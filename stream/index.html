@@ -300,7 +300,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .piece{position:fixed;left:0;top:0;z-index:40;pointer-events:none;padding:1px 9px;border-radius:14px;background:#fff;border:2.5px solid #4a3436;color:#159a5c;font-family:var(--en);font-weight:700;font-size:calc(14px*var(--fs,1.2));white-space:nowrap}
 /* 答えたチャンク君が集まる場所（これまでの「積み上がる文」の代わり） */
 #para{display:none!important}
-.crowd{position:absolute;inset:6px 8px 4px;display:flex;flex-wrap:wrap-reverse;align-content:flex-start;justify-content:center;gap:6px 6px;pointer-events:none;overflow:hidden}
+.crowd{position:absolute;inset:6px 8px 4px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;pointer-events:none;overflow:hidden}
+.mk.big{scale:var(--sc,1.5);transform-origin:50% 100%;transition:scale .25s cubic-bezier(.3,1.6,.5,1)}
+.mk.big s.l0{--lc:rgba(124,196,255,.75)}.mk.big s.l1{--lc:rgba(255,178,62,.75)}
+.mk.big.pop{animation:bkPop .4s cubic-bezier(.3,1.6,.5,1)}
+@keyframes bkPop{from{opacity:0;translate:0 20px}to{opacity:1;translate:0 0}}
 .mk{position:relative;display:flex;align-items:flex-end;height:31px;animation:mkBob 1.8s ease-in-out infinite;animation-delay:var(--d,0s)}
 .mk .h{position:relative;z-index:2;flex:none;width:33px;height:31px;background:var(--fN) center/contain no-repeat}
 .mk.j .h{background-image:var(--fJ)}
@@ -350,8 +354,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   /* 縦画面では選択肢の下を2段分あける（スマホを持つ指が選択肢にかからない／ブラウザの全画面の案内にも隠れない） */
   #sPlay{padding-bottom:calc(58px*var(--fs,1.2) + 18px)}
   /* コンボのキャラは、選択肢にかからないよう上の空き（完成した本文の部分）の右上に出す */
-  .cpop{bottom:auto;top:4px}
-  .cpop img{width:96px;height:96px}
+  .cpop{bottom:auto;top:4px;animation-duration:1.7s}
+  .cpop img{width:112px;height:112px}
+  .crowd{justify-content:flex-start;padding-left:10px}
 }
 </style>
 
@@ -689,7 +694,7 @@ function layout(){const r=$("field").getBoundingClientRect();W=r.width;H=r.heigh
   LY=innerHeight>innerWidth?[H/2,H/2]:[0,1].map(l=>{const g=$("g"+l).getBoundingClientRect();return g.top+g.height/2-r.top});$("seam").style.top=((LY[0]+LY[1])/2)+"px"}
 // レーンの高さ＝それぞれの4択（2×2）の真ん中
 // レーンは真ん中に寄せる（上下の間は日本訳が入るぶんだけ）
-function laneY(l){const mid=(LY[0]+LY[1])/2;if(!G||G.st===2||G.st===3)return mid;const fs=+(SV.set.fs||1.2),ch=fs*15*1.25+12,off=ch/2+(G.st===4?fs*9:7);const o=innerHeight>innerWidth?Math.max(off,H*.24):off;return mid+(l?o:-o)}
+function laneY(l){const mid=(LY[0]+LY[1])/2;if(!G||G.st===2||G.st===3)return mid;const fs=+(SV.set.fs||1.2),ch=fs*15*1.25+12,off=ch/2+(G.st===4?fs*9:7);const o=innerHeight>innerWidth&&G.st===4?fs*15*1.25+10:off;return mid+(l?o:-o)}
 addEventListener("resize",()=>{if(G&&!$("sPlay").hidden)layout()});
 document.addEventListener("fullscreenchange",()=>{document.documentElement.classList.toggle("fsb",!!document.fullscreenElement);if(G&&!$("sPlay").hidden)setTimeout(layout,50)});   // 縦でも横でも遊べる
 
@@ -912,18 +917,28 @@ function crowd(){let c=$("crowd");if(!c){c=document.createElement("div");c.id="c
 function mkMini(lane,segs,joy){const m=document.createElement("i");m.className="mk l"+lane+(joy?" j":"");m.style.setProperty("--d",(Math.random()*1.6).toFixed(2)+"s");
   m.innerHTML='<b class="h"></b>'+"<s></s>".repeat(Math.max(1,Math.min(4,segs)));return m}
 function segsOf(it){return it.kind===1?1:it.ci!=null&&G&&G.p.chunks[it.ci]?G.p.chunks[it.ci].tk.length:Math.max(1,String(it.en||"").split(/\s+/).length)}
+/* 上の空きの、大きなチャンク君（1匹）。答えるたびに体節がくっついて大きくなる */
+const BK={n:0};
+function bigK(){const c=crowd();let k=c.querySelector(".mk.big");
+  if(!k){k=document.createElement("i");k.className="mk big pop";k.innerHTML='<b class="h"></b>';BK.n=0;k.style.setProperty("--sc",1.5);c.appendChild(k);setTimeout(()=>k.classList.remove("pop"),420)}return k}
 function joinCrowd(it,el,segs){
-  const c=crowd(),lane=it.lane||0,m=mkMini(lane,segs,true);m.style.visibility="hidden";c.appendChild(m);
-  while(c.children.length>48)c.firstChild.remove();
-  const a=el.getBoundingClientRect(),b=m.getBoundingClientRect(),f=mkMini(lane,segs,true);f.classList.add("mkfly");document.body.appendChild(f);
-  const sx=a.left-12,sy=a.top+a.height/2-16,tx=b.left,ty=b.top,mx=(sx+tx)/2,my=Math.min(sy,ty)-70;
+  const k=bigK(),lane=it.lane||0,f=mkMini(lane,Math.min(segs,3),true);f.classList.add("mkfly");document.body.appendChild(f);
+  const a=el.getBoundingClientRect(),b=(k.lastElementChild||k).getBoundingClientRect();
+  const sx=a.left-12,sy=a.top+a.height/2-16,tx=b.right-10,ty=b.top,mx=(sx+tx)/2,my=Math.min(sy,ty)-70;
   el.animate([{opacity:1},{opacity:0}],{duration:160,fill:"forwards"});setTimeout(()=>el.remove(),170);
-  f.animate([{transform:`translate(${sx}px,${sy}px) scale(1.3)`},{transform:`translate(${mx}px,${my}px) scale(1.12)`,offset:.45},{transform:`translate(${tx}px,${ty}px) scale(1)`}],{duration:560,easing:"cubic-bezier(.3,.7,.4,1)"})
-   .onfinish=()=>{f.remove();m.style.visibility="";setTimeout(()=>m.classList.remove("j"),900)};
+  f.animate([{transform:`translate(${sx}px,${sy}px) scale(1.3)`},{transform:`translate(${mx}px,${my}px) scale(1.1)`,offset:.45},{transform:`translate(${tx}px,${ty}px) scale(.8)`,opacity:.6}],{duration:520,easing:"cubic-bezier(.3,.7,.4,1)"})
+   .onfinish=()=>{f.remove();if(!k.isConnected)return;BK.n++;
+     if(k.querySelectorAll("s").length<9){const sg=document.createElement("s");sg.className="l"+lane;k.appendChild(sg)}
+     else k.style.setProperty("--sc",Math.min(2.1,1.5+(BK.n-9)*.05).toFixed(2));
+     k.classList.add("j");k.animate([{scale:"1.12 .9"},{scale:"1"}],{duration:220,easing:"ease-out",composite:"add"});clearTimeout(BK.t);BK.t=setTimeout(()=>k.classList.remove("j"),700)};
 }
-function crowdHop(wave){const cr=crowd(),ms=[...cr.children];cr.classList.remove("hop");ms.forEach((m,i)=>m.style.setProperty("--wd",wave?(i*.035).toFixed(2)+"s":"0s"));void cr.offsetWidth;cr.classList.add("hop");
-  setTimeout(()=>cr.classList.remove("hop"),650+(wave?ms.length*35:0));
-  const t=$("txt"),w=t.clientWidth,h=t.clientHeight,n=wave?5:3;for(let k=0;k<n;k++)setTimeout(()=>fireworks(t,w*(.12+(.76/(n-1))*k),h*(.32+.18*(k%2)),wave?26:22,wave?84:70),k*150)}
+/* 節目：大きくなったチャンク君が跳ねて、花火になって散る。そのあと小さな頭から育て直し */
+function crowdHop(wave){const c=crowd(),k=c.querySelector(".mk.big");const t=$("txt"),tr=t.getBoundingClientRect();
+  if(k&&BK.n>0){k.classList.add("j");k.animate([{translate:"0 0"},{translate:"0 -26px"},{translate:"0 0"}],{duration:360,easing:"ease-out"});
+    setTimeout(()=>{if(!k.isConnected)return;const parts=[k.querySelector(".h"),...k.querySelectorAll("s")];
+      parts.forEach((pt,i)=>{const r=pt.getBoundingClientRect();setTimeout(()=>fireworks(t,r.left-tr.left+r.width/2,r.top-tr.top+r.height/2,wave?20:14,wave?78:58),i*45)});
+      k.animate([{opacity:1,scale:"1"},{opacity:0,scale:"1.35"}],{duration:300,fill:"forwards",composite:"add"});setTimeout(()=>{k.remove();BK.n=0;if(!wave)bigK()},320)},340)}
+  else{const w=t.clientWidth,h=t.clientHeight;for(let i=0;i<3;i++)setTimeout(()=>fireworks(t,w*(.2+.3*i),h*.45,18,64),i*140)}}
 const CWORD={5:"Nice!",10:"Great!",15:"Excellent!!",20:"Amazing!!",25:"Fantastic!!",30:"Wonderful!!",40:"Incredible!!",50:"Perfect!!"};
 let popTurn=0;
 function comboPop(){
@@ -931,7 +946,7 @@ function comboPop(){
   $("arena").querySelectorAll(".cpop").forEach(e=>e.remove());
   const who=popTurn++%2?"boy":"girl";const d=document.createElement("div");d.className="cpop";
   d.innerHTML=`<div class="say"><b>${CWORD[c]||(c%20?"Excellent!!":"Unstoppable!!")}</b><span>${c} COMBO</span></div><img alt="" src="img/chara/${who}/joy.webp">`;
-  $("arena").appendChild(d);setTimeout(()=>d.remove(),1300);
+  $("arena").appendChild(d);if(innerHeight>innerWidth){const t=$("txt");d.style.top=Math.max(4,t.offsetTop+t.offsetHeight-d.offsetHeight+6)+"px"}setTimeout(()=>d.remove(),innerHeight>innerWidth?1700:1300);
   if(c%10===0){try{crowdHop(false)}catch(e){}}
   if(c%10===0)voice({10:"nice",20:"excellent",30:"wow",40:"excellent",50:"perfect"}[c]||"wow");
 }
