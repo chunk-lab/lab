@@ -75,6 +75,37 @@ function wordTimes(m, text) {
   const ws = words(text), t = g.map(([a, b]) => ({ t: cum[a] * per / m.sr, e: cum[b] * per / m.sr }));
   return { ok: t.length === ws.length, per: Math.round(per), t, n: t.length, why: t.length === ws.length ? '' : `単語数${ws.length}に対して区切り${t.length}` };
 }
+// ---------- 単語の時刻の補正 ----------
+// モデルが出す「単語の頭」は、実際の声の出だしより約46ms遅い（本物の声144チャンクで測定。tools/timing 参照）。
+// 保存してある時刻は生のまま。使うときに wshift() 分だけ早める。
+const WSHIFT_DEFAULT = 0.046;
+const wshift = () => (typeof S.wshift === 'number' ? S.wshift : WSHIFT_DEFAULT);
+const wtAt = (v, j) => { const x = v.wt[j], d = wshift(); return { t: Math.max(0, x.t - d), e: Math.max(0, x.e - d) }; };
+// 破裂音ではじまる単語（p b t d k c(a,o,u) g(a,o,u,r,l)）は、声の出だしが鋭くて測りやすい
+const PLO_RE = /^(p(?!h)|b|t(?!h)|d|k(?!n)|c[aou]|g[aoulr])/;
+// 端末の中で、モデルの単語の頭と実際の声の出だしのずれを測る。clips: [{text, v:{a,sr,wt}}]
+function measureShift(clips) {
+  const out = [];
+  for (const c of clips) {
+    const v = c.v; if (!v || !v.wt) continue;
+    const ws = words(c.text), hop = .002, n = Math.round(v.sr * .008), h = Math.round(v.sr * hop), a = v.a, N = Math.floor(a.length / h);
+    const le = new Float32Array(N);
+    for (let i = 0; i < N; i++) { let q = 0, k0 = i * h - (n >> 1), cnt = 0; for (let k = Math.max(0, k0); k < Math.min(a.length, k0 + n); k++) { q += a[k] * a[k]; cnt++; } le[i] = Math.log(Math.sqrt(q / Math.max(1, cnt)) + 1e-4); }
+    ws.forEach((w, j) => {
+      if (!v.wt[j] || !PLO_RE.test(bare(w).toLowerCase())) return;
+      const c0 = Math.round(v.wt[j].t / hop), lo = Math.max(1, c0 - 100), hi = Math.min(N - 1, c0 + 100); let bv = -1, bi = -1;
+      for (let i = lo; i <= hi; i++) { const d = le[i] - le[i - 1]; if (d > bv) { bv = d; bi = i; } }
+      if (bv >= 1.2) out.push(bi * hop - v.wt[j].t);
+    });
+  }
+  out.sort((x, y) => x - y);
+  if (out.length < 10) return { n: out.length, ok: false };
+  const med = out[out.length >> 1], q1 = out[Math.floor(out.length * .25)], q3 = out[Math.floor(out.length * .75)];
+  return { n: out.length, ok: true, med, q1, q3, shift: Math.max(0, Math.min(.1, -med)) };
+}
+// 準備のたびに測って、補正を自動で決める
+function autoShift(clips) { const m = measureShift(clips); if (m.ok && m.q3 - m.q1 < .06) { S.wshift = m.shift; m.used = true; } else { delete S.wshift; m.used = false; } saveS(); return m; }
+
 // 必要な声をそろえる（保存済みはそのまま、ないものだけ作る）。値：{a, sr, wt:[{t,e}]|null, info}
 async function getClips(texts, voice, st) {
   const uniq = [...new Set(texts)], got = {}, miss = [];

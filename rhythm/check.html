@@ -67,6 +67,7 @@ if (!window.crossOriginIsolated && 'serviceWorker' in navigator && window.isSecu
       <button id="bNone" disabled>クリックなし</button>
       <button id="bSlow" disabled>ゆっくり（0.6倍）：全単語</button>
     </div>
+    <div class="st" id="am"></div>
     <div class="st">クリックが単語の出だしと「同時」に聞こえれば合格です。下線つきの単語が「意味語」（ゲームで叩く単語）です。</div>
   </section>
 
@@ -80,7 +81,8 @@ if (!window.crossOriginIsolated && 'serviceWorker' in navigator && window.isSecu
 $('psg').innerHTML = LIST.map((p, i) => `<option value="${i}">${p.name}</option>`).join('');
 if (S.psg != null) $('psg').value = S.psg; if (S.voice) $('voice').value = S.voice;
 const st = (t, r) => { $('pst').textContent = t; if (r != null) $('pbar').style.width = (r * 100).toFixed(0) + '%'; };
-let CL = [], P = null, got = null, playing = [];
+let CL = [], P = null, got = null, playing = [], AM = null;
+function showAM() { $('am').innerHTML = AM && AM.ok ? `<span class="good">自動測定</span>：声の出だしはモデルの時刻より中央値 ${Math.round(-AM.med * 1000)}ms 早い（${AM.n}語・ばらつき ${Math.round((AM.q3 - AM.q1) * 1000)}ms）→ <b>${Math.round(wshift() * 1000)}ms 早めて</b>使います` : `<span class="bad">測定できず</span>（破裂音の単語が${AM ? AM.n : 0}語）。標準の ${Math.round(WSHIFT_DEFAULT * 1000)}ms を使います`; }
 
 $('bPrep').onclick = async () => {
   ac(); S.psg = $('psg').value; S.voice = $('voice').value; saveS();
@@ -91,7 +93,8 @@ $('bPrep').onclick = async () => {
     $('rows').innerHTML = CL.map(c => { const v = c.v, ok = !!v.wt;
       return `<tr><td>${c.en}<br><span class="${ok ? 'good' : 'bad'}">${ok ? v.wt.map(x => x.t.toFixed(2)).join(' / ') : '時刻なし：' + (v.info && v.info.why)}</span></td><td class="n">${c.buf.duration.toFixed(2)}秒</td></tr>`; }).join('');
     ['bAll', 'bCon', 'bNone', 'bSlow'].forEach(k => $(k).disabled = false);
-    report();
+    AM = autoShift(CL.map(c => ({ text: c.en, v: c.v })));
+    showAM(); report();
   } catch (e) { st('失敗：' + (e.message || e)); }
   $('bPrep').disabled = false;
 };
@@ -104,7 +107,7 @@ function play(which, rate = 1) {
   CL.forEach((c, ci) => {
     const s = AC.createBufferSource(); s.buffer = c.buf; s.playbackRate.value = rate; s.connect(voiceG); s.start(t0 + t); playing.push(s);
     const ws = words(c.en);
-    if (c.v.wt) c.v.wt.forEach((w, j) => { const at = t0 + t + w.t / rate, con = isContent(ws[j]);
+    if (c.v.wt) c.v.wt.forEach((_, j) => { const w = wtAt(c.v, j), at = t0 + t + w.t / rate, con = isContent(ws[j]);
       if (which === 'all' || (which === 'con' && con)) click(at, con);
       marks.push({ ci, j, t: at, e: t0 + t + w.e / rate }); });
     t += c.buf.duration / rate + .35;
@@ -130,6 +133,7 @@ function report() {
   const n = CL.length, ok = CL.filter(c => c.v.wt).length, i0 = CL[0] && CL[0].v.info;
   $('report').textContent = [`端末: ${navigator.userAgent}`, `isolated: ${crossOriginIsolated} / WebGPU: ${!!navigator.gpu}`,
     `時刻あり: ${ok} / ${n}` + (i0 ? ` / 1単位=${i0.per}サンプル` : ''),
+    AM ? `自動測定: n=${AM.n} 中央値=${AM.ok ? Math.round(AM.med * 1000) : '-'}ms 25-75%=${AM.ok ? Math.round(AM.q1 * 1000) + '〜' + Math.round(AM.q3 * 1000) : '-'}ms 使う補正=${Math.round(wshift() * 1000)}ms` : '',
     ...CL.map(c => `${c.v.wt ? c.v.wt.map(x => x.t.toFixed(2)).join(',') : 'NG ' + (c.v.info && c.v.info.why)} | ${c.en}`)].join('\n');
 }
 $('bCopy').onclick = async () => { report(); try { await navigator.clipboard.writeText($('report').textContent); $('bCopy').textContent = 'コピーしました'; } catch (e) { $('bCopy').textContent = 'コピーできませんでした。長押しで選んでください'; } };

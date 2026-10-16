@@ -192,8 +192,9 @@ $('bPrep').onclick = async () => {
   $('bPrep').disabled = true; $('pbar').style.width = '0%';
   try {
     const got = await getClips(P.chunks.map(c => c.en), voice, st);
+    const am = autoShift(P.chunks.map(c => ({ text: c.en, v: got[c.en] })));
     SONG = { mode: MODE, chunks: P.chunks, got, voice, pid: P.id, noTs: P.chunks.filter(c => !got[c.en].wt).length };
-    $('readyLead').textContent = MODE_NAME[MODE] + (SONG.noTs ? `（${SONG.noTs}チャンクは単語の時刻が取れなかったので、チャンクの頭だけ叩きます）` : '') + '。音を出せる状態にしてスタート。';
+    $('readyLead').textContent = MODE_NAME[MODE] + (SONG.noTs ? `（${SONG.noTs}チャンクは単語の時刻が取れなかったので、チャンクの頭だけ叩きます）` : '') + `。単語の時刻の補正：${Math.round(wshift() * 1000)}ms` + (am.used ? `（この端末で自動測定・${am.n}語）` : '（標準値）') + '。音を出せる状態にしてスタート。';
     $('setup').hidden = true; $('ready').hidden = false;
   } catch (e) { $('pst').innerHTML = `<span class="bad">失敗：</span>${e.message || e}`; }
   $('bPrep').disabled = false;
@@ -211,7 +212,7 @@ function buildSong(bpm, mode) {
     voices.push({ buf, t }); lyr.push({ en: c.en, ja: c.ja, t, d, hit: false }); guides.push({ t, d, en: c.en });
     if (mode === 'fill') notes.push({ kind: 'chunk', t, d, en: c.en, ci });
     if (mode === 'con' || mode === 'mix') {
-      if (v.wt) ws.forEach((w, j) => { if (isContent(w)) notes.push({ kind: 'word', t: t + v.wt[j].t, d: Math.max(.08, v.wt[j].e - v.wt[j].t), en: w, ci }); });
+      if (v.wt) ws.forEach((w, j) => { if (isContent(w)) { const x = wtAt(v, j); notes.push({ kind: 'word', t: t + x.t, d: Math.max(.08, x.e - x.t), en: w, ci }); } });
       else notes.push({ kind: 'word', t, d, en: ws[0], ci });
     }
     let endB = b + Math.ceil((d + .05) / beat);
@@ -220,7 +221,7 @@ function buildSong(bpm, mode) {
     b = endB;
   });
   if (mode === 'recplay') SONG.rec.forEach(t => { let ci = -1, w = ''; lyr.forEach((L, i) => { if (t >= L.t - .1 && t <= L.t + L.d) ci = i; });
-    if (ci >= 0) { const c = SONG.chunks[ci], v = SONG.got[c.en], ws = words(c.en); if (v.wt) v.wt.forEach((x, j) => { if (t >= lyr[ci].t + x.t - .12) w = ws[j]; }); }
+    if (ci >= 0) { const c = SONG.chunks[ci], v = SONG.got[c.en], ws = words(c.en); if (v.wt) v.wt.forEach((_, j) => { if (t >= lyr[ci].t + wtAt(v, j).t - .12) w = ws[j]; }); }
     notes.push({ kind: ci >= 0 ? 'word' : 'fill', t, d: .1, en: w, ci }); });
   notes.sort((x, y) => x.t - y.t);
   const total = Math.ceil((b + 1) / 4) * 4 + 4;
@@ -391,7 +392,7 @@ $('bRecPlay').onclick = () => startGame('recplay');
 $('bRecCopy').onclick = async () => {
   const L = buildSong(+$('bpm').value, 'rec').lyr;
   const txt = JSON.stringify({ passage: SONG.pid, bpm: +$('bpm').value, voice: SONG.voice,
-    chunks: L.map((x, i) => ({ en: x.en, t: +x.t.toFixed(3), words: (SONG.got[x.en].wt || []).map((w, j) => [words(x.en)[j], +(x.t + w.t).toFixed(3)]) })), taps: SONG.rec });
+    chunks: L.map((x, i) => ({ en: x.en, t: +x.t.toFixed(3), words: (SONG.got[x.en].wt || []).map((_, j) => [words(x.en)[j], +(x.t + wtAt(SONG.got[x.en], j).t).toFixed(3)]) })), shift: wshift(), taps: SONG.rec });
   try { await navigator.clipboard.writeText(txt); $('bRecCopy').textContent = 'コピーしました'; } catch (e) { $('bRecCopy').textContent = 'コピーできませんでした'; }
 };
 </script>
