@@ -293,6 +293,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   #sTitle{flex-direction:column;justify-content:center}
   #sTitle .l,#sTitle .r{width:100%;flex:none}
   .btn-run{margin-top:6px}
+  /* ブラウザの全画面では下に「全画面を終了するには…」が出るので、選択肢2段分あけて上に上げる（アプリ版では出ない） */
+  html.fsb #sPlay{padding-bottom:calc(58px*var(--fs,1.2) + 18px)}
 }
 </style>
 
@@ -616,7 +618,8 @@ function layout(){const r=$("field").getBoundingClientRect();W=r.width;H=r.heigh
 // レーンの高さ＝それぞれの4択（2×2）の真ん中
 // レーンは真ん中に寄せる（上下の間は日本訳が入るぶんだけ）
 function laneY(l){const mid=(LY[0]+LY[1])/2;if(!G||G.st===2||G.st===3)return mid;const fs=+(SV.set.fs||1.2),ch=fs*15*1.25+12,off=ch/2+(G.st===4?fs*9:7);return mid+(l?off:-off)}
-addEventListener("resize",()=>{if(G&&!$("sPlay").hidden)layout()});   // 縦でも横でも遊べる
+addEventListener("resize",()=>{if(G&&!$("sPlay").hidden)layout()});
+document.addEventListener("fullscreenchange",()=>{document.documentElement.classList.toggle("fsb",!!document.fullscreenElement);if(G&&!$("sPlay").hidden)setTimeout(layout,50)});   // 縦でも横でも遊べる
 
 function mkCard(it){
   const e=document.createElement("div");e.className="card l"+it.lane;const p=G.p;
