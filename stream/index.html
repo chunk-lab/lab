@@ -1,5 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
-<title>チャンクストリーム</title>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>チャンクストリーム</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#0f1b2d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -300,8 +299,12 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .piece{position:fixed;left:0;top:0;z-index:40;pointer-events:none;padding:1px 9px;border-radius:14px;background:#fff;border:2.5px solid #4a3436;color:#159a5c;font-family:var(--en);font-weight:700;font-size:calc(14px*var(--fs,1.2));white-space:nowrap}
 /* 答えたチャンク君が集まる場所（これまでの「積み上がる文」の代わり） */
 #para{display:none!important}
-.crowd{position:absolute;inset:6px 8px 4px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;pointer-events:none;overflow:hidden}
-.mk.big{scale:var(--sc,1.5);transform-origin:50% 100%;transition:scale .25s cubic-bezier(.3,1.6,.5,1)}
+.crowd{position:absolute;inset:6px 8px 4px;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden}
+.mk.big{scale:var(--sc,1.6);transform-origin:50% 50%;transition:scale .3s cubic-bezier(.3,1.6,.5,1);animation-duration:2.4s}
+.mk.big.sad .h{background-image:var(--fS)}
+.bm{position:fixed;left:0;top:0;width:28px;height:26px;background:var(--fJ) center/contain no-repeat;pointer-events:none;z-index:45;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.bm.n{background-image:var(--fN)}
+.fwl{position:fixed;inset:0;pointer-events:none;z-index:44}
 .mk.big s.l0{--lc:rgba(124,196,255,.75)}.mk.big s.l1{--lc:rgba(255,178,62,.75)}
 .mk.big.pop{animation:bkPop .4s cubic-bezier(.3,1.6,.5,1)}
 @keyframes bkPop{from{opacity:0;translate:0 20px}to{opacity:1;translate:0 0}}
@@ -356,7 +359,6 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   /* コンボのキャラは、選択肢にかからないよう上の空き（完成した本文の部分）の右上に出す */
   .cpop{bottom:auto;top:4px;animation-duration:1.7s}
   .cpop img{width:112px;height:112px}
-  .crowd{justify-content:flex-start;padding-left:10px}
 }
 </style>
 
@@ -671,7 +673,7 @@ function chunkHTML(c,gs,ge,fill){
 /* ---- 通しプレイ ---- */
 function startRun(from){
   goFull();hush();closeOv();RUN={p:CUR,from,res:[],combo:0,maxc:0,review:[],flow:true};
-  show("sPlay");ac();bgmStart(118,"game");crowd().innerHTML="";
+  show("sPlay");ac();bgmStart(118,"game");crowd().innerHTML="";BK.S=1;setTimeout(()=>{try{bigK()}catch(e){}},300);
   buildGrids();cancelAnimationFrame(RAF);LAST=performance.now();RAF=requestAnimationFrame(loop);
   const beat=60/118*1000;
   [3,2,1].forEach((n,i)=>setTimeout(()=>{if(!RUN)return;inter(`<div class="cd">${n}</div>`,0);SE.count(false)},i*beat));
@@ -787,10 +789,11 @@ function buildGrids(){[0,1].forEach(l=>{const g=$("g"+l);g.innerHTML=[0,1,2,3].m
   g.querySelectorAll(".ch").forEach(b=>b.addEventListener("pointerdown",e=>{e.preventDefault();press(l,+b.dataset.i)}))})}
 // 長文の段：上の4択の下段＋下の4択の上段＝真ん中の4つ
 function slotAt(l,i){if(G.st>=2){const k=l===0?(i>=2?i-2:-1):(i<2?i+2:-1);return k<0?undefined:(G.s4?G.s4[k]:null)}const L=G.lanes[l];return L.slots?L.slots[i]:null}
+function fitCh(b,t){t.style.fontSize="";let f=parseFloat(getComputedStyle(t).fontSize),n=0;while(n++<12&&b.scrollHeight>b.clientHeight+1&&f>8.5){f-=.6;t.style.fontSize=f+"px"}}   
 function renderGrid(l){
   const g=$("g"+l),en=G.st>=3,st4=G.st>=2,cl=G.st===1?l:G.st===4?(G.cq[0]?G.cq[0].lane:0):0;g.classList.toggle("c0",cl===0);g.classList.toggle("c1",cl===1);g.classList.toggle("off",st4?!G.s4:!G.lanes[l].slots);g.classList.toggle("m4",st4);
   [...g.children].forEach((b,i)=>{const s=slotAt(l,i),tx=s?s.text:"";b.classList.toggle("hide",s===undefined);const el=b.querySelector(".tx");
-    if(el.textContent!==tx){el.textContent=tx;b.classList.remove("swap");void b.offsetWidth;b.classList.add("swap")}
+    if(el.textContent!==tx){el.textContent=tx;b.classList.remove("swap");void b.offsetWidth;b.classList.add("swap");fitCh(b,el)}
     b.classList.toggle("en",en);b.classList.toggle("long",tx.length>(en?22:16));b.classList.remove("ng","ok");b.classList.toggle("dis",!!(s&&s.dis))})}
 function laneFront(L){
   const f=L.q[0];
@@ -848,12 +851,14 @@ function correct(L,it,btn){
 }
 function wrong(L,it,s,btn){
   G.wrong++;RUN.combo=0;SE.ng();face("surprise");it.flawed=true;s.dis=true;
+  try{bkShrink(.5)}catch(e){}
   if(it.el){const e=it.el;e.classList.remove("oops");void e.offsetWidth;e.classList.add("oops");setTimeout(()=>e.classList.remove("oops"),460)}
   btn.classList.remove("ng");void btn.offsetWidth;btn.classList.add("ng","dis");
   G.pen+=2;penFx("+2.0");
   if(navigator.vibrate)try{navigator.vibrate(30)}catch(e){}
 }
 function missIt(L,it){
+  try{bkShrink(.6)}catch(e){}
   L.q.shift();it.flawed=true;resolve(it);G.miss++;RUN.combo=0;SE.miss();face("sad");G.pen+=3;penFx("+3.0");
   if(G.rqCur===it)G.rqCur=null;
   it.el.classList.add("miss");it.el.classList.remove("spk");setJa(it,null);const a=document.createElement("div");a.className="ans";a.textContent=it.ans;it.el.appendChild(a);
@@ -920,28 +925,45 @@ function crowd(){let c=$("crowd");if(!c){c=document.createElement("div");c.id="c
 function mkMini(lane,segs,joy){const m=document.createElement("i");m.className="mk l"+lane+(joy?" j":"");m.style.setProperty("--d",(Math.random()*1.6).toFixed(2)+"s");
   m.innerHTML='<b class="h"></b>'+"<s></s>".repeat(Math.max(1,Math.min(4,segs)));return m}
 function segsOf(it){return it.kind===1?1:it.ci!=null&&G&&G.p.chunks[it.ci]?G.p.chunks[it.ci].tk.length:Math.max(1,String(it.en||"").split(/\s+/).length)}
-/* 上の空きの、大きなチャンク君（1匹）。答えるたびに体節がくっついて大きくなる */
-const BK={n:0};
+/* 上の空きの、大きなチャンク君（1匹）。答えると大きくなり（速く続けるほど大きく）、時間がたつとしぼむ。育ちきると破裂する */
+const BK={S:1,last:0};
 function bigK(){const c=crowd();let k=c.querySelector(".mk.big");
-  if(!k){k=document.createElement("i");k.className="mk big pop";k.innerHTML='<b class="h"></b>';BK.n=0;k.style.setProperty("--sc",1.5);c.appendChild(k);setTimeout(()=>k.classList.remove("pop"),420)}return k}
+  if(!k){k=document.createElement("i");k.className="mk big pop";k.innerHTML='<b class="h"></b>';c.appendChild(k);setTimeout(()=>k.classList.remove("pop"),420);bkApply(k)}return k}
+function bkApply(k){k=k||bigK();const c=crowd(),max=Math.max(2,Math.min(4.2,(c.clientHeight-10)/31));k.style.setProperty("--sc",(1.6+(max-1.6)*(BK.S-1)/2).toFixed(2))}
+function bkGrow(){const now=performance.now(),dt=(now-BK.last)/1000;BK.last=now;BK.S=Math.min(3,BK.S+(dt<1.6?.42:dt<3?.3:.18));
+  const k=bigK();k.classList.remove("sad");k.classList.add("j");clearTimeout(BK.t);BK.t=setTimeout(()=>k.classList.remove("j"),700);bkApply(k);if(BK.S>=3)bkBurst(false)}
+function bkShrink(v){if(!$("crowd"))return;BK.S=Math.max(1,BK.S-v);const k=bigK();k.classList.add("sad");setTimeout(()=>k.classList.remove("sad"),800);bkApply(k)}
+setInterval(()=>{if(RUN&&G&&G.started&&!G.over&&!PAUSED&&BK.S>1&&$("crowd")){BK.S=Math.max(1,BK.S-.018);bkApply()}},150);   // 1秒に約0.12しぼむ
 function joinCrowd(it,el,segs){
-  const k=bigK(),lane=it.lane||0,f=mkMini(lane,Math.min(segs,3),true);f.classList.add("mkfly");document.body.appendChild(f);
-  const a=el.getBoundingClientRect(),b=(k.lastElementChild||k).getBoundingClientRect();
-  const sx=a.left-12,sy=a.top+a.height/2-16,tx=b.right-10,ty=b.top,mx=(sx+tx)/2,my=Math.min(sy,ty)-70;
+  const k=bigK(),f=mkMini(it.lane||0,0,true);f.innerHTML='<b class="h"></b>';f.classList.add("mkfly");document.body.appendChild(f);
+  const a=el.getBoundingClientRect(),b=k.getBoundingClientRect();
+  const sx=a.left-12,sy=a.top+a.height/2-16,tx=b.left+b.width/2-16,ty=b.top+b.height/2-15,mx=(sx+tx)/2,my=Math.min(sy,ty)-60;
   el.animate([{opacity:1},{opacity:0}],{duration:160,fill:"forwards"});setTimeout(()=>el.remove(),170);
-  f.animate([{transform:`translate(${sx}px,${sy}px) scale(1.3)`},{transform:`translate(${mx}px,${my}px) scale(1.1)`,offset:.45},{transform:`translate(${tx}px,${ty}px) scale(.8)`,opacity:.6}],{duration:520,easing:"cubic-bezier(.3,.7,.4,1)"})
-   .onfinish=()=>{f.remove();if(!k.isConnected)return;BK.n++;
-     if(k.querySelectorAll("s").length<9){const sg=document.createElement("s");sg.className="l"+lane;k.appendChild(sg)}
-     else k.style.setProperty("--sc",Math.min(2.1,1.5+(BK.n-9)*.05).toFixed(2));
-     k.classList.add("j");k.animate([{scale:"1.12 .9"},{scale:"1"}],{duration:220,easing:"ease-out",composite:"add"});clearTimeout(BK.t);BK.t=setTimeout(()=>k.classList.remove("j"),700)};
+  f.animate([{transform:`translate(${sx}px,${sy}px) scale(1.2)`},{transform:`translate(${mx}px,${my}px) scale(1)`,offset:.45},{transform:`translate(${tx}px,${ty}px) scale(.5)`,opacity:.5}],{duration:480,easing:"cubic-bezier(.3,.7,.4,1)"})
+   .onfinish=()=>{f.remove();if(k.isConnected)bkGrow()};
 }
-/* 節目：大きくなったチャンク君が跳ねて、花火になって散る。そのあと小さな頭から育て直し */
-function crowdHop(wave){const c=crowd(),k=c.querySelector(".mk.big");const t=$("txt"),tr=t.getBoundingClientRect();
-  if(k&&BK.n>0){k.classList.add("j");k.animate([{translate:"0 0"},{translate:"0 -26px"},{translate:"0 0"}],{duration:360,easing:"ease-out"});
-    setTimeout(()=>{if(!k.isConnected)return;const parts=[k.querySelector(".h"),...k.querySelectorAll("s")];
-      parts.forEach((pt,i)=>{const r=pt.getBoundingClientRect();setTimeout(()=>fireworks(t,r.left-tr.left+r.width/2,r.top-tr.top+r.height/2,wave?20:14,wave?78:58),i*45)});
-      k.animate([{opacity:1,scale:"1"},{opacity:0,scale:"1.35"}],{duration:300,fill:"forwards",composite:"add"});setTimeout(()=>{k.remove();BK.n=0;if(!wave)bigK()},320)},340)}
-  else{const w=t.clientWidth,h=t.clientHeight;for(let i=0;i<3;i++)setTimeout(()=>fireworks(t,w*(.2+.3*i),h*.45,18,64),i*140)}}
+/* 破裂：小さなチャンク君が花火のように散る。散り方は5種類（輪・二重の輪・らせん・噴水・ハート） */
+const BPAT=["ring","double","spiral","fountain","heart"];
+function fwLayer(){let l=document.querySelector(".fwl");if(!l){l=document.createElement("div");l.className="fwl";document.body.appendChild(l)}return l}
+function burstMinis(cx,cy,big){const pat=BPAT[rnd(BPAT.length)],n=pat==="double"?24:pat==="heart"?22:18,R=Math.min(innerWidth,innerHeight)*(big?.36:.28);
+  for(let i=0;i<n;i++){let x,y,delay=0,fall=36;
+    if(pat==="ring"){const a=i/n*6.283;x=Math.cos(a)*R;y=Math.sin(a)*R}
+    else if(pat==="double"){const k=i%2,a=(i>>1)/(n/2)*6.283+(k?.13:0),r=R*(k?.55:1);x=Math.cos(a)*r;y=Math.sin(a)*r}
+    else if(pat==="spiral"){const a=i*.7,r=R*(.25+i/n*.85);x=Math.cos(a)*r;y=Math.sin(a)*r;delay=i*32}
+    else if(pat==="fountain"){const a=-Math.PI/2+(Math.random()-.5)*1.7,r=R*(.6+Math.random()*.6);x=Math.cos(a)*r;y=Math.sin(a)*r;fall=R*.9}
+    else{const t=i/n*6.283;x=16*Math.pow(Math.sin(t),3)*R/17;y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*R/17}
+    const m=document.createElement("i");m.className="bm"+(i%3?"":" n");document.body.appendChild(m);
+    const rot=(Math.random()-.5)*140,sc=.8+Math.random()*.5;
+    m.animate([{transform:`translate(${cx-14}px,${cy-13}px) scale(.3)`,opacity:1},{transform:`translate(${cx-14+x}px,${cy-13+y}px) scale(${sc}) rotate(${rot}deg)`,opacity:1,offset:.55},
+      {transform:`translate(${cx-14+x}px,${cy-13+y+fall}px) scale(${sc*.8}) rotate(${rot*1.4}deg)`,opacity:0}],{duration:1350,delay,easing:"cubic-bezier(.2,.75,.35,1)",fill:"both"}).onfinish=()=>m.remove()}
+  const L=fwLayer();for(let k=0;k<(big?4:2);k++)setTimeout(()=>fireworks(L,cx+(Math.random()-.5)*R*1.2,cy+(Math.random()-.5)*R*.8,18,R*.45),120+k*160);
+  return pat}
+function bkBurst(final){const c=$("crowd"),k=c&&c.querySelector(".mk.big");if(!k)return;const r=k.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  if(final&&BK.S<1.15){k.classList.add("j");return}
+  k.classList.add("j");k.animate([{scale:"1"},{scale:"1.25"},{scale:"0",opacity:0}],{duration:260,easing:"ease-in",fill:"forwards",composite:"add"});
+  try{SE.clear()}catch(e){}if(RUN&&!final)voice("wow");
+  setTimeout(()=>{burstMinis(cx,cy,final||BK.S>=3);k.remove();BK.S=1;if(!final)setTimeout(()=>{if(RUN&&$("crowd"))bigK()},700)},240)}
+function crowdHop(wave){bkBurst(!!wave)}
 const CWORD={5:"Nice!",10:"Great!",15:"Excellent!!",20:"Amazing!!",25:"Fantastic!!",30:"Wonderful!!",40:"Incredible!!",50:"Perfect!!"};
 let popTurn=0;
 function comboPop(){
@@ -950,7 +972,6 @@ function comboPop(){
   const who=popTurn++%2?"boy":"girl";const d=document.createElement("div");d.className="cpop";
   d.innerHTML=`<div class="say"><b>${CWORD[c]||(c%20?"Excellent!!":"Unstoppable!!")}</b><span>${c} COMBO</span></div><img alt="" src="img/chara/${who}/joy.webp">`;
   $("arena").appendChild(d);if(innerHeight>innerWidth){const t=$("txt");d.style.top=Math.max(4,t.offsetTop+t.offsetHeight-d.offsetHeight+6)+"px"}setTimeout(()=>d.remove(),innerHeight>innerWidth?1700:1300);
-  if(c%10===0){try{crowdHop(false)}catch(e){}}
   if(c%10===0)voice({10:"nice",20:"excellent",30:"wow",40:"excellent",50:"perfect"}[c]||"wow");
 }
 function penFx(t){const d=document.createElement("div");d.className="pen";d.textContent=t;$("sPlay").appendChild(d);setTimeout(()=>d.remove(),900)}
@@ -974,7 +995,7 @@ function endRun(){cancelAnimationFrame(RAF);hush();bgmStop();if(G)G.over=true;G=
 /* ---- 段の終わり：ランクと星をちらっと見せて、そのまま次の段へ ---- */
 function rankOf(acc,time,par){const rank=acc>=.95&&time<=par?"S":acc>=.85&&time<=par*1.35?"A":acc>=.7?"B":"C";return {rank,stars:acc<.6?0:rank==="S"?3:acc>=.8?2:1}}
 function stageEnd(){
-  const g=G;g.over=true;g.started=false;hush();try{crowdHop(true)}catch(e){}
+  const g=G;g.over=true;g.started=false;hush();try{bkBurst(true)}catch(e){}
   const acc=g.first/g.total,time=g.t+g.pen,par=g.total*PAR[g.st]*(1+(g.p.lv-1)*.15),{rank,stars}=rankOf(acc,time,par);
   RUN.res.push({st:g.st,acc,time,par,rank,stars,total:g.total,first:g.first});
   const prev=rec(g.p.id,g.st,"ta");
@@ -1012,4 +1033,5 @@ function finalResult(){
 }
 window.__G=()=>G;
 </script>
+
 </body></html>
