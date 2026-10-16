@@ -689,7 +689,7 @@ function layout(){const r=$("field").getBoundingClientRect();W=r.width;H=r.heigh
   LY=innerHeight>innerWidth?[H/2,H/2]:[0,1].map(l=>{const g=$("g"+l).getBoundingClientRect();return g.top+g.height/2-r.top});$("seam").style.top=((LY[0]+LY[1])/2)+"px"}
 // レーンの高さ＝それぞれの4択（2×2）の真ん中
 // レーンは真ん中に寄せる（上下の間は日本訳が入るぶんだけ）
-function laneY(l){const mid=(LY[0]+LY[1])/2;if(!G||G.st===2||G.st===3)return mid;const fs=+(SV.set.fs||1.2),ch=fs*15*1.25+12,off=ch/2+(G.st===4?fs*9:7);return mid+(l?off:-off)}
+function laneY(l){const mid=(LY[0]+LY[1])/2;if(!G||G.st===2||G.st===3)return mid;const fs=+(SV.set.fs||1.2),ch=fs*15*1.25+12,off=ch/2+(G.st===4?fs*9:7);const o=innerHeight>innerWidth?Math.max(off,H*.24):off;return mid+(l?o:-o)}
 addEventListener("resize",()=>{if(G&&!$("sPlay").hidden)layout()});
 document.addEventListener("fullscreenchange",()=>{document.documentElement.classList.toggle("fsb",!!document.fullscreenElement);if(G&&!$("sPlay").hidden)setTimeout(layout,50)});   // 縦でも横でも遊べる
 
@@ -699,7 +699,7 @@ function mkCard(it){
   else if(it.kind===2){e.textContent=it.en}
   else{e.innerHTML=chunkHTML(p.chunks[it.ci],it.gs,it.ge)}
   e.insertAdjacentHTML("beforeend",'<span class="ft"></span>');
-  $("layer").appendChild(e);if(e.offsetWidth>W-24){e.style.whiteSpace="normal";e.style.width=(W-24)+"px"}it.el=e;it.w=e.offsetWidth;it.h=e.offsetHeight;it.y=laneY(it.lane);it.ready=0;place(it);return e}
+  $("layer").appendChild(e);const mw=innerHeight>innerWidth?Math.round(W*.6):W-24;if(e.offsetWidth>mw){e.style.whiteSpace="normal";e.style.width=mw+"px"}/* 縦画面は幅を6割までにして、右から動いて見えるように */it.el=e;it.w=e.offsetWidth;it.h=e.offsetHeight;it.y=laneY(it.lane);it.ready=0;place(it);return e}
 function place(it){it.el.style.transform=`translate3d(${it.x.toFixed(1)}px,${(it.y-it.h/2).toFixed(1)}px,0)`}
 function setJa(it,txt){let j=it.el.querySelector(".jp");if(!txt){j&&j.remove();return}if(!j){j=document.createElement("span");j.className="jp";it.el.appendChild(j)}j.textContent=txt}
 
@@ -717,7 +717,7 @@ function speedOf(){return (W+40)/(TRAV[G.st]+(G.p.lv-1))*(SV.set.spd||.5)}
 // 右端から全体が見えるところまでは一気に出てきて、そこからゆっくり
 const ENTER=1100;const inView=it=>W-it.w-12;
 // 制限時間：先頭になって全部見えてから一定時間。その時間でちょうど左端に着く速さで動かす（長い文でも同じ時間）
-const LIMIT={1:9,2:13,3:13,4:16};function limitOf(){return (LIMIT[G.st]+(G.p.lv-1))*(.5/(SV.set.spd||.5))}
+const LIMIT={1:9,2:13,3:13,4:16};function limitOf(){return (LIMIT[G.st]+(G.p.lv-1))*(.5/(SV.set.spd||.5))*(innerHeight>innerWidth?1.25:1)}/* 縦画面は読み取りにくいので1.25倍 */
 function moveFront(it,v,dt){const ex=inView(it);if(it.x>ex){it.x=Math.max(ex,it.x-ENTER*dt);return v*2}if(it.v==null)it.v=Math.max(3,(it.x-38)/limitOf());it.age=(it.age||0)+dt;let sp=it.v;if(false){const over=it.x-W*.5;if(over>0)sp+=over*2.4*(SV.set.spd||.5);else it.boost=false}it.x=Math.max(6,it.x-sp*dt);return sp}
 function stepLanes(dt){
   const v=speedOf();let fast=false;
