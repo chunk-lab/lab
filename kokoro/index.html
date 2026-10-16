@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kokoro 読み上げテスト</title>
+<style>
+:root{--bg:#0f1b2d;--sf:#172a45;--sf2:#20395c;--ln:#2d4a72;--ink:#eef2f7;--mu:#8ea3bf;--ac:#ffb23e;--ok:#5fd49a;--ng:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Hiragino Sans","Noto Sans JP",system-ui,sans-serif;padding:16px max(16px,env(safe-area-inset-left)) 40px}
+h1{font-size:20px;margin:0 0 4px}
+.sub{color:var(--mu);font-size:13px;margin:0 0 16px}
+section{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;margin-bottom:12px}
+h2{font-size:15px;margin:0 0 10px;color:var(--ac)}
+label{display:block;font-size:13px;color:var(--mu);margin:8px 0 4px}
+select,textarea{width:100%;background:var(--sf2);color:var(--ink);border:1px solid var(--ln);border-radius:10px;padding:8px;font:inherit}
+textarea{height:110px;font-family:system-ui,sans-serif;font-size:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button{font:inherit;font-weight:700;border:0;border-radius:12px;padding:12px;margin-top:10px;width:100%;background:var(--sf2);color:var(--ink);border:1px solid var(--ln)}
+button.pri{background:linear-gradient(180deg,#ffb23e,#ff8a3d);color:#2a1600;border:0}
+button:disabled{opacity:.4}
+.bar{height:8px;background:#0a1322;border-radius:4px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .2s}
+.st{font-size:13px;color:var(--mu);margin-top:6px;min-height:1.4em}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+td,th{border-bottom:1px solid var(--ln);padding:5px 4px;text-align:left;vertical-align:top}
+th{color:var(--mu);font-weight:600}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.big{font-size:22px;font-weight:800}
+.good{color:var(--ok)}.bad{color:var(--ng)}
+pre{white-space:pre-wrap;font-size:12px;background:#0a1322;border-radius:10px;padding:10px;margin:8px 0 0}
+.chunk.now{background:rgba(255,178,62,.2)}
+</style>
+</head>
+<body>
+<h1>Kokoro 読み上げテスト</h1>
+<p class="sub">スマホで「ダウンロード時間」「生成の速さ」「声の聞きやすさ」を測ります。終わったら一番下の「結果をコピー」で送ってください。</p>
+
+<section>
+  <h2>1. 設定</h2>
+  <div class="row">
+    <div><label for="dev">動かし方</label><select id="dev"><option value="wasm">WASM（どの端末でも）</option><option value="webgpu">WebGPU（対応端末のみ・速い）</option></select></div>
+    <div><label for="dtype">モデルの種類</label><select id="dtype"><option value="q8">q8（約90MB・おすすめ）</option><option value="fp16">fp16（約160MB）</option><option value="q4f16">q4f16（約150MB）</option><option value="fp32">fp32（約330MB・WebGPU向け）</option></select></div>
+  </div>
+  <div class="st" id="env"></div>
+  <button class="pri" id="bLoad">モデルを読み込む</button>
+  <div class="bar"><i id="pbar"></i></div>
+  <div class="st" id="lst">まだ読み込んでいません</div>
+</section>
+
+<section>
+  <h2>2. 声と文章</h2>
+  <label for="voice">声</label>
+  <select id="voice">
+    <option value="af_heart">af_heart（米・女性）</option><option value="af_bella">af_bella（米・女性）</option><option value="af_nicole">af_nicole（米・女性）</option>
+    <option value="am_michael">am_michael（米・男性）</option><option value="am_fenrir">am_fenrir（米・男性）</option>
+    <option value="bf_emma">bf_emma（英・女性）</option><option value="bm_george">bm_george（英・男性）</option>
+  </select>
+  <label for="txt">チャンク（1行＝1チャンク）</label>
+  <textarea id="txt">My grandmother lives
+in a small town
+near the sea.
+Behind her house,
+there is a large garden.
+Every summer,
+I visit her
+and help her
+in the garden.</textarea>
+  <div class="row">
+    <button id="bOne" disabled>1チャンクだけ作る</button>
+    <button id="bAll" disabled>全部作る（計測）</button>
+  </div>
+</section>
+
+<section>
+  <h2>3. 結果</h2>
+  <div class="row">
+    <div><div class="st">生成の速さ（1未満なら読むより速く作れる）</div><div class="big" id="rtf">—</div></div>
+    <div><div class="st">1チャンクの平均生成時間</div><div class="big" id="avg">—</div></div>
+  </div>
+  <table><thead><tr><th>チャンク</th><th>生成</th><th>音声の長さ</th></tr></thead><tbody id="rows"></tbody></table>
+  <div class="row">
+    <button id="bPlay" disabled>続けて再生</button>
+    <button id="bBeat" disabled>ビートに乗せて再生</button>
+  </div>
+  <label for="bpm">ビートの速さ（BPM）</label>
+  <select id="bpm"><option>80</option><option selected>90</option><option>100</option><option>110</option></select>
+  <div class="st">「ビートに乗せて再生」は、チャンツ型リズムゲームのイメージです。各チャンクを拍の頭で鳴らし、長いチャンクには拍を多めに取ります。</div>
+</section>
+
+<section>
+  <h2>4. 送る</h2>
+  <button class="pri" id="bCopy">結果をコピー</button>
+  <pre id="report">（まだ結果がありません）</pre>
+</section>
+
+<script type="module">
+const $ = id => document.getElementById(id);
+const R = { env: {}, load: null, gens: [] };
+let tts = null, clips = [], AC = null;
+
+// 端末の情報
+R.env = { ua: navigator.userAgent, cores: navigator.hardwareConcurrency || '?', mem: navigator.deviceMemory || '?', webgpu: !!navigator.gpu, isolated: !!window.crossOriginIsolated };
+$('env').textContent = `WebGPU: ${R.env.webgpu ? '使える' : '使えない'} ／ CPU: ${R.env.cores}コア`;
+if (!R.env.webgpu) $('dev').querySelector('[value=webgpu]').disabled = true;
+
+function report() {
+  const L = R.load ? `読み込み: ${R.load.sec.toFixed(1)}秒（${R.load.device} / ${R.load.dtype}${R.load.cached ? '・2回目以降' : ''}）` : '読み込み: 未';
+  const g = R.gens.length ? R.gens.map(x => `${x.ms}ms / ${x.dur.toFixed(2)}s  ${x.text}`).join('\n') : '';
+  const tot = R.gens.reduce((a, x) => a + x.ms, 0) / 1000, dur = R.gens.reduce((a, x) => a + x.dur, 0);
+  $('report').textContent = [
+    `端末: ${R.env.ua}`, `CPU: ${R.env.cores}コア / メモリ: ${R.env.mem}GB / WebGPU: ${R.env.webgpu} / isolated: ${R.env.isolated}`,
+    L, R.gens.length ? `生成合計: ${tot.toFixed(2)}秒 / 音声合計: ${dur.toFixed(2)}秒 / 速さ比: ${(tot / dur).toFixed(2)}` : '', g
+  ].filter(Boolean).join('\n');
+}
+
+$('bLoad').onclick = async () => {
+  $('bLoad').disabled = true; $('lst').textContent = 'ライブラリを読み込み中…';
+  const device = $('dev').value, dtype = $('dtype').value, t0 = performance.now();
+  const files = {};
+  try {
+    const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.0/+esm');
+    tts = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
+      dtype, device,
+      progress_callback: p => {
+        if (p.status === 'progress' && p.total) {
+          files[p.file] = [p.loaded, p.total];
+          const l = Object.values(files).reduce((a, x) => a + x[0], 0), t = Object.values(files).reduce((a, x) => a + x[1], 0);
+          $('pbar').style.width = (l / t * 100).toFixed(1) + '%';
+          $('lst').textContent = `ダウンロード中 ${(l / 1e6).toFixed(1)} / ${(t / 1e6).toFixed(1)} MB`;
+        }
+      }
+    });
+    const sec = (performance.now() - t0) / 1000;
+    const dl = Object.values(files).reduce((a, x) => a + x[1], 0);
+    R.load = { sec, device, dtype, cached: dl < 1e6 };
+    $('pbar').style.width = '100%';
+    $('lst').innerHTML = `<span class="good">読み込み完了</span>：${sec.toFixed(1)}秒${dl ? `（${(dl / 1e6).toFixed(0)}MB）` : '（保存済みのデータを使用）'}`;
+    $('bOne').disabled = $('bAll').disabled = false;
+  } catch (e) {
+    $('lst').innerHTML = `<span class="bad">失敗：</span>${e.message || e}`; $('bLoad').disabled = false;
+  }
+  report();
+};
+
+const lines = () => $('txt').value.split('\n').map(s => s.trim()).filter(Boolean);
+async function gen(text) {
+  const t0 = performance.now();
+  const a = await tts.generate(text, { voice: $('voice').value });
+  const ms = Math.round(performance.now() - t0), dur = a.audio.length / a.sampling_rate;
+  R.gens.push({ text, ms, dur });
+  clips.push({ text, data: a.audio, sr: a.sampling_rate, dur });
+  const tr = document.createElement('tr'); tr.className = 'chunk';
+  tr.innerHTML = `<td>${text.replace(/</g, '&lt;')}</td><td class="n">${ms}ms</td><td class="n">${dur.toFixed(2)}秒</td>`;
+  $('rows').appendChild(tr); clips.at(-1).tr = tr;
+  const tot = R.gens.reduce((s, x) => s + x.ms, 0) / 1000, d = R.gens.reduce((s, x) => s + x.dur, 0);
+  const r = tot / d; $('rtf').innerHTML = `<span class="${r < 1 ? 'good' : 'bad'}">${r.toFixed(2)}</span>`;
+  $('avg').textContent = `${Math.round(tot * 1000 / R.gens.length)}ms`;
+  $('bPlay').disabled = $('bBeat').disabled = false;
+  report();
+}
+function reset() { R.gens = []; clips = []; $('rows').innerHTML = ''; }
+$('bOne').onclick = async () => { reset(); $('bOne').disabled = true; await gen(lines()[0]); $('bOne').disabled = false; };
+$('bAll').onclick = async () => { reset(); $('bAll').disabled = true; for (const t of lines()) await gen(t); $('bAll').disabled = false; };
+
+function ac() { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); return AC; }
+function buf(c) { const b = ac().createBuffer(1, c.data.length, c.sr); b.copyToChannel(c.data, 0); return b; }
+function play(c, at) { const s = ac().createBufferSource(); s.buffer = buf(c); s.connect(AC.destination); s.start(at);
+  setTimeout(() => { clips.forEach(x => x.tr.classList.remove('now')); c.tr.classList.add('now'); }, Math.max(0, (at - AC.currentTime) * 1000)); }
+function click(at, hi) { const o = AC.createOscillator(), g = AC.createGain(); o.frequency.value = hi ? 1400 : 900; g.gain.setValueAtTime(.12, at); g.gain.exponentialRampToValueAtTime(.001, at + .05); o.connect(g).connect(AC.destination); o.start(at); o.stop(at + .06); }
+
+// 続けて再生：チャンクを隙間なくつなぐ
+$('bPlay').onclick = () => { let t = ac().currentTime + .1; clips.forEach(c => { play(c, t); t += c.dur + .05; }); };
+// ビートに乗せて再生：各チャンクを拍の頭で鳴らす。長さに合わせて1〜4拍を使う
+$('bBeat').onclick = () => {
+  const beat = 60 / +$('bpm').value; let t = ac().currentTime + beat * 2;
+  for (let i = 0; i < 4; i++) click(AC.currentTime + .1 + i * beat / 2, i === 0);
+  clips.forEach(c => { const n = Math.min(4, Math.max(1, Math.ceil(c.dur / beat))); for (let k = 0; k < n; k++) click(t + k * beat, k === 0); play(c, t); t += n * beat; });
+};
+
+$('bCopy').onclick = async () => { report(); try { await navigator.clipboard.writeText($('report').textContent); $('bCopy').textContent = 'コピーしました'; } catch (e) { const r = document.createRange(); r.selectNodeContents($('report')); getSelection().removeAllRanges(); getSelection().addRange(r); $('bCopy').textContent = '選択しました。長押しでコピーしてください'; } };
+report();
+</script>
+</body>
+</html>
