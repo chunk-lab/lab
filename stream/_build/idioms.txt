@@ -1,0 +1,333 @@
+# 熟語セット（build_words.py が読む）。「レベル<TAB>英語<TAB>訳」。訳は12字まで。初級＝高校受験、中級＝共通テスト、上級＝難関大
+1	a lot of	たくさんの
+1	a few	少しの（数）
+1	a little	少しの（量）
+1	a cup of	カップ1杯の
+1	a kind of	一種の
+1	a piece of	1つの、1枚の
+1	all over the world	世界中で
+1	as soon as	〜するとすぐに
+1	at first	最初は
+1	at last	ついに
+1	at once	すぐに
+1	be able to	〜できる
+1	be afraid of	〜を恐れる
+1	be different from	〜と違う
+1	be famous for	〜で有名だ
+1	be good at	〜が得意だ
+1	be interested in	〜に興味がある
+1	be late for	〜に遅れる
+1	be proud of	〜を誇りに思う
+1	be ready for	〜の準備ができている
+1	because of	〜のために
+1	both A and B	AとBの両方
+1	by the way	ところで
+1	come back	戻る
+1	each other	お互い
+1	for example	たとえば
+1	for the first time	初めて
+1	get up	起きる
+1	get to	〜に着く
+1	get on	〜に乗る
+1	get off	〜を降りる
+1	give up	あきらめる
+1	go shopping	買い物に行く
+1	go to bed	寝る
+1	have to	〜しなければならない
+1	help A with B	AのBを手伝う
+1	in front of	〜の前に
+1	in the future	将来
+1	instead of	〜の代わりに
+1	look at	〜を見る
+1	look for	〜を探す
+1	look forward to	〜を楽しみに待つ
+1	look after	〜の世話をする
+1	more and more	ますます
+1	next to	〜の隣に
+1	not only A but also B	AだけでなくBも
+1	of course	もちろん
+1	one day	ある日
+1	pick up	拾い上げる、迎えに行く
+1	put on	〜を着る
+1	take off	〜を脱ぐ、離陸する
+1	take care of	〜の世話をする
+1	take a picture	写真を撮る
+1	thanks to	〜のおかげで
+1	these days	最近
+1	think of	〜のことを考える
+1	too A to B	Aすぎて Bできない
+1	try on	試着する
+1	turn on	（電気を）つける
+1	turn off	（電気を）消す
+1	wait for	〜を待つ
+1	wake up	目が覚める
+1	worry about	〜を心配する
+1	so A that B	とてもAなのでB
+1	a long time ago	ずっと昔
+1	after school	放課後
+1	all day	一日中
+1	at home	家で
+1	at that time	その時
+1	be born	生まれる
+1	be full of	〜でいっぱいだ
+1	be surprised at	〜に驚く
+1	be tired of	〜にうんざりする
+1	be made of	〜でできている
+1	belong to	〜に所属する
+1	between A and B	AとBの間に
+1	by bus	バスで
+1	come true	実現する
+1	do one's best	最善をつくす
+1	each of	〜のそれぞれ
+1	far from	〜から遠い
+1	find out	見つけ出す、知る
+1	get angry	怒る
+1	go out	外出する
+1	grow up	成長する
+1	hear from	〜から連絡がある
+1	hurry up	急ぐ
+1	in the morning	朝に
+1	keep in touch	連絡を取り合う
+1	laugh at	〜を笑う
+1	listen to	〜を聞く
+1	on time	時間どおりに
+1	out of	〜から外へ
+1	right now	今すぐ
+1	say hello to	〜によろしく
+1	stay with	〜の家に泊まる
+1	talk to	〜と話す
+1	the other day	先日
+1	write to	〜に手紙を書く
+1	why don't you	〜したらどう？
+2	according to	〜によると
+2	add to	〜を増やす
+2	agree with	〜に賛成する
+2	as a result	その結果
+2	as well as	〜だけでなく
+2	at least	少なくとも
+2	be aware of	〜に気づいている
+2	be based on	〜に基づいている
+2	be likely to	〜しそうだ
+2	be responsible for	〜に責任がある
+2	be supposed to	〜することになっている
+2	be used to	〜に慣れている
+2	used to	以前は〜した
+2	break down	故障する
+2	bring up	育てる
+2	call off	中止する
+2	carry out	実行する
+2	catch up with	〜に追いつく
+2	come up with	〜を思いつく
+2	compared with	〜と比べて
+2	consist of	〜から成る
+2	cope with	〜に対処する
+2	deal with	〜を扱う
+2	depend on	〜に頼る、次第だ
+2	due to	〜が原因で
+2	figure out	理解する、解く
+2	fill out	記入する
+2	focus on	〜に集中する
+2	get along with	〜とうまくやる
+2	get rid of	〜を取り除く
+2	go through	経験する
+2	hand in	提出する
+2	in addition	さらに
+2	in fact	実際は
+2	in order to	〜するために
+2	in spite of	〜にもかかわらず
+2	in general	一般に
+2	in charge of	〜を担当して
+2	in terms of	〜の点で
+2	keep up with	〜に遅れずについていく
+2	lead to	〜につながる
+2	look up	（辞書で）調べる
+2	look up to	〜を尊敬する
+2	look down on	〜を見下す
+2	make sense	意味が通る
+2	make up one's mind	決心する
+2	make use of	〜を利用する
+2	no longer	もはや〜ない
+2	on the other hand	一方で
+2	out of order	故障して
+2	pay attention to	〜に注意を払う
+2	point out	指摘する
+2	put off	延期する
+2	put up with	〜をがまんする
+2	rather than	〜よりむしろ
+2	refer to	〜に言及する
+2	rely on	〜に頼る
+2	result in	〜という結果になる
+2	result from	〜から生じる
+2	run out of	〜を使い果たす
+2	set up	設立する、準備する
+2	show up	現れる
+2	stand for	〜を表す
+2	take part in	〜に参加する
+2	take place	行われる
+2	take advantage of	〜を利用する
+2	turn down	断る
+2	turn out	〜だとわかる
+2	at all	まったく（〜ない）
+2	all of a sudden	突然
+2	as long as	〜する限り
+2	as far as	〜の範囲では
+2	be about to	まさに〜しようとする
+2	be capable of	〜する能力がある
+2	be concerned about	〜を心配している
+2	be familiar with	〜をよく知っている
+2	be filled with	〜で満たされている
+2	be involved in	〜に関わる
+2	be known for	〜で知られている
+2	be satisfied with	〜に満足している
+2	by chance	偶然に
+2	by oneself	ひとりで
+2	come across	偶然出会う
+2	come from	〜の出身だ
+2	contribute to	〜に貢献する
+2	devote A to B	AをBにささげる
+2	do without	〜なしで済ます
+2	even if	たとえ〜でも
+2	every other day	1日おきに
+2	for a while	しばらくの間
+2	for instance	たとえば
+2	get over	〜を乗り越える
+2	go on	続く
+2	had better	〜したほうがよい
+2	in advance	前もって
+2	in time	間に合って
+2	in other words	言いかえれば
+2	in the end	結局
+2	in case	〜の場合に備えて
+2	keep A from B	AにBさせない
+2	make a mistake	間違える
+2	make friends with	〜と友達になる
+2	more or less	多かれ少なかれ
+2	no matter what	何が〜しても
+2	on purpose	わざと
+2	once in a while	時々
+2	prefer A to B	BよりAを好む
+2	prevent A from B	AがBするのを防ぐ
+2	regard A as B	AをBとみなす
+2	so that	〜するために
+2	suffer from	〜に苦しむ
+2	take after	〜に似ている
+2	take over	引き継ぐ
+2	try to	〜しようとする
+2	up to	〜まで、〜次第
+2	what is more	さらに
+2	whether or not	〜かどうか
+2	work out	うまくいく、運動する
+2	would rather	むしろ〜したい
+2	a number of	いくつかの
+2	a variety of	さまざまな
+2	be eager to	しきりに〜したがる
+2	apply for	〜に申し込む
+2	ask for	〜を求める
+2	be in danger	危険な状態だ
+2	not A but B	AではなくB
+3	abide by	〜に従う
+3	account for	〜を説明する、占める
+3	at the expense of	〜を犠牲にして
+3	at the mercy of	〜のなすがままに
+3	be bound to	きっと〜する
+3	be entitled to	〜の権利がある
+3	be indifferent to	〜に無関心だ
+3	be liable to	〜しがちだ
+3	be subject to	〜を受けやすい
+3	be accustomed to	〜に慣れている
+3	be committed to	〜に専念している
+3	be reluctant to	〜したがらない
+3	bring about	引き起こす
+3	by no means	決して〜ない
+3	call for	〜を必要とする
+3	come to terms with	〜を受け入れる
+3	cut down on	〜を減らす
+3	do away with	〜を廃止する
+3	dispose of	〜を処分する
+3	fall short of	〜に達しない
+3	for the sake of	〜のために
+3	give in to	〜に屈する
+3	give rise to	〜を引き起こす
+3	go without saying	言うまでもない
+3	hold on to	〜にしがみつく
+3	in accordance with	〜に従って
+3	in favor of	〜に賛成して
+3	in the long run	長い目で見れば
+3	in vain	むだに
+3	in the wake of	〜の後で
+3	keep track of	〜を把握する
+3	lay off	解雇する
+3	leave out	省く
+3	live up to	〜に恥じない
+3	make do with	〜で間に合わせる
+3	make up for	〜を埋め合わせる
+3	needless to say	言うまでもなく
+3	on behalf of	〜を代表して
+3	on the verge of	今にも〜しそうで
+3	owing to	〜のために
+3	pass away	亡くなる
+3	play a role in	〜で役割を果たす
+3	put forward	提案する
+3	rule out	除外する
+3	see to it that	〜するよう取り計らう
+3	set aside	取っておく
+3	settle down	落ち着く
+3	stand out	目立つ
+3	stick to	〜を貫く
+3	take into account	考慮に入れる
+3	take for granted	当然と思う
+3	take on	引き受ける
+3	to the point	的を射た
+3	under way	進行中で
+3	with regard to	〜に関して
+3	when it comes to	〜のことになると
+3	at random	でたらめに
+3	be inclined to	〜したい気がする
+3	be obliged to	〜せざるを得ない
+3	bear in mind	心に留める
+3	break out	勃発する
+3	by and large	概して
+3	come into effect	施行される
+3	count on	〜を当てにする
+3	draw on	〜を利用する
+3	drop out of	〜を中退する
+3	fall back on	〜に頼る
+3	get across	理解させる
+3	get the better of	〜に勝つ
+3	go along with	〜に同意する
+3	hit on	〜を思いつく
+3	in the face of	〜に直面して
+3	in the light of	〜を考慮して
+3	irrespective of	〜に関係なく
+3	keep pace with	〜に遅れない
+3	lose sight of	〜を見失う
+3	make allowances for	〜を考慮する
+3	make the most of	〜を最大限活かす
+3	nothing but	〜にすぎない
+3	on the contrary	それどころか
+3	out of the question	問題外で
+3	pull off	やってのける
+3	run into	〜に偶然出会う
+3	see off	見送る
+3	shed light on	〜を解明する
+3	side with	〜の味方をする
+3	speak ill of	〜の悪口を言う
+3	stand by	〜を支持する
+3	take pains	骨を折る
+3	tell A from B	AとBを区別する
+3	think better of	考え直す
+3	to some extent	ある程度
+3	turn to	〜に頼る
+3	wear out	すり減らす、疲れさせる
+3	with a view to	〜する目的で
+3	yield to	〜に屈する
+3	at stake	危うくなって
+3	be absorbed in	〜に夢中だ
+3	be on the point of	まさに〜しようと
+3	cannot help doing	〜せずにいられない
+3	for good	永久に
+3	in the presence of	〜の面前で
+3	no sooner A than B	AするとすぐB
+3	not to mention	〜は言うまでもなく
+3	on account of	〜のために
+3	put an end to	〜を終わらせる

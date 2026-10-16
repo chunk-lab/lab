@@ -134,6 +134,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .arena .sp{flex:1;min-height:0}
 .zone{display:none}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;transition:opacity .2s}
+.side{position:relative}
+.side.wd{gap:16px}.side.wd .grid{column-gap:14px}
+.rep{position:absolute;left:50%;top:0;width:42px;height:42px;margin:-21px 0 0 -21px;border-radius:50%;border:2px solid var(--accent);background:var(--surface);color:var(--text);font-size:20px;line-height:1;z-index:5;box-shadow:0 2px 10px rgba(0,0,0,.45);padding:0;touch-action:manipulation}
+.rep:active{transform:scale(.9)}
+.rep.on{background:color-mix(in srgb,var(--accent) 35%,var(--surface))}
 .grid.off{opacity:.28}
 .grid.off .ch{pointer-events:none}
 .grid .ch{transition:opacity .3s,transform .3s,background .15s}
@@ -334,6 +339,28 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 /* 単語練習 */
 .wcard{border-style:dashed}
 .wnote{color:var(--muted);font-size:13px;margin:6px 2px}
+.wtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--bg2);padding:4px;border-radius:14px;border:1px solid var(--line);margin-top:6px}
+.wtabs button{padding:8px 4px;border-radius:10px;font-weight:800;font-size:14px;color:var(--muted)}
+.wtabs button.on{background:var(--surface2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
+.wtools{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.wtools:empty{display:none}
+.chip{padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:12px;font-weight:700;color:var(--muted)}
+.chip.on{border-color:var(--accent);color:var(--ink);background:color-mix(in srgb,var(--accent) 18%,var(--surface))}
+.chip.add{margin-left:auto;border-color:var(--accent);color:var(--accent)}
+.wsets.ul{grid-template-columns:1fr}
+.ulc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px;text-align:left;color:var(--ink)}
+.ulc .t{flex:1;min-width:0}.ulc .t b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ulc .t small{color:var(--muted);font-size:11px}
+.ulc .cat{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.ulempty{color:var(--muted);font-size:13px;line-height:1.7;padding:14px 4px}
+.sheet label{font-size:12px;color:var(--muted);font-weight:700;display:flex;flex-direction:column;gap:4px}
+.sheet input,.sheet select,.sheet textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;box-sizing:border-box}
+.sheet textarea{min-height:150px;font-family:var(--en);font-size:15px;line-height:1.5}
+.sheet .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sheet .hint{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
+.sheet .hint code{background:var(--bg2);padding:1px 5px;border-radius:5px;font-family:var(--en)}
+.sheet .msg{font-size:12px;line-height:1.6;margin:0;color:var(--muted)}.sheet .msg.ng{color:var(--bad)}
+.usets{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:6px}
 .wsets{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;align-content:start;padding:6px 2px 12px}
 .wset{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink)}
 .wset b{font-family:var(--disp);font-size:22px;color:var(--accent);font-weight:400;line-height:1}
@@ -394,7 +421,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 <section class="scr" id="sWords" hidden>
   <div class="bar"><button class="icon-btn" data-back="home" aria-label="戻る"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="wTitle">単語練習</h2></div>
+  <div class="wtabs" id="wtabs"></div>
   <p class="wnote" id="wNote"></p>
+  <div class="wtools" id="wtools"></div>
   <div class="wsets" id="wsets"></div>
 </section>
 <section class="scr" id="sDetail" hidden>
@@ -435,7 +464,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   <div class="arena" id="arena">
     <div class="sp"></div>
     <div class="band">
-      <div class="side" id="side"><div class="grid up" id="g0"></div><div class="grid dn" id="g1"></div></div>
+      <div class="side" id="side"><div class="grid up" id="g0"></div><div class="grid dn" id="g1"></div><button class="rep" id="rep" aria-label="もう一度聞く" hidden>🔊</button></div>
       <div class="field" id="field"><div class="flow"></div><div class="dz"></div><div class="zone" id="zone"></div><div class="seam" id="seam"></div><div id="layer"></div><div class="fx" id="fx"></div></div>
     </div>
     <div class="txt" id="txt"><div class="para" id="para"></div></div>
@@ -474,7 +503,7 @@ const STAGES=[
  {id:2,name:"チャンクキャッチ",desc:"聞こえたチャンク（意味のかたまり）の意味を選ぶ",note:"チャンクの意味をタップ！"},
  {id:3,name:"チャンクパズル",desc:"上の日本語に合うように、欠けた1語を埋める",note:"日本語に合う1語で穴を埋めよう"},
  {id:4,name:"ロングストリーム",desc:"チャンクを順番につないで長文を完成させる",note:"順番につないで長文を完成！ 光っている側の4択で答えよう"}];
-const POSJ={n:"名",v:"動",a:"形",r:"副"};
+const POSJ={n:"名",v:"動",a:"形",r:"副",ph:"熟"};
 const SKEY="chunkstream.v1";
 let SV={best:{},seen:{},set:{nav:"girl",voice:1,rate:1,se:1,bgm:1,jp4:1},mode:"ta",lv:1};
 try{const s=JSON.parse(localStorage.getItem(SKEY)||"null");if(s){SV={...SV,...s,set:{...SV.set,...(s.set||{})}}}}catch(e){}
@@ -574,16 +603,97 @@ function renderHome(){
     return `<button class="pcard" style="--lc:${LV[p.lv].col}" data-id="${p.id}"><span class="tg">${esc(p.tag)}</span><span class="t">${esc(p.title)}</span><span class="j">${esc(p.ja)}</span>
     <span class="meta"><span class="en">${wc} words</span><span>${p.chunks.length}チャンク</span><span class="sp"></span><span class="steps4">${[1,2,3,4].map(s=>`<i class="s${starsOf(p.id,s)}"></i>`).join("")}</span></span></button>`}).join("");
   const wn=WORDS[SV.lv].length,ws=WSET[SV.lv];
-  $("plist").insertAdjacentHTML("afterbegin",`<button class="pcard wcard" style="--lc:${LV[SV.lv].col}" id="btnWords"><span class="tg">単語だけ練習</span><span class="t">${LV[SV.lv].name}の単語 ${wn}語</span><span class="j">${ws}語ずつ・${Math.ceil(wn/ws)}セット　聞いて、意味を選ぶ</span></button>`);
+  $("plist").insertAdjacentHTML("afterbegin",`<button class="pcard wcard" style="--lc:${LV[SV.lv].col}" id="btnWords"><span class="tg">単語・熟語・単語集</span><span class="t">${LV[SV.lv].name}の単語 ${wn}語</span><span class="j">${ws}語ずつ・${Math.ceil(wn/ws)}セット　聞いて、意味を選ぶ</span></button>`);
   $("btnWords").onclick=()=>{SE.tap();renderWords();show("sWords")};
   $("plist").querySelectorAll(".pcard[data-id]").forEach(b=>b.onclick=()=>{SE.tap();CUR=P(b.dataset.id);renderDetail();show("sDetail")});
 }
 function wordSet(lv,k){const n=WSET[lv],ws=WORDS[lv].slice(k*n,k*n+n);return {id:`w${lv}-${k+1}`,lv,word:true,title:`${LV[lv].name}の単語 セット${k+1}`,ja:`${ws[0][0]} 〜 ${ws[ws.length-1][0]}`,tag:`${LV[lv].name}・単語練習`,words:ws,chunks:[]}}
-function renderWords(){const lv=SV.lv,n=WSET[lv],m=Math.ceil(WORDS[lv].length/n);
-  $("wTitle").textContent=`${LV[lv].name}の単語練習`;$("wNote").textContent=`よく使われる順に${n}語ずつ。読み上げを聞いて、意味を選ぶ（単語ダッシュ）。`;
-  $("wsets").innerHTML=Array.from({length:m},(_,k)=>{const id=`w${lv}-${k+1}`,st=starsOf(id,1),b=rec(id,1,"ta");
-    return `<button class="wset" data-k="${k}"><b>${k+1}</b><span class="ws">${esc(WORDS[lv][k*n][0])}…</span><span class="st">${"★".repeat(st)}<i>${"★".repeat(3-st)}</i></span>${b?`<small>${b.time.toFixed(1)}s</small>`:""}</button>`}).join("");
-  $("wsets").querySelectorAll(".wset").forEach(b=>b.onclick=()=>{SE.tap();CUR=wordSet(lv,+b.dataset.k);startRun(1)})}
+/* ===== 単語練習：単語（直した訳）・熟語・単語集（自分で作る／みんなの） ===== */
+let WJA=null;function wja(pos){if(!WJA){WJA={};[1,2,3].forEach(l=>{WORDS[l].forEach(w=>(WJA[w[1]]=WJA[w[1]]||[]).push(w[2]));IDIOMS[l].forEach(w=>(WJA.ph=WJA.ph||[]).push(w[2]))})}return pos==="x"?WJA.n.concat(WJA.v):(WJA[pos]||WJA.n)}
+function wordSet(lv,k,kind){const src=kind==="i"?IDIOMS:WORDS,n=WSET[lv],ws=src[lv].slice(k*n,k*n+n),nm=kind==="i"?"熟語":"単語";
+  return {id:`${kind==="i"?"i":"w"}${lv}-${k+1}`,lv,word:true,title:`${LV[lv].name}の${nm} セット${k+1}`,ja:`${ws[0][0]} 〜 ${ws[ws.length-1][0]}`,tag:`${LV[lv].name}・${nm}練習`,words:ws,chunks:[]}}
+const ULKEY="cs-wordlists",USET=20,UL_DOC_MAX=250000;
+function myLists(){try{return JSON.parse(localStorage.getItem(ULKEY)||"[]")}catch(e){return []}}
+function saveLists(l){try{localStorage.setItem(ULKEY,JSON.stringify(l));return true}catch(e){return false}}
+const lineToW=l=>{const c=String(l).split("\t");return [c[0],c[2]||"x",c[1]||""]};
+let WDB=null,WME=null,WADMIN=false,SHL=null,UCAT="";
+/* 共有：チャンクチャンクの「みんなの短文」と同じしくみ（共有データベースの wordlists に 1単語集＝1ドキュメント）。使えない環境では出ない */
+async function initWDB(){try{if(!window.claude||!claude.use)return;WDB=await claude.use("db");if(!WDB)return;
+  const u=await claude.use("user");if(u){try{WADMIN=!!(await u.canEdit())}catch(e){}try{WME=await u.id()}catch(e){}}
+  await loadSharedLists();if(!$("sWords").hidden&&SV.wtab==="u")renderWords()}catch(e){WDB=null}}
+async function loadSharedLists(){if(!WDB)return;try{const sn=await WDB.collection("wordlists").get();SHL=sn.docs.map(d=>({...d.data(),id:d.id}))}catch(e){SHL=SHL||[]}}
+function allLists(){const mine=myLists(),sid=new Set(mine.map(l=>l.sid).filter(Boolean));
+  return mine.map(l=>({...l,mine:true})).concat((SHL||[]).filter(d=>!sid.has(d.id)).map(d=>({...d,shared:true,sid:d.id})))}
+function parseWordLines(text){const ok=[],errs=[],long=[],seen=new Set();
+  String(text).replace(/\r/g,"").split("\n").forEach((raw,i)=>{const l=raw.trim();if(!l||l.startsWith("#"))return;
+    let m=null;for(const re of[/\t/,/\s##\s/,/\s*[=＝]\s*/,/\s*,\s*/,/[ 　]+(?=[^\x00-\x7f])/]){if(re.test(l)){const k=l.search(re),mm=l.match(re)[0];m=[l.slice(0,k),l.slice(k+mm.length).split(/\t|\s##\s/)[0]];break}}
+    const cl=t=>(t||"").trim().replace(/^"(.*)"$/,"$1").trim();const en=m?cl(m[0]):"",ja=m?cl(m[1]):"";
+    if(!en||!ja||!/[a-zA-Z]/.test(en)||/[^\x00-\x7f’‘“”–—]/.test(en)){errs.push(`${i+1}行目「${l.slice(0,24)}」`);return}
+    const k=en.toLowerCase();if(seen.has(k))return;seen.add(k);if(ja.length>12)long.push(en);ok.push(en.replace(/\s+/g," ")+"\t"+ja)});
+  return {ok,errs,long}}
+function ulPlay(L,k){const ws=L.lines.map(lineToW),a=k*USET,part=ws.slice(a,a+USET);
+  return {id:`u-${L.sid||L.lid}-${k+1}`,lv:+L.lv||1,word:true,title:`${L.title}（${a+1}〜${a+part.length}）`,ja:`${part[0][0]} 〜 ${part[part.length-1][0]}`,tag:`${L.cat||"単語集"}・単語練習`,words:part,chunks:[]}}
+function renderWords(){const t=SV.wtab||"w",lv=SV.lv;
+  $("wtabs").innerHTML=[["w","単語"],["i","熟語"],["u","単語集"]].map(([k,n])=>`<button data-t="${k}" class="${k===t?"on":""}">${n}</button>`).join("");
+  $("wtabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{SE.tap();SV.wtab=b.dataset.t;save();renderWords()});
+  $("wtools").innerHTML="";$("wsets").classList.toggle("ul",t==="u");
+  if(t==="u"){renderUL();return}
+  const src=t==="i"?IDIOMS:WORDS,n=WSET[lv],m=Math.ceil(src[lv].length/n),nm=t==="i"?"熟語":"単語";
+  $("wTitle").textContent=`${LV[lv].name}の${nm}練習`;
+  $("wNote").textContent=t==="i"?`${LV[lv].name}によく出る熟語を${n}個ずつ。読み上げを聞いて、意味を選ぶ。`:`よく使われる順に${n}語ずつ。読み上げを聞いて、意味を選ぶ（単語ダッシュ）。`;
+  $("wsets").innerHTML=Array.from({length:m},(_,k)=>{const id=`${t==="i"?"i":"w"}${lv}-${k+1}`,st=starsOf(id,1),b=rec(id,1,"ta");
+    return `<button class="wset" data-k="${k}"><b>${k+1}</b><span class="ws">${esc(src[lv][k*n][0])}…</span><span class="st">${"★".repeat(st)}<i>${"★".repeat(3-st)}</i></span>${b?`<small>${b.time.toFixed(1)}s</small>`:""}</button>`}).join("");
+  $("wsets").querySelectorAll(".wset").forEach(b=>b.onclick=()=>{SE.tap();CUR=wordSet(lv,+b.dataset.k,t);startRun(1)})}
+function renderUL(){const all=allLists(),cats=[...new Set(all.map(l=>l.cat).filter(Boolean))];if(UCAT&&!cats.includes(UCAT))UCAT="";
+  $("wTitle").textContent="単語集";
+  $("wNote").textContent=WDB?"自分で作った単語集と、みんなが共有した単語集（🌐）。カテゴリーで絞り込めます。":"自分で作った単語集。英語と訳を1行ずつ貼り付けるか、ファイルから読み込めます。";
+  $("wtools").innerHTML=[["","すべて"],...cats.map(c=>[c,c])].map(([c,n])=>`<button class="chip ${c===UCAT?"on":""}" data-c="${esc(c)}">${esc(n)}</button>`).join("")+`<button class="chip add" id="ulAdd">＋ 作る・読み込む</button>`;
+  $("wtools").querySelectorAll(".chip[data-c]").forEach(b=>b.onclick=()=>{UCAT=b.dataset.c;renderUL()});$("ulAdd").onclick=()=>ulEdit();
+  const ls=all.filter(l=>!UCAT||l.cat===UCAT);
+  $("wsets").innerHTML=ls.length?ls.map((l,i)=>`<button class="ulc" data-i="${i}"><span class="t"><b>${l.shared?"🌐 ":""}${esc(l.title||"無題")}</b><small>${l.lines.length}語${l.lv?"・"+LV[l.lv].name:""}${l.mine&&l.sid?"・共有中":""}</small></span>${l.cat?`<span class="cat">${esc(l.cat)}</span>`:""}</button>`).join("")
+    :`<div class="ulempty">まだ単語集がありません。<br>「＋ 作る・読み込む」から、学校の単語テストの範囲や、市販の単語帳のページなどを入れてみよう。</div>`;
+  $("wsets").querySelectorAll(".ulc").forEach(b=>b.onclick=()=>{SE.tap();ulOpen(ls[+b.dataset.i])})}
+function ulOpen(L){const n=Math.ceil(L.lines.length/USET),own=L.mine,canDrop=L.sid&&WDB&&(own||(L.by&&L.by===WME)||WADMIN);
+  overlay(`<div class="sheet"><h3>${esc(L.title||"無題")}</h3><p class="hint">${L.lines.length}語${L.cat?"・"+esc(L.cat):""}${L.lv?"・"+LV[L.lv].name:""}${L.shared?"・みんなの単語集":""}</p>
+    <div class="usets">${Array.from({length:n},(_,k)=>{const id=`u-${L.sid||L.lid}-${k+1}`,st=starsOf(id,1);return `<button class="wset" data-k="${k}"><b>${k+1}</b><span class="ws">${esc(L.lines[k*USET].split("\t")[0])}…</span><span class="st">${"★".repeat(st)}<i>${"★".repeat(3-st)}</i></span></button>`}).join("")}</div>
+    ${own?`<button class="sbtn" id="uEd">編集する</button>`:""}${own&&WDB?`<button class="sbtn" id="uSh">${L.sid?"共有を今の内容で上書きする":"🌐 みんなに共有する"}</button>`:""}
+    ${canDrop?`<button class="sbtn" id="uDr">共有を取り下げる</button>`:""}${!own?`<button class="sbtn" id="uCp">自分の単語集にコピー</button>`:""}
+    ${own?`<button class="sbtn" id="uDel" style="color:var(--bad)">この単語集を消す</button>`:""}<button class="sbtn" id="uX">閉じる</button></div>`,b=>{
+    b.querySelectorAll(".wset").forEach(x=>x.onclick=()=>{SE.tap();closeOv();CUR=ulPlay(L,+x.dataset.k);startRun(1)});
+    b.querySelector("#uX").onclick=closeOv;
+    const q=id=>b.querySelector(id);
+    q("#uEd")&&(q("#uEd").onclick=()=>ulEdit(L));
+    q("#uSh")&&(q("#uSh").onclick=()=>ulShare(L));
+    q("#uDr")&&(q("#uDr").onclick=async()=>{const x=q("#uDr");if(!x.dataset.c){x.dataset.c=1;x.textContent="もう一度押すと取り下げ（みんなの画面から消えます）";return}
+      try{await WDB.doc("wordlists/"+L.sid).delete();SHL=(SHL||[]).filter(d=>d.id!==L.sid);if(own){const l=myLists();const m=l.find(z=>z.lid===L.lid);if(m){delete m.sid;saveLists(l)}}toast("取り下げました");closeOv();renderUL()}catch(e){toast("取り下げられませんでした（権限か通信の問題）")}});
+    q("#uCp")&&(q("#uCp").onclick=()=>{const l=myLists();l.unshift({lid:"l"+Date.now().toString(36),title:L.title,cat:L.cat||"",lv:L.lv||0,lines:L.lines.slice(),at:Date.now()});saveLists(l)?toast("自分の単語集にコピーしました"):toast("保存できませんでした");closeOv();renderUL()});
+    q("#uDel")&&(q("#uDel").onclick=()=>{const x=q("#uDel");if(!x.dataset.c){x.dataset.c=1;x.textContent=L.sid?"もう一度押すと消す（共有はそのまま残ります）":"もう一度押すと消す";return}
+      saveLists(myLists().filter(z=>z.lid!==L.lid));toast("消しました");closeOv();renderUL()})})}
+async function ulShare(L){if(!WDB)return;const doc={title:L.title,cat:L.cat||"",lv:+L.lv||0,lines:L.lines,by:WME||"",at:Date.now()};
+  if(new TextEncoder().encode(JSON.stringify(doc)).length>UL_DOC_MAX){toast("大きすぎて共有できません。単語集を分けてください");return}
+  const id=L.sid||("w"+Date.now().toString(36)+Math.random().toString(36).slice(2,6));
+  try{await WDB.doc("wordlists/"+id).set(doc);const l=myLists(),m=l.find(z=>z.lid===L.lid);if(m){m.sid=id;saveLists(l)}
+    SHL=(SHL||[]).filter(d=>d.id!==id).concat([{...doc,id}]);toast("みんなの単語集に送りました");closeOv();renderUL()}
+  catch(e){toast(e&&e.code==="quota_exceeded"?"共有の保存数がいっぱいです。不要な単語集を取り下げてください":"送れませんでした（共有の権限がないか、通信の問題）")}}
+const UCATS=["学校の単語テスト","英検","受験","TOEIC","熟語","会話","その他"];
+function ulEdit(L){const cats=[...new Set(UCATS.concat(allLists().map(l=>l.cat).filter(Boolean)))];
+  overlay(`<div class="sheet wide"><h3>${L?"単語集を編集":"単語集を作る・読み込む"}</h3>
+    <label>名前<input id="uT" maxlength="40" placeholder="例：中2 2学期 単語テスト" value="${esc(L?L.title:"")}"></label>
+    <div class="row2"><label>カテゴリー<input id="uC" list="ucats" maxlength="20" placeholder="例：英検" value="${esc(L?L.cat||"":"")}"><datalist id="ucats">${cats.map(c=>`<option value="${esc(c)}">`).join("")}</datalist></label>
+    <label>レベル<select id="uL"><option value="0">なし</option>${[1,2,3].map(l=>`<option value="${l}" ${L&&+L.lv===l?"selected":""}>${LV[l].name}</option>`).join("")}</select></label></div>
+    <label>英語と訳（1行に1つ）<textarea id="uX" spellcheck="false" placeholder="apple = りんご&#10;look forward to = 〜を楽しみに待つ&#10;improve	向上させる">${L?esc(L.lines.map(x=>x.replace("\t"," = ")).join("\n")):""}</textarea></label>
+    <p class="hint">区切りは <code>=</code>・タブ・カンマ・<code> ## </code> のどれでもOK（Excelやスプレッドシートからのコピー、CSVファイルもそのまま）。熟語もそのまま書けます。訳は12字までがおすすめ（長いと文字が小さくなります）。「#」で始まる行はメモ。</p>
+    <label>ファイルから読み込む（.txt / .csv / .tsv）<input type="file" id="uF" accept=".txt,.csv,.tsv,text/plain,text/csv"></label>
+    <p class="msg" id="uM"></p><button class="sbtn pri" id="uS">保存する</button><button class="sbtn" id="uN">やめる</button></div>`,b=>{
+    const q=id=>b.querySelector(id),chk=()=>{const r=parseWordLines(q("#uX").value),m=q("#uM");
+      m.className="msg"+(r.errs.length?" ng":"");m.innerHTML=`${r.ok.length}語${r.ok.length<4?"（4語以上必要）":""}${r.long.length?`・訳が長い：${esc(r.long.slice(0,5).join(", "))}${r.long.length>5?" ほか":""}`:""}${r.errs.length?`<br>読めない行（飛ばします）：${esc(r.errs.slice(0,3).join("、"))}${r.errs.length>3?` ほか${r.errs.length-3}行`:""}`:""}`;return r};
+    q("#uX").oninput=chk;if(L)chk();
+    q("#uF").onchange=async e=>{const f=e.target.files[0];if(!f)return;const t=await f.text();q("#uX").value=(q("#uX").value.trim()?q("#uX").value.trim()+"\n":"")+t;if(!q("#uT").value)q("#uT").value=f.name.replace(/\.[^.]+$/,"").slice(0,40);chk()};
+    q("#uN").onclick=closeOv;
+    q("#uS").onclick=()=>{const r=chk();if(r.ok.length<4){SE.ng();toast("4語以上入れてください");return}
+      const l=myLists(),o={lid:L?L.lid:"l"+Date.now().toString(36),title:q("#uT").value.trim()||"無題の単語集",cat:q("#uC").value.trim(),lv:+q("#uL").value,lines:r.ok,at:Date.now()};
+      if(L&&L.sid)o.sid=L.sid;const i=l.findIndex(z=>z.lid===o.lid);i>=0?l.splice(i,1,o):l.unshift(o);
+      if(!saveLists(l)){toast("保存できませんでした（端末の容量）");return}SE.tap();toast(L&&L.sid?"保存しました（共有は「上書き」で反映）":"保存しました");closeOv();UCAT="";renderUL()}})}
 function renderDetail(){
   const p=CUR;$("dTag").textContent=`${LV[p.lv].name}・${p.tag.split("・")[1]||""}`;$("dTitle").textContent=p.title;$("dJa").textContent=p.ja;
   const rb=(SV.best[p.id]||{}).run;$("dRun").innerHTML=rb?`通しのベスト <b>${rb.time.toFixed(1)}s</b>　ランク ${rb.rank}`:"4段階を続けて遊びます。途中の段から始めることもできます";
@@ -707,7 +817,7 @@ document.addEventListener("fullscreenchange",()=>{document.documentElement.class
 
 function mkCard(it){
   const e=document.createElement("div");e.className="card l"+it.lane;const p=G.p;
-  if(it.kind===1)e.innerHTML=`<span class="pos ${it.pos}">${POSJ[it.pos]}</span>${esc(it.en)}`;
+  if(it.kind===1)e.innerHTML=`${POSJ[it.pos]?`<span class="pos ${it.pos}">${POSJ[it.pos]}</span>`:""}${esc(it.en)}`;
   else if(it.kind===2){e.textContent=it.en}
   else{e.innerHTML=chunkHTML(p.chunks[it.ci],it.gs,it.ge)}
   e.insertAdjacentHTML("beforeend",'<span class="ft"></span>');
@@ -779,8 +889,7 @@ function readPump(){
 function readTick(){
   if(G.rqCur&&!isFront(G.rqCur)){G.rqCur.el.classList.remove("spk");G.rqCur=null}
   if(G.st===1){ // 単語：持ち時間の半分でもう一度、残りわずかになったら何回か読み直す
-    const lim=limitOf();G.lanes.forEach(L=>{const f=L.q[0];if(!f||f.v==null)return;const k=f.rk||0,th=[.5,.72,.84,.93][k];if(th!=null&&f.age/lim>=th){f.rk=k+1;readEnq(f)}});
-    readPump();return}
+    readPump();return}   /* 読み直しは🔊ボタンを押したときだけ */
   if(!G.rqCur&&!G.rq.length){const fr=G.lanes.map(L=>L.q[0]).filter(f=>f&&f.x<W-20);
     if(fr.length&&G.t-G.rqLast>2.2){fr.sort((a,b)=>(a.heard??-1)-(b.heard??-1));readEnq(fr[0])}}
   else readPump();
@@ -792,6 +901,12 @@ function buildGrids(){[0,1].forEach(l=>{const g=$("g"+l);g.innerHTML=[0,1,2,3].m
 // 長文の段：上の4択の下段＋下の4択の上段＝真ん中の4つ
 function slotAt(l,i){if(G.st>=2){const k=l===0?(i>=2?i-2:-1):(i<2?i+2:-1);return k<0?undefined:(G.s4?G.s4[k]:null)}const L=G.lanes[l];return L.slots?L.slots[i]:null}
 function fitCh(b,t){t.style.fontSize="";let f=parseFloat(getComputedStyle(t).fontSize),n=0;while(n++<12&&b.scrollHeight>b.clientHeight+1&&f>8.5){f-=.6;t.style.fontSize=f+"px"}}   
+/* 🔊：単語のステージだけ。押すと、時間の残りが少ない順に先頭の単語を読み直す。答えた直後0.3秒は反応しない（指が流れて押すのを防ぐ） */
+let LASTCH=0;
+function posRep(){const r=$("rep"),sd=$("side");if(!r)return;const on=!!(G&&G.st===1);r.hidden=!on;sd.classList.toggle("wd",on);if(!on)return;const g=$("g0"),g1=$("g1");r.style.top=((g.offsetTop+g.offsetHeight+g1.offsetTop)/2)+"px"}
+function repTap(e){e.preventDefault();e.stopPropagation();if(!G||G.st!==1||!G.started||G.over||PAUSED)return;if(performance.now()-LASTCH<300)return;
+  const lim=limitOf(),fr=G.lanes.map(L=>L.q[0]).filter(f=>f&&f.v!=null).sort((a,b)=>b.age-a.age);if(!fr.length)return;
+  fr.slice().reverse().forEach(f=>{G.rq=G.rq.filter(x=>x!==f);readEnq(f,true)});const r=$("rep");r.classList.add("on");setTimeout(()=>r.classList.remove("on"),400)}
 function renderGrid(l){
   const g=$("g"+l),en=G.st>=3,st4=G.st>=2,cl=G.st===1?l:G.st===4?(G.cq[0]?G.cq[0].lane:0):0;g.classList.toggle("c0",cl===0);g.classList.toggle("c1",cl===1);g.classList.toggle("off",st4?!G.s4:!G.lanes[l].slots);g.classList.toggle("m4",st4);
   [...g.children].forEach((b,i)=>{const s=slotAt(l,i),tx=s?s.text:"";b.classList.toggle("hide",s===undefined);const el=b.querySelector(".tx");
@@ -812,8 +927,9 @@ function laneFront(L){
 function distract(f,ex,old){
   const p=G.p,bad=t=>ex.has(t)||(old&&old.has(t))||(G.prev&&G.st===2&&G.prev.has(t));const out=[];
   if(G.st===1){
-    shuf(p.words.filter(w=>w[1]===f.pos).map(w=>w[2])).forEach(t=>{if(out.length<2&&!bad(t)&&!out.includes(t))out.push(t)});
-    shuf(POOLJA[f.pos]||POOLJA.n).forEach(t=>{if(out.length<3&&!bad(t)&&!out.includes(t))out.push(t)});
+    const own=f.pos==="x"?3:2;shuf(p.words.filter(w=>w[0]!==f.en&&(w[1]===f.pos||f.pos==="x")).map(w=>w[2])).forEach(t=>{if(out.length<own&&!bad(t)&&!out.includes(t))out.push(t)});
+    shuf(wja(f.pos)).forEach(t=>{if(out.length<3&&!bad(t)&&!out.includes(t))out.push(t)});
+    shuf(p.words.map(w=>w[2])).forEach(t=>{if(out.length<3&&t!==f.ans&&!ex.has(t)&&!out.includes(t))out.push(t)});
   }else{
     const pool=shuf(p.chunks.map(c=>c.ja)).concat(shuf(PASSAGES.filter(q=>q!==p&&q.lv===p.lv).flatMap(q=>q.chunks.map(c=>c.ja))));
     pool.forEach(t=>{if(out.length<3&&!bad(t)&&!out.includes(t))out.push(t)});
@@ -1033,6 +1149,9 @@ function finalResult(){
   if(p.word){$("rRead").remove();$("rBack").onclick=()=>{SE.tap();bgmStart(84,"menu");renderWords();show("sWords")}}
   cancelAnimationFrame(RAF);G=null;RUN=null;show("sResult");
 }
+{const L0=layout;layout=function(){L0.apply(this,arguments);try{posRep()}catch(e){}};const R0=renderGrid;renderGrid=function(l){R0.apply(this,arguments);if(l===1)try{posRep()}catch(e){}}}
+$("rep").addEventListener("pointerdown",repTap);$("side").addEventListener("pointerdown",e=>{if(e.target.closest(".ch"))LASTCH=performance.now()},true);
+initWDB();
 window.__G=()=>G;
 </script>
 
