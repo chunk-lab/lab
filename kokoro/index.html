@@ -95,6 +95,14 @@ in the garden.</textarea>
   <pre id="report">（まだ結果がありません）</pre>
 </section>
 
+<script>
+// 全コア化：仕掛け（coi-sw.js）を入れて1回だけ再読み込み
+if (!window.crossOriginIsolated && 'serviceWorker' in navigator && window.isSecureContext) {
+  navigator.serviceWorker.register('./coi-sw.js').then(() => navigator.serviceWorker.ready).then(() => {
+    try { if (!sessionStorage.getItem('coi')) { sessionStorage.setItem('coi', '1'); location.reload(); } } catch (e) {}
+  }).catch(() => {});
+}
+</script>
 <script type="module">
 const $ = id => document.getElementById(id);
 const R = { env: {}, load: null, gens: [] };
@@ -102,8 +110,9 @@ let tts = null, clips = [], AC = null;
 
 // 端末の情報
 R.env = { ua: navigator.userAgent, cores: navigator.hardwareConcurrency || '?', mem: navigator.deviceMemory || '?', webgpu: !!navigator.gpu, isolated: !!window.crossOriginIsolated };
-$('env').textContent = `WebGPU: ${R.env.webgpu ? '使える' : '使えない'} ／ CPU: ${R.env.cores}コア`;
+$('env').textContent = `WebGPU: ${R.env.webgpu ? '使える' : '使えない'} ／ CPU: ${R.env.cores}コア ／ 全コア化: ${R.env.isolated ? 'オン' : 'オフ'}`;
 if (!R.env.webgpu) $('dev').querySelector('[value=webgpu]').disabled = true;
+else { $('dev').value = 'webgpu'; $('dtype').value = 'fp32'; }
 
 function report() {
   const L = R.load ? `読み込み: ${R.load.sec.toFixed(1)}秒（${R.load.device} / ${R.load.dtype}${R.load.cached ? '・2回目以降' : ''}）` : '読み込み: 未';
@@ -135,7 +144,7 @@ W.onmessage = e => {
     R.load = { sec, device: $('dev').value, dtype: $('dtype').value, cached: dl < 1e6 };
     $('pbar').style.width = '100%';
     $('lst').innerHTML = `<span class="good">読み込み完了</span>：${sec.toFixed(1)}秒${dl ? `（${(dl / 1e6).toFixed(0)}MB）` : '（保存済みのデータを使用）'}`;
-    $('bOne').disabled = $('bAll').disabled = false; report();
+    $('bOne').disabled = $('bAll').disabled = false; $('bLoad').disabled = false; $('bLoad').textContent = '設定を変えて読み直す'; report();
   }
   else if (m.type === 'audio' || m.type === 'error') {
     const w = waiters[m.id];
