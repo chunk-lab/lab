@@ -647,17 +647,20 @@ const PAR={1:1.7,2:2.5,3:2.5,4:2.3};   // 1問あたりの目標秒数
 const MAXVIS={1:4,2:4,3:3};
 let W=700,H=200,XJ=140;
 
+// 穴の位置と選択肢を1つ選ぶ（穴うめの候補から。作者が決めた誤答があればそれを優先して混ぜる）
+function gapPick(c){
+  const auth=c.s3.filter(x=>Array.isArray(x[1]));const pick=(auth.length&&Math.random()<.45)?auth[rnd(auth.length)]:c.s3[rnd(c.s3.length)];
+  const [ti,src]=pick;const ans=c.tk[ti][1];let ds;
+  if(Array.isArray(src))ds=src.slice(0,3);else{const own=c.tk.map(t=>t[1].toLowerCase());ds=shuf(POOL[src].filter(w=>w!==ans.toLowerCase()&&!own.includes(w))).slice(0,3)}
+  const up=/^[A-Z]/.test(ans)&&ans!=="I";ds=ds.map(d=>up?cap(d):d);
+  return {gs:ti,ge:ti+1,ans,opts:shuf([ans,...ds])}}
 function buildItems(st,p){
   if(st===1)return shuf(p.words).map(w=>({kind:1,en:w[0],pos:w[1],ans:w[2]}));
   const n=Math.min(p.lv===1?14:16,p.chunks.length);
   if(st===2)return shuf(p.chunks.map((c,i)=>i)).slice(0,n).map(i=>({kind:2,ci:i,en:plain(p.chunks[i]),ans:p.chunks[i].ja}));
-  if(st===3)return shuf(p.chunks.map((c,i)=>i).filter(i=>p.chunks[i].s3.length)).slice(0,n).map(i=>{const c=p.chunks[i];
-      const auth=c.s3.filter(x=>Array.isArray(x[1]));const pick=(auth.length&&Math.random()<.45)?auth[rnd(auth.length)]:c.s3[rnd(c.s3.length)];
-      const [ti,src]=pick;const ans=c.tk[ti][1];let ds;
-      if(Array.isArray(src))ds=src.slice(0,3);else{const own=c.tk.map(t=>t[1].toLowerCase());ds=shuf(POOL[src].filter(w=>w!==ans.toLowerCase()&&!own.includes(w))).slice(0,3)}
-      const up=/^[A-Z]/.test(ans)&&ans!=="I";ds=ds.map(d=>up?cap(d):d);
-      return {kind:3,ci:i,gs:ti,ge:ti+1,ans,opts:shuf([ans,...ds]),ja:c.ja}});
-  return p.chunks.map((c,i)=>({kind:4,ci:i,gs:c.g[0],ge:c.g[1],ans:c.g[2][0],opts:shuf(c.g[2]),ja:c.ja,lane:i%2}));
+  if(st===3)return shuf(p.chunks.map((c,i)=>i).filter(i=>p.chunks[i].s3.length)).slice(0,n).map(i=>({kind:3,ci:i,...gapPick(p.chunks[i]),ja:p.chunks[i].ja}));
+  // 長文：穴の位置は遊ぶたびにランダム（つなぎの穴か、穴うめの候補から）
+  return p.chunks.map((c,i)=>{const gp=c.s3.length&&Math.random()<.6?gapPick(c):{gs:c.g[0],ge:c.g[1],ans:c.g[2][0],opts:shuf(c.g[2])};return {kind:4,ci:i,...gp,ja:c.ja,lane:i%2}});
 }
 function chunkHTML(c,gs,ge,fill){
   const h=[];for(let j=0;j<c.tk.length;j++){const t=c.tk[j];
