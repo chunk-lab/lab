@@ -13,7 +13,7 @@ self.onmessage = async (e) => {
       self.postMessage({ type: 'loaded' });
     } else if (m.type === 'gen') {
       const t0 = performance.now();
-      const a = await tts.generate(m.text, { voice: m.voice });
+      const a = await tts.generate(m.text, { voice: m.voice, speed: m.speed || 1 });
       const audio = a.audio instanceof Float32Array ? a.audio : Float32Array.from(a.audio);
       self.postMessage({ type: 'audio', id: m.id, ms: Math.round(performance.now() - t0), audio, sr: a.sampling_rate }, [audio.buffer]);
     }
