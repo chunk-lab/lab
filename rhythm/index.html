@@ -19,7 +19,7 @@ h1{font-size:22px;margin:0 0 2px}h1 small{font-size:12px;color:var(--sub);font-w
 label{display:block;font-size:12px;color:var(--sub);margin-bottom:3px}
 select,input[type=range]{width:100%}
 select{background:#0f1b2d;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px;font-size:14px}
-.modes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:6px}
 .modes button{background:#0f1b2d;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:8px 4px;font-size:13px;line-height:1.3}
 .modes button small{display:block;color:var(--sub);font-size:11px}
 .modes button.on{border-color:var(--acc);background:#3a2a10}
@@ -70,6 +70,7 @@ if (!window.crossOriginIsolated && 'serviceWorker' in navigator && window.isSecu
     <p class="lead">英文の声に合わせて叩くリズムゲームの試作です。遊び方を比べてください。<a href="check.html">タイミング確認ページ</a></p>
     <div class="grid">
       <div class="full"><label>遊び方</label><div class="modes" id="modes">
+        <button data-m="voice">声の長さ<small>長押し＋タップ</small></button>
         <button data-m="con">意味語<small>大事な単語を叩く</small></button>
         <button data-m="fill">長押し<small>＋タタタン</small></button>
         <button data-m="mix">ミックス<small>意味語＋タタタン</small></button>
@@ -144,14 +145,15 @@ const DEF = { flow: '3', bpm: '100', voice: 'af_heart' };
 $('ofs').value = S.ofs || 0; $('ofsv').textContent = $('ofs').value;
 function setOfs(v) { $('ofs').value = v; $('ofsv').textContent = v; S.ofs = +v; saveS(); }
 $('ofs').oninput = () => setOfs($('ofs').value);
-const MODE_NAME = { con: '意味語', fill: '長押し＋タタタン', mix: 'ミックス', rec: '譜面作り', recplay: '自作の譜面' };
+const MODE_NAME = { voice: '声の長さ（長押し＋タップ）', con: '意味語', fill: '長押し＋タタタン', mix: 'ミックス', rec: '譜面作り', recplay: '自作の譜面' };
 const HOW = {
+  voice: '<b>声の長さ</b>　英文の<b>全部の単語</b>が音符。<b>長く伸ばして読まれる単語は長押し（声が終わるまで押しっぱなし）、短い単語はタップ</b>。譜面は声の長さそのものから作っています。',
   con: '<b>意味語</b>　英文の中の<b>大事な単語（名詞・動詞・形容詞など）</b>が声で読まれる瞬間に叩く。a・the・in などは叩かない。英語の強いところ＝リズムの山です。',
   fill: '<b>長押し＋タタタン</b>　オレンジの丸で叩いて、<b>声が終わるまで押しっぱなし</b>。チャンクのあいだの<b>青い丸はドラムに合わせてタタタン</b>。',
   mix: '<b>ミックス</b>　声の中では<b>大事な単語</b>を叩き、チャンクのあいだは<b>青い丸をタタタン</b>。',
   rec: '<b>譜面作り</b>　声とドラムが流れるので、<b>気持ちいいと思うところを自由に叩いて</b>ください。終わったらその譜面で遊べます。コピーしてClaudeに送ると配置のルール作りに使えます。'
 };
-let MODE = S.mode && HOW[S.mode] ? S.mode : 'con';
+let MODE = S.mode && HOW[S.mode] ? S.mode : 'voice';
 function setMode(m) { MODE = m; S.mode = m; saveS(); document.querySelectorAll('#modes button').forEach(b => b.classList.toggle('on', b.dataset.m === m)); $('how').innerHTML = HOW[m] + '<br>横画面がおすすめ。最初に「自動で測る」でズレを合わせておくと正確です。'; }
 document.querySelectorAll('#modes button').forEach(b => b.onclick = () => setMode(b.dataset.m));
 setMode(MODE);
@@ -201,6 +203,16 @@ $('bPrep').onclick = async () => {
 };
 $('bBack1').onclick = $('bBack2').onclick = () => { $('ready').hidden = $('result').hidden = true; $('setup').hidden = false; };
 
+// 声が実際に鳴っている長さ（単語のあとの無音は含めない）
+function voicedEnd(v, t, e) {
+  if (!v.__rms) { const h = Math.round(v.sr * .01), n = Math.floor(v.a.length / h), r = new Float32Array(n); let pk = 0;
+    for (let i = 0; i < n; i++) { let q = 0; for (let k = i * h; k < Math.min(v.a.length, i * h + h * 2); k++) q += v.a[k] * v.a[k]; r[i] = Math.sqrt(q / (h * 2)); if (r[i] > pk) pk = r[i]; }
+    v.__rms = { r, pk }; }
+  const { r, pk } = v.__rms; let end = t;
+  for (let i = Math.min(r.length - 1, Math.floor(e / .01)); i >= Math.floor(t / .01); i--) if (r[i] >= pk * .15) { end = (i + 1) * .01; break; }
+  return Math.max(.06, end - t);
+}
+const HOLD_MIN = .30;   // これ以上声が伸びる単語は長押し
 // ---------- 曲（声・ノーツ・ドラムの並び）を作る：すべて拍とモデルの時刻から決める ----------
 const PATS = [[0, .5, 1], [0, 1], [0, .5, 1, 1.5], [0, .5, 1]];   // タタタン、タン・タン、タタタタ…
 function buildSong(bpm, mode) {
@@ -211,6 +223,10 @@ function buildSong(bpm, mode) {
     const v = SONG.got[c.en], buf = toBuf(v), t = b * beat, ws = words(c.en), d = buf.duration;
     voices.push({ buf, t }); lyr.push({ en: c.en, ja: c.ja, t, d, hit: false }); guides.push({ t, d, en: c.en });
     if (mode === 'fill') notes.push({ kind: 'chunk', t, d, en: c.en, ci });
+    if (mode === 'voice') {
+      if (v.wt) ws.forEach((w, j) => { const x = wtAt(v, j), dd = voicedEnd(v, x.t, x.e), hold = dd >= HOLD_MIN; notes.push({ kind: hold ? 'hold' : 'word', t: t + x.t, d: hold ? dd : Math.max(.08, dd), en: w, ci }); });
+      else notes.push({ kind: 'chunk', t, d, en: c.en, ci });
+    }
     if (mode === 'con' || mode === 'mix') {
       if (v.wt) ws.forEach((w, j) => { if (isContent(w)) { const x = wtAt(v, j); notes.push({ kind: 'word', t: t + x.t, d: Math.max(.08, x.e - x.t), en: w, ci }); } });
       else notes.push({ kind: 'word', t, d, en: ws[0], ci });
@@ -280,7 +296,7 @@ cv.addEventListener('pointerdown', e => {
   if (bd <= JW.p) { G.cnt.p++; popJudge('Perfect', '#ffd166'); addScore(1000); burst('#ffd166'); }
   else if (bd <= JW.g) { G.cnt.g++; popJudge(dt < 0 ? 'Great（早い）' : 'Great（遅い）', '#5ab0ff'); addScore(700); burst('#5ab0ff'); }
   else { G.cnt.ok++; popJudge(dt < 0 ? 'Good（早い）' : 'Good（遅い）', '#c9d6e8'); addScore(300); burst('#c9d6e8'); }
-  if (best.kind === 'chunk') G.hold = { n: best, id: e.pointerId };
+  if (best.kind === 'chunk' || best.kind === 'hold') G.hold = { n: best, id: e.pointerId };
 });
 function release(e) { if (!G || !G.hold || G.hold.id !== e.pointerId) return; const n = G.hold.n; G.hold = null;
   if (n.st === 1) { const tt = songNow(); if (tt >= n.t + n.d * .8) holdOK(n); else n.st = 2; } }
@@ -317,7 +333,7 @@ function frame() {
     if (!n.st && now > n.t + JW.ok) { n.st = 3; G.cnt.m++; G.combo = 0; popJudge('Miss', '#ff6b6b'); }
     if (n.st === 1 && now > n.t + n.d) { if (G.hold && G.hold.n === n) { G.hold = null; holdOK(n); } else n.st = 2; }
     if (x1 < -60 || x0 > Wd + 60) continue;
-    if (n.kind === 'chunk') drawChunk(n, x0, x1, now, laneY, laneH, JX);
+    if (n.kind === 'chunk' || n.kind === 'hold') drawChunk(n, x0, x1, now, laneY, laneH, JX);
     else if (n.kind === 'fill') drawFill(n, x0, now, laneY, laneH, JX);
     else drawWord(n, x0, now, laneY, laneH, JX);
   }
@@ -379,7 +395,7 @@ function showResult() {
   const rank = acc >= .95 ? 'S' : acc >= .85 ? 'A' : acc >= .7 ? 'B' : 'C';
   $('rRank').textContent = rank; $('rScore').textContent = G.score.toLocaleString() + ' 点';
   $('rP').textContent = c.p; $('rG').textContent = c.g; $('rGo').textContent = c.ok; $('rM').textContent = c.m;
-  $('rInfo').textContent = `最大コンボ ${G.maxc} / ${N}` + (G.mode === 'fill' ? ` ／ ホールド成功 ${c.hold}` : '');
+  $('rInfo').textContent = `最大コンボ ${G.maxc} / ${N}` + (G.mode === 'fill' || G.mode === 'voice' ? ` ／ ホールド成功 ${c.hold}` : '');
   if (G.dts.length >= 3) { const avg = G.dts.reduce((a, x) => a + x, 0) / G.dts.length, ms = Math.round(avg * 1000);
     $('rOfs').textContent = `平均のズレ：${ms > 0 ? '+' : ''}${ms}ms（${Math.abs(ms) < 25 ? 'ちょうどいい' : ms > 0 ? '遅め' : '早め'}）`;
     $('bFix').hidden = Math.abs(ms) < 25; $('bFix').onclick = () => { const v = Math.max(-250, Math.min(250, Math.round(((+$('ofs').value) + ms) / 10) * 10)); setOfs(v); $('bFix').hidden = true; $('rOfs').textContent += ` → 補正を ${v}ms にしました`; };
