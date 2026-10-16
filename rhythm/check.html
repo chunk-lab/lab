@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>タイミング確認</title>
+<style>
+:root{--bg:#0f1b2d;--panel:#172a45;--line:#2d4a72;--ink:#eef2f7;--sub:#8ea3bf;--acc:#ffb23e;--good:#5fd38d;--bad:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Hiragino Sans","Noto Sans JP",system-ui,sans-serif;padding:16px}
+main{max-width:720px;margin:0 auto}
+h1{font-size:20px;margin:0 0 4px}
+.lead{color:var(--sub);font-size:13px;margin:0 0 14px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+label{display:block;font-size:12px;color:var(--sub);margin:6px 0 3px}
+select{width:100%;background:#0f1b2d;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px;font-size:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button{width:100%;border:0;border-radius:12px;padding:12px;font-size:15px;font-weight:700;background:#24406a;color:var(--ink);margin-top:8px}
+button.pri{background:var(--acc);color:#1b1206}
+button:disabled{opacity:.45}
+.st{font-size:13px;color:var(--sub);margin-top:6px}
+.bar{height:6px;background:#0f1b2d;border-radius:3px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;width:0;background:var(--acc)}
+#stage{min-height:120px;display:flex;flex-wrap:wrap;align-content:center;gap:6px 10px;font:600 26px/1.3 "Helvetica Neue",Arial,sans-serif;padding:10px 4px}
+#stage span{color:rgba(255,255,255,.35);transition:color .05s}
+#stage span.c{text-decoration:underline;text-decoration-color:rgba(255,178,62,.4);text-underline-offset:6px}
+#stage span.on{color:#fff}
+#stage span.now{color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+td{padding:4px 2px;border-bottom:1px solid #22385a;vertical-align:top}
+td.n{text-align:right;color:var(--sub);white-space:nowrap}
+.good{color:var(--good)}.bad{color:var(--bad)}
+pre{white-space:pre-wrap;word-break:break-all;font-size:11px;background:#0b1424;border-radius:8px;padding:8px;color:#b9c7da;max-height:200px;overflow:auto}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<script>
+if (!window.crossOriginIsolated && 'serviceWorker' in navigator && window.isSecureContext) {
+  navigator.serviceWorker.register('./coi-sw.js').then(() => navigator.serviceWorker.ready).then(() => {
+    try { if (!sessionStorage.getItem('coi')) { sessionStorage.setItem('coi', '1'); location.reload(); } } catch (e) {}
+  }).catch(() => {});
+}
+</script>
+<script src="../stream/data.js"></script>
+<script src="common.js"></script>
+<main>
+  <h1>タイミング確認</h1>
+  <p class="lead">声を作ったモデル自身が出す「単語の時刻」が、本当の声と合っているかを耳で確かめるページです。<a href="./">ゲームへ戻る</a></p>
+
+  <section>
+    <label for="psg">文章（最初の12チャンク）</label><select id="psg"></select>
+    <label for="voice">声</label><select id="voice">
+      <option value="af_heart">女性（米）1</option><option value="af_bella">女性（米）2</option>
+      <option value="am_michael">男性（米）</option><option value="bf_emma">女性（英）</option><option value="bm_george">男性（英）</option></select>
+    <button class="pri" id="bPrep">準備する</button>
+    <div class="bar"><i id="pbar"></i></div>
+    <div class="st" id="pst">初回は声のエンジン（約330MB）と声づくりで数分かかります。</div>
+  </section>
+
+  <section>
+    <div id="stage"></div>
+    <div class="row">
+      <button id="bAll" disabled>全単語でクリック</button>
+      <button id="bCon" disabled>意味語だけクリック</button>
+    </div>
+    <div class="row">
+      <button id="bNone" disabled>クリックなし</button>
+      <button id="bSlow" disabled>ゆっくり（0.6倍）：全単語</button>
+    </div>
+    <div class="st">クリックが単語の出だしと「同時」に聞こえれば合格です。下線つきの単語が「意味語」（ゲームで叩く単語）です。</div>
+  </section>
+
+  <section>
+    <table><tbody id="rows"></tbody></table>
+    <button id="bCopy">結果をコピー</button>
+    <pre id="report">（まだありません）</pre>
+  </section>
+</main>
+<script>
+$('psg').innerHTML = LIST.map((p, i) => `<option value="${i}">${p.name}</option>`).join('');
+if (S.psg != null) $('psg').value = S.psg; if (S.voice) $('voice').value = S.voice;
+const st = (t, r) => { $('pst').textContent = t; if (r != null) $('pbar').style.width = (r * 100).toFixed(0) + '%'; };
+let CL = [], P = null, got = null, playing = [];
+
+$('bPrep').onclick = async () => {
+  ac(); S.psg = $('psg').value; S.voice = $('voice').value; saveS();
+  P = LIST[+$('psg').value]; $('bPrep').disabled = true;
+  try {
+    got = await getClips(P.chunks.map(c => c.en), $('voice').value, st);
+    CL = P.chunks.map(c => ({ ...c, v: got[c.en], buf: toBuf(got[c.en]) }));
+    $('rows').innerHTML = CL.map(c => { const v = c.v, ok = !!v.wt;
+      return `<tr><td>${c.en}<br><span class="${ok ? 'good' : 'bad'}">${ok ? v.wt.map(x => x.t.toFixed(2)).join(' / ') : '時刻なし：' + (v.info && v.info.why)}</span></td><td class="n">${c.buf.duration.toFixed(2)}秒</td></tr>`; }).join('');
+    ['bAll', 'bCon', 'bNone', 'bSlow'].forEach(k => $(k).disabled = false);
+    report();
+  } catch (e) { st('失敗：' + (e.message || e)); }
+  $('bPrep').disabled = false;
+};
+
+function stop() { playing.forEach(s => { try { s.stop(); } catch (e) {} }); playing = []; cancelAnimationFrame(raf); }
+let raf = 0;
+function play(which, rate = 1) {
+  stop(); ac();
+  const t0 = AC.currentTime + .4; let t = 0; const marks = [];
+  CL.forEach((c, ci) => {
+    const s = AC.createBufferSource(); s.buffer = c.buf; s.playbackRate.value = rate; s.connect(voiceG); s.start(t0 + t); playing.push(s);
+    const ws = words(c.en);
+    if (c.v.wt) c.v.wt.forEach((w, j) => { const at = t0 + t + w.t / rate, con = isContent(ws[j]);
+      if (which === 'all' || (which === 'con' && con)) click(at, con);
+      marks.push({ ci, j, t: at, e: t0 + t + w.e / rate }); });
+    t += c.buf.duration / rate + .35;
+  });
+  // 画面：いま読んでいる単語を光らせる
+  const lat = AC.outputLatency || AC.baseLatency || 0;
+  let shown = -1;
+  const loop = () => {
+    const now = AC.currentTime - lat; let ci = -1;
+    for (const m of marks) if (now >= m.t - .3) ci = m.ci;
+    if (ci !== shown && ci >= 0) { shown = ci; const ws = words(CL[ci].en); $('stage').innerHTML = ws.map((w, j) => `<span id="w${j}" class="${isContent(w) ? 'c' : ''}">${w}</span>`).join(''); }
+    marks.forEach(m => { if (m.ci !== shown) return; const el = $('w' + m.j); if (!el) return; el.classList.toggle('now', now >= m.t && now < m.e); el.classList.toggle('on', now >= m.e); });
+    if (now < t0 + t + .5) raf = requestAnimationFrame(loop);
+  };
+  raf = requestAnimationFrame(loop);
+}
+$('bAll').onclick = () => play('all');
+$('bCon').onclick = () => play('con');
+$('bNone').onclick = () => play('none');
+$('bSlow').onclick = () => play('all', .6);
+
+function report() {
+  const n = CL.length, ok = CL.filter(c => c.v.wt).length, i0 = CL[0] && CL[0].v.info;
+  $('report').textContent = [`端末: ${navigator.userAgent}`, `isolated: ${crossOriginIsolated} / WebGPU: ${!!navigator.gpu}`,
+    `時刻あり: ${ok} / ${n}` + (i0 ? ` / 1単位=${i0.per}サンプル` : ''),
+    ...CL.map(c => `${c.v.wt ? c.v.wt.map(x => x.t.toFixed(2)).join(',') : 'NG ' + (c.v.info && c.v.info.why)} | ${c.en}`)].join('\n');
+}
+$('bCopy').onclick = async () => { report(); try { await navigator.clipboard.writeText($('report').textContent); $('bCopy').textContent = 'コピーしました'; } catch (e) { $('bCopy').textContent = 'コピーできませんでした。長押しで選んでください'; } };
+</script>
+</body>
+</html>
