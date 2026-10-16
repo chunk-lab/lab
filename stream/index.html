@@ -279,6 +279,21 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (orientation:portrait) and (max-width:820px){.rotate{display:flex}}
 @media (prefers-reduced-motion:reduce){.river .row,.hero-chara,.field .flow{animation:none}}
 #rdOv{position:fixed;inset:0;z-index:900;background:#fff}#rdOv[hidden]{display:none}#rdFr{border:0;width:100%;height:100%;display:block}
+/* ===== 縦画面（試作）：上から 完成した本文 → 英文の帯 → 選択肢。選択肢は親指の届く下に ===== */
+@media (orientation:portrait){
+  .rotate{display:none!important}
+  .arena .sp{display:none}
+  .arena .txt{order:-1;flex:1;min-height:56px}
+  .band{flex-direction:column;gap:6px}
+  .band .field{flex:none;height:calc(104px + 84px*var(--fs,1.2));min-height:0}
+  .band .side{order:1;width:100%;padding:0 0 4px}
+  .dwrap{grid-template-columns:1fr;overflow-y:auto;align-content:start}
+  #sResult{flex-direction:column;overflow-y:auto}
+  .res-l{width:100%}
+  #sTitle{flex-direction:column;justify-content:center}
+  #sTitle .l,#sTitle .r{width:100%;flex:none}
+  .btn-run{margin-top:6px}
+}
 </style>
 
 <div class="bgflow"></div>
@@ -500,7 +515,7 @@ function renderDetail(){
 const isFull=()=>!!(document.fullscreenElement||document.webkitFullscreenElement);
 const canFull=()=>{const d=document.documentElement;return !!(d.requestFullscreen||d.webkitRequestFullscreen)};
 function goFull(){if(isFull()||!canFull())return false;const d=document.documentElement;try{const p=(d.requestFullscreen||d.webkitRequestFullscreen).call(d,{navigationUI:"hide"});
-  const lock=()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock("landscape").catch(()=>{})}catch(e){}};p&&p.then?p.then(lock).catch(()=>{}):lock()}catch(e){}return true}
+  const lock=()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock(innerHeight>innerWidth?"portrait":"landscape").catch(()=>{})}catch(e){}};p&&p.then?p.then(lock).catch(()=>{}):lock()}catch(e){}return true}
 function toggleFull(){if(isFull()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return}if(!canFull()){toast("このブラウザは全画面に対応していません（アプリ版では全画面になります）");return}goFull()}
 $("btnFull").onclick=()=>{SE.tap();toggleFull()};
 $("btnRun").onclick=()=>{SE.tap();startRun(1)};
@@ -596,11 +611,12 @@ function beginStage(st){
 }
 let LY=[60,140];
 function layout(){const r=$("field").getBoundingClientRect();W=r.width;H=r.height;XJ=Math.round(Math.min(W*.18,150));$("zone").style.left=XJ+"px";
-  LY=[0,1].map(l=>{const g=$("g"+l).getBoundingClientRect();return g.top+g.height/2-r.top});$("seam").style.top=((LY[0]+LY[1])/2)+"px"}
+  // 縦画面：選択肢は帯の下にあるので、レーンは帯の真ん中
+  LY=innerHeight>innerWidth?[H/2,H/2]:[0,1].map(l=>{const g=$("g"+l).getBoundingClientRect();return g.top+g.height/2-r.top});$("seam").style.top=((LY[0]+LY[1])/2)+"px"}
 // レーンの高さ＝それぞれの4択（2×2）の真ん中
 // レーンは真ん中に寄せる（上下の間は日本訳が入るぶんだけ）
 function laneY(l){const mid=(LY[0]+LY[1])/2;if(!G||G.st===2||G.st===3)return mid;const fs=+(SV.set.fs||1.2),ch=fs*15*1.25+12,off=ch/2+(G.st===4?fs*9:7);return mid+(l?off:-off)}
-addEventListener("resize",()=>{if(G&&!$("sPlay").hidden){layout();if(innerHeight>innerWidth&&innerWidth<820)pause()}});
+addEventListener("resize",()=>{if(G&&!$("sPlay").hidden)layout()});   // 縦でも横でも遊べる
 
 function mkCard(it){
   const e=document.createElement("div");e.className="card l"+it.lane;const p=G.p;
