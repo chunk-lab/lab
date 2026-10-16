@@ -70,6 +70,7 @@ in the garden.</textarea>
     <button id="bOne" disabled>1チャンクだけ作る</button>
     <button id="bAll" disabled>全部作る（計測）</button>
   </div>
+  <div class="st" id="gst"></div>
 </section>
 
 <section>
@@ -106,7 +107,7 @@ if (!R.env.webgpu) $('dev').querySelector('[value=webgpu]').disabled = true;
 
 function report() {
   const L = R.load ? `読み込み: ${R.load.sec.toFixed(1)}秒（${R.load.device} / ${R.load.dtype}${R.load.cached ? '・2回目以降' : ''}）` : '読み込み: 未';
-  const g = R.gens.length ? R.gens.map(x => `${x.ms}ms / ${x.dur.toFixed(2)}s  ${x.text}`).join('\n') : '';
+  const g = R.gens.length ? R.gens.map(x => x.err ? `失敗: ${x.err}  ${x.text}` : `${x.ms}ms / ${x.dur.toFixed(2)}s  ${x.text}`).join('\n') : '';
   const tot = R.gens.reduce((a, x) => a + x.ms, 0) / 1000, dur = R.gens.reduce((a, x) => a + x.dur, 0);
   $('report').textContent = [
     `端末: ${R.env.ua}`, `CPU: ${R.env.cores}コア / メモリ: ${R.env.mem}GB / WebGPU: ${R.env.webgpu} / isolated: ${R.env.isolated}`,
@@ -114,54 +115,64 @@ function report() {
   ].filter(Boolean).join('\n');
 }
 
-$('bLoad').onclick = async () => {
-  $('bLoad').disabled = true; $('lst').textContent = 'ライブラリを読み込み中…';
-  const device = $('dev').value, dtype = $('dtype').value, t0 = performance.now();
-  const files = {};
-  try {
-    const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.0/+esm');
-    tts = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
-      dtype, device,
-      progress_callback: p => {
-        if (p.status === 'progress' && p.total) {
-          files[p.file] = [p.loaded, p.total];
-          const l = Object.values(files).reduce((a, x) => a + x[0], 0), t = Object.values(files).reduce((a, x) => a + x[1], 0);
-          $('pbar').style.width = (l / t * 100).toFixed(1) + '%';
-          $('lst').textContent = `ダウンロード中 ${(l / 1e6).toFixed(1)} / ${(t / 1e6).toFixed(1)} MB`;
-        }
-      }
-    });
-    const sec = (performance.now() - t0) / 1000;
-    const dl = Object.values(files).reduce((a, x) => a + x[1], 0);
-    R.load = { sec, device, dtype, cached: dl < 1e6 };
+// 重い処理は worker.js（裏側）で動かす
+const W = new Worker('./worker.js', { type: 'module' });
+let waiters = {}, nid = 0, loadT0 = 0, files = {}, ticker = null;
+function tick(el, label) { const t0 = performance.now(); clearInterval(ticker); ticker = setInterval(() => { el.textContent = `${label}（${((performance.now() - t0) / 1000).toFixed(0)}秒経過）`; }, 500); }
+W.onerror = e => { $('lst').innerHTML = `<span class="bad">裏側の処理を起動できません：</span>${e.message || 'この端末のブラウザが対応していない可能性'}`; };
+W.onmessage = e => {
+  const m = e.data;
+  if (m.type === 'stage') { tick($('lst'), m.text); }
+  else if (m.type === 'progress' && m.status === 'progress' && m.total) {
+    clearInterval(ticker); files[m.file] = [m.loaded, m.total];
+    const l = Object.values(files).reduce((a, x) => a + x[0], 0), t = Object.values(files).reduce((a, x) => a + x[1], 0);
+    $('pbar').style.width = (l / t * 100).toFixed(1) + '%';
+    $('lst').textContent = `ダウンロード中 ${(l / 1e6).toFixed(1)} / ${(t / 1e6).toFixed(1)} MB`;
+  }
+  else if (m.type === 'loaded') {
+    clearInterval(ticker);
+    const sec = (performance.now() - loadT0) / 1000, dl = Object.values(files).reduce((a, x) => a + x[1], 0);
+    R.load = { sec, device: $('dev').value, dtype: $('dtype').value, cached: dl < 1e6 };
     $('pbar').style.width = '100%';
     $('lst').innerHTML = `<span class="good">読み込み完了</span>：${sec.toFixed(1)}秒${dl ? `（${(dl / 1e6).toFixed(0)}MB）` : '（保存済みのデータを使用）'}`;
-    $('bOne').disabled = $('bAll').disabled = false;
-  } catch (e) {
-    $('lst').innerHTML = `<span class="bad">失敗：</span>${e.message || e}`; $('bLoad').disabled = false;
+    $('bOne').disabled = $('bAll').disabled = false; report();
   }
-  report();
+  else if (m.type === 'audio' || m.type === 'error') {
+    const w = waiters[m.id];
+    if (w) { delete waiters[m.id]; w(m); }
+    else { clearInterval(ticker); $('lst').innerHTML = `<span class="bad">失敗：</span>${m.msg}`; $('bLoad').disabled = false; report(); }
+  }
+};
+$('bLoad').onclick = () => {
+  $('bLoad').disabled = true; files = {}; loadT0 = performance.now(); tick($('lst'), 'ライブラリを読み込み中…');
+  W.postMessage({ type: 'load', device: $('dev').value, dtype: $('dtype').value });
 };
 
 const lines = () => $('txt').value.split('\n').map(s => s.trim()).filter(Boolean);
-async function gen(text) {
-  const t0 = performance.now();
-  const a = await tts.generate(text, { voice: $('voice').value });
-  const ms = Math.round(performance.now() - t0), dur = a.audio.length / a.sampling_rate;
-  R.gens.push({ text, ms, dur });
-  clips.push({ text, data: a.audio, sr: a.sampling_rate, dur });
-  const tr = document.createElement('tr'); tr.className = 'chunk';
-  tr.innerHTML = `<td>${text.replace(/</g, '&lt;')}</td><td class="n">${ms}ms</td><td class="n">${dur.toFixed(2)}秒</td>`;
-  $('rows').appendChild(tr); clips.at(-1).tr = tr;
-  const tot = R.gens.reduce((s, x) => s + x.ms, 0) / 1000, d = R.gens.reduce((s, x) => s + x.dur, 0);
-  const r = tot / d; $('rtf').innerHTML = `<span class="${r < 1 ? 'good' : 'bad'}">${r.toFixed(2)}</span>`;
-  $('avg').textContent = `${Math.round(tot * 1000 / R.gens.length)}ms`;
-  $('bPlay').disabled = $('bBeat').disabled = false;
-  report();
+function gen(text) {
+  return new Promise(res => {
+    const id = ++nid; tick($('gst'), `作成中：${text}`);
+    waiters[id] = m => {
+      clearInterval(ticker); $('gst').textContent = '';
+      if (m.type === 'error') { $('gst').innerHTML = `<span class="bad">失敗：</span>${m.msg}`; R.gens.push({ text, ms: 0, dur: 0, err: m.msg }); report(); return res(false); }
+      const dur = m.audio.length / m.sr;
+      R.gens.push({ text, ms: m.ms, dur });
+      clips.push({ text, data: m.audio, sr: m.sr, dur });
+      const tr = document.createElement('tr'); tr.className = 'chunk';
+      tr.innerHTML = `<td>${text.replace(/</g, '&lt;')}</td><td class="n">${m.ms}ms</td><td class="n">${dur.toFixed(2)}秒</td>`;
+      $('rows').appendChild(tr); clips.at(-1).tr = tr;
+      const ok = R.gens.filter(x => !x.err), tot = ok.reduce((s, x) => s + x.ms, 0) / 1000, d = ok.reduce((s, x) => s + x.dur, 0);
+      const r = tot / d; $('rtf').innerHTML = `<span class="${r < 1 ? 'good' : 'bad'}">${r.toFixed(2)}</span>`;
+      $('avg').textContent = `${Math.round(tot * 1000 / ok.length)}ms`;
+      $('bPlay').disabled = $('bBeat').disabled = false;
+      report(); res(true);
+    };
+    W.postMessage({ type: 'gen', id, text, voice: $('voice').value });
+  });
 }
 function reset() { R.gens = []; clips = []; $('rows').innerHTML = ''; }
 $('bOne').onclick = async () => { reset(); $('bOne').disabled = true; await gen(lines()[0]); $('bOne').disabled = false; };
-$('bAll').onclick = async () => { reset(); $('bAll').disabled = true; for (const t of lines()) await gen(t); $('bAll').disabled = false; };
+$('bAll').onclick = async () => { reset(); $('bAll').disabled = true; for (const t of lines()) { if (!(await gen(t))) break; } $('bAll').disabled = false; };
 
 function ac() { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); return AC; }
 function buf(c) { const b = ac().createBuffer(1, c.data.length, c.sr); b.copyToChannel(c.data, 0); return b; }
