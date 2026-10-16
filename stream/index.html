@@ -293,8 +293,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   #sTitle{flex-direction:column;justify-content:center}
   #sTitle .l,#sTitle .r{width:100%;flex:none}
   .btn-run{margin-top:6px}
-  /* ブラウザの全画面では下に「全画面を終了するには…」が出るので、選択肢2段分あけて上に上げる（アプリ版では出ない） */
-  html.fsb #sPlay{padding-bottom:calc(58px*var(--fs,1.2) + 18px)}
+  /* 縦画面では選択肢の下を2段分あける（スマホを持つ指が選択肢にかからない／ブラウザの全画面の案内にも隠れない） */
+  #sPlay{padding-bottom:calc(58px*var(--fs,1.2) + 18px)}
 }
 </style>
 
