@@ -595,9 +595,10 @@ function renderDetail(){
 /* 全画面（ブラウザのバーを消す）＋横向き固定。押したときにだけ呼べる。iPhoneのブラウザは非対応（アプリ版で全画面） */
 const isFull=()=>!!(document.fullscreenElement||document.webkitFullscreenElement);
 const canFull=()=>{const d=document.documentElement;return !!(d.requestFullscreen||d.webkitRequestFullscreen)};
-function goFull(){if(isFull()||!canFull())return false;const d=document.documentElement;try{const p=(d.requestFullscreen||d.webkitRequestFullscreen).call(d,{navigationUI:"hide"});
-  const lock=()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock(innerHeight>innerWidth?"portrait":"landscape").catch(()=>{})}catch(e){}};p&&p.then?p.then(lock).catch(()=>{}):lock()}catch(e){}return true}
-function toggleFull(){if(isFull()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return}if(!canFull()){toast("このブラウザは全画面に対応していません（アプリ版では全画面になります）");return}goFull()}
+let WANTF=false;   /* 全画面にしたい状態か。回転などで勝手に抜けても、次のタップで戻す */
+function goFull(){if(!canFull())return false;WANTF=true;if(isFull())return false;const d=document.documentElement;try{const p=(d.requestFullscreen||d.webkitRequestFullscreen).call(d,{navigationUI:"hide"});
+  p&&p.catch&&p.catch(()=>{})}catch(e){}return true}
+function toggleFull(){if(isFull()){WANTF=false;(document.exitFullscreen||document.webkitExitFullscreen).call(document);return}if(!canFull()){toast("このブラウザは全画面に対応していません（アプリ版では全画面になります）");return}goFull()}
 $("btnFull").onclick=()=>{SE.tap();toggleFull()};
 $("btnRun").onclick=()=>{SE.tap();startRun(1)};
 $("modeRh").onclick=()=>{SE.tap();toast("リズムモードは準備中です")};
@@ -701,6 +702,7 @@ function layout(){const r=$("field").getBoundingClientRect();W=r.width;H=r.heigh
 // レーンは真ん中に寄せる（上下の間は日本訳が入るぶんだけ）
 function laneY(l){const mid=(LY[0]+LY[1])/2;if(!G||G.st===2||G.st===3)return mid;const fs=+(SV.set.fs||1.2),ch=fs*15*1.25+12,off=ch/2+(G.st===4?fs*9:7);const o=innerHeight>innerWidth&&G.st===4?fs*15*1.25+10:off;return mid+(l?o:-o)}
 addEventListener("resize",()=>{if(G&&!$("sPlay").hidden)layout()});
+document.addEventListener("pointerdown",()=>{if(WANTF&&!isFull())goFull()},true);
 document.addEventListener("fullscreenchange",()=>{document.documentElement.classList.toggle("fsb",!!document.fullscreenElement);if(G&&!$("sPlay").hidden)setTimeout(layout,50)});   // 縦でも横でも遊べる
 
 function mkCard(it){
