@@ -360,6 +360,14 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .sheet .hint{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
 .sheet .hint code{background:var(--bg2);padding:1px 5px;border-radius:5px;font-family:var(--en)}
 .sheet .msg{font-size:12px;line-height:1.6;margin:0;color:var(--muted)}.sheet .msg.ng{color:var(--bad)}
+.pgres{background:color-mix(in srgb,var(--accent) 18%,var(--surface));border:1px solid var(--accent);border-radius:12px;padding:8px 10px;font-size:13px;margin-bottom:8px;line-height:1.6}
+.pgc{display:flex;flex-direction:column;gap:6px;text-align:left;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 22%,var(--surface)),var(--surface));border:1px solid color-mix(in srgb,var(--accent) 50%,var(--line));border-radius:16px;padding:10px 12px;color:var(--ink)}
+.pgc .hd{display:flex;align-items:center;gap:8px}.pgc .lv{font-family:var(--disp);font-size:20px;color:var(--accent)}.pgc .xp{flex:1;height:6px;border-radius:3px;background:var(--bg2);overflow:hidden}.pgc .xp i{display:block;height:100%;background:var(--accent)}
+.pgc .st{font-size:11px;color:var(--muted);white-space:nowrap}.pgc ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}.pgc li{font-size:13px;display:flex;gap:6px;align-items:center}.pgc li.ok{color:var(--muted);text-decoration:line-through}
+.pgc .wk{font-size:11px;color:var(--gold)}
+.bkh{grid-column:1/-1;margin:14px 2px 2px;font-weight:800;font-size:14px;display:flex;justify-content:space-between;align-items:baseline}.bkh small{color:var(--muted);font-weight:400;font-size:11px}
+.wset.lock{opacity:.55}.wset.lock b{color:var(--muted)}.wset .lk{font-size:10px;color:var(--muted);text-align:center;line-height:1.3}
+.task{display:flex;align-items:center;gap:8px;background:var(--bg2);border-radius:12px;padding:8px 10px}.task .tx{flex:1;font-size:13px}.task .tx small{display:block;color:var(--muted);font-size:11px}.task button{padding:6px 10px;border-radius:10px;background:var(--accent);color:#2a1600;font-weight:800;font-size:12px}.task.ok{opacity:.55}
 .usets{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:6px}
 .wsets{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;align-content:start;padding:6px 2px 12px}
 .wset{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink)}
@@ -503,7 +511,7 @@ const STAGES=[
  {id:2,name:"チャンクキャッチ",desc:"聞こえたチャンク（意味のかたまり）の意味を選ぶ",note:"チャンクの意味をタップ！"},
  {id:3,name:"チャンクパズル",desc:"上の日本語に合うように、欠けた1語を埋める",note:"日本語に合う1語で穴を埋めよう"},
  {id:4,name:"ロングストリーム",desc:"チャンクを順番につないで長文を完成させる",note:"順番につないで長文を完成！ 光っている側の4択で答えよう"}];
-const POSJ={n:"名",v:"動",a:"形",r:"副",ph:"熟"};
+const POSJ={n:"名",v:"動",a:"形",r:"副",ph:"熟",pp:"前",cj:"接",pn:"代",ij:"間"};
 const SKEY="chunkstream.v1";
 let SV={best:{},seen:{},set:{nav:"girl",voice:1,rate:1,se:1,bgm:1,jp4:1},mode:"ta",lv:1};
 try{const s=JSON.parse(localStorage.getItem(SKEY)||"null");if(s){SV={...SV,...s,set:{...SV.set,...(s.set||{})}}}}catch(e){}
@@ -605,6 +613,7 @@ function renderHome(){
   const wn=WORDS[SV.lv].length,ws=WSET[SV.lv];
   $("plist").insertAdjacentHTML("afterbegin",`<button class="pcard wcard" style="--lc:${LV[SV.lv].col}" id="btnWords"><span class="tg">単語・熟語・単語集</span><span class="t">${LV[SV.lv].name}の単語 ${wn}語</span><span class="j">${ws}語ずつ・${Math.ceil(wn/ws)}セット　聞いて、意味を選ぶ</span></button>`);
   $("btnWords").onclick=()=>{SE.tap();renderWords();show("sWords")};
+  $("plist").insertAdjacentHTML("afterbegin",pgCard());$("btnPg").onclick=()=>{SE.tap();openTasks()};
   $("plist").querySelectorAll(".pcard[data-id]").forEach(b=>b.onclick=()=>{SE.tap();CUR=P(b.dataset.id);renderDetail();show("sDetail")});
 }
 function wordSet(lv,k){const n=WSET[lv],ws=WORDS[lv].slice(k*n,k*n+n);return {id:`w${lv}-${k+1}`,lv,word:true,title:`${LV[lv].name}の単語 セット${k+1}`,ja:`${ws[0][0]} 〜 ${ws[ws.length-1][0]}`,tag:`${LV[lv].name}・単語練習`,words:ws,chunks:[]}}
@@ -643,7 +652,69 @@ function renderWords(){const t=SV.wtab||"w",lv=SV.lv;
   $("wNote").textContent=t==="i"?`${LV[lv].name}によく出る熟語を${n}個ずつ。読み上げを聞いて、意味を選ぶ。`:`よく使われる順に${n}語ずつ。読み上げを聞いて、意味を選ぶ（単語ダッシュ）。`;
   $("wsets").innerHTML=Array.from({length:m},(_,k)=>{const id=`${t==="i"?"i":"w"}${lv}-${k+1}`,st=starsOf(id,1),b=rec(id,1,"ta");
     return `<button class="wset" data-k="${k}"><b>${k+1}</b><span class="ws">${esc(src[lv][k*n][0])}…</span><span class="st">${"★".repeat(st)}<i>${"★".repeat(3-st)}</i></span>${b?`<small>${b.time.toFixed(1)}s</small>`:""}</button>`}).join("");
-  $("wsets").querySelectorAll(".wset").forEach(b=>b.onclick=()=>{SE.tap();CUR=wordSet(lv,+b.dataset.k,t);startRun(1)})}
+  $("wsets").querySelectorAll(".wset").forEach(b=>b.onclick=()=>{SE.tap();CUR=wordSet(lv,+b.dataset.k,t);startRun(1)});
+  if(t==="w")renderBankStages()}
+/* ===== 単語バンク（全単語）と解放のしくみ =====
+ ・無料：初級・中級・上級の単語と熟語、自分の単語集
+ ・単語バンク（2万語以上）：ステージごとに解放。会員は「毎日の課題」でレベルを上げると順に開く（レベルk でステージk）
+ ・💎で先に解放（買い切り。会員をやめても残る）
+ ・週替わりのテーマ課題で、有料のコンテンツも体験できる（無料の人もできる）
+ ※ いまは試験用：会員・💎は設定の「試験用」で切り替える */
+const PG0={xp:0,member:false,dia:0,owned:[],day:{d:"",done:[0,0,0]},wk:{w:-1,done:0}};
+function PG(){if(!SV.pg)SV.pg=JSON.parse(JSON.stringify(PG0));for(const k in PG0)if(SV.pg[k]==null)SV.pg[k]=JSON.parse(JSON.stringify(PG0[k]));const d=today();if(SV.pg.day.d!==d)SV.pg.day={d,done:[0,0,0]};const w=weekNo();if(SV.pg.wk.w!==w)SV.pg.wk={w,done:0};return SV.pg}
+const today=()=>{const t=new Date();return `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`};
+const weekNo=()=>Math.floor((Date.now()/864e5+3)/7);   /* 月曜はじまり */
+const XPL=40,lvOf=xp=>1+Math.floor(xp/XPL),DIA_STAGE=100;
+let BANK=null;
+function loadBank(cb){if(BANK)return cb&&cb();if(window.BANK_SRC){BANK=BANK_SRC.split("\n").map(l=>l.split("\t"));return cb&&cb()}
+  const sc=document.createElement("script");sc.src="bank.js";sc.onload=()=>{BANK=BANK_SRC.split("\n").map(l=>l.split("\t"));cb&&cb()};sc.onerror=()=>toast("単語バンクを読み込めませんでした");document.head.appendChild(sc)}
+const bankStages=()=>Math.ceil(BANK.length/BANK_STAGE),BSET=30;
+function stageOpen(k){const g=PG();return g.owned.includes(k)||(g.member&&lvOf(g.xp)>=k)}
+function bankSet(k,j,trial){const a=(k-1)*BANK_STAGE+j*BSET,ws=BANK.slice(a,Math.min(a+BSET,k*BANK_STAGE)).map(x=>[x[0],x[1],x[2]]);
+  return {id:`b${k}-${j+1}`,lv:3,word:true,bank:true,trial:!!trial,title:`単語バンク ステージ${k}・セット${j+1}${trial?"（体験）":""}`,ja:`${ws[0][0]} 〜 ${ws[ws.length-1][0]}`,tag:"単語バンク・単語練習",words:ws,chunks:[]}}
+function renderBankStages(){const box=$("wsets");box.insertAdjacentHTML("beforeend",`<div class="bkh" id="bkh">単語バンク<small>読み込み中…</small></div>`);
+  loadBank(()=>{const h=$("bkh");if(!h)return;const g=PG(),n=bankStages(),L=lvOf(g.xp);
+    h.innerHTML=`単語バンク（全${BANK.length.toLocaleString()}語）<small>${g.member?`会員・Lv.${L}まで解放`:"会員になると課題で順に解放"}・💎${g.dia}</small>`;
+    box.insertAdjacentHTML("beforeend",Array.from({length:n},(_,i)=>{const k=i+1,op=stageOpen(k),w=BANK[(k-1)*BANK_STAGE][0];let st=0;for(let j=0;j<BANK_STAGE/BSET;j++)st+=starsOf(`b${k}-${j+1}`,1);
+      return `<button class="wset bk ${op?"":"lock"}" data-k="${k}"><b>${op?k:"🔒"}</b><span class="ws">${esc(w)}…</span>${op?`<span class="st">★${st}</span>`:`<span class="lk">${g.member?`Lv.${k}`:"会員"}／💎${DIA_STAGE}</span>`}</button>`}).join(""));
+    box.querySelectorAll(".wset.bk").forEach(b=>b.onclick=()=>{SE.tap();bankOpen(+b.dataset.k)})})}
+function bankOpen(k){const g=PG(),op=stageOpen(k),a=(k-1)*BANK_STAGE,ns=Math.ceil(Math.min(BANK_STAGE,BANK.length-a)/BSET);
+  if(!op){overlay(`<div class="sheet"><h3>ステージ${k}（${BANK[a][0]} 〜）</h3>
+    <p class="hint">${g.member?`毎日の課題でレベルを上げると開きます（あと Lv.${k-lvOf(g.xp)}）。`:"会員になると、毎日の課題でレベルを上げて順に開けます。"}💎で先に開けることもできます（買い切り。会員をやめても残ります）。</p>
+    <p class="hint">収録例：${esc(BANK.slice(a,a+6).map(x=>x[0]).join(", "))} …</p>
+    <button class="sbtn pri" id="bBuy">💎${DIA_STAGE}で今すぐ開ける（所持 💎${g.dia}）</button><button class="sbtn" id="bTry">1セットだけ体験する</button><button class="sbtn" id="bX">閉じる</button></div>`,b=>{
+    b.querySelector("#bX").onclick=closeOv;
+    b.querySelector("#bTry").onclick=()=>{SE.tap();closeOv();CUR=bankSet(k,0,true);startRun(1)};
+    b.querySelector("#bBuy").onclick=()=>{const g=PG();if(g.dia<DIA_STAGE){SE.ng();toast("💎が足りません");return}g.dia-=DIA_STAGE;g.owned.push(k);save();SE.tap();toast(`ステージ${k}を開けました`);closeOv();renderWords();bankOpen(k)}});return}
+  overlay(`<div class="sheet"><h3>ステージ${k}</h3><p class="hint">${BSET}語ずつ・${ns}セット${g.owned.includes(k)?"・💎で解放済み":""}</p>
+    <div class="usets">${Array.from({length:ns},(_,j)=>{const id=`b${k}-${j+1}`,st=starsOf(id,1);return `<button class="wset" data-j="${j}"><b>${j+1}</b><span class="ws">${esc(BANK[a+j*BSET][0])}…</span><span class="st">${"★".repeat(st)}<i>${"★".repeat(3-st)}</i></span></button>`}).join("")}</div>
+    <button class="sbtn" id="bX">閉じる</button></div>`,b=>{b.querySelector("#bX").onclick=closeOv;
+    b.querySelectorAll(".wset").forEach(x=>x.onclick=()=>{SE.tap();closeOv();CUR=bankSet(k,+x.dataset.j);startRun(1)})})}
+/* ---- 毎日の課題と週替わりテーマ ---- */
+const THEMES=[
+  {n:"熟語ウィーク",d:"熟語セットを1つクリア",ok:id=>/^i/.test(id),go:()=>{CUR=wordSet(SV.lv,0,"i");startRun(1)}},
+  {n:"長文ウィーク",d:"長文を1つ通しでクリア",ok:(id,p)=>!p.word,go:()=>{renderHome();show("sHome")}},
+  {n:"単語バンク体験",d:"単語バンクの体験セットをクリア（有料コンテンツ）",ok:(id,p)=>!!p.bank,go:()=>loadBank(()=>{CUR=bankSet(1+(weekNo()*7)%Math.max(1,bankStages()-1),0,true);startRun(1)})},
+  {n:"単語集ウィーク",d:"単語集（自分の・みんなの）を1つクリア",ok:id=>/^u-/.test(id),go:()=>{SV.wtab="u";renderWords();show("sWords")}},
+  {n:"上級単語体験",d:"単語バンク後半の体験セットをクリア（受験・資格向けの先取り）",ok:(id,p)=>!!p.bank,go:()=>loadBank(()=>{const n=bankStages();CUR=bankSet(Math.max(1,Math.floor(n*.6)+weekNo()%Math.floor(n*.3)),0,true);startRun(1)})}];
+const theme=()=>THEMES[weekNo()%THEMES.length];
+function tasks(){const th=theme();return [
+  {n:"単語ダッシュ",d:"単語のセットを1つクリア",ok:id=>/^w/.test(id),go:()=>{SV.wtab="w";renderWords();show("sWords")}},
+  {n:`今週：${th.n}`,d:th.d,ok:th.ok,go:th.go,wk:true},
+  {n:"Aランク以上",d:"どれかでAランク以上を取る",ok:(id,p,rank)=>rank==="S"||rank==="A",go:()=>{SV.wtab="w";renderWords();show("sWords")}}]}
+function taskCheck(p,rank){const g=PG(),ts=tasks();let got=0,msg=[];
+  ts.forEach((t,i)=>{if(!g.day.done[i]&&t.ok(p.id,p,rank)){g.day.done[i]=1;got+=10;msg.push(t.n);if(t.wk&&!g.wk.done){g.wk.done=1;got+=20}}});
+  if(got&&g.day.done.every(Boolean)){got+=10;msg.push("全部達成ボーナス")}
+  if(!got)return "";const L0=lvOf(g.xp);g.xp+=got;save();const L1=lvOf(g.xp);
+  return `<div class="pgres">課題クリア：${esc(msg.join("・"))}　+${got}XP${L1>L0?`<br><b>レベルアップ！ Lv.${L1}</b>${g.member?`（単語バンク ステージ${L1}が開きました）`:""}`:""}</div>`}
+function pgCard(){const g=PG(),L=lvOf(g.xp),r=(g.xp%XPL)/XPL,ts=tasks();
+  return `<button class="pgc" id="btnPg"><span class="hd"><span class="lv">Lv.${L}</span><span class="xp"><i style="width:${Math.round(r*100)}%"></i></span><span class="st">${g.member?"会員":"無料"}・💎${g.dia}</span></span>
+   <span class="wk">今週のテーマ：${esc(theme().n)}</span><ul>${ts.map((t,i)=>`<li class="${g.day.done[i]?"ok":""}">${g.day.done[i]?"✅":"⬜"} ${esc(t.n)}</li>`).join("")}</ul></button>`}
+function openTasks(){const g=PG(),ts=tasks(),L=lvOf(g.xp);
+  overlay(`<div class="sheet"><h3>今日の課題</h3><p class="hint">課題をクリアするとXPがたまってレベルが上がります（${XPL}XPで1レベル）。${g.member?"会員はレベルに合わせて単語バンクのステージが開きます。":"会員になると、レベルに合わせて単語バンク（2万語以上）が開きます。"}今週のテーマでは、有料のコンテンツも体験できます。</p>
+   ${ts.map((t,i)=>`<div class="task ${g.day.done[i]?"ok":""}"><span class="tx">${g.day.done[i]?"✅":"⬜"} ${esc(t.n)}<small>${esc(t.d)}${t.wk?"（週のテーマ +20XP）":""}</small></span>${g.day.done[i]?"":`<button data-i="${i}">やる</button>`}</div>`).join("")}
+   <p class="hint">Lv.${L}・あと${XPL-g.xp%XPL}XPで次のレベル</p><button class="sbtn" id="tX">閉じる</button></div>`,b=>{
+   b.querySelector("#tX").onclick=closeOv;b.querySelectorAll(".task button").forEach(x=>x.onclick=()=>{SE.tap();closeOv();ts[+x.dataset.i].go()})})}
 function renderUL(){const all=allLists(),cats=[...new Set(all.map(l=>l.cat).filter(Boolean))];if(UCAT&&!cats.includes(UCAT))UCAT="";
   $("wTitle").textContent="単語集";
   $("wNote").textContent=WDB?"自分で作った単語集と、みんなが共有した単語集（🌐）。カテゴリーで絞り込めます。":"自分で作った単語集。英語と訳を1行ずつ貼り付けるか、ファイルから読み込めます。";
@@ -745,10 +816,13 @@ function openSettings(){
    <div class="set">効果音・ボイス${segs("se",[[1,"ON"],[0,"OFF"]])}</div>
    <div class="set">BGM${segs("bgm",[[1,"ON"],[0,"OFF"]])}</div>
    <div class="set">長文完成の日本語${segs("jp4",[[1,"出す"],[0,"出さない"]])}</div>
-   </div><div class="row2"><button class="sbtn" id="setReset">記録をリセット</button><button class="sbtn pri" id="setClose">とじる</button></div></div>`,b=>{
-    b.querySelectorAll(".seg").forEach(sg=>sg.querySelectorAll("button").forEach(x=>x.onclick=()=>{const k=sg.dataset.k,v=x.dataset.v;SV.set[k]=k==="nav"?v:+v;save();SE.tap();applyFs();
+   <div class="set">（試験用）会員${segs("tmem",[[1,"ON"],[0,"OFF"]])}</div>
+   </div><button class="sbtn" id="setDia">（試験用）💎を500もらう</button><div class="row2"><button class="sbtn" id="setReset">記録をリセット</button><button class="sbtn pri" id="setClose">とじる</button></div></div>`,b=>{
+    b.querySelectorAll(".seg").forEach(sg=>sg.querySelectorAll("button").forEach(x=>x.onclick=()=>{const k=sg.dataset.k,v=x.dataset.v;if(k==="tmem"){PG().member=v==="1";save();sg.querySelectorAll("button").forEach(y=>y.classList.toggle("on",y===x));SE.tap();return}SV.set[k]=k==="nav"?v:+v;save();SE.tap();applyFs();
       sg.querySelectorAll("button").forEach(y=>y.classList.toggle("on",y===x));if(k==="bgm"&&AC)BGG.gain.setValueAtTime(SV.set.bgm?.35:0,AC.currentTime);$("heroChara").src=chara("joy")}));
     b.querySelector("#setClose").onclick=()=>{SE.tap();closeOv();renderHome()};
+    b.querySelector("#setDia").onclick=()=>{PG().dia+=500;save();SE.tap();toast(`💎 ${PG().dia}`)};
+    b.querySelectorAll('.seg[data-k="tmem"] button').forEach(y=>y.classList.toggle("on",y.dataset.v===(PG().member?"1":"0")));
     const r=b.querySelector("#setReset");r.onclick=()=>{if(r.dataset.c){SV.best={};save();toast("記録をリセットしました");closeOv();renderHome()}else{r.dataset.c=1;r.textContent="もう一度押すとリセット";r.style.color="var(--bad)"}};
   });
 }
@@ -1137,10 +1211,11 @@ function finalResult(){
   $("resChara").src=chara(rank==="S"||rank==="A"?"joy":rank==="B"?"normal":"think");
   $("resStages").innerHTML=r.res.map(x=>`<div><span>${x.st}. ${STAGES[x.st-1].name}</span><b style="color:${{S:"var(--gold)",A:"var(--accent)",B:"var(--great)",C:"var(--muted)"}[x.rank]}">${x.rank}</b><span class="s">${"★".repeat(x.stars)}<span style="color:var(--line)">${"★".repeat(3-x.stars)}</span></span><span class="n">${x.time.toFixed(1)}s</span></div>`).join("");
   const rv=r.review;
-  $("review").innerHTML=rv.length?`<h4>まちがえた・時間切れ（${rv.length}）</h4>`+rv.map((x,k)=>{const it=x.it,c=it.ci!=null?p.chunks[it.ci]:null;
+  const pgm=taskCheck(p,rank);
+  $("review").innerHTML=pgm+(rv.length?`<h4>まちがえた・時間切れ（${rv.length}）</h4>`+rv.map((x,k)=>{const it=x.it,c=it.ci!=null?p.chunks[it.ci]:null;
     const e=it.kind===1?`<b>${esc(it.en)}</b>`:it.kind===2?esc(it.en):chunkHTML(c,it.gs,it.ge,it.ans);const j=it.kind===1?it.ans:c.ja;
     return `<div class="rv"><div><div class="e">${e}</div><div class="j">${esc(j)}</div></div><button data-k="${k}" aria-label="聞く">🔊</button></div>`}).join("")
-    :`<h4>ミスなし！ 次はタイムを縮めよう</h4>`;
+    :`<h4>ミスなし！ 次はタイムを縮めよう</h4>`);
   $("review").querySelectorAll("button").forEach(b=>b.onclick=()=>{const it=rv[+b.dataset.k].it;say(it.kind===1?it.en:plain(p.chunks[it.ci]))});
   $("resBtns").innerHTML=`<button class="sbtn pri" id="rRe">もう一度</button><button class="sbtn" id="rRead">📖 振り返り：本文を読む</button><button class="sbtn" id="rBack">もどる</button>`;
   $("rRe").onclick=()=>{SE.tap();startRun(1)};
