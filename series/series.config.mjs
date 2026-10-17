@@ -2,11 +2,10 @@
    新しく単体アプリを売るときは APPS に1つ足すだけ。 */
 export const PREBUILD = [   // 組み立ての前に動かす道具
   'tools/build_dict.py',   // 共通の辞書
-  'games/cb/tools/series_build.py',
 ];
 export const GAMES = {   // ゲーム → 公開するファイル [元, 公開先]（フォルダは中身ごと）
-  punichunk: [['games/cb/out/punichunk.js', 'lib/punichunk.js']],
-  cards: [['games/cb/out/punichunk.js', 'lib/punichunk.js'], ['games/cb/out/cards.js', 'g/cards/cards.js']],
+  punichunk: [],   // 全部 app.js / app.css に入る
+  cards: [],
   stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream']],
   chunkchunk: [],   // 全部 app.js / app.css に入る（共通の辞書・読む画面を使う）
 };
