@@ -6,12 +6,11 @@
   apps/adapters/   各アプリを土台につなぐ「組み込み口」
   apps/cb/         ぷにチャンク＋チャンク・カード（もとのプロジェクトのまま。単体でも apps/cb/build.py でビルドできる）
   apps/chunkchunk/ チャンクチャンク
-  （チャンクストリームのソースは /home/claude/game。ステップ2で apps/stream に移す）
+  apps/stream/      チャンクストリーム（src/＝画面・見た目・動き、data/＝長文と単語、assets/＝画像と声、tools/＝データを作る道具）
 """
 import os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DIST = os.path.join(ROOT, 'dist')
-GAME = '/home/claude/game'
 r = lambda *p: open(os.path.join(ROOT, *p), encoding='utf-8').read()
 
 def scope_css(css, scope):
@@ -61,18 +60,63 @@ def main():
     open(os.path.join(DIST, 'apps', 'cards.js'), 'w', encoding='utf-8').write(cards)
     # チャンクチャンク
     shutil.copytree(os.path.join(ROOT, 'apps', 'chunkchunk'), os.path.join(DIST, 'apps', 'chunkchunk'))
-    # チャンクストリーム（いまは /home/claude/game のビルド結果）
-    st = os.path.join(DIST, 'apps', 'stream'); os.makedirs(st)
-    for n in ('img', 'audio', 'reading'): shutil.copytree(os.path.join(GAME, 'app', n), os.path.join(st, n))
-    for n in ('data.js', 'pool.js', 'words.js', 'bank.js'): shutil.copy(os.path.join(GAME, 'app', n), st)
-    g = open(os.path.join(GAME, 'app', 'index.html'), encoding='utf-8').read()
-    open(os.path.join(st, 'index.html'), 'w', encoding='utf-8').write('<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>' + g + '\n</body></html>')
+    build_stream()
     # 土台＋組み込み口 → index.html
     core = '\n'.join(r('core', f) for f in ('core.js', 'town.js')) + '\n' + '\n'.join(r('apps', 'adapters', f) for f in sorted(os.listdir(os.path.join(ROOT, 'apps', 'adapters'))) if f.endswith('.js'))
     html = r('core', 'shell.html').replace('/*@@CORE@@*/', core.replace('</script', '<\\/script')).replace('/*@@APPCSS@@*/', '')
     open(os.path.join(DIST, 'index.html'), 'w', encoding='utf-8').write(html)
     total = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(DIST) for f in fs)
     print('dist/ %.1fMB, %d files' % (total / 1048576, sum(len(fs) for _, _, fs in os.walk(DIST))))
+
+STREAM_FIX = [   # チャンクストリームを「開け閉めできる部品」にするための置きかえ（元は1ページ用に書いてある）
+    ('localStorage', '__LS'),                                        # セーブは土台の保存場所へ
+    ('document.addEventListener(', '__docOn('),                     # 閉じるときに外せるように記録
+    ('document.body.appendChild', '__root.appendChild'),            # 飛ぶ演出などは、このアプリの箱の中に出す
+    ('document.documentElement.style.setProperty', '__root.style.setProperty'),
+    ('document.documentElement.classList.toggle("fsb"', '__root.classList.toggle("fsb"'),
+    ('img/chara/', 'apps/stream/img/chara/'), ('audio/voice/', 'apps/stream/audio/voice/'),
+    ('`reading/index.html', '`apps/stream/reading/index.html'),
+]
+def build_stream():
+    S = os.path.join(ROOT, 'apps', 'stream')
+    out = os.path.join(DIST, 'apps', 'stream'); os.makedirs(out)
+    for f in os.listdir(os.path.join(S, 'data')): shutil.copy(os.path.join(S, 'data', f), out)
+    for n in os.listdir(os.path.join(S, 'assets')): shutil.copytree(os.path.join(S, 'assets', n), os.path.join(out, n))
+    shutil.copytree(os.path.join(S, 'reading'), os.path.join(out, 'reading'))
+    js = r('apps', 'stream', 'src', 'stream.js')
+    for a, b in STREAM_FIX:
+        if a not in js: sys.exit('stream.js に「%s」が見つかりません（STREAM_FIX を直してください）' % a)
+        js = js.replace(a, b)
+    css = scope_css(r('apps', 'stream', 'src', 'stream.css'), '.ct-stream')
+    html = r('apps', 'stream', 'src', 'stream.html')
+    mod = """/* チャンクストリーム（build.py が apps/stream/src から作る。直すのは src のほう） */
+(function(){
+var CSS=%s, HTML=%s, FONT="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;600;700&display=swap";
+window.StreamApp=function(__root,ctx){
+  if(!document.querySelector('style[data-ct="stream"]')){var st=document.createElement("style");st.setAttribute("data-ct","stream");st.textContent=CSS;document.head.appendChild(st)}
+  if(!document.querySelector('link[data-ct="stream"]')){var lk=document.createElement("link");lk.rel="stylesheet";lk.href=FONT;lk.setAttribute("data-ct","stream");document.head.appendChild(lk)}
+  __root.classList.add("ct-stream");__root.innerHTML=HTML;
+  const __iv=[],__to=[],__ls=[];
+  const setInterval=(f,t)=>{const i=window.setInterval(f,t);__iv.push(i);return i};
+  const setTimeout=(f,t)=>{const i=window.setTimeout(f,t);__to.push(i);return i};
+  const addEventListener=(t,f,o)=>{window.addEventListener(t,f,o);__ls.push([window,t,f,o])};
+  const __docOn=(t,f,o)=>{document.addEventListener(t,f,o);__ls.push([document,t,f,o])};
+  const __LS={getItem:k=>{const v=ctx.storage.get(k);return v==null?null:v},setItem:(k,v)=>ctx.storage.set(k,v)};
+/* ===== ここから apps/stream/src/stream.js ===== */
+%s
+/* ===== ここまで ===== */
+  {const __show=show;show=function(id){__show(id);ctx.showBack(id==="sTitle"||id==="sHome")}}
+  ctx.showBack(true);
+  return {unmount(){
+    try{endRun()}catch(e){} try{hush()}catch(e){} try{bgmStop()}catch(e){} try{AC&&AC.close()}catch(e){}
+    try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}
+    __iv.forEach(i=>window.clearInterval(i));__to.forEach(i=>window.clearTimeout(i));__ls.forEach(([o,t,f,op])=>o.removeEventListener(t,f,op));
+    __root.innerHTML="";
+  }};
+};
+})();
+""" % (repr_js(css), repr_js(html), js)
+    open(os.path.join(DIST, 'apps', 'stream.js'), 'w', encoding='utf-8').write(mod)
 
 def repr_js(s):
     import json

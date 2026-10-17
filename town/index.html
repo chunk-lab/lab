@@ -175,10 +175,9 @@ ChunkTown.register({
   }
 });
 
-/* いまはまだ部品になっていないアプリ（ステップ2・3で、ほかと同じ組み込み口に作り直す）
-   ・チャンクストリーム … /home/claude/game（長文ゲーム）のビルド結果を apps/stream/ に入れて表示
+/* いまはまだ部品になっていないアプリ（ステップ3で、ほかと同じ組み込み口に作り直す）
    ・チャンクチャンク …… apps/chunkchunk/（?go=study|game|avatar で開く画面を指定） */
-['stream', 'chunkchunk'].forEach(function (id) {
+['chunkchunk'].forEach(function (id) {
   ChunkTown.register({
     id: id, name: id,
     mount: function (el, ctx) {
@@ -203,6 +202,13 @@ ChunkTown.register({
     ctx.showBack(true);
     return { unmount: function () { g.unmount(); } };
   }
+});
+
+/* チャンクストリーム（apps/stream/src → build.py で apps/stream.js に包む）。データは先に読む */
+ChunkTown.register({
+  id: 'stream', name: 'チャンクストリーム',
+  scripts: ['apps/stream/data.js', 'apps/stream/pool.js', 'apps/stream/words.js', 'apps/stream.js'],
+  mount: function (el, ctx) { return window.StreamApp(el, ctx); }
 });
 </script>
 

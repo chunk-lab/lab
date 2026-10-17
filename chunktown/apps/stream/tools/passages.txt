@@ -1,0 +1,263 @@
+# きまり：日本語訳は12字まで（選択肢のボタンに2行で収まるように）。長くなるならチャンクを分ける
+# 書式： 英語チャンク :: 日本語訳   ／ {正解|誤答1|誤答2|誤答3} が第4段階の「つなぎ」
+# @gloss 単語=意味（辞書の訳を文脈に合わせて上書き） @skip 出題しない語
+
+@id beg1
+@lv 1
+@title My Grandmother's Garden
+@ja おばあちゃんの庭
+@tag 高校受験レベル・物語文
+@gloss patience=忍耐, appear=現れる, plant=植える, seed=種, cucumber=キュウリ, especially=特に, finally=ついに, garden=庭, grandmother=祖母, understand=理解する, beautiful=美しい, tomato=トマト
+My grandmother {lives|live|living|to live} :: 私の祖母は住んでいる
+in a small {town|sea|garden|summer} :: 小さな町に
+{near|between|under|during} the sea. :: 海の近くの
+{Behind|Before|Since|Until} her house, :: 彼女の家の裏に
+there {is|are|be|has} a large garden. :: 大きな庭がある
+Every {summer|summers|winters|years}, :: 毎年夏に
+I {visit|visits|visiting|am visit} her :: 私は彼女を訪ねる
+and {help|helps|helping|to helped} her :: そして彼女を手伝う
+{in|of|to|from} the garden. :: 庭で
+We {grow|grows|growing|is grow} tomatoes, :: 私たちはトマトを育てる
+{cucumbers|cucumber|a cucumber|cucumbering}, :: キュウリ
+and many {kinds|kind|kindness|kinded} of flowers. :: たくさんの種類の花を
+{Working|Worked|Works|To working} in the garden :: 庭で働くことは
+{is|are|be|being} hard, :: 大変だ
+{especially|special|especial|specialty} on hot days. :: 特に暑い日には
+{However|Because|Although|Unless}, my grandmother :: しかし祖母は
+always {says|say|saying|said to}, :: いつも言う
+"Plants {teach|teaches|taught to|teaching} us patience." :: 「植物は忍耐を教える」
+{At first|At last|At least|At once}, :: 最初は
+I {didn't|don't|wasn't|haven't} understand :: 私は理解できなかった
+{what|that|which|who} she meant. :: 彼女が何を言いたいのか
+{Last|Next|Ago|Later} year, :: 去年
+I {planted|plant|planting|plants} some seeds :: 私はいくつかの種をまいた
+{by myself|by me|for mine|of myself} :: 自分ひとりで
+and {waited|waiting|waits|to wait} for weeks. :: そして何週間も待った
+{When|What|Which|Who} the first small leaves :: 最初の小さな葉が
+finally {appeared|appear|appearing|appears}, :: ついに現れたとき
+I {felt|feel|feeling|was felt} very happy. :: 私はとてもうれしかった
+Now I {know|knows|knew|knowing} :: 今、私は知っている
+{that|what|which|who} good things take time. :: 良いことは時間がかかると
+I want {to keep|keeping|keep|kept} the garden :: 私はその庭を保ちたい
+beautiful {for|to|by|at} her. :: 彼女のために美しく
+
+@id beg2
+@lv 1
+@title A New Friend from Australia
+@ja オーストラリアから来た友達
+@tag 高校受験レベル・体験文
+@gloss visit=訪ねる, nervous=緊張して, decide=決める, mistake=間違い, carefully=注意深く, culture=文化, especially=特に, together=一緒に, courage=勇気, worried=心配して, interested=興味がある, meal=食事, student=生徒, through=〜を通して, smile=ほほえむ, listen=聞く
+{Last|Next|Ago|Before} month, :: 先月
+a new student {came|come|comes|coming} :: 新しい生徒がやって来た
+{to|at|on|by} our class :: 私たちのクラスに
+{from|for|of|with} Australia. :: オーストラリアから
+His name {is|are|am|be} Liam. :: 彼の名前はリアムだ
+{On|In|At|By} his first day, :: 初日に
+he {looked|looked at|looking|looks like} nervous :: 彼は緊張して見えた
+{because|so|but|though} he could not :: 彼は…できなかったので
+speak Japanese {well|good|great|skillful}. :: 日本語を上手に話す
+{During|While|For|Since} lunch time, :: 昼食の時間に
+I {decided|decide|deciding|was decide} :: 私は決めた
+{to talk|talking|talk|talked} to him in English. :: 英語で彼と話すことを
+I {was|am|did|were} worried :: 私は心配していた
+{about|of|for|with} making mistakes, :: 間違えることについて
+but he {listened|heard|listen|listening} to me :: でも彼は聞いてくれた
+{carefully|careful|carefulness|care} :: 注意深く
+and {smiled|smile|smiling|smiles}. :: そしてほほえんだ
+He {told|said|talked|spoke} me :: 彼は私に言った
+{that|what|which|if} he was interested :: 彼は興味があると
+{in|on|at|of} Japanese culture, :: 日本の文化に
+{especially|exactly|usually|already} anime and food. :: 特にアニメと食べ物に
+{After|Before|Until|Since} school, :: 放課後
+we {went|go|gone|going} to a ramen shop :: ラーメン店に行った
+{together|each|alone|other}. :: 一緒に
+He {said|told|talked|spoke} it was :: 彼はそれが…だと言った
+the {best|better|good|most good} meal :: 最高の食事
+he {had ever|ever had|had never|has never} eaten. :: 今まで食べた中で
+{Since|Until|For|By} then, :: それ以来
+we {have become|have became|are become|has become} good friends. :: 私たちは良い友達になった
+{Through|Though|Thought|Throw} him, :: 彼を通して
+I have {learned|learn|learning|to learn} :: 私は学んだ
+that a little {courage|courages|courageous|encourage} :: ほんの少しの勇気が
+can {change|changes|changed|changing} a lot. :: 多くを変えられると
+
+@id int1
+@lv 2
+@title Why Do We Need Sleep?
+@ja 私たちはなぜ眠るのか
+@tag 共通テストレベル・説明文
+@gloss role=役割, organize=整理する, memory=記憶, experiment=実験, memorize=暗記する, awake=目が覚めて, suggest=示唆する, waste=無駄, improve=向上させる, effective=効果的な, strategy=戦略, actually=実は, scientist=科学者, smartphone=スマートフォン, information=情報, result=結果, remember=覚えている, grade=成績, enough=十分な, important=重要な, cut=削る, learning=学習
+Many students {stay up|get up|wake up|stand up} late :: 多くの生徒が夜ふかしする
+{to study|studied|to studying|for studied} :: 勉強するために
+or {use|uses|using|used} their smartphones. :: スマホを使うために
+{However|Therefore|Moreover|Instead}, scientists :: しかし科学者たちは
+have {found|find|founded|finding} :: 発見した
+that sleep {plays|play|playing|is play} :: 睡眠が果たすということを
+an important {role|roll|rule|row} in learning. :: 学習において重要な役割を
+{While|During|Since|Until} we are sleeping, :: 私たちが眠っている間に
+our brain {organizes|organize|organizing|to organize} :: 脳は整理する
+the information {we took in|took in us|we took off|we took up} :: 取り入れた情報を
+{during|while|since|until} the day. :: 日中に
+In other {words|word|wording|worlds}, :: 言い換えれば
+sleep {helps us turn|helps us turning|helps turn us|help us turn} :: 睡眠は…変える助けになる
+short-term {memories|memorize|memorial|memory's} :: 短期記憶を
+{into|onto|from|with} long-term ones. :: 長期記憶へと
+In one {experiment|experience|expert|expense}, :: ある実験で
+two {groups|group|grouping|grouped} of students :: 2つのグループの学生が
+{were asked|asked|were asking|was asked} :: 求められた
+{to memorize|memorize|memorizing|memorized} a list of words. :: 単語の一覧を覚えるよう
+The first group {slept|sleep|sleeping|slipped} :: 1つ目のグループは眠った
+{for|during|while|since} eight hours, :: 8時間
+{while|during|because|unless} the second group :: 一方で2つ目のグループは
+stayed {awake|wake|waken|awaking} all night. :: 一晩中起きていた
+The {next|last|nearest|later} day, :: 翌日
+the students {who|which|whose|what} had slept :: 眠った学生たちは
+remembered {far more|very more|much many|far many} words :: ずっと多くの単語を覚えた
+{than|then|that|as} the others. :: 他の学生たちよりも
+This result {suggests|suggest|suggesting|is suggest} :: この結果は示している
+that {cutting|cut|to cutting|cuts} sleep :: 睡眠を削ることは
+{in order to|in order|so that|in order for} study longer :: より長く勉強するために
+may actually {be|is|being|been} :: 実は…かもしれない
+a {waste|waist|west|wasted} of time. :: 時間の無駄
+{If|Unless|Whether|Though} you want :: もしあなたが…したいなら
+to {improve|improves|improving|improvement} your grades, :: 成績を上げることを
+{getting|get|got|gets} enough sleep :: 十分な睡眠をとることが
+{could|can|should|would} be :: …かもしれない
+the most {effective|effect|effectively|affect} strategy. :: 最も効果的な戦略
+
+@id int2
+@lv 2
+@title Vending Machines in Japan
+@ja 日本の自動販売機
+@tag 共通テストレベル・説明文
+@gloss vending=販売, variety=多様性, product=製品, relatively=比較的, rarely=めったに〜ない, damage=損傷を与える, steal=盗む, expensive=高価な, recently=最近, design=設計する, emergency=緊急事態, disaster=災害, occur=起こる, provide=提供する, convenient=便利な, support=支える, local=地域の, community=地域社会, village=村, reason=理由, quiet=静かな, fresh=新鮮な, machine=機械, space=空間, number=数, free=無料の
+Japan {is said|says|is saying|said} :: 日本は言われている
+{to have|having|has|to having} one of :: …の1つを持っていると
+the {highest|higher|high|most high} numbers of vending machines :: 最も多い自動販売機の数
+{in|on|at|to} the world. :: 世界で
+You can {find|found|finding|to find} them :: それらを見つけられる
+{not only|only not|not but|but also} on busy streets :: にぎやかな通りだけでなく
+{but also|and also|but only|and so} in quiet villages. :: 静かな村でも
+They {sell|sale|sells|selling} :: それらは売っている
+a wide {variety|various|vary|variously} of products, :: 多種多様な製品を
+{such as|such like|as such|so as} hot and cold drinks, :: 温かい・冷たい飲み物など
+ice cream, and {even|ever|every|evenly} fresh eggs. :: アイスや新鮮な卵まで
+Why {are there|there are|is there|have there} :: なぜあるのだろうか
+so {many|much|lot|lots} vending machines :: そんなに多くの自販機が
+{in|on|at|to} Japan? :: 日本に
+One {reason|reasons|reasonable|reasoning} is :: 1つの理由は
+{that|what|which|why} the country :: その国が
+is {relatively|relative|relation|relate} safe, :: 比較的安全だということだ
+so the machines {are rarely|are rare|rarely|are rarer} :: だから機械はめったに
+{damaged|damage|damaging|damages} or stolen. :: 壊されたり盗まれたり
+{Another|Other|Others|An other} reason is :: もう1つの理由は
+that land {is|are|be|being} expensive, :: 土地が高いということ
+and a machine {needs|need|needing|to need} :: そして機械は必要とする
+much {less|fewer|little|least} space :: ずっと少ない空間しか
+{than|then|as|that} a shop. :: 店よりも
+{Recently|Recent|Recency|Recenter}, some machines :: 最近、いくつかの機械は
+{have been designed|have designed|are designing|has been designed} :: 設計されてきた
+{to help|helping|helped|to helping} people :: 人々を助けるために
+{in|on|at|by} emergencies. :: 緊急時に
+{When|What|Which|Whose} a disaster occurs, :: 災害が起こったとき
+they {provide|provides|providing|provision} free drinks :: 無料の飲み物を提供する
+to those {who|which|whose|whom} need them. :: それを必要とする人々に
+{In this way|In this time|By this way|On this way}, :: このようにして
+{vending|vend|vended|vendor} machines :: 自動販売機は
+are {not just|not yet|just not|not even} convenient; :: 単に便利なだけでない
+they {also|either|neither|as well} support :: それらは支えてもいる
+local {communities|commute|communicate|common}. :: 地域社会を
+
+@id adv1
+@lv 3
+@title The Paradox of Choice
+@ja 選択のパラドックス
+@tag 難関大レベル・論説文
+@gloss option=選択肢, psychologist=心理学者, discover=発見する, display=陳列（する）, attract=引きつける, customer=客, purchase=購入, overwhelm=圧倒する, moreover=さらに, tend=傾向がある, wonder=〜かと思う, alternative=代わりの選択肢, regret=後悔, reduce=減らす, satisfaction=満足, decision=決定, aware=気づいている, hidden=隠れた, cost=代償, widely=広く, exactly=まさに, likely=〜しそうな, researcher=研究者, supermarket=スーパー, decide=決める, choice=選択, lesson=教訓, feeling=感情, difficult=難しい
+@skip happier,jam,larger,types,type,cases,case,study
+It is {widely|wide|width|widen} believed :: 広く信じられている
+{that|what|which|it} having more options :: 選択肢が多いことが
+{makes|make|making|made to} us happier. :: 私たちをより幸せにすると
+{After all|At all|After that|All after}, :: 結局のところ
+{the more|more|the most|much more} choices we have, :: 選択肢が多ければ多いほど
+the more {likely|like|likes|alike} we are :: 私たちは可能性が高くなる
+to find {exactly|exact|exacting|exactness} :: まさに…を見つける
+{what|that|which|whose} we want. :: 自分が望むもの
+{However|Therefore|Otherwise|Hence}, psychologists :: しかし心理学者たちは
+have {discovered|discover|discovering|discovery} :: 発見した
+that this is not {always|never|often|usually} the case. :: いつもそうとは限らないと
+In a {well-known|well-knew|good-known|well-knowing} study, :: ある有名な研究で
+researchers {set up|set on|set off|set in} a table :: 研究者は台を置いた
+{in|on|of|to} a supermarket :: スーパーマーケットに
+{that|who|where|what} displayed :: それは陳列していた
+{either|neither|both|whether} six or twenty-four types of jam. :: 6種か24種のジャムを
+{Although|Despite|However|Because} the larger display :: 大きな陳列は…けれど
+{attracted|attractive|attraction|attracting} more customers, :: 多くの客を引きつけた
+those {who|which|whose|whom} saw only six types :: 6種類だけを見た人々は
+were about ten {times|time|timing|timed} :: 約10倍
+more {likely|like|likes|liking} to make a purchase. :: 購入する可能性が高かった
+{Too many|Too much|So much|Too lot} options, :: 多すぎる選択肢は
+it {seems|seem|seeming|is seems}, :: どうやら
+can {overwhelm|overwhelming|overwhelmed|overwhelms} us :: 私たちを圧倒しうる
+and make {it|that|this|its} difficult to decide. :: 決めるのを難しくする
+{Moreover|However|Nevertheless|Otherwise}, :: さらに
+even {after|before|since|until} we have made a choice, :: 選択をした後でさえ
+we {tend|tends|tending|are tend} :: 私たちは…しがちだ
+to {wonder whether|wonder that|wonder what|wondering whether} :: …かどうかと考える
+one of the {alternatives|alternative|alternate|alternately} :: 他の選択肢の1つが
+{would have been|would be been|will have been|would had been} better. :: より良かったのではないか
+This feeling {of regret|for regret|to regret|of regretting to} :: この後悔の気持ちは
+{reduces|reduce|reducing|reduction} the satisfaction :: 満足感を減らす
+we {get|got|getting|gets} from our decision. :: 私たちが決定から得る
+The {lesson|lessen|lessons|lesson's} :: 教訓は
+{is not that|is not what|not is that|is that not} choice is bad, :: 選択が悪いのではなく
+{but that|but what|and that|so that} we should be aware :: 気づくべきだということ
+{of|for|to|with} its hidden costs. :: その隠れた代償に
+
+@id adv2
+@lv 3
+@title Does Language Shape Thought?
+@ja 言語は思考を形づくるか
+@tag 難関大レベル・論説文
+@gloss linguist=言語学者, debate=議論する, influence=影響を与える, describe=説明する, location=位置, direction=方角, remarkably=驚くべきことに, excellent=優れた, unfamiliar=なじみのない, concern=〜に関係する, separate=別々の, distinguish=区別する, shade=色合い, slightly=わずかに, finding=発見, prove=証明する, completely=完全に, determine=決定する, rather=むしろ, available=利用できる, attention=注意, certain=ある特定の, aspect=側面, foreign=外国の, therefore=したがって, offer=提供する, instead=その代わりに, language=言語, thought=思考, speaker=話し手, color=色
+@skip russian,english,north,south,dark,light,left,right,blue
+{For|Since|During|While} a long time, :: 長い間
+linguists {have debated|debating|have debate|has debated} :: 言語学者は議論してきた
+{whether|that|what|which} the language we speak :: 話す言語が…かどうか
+{influences|influence|influential|influenced by} :: 影響を与える
+the way {we think|we thinking|how we think|we thought of}. :: 私たちの考え方に
+Some languages, {for example|for instance of|as example|by example}, :: 例えば、いくつかの言語は
+do not use words {such as|such like|so as|as such} :: …のような言葉を使わない
+"left" and "{right|write|light|rite}." :: 「左」や「右」
+{Instead|Instead of|Despite|Unless}, speakers :: 代わりに、話し手は
+{describe|describes|description|describing} locations :: 位置を説明する
+{in terms of|in term of|on terms of|in terms with} directions :: 方角の観点から
+{like|likely|alike|liking} north and south. :: 北や南のような
+{Remarkably|Remarkable|Remark|Remarked}, people :: 驚くべきことに、人々は
+{who|which|whose|what} grow up :: 育った
+{speaking|speak|spoken|to speaking} such languages :: そのような言語を話して
+tend to {have|having|has|had} :: 持つ傾向がある
+an {excellent|excel|excellence|excellently} sense of direction, :: 優れた方向感覚を
+even {in|on|at|to} unfamiliar places. :: なじみのない場所でさえ
+Another example {concerns|concern|concerned|concerning} color. :: もう1つの例は色の話
+Russian has two {separate|separately|separation|separates} words :: ロシア語には別々の2語が
+{for|to|of|with} light blue and dark blue, :: 水色と紺色を表す
+and studies {have shown|have showed|has shown|are shown} :: そして研究は示している
+{that|what|which|whose} Russian speakers :: ロシア語話者が…と
+{can distinguish|can distinguishing|can to distinguish|cans distinguish} :: 区別できる
+{between|among|from|within} these shades :: これらの色合いを
+slightly {faster|fast|fastest|more fast} :: わずかに速く
+{than|then|as|that} English speakers. :: 英語話者よりも
+Such findings {do not prove|does not prove|do not proof|not do prove} :: そうした発見は証明しない
+that language {completely|complete|completion|completed} determines :: 言語が完全に決めると
+{thought|thoughts|think|thinking}. :: 思考を
+{Rather|Rather than|Instead of|Other}, they suggest :: むしろそれらは示す
+that the words {available|avail|availability|availably} to us :: 私たちが使える言葉が
+can {direct|direction|directly|director} our attention :: 私たちの注意を向けうる
+{to|from|of|with} certain aspects of the world. :: 世界の特定の側面に
+{Learning|Learn|Learned|To learning} a foreign language, :: 外国語を学ぶことは
+{therefore|however|otherwise|instead}, :: したがって
+may {offer|offers|offering|to offer} more :: より多くをくれるかも
+{than|then|that|as} a new way of speaking; :: 新しい話し方以上のものを
+it {may offer|may offering|may offers|maybe offer} :: それは…をくれるかも
+a new way {of seeing|to seeing|of see|for seen}. :: 新しい見方を

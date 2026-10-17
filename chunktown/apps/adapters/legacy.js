@@ -1,7 +1,6 @@
-/* いまはまだ部品になっていないアプリ（ステップ2・3で、ほかと同じ組み込み口に作り直す）
-   ・チャンクストリーム … /home/claude/game（長文ゲーム）のビルド結果を apps/stream/ に入れて表示
+/* いまはまだ部品になっていないアプリ（ステップ3で、ほかと同じ組み込み口に作り直す）
    ・チャンクチャンク …… apps/chunkchunk/（?go=study|game|avatar で開く画面を指定） */
-['stream', 'chunkchunk'].forEach(function (id) {
+['chunkchunk'].forEach(function (id) {
   ChunkTown.register({
     id: id, name: id,
     mount: function (el, ctx) {

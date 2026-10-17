@@ -1,0 +1,2516 @@
+# 単語ドリル用の訳の直し。build_words.py が読む。「単語<TAB>品詞<TAB>訳」で上書き、「単語<TAB>-」で外す（変化形など）
+# 方針：中学・高校で最初に習うふつうの意味。12字以内。形容詞は「〜い／〜な／〜の」の形
+day	n	日
+dear	a	親愛な
+letter	n	手紙
+get	v	手に入れる
+order	n	注文
+know	v	知っている
+like	v	好きだ
+made	-
+received	-
+see	v	見る
+account	n	説明、口座
+cow	n	牛
+bee	n	ハチ
+monkey	n	サル
+able	a	できる
+addition	n	追加
+female	n	女性
+adjustment	n	調整
+angry	a	怒った
+general	a	一般的な
+fowl	n	家禽（ニワトリなど）
+guide	n	案内人
+amount	n	量
+manager	n	経営者
+married	a	結婚している
+bent	a	曲がった
+answer	n	答え
+apparatus	n	装置
+angle	n	角度
+porter	n	運搬人
+probable	a	ありそうな
+bright	a	明るい
+representative	n	代表者
+broken	a	壊れた
+awake	a	目が覚めて
+certain	a	確かな
+servant	n	召使い
+cheap	a	安い
+sister	n	姉妹
+attempt	n	試み
+common	a	共通の
+attraction	n	魅力
+automatic	a	自動の
+conscious	a	意識して
+back	n	背中
+cruel	a	残酷な
+balance	n	バランス
+dead	a	死んだ
+ball	n	ボール
+band	n	バンド
+delicate	a	繊細な
+basin	n	洗面器
+different	a	違う
+driving	-
+bath	n	風呂
+dry	a	乾いた
+electric	a	電気の
+complete	v	完成させる
+bit	n	少し
+false	a	間違った
+bite	n	ひとかみ
+far	a	遠い
+blue	n	青
+cover	v	覆う
+fertile	a	肥えた
+boat	n	ボート
+fixed	a	固定された
+boiling	-
+foolish	a	愚かな
+forward	r	前へ
+boot	n	ブーツ
+full	a	いっぱいの
+dress	v	服を着る
+great	a	すばらしい
+drop	v	落とす
+happy	a	幸せな
+hard	a	難しい
+healthy	a	健康な
+brown	n	茶色
+equal	a	等しい
+ill	a	病気の
+important	a	重要な
+bulb	n	電球
+fall	v	落ちる
+kind	a	親切な
+farm	n	農場
+business	n	仕事
+late	a	遅い
+feather	n	羽
+canvas	n	キャンバス
+care	n	世話
+flame	n	炎
+loose	a	ゆるい
+carriage	n	馬車
+loud	a	（声が）大きい
+cart	n	荷車
+chance	n	機会
+free	a	自由な
+medical	a	医学の
+frequent	a	たびたびの
+military	a	軍の
+chemical	n	化学物質
+mixed	-
+chest	n	胸
+natural	a	自然な
+necessary	a	必要な
+normal	a	普通の
+old	a	古い
+open	a	開いた
+physical	a	身体の
+political	a	政治の
+poor	a	貧しい
+company	n	会社
+judge	v	判断する
+private	a	個人の
+complex	a	複雑な
+keep	v	保つ
+quiet	a	静かな
+control	n	管理
+copy	n	コピー
+regular	a	規則正しい
+cord	n	ひも
+let	v	〜させる
+responsible	a	責任がある
+list	n	一覧表
+cup	n	カップ
+crush	v	押しつぶす
+secret	a	秘密の
+serious	a	深刻な
+map	n	地図
+look	v	見る
+simple	a	簡単な
+smooth	a	滑らかな
+mist	n	霧
+solid	a	固体の
+dark	a	暗い
+special	a	特別な
+nail	n	くぎ
+narrow	a	狭い
+design	n	デザイン
+straight	a	まっすぐな
+strange	a	奇妙な
+strong	a	強い
+sudden	a	突然の
+development	n	発展
+tight	a	きつい
+disease	n	病気
+tired	a	疲れた
+true	a	本当の
+doubt	n	疑い
+wide	a	広い
+drain	n	排水管
+yellow	a	黄色い
+wrong	a	間違った
+dust	n	ほこり
+poison	n	毒
+present	a	出席している
+effect	n	効果
+elastic	a	伸縮性のある
+end	n	終わり
+enough	a	十分な
+pump	n	ポンプ
+event	n	出来事
+exchange	n	交換
+feeling	n	感情
+field	n	野原、分野
+flight	n	飛行
+food	n	食べ物
+seem	v	〜のようだ
+front	n	前
+separate	v	分ける
+ship	n	船
+grip	v	つかむ
+group	n	グループ
+slow	a	遅い
+hair	n	髪
+hanging	-
+hearing	-
+heat	n	熱
+help	n	助け
+high	a	高い
+steam	n	蒸気
+hollow	a	中が空の
+hook	n	フック
+hour	n	時間
+idea	n	考え
+instrument	n	楽器、道具
+take	v	取る
+tax	n	税金
+thin	a	薄い、やせた
+kick	v	ける
+kiss	n	キス
+turn	v	回す、曲がる
+last	a	最後の
+lead	v	導く
+learning	-
+leather	n	革
+left	n	左
+wax	n	ろう
+weather	n	天気
+level	n	水準
+lift	v	持ち上げる
+living	-
+lock	n	錠、かぎ
+loss	n	損失
+mark	n	しるし
+mass	n	大量、かたまり
+measure	v	測る
+meat	n	肉
+meeting	n	会議
+motion	n	動き
+nation	n	国家
+need	n	必要
+news	n	ニュース
+noise	n	騒音
+note	n	メモ
+nut	n	木の実
+operation	n	手術、操作
+opposite	a	反対の
+organization	n	組織
+oven	n	オーブン
+pain	n	痛み
+past	n	過去
+paste	n	のり
+plate	n	皿
+plough	n	すき（農具）
+point	n	点、要点
+possible	a	可能な
+pot	n	なべ
+power	n	力
+process	n	過程
+public	a	公共の
+punishment	n	罰
+push	v	押す
+quality	n	質
+rail	n	レール
+reading	-
+request	n	依頼
+rhythm	n	リズム
+right	a	正しい、右の
+roll	v	転がる
+round	a	丸い
+rub	v	こする
+scale	n	規模、目盛り
+seat	n	座席
+selection	n	選択
+shade	n	日陰
+shake	v	振る
+shame	n	恥
+shelf	n	棚
+side	n	側
+sign	n	しるし、標識
+silk	n	絹
+sleep	n	睡眠
+slip	v	滑る
+smash	v	粉々にする
+smell	n	におい
+smile	n	ほほえみ
+sock	n	靴下
+spade	n	シャベル
+sponge	n	スポンジ
+statement	n	発言
+stitch	n	ひと針
+stocking	n	ストッキング
+stop	v	止まる
+story	n	物語
+street	n	通り
+stretch	v	伸ばす
+structure	n	構造
+support	n	支え
+system	n	仕組み
+talk	n	話
+taste	n	味
+teaching	-
+thing	n	物、事
+thought	n	考え
+throat	n	のど
+thunder	n	雷
+till	-
+tin	n	すず、缶
+top	n	頂上
+touch	v	触れる
+town	n	町
+trade	n	貿易
+trick	n	いたずら、手品
+trouble	n	困難
+twist	v	ねじる
+unit	n	単位
+use	n	使用
+verse	n	詩
+vessel	n	船、容器
+view	n	眺め
+waiting	-
+walk	n	散歩
+waste	n	むだ
+water	n	水
+word	n	単語
+wound	n	けが
+writing	-
+mouse	n	ネズミ
+ancient	a	古代の
+pet	n	ペット
+brave	a	勇敢な
+captain	n	船長、主将
+clerk	n	店員、事務員
+creep	v	はう
+customer	n	客
+director	n	監督
+employee	n	従業員
+extra	a	余分の
+familiar	a	よく知っている
+fellow	n	仲間
+grind	v	ひく、すりつぶす
+guard	n	警備員
+guest	n	客
+hire	v	雇う
+host	n	主催者
+lady	n	女性
+lord	n	領主
+lovely	a	すてきな
+master	n	主人、名人
+minister	n	大臣
+modern	a	現代の
+native	a	母国の
+nobody	n	だれも〜ない
+officer	n	役人、警官
+ordinary	a	普通の
+partner	n	パートナー
+president	n	大統領、社長
+salesman	n	セールスマン
+sir	n	（男性への敬称）
+soldier	n	兵士
+student	n	学生
+visitor	n	訪問者
+waiter	n	ウエーター
+youth	n	若者、青春
+above	r	上に
+absent	a	欠席の
+absolute	a	絶対的な
+active	a	活発な
+actual	a	実際の
+afraid	a	恐れて
+alive	a	生きている
+ambitious	a	野心的な
+anxious	a	心配して
+artificial	a	人工の
+awkward	a	ぎこちない
+backward	r	後ろへ
+bare	a	裸の
+basic	a	基本的な
+bold	a	大胆な
+bound	a	きっと〜する
+broad	a	広い
+clever	a	賢い
+commercial	a	商業の
+convenient	a	便利な
+criminal	a	犯罪の
+decisive	a	決定的な
+destructive	a	破壊的な
+eager	a	熱心な
+earnest	a	まじめな
+eastern	a	東の
+easy	a	簡単な
+effective	a	効果的な
+efficient	a	効率的な
+entire	a	全体の
+essential	a	不可欠な
+excellent	a	すぐれた
+excessive	a	過度の
+expensive	a	高価な
+explosive	a	爆発性の
+extensive	a	広範囲の
+extraordinary	a	並はずれた
+faint	a	かすかな
+fair	a	公平な
+fine	a	すばらしい
+firm	a	かたい
+fond	a	好きで
+foreign	a	外国の
+formal	a	正式な
+former	a	前の
+fortunate	a	幸運な
+fresh	a	新鮮な
+friendly	a	友好的な
+gay	a	陽気な
+generous	a	気前のよい
+gentle	a	優しい
+golden	a	金色の
+gradual	a	徐々の
+grand	a	壮大な
+grateful	a	感謝して
+honest	a	正直な
+human	a	人間の
+idle	a	怠けた
+immediate	a	即座の
+immense	a	巨大な
+impossible	a	不可能な
+international	a	国際的な
+latter	a	後者の
+likely	a	〜しそうな
+literary	a	文学の
+lonely	a	さびしい
+loyal	a	忠実な
+mad	a	怒った
+mild	a	穏やかな
+accept	v	受け入れる
+miserable	a	みじめな
+accustom	v	慣れさせる
+add	v	加える
+modest	a	謙虚な
+admire	v	称賛する
+admit	v	認める
+neat	a	きちんとした
+next	a	次の
+noble	a	高貴な
+afford	v	〜する余裕がある
+northern	a	北の
+official	a	公式の
+otherwise	r	さもないと
+outside	n	外側
+appear	v	現れる
+appoint	v	任命する
+peculiar	a	奇妙な
+perfect	a	完璧な
+approve	v	賛成する
+permanent	a	永久の
+plain	a	明白な、質素な
+arrange	v	並べる
+pleasant	a	楽しい
+popular	a	人気のある
+ask	v	尋ねる
+practical	a	実用的な
+astonish	v	驚かせる
+precious	a	貴重な
+pretty	a	かわいい
+proper	a	適切な
+proud	a	誇りに思う
+pure	a	純粋な
+bathe	v	入浴する
+rare	a	まれな
+raw	a	生の
+bear	v	耐える
+real	a	本物の
+reasonable	a	妥当な
+become	v	〜になる
+recent	a	最近の
+beg	v	頼む
+rich	a	金持ちの
+royal	a	王の
+sacred	a	神聖な
+satisfactory	a	満足のいく
+scarce	a	乏しい
+scientific	a	科学的な
+sensitive	a	敏感な
+several	a	いくつかの
+bless	v	祝福する
+severe	a	厳しい
+sick	a	病気の
+silent	a	静かな
+sincere	a	誠実な
+single	a	たった1つの
+slight	a	わずかな
+social	a	社会の
+solemn	a	厳粛な
+sorry	a	すまなく思う
+build	v	建てる
+splendid	a	見事な
+steady	a	安定した
+bury	v	埋める
+strict	a	厳しい
+calculate	v	計算する
+stupid	a	ばかな
+sure	a	確信して
+suspicious	a	疑わしい
+sympathetic	a	同情的な
+catch	v	捕まえる
+terrible	a	ひどい
+thorough	a	徹底的な
+tough	a	たくましい
+ugly	a	醜い
+choose	v	選ぶ
+universal	a	普遍的な
+urgent	a	緊急の
+usual	a	いつもの
+various	a	さまざまな
+clothe	-
+whole	a	全部の
+wild	a	野生の
+wooden	a	木製の
+worse	-
+compare	v	比べる
+compose	v	作曲する、構成する
+confuse	v	混乱させる
+connect	v	つなぐ
+contain	v	含む
+crash	v	衝突する
+cure	v	治す
+damp	a	湿った
+dare	v	あえて〜する
+decide	v	決める
+describe	v	説明する
+desert	n	砂漠
+develop	v	発達させる
+direct	a	直接の
+disagree	v	意見が違う
+disapprove	v	反対する
+discuss	v	話し合う
+dismiss	v	解雇する
+disturb	v	じゃまする
+dull	a	退屈な
+earn	v	稼ぐ
+empty	a	空の
+encourage	v	励ます
+exact	a	正確な
+except	r	〜を除いて
+excite	v	わくわくさせる
+fasten	v	留める
+feed	v	えさをやる
+feel	v	感じる
+fence	n	柵
+fill	v	満たす
+follow	v	ついて行く
+frighten	v	怖がらせる
+furnish	v	家具を備える
+further	r	さらに
+govern	v	統治する
+handle	v	扱う
+heal	v	治す
+hear	v	聞く
+humble	a	謙虚な
+improve	v	改善する
+insure	v	保険をかける
+interrupt	v	じゃまする
+learn	v	学ぶ
+lessen	v	減らす
+live	v	住む
+lose	v	なくす
+accident	n	事故
+accord	n	一致
+address	n	住所
+admission	n	入場
+advance	n	進歩
+advantage	n	利点
+mean	v	意味する
+affair	n	出来事
+miss	v	乗り遅れる、恋しく思う
+aim	n	目的
+moderate	a	適度な
+allowance	n	こづかい
+ambition	n	野心
+multiply	v	増やす、かけ算する
+anger	n	怒り
+appearance	n	外見
+application	n	申し込み
+association	n	協会
+operate	v	操作する
+avenue	n	大通り
+organize	v	組織する
+bank	n	銀行
+owe	v	借りがある
+bargain	n	お買い得品
+basis	n	基礎
+beam	n	光線
+perform	v	演じる、行う
+bend	v	曲げる
+best	a	最もよい
+better	a	よりよい
+bill	n	請求書
+blame	v	責める
+blind	a	目の見えない
+block	n	ブロック
+border	n	国境
+bowl	n	ボウル
+broadcast	n	放送
+bunch	n	房、束
+prefer	v	〜の方を好む
+prepare	v	準備する
+bush	n	茂み
+calculation	n	計算
+calm	a	穏やかな
+camp	n	キャンプ
+cape	n	岬
+prompt	a	即座の
+case	n	場合、事例
+caution	n	注意
+cave	n	洞窟
+century	n	世紀
+qualify	v	資格を得る
+charge	n	料金
+check	v	確認する
+chicken	n	ニワトリ、鶏肉
+childhood	n	子ども時代
+circular	a	円形の
+realize	v	気づく
+claim	v	主張する
+recognize	v	認識する
+class	n	クラス、授業
+classification	n	分類
+climb	v	登る
+refer	v	言及する
+club	n	クラブ
+refresh	v	元気にする
+relate	v	関係づける
+collection	n	収集
+remember	v	覚えている
+concern	n	心配、関心
+composition	n	作文、構成
+repeat	v	繰り返す
+replace	v	取りかえる
+convenience	n	便利
+corn	n	トウモロコシ
+resist	v	抵抗する
+cost	n	費用
+cottage	n	小さな家
+council	n	議会
+course	n	講座、進路
+court	n	裁判所、コート
+ride	v	乗る
+cross	v	横切る
+rob	v	奪う
+crown	n	王冠
+curse	n	のろい
+daily	a	毎日の
+deal	n	取引
+sauce	n	ソース
+decay	v	腐る
+scatter	v	まき散らす
+deed	n	行い
+delay	n	遅れ
+seize	v	つかむ
+serve	v	仕える、出す
+settle	v	解決する、落ち着く
+description	n	説明
+shallow	a	浅い
+shave	v	ひげをそる
+difference	n	違い
+difficulty	n	困難
+dig	v	掘る
+dinner	n	夕食
+dip	v	ひたす
+dirt	n	泥、汚れ
+discipline	n	しつけ、規律
+dish	n	皿、料理
+dive	v	飛び込む
+double	a	2倍の
+soften	v	柔らかくする
+drag	v	引きずる
+drive	v	運転する
+drum	n	ドラム
+due	a	期限の、〜による
+ease	n	容易さ
+efficiency	n	効率
+spend	v	過ごす、使う
+elect	v	選挙で選ぶ
+employ	v	雇う
+envy	n	うらやみ
+escape	v	逃げる
+steep	a	急な
+everything	n	すべて
+exception	n	例外
+excess	n	超過
+strike	v	打つ
+strip	v	はぎ取る
+expression	n	表現
+extension	n	延長
+extreme	a	極端な
+fade	v	薄れる
+faith	n	信仰、信頼
+suppose	v	思う
+fan	n	ファン、扇風機
+fancy	a	高級な
+favor	n	親切、好意
+fellowship	n	仲間意識
+film	n	映画
+finish	v	終える
+flash	n	閃光
+flesh	n	肉
+tend	v	〜しがちである
+float	v	浮く
+fortune	n	運、財産
+frequency	n	頻度
+tire	n	タイヤ
+game	n	試合、ゲーム
+gap	n	すき間、差
+gas	n	ガス
+grave	n	墓
+grease	n	油脂
+try	v	試す
+guilt	n	罪悪感
+unite	v	団結する
+hall	n	ホール
+haste	n	急ぐこと
+heap	n	山積み
+heaven	n	天国
+wander	v	さまよう
+hide	v	隠す
+wear	v	着ている
+weave	v	織る
+holiday	n	休日
+weigh	v	重さを量る
+holy	a	神聖な
+honor	n	名誉
+hunt	v	狩る
+hurry	v	急ぐ
+hurt	v	傷つける
+yield	v	生む、譲る
+imaginary	a	想像上の
+imitation	n	まね
+inquiry	n	問い合わせ
+instant	n	瞬間
+introduction	n	紹介
+knock	v	ノックする
+leadership	n	指導力
+lesson	n	授業、教訓
+life	n	生活、生命
+load	n	荷物
+loan	n	貸付金
+local	a	地元の
+lodge	n	山小屋
+lot	n	たくさん
+loyalty	n	忠誠
+lump	n	かたまり
+main	a	主な
+manner	n	方法、作法
+mechanism	n	仕組み
+medicine	n	薬
+membership	n	会員資格
+mention	v	述べる
+mere	a	ほんの
+message	n	伝言
+mill	n	工場、製粉所
+mineral	n	鉱物
+mistake	n	間違い
+mix	v	混ぜる
+mixture	n	混合物
+moral	a	道徳的な
+mystery	n	なぞ
+neglect	v	無視する
+network	n	ネットワーク
+none	n	だれも〜ない
+nothing	n	何も〜ない
+notice	v	気づく
+nowhere	r	どこにも〜ない
+occasion	n	機会、場合
+ocean	n	海洋
+operator	n	操作する人
+opposition	n	反対
+outline	n	概要
+pack	v	詰める
+package	n	包み
+pad	n	パッド
+pair	n	1組
+pan	n	フライパン
+particle	n	粒子
+particular	a	特定の
+party	n	パーティー、政党
+pass	v	通る、渡す
+passage	n	一節、通路
+path	n	小道
+pause	n	一時停止
+performance	n	演技、成績
+pick	v	選ぶ、摘む
+piece	n	1つ、かけら
+pile	n	山
+pink	n	ピンク
+plaster	n	しっくい
+pool	n	プール
+post	n	郵便、地位
+poverty	n	貧困
+praise	v	ほめる
+presence	n	存在
+preserve	v	保存する
+press	v	押す
+pressure	n	圧力
+product	n	製品
+production	n	生産
+progress	n	進歩
+proposal	n	提案
+protection	n	保護
+puzzle	n	パズル、なぞ
+qualification	n	資格
+race	n	競走、人種
+rapid	a	急速な
+reduction	n	削減
+reference	n	言及、参照
+regard	v	みなす
+relief	n	安心
+remark	n	発言
+remedy	n	治療法
+rent	n	家賃
+repair	n	修理
+repetition	n	繰り返し
+reserve	v	予約する
+return	v	戻る
+review	n	復習、批評
+roar	n	ほえ声
+roast	v	焼く
+rope	n	ロープ
+rug	n	じゅうたん
+ruin	v	だめにする
+rush	v	急ぐ
+sacrifice	n	犠牲
+saddle	n	鞍
+satisfaction	n	満足
+saw	n	のこぎり
+scene	n	場面
+scrape	v	こする
+scratch	v	ひっかく
+screen	n	画面
+sheet	n	1枚、シーツ
+shelter	n	避難所
+shop	n	店
+shower	n	シャワー、にわか雨
+sight	n	視力、光景
+silence	n	沈黙
+simplicity	n	簡単さ
+situation	n	状況
+skill	n	技術
+slide	v	滑る
+solution	n	解決策
+somewhere	r	どこかに
+spare	a	予備の
+speech	n	演説
+speed	n	速さ
+spell	v	つづる
+spin	v	回る
+spit	v	つばを吐く
+split	v	分ける
+spot	n	場所、斑点
+spread	v	広げる
+staff	n	職員
+stair	n	階段
+stand	v	立つ
+state	n	状態、州
+stay	v	滞在する
+steer	v	操縦する
+stock	n	在庫、株
+stroke	n	一打ち
+struggle	v	もがく
+subject	n	科目、主題
+supply	n	供給
+surface	n	表面
+sweep	v	掃く
+swell	v	ふくらむ
+swing	v	揺れる
+tap	v	軽くたたく
+telephone	n	電話
+temple	n	寺
+tender	a	優しい
+term	n	期間、用語
+theatrical	a	演劇の
+threat	n	脅し
+thus	r	このように
+tide	n	潮
+tie	v	結ぶ
+tip	n	先端、チップ
+tobacco	n	タバコ
+track	n	跡、線路
+translation	n	翻訳
+travel	v	旅行する
+treasury	n	財務省
+tremble	v	震える
+trust	n	信頼
+truth	n	真実
+tune	n	曲
+type	n	型、種類
+union	n	組合、連合
+unity	n	統一
+university	n	大学
+upper	a	上の
+upset	a	動揺して
+urge	v	強く勧める
+valuable	a	貴重な
+variety	n	多様性
+village	n	村
+violence	n	暴力
+wait	v	待つ
+wake	v	目を覚ます
+want	v	ほしい
+welcome	v	歓迎する
+whisper	v	ささやく
+wipe	v	ふく
+wish	v	願う
+wonder	v	不思議に思う
+wrap	v	包む
+wreck	n	難破
+wrist	n	手首
+hack	v	たたき切る
+positive	a	前向きな
+choke	v	息を詰まらせる
+foul	a	反則の、不快な
+pop	v	はじける
+project	n	計画
+render	v	〜にする
+trim	v	刈り込む
+blast	n	爆発
+cast	v	投げる
+chip	n	かけら
+colour	n	色
+discharge	v	放出する
+draft	n	下書き
+drift	v	漂う
+flare	v	燃え上がる
+flip	v	ひっくり返す
+flush	v	赤くなる
+heave	v	持ち上げる
+issue	n	問題
+job	n	仕事
+mold	n	型、カビ
+mould	n	型、カビ
+opening	n	開始、すき間
+pit	n	穴
+pitch	n	投球、音の高さ
+plug	n	プラグ
+puff	n	ひと吹き
+rack	n	棚
+reverse	a	逆の
+score	n	得点
+seal	n	アザラシ、印
+shaft	n	軸
+shift	n	交替、変化
+shot	n	発砲、シュート
+slack	a	ゆるんだ
+snap	v	ポキッと折る
+spike	n	とがった物
+squeeze	v	しぼる
+stall	n	売店
+strain	n	負担
+switch	n	スイッチ
+transfer	v	移す
+mount	v	登る
+mate	n	仲間
+brace	n	支え
+counter	n	カウンター
+cutting	-
+jack	n	ジャッキ
+link	n	つながり
+medium	a	中くらいの
+patch	n	つぎ
+sack	n	袋
+splash	v	はねかける
+thrust	v	押しつける
+major	a	主要な
+minor	a	小さい方の
+negative	a	否定的な
+contract	n	契約
+puddle	n	水たまり
+ruffle	v	しわくちゃにする
+tease	v	からかう
+bang	n	ドン（大きな音）
+bob	v	上下に動く
+bond	n	きずな
+butt	n	根元、しり
+commission	n	委員会、手数料
+compound	n	化合物
+dash	v	突進する
+deposit	n	預金
+dock	n	波止場
+glow	v	光る
+grant	v	与える
+hitch	n	障害
+passing	-
+pinch	v	つねる
+pole	n	棒、極
+prime	a	主要な
+recall	v	思い出す
+smack	v	ピシャリと打つ
+tack	n	びょう
+carrier	n	運ぶもの
+hood	n	フード
+jerk	v	ぐいと引く
+prick	v	ちくりと刺す
+superior	a	すぐれた
+troll	-
+intimate	a	親密な
+irregular	a	不規則な
+mature	a	成熟した
+obscure	a	はっきりしない
+pall	-
+secure	a	安全な
+soak	v	ひたす
+spoil	v	だめにする、甘やかす
+capture	v	捕らえる
+channel	n	チャンネル、水路
+chop	v	切り刻む
+click	v	クリックする
+clinch	-
+clip	n	クリップ
+collapse	v	崩れる
+cycle	n	周期
+decline	v	断る、減る
+defence	n	防御
+flap	v	はためく
+flux	n	流動
+gauge	n	計器
+image	n	イメージ
+lap	n	ひざ
+movement	n	動き、運動
+offset	v	相殺する
+radical	a	根本的な、過激な
+rag	n	ぼろきれ
+rear	n	後ろ
+resolution	n	決意
+retreat	v	退く
+rig	-
+running	-
+slick	a	なめらかな
+sour	a	すっぱい
+source	n	源
+upgrade	v	向上させる
+variation	n	変化
+bat	n	バット、コウモリ
+runner	n	走者
+tramp	v	重い足取りで歩く
+gross	a	総計の
+inactive	a	活動していない
+lost	-
+bump	v	ぶつかる
+clap	v	拍手する
+dim	a	薄暗い
+engage	v	従事する
+plunge	v	飛び込む
+purge	-
+regenerate	v	再生する
+skim	v	ざっと読む
+spat	-
+submit	v	提出する
+bid	n	入札
+boom	n	ブーム
+brand	n	ブランド
+bust	n	胸像
+canvass	-
+clutch	v	つかむ
+compact	a	小型の
+core	n	中心
+dump	v	捨てる
+exposure	n	さらされること
+pace	n	ペース
+peck	v	つつく
+peg	n	くぎ、留め具
+perch	v	とまる
+poke	v	つつく
+projection	n	予測、投影
+rally	n	集会
+rap	n	ラップ、コツン
+representation	n	表現、代表
+slice	n	薄切り
+slop	-
+slug	n	ナメクジ
+spill	v	こぼす
+stake	n	くい、利害
+sting	v	刺す
+tag	n	札
+tread	v	踏む
+undercut	-
+yoke	-
+caller	n	電話をかけた人
+rake	n	熊手
+rip	v	引き裂く
+sleeper	n	眠る人
+casual	a	気軽な
+crisp	a	パリッとした
+divine	a	神の
+incompatible	a	両立しない
+smart	a	頭のいい
+technical	a	技術的な
+assume	v	思い込む
+blunt	a	鈍い
+forge	v	偽造する
+gag	n	ギャグ
+plumb	-
+remit	-
+remove	v	取り除く
+resolve	v	解決する
+retrograde	-
+scan	v	ざっと見る
+slash	v	切りつける、大幅に削る
+tame	v	飼いならす
+abstract	a	抽象的な
+ace	n	エース
+appeal	n	訴え、魅力
+bark	v	ほえる
+bass	n	低音
+bubble	n	泡
+buffer	n	緩衝材
+bunk	-
+capsule	n	カプセル
+cheat	v	だます
+clog	v	詰まらせる
+coil	n	コイル
+column	n	柱、コラム
+conflict	n	対立
+couple	n	カップル、2つ
+depression	n	不況、落ち込み
+dinar	-
+dispatch	v	派遣する
+drill	n	訓練、ドリル
+favour	n	親切、好意
+fin	n	ひれ
+flop	n	大失敗
+flutter	v	はためく
+hatch	v	ふ化する
+hop	v	ぴょんと跳ぶ
+inversion	n	逆転
+jet	n	ジェット機
+jog	v	ジョギングする
+label	n	ラベル
+lapse	n	ちょっとした誤り
+leak	v	漏れる
+lurch	-
+mantle	n	マント
+mesh	n	網の目
+overhead	r	頭上に
+pickup	n	小型トラック
+plume	n	羽根、煙の柱
+poll	n	世論調査
+reel	n	リール
+reform	n	改革
+repose	-
+salute	v	敬礼する
+scallop	-
+scorch	v	焦がす
+security	n	安全、警備
+shank	-
+sling	n	つり包帯
+smut	-
+squat	v	しゃがむ
+standing	n	地位
+stress	n	ストレス
+stub	n	半券、使い残り
+substitute	n	代わり
+temper	n	気性、かんしゃく
+terminal	n	終点、ターミナル
+tilt	v	傾ける
+tonic	-
+torment	n	苦痛
+toss	v	軽く投げる
+trench	n	溝
+withdrawal	n	撤退、引き出し
+giant	n	巨人
+buff	-
+initiate	v	始める
+jumper	n	セーター
+monitor	v	監視する
+picket	-
+pilot	n	パイロット
+professional	a	プロの
+savage	a	野蛮な
+sneak	v	こっそり動く
+tackle	v	取り組む
+torpedo	-
+advanced	a	進んだ
+classical	a	古典的な
+deadly	a	命にかかわる
+engaged	a	婚約した、従事して
+inferior	a	劣った
+innocent	a	無実の
+keen	a	熱心な、鋭い
+limited	a	限られた
+national	a	国の
+neutral	a	中立の
+unknown	a	知られていない
+bother	v	悩ます
+chafe	-
+commit	v	（罪を）犯す
+conduct	v	行う
+conjugate	-
+corrupt	a	堕落した
+ditch	n	溝
+erupt	v	噴火する
+fiddle	v	いじる
+grab	v	つかむ
+impress	v	感動させる
+incline	v	傾く、気にさせる
+launch	v	始める、打ち上げる
+mellow	a	まろやかな
+ply	-
+propagate	v	広める
+recognise	v	認識する
+relax	v	くつろぐ
+riddle	n	なぞなぞ
+sheer	a	まったくの
+skip	v	飛ばす
+surcharge	n	追加料金
+tense	a	緊張した
+transpose	v	入れかえる
+access	n	利用、接近
+boost	v	押し上げる
+bosom	n	胸
+broadside	-
+buck	-
+cable	n	ケーブル
+cackle	-
+crawl	v	はう
+crib	n	ベビーベッド
+culture	n	文化
+derivation	n	由来
+display	v	展示する
+duplicate	n	複製
+elevation	n	高さ、高度
+fake	a	偽の
+fillet	n	切り身
+floater	-
+flourish	v	栄える
+foil	n	ホイル
+fracture	n	骨折
+fringe	n	ふち、ふさ
+gall	-
+gloss	n	つや
+grate	-
+gutter	n	雨どい、溝
+hail	n	あられ
+halt	n	停止
+inclination	n	傾向
+insert	v	差し込む
+interchange	n	交換
+jar	n	びん、つぼ
+kite	n	たこ（凧）
+lather	-
+leap	v	跳ぶ
+lime	n	ライム、石灰
+loft	n	屋根裏
+maneuver	n	作戦、操作
+manoeuvre	n	作戦、操作
+mess	n	散らかった状態
+mint	n	ミント
+nip	v	つねる
+node	n	節、結び目
+overcast	a	曇った
+pip	n	種
+plot	n	あらすじ、たくらみ
+primary	a	最初の、主な
+puncture	n	パンク
+purple	n	紫
+ramp	n	傾斜路
+recess	n	休憩
+rim	n	ふち
+romance	n	恋愛
+scoop	n	スコップ、特ダネ
+shit	-
+slam	v	バタンと閉める
+smear	v	塗りつける
+snatch	v	ひったくる
+stack	n	積み重ね
+stoop	v	かがむ
+strand	n	糸、ひも
+strap	n	ひも、ベルト
+surge	n	急増
+tick	n	カチカチ（音）
+trail	n	小道、跡
+utility	n	実用性、公共料金
+void	a	無効の、空の
+web	n	クモの巣、ウェブ
+whiff	-
+bug	n	虫、バグ
+drone	n	ドローン
+dun	-
+antique	n	骨董品
+bum	-
+coach	n	コーチ
+lightweight	a	軽量の
+occult	-
+primitive	a	原始的な
+rocker	-
+souse	-
+stud	-
+subordinate	n	部下
+sucker	-
+teaser	-
+twin	n	双子
+vamp	-
+acute	a	鋭い、深刻な
+conventional	a	従来の
+critical	a	重大な、批判的な
+crude	a	粗野な、天然の
+decent	a	きちんとした
+desperate	a	必死の
+fluid	n	液体
+frontal	a	正面の
+frozen	a	凍った
+harmonic	a	調和の
+interior	n	内部
+liberal	a	自由な
+marine	a	海の
+nominal	a	名目上の
+offensive	a	不快な、攻撃的な
+organic	a	有機の
+sealed	-
+secondary	a	2番目の
+singular	a	単数の
+solitary	a	孤独な
+stable	a	安定した
+sublime	a	崇高な
+synthetic	a	合成の
+uncertain	a	不確かな
+uncut	-
+acquire	v	身につける
+animate	v	生き生きさせる
+articulate	v	はっきり話す
+bail	n	保釈金
+blur	v	ぼやけさせる
+convey	v	伝える、運ぶ
+douse	-
+graze	v	草を食べる
+hustle	-
+indent	-
+inscribe	-
+juggle	v	ジャグリングする
+lace	n	レース、ひも
+legitimate	a	正当な
+loosen	v	緩める
+muddy	a	泥だらけの
+peep	v	のぞく
+percolate	-
+plump	a	ふっくらした
+precipitate	-
+profess	v	公言する
+purl	-
+quest	n	探求
+scramble	v	よじ登る、奪い合う
+sober	a	しらふの
+sputter	-
+steamroller	-
+treble	v	3倍にする
+trespass	v	不法侵入する
+twang	-
+upstage	-
+vegetate	-
+vest	n	ベスト、チョッキ
+volley	n	ボレー、一斉射撃
+wallow	-
+acceptance	n	受け入れ
+accession	-
+affinity	n	親近感
+aggregate	n	総計
+alert	a	油断のない
+attachment	n	愛着、添付
+backfire	v	裏目に出る
+bearing	n	関係
+bloom	v	咲く
+bluff	n	はったり
+bluster	-
+bracket	n	かっこ
+browse	v	見て回る
+campaign	n	運動、キャンペーン
+caper	-
+cell	n	細胞
+chestnut	n	栗
+chill	n	寒気
+chorus	n	合唱
+chuck	-
+cipher	n	暗号
+clash	n	衝突
+clump	n	かたまり、茂み
+community	n	地域社会
+complement	n	補うもの
+concord	-
+construction	n	建設
+contrary	n	正反対
+contrast	n	対照
+corona	-
+cramp	n	けいれん
+crease	n	しわ、折り目
+crest	n	頂上
+crossing	n	横断歩道
+crunch	n	ザクザクという音
+cypher	-
+dab	-
+deck	n	甲板、デッキ
+delicacy	n	ごちそう、繊細さ
+displacement	n	移動
+disturbance	n	騒ぎ
+dope	-
+drape	-
+draught	n	すきま風
+dressing	n	ドレッシング
+dribble	v	ドリブルする
+engagement	n	婚約、約束
+establishment	n	設立、施設
+execution	n	実行、処刑
+feast	n	ごちそう、祝宴
+fell	-
+ferment	v	発酵させる
+fling	v	投げつける
+formula	n	公式
+foundation	n	基礎、財団
+fusion	n	融合
+gallery	n	美術館
+generation	n	世代
+glaze	-
+header	n	ヘディング
+hedge	n	生け垣
+honour	n	名誉
+howl	v	遠ぼえする
+humour	n	ユーモア
+imprint	n	跡、印象
+infection	n	感染
+itch	n	かゆみ
+jade	n	ひすい
+judgement	n	判断
+judgment	n	判断
+kink	-
+lag	n	遅れ
+lash	-
+lease	n	賃貸契約
+lick	v	なめる
+litter	n	ごみ
+lyric	n	歌詞
+malt	-
+mire	-
+motley	-
+muzzle	-
+nick	-
+organisation	n	組織
+outrage	n	激しい怒り
+pat	v	軽くたたく
+patronage	n	後援
+perpendicular	a	垂直の
+plague	n	伝染病
+plunk	-
+poise	n	落ち着き
+presentation	n	発表
+principal	n	校長
+profile	n	横顔、プロフィール
+promenade	n	遊歩道
+prospect	n	見込み
+pulp	n	果肉、パルプ
+pulse	n	脈拍
+quiver	v	震える
+radiation	n	放射線
+relaxation	n	くつろぎ
+relay	n	リレー
+rendering	-
+replication	n	複製
+response	n	反応、返答
+rinse	v	すすぐ
+roach	-
+roughness	n	粗さ
+rubric	-
+sanction	n	制裁、許可
+savory	a	風味のよい
+scrap	n	切れ端
+setting	n	設定、背景
+sharpness	n	鋭さ
+skid	v	横滑りする
+slate	n	石板
+slur	-
+snag	n	思わぬ障害
+snare	n	わな
+snarl	v	うなる
+snuff	-
+sole	a	唯一の
+solo	n	ソロ
+span	n	期間、幅
+spar	-
+sparkle	v	きらめく
+staple	a	主要な
+starter	n	前菜、始める人
+straddle	-
+streak	n	筋、連続
+submission	n	提出、服従
+suspension	n	停止、つるすこと
+tally	n	集計
+tenor	n	テノール
+thrill	n	わくわく感
+token	n	しるし
+transit	n	輸送、通過
+transplant	n	移植
+transposition	-
+traverse	v	横切る
+triple	a	3倍の
+trump	n	切り札
+tuck	v	押し込む
+turnout	n	参加者数
+variable	a	変わりやすい
+variance	-
+vent	n	通気口
+wrench	n	レンチ
+feeder	-
+alien	n	外国人、宇宙人
+booster	-
+bore	v	退屈させる
+cardinal	-
+chink	-
+cutter	-
+derelict	-
+dummy	n	模型、人形
+escort	v	付き添う
+favourite	a	お気に入りの
+gallant	-
+goldbrick	-
+graduate	v	卒業する
+groom	n	花婿
+heavyweight	n	重量級
+humanist	-
+independent	a	独立した
+junior	a	年下の
+kid	n	子ども
+maroon	-
+marshal	-
+operative	-
+palatine	-
+premier	n	首相
+punk	-
+snapper	-
+tinker	-
+volunteer	n	ボランティア
+aged	a	年をとった
+brilliant	a	すばらしい
+civil	a	市民の
+collateral	-
+conservative	a	保守的な
+crazy	a	正気でない
+detached	a	無関心な
+domestic	a	国内の、家庭の
+floating	-
+frank	a	率直な
+functional	a	機能的な
+gone	-
+graphic	a	図の、生々しい
+grim	a	厳しい
+harsh	a	厳しい
+heroic	a	英雄的な
+hostile	a	敵意のある
+incompetent	a	無能な
+infernal	-
+inner	a	内側の
+isolated	a	孤立した
+leading	a	一流の
+lively	a	活発な
+mobile	a	移動式の
+odd	a	奇妙な
+partial	a	部分的な
+polar	a	極地の
+powerful	a	強力な
+profound	a	深い
+remote	a	遠い
+secular	a	世俗の
+sidelong	-
+sloppy	a	だらしない
+stark	a	厳しい
+substantial	a	かなりの
+telling	-
+temporal	-
+uniform	n	制服
+unsound	-
+unstable	a	不安定な
+untouchable	-
+verbal	a	言葉の
+working	-
+adhere	v	くっつく、守る
+agitate	v	かき乱す
+brood	v	考え込む
+bunt	-
+capitalise	-
+capitalize	v	資本にする、利用する
+cod	n	タラ
+commute	v	通勤する
+convulse	-
+crisscross	-
+daub	-
+deflate	v	しぼませる
+delineate	-
+designate	v	指名する
+diffuse	v	広める
+drown	v	おぼれる
+elaborate	a	手の込んだ
+fumble	v	手探りする
+harmonise	-
+heighten	v	高める
+identify	v	特定する
+immobilise	-
+immobilize	v	動けなくする
+inspire	v	やる気にさせる
+lighten	v	軽くする
+limber	-
+neutralize	v	無効にする
+organise	v	組織する
+orient	v	向ける
+overlook	v	見落とす、見渡す
+override	v	優先する
+overrun	v	はびこる
+profane	-
+quench	v	（渇きを）いやす
+realise	v	気づく
+reckon	v	思う
+recreate	v	再現する
+rectify	v	正す
+redeem	v	取り戻す
+refine	v	洗練する
+reverberate	v	響き渡る
+sandbag	-
+sashay	-
+shed	v	（涙を）流す
+shy	a	恥ずかしがりの
+strangle	v	首を絞める
+stray	v	迷う
+suspend	v	一時停止する
+swagger	-
+synchronise	-
+synchronize	v	同時に起こる
+taper	v	先細りになる
+unbend	-
+utter	v	口に出す
+vet	n	獣医
+violate	v	違反する
+accretion	-
+aid	n	援助
+analysis	n	分析
+animation	n	アニメ、活気
+appointment	n	予約、約束
+area	n	地域、面積
+arrangement	n	準備、配置
+array	n	ずらりと並んだもの
+assault	n	暴行、攻撃
+assay	-
+assembly	n	集会、組み立て
+assignment	n	課題
+assimilation	n	同化
+ballast	-
+bead	n	ビーズ
+beginning	n	始まり
+berth	-
+binding	-
+bitch	-
+blend	v	混ぜる
+breed	n	品種
+breeding	n	繁殖
+brief	a	短い
+bristle	-
+bulk	n	大部分
+bunker	-
+burden	n	負担
+buzz	n	ブンブンいう音
+canon	-
+cant	-
+chamber	n	部屋、議会
+chart	n	図表
+cinch	-
+circulation	n	循環、発行部数
+clasp	v	握りしめる
+climax	n	最高潮
+closeness	n	親密さ
+closing	-
+code	n	規則、暗号
+comment	n	意見、コメント
+complexion	n	顔色
+con	-
+condensation	n	結露
+conjugation	-
+connexion	-
+constituent	n	構成要素
+contrivance	-
+convertible	-
+corruption	n	汚職
+costume	n	衣装
+counterbalance	-
+crackle	-
+craft	n	工芸、技能
+crumb	n	くず
+curb	v	抑える
+dart	n	ダーツ
+debate	n	討論
+deduction	n	推論、差し引き
+deluge	-
+dial	n	ダイヤル
+diet	n	食事、ダイエット
+dimension	n	次元、寸法
+discourse	n	談話
+dissent	n	反対意見
+distemper	-
+distortion	n	ゆがみ
+distress	n	苦悩
+dodge	v	よける
+dogfight	-
+dose	n	1回分の量
+drawing	n	絵
+embrace	v	抱きしめる
+energy	n	エネルギー
+entry	n	入場、参加
+eruption	n	噴火
+exhibit	v	展示する
+fatigue	n	疲労
+filling	n	詰め物
+fitting	a	ふさわしい
+flake	n	薄片
+fleece	n	羊毛
+flicker	v	ちらつく
+fluff	n	綿毛
+following	-
+gig	n	ライブ演奏
+gin	-
+glare	v	にらむ
+glide	v	滑るように動く
+goad	-
+gouge	-
+grasp	v	つかむ、理解する
+grumble	v	不平を言う
+halter	-
+harbour	n	港
+harness	v	利用する
+hazard	n	危険
+herd	n	群れ
+hint	n	ヒント
+hip	n	腰
+hiss	v	シューと音を立てる
+hive	n	ミツバチの巣
+hum	v	鼻歌を歌う
+impact	n	影響、衝撃
+imperial	a	帝国の
+induction	n	導入、帰納
+inspiration	n	ひらめき
+inventory	n	在庫
+investment	n	投資
+involution	-
+irradiation	-
+jab	-
+jumble	n	寄せ集め
+junket	-
+knit	v	編む
+lance	-
+layer	n	層
+ligature	-
+lightness	n	軽さ
+limb	n	手足
+looseness	-
+mandate	n	権限、命令
+manifold	-
+margin	n	余白、差
+matrix	-
+meter	n	メートル、計器
+miter	-
+mode	n	様式、モード
+mole	n	モグラ、ほくろ
+mound	n	塚、盛り土
+mouthpiece	-
+mug	n	マグカップ
+murmur	v	つぶやく
+mush	-
+nap	n	昼寝
+notch	n	刻み目
+nucleus	n	核
+original	a	元の、独創的な
+output	n	生産高、出力
+partition	n	仕切り
+pastoral	a	牧歌的な
+penetration	n	浸透
+phrase	n	句、表現
+platform	n	ホーム、壇
+pod	n	さや
+pouch	n	小袋
+precipitation	n	降水量
+premium	n	割増金
+principle	n	原理、原則
+probe	v	調査する
+proposition	n	提案、命題
+punch	v	殴る
+punt	-
+purse	n	財布
+quote	v	引用する
+raid	n	襲撃
+ram	n	雄羊
+realisation	-
+realization	n	実現、理解
+receiver	n	受話器、受け手
+recoil	v	後ずさりする
+rein	n	手綱
+repellent	n	防虫剤
+replacement	n	交換、代わり
+replay	n	再試合、リプレイ
+reprieve	-
+resort	n	リゾート、手段
+respite	-
+restraint	n	抑制
+resume	v	再開する
+reversion	-
+rising	-
+romp	-
+rout	-
+rupee	-
+sable	-
+scald	-
+scent	n	香り
+scourge	-
+scream	v	叫ぶ
+scrub	v	ごしごし洗う
+scruple	-
+scuff	-
+sector	n	部門、分野
+serial	a	連続の
+shag	-
+shear	v	刈る
+shilling	-
+shortness	-
+shroud	-
+sitting	-
+slant	n	傾き、観点
+slit	n	切れ目
+slump	n	急落、不振
+snort	v	鼻を鳴らす
+sop	-
+sorrel	-
+specific	a	特定の
+splice	-
+sprinkle	v	ふりかける
+squelch	-
+squint	v	目を細める
+stab	v	刺す
+stampede	-
+stern	a	厳格な
+stripe	n	しま
+stumble	v	つまずく
+suffering	n	苦しみ
+supplement	n	補足、サプリ
+surrender	v	降伏する
+swag	-
+sway	v	揺れる
+swoop	-
+syndicate	-
+tan	n	日焼け
+tang	-
+tangle	v	もつれる
+tension	n	緊張
+thinness	-
+tincture	-
+toggle	-
+traffic	n	交通
+trammel	-
+trash	n	ごみ
+trifle	n	ささいなこと
+trot	-
+trough	-
+truss	-
+turning	-
+underground	a	地下の
+variant	n	変種
+vault	n	金庫室
+venture	n	冒険的事業
+version	n	版、バージョン
+vertical	a	垂直の
+vocal	a	声の
+volume	n	量、音量
+warp	v	ゆがめる
+warrant	n	令状
+whisk	v	泡立てる
+whitewash	-
+whiting	-
+wildcat	-
+worst	-
+squarely	r	まともに
+thickly	r	厚く
+ape	n	類人猿
+pony	n	ポニー
+raven	n	カラス
+snipe	-
+stag	-
+adolescent	n	青年
+antecedent	-
+attendant	n	係員
+batter	n	バッター
+bourgeois	-
+bully	n	いじめっ子
+buster	-
+captive	n	捕虜
+chap	n	やつ、男
+checker	-
+cognate	-
+colored	-
+coloured	-
+confederate	-
+consort	-
+dealer	n	販売業者
+dependent	a	頼っている
+driver	n	運転手
+dwarf	n	小人
+fag	-
+faggot	-
+fagot	-
+gentile	-
+herald	-
+hob	-
+incendiary	-
+invalid	a	無効の
+jockey	n	騎手
+knocker	-
+lame	-
+lush	a	青々とした
+mute	a	無言の
+nag	v	うるさく言う
+pitcher	n	ピッチャー
+player	n	選手
+pusher	-
+putter	-
+quack	-
+queer	-
+recruit	v	募集する
+referee	n	審判
+religious	a	宗教の
+reprobate	-
+revolutionary	a	革命的な
+romantic	a	ロマンチックな
+sage	-
+scrag	-
+senior	a	年上の
+silly	a	ばかげた
+skunk	n	スカンク
+sophisticate	-
+sponsor	n	スポンサー
+steward	n	客室乗務員
+stooge	-
+striker	-
+super	a	すごい
+supporter	n	支持者
+tart	n	タルト
+territorial	a	領土の
+throwaway	a	使い捨ての
+tout	-
+wanton	-
+ward	n	病棟
+zombi	-
+amorphous	-
+blessed	a	恵まれた
+bloodless	-
+burning	-
+capable	a	能力がある
+comfortable	a	快適な
+concentrated	-
+confused	a	混乱した
+connected	-
+cyclic	-
+dense	a	密集した
+determined	a	決心した
+disconnected	-
+disjoint	-
+distinct	a	はっきりした
+duplex	-
+earthy	-
+economic	a	経済の
+established	a	確立した
+extended	-
+fantastic	a	すばらしい
+fearful	a	恐れて
+feminine	a	女性らしい
+finished	-
+flexible	a	柔軟な
+foremost	a	一番の
+generic	a	一般的な
+headlong	-
+hearty	a	心からの
+identical	a	同一の
+immaterial	-
+immature	a	未熟な
+immune	a	免疫のある
+impulsive	a	衝動的な
+indeterminate	-
+indirect	a	間接的な
+inferential	-
+intangible	a	無形の
+internal	a	内部の
+involved	a	関わっている
+knowing	-
+later	-
+leaden	-
+legal	a	法律の、合法の
+linear	a	直線の
+loaded	-
+magnetic	a	磁気の
+mathematical	a	数学の
+mental	a	精神の
+metric	a	メートル法の
+mindless	a	無意味な
+musical	a	音楽の
+naive	a	世間知らずの
+naked	a	裸の
+nervous	a	緊張して
+oral	a	口頭の
+outright	a	完全な
+prim	-
+qualified	a	資格のある
+radial	-
+rational	a	合理的な
+refined	a	洗練された
+restrained	-
+rigid	a	かたい
+ripe	a	熟した
+rude	a	失礼な
+sideways	r	横に
+similar	a	似ている
+skinny	a	やせこけた
+snappy	-
+subdued	-
+superficial	a	表面的な
+syllabic	-
+terrestrial	a	地球の
+thoughtful	a	思いやりのある
+titular	-
+tolerant	a	寛容な
+tubercular	-
+unbroken	-
+uneasy	a	不安な
+uneven	a	でこぼこの
+unlawful	a	違法の
+unsympathetic	-
+volatile	a	不安定な
+weighty	a	重大な
+wicked	a	邪悪な
+wretched	a	みじめな
+yielding	-
+activate	v	作動させる
+appreciate	v	感謝する、よさがわかる
+approximate	a	おおよその
+assure	v	保証する
+attach	v	取り付ける
+certify	v	証明する
+char	-
+conclude	v	結論づける
+confirm	v	確認する
+consecrate	-
+consummate	-
+culminate	v	最高潮に達する
+deliberate	a	意図的な
+depress	v	落ち込ませる
+desolate	a	荒れ果てた
+dispose	v	処分する
+distil	-
+distort	v	ゆがめる
+etch	-
+evacuate	v	避難させる
+evoke	v	呼び起こす
+found	v	設立する
+geminate	-
+gurgle	-
+holler	-
+hover	v	空中に浮かぶ
+induce	v	引き起こす
+induct	-
+indurate	-
+inflame	-
+infuse	-
+inoculate	-
+instill	-
+interlock	-
+jolly	a	陽気な
+limp	v	足を引きずる
+linger	v	長居する、残る
+macerate	-
+mangle	-
+manifest	v	明らかにする
+modulate	-
+naturalize	-
+obliterate	-
+pout	-
+precede	v	先行する
+preempt	-
+prevail	v	広まる、勝る
+proceed	v	進む
+promote	v	促進する
+prostrate	-
+pullulate	-
+rationalise	-
+rationalize	v	正当化する
+reclaim	v	取り戻す
+accounting	n	会計
+adjunct	-
+agitation	n	動揺
+altogether	r	まったく
+anchorage	-
+appreciation	n	感謝、理解
+articulation	-
+aside	r	わきに
+aspect	n	側面
+aspirate	-
+assumption	n	仮定
+attrition	-
+awkwardness	-
+rusticate	-
+babble	-
+backup	n	予備、バックアップ
+bait	n	えさ
+balk	-
+barb	-
+scintillate	-
+beacon	n	灯台、合図
+sear	-
+behind	-
+benefit	n	利益
+bet	v	賭ける
+sequester	-
+bias	n	偏見
+bight	-
+billow	-
+bimonthly	-
+birch	-
+biweekly	-
+blackjack	-
+blessing	n	恵み
+sieve	-
+bootleg	-
+braid	-
+breach	n	違反
+sliver	-
+bream	-
+bridle	-
+brier	-
+buckle	n	バックル
+buffet	n	ビュッフェ
+bulge	-
+solicit	-
+burr	-
+calabash	-
+callus	-
+camouflage	n	カモフラージュ
+canker	-
+specialise	-
+canteen	n	食堂
+cascade	n	小さな滝
+catapult	-
+charity	n	慈善
+charter	n	憲章
+clack	-
+clamor	-
+stifle	v	抑える
+cleat	-
+cleavage	-
+stratify	-
+climber	n	登山者
+cloister	-
+closet	n	クローゼット
+clot	-
+clout	-
+subscribe	v	定期購読する
+coming	-
+commitment	n	献身、約束
+complication	n	複雑な問題
+conceit	-
+cone	n	円すい
+confirmation	n	確認
+conformity	n	順応
+confrontation	n	対立
+conk	-
+conserve	v	保存する
+console	v	慰める
+constant	a	絶え間ない
+constitutional	a	憲法の
+transpire	-
+contingent	-
+contradictory	a	矛盾した
+tweak	v	微調整する
+contribution	n	貢献
+convention	n	会議、慣習
+conveyance	-
+undo	v	元に戻す
+undulate	-
+cooperative	a	協力的な
+correspondence	n	文通、一致
+covering	-
+cracker	n	クラッカー
+craze	n	大流行
+crimp	-
+crimson	n	深紅
+vocalise	-
+crock	-
+cruise	n	船旅
+cuff	n	そで口
+cult	n	崇拝、カルト
+cunning	a	ずるい
+dado	-
+damn	-
+wholesale	n	卸売
+debut	n	デビュー
+winnow	-
+dedication	n	献身
+default	n	初期設定
+deflection	-
+deliberation	n	熟考
+demonstration	n	実演、デモ
+derivative	n	派生物
+detachment	n	分離
+devastation	n	壊滅
+deviation	n	逸脱
+device	n	装置
+dictate	v	命じる
+differential	-
+discernment	-
+discretion	n	思慮分別
+dishonour	-
+disintegration	-
+disregard	v	無視する
+dissolution	-
+domain	n	領域
+dominant	a	支配的な
+downhill	r	下り坂で
+drab	-
+dresser	-
+drip	v	したたる
+dullness	-
+ebb	-
+elaboration	-
+emission	n	排出
+enamel	-
+endemic	-
+ending	n	結末
+endorsement	n	支持
+ensemble	n	合奏団
+entail	v	伴う
+expedition	n	遠征
+external	a	外部の
+extremity	-
+fabrication	-
+facility	n	施設
+faithful	a	忠実な
+falter	-
+fawn	-
+fiber	n	繊維
+fibre	n	繊維
+fifth	a	5番目の
+filler	-
+final	a	最後の
+finance	n	財政、金融
+flank	-
+fluke	-
+forfeit	-
+format	n	形式
+fort	n	とりで
+forte	-
+fourth	a	4番目の
+frail	a	弱々しい
+freight	n	貨物
+freshness	n	新鮮さ
+fume	n	煙
+fundamental	a	基本的な
+furrow	-
+gang	n	ギャング、一団
+gantlet	-
+gear	n	ギア、道具
+gem	n	宝石
+girdle	-
+gleam	v	かすかに光る
+gore	-
+graft	-
+grapple	-
+grid	n	格子
+groove	n	溝
+gush	-
+gut	n	腸、勇気
+hardness	n	かたさ
+hazel	-
+heaviness	-
+hereafter	-
+hike	n	ハイキング
+hobble	-
+honk	-
+hoodoo	-
+hoop	n	輪
+hoot	-
+hopper	-
+hybrid	n	雑種、ハイブリッド
+identification	n	身分証明、特定
+illumination	n	照明
+immersion	-
+imperative	a	不可欠な
+implication	n	意味合い
+incidental	a	付随的な
+indenture	-
+indication	n	しるし、兆候
+individual	n	個人
+indulgence	-
+infinite	a	無限の
+input	n	入力
+institution	n	機関、制度
+intelligence	n	知能
+intervention	n	介入
+interview	n	面接、インタビュー
+involvement	n	関与
+jag	-
+jig	-
+journal	n	日誌、雑誌
+junction	n	合流点
+keynote	n	基調
+lament	v	嘆く
+laminate	-
+leaning	-
+legion	-
+leverage	n	影響力
+license	n	免許
+limitation	n	制限
+lineage	-
+ling	-
+literal	a	文字どおりの
+logic	n	論理
+loom	-
+lug	-
+lull	-
+mandarin	-
+manifestation	n	表れ
+manual	n	説明書
+marrow	-
+mash	v	すりつぶす
+masquerade	-
+melancholy	n	憂うつ
+mellowness	-
+menace	n	脅威
+mil	-
+minuscule	-
+mission	n	任務
+modulation	-
+molar	-
+molding	-
+mortal	a	死すべき
+motive	n	動機
+muck	-
+nibble	v	少しずつかじる
+now	r	今
+nude	-
+nurture	v	育てる
+obstruction	n	妨害
+occupation	n	職業、占領
+octet	-
+offence	n	違反、罪
+offense	n	違反、罪
+offstage	-
+outpouring	-
+overlap	v	重なる
+overload	n	過重
+palaver	-
+pallet	-
+pant	v	あえぐ
+pardon	n	許し
+parity	-
+partridge	-
+pawn	-
+pelt	-
+perception	n	知覚、認識
+perturbation	-
+piggyback	-
+pigment	-
+pike	-
+pill	n	錠剤
+pinion	-
+pinnacle	n	頂点
+plank	n	厚板
+plastron	-
+plop	-
+plum	n	プラム
+portrayal	n	描写
+positiveness	-
+potty	-
+prance	-
+prayer	n	祈り
+predicate	n	述語
+prescription	n	処方せん
+pretence	-
+pretense	n	見せかけ
+preventive	a	予防の
+prod	-
+prohibition	n	禁止
+prophylactic	-
+provision	n	供給、規定
+pry	-
+purchase	n	購入
+quadruple	-
+quartet	n	四重奏
+quintet	-
+radish	n	ラディッシュ
+rape	-
+rationalisation	-
+rationalization	-
+rattle	n	ガラガラという音
+rave	-
+realism	n	現実主義
+ream	-
+rebate	n	払い戻し
+rebound	v	はね返る
+reception	n	受付、歓迎会
+reciprocal	a	相互の
+reef	n	さんご礁
+reek	-
+refinement	n	洗練
+registration	n	登録
+reign	n	治世
+reinforcement	n	強化
+remainder	n	残り
+requisition	-
+rerun	n	再放送
+resonance	n	響き
+restoration	n	回復、修復
+retardation	-
+reversible	-
+rivet	-
+rot	v	腐る
+roughcast	-
+rue	-
+ruff	-
+rumble	v	ゴロゴロ鳴る
+rustication	-
+rut	n	わだち、マンネリ
+salvage	v	救出する
+sap	-
+saving	n	節約、貯金
+savor	v	味わう
+savour	-
+savoury	-
+scattering	-
+scintillation	-
+scour	-
+scuffle	-
+sensitivity	n	敏感さ
+septet	-
+sextet	-
+sham	-
+shimmy	-
+shin	n	すね
+shoal	-
+shooter	-
+shuffle	v	すり足で歩く、混ぜる
+shunt	-
+singsong	-
+slap	v	平手で打つ
+slaughter	n	虐殺
+sledge	n	そり
+slough	-
+sluice	-
+smallness	-
+smoothness	-
+snub	-
+snug	a	心地よい
+sophistication	n	洗練
+sounding	-
+southerly	-
+spatter	-
+spice	n	香辛料
+spindle	-
+spiritual	a	精神的な
+splat	-
+splay	-
+spruce	-
+stagger	v	よろめく
+static	a	静的な
+stave	-
+steal	v	盗む
+steamer	n	汽船
+stiffness	-
+stint	-
+stopper	n	栓
+stout	a	太った、頑丈な
+stratification	-
+stunt	n	離れ業
+subdivision	n	細分
+succession	n	連続、継承
+superlative	n	最上級
+surety	-
+surfeit	-
+swash	-
+tab	n	タブ、つまみ
+tablet	n	錠剤、タブレット
+taboo	n	タブー
+tare	-
+tee	-
+tenderness	n	優しさ
+termination	n	終了
+terminus	-
+testimonial	n	推薦状
+text	n	本文
+texture	n	質感
+thickening	-
+throb	v	ずきずきする
+throttle	-
+thump	v	ドンとたたく
+tickle	v	くすぐる
+tier	n	段、層
+tightness	-
+tiller	-
+tinsel	-
+tithe	-
+tolerance	n	寛容
+toll	n	通行料
+torch	n	たいまつ
+transcription	n	書き起こし
+transformation	n	変化
+transmission	n	伝達、送信
+treatment	n	治療、扱い
+trigger	n	引き金
+trio	n	3人組
+trunk	n	幹、トランク
+turnaround	-
+tweet	n	さえずり、ツイート
+twine	-
+twinge	-
+uneasiness	-
+uplift	-
+upright	a	直立した
+vacuum	n	真空
+vagabond	-
+valve	n	弁
+van	n	バン
+vanilla	n	バニラ
+verge	n	ふち
+vision	n	視力、展望
+wad	-
+wattle	-
+weakness	n	弱さ、弱点
+welterweight	-
+westerly	-
+wharf	-
+whine	v	泣き言を言う
+whipping	-
+wickedness	-
+winkle	-
+wireless	a	無線の
+wrestle	v	格闘する
+wring	v	しぼる
+zap	-
+zip	n	ジッパー
+zoom	v	ズームする
