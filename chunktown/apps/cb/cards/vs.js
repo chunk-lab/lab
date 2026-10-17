@@ -145,14 +145,14 @@
       '<div class="opp"><div class="face">' + op.face + '</div><div class="oinfo"><div class="oname">' + op.name + '<small>捨て札pt <b id="opt">0</b></small></div><div class="backs" id="obk"></div></div><div class="bubble" id="obb"></div></div>' +
       '<div class="rule" id="vrule"></div><div class="vturn" id="vturn"></div>' +
       '<div class="board"><div class="row" id="row"></div>' +
-      '<div class="pv"><div class="sent" id="sent"></div><div class="yk" id="yk"></div><div class="cm"><span class="chips" id="ch">0</span><span class="x">×</span><span class="mult" id="ml">0</span><span class="eq" id="eq"></span></div><div class="msg" id="msg"></div></div></div>' +
+      '<div class="pv"><div class="sent" id="sent"></div><div class="jt" id="jt"></div><div class="yk" id="yk"></div><div class="cm"><span class="chips" id="ch">0</span><span class="x">×</span><span class="mult" id="ml">0</span><span class="eq" id="eq"></span></div><div class="msg" id="msg"></div><div class="hp" id="hp"></div></div><button class="hintb" id="hb">💡 ヒント</button></div>' +
       '<div class="field"><div class="flbl"><span>場(<i class="me">あなた</i>/<i class="cp">' + op.name + '</i>の捨てたカード)</span><span class="pts">捨て札pt <b id="pt">0</b></span></div><div class="frow" id="fd"></div><div class="fhint" id="fh"></div></div>' +
       '<div class="tsu"><div class="tabs" id="tabs"></div><div class="tw" id="tw"></div></div>' +
       '<div class="hand" id="hand"></div><div class="btns" id="bt"></div>');
     ['row', 'sent', 'yk', 'ch', 'ml', 'msg', 'tabs', 'tw', 'hand', 'bt', 'fd', 'fh', 'pt'].forEach(function (k) { G_[k] = $('#' + k, s); });
-    ['vhn', 'vpot', 'vme', 'vcpu', 'opt', 'obk', 'obb', 'vrule', 'vturn', 'eq'].forEach(function (k) { G_[k] = $('#' + k, s); });
+    ['vhn', 'vpot', 'vme', 'vcpu', 'opt', 'obk', 'obb', 'vrule', 'vturn', 'eq', 'jt', 'hp', 'hb'].forEach(function (k) { G_[k] = $('#' + k, s); });
     G_.tab = G_.tab || 0; G_.mode = 'play'; G_.mark = []; G_.busy = false;
-    G_.vs = { renderAll: renderAll, preview: preview, btns: btns };
+    G_.vs = { renderAll: renderAll, preview: preview, btns: btns }; G_.hb.onclick = K.doHint;
     $('#vq', s).onclick = function () { var o = el('div', 'modal', '<div class="box"><h2>対戦をやめる?</h2><p>ここでやめると負けになる。</p><button class="btn disc" id="y">やめる</button><button class="btn ghost" id="n">つづける</button></div>'); K.root().appendChild(o); $('#n', o).onclick = function () { o.remove(); }; $('#y', o).onclick = function () { o.remove(); V.quit = true; endMatch(true); }; };
   }
   function renderAll() { top(); K.renderRow(); K.renderTsu(); K.renderHand(); field(); btns(); }
@@ -166,11 +166,13 @@
   }
   function say(t, cls) { if (!G_.obb) return; G_.obb.className = 'bubble on ' + (cls || ''); G_.obb.innerHTML = t; K.bump(G_.obb); }
   var cur = null;
+  function myMul(t) { return Math.floor(t * K.LV_MULT[K.level()] * K.HINT_MULT[ME.hintLv || 0]); }
+  function mulNote() { var o = []; if (K.level() !== 1) o.push(K.LV_JA[K.level()] + ' ×' + K.LV_MULT[K.level()]); return o.length ? '<br>' + o.join('・') : ''; }
   function preview(ev) {
     cur = ev; G_.sent.className = 'sent ' + ev.state; G_.msg.textContent = ''; G_.eq.textContent = '';
     if (ev.state === 'empty') { G_.sent.textContent = ''; G_.yk.textContent = '最後に台の文で勝負。手札をタップして並べよう'; G_.ch.textContent = '0'; G_.ml.textContent = '0'; return; }
-    if (ev.state === 'ok') { var sc = scoreRow(ME.row, ev, V.rule); G_.sent.textContent = ev.text; G_.yk.textContent = '役:' + sc.y.name + '(' + ev.f.words + '語)'; G_.ch.textContent = sc.chips; G_.ml.textContent = sc.mult; G_.eq.textContent = '= ' + sc.total.toLocaleString(); G_.msg.innerHTML = K.notes(ev.f, 0); top(); return; }
-    G_.sent.textContent = K.rowText(ME.row); G_.yk.textContent = ''; G_.ch.textContent = '–'; G_.ml.textContent = '–'; G_.msg.textContent = (ev.state === 'bad' ? '✕ ' : '… ') + (ev.msg || '');
+    if (ev.state === 'ok') { var sc = scoreRow(ME.row, ev, V.rule); G_.sent.textContent = ev.text; G_.yk.textContent = '役:' + sc.y.name + '(' + ev.f.words + '語)'; G_.ch.textContent = sc.chips; G_.ml.textContent = sc.mult; G_.eq.textContent = '= ' + myMul(sc.total).toLocaleString(); G_.msg.innerHTML = K.notes(ev.f, 0) + mulNote(); top(); return; }
+    G_.sent.textContent = K.rowText(ME.row); G_.yk.textContent = ''; G_.ch.textContent = '–'; G_.ml.textContent = '–'; G_.msg.textContent = K.errMsg(ev, ME.row);
   }
   function field() {
     G_.fd.innerHTML = ''; G_.pt.textContent = ME.pts;
@@ -219,7 +221,7 @@
     V.first = V.first === 'me' ? 'cpu' : 'me';
     V.all.forEach(function (c) { c.by = null; if (c.w.k === 'v') c.w.f = 'base'; if (c.w.k === 'n') c.w.pl = false; });
     ME.hand = []; ME.row = []; ME.field = []; ME.disc = []; ME.draw = shuffle(V.all.slice()); ME.pts = 0; ME.refill = 0;
-    CPU.hand = []; CPU.row = []; CPU.pts = 0; CPU.refill = 0; V.cpuBest = null; V.cpuLocked = null; V.ri = { me: 0, cpu: 0 }; V.bluffed = false; G_.busy = false;
+    CPU.hand = []; CPU.row = []; CPU.pts = 0; CPU.refill = 0; V.cpuBest = null; V.cpuLocked = null; ME.hintLv = 0; G_.hintBest = null; G_.hintIds = {}; V.ri = { me: 0, cpu: 0 }; V.bluffed = false; G_.busy = false;
     V.quest = K.pickQuest(V.usedQ = V.usedQ || []); QCTX = V.quest; V.mission = K.pickMissions(V.usedM = V.usedM || [], 1)[0].m;
     V.rule = pick(K.JOKERS.filter(function (j) { return !/^(bank|lucky|first|last)$/.test(j.id); }));
     V.pot = 0; V.c = { me: 0, cpu: 0 }; pay('me', ANTE); pay('cpu', ANTE);
@@ -329,21 +331,25 @@
     var ev = K.evaluate(ME.row), my = ev.state === 'ok' ? scoreRow(ME.row, ev, V.rule) : null, cb = V.cpuBest = best(), cs = cb ? cb.sc : null, Q = V.quest.secret;
     var bon = function (f, who) { var o = []; if (V.ri[who]) o.push(['🀄 リーチ', riPct(V.ri[who])]); if (f && K.missionHit(V.mission, f)) o.push(['🎯 お題', 10]); if (f && K.questHit(Q, f)) o.push(['🔒 シークレット', K.Q_PCT[Q.tier]]); return o; };
     var mb = my ? bon(ev.f, 'me') : [], cbn = cs ? bon(cb.ev.f, 'cpu') : [], pc = function (l) { return Math.min(50, l.reduce(function (a, x) { return a + x[1]; }, 0)); };
-    var mt = my ? Math.floor(my.total * (1 + pc(mb) / 100)) : 0, ct = cs ? Math.floor(cs.total * (1 + pc(cbn) / 100)) : 0, win = mt > ct ? 'me' : mt < ct ? 'cpu' : 'draw';
+    var mt = my ? Math.floor(myMul(my.total) * (1 + pc(mb) / 100)) : 0, ct = cs ? Math.floor(cs.total * (1 + pc(cbn) / 100)) : 0, win = mt > ct ? 'me' : mt < ct ? 'cpu' : 'draw';
     var bl = function (l) { return l.length ? '<div class="bon">' + l.map(function (x) { return x[0] + ' +' + x[1] + '%'; }).join(' ・ ') + (pc(l) < l.reduce(function (a, x) { return a + x[1]; }, 0) ? '(上限 +50%)' : '') + '</div>' : ''; };
     if (my && ev.f.colloc === 'good' && K.addCombo(ev.f.pair)) K.flash('📖 名コンビ図鑑に登録!「' + ev.f.pair + '」');
     var o = el('div', 'modal', '<div class="box sd"><h2>勝負!</h2>' +
-      '<div class="side me"><div class="who">あなた</div><div class="tx">' + (my ? ev.text : '(文になっていない → 0点)') + '</div>' + (my ? '<div class="yk2">' + my.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (my ? my.chips : 0) + '</b>×<b class="mult">' + (my ? my.mult : 0) + '</b>= <b class="tot" id="mt">0</b></div>' + bl(mb) + '</div>' +
-      '<div class="side cp"><div class="who">' + V.opp.face + ' ' + V.opp.name + '</div><div id="crow"></div><div class="tx">' + (cb ? cb.ev.text : '(文が作れなかった)') + '</div>' + (cs ? '<div class="yk2">' + cs.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (cs ? cs.chips : 0) + '</b>×<b class="mult">' + (cs ? cs.mult : 0) + '</b>= <b class="tot" id="ct">0</b></div>' + bl(cbn) + '</div>' +
+      '<div class="side me"><div class="who">あなた' + (my ? '<button class="spk" id="spm">🔊</button>' : '') + '</div><div class="tx">' + (my ? ev.text : '(文になっていない → 0点)') + '</div>' + (my ? '<div class="yk2">' + my.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (my ? my.chips : 0) + '</b>×<b class="mult">' + (my ? my.mult : 0) + '</b>= <b class="tot" id="mt">0</b></div>' + bl(mb) + (mulNote() ? '<div class="bon">' + mulNote().replace('<br>', '') + '</div>' : '') + '</div>' +
+      '<div class="side cp"><div class="who">' + V.opp.face + ' ' + V.opp.name + (cb ? '<button class="spk" id="spc">🔊 聞く</button>' : '') + '</div><div id="crow"></div><div class="tx">' + (cb ? cb.ev.text : '(文が作れなかった)') + '</div>' + (cs ? '<div class="yk2">' + cs.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (cs ? cs.chips : 0) + '</b>×<b class="mult">' + (cs ? cs.mult : 0) + '</b>= <b class="tot" id="ct">0</b></div>' + bl(cbn) + '</div>' +
       '<div class="qrev2">🔒 シークレットは「<b>' + Q.label + '</b>」(' + K.TIER_JA[Q.tier] + ' +' + K.Q_PCT[Q.tier] + '%)</div><p class="res" id="rs"></p><button class="btn go" id="nx" style="visibility:hidden">つぎのハンドへ</button></div>');
     K.root().appendChild(o); if (cb) $('#crow', o).appendChild(miniRow(cb.row, cb.ev));
-    if (my) { K.speak(ev.text); } await wait(400);
+    var rv = my ? K.reviewItems(ME.row, ev) : null; if (my) K.recordHist(V.hist = V.hist || [], ME.row, ev, mt);
+    if (rv) { var rb = el('button', 'btn ghost small', '📖 この文の解説'); rb.onclick = function () { K.reviewFlow(rv); }; $('.side.me', o).appendChild(rb); }
+    if ($('#spm', o)) $('#spm', o).onclick = function () { K.speak(ev.text); }; if ($('#spc', o)) $('#spc', o).onclick = function () { K.speak(cb.ev.text); };
+    if (my) { K.speak(ev.text); } await wait(400); // 自分の文だけ自動で読む。相手の文は🔊で
     for (var i = 1; i <= 15; i++) { $('#mt', o).textContent = Math.round(mt * i / 15).toLocaleString(); $('#ct', o).textContent = Math.round(ct * i / 15).toLocaleString(); if (i % 3 === 0) SFX.chip(i); await wait(45); }
-    await wait(my ? 1600 : 300); if (cb) K.speak(cb.ev.text); await wait(500);
+    await wait(my ? 1200 : 300);
     var p = settle(win);
     $('#rs', o).className = 'res ' + (win === 'me' ? 'w' : win === 'cpu' ? 'l' : '');
     $('#rs', o).textContent = win === 'me' ? '勝ち! 🪙 +' + p : win === 'cpu' ? '負け… 🪙 ' + p + ' は ' + V.opp.name + 'へ' : '引き分け(半分ずつ)';
     if (win === 'me') { SFX.win(); say(pick(['くっ…', 'やるね', 'まいった'])); } else if (win === 'cpu') { SFX.lose(); say(pick(['いただき!', 'ふふん', 'まだまだ'])); }
+    if (rv) { await wait(900); await K.reviewAfter(rv); } // 直した所は勝負のあとすぐ(上級は見たい人だけ)
     $('#nx', o).style.visibility = 'visible'; G_.busy = false; renderAll();
     $('#nx', o).onclick = function () { o.remove(); nextHand(); };
   }
@@ -353,7 +359,8 @@
     G_.vs = null; if (won) SFX.win(); else SFX.lose();
     var s = K.screen('<div class="end"><h1>' + (won ? '🏆 勝ち!' : draw ? '引き分け' : '負け…') + '</h1><div class="st">' + V.opp.face + ' ' + V.opp.name + ' との対戦</div>' +
       '<div class="tot">あなた 🪙' + V.med.me + ' ・ ' + V.opp.name + ' 🪙' + V.med.cpu + '</div><div class="st">ハンド ' + V.stats.win + '勝 ' + V.stats.lose + '敗 ・ 通算 ' + r.w + '勝 ' + r.l + '敗</div>' +
-      '<button class="btn go" id="re">もう一回</button><button class="btn vs" id="ot">相手をかえる</button><button class="btn ghost" id="tt">タイトルへ</button></div>');
+      ((V.hist || []).length ? '<button class="btn ghost" id="hs">📚 今回の文をふりかえる(' + V.hist.length + ')</button>' : '') + '<button class="btn go" id="re">もう一回</button><button class="btn vs" id="ot">相手をかえる</button><button class="btn ghost" id="tt">タイトルへ</button></div>');
+    if ($('#hs', s)) { var hl = V.hist; $('#hs', s).onclick = function () { K.histModal(hl); }; }
     $('#re', s).onclick = function () { start(V.opp); }; $('#ot', s).onclick = function () { K.showTitle(); pickOpp(); }; $('#tt', s).onclick = function () { K.showTitle(); };
   }
 

@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 街：一枚絵を横幅に合わせて表示。建物は絵の区画に％で置く。アプリは全画面の #ctApp の中に mount する */
-:root{--sky:#189efe;--ink:#2b2320;--paper:#fffaf0;--wood:#8a5a32;--leaf:#4fa34a;--sun:#ffc93c;
+:root{--sky:#069bfd;--ink:#2b2320;--paper:#fffaf0;--wood:#8a5a32;--leaf:#4fa34a;--sun:#ffc93c;
   --font:"Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP","M PLUS Rounded 1c","Yu Gothic",system-ui,sans-serif;color-scheme:light}
 html,body{height:100%}
 body{background:var(--sky);color:var(--ink);font-family:var(--font);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
@@ -15,11 +15,11 @@ body{background:var(--sky);color:var(--ink);font-family:var(--font);overflow:hid
 .ct-bld.hop{animation:cthop .45s cubic-bezier(.3,1.6,.5,1)}
 @keyframes cthop{35%{transform:translate(-50%,-104%) scale(1.06,.95)}}
 .ct-bld:focus-visible{outline:3px solid var(--sun);outline-offset:4px;border-radius:12px}
-#bSchool{left:22.5%;top:calc(33.2% - 30px);width:34%}
-#bLibrary{left:77.6%;top:calc(33.2% - 30px);width:33%}
-#bHouse{left:50.2%;top:calc(47.6% - 30px);width:29%}
-#bShop{left:21.6%;top:calc(69.6% - 30px);width:36%}
-#bGame{left:79.2%;top:calc(69.6% - 30px);width:32%}
+#bSchool{left:22.8%;top:45.4%;width:32%}
+#bLibrary{left:77.8%;top:45.4%;width:31%}
+#bHouse{left:50.2%;top:58.6%;width:24%}
+#bShop{left:20.6%;top:78.6%;width:34%}
+#bGame{left:80.2%;top:78.6%;width:31%}
 @media (prefers-reduced-motion:reduce){.ct-bld.hop{animation:none}}
 .ct-ov{position:fixed;inset:0;background:rgba(20,30,40,.35);display:flex;align-items:flex-end;justify-content:center;z-index:10}
 .ct-sheet{width:min(100%,520px);background:var(--paper);border-radius:22px 22px 0 0;border:3px solid var(--wood);border-bottom:0;

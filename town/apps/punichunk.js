@@ -672,7 +672,7 @@ var G = (function () {
     var p = [], v = vp.verb, modal = td.modal, sg3 = s.p === 3 && !s.pl;
     var freq = vp.freq ? vp.freq.w : null;
     var rest = function () { if (td.asp === 'cop') p.push('be'); else if (td.asp === 'prog') p.push('be', Dict.ing(v)); else if (td.asp === 'pass') p.push('be', Dict.pp(v)); else p.push(Dict.base(v)); };
-    var perfTail = function () { if (vp.be || td.asp === 'prog' || td.asp === 'pass') { p.push('been', td.asp === 'pass' ? Dict.pp(v) : Dict.ing(v)); } else p.push(Dict.pp(v)); };
+    var perfTail = function () { if (!v) { p.push('been'); return; } if (vp.be || td.asp === 'prog' || td.asp === 'pass') { p.push('been', td.asp === 'pass' ? Dict.pp(v) : Dict.ing(v)); } else p.push(Dict.pp(v)); };
     if (td.perf && !td.semi) {
       if (modal) { p.push(vp.neg ? negOf(modal) : modal); if (freq) p.push(freq); p.push('have'); }
       else { var hf0 = td.tense === 'past' ? 'had' : sg3 ? 'has' : 'have'; p.push(vp.neg ? negOf(hf0) : hf0); if (marks && hf0 === 'has' && !vp.neg) marks.push('has'); if (freq) p.push(freq); }

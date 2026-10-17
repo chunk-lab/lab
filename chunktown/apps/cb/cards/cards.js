@@ -4,22 +4,37 @@
   'use strict';
   var PC = window.PuniChunk, G = PC._internal.G, DICT = PC.adapters.dict();
   var CFG = { auto: { art: false, prep: false, verb: false, ti: false, er: false } };
+  // レベル:0 初級(冠詞・前置詞・時制はおまかせ)/1 中級/2 上級
+  var LEVEL = 1, LV_JA = ['初級', '中級', '上級'], LV_MULT = [1, 1, 1.3];
+  function setLevel(l) { LEVEL = l; var a = l === 0; CFG.auto = { art: a, prep: a, verb: a, ti: a, er: a }; }
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var el = function (tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   var rnd = Math.random, pick = function (a) { return a[Math.floor(rnd() * a.length)]; };
   var shuffle = function (a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rnd() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+  var storeKeyLevel = 'level';
   var store = { get: function (k) { try { return JSON.parse(localStorage.getItem('chunkcards:' + k)); } catch (e) { return null; } }, set: function (k, v) { try { localStorage.setItem('chunkcards:' + k, JSON.stringify(v)); } catch (e) { } } };
 
   // ---------------- 音 ----------------
   var AC = null;
   function ac() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { } } if (AC && AC.state === 'suspended') AC.resume(); return AC; }
   function beep(f, d, type, v, when) { var c = ac(); if (!c) return; var t = c.currentTime + (when || 0), o = c.createOscillator(), g = c.createGain(); o.type = type || 'triangle'; o.frequency.setValueAtTime(f, t); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v || .12, t + .01); g.gain.exponentialRampToValueAtTime(.001, t + d); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + d + .02); }
+  // 柔らかい音:鈴のような高音(sine)と、カード・チップの「カチッ」(短いノイズ)
+  var NB = null;
+  function noise(d, f, q, v, when) { var c = ac(); if (!c) return; if (!NB) { NB = c.createBuffer(1, c.sampleRate * .3, c.sampleRate); var a = NB.getChannelData(0); for (var i = 0; i < a.length; i++) a[i] = Math.random() * 2 - 1; }
+    var t = c.currentTime + (when || 0), sN = c.createBufferSource(), bp = c.createBiquadFilter(), g = c.createGain(); sN.buffer = NB; bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q; g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + d); sN.connect(bp); bp.connect(g); g.connect(c.destination); sN.start(t); sN.stop(t + d + .02); }
+  function bell(f, d, v, when) { beep(f, d, 'sine', v, when); beep(f * 2.01, d * .6, 'sine', v * .25, when); }
   var SFX = {
-    tap: function () { beep(660, .08, 'triangle', .08); }, put: function () { beep(520, .07, 'square', .05); beep(780, .07, 'triangle', .06, .04); },
-    chip: function (i) { beep(500 + i * 40, .09, 'square', .06); }, mult: function (i) { beep(300 + i * 30, .14, 'sawtooth', .07); }, joker: function () { beep(880, .1, 'triangle', .1); beep(1320, .14, 'triangle', .09, .06); },
-    bad: function () { beep(180, .2, 'sawtooth', .07); }, win: function () { [523, 659, 784, 1046].forEach(function (f, i) { beep(f, .25, 'triangle', .12, i * .1); }); }, coin: function () { beep(1200, .06, 'square', .06); beep(1600, .1, 'square', .05, .05); },
-    lose: function () { [392, 330, 262].forEach(function (f, i) { beep(f, .35, 'triangle', .1, i * .18); }); }
+    tap: function () { noise(.04, 3200, 2, .12); },
+    put: function () { noise(.06, 2200, 1.2, .18); noise(.05, 900, 1, .08, .01); },
+    chip: function (i) { noise(.05, 2600 + i * 60, 6, .16); bell(880 + i * 30, .12, .03, .01); },
+    mult: function () { bell(523, .35, .08); bell(784, .4, .06, .05); },
+    joker: function () { bell(1175, .45, .07); bell(1568, .5, .05, .08); },
+    bad: function () { beep(196, .25, 'triangle', .06); beep(185, .3, 'triangle', .05, .08); },
+    win: function () { [523, 659, 784, 1047, 1319].forEach(function (f, i) { bell(f, .9, .07, i * .09); }); },
+    coin: function () { noise(.05, 4200, 8, .14); bell(2093, .25, .04, .02); },
+    lose: function () { [392, 330, 262].forEach(function (f, i) { bell(f, .8, .07, i * .2); }); }
   };
+
   var voice = null, warned = false;
   function pickVoice() { try { var vs = speechSynthesis.getVoices() || []; var en = vs.filter(function (v) { return /^en([-_]|$)/i.test(v.lang || '') || /english/i.test(v.name || ''); }); var us = en.filter(function (v) { return /US/i.test(v.lang) || /Samantha|Google US|Alex|Aaron|Ava|Allison/i.test(v.name); }); voice = us.filter(function (v) { return v.localService; })[0] || us[0] || en.filter(function (v) { return v.localService; })[0] || en[0] || null; } catch (e) { } return voice; }
   try { pickVoice(); speechSynthesis.addEventListener('voiceschanged', pickVoice); setTimeout(pickVoice, 300); setTimeout(pickVoice, 1500); } catch (e) { }
@@ -54,26 +69,35 @@
     ['所有', [['pos', 'i', 'my'], ['pos', 'you', 'your'], ['pos', 'he', 'his'], ['pos', 'she', 'her'], ['pos', 'we', 'our'], ['pos', 'they', 'their']]],
     ['前置詞', [['prep', 'in'], ['prep', 'at'], ['prep', 'on'], ['prep', 'to'], ['prep', 'with'], ['prep', 'for'], ['prep', 'from'], ['prep', 'by'], ['prep', 'up'], ['prep', 'down'], ['prep', 'out'], ['prep', 'off'], ['prep', 'away'], ['prep', 'back']]],
     ['助動詞', [['modal', 'can'], ['modal', 'will'], ['modal', 'must'], ['modal', 'should'], ['modal', 'may'], ['sm', 'want to'], ['sm', 'have to'], ['sm', 'need to'], ['sm', 'be going to']]],
-    ['be/have', [['be', 'pres'], ['hv', 'pres'], ['not', ''], ['deg', 'very']]],
+    ['be/have/do', [['be', 'pres'], ['hv', 'pres'], ['do', 'pres'], ['not', ''], ['deg', 'very']]],
     ['つなぐ', [['conj', 'and'], ['conj', 'but'], ['conj', 'so'], ['conj', 'when'], ['conj', 'if'], ['conj', 'because'], ['rel', 'who', 'who'], ['rel', 'which', 'which'], ['rel', 'that', 'that']]]
   ];
+  var TSU_EASY = [
+    ['前置詞', [['prep', 'to'], ['prep', 'with'], ['prep', 'for'], ['prep', 'from'], ['prep', 'up'], ['prep', 'out'], ['prep', 'off'], ['prep', 'back']]],
+    TSU[1], TSU[3], TSU[4], TSU[5]
+  ];
+  function curTSU() { return TSU; }
   function tsuCard(spec) {
     var k = spec[0], w;
-    if (k === 'pos') w = { k: 'pr', v: spec[1] }; else if (k === 'sm') w = { k: 'sm', v: spec[1], t: 'pres' }; else if (k === 'not') w = { k: 'not' }; else w = { k: k, v: spec[1] };
+    if (k === 'pos') w = { k: 'pr', v: spec[1] }; else if (k === 'sm') w = { k: 'sm', v: spec[1], t: 'pres' }; else if (k === 'not') w = { k: 'not' }; else if (k === 'do') w = { k: 'do', v: 'pres', neg: false }; else w = { k: k, v: spec[1] };
     return card('t', w, { tsu: true, label: spec[2] || null });
   }
   function cardText(c) {
     if (c.label) return c.label;
-    var t = G.wordText(c.w, CFG); if (c.w.k === 'be') t = c.w.v === 'past' ? 'be(過去)' : 'be'; if (c.w.k === 'hv') t = c.w.v === 'past' ? 'had' : 'have';
+    if (c.w.k === 'do') return c.w.neg ? (c.w.v === 'past' ? "didn't" : "don't") : c.w.v === 'past' ? 'did' : 'do';
+    var t = G.wordText(c.w, CFG); if (c.w.k === 'be') t = c.w.v === 'past' ? (c.w.neg ? 'be(過去・否定)' : 'be(過去)') : (c.w.neg ? 'be(否定)' : 'be'); if (c.w.k === 'hv') t = (c.w.v === 'past' ? 'had' : 'have') + (c.w.neg ? "n't" : ''); if (c.w.k === 'modal') t = c.w.neg ? ({ can: "can't", could: "couldn't", will: "won't", would: "wouldn't", must: "mustn't", should: "shouldn't", may: 'may not', might: 'might not' }[c.w.v] || c.w.v + ' not') : c.w.v;
     return t === 'i' ? 'I' : t;
   }
   function colorOf(c) { var k = c.w.k; return k === 'n' || k === 'pr' || k === 'det' ? 'n' : k === 'v' ? 'v' : k === 'adj' || k === 'adv' || k === 'deg' ? 'm' : k === 'prep' ? 'p' : k === 'conj' || k === 'rel' ? 'c' : 'a'; }
-  function cyclable(c) { return !c.tsu && (c.kind === 'v' || (c.kind === 'n' && G.isCount(c.w.e) && !c.w.e.ind)) || (c.tsu && (c.w.k === 'be' || c.w.k === 'hv' || c.w.k === 'det')); }
+  function cyclable(c) { return !c.tsu && (c.kind === 'v' || (c.kind === 'n' && G.isCount(c.w.e) && !c.w.e.ind)) || (c.tsu && /^(be|hv|det|do|modal|sm)$/.test(c.w.k)); }
   function cycle(c) {
     var w = c.w;
     if (w.k === 'v') { var F = ['base', 'past', 'pp', 'ing'], i = F.indexOf(w.f || 'base'); w.f = F[(i + 1) % 4]; }
     else if (w.k === 'n') w.pl = !w.pl;
-    else if (w.k === 'be' || w.k === 'hv') w.v = w.v === 'past' ? 'pres' : 'past';
+    else if (w.k === 'be' || w.k === 'hv') { var st = (w.v === 'past' ? 1 : 0) + (w.neg ? 2 : 0); st = (st + 1) % 4; w.v = st & 1 ? 'past' : 'pres'; w.neg = !!(st & 2); } // 今 → 過去 → 否定 → 過去の否定
+    else if (w.k === 'do') { var sd = (w.v === 'past' ? 1 : 0) + (w.neg ? 2 : 0); sd = (sd + 1) % 4; w.v = sd & 1 ? 'past' : 'pres'; w.neg = !!(sd & 2); } // do → did → don't → didn't
+    else if (w.k === 'modal') { var FAM = { can: ['can', 'could'], could: ['can', 'could'], will: ['will', 'would'], would: ['will', 'would'], may: ['may', 'might'], might: ['may', 'might'], must: ['must'], should: ['should'] }[w.v] || [w.v], L = FAM.length * 2, si = FAM.indexOf(w.v) + (w.neg ? FAM.length : 0); si = (si + 1) % L; w.v = FAM[si % FAM.length]; w.neg = si >= FAM.length; } // can → could → can't → couldn't
+    else if (w.k === 'sm') w.t = w.t === 'past' ? 'pres' : 'past'; // want to → wanted to
     else if (w.k === 'det') w.v = { a: 'the', the: 'a', 'this': 'that', that: 'this' }[w.v];
   }
   var FORM_JA = { base: '原形・現在', past: '過去形', pp: '過去分詞', ing: '-ing形' };
@@ -107,7 +131,7 @@
       if (nx.t === 'PP') gen(i + 2, acc.concat([mergeNP(t, [nx], G.chunkText(nx, CFG), 'pp')]));
       var vp = nx;
       if (vp.t === 'PART') {
-        for (var k = 0; k <= 2 && i + 2 + k <= T.length; k++) {
+        for (var k = 1; k <= 2 && i + 2 + k <= T.length; k++) { // 分詞だけ(the cat watched)では名詞を説明できない。うしろに1つ以上必要
           var ab = T.slice(i + 2, i + 2 + k);
           if (ab.some(function (x) { return !/^(NP|PP|ADV)$/.test(x.t); })) break;
           if (ab.length && ab[0].t === 'NP' && (vp.vf === 'pp' || vp.verb.fr === 'intr')) break;
@@ -124,18 +148,52 @@
   function vtext(e, f) { return G.wordText({ k: 'v', e: e, f: f }, CFG); }
   function regular(e) { return vtext(e, 'past') === vtext(e, 'pp'); }
   function prevCore(ws, i) { for (var j = i - 1; j >= 0; j--) if (ws[j].k !== 'not' && ws[j].k !== 'deg' && ws[j].k !== 'adv') return ws[j]; return null; }
-  function evaluate(row) {
+  var MOTION_V = ['go', 'come', 'run', 'walk', 'move', 'fly', 'drive', 'travel', 'return', 'swim', 'jump', 'hurry', 'ride', 'climb', 'get', 'send', 'bring', 'take'];
+  function autoWord(k, v) { return { id: -1, kind: 't', tsu: true, auto: true, chips: 0, bonus: 0, w: { k: k, v: v } }; }
+  function autoInsert(ws, crow, skipAfterVerb) {
+    var hasVerb = ws.some(function (w) { return /^(v|be|modal|sm|hv)$/.test(w.k); }), out = [], oc = [], changed = false, seenV = false, motion = false, past = ws.some(function (w) { return w.k === 'adv' && /yesterday|ago|last/.test(w.e.w); });
+    for (var i = 0; i < ws.length; i++) {
+      var w = ws[i];
+      if (!hasVerb && w.k === 'adj' && i > 0 && (ws[i - 1].k === 'n' || ws[i - 1].k === 'pr')) { var bw = autoWord('be', past ? 'past' : 'pres'); out.push(bw.w); oc.push(bw); changed = true; hasVerb = true; seenV = true; }
+      if (w.k === 'n' && w.e && (w.e.cat === 'place' || w.e.cat === 'time') && seenV) {
+        var j = i; while (j > 0 && (/^(det|adj)$/.test(ws[j - 1].k) || (ws[j - 1].k === 'pr' && crow[j - 1].tsu))) j--;
+        var pw = ws[j - 1];
+        if (pw && pw.k !== 'prep' && !(skipAfterVerb && pw.k === 'v')) {
+          var pv = w.e.cat === 'time' ? (w.e.prep || 'on') : motion ? 'to' : (w.e.prep || 'in'), aw = autoWord('prep', pv), at = out.length - (i - j);
+          out.splice(at, 0, aw.w); oc.splice(at, 0, aw); changed = true;
+        }
+      }
+      if (w.k === 'v' || w.k === 'be') { seenV = true; if (w.k === 'v' && MOTION_V.indexOf(w.e.w.split(' ')[0]) >= 0) motion = true; }
+      out.push(w); oc.push(crow[i]);
+    }
+    return changed ? { ws: out, crow: oc } : null;
+  }
+  function fixEmph(r, emph) { if (!emph || r.state !== 'ok') return r; r.text = r.text.replace(/\b(do|does|did)(n't| not)\b/i, '$1'); r.f.neg = false; r.f.emph = true; if (r.ja) r.ja = r.ja.replace('(〜ない)', '(本当に)'); return r; }
+  function evaluate(row, quick) { try { return evaluateRaw(row, quick); } catch (e) { if (window.console) console.warn('evaluate', e); return { state: 'bad', msg: 'この並びは読めない。並べ直そう' }; } }
+  function evaluateRaw(row, quick) {
     if (!row.length) return { state: 'empty' };
     // 1) 句動詞をまとめる/be・have のうしろの規則動詞を過去分詞に(カード自体も切りかえる)
-    var ws = [], crow = [], phr = false;
+    var ws = [], crow = [], phr = false, doPast = false, emph = false;
     for (var i = 0; i < row.length; i++) {
       var w = row[i].w, nx = row[i + 1] && row[i + 1].w;
-      if (w.k === 'v' && w.f === 'past' && regular(w.e)) { var pv = prevCore(row.map(function (c) { return c.w; }), i); if (pv && (pv.k === 'be' || pv.k === 'hv')) w.f = 'pp'; }
+      if (w.k === 'do') { ws.push({ k: 'not' }); crow.push(row[i]); if (w.v === 'past') doPast = true; if (!w.neg) emph = true; continue; } // don't / didn't = 否定。do / did(強調)は not を付けて読んであとで外す
+      if (w.neg && /^(be|hv|modal)$/.test(w.k)) { ws.push(w); crow.push(row[i]); ws.push({ k: 'not' }); crow.push(row[i]); continue; }
+      if (LEVEL === 0 && w.k === 'v' && (w.f === 'base' || w.f === 'past') && w.e.fr !== 'intr') { // 初級:物が主語で be のあと・目的語なし → 受け身(The cake was eaten)
+        var pvb = prevCore(row.map(function (c) { return c.w; }), i), sN = null; for (var si = i - 1; si >= 0; si--) { if (row[si].w.k === 'n') { sN = row[si].w; break; } if (row[si].w.k === 'pr' && !row[si].tsu) break; }
+        var nxi = i + 1; while (row[nxi] && /^(det|adj)$/.test(row[nxi].w.k)) nxi++; var nxw = row[nxi] && row[nxi].w, objLike = nxw && (nxw.k === 'pr' && !row[nxi].tsu || (nxw.k === 'n' && !/^(place|time)$/.test(nxw.e.cat)));
+        if (pvb && pvb.k === 'be' && sN && !/^(person|animal)$/.test(sN.e.cat) && !objLike) { var wp = {}; for (var kp in w) wp[kp] = w[kp]; wp.f = 'pp'; w = wp; }
+      }
+      if (doPast && w.k === 'v') { var wc = {}; for (var kk in w) wc[kk] = w[kk]; wc.f = 'past'; w = wc; doPast = false; }
+      if (w.k === 'v' && w.f === 'past' && regular(w.e)) { var pv = prevCore(row.map(function (c) { return c.w; }), i); if (pv && (pv.k === 'be' || pv.k === 'hv')) { var wq = {}; for (var kq in w) wq[kq] = w[kq]; wq.f = 'pp'; w = wq; } } // カードは書きかえず、読むときだけ過去分詞に
       if (w.k === 'v' && nx && nx.k === 'prep' && PARTICLE.indexOf(nx.v) >= 0 && E.verb[w.e.w + ' ' + nx.v]) { ws.push({ k: 'v', e: E.verb[w.e.w + ' ' + nx.v], f: w.f }); crow.push(row[i]); i++; phr = true; continue; }
       ws.push(w); crow.push(row[i]);
     }
-    var r = evalWords(crow, ws, row);
+    var r = fixEmph(evalWords(crow, ws, row), emph);
     if (r.state === 'ok') { r.f.phrasal = phr; return r; }
+    if (LEVEL === 0) { // 初級:場所・時の前置詞や be は、語順さえ合っていれば補う
+      for (var vi = 0; vi < 2; vi++) { var ins = autoInsert(ws, crow, vi === 1); if (!ins) continue; var r3 = evalWords(ins.crow, ins.ws, row); if (r3.state === 'ok') { r3.f.phrasal = phr; return r3; } }
+    }
+    if (quick) return r;
     // 2) 読みかえを試す(分詞の形容詞・動名詞・規則動詞の過去⇄過去分詞)
     var opts = [];
     ws.forEach(function (w, k) {
@@ -184,13 +242,13 @@
       }
     }
     dfs(0, []);
-    if (found) { var sm = semantic(found.r); if (sm) return { state: 'bad', msg: sm }; return { state: 'ok', text: found.r.text, f: features(found.r, fullRow), nps: nounPhrases(found.r) }; }
+    if (found) { var sm = semantic(found.r); if (sm) return { state: 'bad', msg: sm }; return { state: 'ok', text: found.r.text, f: features(found.r, fullRow), nps: nounPhrases(found.r), ja: jaOf(found.r), r: found.r }; }
     if (bestBad) return { state: bestBad.wait ? 'wait' : 'bad', msg: bestBad.r.err ? bestBad.r.err.msg : 'まだ文になっていない' };
     // 区切れない:どこで止まったか
     var tail = cs(far, n);
     if (segErr) return { state: 'bad', msg: segErr.msg };
     if (tail.prefix) return { state: 'wait', msg: '「' + cardText(row[n - 1]) + '」の後ろに続きが必要' };
-    return { state: 'bad', at: far, msg: '「' + cardText(row[far]) + '」のところで つながらない' };
+    return { state: 'bad', at: far, atCard: row[far], msg: '「' + cardText(row[far]) + '」のところで つながらない' };
   }
   // 意味のチェック(英語脳の辞書の情報):動詞の目的語に合う名詞か/場所・時・食べ物が主語になっていないか
   var THING_OK = ['go', 'come', 'run', 'move', 'stop', 'start', 'begin', 'change', 'open', 'close', 'break', 'fall', 'work', 'arrive', 'leave', 'turn', 'fly', 'grow', 'shine', 'happen', 'end', 'ring', 'burn', 'melt', 'float', 'sink', 'roll', 'shake', 'hurt', 'cost', 'smell', 'taste', 'sound', 'look'];
@@ -206,6 +264,40 @@
     });
     return bad;
   }
+  // チャンクごとの日本語(直訳ふう)
+  function jaOf(r) {
+    try {
+      var past = !!r.info.past;
+      function clJa(cl) {
+        var o = [], vp = cl.vp, mods = cl.pre.concat(cl.posts);
+        if (cl.subj) o.push(G.gloss(cl.subj) + 'は');
+        mods.filter(isTime).forEach(function (t) { o.push(G.gloss(t)); });
+        mods.filter(function (t) { return !isTime(t); }).forEach(function (t) { o.push(G.gloss(t)); });
+        cl.comps.forEach(function (t) { o.push(G.gloss(t) + (t.t === 'NP' && !(vp.be && !vp.verb) ? 'を' : '')); });
+        var v = G.gloss(vp).replace(/\(〜ない\)/, '');
+        if (vp.be && vp.verb && vp.vf === 'pp') v += '(〜される)'; else if (vp.be && vp.verb && vp.vf === 'ing') v += '(〜している)'; else if (vp.have) v += '(〜したところ・したことがある)';
+        if (vp.neg) v += '(〜ない)';
+        o.push(v); return o.filter(Boolean).join(' / ');
+      }
+      var parts = [], a = r.alt;
+      if (a.front && a.front.cl) parts.push('〈' + a.front.conj.v + '〉' + clJa(a.front.cl));
+      a.cls.forEach(function (cl, i) { parts.push((i && a.co ? '〈' + a.co.v + '〉' : '') + clJa(cl)); });
+      return parts.join('、') + (past ? '(過去)' : '');
+    } catch (e) { return ''; }
+  }
+  // ざっくりしたエラーを、何をすればいいかの言葉にする
+  function advise(row) {
+    var cs = row.filter(function (c) { return !c.tsu || /^(be|hv|modal|sm)$/.test(c.w.k); }), K = function (c) { return c.kind === 'pron' || c.kind === 'n' ? 'N' : c.kind === 'v' || /^(be|hv)$/.test(c.w.k) ? 'V' : c.kind === 'adj' ? 'A' : c.kind === 'adv' ? 'D' : /^(modal|sm)$/.test(c.w.k) ? 'M' : 'x'; };
+    var seq = cs.map(K).join(''), hasConj = row.some(function (c) { return /^(conj|rel)$/.test(c.w.k); });
+    if (seq.indexOf('V') < 0) return '動詞(v.)か be を置こう';
+    if (seq.charAt(0) === 'V' && !hasConj) return '文の最初に主語(I / he / the dog など)を置こう';
+    if (/V[^V]*V/.test(seq.replace(/MV/g, 'V')) && !hasConj && !row.some(function (c) { return c.w.k === 'v' && /ing|pp/.test(c.w.f); })) return '動詞が2つある。1つ外すか、and / when / because でつなごう';
+    if (/^N+N/.test(seq) && seq.indexOf('NV') > 1) return '動詞の前に名詞が2つ。目的語は動詞のうしろへ';
+    if (/VNN/.test(seq) && !row.some(function (c) { return c.w.k === 'prep'; })) return '名詞が2つ続いている。間に前置詞(in / with など)を入れよう';
+    if (/NA/.test(seq) && !row.some(function (c) { return c.w.k === 'be'; })) return '形容詞は名詞の前か、be のうしろに置こう';
+    if (/^AN|^DN/.test(seq)) return '主語の前に形容詞・副詞が来ている。順番を見直そう';
+    return '';
+  }
   function nounPhrases(r) {
     var out = [], add = function (t) { if (!t) return; if (t.t === 'NP') out.push(t); if (t.t === 'PP' && t.np) out.push(t.np); };
     var cl = function (c) { if (!c) return; add(c.subj); (c.comps || []).forEach(add); (c.posts || []).forEach(add); (c.pre || []).forEach(add); };
@@ -213,6 +305,7 @@
     return out.map(function (np) { return { pron: np.pron || null, w: np.noun ? np.noun.w : null, det: np.det, poss: np.poss, num: np.num, person: !!(np.noun && /^(person|animal)$/.test(np.noun.cat)) }; });
   }
   function clWords(cl) { var w = []; if (!cl) return w; [cl.subj, cl.vp].concat(cl.comps || [], cl.posts || [], cl.pre || []).forEach(function (t) { if (t && t.words) w = w.concat(t.words); }); return w; }
+  var COMPAT = { write: ['read'], cook: ['food'], make: ['food', 'drink'], drink: [], open: ['read'] }; // 辞書のタグで足りない自然な組み合わせ
   function features(r, row) {
     var a = r.alt, cls = a.cls, main = cls[0], vp = main.vp, f = { words: row.length, adj: 0, rare: 0 };
     row.forEach(function (c) { if (c.w.k === 'adj') f.adj++; if (!c.tsu && lvOf(c) >= 2) f.rare++; });
@@ -237,9 +330,24 @@
     var v = vp.verb; f.colloc = null; f.pair = null;
     if (v && !vp.be) {
       var ot = (v.ot || []).filter(function (x) { return x !== 'any'; }), on = main.comps.filter(function (t) { return t.t === 'NP' && !t.pron && t.noun; })[0];
-      if (ot.length && on) { var e = on.noun, tags = [e.cat].concat(e.tg || []), m = ot.filter(function (x) { return tags.indexOf(x) >= 0; }); f.pair = v.w + ' + ' + e.w; f.colloc = m.some(function (x) { return x !== 'thing'; }) && ot.indexOf('thing') < 0 && ot.length <= 3 ? 'good' : m.length ? null : 'bad'; }
+      if (ot.length && on) { var e = on.noun, tags = [e.cat].concat(e.tg || [], COMPAT[v.w] && (e.tg || []).some(function (x) { return COMPAT[v.w].indexOf(x) >= 0; }) ? ot : []), m = ot.filter(function (x) { return tags.indexOf(x) >= 0; }); f.pair = v.w + ' + ' + e.w; f.colloc = m.some(function (x) { return x !== 'thing'; }) && ot.indexOf('thing') < 0 && ot.length <= 3 ? 'good' : m.length ? null : 'bad'; }
     }
     f.combo = f.colloc === 'good';
+    // 進行形・受け身は、実際にできた文の形で決める(読みかえとずれないように)
+    if (vp.verb && vp.be) {
+      var txt = ' ' + r.text.toLowerCase().replace(/[.,!?]/g, '') + ' ', ing = first(vtext(vp.verb, 'ing')), pp = first(vtext(vp.verb, 'pp'));
+      var beRe = '(am|is|are|was|were|be|been|isn\'t|aren\'t|wasn\'t|weren\'t)( not)?( \\w+ly)? ';
+      var isIng = new RegExp(' ' + beRe + ing + ' ').test(txt), isPP = new RegExp(' ' + beRe + pp + ' ').test(txt);
+      if (isIng || isPP) { f.prog = isIng; f.passive = !isIng && isPP; }
+    }
+    // 主節以外(when/if の節・and のうしろ)の文法も、お題の判定には数える
+    var sub = {}; cls.slice(1).concat(a.front && a.front.cl ? [a.front.cl] : []).forEach(function (cl) {
+      var v2 = cl.vp; if (!v2) return;
+      if (v2.be && v2.verb) { var t2 = ' ' + r.text.toLowerCase().replace(/[.,!?]/g, '') + ' ', b2 = '(am|is|are|was|were|be|been|isn\'t|aren\'t|wasn\'t|weren\'t)( not)? '; if (new RegExp(' ' + b2 + first(vtext(v2.verb, 'ing')) + ' ').test(t2)) sub.prog = 1; else if (new RegExp(' ' + b2 + first(vtext(v2.verb, 'pp')) + ' ').test(t2)) sub.passive = 1; } if (v2.have) sub.perfect = 1; if (v2.modal || v2.semi) sub.aux = 1; if (v2.neg) sub.neg = 1;
+      if (cl.comps.some(function (t) { return t.t === 'NP'; })) sub.O = 1; if (cl.comps.some(function (t) { return t.t === 'AP'; }) || (v2.be && !v2.verb)) sub.C = 1;
+      var m2 = cl.pre.concat(cl.posts); if (m2.some(isPlace)) sub.place = 1; if (m2.some(isTime)) sub.time = 1;
+    });
+    f.sub = sub;
     return f;
   }
   // 話のつながり:前の文に出た名詞を the / this / that / 所有格 か代名詞で受ける
@@ -262,7 +370,6 @@
       if (dup.indexOf(c.w) >= 0) { v = 0; tag = '重複'; } else if (half.indexOf(c.w) >= 0) { v = Math.floor(v / 2); tag = '½'; }
       chips += v; steps.push({ t: 'card', i: i, add: v, tag: tag, chips: chips, mult: mult });
     });
-    if (f.colloc === 'bad') { chips = Math.floor(chips / 2); steps.push({ t: 'note', txt: 'ちぐはぐ ×½', chips: chips, mult: mult }); }
     return { y: y, chips: chips, mult: mult, steps: steps };
   }
   // 役(文の型)の点。お店の「文型の本」でレベルが上がる
@@ -321,6 +428,7 @@
   var R = null;
   function newRun() {
     R = { stage: 0, money: 4, deck: starterDeck(), jokers: [], lv: {}, best: { text: '', pts: 0 }, total: 0, played: 0, rerollCost: 2 };
+    if (LEVEL === 2) for (var i = 0; i < 8; i++) { var g = guestCard(); if (g) { g.guest = false; g.chips = baseChips(g); R.deck.push(g); } }
     startStage();
   }
   function startStage() {
@@ -376,7 +484,6 @@
   function notes(f, rep) {
     var o = [];
     if (f.colloc === 'good') o.push('<span class="gd">✨ 名コンビ(' + f.pair + ')</span>');
-    if (f.colloc === 'bad') o.push('ちぐはぐ(' + f.pair + ')→ チップ半分');
     if (f.storyP) o.push('<span class="gd">🔗 前の文を代名詞で受けた</span>'); else if (f.story) o.push('<span class="gd">🔗 前の文とつながった</span>');
     if ((f.dupWords || []).length) o.push('同じ種類の句の2つ目は 0点');
     if ((f.halfWords || []).length) o.push('2つ目の文は カード点が半分');
@@ -396,20 +503,24 @@
     });
     var rep = (R.yakuCnt && R.yakuCnt[y.name]) || 0;
     if (rep) { mult = Math.round(mult * (rep === 1 ? .5 : .25) * 10) / 10; steps.push({ t: 'note', txt: '同じ役 ' + (rep + 1) + '回目 ×' + (rep === 1 ? '½' : '¼'), chips: chips, mult: mult }); }
+    if (LEVEL !== 1) { mult = Math.round(mult * LV_MULT[LEVEL] * 10) / 10; steps.push({ t: 'note', txt: LV_JA[LEVEL] + ' ×' + LV_MULT[LEVEL], chips: chips, mult: mult }); }
     var bossOk = !R.boss || R.boss.ok(f);
     return { y: y, steps: steps, chips: chips, mult: mult, total: bossOk ? Math.floor(chips * mult) : 0, bossFail: !bossOk, rep: rep };
   }
 
   // ---------------- 画面 ----------------
   var root = null;
-  function mount(r) { root = r; showTitle(); document.addEventListener('pointerdown', unlock, { once: false, passive: true }); }
+  function mount(r) { root = r; var lv = store.get('level'); setLevel(lv == null ? 1 : lv); showTitle(); document.addEventListener('pointerdown', unlock, { once: false, passive: true }); }
   function screen(html) { root.innerHTML = ''; var s = el('div', 'scr', html); root.appendChild(s); return s; }
   function showTitle() {
     var b = store.get('best') || {};
-    var s = screen('<div class="title"><div class="logo"><span>CHUNK</span><span>CARDS</span></div><div class="sub">英文で「役」をつくる カードゲーム</div>' +
+    var s = screen('<div class="title"><div class="logo"><span>CHUNK</span><span>CARDS</span></div><div class="sub">英文で「役」をつくる カードゲーム</div><div class="lvsel" id="lvsel"></div><div class="lvdesc" id="lvd"></div>' +
       '<div class="fan"><div class="card n big" style="--r:-12deg">The</div><div class="card v big" style="--r:-4deg">dog</div><div class="card v big" style="--r:4deg">ate</div><div class="card m big" style="--r:12deg">quickly</div></div>' +
-      '<button class="btn go" id="go">ひとりで練習</button><button class="btn vs" id="vs">⚔️ CPUと対戦</button><button class="btn ghost" id="how">あそびかた</button><button class="btn ghost small" id="cb">📖 名コンビ図鑑</button>' +
+      '<button class="btn go" id="go">ひとりで練習</button><button class="btn vs" id="vs">CPUと対戦</button><button class="btn ghost" id="how">あそびかた</button><button class="btn ghost small" id="cb">📖 名コンビ図鑑</button>' +
       (b.stage ? '<div class="rec">最高:ステージ ' + b.stage + ' ・ ' + (b.total || 0).toLocaleString() + '点' + (b.text ? '<br><i>' + b.text + '</i>' : '') + '</div>' : '') + '</div>');
+    var LVD = ['a / the・前置詞・be・動詞の形を忘れても、自動で補って文にしてくれる。出したあとに1語ずつ解説(点 ×1)', 'a / the・前置詞・動詞の形も自分で選ぶ(点 ×1)', 'むずかしい語が山札に入り、候補の光もなし(点 ×1.3)'];
+    function lvUI() { var box = $('#lvsel', s); box.innerHTML = ''; LV_JA.forEach(function (n, i) { var b = el('button', 'lvb' + (i === LEVEL ? ' on' : ''), n); b.onclick = function () { setLevel(i); store.set('level', i); SFX.tap(); lvUI(); }; box.appendChild(b); }); $('#lvd', s).textContent = LVD[LEVEL]; }
+    lvUI();
     $('#go', s).onclick = function () { unlock(); SFX.put(); newRun(); };
     $('#how', s).onclick = function () { unlock(); showHow(); };
     $('#cb', s).onclick = function () { var l = store.get('combos') || [], o = el('div', 'modal', '<div class="box"><h2>📖 名コンビ図鑑(' + l.length + ')</h2><p style="font-size:12px;opacity:.8;margin:0">動詞とぴったりの目的語の組み合わせ。文で使うと倍率+2</p><div class="combos">' + (l.length ? l.map(function (x) { return '<span>' + x + '</span>'; }).join('') : '<i>まだない</i>') + '</div><button class="btn go" id="ok">とじる</button></div>'); root.appendChild(o); $('#ok', o).onclick = function () { o.remove(); }; };
@@ -418,11 +529,11 @@
   function showHow() {
     var o = el('div', 'modal', '<div class="box"><h2>あそびかた</h2><ol>' +
       '<li>手札のカードを<b>タップ</b>すると「文の台」に並ぶ。<b>つなぎの棚</b>(a / the / in / can など)は何回でも使える。</li>' +
-      '<li>台のカードは<b>ドラッグで並べかえ</b>、<b>タップで形が変わる</b>(eat → ate → eaten → eating、単数⇄複数)。×で手札へ戻す。</li>' +
+      '<li>手札は<b>タップ</b>か<b>上へフリック</b>で台の最後へ。<b>ドラッグ</b>すると金の線の位置に1枚ずつ差し込める。台のカードは<b>ドラッグで並べかえ</b>、<b>下へフリック</b>か×で手札へ戻す。<b>タップで形が変わる</b>(eat → ate → eaten → eating、単数⇄複数)。be・have は「今 → 過去 → 否定 → 過去の否定」(is → was → isn’t → wasn’t)、do は do → did → don’t → didn’t、can は can → could → can’t → couldn’t(will・may も同じ。must・should は否定と切りかえ)、want to → wanted to。</li>' +
       '<li>正しい英文になると<b>役</b>(S+V+O+場所 など)と点が出る。「<b>出す!</b>」で点が入る。間違っていると理由が出て、出せない。</li>' +
       '<li>点 = <b>チップ × 倍率</b>。長い文・むずかしい形(過去・完了・進行・節…)ほど高い。</li>' +
       '<li>「出す」の回数のうちに<b>目標点</b>に届けばクリア。お店で<b>ジョーカー</b>(点が化ける効果)や<b>文型の本</b>を買って強くなろう。3・6・8ステージは<b>ボス</b>(条件つき)。</li>' +
-      '<li>「<b>捨てる</b>」→ 手札から捨てるカードをえらぶ。捨てたカードは<b>場</b>に表向きで並び、その点数が<b>捨て札pt</b>になる。補充は1枚ずつ「山から引く(タダ)」か「場から取る(点数ぶんのpt)」をえらべる。強いカードをわざと捨てて、あとで拾い直すのもアリ。</li></ol><button class="btn go" id="ok">わかった</button></div>');
+      '<li>「<b>捨てる</b>」→ 手札から捨てるカードをえらぶ。捨てたカードは<b>場</b>に表向きで並び、その点数が<b>捨て札pt</b>になる。補充は1枚ずつ「山から引く(タダ)」か「場から取る(点数ぶんのpt)」をえらべる。強いカードをわざと捨てて、あとで拾い直すのもアリ。</li><li><b>レベル</b>(タイトルで選ぶ):初級は冠詞・前置詞(「つなぎ」カード)・時制がおまかせ。上級はむずかしい語が増え、点も高い。</li><li>台の文がうまくいかないときは、止まったカードが<b>赤く</b>光り、次に置けるカードに<b>金の点</b>が付く(初級・中級)。初級・中級は、台の下に「次に置くもの」(主語 → 動詞 → 目的語 → 場所 → 時)がいつも出る。答えは出ないので、並べるのは自分で。上級は💡ヒント(💰1)で、使えるカードが光るだけ。</li></ol><button class="btn go" id="ok">わかった</button></div>');
     root.appendChild(o); $('#ok', o).onclick = function () { o.remove(); };
   }
 
@@ -435,12 +546,13 @@
       '<div class="jokers" id="jk"></div>' +
       (R.boss ? '<div class="bossbar">👹 ' + R.boss.text + '</div>' : '') + '<div class="qbar" id="qb"></div>' +
       '<div class="board"><div class="row" id="row"><div class="ph">手札をタップして ここに並べる</div></div>' +
-      '<div class="pv"><div class="sent" id="sent"></div><div class="yk" id="yk"></div><div class="cm"><span class="chips" id="ch">0</span><span class="x">×</span><span class="mult" id="ml">0</span></div><div class="msg" id="msg"></div></div></div>' +
+      '<div class="pv"><div class="sent" id="sent"></div><div class="jt" id="jt"></div><div class="yk" id="yk"></div><div class="cm"><span class="chips" id="ch">0</span><span class="x">×</span><span class="mult" id="ml">0</span></div><div class="msg" id="msg"></div><div class="hp" id="hp"></div></div><button class="hintb" id="hb">💡 ヒント</button></div>' +
       '<div class="field"><div class="flbl"><span>場(捨てたカード)</span><span class="pts">捨て札pt <b id="pt">0</b></span></div><div class="frow" id="fd"></div><div class="fhint" id="fh"></div></div>' +
       '<div class="tsu"><div class="tabs" id="tabs"></div><div class="tw" id="tw"></div></div>' +
       '<div class="hand" id="hand"></div>' +
       '<div class="btns" id="bt"></div>');
-    ['jk', 'row', 'sent', 'yk', 'ch', 'ml', 'msg', 'tabs', 'tw', 'hand', 'bt', 'hd', 'ds', 'mn', 'sc', 'barf', 'fd', 'fh', 'pt', 'qb'].forEach(function (k) { G_[k] = $('#' + k, s); });
+    ['jk', 'row', 'sent', 'yk', 'ch', 'ml', 'msg', 'tabs', 'tw', 'hand', 'bt', 'hd', 'ds', 'mn', 'sc', 'barf', 'fd', 'fh', 'pt', 'qb', 'jt', 'hp', 'hb'].forEach(function (k) { G_[k] = $('#' + k, s); });
+    G_.hb.onclick = doHint;
     G_.tab = G_.tab == null ? 0 : G_.tab;
     G_.vs = null; G_.mode = 'play'; G_.mark = []; renderAll();
   }
@@ -449,7 +561,10 @@
   function first(w) { return String(w).toLowerCase().split(' ')[0]; }
   function plaus(c, tok) {
     var k = c.w.k;
-    if (k === 'be') return BE.test(tok); if (k === 'hv') return HV.test(tok); if (k === 'det') return /^(a|an|the|this|that|these|those)$/.test(tok);
+    if (k === 'prep' && c.label) return /^(in|on|at)$/.test(tok);
+    if (k === 'be') return BE.test(tok);
+    if (k === 'modal') return tok === c.w.v;
+    if (k === 'do') return /^(do|does|did)$/.test(tok); if (k === 'hv') return HV.test(tok); if (k === 'det') return /^(a|an|the|this|that|these|those)$/.test(tok);
     if (k === 'pr' && !c.label && G.PRON[c.w.v]) { var P = G.PRON[c.w.v]; return tok === first(P.sub) || tok === first(P.obj); }
     if (k === 'sm') return /^be/.test(c.w.v) ? BE.test(tok) : /^have/.test(c.w.v) ? HV.test(tok) : tok.indexOf(first(c.w.v).slice(0, 3)) === 0;
     if (k === 'v') { var fs = ['base', 'past', 'pp', 'ing'].map(function (f) { return first(G.wordText({ k: 'v', e: c.w.e, f: f }, CFG)); }), b0 = fs[0]; return fs.indexOf(tok) >= 0 || tok === b0 + 's' || tok === b0 + 'es' || tok === b0.replace(/y$/, 'ies') || tok === 'has' && b0 === 'have'; }
@@ -457,18 +572,26 @@
   }
   function surfaceOf(row, ev) {
     if (!ev || ev.state !== 'ok') return null;
-    var toks = [], orig = {}, p = 0, out = [];
-    ev.text.replace(/[.,!?]/g, '').split(/\s+/).filter(Boolean).forEach(function (w) { var m = /^(\w+)n't$/i.exec(w); if (m) { var b = { ca: 'can', wo: 'will', sha: 'shall' }[m[1].toLowerCase()] || m[1]; if (/^(do|does|did)$/i.test(b)) orig[toks.length] = w; toks.push(b, 'not'); } else toks.push(w); });
+    var toks = [], orig = {}, p = 0, out = [], seq = [];
+    ev.text.replace(/[.,!?]/g, '').split(/\s+/).filter(Boolean).forEach(function (w) { var m = /^(\w+)n't$/i.exec(w); if (m) { var b = { ca: 'can', wo: 'will', sha: 'shall' }[m[1].toLowerCase()] || m[1]; orig[toks.length] = w; toks.push(b, 'not'); } else toks.push(w); });
     for (var i = 0; i < row.length; i++) {
       var c = row[i], n = cardText(c).split(' ').length;
-      if (c.w.k === 'not' && /^(do|does|did)$/i.test(toks[p] || '') && /^not$/i.test(toks[p + 1] || '')) n = 2;
+      var neg2 = c.w.neg && /^(be|hv|modal|do)$/.test(c.w.k);
+      if (neg2) { if (!/^not$/i.test(toks[p + 1] || '') || (c.w.k === 'do' ? !/^(do|does|did)$/i.test(toks[p] || '') : !plaus(c, (toks[p] || '').toLowerCase()))) return null; n = 2; }
+      else if (c.w.k === 'not' && /^(do|does|did)$/i.test(toks[p] || '') && /^not$/i.test(toks[p + 1] || '')) n = 2;
       else if (c.w.k === 'not') { if (!/^not$/i.test(toks[p] || '')) return null; }
-      else if (!plaus(c, (toks[p] || '').toLowerCase())) return null;
-      var t = orig[p] && n === 2 && c.w.k === 'not' ? orig[p] : toks.slice(p, p + n).join(' '); p += n;
+      else if (!plaus(c, (toks[p] || '').toLowerCase())) {
+        var sk = 0; // 初級:おまかせで足された語(冠詞・前置詞・be など)は飛ばして、あとで解説する
+        while (LEVEL === 0 && sk < 3 && toks[p] && !plaus(c, toks[p].toLowerCase())) { seq.push({ t: toks[p], auto: true }); p++; sk++; }
+        if (!plaus(c, (toks[p] || '').toLowerCase())) return null;
+      }
+      var t = orig[p] && n === 2 && (c.w.k === 'not' || neg2) ? orig[p] : toks.slice(p, p + n).join(' '); p += n;
       if (i === 0 && t !== 'I' && !/^[A-Z]/.test(cardText(c))) t = t.charAt(0).toLowerCase() + t.slice(1);
-      out.push(t);
+      out.push(t); seq.push({ t: t, card: i });
     }
-    return p === toks.length ? out : null;
+    while (LEVEL === 0 && p < toks.length) { seq.push({ t: toks[p], auto: true }); p++; }
+    if (p !== toks.length) return null;
+    out.seq = seq; return out;
   }
   // 文になっていないときの目安:主語に合わせて be / have、動詞・前置詞のうしろの代名詞は目的語の形
   function guessForm(c, prev) {
@@ -482,11 +605,16 @@
     return null;
   }
   function rowText(row) { return row.map(function (c, i) { return guessForm(c, row[i - 1]) || cardText(c); }).join(' '); }
-  function cardEl(c, where, i, disp) {
+  function formTag(c, tok, row, i) {
+    if (!tok || c.w.k !== 'v') return null; var t = first(tok), e = c.w.e, b = first(vtext(e, 'base')), pa = first(vtext(e, 'past')), pp = first(vtext(e, 'pp')), ing = first(vtext(e, 'ing')), pv = prevCore(row.map(function (x) { return x.w; }), i);
+    if (t === ing) return '-ing形'; if (t === pp && pv && (pv.k === 'be' || pv.k === 'hv')) return '過去分詞'; if (t === pa) return '過去形'; if (t === pp) return '過去分詞';
+    if (t === b) return pv && (pv.k === 'modal' || pv.k === 'sm' || pv.k === 'not') ? '原形' : '現在形'; if (t === b + 's' || t === b + 'es' || t === b.replace(/y$/, 'ies') || t === 'has') return '現在(三単現)'; return null;
+  }
+  function cardEl(c, where, i, disp, ftag) {
     var e = el('div', 'card ' + colorOf(c) + (c.tsu ? ' tsu' : '') + (lvOf(c) >= 2 && !c.tsu ? ' rare' : '') + (c.guest ? ' guest' : '') + (c.w.k === 'pr' && c.w.v === 'it' && !c.tsu ? ' wild' : ''));
-    var t = disp || cardText(c);
- e.innerHTML = '<span class="w"' + (t.length > 8 ? ' style="font-size:' + Math.max(9, 13 - (t.length - 8) * .7) + 'px"' : '') + '>' + t + '</span><i>' + (c.chips + c.bonus) + '</i>' + (c.bonus ? '<u>+' + c.bonus + '</u>' : '') +
-      (c.w.k === 'v' && where === 'row' ? '<em>' + FORM_JA[c.w.f || 'base'] + '</em>' : '') + (where === 'row' ? '<b class="rm">×</b>' : '');
+    var t = disp || cardText(c); e.dataset.pos = { pron: 'pron.', n: 'n.', v: 'v.', adj: 'adj.', adv: 'adv.' }[c.kind] || '';
+ e.innerHTML = '<span class="w"' + (t.length > 5 ? ' style="font-size:' + Math.max(8.5, (where === 'hand' ? 14.5 : where === 'field' ? 10.5 : 13.5) - (t.length - 5) * (where === 'field' ? .8 : 1.05)) + 'px"' : '') + '>' + t + '</span><i>' + (c.chips + c.bonus) + '</i>' + (c.bonus ? '<u>+' + c.bonus + '</u>' : '') +
+      (c.w.k === 'v' && where === 'row' ? '<em>' + (ftag || FORM_JA[c.w.f || 'base']) + '</em>' : '') + (where === 'row' ? '<b class="rm">×</b>' : '');
     e.dataset.i = i; return e;
   }
   function renderAll() { if (G_.vs) return G_.vs.renderAll(); renderTop(); renderJokers(); renderRow(); renderTsu(); renderHand(); renderField(); renderBtns(); }
@@ -500,58 +628,412 @@
     G_.hand.innerHTML = '';
     R.hand.forEach(function (c, i) {
       var e = cardEl(c, 'hand', i); if (G_.mode === 'disc' && G_.mark.indexOf(c) >= 0) e.classList.add('marked');
-      e.onclick = function () {
-        if (G_.busy) return;
-        if (G_.mode === 'disc') { var k = G_.mark.indexOf(c); if (k >= 0) G_.mark.splice(k, 1); else G_.mark.push(c); SFX.tap(); renderHand(); renderBtns(); return; }
-        if (G_.mode === 'refill') { flash('先に補充しよう(山から引く/場から取る)'); return; }
-        SFX.put(); R.hand.splice(R.hand.indexOf(c), 1); R.row.push(c); renderRow(); renderHand();
-      };
+      if (G_.nxH && G_.nxH[c.id]) e.classList.add('nx'); if (G_.hintIds && G_.hintIds[c.id]) e.classList.add('hintc');
+      e.onpointerdown = function (ev) { cardPress(ev, c, e, 'hand'); };
       G_.hand.appendChild(e);
     });
   }
   function renderTsu() {
-    G_.tabs.innerHTML = ''; TSU.forEach(function (t, i) { var b = el('button', 'tab' + (i === G_.tab ? ' on' : ''), t[0]); b.onclick = function () { G_.tab = i; SFX.tap(); renderTsu(); }; G_.tabs.appendChild(b); });
-    G_.tw.innerHTML = ''; TSU[G_.tab][1].forEach(function (spec) { var c = tsuCard(spec), e = cardEl(c, 'tsu', 0); e.onclick = function () { if (G_.busy) return; SFX.put(); R.row.push(tsuCard(spec)); renderRow(); }; G_.tw.appendChild(e); });
+    var TS = curTSU(); if (G_.tab >= TS.length) G_.tab = 0;
+    G_.tabs.innerHTML = ''; TS.forEach(function (t, i) { var b = el('button', 'tab' + (i === G_.tab ? ' on' : ''), t[0]); b.onclick = function () { G_.tab = i; SFX.tap(); renderTsu(); }; G_.tabs.appendChild(b); });
+    G_.tw.innerHTML = ''; TS[G_.tab][1].forEach(function (spec) { var c = tsuCard(spec), e = cardEl(c, 'tsu', 0); if (G_.nxT && G_.nxT[spec.join('|')]) e.classList.add('nx'); e.dataset.spec = spec.join('|'); e.onpointerdown = function (ev) { cardPress(ev, c, e, 'tsu', spec); }; G_.tw.appendChild(e); });
   }
   // 文の台:タップ=形を変える/×=戻す/ドラッグ=並べかえ
   function renderRow() {
     G_.row.innerHTML = '';
     if (!R.row.length) G_.row.appendChild(el('div', 'ph', '手札をタップして ここに並べる'));
-    var sf = surfaceOf(R.row, evaluate(R.row));
+    var ev0 = evaluate(R.row), sf = surfaceOf(R.row, ev0), errI = ev0.state === 'bad' && ev0.atCard ? R.row.indexOf(ev0.atCard) : -1;
+    calcNext();
     R.row.forEach(function (c, i) {
-      var e = cardEl(c, 'row', i, sf ? sf[i] : guessForm(c, R.row[i - 1])); G_.row.appendChild(e);
+      var e = cardEl(c, 'row', i, sf ? sf[i] : guessForm(c, R.row[i - 1]), sf ? formTag(c, sf[i], R.row, i) : null); G_.row.appendChild(e);
+      if (i === errI) e.classList.add('errc'); if (G_.hintIds && G_.hintIds[c.id] && !c.tsu) e.classList.add('hintc');
       $('.rm', e).onpointerdown = function (ev) { ev.stopPropagation(); };
       $('.rm', e).onclick = function (ev) { ev.stopPropagation(); if (G_.busy) return; SFX.tap(); R.row.splice(R.row.indexOf(c), 1); if (!c.tsu) R.hand.push(c); renderRow(); renderHand(); };
-      e.onpointerdown = function (ev) { if (G_.busy) return; dragStart(ev, c, e); };
+      e.onpointerdown = function (ev) { cardPress(ev, c, e, 'row'); };
     });
     updatePreview(); if (G_.bt) renderBtns();
+    applyNext(); armIdle();
   }
+  // 次に置けるカード(初級・中級):今の並びに足しても「まちがい」にならないもの
+  function calcNext() {
+    G_.nxH = {}; G_.nxT = {};
+    if (LEVEL >= 2 || !R.row.length || G_.mode !== 'play' || G_.busy) return;
+    var cur0 = evaluate(R.row, true); if (cur0.state === 'ok') return;
+    R.hand.forEach(function (c) { if (evaluate(R.row.concat([c]), true).state !== 'bad') G_.nxH[c.id] = 1; });
+    var TS = curTSU(); (TS[G_.tab] || TS[0])[1].forEach(function (spec) { if (evaluate(R.row.concat([tsuCard(spec)]), true).state !== 'bad') G_.nxT[spec.join('|')] = 1; });
+  }
+  function applyNext() {
+    if (G_.hand) Array.prototype.forEach.call(G_.hand.children, function (e) { var c = R.hand[+e.dataset.i]; e.classList.toggle('nx', !!(c && G_.nxH && G_.nxH[c.id])); e.classList.toggle('hintc', !!(c && G_.hintIds && G_.hintIds[c.id])); });
+    if (G_.tw) Array.prototype.forEach.call(G_.tw.children, function (e) { e.classList.toggle('nx', !!(G_.nxT && G_.nxT[e.dataset.spec])); });
+  }
+  // ---- 💡 ヒント(3段階)。使うほど次の文の点が下がる ----
+  var HINT_MULT = [1, 1, 1, 1], HINT_COST = [0, 1, 0, 0]; // 上級のヒント:練習は💰1、対戦は捨て札pt5
+  function hintCostTxt(n) { return G_.vs ? '捨て札pt ' + HINT_COST[n] * 5 : '💰' + HINT_COST[n]; }
+  function payHint(n) { var c = HINT_COST[n]; if (!c) return true; if (G_.vs) { if (R.pts < c * 5) return false; R.pts -= c * 5; return true; } if (R.money < c) return false; R.money -= c; return true; }
+  function roleOf(row, i) {
+    var c = row[i], k = c.w.k, seenV = row.slice(0, i).some(function (x) { return x.w.k === 'v' || x.w.k === 'be'; });
+    if (k === 'pr' && !c.tsu || k === 'n') { var prv = row.slice(0, i).filter(function (x) { return x.w.k !== 'det' && x.w.k !== 'adj'; }).pop(); if (prv && prv.w.k === 'prep') return k === 'n' && c.w.e.cat === 'time' ? '時' : '場所など'; return seenV ? '目的語' : '主語'; }
+    if (k === 'modal' || k === 'sm') return '助動詞'; if (k === 'be') return 'be'; if (k === 'hv') return 'have'; if (k === 'not') return '否定';
+    if (k === 'adj') return '形容詞:名詞の前に置く'; if (k === 'det') return '冠詞';
+    if (k === 'v') return '動詞'; if (k === 'adv') return c.w.e.k === 'time' ? '時' : c.w.e.k === 'place' ? '場所' : '様子';
+    return null;
+  }
+  function diagnose(cards) {
+    var subj = cards.some(function (c) { return c.kind === 'pron' || (c.kind === 'n' && /^(person|animal)$/.test(c.w.e.cat)); }), verb = cards.some(function (c) { return c.kind === 'v'; });
+    return !subj ? '主語になれるカード(I / he / 人・動物の名詞)がない。捨てて交換しよう' : !verb ? '動詞のカードがない。捨てて交換しよう' : 'この手札だと文が作りにくい。捨てて交換しよう';
+  }
+  // ---- ヒント:答えは見せない。初級・中級は「次に何を置くか」をいつも出す。上級はボタンで使えるカードを光らせるだけ(💰1) ----
+  function doHint() {
+    if (G_.busy || G_.mode !== 'play') { flash('いまはヒントを使えない'); return; }
+    if (LEVEL < 2) { flash('次に置けるカードには金の点が付いている'); return; }
+    var cards = R.hand.concat(R.row.filter(function (c) { return !c.tsu; }));
+    var best = window.ChunkVS && window.ChunkVS._search ? window.ChunkVS._search(cards, null, 1, 220) : null;
+    if (!best) { G_.hp.innerHTML = '<div class="hrow">💡 ' + diagnose(cards) + '</div>'; SFX.bad(); return; }
+    if (R.hintLv) return;
+    if (!payHint(1)) { flash('ヒントには ' + hintCostTxt(1) + ' が必要'); SFX.bad(); return; }
+    R.hintLv = 1; G_.hintBest = best; SFX.joker(); if (!G_.vs && G_.mn) renderTop(); renderRow(); renderHand();
+  }
+  function stepGuide(row, ev) {
+    var k = function (c) { return c.w.k; }, cs = row.map(k), iV = cs.findIndex(function (x) { return x === 'v' || x === 'be'; });
+    var subj = row.slice(0, iV < 0 ? row.length : iV).some(function (c) { return c.w.k === 'pr' && !c.tsu || c.w.k === 'n'; });
+    var after = iV < 0 ? [] : row.slice(iV + 1), obj = after.some(function (c) { return (c.w.k === 'n' || c.w.k === 'pr' || c.w.k === 'adj') && !(c.tsu && c.w.k !== 'pr'); });
+    var vC = row.filter(function (c) { return c.w.k === 'v'; })[0], noObj = vC && ((c0 = prevCore(row.map(function (z) { return z.w; }), row.indexOf(vC))) && c0.k === 'be' && /pp|past/.test(vC.w.f) || vC.w.e.fr === 'intr'); var c0;
+    if (noObj && ev.state === 'ok') obj = true; // 受け身や自動詞は目的語なしでOK
+    var place = row.some(function (c, i) { return c.w.k === 'prep' || (c.w.k === 'adv' && c.w.e.k === 'place') || (LEVEL === 0 && iV >= 0 && i > iV && c.w.k === 'n' && c.w.e.cat === 'place'); }), time = row.some(function (c) { return (c.w.k === 'adv' && c.w.e.k === 'time') || (c.w.k === 'n' && c.w.e.cat === 'time'); });
+    var steps = [['主語', subj], ['動詞', iV >= 0], ['目的語・補語', obj], ['場所', place], ['時', time]], nextI = steps.findIndex(function (x) { return !x[1]; });
+    var line = steps.map(function (x, i) { return x[1] ? '<span class="sd1">✔ ' + x[0] + '</span>' : i === nextI ? '<b class="sd2">' + x[0] + '</b>' : '<span class="sd0">' + x[0] + '</span>'; }).join(' → ');
+    var tip = !row.length ? '主語から置こう(I / he / a・the + 人や動物の名詞)'
+      : !subj ? '主語を作ろう(名詞まで置く)'
+      : iV < 0 ? '次は動詞(v.)。can や be をはさんでもOK'
+      : ev.state === 'ok' ? '文になった! のばすなら 場所(前置詞 + 名詞)・時・様子を足そう'
+      : ev.state === 'wait' ? 'もう少し:' + (ev.msg || '続きを置こう')
+      : 'まちがいを直そう(赤いカード)';
+    return '<div class="hrow">💡 ' + tip + '</div><div class="hrow guide">' + line + '</div>';
+  }
+  function hintPanel() {
+    if (!G_.hp) return; G_.hintIds = {};
+    if (G_.mode !== 'play') { G_.hp.innerHTML = ''; return; }
+    if (LEVEL < 2) { G_.hp.innerHTML = stepGuide(R.row, cur || { state: 'empty' }); if (G_.hb) G_.hb.style.display = 'none'; return; }
+    if (G_.hb) { G_.hb.style.display = ''; G_.hb.textContent = R.hintLv ? '💡' : '💡 ヒント(' + hintCostTxt(1) + ')'; }
+    var b = G_.hintBest;
+    if (!R.hintLv || !b) { G_.hp.innerHTML = ''; return; }
+    b.row.forEach(function (c) { if (!c.tsu) G_.hintIds[c.id] = 1; });
+    G_.hp.innerHTML = '<div class="hrow">💡 光っているカードで文が作れる。並べ方は自分で考えよう</div>';
+  }
+  function placeBest(b) {
+    var orig = R.hand.concat(R.row.filter(function (c) { return !c.tsu; })), used = {};
+    var nr = b.row.map(function (c) { if (c.tsu) return c; var o = orig.filter(function (x) { return x.id === c.id; })[0]; o.w.f = c.w.f; o.w.pl = c.w.pl; used[o.id] = 1; return o; });
+    R.hand = orig.filter(function (c) { return !used[c.id]; }); R.row = nr; SFX.put(); renderRow(); renderHand();
+  }
+  // ---- 初級:出したあとの解説(チュートリアル式)。文をチャンク(意味のかたまり)に分けて、順番と1語ずつの理由を説明する ----
+  var ROLE = {
+    subj: { n: '主語', m: 'だれが・何が', c: 'r1', d: '文の主人公。英語の文は、かならず主語から始まる。主語になれるのは「名詞のかたまり」(the dog など)か「代名詞」(she など)。' },
+    verb: { n: '動詞', m: 'どうする', c: 'r2', d: '動きや状態を表すかたまり。英語では主語のすぐうしろに置く。動詞の形は「いつのことか(今・過去)」と「主語がだれか」で変わる。' },
+    be: { n: '動詞(be動詞)', m: '〜である', c: 'r2', d: 'be動詞は「主語 = 〜」とイコールでつなぐ動詞。うしろに様子(形容詞)や名詞を置いて「主語がどんなものか」を言う。' },
+    obj: { n: '目的語', m: '何を・だれを', c: 'r3', d: '動詞の動作を受ける相手。動詞のすぐうしろに置き、前置詞は付けない(× eat in an apple)。' },
+    comp: { n: '補語', m: 'どんな・何', c: 'r3', d: 'be動詞のうしろで、主語の様子や正体を説明する言葉。He is happy. の happy は he の様子。' },
+    place: { n: '場所', m: 'どこで・どこへ', c: 'r4', d: '場所は「前置詞 + 名詞」のかたまりで表すことが多い。目的語のうしろに置く。' },
+    time: { n: '時', m: 'いつ', c: 'r5', d: '時は1語の副詞(yesterday など)か「前置詞 + 名詞」(on Monday など)で表す。文の最後に置くのが基本。' },
+    manner: { n: '様子', m: 'どんなふうに', c: 'r4', d: '動詞をくわしくする副詞。ふつうは動詞(と目的語)のうしろに置く。' },
+    other: { n: '修飾', m: '', c: 'r4', d: '' },
+    front: { n: '前おき', m: '', c: 'r5', d: '文の前に置く「〜するとき」などのかたまり。前に置いたときは、うしろにカンマ(,)を付ける。' },
+    conj: { n: '接続詞', m: 'つなぎ', c: 'r5', d: '接続詞は文と文をつなぐ言葉。when / if / because のうしろには「主語 + 動詞」の文が続く。' }
+  };
+  function tokRole(t, cl) {
+    if (!t) return 'other'; if (t === cl.subj) return 'subj'; if (t === cl.vp) return cl.vp.be && !cl.vp.verb ? 'be' : 'verb';
+    if (cl.comps.indexOf(t) >= 0) return cl.vp.be && !cl.vp.verb ? 'comp' : t.t === 'AP' ? 'comp' : 'obj';
+    if (isTime(t)) return 'time'; if (isPlace(t) || (t.t === 'PP' && t.cat === 'dir')) return 'place'; if (t.t === 'ADV') return 'manner'; return 'other';
+  }
+  function chunksOf(row, ev) {
+    var sf = surfaceOf(row, ev); if (!sf || !sf.seq || !ev.r) return null;
+    var a = ev.r.alt, owners = [];
+    function addCl(cl, tag) { if (!cl) return; [cl.subj, cl.vp].concat(cl.pre, cl.comps, cl.posts).forEach(function (t) { if (t) owners.push({ t: t, role: tokRole(t, cl), cl: tag }); }); }
+    if (a.front) { if (a.front.cl) addCl(a.front.cl, 'front'); else if (a.front.tok) owners.push({ t: a.front.tok, role: isTime(a.front.tok) ? 'time' : 'front', cl: 'main' }); }
+    a.cls.forEach(function (cl, i) { addCl(cl, i ? 'second' : 'main'); });
+    function ownerOfCard(c) { for (var i = 0; i < owners.length; i++) if ((owners[i].t.words || []).indexOf(c.w) >= 0) return i; return -1; }
+    var seq = sf.seq, own = seq.map(function (x) { return x.auto ? null : ownerOfCard(row[x.card]); });
+    seq.forEach(function (x, k) { if (x.auto && /^(am|is|are|was|were|be|been|do|does|did)$/i.test(x.t)) { var vi = owners.findIndex(function (o) { return o.role === 'verb' || o.role === 'be'; }); own[k] = vi; } });
+    for (var k = seq.length - 1; k >= 0; k--) if (own[k] == null || own[k] < 0) { var c = !seq[k].auto && row[seq[k].card]; if (c && /^(conj)$/.test(c.w.k)) { own[k] = 'conj' + k; continue; } own[k] = k + 1 < seq.length ? own[k + 1] : own[k - 1]; }
+    for (var k2 = 0; k2 < seq.length; k2++) if (own[k2] == null || own[k2] < 0) own[k2] = k2 ? own[k2 - 1] : 0;
+    // 動詞のかたまりに入った副詞(quickly など)は、別のチャンクとして見せる
+    seq.forEach(function (x, k) { var c = !x.auto && row[x.card], ow = owners[own[k]]; if (c && c.w.k === 'adv' && ow && (ow.role === 'verb' || ow.role === 'be')) own[k] = 'adv' + k; });
+    var chunks = [];
+    seq.forEach(function (x, k) {
+      var o = own[k], last = chunks[chunks.length - 1];
+      if (last && last.o === o) { last.ks.push(k); return; }
+      var isC = typeof o === 'string', ow = isC ? null : owners[o], ac = isC && /^adv/.test(o) ? row[x.card] : null;
+      chunks.push({ o: o, ks: [k], role: ac ? (ac.w.e.k === 'time' ? 'time' : ac.w.e.k === 'place' ? 'place' : 'manner') : isC ? 'conj' : ow ? ow.role : 'other', tok: ow ? ow.t : null, cl: ow ? ow.cl : 'main', adv: ac });
+    });
+    chunks.forEach(function (ch) { ch.text = ch.ks.map(function (k) { return seq[k].t; }).join(' '); ch.ja = ch.adv ? (ch.adv.w.e.ja || '') : ch.tok ? jaChunk(ch, ev) : ''; });
+    return { seq: seq, chunks: chunks, ev: ev, row: row };
+  }
+  function jaChunk(ch, ev) {
+    var g = ''; try { g = G.gloss(ch.tok) || ''; } catch (e) { }
+    if (ch.role === 'subj') return g + 'は'; if (ch.role === 'obj') return g + 'を';
+    if (ch.role === 'verb' || ch.role === 'be') { var vp = ch.tok; g = g.replace(/\(.*?\)/g, ''); if (vp.be && !vp.verb) g = ''; return g; }
+    return g;
+  }
+  // 1語ずつの説明:品詞名つき。おまかせで補った語には印を付ける
+  function posOf(x, c) {
+    if (x.auto) { var t = x.t.toLowerCase(); return /^(a|an|the)$/.test(t) ? '冠詞' : /^(am|is|are|was|were|be|been)$/.test(t) ? 'be動詞' : /^(do|does|did|will|would|shall|have|has|had)$/.test(t) ? '助動詞' : /^(to|in|on|at|for|with|from|by|of|into)$/.test(t) ? '前置詞' : 'つなぎの語'; }
+    var k = c.w.k; if (k === 'pr') return c.label ? '所有格' : '代名詞';
+    return { n: '名詞', v: '動詞', adj: '形容詞', adv: '副詞', det: c.w.v === 'this' || c.w.v === 'that' ? '指示語' : '冠詞', prep: '前置詞', modal: '助動詞', sm: '助動詞', do: '助動詞', be: 'be動詞', hv: '助動詞(have)', not: '否定', conj: '接続詞', rel: '関係代名詞', deg: '副詞' }[k] || '';
+  }
+  function wordNotes(ch, R0) {
+    var out = [], seq = R0.seq, row = R0.row;
+    ch.ks.forEach(function (k) {
+      var x = seq[k], t = x.t.toLowerCase(), c = x.auto ? null : row[x.card], pos = posOf(x, c), nk = null, txt = '';
+      for (var j = k + 1; j < seq.length; j++) if (!seq[j].auto) { nk = row[seq[j].card]; if (nk && nk.w.k !== 'adj') break; }
+      var nw = nk && nk.w.e ? nk.w.e.w : '', ncat = nk && nk.w.e ? nk.w.e.cat : '';
+      if (pos === '冠詞') {
+        if (t === 'a') txt = '名詞の前に付けて「1つの」を表す。数えられる名詞(' + (nw || 'book') + ' など)が1つで、まだ話に出ていないものに付ける。';
+        else if (t === 'an') txt = 'a と同じ働き。ただし ' + (nw || 'apple') + ' のように母音(ア・イ・ウ・エ・オの音)で始まる語の前では an にする。';
+        else txt = '名詞の前に付けて「その」を表す。聞き手にもどれのことか分かるもの、1つに決まるものに付ける' + (/^(place|time)$/.test(ncat) ? '(the park、the morning のように場所や時間帯にはよく付く)' : '') + '。';
+        txt += ' 冠詞は「冠詞 →(形容詞)→ 名詞」の順で、名詞の前に置く。';
+      } else if (pos === '指示語') txt = '「この(this)・あの(that)」。冠詞のかわりに名詞の前に置く。名詞が複数なら these / those に変わる。';
+      else if (pos === '前置詞') {
+        var m = { 'in': ncat === 'time' ? '朝・午後・月・年など「幅のある時間」に使う(in the morning)。' : '「〜の中で」。建物や町など広がりのある場所に使う(in the park)。', on: ncat === 'time' ? '曜日や日付に使う(on Monday)。' : '「〜の上に・接して」。', at: ncat === 'time' ? '時刻やお昼など「時間の1点」に使う(at noon)。' : '駅や家など「場所を1点」として考えるときに使う(at the station)。', to: '「〜へ」。go・come など移動の動詞のあとで行き先を表す。', 'with': '「〜と一緒に・〜を使って」。', 'for': '「〜のために」。', from: '「〜から」。', by: '「〜のそばで・〜によって」。' }[t] || '';
+        txt = '前置詞は名詞の前に置いて、場所・時・方向などを表す言葉。「前置詞 + 名詞」でひとつのかたまりになる。' + m;
+      } else if (pos === 'be動詞') txt = (/n't|not/.test(t) ? 'not が付いた否定の形(〜ではない)。be動詞は、うしろに not を付けるだけで否定になる。' : '') + '主語とうしろの言葉をイコールでつなぐ動詞。主語と時で形が変わる:I am / he・she・it is / you・we・they are(過去は was / were)。' + (t === 'been' ? 'have のうしろでは been になる(完了形)。' : '');
+      else if (c && c.w.k === 'do' && !c.w.neg) txt = '強調の do:「本当に〜する」と気持ちを強める。主語が he / she なら does、過去なら did。うしろの動詞は原形(元の形)。';
+      else if (c && c.w.k === 'do') txt = '「〜しない」の否定。ふつうの動詞(like・play など)を打ち消すときは、動詞の前に do not(don\'t)を置く。主語が he / she / 1つなら doesn\'t、過去なら didn\'t。うしろの動詞は原形(元の形)にする。';
+      else if (pos === '助動詞' && /^(do|does|did)$/.test(t)) txt = 'not で打ち消すときに動詞の前に置く助動詞。主語が he / she なら does、過去なら did。うしろの動詞は原形(元の形)にする。';
+      else if (pos === '助動詞(have)') txt = 'have + 過去分詞 で完了形(〜したところ・〜したことがある)。主語が he / she なら has、過去なら had。';
+      else if (pos === '助動詞') txt = '動詞の前に置いて「できる(can)・するつもり(will)」などの意味を足す。うしろの動詞は原形(元の形)のまま。';
+      else if (pos === '代名詞') { var P = G.PRON[c.w.v], base = cardText(c).toLowerCase(); txt = '名詞のかわりに使う言葉(' + P.ja + ')。' + (t === P.obj.toLowerCase() && t !== base ? '動詞や前置詞のうしろ(目的語)では形が変わる:' + base + ' → ' + t + '。I → me、he → him、she → her、we → us、they → them。' : '主語のときは I / you / he / she / it / we / they の形。'); }
+      else if (pos === '所有格') txt = '「〜の」を表す(my = わたしの)。冠詞のかわりに名詞の前に置く。';
+      else if (pos === '名詞') { var e = c.w.e; txt = 'ものや人の名前を表す言葉(' + (e.ja || '') + ')。' + (c.w.pl ? '2つ以上なので -s を付けた複数形。' : G.isCount(e) && !e.ind ? '数えられる名詞なので、1つなら a / the などが前に必要。' : '数えられない名詞なので a は付けない。'); }
+      else if (pos === '動詞') {
+        var e3 = c.w.e, b = first(vtext(e3, 'base')), w0 = first(t), pv = prevCore(row.map(function (z) { return z.w; }), x.card), pa = first(vtext(e3, 'past')), irr = pa !== b + 'ed' && pa !== b + 'd' && pa !== b.replace(/y$/, 'ied');
+        txt = '動きを表す言葉(' + (e3.ja || '') + ')。';
+        if (w0 === first(vtext(e3, 'ing'))) txt += 'be動詞 + 〜ing 形で進行形「〜しているところ」。';
+        else if (pv && pv.k === 'hv' && w0 === first(vtext(e3, 'pp'))) txt += 'have + 過去分詞で完了形。' + b + ' の過去分詞は ' + w0 + '。';
+        else if (pv && pv.k === 'be' && w0 === first(vtext(e3, 'pp'))) txt += 'be動詞 + 過去分詞で受け身「〜される」。';
+        else if (w0 === pa && w0 !== b) txt += '過去のことなので過去形:' + b + ' → ' + w0 + '。' + (irr ? 'これは形が不規則に変わる動詞(不規則動詞)。' : 'ふつうの動詞は -ed を付ける。');
+        else if (w0 !== b) txt += '主語が he / she / it や1人・1つで、今のこと(いつもすること)のときは -s を付ける(三人称単数現在):' + b + ' → ' + w0 + '。';
+        else txt += pv && (pv.k === 'modal' || pv.k === 'sm' || pv.k === 'not') ? '助動詞のうしろなので原形(元の形)のまま。' : '主語が I / you / 複数で今のことなので、元の形のまま。';
+      }
+      else if (pos === '形容詞') txt = '様子を表す言葉(' + (c.w.e.ja || '') + ')。名詞の前に置いて名詞をくわしくするか、be動詞のうしろで主語の様子を言う。';
+      else if (pos === '副詞') txt = c.w.k === 'deg' ? '「とても」。形容詞の前に置いて強める。' : '動詞や文をくわしくする言葉(' + (c.w.e.ja || '') + ')。' + (c.w.e.k === 'time' ? '時を表す副詞は文の最後に置くのが基本。' : c.w.e.k === 'place' ? '場所を表す副詞。前置詞はいらない。' : '様子を表す副詞は動詞(と目的語)のうしろに置くのが基本。');
+      else if (pos === '否定') txt = '「〜ない」。be動詞・助動詞のうしろに置く。ふつうの動詞のときは do / does / did + not にする。';
+      else if (pos === '接続詞') txt = { and: '「そして」。', but: '「でも」。', so: '「だから」。', when: '「〜するとき」。', 'if': '「もし〜なら」。', because: '「〜だから」。' }[c.w.v] + 'うしろに「主語 + 動詞」の文が続く。';
+      else if (pos === '関係代名詞') txt = '前の名詞を、うしろの文で説明するときのつなぎ(who は人、which はもの、that はどちらにも使える)。';
+      var fixed = R0.fixK && R0.fixK[k];
+      out.push({ w: x.t, pos: pos, auto: fixed ? (x.auto ? true : 'form') : (x.auto || (c && cardText(c).toLowerCase() !== t)) ? 'rule' : false, txt: txt });
+    });
+    return out;
+  }
+  function reviewItems(row, ev) { var R0 = chunksOf(row, ev); return R0 && R0.chunks.length ? R0 : null; }
+  function showReview(R0) {
+    return new Promise(function (done) {
+      var o = el('div', 'modal'); root.appendChild(o); var idx = -1, chs = R0.chunks; R0.fixK = {}; improvements(R0).forEach(function (m) { R0.fixK[m.k] = 1; });
+      function line(hi) { return chs.map(function (ch, i) { var r = ROLE[ch.role] || ROLE.other; return '<span class="ck ' + r.c + (i === hi ? ' hi' : '') + (hi >= 0 && i !== hi ? ' dim' : '') + '"><b>' + (i === 0 ? ch.text.charAt(0).toUpperCase() + ch.text.slice(1) : ch.text) + '</b><small>' + r.n + '</small></span>'; }).join('') + '<span class="ck dot">.</span>'; }
+      function close() { o.remove(); done(); }
+      function page() {
+        var body, btn;
+        if (idx < 0) {
+          body = '<h2>📖 この文を分解しよう</h2><div class="cks">' + line(-1) + '</div>' +
+            '<p class="lead">英語の文は、意味のかたまり(<b>チャンク</b>)を決まった順番に並べて作る。<br>基本の順番:<b>主語 → 動詞 → 目的語・補語 → 場所 → 時</b></p>' +
+            '<p class="lead">この文の型:<b>' + yaku(R0.ev.f).name + '</b></p><p class="sm">チャンクごとに、中の1語1語の品詞と、なぜその形なのかを見ていこう。「置き忘れ」「選びなおし」はあなたが直す所。「自動で変わる形」は主語などに合わせて決まるルール(まちがいではない)。</p>';
+          btn = 'くわしく見る';
+        } else if (idx < chs.length) {
+          var ch = chs[idx], r = ROLE[ch.role] || ROLE.other, notes = wordNotes(ch, R0);
+          body = '<h2>' + (idx + 1) + '. ' + r.n + (r.m ? '<small>' + r.m + '</small>' : '') + '</h2><div class="cks">' + line(idx) + '</div>' +
+            '<div class="big"><b>' + ch.text + '</b>' + (ch.ja ? '<span>' + ch.ja + '</span>' : '') + '</div>' +
+            (r.d ? '<p class="lead">' + (ch.cl === 'second' ? '(2つ目の文)' : ch.cl === 'front' ? '(前おきの文の中)' : '') + r.d + '</p>' : '') +
+            (notes.length ? '<ul class="wn">' + notes.map(function (n) { return '<li><div class="wh"><b>' + n.w + '</b><i>' + n.pos + '</i>' + (n.auto === true ? '<u>置き忘れ</u>' : n.auto === 'form' ? '<u>選びなおし</u>' : n.auto === 'rule' ? '<u class="ru">自動で変わる形</u>' : '') + '</div>' + n.txt + '</li>'; }).join('') + '</ul>' : '');
+          btn = idx + 1 < chs.length ? 'つぎのチャンクへ' : 'まとめへ';
+        } else {
+          var pts = []; chs.forEach(function (ch) { wordNotes(ch, R0).forEach(function (n) { if (n.auto === true || n.auto === 'form') pts.push('<li><b>' + n.w + '</b>(' + n.pos + ')</li>'); }); });
+          body = '<h2>まとめ</h2><div class="cks">' + line(-1) + '</div><p class="lead">' + chs.map(function (c) { return '<b>' + (ROLE[c.role] || ROLE.other).n + '</b>'; }).join(' → ') + '</p>' +
+            (pts.length ? '<p class="sm">今回の置き忘れ・選びなおし:</p><ul class="pts">' + pts.join('') + '</ul><p class="sm">次は、この部品も自分でカードを置いてみよう。</p>' : '<p class="sm">補った語はなし。完ぺき!</p>');
+          btn = 'おわり';
+        }
+        o.innerHTML = '<div class="box rv">' + body + '<div class="rvb"><button class="btn ghost small" id="cl">解説をやめる</button><button class="btn go" id="nx">' + btn + '</button></div><div class="pg">' + (idx + 2) + ' / ' + (chs.length + 2) + '</div></div>';
+        $('#nx', o).onclick = function () { SFX.tap(); idx++; if (idx > chs.length) close(); else page(); };
+        $('#cl', o).onclick = close;
+        if (idx >= 0 && idx < chs.length) speak(chs[idx].text);
+      }
+      page();
+    });
+  }
+  // ---- 初級:10秒止まったら、次に必要なカードを光らせる ----
+  function armIdle() {
+    clearTimeout(G_.idleT); G_.needId = null; if (G_.hand) Array.prototype.forEach.call(G_.hand.querySelectorAll('.need'), function (e) { e.classList.remove('need'); });
+    if (LEVEL !== 0 || !G_.hand) return;
+    G_.idleT = setTimeout(idleHint, 10000);
+  }
+  function idleHint() {
+    if (LEVEL !== 0 || G_.busy || G_.mode !== 'play' || !G_.hand || !document.body.contains(G_.hand)) return;
+    var cards = R.hand.concat(R.row.filter(function (c) { return !c.tsu; }));
+    var best = window.ChunkVS && window.ChunkVS._search ? window.ChunkVS._search(cards, null, 1, 220) : null;
+    if (!best) { if (G_.hp) G_.hp.innerHTML = '<div class="hrow">💡 ' + diagnose(cards) + '</div>'; return; }
+    var inRow = {}; R.row.forEach(function (c) { inRow[c.id] = 1; });
+    var miss = best.row.filter(function (c) { return !c.tsu && !inRow[c.id]; });
+    var noAdj = function (c) { return c.w.k !== 'adj' && c.w.k !== 'adv'; }, pick0 = miss.filter(function (c) { return G_.nxH && G_.nxH[c.id] && noAdj(c); })[0] || miss.filter(noAdj)[0] || miss[0];
+    if (!pick0) { if (G_.hp && cur && cur.state !== 'ok') G_.hp.innerHTML = '<div class="hrow">💡 カードはそろっている。並べる順番を見直そう(主語 → 動詞 → 目的語 → 場所 → 時)</div>'; return; }
+    var idx = best.row.indexOf(pick0), role = roleOf(best.row, idx) || '';
+    G_.needId = pick0.id;
+    Array.prototype.forEach.call(G_.hand.children, function (e) { var c = R.hand[+e.dataset.i]; if (c && c.id === pick0.id) e.classList.add('need'); });
+    if (G_.hp) G_.hp.innerHTML = '<div class="hrow need">💡 次はこのカード:<b>' + cardText(pick0) + '</b>' + (role ? '(' + role + ')' : '') + '</div>' + G_.hp.innerHTML;
+    SFX.joker();
+  }
+  // ---- 初級:置き忘れた語・直した形を、まず必ず解説する ----
+  // 「直した」に出すのは、本人が選べたのに置き忘れた・選びまちがえた所だけ。
+  // 三単現の -s・him/her・is/are・do-support のような「カードの仕組みで自動に決まる形」は出さない(全体の解説でルールとして説明)
+  function vCat(c, tok, row, i) {
+    var e = c.w.e, t = first(tok), pv = prevCore(row.map(function (z) { return z.w; }), i);
+    if (t === first(vtext(e, 'ing'))) return 'ing';
+    if (t === first(vtext(e, 'pp')) && pv && (pv.k === 'be' || pv.k === 'hv')) return 'pp';
+    if (t === first(vtext(e, 'past')) && t !== first(vtext(e, 'base'))) return 'past';
+    return 'base';
+  }
+  function improvements(R0) {
+    var out = [], seq = R0.seq, row = R0.row;
+    seq.forEach(function (x, k) {
+      var c = x.auto ? null : row[x.card], t = x.t.toLowerCase();
+      if (x.auto) { if (/^(do|does|did)$/.test(t)) return; out.push({ k: k, kind: 'miss', w: x.t, pos: posOf(x, null), why: needWhy(x, k, R0) }); return; }
+      if (!c || c.w.k !== 'v') return;
+      var want = vCat(c, x.t, row, x.card), have = c.w.f || 'base';
+      if (want === 'base' || want === have) return;
+      if (vtext(c.w.e, have) === x.t) return; // 見た目が同じ形(filled の過去形と過去分詞など)は取りちがえにしない
+      out.push({ k: k, kind: 'form', w: x.t, from: cardText(c), pos: posOf(x, c), why: formWhy(c, x, R0) });
+    });
+    return out;
+  }
+  function nextNoun(seq, k, row) { for (var j = k + 1; j < seq.length; j++) if (!seq[j].auto) { var c = row[seq[j].card]; if (c && c.w.k === 'n') return c; if (c && !/^(adj|det)$/.test(c.w.k)) return null; } return null; }
+  function needWhy(x, k, R0) {
+    var t = x.t.toLowerCase(), n = nextNoun(R0.seq, k, R0.row), nw = n ? n.w.e.w : '', cat = n ? n.w.e.cat : '';
+    if (t === 'a' || t === 'an') return '「' + nw + '」は数えられる名詞。英語では、数えられる名詞を1つだけ言うとき、前に a / an / the などがかならず必要(名詞だけをポンと置くことはできない)。ここでは「ある1つの」なので ' + t + (t === 'an' ? '(母音で始まるので a ではなく an)' : '') + '。';
+    if (t === 'the') return '「' + nw + '」の前に冠詞が必要。' + (/^(place|time)$/.test(cat) ? nw + ' のような場所・時間帯は「いつもの・その」と決まったものなので the を付ける。' : '話の中で「どれのことか」決まっているものには the を付ける。');
+    if (/^(in|on|at|to)$/.test(t)) return '「' + nw + '」を' + (cat === 'time' ? '「いつ」' : '「どこで・どこへ」') + 'として使うには、前に前置詞が必要。前置詞がないと、' + nw + ' が動詞の「何を」(目的語)のように読まれてしまう。' + (t === 'on' ? '曜日・日付は on。' : t === 'at' ? (cat === 'time' ? '時刻など「時の1点」は at。' : '駅など「地点」は at。') : t === 'to' ? '移動の動詞(go など)の行き先は to。' : cat === 'time' ? '朝・午後・月など「幅のある時間」は in。' : '公園・町など「広がりのある場所の中」は in。');
+    if (/^(am|is|are|was|were)$/.test(t)) return '英語の文には動詞がかならず1つ必要。形容詞(happy など)は動詞ではないので、主語とつなぐ be動詞を入れる。主語に合わせて ' + t + '(I → am、he・she → is、you・複数 → are、過去は was / were)。';
+    if (t === 'will') return 'tomorrow など「これから先」の時の言葉があるので、未来を表す助動詞 will(〜するだろう・〜するつもり)を動詞の前に補った。will のうしろの動詞は原形(元の形)。';
+    if (/^(do|does|did)$/.test(t)) return 'ふつうの動詞を not で打ち消すときは、動詞の前に do / does / did が必要。主語が he・she なら does、過去なら did。';
+    return '文をつなぐために「' + x.t + '」が必要。';
+  }
+  function formWhy(c, x, R0) {
+    var k = c.w.k, t = x.t.toLowerCase(), base = cardText(c).toLowerCase(), row = R0.row;
+    if (k === 'v') {
+      var e = c.w.e, b = first(vtext(e, 'base')), w0 = first(t), pa = first(vtext(e, 'past'));
+      var timeW = row.filter(function (z) { return z.w.k === 'adv' && z.w.e.k === 'time'; }).map(function (z) { return z.w.e.w; })[0];
+      if (w0 === pa && w0 !== b) return (timeW ? '「' + timeW + '」があるので過去のこと。' : '過去のことなので、') + '動詞を過去形にする:' + b + ' → ' + w0 + '。英語は「〜した」を動詞の形で表す。';
+      if (w0 === first(vtext(e, 'ing'))) return 'be動詞のあとは -ing 形で「〜しているところ」(進行形)。';
+      if (w0 === first(vtext(e, 'pp'))) return 'have / be のあとは過去分詞(完了形・受け身)。';
+      var subj = row.filter(function (z) { return z.w.k === 'pr' || z.w.k === 'n'; })[0];
+      return '主語「' + (subj ? cardText(subj) : '') + '」は自分・相手以外の1人(1つ)で、今のこと。このとき動詞に -s を付ける(三人称単数現在):' + b + ' → ' + w0 + '。';
+    }
+    if (k === 'pr') return '「' + base + '」は動詞(または前置詞)のうしろにあるので、「〜を・〜に」の形にする:' + base + ' → ' + t + '。';
+    if (k === 'be') return 'be動詞は主語と時に合わせて形が決まる:I am / he・she is / you・複数 are / 過去は was・were。ここでは ' + t + '。';
+    if (k === 'hv') return '主語が he / she / 1つなら has、過去なら had にする。';
+    return '形を直した。';
+  }
+  function showImprove(R0, imps) {
+    return new Promise(function (done) {
+      var o = el('div', 'modal'); root.appendChild(o); var i = 0, seq = R0.seq;
+      var mine = R0.row.map(cardText).join(' ');
+      function sent(hk) { return seq.map(function (x, k) { var t = k === 0 ? x.t.charAt(0).toUpperCase() + x.t.slice(1) : x.t, im = imps.some(function (m) { return m.k === k; }); return '<span class="st' + (im ? ' im' : '') + (k === hk ? ' hi' : '') + '">' + t + '</span>'; }).join(' ') + '.'; }
+      function page() {
+        var m = imps[i];
+        o.innerHTML = '<div class="box rv imp"><h2>✏️ ここを直したよ ' + (i + 1) + ' / ' + imps.length + '</h2>' +
+          '<div class="cmp"><div><small>あなたの並べ方</small><p>' + mine + '</p></div><div><small>正しい文</small><p>' + sent(m.k) + '</p></div></div>' +
+          '<div class="big"><b>' + (m.kind === 'form' ? m.from + ' → ' + m.w : '+ ' + m.w) + '</b><span>' + m.pos + (m.kind === 'miss' ? '・置き忘れ' : '・形の直し') + '</span></div>' +
+          '<p class="lead">' + m.why + '</p><div class="rvb"><button class="btn ghost small" id="sk">とばす</button><button class="btn go" id="nx">' + (i + 1 < imps.length ? 'つぎへ' : 'わかった') + '</button></div></div>';
+        $('#nx', o).onclick = function () { SFX.tap(); i++; if (i >= imps.length) { o.remove(); done(); } else page(); };
+        $('#sk', o).onclick = function () { o.remove(); done(); };
+      }
+      page();
+    });
+  }
+  function askFull() {
+    return new Promise(function (done) {
+      var o = el('div', 'modal', '<div class="box rv"><h2>📖 文全体の解説</h2><p class="lead">この文をチャンクに分けて、1語ずつ品詞と働きを見ていく?</p><div class="rvb"><button class="btn ghost small" id="n">今回は見ない</button><button class="btn go" id="y">見る</button></div></div>');
+      root.appendChild(o); $('#y', o).onclick = function () { o.remove(); done(true); }; $('#n', o).onclick = function () { o.remove(); done(false); };
+    });
+  }
+  async function reviewFlow(R0, noAsk) { var imps = improvements(R0); if (imps.length) await showImprove(R0, imps); if (noAsk || await askFull()) await showReview(R0); }
+  // 出したあと:初級・中級は「直した所」をすぐ見せて全体の解説を聞く。上級は見たい人だけ
+  async function reviewAfter(R0) {
+    if (LEVEL < 2) return reviewFlow(R0);
+    var imps = improvements(R0);
+    var yes = await new Promise(function (done) { var o = el('div', 'modal', '<div class="box rv"><h2>📖 この文の解説</h2><p class="lead">' + (imps.length ? '直した所が ' + imps.length + ' か所ある。' : '') + '解説を見る?</p><div class="rvb"><button class="btn ghost small" id="n">見ない</button><button class="btn go" id="y">見る</button></div></div>'); root.appendChild(o); $('#y', o).onclick = function () { o.remove(); done(true); }; $('#n', o).onclick = function () { o.remove(); done(false); }; });
+    if (yes) { if (imps.length) await showImprove(R0, imps); await showReview(R0); }
+  }
+  // 今回出した文の記録(あとでふりかえる)
+  function snap(row) { return row.map(function (c) { var n = {}; for (var k in c) n[k] = c[k]; n.w = {}; for (var j in c.w) n.w[j] = c.w[j]; return n; }); }
+  function recordHist(list, row, ev, score) { if (ev && ev.state === 'ok') list.push({ row: snap(row), text: ev.text, score: score, lv: LEVEL }); }
+  function histModal(list) {
+    var o = el('div', 'modal', '<div class="box rv"><h2>📚 今回の文をふりかえる</h2><p class="sm">タップすると、その文の「直した所」と全体の解説が見られる。</p><div class="hist" id="hl"></div><button class="btn go" id="ok">とじる</button></div>');
+    root.appendChild(o);
+    list.forEach(function (h, i) {
+      var e = el('div', 'hi1', '<span>' + (i + 1) + '</span><b>' + h.text + '</b><i>' + (h.score != null ? h.score.toLocaleString() + '点' : '') + '</i>');
+      e.onclick = async function () { var keep = LEVEL; setLevel(h.lv); var ev = evaluate(h.row), R0 = reviewItems(h.row, ev); if (R0) { o.style.display = 'none'; await reviewFlow(R0, true); o.style.display = ''; } else flash('この文は解説できない'); setLevel(keep); };
+      $('#hl', o).appendChild(e);
+    });
+    $('#ok', o).onclick = function () { o.remove(); };
+  }
+  function errMsg(ev, row) { var m = ev.msg || '', a = /語順|つながらない|まだ文/.test(m) ? advise(row) : ''; return (ev.state === 'bad' ? '✕ ' : '… ') + m + (a ? ' → ' + a : ''); }
+  // ---- 指の操作:タップ/ドラッグで好きな場所へ差し込む/上フリックで台へ/下フリックで手札へ ----
   var drag = null;
-  function dragStart(ev, c, e) {
-    drag = { c: c, e: e, x: ev.clientX, y: ev.clientY, moved: false };
+  function gapAt(x, y, self) {
+    var els = Array.prototype.filter.call(G_.row.querySelectorAll('.card'), function (n) { return n !== self; });
+    if (!els.length) return { i: 0, el: null, after: false };
+    var rs = els.map(function (n) { return n.getBoundingClientRect(); });
+    var line = rs.filter(function (r) { return y >= r.top - 10 && y <= r.bottom + 10; });
+    if (!line.length) { if (y < rs[0].top) return { i: +els[0].dataset.i, el: els[0], after: false }; var lk = els.length - 1; return { i: R.row.length, el: els[lk], after: true }; }
+    for (var k = 0; k < els.length; k++) { var r = rs[k]; if (y >= r.top - 10 && y <= r.bottom + 10 && x < r.left + r.width / 2) return { i: +els[k].dataset.i, el: els[k], after: false }; }
+    var lastIn = els[rs.indexOf(line[line.length - 1])]; return { i: +lastIn.dataset.i + 1, el: lastIn, after: true };
+  }
+  function overRow(x, y) { var b = G_.row.getBoundingClientRect(); return x >= b.left - 6 && x <= b.right + 6 && y >= b.top - 14 && y <= b.bottom + 14; }
+  function caret(g) {
+    var c = G_.caret; if (!g) { if (c) c.style.display = 'none'; return; }
+    if (!c) { c = G_.caret = el('div', 'caret'); }
+    if (c.parentNode !== G_.row) G_.row.appendChild(c);
+    var rb = G_.row.getBoundingClientRect(); c.style.display = 'block';
+    if (!g.el) { c.style.left = '4px'; c.style.top = '2px'; c.style.height = '70px'; return; }
+    var r = g.el.getBoundingClientRect(); c.style.left = ((g.after ? r.right + 1 : r.left - 4) - rb.left) + 'px'; c.style.top = (r.top - rb.top) + 'px'; c.style.height = r.height + 'px';
+  }
+  function cardPress(ev, c, e, from, spec) {
+    if (G_.busy) return;
+    var d = drag = { c: c, e: e, from: from, spec: spec, x: ev.clientX, y: ev.clientY, t: Date.now(), moved: false, ghost: null };
     e.setPointerCapture && e.setPointerCapture(ev.pointerId);
     e.onpointermove = function (m) {
-      if (!drag) return; var dx = m.clientX - drag.x, dy = m.clientY - drag.y;
-      if (!drag.moved && Math.hypot(dx, dy) > 8) { drag.moved = true; e.classList.add('drag'); }
-      if (drag.moved) { e.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(1.08)'; var to = slotIndex(m.clientX, m.clientY, e); markInsert(to); }
+      if (drag !== d) return; var dx = m.clientX - d.x, dy = m.clientY - d.y;
+      if (!d.moved && Math.hypot(dx, dy) > 8) { d.moved = true; if (from === 'row') e.classList.add('drag'); else { d.ghost = e.cloneNode(true); d.ghost.classList.add('ghost'); var r = e.getBoundingClientRect(), rr = root.getBoundingClientRect(); d.ghost.style.left = (r.left - rr.left) + 'px'; d.ghost.style.top = (r.top - rr.top) + 'px'; root.appendChild(d.ghost); e.style.opacity = .35; } }
+      if (!d.moved) return;
+      var tf = 'translate(' + dx + 'px,' + (dy - 46) + 'px) scale(1.08)'; if (from === 'row') e.style.transform = tf; else d.ghost.style.transform = tf; // 指で隠れないよう少し上に
+      if (G_.mode === 'play' && overRow(m.clientX, m.clientY)) caret(gapAt(m.clientX, m.clientY, from === 'row' ? e : null)); else caret(null);
     };
-    e.onpointerup = function (u) {
-      var d = drag; drag = null; e.onpointermove = e.onpointerup = null; if (!d) return;
-      if (!d.moved) { if (cyclable(c)) { cycle(c); SFX.tap(); renderRow(); renderHand(); } return; }
-      var to = slotIndex(u.clientX, u.clientY, e), from = R.row.indexOf(c);
-      R.row.splice(from, 1); if (to > from) to--; R.row.splice(Math.max(0, Math.min(R.row.length, to)), 0, c); SFX.put(); renderRow();
+    e.onpointerup = e.onpointercancel = function (u) {
+      if (drag !== d) return; drag = null; e.onpointermove = e.onpointerup = e.onpointercancel = null; caret(null);
+      if (d.ghost) d.ghost.remove(); e.style.opacity = ''; e.style.transform = ''; e.classList.remove('drag');
+      var dx = u.clientX - d.x, dy = u.clientY - d.y, dt = Date.now() - d.t, flickUp = dy < -35 && Math.abs(dy) > Math.abs(dx) * 1.2 && dt < 350, flickDown = dy > 35 && Math.abs(dy) > Math.abs(dx) * 1.2 && dt < 350;
+      if (!d.moved) return tapCard(c, from, spec);
+      if (G_.mode !== 'play') { if (from === 'hand') tapCard(c, from, spec); return; }
+      var into = overRow(u.clientX, u.clientY);
+      if (from === 'row') {
+        if (into) { var g = gapAt(u.clientX, u.clientY, e), fi = R.row.indexOf(c), to = g.i; R.row.splice(fi, 1); if (to > fi) to--; R.row.splice(Math.max(0, Math.min(R.row.length, to)), 0, c); SFX.put(); renderRow(); return; }
+        if (flickDown || u.clientY > G_.row.getBoundingClientRect().bottom + 20) { R.row.splice(R.row.indexOf(c), 1); if (!c.tsu) R.hand.push(c); SFX.tap(); renderRow(); renderHand(); return; }
+        renderRow(); return;
+      }
+      var nc = from === 'tsu' ? tsuCard(spec) : c;
+      if (into) { var g2 = gapAt(u.clientX, u.clientY, null); if (from === 'hand') R.hand.splice(R.hand.indexOf(c), 1); R.row.splice(Math.max(0, Math.min(R.row.length, g2.i)), 0, nc); SFX.put(); renderRow(); renderHand(); return; }
+      if (flickUp) { if (from === 'hand') R.hand.splice(R.hand.indexOf(c), 1); R.row.push(nc); SFX.put(); renderRow(); renderHand(); return; }
     };
   }
-  function slotIndex(x, y, self) {
-    var els = Array.prototype.filter.call(G_.row.querySelectorAll('.card'), function (n) { return n !== self; }), idx = els.length;
-    for (var i = 0; i < els.length; i++) { var r = els[i].getBoundingClientRect(); if (y < r.top - 6) { idx = i; break; } if (y <= r.bottom + 6 && x < r.left + r.width / 2) { idx = i; break; } }
-    var real = idx < els.length ? +els[idx].dataset.i : R.row.length; return real;
+  function tapCard(c, from, spec) {
+    if (G_.busy) return;
+    if (from === 'row') { if (cyclable(c)) { cycle(c); SFX.tap(); renderRow(); renderHand(); } return; }
+    if (from === 'tsu') { SFX.put(); R.row.push(tsuCard(spec)); renderRow(); return; }
+    if (G_.mode === 'disc') { var k = G_.mark.indexOf(c); if (k >= 0) G_.mark.splice(k, 1); else G_.mark.push(c); SFX.tap(); renderHand(); renderBtns(); return; }
+    if (G_.mode === 'refill') { flash('先に補充しよう(山から引く/場から取る)'); return; }
+    SFX.put(); R.hand.splice(R.hand.indexOf(c), 1); R.row.push(c); renderRow(); renderHand();
   }
-  function markInsert(i) { Array.prototype.forEach.call(G_.row.querySelectorAll('.card'), function (n) { n.classList.toggle('ins', +n.dataset.i === i); }); }
 
   var cur = null;
   function updatePreview() {
     var ev = cur = evaluate(R.row);
+    hintPanel(); if (G_.jt) G_.jt.textContent = ev.state === 'ok' && ev.ja ? ev.ja : '';
     if (G_.vs) return G_.vs.preview(ev);
     G_.sent.className = 'sent ' + ev.state; G_.msg.textContent = '';
     if (ev.state === 'empty') { G_.sent.textContent = ''; G_.yk.textContent = ''; G_.ch.textContent = '0'; G_.ml.textContent = '0'; if (G_.bp) G_.bp.disabled = true; return; }
@@ -564,7 +1046,7 @@
       if (G_.bp) G_.bp.disabled = G_.mode !== 'play';
     } else {
       G_.sent.textContent = rowText(R.row); G_.yk.textContent = ''; G_.ch.textContent = '–'; G_.ml.textContent = '–';
-      G_.msg.textContent = (ev.state === 'bad' ? '✕ ' : '… ') + (ev.msg || ''); if (G_.bp) G_.bp.disabled = true;
+      G_.msg.textContent = errMsg(ev, R.row); if (G_.bp) G_.bp.disabled = true;
     }
   }
   // 場:捨て札は表向き。補充のときは、点数ぶんの捨て札ptで取れる
@@ -606,8 +1088,10 @@
     }
     if (sc.bossFail) { G_.msg.textContent = '👹 ボスの条件を満たしていない… 0点'; SFX.bad(); await wait(900); }
     var total = sc.total; await countUp(total);
+    clearTimeout(G_.idleT); recordHist(R.hist = R.hist || [], R.row, cur, total);
+    var rv = reviewItems(R.row, cur); if (rv) await reviewAfter(rv);
     if (total > R.best.pts) R.best = { text: text, pts: total };
-    R.total += total; afterPlay(cur, sc);
+    R.total += total; afterPlay(cur, sc); R.hintLv = 0; G_.hintBest = null; G_.hintIds = {};
     R.disc = R.disc.concat(R.row.filter(function (c) { return !c.tsu; })); R.row = [];
     await wait(350); deal(); G_.busy = false;
     if (R.score >= R.target) { stageClear(); return; }
@@ -654,9 +1138,9 @@
     var tiers = n === 1 ? [Math.floor(rnd() * 3)] : [0, 1, 2];
     return tiers.map(function (t) { var pool = MISSIONS.filter(function (m) { return m.tier === t && used.indexOf(m.k) < 0; }); if (!pool.length) { pool = MISSIONS.filter(function (m) { return m.tier === t; }); } var m = pick(pool); used.push(m.k); return { m: m, done: false }; });
   }
-  function missionHit(m, f) { try { return !!m.t(f); } catch (e) { return false; } }
+  function missionHit(m, f) { try { if (m.t(f)) return true; if (!f.sub) return false; var g = {}; for (var k in f) g[k] = f[k]; for (var j in f.sub) g[j] = true; return !!m.t(g); } catch (e) { return false; } }
   var Q_PCT = [10, 20, 30], TIER_JA = ['やさしい', 'ふつう', 'むずかしい'];
-  function questHit(q, f) { return q.k === 'story' ? !!(f.story || f.storyP) : q.k === 'adj' ? f.adj > 0 : !!f[q.k]; }
+  function questHit(q, f) { return q.k === 'story' ? !!(f.story || f.storyP) : q.k === 'adj' ? f.adj > 0 : !!(f[q.k] || (f.sub && f.sub[q.k])); }
   function pickQuest(used) {
     var cands = [0, 1, 2].map(function (t) { var pool = QUESTS.filter(function (q) { return q.tier === t && used.indexOf(q.k) < 0; }); if (!pool.length) pool = QUESTS.filter(function (q) { return q.tier === t; }); return pick(pool); });
     var secret = pick(cands); used.push(secret.k); return { cands: cands, secret: secret };
@@ -771,7 +1255,9 @@
     var s = screen('<div class="end"><h1>' + (win ? '🏆 全ステージ クリア!' : 'ゲームオーバー') + '</h1><div class="st">ステージ ' + (R.stage + 1) + (win ? '' : ' で目標に届かず(' + R.score.toLocaleString() + ' / ' + R.target.toLocaleString() + ')') + '</div>' +
       '<div class="tot">合計 ' + R.total.toLocaleString() + '点 ・ 文 ' + R.played + '本</div>' +
       (R.best.text ? '<div class="bestS"><div class="lbl">いちばん高かった文(' + R.best.pts.toLocaleString() + '点)</div><div class="t">' + R.best.text + '</div><button class="btn ghost small" id="sp">🔊 聞く</button></div>' : '') +
+      ((R.hist || []).length ? '<button class="btn ghost" id="hs">📚 今回の文をふりかえる(' + R.hist.length + ')</button>' : '') +
       '<button class="btn go" id="re">もう一回</button><button class="btn ghost" id="tt">タイトルへ</button></div>');
+    if ($('#hs', s)) $('#hs', s).onclick = function () { histModal(R.hist); };
     if ($('#sp', s)) $('#sp', s).onclick = function () { speak(R.best.text); };
     $('#re', s).onclick = function () { SFX.put(); newRun(); }; $('#tt', s).onclick = function () { showTitle(); };
   }
@@ -780,7 +1266,7 @@
     mk: mk, card: card, starterDeck: starterDeck, randomCard: randomCard, TSU: TSU, tsuCard: tsuCard, cardText: cardText, cardEl: cardEl, colorOf: colorOf, lvOf: lvOf, cat: cat, verbFits: verbFits,
     evaluate: evaluate, yaku: yaku, JOKERS: JOKERS, PART_JA: PART_JA, KIND_JA: KIND_JA, Core: Core, fillTo: fillTo,
     G_: G_, getR: function () { return R; }, setR: function (x) { R = x; }, screen: screen, showTitle: showTitle, flash: flash, wait: wait, bump: bump, floatTxt: floatTxt,
-    renderRow: renderRow, surfaceOf: surfaceOf, baseScore: baseScore, QUESTS: QUESTS, MISSIONS: MISSIONS, pickMissions: pickMissions, missionHit: missionHit, Q_PCT: Q_PCT, TIER_JA: TIER_JA, questHit: questHit, pickQuest: pickQuest, addCombo: addCombo, guestCard: guestCard, notes: notes, baseChips: baseChips, rowText: rowText, renderHand: renderHand, renderTsu: renderTsu, cur: function () { return cur; }, root: function () { return root; } };
+    renderRow: renderRow, _cycle: cycle, _wordNotes: wordNotes, _formTag: formTag, _improvements: improvements, surfaceOf: surfaceOf, reviewItems: reviewItems, showReview: showReview, reviewFlow: reviewFlow, reviewAfter: reviewAfter, recordHist: recordHist, histModal: histModal, errMsg: errMsg, hintPanel: hintPanel, doHint: doHint, level: function () { return LEVEL; }, LV_MULT: LV_MULT, LV_JA: LV_JA, HINT_MULT: HINT_MULT, calcNext: calcNext, baseScore: baseScore, QUESTS: QUESTS, MISSIONS: MISSIONS, pickMissions: pickMissions, missionHit: missionHit, Q_PCT: Q_PCT, TIER_JA: TIER_JA, questHit: questHit, pickQuest: pickQuest, addCombo: addCombo, guestCard: guestCard, notes: notes, baseChips: baseChips, rowText: rowText, renderHand: renderHand, renderTsu: renderTsu, cur: function () { return cur; }, root: function () { return root; } };
   // テスト用
   window.ChunkCards = { mount: mount, _R: function () { return R; }, _eval: evaluate, _scoreOf: scoreOf, _mk: mk, _tsu: tsuCard, _yaku: yaku, _features: features, JOKERS: JOKERS };
   document.addEventListener('DOMContentLoaded', function () { var r = document.getElementById('app'); if (r) mount(r); });
