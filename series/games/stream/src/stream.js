@@ -220,13 +220,15 @@ function toggleFull(){if(isFull()){WANTF=false;(document.exitFullscreen||documen
 $("btnFull").onclick=()=>{SE.tap();toggleFull()};
 $("btnRun").onclick=()=>{SE.tap();startRun(1)};
 $("modeRh").onclick=()=>{SE.tap();toast("リズムモードは準備中です")};
-// 本文を読む：チャンクチャンクのリーディングを全画面で重ねて開く（reading/）。閉じるとゲームに戻る
-function openReading(from){SE.tap();bgmStop();RDFROM=from;$("rdFr").src=`reading/index.html?id=${encodeURIComponent(CUR.id)}&from=${from}`;$("rdOv").hidden=false}
-let RDFROM="pre";
-function closeReading(){$("rdOv").hidden=true;$("rdFr").src="about:blank";bgmStart(84,"menu")}
-addEventListener("message",e=>{const d=e.data||{};
-  if(d.type==="reading:close")closeReading();
-  if(d.type==="reading:missing"){closeReading();renderReader();show("sReader")}});   // 文章データがない長文は、今までの読む画面で
+// 本文を読む：共通の「読む画面」（core.reader）を全画面で開く。閉じるとゲームに戻る。文章データは data/texts.js（tools/reading_texts.py が作る）
+function openReading(from){
+  const t=typeof LS_TEXTS!=="undefined"?LS_TEXTS[CUR.id]:null;
+  SE.tap();
+  if(!t){renderReader();show("sReader");return}   // 文章データがない長文は、今までの読む画面で
+  bgmStop();
+  ctx.core.reader.open({title:t.title,list:t.list,level:t.level,questions:t.q||[]},
+    {label:from==="post"?"振り返り":"予習",backLabel:from==="post"?"← 結果へ":"← もどる",onClose:()=>bgmStart(84,"menu")});
+}
 $("btnRead").onclick=()=>openReading("pre");
 document.querySelectorAll("[data-back]").forEach(b=>b.onclick=()=>{SE.tap();hush();if(b.dataset.back==="home"){renderHome();show("sHome")}else{renderDetail();show("sDetail")}});
 function renderReader(){

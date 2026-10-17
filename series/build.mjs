@@ -18,6 +18,7 @@ for (const id of apps) {
   const out = path.join(ROOT, 'dist', id); fs.rmSync(out, { recursive: true, force: true }); fs.mkdirSync(out, { recursive: true });
   await esbuild.build({ entryPoints: [path.join(ROOT, 'apps', app.shell, 'main.js')], bundle: true, format: 'iife', target: 'es2020', outfile: path.join(out, 'app.js'), loader: { '.webp': 'file' }, external: ['img/*'], logLevel: 'warning', legalComments: 'none' });
   copy('core/avatar', path.join(out, 'core', 'avatar'));
+  copy('core/dict', path.join(out, 'core', 'dict'));   // 共通の辞書のデータ（読む画面を開いたときに読み込む）
   for (const [s, d] of app.assets || []) copy(s, path.join(out, d));
   for (const g of app.games) for (const [s, d] of GAMES[g]) copy(s, path.join(out, d));
   const cfg = JSON.stringify({ appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel }).replace(/</g, '\\u003c');

@@ -14,7 +14,7 @@ FIX = [   # 元は1ページ用に書いてあるので、部品として動く�
     ('document.documentElement.style.setProperty', '__root.style.setProperty'),
     ('document.documentElement.classList.toggle("fsb"', '__root.classList.toggle("fsb"'),
     ('`img/chara/', '`${__BASE}img/chara/'), ('src="img/chara/', 'src="${__BASE}img/chara/'),
-    ('`audio/voice/', '`${__BASE}audio/voice/'), ('`reading/index.html', '`${__BASE}reading/index.html'),
+    ('`audio/voice/', '`${__BASE}audio/voice/'),
 ]
 js = r('src', 'stream.js')
 for a, b in FIX:
@@ -29,7 +29,7 @@ window.StreamApp=function(__root,ctx){
   if(!document.querySelector('style[data-ct="stream"]')){var st=document.createElement("style");st.setAttribute("data-ct","stream");st.textContent=CSS;document.head.appendChild(st)}
   if(!document.querySelector('link[data-ct="stream"]')){var lk=document.createElement("link");lk.rel="stylesheet";lk.href=FONT;lk.setAttribute("data-ct","stream");document.head.appendChild(lk)}
   const __BASE=ctx.base;
-  __root.classList.add("ct-stream");__root.innerHTML=HTML.replace(/(src|href)="(img|audio)\//g,(m,at,d)=>at+'="'+__BASE+d+'/');
+  __root.classList.add("ct-stream");__root.innerHTML=HTML.replace(/(src|href)="(img|audio)\\//g,(m,at,d)=>at+'="'+__BASE+d+'/');
   const __iv=[],__to=[],__ls=[];
   const setInterval=(f,t)=>{const i=window.setInterval(f,t);__iv.push(i);return i};
   const setTimeout=(f,t)=>{const i=window.setTimeout(f,t);__to.push(i);return i};
@@ -42,7 +42,7 @@ window.StreamApp=function(__root,ctx){
   {const __show=show;show=function(id){__show(id);ctx.showBack(id==="sTitle"||id==="sHome")}}
   ctx.showBack(true);
   return {unmount(){
-    try{endRun()}catch(e){} try{hush()}catch(e){} try{bgmStop()}catch(e){} try{AC&&AC.close()}catch(e){}
+    try{ctx.core.reader.close()}catch(e){} try{endRun()}catch(e){} try{hush()}catch(e){} try{bgmStop()}catch(e){} try{AC&&AC.close()}catch(e){}
     try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}
     __iv.forEach(i=>window.clearInterval(i));__to.forEach(i=>window.clearTimeout(i));__ls.forEach(([o,t,f,op])=>o.removeEventListener(t,f,op));
     __root.innerHTML="";

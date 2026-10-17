@@ -13,7 +13,7 @@ node build.mjs town       # 街アプリだけ
 ## フォルダ
 | フォルダ | 中身 | 直すのはどんなとき |
 |---|---|---|
-| `core/` | 共通部品：セーブ（store）・設定（settings）・音（sound）・読み上げ（speech）・権利（rights）・できごとの記録（events）・プロフィール（profile）・共通の画面（ui）・ゲームの開け閉め（host） | 全アプリに関わること |
+| `core/` | 共通部品：セーブ（store）・設定（settings）・音（sound）・読み上げ（speech）・権利（rights）・できごとの記録（events）・プロフィール（profile）・共通の画面（ui）・ゲームの開け閉め（host）・**辞書（dict）**・**読む画面（reader）**・チャンクの文の形（chunk） | 全アプリに関わること |
 | `games/` | 各ゲーム。`game.js`（または game-*.js）が共通部品とのつなぎ口。`games/index.js` が一覧 | そのゲームの遊び方・画面 |
 | `apps/town/` | 街アプリ（街の絵・建物の位置・施設の中身＝main.js の PLACES） | 街の見た目・施設に何を入れるか |
 | `apps/solo/` | 単体アプリの土台（共通部品＋ゲーム1つ） | 単体アプリ共通のこと |
@@ -27,15 +27,20 @@ export default {
   async mount(el, ctx) { /* el の中に表示 */ return { unmount() { /* 片付け */ } }; }
 };
 ```
-`ctx` で使えるもの：`store`（そのゲーム専用のセーブ）・`settings`・`speech`・`sound`・`report(できごと, データ)`・`showBack(true/false)`・`exit()`・`opts`・`base`（そのゲームのファイルの場所）・`loadScript`・`core`
+`ctx` で使えるもの（`ctx.core.dict`・`ctx.core.reader` も）：`store`（そのゲーム専用のセーブ）・`settings`・`speech`・`sound`・`report(できごと, データ)`・`showBack(true/false)`・`exit()`・`opts`・`base`（そのゲームのファイルの場所）・`loadScript`・`core`
 
 - ゲームはセーブ・音量・読み上げ・権利を自分で持たず、`ctx` を使う。
 - コイン・課題・レベル・ステータスのために、ゲームは「何をしたか」を `ctx.report` で知らせるだけ（中身のルールは共通部品が決める。数字はこれから相談）。
 
+## 共通の辞書と読む画面
+- 辞書：`tools/build_dict.py` が チャンクチャンクの2000語（手直し済み・最優先）＋約1万語＋英語脳アプリの辞書（約2.9万語）＋熟語 を1つにまとめて `core/dict/data.js` を作る（組み立てのたびに自動）。意味を直すときは材料のほうを直す。
+- 読む画面：`core.reader.open(story, opts)`。チャンクの色・単語/チャンクのタップ（発音＋品詞・意味）・訳・読み上げ・範囲の問題と選択肢の問題・答え合わせ・全文の読み上げ。中身は `core/reader.js`、見た目は `core/reader.css`、文の書き方と採点は `core/chunk.js`。
+- 単語ドリルのカード（短い訳）は、同じ材料から `games/stream/tools/build_words2.py` が作る（長文で引く意味とドリルの訳は分けてある）。
+
 ## 各ゲームの今
 | ゲーム | ソース | 今のつなぎ方 | これから |
 |---|---|---|---|
-| チャンクストリーム | `games/stream/src`（データは `games/stream/tools`） | `tools/build_module.py` で1ページ用のコードを包んでいる | 共通部品（読む画面・辞書・設定）を使う形に組み直す |
+| チャンクストリーム | `games/stream/src`（データは `games/stream/tools`） | `tools/build_module.py` で1ページ用のコードを包んでいる。予習・振り返りは共通の読む画面 | 残りを共通部品（設定・音）を使う形に組み直す |
 | ぷにチャンク | `games/cb/src`（もとの手順どおり） | もとのビルドの組み込み口を使う。セーブ・音量は共通部品から | 辞書・音・ショップ・ランキングを共通部品へ |
 | チャンク・カード | `games/cb/cards` | `tools/series_build.py` で見た目をカードの中だけに | 辞書・音・セーブを共通部品へ |
 | チャンクチャンク | `games/chunkchunk` | 元のページを枠の中で表示 | 学校・図書館・ゲームセンターに分けて組み直す |
@@ -43,14 +48,14 @@ export default {
 ## チャンクストリームのデータ（games/stream/tools/）
 | 直したいもの | 直すファイル | 実行 |
 |---|---|---|
-| 長文（チャンク・訳・選択肢） | `passages.txt` | `python3 build.py`、`python3 reading_texts.py` |
+| 長文（チャンク・訳・選択肢） | `passages.txt` | `python3 build.py`、`python3 reading_texts.py`（→ 予習・振り返り用 data/texts.js） |
 | 単語ドリルの訳 | `drill_fix.tsv`（ChatGPTの見直しは `chatgpt_review.csv`） | `python3 build_words2.py` |
 | 熟語 | `idioms.txt` | `python3 build_words2.py` |
 
 ## 進み具合（設計書の「進める順番」）
 - [x] 1. 土台（フォルダの形・組み立ての仕組み・街アプリと単体アプリ）
 - [x] 2. 共通部品（セーブ・設定・音・読み上げ・プロフィール（仮）・権利（仮）・できごとの記録）
-- [ ] 3. 辞書を1つにまとめ、共通の「読む画面」を作る
+- [x] 3. 辞書を1つにまとめ、共通の「読む画面」を作る（チャンクストリームの予習・振り返りはこれに切りかえ済み。チャンクチャンクは順番4で）
 - [ ] 4. チャンクチャンクを学校・図書館・ゲームセンターに分けて組み直す
 - [ ] 5. チャンクストリームを共通部品を使う形に
 - [ ] 6. ぷにチャンク・カードを共通部品を使う形に

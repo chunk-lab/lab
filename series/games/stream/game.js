@@ -3,7 +3,7 @@
 export default {
   id: 'stream', name: 'チャンクストリーム', right: 'game:stream',
   async mount(el, ctx) {
-    for (const f of ['data.js', 'pool.js', 'words.js', 'stream.js']) await ctx.loadScript(ctx.base + f);
+    for (const f of ['data.js', 'pool.js', 'words.js', 'texts.js', 'stream.js']) await ctx.loadScript(ctx.base + f);
     return window.StreamApp(el, ctx);
   }
 };

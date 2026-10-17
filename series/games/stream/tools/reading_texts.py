@@ -102,4 +102,4 @@ for k,t in T.items():
             if us[1]!=':' or us[0] not in 'SVOICPTMRFX' or '=' not in us:ok=False;print('FMT NG',k,us[:40])
 print('照合', 'OK' if ok else 'NG', {k:len(t['list']) for k,t in T.items()})
 if ok:
-    open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'../reading/js/texts.js'),'w',encoding='utf8').write('/* 長文ゲーム（チャンクストリーム）の文章を、チャンクチャンクの文の形式にしたもの。build/reading_texts.py で生成 */\nconst LS_TEXTS='+json.dumps(T,ensure_ascii=False,separators=(',',':'))+';\n')
+    open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'../data/texts.js'),'w',encoding='utf8').write('/* 長文ゲーム（チャンクストリーム）の文章を、共通の読む画面（core.reader）の文の形式にしたもの。tools/reading_texts.py で生成 */\nconst LS_TEXTS='+json.dumps(T,ensure_ascii=False,separators=(',',':'))+';\n')
