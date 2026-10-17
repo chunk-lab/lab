@@ -29,7 +29,7 @@
 .cs-reader .rdChoices button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--ink)}
 .cs-reader .rdChoices button.on{border-color:var(--accent);background:var(--surface2)}
 .cs-reader .rdGest{flex:1 1 auto;display:flex;flex-direction:column;gap:8px;touch-action:none;min-height:0}
-.cs-reader .rdPad{flex:1 1 auto;min-height:150px;display:flex;flex-direction:column;justify-content:center;gap:6px;position:relative;touch-action:none;cursor:grab;border:1.5px dashed var(--line);border-radius:16px;padding:8px 6px;overflow:hidden}
+.cs-reader .rdPad{flex:none;display:flex;flex-direction:column;justify-content:flex-start;gap:6px;position:relative;touch-action:none;cursor:grab;border:1.5px dashed var(--line);border-radius:16px;padding:24px 6px 10px;overflow:hidden}
 .cs-reader .rdPadHint{position:absolute;top:6px;left:0;right:0;text-align:center;font-size:11px;color:var(--faint);pointer-events:none}
 .cs-reader .rdCtxBox{display:flex;flex-direction:column;gap:4px;justify-content:center}
 .cs-reader .rdCtx{font-family:var(--en);font-size:14px;color:var(--faint);line-height:1.4;padding:0 4px}
@@ -102,3 +102,16 @@
 .cs-reader .rvSen .en{font-family:var(--en);font-size:15px}
 .cs-reader .rvSen .ja{font-size:12px;color:var(--muted);margin-top:2px}
 .cs-reader .rvSen.on{background:rgba(255,178,62,.18);border-color:var(--accent)}
+
+/* 本文の上下にすき間を作らない（前後の文がないときは箱ごと消す） */
+.cs-reader .rdCtxBox:empty{display:none}
+/* 横画面（高さが低いとき）：上の余白・説明を減らして、訳まで見えるようにする */
+@media (max-height:520px){
+  .cs-reader{gap:5px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .cs-reader .rdTop{padding-top:4px}
+  .cs-reader .rdPadHint,.cs-reader .rdHelp{display:none}
+  .cs-reader .rdPad{padding:6px}
+  .cs-reader .rdLane{height:68px}
+  .cs-reader .rdGest{gap:5px;flex:none}
+  .cs-reader .rdInfo{max-height:none}
+}
