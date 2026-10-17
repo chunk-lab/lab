@@ -317,3 +317,11 @@
 .ct-cc .titleScr[data-face="lesson"],.ct-cc .titleScr[data-face="library"]{background:#07090e;color:#e8ecf2}
 .ct-cc .faceStudy .sLogo{margin-top:12vh}
 .ct-cc{position:absolute;inset:0;overflow:auto}
+
+/* BGM の入／切ボタン（画面の左はし）。音が鳴り始めるのを待っているときは光る */
+.ct-cc .ccBgmMute{position:fixed;left:8px;top:calc(60px + env(safe-area-inset-top));z-index:200;width:34px;height:34px;border-radius:50%;border:0;background:rgba(40,30,60,.55);color:#fff;font-size:16px;line-height:34px;padding:0;cursor:pointer;opacity:.75;backdrop-filter:blur(4px)}
+.ct-cc .ccBgmMute.bgmWait{opacity:1;background:#e9a02f;animation:cc-bgmWait 1.2s infinite}
+@keyframes cc-bgmWait{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,178,62,.7)}50%{transform:scale(1.18);box-shadow:0 0 0 9px rgba(255,178,62,0)}}
+.ct-cc .blk.k-cross{border-color:rgba(224,179,255,.45)}
+.ct-cc .mk.k-cross{color:#e0b3ff}
+.ct-cc .pop.k-cross b{color:#e0b3ff}

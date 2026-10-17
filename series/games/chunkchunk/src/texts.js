@@ -35,10 +35,15 @@ export function unitEnds(s){const n=s.words.length;return [...new Set([...(s.end
 export function unitStarts(s){return [0,...unitEnds(s).slice(0,-1).map(e=>e+1)]}
 export function myToStory(t){
   const clean=x=>x.replace(/[|=#{}]/g,"");
-  const list=t.sents.map(s=>{let st=0;
+  const list=t.sents.map(s=>{let st=0;const soft=new Set(s.soft||[]),xs=new Set(s.xs||[]);
     const parts=unitEnds(s).map(e=>{const role=(s.roleAt||{})[st]||"M";
-      const w=s.words.slice(st,e+1).map(clean).filter(x=>x&&x!=="/").join(" ")||"…";
-      const jp=((s.ujp||{})[st]||"").replace(/[|#{}]/g,"");st=e+1;return `${role}:${w}=${jp}`});
+      const seg=[];let cur=[];   // 小さなまとまり（/）で分ける
+      for(let k=st;k<=e;k++){const c=clean(s.words[k]);if(c&&c!=="/")cur.push(xs.has(k)&&!cur.length&&seg.length?"X:"+c:c);if(k<e&&soft.has(k)&&cur.length){seg.push(cur.join(" "));cur=[]}}
+      if(cur.length)seg.push(cur.join(" "));
+      const w=seg.join(" / ")||"…";
+      let jp=((s.ujp||{})[st]||"").replace(/[|#{}]/g,"");
+      const sj=(s.sjp||{})[st];if(seg.length>1&&Array.isArray(sj)&&sj.length===seg.length)jp+=`{${sj.map(x=>String(x).replace(/[|#{}\/]/g,"")).join("/")}}`;
+      st=e+1;return `${role}:${w}=${jp}`});
     return [parts.join(" | "),s.ja||""]});
   const questions=(t.questions||[]).map(q0=>{const q=normQ(q0,t.sents);
     if(q.type==="choice"){const opts=[];let corr=-1;(q.options||[]).forEach((o,i)=>{if(o&&o.trim()){if(i===q.correct)corr=opts.length;opts.push(o)}});
@@ -127,18 +132,27 @@ export function buildAIPrompt(text){
 5択の問題の形：{"type":"choice","q":"問題文","options":["選択肢1","選択肢2","選択肢3","選択肢4","選択肢5"],"correct":正解の番号（0から）}`:"";
   return `英語の長文を、日本人学習者向けの「チャンク読み」アプリ用に、意味のまとまり（チャンク）に分けてください。
 説明やコードブロック（\`\`\`）は付けず、次の形のJSONだけを返してください。
-{"title":"タイトル","level":難易度の番号,"sentences":[{"ja":"文全体の自然な日本語訳","units":[{"role":"S","text":"元の英語そのまま","ja":"このチャンクの日本語"}]}]${R+C>0?',"questions":[ ... ]':""}}
+{"title":"タイトル","level":難易度の番号,"sentences":[{"ja":"文全体の自然な日本語訳","units":[{"role":"S","text":"元の英語そのまま（中を小さく分けるときは / を入れる）","ja":"この役割のかたまりの日本語","subja":["小さなまとまりの日本語","…"]}]}]${R+C>0?',"questions":[ ... ]':""}}
 
 ルール：
 ・title：英文にタイトルがあれば、それをそのまま入れる（タイトルは本文の文としては入れない）。なければ、内容に合う短いタイトルを付ける。
 ・level：長文の難易度を1〜10の番号で。1＝入門（小学校低〜中学年） 2＝小学校高学年 3＝中1・英検5級 4＝中2・英検4級 5＝中3・英検3級（CEFR A1） 6＝高1〜2・英検準2級（A2） 7＝高3・英検2級（B1） 8＝難関大・英検準1級（B2） 9＝大学・英検1級（C1） 10＝それ以上（C2）
 ・長文を1文ずつに分ける。各文の units には、その文の単語を順番どおりに、元の単語・記号のまま、もれなく入れる。
 ・role（役割）は次のどれか1つ。
-  S＝主語（関係詞などの説明も主語に含める）
+  S＝主語（後ろから説明がつく主語も、説明ごと S に含める）
   V＝動詞のまとまり（助動詞、否定、usually などの頻度の副詞、句動詞の up・out など、to不定詞の動詞、take care of・look forward to・be good at などの熟語も含める）
   O＝目的語　I＝「誰に」にあたる目的語　C＝補語
   P＝場所　T＝時（when… や after… などの時の節も含む）
   M＝様子・手段・誰と・目的・その他　R＝理由（because… など）　F＝条件（if… など）
+・役割のかたまりの中は、意味のまとまり（チャンク）ごとに「 / 」で小さく分ける。ゲームでは、役割のかたまり全体で切っても、「 / 」で分けた小さなまとまりで切っても正解になる。
+  ・原則：意味の分かれ目があれば、補助の区切り「 / 」を入れる。迷ったら入れる。ただし、単語ごとに細かく切ることはしない。下に挙げるのは例で、これに限らない。
+  ・主語・目的語・補語に、後ろから説明（関係詞・形容詞句・前置詞句・分詞など）がつくときは、説明も同じ役割に入れたまま「中心 / 説明」と分ける。例：The man / who lives next door
+  ・動詞は、助動詞（can・will・must・should など）を先に分ける。また be going to・decided to・want to・used to・have to などの「熟語＋動詞」は「熟語 / 動詞」と分ける。例：can / have an influence on　will / be able to / speak　decided to / visit
+  ・場所・時・様子・理由・条件が長いときは、意味の切れ目で分ける。直前の名詞や語句を後ろから説明する部分は、その小さなまとまりの先頭に「X:」を付ける（「つけ足し」の印）。例：in the small town / X:by the sea（text の中でも「 / X:by the sea」のように書く）。主語・目的語・補語の「中心 / 説明」には付けない。
+  ・対になる言い方や、意味が分かれる言い方も分ける。例：not only English / but also French　both A / and B　either A / or B　so that / you can find it　in order to / catch the train　more difficult / than I thought　It is important / for you / to get enough sleep（for 〜 / to 〜 は M の中で分ける）
+  ・取り残さない：冠詞＋名詞、前置詞＋名詞、to＋動詞のように、1つでは意味にならない語は、前後の語から切り離さない。not only・so that・in order to のように、それだけで1つの意味になる語句は、1つのまとまりにしてよい。
+  ・「 / 」で分けたかたまりだけ、units に "subja" を付け、分けた数と同じ数の日本語を順番どおりに入れる。分けないかたまりには "subja" を付けない。
+  　例：{"role":"S","text":"The man / who lives next door","ja":"隣に住む男の人は","subja":["男の人は","隣に住む"]}
 ・チャンクの ja は、つなげて読める形にする（主語は「〜は／〜が」、目的語は「〜を」など）。${qPart}
 
 長文：
@@ -149,10 +163,20 @@ ${text?`"""${text}"""`:"（この下に英文を貼り付けてください）\n
 }
 export function aiResultToSents(out){
   const arr=v=>Array.isArray(v)?v:v==null?[]:[v];
-  return arr(out&&out.sentences).map(x=>{const words=[],ends=[],roleAt={},ujp={};
-    arr(x&&x.units).forEach(u=>{if(!u)return;const ws=String(u.text||"").trim().split(/\s+/).filter(Boolean);if(!ws.length)return;
-      const st=words.length,r=String(u.role||"").trim().toUpperCase()[0];roleAt[st]=ROLES.includes(r)?r:"M";ujp[st]=String(u.ja||"");words.push(...ws);ends.push(words.length-1)});
-    return {words,ends,roleAt,ujp,ja:String((x&&x.ja)||"")}}).filter(x=>x.words.length);
+  return arr(out&&out.sentences).map(x=>{const words=[],ends=[],roleAt={},ujp={},sjp={},soft=new Set(),xs=new Set();
+    arr(x&&x.units).forEach(u=>{if(!u)return;
+      const st=words.length,r=String(u.role||"").trim().toUpperCase()[0];let n=0;
+      let xNext=false;
+      String(u.text||"").trim().split(/\s+/).filter(Boolean).forEach(t=>{   // 「/」だけの語は、小さなまとまりの区切り。「/ X:」は「つけ足し」
+        if(t==="/"){if(n>0)soft.add(words.length-1);xNext=false}
+        else if(/^X:$/i.test(t)&&n>0&&soft.has(words.length-1))xNext=true;
+        else if(/^X:./i.test(t)&&n>0&&soft.has(words.length-1)){xs.add(words.length);words.push(t.slice(2));n++;xNext=false}
+        else{if(xNext){xs.add(words.length);xNext=false}words.push(t);n++}});
+      if(!n)return;
+      soft.delete(words.length-1);   // かたまりの最後の「/」は区切りにしない
+      roleAt[st]=ROLES.includes(r)?r:"M";ujp[st]=String(u.ja||"");ends.push(words.length-1);
+      const sj=arr(u.subja).map(String).filter(Boolean);if(sj.length>1)sjp[st]=sj});
+    return {words,ends,roleAt,ujp,sjp,xs:[...xs],soft:[...soft].sort((a,b)=>a-b),ja:String((x&&x.ja)||"")}}).filter(x=>x.words.length);
 }
 /* 指示文の枠を、今の英文に合わせる */
 export let lastPromptSrc=null;

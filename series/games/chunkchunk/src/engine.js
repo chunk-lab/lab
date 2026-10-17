@@ -3,6 +3,8 @@ import { timedEnd } from './rank.js';
 import { shortsAll } from './shorts.js';
 import { myToStory } from './texts.js';
 import { showTitle, updateLvHint } from './title.js';
+import { sfx, stopSfxVoice } from './sfx.js';
+import { bgmTick, bgmMuteDraw } from './bgm.js';
 /* チャンクチャンク：ゲームの本体（区切る・判定・振り返り・設定・タイトル・ランダム） */
 export const PER_STAGE=6;
 /* 速さ10段階（1語が進む間隔ms）。4＝前の「ふつう」、10＝その約10倍速 */
@@ -10,8 +12,8 @@ export const SPEED={1:1600,2:1300,3:1100,4:820,5:600,6:450,7:330,8:230,9:150,10:
 export const SPEED_NAME={1:"のんびり",2:"ゆっくり",3:"やや遅い",4:"ふつう",5:"やや速い",6:"速い",7:"とても速い",8:"激速",9:"超速",10:"鬼"};
 export const FONT={xl:28,l:23,m:20,s:17,xs:14};
 export const FONT_NAME={xl:"特大",l:"大",m:"中",s:"小",xs:"極小（先まで見える）"};
-export const PTS={excellent:100,great:80,good:40,mini:30,miss:0,forgot:0},BONUS=50,PERFECT_BONUS=100;
-export const RANK={excellent:["Excellent!","◎"],great:["Great!","◯"],good:["Good","△"],mini:["","・"],miss:["Miss…","×"],forgot:["区切り忘れ！","×"]};
+export const PTS={excellent:100,great:80,good:40,cross:30,mini:30,miss:0,forgot:0},BONUS=50,PERFECT_BONUS=100;
+export const RANK={excellent:["Excellent!","◎"],great:["Great!","◯"],good:["Good","△"],cross:["Nice","▽"],mini:["","・"],miss:["Miss…","×"],forgot:["区切り忘れ！","×"]};
 /* 役割の名前 [かんたん, 文法] */
 export const RN={S:["誰が・何が","主語"],V:["する","動詞"],O:["何を・誰を","目的語"],I:["誰に","間接目的語"],C:["どうだ","補語"],P:["どこで","場所"],T:["いつ","時"],M:["どうやって","様子・手段"],R:["なぜ","理由"],F:["もし","条件"],X:["説明","修飾語句"]};
 export const RS={S:["誰が","主語"],V:["する","動詞"],O:["何を","目的語"],I:["誰に","間接目的語"],C:["どうだ","補語"],P:["どこで","場所"],T:["いつ","時"],M:["どうやって","様子"],R:["なぜ","理由"],F:["もし","条件"]};
@@ -19,6 +21,7 @@ export const PH={S:"名詞句",O:"名詞句",I:"名詞句",C:"補語",P:"副詞�
 export const DET=new Set("a an the my your his her its our their this that these those some".split(" "));
 export const PRON=new Set("i you he she it we they me him her us them".split(" "));
 export const ADV="PTMRF";
+export const AUX=new Set("can could will would shall should may might must do does did am is are was were be been being have has had".split(" "));
 
 export const $=id=>document.getElementById(id);
 /* このゲームを開いている間の環境（game.js が開くときに入れる）：root＝箱、ctx＝共通部品とのつなぎ、core＝共通部品 */
@@ -37,7 +40,8 @@ export const bare=w=>w.toLowerCase().replace(/[^a-z']/g,"");
 
 export const settings={lvSys:"grade",myLevel:0,lvAuto:true,lvSort:"rec",lvFilter:"all",qRange:3,qChoice:3,qLang:"ja",advance:"auto",speed:4,font:"m",rdLines:1,tts:true,sound:"both",disp:"easy",mode:"one"};
 export function loadSettings(){try{Object.assign(settings,JSON.parse(LS.getItem("ccs3-settings")||"{}"))}catch(e){}
-settings.speed={slow:3,normal:4,fast:5}[settings.speed]||+settings.speed||4;if(!FONT[settings.font])settings.font="m";}
+settings.speed={slow:3,normal:4,fast:5}[settings.speed]||+settings.speed||4;if(!FONT[settings.font])settings.font="m";
+  document.body.classList.toggle("nogram",settings.gram===false);ENV.offs.push(()=>document.body.classList.remove("nogram"))}
 export function applyVisual(){
   const r=document.documentElement.style,ms=SPEED[settings.speed];
   r.setProperty("--laneFont",FONT[settings.font]+"px");
@@ -58,28 +62,35 @@ export let speakTok=0;
 export let actx=null;   // 効果音は共通の音（core.sound）の「効果音」の音量でまとめて鳴らす
 export function unlockAudio(){try{actx=ENV.core.sound.ctx()}catch(e){}}
 export function tone(freq,dur,type,vol,slide){
-  if(!actx)return;
+  if(settings.mute||!actx)return;
   try{const t=actx.currentTime,o=actx.createOscillator(),g=actx.createGain();o.type=type||"sine";o.frequency.setValueAtTime(freq,t);
     if(slide)o.frequency.exponentialRampToValueAtTime(freq*slide,t+dur);
     g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.006);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
     o.connect(g).connect(ENV.core.sound.sfxBus);o.start(t);o.stop(t+dur+.03)}catch(e){}
 }
+/* 音をぜんぶ消す／入れる（BGM・声・効果音・自動の読み上げ）。ほかの音の設定は、そのまま残す */
+export function setMute(on){settings.mute=!!on;saveSettings();
+  if(on){stopSfxVoice();try{ENV.core.speech.stop()}catch(e){}}
+  else{try{unlockAudio()}catch(e){}}
+  bgmTick();bgmMuteDraw();const sel=document.getElementById("optMute");if(sel)sel.value=on?"on":"off"}
 export function hitSound(kind){
-  const m=settings.sound;if(m==="off")return;
+  const m=settings.sound;if(m==="off"||settings.mute)return;
   const miss=kind==="miss"||kind==="forgot";
   if(m==="voice"&&!miss)return;
+  if(!miss){const vf={excellent:"voice/excellent",good:"voice/good",cross:"voice/nice"}[kind];if(vf){sfx(vf);return}}
+  if(kind==="forgot"&&m!=="voice"){sfx("se/forgot");return}
   const v=m==="both"?.55:1;
   if(kind==="excellent"){tone(880,.07,"sine",.14*v);setTimeout(()=>tone(1320,.09,"sine",.12*v),55)}
   else if(kind==="great")tone(988,.09,"sine",.13*v);
-  else if(kind==="good")tone(660,.09,"triangle",.11*v);
+  else if(kind==="good"||kind==="cross")tone(660,.09,"triangle",.11*v);
   else if(kind==="mini")tone(1250,.04,"triangle",.07*v);
   else tone(160,.18,"sawtooth",.06,.7);
 }
 export function speakChunk(text){
-  if(!canSpeak||settings.sound==="sfx"||settings.sound==="off")return;
+  if(settings.mute||!canSpeak||settings.sound==="sfx"||settings.sound==="off")return;
   speakTok++;ENV.core.speech.speak(text,{rate:1.2});
 }
-export function tick(){if(settings.sound==="sfx")tone(1900,.025,"square",.012)}
+export function tick(){if(!settings.mute&&settings.sound==="sfx")tone(1900,.025,"square",.012)}
 export function primeSpeech(){}   // 共通の読み上げが受け持つ
 
 /* ===== 文を読み込む ===== */
@@ -93,12 +104,29 @@ export function parseSentence(str,ja){
     const m=jp.match(/^(.*)\{(.*)\}$/);if(m){jp=m[1];subJp=m[2].split("/")}
     const u={role,jp,note,s:words.length,subs:null};
     const parts=en.split(" / ");if(parts.length>1)u.subs=[];
-    parts.forEach((p,pi)=>{const s=words.length;p.split(" ").forEach(w=>{words.push(w);unitOf.push(units.length)});if(u.subs)u.subs.push({s,e:words.length-1,jp:subJp?subJp[pi]||"":""})});
+    parts.forEach((p,pi)=>{let x=false;if(u.subs&&pi>0&&/^X:/i.test(p)){x=true;p=p.slice(2)}   // 「X:」で、その小さなまとまりを「つけ足し」にする
+      const s=words.length;p.split(" ").forEach(w=>{words.push(w);unitOf.push(units.length)});if(u.subs)u.subs.push({s,e:words.length-1,jp:subJp?subJp[pi]||"":"",x})});
     u.e=words.length-1;u.text=words.slice(u.s,u.e+1).join(" ");units.push(u);
   });
   const sen={units,words,unitOf,ja,en:words.join(" ")};sen.who=who||guessWho(sen);return sen;
 }
-export function wordRole(sen,i){const u=sen.units[sen.unitOf[i]];if(u.subs&&u.role!=="V"){const pi=u.subs.findIndex(p=>i>=p.s&&i<=p.e);if(pi>0)return "X"}return u.role}
+export const SHARE={2:[60,40],3:[40,30,30]};
+export function subPts(u,pi,kind){const n=u.subs.length,sh=(SHARE[n]||[])[pi]??Math.round(100/n);return kind==="mini"?Math.min(sh,PTS.mini):sh}
+export function subIsX(u,pi){return pi>0&&!!u.subs&&u.role!=="V"&&(u.subs[pi].x||"SOIC".includes(u.role))}
+export function wordRole(sen,i){const u=sen.units[sen.unitOf[i]];if(u.subs){const pi=u.subs.findIndex(p=>i>=p.s&&i<=p.e);if(subIsX(u,pi))return "X"}return u.role}
+/* 理想の切り方ではないが、意味のあるまとまり（▽）。1つでは意味にならない語で終わるものは×。 */
+const PREPS=new Set("in on at by for with of from into onto over under about after before during through between among against around across along behind beside beyond despite except inside near off out outside past since than toward towards until up upon within without as like per via".split(" "));
+const CONJS=new Set("and but or nor so yet because if when while although though unless whether that than until once".split(" "));
+function lenient(sen,a,b,roles,miss){
+  const ws=sen.words.slice(a,b+1),last=bare(ws[ws.length-1]);
+  if(!last)return miss;
+  if(DET.has(last)||PREPS.has(last)||CONJS.has(last)||last==="to")return miss;   // the / in / and / to で終わる
+  if(AUX.has(last)&&b<sen.words.length-1)return miss;   // can / will で終わる
+  if(ws.length===1&&DET.has(bare(ws[0])))return miss;
+  if(ENV.core&&ENV.core.dict&&b<sen.words.length-1){const e=ENV.core.dict.lookup(last);   // 形容詞だけで終わり、名詞が続く（the small / town）
+    if(e&&e.pos&&e.pos.length&&e.pos.every(p=>p[0]==="adj")&&/[a-z]$/i.test(sen.words[b])&&!/^[A-Z]/.test(sen.words[b+1]||""))return miss}
+  return {kind:"cross",easy:"意味のまとまり",gram:"意味のまとまり（役割をまたぐ）",jp:"",roles};
+}
 export function isMini(role,ws){
   if(ws.length===1)return true;
   return ws.length===2&&"SOIC".includes(role)&&DET.has(bare(ws[0]));
@@ -122,19 +150,25 @@ export function classify(sen,a,b){
       const note=u.note;
       if(isMini(u.role,ws)){const [e,g]=miniLabel(u.role,ws);return {kind:"mini",easy:e,gram:g,note,jp:u.jp,roles}}
       let easy=RN[u.role][0],gram=u.role==="V"?"動詞のまとまり":`${RN[u.role][1]}・${PH[u.role]}`;
-      if(u.subs){if(u.role==="V"){easy+="（熟語＋動詞）";gram+="（熟語＋動詞）"}else{easy+="（ひと・もの＋説明）";gram+="（名詞＋修飾語句）"}}
+      if(u.subs){if(u.role==="V"){easy+="（熟語＋動詞）";gram+="（熟語＋動詞）"}else if("SOIC".includes(u.role)){easy+="（ひと・もの＋説明）";gram+="（名詞＋修飾語句）"}else{easy+="（いくつかのまとまり）";gram+="（いくつかのまとまり）"}}
       return {kind:"excellent",easy,gram,note,jp:u.jp,roles};
     }
     if(u.subs&&u.role==="V"){const pi=u.subs.findIndex(p=>p.s===a&&p.e===b);   // 熟語＋動詞（managed to / finish）：熟語だけ・動詞だけで区切っても正解
-      if(pi===0)return {kind:"excellent",easy:"熟語",gram:"熟語のまとまり",jp:u.subs[0].jp,roles};
-      if(pi>0)return {kind:ws.length===1?"mini":"excellent",easy:"する",gram:ws.length===1?"動詞！":"動詞",jp:u.subs[pi].jp,roles}}
+      if(pi===0&&ws.length===1&&AUX.has(bare(ws[0])))return {kind:"mini",easy:"助動詞",gram:"助動詞！",jp:u.subs[0].jp,roles,pts:subPts(u,pi,"mini")};
+      if(pi===0||(pi>0&&pi<u.subs.length-1))return {kind:"excellent",easy:"熟語",gram:"熟語のまとまり",jp:u.subs[pi].jp,roles,pts:subPts(u,pi)};
+      if(pi>0){const k1=ws.length===1?"mini":"excellent";return {kind:k1,easy:"する",gram:ws.length===1?"動詞！":"動詞",jp:u.subs[pi].jp,roles,pts:subPts(u,pi,k1)}}}
+    if(u.subs&&!"SOIC".includes(u.role)){const pi=u.subs.findIndex(p=>p.s===a&&p.e===b);   // 場所・時・理由などの中の小さなまとまり
+      if(pi>=0&&subIsX(u,pi)){if(ws.length===1)return {kind:"mini",easy:"つけ足し",gram:"修飾語！",jp:u.subs[pi].jp,roles,pts:subPts(u,pi,"mini")};
+        return {kind:"excellent",easy:"つけ足し（"+RN[u.role][0]+"の説明）",gram:"修飾語句（後ろから説明）",jp:u.subs[pi].jp,roles,pts:subPts(u,pi)}}
+      if(pi>=0){if(ws.length===1){const [e,g]=miniLabel(u.role,ws);return {kind:"mini",easy:e,gram:g,jp:u.subs[pi].jp,roles,pts:subPts(u,pi,"mini")}}
+        return {kind:"excellent",easy:RN[u.role][0]+"（まとまりの一部）",gram:(PH[u.role]||"副詞句")+"の一部",jp:u.subs[pi].jp,roles,pts:subPts(u,pi)}}}
     if(u.subs){const pi=u.subs.findIndex(p=>p.s===a&&p.e===b);
-      if(pi===0){if(isMini(u.role,ws))return {kind:"mini",easy:"ひと・もの（中心）",gram:"名詞！",jp:u.subs[0].jp,roles:roles.map(()=>u.role)};
-        return {kind:"excellent",easy:"ひと・もの（中心）",gram:"名詞句（中心の名詞）",jp:u.subs[0].jp,roles}}
-      if(pi>0)return {kind:"excellent",easy:"どんな（説明）",gram:"修飾語句（後ろから説明）",jp:u.subs[pi].jp,roles}}
-    return miss;
+      if(pi===0){if(isMini(u.role,ws))return {kind:"mini",easy:"ひと・もの（中心）",gram:"名詞！",jp:u.subs[0].jp,roles:roles.map(()=>u.role),pts:subPts(u,0,"mini")};
+        return {kind:"excellent",easy:"ひと・もの（中心）",gram:"名詞句（中心の名詞）",jp:u.subs[0].jp,roles,pts:subPts(u,0)}}
+      if(pi>0)return {kind:"excellent",easy:"どんな（説明）",gram:"修飾語句（後ろから説明）",jp:u.subs[pi].jp,roles,pts:subPts(u,pi)}}
+    return lenient(sen,a,b,roles,miss);
   }
-  if(a!==U[ua].s||b!==U[ub].e)return miss;
+  if(a!==U[ua].s||b!==U[ub].e)return lenient(sen,a,b,roles,miss);
   const list=U.slice(ua,ub+1);
   for(let i=1;i<list.length;i++)if(list[i].role==="S"&&list[i-1].role!=="V")return miss;
   const compE=list.map(u=>RS[u.role][0]).join("＋"),compG=list.map(u=>RS[u.role][1]).join("＋");
@@ -348,7 +382,7 @@ export function setupSeq(){
   const seq=S.mode==="one"?[S.si]:S.sens.map((_,i)=>i);
   S.seq=seq;S.flat=[];S.starts=[];
   seq.forEach((si,k)=>{S.starts.push(S.flat.length);S.sens[si].words.forEach((t,li)=>S.flat.push({t,k,li,si}))});
-  S.passed=0;S.cuts=new Map();S.lastCut=-1;S.finishing=false;S.queuedCut=false;S.lastStepAt=0;S.nextStepAt=0;S.chunks=seq.map(()=>[]);S.closed=seq.map(()=>false);S.openK=0;
+  S.passed=0;S.combo=0;S.cuts=new Map();S.lastCut=-1;S.finishing=false;S.queuedCut=false;S.lastStepAt=0;S.nextStepAt=0;S.chunks=seq.map(()=>[]);S.closed=seq.map(()=>false);S.openK=0;
   stageReset(0);
 }
 export const endOf=k=>k+1<S.starts.length?S.starts[k+1]-1:S.flat.length-1;
@@ -382,6 +416,7 @@ export async function runCount(run,seq,quick){
 }
 export async function countdown(run){
   if(!await runCount(run,[["Ready...","small",1200],["3","",850],["2","",850],["1","",850],["GO!","go",650]]))return;
+  sfx("voice/chunk");
   S.phase="play";renderPreview();step();
 }
 
@@ -439,7 +474,7 @@ export function renderLine(){
 }
 /* タイミングの猶予：少し遅れて押したら1つ前のすき間、少し早く押したら次のすき間で切ったことにする */
 export const late=()=>Math.min(260,SPEED[settings.speed]*.35),early=()=>Math.min(160,SPEED[settings.speed]*.2);
-export const RANKV={miss:0,forgot:0,good:1,mini:2,great:3,excellent:3};
+export const RANKV={miss:0,forgot:0,cross:1,good:1,mini:2,great:3,excellent:3};
 export function gapRank(gb){
   const ga=S.lastCut+1;if(gb<ga||gb>=S.flat.length)return -1;
   const fa=S.flat[ga],fb=S.flat[gb];if(fa.k!==fb.k)return -1;
@@ -510,8 +545,14 @@ export function judgeChunk(ga,gb,forced){
   let c=classify(sen,f.li,S.flat[gb].li);
   if(forced)c={...c,kind:"forgot",roles:null};
   c={...c,a:f.li,b:S.flat[gb].li};
-  S.chunks[k].push(c);S.lastCut=gb;addScore(PTS[c.kind]);
-  hitSound(c.kind);stageOnChunk(k,sen,c);
+  S.chunks[k].push(c);S.lastCut=gb;
+  const base=c.pts??PTS[c.kind];
+  if(c.kind==="excellent"||c.kind==="great")S.combo=(S.combo||0)+1;else if(c.kind==="miss"||c.kind==="forgot")S.combo=0;
+  const mult=(c.kind==="excellent"||c.kind==="great")?Math.min(1.5,1+.1*Math.floor((S.combo||0)/3)):1;
+  c.base=base;c.gain=Math.round(base*mult);c.combo=S.combo||0;c.mult=mult;
+  if((c.kind==="excellent"||c.kind==="great")&&c.combo>0&&c.combo%3===0)setTimeout(()=>sfx(c.combo>=9?"voice/wow":"voice/combo"),90);
+  S.chunks[k][S.chunks[k].length-1]=c;addScore(c.gain);
+  hitSound(c.kind);if(c.kind==="mini"){const pv={"動詞！":"voice/verb","名詞！":"voice/noun","副詞！":"voice/adverb"}[c.gram];sfx(pv||"voice/yes")}stageOnChunk(k,sen,c);
   if(c.kind==="excellent"||c.kind==="great")speakChunk(sen.words.slice(c.a,c.b+1).join(" "));
   showPop(c);burst(c);
   document.dispatchEvent(new CustomEvent("cc:judge",{detail:{kind:c.kind,roles:c.roles}}));   // アバターなどが反応できるように
@@ -524,7 +565,7 @@ export function forceClose(k){
   closeSentence(k);
 }
 /* 区切った瞬間：線から輪っかと色の粒がはじける */
-export const KIND_COLOR={excellent:"#5fd49a",great:"#7cc4ff",good:"#ffd166",mini:"#c3cfdf",miss:"#ff6b6b",forgot:"#ff6b6b"};
+export const KIND_COLOR={excellent:"#5fd49a",great:"#7cc4ff",good:"#ffd166",cross:"#e0b3ff",mini:"#c3cfdf",miss:"#ff6b6b",forgot:"#ff6b6b"};
 export const ROLE_COLOR={S:"#7cc4ff",V:"#ff8f8f",O:"#8ee6a8",I:"#6fe0d8",C:"#ffb870",P:"#d6a8ff",T:"#ffd166",M:"#e6ecf5",R:"#e6ecf5",F:"#e6ecf5",X:"#9fb0c6"};
 export function burst(c){
   const wrap=$("laneWrap"),x=lineX(),col=KIND_COLOR[c.kind];
@@ -551,7 +592,7 @@ export function showPop(c){
     +((c.kind!=="mini"||settings.disp!=="gram")&&c.kind!=="forgot"&&lab?`<span class="pl">${esc(lab)}</span>`:"")
     +(nt?`<span class="pl2">${esc(nt)}</span>`:"")
     +(showJp&&c.jp?`<span class="pj">${esc(c.jp)}</span>`:"")
-    +(c.title?"":`<span class="pc">+${PTS[c.kind]}</span>`);
+    +(c.title?"":`<span class="pc">+${c.gain!=null?c.gain:(c.pts??PTS[c.kind])}${c.mult>1?` ×${c.mult.toFixed(1)}`:""}</span>`)+(c.combo>=3&&(c.kind==="excellent"||c.kind==="great")?`<span class="pl2">COMBO ${c.combo}</span>`:"");
   const x=Math.min(Math.max(r.left+lineX(),r.left+110),r.right-110);
   el.style.left=x+"px";el.style.bottom=(innerHeight-r.top+8)+"px";
   ENV.root.append(el);popEl=el;setTimeout(()=>{el.remove();if(popEl===el)popEl=null},1500);
@@ -565,12 +606,13 @@ export function closeSentence(k){
     if(!"SVO".includes(u.role))return;
     if(chunks.some(c=>c.a===u.s&&c.b===u.e&&c.kind!=="forgot"))bonus.push({role:u.role,name:{S:"主語",V:"動詞",O:"目的語"}[u.role]+"ボーナス"});
   });
-  const perfect=chunks.every(c=>c.kind!=="miss"&&c.kind!=="forgot"&&c.kind!=="good");
+  const perfect=chunks.every(c=>c.kind!=="miss"&&c.kind!=="forgot"&&c.kind!=="good"&&c.kind!=="cross");
   let time=null,tb=0;
   if(manual()&&!S.timed){time=(S.elapsed-S.sentStart)/1000;S.sentStart=S.elapsed;tb=Math.max(0,Math.round((sen.words.length*1.2-time)*20))}
-  const extra=bonus.length*BONUS+(perfect?PERFECT_BONUS:0)+tb;if(extra)addScore(extra);
-  const pts=chunks.reduce((a,c)=>a+PTS[c.kind],0)+extra;
+  const extra=bonus.length*BONUS+(perfect?chunks.reduce((a,c)=>a+(c.base!=null?c.base:(c.pts??PTS[c.kind])),0):0)+tb;if(extra)addScore(extra);
+  const pts=chunks.reduce((a,c)=>a+(c.gain!=null?c.gain:(c.pts??PTS[c.kind])),0)+extra;
   const r={chunks:[...chunks],bonus,pts,perfect,time,tb};S.results[S.seq[k]]=r;
+  {setTimeout(()=>sfx(perfect?"voice/perfect":"se/sentence_clear"),260);if(perfect)setTimeout(()=>sfx("voice/wow"),1250);if(bonus.length)setTimeout(()=>sfx("se/bonus"),560)}
   if(perfect)stageDone();
   document.dispatchEvent(new CustomEvent("cc:sentence",{detail:{perfect,pts}}));
   const html=judgedHTML(sen,r);
@@ -625,12 +667,13 @@ export async function finishSeq(){
 /* ===== 振り返り ===== */
 export function legendHTML(){return `<div class="legend">${"SVOICPTM".split("").map(r=>`<span class="r${r}">■${RN[r][0]}</span>`).join("")}<span class="rX">■説明</span></div>`}
 export function review(){
+  sfx("voice/stage_clear");
   const all=S.results.flatMap(r=>r?r.chunks:[]),cnt=k=>all.filter(c=>c.kind===k||(k==="miss"&&c.kind==="forgot")).length;
-  const refHTML=sen=>`<div class="roles">${sen.units.map(u=>`<span class="rcell"><span class="rtx">${u.subs?u.subs.map((p,pi)=>`<span class="r${pi&&u.role!=="V"?"X":u.role}">${esc(sen.words.slice(p.s,p.e+1).join(" "))}</span>`).join(" "):`<span class="r${u.role}">${esc(u.text)}</span>`}</span><span class="rl r${u.role}">${RN[u.role][settings.disp==="gram"?1:0]}</span></span>`).join('<span class="cutmark">｜</span>')}</div>`;
+  const refHTML=sen=>`<div class="roles">${sen.units.map(u=>`<span class="rcell"><span class="rtx">${u.subs?u.subs.map((p,pi)=>`<span class="r${subIsX(u,pi)?"X":u.role}">${esc(sen.words.slice(p.s,p.e+1).join(" "))}</span>`).join(" "):`<span class="r${u.role}">${esc(u.text)}</span>`}</span><span class="rl r${u.role}">${RN[u.role][settings.disp==="gram"?1:0]}</span></span>`).join('<span class="cutmark">｜</span>')}</div>`;
   openSheet(`<h2>${esc(S.title)} クリア！</h2>
     ${S.roleMode&&S.roleN?`<div class="note">役割：${S.roleOk} / ${S.roleN} 正解</div>`:""}
     <div class="big">${S.gained} pt${manual()?`<span style="font-size:16px;color:var(--muted);margin-left:10px">⏱ ${(S.elapsed/1000).toFixed(1)}秒</span>`:""}</div>
-    <div class="stats">${[["excellent","◎"],["great","◯"],["good","△"],["mini","・"],["miss","×"]].map(([k,m])=>`<div class="stat"><span class="mk k-${k}">${m}</span><b>${cnt(k)}</b></div>`).join("")}</div>
+    <div class="stats">${[["excellent","◎"],["great","◯"],["good","△"],["cross","▽"],["mini","・"],["miss","×"]].map(([k,m])=>`<div class="stat"><span class="mk k-${k}">${m}</span><b>${cnt(k)}</b></div>`).join("")}</div>
     ${legendHTML()}
     ${S.sens.map((sen,i)=>{const r=S.results[i];if(!r)return "";
       return `<div class="rvw"><span class="lab">あなたの区切り</span><div class="en">${judgedHTML(sen,r)}</div>
@@ -646,15 +689,19 @@ export function review(){
 /* ===== 操作 ===== */
 
 export let sheetClosable=true;
-export function openSheet(html,closable=true){sheetClosable=closable;if(S){S.paused=true;clearTimeout(S.timer)}$("sheet").innerHTML=html;$("modal").hidden=false}
-export function closeSheet(){$("modal").hidden=true;if(S){S.paused=false;if(S.phase==="play")S.timer=setTimeout(step,SPEED[settings.speed])}}
+export function openSheet(html,closable=true){if($("modal").hidden)sfx("se/open");sheetClosable=closable;if(S){S.paused=true;clearTimeout(S.timer)}$("sheet").innerHTML=html;$("modal").hidden=false}
+export function closeSheet(){if(!$("modal").hidden)sfx("se/close");$("modal").hidden=true;if(S){S.paused=false;if(S.phase==="play")S.timer=setTimeout(step,SPEED[settings.speed])}}
 
 export const opt=(id,cur,list)=>`<select id="${id}">${list.map(([v,l])=>`<option value="${v}" ${v===cur?"selected":""}>${l}</option>`).join("")}</select>`;
 export function settingRows(){return `
     <div class="row"><label for="optSpeed">単語が入ってくる速さ（自動の時）</label>${opt("optSpeed",String(settings.speed),Object.keys(SPEED).map(k=>[k,`${k}　${SPEED_NAME[k]}`]))}</div>
     <div class="row"><label for="optFont">流れる文字の大きさ</label>${opt("optFont",settings.font,Object.keys(FONT).map(k=>[k,FONT_NAME[k]]))}</div>
     <div class="row"><label for="optDisp">チャンクの説明</label>${opt("optDisp",settings.disp,[["easy","かんたん（する＋何を）"],["gram","文法（動詞＋目的語）"],["both","両方"],["none","色だけ"]])}</div>
-    <div class="row"><label for="optSnd">区切ったときの音</label>${opt("optSnd",settings.sound,[["both","効果音（小）＋読み上げ"],["voice","読み上げだけ"],["sfx","効果音だけ（テンポ重視）"],["off","なし"]])}</div>
+    <div class="row"><label for="optVoice">声・読み上げ</label>${opt("optVoice",(settings.sound==="both"||settings.sound==="voice")?"on":"off",[["on","オン"],["off","オフ"]])}</div>
+    <div class="row"><label for="optSe">効果音</label>${opt("optSe",(settings.sound==="both"||settings.sound==="sfx")?"on":"off",[["on","オン"],["off","オフ"]])}</div>
+    <div class="row"><label for="optBgm">BGM</label>${opt("optBgm",settings.bgm||"low",[["low","小さめ"],["mid","ふつう"],["off","なし"]])}</div>
+    <div class="row"><label for="optMute">音をぜんぶ消す（左はしの 🎵 と同じ）</label>${opt("optMute",settings.mute?"on":"off",[["off","消さない"],["on","消す"]])}</div>
+    <div class="row"><label for="optGram">チュートリアルの文法用語（カードに小さく併記）</label>${opt("optGram",settings.gram===false?"off":"on",[["on","出す"],["off","出さない"]])}</div>
     <div class="row"><label for="optMyRank">自分のランク</label>${opt("optMyRank",String(settings.myLevel||0),[["0","未登録"],...LV.slice(1).map((_,i)=>[String(i+1),lvLabel(i+1)])])}</div>
     <div class="row"><label for="optRandLv">ランダムで出す文</label>${opt("optRandLv",settings.randLv||"auto",[["auto","おまかせ（自分のランクの前後）"],["all","すべてのレベル"],...LV.slice(1).map((_,i)=>[String(i+1),lvLabel(i+1)+" だけ"])])}</div>
     <div class="row"><label for="optBack">1語もどるボタン（自分で送るとき）</label>${opt("optBack",settings.backBtn?"on":"off",[["off","使わない"],["on","使う"]])}</div>
@@ -667,7 +714,12 @@ export function bindSettingRows(){
   $("optFont").onchange=e=>{settings.font=e.target.value;saveSettings();applyVisual();if(S){renderLane(true);renderPreview()}};
   $("optDisp").onchange=e=>{settings.disp=e.target.value;saveSettings();if(S)renderLine()};
   $("optTts").onchange=e=>{settings.tts=e.target.value==="on";saveSettings()};
-  $("optSnd").onchange=e=>{settings.sound=e.target.value;saveSettings();unlockAudio();hitSound("excellent");speakChunk("was cooking dinner")};
+  $("optBgm").onchange=e=>{settings.bgm=e.target.value;saveSettings();unlockAudio();bgmTick()};
+  const sndSet=()=>{const v=$("optVoice").value==="on",e=$("optSe").value==="on";settings.sound=v&&e?"both":v?"voice":e?"sfx":"off";saveSettings();unlockAudio()};
+  $("optVoice").onchange=()=>{sndSet();hitSound("excellent")};
+  $("optSe").onchange=()=>{sndSet();sfx("se/sentence_clear")};
+  $("optMute").onchange=e=>{setMute(e.target.value==="on")};
+  $("optGram").onchange=e=>{settings.gram=e.target.value==="on";saveSettings();document.body.classList.toggle("nogram",settings.gram===false)};
 }
 
 export function startPractice(t){
@@ -749,7 +801,7 @@ export function init_engine(){
   });
   tickTimer=setInterval(()=>{const now=performance.now(),dt=now-lastTick;lastTick=now;
     if(S&&manual()&&S.phase==="play"&&!S.paused){S.elapsed+=dt;
-      if(S.timed){$("timeText").textContent="残り "+Math.max(0,(S.timed.limit-S.elapsed)/1000).toFixed(1);if(S.elapsed>=S.timed.limit)timedEnd()}
+      if(S.timed){$("timeText").textContent="残り "+Math.max(0,(S.timed.limit-S.elapsed)/1000).toFixed(1);{const rs=Math.ceil((S.timed.limit-S.elapsed)/1000);if(rs<=5&&rs>=1&&S.lastCount!==rs){S.lastCount=rs;sfx("se/count5")}}if(S.elapsed>=S.timed.limit)timedEnd()}
       else $("timeText").textContent="⏱ "+(S.elapsed/1000).toFixed(1)}},100);
   ENV.offs.push(()=>clearInterval(tickTimer));
 }

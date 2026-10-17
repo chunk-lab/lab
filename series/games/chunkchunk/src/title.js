@@ -2,6 +2,7 @@ import { clearPop, stopVoice, $, ENV, S, bindSettingRows, closeSheet, legendHTML
 import { pickText } from './pick.js';
 import { showRanking, startTimed } from './rank.js';
 import { openMyTexts } from './texts.js';
+import { sfx } from './sfx.js';
 /* 施設ごとの入口（メニュー）。街のどこから入ったかで中身が変わる：
    lesson＝学校（チャンク練習・役割）／library＝図書館（リーディング・長文の登録と共有）／arcade＝ゲームセンター（ゲーム・チャレンジ・ランキング） */
 export let FACE="arcade";
@@ -18,7 +19,7 @@ export function initTitle(face){
   FACE=face||"arcade";
   document.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>{
     primeSpeech();unlockAudio();$("title").hidden=true;
-    const [adv,mode]=b.dataset.play.split("-");settings.advance=adv;settings.mode=mode;saveSettings();
+    const [adv,mode]=b.dataset.play.split("-");sfx("se/btn_"+(adv==="auto"?"sarasara":"yoidon"));settings.advance=adv;settings.mode=mode;saveSettings();
     loadStage(mode,stageN[mode],null,true);
   });
   document.querySelectorAll("[data-open-set]").forEach(b=>b.onclick=()=>{
@@ -27,7 +28,7 @@ export function initTitle(face){
   });
   document.querySelectorAll("[data-study]").forEach(b=>b.onclick=()=>{
     primeSpeech();unlockAudio();const v=b.dataset.study;
-    if(v==="make"){ENV.make.open();return}
+    if(v==="make"){sfx("se/btn_lesson");ENV.make.open();return}
     if(v==="texts"){$("title").hidden=true;openMyTexts();return}
     if(v==="random"){$("title").hidden=true;startPractice(null);return}
     pickText(v);
