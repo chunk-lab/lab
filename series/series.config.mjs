@@ -7,7 +7,7 @@ export const GAMES = {   // ゲーム → 公開するファイル [元, 公開�
   punichunk: [],   // 全部 app.js / app.css に入る
   cards: [],
   stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream']],
-  chunkchunk: [],   // 全部 app.js / app.css に入る（共通の辞書・読む画面を使う）
+  chunkchunk: [['games/chunkchunk/assets', 'g/chunkchunk']],   // 本体は app.js / app.css に入る。レッスンの2人の絵だけ別ファイル
   eigonou: [{ bundle: 'games/eigonou/src/main.js', out: 'g/eigonou/eigo.js' }],   // 大きいので、開いたときに読み込む別ファイル（eigo.js / eigo.css）
 };
 export const APPS = {

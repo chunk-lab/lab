@@ -72,7 +72,8 @@ export default {
 | `src/cards.css` | 見た目（`.ct-cards` の中だけに効く） |
 
 ## チャンクチャンク（games/chunkchunk）
-入口は施設ごと（`apps/town/main.js` の PLACES で `opts.face` を指定）：学校＝`lesson`（チャンク練習）、図書館＝`library`（リーディング・My Texts）、ゲームセンター＝`arcade`（さらさら・よーいどん・チャレンジ・ランキング）。
+レッスン（文を作る・第1〜3章）は `src/make.js`（もとの make.js のまま、保存と効果音だけ共通部品に）。コインの入れ物は `src/wallet.js`（数字はまだ決めていない）。2人の絵は `assets/img/chara`。
+入口は施設ごと（`apps/town/main.js` の PLACES で `opts.face` を指定）：学校＝`lesson`（レッスン＝文を作る・チャンク練習）、図書館＝`library`（リーディング・My Texts）、ゲームセンター＝`arcade`（さらさら・よーいどん・チャレンジ・ランキング）。
 | 直したいもの | ファイル |
 |---|---|
 | 施設の入口（メニュー）の中身 | `src/view.html` の `#title`、つなぎは `src/title.js` |
