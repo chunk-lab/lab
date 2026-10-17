@@ -7,13 +7,13 @@ import { GAMES } from '../../games/index.js';
 
 const core = createCore(window.__APP__);
 const PLACES = {
-  school: { n: '学校', img: 'school', sub: 'チャンクチャンクで学ぶ', items: [{ t: 'チャンクチャンク（スタディ）', game: 'chunkchunk', opts: { go: 'study' } }] },
-  library: { n: '図書館', img: 'library', sub: '読む・調べる', items: [{ t: 'リーディング（チャンクチャンク）', game: 'chunkchunk', opts: { go: 'study' } }] },
+  school: { n: '学校', img: 'school', sub: 'チャンクを練習する', items: [{ t: 'チャンクレッスン', game: 'chunkchunk', opts: { face: 'lesson' } }] },
+  library: { n: '図書館', img: 'library', sub: '読む・登録する', items: [{ t: 'チャンクリーディング', game: 'chunkchunk', opts: { face: 'library' } }] },
   house: { n: '自宅', img: 'house', profile: true },
   shop: { n: 'ショップ', img: 'supermarket', sub: '有料コンテンツ', items: [] },
   game: { n: 'ゲームセンター', img: 'gamecenter', sub: '遊んで鍛える', items: [
     { t: 'チャンクストリーム', game: 'stream' }, { t: 'ぷにチャンク', game: 'punichunk' },
-    { t: 'チャンク・カード', game: 'cards' }, { t: 'チャンクチャンク（ゲーム）', game: 'chunkchunk', opts: { go: 'game' } }] }
+    { t: 'チャンク・カード', game: 'cards' }, { t: 'チャンクチャンク', game: 'chunkchunk', opts: { face: 'arcade' } }] }
 };
 const BLD = [['school', 'bSchool', '学校'], ['library', 'bLibrary', '図書館'], ['house', 'bHouse', '自宅'], ['shop', 'bShop', 'ショップ'], ['game', 'bGame', 'ゲームセンター']];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

@@ -1,23 +1,26 @@
+import { $, LS, ask, esc, parseSentence, startShortPractice, tell, toast } from './engine.js';
+import { DB, IS_ADMIN, MYID, copyText, edStatus, renderMyList } from './texts.js';
 /* チャンクチャンク：短文をまとめて入れる */
 /* ===== 短文をまとめて入れる =====
  1行＝1文： 役割:英語=チャンク訳 | 役割:英語=チャンク訳 … ## 全体訳 ## ランク(1〜10) ## 用途
  区切りは「 ## 」かタブ（Excel からのコピーはタブになる）。訳・ランク・用途は省略してもよい。「#」で始まる行はメモとして読み飛ばす */
-const SHORTKEY="ccs-shorts",SHORT_DOC_MAX=250000;   // 1つのまとまりの上限（共有DBの1ドキュメントは256KiBまで。少し余裕を残す）
-const shortToLine=x=>[x.s,x.ja||"",x.lv||"",x.cat||""].join("\t");
-function lineToShort(l){const [s,ja,lv,cat]=String(l).split("\t");return {s,ja:ja||"",lv:+lv||null,cat:cat||""}}
-const byteLen=s=>new TextEncoder().encode(s).length;
-function shortDocSize(title,lines){return byteLen(JSON.stringify({title,lines,by:"u_0000000000000000000000",at:Date.now()}))}
-function loadMyShorts(){try{return JSON.parse(localStorage.getItem(SHORTKEY)||"[]")}catch(e){return []}}
-function saveMyShorts(l){try{localStorage.setItem(SHORTKEY,JSON.stringify(l));return true}catch(e){return false}}
-function shortsShared(){return (SHORTS||[]).flatMap(d=>(d.lines?d.lines.map(lineToShort):(d.items||[])).map(x=>({...x,doc:d.id})))}
-const shortDocCount=d=>(d.lines||d.items||[]).length;
-function shortsAll(){const seen=new Set(),out=[];[...shortsShared(),...loadMyShorts()].forEach(x=>{if(x&&x.s&&!seen.has(x.s)){seen.add(x.s);out.push(x)}});return out}
-async function loadShorts(){
+export let SHORTS=null;   // みんなの短文（共有）
+export const SHORTKEY="ccs-shorts",SHORT_DOC_MAX=250000;   // 1つのまとまりの上限（共有DBの1ドキュメントは256KiBまで。少し余裕を残す）
+export const shortToLine=x=>[x.s,x.ja||"",x.lv||"",x.cat||""].join("\t");
+export function lineToShort(l){const [s,ja,lv,cat]=String(l).split("\t");return {s,ja:ja||"",lv:+lv||null,cat:cat||""}}
+export const byteLen=s=>new TextEncoder().encode(s).length;
+export function shortDocSize(title,lines){return byteLen(JSON.stringify({title,lines,by:"u_0000000000000000000000",at:Date.now()}))}
+export function loadMyShorts(){try{return JSON.parse(LS.getItem(SHORTKEY)||"[]")}catch(e){return []}}
+export function saveMyShorts(l){try{LS.setItem(SHORTKEY,JSON.stringify(l));return true}catch(e){return false}}
+export function shortsShared(){return (SHORTS||[]).flatMap(d=>(d.lines?d.lines.map(lineToShort):(d.items||[])).map(x=>({...x,doc:d.id})))}
+export const shortDocCount=d=>(d.lines||d.items||[]).length;
+export function shortsAll(){const seen=new Set(),out=[];[...shortsShared(),...loadMyShorts()].forEach(x=>{if(x&&x.s&&!seen.has(x.s)){seen.add(x.s);out.push(x)}});return out}
+export async function loadShorts(){
   if(!DB)return SHORTS;
   try{const snap=await DB.collection("shorts").get();SHORTS=snap.docs.map(d=>({...d.data(),id:d.id}))}catch(e){SHORTS=SHORTS||[]}
   return SHORTS;
 }
-function parseShortLines(text){
+export function parseShortLines(text){
   const ok=[],errs=[],seen=new Set();
   String(text).replace(/\r/g,"").split("\n").forEach((raw,li)=>{
     const line=raw.trim();if(!line||line.startsWith("#")||line.startsWith("```"))return;   // 空行・メモ・コードブロックの線は飛ばす
@@ -44,7 +47,7 @@ function parseShortLines(text){
   });
   return {ok,errs};
 }
-function buildShortPrompt(asFile){
+export function buildShortPrompt(asFile){
   return `英語の短文を、日本人学習者向けの「チャンク読み」ゲーム用に、1行1文の形式にしてください。
 ${asFile?`結果は、ファイル作成の機能を使って、ダウンロードできるテキストファイル（.txt、文字コードは UTF-8）として作ってください。チャットに中身を書き出すのではなく、ファイルそのものを渡してください。
 ・ファイル名は chunk_shorts.txt にする。
@@ -79,7 +82,7 @@ S:The man / by the window=窓のそばの男の人は{男の人/窓のそばの}
 （この下に英文を貼り付けるか、「中1レベルで、熟語のまとまりの文を30文作って」のように書いてください）
 `;
 }
-function renderShortEditor(){
+export function renderShortEditor(){
   $("edHead").textContent="短文をまとめて入れる";
   const canShare=!!(DB&&IS_ADMIN),mine=loadMyShorts(),shared=SHORTS||[];
   const sum=list=>{const c={};list.forEach(x=>{const k=`${x.cat||"用途なし"}・${x.lv?"ランク"+x.lv:"ランクなし"}`;c[k]=(c[k]||0)+1});
@@ -185,7 +188,7 @@ function renderShortEditor(){
   }
 }
 /* Chunk Practice の選択肢：ランク別・用途別の短文 */
-function shortPickItems(){
+export function shortPickItems(){
   const all=shortsAll();if(!all.length)return [];
   const byLv={},byCat={};all.forEach(x=>{(byLv[x.lv||0]=byLv[x.lv||0]||[]).push(x);if(x.cat)(byCat[x.cat]=byCat[x.cat]||[]).push(x)});
   return [...Object.keys(byLv).sort((a,b)=>a-b).map((lv,i)=>({label:+lv?`短文 ランク${lv}`:"短文 ランクなし",level:+lv||null,sub:`ランク別・${byLv[lv].length}文`,ord:800+i,go:()=>startShortPractice(byLv[lv],+lv?`短文 ランク${lv}`:"短文")})),
@@ -193,8 +196,8 @@ function shortPickItems(){
 }
 
 /* 短文を1文ずつ見る・直す・消す（自分の短文も、みんなの短文のまとまりも同じ画面） */
-const shLine=x=>[x.s,x.ja||"",x.lv||"",x.cat||""].join(" ## ").replace(/( ## )+$/,"");
-function shortItemsEditor(box,getItems,save){
+export const shLine=x=>[x.s,x.ja||"",x.lv||"",x.cat||""].join(" ## ").replace(/( ## )+$/,"");
+export function shortItemsEditor(box,getItems,save){
   let q="",openI=-1;
   const draw=()=>{
     const items=getItems(),key=x=>(x.s+" "+(x.ja||"")+" "+(x.cat||"")).toLowerCase();

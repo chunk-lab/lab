@@ -16,7 +16,13 @@ for (const p of PREBUILD) execFileSync('python3', [path.join(ROOT, p)], { stdio:
 for (const id of apps) {
   const app = APPS[id]; if (!app) { console.error('アプリがありません: ' + id); process.exit(1); }
   const out = path.join(ROOT, 'dist', id); fs.rmSync(out, { recursive: true, force: true }); fs.mkdirSync(out, { recursive: true });
-  await esbuild.build({ entryPoints: [path.join(ROOT, 'apps', app.shell, 'main.js')], bundle: true, format: 'iife', target: 'es2020', outfile: path.join(out, 'app.js'), loader: { '.webp': 'file' }, external: ['img/*'], logLevel: 'warning', legalComments: 'none' });
+  // games/index.js は、このアプリに入れるゲームだけを読む形にして組み立てる（単体アプリにほかのゲームが入らないように）
+  const gamesIdx = path.join(ROOT, 'games', 'index.js'), src = fs.readFileSync(gamesIdx, 'utf8');
+  const only = { name: 'only-games', setup(b) { b.onLoad({ filter: /games[\\/]index\.js$/ }, () => {
+    const lines = [...src.matchAll(/^import (\w+) from '([^']+)';/gm)].filter(m => app.games.includes(m[1]));
+    return { contents: lines.map(m => m[0]).join('\n') + `\nexport const GAMES = { ${lines.map(m => m[1]).join(', ')} };\n`, resolveDir: path.dirname(gamesIdx), loader: 'js' };
+  }); } };
+  await esbuild.build({ plugins: [only], entryPoints: [path.join(ROOT, 'apps', app.shell, 'main.js')], bundle: true, format: 'iife', target: 'es2020', outfile: path.join(out, 'app.js'), loader: { '.webp': 'file', '.html': 'text' }, external: ['img/*'], logLevel: 'warning', legalComments: 'none' });
   copy('core/avatar', path.join(out, 'core', 'avatar'));
   copy('core/dict', path.join(out, 'core', 'dict'));   // 共通の辞書のデータ（読む画面を開いたときに読み込む）
   for (const [s, d] of app.assets || []) copy(s, path.join(out, d));

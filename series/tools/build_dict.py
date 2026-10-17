@@ -3,9 +3,9 @@
  読む画面の単語タップ・熟語さがしで使う。単語ドリルのカード（短い訳）は games/stream/tools/build_words2.py が同じ材料から作る。
 
  材料（上ほど優先。同じ単語・同じ品詞なら上の意味を使う）
-  1. games/chunkchunk/js/dict.js   … よく使う2000語（手直し済み）
-  2. games/chunkchunk/js/dictx.js  … 約1万語＋複合語・熟語（EJDict / WordNet / FrequencyWords）
-  3. games/stream/tools/big.js     … 英語脳アプリの辞書（約2.9万語・動詞の変化形つき）
+  1. data/dict/chunkchunk_dict.js  … よく使う2000語（手直し済み）
+  2. data/dict/chunkchunk_dictx.js … 約1万語＋複合語・熟語（EJDict / WordNet / FrequencyWords）
+  3. data/dict/big.js              … 英語脳アプリの辞書（約2.9万語・動詞の変化形つき）
   4. games/stream/tools/idioms.txt … 熟語（ドリル用に直した訳）
  書き出す形（1行1語）：単語<TAB>品詞=意味,意味;品詞=意味<TAB>変化形,変化形
 """
@@ -43,17 +43,17 @@ def read_rows(src, skip=None):
             add(f[0], p, m.split(','), forms)
 
 # 1. 2000語（DICT_SRC）
-read_rows(js_strings(P('games', 'chunkchunk', 'js', 'dict.js'))[0])
+read_rows(js_strings(P('data', 'dict', 'chunkchunk_dict.js'))[0])
 CURATED = set(W)   # 手直し済みの語には、ほかの辞書の品詞は足さない（変化形だけもらう）（「make＝成功（名詞）」のような変な意味が出ないように）
 # 2. 約1万語＋複合語・熟語
-rows, phr = js_strings(P('games', 'chunkchunk', 'js', 'dictx.js'))[:2]
+rows, phr = js_strings(P('data', 'dict', 'chunkchunk_dictx.js'))[:2]
 read_rows(rows, CURATED)
 PH = {}
 for l in phr.split('\n'):
     f = l.split('\t')
     if len(f) == 2 and f[0] and f[1]: PH.setdefault(f[0].lower(), f[1])
 # 3. 英語脳アプリの辞書
-src = open(P('games', 'stream', 'tools', 'big.js'), encoding='utf8').read()
+src = open(P('data', 'dict', 'big.js'), encoding='utf8').read()
 for k, v in re.findall(r'\n  (\w+):`(.*?)`', src, re.S):
     if k not in BIGPOS: continue
     for l in v.split('\n'):

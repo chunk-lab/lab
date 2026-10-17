@@ -8,7 +8,7 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__)) + '/'   # tools/
 os.chdir(HERE)
 APP = HERE + '../data/'
-CC = HERE + '../../chunkchunk/js/'   # チャンクチャンクの辞書
+DICT = HERE + '../../../data/dict/'   # 辞書の元データ（共通の辞書と同じ材料）
 MAXJA = 12          # ボタン2行に収まる長さ。意味はこの長さに収まるだけ並べる
 POSMAP = {'n': 'n', 'p': 'n', 'an': 'n', 'v': 'v', 'a': 'a', 'r': 'r', 'adj': 'a', 'adv': 'r', 'prep': 'pp', 'conj': 'cj', 'pr': 'pn', 'int': 'ij', 'num': 'n', 'det': 'a'}
 JTAG = {'名': 'n', '動': 'v', '形': 'a', '副': 'r', '前': 'pp', '接': 'cj', '代': 'pn', '間': 'ij', '形・副': 'a', '名・形': 'n', '前・副': 'pp', '名・動': 'n', '名・副': 'n'}
@@ -30,7 +30,7 @@ def join(ms):
     return '、'.join(out)
 
 # ---- 辞書を読む ----
-src = open('big.js', encoding='utf8').read()
+src = open(DICT + 'big.js', encoding='utf8').read()
 secs = dict(re.findall(r'\n  (\w+):`(.*?)`', src, re.S))
 BIG = {}; SCORE = {}; ORD = {}; PAST = set(); HEAD = set()
 for k, v in secs.items():
@@ -46,7 +46,7 @@ def dsrc(path):
     body = re.search(r'"(.*)"', x, re.S).group(1).encode().decode('unicode_escape').encode('latin1').decode('utf8')
     return body
 DX = {}; RANK = {}
-for n, l in enumerate(dsrc(CC + 'dictx.js').split('\n')):
+for n, l in enumerate(dsrc(DICT + 'chunkchunk_dictx.js').split('\n')):
     f = l.split('\t')
     if len(f) < 2 or not re.fullmatch(r"[a-z][a-z'-]*", f[0]) or '=' not in f[1]: continue
     RANK.setdefault(f[0], 2000 + n)
@@ -55,7 +55,7 @@ for n, l in enumerate(dsrc(CC + 'dictx.js').split('\n')):
             p, ms = seg.split('=', 1)
             if p in POSMAP: DX.setdefault((f[0], POSMAP[p]), ms.split(','))
 D2 = {}
-for n, l in enumerate(dsrc(CC + 'dict.js').split('\n')):
+for n, l in enumerate(dsrc(DICT + 'chunkchunk_dict.js').split('\n')):
     f = l.split('\t')
     if len(f) < 2 or not re.fullmatch(r"[a-z][a-z'-]*", f[0]): continue
     RANK[f[0]] = min(RANK.get(f[0], 9e9), n)

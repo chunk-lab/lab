@@ -1,404 +1,17 @@
-/* チャンクチャンク：STUDY（Reading・Chunk Practice の役割・My Texts・共有の長文） */
-/* ===== みっけ！チャンク（読解モード） =====
- 問題：[文の番号, 答えのユニットの番号, 問題文]。ユニットの番号は、その文を「 | 」で分けた何番目か（0から） */
-let RD=null,readN=0;
-function builtinStory(s){const sens=s.list.map(([en,ja])=>parseSentence(en,ja));
-  return {title:s.title,list:s.list,level:(LVO[s.id]??s.level),questions:(QUESTIONS[s.title]||[]).map(([si,ui,q])=>{const u=sens[si].units[ui];return {type:"range",si,a:u.s,b:u.e,alts:[],partials:[],q}})}}
-function startRead(story){
-  loadDictX(()=>{if(RD&&!$("readView").hidden)rdInfoUI()});   // 追加の辞書（約1万語）
-  try{speechSynthesis.cancel()}catch(e){}
-  if(!story){const pool=STORIES.filter(s=>QUESTIONS[s.title]);story=builtinStory(pool[readN++%pool.length])}
-  RD={st:story,sens:story.list.map(([en,ja])=>parseSentence(en,ja)),qs:story.questions.map(q=>({...q,ans:null})),
-      qi:0,si:0,p:0,start:null,sel:null,hints:0,hintOn:false,hintQ:new Set(),gpos:[],view:settings.rdView||"read",gramOn:!!settings.rdAlways,showJa:false,info:null,
-      hintPolicy:story.mode==="test"?(story.hint||"none"):"grammar",hintCost:story.mode==="test"?(story.hintCost==null?20:+story.hintCost):0};
-  $("rdTitle").textContent=`${story.mode==="test"?"TEST":"Reading"}｜${story.title}${story.level?`（Lv${story.level}）`:""}`;
-  $("readView").hidden=false;rdRender(true);
-}
-const rdSen=()=>RD.sens[RD.si];
-function rdView(){return RD.st.mode==="test"?"solve":(RD.qs.length?RD.view:"read")}
-function rdModeUI(view){
-  const test=RD.st.mode==="test",hasQ=RD.qs.length>0;
-  $("rdSeg").hidden=test||!hasQ;
-  $("rdSeg").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
-  $("rdGram").hidden=view!=="read";$("rdGram").classList.toggle("on",!!RD.gramOn);
-  $("rdJaBtn").hidden=view!=="read"||test||settings.rdJa===false;$("rdJaBtn").classList.toggle("on",!!RD.showJa);
-  $("rdHint").hidden=view!=="solve"||RD.hintPolicy==="none";$("rdHint").classList.toggle("on",!!RD.hintOn);
-  $("rdHint").textContent="💡ヒント"+(RD.hintCost?`（−${RD.hintCost}点）`:"");
-  $("rdModeRow").hidden=[...$("rdModeRow").children].every(c=>c.hidden);
-}
-/* 読むモードのタップ：「チャンク」オフ＝単語（品詞／＋意味）、オン＝チャンク（役割＋説明／＋意味）。意味は「訳」オンのときだけ */
-const POSPREF={S:["n","pr","art","det","adj","num"],O:["n","pr","art","det","adj","num"],I:["pr","n"],C:["adj","n","pr"],
-  P:["prep","n","art","det","adj","adv"],T:["prep","conj","n","adv","det","art"],M:["prep","adv","n","art","det","adj"],R:["conj","prep"],F:["conj"]};
-function wordInfoHTML(sen,wi,ja){
-  const raw=sen.words[wi],clean=raw.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9'’]+$/g,""),e=lookupWord(raw);
-  const ph=phraseAt(sen.words,wi),phH=ph?`<div class="riNote">熟語・複合語：<b>${esc(ph.ws.join(" "))}</b>${ja?` ＝ ${esc(ph.m)}`:""}</div>`:"";
-  if(!e)return `<div><span class="posTag">${dictXState===1?"辞書を読み込み中…":/^[A-Z]/.test(clean)&&wi>0?"名前など":"辞書にない単語"}</span> <b>${esc(clean)}</b>${phH}</div>`;
-  const u=sen.units[sen.unitOf[wi]];
-  let pref=POSPREF[u.role]||[];
-  if(u.role==="V")pref=wi<u.e&&e.pos.some(p=>p[0]==="aux")?["aux","v"]:["v","aux"];   // 後ろに動詞が続くなら助動詞
-  const rk=t=>{const i=pref.indexOf(t);return i<0?99:i};
-  const [main,...rest]=[...e.pos].sort((x,y)=>rk(x[0])-rk(y[0]));
-  const base=e.w.toLowerCase()!==clean.toLowerCase()?`<small class="riBase">（元の形 ${esc(e.w)}${e.neg?"＋not":""}）</small>`:"";
-  return `<div><span class="posTag">${POSN[main[0]]||main[0]}</span> <b>${esc(clean)}</b>${base}${ja?` ＝ ${esc(main[1])}`:""}`
-    +(rest.length?`<div class="riNote">ほかに：${rest.map(([t,m])=>(POSN[t]||t)+(ja?`（${esc(m)}）`:"")).join("、")}</div>`:"")+phH+`</div>`;
-}
-function rdInfoUI(){
-  const el=$("rdInfo");if(rdView()!=="read"){el.innerHTML="";el.hidden=true;return}
-  const sen=rdSen(),d=settings.disp||"easy",ja=RD.showJa,roleOn=RD.gramOn&&settings.rdRole!==false;let h="";
-  const inf=RD.info&&RD.info.si===RD.si&&RD.info.chunk===!!RD.gramOn?RD.info:null;
-  if(inf&&inf.chunk){const u=sen.units[inf.u],rn=RN[u.role]||["",u.role],note=u.note||[];
-    const tag=d==="gram"?rn[1]:d==="both"?`${rn[0]}／${rn[1]}`:d==="none"?"":rn[0];
-    const nt=d==="none"?"":d==="gram"?(note[1]||""):d==="both"?[note[0],note[1]].filter(Boolean).join("／"):(note[0]||"");
-    h+=`<div><span class="roleTag r${u.role}">${esc(tag)||"　"}</span> <b>${esc(u.text)}</b>${ja&&u.jp?` ＝ ${esc(u.jp)}`:""}${nt?`<div class="riNote">${esc(nt)}</div>`:""}</div>`}
-  if(inf&&!inf.chunk)h+=wordInfoHTML(sen,inf.wi,ja);
-  if(ja){h+=`<button class="riFull" id="rdFull">全文の訳 ${RD.fullOpen?"▲":"▼"}</button>`;
-    if(RD.fullOpen){   // チャンクごとの英語と意味を並べて、最後に全体の訳
-      if(sen.units.some(u=>u.jp))h+=`<div class="il">${sen.units.map(u=>`<span class="ilItem"${roleOn?` style="--c:var(--c${u.role})"`:""}><span class="ilEn">${esc(u.text)}</span>${u.jp?`<span class="ilJp">${esc(u.jp)}</span>`:""}</span>`).join("")}</div>`;
-      if(sen.ja)h+=`<div class="riJa">${esc(sen.ja)}</div>`}}
-  el.innerHTML=h;el.hidden=!h;
-  if($("rdFull"))$("rdFull").onclick=()=>{RD.fullOpen=!RD.fullOpen;rdInfoUI()};
-}
-function rdInfoTap(wi){
-  if(wi<0){RD.info=null;rdRender(true);return}
-  const sn=rdSen(),ui=sn.unitOf[wi],u=sn.units[ui],chunk=!!RD.gramOn;
-  if(RD.st.mode!=="test"){rdStopSay();speakOne(chunk?u.text:sn.words[wi].replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9'’]+$/g,""))}   // チャンク／単語だけ発音
-  const same=RD.info&&RD.info.si===RD.si&&RD.info.chunk===chunk&&(chunk?RD.info.u===ui:RD.info.wi===wi);
-  RD.info=same?null:chunk?{si:RD.si,chunk:true,u:ui,s:u.s,e:u.e}:{si:RD.si,chunk:false,wi,s:wi,e:wi};
-  rdRender(true);
-}
-function showRdSettings(){
-  const test=RD.st.mode==="test",onoff=(id,v)=>opt(id,v?"on":"off",[["on","オン"],["off","オフ"]]);
-  openSheet(`<h2>表示の設定</h2>
-    ${test?"":`<p class="note">「読む」で「チャンク」を押したときの見え方を選べます。</p>
-    <div class="row"><label for="sSeg">区切り</label>${onoff("sSeg",settings.rdSeg!==false)}</div>
-    <div class="row"><label for="sRole">役割の色</label>${onoff("sRole",settings.rdRole!==false)}</div>
-    <div class="row"><label for="sJa">日本語の「訳」ボタン</label>${onoff("sJa",settings.rdJa!==false)}</div>
-    <div class="row"><label for="sAlways">最初からチャンクで見る</label>${onoff("sAlways",!!settings.rdAlways)}</div>`}
-    <div class="row"><label for="sLines">表示する文の数</label>${opt("sLines",String(settings.rdLines),[["1","1文（今の文だけ）"],["2","2文（次の文も）"],["3","3文（前後の文も）"]])}</div>
-    <p class="note" style="font-size:10px">単語の辞書：EJDict（CC0）／品詞：WordNet 3.1（Princeton University）／語の選び方：FrequencyWords（CC BY-SA 4.0）</p>
-    <div class="btns"><button class="primary" id="closeBtn">閉じる</button></div>`);
-  const bind=(id,fn)=>{if($(id))$(id).onchange=e=>{fn(e.target.value==="on");saveSettings()}};
-  bind("sSeg",v=>settings.rdSeg=v);bind("sRole",v=>settings.rdRole=v);bind("sJa",v=>settings.rdJa=v);
-  bind("sAlways",v=>{settings.rdAlways=v;RD.gramOn=v});
-  $("sLines").onchange=e=>{settings.rdLines=+e.target.value;saveSettings()};
-  $("closeBtn").onclick=()=>{closeSheet();rdRender(true)};
-}
-function rdRange(){ // 今の選択（確定済み or 選択中）
-  if(RD.sel&&RD.sel.si===RD.si)return [RD.sel.a,RD.sel.b];
-  if(RD.start&&RD.start.si===RD.si){const g1=Math.min(RD.start.g,RD.p),g2=Math.max(RD.start.g,RD.p);return [g1,g2-1]}
-  return [-1,-2];
-}
-function rdRender(noAnim){
-  const sen=rdSen(),n=sen.words.length,[ra,rb]=rdRange(),q=RD.qs[RD.qi];
-  const unitEnds=new Set(sen.units.map(u=>u.e));
-  const view=rdView(),gOn=view==="read"?RD.gramOn:(RD.hintOn&&RD.hintPolicy==="grammar");
-  const segOn=gOn&&(view!=="read"||settings.rdSeg!==false),roleOn=gOn&&(view!=="read"||settings.rdRole!==false);
-  const st=$("rdStrip");
-  st.innerHTML=sen.words.map((w,i)=>{
-    let cls="w";if(i>=ra&&i<=rb)cls+=" sel";else if(roleOn)cls+=" r"+wordRole(sen,i);
-    if(RD.info&&RD.info.si===RD.si&&i>=RD.info.s&&i<=RD.info.e)cls+=" hl";
-    // 範囲は［ ］で囲んで見せる
-    const selOn=RD.sel&&RD.sel.si===RD.si,startOn=RD.start&&RD.start.si===RD.si;
-    const pre=(selOn&&i===ra)||(startOn&&i===RD.start.g)?`<span class="cutmark brk">［</span>`:"";
-    let post=selOn&&i===rb?`<span class="cutmark brk">］</span>`:"";
-    if(!post&&segOn&&unitEnds.has(i)&&i<n-1)post=`<span class="cutmark hint">｜</span>`;
-    return `${pre}<span class="${cls}">${esc(w)}</span>${post}`;
-  }).join("");
-  // すき間の位置（0＝最初の単語の前、n＝最後の単語の後ろ）
-  const ws=[...st.querySelectorAll(".w")];RD.gpos=[];
-  for(let g=0;g<=n;g++){
-    if(g===0)RD.gpos.push(ws[0].offsetLeft-4);
-    else if(g===n)RD.gpos.push(ws[n-1].offsetLeft+ws[n-1].offsetWidth+6);
-    else RD.gpos.push((ws[g-1].offsetLeft+ws[g-1].offsetWidth+ws[g].offsetLeft)/2);
-  }
-  st.classList.toggle("step",!noAnim);
-  st.style.transform=`translate(${lineX2()-RD.gpos[RD.p]}px,-50%)`;
-  $("rdCutline").style.left=lineX2()+"px";
-  const bar=$("rdBar");bar.max=n;bar.value=RD.p;
-  {const k=settings.rdLines===3?2:settings.rdLines===2?1:0,ctx=(from,step,mark)=>{let h="";for(let j=1;j<=k;j++){const t=RD.sens[RD.si+step*j];if(t)h+=`<div class="rdCtx${j>1?" far":""}">${mark} ${esc(t.en)}</div>`}return h};
-    $("rdPrevLine").innerHTML=ctx(0,-1,"▲").split("</div>").filter(Boolean).reverse().map(x=>x+"</div>").join("");
-    $("rdNextLine").innerHTML=ctx(0,1,"▼");
-    $("rdLines").textContent="表示 "+settings.rdLines;
-    $("rdSay").hidden=RD.st.mode==="test"}
-  $("rdSenNum").textContent=`${RD.si+1} / ${RD.sens.length} 文目`;
-  $("rdUp").disabled=RD.si===0;$("rdDown").disabled=RD.si===RD.sens.length-1;
-  $("readView").classList.toggle("vRead",view==="read");
-  rdModeUI(view);rdInfoUI();
-  if(view==="read"){$("rdHelp").textContent=RD.gramOn?`チャンクをタップすると、発音して役割${RD.showJa?"と意味":""}が出ます`:`単語をタップすると、発音して品詞${RD.showJa?"と意味":""}が出ます。「チャンク」でチャンクごとに見られます`;return}
-  // 問題
-  if(!q){$("rdQNum").textContent="";$("rdQ").textContent="（問題なし：読むだけ）";$("rdAns").textContent="";$("rdChoices").innerHTML="";$("rdBtns").innerHTML="";$("rdHelp").textContent="左右・上下にドラッグして読めます";$("rdCheck").hidden=true;return}
-  $("rdCheck").hidden=false;
-  $("rdQNum").textContent=`Q${RD.qi+1} / ${RD.qs.length}`;$("rdQ").textContent=q.q;
-  $("rdQPrev").disabled=RD.qi===0;$("rdQNext").disabled=RD.qi===RD.qs.length-1;
-  const answered=RD.qs.filter(q=>q.ans).length;
-  const test=RD.st.mode==="test";
-  $("rdCheck").textContent=test?`提出する（${answered}/${RD.qs.length}問）`:`答え合わせ（${answered}/${RD.qs.length}問）`;
-  if(q.type==="choice"){   // 5択：選択肢から選ぶ
-    $("rdAns").textContent=q.ans?"あなたの答え："+q.options[q.ans.choice]:"";
-    $("rdChoices").innerHTML=q.options.map((o,i)=>`<button data-c="${i}" class="${q.ans&&q.ans.choice===i?"on":""}">${String.fromCharCode(65+i)}. ${esc(o)}</button>`).join("");
-    $("rdChoices").querySelectorAll("button").forEach(b=>b.onclick=()=>{q.ans={choice:+b.dataset.c};hitSound("mini");rdRender(true);
-      const qi=RD.qi;setTimeout(()=>{if(RD&&RD.qi===qi)rdNextUnanswered()},350)});
-    $("rdBtns").innerHTML="";$("rdHelp").textContent="英文を読んで、選択肢から答えを選ぼう";return;
-  }
-  $("rdChoices").innerHTML="";
-  $("rdAns").textContent=q.ans?"あなたの答え："+RD.sens[q.ans.si].words.slice(q.ans.a,q.ans.b+1).join(" "):"";
-  // 説明とボタン
-  const startOn=RD.start&&RD.start.si===RD.si;
-  const help=RD.sel?"この範囲でいい？":startOn?"答えの終わりを線に合わせて「ここまで ］」":"答えの始まりを線に合わせて「［ ここから」（レーンを左右にドラッグして動かす）";
-  $("rdHelp").textContent=(RD.hintQ.has(RD.qi)&&q.si!=null?`💡 答えは ${q.si+1} 文目にあるよ。 `:"")+help;
-  $("rdBtns").innerHTML=RD.sel?`<button id="rdRedo">選びなおし</button><button id="rdOk" class="ok">決定</button>`
-    :`${startOn?`<button id="rdRedo">やめる</button>`:""}<button id="rdCutBtn" class="cutMain">${startOn?"ここまで ］":"［ ここから"}</button>`;
-  if(!RD.sel&&startOn)$("rdRedo").onclick=()=>{RD.start=null;rdRender(true)};
-  if(RD.sel){$("rdRedo").onclick=()=>{RD.sel=null;RD.start=null;rdRender(true)};$("rdOk").onclick=rdDecide}
-  else $("rdCutBtn").onclick=rdCut;
-}
-function lineX2(){return Math.round($("rdLane").clientWidth*0.34)}
-function rdCut(){
-  if(RD.sel)return;
-  if(!RD.start||RD.start.si!==RD.si){RD.start={si:RD.si,g:RD.p}}
-  else{if(RD.p===RD.start.g)return;
-    RD.sel={si:RD.si,a:Math.min(RD.start.g,RD.p),b:Math.max(RD.start.g,RD.p)-1};RD.start=null}
-  unlockAudio();hitSound("mini");
-  const lw=$("rdLane");lw.classList.remove("flash");void lw.offsetWidth;lw.classList.add("flash");
-  rdRender(true);
-}
-function rdNextUnanswered(){   // 答えたら、まだ答えていない問題へ自動で移る
-  const next=RD.qs.findIndex((x,i)=>i>RD.qi&&!x.ans),first=RD.qs.findIndex(x=>!x.ans);
-  const to=next>=0?next:first;
-  if(to>=0&&to!==RD.qi){RD.qi=to;rdRender(true);qFlash(1)}
-  else{rdRender(true);if(to<0)rdToast(RD.st.mode==="test"?"全部答えました。下の「提出する」へ":"全部答えました。下の「答え合わせ」へ")}
-}
-function rdDecide(){
-  const q=RD.qs[RD.qi];q.ans=RD.sel;RD.sel=null;RD.start=null;
-  hitSound("great");rdNextUnanswered();
-}
-function qFlash(d){const el=$("rdQ");el.animate(reduce?[{opacity:.4},{opacity:1}]:[{transform:`translateX(${d*30}px)`,opacity:.3},{transform:"none",opacity:1}],{duration:220,easing:"ease-out"})}
-function rdToast(t){const el=$("rdHelp");el.textContent=t;el.animate([{color:"var(--accent)"},{color:"var(--muted)"}],{duration:1600})}
-function rdGoQ(i,d){if(i<0||i>=RD.qs.length||i===RD.qi)return;RD.qi=i;RD.hintOn=false;RD.sel=null;RD.start=null;rdRender(true);qFlash(d)}
-function rdMove(p,noAnim){const n=rdSen().words.length;p=Math.max(0,Math.min(n,p));if(p===RD.p)return;RD.p=p;rdRender(noAnim)}
-function rdStopSay(){try{speechSynthesis.cancel()}catch(e){}RD&&(RD.saying=false);const b=$("rdSay");if(b)b.textContent="🔊 聞く"}
-let noSpeechTold=false;
-function speakOne(text){   // 短い語句をすぐ発音（チャンクをタップしたとき）
-  if(!canSpeak){if(!noSpeechTold){noSpeechTold=true;toast("この画面では音声が使えません。ブラウザ（Chrome など）で開くと聞けます")}return}
-  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-US";const v=enVoice();if(v)u.voice=v;u.rate=.9;speechSynthesis.speak(u)}catch(e){}
-}
-function rdSay(){   // いま表示している文を読み上げ（もう一度押すと止まる）。テストモードではオフ
-  if(RD.st.mode==="test")return;
-  if(!canSpeak){tell("この画面では、音声が使えません。\nブラウザ（Chrome など）でこのページを開くと、聞けます。");return}
-  if(RD.saying){rdStopSay();return}
-  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(rdSen().en);u.lang="en-US";const v=enVoice();if(v)u.voice=v;u.rate=.9;
-    u.onend=u.onerror=()=>{if(RD&&RD.saying){RD.saying=false;$("rdSay").textContent="🔊 聞く"}};
-    RD.saying=true;$("rdSay").textContent="■ 止める";speechSynthesis.speak(u)}catch(e){RD.saying=false}
-}
-/* 振り返りの全文読み上げ：1文ずつ順番に読む（一時停止は、その文の頭から再開） */
-const RV={i:0,on:false,tok:0};
-function rvStop(){RV.on=false;RV.tok++;try{speechSynthesis.cancel()}catch(e){}}
-function rvUI(){const b=$("rvPlay");if(!b)return;
-  b.textContent=RV.on?"⏸ 一時停止":RV.i>0?"▶ つづき":"▶ 最初から";
-  document.querySelectorAll(".rvSen").forEach(el=>el.classList.toggle("on",RV.on&&+el.dataset.i===RV.i))}
-function rvSpeak(){
-  if(!RD||RV.i>=RD.sens.length){RV.on=false;RV.i=0;rvUI();return}
-  const tok=++RV.tok;
-  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(RD.sens[RV.i].en);u.lang="en-US";const v=enVoice();if(v)u.voice=v;u.rate=.9;
-    const nx=()=>{if(tok!==RV.tok||!RV.on)return;RV.i++;rvSpeak()};u.onend=nx;u.onerror=nx;
-    RV.on=true;rvUI();
-    const el=document.querySelector(`.rvSen[data-i="${RV.i}"]`);if(el&&el.scrollIntoView)el.scrollIntoView({block:"nearest",behavior:"smooth"});
-    speechSynthesis.speak(u)}catch(e){RV.on=false;rvUI()}
-}
-function rvInit(){
-  RV.i=0;RV.on=false;RV.tok++;rvUI();
-  $("rvPlay").onclick=()=>{if(RV.on){rvStop();rvUI()}else rvSpeak()};
-  document.querySelectorAll(".rvSen").forEach(el=>el.onclick=()=>{RV.i=+el.dataset.i;RV.tok++;rvSpeak()});
-}
-function rdSentence(d){
-  const si=RD.si+d;if(si<0||si>=RD.sens.length)return;
-  rdStopSay();RD.si=si;RD.p=0;RD.fullOpen=false;RD.start=null;if(RD.sel&&RD.sel.si!==si)RD.sel=null;rdRender(true);
-  const lw=$("rdLane");lw.animate(reduce?[{opacity:.4},{opacity:1}]:[{transform:`translateY(${d*18}px)`,opacity:.3},{transform:"none",opacity:1}],{duration:220,easing:"ease-out"});
-}
-/* 読解モードの操作：左右ドラッグで位置、上下ドラッグで前後の文、タップで切る */
-(()=>{
-  const lane=$("rdGest");let d=null;
-  $("rdSet").onclick=showRdSettings;
-  $("rdLines").onclick=()=>{settings.rdLines=settings.rdLines>=3?1:settings.rdLines+1;saveSettings();rdRender(true)};
-  $("rdSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{settings.rdView=b.dataset.v;saveSettings();RD.view=b.dataset.v;RD.sel=null;RD.start=null;RD.info=null;RD.hintOn=false;rdRender(true)});
-  $("rdGram").onclick=()=>{RD.gramOn=!RD.gramOn;RD.info=null;rdRender(true)};
-  $("rdJaBtn").onclick=()=>{RD.showJa=!RD.showJa;RD.fullOpen=false;rdRender(true)};
-  lane.addEventListener("pointerdown",e=>{if(e.target.closest("button,#rdInfo"))return;
-    const onBar=e.target.id==="rdBar";
-    if(!onBar){e.preventDefault();try{lane.setPointerCapture(e.pointerId)}catch(_){}}
-    d={onBar,onLane:!onBar,wi:(()=>{const w=document.elementsFromPoint(e.clientX,e.clientY).find(x=>x.classList&&x.classList.contains("w"));return w?[...$("rdStrip").querySelectorAll(".w")].indexOf(w):-1})(),x:e.clientX,y:e.clientY,p0:RD.p,g0:RD.gpos[RD.p],moved:false,axis:null}});
-  lane.addEventListener("pointermove",e=>{
-    if(!d)return;const dx=e.clientX-d.x,dy=e.clientY-d.y;
-    if(!d.axis&&(Math.abs(dx)>5||Math.abs(dy)>5))d.axis=Math.abs(dy)>=Math.abs(dx)*2?"y":"x";  // 縦は「はっきり縦」のときだけ
-    if(d.axis==="x"&&!d.onBar){d.moved=true;const target=d.g0+dx;let best=0;RD.gpos.forEach((g,i)=>{if(Math.abs(g-target)<Math.abs(RD.gpos[best]-target))best=i});rdMove(best,true)}
-    if(d.axis==="y"){d.moved=true;
-      if(!d.done&&Math.abs(dy)>=20){d.done=true;rdSentence(dy<0?1:-1);   // 1回のドラッグで進むのは1文だけ
-        $("rdSenNum").animate([{color:"var(--accent)",transform:"scale(1.25)"},{color:"var(--muted)",transform:"none"}],{duration:500})}}
-  });
-  const end=e=>{if(!d)return;
-    if(!d.moved&&e.type==="pointerup"&&d.onLane){if(rdView()==="read")rdInfoTap(d.wi);else rdCut()}
-    d=null};
-  lane.addEventListener("pointerup",end);lane.addEventListener("pointercancel",end);
-  $("rdBar").addEventListener("input",e=>rdMove(+e.target.value,true));
-  $("rdSay").onclick=rdSay;
-  $("rdUp").onclick=()=>rdSentence(-1);$("rdDown").onclick=()=>rdSentence(1);
-  $("rdQPrev").onclick=()=>rdGoQ(RD.qi-1,-1);
-  $("rdQNext").onclick=()=>rdGoQ(RD.qi+1,1);
-  // 問題文の枠を左右にフリック・ドラッグで前後の問題へ
-  (()=>{const box=$("rdQ").parentElement;let d=null;
-    const st=(x,y)=>{d={x,y,done:false}},mv=(x,y)=>{if(!d||d.done)return;const dx=x-d.x,dy=y-d.y;
-      if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.2){d.done=true;dx<0?rdGoQ(RD.qi+1,1):rdGoQ(RD.qi-1,-1)}};
-    box.addEventListener("pointerdown",e=>st(e.clientX,e.clientY));box.addEventListener("pointermove",e=>mv(e.clientX,e.clientY));
-    box.addEventListener("touchstart",e=>{const t=e.touches[0];st(t.clientX,t.clientY)},{passive:true});
-    box.addEventListener("touchmove",e=>{const t=e.touches[0];mv(t.clientX,t.clientY)},{passive:true});
-    ["pointerup","pointercancel","touchend","touchcancel"].forEach(ev=>box.addEventListener(ev,()=>{d=null}));})();
-  $("rdBack").onclick=showTitle;
-  const fk=Object.keys(FONT).reverse(); // xs→xl
-  $("rdFontM").onclick=()=>{const i=fk.indexOf(settings.font);if(i>0){settings.font=fk[i-1];saveSettings();applyVisual();rdRender(true)}};
-  $("rdFontP").onclick=()=>{const i=fk.indexOf(settings.font);if(i<fk.length-1){settings.font=fk[i+1];saveSettings();applyVisual();rdRender(true)}};
-  // ヒント：答えが何文目か＋役割の色と区切りを表示（もう一度押すと消える）
-  $("rdHint").onclick=()=>{
-    if(RD.hintOn){RD.hintOn=false;rdRender(true);return}
-    const q=RD.qs[RD.qi];
-    if(q&&q.type==="choice"&&RD.hintPolicy!=="grammar"){rdToast("この問題では、ヒントは使えません");return}
-    RD.hintOn=RD.hintPolicy==="grammar";   // 「何文目か」だけの設定なら、色と区切りは出さない
-    if(!RD.hintQ.has(RD.qi)){RD.hintQ.add(RD.qi);RD.hints++}
-    rdRender(true);
-  };
-  $("rdCheck").onclick=rdGrade;
-})();
-/* 範囲の問題の採点：◯＝想定どおり（別解も）、△＝中心は合っていて説明が足りない／同じ役割の分だけ長い、×＝それ以外 */
-function gradeRange(sen,q,ans){
-  const eq=(x,y)=>x&&y&&x.si===y.si&&x.a===y.a&&x.b===y.b,W=(a,b)=>sen.words.slice(a,b+1).join(" ");
-  if(!ans)return {mark:"x",why:"未回答"};
-  if(eq(ans,q)||(q.alts||[]).some(x=>x.a>=0&&eq(ans,x)))return {mark:"o",why:""};
-  if((q.partials||[]).some(x=>eq(ans,x)))return {mark:"t",why:"部分点"};
-  if(ans.si!==q.si)return {mark:"x",why:"別の文を選んでいる"};
-  if(ans.b<q.a||ans.a>q.b)return {mark:"x",why:"答えと重なっていない"};
-  const unitRole=i=>sen.units[sen.unitOf[i]].role;
-  if(ans.a>=q.a&&ans.b<=q.b){   // 短い
-    const u=sen.units[sen.unitOf[q.a]],part=u.subs?u.subs.find(p=>q.a>=p.s&&q.a<=p.e):u;
-    const head={a:Math.max(q.a,part.s),b:Math.min(q.b,part.e)};
-    const miss=[];for(let i=q.a;i<=q.b;i++)if(i<ans.a||i>ans.b)miss.push(i);
-    if(ans.a<=head.a&&ans.b>=head.b)return {mark:"t",why:`短い（足りない：${miss.map(i=>sen.words[i]).join(" ")}）`};
-    return {mark:"x",why:"答えの中心が入っていない"};
-  }
-  if(ans.a<=q.a&&ans.b>=q.b){   // 長い
-    const roles=new Set();for(let i=q.a;i<=q.b;i++)roles.add(unitRole(i));
-    const extra=[];for(let i=ans.a;i<=ans.b;i++)if(i<q.a||i>q.b)extra.push(i);
-    const bad=extra.filter(i=>!roles.has(unitRole(i)));
-    if(!bad.length)return {mark:"t",why:`長い（余分：${extra.map(i=>sen.words[i]).join(" ")}）`};
-    const br=[...new Set(bad.map(unitRole))].map(r=>RN[r][1]).join("・");
-    return {mark:"x",why:`長い（余分：${W(bad[0],bad[bad.length-1])} ＝${br}）`};
-  }
-  return {mark:"x",why:"範囲がずれている"};
-}
-function rdJudge(q){
-  if(q.type==="choice")return q.ans&&q.ans.choice===q.correct?"o":"x";
-  return gradeRange(RD.sens[q.si],q,q.ans).mark;
-}
-function spanHTML(sen,exp,mine){   // 想定の範囲（緑）と自分の範囲（オレンジ下線）を並べて見せる
-  return sen.words.map((w,i)=>{const e=exp&&i>=exp.a&&i<=exp.b,m=mine&&mine.si===exp.si&&i>=mine.a&&i<=mine.b;
-    return `<span class="spw${e?" spE":""}${m?" spM":""}">${esc(w)}</span>`}).join(" ");
-}
-function rdAnswersSummary(){
-  return RD.qs.map((q,i)=>{
-    if(q.type==="choice")return {q:q.q,mine:q.ans?q.options[q.ans.choice]:"",mark:rdJudge(q),why:"",pts:q.pts||100,hint:RD.hintQ.has(i)};
-    const sen=RD.sens[q.si],g=gradeRange(sen,q,q.ans);
-    return {q:q.q,mine:q.ans?RD.sens[q.ans.si].words.slice(q.ans.a,q.ans.b+1).join(" "):"",mark:g.mark,why:g.why,pts:q.pts||100,hint:RD.hintQ.has(i)};
-  });
-}
-async function rdGrade(){
-  // 未回答のチェック（範囲を選びかけ・決定し忘れも未回答として知らせる）
-  const pending=RD.sel||RD.start?RD.qi:-1;
-  const un=RD.qs.map((q,i)=>!q.ans?i:-1).filter(i=>i>=0);
-  const names=un.map(i=>`Q${i+1}`).join("・");
-  const pendNote=pending>=0&&!RD.qs[pending].ans?`<p class="note">Q${pending+1} は範囲を選びかけたまま「決定」されていません。</p>`:"";
-  if(un.length&&RD.st.mode!=="test"){   // 学習用：全部答えてから
-    openSheet(`<h2>まだ答えていない問題があります</h2><p class="note">${names} に答えてから、答え合わせをしましょう。</p>${pendNote}
-      <div class="btns"><button class="primary" id="goUn">${names.split("・")[0]} へ</button></div>`);
-    $("goUn").onclick=()=>{closeSheet();if(!(pending>=0&&un[0]===pending))rdGoQ(un[0],1)};return;
-  }
-  if(un.length&&RD.st.mode==="test"&&!RD._forceSubmit){   // テスト用：しつこく念押し
-    openSheet(`<h2>未回答の問題があります</h2><p class="note"><b>${names}</b> が未回答です。<br>未回答の問題は点数が入りません。本当に提出しますか？</p>${pendNote}
-      <div class="btns"><button class="primary" id="goUn">未回答の問題へ</button><button class="ghost" id="forceSub">それでも提出する</button></div>`);
-    $("goUn").onclick=()=>{closeSheet();if(!(pending>=0&&un[0]===pending))rdGoQ(un[0],1)};
-    $("forceSub").onclick=async()=>{if(!(await ask(`もう一度確認します。\n${names} は0点になります。提出すると答えは変えられません。提出しますか？`,"提出する")))return;
-      closeSheet();RD._forceSubmit=true;rdGrade();RD._forceSubmit=false};
-    return;
-  }
-  // テスト用：答えは見せず、提出だけ（結果はこの端末に保存。先生が My Texts の「提出結果」で見る）
-  if(RD.st.mode==="test"){
-    if(!RD._forceSubmit&&!(await ask("提出しますか？\n提出すると答えは変えられません。","提出する")))return;
-    const sm=rdAnswersSummary(),list=loadSubs(),cost=RD.hintCost;
-    const score=sm.reduce((a,x)=>a+Math.max(0,Math.round(x.pts*({o:1,t:.4,x:0})[x.mark])-(x.hint?cost:0)),0),max=sm.reduce((a,x)=>a+x.pts,0);
-    list.push({textId:RD.st.id,title:RD.st.title,at:Date.now(),answers:sm,score,max});saveSubs(list);
-    openSheet(`<h2>提出しました</h2><p class="note">答えは先生が確認します。</p>
-      <div class="btns"><button class="primary" id="rdTitleBtn">タイトルへ</button></div>`,false);
-    $("rdTitleBtn").onclick=showTitle;return;
-  }
-  const res=RD.qs.map(q=>rdJudge(q)),pts=res.reduce((a,r,i)=>a+Math.round((RD.qs[i].pts||100)*({o:1,t:.4,x:0})[r]),0);
-  const lvMsg=RD.qs.length?adaptLevel(res.reduce((a,r)=>a+({o:1,t:.5,x:0})[r],0)/RD.qs.length,RD.st.level):"";
-  hitSound(res.every(r=>r==="o")?"excellent":"great");
-  const MK={o:["◯","k-excellent"],t:["△","k-good"],x:["×","k-miss"]};
-  openSheet(`<h2>答え合わせ</h2>
-    <div class="big">${Math.max(0,pts)} pt <span style="font-size:14px;color:var(--muted)">◯${res.filter(r=>r==="o").length}／${RD.qs.length}問　ヒント使用${RD.hints}問</span></div>
-    ${lvMsg?`<p class="note" style="color:var(--accent);font-weight:800">${esc(lvMsg)}</p>`:""}
-    ${RD.qs.map((q,i)=>{const r=res[i];
-      if(q.type==="choice")return `<div class="rvw"><span class="lab">Q${i+1}. ${esc(q.q)}</span>
-        <div class="en"><span class="mk ${MK[r][1]}">${MK[r][0]}</span>あなた：${q.ans?esc(q.options[q.ans.choice]):"（未回答）"}</div>
-        <div class="en">答え：${esc(q.options[q.correct]||"")}</div></div>`;
-      const sen=RD.sens[q.si],g=gradeRange(sen,q,q.ans);
-      return `<div class="rvw"><span class="lab">Q${i+1}. ${esc(q.q)}</span>
-        <div class="en"><span class="mk ${MK[g.mark][1]}">${MK[g.mark][0]}</span>${g.why?`<small class="why">${esc(g.why)}</small>`:""}</div>
-        <div class="en spanView">${spanHTML(sen,q,q.ans)}</div>
-        <small class="legendSp"><span class="spE">想定した答え</span>　<span class="spM">あなたの選択</span></small>
-        <div class="ja">${esc(sen.ja)}</div></div>`}).join("")}
-    ${canSpeak?`<div class="rvAll"><div class="rvAllHead"><b>全文を聞く</b><button class="primary" id="rvPlay">▶ 最初から</button></div>
-      <small class="note">文をタップすると、そこから下を読みます。</small>
-      ${RD.sens.map((sn,i)=>`<div class="rvSen" data-i="${i}"><div class="en">${esc(sn.en)}</div><div class="ja">${esc(sn.ja)}</div></div>`).join("")}</div>`:""}
-    <div class="btns"><button class="ghost" id="rdTitleBtn">タイトルへ</button><button class="ghost" id="rdAgain">もう一度</button><button class="primary" id="rdNextStory">次のお話</button></div>`,false);
-  if(canSpeak)rvInit();
-  $("rdTitleBtn").onclick=showTitle;
-  $("rdAgain").onclick=()=>{closeSheet();startRead(RD.st)};
-  if(RD.st.my){$("rdNextStory").textContent="My Texts へ";$("rdNextStory").onclick=()=>{closeSheet();$("readView").hidden=true;openMyTexts()}}
-  else $("rdNextStory").onclick=()=>{closeSheet();startRead()};
-}
-
-/* ===== Chunk Practice：切ったチャンクの役割を答える ===== */
-const RG={S:"S",V:"V",O:"O",I:"O",C:"C",P:"P",T:"T",M:"M",R:"M",F:"M",X:"M"};
-const RGN={S:"Subject",V:"Verb",O:"Object",C:"Complement",P:"Place",T:"Time",M:"Other"};
-function expectedRoles(c){
-  if(!c.roles)return null;
-  if(c.kind==="good")return new Set(["S","V"]);
-  if(c.roles[0]==="V")return new Set(["V"]);
-  if(c.roles.every(r=>"PTMRF".includes(r)))return new Set(c.roles.map(r=>RG[r]));
-  return new Set([RG[c.roles[0]]]);
-}
-function askRole(c){
-  const exp=expectedRoles(c);if(!exp)return;
-  const el=$("rolePick"),r=$("laneWrap").getBoundingClientRect();
-  el.innerHTML=Object.keys(RGN).map(k=>`<button data-r="${k}" class="r${k}">${RGN[k]}</button>`).join("");
-  el.style.left=(r.left+r.width/2)+"px";el.style.top=(r.bottom+6)+"px";el.hidden=false;
-  el.querySelectorAll("button").forEach(b=>{
-    b.addEventListener("pointerdown",e=>e.stopPropagation());
-    b.onclick=()=>{
-      const ok=exp.has(b.dataset.r);S.roleN=(S.roleN||0)+1;if(ok){S.roleOk=(S.roleOk||0)+1;addScore(50)}
-      hitSound(ok?"great":"miss");el.hidden=true;
-      showPop({kind:ok?"excellent":"miss",easy:ok?"役割も正解 +50":`正解：${[...exp].map(x=>RGN[x]).join(" / ")}`,gram:"",jp:"",roles:null,title:`${RGN[b.dataset.r]} ${ok?"✓":"✗"}`});
-    };
-  });
-}
-
+import { LVO } from './data.js';
+import { $, LS, LV, ask, closeSheet, esc, estimateLevel, lvLabel, openSheet, saveSettings, settings, startPractice, tell, toast } from './engine.js';
+import { startRead } from './reading.js';
+import { SHORTS, loadMyShorts, loadShorts, renderShortEditor, shortsShared } from './shorts.js';
+import { showTitle } from './title.js';
 /* ===== My Texts：長文の登録・チャンク分け・問題作成（この端末のブラウザに保存） ===== */
 /* ===== みんなの長文・難易度の共有（共有データベース）。使えない環境では何も出ない ===== */
-let DB=null,DLC=null,IS_ADMIN=false,CAN_WRITE=null,MYID=null,SHARED=null,SHORTS=null;
-async function loadShared(){
+export let DB=null,DLC=null,IS_ADMIN=false,CAN_WRITE=null,MYID=null,SHARED=null;
+export async function loadShared(){
   if(!DB)return SHARED;
   try{const snap=await DB.collection("texts").get();SHARED=snap.docs.map(d=>({...d.data(),id:d.id}));}catch(e){SHARED=SHARED||[]}
   return SHARED;
 }
-async function initShared(){
+export async function initShared(){
   try{
     if(!window.claude||!claude.use)return;
     try{DLC=await claude.use("downloads")}catch(e){DLC=null}
@@ -409,18 +22,18 @@ async function initShared(){
     loadShared();loadShorts();
   }catch(e){DB=null}
 }
-const MYKEY="ccs-mytexts",ROLES="SVOICPTMRF".split("");
-function loadMy(){try{return JSON.parse(localStorage.getItem(MYKEY)||"[]")}catch(e){return []}}
-function saveMy(list){try{localStorage.setItem(MYKEY,JSON.stringify(list));return true}catch(e){return false}}
-const TRASHKEY="ccs-trash",TRASH_DAYS=30;
-function loadTrash(){try{const now=Date.now();return JSON.parse(localStorage.getItem(TRASHKEY)||"[]").filter(t=>now-t.deletedAt<TRASH_DAYS*864e5)}catch(e){return []}}
-function saveTrash(l){try{localStorage.setItem(TRASHKEY,JSON.stringify(l));return true}catch(e){return false}}
-const SUBKEY="ccs-submits";
-function loadSubs(){try{return JSON.parse(localStorage.getItem(SUBKEY)||"[]")}catch(e){return []}}
-function saveSubs(l){try{localStorage.setItem(SUBKEY,JSON.stringify(l));return true}catch(e){return false}}
-function unitEnds(s){const n=s.words.length;return [...new Set([...(s.ends||[]),n-1])].filter(x=>x>=0&&x<n).sort((a,b)=>a-b)}
-function unitStarts(s){return [0,...unitEnds(s).slice(0,-1).map(e=>e+1)]}
-function myToStory(t){
+export const MYKEY="ccs-mytexts",ROLES="SVOICPTMRF".split("");
+export function loadMy(){try{return JSON.parse(LS.getItem(MYKEY)||"[]")}catch(e){return []}}
+export function saveMy(list){try{LS.setItem(MYKEY,JSON.stringify(list));return true}catch(e){return false}}
+export const TRASHKEY="ccs-trash",TRASH_DAYS=30;
+export function loadTrash(){try{const now=Date.now();return JSON.parse(LS.getItem(TRASHKEY)||"[]").filter(t=>now-t.deletedAt<TRASH_DAYS*864e5)}catch(e){return []}}
+export function saveTrash(l){try{LS.setItem(TRASHKEY,JSON.stringify(l));return true}catch(e){return false}}
+export const SUBKEY="ccs-submits";
+export function loadSubs(){try{return JSON.parse(LS.getItem(SUBKEY)||"[]")}catch(e){return []}}
+export function saveSubs(l){try{LS.setItem(SUBKEY,JSON.stringify(l));return true}catch(e){return false}}
+export function unitEnds(s){const n=s.words.length;return [...new Set([...(s.ends||[]),n-1])].filter(x=>x>=0&&x<n).sort((a,b)=>a-b)}
+export function unitStarts(s){return [0,...unitEnds(s).slice(0,-1).map(e=>e+1)]}
+export function myToStory(t){
   const clean=x=>x.replace(/[|=#{}]/g,"");
   const list=t.sents.map(s=>{let st=0;
     const parts=unitEnds(s).map(e=>{const role=(s.roleAt||{})[st]||"M";
@@ -435,8 +48,8 @@ function myToStory(t){
   return {title:t.title||"無題",list,questions,my:true,id:t.id,mode:t.mode||"learn",level:t.level||null,hint:t.hint||"none",hintCost:t.hintCost==null?20:+t.hintCost};
 }
 /* お手軽自動：単語リストの規則で分ける（あとで手直しする前提） */
-const WS=str=>new Set(str.split(" "));
-const AW={
+export const WS=str=>new Set(str.split(" "));
+export const AW={
  det:WS("a an the my your his her its our their this that these those some any every each many much few several no two three four five"),
  subj:WS("i you he she it we they there"),
  obj:WS("me you him her it us them"),
@@ -448,8 +61,8 @@ const AW={
  timeN:WS("yesterday today tomorrow tonight now morning mornings afternoon evening night nights week weekend month year years summer winter spring autumn fall monday tuesday wednesday thursday friday saturday sunday sundays ago o'clock time day days hour hours minute minutes lunch breakfast dinner school first end"),
  verb:WS("go goes went come comes came see sees saw make makes made take takes took get gets got give gives gave know knows knew think thinks thought want wants wanted like likes liked love loves play plays played read reads eat eats ate drink drinks drank run runs ran walk walks swim swims swam study studies live lives lived work works help helps tell tells told say says said find finds found buy buys bought bring brings brought leave leaves left meet meets met speak speaks spoke write writes wrote sing sings sang sit sits sat stand stands stood teach teaches taught feel feels felt keep keeps kept begin begins began become becomes became grow grows grew wait waits watch watches listen listens look looks use uses call calls try tries need needs start starts show shows open opens close closes visit visits stay stays talk talks learn learns cook cooks clean cleans carry carries catch catches build builds send sends sleep sleeps win wins won lose loses lost hear hears heard belong belongs seem seems taste tastes tasted sound sounds smell smells borrow borrows join joins thank thanks pick picks forget forgets forgot enjoy enjoys decide decides")
 };
-const lw_=w=>w.toLowerCase().replace(/[^a-z']/g,"");
-function chunkSentence(words){
+export const lw_=w=>w.toLowerCase().replace(/[^a-z']/g,"");
+export function chunkSentence(words){
   const lw=words.map(lw_),n=words.length,units=[];let i=0;
   const isVerb=k=>k<n&&(AW.aux.has(lw[k])||AW.verb.has(lw[k])||(/ed$/.test(lw[k])&&lw[k].length>3));
   const isTimeStart=k=>k<n&&(AW.timeN.has(lw[k])&&!["school","lunch","dinner","breakfast","time","first","end"].includes(lw[k])||(["every","last","next","this","that"].includes(lw[k])&&AW.timeN.has(lw[k+1]||""))||lw[k]==="ago");
@@ -498,10 +111,10 @@ function chunkSentence(words){
   const roleAt={};units.forEach(u=>roleAt[u.s]=u.role);
   return {words,ends:units.map(u=>u.e),roleAt,ujp:{},ja:""};
 }
-function splitSentences(text){return text.replace(/\s+/g," ").trim().split(/(?<=[.!?]["']?)\s+(?=["']?[A-Z])/).filter(Boolean)}
-function autoChunk(text){return splitSentences(text).map(t=>chunkSentence(t.split(" ").filter(Boolean)))}
+export function splitSentences(text){return text.replace(/\s+/g," ").trim().split(/(?<=[.!?]["']?)\s+(?=["']?[A-Z])/).filter(Boolean)}
+export function autoChunk(text){return splitSentences(text).map(t=>chunkSentence(t.split(" ").filter(Boolean)))}
 /* AIへの指示文（ページから頼む時も、コピペ方式でも同じもの） */
-function buildAIPrompt(text){
+export function buildAIPrompt(text){
   const R=+settings.qRange||0,C=+settings.qChoice||0,lang=settings.qLang==="en"?"英語":"日本語";
   const qPart=R+C>0?`
 また、長文の内容について問題を作り、"questions" に入れてください。
@@ -534,7 +147,7 @@ ${text?`"""${text}"""`:"（この下に英文を貼り付けてください）\n
 （用意した問題があれば、この下に貼り付け。なければ空のまま）
 `:""}`;
 }
-function aiResultToSents(out){
+export function aiResultToSents(out){
   const arr=v=>Array.isArray(v)?v:v==null?[]:[v];
   return arr(out&&out.sentences).map(x=>{const words=[],ends=[],roleAt={},ujp={};
     arr(x&&x.units).forEach(u=>{if(!u)return;const ws=String(u.text||"").trim().split(/\s+/).filter(Boolean);if(!ws.length)return;
@@ -542,15 +155,15 @@ function aiResultToSents(out){
     return {words,ends,roleAt,ujp,ja:String((x&&x.ja)||"")}}).filter(x=>x.words.length);
 }
 /* 指示文の枠を、今の英文に合わせる */
-let lastPromptSrc=null;
-function syncPrompt(force){
+export let lastPromptSrc=null;
+export function syncPrompt(force){
   const tx=$("edText"),pr=$("edPrompt");if(!tx||!pr)return;
   const t=tx.value.trim();if(!force&&t===lastPromptSrc)return;lastPromptSrc=t;
   pr.value=buildAIPrompt(t);
 }
 /* 本文の英語から、何文目の何語目〜何語目かを探す */
-const normW=w=>String(w).toLowerCase().replace(/[^a-z0-9']/g,"");
-function findSpan(sents,siHint,text){
+export const normW=w=>String(w).toLowerCase().replace(/[^a-z0-9']/g,"");
+export function findSpan(sents,siHint,text){
   const tw=String(text||"").trim().split(/\s+/).map(normW).filter(Boolean);if(!tw.length)return null;
   const order=[siHint,...sents.map((_,i)=>i).filter(i=>i!==siHint)].filter(i=>i>=0&&i<sents.length);
   for(const si of order){const ws=sents[si].words.map(normW);
@@ -559,14 +172,14 @@ function findSpan(sents,siHint,text){
   return null;
 }
 /* 別解・△の答えから、未設定のもの・正解と同じもの・重複を取り除く */
-function cleanQ(q){
+export function cleanQ(q){
   if(q.type!=="range")return q;
   const key=x=>`${x.si}:${x.a}:${x.b}`,valid=x=>x&&x.a>=0&&x.b>=0,seen=new Set([key(q)]);
   const alts=(q.alts||[]).filter(x=>valid(x)&&!seen.has(key(x))&&seen.add(key(x)));
   const partials=(q.partials||[]).filter(x=>valid(x)&&!seen.has(key(x))&&seen.add(key(x)));
   return {...q,alts,partials};
 }
-function aiResultToQuestions(out,sents){
+export function aiResultToQuestions(out,sents){
   const arr=v=>Array.isArray(v)?v:v==null||v===""?[]:[v];
   return arr(out&&out.questions).map(q=>{try{
     if(!q||typeof q!=="object")return null;
@@ -581,14 +194,14 @@ function aiResultToQuestions(out,sents){
   }catch(e){return null}}).filter(Boolean);
 }
 /* 古い形（チャンクの始まりだけ）の範囲問題を、何語目〜何語目の形にそろえる */
-function normQ(q,sents){
+export function normQ(q,sents){
   if(q.type!=="range"||q.a!=null)return q;
   const s=sents[q.si];if(!s)return q;const st=unitStarts(s),en=unitEnds(s);
   const k=Math.max(0,en.findIndex((e,i)=>q.w>=st[i]&&q.w<=e));
   return {...q,a:st[k],b:en[k],alts:q.alts||[],partials:q.partials||[]};
 }
 /* コピペ方式：AIの返事（前後に説明文や ``` が付いていてもよい）からJSONを取り出す */
-function parsePastedAI(t){
+export function parsePastedAI(t){
   // 最初の「{」から、対応する「}」までを取り出す（文字列の中の { } は数えない）
   t=String(t).replace(/^﻿/,"");
   const a=t.indexOf("{");if(a<0)throw new Error("「{」で始まるデータが見つかりません");
@@ -606,12 +219,12 @@ function parsePastedAI(t){
   let last;for(const x of tries){try{return JSON.parse(x)}catch(e){last=e}}
   throw new Error("データの形が崩れています（"+(last&&last.message||"")+"）");
 }
-async function copyText(t){
+export async function copyText(t){
   try{await navigator.clipboard.writeText(t);return true}catch(e){}
   try{const ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.append(ta);ta.select();const ok=document.execCommand("copy");ta.remove();return ok}catch(e){return false}
 }
 /* AIで分ける：ページからClaudeに頼む（使う人のアカウントの利用量を使う。初回は確認が出る） */
-async function aiChunk(text){
+export async function aiChunk(text){
   const sample=window.claude?await window.claude.use("sample"):null;
   if(!sample){edStatus("この画面ではAIが使えません。「お手軽自動」を使ってください。");return}
   edStatus("AIで分けています…（10〜60秒ほど）");$("edAI").disabled=true;
@@ -627,10 +240,10 @@ async function aiChunk(text){
   }catch(e){edStatus(e&&e.code==="not_granted"?"AIの利用が許可されませんでした。":`AIで分けられませんでした（${esc((e&&(e.code||e.message))||"エラー")}）。「お手軽自動」を使ってください。`)}
   finally{const b=$("edAI");if(b)b.disabled=false}
 }
-let ED=null;
-const edStatus=t=>{const el=$("edStatus");if(el)el.innerHTML=t};
-function openMyTexts(){$("edView").hidden=false;ED=null;renderMyList()}
-function showSubs(t){
+export let ED=null;
+export const edStatus=t=>{const el=$("edStatus");if(el)el.innerHTML=t};
+export function openMyTexts(){$("edView").hidden=false;ED=null;renderMyList()}
+export function showSubs(t){
   const subs=loadSubs().filter(x=>x.textId===t.id),MK={o:"◯",t:"△",x:"×"};
   openSheet(`<h2>提出結果：${esc(t.title||"無題")}</h2>
     ${subs.map((s,k)=>{const sc=s.answers.filter(a=>a.mark==="o").length;
@@ -641,7 +254,7 @@ function showSubs(t){
   $("closeBtn").onclick=closeSheet;
   $("subsClear").onclick=async()=>{if(await ask("この長文の提出結果を全部消しますか？","消す")){saveSubs(loadSubs().filter(x=>x.textId!==t.id));closeSheet();renderMyList()}};
 }
-function showTrash(){
+export function showTrash(){
   const tr=loadTrash();
   openSheet(`<h2>ゴミ箱</h2><p class="note">削除した長文は${TRASH_DAYS}日間ここに残ります。</p>
     ${tr.length?"":`<p class="note">ゴミ箱は空です。</p>`}
@@ -657,7 +270,7 @@ function showTrash(){
     tr.splice(+b.dataset.purge,1);saveTrash(tr);saveSubs(loadSubs().filter(x=>x.textId!==t.id));toast("完全に削除しました");showTrash()});
 }
 /* バックアップ：My Texts・みんなの長文・難易度の修正を1つのファイルに書き出す／My Texts に戻す */
-async function exportBackup(){
+export async function exportBackup(){
   if(DB)await loadShared();
   const data=JSON.stringify({app:"chunkchunk",v:1,at:new Date().toISOString(),myTexts:loadMy(),shared:(SHARED||[]).map(({by,at,...t})=>t),levels:LVO},null,1);
   const fn=`chunkchunk-backup-${new Date().toISOString().slice(0,10)}.json`;
@@ -668,7 +281,7 @@ async function exportBackup(){
     <div class="btns"><button class="ghost" id="closeBtn">閉じる</button><button class="primary" id="bkSel">全部選択</button></div>`);
   $("bkText").value=data;$("bkSel").onclick=()=>{$("bkText").focus();$("bkText").select()};$("closeBtn").onclick=closeSheet;
 }
-async function importBackup(text){
+export async function importBackup(text){
   let d;try{d=JSON.parse(text)}catch(e){await tell("読み込めませんでした。バックアップのファイルか確認してください。");return}
   if(!d||d.app!=="chunkchunk"){await tell("このアプリのバックアップではないようです。");return}
   const mine=loadMy(),ids=new Set(mine.map(t=>t.id));let n=0;
@@ -678,7 +291,7 @@ async function importBackup(text){
   if(DB&&IS_ADMIN&&d.levels)for(const [k,v] of Object.entries(d.levels)){if(v>=1&&v<=10&&LVO[k]==null){try{await DB.doc("levels/"+k).set({level:v});LVO[k]=v;lv++}catch(e){}}}
   toast(`戻しました：長文${n}本${lv?`・難易度の修正${lv}件`:""}`);renderMyList();
 }
-async function renderShared(){
+export async function renderShared(){
   const box=$("edShared");if(!box)return;
   const list=await loadShared();if(!$("edShared"))return;
   if(!list.length){box.innerHTML=`<p class="edStatus">まだ共有された長文はありません。自分の長文の「共有に送る」で追加できます。</p>`;return}
@@ -693,7 +306,7 @@ async function renderShared(){
     $("edView").hidden=true;const st={...myToStory(t),level:LVO["t-"+t.id]!=null?LVO["t-"+t.id]:t.level};
     if(a==="read")startRead(st);else startPractice(t)});
 }
-async function shareText(t){
+export async function shareText(t){
   if(!DB)return;
   await loadShared();const exists=(SHARED||[]).some(x=>x.id===t.id);
   const msg=exists?`「${t.title||"無題"}」はすでに共有されています。今の内容で上書きしますか？`:`「${t.title||"無題"}」を「みんなの長文」に送りますか？\n共有相手の全員が読めるようになります。`;
@@ -702,7 +315,7 @@ async function shareText(t){
   try{await DB.doc("texts/"+t.id).set(doc);SHARED=(SHARED||[]).filter(x=>x.id!==t.id).concat([doc]);toast("みんなの長文に送りました");renderMyList()}
   catch(e){await tell(e&&e.code==="quota_exceeded"?"共有の保存数がいっぱいです。不要な長文を取り下げてください。":"送れませんでした。共有への書き込み権限がないか、通信の問題かもしれません。")}
 }
-function renderMyList(){
+export function renderMyList(){
   const list=loadMy();$("edHead").textContent="My Texts";
   $("edBody").innerHTML=`<p class="edStatus">登録した長文は、この端末のブラウザに保存されます（共有は今後対応）。</p>
     <button class="edBtn pri" id="edNew">＋ 長文を登録する</button>
@@ -735,7 +348,7 @@ function renderMyList(){
     else{$("edView").hidden=true;if(a==="read")startRead(myToStory(t));else startPractice(t)}
   });
 }
-function edCollect(){
+export function edCollect(){
   if(!ED||!$("edTitle"))return;
   ED.title=$("edTitle").value;ED.text=$("edText").value;
   if($("edMode"))ED.mode=$("edMode").value;
@@ -751,7 +364,7 @@ function edCollect(){
   document.querySelectorAll(".qOpt").forEach(x=>{ED.questions[+x.dataset.q].options[+x.dataset.i]=x.value});
   document.querySelectorAll(".qCorrect").forEach(x=>{if(x.checked)ED.questions[+x.dataset.q].correct=+x.dataset.i});
 }
-function spanPicker(qi,kind,k,v){   // 文・最初の語・最後の語を選ぶ。チャンクからまとめて選ぶこともできる
+export function spanPicker(qi,kind,k,v){   // 文・最初の語・最後の語を選ぶ。チャンクからまとめて選ぶこともできる
   const s=ED.sents[v.si]||ED.sents[0];if(!s)return "";
   const wopt=(sel)=>`<option value="-1" ${sel<0?"selected":""}>（選ぶ）</option>`+s.words.map((w,i)=>`<option value="${i}" ${i===sel?"selected":""}>${i+1}. ${esc(w)}</option>`).join("");
   const chunkOpts=ED.sents.map((ss,si)=>{const st=unitStarts(ss),en=unitEnds(ss);
@@ -763,7 +376,7 @@ function spanPicker(qi,kind,k,v){   // 文・最初の語・最後の語を選�
     ${kind!=="main"?`<button class="edBtn del spDel">✕</button>`:""}
     <div class="spPrev">${v.a>=0&&v.b>=0?esc(s.words.slice(Math.min(v.a,v.b),Math.max(v.a,v.b)+1).join(" ")):`<span style="color:#6b7686">まだ選んでいません（選ばないままなら保存時に消えます）</span>`}</div></div>`;
 }
-function renderEditor(){
+export function renderEditor(){
   $("edHead").textContent=ED.title?`編集：${ED.title}`:"新しい長文";
   const sentHTML=ED.sents.map((s,si)=>{const en=new Set(unitEnds(s)),starts=new Set(unitStarts(s));
     return `<div class="edSent"><div class="edWords">${s.words.map((w,j)=>
@@ -873,4 +486,8 @@ function renderEditor(){
     else tell("保存できませんでした。この画面ではブラウザへの保存が使えないようです。")};
   $("edCancel").onclick=()=>{ED=null;renderMyList()};
 }
-$("edBack").onclick=()=>{if(ED){ED=null;renderMyList()}else showTitle()};
+
+/* 開くたびに動かすこと（画面のボタンをつなぐ など）。game.js が呼ぶ */
+export function init_texts(){
+  $("edBack").onclick=()=>{if(ED){ED=null;renderMyList()}else showTitle()};
+}

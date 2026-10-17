@@ -1295,60 +1295,6 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     return core2;
   }
 
-  // games/cb/game-punichunk.js
-  var game_punichunk_default = {
-    id: "punichunk",
-    name: "\u3077\u306B\u30C1\u30E3\u30F3\u30AF",
-    right: "game:punichunk",
-    async mount(el, ctx) {
-      await ctx.loadScript(ctx.core.base + "lib/punichunk.js");
-      const s = ctx.settings, audio = () => ({ bgm: s.get("bgm"), sfx: s.get("sfx"), voice: s.get("voice"), rate: s.get("rate") });
-      const g = window.PuniChunk.mount(el, {
-        startScreen: "title",
-        storage: ctx.store,
-        audio: audio(),
-        onEvent: (n, d) => {
-          if (n === "screen") ctx.showBack(["title", "modes", "splash"].includes(d.name));
-          if (n === "result") ctx.report("result", { mode: d.mode, score: d.score });
-        }
-      });
-      const off = s.onChange(() => {
-        try {
-          g.setAudio(audio());
-        } catch (e) {
-        }
-      });
-      ctx.showBack(true);
-      return { unmount() {
-        off();
-        g.unmount();
-      } };
-    }
-  };
-
-  // games/cb/game-cards.js
-  var game_cards_default = {
-    id: "cards",
-    name: "\u30C1\u30E3\u30F3\u30AF\u30FB\u30AB\u30FC\u30C9",
-    right: "game:cards",
-    async mount(el, ctx) {
-      await ctx.loadScript(ctx.core.base + "lib/punichunk.js");
-      await ctx.loadScript(ctx.base + "cards.js");
-      el.classList.add("ct-cards");
-      const root = document.createElement("div");
-      root.className = "cc-app";
-      el.appendChild(root);
-      window.ChunkCards.mount(root);
-      const mo = new MutationObserver(() => ctx.showBack(!!root.querySelector("#go")));
-      mo.observe(root, { childList: true, subtree: true });
-      ctx.showBack(true);
-      return { unmount() {
-        mo.disconnect();
-        root.remove();
-      } };
-    }
-  };
-
   // games/stream/game.js
   var game_default = {
     id: "stream",
@@ -1360,25 +1306,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     }
   };
 
-  // games/chunkchunk/game.js
-  var game_default2 = {
-    id: "chunkchunk",
-    name: "\u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF",
-    right: "game:chunkchunk",
-    async mount(el, ctx) {
-      const f = document.createElement("iframe");
-      f.src = ctx.base + "index.html" + (ctx.opts.go ? "?go=" + ctx.opts.go : "");
-      f.allow = "fullscreen; autoplay";
-      el.appendChild(f);
-      ctx.showBack(true);
-      return { unmount() {
-        f.src = "about:blank";
-      } };
-    }
-  };
-
   // games/index.js
-  var GAMES = { punichunk: game_punichunk_default, cards: game_cards_default, stream: game_default, chunkchunk: game_default2 };
+  var GAMES = { stream: game_default };
 
   // apps/solo/main.js
   var app = window.__APP__;

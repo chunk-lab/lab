@@ -1,0 +1,91 @@
+<!-- チャンクチャンクの画面（game.js が箱の中に入れる）。施設の入口は #title の data-face（arcade／lesson／library） -->
+
+<div class="app">
+  <header class="top">
+    <div class="logo">チャンク<span>チャンク</span></div>
+    <div class="meta"><span id="stageText">面1</span><span id="progText">1/6</span><span id="timeText" hidden>⏱ 0.0</span><span><b id="score">0</b> pt</span></div>
+    <button id="gear" class="gear">設定</button>
+  </header>
+
+  <section class="board" id="board" aria-live="polite">
+    <div id="hist"></div>
+    <div class="line" id="line"></div>
+  </section>
+
+  <div class="tapZone" id="tapZone">
+  <section class="laneWrap" id="laneWrap" aria-label="流れてくる英文">
+    <div class="strip" id="strip"></div>
+    <div class="cutline" id="cutline" data-lbl="ここで区切る"></div>
+    <div class="fadeL"></div><div class="fadeR"></div>
+  </section>
+  <div class="preview" id="preview"></div>
+
+  <section class="stage" id="stage" aria-label="文の絵">
+    <div class="sgHint" id="sgHint">チャンクを当てると、絵ができていく</div>
+    <span class="sgPlace" id="sgPlace"></span><span class="sgSign" id="sgSign"></span>
+    <div class="sgTime" id="sgTime"></div>
+    <div class="sgChar" id="sgChar"><span class="sgFace" id="sgFace"></span><span class="sgArt" id="sgArt"></span><span class="sgCap" id="sgCap"></span></div>
+    <div class="sgObj" id="sgObj"></div>
+    <span class="sgQ" id="sgQ"></span>
+    <span class="sgDone" id="sgDone">完成！</span>
+  </section>
+  <input type="range" id="scrub" class="scrub" min="0" max="10" value="0" step="1" hidden aria-label="ドラッグで一気に先へ進む">
+  <div class="ctrlRow">
+    <div class="navBtns" id="navBtns" hidden><button id="backBtn" class="navBtn" disabled aria-label="戻る（このモードでは戻れない）">◀</button><button id="fwdBtn" class="navBtn" aria-label="1語進む">▶</button></div>
+    <button id="cutBtn" class="cutBtn">区切る<small id="cutHint">ここから下なら、どこをタップしても区切れる</small></button>
+  </div>
+  </div>
+</div>
+
+<div id="count" class="count" hidden></div>
+<div id="startBox" class="modal" hidden style="align-items:center"><div class="sheet" style="text-align:center;align-items:center">
+  <h2 id="startTitle">面1</h2>
+  <p class="note" id="startNote"></p>
+  <button class="primary" id="startBtn" style="width:100%">タップしてスタート</button></div></div>
+<div id="title" class="titleScr" data-face="arcade" hidden>
+  <!-- ゲームセンター：遊んで鍛える -->
+  <div class="faceGame">
+    <div class="gLogo"><span class="p">チャンク</span><span class="b">チャンク</span></div>
+    <div class="gMenu">
+      <div class="tCard"><div class="tName">さらさらチャンク</div><div class="tDesc">自動で流れてくるよ！</div>
+        <div class="tPlay"><button data-play="auto-one">ランダム</button><button data-play="auto-cont" class="b">おはなし</button></div></div>
+      <div class="tCard"><div class="tName">よーいどんチャンク</div><div class="tDesc">自分で送って、はやく切ろう！</div>
+        <div class="tPlay"><button data-play="manual-one">ランダム</button><button data-play="manual-cont" class="b">おはなし</button></div></div>
+      <div class="tCard"><div class="tName">チャレンジ</div><div class="tDesc">30秒・1分で、何点とれるか！（全レベル・自分で送る）</div>
+        <div class="tPlay"><button data-timed="30">30秒</button><button data-timed="60" class="b">1分</button></div>
+        <button class="tSet" data-rank style="margin-top:6px">ランキングを見る</button></div>
+      <p class="tDesc" id="lvHint" style="text-align:center;margin:2px 0 0"></p>
+      <button class="tSet" data-open-set>設定</button>
+    </div>
+  </div>
+  <!-- 学校：チャンク練習（自分で送って切る・役割も答える） -->
+  <div class="faceLesson faceStudy">
+    <div class="sLogo">CHUNK<br>LESSON</div><div class="sSub">SCHOOL</div>
+    <div class="sMenu">
+      <button data-study="practice"><b>Chunk Practice</b><small>文章を選んで、自分で送って切る・役割も答える</small><i>→</i></button>
+      <button data-study="random"><b>Random Practice</b><small>内蔵の例文と短文から、ランダムに練習</small><i>→</i></button>
+      <button data-open-set><b>Settings</b><small>速さ・文字の大きさ・音</small><i>→</i></button>
+    </div>
+  </div>
+  <!-- 図書館：リーディング・長文の登録と共有 -->
+  <div class="faceLibrary faceStudy">
+    <div class="sLogo">CHUNK<br>READING</div><div class="sSub">LIBRARY</div>
+    <div class="sMenu">
+      <button data-study="read"><b>Reading</b><small>長文を読んで設問に答える（内蔵・みんなの長文・My Texts）</small><i>→</i></button>
+      <button data-study="texts"><b>My Texts</b><small>長文・短文の登録、問題の作成、共有</small><i>→</i></button>
+      <button data-open-set><b>Settings</b><small>速さ・文字の大きさ・音</small><i>→</i></button>
+    </div>
+  </div>
+</div>
+
+<!-- My Texts（長文の登録・問題の作成） -->
+<div id="edView" class="edView" hidden>
+  <header class="top"><button class="gear" id="edBack">← Back</button><div class="rdStory" id="edHead">My Texts</div></header>
+  <div id="edBody" class="edBody"></div>
+</div>
+
+<!-- 役割を答えるボタン（Chunk Practice） -->
+<div id="rolePick" class="rolePick" hidden></div>
+
+<div id="askBox" class="modal askBox" hidden><div class="sheet" role="alertdialog" aria-modal="true"><p id="askMsg" class="askMsg"></p><div class="btns"><button class="ghost" id="askNo">やめる</button><button class="primary" id="askYes">OK</button></div></div></div>
+<div id="modal" class="modal" hidden><div id="sheet" class="sheet" role="dialog" aria-modal="true"></div></div>

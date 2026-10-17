@@ -9,7 +9,7 @@ export const GAMES = {   // ゲーム → 公開するファイル [元, 公開�
   punichunk: [['games/cb/out/punichunk.js', 'lib/punichunk.js']],
   cards: [['games/cb/out/punichunk.js', 'lib/punichunk.js'], ['games/cb/out/cards.js', 'g/cards/cards.js']],
   stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream'], ['games/stream/out/stream.js', 'g/stream/stream.js']],
-  chunkchunk: [['games/chunkchunk', 'g/chunkchunk']],
+  chunkchunk: [],   // 全部 app.js / app.css に入る（共通の辞書・読む画面を使う）
 };
 export const APPS = {
   town: { shell: 'town', title: 'チャンクタウン', games: ['stream', 'punichunk', 'cards', 'chunkchunk'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']] },
