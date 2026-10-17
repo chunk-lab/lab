@@ -1,0 +1,7 @@
+{
+  "name": "chunk-series",
+  "private": true,
+  "description": "チャンクシリーズ：共通部品＋各ゲーム。1つの置き場から街アプリと単体アプリを組み立てる",
+  "scripts": { "build": "node build.mjs" },
+  "devDependencies": { "esbuild": "^0.28.0" }
+}

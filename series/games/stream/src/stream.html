@@ -1,0 +1,97 @@
+<div class="bgflow"></div>
+<div class="rotate"><div class="ph"></div><b>横向きにしてね</b><span>チャンクストリームは横画面で遊ぶゲームです</span></div>
+<div class="app" id="app">
+
+<section class="scr" id="sTitle">
+  <div class="l">
+    <div class="logo"><div class="k">CHUNK STREAM</div><h1>チャンク<span>ストリーム</span></h1></div>
+    <div class="tagline">英語の長文が、右から流れてくる。聞いて、選んで、つなげる。</div>
+    <div class="river" aria-hidden="true">
+      <div class="row" style="top:8px;animation-duration:30s" id="rv1"></div>
+      <div class="row" style="top:52px;animation-duration:36s" id="rv2"></div>
+    </div>
+  </div>
+  <div class="r">
+    <img class="hero-chara" id="heroChara" alt="" src="img/chara/girl/joy.webp">
+    <button class="btn-main" id="btnStart">はじめる</button>
+    <div class="small">単語 → チャンク → 穴うめ → 長文完成</div>
+  </div>
+</section>
+
+<section class="scr" id="sHome" hidden>
+  <div class="bar">
+    <h2>長文をえらぶ</h2>
+    <div class="tabs" id="tabs"></div>
+    <button class="icon-btn" id="btnFull" aria-label="全画面"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    <button class="icon-btn" id="btnSettings" aria-label="設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button>
+  </div>
+  <div class="list" id="plist"></div>
+</section>
+
+<section class="scr" id="sWords" hidden>
+  <div class="bar"><button class="icon-btn" data-back="home" aria-label="戻る"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="wTitle">単語練習</h2></div>
+  <div class="wtabs" id="wtabs"></div>
+  <p class="wnote" id="wNote"></p>
+  <div class="wtools" id="wtools"></div>
+  <div class="wsets" id="wsets"></div>
+</section>
+<section class="scr" id="sDetail" hidden>
+  <div class="bar">
+    <button class="icon-btn" data-back="home" aria-label="戻る"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2 id="dTag"></h2>
+    <div class="modes"><button class="mode on">タイムアタック</button><button class="mode soon" id="modeRh">リズム（準備中）</button></div>
+  </div>
+  <div class="dwrap">
+    <div class="dleft">
+      <div class="t" id="dTitle"></div><div class="j" id="dJa"></div>
+      <div class="runbest" id="dRun"></div>
+      <button class="read-btn" id="btnRead">📖 予習：本文を読む</button>
+      <button class="btn-run" id="btnRun">通しでスタート<small>単語 → チャンク → 穴うめ → 長文完成</small></button>
+    </div>
+    <div class="stages" id="stages"></div>
+  </div>
+</section>
+
+<div id="rdOv" hidden><iframe id="rdFr" title="本文を読む" allow="autoplay"></iframe></div>
+<section class="scr" id="sReader" hidden>
+  <div class="bar">
+    <button class="icon-btn" data-back="detail" aria-label="戻る"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2 id="rTitle"></h2>
+    <button class="chip on" id="btnJp">訳</button>
+    <button class="chip" id="btnReadAll">▶ 全文</button>
+  </div>
+  <div class="reader" id="reader"></div>
+</section>
+
+<section class="scr" id="sPlay" hidden>
+  <div class="hbar">
+    <button class="icon-btn sm" id="btnPause" aria-label="一時停止"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button>
+    <div class="stno">STAGE <b id="hudNo">1</b></div><div class="stnm" id="hudName"></div>
+    <div class="hprog"><i id="hudProg"></i></div><div class="cnt" id="hudCount"></div>
+    <div class="tm" id="hudTime">0.0</div><div class="cmb" id="hudCombo"></div>
+  </div>
+  <div class="arena" id="arena">
+    <div class="sp"></div>
+    <div class="band">
+      <div class="side" id="side"><div class="grid up" id="g0"></div><div class="grid dn" id="g1"></div><button class="rep" id="rep" aria-label="もう一度聞く" hidden>🔊</button></div>
+      <div class="field" id="field"><div class="flow"></div><div class="dz"></div><div class="zone" id="zone"></div><div class="seam" id="seam"></div><div id="layer"></div><div class="fx" id="fx"></div></div>
+    </div>
+    <div class="txt" id="txt"><div class="para" id="para"></div></div>
+  </div>
+</section>
+
+<section class="scr" id="sResult" hidden>
+  <div class="res-l">
+    <div class="res-top">
+      <div class="rank" id="resRank">S</div>
+      <div><div class="lab" id="resLab"></div><div class="tt" id="resTitle"></div><div class="tot" id="resTot"></div></div>
+      <img class="res-chara" id="resChara" alt="" src="img/chara/girl/joy.webp">
+    </div>
+    <div class="stt" id="resStages"></div>
+    <div class="res-btns" id="resBtns"></div>
+  </div>
+  <div class="res-r"><div class="review" id="review"></div></div>
+</section>
+
+<div class="ov" id="ov" hidden><div id="ovBody"></div></div>
+</div>

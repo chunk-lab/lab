@@ -1,0 +1,189 @@
+/* core/ui.css */
+.cs-ui {
+  --cs-ink:#2b2320;
+  --cs-paper:#fffaf0;
+  --cs-wood:#8a5a32;
+  --cs-leaf:#4fa34a;
+  --cs-sun:#ffc93c;
+  font-family:
+    "Hiragino Maru Gothic ProN",
+    "Hiragino Sans",
+    "Noto Sans JP",
+    "M PLUS Rounded 1c",
+    system-ui,
+    sans-serif;
+}
+.cs-ov {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(20, 30, 40, .4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.cs-sheet {
+  width: min(100%, 480px);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--cs-paper);
+  color: var(--cs-ink);
+  border: 3px solid var(--cs-wood);
+  border-bottom: 0;
+  border-radius: 22px 22px 0 0;
+  padding: 16px max(18px, env(safe-area-inset-left, 0px)) calc(18px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-right, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: csup .22s ease-out;
+}
+@keyframes csup {
+  from {
+    transform: translateY(100%);
+  }
+}
+.cs-sheet h3 {
+  margin: 0;
+  font-size: 20px;
+  text-align: center;
+}
+.cs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 14px;
+}
+.cs-row input[type=range] {
+  flex: 1;
+  max-width: 60%;
+}
+.cs-row input[type=checkbox] {
+  width: 22px;
+  height: 22px;
+}
+.cs-col {
+  flex-direction: column;
+  align-items: stretch;
+}
+.cs-col input {
+  font: inherit;
+  font-size: 16px;
+  padding: 8px 10px;
+  border: 2px solid #ead9c2;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--cs-ink);
+}
+.cs-btn {
+  padding: 12px;
+  border-radius: 14px;
+  border: 2px solid var(--cs-wood);
+  background: #fff;
+  font: inherit;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--cs-ink);
+  box-shadow: 0 3px 0 var(--cs-wood);
+  cursor: pointer;
+}
+.cs-close {
+  background: var(--cs-sun);
+}
+.cs-prof {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.cs-prof img {
+  width: 96px;
+  height: 96px;
+  border-radius: 18px;
+  background: #fff;
+  border: 2px solid #ead9c2;
+  flex: none;
+}
+.cs-prof > div {
+  flex: 1;
+  min-width: 0;
+}
+.cs-note {
+  margin: 0;
+  font-size: 12px;
+  color: #8a7766;
+  line-height: 1.6;
+}
+.cs-stat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-stat li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #fff;
+  border: 2px solid #ead9c2;
+  border-radius: 12px;
+  font-size: 14px;
+}
+.cs-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 110;
+  background: rgba(30, 30, 30, .88);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.cs-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #0b1626;
+}
+.cs-mount {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.cs-mount iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.cs-back {
+  position: fixed;
+  z-index: 60;
+  left: max(8px, env(safe-area-inset-left, 0px));
+  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 2px solid #8a5a32;
+  background: #fffaf0;
+  font: inherit;
+  font-weight: 800;
+  font-size: 13px;
+  color: #2b2320;
+  box-shadow: 0 2px 0 #8a5a32;
+  opacity: .92;
+  cursor: pointer;
+}
+.cs-err {
+  color: #fff;
+  padding: 24px;
+  text-align: center;
+}
+[hidden] {
+  display: none !important;
+}
