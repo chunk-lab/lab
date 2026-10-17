@@ -3,12 +3,11 @@
 export const PREBUILD = [   // 組み立ての前に動かす道具
   'tools/build_dict.py',   // 共通の辞書
   'games/cb/tools/series_build.py',
-  'games/stream/tools/build_module.py',
 ];
 export const GAMES = {   // ゲーム → 公開するファイル [元, 公開先]（フォルダは中身ごと）
   punichunk: [['games/cb/out/punichunk.js', 'lib/punichunk.js']],
   cards: [['games/cb/out/punichunk.js', 'lib/punichunk.js'], ['games/cb/out/cards.js', 'g/cards/cards.js']],
-  stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream'], ['games/stream/out/stream.js', 'g/stream/stream.js']],
+  stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream']],
   chunkchunk: [],   // 全部 app.js / app.css に入る（共通の辞書・読む画面を使う）
 };
 export const APPS = {
