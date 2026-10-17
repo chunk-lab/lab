@@ -8,10 +8,12 @@ export const GAMES = {   // ゲーム → 公開するファイル [元, 公開�
   cards: [],
   stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream']],
   chunkchunk: [],   // 全部 app.js / app.css に入る（共通の辞書・読む画面を使う）
+  eigonou: [{ bundle: 'games/eigonou/src/main.js', out: 'g/eigonou/eigo.js' }],   // 大きいので、開いたときに読み込む別ファイル（eigo.js / eigo.css）
 };
 export const APPS = {
-  town: { shell: 'town', title: 'チャンクタウン', games: ['stream', 'punichunk', 'cards', 'chunkchunk'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']] },
+  town: { shell: 'town', title: 'チャンクタウン', games: ['stream', 'punichunk', 'cards', 'chunkchunk', 'eigonou'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']] },
   stream: { shell: 'solo', title: 'チャンクストリーム', games: ['stream'], grants: ['game:stream'] },
   punichunk: { shell: 'solo', title: 'ぷにチャンク', games: ['punichunk'], grants: ['game:punichunk'] },
   cards: { shell: 'solo', title: 'チャンク・カード', games: ['cards'], grants: ['game:cards'] },
+  eigonou: { shell: 'solo', title: '英語脳アプリ', games: ['eigonou'], grants: ['game:eigonou'] },
 };

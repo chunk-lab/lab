@@ -1,0 +1,15 @@
+<div id="app">
+ <div class="view" data-view="play">
+  <div class="top"><h1>英語脳ゲーム<small>試作7</small></h1><div class="seg lvseg" id="lvl"><span class="lvlab">Lv</span><button data-l="1">1</button><button data-l="2">2</button><button data-l="3">3</button><button data-l="4">4</button><button data-l="5">5</button><button data-l="6">∞</button></div><button class="ib rs" id="bUndo" aria-label="最初から">⟲<small>最初から</small></button></div>
+  <div class="bar"><div id="chunks"></div><div class="barside"><button class="ib" id="sayall" aria-label="文を読む">🔊</button><button class="ib" id="finish" disabled>完成</button></div></div>
+  <div id="barnote"></div>
+  <div id="ttsnote" hidden>🔇 この画面では音が出ないようです。右上の共有メニューなどから<b>ブラウザ（Chromeなど）で開く</b>と英語が読み上げられます。<button onclick="this.parentNode.hidden=true">×</button></div>
+  <div id="canvas"><div id="sidebg"><div class="l"></div><div class="r"></div></div><div id="csent"></div><div id="scene"><div id="bg"></div><div id="sky"></div></div><div id="tline"><div class="track"><div class="tvis"></div><i class="nowl"></i><span class="nowt">今</span><span class="tend l">前</span><span class="tend r">先</span><div class="knob"></div></div><div class="tstops"></div><div class="tlock"></div><button class="tmore">＋ ほかの時制</button></div><div id="idle"></div></div>
+ </div>
+ <div class="view page" data-view="prac" id="prac" hidden></div>
+ <div class="view page" data-view="reg" id="reg" hidden></div>
+ <div class="view page" data-view="sets" id="sets" hidden></div>
+ <div class="view page" data-view="settings" id="settings" hidden></div>
+ <nav class="nav"><button data-v="make" data-i18n="nav.make"><span>🎨</span>つくる</button><button data-v="prac" data-i18n="nav.prac"><span>🎯</span>れんしゅう</button><button data-v="reg" data-i18n="nav.reg"><span>➕</span>ことば登録</button><button data-v="sets" data-i18n="nav.sets"><span>📚</span>セット</button><button data-v="settings" data-i18n="nav.settings"><span>⚙️</span>設定</button></nav>
+</div>
+<div id="toast"></div>

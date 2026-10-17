@@ -26,7 +26,11 @@ for (const id of apps) {
   copy('core/avatar', path.join(out, 'core', 'avatar'));
   copy('core/dict', path.join(out, 'core', 'dict'));   // 共通の辞書のデータ（読む画面を開いたときに読み込む）
   for (const [s, d] of app.assets || []) copy(s, path.join(out, d));
-  for (const g of app.games) for (const [s, d] of GAMES[g]) copy(s, path.join(out, d));
+  for (const g of app.games) for (const f of GAMES[g]) {
+    if (Array.isArray(f)) { copy(f[0], path.join(out, f[1])); continue; }
+    // { bundle: 入口, out: 公開先 } … 開いたときに読み込む別ファイル（大きいゲームを app.js に入れないため）。見た目は同じ名前の .css に出る
+    await esbuild.build({ entryPoints: [path.join(ROOT, f.bundle)], bundle: true, format: 'iife', target: 'es2020', outfile: path.join(out, f.out), loader: { '.html': 'text' }, logLevel: 'warning', logOverride: { 'duplicate-object-key': 'silent' }, legalComments: 'none', minify: true });
+  }
   const cfg = JSON.stringify({ appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel }).replace(/</g, '\\u003c');
   const head = `<title>${app.title}</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="app.css">`;
   const body = `<script>window.__APP__=${cfg}</script>\n<script src="app.js"></script>`;

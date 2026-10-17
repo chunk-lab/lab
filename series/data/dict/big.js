@@ -1,5 +1,5 @@
 // 自動生成（tools/mkdict.py）。英和辞典 EJDict（CC0／パブリックドメイン）＋ English WordNet（CC BY 4.0・Princeton WordNet License）から変換。手で直さない。
-const BIGT={
+export const BIGT={
   n:`day	昼間	100	time	0
 letter	文字	100	comm	0
 order	命令	100	comm	0

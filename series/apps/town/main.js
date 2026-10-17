@@ -8,7 +8,7 @@ import { GAMES } from '../../games/index.js';
 const core = createCore(window.__APP__);
 const PLACES = {
   school: { n: '学校', img: 'school', sub: 'チャンクを練習する', items: [{ t: 'チャンクレッスン', game: 'chunkchunk', opts: { face: 'lesson' } }] },
-  library: { n: '図書館', img: 'library', sub: '読む・登録する', items: [{ t: 'チャンクリーディング', game: 'chunkchunk', opts: { face: 'library' } }] },
+  library: { n: '図書館', img: 'library', sub: '読む・登録する', items: [{ t: 'チャンクリーディング', game: 'chunkchunk', opts: { face: 'library' } }, { t: '英語脳アプリ', game: 'eigonou' }] },
   house: { n: '自宅', img: 'house', profile: true },
   shop: { n: 'ショップ', img: 'supermarket', sub: '有料コンテンツ', items: [] },
   game: { n: 'ゲームセンター', img: 'gamecenter', sub: '遊んで鍛える', items: [

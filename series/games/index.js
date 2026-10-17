@@ -3,4 +3,5 @@ import punichunk from './punichunk/game.js';
 import cards from './cards/game.js';
 import stream from './stream/game.js';
 import chunkchunk from './chunkchunk/game.js';
-export const GAMES = { punichunk, cards, stream, chunkchunk };
+import eigonou from './eigonou/game.js';
+export const GAMES = { punichunk, cards, stream, chunkchunk, eigonou };
