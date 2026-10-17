@@ -1,0 +1,56 @@
+<title>チャンクタウン</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* 街：一枚絵を横幅に合わせて表示。建物は絵の区画に％で置く。アプリは全画面の #ctApp の中に mount する */
+:root{--sky:#189efe;--ink:#2b2320;--paper:#fffaf0;--wood:#8a5a32;--leaf:#4fa34a;--sun:#ffc93c;
+  --font:"Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP","M PLUS Rounded 1c","Yu Gothic",system-ui,sans-serif;color-scheme:light}
+html,body{height:100%}
+body{background:var(--sky);color:var(--ink);font-family:var(--font);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
+[hidden]{display:none!important}
+.ct-view{position:fixed;inset:0;overflow:hidden}
+.ct-map{position:absolute;left:0;top:0;width:100%;aspect-ratio:941/1672;background:url(img/bg.webp) center/100% 100% no-repeat}
+.ct-bld{position:absolute;transform:translate(-50%,-100%);background:none;border:0;padding:0;cursor:pointer;filter:drop-shadow(0 6px 6px rgba(40,60,20,.35));transition:transform .15s}
+.ct-bld img{width:100%;display:block;pointer-events:none}
+.ct-bld:active{transform:translate(-50%,-100%) scale(.94)}
+.ct-bld.hop{animation:cthop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes cthop{35%{transform:translate(-50%,-104%) scale(1.06,.95)}}
+.ct-bld:focus-visible{outline:3px solid var(--sun);outline-offset:4px;border-radius:12px}
+#bSchool{left:22.5%;top:calc(33.2% - 30px);width:34%}
+#bLibrary{left:77.6%;top:calc(33.2% - 30px);width:33%}
+#bHouse{left:50.2%;top:calc(47.6% - 30px);width:29%}
+#bShop{left:21.6%;top:calc(69.6% - 30px);width:36%}
+#bGame{left:79.2%;top:calc(69.6% - 30px);width:32%}
+@media (prefers-reduced-motion:reduce){.ct-bld.hop{animation:none}}
+.ct-ov{position:fixed;inset:0;background:rgba(20,30,40,.35);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.ct-sheet{width:min(100%,520px);background:var(--paper);border-radius:22px 22px 0 0;border:3px solid var(--wood);border-bottom:0;
+  padding:16px max(18px,env(safe-area-inset-left,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:10px;animation:ctup .25s ease-out;max-height:80vh;overflow-y:auto}
+@keyframes ctup{from{transform:translateY(100%)}}
+.ct-sheet header{display:flex;align-items:center;gap:12px}
+.ct-sheet header img{width:72px}
+.ct-sheet h2{margin:0;font-size:22px}
+.ct-sheet header p{margin:2px 0 0;font-size:13px;color:#6b5a4c}
+.ct-sheet ul{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.ct-sheet li button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:14px;background:#fff;border:2px solid var(--leaf);box-shadow:0 3px 0 var(--leaf);color:var(--ink);font:inherit;font-weight:800;font-size:15px;cursor:pointer}
+.ct-sheet small{font-weight:500;font-size:12px;color:#8a7766}
+.ct-close{padding:12px;border-radius:14px;border:2px solid var(--wood);background:var(--sun);font:inherit;font-weight:800;font-size:15px;color:var(--ink);box-shadow:0 3px 0 var(--wood);cursor:pointer}
+.ct-note{font-size:13px;color:#8a7766;margin:0}
+/* アプリの表示場所 */
+.ct-app{position:fixed;inset:0;z-index:20;background:#0b1626}
+.ct-mount{position:absolute;inset:0;overflow:hidden}
+.ct-mount iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ct-back{position:fixed;z-index:30;left:max(8px,env(safe-area-inset-left,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));padding:6px 12px;border-radius:999px;border:2px solid var(--wood);background:var(--paper);font:inherit;font-weight:800;font-size:13px;color:var(--ink);box-shadow:0 2px 0 var(--wood);opacity:.92;cursor:pointer}
+.ct-err{color:#fff;padding:24px;text-align:center}
+/*@@APPCSS@@*/
+</style>
+<div class="ct-view"><div class="ct-map" id="ctMap">
+  <button class="ct-bld" id="bSchool" data-k="school"><img src="img/school.webp" alt="学校"></button>
+  <button class="ct-bld" id="bLibrary" data-k="library"><img src="img/library.webp" alt="図書館"></button>
+  <button class="ct-bld" id="bHouse" data-k="house"><img src="img/house.webp" alt="自宅"></button>
+  <button class="ct-bld" id="bShop" data-k="shop"><img src="img/supermarket.webp" alt="ショップ"></button>
+  <button class="ct-bld" id="bGame" data-k="game"><img src="img/gamecenter.webp" alt="ゲームセンター"></button>
+</div></div>
+<div class="ct-ov" id="ctOv" hidden></div>
+<div class="ct-app" id="ctApp" hidden></div>
+<button class="ct-back" id="ctBack" hidden>🏠 街へ</button>
+<script>/*@@CORE@@*/</script>
