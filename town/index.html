@@ -1,0 +1,91 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style></head><body><title>チャンクシリーズの街</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&display=swap">
+<style>
+/* レイアウト：一枚絵の街を画面いっぱいに（縦向き）。建物は絵の区画に％で置く。タップで中身のシートが下から出る */
+:root{
+  --sky:#189efe; --ink:#2b2320; --paper:#fffaf0; --wood:#8a5a32; --leaf:#4fa34a; --sun:#ffc93c;
+  --font:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--sky);color:var(--ink);font-family:var(--font);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
+.view{position:fixed;inset:0;overflow:hidden}
+/* 横幅に合わせる（建物が左右で切れない）。縦長のスマホでは下にそろえ、上の空き＝空の色。横に広い画面では建物のあたりを真ん中に */
+.map{position:absolute;left:0;top:0;width:100%;aspect-ratio:941/1672;background:url(img/bg.webp) center/100% 100% no-repeat}
+.bld{position:absolute;transform:translate(-50%,-100%);background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;filter:drop-shadow(0 6px 6px rgba(40,60,20,.35));transition:transform .15s}
+.bld img{width:100%;display:block;pointer-events:none}
+.bld:active,.bld.tap{transform:translate(-50%,-100%) scale(.94)}
+.bld.hop{animation:hop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes hop{0%{transform:translate(-50%,-100%) scale(1)}35%{transform:translate(-50%,-104%) scale(1.06,.95)}100%{transform:translate(-50%,-100%) scale(1)}}
+.bld:focus-visible{outline:3px solid var(--sun);outline-offset:4px;border-radius:12px}
+#school{left:22.5%;top:calc(33.2% - 30px);width:34%}
+#library{left:77.6%;top:calc(33.2% - 30px);width:33%}
+#house{left:50.2%;top:calc(47.6% - 30px);width:29%}
+#shop{left:21.6%;top:calc(69.6% - 30px);width:36%}
+#game{left:79.2%;top:calc(69.6% - 30px);width:32%}
+@media (prefers-reduced-motion:reduce){.bld.hop{animation:none}}
+
+/* 中身のシート */
+.ov[hidden]{display:none}
+.ov{position:fixed;inset:0;background:rgba(20,30,40,.35);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet{width:min(100%,520px);background:var(--paper);border-radius:22px 22px 0 0;border:3px solid var(--wood);border-bottom:0;
+  padding:16px max(18px,env(safe-area-inset-left,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:10px;animation:up .25s ease-out;max-height:80vh;overflow-y:auto}
+@keyframes up{from{transform:translateY(100%)}}
+.sheet header{display:flex;align-items:center;gap:12px}
+.sheet header img{width:72px}
+.sheet h2{margin:0;font-size:22px;font-weight:800}
+.sheet .sub{margin:2px 0 0;font-size:13px;color:#6b5a4c}
+.items{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.items a,.items div{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:14px;background:#fff;border:2px solid #ead9c2;color:var(--ink);text-decoration:none;font-weight:800;font-size:15px}
+.items a{border-color:var(--leaf);box-shadow:0 3px 0 var(--leaf)}
+.items small{font-weight:500;font-size:12px;color:#8a7766;white-space:nowrap}
+.close{margin-top:4px;padding:12px;border-radius:14px;border:2px solid var(--wood);background:var(--sun);font:inherit;font-weight:800;font-size:15px;color:var(--ink);box-shadow:0 3px 0 var(--wood);cursor:pointer}
+.note{font-size:12px;color:#8a7766;margin:0}
+/* 街の中で開くアプリ（全画面） */
+.app[hidden]{display:none}
+.app{position:fixed;inset:0;z-index:20;background:#0b1626}
+.app iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.back{position:absolute;left:max(8px,env(safe-area-inset-left,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:2;padding:6px 12px;border-radius:999px;border:2px solid var(--wood);background:var(--paper);font:inherit;font-weight:800;font-size:13px;color:var(--ink);box-shadow:0 2px 0 var(--wood);opacity:.9;cursor:pointer}
+</style>
+
+<div class="view"><div class="map" id="map">
+  <button class="bld" id="school" data-k="school"><img src="img/school.webp" alt="学校"></button>
+  <button class="bld" id="library" data-k="library"><img src="img/library.webp" alt="図書館"></button>
+  <button class="bld" id="house" data-k="house"><img src="img/house.webp" alt="自宅"></button>
+  <button class="bld" id="shop" data-k="shop"><img src="img/supermarket.webp" alt="ショップ"></button>
+  <button class="bld" id="game" data-k="game"><img src="img/gamecenter.webp" alt="ゲームセンター"></button>
+</div></div>
+<div class="ov" id="ov" hidden></div>
+<div class="app" id="app" hidden><iframe id="appf" title="アプリ" allow="fullscreen; autoplay"></iframe><button class="back" id="appBack" aria-label="街にもどる">🏠 街</button></div>
+
+<script>
+function fit(){const m=document.getElementById("map"),vh=innerHeight,mh=m.offsetHeight;m.style.top=(mh<=vh?vh-mh:Math.min(0,Math.max(vh-mh,vh/2-mh*.48)))+"px"}addEventListener("resize",fit);fit();
+/* 施設の中身。app＝街の中で開く（このページに入っているアプリ）、url＝別ページで開く */
+const PLACES={
+  school:{n:"学校",img:"school",sub:"チャンクチャンクで学ぶ",items:[{t:"チャンクチャンク（スタディ）",app:"cc/index.html?go=study"}]},
+  library:{n:"図書館",img:"library",sub:"読む・調べる",items:[{t:"リーディング（チャンクチャンク）",app:"cc/index.html?go=study"},{t:"英語脳ゲーム（辞書）",url:"https://claude.ai/artifact/541ypWUoEvzstyYqjEwjCr"}]},
+  house:{n:"自宅",img:"house",sub:"アバター・マイページ",items:[{t:"アバター・マイページ",app:"cc/index.html?go=avatar"}]},
+  shop:{n:"ショップ",img:"supermarket",sub:"有料コンテンツ",items:[]},
+  game:{n:"ゲームセンター",img:"gamecenter",sub:"遊んで鍛える",items:[{t:"チャンクストリーム",app:"stream/index.html"},{t:"チャンクチャンク（ゲーム）",app:"cc/index.html?go=game"},{t:"英語脳ゲーム（カード）",url:"https://claude.ai/artifact/541ypWUoEvzstyYqjEwjCr"}]}
+};
+const $=id=>document.getElementById(id),ov=$("ov");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function runApp(src){const f=$("appf");f.src=src;$("app").hidden=false;close()}
+function quitApp(){const f=$("appf");$("app").hidden=true;f.src="about:blank"}
+$("appBack").onclick=quitApp;
+function open(k){const p=PLACES[k];if(p.items.length===1&&p.items[0].app){runApp(p.items[0].app);return}
+  ov.innerHTML=`<div class="sheet" role="dialog" aria-label="${esc(p.n)}"><header><img src="img/${p.img}.webp" alt=""><div><h2>${esc(p.n)}</h2><p class="sub">${esc(p.sub)}</p></div></header>
+    ${p.items.length?`<ul class="items">${p.items.map((it,i)=>`<li>${it.url?`<a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.t)}<small>別ページで開く ›</small></a>`:`<a href="#" data-i="${i}">${esc(it.t)}<small>入る ›</small></a>`}</li>`).join("")}</ul>`:`<p class="note">売っているものは、まだありません。</p>`}
+    <button class="close" id="cl">街にもどる</button></div>`;
+  ov.hidden=false;$("cl").focus();$("cl").onclick=close;
+  ov.querySelectorAll("a[data-i]").forEach(a=>a.onclick=e=>{e.preventDefault();runApp(p.items[+a.dataset.i].app)})}
+function close(){ov.hidden=true;ov.innerHTML=""}
+ov.addEventListener("click",e=>{if(e.target===ov)close()});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!ov.hidden)close()});
+document.querySelectorAll(".bld").forEach(b=>b.addEventListener("click",()=>{b.classList.remove("hop");void b.offsetWidth;b.classList.add("hop");setTimeout(()=>open(b.dataset.k),260)}));
+</script>
+
+</body></html>
