@@ -31,7 +31,7 @@ for (const id of apps) {
     // { bundle: 入口, out: 公開先 } … 開いたときに読み込む別ファイル（大きいゲームを app.js に入れないため）。見た目は同じ名前の .css に出る
     await esbuild.build({ entryPoints: [path.join(ROOT, f.bundle)], bundle: true, format: 'iife', target: 'es2020', outfile: path.join(out, f.out), loader: { '.html': 'text' }, logLevel: 'warning', logOverride: { 'duplicate-object-key': 'silent' }, legalComments: 'none', minify: true });
   }
-  const cfg = JSON.stringify({ appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel }).replace(/</g, '\\u003c');
+  const cfg = JSON.stringify({ appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel, opts: app.opts || undefined }).replace(/</g, '\\u003c');
   const head = `<title>${app.title}</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="app.css">`;
   const body = `<script>window.__APP__=${cfg}</script>\n<script src="app.js"></script>`;
   fs.writeFileSync(path.join(out, 'index.html'), `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n${head}\n</head><body>\n${body}\n</body></html>\n`);

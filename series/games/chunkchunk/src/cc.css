@@ -325,3 +325,9 @@
 .ct-cc .blk.k-cross{border-color:rgba(224,179,255,.45)}
 .ct-cc .mk.k-cross{color:#e0b3ff}
 .ct-cc .pop.k-cross b{color:#e0b3ff}
+
+/* 単体アプリの施設タブ（ゲームセンター／学校／図書館） */
+.ct-cc .ccTabs{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:6px;justify-content:center;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:rgba(10,14,22,.92);backdrop-filter:blur(8px)}
+.ct-cc .ccTabs button{flex:1;max-width:150px;border:0;border-radius:999px;padding:10px 0;font-weight:800;font-size:13px;background:rgba(255,255,255,.1);color:#cfd6e4}
+.ct-cc .ccTabs button.on{background:#ffb23e;color:#1a1a1a}
+.ct-cc .titleScr[hidden] .ccTabs{display:none}

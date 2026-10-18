@@ -17,6 +17,14 @@ export function showTitle(){
 }
 export function initTitle(face){
   FACE=face||"arcade";
+  if(FACE==="all"){   // 単体アプリ：施設の切りかえタブ（ゲームセンター／学校／図書館）
+    FACE="arcade";const t=$("title"),bar=document.createElement("div");bar.className="ccTabs";
+    bar.innerHTML=[["arcade","ゲームセンター"],["lesson","学校"],["library","図書館"]].map(([k,n])=>`<button data-tab="${k}">${n}</button>`).join("");
+    t.appendChild(bar);
+    const draw=()=>bar.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.tab===FACE));
+    bar.onclick=e=>{const b=e.target.closest("button");if(!b)return;FACE=b.dataset.tab;t.dataset.face=FACE;draw()};
+    draw();ENV.tabsDraw=draw;
+  }
   document.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>{
     primeSpeech();unlockAudio();$("title").hidden=true;
     const [adv,mode]=b.dataset.play.split("-");sfx("se/btn_"+(adv==="auto"?"sarasara":"yoidon"));settings.advance=adv;settings.mode=mode;saveSettings();

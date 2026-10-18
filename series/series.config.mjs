@@ -16,4 +16,5 @@ export const APPS = {
   punichunk: { shell: 'solo', title: 'ぷにチャンク', games: ['punichunk'], grants: ['game:punichunk'] },
   cards: { shell: 'solo', title: 'チャンク・カード', games: ['cards'], grants: ['game:cards'] },
   eigonou: { shell: 'solo', title: '英語脳アプリ', games: ['eigonou'], grants: ['game:eigonou'] },
+  chunkchunk: { shell: 'solo', title: 'チャンクチャンク', games: ['chunkchunk'], grants: ['game:chunkchunk'], opts: { face: 'all' } },   // 単体：学校・図書館・ゲームセンターを下のタブで切りかえる
 };

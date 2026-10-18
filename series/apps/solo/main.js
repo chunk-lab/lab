@@ -5,4 +5,4 @@ import { GAMES } from '../../games/index.js';
 const app = window.__APP__;
 const core = createCore({ ...app, backButton: false });
 document.body.style.background = '#0b1626';
-core.host.open(GAMES[app.games[0]]);
+core.host.open(GAMES[app.games[0]], app.opts || {});

@@ -16,7 +16,7 @@ import { init_texts, initShared } from './src/texts.js';
 import { init_rank } from './src/rank.js';
 import { initTitle, showTitle } from './src/title.js';
 const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;700&family=Mochiy+Pop+One&family=Zen+Maru+Gothic:wght@500;700&family=Quicksand:wght@500;700&display=swap';
-const NAMES = { lesson: 'チャンクチャンク（学校）', library: 'チャンクチャンク（図書館）', arcade: 'チャンクチャンク' };
+const NAMES = { lesson: 'チャンクチャンク（学校）', library: 'チャンクチャンク（図書館）', arcade: 'チャンクチャンク', all: 'チャンクチャンク' };
 
 /* 前のチャンクチャンク（街の中の枠で動いていたとき）のセーブを、共通のセーブへ1回だけ引っ越す */
 function migrate(store) {
