@@ -11,10 +11,10 @@ export const GAMES = {   // ゲーム → 公開するファイル [元, 公開�
   eigonou: [{ bundle: 'games/eigonou/src/main.js', out: 'g/eigonou/eigo.js' }],   // 大きいので、開いたときに読み込む別ファイル（eigo.js / eigo.css）
 };
 export const APPS = {
-  town: { shell: 'town', title: 'チャンクタウン', games: ['stream', 'punichunk', 'cards', 'chunkchunk', 'eigonou'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']] },
-  stream: { shell: 'solo', title: 'チャンクストリーム', games: ['stream'], grants: ['game:stream'] },
-  punichunk: { shell: 'solo', title: 'ぷにチャンク', games: ['punichunk'], grants: ['game:punichunk'] },
-  cards: { shell: 'solo', title: 'チャンク・カード', games: ['cards'], grants: ['game:cards'] },
-  eigonou: { shell: 'solo', title: '英語脳アプリ', games: ['eigonou'], grants: ['game:eigonou'] },
-  chunkchunk: { shell: 'solo', title: 'チャンクチャンク', games: ['chunkchunk'], grants: ['game:chunkchunk'], opts: { face: 'all' } },   // 単体：学校・図書館・ゲームセンターを下のタブで切りかえる
+  town: { shell: 'town', title: 'チャンクタウン', theme: 'cute', games: ['stream', 'punichunk', 'cards', 'chunkchunk', 'eigonou'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']] },
+  stream: { shell: 'solo', theme: 'chic', title: 'チャンクストリーム', games: ['stream'], grants: ['game:stream'] },
+  punichunk: { shell: 'solo', theme: 'chic', title: 'ぷにチャンク', games: ['punichunk'], grants: ['game:punichunk'] },
+  cards: { shell: 'solo', theme: 'chic', title: 'チャンク・カード', games: ['cards'], grants: ['game:cards'] },
+  eigonou: { shell: 'solo', theme: 'chic', title: '英語脳アプリ', games: ['eigonou'], grants: ['game:eigonou'] },
+  chunkchunk: { shell: 'solo', theme: 'chic', title: 'チャンクチャンク', games: ['chunkchunk'], grants: ['game:chunkchunk'], opts: { face: 'all' } },   // 単体：学校・図書館・ゲームセンターを下のタブで切りかえる
 };

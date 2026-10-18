@@ -331,3 +331,36 @@
 .ct-cc .ccTabs button{flex:1;max-width:150px;border:0;border-radius:999px;padding:10px 0;font-weight:800;font-size:13px;background:rgba(255,255,255,.1);color:#cfd6e4}
 .ct-cc .ccTabs button.on{background:#ffb23e;color:#1a1a1a}
 .ct-cc .titleScr[hidden] .ccTabs{display:none}
+
+/* 見た目：シック（今のまま）／かわいい（街アプリの標準）。切りかえは共通の設定（html の data-theme）。シックは上の定義がそのまま効く */
+.ct-cc .sLogo span{display:block}
+.ct-cc .sChara{display:none}
+html[data-theme="cute"] .ct-cc .titleScr[data-face="lesson"],html[data-theme="cute"] .ct-cc .titleScr[data-face="library"]{background:linear-gradient(180deg,#bfe0fb 0%,#e9e3fb 55%,#fde3ee 100%);color:#5a4470}
+html[data-theme="cute"] .ct-cc .faceStudy{align-items:stretch}
+html[data-theme="cute"] .ct-cc .sChara{display:block;width:150px;max-width:44vw;margin:6vh auto -14px;filter:drop-shadow(0 6px 10px rgba(90,68,112,.25));animation:cc-bob 3.2s ease-in-out infinite}
+@keyframes cc-bob{50%{transform:translateY(-6px)}}
+html[data-theme="cute"] .ct-cc .faceStudy .sLogo{margin:0 0 4px;font-family:var(--disp,var(--jp));font-weight:400;font-size:46px;letter-spacing:.04em;line-height:1.08}
+html[data-theme="cute"] .ct-cc .sLogo .a{color:#ff9ec4;-webkit-text-stroke:2px #fff;text-shadow:0 4px 0 #e889b2,0 8px 18px rgba(232,137,178,.35)}
+html[data-theme="cute"] .ct-cc .sLogo .b{color:#8cc8ff;-webkit-text-stroke:2px #fff;text-shadow:0 4px 0 #5ea6e6,0 8px 18px rgba(94,166,230,.35)}
+html[data-theme="cute"] .ct-cc .sSub{font-family:var(--jp);font-weight:800;color:#8a7a9c;margin-bottom:4vh;letter-spacing:.3em}
+html[data-theme="cute"] .ct-cc .sMenu{border-top:0;gap:12px}
+html[data-theme="cute"] .ct-cc .sMenu button{background:rgba(255,255,255,.88);border:2px solid #fff;border-radius:20px;padding:14px 18px;color:#5a4470;box-shadow:0 5px 0 rgba(150,130,180,.28),0 10px 22px rgba(120,100,160,.12);transition:transform .12s}
+html[data-theme="cute"] .ct-cc .sMenu button:active{background:#fff;transform:translateY(3px);box-shadow:0 2px 0 rgba(150,130,180,.28)}
+html[data-theme="cute"] .ct-cc .sMenu b{font-family:var(--jp);font-weight:800;font-size:17px;letter-spacing:.02em}
+html[data-theme="cute"] .ct-cc .sMenu small{color:#8a7a9c;font-size:11.5px;font-weight:700}
+html[data-theme="cute"] .ct-cc .sMenu i{color:#ff9ec4;font-weight:800}
+html[data-theme="cute"] .ct-cc .sMenu button:nth-child(even) i{color:#7cc4ff}
+html[data-theme="cute"] .ct-cc .ccTabs{background:rgba(255,255,255,.82)}
+html[data-theme="cute"] .ct-cc .ccTabs button{background:#fff;color:#8a7a9c;box-shadow:0 2px 0 rgba(150,130,180,.25)}
+html[data-theme="cute"] .ct-cc .ccTabs button.on{background:#ff9ec4;color:#fff}
+/* My Texts の画面もかわいく */
+html[data-theme="cute"] .ct-cc .edView{background:linear-gradient(180deg,#e6f2fd,#fdeaf2);color:#5a4470}
+html[data-theme="cute"] .ct-cc .edBody input[type=text],html[data-theme="cute"] .ct-cc .edBody textarea{background:#fff;border:2px solid #e3d8f2;border-radius:12px;color:#5a4470}
+html[data-theme="cute"] .ct-cc .edBody h3{color:#8a7a9c}
+html[data-theme="cute"] .ct-cc .edBtn{background:#fff;border:2px solid #e3d8f2;border-radius:14px;color:#5a4470;box-shadow:0 3px 0 rgba(150,130,180,.25)}
+html[data-theme="cute"] .ct-cc .edBtn.pri{background:#ff9ec4;border-color:#ff9ec4;color:#fff}
+html[data-theme="cute"] .ct-cc .edItem{background:rgba(255,255,255,.8);border:2px solid #fff;border-radius:16px}
+html[data-theme="cute"] .ct-cc .edView .top{background:transparent;border:0}
+html[data-theme="cute"] .ct-cc .edView .gear{background:#fff;color:#5a4470;border:2px solid #fff;border-radius:16px;box-shadow:0 3px 0 rgba(150,130,180,.28);font-weight:800;padding:8px 14px}
+html[data-theme="cute"] .ct-cc .edView .rdStory{color:#5a4470;font-weight:800}
+html[data-theme="cute"] .ct-cc .edView .edNote,html[data-theme="cute"] .ct-cc .edView p{color:#8a7a9c}

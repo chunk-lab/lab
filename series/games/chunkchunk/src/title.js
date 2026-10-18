@@ -19,6 +19,7 @@ export function showTitle(){
 function lessonSub(on){const f=document.querySelector(".faceLesson");if(!f)return;f.querySelector(".sMenu:not(.lessonSub)").hidden=on;f.querySelector(".lessonSub").hidden=!on}
 export function initTitle(face){
   FACE=face||"arcade";
+  document.querySelectorAll("[data-chara]").forEach(i=>i.src=ENV.ctx.base+"img/chara/"+i.dataset.chara+"/"+(i.dataset.chara==="boy"?"idea":"joy")+".webp");
   if(FACE==="all"){   // 単体アプリ：施設の切りかえタブ（ゲームセンター／学校／図書館）
     FACE="arcade";const t=$("title"),bar=document.createElement("div");bar.className="ccTabs";
     bar.innerHTML=[["arcade","ゲームセンター"],["lesson","学校"],["library","図書館"]].map(([k,n])=>`<button data-tab="${k}">${n}</button>`).join("");

@@ -392,3 +392,24 @@
 .ct-stream #sPlay{padding-bottom:calc(58px*var(--fs,1.2) + 18px)}
 .ct-stream .cpop{bottom:auto;top:4px;animation-duration:1.7s}
 .ct-stream .cpop img{width:112px;height:112px}}
+/* かわいい版（街アプリの標準）：タイトル画面だけ色と文字をそろえる。遊ぶ画面は読みやすさを守ってそのまま。シックは上の定義がそのまま効く */
+html[data-theme="cute"] .ct-stream #sTitle{background:linear-gradient(135deg,#bfe0fb 0%,#e9e3fb 55%,#fde3ee 100%);--ink:#5a4470;--muted:#8a7a9c;--surface:rgba(255,255,255,.88);--line:#fff;--accent:#ff8fb8;--accent2:#ff6fa0}
+html[data-theme="cute"] .ct-stream #sTitle .logo h1{font-family:"Mochiy Pop One","M PLUS Rounded 1c",sans-serif;-webkit-text-stroke:2px #fff;color:#8cc8ff;text-shadow:0 4px 0 #5ea6e6,0 8px 18px rgba(94,166,230,.35)}
+html[data-theme="cute"] .ct-stream #sTitle .logo h1 span{color:#ff9ec4;text-shadow:0 4px 0 #e889b2,0 8px 18px rgba(232,137,178,.35)}
+html[data-theme="cute"] .ct-stream #sTitle .logo .k{color:#8a7a9c}
+html[data-theme="cute"] .ct-stream #sTitle .river .row span{box-shadow:0 3px 0 rgba(150,130,180,.25);border:2px solid #fff;color:#5a4470}
+html[data-theme="cute"] .ct-stream #sTitle .river .row span.h{color:#ff6fa0;border-color:#ffd0e2}
+html[data-theme="cute"] .ct-stream #sTitle .btn-main{font-family:"Mochiy Pop One","M PLUS Rounded 1c",sans-serif;color:#fff;border:2px solid #fff;background:linear-gradient(180deg,#ffb3d0,#ff8fb8);box-shadow:0 5px 0 #e889b2,0 10px 22px rgba(232,137,178,.3)}
+html[data-theme="cute"] .ct-stream #sTitle .small{color:#8a7a9c}
+html[data-theme="cute"] .ct-stream #sHome{background:linear-gradient(135deg,#bfe0fb 0%,#e9e3fb 55%,#fde3ee 100%);color-scheme:light;--ink:#5a4470;--muted:#8a7a9c;--faint:#a597b8;--surface:rgba(255,255,255,.9);--surface2:#fff;--line:#fff;--accent:#ff6fa0}
+html[data-theme="cute"] .ct-stream #sHome .bar h2{font-family:"Mochiy Pop One","M PLUS Rounded 1c",sans-serif;font-weight:400;color:#5a4470}
+html[data-theme="cute"] .ct-stream #sHome .list>*{box-shadow:0 5px 0 rgba(150,130,180,.25),0 10px 22px rgba(120,100,160,.12);border:2px solid #fff}
+html[data-theme="cute"] .ct-stream #sHome .tabs{background:rgba(255,255,255,.7);border-color:#fff}
+html[data-theme="cute"] .ct-stream #sHome .tabs *{color:#8a7a9c}
+html[data-theme="cute"] .ct-stream #sHome .tabs .on{background:#ff9ec4;color:#fff;border-color:#ff9ec4}
+html[data-theme="cute"] .ct-stream #sHome .tabs .on *{color:#fff}
+html[data-theme="cute"] .ct-stream #sHome .icon-btn{background:#fff;border:2px solid #fff;box-shadow:0 3px 0 rgba(150,130,180,.25)}
+html[data-theme="cute"] .ct-stream #sHome .icon-btn svg{stroke:#5a4470}
+html[data-theme="cute"] .ct-stream #sHome .pcard{color:#5a4470}
+html[data-theme="cute"] .ct-stream #sHome .pcard .t{color:#5a4470}
+html[data-theme="cute"] .ct-stream #sHome .pcard .tg{filter:saturate(.9) brightness(.85)}

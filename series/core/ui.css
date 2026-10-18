@@ -25,3 +25,5 @@
 .cs-back{position:fixed;z-index:60;left:max(8px,env(safe-area-inset-left,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));padding:6px 12px;border-radius:999px;border:2px solid #8a5a32;background:#fffaf0;font:inherit;font-weight:800;font-size:13px;color:#2b2320;box-shadow:0 2px 0 #8a5a32;opacity:.92;cursor:pointer}
 .cs-err{color:#fff;padding:24px;text-align:center}
 [hidden]{display:none!important}
+
+.cs-row select{font:inherit;font-size:14px;padding:6px 10px;border:2px solid #ead9c2;border-radius:10px;background:#fff;color:var(--cs-ink)}

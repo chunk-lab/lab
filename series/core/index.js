@@ -16,7 +16,7 @@ import './reader.css';
 export function createCore(config) {
   const base = config.base || './';
   const core = { config, base };
-  core.settings = createSettings();
+  core.settings = createSettings(config.theme);
   core.speech = createSpeech(core.settings);
   core.sound = createSound(core.settings);
   core.rights = createRights(config.grants || []);

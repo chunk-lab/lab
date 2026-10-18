@@ -11,9 +11,11 @@ export function createUI(core) {
   const settings = () => {
     const s = core.settings, row = (k, label, min, max, step) => `<label class="cs-row"><span>${label}</span><input type="range" id="cs-${k}" min="${min}" max="${max}" step="${step}" value="${s.get(k)}"></label>`;
     sheet(`<h3>設定</h3>${row('bgm', 'BGM', 0, 1, 0.05)}${row('sfx', '効果音', 0, 1, 0.05)}
+      <label class="cs-row"><span>見た目</span><select id="cs-theme"><option value="cute" ${s.get('theme') === 'cute' ? 'selected' : ''}>かわいい</option><option value="chic" ${s.get('theme') === 'chic' ? 'selected' : ''}>シック</option></select></label>
       <label class="cs-row"><span>英語の読み上げ</span><input type="checkbox" id="cs-voice" ${s.get('voice') ? 'checked' : ''}></label>
       ${row('rate', '読み上げの速さ', 0.7, 1.3, 0.05)}<button class="cs-btn" id="cs-try">読み上げを試す</button>`, ov => {
       ['bgm', 'sfx', 'rate'].forEach(k => ov.querySelector('#cs-' + k).oninput = e => s.set(k, +e.target.value));
+      ov.querySelector('#cs-theme').onchange = e => s.set('theme', e.target.value);
       ov.querySelector('#cs-voice').onchange = e => s.set('voice', e.target.checked);
       ov.querySelector('#cs-try').onclick = () => core.speech.speak('Hello! Let’s read English in chunks.');
     });

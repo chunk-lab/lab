@@ -27,6 +27,7 @@ function wanted() {
 }
 function hint(on) { if (btn) btn.classList.toggle('bgmWait', !!on); }
 export function bgmTick() {
+  if (btn) { const ev = document.getElementById('edView'); btn.style.display = ev && !ev.hidden ? 'none' : ''; }
   if (!ENV.root) return;
   let ac = null; try { ac = ENV.core.sound.ctx(); if (ac && ac.state === 'suspended') ac.resume().catch(() => { }); } catch (e) { }
   if (!ac) return;
