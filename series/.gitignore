@@ -1,5 +1,2 @@
-node_modules/
 dist/
-games/cb/out/
-games/cb/dist/
-games/stream/out/
+node_modules/
