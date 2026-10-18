@@ -32,3 +32,6 @@ node build.mjs town                                  # 街アプリを組み立�
 - 共通部品は `core/`、各ゲームは `games/<名前>/`。ゲームはセーブ・音・読み上げ・権利を自分で持たず、`ctx` 経由で使う。
 - 画面の部品や CSS は、ほかのゲームに影響しないよう、ゲームごとの名前（`.ct-cc` など）で囲んである。
 - 音：BGM・効果音・声は共通の音量（`core.sound`）に流す。音が大きい／小さいときは、チャンクチャンクなら `games/chunkchunk/src/sfx.js` の `FILE_GAIN` と `bgm.js` の `BGM_TARGET` を直す。
+
+## 6. スマホ版（試作中）
+`node build.mjs <アプリ>` → `node tools/cap.mjs <アプリ>` で `mobile/<アプリ>/`（Capacitor）ができる。アプリ名・IDは仮（`tools/cap.mjs` の NAMES）。まだ実機では試していない。

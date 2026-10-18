@@ -18,7 +18,7 @@ function node(k) {
 function setVol(n, v, sec) { if (n.g) { try { const t = ENV.core.sound.ctx().currentTime; n.g.gain.cancelScheduledValues(t); n.g.gain.setTargetAtTime(v, t, sec / 3); } catch (e) { } } else n.a.volume = Math.min(1, v * .5); }
 function wanted() {
   if (!ENV.root || settings.mute || (settings.bgm || 'low') === 'off' || document.hidden) return null;
-  if (ENV.make && ENV.make.visible()) return 'study';   // 文を作るレッスン
+  if ((ENV.make && ENV.make.visible()) || (ENV.story && ENV.story.visible())) return 'study';   // 文を作るレッスン
   const ti = $('title'); if (ti && !ti.hidden) return 'title';
   try { if (ENV.core.reader.isOpen) return 'study'; } catch (e) { }
   if ($('edView') && !$('edView').hidden) return 'study';

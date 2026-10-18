@@ -1,5 +1,5 @@
 /* チャンクチャンク：街の施設ごとに入口が変わる。opts.face（town の PLACES で指定）
-     'lesson'  学校　　　 … Chunk Practice（自分で送って切る・役割も答える）
+     'lesson'  学校　　　 … Lesson（文を作る＝話す・書く）・Chunk Story（読む・聞く）・Chunk Practice（自分で送って切る・役割も答える）
      'library' 図書館　　 … Reading（共通の読む画面）・My Texts（長文・短文の登録、問題、共有）
      'arcade'  ゲームセンター … さらさら・よーいどん・チャレンジ・ランキング
    中身は src/（engine＝流れる文を切るゲーム本体／pick＝文章を選ぶ／reading＝リーディング／texts＝My Texts と共有／
@@ -11,10 +11,11 @@ import { sfx, preloadSfx, stopSfxVoice, initSfx } from './src/sfx.js';
 import { initBgm } from './src/bgm.js';
 import { createWallet } from './src/wallet.js';
 import { createMake } from './src/make.js';
+import { createStory } from './src/story.js';
 import { init_texts, initShared } from './src/texts.js';
 import { init_rank } from './src/rank.js';
 import { initTitle, showTitle } from './src/title.js';
-const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;700&display=swap';
+const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;700&family=Mochiy+Pop+One&family=Zen+Maru+Gothic:wght@500;700&family=Quicksand:wght@500;700&display=swap';
 const NAMES = { lesson: 'チャンクチャンク（学校）', library: 'チャンクチャンク（図書館）', arcade: 'チャンクチャンク' };
 
 /* 前のチャンクチャンク（街の中の枠で動いていたとき）のセーブを、共通のセーブへ1回だけ引っ越す */
@@ -35,11 +36,12 @@ export default {
     // レッスン（文を作る）。開いている間は「街へ」ボタンを隠す（レッスンの画面が全体をおおうため）
     const wallet = createWallet(ctx.store);
     ENV.make = createMake({ base: ctx.base, store: ctx.store, Wallet: wallet, sfx, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
+    ENV.story = createStory({ base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
     loadSettings(); init_engine(); init_texts(); init_rank(); initTitle(face);
     initBgm(el); initSfx(); preloadSfx();   // 音楽・効果音・声（音量は共通の設定。mp3は小さめに調整済み）
     initShared();   // みんなの長文・難易度（共有データベース）。使えない環境では何も出ない
     // 「街へ」ボタンは入口（メニュー）にいるときだけ出す
-    const title = el.querySelector('#title'), mo = new MutationObserver(() => ctx.showBack(!title.hidden && !ctx.core.reader.isOpen && !ENV.make.visible()));
+    const title = el.querySelector('#title'), mo = new MutationObserver(() => ctx.showBack(!title.hidden && !ctx.core.reader.isOpen && !ENV.make.visible() && !ENV.story.visible()));
     mo.observe(title, { attributes: true, attributeFilter: ['hidden'] });
     showTitle(); ctx.showBack(true);
     ctx.report('enter', { face, name: NAMES[face] });
@@ -49,6 +51,7 @@ export default {
         try { if (S) { clearTimeout(S.timer); S.phase = 'ready'; } } catch (e) { }
         try { ctx.core.reader.close(); } catch (e) { }
         try { ENV.make.destroy(); ENV.make = null; } catch (e) { }
+        try { ENV.story.destroy(); ENV.story = null; } catch (e) { }
         clearPop(); stopSfxVoice();
         ENV.offs.forEach(f => f()); ENV.offs = [];
         el.innerHTML = '';

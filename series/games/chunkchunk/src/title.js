@@ -29,6 +29,7 @@ export function initTitle(face){
   document.querySelectorAll("[data-study]").forEach(b=>b.onclick=()=>{
     primeSpeech();unlockAudio();const v=b.dataset.study;
     if(v==="make"){sfx("se/btn_lesson");ENV.make.open();return}
+    if(v==="story"){sfx("se/btn_lesson");ENV.story.open();return}
     if(v==="texts"){$("title").hidden=true;openMyTexts();return}
     if(v==="random"){$("title").hidden=true;startPractice(null);return}
     pickText(v);
