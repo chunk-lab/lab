@@ -15,6 +15,8 @@ export function showTitle(){
   $("title").dataset.face=FACE;updateLvHint();
   $("title").hidden=false;
 }
+/* 学校の「Lesson」：押すと「読む・聞く」「話す・書く」の2つから選ぶ（もどるで学校のメニューへ） */
+function lessonSub(on){const f=document.querySelector(".faceLesson");if(!f)return;f.querySelector(".sMenu:not(.lessonSub)").hidden=on;f.querySelector(".lessonSub").hidden=!on}
 export function initTitle(face){
   FACE=face||"arcade";
   if(FACE==="all"){   // 単体アプリ：施設の切りかえタブ（ゲームセンター／学校／図書館）
@@ -36,12 +38,14 @@ export function initTitle(face){
   });
   document.querySelectorAll("[data-study]").forEach(b=>b.onclick=()=>{
     primeSpeech();unlockAudio();const v=b.dataset.study;
+    if(v==="lesson"){sfx("se/btn_lesson");lessonSub(true);return}
     if(v==="make"){sfx("se/btn_lesson");ENV.make.open();return}
     if(v==="story"){sfx("se/btn_lesson");ENV.story.open();return}
     if(v==="texts"){$("title").hidden=true;openMyTexts();return}
     if(v==="random"){$("title").hidden=true;startPractice(null);return}
     pickText(v);
   });
+  document.querySelectorAll("[data-lesson-back]").forEach(b=>b.onclick=()=>lessonSub(false));
   document.querySelectorAll("[data-timed]").forEach(b=>b.onclick=()=>startTimed(+b.dataset.timed));
   document.querySelectorAll("[data-rank]").forEach(b=>b.onclick=()=>showRanking(30));
 }
