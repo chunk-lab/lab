@@ -8,7 +8,6 @@ import { sfx } from './sfx.js';
 export let FACE="arcade";
 export function updateLvHint(){const el=$("lvHint");if(el)el.textContent=`出る文：${randLabel()}（設定で変えられます）`}
 export function showTitle(){
-  if(S&&S.lesson){const L=S.lesson;S.lesson=null;L.onCancel&&L.onCancel()}   // レッスン中にやめたら、章の画面にもどす
   nextRun();if(S){clearTimeout(S.timer);S.phase="ready";S.paused=false;S.roleMode=false}
   stopVoice();
   ["count","modal","startBox","edView","rolePick"].forEach(id=>$(id).hidden=true);
@@ -19,7 +18,6 @@ export function showTitle(){
 /* 学校の「Lesson」：押すと「読む・聞く」「話す・書く」の2つから選ぶ（もどるで学校のメニューへ） */
 function lessonSub(on){const f=document.querySelector(".faceLesson");if(!f)return;f.querySelector(".sMenu:not(.lessonSub)").hidden=on;f.querySelector(".lessonSub").hidden=!on}
 export function initTitle(face){
-  ENV.showTitle=showTitle;
   FACE=face||"arcade";
   document.querySelectorAll("[data-chara]").forEach(i=>i.src=ENV.ctx.base+"img/chara/"+i.dataset.chara+"/"+(i.dataset.chara==="boy"?"idea":"joy")+".webp");
   if(FACE==="all"){   // 単体アプリ：施設の切りかえタブ（ゲームセンター／学校／図書館）

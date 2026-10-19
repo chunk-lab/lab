@@ -18909,11 +18909,6 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
     if (el3) el3.textContent = `\u51FA\u308B\u6587\uFF1A${randLabel()}\uFF08\u8A2D\u5B9A\u3067\u5909\u3048\u3089\u308C\u307E\u3059\uFF09`;
   }
   function showTitle2() {
-    if (S && S.lesson) {
-      const L = S.lesson;
-      S.lesson = null;
-      L.onCancel && L.onCancel();
-    }
     nextRun();
     if (S) {
       clearTimeout(S.timer);
@@ -18935,7 +18930,6 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
     f.querySelector(".lessonSub").hidden = !on;
   }
   function initTitle(face2) {
-    ENV2.showTitle = showTitle2;
     FACE = face2 || "arcade";
     document.querySelectorAll("[data-chara]").forEach((i) => i.src = ENV2.ctx.base + "img/chara/" + i.dataset.chara + "/" + (i.dataset.chara === "boy" ? "idea" : "joy") + ".webp");
     if (FACE === "all") {
@@ -21692,13 +21686,6 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
   }
   function review() {
     sfx("voice/stage_clear");
-    if (S.lesson) {
-      const L = S.lesson;
-      S.lesson = null;
-      if (ENV2.showTitle) ENV2.showTitle();
-      L.onDone && L.onDone(S.results);
-      return;
-    }
     const all = S.results.flatMap((r) => r ? r.chunks : []), cnt = (k) => all.filter((c) => c.kind === k || k === "miss" && c.kind === "forgot").length;
     const refHTML = (sen) => `<div class="roles">${sen.units.map((u) => `<span class="rcell"><span class="rtx">${u.subs ? u.subs.map((p, pi) => `<span class="r${subIsX(u, pi) ? "X" : u.role}">${esc3(sen.words.slice(p.s, p.e + 1).join(" "))}</span>`).join(" ") : `<span class="r${u.role}">${esc3(u.text)}</span>`}</span><span class="rl r${u.role}">${RN2[u.role][settings.disp === "gram" ? 1 : 0]}</span></span>`).join('<span class="cutmark">\uFF5C</span>')}</div>`;
     openSheet(`<h2>${esc3(S.title)} \u30AF\u30EA\u30A2\uFF01</h2>
@@ -21854,19 +21841,6 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     $4("stageText").textContent = "Practice";
     S.roleMode = settings.roleAns !== false;
     S.studyMode = true;
-    applyAdvanceUI();
-  }
-  function startLesson(list, title, onDone, onCancel) {
-    settings.advance = "manual";
-    saveSettings();
-    $4("title").hidden = true;
-    loadStage("one", 4, list, true);
-    S.title = title;
-    S.short = "Lesson";
-    $4("stageText").textContent = "Lesson";
-    S.roleMode = false;
-    S.studyMode = true;
-    S.lesson = { onDone, onCancel };
     applyAdvanceUI();
   }
   var lastTick = performance.now();
@@ -23956,9 +23930,9 @@ body.nogram .gmT{display:none}
           mode: "manual",
           title: "\u4E3B\u5F79\u3092\u5207\u308A\u51FA\u305D\u3046",
           coach: {
-            start: "\u3053\u3068\u3070\u304C1\u3064\u305A\u3064\u51FA\u3066\u304F\u308B\u3088\u3002\u300E\u3064\u304E\u300F\u3067\u6B21\u306E\u3053\u3068\u3070\u3092\u51FA\u3057\u3066\u3001\u4E3B\u5F79\u304C\u51FA\u304D\u3063\u305F\u3089\u300E\u2702 \u304D\u308B\u300F\uFF01",
+            start: "\u25B6\u3092\u62BC\u3059\u3068\u3001\u3053\u3068\u3070\u304C1\u3064\u305A\u3064\u9032\u3080\u3088\u3002\u4E3B\u5F79\u304C\u7DDA\u306E\u5DE6\u306B\u6765\u305F\u3089\u300E\u533A\u5207\u308B\u300F\uFF01",
             cut: "\u5207\u308C\u305F\u306D\uFF01\u5207\u3063\u305F\u3068\u3053\u308D\u3092\u30BF\u30C3\u30D7\u3059\u308B\u3068\u5143\u306B\u623B\u305B\u308B\u3088\u3002",
-            end: "\u6700\u5F8C\u307E\u3067\u51FA\u305F\u3089\u300E\u304B\u3093\u305B\u3044\u300F\u3092\u62BC\u3057\u3066\u306D\u3002"
+            end: "\u6700\u5F8C\u307E\u3067\u9032\u3093\u3060\u3089\u300E\u304B\u3093\u305B\u3044\u300F\u3092\u62BC\u3057\u3066\u306D\u3002"
           },
           items: [
             { s: "Tom | plays soccer.", ja: "\u30C8\u30E0\u306F\u30B5\u30C3\u30AB\u30FC\u3092\u3059\u308B\u3002" },
@@ -24043,14 +24017,14 @@ body.nogram .gmT{display:none}
           { fx: "wait", ms: 500 },
           { fx: "pfill", step: 3, t: "the door\uFF08\u76F8\u624B\uFF09" },
           { say: "girl", f: "hirameki", t: "\u3042\u308C\uFF1F \u899A\u3048\u308B\u3053\u3068\u3001\u610F\u5916\u3068\u5C11\u306A\u3044\u306D\uFF01" },
-          { say: "boy", f: "egao", t: "\u3053\u3053\u304B\u3089\u306F\u30B2\u30FC\u30E0\u306E\u3053\u3068\u3070\u304C\u81EA\u52D5\u3067\u6D41\u308C\u3066\u304F\u308B\u3088\u3002\u571F\u53F0\u306E3\u3064\u306B\u5207\u3063\u3066\u307F\u3066\uFF01" }
+          { say: "boy", f: "egao", t: "\u3053\u3053\u304B\u3089\u306F\u3001\u30B2\u30FC\u30E0\u3068\u540C\u3058\u753B\u9762\u3067\u5207\u3063\u3066\u307F\u3088\u3046\u3002\u571F\u53F0\u306E3\u3064\u3060\u3088\uFF01" }
         ],
         stage: {
           type: "cut",
           mode: "auto",
           speed: 1700,
           title: "\u571F\u53F0\u3067\u5207\u308D\u3046",
-          coach: { start: "\u3053\u3068\u3070\u304C\u81EA\u52D5\u3067\u6D41\u308C\u3066\u304F\u308B\u3088\uFF01\u5F85\u3061\u304D\u308C\u306A\u3044\u3068\u304D\u306F\u300E\u3064\u304E\u300F\u3067\u65E9\u9001\u308A\u3082\u3067\u304D\u308B\u3002" },
+          coach: { start: "\u571F\u53F0\u306E3\u3064\uFF08\u4E3B\u5F79\u30FB\u3046\u3054\u304D\u30FB\u76F8\u624B\uFF09\u3067\u5207\u3063\u3066\u307F\u3088\u3046\uFF01" },
           items: [
             { s: "She | met | Tom.", ja: "\u5F7C\u5973\u306F\u30C8\u30E0\u306B\u4F1A\u3063\u305F\u3002" },
             { s: "Tom | opened | the door.", ja: "\u30C8\u30E0\u306F\u30C9\u30A2\u3092\u958B\u3051\u305F\u3002" },
@@ -24779,6 +24753,7 @@ body.nogram .gmT{display:none}
     }
     function cutStage(ch, st, finish) {
       const f = stageFrame(ch, st);
+      f.s.classList.add("cs-cutscr");
       const coach = st.coach || {};
       const said = {};
       const tell2 = (k) => {
@@ -24794,65 +24769,65 @@ body.nogram .gmT{display:none}
       function next() {
         if (!f.alive) return;
         if (n >= st.items.length) return finish(all);
-        const item = st.items[n], p = parseCut(item.s);
+        const item = st.items[n], p = parseCut(item.s), len = p.words.length;
         f.cnt.textContent = n + 1 + " / " + st.items.length;
         f.ja.textContent = item.ja || "";
         f.lane.innerHTML = "";
         f.lane.classList.remove("cs-col");
-        const ws = el3("div", "ws");
-        f.lane.appendChild(ws);
+        const lw = el3("div", "laneW"), strip = el3("div", "strip"), line = el3("div", "cutline");
+        line.dataset.lbl = "\u3053\u3053\u3067\u533A\u5207\u308B";
+        lw.append(strip, line, el3("div", "fadeL"), el3("div", "fadeR"));
+        f.lane.appendChild(lw);
         f.foot.innerHTML = "";
-        const bar = el3("div", "timer");
-        const bi = el3("i");
-        bar.appendChild(bi);
-        const btns2 = el3("div", "btns");
-        const bNext = el3("button", "bb", "\u3064\u304E \u2192"), bCut = el3("button", "bb cutb", "\u2702 \u304D\u308B");
-        btns2.append(bNext, bCut);
-        if (st.mode === "auto") f.foot.append(bar);
-        f.foot.append(btns2);
-        f.foot.style.cssText = "display:flex;flex-direction:column;gap:10px";
-        let shown = 0, over = false, timer2 = null, anim = null;
+        f.foot.style.cssText = "";
+        const bar = el3("div", "navrow");
+        const nav = el3("div", "nav");
+        const bBack = el3("button", "navb", "\u25C0"), bFwd = el3("button", "navb", "\u25B6");
+        bBack.disabled = true;
+        bBack.setAttribute("aria-label", "\u3082\u3069\u308B\uFF08\u3053\u3053\u3067\u306F\u623B\u308C\u306A\u3044\uFF09");
+        bFwd.setAttribute("aria-label", "1\u8A9E\u3059\u3059\u3080");
+        nav.append(bBack, bFwd);
+        const bCut = el3("button", "cutBtn");
+        bCut.innerHTML = "\u533A\u5207\u308B<small>\u25B6\u3067\u9032\u3093\u3067\u3001\u3053\u3053\u3060\u3068\u601D\u3063\u305F\u3089\u62BC\u3059</small>";
+        bar.append(nav, bCut);
+        f.foot.appendChild(bar);
+        let passed = 0, over = false;
         const cuts = /* @__PURE__ */ new Set();
-        function render(fresh) {
-          ws.innerHTML = "";
-          for (let i = 0; i < shown; i++) {
-            if (i > 0) {
-              if (cuts.has(i)) {
-                const c = el3("span", "cut");
-                c.title = "\u30BF\u30C3\u30D7\u3067\u5143\u306B\u623B\u3059";
-                c.onclick = () => {
-                  if (over) return;
-                  cuts.delete(i);
-                  render();
-                };
-                ws.appendChild(c);
-              } else ws.appendChild(el3("span", "gap"));
+        function render(anim) {
+          strip.innerHTML = "";
+          p.words.forEach((w, i) => {
+            const cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "";
+            strip.appendChild(el3("span", "w" + cls, esc5(w)));
+            if (i + 1 < len && cuts.has(i + 1)) {
+              const c = el3("span", "cutmark", "\uFF5C");
+              c.title = "\u30BF\u30C3\u30D7\u3067\u5143\u306B\u623B\u3059";
+              c.onclick = () => {
+                if (over) return;
+                cuts.delete(i + 1);
+                render();
+              };
+              strip.appendChild(c);
             }
-            ws.appendChild(el3("span", "w" + (fresh && i === shown - 1 ? " nw" : ""), esc5(p.words[i])));
+          });
+          strip.appendChild(el3("span", "endmk", "\u25A0"));
+          const ws = strip.querySelectorAll(".cs-w"), lx = Math.round(lw.clientWidth * 0.34);
+          let gx;
+          if (passed <= 0) gx = ws[0].offsetLeft - 4;
+          else {
+            const a = ws[Math.min(passed, ws.length) - 1], nx = a.nextElementSibling, r = a.offsetLeft + a.offsetWidth;
+            gx = nx ? nx.classList.contains("cs-cutmark") ? nx.offsetLeft + nx.offsetWidth / 2 : (r + nx.offsetLeft) / 2 : r + 6;
           }
-          bCut.disabled = over || shown === 0 || shown >= p.words.length || cuts.has(shown);
-          bNext.textContent = shown >= p.words.length ? "\u304B\u3093\u305B\u3044" : "\u3064\u304E \u2192";
-        }
-        function step2() {
-          if (over || !f.alive) return;
-          if (shown >= p.words.length) return done();
-          shown++;
-          render(true);
-          if (shown >= p.words.length) tell2("end");
-          arm();
-        }
-        function arm() {
-          if (st.mode !== "auto") return;
-          clearTimeout(timer2);
-          anim && anim.cancel();
-          const ms = st.speed || 1600;
-          anim = bi.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }], { duration: ms, easing: "linear", fill: "forwards" });
-          timer2 = setTimeout(step2, ms);
+          strip.classList.toggle("cs-step", !!anim);
+          strip.style.transform = "translate(" + (lx - gx) + "px,-50%)";
+          line.style.left = lx + "px";
+          const fin = passed >= len;
+          bFwd.disabled = fin;
+          bCut.classList.toggle("cs-fin", fin);
+          bCut.innerHTML = fin ? "\u304B\u3093\u305B\u3044<small>\u304A\u3057\u307E\u3044\u307E\u3067\u9032\u3093\u3060\u3088</small>" : "\u533A\u5207\u308B<small>\u25B6\u3067\u9032\u3093\u3067\u3001\u3053\u3053\u3060\u3068\u601D\u3063\u305F\u3089\u62BC\u3059</small>";
+          bCut.disabled = !fin && (over || passed === 0 || cuts.has(passed));
         }
         function done() {
           over = true;
-          clearTimeout(timer2);
-          anim && anim.cancel();
           const res = judge(p, cuts);
           all.push({ s: p.words.join(" "), chunks: res });
           f.lane.innerHTML = "";
@@ -24868,21 +24843,28 @@ body.nogram .gmT{display:none}
           const good = res.every((c) => c.r === "o");
           f.say(good ? "\u305C\u3093\u3076\u25EF\uFF01\u3044\u3044\u5207\u308A\u65B9\uFF01" : "\u25B3\u306F\u5927\u304D\u3059\u304E\u3001\xD7\u306F\u5207\u308B\u5834\u6240\u304C\u305A\u308C\u3066\u308B\u3088\u3002");
           f.foot.innerHTML = "";
-          const go = el3("button", "bb go", n + 1 < st.items.length ? "\u3064\u304E\u306E\u6587\u3078" : "\u3051\u3063\u304B\u3092\u898B\u308B");
+          const go = el3("button", "cutBtn go");
+          go.textContent = n + 1 < st.items.length ? "\u3064\u304E\u306E\u6587\u3078" : "\u3051\u3063\u304B\u3092\u898B\u308B";
           go.onclick = () => {
             n++;
             next();
           };
           f.foot.appendChild(go);
         }
-        bNext.onclick = () => step2();
+        bFwd.onclick = () => {
+          if (over || passed >= len) return;
+          passed++;
+          render(true);
+          if (passed >= len) tell2("end");
+        };
         bCut.onclick = () => {
-          if (bCut.disabled) return;
-          cuts.add(shown);
-          render();
+          if (bCut.disabled || over) return;
+          if (passed >= len) return done();
+          cuts.add(passed);
+          render(true);
           tell2("cut");
         };
-        step2();
+        render(false);
       }
     }
     function orderStage(ch, st, finish) {
@@ -25033,35 +25015,6 @@ body.nogram .gmT{display:none}
     };
   })();
 
-  // games/chunkchunk/src/story/lessonmap.js
-  var LESSON = {
-    "Tom | plays soccer.": "S:Tom=\u30C8\u30E0\u306F | V:plays soccer.=\u30B5\u30C3\u30AB\u30FC\u3092\u3059\u308B",
-    "My sister | likes cats.": "S:My sister=\u308F\u305F\u3057\u306E\u59C9\u306F | V:likes cats.=\u30CD\u30B3\u304C\u597D\u304D",
-    "The dog | runs fast.": "S:The dog=\u305D\u306E\u72AC\u306F | V:runs fast.=\u901F\u304F\u8D70\u308B",
-    "I | am | happy.": "S:I=\u308F\u305F\u3057\u306F | V:am=\uFF1D | C:happy.=\u3046\u308C\u3057\u3044",
-    "She | is | my friend.": "S:She=\u5F7C\u5973\u306F | V:is=\uFF1D | C:my friend.=\u308F\u305F\u3057\u306E\u53CB\u3060\u3061",
-    "Tom | plays | soccer.": "S:Tom=\u30C8\u30E0\u306F | V:plays=\u3059\u308B | O:soccer.=\u30B5\u30C3\u30AB\u30FC\u3092",
-    "She | met | Tom.": "S:She=\u5F7C\u5973\u306F | V:met=\u4F1A\u3063\u305F | O:Tom.=\u30C8\u30E0\u306B",
-    "Tom | opened | the door.": "S:Tom=\u30C8\u30E0\u306F | V:opened=\u958B\u3051\u305F | O:the door.=\u30C9\u30A2\u3092",
-    "My mother | makes | lunch.": "S:My mother=\u6BCD\u306F | V:makes=\u4F5C\u308B | O:lunch.=\u663C\u3054\u306F\u3093\u3092",
-    "She | plays | tennis | at school / after class.": "S:She=\u5F7C\u5973\u306F | V:plays=\u3059\u308B | O:tennis=\u30C6\u30CB\u30B9\u3092 | P:at school=\u5B66\u6821\u3067 | T:after class.=\u653E\u8AB2\u5F8C",
-    "After lunch, | we | play | soccer | in the park.": "T:After lunch,=\u663C\u3054\u306F\u3093\u306E\u3042\u3068 | S:we=\u308F\u305F\u3057\u305F\u3061\u306F | V:play=\u3059\u308B | O:soccer=\u30B5\u30C3\u30AB\u30FC\u3092 | P:in the park.=\u516C\u5712\u3067",
-    "I | get up | at seven / every day.": "S:I=\u308F\u305F\u3057\u306F | V:get up=\u8D77\u304D\u308B | T:at seven=7\u6642\u306B | T:every day.=\u6BCE\u65E5",
-    "The book / I bought yesterday | is | fun.": "S:The book / X:I bought yesterday=\u6628\u65E5\u8CB7\u3063\u305F\u672C\u306F{\u672C\u306F/\u6628\u65E5\u8CB7\u3063\u305F} | V:is=\uFF1D | C:fun.=\u304A\u3082\u3057\u308D\u3044",
-    "The girl / with long hair | is | my sister.": "S:The girl / X:with long hair=\u9AEA\u306E\u9577\u3044\u5973\u306E\u5B50\u306F{\u5973\u306E\u5B50\u306F/\u9AEA\u306E\u9577\u3044} | V:is=\uFF1D | C:my sister.=\u308F\u305F\u3057\u306E\u59C9",
-    "The man / I met | lives | in Tokyo.": "S:The man / X:I met=\u308F\u305F\u3057\u304C\u4F1A\u3063\u305F\u7537\u306E\u4EBA\u306F{\u7537\u306E\u4EBA\u306F/\u308F\u305F\u3057\u304C\u4F1A\u3063\u305F} | V:lives=\u4F4F\u3093\u3067\u3044\u308B | P:in Tokyo.=\u6771\u4EAC\u306B",
-    "My brother | is | a good cook.": "S:My brother=\u5144\u306F | V:is=\uFF1D | C:a good cook.=\u6599\u7406\u304C\u3058\u3087\u3046\u305A",
-    "After school, | Ken | opened | the box | in his room.": "T:After school,=\u653E\u8AB2\u5F8C | S:Ken=\u30B1\u30F3\u306F | V:opened=\u958B\u3051\u305F | O:the box=\u7BB1\u3092 | P:in his room.=\u81EA\u5206\u306E\u90E8\u5C4B\u3067",
-    "The cake / my mother made | was | delicious.": "S:The cake / X:my mother made=\u6BCD\u304C\u4F5C\u3063\u305F\u30B1\u30FC\u30AD\u306F{\u30B1\u30FC\u30AD\u306F/\u6BCD\u304C\u4F5C\u3063\u305F} | V:was=\uFF1D | C:delicious.=\u304A\u3044\u3057\u304B\u3063\u305F"
-  };
-  function lessonList(items) {
-    const out = (items || []).map((it) => LESSON[it.s] ? [LESSON[it.s], it.ja] : null);
-    return out.length && out.every(Boolean) ? out : null;
-  }
-  function lessonResults(results) {
-    return (results || []).map((r) => ({ chunks: (r && r.chunks || []).map((c) => ({ r: c.kind === "excellent" || c.kind === "great" ? "o" : c.kind === "miss" || c.kind === "forgot" ? "x" : "t" })) }));
-  }
-
   // games/chunkchunk/src/story.js
   function createStory(HOST) {
     const root2 = document.createElement("div");
@@ -25095,28 +25048,6 @@ body.nogram .gmT{display:none}
         },
         onUnlock: (key) => rep("story_unlock", { key }),
         onChapterClear: (no, r) => rep("story_clear", { chapter: no, pct: r && r.pct, firstClear: r && r.firstClear }),
-        // 切る場面は、チャンクチャンク本体のチャレンジ（自分で横に流して切る）で遊ぶ。「order」の場面や、対応表にない文は、今までの簡易版
-        onStage: (st, ch, finish) => {
-          const list = st.type === "cut" ? lessonList(st.items) : null;
-          if (!list) return false;
-          root2.hidden = true;
-          startLesson(
-            list,
-            "\u7B2C" + ch.no + "\u7AE0 " + (st.title || ""),
-            (res) => {
-              root2.hidden = false;
-              finish(lessonResults(res));
-            },
-            () => {
-              root2.hidden = false;
-              try {
-                window.ChunkStory.openMap();
-              } catch (e) {
-              }
-            }
-          );
-          return true;
-        },
         onFinish: () => close(),
         onExit: () => close(),
         assets: { base: HOST.base + "img/chara/", ext: ".webp" }

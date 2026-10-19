@@ -65,9 +65,9 @@ window.CS_STORY = {
       {say:"boy", f:"egao", t:"じゃあさっそく、ゲームで主役を切り出してみよう！"}
     ],
     stage:{ type:"cut", mode:"manual", title:"主役を切り出そう",
-      coach:{ start:"ことばが1つずつ出てくるよ。『つぎ』で次のことばを出して、主役が出きったら『✂ きる』！",
+      coach:{ start:"▶を押すと、ことばが1つずつ進むよ。主役が線の左に来たら『区切る』！",
               cut:"切れたね！切ったところをタップすると元に戻せるよ。",
-              end:"最後まで出たら『かんせい』を押してね。" },
+              end:"最後まで進んだら『かんせい』を押してね。" },
       items:[
         { s:"Tom | plays soccer.", ja:"トムはサッカーをする。" },
         { s:"My sister | likes cats.", ja:"わたしの姉はネコが好き。" },
@@ -133,10 +133,10 @@ window.CS_STORY = {
       {fx:"pfill", step:3, t:"happy（どんな感じ？）"}, {fx:"wait", ms:500},
       {fx:"pfill", step:3, t:"the door（相手）"},
       {say:"girl", f:"hirameki", t:"あれ？ 覚えること、意外と少ないね！"},
-      {say:"boy", f:"egao", t:"ここからはゲームのことばが自動で流れてくるよ。土台の3つに切ってみて！"}
+      {say:"boy", f:"egao", t:"ここからは、ゲームと同じ画面で切ってみよう。土台の3つだよ！"}
     ],
     stage:{ type:"cut", mode:"auto", speed:1700, title:"土台で切ろう",
-      coach:{ start:"ことばが自動で流れてくるよ！待ちきれないときは『つぎ』で早送りもできる。" },
+      coach:{ start:"土台の3つ（主役・うごき・相手）で切ってみよう！" },
       items:[
         { s:"She | met | Tom.", ja:"彼女はトムに会った。" },
         { s:"Tom | opened | the door.", ja:"トムはドアを開けた。" },
@@ -623,8 +623,10 @@ function stageFrame(ch, st){
   return f;
 }
 
+/* 切る場面：チャンクチャンクのチャレンジと同じ見た目・同じ操作（▶で1語ずつ進める → 線のところで「区切る」）。
+   点数・コンボ・タイム・声はなし。終わったら、こたえの例といっしょに ◯△× を見せる */
 function cutStage(ch, st, finish){
-  const f = stageFrame(ch, st);
+  const f = stageFrame(ch, st); f.s.classList.add("cs-cutscr");
   const coach = st.coach || {}; const said = {};
   const tell = k => { if (coach[k] && !said[k]) { said[k] = 1; f.say(coach[k]); } };
   const all = []; let n = 0;
@@ -634,53 +636,52 @@ function cutStage(ch, st, finish){
   function next(){
     if (!f.alive) return;
     if (n >= st.items.length) return finish(all);
-    const item = st.items[n], p = parseCut(item.s);
+    const item = st.items[n], p = parseCut(item.s), len = p.words.length;
     f.cnt.textContent = (n + 1) + " / " + st.items.length;
     f.ja.textContent = item.ja || "";
     f.lane.innerHTML = ""; f.lane.classList.remove("cs-col");
-    const ws = el("div", "ws"); f.lane.appendChild(ws);
-    f.foot.innerHTML = "";
-    const bar = el("div", "timer"); const bi = el("i"); bar.appendChild(bi);
-    const btns = el("div", "btns");
-    const bNext = el("button", "bb", "つぎ →"), bCut = el("button", "bb cutb", "✂ きる");
-    btns.append(bNext, bCut);
-    if (st.mode === "auto") f.foot.append(bar);
-    f.foot.append(btns); f.foot.style.cssText = "display:flex;flex-direction:column;gap:10px";
+    const lw = el("div", "laneW"), strip = el("div", "strip"), line = el("div", "cutline");
+    line.dataset.lbl = "ここで区切る";
+    lw.append(strip, line, el("div", "fadeL"), el("div", "fadeR")); f.lane.appendChild(lw);
+    f.foot.innerHTML = ""; f.foot.style.cssText = "";
+    const bar = el("div", "navrow");
+    const nav = el("div", "nav");
+    const bBack = el("button", "navb", "◀"), bFwd = el("button", "navb", "▶");
+    bBack.disabled = true; bBack.setAttribute("aria-label", "もどる（ここでは戻れない）"); bFwd.setAttribute("aria-label", "1語すすむ");
+    nav.append(bBack, bFwd);
+    const bCut = el("button", "cutBtn"); bCut.innerHTML = "区切る<small>▶で進んで、ここだと思ったら押す</small>";
+    bar.append(nav, bCut); f.foot.appendChild(bar);
 
-    let shown = 0, over = false, timer = null, anim = null;
-    const cuts = new Set();
+    let passed = 0, over = false;
+    const cuts = new Set();   // 「i番目のことばの前で切る」
 
-    function render(fresh){
-      ws.innerHTML = "";
-      for (let i = 0; i < shown; i++){
-        if (i > 0){
-          if (cuts.has(i)){
-            const c = el("span", "cut"); c.title = "タップで元に戻す";
-            c.onclick = () => { if (over) return; cuts.delete(i); render(); };
-            ws.appendChild(c);
-          } else ws.appendChild(el("span", "gap"));
+    function render(anim){
+      strip.innerHTML = "";
+      p.words.forEach((w, i) => {
+        const cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "";
+        strip.appendChild(el("span", "w" + cls, esc(w)));
+        if (i + 1 < len && cuts.has(i + 1)){
+          const c = el("span", "cutmark", "｜"); c.title = "タップで元に戻す";
+          c.onclick = () => { if (over) return; cuts.delete(i + 1); render(); };
+          strip.appendChild(c);
         }
-        ws.appendChild(el("span", "w" + (fresh && i === shown - 1 ? " nw" : ""), esc(p.words[i])));
-      }
-      bCut.disabled = over || shown === 0 || shown >= p.words.length || cuts.has(shown);
-      bNext.textContent = shown >= p.words.length ? "かんせい" : "つぎ →";
-    }
-    function step(){
-      if (over || !f.alive) return;
-      if (shown >= p.words.length) return done();
-      shown++; render(true);
-      if (shown >= p.words.length) tell("end");
-      arm();
-    }
-    function arm(){
-      if (st.mode !== "auto") return;
-      clearTimeout(timer); anim && anim.cancel();
-      const ms = st.speed || 1600;
-      anim = bi.animate([{ transform:"scaleX(1)" }, { transform:"scaleX(0)" }], { duration: ms, easing:"linear", fill:"forwards" });
-      timer = setTimeout(step, ms);
+      });
+      strip.appendChild(el("span", "endmk", "■"));
+      const ws = strip.querySelectorAll(".cs-w"), lx = Math.round(lw.clientWidth * 0.34); let gx;
+      if (passed <= 0) gx = ws[0].offsetLeft - 4;
+      else { const a = ws[Math.min(passed, ws.length) - 1], nx = a.nextElementSibling, r = a.offsetLeft + a.offsetWidth;
+        gx = nx ? (nx.classList.contains("cs-cutmark") ? nx.offsetLeft + nx.offsetWidth / 2 : (r + nx.offsetLeft) / 2) : r + 6; }
+      strip.classList.toggle("cs-step", !!anim);
+      strip.style.transform = "translate(" + (lx - gx) + "px,-50%)";
+      line.style.left = lx + "px";
+      const fin = passed >= len;
+      bFwd.disabled = fin;
+      bCut.classList.toggle("cs-fin", fin);
+      bCut.innerHTML = fin ? "かんせい<small>おしまいまで進んだよ</small>" : "区切る<small>▶で進んで、ここだと思ったら押す</small>";
+      bCut.disabled = !fin && (over || passed === 0 || cuts.has(passed));
     }
     function done(){
-      over = true; clearTimeout(timer); anim && anim.cancel();
+      over = true;
       const res = judge(p, cuts); all.push({ s: p.words.join(" "), chunks: res });
       f.lane.innerHTML = ""; f.lane.classList.add("cs-col");
       const rw = el("div", "res-ws");
@@ -690,13 +691,17 @@ function cutStage(ch, st, finish){
       const good = res.every(c => c.r === "o");
       f.say(good ? "ぜんぶ◯！いい切り方！" : "△は大きすぎ、×は切る場所がずれてるよ。");
       f.foot.innerHTML = "";
-      const go = el("button", "bb go", n + 1 < st.items.length ? "つぎの文へ" : "けっかを見る");
+      const go = el("button", "cutBtn go"); go.textContent = n + 1 < st.items.length ? "つぎの文へ" : "けっかを見る";
       go.onclick = () => { n++; next(); };
       f.foot.appendChild(go);
     }
-    bNext.onclick = () => step();
-    bCut.onclick = () => { if (bCut.disabled) return; cuts.add(shown); render(); tell("cut"); };
-    step();
+    bFwd.onclick = () => { if (over || passed >= len) return; passed++; render(true); if (passed >= len) tell("end"); };
+    bCut.onclick = () => {
+      if (bCut.disabled || over) return;
+      if (passed >= len) return done();
+      cuts.add(passed); render(true); tell("cut");
+    };
+    render(false);
   }
 }
 

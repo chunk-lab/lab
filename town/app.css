@@ -9563,6 +9563,223 @@ html[data-theme=cute] .ct-cc .edView p {
 .cs-oc.cs-in {
   background: var(--cs-mint);
 }
+.cs-cutscr {
+  background: #0f1b2d;
+  color: #eef2f7;
+  --cs-ink:#eef2f7;
+  --cs-ink-soft:#8ea3bf;
+  --cs-paper:#172a45;
+  --cs-line:#2d4a72;
+  --cs-bg:#20395c;
+}
+.cs-cutscr .cs-top .cs-t {
+  color: #eef2f7;
+}
+.cs-cutscr .cs-top .cs-pill {
+  background: #20395c;
+  color: #eef2f7;
+  border: 1px solid #2d4a72;
+}
+.cs-cutscr .cs-coach .cs-sb {
+  background: #fffdfb;
+  color: #4b3a58;
+  border-color: #fffdfb;
+}
+.cs-cutscr .cs-ja {
+  color: #8ea3bf;
+}
+.cs-cutscr .cs-lane {
+  background: none;
+  border: 0;
+  padding: 0;
+  overflow: visible;
+}
+.cs-cutscr .cs-laneW {
+  position: relative;
+  width: 100%;
+  height: 92px;
+  background: #172a45;
+  border-radius: 14px;
+  overflow: hidden;
+  flex: none;
+}
+.cs-cutscr .cs-strip {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+.cs-cutscr .cs-strip.cs-step {
+  transition: transform .17s cubic-bezier(.3, 1.5, .5, 1);
+}
+.cs-cutscr .cs-strip .cs-w {
+  font:
+    700 20px "Lexend",
+    "Quicksand",
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+  color: #eef2f7;
+  padding: 0 .28em;
+}
+.cs-cutscr .cs-strip .cs-w.cs-past {
+  color: #8ea3bf;
+}
+.cs-cutscr .cs-strip .cs-w.cs-gone {
+  opacity: .18;
+}
+.cs-cutscr .cs-strip .cs-w.cs-next {
+  color: #ffb23e;
+}
+.cs-cutscr .cs-strip .cs-endmk {
+  font-size: 14px;
+  color: #5d7391;
+  padding: 0 .5em 0 .15em;
+}
+.cs-cutscr .cs-strip .cs-cutmark {
+  font-size: 26px;
+  color: #ffb23e;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 2px;
+}
+.cs-cutscr .cs-cutline {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: #ffb23e;
+  box-shadow: 0 0 10px rgba(255, 178, 62, .6);
+  z-index: 2;
+  pointer-events: none;
+}
+.cs-cutscr .cs-cutline::before {
+  content: attr(data-lbl);
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 800;
+  color: #ffb23e;
+  white-space: nowrap;
+}
+.cs-cutscr .cs-fadeL {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  background:
+    linear-gradient(
+      90deg,
+      #172a45,
+      transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+.cs-cutscr .cs-fadeR {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 26px;
+  background:
+    linear-gradient(
+      270deg,
+      #172a45,
+      transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+.cs-cutscr .cs-navrow {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  width: 100%;
+}
+.cs-cutscr .cs-nav {
+  display: flex;
+  gap: 6px;
+}
+.cs-cutscr .cs-navb {
+  width: 58px;
+  border: 1px solid #2d4a72;
+  border-radius: 14px;
+  background: #20395c;
+  color: #eef2f7;
+  font-size: 22px;
+  font-weight: 800;
+  touch-action: manipulation;
+}
+.cs-cutscr .cs-navb:active {
+  background: #2d4a72;
+}
+.cs-cutscr .cs-navb:disabled {
+  opacity: .3;
+}
+.cs-cutscr .cs-cutBtn {
+  flex: 0 0 60%;
+  margin-left: auto;
+  border: 0;
+  border-radius: 18px;
+  background: #ffb23e;
+  color: #2a1a00;
+  font-family: var(--cs-f-pop);
+  font-size: 21px;
+  letter-spacing: .06em;
+  min-height: 64px;
+  box-shadow: 0 5px 0 #b87600;
+  touch-action: manipulation;
+}
+.cs-cutscr .cs-cutBtn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #b87600;
+}
+.cs-cutscr .cs-cutBtn small {
+  display: block;
+  font-family: var(--cs-f-body);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0;
+  margin-top: 2px;
+}
+.cs-cutscr .cs-cutBtn:disabled {
+  opacity: .4;
+  box-shadow: none;
+}
+.cs-cutscr .cs-cutBtn.cs-fin {
+  background: #5fd49a;
+  box-shadow: 0 5px 0 #2f9a68;
+}
+.cs-cutscr .cs-cutBtn.cs-go {
+  flex: 1;
+  margin: 0;
+  background: #5fd49a;
+  box-shadow: 0 5px 0 #2f9a68;
+}
+.cs-cutscr .cs-rc {
+  background: #20395c;
+  color: #eef2f7;
+  border-color: #2d4a72;
+}
+.cs-cutscr .cs-rc.cs-o {
+  border-color: #5fd49a;
+}
+.cs-cutscr .cs-rc.cs-t {
+  border-color: #ffd166;
+}
+.cs-cutscr .cs-rc.cs-x {
+  border-color: #ff6b6b;
+}
+.cs-cutscr .cs-ans b {
+  color: #eef2f7;
+}
 .cs-rs {
   padding: 24px 16px;
   gap: 16px;
@@ -9647,4 +9864,7 @@ html[data-theme=cute] .ct-cc .edView p {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
   }
+}
+.cs-cutscr .cs-foot {
+  display: flex;
 }
