@@ -3139,6 +3139,23 @@ html[data-theme=cute] .ct-cc .edView .edNote,
 html[data-theme=cute] .ct-cc .edView p {
   color: #8a7a9c;
 }
+.ct-cc .navBtns {
+  gap: 46px;
+}
+.ct-cc .navBtn {
+  width: 52px;
+}
+.ct-cc .cutBtn {
+  flex: 1 1 0;
+  min-width: 0;
+  margin-left: 0;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+.ct-cc .cutBtn small {
+  white-space: normal;
+  line-height: 1.25;
+}
 
 /* games/chunkchunk/src/story/chunkstory.css */
 .cs-root {
@@ -4467,4 +4484,10 @@ html[data-theme=cute] .ct-cc .edView p {
 }
 .cs-cutscr .cs-foot {
   display: flex;
+}
+.cs-cutscr .cs-nav {
+  gap: 46px;
+}
+.cs-cutscr .cs-navb {
+  width: 52px;
 }

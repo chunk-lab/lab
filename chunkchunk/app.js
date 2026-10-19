@@ -4536,12 +4536,37 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     if (manual()) syncScrub();
     updateBackBtn();
   }
-  var canBack = () => !!(S && S.phase === "play" && !S.paused && manual() && S.passed > S.lastCut + 1);
+  var BACK_PENALTY_MS = 1e3;
+  var sentHead = () => {
+    const f = S.flat[Math.min(Math.max(S.passed - 1, 0), S.flat.length - 1)];
+    return S.starts[f.k];
+  };
+  var canBack = () => !!(S && S.phase === "play" && !S.paused && manual() && S.passed > sentHead());
   function back(n) {
     if (!canBack()) return;
-    const to = Math.max(S.lastCut + 1, S.passed - n);
-    if (to === S.passed) return;
+    const head = sentHead(), to = Math.max(head, S.passed - n);
+    if (to >= S.passed) return;
+    const moved = S.passed - to, k = S.flat[head].k, sen = S.sens[S.seq[k]], base = S.starts[k];
+    const kept = [], removed = [];
+    S.chunks[k].forEach((c) => (base + c.b < to ? kept : removed).push(c));
+    removed.forEach((c) => addScore(-(c.gain != null ? c.gain : c.pts ?? PTS[c.kind])));
+    if (removed.length) S.combo = removed[0].prevCombo || 0;
+    S.chunks[k] = kept;
+    [...S.cuts.keys()].forEach((i) => {
+      if (i >= to && S.flat[i] && S.flat[i].k === k) S.cuts.delete(i);
+    });
+    S.lastCut = kept.length ? base + kept[kept.length - 1].b : base - 1;
+    clearPop();
+    $("rolePick").hidden = true;
+    stageReset(k);
+    kept.forEach((c) => {
+      if (c.kind !== "miss" && c.kind !== "forgot") stageOnChunk(k, sen, c);
+    });
     S.passed = to;
+    if (S.timed) {
+      S.elapsed += BACK_PENALTY_MS * moved;
+      toast(`\u3082\u3069\u308B \u2212${moved}\u79D2`);
+    }
     renderLane(true);
     renderLine();
   }
@@ -4549,7 +4574,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     const b = $("backBtn");
     if (!b) return;
     b.disabled = !canBack();
-    b.setAttribute("aria-label", "1\u8A9E\u3082\u3069\u308B\uFF08\u533A\u5207\u3063\u305F\u6240\u3088\u308A\u524D\u306B\u306F\u623B\u308C\u306A\u3044\uFF09");
+    b.setAttribute("aria-label", "1\u8A9E\u3082\u3069\u308B\uFF08\u3053\u306E\u6587\u306E\u982D\u307E\u3067\u623B\u308C\u308B\uFF09");
   }
   function blockHTML(sen, c) {
     const words = sen.words.slice(c.a, c.b + 1).map((w, i) => `<span class="w${c.roles ? " r" + c.roles[i] : ""}">${esc2(w)}</span>`).join(" ");
@@ -4685,7 +4710,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     const f = S.flat[ga], k = f.k, sen = S.sens[S.seq[k]];
     let c = classify(sen, f.li, S.flat[gb].li);
     if (forced) c = { ...c, kind: "forgot", roles: null };
-    c = { ...c, a: f.li, b: S.flat[gb].li };
+    c = { ...c, a: f.li, b: S.flat[gb].li, prevCombo: S.combo || 0 };
     S.chunks[k].push(c);
     S.lastCut = gb;
     const base = c.pts ?? PTS[c.kind];
@@ -7974,7 +7999,7 @@ body.nogram .gmT{display:none}
         const bar = el("div", "navrow");
         const nav = el("div", "nav");
         const bBack = el("button", "navb", "\u25C0"), bFwd = el("button", "navb", "\u25B6");
-        bBack.setAttribute("aria-label", "1\u8A9E\u3082\u3069\u308B\uFF08\u533A\u5207\u3063\u305F\u6240\u3088\u308A\u524D\u306B\u306F\u623B\u308C\u306A\u3044\uFF09");
+        bBack.setAttribute("aria-label", "1\u8A9E\u3082\u3069\u308B\uFF08\u6587\u306E\u982D\u307E\u3067\u623B\u308C\u308B\uFF09");
         bFwd.setAttribute("aria-label", "1\u8A9E\u3059\u3059\u3080");
         nav.append(bBack, bFwd);
         const bCut = el("button", "cutBtn");
@@ -8010,8 +8035,8 @@ body.nogram .gmT{display:none}
           strip.classList.toggle("cs-step", !!anim);
           strip.style.transform = "translate(" + (lx - gx) + "px,-50%)";
           line.style.left = lx + "px";
-          const fin = passed >= len, lastCut = cuts.size ? Math.max(...cuts) : 0;
-          bBack.disabled = over || passed <= lastCut;
+          const fin = passed >= len;
+          bBack.disabled = over || passed <= 0;
           bFwd.disabled = fin;
           bCut.classList.toggle("cs-fin", fin);
           bCut.innerHTML = fin ? "\u304B\u3093\u305B\u3044<small>\u304A\u3057\u307E\u3044\u307E\u3067\u9032\u3093\u3060\u3088</small>" : "\u533A\u5207\u308B<small>\u25B6\u3067\u9032\u3093\u3067\u3001\u3053\u3053\u3060\u3068\u601D\u3063\u305F\u3089\u62BC\u3059</small>";
@@ -8045,6 +8070,9 @@ body.nogram .gmT{display:none}
         bBack.onclick = () => {
           if (over || bBack.disabled) return;
           passed--;
+          [...cuts].forEach((i) => {
+            if (i > passed) cuts.delete(i);
+          });
           render(true);
         };
         bFwd.onclick = () => {

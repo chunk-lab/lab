@@ -364,3 +364,9 @@ html[data-theme="cute"] .ct-cc .edView .top{background:transparent;border:0}
 html[data-theme="cute"] .ct-cc .edView .gear{background:#fff;color:#5a4470;border:2px solid #fff;border-radius:16px;box-shadow:0 3px 0 rgba(150,130,180,.28);font-weight:800;padding:8px 14px}
 html[data-theme="cute"] .ct-cc .edView .rdStory{color:#5a4470;font-weight:800}
 html[data-theme="cute"] .ct-cc .edView .edNote,html[data-theme="cute"] .ct-cc .edView p{color:#8a7a9c}
+
+/* もどるボタンは、誤タップしないように進むボタンからボタン1個分はなす */
+.ct-cc .navBtns{gap:46px}
+.ct-cc .navBtn{width:52px}
+.ct-cc .cutBtn{flex:1 1 0;min-width:0;margin-left:0;padding-left:6px;padding-right:6px}
+.ct-cc .cutBtn small{white-space:normal;line-height:1.25}

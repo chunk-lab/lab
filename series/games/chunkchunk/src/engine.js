@@ -444,16 +444,32 @@ export function renderLane(noAnim){
   if(manual())syncScrub();
   updateBackBtn();
 }
-/* 1語もどる（設定で「使う」のときだけ）。区切った所より前には戻れない。チャレンジ中は使えない */
-export const canBack=()=>!!(S&&S.phase==="play"&&!S.paused&&manual()&&S.passed>S.lastCut+1);   // 1語もどる：自分で送るとき（練習もチャレンジも）。区切った所より前には戻れない
+/* 1語もどる：自分で送るとき（練習もチャレンジも）。いまの文の頭まで戻れる。戻った範囲の区切り（判定・点数・絵）は取り消す。
+   チャレンジ（タイムあり）では、1語もどるごとに1秒かかる */
+export const BACK_PENALTY_MS=1000;
+const sentHead=()=>{const f=S.flat[Math.min(Math.max(S.passed-1,0),S.flat.length-1)];return S.starts[f.k]};
+export const canBack=()=>!!(S&&S.phase==="play"&&!S.paused&&manual()&&S.passed>sentHead());
 export function back(n){
   if(!canBack())return;
-  const to=Math.max(S.lastCut+1,S.passed-n);if(to===S.passed)return;
-  S.passed=to;renderLane(true);renderLine();
+  const head=sentHead(),to=Math.max(head,S.passed-n);if(to>=S.passed)return;
+  const moved=S.passed-to,k=S.flat[head].k,sen=S.sens[S.seq[k]],base=S.starts[k];
+  // 戻った範囲の区切りをなかったことにする（点数・コンボ・絵も）
+  const kept=[],removed=[];
+  S.chunks[k].forEach(c=>(base+c.b<to?kept:removed).push(c));
+  removed.forEach(c=>addScore(-(c.gain!=null?c.gain:(c.pts??PTS[c.kind]))));
+  if(removed.length)S.combo=removed[0].prevCombo||0;
+  S.chunks[k]=kept;
+  [...S.cuts.keys()].forEach(i=>{if(i>=to&&S.flat[i]&&S.flat[i].k===k)S.cuts.delete(i)});
+  S.lastCut=kept.length?base+kept[kept.length-1].b:base-1;
+  clearPop();$("rolePick").hidden=true;
+  stageReset(k);kept.forEach(c=>{if(c.kind!=="miss"&&c.kind!=="forgot")stageOnChunk(k,sen,c)});
+  S.passed=to;
+  if(S.timed){S.elapsed+=BACK_PENALTY_MS*moved;toast(`もどる −${moved}秒`)}
+  renderLane(true);renderLine();
 }
 export function updateBackBtn(){
   const b=$("backBtn");if(!b)return;b.disabled=!canBack();
-  b.setAttribute("aria-label","1語もどる（区切った所より前には戻れない）");
+  b.setAttribute("aria-label","1語もどる（この文の頭まで戻れる）");
 }
 /* 上の行：今の文の判定済みチャンク＋流れ出た単語 */
 export function blockHTML(sen,c){
@@ -543,7 +559,7 @@ export function judgeChunk(ga,gb,forced){
   const f=S.flat[ga],k=f.k,sen=S.sens[S.seq[k]];
   let c=classify(sen,f.li,S.flat[gb].li);
   if(forced)c={...c,kind:"forgot",roles:null};
-  c={...c,a:f.li,b:S.flat[gb].li};
+  c={...c,a:f.li,b:S.flat[gb].li,prevCombo:S.combo||0};
   S.chunks[k].push(c);S.lastCut=gb;
   const base=c.pts??PTS[c.kind];
   if(c.kind==="excellent"||c.kind==="great")S.combo=(S.combo||0)+1;else if(c.kind==="miss"||c.kind==="forgot")S.combo=0;
