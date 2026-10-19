@@ -18909,6 +18909,11 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
     if (el3) el3.textContent = `\u51FA\u308B\u6587\uFF1A${randLabel()}\uFF08\u8A2D\u5B9A\u3067\u5909\u3048\u3089\u308C\u307E\u3059\uFF09`;
   }
   function showTitle2() {
+    if (S && S.lesson) {
+      const L = S.lesson;
+      S.lesson = null;
+      L.onCancel && L.onCancel();
+    }
     nextRun();
     if (S) {
       clearTimeout(S.timer);
@@ -18930,6 +18935,7 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
     f.querySelector(".lessonSub").hidden = !on;
   }
   function initTitle(face2) {
+    ENV2.showTitle = showTitle2;
     FACE = face2 || "arcade";
     document.querySelectorAll("[data-chara]").forEach((i) => i.src = ENV2.ctx.base + "img/chara/" + i.dataset.chara + "/" + (i.dataset.chara === "boy" ? "idea" : "joy") + ".webp");
     if (FACE === "all") {
@@ -21686,6 +21692,13 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
   }
   function review() {
     sfx("voice/stage_clear");
+    if (S.lesson) {
+      const L = S.lesson;
+      S.lesson = null;
+      if (ENV2.showTitle) ENV2.showTitle();
+      L.onDone && L.onDone(S.results);
+      return;
+    }
     const all = S.results.flatMap((r) => r ? r.chunks : []), cnt = (k) => all.filter((c) => c.kind === k || k === "miss" && c.kind === "forgot").length;
     const refHTML = (sen) => `<div class="roles">${sen.units.map((u) => `<span class="rcell"><span class="rtx">${u.subs ? u.subs.map((p, pi) => `<span class="r${subIsX(u, pi) ? "X" : u.role}">${esc3(sen.words.slice(p.s, p.e + 1).join(" "))}</span>`).join(" ") : `<span class="r${u.role}">${esc3(u.text)}</span>`}</span><span class="rl r${u.role}">${RN2[u.role][settings.disp === "gram" ? 1 : 0]}</span></span>`).join('<span class="cutmark">\uFF5C</span>')}</div>`;
     openSheet(`<h2>${esc3(S.title)} \u30AF\u30EA\u30A2\uFF01</h2>
@@ -21841,6 +21854,19 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     $4("stageText").textContent = "Practice";
     S.roleMode = settings.roleAns !== false;
     S.studyMode = true;
+    applyAdvanceUI();
+  }
+  function startLesson(list, title, onDone, onCancel) {
+    settings.advance = "manual";
+    saveSettings();
+    $4("title").hidden = true;
+    loadStage("one", 4, list, true);
+    S.title = title;
+    S.short = "Lesson";
+    $4("stageText").textContent = "Lesson";
+    S.roleMode = false;
+    S.studyMode = true;
+    S.lesson = { onDone, onCancel };
     applyAdvanceUI();
   }
   var lastTick = performance.now();
@@ -24155,6 +24181,41 @@ body.nogram .gmT{display:none}
       }
     ]
   };
+  function splitSay(t) {
+    const ss = [];
+    let cur4 = "", d = 0;
+    for (const c of t) {
+      cur4 += c;
+      if ("\u300E\u300C\uFF08(".includes(c)) d++;
+      else if ("\u300F\u300D\uFF09)".includes(c)) d = Math.max(0, d - 1);
+      else if ("\u3002\uFF01\uFF1F!?".includes(c) && !d) {
+        ss.push(cur4);
+        cur4 = "";
+      }
+    }
+    if (cur4.trim()) ss.push(cur4);
+    const out = [];
+    let acc = "";
+    for (const x of ss) {
+      if (!acc) acc = x;
+      else if (acc.length + x.length <= 24) acc += x;
+      else {
+        out.push(acc);
+        acc = x;
+      }
+    }
+    if (acc) out.push(acc);
+    return out;
+  }
+  window.CS_STORY.chapters.forEach((ch) => {
+    const n = [];
+    ch.steps.forEach((st) => {
+      if (st.say && st.t) {
+        splitSay(st.t).forEach((t) => n.push({ ...st, t }));
+      } else n.push(st);
+    });
+    ch.steps = n;
+  });
   (function() {
     "use strict";
     const A = window.CS_ASSETS, S2 = window.CS_STORY;
@@ -24972,6 +25033,35 @@ body.nogram .gmT{display:none}
     };
   })();
 
+  // games/chunkchunk/src/story/lessonmap.js
+  var LESSON = {
+    "Tom | plays soccer.": "S:Tom=\u30C8\u30E0\u306F | V:plays soccer.=\u30B5\u30C3\u30AB\u30FC\u3092\u3059\u308B",
+    "My sister | likes cats.": "S:My sister=\u308F\u305F\u3057\u306E\u59C9\u306F | V:likes cats.=\u30CD\u30B3\u304C\u597D\u304D",
+    "The dog | runs fast.": "S:The dog=\u305D\u306E\u72AC\u306F | V:runs fast.=\u901F\u304F\u8D70\u308B",
+    "I | am | happy.": "S:I=\u308F\u305F\u3057\u306F | V:am=\uFF1D | C:happy.=\u3046\u308C\u3057\u3044",
+    "She | is | my friend.": "S:She=\u5F7C\u5973\u306F | V:is=\uFF1D | C:my friend.=\u308F\u305F\u3057\u306E\u53CB\u3060\u3061",
+    "Tom | plays | soccer.": "S:Tom=\u30C8\u30E0\u306F | V:plays=\u3059\u308B | O:soccer.=\u30B5\u30C3\u30AB\u30FC\u3092",
+    "She | met | Tom.": "S:She=\u5F7C\u5973\u306F | V:met=\u4F1A\u3063\u305F | O:Tom.=\u30C8\u30E0\u306B",
+    "Tom | opened | the door.": "S:Tom=\u30C8\u30E0\u306F | V:opened=\u958B\u3051\u305F | O:the door.=\u30C9\u30A2\u3092",
+    "My mother | makes | lunch.": "S:My mother=\u6BCD\u306F | V:makes=\u4F5C\u308B | O:lunch.=\u663C\u3054\u306F\u3093\u3092",
+    "She | plays | tennis | at school / after class.": "S:She=\u5F7C\u5973\u306F | V:plays=\u3059\u308B | O:tennis=\u30C6\u30CB\u30B9\u3092 | P:at school=\u5B66\u6821\u3067 | T:after class.=\u653E\u8AB2\u5F8C",
+    "After lunch, | we | play | soccer | in the park.": "T:After lunch,=\u663C\u3054\u306F\u3093\u306E\u3042\u3068 | S:we=\u308F\u305F\u3057\u305F\u3061\u306F | V:play=\u3059\u308B | O:soccer=\u30B5\u30C3\u30AB\u30FC\u3092 | P:in the park.=\u516C\u5712\u3067",
+    "I | get up | at seven / every day.": "S:I=\u308F\u305F\u3057\u306F | V:get up=\u8D77\u304D\u308B | T:at seven=7\u6642\u306B | T:every day.=\u6BCE\u65E5",
+    "The book / I bought yesterday | is | fun.": "S:The book / X:I bought yesterday=\u6628\u65E5\u8CB7\u3063\u305F\u672C\u306F{\u672C\u306F/\u6628\u65E5\u8CB7\u3063\u305F} | V:is=\uFF1D | C:fun.=\u304A\u3082\u3057\u308D\u3044",
+    "The girl / with long hair | is | my sister.": "S:The girl / X:with long hair=\u9AEA\u306E\u9577\u3044\u5973\u306E\u5B50\u306F{\u5973\u306E\u5B50\u306F/\u9AEA\u306E\u9577\u3044} | V:is=\uFF1D | C:my sister.=\u308F\u305F\u3057\u306E\u59C9",
+    "The man / I met | lives | in Tokyo.": "S:The man / X:I met=\u308F\u305F\u3057\u304C\u4F1A\u3063\u305F\u7537\u306E\u4EBA\u306F{\u7537\u306E\u4EBA\u306F/\u308F\u305F\u3057\u304C\u4F1A\u3063\u305F} | V:lives=\u4F4F\u3093\u3067\u3044\u308B | P:in Tokyo.=\u6771\u4EAC\u306B",
+    "My brother | is | a good cook.": "S:My brother=\u5144\u306F | V:is=\uFF1D | C:a good cook.=\u6599\u7406\u304C\u3058\u3087\u3046\u305A",
+    "After school, | Ken | opened | the box | in his room.": "T:After school,=\u653E\u8AB2\u5F8C | S:Ken=\u30B1\u30F3\u306F | V:opened=\u958B\u3051\u305F | O:the box=\u7BB1\u3092 | P:in his room.=\u81EA\u5206\u306E\u90E8\u5C4B\u3067",
+    "The cake / my mother made | was | delicious.": "S:The cake / X:my mother made=\u6BCD\u304C\u4F5C\u3063\u305F\u30B1\u30FC\u30AD\u306F{\u30B1\u30FC\u30AD\u306F/\u6BCD\u304C\u4F5C\u3063\u305F} | V:was=\uFF1D | C:delicious.=\u304A\u3044\u3057\u304B\u3063\u305F"
+  };
+  function lessonList(items) {
+    const out = (items || []).map((it) => LESSON[it.s] ? [LESSON[it.s], it.ja] : null);
+    return out.length && out.every(Boolean) ? out : null;
+  }
+  function lessonResults(results) {
+    return (results || []).map((r) => ({ chunks: (r && r.chunks || []).map((c) => ({ r: c.kind === "excellent" || c.kind === "great" ? "o" : c.kind === "miss" || c.kind === "forgot" ? "x" : "t" })) }));
+  }
+
   // games/chunkchunk/src/story.js
   function createStory(HOST) {
     const root2 = document.createElement("div");
@@ -25005,6 +25095,28 @@ body.nogram .gmT{display:none}
         },
         onUnlock: (key) => rep("story_unlock", { key }),
         onChapterClear: (no, r) => rep("story_clear", { chapter: no, pct: r && r.pct, firstClear: r && r.firstClear }),
+        // 切る場面は、チャンクチャンク本体のチャレンジ（自分で横に流して切る）で遊ぶ。「order」の場面や、対応表にない文は、今までの簡易版
+        onStage: (st, ch, finish) => {
+          const list = st.type === "cut" ? lessonList(st.items) : null;
+          if (!list) return false;
+          root2.hidden = true;
+          startLesson(
+            list,
+            "\u7B2C" + ch.no + "\u7AE0 " + (st.title || ""),
+            (res) => {
+              root2.hidden = false;
+              finish(lessonResults(res));
+            },
+            () => {
+              root2.hidden = false;
+              try {
+                window.ChunkStory.openMap();
+              } catch (e) {
+              }
+            }
+          );
+          return true;
+        },
         onFinish: () => close(),
         onExit: () => close(),
         assets: { base: HOST.base + "img/chara/", ext: ".webp" }

@@ -232,6 +232,30 @@ window.CS_STORY = {
   ]
 };
 
+/* 説明は、基本1文ずつ表示する（短い文どうしはひとまとめ）。「。！？」で区切り、『』「」（）の中では区切らない */
+function splitSay(t){
+  const ss = []; let cur = "", d = 0;
+  for (const c of t){
+    cur += c;
+    if ("『「（(".includes(c)) d++; else if ("』」）)".includes(c)) d = Math.max(0, d - 1);
+    else if ("。！？!?".includes(c) && !d) { ss.push(cur); cur = ""; }
+  }
+  if (cur.trim()) ss.push(cur);
+  const out = []; let acc = "";
+  for (const x of ss){
+    if (!acc) acc = x;
+    else if (acc.length + x.length <= 24) acc += x;
+    else { out.push(acc); acc = x; }
+  }
+  if (acc) out.push(acc);
+  return out;
+}
+window.CS_STORY.chapters.forEach(ch => {
+  const n = []; ch.steps.forEach(st => {
+    if (st.say && st.t){ splitSay(st.t).forEach(t => n.push({ ...st, t })); } else n.push(st);
+  }); ch.steps = n;
+});
+
 (function(){
 "use strict";
 const A = window.CS_ASSETS, S = window.CS_STORY;

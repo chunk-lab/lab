@@ -668,6 +668,7 @@ export async function finishSeq(){
 export function legendHTML(){return `<div class="legend">${"SVOICPTM".split("").map(r=>`<span class="r${r}">■${RN[r][0]}</span>`).join("")}<span class="rX">■説明</span></div>`}
 export function review(){
   sfx("voice/stage_clear");
+  if(S.lesson){const L=S.lesson;S.lesson=null;if(ENV.showTitle)ENV.showTitle();L.onDone&&L.onDone(S.results);return}
   const all=S.results.flatMap(r=>r?r.chunks:[]),cnt=k=>all.filter(c=>c.kind===k||(k==="miss"&&c.kind==="forgot")).length;
   const refHTML=sen=>`<div class="roles">${sen.units.map(u=>`<span class="rcell"><span class="rtx">${u.subs?u.subs.map((p,pi)=>`<span class="r${subIsX(u,pi)?"X":u.role}">${esc(sen.words.slice(p.s,p.e+1).join(" "))}</span>`).join(" "):`<span class="r${u.role}">${esc(u.text)}</span>`}</span><span class="rl r${u.role}">${RN[u.role][settings.disp==="gram"?1:0]}</span></span>`).join('<span class="cutmark">｜</span>')}</div>`;
   openSheet(`<h2>${esc(S.title)} クリア！</h2>
@@ -735,6 +736,13 @@ export function startShortPractice(items,title){
   loadStage("one",4,list,true);
   S.title=`Chunk Practice「${title}」`;S.short="Practice";$("stageText").textContent="Practice";
   S.roleMode=settings.roleAns!==false;S.studyMode=true;applyAdvanceUI();
+}
+/* レッスン（チャンクストーリー）の切る場面：チャレンジと同じ遊びを、章の中で1回だけ遊ぶ。終わったら onDone(結果)、途中でやめたら onCancel */
+export function startLesson(list,title,onDone,onCancel){
+  settings.advance="manual";saveSettings();$("title").hidden=true;
+  loadStage("one",4,list,true);
+  S.title=title;S.short="Lesson";$("stageText").textContent="Lesson";
+  S.roleMode=false;S.studyMode=true;S.lesson={onDone,onCancel};applyAdvanceUI();
 }
 /* 自分で送るモードの操作 */
 
