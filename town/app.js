@@ -24102,11 +24102,11 @@ body.nogram .gmT{display:none}
           mode: "auto",
           speed: 1600,
           title: "\u304A\u307E\u3051\u30BF\u30B0\u3082\u5207\u308D\u3046",
-          coach: { start: "\u571F\u53F0\u3068\u3001\u304A\u307E\u3051\u306E\u30BF\u30B0\uFF08\u3044\u3064\u30FB\u3069\u3053\u3067\uFF09\u3067\u5207\u3063\u3066\u307F\u3088\u3046\u3002" },
+          coach: { start: "\u30BF\u30B0\uFF08\u3044\u3064\u30FB\u3069\u3053\u3067\uFF09\u306E\u524D\u3067\u533A\u5207\u3063\u3066\u307F\u3088\u3046\uFF01\u30BF\u30B0\u4EE5\u5916\u306F\u3001\u5207\u3063\u3066\u3082\u5207\u3089\u306A\u304F\u3066\u3082OK\u3002\u8FF7\u3063\u305F\u3089\u300C\u30D2\u30F3\u30C8\u300D\u3002" },
           items: [
-            { s: "She | plays | tennis | at school / after class.", ja: "\u5F7C\u5973\u306F\u653E\u8AB2\u5F8C\u3001\u5B66\u6821\u3067\u30C6\u30CB\u30B9\u3092\u3059\u308B\u3002" },
-            { s: "After lunch, | we | play | soccer | in the park.", ja: "\u663C\u3054\u306F\u3093\u306E\u3042\u3068\u3001\u308F\u305F\u3057\u305F\u3061\u306F\u516C\u5712\u3067\u30B5\u30C3\u30AB\u30FC\u3092\u3059\u308B\u3002" },
-            { s: "I | get up | at seven / every day.", ja: "\u308F\u305F\u3057\u306F\u6BCE\u65E57\u6642\u306B\u8D77\u304D\u308B\u3002" }
+            { s: "She / plays / tennis | at school / after class.", ja: "\u5F7C\u5973\u306F\u653E\u8AB2\u5F8C\u3001\u5B66\u6821\u3067\u30C6\u30CB\u30B9\u3092\u3059\u308B\u3002" },
+            { s: "After lunch, | we / play / soccer | in the park.", ja: "\u663C\u3054\u306F\u3093\u306E\u3042\u3068\u3001\u308F\u305F\u3057\u305F\u3061\u306F\u516C\u5712\u3067\u30B5\u30C3\u30AB\u30FC\u3092\u3059\u308B\u3002" },
+            { s: "I / get up | at seven / every day.", ja: "\u308F\u305F\u3057\u306F\u6BCE\u65E57\u6642\u306B\u8D77\u304D\u308B\u3002" }
           ]
         }
       },
@@ -24139,11 +24139,11 @@ body.nogram .gmT{display:none}
           mode: "auto",
           speed: 1500,
           title: "\u30B7\u30FC\u30EB\u3054\u3068\u4E3B\u5F79",
-          coach: { start: "\u4E3B\u5F79\u306B\u30B7\u30FC\u30EB\u304C\u4ED8\u3044\u3066\u308B\u3088\u3002\u672C\u7269\u306E\u300E\u3069\u3046\u3057\u3066\u308B\uFF1F\u300F\u306E\u524D\u3067\u5207\u308D\u3046\uFF01" },
+          coach: { start: "\u4E3B\u5F79\u306B\u30B7\u30FC\u30EB\u304C\u4ED8\u3044\u3066\u308B\u3088\u3002\u300E\u3069\u3046\u3057\u3066\u308B\uFF1F\u300F\u306E\u524D\u3067\u533A\u5207\u308D\u3046\uFF01\u30B7\u30FC\u30EB\u306E\u4E2D\u306F\u5207\u3089\u306A\u3044\u3067\u306D\u3002\u8FF7\u3063\u305F\u3089\u300C\u30D2\u30F3\u30C8\u300D\u3002" },
           items: [
-            { s: "The book / I bought yesterday | is | fun.", ja: "\u6628\u65E5\u8CB7\u3063\u305F\u672C\u306F\u304A\u3082\u3057\u308D\u3044\u3002" },
-            { s: "The girl / with long hair | is | my sister.", ja: "\u9AEA\u306E\u9577\u3044\u5973\u306E\u5B50\u306F\u308F\u305F\u3057\u306E\u59C9\u3060\u3002" },
-            { s: "The man / I met | lives | in Tokyo.", ja: "\u308F\u305F\u3057\u304C\u4F1A\u3063\u305F\u7537\u306E\u4EBA\u306F\u6771\u4EAC\u306B\u4F4F\u3093\u3067\u3044\u308B\u3002" }
+            { s: "The book / I bought yesterday | is / fun.", ja: "\u6628\u65E5\u8CB7\u3063\u305F\u672C\u306F\u304A\u3082\u3057\u308D\u3044\u3002" },
+            { s: "The girl / with long hair | is / my sister.", ja: "\u9AEA\u306E\u9577\u3044\u5973\u306E\u5B50\u306F\u308F\u305F\u3057\u306E\u59C9\u3060\u3002" },
+            { s: "The man / I met | lives / in Tokyo.", ja: "\u308F\u305F\u3057\u304C\u4F1A\u3063\u305F\u7537\u306E\u4EBA\u306F\u6771\u4EAC\u306B\u4F4F\u3093\u3067\u3044\u308B\u3002" }
           ]
         }
       },
@@ -24796,6 +24796,11 @@ body.nogram .gmT{display:none}
       const all = [];
       let n = 0;
       tell2("start");
+      const hintBtn = el3("button", "pill sub", "\u{1F4A1}\u30D2\u30F3\u30C8");
+      const topBar = f.s.querySelector(".cs-top");
+      topBar.insertBefore(hintBtn, topBar.querySelector('[data-a="map"]'));
+      let hintFn = null;
+      hintBtn.onclick = () => hintFn && hintFn();
       next();
       function next() {
         if (!f.alive) return;
@@ -24821,13 +24826,25 @@ body.nogram .gmT{display:none}
         bCut.innerHTML = "\u533A\u5207\u308B<small>\u25B6\u3067\u9032\u3093\u3067\u3001\u3053\u3053\u3060\u3068\u601D\u3063\u305F\u3089\u62BC\u3059</small>";
         bar.append(nav, bCut);
         f.foot.appendChild(bar);
-        let passed = 0, over = false;
+        let passed = 0, over = false, hintAt = null;
         const cuts = /* @__PURE__ */ new Set();
+        hintFn = () => {
+          if (over) return;
+          const miss = [...p.B].filter((b) => !cuts.has(b)).sort((a, b) => a - b);
+          if (!miss.length) {
+            f.say("\u7B54\u3048\u306E\u533A\u5207\u308A\u306F\u3001\u305C\u3093\u3076\u5207\u308C\u3066\u308B\u3088\uFF01");
+            return;
+          }
+          hintAt = miss[0];
+          render(false);
+          f.say(hintAt === passed ? "\u3044\u307E\u300E\u533A\u5207\u308B\u300F\u3092\u62BC\u3057\u3066\u306D\uFF01" : hintAt > passed ? "\u25B6\u3067\u9032\u3081\u305F\u5148\u306E\u3001\u25C6\u306E\u3068\u3053\u308D\u3067\u533A\u5207\u308B\u3088\u3002" : "\u25C6\u306E\u3068\u3053\u308D\u3092\u533A\u5207\u308A\u5FD8\u308C\u3066\u308B\u3088\u3002\u25C0\u3067\u623B\u3063\u3066\u307F\u3088\u3046\u3002");
+        };
         function render(anim) {
           strip.innerHTML = "";
           p.words.forEach((w, i) => {
             const cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "";
             strip.appendChild(el3("span", "w" + cls, esc5(w)));
+            if (i + 1 < len && !cuts.has(i + 1) && hintAt === i + 1) strip.appendChild(el3("span", "hintmk", "\u25C6"));
             if (i + 1 < len && cuts.has(i + 1)) {
               const c = el3("span", "cutmark", "\uFF5C");
               c.title = "\u30BF\u30C3\u30D7\u3067\u5143\u306B\u623B\u3059";
@@ -24900,6 +24917,7 @@ body.nogram .gmT{display:none}
           if (bCut.disabled || over) return;
           if (passed >= len) return done();
           cuts.add(passed);
+          if (hintAt === passed) hintAt = null;
           render(true);
           tell2("cut");
         };

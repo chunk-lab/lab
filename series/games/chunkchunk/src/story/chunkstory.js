@@ -179,11 +179,11 @@ window.CS_STORY = {
       {say:"boy", f:"egao", t:"おまけのタグも1つのかたまり。ゲームでもひとまとまりで切ってね！"}
     ],
     stage:{ type:"cut", mode:"auto", speed:1600, title:"おまけタグも切ろう",
-      coach:{ start:"土台と、おまけのタグ（いつ・どこで）で切ってみよう。" },
+      coach:{ start:"タグ（いつ・どこで）の前で区切ってみよう！タグ以外は、切っても切らなくてもOK。迷ったら「ヒント」。" },
       items:[
-        { s:"She | plays | tennis | at school / after class.", ja:"彼女は放課後、学校でテニスをする。" },
-        { s:"After lunch, | we | play | soccer | in the park.", ja:"昼ごはんのあと、わたしたちは公園でサッカーをする。" },
-        { s:"I | get up | at seven / every day.", ja:"わたしは毎日7時に起きる。" }
+        { s:"She / plays / tennis | at school / after class.", ja:"彼女は放課後、学校でテニスをする。" },
+        { s:"After lunch, | we / play / soccer | in the park.", ja:"昼ごはんのあと、わたしたちは公園でサッカーをする。" },
+        { s:"I / get up | at seven / every day.", ja:"わたしは毎日7時に起きる。" }
       ] } },
 
   { no:6, title:"途中で人が出てきても騙されるな！", sub:"主役の説明シール",
@@ -206,11 +206,11 @@ window.CS_STORY = {
       {say:"boy", f:"egao", t:"シール付きの主役は、まるごと1つのかたまり。ゲームで確かめてみよう！"}
     ],
     stage:{ type:"cut", mode:"auto", speed:1500, title:"シールごと主役",
-      coach:{ start:"主役にシールが付いてるよ。本物の『どうしてる？』の前で切ろう！" },
+      coach:{ start:"主役にシールが付いてるよ。『どうしてる？』の前で区切ろう！シールの中は切らないでね。迷ったら「ヒント」。" },
       items:[
-        { s:"The book / I bought yesterday | is | fun.", ja:"昨日買った本はおもしろい。" },
-        { s:"The girl / with long hair | is | my sister.", ja:"髪の長い女の子はわたしの姉だ。" },
-        { s:"The man / I met | lives | in Tokyo.", ja:"わたしが会った男の人は東京に住んでいる。" }
+        { s:"The book / I bought yesterday | is / fun.", ja:"昨日買った本はおもしろい。" },
+        { s:"The girl / with long hair | is / my sister.", ja:"髪の長い女の子はわたしの姉だ。" },
+        { s:"The man / I met | lives / in Tokyo.", ja:"わたしが会った男の人は東京に住んでいる。" }
       ] } },
 
   { no:7, title:"全体のマップ", sub:"エンディング", unlock:"free",
@@ -633,6 +633,9 @@ function cutStage(ch, st, finish){
   const tell = k => { if (coach[k] && !said[k]) { said[k] = 1; f.say(coach[k]); } };
   const all = []; let n = 0;
   tell("start");
+  const hintBtn = el("button", "pill sub", "💡ヒント"); const topBar = f.s.querySelector(".cs-top");
+  topBar.insertBefore(hintBtn, topBar.querySelector('[data-a="map"]'));
+  let hintFn = null; hintBtn.onclick = () => hintFn && hintFn();
   next();
 
   function next(){
@@ -654,14 +657,23 @@ function cutStage(ch, st, finish){
     const bCut = el("button", "cutBtn"); bCut.innerHTML = "区切る<small>▶で進んで、ここだと思ったら押す</small>";
     bar.append(nav, bCut); f.foot.appendChild(bar);
 
-    let passed = 0, over = false;
+    let passed = 0, over = false, hintAt = null;
     const cuts = new Set();   // 「i番目のことばの前で切る」
+    // ヒント：まだ切っていない「答えの区切り」のうち、いちばん前のものに印を出す
+    hintFn = () => {
+      if (over) return;
+      const miss = [...p.B].filter(b => !cuts.has(b)).sort((a, b) => a - b);
+      if (!miss.length) { f.say("答えの区切りは、ぜんぶ切れてるよ！"); return; }
+      hintAt = miss[0]; render(false);
+      f.say(hintAt === passed ? "いま『区切る』を押してね！" : hintAt > passed ? "▶で進めた先の、◆のところで区切るよ。" : "◆のところを区切り忘れてるよ。◀で戻ってみよう。");
+    };
 
     function render(anim){
       strip.innerHTML = "";
       p.words.forEach((w, i) => {
         const cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "";
         strip.appendChild(el("span", "w" + cls, esc(w)));
+        if (i + 1 < len && !cuts.has(i + 1) && hintAt === i + 1) strip.appendChild(el("span", "hintmk", "◆"));
         if (i + 1 < len && cuts.has(i + 1)){
           const c = el("span", "cutmark", "｜"); c.title = "タップで元に戻す";
           c.onclick = () => { if (over) return; cuts.delete(i + 1); render(); };
@@ -703,7 +715,7 @@ function cutStage(ch, st, finish){
     bCut.onclick = () => {
       if (bCut.disabled || over) return;
       if (passed >= len) return done();
-      cuts.add(passed); render(true); tell("cut");
+      cuts.add(passed); if (hintAt === passed) hintAt = null; render(true); tell("cut");
     };
     render(false);
   }

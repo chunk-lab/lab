@@ -253,3 +253,5 @@
 .cs-cutscr .cs-navb{width:52px}
 .cs-map .cs-ch:not(.cs-lock):active{transform:scale(.99)}
 .cs-card img{width:100%;max-height:92px;object-fit:contain;border-radius:12px}
+.cs-cutscr .cs-strip .cs-hintmk{color:#ffd166;font-size:16px;padding:0 3px;text-shadow:0 0 10px #ffd166;animation:cs-hint 1s ease-in-out infinite}
+@keyframes cs-hint{50%{opacity:.35;transform:scale(1.3)}}
