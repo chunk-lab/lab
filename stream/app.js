@@ -40,9 +40,23 @@
 
   // core/settings.js
   var DEFAULTS = { bgm: 0.5, sfx: 0.8, voice: true, rate: 1 };
-  function createSettings() {
+  function createSettings(defaultTheme) {
     const st = createStore("core");
-    const v = Object.assign({}, DEFAULTS, st.get("settings") || {});
+    const v = Object.assign({}, DEFAULTS, { theme: defaultTheme || "chic" }, st.get("settings") || {});
+    const apply = () => {
+      try {
+        document.documentElement.dataset.theme = v.theme;
+        if (v.theme === "cute" && !document.getElementById("cs-cutefont")) {
+          const l = document.createElement("link");
+          l.id = "cs-cutefont";
+          l.rel = "stylesheet";
+          l.href = "https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap";
+          document.head.appendChild(l);
+        }
+      } catch (e) {
+      }
+    };
+    apply();
     const subs = /* @__PURE__ */ new Set();
     return {
       get: (k) => v[k],
@@ -50,6 +64,7 @@
       set(k, val) {
         v[k] = val;
         st.set("settings", v);
+        if (k === "theme") apply();
         subs.forEach((f) => {
           try {
             f(k, val, v);
@@ -261,9 +276,11 @@
     const settings = () => {
       const s = core2.settings, row = (k, label, min, max, step) => `<label class="cs-row"><span>${label}</span><input type="range" id="cs-${k}" min="${min}" max="${max}" step="${step}" value="${s.get(k)}"></label>`;
       sheet(`<h3>\u8A2D\u5B9A</h3>${row("bgm", "BGM", 0, 1, 0.05)}${row("sfx", "\u52B9\u679C\u97F3", 0, 1, 0.05)}
+      <label class="cs-row"><span>\u898B\u305F\u76EE</span><select id="cs-theme"><option value="cute" ${s.get("theme") === "cute" ? "selected" : ""}>\u304B\u308F\u3044\u3044</option><option value="chic" ${s.get("theme") === "chic" ? "selected" : ""}>\u30B7\u30C3\u30AF</option></select></label>
       <label class="cs-row"><span>\u82F1\u8A9E\u306E\u8AAD\u307F\u4E0A\u3052</span><input type="checkbox" id="cs-voice" ${s.get("voice") ? "checked" : ""}></label>
       ${row("rate", "\u8AAD\u307F\u4E0A\u3052\u306E\u901F\u3055", 0.7, 1.3, 0.05)}<button class="cs-btn" id="cs-try">\u8AAD\u307F\u4E0A\u3052\u3092\u8A66\u3059</button>`, (ov) => {
         ["bgm", "sfx", "rate"].forEach((k) => ov.querySelector("#cs-" + k).oninput = (e) => s.set(k, +e.target.value));
+        ov.querySelector("#cs-theme").onchange = (e) => s.set("theme", e.target.value);
         ov.querySelector("#cs-voice").onchange = (e) => s.set("voice", e.target.checked);
         ov.querySelector("#cs-try").onclick = () => core2.speech.speak("Hello! Let\u2019s read English in chunks.");
       });
@@ -1274,7 +1291,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
   function createCore(config) {
     const base = config.base || "./";
     const core2 = { config, base };
-    core2.settings = createSettings();
+    core2.settings = createSettings(config.theme);
     core2.speech = createSpeech(core2.settings);
     core2.sound = createSound(core2.settings);
     core2.rights = createRights(config.grants || []);
@@ -3375,5 +3392,5 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
   var app = window.__APP__;
   var core = createCore({ ...app, backButton: false });
   document.body.style.background = "#0b1626";
-  core.host.open(GAMES[app.games[0]]);
+  core.host.open(GAMES[app.games[0]], app.opts || {});
 })();

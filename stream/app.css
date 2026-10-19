@@ -180,18 +180,17 @@
   min-height: 0;
 }
 .cs-reader .rdPad {
-  flex: 1 1 auto;
-  min-height: 150px;
+  flex: none;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 6px;
   position: relative;
   touch-action: none;
   cursor: grab;
   border: 1.5px dashed var(--line);
   border-radius: 16px;
-  padding: 8px 6px;
+  padding: 24px 6px 10px;
   overflow: hidden;
 }
 .cs-reader .rdPadHint {
@@ -724,6 +723,35 @@
   background: rgba(255, 178, 62, .18);
   border-color: var(--accent);
 }
+.cs-reader .rdCtxBox:empty {
+  display: none;
+}
+@media (max-height: 520px) {
+  .cs-reader {
+    gap: 5px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+  .cs-reader .rdTop {
+    padding-top: 4px;
+  }
+  .cs-reader .rdPadHint,
+  .cs-reader .rdHelp {
+    display: none;
+  }
+  .cs-reader .rdPad {
+    padding: 6px;
+  }
+  .cs-reader .rdLane {
+    height: 68px;
+  }
+  .cs-reader .rdGest {
+    gap: 5px;
+    flex: none;
+  }
+  .cs-reader .rdInfo {
+    max-height: none;
+  }
+}
 
 /* core/ui.css */
 .cs-ui {
@@ -913,6 +941,15 @@
 }
 [hidden] {
   display: none !important;
+}
+.cs-row select {
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 10px;
+  border: 2px solid #ead9c2;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--cs-ink);
 }
 
 /* games/stream/src/stream.css */
@@ -3347,4 +3384,120 @@
     width: 112px;
     height: 112px;
   }
+}
+html[data-theme=cute] .ct-stream #sTitle {
+  background:
+    linear-gradient(
+      135deg,
+      #bfe0fb 0%,
+      #e9e3fb 55%,
+      #fde3ee 100%);
+  --ink:#5a4470;
+  --muted:#8a7a9c;
+  --surface:rgba(255,255,255,.88);
+  --line:#fff;
+  --accent:#ff8fb8;
+  --accent2:#ff6fa0;
+}
+html[data-theme=cute] .ct-stream #sTitle .logo h1 {
+  font-family:
+    "Mochiy Pop One",
+    "M PLUS Rounded 1c",
+    sans-serif;
+  -webkit-text-stroke: 2px #fff;
+  color: #8cc8ff;
+  text-shadow: 0 4px 0 #5ea6e6, 0 8px 18px rgba(94, 166, 230, .35);
+}
+html[data-theme=cute] .ct-stream #sTitle .logo h1 span {
+  color: #ff9ec4;
+  text-shadow: 0 4px 0 #e889b2, 0 8px 18px rgba(232, 137, 178, .35);
+}
+html[data-theme=cute] .ct-stream #sTitle .logo .k {
+  color: #8a7a9c;
+}
+html[data-theme=cute] .ct-stream #sTitle .river .row span {
+  box-shadow: 0 3px 0 rgba(150, 130, 180, .25);
+  border: 2px solid #fff;
+  color: #5a4470;
+}
+html[data-theme=cute] .ct-stream #sTitle .river .row span.h {
+  color: #ff6fa0;
+  border-color: #ffd0e2;
+}
+html[data-theme=cute] .ct-stream #sTitle .btn-main {
+  font-family:
+    "Mochiy Pop One",
+    "M PLUS Rounded 1c",
+    sans-serif;
+  color: #fff;
+  border: 2px solid #fff;
+  background:
+    linear-gradient(
+      180deg,
+      #ffb3d0,
+      #ff8fb8);
+  box-shadow: 0 5px 0 #e889b2, 0 10px 22px rgba(232, 137, 178, .3);
+}
+html[data-theme=cute] .ct-stream #sTitle .small {
+  color: #8a7a9c;
+}
+html[data-theme=cute] .ct-stream #sHome {
+  background:
+    linear-gradient(
+      135deg,
+      #bfe0fb 0%,
+      #e9e3fb 55%,
+      #fde3ee 100%);
+  color-scheme: light;
+  --ink:#5a4470;
+  --muted:#8a7a9c;
+  --faint:#a597b8;
+  --surface:rgba(255,255,255,.9);
+  --surface2:#fff;
+  --line:#fff;
+  --accent:#ff6fa0;
+}
+html[data-theme=cute] .ct-stream #sHome .bar h2 {
+  font-family:
+    "Mochiy Pop One",
+    "M PLUS Rounded 1c",
+    sans-serif;
+  font-weight: 400;
+  color: #5a4470;
+}
+html[data-theme=cute] .ct-stream #sHome .list > * {
+  box-shadow: 0 5px 0 rgba(150, 130, 180, .25), 0 10px 22px rgba(120, 100, 160, .12);
+  border: 2px solid #fff;
+}
+html[data-theme=cute] .ct-stream #sHome .tabs {
+  background: rgba(255, 255, 255, .7);
+  border-color: #fff;
+}
+html[data-theme=cute] .ct-stream #sHome .tabs * {
+  color: #8a7a9c;
+}
+html[data-theme=cute] .ct-stream #sHome .tabs .on {
+  background: #ff9ec4;
+  color: #fff;
+  border-color: #ff9ec4;
+}
+html[data-theme=cute] .ct-stream #sHome .tabs .on * {
+  color: #fff;
+}
+html[data-theme=cute] .ct-stream #sHome .icon-btn {
+  background: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 3px 0 rgba(150, 130, 180, .25);
+}
+html[data-theme=cute] .ct-stream #sHome .icon-btn svg {
+  stroke: #5a4470;
+}
+html[data-theme=cute] .ct-stream #sHome .pcard {
+  color: #5a4470;
+}
+html[data-theme=cute] .ct-stream #sHome .pcard .t {
+  color: #5a4470;
+}
+html[data-theme=cute] .ct-stream #sHome .pcard .tg {
+  filter: saturate(.9) brightness(.85);
 }
