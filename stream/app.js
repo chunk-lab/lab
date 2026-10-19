@@ -1416,7 +1416,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         BGG.gain.value = 0.55;
         BGG.connect(cs.bgmBus);
         VOG = AC.createGain();
-        VOG.gain.value = 1;
+        VOG.gain.value = 0.5;
         VOG.connect(cs.sfxBus);
         loadVoices();
       } catch (e) {

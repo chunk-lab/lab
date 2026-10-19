@@ -5,9 +5,11 @@
 import { ENV, settings, $, unlockAudio, S } from './engine.js';
 import { setMute } from './engine.js';
 const FILES = { title: { f: 'title.mp3', mean: -16.1 }, game: { f: 'game.mp3', mean: -13.8 }, game30: { f: 'game30.mp3', mean: -15.2 }, result: { f: 'result.mp3', mean: -19.1 }, study: { f: 'study.mp3', mean: -19.0 } };
-const BGM_TARGET = { low: -37, mid: -31 };   // 鳴らすときの平均音量(dB)。前の版は 小さめ −31／ふつう −25
+const BGM_TARGET = { low: -31, mid: -25 };   // 鳴らすときの平均音量(dB)
+let duck = 1;   // 読み上げ中は音楽を小さくする(0〜1)
+export function bgmDuck(on) { duck = on ? 0.25 : 1; try { bgmTick(); } catch (e) { } }
 let NODES = {}, cur = null, timer = 0, btn = null;
-function level(k) { const m = settings.bgm || 'low'; if (!BGM_TARGET[m]) return 0; return Math.min(1, Math.pow(10, (BGM_TARGET[m] - FILES[k].mean) / 20)); }
+function level(k) { const m = settings.bgm || 'low'; if (!BGM_TARGET[m]) return 0; return Math.min(1, Math.pow(10, (BGM_TARGET[m] - FILES[k].mean) / 20)) * duck; }
 function node(k) {
   if (NODES[k]) return NODES[k];
   const a = new Audio(ENV.ctx.base + 'audio/bgm/' + FILES[k].f); a.loop = true; a.preload = 'auto';

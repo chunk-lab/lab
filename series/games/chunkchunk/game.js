@@ -6,7 +6,7 @@
    shorts＝短文／rank＝チャレンジとランキング／title＝施設の入口／data＝内蔵の文と問題）。画面は src/view.html、見た目は src/cc.css */
 import html from './src/view.html';
 import './src/cc.css';
-import { ENV, init_engine, loadSettings, S, nextRun, clearPop } from './src/engine.js';
+import { ENV, init_engine, loadSettings, S, nextRun, clearPop, readTextAloud } from './src/engine.js';
 import { sfx, preloadSfx, stopSfxVoice, initSfx } from './src/sfx.js';
 import { initBgm } from './src/bgm.js';
 import { createWallet } from './src/wallet.js';
@@ -36,7 +36,7 @@ export default {
     // レッスン（文を作る）。開いている間は「街へ」ボタンを隠す（レッスンの画面が全体をおおうため）
     const wallet = createWallet(ctx.store);
     ENV.make = createMake({ base: ctx.base, store: ctx.store, Wallet: wallet, sfx, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
-    ENV.story = createStory({ base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
+    ENV.story = createStory({ speak: t => readTextAloud(t), base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
     loadSettings(); init_engine(); init_texts(); init_rank(); initTitle(face);
     initBgm(el); initSfx(); preloadSfx();   // 音楽・効果音・声（音量は共通の設定。mp3は小さめに調整済み）
     initShared();   // みんなの長文・難易度（共有データベース）。使えない環境では何も出ない

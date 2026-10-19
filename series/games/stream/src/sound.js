@@ -4,7 +4,7 @@ import { PAUSED } from './play.js';
 export let AC=null,SEG,BGG,VOG;
 export function ac(){
   if(!AC){try{const cs=ENV.core.sound;AC=cs.ctx();   // 共通の音：効果音・ボイスは「効果音」、BGMは「BGM」の音量で鳴る
-    SEG=AC.createGain();SEG.gain.value=.9;SEG.connect(cs.sfxBus);BGG=AC.createGain();BGG.gain.value=.55;BGG.connect(cs.bgmBus);VOG=AC.createGain();VOG.gain.value=1;VOG.connect(cs.sfxBus);loadVoices()}catch(e){AC=null}}
+    SEG=AC.createGain();SEG.gain.value=.9;SEG.connect(cs.sfxBus);BGG=AC.createGain();BGG.gain.value=.55;BGG.connect(cs.bgmBus);VOG=AC.createGain();VOG.gain.value=.5;VOG.connect(cs.sfxBus);loadVoices()}catch(e){AC=null}}
   if(AC&&AC.state==="suspended"&&!PAUSED)AC.resume();
   return AC;
 }

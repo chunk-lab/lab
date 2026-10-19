@@ -16145,7 +16145,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         BGG.gain.value = 0.55;
         BGG.connect(cs.bgmBus);
         VOG = AC.createGain();
-        VOG.gain.value = 1;
+        VOG.gain.value = 0.5;
         VOG.connect(cs.sfxBus);
         loadVoices();
       } catch (e) {
@@ -18236,6 +18236,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
 
   // games/chunkchunk/src/sfx.js
   var FILE_GAIN = 0.3;
+  var VOICE_RATE = 0.5;
   var FILES = ["se/mode_game", "se/mode_study", "se/btn_sarasara", "se/btn_yoidon", "se/btn_lesson", "voice/chunk", "voice/combo", "voice/adjective", "voice/adverb", "voice/verb", "voice/noun", "voice/perfect", "voice/nice", "voice/yes", "voice/good", "voice/excellent", "voice/wow", "voice/stage_clear", "voice/try_again"];
   var BUF = {};
   var LAST2 = {};
@@ -18308,7 +18309,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       if (!buf || !ENV2.root || settings.mute) return;
       const ac3 = ENV2.core.sound.ctx(), src = ac3.createBufferSource(), g = ac3.createGain();
       src.buffer = buf;
-      g.gain.value = FILE_GAIN;
+      g.gain.value = isVoice ? FILE_GAIN * VOICE_RATE : FILE_GAIN;
       src.connect(g).connect(ENV2.core.sound.sfxBus);
       if (isVoice) {
         stopSfxVoice();
@@ -20434,7 +20435,15 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
 
   // games/chunkchunk/src/bgm.js
   var FILES2 = { title: { f: "title.mp3", mean: -16.1 }, game: { f: "game.mp3", mean: -13.8 }, game30: { f: "game30.mp3", mean: -15.2 }, result: { f: "result.mp3", mean: -19.1 }, study: { f: "study.mp3", mean: -19 } };
-  var BGM_TARGET = { low: -37, mid: -31 };
+  var BGM_TARGET = { low: -31, mid: -25 };
+  var duck = 1;
+  function bgmDuck2(on) {
+    duck = on ? 0.25 : 1;
+    try {
+      bgmTick2();
+    } catch (e) {
+    }
+  }
   var NODES = {};
   var cur3 = null;
   var timer = 0;
@@ -20442,7 +20451,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
   function level(k) {
     const m = settings.bgm || "low";
     if (!BGM_TARGET[m]) return 0;
-    return Math.min(1, Math.pow(10, (BGM_TARGET[m] - FILES2[k].mean) / 20));
+    return Math.min(1, Math.pow(10, (BGM_TARGET[m] - FILES2[k].mean) / 20)) * duck;
   }
   function node(k) {
     if (NODES[k]) return NODES[k];
@@ -20619,6 +20628,10 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
   function stopVoice() {
     speakTok++;
     ENV2.core.speech.stop();
+    try {
+      bgmDuck2(false);
+    } catch (e) {
+    }
   }
   function clearPop() {
     if (popEl) {
@@ -20661,7 +20674,11 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     const sp = ENV2.core.speech, tok = ++speakTok;
     let i = 0;
     const next = () => {
-      if (tok !== speakTok || i >= chunks.length) return;
+      if (tok !== speakTok || i >= chunks.length) {
+        if (tok === speakTok) bgmDuck2(false);
+        return;
+      }
+      bgmDuck2(true);
       sp.speak(chunks[i++], { rate: 0.9, onend: next });
     };
     next();
@@ -20735,10 +20752,19 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     else if (kind === "mini") tone2(1250, 0.04, "triangle", 0.07 * v);
     else tone2(160, 0.18, "sawtooth", 0.06, 0.7);
   }
-  function speakChunk(text) {
-    if (settings.mute || !canSpeak || settings.sound === "sfx" || settings.sound === "off") return;
+  var readTok = 0;
+  function readTextAloud(text) {
+    if (!canSpeak || !text || settings.mute || settings.sound === "sfx" || settings.sound === "off") return;
+    const tok = ++readTok;
     speakTok++;
-    ENV2.core.speech.speak(text, { rate: 1.2 });
+    bgmDuck2(true);
+    ENV2.core.speech.speak(text, { rate: 1, onend: () => {
+      if (tok === readTok) bgmDuck2(false);
+    } });
+  }
+  function readSentence(k) {
+    const sen = S && S.sens[S.seq[k]];
+    if (sen) readTextAloud(sen.words.join(" "));
   }
   function tick() {
     if (!settings.mute && settings.sound === "sfx") tone2(1900, 0.025, "square", 0.012);
@@ -21294,6 +21320,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     return run === runId;
   }
   async function countdown(run) {
+    readSentence(0);
     if (!await runCount(run, [["Ready...", "small", 1200], ["3", "", 850], ["2", "", 850], ["1", "", 850], ["GO!", "go", 650]])) return;
     sfx("voice/chunk");
     S.phase = "play";
@@ -21532,7 +21559,6 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
       sfx(pv || "voice/yes");
     }
     stageOnChunk(k, sen, c);
-    if (c.kind === "excellent" || c.kind === "great") speakChunk(sen.words.slice(c.a, c.b + 1).join(" "));
     showPop(c);
     burst(c);
     document.dispatchEvent(new CustomEvent("cc:judge", { detail: { kind: c.kind, roles: c.roles } }));
@@ -21616,6 +21642,10 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
       if (bonus.length) setTimeout(() => sfx("se/bonus"), 560);
     }
     if (perfect) stageDone();
+    if (S.phase === "play") {
+      const nx = S.mode === "one" ? S.sens[S.si + 1] : S.sens[S.seq[k + 1]];
+      if (nx) readTextAloud(nx.words.join(" "));
+    }
     document.dispatchEvent(new CustomEvent("cc:sentence", { detail: { perfect, pts } }));
     const html = judgedHTML(sen, r);
     if (S.mode === "cont") {
@@ -24808,6 +24838,10 @@ body.nogram .gmT{display:none}
         const item = st.items[n], p = parseCut(item.s), len = p.words.length;
         f.cnt.textContent = n + 1 + " / " + st.items.length;
         f.ja.textContent = item.ja || "";
+        try {
+          opts.speak && opts.speak(p.words.join(" "));
+        } catch (e) {
+        }
         f.lane.innerHTML = "";
         f.lane.classList.remove("cs-col");
         const lw = el3("div", "laneW"), strip = el3("div", "strip"), line = el3("div", "cutline");
@@ -25107,6 +25141,12 @@ body.nogram .gmT{display:none}
         onChapterClear: (no, r) => rep("story_clear", { chapter: no, pct: r && r.pct, firstClear: r && r.firstClear }),
         onFinish: () => close(),
         onExit: () => close(),
+        speak: (t) => {
+          try {
+            HOST.speak && HOST.speak(t);
+          } catch (e) {
+          }
+        },
         assets: { base: HOST.base + "img/chara/", ext: ".webp", picBase: HOST.base + "img/story/", picExt: ".svg" }
       });
     }
@@ -25165,7 +25205,7 @@ body.nogram .gmT{display:none}
       el3.innerHTML = view_default;
       const wallet = createWallet(ctx.store);
       ENV2.make = createMake({ base: ctx.base, store: ctx.store, Wallet: wallet, sfx, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el3.querySelector("#title").hidden) });
-      ENV2.story = createStory({ base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el3.querySelector("#title").hidden) });
+      ENV2.story = createStory({ speak: (t) => readTextAloud(t), base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el3.querySelector("#title").hidden) });
       loadSettings();
       init_engine();
       init_texts();

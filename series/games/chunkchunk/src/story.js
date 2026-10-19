@@ -19,6 +19,7 @@ export function createStory(HOST) {
       onUnlock: key => rep('story_unlock', { key }),
       onChapterClear: (no, r) => rep('story_clear', { chapter: no, pct: r && r.pct, firstClear: r && r.firstClear }),
       onFinish: () => close(), onExit: () => close(),
+      speak: t => { try { HOST.speak && HOST.speak(t); } catch (e) { } },
       assets: { base: HOST.base + 'img/chara/', ext: '.webp', picBase: HOST.base + 'img/story/', picExt: '.svg' }
     });
   }

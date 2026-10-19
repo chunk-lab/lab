@@ -4,7 +4,7 @@ import { shortsAll } from './shorts.js';
 import { myToStory } from './texts.js';
 import { showTitle, updateLvHint } from './title.js';
 import { sfx, stopSfxVoice } from './sfx.js';
-import { bgmTick, bgmMuteDraw } from './bgm.js';
+import { bgmTick, bgmMuteDraw, bgmDuck } from './bgm.js';
 /* チャンクチャンク：ゲームの本体（区切る・判定・振り返り・設定・タイトル・ランダム） */
 export const PER_STAGE=6;
 /* 速さ10段階（1語が進む間隔ms）。4＝前の「ふつう」、10＝その約10倍速 */
@@ -30,7 +30,7 @@ export const onDoc=(t,f,o)=>{document.addEventListener(t,f,o);ENV.offs.push(()=>
 /* セーブ：共通のセーブ（このゲーム専用の場所）。中身は前と同じ形（文字列） */
 export const LS={getItem:k=>{const v=ENV.ctx.store.get(k);return v==null?null:v},setItem:(k,v)=>ENV.ctx.store.set(k,v),removeItem:k=>ENV.ctx.store.remove(k)};
 export function setTotal(v){total=v}
-export function stopVoice(){speakTok++;ENV.core.speech.stop()}
+export function stopVoice(){speakTok++;ENV.core.speech.stop();try{bgmDuck(false)}catch(e){}}
 export function clearPop(){if(popEl){popEl.remove();popEl=null}}
 export function nextRun(){return ++runId}
 export const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -55,7 +55,7 @@ export const canSpeak="speechSynthesis" in window&&"SpeechSynthesisUtterance" in
 export function speakChunks(chunks){   // 区切りごとに続けて読む
   if(!canSpeak||!settings.tts)return;
   const sp=ENV.core.speech,tok=++speakTok;let i=0;
-  const next=()=>{if(tok!==speakTok||i>=chunks.length)return;sp.speak(chunks[i++],{rate:.9,onend:next})};next();
+  const next=()=>{if(tok!==speakTok||i>=chunks.length){if(tok===speakTok)bgmDuck(false);return}bgmDuck(true);sp.speak(chunks[i++],{rate:.9,onend:next})};next();
 }
 export let speakTok=0;
 /* 区切った時の音：both＝小さい効果音＋チャンクの読み上げ／voice＝読み上げだけ／sfx＝効果音だけ（テンポ重視）／off */
@@ -90,6 +90,14 @@ export function speakChunk(text){
   if(settings.mute||!canSpeak||settings.sound==="sfx"||settings.sound==="off")return;
   speakTok++;ENV.core.speech.speak(text,{rate:1.2});
 }
+/* 一文まるごとの読み上げ（開始の3・2・1で一文目／文を区切り終えたら次の文）。時間は止めない。読み上げ中は音楽を小さくする */
+let readTok=0;
+export function readTextAloud(text){
+  if(!canSpeak||!text||settings.mute||settings.sound==="sfx"||settings.sound==="off")return;
+  const tok=++readTok;speakTok++;bgmDuck(true);
+  ENV.core.speech.speak(text,{rate:1,onend:()=>{if(tok===readTok)bgmDuck(false)}});
+}
+export function readSentence(k){const sen=S&&S.sens[S.seq[k]];if(sen)readTextAloud(sen.words.join(" "))}
 export function tick(){if(!settings.mute&&settings.sound==="sfx")tone(1900,.025,"square",.012)}
 export function primeSpeech(){}   // 共通の読み上げが受け持つ
 
@@ -415,6 +423,7 @@ export async function runCount(run,seq,quick){
   c.hidden=true;return run===runId;
 }
 export async function countdown(run){
+  readSentence(0);
   if(!await runCount(run,[["Ready...","small",1200],["3","",850],["2","",850],["1","",850],["GO!","go",650]]))return;
   sfx("voice/chunk");
   S.phase="play";renderPreview();step();
@@ -568,7 +577,6 @@ export function judgeChunk(ga,gb,forced){
   if((c.kind==="excellent"||c.kind==="great")&&c.combo>0&&c.combo%3===0)setTimeout(()=>sfx(c.combo>=9?"voice/wow":"voice/combo"),90);
   S.chunks[k][S.chunks[k].length-1]=c;addScore(c.gain);
   hitSound(c.kind);if(c.kind==="mini"){const pv={"動詞！":"voice/verb","名詞！":"voice/noun","副詞！":"voice/adverb"}[c.gram];sfx(pv||"voice/yes")}stageOnChunk(k,sen,c);
-  if(c.kind==="excellent"||c.kind==="great")speakChunk(sen.words.slice(c.a,c.b+1).join(" "));
   showPop(c);burst(c);
   document.dispatchEvent(new CustomEvent("cc:judge",{detail:{kind:c.kind,roles:c.roles}}));   // アバターなどが反応できるように
   if(S.roleMode&&!forced)askRole(c);
@@ -629,6 +637,7 @@ export function closeSentence(k){
   const r={chunks:[...chunks],bonus,pts,perfect,time,tb};S.results[S.seq[k]]=r;
   {setTimeout(()=>sfx(perfect?"voice/perfect":"se/sentence_clear"),260);if(perfect)setTimeout(()=>sfx("voice/wow"),1250);if(bonus.length)setTimeout(()=>sfx("se/bonus"),560)}
   if(perfect)stageDone();
+  if(S.phase==="play"){const nx=S.mode==="one"?S.sens[S.si+1]:S.sens[S.seq[k+1]];if(nx)readTextAloud(nx.words.join(" "))}
   document.dispatchEvent(new CustomEvent("cc:sentence",{detail:{perfect,pts}}));
   const html=judgedHTML(sen,r);
   if(S.mode==="cont"){pushHist(html);S.openK=k+1;updateProg()}

@@ -644,6 +644,7 @@ function cutStage(ch, st, finish){
     const item = st.items[n], p = parseCut(item.s), len = p.words.length;
     f.cnt.textContent = (n + 1) + " / " + st.items.length;
     f.ja.textContent = item.ja || "";
+    try { opts.speak && opts.speak(p.words.join(" ")); } catch (e) {}
     f.lane.innerHTML = ""; f.lane.classList.remove("cs-col");
     const lw = el("div", "laneW"), strip = el("div", "strip"), line = el("div", "cutline");
     line.dataset.lbl = "ここで区切る";
