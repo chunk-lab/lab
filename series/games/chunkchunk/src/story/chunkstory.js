@@ -647,7 +647,7 @@ function cutStage(ch, st, finish){
     const bar = el("div", "navrow");
     const nav = el("div", "nav");
     const bBack = el("button", "navb", "◀"), bFwd = el("button", "navb", "▶");
-    bBack.disabled = true; bBack.setAttribute("aria-label", "もどる（ここでは戻れない）"); bFwd.setAttribute("aria-label", "1語すすむ");
+    bBack.setAttribute("aria-label", "1語もどる（区切った所より前には戻れない）"); bFwd.setAttribute("aria-label", "1語すすむ");
     nav.append(bBack, bFwd);
     const bCut = el("button", "cutBtn"); bCut.innerHTML = "区切る<small>▶で進んで、ここだと思ったら押す</small>";
     bar.append(nav, bCut); f.foot.appendChild(bar);
@@ -674,7 +674,8 @@ function cutStage(ch, st, finish){
       strip.classList.toggle("cs-step", !!anim);
       strip.style.transform = "translate(" + (lx - gx) + "px,-50%)";
       line.style.left = lx + "px";
-      const fin = passed >= len;
+      const fin = passed >= len, lastCut = cuts.size ? Math.max(...cuts) : 0;
+      bBack.disabled = over || passed <= lastCut;
       bFwd.disabled = fin;
       bCut.classList.toggle("cs-fin", fin);
       bCut.innerHTML = fin ? "かんせい<small>おしまいまで進んだよ</small>" : "区切る<small>▶で進んで、ここだと思ったら押す</small>";
@@ -695,6 +696,7 @@ function cutStage(ch, st, finish){
       go.onclick = () => { n++; next(); };
       f.foot.appendChild(go);
     }
+    bBack.onclick = () => { if (over || bBack.disabled) return; passed--; render(true); };
     bFwd.onclick = () => { if (over || passed >= len) return; passed++; render(true); if (passed >= len) tell("end"); };
     bCut.onclick = () => {
       if (bCut.disabled || over) return;

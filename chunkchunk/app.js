@@ -4536,7 +4536,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     if (manual()) syncScrub();
     updateBackBtn();
   }
-  var canBack = () => !!(S && S.phase === "play" && !S.paused && manual() && settings.backBtn && !S.timed && S.passed > S.lastCut + 1);
+  var canBack = () => !!(S && S.phase === "play" && !S.paused && manual() && S.passed > S.lastCut + 1);
   function back(n) {
     if (!canBack()) return;
     const to = Math.max(S.lastCut + 1, S.passed - n);
@@ -4548,9 +4548,8 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
   function updateBackBtn() {
     const b = $("backBtn");
     if (!b) return;
-    const on = !!(settings.backBtn && !(S && S.timed));
-    b.disabled = !(on && canBack());
-    b.setAttribute("aria-label", on ? "1\u8A9E\u3082\u3069\u308B\uFF08\u533A\u5207\u3063\u305F\u6240\u3088\u308A\u524D\u306B\u306F\u623B\u308C\u306A\u3044\uFF09" : "\u623B\u308B\uFF08\u8A2D\u5B9A\u3067\u300C\u4F7F\u3046\u300D\u306B\u3059\u308B\u3068\u4F7F\u3048\u307E\u3059\uFF09");
+    b.disabled = !canBack();
+    b.setAttribute("aria-label", "1\u8A9E\u3082\u3069\u308B\uFF08\u533A\u5207\u3063\u305F\u6240\u3088\u308A\u524D\u306B\u306F\u623B\u308C\u306A\u3044\uFF09");
   }
   function blockHTML(sen, c) {
     const words = sen.words.slice(c.a, c.b + 1).map((w, i) => `<span class="w${c.roles ? " r" + c.roles[i] : ""}">${esc2(w)}</span>`).join(" ");
@@ -4945,15 +4944,9 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     <div class="row"><label for="optGram">\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u306E\u6587\u6CD5\u7528\u8A9E\uFF08\u30AB\u30FC\u30C9\u306B\u5C0F\u3055\u304F\u4F75\u8A18\uFF09</label>${opt("optGram", settings.gram === false ? "off" : "on", [["on", "\u51FA\u3059"], ["off", "\u51FA\u3055\u306A\u3044"]])}</div>
     <div class="row"><label for="optMyRank">\u81EA\u5206\u306E\u30E9\u30F3\u30AF</label>${opt("optMyRank", String(settings.myLevel || 0), [["0", "\u672A\u767B\u9332"], ...LV.slice(1).map((_, i) => [String(i + 1), lvLabel(i + 1)])])}</div>
     <div class="row"><label for="optRandLv">\u30E9\u30F3\u30C0\u30E0\u3067\u51FA\u3059\u6587</label>${opt("optRandLv", settings.randLv || "auto", [["auto", "\u304A\u307E\u304B\u305B\uFF08\u81EA\u5206\u306E\u30E9\u30F3\u30AF\u306E\u524D\u5F8C\uFF09"], ["all", "\u3059\u3079\u3066\u306E\u30EC\u30D9\u30EB"], ...LV.slice(1).map((_, i) => [String(i + 1), lvLabel(i + 1) + " \u3060\u3051"])])}</div>
-    <div class="row"><label for="optBack">1\u8A9E\u3082\u3069\u308B\u30DC\u30BF\u30F3\uFF08\u81EA\u5206\u3067\u9001\u308B\u3068\u304D\uFF09</label>${opt("optBack", settings.backBtn ? "on" : "off", [["off", "\u4F7F\u308F\u306A\u3044"], ["on", "\u4F7F\u3046"]])}</div>
     <div class="row"><label for="optTts">\u632F\u308A\u8FD4\u308A\u306E\u8AAD\u307F\u4E0A\u3052</label>${opt("optTts", settings.tts ? "on" : "off", [["on", "\u30AA\u30F3"], ["off", "\u30AA\u30D5"]])}</div>`;
   }
   function bindSettingRows() {
-    $("optBack").onchange = (e) => {
-      settings.backBtn = e.target.value === "on";
-      saveSettings();
-      updateBackBtn();
-    };
     $("optMyRank").onchange = (e) => {
       settings.myLevel = +e.target.value;
       settings.lvUp = settings.lvDown = 0;
@@ -7981,8 +7974,7 @@ body.nogram .gmT{display:none}
         const bar = el("div", "navrow");
         const nav = el("div", "nav");
         const bBack = el("button", "navb", "\u25C0"), bFwd = el("button", "navb", "\u25B6");
-        bBack.disabled = true;
-        bBack.setAttribute("aria-label", "\u3082\u3069\u308B\uFF08\u3053\u3053\u3067\u306F\u623B\u308C\u306A\u3044\uFF09");
+        bBack.setAttribute("aria-label", "1\u8A9E\u3082\u3069\u308B\uFF08\u533A\u5207\u3063\u305F\u6240\u3088\u308A\u524D\u306B\u306F\u623B\u308C\u306A\u3044\uFF09");
         bFwd.setAttribute("aria-label", "1\u8A9E\u3059\u3059\u3080");
         nav.append(bBack, bFwd);
         const bCut = el("button", "cutBtn");
@@ -8018,7 +8010,8 @@ body.nogram .gmT{display:none}
           strip.classList.toggle("cs-step", !!anim);
           strip.style.transform = "translate(" + (lx - gx) + "px,-50%)";
           line.style.left = lx + "px";
-          const fin = passed >= len;
+          const fin = passed >= len, lastCut = cuts.size ? Math.max(...cuts) : 0;
+          bBack.disabled = over || passed <= lastCut;
           bFwd.disabled = fin;
           bCut.classList.toggle("cs-fin", fin);
           bCut.innerHTML = fin ? "\u304B\u3093\u305B\u3044<small>\u304A\u3057\u307E\u3044\u307E\u3067\u9032\u3093\u3060\u3088</small>" : "\u533A\u5207\u308B<small>\u25B6\u3067\u9032\u3093\u3067\u3001\u3053\u3053\u3060\u3068\u601D\u3063\u305F\u3089\u62BC\u3059</small>";
@@ -8049,6 +8042,11 @@ body.nogram .gmT{display:none}
           };
           f.foot.appendChild(go);
         }
+        bBack.onclick = () => {
+          if (over || bBack.disabled) return;
+          passed--;
+          render(true);
+        };
         bFwd.onclick = () => {
           if (over || passed >= len) return;
           passed++;

@@ -445,16 +445,15 @@ export function renderLane(noAnim){
   updateBackBtn();
 }
 /* 1語もどる（設定で「使う」のときだけ）。区切った所より前には戻れない。チャレンジ中は使えない */
-export const canBack=()=>!!(S&&S.phase==="play"&&!S.paused&&manual()&&settings.backBtn&&!S.timed&&S.passed>S.lastCut+1);
+export const canBack=()=>!!(S&&S.phase==="play"&&!S.paused&&manual()&&S.passed>S.lastCut+1);   // 1語もどる：自分で送るとき（練習もチャレンジも）。区切った所より前には戻れない
 export function back(n){
   if(!canBack())return;
   const to=Math.max(S.lastCut+1,S.passed-n);if(to===S.passed)return;
   S.passed=to;renderLane(true);renderLine();
 }
 export function updateBackBtn(){
-  const b=$("backBtn");if(!b)return;const on=!!(settings.backBtn&&!(S&&S.timed));
-  b.disabled=!(on&&canBack());
-  b.setAttribute("aria-label",on?"1語もどる（区切った所より前には戻れない）":"戻る（設定で「使う」にすると使えます）");
+  const b=$("backBtn");if(!b)return;b.disabled=!canBack();
+  b.setAttribute("aria-label","1語もどる（区切った所より前には戻れない）");
 }
 /* 上の行：今の文の判定済みチャンク＋流れ出た単語 */
 export function blockHTML(sen,c){
@@ -704,10 +703,8 @@ export function settingRows(){return `
     <div class="row"><label for="optGram">チュートリアルの文法用語（カードに小さく併記）</label>${opt("optGram",settings.gram===false?"off":"on",[["on","出す"],["off","出さない"]])}</div>
     <div class="row"><label for="optMyRank">自分のランク</label>${opt("optMyRank",String(settings.myLevel||0),[["0","未登録"],...LV.slice(1).map((_,i)=>[String(i+1),lvLabel(i+1)])])}</div>
     <div class="row"><label for="optRandLv">ランダムで出す文</label>${opt("optRandLv",settings.randLv||"auto",[["auto","おまかせ（自分のランクの前後）"],["all","すべてのレベル"],...LV.slice(1).map((_,i)=>[String(i+1),lvLabel(i+1)+" だけ"])])}</div>
-    <div class="row"><label for="optBack">1語もどるボタン（自分で送るとき）</label>${opt("optBack",settings.backBtn?"on":"off",[["off","使わない"],["on","使う"]])}</div>
     <div class="row"><label for="optTts">振り返りの読み上げ</label>${opt("optTts",settings.tts?"on":"off",[["on","オン"],["off","オフ"]])}</div>`}
 export function bindSettingRows(){
-  $("optBack").onchange=e=>{settings.backBtn=e.target.value==="on";saveSettings();updateBackBtn()};
   $("optMyRank").onchange=e=>{settings.myLevel=+e.target.value;settings.lvUp=settings.lvDown=0;saveSettings();updateLvHint()};
   $("optRandLv").onchange=e=>{settings.randLv=e.target.value;saveSettings();updateLvHint()};
   $("optSpeed").onchange=e=>{settings.speed=+e.target.value;saveSettings();applyVisual()};
@@ -795,7 +792,7 @@ export function init_engine(){
   $("scrub").addEventListener("input",e=>{
     if(!S||S.phase!=="play"||!manual()){syncScrub();return}
     const v=+e.target.value;
-    if(v<S.passed&&canBack()){back(S.passed-v);e.target.value=S.passed;return}   // 「1語もどる」を使うときだけ、区切った所まで戻れる
+    if(v<S.passed&&canBack()){back(S.passed-v);e.target.value=S.passed;return}   // 区切った所まで戻れる
     if(v<=S.passed){e.target.value=S.passed;return}   // 戻れない
     fwd(v-S.passed);
   });
