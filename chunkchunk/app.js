@@ -7074,6 +7074,9 @@ body.nogram .gmT{display:none}
       // true にすると bg/pic も <storyBase><キー>.<storyExt> から読む
       storyBase: "img/story/",
       storyExt: ".webp",
+      picBase: "img/story/",
+      picExt: ".svg",
+      // 説明の絵（pic_<キー>.svg）。無ければ仮アイコン
       debug: false,
       // true で仮アイコンにキー名を出す
       /* 台本で使う旧表情名 → 本体の7表情。好きに直してOK */
@@ -7151,9 +7154,9 @@ body.nogram .gmT{display:none}
             end: "\u6700\u5F8C\u307E\u3067\u9032\u3093\u3060\u3089\u300E\u304B\u3093\u305B\u3044\u300F\u3092\u62BC\u3057\u3066\u306D\u3002"
           },
           items: [
-            { s: "Tom | plays soccer.", ja: "\u30C8\u30E0\u306F\u30B5\u30C3\u30AB\u30FC\u3092\u3059\u308B\u3002" },
-            { s: "My sister | likes cats.", ja: "\u308F\u305F\u3057\u306E\u59C9\u306F\u30CD\u30B3\u304C\u597D\u304D\u3002" },
-            { s: "The dog | runs fast.", ja: "\u305D\u306E\u72AC\u306F\u901F\u304F\u8D70\u308B\u3002" }
+            { s: "Tom | plays / soccer.", ja: "\u30C8\u30E0\u306F\u30B5\u30C3\u30AB\u30FC\u3092\u3059\u308B\u3002" },
+            { s: "My sister | likes / cats.", ja: "\u308F\u305F\u3057\u306E\u59C9\u306F\u30CD\u30B3\u304C\u597D\u304D\u3002" },
+            { s: "The dog | runs / fast.", ja: "\u305D\u306E\u72AC\u306F\u901F\u304F\u8D70\u308B\u3002" }
           ]
         }
       },
@@ -7476,7 +7479,7 @@ body.nogram .gmT{display:none}
     function picNode(k) {
       const p = A.pic[k] || { label: k };
       const key = "pic_" + k;
-      return withFallback(storySrc(p.src, key), () => {
+      return withFallback(p.src || (A.config.picBase ? A.config.picBase + key + A.config.picExt : storySrc(p.src, key)), () => {
         const d = el("div", "ph");
         d.style.setProperty("--c", "#fff7d6");
         d.innerHTML = `<b>\u7D75</b><span style="font-size:12px;line-height:1.5">${esc3(p.label)}</span>${A.config.debug ? `<code>${key}</code>` : ""}`;
@@ -7524,10 +7527,20 @@ body.nogram .gmT{display:none}
         const bt = el("div", "bt");
         const b1 = el("button", "pill", done ? "\u3082\u3046\u4E00\u5EA6\u898B\u308B" : "\u306F\u3058\u3081\u308B");
         b1.disabled = !open;
-        b1.onclick = () => playChapter(ch.no);
+        b1.onclick = (e) => {
+          e.stopPropagation();
+          playChapter(ch.no);
+        };
+        if (open) {
+          row.onclick = () => playChapter(ch.no);
+          row.style.cursor = "pointer";
+        }
         const b2 = el("button", "pill sub", "\u30B2\u30FC\u30E0\u3060\u3051");
         b2.disabled = !done;
-        b2.onclick = () => runStage(ch);
+        b2.onclick = (e) => {
+          e.stopPropagation();
+          runStage(ch);
+        };
         bt.append(b1, b2);
         if (mode) bt.appendChild(el("span", "tag-unlock", "\u30AF\u30EA\u30A2\u3067\u300C" + esc3(mode.name) + "\u300D"));
         row.appendChild(bt);
@@ -8274,7 +8287,7 @@ body.nogram .gmT{display:none}
         onChapterClear: (no, r) => rep("story_clear", { chapter: no, pct: r && r.pct, firstClear: r && r.firstClear }),
         onFinish: () => close(),
         onExit: () => close(),
-        assets: { base: HOST.base + "img/chara/", ext: ".webp" }
+        assets: { base: HOST.base + "img/chara/", ext: ".webp", picBase: HOST.base + "img/story/", picExt: ".svg" }
       });
     }
     function close() {

@@ -9,6 +9,7 @@ window.CS_ASSETS = {
     ext: ".webp",
     storyImages: false,         // true にすると bg/pic も <storyBase><キー>.<storyExt> から読む
     storyBase: "img/story/", storyExt: ".webp",
+    picBase: "img/story/", picExt: ".svg",   // 説明の絵（pic_<キー>.svg）。無ければ仮アイコン
     debug: false,               // true で仮アイコンにキー名を出す
     /* 台本で使う旧表情名 → 本体の7表情。好きに直してOK */
     faceMap: {
@@ -69,9 +70,9 @@ window.CS_STORY = {
               cut:"切れたね！切ったところをタップすると元に戻せるよ。",
               end:"最後まで進んだら『かんせい』を押してね。" },
       items:[
-        { s:"Tom | plays soccer.", ja:"トムはサッカーをする。" },
-        { s:"My sister | likes cats.", ja:"わたしの姉はネコが好き。" },
-        { s:"The dog | runs fast.", ja:"その犬は速く走る。" }
+        { s:"Tom | plays / soccer.", ja:"トムはサッカーをする。" },
+        { s:"My sister | likes / cats.", ja:"わたしの姉はネコが好き。" },
+        { s:"The dog | runs / fast.", ja:"その犬は速く走る。" }
       ] } },
 
   { no:2, title:"「＝」のことばと「うごき」のことば", sub:"主役のようすを見つける",
@@ -305,7 +306,7 @@ function charaNode(who, face){
 }
 function picNode(k){
   const p = A.pic[k] || { label:k }; const key = "pic_" + k;
-  return withFallback(storySrc(p.src, key), () => {
+  return withFallback(p.src || (A.config.picBase ? A.config.picBase + key + A.config.picExt : storySrc(p.src, key)), () => {
     const d = el("div", "ph"); d.style.setProperty("--c", "#fff7d6");
     d.innerHTML = `<b>絵</b><span style="font-size:12px;line-height:1.5">${esc(p.label)}</span>${A.config.debug ? `<code>${key}</code>` : ""}`;
     return d;
@@ -345,9 +346,10 @@ function openMap(){
       <div class="cs-tt">${esc(ch.title)}<small>${esc(ch.sub || "")}${done ? " ・ クリア" : ""}</small></div>`;
     const bt = el("div", "bt");
     const b1 = el("button", "pill", done ? "もう一度見る" : "はじめる"); b1.disabled = !open;
-    b1.onclick = () => playChapter(ch.no);
+    b1.onclick = e => { e.stopPropagation(); playChapter(ch.no); };
+    if (open){ row.onclick = () => playChapter(ch.no); row.style.cursor = "pointer"; }   // カードのどこを押しても始まる
     const b2 = el("button", "pill sub", "ゲームだけ"); b2.disabled = !done;
-    b2.onclick = () => runStage(ch);
+    b2.onclick = e => { e.stopPropagation(); runStage(ch); };
     bt.append(b1, b2);
     if (mode) bt.appendChild(el("span", "tag-unlock", "クリアで「" + esc(mode.name) + "」"));
     row.appendChild(bt);

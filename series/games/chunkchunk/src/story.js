@@ -19,7 +19,7 @@ export function createStory(HOST) {
       onUnlock: key => rep('story_unlock', { key }),
       onChapterClear: (no, r) => rep('story_clear', { chapter: no, pct: r && r.pct, firstClear: r && r.firstClear }),
       onFinish: () => close(), onExit: () => close(),
-      assets: { base: HOST.base + 'img/chara/', ext: '.webp' }
+      assets: { base: HOST.base + 'img/chara/', ext: '.webp', picBase: HOST.base + 'img/story/', picExt: '.svg' }
     });
   }
   function close() { try { window.ChunkStory.unmount(); } catch (e) { } root.hidden = true; HOST.onClose && HOST.onClose(); }

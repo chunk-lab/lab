@@ -251,3 +251,5 @@
 .cs-cutscr .cs-foot{display:flex}
 .cs-cutscr .cs-nav{gap:46px}
 .cs-cutscr .cs-navb{width:52px}
+.cs-map .cs-ch:not(.cs-lock):active{transform:scale(.99)}
+.cs-card img{width:100%;max-height:92px;object-fit:contain;border-radius:12px}

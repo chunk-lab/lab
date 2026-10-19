@@ -4491,3 +4491,12 @@ html[data-theme=cute] .ct-cc .edView p {
 .cs-cutscr .cs-navb {
   width: 52px;
 }
+.cs-map .cs-ch:not(.cs-lock):active {
+  transform: scale(.99);
+}
+.cs-card img {
+  width: 100%;
+  max-height: 92px;
+  object-fit: contain;
+  border-radius: 12px;
+}
