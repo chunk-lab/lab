@@ -28,11 +28,11 @@ export function renderHome(){
 }
 export function renderDetail(){
   const p=CUR;$("dTag").textContent=`${LV[p.lv].name}・${p.tag.split("・")[1]||""}`;$("dTitle").textContent=p.title;$("dJa").textContent=p.ja;
-  const rb=(SV.best[p.id]||{}).run;$("dRun").innerHTML=rb?`通しのベスト <b>${rb.time.toFixed(1)}s</b>　ランク ${rb.rank}`:"4段階を続けて遊びます。途中の段から始めることもできます";
+  const rb=(SV.best[p.id]||{}).run;$("dRun").innerHTML=rb?`通しのベスト <b>${rb.time.toFixed(1)}s</b>　ランク ${rb.rank}`:"4ステージを続けて遊びます。途中の段から始めることもできます";
   $("stages").innerHTML=STAGES.map(s=>{const lk=!reached(p.id,s.id),r=rec(p.id,s.id,"ta"),st=starsOf(p.id,s.id);
-    return `<button class="st ${lk?"lock":""}" data-st="${s.id}"><span class="no">${lk?"🔒":s.id}</span><span><div class="nm">${s.name}</div><div class="ds">${lk?"ひとつ前の段まで進むと、ここから始められます":s.desc}</div></span>
+    return `<button class="st ${lk?"lock":""}" data-st="${s.id}"><span class="no">${lk?"🔒":s.id}</span><span><div class="nm">${s.name}</div><div class="ds">${lk?"ひとつ前のステージまで進むと、ここから始められます":s.desc}</div></span>
     <span class="rec">${r?`<b>${r.rank||"-"}</b>${r.time.toFixed(1)}s`:""}<span class="stars">${[0,1,2].map(i=>`<span class="${i<st?"on":""}">★</span>`).join("")}</span></span></button>`}).join("");
-  $("stages").querySelectorAll(".st").forEach(b=>b.onclick=()=>{const s=+b.dataset.st;if(!reached(p.id,s)){SE.ng();toast("ひとつ前の段まで進むと開きます");return}SE.tap();startRun(s)});
+  $("stages").querySelectorAll(".st").forEach(b=>b.onclick=()=>{const s=+b.dataset.st;if(!reached(p.id,s)){SE.ng();toast("ひとつ前のステージまで進むと開きます");return}SE.tap();startRun(s)});
 }
 /* 全画面（ブラウザのバーを消す）＋横向き固定。押したときにだけ呼べる。iPhoneのブラウザは非対応（アプリ版で全画面） */
 export const isFull=()=>!!(document.fullscreenElement||document.webkitFullscreenElement);

@@ -48,13 +48,13 @@ function enter(k) {
 document.querySelectorAll('.tw-bld').forEach(b => b.addEventListener('click', () => { tour.tapped(b.dataset.k); b.classList.remove('hop'); void b.offsetWidth; b.classList.add('hop'); setTimeout(() => enter(b.dataset.k), 260); }));
 core.onClose = () => { refreshMe(); tour.afterClose(); };
 
-/* ひみつ：街の真ん中の木。タップすると葉が落ちて、「今日のフレーズ」が出る（1日ひとつ。集めたフレーズも見られる） */
+/* ひみつ：街の真ん中の木。タップするとりんごが落ちて、「今日のフレーズ」が出る（1日ひとつ。集めたフレーズも見られる） */
 const tstore = createStore('town');
 function dayNo() { const d = new Date(); return Math.floor(new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() / 864e5); }
 $('twTree').onclick = () => {
   const m = $('twMap'), t = $('twTree');
   for (let i = 0; i < 9; i++) {
-    const l = document.createElement('span'); l.className = 'tw-leaf'; l.textContent = '🍃';
+    const l = document.createElement('span'); l.className = 'tw-leaf'; l.textContent = '🍎';
     l.style.left = (44 + Math.random() * 12) + '%'; l.style.top = (58 + Math.random() * 4) + '%';
     l.style.setProperty('--dx', (Math.random() * 80 - 40) + 'px'); l.style.setProperty('--rot', (Math.random() * 360 - 180) + 'deg');
     l.style.animationDelay = (i * 0.07) + 's'; m.appendChild(l); setTimeout(() => l.remove(), 2200);
@@ -63,7 +63,7 @@ $('twTree').onclick = () => {
   const v = Object.assign({ seen: false, got: {} }, tstore.get('tree') || {});
   const first = !v.seen; v.seen = true; v.got[idx] = 1; tstore.set('tree', v);
   const n = Object.keys(v.got).length;
-  setTimeout(() => core.ui.sheet(`<h3>🌳 今日のフレーズ</h3><div class="tw-phrase">${first ? '<div class="secret">ひみつを見つけた！</div>' : ''}<div class="en">${esc(en)}</div><div class="ja">${esc(ja)}</div>
+  setTimeout(() => core.ui.sheet(`<h3>🍎 今日のフレーズ</h3><div class="tw-phrase">${first ? '<div class="secret">ひみつを見つけた！ りんごが落ちてきたよ</div>' : ''}<div class="en">${esc(en)}</div><div class="ja">${esc(ja)}</div>
     <button class="cs-btn" id="twSay">🔊 聞く</button><div class="cnt">あつめたフレーズ ${n} / ${PHRASES.length}　（毎日ちがうフレーズが出るよ）</div>
     <button class="cs-btn" id="twGotBtn">あつめたフレーズを見る</button><ul class="tw-got" id="twGot" hidden>${Object.keys(v.got).map(Number).sort((a, b) => a - b).map(i => `<li><b>${esc(PHRASES[i][0])}</b>　${esc(PHRASES[i][1])}</li>`).join('')}</ul></div>`,
     (ov) => { ov.querySelector('#twSay').onclick = () => { try { core.speech.speak(en, { rate: .9 }); } catch (e) { } }; ov.querySelector('#twGotBtn').onclick = () => { ov.querySelector('#twGot').hidden = false; }; }), 500);
