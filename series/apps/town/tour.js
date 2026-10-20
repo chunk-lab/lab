@@ -2,6 +2,7 @@
    コースごとに区切ってあるので、右上の「？」からいつでも見たいところだけ見直せる。
    台本は COURSES を書きかえる（w: g＝女の子／b＝男の子、at: 光らせる建物、tap: その建物をタップするまで待つ）。 */
 import { createStore } from '../../core/store.js';
+import { runCoach } from '../../core/coach.js';
 const CH = 'g/chunkchunk/img/chara/';
 const face = (w, f) => `${CH}${w === 'g' ? 'girl' : 'boy'}/${f || 'normal'}.webp`;
 const NAME = { g: '女の子', b: '男の子' };
@@ -52,6 +53,16 @@ const COURSES = [
     { w: 'g', f: 'joy', t: 'さあ、街で遊んでみよう！' }] }
 ];
 const ALL = COURSES.map(c => c.id);
+/* 施設から入ったあと（ツアー中だけ）出す「ここでやること」。キーは「ゲームid:face」か「ゲームid」 */
+const INTRO = {
+  'chunkchunk:lesson': [{ w: 'b', t: 'ここはレッスン。お話を読みながら、チャンクの切り方を覚えていくよ。' }, { w: 'g', f: 'idea', t: '章を選んだら、画面の案内のとおりに進めてね。' }],
+  'chunkchunk:library': [{ w: 'g', t: 'ここでは、英語の文章を、チャンクごとに区切りながら読めるよ。' }, { w: 'b', f: 'idea', t: '読みたい文章を選んでみよう。分からない単語は、辞書で見られるよ。' }],
+  'chunkchunk:arcade': [{ w: 'b', t: '英文が横に流れてくるよ。▶で1語ずつ進めて、意味の切れ目で「区切る」を押してね。' }, { w: 'g', f: 'idea', t: 'まちがえたら◀で戻れるよ。区切りが合うと、点が入るんだ。' }],
+  eigonou: [{ w: 'g', t: 'ここは「英語脳アプリ」。絵を見ながら、英文を組み立てる英語のシミュレータだよ。' }, { w: 'b', f: 'idea', t: 'まずは、画面の案内のとおりに触ってみてね。' }],
+  stream: [{ w: 'b', t: 'チャンクストリームは、聞いた音で判断するゲームだよ。横画面で遊んでね。' }, { w: 'g', f: 'idea', t: '4つの段をクリアしていこう。はじめて遊ぶ段の前に、説明が出るよ。' }],
+  punichunk: [{ w: 'g', t: 'ぷにチャンクは、バブルを英語の順につないで、文を作るパズルだよ。' }, { w: 'b', f: 'idea', t: 'はじめてなら、チュートリアルから遊んでみてね。' }],
+  cards: [{ w: 'b', t: 'チャンク・カードは、英語の語順を正しく並べるカードゲームだよ。' }, { w: 'g', f: 'idea', t: 'はじめてなら、「ひとりで練習」で、案内つきで遊べるよ。' }]
+};
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 export function createTour(core) {
@@ -118,6 +129,8 @@ export function createTour(core) {
     active: () => on,
     /* 建物をタップしたとき：いま待っている建物なら「触った」ことにする */
     tapped(k) { if (on && cur().tap === k) { touched = true; box && box.classList.add('touched'); } },
+    /* 施設から入ったとき：ツアー中なら、「ここでやること」を出す */
+    entering(game, opts) { if (!on || !cur().tap) return; const st = INTRO[game + ':' + ((opts && opts.face) || '')] || INTRO[game]; if (st) setTimeout(() => runCoach(st), 500); },
     /* ゲームから街にもどったとき：触ったあとなら、つぎへ進む */
     afterClose() { if (on && cur().tap && touched) next(); }
   };

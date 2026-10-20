@@ -1,5 +1,7 @@
 import { $, ENV, LV, STAGES, SV, chara, esc, rec, save, setTimeout, shuf, starsOf } from './base.js';
-import { startRun } from './play.js';
+import { startRun, tutFace } from './play.js';
+import { runCoach } from '../../../core/coach.js';
+import { TUT } from './tutorial.js';
 import { SE, ac, bgmStart, bgmStop, hush, say } from './sound.js';
 import { renderWords } from './words.js';
 /* ================= 画面 ================= */
@@ -90,6 +92,7 @@ export function init_screens(){
   $("btnRun").onclick=()=>{SE.tap();startRun(1)};
   $("modeRh").onclick=()=>{SE.tap();toast("リズムモードは準備中です")};
   $("btnRead").onclick=()=>openReading("pre");
+  $("btnHow").onclick=()=>{SE.tap();runCoach([...TUT.intro,...TUT[1],...TUT[2],...TUT[3],...TUT[4]],{face:tutFace})};
   document.querySelectorAll("[data-back]").forEach(b=>b.onclick=()=>{SE.tap();hush();if(b.dataset.back==="home"){renderHome();show("sHome")}else{renderDetail();show("sDetail")}});
   $("btnJp").onclick=()=>{$("btnJp").classList.toggle("on");$("reader").classList.toggle("nojp")};
   $("btnReadAll").onclick=()=>{ac();say(CUR.chunks.map(plain).join(" "))};

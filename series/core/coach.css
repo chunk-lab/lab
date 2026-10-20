@@ -1,0 +1,23 @@
+/* 案内（コーチ）：暗くして、光る枠で場所を指し、しゃべるカードで説明する。全ゲーム共通 */
+.cc-coach{position:fixed;inset:0;z-index:80;font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP","M PLUS Rounded 1c",system-ui,sans-serif}
+.cc-coach.pass{pointer-events:none}
+.cc-coach .cc-dim{position:absolute;inset:0;background:rgba(10,20,40,.55)}
+.cc-coach.has .cc-dim{display:none}
+.cc-coach .cc-hole{position:absolute;border:3px solid #ffd23c;border-radius:14px;box-shadow:0 0 0 100vmax rgba(10,20,40,.58);pointer-events:none;animation:ccPulse .9s ease-in-out infinite alternate}
+@keyframes ccPulse{from{border-color:#ffe066}to{border-color:#fff3a0;box-shadow:0 0 0 100vmax rgba(10,20,40,.58),0 0 14px #ffc400}}
+.cc-coach .cc-box{pointer-events:auto;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 16px));box-sizing:border-box;min-height:104px;padding:20px 14px 12px 86px;background:#fffaf0;border:3px solid #8a5a32;border-radius:20px;box-shadow:0 4px 0 #8a5a32,0 8px 18px rgba(0,0,0,.28);color:#2b2320;cursor:pointer;user-select:none}
+.cc-coach .cc-box.top{bottom:auto;top:calc(10px + env(safe-area-inset-top,0px))}
+.cc-coach .cc-box.pop{animation:ccPop .2s ease-out}
+@keyframes ccPop{from{opacity:.5;margin-top:6px}to{opacity:1;margin-top:0}}
+.cc-coach .cf{position:absolute;left:10px;bottom:10px;width:64px;height:64px;object-fit:contain;border-radius:50%;background:#e6f3ff;border:2px solid #8a5a32}
+.cc-coach .cf[hidden]{display:none}
+.cc-coach .cc-box.nofc{padding-left:16px}
+.cc-coach .cn{position:absolute;left:14px;top:-14px;padding:3px 14px;border-radius:999px;font-size:13px;font-weight:800;color:#fff;background:#ff7fb0;border:2px solid #8a5a32}
+.cc-coach .cn.b{background:#5aa9ff}
+.cc-coach .ct{font-size:15px;line-height:1.7;font-weight:700;padding-bottom:22px}
+.cc-coach .cskip{position:absolute;right:10px;top:-14px;padding:3px 12px;border-radius:999px;font:inherit;font-size:12px;font-weight:800;background:#fff;color:#6b5a4c;border:2px solid #8a5a32;cursor:pointer}
+.cc-coach .cnx{position:absolute;right:12px;bottom:8px;padding:5px 14px;border-radius:999px;font:inherit;font-size:13px;font-weight:800;background:#4a8fe0;color:#fff;border:2px solid #2e6fbf;cursor:pointer}
+.cc-coach .cnx[hidden]{display:none}
+.cc-coach .cwt{position:absolute;right:14px;bottom:10px;font-size:12px;font-weight:800;color:#4a8fe0;animation:ccBlink 1s steps(2) infinite}
+@keyframes ccBlink{50%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){.cc-coach .cc-hole,.cc-coach .cc-box.pop{animation:none}}

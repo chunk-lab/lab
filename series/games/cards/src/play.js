@@ -1,6 +1,8 @@
 import { $, CFG, DICT, G, LEVEL, LV_JA, LV_MULT, el, pick, rnd, setLevel, shuffle, store } from './base.js';
 import { BOSSES, BOSS_AT, FORM_JA, JOKERS, KIND_JA, PART_JA, TARGETS, TSU, advise, baseChips, baseScore, card, cardText, colorOf, curTSU, cyclable, cycle, evaluate, isPlace, isTime, lvOf, mk, prevCore, starterDeck, storyOf, tsuCard, vtext, yaku } from './rules.js';
 import { SFX, ac, speak, unlock } from './sound.js';
+import { runCoach } from '../../../core/coach.js';
+import { TUT } from './tutorial.js';
   export var VSref = null; export function registerVS(v) { VSref = v; }
   // ---------------- ゲームの状態 ----------------
   export var R = null;
@@ -94,13 +96,14 @@ import { SFX, ac, speak, unlock } from './sound.js';
     var b = store.get('best') || {};
     var s = screen('<div class="title"><div class="logo"><span>CHUNK</span><span>CARDS</span></div><div class="sub">英文で「役」をつくる カードゲーム</div><div class="lvsel" id="lvsel"></div><div class="lvdesc" id="lvd"></div>' +
       '<div class="fan"><div class="card n big" style="--r:-12deg">The</div><div class="card v big" style="--r:-4deg">dog</div><div class="card v big" style="--r:4deg">ate</div><div class="card m big" style="--r:12deg">quickly</div></div>' +
-      '<button class="btn go" id="go">ひとりで練習</button><button class="btn vs" id="vs">CPUと対戦</button><button class="btn ghost" id="how">あそびかた</button><button class="btn ghost small" id="cb">📖 名コンビ図鑑</button>' +
+      '<button class="btn go" id="go">ひとりで練習</button><button class="btn vs" id="vs">CPUと対戦</button><button class="btn ghost" id="how">あそびかた</button><button class="btn ghost small" id="tut">🎓 チュートリアル</button><button class="btn ghost small" id="cb">📖 名コンビ図鑑</button>' +
       (b.stage ? '<div class="rec">最高:ステージ ' + b.stage + ' ・ ' + (b.total || 0).toLocaleString() + '点' + (b.text ? '<br><i>' + b.text + '</i>' : '') + '</div>' : '') + '</div>');
     var LVD = ['a / the・前置詞・be・動詞の形を忘れても、自動で補って文にしてくれる。出したあとに1語ずつ解説(点 ×1)', 'a / the・前置詞・動詞の形も自分で選ぶ(点 ×1)', 'むずかしい語が山札に入り、候補の光もなし(点 ×1.3)'];
     function lvUI() { var box = $('#lvsel', s); box.innerHTML = ''; LV_JA.forEach(function (n, i) { var b = el('button', 'lvb' + (i === LEVEL ? ' on' : ''), n); b.onclick = function () { setLevel(i); store.set('level', i); SFX.tap(); lvUI(); }; box.appendChild(b); }); $('#lvd', s).textContent = LVD[LEVEL]; }
     lvUI();
     $('#go', s).onclick = function () { unlock(); SFX.put(); newRun(); };
     $('#how', s).onclick = function () { unlock(); showHow(); };
+    $('#tut', s).onclick = function () { unlock(); SFX.put(); store.set('tut', 0); newRun(); };
     $('#cb', s).onclick = function () { var l = store.get('combos') || [], o = el('div', 'modal', '<div class="box"><h2>📖 名コンビ図鑑(' + l.length + ')</h2><p style="font-size:12px;opacity:.8;margin:0">動詞とぴったりの目的語の組み合わせ。文で使うと倍率+2</p><div class="combos">' + (l.length ? l.map(function (x) { return '<span>' + x + '</span>'; }).join('') : '<i>まだない</i>') + '</div><button class="btn go" id="ok">とじる</button></div>'); root.appendChild(o); $('#ok', o).onclick = function () { o.remove(); }; };
     $('#vs', s).onclick = function () { unlock(); SFX.put(); VSref && VSref.start(); };
   }
@@ -133,6 +136,7 @@ import { SFX, ac, speak, unlock } from './sound.js';
     G_.hb.onclick = doHint;
     G_.tab = G_.tab == null ? 0 : G_.tab;
     G_.vs = null; G_.mode = 'play'; G_.mark = []; renderAll();
+    if (R.stage === 0 && !store.get('tut')) setTimeout(function () { if (G_.row && G_.row.isConnected) runCoach(TUT, { onDone: function () { store.set('tut', 1); } }); }, 500);
   }
   // 台の上の見た目:文の中での実際の形(is / plays / him / an …)にそろえる
   export var BE = /^(am|is|are|was|were|be|been|being)$/, HV = /^(have|has|had|having)$/;

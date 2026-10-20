@@ -40,10 +40,10 @@ addEventListener('resize', fit); fit();
 function enter(k) {
   const p = PLACES[k];
   if (p.profile) { core.ui.profile(); return; }
-  if (p.items.length === 1) { core.host.open(GAMES[p.items[0].game], p.items[0].opts); return; }
+  if (p.items.length === 1) { tour.entering(p.items[0].game, p.items[0].opts); core.host.open(GAMES[p.items[0].game], p.items[0].opts); return; }
   core.ui.sheet(`<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc(p.n)}</h3><p>${esc(p.sub)}</p></div></header>` +
     (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc(it.t)}<small>入る ›</small></button></li>`).join('')}</ul>` : '<p class="cs-note">売っているものは、まだありません。</p>'),
-    (ov, close) => ov.querySelectorAll('button[data-i]').forEach(b => b.onclick = () => { const it = p.items[+b.dataset.i]; close(); core.host.open(GAMES[it.game], it.opts); }));
+    (ov, close) => ov.querySelectorAll('button[data-i]').forEach(b => b.onclick = () => { const it = p.items[+b.dataset.i]; close(); tour.entering(it.game, it.opts); core.host.open(GAMES[it.game], it.opts); }));
 }
 document.querySelectorAll('.tw-bld').forEach(b => b.addEventListener('click', () => { tour.tapped(b.dataset.k); b.classList.remove('hop'); void b.offsetWidth; b.classList.add('hop'); setTimeout(() => enter(b.dataset.k), 260); }));
 core.onClose = () => { refreshMe(); tour.afterClose(); };

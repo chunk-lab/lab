@@ -5,7 +5,7 @@ export const PREBUILD = [   // 組み立ての前に動かす道具
 ];
 export const GAMES = {   // ゲーム → 公開するファイル [元, 公開先]（フォルダは中身ごと）
   punichunk: [],   // 全部 app.js / app.css に入る
-  cards: [],
+  cards: [['games/chunkchunk/assets/img/chara', 'g/chunkchunk/img/chara']],   // 案内の2人の顔（ほかのゲームと同じ場所に置く）
   stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream']],
   chunkchunk: [['games/chunkchunk/assets', 'g/chunkchunk']],   // 本体は app.js / app.css に入る。レッスンの2人の絵だけ別ファイル
   eigonou: [{ bundle: 'games/eigonou/src/main.js', out: 'g/eigonou/eigo.js' }],   // 大きいので、開いたときに読み込む別ファイル（eigo.js / eigo.css）
