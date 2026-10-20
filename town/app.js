@@ -23281,6 +23281,7 @@ body.nogram .gmT{display:none}
 .mkName.g{background:#ff7fb7}.mkName.b{background:#5aa9ff}
 .mkTxt{white-space:pre-line;font-size:16px;line-height:1.7;font-weight:700;margin-top:6px}
 .mkNext{position:absolute;right:12px;bottom:8px;color:#5aa9ff;font-size:14px;animation:mkBlink 1.2s infinite}
+.mkQt{height:190px;margin-top:8px!important;box-sizing:border-box;justify-content:center;gap:5px;padding:8px 12px}.mkQt.big{height:auto;min-height:190px}.mkQb{margin-top:4px!important;min-height:104px;box-sizing:border-box;justify-content:center}
 .mkQ{flex:none;margin:6px 12px 0;padding:12px 12px 14px;background:rgba(255,255,255,.93);border-radius:18px;box-shadow:0 2px 12px rgba(60,90,140,.2);display:flex;flex-direction:column;gap:10px}
 .mkQ .jp{font-size:19px;font-weight:800;text-align:center}
 .mkQ .tag{font-size:11px;color:#fff;background:#8a9bb8;border-radius:8px;padding:2px 8px;align-self:center}
@@ -23632,15 +23633,15 @@ body.nogram .gmT{display:none}
         const boss = cur4.lesson.boss && cur4.bossOn;
         const TAGS = { A: "\u4E26\u3079\u308B", E: "\u65E5\u672C\u8A9E\u3067\u4E26\u3079\u308B", B: "\u9078\u3076", C: s.gen ? "\u4EF2\u9593\u308F\u3051" : "\u578B\u3092\u9078\u3076", D: "\u65E5\u672C\u8A9E\u307E\u3058\u308A", T: "\u3069\u3053\u3092\u8A73\u3057\u304F\u3057\u3066\u308B\uFF1F" };
         const tag = `<span class="tag ${boss ? "boss" : s.type === "D" || s.type === "T" ? s.type : ""}">${boss ? "\u30DC\u30B9\u6226" : TAGS[s.type] || ""}</span>`;
-        const chs = chars(main, "\u666E\u901A", "\u666E\u901A", "", true);
+        const chs = chars(main, "\u666E\u901A", "\u666E\u901A", "", false);
         if (s.type === "A" || s.type === "D" || s.type === "E") {
           const toks = s.ans.concat(s.dummy.map((t) => "X:" + t));
           const pool = s.type === "E" ? s.jo.map((i) => ({ id: i, ...tk(s.ans[i]) })) : shuf2(toks.map((a, i) => ({ id: i, ...tk(a) })));
           const slots = Array(s.ans.length).fill(null);
-          main.innerHTML = `${chs}<div class="mkQ">${tag}<div class="jp">${esc5(s.jp)}</div>
+          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="jp">${esc5(s.jp)}</div>
         ${s.hint ? `<div class="hint">${esc5(s.hint).replace(/\n/g, "<br>")}</div>` : s.type === "E" ? `<div class="hint">\u65E5\u672C\u8A9E\u306E\u307E\u307E\u3001\u82F1\u8A9E\u306E\u9806\u756A\u306B\u4E26\u3079\u3088\u3046<br>\uFF08\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u76F8\u624B\uFF09</div>` : s.type === "D" ? `<div class="hint">\u77E5\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u65E5\u672C\u8A9E\u306E\u30AB\u30FC\u30C9\u306E\u307E\u307E\u3067OK\u3002\u9806\u756A\u3060\u3051\u5408\u308F\u305B\u3088\u3046</div>` : boss ? `<div class="hint">\u4F7F\u308F\u306A\u3044\u30AB\u30FC\u30C9\u304C\u6DF7\u3056\u3063\u3066\u3044\u308B\u3088</div>` : `<div class="hint">\u4E3B\u5F79\u304B\u3089\u9806\u756A\u306B\u3001\u30AB\u30FC\u30C9\u3092\u30BF\u30C3\u30D7</div>`}
         <div class="mkSlots" id="mkSl"></div><div class="mkMsg" id="mkMsg"></div>
-        <div class="mkPool" id="mkPo"></div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkPool" id="mkPo"></div>
         <button class="mkBtn" id="mkGo" disabled>\u3067\u304D\u305F</button></div>`;
           const sl = main.querySelector("#mkSl"), po = main.querySelector("#mkPo"), go = main.querySelector("#mkGo"), msg = main.querySelector("#mkMsg");
           let done = false, miss = 0;
@@ -23725,9 +23726,9 @@ body.nogram .gmT{display:none}
           return;
         }
         if (s.type === "T") {
-          main.innerHTML = `${chs}<div class="mkQ">${tag}<div class="hint">\u5149\u3063\u3066\u3044\u308B\u30AB\u30FC\u30C9\u306F\u3001\u3069\u3053\u3092\u8A73\u3057\u304F\u3057\u3066\u3044\u308B\uFF1F</div>
+          main.innerHTML = `<div class="mkQ mkQt big">${tag}<div class="hint">\u5149\u3063\u3066\u3044\u308B\u30AB\u30FC\u30C9\u306F\u3001\u3069\u3053\u3092\u8A73\u3057\u304F\u3057\u3066\u3044\u308B\uFF1F</div>
         ${boardHtml({ cards: s.cards, hl: s.hl })}<div class="mkMsg" id="mkMsg"></div>
-        <div class="mkOpts c" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}</button>`).join("")}</div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}</button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {
@@ -23762,9 +23763,9 @@ body.nogram .gmT{display:none}
           return;
         }
         if (s.type === "B") {
-          main.innerHTML = `${chs}<div class="mkQ">${tag}<div class="hint">\u7A7A\u3044\u3066\u3044\u308B\u3068\u3053\u308D\u306B\u5165\u308B\u8A00\u8449\u306F\uFF1F<br>${s.hint ? esc5(s.hint) : "I \u2192 am \uFF0F he\u30FBshe\u30FBit\u30FB\u540D\u524D\u3072\u3068\u308A \u2192 is \uFF0F you\u30FBwe\u30FBthey \u2192 are"}</div>${s.ctx ? `<div class="hint" style="font-weight:800;color:#27344f">${esc5(s.ctx)}</div>` : ""}
+          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="hint">\u7A7A\u3044\u3066\u3044\u308B\u3068\u3053\u308D\u306B\u5165\u308B\u8A00\u8449\u306F\uFF1F<br>${s.hint ? esc5(s.hint) : "I \u2192 am \uFF0F he\u30FBshe\u30FBit\u30FB\u540D\u524D\u3072\u3068\u308A \u2192 is \uFF0F you\u30FBwe\u30FBthey \u2192 are"}</div>${s.ctx ? `<div class="hint" style="font-weight:800;color:#27344f">${esc5(s.ctx)}</div>` : ""}
         <div class="mkSen">${esc5(s.before)} <span class="bl" id="mkBl">\u3000\u3000</span>${/^[.,!?]/.test(s.after) || !s.after ? "" : " "}${esc5(s.after)}</div><div class="mkMsg" id="mkMsg"></div>
-        <div class="mkOpts" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}</button>`).join("")}</div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}</button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {
@@ -23794,9 +23795,9 @@ body.nogram .gmT{display:none}
           return;
         }
         if (s.type === "C") {
-          main.innerHTML = `${chs}<div class="mkQ">${tag}<div class="hint">${s.hint || (s.gen ? "\u3053\u306E\u8A00\u8449\u306F\u3001\u3069\u308C\uFF1F" : "\u3053\u306E\u6587\u306F\u3001\u3069\u306E\u578B\uFF1F")}</div>
+          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="hint">${s.hint || (s.gen ? "\u3053\u306E\u8A00\u8449\u306F\u3001\u3069\u308C\uFF1F" : "\u3053\u306E\u6587\u306F\u3001\u3069\u306E\u578B\uFF1F")}</div>
         <div class="mkSen">${esc5(s.en)}</div><div class="mkMsg" id="mkMsg"></div>
-        <div class="mkOpts c" id="mkOp">${(s.opts || TYPES).map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}<small style="display:block;font:700 11px var(--jp);color:#7b8cab">${esc5((s.subs || (s.gen ? GEN_SUB : TYPE_SUB))[o] || "")}</small></button>`).join("")}</div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${(s.opts || TYPES).map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}<small style="display:block;font:700 11px var(--jp);color:#7b8cab">${esc5((s.subs || (s.gen ? GEN_SUB : TYPE_SUB))[o] || "")}</small></button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {

@@ -1138,6 +1138,7 @@ body.nogram .gmT{display:none}
 .mkName.g{background:#ff7fb7}.mkName.b{background:#5aa9ff}
 .mkTxt{white-space:pre-line;font-size:16px;line-height:1.7;font-weight:700;margin-top:6px}
 .mkNext{position:absolute;right:12px;bottom:8px;color:#5aa9ff;font-size:14px;animation:mkBlink 1.2s infinite}
+.mkQt{height:190px;margin-top:8px!important;box-sizing:border-box;justify-content:center;gap:5px;padding:8px 12px}.mkQt.big{height:auto;min-height:190px}.mkQb{margin-top:4px!important;min-height:104px;box-sizing:border-box;justify-content:center}
 .mkQ{flex:none;margin:6px 12px 0;padding:12px 12px 14px;background:rgba(255,255,255,.93);border-radius:18px;box-shadow:0 2px 12px rgba(60,90,140,.2);display:flex;flex-direction:column;gap:10px}
 .mkQ .jp{font-size:19px;font-weight:800;text-align:center}
 .mkQ .tag{font-size:11px;color:#fff;background:#8a9bb8;border-radius:8px;padding:2px 8px;align-self:center}
@@ -1375,15 +1376,15 @@ body.nogram .gmT{display:none}
     const boss=cur.lesson.boss&&cur.bossOn;   // ボス戦のお知らせが出たあとの練習だけ
     const TAGS={A:"並べる",E:"日本語で並べる",B:"選ぶ",C:s.gen?"仲間わけ":"型を選ぶ",D:"日本語まじり",T:"どこを詳しくしてる？"};
     const tag=`<span class="tag ${boss?"boss":s.type==="D"||s.type==="T"?s.type:""}">${boss?"ボス戦":TAGS[s.type]||""}</span>`;
-    const chs=chars(main,"普通","普通","",true);
+    const chs=chars(main,"普通","普通","",false);
     if(s.type==="A"||s.type==="D"||s.type==="E"){
       const toks=s.ans.concat(s.dummy.map(t=>"X:"+t));
       const pool=s.type==="E"?s.jo.map(i=>({id:i,...tk(s.ans[i])})):shuf(toks.map((a,i)=>({id:i,...tk(a)})));
       const slots=Array(s.ans.length).fill(null);
-      main.innerHTML=`${chs}<div class="mkQ">${tag}<div class="jp">${esc(s.jp)}</div>
+      main.innerHTML=`<div class="mkQ mkQt">${tag}<div class="jp">${esc(s.jp)}</div>
         ${s.hint?`<div class="hint">${esc(s.hint).replace(/\n/g,"<br>")}</div>`:s.type==="E"?`<div class="hint">日本語のまま、英語の順番に並べよう<br>（主役 → どうしてる？ → 相手）</div>`:s.type==="D"?`<div class="hint">知らない単語は、日本語のカードのままでOK。順番だけ合わせよう</div>`:boss?`<div class="hint">使わないカードが混ざっているよ</div>`:`<div class="hint">主役から順番に、カードをタップ</div>`}
         <div class="mkSlots" id="mkSl"></div><div class="mkMsg" id="mkMsg"></div>
-        <div class="mkPool" id="mkPo"></div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkPool" id="mkPo"></div>
         <button class="mkBtn" id="mkGo" disabled>できた</button></div>`;
       const sl=main.querySelector("#mkSl"),po=main.querySelector("#mkPo"),go=main.querySelector("#mkGo"),msg=main.querySelector("#mkMsg");
       let done=false,miss=0;
@@ -1421,9 +1422,9 @@ body.nogram .gmT{display:none}
       return;
     }
     if(s.type==="T"){
-      main.innerHTML=`${chs}<div class="mkQ">${tag}<div class="hint">光っているカードは、どこを詳しくしている？</div>
+      main.innerHTML=`<div class="mkQ mkQt big">${tag}<div class="hint">光っているカードは、どこを詳しくしている？</div>
         ${boardHtml({cards:s.cards,hl:s.hl})}<div class="mkMsg" id="mkMsg"></div>
-        <div class="mkOpts c" id="mkOp">${s.opts.map(o=>`<button class="mkCard" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${s.opts.map(o=>`<button class="mkCard" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">つぎへ</button></div>`;
       const msg=main.querySelector("#mkMsg");
       main.querySelectorAll("[data-o]").forEach(bt=>bt.onclick=()=>{
@@ -1439,9 +1440,9 @@ body.nogram .gmT{display:none}
       return;
     }
     if(s.type==="B"){
-      main.innerHTML=`${chs}<div class="mkQ">${tag}<div class="hint">空いているところに入る言葉は？<br>${s.hint?esc(s.hint):"I → am ／ he・she・it・名前ひとり → is ／ you・we・they → are"}</div>${s.ctx?`<div class="hint" style="font-weight:800;color:#27344f">${esc(s.ctx)}</div>`:""}
+      main.innerHTML=`<div class="mkQ mkQt">${tag}<div class="hint">空いているところに入る言葉は？<br>${s.hint?esc(s.hint):"I → am ／ he・she・it・名前ひとり → is ／ you・we・they → are"}</div>${s.ctx?`<div class="hint" style="font-weight:800;color:#27344f">${esc(s.ctx)}</div>`:""}
         <div class="mkSen">${esc(s.before)} <span class="bl" id="mkBl">　　</span>${/^[.,!?]/.test(s.after)||!s.after?"":" "}${esc(s.after)}</div><div class="mkMsg" id="mkMsg"></div>
-        <div class="mkOpts" id="mkOp">${s.opts.map(o=>`<button class="mkCard" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts" id="mkOp">${s.opts.map(o=>`<button class="mkCard" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">つぎへ</button></div>`;
       const msg=main.querySelector("#mkMsg");
       main.querySelectorAll("[data-o]").forEach(bt=>bt.onclick=()=>{
@@ -1456,9 +1457,9 @@ body.nogram .gmT{display:none}
       return;
     }
     if(s.type==="C"){
-      main.innerHTML=`${chs}<div class="mkQ">${tag}<div class="hint">${s.hint||(s.gen?"この言葉は、どれ？":"この文は、どの型？")}</div>
+      main.innerHTML=`<div class="mkQ mkQt">${tag}<div class="hint">${s.hint||(s.gen?"この言葉は、どれ？":"この文は、どの型？")}</div>
         <div class="mkSen">${esc(s.en)}</div><div class="mkMsg" id="mkMsg"></div>
-        <div class="mkOpts c" id="mkOp">${(s.opts||TYPES).map(o=>`<button class="mkCard" data-o="${esc(o)}">${esc(o)}<small style="display:block;font:700 11px var(--jp);color:#7b8cab">${esc(((s.subs)||(s.gen?GEN_SUB:TYPE_SUB))[o]||"")}</small></button>`).join("")}</div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${(s.opts||TYPES).map(o=>`<button class="mkCard" data-o="${esc(o)}">${esc(o)}<small style="display:block;font:700 11px var(--jp);color:#7b8cab">${esc(((s.subs)||(s.gen?GEN_SUB:TYPE_SUB))[o]||"")}</small></button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">つぎへ</button></div>`;
       const msg=main.querySelector("#mkMsg");
       main.querySelectorAll("[data-o]").forEach(bt=>bt.onclick=()=>{
