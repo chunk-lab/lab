@@ -23603,7 +23603,7 @@ body.nogram .gmT{display:none}
           return;
         }
         if (s.k === "sum") {
-          main.innerHTML = `${chars(main, "\u559C\u3076", "\u559C\u3076", "", false)}
+          main.innerHTML = `<div class="mkBoard" style="visibility:hidden"></div>${chars(main, "\u559C\u3076", "\u559C\u3076", "", false)}
         <div class="mkSay" id="mkSay"><div class="mkName b">\u307E\u3068\u3081</div><div class="mkTxt">${esc5(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
           sfxs("se/sentence_clear");
           main.querySelector("#mkSay").onclick = () => {

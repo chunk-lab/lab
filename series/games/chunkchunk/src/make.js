@@ -1358,7 +1358,7 @@ body.nogram .gmT{display:none}
       return;
     }
     if(s.k==="sum"){
-      main.innerHTML=`${chars(main,"喜ぶ","喜ぶ","",false)}
+      main.innerHTML=`<div class="mkBoard" style="visibility:hidden"></div>${chars(main,"喜ぶ","喜ぶ","",false)}
         <div class="mkSay" id="mkSay"><div class="mkName b">まとめ</div><div class="mkTxt">${esc(s.t)}</div><div class="mkNext">▶</div></div>`;
       sfxs("se/sentence_clear");
       main.querySelector("#mkSay").onclick=()=>{cur.i++;step()};
