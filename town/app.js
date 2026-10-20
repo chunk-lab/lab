@@ -252,7 +252,7 @@
     const root2 = document.createElement("div");
     root2.className = "cs-ui";
     document.body.appendChild(root2);
-    const esc5 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const esc6 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
     const sheet = (html, bind) => {
       const ov = document.createElement("div");
       ov.className = "cs-ov";
@@ -288,9 +288,9 @@
     const profile = () => {
       const p = core2.profile;
       sheet(`<h3>\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB</h3><div class="cs-prof"><img src="${p.avatarURL()}" alt="\u30A2\u30D0\u30BF\u30FC"><div>
-      <label class="cs-row cs-col"><span>\u306A\u307E\u3048</span><input id="cs-name" maxlength="12" placeholder="\u306A\u307E\u3048\u3092\u5165\u308C\u3066\u306D" value="${esc5(p.name)}"></label></div></div>
+      <label class="cs-row cs-col"><span>\u306A\u307E\u3048</span><input id="cs-name" maxlength="12" placeholder="\u306A\u307E\u3048\u3092\u5165\u308C\u3066\u306D" value="${esc6(p.name)}"></label></div></div>
       <p class="cs-note">\u30A2\u30D0\u30BF\u30FC\u306F\u4F5C\u308A\u76F4\u3057\u4E2D\uFF08\u3044\u307E\u306F\u4EEE\u306E\u7D75\uFF09\u3002\u30B9\u30C6\u30FC\u30BF\u30B9\u306E\u9805\u76EE\u3082\u3053\u308C\u304B\u3089\u6C7A\u3081\u307E\u3059\u3002</p>
-      <ul class="cs-stat">${p.status().map((x) => `<li><span>${esc5(x.label)}</span><b>${esc5(x.value)}</b></li>`).join("")}</ul>`, (ov) => {
+      <ul class="cs-stat">${p.status().map((x) => `<li><span>${esc6(x.label)}</span><b>${esc6(x.value)}</b></li>`).join("")}</ul>`, (ov) => {
         ov.querySelector("#cs-name").onchange = (e) => p.setName(e.target.value);
       });
     };
@@ -1644,8 +1644,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       c.stroke();
       c.restore();
     }
-    function drawFace(c, face3, r) {
-      var faces = face3 === "pl" ? [-r * 0.28, r * 0.28] : [0], fr = face3 === "pl" ? r * 0.3 : r * 0.38;
+    function drawFace(c, face4, r) {
+      var faces = face4 === "pl" ? [-r * 0.28, r * 0.28] : [0], fr = face4 === "pl" ? r * 0.3 : r * 0.38;
       faces.forEach(function(fx, i) {
         var fy = -r * 0.2;
         c.beginPath();
@@ -1717,7 +1717,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       ctx.fill();
       ctx.restore();
       blob(ctx, 0, bob, R2 * 1.18, R2 * 0.98, s);
-      face2(ctx, -R2 * 0.1, bob, R2, o.expr || "normal", o.blink, t);
+      face3(ctx, -R2 * 0.1, bob, R2, o.expr || "normal", o.blink, t);
       ctx.restore();
       return { head: { x, y: y + bob, r: R2 }, tail: x + last.x + last.r };
     }
@@ -1750,7 +1750,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         ctx.fill();
       }
     }
-    function face2(ctx, fx, fy, R2, ex, blinkK, t) {
+    function face3(ctx, fx, fy, R2, ex, blinkK, t) {
       var ey = fy - R2 * 0.08, dx = R2 * 0.3, k = blinkK == null ? 1 : blinkK;
       ctx.lineCap = "round";
       ctx.fillStyle = CK.cheek;
@@ -6856,11 +6856,11 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       function sizeItem(it) {
         if (it.kind === "word") {
           it.text = G.wordText(it.word, cfg);
-          var face2 = it.word.k === "pr";
+          var face3 = it.word.k === "pr";
           var k = g.k || 1;
           it.fs = Math.round(15 * Math.max(0.9, k) * 2) / 2;
-          it.r = (face2 ? 30 : U.clamp(Art.measure(it.text, it.fs) / 2 + 13, 23, 46)) * k;
-          it.face = face2 ? G.PRON[it.word.v].pl ? "pl" : "one" : "";
+          it.r = (face3 ? 30 : U.clamp(Art.measure(it.text, it.fs) / 2 + 13, 23, 46)) * k;
+          it.face = face3 ? G.PRON[it.word.v].pl ? "pl" : "one" : "";
         } else {
           it.text = G.label(it.chunk, cfg);
           it.full = G.chunkText(it.chunk, cfg);
@@ -11108,7 +11108,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       ui.banner = function(text, marks, pts, o) {
         o = o || {};
         if (banEl) banEl.remove();
-        var html = esc5(text);
+        var html = esc6(text);
         (marks || []).forEach(function(m) {
           var re = new RegExp("\\b(" + m.replace(/(es|s)$/, "") + ")(es|s)\\b");
           html = html.replace(re, "$1<u>$2</u>");
@@ -11123,7 +11123,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           }
         }, 2200);
       };
-      function esc5(s) {
+      function esc6(s) {
         return String(s).replace(/[&<>"]/g, function(c) {
           return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
         });
@@ -14737,9 +14737,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         box.appendChild(el("div", "item sold", "<span>\u58F2\u308A\u5207\u308C</span>"));
         return;
       }
-      var face2 = it.t === "joker" ? '<div class="joker"><b>' + it.j.name + "</b><span>" + it.j.desc + "</span></div>" : it.t === "pack" ? '<div class="pack">\u5358\u8A9E<br>\u30D1\u30C3\u30AF</div>' : it.t === "book" ? '<div class="pack book">\u6587\u578B\u306E\u672C<br><small>' + PART_JA[it.key] + "</small></div>" : it.t === "it" ? '<div class="pack itp">it<br><small>\u4E07\u80FD</small></div>' : '<div class="pack boost">\u30AB\u30FC\u30C9<br>\u5F37\u5316</div>';
+      var face3 = it.t === "joker" ? '<div class="joker"><b>' + it.j.name + "</b><span>" + it.j.desc + "</span></div>" : it.t === "pack" ? '<div class="pack">\u5358\u8A9E<br>\u30D1\u30C3\u30AF</div>' : it.t === "book" ? '<div class="pack book">\u6587\u578B\u306E\u672C<br><small>' + PART_JA[it.key] + "</small></div>" : it.t === "it" ? '<div class="pack itp">it<br><small>\u4E07\u80FD</small></div>' : '<div class="pack boost">\u30AB\u30FC\u30C9<br>\u5F37\u5316</div>';
       var desc = it.t === "joker" ? "\u30B8\u30E7\u30FC\u30AB\u30FC(\u6700\u59275\u679A)" : it.t === "pack" ? "3\u679A\u306E\u4E2D\u304B\u30891\u679A\u3048\u3089\u3093\u3067\u5C71\u672D\u3078" : it.t === "book" ? "\u300C" + PART_JA[it.key] + "\u300D\u306E\u5165\u3063\u305F\u5F79\u304C \u30C1\u30C3\u30D7+10\u30FB\u500D\u7387+1(\u3044\u307ELv" + (R.lv[it.key] || 0) + ")" : it.t === "it" ? "\u4E07\u80FD\u30AB\u30FC\u30C9\u300Cit\u300D\u3092\u5C71\u672D\u3078\u3002\u3069\u306E\u52D5\u8A5E\u306E\u76EE\u7684\u8A9E\u306B\u3082\u5165\u308A\u3001\u4E3B\u8A9E\u306B\u3082\u306A\u308C\u308B" : "\u5C71\u672D\u306E\u30AB\u30FC\u30C91\u679A\u306E\u70B9\u3092+15";
-      var e = el("div", "item" + (R.money < it.price ? " poor" : ""), face2 + '<div class="desc">' + desc + '</div><div class="price">\u{1F4B0}' + it.price + "</div>");
+      var e = el("div", "item" + (R.money < it.price ? " poor" : ""), face3 + '<div class="desc">' + desc + '</div><div class="price">\u{1F4B0}' + it.price + "</div>");
       e.onclick = function() {
         buy(i);
       };
@@ -15786,31 +15786,31 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     var q = QS[V.opp.lv];
     return s < q[0] * 0.8 ? 0.1 : s < q[0] ? 0.25 : s < q[1] ? 0.45 : s < q[2] ? 0.7 : s < q[2] * 1.3 ? 0.85 : 0.95;
   }
-  function cpuBet(face2, raised, t) {
+  function cpuBet(face3, raised, t) {
     var sc = V.cpuBest ? V.cpuBest.score : 0, q = quant(sc), st = V.opp.style, early2 = t === 1 ? 0.1 : 0, r = rnd2();
     if (V.bluffed) q = Math.max(q, 0.6);
-    if (!face2) {
+    if (!face3) {
       var th = st === "careful" ? 0.65 : st === "bluff" ? 0.45 : 0.55, bl = st === "bluff" ? 0.35 : st === "careful" ? 0.03 : 0.1;
       return q >= th || r < bl ? "bet" : "check";
     }
     var fold = (st === "careful" ? 0.4 : st === "bluff" ? 0.2 : 0.3) - early2, rz = st === "bluff" ? 0.75 : st === "careful" ? 0.9 : 0.85;
     if (V.med.me === 0) rz = 2;
     if (q < fold && !(st === "bluff" && r < 0.4)) return "fold";
-    if (!raised && (q >= rz || st === "bluff" && r < 0.15) && V.med.cpu > face2) return "raise";
+    if (!raised && (q >= rz || st === "bluff" && r < 0.15) && V.med.cpu > face3) return "raise";
     return "call";
   }
   async function betting(t, order) {
     var amt = BETS[t], c0 = { me: V.c.me, cpu: V.c.cpu }, raised = false, acted = {}, i = 0, guard = 0;
     while (guard++ < 8) {
-      var who = order[i % 2], oth = order[(i + 1) % 2], face2 = V.c[oth] - c0[oth] - (V.c[who] - c0[who]);
-      if (face2 > 0 && V.med[who] === 0) face2 = 0;
-      if (who !== "me" && V.med.me === 0 && face2 === 0) {
+      var who = order[i % 2], oth = order[(i + 1) % 2], face3 = V.c[oth] - c0[oth] - (V.c[who] - c0[who]);
+      if (face3 > 0 && V.med[who] === 0) face3 = 0;
+      if (who !== "me" && V.med.me === 0 && face3 === 0) {
         acted[who] = 1;
       } else {
         var a;
         if (who === "me") {
-          V.betQ = { face: face2, raised };
-          V.turnTxt = '<span class="you">\u8CED\u3051</span>:' + (face2 ? V.opp.name + "\u304C " + face2 + " \u8CED\u3051\u305F\u3002\u53D7\u3051\u308B?" : "\u30D9\u30C3\u30C8\u3059\u308B?(1\u56DE\u76EE\u306F" + BETS[1] + "\u30FB\u6700\u5F8C\u306F" + BETS[3] + ")");
+          V.betQ = { face: face3, raised };
+          V.turnTxt = '<span class="you">\u8CED\u3051</span>:' + (face3 ? V.opp.name + "\u304C " + face3 + " \u8CED\u3051\u305F\u3002\u53D7\u3051\u308B?" : "\u30D9\u30C3\u30C8\u3059\u308B?(1\u56DE\u76EE\u306F" + BETS[1] + "\u30FB\u6700\u5F8C\u306F" + BETS[3] + ")");
           a = (await ask("bet")).a;
           if (V.quit) return null;
         } else {
@@ -15818,7 +15818,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           V.turnTxt = V.opp.name + "\u304C\u8003\u3048\u3066\u3044\u308B\u2026";
           renderAll2();
           await wait2(700);
-          a = cpuBet(face2, raised, t);
+          a = cpuBet(face3, raised, t);
         }
         if (a === "fold") {
           say(who === "cpu" ? "\u964D\u308A\u308B\u2026" : "\u3084\u3063\u305F!", who === "cpu" ? "sad" : "happy");
@@ -15829,13 +15829,13 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           acted[who] = 1;
         }
         if (a === "call") {
-          pay(who, face2);
+          pay(who, face3);
           if (who === "cpu") say("\u30B3\u30FC\u30EB");
           SFX2.coin();
           acted[who] = 1;
         }
         if (a === "bet" || a === "raise") {
-          pay(who, face2 + amt);
+          pay(who, face3 + amt);
           if (a === "raise") raised = true;
           acted = {};
           acted[who] = 1;
@@ -18930,8 +18930,8 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
     f.querySelector(".sMenu:not(.lessonSub)").hidden = on;
     f.querySelector(".lessonSub").hidden = !on;
   }
-  function initTitle(face2) {
-    FACE = face2 || "arcade";
+  function initTitle(face3) {
+    FACE = face3 || "arcade";
     document.querySelectorAll("[data-chara]").forEach((i) => i.src = ENV2.ctx.base + "img/chara/" + i.dataset.chara + "/" + (i.dataset.chara === "boy" ? "idea" : "joy") + ".webp");
     if (FACE === "all") {
       FACE = "arcade";
@@ -23122,7 +23122,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
         ] }
       ];
       LESSONS3.forEach((l) => l.nums = true);
-      const ALL = LESSONS.concat(LESSONS2, LESSONS3);
+      const ALL2 = LESSONS.concat(LESSONS2, LESSONS3);
       const CHAPTERS = [
         { n: 1, name: "\u571F\u53F0\u3092\u3064\u304F\u308B", sub: "\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u3069\u3053\u306B\u5411\u304F\uFF1F", lessons: LESSONS, coin: 30, title: "\u571F\u53F0\u30D3\u30EB\u30C0\u30FC", frame: "\u571F\u53F0" },
         { n: 2, name: "\u571F\u53F0\u3092\u81A8\u3089\u307E\u305B\u308B", sub: "\u524D\u3061\u3087\u3044\u8DB3\u3057 \uFF0B \u8A73\u3057\u304F\u3057\u305F\u3044\u3082\u306E \uFF0B \u5F8C\u308D\u3061\u3087\u3044\u8DB3\u3057", lessons: LESSONS2, coin: 30, title: "\u3061\u3087\u3044\u8DB3\u3057\u540D\u4EBA", frame: "\u3061\u3087\u3044\u8DB3\u3057" },
@@ -23340,7 +23340,7 @@ body.nogram .gmT{display:none}
         } catch (e) {
         }
       };
-      const esc5 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      const esc6 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
       const shuf2 = (a) => {
         a = a.slice();
         for (let i = a.length - 1; i > 0; i--) {
@@ -23350,7 +23350,7 @@ body.nogram .gmT{display:none}
         return a;
       };
       const rc = (r) => `style="--rc:var(--c${r === "I" ? "I" : r})"`;
-      const face2 = (w, f) => `${HOST.base}img/chara/${w === "g" ? "girl" : "boy"}/${FACE2[f] || "normal"}.webp`;
+      const face3 = (w, f) => `${HOST.base}img/chara/${w === "g" ? "girl" : "boy"}/${FACE2[f] || "normal"}.webp`;
       let cur4 = null;
       function visible() {
         return !root2.hidden;
@@ -23359,28 +23359,28 @@ body.nogram .gmT{display:none}
         cur4 = null;
         const ch = CHAPTERS.map((c) => {
           const open2 = c.n === 1 || st.ch[c.n - 1];
-          if (!c.lessons || !open2) return `<div class="mkCh lock"><h3>\u7B2C${c.n}\u7AE0\u3000${esc5(c.name)}</h3><div class="sub">${esc5(c.sub)}</div><div class="sub">\u{1F512} ${!c.lessons ? "\u3082\u3046\u3059\u3050\u516C\u958B" : "\u524D\u306E\u7AE0\u3092\u30AF\u30EA\u30A2\u3059\u308B\u3068\u958B\u304D\u307E\u3059"}</div></div>`;
+          if (!c.lessons || !open2) return `<div class="mkCh lock"><h3>\u7B2C${c.n}\u7AE0\u3000${esc6(c.name)}</h3><div class="sub">${esc6(c.sub)}</div><div class="sub">\u{1F512} ${!c.lessons ? "\u3082\u3046\u3059\u3050\u516C\u958B" : "\u524D\u306E\u7AE0\u3092\u30AF\u30EA\u30A2\u3059\u308B\u3068\u958B\u304D\u307E\u3059"}</div></div>`;
           let nxt = true;
           const ls = c.lessons.map((l) => {
             const done = !!st.done[l.id];
             const can = done || nxt;
             const isNext = !done && nxt;
             if (!done) nxt = false;
-            return `<button class="mkL${isNext ? " next" : ""}" data-l="${l.id}" ${can ? "" : "disabled"}><b>${l.id}</b>${esc5(l.name)}<em>${done ? "\u2705" : can ? "\u25B6" : "\u{1F512}"}</em></button>`;
+            return `<button class="mkL${isNext ? " next" : ""}" data-l="${l.id}" ${can ? "" : "disabled"}><b>${l.id}</b>${esc6(l.name)}<em>${done ? "\u2705" : can ? "\u25B6" : "\u{1F512}"}</em></button>`;
           }).join("");
-          return `<div class="mkCh"><h3>\u7B2C${c.n}\u7AE0\u3000${esc5(c.name)}${st.ch[c.n] ? " \u2705" : ""}</h3><div class="sub">${esc5(c.sub)}</div>${c.partial ? `<div class="sub">\u3044\u307E\u306F ${esc5(c.partial)} \u307E\u3067\u904A\u3079\u307E\u3059</div>` : ""}<div class="mkLs">${ls}</div></div>`;
+          return `<div class="mkCh"><h3>\u7B2C${c.n}\u7AE0\u3000${esc6(c.name)}${st.ch[c.n] ? " \u2705" : ""}</h3><div class="sub">${esc6(c.sub)}</div>${c.partial ? `<div class="sub">\u3044\u307E\u306F ${esc6(c.partial)} \u307E\u3067\u904A\u3079\u307E\u3059</div>` : ""}<div class="mkLs">${ls}</div></div>`;
         }).join("");
-        const tt = st.titles.length ? `<div class="mkTitle">\u79F0\u53F7\uFF1A${esc5(st.titles.join(" / "))}</div>` : "";
+        const tt = st.titles.length ? `<div class="mkTitle">\u79F0\u53F7\uFF1A${esc6(st.titles.join(" / "))}</div>` : "";
         root2.innerHTML = `<div class="mkTop"><button id="mkX">\u2190 \u3082\u3069\u308B</button><div class="mkTtl">\u6587\u3092\u4F5C\u308B\uFF08\u8A71\u3059\u30FB\u66F8\u304F\uFF09</div><div class="mkPg"></div></div>
       <div class="mkList">${tt}${ch}<div class="mkCap">\u7AE0\u306F\u9806\u756A\u306B\u958B\u304D\u307E\u3059\u3002\u300C\u8AAD\u3080\u300D\u306E\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u3092\u7D42\u3048\u305F\u4EBA\u304C\u3001\u30C6\u30B9\u30C8\u3067\u98DB\u3070\u305B\u308B\u4ED5\u7D44\u307F\u306F\u6E96\u5099\u4E2D\u3067\u3059\u3002</div></div>`;
         root2.querySelector("#mkX").onclick = close;
         root2.querySelectorAll("[data-l]").forEach((bt) => bt.onclick = () => start2(bt.dataset.l));
       }
       function start2(id) {
-        const lesson = ALL.find((l) => l.id === id);
+        const lesson = ALL2.find((l) => l.id === id);
         if (!lesson) return;
         cur4 = { lesson, i: 0, miss: 0 };
-        root2.innerHTML = `<div class="mkTop"><button id="mkX">\u2190 \u4E00\u89A7</button><div class="mkTtl">${esc5(lesson.id)}\u3000${esc5(lesson.name)}</div><div class="mkPg" id="mkPg"></div></div>
+        root2.innerHTML = `<div class="mkTop"><button id="mkX">\u2190 \u4E00\u89A7</button><div class="mkTtl">${esc6(lesson.id)}\u3000${esc6(lesson.name)}</div><div class="mkPg" id="mkPg"></div></div>
       <div class="mkBar"><i id="mkBarI"></i></div>
       <div id="mkMain" style="flex:1;min-height:0;display:flex;flex-direction:column"></div>`;
         root2.querySelector("#mkX").onclick = () => {
@@ -23392,8 +23392,8 @@ body.nogram .gmT{display:none}
       }
       function chars(main, gf, bf, talk, small) {
         return `<div class="mkChars"${small ? ` style="flex:none;height:96px"` : ""}>
-      <div class="mkC g ${talk === "g" ? "talk" : talk ? "dim" : ""}" id="mkCg"><img src="${face2("g", gf)}" alt=""></div>
-      <div class="mkC b ${talk === "b" ? "talk" : talk ? "dim" : ""}" id="mkCb"><img src="${face2("b", bf)}" alt=""></div></div>`;
+      <div class="mkC g ${talk === "g" ? "talk" : talk ? "dim" : ""}" id="mkCg"><img src="${face3("g", gf)}" alt=""></div>
+      <div class="mkC b ${talk === "b" ? "talk" : talk ? "dim" : ""}" id="mkCb"><img src="${face3("b", bf)}" alt=""></div></div>`;
       }
       let FACES = { g: "\u666E\u901A", b: "\u666E\u901A" };
       function setFaces(w, f) {
@@ -23404,7 +23404,7 @@ body.nogram .gmT{display:none}
       }
       const subHtml = (x) => {
         const p = String(x).split("|");
-        return `<small><b class="ct">${esc5(p[p.length - 1])}</b></small>`;
+        return `<small><b class="ct">${esc6(p[p.length - 1])}</b></small>`;
       };
       const NUMR = { S: "\u2460\u4E3B\u5F79", V: "\u2461\u3069\u3046\u3057\u3066\u308B\uFF1F", O: "\u2462\u76F8\u624B" };
       const roleName = (r) => cur4 && cur4.lesson && cur4.lesson.nums && NUMR[r] || ROLE2[r];
@@ -23433,9 +23433,9 @@ body.nogram .gmT{display:none}
       const gramOf = (cat2) => GRAM[String(cat2 || "").replace(/^[①②③]/, "")] || "";
       const gmHtml = (cat2) => {
         const g2 = gramOf(cat2);
-        return g2 ? `<em class="gmT">${esc5(g2)}</em>` : "";
+        return g2 ? `<em class="gmT">${esc6(g2)}</em>` : "";
       };
-      const topHtml = (m) => m ? `<i class="mnT">${esc5(m)}</i>` : "";
+      const topHtml = (m) => m ? `<i class="mnT">${esc6(m)}</i>` : "";
       const MEAN = { "I:me": "\u79C1\u306B", "O:me": "\u79C1\u3092", "I:you": "\u3042\u306A\u305F\u306B", "S:You": "\u3042\u306A\u305F", "S:I": "\u79C1", "S:She": "\u5F7C\u5973", "S:she": "\u5F7C\u5973", "S:Tom": "\u30C8\u30E0", "S:Mika": "\u30DF\u30AB", "S:Birds": "\u9CE5", "S:birds": "\u9CE5", "S:Kids": "\u5B50\u3069\u3082\u305F\u3061", "S:Music": "\u97F3\u697D", "S:He": "\u5F7C", "V:found": "\u601D\u3063\u305F", "O:the book": "\u305D\u306E\u672C\u3092", "C:interesting": "\u9762\u767D\u3044", "S:cat": "\u306D\u3053", "S:The cat": "\u305D\u306E\u306D\u3053", "S:the cat": "\u305D\u306E\u306D\u3053", "S:friend": "\u53CB\u3060\u3061", "O:Tom": "\u30C8\u30E0\u3092", "O:music": "\u97F3\u697D\u3092", "O:flowers": "\u82B1\u3092", "O:English": "\u82F1\u8A9E\u3092", "V:am": "\u301C\u3060", "V:is": "\u301C\u3060", "V:are": "\u301C\u3060", "V:arrives": "\u5230\u7740\u3059\u308B", "V:calls": "\u547C\u3076", "V:fly": "\u98DB\u3076", "V:gives": "\u304F\u308C\u308B", "V:likes": "\u597D\u304D", "V:makes": "\u301C\u306B\u3059\u308B", "V:ran": "\u8D70\u3063\u305F", "V:runs": "\u8D70\u308B", "V:sing": "\u6B4C\u3046", "V:sings": "\u6B4C\u3046", "V:teach": "\u6559\u3048\u308B", "V:eats": "\u98DF\u3079\u308B", "V:reads": "\u8AAD\u3080", "V:walks": "\u6B69\u304F", "C:happy": "\u5E78\u305B", "C:kind": "\u512A\u3057\u3044", "C:smile": "\u7B11\u9854", "C:tall": "\u80CC\u304C\u9AD8\u3044", "C:sleepy": "\u7720\u3044", "C:smart": "\u982D\u304C\u3044\u3044", "O:lunch": "\u663C\u3054\u306F\u3093\u3092", "O:ramen": "\u30E9\u30FC\u30E1\u30F3\u3092", "O:presents": "\u30D7\u30EC\u30BC\u30F3\u30C8\u3092", "O:book": "\u672C\u3092", "V:sleep": "\u7720\u308B", "V:sleeps": "\u7720\u308B", "V:like": "\u597D\u304D", "S:cats": "\u306D\u3053", "S:Ken": "\u30B1\u30F3", "S:Cats": "\u306D\u3053", "S:They": "\u5F7C\u3089", "V:waits": "\u5F85\u3064", "V:goes": "\u884C\u304F", "O:tennis": "\u30C6\u30CB\u30B9\u3092", "O:Osaka": "\u5927\u962A\u3092" };
       const meanOf = (r, t) => MEAN[r + ":" + t] || "";
       const ctrCls = (c) => c === "\u30B8\u30E3\u30F3\u30EB" ? " cg" : c === "\u5177\u4F53\u7684" ? " ca" : c === "\u305D\u308C\uFF01" ? " cT" : "";
@@ -23451,7 +23451,7 @@ body.nogram .gmT{display:none}
         const ctr = ctrCls(cat2) + (EQFIRST && s.draw ? " go" : "");
         const crown = s.fx === "crown" && i === 0 ? `<span class="crown">\u{1F451}</span>` : "";
         const eq = s.eq && r === "V" ? " eq" : "";
-        return `<span class="mkChip ${r === "Q" ? "Q" : ""}${jp ? " jp" : ""}${eq}${ctr}${s.swap && i === 1 ? " in" : ""}${s.hl === i ? " hl" : ""}${s.bad === i ? " bad" : ""}${morph ? " eqm" : ""}" data-t="${esc5(t)}" data-r="${r}" data-cat="${esc5(cat2)}" ${r !== "Q" ? rc(r) : ""}>${crown}${gmHtml(cat2)}${topHtml(mean)}${morph ? `<span class="eqw${EQFIRST ? " go" : ""}"><span class="a">${esc5(t)}</span><span class="b">\uFF1D</span></span>` : esc5(t)}${sub ? subHtml(sub) : ""}</span>`;
+        return `<span class="mkChip ${r === "Q" ? "Q" : ""}${jp ? " jp" : ""}${eq}${ctr}${s.swap && i === 1 ? " in" : ""}${s.hl === i ? " hl" : ""}${s.bad === i ? " bad" : ""}${morph ? " eqm" : ""}" data-t="${esc6(t)}" data-r="${r}" data-cat="${esc6(cat2)}" ${r !== "Q" ? rc(r) : ""}>${crown}${gmHtml(cat2)}${topHtml(mean)}${morph ? `<span class="eqw${EQFIRST ? " go" : ""}"><span class="a">${esc6(t)}</span><span class="b">\uFF1D</span></span>` : esc6(t)}${sub ? subHtml(sub) : ""}</span>`;
       }
       const ARR = { self: "#e4546a", eq: "#e89a1a", out: "#e4546a", add: "#8b5cf6" };
       function drawArrows(row, kind, mini) {
@@ -23507,14 +23507,14 @@ body.nogram .gmT{display:none}
         EQFIRST = !!first2;
         if (s.types) {
           const T3 = [["S:Tom", "V:runs"], ["S:She", "V:is", "C:tall"], ["S:She", "V:calls", "O:Tom"], ["S:She", "V:gives", "I:me", "O:flowers"], ["S:Music", "V:makes", "O:me", "C:happy"]], K = ["self", "eqarc", "out", "out2", "outc"];
-          return `<div class="mkTypes">${T3.map((c, i) => `<div class="mkTR"><span class="nm">${esc5(TYPES[i])}</span><div class="mkRow ar mini${K[i] === "out2" ? " ar2" : ""}" data-ar="${K[i]}">${c.map((x, j) => (K[i] === "outc" && j === 3 ? `<span class="mkEqS">\uFF1D</span>` : "") + chipHtml(x, j, { nomean: 1 })).join("")}</div></div>`).join("")}</div>${s.cap ? `<div class="mkCap">${esc5(s.cap)}</div>` : ""}`;
+          return `<div class="mkTypes">${T3.map((c, i) => `<div class="mkTR"><span class="nm">${esc6(TYPES[i])}</span><div class="mkRow ar mini${K[i] === "out2" ? " ar2" : ""}" data-ar="${K[i]}">${c.map((x, j) => (K[i] === "outc" && j === 3 ? `<span class="mkEqS">\uFF1D</span>` : "") + chipHtml(x, j, { nomean: 1 })).join("")}</div></div>`).join("")}</div>${s.cap ? `<div class="mkCap">${esc6(s.cap)}</div>` : ""}`;
         }
-        if (s.table) return `<div class="mkTbl">${s.table.map(([l, r, k]) => `<div><span class="l" ${rc(k || "V")}>${esc5(l)}</span><span>\u2192</span><span class="mkChip" ${rc(k || "V")}>${esc5(r)}</span></div>`).join("")}</div>${s.cap ? `<div class="mkCap">${esc5(s.cap)}</div>` : ""}`;
+        if (s.table) return `<div class="mkTbl">${s.table.map(([l, r, k]) => `<div><span class="l" ${rc(k || "V")}>${esc6(l)}</span><span>\u2192</span><span class="mkChip" ${rc(k || "V")}>${esc6(r)}</span></div>`).join("")}</div>${s.cap ? `<div class="mkCap">${esc6(s.cap)}</div>` : ""}`;
         const n = s.cards.length;
         if (s.grow) {
           let h = chipHtml(s.cards[0], 0, s).replace('class="mkChip ', 'class="mkChip g0 ');
           for (let i = 1; i < n; i++) h = `<span class="mkNest" style="--d:${(i * 0.9).toFixed(1)}s">${h}${chipHtml(s.cards[i], i, s).replace('class="mkChip ', 'class="mkChip g' + i + " ")}</span>`;
-          return `<div class="mkRow grown sm xs${EQFIRST ? " go" : ""}">${h}</div><div class="mkLR${EQFIRST ? " go" : ""}"><i></i><span>\u6587\u306F\u3001\u5DE6\u304B\u3089\u53F3\u3078</span></div>${s.cap ? `<div class="mkCap">${esc5(s.cap)}</div>` : ""}`;
+          return `<div class="mkRow grown sm xs${EQFIRST ? " go" : ""}">${h}</div><div class="mkLR${EQFIRST ? " go" : ""}"><i></i><span>\u6587\u306F\u3001\u5DE6\u304B\u3089\u53F3\u3078</span></div>${s.cap ? `<div class="mkCap">${esc6(s.cap)}</div>` : ""}`;
         }
         const gs = [];
         if (s.arrow && s.arrow.startsWith("add:")) s.arrow.slice(4).split(",").forEach((p) => {
@@ -23531,8 +23531,8 @@ body.nogram .gmT{display:none}
           } else inner += (s.arrow === "outc" && i === 3 ? `<span class="mkEqS">\uFF1D</span>` : "") + chipHtml(s.cards[i], i, s);
         }
         const rows = `<div class="mkRow${s.arrow ? " ar" : ""}${s.arrow === "out2" ? " ar2" : ""}${n >= 4 || s.small ? " sm" : ""}${s.small || s.arrow === "outc" ? " xs" : ""}" ${s.arrow ? `data-ar="${s.arrow}"` : ""}>${inner}${s.mark ? `<span class="mkMark${s.mark === "\xD7" ? " ng" : ""}">${s.mark}</span>` : ""}</div>`;
-        const lr = s.lr ? `<div class="mkLR"><i></i><span>${esc5(s.lr)}</span></div>` : "";
-        return `${rows}${lr}${s.cap ? `<div class="mkCap">${esc5(s.cap)}</div>` : ""}`;
+        const lr = s.lr ? `<div class="mkLR"><i></i><span>${esc6(s.lr)}</span></div>` : "";
+        return `${rows}${lr}${s.cap ? `<div class="mkCap">${esc6(s.cap)}</div>` : ""}`;
       }
       function paintArrows(scope) {
         scope.querySelectorAll("[data-ar]").forEach((r) => drawArrows(r, r.dataset.ar, r.classList.contains("mini")));
@@ -23580,7 +23580,7 @@ body.nogram .gmT{display:none}
           const gf = lastF("g"), bf = lastF("b");
           main.innerHTML = `<div class="mkBoard" id="mkBoard">${boardState ? boardHtml(boardState, !boardState.__shown) : ""}</div>
         ${chars(main, gf, bf, s.w)}
-        <div class="mkSay" id="mkSay"><div class="mkName ${s.w}">${s.w === "g" ? "\u5973\u306E\u5B50" : "\u7537\u306E\u5B50"}</div><div class="mkTxt">${esc5(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
+        <div class="mkSay" id="mkSay"><div class="mkName ${s.w}">${s.w === "g" ? "\u5973\u306E\u5B50" : "\u7537\u306E\u5B50"}</div><div class="mkTxt">${esc6(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
           if (boardState) boardState.__shown = true;
           if (!boardState) main.querySelector("#mkBoard").style.visibility = "hidden";
           else {
@@ -23595,7 +23595,7 @@ body.nogram .gmT{display:none}
         }
         if (s.k === "notice") {
           cur4.bossOn = true;
-          main.innerHTML = `<div class="mkNotice">${esc5(s.t)}</div><div class="mkQ"><button class="mkBtn" id="mkOk">\u308F\u304B\u3063\u305F\uFF01</button></div>`;
+          main.innerHTML = `<div class="mkNotice">${esc6(s.t)}</div><div class="mkQ"><button class="mkBtn" id="mkOk">\u308F\u304B\u3063\u305F\uFF01</button></div>`;
           main.querySelector("#mkOk").onclick = () => {
             cur4.i++;
             step2();
@@ -23604,7 +23604,7 @@ body.nogram .gmT{display:none}
         }
         if (s.k === "sum") {
           main.innerHTML = `<div class="mkBoard" style="visibility:hidden"></div>${chars(main, "\u559C\u3076", "\u559C\u3076", "", false)}
-        <div class="mkSay" id="mkSay"><div class="mkName b">\u307E\u3068\u3081</div><div class="mkTxt">${esc5(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
+        <div class="mkSay" id="mkSay"><div class="mkName b">\u307E\u3068\u3081</div><div class="mkTxt">${esc6(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
           sfxs("se/sentence_clear");
           main.querySelector("#mkSay").onclick = () => {
             cur4.i++;
@@ -23618,12 +23618,12 @@ body.nogram .gmT{display:none}
         const ev = W2 ? Object.values(W2) : [];
         return `<div class="mkRow">${ans.map((a) => {
           const { r, t, sub } = tk(a);
-          return `<span class="mkChip${isJp(t) ? " jp" : ""}${ev.includes(t) ? " in" : ""}${ctrCls((sub || "").split("|").pop())}" ${rc(r)}>${gmHtml((sub || roleName(r) || "").split("|").pop())}${isJp(t) ? "" : topHtml(sub && sub.includes("|") ? sub.split("|")[0] : meanOf(r, t))}${esc5(t)}${subHtml(sub || roleName(r) || "")}</span>`;
+          return `<span class="mkChip${isJp(t) ? " jp" : ""}${ev.includes(t) ? " in" : ""}${ctrCls((sub || "").split("|").pop())}" ${rc(r)}>${gmHtml((sub || roleName(r) || "").split("|").pop())}${isJp(t) ? "" : topHtml(sub && sub.includes("|") ? sub.split("|")[0] : meanOf(r, t))}${esc6(t)}${subHtml(sub || roleName(r) || "")}</span>`;
         }).join("")}</div>`;
       }
       function react(w, f) {
         const im = root2.querySelector(w === "g" ? "#mkCg img" : "#mkCb img");
-        if (im) im.src = face2(w, f);
+        if (im) im.src = face3(w, f);
       }
       function reactBoth(f1, f2) {
         react("g", f1);
@@ -23638,16 +23638,16 @@ body.nogram .gmT{display:none}
           const toks = s.ans.concat(s.dummy.map((t) => "X:" + t));
           const pool = s.type === "E" ? s.jo.map((i) => ({ id: i, ...tk(s.ans[i]) })) : shuf2(toks.map((a, i) => ({ id: i, ...tk(a) })));
           const slots = Array(s.ans.length).fill(null);
-          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="jp">${esc5(s.jp)}</div>
-        ${s.hint ? `<div class="hint">${esc5(s.hint).replace(/\n/g, "<br>")}</div>` : s.type === "E" ? `<div class="hint">\u65E5\u672C\u8A9E\u306E\u307E\u307E\u3001\u82F1\u8A9E\u306E\u9806\u756A\u306B\u4E26\u3079\u3088\u3046<br>\uFF08\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u76F8\u624B\uFF09</div>` : s.type === "D" ? `<div class="hint">\u77E5\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u65E5\u672C\u8A9E\u306E\u30AB\u30FC\u30C9\u306E\u307E\u307E\u3067OK\u3002\u9806\u756A\u3060\u3051\u5408\u308F\u305B\u3088\u3046</div>` : boss ? `<div class="hint">\u4F7F\u308F\u306A\u3044\u30AB\u30FC\u30C9\u304C\u6DF7\u3056\u3063\u3066\u3044\u308B\u3088</div>` : `<div class="hint">\u4E3B\u5F79\u304B\u3089\u9806\u756A\u306B\u3001\u30AB\u30FC\u30C9\u3092\u30BF\u30C3\u30D7</div>`}
+          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="jp">${esc6(s.jp)}</div>
+        ${s.hint ? `<div class="hint">${esc6(s.hint).replace(/\n/g, "<br>")}</div>` : s.type === "E" ? `<div class="hint">\u65E5\u672C\u8A9E\u306E\u307E\u307E\u3001\u82F1\u8A9E\u306E\u9806\u756A\u306B\u4E26\u3079\u3088\u3046<br>\uFF08\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u76F8\u624B\uFF09</div>` : s.type === "D" ? `<div class="hint">\u77E5\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u65E5\u672C\u8A9E\u306E\u30AB\u30FC\u30C9\u306E\u307E\u307E\u3067OK\u3002\u9806\u756A\u3060\u3051\u5408\u308F\u305B\u3088\u3046</div>` : boss ? `<div class="hint">\u4F7F\u308F\u306A\u3044\u30AB\u30FC\u30C9\u304C\u6DF7\u3056\u3063\u3066\u3044\u308B\u3088</div>` : `<div class="hint">\u4E3B\u5F79\u304B\u3089\u9806\u756A\u306B\u3001\u30AB\u30FC\u30C9\u3092\u30BF\u30C3\u30D7</div>`}
         <div class="mkSlots" id="mkSl"></div><div class="mkMsg" id="mkMsg"></div>
         </div>${chs}<div class="mkQ mkQb"><div class="mkPool" id="mkPo"></div>
         <button class="mkBtn" id="mkGo" disabled>\u3067\u304D\u305F</button></div>`;
           const sl = main.querySelector("#mkSl"), po = main.querySelector("#mkPo"), go = main.querySelector("#mkGo"), msg = main.querySelector("#mkMsg");
           let done = false, miss = 0;
           const draw = () => {
-            sl.innerHTML = slots.map((c, i) => c ? `<button class="mkSlot f${isJp(c.t) ? " jp" : ""}" data-s="${i}">${esc5(c.t)}</button>` : `<div class="mkSlot">${s.type === "E" ? `<small style="font:700 11px var(--jp);color:#8a9bb8">${ROLE2[tk(s.ans[i]).r] || ""}</small>` : ""}</div>`).join("");
-            po.innerHTML = pool.map((c) => `<button class="mkCard${isJp(c.t) ? " jp" : ""}${slots.some((x) => x && x.id === c.id) ? " used" : ""}" data-c="${c.id}">${esc5(c.t)}</button>`).join("");
+            sl.innerHTML = slots.map((c, i) => c ? `<button class="mkSlot f${isJp(c.t) ? " jp" : ""}" data-s="${i}">${esc6(c.t)}</button>` : `<div class="mkSlot">${s.type === "E" ? `<small style="font:700 11px var(--jp);color:#8a9bb8">${ROLE2[tk(s.ans[i]).r] || ""}</small>` : ""}</div>`).join("");
+            po.innerHTML = pool.map((c) => `<button class="mkCard${isJp(c.t) ? " jp" : ""}${slots.some((x) => x && x.id === c.id) ? " used" : ""}" data-c="${c.id}">${esc6(c.t)}</button>`).join("");
             go.disabled = done ? false : !slots.every(Boolean);
             sl.querySelectorAll("[data-s]").forEach((b2) => b2.onclick = () => {
               if (done) return;
@@ -23703,7 +23703,7 @@ body.nogram .gmT{display:none}
               if (s.words && s.words.length) {
                 const ex = document.createElement("div");
                 ex.className = "hint";
-                ex.innerHTML = `\u65E5\u672C\u8A9E\u306E\u3068\u3053\u308D\u306F\u3001\u82F1\u8A9E\u3060\u3068\u3053\u3046\u306A\u308B\u3088<br><b>${s.words.map(([j, e]) => esc5(j) + " \uFF1D " + esc5(e)).join("\u3000")}</b>\u3000\u2192\u3000${esc5(s.en)}`;
+                ex.innerHTML = `\u65E5\u672C\u8A9E\u306E\u3068\u3053\u308D\u306F\u3001\u82F1\u8A9E\u3060\u3068\u3053\u3046\u306A\u308B\u3088<br><b>${s.words.map(([j, e]) => esc6(j) + " \uFF1D " + esc6(e)).join("\u3000")}</b>\u3000\u2192\u3000${esc6(s.en)}`;
                 msg.after(ex);
               }
               po.style.display = "none";
@@ -23728,7 +23728,7 @@ body.nogram .gmT{display:none}
         if (s.type === "T") {
           main.innerHTML = `<div class="mkQ mkQt big">${tag}<div class="hint">\u5149\u3063\u3066\u3044\u308B\u30AB\u30FC\u30C9\u306F\u3001\u3069\u3053\u3092\u8A73\u3057\u304F\u3057\u3066\u3044\u308B\uFF1F</div>
         ${boardHtml({ cards: s.cards, hl: s.hl })}<div class="mkMsg" id="mkMsg"></div>
-        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}</button>`).join("")}</div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc6(o)}">${esc6(o)}</button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {
@@ -23763,9 +23763,9 @@ body.nogram .gmT{display:none}
           return;
         }
         if (s.type === "B") {
-          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="hint">\u7A7A\u3044\u3066\u3044\u308B\u3068\u3053\u308D\u306B\u5165\u308B\u8A00\u8449\u306F\uFF1F<br>${s.hint ? esc5(s.hint) : "I \u2192 am \uFF0F he\u30FBshe\u30FBit\u30FB\u540D\u524D\u3072\u3068\u308A \u2192 is \uFF0F you\u30FBwe\u30FBthey \u2192 are"}</div>${s.ctx ? `<div class="hint" style="font-weight:800;color:#27344f">${esc5(s.ctx)}</div>` : ""}
-        <div class="mkSen">${esc5(s.before)} <span class="bl" id="mkBl">\u3000\u3000</span>${/^[.,!?]/.test(s.after) || !s.after ? "" : " "}${esc5(s.after)}</div><div class="mkMsg" id="mkMsg"></div>
-        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}</button>`).join("")}</div>
+          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="hint">\u7A7A\u3044\u3066\u3044\u308B\u3068\u3053\u308D\u306B\u5165\u308B\u8A00\u8449\u306F\uFF1F<br>${s.hint ? esc6(s.hint) : "I \u2192 am \uFF0F he\u30FBshe\u30FBit\u30FB\u540D\u524D\u3072\u3068\u308A \u2192 is \uFF0F you\u30FBwe\u30FBthey \u2192 are"}</div>${s.ctx ? `<div class="hint" style="font-weight:800;color:#27344f">${esc6(s.ctx)}</div>` : ""}
+        <div class="mkSen">${esc6(s.before)} <span class="bl" id="mkBl">\u3000\u3000</span>${/^[.,!?]/.test(s.after) || !s.after ? "" : " "}${esc6(s.after)}</div><div class="mkMsg" id="mkMsg"></div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc6(o)}">${esc6(o)}</button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {
@@ -23796,8 +23796,8 @@ body.nogram .gmT{display:none}
         }
         if (s.type === "C") {
           main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="hint">${s.hint || (s.gen ? "\u3053\u306E\u8A00\u8449\u306F\u3001\u3069\u308C\uFF1F" : "\u3053\u306E\u6587\u306F\u3001\u3069\u306E\u578B\uFF1F")}</div>
-        <div class="mkSen">${esc5(s.en)}</div><div class="mkMsg" id="mkMsg"></div>
-        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${(s.opts || TYPES).map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}<small style="display:block;font:700 11px var(--jp);color:#7b8cab">${esc5((s.subs || (s.gen ? GEN_SUB : TYPE_SUB))[o] || "")}</small></button>`).join("")}</div>
+        <div class="mkSen">${esc6(s.en)}</div><div class="mkMsg" id="mkMsg"></div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${(s.opts || TYPES).map((o) => `<button class="mkCard" data-o="${esc6(o)}">${esc6(o)}<small style="display:block;font:700 11px var(--jp);color:#7b8cab">${esc6((s.subs || (s.gen ? GEN_SUB : TYPE_SUB))[o] || "")}</small></button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {
@@ -23850,18 +23850,18 @@ body.nogram .gmT{display:none}
         const idx = ch.lessons.findIndex((l) => l.id === L.id), nx = ch.lessons[idx + 1];
         sfxs(chapterClear || L.boss ? "voice/perfect" : "se/newbest");
         if (chapterClear) {
-          main.innerHTML = `<div class="mkEnd"><img src="${face2("g", "\u559C\u3076")}" alt=""><h2>\u7B2C${ch.n}\u7AE0\u3000\u30AF\u30EA\u30A2\uFF01</h2>
-        <div class="mkTitle">\u79F0\u53F7\u300C${esc5(ch.title)}\u300D\u3092\u30B2\u30C3\u30C8\uFF01</div>
+          main.innerHTML = `<div class="mkEnd"><img src="${face3("g", "\u559C\u3076")}" alt=""><h2>\u7B2C${ch.n}\u7AE0\u3000\u30AF\u30EA\u30A2\uFF01</h2>
+        <div class="mkTitle">\u79F0\u53F7\u300C${esc6(ch.title)}\u300D\u3092\u30B2\u30C3\u30C8\uFF01</div>
         <p>\u30B3\u30A4\u30F3 +${first2 ? L.coin + ch.coin : ch.coin}
-\u30A2\u30D0\u30BF\u30FC\u306E\u30D5\u30EC\u30FC\u30E0\u300C${esc5(ch.frame)}\u300D\u306F\u3001\u4F7F\u3048\u308B\u3088\u3046\u306B\u6E96\u5099\u4E2D\u3067\u3059</p>
+\u30A2\u30D0\u30BF\u30FC\u306E\u30D5\u30EC\u30FC\u30E0\u300C${esc6(ch.frame)}\u300D\u306F\u3001\u4F7F\u3048\u308B\u3088\u3046\u306B\u6E96\u5099\u4E2D\u3067\u3059</p>
         <div class="btns"><button class="mkBtn" id="mkBk">\u7AE0\u306E\u4E00\u89A7\u3078</button></div></div>`;
           main.querySelector("#mkBk").onclick = showList;
           return;
         }
-        main.innerHTML = `<div class="mkEnd"><img src="${face2("b", "\u559C\u3076")}" style="transform:scaleX(-1)" alt=""><h2>${esc5(L.id)}\u3000\u30AF\u30EA\u30A2\uFF01</h2>
+        main.innerHTML = `<div class="mkEnd"><img src="${face3("b", "\u559C\u3076")}" style="transform:scaleX(-1)" alt=""><h2>${esc6(L.id)}\u3000\u30AF\u30EA\u30A2\uFF01</h2>
       <p>${first2 ? `\u30B3\u30A4\u30F3 +${L.coin}` : "\u3082\u3046\u4E00\u5EA6\u3067\u304D\u305F\u306D"}${ch.partial && !nx ? `
 \u7B2C${ch.n}\u7AE0\u306E\u7D9A\u304D\uFF08${ch.rest}\uFF09\u306F\u3001\u6E96\u5099\u4E2D\u3067\u3059` : ""}</p>
-      <div class="btns">${nx ? `<button class="mkBtn" id="mkNx">\u3064\u304E\u306E\u30EC\u30C3\u30B9\u30F3\uFF08${esc5(nx.id)}\uFF09</button>` : ""}<button class="mkBtn sub" id="mkBk">\u7AE0\u306E\u4E00\u89A7\u3078</button></div></div>`;
+      <div class="btns">${nx ? `<button class="mkBtn" id="mkNx">\u3064\u304E\u306E\u30EC\u30C3\u30B9\u30F3\uFF08${esc6(nx.id)}\uFF09</button>` : ""}<button class="mkBtn sub" id="mkBk">\u7AE0\u306E\u4E00\u89A7\u3078</button></div></div>`;
         if (nx) main.querySelector("#mkNx").onclick = () => start2(nx.id);
         main.querySelector("#mkBk").onclick = showList;
         const bi = root2.querySelector("#mkBarI");
@@ -23890,7 +23890,7 @@ body.nogram .gmT{display:none}
         } catch (e) {
         }
       }
-      return { open, close, visible, destroy, LESSONS: ALL, _st: () => st };
+      return { open, close, visible, destroy, LESSONS: ALL2, _st: () => st };
     })();
     return MakeTut;
   }
@@ -24252,7 +24252,7 @@ body.nogram .gmT{display:none}
       if (html != null) e.innerHTML = html;
       return e;
     };
-    const esc5 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const esc6 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     let root2, opts = {}, app;
     let STORE_KEY = "chunkStory.v1";
@@ -24276,15 +24276,15 @@ body.nogram .gmT{display:none}
       if (own) return own;
       return null;
     }
-    function faceKey(who, face2) {
+    function faceKey(who, face3) {
       const m = A.config.faceMap && A.config.faceMap[who] || {};
-      return m[face2] || face2;
+      return m[face3] || face3;
     }
-    function charaSrc(who, face2) {
+    function charaSrc(who, face3) {
       const c = A.chara[who];
-      if (c.src && c.src[face2]) return c.src[face2];
+      if (c.src && c.src[face3]) return c.src[face3];
       if (!A.config.useImages) return null;
-      return A.config.base + who + "/" + faceKey(who, face2) + A.config.ext;
+      return A.config.base + who + "/" + faceKey(who, face3) + A.config.ext;
     }
     function storySrc(own, key) {
       if (own) return own;
@@ -24299,13 +24299,13 @@ body.nogram .gmT{display:none}
       img.onerror = () => img.replaceWith(ph);
       return img;
     }
-    function charaNode(who, face2) {
+    function charaNode(who, face3) {
       const c = A.chara[who];
-      const key = who + "_" + face2;
-      return withFallback(charaSrc(who, face2), () => {
+      const key = who + "_" + face3;
+      return withFallback(charaSrc(who, face3), () => {
         const p = el3("div", "ph");
         p.style.setProperty("--c", c.color);
-        p.innerHTML = `<div class="cs-head">${esc5(c.faces[face2] || face2)}</div><b>${esc5(c.name)}</b>${A.config.debug ? `<code>${key}</code>` : ""}`;
+        p.innerHTML = `<div class="cs-head">${esc6(c.faces[face3] || face3)}</div><b>${esc6(c.name)}</b>${A.config.debug ? `<code>${key}</code>` : ""}`;
         return p;
       });
     }
@@ -24315,7 +24315,7 @@ body.nogram .gmT{display:none}
       return withFallback(p.src || (A.config.picBase ? A.config.picBase + key + A.config.picExt : storySrc(p.src, key)), () => {
         const d = el3("div", "ph");
         d.style.setProperty("--c", "#fff7d6");
-        d.innerHTML = `<b>\u7D75</b><span style="font-size:12px;line-height:1.5">${esc5(p.label)}</span>${A.config.debug ? `<code>${key}</code>` : ""}`;
+        d.innerHTML = `<b>\u7D75</b><span style="font-size:12px;line-height:1.5">${esc6(p.label)}</span>${A.config.debug ? `<code>${key}</code>` : ""}`;
         return d;
       });
     }
@@ -24332,7 +24332,7 @@ body.nogram .gmT{display:none}
         };
         im.src = src;
       }
-      if (A.config.debug) layer.appendChild(el3("span", "bgname", esc5((b.label || k) + " / " + key)));
+      if (A.config.debug) layer.appendChild(el3("span", "bgname", esc6((b.label || k) + " / " + key)));
     }
     function screen2(cls) {
       app.innerHTML = "";
@@ -24345,10 +24345,10 @@ body.nogram .gmT{display:none}
     }
     function openMap() {
       const s = screen2("map");
-      s.innerHTML = `<h1>${esc5(S2.title)}</h1>
+      s.innerHTML = `<h1>${esc6(S2.title)}</h1>
     <p class="cs-lead">\u304A\u8A71\u3092\u805E\u3044\u3066\u3001\u3059\u3050\u30B2\u30FC\u30E0\u3067\u8A66\u3059\u3002\u7AE0\u3092\u30AF\u30EA\u30A2\u3059\u308B\u3068\u3001\u3042\u305D\u3079\u308B\u30E2\u30FC\u30C9\u304C\u5897\u3048\u3066\u3044\u304F\u3088\u3002</p>`;
       const un = el3("div", "unlocks");
-      S2.modes.forEach((m) => un.appendChild(el3("span", prog.unlocked[m.key] ? "on" : "", esc5((prog.unlocked[m.key] ? "" : "\u{1F512} ") + m.name))));
+      S2.modes.forEach((m) => un.appendChild(el3("span", prog.unlocked[m.key] ? "on" : "", esc6((prog.unlocked[m.key] ? "" : "\u{1F512} ") + m.name))));
       s.appendChild(un);
       const list = el3("div", "chs");
       S2.chapters.forEach((ch) => {
@@ -24356,7 +24356,7 @@ body.nogram .gmT{display:none}
         const row = el3("div", "ch" + (done ? " done" : "") + (open ? "" : " lock"));
         const mode = ch.unlock && S2.modes.find((m) => m.key === ch.unlock);
         row.innerHTML = `<div class="cs-no">${ch.no}</div>
-      <div class="cs-tt">${esc5(ch.title)}<small>${esc5(ch.sub || "")}${done ? " \u30FB \u30AF\u30EA\u30A2" : ""}</small></div>`;
+      <div class="cs-tt">${esc6(ch.title)}<small>${esc6(ch.sub || "")}${done ? " \u30FB \u30AF\u30EA\u30A2" : ""}</small></div>`;
         const bt = el3("div", "bt");
         const b1 = el3("button", "pill", done ? "\u3082\u3046\u4E00\u5EA6\u898B\u308B" : "\u306F\u3058\u3081\u308B");
         b1.disabled = !open;
@@ -24375,7 +24375,7 @@ body.nogram .gmT{display:none}
           runStage(ch);
         };
         bt.append(b1, b2);
-        if (mode) bt.appendChild(el3("span", "tag-unlock", "\u30AF\u30EA\u30A2\u3067\u300C" + esc5(mode.name) + "\u300D"));
+        if (mode) bt.appendChild(el3("span", "tag-unlock", "\u30AF\u30EA\u30A2\u3067\u300C" + esc6(mode.name) + "\u300D"));
         row.appendChild(bt);
         list.appendChild(row);
       });
@@ -24412,7 +24412,7 @@ body.nogram .gmT{display:none}
       const s = screen2("adv");
       adv = { ch, lines: {}, skip: false, log: [], resolve: null, chars: {} };
       s.innerHTML = `<div class="cs-bgl"></div>
-    <div class="cs-top"><span class="cs-chname">\u7B2C${ch.no}\u7AE0 ${esc5(ch.title)}</span>
+    <div class="cs-top"><span class="cs-chname">\u7B2C${ch.no}\u7AE0 ${esc6(ch.title)}</span>
       <button data-a="log">\u30ED\u30B0</button><button data-a="skip">\u30B9\u30AD\u30C3\u30D7</button></div>
     <div class="cs-board"></div>
     <div class="cs-chars"><div class="cs-chr cs-l cs-hide"></div><div class="cs-chr cs-r cs-hide"></div></div>
@@ -24460,14 +24460,14 @@ body.nogram .gmT{display:none}
     function slotOf(who) {
       return adv.chars[who];
     }
-    function setFace(who, face2) {
+    function setFace(who, face3) {
       const slot = slotOf(who);
       if (!slot) return;
-      if (slot.dataset.face === face2) return;
-      slot.dataset.face = face2;
+      if (slot.dataset.face === face3) return;
+      slot.dataset.face = face3;
       const q = slot.querySelector(".cs-q");
       slot.innerHTML = "";
-      slot.appendChild(charaNode(who, face2));
+      slot.appendChild(charaNode(who, face3));
       if (q) slot.appendChild(q);
     }
     async function say3(st) {
@@ -24553,7 +24553,7 @@ body.nogram .gmT{display:none}
     function showLog() {
       const o = el3("div", "log");
       const inn = el3("div", "in");
-      inn.innerHTML = adv.log.map((l) => `<p><b>${esc5(l.who)}</b>${esc5(l.t)}</p>`).join("") || "<p>\u307E\u3060\u30BB\u30EA\u30D5\u306F\u3042\u308A\u307E\u305B\u3093\u3002</p>";
+      inn.innerHTML = adv.log.map((l) => `<p><b>${esc6(l.who)}</b>${esc6(l.t)}</p>`).join("") || "<p>\u307E\u3060\u30BB\u30EA\u30D5\u306F\u3042\u308A\u307E\u305B\u3093\u3002</p>";
       o.appendChild(inn);
       o.onclick = () => o.remove();
       adv.s.appendChild(o);
@@ -24562,7 +24562,7 @@ body.nogram .gmT{display:none}
     const idx = (i) => Array.isArray(i) ? i : [i];
     function mkTok(text) {
       const t = el3("span", "tok");
-      t.appendChild(el3("span", "t", esc5(text)));
+      t.appendChild(el3("span", "t", esc6(text)));
       return t;
     }
     const FX = {
@@ -24577,10 +24577,10 @@ body.nogram .gmT{display:none}
             slot.classList.add("cs-hide");
             return;
           }
-          const [who, face2] = st[side].split(":");
+          const [who, face3] = st[side].split(":");
           adv.chars[who] = slot;
           slot.classList.remove("cs-hide");
-          setFace(who, face2 || "normal");
+          setFace(who, face3 || "normal");
         });
       },
       clear: async () => {
@@ -24605,7 +24605,7 @@ body.nogram .gmT{display:none}
       },
       line: (st) => {
         const ln = el3("div", "ln");
-        if (st.label) ln.appendChild(el3("span", "lab", esc5(st.label)));
+        if (st.label) ln.appendChild(el3("span", "lab", esc6(st.label)));
         const tokens = st.parts.map((p) => {
           const t = mkTok(p);
           ln.appendChild(t);
@@ -24640,7 +24640,7 @@ body.nogram .gmT{display:none}
         const t = adv.lines[st.id]?.tokens[st.i];
         if (!t) return;
         t.querySelector(".cs-bdg")?.remove();
-        t.appendChild(el3("span", "bdg " + (st.c || ""), esc5(st.t)));
+        t.appendChild(el3("span", "bdg " + (st.c || ""), esc6(st.t)));
       },
       push: async (st) => {
         const L = adv.lines[st.id];
@@ -24668,7 +24668,7 @@ body.nogram .gmT{display:none}
       },
       mark: (st) => {
         const L = adv.lines[st.id];
-        if (L) L.el.appendChild(el3("span", "mk " + (st.c || ""), esc5(st.t)));
+        if (L) L.el.appendChild(el3("span", "mk " + (st.c || ""), esc6(st.t)));
       },
       reorder: async (st) => {
         const L = adv.lines[st.id];
@@ -24707,9 +24707,9 @@ body.nogram .gmT{display:none}
         const w = el3("div", "cards");
         st.items.forEach((c) => {
           const d = el3("div", "card");
-          d.appendChild(el3("div", "en", esc5(c.en)));
+          d.appendChild(el3("div", "en", esc6(c.en)));
           if (c.pic) d.appendChild(picNode(c.pic));
-          d.appendChild(el3("div", "jp", esc5(c.jp)));
+          d.appendChild(el3("div", "jp", esc6(c.jp)));
           w.appendChild(d);
         });
         adv.board.appendChild(w);
@@ -24723,7 +24723,7 @@ body.nogram .gmT{display:none}
       },
       pfill: (st) => {
         const r = adv.board.querySelector(`.cs-pyr .cs-st[data-s="${st.step}"]`);
-        if (r) r.appendChild(el3("span", "chip", esc5(st.t)));
+        if (r) r.appendChild(el3("span", "chip", esc6(st.t)));
       },
       amap: () => {
         const m = el3("div", "amap");
@@ -24782,7 +24782,7 @@ body.nogram .gmT{display:none}
     }
     function stageFrame(ch, st) {
       const s = screen2("stg");
-      s.innerHTML = `<div class="cs-top"><span class="cs-t">\u7B2C${ch.no}\u7AE0 ${esc5(st.title || "")}</span><span class="cs-cnt"></span>
+      s.innerHTML = `<div class="cs-top"><span class="cs-t">\u7B2C${ch.no}\u7AE0 ${esc6(st.title || "")}</span><span class="cs-cnt"></span>
       <button class="cs-pill cs-sub" data-a="map">\u30DE\u30C3\u30D7</button></div>
     <div class="cs-coach"></div><div class="cs-ja"></div><div class="cs-lane"></div><div class="cs-foot"></div>`;
       const coach = s.querySelector(".cs-coach");
@@ -24878,7 +24878,7 @@ body.nogram .gmT{display:none}
           strip.innerHTML = "";
           p.words.forEach((w, i) => {
             const cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "";
-            strip.appendChild(el3("span", "w" + cls, esc5(w)));
+            strip.appendChild(el3("span", "w" + cls, esc6(w)));
             if (i + 1 < len && !cuts.has(i + 1) && hintAt === i + 1) strip.appendChild(el3("span", "hintmk", "\u25C6"));
             if (i + 1 < len && cuts.has(i + 1)) {
               const c = el3("span", "cutmark", "\uFF5C");
@@ -24918,11 +24918,11 @@ body.nogram .gmT{display:none}
           const rw = el3("div", "res-ws");
           res.forEach((c) => {
             const d = el3("span", "rc " + c.r);
-            d.innerHTML = `<span class="cs-m">${{ o: "\u25EF", t: "\u25B3", x: "\xD7" }[c.r]}</span>${esc5(c.text)}`;
+            d.innerHTML = `<span class="cs-m">${{ o: "\u25EF", t: "\u25B3", x: "\xD7" }[c.r]}</span>${esc6(c.text)}`;
             rw.appendChild(d);
           });
           f.lane.appendChild(rw);
-          if (res.some((c) => c.r !== "o")) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048\u306E\u4F8B<br><b>${esc5(answerText(p))}</b>`));
+          if (res.some((c) => c.r !== "o")) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048\u306E\u4F8B<br><b>${esc6(answerText(p))}</b>`));
           const good = res.every((c) => c.r === "o");
           f.say(good ? "\u305C\u3093\u3076\u25EF\uFF01\u3044\u3044\u5207\u308A\u65B9\uFF01" : "\u25B3\u306F\u5927\u304D\u3059\u304E\u3001\xD7\u306F\u5207\u308B\u5834\u6240\u304C\u305A\u308C\u3066\u308B\u3088\u3002");
           f.foot.innerHTML = "";
@@ -24985,7 +24985,7 @@ body.nogram .gmT{display:none}
           ansRow.innerHTML = "";
           pool.innerHTML = "";
           picked.forEach((pi, k) => {
-            const b = el3("button", "oc in", esc5(item.parts[pi]));
+            const b = el3("button", "oc in", esc6(item.parts[pi]));
             b.onclick = () => {
               picked.splice(k, 1);
               draw();
@@ -24993,7 +24993,7 @@ body.nogram .gmT{display:none}
             ansRow.appendChild(b);
           });
           order.filter((i) => !picked.includes(i)).forEach((pi) => {
-            const b = el3("button", "oc", esc5(item.parts[pi]));
+            const b = el3("button", "oc", esc6(item.parts[pi]));
             b.onclick = () => {
               picked.push(pi);
               draw();
@@ -25009,10 +25009,10 @@ body.nogram .gmT{display:none}
           f.lane.classList.add("cs-col");
           const rw = el3("div", "res-ws");
           const d = el3("span", "rc " + (ok ? "o" : "x"));
-          d.innerHTML = `<span class="cs-m">${ok ? "\u25EF" : "\xD7"}</span>${esc5(picked.map((i) => item.parts[i]).join(" "))}`;
+          d.innerHTML = `<span class="cs-m">${ok ? "\u25EF" : "\xD7"}</span>${esc6(picked.map((i) => item.parts[i]).join(" "))}`;
           rw.appendChild(d);
           f.lane.appendChild(rw);
-          if (!ok) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048<br><b>${esc5(item.parts.join(" "))}</b>`));
+          if (!ok) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048<br><b>${esc6(item.parts.join(" "))}</b>`));
           f.say(ok ? "\u305D\u306E\u9806\u756A\uFF01\u571F\u53F0\u30D0\u30C3\u30C1\u30EA\u3002" : "\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u76F8\u624B \u306E\u9806\u3060\u3088\u3002");
           const go = el3("button", "bb go", n + 1 < st.items.length ? "\u3064\u304E\u3078" : "\u3051\u3063\u304B\u3092\u898B\u308B");
           go.onclick = () => {
@@ -25051,8 +25051,8 @@ body.nogram .gmT{display:none}
       b.appendChild(charaNode("boy", bf));
       duo.append(g, b);
       s.appendChild(duo);
-      s.appendChild(el3("div", "say", esc5(line)));
-      if (unlockedMode) s.appendChild(el3("div", "unl", `\u300C${esc5(unlockedMode.name)}\u300D\u304C\u3042\u305D\u3079\u308B\u3088\u3046\u306B\u306A\u3063\u305F\uFF01`));
+      s.appendChild(el3("div", "say", esc6(line)));
+      if (unlockedMode) s.appendChild(el3("div", "unl", `\u300C${esc6(unlockedMode.name)}\u300D\u304C\u3042\u305D\u3079\u308B\u3088\u3046\u306B\u306A\u3063\u305F\uFF01`));
       const col = el3("div", "col");
       const nextCh = S2.chapters.find((c) => c.no === ch.no + 1);
       if (nextCh) {
@@ -25192,7 +25192,7 @@ body.nogram .gmT{display:none}
     name: "\u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF",
     right: "game:chunkchunk",
     async mount(el3, ctx) {
-      const face2 = ctx.opts.face || "arcade";
+      const face3 = ctx.opts.face || "arcade";
       if (!document.querySelector('link[data-ct="cc"]')) {
         const lk = document.createElement("link");
         lk.rel = "stylesheet";
@@ -25211,7 +25211,7 @@ body.nogram .gmT{display:none}
       init_engine();
       init_texts();
       init_rank();
-      initTitle(face2);
+      initTitle(face3);
       initBgm(el3);
       initSfx();
       preloadSfx();
@@ -25220,7 +25220,7 @@ body.nogram .gmT{display:none}
       mo.observe(title, { attributes: true, attributeFilter: ["hidden"] });
       showTitle2();
       ctx.showBack(true);
-      ctx.report("enter", { face: face2, name: NAMES[face2] });
+      ctx.report("enter", { face: face3, name: NAMES[face3] });
       return {
         unmount() {
           mo.disconnect();
@@ -25321,6 +25321,226 @@ body.nogram .gmT{display:none}
   // games/index.js
   var GAMES = { punichunk: game_default, cards: game_default2, stream: game_default3, chunkchunk: game_default4, eigonou: game_default5 };
 
+  // apps/town/tour.js
+  var CH = "g/chunkchunk/img/chara/";
+  var face2 = (w, f) => `${CH}${w === "g" ? "girl" : "boy"}/${f || "normal"}.webp`;
+  var NAME = { g: "\u5973\u306E\u5B50", b: "\u7537\u306E\u5B50" };
+  var COURSES = [
+    { id: "intro", n: "\u8857\u306E\u3042\u308B\u304D\u304B\u305F", steps: [
+      { w: "g", f: "joy", t: "\u3088\u3046\u3053\u305D\u3001\u30C1\u30E3\u30F3\u30AF\u30BF\u30A6\u30F3\u3078\uFF01" },
+      { w: "b", t: "\u3053\u3053\u306F\u3001\u82F1\u8A9E\u3092\u697D\u3057\u304F\u935B\u3048\u308B\u8857\u3060\u3088\u3002" },
+      { w: "g", t: "\u5EFA\u7269\u3092\u30BF\u30C3\u30D7\u3059\u308B\u3068\u3001\u4E2D\u306B\u5165\u308C\u308B\u3088\u3002" },
+      { w: "b", t: "\u4E2D\u304B\u3089\u8857\u306B\u3082\u3069\u308B\u3068\u304D\u306F\u3001\u5DE6\u4E0B\u306E\u300C\u{1F3E0} \u8857\u3078\u300D\u3092\u62BC\u3057\u3066\u306D\u3002" },
+      { w: "g", t: "\u53F3\u4E0A\u306E\u2699\u3067\u306F\u3001\u97F3\u30FB\u8AAD\u307F\u4E0A\u3052\u30FB\u898B\u305F\u76EE\u3092\u5909\u3048\u3089\u308C\u308B\u3088\u3002" },
+      { w: "b", t: "\u5DE6\u4E0A\u306E\u304D\u307F\u306E\u9854\u306F\u3001\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u3002\u306A\u307E\u3048\u3084\u30A2\u30D0\u30BF\u30FC\u3092\u5909\u3048\u3089\u308C\u308B\u3088\u3002" },
+      { w: "g", f: "idea", t: "\u305D\u308C\u3058\u3083\u3001\u5EFA\u7269\u3092\u3072\u3068\u3064\u305A\u3064\u56DE\u3063\u3066\u307F\u3088\u3046\uFF01" }
+    ] },
+    { id: "school", n: "\u5B66\u6821", steps: [
+      { w: "b", t: "\u3053\u3053\u306F\u5B66\u6821\u3002\u30C1\u30E3\u30F3\u30AF\u3092\u7DF4\u7FD2\u3059\u308B\u3068\u3053\u308D\u3060\u3088\u3002", at: "school" },
+      { w: "g", t: "\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u610F\u5473\u306E\u307E\u3068\u307E\u308A\u306E\u3053\u3068\u3002\u82F1\u8A9E\u306F\u3001\u307E\u3068\u307E\u308A\u3054\u3068\u306B\u8AAD\u3080\u3068\u5206\u304B\u308A\u3084\u3059\u3044\u3093\u3060\u3002", at: "school" },
+      { w: "b", t: "\u30EC\u30C3\u30B9\u30F3\u3067\u306F\u3001\u304A\u8A71\u3092\u8AAD\u307F\u306A\u304C\u3089\u3001\u307E\u3068\u307E\u308A\u306E\u5207\u308A\u65B9\u3092\u899A\u3048\u3066\u3044\u304F\u3088\u3002", at: "school" },
+      { w: "g", t: "\u6700\u521D\u306E\u7AE0\u304B\u3089\u3001\u9806\u756A\u306B\u30B2\u30FC\u30E0\u611F\u899A\u3067\u9032\u3081\u3089\u308C\u308B\u3088\u3002", at: "school" },
+      { w: "b", f: "idea", t: "\u3055\u3063\u305D\u304F\u5165\u3063\u3066\u307F\u3088\u3046\u3002\u5149\u3063\u3066\u3044\u308B\u5B66\u6821\u3092\u30BF\u30C3\u30D7\uFF01", tap: "school" },
+      { w: "g", f: "joy", t: "\u304A\u304B\u3048\u308A\uFF01 \u30EC\u30C3\u30B9\u30F3\u306F\u3001\u3042\u3068\u304B\u3089\u7D9A\u304D\u304C\u3067\u304D\u308B\u3088\u3002" }
+    ] },
+    { id: "library", n: "\u56F3\u66F8\u9928", steps: [
+      { w: "g", t: "\u3053\u3053\u306F\u56F3\u66F8\u9928\u3002\u82F1\u8A9E\u306E\u6587\u7AE0\u3092\u8AAD\u3080\u3068\u3053\u308D\u3060\u3088\u3002", at: "library" },
+      { w: "b", t: "\u6587\u7AE0\u3092\u3001\u30C1\u30E3\u30F3\u30AF\u3054\u3068\u306B\u533A\u5207\u308A\u306A\u304C\u3089\u8AAD\u3081\u308B\u3093\u3060\u3002", at: "library" },
+      { w: "g", t: "\u5206\u304B\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u8F9E\u66F8\u3067\u610F\u5473\u3092\u898B\u3089\u308C\u308B\u3088\u3002", at: "library" },
+      { w: "b", t: "\u300C\u82F1\u8A9E\u8133\u30A2\u30D7\u30EA\u300D\u3082\u3053\u3053\u306B\u3042\u308B\u3088\u3002\u7D75\u3092\u898B\u306A\u304C\u3089\u82F1\u6587\u3092\u7D44\u307F\u7ACB\u3066\u308B\u3001\u82F1\u8A9E\u306E\u30B7\u30DF\u30E5\u30EC\u30FC\u30BF\u3060\u3088\u3002", at: "library" },
+      { w: "g", f: "idea", t: "\u5165\u3063\u3066\u307F\u3088\u3046\u3002\u5149\u3063\u3066\u3044\u308B\u56F3\u66F8\u9928\u3092\u30BF\u30C3\u30D7\uFF01", tap: "library" },
+      { w: "b", f: "joy", t: "\u304A\u304B\u3048\u308A\uFF01 \u8AAD\u307F\u305F\u3044\u6587\u7AE0\u306F\u3001\u3044\u3064\u3067\u3082\u8AAD\u307F\u76F4\u305B\u308B\u3088\u3002" }
+    ] },
+    { id: "game", n: "\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC", steps: [
+      { w: "b", t: "\u3053\u3053\u306F\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\u3002\u904A\u3073\u306A\u304C\u3089\u82F1\u8A9E\u304C\u935B\u3048\u3089\u308C\u308B\u3088\u3002", at: "game" },
+      { w: "g", t: "\u300C\u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF\u300D\u306F\u3001\u82F1\u6587\u304C\u6A2A\u306B\u6D41\u308C\u3066\u304F\u308B\u3088\u3002", at: "game" },
+      { w: "g", t: "\u25B6\u30671\u8A9E\u305A\u3064\u9032\u3081\u3066\u3001\u610F\u5473\u306E\u5207\u308C\u76EE\u3067\u300C\u533A\u5207\u308B\u300D\u3092\u62BC\u3057\u3066\u306D\u3002", at: "game" },
+      { w: "b", t: "\u307E\u3061\u304C\u3048\u305F\u3089\u3001\u25C0\u3067\u623B\u308C\u308B\u3088\u3002", at: "game" },
+      { w: "b", t: "\u5207\u308C\u76EE\u304C\u5408\u3046\u3068\u70B9\u304C\u5165\u3063\u3066\u3001\u7D9A\u3051\u308B\u3068\u30B3\u30F3\u30DC\u306B\u306A\u308B\u3093\u3060\u3002", at: "game" },
+      { w: "b", t: "\u300C\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u300D\u306F\u3001\u6D41\u308C\u3066\u304F\u308B\u5358\u8A9E\u3084\u30C1\u30E3\u30F3\u30AF\u30924\u629E\u3067\u7B54\u3048\u3066\u3001\u9577\u6587\u3092\u5B8C\u6210\u3055\u305B\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002", at: "game" },
+      { w: "g", t: "\u300C\u3077\u306B\u30C1\u30E3\u30F3\u30AF\u300D\u306F\u3001\u30D0\u30D6\u30EB\u3092\u82F1\u8A9E\u306E\u9806\u306B\u3064\u306A\u3044\u3067\u6587\u3092\u4F5C\u308B\u30D1\u30BA\u30EB\u3002", at: "game" },
+      { w: "b", t: "\u300C\u30C1\u30E3\u30F3\u30AF\u30FB\u30AB\u30FC\u30C9\u300D\u306F\u3001\u82F1\u6587\u3067\u5F79\u3092\u4F5C\u308B\u30AB\u30FC\u30C9\u30B2\u30FC\u30E0\u3002CPU\u3068\u306E\u5BFE\u6226\u3082\u3042\u308B\u3088\u3002", at: "game" },
+      { w: "g", f: "idea", t: "\u597D\u304D\u306A\u30B2\u30FC\u30E0\u30921\u3064\u89E6\u3063\u3066\u307F\u3088\u3046\u3002\u5149\u3063\u3066\u3044\u308B\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\u3092\u30BF\u30C3\u30D7\uFF01", tap: "game" },
+      { w: "b", f: "joy", t: "\u304A\u304B\u3048\u308A\uFF01 \u307B\u304B\u306E\u30B2\u30FC\u30E0\u3082\u3001\u307E\u305F\u904A\u3093\u3067\u307F\u3066\u306D\u3002" }
+    ] },
+    { id: "house", n: "\u81EA\u5B85", steps: [
+      { w: "g", t: "\u3053\u3053\u306F\u81EA\u5B85\u3002\u304D\u307F\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u304C\u898B\u3089\u308C\u308B\u3088\u3002", at: "house" },
+      { w: "b", t: "\u306A\u307E\u3048\u3084\u30A2\u30D0\u30BF\u30FC\u3092\u5909\u3048\u3089\u308C\u308B\u3088\u3002", at: "house" },
+      { w: "g", f: "idea", t: "\u306E\u305E\u3044\u3066\u307F\u3088\u3046\u3002\u81EA\u5B85\u3092\u30BF\u30C3\u30D7\uFF01", tap: "house" }
+    ] },
+    { id: "shop", n: "\u30B7\u30E7\u30C3\u30D7", steps: [
+      { w: "b", t: "\u3053\u3053\u306F\u30B7\u30E7\u30C3\u30D7\u3002\u6709\u6599\u306E\u30B3\u30F3\u30C6\u30F3\u30C4\u3092\u58F2\u308B\u4E88\u5B9A\u306E\u5834\u6240\u3060\u3088\u3002", at: "shop" },
+      { w: "g", t: "\u4ECA\u306F\u3001\u307E\u3060\u6E96\u5099\u4E2D\u3002\u697D\u3057\u307F\u306B\u3057\u3066\u3066\u306D\u3002", at: "shop" }
+    ] },
+    { id: "outro", n: "\u304A\u308F\u308A\u306B", steps: [
+      { w: "g", f: "joy", t: "\u3053\u308C\u3067\u3001\u6848\u5185\u306F\u304A\u3057\u307E\u3044\uFF01" },
+      { w: "b", t: "\u5206\u304B\u3089\u306A\u304F\u306A\u3063\u305F\u3089\u3001\u53F3\u4E0A\u306E\u300C\uFF1F\u300D\u304B\u3089\u3001\u3044\u3064\u3067\u3082\u898B\u76F4\u305B\u308B\u3088\u3002" },
+      { w: "g", f: "joy", t: "\u3055\u3042\u3001\u8857\u3067\u904A\u3093\u3067\u307F\u3088\u3046\uFF01" }
+    ] }
+  ];
+  var ALL = COURSES.map((c) => c.id);
+  var esc4 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  function createTour(core2) {
+    const store2 = createStore("town");
+    const load2 = () => Object.assign({ done: false, courses: {} }, store2.get("tour") || {});
+    const save2 = (v) => store2.set("tour", v);
+    const map = () => document.getElementById("twMap");
+    let queue = [], ci = 0, si = 0, box = null, dim = null, hi = null, touched = false, on = false;
+    function clearHi() {
+      if (hi) hi.classList.remove("tour-on");
+      hi = null;
+    }
+    function end(completed) {
+      on = false;
+      clearHi();
+      if (box) {
+        box.remove();
+        box = null;
+      }
+      if (dim) {
+        dim.remove();
+        dim = null;
+      }
+      const v = load2();
+      if (completed) {
+        queue.forEach((id) => {
+          v.courses[id] = 1;
+        });
+        if (queue.length === ALL.length) v.done = true;
+      } else v.done = true;
+      save2(v);
+      queue = [];
+    }
+    function cur4() {
+      return COURSES.find((c) => c.id === queue[ci]).steps[si];
+    }
+    function next() {
+      const c = COURSES.find((x) => x.id === queue[ci]);
+      si++;
+      if (si >= c.steps.length) {
+        const v = load2();
+        v.courses[c.id] = 1;
+        save2(v);
+        ci++;
+        si = 0;
+        if (ci >= queue.length) return end(true);
+      }
+      render();
+    }
+    function render() {
+      const s = cur4();
+      touched = false;
+      if (!dim) {
+        dim = document.createElement("div");
+        dim.className = "tour-dim";
+        map().appendChild(dim);
+      }
+      clearHi();
+      const k = s.tap || s.at;
+      if (k) {
+        hi = document.querySelector(`.tw-bld[data-k="${k}"]`);
+        if (hi) hi.classList.add("tour-on");
+      }
+      if (!box) {
+        box = document.createElement("div");
+        box.className = "tour-box";
+        box.innerHTML = '<img class="tf" alt=""><div class="tn"></div><div class="tx"></div><button class="tskip">\u3068\u3070\u3059</button><div class="tnx">\u25B6</div>';
+        box.onclick = (e) => {
+          if (e.target.closest(".tskip")) return;
+          if (!cur4().tap) next();
+          else if (e.target.closest(".tnx")) next();
+        };
+        box.querySelector(".tskip").onclick = () => end(false);
+        document.body.appendChild(box);
+      }
+      box.querySelector(".tf").src = face2(s.w, s.f);
+      const nm = box.querySelector(".tn");
+      nm.textContent = NAME[s.w];
+      nm.className = "tn " + s.w;
+      box.querySelector(".tx").textContent = s.t;
+      const nx = box.querySelector(".tnx");
+      nx.textContent = s.tap ? "\u3064\u304E\u3078 \u25B6" : "\u25B6";
+      nx.classList.toggle("btn", !!s.tap);
+      box.classList.toggle("wait", !!s.tap);
+      box.classList.remove("pop");
+      void box.offsetWidth;
+      box.classList.add("pop");
+    }
+    function start2(ids2) {
+      if (on) end(false);
+      queue = ids2.slice();
+      ci = 0;
+      si = 0;
+      on = true;
+      render();
+    }
+    function menu() {
+      const v = load2();
+      core2.ui.sheet(
+        `<h3>\u8857\u306E\u30C4\u30A2\u30FC</h3><ul class="tw-list"><li><button data-c="all">\u306F\u3058\u3081\u304B\u3089\u901A\u3057\u3066\u898B\u308B<small>${v.done ? "\u2705" : "\u203A"}</small></button></li>` + COURSES.filter((c) => c.id !== "outro").map((c) => `<li><button data-c="${c.id}">${esc4(c.n)}<small>${v.courses[c.id] ? "\u2705 \u898B\u305F" : "\u898B\u308B \u203A"}</small></button></li>`).join("") + "</ul>",
+        (ov, close) => ov.querySelectorAll("button[data-c]").forEach((b) => b.onclick = () => {
+          close();
+          start2(b.dataset.c === "all" ? ALL : [b.dataset.c]);
+        })
+      );
+    }
+    return {
+      /* 初めて街に来たときだけ、自動で始める */
+      auto() {
+        if (!load2().done && !document.body.classList.contains("cs-in-game")) setTimeout(() => {
+          if (!on && !load2().done) start2(ALL);
+        }, 700);
+      },
+      menu,
+      active: () => on,
+      /* 建物をタップしたとき：いま待っている建物なら「触った」ことにする */
+      tapped(k) {
+        if (on && cur4().tap === k) {
+          touched = true;
+          box && box.classList.add("touched");
+        }
+      },
+      /* ゲームから街にもどったとき：触ったあとなら、つぎへ進む */
+      afterClose() {
+        if (on && cur4().tap && touched) next();
+      }
+    };
+  }
+
+  // apps/town/phrases.js
+  var PHRASES = [
+    ["How's it going?", "\u8ABF\u5B50\u306F\u3069\u3046\uFF1F"],
+    ["I'm on my way.", "\u4ECA\u5411\u304B\u3063\u3066\u308B\u3088\u3002"],
+    ["Take your time.", "\u3086\u3063\u304F\u308A\u3067\u3044\u3044\u3088\u3002"],
+    ["That makes sense.", "\u306A\u308B\u307B\u3069\u3001\u308F\u304B\u308B\u3002"],
+    ["I'll think about it.", "\u8003\u3048\u3066\u304A\u304F\u306D\u3002"],
+    ["Let me check.", "\u78BA\u8A8D\u3055\u305B\u3066\u3002"],
+    ["No worries.", "\u6C17\u306B\u3057\u306A\u3044\u3067\u3002"],
+    ["I'm looking forward to it.", "\u697D\u3057\u307F\u306B\u3057\u3066\u308B\u3088\u3002"],
+    ["It depends.", "\u5834\u5408\u306B\u3088\u308B\u306D\u3002"],
+    ["Sounds good to me.", "\u3044\u3044\u306D\u3001\u305D\u308C\u3067\u3044\u3053\u3046\u3002"],
+    ["I couldn't agree more.", "\u307E\u3063\u305F\u304F\u540C\u611F\u3060\u3088\u3002"],
+    ["Can you say that again?", "\u3082\u3046\u4E00\u56DE\u8A00\u3063\u3066\u304F\u308C\u308B\uFF1F"],
+    ["What do you mean?", "\u3069\u3046\u3044\u3046\u610F\u5473\uFF1F"],
+    ["I'm not sure yet.", "\u307E\u3060\u308F\u304B\u3089\u306A\u3044\u3093\u3060\u3002"],
+    ["Let's get started.", "\u3055\u3042\u3001\u59CB\u3081\u3088\u3046\u3002"],
+    ["Good luck!", "\u304C\u3093\u3070\u3063\u3066\u306D\uFF01"],
+    ["Don't give up.", "\u3042\u304D\u3089\u3081\u306A\u3044\u3067\u3002"],
+    ["I'm full.", "\u304A\u306A\u304B\u3044\u3063\u3071\u3044\u3002"],
+    ["I'm running late.", "\u9045\u308C\u305D\u3046\u3002"],
+    ["It's up to you.", "\u3042\u306A\u305F\u6B21\u7B2C\u3060\u3088\u3002"],
+    ["Long time no see.", "\u4E45\u3057\u3076\u308A\uFF01"],
+    ["Thanks for waiting.", "\u5F85\u3063\u3066\u3066\u304F\u308C\u3066\u3042\u308A\u304C\u3068\u3046\u3002"],
+    ["I got it.", "\u308F\u304B\u3063\u305F\u3002"],
+    ["Just a moment, please.", "\u3061\u3087\u3063\u3068\u5F85\u3063\u3066\u306D\u3002"],
+    ["Here you go.", "\u306F\u3044\u3001\u3069\u3046\u305E\u3002"],
+    ["Me too.", "\u79C1\u3082\u3002"],
+    ["Good job!", "\u3088\u304F\u3067\u304D\u305F\u306D\uFF01"],
+    ["I'll do my best.", "\u5168\u529B\u3067\u3084\u308B\u3088\u3002"],
+    ["Practice makes perfect.", "\u7FD2\u3046\u3088\u308A\u6163\u308C\u308D\u3002"],
+    ["See you tomorrow.", "\u307E\u305F\u660E\u65E5\u306D\u3002"]
+  ];
+
   // apps/town/main.js
   var core = createCore(window.__APP__);
   var PLACES = {
@@ -25336,9 +25556,9 @@ body.nogram .gmT{display:none}
     ] }
   };
   var BLD = [["school", "bSchool", "\u5B66\u6821"], ["library", "bLibrary", "\u56F3\u66F8\u9928"], ["house", "bHouse", "\u81EA\u5B85"], ["shop", "bShop", "\u30B7\u30E7\u30C3\u30D7"], ["game", "bGame", "\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC"]];
-  var esc4 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-  document.body.insertAdjacentHTML("afterbegin", `<div class="tw-view"><div class="tw-map" id="twMap">${BLD.map(([k, id, alt]) => `<button class="tw-bld" id="${id}" data-k="${k}"><img src="img/${PLACES[k].img}.webp" alt="${alt}"></button>`).join("")}</div></div>
-<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><button class="tw-gear" id="twGear" aria-label="\u8A2D\u5B9A">\u2699</button></div>`);
+  var esc5 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  document.body.insertAdjacentHTML("afterbegin", `<div class="tw-view"><div class="tw-map" id="twMap">${BLD.map(([k, id, alt]) => `<button class="tw-bld" id="${id}" data-k="${k}"><img src="img/${PLACES[k].img}.webp" alt="${alt}"></button>`).join("")}<button class="tw-tree" id="twTree" aria-label="\u6728"></button></div></div>
+<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><button class="tw-gear tw-help" id="twHelp" aria-label="\u8857\u306E\u30C4\u30A2\u30FC">\uFF1F</button><button class="tw-gear" id="twGear" aria-label="\u8A2D\u5B9A">\u2699</button></div></div>`);
   var $5 = (id) => document.getElementById(id);
   var refreshMe = () => {
     $5("twMeImg").src = core.profile.avatarURL();
@@ -25349,6 +25569,8 @@ body.nogram .gmT{display:none}
     core.ui.profile();
   };
   $5("twGear").onclick = () => core.ui.settings();
+  var tour = createTour(core);
+  $5("twHelp").onclick = () => tour.menu();
   document.addEventListener("change", (e) => {
     if (e.target && e.target.id === "cs-name") setTimeout(refreshMe, 0);
   });
@@ -25369,7 +25591,7 @@ body.nogram .gmT{display:none}
       return;
     }
     core.ui.sheet(
-      `<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc4(p.n)}</h3><p>${esc4(p.sub)}</p></div></header>` + (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc4(it.t)}<small>\u5165\u308B \u203A</small></button></li>`).join("")}</ul>` : '<p class="cs-note">\u58F2\u3063\u3066\u3044\u308B\u3082\u306E\u306F\u3001\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002</p>'),
+      `<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc5(p.n)}</h3><p>${esc5(p.sub)}</p></div></header>` + (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc5(it.t)}<small>\u5165\u308B \u203A</small></button></li>`).join("")}</ul>` : '<p class="cs-note">\u58F2\u3063\u3066\u3044\u308B\u3082\u306E\u306F\u3001\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002</p>'),
       (ov, close) => ov.querySelectorAll("button[data-i]").forEach((b) => b.onclick = () => {
         const it = p.items[+b.dataset.i];
         close();
@@ -25378,10 +25600,58 @@ body.nogram .gmT{display:none}
     );
   }
   document.querySelectorAll(".tw-bld").forEach((b) => b.addEventListener("click", () => {
+    tour.tapped(b.dataset.k);
     b.classList.remove("hop");
     void b.offsetWidth;
     b.classList.add("hop");
     setTimeout(() => enter(b.dataset.k), 260);
   }));
-  core.onClose = () => refreshMe();
+  core.onClose = () => {
+    refreshMe();
+    tour.afterClose();
+  };
+  var tstore = createStore("town");
+  function dayNo() {
+    const d = /* @__PURE__ */ new Date();
+    return Math.floor(new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() / 864e5);
+  }
+  $5("twTree").onclick = () => {
+    const m = $5("twMap"), t = $5("twTree");
+    for (let i = 0; i < 9; i++) {
+      const l = document.createElement("span");
+      l.className = "tw-leaf";
+      l.textContent = "\u{1F343}";
+      l.style.left = 44 + Math.random() * 12 + "%";
+      l.style.top = 58 + Math.random() * 4 + "%";
+      l.style.setProperty("--dx", Math.random() * 80 - 40 + "px");
+      l.style.setProperty("--rot", Math.random() * 360 - 180 + "deg");
+      l.style.animationDelay = i * 0.07 + "s";
+      m.appendChild(l);
+      setTimeout(() => l.remove(), 2200);
+    }
+    const idx = dayNo() % PHRASES.length, [en, ja] = PHRASES[idx];
+    const v = Object.assign({ seen: false, got: {} }, tstore.get("tree") || {});
+    const first2 = !v.seen;
+    v.seen = true;
+    v.got[idx] = 1;
+    tstore.set("tree", v);
+    const n = Object.keys(v.got).length;
+    setTimeout(() => core.ui.sheet(
+      `<h3>\u{1F333} \u4ECA\u65E5\u306E\u30D5\u30EC\u30FC\u30BA</h3><div class="tw-phrase">${first2 ? '<div class="secret">\u3072\u307F\u3064\u3092\u898B\u3064\u3051\u305F\uFF01</div>' : ""}<div class="en">${esc5(en)}</div><div class="ja">${esc5(ja)}</div>
+    <button class="cs-btn" id="twSay">\u{1F50A} \u805E\u304F</button><div class="cnt">\u3042\u3064\u3081\u305F\u30D5\u30EC\u30FC\u30BA ${n} / ${PHRASES.length}\u3000\uFF08\u6BCE\u65E5\u3061\u304C\u3046\u30D5\u30EC\u30FC\u30BA\u304C\u51FA\u308B\u3088\uFF09</div>
+    <button class="cs-btn" id="twGotBtn">\u3042\u3064\u3081\u305F\u30D5\u30EC\u30FC\u30BA\u3092\u898B\u308B</button><ul class="tw-got" id="twGot" hidden>${Object.keys(v.got).map(Number).sort((a, b) => a - b).map((i) => `<li><b>${esc5(PHRASES[i][0])}</b>\u3000${esc5(PHRASES[i][1])}</li>`).join("")}</ul></div>`,
+      (ov) => {
+        ov.querySelector("#twSay").onclick = () => {
+          try {
+            core.speech.speak(en, { rate: 0.9 });
+          } catch (e) {
+          }
+        };
+        ov.querySelector("#twGotBtn").onclick = () => {
+          ov.querySelector("#twGot").hidden = false;
+        };
+      }
+    ), 500);
+  };
+  tour.auto();
 })();
