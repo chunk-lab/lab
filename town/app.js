@@ -252,7 +252,7 @@
     const root2 = document.createElement("div");
     root2.className = "cs-ui";
     document.body.appendChild(root2);
-    const esc6 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const esc5 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
     const sheet = (html, bind) => {
       const ov = document.createElement("div");
       ov.className = "cs-ov";
@@ -288,9 +288,9 @@
     const profile = () => {
       const p = core2.profile;
       sheet(`<h3>\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB</h3><div class="cs-prof"><img src="${p.avatarURL()}" alt="\u30A2\u30D0\u30BF\u30FC"><div>
-      <label class="cs-row cs-col"><span>\u306A\u307E\u3048</span><input id="cs-name" maxlength="12" placeholder="\u306A\u307E\u3048\u3092\u5165\u308C\u3066\u306D" value="${esc6(p.name)}"></label></div></div>
+      <label class="cs-row cs-col"><span>\u306A\u307E\u3048</span><input id="cs-name" maxlength="12" placeholder="\u306A\u307E\u3048\u3092\u5165\u308C\u3066\u306D" value="${esc5(p.name)}"></label></div></div>
       <p class="cs-note">\u30A2\u30D0\u30BF\u30FC\u306F\u4F5C\u308A\u76F4\u3057\u4E2D\uFF08\u3044\u307E\u306F\u4EEE\u306E\u7D75\uFF09\u3002\u30B9\u30C6\u30FC\u30BF\u30B9\u306E\u9805\u76EE\u3082\u3053\u308C\u304B\u3089\u6C7A\u3081\u307E\u3059\u3002</p>
-      <ul class="cs-stat">${p.status().map((x) => `<li><span>${esc6(x.label)}</span><b>${esc6(x.value)}</b></li>`).join("")}</ul>`, (ov) => {
+      <ul class="cs-stat">${p.status().map((x) => `<li><span>${esc5(x.label)}</span><b>${esc5(x.value)}</b></li>`).join("")}</ul>`, (ov) => {
         ov.querySelector("#cs-name").onchange = (e) => p.setName(e.target.value);
       });
     };
@@ -10673,20 +10673,23 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         })), el3("div", { class: "sub", text: "\u82F1\u8A9E\u8133\u30D0\u30D6\u30EB\u30D1\u30BA\u30EB" }), el3("div", { class: "en", text: "PUNI CHUNK" })]);
       }
       ui.title = function(h) {
+        var seen = !!(h.seenHow && h.seenHow());
+        var how = btn2("\u904A\u3073\u65B9", "ghost wide", function() {
+          h.markHow && h.markHow();
+          h.tutorial();
+        }, "info");
+        var play2 = btn2("\u3042\u305D\u3076", "wide", h.play, "play");
+        var row = el3("div", { class: "pc-row" }, [
+          el3("div", { class: "pc-ibl" }, [ib("trophy", "\u8A18\u9332", h.records), document.createTextNode("\u8A18\u9332")]),
+          el3("div", { class: "pc-ibl" }, [ib("shop", "\u30B7\u30E7\u30C3\u30D7", h.shop), document.createTextNode("\u30B7\u30E7\u30C3\u30D7")]),
+          el3("div", { class: "pc-ibl" }, [ib("star", "\u30AF\u30EC\u30B8\u30C3\u30C8", h.credits), document.createTextNode("\u30AF\u30EC\u30B8\u30C3\u30C8")])
+        ]);
         var n = el3("div", { class: "pc-scr" }, [
           muteBtn(),
           el3("div", { class: "pc-tgear" }, [ib("gear", "\u8A2D\u5B9A", h.settings)]),
           logo(),
           el3("div", { class: "pc-spacer" }),
-          el3("div", { class: "pc-menu" }, [
-            btn2("\u3042\u305D\u3076", "wide", h.play, "play"),
-            btn2("\u3042\u305D\u3073\u304B\u305F", "ghost wide", h.tutorial, "info"),
-            el3("div", { class: "pc-row" }, [
-              el3("div", { class: "pc-ibl" }, [ib("trophy", "\u8A18\u9332", h.records), document.createTextNode("\u8A18\u9332")]),
-              el3("div", { class: "pc-ibl" }, [ib("shop", "\u30B7\u30E7\u30C3\u30D7", h.shop), document.createTextNode("\u30B7\u30E7\u30C3\u30D7")]),
-              el3("div", { class: "pc-ibl" }, [ib("star", "\u30AF\u30EC\u30B8\u30C3\u30C8", h.credits), document.createTextNode("\u30AF\u30EC\u30B8\u30C3\u30C8")])
-            ])
-          ]),
+          el3("div", { class: "pc-menu" }, seen ? [play2, row, how] : [how, play2, row]),
           el3("div", { style: { height: "20vh", minHeight: "150px" } })
         ]);
         screen2(n);
@@ -11108,7 +11111,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       ui.banner = function(text, marks, pts, o) {
         o = o || {};
         if (banEl) banEl.remove();
-        var html = esc6(text);
+        var html = esc5(text);
         (marks || []).forEach(function(m) {
           var re = new RegExp("\\b(" + m.replace(/(es|s)$/, "") + ")(es|s)\\b");
           html = html.replace(re, "$1<u>$2</u>");
@@ -11123,7 +11126,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           }
         }, 2200);
       };
-      function esc6(s) {
+      function esc5(s) {
         return String(s).replace(/[&<>"]/g, function(c) {
           return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
         });
@@ -11672,7 +11675,12 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       app.decor = true;
       app.kun = true;
       app.audio.music("title");
-      ui.title({ play: toPlay, tutorial: function() {
+      ui.title({ play: toPlay, seenHow: function() {
+        return !!state.howSeen;
+      }, markHow: function() {
+        state.howSeen = true;
+        app.saveState();
+      }, tutorial: function() {
         startTutorial(toTitle);
       }, records: function() {
         app.decor = false;
@@ -11694,8 +11702,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       app.emit("screen", { name: "title" });
     }
     function toPlay() {
-      if (!state.tutorialDone) startTutorial(toModes);
-      else toModes();
+      toModes();
     }
     function toModes() {
       endGame();
@@ -11948,7 +11955,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         core: { sound: ctx.core.sound, speech: ctx.core.speech },
         openSettings: () => ctx.core.ui.settings(),
         onEvent: (n, d) => {
-          if (n === "screen") ctx.showBack(["title", "modes", "splash"].includes(d.name));
+          if (n === "screen") ctx.showBack(!["game", "tutorial"].includes(d.name));
           if (n === "result") ctx.report("result", { mode: d.mode, score: d.score });
         }
       });
@@ -12974,9 +12981,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     let i = 0, done = false, timer2 = 0;
     const ov = document.createElement("div");
     ov.className = "cc-coach";
-    ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">\u3068\u3070\u3059</button><button class="cnx">\u3064\u304E\u3078 \u25B6</button><div class="cwt" hidden>\u3084\u3063\u3066\u307F\u3088\u3046</div></div>';
+    ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-hole two" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">\u3068\u3070\u3059</button><button class="cnx">\u3064\u304E\u3078 \u25B6</button><div class="cwt" hidden>\u3084\u3063\u3066\u307F\u3088\u3046</div></div>';
     document.body.appendChild(ov);
-    const q = (s) => ov.querySelector(s), hole = q(".cc-hole"), box = q(".cc-box"), img = q(".cf");
+    const q = (s) => ov.querySelector(s), hole = q(".cc-hole"), hole2 = q(".cc-hole.two"), box = q(".cc-box"), img = q(".cf");
     img.onerror = () => {
       img.hidden = true;
       box.classList.add("nofc");
@@ -12998,22 +13005,33 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         return null;
       }
     };
+    const ring = (h, el3, free) => {
+      const r = el3 && el3.getBoundingClientRect();
+      if (!r || r.width <= 0 || r.height <= 0) {
+        h.hidden = true;
+        return false;
+      }
+      const p = 6;
+      h.hidden = false;
+      h.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`;
+      h.classList.toggle("free", free);
+      return true;
+    };
     function place2() {
-      const el3 = target();
-      if (el3) {
-        const r = el3.getBoundingClientRect();
-        if (r.width > 0 && r.height > 0) {
-          const p = 6;
-          hole.hidden = false;
-          hole.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`;
-          ov.classList.add("has");
-          box.classList.toggle("top", r.top + r.height / 2 > innerHeight * 0.55);
-          return;
+      const s = steps[i], free = !!s.wait;
+      let el22 = null;
+      if (s.also) {
+        try {
+          el22 = document.querySelector(s.also);
+        } catch (e) {
         }
       }
-      hole.hidden = true;
-      ov.classList.remove("has");
-      box.classList.remove("top");
+      const ok = ring(hole, target(), free);
+      ring(hole2, el22, true);
+      ov.classList.toggle("has", ok);
+      ov.classList.toggle("free", free);
+      const r = ok && target().getBoundingClientRect();
+      box.classList.toggle("top", free || !!(r && r.top + r.height / 2 > innerHeight * 0.55));
     }
     function show2() {
       const s = steps[i];
@@ -13082,7 +13100,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     { w: "g", f: "joy", t: "\u30C1\u30E3\u30F3\u30AF\u30FB\u30AB\u30FC\u30C9\u306F\u3001\u82F1\u8A9E\u306E\u300C\u8A9E\u9806\u300D\u3092\u6B63\u3057\u304F\u4E26\u3079\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002" },
     { w: "b", f: "idea", t: "\u6587\u306E\u610F\u5473\u306F\u3001\u5909\u3067\u3082\u3060\u3044\u3058\u3087\u3046\u3076\uFF01 \u5927\u4E8B\u306A\u306E\u306F\u3001\u8A9E\u9806\u304C\u6B63\u3057\u3044\u3053\u3068\u3002" },
     { w: "g", sel: "#hand", t: "\u4E0B\u306E\u624B\u672D\u304B\u3089\u3001\u4F7F\u3044\u305F\u3044\u30AB\u30FC\u30C9\u3092\u30BF\u30C3\u30D7\u3057\u3066\u306D\u3002" },
-    { w: "b", sel: "#row", wait: () => document.querySelectorAll("#row .card").length >= 2, t: "\u4E0A\u306E\u300C\u6587\u306E\u53F0\u300D\u306B\u3001\u82F1\u8A9E\u306E\u9806\u756A\u3067\u4E26\u3079\u3088\u3046\u3002\u307E\u305A2\u679A\u3001\u4E26\u3079\u3066\u307F\u3066\uFF01" },
+    { w: "b", sel: "#row", also: "#hand", wait: () => document.querySelectorAll("#row .card").length >= 2, t: "\u4E0A\u306E\u300C\u6587\u306E\u53F0\u300D\u306B\u3001\u82F1\u8A9E\u306E\u9806\u756A\u3067\u4E26\u3079\u3088\u3046\u3002\u307E\u305A2\u679A\u3001\u4E26\u3079\u3066\u307F\u3066\uFF01" },
     { w: "g", sel: "#row", t: "\u82F1\u8A9E\u306F\u300C\u3060\u308C\u304C \u2192 \u3069\u3046\u3059\u308B \u2192 \u306A\u306B\u3092\u300D\u306E\u9806\u3002\u30AB\u30FC\u30C9\u306F\u3001\u30C9\u30E9\u30C3\u30B0\u3067\u4E26\u3079\u304B\u3048\u3089\u308C\u308B\u3088\u3002" },
     { w: "b", sel: ".pv", t: "\u8A9E\u9806\u304C\u6B63\u3057\u3044\u3068\u3001\u300C\u5F79\u300D\u3068\u70B9\u304C\u3053\u3053\u306B\u51FA\u308B\u3088\u3002\u307E\u3061\u304C\u3063\u3066\u3044\u305F\u3089\u3001\u7406\u7531\u304C\u51FA\u308B\u3088\u3002" },
     { w: "g", sel: "#bt", t: "\u6B63\u3057\u304F\u4E26\u3093\u3060\u3089\u300C\u51FA\u3059!\u300D\u3092\u62BC\u305D\u3046\u3002\u70B9\u304C\u5165\u308B\u3088\u3002" },
@@ -13333,9 +13351,10 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     root.appendChild(s);
     return s;
   }
+  var HOWBTN = '<button class="btn ghost" id="tut">\u2753 \u904A\u3073\u65B9</button>';
   function showTitle() {
     var b = store.get("best") || {};
-    var s = screen('<div class="title"><div class="logo"><span>CHUNK</span><span>CARDS</span></div><div class="sub">\u82F1\u6587\u3067\u300C\u5F79\u300D\u3092\u3064\u304F\u308B \u30AB\u30FC\u30C9\u30B2\u30FC\u30E0</div><div class="lvsel" id="lvsel"></div><div class="lvdesc" id="lvd"></div><div class="fan"><div class="card n big" style="--r:-12deg">The</div><div class="card v big" style="--r:-4deg">dog</div><div class="card v big" style="--r:4deg">ate</div><div class="card m big" style="--r:12deg">quickly</div></div><button class="btn go" id="go">\u3072\u3068\u308A\u3067\u7DF4\u7FD2</button><button class="btn vs" id="vs">CPU\u3068\u5BFE\u6226</button><button class="btn ghost" id="how">\u3042\u305D\u3073\u304B\u305F</button><button class="btn ghost small" id="tut">\u{1F393} \u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB</button><button class="btn ghost small" id="cb">\u{1F4D6} \u540D\u30B3\u30F3\u30D3\u56F3\u9451</button>' + (b.stage ? '<div class="rec">\u6700\u9AD8:\u30B9\u30C6\u30FC\u30B8 ' + b.stage + " \u30FB " + (b.total || 0).toLocaleString() + "\u70B9" + (b.text ? "<br><i>" + b.text + "</i>" : "") + "</div>" : "") + "</div>");
+    var s = screen('<div class="title"><div class="logo"><span>CHUNK</span><span>CARDS</span></div><div class="sub">\u82F1\u6587\u3067\u300C\u5F79\u300D\u3092\u3064\u304F\u308B \u30AB\u30FC\u30C9\u30B2\u30FC\u30E0</div><div class="lvsel" id="lvsel"></div><div class="lvdesc" id="lvd"></div><div class="fan"><div class="card n big" style="--r:-12deg">The</div><div class="card v big" style="--r:-4deg">dog</div><div class="card v big" style="--r:4deg">ate</div><div class="card m big" style="--r:12deg">quickly</div></div>' + (store.get("howSeen") ? "" : HOWBTN) + '<button class="btn go" id="go">\u3072\u3068\u308A\u3067\u7DF4\u7FD2</button><button class="btn vs" id="vs">CPU\u3068\u5BFE\u6226</button><button class="btn ghost" id="how">\u304F\u308F\u3057\u3044\u30EB\u30FC\u30EB</button><button class="btn ghost small" id="cb">\u{1F4D6} \u540D\u30B3\u30F3\u30D3\u56F3\u9451</button>' + (store.get("howSeen") ? HOWBTN : "") + (b.stage ? '<div class="rec">\u6700\u9AD8:\u30B9\u30C6\u30FC\u30B8 ' + b.stage + " \u30FB " + (b.total || 0).toLocaleString() + "\u70B9" + (b.text ? "<br><i>" + b.text + "</i>" : "") + "</div>" : "") + "</div>");
     var LVD = ["a / the\u30FB\u524D\u7F6E\u8A5E\u30FBbe\u30FB\u52D5\u8A5E\u306E\u5F62\u3092\u5FD8\u308C\u3066\u3082\u3001\u81EA\u52D5\u3067\u88DC\u3063\u3066\u6587\u306B\u3057\u3066\u304F\u308C\u308B\u3002\u51FA\u3057\u305F\u3042\u3068\u306B1\u8A9E\u305A\u3064\u89E3\u8AAC(\u70B9 \xD71)", "a / the\u30FB\u524D\u7F6E\u8A5E\u30FB\u52D5\u8A5E\u306E\u5F62\u3082\u81EA\u5206\u3067\u9078\u3076(\u70B9 \xD71)", "\u3080\u305A\u304B\u3057\u3044\u8A9E\u304C\u5C71\u672D\u306B\u5165\u308A\u3001\u5019\u88DC\u306E\u5149\u3082\u306A\u3057(\u70B9 \xD71.3)"];
     function lvUI() {
       var box = $("#lvsel", s);
@@ -13365,7 +13384,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     $("#tut", s).onclick = function() {
       unlock();
       SFX.put();
-      store.set("tut", 0);
+      store.set("howSeen", 1);
+      G_.tutOn = true;
       newRun();
     };
     $("#cb", s).onclick = function() {
@@ -13404,11 +13424,12 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     G_.mode = "play";
     G_.mark = [];
     renderAll();
-    if (R.stage === 0 && !store.get("tut")) setTimeout(function() {
-      if (G_.row && G_.row.isConnected) runCoach(TUT, { onDone: function() {
-        store.set("tut", 1);
-      } });
-    }, 500);
+    if (G_.tutOn) {
+      G_.tutOn = false;
+      setTimeout(function() {
+        if (G_.row && G_.row.isConnected) runCoach(TUT);
+      }, 500);
+    }
   }
   var BE = /^(am|is|are|was|were|be|been|being)$/;
   var HV = /^(have|has|had|having)$/;
@@ -16167,7 +16188,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       root2.className = "cc-app";
       el3.appendChild(root2);
       const off = mount2(root2);
-      const mo = new MutationObserver(() => ctx.showBack(!!root2.querySelector("#go")));
+      const mo = new MutationObserver(() => ctx.showBack(!!(root2.querySelector("#go") || root2.querySelector(".end"))));
       mo.observe(root2, { childList: true, subtree: true });
       ctx.showBack(true);
       return { unmount() {
@@ -16183,7 +16204,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
   };
 
   // games/stream/src/stream.html
-  var stream_default = '<div class="bgflow"></div>\n<div class="rotate"><div class="ph"></div><b>\u6A2A\u5411\u304D\u306B\u3057\u3066\u306D</b><span>\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u306F\u6A2A\u753B\u9762\u3067\u904A\u3076\u30B2\u30FC\u30E0\u3067\u3059</span></div>\n<div class="app" id="app">\n\n<section class="scr" id="sTitle">\n  <div class="l">\n    <div class="logo"><div class="k">CHUNK STREAM</div><h1>\u30C1\u30E3\u30F3\u30AF<span>\u30B9\u30C8\u30EA\u30FC\u30E0</span></h1></div>\n    <div class="tagline">\u82F1\u8A9E\u306E\u9577\u6587\u304C\u3001\u53F3\u304B\u3089\u6D41\u308C\u3066\u304F\u308B\u3002\u805E\u3044\u3066\u3001\u9078\u3093\u3067\u3001\u3064\u306A\u3052\u308B\u3002</div>\n    <div class="river" aria-hidden="true">\n      <div class="row" style="top:8px;animation-duration:30s" id="rv1"></div>\n      <div class="row" style="top:52px;animation-duration:36s" id="rv2"></div>\n    </div>\n  </div>\n  <div class="r">\n    <img class="hero-chara" id="heroChara" alt="" src="img/chara/girl/joy.webp">\n    <button class="btn-main" id="btnStart">\u306F\u3058\u3081\u308B</button>\n    <div class="small">\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u5B8C\u6210</div>\n  </div>\n</section>\n\n<section class="scr" id="sHome" hidden>\n  <div class="bar">\n    <h2>\u9577\u6587\u3092\u3048\u3089\u3076</h2>\n    <div class="tabs" id="tabs"></div>\n    <button class="icon-btn" id="btnFull" aria-label="\u5168\u753B\u9762"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>\n    <button class="icon-btn" id="btnSettings" aria-label="\u8A2D\u5B9A"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button>\n  </div>\n  <div class="list" id="plist"></div>\n</section>\n\n<section class="scr" id="sWords" hidden>\n  <div class="bar"><button class="icon-btn" data-back="home" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="wTitle">\u5358\u8A9E\u7DF4\u7FD2</h2></div>\n  <div class="wtabs" id="wtabs"></div>\n  <p class="wnote" id="wNote"></p>\n  <div class="wtools" id="wtools"></div>\n  <div class="wsets" id="wsets"></div>\n</section>\n<section class="scr" id="sDetail" hidden>\n  <div class="bar">\n    <button class="icon-btn" data-back="home" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>\n    <h2 id="dTag"></h2>\n    <div class="modes"><button class="mode on">\u30BF\u30A4\u30E0\u30A2\u30BF\u30C3\u30AF</button><button class="mode soon" id="modeRh">\u30EA\u30BA\u30E0\uFF08\u6E96\u5099\u4E2D\uFF09</button></div>\n  </div>\n  <div class="dwrap">\n    <div class="dleft">\n      <div class="t" id="dTitle"></div><div class="j" id="dJa"></div>\n      <div class="runbest" id="dRun"></div>\n      <button class="read-btn" id="btnRead">\u{1F4D6} \u4E88\u7FD2\uFF1A\u672C\u6587\u3092\u8AAD\u3080</button>\n      <button class="read-btn" id="btnHow">\u2753 \u3042\u305D\u3073\u304B\u305F\uFF08\u5404\u30B9\u30C6\u30FC\u30B8\u306E\u8AAC\u660E\uFF09</button>\n      <button class="btn-run" id="btnRun">\u901A\u3057\u3067\u30B9\u30BF\u30FC\u30C8<small>\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u5B8C\u6210</small></button>\n    </div>\n    <div class="stages" id="stages"></div>\n  </div>\n</section>\n\n<section class="scr" id="sReader" hidden>\n  <div class="bar">\n    <button class="icon-btn" data-back="detail" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>\n    <h2 id="rTitle"></h2>\n    <button class="chip on" id="btnJp">\u8A33</button>\n    <button class="chip" id="btnReadAll">\u25B6 \u5168\u6587</button>\n  </div>\n  <div class="reader" id="reader"></div>\n</section>\n\n<section class="scr" id="sPlay" hidden>\n  <div class="hbar">\n    <button class="icon-btn sm" id="btnPause" aria-label="\u4E00\u6642\u505C\u6B62"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button>\n    <div class="stno">STAGE <b id="hudNo">1</b></div><div class="stnm" id="hudName"></div>\n    <div class="hprog"><i id="hudProg"></i></div><div class="cnt" id="hudCount"></div>\n    <div class="tm" id="hudTime">0.0</div><div class="cmb" id="hudCombo"></div>\n  </div>\n  <div class="arena" id="arena">\n    <div class="sp"></div>\n    <div class="band">\n      <div class="side" id="side"><div class="grid up" id="g0"></div><div class="grid dn" id="g1"></div><button class="rep" id="rep" aria-label="\u3082\u3046\u4E00\u5EA6\u805E\u304F" hidden>\u{1F50A}</button></div>\n      <div class="field" id="field"><div class="flow"></div><div class="dz"></div><div class="zone" id="zone"></div><div class="seam" id="seam"></div><div id="layer"></div><div class="fx" id="fx"></div></div>\n    </div>\n    <div class="txt" id="txt"><div class="para" id="para"></div></div>\n  </div>\n</section>\n\n<section class="scr" id="sResult" hidden>\n  <div class="res-l">\n    <div class="res-top">\n      <div class="rank" id="resRank">S</div>\n      <div><div class="lab" id="resLab"></div><div class="tt" id="resTitle"></div><div class="tot" id="resTot"></div></div>\n      <img class="res-chara" id="resChara" alt="" src="img/chara/girl/joy.webp">\n    </div>\n    <div class="stt" id="resStages"></div>\n    <div class="res-btns" id="resBtns"></div>\n  </div>\n  <div class="res-r"><div class="review" id="review"></div></div>\n</section>\n\n<div class="ov" id="ov" hidden><div id="ovBody"></div></div>\n</div>\n';
+  var stream_default = '<div class="bgflow"></div>\n<div class="rotate"><div class="ph"></div><b>\u6A2A\u5411\u304D\u306B\u3057\u3066\u306D</b><span>\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u306F\u6A2A\u753B\u9762\u3067\u904A\u3076\u30B2\u30FC\u30E0\u3067\u3059</span></div>\n<div class="app" id="app">\n\n<section class="scr" id="sTitle">\n  <div class="l">\n    <div class="logo"><div class="k">CHUNK STREAM</div><h1>\u30C1\u30E3\u30F3\u30AF<span>\u30B9\u30C8\u30EA\u30FC\u30E0</span></h1></div>\n    <div class="tagline">\u82F1\u8A9E\u306E\u9577\u6587\u304C\u3001\u53F3\u304B\u3089\u6D41\u308C\u3066\u304F\u308B\u3002\u805E\u3044\u3066\u3001\u9078\u3093\u3067\u3001\u3064\u306A\u3052\u308B\u3002</div>\n    <div class="river" aria-hidden="true">\n      <div class="row" style="top:8px;animation-duration:30s" id="rv1"></div>\n      <div class="row" style="top:52px;animation-duration:36s" id="rv2"></div>\n    </div>\n  </div>\n  <div class="r">\n    <img class="hero-chara" id="heroChara" alt="" src="img/chara/girl/joy.webp">\n    <button class="btn-main" id="btnStart">\u306F\u3058\u3081\u308B</button>\n    <button class="read-btn" id="btnHowT" style="margin-top:10px">\u2753 \u904A\u3073\u65B9</button>\n    <div class="small">\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u5B8C\u6210</div>\n  </div>\n</section>\n\n<section class="scr" id="sHome" hidden>\n  <div class="bar">\n    <h2>\u9577\u6587\u3092\u3048\u3089\u3076</h2>\n    <div class="tabs" id="tabs"></div>\n    <button class="icon-btn" id="btnFull" aria-label="\u5168\u753B\u9762"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>\n    <button class="icon-btn" id="btnSettings" aria-label="\u8A2D\u5B9A"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button>\n  </div>\n  <div class="list" id="plist"></div>\n</section>\n\n<section class="scr" id="sWords" hidden>\n  <div class="bar"><button class="icon-btn" data-back="home" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="wTitle">\u5358\u8A9E\u7DF4\u7FD2</h2></div>\n  <div class="wtabs" id="wtabs"></div>\n  <p class="wnote" id="wNote"></p>\n  <div class="wtools" id="wtools"></div>\n  <div class="wsets" id="wsets"></div>\n</section>\n<section class="scr" id="sDetail" hidden>\n  <div class="bar">\n    <button class="icon-btn" data-back="home" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>\n    <h2 id="dTag"></h2>\n    <div class="modes"><button class="mode on">\u30BF\u30A4\u30E0\u30A2\u30BF\u30C3\u30AF</button><button class="mode soon" id="modeRh">\u30EA\u30BA\u30E0\uFF08\u6E96\u5099\u4E2D\uFF09</button></div>\n  </div>\n  <div class="dwrap">\n    <div class="dleft">\n      <div class="t" id="dTitle"></div><div class="j" id="dJa"></div>\n      <div class="runbest" id="dRun"></div>\n      <button class="read-btn" id="btnRead">\u{1F4D6} \u4E88\u7FD2\uFF1A\u672C\u6587\u3092\u8AAD\u3080</button>\n      <button class="read-btn" id="btnHow">\u2753 \u904A\u3073\u65B9</button>\n      <button class="btn-run" id="btnRun">\u901A\u3057\u3067\u30B9\u30BF\u30FC\u30C8<small>\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u5B8C\u6210</small></button>\n    </div>\n    <div class="stages" id="stages"></div>\n  </div>\n</section>\n\n<section class="scr" id="sReader" hidden>\n  <div class="bar">\n    <button class="icon-btn" data-back="detail" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>\n    <h2 id="rTitle"></h2>\n    <button class="chip on" id="btnJp">\u8A33</button>\n    <button class="chip" id="btnReadAll">\u25B6 \u5168\u6587</button>\n  </div>\n  <div class="reader" id="reader"></div>\n</section>\n\n<section class="scr" id="sPlay" hidden>\n  <div class="hbar">\n    <button class="icon-btn sm" id="btnPause" aria-label="\u4E00\u6642\u505C\u6B62"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button>\n    <div class="stno">STAGE <b id="hudNo">1</b></div><div class="stnm" id="hudName"></div>\n    <div class="hprog"><i id="hudProg"></i></div><div class="cnt" id="hudCount"></div>\n    <div class="tm" id="hudTime">0.0</div><div class="cmb" id="hudCombo"></div>\n  </div>\n  <div class="arena" id="arena">\n    <div class="sp"></div>\n    <div class="band">\n      <div class="side" id="side"><div class="grid up" id="g0"></div><div class="grid dn" id="g1"></div><button class="rep" id="rep" aria-label="\u3082\u3046\u4E00\u5EA6\u805E\u304F" hidden>\u{1F50A}</button></div>\n      <div class="field" id="field"><div class="flow"></div><div class="dz"></div><div class="zone" id="zone"></div><div class="seam" id="seam"></div><div id="layer"></div><div class="fx" id="fx"></div></div>\n    </div>\n    <div class="txt" id="txt"><div class="para" id="para"></div></div>\n  </div>\n</section>\n\n<section class="scr" id="sResult" hidden>\n  <div class="res-l">\n    <div class="res-top">\n      <div class="rank" id="resRank">S</div>\n      <div><div class="lab" id="resLab"></div><div class="tt" id="resTitle"></div><div class="tot" id="resTot"></div></div>\n      <img class="res-chara" id="resChara" alt="" src="img/chara/girl/joy.webp">\n    </div>\n    <div class="stt" id="resStages"></div>\n    <div class="res-btns" id="resBtns"></div>\n  </div>\n  <div class="res-r"><div class="review" id="review"></div></div>\n</section>\n\n<div class="ov" id="ov" hidden><div id="ovBody"></div></div>\n</div>\n';
 
   // games/stream/src/base.js
   var $3 = (id) => document.getElementById(id);
@@ -17018,37 +17039,6 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     });
   }
 
-  // games/stream/src/tutorial.js
-  var TUT2 = {
-    intro: [
-      { w: "g", f: "joy", t: "\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u3078\u3088\u3046\u3053\u305D\uFF01" },
-      { w: "b", t: "\u82F1\u8A9E\u304C\u6D41\u308C\u3066\u304F\u308B\u3088\u3002\u6587\u5B57\u3088\u308A\u300C\u805E\u3044\u305F\u97F3\u300D\u3067\u5224\u65AD\u3059\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002" },
-      { w: "g", t: "\u30B9\u30C6\u30FC\u30B8\u306F4\u3064\u3002\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u306E\u9806\u306B\u9032\u3080\u3088\u3002" },
-      { w: "b", f: "idea", t: "\u6700\u5F8C\u306E\u30B9\u30C6\u30FC\u30B84\u306E\u9577\u6587\u306F\u3001\u3072\u3068\u3064\u306E\u7269\u8A9E\u306B\u306A\u3063\u3066\u308B\u3093\u3060\u3002" }
-    ],
-    1: [
-      { w: "g", t: "\u30B9\u30C6\u30FC\u30B81\u306F\u300C\u5358\u8A9E\u30C0\u30C3\u30B7\u30E5\u300D\u3002\u6D41\u308C\u3066\u304F\u308B\u5358\u8A9E\u306E\u97F3\u3092\u805E\u3044\u3066\u306D\u3002" },
-      { w: "b", t: "\u805E\u3053\u3048\u305F\u5358\u8A9E\u306E\u610F\u5473\u3092\u30014\u629E\u304B\u3089\u9078\u307C\u3046\u3002" },
-      { w: "g", t: "\u4E0A\u3092\u6D41\u308C\u308B\u5358\u8A9E\u306F\u4E0A\u306E4\u629E\u3001\u4E0B\u3092\u6D41\u308C\u308B\u5358\u8A9E\u306F\u4E0B\u306E4\u629E\u3067\u7B54\u3048\u308B\u3088\u3002" },
-      { w: "b", f: "idea", t: "\u6587\u5B57\u3092\u76EE\u3067\u8FFD\u3046\u3088\u308A\u3001\u300C\u97F3\u300D\u3067\u5224\u65AD\u3059\u308B\u306E\u304C\u30B3\u30C4\uFF01" }
-    ],
-    2: [
-      { w: "g", t: "\u30B9\u30C6\u30FC\u30B82\u306F\u300C\u30C1\u30E3\u30F3\u30AF\u30AD\u30E3\u30C3\u30C1\u300D\u3002\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u610F\u5473\u306E\u304B\u305F\u307E\u308A\u306E\u3053\u3068\u3060\u3088\u3002" },
-      { w: "b", t: "\u4ECA\u5EA6\u306F\u3001\u304B\u305F\u307E\u308A\u306E\u97F3\u3092\u805E\u3044\u3066\u3001\u610F\u5473\u3092\u9078\u307C\u3046\u3002" },
-      { w: "g", f: "idea", t: "1\u8A9E\u305A\u3064\u3058\u3083\u306A\u304F\u3001\u304B\u305F\u307E\u308A\u3067\u805E\u304F\u306E\u304C\u30DD\u30A4\u30F3\u30C8\u3002" }
-    ],
-    3: [
-      { w: "b", t: "\u30B9\u30C6\u30FC\u30B83\u306F\u300C\u30C1\u30E3\u30F3\u30AF\u30D1\u30BA\u30EB\u300D\u3002\u4E0A\u306E\u65E5\u672C\u8A9E\u306B\u5408\u3046\u3088\u3046\u306B\u3001\u6B20\u3051\u305F1\u8A9E\u3092\u9078\u3093\u3067\u7A74\u3092\u57CB\u3081\u308B\u3088\u3002" },
-      { w: "g", f: "idea", t: "\u3069\u3053\u304C\u7A74\u306B\u306A\u308B\u304B\u306F\u3001\u904A\u3076\u305F\u3073\u306B\u30E9\u30F3\u30C0\u30E0\u3002\u6BCE\u56DE\u3061\u304C\u3046\u554F\u984C\u306B\u306A\u308B\u3088\u3002" }
-    ],
-    4: [
-      { w: "g", t: "\u30B9\u30C6\u30FC\u30B84\u306F\u300C\u30ED\u30F3\u30B0\u30B9\u30C8\u30EA\u30FC\u30E0\u300D\u3002\u9577\u6587\u3092\u3001\u6700\u521D\u304B\u3089\u8AAD\u3093\u3067\u3044\u304F\u3088\u3002" },
-      { w: "b", t: "\u3053\u306E\u9577\u6587\u306F\u3001\u3072\u3068\u3064\u306E\u7269\u8A9E\u306B\u306A\u3063\u3066\u308B\u3093\u3060\u3002" },
-      { w: "g", t: "\u30C1\u30E3\u30F3\u30AF\u3092\u9806\u756A\u306B\u3064\u306A\u3044\u3067\u3001\u7269\u8A9E\u3092\u5B8C\u6210\u3055\u305B\u3088\u3046\uFF01" },
-      { w: "b", f: "joy", t: "\u5149\u3063\u3066\u3044\u308B\u5074\u306E4\u629E\u3067\u7B54\u3048\u3066\u306D\u3002" }
-    ]
-  };
-
   // games/stream/src/play.js
   var tutFace = (w, f) => `${ENV.base}img/chara/${w === "b" ? "boy" : "girl"}/${f || "normal"}.webp`;
   var RUN = null;
@@ -17183,21 +17173,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     SE.count(true);
     inter(`<div class="sub" style="color:var(--accent)">STAGE ${st}</div><div class="big" style="font-size:clamp(28px,9vh,44px)">${STAGES[st - 1].name}</div><div class="note">${STAGES[st - 1].note}</div>`, 1350);
     setTimeout2(() => {
-      if (!(G3 && G3.st === st)) return;
-      SV.tut = SV.tut || {};
-      const steps = [];
-      if (st === 1 && !SV.tut.intro) steps.push(...TUT2.intro);
-      if (!SV.tut[st]) steps.push(...TUT2[st]);
-      if (!steps.length) {
+      if (G3 && G3.st === st) {
         G3.started = true;
-        return;
       }
-      runCoach(steps, { face: tutFace, onDone: () => {
-        SV.tut.intro = 1;
-        SV.tut[st] = 1;
-        save();
-        if (G3 && G3.st === st && !G3.over) G3.started = true;
-      } });
     }, 1350);
   }
   var LY = [60, 140];
@@ -18001,11 +17979,42 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     show("sResult");
   }
 
+  // games/stream/src/tutorial.js
+  var TUT2 = {
+    intro: [
+      { w: "g", f: "joy", t: "\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u3078\u3088\u3046\u3053\u305D\uFF01" },
+      { w: "b", t: "\u82F1\u8A9E\u304C\u6D41\u308C\u3066\u304F\u308B\u3088\u3002\u6587\u5B57\u3088\u308A\u300C\u805E\u3044\u305F\u97F3\u300D\u3067\u5224\u65AD\u3059\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002" },
+      { w: "g", t: "\u30B9\u30C6\u30FC\u30B8\u306F4\u3064\u3002\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u306E\u9806\u306B\u9032\u3080\u3088\u3002" },
+      { w: "b", t: "\u3072\u3068\u3064\u306E\u9577\u6587\u304B\u3089\u554F\u984C\u304C\u51FA\u3066\u304F\u308B\u304B\u3089\u30013\u30B9\u30C6\u30FC\u30B8\u307E\u3067\u306F\u7269\u8A9E\u3092\u60F3\u50CF\u3057\u306A\u304C\u3089\u554F\u984C\u3092\u89E3\u3044\u3066\u3044\u3053\u3046\uFF01" },
+      { w: "g", f: "idea", t: "\u6700\u5F8C\u306E\u30B9\u30C6\u30FC\u30B8\u306F\u9577\u6587\u3092\u305D\u306E\u307E\u307E\u8AAD\u3093\u3067\u3044\u304F\u304B\u3089\u3001\u6B21\u306E\u5C55\u958B\u3092\u4E88\u60F3\u3057\u3066\u7B54\u3048\u3066\u306D\u3002" }
+    ],
+    1: [
+      { w: "g", t: "\u30B9\u30C6\u30FC\u30B81\u306F\u300C\u5358\u8A9E\u30C0\u30C3\u30B7\u30E5\u300D\u3002\u6D41\u308C\u3066\u304F\u308B\u5358\u8A9E\u306E\u97F3\u3092\u805E\u3044\u3066\u306D\u3002" },
+      { w: "b", t: "\u805E\u3053\u3048\u305F\u5358\u8A9E\u306E\u610F\u5473\u3092\u30014\u629E\u304B\u3089\u9078\u307C\u3046\u3002" },
+      { w: "g", t: "\u4E0A\u3092\u6D41\u308C\u308B\u5358\u8A9E\u306F\u4E0A\u306E4\u629E\u3001\u4E0B\u3092\u6D41\u308C\u308B\u5358\u8A9E\u306F\u4E0B\u306E4\u629E\u3067\u7B54\u3048\u308B\u3088\u3002" },
+      { w: "b", f: "idea", t: "\u6587\u5B57\u3092\u76EE\u3067\u8FFD\u3046\u3088\u308A\u3001\u300C\u97F3\u300D\u3067\u5224\u65AD\u3059\u308B\u306E\u304C\u30B3\u30C4\uFF01" }
+    ],
+    2: [
+      { w: "g", t: "\u30B9\u30C6\u30FC\u30B82\u306F\u300C\u30C1\u30E3\u30F3\u30AF\u30AD\u30E3\u30C3\u30C1\u300D\u3002\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u610F\u5473\u306E\u304B\u305F\u307E\u308A\u306E\u3053\u3068\u3060\u3088\u3002" },
+      { w: "b", t: "\u4ECA\u5EA6\u306F\u3001\u304B\u305F\u307E\u308A\u306E\u97F3\u3092\u805E\u3044\u3066\u3001\u610F\u5473\u3092\u9078\u307C\u3046\u3002" },
+      { w: "g", f: "idea", t: "1\u8A9E\u305A\u3064\u3058\u3083\u306A\u304F\u3001\u304B\u305F\u307E\u308A\u3067\u805E\u304F\u306E\u304C\u30DD\u30A4\u30F3\u30C8\u3002" }
+    ],
+    3: [
+      { w: "b", t: "\u30B9\u30C6\u30FC\u30B83\u306F\u300C\u30C1\u30E3\u30F3\u30AF\u30D1\u30BA\u30EB\u300D\u3002\u4E0A\u306E\u65E5\u672C\u8A9E\u306B\u5408\u3046\u3088\u3046\u306B\u3001\u6B20\u3051\u305F1\u8A9E\u3092\u9078\u3093\u3067\u7A74\u3092\u57CB\u3081\u308B\u3088\u3002" },
+      { w: "g", f: "idea", t: "\u3069\u3053\u304C\u7A74\u306B\u306A\u308B\u304B\u306F\u3001\u904A\u3076\u305F\u3073\u306B\u30E9\u30F3\u30C0\u30E0\u3002\u6BCE\u56DE\u3061\u304C\u3046\u554F\u984C\u306B\u306A\u308B\u3088\u3002" }
+    ],
+    4: [
+      { w: "g", t: "\u30B9\u30C6\u30FC\u30B84\u306F\u300C\u30ED\u30F3\u30B0\u30B9\u30C8\u30EA\u30FC\u30E0\u300D\u3002\u9577\u6587\u3092\u3001\u6700\u521D\u304B\u3089\u8AAD\u3093\u3067\u3044\u304F\u3088\u3002" },
+      { w: "b", t: "\u30C1\u30E3\u30F3\u30AF\u3092\u9806\u756A\u306B\u3064\u306A\u3044\u3067\u3001\u7269\u8A9E\u3092\u5B8C\u6210\u3055\u305B\u3088\u3046\uFF01" },
+      { w: "g", f: "joy", t: "\u5149\u3063\u3066\u3044\u308B\u5074\u306E4\u629E\u3067\u7B54\u3048\u3066\u306D\u3002" }
+    ]
+  };
+
   // games/stream/src/screens.js
   var SCR = ["sTitle", "sHome", "sWords", "sDetail", "sReader", "sPlay", "sResult"];
   function show(id) {
     SCR.forEach((s) => $3(s).hidden = s !== id);
-    ENV.ctx.showBack(id === "sTitle" || id === "sHome");
+    ENV.ctx.showBack(id !== "sPlay");
   }
   var CUR2 = null;
   var P = (id) => PASSAGES.find((p) => p.id === id);
@@ -18222,10 +18231,20 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       toast("\u30EA\u30BA\u30E0\u30E2\u30FC\u30C9\u306F\u6E96\u5099\u4E2D\u3067\u3059");
     };
     $3("btnRead").onclick = () => openReading("pre");
-    $3("btnHow").onclick = () => {
+    const how = () => {
       SE.tap();
+      if (!SV.howSeen) {
+        SV.howSeen = 1;
+        save();
+      }
       runCoach([...TUT2.intro, ...TUT2[1], ...TUT2[2], ...TUT2[3], ...TUT2[4]], { face: tutFace });
     };
+    $3("btnHow").onclick = how;
+    $3("btnHowT").onclick = how;
+    if (!SV.howSeen) {
+      const bs = $3("btnStart");
+      bs.parentNode.insertBefore($3("btnHowT"), bs);
+    }
     document.querySelectorAll("[data-back]").forEach((b) => b.onclick = () => {
       SE.tap();
       hush();
@@ -18304,7 +18323,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
   };
 
   // games/chunkchunk/src/view.html
-  var view_default = '<!-- \u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF\u306E\u753B\u9762\uFF08game.js \u304C\u7BB1\u306E\u4E2D\u306B\u5165\u308C\u308B\uFF09\u3002\u65BD\u8A2D\u306E\u5165\u53E3\u306F #title \u306E data-face\uFF08arcade\uFF0Flesson\uFF0Flibrary\uFF09 -->\n\n<div class="app">\n  <header class="top">\n    <div class="logo">\u30C1\u30E3\u30F3\u30AF<span>\u30C1\u30E3\u30F3\u30AF</span></div>\n    <div class="meta"><span id="stageText">\u97621</span><span id="progText">1/6</span><span id="timeText" hidden>\u23F1 0.0</span><span><b id="score">0</b> pt</span></div>\n    <button id="gear" class="gear">\u8A2D\u5B9A</button>\n  </header>\n\n  <section class="board" id="board" aria-live="polite">\n    <div id="hist"></div>\n    <div class="line" id="line"></div>\n  </section>\n\n  <div class="tapZone" id="tapZone">\n  <section class="laneWrap" id="laneWrap" aria-label="\u6D41\u308C\u3066\u304F\u308B\u82F1\u6587">\n    <div class="strip" id="strip"></div>\n    <div class="cutline" id="cutline" data-lbl="\u3053\u3053\u3067\u533A\u5207\u308B"></div>\n    <div class="fadeL"></div><div class="fadeR"></div>\n  </section>\n  <div class="preview" id="preview"></div>\n\n  <section class="stage" id="stage" aria-label="\u6587\u306E\u7D75">\n    <div class="sgHint" id="sgHint">\u30C1\u30E3\u30F3\u30AF\u3092\u5F53\u3066\u308B\u3068\u3001\u7D75\u304C\u3067\u304D\u3066\u3044\u304F</div>\n    <span class="sgPlace" id="sgPlace"></span><span class="sgSign" id="sgSign"></span>\n    <div class="sgTime" id="sgTime"></div>\n    <div class="sgChar" id="sgChar"><span class="sgFace" id="sgFace"></span><span class="sgArt" id="sgArt"></span><span class="sgCap" id="sgCap"></span></div>\n    <div class="sgObj" id="sgObj"></div>\n    <span class="sgQ" id="sgQ"></span>\n    <span class="sgDone" id="sgDone">\u5B8C\u6210\uFF01</span>\n  </section>\n  <input type="range" id="scrub" class="scrub" min="0" max="10" value="0" step="1" hidden aria-label="\u30C9\u30E9\u30C3\u30B0\u3067\u4E00\u6C17\u306B\u5148\u3078\u9032\u3080">\n  <div class="ctrlRow">\n    <div class="navBtns" id="navBtns" hidden><button id="backBtn" class="navBtn" disabled aria-label="\u623B\u308B\uFF08\u3053\u306E\u30E2\u30FC\u30C9\u3067\u306F\u623B\u308C\u306A\u3044\uFF09">\u25C0</button><button id="fwdBtn" class="navBtn" aria-label="1\u8A9E\u9032\u3080">\u25B6</button></div>\n    <button id="cutBtn" class="cutBtn">\u533A\u5207\u308B<small id="cutHint">\u3053\u3053\u304B\u3089\u4E0B\u306A\u3089\u3001\u3069\u3053\u3092\u30BF\u30C3\u30D7\u3057\u3066\u3082\u533A\u5207\u308C\u308B</small></button>\n  </div>\n  </div>\n</div>\n\n<div id="count" class="count" hidden></div>\n<div id="startBox" class="modal" hidden style="align-items:center"><div class="sheet" style="text-align:center;align-items:center">\n  <h2 id="startTitle">\u97621</h2>\n  <p class="note" id="startNote"></p>\n  <button class="primary" id="startBtn" style="width:100%">\u30BF\u30C3\u30D7\u3057\u3066\u30B9\u30BF\u30FC\u30C8</button></div></div>\n<div id="title" class="titleScr" data-face="arcade" hidden>\n  <!-- \u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\uFF1A\u904A\u3093\u3067\u935B\u3048\u308B -->\n  <div class="faceGame">\n    <div class="gLogo"><span class="p">\u30C1\u30E3\u30F3\u30AF</span><span class="b">\u30C1\u30E3\u30F3\u30AF</span></div>\n    <div class="gMenu">\n      <div class="tCard"><div class="tName">\u3055\u3089\u3055\u3089\u30C1\u30E3\u30F3\u30AF</div><div class="tDesc">\u81EA\u52D5\u3067\u6D41\u308C\u3066\u304F\u308B\u3088\uFF01</div>\n        <div class="tPlay"><button data-play="auto-one">\u30E9\u30F3\u30C0\u30E0</button><button data-play="auto-cont" class="b">\u304A\u306F\u306A\u3057</button></div></div>\n      <div class="tCard"><div class="tName">\u3088\u30FC\u3044\u3069\u3093\u30C1\u30E3\u30F3\u30AF</div><div class="tDesc">\u81EA\u5206\u3067\u9001\u3063\u3066\u3001\u306F\u3084\u304F\u5207\u308D\u3046\uFF01</div>\n        <div class="tPlay"><button data-play="manual-one">\u30E9\u30F3\u30C0\u30E0</button><button data-play="manual-cont" class="b">\u304A\u306F\u306A\u3057</button></div></div>\n      <div class="tCard"><div class="tName">\u30C1\u30E3\u30EC\u30F3\u30B8</div><div class="tDesc">30\u79D2\u30FB1\u5206\u3067\u3001\u4F55\u70B9\u3068\u308C\u308B\u304B\uFF01\uFF08\u5168\u30EC\u30D9\u30EB\u30FB\u81EA\u5206\u3067\u9001\u308B\uFF09</div>\n        <div class="tPlay"><button data-timed="30">30\u79D2</button><button data-timed="60" class="b">1\u5206</button></div>\n        <button class="tSet" data-rank style="margin-top:6px">\u30E9\u30F3\u30AD\u30F3\u30B0\u3092\u898B\u308B</button></div>\n      <p class="tDesc" id="lvHint" style="text-align:center;margin:2px 0 0"></p>\n      <button class="tSet" data-open-set>\u8A2D\u5B9A</button>\n    </div>\n  </div>\n  <!-- \u5B66\u6821\uFF1A\u30C1\u30E3\u30F3\u30AF\u7DF4\u7FD2\uFF08\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u30FB\u5F79\u5272\u3082\u7B54\u3048\u308B\uFF09 -->\n  <div class="faceLesson faceStudy">\n    <img class="sChara" data-chara="boy" alt=""><div class="sLogo"><span class="a">CHUNK</span><span class="b">LESSON</span></div><div class="sSub">SCHOOL</div>\n    <div class="sMenu">\n      <button data-study="lesson"><b>Lesson</b><small>\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u5B66\u3076\uFF1A\u300C\u8AAD\u3080\u30FB\u805E\u304F\u300D\u300C\u8A71\u3059\u30FB\u66F8\u304F\u300D\u304B\u3089\u9078\u3076</small><i>\u2192</i></button>\n      <button data-study="practice"><b>Chunk Practice</b><small>\u6587\u7AE0\u3092\u9078\u3093\u3067\u3001\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u30FB\u5F79\u5272\u3082\u7B54\u3048\u308B</small><i>\u2192</i></button>\n      <button data-study="random"><b>Random Practice</b><small>\u5185\u8535\u306E\u4F8B\u6587\u3068\u77ED\u6587\u304B\u3089\u3001\u30E9\u30F3\u30C0\u30E0\u306B\u7DF4\u7FD2</small><i>\u2192</i></button>\n      <button data-open-set><b>Settings</b><small>\u901F\u3055\u30FB\u6587\u5B57\u306E\u5927\u304D\u3055\u30FB\u97F3</small><i>\u2192</i></button>\n    </div>\n    <div class="sMenu lessonSub" hidden>\n      <button data-study="story"><b>\u8AAD\u3080\u30FB\u805E\u304F</b><small>Chunk Story\uFF1A\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u3001\u30C1\u30E3\u30F3\u30AF\u306E\u8AAD\u307F\u65B9\u3092\u5B66\u3076</small><i>\u2192</i></button>\n      <button data-study="make"><b>\u8A71\u3059\u30FB\u66F8\u304F</b><small>2\u4EBA\u306E\u3084\u308A\u3068\u308A\u3067\u3001\u6587\u3092\u4F5C\u308B</small><i>\u2192</i></button>\n      <button data-lesson-back><b>\u2190 \u3082\u3069\u308B</b><small>\u5B66\u6821\u306E\u30E1\u30CB\u30E5\u30FC\u3078</small><i></i></button>\n    </div>\n  </div>\n  <!-- \u56F3\u66F8\u9928\uFF1A\u30EA\u30FC\u30C7\u30A3\u30F3\u30B0\u30FB\u9577\u6587\u306E\u767B\u9332\u3068\u5171\u6709 -->\n  <div class="faceLibrary faceStudy">\n    <img class="sChara" data-chara="girl" alt=""><div class="sLogo"><span class="a">CHUNK</span><span class="b">READING</span></div><div class="sSub">LIBRARY</div>\n    <div class="sMenu">\n      <button data-study="read"><b>Reading</b><small>\u9577\u6587\u3092\u8AAD\u3093\u3067\u8A2D\u554F\u306B\u7B54\u3048\u308B\uFF08\u5185\u8535\u30FB\u307F\u3093\u306A\u306E\u9577\u6587\u30FBMy Texts\uFF09</small><i>\u2192</i></button>\n      <button data-study="texts"><b>My Texts</b><small>\u9577\u6587\u30FB\u77ED\u6587\u306E\u767B\u9332\u3001\u554F\u984C\u306E\u4F5C\u6210\u3001\u5171\u6709</small><i>\u2192</i></button>\n      <button data-open-set><b>Settings</b><small>\u901F\u3055\u30FB\u6587\u5B57\u306E\u5927\u304D\u3055\u30FB\u97F3</small><i>\u2192</i></button>\n    </div>\n  </div>\n</div>\n\n<!-- My Texts\uFF08\u9577\u6587\u306E\u767B\u9332\u30FB\u554F\u984C\u306E\u4F5C\u6210\uFF09 -->\n<div id="edView" class="edView" hidden>\n  <header class="top"><button class="gear" id="edBack">\u2190 Back</button><div class="rdStory" id="edHead">My Texts</div></header>\n  <div id="edBody" class="edBody"></div>\n</div>\n\n<!-- \u5F79\u5272\u3092\u7B54\u3048\u308B\u30DC\u30BF\u30F3\uFF08Chunk Practice\uFF09 -->\n<div id="rolePick" class="rolePick" hidden></div>\n\n<div id="askBox" class="modal askBox" hidden><div class="sheet" role="alertdialog" aria-modal="true"><p id="askMsg" class="askMsg"></p><div class="btns"><button class="ghost" id="askNo">\u3084\u3081\u308B</button><button class="primary" id="askYes">OK</button></div></div></div>\n<div id="modal" class="modal" hidden><div id="sheet" class="sheet" role="dialog" aria-modal="true"></div></div>\n';
+  var view_default = '<!-- \u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF\u306E\u753B\u9762\uFF08game.js \u304C\u7BB1\u306E\u4E2D\u306B\u5165\u308C\u308B\uFF09\u3002\u65BD\u8A2D\u306E\u5165\u53E3\u306F #title \u306E data-face\uFF08arcade\uFF0Flesson\uFF0Flibrary\uFF09 -->\n\n<div class="app">\n  <header class="top">\n    <div class="logo">\u30C1\u30E3\u30F3\u30AF<span>\u30C1\u30E3\u30F3\u30AF</span></div>\n    <div class="meta"><span id="stageText">\u97621</span><span id="progText">1/6</span><span id="timeText" hidden>\u23F1 0.0</span><span><b id="score">0</b> pt</span></div>\n    <button id="gear" class="gear">\u8A2D\u5B9A</button>\n  </header>\n\n  <section class="board" id="board" aria-live="polite">\n    <div id="hist"></div>\n    <div class="line" id="line"></div>\n  </section>\n\n  <div class="tapZone" id="tapZone">\n  <section class="laneWrap" id="laneWrap" aria-label="\u6D41\u308C\u3066\u304F\u308B\u82F1\u6587">\n    <div class="strip" id="strip"></div>\n    <div class="cutline" id="cutline" data-lbl="\u3053\u3053\u3067\u533A\u5207\u308B"></div>\n    <div class="fadeL"></div><div class="fadeR"></div>\n  </section>\n  <div class="preview" id="preview"></div>\n\n  <section class="stage" id="stage" aria-label="\u6587\u306E\u7D75">\n    <div class="sgHint" id="sgHint">\u30C1\u30E3\u30F3\u30AF\u3092\u5F53\u3066\u308B\u3068\u3001\u7D75\u304C\u3067\u304D\u3066\u3044\u304F</div>\n    <span class="sgPlace" id="sgPlace"></span><span class="sgSign" id="sgSign"></span>\n    <div class="sgTime" id="sgTime"></div>\n    <div class="sgChar" id="sgChar"><span class="sgFace" id="sgFace"></span><span class="sgArt" id="sgArt"></span><span class="sgCap" id="sgCap"></span></div>\n    <div class="sgObj" id="sgObj"></div>\n    <span class="sgQ" id="sgQ"></span>\n    <span class="sgDone" id="sgDone">\u5B8C\u6210\uFF01</span>\n  </section>\n  <input type="range" id="scrub" class="scrub" min="0" max="10" value="0" step="1" hidden aria-label="\u30C9\u30E9\u30C3\u30B0\u3067\u4E00\u6C17\u306B\u5148\u3078\u9032\u3080">\n  <div class="ctrlRow">\n    <div class="navBtns" id="navBtns" hidden><button id="backBtn" class="navBtn" disabled aria-label="\u623B\u308B\uFF08\u3053\u306E\u30E2\u30FC\u30C9\u3067\u306F\u623B\u308C\u306A\u3044\uFF09">\u25C0</button><button id="fwdBtn" class="navBtn" aria-label="1\u8A9E\u9032\u3080">\u25B6</button></div>\n    <button id="cutBtn" class="cutBtn">\u533A\u5207\u308B<small id="cutHint">\u3053\u3053\u304B\u3089\u4E0B\u306A\u3089\u3001\u3069\u3053\u3092\u30BF\u30C3\u30D7\u3057\u3066\u3082\u533A\u5207\u308C\u308B</small></button>\n  </div>\n  </div>\n</div>\n\n<div id="count" class="count" hidden></div>\n<div id="startBox" class="modal" hidden style="align-items:center"><div class="sheet" style="text-align:center;align-items:center">\n  <h2 id="startTitle">\u97621</h2>\n  <p class="note" id="startNote"></p>\n  <button class="primary" id="startBtn" style="width:100%">\u30BF\u30C3\u30D7\u3057\u3066\u30B9\u30BF\u30FC\u30C8</button></div></div>\n<div id="title" class="titleScr" data-face="arcade" hidden>\n  <!-- \u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\uFF1A\u904A\u3093\u3067\u935B\u3048\u308B -->\n  <div class="faceGame">\n    <div class="gLogo"><span class="p">\u30C1\u30E3\u30F3\u30AF</span><span class="b">\u30C1\u30E3\u30F3\u30AF</span></div>\n    <div class="gMenu">\n      <div class="tCard"><div class="tName">\u3055\u3089\u3055\u3089\u30C1\u30E3\u30F3\u30AF</div><div class="tDesc">\u81EA\u52D5\u3067\u6D41\u308C\u3066\u304F\u308B\u3088\uFF01</div>\n        <div class="tPlay"><button data-play="auto-one">\u30E9\u30F3\u30C0\u30E0</button><button data-play="auto-cont" class="b">\u304A\u306F\u306A\u3057</button></div></div>\n      <div class="tCard"><div class="tName">\u3088\u30FC\u3044\u3069\u3093\u30C1\u30E3\u30F3\u30AF</div><div class="tDesc">\u81EA\u5206\u3067\u9001\u3063\u3066\u3001\u306F\u3084\u304F\u5207\u308D\u3046\uFF01</div>\n        <div class="tPlay"><button data-play="manual-one">\u30E9\u30F3\u30C0\u30E0</button><button data-play="manual-cont" class="b">\u304A\u306F\u306A\u3057</button></div></div>\n      <div class="tCard"><div class="tName">\u30C1\u30E3\u30EC\u30F3\u30B8</div><div class="tDesc">30\u79D2\u30FB1\u5206\u3067\u3001\u4F55\u70B9\u3068\u308C\u308B\u304B\uFF01\uFF08\u5168\u30EC\u30D9\u30EB\u30FB\u81EA\u5206\u3067\u9001\u308B\uFF09</div>\n        <div class="tPlay"><button data-timed="30">30\u79D2</button><button data-timed="60" class="b">1\u5206</button></div>\n        <button class="tSet" data-rank style="margin-top:6px">\u30E9\u30F3\u30AD\u30F3\u30B0\u3092\u898B\u308B</button></div>\n      <p class="tDesc" id="lvHint" style="text-align:center;margin:2px 0 0"></p>\n      <button class="tSet" data-open-set>\u8A2D\u5B9A</button>\n      <button class="tSet" data-howto="arcade">\u2753 \u904A\u3073\u65B9</button>\n    </div>\n  </div>\n  <!-- \u5B66\u6821\uFF1A\u30C1\u30E3\u30F3\u30AF\u7DF4\u7FD2\uFF08\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u30FB\u5F79\u5272\u3082\u7B54\u3048\u308B\uFF09 -->\n  <div class="faceLesson faceStudy">\n    <img class="sChara" data-chara="boy" alt=""><div class="sLogo"><span class="a">CHUNK</span><span class="b">LESSON</span></div><div class="sSub">SCHOOL</div>\n    <div class="sMenu">\n      <button data-study="lesson"><b>Lesson</b><small>\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u5B66\u3076\uFF1A\u300C\u8AAD\u3080\u30FB\u805E\u304F\u300D\u300C\u8A71\u3059\u30FB\u66F8\u304F\u300D\u304B\u3089\u9078\u3076</small><i>\u2192</i></button>\n      <button data-study="practice"><b>Chunk Practice</b><small>\u6587\u7AE0\u3092\u9078\u3093\u3067\u3001\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u30FB\u5F79\u5272\u3082\u7B54\u3048\u308B</small><i>\u2192</i></button>\n      <button data-study="random"><b>Random Practice</b><small>\u5185\u8535\u306E\u4F8B\u6587\u3068\u77ED\u6587\u304B\u3089\u3001\u30E9\u30F3\u30C0\u30E0\u306B\u7DF4\u7FD2</small><i>\u2192</i></button>\n      <button data-open-set><b>Settings</b><small>\u901F\u3055\u30FB\u6587\u5B57\u306E\u5927\u304D\u3055\u30FB\u97F3</small><i>\u2192</i></button>\n      <button data-howto="lesson"><b>How to Play</b><small>\u904A\u3073\u65B9</small><i>\u2192</i></button>\n    </div>\n    <div class="sMenu lessonSub" hidden>\n      <button data-study="story"><b>\u8AAD\u3080\u30FB\u805E\u304F</b><small>Chunk Story\uFF1A\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u3001\u30C1\u30E3\u30F3\u30AF\u306E\u8AAD\u307F\u65B9\u3092\u5B66\u3076</small><i>\u2192</i></button>\n      <button data-study="make"><b>\u8A71\u3059\u30FB\u66F8\u304F</b><small>2\u4EBA\u306E\u3084\u308A\u3068\u308A\u3067\u3001\u6587\u3092\u4F5C\u308B</small><i>\u2192</i></button>\n      <button data-lesson-back><b>\u2190 \u3082\u3069\u308B</b><small>\u5B66\u6821\u306E\u30E1\u30CB\u30E5\u30FC\u3078</small><i></i></button>\n    </div>\n  </div>\n  <!-- \u56F3\u66F8\u9928\uFF1A\u30EA\u30FC\u30C7\u30A3\u30F3\u30B0\u30FB\u9577\u6587\u306E\u767B\u9332\u3068\u5171\u6709 -->\n  <div class="faceLibrary faceStudy">\n    <img class="sChara" data-chara="girl" alt=""><div class="sLogo"><span class="a">CHUNK</span><span class="b">READING</span></div><div class="sSub">LIBRARY</div>\n    <div class="sMenu">\n      <button data-study="read"><b>Reading</b><small>\u9577\u6587\u3092\u8AAD\u3093\u3067\u8A2D\u554F\u306B\u7B54\u3048\u308B\uFF08\u5185\u8535\u30FB\u307F\u3093\u306A\u306E\u9577\u6587\u30FBMy Texts\uFF09</small><i>\u2192</i></button>\n      <button data-study="texts"><b>My Texts</b><small>\u9577\u6587\u30FB\u77ED\u6587\u306E\u767B\u9332\u3001\u554F\u984C\u306E\u4F5C\u6210\u3001\u5171\u6709</small><i>\u2192</i></button>\n      <button data-open-set><b>Settings</b><small>\u901F\u3055\u30FB\u6587\u5B57\u306E\u5927\u304D\u3055\u30FB\u97F3</small><i>\u2192</i></button>\n      <button data-howto="library"><b>How to Play</b><small>\u904A\u3073\u65B9</small><i>\u2192</i></button>\n    </div>\n  </div>\n</div>\n\n<!-- My Texts\uFF08\u9577\u6587\u306E\u767B\u9332\u30FB\u554F\u984C\u306E\u4F5C\u6210\uFF09 -->\n<div id="edView" class="edView" hidden>\n  <header class="top"><button class="gear" id="edBack">\u2190 Back</button><div class="rdStory" id="edHead">My Texts</div></header>\n  <div id="edBody" class="edBody"></div>\n</div>\n\n<!-- \u5F79\u5272\u3092\u7B54\u3048\u308B\u30DC\u30BF\u30F3\uFF08Chunk Practice\uFF09 -->\n<div id="rolePick" class="rolePick" hidden></div>\n\n<div id="askBox" class="modal askBox" hidden><div class="sheet" role="alertdialog" aria-modal="true"><p id="askMsg" class="askMsg"></p><div class="btns"><button class="ghost" id="askNo">\u3084\u3081\u308B</button><button class="primary" id="askYes">OK</button></div></div></div>\n<div id="modal" class="modal" hidden><div id="sheet" class="sheet" role="dialog" aria-modal="true"></div></div>\n';
 
   // games/chunkchunk/src/data.js
   var ONE_TIERS = [
@@ -18545,6 +18564,42 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     };
     document.addEventListener("click", h, true);
     ENV2.offs.push(() => document.removeEventListener("click", h, true));
+  }
+
+  // games/chunkchunk/src/howto.js
+  var HOW = {
+    arcade: [
+      { w: "g", f: "joy", t: "\u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u82F1\u6587\u3092\u3001\u610F\u5473\u306E\u307E\u3068\u307E\u308A\uFF08\u30C1\u30E3\u30F3\u30AF\uFF09\u3067\u533A\u5207\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002" },
+      { w: "b", t: "\u6587\u306F\u3001\u30B9\u30BF\u30FC\u30C8\u306E\u3068\u304D\u306B\u3001\u307E\u305A1\u6587\u307E\u308B\u3054\u3068\u8AAD\u307F\u4E0A\u3052\u3089\u308C\u308B\u3088\u3002\u97F3\u3092\u805E\u3044\u3066\u3001\u5207\u308C\u76EE\u3092\u8003\u3048\u3088\u3046\u3002" },
+      { w: "g", t: "\u300C\u3055\u3089\u3055\u3089\u30C1\u30E3\u30F3\u30AF\u300D\u306F\u3001\u81EA\u52D5\u3067\u6D41\u308C\u3066\u304F\u308B\u82F1\u6587\u3092\u3001\u5207\u308C\u76EE\u3067\u300C\u30C1\u30E3\u30F3\u30AF\uFF01\u300D\u3068\u30BF\u30C3\u30D7\u3059\u308B\u3088\u3002" },
+      { w: "b", t: "\u300C\u3088\u30FC\u3044\u3069\u3093\u30C1\u30E3\u30F3\u30AF\u300D\u306F\u3001\u25B6\u30671\u8A9E\u305A\u3064\u9032\u3081\u3066\u3001\u5207\u308C\u76EE\u3067\u300C\u533A\u5207\u308B\u300D\u3092\u62BC\u3059\u3088\u3002\u307E\u3061\u304C\u3048\u305F\u3089\u25C0\u3067\u623B\u308C\u308B\u3002" },
+      { w: "g", t: "\u300C\u30C1\u30E3\u30EC\u30F3\u30B8\u300D\u306F\u300130\u79D2\u304B1\u5206\u3067\u3001\u4F55\u70B9\u3068\u308C\u308B\u304B\u3002\u30B3\u30F3\u30DC\u304C\u3064\u306A\u304C\u308B\u3068\u3001\u70B9\u304C\u4E0A\u304C\u308B\u3088\u3002" },
+      { w: "b", f: "idea", t: "\u300C\u30E9\u30F3\u30C0\u30E0\u300D\u306F1\u6587\u305A\u3064\u3001\u300C\u304A\u306F\u306A\u3057\u300D\u306F\u7269\u8A9E\u3092\u7D9A\u3051\u3066\u904A\u3079\u308B\u3088\u3002" }
+    ],
+    lesson: [
+      { w: "g", f: "joy", t: "\u3053\u3053\u306F\u5B66\u6821\u3002\u30C1\u30E3\u30F3\u30AF\u306E\u5207\u308A\u65B9\u3092\u3001\u7DF4\u7FD2\u3059\u308B\u3068\u3053\u308D\u3060\u3088\u3002" },
+      { w: "b", t: "\u300CLesson\u300D\u306F\u3001\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u5B66\u3076\u3088\u3002\u300C\u8AAD\u3080\u30FB\u805E\u304F\u300D\u3068\u300C\u8A71\u3059\u30FB\u66F8\u304F\u300D\u304B\u3089\u9078\u3079\u308B\u3088\u3002" },
+      { w: "g", t: "\u300CChunk Practice\u300D\u306F\u3001\u6587\u7AE0\u3092\u9078\u3093\u3067\u3001\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u7DF4\u7FD2\u3060\u3088\u3002" },
+      { w: "b", f: "idea", t: "\u300CRandom Practice\u300D\u306F\u3001\u4F8B\u6587\u304B\u3089\u30E9\u30F3\u30C0\u30E0\u306B\u7DF4\u7FD2\u3067\u304D\u308B\u3088\u3002" }
+    ],
+    library: [
+      { w: "g", f: "joy", t: "\u3053\u3053\u306F\u56F3\u66F8\u9928\u3002\u82F1\u8A9E\u306E\u6587\u7AE0\u3092\u3001\u8AAD\u3093\u3060\u308A\u767B\u9332\u3057\u305F\u308A\u3059\u308B\u3068\u3053\u308D\u3060\u3088\u3002" },
+      { w: "b", t: "\u300CReading\u300D\u306F\u3001\u9577\u6587\u3092\u8AAD\u3093\u3067\u3001\u554F\u984C\u306B\u7B54\u3048\u308B\u3088\u3002\u5206\u304B\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u8F9E\u66F8\u3067\u898B\u3089\u308C\u308B\u3088\u3002" },
+      { w: "g", f: "idea", t: "\u300CMy Texts\u300D\u3067\u306F\u3001\u81EA\u5206\u306E\u9577\u6587\u3084\u77ED\u6587\u3092\u767B\u9332\u3057\u3066\u3001\u554F\u984C\u3082\u4F5C\u308C\u308B\u3088\u3002" }
+    ]
+  };
+  function initHowto(root2, settings2, save2) {
+    root2.querySelectorAll("[data-howto]").forEach((b) => {
+      const menu = b.parentElement;
+      if (!settings2.howSeen) menu.prepend(b);
+      b.onclick = () => {
+        runCoach(HOW[b.dataset.howto] || HOW.arcade);
+        if (!settings2.howSeen) {
+          settings2.howSeen = true;
+          save2();
+        }
+      };
+    });
   }
 
   // games/chunkchunk/src/shorts.js
@@ -19155,6 +19210,7 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
       bindSettingRows();
       $4("closeBtn").onclick = closeSheet;
     });
+    initHowto($4("title"), settings, saveSettings);
     document.querySelectorAll("[data-study]").forEach((b) => b.onclick = () => {
       primeSpeech();
       unlockAudio();
@@ -23529,7 +23585,7 @@ body.nogram .gmT{display:none}
         } catch (e) {
         }
       };
-      const esc6 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      const esc5 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
       const shuf2 = (a) => {
         a = a.slice();
         for (let i = a.length - 1; i > 0; i--) {
@@ -23548,18 +23604,18 @@ body.nogram .gmT{display:none}
         cur4 = null;
         const ch = CHAPTERS.map((c) => {
           const open2 = c.n === 1 || st.ch[c.n - 1];
-          if (!c.lessons || !open2) return `<div class="mkCh lock"><h3>\u7B2C${c.n}\u7AE0\u3000${esc6(c.name)}</h3><div class="sub">${esc6(c.sub)}</div><div class="sub">\u{1F512} ${!c.lessons ? "\u3082\u3046\u3059\u3050\u516C\u958B" : "\u524D\u306E\u7AE0\u3092\u30AF\u30EA\u30A2\u3059\u308B\u3068\u958B\u304D\u307E\u3059"}</div></div>`;
+          if (!c.lessons || !open2) return `<div class="mkCh lock"><h3>\u7B2C${c.n}\u7AE0\u3000${esc5(c.name)}</h3><div class="sub">${esc5(c.sub)}</div><div class="sub">\u{1F512} ${!c.lessons ? "\u3082\u3046\u3059\u3050\u516C\u958B" : "\u524D\u306E\u7AE0\u3092\u30AF\u30EA\u30A2\u3059\u308B\u3068\u958B\u304D\u307E\u3059"}</div></div>`;
           let nxt = true;
           const ls = c.lessons.map((l) => {
             const done = !!st.done[l.id];
             const can = done || nxt;
             const isNext = !done && nxt;
             if (!done) nxt = false;
-            return `<button class="mkL${isNext ? " next" : ""}" data-l="${l.id}" ${can ? "" : "disabled"}><b>${l.id}</b>${esc6(l.name)}<em>${done ? "\u2705" : can ? "\u25B6" : "\u{1F512}"}</em></button>`;
+            return `<button class="mkL${isNext ? " next" : ""}" data-l="${l.id}" ${can ? "" : "disabled"}><b>${l.id}</b>${esc5(l.name)}<em>${done ? "\u2705" : can ? "\u25B6" : "\u{1F512}"}</em></button>`;
           }).join("");
-          return `<div class="mkCh"><h3>\u7B2C${c.n}\u7AE0\u3000${esc6(c.name)}${st.ch[c.n] ? " \u2705" : ""}</h3><div class="sub">${esc6(c.sub)}</div>${c.partial ? `<div class="sub">\u3044\u307E\u306F ${esc6(c.partial)} \u307E\u3067\u904A\u3079\u307E\u3059</div>` : ""}<div class="mkLs">${ls}</div></div>`;
+          return `<div class="mkCh"><h3>\u7B2C${c.n}\u7AE0\u3000${esc5(c.name)}${st.ch[c.n] ? " \u2705" : ""}</h3><div class="sub">${esc5(c.sub)}</div>${c.partial ? `<div class="sub">\u3044\u307E\u306F ${esc5(c.partial)} \u307E\u3067\u904A\u3079\u307E\u3059</div>` : ""}<div class="mkLs">${ls}</div></div>`;
         }).join("");
-        const tt = st.titles.length ? `<div class="mkTitle">\u79F0\u53F7\uFF1A${esc6(st.titles.join(" / "))}</div>` : "";
+        const tt = st.titles.length ? `<div class="mkTitle">\u79F0\u53F7\uFF1A${esc5(st.titles.join(" / "))}</div>` : "";
         root2.innerHTML = `<div class="mkTop"><button id="mkX">\u2190 \u3082\u3069\u308B</button><div class="mkTtl">\u6587\u3092\u4F5C\u308B\uFF08\u8A71\u3059\u30FB\u66F8\u304F\uFF09</div><div class="mkPg"></div></div>
       <div class="mkList">${tt}${ch}<div class="mkCap">\u7AE0\u306F\u9806\u756A\u306B\u958B\u304D\u307E\u3059\u3002\u300C\u8AAD\u3080\u300D\u306E\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u3092\u7D42\u3048\u305F\u4EBA\u304C\u3001\u30C6\u30B9\u30C8\u3067\u98DB\u3070\u305B\u308B\u4ED5\u7D44\u307F\u306F\u6E96\u5099\u4E2D\u3067\u3059\u3002</div></div>`;
         root2.querySelector("#mkX").onclick = close;
@@ -23569,7 +23625,7 @@ body.nogram .gmT{display:none}
         const lesson = ALL2.find((l) => l.id === id);
         if (!lesson) return;
         cur4 = { lesson, i: 0, miss: 0 };
-        root2.innerHTML = `<div class="mkTop"><button id="mkX">\u2190 \u4E00\u89A7</button><div class="mkTtl">${esc6(lesson.id)}\u3000${esc6(lesson.name)}</div><div class="mkPg" id="mkPg"></div></div>
+        root2.innerHTML = `<div class="mkTop"><button id="mkX">\u2190 \u4E00\u89A7</button><div class="mkTtl">${esc5(lesson.id)}\u3000${esc5(lesson.name)}</div><div class="mkPg" id="mkPg"></div></div>
       <div class="mkBar"><i id="mkBarI"></i></div>
       <div id="mkMain" style="flex:1;min-height:0;display:flex;flex-direction:column"></div>`;
         root2.querySelector("#mkX").onclick = () => {
@@ -23593,7 +23649,7 @@ body.nogram .gmT{display:none}
       }
       const subHtml = (x) => {
         const p = String(x).split("|");
-        return `<small><b class="ct">${esc6(p[p.length - 1])}</b></small>`;
+        return `<small><b class="ct">${esc5(p[p.length - 1])}</b></small>`;
       };
       const NUMR = { S: "\u2460\u4E3B\u5F79", V: "\u2461\u3069\u3046\u3057\u3066\u308B\uFF1F", O: "\u2462\u76F8\u624B" };
       const roleName = (r) => cur4 && cur4.lesson && cur4.lesson.nums && NUMR[r] || ROLE2[r];
@@ -23622,9 +23678,9 @@ body.nogram .gmT{display:none}
       const gramOf = (cat2) => GRAM[String(cat2 || "").replace(/^[①②③]/, "")] || "";
       const gmHtml = (cat2) => {
         const g2 = gramOf(cat2);
-        return g2 ? `<em class="gmT">${esc6(g2)}</em>` : "";
+        return g2 ? `<em class="gmT">${esc5(g2)}</em>` : "";
       };
-      const topHtml = (m) => m ? `<i class="mnT">${esc6(m)}</i>` : "";
+      const topHtml = (m) => m ? `<i class="mnT">${esc5(m)}</i>` : "";
       const MEAN = { "I:me": "\u79C1\u306B", "O:me": "\u79C1\u3092", "I:you": "\u3042\u306A\u305F\u306B", "S:You": "\u3042\u306A\u305F", "S:I": "\u79C1", "S:She": "\u5F7C\u5973", "S:she": "\u5F7C\u5973", "S:Tom": "\u30C8\u30E0", "S:Mika": "\u30DF\u30AB", "S:Birds": "\u9CE5", "S:birds": "\u9CE5", "S:Kids": "\u5B50\u3069\u3082\u305F\u3061", "S:Music": "\u97F3\u697D", "S:He": "\u5F7C", "V:found": "\u601D\u3063\u305F", "O:the book": "\u305D\u306E\u672C\u3092", "C:interesting": "\u9762\u767D\u3044", "S:cat": "\u306D\u3053", "S:The cat": "\u305D\u306E\u306D\u3053", "S:the cat": "\u305D\u306E\u306D\u3053", "S:friend": "\u53CB\u3060\u3061", "O:Tom": "\u30C8\u30E0\u3092", "O:music": "\u97F3\u697D\u3092", "O:flowers": "\u82B1\u3092", "O:English": "\u82F1\u8A9E\u3092", "V:am": "\u301C\u3060", "V:is": "\u301C\u3060", "V:are": "\u301C\u3060", "V:arrives": "\u5230\u7740\u3059\u308B", "V:calls": "\u547C\u3076", "V:fly": "\u98DB\u3076", "V:gives": "\u304F\u308C\u308B", "V:likes": "\u597D\u304D", "V:makes": "\u301C\u306B\u3059\u308B", "V:ran": "\u8D70\u3063\u305F", "V:runs": "\u8D70\u308B", "V:sing": "\u6B4C\u3046", "V:sings": "\u6B4C\u3046", "V:teach": "\u6559\u3048\u308B", "V:eats": "\u98DF\u3079\u308B", "V:reads": "\u8AAD\u3080", "V:walks": "\u6B69\u304F", "C:happy": "\u5E78\u305B", "C:kind": "\u512A\u3057\u3044", "C:smile": "\u7B11\u9854", "C:tall": "\u80CC\u304C\u9AD8\u3044", "C:sleepy": "\u7720\u3044", "C:smart": "\u982D\u304C\u3044\u3044", "O:lunch": "\u663C\u3054\u306F\u3093\u3092", "O:ramen": "\u30E9\u30FC\u30E1\u30F3\u3092", "O:presents": "\u30D7\u30EC\u30BC\u30F3\u30C8\u3092", "O:book": "\u672C\u3092", "V:sleep": "\u7720\u308B", "V:sleeps": "\u7720\u308B", "V:like": "\u597D\u304D", "S:cats": "\u306D\u3053", "S:Ken": "\u30B1\u30F3", "S:Cats": "\u306D\u3053", "S:They": "\u5F7C\u3089", "V:waits": "\u5F85\u3064", "V:goes": "\u884C\u304F", "O:tennis": "\u30C6\u30CB\u30B9\u3092", "O:Osaka": "\u5927\u962A\u3092" };
       const meanOf = (r, t) => MEAN[r + ":" + t] || "";
       const ctrCls = (c) => c === "\u30B8\u30E3\u30F3\u30EB" ? " cg" : c === "\u5177\u4F53\u7684" ? " ca" : c === "\u305D\u308C\uFF01" ? " cT" : "";
@@ -23640,7 +23696,7 @@ body.nogram .gmT{display:none}
         const ctr = ctrCls(cat2) + (EQFIRST && s.draw ? " go" : "");
         const crown = s.fx === "crown" && i === 0 ? `<span class="crown">\u{1F451}</span>` : "";
         const eq = s.eq && r === "V" ? " eq" : "";
-        return `<span class="mkChip ${r === "Q" ? "Q" : ""}${jp ? " jp" : ""}${eq}${ctr}${s.swap && i === 1 ? " in" : ""}${s.hl === i ? " hl" : ""}${s.bad === i ? " bad" : ""}${morph ? " eqm" : ""}" data-t="${esc6(t)}" data-r="${r}" data-cat="${esc6(cat2)}" ${r !== "Q" ? rc(r) : ""}>${crown}${gmHtml(cat2)}${topHtml(mean)}${morph ? `<span class="eqw${EQFIRST ? " go" : ""}"><span class="a">${esc6(t)}</span><span class="b">\uFF1D</span></span>` : esc6(t)}${sub ? subHtml(sub) : ""}</span>`;
+        return `<span class="mkChip ${r === "Q" ? "Q" : ""}${jp ? " jp" : ""}${eq}${ctr}${s.swap && i === 1 ? " in" : ""}${s.hl === i ? " hl" : ""}${s.bad === i ? " bad" : ""}${morph ? " eqm" : ""}" data-t="${esc5(t)}" data-r="${r}" data-cat="${esc5(cat2)}" ${r !== "Q" ? rc(r) : ""}>${crown}${gmHtml(cat2)}${topHtml(mean)}${morph ? `<span class="eqw${EQFIRST ? " go" : ""}"><span class="a">${esc5(t)}</span><span class="b">\uFF1D</span></span>` : esc5(t)}${sub ? subHtml(sub) : ""}</span>`;
       }
       const ARR = { self: "#e4546a", eq: "#e89a1a", out: "#e4546a", add: "#8b5cf6" };
       function drawArrows(row, kind, mini) {
@@ -23696,14 +23752,14 @@ body.nogram .gmT{display:none}
         EQFIRST = !!first2;
         if (s.types) {
           const T3 = [["S:Tom", "V:runs"], ["S:She", "V:is", "C:tall"], ["S:She", "V:calls", "O:Tom"], ["S:She", "V:gives", "I:me", "O:flowers"], ["S:Music", "V:makes", "O:me", "C:happy"]], K = ["self", "eqarc", "out", "out2", "outc"];
-          return `<div class="mkTypes">${T3.map((c, i) => `<div class="mkTR"><span class="nm">${esc6(TYPES[i])}</span><div class="mkRow ar mini${K[i] === "out2" ? " ar2" : ""}" data-ar="${K[i]}">${c.map((x, j) => (K[i] === "outc" && j === 3 ? `<span class="mkEqS">\uFF1D</span>` : "") + chipHtml(x, j, { nomean: 1 })).join("")}</div></div>`).join("")}</div>${s.cap ? `<div class="mkCap">${esc6(s.cap)}</div>` : ""}`;
+          return `<div class="mkTypes">${T3.map((c, i) => `<div class="mkTR"><span class="nm">${esc5(TYPES[i])}</span><div class="mkRow ar mini${K[i] === "out2" ? " ar2" : ""}" data-ar="${K[i]}">${c.map((x, j) => (K[i] === "outc" && j === 3 ? `<span class="mkEqS">\uFF1D</span>` : "") + chipHtml(x, j, { nomean: 1 })).join("")}</div></div>`).join("")}</div>${s.cap ? `<div class="mkCap">${esc5(s.cap)}</div>` : ""}`;
         }
-        if (s.table) return `<div class="mkTbl">${s.table.map(([l, r, k]) => `<div><span class="l" ${rc(k || "V")}>${esc6(l)}</span><span>\u2192</span><span class="mkChip" ${rc(k || "V")}>${esc6(r)}</span></div>`).join("")}</div>${s.cap ? `<div class="mkCap">${esc6(s.cap)}</div>` : ""}`;
+        if (s.table) return `<div class="mkTbl">${s.table.map(([l, r, k]) => `<div><span class="l" ${rc(k || "V")}>${esc5(l)}</span><span>\u2192</span><span class="mkChip" ${rc(k || "V")}>${esc5(r)}</span></div>`).join("")}</div>${s.cap ? `<div class="mkCap">${esc5(s.cap)}</div>` : ""}`;
         const n = s.cards.length;
         if (s.grow) {
           let h = chipHtml(s.cards[0], 0, s).replace('class="mkChip ', 'class="mkChip g0 ');
           for (let i = 1; i < n; i++) h = `<span class="mkNest" style="--d:${(i * 0.9).toFixed(1)}s">${h}${chipHtml(s.cards[i], i, s).replace('class="mkChip ', 'class="mkChip g' + i + " ")}</span>`;
-          return `<div class="mkRow grown sm xs${EQFIRST ? " go" : ""}">${h}</div><div class="mkLR${EQFIRST ? " go" : ""}"><i></i><span>\u6587\u306F\u3001\u5DE6\u304B\u3089\u53F3\u3078</span></div>${s.cap ? `<div class="mkCap">${esc6(s.cap)}</div>` : ""}`;
+          return `<div class="mkRow grown sm xs${EQFIRST ? " go" : ""}">${h}</div><div class="mkLR${EQFIRST ? " go" : ""}"><i></i><span>\u6587\u306F\u3001\u5DE6\u304B\u3089\u53F3\u3078</span></div>${s.cap ? `<div class="mkCap">${esc5(s.cap)}</div>` : ""}`;
         }
         const gs = [];
         if (s.arrow && s.arrow.startsWith("add:")) s.arrow.slice(4).split(",").forEach((p) => {
@@ -23720,8 +23776,8 @@ body.nogram .gmT{display:none}
           } else inner += (s.arrow === "outc" && i === 3 ? `<span class="mkEqS">\uFF1D</span>` : "") + chipHtml(s.cards[i], i, s);
         }
         const rows = `<div class="mkRow${s.arrow ? " ar" : ""}${s.arrow === "out2" ? " ar2" : ""}${n >= 4 || s.small ? " sm" : ""}${s.small || s.arrow === "outc" ? " xs" : ""}" ${s.arrow ? `data-ar="${s.arrow}"` : ""}>${inner}${s.mark ? `<span class="mkMark${s.mark === "\xD7" ? " ng" : ""}">${s.mark}</span>` : ""}</div>`;
-        const lr = s.lr ? `<div class="mkLR"><i></i><span>${esc6(s.lr)}</span></div>` : "";
-        return `${rows}${lr}${s.cap ? `<div class="mkCap">${esc6(s.cap)}</div>` : ""}`;
+        const lr = s.lr ? `<div class="mkLR"><i></i><span>${esc5(s.lr)}</span></div>` : "";
+        return `${rows}${lr}${s.cap ? `<div class="mkCap">${esc5(s.cap)}</div>` : ""}`;
       }
       function paintArrows(scope) {
         scope.querySelectorAll("[data-ar]").forEach((r) => drawArrows(r, r.dataset.ar, r.classList.contains("mini")));
@@ -23769,7 +23825,7 @@ body.nogram .gmT{display:none}
           const gf = lastF("g"), bf = lastF("b");
           main.innerHTML = `<div class="mkBoard" id="mkBoard">${boardState ? boardHtml(boardState, !boardState.__shown) : ""}</div>
         ${chars(main, gf, bf, s.w)}
-        <div class="mkSay" id="mkSay"><div class="mkName ${s.w}">${s.w === "g" ? "\u5973\u306E\u5B50" : "\u7537\u306E\u5B50"}</div><div class="mkTxt">${esc6(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
+        <div class="mkSay" id="mkSay"><div class="mkName ${s.w}">${s.w === "g" ? "\u5973\u306E\u5B50" : "\u7537\u306E\u5B50"}</div><div class="mkTxt">${esc5(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
           if (boardState) boardState.__shown = true;
           if (!boardState) main.querySelector("#mkBoard").style.visibility = "hidden";
           else {
@@ -23784,7 +23840,7 @@ body.nogram .gmT{display:none}
         }
         if (s.k === "notice") {
           cur4.bossOn = true;
-          main.innerHTML = `<div class="mkNotice">${esc6(s.t)}</div><div class="mkQ"><button class="mkBtn" id="mkOk">\u308F\u304B\u3063\u305F\uFF01</button></div>`;
+          main.innerHTML = `<div class="mkNotice">${esc5(s.t)}</div><div class="mkQ"><button class="mkBtn" id="mkOk">\u308F\u304B\u3063\u305F\uFF01</button></div>`;
           main.querySelector("#mkOk").onclick = () => {
             cur4.i++;
             step2();
@@ -23793,7 +23849,7 @@ body.nogram .gmT{display:none}
         }
         if (s.k === "sum") {
           main.innerHTML = `<div class="mkBoard" style="visibility:hidden"></div>${chars(main, "\u559C\u3076", "\u559C\u3076", "", false)}
-        <div class="mkSay" id="mkSay"><div class="mkName b">\u307E\u3068\u3081</div><div class="mkTxt">${esc6(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
+        <div class="mkSay" id="mkSay"><div class="mkName b">\u307E\u3068\u3081</div><div class="mkTxt">${esc5(s.t)}</div><div class="mkNext">\u25B6</div></div>`;
           sfxs("se/sentence_clear");
           main.querySelector("#mkSay").onclick = () => {
             cur4.i++;
@@ -23807,7 +23863,7 @@ body.nogram .gmT{display:none}
         const ev = W2 ? Object.values(W2) : [];
         return `<div class="mkRow">${ans.map((a) => {
           const { r, t, sub } = tk(a);
-          return `<span class="mkChip${isJp(t) ? " jp" : ""}${ev.includes(t) ? " in" : ""}${ctrCls((sub || "").split("|").pop())}" ${rc(r)}>${gmHtml((sub || roleName(r) || "").split("|").pop())}${isJp(t) ? "" : topHtml(sub && sub.includes("|") ? sub.split("|")[0] : meanOf(r, t))}${esc6(t)}${subHtml(sub || roleName(r) || "")}</span>`;
+          return `<span class="mkChip${isJp(t) ? " jp" : ""}${ev.includes(t) ? " in" : ""}${ctrCls((sub || "").split("|").pop())}" ${rc(r)}>${gmHtml((sub || roleName(r) || "").split("|").pop())}${isJp(t) ? "" : topHtml(sub && sub.includes("|") ? sub.split("|")[0] : meanOf(r, t))}${esc5(t)}${subHtml(sub || roleName(r) || "")}</span>`;
         }).join("")}</div>`;
       }
       function react(w, f) {
@@ -23827,16 +23883,16 @@ body.nogram .gmT{display:none}
           const toks = s.ans.concat(s.dummy.map((t) => "X:" + t));
           const pool = s.type === "E" ? s.jo.map((i) => ({ id: i, ...tk(s.ans[i]) })) : shuf2(toks.map((a, i) => ({ id: i, ...tk(a) })));
           const slots = Array(s.ans.length).fill(null);
-          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="jp">${esc6(s.jp)}</div>
-        ${s.hint ? `<div class="hint">${esc6(s.hint).replace(/\n/g, "<br>")}</div>` : s.type === "E" ? `<div class="hint">\u65E5\u672C\u8A9E\u306E\u307E\u307E\u3001\u82F1\u8A9E\u306E\u9806\u756A\u306B\u4E26\u3079\u3088\u3046<br>\uFF08\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u76F8\u624B\uFF09</div>` : s.type === "D" ? `<div class="hint">\u77E5\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u65E5\u672C\u8A9E\u306E\u30AB\u30FC\u30C9\u306E\u307E\u307E\u3067OK\u3002\u9806\u756A\u3060\u3051\u5408\u308F\u305B\u3088\u3046</div>` : boss ? `<div class="hint">\u4F7F\u308F\u306A\u3044\u30AB\u30FC\u30C9\u304C\u6DF7\u3056\u3063\u3066\u3044\u308B\u3088</div>` : `<div class="hint">\u4E3B\u5F79\u304B\u3089\u9806\u756A\u306B\u3001\u30AB\u30FC\u30C9\u3092\u30BF\u30C3\u30D7</div>`}
+          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="jp">${esc5(s.jp)}</div>
+        ${s.hint ? `<div class="hint">${esc5(s.hint).replace(/\n/g, "<br>")}</div>` : s.type === "E" ? `<div class="hint">\u65E5\u672C\u8A9E\u306E\u307E\u307E\u3001\u82F1\u8A9E\u306E\u9806\u756A\u306B\u4E26\u3079\u3088\u3046<br>\uFF08\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u76F8\u624B\uFF09</div>` : s.type === "D" ? `<div class="hint">\u77E5\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u65E5\u672C\u8A9E\u306E\u30AB\u30FC\u30C9\u306E\u307E\u307E\u3067OK\u3002\u9806\u756A\u3060\u3051\u5408\u308F\u305B\u3088\u3046</div>` : boss ? `<div class="hint">\u4F7F\u308F\u306A\u3044\u30AB\u30FC\u30C9\u304C\u6DF7\u3056\u3063\u3066\u3044\u308B\u3088</div>` : `<div class="hint">\u4E3B\u5F79\u304B\u3089\u9806\u756A\u306B\u3001\u30AB\u30FC\u30C9\u3092\u30BF\u30C3\u30D7</div>`}
         <div class="mkSlots" id="mkSl"></div><div class="mkMsg" id="mkMsg"></div>
         </div>${chs}<div class="mkQ mkQb"><div class="mkPool" id="mkPo"></div>
         <button class="mkBtn" id="mkGo" disabled>\u3067\u304D\u305F</button></div>`;
           const sl = main.querySelector("#mkSl"), po = main.querySelector("#mkPo"), go = main.querySelector("#mkGo"), msg = main.querySelector("#mkMsg");
           let done = false, miss = 0;
           const draw = () => {
-            sl.innerHTML = slots.map((c, i) => c ? `<button class="mkSlot f${isJp(c.t) ? " jp" : ""}" data-s="${i}">${esc6(c.t)}</button>` : `<div class="mkSlot">${s.type === "E" ? `<small style="font:700 11px var(--jp);color:#8a9bb8">${ROLE2[tk(s.ans[i]).r] || ""}</small>` : ""}</div>`).join("");
-            po.innerHTML = pool.map((c) => `<button class="mkCard${isJp(c.t) ? " jp" : ""}${slots.some((x) => x && x.id === c.id) ? " used" : ""}" data-c="${c.id}">${esc6(c.t)}</button>`).join("");
+            sl.innerHTML = slots.map((c, i) => c ? `<button class="mkSlot f${isJp(c.t) ? " jp" : ""}" data-s="${i}">${esc5(c.t)}</button>` : `<div class="mkSlot">${s.type === "E" ? `<small style="font:700 11px var(--jp);color:#8a9bb8">${ROLE2[tk(s.ans[i]).r] || ""}</small>` : ""}</div>`).join("");
+            po.innerHTML = pool.map((c) => `<button class="mkCard${isJp(c.t) ? " jp" : ""}${slots.some((x) => x && x.id === c.id) ? " used" : ""}" data-c="${c.id}">${esc5(c.t)}</button>`).join("");
             go.disabled = done ? false : !slots.every(Boolean);
             sl.querySelectorAll("[data-s]").forEach((b2) => b2.onclick = () => {
               if (done) return;
@@ -23892,7 +23948,7 @@ body.nogram .gmT{display:none}
               if (s.words && s.words.length) {
                 const ex = document.createElement("div");
                 ex.className = "hint";
-                ex.innerHTML = `\u65E5\u672C\u8A9E\u306E\u3068\u3053\u308D\u306F\u3001\u82F1\u8A9E\u3060\u3068\u3053\u3046\u306A\u308B\u3088<br><b>${s.words.map(([j, e]) => esc6(j) + " \uFF1D " + esc6(e)).join("\u3000")}</b>\u3000\u2192\u3000${esc6(s.en)}`;
+                ex.innerHTML = `\u65E5\u672C\u8A9E\u306E\u3068\u3053\u308D\u306F\u3001\u82F1\u8A9E\u3060\u3068\u3053\u3046\u306A\u308B\u3088<br><b>${s.words.map(([j, e]) => esc5(j) + " \uFF1D " + esc5(e)).join("\u3000")}</b>\u3000\u2192\u3000${esc5(s.en)}`;
                 msg.after(ex);
               }
               po.style.display = "none";
@@ -23917,7 +23973,7 @@ body.nogram .gmT{display:none}
         if (s.type === "T") {
           main.innerHTML = `<div class="mkQ mkQt big">${tag}<div class="hint">\u5149\u3063\u3066\u3044\u308B\u30AB\u30FC\u30C9\u306F\u3001\u3069\u3053\u3092\u8A73\u3057\u304F\u3057\u3066\u3044\u308B\uFF1F</div>
         ${boardHtml({ cards: s.cards, hl: s.hl })}<div class="mkMsg" id="mkMsg"></div>
-        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc6(o)}">${esc6(o)}</button>`).join("")}</div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}</button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {
@@ -23952,9 +24008,9 @@ body.nogram .gmT{display:none}
           return;
         }
         if (s.type === "B") {
-          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="hint">\u7A7A\u3044\u3066\u3044\u308B\u3068\u3053\u308D\u306B\u5165\u308B\u8A00\u8449\u306F\uFF1F<br>${s.hint ? esc6(s.hint) : "I \u2192 am \uFF0F he\u30FBshe\u30FBit\u30FB\u540D\u524D\u3072\u3068\u308A \u2192 is \uFF0F you\u30FBwe\u30FBthey \u2192 are"}</div>${s.ctx ? `<div class="hint" style="font-weight:800;color:#27344f">${esc6(s.ctx)}</div>` : ""}
-        <div class="mkSen">${esc6(s.before)} <span class="bl" id="mkBl">\u3000\u3000</span>${/^[.,!?]/.test(s.after) || !s.after ? "" : " "}${esc6(s.after)}</div><div class="mkMsg" id="mkMsg"></div>
-        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc6(o)}">${esc6(o)}</button>`).join("")}</div>
+          main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="hint">\u7A7A\u3044\u3066\u3044\u308B\u3068\u3053\u308D\u306B\u5165\u308B\u8A00\u8449\u306F\uFF1F<br>${s.hint ? esc5(s.hint) : "I \u2192 am \uFF0F he\u30FBshe\u30FBit\u30FB\u540D\u524D\u3072\u3068\u308A \u2192 is \uFF0F you\u30FBwe\u30FBthey \u2192 are"}</div>${s.ctx ? `<div class="hint" style="font-weight:800;color:#27344f">${esc5(s.ctx)}</div>` : ""}
+        <div class="mkSen">${esc5(s.before)} <span class="bl" id="mkBl">\u3000\u3000</span>${/^[.,!?]/.test(s.after) || !s.after ? "" : " "}${esc5(s.after)}</div><div class="mkMsg" id="mkMsg"></div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts" id="mkOp">${s.opts.map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}</button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {
@@ -23985,8 +24041,8 @@ body.nogram .gmT{display:none}
         }
         if (s.type === "C") {
           main.innerHTML = `<div class="mkQ mkQt">${tag}<div class="hint">${s.hint || (s.gen ? "\u3053\u306E\u8A00\u8449\u306F\u3001\u3069\u308C\uFF1F" : "\u3053\u306E\u6587\u306F\u3001\u3069\u306E\u578B\uFF1F")}</div>
-        <div class="mkSen">${esc6(s.en)}</div><div class="mkMsg" id="mkMsg"></div>
-        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${(s.opts || TYPES).map((o) => `<button class="mkCard" data-o="${esc6(o)}">${esc6(o)}<small style="display:block;font:700 11px var(--jp);color:#7b8cab">${esc6((s.subs || (s.gen ? GEN_SUB : TYPE_SUB))[o] || "")}</small></button>`).join("")}</div>
+        <div class="mkSen">${esc5(s.en)}</div><div class="mkMsg" id="mkMsg"></div>
+        </div>${chs}<div class="mkQ mkQb"><div class="mkOpts c" id="mkOp">${(s.opts || TYPES).map((o) => `<button class="mkCard" data-o="${esc5(o)}">${esc5(o)}<small style="display:block;font:700 11px var(--jp);color:#7b8cab">${esc5((s.subs || (s.gen ? GEN_SUB : TYPE_SUB))[o] || "")}</small></button>`).join("")}</div>
         <button class="mkBtn" id="mkGo" style="display:none">\u3064\u304E\u3078</button></div>`;
           const msg = main.querySelector("#mkMsg");
           main.querySelectorAll("[data-o]").forEach((bt) => bt.onclick = () => {
@@ -24040,17 +24096,17 @@ body.nogram .gmT{display:none}
         sfxs(chapterClear || L.boss ? "voice/perfect" : "se/newbest");
         if (chapterClear) {
           main.innerHTML = `<div class="mkEnd"><img src="${face3("g", "\u559C\u3076")}" alt=""><h2>\u7B2C${ch.n}\u7AE0\u3000\u30AF\u30EA\u30A2\uFF01</h2>
-        <div class="mkTitle">\u79F0\u53F7\u300C${esc6(ch.title)}\u300D\u3092\u30B2\u30C3\u30C8\uFF01</div>
+        <div class="mkTitle">\u79F0\u53F7\u300C${esc5(ch.title)}\u300D\u3092\u30B2\u30C3\u30C8\uFF01</div>
         <p>\u30B3\u30A4\u30F3 +${first2 ? L.coin + ch.coin : ch.coin}
-\u30A2\u30D0\u30BF\u30FC\u306E\u30D5\u30EC\u30FC\u30E0\u300C${esc6(ch.frame)}\u300D\u306F\u3001\u4F7F\u3048\u308B\u3088\u3046\u306B\u6E96\u5099\u4E2D\u3067\u3059</p>
+\u30A2\u30D0\u30BF\u30FC\u306E\u30D5\u30EC\u30FC\u30E0\u300C${esc5(ch.frame)}\u300D\u306F\u3001\u4F7F\u3048\u308B\u3088\u3046\u306B\u6E96\u5099\u4E2D\u3067\u3059</p>
         <div class="btns"><button class="mkBtn" id="mkBk">\u7AE0\u306E\u4E00\u89A7\u3078</button></div></div>`;
           main.querySelector("#mkBk").onclick = showList;
           return;
         }
-        main.innerHTML = `<div class="mkEnd"><img src="${face3("b", "\u559C\u3076")}" style="transform:scaleX(-1)" alt=""><h2>${esc6(L.id)}\u3000\u30AF\u30EA\u30A2\uFF01</h2>
+        main.innerHTML = `<div class="mkEnd"><img src="${face3("b", "\u559C\u3076")}" style="transform:scaleX(-1)" alt=""><h2>${esc5(L.id)}\u3000\u30AF\u30EA\u30A2\uFF01</h2>
       <p>${first2 ? `\u30B3\u30A4\u30F3 +${L.coin}` : "\u3082\u3046\u4E00\u5EA6\u3067\u304D\u305F\u306D"}${ch.partial && !nx ? `
 \u7B2C${ch.n}\u7AE0\u306E\u7D9A\u304D\uFF08${ch.rest}\uFF09\u306F\u3001\u6E96\u5099\u4E2D\u3067\u3059` : ""}</p>
-      <div class="btns">${nx ? `<button class="mkBtn" id="mkNx">\u3064\u304E\u306E\u30EC\u30C3\u30B9\u30F3\uFF08${esc6(nx.id)}\uFF09</button>` : ""}<button class="mkBtn sub" id="mkBk">\u7AE0\u306E\u4E00\u89A7\u3078</button></div></div>`;
+      <div class="btns">${nx ? `<button class="mkBtn" id="mkNx">\u3064\u304E\u306E\u30EC\u30C3\u30B9\u30F3\uFF08${esc5(nx.id)}\uFF09</button>` : ""}<button class="mkBtn sub" id="mkBk">\u7AE0\u306E\u4E00\u89A7\u3078</button></div></div>`;
         if (nx) main.querySelector("#mkNx").onclick = () => start2(nx.id);
         main.querySelector("#mkBk").onclick = showList;
         const bi = root2.querySelector("#mkBarI");
@@ -24441,7 +24497,7 @@ body.nogram .gmT{display:none}
       if (html != null) e.innerHTML = html;
       return e;
     };
-    const esc6 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const esc5 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     let root2, opts = {}, app;
     let STORE_KEY = "chunkStory.v1";
@@ -24494,7 +24550,7 @@ body.nogram .gmT{display:none}
       return withFallback(charaSrc(who, face3), () => {
         const p = el3("div", "ph");
         p.style.setProperty("--c", c.color);
-        p.innerHTML = `<div class="cs-head">${esc6(c.faces[face3] || face3)}</div><b>${esc6(c.name)}</b>${A.config.debug ? `<code>${key}</code>` : ""}`;
+        p.innerHTML = `<div class="cs-head">${esc5(c.faces[face3] || face3)}</div><b>${esc5(c.name)}</b>${A.config.debug ? `<code>${key}</code>` : ""}`;
         return p;
       });
     }
@@ -24504,7 +24560,7 @@ body.nogram .gmT{display:none}
       return withFallback(p.src || (A.config.picBase ? A.config.picBase + key + A.config.picExt : storySrc(p.src, key)), () => {
         const d = el3("div", "ph");
         d.style.setProperty("--c", "#fff7d6");
-        d.innerHTML = `<b>\u7D75</b><span style="font-size:12px;line-height:1.5">${esc6(p.label)}</span>${A.config.debug ? `<code>${key}</code>` : ""}`;
+        d.innerHTML = `<b>\u7D75</b><span style="font-size:12px;line-height:1.5">${esc5(p.label)}</span>${A.config.debug ? `<code>${key}</code>` : ""}`;
         return d;
       });
     }
@@ -24521,7 +24577,7 @@ body.nogram .gmT{display:none}
         };
         im.src = src;
       }
-      if (A.config.debug) layer.appendChild(el3("span", "bgname", esc6((b.label || k) + " / " + key)));
+      if (A.config.debug) layer.appendChild(el3("span", "bgname", esc5((b.label || k) + " / " + key)));
     }
     function screen2(cls) {
       app.innerHTML = "";
@@ -24534,10 +24590,10 @@ body.nogram .gmT{display:none}
     }
     function openMap() {
       const s = screen2("map");
-      s.innerHTML = `<h1>${esc6(S2.title)}</h1>
+      s.innerHTML = `<h1>${esc5(S2.title)}</h1>
     <p class="cs-lead">\u304A\u8A71\u3092\u805E\u3044\u3066\u3001\u3059\u3050\u30B2\u30FC\u30E0\u3067\u8A66\u3059\u3002\u7AE0\u3092\u30AF\u30EA\u30A2\u3059\u308B\u3068\u3001\u3042\u305D\u3079\u308B\u30E2\u30FC\u30C9\u304C\u5897\u3048\u3066\u3044\u304F\u3088\u3002</p>`;
       const un = el3("div", "unlocks");
-      S2.modes.forEach((m) => un.appendChild(el3("span", prog.unlocked[m.key] ? "on" : "", esc6((prog.unlocked[m.key] ? "" : "\u{1F512} ") + m.name))));
+      S2.modes.forEach((m) => un.appendChild(el3("span", prog.unlocked[m.key] ? "on" : "", esc5((prog.unlocked[m.key] ? "" : "\u{1F512} ") + m.name))));
       s.appendChild(un);
       const list = el3("div", "chs");
       S2.chapters.forEach((ch) => {
@@ -24545,7 +24601,7 @@ body.nogram .gmT{display:none}
         const row = el3("div", "ch" + (done ? " done" : "") + (open ? "" : " lock"));
         const mode = ch.unlock && S2.modes.find((m) => m.key === ch.unlock);
         row.innerHTML = `<div class="cs-no">${ch.no}</div>
-      <div class="cs-tt">${esc6(ch.title)}<small>${esc6(ch.sub || "")}${done ? " \u30FB \u30AF\u30EA\u30A2" : ""}</small></div>`;
+      <div class="cs-tt">${esc5(ch.title)}<small>${esc5(ch.sub || "")}${done ? " \u30FB \u30AF\u30EA\u30A2" : ""}</small></div>`;
         const bt = el3("div", "bt");
         const b1 = el3("button", "pill", done ? "\u3082\u3046\u4E00\u5EA6\u898B\u308B" : "\u306F\u3058\u3081\u308B");
         b1.disabled = !open;
@@ -24564,7 +24620,7 @@ body.nogram .gmT{display:none}
           runStage(ch);
         };
         bt.append(b1, b2);
-        if (mode) bt.appendChild(el3("span", "tag-unlock", "\u30AF\u30EA\u30A2\u3067\u300C" + esc6(mode.name) + "\u300D"));
+        if (mode) bt.appendChild(el3("span", "tag-unlock", "\u30AF\u30EA\u30A2\u3067\u300C" + esc5(mode.name) + "\u300D"));
         row.appendChild(bt);
         list.appendChild(row);
       });
@@ -24601,7 +24657,7 @@ body.nogram .gmT{display:none}
       const s = screen2("adv");
       adv = { ch, lines: {}, skip: false, log: [], resolve: null, chars: {} };
       s.innerHTML = `<div class="cs-bgl"></div>
-    <div class="cs-top"><span class="cs-chname">\u7B2C${ch.no}\u7AE0 ${esc6(ch.title)}</span>
+    <div class="cs-top"><span class="cs-chname">\u7B2C${ch.no}\u7AE0 ${esc5(ch.title)}</span>
       <button data-a="log">\u30ED\u30B0</button><button data-a="skip">\u30B9\u30AD\u30C3\u30D7</button></div>
     <div class="cs-board"></div>
     <div class="cs-chars"><div class="cs-chr cs-l cs-hide"></div><div class="cs-chr cs-r cs-hide"></div></div>
@@ -24742,7 +24798,7 @@ body.nogram .gmT{display:none}
     function showLog() {
       const o = el3("div", "log");
       const inn = el3("div", "in");
-      inn.innerHTML = adv.log.map((l) => `<p><b>${esc6(l.who)}</b>${esc6(l.t)}</p>`).join("") || "<p>\u307E\u3060\u30BB\u30EA\u30D5\u306F\u3042\u308A\u307E\u305B\u3093\u3002</p>";
+      inn.innerHTML = adv.log.map((l) => `<p><b>${esc5(l.who)}</b>${esc5(l.t)}</p>`).join("") || "<p>\u307E\u3060\u30BB\u30EA\u30D5\u306F\u3042\u308A\u307E\u305B\u3093\u3002</p>";
       o.appendChild(inn);
       o.onclick = () => o.remove();
       adv.s.appendChild(o);
@@ -24751,7 +24807,7 @@ body.nogram .gmT{display:none}
     const idx = (i) => Array.isArray(i) ? i : [i];
     function mkTok(text) {
       const t = el3("span", "tok");
-      t.appendChild(el3("span", "t", esc6(text)));
+      t.appendChild(el3("span", "t", esc5(text)));
       return t;
     }
     const FX = {
@@ -24794,7 +24850,7 @@ body.nogram .gmT{display:none}
       },
       line: (st) => {
         const ln = el3("div", "ln");
-        if (st.label) ln.appendChild(el3("span", "lab", esc6(st.label)));
+        if (st.label) ln.appendChild(el3("span", "lab", esc5(st.label)));
         const tokens = st.parts.map((p) => {
           const t = mkTok(p);
           ln.appendChild(t);
@@ -24829,7 +24885,7 @@ body.nogram .gmT{display:none}
         const t = adv.lines[st.id]?.tokens[st.i];
         if (!t) return;
         t.querySelector(".cs-bdg")?.remove();
-        t.appendChild(el3("span", "bdg " + (st.c || ""), esc6(st.t)));
+        t.appendChild(el3("span", "bdg " + (st.c || ""), esc5(st.t)));
       },
       push: async (st) => {
         const L = adv.lines[st.id];
@@ -24857,7 +24913,7 @@ body.nogram .gmT{display:none}
       },
       mark: (st) => {
         const L = adv.lines[st.id];
-        if (L) L.el.appendChild(el3("span", "mk " + (st.c || ""), esc6(st.t)));
+        if (L) L.el.appendChild(el3("span", "mk " + (st.c || ""), esc5(st.t)));
       },
       reorder: async (st) => {
         const L = adv.lines[st.id];
@@ -24896,9 +24952,9 @@ body.nogram .gmT{display:none}
         const w = el3("div", "cards");
         st.items.forEach((c) => {
           const d = el3("div", "card");
-          d.appendChild(el3("div", "en", esc6(c.en)));
+          d.appendChild(el3("div", "en", esc5(c.en)));
           if (c.pic) d.appendChild(picNode(c.pic));
-          d.appendChild(el3("div", "jp", esc6(c.jp)));
+          d.appendChild(el3("div", "jp", esc5(c.jp)));
           w.appendChild(d);
         });
         adv.board.appendChild(w);
@@ -24912,7 +24968,7 @@ body.nogram .gmT{display:none}
       },
       pfill: (st) => {
         const r = adv.board.querySelector(`.cs-pyr .cs-st[data-s="${st.step}"]`);
-        if (r) r.appendChild(el3("span", "chip", esc6(st.t)));
+        if (r) r.appendChild(el3("span", "chip", esc5(st.t)));
       },
       amap: () => {
         const m = el3("div", "amap");
@@ -24971,7 +25027,7 @@ body.nogram .gmT{display:none}
     }
     function stageFrame(ch, st) {
       const s = screen2("stg");
-      s.innerHTML = `<div class="cs-top"><span class="cs-t">\u7B2C${ch.no}\u7AE0 ${esc6(st.title || "")}</span><span class="cs-cnt"></span>
+      s.innerHTML = `<div class="cs-top"><span class="cs-t">\u7B2C${ch.no}\u7AE0 ${esc5(st.title || "")}</span><span class="cs-cnt"></span>
       <button class="cs-pill cs-sub" data-a="map">\u30DE\u30C3\u30D7</button></div>
     <div class="cs-coach"></div><div class="cs-ja"></div><div class="cs-lane"></div><div class="cs-foot"></div>`;
       const coach = s.querySelector(".cs-coach");
@@ -25067,7 +25123,7 @@ body.nogram .gmT{display:none}
           strip.innerHTML = "";
           p.words.forEach((w, i) => {
             const cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "";
-            strip.appendChild(el3("span", "w" + cls, esc6(w)));
+            strip.appendChild(el3("span", "w" + cls, esc5(w)));
             if (i + 1 < len && !cuts.has(i + 1) && hintAt === i + 1) strip.appendChild(el3("span", "hintmk", "\u25C6"));
             if (i + 1 < len && cuts.has(i + 1)) {
               const c = el3("span", "cutmark", "\uFF5C");
@@ -25107,11 +25163,11 @@ body.nogram .gmT{display:none}
           const rw = el3("div", "res-ws");
           res.forEach((c) => {
             const d = el3("span", "rc " + c.r);
-            d.innerHTML = `<span class="cs-m">${{ o: "\u25EF", t: "\u25B3", x: "\xD7" }[c.r]}</span>${esc6(c.text)}`;
+            d.innerHTML = `<span class="cs-m">${{ o: "\u25EF", t: "\u25B3", x: "\xD7" }[c.r]}</span>${esc5(c.text)}`;
             rw.appendChild(d);
           });
           f.lane.appendChild(rw);
-          if (res.some((c) => c.r !== "o")) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048\u306E\u4F8B<br><b>${esc6(answerText(p))}</b>`));
+          if (res.some((c) => c.r !== "o")) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048\u306E\u4F8B<br><b>${esc5(answerText(p))}</b>`));
           const good = res.every((c) => c.r === "o");
           f.say(good ? "\u305C\u3093\u3076\u25EF\uFF01\u3044\u3044\u5207\u308A\u65B9\uFF01" : "\u25B3\u306F\u5927\u304D\u3059\u304E\u3001\xD7\u306F\u5207\u308B\u5834\u6240\u304C\u305A\u308C\u3066\u308B\u3088\u3002");
           f.foot.innerHTML = "";
@@ -25174,7 +25230,7 @@ body.nogram .gmT{display:none}
           ansRow.innerHTML = "";
           pool.innerHTML = "";
           picked.forEach((pi, k) => {
-            const b = el3("button", "oc in", esc6(item.parts[pi]));
+            const b = el3("button", "oc in", esc5(item.parts[pi]));
             b.onclick = () => {
               picked.splice(k, 1);
               draw();
@@ -25182,7 +25238,7 @@ body.nogram .gmT{display:none}
             ansRow.appendChild(b);
           });
           order.filter((i) => !picked.includes(i)).forEach((pi) => {
-            const b = el3("button", "oc", esc6(item.parts[pi]));
+            const b = el3("button", "oc", esc5(item.parts[pi]));
             b.onclick = () => {
               picked.push(pi);
               draw();
@@ -25198,10 +25254,10 @@ body.nogram .gmT{display:none}
           f.lane.classList.add("cs-col");
           const rw = el3("div", "res-ws");
           const d = el3("span", "rc " + (ok ? "o" : "x"));
-          d.innerHTML = `<span class="cs-m">${ok ? "\u25EF" : "\xD7"}</span>${esc6(picked.map((i) => item.parts[i]).join(" "))}`;
+          d.innerHTML = `<span class="cs-m">${ok ? "\u25EF" : "\xD7"}</span>${esc5(picked.map((i) => item.parts[i]).join(" "))}`;
           rw.appendChild(d);
           f.lane.appendChild(rw);
-          if (!ok) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048<br><b>${esc6(item.parts.join(" "))}</b>`));
+          if (!ok) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048<br><b>${esc5(item.parts.join(" "))}</b>`));
           f.say(ok ? "\u305D\u306E\u9806\u756A\uFF01\u571F\u53F0\u30D0\u30C3\u30C1\u30EA\u3002" : "\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u76F8\u624B \u306E\u9806\u3060\u3088\u3002");
           const go = el3("button", "bb go", n + 1 < st.items.length ? "\u3064\u304E\u3078" : "\u3051\u3063\u304B\u3092\u898B\u308B");
           go.onclick = () => {
@@ -25240,8 +25296,8 @@ body.nogram .gmT{display:none}
       b.appendChild(charaNode("boy", bf));
       duo.append(g, b);
       s.appendChild(duo);
-      s.appendChild(el3("div", "say", esc6(line)));
-      if (unlockedMode) s.appendChild(el3("div", "unl", `\u300C${esc6(unlockedMode.name)}\u300D\u304C\u3042\u305D\u3079\u308B\u3088\u3046\u306B\u306A\u3063\u305F\uFF01`));
+      s.appendChild(el3("div", "say", esc5(line)));
+      if (unlockedMode) s.appendChild(el3("div", "unl", `\u300C${esc5(unlockedMode.name)}\u300D\u304C\u3042\u305D\u3079\u308B\u3088\u3046\u306B\u306A\u3063\u305F\uFF01`));
       const col = el3("div", "col");
       const nextCh = S2.chapters.find((c) => c.no === ch.no + 1);
       if (nextCh) {
@@ -25449,6 +25505,12 @@ body.nogram .gmT{display:none}
   var view_default2 = '<div id="app">\n <div class="view" data-view="play">\n  <div class="top"><h1>\u82F1\u8A9E\u8133\u30B2\u30FC\u30E0<small>\u8A66\u4F5C7</small></h1><div class="seg lvseg" id="lvl"><span class="lvlab">Lv</span><button data-l="1">1</button><button data-l="2">2</button><button data-l="3">3</button><button data-l="4">4</button><button data-l="5">5</button><button data-l="6">\u221E</button></div><button class="ib rs" id="bUndo" aria-label="\u6700\u521D\u304B\u3089">\u27F2<small>\u6700\u521D\u304B\u3089</small></button></div>\n  <div class="bar"><div id="chunks"></div><div class="barside"><button class="ib" id="sayall" aria-label="\u6587\u3092\u8AAD\u3080">\u{1F50A}</button><button class="ib" id="finish" disabled>\u5B8C\u6210</button></div></div>\n  <div id="barnote"></div>\n  <div id="ttsnote" hidden>\u{1F507} \u3053\u306E\u753B\u9762\u3067\u306F\u97F3\u304C\u51FA\u306A\u3044\u3088\u3046\u3067\u3059\u3002\u53F3\u4E0A\u306E\u5171\u6709\u30E1\u30CB\u30E5\u30FC\u306A\u3069\u304B\u3089<b>\u30D6\u30E9\u30A6\u30B6\uFF08Chrome\u306A\u3069\uFF09\u3067\u958B\u304F</b>\u3068\u82F1\u8A9E\u304C\u8AAD\u307F\u4E0A\u3052\u3089\u308C\u307E\u3059\u3002<button onclick="this.parentNode.hidden=true">\xD7</button></div>\n  <div id="canvas"><div id="sidebg"><div class="l"></div><div class="r"></div></div><div id="csent"></div><div id="scene"><div id="bg"></div><div id="sky"></div></div><div id="tline"><div class="track"><div class="tvis"></div><i class="nowl"></i><span class="nowt">\u4ECA</span><span class="tend l">\u524D</span><span class="tend r">\u5148</span><div class="knob"></div></div><div class="tstops"></div><div class="tlock"></div><button class="tmore">\uFF0B \u307B\u304B\u306E\u6642\u5236</button></div><div id="idle"></div></div>\n </div>\n <div class="view page" data-view="prac" id="prac" hidden></div>\n <div class="view page" data-view="reg" id="reg" hidden></div>\n <div class="view page" data-view="sets" id="sets" hidden></div>\n <div class="view page" data-view="settings" id="settings" hidden></div>\n <nav class="nav"><button data-v="make" data-i18n="nav.make"><span>\u{1F3A8}</span>\u3064\u304F\u308B</button><button data-v="prac" data-i18n="nav.prac"><span>\u{1F3AF}</span>\u308C\u3093\u3057\u3085\u3046</button><button data-v="reg" data-i18n="nav.reg"><span>\u2795</span>\u3053\u3068\u3070\u767B\u9332</button><button data-v="sets" data-i18n="nav.sets"><span>\u{1F4DA}</span>\u30BB\u30C3\u30C8</button><button data-v="settings" data-i18n="nav.settings"><span>\u2699\uFE0F</span>\u8A2D\u5B9A</button></nav>\n</div>\n<div id="toast"></div>\n';
 
   // games/eigonou/game.js
+  var HOW2 = [
+    { w: "g", f: "joy", t: "\u82F1\u8A9E\u8133\u30A2\u30D7\u30EA\u306F\u3001\u7D75\u3092\u898B\u306A\u304C\u3089\u82F1\u6587\u3092\u7D44\u307F\u7ACB\u3066\u308B\u3001\u82F1\u8A9E\u306E\u30B7\u30DF\u30E5\u30EC\u30FC\u30BF\u3060\u3088\u3002" },
+    { w: "b", t: "\u4E0B\u306E\u30E1\u30CB\u30E5\u30FC\u306E\u300C\u3064\u304F\u308B\u300D\u3067\u3001\u6587\u3092\u4F5C\u3063\u3066\u307F\u3088\u3046\u3002" },
+    { w: "g", t: "\u300C\u308C\u3093\u3057\u3085\u3046\u300D\u3067\u7DF4\u7FD2\u3057\u3066\u3001\u300C\u3053\u3068\u3070\u767B\u9332\u300D\u300C\u30BB\u30C3\u30C8\u300D\u3067\u3001\u4F7F\u3046\u3053\u3068\u3070\u3092\u5897\u3084\u305B\u308B\u3088\u3002" },
+    { w: "b", f: "idea", t: "\u97F3\u3084\u8AAD\u307F\u4E0A\u3052\u306F\u3001\u300C\u8A2D\u5B9A\u300D\u3067\u5909\u3048\u3089\u308C\u308B\u3088\u3002" }
+  ];
   var FONT5 = "https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap";
   var SAVED = null;
   var SAVED_CLS = "";
@@ -25488,6 +25550,15 @@ body.nogram .gmT{display:none}
         const top2 = el3.querySelector(".top");
         top2 && top2.prepend(b);
       }
+      {
+        const h = document.createElement("button");
+        h.className = "ib eg-how";
+        h.textContent = "\u2753 \u904A\u3073\u65B9";
+        h.style.cssText = "font-size:12px;padding:4px 8px;white-space:nowrap";
+        h.onclick = () => runCoach(HOW2);
+        const top2 = el3.querySelector(".top");
+        top2 && top2.appendChild(h);
+      }
       return {
         unmount() {
           try {
@@ -25500,7 +25571,7 @@ body.nogram .gmT{display:none}
           }
           SAVED = document.createDocumentFragment();
           SAVED_CLS = el3.className;
-          el3.querySelectorAll(".eg-home").forEach((b) => b.remove());
+          el3.querySelectorAll(".eg-home,.eg-how").forEach((b) => b.remove());
           while (el3.firstChild) SAVED.appendChild(el3.firstChild);
         }
       };
@@ -25515,69 +25586,18 @@ body.nogram .gmT{display:none}
   var face2 = (w, f) => `${CH}${w === "g" ? "girl" : "boy"}/${f || "normal"}.webp`;
   var NAME2 = { g: "\u5973\u306E\u5B50", b: "\u7537\u306E\u5B50" };
   var COURSES = [
-    { id: "intro", n: "\u8857\u306E\u3042\u308B\u304D\u304B\u305F", steps: [
+    { id: "intro", n: "\u8857\u306E\u3057\u3087\u3046\u304B\u3044", steps: [
       { w: "g", f: "joy", t: "\u3088\u3046\u3053\u305D\u3001\u30C1\u30E3\u30F3\u30AF\u30BF\u30A6\u30F3\u3078\uFF01" },
-      { w: "b", t: "\u3053\u3053\u306F\u3001\u82F1\u8A9E\u3092\u697D\u3057\u304F\u935B\u3048\u308B\u8857\u3060\u3088\u3002" },
-      { w: "g", t: "\u5EFA\u7269\u3092\u30BF\u30C3\u30D7\u3059\u308B\u3068\u3001\u4E2D\u306B\u5165\u308C\u308B\u3088\u3002" },
-      { w: "b", t: "\u4E2D\u304B\u3089\u8857\u306B\u3082\u3069\u308B\u3068\u304D\u306F\u3001\u5DE6\u4E0B\u306E\u300C\u{1F3E0} \u8857\u3078\u300D\u3092\u62BC\u3057\u3066\u306D\u3002" },
-      { w: "g", t: "\u53F3\u4E0A\u306E\u2699\u3067\u306F\u3001\u97F3\u30FB\u8AAD\u307F\u4E0A\u3052\u30FB\u898B\u305F\u76EE\u3092\u5909\u3048\u3089\u308C\u308B\u3088\u3002" },
-      { w: "b", t: "\u5DE6\u4E0A\u306E\u304D\u307F\u306E\u9854\u306F\u3001\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u3002\u306A\u307E\u3048\u3084\u30A2\u30D0\u30BF\u30FC\u3092\u5909\u3048\u3089\u308C\u308B\u3088\u3002" },
-      { w: "g", f: "idea", t: "\u305D\u308C\u3058\u3083\u3001\u5EFA\u7269\u3092\u3072\u3068\u3064\u305A\u3064\u56DE\u3063\u3066\u307F\u3088\u3046\uFF01" }
-    ] },
-    { id: "school", n: "\u5B66\u6821", steps: [
-      { w: "b", t: "\u3053\u3053\u306F\u5B66\u6821\u3002\u30C1\u30E3\u30F3\u30AF\u3092\u7DF4\u7FD2\u3059\u308B\u3068\u3053\u308D\u3060\u3088\u3002", at: "school" },
-      { w: "g", t: "\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u610F\u5473\u306E\u307E\u3068\u307E\u308A\u306E\u3053\u3068\u3002\u82F1\u8A9E\u306F\u3001\u307E\u3068\u307E\u308A\u3054\u3068\u306B\u8AAD\u3080\u3068\u5206\u304B\u308A\u3084\u3059\u3044\u3093\u3060\u3002", at: "school" },
-      { w: "b", t: "\u30EC\u30C3\u30B9\u30F3\u3067\u306F\u3001\u304A\u8A71\u3092\u8AAD\u307F\u306A\u304C\u3089\u3001\u307E\u3068\u307E\u308A\u306E\u5207\u308A\u65B9\u3092\u899A\u3048\u3066\u3044\u304F\u3088\u3002", at: "school" },
-      { w: "g", t: "\u6700\u521D\u306E\u7AE0\u304B\u3089\u3001\u9806\u756A\u306B\u30B2\u30FC\u30E0\u611F\u899A\u3067\u9032\u3081\u3089\u308C\u308B\u3088\u3002", at: "school" },
-      { w: "b", f: "idea", t: "\u3055\u3063\u305D\u304F\u5165\u3063\u3066\u307F\u3088\u3046\u3002\u5149\u3063\u3066\u3044\u308B\u5B66\u6821\u3092\u30BF\u30C3\u30D7\uFF01", tap: "school" },
-      { w: "g", f: "joy", t: "\u304A\u304B\u3048\u308A\uFF01 \u30EC\u30C3\u30B9\u30F3\u306F\u3001\u3042\u3068\u304B\u3089\u7D9A\u304D\u304C\u3067\u304D\u308B\u3088\u3002" }
-    ] },
-    { id: "library", n: "\u56F3\u66F8\u9928", steps: [
-      { w: "g", t: "\u3053\u3053\u306F\u56F3\u66F8\u9928\u3002\u82F1\u8A9E\u306E\u6587\u7AE0\u3092\u8AAD\u3080\u3068\u3053\u308D\u3060\u3088\u3002", at: "library" },
-      { w: "b", t: "\u6587\u7AE0\u3092\u3001\u30C1\u30E3\u30F3\u30AF\u3054\u3068\u306B\u533A\u5207\u308A\u306A\u304C\u3089\u8AAD\u3081\u308B\u3093\u3060\u3002", at: "library" },
-      { w: "g", t: "\u5206\u304B\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u8F9E\u66F8\u3067\u610F\u5473\u3092\u898B\u3089\u308C\u308B\u3088\u3002", at: "library" },
-      { w: "b", t: "\u300C\u82F1\u8A9E\u8133\u30A2\u30D7\u30EA\u300D\u3082\u3053\u3053\u306B\u3042\u308B\u3088\u3002\u7D75\u3092\u898B\u306A\u304C\u3089\u82F1\u6587\u3092\u7D44\u307F\u7ACB\u3066\u308B\u3001\u82F1\u8A9E\u306E\u30B7\u30DF\u30E5\u30EC\u30FC\u30BF\u3060\u3088\u3002", at: "library" },
-      { w: "g", f: "idea", t: "\u5165\u3063\u3066\u307F\u3088\u3046\u3002\u5149\u3063\u3066\u3044\u308B\u56F3\u66F8\u9928\u3092\u30BF\u30C3\u30D7\uFF01", tap: "library" },
-      { w: "b", f: "joy", t: "\u304A\u304B\u3048\u308A\uFF01 \u8AAD\u307F\u305F\u3044\u6587\u7AE0\u306F\u3001\u3044\u3064\u3067\u3082\u8AAD\u307F\u76F4\u305B\u308B\u3088\u3002" }
-    ] },
-    { id: "game", n: "\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC", steps: [
-      { w: "b", t: "\u3053\u3053\u306F\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\u3002\u904A\u3073\u306A\u304C\u3089\u82F1\u8A9E\u304C\u935B\u3048\u3089\u308C\u308B\u3088\u3002", at: "game" },
-      { w: "g", t: "\u300C\u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF\u300D\u306F\u3001\u82F1\u6587\u304C\u6A2A\u306B\u6D41\u308C\u3066\u304F\u308B\u3088\u3002", at: "game" },
-      { w: "g", t: "\u25B6\u30671\u8A9E\u305A\u3064\u9032\u3081\u3066\u3001\u610F\u5473\u306E\u5207\u308C\u76EE\u3067\u300C\u533A\u5207\u308B\u300D\u3092\u62BC\u3057\u3066\u306D\u3002", at: "game" },
-      { w: "b", t: "\u307E\u3061\u304C\u3048\u305F\u3089\u3001\u25C0\u3067\u623B\u308C\u308B\u3088\u3002", at: "game" },
-      { w: "b", t: "\u5207\u308C\u76EE\u304C\u5408\u3046\u3068\u70B9\u304C\u5165\u3063\u3066\u3001\u7D9A\u3051\u308B\u3068\u30B3\u30F3\u30DC\u306B\u306A\u308B\u3093\u3060\u3002", at: "game" },
-      { w: "b", t: "\u300C\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u300D\u306F\u3001\u6D41\u308C\u3066\u304F\u308B\u5358\u8A9E\u3084\u30C1\u30E3\u30F3\u30AF\u30924\u629E\u3067\u7B54\u3048\u3066\u3001\u9577\u6587\u3092\u5B8C\u6210\u3055\u305B\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002", at: "game" },
-      { w: "g", t: "\u300C\u3077\u306B\u30C1\u30E3\u30F3\u30AF\u300D\u306F\u3001\u30D0\u30D6\u30EB\u3092\u82F1\u8A9E\u306E\u9806\u306B\u3064\u306A\u3044\u3067\u6587\u3092\u4F5C\u308B\u30D1\u30BA\u30EB\u3002", at: "game" },
-      { w: "b", t: "\u300C\u30C1\u30E3\u30F3\u30AF\u30FB\u30AB\u30FC\u30C9\u300D\u306F\u3001\u82F1\u6587\u3067\u5F79\u3092\u4F5C\u308B\u30AB\u30FC\u30C9\u30B2\u30FC\u30E0\u3002CPU\u3068\u306E\u5BFE\u6226\u3082\u3042\u308B\u3088\u3002", at: "game" },
-      { w: "g", f: "idea", t: "\u597D\u304D\u306A\u30B2\u30FC\u30E0\u30921\u3064\u89E6\u3063\u3066\u307F\u3088\u3046\u3002\u5149\u3063\u3066\u3044\u308B\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\u3092\u30BF\u30C3\u30D7\uFF01", tap: "game" },
-      { w: "b", f: "joy", t: "\u304A\u304B\u3048\u308A\uFF01 \u307B\u304B\u306E\u30B2\u30FC\u30E0\u3082\u3001\u307E\u305F\u904A\u3093\u3067\u307F\u3066\u306D\u3002" }
-    ] },
-    { id: "house", n: "\u81EA\u5B85", steps: [
-      { w: "g", t: "\u3053\u3053\u306F\u81EA\u5B85\u3002\u304D\u307F\u306E\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u304C\u898B\u3089\u308C\u308B\u3088\u3002", at: "house" },
-      { w: "b", t: "\u306A\u307E\u3048\u3084\u30A2\u30D0\u30BF\u30FC\u3092\u5909\u3048\u3089\u308C\u308B\u3088\u3002", at: "house" },
-      { w: "g", f: "idea", t: "\u306E\u305E\u3044\u3066\u307F\u3088\u3046\u3002\u81EA\u5B85\u3092\u30BF\u30C3\u30D7\uFF01", tap: "house" }
-    ] },
-    { id: "shop", n: "\u30B7\u30E7\u30C3\u30D7", steps: [
-      { w: "b", t: "\u3053\u3053\u306F\u30B7\u30E7\u30C3\u30D7\u3002\u6709\u6599\u306E\u30B3\u30F3\u30C6\u30F3\u30C4\u3092\u58F2\u308B\u4E88\u5B9A\u306E\u5834\u6240\u3060\u3088\u3002", at: "shop" },
-      { w: "g", t: "\u4ECA\u306F\u3001\u307E\u3060\u6E96\u5099\u4E2D\u3002\u697D\u3057\u307F\u306B\u3057\u3066\u3066\u306D\u3002", at: "shop" }
-    ] },
-    { id: "outro", n: "\u304A\u308F\u308A\u306B", steps: [
-      { w: "g", f: "joy", t: "\u3053\u308C\u3067\u3001\u6848\u5185\u306F\u304A\u3057\u307E\u3044\uFF01" },
-      { w: "b", t: "\u5206\u304B\u3089\u306A\u304F\u306A\u3063\u305F\u3089\u3001\u53F3\u4E0A\u306E\u300C\uFF1F\u300D\u304B\u3089\u3001\u3044\u3064\u3067\u3082\u898B\u76F4\u305B\u308B\u3088\u3002" },
-      { w: "g", f: "joy", t: "\u3055\u3042\u3001\u8857\u3067\u904A\u3093\u3067\u307F\u3088\u3046\uFF01" }
+      { w: "b", t: "\u5EFA\u7269\u3092\u30BF\u30C3\u30D7\u3059\u308B\u3068\u3001\u4E2D\u306B\u5165\u308C\u308B\u3088\u3002" },
+      { w: "g", t: "\u5B66\u6821\u3067\u306F\u3001\u30C1\u30E3\u30F3\u30AF\u306E\u7DF4\u7FD2\u304C\u3067\u304D\u308B\u3088\u3002", at: "school" },
+      { w: "b", t: "\u56F3\u66F8\u9928\u3067\u306F\u3001\u82F1\u8A9E\u306E\u6587\u7AE0\u3092\u8AAD\u3081\u308B\u3088\u3002", at: "library" },
+      { w: "g", t: "\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\u3067\u306F\u3001\u904A\u3073\u306A\u304C\u3089\u82F1\u8A9E\u3092\u935B\u3048\u3089\u308C\u308B\u3088\u3002", at: "game" },
+      { w: "b", t: "\u81EA\u5B85\u3067\u306F\u3001\u306A\u307E\u3048\u3084\u30A2\u30D0\u30BF\u30FC\u3092\u5909\u3048\u3089\u308C\u308B\u3088\u3002", at: "house" },
+      { w: "g", f: "idea", t: "\u904A\u3073\u65B9\u306F\u3001\u5404\u30B2\u30FC\u30E0\u306E\u300C\u904A\u3073\u65B9\u300D\u304B\u3089\u898B\u3089\u308C\u308B\u3088\u3002" },
+      { w: "b", t: "\u4E2D\u304B\u3089\u8857\u306B\u3082\u3069\u308B\u3068\u304D\u306F\u3001\u5DE6\u4E0B\u306E\u300C\u{1F3E0} \u8857\u3078\u300D\u3092\u62BC\u3057\u3066\u306D\u3002" }
     ] }
   ];
   var ALL = COURSES.map((c) => c.id);
-  var INTRO = {
-    "chunkchunk:lesson": [{ w: "b", t: "\u3053\u3053\u306F\u30EC\u30C3\u30B9\u30F3\u3002\u304A\u8A71\u3092\u8AAD\u307F\u306A\u304C\u3089\u3001\u30C1\u30E3\u30F3\u30AF\u306E\u5207\u308A\u65B9\u3092\u899A\u3048\u3066\u3044\u304F\u3088\u3002" }, { w: "g", f: "idea", t: "\u7AE0\u3092\u9078\u3093\u3060\u3089\u3001\u753B\u9762\u306E\u6848\u5185\u306E\u3068\u304A\u308A\u306B\u9032\u3081\u3066\u306D\u3002" }],
-    "chunkchunk:library": [{ w: "g", t: "\u3053\u3053\u3067\u306F\u3001\u82F1\u8A9E\u306E\u6587\u7AE0\u3092\u3001\u30C1\u30E3\u30F3\u30AF\u3054\u3068\u306B\u533A\u5207\u308A\u306A\u304C\u3089\u8AAD\u3081\u308B\u3088\u3002" }, { w: "b", f: "idea", t: "\u8AAD\u307F\u305F\u3044\u6587\u7AE0\u3092\u9078\u3093\u3067\u307F\u3088\u3046\u3002\u5206\u304B\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u8F9E\u66F8\u3067\u898B\u3089\u308C\u308B\u3088\u3002" }],
-    "chunkchunk:arcade": [{ w: "b", t: "\u82F1\u6587\u304C\u6A2A\u306B\u6D41\u308C\u3066\u304F\u308B\u3088\u3002\u25B6\u30671\u8A9E\u305A\u3064\u9032\u3081\u3066\u3001\u610F\u5473\u306E\u5207\u308C\u76EE\u3067\u300C\u533A\u5207\u308B\u300D\u3092\u62BC\u3057\u3066\u306D\u3002" }, { w: "g", f: "idea", t: "\u307E\u3061\u304C\u3048\u305F\u3089\u25C0\u3067\u623B\u308C\u308B\u3088\u3002\u533A\u5207\u308A\u304C\u5408\u3046\u3068\u3001\u70B9\u304C\u5165\u308B\u3093\u3060\u3002" }],
-    eigonou: [{ w: "g", t: "\u3053\u3053\u306F\u300C\u82F1\u8A9E\u8133\u30A2\u30D7\u30EA\u300D\u3002\u7D75\u3092\u898B\u306A\u304C\u3089\u3001\u82F1\u6587\u3092\u7D44\u307F\u7ACB\u3066\u308B\u82F1\u8A9E\u306E\u30B7\u30DF\u30E5\u30EC\u30FC\u30BF\u3060\u3088\u3002" }, { w: "b", f: "idea", t: "\u307E\u305A\u306F\u3001\u753B\u9762\u306E\u6848\u5185\u306E\u3068\u304A\u308A\u306B\u89E6\u3063\u3066\u307F\u3066\u306D\u3002" }],
-    stream: [{ w: "b", t: "\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u306F\u3001\u805E\u3044\u305F\u97F3\u3067\u5224\u65AD\u3059\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002\u6A2A\u753B\u9762\u3067\u904A\u3093\u3067\u306D\u3002" }, { w: "g", f: "idea", t: "4\u3064\u306E\u30B9\u30C6\u30FC\u30B8\u3092\u30AF\u30EA\u30A2\u3057\u3066\u3044\u3053\u3046\u3002\u306F\u3058\u3081\u3066\u904A\u3076\u30B9\u30C6\u30FC\u30B8\u306E\u524D\u306B\u3001\u8AAC\u660E\u304C\u51FA\u308B\u3088\u3002" }],
-    punichunk: [{ w: "g", t: "\u3077\u306B\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u30D0\u30D6\u30EB\u3092\u82F1\u8A9E\u306E\u9806\u306B\u3064\u306A\u3044\u3067\u3001\u6587\u3092\u4F5C\u308B\u30D1\u30BA\u30EB\u3060\u3088\u3002" }, { w: "b", f: "idea", t: "\u306F\u3058\u3081\u3066\u306A\u3089\u3001\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u304B\u3089\u904A\u3093\u3067\u307F\u3066\u306D\u3002" }],
-    cards: [{ w: "b", t: "\u30C1\u30E3\u30F3\u30AF\u30FB\u30AB\u30FC\u30C9\u306F\u3001\u82F1\u8A9E\u306E\u8A9E\u9806\u3092\u6B63\u3057\u304F\u4E26\u3079\u308B\u30AB\u30FC\u30C9\u30B2\u30FC\u30E0\u3060\u3088\u3002" }, { w: "g", f: "idea", t: "\u306F\u3058\u3081\u3066\u306A\u3089\u3001\u300C\u3072\u3068\u308A\u3067\u7DF4\u7FD2\u300D\u3067\u3001\u6848\u5185\u3064\u304D\u3067\u904A\u3079\u308B\u3088\u3002" }]
-  };
-  var esc4 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   function createTour(core2) {
     const store2 = createStore("town");
     const load2 = () => Object.assign({ done: false, courses: {} }, store2.get("tour") || {});
@@ -25673,14 +25693,7 @@ body.nogram .gmT{display:none}
       render();
     }
     function menu() {
-      const v = load2();
-      core2.ui.sheet(
-        `<h3>\u8857\u306E\u30C4\u30A2\u30FC</h3><ul class="tw-list"><li><button data-c="all">\u306F\u3058\u3081\u304B\u3089\u901A\u3057\u3066\u898B\u308B<small>${v.done ? "\u2705" : "\u203A"}</small></button></li>` + COURSES.filter((c) => c.id !== "outro").map((c) => `<li><button data-c="${c.id}">${esc4(c.n)}<small>${v.courses[c.id] ? "\u2705 \u898B\u305F" : "\u898B\u308B \u203A"}</small></button></li>`).join("") + "</ul>",
-        (ov, close) => ov.querySelectorAll("button[data-c]").forEach((b) => b.onclick = () => {
-          close();
-          start2(b.dataset.c === "all" ? ALL : [b.dataset.c]);
-        })
-      );
+      start2(ALL);
     }
     return {
       /* 初めて街に来たときだけ、自動で始める */
@@ -25698,11 +25711,7 @@ body.nogram .gmT{display:none}
           box && box.classList.add("touched");
         }
       },
-      /* 施設から入ったとき：ツアー中なら、「ここでやること」を出す */
-      entering(game, opts) {
-        if (!on || !cur4().tap) return;
-        const st = INTRO[game + ":" + (opts && opts.face || "")] || INTRO[game];
-        if (st) setTimeout(() => runCoach(st), 500);
+      entering() {
       },
       /* ゲームから街にもどったとき：触ったあとなら、つぎへ進む */
       afterClose() {
@@ -25760,7 +25769,7 @@ body.nogram .gmT{display:none}
     ] }
   };
   var BLD = [["school", "bSchool", "\u5B66\u6821"], ["library", "bLibrary", "\u56F3\u66F8\u9928"], ["house", "bHouse", "\u81EA\u5B85"], ["shop", "bShop", "\u30B7\u30E7\u30C3\u30D7"], ["game", "bGame", "\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC"]];
-  var esc5 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  var esc4 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   document.body.insertAdjacentHTML("afterbegin", `<div class="tw-view"><div class="tw-map" id="twMap">${BLD.map(([k, id, alt]) => `<button class="tw-bld" id="${id}" data-k="${k}"><img src="img/${PLACES[k].img}.webp" alt="${alt}"></button>`).join("")}<button class="tw-tree" id="twTree" aria-label="\u6728"></button></div></div>
 <div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><button class="tw-gear tw-help" id="twHelp" aria-label="\u8857\u306E\u30C4\u30A2\u30FC">\uFF1F</button><button class="tw-gear" id="twGear" aria-label="\u8A2D\u5B9A">\u2699</button></div></div>`);
   var $5 = (id) => document.getElementById(id);
@@ -25796,7 +25805,7 @@ body.nogram .gmT{display:none}
       return;
     }
     core.ui.sheet(
-      `<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc5(p.n)}</h3><p>${esc5(p.sub)}</p></div></header>` + (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc5(it.t)}<small>\u5165\u308B \u203A</small></button></li>`).join("")}</ul>` : '<p class="cs-note">\u58F2\u3063\u3066\u3044\u308B\u3082\u306E\u306F\u3001\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002</p>'),
+      `<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc4(p.n)}</h3><p>${esc4(p.sub)}</p></div></header>` + (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc4(it.t)}<small>\u5165\u308B \u203A</small></button></li>`).join("")}</ul>` : '<p class="cs-note">\u58F2\u3063\u3066\u3044\u308B\u3082\u306E\u306F\u3001\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002</p>'),
       (ov, close) => ov.querySelectorAll("button[data-i]").forEach((b) => b.onclick = () => {
         const it = p.items[+b.dataset.i];
         close();
@@ -25843,9 +25852,9 @@ body.nogram .gmT{display:none}
     tstore.set("tree", v);
     const n = Object.keys(v.got).length;
     setTimeout(() => core.ui.sheet(
-      `<h3>\u{1F34E} \u4ECA\u65E5\u306E\u30D5\u30EC\u30FC\u30BA</h3><div class="tw-phrase">${first2 ? '<div class="secret">\u3072\u307F\u3064\u3092\u898B\u3064\u3051\u305F\uFF01 \u308A\u3093\u3054\u304C\u843D\u3061\u3066\u304D\u305F\u3088</div>' : ""}<div class="en">${esc5(en)}</div><div class="ja">${esc5(ja)}</div>
+      `<h3>\u{1F34E} \u4ECA\u65E5\u306E\u30D5\u30EC\u30FC\u30BA</h3><div class="tw-phrase">${first2 ? '<div class="secret">\u3072\u307F\u3064\u3092\u898B\u3064\u3051\u305F\uFF01 \u308A\u3093\u3054\u304C\u843D\u3061\u3066\u304D\u305F\u3088</div>' : ""}<div class="en">${esc4(en)}</div><div class="ja">${esc4(ja)}</div>
     <button class="cs-btn" id="twSay">\u{1F50A} \u805E\u304F</button><div class="cnt">\u3042\u3064\u3081\u305F\u30D5\u30EC\u30FC\u30BA ${n} / ${PHRASES.length}\u3000\uFF08\u6BCE\u65E5\u3061\u304C\u3046\u30D5\u30EC\u30FC\u30BA\u304C\u51FA\u308B\u3088\uFF09</div>
-    <button class="cs-btn" id="twGotBtn">\u3042\u3064\u3081\u305F\u30D5\u30EC\u30FC\u30BA\u3092\u898B\u308B</button><ul class="tw-got" id="twGot" hidden>${Object.keys(v.got).map(Number).sort((a, b) => a - b).map((i) => `<li><b>${esc5(PHRASES[i][0])}</b>\u3000${esc5(PHRASES[i][1])}</li>`).join("")}</ul></div>`,
+    <button class="cs-btn" id="twGotBtn">\u3042\u3064\u3081\u305F\u30D5\u30EC\u30FC\u30BA\u3092\u898B\u308B</button><ul class="tw-got" id="twGot" hidden>${Object.keys(v.got).map(Number).sort((a, b) => a - b).map((i) => `<li><b>${esc4(PHRASES[i][0])}</b>\u3000${esc4(PHRASES[i][1])}</li>`).join("")}</ul></div>`,
       (ov) => {
         ov.querySelector("#twSay").onclick = () => {
           try {

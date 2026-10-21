@@ -3752,6 +3752,23 @@ body.cs-in-game .tw-top {
     box-shadow: 0 0 0 100vmax rgba(10, 20, 40, .58), 0 0 14px #ffc400;
   }
 }
+.cc-coach .cc-hole.free {
+  box-shadow: 0 0 10px #ffc400;
+  animation: ccPulse2 .9s ease-in-out infinite alternate;
+}
+@keyframes ccPulse2 {
+  from {
+    border-color: #ffe066;
+    box-shadow: 0 0 4px #ffc400;
+  }
+  to {
+    border-color: #fff3a0;
+    box-shadow: 0 0 16px #ffc400;
+  }
+}
+.cc-coach.free .cc-dim {
+  display: none;
+}
 .cc-coach .cc-box {
   pointer-events: auto;
   position: absolute;
@@ -3872,6 +3889,7 @@ body.cs-in-game .tw-top {
 }
 @media (prefers-reduced-motion: reduce) {
   .cc-coach .cc-hole,
+  .cc-coach .cc-hole.free,
   .cc-coach .cc-box.pop {
     animation: none;
   }

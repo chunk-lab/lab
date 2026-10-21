@@ -1315,7 +1315,140 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
   // games/eigonou/src/view.html
   var view_default = '<div id="app">\n <div class="view" data-view="play">\n  <div class="top"><h1>\u82F1\u8A9E\u8133\u30B2\u30FC\u30E0<small>\u8A66\u4F5C7</small></h1><div class="seg lvseg" id="lvl"><span class="lvlab">Lv</span><button data-l="1">1</button><button data-l="2">2</button><button data-l="3">3</button><button data-l="4">4</button><button data-l="5">5</button><button data-l="6">\u221E</button></div><button class="ib rs" id="bUndo" aria-label="\u6700\u521D\u304B\u3089">\u27F2<small>\u6700\u521D\u304B\u3089</small></button></div>\n  <div class="bar"><div id="chunks"></div><div class="barside"><button class="ib" id="sayall" aria-label="\u6587\u3092\u8AAD\u3080">\u{1F50A}</button><button class="ib" id="finish" disabled>\u5B8C\u6210</button></div></div>\n  <div id="barnote"></div>\n  <div id="ttsnote" hidden>\u{1F507} \u3053\u306E\u753B\u9762\u3067\u306F\u97F3\u304C\u51FA\u306A\u3044\u3088\u3046\u3067\u3059\u3002\u53F3\u4E0A\u306E\u5171\u6709\u30E1\u30CB\u30E5\u30FC\u306A\u3069\u304B\u3089<b>\u30D6\u30E9\u30A6\u30B6\uFF08Chrome\u306A\u3069\uFF09\u3067\u958B\u304F</b>\u3068\u82F1\u8A9E\u304C\u8AAD\u307F\u4E0A\u3052\u3089\u308C\u307E\u3059\u3002<button onclick="this.parentNode.hidden=true">\xD7</button></div>\n  <div id="canvas"><div id="sidebg"><div class="l"></div><div class="r"></div></div><div id="csent"></div><div id="scene"><div id="bg"></div><div id="sky"></div></div><div id="tline"><div class="track"><div class="tvis"></div><i class="nowl"></i><span class="nowt">\u4ECA</span><span class="tend l">\u524D</span><span class="tend r">\u5148</span><div class="knob"></div></div><div class="tstops"></div><div class="tlock"></div><button class="tmore">\uFF0B \u307B\u304B\u306E\u6642\u5236</button></div><div id="idle"></div></div>\n </div>\n <div class="view page" data-view="prac" id="prac" hidden></div>\n <div class="view page" data-view="reg" id="reg" hidden></div>\n <div class="view page" data-view="sets" id="sets" hidden></div>\n <div class="view page" data-view="settings" id="settings" hidden></div>\n <nav class="nav"><button data-v="make" data-i18n="nav.make"><span>\u{1F3A8}</span>\u3064\u304F\u308B</button><button data-v="prac" data-i18n="nav.prac"><span>\u{1F3AF}</span>\u308C\u3093\u3057\u3085\u3046</button><button data-v="reg" data-i18n="nav.reg"><span>\u2795</span>\u3053\u3068\u3070\u767B\u9332</button><button data-v="sets" data-i18n="nav.sets"><span>\u{1F4DA}</span>\u30BB\u30C3\u30C8</button><button data-v="settings" data-i18n="nav.settings"><span>\u2699\uFE0F</span>\u8A2D\u5B9A</button></nav>\n</div>\n<div id="toast"></div>\n';
 
+  // core/coach.js
+  var NAME = { g: "\u5973\u306E\u5B50", b: "\u7537\u306E\u5B50" };
+  var defFace = (w, f) => `g/chunkchunk/img/chara/${w === "b" ? "boy" : "girl"}/${f || "normal"}.webp`;
+  function runCoach(steps, opt = {}) {
+    if (!steps || !steps.length) {
+      opt.onDone && opt.onDone(true);
+      return { stop() {
+      } };
+    }
+    const faceOf = opt.face || defFace;
+    let i = 0, done = false, timer = 0;
+    const ov = document.createElement("div");
+    ov.className = "cc-coach";
+    ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-hole two" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">\u3068\u3070\u3059</button><button class="cnx">\u3064\u304E\u3078 \u25B6</button><div class="cwt" hidden>\u3084\u3063\u3066\u307F\u3088\u3046</div></div>';
+    document.body.appendChild(ov);
+    const q = (s) => ov.querySelector(s), hole = q(".cc-hole"), hole2 = q(".cc-hole.two"), box = q(".cc-box"), img = q(".cf");
+    img.onerror = () => {
+      img.hidden = true;
+      box.classList.add("nofc");
+    };
+    const finish = (ok) => {
+      if (done) return;
+      done = true;
+      clearInterval(timer);
+      removeEventListener("resize", place);
+      ov.remove();
+      opt.onDone && opt.onDone(ok);
+    };
+    const target = () => {
+      const s = steps[i];
+      if (!s || !s.sel) return null;
+      try {
+        return document.querySelector(s.sel);
+      } catch (e) {
+        return null;
+      }
+    };
+    const ring = (h, el, free) => {
+      const r = el && el.getBoundingClientRect();
+      if (!r || r.width <= 0 || r.height <= 0) {
+        h.hidden = true;
+        return false;
+      }
+      const p = 6;
+      h.hidden = false;
+      h.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`;
+      h.classList.toggle("free", free);
+      return true;
+    };
+    function place() {
+      const s = steps[i], free = !!s.wait;
+      let el2 = null;
+      if (s.also) {
+        try {
+          el2 = document.querySelector(s.also);
+        } catch (e) {
+        }
+      }
+      const ok = ring(hole, target(), free);
+      ring(hole2, el2, true);
+      ov.classList.toggle("has", ok);
+      ov.classList.toggle("free", free);
+      const r = ok && target().getBoundingClientRect();
+      box.classList.toggle("top", free || !!(r && r.top + r.height / 2 > innerHeight * 0.55));
+    }
+    function show() {
+      const s = steps[i];
+      const u = faceOf(s.w, s.f);
+      if (u) {
+        img.hidden = false;
+        box.classList.remove("nofc");
+        img.src = u;
+      } else {
+        img.hidden = true;
+        box.classList.add("nofc");
+      }
+      const nm = q(".cn");
+      nm.textContent = NAME[s.w] || NAME.g;
+      nm.className = "cn " + (s.w || "g");
+      q(".ct").textContent = s.t;
+      ov.classList.toggle("pass", !!s.wait);
+      q(".cnx").hidden = !!s.wait;
+      q(".cwt").hidden = !s.wait;
+      q(".cnx").textContent = i === steps.length - 1 ? "\u304A\u308F\u308A \u2713" : "\u3064\u304E\u3078 \u25B6";
+      place();
+      box.classList.remove("pop");
+      void box.offsetWidth;
+      box.classList.add("pop");
+    }
+    function next() {
+      if (done) return;
+      i++;
+      if (i >= steps.length) return finish(true);
+      show();
+    }
+    q(".cnx").onclick = (e) => {
+      e.stopPropagation();
+      next();
+    };
+    q(".cskip").onclick = (e) => {
+      e.stopPropagation();
+      finish(false);
+    };
+    box.onclick = (e) => {
+      if (e.target.closest("button")) return;
+      if (!steps[i].wait) next();
+    };
+    addEventListener("resize", place);
+    timer = setInterval(() => {
+      place();
+      const s = steps[i];
+      if (s && s.wait && !s._ok) {
+        try {
+          if (s.wait()) {
+            s._ok = 1;
+            setTimeout(next, 600);
+          }
+        } catch (e) {
+        }
+      }
+    }, 250);
+    show();
+    return { stop() {
+      finish(false);
+    } };
+  }
+
   // games/eigonou/game.js
+  var HOW = [
+    { w: "g", f: "joy", t: "\u82F1\u8A9E\u8133\u30A2\u30D7\u30EA\u306F\u3001\u7D75\u3092\u898B\u306A\u304C\u3089\u82F1\u6587\u3092\u7D44\u307F\u7ACB\u3066\u308B\u3001\u82F1\u8A9E\u306E\u30B7\u30DF\u30E5\u30EC\u30FC\u30BF\u3060\u3088\u3002" },
+    { w: "b", t: "\u4E0B\u306E\u30E1\u30CB\u30E5\u30FC\u306E\u300C\u3064\u304F\u308B\u300D\u3067\u3001\u6587\u3092\u4F5C\u3063\u3066\u307F\u3088\u3046\u3002" },
+    { w: "g", t: "\u300C\u308C\u3093\u3057\u3085\u3046\u300D\u3067\u7DF4\u7FD2\u3057\u3066\u3001\u300C\u3053\u3068\u3070\u767B\u9332\u300D\u300C\u30BB\u30C3\u30C8\u300D\u3067\u3001\u4F7F\u3046\u3053\u3068\u3070\u3092\u5897\u3084\u305B\u308B\u3088\u3002" },
+    { w: "b", f: "idea", t: "\u97F3\u3084\u8AAD\u307F\u4E0A\u3052\u306F\u3001\u300C\u8A2D\u5B9A\u300D\u3067\u5909\u3048\u3089\u308C\u308B\u3088\u3002" }
+  ];
   var FONT2 = "https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap";
   var SAVED = null;
   var SAVED_CLS = "";
@@ -1355,6 +1488,15 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         const top = el.querySelector(".top");
         top && top.prepend(b);
       }
+      {
+        const h = document.createElement("button");
+        h.className = "ib eg-how";
+        h.textContent = "\u2753 \u904A\u3073\u65B9";
+        h.style.cssText = "font-size:12px;padding:4px 8px;white-space:nowrap";
+        h.onclick = () => runCoach(HOW);
+        const top = el.querySelector(".top");
+        top && top.appendChild(h);
+      }
       return {
         unmount() {
           try {
@@ -1367,7 +1509,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           }
           SAVED = document.createDocumentFragment();
           SAVED_CLS = el.className;
-          el.querySelectorAll(".eg-home").forEach((b) => b.remove());
+          el.querySelectorAll(".eg-home,.eg-how").forEach((b) => b.remove());
           while (el.firstChild) SAVED.appendChild(el.firstChild);
         }
       };

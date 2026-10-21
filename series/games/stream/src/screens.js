@@ -6,7 +6,7 @@ import { SE, ac, bgmStart, bgmStop, hush, say } from './sound.js';
 import { renderWords } from './words.js';
 /* ================= 画面 ================= */
 export const SCR=["sTitle","sHome","sWords","sDetail","sReader","sPlay","sResult"];
-export function show(id){SCR.forEach(s=>$(s).hidden=s!==id);ENV.ctx.showBack(id==="sTitle"||id==="sHome")}   // 「街へ」はタイトルとホームだけ
+export function show(id){SCR.forEach(s=>$(s).hidden=s!==id);ENV.ctx.showBack(id!=="sPlay")}   // 「街へ」はタイトルとホームだけ
 export let CUR=null;export const P=id=>PASSAGES.find(p=>p.id===id);
 export function plain(c){return c.tk.map(t=>t[0]+t[1]+t[2]).join(" ")}
 export function fromGap(c,gs){return c.tk.slice(gs).map(t=>t[0]+t[1]+t[2]).join(" ")}
@@ -92,7 +92,9 @@ export function init_screens(){
   $("btnRun").onclick=()=>{SE.tap();startRun(1)};
   $("modeRh").onclick=()=>{SE.tap();toast("リズムモードは準備中です")};
   $("btnRead").onclick=()=>openReading("pre");
-  $("btnHow").onclick=()=>{SE.tap();runCoach([...TUT.intro,...TUT[1],...TUT[2],...TUT[3],...TUT[4]],{face:tutFace})};
+  const how=()=>{SE.tap();if(!SV.howSeen){SV.howSeen=1;save()}runCoach([...TUT.intro,...TUT[1],...TUT[2],...TUT[3],...TUT[4]],{face:tutFace})};
+  $("btnHow").onclick=how;$("btnHowT").onclick=how;
+  if(!SV.howSeen){const bs=$("btnStart");bs.parentNode.insertBefore($("btnHowT"),bs)}   // まだ見ていない間は、いちばん上
   document.querySelectorAll("[data-back]").forEach(b=>b.onclick=()=>{SE.tap();hush();if(b.dataset.back==="home"){renderHome();show("sHome")}else{renderDetail();show("sDetail")}});
   $("btnJp").onclick=()=>{$("btnJp").classList.toggle("on");$("reader").classList.toggle("nojp")};
   $("btnReadAll").onclick=()=>{ac();say(CUR.chunks.map(plain).join(" "))};

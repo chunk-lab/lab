@@ -1313,7 +1313,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
   }
 
   // games/stream/src/stream.html
-  var stream_default = '<div class="bgflow"></div>\n<div class="rotate"><div class="ph"></div><b>\u6A2A\u5411\u304D\u306B\u3057\u3066\u306D</b><span>\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u306F\u6A2A\u753B\u9762\u3067\u904A\u3076\u30B2\u30FC\u30E0\u3067\u3059</span></div>\n<div class="app" id="app">\n\n<section class="scr" id="sTitle">\n  <div class="l">\n    <div class="logo"><div class="k">CHUNK STREAM</div><h1>\u30C1\u30E3\u30F3\u30AF<span>\u30B9\u30C8\u30EA\u30FC\u30E0</span></h1></div>\n    <div class="tagline">\u82F1\u8A9E\u306E\u9577\u6587\u304C\u3001\u53F3\u304B\u3089\u6D41\u308C\u3066\u304F\u308B\u3002\u805E\u3044\u3066\u3001\u9078\u3093\u3067\u3001\u3064\u306A\u3052\u308B\u3002</div>\n    <div class="river" aria-hidden="true">\n      <div class="row" style="top:8px;animation-duration:30s" id="rv1"></div>\n      <div class="row" style="top:52px;animation-duration:36s" id="rv2"></div>\n    </div>\n  </div>\n  <div class="r">\n    <img class="hero-chara" id="heroChara" alt="" src="img/chara/girl/joy.webp">\n    <button class="btn-main" id="btnStart">\u306F\u3058\u3081\u308B</button>\n    <div class="small">\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u5B8C\u6210</div>\n  </div>\n</section>\n\n<section class="scr" id="sHome" hidden>\n  <div class="bar">\n    <h2>\u9577\u6587\u3092\u3048\u3089\u3076</h2>\n    <div class="tabs" id="tabs"></div>\n    <button class="icon-btn" id="btnFull" aria-label="\u5168\u753B\u9762"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>\n    <button class="icon-btn" id="btnSettings" aria-label="\u8A2D\u5B9A"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button>\n  </div>\n  <div class="list" id="plist"></div>\n</section>\n\n<section class="scr" id="sWords" hidden>\n  <div class="bar"><button class="icon-btn" data-back="home" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="wTitle">\u5358\u8A9E\u7DF4\u7FD2</h2></div>\n  <div class="wtabs" id="wtabs"></div>\n  <p class="wnote" id="wNote"></p>\n  <div class="wtools" id="wtools"></div>\n  <div class="wsets" id="wsets"></div>\n</section>\n<section class="scr" id="sDetail" hidden>\n  <div class="bar">\n    <button class="icon-btn" data-back="home" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>\n    <h2 id="dTag"></h2>\n    <div class="modes"><button class="mode on">\u30BF\u30A4\u30E0\u30A2\u30BF\u30C3\u30AF</button><button class="mode soon" id="modeRh">\u30EA\u30BA\u30E0\uFF08\u6E96\u5099\u4E2D\uFF09</button></div>\n  </div>\n  <div class="dwrap">\n    <div class="dleft">\n      <div class="t" id="dTitle"></div><div class="j" id="dJa"></div>\n      <div class="runbest" id="dRun"></div>\n      <button class="read-btn" id="btnRead">\u{1F4D6} \u4E88\u7FD2\uFF1A\u672C\u6587\u3092\u8AAD\u3080</button>\n      <button class="read-btn" id="btnHow">\u2753 \u3042\u305D\u3073\u304B\u305F\uFF08\u5404\u30B9\u30C6\u30FC\u30B8\u306E\u8AAC\u660E\uFF09</button>\n      <button class="btn-run" id="btnRun">\u901A\u3057\u3067\u30B9\u30BF\u30FC\u30C8<small>\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u5B8C\u6210</small></button>\n    </div>\n    <div class="stages" id="stages"></div>\n  </div>\n</section>\n\n<section class="scr" id="sReader" hidden>\n  <div class="bar">\n    <button class="icon-btn" data-back="detail" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>\n    <h2 id="rTitle"></h2>\n    <button class="chip on" id="btnJp">\u8A33</button>\n    <button class="chip" id="btnReadAll">\u25B6 \u5168\u6587</button>\n  </div>\n  <div class="reader" id="reader"></div>\n</section>\n\n<section class="scr" id="sPlay" hidden>\n  <div class="hbar">\n    <button class="icon-btn sm" id="btnPause" aria-label="\u4E00\u6642\u505C\u6B62"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button>\n    <div class="stno">STAGE <b id="hudNo">1</b></div><div class="stnm" id="hudName"></div>\n    <div class="hprog"><i id="hudProg"></i></div><div class="cnt" id="hudCount"></div>\n    <div class="tm" id="hudTime">0.0</div><div class="cmb" id="hudCombo"></div>\n  </div>\n  <div class="arena" id="arena">\n    <div class="sp"></div>\n    <div class="band">\n      <div class="side" id="side"><div class="grid up" id="g0"></div><div class="grid dn" id="g1"></div><button class="rep" id="rep" aria-label="\u3082\u3046\u4E00\u5EA6\u805E\u304F" hidden>\u{1F50A}</button></div>\n      <div class="field" id="field"><div class="flow"></div><div class="dz"></div><div class="zone" id="zone"></div><div class="seam" id="seam"></div><div id="layer"></div><div class="fx" id="fx"></div></div>\n    </div>\n    <div class="txt" id="txt"><div class="para" id="para"></div></div>\n  </div>\n</section>\n\n<section class="scr" id="sResult" hidden>\n  <div class="res-l">\n    <div class="res-top">\n      <div class="rank" id="resRank">S</div>\n      <div><div class="lab" id="resLab"></div><div class="tt" id="resTitle"></div><div class="tot" id="resTot"></div></div>\n      <img class="res-chara" id="resChara" alt="" src="img/chara/girl/joy.webp">\n    </div>\n    <div class="stt" id="resStages"></div>\n    <div class="res-btns" id="resBtns"></div>\n  </div>\n  <div class="res-r"><div class="review" id="review"></div></div>\n</section>\n\n<div class="ov" id="ov" hidden><div id="ovBody"></div></div>\n</div>\n';
+  var stream_default = '<div class="bgflow"></div>\n<div class="rotate"><div class="ph"></div><b>\u6A2A\u5411\u304D\u306B\u3057\u3066\u306D</b><span>\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u306F\u6A2A\u753B\u9762\u3067\u904A\u3076\u30B2\u30FC\u30E0\u3067\u3059</span></div>\n<div class="app" id="app">\n\n<section class="scr" id="sTitle">\n  <div class="l">\n    <div class="logo"><div class="k">CHUNK STREAM</div><h1>\u30C1\u30E3\u30F3\u30AF<span>\u30B9\u30C8\u30EA\u30FC\u30E0</span></h1></div>\n    <div class="tagline">\u82F1\u8A9E\u306E\u9577\u6587\u304C\u3001\u53F3\u304B\u3089\u6D41\u308C\u3066\u304F\u308B\u3002\u805E\u3044\u3066\u3001\u9078\u3093\u3067\u3001\u3064\u306A\u3052\u308B\u3002</div>\n    <div class="river" aria-hidden="true">\n      <div class="row" style="top:8px;animation-duration:30s" id="rv1"></div>\n      <div class="row" style="top:52px;animation-duration:36s" id="rv2"></div>\n    </div>\n  </div>\n  <div class="r">\n    <img class="hero-chara" id="heroChara" alt="" src="img/chara/girl/joy.webp">\n    <button class="btn-main" id="btnStart">\u306F\u3058\u3081\u308B</button>\n    <button class="read-btn" id="btnHowT" style="margin-top:10px">\u2753 \u904A\u3073\u65B9</button>\n    <div class="small">\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u5B8C\u6210</div>\n  </div>\n</section>\n\n<section class="scr" id="sHome" hidden>\n  <div class="bar">\n    <h2>\u9577\u6587\u3092\u3048\u3089\u3076</h2>\n    <div class="tabs" id="tabs"></div>\n    <button class="icon-btn" id="btnFull" aria-label="\u5168\u753B\u9762"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>\n    <button class="icon-btn" id="btnSettings" aria-label="\u8A2D\u5B9A"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button>\n  </div>\n  <div class="list" id="plist"></div>\n</section>\n\n<section class="scr" id="sWords" hidden>\n  <div class="bar"><button class="icon-btn" data-back="home" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="wTitle">\u5358\u8A9E\u7DF4\u7FD2</h2></div>\n  <div class="wtabs" id="wtabs"></div>\n  <p class="wnote" id="wNote"></p>\n  <div class="wtools" id="wtools"></div>\n  <div class="wsets" id="wsets"></div>\n</section>\n<section class="scr" id="sDetail" hidden>\n  <div class="bar">\n    <button class="icon-btn" data-back="home" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>\n    <h2 id="dTag"></h2>\n    <div class="modes"><button class="mode on">\u30BF\u30A4\u30E0\u30A2\u30BF\u30C3\u30AF</button><button class="mode soon" id="modeRh">\u30EA\u30BA\u30E0\uFF08\u6E96\u5099\u4E2D\uFF09</button></div>\n  </div>\n  <div class="dwrap">\n    <div class="dleft">\n      <div class="t" id="dTitle"></div><div class="j" id="dJa"></div>\n      <div class="runbest" id="dRun"></div>\n      <button class="read-btn" id="btnRead">\u{1F4D6} \u4E88\u7FD2\uFF1A\u672C\u6587\u3092\u8AAD\u3080</button>\n      <button class="read-btn" id="btnHow">\u2753 \u904A\u3073\u65B9</button>\n      <button class="btn-run" id="btnRun">\u901A\u3057\u3067\u30B9\u30BF\u30FC\u30C8<small>\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u5B8C\u6210</small></button>\n    </div>\n    <div class="stages" id="stages"></div>\n  </div>\n</section>\n\n<section class="scr" id="sReader" hidden>\n  <div class="bar">\n    <button class="icon-btn" data-back="detail" aria-label="\u623B\u308B"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>\n    <h2 id="rTitle"></h2>\n    <button class="chip on" id="btnJp">\u8A33</button>\n    <button class="chip" id="btnReadAll">\u25B6 \u5168\u6587</button>\n  </div>\n  <div class="reader" id="reader"></div>\n</section>\n\n<section class="scr" id="sPlay" hidden>\n  <div class="hbar">\n    <button class="icon-btn sm" id="btnPause" aria-label="\u4E00\u6642\u505C\u6B62"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button>\n    <div class="stno">STAGE <b id="hudNo">1</b></div><div class="stnm" id="hudName"></div>\n    <div class="hprog"><i id="hudProg"></i></div><div class="cnt" id="hudCount"></div>\n    <div class="tm" id="hudTime">0.0</div><div class="cmb" id="hudCombo"></div>\n  </div>\n  <div class="arena" id="arena">\n    <div class="sp"></div>\n    <div class="band">\n      <div class="side" id="side"><div class="grid up" id="g0"></div><div class="grid dn" id="g1"></div><button class="rep" id="rep" aria-label="\u3082\u3046\u4E00\u5EA6\u805E\u304F" hidden>\u{1F50A}</button></div>\n      <div class="field" id="field"><div class="flow"></div><div class="dz"></div><div class="zone" id="zone"></div><div class="seam" id="seam"></div><div id="layer"></div><div class="fx" id="fx"></div></div>\n    </div>\n    <div class="txt" id="txt"><div class="para" id="para"></div></div>\n  </div>\n</section>\n\n<section class="scr" id="sResult" hidden>\n  <div class="res-l">\n    <div class="res-top">\n      <div class="rank" id="resRank">S</div>\n      <div><div class="lab" id="resLab"></div><div class="tt" id="resTitle"></div><div class="tot" id="resTot"></div></div>\n      <img class="res-chara" id="resChara" alt="" src="img/chara/girl/joy.webp">\n    </div>\n    <div class="stt" id="resStages"></div>\n    <div class="res-btns" id="resBtns"></div>\n  </div>\n  <div class="res-r"><div class="review" id="review"></div></div>\n</section>\n\n<div class="ov" id="ov" hidden><div id="ovBody"></div></div>\n</div>\n';
 
   // games/stream/src/base.js
   var $ = (id) => document.getElementById(id);
@@ -2148,153 +2148,6 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     });
   }
 
-  // core/coach.js
-  var NAME = { g: "\u5973\u306E\u5B50", b: "\u7537\u306E\u5B50" };
-  var defFace = (w, f) => `g/chunkchunk/img/chara/${w === "b" ? "boy" : "girl"}/${f || "normal"}.webp`;
-  function runCoach(steps, opt = {}) {
-    if (!steps || !steps.length) {
-      opt.onDone && opt.onDone(true);
-      return { stop() {
-      } };
-    }
-    const faceOf = opt.face || defFace;
-    let i = 0, done = false, timer = 0;
-    const ov = document.createElement("div");
-    ov.className = "cc-coach";
-    ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">\u3068\u3070\u3059</button><button class="cnx">\u3064\u304E\u3078 \u25B6</button><div class="cwt" hidden>\u3084\u3063\u3066\u307F\u3088\u3046</div></div>';
-    document.body.appendChild(ov);
-    const q = (s) => ov.querySelector(s), hole = q(".cc-hole"), box = q(".cc-box"), img = q(".cf");
-    img.onerror = () => {
-      img.hidden = true;
-      box.classList.add("nofc");
-    };
-    const finish = (ok) => {
-      if (done) return;
-      done = true;
-      clearInterval(timer);
-      removeEventListener("resize", place2);
-      ov.remove();
-      opt.onDone && opt.onDone(ok);
-    };
-    const target = () => {
-      const s = steps[i];
-      if (!s || !s.sel) return null;
-      try {
-        return document.querySelector(s.sel);
-      } catch (e) {
-        return null;
-      }
-    };
-    function place2() {
-      const el = target();
-      if (el) {
-        const r = el.getBoundingClientRect();
-        if (r.width > 0 && r.height > 0) {
-          const p = 6;
-          hole.hidden = false;
-          hole.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`;
-          ov.classList.add("has");
-          box.classList.toggle("top", r.top + r.height / 2 > innerHeight * 0.55);
-          return;
-        }
-      }
-      hole.hidden = true;
-      ov.classList.remove("has");
-      box.classList.remove("top");
-    }
-    function show2() {
-      const s = steps[i];
-      const u = faceOf(s.w, s.f);
-      if (u) {
-        img.hidden = false;
-        box.classList.remove("nofc");
-        img.src = u;
-      } else {
-        img.hidden = true;
-        box.classList.add("nofc");
-      }
-      const nm = q(".cn");
-      nm.textContent = NAME[s.w] || NAME.g;
-      nm.className = "cn " + (s.w || "g");
-      q(".ct").textContent = s.t;
-      ov.classList.toggle("pass", !!s.wait);
-      q(".cnx").hidden = !!s.wait;
-      q(".cwt").hidden = !s.wait;
-      q(".cnx").textContent = i === steps.length - 1 ? "\u304A\u308F\u308A \u2713" : "\u3064\u304E\u3078 \u25B6";
-      place2();
-      box.classList.remove("pop");
-      void box.offsetWidth;
-      box.classList.add("pop");
-    }
-    function next() {
-      if (done) return;
-      i++;
-      if (i >= steps.length) return finish(true);
-      show2();
-    }
-    q(".cnx").onclick = (e) => {
-      e.stopPropagation();
-      next();
-    };
-    q(".cskip").onclick = (e) => {
-      e.stopPropagation();
-      finish(false);
-    };
-    box.onclick = (e) => {
-      if (e.target.closest("button")) return;
-      if (!steps[i].wait) next();
-    };
-    addEventListener("resize", place2);
-    timer = setInterval(() => {
-      place2();
-      const s = steps[i];
-      if (s && s.wait && !s._ok) {
-        try {
-          if (s.wait()) {
-            s._ok = 1;
-            setTimeout(next, 600);
-          }
-        } catch (e) {
-        }
-      }
-    }, 250);
-    show2();
-    return { stop() {
-      finish(false);
-    } };
-  }
-
-  // games/stream/src/tutorial.js
-  var TUT = {
-    intro: [
-      { w: "g", f: "joy", t: "\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u3078\u3088\u3046\u3053\u305D\uFF01" },
-      { w: "b", t: "\u82F1\u8A9E\u304C\u6D41\u308C\u3066\u304F\u308B\u3088\u3002\u6587\u5B57\u3088\u308A\u300C\u805E\u3044\u305F\u97F3\u300D\u3067\u5224\u65AD\u3059\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002" },
-      { w: "g", t: "\u30B9\u30C6\u30FC\u30B8\u306F4\u3064\u3002\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u306E\u9806\u306B\u9032\u3080\u3088\u3002" },
-      { w: "b", f: "idea", t: "\u6700\u5F8C\u306E\u30B9\u30C6\u30FC\u30B84\u306E\u9577\u6587\u306F\u3001\u3072\u3068\u3064\u306E\u7269\u8A9E\u306B\u306A\u3063\u3066\u308B\u3093\u3060\u3002" }
-    ],
-    1: [
-      { w: "g", t: "\u30B9\u30C6\u30FC\u30B81\u306F\u300C\u5358\u8A9E\u30C0\u30C3\u30B7\u30E5\u300D\u3002\u6D41\u308C\u3066\u304F\u308B\u5358\u8A9E\u306E\u97F3\u3092\u805E\u3044\u3066\u306D\u3002" },
-      { w: "b", t: "\u805E\u3053\u3048\u305F\u5358\u8A9E\u306E\u610F\u5473\u3092\u30014\u629E\u304B\u3089\u9078\u307C\u3046\u3002" },
-      { w: "g", t: "\u4E0A\u3092\u6D41\u308C\u308B\u5358\u8A9E\u306F\u4E0A\u306E4\u629E\u3001\u4E0B\u3092\u6D41\u308C\u308B\u5358\u8A9E\u306F\u4E0B\u306E4\u629E\u3067\u7B54\u3048\u308B\u3088\u3002" },
-      { w: "b", f: "idea", t: "\u6587\u5B57\u3092\u76EE\u3067\u8FFD\u3046\u3088\u308A\u3001\u300C\u97F3\u300D\u3067\u5224\u65AD\u3059\u308B\u306E\u304C\u30B3\u30C4\uFF01" }
-    ],
-    2: [
-      { w: "g", t: "\u30B9\u30C6\u30FC\u30B82\u306F\u300C\u30C1\u30E3\u30F3\u30AF\u30AD\u30E3\u30C3\u30C1\u300D\u3002\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u610F\u5473\u306E\u304B\u305F\u307E\u308A\u306E\u3053\u3068\u3060\u3088\u3002" },
-      { w: "b", t: "\u4ECA\u5EA6\u306F\u3001\u304B\u305F\u307E\u308A\u306E\u97F3\u3092\u805E\u3044\u3066\u3001\u610F\u5473\u3092\u9078\u307C\u3046\u3002" },
-      { w: "g", f: "idea", t: "1\u8A9E\u305A\u3064\u3058\u3083\u306A\u304F\u3001\u304B\u305F\u307E\u308A\u3067\u805E\u304F\u306E\u304C\u30DD\u30A4\u30F3\u30C8\u3002" }
-    ],
-    3: [
-      { w: "b", t: "\u30B9\u30C6\u30FC\u30B83\u306F\u300C\u30C1\u30E3\u30F3\u30AF\u30D1\u30BA\u30EB\u300D\u3002\u4E0A\u306E\u65E5\u672C\u8A9E\u306B\u5408\u3046\u3088\u3046\u306B\u3001\u6B20\u3051\u305F1\u8A9E\u3092\u9078\u3093\u3067\u7A74\u3092\u57CB\u3081\u308B\u3088\u3002" },
-      { w: "g", f: "idea", t: "\u3069\u3053\u304C\u7A74\u306B\u306A\u308B\u304B\u306F\u3001\u904A\u3076\u305F\u3073\u306B\u30E9\u30F3\u30C0\u30E0\u3002\u6BCE\u56DE\u3061\u304C\u3046\u554F\u984C\u306B\u306A\u308B\u3088\u3002" }
-    ],
-    4: [
-      { w: "g", t: "\u30B9\u30C6\u30FC\u30B84\u306F\u300C\u30ED\u30F3\u30B0\u30B9\u30C8\u30EA\u30FC\u30E0\u300D\u3002\u9577\u6587\u3092\u3001\u6700\u521D\u304B\u3089\u8AAD\u3093\u3067\u3044\u304F\u3088\u3002" },
-      { w: "b", t: "\u3053\u306E\u9577\u6587\u306F\u3001\u3072\u3068\u3064\u306E\u7269\u8A9E\u306B\u306A\u3063\u3066\u308B\u3093\u3060\u3002" },
-      { w: "g", t: "\u30C1\u30E3\u30F3\u30AF\u3092\u9806\u756A\u306B\u3064\u306A\u3044\u3067\u3001\u7269\u8A9E\u3092\u5B8C\u6210\u3055\u305B\u3088\u3046\uFF01" },
-      { w: "b", f: "joy", t: "\u5149\u3063\u3066\u3044\u308B\u5074\u306E4\u629E\u3067\u7B54\u3048\u3066\u306D\u3002" }
-    ]
-  };
-
   // games/stream/src/play.js
   var tutFace = (w, f) => `${ENV.base}img/chara/${w === "b" ? "boy" : "girl"}/${f || "normal"}.webp`;
   var RUN = null;
@@ -2429,21 +2282,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     SE.count(true);
     inter(`<div class="sub" style="color:var(--accent)">STAGE ${st}</div><div class="big" style="font-size:clamp(28px,9vh,44px)">${STAGES[st - 1].name}</div><div class="note">${STAGES[st - 1].note}</div>`, 1350);
     setTimeout2(() => {
-      if (!(G && G.st === st)) return;
-      SV.tut = SV.tut || {};
-      const steps = [];
-      if (st === 1 && !SV.tut.intro) steps.push(...TUT.intro);
-      if (!SV.tut[st]) steps.push(...TUT[st]);
-      if (!steps.length) {
+      if (G && G.st === st) {
         G.started = true;
-        return;
       }
-      runCoach(steps, { face: tutFace, onDone: () => {
-        SV.tut.intro = 1;
-        SV.tut[st] = 1;
-        save();
-        if (G && G.st === st && !G.over) G.started = true;
-      } });
     }, 1350);
   }
   var LY = [60, 140];
@@ -3247,11 +3088,169 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     show("sResult");
   }
 
+  // core/coach.js
+  var NAME = { g: "\u5973\u306E\u5B50", b: "\u7537\u306E\u5B50" };
+  var defFace = (w, f) => `g/chunkchunk/img/chara/${w === "b" ? "boy" : "girl"}/${f || "normal"}.webp`;
+  function runCoach(steps, opt = {}) {
+    if (!steps || !steps.length) {
+      opt.onDone && opt.onDone(true);
+      return { stop() {
+      } };
+    }
+    const faceOf = opt.face || defFace;
+    let i = 0, done = false, timer = 0;
+    const ov = document.createElement("div");
+    ov.className = "cc-coach";
+    ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-hole two" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">\u3068\u3070\u3059</button><button class="cnx">\u3064\u304E\u3078 \u25B6</button><div class="cwt" hidden>\u3084\u3063\u3066\u307F\u3088\u3046</div></div>';
+    document.body.appendChild(ov);
+    const q = (s) => ov.querySelector(s), hole = q(".cc-hole"), hole2 = q(".cc-hole.two"), box = q(".cc-box"), img = q(".cf");
+    img.onerror = () => {
+      img.hidden = true;
+      box.classList.add("nofc");
+    };
+    const finish = (ok) => {
+      if (done) return;
+      done = true;
+      clearInterval(timer);
+      removeEventListener("resize", place2);
+      ov.remove();
+      opt.onDone && opt.onDone(ok);
+    };
+    const target = () => {
+      const s = steps[i];
+      if (!s || !s.sel) return null;
+      try {
+        return document.querySelector(s.sel);
+      } catch (e) {
+        return null;
+      }
+    };
+    const ring = (h, el, free) => {
+      const r = el && el.getBoundingClientRect();
+      if (!r || r.width <= 0 || r.height <= 0) {
+        h.hidden = true;
+        return false;
+      }
+      const p = 6;
+      h.hidden = false;
+      h.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`;
+      h.classList.toggle("free", free);
+      return true;
+    };
+    function place2() {
+      const s = steps[i], free = !!s.wait;
+      let el2 = null;
+      if (s.also) {
+        try {
+          el2 = document.querySelector(s.also);
+        } catch (e) {
+        }
+      }
+      const ok = ring(hole, target(), free);
+      ring(hole2, el2, true);
+      ov.classList.toggle("has", ok);
+      ov.classList.toggle("free", free);
+      const r = ok && target().getBoundingClientRect();
+      box.classList.toggle("top", free || !!(r && r.top + r.height / 2 > innerHeight * 0.55));
+    }
+    function show2() {
+      const s = steps[i];
+      const u = faceOf(s.w, s.f);
+      if (u) {
+        img.hidden = false;
+        box.classList.remove("nofc");
+        img.src = u;
+      } else {
+        img.hidden = true;
+        box.classList.add("nofc");
+      }
+      const nm = q(".cn");
+      nm.textContent = NAME[s.w] || NAME.g;
+      nm.className = "cn " + (s.w || "g");
+      q(".ct").textContent = s.t;
+      ov.classList.toggle("pass", !!s.wait);
+      q(".cnx").hidden = !!s.wait;
+      q(".cwt").hidden = !s.wait;
+      q(".cnx").textContent = i === steps.length - 1 ? "\u304A\u308F\u308A \u2713" : "\u3064\u304E\u3078 \u25B6";
+      place2();
+      box.classList.remove("pop");
+      void box.offsetWidth;
+      box.classList.add("pop");
+    }
+    function next() {
+      if (done) return;
+      i++;
+      if (i >= steps.length) return finish(true);
+      show2();
+    }
+    q(".cnx").onclick = (e) => {
+      e.stopPropagation();
+      next();
+    };
+    q(".cskip").onclick = (e) => {
+      e.stopPropagation();
+      finish(false);
+    };
+    box.onclick = (e) => {
+      if (e.target.closest("button")) return;
+      if (!steps[i].wait) next();
+    };
+    addEventListener("resize", place2);
+    timer = setInterval(() => {
+      place2();
+      const s = steps[i];
+      if (s && s.wait && !s._ok) {
+        try {
+          if (s.wait()) {
+            s._ok = 1;
+            setTimeout(next, 600);
+          }
+        } catch (e) {
+        }
+      }
+    }, 250);
+    show2();
+    return { stop() {
+      finish(false);
+    } };
+  }
+
+  // games/stream/src/tutorial.js
+  var TUT = {
+    intro: [
+      { w: "g", f: "joy", t: "\u30C1\u30E3\u30F3\u30AF\u30B9\u30C8\u30EA\u30FC\u30E0\u3078\u3088\u3046\u3053\u305D\uFF01" },
+      { w: "b", t: "\u82F1\u8A9E\u304C\u6D41\u308C\u3066\u304F\u308B\u3088\u3002\u6587\u5B57\u3088\u308A\u300C\u805E\u3044\u305F\u97F3\u300D\u3067\u5224\u65AD\u3059\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002" },
+      { w: "g", t: "\u30B9\u30C6\u30FC\u30B8\u306F4\u3064\u3002\u5358\u8A9E \u2192 \u30C1\u30E3\u30F3\u30AF \u2192 \u7A74\u3046\u3081 \u2192 \u9577\u6587\u306E\u9806\u306B\u9032\u3080\u3088\u3002" },
+      { w: "b", t: "\u3072\u3068\u3064\u306E\u9577\u6587\u304B\u3089\u554F\u984C\u304C\u51FA\u3066\u304F\u308B\u304B\u3089\u30013\u30B9\u30C6\u30FC\u30B8\u307E\u3067\u306F\u7269\u8A9E\u3092\u60F3\u50CF\u3057\u306A\u304C\u3089\u554F\u984C\u3092\u89E3\u3044\u3066\u3044\u3053\u3046\uFF01" },
+      { w: "g", f: "idea", t: "\u6700\u5F8C\u306E\u30B9\u30C6\u30FC\u30B8\u306F\u9577\u6587\u3092\u305D\u306E\u307E\u307E\u8AAD\u3093\u3067\u3044\u304F\u304B\u3089\u3001\u6B21\u306E\u5C55\u958B\u3092\u4E88\u60F3\u3057\u3066\u7B54\u3048\u3066\u306D\u3002" }
+    ],
+    1: [
+      { w: "g", t: "\u30B9\u30C6\u30FC\u30B81\u306F\u300C\u5358\u8A9E\u30C0\u30C3\u30B7\u30E5\u300D\u3002\u6D41\u308C\u3066\u304F\u308B\u5358\u8A9E\u306E\u97F3\u3092\u805E\u3044\u3066\u306D\u3002" },
+      { w: "b", t: "\u805E\u3053\u3048\u305F\u5358\u8A9E\u306E\u610F\u5473\u3092\u30014\u629E\u304B\u3089\u9078\u307C\u3046\u3002" },
+      { w: "g", t: "\u4E0A\u3092\u6D41\u308C\u308B\u5358\u8A9E\u306F\u4E0A\u306E4\u629E\u3001\u4E0B\u3092\u6D41\u308C\u308B\u5358\u8A9E\u306F\u4E0B\u306E4\u629E\u3067\u7B54\u3048\u308B\u3088\u3002" },
+      { w: "b", f: "idea", t: "\u6587\u5B57\u3092\u76EE\u3067\u8FFD\u3046\u3088\u308A\u3001\u300C\u97F3\u300D\u3067\u5224\u65AD\u3059\u308B\u306E\u304C\u30B3\u30C4\uFF01" }
+    ],
+    2: [
+      { w: "g", t: "\u30B9\u30C6\u30FC\u30B82\u306F\u300C\u30C1\u30E3\u30F3\u30AF\u30AD\u30E3\u30C3\u30C1\u300D\u3002\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u610F\u5473\u306E\u304B\u305F\u307E\u308A\u306E\u3053\u3068\u3060\u3088\u3002" },
+      { w: "b", t: "\u4ECA\u5EA6\u306F\u3001\u304B\u305F\u307E\u308A\u306E\u97F3\u3092\u805E\u3044\u3066\u3001\u610F\u5473\u3092\u9078\u307C\u3046\u3002" },
+      { w: "g", f: "idea", t: "1\u8A9E\u305A\u3064\u3058\u3083\u306A\u304F\u3001\u304B\u305F\u307E\u308A\u3067\u805E\u304F\u306E\u304C\u30DD\u30A4\u30F3\u30C8\u3002" }
+    ],
+    3: [
+      { w: "b", t: "\u30B9\u30C6\u30FC\u30B83\u306F\u300C\u30C1\u30E3\u30F3\u30AF\u30D1\u30BA\u30EB\u300D\u3002\u4E0A\u306E\u65E5\u672C\u8A9E\u306B\u5408\u3046\u3088\u3046\u306B\u3001\u6B20\u3051\u305F1\u8A9E\u3092\u9078\u3093\u3067\u7A74\u3092\u57CB\u3081\u308B\u3088\u3002" },
+      { w: "g", f: "idea", t: "\u3069\u3053\u304C\u7A74\u306B\u306A\u308B\u304B\u306F\u3001\u904A\u3076\u305F\u3073\u306B\u30E9\u30F3\u30C0\u30E0\u3002\u6BCE\u56DE\u3061\u304C\u3046\u554F\u984C\u306B\u306A\u308B\u3088\u3002" }
+    ],
+    4: [
+      { w: "g", t: "\u30B9\u30C6\u30FC\u30B84\u306F\u300C\u30ED\u30F3\u30B0\u30B9\u30C8\u30EA\u30FC\u30E0\u300D\u3002\u9577\u6587\u3092\u3001\u6700\u521D\u304B\u3089\u8AAD\u3093\u3067\u3044\u304F\u3088\u3002" },
+      { w: "b", t: "\u30C1\u30E3\u30F3\u30AF\u3092\u9806\u756A\u306B\u3064\u306A\u3044\u3067\u3001\u7269\u8A9E\u3092\u5B8C\u6210\u3055\u305B\u3088\u3046\uFF01" },
+      { w: "g", f: "joy", t: "\u5149\u3063\u3066\u3044\u308B\u5074\u306E4\u629E\u3067\u7B54\u3048\u3066\u306D\u3002" }
+    ]
+  };
+
   // games/stream/src/screens.js
   var SCR = ["sTitle", "sHome", "sWords", "sDetail", "sReader", "sPlay", "sResult"];
   function show(id) {
     SCR.forEach((s) => $(s).hidden = s !== id);
-    ENV.ctx.showBack(id === "sTitle" || id === "sHome");
+    ENV.ctx.showBack(id !== "sPlay");
   }
   var CUR2 = null;
   var P = (id) => PASSAGES.find((p) => p.id === id);
@@ -3468,10 +3467,20 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       toast("\u30EA\u30BA\u30E0\u30E2\u30FC\u30C9\u306F\u6E96\u5099\u4E2D\u3067\u3059");
     };
     $("btnRead").onclick = () => openReading("pre");
-    $("btnHow").onclick = () => {
+    const how = () => {
       SE.tap();
+      if (!SV.howSeen) {
+        SV.howSeen = 1;
+        save();
+      }
       runCoach([...TUT.intro, ...TUT[1], ...TUT[2], ...TUT[3], ...TUT[4]], { face: tutFace });
     };
+    $("btnHow").onclick = how;
+    $("btnHowT").onclick = how;
+    if (!SV.howSeen) {
+      const bs = $("btnStart");
+      bs.parentNode.insertBefore($("btnHowT"), bs);
+    }
     document.querySelectorAll("[data-back]").forEach((b) => b.onclick = () => {
       SE.tap();
       hush();

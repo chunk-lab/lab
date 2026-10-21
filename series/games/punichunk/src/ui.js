@@ -200,17 +200,17 @@ export var UI = (function () {
     }
     // ---------- タイトル ----------
     ui.title = function (h) {
+      var seen = !!(h.seenHow && h.seenHow());   // 遊び方を見たことがなければ、いちばん上に出す（見たあとは、いちばん下）
+      var how = btn('遊び方', 'ghost wide', function () { h.markHow && h.markHow(); h.tutorial(); }, 'info');
+      var play = btn('あそぶ', 'wide', h.play, 'play');
+      var row = el('div', { class: 'pc-row' }, [
+        el('div', { class: 'pc-ibl' }, [ib('trophy', '記録', h.records), document.createTextNode('記録')]),
+        el('div', { class: 'pc-ibl' }, [ib('shop', 'ショップ', h.shop), document.createTextNode('ショップ')]),
+        el('div', { class: 'pc-ibl' }, [ib('star', 'クレジット', h.credits), document.createTextNode('クレジット')])
+      ]);
       var n = el('div', { class: 'pc-scr' }, [
         muteBtn(), el('div', { class: 'pc-tgear' }, [ib('gear', '設定', h.settings)]), logo(), el('div', { class: 'pc-spacer' }),
-        el('div', { class: 'pc-menu' }, [
-          btn('あそぶ', 'wide', h.play, 'play'),
-          btn('あそびかた', 'ghost wide', h.tutorial, 'info'),
-          el('div', { class: 'pc-row' }, [
-            el('div', { class: 'pc-ibl' }, [ib('trophy', '記録', h.records), document.createTextNode('記録')]),
-            el('div', { class: 'pc-ibl' }, [ib('shop', 'ショップ', h.shop), document.createTextNode('ショップ')]),
-            el('div', { class: 'pc-ibl' }, [ib('star', 'クレジット', h.credits), document.createTextNode('クレジット')])
-          ])
-        ]),
+        el('div', { class: 'pc-menu' }, seen ? [play, row, how] : [how, play, row]),
         el('div', { style: { height: '20vh', minHeight: '150px' } })
       ]);
       screen(n);

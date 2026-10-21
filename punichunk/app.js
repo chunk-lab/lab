@@ -10673,20 +10673,23 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         })), el("div", { class: "sub", text: "\u82F1\u8A9E\u8133\u30D0\u30D6\u30EB\u30D1\u30BA\u30EB" }), el("div", { class: "en", text: "PUNI CHUNK" })]);
       }
       ui.title = function(h) {
+        var seen = !!(h.seenHow && h.seenHow());
+        var how = btn("\u904A\u3073\u65B9", "ghost wide", function() {
+          h.markHow && h.markHow();
+          h.tutorial();
+        }, "info");
+        var play = btn("\u3042\u305D\u3076", "wide", h.play, "play");
+        var row = el("div", { class: "pc-row" }, [
+          el("div", { class: "pc-ibl" }, [ib("trophy", "\u8A18\u9332", h.records), document.createTextNode("\u8A18\u9332")]),
+          el("div", { class: "pc-ibl" }, [ib("shop", "\u30B7\u30E7\u30C3\u30D7", h.shop), document.createTextNode("\u30B7\u30E7\u30C3\u30D7")]),
+          el("div", { class: "pc-ibl" }, [ib("star", "\u30AF\u30EC\u30B8\u30C3\u30C8", h.credits), document.createTextNode("\u30AF\u30EC\u30B8\u30C3\u30C8")])
+        ]);
         var n = el("div", { class: "pc-scr" }, [
           muteBtn(),
           el("div", { class: "pc-tgear" }, [ib("gear", "\u8A2D\u5B9A", h.settings)]),
           logo(),
           el("div", { class: "pc-spacer" }),
-          el("div", { class: "pc-menu" }, [
-            btn("\u3042\u305D\u3076", "wide", h.play, "play"),
-            btn("\u3042\u305D\u3073\u304B\u305F", "ghost wide", h.tutorial, "info"),
-            el("div", { class: "pc-row" }, [
-              el("div", { class: "pc-ibl" }, [ib("trophy", "\u8A18\u9332", h.records), document.createTextNode("\u8A18\u9332")]),
-              el("div", { class: "pc-ibl" }, [ib("shop", "\u30B7\u30E7\u30C3\u30D7", h.shop), document.createTextNode("\u30B7\u30E7\u30C3\u30D7")]),
-              el("div", { class: "pc-ibl" }, [ib("star", "\u30AF\u30EC\u30B8\u30C3\u30C8", h.credits), document.createTextNode("\u30AF\u30EC\u30B8\u30C3\u30C8")])
-            ])
-          ]),
+          el("div", { class: "pc-menu" }, seen ? [play, row, how] : [how, play, row]),
           el("div", { style: { height: "20vh", minHeight: "150px" } })
         ]);
         screen(n);
@@ -11672,7 +11675,12 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       app2.decor = true;
       app2.kun = true;
       app2.audio.music("title");
-      ui.title({ play: toPlay, tutorial: function() {
+      ui.title({ play: toPlay, seenHow: function() {
+        return !!state.howSeen;
+      }, markHow: function() {
+        state.howSeen = true;
+        app2.saveState();
+      }, tutorial: function() {
         startTutorial(toTitle);
       }, records: function() {
         app2.decor = false;
@@ -11694,8 +11702,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       app2.emit("screen", { name: "title" });
     }
     function toPlay() {
-      if (!state.tutorialDone) startTutorial(toModes);
-      else toModes();
+      toModes();
     }
     function toModes() {
       endGame();
@@ -11948,7 +11955,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         core: { sound: ctx.core.sound, speech: ctx.core.speech },
         openSettings: () => ctx.core.ui.settings(),
         onEvent: (n, d) => {
-          if (n === "screen") ctx.showBack(["title", "modes", "splash"].includes(d.name));
+          if (n === "screen") ctx.showBack(!["game", "tutorial"].includes(d.name));
           if (n === "result") ctx.report("result", { mode: d.mode, score: d.score });
         }
       });

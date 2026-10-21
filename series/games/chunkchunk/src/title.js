@@ -1,3 +1,4 @@
+import { initHowto } from './howto.js';
 import { clearPop, stopVoice, $, ENV, S, bindSettingRows, closeSheet, legendHTML, loadStage, nextRun, openSheet, primeSpeech, randLabel, saveSettings, settingRows, settings, stageN, startPractice, unlockAudio } from './engine.js';
 import { pickText } from './pick.js';
 import { showRanking, startTimed } from './rank.js';
@@ -37,6 +38,7 @@ export function initTitle(face){
     openSheet(`<h2>設定</h2>${settingRows()}${legendHTML()}<div class="btns"><button class="primary" id="closeBtn">閉じる</button></div>`);
     bindSettingRows();$("closeBtn").onclick=closeSheet;
   });
+  initHowto($("title"),settings,saveSettings);
   document.querySelectorAll("[data-study]").forEach(b=>b.onclick=()=>{
     primeSpeech();unlockAudio();const v=b.dataset.study;
     if(v==="lesson"){sfx("se/btn_lesson");lessonSub(true);return}

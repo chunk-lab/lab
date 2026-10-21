@@ -3,8 +3,6 @@ import { BK, bigK, bkBurst, bkShrink, comboPop, crowd, face, fireworks, hud, joi
 import { CUR, WANTF, canFull, closeOv, fromGap, goFull, isFull, openReading, overlay, plain, renderDetail, show } from './screens.js';
 import { AC, SE, TTS, ac, bgmStart, bgmStop, hush, say, speak, speakAfter, voice } from './sound.js';
 import { initWDB, renderWords, wja } from './words.js';
-import { runCoach } from '../../../core/coach.js';
-import { TUT } from './tutorial.js';
 export const tutFace=(w,f)=>`${ENV.base}img/chara/${w==="b"?"boy":"girl"}/${f||"normal"}.webp`;
 /* ================= ゲーム ================= */
 export let RUN=null,G=null,PAUSED=false,RAF=0,LAST=0;
@@ -55,10 +53,7 @@ export function beginStage(st){
   G.lanes.forEach(L=>{L.slots=null;renderGrid(L.i)});
   SE.count(true);
   inter(`<div class="sub" style="color:var(--accent)">STAGE ${st}</div><div class="big" style="font-size:clamp(28px,9vh,44px)">${STAGES[st-1].name}</div><div class="note">${STAGES[st-1].note}</div>`,1350);
-  setTimeout(()=>{if(!(G&&G.st===st))return;
-    SV.tut=SV.tut||{};const steps=[];if(st===1&&!SV.tut.intro)steps.push(...TUT.intro);if(!SV.tut[st])steps.push(...TUT[st]);
-    if(!steps.length){G.started=true;return}
-    runCoach(steps,{face:tutFace,onDone:()=>{SV.tut.intro=1;SV.tut[st]=1;save();if(G&&G.st===st&&!G.over)G.started=true}})},1350);
+  setTimeout(()=>{if(G&&G.st===st){G.started=true}},1350);
 }
 export let LY=[60,140];
 export function layout(){const r=$("field").getBoundingClientRect();W=r.width;H=r.height;XJ=Math.round(Math.min(W*.18,150));$("zone").style.left=XJ+"px";

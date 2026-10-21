@@ -1313,7 +1313,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
   }
 
   // games/chunkchunk/src/view.html
-  var view_default = '<!-- \u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF\u306E\u753B\u9762\uFF08game.js \u304C\u7BB1\u306E\u4E2D\u306B\u5165\u308C\u308B\uFF09\u3002\u65BD\u8A2D\u306E\u5165\u53E3\u306F #title \u306E data-face\uFF08arcade\uFF0Flesson\uFF0Flibrary\uFF09 -->\n\n<div class="app">\n  <header class="top">\n    <div class="logo">\u30C1\u30E3\u30F3\u30AF<span>\u30C1\u30E3\u30F3\u30AF</span></div>\n    <div class="meta"><span id="stageText">\u97621</span><span id="progText">1/6</span><span id="timeText" hidden>\u23F1 0.0</span><span><b id="score">0</b> pt</span></div>\n    <button id="gear" class="gear">\u8A2D\u5B9A</button>\n  </header>\n\n  <section class="board" id="board" aria-live="polite">\n    <div id="hist"></div>\n    <div class="line" id="line"></div>\n  </section>\n\n  <div class="tapZone" id="tapZone">\n  <section class="laneWrap" id="laneWrap" aria-label="\u6D41\u308C\u3066\u304F\u308B\u82F1\u6587">\n    <div class="strip" id="strip"></div>\n    <div class="cutline" id="cutline" data-lbl="\u3053\u3053\u3067\u533A\u5207\u308B"></div>\n    <div class="fadeL"></div><div class="fadeR"></div>\n  </section>\n  <div class="preview" id="preview"></div>\n\n  <section class="stage" id="stage" aria-label="\u6587\u306E\u7D75">\n    <div class="sgHint" id="sgHint">\u30C1\u30E3\u30F3\u30AF\u3092\u5F53\u3066\u308B\u3068\u3001\u7D75\u304C\u3067\u304D\u3066\u3044\u304F</div>\n    <span class="sgPlace" id="sgPlace"></span><span class="sgSign" id="sgSign"></span>\n    <div class="sgTime" id="sgTime"></div>\n    <div class="sgChar" id="sgChar"><span class="sgFace" id="sgFace"></span><span class="sgArt" id="sgArt"></span><span class="sgCap" id="sgCap"></span></div>\n    <div class="sgObj" id="sgObj"></div>\n    <span class="sgQ" id="sgQ"></span>\n    <span class="sgDone" id="sgDone">\u5B8C\u6210\uFF01</span>\n  </section>\n  <input type="range" id="scrub" class="scrub" min="0" max="10" value="0" step="1" hidden aria-label="\u30C9\u30E9\u30C3\u30B0\u3067\u4E00\u6C17\u306B\u5148\u3078\u9032\u3080">\n  <div class="ctrlRow">\n    <div class="navBtns" id="navBtns" hidden><button id="backBtn" class="navBtn" disabled aria-label="\u623B\u308B\uFF08\u3053\u306E\u30E2\u30FC\u30C9\u3067\u306F\u623B\u308C\u306A\u3044\uFF09">\u25C0</button><button id="fwdBtn" class="navBtn" aria-label="1\u8A9E\u9032\u3080">\u25B6</button></div>\n    <button id="cutBtn" class="cutBtn">\u533A\u5207\u308B<small id="cutHint">\u3053\u3053\u304B\u3089\u4E0B\u306A\u3089\u3001\u3069\u3053\u3092\u30BF\u30C3\u30D7\u3057\u3066\u3082\u533A\u5207\u308C\u308B</small></button>\n  </div>\n  </div>\n</div>\n\n<div id="count" class="count" hidden></div>\n<div id="startBox" class="modal" hidden style="align-items:center"><div class="sheet" style="text-align:center;align-items:center">\n  <h2 id="startTitle">\u97621</h2>\n  <p class="note" id="startNote"></p>\n  <button class="primary" id="startBtn" style="width:100%">\u30BF\u30C3\u30D7\u3057\u3066\u30B9\u30BF\u30FC\u30C8</button></div></div>\n<div id="title" class="titleScr" data-face="arcade" hidden>\n  <!-- \u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\uFF1A\u904A\u3093\u3067\u935B\u3048\u308B -->\n  <div class="faceGame">\n    <div class="gLogo"><span class="p">\u30C1\u30E3\u30F3\u30AF</span><span class="b">\u30C1\u30E3\u30F3\u30AF</span></div>\n    <div class="gMenu">\n      <div class="tCard"><div class="tName">\u3055\u3089\u3055\u3089\u30C1\u30E3\u30F3\u30AF</div><div class="tDesc">\u81EA\u52D5\u3067\u6D41\u308C\u3066\u304F\u308B\u3088\uFF01</div>\n        <div class="tPlay"><button data-play="auto-one">\u30E9\u30F3\u30C0\u30E0</button><button data-play="auto-cont" class="b">\u304A\u306F\u306A\u3057</button></div></div>\n      <div class="tCard"><div class="tName">\u3088\u30FC\u3044\u3069\u3093\u30C1\u30E3\u30F3\u30AF</div><div class="tDesc">\u81EA\u5206\u3067\u9001\u3063\u3066\u3001\u306F\u3084\u304F\u5207\u308D\u3046\uFF01</div>\n        <div class="tPlay"><button data-play="manual-one">\u30E9\u30F3\u30C0\u30E0</button><button data-play="manual-cont" class="b">\u304A\u306F\u306A\u3057</button></div></div>\n      <div class="tCard"><div class="tName">\u30C1\u30E3\u30EC\u30F3\u30B8</div><div class="tDesc">30\u79D2\u30FB1\u5206\u3067\u3001\u4F55\u70B9\u3068\u308C\u308B\u304B\uFF01\uFF08\u5168\u30EC\u30D9\u30EB\u30FB\u81EA\u5206\u3067\u9001\u308B\uFF09</div>\n        <div class="tPlay"><button data-timed="30">30\u79D2</button><button data-timed="60" class="b">1\u5206</button></div>\n        <button class="tSet" data-rank style="margin-top:6px">\u30E9\u30F3\u30AD\u30F3\u30B0\u3092\u898B\u308B</button></div>\n      <p class="tDesc" id="lvHint" style="text-align:center;margin:2px 0 0"></p>\n      <button class="tSet" data-open-set>\u8A2D\u5B9A</button>\n    </div>\n  </div>\n  <!-- \u5B66\u6821\uFF1A\u30C1\u30E3\u30F3\u30AF\u7DF4\u7FD2\uFF08\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u30FB\u5F79\u5272\u3082\u7B54\u3048\u308B\uFF09 -->\n  <div class="faceLesson faceStudy">\n    <img class="sChara" data-chara="boy" alt=""><div class="sLogo"><span class="a">CHUNK</span><span class="b">LESSON</span></div><div class="sSub">SCHOOL</div>\n    <div class="sMenu">\n      <button data-study="lesson"><b>Lesson</b><small>\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u5B66\u3076\uFF1A\u300C\u8AAD\u3080\u30FB\u805E\u304F\u300D\u300C\u8A71\u3059\u30FB\u66F8\u304F\u300D\u304B\u3089\u9078\u3076</small><i>\u2192</i></button>\n      <button data-study="practice"><b>Chunk Practice</b><small>\u6587\u7AE0\u3092\u9078\u3093\u3067\u3001\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u30FB\u5F79\u5272\u3082\u7B54\u3048\u308B</small><i>\u2192</i></button>\n      <button data-study="random"><b>Random Practice</b><small>\u5185\u8535\u306E\u4F8B\u6587\u3068\u77ED\u6587\u304B\u3089\u3001\u30E9\u30F3\u30C0\u30E0\u306B\u7DF4\u7FD2</small><i>\u2192</i></button>\n      <button data-open-set><b>Settings</b><small>\u901F\u3055\u30FB\u6587\u5B57\u306E\u5927\u304D\u3055\u30FB\u97F3</small><i>\u2192</i></button>\n    </div>\n    <div class="sMenu lessonSub" hidden>\n      <button data-study="story"><b>\u8AAD\u3080\u30FB\u805E\u304F</b><small>Chunk Story\uFF1A\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u3001\u30C1\u30E3\u30F3\u30AF\u306E\u8AAD\u307F\u65B9\u3092\u5B66\u3076</small><i>\u2192</i></button>\n      <button data-study="make"><b>\u8A71\u3059\u30FB\u66F8\u304F</b><small>2\u4EBA\u306E\u3084\u308A\u3068\u308A\u3067\u3001\u6587\u3092\u4F5C\u308B</small><i>\u2192</i></button>\n      <button data-lesson-back><b>\u2190 \u3082\u3069\u308B</b><small>\u5B66\u6821\u306E\u30E1\u30CB\u30E5\u30FC\u3078</small><i></i></button>\n    </div>\n  </div>\n  <!-- \u56F3\u66F8\u9928\uFF1A\u30EA\u30FC\u30C7\u30A3\u30F3\u30B0\u30FB\u9577\u6587\u306E\u767B\u9332\u3068\u5171\u6709 -->\n  <div class="faceLibrary faceStudy">\n    <img class="sChara" data-chara="girl" alt=""><div class="sLogo"><span class="a">CHUNK</span><span class="b">READING</span></div><div class="sSub">LIBRARY</div>\n    <div class="sMenu">\n      <button data-study="read"><b>Reading</b><small>\u9577\u6587\u3092\u8AAD\u3093\u3067\u8A2D\u554F\u306B\u7B54\u3048\u308B\uFF08\u5185\u8535\u30FB\u307F\u3093\u306A\u306E\u9577\u6587\u30FBMy Texts\uFF09</small><i>\u2192</i></button>\n      <button data-study="texts"><b>My Texts</b><small>\u9577\u6587\u30FB\u77ED\u6587\u306E\u767B\u9332\u3001\u554F\u984C\u306E\u4F5C\u6210\u3001\u5171\u6709</small><i>\u2192</i></button>\n      <button data-open-set><b>Settings</b><small>\u901F\u3055\u30FB\u6587\u5B57\u306E\u5927\u304D\u3055\u30FB\u97F3</small><i>\u2192</i></button>\n    </div>\n  </div>\n</div>\n\n<!-- My Texts\uFF08\u9577\u6587\u306E\u767B\u9332\u30FB\u554F\u984C\u306E\u4F5C\u6210\uFF09 -->\n<div id="edView" class="edView" hidden>\n  <header class="top"><button class="gear" id="edBack">\u2190 Back</button><div class="rdStory" id="edHead">My Texts</div></header>\n  <div id="edBody" class="edBody"></div>\n</div>\n\n<!-- \u5F79\u5272\u3092\u7B54\u3048\u308B\u30DC\u30BF\u30F3\uFF08Chunk Practice\uFF09 -->\n<div id="rolePick" class="rolePick" hidden></div>\n\n<div id="askBox" class="modal askBox" hidden><div class="sheet" role="alertdialog" aria-modal="true"><p id="askMsg" class="askMsg"></p><div class="btns"><button class="ghost" id="askNo">\u3084\u3081\u308B</button><button class="primary" id="askYes">OK</button></div></div></div>\n<div id="modal" class="modal" hidden><div id="sheet" class="sheet" role="dialog" aria-modal="true"></div></div>\n';
+  var view_default = '<!-- \u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF\u306E\u753B\u9762\uFF08game.js \u304C\u7BB1\u306E\u4E2D\u306B\u5165\u308C\u308B\uFF09\u3002\u65BD\u8A2D\u306E\u5165\u53E3\u306F #title \u306E data-face\uFF08arcade\uFF0Flesson\uFF0Flibrary\uFF09 -->\n\n<div class="app">\n  <header class="top">\n    <div class="logo">\u30C1\u30E3\u30F3\u30AF<span>\u30C1\u30E3\u30F3\u30AF</span></div>\n    <div class="meta"><span id="stageText">\u97621</span><span id="progText">1/6</span><span id="timeText" hidden>\u23F1 0.0</span><span><b id="score">0</b> pt</span></div>\n    <button id="gear" class="gear">\u8A2D\u5B9A</button>\n  </header>\n\n  <section class="board" id="board" aria-live="polite">\n    <div id="hist"></div>\n    <div class="line" id="line"></div>\n  </section>\n\n  <div class="tapZone" id="tapZone">\n  <section class="laneWrap" id="laneWrap" aria-label="\u6D41\u308C\u3066\u304F\u308B\u82F1\u6587">\n    <div class="strip" id="strip"></div>\n    <div class="cutline" id="cutline" data-lbl="\u3053\u3053\u3067\u533A\u5207\u308B"></div>\n    <div class="fadeL"></div><div class="fadeR"></div>\n  </section>\n  <div class="preview" id="preview"></div>\n\n  <section class="stage" id="stage" aria-label="\u6587\u306E\u7D75">\n    <div class="sgHint" id="sgHint">\u30C1\u30E3\u30F3\u30AF\u3092\u5F53\u3066\u308B\u3068\u3001\u7D75\u304C\u3067\u304D\u3066\u3044\u304F</div>\n    <span class="sgPlace" id="sgPlace"></span><span class="sgSign" id="sgSign"></span>\n    <div class="sgTime" id="sgTime"></div>\n    <div class="sgChar" id="sgChar"><span class="sgFace" id="sgFace"></span><span class="sgArt" id="sgArt"></span><span class="sgCap" id="sgCap"></span></div>\n    <div class="sgObj" id="sgObj"></div>\n    <span class="sgQ" id="sgQ"></span>\n    <span class="sgDone" id="sgDone">\u5B8C\u6210\uFF01</span>\n  </section>\n  <input type="range" id="scrub" class="scrub" min="0" max="10" value="0" step="1" hidden aria-label="\u30C9\u30E9\u30C3\u30B0\u3067\u4E00\u6C17\u306B\u5148\u3078\u9032\u3080">\n  <div class="ctrlRow">\n    <div class="navBtns" id="navBtns" hidden><button id="backBtn" class="navBtn" disabled aria-label="\u623B\u308B\uFF08\u3053\u306E\u30E2\u30FC\u30C9\u3067\u306F\u623B\u308C\u306A\u3044\uFF09">\u25C0</button><button id="fwdBtn" class="navBtn" aria-label="1\u8A9E\u9032\u3080">\u25B6</button></div>\n    <button id="cutBtn" class="cutBtn">\u533A\u5207\u308B<small id="cutHint">\u3053\u3053\u304B\u3089\u4E0B\u306A\u3089\u3001\u3069\u3053\u3092\u30BF\u30C3\u30D7\u3057\u3066\u3082\u533A\u5207\u308C\u308B</small></button>\n  </div>\n  </div>\n</div>\n\n<div id="count" class="count" hidden></div>\n<div id="startBox" class="modal" hidden style="align-items:center"><div class="sheet" style="text-align:center;align-items:center">\n  <h2 id="startTitle">\u97621</h2>\n  <p class="note" id="startNote"></p>\n  <button class="primary" id="startBtn" style="width:100%">\u30BF\u30C3\u30D7\u3057\u3066\u30B9\u30BF\u30FC\u30C8</button></div></div>\n<div id="title" class="titleScr" data-face="arcade" hidden>\n  <!-- \u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC\uFF1A\u904A\u3093\u3067\u935B\u3048\u308B -->\n  <div class="faceGame">\n    <div class="gLogo"><span class="p">\u30C1\u30E3\u30F3\u30AF</span><span class="b">\u30C1\u30E3\u30F3\u30AF</span></div>\n    <div class="gMenu">\n      <div class="tCard"><div class="tName">\u3055\u3089\u3055\u3089\u30C1\u30E3\u30F3\u30AF</div><div class="tDesc">\u81EA\u52D5\u3067\u6D41\u308C\u3066\u304F\u308B\u3088\uFF01</div>\n        <div class="tPlay"><button data-play="auto-one">\u30E9\u30F3\u30C0\u30E0</button><button data-play="auto-cont" class="b">\u304A\u306F\u306A\u3057</button></div></div>\n      <div class="tCard"><div class="tName">\u3088\u30FC\u3044\u3069\u3093\u30C1\u30E3\u30F3\u30AF</div><div class="tDesc">\u81EA\u5206\u3067\u9001\u3063\u3066\u3001\u306F\u3084\u304F\u5207\u308D\u3046\uFF01</div>\n        <div class="tPlay"><button data-play="manual-one">\u30E9\u30F3\u30C0\u30E0</button><button data-play="manual-cont" class="b">\u304A\u306F\u306A\u3057</button></div></div>\n      <div class="tCard"><div class="tName">\u30C1\u30E3\u30EC\u30F3\u30B8</div><div class="tDesc">30\u79D2\u30FB1\u5206\u3067\u3001\u4F55\u70B9\u3068\u308C\u308B\u304B\uFF01\uFF08\u5168\u30EC\u30D9\u30EB\u30FB\u81EA\u5206\u3067\u9001\u308B\uFF09</div>\n        <div class="tPlay"><button data-timed="30">30\u79D2</button><button data-timed="60" class="b">1\u5206</button></div>\n        <button class="tSet" data-rank style="margin-top:6px">\u30E9\u30F3\u30AD\u30F3\u30B0\u3092\u898B\u308B</button></div>\n      <p class="tDesc" id="lvHint" style="text-align:center;margin:2px 0 0"></p>\n      <button class="tSet" data-open-set>\u8A2D\u5B9A</button>\n      <button class="tSet" data-howto="arcade">\u2753 \u904A\u3073\u65B9</button>\n    </div>\n  </div>\n  <!-- \u5B66\u6821\uFF1A\u30C1\u30E3\u30F3\u30AF\u7DF4\u7FD2\uFF08\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u30FB\u5F79\u5272\u3082\u7B54\u3048\u308B\uFF09 -->\n  <div class="faceLesson faceStudy">\n    <img class="sChara" data-chara="boy" alt=""><div class="sLogo"><span class="a">CHUNK</span><span class="b">LESSON</span></div><div class="sSub">SCHOOL</div>\n    <div class="sMenu">\n      <button data-study="lesson"><b>Lesson</b><small>\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u5B66\u3076\uFF1A\u300C\u8AAD\u3080\u30FB\u805E\u304F\u300D\u300C\u8A71\u3059\u30FB\u66F8\u304F\u300D\u304B\u3089\u9078\u3076</small><i>\u2192</i></button>\n      <button data-study="practice"><b>Chunk Practice</b><small>\u6587\u7AE0\u3092\u9078\u3093\u3067\u3001\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u30FB\u5F79\u5272\u3082\u7B54\u3048\u308B</small><i>\u2192</i></button>\n      <button data-study="random"><b>Random Practice</b><small>\u5185\u8535\u306E\u4F8B\u6587\u3068\u77ED\u6587\u304B\u3089\u3001\u30E9\u30F3\u30C0\u30E0\u306B\u7DF4\u7FD2</small><i>\u2192</i></button>\n      <button data-open-set><b>Settings</b><small>\u901F\u3055\u30FB\u6587\u5B57\u306E\u5927\u304D\u3055\u30FB\u97F3</small><i>\u2192</i></button>\n      <button data-howto="lesson"><b>How to Play</b><small>\u904A\u3073\u65B9</small><i>\u2192</i></button>\n    </div>\n    <div class="sMenu lessonSub" hidden>\n      <button data-study="story"><b>\u8AAD\u3080\u30FB\u805E\u304F</b><small>Chunk Story\uFF1A\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u3001\u30C1\u30E3\u30F3\u30AF\u306E\u8AAD\u307F\u65B9\u3092\u5B66\u3076</small><i>\u2192</i></button>\n      <button data-study="make"><b>\u8A71\u3059\u30FB\u66F8\u304F</b><small>2\u4EBA\u306E\u3084\u308A\u3068\u308A\u3067\u3001\u6587\u3092\u4F5C\u308B</small><i>\u2192</i></button>\n      <button data-lesson-back><b>\u2190 \u3082\u3069\u308B</b><small>\u5B66\u6821\u306E\u30E1\u30CB\u30E5\u30FC\u3078</small><i></i></button>\n    </div>\n  </div>\n  <!-- \u56F3\u66F8\u9928\uFF1A\u30EA\u30FC\u30C7\u30A3\u30F3\u30B0\u30FB\u9577\u6587\u306E\u767B\u9332\u3068\u5171\u6709 -->\n  <div class="faceLibrary faceStudy">\n    <img class="sChara" data-chara="girl" alt=""><div class="sLogo"><span class="a">CHUNK</span><span class="b">READING</span></div><div class="sSub">LIBRARY</div>\n    <div class="sMenu">\n      <button data-study="read"><b>Reading</b><small>\u9577\u6587\u3092\u8AAD\u3093\u3067\u8A2D\u554F\u306B\u7B54\u3048\u308B\uFF08\u5185\u8535\u30FB\u307F\u3093\u306A\u306E\u9577\u6587\u30FBMy Texts\uFF09</small><i>\u2192</i></button>\n      <button data-study="texts"><b>My Texts</b><small>\u9577\u6587\u30FB\u77ED\u6587\u306E\u767B\u9332\u3001\u554F\u984C\u306E\u4F5C\u6210\u3001\u5171\u6709</small><i>\u2192</i></button>\n      <button data-open-set><b>Settings</b><small>\u901F\u3055\u30FB\u6587\u5B57\u306E\u5927\u304D\u3055\u30FB\u97F3</small><i>\u2192</i></button>\n      <button data-howto="library"><b>How to Play</b><small>\u904A\u3073\u65B9</small><i>\u2192</i></button>\n    </div>\n  </div>\n</div>\n\n<!-- My Texts\uFF08\u9577\u6587\u306E\u767B\u9332\u30FB\u554F\u984C\u306E\u4F5C\u6210\uFF09 -->\n<div id="edView" class="edView" hidden>\n  <header class="top"><button class="gear" id="edBack">\u2190 Back</button><div class="rdStory" id="edHead">My Texts</div></header>\n  <div id="edBody" class="edBody"></div>\n</div>\n\n<!-- \u5F79\u5272\u3092\u7B54\u3048\u308B\u30DC\u30BF\u30F3\uFF08Chunk Practice\uFF09 -->\n<div id="rolePick" class="rolePick" hidden></div>\n\n<div id="askBox" class="modal askBox" hidden><div class="sheet" role="alertdialog" aria-modal="true"><p id="askMsg" class="askMsg"></p><div class="btns"><button class="ghost" id="askNo">\u3084\u3081\u308B</button><button class="primary" id="askYes">OK</button></div></div></div>\n<div id="modal" class="modal" hidden><div id="sheet" class="sheet" role="dialog" aria-modal="true"></div></div>\n';
 
   // games/chunkchunk/src/data.js
   var ONE_TIERS = [
@@ -1554,6 +1554,169 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     };
     document.addEventListener("click", h, true);
     ENV.offs.push(() => document.removeEventListener("click", h, true));
+  }
+
+  // core/coach.js
+  var NAME = { g: "\u5973\u306E\u5B50", b: "\u7537\u306E\u5B50" };
+  var defFace = (w, f) => `g/chunkchunk/img/chara/${w === "b" ? "boy" : "girl"}/${f || "normal"}.webp`;
+  function runCoach(steps, opt2 = {}) {
+    if (!steps || !steps.length) {
+      opt2.onDone && opt2.onDone(true);
+      return { stop() {
+      } };
+    }
+    const faceOf = opt2.face || defFace;
+    let i = 0, done = false, timer2 = 0;
+    const ov = document.createElement("div");
+    ov.className = "cc-coach";
+    ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-hole two" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">\u3068\u3070\u3059</button><button class="cnx">\u3064\u304E\u3078 \u25B6</button><div class="cwt" hidden>\u3084\u3063\u3066\u307F\u3088\u3046</div></div>';
+    document.body.appendChild(ov);
+    const q = (s) => ov.querySelector(s), hole = q(".cc-hole"), hole2 = q(".cc-hole.two"), box = q(".cc-box"), img = q(".cf");
+    img.onerror = () => {
+      img.hidden = true;
+      box.classList.add("nofc");
+    };
+    const finish = (ok) => {
+      if (done) return;
+      done = true;
+      clearInterval(timer2);
+      removeEventListener("resize", place);
+      ov.remove();
+      opt2.onDone && opt2.onDone(ok);
+    };
+    const target = () => {
+      const s = steps[i];
+      if (!s || !s.sel) return null;
+      try {
+        return document.querySelector(s.sel);
+      } catch (e) {
+        return null;
+      }
+    };
+    const ring = (h, el, free) => {
+      const r = el && el.getBoundingClientRect();
+      if (!r || r.width <= 0 || r.height <= 0) {
+        h.hidden = true;
+        return false;
+      }
+      const p = 6;
+      h.hidden = false;
+      h.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`;
+      h.classList.toggle("free", free);
+      return true;
+    };
+    function place() {
+      const s = steps[i], free = !!s.wait;
+      let el2 = null;
+      if (s.also) {
+        try {
+          el2 = document.querySelector(s.also);
+        } catch (e) {
+        }
+      }
+      const ok = ring(hole, target(), free);
+      ring(hole2, el2, true);
+      ov.classList.toggle("has", ok);
+      ov.classList.toggle("free", free);
+      const r = ok && target().getBoundingClientRect();
+      box.classList.toggle("top", free || !!(r && r.top + r.height / 2 > innerHeight * 0.55));
+    }
+    function show() {
+      const s = steps[i];
+      const u = faceOf(s.w, s.f);
+      if (u) {
+        img.hidden = false;
+        box.classList.remove("nofc");
+        img.src = u;
+      } else {
+        img.hidden = true;
+        box.classList.add("nofc");
+      }
+      const nm = q(".cn");
+      nm.textContent = NAME[s.w] || NAME.g;
+      nm.className = "cn " + (s.w || "g");
+      q(".ct").textContent = s.t;
+      ov.classList.toggle("pass", !!s.wait);
+      q(".cnx").hidden = !!s.wait;
+      q(".cwt").hidden = !s.wait;
+      q(".cnx").textContent = i === steps.length - 1 ? "\u304A\u308F\u308A \u2713" : "\u3064\u304E\u3078 \u25B6";
+      place();
+      box.classList.remove("pop");
+      void box.offsetWidth;
+      box.classList.add("pop");
+    }
+    function next() {
+      if (done) return;
+      i++;
+      if (i >= steps.length) return finish(true);
+      show();
+    }
+    q(".cnx").onclick = (e) => {
+      e.stopPropagation();
+      next();
+    };
+    q(".cskip").onclick = (e) => {
+      e.stopPropagation();
+      finish(false);
+    };
+    box.onclick = (e) => {
+      if (e.target.closest("button")) return;
+      if (!steps[i].wait) next();
+    };
+    addEventListener("resize", place);
+    timer2 = setInterval(() => {
+      place();
+      const s = steps[i];
+      if (s && s.wait && !s._ok) {
+        try {
+          if (s.wait()) {
+            s._ok = 1;
+            setTimeout(next, 600);
+          }
+        } catch (e) {
+        }
+      }
+    }, 250);
+    show();
+    return { stop() {
+      finish(false);
+    } };
+  }
+
+  // games/chunkchunk/src/howto.js
+  var HOW = {
+    arcade: [
+      { w: "g", f: "joy", t: "\u30C1\u30E3\u30F3\u30AF\u30C1\u30E3\u30F3\u30AF\u306F\u3001\u82F1\u6587\u3092\u3001\u610F\u5473\u306E\u307E\u3068\u307E\u308A\uFF08\u30C1\u30E3\u30F3\u30AF\uFF09\u3067\u533A\u5207\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002" },
+      { w: "b", t: "\u6587\u306F\u3001\u30B9\u30BF\u30FC\u30C8\u306E\u3068\u304D\u306B\u3001\u307E\u305A1\u6587\u307E\u308B\u3054\u3068\u8AAD\u307F\u4E0A\u3052\u3089\u308C\u308B\u3088\u3002\u97F3\u3092\u805E\u3044\u3066\u3001\u5207\u308C\u76EE\u3092\u8003\u3048\u3088\u3046\u3002" },
+      { w: "g", t: "\u300C\u3055\u3089\u3055\u3089\u30C1\u30E3\u30F3\u30AF\u300D\u306F\u3001\u81EA\u52D5\u3067\u6D41\u308C\u3066\u304F\u308B\u82F1\u6587\u3092\u3001\u5207\u308C\u76EE\u3067\u300C\u30C1\u30E3\u30F3\u30AF\uFF01\u300D\u3068\u30BF\u30C3\u30D7\u3059\u308B\u3088\u3002" },
+      { w: "b", t: "\u300C\u3088\u30FC\u3044\u3069\u3093\u30C1\u30E3\u30F3\u30AF\u300D\u306F\u3001\u25B6\u30671\u8A9E\u305A\u3064\u9032\u3081\u3066\u3001\u5207\u308C\u76EE\u3067\u300C\u533A\u5207\u308B\u300D\u3092\u62BC\u3059\u3088\u3002\u307E\u3061\u304C\u3048\u305F\u3089\u25C0\u3067\u623B\u308C\u308B\u3002" },
+      { w: "g", t: "\u300C\u30C1\u30E3\u30EC\u30F3\u30B8\u300D\u306F\u300130\u79D2\u304B1\u5206\u3067\u3001\u4F55\u70B9\u3068\u308C\u308B\u304B\u3002\u30B3\u30F3\u30DC\u304C\u3064\u306A\u304C\u308B\u3068\u3001\u70B9\u304C\u4E0A\u304C\u308B\u3088\u3002" },
+      { w: "b", f: "idea", t: "\u300C\u30E9\u30F3\u30C0\u30E0\u300D\u306F1\u6587\u305A\u3064\u3001\u300C\u304A\u306F\u306A\u3057\u300D\u306F\u7269\u8A9E\u3092\u7D9A\u3051\u3066\u904A\u3079\u308B\u3088\u3002" }
+    ],
+    lesson: [
+      { w: "g", f: "joy", t: "\u3053\u3053\u306F\u5B66\u6821\u3002\u30C1\u30E3\u30F3\u30AF\u306E\u5207\u308A\u65B9\u3092\u3001\u7DF4\u7FD2\u3059\u308B\u3068\u3053\u308D\u3060\u3088\u3002" },
+      { w: "b", t: "\u300CLesson\u300D\u306F\u3001\u304A\u8A71\u3068\u30B2\u30FC\u30E0\u3067\u5B66\u3076\u3088\u3002\u300C\u8AAD\u3080\u30FB\u805E\u304F\u300D\u3068\u300C\u8A71\u3059\u30FB\u66F8\u304F\u300D\u304B\u3089\u9078\u3079\u308B\u3088\u3002" },
+      { w: "g", t: "\u300CChunk Practice\u300D\u306F\u3001\u6587\u7AE0\u3092\u9078\u3093\u3067\u3001\u81EA\u5206\u3067\u9001\u3063\u3066\u5207\u308B\u7DF4\u7FD2\u3060\u3088\u3002" },
+      { w: "b", f: "idea", t: "\u300CRandom Practice\u300D\u306F\u3001\u4F8B\u6587\u304B\u3089\u30E9\u30F3\u30C0\u30E0\u306B\u7DF4\u7FD2\u3067\u304D\u308B\u3088\u3002" }
+    ],
+    library: [
+      { w: "g", f: "joy", t: "\u3053\u3053\u306F\u56F3\u66F8\u9928\u3002\u82F1\u8A9E\u306E\u6587\u7AE0\u3092\u3001\u8AAD\u3093\u3060\u308A\u767B\u9332\u3057\u305F\u308A\u3059\u308B\u3068\u3053\u308D\u3060\u3088\u3002" },
+      { w: "b", t: "\u300CReading\u300D\u306F\u3001\u9577\u6587\u3092\u8AAD\u3093\u3067\u3001\u554F\u984C\u306B\u7B54\u3048\u308B\u3088\u3002\u5206\u304B\u3089\u306A\u3044\u5358\u8A9E\u306F\u3001\u8F9E\u66F8\u3067\u898B\u3089\u308C\u308B\u3088\u3002" },
+      { w: "g", f: "idea", t: "\u300CMy Texts\u300D\u3067\u306F\u3001\u81EA\u5206\u306E\u9577\u6587\u3084\u77ED\u6587\u3092\u767B\u9332\u3057\u3066\u3001\u554F\u984C\u3082\u4F5C\u308C\u308B\u3088\u3002" }
+    ]
+  };
+  function initHowto(root, settings2, save) {
+    root.querySelectorAll("[data-howto]").forEach((b) => {
+      const menu = b.parentElement;
+      if (!settings2.howSeen) menu.prepend(b);
+      b.onclick = () => {
+        runCoach(HOW[b.dataset.howto] || HOW.arcade);
+        if (!settings2.howSeen) {
+          settings2.howSeen = true;
+          save();
+        }
+      };
+    });
   }
 
   // games/chunkchunk/src/shorts.js
@@ -2164,6 +2327,7 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
       bindSettingRows();
       $("closeBtn").onclick = closeSheet;
     });
+    initHowto($("title"), settings, saveSettings);
     document.querySelectorAll("[data-study]").forEach((b) => b.onclick = () => {
       primeSpeech();
       unlockAudio();

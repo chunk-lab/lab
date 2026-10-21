@@ -22,7 +22,7 @@ export default {
     el.classList.add('ct-cards');
     const root = document.createElement('div'); root.className = 'cc-app'; el.appendChild(root);
     const off = mount(root);
-    const mo = new MutationObserver(() => ctx.showBack(!!root.querySelector('#go')));   /* タイトル画面のときだけ「戻る」 */
+    const mo = new MutationObserver(() => ctx.showBack(!!(root.querySelector('#go') || root.querySelector('.end'))));   /* ゲーム中（ステージ・お店）以外は「街へ」を出す */
     mo.observe(root, { childList: true, subtree: true }); ctx.showBack(true);
     return { unmount() { mo.disconnect(); off && off(); try { ctx.core.speech.stop(); } catch (e) { } root.remove(); } };
   }

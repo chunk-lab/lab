@@ -11,7 +11,7 @@ export default {
       startScreen: 'title', storage: ctx.store, core: { sound: ctx.core.sound, speech: ctx.core.speech },
       openSettings: () => ctx.core.ui.settings(),
       onEvent: (n, d) => {
-        if (n === 'screen') ctx.showBack(['title', 'modes', 'splash'].includes(d.name));
+        if (n === 'screen') ctx.showBack(!['game', 'tutorial'].includes(d.name));
         if (n === 'result') ctx.report('result', { mode: d.mode, score: d.score });
       }
     });

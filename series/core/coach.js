@@ -9,16 +9,20 @@ export function runCoach(steps, opt = {}) {
   const faceOf = opt.face || defFace;
   let i = 0, done = false, timer = 0;
   const ov = document.createElement('div'); ov.className = 'cc-coach';
-  ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">とばす</button><button class="cnx">つぎへ ▶</button><div class="cwt" hidden>やってみよう</div></div>';
+  ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-hole two" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">とばす</button><button class="cnx">つぎへ ▶</button><div class="cwt" hidden>やってみよう</div></div>';
   document.body.appendChild(ov);
-  const q = s => ov.querySelector(s), hole = q('.cc-hole'), box = q('.cc-box'), img = q('.cf');
+  const q = s => ov.querySelector(s), hole = q('.cc-hole'), hole2 = q('.cc-hole.two'), box = q('.cc-box'), img = q('.cf');
   img.onerror = () => { img.hidden = true; box.classList.add('nofc'); };
   const finish = ok => { if (done) return; done = true; clearInterval(timer); removeEventListener('resize', place); ov.remove(); opt.onDone && opt.onDone(ok); };
   const target = () => { const s = steps[i]; if (!s || !s.sel) return null; try { return document.querySelector(s.sel); } catch (e) { return null; } };
+  const ring = (h, el, free) => { const r = el && el.getBoundingClientRect(); if (!r || r.width <= 0 || r.height <= 0) { h.hidden = true; return false; } const p = 6; h.hidden = false; h.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`; h.classList.toggle('free', free); return true; };
   function place() {
-    const el = target();
-    if (el) { const r = el.getBoundingClientRect(); if (r.width > 0 && r.height > 0) { const p = 6; hole.hidden = false; hole.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`; ov.classList.add('has'); box.classList.toggle('top', r.top + r.height / 2 > innerHeight * .55); return; } }
-    hole.hidden = true; ov.classList.remove('has'); box.classList.remove('top');
+    const s = steps[i], free = !!s.wait;   // 「やってみよう」の場面は、暗くしない（触るものが暗いと選びにくい）
+    let el2 = null; if (s.also) { try { el2 = document.querySelector(s.also); } catch (e) { } }
+    const ok = ring(hole, target(), free); ring(hole2, el2, true);
+    ov.classList.toggle('has', ok); ov.classList.toggle('free', free);
+    const r = ok && target().getBoundingClientRect();
+    box.classList.toggle('top', free || !!(r && r.top + r.height / 2 > innerHeight * .55));   // 触る場面は説明を上に出して、下の手札などを隠さない
   }
   function show() {
     const s = steps[i];

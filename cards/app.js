@@ -3865,9 +3865,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     let i = 0, done = false, timer = 0;
     const ov = document.createElement("div");
     ov.className = "cc-coach";
-    ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">\u3068\u3070\u3059</button><button class="cnx">\u3064\u304E\u3078 \u25B6</button><div class="cwt" hidden>\u3084\u3063\u3066\u307F\u3088\u3046</div></div>';
+    ov.innerHTML = '<div class="cc-dim"></div><div class="cc-hole" hidden></div><div class="cc-hole two" hidden></div><div class="cc-box"><img class="cf" alt=""><div class="cn"></div><div class="ct"></div><button class="cskip">\u3068\u3070\u3059</button><button class="cnx">\u3064\u304E\u3078 \u25B6</button><div class="cwt" hidden>\u3084\u3063\u3066\u307F\u3088\u3046</div></div>';
     document.body.appendChild(ov);
-    const q = (s) => ov.querySelector(s), hole = q(".cc-hole"), box = q(".cc-box"), img = q(".cf");
+    const q = (s) => ov.querySelector(s), hole = q(".cc-hole"), hole2 = q(".cc-hole.two"), box = q(".cc-box"), img = q(".cf");
     img.onerror = () => {
       img.hidden = true;
       box.classList.add("nofc");
@@ -3889,22 +3889,33 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         return null;
       }
     };
+    const ring = (h, el3, free) => {
+      const r = el3 && el3.getBoundingClientRect();
+      if (!r || r.width <= 0 || r.height <= 0) {
+        h.hidden = true;
+        return false;
+      }
+      const p = 6;
+      h.hidden = false;
+      h.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`;
+      h.classList.toggle("free", free);
+      return true;
+    };
     function place() {
-      const el3 = target();
-      if (el3) {
-        const r = el3.getBoundingClientRect();
-        if (r.width > 0 && r.height > 0) {
-          const p = 6;
-          hole.hidden = false;
-          hole.style.cssText = `left:${r.left - p}px;top:${r.top - p}px;width:${r.width + p * 2}px;height:${r.height + p * 2}px`;
-          ov.classList.add("has");
-          box.classList.toggle("top", r.top + r.height / 2 > innerHeight * 0.55);
-          return;
+      const s = steps[i], free = !!s.wait;
+      let el22 = null;
+      if (s.also) {
+        try {
+          el22 = document.querySelector(s.also);
+        } catch (e) {
         }
       }
-      hole.hidden = true;
-      ov.classList.remove("has");
-      box.classList.remove("top");
+      const ok = ring(hole, target(), free);
+      ring(hole2, el22, true);
+      ov.classList.toggle("has", ok);
+      ov.classList.toggle("free", free);
+      const r = ok && target().getBoundingClientRect();
+      box.classList.toggle("top", free || !!(r && r.top + r.height / 2 > innerHeight * 0.55));
     }
     function show() {
       const s = steps[i];
@@ -3973,7 +3984,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     { w: "g", f: "joy", t: "\u30C1\u30E3\u30F3\u30AF\u30FB\u30AB\u30FC\u30C9\u306F\u3001\u82F1\u8A9E\u306E\u300C\u8A9E\u9806\u300D\u3092\u6B63\u3057\u304F\u4E26\u3079\u308B\u30B2\u30FC\u30E0\u3060\u3088\u3002" },
     { w: "b", f: "idea", t: "\u6587\u306E\u610F\u5473\u306F\u3001\u5909\u3067\u3082\u3060\u3044\u3058\u3087\u3046\u3076\uFF01 \u5927\u4E8B\u306A\u306E\u306F\u3001\u8A9E\u9806\u304C\u6B63\u3057\u3044\u3053\u3068\u3002" },
     { w: "g", sel: "#hand", t: "\u4E0B\u306E\u624B\u672D\u304B\u3089\u3001\u4F7F\u3044\u305F\u3044\u30AB\u30FC\u30C9\u3092\u30BF\u30C3\u30D7\u3057\u3066\u306D\u3002" },
-    { w: "b", sel: "#row", wait: () => document.querySelectorAll("#row .card").length >= 2, t: "\u4E0A\u306E\u300C\u6587\u306E\u53F0\u300D\u306B\u3001\u82F1\u8A9E\u306E\u9806\u756A\u3067\u4E26\u3079\u3088\u3046\u3002\u307E\u305A2\u679A\u3001\u4E26\u3079\u3066\u307F\u3066\uFF01" },
+    { w: "b", sel: "#row", also: "#hand", wait: () => document.querySelectorAll("#row .card").length >= 2, t: "\u4E0A\u306E\u300C\u6587\u306E\u53F0\u300D\u306B\u3001\u82F1\u8A9E\u306E\u9806\u756A\u3067\u4E26\u3079\u3088\u3046\u3002\u307E\u305A2\u679A\u3001\u4E26\u3079\u3066\u307F\u3066\uFF01" },
     { w: "g", sel: "#row", t: "\u82F1\u8A9E\u306F\u300C\u3060\u308C\u304C \u2192 \u3069\u3046\u3059\u308B \u2192 \u306A\u306B\u3092\u300D\u306E\u9806\u3002\u30AB\u30FC\u30C9\u306F\u3001\u30C9\u30E9\u30C3\u30B0\u3067\u4E26\u3079\u304B\u3048\u3089\u308C\u308B\u3088\u3002" },
     { w: "b", sel: ".pv", t: "\u8A9E\u9806\u304C\u6B63\u3057\u3044\u3068\u3001\u300C\u5F79\u300D\u3068\u70B9\u304C\u3053\u3053\u306B\u51FA\u308B\u3088\u3002\u307E\u3061\u304C\u3063\u3066\u3044\u305F\u3089\u3001\u7406\u7531\u304C\u51FA\u308B\u3088\u3002" },
     { w: "g", sel: "#bt", t: "\u6B63\u3057\u304F\u4E26\u3093\u3060\u3089\u300C\u51FA\u3059!\u300D\u3092\u62BC\u305D\u3046\u3002\u70B9\u304C\u5165\u308B\u3088\u3002" },
@@ -4224,9 +4235,10 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     root.appendChild(s);
     return s;
   }
+  var HOWBTN = '<button class="btn ghost" id="tut">\u2753 \u904A\u3073\u65B9</button>';
   function showTitle() {
     var b = store.get("best") || {};
-    var s = screen('<div class="title"><div class="logo"><span>CHUNK</span><span>CARDS</span></div><div class="sub">\u82F1\u6587\u3067\u300C\u5F79\u300D\u3092\u3064\u304F\u308B \u30AB\u30FC\u30C9\u30B2\u30FC\u30E0</div><div class="lvsel" id="lvsel"></div><div class="lvdesc" id="lvd"></div><div class="fan"><div class="card n big" style="--r:-12deg">The</div><div class="card v big" style="--r:-4deg">dog</div><div class="card v big" style="--r:4deg">ate</div><div class="card m big" style="--r:12deg">quickly</div></div><button class="btn go" id="go">\u3072\u3068\u308A\u3067\u7DF4\u7FD2</button><button class="btn vs" id="vs">CPU\u3068\u5BFE\u6226</button><button class="btn ghost" id="how">\u3042\u305D\u3073\u304B\u305F</button><button class="btn ghost small" id="tut">\u{1F393} \u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB</button><button class="btn ghost small" id="cb">\u{1F4D6} \u540D\u30B3\u30F3\u30D3\u56F3\u9451</button>' + (b.stage ? '<div class="rec">\u6700\u9AD8:\u30B9\u30C6\u30FC\u30B8 ' + b.stage + " \u30FB " + (b.total || 0).toLocaleString() + "\u70B9" + (b.text ? "<br><i>" + b.text + "</i>" : "") + "</div>" : "") + "</div>");
+    var s = screen('<div class="title"><div class="logo"><span>CHUNK</span><span>CARDS</span></div><div class="sub">\u82F1\u6587\u3067\u300C\u5F79\u300D\u3092\u3064\u304F\u308B \u30AB\u30FC\u30C9\u30B2\u30FC\u30E0</div><div class="lvsel" id="lvsel"></div><div class="lvdesc" id="lvd"></div><div class="fan"><div class="card n big" style="--r:-12deg">The</div><div class="card v big" style="--r:-4deg">dog</div><div class="card v big" style="--r:4deg">ate</div><div class="card m big" style="--r:12deg">quickly</div></div>' + (store.get("howSeen") ? "" : HOWBTN) + '<button class="btn go" id="go">\u3072\u3068\u308A\u3067\u7DF4\u7FD2</button><button class="btn vs" id="vs">CPU\u3068\u5BFE\u6226</button><button class="btn ghost" id="how">\u304F\u308F\u3057\u3044\u30EB\u30FC\u30EB</button><button class="btn ghost small" id="cb">\u{1F4D6} \u540D\u30B3\u30F3\u30D3\u56F3\u9451</button>' + (store.get("howSeen") ? HOWBTN : "") + (b.stage ? '<div class="rec">\u6700\u9AD8:\u30B9\u30C6\u30FC\u30B8 ' + b.stage + " \u30FB " + (b.total || 0).toLocaleString() + "\u70B9" + (b.text ? "<br><i>" + b.text + "</i>" : "") + "</div>" : "") + "</div>");
     var LVD = ["a / the\u30FB\u524D\u7F6E\u8A5E\u30FBbe\u30FB\u52D5\u8A5E\u306E\u5F62\u3092\u5FD8\u308C\u3066\u3082\u3001\u81EA\u52D5\u3067\u88DC\u3063\u3066\u6587\u306B\u3057\u3066\u304F\u308C\u308B\u3002\u51FA\u3057\u305F\u3042\u3068\u306B1\u8A9E\u305A\u3064\u89E3\u8AAC(\u70B9 \xD71)", "a / the\u30FB\u524D\u7F6E\u8A5E\u30FB\u52D5\u8A5E\u306E\u5F62\u3082\u81EA\u5206\u3067\u9078\u3076(\u70B9 \xD71)", "\u3080\u305A\u304B\u3057\u3044\u8A9E\u304C\u5C71\u672D\u306B\u5165\u308A\u3001\u5019\u88DC\u306E\u5149\u3082\u306A\u3057(\u70B9 \xD71.3)"];
     function lvUI() {
       var box = $("#lvsel", s);
@@ -4256,7 +4268,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     $("#tut", s).onclick = function() {
       unlock();
       SFX.put();
-      store.set("tut", 0);
+      store.set("howSeen", 1);
+      G_.tutOn = true;
       newRun();
     };
     $("#cb", s).onclick = function() {
@@ -4295,11 +4308,12 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     G_.mode = "play";
     G_.mark = [];
     renderAll();
-    if (R.stage === 0 && !store.get("tut")) setTimeout(function() {
-      if (G_.row && G_.row.isConnected) runCoach(TUT, { onDone: function() {
-        store.set("tut", 1);
-      } });
-    }, 500);
+    if (G_.tutOn) {
+      G_.tutOn = false;
+      setTimeout(function() {
+        if (G_.row && G_.row.isConnected) runCoach(TUT);
+      }, 500);
+    }
   }
   var BE = /^(am|is|are|was|were|be|been|being)$/;
   var HV = /^(have|has|had|having)$/;
@@ -7058,7 +7072,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       root2.className = "cc-app";
       el3.appendChild(root2);
       const off = mount(root2);
-      const mo = new MutationObserver(() => ctx.showBack(!!root2.querySelector("#go")));
+      const mo = new MutationObserver(() => ctx.showBack(!!(root2.querySelector("#go") || root2.querySelector(".end"))));
       mo.observe(root2, { childList: true, subtree: true });
       ctx.showBack(true);
       return { unmount() {
