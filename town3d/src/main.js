@@ -6,6 +6,7 @@ import { createLocalNet, createWsNet } from './core/net.js';
 import { createAudio } from './core/audio.js';
 import { createAI, buildSystem } from './core/ai.js';
 import { openAiSetup, openChat } from './ui/aiui.js';
+import { openOgiri } from './ui/ogiri.js';
 import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
 import { buildAmbient } from './world/ambient.js';
@@ -223,9 +224,7 @@ export function mount(container, opt = {}) {
   // メニューの「act」:大喜利・格言・ハーモニカ(アプリを開かない、住人ならではのあそび)
   function doAct(r, m) {
     if (m.act === 'ogiri') {
-      const en = !!settings.en, d = r.def, i = Math.floor(Math.random() * d.topics.length);
-      const first = en ? `Ogiri time! Topic: "${d.topicsEn[i]}" You go first!` : `お題!「${d.topics[i]}」さあ、まずはあなたから答えてね!`;
-      const go = () => startChat(r, first);
+      const go = () => openOgiri({ hud, ai, def: r.def, en: !!settings.en });
       if (ai.ready) go(); else openAiSetup({ hud, ai, onDone: go });
     } else if (m.act === 'quote') showQuote(r);
     else if (m.act === 'harmonica') { audio.unlock(); audio.play('harmonica'); r.harpT = 7.6; hud.say('npc:' + r.def.id, '♪ ♪ ♪', 7); }

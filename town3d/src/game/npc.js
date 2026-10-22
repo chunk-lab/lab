@@ -56,15 +56,10 @@ export const RESIDENTS = [
   {
     // 大喜利チョコ:お題を出して、プレイヤーと答えを出し合う。点数と勝ち負けはチョコが決める(AIキーで遊ぶ)
     id: 'choco', tips: ["「Good one!」は『うまい!』。大喜利で、いい答えが出たときに使うよ", "「You got me!」は『やられた!』。笑わされたときの一言!", "「That's hilarious!」は『めっちゃ笑った』。ほめ言葉の最上級だね", "「Nailed it!」は『ばっちり決まった!』", "「punchline」は話のオチのこと。ここが大事なんだよ〜"], yomi: 'おおぎりちょこ', name: '大喜利チョコ', role: '大喜利の達人',
-    persona: 'お笑いと大喜利が大好きな、明るくて少し負けず嫌いの女の子。テンポのいいくだけた口調で、ツッコミも上手。笑いのセンスにはきびしいけど、いい答えは大げさによろこぶ。',
-    replyRule: '- 日本語で、3〜4文、110文字ほど。絵文字は使わない。1文を短く。',
-    extraRules: ['- 大喜利のあそび方:お題が出ているとき、相手が答えたら、毎回「相手の答えへの感想と点(10点満点)」→「自分の答えと自分の点(自分にも正直につける)」→「合計(チョコ◯点-あなた◯点)」→「次のお題」の順に書く。3問で終わり、最後は合計で勝ち負けを発表する。点は少し辛口、でも笑いのセンスは認める。', '- 相手が大喜利以外の話をしたら、ふつうにおしゃべりして、あとで「大喜利する?」とさそう。'],
-    maxChars: 150, maxTokens: 300,
-    topics: ['こんなコンビニは嫌だ。どんなコンビニ?', 'ひとこと言うだけで、場がしーんとなる魔法の言葉は?', 'ねこが急に大統領に! 最初に出した命令は?', 'こんな学校の給食は嫌だ。どんな給食?', '桃太郎が鬼ヶ島に持っていった、意外すぎる持ち物は?', 'タイムマシンで未来に行ったら、まず何があった?', 'ロボットが初めて言った、人間くさい一言は?', 'こんなカフェは嫌だ。どんなカフェ?', 'サンタクロースがクビになった理由は?', 'ゲームセンターに、ぜったいに置いてはいけないゲームは?'],
-    topicsEn: ['What kind of convenience store would be terrible? Describe it!', 'What is a magic phrase that makes the whole room go silent?', 'A cat suddenly became president! What was its first order?', 'What would a terrible school lunch be like?', 'Momotaro brought a surprising item to Demon Island. What was it?', 'You time-traveled to the future. What was the first thing you saw?', 'A robot said its first very human sentence. What was it?', 'What would a terrible cafe be like?', 'Why did Santa Claus get fired?', 'What game must never be placed in an arcade?'],
+    persona: 'お笑いと大喜利が好きな女の子。落ち着いた普通のため口で、テンションは上げすぎない。ツッコミは短く、聞かれたことにまっすぐ答える。大喜利の話が出たら「大喜利で勝負する」から遊べると伝える。',
     look: { skin: 0xffe1cf, hair: 0x5b3a2e, style: 'bob', top: 0x9c6a4a, bottom: 0xffd6e0, shoes: 0xffffff, acc: 'ribbon', accColor: 0xffb3c1 },
     schedule: [[7, 'plaza'], [11, 'cafe'], [15, 'gamecenter'], [19, 'plaza2'], [22, 'home', 'in']],
-    lines: { morning: ['おはよっ! 朝イチの大喜利、いっとく?', 'ねえねえ、今日のお題、もう考えてあるんだ。'], day: ['ひらめいた答えを、ここで試したくてウズウズしてたの!', '笑いはね、ちょっとズラすのがコツなんだよ。'], evening: ['夕方って、ふしぎとおもしろい答えが出るんだよね。', '勝負、受けて立つよ。'], night: ['夜は、変な答えほどウケるんだ。ふふっ。'] },
+    lines: { morning: ['おはよう。今日のお題を考えてるところ。', '朝は頭がすっきりしてて、いい答えが出やすいんだよね。'], day: ['大喜利、やる? いつでもいいよ。', '答えは短いほうが、意外とおもしろいんだ。'], evening: ['夕方になると、ひねった答えが浮かぶんだよね。', 'そろそろ一本、やっておく?'], night: ['夜は静かだから、考えるのにちょうどいいね。'] },
     menu: [{ label: '大喜利で勝負する', act: 'ogiri' }],
   },
   {

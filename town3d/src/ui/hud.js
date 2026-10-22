@@ -95,6 +95,7 @@ export const CSS = `
 .tw-status{min-height:22px;font-size:14px;font-weight:700;margin:8px 0}
 .tw-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px}.tw-actions .tw-btn{padding:9px 16px;font-size:14px;box-shadow:none;border:2px solid #eadff3}.tw-actions .main{background:var(--tw-mint);border-color:var(--tw-mint)}
 .tw-card h2 small{font-size:12px;color:var(--tw-sub);margin-left:8px;font-weight:700}
+.og-body{max-height:min(62vh,440px);overflow-y:auto;overscroll-behavior:contain}.og-t{font-weight:800;font-size:17px;margin:8px 0}.og-sub{font-size:13px;color:var(--tw-sub);font-weight:700;margin:4px 0}.og-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.og-ans{background:#fff;border-radius:14px;padding:8px 12px;margin:6px 0;font-size:15px;line-height:1.5}.og-ans b{display:block;font-size:12px;color:var(--tw-sub);font-weight:700}.og-sc{font-weight:800;color:var(--tw-pink)}
 .tw-log{height:min(46vh,340px);overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
 .tw-msg{max-width:84%;padding:8px 12px;border-radius:16px;font-size:15px;line-height:1.5;background:#fff;align-self:flex-start;user-select:text;-webkit-user-select:text}
 .tw-msg.me{align-self:flex-end;background:var(--tw-pink);color:#fff}.tw-msg.wait{opacity:.6}.tw-msg.err{background:#fff3e0;color:#9a6a3a}
