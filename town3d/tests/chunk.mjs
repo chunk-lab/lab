@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+const p = await b.newPage({ viewport: { width: 700, height: 500 } }); const errs = [];
+p.on('pageerror', e => errs.push(e.message));
+await p.goto('file://' + process.cwd() + '/dist/index.html'); await p.waitForTimeout(600); await p.click('.tw-start');
+await p.evaluate(() => town.setHour(12));
+const c = await p.evaluate(() => town.getState().npcs.chunkkun);
+await p.evaluate(([x, z]) => town.teleport(x + 2.4, z + 2.4, Math.atan2(-2.4, -2.4) + 0.75), c);
+await p.mouse.move(350, 250); for (let i = 0; i < 8; i++) await p.mouse.wheel(0, -300);
+await p.waitForTimeout(1500);
+await p.screenshot({ path: 'tests/shots/chunk.png' }); console.log(errs.length ? errs : 'no errors'); await b.close();

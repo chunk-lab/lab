@@ -1,0 +1,20 @@
+{
+ "name": "hoshimiya-town",
+ "version": "1.0.0",
+ "description": "",
+ "main": "index.js",
+ "scripts": {
+  "build": "node build.mjs",
+  "relay": "node server/relay.js"
+ },
+ "keywords": [],
+ "author": "",
+ "license": "ISC",
+ "dependencies": {
+  "esbuild": "^0.28.2",
+  "playwright": "^1.64.1",
+  "three": "^0.186.0",
+  "ws": "^8.22.0"
+ },
+ "type": "module"
+}
