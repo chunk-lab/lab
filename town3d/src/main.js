@@ -140,7 +140,7 @@ export function mount(container, opt = {}) {
     input.clear(); r.talking = true; talkingTo = r;
     audio.play('talk');
     const text = residents.lineFor(r, env.hour);
-    const choices = (r.def.menu || []).map(m => ({ label: m.label, fn: () => openApp(m.app, m.params) }));
+    const choices = (r.def.menu || []).map(m => ({ label: m.label, fn: () => (m.act ? doAct(r, m) : openApp(m.app, m.params)) }));
     choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => (ai.ready ? startChat(r, text) : openAiSetup({ hud, ai, onDone: () => startChat(r, text) })) });
     hud.dialog({ name: r.def.name, role: r.def.role, text, choices });
     bus.emit('talk', { npc: r.def.id });
@@ -154,10 +154,10 @@ export function mount(container, opt = {}) {
     n.pending = true;
     try { n.meaning = await ai.explain(n.text, n.sentence); } catch (_) {} finally { n.pending = false; saveNotes(); }
   }
-  function addNote({ kind, text, sentence, npc }) {
+  function addNote({ kind, text, sentence, npc, meaning }) {
     const key = text.trim().toLowerCase(), hit = notes.find(n => n.kind === kind && n.text.toLowerCase() === key);
     if (hit) { hit.count = (hit.count || 1) + 1; hit.npc = npc; saveNotes(); return `「${text}」をもう一度ほぞん(×${hit.count})`; }
-    const n = { id: 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), kind, text: text.trim(), sentence, npc, date: new Date().toLocaleDateString('ja-JP'), count: 1, meaning: '' };
+    const n = { id: 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), kind, text: text.trim(), sentence, npc, date: new Date().toLocaleDateString('ja-JP'), count: 1, meaning: meaning || '' };
     notes.push(n); saveNotes(); fillMeaning(n);
     return `「${text}」をノートに入れたよ`;
   }
@@ -220,6 +220,25 @@ export function mount(container, opt = {}) {
       }
     });
   }
+  // メニューの「act」:大喜利・格言・ハーモニカ(アプリを開かない、住人ならではのあそび)
+  function doAct(r, m) {
+    if (m.act === 'ogiri') {
+      const en = !!settings.en, d = r.def, i = Math.floor(Math.random() * d.topics.length);
+      const first = en ? `Ogiri time! Topic: "${d.topicsEn[i]}" You go first!` : `お題!「${d.topics[i]}」さあ、まずはあなたから答えてね!`;
+      const go = () => startChat(r, first);
+      if (ai.ready) go(); else openAiSetup({ hud, ai, onDone: go });
+    } else if (m.act === 'quote') showQuote(r);
+    else if (m.act === 'harmonica') { audio.unlock(); audio.play('harmonica'); r.harpT = 7.6; hud.say('npc:' + r.def.id, '♪ ♪ ♪', 7); }
+  }
+  function showQuote(r) {
+    const qs = r.def.quotes; let i = Math.floor(Math.random() * qs.length); if (i === r.qi) i = (i + 1) % qs.length; r.qi = i;
+    const q = qs[i], en = !!settings.en;
+    r.talking = true; talkingTo = r; input.clear();
+    const choices = [];
+    if (en) choices.push({ label: 'ことばノートに入れる', fn: () => hud.toast(addNote({ kind: 'phrase', text: q.en, sentence: `${q.who}の言葉`, meaning: q.ja, npc: r.def.name })) });
+    choices.push({ label: 'もうひとつ聞く', fn: () => showQuote(r) });
+    hud.dialog({ name: r.def.name, role: r.def.role, text: en ? `"${q.en}"(${q.ja}) ― ${q.who}。${q.note}` : `「${q.ja}」― ${q.who}。${q.note}`, choices });
+  }
   function startChat(r, first) {
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
@@ -234,7 +253,7 @@ export function mount(container, opt = {}) {
         const H = Math.floor(env.hour), M = Math.floor((env.hour % 1) * 60);
         const system = buildSystem({ npc: r.def, player: settings.name || 'あなた', hourText: `${H}時${M}分`, periodText: PERIOD[period(env.hour)], place: city.areaName(r.ch.root.position.x, r.ch.root.position.z), english: settings.en ? settings.enLevel : '', adult: ageOk() && !!settings.adult && r.def.adult !== false });
         try {
-          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-6)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, ...(settings.en ? { maxChars: 170, maxTokens: 130 } : {}) });
+          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-6)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, ...(settings.en ? { maxChars: 170, maxTokens: 130 } : r.def.maxChars ? { maxChars: r.def.maxChars, maxTokens: r.def.maxTokens || 260 } : {}) });
           hist.push({ role: 'assistant', text: out });
           hud.say('npc:' + r.def.id, out, 4);
           return out;

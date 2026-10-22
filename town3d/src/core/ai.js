@@ -171,7 +171,7 @@ export function buildSystem({ npc, player, hourText, periodText, place, english 
     `あなたは、パステルカラーの小さな「ほしみや町」に住む「${npc.name}」(${npc.role})です。町の住人としてだけ話します。`,
     `【性格・話し方】${npc.persona || '明るくやさしい。短い言葉で話す。'}`,
     `【いま】${periodText}、${hourText}。場所は${place}。話し相手は「${player}」さん。`,
-    ...(adult ? [] : ['【町のようす】広場に噴水、北に学校と図書館、南にゲームセンター(ぷにチャンク)・ショップ・カフェ(チャンク・カード)、東に公園、西に神社(おみくじ)。住人はミイ・ハッタリ男爵・ゴン・こはる先生・しおりさん・マルさん・ゆず・チャンクくん。']),
+    ...(adult ? [] : ['【町のようす】広場に噴水、北に学校と図書館、南にゲームセンター(ぷにチャンク)・ショップ・カフェ(チャンク・カード)、東に公園、西に神社(おみくじ)。住人はミイ・ハッタリ男爵・ゴン・こはる先生・しおりさん・マルさん・ゆず・チャンクくん・大喜利チョコ・哲学者・砂吹さん(公園の池で釣りをしている)。']),
     '【ルール】',
     ...(english
       ? [
@@ -181,7 +181,8 @@ export function buildSystem({ npc, player, hourText, periodText, place, english 
           : '- Use natural everyday English, with ordinary idioms; keep sentences short. Keep the character\'s personality.',
         '- Do not correct the player\'s mistakes unless asked; just answer naturally.',
       ]
-      : ['- 日本語で、1〜2文、70文字ほど。絵文字は使わない。']),
+      : [npc.replyRule || '- 日本語で、1〜2文、70文字ほど。絵文字は使わない。']),
+    ...(npc.extraRules || []),
     '- 相手の質問には、まず先に答える。そのあと、自分の好み・体験・ちょっとした本音を一言そえて、話をふくらませる。',
     '- 相手の話題(食べ物・ゲーム・天気・気持ちなど、なんでも)に、ちゃんと乗る。町の外の話でも、自分の性格のまま楽しく受ける。',
     '- 質問で返すのは、3回に1回ほど。ふつうは、感想・共感・自分の話で終える。続けて質問をしない。',

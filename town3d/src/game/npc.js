@@ -53,6 +53,54 @@ export const RESIDENTS = [
     lines: { morning: ['もちもち〜! おはよう!'], day: ['いっしょにチャンクつくろ!', 'ぼく、文ができると、のびるんだ!'], evening: ['ゲーセン行こうよ〜。'], night: ['ねむねむ……でも、まだ遊べるよ。'] },
     menu: [{ label: 'ぷにチャンクで遊ぶ', app: 'punichunk' }],
   },
+  {
+    // 大喜利チョコ:お題を出して、プレイヤーと答えを出し合う。点数と勝ち負けはチョコが決める(AIキーで遊ぶ)
+    id: 'choco', tips: ["「Good one!」は『うまい!』。大喜利で、いい答えが出たときに使うよ", "「You got me!」は『やられた!』。笑わされたときの一言!", "「That's hilarious!」は『めっちゃ笑った』。ほめ言葉の最上級だね", "「Nailed it!」は『ばっちり決まった!』", "「punchline」は話のオチのこと。ここが大事なんだよ〜"], yomi: 'おおぎりちょこ', name: '大喜利チョコ', role: '大喜利の達人',
+    persona: 'お笑いと大喜利が大好きな、明るくて少し負けず嫌いの女の子。テンポのいいくだけた口調で、ツッコミも上手。笑いのセンスにはきびしいけど、いい答えは大げさによろこぶ。',
+    replyRule: '- 日本語で、4〜5文、160文字ほど。絵文字は使わない。',
+    extraRules: ['- 大喜利のあそび方:お題が出ているとき、相手が答えたら、毎回「相手の答えへの感想と点(10点満点)」→「自分の答えと自分の点(自分にも正直につける)」→「合計(チョコ◯点-あなた◯点)」→「次のお題」の順に書く。3問で終わり、最後は合計で勝ち負けを発表する。点は少し辛口、でも笑いのセンスは認める。', '- 相手が大喜利以外の話をしたら、ふつうにおしゃべりして、あとで「大喜利する?」とさそう。'],
+    maxChars: 200, maxTokens: 400,
+    topics: ['こんなコンビニは嫌だ。どんなコンビニ?', 'ひとこと言うだけで、場がしーんとなる魔法の言葉は?', 'ねこが急に大統領に! 最初に出した命令は?', 'こんな学校の給食は嫌だ。どんな給食?', '桃太郎が鬼ヶ島に持っていった、意外すぎる持ち物は?', 'タイムマシンで未来に行ったら、まず何があった?', 'ロボットが初めて言った、人間くさい一言は?', 'こんなカフェは嫌だ。どんなカフェ?', 'サンタクロースがクビになった理由は?', 'ゲームセンターに、ぜったいに置いてはいけないゲームは?'],
+    topicsEn: ['What kind of convenience store would be terrible? Describe it!', 'What is a magic phrase that makes the whole room go silent?', 'A cat suddenly became president! What was its first order?', 'What would a terrible school lunch be like?', 'Momotaro brought a surprising item to Demon Island. What was it?', 'You time-traveled to the future. What was the first thing you saw?', 'A robot said its first very human sentence. What was it?', 'What would a terrible cafe be like?', 'Why did Santa Claus get fired?', 'What game must never be placed in an arcade?'],
+    look: { skin: 0xffe1cf, hair: 0x5b3a2e, style: 'bob', top: 0x9c6a4a, bottom: 0xffd6e0, shoes: 0xffffff, acc: 'ribbon', accColor: 0xffb3c1 },
+    schedule: [[7, 'plaza'], [11, 'cafe'], [15, 'gamecenter'], [19, 'plaza2'], [22, 'home', 'in']],
+    lines: { morning: ['おはよっ! 朝イチの大喜利、いっとく?', 'ねえねえ、今日のお題、もう考えてあるんだ。'], day: ['ひらめいた答えを、ここで試したくてウズウズしてたの!', '笑いはね、ちょっとズラすのがコツなんだよ。'], evening: ['夕方って、ふしぎとおもしろい答えが出るんだよね。', '勝負、受けて立つよ。'], night: ['夜は、変な答えほどウケるんだ。ふふっ。'] },
+    menu: [{ label: '大喜利で勝負する', act: 'ogiri' }],
+  },
+  {
+    // 哲学者:人生についていつも考えている。偉人の格言を教えてくれる(英語モードなら英語+訳)
+    id: 'tetsu', tips: ["「Food for thought.」は『考えさせられること』。哲学者の口ぐせです", "「Think twice.」は『よく考えて』。急がないほうがいいときの一言", "「deep down」は『心の奥では』。本音を話すときに使います", "「What's the point?」は『何の意味があるの?』。哲学的な問いの入口です", "「the meaning of life」は『人生の意味』。大きな話題ですね"], yomi: 'てつがくしゃ', name: '哲学者', role: '考えごとの人',
+    persona: '人生についていつも深く考えている、おだやかな人。ゆっくり、少し詩的に話す。ときどき偉人の言葉(ソクラテス・デカルト・老子・孔子・ニーチェなど)を引いて、そのあと自分の言葉で一言そえる。説教くさくならない。',
+    replyRule: '- 日本語で、2〜3文、100文字ほど。絵文字は使わない。',
+    extraRules: ['- 偉人の言葉を引くときは、出典が確かなものだけにする。あやふやなときは引用せず、自分の言葉で話す。'],
+    maxChars: 130, maxTokens: 260,
+    quotes: [
+      { en: 'The unexamined life is not worth living.', ja: '吟味されない人生は、生きるに値しない。', who: 'ソクラテス', note: '立ち止まって考える時間も、人生のうちなんだね。' },
+      { en: 'I think, therefore I am.', ja: 'われ思う、ゆえにわれあり。', who: 'デカルト', note: '疑っている自分がいる。それだけは、たしかなことなんだ。' },
+      { en: 'A journey of a thousand miles begins with a single step.', ja: '千里の道も、一歩から。', who: '老子', note: '大きなことも、足もとの一歩から始まるよ。' },
+      { en: 'It does not matter how slowly you go, as long as you do not stop.', ja: 'どんなにゆっくりでもいい。止まらなければ。', who: '孔子(の言葉とされる)', note: '速さより、続けることのほうが力になる。' },
+      { en: 'Life can only be understood backwards; but it must be lived forwards.', ja: '人生は後ろ向きにしか理解できない。でも、前に向かって生きるしかない。', who: 'キルケゴール', note: 'わからないまま進んで、あとから意味に気づくんだね。' },
+      { en: 'He who has a why to live can bear almost any how.', ja: '生きる理由をもつ人は、ほとんどどんなやり方にも耐えられる。', who: 'ニーチェ', note: '「なぜ」があると、人は強くなれるのかもしれない。' },
+      { en: 'Happiness depends upon ourselves.', ja: '幸せは、自分しだい。', who: 'アリストテレス', note: '外ではなく、自分の中に答えがあるって、すてきだよね。' },
+      { en: 'Knowing others is wisdom; knowing yourself is enlightenment.', ja: '人を知る者は知恵があり、自分を知る者は明るい。', who: '老子', note: '自分のことが、いちばんむずかしい。' },
+      { en: 'Nothing is permanent except change.', ja: '変わらないものは、変わるということだけ。', who: 'ヘラクレイトス(とされる言葉)', note: '今日のつらさも楽しさも、少しずつ形をかえていくよ。' },
+      { en: 'The only thing we have to fear is fear itself.', ja: '恐れるべきは、恐れそのものだけだ。', who: 'ルーズベルト', note: '不安は、考えているうちに大きくなるものだからね。' },
+    ],
+    look: { skin: 0xf6d2bb, hair: 0xe3e0dc, style: 'short', top: 0x8a7bb0, bottom: 0x5a4a6b, shoes: 0x7a6a5a, acc: 'glasses', accColor: 0x8a5a44 },
+    schedule: [[6, 'shrine'], [10, 'library'], [15, 'park'], [19, 'busstop'], [22, 'home', 'in']],
+    lines: { morning: ['朝の静けさは、考えごとにぴったりなんだ。', 'おはよう。今日は、どんなことを考えようか。'], day: ['ふと思ったんだ。「ふつう」って、だれが決めたんだろうね。', '本を読んでいると、昔の人と話している気分になるよ。'], evening: ['夕ぐれは、一日をふり返るのにいい時間だね。', '空の色が変わるのを見ていると、時間の流れを感じるよ。'], night: ['夜は、考えが深いところまで降りていくんだ。', '星を見ていると、自分の悩みが小さく思えてくるね。'] },
+    menu: [{ label: '格言をひとつ聞く', act: 'quote' }],
+  },
+  {
+    // 砂吹さん:さすらいの旅人。池のほとりで釣りをしている。頼むとハーモニカを吹いてくれる
+    id: 'suna', tips: ["「Any luck?」は釣りの定番の声かけ。『釣れた?』ってことさ", "「Nothing's biting.」は『ぜんぜん食いつかない』。釣れない日のぼやきだな", "「Take it easy.」は『のんびりいこう』。ぼくの生き方みたいなものさ", "「Go with the flow.」は『流れにまかせて』。川と同じだね", "「catch of the day」は『今日の釣果』。とれたら自慢できる"], yomi: 'すなぶきさん', name: '砂吹さん', role: 'さすらいの旅人',
+    persona: '自由なさすらいの旅人。ひょうひょうとしていて、口数は少なめでおだやか。「〜さ」「〜だな」と話す。持ち物はハーモニカと釣り竿だけ。池でアヒルをながめながら釣りをするのが好きで、釣れなくても気にしない。',
+    look: { skin: 0xf2c9ac, hair: 0x8a5a44, style: 'short', top: 0x7f9a52, bottom: 0x8a6b4a, shoes: 0x5a4a3a, acc: 'snuf', accColor: 0x7a8f4a },
+    angler: { spot: [46, 22.5], face: [46, 18] },
+    schedule: [[5, 'pond'], [17, 'park2'], [19, 'plaza2'], [21, 'pond']],
+    lines: { morning: ['おはよう。朝の池は、水がきらきらしてるのさ。', 'まだ一匹も釣れてないけど、いい朝だな。'], day: ['釣れなくていいんだ。のんびりしに来てるだけさ。', 'あのアヒル、ぼくのことを見張ってるみたいだな。'], evening: ['夕方は風がやさしいな。そろそろ歩きたくなる。', '今日はどこまで行こうかな。気のむくままさ。'], night: ['夜の池は静かだな。星が水に映ってるのさ。'] },
+    menu: [{ label: 'ハーモニカをお願いする', act: 'harmonica' }],
+  },
 ];
 
 function period(h) { return h < 5 ? 'night' : h < 10 ? 'morning' : h < 16.5 ? 'day' : h < 19.5 ? 'evening' : 'night'; }
@@ -116,7 +164,7 @@ export function createResidents(scene, graph, getHour) {
           if (r.stopWill === undefined) { r.stopWill = Math.random() < 0.6; r.stopLimit = 1 + Math.random() * 9; }
           if (!r.free) { r.stopT = (r.stopT || 0) + dt; if (!r.stopWill || anyTalking || r.stopT > r.stopLimit) r.free = true; }
         }
-        if (r.talking || (r.near && !r.hidden && !r.free)) {
+        if (r.talking || r.harpT > 0 || (r.near && !r.hidden && !r.free)) {
           r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(player.x - p.x, player.z - p.z), Math.min(1, dt * 8));
         } else if (r.path.length) {
           const n = graph.nodes[r.path[0]];
@@ -124,6 +172,11 @@ export function createResidents(scene, graph, getHour) {
           if (Math.hypot(n.x - p.x, n.z - p.z) < 0.4) { r.node = r.path.shift(); if (!r.path.length) r.wait = 1 + Math.random() * 2; }
         } else if (r.goal.inside) {
           if (!r.hidden) { r.hidden = true; r.ch.root.visible = false; }
+        } else if (r.def.angler && r.goal.place === 'pond') {
+          // 池のほとりの決まった場所で、釣りをする(うろうろしない)
+          const a = r.def.angler;
+          if (Math.hypot(a.spot[0] - p.x, a.spot[1] - p.z) > 0.3) target = a.spot;
+          else r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(a.face[0] - p.x, a.face[1] - p.z), Math.min(1, dt * 4));
         } else {
           // 目的地のまわりをうろうろ。ときどき、町のほかの場所へ散歩に出る(もどるときは、予定の場所へ)
           r.roamT = (r.roamT ?? 6 + Math.random() * 20) - dt;
@@ -164,6 +217,12 @@ export function createResidents(scene, graph, getHour) {
           if (od < 1.1) { const k = od > 0.01 ? (1.1 - od) * Math.min(1, dt * 2.5) / od : 0.02; p.x += (od > 0.01 ? ox : Math.random() - 0.5) * k; p.z += (od > 0.01 ? oz : Math.random() - 0.5) * k; }
         }
         r.speed = speed;
+        // ポーズ:ハーモニカを吹いている間 / 池のそばで釣り竿を構えているとき
+        if (r.harpT > 0) r.harpT -= dt;
+        if (r.def.angler) {
+          const a = r.def.angler;
+          r.ch.pose = r.harpT > 0 ? 'harp' : (r.goal.place === 'pond' && !r.hidden && Math.hypot(a.spot[0] - p.x, a.spot[1] - p.z) < 0.6 ? 'fish' : null);
+        }
         if (r.ch.root.visible) r.ch.update(dt, speed);
       }
     },

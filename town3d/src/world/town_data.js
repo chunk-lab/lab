@@ -48,7 +48,7 @@ function chain(...ids) { for (let i = 1; i < ids.length; i++) { N[ids[i - 1]].li
 [-16, -25, -36, -45, -58].forEach(x => node('ew' + x, x, 0));
 [-30, -18, 18, 30].forEach(x => { node('nc' + x, x, -36); node('sc' + x, x, 36); });
 for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2; node('p' + i, Math.sin(a) * 9.5, -Math.cos(a) * 9.5); }
-node('pk1', 40, 11); node('pk2', 30, 19); node('pk3', 41, 26); node('pk4', 53, 20); node('pk5', 53, 10);
+node('pk1', 40, 11); node('pk2', 30, 19); node('pk3', 41, 26); node('pk4', 53, 20); node('pk5', 53, 10); node('pd1', 46, 22.5);
 node('sh1', -45, -9); node('sh2', -45, -18);
 chain('ns-60', 'ns-48', 'ns-36', 'ns-25', 'ns-16', 'p0');
 chain('p4', 'ns16', 'ns25', 'ns36', 'ns47', 'ns60');
@@ -58,11 +58,12 @@ chain('nc-30', 'nc-18', 'ns-36', 'nc18', 'nc30');
 chain('sc-30', 'sc-18', 'ns36', 'sc18', 'sc30');
 chain('p0', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p0');
 chain('ew40', 'pk1', 'pk2', 'pk3', 'pk4', 'pk5', 'pk1');
+chain('pk3', 'pd1', 'pk4');
 chain('ew-45', 'sh1', 'sh2');
 export const GRAPH = { nodes: N };
 
 // NPC の予定で使う場所の名前 → 道すじの点
 export const PLACES = {
   school: 'ns-60', library: 'ns-25', gamecenter: 'ns25', shop: 'ns25', cafe: 'ns47', home: 'ew30',
-  plaza: 'p3', plaza2: 'p7', park: 'pk3', park2: 'pk4', shrine: 'sh2', busstop: 'ew-58', north: 'nc18', south: 'sc-18',
+  plaza: 'p3', plaza2: 'p7', park: 'pk3', park2: 'pk4', pond: 'pd1', shrine: 'sh2', busstop: 'ew-58', north: 'nc18', south: 'sc-18',
 };

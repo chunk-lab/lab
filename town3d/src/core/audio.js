@@ -17,6 +17,20 @@ export function createAudio() {
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(gain * vol.sfx, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     o.connect(g).connect(master); o.start(t); o.stop(t + dur + 0.02);
   }
+  // ハーモニカのような、のばす音(ゆれ=ビブラートつき)
+  function reed(f, dur, delay = 0) {
+    const a = ctx(); if (!a || vol.sfx <= 0) return;
+    const t = a.currentTime + delay, o = a.createOscillator(), o2 = a.createOscillator(), g = a.createGain(), lp = a.createBiquadFilter(), lfo = a.createOscillator(), lg = a.createGain();
+    o.type = 'sawtooth'; o2.type = 'triangle'; o.frequency.value = f; o2.frequency.value = f * 1.005;
+    lp.type = 'lowpass'; lp.frequency.value = 2200;
+    lfo.frequency.value = 5.2; lg.gain.value = f * 0.007; lfo.connect(lg); lg.connect(o.frequency); lg.connect(o2.frequency);
+    const v = 0.05 * vol.sfx;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 0.07); g.gain.setValueAtTime(v * 0.85, Math.max(t + 0.08, t + dur - 0.12)); g.gain.linearRampToValueAtTime(0, t + dur);
+    o.connect(lp); o2.connect(lp); lp.connect(g).connect(master);
+    [o, o2, lfo].forEach(x => { x.start(t); x.stop(t + dur + 0.05); });
+  }
+  // オリジナルの短いメロディ(ペンタトニック)
+  const HARP = [[659, 1], [784, 1], [880, 2], [784, 1], [659, 1], [587, 2], [659, 1], [784, 1], [1047, 2], [880, 1], [784, 1], [659, 3], [587, 1], [659, 1], [523, 4]];
   // 広場の水音+遠いざわめき(フィルタをかけたノイズ)
   function ambience(on) {
     const a = ctx(); if (!a) return;
@@ -38,6 +52,7 @@ export function createAudio() {
     talk: () => tone(740, 0.1, { type: 'sine', gain: 0.18, slide: 1.3 }),
     coin: () => { tone(1320, 0.08, { type: 'square', gain: 0.06 }); tone(1760, 0.2, { type: 'square', gain: 0.06, delay: 0.07 }); },
     wave: () => tone(523, 0.2, { type: 'sine', gain: 0.12, slide: 1.5 }),
+    harmonica: () => { let t = 0; for (const [f, b] of HARP) { const d = b * 0.32; reed(f, d * 0.96, t); t += d; } },
   };
   return {
     unlock() { ctx(); },

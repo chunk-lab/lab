@@ -412,6 +412,11 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     const bk = new THREE.Mesh(sph(0.07, 6), mat(0xffb38a)); bk.position.set(0.45, 0.22, 0); bk.scale.set(1.6, 0.6, 1); duck.add(bk);
     scene.add(duck);
     animated.push(t => { const a = t * 0.25; duck.position.set(x + Math.cos(a) * rr * 0.55, 0.3 + Math.sin(t * 2) * 0.02, z + Math.sin(a) * rr * 0.55); duck.rotation.y = Math.atan2(-Math.cos(a), -Math.sin(a)); });
+    // こがもを2羽(反対まわり・小さめ)
+    [[-0.18, 2.1, 0.55, 0.6], [0.31, 4.0, 0.35, 0.5]].forEach(([w, ph, rf, sc]) => {
+      const d = duck.clone(); d.scale.setScalar(sc); scene.add(d);
+      animated.push(t => { const a = t * w + ph; d.position.set(x + Math.cos(a) * rr * rf, 0.22 + Math.sin(t * 2 + ph) * 0.02, z + Math.sin(a) * rr * rf); d.rotation.y = Math.atan2(-Math.cos(a) * Math.sign(w), -Math.sin(a) * Math.sign(w)); });
+    });
   }
   function slide(x, z) {
     colliders.push({ x0: x - 1.2, x1: x + 1.2, z0: z - 2.2, z1: z + 2.2 });
