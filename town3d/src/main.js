@@ -27,7 +27,7 @@ export function mount(container, opt = {}) {
   const storage = opt.storage || createStorage(opt.storagePrefix || 'town:');
   const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, adult: 0, birth: '', en: 0, enLevel: 'easy', tips: 1, look: 'hana', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
   const save = () => storage.set('settings', settings);
-  const wallet = createWallet(storage, bus);
+  const wallet = opt.wallet || createWallet(storage, bus);   // 組み込み先から共通の財布を渡せる(2Dと3Dで同じコイン)
   const ai = createAI(storage);
   const PERIOD = { morning: '朝', day: '昼', evening: '夕方', night: '夜' };
   const audio = createAudio(); audio.set({ bgm: settings.bgm, sfx: settings.sfx });
@@ -271,6 +271,7 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('ui:dialogClosed', () => { if (talkingTo) talkingTo.talking = false; talkingTo = null; }));
   offs.push(bus.on('ui:panelClosed', () => { if (talkingTo) talkingTo.talking = false; talkingTo = null; }));
   offs.push(bus.on('app:close', () => { input.enabled = true; audio.play('close'); hud.setCoins(wallet.get()); }));
+  if (opt.wallet?.onChange) offs.push(opt.wallet.onChange(w => bus.emit('wallet', w)));
   offs.push(bus.on('wallet', w => { hud.setCoins(w.coins); if (w.delta > 0) { audio.play('coin'); hud.toast(`🪙 +${w.delta}`); } }));
   offs.push(bus.on('toast', t => hud.toast(t)));
   offs.push(bus.on('sfx', n => audio.play(n)));
@@ -560,7 +561,7 @@ export function mount(container, opt = {}) {
     action: doAction,
     // 組み込み先がゲームを開いている間は止める(描画も音も)
     pause() { held = true; input.clear(); audio.suspend(); },
-    resume() { held = false; clock.getDelta(); input.clear(); audio.resume(); },
+    resume() { held = false; clock.getDelta(); input.clear(); audio.resume(); hud.setCoins(wallet.get()); },
     unmount() {
       cancelAnimationFrame(raf); ro.disconnect(); offs.forEach(f => f()); appHost.close(); input.dispose(); hud.dispose(); net?.disconnect(); audio.dispose(); bus.clear();
       scene.traverse(o => { o.geometry?.dispose(); });

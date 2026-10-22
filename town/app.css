@@ -1141,6 +1141,22 @@ body > .tw-top button {
 body.cs-in-game > .tw-top {
   display: none;
 }
+body > .tw-top .tw-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.tw-coin {
+  pointer-events: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 2px solid #8a5a32;
+  background: #fff3cf;
+  box-shadow: 0 2px 0 #8a5a32;
+  font-weight: 800;
+  font-size: 13px;
+  color: #2b2320;
+}
 
 /* games/cards/src/cards.css */
 .ct-cards {

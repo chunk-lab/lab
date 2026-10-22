@@ -377,6 +377,52 @@
     };
   }
 
+  // core/wallet.js
+  function createWallet() {
+    const st2 = createStore("core"), subs = /* @__PURE__ */ new Set();
+    let coins = st2.get("coins");
+    if (coins == null) {
+      let old = null;
+      try {
+        old = JSON.parse(localStorage.getItem("town:coins"));
+      } catch (e) {
+      }
+      coins = Number.isFinite(old) ? old : 50;
+      st2.set("coins", coins);
+    }
+    const fire = (delta, reason) => subs.forEach((f) => {
+      try {
+        f({ coins, delta, reason });
+      } catch (e) {
+      }
+    });
+    return {
+      get: () => coins,
+      add(n, reason = "") {
+        n = Math.round(n);
+        if (!Number.isFinite(n) || n === 0) return coins;
+        n = Math.max(-coins, Math.min(500, n));
+        coins += n;
+        st2.set("coins", coins);
+        fire(n, reason);
+        return coins;
+      },
+      set(n, reason = "set") {
+        n = Math.max(0, Math.min(999999, Math.round(+n) || 0));
+        const d = n - coins;
+        coins = n;
+        st2.set("coins", coins);
+        fire(d, reason);
+        return coins;
+      },
+      // テスト用
+      onChange(f) {
+        subs.add(f);
+        return () => subs.delete(f);
+      }
+    };
+  }
+
   // core/dict.js
   var POSN = { v: "\u52D5\u8A5E", aux: "\u52A9\u52D5\u8A5E", n: "\u540D\u8A5E", adj: "\u5F62\u5BB9\u8A5E", adv: "\u526F\u8A5E", prep: "\u524D\u7F6E\u8A5E", conj: "\u63A5\u7D9A\u8A5E", pr: "\u4EE3\u540D\u8A5E", det: "\u9650\u5B9A\u8A5E", art: "\u51A0\u8A5E", num: "\u6570", int: "\u9593\u6295\u8A5E" };
   function createDict(base) {
@@ -1296,6 +1342,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     core2.sound = createSound(core2.settings);
     core2.rights = createRights(config.grants || []);
     core2.events = createEvents();
+    core2.wallet = createWallet();
     core2.profile = createProfile(core2.events, base);
     core2.ui = createUI(core2);
     core2.dict = createDict(base);
@@ -22260,7 +22307,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
   }
 
   // games/chunkchunk/src/wallet.js
-  function createWallet(store2) {
+  function createWallet2(store2) {
     const KEY = "ccs-wallet", KINDS = ["coins", "gems"], MAXLOG = 60;
     const REASONS = {
       // 理由のコード（履歴に残す名前）。増やすときは earn:*、使うときは buy:* で始める
@@ -25449,7 +25496,7 @@ body.nogram .gmT{display:none}
       migrate2(ctx.store);
       el3.classList.add("ct-cc");
       el3.innerHTML = view_default;
-      const wallet = createWallet(ctx.store);
+      const wallet = createWallet2(ctx.store);
       ENV2.make = createMake({ base: ctx.base, store: ctx.store, Wallet: wallet, sfx, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el3.querySelector("#title").hidden) });
       ENV2.story = createStory({ speak: (t) => readTextAloud(t), base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el3.querySelector("#title").hidden) });
       loadSettings();
@@ -25811,16 +25858,13 @@ body.nogram .gmT{display:none}
       }
       wait4.remove();
       const qc = new URLSearchParams(location.search).get("coins");
-      if (/^\d{1,6}$/.test(qc || "")) {
-        try {
-          localStorage.setItem("town:coins", JSON.stringify(+qc));
-        } catch (e) {
-        }
-      }
+      if (/^\d{1,6}$/.test(qc || "")) core2.wallet.set(+qc, "test");
       box = document.createElement("div");
       box.className = "md-town3d";
       document.body.appendChild(box);
       town = window.town3d = window.Hoshimiya.mount(box, {
+        wallet: core2.wallet,
+        // コインは2Dと共通
         switchLabel: "2D\u306E\u5730\u56F3\u306B\u3059\u308B",
         onSwitchMode: () => go("2d"),
         openExternal(id) {
@@ -25887,13 +25931,18 @@ body.nogram .gmT{display:none}
   var BLD = [["school", "bSchool", "\u5B66\u6821"], ["library", "bLibrary", "\u56F3\u66F8\u9928"], ["house", "bHouse", "\u81EA\u5B85"], ["shop", "bShop", "\u30B7\u30E7\u30C3\u30D7"], ["game", "bGame", "\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC"]];
   var esc4 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   document.body.insertAdjacentHTML("afterbegin", `<div class="tw-view"><div class="tw-map" id="twMap">${BLD.map(([k, id, alt]) => `<button class="tw-bld" id="${id}" data-k="${k}"><img src="img/${PLACES[k].img}.webp" alt="${alt}"></button>`).join("")}<button class="tw-tree" id="twTree" aria-label="\u6728"></button></div></div>
-<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><button class="tw-gear" id="twTo3d" aria-label="3D\u306E\u753A\u3078">\u{1F3D9}</button><button class="tw-gear tw-help" id="twHelp" aria-label="\u8857\u306E\u30C4\u30A2\u30FC">\uFF1F</button><button class="tw-gear" id="twGear" aria-label="\u8A2D\u5B9A">\u2699</button></div></div>`);
+<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><span class="tw-coin" id="twCoin"></span><button class="tw-gear" id="twTo3d" aria-label="3D\u306E\u753A\u3078">\u{1F3D9}</button><button class="tw-gear tw-help" id="twHelp" aria-label="\u8857\u306E\u30C4\u30A2\u30FC">\uFF1F</button><button class="tw-gear" id="twGear" aria-label="\u8A2D\u5B9A">\u2699</button></div></div>`);
   var $5 = (id) => document.getElementById(id);
   var refreshMe = () => {
     $5("twMeImg").src = core.profile.avatarURL();
     $5("twMeName").textContent = core.profile.name || "\u306A\u307E\u3048\u672A\u8A2D\u5B9A";
   };
   refreshMe();
+  var showCoin = () => {
+    $5("twCoin").textContent = "\u{1FA99} " + core.wallet.get();
+  };
+  showCoin();
+  core.wallet.onChange(showCoin);
   $5("twMe").onclick = () => {
     core.ui.profile();
   };
@@ -25921,7 +25970,7 @@ body.nogram .gmT{display:none}
       return;
     }
     core.ui.sheet(
-      `<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc4(p.n)}</h3><p>${esc4(p.sub)}</p></div></header>` + (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc4(it.t)}<small>\u5165\u308B \u203A</small></button></li>`).join("")}</ul>` : '<p class="cs-note">\u58F2\u3063\u3066\u3044\u308B\u3082\u306E\u306F\u3001\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002</p>'),
+      `<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc4(p.n)}</h3><p>${esc4(p.sub)}</p></div></header>` + (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc4(it.t)}<small>\u5165\u308B \u203A</small></button></li>`).join("")}</ul>` : '<p class="cs-note">\u58F2\u3063\u3066\u3044\u308B\u3082\u306E\u306F\u3001\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002<br>\u5BB6\u5177\u306F\u30013D\u306E\u753A\u306E\u30B7\u30E7\u30C3\u30D7\u3067\u8CB7\u3048\u307E\u3059\u3002</p>'),
       (ov, close) => ov.querySelectorAll("button[data-i]").forEach((b) => b.onclick = () => {
         const it = p.items[+b.dataset.i];
         close();

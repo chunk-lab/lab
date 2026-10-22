@@ -10,6 +10,7 @@ import { createEvents } from './events.js';
 import { createProfile } from './profile.js';
 import { createUI } from './ui.js';
 import { createHost } from './host.js';
+import { createWallet } from './wallet.js';
 import { createDict } from './dict.js';
 import { createReader } from './reader.js';
 import './reader.css';
@@ -21,6 +22,7 @@ export function createCore(config) {
   core.sound = createSound(core.settings);
   core.rights = createRights(config.grants || []);
   core.events = createEvents();
+  core.wallet = createWallet();       // 共通のコイン（2Dも3Dも同じ）
   core.profile = createProfile(core.events, base);
   core.ui = createUI(core);
   core.dict = createDict(base);       // 共通の辞書（使うときに読み込む）

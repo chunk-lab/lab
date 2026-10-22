@@ -7,7 +7,17 @@ await p.goto('file:///home/claude/town/dist/index.html'); await p.waitForTimeout
 await p.click('.tw-start'); await p.waitForTimeout(800);
 await p.evaluate(() => town.openApp('shop')); await p.waitForTimeout(800);
 await p.screenshot({ path: '/tmp/claude-0/shop.png' });
-for (const id of ['bed','sofa','rug','lamp','plant','tv','chest','bear']) await p.click(`[data-b="${id}"]`);
+// カゴ:押してもお金は減らない → カゴで数を変える → まとめて払う
+const coins = () => p.evaluate(() => town.getState().coins);
+const c0 = await coins();
+for (const id of ['bed','sofa','rug','lamp','plant','tv','chest','bear']) await p.click(`[data-q="${id}"][data-d="1"]`);
+await p.click('[data-q="bed"][data-d="1"]');   // ベッドは2個
+console.log('カゴに入れただけ→減らない', (await coins()) === c0, await p.evaluate(() => localStorage.getItem('town:furn:cart')));
+await p.click('[data-v="cart"]'); await p.waitForTimeout(200);
+await p.click('[data-q="bed"][data-d="-1"]');   // ベッドを1個にもどす
+await p.screenshot({ path: '/tmp/claude-0/cart.png' });
+console.log('カゴ画面でも減らない', (await coins()) === c0);
+await p.click('[data-pay]'); await p.waitForTimeout(200);
 console.log('coins', await p.evaluate(() => town.getState().coins), 'inv', await p.evaluate(() => localStorage.getItem('town:furn:inv')));
 await p.evaluate(() => town.openApp('home')); await p.waitForTimeout(800);
 for (const id of ['rug','bed','sofa','tv','lamp','plant','chest','bear']) { await p.click(`[data-i="${id}"]`); await p.waitForTimeout(60); }

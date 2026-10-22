@@ -71,13 +71,25 @@ export const furn = {
   saveRoom: v => st.set('room', v),
   owned(id) { return this.inv()[id] || 0; },
   placedCount(id) { return this.room().filter(p => p.id === id).length; },
-  buy(id, wallet) {
-    const it = ITEM[id]; if (!it) return 'なし';
-    if (this.owned(id) >= MAX_OWN) return `${MAX_OWN}個までだよ`;
-    if (wallet.get() < it.price) return 'コインが足りないよ';
-    wallet.add(-it.price, 'furniture:' + id);
-    const inv = this.inv(); inv[id] = (inv[id] || 0) + 1; this.saveInv(inv);
-    return '';
+  // カゴ {家具id: 個数}。お店を出ても残る。お金が減るのは「まとめて買う」を押したときだけ
+  cart: () => { const c = st.get('cart') || {}, o = {}; for (const id in c) if (ITEM[id] && c[id] > 0) o[id] = c[id]; return o; },
+  saveCart: v => st.set('cart', v),
+  total(cart) { return Object.entries(cart).reduce((a, [id, n]) => a + ITEM[id].price * n, 0); },
+  // カゴの数を変える(持っている数＋カゴの数が MAX_OWN を超えないように)。変えたあとの個数を返す
+  setQty(id, n) {
+    const cart = this.cart(); n = Math.max(0, Math.min(MAX_OWN - this.owned(id), n | 0));
+    if (n) cart[id] = n; else delete cart[id]; this.saveCart(cart); return n;
+  },
+  // まとめて払う。足りなければ何も買わずに理由を返す(空文字なら成功)
+  buyCart(wallet) {
+    const cart = this.cart(), ids = Object.keys(cart);
+    if (!ids.length) return 'カゴが空だよ';
+    for (const id of ids) if (this.owned(id) + cart[id] > MAX_OWN) return `${ITEM[id].name}は${MAX_OWN}個までだよ`;
+    const total = this.total(cart);
+    if (wallet.get() < total) return `コインが足りないよ(あと ${total - wallet.get()})`;
+    wallet.add(-total, 'furniture');
+    const inv = this.inv(); for (const id of ids) inv[id] = (inv[id] || 0) + cart[id];
+    this.saveInv(inv); this.saveCart({}); return '';
   },
 };
 

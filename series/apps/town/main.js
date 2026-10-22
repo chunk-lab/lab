@@ -24,11 +24,12 @@ const BLD = [['school', 'bSchool', '学校'], ['library', 'bLibrary', '図書館
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 document.body.insertAdjacentHTML('afterbegin', `<div class="tw-view"><div class="tw-map" id="twMap">${BLD.map(([k, id, alt]) => `<button class="tw-bld" id="${id}" data-k="${k}"><img src="img/${PLACES[k].img}.webp" alt="${alt}"></button>`).join('')}<button class="tw-tree" id="twTree" aria-label="木"></button></div></div>
-<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><button class="tw-gear" id="twTo3d" aria-label="3Dの町へ">🏙</button><button class="tw-gear tw-help" id="twHelp" aria-label="街のツアー">？</button><button class="tw-gear" id="twGear" aria-label="設定">⚙</button></div></div>`);
+<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><span class="tw-coin" id="twCoin"></span><button class="tw-gear" id="twTo3d" aria-label="3Dの町へ">🏙</button><button class="tw-gear tw-help" id="twHelp" aria-label="街のツアー">？</button><button class="tw-gear" id="twGear" aria-label="設定">⚙</button></div></div>`);
 
 const $ = id => document.getElementById(id);
 const refreshMe = () => { $('twMeImg').src = core.profile.avatarURL(); $('twMeName').textContent = core.profile.name || 'なまえ未設定'; };
 refreshMe();
+const showCoin = () => { $('twCoin').textContent = '🪙 ' + core.wallet.get(); }; showCoin(); core.wallet.onChange(showCoin);
 $('twMe').onclick = () => { core.ui.profile(); };
 $('twGear').onclick = () => core.ui.settings();
 const tour = createTour(core);
@@ -43,7 +44,7 @@ function enter(k) {
   if (p.profile) { core.ui.profile(); return; }
   if (p.items.length === 1) { tour.entering(p.items[0].game, p.items[0].opts); core.host.open(GAMES[p.items[0].game], p.items[0].opts); return; }
   core.ui.sheet(`<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc(p.n)}</h3><p>${esc(p.sub)}</p></div></header>` +
-    (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc(it.t)}<small>入る ›</small></button></li>`).join('')}</ul>` : '<p class="cs-note">売っているものは、まだありません。</p>'),
+    (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc(it.t)}<small>入る ›</small></button></li>`).join('')}</ul>` : '<p class="cs-note">売っているものは、まだありません。<br>家具は、3Dの町のショップで買えます。</p>'),
     (ov, close) => ov.querySelectorAll('button[data-i]').forEach(b => b.onclick = () => { const it = p.items[+b.dataset.i]; close(); tour.entering(it.game, it.opts); core.host.open(GAMES[it.game], it.opts); }));
 }
 document.querySelectorAll('.tw-bld').forEach(b => b.addEventListener('click', () => { tour.tapped(b.dataset.k); b.classList.remove('hop'); void b.offsetWidth; b.classList.add('hop'); setTimeout(() => enter(b.dataset.k), 260); }));

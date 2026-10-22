@@ -43,9 +43,10 @@ export function createMode(core, { GAMES, enter, start2D }) {
     wait.remove();
     // テスト用: ?coins=10000 で3Dの町のコインを増やして始められる（この端末の保存だけが変わる）
     const qc = new URLSearchParams(location.search).get('coins');
-    if (/^\d{1,6}$/.test(qc || '')) { try { localStorage.setItem('town:coins', JSON.stringify(+qc)); } catch (e) { } }
+    if (/^\d{1,6}$/.test(qc || '')) core.wallet.set(+qc, 'test');
     box = document.createElement('div'); box.className = 'md-town3d'; document.body.appendChild(box);
     town = window.town3d = window.Hoshimiya.mount(box, {
+      wallet: core.wallet,   // コインは2Dと共通
       switchLabel: '2Dの地図にする',
       onSwitchMode: () => go('2d'),
       openExternal(id) {

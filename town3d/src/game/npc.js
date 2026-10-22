@@ -191,25 +191,41 @@ export function createResidents(scene, graph, getHour) {
           }
           if (r.idle) { target = r.idle; if (Math.hypot(r.idle[0] - p.x, r.idle[1] - p.z) < 0.25) r.idle = null; }
         }
+        // ---- 動き:行きたい方向(intent)と、よけ・押しのけ(avoid)を、なめらかな速度にまぜて進む ----
+        // 以前は「目的地へ進む」と「押し出される」を毎フレーム別々に位置へ足していたので、境目でガクガクしていた。
+        // いまは両方を1つの速度にまとめ、よけの強さは距離で少しずつ変える(境目でぱっと切りかわらない)。
+        const sp = (r.def.mascot ? 1.6 : 1.9) * (r.path.length > 3 ? 1.3 : 1);
+        let ix = 0, iz = 0, ax = 0, az = 0;
         if (target && !r.hidden) {
           const dx = target[0] - p.x, dz = target[1] - p.z, d = Math.hypot(dx, dz);
-          const sp = (r.def.mascot ? 1.6 : 1.9) * (r.path.length > 3 ? 1.3 : 1);
-          // プレイヤーに近すぎるときは、止まらずに横へよけながら進む(立ち止まっているプレイヤーのそばで、ずっと固まらないように)
+          if (d > 0.01) { const k = r.path.length ? 1 : Math.min(1, d / 0.8); ix = dx / d * sp * k; iz = dz / d * sp * k; }   // 道の途中は止まらず、うろうろの目的地ではゆっくり着く
+        }
+        if (!r.hidden) {
+          // プレイヤーに近すぎるときは、止まらずに横へよける(立ち止まっているプレイヤーのそばで固まらないように)
           const pd = Math.hypot(player.x - p.x, player.z - p.z);
-          if (d > 0.01) {
-            let mx = dx / d, mz = dz / d;
-            if (pd < 0.9 && pd > 0.001) { mx += (p.x - player.x) / pd * 1.6; mz += (p.z - player.z) / pd * 1.6; const l = Math.hypot(mx, mz) || 1; mx /= l; mz /= l; }
-            const s = Math.min(Math.max(d, 0.3), sp * dt);
-            p.x += mx * s; p.z += mz * s;
-            speed = sp;
-            r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(mx, mz), Math.min(1, dt * 6));
+          if ((ix || iz) && pd < 1.5 && pd > 0.001) { const w = 1 - pd / 1.5; ax += (p.x - player.x) / pd * w * sp * 1.6; az += (p.z - player.z) / pd * w * sp * 1.6; }
+          // 住人どうしが重なって団子にならないよう、ゆるく離れる
+          if (!r.talking) for (const o of list) {
+            if (o === r || o.hidden) continue;
+            const ox = p.x - o.ch.root.position.x, oz = p.z - o.ch.root.position.z, od = Math.hypot(ox, oz);
+            if (od < 1.2) {
+              const w = 1 - od / 1.2;
+              if (od > 0.01) { ax += ox / od * w * sp * 1.1; az += oz / od * w * sp * 1.1; }
+              else { r.jit ??= Math.random() * 6.283; ax += Math.sin(r.jit) * sp; az += Math.cos(r.jit) * sp; }
+            }
           }
         }
-        // 住人どうしが重なって団子にならないよう、ゆるく押しのけ合う
-        if (!r.hidden && !r.talking) for (const o of list) {
-          if (o === r || o.hidden) continue;
-          const ox = p.x - o.ch.root.position.x, oz = p.z - o.ch.root.position.z, od = Math.hypot(ox, oz);
-          if (od < 1.1) { const k = od > 0.01 ? (1.1 - od) * Math.min(1, dt * 2.5) / od : 0.02; p.x += (od > 0.01 ? ox : Math.random() - 0.5) * k; p.z += (od > 0.01 ? oz : Math.random() - 0.5) * k; }
+        let dvx = ix + ax, dvz = iz + az; const dl = Math.hypot(dvx, dvz), cap = sp * 1.4;
+        if (dl > cap) { dvx *= cap / dl; dvz *= cap / dl; }
+        const bl = 1 - Math.exp(-dt * 6);
+        r.vx = (r.vx || 0) + (dvx - (r.vx || 0)) * bl; r.vz = (r.vz || 0) + (dvz - (r.vz || 0)) * bl;
+        if (r.hidden) { r.vx = r.vz = 0; }
+        else { p.x += r.vx * dt; p.z += r.vz * dt; }
+        speed = Math.hypot(r.vx, r.vz); if (speed < 0.05) speed = 0;
+        // 向きは「行きたい方向」を優先(よけられて横にずれても、体は進む方を向いたまま)
+        if (!(r.talking || r.harpT > 0 || (r.near && !r.hidden && !r.free))) {
+          if (ix || iz) r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(ix, iz), Math.min(1, dt * 6));
+          else if (speed > 0.3) r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(r.vx, r.vz), Math.min(1, dt * 4));
         }
         r.speed = speed;
         // ポーズ:ハーモニカを吹いている間 / 池のそばで釣り竿を構えているとき

@@ -35,28 +35,52 @@ export const shopApp = {
   mount(el, ctx) {
     makeThumbs();
     const box = document.createElement('div');
-    box.style.cssText = `font-family:inherit;color:${ink};padding:16px;max-width:640px;margin:0 auto`;
+    box.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;font-family:inherit;color:${ink}`;
     el.appendChild(box);
-    let msg = '';
+    let view = 'list', msg = '';
+    const qtyBtn = (id, d, label, on = true) => `<button data-q="${id}" data-d="${d}" style="width:34px;height:34px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:18px;line-height:1;color:#fff;background:${on ? 'linear-gradient(160deg,#c9b8ea,#b19cd9)' : '#d9d2e3'};${on ? 'cursor:pointer' : 'cursor:default'}">${label}</button>`;
+    const stepper = id => {
+      const c = furn.cart()[id] || 0, room = MAX_OWN - furn.owned(id);
+      return `<div style="display:flex;align-items:center;justify-content:center;gap:10px">${qtyBtn(id, -1, '−', c > 0)}<b style="min-width:20px;font-size:16px">${c}</b>${qtyBtn(id, 1, '＋', c < room)}</div>`;
+    };
+    const head = (title, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${title}</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px">🪙 ${ctx.wallet.get()}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
     const draw = () => {
-      const coins = ctx.wallet.get();
-      box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin:2px 0 10px"><h2 style="margin:0">ショップ</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px">🪙 ${coins}</b></div>
-        <p style="margin:0 0 10px;font-size:13px;color:#8d7f9e">${msg || '家具を買うと、「あなたの家」で好きなところに置けるよ。'}</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">${ITEMS.map(it => {
-          const own = furn.owned(it.id), can = coins >= it.price && own < MAX_OWN;
+      const cart = furn.cart(), total = furn.total(cart), n = Object.values(cart).reduce((a, b) => a + b, 0), coins = ctx.wallet.get();
+      if (view === 'cart') {
+        const rows = Object.entries(cart).map(([id, q]) => `<div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:8px 10px;margin-bottom:8px;box-shadow:0 2px 8px #0001">
+          ${thumbs.get(id) ? `<img src="${thumbs.get(id)}" width="48" height="48" alt="">` : ''}
+          <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:14px">${ITEM[id].name}</div><div style="font-size:12px;color:#8d7f9e">🪙 ${ITEM[id].price} × ${q} = <b style="color:${ink}">${ITEM[id].price * q}</b></div></div>${stepper(id)}</div>`).join('');
+        const short = total - coins;
+        box.innerHTML = head('カゴ', msg || 'ここで数を変えて、さいごに まとめて払うよ。')
+          + `<div style="flex:1;overflow:auto;padding:4px 16px">${rows || '<p style="text-align:center;color:#8d7f9e;margin-top:40px">カゴは空だよ</p>'}</div>
+          <div style="padding:10px 16px calc(14px + env(safe-area-inset-bottom,0px));background:#fffaf0;box-shadow:0 -2px 10px #0001">
+            <div style="display:flex;justify-content:space-between;font-weight:800"><span>ごうけい（${n}点）</span><span>🪙 ${total}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;color:#8d7f9e;margin:2px 0 10px"><span>はらったあとの コイン</span><span>${short > 0 ? `<b style="color:#e0556b">あと ${short} たりない</b>` : '🪙 ' + (coins - total)}</span></div>
+            <div style="display:flex;gap:8px"><button data-v="list" style="${btn('#d9d2e3', ink)};flex:1">もどる</button><button data-pay style="${btn(n && short <= 0 ? undefined : '#d9d2e3')};flex:2;${n && short <= 0 ? '' : 'cursor:default'}">まとめて買う</button></div></div>`;
+        return;
+      }
+      box.innerHTML = head('ショップ', msg || '気に入った家具を、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけ。')
+        + `<div style="flex:1;overflow:auto;padding:4px 16px 12px"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">${ITEMS.map(it => {
+          const own = furn.owned(it.id);
           return `<div style="background:#fff;border-radius:18px;padding:10px;box-shadow:0 2px 10px #0001;text-align:center">
             <div style="height:74px;display:flex;align-items:center;justify-content:center">${thumbs.get(it.id) ? `<img src="${thumbs.get(it.id)}" width="74" height="74" alt="">` : ''}</div>
             <div style="font-weight:800;font-size:14px">${it.name}</div>
-            <div style="font-size:12px;color:#8d7f9e;margin:2px 0 6px">もっている: ${own}</div>
-            <button data-b="${it.id}" style="${btn(can ? undefined : '#d9d2e3')};${can ? '' : 'cursor:default'}">🪙 ${it.price}</button></div>`;
-        }).join('')}</div>`;
+            <div style="font-size:12px;color:#8d7f9e;margin:2px 0 6px">🪙 ${it.price}　もっている: ${own}</div>${own >= MAX_OWN ? '<div style="font-size:12px;color:#8d7f9e;height:34px;line-height:34px">これ以上は もてないよ</div>' : stepper(it.id)}</div>`;
+        }).join('')}</div></div>
+        <div style="padding:10px 16px calc(14px + env(safe-area-inset-bottom,0px));background:#fffaf0;box-shadow:0 -2px 10px #0001;display:flex;align-items:center;gap:12px">
+          <div style="flex:1;font-weight:800">カゴ ${n}点<br><span style="font-size:13px;color:#8d7f9e">ごうけい 🪙 ${total}</span></div>
+          <button data-v="cart" style="${btn(n ? undefined : '#d9d2e3')};${n ? '' : 'cursor:default'}">カゴを見る</button></div>`;
     };
     box.onclick = e => {
-      const id = e.target.closest('[data-b]')?.dataset.b; if (!id) return;
-      const err = furn.buy(id, ctx.wallet);
-      msg = err || `${ITEM[id].name}を買ったよ。あなたの家に置いてみよう。`;
-      if (!err) ctx.emit('buy', { id });
-      draw();
+      const q = e.target.closest('[data-q]');
+      if (q) { const id = q.dataset.q, cur = furn.cart()[id] || 0; furn.setQty(id, cur + +q.dataset.d); msg = ''; draw(); return; }
+      const v = e.target.closest('[data-v]')?.dataset.v;
+      if (v) { if (v === 'cart' && !Object.keys(furn.cart()).length) return; view = v; msg = ''; draw(); return; }
+      if (e.target.closest('[data-pay]')) {
+        const items = Object.keys(furn.cart()), err = furn.buyCart(ctx.wallet);
+        if (err) msg = err; else { msg = '買ったよ！「あなたの家」に置いてみよう。'; view = 'list'; ctx.emit('buy', { items }); }
+        draw();
+      }
     };
     draw();
     return { unmount() { box.remove(); } };
