@@ -261,6 +261,8 @@ export function mount(container, opt = {}) {
     });
   }
   function openApp(id, params) {
+    // 組み込み先(チャンクタウン)が開くアプリ(ゲームなど)は、そちらに任せる
+    if (opt.openExternal?.(id, params)) { input.clear(); return; }
     if (!appHost.has(id)) { hud.toast('まだ準備中みたい'); return; }
     audio.play('open'); input.clear(); input.enabled = false;
     appHost.open(id, params);
@@ -346,6 +348,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">英語のヒント(すれ違い)${seg('tips', [[0, 'なし'], [1, 'あり']])}</div>
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
       <div class="tw-row">AIとおしゃべり<button class="tw-btn" data-act="ai" style="padding:6px 14px">${ai.ready ? 'せってい(つながっています)' : 'つなぐ'}</button></div>
+      ${opt.onSwitchMode ? `<div class="tw-row">${opt.switchLabel || 'ほかのモード'}<button class="tw-btn" data-act="mode" style="padding:6px 14px">きりかえる</button></div>` : ''}
       <div class="tw-row">キャラクター<button class="tw-btn" data-act="title" style="padding:6px 14px">えらびなおす</button></div>
       <div class="tw-row" style="border:0;justify-content:center"><button class="tw-btn" data-act="close" style="padding:10px 28px">とじる</button></div>`,
       (e, p) => {
@@ -367,6 +370,7 @@ export function mount(container, opt = {}) {
         if (b.dataset.act === 'notes') { hud.closePanel(); setTimeout(openNoteBook, 30); }
         if (b.dataset.act === 'today') { applyDate(new Date()); const di = p.querySelector('.tw-t-date'); const d = testDate; di.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; p.querySelectorAll('[data-bl]').forEach(x => x.classList.toggle('on', (x.dataset.bl === '1') === blossomOn)); }
         if (b.dataset.act === 'close') hud.closePanel();
+        if (b.dataset.act === 'mode') { hud.closePanel(); setTimeout(() => opt.onSwitchMode(), 30); }
         if (b.dataset.act === 'title') { hud.closePanel(); showTitle(); }
         if (b.dataset.act === 'ai') openAiSetup({ hud, ai });
       });
@@ -415,7 +419,7 @@ export function mount(container, opt = {}) {
   // ---- ループ ----
   const v3 = new THREE.Vector3(), clock = new THREE.Clock();
   const tagPos = new Map();
-  let raf = 0, sendT = 0, saveT = 0, paused = false, frames = 0, fpsT = 0, fps = 60;
+  let raf = 0, sendT = 0, saveT = 0, paused = false, held = false, frames = 0, fpsT = 0, fps = 60;
   function resize() {
     const w = root.clientWidth || 1, h = root.clientHeight || 1;
     renderer.setSize(w, h, false); camera.aspect = w / h;
@@ -429,7 +433,7 @@ export function mount(container, opt = {}) {
     raf = requestAnimationFrame(frame);
     let dt = Math.min(0.05, clock.getDelta());
     if (settings.lite) { fpsAcc += dt; if (fpsAcc < 0.031) return; dt = Math.min(0.1, fpsAcc); fpsAcc = 0; }   // 低負荷モードは30fps
-    if (paused || appHost.current) return; // アプリ中は町を止めて電池を節約
+    if (paused || held || appHost.current) return; // アプリ中は町を止めて電池を節約
     const t = clock.elapsedTime;
     const inp = input.read();
 
@@ -531,7 +535,7 @@ export function mount(container, opt = {}) {
   }
 
   // バックグラウンドでは止める
-  const vis = () => { if (document.hidden) { paused = true; audio.suspend(); } else { paused = false; clock.getDelta(); audio.resume(); } };
+  const vis = () => { if (document.hidden) { paused = true; audio.suspend(); } else { paused = false; clock.getDelta(); if (!held) audio.resume(); } };
   on(document, 'visibilitychange', vis);
   on(root, 'pointerdown', () => audio.unlock(), { once: true });
 
@@ -554,8 +558,9 @@ export function mount(container, opt = {}) {
     moveNpc: (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (r) r.ch.root.position.set(x, 0, z); },
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,
-    pause() { paused = true; audio.suspend(); },
-    resume() { paused = false; clock.getDelta(); audio.resume(); },
+    // 組み込み先がゲームを開いている間は止める(描画も音も)
+    pause() { held = true; input.clear(); audio.suspend(); },
+    resume() { held = false; clock.getDelta(); input.clear(); audio.resume(); },
     unmount() {
       cancelAnimationFrame(raf); ro.disconnect(); offs.forEach(f => f()); appHost.close(); input.dispose(); hud.dispose(); net?.disconnect(); audio.dispose(); bus.clear();
       scene.traverse(o => { o.geometry?.dispose(); });

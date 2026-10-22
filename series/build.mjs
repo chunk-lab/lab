@@ -26,6 +26,12 @@ for (const id of apps) {
   copy('core/avatar', path.join(out, 'core', 'avatar'));
   copy('core/dict', path.join(out, 'core', 'dict'));   // 共通の辞書のデータ（読む画面を開いたときに読み込む）
   for (const [s, d] of app.assets || []) copy(s, path.join(out, d));
+  if (app.town3d) {   // 3Dの町：../town3d を組み立てて、開いたときに読み込むファイルとして置く（2Dだけの人は読み込まない）
+    const t3 = path.join(ROOT, '..', 'town3d');
+    execFileSync('node', ['build.mjs'], { cwd: t3, stdio: 'inherit' });
+    fs.mkdirSync(path.join(out, 'g', 'town3d'), { recursive: true });
+    fs.copyFileSync(path.join(t3, 'dist', 'town.js'), path.join(out, 'g', 'town3d', 'town.js'));
+  }
   for (const g of app.games) for (const f of GAMES[g]) {
     if (Array.isArray(f)) { copy(f[0], path.join(out, f[1])); continue; }
     // { bundle: 入口, out: 公開先 } … 開いたときに読み込む別ファイル（大きいゲームを app.js に入れないため）。見た目は同じ名前の .css に出る

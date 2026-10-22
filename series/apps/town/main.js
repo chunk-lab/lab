@@ -8,6 +8,7 @@ import { createTour } from './tour.js';
 import './tour.css';
 import { PHRASES } from './phrases.js';
 import { createStore } from '../../core/store.js';
+import { createMode } from './mode.js';
 
 const core = createCore(window.__APP__);
 const PLACES = {
@@ -23,7 +24,7 @@ const BLD = [['school', 'bSchool', '学校'], ['library', 'bLibrary', '図書館
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 document.body.insertAdjacentHTML('afterbegin', `<div class="tw-view"><div class="tw-map" id="twMap">${BLD.map(([k, id, alt]) => `<button class="tw-bld" id="${id}" data-k="${k}"><img src="img/${PLACES[k].img}.webp" alt="${alt}"></button>`).join('')}<button class="tw-tree" id="twTree" aria-label="木"></button></div></div>
-<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><button class="tw-gear tw-help" id="twHelp" aria-label="街のツアー">？</button><button class="tw-gear" id="twGear" aria-label="設定">⚙</button></div></div>`);
+<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><button class="tw-gear" id="twTo3d" aria-label="3Dの町へ">🏙</button><button class="tw-gear tw-help" id="twHelp" aria-label="街のツアー">？</button><button class="tw-gear" id="twGear" aria-label="設定">⚙</button></div></div>`);
 
 const $ = id => document.getElementById(id);
 const refreshMe = () => { $('twMeImg').src = core.profile.avatarURL(); $('twMeName').textContent = core.profile.name || 'なまえ未設定'; };
@@ -46,7 +47,7 @@ function enter(k) {
     (ov, close) => ov.querySelectorAll('button[data-i]').forEach(b => b.onclick = () => { const it = p.items[+b.dataset.i]; close(); tour.entering(it.game, it.opts); core.host.open(GAMES[it.game], it.opts); }));
 }
 document.querySelectorAll('.tw-bld').forEach(b => b.addEventListener('click', () => { tour.tapped(b.dataset.k); b.classList.remove('hop'); void b.offsetWidth; b.classList.add('hop'); setTimeout(() => enter(b.dataset.k), 260); }));
-core.onClose = () => { refreshMe(); tour.afterClose(); };
+core.onClose = () => { refreshMe(); if (mode.is3D) mode.resume(); else tour.afterClose(); };
 
 /* ひみつ：街の真ん中の木。タップするとりんごが落ちて、「今日のフレーズ」が出る（1日ひとつ。集めたフレーズも見られる） */
 const tstore = createStore('town');
@@ -68,4 +69,7 @@ $('twTree').onclick = () => {
     <button class="cs-btn" id="twGotBtn">あつめたフレーズを見る</button><ul class="tw-got" id="twGot" hidden>${Object.keys(v.got).map(Number).sort((a, b) => a - b).map(i => `<li><b>${esc(PHRASES[i][0])}</b>　${esc(PHRASES[i][1])}</li>`).join('')}</ul></div>`,
     (ov) => { ov.querySelector('#twSay').onclick = () => { try { core.speech.speak(en, { rate: .9 }); } catch (e) { } }; ov.querySelector('#twGotBtn').onclick = () => { ov.querySelector('#twGot').hidden = false; }; }), 500);
 };
-tour.auto();
+/* はじめに「3Dの町」か「2Dの地図」かを選ぶ（apps/town/mode.js） */
+const mode = createMode(core, { GAMES, enter, start2D: () => { fit(); tour.auto(); } });
+$('twTo3d').onclick = () => mode.to3D();
+mode.start();

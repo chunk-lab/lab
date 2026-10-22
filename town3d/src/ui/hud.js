@@ -6,7 +6,7 @@ export const CSS = `
  --tw-pink:#ffb3c1;--tw-mint:#a8e6cf;--tw-lav:#c9b8ea;--tw-cream:#fffaf2;--tw-ink:#5a4a6b;--tw-sub:#8d7f9e;--tw-shadow:0 6px 18px rgba(90,74,107,.18);--tw-top:env(safe-area-inset-top,0px);--tw-bot:env(safe-area-inset-bottom,0px)}
 .tw-root *{box-sizing:border-box}
 .tw-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.tw-top{position:absolute;left:12px;right:12px;top:calc(10px + var(--tw-top));display:flex;gap:8px;align-items:center;pointer-events:none}
+.tw-root .tw-top{position:absolute;left:12px;right:12px;top:calc(10px + var(--tw-top));display:flex;gap:8px;align-items:center;pointer-events:none}
 .tw-chip{background:rgba(255,250,242,.9);border-radius:999px;padding:7px 13px;font-weight:700;font-size:14px;box-shadow:var(--tw-shadow);white-space:nowrap}
 .tw-area{max-width:46%;overflow:hidden;text-overflow:ellipsis}
 .tw-sp{flex:1}
@@ -70,7 +70,7 @@ export const CSS = `
 .tw-app-missing small{color:var(--tw-sub)}
 .tw-fade{position:absolute;inset:0;background:#fff8f3;pointer-events:none;opacity:0;transition:opacity .25s;z-index:19}
 .tw-card{touch-action:pan-y}
-.tw-map{display:block;width:100%;border-radius:16px;margin:0 0 10px;background:#cfe9c3;cursor:pointer;touch-action:manipulation}
+.tw-root .tw-map{display:block;width:100%;border-radius:16px;margin:0 0 10px;background:#cfe9c3;cursor:pointer;touch-action:manipulation}
 .tw-ftabs{display:flex;gap:6px;margin-bottom:8px}.tw-ftabs .tw-btn{flex:1;padding:8px;font-size:14px;box-shadow:none;border:2px solid #eadff3}.tw-ftabs .tw-btn.on{background:var(--tw-pink);border-color:var(--tw-pink);color:#fff}
 .tw-fq{width:100%;font:inherit;font-size:16px;padding:9px 12px;border-radius:14px;border:2px solid #eadff3;background:#fff;color:var(--tw-ink);user-select:text;-webkit-user-select:text}
 .tw-flist{max-height:34vh;overflow:auto;margin:8px 0;touch-action:pan-y}

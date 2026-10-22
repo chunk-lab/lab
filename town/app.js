@@ -41,8 +41,8 @@
   // core/settings.js
   var DEFAULTS = { bgm: 0.5, sfx: 0.8, voice: true, rate: 1 };
   function createSettings(defaultTheme) {
-    const st = createStore("core");
-    const v = Object.assign({}, DEFAULTS, { theme: defaultTheme || "chic" }, st.get("settings") || {});
+    const st2 = createStore("core");
+    const v = Object.assign({}, DEFAULTS, { theme: defaultTheme || "chic" }, st2.get("settings") || {});
     const apply = () => {
       try {
         document.documentElement.dataset.theme = v.theme;
@@ -63,7 +63,7 @@
       all: () => Object.assign({}, v),
       set(k, val) {
         v[k] = val;
-        st.set("settings", v);
+        st2.set("settings", v);
         if (k === "theme") apply();
         subs.forEach((f) => {
           try {
@@ -178,8 +178,8 @@
 
   // core/rights.js
   function createRights(grants = []) {
-    const st = createStore("core");
-    const owned = /* @__PURE__ */ new Set([...st.get("rights") || [], ...grants]);
+    const st2 = createStore("core");
+    const owned = /* @__PURE__ */ new Set([...st2.get("rights") || [], ...grants]);
     const subs = /* @__PURE__ */ new Set();
     const has = (id) => owned.has(id) || id.startsWith("game:") && owned.has("sub:all");
     return {
@@ -188,7 +188,7 @@
       grant(id) {
         if (owned.has(id)) return;
         owned.add(id);
-        st.set("rights", [...owned].filter((x) => !grants.includes(x)));
+        st2.set("rights", [...owned].filter((x) => !grants.includes(x)));
         subs.forEach((f) => f(id));
       },
       onChange(f) {
@@ -200,8 +200,8 @@
 
   // core/events.js
   function createEvents() {
-    const st = createStore("core");
-    const stats = st.get("stats") || { first: null, last: null, count: {} };
+    const st2 = createStore("core");
+    const stats = st2.get("stats") || { first: null, last: null, count: {} };
     const subs = /* @__PURE__ */ new Set();
     return {
       report(game, name, data = {}) {
@@ -209,7 +209,7 @@
         stats.first = stats.first || now;
         stats.last = now;
         stats.count[key] = (stats.count[key] || 0) + 1;
-        st.set("stats", stats);
+        st2.set("stats", stats);
         subs.forEach((f) => {
           try {
             f(game, name, data);
@@ -227,15 +227,15 @@
 
   // core/profile.js
   function createProfile(events, base) {
-    const st = createStore("core");
-    const p = Object.assign({ name: "", avatar: "default" }, st.get("profile") || {});
+    const st2 = createStore("core");
+    const p = Object.assign({ name: "", avatar: "default" }, st2.get("profile") || {});
     return {
       get name() {
         return p.name;
       },
       setName(n) {
         p.name = String(n).slice(0, 12);
-        st.set("profile", p);
+        st2.set("profile", p);
       },
       avatarURL() {
         return base + "core/avatar/" + p.avatar + ".svg";
@@ -827,9 +827,9 @@
         const unitEnds2 = new Set(sn.units.map((u) => u.e));
         const v = view(), gOn = v === "read" ? RD.gramOn : RD.hintOn && RD.hintPolicy === "grammar";
         const segOn = gOn && (v !== "read" || S2.seg !== false), roleOn = gOn && (v !== "read" || S2.role !== false);
-        const st = $6("strip");
+        const st2 = $6("strip");
         const selOn = RD.sel && RD.sel.si === RD.si, startOn = RD.start && RD.start.si === RD.si;
-        st.innerHTML = sn.words.map((w, i) => {
+        st2.innerHTML = sn.words.map((w, i) => {
           let cls = "w";
           if (i >= ra && i <= rb) cls += " sel";
           else if (roleOn) cls += " r" + wordRole(sn, i);
@@ -839,15 +839,15 @@
           if (!post && segOn && unitEnds2.has(i) && i < n - 1) post = '<span class="cutmark hint">\uFF5C</span>';
           return `${pre}<span class="${cls}">${esc(w)}</span>${post}`;
         }).join("");
-        const ws = [...st.querySelectorAll(".w")];
+        const ws = [...st2.querySelectorAll(".w")];
         RD.gpos = [];
         for (let g = 0; g <= n; g++) {
           if (g === 0) RD.gpos.push(ws[0].offsetLeft - 4);
           else if (g === n) RD.gpos.push(ws[n - 1].offsetLeft + ws[n - 1].offsetWidth + 6);
           else RD.gpos.push((ws[g - 1].offsetLeft + ws[g - 1].offsetWidth + ws[g].offsetLeft) / 2);
         }
-        st.classList.toggle("step", !noAnim);
-        st.style.transform = `translate(${lineX2() - RD.gpos[RD.p]}px,-50%)`;
+        st2.classList.toggle("step", !noAnim);
+        st2.style.transform = `translate(${lineX2() - RD.gpos[RD.p]}px,-50%)`;
         $6("cutline").style.left = lineX2() + "px";
         const bar = $6("bar");
         bar.max = n;
@@ -2748,12 +2748,12 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       return r;
     }
     function mVPcore(c) {
-      var st = 0, hasT = 0, h = {}, i;
+      var st2 = 0, hasT = 0, h = {}, i;
       for (i = 0; i < c.length; i++) {
         var x = c[i];
         if (x === "Y" || x === "G") break;
         var s = -1;
-        for (var k = st; k < VP_ST.length; k++) if (VP_ST[k] === x) {
+        for (var k = st2; k < VP_ST.length; k++) if (VP_ST[k] === x) {
           s = k;
           break;
         }
@@ -2763,7 +2763,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           hasT = 1;
         }
         h[x] = 1;
-        st = s + 1;
+        st2 = s + 1;
       }
       var tail = c.slice(i), adv = tail.length ? advRun(tail) : { ok: true, full: true };
       if (!adv.ok) return { full: false, pre: false };
@@ -3917,8 +3917,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       for (var i = 0; i < samples.length; i++) {
         var ws = pend.concat(samples[i]);
         for (var k = 1; k <= samples[i].length; k++) {
-          var st = chainState(pend.concat(samples[i].slice(0, k)), cfg);
-          if (st.complete && !st.err) return st.chunk;
+          var st2 = chainState(pend.concat(samples[i].slice(0, k)), cfg);
+          if (st2.complete && !st2.err) return st2.chunk;
         }
       }
       return null;
@@ -6255,9 +6255,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       function validate(chunks) {
         var T2 = [];
         for (var i = 0; i < chunks.length; i++) {
-          var st = G.chainState(chunks[i], cfg);
-          if (!st.complete || st.err) return null;
-          T2.push(st.chunk);
+          var st2 = G.chainState(chunks[i], cfg);
+          if (!st2.complete || st2.err) return null;
+          T2.push(st2.chunk);
         }
         var r = G.parse(T2, cfg);
         return r.ok && r.kind === "S" ? r.text : null;
@@ -6815,7 +6815,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       g.on = on;
       var colorMode = SHOT ? "pos" : opt2.colorMode || "pos", dpr = app.dpr;
       g.layout = function() {
-        var st = app.stage, W2 = st.w, H2 = st.h, top2 = st.top, bot = st.bottom;
+        var st2 = app.stage, W2 = st2.w, H2 = st2.h, top2 = st2.top, bot = st2.bottom;
         var hud3 = top2 + 58, prev = 30, barH = 70, laneH = SHOT ? 132 : 50;
         var bar = { x: 6, y: H2 - bot - barH - 6, w: W2 - 12, h: barH };
         var lane = { x: 0, y: bar.y - laneH, w: W2, h: laneH };
@@ -6961,10 +6961,10 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         if (s.k === "sm") s.t = "pres";
         if (s.k === "be") s.v = "pres";
         if (s.k === "idm") {
-          var st = G.chainState([s], cfg);
-          if (st.complete && st.chunk) {
-            st.chunk.words[0].star = 1;
-            return { chunk: st.chunk };
+          var st2 = G.chainState([s], cfg);
+          if (st2.complete && st2.chunk) {
+            st2.chunk.words[0].star = 1;
+            return { chunk: st2.chunk };
           }
         }
         return s;
@@ -7131,10 +7131,10 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       }
       function previewChain() {
         if (!g.chain) return;
-        var st = g.chain.st, txt = st.complete && st.chunk ? G.chunkText(st.chunk, cfg) : g.chain.items.map(function(i) {
+        var st2 = g.chain.st, txt = st2.complete && st2.chunk ? G.chunkText(st2.chunk, cfg) : g.chain.items.map(function(i) {
           return i.text;
         }).join(" ");
-        app.ui.preview(txt, st.complete ? st.err ? "bad" : "ok" : "wait", st.err ? st.err.msg : "");
+        app.ui.preview(txt, st2.complete ? st2.err ? "bad" : "ok" : "wait", st2.err ? st2.err.msg : "");
       }
       function startChain(it) {
         g.chain = { items: [it], last: g.t, t0: g.t };
@@ -7147,8 +7147,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       function fitForms(items) {
         var ws = items.map(function(i) {
           return i.word;
-        }), st = G.chainState(ws, cfg);
-        if (!st.err) return st;
+        }), st2 = G.chainState(ws, cfg);
+        if (!st2.err) return st2;
         for (var k = 0; k < items.length; k++) {
           var w = ws[k];
           if (w.k !== "v") continue;
@@ -7164,7 +7164,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           }
           w.f = f0;
         }
-        return st;
+        return st2;
       }
       function addToChain(it) {
         g.chain.items.push(it);
@@ -7189,7 +7189,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         app.ui.preview("", "");
       }
       function scatterChain(msg) {
-        var its = g.chain.items, st = g.chain.st;
+        var its = g.chain.items, st2 = g.chain.st;
         its.forEach(function(i) {
           i.vx += (Math.random() - 0.5) * 160;
           i.vy += (Math.random() - 0.5) * 160;
@@ -7198,16 +7198,16 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         var text = its.map(function(i) {
           return i.text;
         }).join(" ");
-        var m = msg || (st && st.err ? st.err.msg : G.MSG.chain({ t: text }));
+        var m = msg || (st2 && st2.err ? st2.err.msg : G.MSG.chain({ t: text }));
         var c = centroid(its);
-        toast3(m, st && st.err ? "x" : "tri", c.x, c.y);
+        toast3(m, st2 && st2.err ? "x" : "tri", c.x, c.y);
         app.audio.sfx("scatter");
         clearChain();
         breakCombo();
         setExpr("sad", 1);
-        if (st && st.err && !msg) {
+        if (st2 && st2.err && !msg) {
           g.stats.fails++;
-          emit("fail", { kind: "chunk", code: st.err.code });
+          emit("fail", { kind: "chunk", code: st2.err.code });
         }
       }
       function confirmChain() {
@@ -7218,16 +7218,16 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           clearChain();
           return only || null;
         }
-        var st = ch.st;
-        if (!st.complete) {
+        var st2 = ch.st;
+        if (!st2.complete) {
           scatterChain();
           return null;
         }
-        if (st.err) {
+        if (st2.err) {
           scatterChain();
           return null;
         }
-        var its = ch.items, c = centroid(its), chunk = st.chunk;
+        var its = ch.items, c = centroid(its), chunk = st2.chunk;
         if (chunk.t === "NP" && chunk.merged) {
           var mw = { k: "pr", v: chunk.pron };
           chunk = G.chainState([mw], cfg).chunk;
@@ -7365,8 +7365,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       }
       function tokenOf(it) {
         if (it.chunk) return it.chunk;
-        var st = G.chainState([it.word], cfg);
-        return st.complete && !st.err ? st.chunk : null;
+        var st2 = G.chainState([it.word], cfg);
+        return st2.complete && !st2.err ? st2.chunk : null;
       }
       function unitOf(it) {
         return it.chunk ? { chunk: it.chunk, words: it.chunk.words || [] } : { words: [it.word] };
@@ -8040,9 +8040,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       }
       function refreshCand() {
         g.cand = null;
-        var mode = S2.hint;
-        if (mode === "none") return;
-        if (mode === "press" && !g.pressHint && !g.drag) return;
+        var mode2 = S2.hint;
+        if (mode2 === "none") return;
+        if (mode2 === "press" && !g.pressHint && !g.drag) return;
         var set = /* @__PURE__ */ new Set(), all = fieldAndSlotItems();
         if (g.chain) {
           var cw = chainWords();
@@ -8585,8 +8585,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         g.idleT += dt;
         g.playT += dt;
         if (g.chain && !g.drag) {
-          var el3 = g.t - g.chain.last, st = g.chain.st;
-          if (st.complete && !st.err && g.chain.items.length >= 2 && el3 > (st.closed ? 0.6 : 1)) confirmChain();
+          var el3 = g.t - g.chain.last, st2 = g.chain.st;
+          if (st2.complete && !st2.err && g.chain.items.length >= 2 && el3 > (st2.closed ? 0.6 : 1)) confirmChain();
         }
         if (g.sel && g.t - g.sel.t > 2.5 && !press2) deselect();
         if (g.comboT > 0) {
@@ -8736,7 +8736,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         });
         if (g.drag && g.drag.lifted && g.drag.lifted.lift) drawItem(ctx, g.drag.lifted, 0.92, t, 1.12);
         if (g.chain) {
-          var st = g.chain.st, el3 = g.t - g.chain.last, lim = st.complete && !st.err && g.chain.items.length >= 2 ? st.closed ? 0.6 : 1 : 0, k = lim ? U.clamp(1 - el3 / lim, 0, 1) : 1;
+          var st2 = g.chain.st, el3 = g.t - g.chain.last, lim = st2.complete && !st2.err && g.chain.items.length >= 2 ? st2.closed ? 0.6 : 1 : 0, k = lim ? U.clamp(1 - el3 / lim, 0, 1) : 1;
           g.chain.items.forEach(function(i, n) {
             badge(ctx, i.x - i.r * 0.7, i.y - i.r * 0.7, String(n + 1));
           });
@@ -8744,7 +8744,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           ctx.save();
           ctx.lineWidth = 4;
           ctx.lineCap = "round";
-          ctx.strokeStyle = st.complete ? st.err ? "#ff6b7a" : "#3cc98a" : "#f5a524";
+          ctx.strokeStyle = st2.complete ? st2.err ? "#ff6b7a" : "#3cc98a" : "#f5a524";
           ctx.beginPath();
           ctx.arc(last.x, last.y, last.r + 7, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * k);
           ctx.stroke();
@@ -9210,8 +9210,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         return ball === "art" || ball === "prep" || ball === "pron" ? nounOK(t) : verbOK(t, ball);
       }
       function cs(ws) {
-        var st = G.chainState(ws, cfg);
-        return st.complete && !st.err ? st.chunk : null;
+        var st2 = G.chainState(ws, cfg);
+        return st2.complete && !st2.err ? st2.chunk : null;
       }
       function buildFor(ball, t, mods) {
         var res = null;
@@ -9714,18 +9714,18 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         bAll().forEach(function(it) {
           if (it.state === "pop") bRemove(it);
         });
-        var ok = {}, st = [];
+        var ok = {}, st2 = [];
         for (var c = 0; c < bCols(0); c++) if (bGet(0, c)) {
           ok[bKey(0, c)] = 1;
-          st.push([0, c]);
+          st2.push([0, c]);
         }
-        while (st.length) {
-          var p = st.pop();
+        while (st2.length) {
+          var p = st2.pop();
           bNb(p[0], p[1]).forEach(function(q) {
             var k = bKey(q[0], q[1]);
             if (!ok[k] && B.cells[k]) {
               ok[k] = 1;
-              st.push(q);
+              st2.push(q);
             }
           });
         }
@@ -10879,12 +10879,12 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           });
         }
         render();
-        var st = app.lifetime();
+        var st2 = app.lifetime();
         return screen2(el3("div", { class: "pc-scr" }, [
           head("\u8A18\u9332", h.back),
           tabs,
           box,
-          el3("div", { class: "pc-card" }, [el3("h3", { text: "\u3053\u308C\u307E\u3067" }), el3("div", { class: "pc-stats" }, [stat(st.plays, "\u3042\u305D\u3093\u3060\u56DE\u6570"), stat(st.sentences, "\u4F5C\u3063\u305F\u6587"), stat(st.maxCombo, "\u6700\u5927\u30B3\u30F3\u30DC"), stat(st.longestN, "\u3044\u3061\u3070\u3093\u9577\u3044\u6587(\u8A9E)")]), st.longest ? el3("div", { class: "pc-sent", style: { marginTop: "8px" } }, [el3("span", { text: st.longest }), speakBtn(st.longest)]) : null])
+          el3("div", { class: "pc-card" }, [el3("h3", { text: "\u3053\u308C\u307E\u3067" }), el3("div", { class: "pc-stats" }, [stat(st2.plays, "\u3042\u305D\u3093\u3060\u56DE\u6570"), stat(st2.sentences, "\u4F5C\u3063\u305F\u6587"), stat(st2.maxCombo, "\u6700\u5927\u30B3\u30F3\u30DC"), stat(st2.longestN, "\u3044\u3061\u3070\u3093\u9577\u3044\u6587(\u8A9E)")]), st2.longest ? el3("div", { class: "pc-sent", style: { marginTop: "8px" } }, [el3("span", { text: st2.longest }), speakBtn(st2.longest)]) : null])
         ]));
       };
       function stat(v, l) {
@@ -10897,25 +10897,25 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         } });
       }
       ui.shop = function(h) {
-        var st = app.services.store, box = el3("div");
+        var st2 = app.services.store, box = el3("div");
         function render() {
           box.innerHTML = "";
-          var inv = st.inventory();
-          var prem = st.isPremium();
-          box.appendChild(el3("div", { class: "pc-card" }, [el3("h3", { text: "\u30D7\u30EC\u30DF\u30A2\u30E0" }), el3("div", { class: "pc-prod" }, [el3("div", { class: "ic", html: icon("star") }), el3("div", { class: "tx" }, [el3("b", { text: "\u30D7\u30EC\u30DF\u30A2\u30E0\u4F1A\u54E1" }), el3("small", { text: "\u65E5\u66FF\u308F\u308A\u304A\u984C+\u81EA\u7531\u306B\u4F7F\u3048\u308B\u300C\u3042\u304D\u300D\u30B9\u30ED\u30C3\u30C8" })]), prem ? el3("b", { text: "\u52A0\u5165\u4E2D", style: { color: "#3cc98a" } }) : btn2(st.price("premium"), "pink small", function() {
+          var inv = st2.inventory();
+          var prem = st2.isPremium();
+          box.appendChild(el3("div", { class: "pc-card" }, [el3("h3", { text: "\u30D7\u30EC\u30DF\u30A2\u30E0" }), el3("div", { class: "pc-prod" }, [el3("div", { class: "ic", html: icon("star") }), el3("div", { class: "tx" }, [el3("b", { text: "\u30D7\u30EC\u30DF\u30A2\u30E0\u4F1A\u54E1" }), el3("small", { text: "\u65E5\u66FF\u308F\u308A\u304A\u984C+\u81EA\u7531\u306B\u4F7F\u3048\u308B\u300C\u3042\u304D\u300D\u30B9\u30ED\u30C3\u30C8" })]), prem ? el3("b", { text: "\u52A0\u5165\u4E2D", style: { color: "#3cc98a" } }) : btn2(st2.price("premium"), "pink small", function() {
             buy2("premium");
           })])]));
           var items = [["hint", "hint", "\u30D2\u30F3\u30C8+ \xD75", "\u4F5C\u308C\u308B\u6587\u3092\u756A\u53F7\u3067\u6559\u3048\u3066\u304F\u308C\u308B"], ["magic", "magic", "\u307E\u307B\u3046\u30D0\u30D6\u30EB \xD73", "\u3064\u306A\u3052\u305F\u3044\u5358\u8A9E\u306B\u5909\u8EAB\u3059\u308B"], ["auto", "auto", "\u30AA\u30FC\u30C8\u304F\u3063\u3064\u3051 \xD73", "\u5358\u8A9E\u3092\u81EA\u52D5\u3067\u30C1\u30E3\u30F3\u30AF\u306B\u3059\u308B"]];
           box.appendChild(el3("div", { class: "pc-card" }, [el3("h3", { text: "\u30A2\u30A4\u30C6\u30E0" })].concat(items.map(function(it) {
-            return el3("div", { class: "pc-prod" }, [el3("div", { class: "ic", html: icon(it[1]) }), el3("div", { class: "tx" }, [el3("b", { text: it[2] }), el3("small", { text: it[3] + "(\u6240\u6301 " + (inv[it[0]] || 0) + ")" })]), btn2(st.price(it[0]), "yellow small", function() {
+            return el3("div", { class: "pc-prod" }, [el3("div", { class: "ic", html: icon(it[1]) }), el3("div", { class: "tx" }, [el3("b", { text: it[2] }), el3("small", { text: it[3] + "(\u6240\u6301 " + (inv[it[0]] || 0) + ")" })]), btn2(st2.price(it[0]), "yellow small", function() {
               buy2(it[0]);
             })]);
           }))));
-          if (st.isDummy) box.lastChild.appendChild(el3("div", { class: "pc-note", text: "\u30C6\u30B9\u30C8\u7248:\u5B9F\u969B\u306E\u652F\u6255\u3044\u306F\u767A\u751F\u3057\u307E\u305B\u3093" }));
+          if (st2.isDummy) box.lastChild.appendChild(el3("div", { class: "pc-note", text: "\u30C6\u30B9\u30C8\u7248:\u5B9F\u969B\u306E\u652F\u6255\u3044\u306F\u767A\u751F\u3057\u307E\u305B\u3093" }));
         }
         function buy2(id) {
-          ui.confirm(st.isDummy ? "(\u30C6\u30B9\u30C8\u8CFC\u5165)\u8CFC\u5165\u3057\u307E\u3059\u304B?" : "\u8CFC\u5165\u3057\u307E\u3059\u304B?", "\u8CB7\u3046", function() {
-            st.purchase(id).then(function(ok) {
+          ui.confirm(st2.isDummy ? "(\u30C6\u30B9\u30C8\u8CFC\u5165)\u8CFC\u5165\u3057\u307E\u3059\u304B?" : "\u8CFC\u5165\u3057\u307E\u3059\u304B?", "\u8CB7\u3046", function() {
+            st2.purchase(id).then(function(ok) {
               if (ok) {
                 app.audio.sfx("best");
                 ui.toast("\u3042\u308A\u304C\u3068\u3046!", "info");
@@ -11299,9 +11299,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         storage.set("rank", all);
         return Promise.resolve({ rank: all[key].indexOf(e) + 1 });
       },
-      top: function(mode, level2) {
+      top: function(mode2, level2) {
         var all = storage.get("rank") || {};
-        return Promise.resolve((all[mode + ":" + level2] || []).slice());
+        return Promise.resolve((all[mode2 + ":" + level2] || []).slice());
       },
       isLocal: true
     };
@@ -11421,9 +11421,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     app.saveState = function() {
       storage.set("state", state);
     };
-    app.best = function(mode, level2) {
+    app.best = function(mode2, level2) {
       var b = storage.get("best") || {};
-      return b[mode + ":" + level2] || 0;
+      return b[mode2 + ":" + level2] || 0;
     };
     app.lifetime = function() {
       return Object.assign({ plays: 0, sentences: 0, maxCombo: 0, longestN: 0, longest: "" }, storage.get("life") || {});
@@ -11737,20 +11737,20 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       var L = LEVELS[level2] || LEVELS[0];
       return settings2.custom ? { auto: Object.assign({}, settings2.auto), color: settings2.color, maxLevel: L.maxLevel } : { auto: Object.assign({}, L.auto), color: L.color, maxLevel: L.maxLevel };
     }
-    function startGame(mode) {
+    function startGame(mode2) {
       endGame();
-      lastMode = mode;
+      lastMode = mode2;
       app.scene = "game";
       ui.clear();
       app.audio.music(null);
       var level2 = state.level, c = cfgFor(level2), seed = null, goal = null, practice = false;
-      if (mode === "daily") {
+      if (mode2 === "daily") {
         var day = U.today();
         seed = U.hash("daily:" + day);
         goal = GOALS[seed % GOALS.length];
         practice = !!(storage.get("daily") || {})[day];
       }
-      var g = Game.create(app, { mode, level: level2, auto: c.auto, colorMode: c.color, maxLevel: c.maxLevel, seed, freeSlot: services.store.isPremium() });
+      var g = Game.create(app, { mode: mode2, level: level2, auto: c.auto, colorMode: c.color, maxLevel: c.maxLevel, seed, freeSlot: services.store.isPremium() });
       g.goal = goal;
       g.practice = practice;
       app.game = g;
@@ -11758,12 +11758,12 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         return services.store.inventory();
       }, useItem });
       g.start();
-      ui.itemsPos(mode === "shot" ? -200 : g.L.lane.y + g.L.lane.h / 2);
+      ui.itemsPos(mode2 === "shot" ? -200 : g.L.lane.y + g.L.lane.h / 2);
       if (goal) {
         ui.goal = goal.text + (practice ? "(\u7DF4\u7FD2)" : "");
         ui.preview("", "");
       }
-      app.emit("screen", { name: "game", mode });
+      app.emit("screen", { name: "game", mode: mode2 });
     }
     function useItem(id) {
       var g = app.game;
@@ -11842,9 +11842,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     }
     app.onGameEnd = function(g) {
       if (app.game !== g) return;
-      var st = g.stats, score = g.score, goalRes = null;
+      var st2 = g.stats, score = g.score, goalRes = null;
       if (g.goal) {
-        var ok = g.goal.test(st);
+        var ok = g.goal.test(st2);
         goalRes = { text: g.goal.text, done: ok, bonus: 1500 };
         if (ok) score += 1500;
       }
@@ -11854,7 +11854,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
           bests[key] = score;
           storage.set("best", bests);
         }
-        services.ranking.submit({ mode: g.mode, level: g.level, score, sentences: st.sentences, longest: st.longest, date: U.today() });
+        services.ranking.submit({ mode: g.mode, level: g.level, score, sentences: st2.sentences, longest: st2.longest, date: U.today() });
         if (g.mode === "daily") {
           var dl = storage.get("daily") || {};
           dl[U.today()] = score;
@@ -11863,14 +11863,14 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       }
       var life = app.lifetime();
       life.plays++;
-      life.sentences += st.sentences;
-      life.maxCombo = Math.max(life.maxCombo, st.maxCombo);
-      if (st.longestN > life.longestN) {
-        life.longestN = st.longestN;
-        life.longest = st.longest;
+      life.sentences += st2.sentences;
+      life.maxCombo = Math.max(life.maxCombo, st2.maxCombo);
+      if (st2.longestN > life.longestN) {
+        life.longestN = st2.longestN;
+        life.longest = st2.longest;
       }
       storage.set("life", life);
-      var mode = MODES.filter(function(m) {
+      var mode2 = MODES.filter(function(m) {
         return m.id === g.mode;
       })[0] || MODES[0];
       endGame();
@@ -11880,11 +11880,11 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       if (newBest) setTimeout(function() {
         app.audio.sfx("best");
       }, 700);
-      var res = { mode: g.mode, level: g.level, score, stats: st, newBest, best: Math.max(prev, newBest ? score : 0), goal: goalRes, practice, modeName: mode.name, levelName: LEVELS[g.level].name };
+      var res = { mode: g.mode, level: g.level, score, stats: st2, newBest, best: Math.max(prev, newBest ? score : 0), goal: goalRes, practice, modeName: mode2.name, levelName: LEVELS[g.level].name };
       ui.result(res, { retry: function() {
         startGame(lastMode);
       }, modes: toModes, title: toTitle });
-      app.emit("result", { mode: res.mode, level: res.level, score, newBest, stats: { sentences: st.sentences, chunks: st.chunks, maxCombo: st.maxCombo, longest: st.longest } });
+      app.emit("result", { mode: res.mode, level: res.level, score, newBest, stats: { sentences: st2.sentences, chunks: st2.chunks, maxCombo: st2.maxCombo, longest: st2.longest } });
     };
     measure();
     raf = requestAnimationFrame(frame);
@@ -11928,10 +11928,10 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         });
         app.saveSettings();
       },
-      show: function(name, mode) {
+      show: function(name, mode2) {
         if (name === "title") toTitle();
         else if (name === "modes") toModes();
-        else if (name === "game") startGame(mode || "ta");
+        else if (name === "game") startGame(mode2 || "ta");
         else if (name === "tutorial") startTutorial(toModes);
       },
       getState: function() {
@@ -12201,10 +12201,10 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       w.f = F[(i + 1) % 4];
     } else if (w.k === "n") w.pl = !w.pl;
     else if (w.k === "be" || w.k === "hv") {
-      var st = (w.v === "past" ? 1 : 0) + (w.neg ? 2 : 0);
-      st = (st + 1) % 4;
-      w.v = st & 1 ? "past" : "pres";
-      w.neg = !!(st & 2);
+      var st2 = (w.v === "past" ? 1 : 0) + (w.neg ? 2 : 0);
+      st2 = (st2 + 1) % 4;
+      w.v = st2 & 1 ? "past" : "pres";
+      w.neg = !!(st2 & 2);
     } else if (w.k === "do") {
       var sd = (w.v === "past" ? 1 : 0) + (w.neg ? 2 : 0);
       sd = (sd + 1) % 4;
@@ -12527,13 +12527,13 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
         if (found) return;
       }
       for (var j = n; j > i; j--) {
-        var st = cs(i, j);
-        if (st.complete && !st.err) {
-          T2.push(st.chunk);
+        var st2 = cs(i, j);
+        if (st2.complete && !st2.err) {
+          T2.push(st2.chunk);
           dfs(j, T2);
           T2.pop();
           if (found) return;
-        } else if (st.complete && st.err && !segErr) segErr = st.err;
+        } else if (st2.complete && st2.err && !segErr) segErr = st2.err;
       }
     }
     dfs(0, []);
@@ -13305,9 +13305,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     return o.join("<br>");
   }
   function applyStory(ev) {
-    var st = storyOf(ev.nps, R && R.prev);
-    ev.f.story = st === "def";
-    ev.f.storyP = st === "pron";
+    var st2 = storyOf(ev.nps, R && R.prev);
+    ev.f.story = st2 === "def";
+    ev.f.storyP = st2 === "pron";
   }
   function scoreOf(ev, ctx) {
     var f = ev.f;
@@ -14551,38 +14551,38 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     renderTop();
     var cards = G_.row.querySelectorAll(".card"), jks = G_.jk.querySelectorAll(".joker");
     for (var k = 0; k < sc.steps.length; k++) {
-      var st = sc.steps[k];
-      if (st.t === "yaku") {
-        G_.yk.textContent = "\u5F79:" + st.label;
+      var st2 = sc.steps[k];
+      if (st2.t === "yaku") {
+        G_.yk.textContent = "\u5F79:" + st2.label;
         bump(G_.yk);
         SFX.mult(0);
         await wait(380);
       }
-      if (st.t === "card") {
-        var ce = cards[st.i];
+      if (st2.t === "card") {
+        var ce = cards[st2.i];
         if (ce) {
           ce.classList.add("hit");
-          floatTxt(ce, "+" + st.add + (st.tag ? " " + st.tag : ""), "c");
+          floatTxt(ce, "+" + st2.add + (st2.tag ? " " + st2.tag : ""), "c");
         }
         SFX.chip(k);
         await wait(150);
       }
-      if (st.t === "note") {
-        floatTxt(G_.yk, st.txt, "x");
+      if (st2.t === "note") {
+        floatTxt(G_.yk, st2.txt, "x");
         SFX.bad();
         await wait(500);
       }
-      if (st.t === "joker") {
-        var je = jks[st.ji];
+      if (st2.t === "joker") {
+        var je = jks[st2.ji];
         if (je) {
           bump(je);
-          floatTxt(je, st.txt, /×/.test(st.txt) ? "x" : /倍/.test(st.txt) ? "m" : "c");
+          floatTxt(je, st2.txt, /×/.test(st2.txt) ? "x" : /倍/.test(st2.txt) ? "m" : "c");
         }
         SFX.joker();
         await wait(420);
       }
-      G_.ch.textContent = st.chips;
-      G_.ml.textContent = st.mult;
+      G_.ch.textContent = st2.chips;
+      G_.ml.textContent = st2.mult;
       bump(G_.ch);
       bump(G_.ml);
     }
@@ -15949,16 +15949,16 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     return s < q[0] * 0.8 ? 0.1 : s < q[0] ? 0.25 : s < q[1] ? 0.45 : s < q[2] ? 0.7 : s < q[2] * 1.3 ? 0.85 : 0.95;
   }
   function cpuBet(face3, raised, t) {
-    var sc = V.cpuBest ? V.cpuBest.score : 0, q = quant(sc), st = V.opp.style, early2 = t === 1 ? 0.1 : 0, r = rnd2();
+    var sc = V.cpuBest ? V.cpuBest.score : 0, q = quant(sc), st2 = V.opp.style, early2 = t === 1 ? 0.1 : 0, r = rnd2();
     if (V.bluffed) q = Math.max(q, 0.6);
     if (!face3) {
-      var th = st === "careful" ? 0.65 : st === "bluff" ? 0.45 : 0.55, bl = st === "bluff" ? 0.35 : st === "careful" ? 0.03 : 0.1;
+      var th = st2 === "careful" ? 0.65 : st2 === "bluff" ? 0.45 : 0.55, bl = st2 === "bluff" ? 0.35 : st2 === "careful" ? 0.03 : 0.1;
       return q >= th || r < bl ? "bet" : "check";
     }
-    var fold = (st === "careful" ? 0.4 : st === "bluff" ? 0.2 : 0.3) - early2, rz = st === "bluff" ? 0.75 : st === "careful" ? 0.9 : 0.85;
+    var fold = (st2 === "careful" ? 0.4 : st2 === "bluff" ? 0.2 : 0.3) - early2, rz = st2 === "bluff" ? 0.75 : st2 === "careful" ? 0.9 : 0.85;
     if (V.med.me === 0) rz = 2;
-    if (q < fold && !(st === "bluff" && r < 0.4)) return "fold";
-    if (!raised && (q >= rz || st === "bluff" && r < 0.15) && V.med.cpu > face3) return "raise";
+    if (q < fold && !(st2 === "bluff" && r < 0.4)) return "fold";
+    if (!raised && (q >= rz || st2 === "bluff" && r < 0.15) && V.med.cpu > face3) return "raise";
     return "call";
   }
   async function betting(t, order) {
@@ -16281,11 +16281,11 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     } catch (e) {
     }
   }
-  function rec(pid, st, mode) {
-    return ((SV.best[pid] || {})[st] || {})[mode] || null;
+  function rec(pid, st2, mode2) {
+    return ((SV.best[pid] || {})[st2] || {})[mode2] || null;
   }
-  function starsOf(pid, st) {
-    const a = rec(pid, st, "ta"), b = rec(pid, st, "rh");
+  function starsOf(pid, st2) {
+    const a = rec(pid, st2, "ta"), b = rec(pid, st2, "rh");
     return Math.max(a ? a.stars : 0, b ? b.stars : 0);
   }
   var chara = (f) => `${ENV.base}img/chara/${SV.set.nav}/${f}.webp`;
@@ -16434,22 +16434,22 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     }
   }
   function bgmStep(s, t) {
-    const st = s % 16, bar = Math.floor(s / 16) % 4, ch = PROG[bar], root2 = 48 + ch[0], menu = BGM.style === "menu";
+    const st2 = s % 16, bar = Math.floor(s / 16) % 4, ch = PROG[bar], root2 = 48 + ch[0], menu = BGM.style === "menu";
     if (menu) {
-      if (st === 0) ch.forEach((n) => tone(mtof(60 + n), 3.2, "sine", 0.035, t, 0, BGG));
-      if (st % 4 === 2) tone(mtof(72 + ch[(st / 4 | 0) % 3]), 0.5, "triangle", 0.045, t, 0, BGG);
-      if (st === 0) tone(mtof(root2 - 12), 1.4, "triangle", 0.07, t, 0, BGG);
+      if (st2 === 0) ch.forEach((n) => tone(mtof(60 + n), 3.2, "sine", 0.035, t, 0, BGG));
+      if (st2 % 4 === 2) tone(mtof(72 + ch[(st2 / 4 | 0) % 3]), 0.5, "triangle", 0.045, t, 0, BGG);
+      if (st2 === 0) tone(mtof(root2 - 12), 1.4, "triangle", 0.07, t, 0, BGG);
       return;
     }
-    if (st % 4 === 0) {
+    if (st2 % 4 === 0) {
       tone(120, 0.16, "sine", 0.5, t, 45, BGG);
     }
-    if (st === 4 || st === 12) noise2(0.13, 0.22, 1600, "bandpass", t, BGG);
-    if (st % 2 === 1) noise2(0.03, st % 4 === 3 ? 0.09 : 0.05, 7e3, "highpass", t, BGG);
-    if (st % 2 === 0) tone(mtof(root2 + (st % 8 === 6 ? 12 : 0)), 0.16, "triangle", 0.17, t, 0, BGG);
-    const arp = [0, 1, 2, 1][st % 4];
-    tone(mtof(72 + ch[arp] + (st >= 8 && bar % 2 ? 12 : 0)), 0.11, "square", 0.022, t, 0, BGG);
-    if (st === 0) ch.forEach((n) => tone(mtof(60 + n), 1.6, "sawtooth", 0.012, t, 0, BGG));
+    if (st2 === 4 || st2 === 12) noise2(0.13, 0.22, 1600, "bandpass", t, BGG);
+    if (st2 % 2 === 1) noise2(0.03, st2 % 4 === 3 ? 0.09 : 0.05, 7e3, "highpass", t, BGG);
+    if (st2 % 2 === 0) tone(mtof(root2 + (st2 % 8 === 6 ? 12 : 0)), 0.16, "triangle", 0.17, t, 0, BGG);
+    const arp = [0, 1, 2, 1][st2 % 4];
+    tone(mtof(72 + ch[arp] + (st2 >= 8 && bar % 2 ? 12 : 0)), 0.11, "square", 0.022, t, 0, BGG);
+    if (st2 === 0) ch.forEach((n) => tone(mtof(60 + n), 1.6, "sawtooth", 0.012, t, 0, BGG));
   }
   function bgmDuck(on) {
     if (!AC || !BGM.on || !bgmOn()) return;
@@ -16871,8 +16871,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     $3("wTitle").textContent = `${LV[lv].name}\u306E${nm}\u7DF4\u7FD2`;
     $3("wNote").textContent = t === "i" ? `${LV[lv].name}\u306B\u3088\u304F\u51FA\u308B\u719F\u8A9E\u3092${n}\u500B\u305A\u3064\u3002\u8AAD\u307F\u4E0A\u3052\u3092\u805E\u3044\u3066\u3001\u610F\u5473\u3092\u9078\u3076\u3002` : `\u3088\u304F\u4F7F\u308F\u308C\u308B\u9806\u306B${n}\u8A9E\u305A\u3064\u3002\u8AAD\u307F\u4E0A\u3052\u3092\u805E\u3044\u3066\u3001\u610F\u5473\u3092\u9078\u3076\uFF08\u5358\u8A9E\u30C0\u30C3\u30B7\u30E5\uFF09\u3002`;
     $3("wsets").innerHTML = Array.from({ length: m }, (_, k) => {
-      const id = `${t === "i" ? "i" : "w"}${lv}-${k + 1}`, st = starsOf(id, 1), b = rec(id, 1, "ta");
-      return `<button class="wset" data-k="${k}"><b>${k + 1}</b><span class="ws">${esc2(src[lv][k * n][0])}\u2026</span><span class="st">${"\u2605".repeat(st)}<i>${"\u2605".repeat(3 - st)}</i></span>${b ? `<small>${b.time.toFixed(1)}s</small>` : ""}</button>`;
+      const id = `${t === "i" ? "i" : "w"}${lv}-${k + 1}`, st2 = starsOf(id, 1), b = rec(id, 1, "ta");
+      return `<button class="wset" data-k="${k}"><b>${k + 1}</b><span class="ws">${esc2(src[lv][k * n][0])}\u2026</span><span class="st">${"\u2605".repeat(st2)}<i>${"\u2605".repeat(3 - st2)}</i></span>${b ? `<small>${b.time.toFixed(1)}s</small>` : ""}</button>`;
     }).join("");
     $3("wsets").querySelectorAll(".wset").forEach((b) => b.onclick = () => {
       SE.tap();
@@ -16902,8 +16902,8 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     const n = Math.ceil(L.lines.length / USET), own = L.mine, canDrop = L.sid && WDB && (own || L.by && L.by === WME || WADMIN);
     overlay(`<div class="sheet"><h3>${esc2(L.title || "\u7121\u984C")}</h3><p class="hint">${L.lines.length}\u8A9E${L.cat ? "\u30FB" + esc2(L.cat) : ""}${L.lv ? "\u30FB" + LV[L.lv].name : ""}${L.shared ? "\u30FB\u307F\u3093\u306A\u306E\u5358\u8A9E\u96C6" : ""}</p>
     <div class="usets">${Array.from({ length: n }, (_, k) => {
-      const id = `u-${L.sid || L.lid}-${k + 1}`, st = starsOf(id, 1);
-      return `<button class="wset" data-k="${k}"><b>${k + 1}</b><span class="ws">${esc2(L.lines[k * USET].split("	")[0])}\u2026</span><span class="st">${"\u2605".repeat(st)}<i>${"\u2605".repeat(3 - st)}</i></span></button>`;
+      const id = `u-${L.sid || L.lid}-${k + 1}`, st2 = starsOf(id, 1);
+      return `<button class="wset" data-k="${k}"><b>${k + 1}</b><span class="ws">${esc2(L.lines[k * USET].split("	")[0])}\u2026</span><span class="st">${"\u2605".repeat(st2)}<i>${"\u2605".repeat(3 - st2)}</i></span></button>`;
     }).join("")}</div>
     ${own ? `<button class="sbtn" id="uEd">\u7DE8\u96C6\u3059\u308B</button>` : ""}${own && WDB ? `<button class="sbtn" id="uSh">${L.sid ? "\u5171\u6709\u3092\u4ECA\u306E\u5185\u5BB9\u3067\u4E0A\u66F8\u304D\u3059\u308B" : "\u{1F310} \u307F\u3093\u306A\u306B\u5171\u6709\u3059\u308B"}</button>` : ""}
     ${canDrop ? `<button class="sbtn" id="uDr">\u5171\u6709\u3092\u53D6\u308A\u4E0B\u3052\u308B</button>` : ""}${!own ? `<button class="sbtn" id="uCp">\u81EA\u5206\u306E\u5358\u8A9E\u96C6\u306B\u30B3\u30D4\u30FC</button>` : ""}
@@ -17067,11 +17067,11 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     ds = ds.map((d) => up ? cap(d) : d);
     return { gs: ti, ge: ti + 1, ans, opts: shuf([ans, ...ds]) };
   }
-  function buildItems(st, p) {
-    if (st === 1) return shuf(p.words).map((w) => ({ kind: 1, en: w[0], pos: w[1], ans: w[2] }));
+  function buildItems(st2, p) {
+    if (st2 === 1) return shuf(p.words).map((w) => ({ kind: 1, en: w[0], pos: w[1], ans: w[2] }));
     const n = Math.min(p.lv === 1 ? 14 : 16, p.chunks.length);
-    if (st === 2) return shuf(p.chunks.map((c, i) => i)).slice(0, n).map((i) => ({ kind: 2, ci: i, en: plain(p.chunks[i]), ans: p.chunks[i].ja }));
-    if (st === 3) return shuf(p.chunks.map((c, i) => i).filter((i) => p.chunks[i].s3.length)).slice(0, n).map((i) => ({ kind: 3, ci: i, ...gapPick(p.chunks[i]), ja: p.chunks[i].ja }));
+    if (st2 === 2) return shuf(p.chunks.map((c, i) => i)).slice(0, n).map((i) => ({ kind: 2, ci: i, en: plain(p.chunks[i]), ans: p.chunks[i].ja }));
+    if (st2 === 3) return shuf(p.chunks.map((c, i) => i).filter((i) => p.chunks[i].s3.length)).slice(0, n).map((i) => ({ kind: 3, ci: i, ...gapPick(p.chunks[i]), ja: p.chunks[i].ja }));
     return p.chunks.map((c, i) => {
       const gp = c.s3.length && Math.random() < 0.6 ? gapPick(c) : { gs: c.g[0], ge: c.g[1], ans: c.g[2][0], opts: shuf(c.g[2]) };
       return { kind: 4, ci: i, ...gp, ja: c.ja, lane: i % 2 };
@@ -17131,12 +17131,12 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     if (ms) setTimeout2(() => d.remove(), ms);
     return d;
   }
-  function beginStage(st) {
+  function beginStage(st2) {
     const p = RUN.p;
     $3("layer").innerHTML = "";
     $3("fx").innerHTML = "";
     G3 = {
-      st,
+      st: st2,
       p,
       done: 0,
       first: 0,
@@ -17153,27 +17153,27 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
       rqCur: null,
       rqLast: 0
     };
-    const items = buildItems(st, p);
+    const items = buildItems(st2, p);
     G3.total = items.length;
     $3("para").innerHTML = "";
-    $3("para").className = "para" + (st === 4 ? "" : " log");
+    $3("para").className = "para" + (st2 === 4 ? "" : " log");
     $3("para").style.transform = "";
-    if (st === 1) items.forEach((it, i) => G3.lanes[i % 2].list.push(it));
-    else if (st <= 3) items.forEach((it) => G3.lanes[0].list.push(it));
+    if (st2 === 1) items.forEach((it, i) => G3.lanes[i % 2].list.push(it));
+    else if (st2 <= 3) items.forEach((it) => G3.lanes[0].list.push(it));
     else G3.list = items;
     G3.prev = /* @__PURE__ */ new Set();
     layout();
     hud();
-    $3("hudNo").textContent = st;
-    $3("hudName").textContent = STAGES[st - 1].name;
+    $3("hudNo").textContent = st2;
+    $3("hudName").textContent = STAGES[st2 - 1].name;
     G3.lanes.forEach((L) => {
       L.slots = null;
       renderGrid(L.i);
     });
     SE.count(true);
-    inter(`<div class="sub" style="color:var(--accent)">STAGE ${st}</div><div class="big" style="font-size:clamp(28px,9vh,44px)">${STAGES[st - 1].name}</div><div class="note">${STAGES[st - 1].note}</div>`, 1350);
+    inter(`<div class="sub" style="color:var(--accent)">STAGE ${st2}</div><div class="big" style="font-size:clamp(28px,9vh,44px)">${STAGES[st2 - 1].name}</div><div class="note">${STAGES[st2 - 1].note}</div>`, 1350);
     setTimeout2(() => {
-      if (G3 && G3.st === st) {
+      if (G3 && G3.st === st2) {
         G3.started = true;
       }
     }, 1350);
@@ -18024,7 +18024,7 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
   function fromGap(c, gs) {
     return c.tk.slice(gs).map((t) => t[0] + t[1] + t[2]).join(" ");
   }
-  var reached = (pid, st) => st === 1 || !!rec(pid, st - 1, "ta");
+  var reached = (pid, st2) => st2 === 1 || !!rec(pid, st2 - 1, "ta");
   function applyFs() {
     if (SV.set.spd == null) SV.set.spd = 0.5;
     if (SV.set.fs == null) SV.set.fs = 1.2;
@@ -18065,9 +18065,9 @@ ${names} \u306F0\u70B9\u306B\u306A\u308A\u307E\u3059\u3002\u63D0\u51FA\u3059\u30
     const rb = (SV.best[p.id] || {}).run;
     $3("dRun").innerHTML = rb ? `\u901A\u3057\u306E\u30D9\u30B9\u30C8 <b>${rb.time.toFixed(1)}s</b>\u3000\u30E9\u30F3\u30AF ${rb.rank}` : "4\u30B9\u30C6\u30FC\u30B8\u3092\u7D9A\u3051\u3066\u904A\u3073\u307E\u3059\u3002\u9014\u4E2D\u306E\u6BB5\u304B\u3089\u59CB\u3081\u308B\u3053\u3068\u3082\u3067\u304D\u307E\u3059";
     $3("stages").innerHTML = STAGES.map((s) => {
-      const lk = !reached(p.id, s.id), r = rec(p.id, s.id, "ta"), st = starsOf(p.id, s.id);
+      const lk = !reached(p.id, s.id), r = rec(p.id, s.id, "ta"), st2 = starsOf(p.id, s.id);
       return `<button class="st ${lk ? "lock" : ""}" data-st="${s.id}"><span class="no">${lk ? "\u{1F512}" : s.id}</span><span><div class="nm">${s.name}</div><div class="ds">${lk ? "\u3072\u3068\u3064\u524D\u306E\u30B9\u30C6\u30FC\u30B8\u307E\u3067\u9032\u3080\u3068\u3001\u3053\u3053\u304B\u3089\u59CB\u3081\u3089\u308C\u307E\u3059" : s.desc}</div></span>
-    <span class="rec">${r ? `<b>${r.rank || "-"}</b>${r.time.toFixed(1)}s` : ""}<span class="stars">${[0, 1, 2].map((i) => `<span class="${i < st ? "on" : ""}">\u2605</span>`).join("")}</span></span></button>`;
+    <span class="rec">${r ? `<b>${r.rank || "-"}</b>${r.time.toFixed(1)}s` : ""}<span class="stars">${[0, 1, 2].map((i) => `<span class="${i < st2 ? "on" : ""}">\u2605</span>`).join("")}</span></span></button>`;
     }).join("");
     $3("stages").querySelectorAll(".st").forEach((b) => b.onclick = () => {
       const s = +b.dataset.st;
@@ -19198,12 +19198,12 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
       primeSpeech();
       unlockAudio();
       $4("title").hidden = true;
-      const [adv, mode] = b.dataset.play.split("-");
+      const [adv, mode2] = b.dataset.play.split("-");
       sfx("se/btn_" + (adv === "auto" ? "sarasara" : "yoidon"));
       settings.advance = adv;
-      settings.mode = mode;
+      settings.mode = mode2;
       saveSettings();
-      loadStage(mode, stageN[mode], null, true);
+      loadStage(mode2, stageN[mode2], null, true);
     });
     document.querySelectorAll("[data-open-set]").forEach((b) => b.onclick = () => {
       openSheet(`<h2>\u8A2D\u5B9A</h2>${settingRows()}${legendHTML()}<div class="btns"><button class="primary" id="closeBtn">\u9589\u3058\u308B</button></div>`);
@@ -19395,13 +19395,13 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
   function myToStory(t) {
     const clean = (x) => x.replace(/[|=#{}]/g, "");
     const list = t.sents.map((s) => {
-      let st = 0;
+      let st2 = 0;
       const soft = new Set(s.soft || []), xs = new Set(s.xs || []);
       const parts2 = unitEnds(s).map((e) => {
-        const role = (s.roleAt || {})[st] || "M";
+        const role = (s.roleAt || {})[st2] || "M";
         const seg = [];
         let cur4 = [];
-        for (let k = st; k <= e; k++) {
+        for (let k = st2; k <= e; k++) {
           const c = clean(s.words[k]);
           if (c && c !== "/") cur4.push(xs.has(k) && !cur4.length && seg.length ? "X:" + c : c);
           if (k < e && soft.has(k) && cur4.length) {
@@ -19411,10 +19411,10 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
         }
         if (cur4.length) seg.push(cur4.join(" "));
         const w = seg.join(" / ") || "\u2026";
-        let jp = ((s.ujp || {})[st] || "").replace(/[|#{}]/g, "");
-        const sj = (s.sjp || {})[st];
+        let jp = ((s.ujp || {})[st2] || "").replace(/[|#{}]/g, "");
+        const sj = (s.sjp || {})[st2];
         if (seg.length > 1 && Array.isArray(sj) && sj.length === seg.length) jp += `{${sj.map((x) => String(x).replace(/[|#{}\/]/g, "")).join("/")}}`;
-        st = e + 1;
+        st2 = e + 1;
         return `${role}:${w}=${jp}`;
       });
       return [parts2.join(" | "), s.ja || ""];
@@ -19516,7 +19516,7 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
     const vUnit = units.find((u) => u.role === "V"), beOnly = vUnit && words.slice(vUnit.s, vUnit.e + 1).every((w) => AW.aux.has(lw_(w)) || lw_(w) === "there");
     let objDone = false;
     while (i < n) {
-      const st = i;
+      const st2 = i;
       let e = i;
       const stopAt = (k) => AW.prep.has(lw[k]) && lw[k] !== "of" || AW.sub.has(lw[k]) || isTimeStart(k);
       if (AW.sub.has(lw[i])) {
@@ -19532,15 +19532,15 @@ S:My sister=\u59C9\u306F | V:decided to / visit=\u8A2A\u308C\u308B\u3053\u3068\u
       }
       if (AW.prep.has(lw[i])) {
         while (e + 1 < n && !/[,.!?]$/.test(words[e]) && !stopAt(e + 1)) e++;
-        const ws = lw.slice(st, e + 1), r = ws.some((x) => AW.timeN.has(x)) && !ws.includes("school") ? "T" : ["with", "by", "for", "about", "like", "without", "than"].includes(lw[st]) ? "M" : "P";
+        const ws = lw.slice(st2, e + 1), r = ws.some((x) => AW.timeN.has(x)) && !ws.includes("school") ? "T" : ["with", "by", "for", "about", "like", "without", "than"].includes(lw[st2]) ? "M" : "P";
         push(r, e);
         continue;
       }
       while (e + 1 < n && !/[,.!?]$/.test(words[e]) && !stopAt(e + 1)) {
-        if (!objDone && AW.obj.has(lw[e]) && e === st && !AW.prep.has(lw[e + 1])) break;
+        if (!objDone && AW.obj.has(lw[e]) && e === st2 && !AW.prep.has(lw[e + 1])) break;
         e++;
       }
-      const role = beOnly && !objDone ? "C" : !objDone && AW.obj.has(lw[st]) && e === st && e + 1 < n && !stopAt(e + 1) ? "I" : "O";
+      const role = beOnly && !objDone ? "C" : !objDone && AW.obj.has(lw[st2]) && e === st2 && e + 1 < n && !stopAt(e + 1) ? "I" : "O";
       push(role, e);
       if (role !== "I") objDone = true;
     }
@@ -19602,7 +19602,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
       const words = [], ends = [], roleAt = {}, ujp = {}, sjp = {}, soft = /* @__PURE__ */ new Set(), xs = /* @__PURE__ */ new Set();
       arr(x && x.units).forEach((u) => {
         if (!u) return;
-        const st = words.length, r = String(u.role || "").trim().toUpperCase()[0];
+        const st2 = words.length, r = String(u.role || "").trim().toUpperCase()[0];
         let n = 0;
         let xNext = false;
         String(u.text || "").trim().split(/\s+/).filter(Boolean).forEach((t) => {
@@ -19626,11 +19626,11 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
         });
         if (!n) return;
         soft.delete(words.length - 1);
-        roleAt[st] = ROLES.includes(r) ? r : "M";
-        ujp[st] = String(u.ja || "");
+        roleAt[st2] = ROLES.includes(r) ? r : "M";
+        ujp[st2] = String(u.ja || "");
         ends.push(words.length - 1);
         const sj = arr(u.subja).map(String).filter(Boolean);
-        if (sj.length > 1) sjp[st] = sj;
+        if (sj.length > 1) sjp[st2] = sj;
       });
       return { words, ends, roleAt, ujp, sjp, xs: [...xs], soft: [...soft].sort((a, b) => a - b), ja: String(x && x.ja || "") };
     }).filter((x) => x.words.length);
@@ -19696,9 +19696,9 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     if (q.type !== "range" || q.a != null) return q;
     const s = sents[q.si];
     if (!s) return q;
-    const st = unitStarts(s), en = unitEnds(s);
-    const k = Math.max(0, en.findIndex((e, i) => q.w >= st[i] && q.w <= e));
-    return { ...q, a: st[k], b: en[k], alts: q.alts || [], partials: q.partials || [] };
+    const st2 = unitStarts(s), en = unitEnds(s);
+    const k = Math.max(0, en.findIndex((e, i) => q.w >= st2[i] && q.w <= e));
+    return { ...q, a: st2[k], b: en[k], alts: q.alts || [], partials: q.partials || [] };
   }
   function parsePastedAI(t) {
     t = String(t).replace(/^﻿/, "");
@@ -19957,8 +19957,8 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
         return;
       }
       $4("edView").hidden = true;
-      const st = { ...myToStory(t), level: LVO["t-" + t.id] != null ? LVO["t-" + t.id] : t.level };
-      if (a === "read") startRead(st);
+      const st2 = { ...myToStory(t), level: LVO["t-" + t.id] != null ? LVO["t-" + t.id] : t.level };
+      if (a === "read") startRead(st2);
       else startPractice(t);
     });
   }
@@ -20082,8 +20082,8 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     if (!s) return "";
     const wopt = (sel) => `<option value="-1" ${sel < 0 ? "selected" : ""}>\uFF08\u9078\u3076\uFF09</option>` + s.words.map((w, i) => `<option value="${i}" ${i === sel ? "selected" : ""}>${i + 1}. ${esc3(w)}</option>`).join("");
     const chunkOpts = ED.sents.map((ss, si) => {
-      const st = unitStarts(ss), en = unitEnds(ss);
-      return st.map((a, j) => `<option value="${si}:${a}:${en[j]}">\u6587${si + 1}: ${esc3(ss.words.slice(a, en[j] + 1).join(" "))}</option>`).join("");
+      const st2 = unitStarts(ss), en = unitEnds(ss);
+      return st2.map((a, j) => `<option value="${si}:${a}:${en[j]}">\u6587${si + 1}: ${esc3(ss.words.slice(a, en[j] + 1).join(" "))}</option>`).join("");
     }).join("");
     return `<div class="spanPick" data-q="${qi}" data-kind="${kind}" data-k="${k}">
     <select class="spS">${ED.sents.map((_, si) => `<option value="${si}" ${si === v.si ? "selected" : ""}>\u6587${si + 1}</option>`).join("")}</select>
@@ -20295,9 +20295,9 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
         delete s.roleAt[g + 1];
         delete s.ujp[g + 1];
       } else {
-        const st = unitStarts(s).filter((x) => x <= g).pop();
+        const st2 = unitStarts(s).filter((x) => x <= g).pop();
         s.ends = [...en, g].sort((a, b2) => a - b2);
-        s.roleAt[g + 1] = s.roleAt[st] || "M";
+        s.roleAt[g + 1] = s.roleAt[st2] || "M";
       }
       renderEditor();
     });
@@ -20412,7 +20412,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     S.phase = "done";
     $4("rolePick").hidden = true;
     ENV2.core.speech.stop();
-    const t = S.timed, score = S.gained, st = timedStats();
+    const t = S.timed, score = S.gained, st2 = timedStats();
     settings.bestTimed = settings.bestTimed || {};
     const lb = settings.bestTimed[t.band] = settings.bestTimed[t.band] || {};
     const localBest = lb[t.sec] || 0, isBest = score > localBest;
@@ -20423,14 +20423,14 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     const diff = score - localBest;
     openSheet(`<h2>${esc3(S.title)} \u304A\u308F\u308A\uFF01</h2>
     <div class="rkScore"><div class="big">${score} pt</div>${isBest && score > 0 ? `<div class="rkNew">NEW BEST!</div>` : ""}</div>
-    <p class="note">${st.sent}\u6587\u30FB\u25CE${st.c.excellent} \u25EF${st.c.great} \u25B3${st.c.good} \u25BD${st.c.cross} \u30FB${st.c.mini} \xD7${st.c.miss}</p>
+    <p class="note">${st2.sent}\u6587\u30FB\u25CE${st2.c.excellent} \u25EF${st2.c.great} \u25B3${st2.c.good} \u25BD${st2.c.cross} \u30FB${st2.c.mini} \xD7${st2.c.miss}</p>
     <p class="note">\u3053\u306E\u7AEF\u672B\u306E\u81EA\u5DF1\u30D9\u30B9\u30C8\uFF1A${isBest ? "\u66F4\u65B0\uFF01" : `${localBest} pt\uFF08${diff < 0 ? "\u3042\u3068 " + -diff : "\u540C\u3058"} pt\uFF09`}</p>
     <div id="rkName"></div>
     <div id="rkMsg" class="rkMsg">\u30E9\u30F3\u30AD\u30F3\u30B0\u3068\u6BD4\u3079\u3066\u3044\u307E\u3059\u2026</div>
     <div id="rkCmp"></div>
     <div class="btns" style="flex-direction:column"><button class="primary" id="rkRetry" hidden>\u767B\u9332\u306B\u3082\u3069\u308B\uFF08\u8A18\u9332\u3092\u9001\u308B\uFF09</button><button class="primary" id="rkShow">\u30E9\u30F3\u30AD\u30F3\u30B0\u3092\u898B\u308B</button>
       <div style="display:flex;gap:8px"><button class="ghost" id="rkAgain" style="flex:1">\u3082\u3046\u4E00\u5EA6</button><button class="ghost" id="rkTitle" style="flex:none;font-size:12px;padding:8px 14px">\u30BF\u30A4\u30C8\u30EB\u3078</button></div></div>`, false);
-    const rec2 = { id: "c" + Date.now(), sec: t.sec, band: t.band, score, sent: st.sent, n: st.n, at: Date.now() };
+    const rec2 = { id: "c" + Date.now(), sec: t.sec, band: t.band, score, sent: st2.sent, n: st2.n, at: Date.now() };
     if (score > 0) addPending(rec2);
     $4("rkTitle").onclick = showTitle2;
     $4("rkAgain").onclick = () => {
@@ -20440,7 +20440,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     $4("rkShow").onclick = () => showRanking(t.sec, t.band);
     $4("rkRetry").onclick = () => {
       $4("rkRetry").hidden = true;
-      submitRank(t, score, st, rec2.id);
+      submitRank(t, score, st2, rec2.id);
     };
     const lockBtns = ["rkTitle", "rkAgain", "rkShow", "rkRetry"].map($4);
     lockBtns.forEach((b) => {
@@ -20457,7 +20457,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     }), 1500);
     if (isBest && score > 0) setTimeout(() => sfx("se/newbest"), 900);
     else if (score <= 0) setTimeout(() => sfx("voice/try_again"), 600);
-    submitRank(t, score, st, rec2.id);
+    submitRank(t, score, st2, rec2.id);
     document.dispatchEvent(new CustomEvent("cc:challenge", { detail: { score, sec: t.sec, best: isBest } }));
   }
   function loadPending() {
@@ -20539,18 +20539,18 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     });
     box.innerHTML = `<div class="rkCmpBox"><p class="note" style="color:var(--ink);margin:0 0 4px">${lines.join("<br>")}</p>${rows}</div>`;
   }
-  async function doSubmit(t, score, st) {
+  async function doSubmit(t, score, st2) {
     await loadRanks();
     const ref = DB.doc("ranks/" + MYID), snap2 = await ref.get(), d = snap2.exists ? snap2.data() : {};
     const best2 = JSON.parse(JSON.stringify(d.best || {}));
     best2[t.band] = best2[t.band] || {};
     const cur4 = best2[t.band][t.sec], better = !cur4 || score > cur4.score;
-    if (better) best2[t.band][t.sec] = { score, at: Date.now(), sent: st.sent, chunks: st.n != null ? st.n : st.chunks };
+    if (better) best2[t.band][t.sec] = { score, at: Date.now(), sent: st2.sent, chunks: st2.n != null ? st2.n : st2.chunks };
     await ref.set({ v: 1, nick: settings.nick, best: best2, at: Date.now() });
     await loadRanks();
     return { better, cur: cur4 };
   }
-  async function submitRank(t, score, st, pid) {
+  async function submitRank(t, score, st2, pid) {
     const msg = $4("rkMsg");
     if (!msg) return;
     const say3 = (h, warn) => {
@@ -20584,14 +20584,14 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
       say3("\u30E9\u30F3\u30AD\u30F3\u30B0\u306B\u51FA\u3059\u540D\u524D\u3092\u6C7A\u3081\u308B\u3068\u3001\u9806\u4F4D\u304C\u51FA\u307E\u3059\u3002");
       askNick($4("rkName"), () => {
         say3("\u30E9\u30F3\u30AD\u30F3\u30B0\u306B\u9001\u3063\u3066\u3044\u307E\u3059\u2026");
-        submitRank(t, score, st, pid);
+        submitRank(t, score, st2, pid);
       });
       retry();
       return;
     }
     try {
       say3("\u30E9\u30F3\u30AD\u30F3\u30B0\u306B\u9001\u3063\u3066\u3044\u307E\u3059\u2026");
-      const { better, cur: cur4 } = await doSubmit(t, score, st);
+      const { better, cur: cur4 } = await doSubmit(t, score, st2);
       if (pid) dropPending(pid);
       say3(better ? "\u30E9\u30F3\u30AD\u30F3\u30B0\u306E\u81EA\u5DF1\u30D9\u30B9\u30C8\u3092\u66F4\u65B0\u3057\u307E\u3057\u305F\uFF01" : `\u30E9\u30F3\u30AD\u30F3\u30B0\u4E0A\u306E\u81EA\u5DF1\u30D9\u30B9\u30C8\u306F ${cur4.score} pt \u306E\u307E\u307E\u3067\u3059\u3002`);
       renderCompare(t, score);
@@ -21219,8 +21219,8 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
   var SG = { k: -1 };
   function stageReset(k) {
     SG = { k, face: false, body: null, cap: [] };
-    const st = $4("stage");
-    st.className = "stage";
+    const st2 = $4("stage");
+    st2.className = "stage";
     ["sgPlace", "sgSign", "sgTime", "sgArt", "sgCap", "sgObj", "sgFace"].forEach((id) => $4(id).innerHTML = "");
     $4("sgArt").className = "sgArt";
     $4("sgHint").hidden = false;
@@ -21471,23 +21471,23 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     addRecent(pick3.map((x) => x.s));
     return pick3.map((x) => [x.s, x.ja]);
   }
-  function buildStage(mode, n, same) {
-    if (mode === "one") {
+  function buildStage(mode2, n, same) {
+    if (mode2 === "one") {
       const pick3 = same ? shuffle3(same) : pickRandom(PER_STAGE);
-      return { mode, n, title: `\u30E9\u30F3\u30C0\u30E0${n + 1}\uFF08${randLabel()}\uFF09`, short: `\u30E9\u30F3\u30C0\u30E0${n + 1}`, list: pick3 };
+      return { mode: mode2, n, title: `\u30E9\u30F3\u30C0\u30E0${n + 1}\uFF08${randLabel()}\uFF09`, short: `\u30E9\u30F3\u30C0\u30E0${n + 1}`, list: pick3 };
     }
-    let st;
-    if (same) st = STORIES.find((s) => s.list === same);
+    let st2;
+    if (same) st2 = STORIES.find((s) => s.list === same);
     else {
       const pool = byLevel(STORIES, (s) => LVO[s.id] ?? s.level), cand = pool.filter((s) => s.id !== settings.lastStory);
-      st = (cand.length ? cand : pool)[Math.floor(Math.random() * (cand.length ? cand : pool).length)];
-      settings.lastStory = st.id;
+      st2 = (cand.length ? cand : pool)[Math.floor(Math.random() * (cand.length ? cand : pool).length)];
+      settings.lastStory = st2.id;
       saveSettings();
     }
-    return { mode, n, title: `\u304A\u8A71\u300C${st.title}\u300D`, short: `\u304A\u8A71${n + 1}`, list: st.list };
+    return { mode: mode2, n, title: `\u304A\u8A71\u300C${st2.title}\u300D`, short: `\u304A\u8A71${n + 1}`, list: st2.list };
   }
-  function loadStage(mode, n, same, autoStart) {
-    const info = buildStage(mode, n, same);
+  function loadStage(mode2, n, same, autoStart) {
+    const info = buildStage(mode2, n, same);
     S = { ...info, sens: info.list.map(([en, ja]) => parseSentence2(en, ja)), si: 0, results: [], phase: "ready", gained: 0, paused: false, timer: null, elapsed: 0, sentStart: 0 };
     $4("stageText").textContent = info.short;
     $4("hist").innerHTML = "";
@@ -21582,12 +21582,12 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
     return S.chunks[f.k].find((c) => f.li >= c.a && f.li <= c.b) || null;
   }
   function renderLane(noAnim) {
-    const st = $4("strip");
+    const st2 = $4("strip");
     if (!S.flat.length) {
-      st.innerHTML = "";
+      st2.innerHTML = "";
       return;
     }
-    st.innerHTML = S.flat.map((f, i) => {
+    st2.innerHTML = S.flat.map((f, i) => {
       const ch = chunkAt(i);
       let cls = i < S.passed - KEEP_LEFT ? " gone" : i < S.passed ? " past" : i === S.passed ? " next" : "";
       if (ch && ch.roles && i < S.passed) cls += " r" + ch.roles[f.li - ch.a] + " done";
@@ -21596,7 +21596,7 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
       const endMk = f.li === S.sens[f.si].words.length - 1 ? `<span class="endmk">\u25A0</span>` : "";
       return `<span class="w${cls}">${esc3(f.t)}</span>${cm ? `<span class="cutmark${cm === "forced" ? " forced" : ""}">\uFF5C</span>` : ""}${endMk}`;
     }).join("");
-    const ws = st.querySelectorAll(".w");
+    const ws = st2.querySelectorAll(".w");
     let gx;
     if (S.passed <= 0) gx = ws[0].offsetLeft - 4;
     else {
@@ -21604,8 +21604,8 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
       const r = a.offsetLeft + a.offsetWidth;
       gx = nx ? nx.classList.contains("cutmark") ? nx.offsetLeft + nx.offsetWidth / 2 : (r + nx.offsetLeft) / 2 : r + 6;
     }
-    st.classList.toggle("step", !noAnim);
-    st.style.transform = `translate(${lineX() - gx}px,-50%)`;
+    st2.classList.toggle("step", !noAnim);
+    st2.style.transform = `translate(${lineX() - gx}px,-50%)`;
     $4("cutline").style.left = lineX() + "px";
     if (manual()) syncScrub();
     updateBackBtn();
@@ -23418,11 +23418,11 @@ ${text ? `"""${text}"""` : "\uFF08\u3053\u306E\u4E0B\u306B\u82F1\u6587\u3092\u8C
       }
       function save2() {
         try {
-          HOST.store.set("make", st);
+          HOST.store.set("make", st2);
         } catch (e) {
         }
       }
-      let st = load2();
+      let st2 = load2();
       const css = document.createElement("style");
       css.textContent = `.mkApp{--jp:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;--en:"Lexend","Segoe UI",system-ui,sans-serif;--cS:#7cc4ff;--cV:#ff8f8f;--cO:#8ee6a8;--cI:#6fe0d8;--cC:#ffb870;--cP:#d6a8ff;--cT:#ffd166;--cM:#e6ecf5;--cX:#9fb0c6}
 
@@ -23603,19 +23603,19 @@ body.nogram .gmT{display:none}
       function showList() {
         cur4 = null;
         const ch = CHAPTERS.map((c) => {
-          const open2 = c.n === 1 || st.ch[c.n - 1];
+          const open2 = c.n === 1 || st2.ch[c.n - 1];
           if (!c.lessons || !open2) return `<div class="mkCh lock"><h3>\u7B2C${c.n}\u7AE0\u3000${esc5(c.name)}</h3><div class="sub">${esc5(c.sub)}</div><div class="sub">\u{1F512} ${!c.lessons ? "\u3082\u3046\u3059\u3050\u516C\u958B" : "\u524D\u306E\u7AE0\u3092\u30AF\u30EA\u30A2\u3059\u308B\u3068\u958B\u304D\u307E\u3059"}</div></div>`;
           let nxt = true;
           const ls = c.lessons.map((l) => {
-            const done = !!st.done[l.id];
+            const done = !!st2.done[l.id];
             const can = done || nxt;
             const isNext = !done && nxt;
             if (!done) nxt = false;
             return `<button class="mkL${isNext ? " next" : ""}" data-l="${l.id}" ${can ? "" : "disabled"}><b>${l.id}</b>${esc5(l.name)}<em>${done ? "\u2705" : can ? "\u25B6" : "\u{1F512}"}</em></button>`;
           }).join("");
-          return `<div class="mkCh"><h3>\u7B2C${c.n}\u7AE0\u3000${esc5(c.name)}${st.ch[c.n] ? " \u2705" : ""}</h3><div class="sub">${esc5(c.sub)}</div>${c.partial ? `<div class="sub">\u3044\u307E\u306F ${esc5(c.partial)} \u307E\u3067\u904A\u3079\u307E\u3059</div>` : ""}<div class="mkLs">${ls}</div></div>`;
+          return `<div class="mkCh"><h3>\u7B2C${c.n}\u7AE0\u3000${esc5(c.name)}${st2.ch[c.n] ? " \u2705" : ""}</h3><div class="sub">${esc5(c.sub)}</div>${c.partial ? `<div class="sub">\u3044\u307E\u306F ${esc5(c.partial)} \u307E\u3067\u904A\u3079\u307E\u3059</div>` : ""}<div class="mkLs">${ls}</div></div>`;
         }).join("");
-        const tt = st.titles.length ? `<div class="mkTitle">\u79F0\u53F7\uFF1A${esc5(st.titles.join(" / "))}</div>` : "";
+        const tt = st2.titles.length ? `<div class="mkTitle">\u79F0\u53F7\uFF1A${esc5(st2.titles.join(" / "))}</div>` : "";
         root2.innerHTML = `<div class="mkTop"><button id="mkX">\u2190 \u3082\u3069\u308B</button><div class="mkTtl">\u6587\u3092\u4F5C\u308B\uFF08\u8A71\u3059\u30FB\u66F8\u304F\uFF09</div><div class="mkPg"></div></div>
       <div class="mkList">${tt}${ch}<div class="mkCap">\u7AE0\u306F\u9806\u756A\u306B\u958B\u304D\u307E\u3059\u3002\u300C\u8AAD\u3080\u300D\u306E\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u3092\u7D42\u3048\u305F\u4EBA\u304C\u3001\u30C6\u30B9\u30C8\u3067\u98DB\u3070\u305B\u308B\u4ED5\u7D44\u307F\u306F\u6E96\u5099\u4E2D\u3067\u3059\u3002</div></div>`;
         root2.querySelector("#mkX").onclick = close;
@@ -24072,8 +24072,8 @@ body.nogram .gmT{display:none}
       }
       function finishLesson() {
         const L = cur4.lesson, main = root2.querySelector("#mkMain");
-        const first2 = !st.done[L.id];
-        st.done[L.id] = 1;
+        const first2 = !st2.done[L.id];
+        st2.done[L.id] = 1;
         let chapterClear = false;
         if (first2) {
           try {
@@ -24082,14 +24082,14 @@ body.nogram .gmT{display:none}
           }
         }
         const ch = CHAPTERS.find((c) => c.lessons && c.lessons.some((l) => l.id === L.id));
-        if (!ch.partial && ch.lessons.every((l) => st.done[l.id]) && !st.ch[ch.n]) {
-          st.ch[ch.n] = 1;
+        if (!ch.partial && ch.lessons.every((l) => st2.done[l.id]) && !st2.ch[ch.n]) {
+          st2.ch[ch.n] = 1;
           chapterClear = true;
           try {
             Wallet.add("coins", ch.coin, "earn:play");
           } catch (e) {
           }
-          if (!st.titles.includes(ch.title)) st.titles.push(ch.title);
+          if (!st2.titles.includes(ch.title)) st2.titles.push(ch.title);
         }
         save2();
         const idx = ch.lessons.findIndex((l) => l.id === L.id), nx = ch.lessons[idx + 1];
@@ -24113,7 +24113,7 @@ body.nogram .gmT{display:none}
         if (bi) bi.style.width = "100%";
       }
       function open() {
-        st = load2();
+        st2 = load2();
         boardState = null;
         root2.hidden = false;
         HOST.onOpen && HOST.onOpen();
@@ -24135,7 +24135,7 @@ body.nogram .gmT{display:none}
         } catch (e) {
         }
       }
-      return { open, close, visible, destroy, LESSONS: ALL2, _st: () => st };
+      return { open, close, visible, destroy, LESSONS: ALL2, _st: () => st2 };
     })();
     return MakeTut;
   }
@@ -24480,10 +24480,10 @@ body.nogram .gmT{display:none}
   }
   window.CS_STORY.chapters.forEach((ch) => {
     const n = [];
-    ch.steps.forEach((st) => {
-      if (st.say && st.t) {
-        splitSay(st.t).forEach((t) => n.push({ ...st, t }));
-      } else n.push(st);
+    ch.steps.forEach((st2) => {
+      if (st2.say && st2.t) {
+        splitSay(st2.t).forEach((t) => n.push({ ...st2, t }));
+      } else n.push(st2);
     });
     ch.steps = n;
   });
@@ -24599,7 +24599,7 @@ body.nogram .gmT{display:none}
       S2.chapters.forEach((ch) => {
         const open = isOpen(ch.no), done = !!prog.cleared[ch.no];
         const row = el3("div", "ch" + (done ? " done" : "") + (open ? "" : " lock"));
-        const mode = ch.unlock && S2.modes.find((m) => m.key === ch.unlock);
+        const mode2 = ch.unlock && S2.modes.find((m) => m.key === ch.unlock);
         row.innerHTML = `<div class="cs-no">${ch.no}</div>
       <div class="cs-tt">${esc5(ch.title)}<small>${esc5(ch.sub || "")}${done ? " \u30FB \u30AF\u30EA\u30A2" : ""}</small></div>`;
         const bt = el3("div", "bt");
@@ -24620,7 +24620,7 @@ body.nogram .gmT{display:none}
           runStage(ch);
         };
         bt.append(b1, b2);
-        if (mode) bt.appendChild(el3("span", "tag-unlock", "\u30AF\u30EA\u30A2\u3067\u300C" + esc5(mode.name) + "\u300D"));
+        if (mode2) bt.appendChild(el3("span", "tag-unlock", "\u30AF\u30EA\u30A2\u3067\u300C" + esc5(mode2.name) + "\u300D"));
         row.appendChild(bt);
         list.appendChild(row);
       });
@@ -24684,11 +24684,11 @@ body.nogram .gmT{display:none}
     }
     async function run(ch) {
       const me = adv;
-      for (const st of ch.steps) {
+      for (const st2 of ch.steps) {
         if (me.skip || adv !== me) break;
-        if (st.say) await say3(st);
-        else if (st.ask != null) await ask3(st);
-        else if (st.fx && FX[st.fx]) await FX[st.fx](st);
+        if (st2.say) await say3(st2);
+        else if (st2.ask != null) await ask3(st2);
+        else if (st2.fx && FX[st2.fx]) await FX[st2.fx](st2);
       }
       if (adv !== me) return;
       runStage(ch);
@@ -24715,11 +24715,11 @@ body.nogram .gmT{display:none}
       slot.appendChild(charaNode(who, face3));
       if (q) slot.appendChild(q);
     }
-    async function say3(st) {
-      const c = A.chara[st.say];
-      if (st.f) setFace(st.say, st.f);
-      Object.entries(adv.chars).forEach(([w, sl2]) => sl2.classList.toggle("cs-off", w !== st.say));
-      const sl = slotOf(st.say);
+    async function say3(st2) {
+      const c = A.chara[st2.say];
+      if (st2.f) setFace(st2.say, st2.f);
+      Object.entries(adv.chars).forEach(([w, sl2]) => sl2.classList.toggle("cs-off", w !== st2.say));
+      const sl = slotOf(st2.say);
       if (sl) {
         sl.classList.remove("cs-bump");
         void sl.offsetWidth;
@@ -24728,9 +24728,9 @@ body.nogram .gmT{display:none}
       adv.nm.textContent = c ? c.name : "";
       adv.nm.style.setProperty("--c", c ? c.color : "var(--lemon)");
       adv.tbox.classList.remove("cs-ask");
-      adv.tbox.classList.toggle("cs-big", !!st.big);
-      adv.log.push({ who: c ? c.name : "", t: st.t });
-      await type(st.t);
+      adv.tbox.classList.toggle("cs-big", !!st2.big);
+      adv.log.push({ who: c ? c.name : "", t: st2.t });
+      await type(st2.t);
       adv.nx.hidden = false;
       await waitTap();
       adv.nx.hidden = true;
@@ -24751,14 +24751,14 @@ body.nogram .gmT{display:none}
         adv.resolve = null;
       }
     }
-    async function ask3(st) {
-      const line = adv.lines[st.ask];
+    async function ask3(st2) {
+      const line = adv.lines[st2.ask];
       if (!line) return;
       Object.values(adv.chars).forEach((sl) => sl.classList.add("cs-off"));
       adv.nm.textContent = "";
       adv.tbox.classList.add("cs-ask");
-      adv.tx.textContent = st.t;
-      const tok = line.tokens[st.i];
+      adv.tx.textContent = st2.t;
+      const tok = line.tokens[st2.i];
       line.tokens.forEach((t) => {
         t.classList.add("cs-tapme");
         t.tabIndex = 0;
@@ -24774,7 +24774,7 @@ body.nogram .gmT{display:none}
             t.classList.remove("cs-wrong");
             void t.offsetWidth;
             t.classList.add("cs-wrong");
-            adv.tx.textContent = st.ng || "\u3082\u3046\u4E00\u56DE\uFF01";
+            adv.tx.textContent = st2.ng || "\u3082\u3046\u4E00\u56DE\uFF01";
           };
           t.onkeydown = (e) => {
             if (e.key === "Enter" || e.key === " ") t.onclick(e);
@@ -24811,18 +24811,18 @@ body.nogram .gmT{display:none}
       return t;
     }
     const FX = {
-      bg: (st) => setBg(adv.bgl, st.key),
-      show: (st) => {
+      bg: (st2) => setBg(adv.bgl, st2.key),
+      show: (st2) => {
         adv.chars = {};
         ["l", "r"].forEach((side) => {
           const slot = adv.slot[side];
           slot.innerHTML = "";
           delete slot.dataset.face;
-          if (!st[side]) {
+          if (!st2[side]) {
             slot.classList.add("cs-hide");
             return;
           }
-          const [who, face3] = st[side].split(":");
+          const [who, face3] = st2[side].split(":");
           adv.chars[who] = slot;
           slot.classList.remove("cs-hide");
           setFace(who, face3 || "normal");
@@ -24835,94 +24835,94 @@ body.nogram .gmT{display:none}
         adv.board.innerHTML = "";
         adv.lines = {};
       },
-      wait: (st) => sleep(st.ms || 400),
+      wait: (st2) => sleep(st2.ms || 400),
       wall: () => {
         const w = el3("div", "wall");
         w.textContent = "When the students who had been waiting outside the library since early in the morning finally heard that the new books they had ordered last month would not arrive until the end of the week, most of them decided to go back to their classrooms, although a few stayed because they wanted to ask the librarian whether the old copies could be borrowed instead while they were waiting for the new ones that everyone had been talking about.";
         adv.board.appendChild(w);
       },
-      q: (st) => {
-        const sl = slotOf(st.who);
+      q: (st2) => {
+        const sl = slotOf(st2.who);
         if (!sl) return;
         const q = el3("span", "q", "\uFF1F");
         sl.appendChild(q);
         setTimeout(() => q.remove(), 2700);
       },
-      line: (st) => {
+      line: (st2) => {
         const ln = el3("div", "ln");
-        if (st.label) ln.appendChild(el3("span", "lab", esc5(st.label)));
-        const tokens = st.parts.map((p) => {
+        if (st2.label) ln.appendChild(el3("span", "lab", esc5(st2.label)));
+        const tokens = st2.parts.map((p) => {
           const t = mkTok(p);
           ln.appendChild(t);
           return t;
         });
         adv.board.appendChild(ln);
-        adv.lines[st.id] = { el: ln, tokens };
+        adv.lines[st2.id] = { el: ln, tokens };
       },
-      add: (st) => {
-        const L = adv.lines[st.id];
+      add: (st2) => {
+        const L = adv.lines[st2.id];
         if (!L) return;
-        st.parts.forEach((p) => {
+        st2.parts.forEach((p) => {
           const t = mkTok(p);
           t.classList.add("cs-new");
           L.el.appendChild(t);
           L.tokens.push(t);
         });
       },
-      text: (st) => {
-        const t = adv.lines[st.id]?.tokens[st.i];
-        if (t) t.querySelector(".cs-t").textContent = st.to;
+      text: (st2) => {
+        const t = adv.lines[st2.id]?.tokens[st2.i];
+        if (t) t.querySelector(".cs-t").textContent = st2.to;
       },
-      hl: (st) => {
-        const L = adv.lines[st.id];
-        if (L) idx(st.i).forEach((i) => L.tokens[i] && L.tokens[i].classList.add(P2(st.c || "cs-glow")));
+      hl: (st2) => {
+        const L = adv.lines[st2.id];
+        if (L) idx(st2.i).forEach((i) => L.tokens[i] && L.tokens[i].classList.add(P2(st2.c || "cs-glow")));
       },
-      unhl: (st) => {
-        const L = adv.lines[st.id];
-        if (L) idx(st.i).forEach((i) => L.tokens[i] && L.tokens[i].classList.remove(P2(st.c || "cs-glow")));
+      unhl: (st2) => {
+        const L = adv.lines[st2.id];
+        if (L) idx(st2.i).forEach((i) => L.tokens[i] && L.tokens[i].classList.remove(P2(st2.c || "cs-glow")));
       },
-      badge: (st) => {
-        const t = adv.lines[st.id]?.tokens[st.i];
+      badge: (st2) => {
+        const t = adv.lines[st2.id]?.tokens[st2.i];
         if (!t) return;
         t.querySelector(".cs-bdg")?.remove();
-        t.appendChild(el3("span", "bdg " + (st.c || ""), esc5(st.t)));
+        t.appendChild(el3("span", "bdg " + (st2.c || ""), esc5(st2.t)));
       },
-      push: async (st) => {
-        const L = adv.lines[st.id];
+      push: async (st2) => {
+        const L = adv.lines[st2.id];
         if (!L) return;
         L.tokens.forEach((t2, i) => {
-          if (i !== st.i) t2.classList.add("cs-dim");
+          if (i !== st2.i) t2.classList.add("cs-dim");
         });
-        const t = L.tokens[st.i];
+        const t = L.tokens[st2.i];
         t.classList.add("cs-push");
         await sleep(750);
         t.classList.remove("cs-push");
         L.tokens.forEach((t2, i) => {
-          if (i !== st.i) setTimeout(() => t2.classList.remove("cs-dim"), 200 * i);
+          if (i !== st2.i) setTimeout(() => t2.classList.remove("cs-dim"), 200 * i);
         });
       },
-      morph: async (st) => {
-        const t = adv.lines[st.id]?.tokens[st.i];
+      morph: async (st2) => {
+        const t = adv.lines[st2.id]?.tokens[st2.i];
         if (!t) return;
         t.classList.add("cs-flip");
         await sleep(250);
-        t.querySelector(".cs-t").textContent = st.to;
+        t.querySelector(".cs-t").textContent = st2.to;
         t.classList.add("cs-eq");
         await sleep(260);
         t.classList.remove("cs-flip");
       },
-      mark: (st) => {
-        const L = adv.lines[st.id];
-        if (L) L.el.appendChild(el3("span", "mk " + (st.c || ""), esc5(st.t)));
+      mark: (st2) => {
+        const L = adv.lines[st2.id];
+        if (L) L.el.appendChild(el3("span", "mk " + (st2.c || ""), esc5(st2.t)));
       },
-      reorder: async (st) => {
-        const L = adv.lines[st.id];
+      reorder: async (st2) => {
+        const L = adv.lines[st2.id];
         if (!L) return;
         const first2 = L.tokens.map((t) => t.getBoundingClientRect());
-        if (st.texts) L.tokens.forEach((t, i) => {
-          if (st.texts[i] != null) t.querySelector(".cs-t").textContent = st.texts[i];
+        if (st2.texts) L.tokens.forEach((t, i) => {
+          if (st2.texts[i] != null) t.querySelector(".cs-t").textContent = st2.texts[i];
         });
-        st.order.forEach((i) => L.el.appendChild(L.tokens[i]));
+        st2.order.forEach((i) => L.el.appendChild(L.tokens[i]));
         L.el.querySelectorAll(".cs-mk").forEach((m) => L.el.appendChild(m));
         L.tokens.forEach((t, i) => {
           const last = t.getBoundingClientRect();
@@ -24933,24 +24933,24 @@ body.nogram .gmT{display:none}
         });
         await sleep(700);
       },
-      merge: (st) => {
-        const L = adv.lines[st.id];
+      merge: (st2) => {
+        const L = adv.lines[st2.id];
         if (!L) return;
-        const parts2 = L.tokens.slice(st.from, st.to + 1);
+        const parts2 = L.tokens.slice(st2.from, st2.to + 1);
         const t = mkTok(parts2.map((p) => p.querySelector(".cs-t").textContent).join(" "));
-        t.classList.add(P2(st.c || "cs-sticker"), "cs-new");
+        t.classList.add(P2(st2.c || "cs-sticker"), "cs-new");
         parts2[0].before(t);
         parts2.forEach((p) => p.remove());
-        for (let i = st.from; i <= st.to; i++) L.tokens[i] = t;
+        for (let i = st2.from; i <= st2.to; i++) L.tokens[i] = t;
       },
-      pic: (st) => {
+      pic: (st2) => {
         const d = el3("div", "bpic");
-        d.appendChild(picNode(st.key));
+        d.appendChild(picNode(st2.key));
         adv.board.appendChild(d);
       },
-      cards: (st) => {
+      cards: (st2) => {
         const w = el3("div", "cards");
-        st.items.forEach((c) => {
+        st2.items.forEach((c) => {
           const d = el3("div", "card");
           d.appendChild(el3("div", "en", esc5(c.en)));
           if (c.pic) d.appendChild(picNode(c.pic));
@@ -24966,9 +24966,9 @@ body.nogram .gmT{display:none}
       <div class="cs-st" data-s="3"><span class="cs-n">3</span><b>\u76F8\u624B\uFF0F\u3069\u3093\u306A\u611F\u3058\uFF1F</b></div>`;
         adv.board.appendChild(p);
       },
-      pfill: (st) => {
-        const r = adv.board.querySelector(`.cs-pyr .cs-st[data-s="${st.step}"]`);
-        if (r) r.appendChild(el3("span", "chip", esc5(st.t)));
+      pfill: (st2) => {
+        const r = adv.board.querySelector(`.cs-pyr .cs-st[data-s="${st2.step}"]`);
+        if (r) r.appendChild(el3("span", "chip", esc5(st2.t)));
       },
       amap: () => {
         const m = el3("div", "amap");
@@ -25017,17 +25017,17 @@ body.nogram .gmT{display:none}
     }
     function runStage(ch) {
       adv = null;
-      const st = ch.stage;
+      const st2 = ch.stage;
       const finish = (result) => showResult(ch, result);
       if (opts.onStage) {
-        const handled = opts.onStage(st, ch, finish);
+        const handled = opts.onStage(st2, ch, finish);
         if (handled !== false) return;
       }
-      (st.type === "order" ? orderStage : cutStage)(ch, st, finish);
+      (st2.type === "order" ? orderStage : cutStage)(ch, st2, finish);
     }
-    function stageFrame(ch, st) {
+    function stageFrame(ch, st2) {
       const s = screen2("stg");
-      s.innerHTML = `<div class="cs-top"><span class="cs-t">\u7B2C${ch.no}\u7AE0 ${esc5(st.title || "")}</span><span class="cs-cnt"></span>
+      s.innerHTML = `<div class="cs-top"><span class="cs-t">\u7B2C${ch.no}\u7AE0 ${esc5(st2.title || "")}</span><span class="cs-cnt"></span>
       <button class="cs-pill cs-sub" data-a="map">\u30DE\u30C3\u30D7</button></div>
     <div class="cs-coach"></div><div class="cs-ja"></div><div class="cs-lane"></div><div class="cs-foot"></div>`;
       const coach = s.querySelector(".cs-coach");
@@ -25058,10 +25058,10 @@ body.nogram .gmT{display:none}
       };
       return f;
     }
-    function cutStage(ch, st, finish) {
-      const f = stageFrame(ch, st);
+    function cutStage(ch, st2, finish) {
+      const f = stageFrame(ch, st2);
       f.s.classList.add("cs-cutscr");
-      const coach = st.coach || {};
+      const coach = st2.coach || {};
       const said = {};
       const tell2 = (k) => {
         if (coach[k] && !said[k]) {
@@ -25080,9 +25080,9 @@ body.nogram .gmT{display:none}
       next();
       function next() {
         if (!f.alive) return;
-        if (n >= st.items.length) return finish(all);
-        const item = st.items[n], p = parseCut(item.s), len = p.words.length;
-        f.cnt.textContent = n + 1 + " / " + st.items.length;
+        if (n >= st2.items.length) return finish(all);
+        const item = st2.items[n], p = parseCut(item.s), len = p.words.length;
+        f.cnt.textContent = n + 1 + " / " + st2.items.length;
         f.ja.textContent = item.ja || "";
         try {
           opts.speak && opts.speak(p.words.join(" "));
@@ -25172,7 +25172,7 @@ body.nogram .gmT{display:none}
           f.say(good ? "\u305C\u3093\u3076\u25EF\uFF01\u3044\u3044\u5207\u308A\u65B9\uFF01" : "\u25B3\u306F\u5927\u304D\u3059\u304E\u3001\xD7\u306F\u5207\u308B\u5834\u6240\u304C\u305A\u308C\u3066\u308B\u3088\u3002");
           f.foot.innerHTML = "";
           const go = el3("button", "cutBtn go");
-          go.textContent = n + 1 < st.items.length ? "\u3064\u304E\u306E\u6587\u3078" : "\u3051\u3063\u304B\u3092\u898B\u308B";
+          go.textContent = n + 1 < st2.items.length ? "\u3064\u304E\u306E\u6587\u3078" : "\u3051\u3063\u304B\u3092\u898B\u308B";
           go.onclick = () => {
             n++;
             next();
@@ -25204,17 +25204,17 @@ body.nogram .gmT{display:none}
         render(false);
       }
     }
-    function orderStage(ch, st, finish) {
-      const f = stageFrame(ch, st);
-      f.say((st.coach || {}).start || "");
+    function orderStage(ch, st2, finish) {
+      const f = stageFrame(ch, st2);
+      f.say((st2.coach || {}).start || "");
       const all = [];
       let n = 0;
       next();
       function next() {
         if (!f.alive) return;
-        if (n >= st.items.length) return finish(all);
-        const item = st.items[n];
-        f.cnt.textContent = n + 1 + " / " + st.items.length;
+        if (n >= st2.items.length) return finish(all);
+        const item = st2.items[n];
+        f.cnt.textContent = n + 1 + " / " + st2.items.length;
         f.ja.textContent = item.ja || "";
         f.lane.innerHTML = "";
         f.lane.classList.add("cs-col");
@@ -25259,7 +25259,7 @@ body.nogram .gmT{display:none}
           f.lane.appendChild(rw);
           if (!ok) f.lane.appendChild(el3("div", "ans", `\u3053\u305F\u3048<br><b>${esc5(item.parts.join(" "))}</b>`));
           f.say(ok ? "\u305D\u306E\u9806\u756A\uFF01\u571F\u53F0\u30D0\u30C3\u30C1\u30EA\u3002" : "\u4E3B\u5F79 \u2192 \u3069\u3046\u3057\u3066\u308B\uFF1F \u2192 \u76F8\u624B \u306E\u9806\u3060\u3088\u3002");
-          const go = el3("button", "bb go", n + 1 < st.items.length ? "\u3064\u304E\u3078" : "\u3051\u3063\u304B\u3092\u898B\u308B");
+          const go = el3("button", "bb go", n + 1 < st2.items.length ? "\u3064\u304E\u3078" : "\u3051\u3063\u304B\u3092\u898B\u308B");
           go.onclick = () => {
             n++;
             next();
@@ -25754,6 +25754,122 @@ body.nogram .gmT{display:none}
     ["See you tomorrow.", "\u307E\u305F\u660E\u65E5\u306D\u3002"]
   ];
 
+  // apps/town/mode.js
+  var st = createStore("town");
+  var ROUTE = {
+    punichunk: { place: "game" },
+    // ゲームセンター
+    school: { place: "school" },
+    // 学校
+    library: { place: "library" },
+    // 図書館
+    chunkcards: { game: "cards" }
+    // カフェ＝チャンク・カード
+  };
+  function createMode(core2, { GAMES: GAMES2, enter: enter2, start2D }) {
+    let town = null, box = null;
+    function chooser() {
+      const ov = document.createElement("div");
+      ov.className = "md-ov";
+      ov.innerHTML = `<div class="md-box"><h1>\u30C1\u30E3\u30F3\u30AF\u30BF\u30A6\u30F3</h1><p class="md-q">\u3069\u3063\u3061\u3067 \u306F\u3058\u3081\u308B\uFF1F</p>
+      <button class="md-card md-3d" data-m="3d"><b>\u{1F3D9} \u8857\u3067\u3042\u305D\u3076</b><span>3D\u306E\u753A\u3092\u6B69\u3044\u3066\u3001\u4F4F\u4EBA\u3068\u8A71\u3057\u305F\u308A\u3001\u304A\u5E97\u306B\u5165\u3063\u305F\u308A</span><small>\u5C11\u3057\u91CD\u3081\u30FBWi-Fi\u304C\u304A\u3059\u3059\u3081</small></button>
+      <button class="md-card md-2d" data-m="2d"><b>\u{1F4DA} \u3059\u3050\u306B\u52C9\u5F37\u30FB\u30B2\u30FC\u30E0</b><span>\u5730\u56F3\u304B\u3089\u3059\u3050\u9078\u3079\u308B\u3002\u8EFD\u304F\u3066\u30B5\u30AF\u30B5\u30AF</span></button>
+      <label class="md-keep"><input type="checkbox" id="mdKeep"> \u3064\u304E\u304B\u3089\u306F\u805E\u304B\u306A\u3044</label>
+      <p class="md-note">\u3042\u3068\u304B\u3089\u3001\u3069\u3061\u3089\u306E\u753B\u9762\u3067\u3082\u5207\u308A\u304B\u3048\u3089\u308C\u307E\u3059</p></div>`;
+      document.body.appendChild(ov);
+      ov.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-m]");
+        if (!b) return;
+        st.set("mode", { last: b.dataset.m, keep: ov.querySelector("#mdKeep").checked });
+        ov.remove();
+        go(b.dataset.m);
+      });
+    }
+    async function go(m) {
+      const v = Object.assign({ keep: false }, st.get("mode") || {});
+      v.last = m;
+      st.set("mode", v);
+      if (m === "2d") {
+        stop3D();
+        document.body.classList.remove("md-3d-on");
+        start2D();
+        return;
+      }
+      document.body.classList.add("md-3d-on");
+      if (town) return;
+      const wait4 = document.createElement("div");
+      wait4.className = "md-wait";
+      wait4.textContent = "\u753A\u3092\u8AAD\u307F\u3053\u3093\u3067\u3044\u307E\u3059\u2026";
+      document.body.appendChild(wait4);
+      try {
+        await loadScript(core2.base + "g/town3d/town.js");
+      } catch (e) {
+        wait4.remove();
+        core2.ui.toast("3D\u306E\u753A\u3092\u8AAD\u307F\u3053\u3081\u307E\u305B\u3093\u3067\u3057\u305F");
+        go("2d");
+        return;
+      }
+      wait4.remove();
+      const qc = new URLSearchParams(location.search).get("coins");
+      if (/^\d{1,6}$/.test(qc || "")) {
+        try {
+          localStorage.setItem("town:coins", JSON.stringify(+qc));
+        } catch (e) {
+        }
+      }
+      box = document.createElement("div");
+      box.className = "md-town3d";
+      document.body.appendChild(box);
+      town = window.town3d = window.Hoshimiya.mount(box, {
+        switchLabel: "2D\u306E\u5730\u56F3\u306B\u3059\u308B",
+        onSwitchMode: () => go("2d"),
+        openExternal(id) {
+          const r = ROUTE[id];
+          if (!r) return false;
+          if (r.place) enter2(r.place);
+          else core2.host.open(GAMES2[r.game]);
+          return true;
+        },
+        onEvent(name, d) {
+          if (name === "start") {
+            if (d?.name && !core2.profile.name) core2.profile.setName(d.name);
+            core2.events.report("town3d", "open");
+          } else if (name === "talk") core2.events.report("town3d", "talk", { id: d?.id });
+          else if (name === "app:open") core2.events.report("town3d", "app", { id: d?.id });
+        }
+      });
+    }
+    function stop3D() {
+      if (!town) return;
+      try {
+        town.unmount();
+      } catch (e) {
+        console.error(e);
+      }
+      box.remove();
+      town = null;
+      box = null;
+    }
+    core2.events.on((game, name) => {
+      if (name === "open" && game !== "town3d" && town) town.pause();
+    });
+    const resume = () => {
+      if (town) town.resume();
+    };
+    return {
+      start() {
+        const v = st.get("mode");
+        if (v && v.keep && v.last) go(v.last);
+        else chooser();
+      },
+      to3D: () => go("3d"),
+      resume,
+      get is3D() {
+        return !!town;
+      }
+    };
+  }
+
   // apps/town/main.js
   var core = createCore(window.__APP__);
   var PLACES = {
@@ -25771,7 +25887,7 @@ body.nogram .gmT{display:none}
   var BLD = [["school", "bSchool", "\u5B66\u6821"], ["library", "bLibrary", "\u56F3\u66F8\u9928"], ["house", "bHouse", "\u81EA\u5B85"], ["shop", "bShop", "\u30B7\u30E7\u30C3\u30D7"], ["game", "bGame", "\u30B2\u30FC\u30E0\u30BB\u30F3\u30BF\u30FC"]];
   var esc4 = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   document.body.insertAdjacentHTML("afterbegin", `<div class="tw-view"><div class="tw-map" id="twMap">${BLD.map(([k, id, alt]) => `<button class="tw-bld" id="${id}" data-k="${k}"><img src="img/${PLACES[k].img}.webp" alt="${alt}"></button>`).join("")}<button class="tw-tree" id="twTree" aria-label="\u6728"></button></div></div>
-<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><button class="tw-gear tw-help" id="twHelp" aria-label="\u8857\u306E\u30C4\u30A2\u30FC">\uFF1F</button><button class="tw-gear" id="twGear" aria-label="\u8A2D\u5B9A">\u2699</button></div></div>`);
+<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><button class="tw-gear" id="twTo3d" aria-label="3D\u306E\u753A\u3078">\u{1F3D9}</button><button class="tw-gear tw-help" id="twHelp" aria-label="\u8857\u306E\u30C4\u30A2\u30FC">\uFF1F</button><button class="tw-gear" id="twGear" aria-label="\u8A2D\u5B9A">\u2699</button></div></div>`);
   var $5 = (id) => document.getElementById(id);
   var refreshMe = () => {
     $5("twMeImg").src = core.profile.avatarURL();
@@ -25823,7 +25939,8 @@ body.nogram .gmT{display:none}
   }));
   core.onClose = () => {
     refreshMe();
-    tour.afterClose();
+    if (mode.is3D) mode.resume();
+    else tour.afterClose();
   };
   var tstore = createStore("town");
   function dayNo() {
@@ -25868,5 +25985,10 @@ body.nogram .gmT{display:none}
       }
     ), 500);
   };
-  tour.auto();
+  var mode = createMode(core, { GAMES, enter, start2D: () => {
+    fit();
+    tour.auto();
+  } });
+  $5("twTo3d").onclick = () => mode.to3D();
+  mode.start();
 })();
