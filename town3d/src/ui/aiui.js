@@ -99,6 +99,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     try {
       const out = await ask(t, part => { wait.classList.remove('wait'); wait._t.textContent = part; log.scrollTop = log.scrollHeight; });
       if (en && /[A-Za-z]/.test(out)) enable(wait, out); else wait._t.textContent = out;
+      log.scrollTop += wait.getBoundingClientRect().top - log.getBoundingClientRect().top - 6;   // 長い返事は、頭から読めるように
     } catch (e) { wait._t.textContent = e.message || 'うまく話せなかったよ'; wait.classList.add('err'); }
     wait.classList.remove('wait'); busy = false; inp.focus();
   };

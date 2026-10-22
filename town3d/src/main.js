@@ -255,7 +255,7 @@ export function mount(container, opt = {}) {
         try {
           const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-6)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, ...(settings.en ? { maxChars: 170, maxTokens: 130 } : r.def.maxChars ? { maxChars: r.def.maxChars, maxTokens: r.def.maxTokens || 260 } : {}) });
           hist.push({ role: 'assistant', text: out });
-          hud.say('npc:' + r.def.id, out, 4);
+          hud.say('npc:' + r.def.id, out.length > 46 ? out.slice(0, 44) + '…' : out, 4);
           return out;
         } catch (e) { hist.pop(); throw e; }
       },

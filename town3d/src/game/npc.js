@@ -57,9 +57,9 @@ export const RESIDENTS = [
     // 大喜利チョコ:お題を出して、プレイヤーと答えを出し合う。点数と勝ち負けはチョコが決める(AIキーで遊ぶ)
     id: 'choco', tips: ["「Good one!」は『うまい!』。大喜利で、いい答えが出たときに使うよ", "「You got me!」は『やられた!』。笑わされたときの一言!", "「That's hilarious!」は『めっちゃ笑った』。ほめ言葉の最上級だね", "「Nailed it!」は『ばっちり決まった!』", "「punchline」は話のオチのこと。ここが大事なんだよ〜"], yomi: 'おおぎりちょこ', name: '大喜利チョコ', role: '大喜利の達人',
     persona: 'お笑いと大喜利が大好きな、明るくて少し負けず嫌いの女の子。テンポのいいくだけた口調で、ツッコミも上手。笑いのセンスにはきびしいけど、いい答えは大げさによろこぶ。',
-    replyRule: '- 日本語で、4〜5文、160文字ほど。絵文字は使わない。',
+    replyRule: '- 日本語で、3〜4文、110文字ほど。絵文字は使わない。1文を短く。',
     extraRules: ['- 大喜利のあそび方:お題が出ているとき、相手が答えたら、毎回「相手の答えへの感想と点(10点満点)」→「自分の答えと自分の点(自分にも正直につける)」→「合計(チョコ◯点-あなた◯点)」→「次のお題」の順に書く。3問で終わり、最後は合計で勝ち負けを発表する。点は少し辛口、でも笑いのセンスは認める。', '- 相手が大喜利以外の話をしたら、ふつうにおしゃべりして、あとで「大喜利する?」とさそう。'],
-    maxChars: 200, maxTokens: 400,
+    maxChars: 150, maxTokens: 300,
     topics: ['こんなコンビニは嫌だ。どんなコンビニ?', 'ひとこと言うだけで、場がしーんとなる魔法の言葉は?', 'ねこが急に大統領に! 最初に出した命令は?', 'こんな学校の給食は嫌だ。どんな給食?', '桃太郎が鬼ヶ島に持っていった、意外すぎる持ち物は?', 'タイムマシンで未来に行ったら、まず何があった?', 'ロボットが初めて言った、人間くさい一言は?', 'こんなカフェは嫌だ。どんなカフェ?', 'サンタクロースがクビになった理由は?', 'ゲームセンターに、ぜったいに置いてはいけないゲームは?'],
     topicsEn: ['What kind of convenience store would be terrible? Describe it!', 'What is a magic phrase that makes the whole room go silent?', 'A cat suddenly became president! What was its first order?', 'What would a terrible school lunch be like?', 'Momotaro brought a surprising item to Demon Island. What was it?', 'You time-traveled to the future. What was the first thing you saw?', 'A robot said its first very human sentence. What was it?', 'What would a terrible cafe be like?', 'Why did Santa Claus get fired?', 'What game must never be placed in an arcade?'],
     look: { skin: 0xffe1cf, hair: 0x5b3a2e, style: 'bob', top: 0x9c6a4a, bottom: 0xffd6e0, shoes: 0xffffff, acc: 'ribbon', accColor: 0xffb3c1 },
@@ -71,9 +71,9 @@ export const RESIDENTS = [
     // 哲学者:人生についていつも考えている。偉人の格言を教えてくれる(英語モードなら英語+訳)
     id: 'tetsu', tips: ["「Food for thought.」は『考えさせられること』。哲学者の口ぐせです", "「Think twice.」は『よく考えて』。急がないほうがいいときの一言", "「deep down」は『心の奥では』。本音を話すときに使います", "「What's the point?」は『何の意味があるの?』。哲学的な問いの入口です", "「the meaning of life」は『人生の意味』。大きな話題ですね"], yomi: 'てつがくしゃ', name: '哲学者', role: '考えごとの人',
     persona: '人生についていつも深く考えている、おだやかな人。ゆっくり、少し詩的に話す。ときどき偉人の言葉(ソクラテス・デカルト・老子・孔子・ニーチェなど)を引いて、そのあと自分の言葉で一言そえる。説教くさくならない。',
-    replyRule: '- 日本語で、2〜3文、100文字ほど。絵文字は使わない。',
+    replyRule: '- 日本語で、2文、70文字ほど。絵文字は使わない。',
     extraRules: ['- 偉人の言葉を引くときは、出典が確かなものだけにする。あやふやなときは引用せず、自分の言葉で話す。'],
-    maxChars: 130, maxTokens: 260,
+    maxChars: 100, maxTokens: 220,
     quotes: [
       { en: 'The unexamined life is not worth living.', ja: '吟味されない人生は、生きるに値しない。', who: 'ソクラテス', note: '立ち止まって考える時間も、人生のうちなんだね。' },
       { en: 'I think, therefore I am.', ja: 'われ思う、ゆえにわれあり。', who: 'デカルト', note: '疑っている自分がいる。それだけは、たしかなことなんだ。' },

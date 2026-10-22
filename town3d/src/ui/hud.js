@@ -37,7 +37,7 @@ export const CSS = `
 .tw-dialog{position:absolute;left:12px;right:12px;bottom:calc(16px + var(--tw-bot));max-width:620px;margin:0 auto;background:rgba(255,250,242,.97);border-radius:22px;padding:16px 18px 14px;box-shadow:0 10px 30px rgba(90,74,107,.25);animation:tw-up .22s;pointer-events:auto}
 .tw-dname{position:absolute;top:-14px;left:18px;background:var(--tw-pink);color:#fff;padding:4px 14px;border-radius:999px;font-weight:800;font-size:14px}
 .tw-dname small{font-weight:600;opacity:.85;margin-left:6px}
-.tw-dtext{min-height:48px;font-size:16px;line-height:1.6;margin-top:6px}
+.tw-dtext{max-height:min(34vh,180px);overflow-y:auto;overscroll-behavior:contain;min-height:48px;font-size:16px;line-height:1.6;margin-top:6px}
 .tw-choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:flex-end}
 .tw-choices .tw-btn{padding:9px 16px;font-size:14px;background:#fff;border:2px solid var(--tw-lav);box-shadow:none}
 .tw-choices .tw-btn.main{background:var(--tw-mint);border-color:var(--tw-mint)}
@@ -95,7 +95,7 @@ export const CSS = `
 .tw-status{min-height:22px;font-size:14px;font-weight:700;margin:8px 0}
 .tw-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px}.tw-actions .tw-btn{padding:9px 16px;font-size:14px;box-shadow:none;border:2px solid #eadff3}.tw-actions .main{background:var(--tw-mint);border-color:var(--tw-mint)}
 .tw-card h2 small{font-size:12px;color:var(--tw-sub);margin-left:8px;font-weight:700}
-.tw-log{height:min(42vh,300px);overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
+.tw-log{height:min(46vh,340px);overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
 .tw-msg{max-width:84%;padding:8px 12px;border-radius:16px;font-size:15px;line-height:1.5;background:#fff;align-self:flex-start;user-select:text;-webkit-user-select:text}
 .tw-msg.me{align-self:flex-end;background:var(--tw-pink);color:#fff}.tw-msg.wait{opacity:.6}.tw-msg.err{background:#fff3e0;color:#9a6a3a}
 .tw-chatrow{display:flex;gap:8px}.tw-chatrow .tw-btn{padding:0 16px;box-shadow:none;border:2px solid var(--tw-mint);background:var(--tw-mint)}
