@@ -1,0 +1,31 @@
+# 統合アプリ(series の街アプリ)の確認用ビルド。公開はしない。
+# できた一式は series-preview/<ブランチ名> ブランチに置く(ブランチごとに別なので、ほかの人のものと混ざらない)
+name: series town build
+on:
+  push:
+    branches-ignore: [main, town3d-preview, 'preview/**', 'series-preview/**']
+    paths: ['series/**', 'town3d/**', '.github/workflows/series-build.yml']
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 3Dの町を先に組み立てる(統合側が dist/town.js を取り込む)
+        working-directory: town3d
+        run: npm i --no-audit --no-fund && node build.mjs
+      - name: 統合アプリ(街)を組み立てる
+        working-directory: series
+        run: npm i --no-audit --no-fund && node build.mjs town
+      - name: 一式を series-preview/<ブランチ名> に置く
+        run: |
+          rm -rf /tmp/pv && mkdir /tmp/pv && cp -r series/dist/town/. /tmp/pv/ && cd /tmp/pv
+          du -sh . && find . -type f | wc -l
+          git init -q && git checkout -q -b p && git add -A
+          git -c user.name=github-actions -c user.email=actions@users.noreply.github.com commit -q -m "series build ${GITHUB_SHA}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" "p:refs/heads/series-preview/${{ github.ref_name }}"
