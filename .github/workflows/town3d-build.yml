@@ -2,7 +2,7 @@
 name: town3d build
 on:
   push:
-    branches-ignore: [main, town3d-preview]
+    branches-ignore: [main, town3d-preview, 'preview/**']
     paths: ['town3d/**', '.github/workflows/town3d-build.yml']
   workflow_dispatch:
 jobs:
@@ -24,9 +24,9 @@ jobs:
         with:
           name: town3d-index-html
           path: town3d/dist/index.html
-      # できた index.html を、town3d-preview ブランチ(1ファイルだけ)にも置く。そのまま取り出して開ける
+      # できた index.html を、ブランチごとの preview/<ブランチ名>(1ファイルだけ)にも置く。ほかの人のブランチや、ほかの人のビルドとは混ざらない
       - run: |
           rm -rf /tmp/pv && mkdir /tmp/pv && cp dist/index.html /tmp/pv/index.html && cd /tmp/pv
-          git init -q && git checkout -q -b town3d-preview && git add index.html
+          git init -q && git checkout -q -b preview && git add index.html
           git -c user.name=github-actions -c user.email=actions@users.noreply.github.com commit -q -m "build ${GITHUB_SHA}"
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" town3d-preview
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" "preview:refs/heads/preview/${{ github.ref_name }}"
