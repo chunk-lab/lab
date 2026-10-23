@@ -120,6 +120,9 @@ export function createAI(storage) {
       const out = await this.chat({ system: 'Translate the user\'s English text into natural, easy Japanese. Output only the Japanese translation, nothing else.', messages: [{ role: 'user', text: String(text).slice(0, 300) }], maxTokens: 220, maxChars: 200, free: true });
       return out;
     },
+    async toEnglish(text) {
+      return this.chat({ system: 'Translate the user\'s Japanese text into natural, easy English. Output only the English translation, nothing else.', messages: [{ role: 'user', text: String(text).slice(0, 300) }], maxTokens: 220, maxChars: 260, free: true });
+    },
     async explain(item, sentence) {
       const out = await this.chat({ system: 'You are an English-Japanese dictionary. Given an English word or phrase and the sentence it appeared in, output ONLY its meaning in Japanese as used in that sentence (max 25 characters, with the part of speech in parentheses if it is a single word, e.g. 「(名)秋」). No other text.', messages: [{ role: 'user', text: `Word/phrase: ${String(item).slice(0, 80)}\nSentence: ${String(sentence).slice(0, 200)}` }], maxTokens: 60, maxChars: 40, free: true });
       return out;
@@ -175,7 +178,7 @@ export function buildSystem({ npc, player, hourText, periodText, place, english 
     '【ルール】',
     ...(english
       ? [
-        '- Reply ONLY in English (the player may write in Japanese or English; understand both). 1-2 short sentences, about 20 words at most. No emoji.',
+        '- Write the reply in English (the player may write in Japanese or English; understand both). 1-2 short sentences, about 20 words at most. No emoji.',
         english === 'easy'
           ? '- Use very simple English (CEFR A1-A2): short sentences, common words, no slang or idioms. Keep the character\'s personality.'
           : '- Use natural everyday English, with ordinary idioms; keep sentences short. Keep the character\'s personality.',
@@ -183,6 +186,9 @@ export function buildSystem({ npc, player, hourText, periodText, place, english 
       ]
       : [npc.replyRule || '- 日本語で、1〜2文、70文字ほど。絵文字は使わない。']),
     ...(npc.extraRules || []),
+    english
+      ? '- 出力の形: 英語の返事、そのあとに「 ||| 」、そのあとに同じ内容の自然な日本語訳(60文字以内)。「|||」は1回だけ。'
+      : '- 出力の形: 日本語の返事、そのあとに「 ||| 」、そのあとに同じ内容の自然でやさしい英語訳(1〜2文)。「|||」は1回だけ。口調の指定は日本語側だけに使う。',
     '- 相手の質問には、まず先に答える。そのあと、自分の好み・体験・ちょっとした本音を一言そえて、話をふくらませる。',
     '- 相手の話題(食べ物・ゲーム・天気・気持ちなど、なんでも)に、ちゃんと乗る。町の外の話でも、自分の性格のまま楽しく受ける。',
     '- 質問で返すのは、3回に1回ほど。ふつうは、感想・共感・自分の話で終える。続けて質問をしない。',

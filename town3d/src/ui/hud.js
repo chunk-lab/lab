@@ -12,6 +12,7 @@ export const CSS = `
 .tw-sp{flex:1}
 .tw-btn{pointer-events:auto;border:0;background:var(--tw-cream);color:var(--tw-ink);border-radius:999px;font:inherit;font-weight:700;box-shadow:var(--tw-shadow);cursor:pointer;transition:transform .12s}
 .tw-btn:active{transform:scale(.92)}
+.tw-lang{height:42px;min-width:42px;padding:0 12px;font-size:15px;font-weight:800}.tw-lang.on{background:var(--tw-mint)}
 .tw-find{height:42px;padding:0 16px;font-size:15px;font-weight:700;letter-spacing:.06em}
 .tw-icon{width:42px;height:42px;font-size:20px;display:grid;place-items:center;padding:0}
 .tw-action{position:absolute;right:20px;bottom:calc(26px + var(--tw-bot));min-width:96px;height:96px;border-radius:48px;padding:0 18px;font-size:17px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;text-shadow:0 1px 2px rgba(150,80,110,.4);animation:tw-pop .25s}
@@ -110,7 +111,7 @@ export const CSS = `
 
 export function createHud(root, bus) {
   const h = s => { const t = document.createElement('template'); t.innerHTML = s.trim(); return t.content.firstChild; };
-  const top = h(`<div class="tw-top"><span class="tw-chip tw-area">ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
+  const top = h(`<div class="tw-top"><span class="tw-chip tw-area">ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-lang" aria-label="英語と日本語を切りかえ">日</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
   const labels = h('<div class="tw-labels"></div>');
   const action = h('<button class="tw-btn tw-action" hidden></button>');
   const emotes = h('<div class="tw-emotes"><button class="tw-btn" data-e="wave">👋 手をふる</button><button class="tw-btn" data-e="say">💬 ひとこと</button><button class="tw-btn" data-e="feed" hidden>🌾 えさをまく</button></div>');
@@ -118,11 +119,14 @@ export function createHud(root, bus) {
   root.prepend(grade, vig);
   root.append(labels, top, emotes, action);
   const area = top.querySelector('.tw-area'), clock = top.querySelector('.tw-clock'), coins = top.querySelector('.tw-coins');
-  let dialog = null, toastEl = null, toastT = 0, panel = null;
+  let dialog = null, toastEl = null, toastT = 0, panel = null, ptLast = 0;
 
   emotes.onclick = e => { const b = e.target.closest('[data-e]'); if (b) bus.emit('ui:emote', b.dataset.e); };
   top.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
   top.querySelector('.tw-find').onclick = () => bus.emit('ui:find');
+  const langB = top.querySelector('.tw-lang');
+  langB.onclick = () => bus.emit('ui:lang');
+  const offLang = bus.on('lang', v => { langB.textContent = v.on ? 'EN' : '日'; langB.classList.toggle('on', !!v.on); });
   action.onclick = () => bus.emit('ui:action');
 
   const tags = new Map(); // id → {el, bubble, until}
@@ -172,16 +176,21 @@ export function createHud(root, bus) {
     },
     // pos: id → {x,y,visible}(画面座標)
     placeTags(pos) {
-      const now = performance.now();
+      const now = performance.now(), dt = Math.min(0.1, (now - (ptLast || now)) / 1000); ptLast = now;
       for (const [id, t] of tags) {
         const p = pos.get(id);
         const vis = p && p.visible;
+        // 住人が押し出されて細かく動いても、名前とふきだしがゆれないよう、画面上の位置をなめらかにする(大きく動くときは、すばやく追いかける)
+        if (vis) {
+          if (t.sx === undefined) { t.sx = p.x; t.sy = p.y; }
+          else { const dx = p.x - t.sx, dy = p.y - t.sy, k = 1 - Math.exp(-dt * (9 + Math.hypot(dx, dy) * 0.5)); t.sx += dx * k; t.sy += dy * k; }
+        } else t.sx = undefined;
         t.el.style.display = vis && p.showName ? '' : 'none';
-        if (vis) t.el.style.transform = `translate(${p.x}px,${p.y}px) translate(-50%,-100%)`;
+        if (vis) t.el.style.transform = `translate(${t.sx}px,${t.sy}px) translate(-50%,-100%)`;
         if (t.bubble) {
           if (now > t.until) { t.bubble.remove(); t.bubble = null; continue; }
           t.bubble.style.display = vis ? '' : 'none';
-          if (vis) t.bubble.style.transform = `translate(${p.x}px,${p.y - 24}px) translate(-50%,-100%)`;
+          if (vis) t.bubble.style.transform = `translate(${t.sx}px,${t.sy - 24}px) translate(-50%,-100%)`;
         }
       }
     },
@@ -209,7 +218,7 @@ export function createHud(root, bus) {
       el.querySelector('.tw-start').onclick = () => { el.remove(); onStart({ look: sel, name: (inp.value.trim() || LOOKS[sel].name).slice(0, 8) }); };
       root.appendChild(el);
     },
-    dispose() { this.closeDialog(); this.closePanel(); toastEl?.remove(); [top, labels, action, emotes].forEach(e => e.remove()); },
+    dispose() { offLang(); this.closeDialog(); this.closePanel(); toastEl?.remove(); [top, labels, action, emotes].forEach(e => e.remove()); },
   };
 }
 const hex = n => n.toString(16).padStart(6, '0');

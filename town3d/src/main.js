@@ -224,7 +224,7 @@ export function mount(container, opt = {}) {
   // メニューの「act」:大喜利・格言・ハーモニカ(アプリを開かない、住人ならではのあそび)
   function doAct(r, m) {
     if (m.act === 'ogiri') {
-      const go = () => openOgiri({ hud, ai, def: r.def, en: !!settings.en });
+      const go = () => openOgiri({ hud, ai, bus, def: r.def, getEn: () => ({ on: !!settings.en, level: settings.enLevel }), setEn: v => { settings.en = v.on ? 1 : 0; save(); bus.emit('lang', { on: !!settings.en }); } });
       if (ai.ready) go(); else openAiSetup({ hud, ai, onDone: go });
     } else if (m.act === 'quote') showQuote(r);
     else if (m.act === 'harmonica') { audio.unlock(); audio.play('harmonica'); r.harpT = 7.6; hud.say('npc:' + r.def.id, '♪ ♪ ♪', 7); }
@@ -244,7 +244,7 @@ export function mount(container, opt = {}) {
     openChat({
       hud, bus, name: r.def.name, role: r.def.role, first,
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
-      setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); },
+      setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
       saveNote: it => addNote({ ...it, npc: r.def.name }),
       ask: async (t, onPart) => {
@@ -252,9 +252,10 @@ export function mount(container, opt = {}) {
         const H = Math.floor(env.hour), M = Math.floor((env.hour % 1) * 60);
         const system = buildSystem({ npc: r.def, player: settings.name || 'あなた', hourText: `${H}時${M}分`, periodText: PERIOD[period(env.hour)], place: city.areaName(r.ch.root.position.x, r.ch.root.position.z), english: settings.en ? settings.enLevel : '', adult: ageOk() && !!settings.adult && r.def.adult !== false });
         try {
-          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-6)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, ...(settings.en ? { maxChars: 170, maxTokens: 130 } : r.def.maxChars ? { maxChars: r.def.maxChars, maxTokens: r.def.maxTokens || 260 } : {}) });
-          hist.push({ role: 'assistant', text: out });
-          hud.say('npc:' + r.def.id, out.length > 46 ? out.slice(0, 44) + '…' : out, 4);
+          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-6)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, ...(settings.en ? { maxChars: 300, maxTokens: 300 } : { maxChars: (r.def.maxChars || 90) + 240, maxTokens: (r.def.maxTokens || 160) + 200 }) });
+          const shown = out.split('|||')[0].trim();   // 英語・日本語の両方が入っている。履歴とふきだしには、話した側だけを使う
+          hist.push({ role: 'assistant', text: shown });
+          hud.say('npc:' + r.def.id, shown.length > 46 ? shown.slice(0, 44) + '…' : shown, 4);
           return out;
         } catch (e) { hist.pop(); throw e; }
       },
@@ -331,6 +332,8 @@ export function mount(container, opt = {}) {
   }
   offs.push(bus.on('ui:find', openFind));
   on(window, 'keydown', e => { if (e.code === 'KeyM' && !e.repeat && !e.target.closest?.('input,textarea')) { if (hud.busy) { hud.closePanel(); return; } openFind(); } });
+  offs.push(bus.on('ui:lang', () => { settings.en = settings.en ? 0 : 1; save(); bus.emit('lang', { on: !!settings.en }); hud.toast(settings.en ? 'English モード' : '日本語モード'); }));
+  bus.emit('lang', { on: !!settings.en });
   offs.push(bus.on('ui:menu', () => {
     if (!started) return;
     const seg = (key, opts) => `<div class="tw-seg">${opts.map(([v, l]) => `<button class="tw-btn${settings[key] == v ? ' on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
@@ -358,6 +361,7 @@ export function mount(container, opt = {}) {
         if (b.dataset.k) {
           const v = isNaN(+b.dataset.v) ? b.dataset.v : +b.dataset.v;
           settings[b.dataset.k] = v; save();
+          if (b.dataset.k === 'en') bus.emit('lang', { on: !!settings.en });
           p.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x => x.classList.toggle('on', x === b));
           if (b.dataset.k === 'quality' || b.dataset.k === 'lite') applyQuality();
           if (b.dataset.k === 'timeSpeed') env.speed = v / 60;
