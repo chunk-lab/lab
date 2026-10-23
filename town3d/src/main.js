@@ -42,7 +42,7 @@ export function mount(container, opt = {}) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
   renderer.shadowMap.enabled = settings.quality !== 'low';
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
   root.appendChild(renderer.domElement);
   const applyQuality = () => {
     const lite = !!settings.lite;   // 低負荷モード:解像度・影・光のにじみ・ふちどり・噴水・月をかるくする
@@ -422,7 +422,7 @@ export function mount(container, opt = {}) {
   }
 
   // ---- ループ ----
-  const v3 = new THREE.Vector3(), clock = new THREE.Clock();
+  const v3 = new THREE.Vector3(), timer = new THREE.Timer();
   const tagPos = new Map();
   let raf = 0, sendT = 0, saveT = 0, paused = false, held = false, frames = 0, fpsT = 0, fps = 60;
   function resize() {
@@ -436,10 +436,10 @@ export function mount(container, opt = {}) {
   let fpsAcc = 0;
   function frame() {
     raf = requestAnimationFrame(frame);
-    let dt = Math.min(0.05, clock.getDelta());
+    timer.update(); let dt = Math.min(0.05, timer.getDelta());
     if (settings.lite) { fpsAcc += dt; if (fpsAcc < 0.031) return; dt = Math.min(0.1, fpsAcc); fpsAcc = 0; }   // 低負荷モードは30fps
     if (paused || held || appHost.current) return; // アプリ中は町を止めて電池を節約
-    const t = clock.elapsedTime;
+    const t = timer.getElapsed();
     const inp = input.read();
 
     // 自分の移動(カメラの向き基準)
@@ -540,7 +540,7 @@ export function mount(container, opt = {}) {
   }
 
   // バックグラウンドでは止める
-  const vis = () => { if (document.hidden) { paused = true; audio.suspend(); } else { paused = false; clock.getDelta(); if (!held) audio.resume(); } };
+  const vis = () => { if (document.hidden) { paused = true; audio.suspend(); } else { paused = false; timer.update(); if (!held) audio.resume(); } };
   on(document, 'visibilitychange', vis);
   on(root, 'pointerdown', () => audio.unlock(), { once: true });
 
@@ -565,7 +565,7 @@ export function mount(container, opt = {}) {
     action: doAction,
     // 組み込み先がゲームを開いている間は止める(描画も音も)
     pause() { held = true; input.clear(); audio.suspend(); },
-    resume() { held = false; clock.getDelta(); input.clear(); audio.resume(); hud.setCoins(wallet.get()); },
+    resume() { held = false; timer.update(); input.clear(); audio.resume(); hud.setCoins(wallet.get()); },
     unmount() {
       cancelAnimationFrame(raf); ro.disconnect(); offs.forEach(f => f()); appHost.close(); input.dispose(); hud.dispose(); net?.disconnect(); audio.dispose(); bus.clear();
       scene.traverse(o => { o.geometry?.dispose(); });

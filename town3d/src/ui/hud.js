@@ -6,15 +6,15 @@ export const CSS = `
  --tw-pink:#ffb3c1;--tw-mint:#a8e6cf;--tw-lav:#c9b8ea;--tw-cream:#fffaf2;--tw-ink:#5a4a6b;--tw-sub:#8d7f9e;--tw-shadow:0 6px 18px rgba(90,74,107,.18);--tw-top:env(safe-area-inset-top,0px);--tw-bot:env(safe-area-inset-bottom,0px)}
 .tw-root *{box-sizing:border-box}
 .tw-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.tw-root .tw-top{position:absolute;left:12px;right:12px;top:calc(10px + var(--tw-top));display:flex;gap:8px;align-items:center;pointer-events:none}
-.tw-chip{background:rgba(255,250,242,.9);border-radius:999px;padding:7px 13px;font-weight:700;font-size:14px;box-shadow:var(--tw-shadow);white-space:nowrap}
-.tw-area{max-width:46%;overflow:hidden;text-overflow:ellipsis}
-.tw-sp{flex:1}
+.tw-root .tw-top{position:absolute;left:12px;right:12px;top:calc(10px + var(--tw-top));display:flex;gap:6px;align-items:center;pointer-events:none}
+.tw-chip{background:rgba(255,250,242,.9);border-radius:999px;padding:7px 10px;font-weight:700;font-size:14px;box-shadow:var(--tw-shadow);white-space:nowrap;flex:none}
+.tw-area{flex:0 1 auto;min-width:0;max-width:46%;overflow:hidden;text-overflow:ellipsis}
+.tw-sp{flex:1;min-width:0}
 .tw-btn{pointer-events:auto;border:0;background:var(--tw-cream);color:var(--tw-ink);border-radius:999px;font:inherit;font-weight:700;box-shadow:var(--tw-shadow);cursor:pointer;transition:transform .12s}
 .tw-btn:active{transform:scale(.92)}
-.tw-lang{height:42px;min-width:42px;padding:0 12px;font-size:15px;font-weight:800}.tw-lang.on{background:var(--tw-mint)}
-.tw-find{height:42px;padding:0 16px;font-size:15px;font-weight:700;letter-spacing:.06em}
-.tw-icon{width:42px;height:42px;font-size:20px;display:grid;place-items:center;padding:0}
+.tw-lang{height:40px;min-width:40px;padding:0 10px;flex:none;white-space:nowrap;font-size:15px;font-weight:800}.tw-lang.on{background:var(--tw-mint)}
+.tw-find{height:40px;padding:0 12px;flex:none;white-space:nowrap;font-size:14px;font-weight:700;letter-spacing:.03em}
+.tw-icon{width:40px;height:40px;flex:none;font-size:20px;display:grid;place-items:center;padding:0}
 .tw-action{position:absolute;right:20px;bottom:calc(26px + var(--tw-bot));min-width:96px;height:96px;border-radius:48px;padding:0 18px;font-size:17px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;text-shadow:0 1px 2px rgba(150,80,110,.4);animation:tw-pop .25s}
 .tw-action[hidden]{display:none}
 .tw-emotes{position:absolute;left:12px;bottom:calc(16px + var(--tw-bot));display:flex;gap:6px}
