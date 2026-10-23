@@ -223,7 +223,11 @@ import { Kit as K } from './play.js';
     V.quest = K.pickQuest(V.usedQ = V.usedQ || []); QCTX = V.quest; V.mission = K.pickMissions(V.usedM = V.usedM || [], 1)[0].m;
     V.rule = pick(K.JOKERS.filter(function (j) { return !/^(bank|lucky|first|last)$/.test(j.id); }));
     V.pot = 0; V.c = { me: 0, cpu: 0 }; pay('me', ANTE); pay('cpu', ANTE);
-    withP(CPU, function () { K.fillTo(8); }); K.fillTo(8);
+    // 最初の8枚は敵とあなたで1枚ずつ交互に引く(先に引くのは先攻側)。入れかえ補正は最後に1回
+    for (var di = 1; di <= 8; di++) {
+      var order = V.first === 'cpu' ? ['cpu', 'me'] : ['me', 'cpu'];
+      order.forEach(function (who) { if (who === 'cpu') withP(CPU, function () { K.fillTo(di, di < 8); }); else K.fillTo(di, di < 8); });
+    }
     var g = K.guestCard(); if (g) { g.by = 'guest'; ME.field.unshift(g); }
     G_.mode = 'play'; G_.mark = []; say(pick(['よろしく!', 'いくよ〜', 'ふふふ…', 'さあ勝負!']));
     renderAll(); SFX.put();
