@@ -66,6 +66,22 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     log.appendChild(d); log.scrollTop = log.scrollHeight; d._t = t; return d;
   };
   // 英語の返事:単語ごとにタップできる形にして、「訳」ボタンを付ける
+  const isJa = s => /[\u3040-\u30ff\u4e00-\u9fff]/.test(s);
+  // 返事は「英語」と「日本語」の両方を持っておき、いまのモードに合わせて見せる(切りかえても、AIを呼びなおさない)
+  const msgs = [];
+  const render = d => {
+    d.querySelectorAll('.tw-trbtn,.tw-tr').forEach(x => x.remove());
+    d._w = [];
+    const en = getEn().on;
+    if (en && d._en) enable(d, d._en);
+    else if (!en && d._ja) { d._text = d._ja; d._t.textContent = d._ja; }
+    else if (d._en) enable(d, d._en);   // 日本語がないときは、あるほうをそのまま見せる
+    else { d._text = d._ja || ''; d._t.textContent = d._ja || ''; }
+  };
+  const setPair = (d, parts) => {   // 「英語 ||| 日本語」(または逆)を、文字の種類で見わけて入れる
+    d._en = d._ja = '';
+    for (const x of parts.map(q => q.trim().replace(/^["「『]|["」』]$/g, '')).filter(Boolean)) { if (isJa(x)) d._ja = d._ja || x; else d._en = d._en || x; }
+  };
   const enable = (d, text) => {
     d._text = text; d._w = [];
     d._t.textContent = '';
@@ -89,7 +105,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     showTools();
   };
   const toast = msg => { const x = tools; x.hidden = false; x.innerHTML = `<span class="tw-seltxt">${esc(msg)}</span>`; setTimeout(() => { if (!sel) x.hidden = true; }, 1600); };
-  add('npc', first);
+  { const d0 = add('npc', first); d0._ja = first; msgs.push(d0); render(d0); }
   let busy = false;
   const send = async () => {
     const t = inp.value.trim(); if (!t || busy) return;
@@ -97,8 +113,8 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     const en = getEn().on;
     const wait = add('npc', '…'); wait.classList.add('wait');
     try {
-      const out = await ask(t, part => { wait.classList.remove('wait'); wait._t.textContent = part; log.scrollTop = log.scrollHeight; });
-      if (en && /[A-Za-z]/.test(out)) enable(wait, out); else wait._t.textContent = out;
+      const out = await ask(t, part => { wait.classList.remove('wait'); wait._t.textContent = part.split('|||')[0].trim(); log.scrollTop = log.scrollHeight; });
+      setPair(wait, String(out).split('|||')); msgs.push(wait); render(wait);
       log.scrollTop += wait.getBoundingClientRect().top - log.getBoundingClientRect().top - 6;   // 長い返事は、頭から読めるように
     } catch (e) { wait._t.textContent = e.message || 'うまく話せなかったよ'; wait.classList.add('err'); }
     wait.classList.remove('wait'); busy = false; inp.focus();
@@ -110,7 +126,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     const a = b.dataset.a;
     if (a === 'send') send();
     else if (a === 'close') hud.closePanel();
-    else if (a === 'en') { const c = getEn(); setEn({ on: !c.on, level: c.level }); showEn(); }
+    else if (a === 'en') { const c = getEn(); setEn({ on: !c.on, level: c.level }); }
     else if (a === 'lv') { const c = getEn(); setEn({ on: c.on, level: c.level === 'easy' ? 'normal' : 'easy' }); showEn(); }
     else if (a === 'unsel') clearSel();
     else if (a === 'savesel' && sel) { const txt = sel.el._w.slice(sel.a, sel.b + 1).map(x => x.textContent).join(' '), single = sel.a === sel.b, sentence = sel.el._text; clearSel(); toast(saveNote({ kind: single ? 'word' : 'phrase', text: txt, sentence })); }
@@ -118,10 +134,13 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     else if (a === 'tr') {
       const d = b.closest('.tw-msg'); let tr = d.querySelector('.tw-tr');
       if (tr) { tr.hidden = !tr.hidden; return; }
-      tr = document.createElement('div'); tr.className = 'tw-tr'; tr.textContent = '…'; d.appendChild(tr);
-      try { tr.textContent = await translate(d._text); } catch (err) { tr.textContent = err.message || '訳せなかったよ'; }
+      tr = document.createElement('div'); tr.className = 'tw-tr'; tr.textContent = d._ja || '…'; d.appendChild(tr);
+      if (!d._ja) { try { d._ja = await translate(d._text); tr.textContent = d._ja; } catch (err) { tr.textContent = err.message || '訳せなかったよ'; } }
       log.scrollTop = log.scrollHeight;
     }
   });
+  // 英日の切りかえ(上バーのボタンからも)が来たら、いまある返事も全部切りかえる。パネルを閉じたら受け取りをやめる
+  const offLang = bus.on('lang', () => { clearSel(); showEn(); msgs.forEach(render); });
+  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); });
   setTimeout(() => inp.focus(), 50);
 }

@@ -205,12 +205,16 @@ export function createResidents(scene, graph, getHour) {
             r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(mx, mz), Math.min(1, dt * 6));
           }
         }
-        // 住人どうしが重なって団子にならないよう、ゆるく押しのけ合う
+        // 住人どうしが重なって団子にならないよう、ゆるく押しのけ合う。押す力は少しずつ変わるようにして、ぶるぶるゆれないようにする
+        let ax = 0, az = 0;
         if (!r.hidden && !r.talking) for (const o of list) {
           if (o === r || o.hidden) continue;
           const ox = p.x - o.ch.root.position.x, oz = p.z - o.ch.root.position.z, od = Math.hypot(ox, oz);
-          if (od < 1.1) { const k = od > 0.01 ? (1.1 - od) * Math.min(1, dt * 2.5) / od : 0.02; p.x += (od > 0.01 ? ox : Math.random() - 0.5) * k; p.z += (od > 0.01 ? oz : Math.random() - 0.5) * k; }
+          if (od < 1.1) { const k = od > 0.01 ? (1.1 - od) * 2.5 / od : 0.5; ax += (od > 0.01 ? ox : Math.random() - 0.5) * k; az += (od > 0.01 ? oz : Math.random() - 0.5) * k; }
         }
+        const pk = Math.min(1, dt * 5);
+        r.pvx = (r.pvx || 0) + (ax - (r.pvx || 0)) * pk; r.pvz = (r.pvz || 0) + (az - (r.pvz || 0)) * pk;
+        if (!r.hidden) { p.x += r.pvx * dt; p.z += r.pvz * dt; }
         r.speed = speed;
         // ポーズ:ハーモニカを吹いている間 / 池のそばで釣り竿を構えているとき
         if (r.harpT > 0) r.harpT -= dt;
