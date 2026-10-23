@@ -142,7 +142,7 @@ export function mount(container, opt = {}) {
     audio.play('talk');
     const text = residents.lineFor(r, env.hour);
     const choices = (r.def.menu || []).map(m => ({ label: m.label, fn: () => (m.act ? doAct(r, m) : openApp(m.app, m.params)) }));
-    choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => (ai.ready ? startChat(r, text) : openAiSetup({ hud, ai, onDone: () => startChat(r, text) })) });
+    choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
     hud.dialog({ name: r.def.name, role: r.def.role, text, choices });
     bus.emit('talk', { npc: r.def.id });
   }
@@ -224,6 +224,7 @@ export function mount(container, opt = {}) {
   // メニューの「act」:大喜利・格言・ハーモニカ(アプリを開かない、住人ならではのあそび)
   function doAct(r, m) {
     if (m.act === 'ogiri') {
+      r.talking = true; talkingTo = r; input.clear();   // 大喜利をしている間は、その場にいる
       const go = () => openOgiri({ hud, ai, bus, def: r.def, getEn: () => ({ on: !!settings.en, level: settings.enLevel }), setEn: v => { settings.en = v.on ? 1 : 0; save(); bus.emit('lang', { on: !!settings.en }); } });
       if (ai.ready) go(); else openAiSetup({ hud, ai, onDone: go });
     } else if (m.act === 'quote') showQuote(r);
