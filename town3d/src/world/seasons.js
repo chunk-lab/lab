@@ -64,7 +64,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
       on(v) { on = v; sets.forEach(m => { m.visible = v; }); },
       update(dt, cam) {
         if (!on) return;
-        if ((nearT -= dt) <= 0) { nearT = 1; near = trees.filter(t => Math.hypot(t.x - cam.x, t.z - cam.z) < 38); }
+        if ((nearT -= dt) <= 0) { nearT = 1; near = trees.filter(t => Math.hypot(t.x - cam.x, t.z - cam.z) < 38); if (typeof window !== 'undefined' && window.__dbgLeaves) window.__dbgLeaves({ trees: trees.length, near: near.length, l0: { ...st[0] }, cam: [cam.x, cam.y, cam.z] }); }
         for (let i = 0; i < N; i++) {
           const l = st[i];
           if (l.wait > 0) { l.wait -= dt; if (l.wait <= 0) spawn(l, cam); }
