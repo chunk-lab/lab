@@ -15,7 +15,7 @@ function dotTex() {
 }
 
 // opts: foliage(fn)=葉の材質を順にわたす / groundMats=地面の材質 / colliders=町の当たり判定 / storage
-export function createSeasons(scene, { eachFoliage, eachTex = () => {}, groundMats = [], colliders = [], storage }) {
+export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = [], groundMats = [], colliders = [], storage }) {
   const base = new Map();   // 材質→もとの色
   const baseOf = m => { if (!base.has(m)) base.set(m, m.color.clone()); return base.get(m); };
   let season = 'summer';
@@ -40,6 +40,50 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, groundMa
     }
     geo.attributes.color.needsUpdate = true; geo.setDrawRange(0, count);
   }
+
+  // ---- 秋:木から落ちる葉(イチョウ・モミジ)。ペラペラの板がひらひら落ちて、地面にしばらく残る ----
+  const leaves = (() => {
+    const N = 150, mk = draw => { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.translate(32, 32); draw(g); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; };
+    const ginkgo = mk(g => { g.beginPath(); g.moveTo(0, 28); g.lineTo(0, 10); g.arc(0, 12, 26, -Math.PI * 0.86, -Math.PI * 0.14); g.closePath(); g.fill(); g.lineWidth = 3; g.strokeStyle = '#fff'; g.beginPath(); g.moveTo(0, 30); g.lineTo(0, 12); g.stroke(); g.globalCompositeOperation = 'destination-out'; g.beginPath(); g.moveTo(0, -14); g.lineTo(-3, -4); g.lineTo(3, -4); g.fill(); });
+    const maple = mk(g => { g.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? 11 : 27; g.lineTo(Math.cos(a) * r, Math.sin(a) * r - 2); } g.closePath(); g.fill(); g.lineWidth = 3; g.strokeStyle = '#fff'; g.beginPath(); g.moveTo(0, 6); g.lineTo(0, 28); g.stroke(); });
+    const geo = new THREE.PlaneGeometry(0.34, 0.34);
+    const sets = [[ginkgo, [0xf2c94c, 0xf5d65e, 0xe9b23a, 0xffe08a]], [maple, [0xe8603a, 0xd9433a, 0xf0803c, 0xc9382e]]].map(([tex, cols]) => {
+      const m = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({ map: tex, transparent: true, alphaTest: 0.4, side: THREE.DoubleSide }), N / 2);
+      m.frustumCulled = false; m.visible = false; const c = new THREE.Color();
+      for (let i = 0; i < N / 2; i++) { c.setHex(cols[i % cols.length]); m.setColorAt(i, c); }
+      scene.add(m); return m;
+    });
+    const st = Array.from({ length: N }, () => ({ t: 0, wait: Math.random() * 6, x: 0, y: -9, z: 0, p: Math.random() * 6, ry: Math.random() * 6, ground: 0 }));
+    const dummy = new THREE.Object3D(); let on = false, near = [], nearT = 0;
+    function spawn(l, cam) {
+      if (!near.length) { l.y = -9; l.wait = 1; return; }
+      const tr = near[Math.floor(Math.random() * near.length)], a = Math.random() * 6.28, r = Math.random() * 1.3 * tr.s;
+      Object.assign(l, { x: tr.x + Math.cos(a) * r, z: tr.z + Math.sin(a) * r, y: (2.6 + Math.random() * 1.6) * tr.s, t: 0, ground: 0, p: Math.random() * 6, ry: Math.random() * 6, v: 0.45 + Math.random() * 0.35 });
+    }
+    return {
+      on(v) { on = v; sets.forEach(m => { m.visible = v; }); },
+      update(dt, cam) {
+        if (!on) return;
+        if ((nearT -= dt) <= 0) { nearT = 1; near = trees.filter(t => Math.hypot(t.x - cam.x, t.z - cam.z) < 38); }
+        for (let i = 0; i < N; i++) {
+          const l = st[i];
+          if (l.wait > 0) { l.wait -= dt; if (l.wait <= 0) spawn(l, cam); }
+          else if (!l.ground) {
+            l.t += dt; l.y -= l.v * dt * (0.8 + 0.4 * Math.sin(l.t * 2.3 + l.p)); l.x += Math.sin(l.t * 1.6 + l.p) * 0.5 * dt + 0.12 * dt; l.z += Math.cos(l.t * 1.2 + l.p) * 0.35 * dt;
+            if (l.y <= 0.03) { l.y = 0.03; l.ground = 0.001; }
+          } else { l.ground += dt; if (l.ground > 6 + (i % 5)) { l.wait = Math.random() * 3; l.y = -9; } }
+          dummy.position.set(l.x, l.y, l.z);
+          if (l.ground) dummy.rotation.set(-Math.PI / 2, 0, l.ry);
+          else dummy.rotation.set(Math.sin(l.t * 2.6 + l.p) * 1.1, l.ry + l.t * 0.8, Math.cos(l.t * 3.1 + l.p) * 0.9);   // ひらひら回る
+          const k = l.ground > 5 ? Math.max(0.001, 1 - (l.ground - 5)) : l.y < -5 ? 0.001 : 1;
+          dummy.scale.setScalar(k); dummy.updateMatrix();
+          sets[i & 1].setMatrixAt(i >> 1, dummy.matrix);
+        }
+        sets.forEach(m => { m.instanceMatrix.needsUpdate = true; });
+      },
+      dispose() { sets.forEach(m => scene.remove(m)); },
+    };
+  })();
 
   // ---- 雪だるま ----
   const men = [];   // {g, x, z, born, built}
@@ -86,7 +130,8 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, groundMa
       });
       for (const [pre, k] of [['pave', 0.6], ['roof', 0.62]]) eachTex(pre, m => { const b = baseOf(m); m.color.copy(b); if (s === 'winter') m.color.lerp(new THREE.Color(0xffffff), k); });
       for (const g of groundMats) { const b = baseOf(g); g.color.copy(b); if (s === 'winter') g.color.lerp(new THREE.Color(0xf6f9ff), 0.88); else if (s === 'autumn') g.color.lerp(new THREE.Color(0xd8c98a), 0.35); else if (s === 'spring') g.color.lerp(new THREE.Color(0xd5eca8), 0.25); }
-      setFall(s === 'winter' ? 'snow' : s === 'autumn' ? 'leaf' : null);   // 春の桜は既存の「桜」(木と花びら)がやる
+      setFall(s === 'winter' ? 'snow' : null);   // 春の桜は既存の「桜」(木と花びら)、秋の落ち葉は木から(leaves)
+      leaves.on(s === 'autumn');
       for (const m of men) { m.g.visible = s === 'winter'; const k = colliders.indexOf(m.col); if (s === 'winter' && k < 0) colliders.push(m.col); if (s !== 'winter' && k >= 0) colliders.splice(k, 1); }
     },
     // 雪だるまを作る(x,z に)。ほかの雪だるまとかさならないよう少しずらす
@@ -99,6 +144,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, groundMa
     remove: i => removeMan(i),
     // 毎フレーム。c=カメラの位置
     update(dt, c) {
+      leaves.update(dt, c);
       t += dt;
       if (kind) {
         const cx = c.x, cz = c.z, cy = Math.max(0, c.y - 6);
@@ -124,7 +170,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, groundMa
           if (a > 2.7) m.born = -9; }
       }
     },
-    dispose() { scene.remove(pts); geo.dispose(); mat.dispose(); for (const m of men) scene.remove(m.g); },
+    dispose() { leaves.dispose(); scene.remove(pts); geo.dispose(); mat.dispose(); for (const m of men) scene.remove(m.g); },
   };
   return api;
 }

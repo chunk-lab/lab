@@ -10,7 +10,8 @@ const SHOP_NAMES = ['パン', '花屋', '文房具', 'やおや', '本屋', '古
 export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   const r = rng(20261021);
   const B = new Batcher();
-  const colliders = [];     // { x0,x1,z0,z1 } か { cx,cz,r }
+  const colliders = [];
+  const trees = [];         // 木の位置(秋の落ち葉が落ちてくる所)     // { x0,x1,z0,z1 } か { cx,cz,r }
   const interact = [];      // 入口・調べる場所
   const buildings = [];     // 建物の外形(マップのダブルタップで、入口の前へ案内するため)
   const animated = [];      // 毎フレーム動かすもの
@@ -159,7 +160,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   for (const m of meshes) { const sn = m.material.userData.season; if (sn === 'blossom') m.visible = blossom; else if (sn === 'nonblossom') m.visible = !blossom; }
 
   return {
-    colliders, interact, buildings, animated, graph: GRAPH, groundMats: [ground.material, lawn.material],
+    colliders, interact, buildings, animated, graph: GRAPH, groundMats: [ground.material, lawn.material], trees,
     setLite(on) { animated.fountainLite?.(on); },
     areaName(x, z) {
       if (Math.hypot(x, z) < PLAZA_R + 1) return 'ほし広場';
@@ -310,6 +311,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     });
   }
   function tree(x, z, kind = 'green', s = 1) {
+    trees.push({ x, z, s });
     colliders.push({ cx: x, cz: z, r: 0.35 * s });
     const pinkTree = kind === 'pink';   // 桜は春だけ(ピンクと緑の葉を両方つくり、季節で切りかえる)
     const leaf = foliageMat(pinkTree ? C.leafPink : kind === 'deep' ? 0x8cc89a : r() < 0.5 ? C.leaf : C.leaf2, pinkTree ? 'blossom' : '');

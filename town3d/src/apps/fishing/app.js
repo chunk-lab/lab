@@ -1,6 +1,7 @@
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
-import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, areaAt } from './data.js';
+import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, areaAt, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
+import { askScreen, adviceFor } from './ask.js';
 import { createEngine, createBot, replayAt, timeOf } from './engine.js';
 import { createView } from './view.js';
 import { artCanvas } from './art.js';
@@ -15,7 +16,7 @@ const CSS = `
 .fz .bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:8px;padding:8px 10px;pointer-events:none}
 .fz .bar > *{pointer-events:auto}
 .fz .chip{border:0;border-radius:999px;padding:7px 12px;font:inherit;font-weight:800;font-size:13px;background:rgba(255,255,255,.88);color:${ink};box-shadow:0 2px 8px #0002;white-space:nowrap}
-.fz .hint{position:absolute;left:50%;transform:translateX(-50%);top:52px;max-width:92%;background:rgba(40,30,70,.55);color:#fff;font-weight:700;font-size:13px;padding:6px 12px;border-radius:12px;text-align:center;pointer-events:none;transition:opacity .3s;line-height:1.45}
+.fz .hint{position:absolute;left:50%;transform:translateX(-50%);top:calc(max(46px, 7%) + 25.5% + 6px);max-width:92%;background:rgba(40,30,70,.55);color:#fff;font-weight:700;font-size:13px;padding:6px 12px;border-radius:12px;text-align:center;pointer-events:none;transition:opacity .3s;line-height:1.45}
 .fz .big{position:absolute;right:18px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:108px;height:108px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:17px;color:#fff;background:radial-gradient(circle at 35% 30%,#ffb3c6,#f07a98);box-shadow:0 6px 0 #c9577a,0 10px 20px #0004;touch-action:none}
 .fz .big.on{transform:translateY(4px);box-shadow:0 2px 0 #c9577a,0 6px 12px #0004}
 .fz .big small{display:block;font-size:11px;font-weight:700;opacity:.9}
@@ -23,9 +24,22 @@ const CSS = `
 .fz .hk.alert{animation:fzPulse .35s infinite alternate;background:radial-gradient(circle at 35% 30%,#fff,#ffcf4a)}
 .fz .hk:active{transform:translateY(3px)}
 @keyframes fzPulse{to{transform:scale(1.12)}}
+.fz .flash{position:absolute;inset:0;background:#fff;pointer-events:none;animation:fzFlash .35s ease-out forwards;z-index:3}
+@keyframes fzFlash{from{opacity:.85}to{opacity:0}}
+.fz .hitTxt{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:64px;font-weight:900;color:#ffe36b;-webkit-text-stroke:3px #c0392b;text-shadow:0 6px 0 #c0392b,0 10px 24px #0007;pointer-events:none;z-index:4;animation:fzHit .9s ease-out forwards;white-space:nowrap;letter-spacing:2px}
+@keyframes fzHit{0%{transform:translate(-50%,-50%) scale(2.4);opacity:0}15%{transform:translate(-50%,-50%) scale(1);opacity:1}75%{opacity:1}100%{transform:translate(-50%,-70%) scale(1.05);opacity:0}}
+.fz .boss{position:absolute;left:0;right:0;top:44%;transform:translateY(-50%);text-align:center;padding:12px 0;background:linear-gradient(90deg,transparent,rgba(20,10,40,.85) 15%,rgba(20,10,40,.85) 85%,transparent);color:#fff;font-weight:900;font-size:22px;letter-spacing:3px;pointer-events:none;z-index:4;animation:fzBoss 2.2s ease-out forwards}
+.fz .boss small{display:block;font-size:12px;letter-spacing:1px;color:#ffd36b}
+@keyframes fzBoss{0%{opacity:0;transform:translateY(-50%) scaleY(0)}12%{opacity:1;transform:translateY(-50%) scaleY(1)}80%{opacity:1}100%{opacity:0}}
+.fz .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(30,0,40,.55));transition:opacity .6s;opacity:0;z-index:1}
+.fz.shake{animation:fzShake .45s}
+@keyframes fzShake{20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-1px)}}
+.fz .conf{position:absolute;top:-10px;width:8px;height:12px;border-radius:2px;animation:fzConf 1.6s ease-in forwards;pointer-events:none}
+@keyframes fzConf{to{transform:translateY(520px) rotate(720deg);opacity:.2}}
+.fz .opflash{position:absolute;left:0;right:0;top:0;pointer-events:none;background:#fff;animation:fzFlash .5s ease-out forwards;z-index:2}
 .fz .thr{position:absolute;right:132px;bottom:calc(30px + env(safe-area-inset-bottom,0px));width:12px;height:90px;border-radius:8px;background:rgba(255,255,255,.35);overflow:hidden;pointer-events:none}
 .fz .thr i{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(#ffe36b,#7fd38c);border-radius:8px}
-.fz .gauge{position:absolute;left:50%;transform:translateX(-50%);top:96px;width:min(78%,360px);pointer-events:none}
+.fz .gauge{position:absolute;left:50%;transform:translateX(-50%);top:calc(max(46px, 7%) + 25.5% + 44px);width:min(78%,360px);pointer-events:none}
 .fz .gauge .t{height:16px;border-radius:10px;background:linear-gradient(90deg,#7fd38c 0%,#c8e86b 45%,#ffd84a 66%,#ff9a5a 80%,#ff4f6a 100%);box-shadow:0 2px 8px #0003;position:relative;border:2px solid #fff}
 .fz .gauge .t b{position:absolute;top:-6px;width:6px;height:26px;margin-left:-3px;border-radius:3px;background:#2b2140;box-shadow:0 0 0 2px #fff}
 .fz .gauge .row{display:flex;justify-content:space-between;color:#fff;font-weight:800;font-size:12px;margin-top:4px;text-shadow:0 1px 3px #0008}
@@ -76,7 +90,7 @@ const fmtT = s => `${Math.floor(s / 60)}:${String(Math.max(0, Math.floor(s % 60)
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const SEASON_JP = { spring: '春', summer: '夏', autumn: '秋', winter: '冬' }, TIME_JP = { morning: '朝', day: '昼', evening: '夕方', night: '夜' };
 const SUNA_SAY = { catch: ['Got one!', 'Not bad.', 'Nice and easy.', 'There we go.'], lost: ['Oops.', 'It got away...', 'Next time.'], big: ['Whoa, a big one!', 'Look at that!'] };
-const LOST_JP = { snap: '糸が切れた…', slack: 'バレた…(糸がゆるんで外れた)', jump: 'はねて外れた…' };
+const LOST_JP = { snap: '糸が切れた…', slack: 'バレた…(糸がゆるんで外れた)', jump: 'はねて外れた…', hook: '針が外れた…(針が小さかったかも)' };
 
 // 挑戦状のコード(記録をちぢめて文字にする)
 const b64u = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 8192) s += String.fromCharCode.apply(null, u8.subarray(i, i + 8192)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
@@ -104,8 +118,10 @@ export const fishingApp = {
     ctx.setTitle('砂吹さんの池');
 
     // ---- 保存 ----
-    const own = Object.assign({ rod: ['bamboo'], reel: ['basic'], line: ['nylon'], bait: ['worm'] }, st.get('own') || {});
-    const eq = Object.assign({ rod: 'bamboo', reel: 'basic', line: 'nylon', bait: 'worm' }, st.get('eq') || {});
+    const own = Object.assign({ rod: ['bamboo'], reel: ['basic'], line: ['nylon'], bait: ['worm'], eye: ['none'] }, st.get('own') || {}); own.hook = ['s', 'm', 'l']; if (!own.eye) own.eye = ['none'];
+    const eq = Object.assign({ rod: 'bamboo', reel: 'basic', line: 'nylon', bait: 'worm', hook: 'm', eye: 'none', tana: 0.5 }, st.get('eq') || {});
+    const skill = st.get('skill') || [];   // 最近の出来事(腕のアドバイス用)
+    const note = k => { skill.push(k); if (skill.length > 40) skill.shift(); st.set('skill', skill); };
     const dex = st.get('dex') || {}, stats = Object.assign({ casts: 0, catches: 0, win: 0, lose: 0, draw: 0, today: 0, todayKey: '' }, st.get('stats') || {});
     const letters = st.get('letters') || [], claimed = st.get('claimed') || [];
     const save = () => { st.set('own', own); st.set('eq', eq); st.set('dex', dex); st.set('stats', stats); st.set('letters', letters); st.set('claimed', claimed); };
@@ -139,12 +155,14 @@ export const fishingApp = {
         <button class="btn mb" data-m="free">🎣<span>のんびり釣る<br><small>時間を気にせず、好きなだけ</small></span></button>
         <button class="btn mb gold" data-m="vs">⚔️<span>釣り勝負<br><small>砂吹さん・友だちと2画面で対戦</small></span></button>
         <button class="btn mb sub" data-m="dex">📖<span>図鑑<br><small>${found} / ${ALL.length} 見つけた</small></span></button>
-        <button class="btn mb sub" data-m="shop">🧰<span>道具屋<br><small>竿・リール・糸・エサ・ルアー</small></span></button>
+        <button class="btn mb sub" data-m="ask">💬<span>砂吹さんに聞く<br><small>狙いの魚・いまのおすすめ・腕のアドバイス</small></span></button>
+        <button class="btn mb sub" data-m="shop">🧰<span>道具屋<br><small>竿・リール・糸・エサ・ルアー・見る道具</small></span></button>
         <button class="btn sub" data-m="help" style="margin-top:4px">？ あそびかた</button>`;
       root.appendChild(ui);
-      ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ free: () => play({}), vs: vsSetup, dex: dexScreen, shop: () => shop(), help: () => help() })[m](); };
+      ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ free: () => play({}), vs: vsSetup, dex: dexScreen, shop: () => shop(), ask: () => ask(), help: () => help() })[m](); };
       if (P.vs) { const o = P.vs; P.vs = null; setTimeout(() => vsSetup(o === 'hard' ? 'hard' : 'easy'), 0); }
       else if (P.tab === 'shop') { P.tab = null; setTimeout(() => shop(), 0); }
+      else if (P.tab === 'ask') { P.tab = null; setTimeout(() => ask(), 0); }
       else if (!st.get('tut')) setTimeout(() => help(), 300);
     }
     function pickSay() {
@@ -181,7 +199,7 @@ export const fishingApp = {
       let oppView = null, oppCv = null;
       if (vs) { oppCv = document.createElement('canvas'); oppCv.style.cssText = `top:0;height:${topH * 100}%`; root.appendChild(oppCv); oppView = createView(oppCv, cond, { mini: true }); }
       const cv = document.createElement('canvas'); cv.style.cssText = `top:${topH * 100}%;height:${(1 - topH) * 100}%`; root.appendChild(cv);
-      const view = createView(cv, cond);
+      const view = createView(cv, cond, { under: true });
       const ui = document.createElement('div'); ui.className = 'ui'; ui.style.top = topH * 100 + '%'; root.appendChild(ui);
       const resize = () => { view.resize(); oppView && oppView.resize(); };
       const ro = new ResizeObserver(resize); ro.observe(root); cleanup.push(() => ro.disconnect()); resize();
@@ -191,10 +209,10 @@ export const fishingApp = {
       const onEv = (type, d) => handleEv(type, d);
       const mk = () => createEngine({ seed: vs ? vs.seed : (Math.random() * 1e9) | 0, cond, gear: eq, onEvent: onEv, record: !!vs });
       E = mk(); if (P.debug) { window.__fzE = E; window.__fzOpp = () => oppE; }
-      if (vs && vs.bot) { oppE = createEngine({ seed: vs.seed, cond, gear: vs.bot === 'hard' ? { rod: 'carbon', reel: 'smooth', line: 'fluoro', bait: pickBotBait(cond) } : { rod: 'bamboo', reel: 'basic', line: 'nylon', bait: 'worm' }, onEvent: (t, d) => { oppE.onBot && oppE.onBot(t, d); oppEvent(t, d); } }); bot = createBot(oppE, vs.bot, vs.seed + 5); }
+      if (vs && vs.bot) { oppE = createEngine({ seed: vs.seed, cond, gear: vs.bot === 'hard' ? { rod: 'carbon', reel: 'smooth', line: 'fluoro', bait: pickBotBait(cond), hook: 'm', tana: 0.85 } : { rod: 'bamboo', reel: 'basic', line: 'nylon', bait: 'worm', hook: 'm', tana: 0.5 }, onEvent: (t, d) => { oppE.onBot && oppE.onBot(t, d); oppEvent(t, d); } }); bot = createBot(oppE, vs.bot, vs.seed + 5); }
 
       // ---- 画面の部品 ----
-      ui.innerHTML = `<div class="bar"><button class="chip" data-b="back">≡</button><span style="flex:1"></span><span class="chip" data-b="info" style="pointer-events:none"></span><button class="chip" data-b="tackle"></button><button class="chip" data-b="help">？</button></div>
+      ui.innerHTML = `<div class="bar"><button class="chip" data-b="back">≡</button><span style="flex:1"></span><span class="chip" data-b="info" style="pointer-events:none"></span><button class="chip" data-b="tackle"></button>${vs ? '' : '<button class="chip" data-b="ask">💬</button>'}<button class="chip" data-b="help">？</button></div>
         <div class="hint"></div>
         <div class="gauge" hidden><div class="t"><b></b></div><div class="brk"></div><div class="row"><span class="gl"></span><span class="gs"></span></div></div>
         <div class="thr" hidden><i></i></div>
@@ -207,14 +225,17 @@ export const fishingApp = {
         vsBar.innerHTML = `<span class="on"></span><span class="tm"></span><span class="me"></span>`; root.appendChild(vsBar);
         $('[data-b="back"]').textContent = '×';
       }
-      const tackleChip = () => { const b = gearById('bait', eq.bait); $('[data-b="tackle"]').textContent = `${b.icon} ${b.name}`; };
+      const tackleChip = () => { const b = gearById('bait', eq.bait); $('[data-b="tackle"]').textContent = `${b.icon} ${b.name}・${gearById('hook', eq.hook).name}${b.type === 'lure' ? '' : '・' + TANA[tanaOf(eq.tana)].name}`; };
       tackleChip();
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
         if (b === 'back') { if (vs && !ended) { confirmQuit(); return; } menu(); }
-        if (b === 'tackle') { if (E.S.ph !== 'ready') { toast('投げる前に変えられるよ', 1200); return; } tackleSheet(() => { for (const k of ['rod', 'reel', 'line', 'bait']) E.setGear(k, eq[k]); tackleChip(); }); }
+        if (b === 'tackle') { if (E.S.ph !== 'ready') { toast('投げる前に変えられるよ', 1200); return; } tackleSheet(() => { for (const k of ['rod', 'reel', 'line', 'bait', 'hook', 'eye']) E.setGear(k, eq[k]); E.setTana(eq.tana); tackleChip(); }); }
         if (b === 'help') help();
+        if (b === 'ask') ask();
       };
+      onEqChange = () => { if (E.S.ph === 'ready') { for (const k of ['rod', 'reel', 'line', 'bait', 'hook', 'eye']) E.setGear(k, eq[k]); E.setTana(eq.tana); } tackleChip(); };
+      cleanup.push(() => { onEqChange = null; });
       function confirmQuit() { const s = sheet(`<div class="ph"><h2>勝負をやめる?</h2></div><div class="sc">やめると負けになります。</div><div style="display:flex;gap:10px;padding:12px 16px 18px;justify-content:center"><button class="btn sub" data-n>つづける</button><button class="btn" data-y>やめる</button></div>`, true); s.querySelector('[data-n]').onclick = () => s.remove(); s.querySelector('[data-y]').onclick = () => { s.remove(); stats.lose++; save(); menu(); }; }
 
       // ---- 入力 ----
@@ -224,16 +245,19 @@ export const fishingApp = {
         e.preventDefault(); e.stopPropagation(); sfx.unlock(); if (ended || E.S.locked) return;
         bigB.setPointerCapture(e.pointerId); reelPid = e.pointerId; reelY0 = e.clientY; bigB.classList.add('on');
         if (E.S.ph === 'ready') { E.castStart(); }
-        else if (E.S.ph === 'landed' || E.S.ph === 'lost') { if (!vs) closeCard(); }
+        else if (E.S.ph === 'landed' || E.S.ph === 'lost') { if (!vs && !leap) closeCard(); }
         else thr = 0.55;
       });
       bigB.addEventListener('pointermove', e => { if (e.pointerId !== reelPid) return; if (E.S.ph === 'water' || E.S.ph === 'fight') thr = Math.max(0.15, Math.min(1, 0.55 + (reelY0 - e.clientY) / 110)); });
       const reelUp = e => { if (e.pointerId !== reelPid) return; reelPid = null; bigB.classList.remove('on'); thr = 0; if (E.S.ph === 'charge') { E.castRelease(); stats.casts++; } };
       bigB.addEventListener('pointerup', reelUp); bigB.addEventListener('pointercancel', reelUp);
       hkB.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); sfx.unlock(); if (ended) return; if (E.S.ph === 'water') E.hookPress(); else if ((E.S.ph === 'landed' || E.S.ph === 'lost') && !vs) closeCard(); });
-      cv.addEventListener('pointerdown', e => { if (waterPid != null) return; waterPid = e.pointerId; wx0 = e.clientX; cv.setPointerCapture(e.pointerId); aimFrom(e); });
-      cv.addEventListener('pointermove', e => { if (e.pointerId !== waterPid) return; aimFrom(e); });
-      const wUp = e => { if (e.pointerId === waterPid) { waterPid = null; sideT = 0; } };
+      let tanaDrag = false;
+      const inUnder = e => { const r = W(), u = view.underRect(), x = e.clientX - r.left, y = e.clientY - r.top; return x >= u.x && x <= u.x + u.w && y >= u.y && y <= u.y + u.h; };
+      const tanaFrom = e => { const r = W(), u = view.underRect(), y = e.clientY - r.top, ld = E.S.ph === 'water' ? E.S.lure.d : E.target(1)[1], b = 0.55 + 0.45 * Math.min(1, ld / 0.6); E.setTana((y - u.y - 12) / ((u.h - 18) * b)); eq.tana = E.S.tana; };
+      cv.addEventListener('pointerdown', e => { if (waterPid != null) return; waterPid = e.pointerId; wx0 = e.clientX; cv.setPointerCapture(e.pointerId); tanaDrag = inUnder(e) && E.G.bait.type !== 'lure'; if (tanaDrag) tanaFrom(e); else aimFrom(e); });
+      cv.addEventListener('pointermove', e => { if (e.pointerId !== waterPid) return; if (tanaDrag) tanaFrom(e); else aimFrom(e); });
+      const wUp = e => { if (e.pointerId === waterPid) { waterPid = null; sideT = 0; if (tanaDrag) { tanaDrag = false; save(); } } };
       cv.addEventListener('pointerup', wUp); cv.addEventListener('pointercancel', wUp);
       function aimFrom(e) { const r = W(); if (E.S.ph === 'ready' || E.S.ph === 'charge') E.setAim((e.clientX - r.left - r.width / 2) / (r.width * 0.4)); else if (E.S.ph === 'fight') sideT = Math.max(-1, Math.min(1, (e.clientX - wx0) / (r.width * 0.22))); }
       const kd = e => {
@@ -243,6 +267,8 @@ export const fishingApp = {
         if (k === 'ArrowLeft' || k === 'a') { if (E.S.ph === 'fight') sideT = -1; else E.setAim(E.S.aim - 0.15); }
         if (k === 'ArrowRight' || k === 'd') { if (E.S.ph === 'fight') sideT = 1; else E.setAim(E.S.aim + 0.15); }
         if (k === 'Shift') thr = 1;
+        if (k === 'w' || k === 'PageUp') E.setTana(E.S.tana - 0.1);
+        if (k === 's' || k === 'PageDown') E.setTana(E.S.tana + 0.1);
       };
       const ku = e => { const k = e.key; if (k === ' ' || k === 'Enter') { keyReel = false; thr = 0; if (E.S.ph === 'charge') { E.castRelease(); stats.casts++; } } if (k === 'ArrowLeft' || k === 'ArrowRight' || k === 'a' || k === 'd') sideT = 0; if (k === 'Shift' && keyReel) thr = 0.6; };
       window.addEventListener('keydown', kd); window.addEventListener('keyup', ku); cleanup.push(() => { window.removeEventListener('keydown', kd); window.removeEventListener('keyup', ku); });
@@ -256,20 +282,24 @@ export const fishingApp = {
         if (type === 'land') { sfx.play('plop'); view.splash(d.x, d.d, 8, 0.6); }
         if (type === 'nibble') sfx.play('nibble');
         if (type === 'bite') { sfx.play('bite'); if (E.G.bait.type !== 'bait') view.splash(L.x, L.d, 6, 0.7); }
-        if (type === 'hooked') { sfx.play('hook'); toast(d.item ? 'なにか引っかかった!' : 'ヒット!', 900, 'hit'); view.splash(L.x, L.d, 12, 1); }
-        if (type === 'early') { sfx.play('early'); toast('はやすぎた!', 900); }
-        if (type === 'miss') { toast('のがした…', 900); }
-        if (type === 'stolen') { toast('エサをとられた…<br><small style="font-size:13px">巻いて回収しよう</small>', 1400); }
+        if (type === 'hooked') onHit(d);
+        if (type === 'early') { sfx.play('early'); toast('はやすぎた!', 900); note('early'); }
+        if (type === 'miss') { toast('のがした…', 900); note('late'); }
+        if (type === 'look') { toast('迷ってる…! 小さく誘え<br><small style="font-size:12px">「' + (E.G.bait.type === 'lure' ? 'しゃくる' : 'あわせ') + '」をちょんと</small>', 1500); sfx.play('nibble'); }
+        if (type === 'entice') { note('entice'); }
+        if (type === 'pass') { toast('見切られた…', 1000); note('pass'); }
+        if (type === 'spooked') { toast('おどろいて逃げた…', 1000); note('spook'); }
+        if (type === 'stolen') { note('late'); toast('エサをとられた…<br><small style="font-size:13px">巻いて回収しよう</small>', 1400); }
         if (type === 'twitch') { view.splash(L.x, L.d, 3, 0.4); }
         if (type === 'jump') { sfx.play('jump'); view.splash(L.x, L.d, 22, 1.6); toast('はねた! ゆるめて!', 800); }
-        if (type === 'lost') { sfx.play(d.reason === 'snap' ? 'snap' : 'lost'); if (vs) toast(LOST_JP[d.reason], 1300); else showLost(d); }
+        if (type === 'lost') { endFightFx(); note(d.reason); sfx.play(d.reason === 'snap' ? 'snap' : 'lost'); if (vs) toast(LOST_JP[d.reason], 1300); else showLost(d); }
         if (type === 'catch') onCatch(d);
       }
       function oppEvent(type, d) {
         if (type === 'catch') { const sp = BYID[d.id]; oppPop(sp, d); }
         if (type === 'lost' && Math.random() < 0.6) bubble(SUNA_SAY.lost[Math.floor(Math.random() * 3)]);
         if (type === 'land') oppView.splash(d.x, d.d, 5, 0.5);
-        if (type === 'hooked') oppView.splash(oppE.S.lure.x, oppE.S.lure.d, 8, 0.8);
+        if (type === 'hooked') { oppView.splash(oppE.S.lure.x, oppE.S.lure.d, 8, 0.8); oppHit(); }
       }
       function oppPop(sp, d) {
         if (!sp) return;
@@ -277,9 +307,31 @@ export const fishingApp = {
       }
       function bubble(text) { bubEl?.remove(); bubEl = document.createElement('div'); bubEl.className = 'bub'; bubEl.textContent = (vs.bot ? '砂吹さん: ' : vs.name + ': ') + text; root.appendChild(bubEl); const b = bubEl; setTimeout(() => { if (bubEl === b) { b.remove(); bubEl = null; } }, 2200); }
 
+      // ---- 演出 ----
+      let hitStop = 0, zoomK = 0, zoomO = '50% 50%', leap = null, vign = null;
+      function onHit(d) {
+        const L = E.S.lure, h = E.S.hooked, sp = h && h.sp, big = sp && sp.kind === 'fish' && (sp.r >= 4 || h.size >= 70), legend = sp && sp.r >= 5;
+        sfx.play('hook'); view.splash(L.x, L.d, 16, 1.2);
+        if (d.item) { toast('なにか引っかかった…?', 1000); sfx.fight(0.4); return; }
+        hitStop = big ? 0.45 : 0.22; zoomK = big ? 0.12 : 0.07;
+        const p = view.proj(L.x, L.d), sz = view.size; zoomO = `${Math.round(p.x / sz.W * 100)}% ${Math.round(p.y / sz.H * 100)}%`;
+        const fl = document.createElement('div'); fl.className = 'flash'; ui.appendChild(fl); setTimeout(() => fl.remove(), 400);
+        const ht = document.createElement('div'); ht.className = 'hitTxt'; ht.textContent = big ? 'HIT!!!' : 'HIT!!'; ui.appendChild(ht); setTimeout(() => ht.remove(), 950);
+        sfx.vib(big ? [80, 40, 160] : [60, 30, 90]);
+        if (big) {
+          root.classList.remove('shake'); void root.offsetWidth; root.classList.add('shake');
+          const bo = document.createElement('div'); bo.className = 'boss'; bo.innerHTML = legend ? '⚠ とてつもない引き…!!<small>伝説の魚かもしれない</small>' : '!? 大物だ!!<small>ていねいにいこう</small>'; ui.appendChild(bo); setTimeout(() => bo.remove(), 2300);
+        }
+        if (!vign) { vign = document.createElement('div'); vign.className = 'vign'; ui.prepend(vign); }
+        vign.style.opacity = legend ? 1 : big ? 0.6 : 0.25;
+        sfx.fight(legend ? 1 : big ? 0.75 : 0.5);
+      }
+      function endFightFx() { sfx.fight(0); if (vign) vign.style.opacity = 0; }
+      function oppHit() { const r = oppCv.getBoundingClientRect(), rr = root.getBoundingClientRect(), fl = document.createElement('div'); fl.className = 'opflash'; fl.style.height = r.height + 'px'; root.appendChild(fl); setTimeout(() => fl.remove(), 520); bubble('HIT!'); sfx.play('nibble'); }
+      function confetti(where) { const cols = ['#ff8fab', '#ffd36b', '#7fd3ff', '#9be08f', '#c9a0ff']; for (let i = 0; i < 36; i++) { const c = document.createElement('i'); c.className = 'conf'; c.style.left = Math.random() * 100 + '%'; c.style.background = cols[i % 5]; c.style.animationDelay = Math.random() * 0.5 + 's'; where.querySelector('.panel').appendChild(c); setTimeout(() => c.remove(), 2300); } }
       function record(d) {
         const sp = BYID[d.id], r = dex[d.id] || { n: 0, best: 0, first: todayKey() }, isNew = !dex[d.id], best = sp.kind === 'fish' && d.size > r.best;
-        r.n++; if (sp.kind === 'fish') r.best = Math.max(r.best, d.size); dex[d.id] = r;
+        r.n++; if (sp.kind === 'fish') { r.best = Math.max(r.best, d.size); r.combo = [E.G.bait.id, E.G.bait.type === 'lure' ? '' : tanaOf(E.S.tana), E.G.hook.id]; } dex[d.id] = r; note('catch');
         stats.catches++; if (sp.kind === 'fish') stats.today++;
         let extra = '', coins = sp.kind === 'fish' ? Math.max(1, Math.round(d.pts / 3)) : 0;
         if (sp.coins === 'chest') coins = 120 + Math.floor(Math.random() * 180); else if (sp.coins) coins = sp.coins;
@@ -291,9 +343,11 @@ export const fishingApp = {
       }
       function onCatch(d) {
         const info = record(d), sp = info.sp;
+        endFightFx();
         sfx.play(sp.r >= 5 ? 'legend' : 'catch', sp.r >= 3);
+        // 水からとび出す(スロー)→カード
+        leap = { sp, x: E.S.lure.x, d: E.S.lure.d, len: d.size || 30, t: 0, dur: vs ? 0.7 : 1.15, then: () => { if (vs) return; showCard(d, info); } };
         if (vs) { toast(`${sp.emoji || '🐟'} ${sp.name}${sp.kind === 'fish' ? ` <small>${d.size}cm</small>` : ''}${info.isNew ? ' <small style="color:#e0556b">NEW!</small>' : ''}`, 1300); return; }
-        showCard(d, info);
       }
       function showCard(d, info) {
         const sp = info.sp, a = artCanvas(sp, 260, 150);
@@ -309,6 +363,7 @@ export const fishingApp = {
           </div><div style="padding:8px 16px 18px;text-align:center"><button class="btn" data-x>つづける</button></div>`, true);
         card.querySelector('.art').appendChild(a); a.style.cssText = 'width:100%;height:auto;position:static';
         card.querySelector('[data-x]').onclick = closeCard;
+        if (info.isNew || info.best || sp.r >= 4) confetti(card);
       }
       function showLost(d) { toast(LOST_JP[d.reason] + `<br><small style="font-size:13px">${BYID[d.id] && BYID[d.id].r >= 3 ? 'おしい! 大物だった…' : ''}</small>`, 1500); setTimeout(() => { if (E.S.ph === 'lost') E.ack(); }, 1400); }
       function closeCard() { card?.remove(); card = null; E.ack(); }
@@ -330,7 +385,7 @@ export const fishingApp = {
       }
 
       // ---- 毎フレーム ----
-      let hintKey = '', gaugeOn = false;
+      let hintKey = '', gaugeOn = false, lastGhostPh = null;
       frame = dt => {
         if (vs && countT > 0) {
           const k = Math.ceil(countT - 0.2); countT -= dt;
@@ -343,16 +398,19 @@ export const fishingApp = {
         // 入力をエンジンへ
         E.input.reel = (reelPid != null || keyReel) && (E.S.ph === 'water' || E.S.ph === 'fight') ? thr || 0.55 : 0;
         E.input.side += (sideT - E.input.side) * Math.min(1, dt * 6);
-        if (!(vs && countT > 0)) E.update(dt);
+        if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
+        if (zoomK > 0.001) { cv.style.transformOrigin = zoomO; cv.style.transform = `scale(${1 + zoomK})`; zoomK *= Math.pow(0.12, dt); } else if (cv.style.transform) cv.style.transform = '';
+        if (leap) { leap.t += dt / leap.dur; if (leap.t >= 1) { const fn = leap.then; leap = null; fn && fn(); } }
         if (vs && E.S.ph === 'landed' && E.S.resultT > 0.9) E.ack();
         if (vs && E.S.ph === 'lost' && E.S.resultT > 1.1) E.ack();
-        view.draw(vsOf(E, true), dt);
+        { const v = vsOf(E, true); v.under = underOf(E); if (leap) v.leap = leap; view.draw(v, dt); }
         // 相手
         if (vs) {
           const t = Math.min(startT, vs.dur);
           if (bot) { if (!(countT > 0) && !ended) { bot.update(dt); oppE.update(dt); } oppView.draw(vsOf(oppE, false), dt); }
           else if (vs.ghost) {
             const s = replayAt(vs.ghost, t); oppView.draw(vsOfSnap(s), dt);
+            if (s && s.ph === 'fight' && lastGhostPh !== 'fight') oppHit(); lastGhostPh = s ? s.ph : null;
             while (oppSeen < vs.ghost.e.length && vs.ghost.e[oppSeen][0] / 10 <= t) { const c = vs.ghost.e[oppSeen++]; oppScore.point += c[3]; const sp = BYID[c[1]]; if (sp && sp.kind === 'fish') { oppScore.count++; oppScore.big = Math.max(oppScore.big, c[2]); } oppPop(sp, { size: c[2] }); }
           }
           const R = RULES[vs.rule], ms = scoreOf(E.S.score, vs.rule), os = scoreOf(bot ? oppE.S.score : oppScore, vs.rule);
@@ -403,6 +461,16 @@ export const fishingApp = {
       if (withFish) v.fish = S.fish.map(f => ({ x: f.x, d: f.d, len: Math.max(6, f.size), vis: f.vis * (f.st === 'flee' ? 0.7 : 1), hx: f.hx || 1, hd: f.hd || 0, wig: f.wig, glow: f.sp.art && f.sp.art.glow }));
       return v;
     }
+    function underOf(E) {
+      const S = E.S, ph = S.ph, lure = E.G.bait.type === 'lure';
+      let lx = S.lure.x, ld = S.lure.d;
+      if (ph === 'ready' || ph === 'charge' || ph === 'fly') { [lx, ld] = E.target(ph === 'charge' ? S.p : 1); }
+      const vis = E.G.eye.vis, wid = vis >= 2 ? 0.2 : 0.14, ll = Math.hypot(lx, ld) || 1;
+      const fish = S.fish.filter(f => f.vis > 0.5 && f.st !== 'gone' && Math.abs(lx * f.d - ld * f.x) / ll < wid).map(f => ({ d: f.d, y: f.y, len: Math.max(6, f.size), sp: f.sp, st: f.st, wig: f.wig, hd: f.hd || 0 }));
+      const h = S.hooked;
+      return { ph, lx, ld, depth: ph === 'water' || ph === 'fight' ? (h ? h.y : S.depth) : S.tana, tana: S.tana, isLure: lure, bait: E.G.bait.id, vis, eyeName: E.G.eye.icon + ' ' + E.G.eye.name, fish, canTana: !lure, nib: S.bob.nib, sunk: !!S.bite && !lure,
+        hooked: h ? { len: h.size || 25, sp: h.sp, run: h.mode === 'run', big: h.size >= 60 } : null };
+    }
     function vsOfSnap(s) {
       if (!s) return { ph: 'ready', aim: 0, maxTarget: [0, 0.5] };
       const v = { ph: s.ph, isLure: s.lure, side: 0 };
@@ -412,16 +480,27 @@ export const fishingApp = {
       return v;
     }
 
+    // ================= 砂吹さんに聞く =================
+    let onEqChange = null;
+    function ask(tab) {
+      askScreen({ sheet, dex, cond: baseCond, eq, own, st, sfx, skill, tab, onSet: (c, bb) => {
+        if (c.bait) eq.bait = c.bait; eq.tana = c.tana; eq.hook = c.hook; save(); onEqChange && onEqChange();
+        return c.bait ? 'セットした!' : `針とタナはセット。${gearById('bait', bb[0]).name}は道具屋で`;
+      } });
+    }
+
     // ================= 道具をえらぶ =================
     function tackleSheet(done) {
       const s = sheet(`<div class="ph"><h2>道具をえらぶ</h2><button class="chip" data-shop>🧰 道具屋へ</button></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn" data-x>これで釣る</button></div>`);
       const sc = s.querySelector('.sc');
       const draw = () => {
-        sc.innerHTML = ['bait', 'rod', 'reel', 'line'].map(slot => `<div class="lbl">${{ bait: 'エサ・ルアー', rod: '竿', reel: 'リール', line: '糸' }[slot]}</div><div class="seg">${own[slot].map(id => { const g = gearById(slot, id); return `<button class="tab ${eq[slot] === id ? 'on' : ''}" data-s="${slot}" data-id="${id}">${g.icon ? g.icon + ' ' : ''}${g.name}</button>`; }).join('')}</div>`).join('')
+        const lureNow = gearById('bait', eq.bait).type === 'lure';
+        sc.innerHTML = `<div class="lbl">タナ(エサの深さ)</div><div class="seg">${lureNow ? '<span style="font-size:12px;color:#8d7f9e">ルアーは巻く速さで深さが変わるよ</span>' : Object.entries(TANA).map(([k, t]) => `<button class="tab ${tanaOf(eq.tana) === k ? 'on' : ''}" data-tana="${t.y}">${t.name}</button>`).join('')}</div>`
+          + ['bait', 'hook', 'eye', 'rod', 'reel', 'line'].map(slot => `<div class="lbl">${{ bait: 'エサ・ルアー', hook: '針', eye: '見る道具', rod: '竿', reel: 'リール', line: '糸' }[slot]}</div><div class="seg">${own[slot].map(id => { const g = gearById(slot, id); return `<button class="tab ${eq[slot] === id ? 'on' : ''}" data-s="${slot}" data-id="${id}">${g.icon ? g.icon + ' ' : ''}${g.name}</button>`; }).join('')}</div>`).join('')
           + `<p style="font-size:12px;color:#8d7f9e">いまのエサ:${esc(gearById('bait', eq.bait).desc)}</p>`;
       };
       draw();
-      sc.onclick = e => { const b = e.target.closest('[data-s]'); if (!b) return; eq[b.dataset.s] = b.dataset.id; save(); sfx.play('tap'); draw(); };
+      sc.onclick = e => { const tn = e.target.closest('[data-tana]'); if (tn) { eq.tana = +tn.dataset.tana; save(); sfx.play('tap'); draw(); return; } const b = e.target.closest('[data-s]'); if (!b) return; eq[b.dataset.s] = b.dataset.id; save(); sfx.play('tap'); draw(); };
       s.querySelector('[data-x]').onclick = () => { s.remove(); done && done(); };
       s.querySelector('[data-shop]').onclick = () => { s.remove(); shop(() => { tackleSheet(done); }); };
     }
@@ -435,13 +514,13 @@ export const fishingApp = {
       const draw = () => {
         const g = ctx.gems ? ctx.gems.get() : null;
         s.querySelector('.wal').innerHTML = `🪙 ${ctx.wallet.get()}${g != null ? `<br>💎 ${g}` : ''}`;
-        tabs.innerHTML = [['bait', 'エサ・ルアー'], ['rod', '竿'], ['reel', 'リール'], ['line', '糸']].map(([k, n]) => `<button class="tab ${k === tab ? 'on' : ''}" data-t="${k}">${n}</button>`).join('');
+        tabs.innerHTML = [['bait', 'エサ・ルアー'], ['eye', '見る道具'], ['rod', '竿'], ['reel', 'リール'], ['line', '糸']].map(([k, n]) => `<button class="tab ${k === tab ? 'on' : ''}" data-t="${k}">${n}</button>`).join('');
         sc.innerHTML = (msg ? `<p style="text-align:center;font-weight:800;color:#e0556b">${esc(msg)}</p>` : '') + GEAR[tab].map(it => {
           const has = own[tab].includes(it.id), on = eq[tab] === it.id;
           const gemsP = it.gems && !ctx.gems ? null : it.gems, coinP = it.gems && !ctx.gems ? it.gems * 150 : it.price;
           const price = gemsP ? `💎 ${gemsP}` : `🪙 ${coinP}`;
           const stats = tab === 'rod' ? bar('飛距離', it.dist, 1) + bar('パワー', it.power, 1.8) + bar('ねらい', it.acc, 1) : tab === 'reel' ? bar('巻く速さ', it.speed, 1.7) + bar('ドラグ', it.drag, 1) : tab === 'line' ? bar('強さ', it.str, 2.2) : '';
-          return `<div class="item"><div class="ic">${it.icon || { rod: '🎣', reel: '⚙️', line: '🧵' }[tab]}</div><div style="flex:1;min-width:0"><b>${it.name}</b><div style="font-size:12px;color:#8d7f9e">${esc(it.desc)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:3px">${stats}</div></div>
+          return `<div class="item"><div class="ic">${it.icon || { rod: '🎣', reel: '⚙️', line: '🧵', eye: '👀' }[tab]}</div><div style="flex:1;min-width:0"><b>${it.name}</b><div style="font-size:12px;color:#8d7f9e">${esc(it.desc)}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:3px">${stats}</div></div>
             <div>${has ? (on ? '<span class="chip" style="background:#e9f7ec">使用中</span>' : `<button class="btn sub" data-use="${it.id}" style="padding:8px 14px">使う</button>`) : `<button class="btn ${gemsP ? 'gold' : ''}" data-buy="${it.id}" style="padding:8px 12px;font-size:13px">${price}</button>`}</div></div>`;
         }).join('');
       };

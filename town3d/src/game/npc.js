@@ -94,7 +94,7 @@ export const RESIDENTS = [
     angler: { spot: [46, 22.5], face: [46, 18] },
     schedule: [[5, 'pond'], [17, 'park2'], [19, 'plaza2'], [21, 'pond']],
     lines: { morning: ['おはよう。朝の池は、水がきらきらしてるのさ。', 'まだ一匹も釣れてないけど、いい朝だな。'], day: ['釣れなくていいんだ。のんびりしに来てるだけさ。', 'あのアヒル、ぼくのことを見張ってるみたいだな。'], evening: ['夕方は風がやさしいな。そろそろ歩きたくなる。', '今日はどこまで行こうかな。気のむくままさ。'], night: ['夜の池は静かだな。星が水に映ってるのさ。'] },
-    menu: [{ label: '釣りをする', app: 'fishing' }, { label: '釣り勝負をいどむ', app: 'fishing', params: { vs: 'easy' } }, { label: 'ハーモニカをお願いする', act: 'harmonica' }],
+    menu: [{ label: '釣りをする', app: 'fishing' }, { label: '釣り勝負をいどむ', app: 'fishing', params: { vs: 'easy' } }, { label: '釣りのコツを聞く', app: 'fishing', params: { tab: 'ask' } }, { label: 'ハーモニカをお願いする', act: 'harmonica' }],
   },
 ];
 

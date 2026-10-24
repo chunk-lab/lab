@@ -87,7 +87,7 @@ export function mount(container, opt = {}) {
   const ambient = buildAmbient(scene, city, { quality: settings.quality, blossom });
   let blossomOn = blossom, testDate = new Date();
   const setBlossom = on => { blossomOn = on; city.setBlossom(on); ambient.setBlossom(on); };
-  const seasons = createSeasons(scene, { eachFoliage, eachTex, groundMats: city.groundMats, colliders: city.colliders, storage });
+  const seasons = createSeasons(scene, { eachFoliage, eachTex, trees: city.trees, groundMats: city.groundMats, colliders: city.colliders, storage });
   const curSeason = () => settings.season && settings.season !== 'auto' ? settings.season : seasonOf();
   const applySeason = () => { const s = curSeason(); seasons.set(s); setBlossom(opt.blossom ?? s === 'spring'); };
   const applyDate = d => { testDate = d; env.setMoonDate(d); const md = (d.getMonth() + 1) * 100 + d.getDate(); setBlossom(opt.blossom ?? (md >= 325 && md <= 420)); };

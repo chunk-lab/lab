@@ -1,7 +1,7 @@
 // 釣り場の絵。岸から池を見わたす(手前が大きく、奥が小さい)。
 //   createView(canvas, cond, {mini}) → { resize(), draw(vs, dt) }
 //   vs(見た目の状態) は app.js が、自分の釣り(エンジン)か、相手の記録(再生)から作ってわたす。
-import { AREAS } from './data.js';
+import { AREAS, TANA, areaAt } from './data.js';
 import { drawCreature } from './art.js';
 
 const lerp = (a, b, k) => a + (b - a) * k;
@@ -25,13 +25,14 @@ function palette(h) {
 }
 const TREES = { spring: ['#f6b6cb', '#ffd0de', '#8ccf8c', '#a9dca0'], summer: ['#5aa866', '#79c27a', '#4f9a5c', '#8ccf86'], autumn: ['#e8803a', '#d9503a', '#f0b53c', '#c96a2e', '#9fbf6a'], winter: ['#eef3f5', '#d5e0e6', '#bfcfd8', '#e6eef2'] };
 
-export function createView(canvas, cond, { mini = false } = {}) {
+export function createView(canvas, cond, { mini = false, under = false } = {}) {
   const g = canvas.getContext('2d');
   let W = 0, H = 0, dpr = 1, bg = null, t = 0;
   const P = palette(cond.hour), night = P.night;
   const parts = [], rings = [], weather = [];
   const R = (() => { let s = 7; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
-  const HZ = () => H * (mini ? 0.3 : 0.27), SY = () => H * (mini ? 0.9 : 0.84);
+  const HZ = () => H * (mini ? 0.3 : under ? 0.36 : 0.27), SY = () => H * (mini ? 0.9 : 0.84);
+  const UR = () => ({ x: 8, y: Math.max(46, H * 0.07), w: W - 16, h: H * 0.255 });   // 水中の窓
   // 池の座標 → 画面
   function proj(x, d) {
     const z = 1 + d * 2.4, k = (1 / z - 1 / 3.4) / (1 - 1 / 3.4), s = 1 / z;
@@ -100,7 +101,159 @@ export function createView(canvas, cond, { mini = false } = {}) {
     b.fillStyle = 'rgba(255,255,255,0.12)'; b.fillRect(0, sy2, W, 3);
     if (cond.season === 'winter') { b.fillStyle = 'rgba(250,252,255,0.7)'; b.fillRect(0, sy2, W, 5); }
     for (const side of [-1, 1]) for (let i = 0; i < (mini ? 10 : 22); i++) { const x = side < 0 ? R() * W * 0.14 : W - R() * W * 0.14, h = H * (0.08 + R() * 0.12); b.strokeStyle = shadeRgb(cond.season === 'autumn' ? '#b89a5a' : cond.season === 'winter' ? '#c8c0a8' : '#7aa860', -night * 0.5 - R() * 0.2); b.lineWidth = 2; b.beginPath(); b.moveTo(x, sy2 + 4); b.quadraticCurveTo(x + side * -6, sy2 - h * 0.5, x + side * -10 + (R() - 0.5) * 10, sy2 - h); b.stroke(); if (R() < 0.3) { b.fillStyle = '#7a5a3a'; b.beginPath(); b.ellipse(x + side * -10, sy2 - h, 2.5, 7, 0, 0, 7); b.fill(); } }
+    if (!mini) drawBranch(b);
     if (night > 0) { b.fillStyle = `rgba(10,15,45,${0.25 * night})`; b.fillRect(0, 0, W, H); }
+  }
+  // 手前の左からはり出した木の枝(季節で葉が変わる)。落ち葉・花びらはここから落ちる
+  const branchPts = [];
+  const LEAFC = { autumn: ['#e8603a', '#d9433a', '#f0a03c', '#f2c94c', '#e9b23a'], spring: ['#ffc6d9', '#ffd9e6', '#ffb3cc', '#ffe6ee'], summer: ['#5aa866', '#79c27a', '#4f9a5c'], winter: [] };
+  function drawBranch(b) {
+    branchPts.length = 0;
+    const y0 = HZ() + (SY() - HZ()) * 0.06, len = W * 0.42;
+    b.strokeStyle = shadeRgb('#6b4a36', -night * 0.5); b.lineCap = 'round';
+    b.lineWidth = 16; b.beginPath(); b.moveTo(-10, y0 + 30); b.quadraticCurveTo(len * 0.4, y0 - 6, len, y0 + 8); b.stroke();
+    b.lineWidth = 6; for (let i = 0; i < 6; i++) { const t = 0.25 + i * 0.13, x = len * t, y = y0 + 10 - Math.sin(t * 3) * 10; b.beginPath(); b.moveTo(x, y); b.quadraticCurveTo(x + 14, y - 20 - R() * 14, x + 26 + R() * 14, y - 30 - R() * 16); b.stroke(); }
+    const C = LEAFC[cond.season] || LEAFC.summer;
+    for (let i = 0; i < 26; i++) {
+      const t = 0.15 + R() * 0.9, x = len * t + (R() - 0.5) * 30, y = y0 - 18 - R() * 40 + t * 10;
+      branchPts.push([x, y]);
+      if (!C.length) continue;
+      b.fillStyle = shadeRgb(C[Math.floor(R() * C.length)], -night * 0.45);
+      b.beginPath(); b.ellipse(x, y, 14 + R() * 12, 9 + R() * 8, R(), 0, 7); b.fill();
+    }
+    if (cond.season === 'winter') { b.fillStyle = 'rgba(255,255,255,0.9)'; b.beginPath(); b.ellipse(len * 0.5, y0 - 4, len * 0.42, 4, -0.05, Math.PI, 0); b.fill(); }
+  }
+  // ---- 水中の窓(横から見た池):左=手前(岸) 右=おく / 上=水面 下=底 ----
+  const bubbles = [];
+  const bottomAt = d => 0.55 + 0.45 * Math.min(1, d / 0.6);   // 手前ほど浅い(窓の高さに対する割合)
+  function drawUnder(vs, u, dt) {
+    const r = UR(), X = d => r.x + 22 + d * (r.w - 34), Y = (y, d) => r.y + 12 + y * (r.h - 18) * bottomAt(d);
+    g.save();
+    // 枠と水
+    g.beginPath(); g.roundRect ? g.roundRect(r.x, r.y, r.w, r.h, 14) : g.rect(r.x, r.y, r.w, r.h); g.clip();
+    let gr = g.createLinearGradient(0, r.y, 0, r.y + r.h); gr.addColorStop(0, night > 0.5 ? '#2a4a78' : '#6fc2e0'); gr.addColorStop(1, night > 0.5 ? '#0b1730' : '#1d5a7e');
+    g.fillStyle = gr; g.fillRect(r.x, r.y, r.w, r.h);
+    // 光のすじ
+    g.globalAlpha = 0.12 * (1 - night * 0.7); g.fillStyle = '#fff';
+    for (let i = 0; i < 5; i++) { const x = r.x + ((i * 0.23 + t * 0.01) % 1) * r.w; g.beginPath(); g.moveTo(x, r.y); g.lineTo(x + 18, r.y); g.lineTo(x - 30, r.y + r.h); g.lineTo(x - 44, r.y + r.h); g.fill(); }
+    g.globalAlpha = 1;
+    // 水面
+    g.strokeStyle = 'rgba(255,255,255,0.6)'; g.lineWidth = 2; g.beginPath(); for (let x = r.x; x <= r.x + r.w; x += 8) g.lineTo(x, r.y + 10 + Math.sin(x * 0.08 + t * 2) * 1.5); g.stroke();
+    // 底(場所で変わる)
+    const lane = d => { const k = u.lx != null && u.ld > 0.05 ? d / u.ld : d; return [u.lx != null ? u.lx * k : 0, d]; };
+    g.fillStyle = shadeRgb('#c9b48a', -night * 0.55); g.beginPath(); g.moveTo(r.x, r.y + r.h);
+    for (let i = 0; i <= 40; i++) { const d = i / 40; g.lineTo(X(d), Y(1, d) + Math.sin(i * 1.7) * 2); } g.lineTo(r.x + r.w, r.y + r.h); g.closePath(); g.fill();
+    for (let i = 0; i <= 30; i++) {
+      const d = i / 30, [lx] = lane(d), a = areaAt(lx, d), x = X(d), yb = Y(1, d);
+      if (a === 'weed') { g.strokeStyle = 'rgba(70,150,80,0.8)'; g.lineWidth = 2; for (let k = 0; k < 3; k++) { g.beginPath(); g.moveTo(x + k * 4, yb); g.quadraticCurveTo(x + k * 4 + Math.sin(t + i + k) * 6, yb - 18, x + k * 4 + Math.sin(t * 1.3 + i) * 4, yb - 34 - k * 5); g.stroke(); } }
+      if (a === 'rock' && i % 2 === 0) { g.fillStyle = shadeRgb('#8a8698', -night * 0.5); g.beginPath(); g.ellipse(x, yb, 9, 7, 0, Math.PI, 0); g.fill(); }
+      if (a === 'log' && i % 3 === 0) { g.fillStyle = '#6e5340'; g.fillRect(x - 6, yb - 7, 16, 6); }
+      if (a === 'lily') { g.fillStyle = 'rgba(90,170,90,0.9)'; g.fillRect(x - 4, r.y + 8, 9, 3); g.strokeStyle = 'rgba(90,150,80,0.5)'; g.lineWidth = 1; g.beginPath(); g.moveTo(x, r.y + 11); g.lineTo(x + Math.sin(t + i) * 3, yb); g.stroke(); }
+    }
+    // タナのめもり
+    g.font = '700 10px sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,255,255,0.75)';
+    for (const k of ['top', 'mid', 'bottom']) g.fillText(TANA[k].name, r.x + 3, r.y + 14 + TANA[k].y * (r.h - 24));
+    // 見える範囲
+    const vis = u.vis, hx = X(u.ld ?? 0.3), hy = Y(u.depth ?? 0, u.ld ?? 0.3);
+    const lit = vis >= 2 ? 9 : vis === 1 ? 0.34 : 0.15;
+    // 魚
+    for (const f of u.fish || []) {
+      const near = Math.hypot(f.d - (u.ld ?? 0.3), (f.y - (u.depth ?? 0)) * 0.5);
+      if (vis < 2 && near > lit) continue;
+      const x = X(f.d), y = Y(f.y, f.d), L = Math.max(10, Math.min(r.w * 0.4, f.len * (vis >= 2 ? 1.0 : 0.9) + 6));
+      const face = f.st === 'approach' || f.st === 'look' || f.st === 'nibble' || f.st === 'nibble2' || f.st === 'bite' ? (x < hx ? 1 : -1) : f.hd >= 0 ? 1 : -1;
+      g.save(); g.translate(x, y + Math.sin(t * 3 + f.wig) * 1.5); g.scale(face, 1);
+      if (vis >= 2) { drawCreature(g, f.sp, 0, 0, L); }
+      else { g.globalAlpha = vis === 1 ? 0.85 : 0.6 * (1 - near / lit); g.fillStyle = '#0d2238'; g.beginPath(); g.ellipse(0, 0, L * 0.45, L * 0.15 * (f.sp.art && f.sp.art.h ? f.sp.art.h / 0.34 : 1), 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(-L * 0.4, 0); g.lineTo(-L * 0.6, -L * 0.13); g.lineTo(-L * 0.6, L * 0.13); g.fill(); }
+      g.restore();
+      if (f.st === 'look') mark(x, y - 12, '?', '#fff');
+      if (f.st === 'nibble' || f.st === 'nibble2') mark(x, y - 12, '…', '#fff');
+    }
+    // 糸・ウキ・針
+    if (u.ph === 'water' || u.ph === 'fight' || u.ph === 'ready' || u.ph === 'charge') {
+      const show = u.ph === 'water' || u.ph === 'fight';
+      if (show) {
+        const sx = X(u.ld), sy2 = r.y + 10;
+        g.strokeStyle = 'rgba(255,255,255,0.75)'; g.lineWidth = 1;
+        g.beginPath(); if (u.isLure || u.ph === 'fight') { g.moveTo(r.x + 4, r.y + 2); g.quadraticCurveTo((r.x + hx) / 2, r.y + 10, hx, hy); } else { g.moveTo(sx, sy2); g.lineTo(hx, hy); } g.stroke();
+        if (!u.isLure && u.ph === 'water') { g.fillStyle = '#ff5a5a'; g.beginPath(); g.ellipse(sx, sy2 - 2 + (u.sunk ? 8 : u.nib ? 3 : 0), 4, 5, 0, 0, 7); g.fill(); }
+        if (u.ph === 'water') drawBait(u, hx, hy);
+      }
+      // タナ(エサのとき)
+      if (!u.isLure && u.canTana) { const ty = r.y + 12 + u.tana * (r.h - 18) * bottomAt(u.ld ?? 0.3); g.setLineDash([4, 4]); g.strokeStyle = 'rgba(255,236,120,0.9)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(r.x + 34, ty); g.lineTo(r.x + r.w - 4, ty); g.stroke(); g.setLineDash([]); g.fillStyle = '#ffe36b'; g.font = '800 11px sans-serif'; g.textAlign = 'right'; g.fillText('タナ ▲▼', r.x + r.w - 6, ty - 4); }
+    }
+    // かかった魚
+    if (u.ph === 'fight' && u.hooked) {
+      const h = u.hooked, L = Math.max(16, Math.min(r.w * 0.45, h.len * 1.1 + 8)), x = hx, y = hy;
+      if (vis >= 1 || h.big) { g.save(); g.translate(x, y); g.rotate(Math.sin(t * (h.run ? 22 : 9)) * (h.run ? 0.35 : 0.15)); g.scale(h.run ? -1 : 1, 1); if (vis >= 2) drawCreature(g, h.sp, L * 0.45, 0, L); else { g.fillStyle = 'rgba(10,25,45,0.8)'; g.beginPath(); g.ellipse(L * 0.45, 0, L * 0.45, L * 0.15, 0, 0, 7); g.fill(); } g.restore(); }
+      if (Math.random() < 0.4) bubbles.push({ x: x + (Math.random() - 0.5) * 10, y, v: 20 + Math.random() * 30, a: 1 });
+    }
+    // あわ
+    for (let i = bubbles.length - 1; i >= 0; i--) { const b = bubbles[i]; b.y -= b.v * dt; b.a -= dt * 0.8; if (b.y < r.y + 10 || b.a <= 0) { bubbles.splice(i, 1); continue; } g.strokeStyle = `rgba(255,255,255,${b.a})`; g.lineWidth = 1; g.beginPath(); g.arc(b.x, b.y, 2, 0, 7); g.stroke(); }
+    // にごり(見えない所)
+    if (vis < 2) {
+      const R2 = lit * (r.w - 34);
+      const mg = g.createRadialGradient(hx, hy, R2 * 0.35, hx, hy, R2 * 1.05);
+      mg.addColorStop(0, 'rgba(20,45,60,0)'); mg.addColorStop(1, vis === 1 ? 'rgba(20,45,60,0.55)' : 'rgba(20,45,60,0.82)');
+      g.fillStyle = mg; g.fillRect(r.x, r.y, r.w, r.h);
+    }
+    g.restore();
+    g.strokeStyle = 'rgba(255,255,255,0.85)'; g.lineWidth = 2; g.beginPath(); g.roundRect ? g.roundRect(r.x, r.y, r.w, r.h, 14) : g.rect(r.x, r.y, r.w, r.h); g.stroke();
+    g.font = '800 10px sans-serif'; g.textAlign = 'right'; g.fillStyle = 'rgba(255,255,255,0.85)'; g.fillText(u.eyeName || '', r.x + r.w - 8, r.y + r.h - 6);
+    if (u.isLure && u.ph === 'water') { g.textAlign = 'left'; g.fillText('ルアーは巻く速さで深さが変わる', r.x + 34, r.y + r.h - 6); }
+    else if (u.canTana && (u.ph === 'ready' || u.ph === 'water')) { g.textAlign = 'left'; g.fillText('窓を上下になぞってタナを変える', r.x + 34, r.y + r.h - 6); }
+  }
+  function mark(x, y, ch, col) { g.font = '900 15px sans-serif'; g.textAlign = 'center'; g.lineWidth = 3; g.strokeStyle = 'rgba(0,0,0,0.5)'; g.strokeText(ch, x, y); g.fillStyle = col; g.fillText(ch, x, y); }
+  function drawBait(u, x, y) {
+    const k = u.bait;
+    g.save(); g.translate(x, y);
+    if (k === 'worm') { g.strokeStyle = '#e88a8a'; g.lineWidth = 3; g.lineCap = 'round'; g.beginPath(); g.moveTo(-5, 0); g.quadraticCurveTo(0, Math.sin(t * 6) * 5, 5, 2); g.stroke(); }
+    else if (k === 'bread') { g.fillStyle = '#fff6e0'; g.beginPath(); g.arc(0, 0, 4, 0, 7); g.fill(); }
+    else if (k === 'shrimp') { g.strokeStyle = '#ff9a6a'; g.lineWidth = 3; g.beginPath(); g.arc(0, 0, 4, 0.5, 4.5); g.stroke(); }
+    else if (k === 'glow') { g.shadowColor = '#bfff7a'; g.shadowBlur = 12; g.strokeStyle = '#d8ff8a'; g.lineWidth = 3; g.beginPath(); g.moveTo(-5, 0); g.quadraticCurveTo(0, Math.sin(t * 6) * 4, 5, 1); g.stroke(); }
+    else if (k === 'spoon') { g.rotate(Math.sin(t * 14) * 0.8); g.fillStyle = '#e9edf5'; g.beginPath(); g.ellipse(0, 0, 6, 3, 0, 0, 7); g.fill(); g.fillStyle = 'rgba(255,255,255,0.9)'; g.fillRect(-2, -1, 3, 1); }
+    else if (k === 'minnow') { g.rotate(Math.sin(t * 10) * 0.2); g.fillStyle = '#7fb0d0'; g.beginPath(); g.ellipse(0, 0, 8, 3, 0, 0, 7); g.fill(); g.fillStyle = '#fff'; g.fillRect(-6, 0, 12, 1.5); g.fillStyle = '#e8eef5'; g.beginPath(); g.moveTo(8, 0); g.lineTo(12, 3); g.lineTo(8, 2); g.fill(); }
+    else if (k === 'frog') { g.fillStyle = '#6cc35a'; g.beginPath(); g.ellipse(0, -2, 6, 4, 0, 0, 7); g.fill(); g.fillStyle = '#fff'; g.beginPath(); g.arc(-3, -5, 1.5, 0, 7); g.arc(3, -5, 1.5, 0, 7); g.fill(); }
+    g.strokeStyle = '#d8d8e0'; g.lineWidth = 1.2; g.beginPath(); g.arc(-1, 4, 3, 0, Math.PI); g.stroke();   // 針
+    g.restore();
+  }
+  // 釣り上げ:魚が水からとび出して、こちらへ
+  function drawLeap(lp) {
+    const k = Math.min(1, lp.t), p = proj(lp.x, lp.d), cx = W / 2, cy = H * 0.42;
+    const e = 1 - Math.pow(1 - k, 3), x = p.x + (cx - p.x) * e, y = p.y + (cy - p.y) * e - Math.sin(k * Math.PI) * H * 0.18;
+    const L = (40 + k * Math.min(W * 0.75, 120 + lp.len * 2)) ;
+    if (k < 0.08 && !lp.splashed) { lp.splashed = 1; splash(lp.x, lp.d, 30, 2); }
+    g.save(); g.globalAlpha = 0.35 * k; g.fillStyle = '#fff'; g.beginPath(); g.arc(x, y, L * 0.7, 0, 7); g.fill(); g.restore();
+    g.save(); g.translate(x, y); g.rotate((1 - e) * -1.2 + Math.sin(k * 20) * 0.08 * (1 - k)); drawCreature(g, lp.sp, 0, 0, L); g.restore();
+    for (let i = 0; i < 3; i++) if (Math.random() < 0.6 * (1 - k)) parts.push({ x: x + (Math.random() - 0.5) * L * 0.6, y: y + L * 0.1, vx: (Math.random() - 0.5) * 120, vy: -40 - Math.random() * 80, life: 0.6, t: 0, s: 2 + Math.random() * 2 });
+  }
+  // 落ち葉(イチョウ・モミジ)と桜の花びら
+  const falls = [];
+  function leafShape(g2, k, s) {
+    if (k === 'ginkgo') { g2.beginPath(); g2.moveTo(0, s * 0.9); g2.lineTo(0, s * 0.2); g2.arc(0, s * 0.25, s, -Math.PI * 0.85, -Math.PI * 0.15); g2.closePath(); g2.fill(); g2.fillStyle = 'rgba(0,0,0,0.15)'; g2.fillRect(-0.5, -s * 0.7, 1, s * 0.9); }
+    else if (k === 'maple') { g2.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? s * 0.42 : s; g2.lineTo(Math.cos(a) * r, Math.sin(a) * r); } g2.closePath(); g2.fill(); }
+    else { g2.beginPath(); g2.ellipse(0, 0, s * 0.7, s * 0.45, 0, 0, 7); g2.fill(); }
+  }
+  function spawnFall(f) {
+    const p = branchPts[Math.floor(Math.random() * branchPts.length)] || [W * 0.2, HZ()];
+    const autumn = cond.season === 'autumn';
+    Object.assign(f, { x: p[0], y: p[1], vy: 14 + Math.random() * 12, p: Math.random() * 6, k: autumn ? (Math.random() < 0.5 ? 'ginkgo' : 'maple') : 'petal', c: autumn ? null : ['#ffc6d9', '#ffe0ea', '#ffb3cc'][Math.floor(Math.random() * 3)], land: HZ() + (SY() - HZ()) * (0.15 + Math.random() * 0.75), t: 0, float: 0, s: autumn ? 5 + Math.random() * 3 : 3 + Math.random() * 1.5 });
+    if (f.k === 'ginkgo') f.c = ['#f2c94c', '#f5d65e', '#e9b23a'][Math.floor(Math.random() * 3)]; else if (f.k === 'maple') f.c = ['#e8603a', '#d9433a', '#f0803c'][Math.floor(Math.random() * 3)];
+    f.wait = Math.random() * 6;
+  }
+  if (!mini && (cond.season === 'autumn' || cond.season === 'spring')) for (let i = 0; i < 12; i++) falls.push({ wait: Math.random() * 8 });
+  function drawFalls(dt) {
+    for (const f of falls) {
+      if (f.wait > 0) { f.wait -= dt; if (f.wait <= 0) spawnFall(f); continue; }
+      if (f.x == null) { spawnFall(f); continue; }
+      f.t += dt;
+      if (!f.float) { f.y += f.vy * dt; f.x += (Math.sin(f.t * 1.8 + f.p) * 26 + 10) * dt; if (f.y >= f.land) f.float = 0.001; }
+      else { f.float += dt; f.x += 3 * dt; if (f.float > 7) { spawnFall(f); continue; } }
+      const a = f.float ? Math.max(0, 1 - (f.float - 5) / 2) : 1;
+      g.save(); g.translate(f.x, f.y); g.globalAlpha = a;
+      if (!f.float) { g.rotate(Math.sin(f.t * 2.4 + f.p) * 1.2); g.scale(Math.cos(f.t * 4 + f.p), 1); } else g.scale(1, 0.45);   // くるくる、ひらひら
+      g.fillStyle = f.c; leafShape(g, f.k, f.s); g.restore();
+    }
   }
   function poly(b, a, fill, round) {
     const ps = [proj(a.x0, a.d0), proj(a.x1, a.d0), proj(a.x1, a.d1), proj(a.x0, a.d1)];
@@ -113,13 +266,13 @@ export function createView(canvas, cond, { mini = false } = {}) {
   function addRing(x, d, big = 1) { rings.push({ x, d, r: 0, a: 0.8, big }); }
   function splash(x, d, n = 14, big = 1) { const p = proj(x, d); for (let i = 0; i < n; i++) { const a = -Math.PI * (0.15 + R() * 0.7); parts.push({ x: p.x, y: p.y, vx: Math.cos(a) * (40 + R() * 90) * p.s * big * 2, vy: Math.sin(a) * (80 + R() * 120) * p.s * big * 2, life: 0.5 + R() * 0.4, t: 0, s: (1.5 + R() * 2.5) * p.s * 2 * Math.min(2, big) }); } addRing(x, d, big); }
   if (!mini) {
-    const kind = cond.rain ? 'rain' : cond.season === 'winter' ? 'snow' : cond.season === 'spring' ? 'petal' : cond.season === 'autumn' ? 'leaf' : cond.season === 'summer' && night > 0.5 ? 'fly' : null;
-    const n = kind === 'rain' ? 90 : kind === 'snow' ? 70 : kind === 'fly' ? 14 : kind ? 18 : 0;
+    const kind = cond.rain ? 'rain' : cond.season === 'winter' ? 'snow' : cond.season === 'summer' && night > 0.5 ? 'fly' : null;
+    const n = kind === 'rain' ? 90 : kind === 'snow' ? 70 : kind === 'fly' ? 14 : 0;
     for (let i = 0; i < n; i++) weather.push({ k: kind, x: R(), y: R(), v: 0.5 + R(), p: R() * 6 });
   }
 
   const api = {
-    proj, splash, addRing,
+    proj, splash, addRing, underRect: UR,
     resize() {
       const r = canvas.getBoundingClientRect(); dpr = Math.min(2, window.devicePixelRatio || 1);
       W = Math.max(10, r.width); H = Math.max(10, r.height); canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); buildBg();
@@ -209,6 +362,7 @@ export function createView(canvas, cond, { mini = false } = {}) {
       }
       // 飛び散る水
       for (let i = parts.length - 1; i >= 0; i--) { const q = parts[i]; q.t += dt; if (q.t > q.life) { parts.splice(i, 1); continue; } q.vy += 420 * dt; q.x += q.vx * dt; q.y += q.vy * dt; g.fillStyle = `rgba(255,255,255,${0.9 * (1 - q.t / q.life)})`; g.beginPath(); g.arc(q.x, q.y, q.s, 0, 7); g.fill(); }
+      drawFalls(dt);
       // 天気
       for (const w of weather) {
         if (w.k === 'rain') { w.y += dt * 1.6 * w.v; if (w.y > 1) { w.y = 0; w.x = Math.random(); if (Math.random() < 0.5) addRing(w.x * 2 - 1, Math.random(), 0.3); } g.strokeStyle = 'rgba(220,230,255,0.45)'; g.lineWidth = 1; g.beginPath(); g.moveTo(w.x * W, w.y * H); g.lineTo(w.x * W - 3, w.y * H + 14); g.stroke(); }
@@ -216,6 +370,8 @@ export function createView(canvas, cond, { mini = false } = {}) {
         else if (w.k === 'petal' || w.k === 'leaf') { w.y += dt * 0.06 * w.v; w.x += (Math.sin(t * 1.3 + w.p) * 0.03 + 0.02) * dt; if (w.y > 1) { w.y = 0; w.x = Math.random(); } g.fillStyle = w.k === 'petal' ? 'rgba(255,190,210,0.9)' : ['#e8803a', '#d9503a', '#f0b53c'][Math.floor(w.p) % 3]; g.save(); g.translate(w.x * W, w.y * H); g.rotate(t * 2 + w.p); g.beginPath(); g.ellipse(0, 0, w.k === 'petal' ? 3.5 : 5, w.k === 'petal' ? 2 : 3, 0, 0, 7); g.fill(); g.restore(); }
         else if (w.k === 'fly') { const x = (w.x + Math.sin(t * 0.3 + w.p) * 0.05) * W, y = lerp(hz, sy, 0.3 + w.y * 0.6) + Math.sin(t * 0.8 + w.p * 2) * 10, a = 0.5 + 0.5 * Math.sin(t * 3 + w.p * 5); g.fillStyle = `rgba(220,255,140,${a})`; g.shadowColor = '#d8ff8a'; g.shadowBlur = 8; g.beginPath(); g.arc(x, y, 2, 0, 7); g.fill(); g.shadowBlur = 0; }
       }
+      if (under && vs.under) drawUnder(vs, vs.under, dt);
+      if (vs.leap) drawLeap(vs.leap);
     },
   };
   let ringT = 0;

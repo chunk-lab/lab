@@ -69,6 +69,20 @@ export const ITEMS = [
   I({ id: 'chest', name: '小さな宝箱', en: 'Treasure chest', r: 4, area: ['deep', 'rock'], emoji: '🧰', coins: 'chest', str: 0.7, hint: 'ふかみの底に', say: 'Treasure!!' }),
   I({ id: 'star', name: '星のかけら', en: 'Star fragment', r: 5, area: ['open', 'deep'], time: 'night', emoji: '🌟', coins: 500, hint: '星のきれいな夜に', say: 'It fell from the sky...' }),
 ];
+// タナ(針の深さ)と針の大きさの好み。t:'top'表層 'mid'中層 'bottom'底 / k:'s'小 'm'中 'l'大
+const PREF = {
+  motsugo: ['mid', 's'], funa: ['bottom', 'm'], oikawa: ['top', 's'], bluegill: ['mid', 'm'], haze: ['bottom', 's'], zarigani: ['bottom', 'm'],
+  medaka: ['top', 's'], kingyo: ['top', 's'], koi: ['bottom', 'l'], herabuna: ['mid', 'm'], bass: ['mid', 'l'], aji: ['mid', 'm'], nijimasu: ['mid', 'm'], saba: ['top', 'm'],
+  namazu: ['bottom', 'l'], unagi: ['bottom', 'm'], raigyo: ['top', 'l'], hirame: ['bottom', 'l'], fugu: ['mid', 's'], tako: ['bottom', 'l'], kumanomi: ['mid', 's'], kurage: ['top', 'm'],
+  tai: ['bottom', 'l'], tatsu: ['mid', 's'], sake: ['mid', 'l'], kingoi: ['bottom', 'l'], nushi: ['bottom', 'l'], maguro: ['mid', 'l'], ryugu: ['bottom', 'l'],
+};
+export const TANA = { top: { name: '表層', en: 'near the surface', y: 0.1 }, mid: { name: '中層', en: 'in the middle', y: 0.5 }, bottom: { name: '底', en: 'on the bottom', y: 0.92 } };
+export const HOOK_STEP = { s: 0, m: 1, l: 2 };
+for (const f of FISH) { const p = PREF[f.id] || ['mid', 'm']; f.tana = p[0]; f.hook = p[1]; }
+export const tanaOf = y => (y < 0.3 ? 'top' : y < 0.7 ? 'mid' : 'bottom');
+export const BAIT_EN = { worm: 'worms', bread: 'bread', shrimp: 'shrimp', spoon: 'a spoon', minnow: 'a minnow lure', frog: 'a frog lure', glow: 'the glow worm' };
+export const SPEED_JP = { still: '止めて待つ', slow: 'ゆっくり巻く', fast: '速く巻く', twitch: 'しゃくって誘う' };
+export const SPEED_EN = { still: 'let it sit still', slow: 'reel slowly', fast: 'reel fast', twitch: 'give it a twitch' };
 export const ALL = [...FISH, ...ITEMS];
 export const BYID = Object.fromEntries(ALL.map(x => [x.id, x]));
 
@@ -106,6 +120,16 @@ export const GEAR = {
     { id: 'nylon', name: 'ナイロン糸', price: 0, str: 1.0, desc: 'ふつうの糸' },
     { id: 'fluoro', name: 'フロロ糸', price: 700, str: 1.45, desc: '切れにくい' },
     { id: 'pe', name: 'PE糸', gems: 25, str: 2.2, desc: 'とても強い。マグロもこわくない' },
+  ],
+  hook: [
+    { id: 's', name: '小針', price: 0, desc: '小さな魚に。大物には外れやすい' },
+    { id: 'm', name: '中針', price: 0, desc: 'たいていの魚に' },
+    { id: 'l', name: '大針', price: 0, desc: '大物に。小さな魚はすっぽ抜けやすい' },
+  ],
+  eye: [
+    { id: 'none', name: 'ふつうの目', price: 0, vis: 0, icon: '👀', desc: '針のまわりが少し見える' },
+    { id: 'glass', name: '偏光グラス', price: 600, vis: 1, icon: '🕶️', desc: '水面のギラギラが消えて、魚のかげが広くはっきり見える' },
+    { id: 'cam', name: '水中カメラ', gems: 20, vis: 2, icon: '📷', desc: '水の中がぜんぶ見える。魚の種類までわかる' },
   ],
   bait: [
     { id: 'worm', name: 'ミミズ', price: 0, type: 'bait', icon: '🪱', desc: 'たいていの魚が好き。ウキで待つ' },

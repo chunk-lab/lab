@@ -45,7 +45,29 @@ export function createSfx(volume = 0.7) {
     const s = a.createBufferSource(); s.buffer = noise(); s.loop = true; const fl = a.createBiquadFilter(); fl.type = 'bandpass'; fl.frequency.value = f; fl.Q.value = q;
     const v = a.createGain(); v.gain.value = 0; s.connect(fl).connect(v).connect(out); s.start(); return { s, v, fl };
   }
+  // ファイトの曲(その場で鳴らす短いループ)。level 0=止める / 0.5=ふつう / 1=伝説
+  let seqT = null, seqStep = 0, seqLv = 0, nextAt = 0;
+  const BASS = [110, 110, 0, 110, 131, 0, 98, 0, 110, 110, 0, 147, 131, 0, 98, 82];
+  const LEAD = [440, 0, 523, 0, 587, 0, 523, 494, 440, 0, 392, 0, 440, 0, 0, 0];
+  function seqTick() {
+    const a = ctx(); if (!a) return;
+    const spb = 60 / (126 + seqLv * 24) / 2;
+    while (nextAt < a.currentTime + 0.12) {
+      const i = seqStep % 16, d = Math.max(0, nextAt - a.currentTime);
+      if (i % 4 === 0) { tone(60, 0.18, { type: 'sine', g: 0.22 * seqLv + 0.08, slide: 0.5, delay: d }); }
+      if (i % 2 === 1) burst(0.04, { f: 8000, type: 'highpass', g: 0.05 + 0.04 * seqLv, delay: d });
+      if (BASS[i]) tone(BASS[i], spb * 0.9, { type: 'triangle', g: 0.09 + 0.05 * seqLv, delay: d });
+      if (seqLv >= 0.7 && LEAD[i]) tone(LEAD[i] * (seqLv >= 1 ? 1 : 0.5) * 2, spb * 0.8, { type: 'square', g: 0.025, delay: d });
+      nextAt += spb; seqStep++;
+    }
+  }
+  function fight(lv) {
+    seqLv = lv;
+    if (lv > 0 && !seqT) { const a = ctx(); if (!a) return; nextAt = a.currentTime + 0.05; seqStep = 0; seqT = setInterval(seqTick, 40); }
+    if (lv <= 0 && seqT) { clearInterval(seqT); seqT = null; }
+  }
   return {
+    fight,
     play(n, a) { try { S[n] && S[n](a); } catch (e) { } },
     vib,
     unlock() { ctx(); },
@@ -55,7 +77,7 @@ export function createSfx(volume = 0.7) {
     // 水辺の音(風と水)
     ambience(on) { if (!ac) return; if (on && !ambN) { ambN = loopNoise('amb', 500, 0.4); if (ambN) ambN.v.gain.value = 0.025; } else if (!on && ambN) { ambN.s.stop(); ambN = null; } },
     setVolume(v) { volume = v; if (out) out.gain.value = v; },
-    stopLoops() { for (const n of [reelN, creakN, ambN]) { try { n && n.s.stop(); } catch (e) { } } reelN = creakN = ambN = null; },
+    stopLoops() { fight(0); for (const n of [reelN, creakN, ambN]) { try { n && n.s.stop(); } catch (e) { } } reelN = creakN = ambN = null; },
     close() { this.stopLoops(); try { ac && ac.close(); } catch (e) { } ac = null; },
   };
 }
