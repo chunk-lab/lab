@@ -55,6 +55,19 @@ export function createAudio() {
       amb = { src, g };
     } else if (!on && amb) { amb.src.stop(); amb = null; }
   }
+  // 雨のおと(0〜1)。ふるあいだだけ、ざーっという高めのノイズ
+  let rainN = null;
+  function rain(v) {
+    const a = ctx(); if (!a) return;
+    if (v > 0.01 && !rainN) {
+      const buf = a.createBuffer(1, a.sampleRate * 2, a.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      const src = a.createBufferSource(); src.buffer = buf; src.loop = true;
+      const f = a.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 3200; f.Q.value = 0.35;
+      const g = a.createGain(); g.gain.value = 0; src.connect(f).connect(g).connect(master); src.start(); rainN = { src, g };
+    }
+    if (rainN) { rainN.g.gain.value = 0.16 * v * vol.sfx; if (v <= 0.01) { rainN.src.stop(); rainN = null; } }
+  }
   const SFX = {
     tap: () => tone(880, 0.08, { type: 'triangle', gain: 0.15 }),
     blip: () => tone(620 + Math.random() * 120, 0.04, { type: 'square', gain: 0.03 }),
@@ -66,6 +79,7 @@ export function createAudio() {
     // 花火:のぼる笛のような音→ドン(おおきい花火ほど低く大きく)
     whistle: () => tone(500, 0.8, { type: 'sine', gain: 0.05, slide: 3.2 }),
     boom: sc => { const s = Math.max(0.3, Math.min(1.4, +sc || 1)); tone(95 / s, 0.7, { type: 'triangle', gain: 0.32 * Math.min(1, s), slide: 0.3 }); tone(55 / s, 1.0, { type: 'sine', gain: 0.3 * Math.min(1, s), slide: 0.5 }); tone(1800, 0.25, { type: 'square', gain: 0.02, slide: 0.4, delay: 0.1 }); },
+    bigboom: () => { tone(70, 1.4, { type: 'triangle', gain: 0.42, slide: 0.25 }); tone(42, 2.2, { type: 'sine', gain: 0.45, slide: 0.5 }); tone(120, 0.9, { type: 'sawtooth', gain: 0.1, slide: 0.3, delay: 0.05 }); tone(1500, 0.5, { type: 'square', gain: 0.03, slide: 0.4, delay: 0.1 }); },
     harmonica: kind => { const T = TUNES[kind] || TUNES.noon; let t = 0; for (const [f, b] of T.notes) { const d = b * T.beat; if (f) reed(f, d * 0.96, t); t += d; } return { sec: t, name: T.name }; },
   };
   return {
@@ -73,6 +87,7 @@ export function createAudio() {
     play(name, arg) { try { return SFX[name]?.(arg); } catch (e) {} },
     pickTune,
     ambience,
+    rain,
     get: () => ({ ...vol }),
     set(v) { Object.assign(vol, v); if (amb) amb.g.gain.value = 0.035 * vol.bgm; },
     suspend() { ac?.suspend(); },

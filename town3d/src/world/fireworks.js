@@ -6,12 +6,12 @@
 import * as THREE from 'three';
 
 export const FW_TYPES = {
-  kiku: '菊', botan: '牡丹', yanagi: 'しだれ柳', kamuro: '冠菊', saturn: '土星', heart: 'ハート', star: '星', kobana: '小花', irokawari: '色変化',
+  kiku: '菊', botan: '牡丹', yanagi: 'しだれ柳', kamuro: '冠菊', saturn: '土星', heart: 'ハート', star: '星', kobana: '小花', irokawari: '色変化', niagara: 'ナイアガラ', dai: '特大の一発',
 };
 export const FW_SHOWS = { starmine: 'スターマイン', finale: 'フィナーレ', digest: 'ダイジェスト(約1分)', full: 'フル(約3分)' };
 export const FW_CENTER = { x: 0, z: -105, y: 72 };   // 町の北の空(ここを見る)
 
-const N = 7000;
+const N = 16000;
 const PAL = [[1, 0.25, 0.22], [1, 0.55, 0.15], [1, 0.82, 0.3], [0.35, 1, 0.45], [0.3, 0.9, 1], [0.35, 0.55, 1], [0.72, 0.4, 1], [1, 0.45, 0.78], [1, 1, 0.95]];
 const GOLD = [1, 0.74, 0.28];
 const rnd = (a, b) => a + Math.random() * (b - a), pick = a => a[Math.floor(Math.random() * a.length)];
@@ -43,7 +43,10 @@ export function createFireworks(scene, { onBoom } = {}) {
     size[i] = s; base[i] = s; life[i] = lf; age[i] = 0; drag[i] = o.drag ?? 1.2; grav[i] = o.grav ?? -3; flag[i] = o.trail ? 1 : 0; tr[i] = 0;
   }
   function sphereDir() { const u = Math.random() * 2 - 1, t = Math.random() * Math.PI * 2, r = Math.sqrt(1 - u * u); return [r * Math.cos(t), u, r * Math.sin(t)]; }
-  const shells = [], timers = [];
+  const shells = [], timers = [], nia = [];
+  // ナイアガラ:よこ一列の仕掛けから、金の火の粉が滝のようにたれる
+  function niagara(o = {}) { nia.push({ t: 0, dur: o.dur || 10, x0: o.x0 ?? -30, x1: o.x1 ?? 30, y: o.y ?? FW_CENTER.y - 6, z: FW_CENTER.z + (o.z ?? 8), n: 44, ramp: 1.2 }); onBoomSafe('mini', 1); }
+  const onBoomSafe = (a, b) => onBoom && onBoom(a, b);
   let showT = -1, showList = [], showI = 0, curShow = '';
 
   // ひらく。right=見る人から見て横の向き(形物を見る人のほうに向ける)
@@ -62,6 +65,13 @@ export function createFireworks(scene, { onBoom } = {}) {
       case 'heart': for (let k = 0; k < 120; k++) { const t = k / 120 * Math.PI * 2, hx = 16 * Math.pow(Math.sin(t), 3) / 17, hy = (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) / 17 + 0.05; planar([hx, hy], 25, A[0] > 0.9 && A[1] < 0.5 ? A : [1, 0.4, 0.62], 1.7, 2.5, { drag: 2.1, grav: -2 }); } ball(40, 6, [1, 0.85, 0.9], null, 1.2, 1.6, { drag: 2, grav: -2 }); break;
       case 'star': { const pt = k => { const a = k * Math.PI / 5 + Math.PI / 2, r = k % 2 ? 0.45 : 1; return [Math.cos(a) * r, Math.sin(a) * r]; }; for (let seg = 0; seg < 10; seg++) { const p0 = pt(seg), p1 = pt(seg + 1); for (let k = 0; k < 11; k++) { const f = k / 11; planar([p0[0] + (p1[0] - p0[0]) * f, p0[1] + (p1[1] - p0[1]) * f], 22, [1, 0.9, 0.4], 1.8, 2.4, { drag: 2.1, grav: -1.8 }); } } break; }
       case 'kobana': for (let m = 0; m < 9; m++) { const d = sphereDir(), r = 12 * scale, cx = x + d[0] * r, cy = y + d[1] * r * 0.8, cz = z + d[2] * r, c = pick(PAL); timers.push({ t: rnd(0, 0.9), fn: () => { onBoom && onBoom('mini', scale * 0.4); for (let k = 0; k < 48; k++) { const q = sphereDir(), v = sp(7.5) * rnd(0.8, 1.1); emit(cx, cy, cz, q[0] * v, q[1] * v, q[2] * v, c, null, 1.3, 1.3, { drag: 1.6, grav: -2.2 }); } } }); } break;
+      case 'dai': {   // 特大:町じゅうの空をおおう、金と赤のしだれ
+        ball(900, 26, GOLD, [1, 0.5, 0.14], 2.4, 7.5, { drag: 1.05, grav: -3.4 });
+        ball(120, 24, [1, 0.95, 0.8], [1, 0.45, 0.12], 2.8, 8.5, { drag: 1.0, grav: -4.2, trail: 1 });
+        ball(420, 14, [1, 0.3, 0.3], [1, 0.75, 0.4], 2.2, 6, { drag: 1.3, grav: -3 });
+        ball(160, 6, [1, 1, 1], [1, 0.7, 0.4], 3.2, 3.2, { drag: 1.6, grav: -1.5 });
+        break;
+      }
       case 'irokawari': ball(220, 21, A, B, 1.6, 2.6, { drag: 1.3, grav: -2.6 }); break;   // 開いたあと A→B に色が変わる
       default: ball(160, 20, A, null, 1.5, 2, {});
     }
@@ -71,7 +81,7 @@ export function createFireworks(scene, { onBoom } = {}) {
   function shell(type, o = {}) {
     const bx = (o.x ?? rnd(-34, 34)) + FW_CENTER.x, bz = (o.z ?? rnd(-14, 14)) + FW_CENTER.z, by = o.y ?? rnd(FW_CENTER.y - 14, FW_CENTER.y + 18);
     const sx = bx + rnd(-4, 4), sz = FW_CENTER.z - 28 + rnd(-6, 6), t = rnd(1.3, 1.9);
-    shells.push({ type, sx, sz, bx, by, bz, t: 0, T: o.fast ? 0.55 : t, c: o.c, c2: o.c2, scale: o.scale || 1, wait: o.delay || 0, done: false });
+    shells.push({ type, sx, sz, bx, by, bz, t: 0, T: o.T || (o.fast ? 0.55 : t), c: o.c, c2: o.c2, scale: o.scale || 1, wait: o.delay || 0, done: false });
   }
   function riseTrail(s, u, dt) {
     const x = s.sx + (s.bx - s.sx) * u, z = s.sz + (s.bz - s.sz) * u, y = 0.5 + (s.by - 0.5) * (1 - Math.pow(1 - u, 2));
@@ -84,16 +94,19 @@ export function createFireworks(scene, { onBoom } = {}) {
     types: FW_TYPES, shows: FW_SHOWS,
     get active() { return shells.length > 0 || showT >= 0 || timers.length > 0 || age.some(a => a < 6); },
     get showing() { return showT >= 0; },
-    get busy() { return shells.length > 0 || showT >= 0 || timers.length > 0 || quiet < 8; },
+    get busy() { return nia.length > 0 || shells.length > 0 || showT >= 0 || timers.length > 0 || quiet < 8; },
     launch(type) { shell(type, { x: rnd(-14, 14), z: 0 }); },
-    stop() { showT = -1; showList = []; shells.length = 0; timers.length = 0; },
+    stop() { showT = -1; showList = []; shells.length = 0; timers.length = 0; nia.length = 0; },
     // ショー(starmine / finale / digest / full)
-    show(name) {
+    show(name, targetSec) {
       const L = []; let t = 0.5;
       const add = (type, dt, o) => { t += dt; L.push({ t, type, o }); };
       const mine = (n, gap, tp) => { for (let k = 0; k < n; k++) { const u = n > 1 ? k / (n - 1) : 0.5; L.push({ t: t + k * gap, type: pick(tp || ['botan', 'kiku', 'irokawari']), o: { x: -34 + u * 68 + rnd(-4, 4), z: rnd(-10, 10), y: rnd(FW_CENTER.y - 18, FW_CENTER.y + 4), scale: 0.78, fast: Math.random() < 0.5 } }); } t += n * gap; };
-      const fin = (n, gap) => { for (let k = 0; k < n; k++) L.push({ t: t + k * gap, type: pick(['kiku', 'botan', 'kamuro', 'irokawari', 'saturn', 'kobana']), o: { x: rnd(-40, 40), z: rnd(-16, 12), y: rnd(FW_CENTER.y - 20, FW_CENTER.y + 22), scale: rnd(0.9, 1.25), fast: Math.random() < 0.6 } }); for (let k = 0; k < 5; k++) L.push({ t: t + n * gap + k * 0.5, type: 'kamuro', o: { x: -30 + k * 15, z: 0, y: FW_CENTER.y + 8, scale: 1.3 } }); t += n * gap + 4; };
-      if (name === 'starmine') mine(26, 0.32);
+      const fin = (n, gap) => { for (let k = 0; k < n; k++) L.push({ t: t + k * gap, type: pick(['kiku', 'botan', 'kamuro', 'irokawari', 'saturn', 'kobana']), o: { x: rnd(-40, 40), z: rnd(-16, 12), y: rnd(FW_CENTER.y - 20, FW_CENTER.y + 22), scale: rnd(0.9, 1.25), fast: Math.random() < 0.6 } }); for (let k = 0; k < 5; k++) L.push({ t: t + n * gap + k * 0.5, type: 'kamuro', o: { x: -30 + k * 15, z: 0, y: FW_CENTER.y + 8, scale: 1.3 } }); t += n * gap + 4; L.push({ t: t + 1.2, type: 'dai', o: { T: 3.2, scale: 3.4, y: FW_CENTER.y + 26, x: 0, z: 0 } }); t += 11; };
+  const nia_ = (d) => { L.push({ t, type: 'niagara', o: { dur: d } }); t += d + 2; };
+      if (name === 'niagara') { nia_(12); }
+      else if (name === 'dai') { L.push({ t: 0.5, type: 'dai', o: { T: 3.2, scale: 3.4, y: FW_CENTER.y + 26, x: 0, z: 0 } }); t = 12; }
+      else if (name === 'starmine') mine(26, 0.32);
       else if (name === 'finale') fin(34, 0.28);
       else if (name === 'digest' || name === 'full') {
         const seq = ['kiku', 'botan', 'yanagi', 'saturn', 'heart', 'star', 'kobana', 'kamuro', 'irokawari'];
@@ -102,10 +115,12 @@ export function createFireworks(scene, { onBoom } = {}) {
           for (const tp of seq) add(tp, name === 'full' ? 3.2 : 3.6, { x: rnd(-20, 20), z: 0 });
           if (name === 'full') { add('botan', 1.5, { x: -25 }); add('botan', 0.7, { x: 25 }); add('kiku', 0.7, { x: 0 }); }
           mine(name === 'full' ? 22 : 16, 0.34); t += 3;
+          if (r === rounds - 1 || name === 'full') nia_(name === 'full' ? 10 : 8);
         }
         fin(name === 'full' ? 40 : 28, 0.28);
       } else if (FW_TYPES[name]) { for (let k = 0; k < 3; k++) L.push({ t: 0.5 + k * 1.8, type: name, o: { x: -14 + k * 14, z: 0 } }); t = 6; }
       else return;
+      if (targetSec > 5) { const k = targetSec / (t + 3); if (Math.abs(k - 1) > 0.02) { for (const e of L) { e.t *= k; if (e.type === 'niagara') e.o.dur *= Math.max(0.6, Math.min(2, k)); } t *= k; } }
       showList = L.sort((a, b) => a.t - b.t); showI = 0; showT = 0; curShow = name; api.showLength = t + 3;
     },
     // 毎フレーム。camera=カメラ、h=画面の高さ(px)
@@ -114,7 +129,7 @@ export function createFireworks(scene, { onBoom } = {}) {
       U.uScale.value = h / (2 * Math.tan(camera.fov * Math.PI / 360));
       if (showT >= 0) {
         showT += dt;
-        while (showI < showList.length && showList[showI].t <= showT) { const e = showList[showI++]; shell(e.type, e.o); }
+        while (showI < showList.length && showList[showI].t <= showT) { const e = showList[showI++]; if (e.type === 'niagara') niagara(e.o); else shell(e.type, e.o); }
         if (showT > (api.showLength || 0)) showT = -1;
       }
       // 見る人の右がわ(形物の向き)
@@ -126,6 +141,15 @@ export function createFireworks(scene, { onBoom } = {}) {
         if (s.wait > 0) { s.wait -= dt; continue; }
         s.t += dt; const u = Math.min(1, s.t / s.T); riseTrail(s, u, dt);
         if (u >= 1) { burst(s.type, s.bx, s.by, s.bz, s.c, s.c2, s.type === 'heart' || s.type === 'star' || s.type === 'saturn' ? rightToward(s, camera) : right, s.scale); shells.splice(i, 1); }
+      }
+      for (let i = nia.length - 1; i >= 0; i--) {
+        const n = nia[i]; n.t += dt; if (n.t > n.dur) { nia.splice(i, 1); continue; }
+        const k = Math.min(1, n.t / n.ramp) * Math.min(1, (n.dur - n.t) / 1.5 + 0.0);
+        for (let j = 0; j < n.n; j++) {
+          if (Math.random() > 14 * dt * k) continue;
+          const x = n.x0 + (n.x1 - n.x0) * (j / (n.n - 1)) + rnd(-0.3, 0.3);
+          emit(x, n.y, n.z + rnd(-0.3, 0.3), rnd(-0.6, 0.6), -rnd(1, 4), rnd(-0.3, 0.3), [1, 0.82, 0.4], [1, 0.4, 0.1], rnd(1.2, 1.9), rnd(2.2, 3.6), { drag: 0.7, grav: -5.5 });
+        }
       }
       // 粒のうごき
       for (let i = 0; i < N; i++) {

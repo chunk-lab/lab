@@ -77,7 +77,7 @@ export function mount(container, opt = {}) {
   };
   const env = createEnv(scene, { shadows: settings.quality !== 'low' });
   let fwBoomT = 0;
-  const fw = createFireworks(scene, { onBoom: (t, sc) => { if (t === 'mini') { if (Math.random() < 0.3) audio.play('boom', sc); return; } audio.play('boom', sc); } });
+  const fw = createFireworks(scene, { onBoom: (t, sc) => { if (t === 'dai') { audio.play('bigboom'); return; } if (t === 'mini') { if (Math.random() < 0.3) audio.play('boom', sc); return; } audio.play('boom', sc); } });
   env.hour = opt.hour ?? storage.get('hour') ?? 10;
   env.speed = settings.timeSpeed / 60;
   const _d = new Date(), _md = (_d.getMonth() + 1) * 100 + _d.getDate();
@@ -499,16 +499,21 @@ export function mount(container, opt = {}) {
   }
   const aimFw = () => aimAt(FW_CENTER.x, FW_CENTER.y, FW_CENTER.z);
   const aimSky = kind => { const p = env.skyPos(kind); if (p) aimAt(p.x, p.y, p.z); };
-  function stopEvent() { fw.stop(); env.stopEclipse(); if (evt && evt.fw) env.release(); evt = null; clearBanner(); }
+  // 運営が決めた長さ(分)。town:evdur = {fw,solar,lunar,rain} 秒。なければ標準
+  const evSec = (k, def) => { const v = +(storage.get('evdur') || {})[k]; return v > 5 ? v : def; };
+  function stopEvent() { fw.stop(); env.stopEclipse(); env.stopWeather(); audio.rain(0); if (evt && evt.fw) env.release(); evt = null; clearBanner(); }
   function runEvent(kind, meta = {}) {
     stopEvent(); audio.unlock();
-    if (kind === 'solar' || kind === 'lunar') {
-      env.startEclipse(kind, kind === 'solar' ? 100 : 130); evt = { kind };
+    if (kind === 'rain') {
+      env.startWeather(evSec('rain', 120)); evt = { kind, wx: true };
+      banner('☔ 雨がふってきたよ。あがったら虹が出るかも', '空を見る', () => aimSky('rain'), 12000);
+    } else if (kind === 'solar' || kind === 'lunar') {
+      env.startEclipse(kind, evSec(kind, kind === 'solar' ? 100 : 130)); evt = { kind };
       banner(kind === 'solar' ? '🌑 日食がはじまるよ！太陽がかけていくよ' : '🌕 月食がはじまるよ！月が赤くなっていくよ', '空を見る', () => aimSky(kind));
       setTimeout(() => aimSky(kind), 500);
     } else {
       const name = String(kind).replace(/^fw:/, '');
-      env.hold(21); fw.show(name); evt = { kind, fw: true };
+      env.hold(21); fw.show(name, evSec('fw', 0) || 0); evt = { kind, fw: true };
       banner(meta.birthday ? '🎂 お誕生日おめでとう！ 🎆 花火をどうぞ' : '🎆 花火がはじまるよ！北の空を見てね', '花火を見る', aimFw);
       setTimeout(aimFw, 500);
     }
@@ -630,7 +635,8 @@ export function mount(container, opt = {}) {
     tipUpdate(dt);
     env.camera = camera; env.update(dt, me.ch.root.position);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
-    if (evt) { if (evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
+    if (env.weather || evt?.wx) audio.rain(env.rainLevel || 0);
+    if (evt) { if (evt.wx ? !env.weather : evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
     if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); }
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
@@ -714,7 +720,7 @@ export function mount(container, opt = {}) {
     moveNpc: (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (r) r.ch.root.position.set(x, 0, z); },
     // 最初の画面を飛ばして町へ(前に選んだキャラ。はじめてなら最初のキャラ)
     // イベント(運営画面から。テスト用)
-    event: { run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
+    event: { sec: evSec, run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
     cameraMode: () => camMode,
     quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く

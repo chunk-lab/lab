@@ -4,7 +4,7 @@
 //   誕生日: 町に登録された生年月日の「月日」が今日と同じ日に、1年に1回だけ。
 export const EVENT_KINDS = {
   'fw:digest': '花火大会(ダイジェスト・約1分)', 'fw:full': '花火大会(フル・約3分)', 'fw:starmine': 'スターマイン', 'fw:finale': 'フィナーレ',
-  solar: '日食', lunar: '月食',
+  solar: '日食', lunar: '月食', rain: '雨と虹',
 };
 const LATE_MS = 10 * 60 * 1000;   // 予定の時刻から10分をすぎたら、もう始めない
 

@@ -10,12 +10,19 @@ const evLoad = () => { try { const v = JSON.parse(localStorage.getItem('town:eve
 const evSave = v => { try { localStorage.setItem('town:events', JSON.stringify(v)); } catch (e) { } };
 const pad = n => String(n).padStart(2, '0');
 const localIso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const durLoad = () => { try { return JSON.parse(localStorage.getItem('town:evdur')) || {}; } catch (e) { return {}; } };
 const T3 = () => window.town3d && window.town3d.event;
 const ST = { new: '新着(投票中)', shelf: '共有の棚', passed: '見送り' };
 export function createAdmin(core) {
   const st = createStore('core');
   try { const q = new URLSearchParams(location.search).get('admin'); if (q === '1') st.set('admin', true); if (q === '0') st.remove('admin'); } catch (e) { }
   const on = () => !!st.get('admin');
+  // 長さ(分)。からっぽ=標準(花火は組み合わせごと・日食100秒・月食130秒・雨と虹120秒)
+  function durRow() {
+    const d = durLoad(), f = k => d[k] ? +(d[k] / 60).toFixed(2) : '';
+    const one = (k, lab) => `<label style="display:flex;gap:4px;align-items:center">${lab}<input data-dur="${k}" type="number" step="0.5" min="0.2" inputmode="decimal" placeholder="標準" value="${f(k)}" style="width:62px;padding:5px;border-radius:8px;border:2px solid #cbb;font:inherit">分</label>`;
+    return `<p class="cs-note">ぜんたいの長さ(からっぽ=標準。変えたら下の「長さを保存」):</p><div class="cs-adm-row" style="flex-wrap:wrap">${one('fw', '🎆花火')}${one('solar', '🌑日食')}${one('lunar', '🌕月食')}${one('rain', '☔雨と虹')}</div><div class="cs-adm-row"><button data-durs="1">長さを保存</button></div>`;
+  }
   function evSection() {
     const T = T3(), list = evLoad();
     if (!T) return '<section class="cs-adm"><h4>イベント(花火・日食・月食)</h4><p class="cs-note">3Dの町を開いてから、ここを開いてください。</p></section>';
@@ -24,7 +31,8 @@ export function createAdmin(core) {
     const now = new Date(Date.now() + 60000);
     return `<section class="cs-adm"><h4>イベント(花火・日食・月食)</h4>
       <p class="cs-note">押すと運営画面が閉じて、町ですぐ始まります(夜に切りかわります)。</p>
-      <div class="cs-adm-row"><button data-ev="fw:digest">花火ダイジェスト</button><button data-ev="fw:full">花火フル</button><button data-ev="fw:starmine">スターマイン</button><button data-ev="fw:finale">フィナーレ</button><button data-ev="solar">🌑日食</button><button data-ev="lunar">🌕月食</button></div>
+      <div class="cs-adm-row"><button data-ev="fw:digest">花火ダイジェスト</button><button data-ev="fw:full">花火フル</button><button data-ev="fw:starmine">スターマイン</button><button data-ev="fw:finale">フィナーレ</button><button data-ev="solar">🌑日食</button><button data-ev="lunar">🌕月食</button><button data-ev="rain">☔雨と虹</button></div>
+      ${durRow()}
       <p class="cs-note">花火1種類ずつ:</p><div class="cs-adm-row">${fwb}</div>
       <p class="cs-note">予約(この端末の時計で。誕生日は町に登録された誕生日の夜に1回):</p>
       <div class="cs-adm-row"><select id="evK" style="font:inherit;padding:6px">${opts}</select></div>
@@ -64,6 +72,7 @@ export function createAdmin(core) {
           re();
         });
         ov.querySelectorAll('[data-ev]').forEach(b => b.onclick = () => { const k = b.dataset.ev; close(); setTimeout(() => T3() && T3().run(k), 150); });
+        ov.querySelectorAll('[data-durs]').forEach(b => b.onclick = () => { const o = {}; ov.querySelectorAll('[data-dur]').forEach(i => { const v = +i.value; if (v > 0) o[i.dataset.dur] = Math.round(v * 60); }); try { localStorage.setItem('town:evdur', JSON.stringify(o)); } catch (e) { } re(); });
         ov.querySelectorAll('[data-evadd]').forEach(b => b.onclick = () => {
           const kind = (ov.querySelector('#evK') || {}).value || 'fw:digest', t = b.dataset.evadd, l = evLoad(), id = 'e' + Date.now().toString(36);
           if (t === 'birthday') l.push({ id, kind, when: 'birthday', hour: 20 });
