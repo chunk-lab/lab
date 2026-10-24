@@ -50,7 +50,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     ginkgoS.lineTo(0.012, -0.05); ginkgoS.lineTo(0, -0.17);
     const mapleS = new THREE.Shape(); for (let k = 0; k < 10; k++) { const a = Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? 0.07 : 0.17; const x = Math.cos(a) * r, y = Math.sin(a) * r; k ? mapleS.lineTo(x, y) : mapleS.moveTo(x, y); } mapleS.closePath();
     const sets = [[new THREE.ShapeGeometry(ginkgoS), [0xf2c94c, 0xf5d65e, 0xe9b23a, 0xffe08a]], [new THREE.ShapeGeometry(mapleS), [0xe8603a, 0xd9433a, 0xf0803c, 0xc9382e]]].map(([geo, cols]) => {
-      const m = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({ side: THREE.DoubleSide }), N / 2);
+      const m = new THREE.InstancedMesh(geo, new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }), N / 2);   // 色をはっきり(夜は暗くする)
       m.frustumCulled = false; m.visible = false; const c = new THREE.Color();
       for (let i = 0; i < N / 2; i++) { c.setHex(cols[i % cols.length]); m.setColorAt(i, c); }
       scene.add(m); return m;
@@ -64,8 +64,9 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     }
     return {
       on(v) { on = v; sets.forEach(m => { m.visible = v; }); },
-      update(dt, cam) {
+      update(dt, cam, night = 0) {
         if (!on) return;
+        const k0 = 1 - 0.6 * night; sets.forEach(m => m.material.color.setScalar(k0));
         if ((nearT -= dt) <= 0) { nearT = 1; near = trees.filter(t => Math.hypot(t.x - cam.x, t.z - cam.z) < 38); }
         for (let i = 0; i < N; i++) {
           const l = st[i];
@@ -145,8 +146,8 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     nearest(x, z, r = 1.6) { let b = null, bd = r; men.forEach((m, i) => { const d = Math.hypot(m.x - x, m.z - z); if (d < bd) { bd = d; b = { i, m }; } }); return b; },
     remove: i => removeMan(i),
     // 毎フレーム。c=カメラの位置
-    update(dt, c) {
-      leaves.update(dt, c);
+    update(dt, c, night = 0) {
+      leaves.update(dt, c, night);
       t += dt;
       if (kind) {
         const cx = c.x, cz = c.z, cy = Math.max(0, c.y - 6);

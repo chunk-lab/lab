@@ -643,7 +643,7 @@ export function mount(container, opt = {}) {
     for (const r of residents.list) if (r.talking && r !== talkingTo) r.talking = false;
     tipUpdate(dt);
     env.camera = camera; env.update(dt, me.ch.root.position);
-    seasons.update(dt, camera.position);
+    seasons.update(dt, camera.position, env.night || 0);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
     if (env.weather || evt?.wx) audio.rain(env.rainLevel || 0);
     if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
