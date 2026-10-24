@@ -43,12 +43,14 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
 
   // ---- 秋:木から落ちる葉(イチョウ・モミジ)。ペラペラの板がひらひら落ちて、地面にしばらく残る ----
   const leaves = (() => {
-    const N = 150, mk = draw => { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.translate(32, 32); draw(g); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; };
-    const ginkgo = mk(g => { g.beginPath(); g.moveTo(0, 28); g.lineTo(0, 10); g.arc(0, 12, 26, -Math.PI * 0.86, -Math.PI * 0.14); g.closePath(); g.fill(); g.lineWidth = 3; g.strokeStyle = '#fff'; g.beginPath(); g.moveTo(0, 30); g.lineTo(0, 12); g.stroke(); g.globalCompositeOperation = 'destination-out'; g.beginPath(); g.moveTo(0, -14); g.lineTo(-3, -4); g.lineTo(3, -4); g.fill(); });
-    const maple = mk(g => { g.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? 11 : 27; g.lineTo(Math.cos(a) * r, Math.sin(a) * r - 2); } g.closePath(); g.fill(); g.lineWidth = 3; g.strokeStyle = '#fff'; g.beginPath(); g.moveTo(0, 6); g.lineTo(0, 28); g.stroke(); });
-    const geo = new THREE.PlaneGeometry(0.34, 0.34);
-    const sets = [[ginkgo, [0xf2c94c, 0xf5d65e, 0xe9b23a, 0xffe08a]], [maple, [0xe8603a, 0xd9433a, 0xf0803c, 0xc9382e]]].map(([tex, cols]) => {
-      const m = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({ map: tex, transparent: true, alphaTest: 0.4, side: THREE.DoubleSide }), N / 2);
+    const N = 150;
+    // 形そのものを板にする(テクスチャを使わない):イチョウ=扇形、モミジ=5つにさけた形
+    const ginkgoS = new THREE.Shape(); ginkgoS.moveTo(0, -0.17); ginkgoS.lineTo(-0.012, -0.05);
+    for (let k = 0; k <= 12; k++) { const a = Math.PI * (0.86 - k * 0.72 / 12) , r = k === 6 ? 0.13 : 0.17; ginkgoS.lineTo(Math.cos(a) * r, -0.05 + Math.sin(a) * r); }
+    ginkgoS.lineTo(0.012, -0.05); ginkgoS.lineTo(0, -0.17);
+    const mapleS = new THREE.Shape(); for (let k = 0; k < 10; k++) { const a = Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? 0.07 : 0.17; const x = Math.cos(a) * r, y = Math.sin(a) * r; k ? mapleS.lineTo(x, y) : mapleS.moveTo(x, y); } mapleS.closePath();
+    const sets = [[new THREE.ShapeGeometry(ginkgoS), [0xf2c94c, 0xf5d65e, 0xe9b23a, 0xffe08a]], [new THREE.ShapeGeometry(mapleS), [0xe8603a, 0xd9433a, 0xf0803c, 0xc9382e]]].map(([geo, cols]) => {
+      const m = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({ side: THREE.DoubleSide }), N / 2);
       m.frustumCulled = false; m.visible = false; const c = new THREE.Color();
       for (let i = 0; i < N / 2; i++) { c.setHex(cols[i % cols.length]); m.setColorAt(i, c); }
       scene.add(m); return m;
@@ -64,7 +66,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
       on(v) { on = v; sets.forEach(m => { m.visible = v; }); },
       update(dt, cam) {
         if (!on) return;
-        if ((nearT -= dt) <= 0) { nearT = 1; near = trees.filter(t => Math.hypot(t.x - cam.x, t.z - cam.z) < 38); if (typeof window !== 'undefined' && window.__dbgLeaves) window.__dbgLeaves({ trees: trees.length, near: near.length, l0: { ...st[0] }, cam: [cam.x, cam.y, cam.z] }); }
+        if ((nearT -= dt) <= 0) { nearT = 1; near = trees.filter(t => Math.hypot(t.x - cam.x, t.z - cam.z) < 38); }
         for (let i = 0; i < N; i++) {
           const l = st[i];
           if (l.wait > 0) { l.wait -= dt; if (l.wait <= 0) spawn(l, cam); }
