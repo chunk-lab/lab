@@ -16,6 +16,7 @@ import { createReader } from './reader.js';
 import { createNotebook } from './notebook.js';
 import { createRecord } from './record.js';
 import { createStudy } from './study.js';
+import { importOld } from './import.js';
 import './reader.css';
 export function createCore(config) {
   const base = config.base || './';
@@ -28,6 +29,7 @@ export function createCore(config) {
   core.wallet = createWallet();       // 共通のコイン（2Dも3Dも同じ）
   core.profile = createProfile(core.events, base);
   core.notebook = createNotebook();   // 勉強ノート（全アプリ共通の言葉の置き場）
+  importOld(core.notebook);           // 前から各アプリにあった言葉を1回だけ取り込む
   core.record = createRecord(core.events, core.notebook);   // 学習の記録（done・word・resume の報告をまとめる）
   core.ui = createUI(core);
   core.study = createStudy(core);     // 勉強部屋（自宅・アバターから開く）
