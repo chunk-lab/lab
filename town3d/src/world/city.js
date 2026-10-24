@@ -10,7 +10,8 @@ const SHOP_NAMES = ['パン', '花屋', '文房具', 'やおや', '本屋', '古
 export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   const r = rng(20261021);
   const B = new Batcher();
-  const colliders = [];     // { x0,x1,z0,z1 } か { cx,cz,r }
+  const colliders = [];
+  const trees = [];         // 木の位置(秋の落ち葉が落ちてくる所)     // { x0,x1,z0,z1 } か { cx,cz,r }
   const interact = [];      // 入口・調べる場所
   const buildings = [];     // 建物の外形(マップのダブルタップで、入口の前へ案内するため)
   const animated = [];      // 毎フレーム動かすもの
@@ -159,7 +160,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   for (const m of meshes) { const sn = m.material.userData.season; if (sn === 'blossom') m.visible = blossom; else if (sn === 'nonblossom') m.visible = !blossom; }
 
   return {
-    colliders, interact, buildings, animated, graph: GRAPH,
+    colliders, interact, buildings, animated, graph: GRAPH, groundMats: [ground.material, lawn.material], trees,
     setLite(on) { animated.fountainLite?.(on); },
     areaName(x, z) {
       if (Math.hypot(x, z) < PLAZA_R + 1) return 'ほし広場';
@@ -310,6 +311,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     });
   }
   function tree(x, z, kind = 'green', s = 1) {
+    trees.push({ x, z, s });
     colliders.push({ cx: x, cz: z, r: 0.35 * s });
     const pinkTree = kind === 'pink';   // 桜は春だけ(ピンクと緑の葉を両方つくり、季節で切りかえる)
     const leaf = foliageMat(pinkTree ? C.leafPink : kind === 'deep' ? 0x8cc89a : r() < 0.5 ? C.leaf : C.leaf2, pinkTree ? 'blossom' : '');
@@ -334,8 +336,8 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   function bench(x, z, ry) {
     const P4 = M4(x, z, ry);
     colliders.push({ cx: x, cz: z, r: 0.8 });
+    interact.push({ kind: 'bench', id: 'bench' + interact.length, x, z, ry, r: 1.8, label: '🪑 座る' });
     B.add(rbox(1.8, 0.12, 0.5, 0.04), mat(0xe8c9a8), 0, 0.48, 0, 0, 1, 1, 1, P4);
-    B.add(rbox(1.8, 0.4, 0.1, 0.04), mat(0xe8c9a8), 0, 0.85, -0.22, 0, 1, 1, 1, P4);
     for (const s of [-1, 1]) B.add(box(0.1, 0.48, 0.45), mat(0xa99bc0), s * 0.75, 0.24, 0, 0, 1, 1, 1, P4);
   }
   function flowerBed(x, z, ry) {
@@ -402,6 +404,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
   function pond(x, z, rr) {
     colliders.push({ cx: x, cz: z, r: rr + 0.2 });
+    interact.push({ kind: 'pond', id: 'pond', app: 'fishing', x: x + 3.2, z: z + 3.3, r: 2.2, label: '🎣 釣りをする' });
     B.add(cyl(rr + 0.4, rr + 0.5, 0.25, 28), mat(C.stone), x, 0.08, z);
     const w = new THREE.Mesh(new THREE.CircleGeometry(rr, 28), new THREE.MeshStandardMaterial({ color: C.water, roughness: 0.1 }));
     w.rotation.x = -Math.PI / 2; w.position.set(x, 0.22, z); scene.add(w);
@@ -412,6 +415,11 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     const bk = new THREE.Mesh(sph(0.07, 6), mat(0xffb38a)); bk.position.set(0.45, 0.22, 0); bk.scale.set(1.6, 0.6, 1); duck.add(bk);
     scene.add(duck);
     animated.push(t => { const a = t * 0.25; duck.position.set(x + Math.cos(a) * rr * 0.55, 0.3 + Math.sin(t * 2) * 0.02, z + Math.sin(a) * rr * 0.55); duck.rotation.y = Math.atan2(-Math.cos(a), -Math.sin(a)); });
+    // こがもを2羽(反対まわり・小さめ)
+    [[-0.18, 2.1, 0.55, 0.6], [0.31, 4.0, 0.35, 0.5]].forEach(([w, ph, rf, sc]) => {
+      const d = duck.clone(); d.scale.setScalar(sc); scene.add(d);
+      animated.push(t => { const a = t * w + ph; d.position.set(x + Math.cos(a) * rr * rf, 0.22 + Math.sin(t * 2 + ph) * 0.02, z + Math.sin(a) * rr * rf); d.rotation.y = Math.atan2(-Math.cos(a) * Math.sign(w), -Math.sin(a) * Math.sign(w)); });
+    });
   }
   function slide(x, z) {
     colliders.push({ x0: x - 1.2, x1: x + 1.2, z0: z - 2.2, z1: z + 2.2 });

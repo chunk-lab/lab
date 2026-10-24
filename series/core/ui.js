@@ -13,11 +13,20 @@ export function createUI(core) {
     sheet(`<h3>設定</h3>${row('bgm', 'BGM', 0, 1, 0.05)}${row('sfx', '効果音', 0, 1, 0.05)}
       <label class="cs-row"><span>見た目</span><select id="cs-theme"><option value="cute" ${s.get('theme') === 'cute' ? 'selected' : ''}>かわいい</option><option value="chic" ${s.get('theme') === 'chic' ? 'selected' : ''}>シック</option></select></label>
       <label class="cs-row"><span>英語の読み上げ</span><input type="checkbox" id="cs-voice" ${s.get('voice') ? 'checked' : ''}></label>
-      ${row('rate', '読み上げの速さ', 0.7, 1.3, 0.05)}<button class="cs-btn" id="cs-try">読み上げを試す</button>`, ov => {
+      ${row('rate', '読み上げの速さ', 0.7, 1.3, 0.05)}<button class="cs-btn" id="cs-try">読み上げを試す</button>
+      ${core.ai ? `<label class="cs-row"><span>AI(自分のキー)</span><select id="cs-aip">${Object.entries({ gemini: 'Gemini', openai: 'ChatGPT', claude: 'Claude' }).map(([k, n]) => `<option value="${k}" ${core.ai.state.provider === k ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+      <label class="cs-row cs-col"><span>AIのキー${core.ai.ready ? '(入っています)' : ''}</span><input id="cs-aik" type="password" autocomplete="off" placeholder="${core.ai.ready ? '変えるときだけ入れる' : 'キーを貼る(3Dの町と同じキー)'}"></label>
+      <p class="cs-note">キーはこの端末にだけ保存します。住人との会話・「自然な文か」の判定・例文づくりに使います。</p>` : ''}
+      ${core.admin && core.admin.on() ? '<button class="cs-btn" id="cs-admin">運営</button>' : ''}
+      <p class="cs-note" style="text-align:center;opacity:.6">版 ${(window.__APP__ && window.__APP__.build) || '-'}</p>`, (ov, close) => {
       ['bgm', 'sfx', 'rate'].forEach(k => ov.querySelector('#cs-' + k).oninput = e => s.set(k, +e.target.value));
       ov.querySelector('#cs-theme').onchange = e => s.set('theme', e.target.value);
       ov.querySelector('#cs-voice').onchange = e => s.set('voice', e.target.checked);
       ov.querySelector('#cs-try').onclick = () => core.speech.speak('Hello! Let’s read English in chunks.');
+      const aip = ov.querySelector('#cs-aip'), aik = ov.querySelector('#cs-aik');
+      if (aip) aip.onchange = e => core.ai.configure({ provider: e.target.value });
+      if (aik) aik.onchange = e => { if (e.target.value.trim()) { core.ai.configure({ key: e.target.value }); e.target.value = ''; toast('AIのキーを入れました'); } };
+      const ad = ov.querySelector('#cs-admin'); if (ad) ad.onclick = () => { close(); core.admin.open(); };
     });
   };
   const profile = () => {
@@ -29,5 +38,5 @@ export function createUI(core) {
       ov.querySelector('#cs-name').onchange = e => p.setName(e.target.value);
     });
   };
-  return { sheet, toast, settings, profile };
+  return { root, sheet, toast, settings, profile };
 }

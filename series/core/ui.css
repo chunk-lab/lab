@@ -27,3 +27,73 @@
 [hidden]{display:none!important}
 
 .cs-row select{font:inherit;font-size:14px;padding:6px 10px;border:2px solid #ead9c2;border-radius:10px;background:#fff;color:var(--cs-ink)}
+
+/* 勉強部屋 */
+.cs-study-ov{align-items:stretch}
+.cs-study{width:min(100%,520px);height:100%;max-height:100dvh;display:flex;flex-direction:column;background:var(--cs-paper);color:var(--cs-ink);font-family:inherit;animation:csup .22s ease-out}
+.cs-study header{display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 6px}
+.cs-study header b{font-size:19px}
+.cs-x{width:40px;height:40px;border-radius:50%;border:2px solid var(--cs-wood);background:#fff;font:inherit;font-weight:800;font-size:16px;color:var(--cs-ink);cursor:pointer}
+.cs-tabs{display:flex;gap:6px;padding:0 12px 8px;overflow-x:auto;flex:none}
+.cs-tabs button,.cs-chips button{flex:none;padding:8px 12px;border-radius:999px;border:2px solid #ead9c2;background:#fff;font:inherit;font-weight:800;font-size:13px;color:var(--cs-ink);cursor:pointer;white-space:nowrap}
+.cs-tabs button.on,.cs-chips button.on{background:var(--cs-sun);border-color:var(--cs-wood)}
+.cs-study main>*{flex:none;width:100%;box-sizing:border-box}
+.cs-study main{flex:1;min-height:0;overflow-y:auto;padding:4px 14px calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
+.cs-panel{background:#fff;border:2px solid #ead9c2;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.cs-panel h4{margin:0;font-size:14px}
+.cs-sub{margin:0;font-size:13px;color:#7a6656;line-height:1.6}
+.cs-goal{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800;font-size:14px}
+.cs-goal b{font-size:22px}
+.cs-goal select{font:inherit;font-size:13px;padding:4px 8px;border:2px solid #ead9c2;border-radius:10px;background:#fff;color:var(--cs-ink)}
+.cs-bar{height:12px;border-radius:999px;background:#f3e7d6;overflow:hidden}
+.cs-bar i{display:block;height:100%;background:var(--cs-leaf);border-radius:999px}
+.cs-resume,.cs-go{background:var(--cs-sun)}
+.cs-week{display:flex;gap:6px;align-items:flex-end;height:120px}
+.cs-col7{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+.cs-stack{flex:1;width:100%;max-width:28px;display:flex;flex-direction:column-reverse;background:#f6efe4;border-radius:6px;overflow:hidden}
+.cs-stack i{display:block;width:100%}
+.cs-col7 small{font-size:11px;color:#7a6656}
+.cs-key{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px}
+.cs-key i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.w-word{background:#f59a8c}.w-read{background:#6fb3e0}.w-make{background:#7cc47a}.w-talk{background:#c79be0}.w-chill{background:#f2c35b}
+.cs-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.cs-marks button{font-size:12px;padding:6px 10px}
+.cs-add{display:flex;gap:6px}
+.cs-add input{flex:1;min-width:0;font:inherit;font-size:16px;padding:8px 10px;border:2px solid #ead9c2;border-radius:10px;background:#fff;color:var(--cs-ink)}
+.cs-add .cs-btn{padding:8px 12px;flex:none}
+.cs-nb{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.cs-nb li{background:#fff;border:2px solid #ead9c2;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.cs-nb-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.cs-nb-t b{font-size:16px;word-break:break-word}
+.cs-nb-t span{font-size:14px}
+.cs-nb-t small{font-size:11px;color:#9a8574}
+.cs-nb-a .cs-del{margin-left:auto}
+.cs-nb-a{display:flex;gap:5px;flex-wrap:nowrap;align-items:center}
+.cs-nb-a button{flex:none;padding:4px 7px;white-space:nowrap;border-radius:999px;border:2px solid #ead9c2;background:#fff;font:inherit;font-size:11px;font-weight:800;color:var(--cs-ink);cursor:pointer}
+.cs-nb-a button.on{background:#ffe2a8;border-color:var(--cs-wood)}
+
+/* 今日なにする?・結果の帯・使ってみる・テスト・運営 */
+.cs-big{font-size:17px;padding:14px}
+.cs-go{background:var(--cs-sun)}
+.cs-btn small{display:block;font-size:11px;font-weight:700;color:#7a6656;margin-top:3px}
+.cs-sheet .cs-chips{flex:none}
+.cs-band{position:fixed;z-index:95;left:50%;transform:translateX(-50%);bottom:calc(52px + env(safe-area-inset-bottom,0px));width:min(94vw,480px);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:16px;background:#fffaf0;border:2px solid #8a5a32;box-shadow:0 4px 0 #8a5a32;color:#2b2320;font:800 13px "Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;animation:csup .2s ease-out}
+.cs-band div{display:flex;gap:6px;flex:none}
+.cs-band button{padding:6px 10px;border-radius:999px;border:2px solid #8a5a32;background:#ffc93c;font:inherit;font-size:12px;color:#2b2320;cursor:pointer;max-width:52vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-band [data-x]{background:#fff}
+.cs-q{margin:4px 0;font-size:24px;font-weight:800;text-align:center;word-break:break-word}
+.cs-ta{font:inherit;font-size:16px;padding:8px 10px;border:2px solid #ead9c2;border-radius:10px;background:#fff;color:var(--cs-ink);resize:vertical}
+.cs-adm{display:flex;flex-direction:column;gap:8px;padding:10px;border:2px solid #ead9c2;border-radius:14px;background:#fff}
+.cs-adm h4{margin:0;font-size:14px}
+.cs-adm-row{display:flex;gap:6px;flex-wrap:wrap}
+.cs-adm-row .cs-btn,.cs-adm-row button{padding:8px 10px;font-size:13px}
+.cs-adm-row button:not(.cs-btn){border-radius:10px;border:2px solid #ead9c2;background:#fff;font:inherit;font-weight:800;color:var(--cs-ink);cursor:pointer}
+.cs-adm-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.cs-adm-list li{display:flex;flex-direction:column;gap:4px;padding:8px;border:1px solid #ead9c2;border-radius:10px}
+.cs-adm-list small{font-size:11px;color:#7a6656}
+.cs-nb-a{flex-wrap:wrap!important}
+.cs-use{background:#fff3cc!important}
+.cs-mis{display:flex;flex-direction:column;gap:4px;padding:12px;border:2px solid #f2c35b;border-radius:14px;background:#fff8e1}
+.cs-mis b{font-size:16px;line-height:1.5}
+.cs-mis small{font-size:12px;color:#7a6656}
+.cs-dk{background:#f3efe8!important;color:#7a6656}

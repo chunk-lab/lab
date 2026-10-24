@@ -1,20 +1,33 @@
 // 画面の上に重ねる UI(DOM)。クラスはすべて tw- 接頭辞
 import { LOOKS, LOOK_IDS } from '../world/character.js';
+import { fmtN } from '../core/core.js';
 
 export const CSS = `
 .tw-root{position:absolute;inset:0;overflow:hidden;font-family:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;color:#5a4a6b;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-tap-highlight-color:transparent;
  --tw-pink:#ffb3c1;--tw-mint:#a8e6cf;--tw-lav:#c9b8ea;--tw-cream:#fffaf2;--tw-ink:#5a4a6b;--tw-sub:#8d7f9e;--tw-shadow:0 6px 18px rgba(90,74,107,.18);--tw-top:env(safe-area-inset-top,0px);--tw-bot:env(safe-area-inset-bottom,0px)}
 .tw-root *{box-sizing:border-box}
 .tw-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.tw-top{position:absolute;left:12px;right:12px;top:calc(10px + var(--tw-top));display:flex;gap:8px;align-items:center;pointer-events:none}
-.tw-chip{background:rgba(255,250,242,.9);border-radius:999px;padding:7px 13px;font-weight:700;font-size:14px;box-shadow:var(--tw-shadow);white-space:nowrap}
-.tw-area{max-width:46%;overflow:hidden;text-overflow:ellipsis}
-.tw-sp{flex:1}
+.tw-root .tw-top{position:absolute;left:12px;right:12px;top:calc(10px + var(--tw-top));display:flex;gap:6px;align-items:center;pointer-events:none}
+.tw-chip{background:rgba(255,250,242,.9);border-radius:999px;padding:7px 10px;font-weight:700;font-size:14px;box-shadow:var(--tw-shadow);white-space:nowrap;flex:none}
+.tw-area[hidden]{display:none}
+.tw-cam{position:absolute;left:10px;right:10px;top:calc(60px + var(--tw-top));margin:0 auto;max-width:520px;background:rgba(255,250,242,.94);border-radius:16px;padding:8px 10px;box-shadow:var(--tw-shadow);z-index:12;font-size:13px;font-weight:700}
+.tw-cam[hidden]{display:none}
+.tw-cam .r{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tw-cam .tw-btn{padding:7px 11px;font-size:13px;box-shadow:none;border:2px solid #eadff3}
+.tw-cam .on{background:var(--tw-lav);color:#fff}
+.tw-cam input[type=range]{flex:1;min-width:0}
+.tw-evt{position:absolute;left:10px;right:10px;top:calc(60px + var(--tw-top));margin:0 auto;max-width:480px;background:linear-gradient(160deg,#3b2f6b,#6a3f8f);color:#fff;border-radius:16px;padding:10px 12px;box-shadow:var(--tw-shadow);z-index:13;display:flex;gap:10px;align-items:center;font-weight:800;font-size:14px}
+.tw-evt .tw-btn{padding:7px 12px;font-size:13px;flex:none;background:#ffe08a;color:#5a4a6b}
+.tw-corner{position:absolute;right:8px;bottom:calc(8px + var(--tw-bot));display:flex;flex-direction:column;gap:8px;align-items:center}
+.tw-corner .tw-icon{width:38px;height:38px;font-size:18px;opacity:.88}
+.tw-area{flex:0 1 auto;min-width:0;max-width:46%;overflow:hidden;text-overflow:ellipsis}
+.tw-sp{flex:1;min-width:0}
 .tw-btn{pointer-events:auto;border:0;background:var(--tw-cream);color:var(--tw-ink);border-radius:999px;font:inherit;font-weight:700;box-shadow:var(--tw-shadow);cursor:pointer;transition:transform .12s}
 .tw-btn:active{transform:scale(.92)}
-.tw-find{height:42px;padding:0 16px;font-size:15px;font-weight:700;letter-spacing:.06em}
-.tw-icon{width:42px;height:42px;font-size:20px;display:grid;place-items:center;padding:0}
-.tw-action{position:absolute;right:20px;bottom:calc(26px + var(--tw-bot));min-width:96px;height:96px;border-radius:48px;padding:0 18px;font-size:17px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;text-shadow:0 1px 2px rgba(150,80,110,.4);animation:tw-pop .25s}
+.tw-lang{height:40px;min-width:40px;padding:0 10px;flex:none;white-space:nowrap;font-size:15px;font-weight:800}.tw-lang.on{background:var(--tw-mint)}
+.tw-find{height:40px;padding:0 12px;flex:none;white-space:nowrap;font-size:14px;font-weight:700;letter-spacing:.03em}
+.tw-icon{width:40px;height:40px;flex:none;font-size:20px;display:grid;place-items:center;padding:0}
+.tw-action{position:absolute;right:20px;bottom:calc(112px + var(--tw-bot));min-width:96px;height:96px;border-radius:48px;padding:0 18px;font-size:17px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;text-shadow:0 1px 2px rgba(150,80,110,.4);animation:tw-pop .25s}
 .tw-action[hidden]{display:none}
 .tw-emotes{position:absolute;left:12px;bottom:calc(16px + var(--tw-bot));display:flex;gap:6px}
 .tw-stick.fixed{left:22px;top:auto;bottom:calc(68px + var(--tw-bot));width:132px;height:132px;pointer-events:auto;touch-action:none;background:rgba(255,255,255,.32);border:2px solid rgba(255,255,255,.75);box-shadow:var(--tw-shadow)}
@@ -37,7 +50,7 @@ export const CSS = `
 .tw-dialog{position:absolute;left:12px;right:12px;bottom:calc(16px + var(--tw-bot));max-width:620px;margin:0 auto;background:rgba(255,250,242,.97);border-radius:22px;padding:16px 18px 14px;box-shadow:0 10px 30px rgba(90,74,107,.25);animation:tw-up .22s;pointer-events:auto}
 .tw-dname{position:absolute;top:-14px;left:18px;background:var(--tw-pink);color:#fff;padding:4px 14px;border-radius:999px;font-weight:800;font-size:14px}
 .tw-dname small{font-weight:600;opacity:.85;margin-left:6px}
-.tw-dtext{min-height:48px;font-size:16px;line-height:1.6;margin-top:6px}
+.tw-dtext{max-height:min(34vh,180px);overflow-y:auto;overscroll-behavior:contain;min-height:48px;font-size:16px;line-height:1.6;margin-top:6px}
 .tw-choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:flex-end}
 .tw-choices .tw-btn{padding:9px 16px;font-size:14px;background:#fff;border:2px solid var(--tw-lav);box-shadow:none}
 .tw-choices .tw-btn.main{background:var(--tw-mint);border-color:var(--tw-mint)}
@@ -70,7 +83,7 @@ export const CSS = `
 .tw-app-missing small{color:var(--tw-sub)}
 .tw-fade{position:absolute;inset:0;background:#fff8f3;pointer-events:none;opacity:0;transition:opacity .25s;z-index:19}
 .tw-card{touch-action:pan-y}
-.tw-map{display:block;width:100%;border-radius:16px;margin:0 0 10px;background:#cfe9c3;cursor:pointer;touch-action:manipulation}
+.tw-root .tw-map{display:block;width:100%;border-radius:16px;margin:0 0 10px;background:#cfe9c3;cursor:pointer;touch-action:manipulation}
 .tw-ftabs{display:flex;gap:6px;margin-bottom:8px}.tw-ftabs .tw-btn{flex:1;padding:8px;font-size:14px;box-shadow:none;border:2px solid #eadff3}.tw-ftabs .tw-btn.on{background:var(--tw-pink);border-color:var(--tw-pink);color:#fff}
 .tw-fq{width:100%;font:inherit;font-size:16px;padding:9px 12px;border-radius:14px;border:2px solid #eadff3;background:#fff;color:var(--tw-ink);user-select:text;-webkit-user-select:text}
 .tw-flist{max-height:34vh;overflow:auto;margin:8px 0;touch-action:pan-y}
@@ -95,7 +108,8 @@ export const CSS = `
 .tw-status{min-height:22px;font-size:14px;font-weight:700;margin:8px 0}
 .tw-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px}.tw-actions .tw-btn{padding:9px 16px;font-size:14px;box-shadow:none;border:2px solid #eadff3}.tw-actions .main{background:var(--tw-mint);border-color:var(--tw-mint)}
 .tw-card h2 small{font-size:12px;color:var(--tw-sub);margin-left:8px;font-weight:700}
-.tw-log{height:min(42vh,300px);overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
+.og-body{max-height:min(62vh,440px);overflow-y:auto;overscroll-behavior:contain}.og-t{font-weight:800;font-size:17px;margin:8px 0}.og-sub{font-size:13px;color:var(--tw-sub);font-weight:700;margin:4px 0}.og-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.og-ans{background:#fff;border-radius:14px;padding:8px 12px;margin:6px 0;font-size:15px;line-height:1.5}.og-ans b{display:block;font-size:12px;color:var(--tw-sub);font-weight:700}.og-sc{font-weight:800;color:var(--tw-pink)}
+.tw-log{height:min(46vh,340px);overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
 .tw-msg{max-width:84%;padding:8px 12px;border-radius:16px;font-size:15px;line-height:1.5;background:#fff;align-self:flex-start;user-select:text;-webkit-user-select:text}
 .tw-msg.me{align-self:flex-end;background:var(--tw-pink);color:#fff}.tw-msg.wait{opacity:.6}.tw-msg.err{background:#fff3e0;color:#9a6a3a}
 .tw-chatrow{display:flex;gap:8px}.tw-chatrow .tw-btn{padding:0 16px;box-shadow:none;border:2px solid var(--tw-mint);background:var(--tw-mint)}
@@ -109,28 +123,36 @@ export const CSS = `
 
 export function createHud(root, bus) {
   const h = s => { const t = document.createElement('template'); t.innerHTML = s.trim(); return t.content.firstChild; };
-  const top = h(`<div class="tw-top"><span class="tw-chip tw-area">ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
+  const top = h(`<div class="tw-top"><span class="tw-chip tw-area" hidden>ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-lang" aria-label="英語と日本語を切りかえ">日</button></div>`);
+  const corner = h(`<div class="tw-corner"><button class="tw-btn tw-icon tw-cambtn" aria-label="カメラ">🎥</button><button class="tw-btn tw-icon tw-photo" aria-label="写真をとる">📷</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
   const labels = h('<div class="tw-labels"></div>');
   const action = h('<button class="tw-btn tw-action" hidden></button>');
   const emotes = h('<div class="tw-emotes"><button class="tw-btn" data-e="wave">👋 手をふる</button><button class="tw-btn" data-e="say">💬 ひとこと</button><button class="tw-btn" data-e="feed" hidden>🌾 えさをまく</button></div>');
   const grade = h('<div class="tw-grade"></div>'), vig = h('<div class="tw-vig"></div>');
   root.prepend(grade, vig);
-  root.append(labels, top, emotes, action);
+  root.append(labels, top, emotes, action, corner);
+  const camBar = h('<div class="tw-cam" hidden></div>'); root.append(camBar);
   const area = top.querySelector('.tw-area'), clock = top.querySelector('.tw-clock'), coins = top.querySelector('.tw-coins');
-  let dialog = null, toastEl = null, toastT = 0, panel = null;
+  let dialog = null, toastEl = null, toastT = 0, panel = null, ptLast = 0;
 
   emotes.onclick = e => { const b = e.target.closest('[data-e]'); if (b) bus.emit('ui:emote', b.dataset.e); };
-  top.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
+  corner.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
+  corner.querySelector('.tw-cambtn').onclick = () => bus.emit('ui:cam');
+  corner.querySelector('.tw-photo').onclick = () => bus.emit('ui:photo');
   top.querySelector('.tw-find').onclick = () => bus.emit('ui:find');
+  const langB = top.querySelector('.tw-lang');
+  langB.onclick = () => bus.emit('ui:lang');
+  const offLang = bus.on('lang', v => { langB.textContent = v.on ? 'EN' : '日'; langB.classList.toggle('on', !!v.on); });
   action.onclick = () => bus.emit('ui:action');
 
   const tags = new Map(); // id → {el, bubble, until}
   return {
+    camBar,
     setArea(t) { if (area.textContent !== t) area.textContent = t; },
     setLite(on) { grade.style.display = vig.style.display = on ? 'none' : ''; },
     setFeed(on) { const b = emotes.querySelector('[data-e="feed"]'); if (b && b.hidden === on) b.hidden = !on; },
     setClock(hh) { const H = Math.floor(hh), m = Math.floor((hh % 1) * 60); const ic = hh < 5 || hh >= 19 ? '🌙' : hh < 7 ? '🌅' : hh < 17 ? '☀️' : '🌇'; clock.textContent = `${ic} ${String(H).padStart(2, '0')}:${String(m).padStart(2, '0')}`; },
-    setCoins(n) { coins.textContent = '🪙 ' + n; },
+    setCoins(n, g) { coins.textContent = '🪙 ' + fmtN(n) + (g == null ? '' : ' 💎 ' + fmtN(g)); },
     setAction(label) { if (!label) { action.hidden = true; return; } action.hidden = false; if (action.textContent !== label) action.textContent = label; },
     get busy() { return !!dialog || !!panel; },
     toast(text) {
@@ -171,16 +193,21 @@ export function createHud(root, bus) {
     },
     // pos: id → {x,y,visible}(画面座標)
     placeTags(pos) {
-      const now = performance.now();
+      const now = performance.now(), dt = Math.min(0.1, (now - (ptLast || now)) / 1000); ptLast = now;
       for (const [id, t] of tags) {
         const p = pos.get(id);
         const vis = p && p.visible;
+        // 住人が押し出されて細かく動いても、名前とふきだしがゆれないよう、画面上の位置をなめらかにする(大きく動くときは、すばやく追いかける)
+        if (vis) {
+          if (t.sx === undefined) { t.sx = p.x; t.sy = p.y; }
+          else { const dx = p.x - t.sx, dy = p.y - t.sy, k = 1 - Math.exp(-dt * (9 + Math.hypot(dx, dy) * 0.5)); t.sx += dx * k; t.sy += dy * k; }
+        } else t.sx = undefined;
         t.el.style.display = vis && p.showName ? '' : 'none';
-        if (vis) t.el.style.transform = `translate(${p.x}px,${p.y}px) translate(-50%,-100%)`;
+        if (vis) t.el.style.transform = `translate(${t.sx}px,${t.sy}px) translate(-50%,-100%)`;
         if (t.bubble) {
           if (now > t.until) { t.bubble.remove(); t.bubble = null; continue; }
           t.bubble.style.display = vis ? '' : 'none';
-          if (vis) t.bubble.style.transform = `translate(${p.x}px,${p.y - 24}px) translate(-50%,-100%)`;
+          if (vis) t.bubble.style.transform = `translate(${t.sx}px,${t.sy - 24}px) translate(-50%,-100%)`;
         }
       }
     },
@@ -208,7 +235,7 @@ export function createHud(root, bus) {
       el.querySelector('.tw-start').onclick = () => { el.remove(); onStart({ look: sel, name: (inp.value.trim() || LOOKS[sel].name).slice(0, 8) }); };
       root.appendChild(el);
     },
-    dispose() { this.closeDialog(); this.closePanel(); toastEl?.remove(); [top, labels, action, emotes].forEach(e => e.remove()); },
+    dispose() { offLang(); this.closeDialog(); this.closePanel(); toastEl?.remove(); [top, labels, action, emotes].forEach(e => e.remove()); },
   };
 }
 const hex = n => n.toString(16).padStart(6, '0');

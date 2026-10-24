@@ -46,11 +46,11 @@ export function createEnv(scene, { shadows = true } = {}) {
   // 月(その日の月齢で満ち欠けが変わる)
   const synodic = 29.530588853, jd = Date.now() / 86400000 + 2440587.5;
   let moonPhase = (((jd - 2451550.1) / synodic) % 1 + 1) % 1;   // 0=新月, 0.5=満月
-  const moonU = { uA: { value: moonPhase * Math.PI * 2 }, uO: { value: 0 } };
+  const moonU = { uA: { value: moonPhase * Math.PI * 2 }, uO: { value: 0 }, uC: { value: 9 } };   // uC=月食のとき、地球のかげの中心(9=なし)
   const moon = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({
     uniforms: moonU, transparent: true, depthWrite: false, fog: false, toneMapped: false,
     vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
-    fragmentShader: `varying vec2 vUv; uniform float uA, uO;
+    fragmentShader: `varying vec2 vUv; uniform float uA, uO, uC;
       float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
       void main(){
         vec2 p = (vUv - 0.5) * 2.0; float r2 = dot(p,p); if (r2 > 1.0) discard;
@@ -61,6 +61,9 @@ export function createEnv(scene, { shadows = true } = {}) {
         vec3 col = vec3(1.0, 0.9, 0.66) * shade * limb;                              // 白でなく、ほんのり黄色い月
         vec3 dark = vec3(0.16, 0.18, 0.3);
         float edge = 1.0 - smoothstep(0.94, 1.0, sqrt(r2));
+        float sh = 1.0 - smoothstep(1.28, 1.58, length(p - vec2(uC, 0.12)));   // 月食:地球のかげ(ふちは赤く、中は暗い赤銅色)
+        vec3 red = vec3(0.62, 0.15, 0.07) * shade;
+        col = mix(col, mix(red * 1.25, red * 0.55, smoothstep(0.0, 1.0, sh)), sh);
         gl_FragColor = vec4(col, lit * edge * uO);
       }`,
   }));
@@ -95,6 +98,30 @@ export function createEnv(scene, { shadows = true } = {}) {
   }
   scene.add(clouds);
 
+  // 日食:太陽(ふだんは出さない)と、それをかくす月。ここは日食のあいだだけ見える
+  const discGeo = new THREE.CircleGeometry(1, 40);
+  const sunDisc = new THREE.Mesh(discGeo, new THREE.MeshBasicMaterial({ color: 0xfff4d6, transparent: true, depthWrite: false, fog: false, toneMapped: false }));
+  const glowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, 'rgba(255,238,180,0.8)'); gr.addColorStop(0.3, 'rgba(255,230,160,0.4)'); gr.addColorStop(0.55, 'rgba(255,225,155,0.12)'); gr.addColorStop(1, 'rgba(255,225,155,0)'); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c); })();
+  const sunGlow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: glowTex, transparent: true, opacity: 0.8, depthWrite: false, fog: false, toneMapped: false, blending: THREE.AdditiveBlending }));
+  // ダイヤモンドリング:かくれる直前・出た直後に、ふちの一点がまぶしく光る
+  const flareTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'); const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.12, 'rgba(255,250,235,0.9)'); gr.addColorStop(0.35, 'rgba(255,240,200,0.28)'); gr.addColorStop(1, 'rgba(255,240,200,0)'); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); g.globalCompositeOperation = 'lighter'; for (const [w, h] of [[128, 5], [5, 128]]) { const l = g.createLinearGradient(0, 0, w > h ? 128 : 0, w > h ? 0 : 128); l.addColorStop(0, 'rgba(255,255,255,0)'); l.addColorStop(0.5, 'rgba(255,255,255,0.9)'); l.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = l; g.fillRect(64 - w / 2, 64 - h / 2, w, h); } return new THREE.CanvasTexture(c); })();
+  const flare = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: flareTex, transparent: true, depthWrite: false, fog: false, toneMapped: false, blending: THREE.AdditiveBlending, opacity: 0 }));
+  const coronaTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, 'rgba(255,250,235,0)'); gr.addColorStop(0.36, 'rgba(255,250,235,0)'); gr.addColorStop(0.41, 'rgba(255,248,225,0.95)'); gr.addColorStop(0.55, 'rgba(255,235,185,0.42)'); gr.addColorStop(0.8, 'rgba(255,225,160,0.1)'); gr.addColorStop(1, 'rgba(255,225,160,0)'); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c); })();
+  const corona = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: coronaTex, transparent: true, depthWrite: false, fog: false, toneMapped: false, blending: THREE.AdditiveBlending, opacity: 0 }));
+  const sunCover = new THREE.Mesh(discGeo, new THREE.MeshBasicMaterial({ color: 0x07060e, transparent: true, depthWrite: false, fog: false, toneMapped: false }));
+  for (const m of [sunGlow, sunDisc, sunCover, corona, flare]) { m.visible = false; m.frustumCulled = false; m.renderOrder = -1; scene.add(m); }
+  sunGlow.renderOrder = -2; corona.renderOrder = 0; flare.renderOrder = 1;
+  // 雨と虹
+  const RN = 700, rainPos = new Float32Array(RN * 6), rainSeed = Array.from({ length: RN }, () => [(Math.random() - 0.5) * 70, Math.random() * 30, (Math.random() - 0.5) * 70]);
+  const rainGeo = new THREE.BufferGeometry(); rainGeo.setAttribute('position', new THREE.BufferAttribute(rainPos, 3));
+  const rainMat = new THREE.LineBasicMaterial({ color: 0xdfe9ff, transparent: true, opacity: 0, depthWrite: false, fog: false });
+  const rainLines = new THREE.LineSegments(rainGeo, rainMat); rainLines.frustumCulled = false; rainLines.visible = false; rainLines.renderOrder = 6; scene.add(rainLines);
+  const bow = new THREE.Group(); bow.visible = false;
+  { const cols = [0xff5a5a, 0xff9a4a, 0xffe05a, 0x6bdc6b, 0x58b8ff, 0x5a6cff, 0xa06aff];
+    cols.forEach((c, i) => { for (const [w, op] of [[7, 0.1], [3.4, 0.28]]) { const r0 = 150 - i * 3.2; const m = new THREE.Mesh(new THREE.RingGeometry(r0 - w / 2, r0 + w / 2, 96, 1, 0, Math.PI), new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: op, depthWrite: false, fog: false, toneMapped: false, side: THREE.DoubleSide })); m.userData.op = op; bow.add(m); } });
+  }
+  bow.renderOrder = -1; bow.traverse(o => { o.renderOrder = -1; o.frustumCulled = false; }); scene.add(bow);
+  const sstep = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   const hemi = new THREE.HemisphereLight(0xffffff, 0xb9a9d9, 1);
   scene.add(hemi);
   const sun = new THREE.DirectionalLight(0xffffff, 2);
@@ -130,11 +157,60 @@ export function createEnv(scene, { shadows = true } = {}) {
     },
     setMoonDate(d) { const j = d.getTime() / 86400000 + 2440587.5; moonPhase = (((j - 2451550.1) / synodic) % 1 + 1) % 1; moonU.uA.value = moonPhase * Math.PI * 2; },
     setMoon(ph) { moonPhase = ((ph % 1) + 1) % 1; moonU.uA.value = moonPhase * Math.PI * 2; },
+    // 時間を止めて、その時刻の空にする(花火・日食のあいだ)。release で元にもどる
+    hold(h) { if (!this._held) this._held = { hour: this.hour, speed: this.speed }; this.hour = h; this.speed = 0; },
+    release() { if (this._held) { this.hour = this._held.hour; this.speed = this._held.speed; this._held = null; } },
+    // 天体イベント:'solar'=日食 'lunar'=月食。dur=秒。ずっと進む(時間は止める)
+    startEclipse(kind, dur = 90) {
+      this.stopEclipse(); this.hold(kind === 'solar' ? 12.2 : 22.4);
+      this.eclipse = { kind, t: 0, dur, cover: 0, moonPhase0: moonPhase };
+      if (kind === 'lunar') this.setMoon(0.5);
+    },
+    stopEclipse() {
+      if (!this.eclipse) return; const e = this.eclipse; this.eclipse = null;
+      moonU.uC.value = 9; for (const m of [sunGlow, sunDisc, sunCover, corona, flare]) m.visible = false;
+      if (e.kind === 'lunar') this.setMoon(e.moonPhase0);
+      this.release();
+    },
+    // 天気:'rain' = 雨→あがって虹。dur=秒(全体)
+    startWeather(dur = 120) { this.stopWeather(); this.hold(14); this.weather = { t: 0, dur, rain: 0, bow: 0 }; },
+    stopWeather() { if (!this.weather) return; this.weather = null; rainLines.visible = false; rainMat.opacity = 0; bow.visible = false; scene.fog.near = 75; scene.fog.far = 210; cm.color.setScalar(1); this.rainLevel = 0; this.release(); },
+    skyPos(kind) { return kind === 'solar' ? sunDisc.position.clone() : kind === 'rain' ? bow.position.clone().setY(95) : kind === 'lunar' ? moon.position.clone() : null; },
     meteorNow() { startMeteor(this.camera); },
     setShadows(on, size = 2048) { sun.castShadow = on; if (sun.shadow.mapSize.x !== size) { sun.shadow.mapSize.set(size, size); sun.shadow.map?.dispose(); sun.shadow.map = null; } },
     update(dt, focus) {
       this.hour = (this.hour + dt * this.speed) % 24;
       const s = sample(this.hour);
+      const E = this.eclipse; let ecl = 0;
+      if (E) {
+        E.t += dt; const p = Math.min(1, E.t / E.dur), u = p * 2 - 1;
+        if (E.kind === 'solar') {
+          // 太陽と月のずれ d(太陽の半径=1 にして)。真ん中ほどゆっくり動く → 皆既の時間がのびる
+          const R = 1, r = 1.06, off = 2.12 * (0.7 * u + 0.3 * u * u * u), d = Math.abs(off);
+          let cov; if (d >= R + r) cov = 0; else if (d <= r - R) cov = 1; else { const a = Math.acos((d * d + R * R - r * r) / (2 * d * R)), b = Math.acos((d * d + r * r - R * R) / (2 * d * r)); cov = (R * R * (a - Math.sin(2 * a) / 2) + r * r * (b - Math.sin(2 * b) / 2)) / (Math.PI * R * R); }
+          E.cover = ecl = Math.max(0, Math.min(1, cov)); E.off = off;
+        } else {
+          const cx = 2.4 * (0.6 * u + 0.4 * u * u * u); moonU.uC.value = cx; E.cover = ecl = Math.max(0, 1 - Math.max(0, Math.abs(cx) - 0.45) / 1.9);
+        }
+        if (p >= 1) { this.stopEclipse(); }
+      }
+      const W = this.weather;
+      if (W) {
+        W.t += dt; const p = W.t / W.dur;
+        W.rain = sstep(0, 0.1, p) * (1 - sstep(0.52, 0.66, p)); W.bow = sstep(0.6, 0.74, p) * (1 - sstep(0.9, 1, p));
+        this.rainLevel = W.rain;
+        if (p >= 1) this.stopWeather();
+      }
+      if (E && E.kind === 'solar') {   // 日食のあいだは、空と光を夕ぐれ→夜に近づける
+        const deep = new THREE.Color(0x1d1a40), warm = new THREE.Color(0xb86a5a);
+        s.sunI *= 1 - 0.88 * ecl; s.hemiI *= 1 - 0.5 * ecl; s.top.lerp(deep, 0.85 * ecl); s.bottom.lerp(warm, 0.55 * ecl).lerp(deep, 0.25 * ecl);
+        s.night = Math.max(s.night, ecl * 0.85);
+      }
+      if (this.weather) {
+        const rn = this.weather.rain, gr = new THREE.Color(0x7a8499), gb = new THREE.Color(0xb0b7c6);
+        s.sunI *= 1 - 0.7 * rn; s.hemiI *= 1 - 0.22 * rn; s.top.lerp(gr, 0.85 * rn); s.bottom.lerp(gb, 0.8 * rn);
+        scene.fog.near = 75 - 40 * rn; scene.fog.far = 210 - 95 * rn; cm.color.setScalar(1 - 0.38 * rn);
+      }
       skyU.top.value.copy(s.top); skyU.bottom.value.copy(s.bottom);
       scene.fog.color.copy(s.bottom).lerp(s.top, 0.25);
       hemi.color.copy(s.top).lerp(new THREE.Color(0xffffff), 0.55);
@@ -148,6 +224,33 @@ export function createEnv(scene, { shadows = true } = {}) {
       const dir = new THREE.Vector3(Math.cos(ang) * 0.8, Math.max(0.35, Math.sin(ang)) * 1.0, 0.55).normalize();
       sun.position.copy(focus).addScaledVector(dir, 70);
       sun.target.position.copy(focus);
+      if (E && this.eclipse) {   // 太陽の向きに、日食の円を置く(カメラのほうを向ける)
+        const sd = dir.clone().normalize(), sp = focus.clone().addScaledVector(sd, 330), up = new THREE.Vector3(0, 1, 0), rt = new THREE.Vector3().crossVectors(up, sd).normalize();
+        if (E.kind === 'solar') {
+          const Rs = 15;
+          sunGlow.position.copy(sp); sunGlow.lookAt(focus); sunGlow.scale.setScalar(Rs * 7);
+          sunDisc.position.copy(sp); sunDisc.lookAt(focus); sunDisc.scale.setScalar(Rs);
+          sunCover.position.copy(sp).addScaledVector(rt, E.off * Rs).addScaledVector(sd, -1); sunCover.lookAt(focus); sunCover.scale.setScalar(Rs * 1.04);
+          corona.position.copy(sp).addScaledVector(sd, -2); corona.lookAt(focus); corona.scale.setScalar(Rs * 5); const ad = Math.abs(E.off), w = 1 + ad - 1.06, fl = sstep(0.4, 0.06, w) * sstep(0, 0.035, w), sgn = E.off >= 0 ? -1 : 1;
+          corona.material.opacity = Math.max(Math.max(0, (ecl - 0.93) / 0.07), 0.5 * fl);
+          flare.position.copy(sp).addScaledVector(rt, sgn * (1 - Math.max(0, w) * 0.5) * Rs).addScaledVector(sd, -3); flare.lookAt(focus); flare.scale.setScalar(Rs * (1.2 + 3 * fl)); flare.material.opacity = fl;
+          sunGlow.material.opacity = 0.8 * (1 - ecl);
+          for (const m of [sunGlow, sunDisc, sunCover, corona, flare]) m.visible = true;
+        }
+      }
+      if (this.weather) {
+        const W = this.weather, cp = (this.camera && this.camera.position) || focus;
+        if (W.rain > 0.01) {
+          rainLines.visible = true; rainMat.opacity = 0.55 * W.rain; rainLines.position.set(cp.x, Math.max(0, cp.y - 12), cp.z);
+          for (let i = 0; i < RN; i++) { const sd = rainSeed[i]; sd[1] -= 34 * dt; if (sd[1] < 0) sd[1] += 30; rainPos.set([sd[0], sd[1], sd[2], sd[0] - 0.12, sd[1] + 1.1, sd[2]], i * 6); }
+          rainGeo.attributes.position.needsUpdate = true;
+        } else rainLines.visible = false;
+        if (W.bow > 0.01) {
+          const hx = -dir.x, hz = -dir.z, hl = Math.hypot(hx, hz) || 1;
+          bow.position.set(focus.x + hx / hl * 300, -2, focus.z + hz / hl * 300); bow.lookAt(focus.x, -2, focus.z); bow.visible = true;
+          bow.children.forEach(m => { m.material.opacity = m.userData.op * W.bow * 1.6; });
+        } else bow.visible = false;
+      }
       sky.position.copy(focus); stars.position.copy(focus);
       clouds.rotation.y += dt * 0.004;
       clouds.position.set(focus.x, 0, focus.z);

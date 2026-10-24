@@ -370,3 +370,7 @@ html[data-theme="cute"] .ct-cc .edView .edNote,html[data-theme="cute"] .ct-cc .e
 .ct-cc .navBtn{width:52px}
 .ct-cc .cutBtn{flex:1 1 0;min-width:0;margin-left:0;padding-left:6px;padding-right:6px}
 .ct-cc .cutBtn small{white-space:normal;line-height:1.25}
+
+/* 無料会員：AIを使う登録は出さない（手打ち・お手軽自動は使える） */
+.ct-cc.cc-free .edCopy,.ct-cc.cc-free #edAI,.ct-cc.cc-free .edRow:has(#shCopyFile),.ct-cc.cc-free .edRow:has(#shCopyChat),.ct-cc.cc-free #shDrop,.ct-cc.cc-free ol.edSteps:has(+ .edRow #shCopyFile),.ct-cc.cc-free h3:has(+ ol.edSteps + .edRow #shCopyFile){display:none!important}
+.ct-cc.cc-free #edStatus::before{content:"AIを使った登録(コピペ方式・AIで分ける・ファイル用の指示文)は有料会員の機能です。 ";display:block;font-weight:800;color:#c0563c;margin-bottom:4px}

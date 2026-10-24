@@ -1,6 +1,6 @@
 import { $, LS, LV, SV, esc, rec, save, starsOf } from './base.js';
 import { startRun } from './play.js';
-import { closeOv, overlay, toast } from './screens.js';
+import { closeOv, overlay, setCur, toast } from './screens.js';
 import { SE } from './sound.js';
 /* ===== 単語練習：単語（直した訳）・熟語・単語集（自分で作る／みんなの） ===== */
 export let WJA=null;export function wja(pos){if(!WJA){WJA={};[1,2,3].forEach(l=>{WORDS[l].forEach(w=>(WJA[w[1]]=WJA[w[1]]||[]).push(w[2]));IDIOMS[l].forEach(w=>(WJA.ph=WJA.ph||[]).push(w[2]))})}return pos==="x"?WJA.n.concat(WJA.v):(WJA[pos]||WJA.n)}
@@ -27,6 +27,9 @@ export function parseWordLines(text){const ok=[],errs=[],long=[],seen=new Set();
   return {ok,errs,long}}
 export function ulPlay(L,k){const ws=L.lines.map(lineToW),a=k*USET,part=ws.slice(a,a+USET);
   return {id:`u-${L.sid||L.lid}-${k+1}`,lv:+L.lv||1,word:true,title:`${L.title}（${a+1}〜${a+part.length}）`,ja:`${part[0][0]} 〜 ${part[part.length-1][0]}`,tag:`${L.cat||"単語集"}・単語練習`,words:part,chunks:[]}}
+/* 勉強ノートなど外から渡された単語（[英語, 日本語] の並び）で、すぐ単語練習を始める */
+export function playList(title,pairs){const ws=pairs.filter(w=>w&&w[0]&&w[1]).slice(0,USET).map(w=>[String(w[0]),"x",String(w[1])]);if(ws.length<2)return false;
+  setCur({id:"nb-"+Date.now().toString(36),lv:+SV.lv||1,word:true,title:title||"勉強ノート",ja:`${ws[0][0]} 〜 ${ws[ws.length-1][0]}`,tag:"勉強ノート・単語練習",words:ws,chunks:[]});startRun(1);return true}
 export function renderWords(){const t=SV.wtab||"w",lv=SV.lv;
   $("wtabs").innerHTML=[["w","単語"],["i","熟語"],["u","単語集"]].map(([k,n])=>`<button data-t="${k}" class="${k===t?"on":""}">${n}</button>`).join("");
   $("wtabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{SE.tap();SV.wtab=b.dataset.t;save();renderWords()});
@@ -37,7 +40,7 @@ export function renderWords(){const t=SV.wtab||"w",lv=SV.lv;
   $("wNote").textContent=t==="i"?`${LV[lv].name}によく出る熟語を${n}個ずつ。読み上げを聞いて、意味を選ぶ。`:`よく使われる順に${n}語ずつ。読み上げを聞いて、意味を選ぶ（単語ダッシュ）。`;
   $("wsets").innerHTML=Array.from({length:m},(_,k)=>{const id=`${t==="i"?"i":"w"}${lv}-${k+1}`,st=starsOf(id,1),b=rec(id,1,"ta");
     return `<button class="wset" data-k="${k}"><b>${k+1}</b><span class="ws">${esc(src[lv][k*n][0])}…</span><span class="st">${"★".repeat(st)}<i>${"★".repeat(3-st)}</i></span>${b?`<small>${b.time.toFixed(1)}s</small>`:""}</button>`}).join("");
-  $("wsets").querySelectorAll(".wset").forEach(b=>b.onclick=()=>{SE.tap();CUR=wordSet(lv,+b.dataset.k,t);startRun(1)});}
+  $("wsets").querySelectorAll(".wset").forEach(b=>b.onclick=()=>{SE.tap();setCur(wordSet(lv,+b.dataset.k,t));startRun(1)});}
 export function renderUL(){const all=allLists(),cats=[...new Set(all.map(l=>l.cat).filter(Boolean))];if(UCAT&&!cats.includes(UCAT))UCAT="";
   $("wTitle").textContent="単語集";
   $("wNote").textContent=WDB?"自分で作った単語集と、みんなが共有した単語集（🌐）。カテゴリーで絞り込めます。":"自分で作った単語集。英語と訳を1行ずつ貼り付けるか、ファイルから読み込めます。";
@@ -53,7 +56,7 @@ export function ulOpen(L){const n=Math.ceil(L.lines.length/USET),own=L.mine,canD
     ${own?`<button class="sbtn" id="uEd">編集する</button>`:""}${own&&WDB?`<button class="sbtn" id="uSh">${L.sid?"共有を今の内容で上書きする":"🌐 みんなに共有する"}</button>`:""}
     ${canDrop?`<button class="sbtn" id="uDr">共有を取り下げる</button>`:""}${!own?`<button class="sbtn" id="uCp">自分の単語集にコピー</button>`:""}
     ${own?`<button class="sbtn" id="uDel" style="color:var(--bad)">この単語集を消す</button>`:""}<button class="sbtn" id="uX">閉じる</button></div>`,b=>{
-    b.querySelectorAll(".wset").forEach(x=>x.onclick=()=>{SE.tap();closeOv();CUR=ulPlay(L,+x.dataset.k);startRun(1)});
+    b.querySelectorAll(".wset").forEach(x=>x.onclick=()=>{SE.tap();closeOv();setCur(ulPlay(L,+x.dataset.k));startRun(1)});
     b.querySelector("#uX").onclick=closeOv;
     const q=id=>b.querySelector(id);
     q("#uEd")&&(q("#uEd").onclick=()=>ulEdit(L));

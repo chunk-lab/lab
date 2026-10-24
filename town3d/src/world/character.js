@@ -83,6 +83,14 @@ export function makeCharacter(look, { scale = 1 } = {}) {
   if (look.acc === 'ribbon') { [-1, 1].forEach(s => { const r = add(geo('rib', () => new THREE.ConeGeometry(0.07, 0.14, 4)), M(look.accColor), 0.14 + s * 0.07, 0.2, 0.02, head); r.rotation.z = s * Math.PI / 2; }); add(sph(0.035, 8), M(look.accColor), 0.14, 0.2, 0.02, head); }
   if (look.acc === 'cap') { const c = add(geo('hat', () => new THREE.SphereGeometry(0.25, 24, 12, 0, Math.PI * 2, 0, 1.3)), toon(look.accColor, { side: THREE.DoubleSide }), 0, 0.06, -0.01, head); const v = add(cyl(0.16, 0.16, 0.025, 14), M(look.accColor), 0, 0.12, 0.2, head); v.scale.z = 0.7; }
   if (look.acc === 'tophat') { add(cyl(0.15, 0.15, 0.22, 14), M(look.accColor), 0, 0.3, 0, head); add(cyl(0.24, 0.24, 0.025, 16), M(look.accColor), 0, 0.2, 0, head); add(cyl(0.152, 0.152, 0.04, 14), M(0xff9aa2), 0, 0.23, 0, head); }
+  // 砂吹さんの帽子:つばの広い、くたっとした帽子に羽
+  if (look.acc === 'snuf') {
+    const hm = toon(look.accColor, { side: THREE.DoubleSide });
+    add(cyl(0.31, 0.31, 0.02, 20), hm, 0, 0.17, 0, head);
+    const dome = add(geo('snufdome', () => new THREE.SphereGeometry(0.23, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2)), hm, 0, 0.17, 0, head); dome.scale.y = 1.15;
+    add(cyl(0.235, 0.235, 0.045, 20), M(0x6b4a3a), 0, 0.2, 0, head);
+    const fe = add(geo('snuff', () => new THREE.ConeGeometry(0.03, 0.2, 6)), M(0xf0e6c8), 0.22, 0.3, 0.02, head); fe.rotation.z = -0.9;
+  }
   // 本(ノート)は、片手に下げて持つ(うでは、ふつうに振る)
   if (look.acc === 'apron') {
     add(geo('bookc', () => new THREE.BoxGeometry(0.05, 0.24, 0.18)), M(look.accColor), 0, -0.45, 0.01, arms[0]);
@@ -109,6 +117,18 @@ export function makeCharacter(look, { scale = 1 } = {}) {
     if (outG.length) { const ol = new THREE.Mesh(mergeGeometries(outG.map(g => g.clone()), false), outlineMat); grp.add(ol); }
   };
   [body, head, ...legs, ...arms].forEach(bakeGroup);
+  // 砂吹さんの持ち物:釣り竿とハーモニカ(動かすので、合体させずにあとから付ける)
+  const snuf = look.acc === 'snuf';
+  let fishG = null, harp = null;
+  if (snuf) {
+    fishG = new THREE.Group(); fishG.visible = false; arms[1].add(fishG);
+    const rodG = new THREE.Group(); rodG.position.set(0, -0.45, 0.05); rodG.rotation.x = 1.78; fishG.add(rodG);
+    add(cyl(0.012, 0.025, 1.9, 6), M(0x8a6b4a), 0, 0.95, 0, rodG);
+    const lineG = new THREE.Group(); lineG.position.set(0, -1.24, 1.4); lineG.rotation.x = -2.24; fishG.add(lineG);
+    add(cyl(0.004, 0.004, 1.3, 4), M(0xf5f5f5), 0, 0, 0, lineG);
+    add(sph(0.04, 8), M(0xff6b6b), 0, -1.64, 0.89, fishG);
+    harp = add(geo('harp', () => new THREE.BoxGeometry(0.2, 0.045, 0.05)), M(0xc8ccd4), 0, -0.1, 0.235, head); harp.visible = false;
+  }
   { const ol = new THREE.Mesh(torso.geometry, outlineMat); ol.position.copy(torso.position); ol.scale.copy(torso.scale); torso.userData.ol = ol; body.add(ol); }
   for (const e of eyes) { /* 目はまばたきするので別メッシュのまま */ }
 
@@ -118,7 +138,7 @@ export function makeCharacter(look, { scale = 1 } = {}) {
 
   root.scale.setScalar(scale);
   let phase = 0, blinkT = 2 + Math.random() * 3, wave = 0, idleT = Math.random() * 10;
-  return {
+  const self = {
     root, head,
     height: 1.62 * scale,
     wave() { wave = 1.6; },
@@ -139,12 +159,22 @@ export function makeCharacter(look, { scale = 1 } = {}) {
         arms[1].rotation.z = Math.PI * 0.85 + Math.sin(wave * 14) * 0.25;
         arms[1].rotation.x = 0;
       } else arms[1].rotation.z = 0.12;
+      if (snuf) {
+        const ps = self.pose;
+        fishG.visible = ps === 'fish'; harp.visible = ps === 'harp';
+        if (ps === 'fish') { arms[1].rotation.x = -0.9 + Math.sin(idleT * 1.3) * 0.03; arms[1].rotation.z = 0.12; arms[0].rotation.x = 0; head.rotation.y = 0; }
+        else if (ps === 'harp') { arms[0].rotation.x = arms[1].rotation.x = -2.1; arms[1].rotation.z = 0; head.rotation.y = 0; }
+      }
+      // すわる・ねころぶ(家の中で使う)
+      if (self.pose === 'sit') { legs[0].rotation.x = legs[1].rotation.x = -1.45; arms[0].rotation.x = arms[1].rotation.x = -0.4; body.position.y = 0; body.rotation.x = 0; head.rotation.y = Math.sin(idleT * 0.4) * 0.25; }
+      else if (self.pose === 'lie') { legs[0].rotation.x = legs[1].rotation.x = 0; arms[0].rotation.x = arms[1].rotation.x = 0; arms[0].rotation.z = 0.08; arms[1].rotation.z = -0.08; body.position.y = 0; body.rotation.x = -Math.PI / 2; head.rotation.y = 0; }
       blinkT -= dt;
       const b = blinkT < 0.12 ? 0.15 : 1;
       eyes.forEach(e => (e.scale.y = 1.25 * b));
       if (blinkT < 0) blinkT = 2 + Math.random() * 4;
     },
   };
+  return self;
 }
 
 // 町のマスコット「チャンクくん」:雲。角のとれたクッションのサイコロが3つ、つながったような体

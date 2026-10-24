@@ -5,7 +5,7 @@
 //   script … 別ファイルの JS を読み込み、window[global].mount(要素, options) を呼ぶ(ぷにチャンク型)
 //   iframe … 別の HTML をそのまま入れる。postMessage で町とやり取りする(sdk/town-sdk.js)
 
-export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [] }) {
+export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [], features = [], gems = null, house = null, photo = null, paramsFor = null }) {
   const registry = new Map();
   const loadedScripts = new Map();
   let current = null;
@@ -25,14 +25,20 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
       storage: storage.scope('app:' + def.id),
       notes: { list: getNotes },   // ことばノート(読み取り専用)。チャンクストリームなどの復習アプリが使う
       wallet: { get: wallet.get, add: (n, why) => wallet.add(n, def.id + (why ? ':' + why : '')) },
+      gems,    // ダイヤ {get, spend}。組み込み先がなければ null(その場合コインだけで広げる)
+      house,   // 自宅の広げ方の値段
+      photo,   // 写真の枠の設定(はじめの枚数・最大・ダイヤの値段)
+      features: features.slice(),   // 組み込み先(チャンクタウン)が用意している機能。'study'＝勉強部屋を開ける
       emit: (name, data) => bus.emit('app:event', { app: def.id, name, data }),
       setTitle: t => { frame.querySelector('.tw-app-title').textContent = t; },
+      open: (id, p) => setTimeout(() => open(id, p), 0),   // ほかのアプリへ(いまのアプリは閉じる)。家→ショップなど
       close: result => close(result),
     };
   }
 
   async function open(id, params = {}) {
     const def = registry.get(id);
+    if (paramsFor) params = paramsFor(id, params) || params;   // 町の様子(時刻など)をアプリに足す
     if (!def) { bus.emit('toast', 'まだ準備中みたい'); return false; }
     if (current) close();
     const frame = document.createElement('div');

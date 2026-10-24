@@ -7,7 +7,7 @@ import { renderWords } from './words.js';
 /* ================= 画面 ================= */
 export const SCR=["sTitle","sHome","sWords","sDetail","sReader","sPlay","sResult"];
 export function show(id){SCR.forEach(s=>$(s).hidden=s!==id);ENV.ctx.showBack(id!=="sPlay")}   // 「街へ」はタイトルとホームだけ
-export let CUR=null;export const P=id=>PASSAGES.find(p=>p.id===id);
+export let CUR=null;export function setCur(p){CUR=p}export const P=id=>PASSAGES.find(p=>p.id===id);
 export function plain(c){return c.tk.map(t=>t[0]+t[1]+t[2]).join(" ")}
 export function fromGap(c,gs){return c.tk.slice(gs).map(t=>t[0]+t[1]+t[2]).join(" ")}
 export const reached=(pid,st)=>st===1||!!rec(pid,st-1,"ta");

@@ -4,6 +4,7 @@
 import { createStore } from './store.js';
 const loaded = {};
 export function loadScript(src) {
+  try { const v = window.__APP__ && window.__APP__.build; if (v && !/\?/.test(src)) src += '?v=' + v; } catch (e) { }   // 組み立てごとの印(古いファイルが残らないように)
   return loaded[src] || (loaded[src] = new Promise((ok, ng) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => { delete loaded[src]; ng(new Error(src)); }; document.head.appendChild(s); }));
 }
 export function createHost(core, layer, backBtn) {
@@ -25,6 +26,7 @@ export function createHost(core, layer, backBtn) {
       const ctx = { core, store: createStore(game.id), settings: core.settings, speech: core.speech, sound: core.sound, opts,
         base: core.base + 'g/' + game.id + '/', loadScript,
         report: (name, data) => core.events.report(game.id, name, data),
+        earn: (kind, n) => core.member.earn(kind, n),   // コインをもらう（'game'＝点数のごほうび。1日の上限つき）
         showBack: (on) => { backBtn.hidden = !(on && core.config.backButton); }, exit: close };
       cur = { game, el, inst: null };
       ctx.report('open');
