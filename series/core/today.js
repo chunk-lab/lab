@@ -52,12 +52,13 @@ export function createToday(core) {
       if (band) band.remove(); clearTimeout(hideT);
       band = document.createElement('div'); band.className = 'cs-band';
       band.innerHTML = `<span>記録に足しました${d.min ? `(${Math.max(1, Math.round(d.min))}分)` : ''}${got > 0 ? ` ・ コイン +${got}` : ''}</span>
-        <div>${next ? `<button data-n>次:${esc(next.n)}</button>` : ''}<button data-x aria-label="とじる">✕</button></div>`;
+        <div><button data-n>今日なにする?</button><button data-x aria-label="とじる">✕</button></div>`;
       core.ui.root.appendChild(band);
       band.querySelector('[data-x]').onclick = () => band.remove();
-      const nb = band.querySelector('[data-n]'); if (nb) nb.onclick = () => { band.remove(); core.host.close(); go(next); };
+      const nb = band.querySelector('[data-n]'); if (nb) nb.onclick = () => { band.remove(); core.host.close(); core.mission.open(); };
       hideT = setTimeout(() => band && band.remove(), 9000);
     }, 300);
   });
-  return { open, go, pick };
+  // 「今日なにする?」はミッション(mission.js)。ここの open は古い選び方なので使わない
+  return { open: o => core.mission.open(o), go, pick };
 }

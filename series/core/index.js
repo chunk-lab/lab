@@ -25,6 +25,7 @@ import { createToday } from './today.js';
 import { createUseit } from './useit.js';
 import { createLevel } from './level.js';
 import { createAdmin } from './admin.js';
+import { createMission } from './mission.js';
 import './reader.css';
 export function createCore(config) {
   const base = config.base || './';
@@ -50,7 +51,8 @@ export function createCore(config) {
   core.ai = createAI();               // 自分のAIキー（3Dの町と同じキー）
   core.level = createLevel(core);     // レベル判定・実力テスト・総合の点数
   core.useit = createUseit(core);     // この言葉を使ってみる
-  core.today = createToday(core);     // 今日なにする? と結果の帯
+  core.mission = createMission(core); // 今日なにする?(1つに決めて「これでいい?」→ その中身だけで判定)
+  core.today = createToday(core);     // 結果の帯
   core.admin = createAdmin(core);     // 運営画面（?admin=1）
   core.to3D = null;                   // 3Dの町があるアプリ(街)が入れる
   core.dict = createDict(base);       // 共通の辞書（使うときに読み込む）

@@ -39,6 +39,7 @@ export function createStudy(core) {
         <select data-goal>${[5, 10, 15, 20, 30, 45, 60].map(v => `<option value="${v}" ${v === goal ? 'selected' : ''}>目標 ${v}分</option>`).join('')}</select></div>
         <div class="cs-bar"><i style="width:${pct}%"></i></div>
         <p class="cs-sub">続けた日数 <b>${rec.streak()}</b>日 ・ コイン <b>${core.wallet.get()}</b></p></section>
+      ${(() => { const m = core.mission.current(); return m && m.date === core.member.keys.dayKey() ? `<section class="cs-panel"><h4>${m.done ? 'クリアしたミッション' : 'いまのミッション'}</h4><div class="cs-mis"><b>${esc(m.title)}</b><small>${m.done ? 'クリア!' : esc(m.how)}</small></div></section>` : ''; })()}
       <button class="cs-btn cs-go cs-big" data-today>今日なにする?</button>
       ${lvCard()}
       ${last && canPlay(last.game) ? `<button class="cs-btn cs-resume" data-resume>つづきから:${esc(last.label || (playOf(last.play) || {}).n || '')}</button>` : ''}

@@ -28,19 +28,13 @@ export function createBooks(core) {
   // 読む・解く（共通の読む画面）。終わったら記録へ。課題図書ならその日の「今日の課題」
   function read(b, { onClose } = {}) {
     const story = b.story(); if (!story) { core.ui.toast('この本は、まだ読む画面がありません'); return; }
-    const t0 = Date.now(); let graded = null;
+    const t0 = Date.now(); let graded = null, ended = false;
     const fin = () => {
       const min = Math.round((Date.now() - t0) / 6e3) / 10; if (min < 0.5) return;
-      core.events.report('library', 'done', { play: 'cc.read', book: b.id, title: b.title, min, words: words(story), score: graded && graded.n ? Math.round(graded.res.reduce((a, x) => a + ({ o: 1, t: .5, x: 0 })[x], 0) / graded.n * 100) : undefined, finished: !!graded });
+      core.events.report('library', 'done', { play: 'cc.read', book: b.id, title: b.title, min, words: words(story), score: graded && graded.n ? Math.round(graded.res.reduce((a, x) => a + ({ o: 1, t: .5, x: 0 })[x], 0) / graded.n * 100) : undefined, finished: !!graded || ended });
       if (b.shared && core.cloud) core.cloud.used(b.sid);
     };
-    core.reader.open(story, { backLabel: '← 図書館へ', onClose: () => { fin(); onClose && onClose(); }, onGrade: r => { graded = r; return ''; } });
+    core.reader.open(story, { backLabel: '← 図書館へ', onClose: () => { fin(); onClose && onClose(); }, onGrade: r => { graded = r; return ''; }, onEnd: () => { ended = true; } });
   }
-  // 課題図書を終えたら今日の課題のコイン（その日1回）
-  core.events.on((game, name, d = {}) => {
-    if (name !== 'done') return;
-    const id = d.book || (d.passage ? 'st:' + d.passage : null);
-    if (id && weeklyBooks(core.member.keys.dayKey()).includes(id)) { const g = core.member.earn('task'); if (g) setTimeout(() => core.ui.toast(`今日の課題クリア！ コイン +${g}`), 600); }
-  });
   return { load, all, byId, weekly, featured, read, words, LV };
 }

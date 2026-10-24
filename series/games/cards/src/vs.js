@@ -360,7 +360,7 @@ import { CORE } from './sound.js';
     var won = !quit && V.med.me > V.med.cpu, draw = !quit && V.med.me === V.med.cpu;
     var rec = K.store.get('vs') || {}, r = rec[V.opp.id] || { w: 0, l: 0 }; if (won) r.w++; else if (!draw) r.l++; rec[V.opp.id] = r; K.store.set('vs', rec);
     G_.vs = null; if (won) SFX.win(); else SFX.lose();
-    try { if (!quit && CORE && CORE.report) CORE.report('done', { play: 'cards', title: V.opp.name + 'との対戦', min: Math.round((Date.now() - V.t0) / 6e3) / 10, score: won ? 100 : draw ? 50 : 20, finished: true }); } catch (e) { }   // 記録へ(勝つとゲームのごほうびコイン)
+    try { if (!quit && CORE && CORE.report) CORE.report('done', { play: 'cards', opp: V.opp.id, won: won, title: V.opp.name + 'との対戦', min: Math.round((Date.now() - V.t0) / 6e3) / 10, score: won ? 100 : draw ? 50 : 20, finished: true }); } catch (e) { }   // 記録へ(勝つとゲームのごほうびコイン)
     var s = K.screen('<div class="end"><h1>' + (won ? '🏆 勝ち!' : draw ? '引き分け' : '負け…') + '</h1><div class="st">' + V.opp.face + ' ' + V.opp.name + ' との対戦</div>' +
       '<div class="tot">あなた 🪙' + V.med.me + ' ・ ' + V.opp.name + ' 🪙' + V.med.cpu + '</div><div class="st">ハンド ' + V.stats.win + '勝 ' + V.stats.lose + '敗 ・ 通算 ' + r.w + '勝 ' + r.l + '敗</div>' +
       ((V.hist || []).length ? '<button class="btn ghost" id="hs">📚 今回の文をふりかえる(' + V.hist.length + ')</button>' : '') + '<button class="btn go" id="re">もう一回</button><button class="btn vs" id="ot">相手をかえる</button><button class="btn ghost" id="tt">タイトルへ</button></div>');
@@ -368,4 +368,5 @@ import { CORE } from './sound.js';
     $('#re', s).onclick = function () { start(V.opp); }; $('#ot', s).onclick = function () { K.showTitle(); pickOpp(); }; $('#tt', s).onclick = function () { K.showTitle(); };
   }
 
-  export var VS = { start: start, _search: search, _score: scoreRow, _V: function () { return V; }, _me: function () { return ME; }, _cpu: function () { return CPU; }, OPPS: OPPS };
+  export function startById(id) { var o = OPPS.find(function (x) { return x.id === id; }); if (o) start(o); }
+  export var VS = { start: start, startById: startById, _search: search, _score: scoreRow, _V: function () { return V; }, _me: function () { return ME; }, _cpu: function () { return CPU; }, OPPS: OPPS };

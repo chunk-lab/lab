@@ -15,7 +15,8 @@ export function createRecord(events, notebook) {
     if (name === 'done') {
       const p = playOf(d.play) || { want: 'chill' }, t = today(), m = Math.max(0, Math.min(180, +d.min || 0));
       t.min[p.want] = Math.round(((t.min[p.want] || 0) + m) * 10) / 10;
-      t.plays[d.play || game] = (t.plays[d.play || game] || 0) + 1; t.words += Math.max(0, +d.words || 0) | 0; t.done++;
+      t.plays[d.play || game] = (t.plays[d.play || game] || 0) + 1;
+      const bk = d.book || (d.passage && d.whole ? 'st:' + d.passage : null); if (bk && d.finished) { R.books = R.books || {}; R.books[bk] = (R.books[bk] || 0) + 1; } t.words += Math.max(0, +d.words || 0) | 0; t.done++;
       if (Array.isArray(d.missed) && d.missed.length) notebook.addMany(d.missed.slice(0, 50).map(x => ({ ...x, src: x.src || (p.n || game), marks: ['miss'] })));
       if (R.last && R.last.play === d.play && d.finished) R.last = null;
       save();
@@ -32,6 +33,7 @@ export function createRecord(events, notebook) {
     streak() { let n = 0; const d = new Date(); if (!sumMin(R.days[day(d)]) && !(R.days[day(d)] || {}).done) d.setDate(d.getDate() - 1); while ((R.days[day(d)] || {}).done) { n++; d.setDate(d.getDate() - 1); } return n; },
     sumMin,
     total: id => Object.values(R.days).reduce((a, d) => a + ((d.plays || {})[id] || 0), 0),   // これまでの回数
+    bookDone: id => !!(R.books || {})[id],   // その本を最後まで読んだ(通しクリアした)ことがあるか
     last: () => R.last,
     clearLast() { R.last = null; save(); },
     goal: () => R.goal,

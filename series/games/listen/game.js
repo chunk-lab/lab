@@ -9,6 +9,7 @@ export default {
   id: 'listen', name: 'ランダムチャンク',
   async mount(el, ctx) {
     const core = ctx.core; el.classList.add('ls'); ctx.showBack(true);
+    const auto = ctx.opts && ctx.opts.lv;   // ミッション:レベルを決めてすぐ始める
     el.innerHTML = '<div class="ls-wrap"><p class="ls-note">読みこんでいます…</p></div>';
     try { await loadScript(core.base + 'g/stream/data.js'); } catch (e) { el.innerHTML = '<div class="ls-wrap"><p class="ls-note">このアプリでは使えません</p></div>'; return {}; }
     const PS = (() => { try { return PASSAGES; } catch (e) { return []; } })();
@@ -42,13 +43,13 @@ export default {
       };
       const end = () => {
         const ok = res.filter(x => x.ok).length, missed = res.filter(x => !x.ok).map(x => ({ en: x.en, ja: x.ja, kind: 'phrase' }));
-        ctx.report('done', { play: 'listen', min: Math.round((Date.now() - t0) / 6e3) / 10, score: Math.round(ok / res.length * 100), missed, finished: true });
+        ctx.report('done', { play: 'listen', lv, n: res.length, min: Math.round((Date.now() - t0) / 6e3) / 10, score: Math.round(ok / res.length * 100), missed, finished: true });
         wrap.innerHTML = `<h2>${ok} / ${res.length}</h2><p class="ls-note">まちがえたまとまりは、勉強ノートに入りました。</p><button class="ls-go" data-again>もう一回</button><button class="ls-sub" data-top>レベルを選ぶ</button>`;
         wrap.querySelector('[data-again]').onclick = start; wrap.querySelector('[data-top]').onclick = title;
       };
       ask();
     }
-    title();
+    if (auto) { lv = auto; start(); } else title();
     return { unmount() { alive = false; core.speech.stop(); el.innerHTML = ''; } };
   }
 };

@@ -47,6 +47,7 @@ export default {
     const title = el.querySelector('#title'), mo = new MutationObserver(() => ctx.showBack(!title.hidden && !ctx.core.reader.isOpen && !ENV.make.visible() && !ENV.story.visible()));
     mo.observe(title, { attributes: true, attributeFilter: ['hidden'] });
     showTitle(); ctx.showBack(true);
+    if (ctx.opts && ctx.opts.lesson) setTimeout(() => { try { ENV.make.openLesson(ctx.opts.lesson === 'next' ? (ENV.make.nextLesson() || {}).id : ctx.opts.lesson); } catch (e) { console.error(e); } }, 60);   // ミッション:レッスンを指定
     if (ctx.opts && ctx.opts.open === 'mytexts') setTimeout(() => { try { el.querySelector('#title').hidden = true; openMyTexts(); } catch (e) { console.error(e); } }, 50);   // 図書館の「自分の本」から
     ctx.report('enter', { face, name: NAMES[face] });
     return {

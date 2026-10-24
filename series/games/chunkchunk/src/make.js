@@ -1477,7 +1477,7 @@ body.nogram .gmT{display:none}
   function finishLesson(){
     const L=cur.lesson,main=root.querySelector("#mkMain");
     const first=!st.done[L.id];st.done[L.id]=1;
-    try{HOST.report&&HOST.report("done",{play:"cc.lesson",title:L.name,min:Math.round((Date.now()-(cur.t0||Date.now()))/6e3)/10,first,finished:true})}catch(e){}
+    try{HOST.report&&HOST.report("done",{play:"cc.lesson",lesson:L.id,title:L.name,min:Math.round((Date.now()-(cur.t0||Date.now()))/6e3)/10,first,finished:true})}catch(e){}
     let chapterClear=false;
     if(first){try{Wallet.add("coins",L.coin,"earn:play")}catch(e){}}
     const ch=CHAPTERS.find(c=>c.lessons&&c.lessons.some(l=>l.id===L.id));   // このレッスンがある章
@@ -1505,7 +1505,10 @@ body.nogram .gmT{display:none}
   function open(){st=load();boardState=null;root.hidden=false;HOST.onOpen&&HOST.onOpen();showList()}
   function close(){root.hidden=true;boardState=null;cur=null;HOST.onClose&&HOST.onClose()}
   function destroy(){try{root.remove()}catch(e){}try{css.remove()}catch(e){}}
-  return {open,close,visible,destroy,LESSONS:ALL,_st:()=>st};
+  // 次のレッスン（まだクリアしていない最初のもの）と、指定したレッスンをすぐ始める（ミッションから）
+  function nextLesson(){st=load();const l=ALL.find(x=>!st.done[x.id]);return l?{id:l.id,name:l.name}:null}
+  function openLesson(id){open();if(id)start(id)}
+  return {open,close,visible,destroy,nextLesson,openLesson,LESSONS:ALL,_st:()=>st};
 })();
   return MakeTut;
 }

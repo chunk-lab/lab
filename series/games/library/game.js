@@ -27,7 +27,7 @@ export default {
     function draw() {
       head(); main.scrollTop = 0;
       let h = '';
-      if (tab === 'weekly') { const w = B.weekly(); h = `<p class="lib-note">今週の課題図書。1冊終えると、その日の「今日の課題」(コイン ${ECON.daily.task})がもらえます。</p>` + (w.length ? w.map(card).join('') : '<p class="lib-note">今週の課題図書はまだありません。</p>'); }
+      if (tab === 'weekly') { const w = B.weekly(); h = `<p class="lib-note">今週の課題図書。今日の課題(コイン ${ECON.daily.task})は「今日なにする?」から始めます(その日の1冊とやり方が決まっています)。</p>` + (w.length ? w.map(card).join('') : '<p class="lib-note">今週の課題図書はまだありません。</p>'); }
       else if (tab === 'featured') h = B.featured().map(card).join('') || '<p class="lib-note">まだありません。</p>';
       else if (tab === 'level') h = `<nav class="lib-lvs">${[1, 2, 3].map(n => `<button data-lv="${n}" class="${n === lv ? 'on' : ''}">${B.LV[n]}</button>`).join('')}</nav>` + B.all().filter(b => b.lv === lv && !b.shared).map(card).join('');
       else if (tab === 'shelf') { const s = B.all().filter(b => b.shared); h = `<p class="lib-note">みんなが書いた本。読むには「枠」に入れます(無料会員 ${ECON.slots.free}つ・有料会員 ${ECON.slots.paid}つ)。</p>` + (s.map(card).join('') || '<p class="lib-note">まだ棚に本がありません。新着の投票で選ばれた本が、ここに並びます。</p>'); }
