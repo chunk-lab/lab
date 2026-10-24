@@ -26,7 +26,7 @@ export function createMission(core) {
     if (!c || d.play !== c.play) return false;
     if (c.play === 'stream.read') return d.passage === c.passage && d.whole && d.finished;
     if (c.play === 'stream.word') return c.set ? d.set === c.set : c.nb ? String(d.set || '').startsWith('nb-') : true;
-    if (c.play === 'cc.read') return d.book === c.book && d.finished;
+    if (c.play === 'cc.read') return d.book === c.book && (c.solved ? d.solved : d.finished);
     if (c.play === 'cards') return !c.opp || d.opp === c.opp;
     if (c.play === 'listen') return d.lv === c.lv && d.n >= 10;
     return true;   // cc.lesson / cc.game
@@ -64,7 +64,7 @@ export function createMission(core) {
       out.push({ type: 'ca3', cats: ['chunk', 'game'], time: 'l', need: 3, title: 'チャンク・カードで3試合', how: '相手は自由。3試合を最後までやるとクリア', go: { game: 'cards' }, check: { play: 'cards' } });
     }
     const st2 = unread(b => b.src === 'chunkchunk'); if (st2.length) { const b = pick(st2); out.push({ type: 'rs', cats: ['read'], time: 's', title: `お話「${b.title}」を最後まで読む`, how: '読む画面で最後の文まで進むとクリア', go: { book: b.id }, check: { play: 'cc.read', book: b.id } }); }
-    const rq = unread(b => b.canRead && (b.story() || {}).questions && b.story().questions.length); if (rq.length) { const b = pick(rq); out.push({ type: 'rq', cats: ['read'], time: 'l', title: `「${b.title}」を読んで解く`, how: '読む画面で「解く」を終えるか、最後の文まで進むとクリア', go: { book: b.id }, check: { play: 'cc.read', book: b.id } }); }
+    const rq = unread(b => b.canRead && (b.story() || {}).questions && b.story().questions.length); if (rq.length) { const b = pick(rq); out.push({ type: 'rq', cats: ['read'], time: 'l', title: `「${b.title}」の問題を全部解く`, how: 'リーディングで問題に全部答えて「答え合わせ」するとクリア(まちがっていてもOK)', go: { book: b.id, view: 'solve' }, check: { play: 'cc.read', book: b.id, solved: true } }); }
     return out;
   }
   // 並べ方：長くやっていない種類ほど先。同じくらいならランダム
@@ -74,17 +74,25 @@ export function createMission(core) {
       .map(x => [Math.min(14, (now - (H.kinds[x.type] || 0)) / DAY) + Math.random() * 1.5, x]).sort((a, b) => b[0] - a[0]).map(x => x[1]);
   }
   // ---- 今日の課題：今週の課題図書のうち、日ごとに1冊・やり方も決まっている ----
-  function task() {
+  function task() {   // 今日の課題の本(日ごとに1冊)。やり方は「じっくり」か「ゲーム」かを選ぶ
     if (!core.books) return null;
     const ids = weeklyBooks(today()); if (!ids.length) return null;
-    const b = core.books.byId(ids[new Date().getDay() % ids.length]); if (!b) return null;
-    if (b.canStream && can('stream')) return { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」をストリームで最初から最後まで`, how: 'ストリームで1段目から通しでクリアするとクリア', go: { game: 'stream', opts: { passage: b.pid, run: true } }, check: { play: 'stream.read', passage: b.pid } };
-    return { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」を最後の文まで読む`, how: '読む画面で最後の文まで進むか、「解く」を終えるとクリア', go: { book: b.id }, check: { play: 'cc.read', book: b.id } };
+    const b = core.books.byId(ids[new Date().getDay() % ids.length]); return b || null;
+  }
+  function taskWays(b) {
+    const out = [];
+    if (core.books.hasQ(b)) out.push(['slow', 'じっくり読む(リーディングで問題を解く)', { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」の問題を全部解く`, how: 'リーディングで問題に全部答えて「答え合わせ」するとクリア(まちがっていてもOK)', go: { book: b.id, view: 'solve' }, check: { play: 'cc.read', book: b.id, solved: true } }]);
+    else out.push(['slow', 'じっくり読む(リーディング)', { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」を最後の文まで読む`, how: '読む画面で最後の文まで進むとクリア', go: { book: b.id }, check: { play: 'cc.read', book: b.id } }]);
+    if (b.canStream && can('stream')) out.push(['game', 'ゲームで読む(チャンクストリーム)', { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」をストリームで最初から最後まで`, how: 'ストリームで1段目から通しでクリアするとクリア', go: { game: 'stream', opts: { passage: b.pid, run: true } }, check: { play: 'stream.read', passage: b.pid } }]);
+    return out;
   }
   // ---- 始める ----
   function begin(m) { M = { ...m, kind: m.kind || 'pick', date: today(), at: Date.now(), done: 0, got: 0 }; save(); go(M); }
   function go(m) {
-    if (m.go.book) { const b = core.books.byId(m.go.book); core.openGame('library', { tab: 'weekly' }); setTimeout(() => b && core.books.read(b), 250); }
+    if (m.go.book) {
+      const b = core.books.byId(m.go.book); core.openGame('library', { tab: 'weekly' });
+      setTimeout(() => { if (!b) return; if (m.go.view === 'solve') core.books.solveIntro(() => core.books.read(b, { view: 'solve' })); else core.books.read(b); }, 250);
+    }
     else core.openGame(m.go.game, m.go.opts || {});
   }
   const sheet = (html, bind) => core.ui.sheet(html, bind);
@@ -96,7 +104,10 @@ export function createMission(core) {
     if (core.books) await core.books.load();
     if (M && !M.done && M.date === today()) return sheet(`<h3>今日なにする?</h3><p class="cs-note">いまのミッション</p><div class="cs-mis"><b>${esc(M.title)}</b><small>${esc(M.how)}${M.need > 1 ? `(${M.got || 0}/${M.need})` : ''}</small></div>${btns([['go', 'つづける', 'cs-go'], ['drop', 'やめて、ほかのことにする']])}`, (ov, close) => on(ov, close, { go: () => go(M), drop: () => { M = null; save(); open(o); } }));
     const t = task();
-    if (t && !core.member.today().task && !o.skipTask) return sheet(`<h3>今日なにする?</h3><div class="cs-mis"><b>${esc(t.title)}</b><small>${esc(t.how)} ・ コイン +${core.econ.daily.task}</small></div>${btns([['task', 'これをやる', 'cs-go'], ['other', 'ほかのことをする']])}`, (ov, close) => on(ov, close, { task: () => begin(t), other: () => open({ ...o, skipTask: true }) }));
+    if (t && !core.member.today().task && !o.skipTask) {
+      const ways = taskWays(t);
+      return sheet(`<h3>今日なにする?</h3><div class="cs-mis"><b>今日の課題:「${esc(t.title)}」</b><small>${esc(t.ja || '')} ・ クリアでコイン +${core.econ.daily.task}</small></div><p class="cs-note">どうやって読む?</p>${btns([...ways.map(w => [w[0], w[1], 'cs-go']), ['other', 'ほかのことをする']])}`, (ov, close) => on(ov, close, { ...Object.fromEntries(ways.map(w => [w[0], () => begin(w[2])])), other: () => open({ ...o, skipTask: true }) }));
+    }
     mood();
   }
   function mood() {
@@ -121,7 +132,7 @@ export function createMission(core) {
     list.push(['note', '自宅の勉強ノートから']);
     if (!core.to3D) list.push(['map', '地図から施設を選ぶ']);
     sheet(`<h3>自由にする</h3><p class="cs-note">ミッションなしで、好きに遊べます(記録には入ります)。</p>${btns(list)}`, (ov, close) => on(ov, close, {
-      town: () => core.to3D(), note: () => core.study.open({ play: core.openGame, has: hasGame, tab: 'note' }), map: () => { },
+      town: () => to3DAt(), note: () => core.study.open({ play: core.openGame, has: hasGame, tab: 'note' }), map: () => { },
     }));
   }
   // ---- クリアのあと：これからどうしますか? ----
@@ -143,14 +154,20 @@ export function createMission(core) {
     if (core.to3D && !omiDone) list.push(['omi', '3Dの町の神社でおみくじ(1日1回)']);
     const home = core.to3D ? [['home', '3Dの自宅へ'], ['town', '3Dの町へ']] : [['map', '地図へもどる']];
     if (!list.length) {
-      return sheet(`<h3>今日はここまで</h3><p class="cs-note">今日もらえるコインは、もう全部もらいました。また明日!</p>${btns(home)}`, (ov, close) => on(ov, close, { home: toHome3D, town: () => core.to3D(), map: () => { } }));
+      return sheet(`<h3>今日はここまで</h3><p class="cs-note">今日もらえるコインは、もう全部もらいました。また明日!</p>${btns(home)}`, (ov, close) => on(ov, close, { home: toHome3D, town: () => to3DAt(), map: () => { } }));
     }
     sheet(`<h3>もっとコインが欲しい</h3><p class="cs-note">今日まだもらえるもの</p>${btns(list)}`, (ov, close) => on(ov, close, {
       cm: () => { const g = core.member.earn('cm'); core.ui.toast(g ? `コイン +${g}(CMはアプリにしたときに本物を入れます)` : '今日はもう見られません'); setTimeout(coinWays, 600); },
-      game: () => time(t => result('game', t, 0)), task: () => begin(task()), omi: () => { core.to3D(); setTimeout(() => core.ui.toast('神社でおさいせん箱を調べると、おみくじが引けます'), 1500); },
+      game: () => time(t => result('game', t, 0)), task: () => open({}), omi: () => to3DAt(t => { t.goToApp('omikuji'); core.ui.toast('おさいせん箱の前です。「おまいりする」でおみくじが引けます'); }),
     }));
   }
-  async function toHome3D() { await core.to3D(); setTimeout(() => { try { const t = window.town3d; if (t && t.getState().started) t.openApp('home'); else core.ui.toast('町に出たら、あなたの家に入れます'); } catch (e) { } }, 600); }
+  // 3Dの町へ行き、最初の画面は飛ばして(前に選んだキャラ・はじめてなら最初のキャラ)、そこで fn
+  async function to3DAt(fn) {
+    try { await core.to3D(); } catch (e) { }
+    let n = 0; const tick = () => { const t = window.town3d; if (t && t.quickStart) { try { t.quickStart(); fn && fn(t); } catch (e) { console.error(e); } } else if (n++ < 40) setTimeout(tick, 250); };
+    setTimeout(tick, 300);
+  }
+  const toHome3D = () => to3DAt(t => t.openApp('home'));
   // 自分の記録(みんなとのランキングは、アカウントとつないだあと)
   function records() {
     const json = v => { if (typeof v !== 'string') return v; try { return JSON.parse(v); } catch (e) { return null; } };

@@ -390,7 +390,10 @@ export function mount(container, opt = {}) {
 
   function showTitle() {
     started = false;
-    hud.title({ look: settings.look, name: settings.name }, ({ look, name }) => {
+    hud.title({ look: settings.look, name: settings.name }, startAs);
+  }
+  // 町へ出かける(最初の画面のボタン・組み込み先からの quickStart の両方)
+  function startAs({ look, name }) {
       settings.look = look; settings.name = name; save();
       setLook(look); me.ch.root.position.set(me.x, 0, me.z);
       hud.untag(me.id); hud.tag(me.id, name, true);
@@ -399,7 +402,6 @@ export function mount(container, opt = {}) {
       started = true;
       bus.emit('start', { name, look });
       opt.onEvent?.('start', { name, look });
-    });
   }
   let netStarted = false;
   bus.on('*', (n, d) => { if (n.startsWith('app:') || n === 'talk' || n === 'wallet') opt.onEvent?.(n, d); });
@@ -563,6 +565,10 @@ export function mount(container, opt = {}) {
     notes: () => notes.map(n => ({ ...n })),
     getState: () => ({ speed: +me.speed.toFixed(1), npcs: Object.fromEntries(residents.list.map(r => [r.def.id, [+r.ch.root.position.x.toFixed(1), +r.ch.root.position.z.toFixed(1), r.ch.root.visible]])), cam: [+camera.position.x.toFixed(2), +camera.position.y.toFixed(2), +camera.position.z.toFixed(2)], started, app: appHost.current, area: city.areaName(me.x, me.z), x: me.x, z: me.z, hour: env.hour, coins: wallet.get(), fps: Math.round(fps), peers: peers.size, focus: focus?.label || null }),
     moveNpc: (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (r) r.ch.root.position.set(x, 0, z); },
+    // 最初の画面を飛ばして町へ(前に選んだキャラ。はじめてなら最初のキャラ)
+    quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },
+    // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
+    goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,
     // 組み込み先がゲームを開いている間は止める(描画も音も)

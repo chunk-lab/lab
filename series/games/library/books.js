@@ -26,15 +26,23 @@ export function createBooks(core) {
   const weekly = () => weeklyBooks(core.member.keys.dayKey()).map(byId).filter(Boolean);
   const featured = () => LIBRARY.featured.map(byId).filter(Boolean);
   // 読む・解く（共通の読む画面）。終わったら記録へ。課題図書ならその日の「今日の課題」
-  function read(b, { onClose } = {}) {
+  function read(b, { onClose, view } = {}) {
     const story = b.story(); if (!story) { core.ui.toast('この本は、まだ読む画面がありません'); return; }
     const t0 = Date.now(); let graded = null, ended = false;
     const fin = () => {
       const min = Math.round((Date.now() - t0) / 6e3) / 10; if (min < 0.5) return;
-      core.events.report('library', 'done', { play: 'cc.read', book: b.id, title: b.title, min, words: words(story), score: graded && graded.n ? Math.round(graded.res.reduce((a, x) => a + ({ o: 1, t: .5, x: 0 })[x], 0) / graded.n * 100) : undefined, finished: !!graded || ended });
+      core.events.report('library', 'done', { play: 'cc.read', book: b.id, title: b.title, min, words: words(story), score: graded && graded.n ? Math.round(graded.res.reduce((a, x) => a + ({ o: 1, t: .5, x: 0 })[x], 0) / graded.n * 100) : undefined, finished: !!graded || ended, solved: !!(graded && graded.n && graded.answered >= graded.n) });
       if (b.shared && core.cloud) core.cloud.used(b.sid);
     };
-    core.reader.open(story, { backLabel: '← 図書館へ', onClose: () => { fin(); onClose && onClose(); }, onGrade: r => { graded = r; return ''; }, onEnd: () => { ended = true; } });
+    core.reader.open(story, { backLabel: '← 図書館へ', view: view && (story.questions || []).length ? view : undefined, onClose: () => { fin(); onClose && onClose(); }, onGrade: r => { graded = r; return ''; }, onEnd: () => { ended = true; } });
   }
-  return { load, all, byId, weekly, featured, read, words, LV };
+  // 問題があるか(読む・解くの「解く」)
+  const hasQ = b => { try { return !!((b.story() || {}).questions || []).length; } catch (e) { return false; } };
+  // 解き方の説明(はじめて解くときだけ)
+  function solveIntro(cb) {
+    let seen = false; try { seen = localStorage.getItem('cs:core:solveIntro') === '1'; } catch (e) { }
+    if (seen) return cb();
+    core.ui.sheet(`<h3>問題の解き方</h3><p class="cs-note">・上に問題が出ます。答えになる部分を、英文の中から「切り取り」ます。<br>・英文を左右にドラッグして、答えの始まりを線に合わせて「［ ここから」。<br>・終わりを線に合わせて「ここまで ］」。<br>・上下にドラッグすると、前後の文に移れます。<br>・全部の問題に答えたら「答え合わせ」。まちがっていても、全部答えればミッションはクリアです。</p><button class="cs-btn cs-go" data-ok>わかった</button>`, (ov, close) => ov.querySelector('[data-ok]').onclick = () => { try { localStorage.setItem('cs:core:solveIntro', '1'); } catch (e) { } close(); cb(); });
+  }
+  return { load, all, byId, weekly, featured, read, words, LV, hasQ, solveIntro };
 }

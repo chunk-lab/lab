@@ -39,3 +39,4 @@ body.cs-in-game .tw-dock{display:none}
 body.md-3d-on .tw-dock{left:auto;right:max(8px,env(safe-area-inset-right,0px));top:42%;bottom:auto;transform:none}
 body.md-3d-on .tw-chat{display:none}
 body.md-3d-on .tw-today{padding:8px 12px;font-size:13px;writing-mode:vertical-rl;letter-spacing:2px;border-radius:16px}
+body.md-3d-on .tw-today{text-orientation:upright}

@@ -3,7 +3,7 @@
    story = { title, level, list:[[英語(チャンクの書き方), 訳], …], questions:[…], mode:'test'?（先生のテスト）, hint, hintCost }
      questions の1つ：{ type:'range', si, a, b, q, alts, partials }（範囲を選ぶ）／{ type:'choice', q, options:[…], correct }（選択肢）
                     ／[文の番号, チャンクの番号, 問題文]（そのチャンクを答えにする書き方）
-   opts = { label（上に出す名前 例：予習）, backLabel, onClose, onEnd（最後の文まで来た）, onGrade(結果), onSubmit(結果)（テスト）, next:{label, fn}（答え合わせのあとのボタン） }
+   opts = { label（上に出す名前 例：予習）, backLabel, view（'read'|'solve' 最初の表示）, onClose, onEnd（最後の文まで来た）, onGrade(結果), onSubmit(結果)（テスト）, next:{label, fn}（答え合わせのあとのボタン） }
    見た目は core/reader.css（.cs-reader の中だけ）。設定（文字の大きさ・表示する文の数など）は共通のセーブ "reader" に保存。 */
 import { parseSentence, wordRole, gradeRange, RN } from './chunk.js';
 import { createStore } from './store.js';
@@ -48,7 +48,7 @@ export function createReader(core) {
       return { alts: [], partials: [], ...q, ans: null };
     });
     const test = story.mode === 'test';
-    const RD = { qi: 0, si: 0, p: 0, start: null, sel: null, hints: 0, hintOn: false, hintQ: new Set(), gpos: [], view: S.view, gramOn: !!S.always, showJa: false, info: null, fullOpen: false, saying: false,
+    const RD = { qi: 0, si: 0, p: 0, start: null, sel: null, hints: 0, hintOn: false, hintQ: new Set(), gpos: [], view: opts.view || S.view, gramOn: !!S.always, showJa: false, info: null, fullOpen: false, saying: false,
       hintPolicy: test ? (story.hint || 'none') : 'grammar', hintCost: test ? (story.hintCost == null ? 20 : +story.hintCost) : 0 };
     const sen = () => sens[RD.si];
     const view = () => test ? 'solve' : (qs.length ? RD.view : 'read');
@@ -275,7 +275,7 @@ export function createReader(core) {
       const res = qs.map(judge), pts = res.reduce((a, r, i) => a + Math.round((qs[i].pts || 100) * ({ o: 1, t: .4, x: 0 })[r]), 0);
       beep(res.every(r => r === 'o') ? 'excellent' : 'great');
       core.events.report('reader', 'grade', { title: story.title, n: qs.length, o: res.filter(r => r === 'o').length, hints: RD.hints });
-      const extra = opts.onGrade ? opts.onGrade({ res, pts, hints: RD.hints, n: qs.length }) : '';
+      const extra = opts.onGrade ? opts.onGrade({ res, pts, hints: RD.hints, n: qs.length, answered: qs.filter(x => x.ans).length }) : '';
       const MK = { o: ['◯', 'k-excellent'], t: ['△', 'k-good'], x: ['×', 'k-miss'] };
       sheet(`<h2>答え合わせ</h2>
         <div class="big">${Math.max(0, pts)} pt <span style="font-size:14px;color:var(--muted)">◯${res.filter(r => r === 'o').length}／${qs.length}問　ヒント使用${RD.hints}問</span></div>
