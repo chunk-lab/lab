@@ -315,9 +315,9 @@ export function mount(container, opt = {}) {
   }
   function jumpTo(e) {
     // 相手の手前(南側)に立つ。建物の中なら押し出す。向きは、壁でなく開けた方へ
-    // 入口のある場所は、入口の正面(少し離れたところ)に立って、入口のほうを向く
+    // 入口のある場所は、入口の正面(そのまま入れる距離 1.6。入口の範囲は 2.4)に立って、入口のほうを向く
     const front = e.kind === 'place' && e.fx !== undefined;
-    let [x, z] = front ? [e.x + e.fx * 3, e.z + e.fz * 3] : e.kind === 'place' || e.kind === 'point' ? [e.x, e.z] : [e.x, e.z + 1.7];
+    let [x, z] = front ? [e.x + e.fx * 1.6, e.z + e.fz * 1.6] : e.kind === 'place' || e.kind === 'point' ? [e.x, e.z] : [e.x, e.z + 1.7];
     [x, z] = collide(x, z);
     const ry = front ? Math.atan2(-e.fx, -e.fz) : openHeading(x, z, e.kind === 'place' || e.kind === 'point' ? Math.PI : Math.atan2(e.x - x, e.z - z));
     me.x = x; me.z = z; me.ry = ry; me.speed = 0; cam.yaw = ry + Math.PI; cam.x = x; cam.z = z;

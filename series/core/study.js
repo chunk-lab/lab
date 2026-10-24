@@ -50,7 +50,8 @@ export function createStudy(core) {
     const sc = L.score(), nx = sc.next, pct = nx ? Math.round((sc.total - nx.from) / (nx.at - nx.from) * 100) : 100;
     return `<section class="cs-panel"><div class="cs-goal"><span>${L.lv ? 'レベル ' + L.name() : 'レベル まだ'} ・ ${sc.rank}</span><b>${sc.total}点</b></div>
       <div class="cs-bar"><i style="width:${pct}%"></i></div><p class="cs-sub">${nx ? `${nx.name}まで あと${nx.need}点` : '最高ランク'} ・ ${sc.parts.map(p => `${p.n} ${p.v}`).join(' ・ ')}</p>
-      <div class="cs-adm-row">${L.lv ? '<button class="cs-btn" data-test>実力テスト</button>' : '<button class="cs-btn cs-go" data-place>レベル判定(1分)</button>'}</div></section>`;
+      ${L.lv ? `<p class="cs-sub">推定語彙 約${(L.vocab() || 0).toLocaleString()}語</p>` : ''}
+      <div class="cs-adm-row">${!L.lv ? '<button class="cs-btn cs-go" data-place>レベル診断(約20問)</button>' : L.testLeft() > 0 ? `<span class="cs-sub">実力テストまで ミッションあと${L.testLeft()}個</span>` : '<button class="cs-btn cs-go" data-test>実力テストを受ける</button>'}</div></section>`;
   }
   function log() {
     const ds = rec.days(7), max = Math.max(10, ...ds.map(d => rec.sumMin(d)));
