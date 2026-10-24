@@ -163,6 +163,7 @@ export function createMission(core) {
   }
   // 3Dの町へ行き、最初の画面は飛ばして(前に選んだキャラ・はじめてなら最初のキャラ)、そこで fn
   async function to3DAt(fn) {
+    try { core.host.close(); } catch (e) { }   // 開いているゲームは閉じてから
     try { await core.to3D(); } catch (e) { }
     let n = 0; const tick = () => { const t = window.town3d; if (t && t.quickStart) { try { t.quickStart(); fn && fn(t); } catch (e) { console.error(e); } } else if (n++ < 40) setTimeout(tick, 250); };
     setTimeout(tick, 300);
