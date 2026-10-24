@@ -28,3 +28,10 @@ body>.tw-top button{pointer-events:auto;border:2px solid #8a5a32;background:#fff
 body.cs-in-game>.tw-top{display:none}
 body>.tw-top .tw-right{display:flex;gap:8px;align-items:center}
 .tw-coin{pointer-events:none;padding:6px 12px;border-radius:999px;border:2px solid #8a5a32;background:#fff3cf;box-shadow:0 2px 0 #8a5a32;font-weight:800;font-size:13px;color:#2b2320}
+
+/* 施設の中の見出し・今日なにする?・おしゃべり */
+.tw-grp{margin:4px 0 -2px;font-size:12px;font-weight:800;color:#8a5a32}
+.tw-dock{position:fixed;z-index:40;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;align-items:center}
+body.cs-in-game .tw-dock{display:none}
+.tw-today{padding:12px 22px;border-radius:999px;border:3px solid #8a5a32;background:#ffc93c;color:#2b2320;font:800 16px "Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;box-shadow:0 4px 0 #8a5a32;cursor:pointer;white-space:nowrap}
+.tw-chat{width:48px;height:48px;border-radius:50%;border:3px solid #8a5a32;background:#fffaf0;font-size:20px;box-shadow:0 4px 0 #8a5a32;cursor:pointer}

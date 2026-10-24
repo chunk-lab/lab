@@ -1,4 +1,5 @@
 import { Kit as K } from './play.js';
+import { CORE } from './sound.js';
 /* ===== チャンク・カード:CPU対戦(ポーカー型) =====
    ・2人で山札と「場」を共有。手札8枚。交換を3回ずつ(捨てたカードは表向きで場へ)。
    ・1回目の交換のあとと、最後に「賭け」。最後に文を見せ合って、点が高いほうがポットを取る。 */
@@ -120,7 +121,7 @@ import { Kit as K } from './play.js';
     if (!opp) { pickOpp(); return; }
     ME = player(); CPU = player(); K.setR(ME);
     var all = K.starterDeck(); for (var i = 0; i < 25; i++) { var c = K.randomCard(); if (c) all.push(c); } all.push(K.mk('pron', 'it'));
-    V = { opp: opp, all: all, n: 0, med: { me: START, cpu: START }, first: rnd() < .5 ? 'me' : 'cpu', stats: { win: 0, lose: 0 } };
+    V = { opp: opp, all: all, n: 0, med: { me: START, cpu: START }, first: rnd() < .5 ? 'me' : 'cpu', stats: { win: 0, lose: 0 }, t0: Date.now() };
     showVS(); nextHand();
   }
   function pickOpp() {
@@ -359,6 +360,7 @@ import { Kit as K } from './play.js';
     var won = !quit && V.med.me > V.med.cpu, draw = !quit && V.med.me === V.med.cpu;
     var rec = K.store.get('vs') || {}, r = rec[V.opp.id] || { w: 0, l: 0 }; if (won) r.w++; else if (!draw) r.l++; rec[V.opp.id] = r; K.store.set('vs', rec);
     G_.vs = null; if (won) SFX.win(); else SFX.lose();
+    try { if (!quit && CORE && CORE.report) CORE.report('done', { play: 'cards', title: V.opp.name + 'との対戦', min: Math.round((Date.now() - V.t0) / 6e3) / 10, score: won ? 100 : draw ? 50 : 20, finished: true }); } catch (e) { }   // 記録へ(勝つとゲームのごほうびコイン)
     var s = K.screen('<div class="end"><h1>' + (won ? '🏆 勝ち!' : draw ? '引き分け' : '負け…') + '</h1><div class="st">' + V.opp.face + ' ' + V.opp.name + ' との対戦</div>' +
       '<div class="tot">あなた 🪙' + V.med.me + ' ・ ' + V.opp.name + ' 🪙' + V.med.cpu + '</div><div class="st">ハンド ' + V.stats.win + '勝 ' + V.stats.lose + '敗 ・ 通算 ' + r.w + '勝 ' + r.l + '敗</div>' +
       ((V.hist || []).length ? '<button class="btn ghost" id="hs">📚 今回の文をふりかえる(' + V.hist.length + ')</button>' : '') + '<button class="btn go" id="re">もう一回</button><button class="btn vs" id="ot">相手をかえる</button><button class="btn ghost" id="tt">タイトルへ</button></div>');

@@ -31,6 +31,7 @@ export function createRecord(events, notebook) {
     days(n = 7) { const out = []; for (let i = n - 1; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const k = day(d); out.push({ day: k, ...(R.days[k] || { min: {}, plays: {}, words: 0, done: 0 }) }); } return out; },
     streak() { let n = 0; const d = new Date(); if (!sumMin(R.days[day(d)]) && !(R.days[day(d)] || {}).done) d.setDate(d.getDate() - 1); while ((R.days[day(d)] || {}).done) { n++; d.setDate(d.getDate() - 1); } return n; },
     sumMin,
+    total: id => Object.values(R.days).reduce((a, d) => a + ((d.plays || {})[id] || 0), 0),   // これまでの回数
     last: () => R.last,
     clearLast() { R.last = null; save(); },
     goal: () => R.goal,

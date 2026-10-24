@@ -8,10 +8,12 @@ export const GAMES = {   // ゲーム → 公開するファイル [元, 公開�
   cards: [['games/chunkchunk/assets/img/chara', 'g/chunkchunk/img/chara']],   // 案内の2人の顔（ほかのゲームと同じ場所に置く）
   stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream']],
   chunkchunk: [['games/chunkchunk/assets', 'g/chunkchunk']],   // 本体は app.js / app.css に入る。レッスンの2人の絵だけ別ファイル
+  library: [],
+  listen: [],     // ランダムチャンク（聞き取り。ストリームの長文データを使う）   // 図書館（本の一覧。ストリームの長文データ g/stream を使う）
   eigonou: [{ bundle: 'games/eigonou/src/main.js', out: 'g/eigonou/eigo.js' }, ['games/chunkchunk/assets/img/chara', 'g/chunkchunk/img/chara']],   // 大きいので、開いたときに読み込む別ファイル（eigo.js / eigo.css）
 };
 export const APPS = {
-  town: { shell: 'town', title: 'チャンクタウン', theme: 'cute', games: ['stream', 'punichunk', 'cards', 'chunkchunk', 'eigonou'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']], town3d: true },   // town3d：3Dの町（../town3d を組み立てて g/town3d/town.js に置く）
+  town: { shell: 'town', title: 'チャンクタウン', theme: 'cute', games: ['stream', 'cards', 'chunkchunk', 'eigonou', 'library', 'listen'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']], town3d: true },   // town3d：3Dの町（../town3d を組み立てて g/town3d/town.js に置く）
   stream: { shell: 'solo', theme: 'chic', title: 'チャンクストリーム', games: ['stream'], grants: ['game:stream'] },
   punichunk: { shell: 'solo', theme: 'chic', title: 'ぷにチャンク', games: ['punichunk'], grants: ['game:punichunk'] },
   cards: { shell: 'solo', theme: 'chic', title: 'チャンク・カード', games: ['cards'], grants: ['game:cards'] },

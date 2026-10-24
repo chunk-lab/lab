@@ -4,6 +4,8 @@ import { createCore } from '../../core/index.js';
 import '../../core/ui.css';
 import './town.css';
 import { GAMES } from '../../games/index.js';
+import { createBooks } from '../../games/library/books.js';
+import { PLAYS, WANTS } from '../../core/plays.js';
 import { createTour } from './tour.js';
 import './tour.css';
 import { PHRASES } from './phrases.js';
@@ -11,14 +13,15 @@ import { createStore } from '../../core/store.js';
 import { createMode } from './mode.js';
 
 const core = createCore(window.__APP__);
+core.openGame = (g, o) => { if (GAMES[g]) core.host.open(GAMES[g], o || {}); };
+core.books = createBooks(core);
+/* 施設：中身は遊びの属性表(core/plays.js)の place から作る（2Dも3Dも同じ）。extra は表にない入口 */
 const PLACES = {
-  school: { n: '学校', img: 'school', sub: 'チャンクを練習する', items: [{ t: 'チャンクレッスン', game: 'chunkchunk', opts: { face: 'lesson' } }] },
-  library: { n: '図書館', img: 'library', sub: '読む・登録する', items: [{ t: 'チャンクリーディング', game: 'chunkchunk', opts: { face: 'library' } }, { t: '英語脳アプリ', game: 'eigonou' }] },
+  school: { n: '学校', img: 'school', sub: '勉強する(身につける)', extra: [] },
+  library: { n: '図書館', img: 'library', sub: '読む・調べる・登録する', extra: [{ t: 'My Texts・短文の登録と共有', game: 'chunkchunk', opts: { face: 'library' } }] },
   house: { n: '自宅', img: 'house', profile: true },
-  shop: { n: 'ショップ', img: 'supermarket', sub: '有料コンテンツ', items: [] },
-  game: { n: 'ゲームセンター', img: 'gamecenter', sub: '遊んで鍛える', items: [
-    { t: 'チャンクストリーム', game: 'stream' },
-    { t: 'チャンク・カード', game: 'cards' }, { t: 'チャンクチャンク', game: 'chunkchunk', opts: { face: 'arcade' } }] }
+  shop: { n: 'ショップ', img: 'supermarket', sub: '買う', shop: true },
+  game: { n: 'ゲームセンター', img: 'gamecenter', sub: 'ゲームで鍛える', extra: [{ t: 'チャンクストリーム(タイムアタック・単語練習)', game: 'stream' }] },
 };
 const BLD = [['school', 'bSchool', '学校'], ['library', 'bLibrary', '図書館'], ['house', 'bHouse', '自宅'], ['shop', 'bShop', 'ショップ'], ['game', 'bGame', 'ゲームセンター']];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -32,7 +35,7 @@ refreshMe();
 const showCoin = () => { $('twCoin').textContent = '🪙 ' + core.wallet.get(); }; showCoin(); core.wallet.onChange(showCoin);
 $('twMe').onclick = () => openStudy();
 // 勉強部屋：自宅とアバターから開く。中の「練習する」などは、街と同じしくみでゲームを開く
-function openStudy() { core.study.open({ play: (g, o) => { if (GAMES[g]) core.host.open(GAMES[g], o || {}); }, has: g => !!GAMES[g] }); }
+function openStudy() { core.study.open({ play: core.openGame, has: g => !!GAMES[g] }); }
 $('twGear').onclick = () => core.ui.settings();
 const tour = createTour(core);
 $('twHelp').onclick = () => tour.menu();
@@ -44,10 +47,26 @@ addEventListener('resize', fit); fit();
 function enter(k) {
   const p = PLACES[k];
   if (p.profile) { openStudy(); return; }
-  if (p.items.length === 1) { tour.entering(p.items[0].game, p.items[0].opts); core.host.open(GAMES[p.items[0].game], p.items[0].opts); return; }
+  if (p.shop) { shop(); return; }
+  const plays = PLAYS.filter(x => x.place === k && (x.go.to === 'test' || x.go.to === 'note' || (x.go.game && GAMES[x.go.game])));
+  const groups = WANTS.map(w => [w, plays.filter(x => x.want === w.k)]).filter(g => g[1].length);
+  const items = [...plays.map(x => ({ t: x.n, play: x })), ...p.extra.filter(x => GAMES[x.game])];
   core.ui.sheet(`<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc(p.n)}</h3><p>${esc(p.sub)}</p></div></header>` +
-    (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc(it.t)}<small>入る ›</small></button></li>`).join('')}</ul>` : '<p class="cs-note">売っているものは、まだありません。<br>家具は、3Dの町のショップで買えます。</p>'),
-    (ov, close) => ov.querySelectorAll('button[data-i]').forEach(b => b.onclick = () => { const it = p.items[+b.dataset.i]; close(); tour.entering(it.game, it.opts); core.host.open(GAMES[it.game], it.opts); }));
+    groups.map(([w, l]) => `<p class="tw-grp">${esc(w.n)}</p><ul class="tw-list">${l.map(x => `<li><button data-i="${items.findIndex(it => it.play === x)}">${esc(x.n)}<small>${{ study: '勉強', both: '勉強・ゲーム', game: 'ゲーム', any: '' }[x.mood]} ›</small></button></li>`).join('')}</ul>`).join('') +
+    (p.extra.length ? `<p class="tw-grp">ほかの入口</p><ul class="tw-list">${items.filter(it => !it.play).map(it => `<li><button data-i="${items.indexOf(it)}">${esc(it.t)}<small>入る ›</small></button></li>`).join('')}</ul>` : ''),
+    (ov, close) => ov.querySelectorAll('button[data-i]').forEach(b => b.onclick = () => {
+      const it = items[+b.dataset.i]; close();
+      if (it.play) { if (it.play.go.game) tour.entering(it.play.go.game, it.play.go.opts); core.today.go(it.play); }
+      else { tour.entering(it.game, it.opts); core.openGame(it.game, it.opts); }
+    }));
+}
+// ショップ：コインとダイヤ。家具は3Dの町のショップ、アバターは作り直し中
+function shop() {
+  const M = core.member;
+  core.ui.sheet(`<header class="tw-head"><img src="img/supermarket.webp" alt=""><div><h3>ショップ</h3><p>買う</p></div></header>
+    <ul class="cs-stat"><li><span>コイン</span><b>${core.wallet.get()}</b></li><li><span>ダイヤ</span><b>${M.gems()}</b></li><li><span>会員</span><b>${M.isPaid() ? '有料会員' : '無料会員'}</b></li></ul>
+    <p class="cs-note">・ダイヤと有料会員は、アプリにしたときにストアの課金とつなぎます。<br>・家具は3Dの町のショップで買えます(コイン)。<br>・ダイヤ教材(出版社などの正式な教材)は図書館に並びます。<br>・有料アバターは、アバターの作り直しのあとに並びます。${M.isPaid() ? '有料会員は月に1回、その月のアバターを枠に入れられます。' : ''}</p>
+    ${mode.has3D !== false ? '<button class="cs-btn" data-3d>3Dの町のショップへ</button>' : ''}`, (ov, close) => { const b = ov.querySelector('[data-3d]'); if (b) b.onclick = () => { close(); mode.to3D(); }; });
 }
 document.querySelectorAll('.tw-bld').forEach(b => b.addEventListener('click', () => { tour.tapped(b.dataset.k); b.classList.remove('hop'); void b.offsetWidth; b.classList.add('hop'); setTimeout(() => enter(b.dataset.k), 260); }));
 core.onClose = () => { refreshMe(); if (mode.is3D) mode.resume(); else tour.afterClose(); };
@@ -75,4 +94,9 @@ $('twTree').onclick = () => {
 /* はじめに「3Dの町」か「2Dの地図」かを選ぶ（apps/town/mode.js） */
 const mode = createMode(core, { GAMES, enter, openStudy, start2D: () => { fit(); tour.auto(); } });
 $('twTo3d').onclick = () => mode.to3D();
+core.to3D = () => mode.to3D();
+// 今日なにする?（2Dでも3Dでも、画面の下のまん中）と、おしゃべり（住人がいる3Dの町へ）
+document.body.insertAdjacentHTML('beforeend', '<div class="tw-dock"><button class="tw-today" id="twToday">今日なにする?</button><button class="tw-chat" id="twChat" aria-label="住人とおしゃべり">💬</button></div>');
+$('twToday').onclick = () => core.today.open({ has: g => !!GAMES[g] });
+$('twChat').onclick = () => { if (mode.is3D) core.ui.toast('住人に近づいて、話しかけてみよう'); else { core.ui.toast('3Dの町で、住人に話しかけてみよう'); mode.to3D(); } };
 mode.start();

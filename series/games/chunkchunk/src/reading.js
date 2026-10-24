@@ -10,7 +10,7 @@ export function builtinStory(s){const sens=s.list.map(([en,ja])=>parseSentence(e
 /* 読み終えて閉じたら、記録に「リーディング」として知らせる（30秒未満は数えない） */
 function reportRead(story,t0,g){try{const min=Math.round((Date.now()-t0)/6e3)/10;if(min<0.5)return;
   const words=(story.list||[]).reduce((a,x)=>a+String(Array.isArray(x)?x[0]:(x&&x.en)||"").split(/\s+/).filter(Boolean).length,0);
-  ENV.ctx.report("done",{play:"cc.read",title:story.title,min,words,score:g&&g.n?Math.round(g.res.reduce((a,x)=>a+({o:1,t:.5,x:0})[x],0)/g.n*100):undefined,finished:!!g})}catch(e){}}
+  ENV.ctx.report("done",{play:"cc.read",book:story.my?undefined:"cc:"+story.title,title:story.title,min,words,score:g&&g.n?Math.round(g.res.reduce((a,x)=>a+({o:1,t:.5,x:0})[x],0)/g.n*100):undefined,finished:!!g})}catch(e){}}
 export function startRead(story){
   if(!story){const pool=STORIES.filter(s=>QUESTIONS[s.title]);story=builtinStory(pool[readN++%pool.length])}
   $("title").hidden=true;$("edView").hidden=true;

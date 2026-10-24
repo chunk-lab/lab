@@ -9,10 +9,9 @@ import './src/cc.css';
 import { ENV, init_engine, loadSettings, S, nextRun, clearPop, readTextAloud } from './src/engine.js';
 import { sfx, preloadSfx, stopSfxVoice, initSfx } from './src/sfx.js';
 import { initBgm } from './src/bgm.js';
-import { createWallet } from './src/wallet.js';
 import { createMake } from './src/make.js';
 import { createStory } from './src/story.js';
-import { init_texts, initShared } from './src/texts.js';
+import { init_texts, initShared, openMyTexts } from './src/texts.js';
 import { init_rank } from './src/rank.js';
 import { initTitle, showTitle } from './src/title.js';
 const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;700&family=Mochiy+Pop+One&family=Zen+Maru+Gothic:wght@500;700&family=Quicksand:wght@500;700&display=swap';
@@ -34,7 +33,8 @@ export default {
     migrate(ctx.store);
     el.classList.add('ct-cc'); el.innerHTML = html;
     // レッスン（文を作る）。開いている間は「街へ」ボタンを隠す（レッスンの画面が全体をおおうため）
-    const wallet = createWallet(ctx.store);
+    // コインは全アプリ共通の財布へ（レッスンの初回クリアなど一度きりのごほうび）。前の別財布(createWallet)は使わない
+    const wallet = { add: (kind, n) => kind === 'coins' ? ctx.core.member.earn('once', n) > 0 : false };
     ENV.make = createMake({ base: ctx.base, store: ctx.store, Wallet: wallet, sfx, report: (n, d) => ctx.report(n, d), onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
     ENV.story = createStory({ speak: t => readTextAloud(t), base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
     loadSettings(); init_engine(); init_texts(); init_rank(); initTitle(face);
@@ -44,6 +44,7 @@ export default {
     const title = el.querySelector('#title'), mo = new MutationObserver(() => ctx.showBack(!title.hidden && !ctx.core.reader.isOpen && !ENV.make.visible() && !ENV.story.visible()));
     mo.observe(title, { attributes: true, attributeFilter: ['hidden'] });
     showTitle(); ctx.showBack(true);
+    if (ctx.opts && ctx.opts.open === 'mytexts') setTimeout(() => { try { el.querySelector('#title').hidden = true; openMyTexts(); } catch (e) { console.error(e); } }, 50);   // 図書館の「自分の本」から
     ctx.report('enter', { face, name: NAMES[face] });
     return {
       unmount() {

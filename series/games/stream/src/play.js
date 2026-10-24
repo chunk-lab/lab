@@ -300,7 +300,7 @@ export function pause(){if(!RUN||PAUSED||$("sPlay").hidden)return;PAUSED=true;hu
 /* まちがえた単語は、終わったときに勉強ノートへ（単語の段だけ。長いチャンクは入れない） */
 function noteMiss(it){try{if(RUN&&it&&it.kind===1&&it.en&&it.ans&&!RUN.missed.some(x=>x.en===it.en))RUN.missed.push({en:it.en,ja:it.ans})}catch(e){}}
 function reportDone(r,T,acc,rank){try{const p=r.p,wc=p.word?0:(p.chunks||[]).reduce((a,c)=>a+String(plain(c)).split(/\s+/).filter(Boolean).length,0);
-  ENV.ctx&&ENV.ctx.report("done",{play:p.word?"stream.word":"stream.read",title:p.title,min:Math.round((Date.now()-r.t0)/6e3)/10,words:r.from===1?wc:0,score:Math.round(acc*100),rank,missed:r.missed,finished:true})}catch(e){}}
+  ENV.ctx&&ENV.ctx.report("done",{play:p.word?"stream.word":"stream.read",passage:p.word?undefined:p.id,title:p.title,min:Math.round((Date.now()-r.t0)/6e3)/10,words:r.from===1?wc:0,score:Math.round(acc*100),rank,missed:r.missed,finished:true})}catch(e){}}
 export function endRun(){cancelAnimationFrame(RAF);hush();bgmStop();if(G)G.over=true;G=null;RUN=null;$("arena").querySelectorAll(".inter,.cpop").forEach(e=>e.remove())}
 
 /* ---- 段の終わり：ランクと星をちらっと見せて、そのまま次の段へ ---- */

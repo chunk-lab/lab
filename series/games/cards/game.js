@@ -18,7 +18,7 @@ function migrate(store) {
 export default {
   id: 'cards', name: 'チャンク・カード', right: 'game:cards',
   async mount(el, ctx) {
-    migrate(ctx.store); bindStore(ctx.store); bindCore({ sound: ctx.core.sound, speech: ctx.core.speech });
+    migrate(ctx.store); bindStore(ctx.store); bindCore({ sound: ctx.core.sound, speech: ctx.core.speech, report: (n, d) => ctx.report(n, d) });
     el.classList.add('ct-cards');
     const root = document.createElement('div'); root.className = 'cc-app'; el.appendChild(root);
     const off = mount(root);

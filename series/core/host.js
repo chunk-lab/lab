@@ -25,6 +25,7 @@ export function createHost(core, layer, backBtn) {
       const ctx = { core, store: createStore(game.id), settings: core.settings, speech: core.speech, sound: core.sound, opts,
         base: core.base + 'g/' + game.id + '/', loadScript,
         report: (name, data) => core.events.report(game.id, name, data),
+        earn: (kind, n) => core.member.earn(kind, n),   // コインをもらう（'game'＝点数のごほうび。1日の上限つき）
         showBack: (on) => { backBtn.hidden = !(on && core.config.backButton); }, exit: close };
       cur = { game, el, inst: null };
       ctx.report('open');
