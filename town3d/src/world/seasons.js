@@ -57,8 +57,8 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     const dummy = new THREE.Object3D(); let on = false, near = [], nearT = 0;
     function spawn(l, cam) {
       if (!near.length) { l.y = -9; l.wait = 1; return; }
-      const tr = near[Math.floor(Math.random() * near.length)], a = Math.random() * 6.28, r = Math.random() * 1.3 * tr.s;
-      Object.assign(l, { x: tr.x + Math.cos(a) * r, z: tr.z + Math.sin(a) * r, y: (2.6 + Math.random() * 1.6) * tr.s, t: 0, ground: 0, p: Math.random() * 6, ry: Math.random() * 6, v: 0.45 + Math.random() * 0.35 });
+      const tr = near[Math.floor(Math.random() * near.length)], a = Math.random() * 6.28, r = (1.0 + Math.random() * 0.6) * tr.s;   // 葉のかたまりのふちから
+      Object.assign(l, { x: tr.x + Math.cos(a) * r, z: tr.z + Math.sin(a) * r, y: (2.0 + Math.random() * 1.4) * tr.s, t: 0, ground: 0, p: Math.random() * 6, ry: Math.random() * 6, v: 0.45 + Math.random() * 0.35 });
     }
     return {
       on(v) { on = v; sets.forEach(m => { m.visible = v; }); },
