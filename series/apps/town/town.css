@@ -35,3 +35,7 @@ body>.tw-top .tw-right{display:flex;gap:8px;align-items:center}
 body.cs-in-game .tw-dock{display:none}
 .tw-today{padding:12px 22px;border-radius:999px;border:3px solid #8a5a32;background:#ffc93c;color:#2b2320;font:800 16px "Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;box-shadow:0 4px 0 #8a5a32;cursor:pointer;white-space:nowrap}
 .tw-chat{width:48px;height:48px;border-radius:50%;border:3px solid #8a5a32;background:#fffaf0;font-size:20px;box-shadow:0 4px 0 #8a5a32;cursor:pointer}
+/* 3Dの町では、下のボタン(手をふる・ひとこと・家具の操作)とぶつからないように右のまん中へ */
+body.md-3d-on .tw-dock{left:auto;right:max(8px,env(safe-area-inset-right,0px));top:42%;bottom:auto;transform:none}
+body.md-3d-on .tw-chat{display:none}
+body.md-3d-on .tw-today{padding:8px 12px;font-size:13px;writing-mode:vertical-rl;letter-spacing:2px;border-radius:16px}

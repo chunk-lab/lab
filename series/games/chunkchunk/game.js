@@ -32,6 +32,9 @@ export default {
     Object.assign(ENV, { root: el, ctx, core: ctx.core, offs: [] });
     migrate(ctx.store);
     el.classList.add('ct-cc'); el.innerHTML = html;
+    // 無料会員は手打ちだけ：AIを使う登録(コピペ方式・AIで分ける・ファイル用の指示文)を隠す(設計書「共有・自分だけ・会員」)
+    const freeMark = () => el.classList.toggle('cc-free', !(ctx.core.member && ctx.core.member.isPaid()));
+    freeMark(); const offPlan = ctx.core.member ? ctx.core.member.onChange(freeMark) : null;
     // レッスン（文を作る）。開いている間は「街へ」ボタンを隠す（レッスンの画面が全体をおおうため）
     // コインは全アプリ共通の財布へ（レッスンの初回クリアなど一度きりのごほうび）。前の別財布(createWallet)は使わない
     const wallet = { add: (kind, n) => kind === 'coins' ? ctx.core.member.earn('once', n) > 0 : false };
@@ -48,7 +51,7 @@ export default {
     ctx.report('enter', { face, name: NAMES[face] });
     return {
       unmount() {
-        mo.disconnect(); nextRun();
+        mo.disconnect(); nextRun(); offPlan && offPlan();
         try { if (S) { clearTimeout(S.timer); S.phase = 'ready'; } } catch (e) { }
         try { ctx.core.reader.close(); } catch (e) { }
         try { ENV.make.destroy(); ENV.make = null; } catch (e) { }
