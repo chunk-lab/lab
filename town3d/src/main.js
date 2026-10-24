@@ -720,7 +720,7 @@ export function mount(container, opt = {}) {
     moveNpc: (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (r) r.ch.root.position.set(x, 0, z); },
     // 最初の画面を飛ばして町へ(前に選んだキャラ。はじめてなら最初のキャラ)
     // イベント(運営画面から。テスト用)
-    event: { sec: evSec, run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
+    event: { seek: f => { if (env.eclipse) env.eclipse.t = f * env.eclipse.dur; if (env.weather) env.weather.t = f * env.weather.dur; }, sec: evSec, run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
     cameraMode: () => camMode,
     quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
