@@ -165,6 +165,9 @@ export function makeCharacter(look, { scale = 1 } = {}) {
         if (ps === 'fish') { arms[1].rotation.x = -0.9 + Math.sin(idleT * 1.3) * 0.03; arms[1].rotation.z = 0.12; arms[0].rotation.x = 0; head.rotation.y = 0; }
         else if (ps === 'harp') { arms[0].rotation.x = arms[1].rotation.x = -2.1; arms[1].rotation.z = 0; head.rotation.y = 0; }
       }
+      // すわる・ねころぶ(家の中で使う)
+      if (self.pose === 'sit') { legs[0].rotation.x = legs[1].rotation.x = -1.45; arms[0].rotation.x = arms[1].rotation.x = -0.4; body.position.y = 0; body.rotation.x = 0; head.rotation.y = Math.sin(idleT * 0.4) * 0.25; }
+      else if (self.pose === 'lie') { legs[0].rotation.x = legs[1].rotation.x = 0; arms[0].rotation.x = arms[1].rotation.x = 0; arms[0].rotation.z = 0.08; arms[1].rotation.z = -0.08; body.position.y = 0; body.rotation.x = -Math.PI / 2; head.rotation.y = 0; }
       blinkT -= dt;
       const b = blinkT < 0.12 ? 0.15 : 1;
       eyes.forEach(e => (e.scale.y = 1.25 * b));

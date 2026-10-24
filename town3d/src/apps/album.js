@@ -14,7 +14,8 @@ export const albumApp = {
     el.appendChild(box);
     let view = 'grid', msg = '', cur = null, img = null, crop = null, sure = false;
     const gemsTxt = () => (ctx.gems ? `　💎 ${fmtN(ctx.gems.get())}` : '');
-    const head = (t, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${t}</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px;font-size:13px">📷 ${photos.list().length}/${photos.slots(cfg)}${gemsTxt()}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
+    const fromHome = ctx.params && ctx.params.from === 'home';   // 家から来たときは「部屋にもどる」を出す
+    const head = (t, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${t}</h2>${fromHome ? `<button data-home style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:7px 12px;font-size:13px">🏠 部屋にもどる</button>` : ''}<b style="background:#fff3cf;border-radius:999px;padding:6px 14px;font-size:13px">📷 ${photos.list().length}/${photos.slots(cfg)}${gemsTxt()}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
 
     async function thumb(p, w) {
       const i = await loadImg(p.src); if (!i) return '';
@@ -60,6 +61,7 @@ export const albumApp = {
 
     box.onclick = async e => {
       const t = e.target.closest('button'); if (!t) return;
+      if (t.dataset.home !== undefined) { if (cur && view === 'edit') saveCrop(); ctx.open('home', { walk: !!(ctx.params && ctx.params.walk) }); return; }
       if (t.dataset.p) return open(t.dataset.p);
       if (t.dataset.buy !== undefined) { const err = photos.buySlot(ctx.gems, cfg); msg = err || '枠が1つふえたよ！'; return grid(); }
       if (view !== 'edit') return;

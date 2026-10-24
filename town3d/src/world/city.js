@@ -335,7 +335,6 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     const P4 = M4(x, z, ry);
     colliders.push({ cx: x, cz: z, r: 0.8 });
     B.add(rbox(1.8, 0.12, 0.5, 0.04), mat(0xe8c9a8), 0, 0.48, 0, 0, 1, 1, 1, P4);
-    B.add(rbox(1.8, 0.4, 0.1, 0.04), mat(0xe8c9a8), 0, 0.85, -0.22, 0, 1, 1, 1, P4);
     for (const s of [-1, 1]) B.add(box(0.1, 0.48, 0.45), mat(0xa99bc0), s * 0.75, 0.24, 0, 0, 1, 1, 1, P4);
   }
   function flowerBed(x, z, ry) {

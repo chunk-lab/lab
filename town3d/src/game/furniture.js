@@ -37,10 +37,10 @@ function disc(g, r, t, c, x, y, z) {
 
 // 原点が床の中心、正面は +z。大きさは w×d マス(1マス=1)。壁かけは「壁にふれる面が z=0」「幅の中心が x=0」。
 export const ITEMS = [
-  { id: 'bed', cat: 'ねる・すわる', name: 'ベッド', price: 700, w: 2, d: 3, build(g) {
+  { id: 'bed', lie: 0.63, cat: 'ねる・すわる', name: 'ベッド', price: 700, w: 2, d: 3, build(g) {
     box(g, 1.9, 0.35, 2.9, 0xf3d9b1, 0, 0, 0); box(g, 1.8, 0.28, 2.6, 0xffc2d1, 0, 0.35, 0.1);
     box(g, 1.8, 0.2, 0.12, 0xf3d9b1, 0, 0.35, -1.42); box(g, 1.2, 0.18, 0.55, 0xffffff, 0, 0.63, -0.95); } },
-  { id: 'sofa', cat: 'ねる・すわる', name: 'ソファ', price: 500, w: 3, d: 1, build(g) {
+  { id: 'sofa', sit: 0.4, cat: 'ねる・すわる', name: 'ソファ', price: 500, w: 3, d: 1, build(g) {
     box(g, 2.9, 0.4, 0.95, 0xb9a6e6, 0, 0, 0); box(g, 2.9, 0.55, 0.28, 0xa793d9, 0, 0.4, -0.36);
     box(g, 0.28, 0.35, 0.8, 0xa793d9, -1.31, 0.4, 0.05); box(g, 0.28, 0.35, 0.8, 0xa793d9, 1.31, 0.4, 0.05); } },
   { id: 'lowtable', cat: 'つくえ・しゅうのう', name: 'ローテーブル', price: 300, w: 2, d: 1, build(g) {
@@ -49,7 +49,7 @@ export const ITEMS = [
   { id: 'dining', cat: 'つくえ・しゅうのう', name: 'ダイニングテーブル', price: 500, w: 2, d: 2, build(g) {
     box(g, 1.9, 0.12, 1.9, 0xefd3a8, 0, 0.62, 0);
     for (const sx of [-0.8, 0.8]) for (const sz of [-0.8, 0.8]) box(g, 0.12, 0.62, 0.12, 0xd6b588, sx, 0, sz); } },
-  { id: 'chair', cat: 'ねる・すわる', name: 'いす', price: 150, w: 1, d: 1, build(g) {
+  { id: 'chair', sit: 0.45, cat: 'ねる・すわる', name: 'いす', price: 150, w: 1, d: 1, build(g) {
     box(g, 0.7, 0.1, 0.7, 0xffd6a5, 0, 0.35, 0); box(g, 0.7, 0.6, 0.1, 0xffd6a5, 0, 0.45, -0.3);
     for (const sx of [-0.28, 0.28]) for (const sz of [-0.28, 0.28]) box(g, 0.08, 0.35, 0.08, 0xe0b88a, sx, 0, sz); } },
   { id: 'shelf', cat: 'つくえ・しゅうのう', name: '本だな', price: 400, w: 2, d: 1, build(g) {
@@ -75,7 +75,7 @@ export const ITEMS = [
     box(g, 1.9, 0.1, 1.9, 0xefd3a8, 0, 0.55, 0); box(g, 1.7, 0.45, 1.7, 0xff9f9f, 0, 0.1, 0);
     box(g, 1.9, 0.05, 1.9, 0xffe4e4, 0, 0.65, 0); } },
   // ---- ここから追加 ----
-  { id: 'armchair', cat: 'ねる・すわる', name: 'ひじかけいす', price: 350, w: 1, d: 1, build(g) {
+  { id: 'armchair', sit: 0.42, cat: 'ねる・すわる', name: 'ひじかけいす', price: 350, w: 1, d: 1, build(g) {
     box(g, 0.95, 0.4, 0.9, 0xe7a977, 0, 0, 0); box(g, 0.95, 0.65, 0.25, 0xd6925f, 0, 0.4, -0.33);
     box(g, 0.2, 0.3, 0.7, 0xd6925f, -0.4, 0.4, 0.08); box(g, 0.2, 0.3, 0.7, 0xd6925f, 0.4, 0.4, 0.08); } },
   { id: 'desk', cat: 'つくえ・しゅうのう', name: 'つくえ', price: 450, w: 2, d: 1, build(g) {

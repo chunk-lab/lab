@@ -273,7 +273,7 @@ export const homeApp = {
     ctl.onclick = e => {
       const a = e.target.closest('[data-a]')?.dataset.a, p = placed.find(x => x.uid === selUid);
       if (a === 'walk') { enterWalk(); return; }
-      if (a === 'album') { ctx.open('album'); return; }
+      if (a === 'album') { ctx.open('album', { from: 'home' }); return; }
       if (a === 'shop') { ctx.open('shop', { from: 'home' }); return; }   // ネットショッピング(家からそのままショップへ)
       if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(チャンクタウン)の勉強部屋を開く
       if (!a || !p) return;
@@ -320,6 +320,8 @@ export const homeApp = {
     const mover = (e, p, off) => (kindOf(p.id) === 'wall' ? wallFor(e, p) : cellFor(e, p, off));
     const toTop = p => { placed = placed.filter(x => x !== p); placed.push(p); };   // 動かした家具は一番上にのる
     let drag = null;
+    // この部屋の操作は、外側(町の操作)に伝えない(伝わると、町のほうが指を横取りして動けなくなる)
+    for (const t of ['pointerdown', 'pointermove', 'pointerup', 'pointercancel']) cv.addEventListener(t, e => e.stopPropagation());
     const ptrs = new Map(); let pinch = null;
     const pinchState = () => { const [a, b] = [...ptrs.values()]; return { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 }; };
     cv.onpointerdown = e => {
@@ -364,7 +366,7 @@ export const homeApp = {
     cv.onpointerup = up; cv.onpointercancel = up;
 
     // ---- 歩く(自分が部屋の中に立って、歩きまわる。写真も撮れる) ----
-    let wInput = null, wme = null, wyaw = 0.8, wpitch = 0.3, wdist = 4.2, wx = 0, wz = 0, wry = 0, wspeed = 0, blockers = [], wUI = null;
+    let wPose = null, wy = 0, wLast = '', wInput = null, wme = null, wyaw = 0.8, wpitch = 0.3, wdist = 4.2, wx = 0, wz = 0, wry = 0, wspeed = 0, blockers = [], wUI = null;
     const editEls = [planEl, tip, ctl, inv, zm];
     function calcBlockers() {   // ゆかにじかに置いてある背の高い家具は、とおれない
       blockers = []; Y = stackY(list());
@@ -385,17 +387,47 @@ export const homeApp = {
     function updateWalk(dt) {
       const inp = wInput.read();
       wyaw -= inp.camDX * 0.006; wpitch = clamp(wpitch + inp.camDY * 0.004, 0.04, 1.3); wdist = clamp(wdist + inp.zoom * 0.6, 1.5, 9);
-      const mag = Math.min(1, Math.hypot(inp.mx, inp.my)), target = mag > 0.05 ? (inp.run ? 5.5 : 3.2) * Math.max(mag, 0.4) : 0;
+      const mag = Math.min(1, Math.hypot(inp.mx, inp.my)), target = mag > 0.05 && !wPose ? (inp.run ? 5.5 : 3.2) * Math.max(mag, 0.4) : 0;
+      if (wPose && mag > 0.3) standUp();   // 動こうとしたら、立つ
       wspeed += (target - wspeed) * Math.min(1, dt * 10);
-      if (mag > 0.05) {
+      if (mag > 0.05 && !wPose) {
         const sn = Math.sin(wyaw), cs = Math.cos(wyaw), vx = (inp.mx * cs + inp.my * sn) / mag, vz = (-inp.mx * sn + inp.my * cs) / mag;
         let d = Math.atan2(vx, vz) - wry; d = Math.atan2(Math.sin(d), Math.cos(d)); wry += d * Math.min(1, dt * 12);
         [wx, wz] = walkTo(wx + vx * wspeed * dt, wz + vz * wspeed * dt);
       }
-      wme.root.position.set(wx, 0, wz); wme.root.rotation.y = wry; wme.update(dt, wspeed); wme.root.visible = wdist > 1.9;
+      wme.root.position.set(wx, wPose ? wy : 0, wz); wme.root.rotation.y = wry; wme.update(dt, wspeed); wme.root.visible = wdist > 1.9;
       const look = new THREE.Vector3(wx, 1.1, wz), op = wpitch;
       cam.position.set(wx + Math.sin(wyaw) * Math.cos(op) * wdist, 1.1 + Math.sin(op) * wdist, wz + Math.cos(wyaw) * Math.cos(op) * wdist);
       cam.lookAt(look);
+      cv.dataset.wp = wx.toFixed(2) + ',' + wz.toFixed(2);
+      // 近くに座れる・寝られる家具があれば、ボタンを出す
+      const near = wPose ? wPose.p : seatNear(), label = wPose ? '🧍 立つ' : near ? (ITEM[near.id].lie ? '🛏 寝る' : '🪑 座る') : '';
+      if (label !== wLast && wUI) { wLast = label; const b = wUI.querySelector('[data-w="act"]'); b.style.display = label ? '' : 'none'; b.textContent = label; }
+    }
+    function seatNear() {
+      let best = null, bd = 0.8;
+      for (const p of list()) {
+        const it = ITEM[p.id]; if (!(it.sit || it.lie)) continue;
+        const [w, d] = size(p), dx = Math.max(p.gx / U - wx, 0, wx - (p.gx + w) / U), dz = Math.max(p.gz / U - wz, 0, wz - (p.gz + d) / U), dd = Math.hypot(dx, dz);
+        if (dd < bd) { bd = dd; best = p; }
+      }
+      return best;
+    }
+    // 家具に座る/寝る(家具のむきに合わせる)。立つときは、家具の前(ベッドは横)へ
+    function takePose(p) {
+      const it = ITEM[p.id], [w, d] = size(p), cx = (p.gx + w / 2) / U, cz = (p.gz + d / 2) / U, yaw = -p.r * Math.PI / 2, sn = Math.sin(yaw), cs = Math.cos(yaw);
+      let lx = (wx - cx) * cs - (wz - cz) * sn, lz;
+      if (it.sit) { const lim = Math.max(0, it.w / 2 - 0.5); lx = clamp(lx, -lim, lim); lz = -0.02; } else { lx = 0; lz = 0.8; }
+      wx = cx + lx * cs + lz * sn; wz = cz - lx * sn + lz * cs; wry = yaw;
+      wy = (Y[p.uid] || 0) + (it.sit ? it.sit - 0.58 : it.lie + 0.14);
+      wPose = { p, lx, stand: it.sit ? [lx, it.d / 2 + 0.6] : [it.w / 2 + 0.55, 0.3], yaw, cx, cz };
+      wme.pose = it.sit ? 'sit' : 'lie'; wspeed = 0;
+    }
+    function standUp() {
+      if (!wPose) return;
+      const { stand, yaw, cx, cz } = wPose, sn = Math.sin(yaw), cs = Math.cos(yaw);
+      [wx, wz] = walkTo(cx + stand[0] * cs + stand[1] * sn, cz - stand[0] * sn + stand[1] * cs);
+      wPose = null; wme.pose = null;
     }
     function enterWalk() {
       if (walk) return;
@@ -405,24 +437,26 @@ export const homeApp = {
       editEls.forEach(e => { e._d = e.style.display; e.style.display = 'none'; });
       wme = makeCharacter(typeof ctx.player?.look === 'string' ? LOOKS[ctx.player.look] || LOOKS.hana : LOOKS.hana); scene.add(wme.root);
       // はじめは、かべぎわのあいた場所
-      wx = rm.cols / 2; wz = rm.rows - 1; [wx, wz] = walkTo(wx, wz); wry = Math.PI; wyaw = 0.2; wpitch = 0.3; wdist = 4.2; wspeed = 0;
+      wPose = null; wLast = ''; wx = rm.cols / 2; wz = rm.rows - 1; [wx, wz] = walkTo(wx, wz); wry = Math.PI; wyaw = 0.2; wpitch = 0.3; wdist = 4.2; wspeed = 0;
       wInput = createInput(cv, { onAction: () => {} });
       wUI = document.createElement('div');
       const wb = 'position:absolute;z-index:4;border:0;border-radius:999px;font:inherit;font-weight:800;box-shadow:0 2px 8px #0003;cursor:pointer';
       wUI.innerHTML = `<button data-w="back" style="${wb};left:10px;top:10px;padding:9px 14px;background:#fffaf2;color:${ink}">✏️ へんしゅうにもどる</button>
         <button data-w="shot" aria-label="写真をとる" style="${wb};right:12px;bottom:12px;width:58px;height:58px;font-size:26px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1)">📷</button>
         <button data-w="album" style="${wb};right:12px;bottom:80px;padding:8px 12px;font-size:13px;background:#fffaf2;color:${ink}">🖼 アルバム</button>
+        <button data-w="act" style="${wb};left:50%;transform:translateX(-50%);bottom:18px;padding:12px 22px;font-size:16px;background:linear-gradient(160deg,#ffe08a,#ffc93c);color:${ink};display:none">座る</button>
         <div data-w="hint" style="position:absolute;left:0;right:0;top:56px;text-align:center;font-size:12px;color:#fff;text-shadow:0 1px 3px #0008;pointer-events:none">下を なぞって歩く／上を なぞって見まわす／ピンチで近づく(パソコンは WASD・ドラッグ・ホイール)</div>`;
       cv.appendChild(wUI); setTimeout(() => wUI && wUI.querySelector('[data-w="hint"]')?.remove(), 6000);
       wUI.onpointerdown = e => e.stopPropagation();
       wUI.onclick = e => {
         const w = e.target.closest('[data-w]')?.dataset.w;
         if (w === 'back') exitWalk();
-        else if (w === 'album') ctx.open('album');
+        else if (w === 'album') ctx.open('album', { from: 'home', walk: true });
+        else if (w === 'act') { if (wPose) standUp(); else { const n = seatNear(); if (n) takePose(n); } }
         else if (w === 'shot') {   // 見えたまま撮る(ボタンなどは写らない)
           const was = wme.root.visible; renderer.render(scene, cam);
           const src = snapCanvas(renderer.domElement); flash(root);
-          shotCard(root, src, { gems: ctx.gems, cfg: ctx.photo, openAlbum: () => ctx.open('album') });
+          shotCard(root, src, { gems: ctx.gems, cfg: ctx.photo, openAlbum: () => ctx.open('album', { from: 'home', walk: true }) });
         }
       };
       resize();
@@ -436,6 +470,7 @@ export const homeApp = {
     }
 
     buildShell(); resize(); relayout(); ui(); loop();
+    if (ctx.params && ctx.params.walk) enterWalk();   // アルバムから「部屋にもどる」で、歩いていたところへ
     const offW = ctx.wallet.onChange ? ctx.wallet.onChange(() => planUI()) : null;
     ctx.setTitle?.('あなたの家');
     return {
