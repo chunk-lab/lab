@@ -30,6 +30,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
       features: features.slice(),   // 組み込み先(チャンクタウン)が用意している機能。'study'＝勉強部屋を開ける
       emit: (name, data) => bus.emit('app:event', { app: def.id, name, data }),
       setTitle: t => { frame.querySelector('.tw-app-title').textContent = t; },
+      open: (id, p) => setTimeout(() => open(id, p), 0),   // ほかのアプリへ(いまのアプリは閉じる)。家→ショップなど
       close: result => close(result),
     };
   }

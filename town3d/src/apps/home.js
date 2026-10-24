@@ -76,9 +76,10 @@ export const shopApp = {
         }).join('')}</div></div>
         <div style="padding:10px 16px calc(14px + env(safe-area-inset-bottom,0px));background:#fffaf0;box-shadow:0 -2px 10px #0001;display:flex;align-items:center;gap:12px">
           <div style="flex:1;font-weight:800">カゴ ${n}点<br><span style="font-size:13px;color:#8d7f9e">ごうけい 🪙 ${total}</span></div>
-          <button data-v="cart" style="${btn(n ? undefined : '#d9d2e3')};${n ? '' : 'cursor:default'}">カゴを見る</button></div>`;
+          ${ctx.params && ctx.params.from === 'home' ? `<button data-home style="${btn('#d9d2e3', ink)}">🏠 家へ</button>` : ''}<button data-v="cart" style="${btn(n ? undefined : '#d9d2e3')};${n ? '' : 'cursor:default'}">カゴを見る</button></div>`;
     };
     box.onclick = e => {
+      if (e.target.closest('[data-home]')) { ctx.open('home'); return; }
       const ch = e.target.closest('[data-c]');
       if (ch) { cat = ch.dataset.c; draw(); return; }
       const q = e.target.closest('[data-q]');
@@ -199,7 +200,7 @@ export const homeApp = {
       planUI();
       const p = placed.find(x => x.uid === selUid), k = p && kindOf(p.id);
       tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ(半マスずつ)。${k === 'wall' ? 'かべをタップでも動くよ。' : 'ほかの家具の上にも置けるよ。'}` : (Object.keys(furn.inv()).length ? 'かぐをタップするとえらべるよ。下の一覧から出すこともできるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
-      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : '');
+      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button>` + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
     }
@@ -245,6 +246,7 @@ export const homeApp = {
     };
     ctl.onclick = e => {
       const a = e.target.closest('[data-a]')?.dataset.a, p = placed.find(x => x.uid === selUid);
+      if (a === 'shop') { ctx.open('shop', { from: 'home' }); return; }   // ネットショッピング(家からそのままショップへ)
       if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(チャンクタウン)の勉強部屋を開く
       if (!a || !p) return;
       if (a === 'off') selUid = null;
