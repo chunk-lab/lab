@@ -27,7 +27,7 @@ body>.tw-top button{pointer-events:auto;border:2px solid #8a5a32;background:#fff
 .tw-list small{font-weight:500;font-size:12px;color:#8a7766}
 body.cs-in-game>.tw-top{display:none}
 body>.tw-top .tw-right{display:flex;gap:8px;align-items:center}
-.tw-coin{pointer-events:none;padding:6px 12px;border-radius:999px;border:2px solid #8a5a32;background:#fff3cf;box-shadow:0 2px 0 #8a5a32;font-weight:800;font-size:13px;color:#2b2320}
+.tw-coin{pointer-events:none;white-space:nowrap;padding:6px 12px;border-radius:999px;border:2px solid #8a5a32;background:#fff3cf;box-shadow:0 2px 0 #8a5a32;font-weight:800;font-size:13px;color:#2b2320}
 
 /* 施設の中の見出し・今日なにする?・おしゃべり */
 .tw-grp{margin:4px 0 -2px;font-size:12px;font-weight:800;color:#8a5a32}

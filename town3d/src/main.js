@@ -96,10 +96,12 @@ export function mount(container, opt = {}) {
   setLook(settings.look);
 
   const hud = createHud(root, bus);
+  const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
   const appHost = createAppHost({ root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
-  hud.setCoins(wallet.get());
+  hud.setCoins(wallet.get(), gemsNow());
+  if (opt.gems) { const gi = setInterval(() => hud.setCoins(wallet.get(), gemsNow()), 1500); offs.push(() => clearInterval(gi)); }
 
   // ---- 他のプレイヤー ----
   const peers = new Map();
@@ -273,9 +275,9 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('ui:action', doAction));
   offs.push(bus.on('ui:dialogClosed', () => { if (talkingTo) talkingTo.talking = false; talkingTo = null; }));
   offs.push(bus.on('ui:panelClosed', () => { if (talkingTo) talkingTo.talking = false; talkingTo = null; }));
-  offs.push(bus.on('app:close', () => { input.enabled = true; audio.play('close'); hud.setCoins(wallet.get()); }));
+  offs.push(bus.on('app:close', () => { input.enabled = true; audio.play('close'); hud.setCoins(wallet.get(), gemsNow()); }));
   if (opt.wallet?.onChange) offs.push(opt.wallet.onChange(w => bus.emit('wallet', w)));
-  offs.push(bus.on('wallet', w => { hud.setCoins(w.coins); if (w.delta > 0) { audio.play('coin'); hud.toast(`🪙 +${w.delta}`); } }));
+  offs.push(bus.on('wallet', w => { hud.setCoins(w.coins, gemsNow()); if (w.delta > 0) { audio.play('coin'); hud.toast(`🪙 +${w.delta}`); } }));
   offs.push(bus.on('toast', t => hud.toast(t)));
   offs.push(bus.on('sfx', n => audio.play(n)));
   const SAY = ['こんにちは!', 'いい天気だね', 'いっしょに遊ぼう!', 'またね〜'];
@@ -573,7 +575,7 @@ export function mount(container, opt = {}) {
     action: doAction,
     // 組み込み先がゲームを開いている間は止める(描画も音も)
     pause() { held = true; input.clear(); audio.suspend(); },
-    resume() { held = false; timer.update(); input.clear(); audio.resume(); hud.setCoins(wallet.get()); },
+    resume() { held = false; timer.update(); input.clear(); audio.resume(); hud.setCoins(wallet.get(), gemsNow()); },
     unmount() {
       cancelAnimationFrame(raf); ro.disconnect(); offs.forEach(f => f()); appHost.close(); input.dispose(); hud.dispose(); net?.disconnect(); audio.dispose(); bus.clear();
       scene.traverse(o => { o.geometry?.dispose(); });

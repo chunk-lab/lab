@@ -32,7 +32,7 @@ document.body.insertAdjacentHTML('afterbegin', `<div class="tw-view"><div class=
 const $ = id => document.getElementById(id);
 const refreshMe = () => { $('twMeImg').src = core.profile.avatarURL(); $('twMeName').textContent = core.profile.name || 'なまえ未設定'; };
 refreshMe();
-const showCoin = () => { $('twCoin').textContent = '🪙 ' + core.wallet.get(); }; showCoin(); core.wallet.onChange(showCoin);
+const showCoin = () => { $('twCoin').textContent = '🪙 ' + core.wallet.get() + ' 💎 ' + core.member.gems(); }; showCoin(); core.wallet.onChange(showCoin); core.member.onChange(showCoin);
 $('twMe').onclick = () => openStudy();
 // 勉強部屋：自宅とアバターから開く。中の「練習する」などは、街と同じしくみでゲームを開く
 function openStudy() { core.study.open({ play: core.openGame, has: g => !!GAMES[g] }); }

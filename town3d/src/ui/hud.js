@@ -135,7 +135,7 @@ export function createHud(root, bus) {
     setLite(on) { grade.style.display = vig.style.display = on ? 'none' : ''; },
     setFeed(on) { const b = emotes.querySelector('[data-e="feed"]'); if (b && b.hidden === on) b.hidden = !on; },
     setClock(hh) { const H = Math.floor(hh), m = Math.floor((hh % 1) * 60); const ic = hh < 5 || hh >= 19 ? '🌙' : hh < 7 ? '🌅' : hh < 17 ? '☀️' : '🌇'; clock.textContent = `${ic} ${String(H).padStart(2, '0')}:${String(m).padStart(2, '0')}`; },
-    setCoins(n) { coins.textContent = '🪙 ' + n; },
+    setCoins(n, g) { coins.textContent = '🪙 ' + n + (g == null ? '' : ' 💎 ' + g); },
     setAction(label) { if (!label) { action.hidden = true; return; } action.hidden = false; if (action.textContent !== label) action.textContent = label; },
     get busy() { return !!dialog || !!panel; },
     toast(text) {
