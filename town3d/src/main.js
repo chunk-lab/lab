@@ -340,6 +340,7 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('ui:lang', () => { settings.en = settings.en ? 0 : 1; save(); bus.emit('lang', { on: !!settings.en }); hud.toast(settings.en ? 'English モード' : '日本語モード'); }));
   bus.emit('lang', { on: !!settings.en });
   // 写真:いま見えている画面のまま撮る(HUDは写らない)。のこすのは はじめ1枚、ダイヤで5枚まで。切り取りはアルバムで
+  offs.push(bus.on('app:open', () => root.querySelector('.tw-shot')?.remove()));   // アプリを開いたら写真のカードは消す
   offs.push(bus.on('ui:photo', () => {
     if (!started || appHost.current || hud.busy) return;
     renderer.render(scene, camera);

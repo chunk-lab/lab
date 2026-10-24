@@ -77,6 +77,7 @@ export function shotCard(root, src, { gems, cfg, openAlbum, sfx }) {
     a.onclick = () => { const o = photos.oldest(); if (o) photos.remove(o.id); photos.add(src, cfg); done(); };
     b.onclick = () => { close(); openAlbum && openAlbum(); };
     c.onclick = close;
+    card._t = setTimeout(close, 12000);
   }
   sfx && sfx();
   root.appendChild(card);
