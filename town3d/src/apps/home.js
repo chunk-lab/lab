@@ -102,7 +102,7 @@ export const homeApp = {
     const root = document.createElement('div');
     root.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;font-family:inherit;color:${ink};background:linear-gradient(#fdf0f3,#eaf4ff)`;
     root.innerHTML = `<div class="plan" style="display:flex;align-items:center;gap:8px;padding:8px 10px 2px"></div>
-      <div class="cv" style="flex:1;position:relative;min-height:0;touch-action:none"></div>
+      <div class="cv" style="flex:1;position:relative;min-height:0;touch-action:none"><div class="zm" style="position:absolute;right:8px;bottom:8px;display:flex;flex-direction:column;gap:6px;z-index:3"></div></div>
       <div class="tip" style="text-align:center;font-size:12px;color:#8d7f9e;padding:4px 10px;min-height:18px"></div>
       <div class="ctl" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 10px 6px"></div>
       <div class="inv" style="display:flex;gap:8px;overflow-x:auto;padding:6px 10px 12px"></div>
@@ -145,14 +145,23 @@ export const homeApp = {
       const w2 = new THREE.Mesh(new THREE.BoxGeometry(0.25, WALL_H, R), lm(pal[2])); w2.position.set(-0.125, WALL_H / 2, R / 2);
       shell.add(floor, grid, w1, w2);
     }
+    // 拡大・縮小(ボタン・マウスのホイール・ピンチ)と、拡大中のスクロール(2本指でうごかす)
+    let zoom = 1, panX = 0, panZ = 0, baseDist = 15;
+    const ZMIN = 0.45, ZMAX = 3.2;
+    const setZoom = z => { zoom = Math.max(ZMIN, Math.min(ZMAX, z)); resize(); };
     function resize() {
       const w = cv.clientWidth || 300, h = cv.clientHeight || 300, r = cur(), big = Math.max(r.cols, r.rows);
       renderer.setSize(w, h, false); cam.aspect = w / h;
-      const dist = Math.max(15, 6.4 / (cam.aspect * 0.344)) * Math.max(1, big / 8 * 0.97);
-      const cx = r.cols / 2, cz = r.rows / 2;
+      baseDist = Math.max(15, 6.4 / (cam.aspect * 0.344)) * Math.max(1, big / 8 * 0.97);
+      const dist = baseDist / zoom, cx = r.cols / 2 + panX, cz = r.rows / 2 + panZ;
       cam.position.set(cx + dist * 0.62, dist * 0.55, cz + dist * 0.62); cam.lookAt(cx, 0.9, cz);
       cam.updateProjectionMatrix(); draw();
     }
+    const zm = root.querySelector('.zm'), zb = 'width:40px;height:40px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:20px;line-height:1;color:#fff;background:linear-gradient(160deg,#c9b8ea,#b19cd9);box-shadow:0 2px 6px #0003;cursor:pointer';
+    zm.innerHTML = `<button data-z="in" style="${zb}" aria-label="拡大">＋</button><button data-z="out" style="${zb}" aria-label="縮小">−</button><button data-z="reset" style="${zb};font-size:14px;background:#d9d2e3;color:${ink}" aria-label="もとの大きさ">⟲</button>`;
+    zm.onpointerdown = e => e.stopPropagation();
+    zm.onclick = e => { const z = e.target.closest('[data-z]')?.dataset.z; if (!z) return; if (z === 'reset') { panX = 0; panZ = 0; setZoom(1); } else setZoom(zoom * (z === 'in' ? 1.3 : 1 / 1.3)); };
+    cv.addEventListener('wheel', e => { e.preventDefault(); setZoom(zoom * Math.exp(-e.deltaY * 0.0015)); }, { passive: false });
     const ro = new ResizeObserver(resize); ro.observe(cv);
 
     // 家具の表示
@@ -184,7 +193,7 @@ export const homeApp = {
       outline.visible = !!m; if (m) { outline.setFromObject(m); outline.material.color.set(bad ? 0xff3030 : 0xff7fa0); }
     }
     function enterRoom(id) {
-      curId = id; selUid = null; bad = false; clearMeshes(); buildShell(); resize(); relayout(); ui();
+      curId = id; selUid = null; bad = false; zoom = 1; panX = 0; panZ = 0; clearMeshes(); buildShell(); resize(); relayout(); ui();
     }
 
     function remaining(id) { return furn.owned(id) - placed.filter(p => p.id === id).length; }
@@ -292,7 +301,15 @@ export const homeApp = {
     const mover = (e, p, off) => (kindOf(p.id) === 'wall' ? wallFor(e, p) : cellFor(e, p, off));
     const toTop = p => { placed = placed.filter(x => x !== p); placed.push(p); };   // 動かした家具は一番上にのる
     let drag = null;
+    const ptrs = new Map(); let pinch = null;
+    const pinchState = () => { const [a, b] = [...ptrs.values()]; return { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 }; };
     cv.onpointerdown = e => {
+      ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (ptrs.size === 2) {   // 2本指：つかんでいた家具はもとにもどして、拡大・縮小とスクロールに切りかえる
+        if (drag) { Object.assign(drag.p, drag.from); drag = null; relayout(); }
+        pinch = { ...pinchState(), zoom }; return;
+      }
+      if (ptrs.size > 2) return;
       const u = hitUid(e);
       if (u) {
         selUid = u; const p = placed.find(x => x.uid === u), k = kindOf(p.id); bad = false;
@@ -305,11 +322,19 @@ export const homeApp = {
       }
     };
     cv.onpointermove = e => {
+      if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pinch && ptrs.size >= 2) {
+        const c = pinchState(), k = baseDist / zoom * 2 * Math.tan(19 * Math.PI / 180) / (cv.clientHeight || 300);
+        const dx = c.mx - pinch.mx, dy = c.my - pinch.my, r = cur();
+        panX = Math.max(-r.cols / 2, Math.min(r.cols / 2, panX + k * 0.7071 * (-dx - dy))); panZ = Math.max(-r.rows / 2, Math.min(r.rows / 2, panZ + k * 0.7071 * (dx - dy)));
+        pinch.mx = c.mx; pinch.my = c.my; zoom = Math.max(ZMIN, Math.min(ZMAX, pinch.zoom * c.d / pinch.d)); resize(); return;
+      }
       if (!drag || e.pointerId !== drag.id) return;
       const c = mover(e, drag.p, drag.off); if (!c) return;
       if (Object.keys(c).some(k => c[k] !== drag.p[k])) { drag.moved = true; Object.assign(drag.p, c); relayout(); }
     };
     const up = e => {
+      ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null;
       if (!drag || e.pointerId !== drag.id) return;
       const p = drag.p;
       if (drag.moved && !inside(cur(), p)) { Object.assign(p, drag.from); tip.textContent = 'そこには置けないよ。'; } else if (drag.moved) { toTop(p); save(); }
