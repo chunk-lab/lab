@@ -61,13 +61,14 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       onEvent(name, d) {   // 3Dの町でしたことも、共通の記録に残す（ステータス・あとで課題やコインに使える）
         if (name === 'start') { if (d?.name && !core.profile.name) core.profile.setName(d.name); core.events.report('town3d', 'open'); }
         else if (name === 'talk') core.events.report('town3d', 'talk', { id: d?.id });
-        else if (name === 'app:open') core.events.report('town3d', 'app', { id: d?.id });
+        else if (name === 'app:open') { document.body.classList.add('md-app-open'); core.events.report('town3d', 'app', { id: d?.id }); }   // 家・ショップなどを開いている間は「今日なにする?」を隠す
+        else if (name === 'app:close') document.body.classList.remove('md-app-open');
         else if (name === 'app:event' && d?.name === 'study') openStudy();
         else if (name === 'note' && d?.text) core.events.report('town3d', 'word', { en: d.text, ja: d.meaning || '', kind: d.kind === 'quote' ? 'quote' : d.kind === 'sentence' ? 'short' : undefined });
       },
     });
   }
-  function stop3D() { if (!town) return; try { town.unmount(); } catch (e) { console.error(e); } box.remove(); town = null; box = null; }
+  function stop3D() { document.body.classList.remove('md-app-open'); if (!town) return; try { town.unmount(); } catch (e) { console.error(e); } box.remove(); town = null; box = null; }
 
   // ゲームを開いている間は3Dの町を止め、閉じたら再開する
   core.events.on((game, name) => { if (name === 'open' && game !== 'town3d' && town) town.pause(); });

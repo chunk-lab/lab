@@ -17,7 +17,10 @@ export function createAdmin(core) {
     core.ui.sheet(`<h3>運営</h3>
       <section class="cs-adm"><h4>会員とお金(この端末で試す)</h4>
         <p class="cs-note">${PLAN_NAME[M.plan]} ・ コイン ${core.wallet.get()}(月替わりに残せる上限 ${M.coinCapText()}) ・ ダイヤ ${M.gems()} ・ 共有の枠 ${M.slots().length}/${M.slotMax()}</p>
-        <div class="cs-adm-row"><button class="cs-btn" data-a="plan">${M.isPaid() ? '無料会員にする' : '有料会員にする'}</button><button class="cs-btn" data-a="gems">ダイヤ +100</button><button class="cs-btn" data-a="coins">コイン +1000</button><button class="cs-btn" data-a="month">月替わりを試す</button></div></section>
+        <div class="cs-adm-row"><button class="cs-btn" data-a="plan">${M.isPaid() ? '無料会員にする' : '有料会員にする'}</button><button class="cs-btn" data-a="month">月替わりを試す</button></div>
+        <div class="cs-adm-row" style="align-items:center"><span>💎</span><input id="adG" type="number" inputmode="numeric" value="100" style="width:90px;padding:6px;border-radius:8px;border:2px solid #cbb;font:inherit"><button class="cs-btn" data-a="gems">ダイヤを増やす</button></div>
+        <div class="cs-adm-row" style="align-items:center"><span>🪙</span><input id="adC" type="number" inputmode="numeric" value="1000" style="width:90px;padding:6px;border-radius:8px;border:2px solid #cbb;font:inherit"><button class="cs-btn" data-a="coins">コインを増やす</button></div>
+        <p class="cs-note">数字を入れて押すと、その数だけ増えます(マイナスで減らせます)。</p></section>
       <section class="cs-adm"><h4>共有の教材(${items.length})</h4>
         ${reps.length ? `<p class="cs-note">通報 ${reps.length}件:${reps.map(r => esc((C.get(r.id) || {}).title || r.id) + '「' + esc(r.why) + '」').join(' / ')}</p>` : ''}
         ${rev.length ? `<p class="cs-note">見直しの候補:${rev.map(x => esc(x.title) + '(' + esc(x.why) + ')').join(' / ')}</p>` : ''}
@@ -31,8 +34,9 @@ export function createAdmin(core) {
         ov.querySelectorAll('[data-a]').forEach(b => b.onclick = () => {
           const a = b.dataset.a;
           if (a === 'plan') M.setPlan(M.isPaid() ? 'free' : 'paid');
-          if (a === 'gems') M.addGems(100, 'admin');
-          if (a === 'coins') core.wallet.add(500, 'admin') && core.wallet.add(500, 'admin');
+          const num = id => Math.trunc(+(ov.querySelector(id) || {}).value) || 0;
+          if (a === 'gems') { const n = num('#adG'); if (n > 0) M.addGems(n, 'admin'); else if (n < 0) M.spendGems(Math.min(-n, M.gems()), 'admin'); }
+          if (a === 'coins') core.wallet.set(core.wallet.get() + num('#adC'), 'admin');
           if (a === 'month') { const d = new Date(); d.setMonth(d.getMonth() - 1); M._forceMonth(M.keys.monthKey(d)); }
           re();
         });

@@ -44,7 +44,13 @@ export const shopApp = {
       return `<div style="display:flex;align-items:center;justify-content:center;gap:10px">${qtyBtn(id, -1, '−', c > 0)}<b style="min-width:20px;font-size:16px">${c}</b>${qtyBtn(id, 1, '＋', c < room)}</div>`;
     };
     const head = (title, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${title}</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px">🪙 ${ctx.wallet.get()}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
-    const draw = () => {
+    let lastView = '', lastCat = '';
+    const draw = () => {   // 数を変えるたびに作りなおすので、同じ画面なら見ていた位置(スクロール)を保つ
+      const keep = lastView === view && lastCat === cat ? (box.querySelector('.sc')?.scrollTop || 0) : 0;
+      paint(); lastView = view; lastCat = cat;
+      const sc = box.querySelector('.sc'); if (sc) sc.scrollTop = keep;
+    };
+    const paint = () => {
       const cart = furn.cart(), total = furn.total(cart), n = Object.values(cart).reduce((a, b) => a + b, 0), coins = ctx.wallet.get();
       if (view === 'cart') {
         const rows = Object.entries(cart).map(([id, q]) => `<div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:8px 10px;margin-bottom:8px;box-shadow:0 2px 8px #0001">
@@ -52,7 +58,7 @@ export const shopApp = {
           <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:14px">${ITEM[id].name}</div><div style="font-size:12px;color:#8d7f9e">🪙 ${ITEM[id].price} × ${q} = <b style="color:${ink}">${ITEM[id].price * q}</b></div></div>${stepper(id)}</div>`).join('');
         const short = total - coins;
         box.innerHTML = head('カゴ', msg || 'ここで数を変えて、さいごに まとめて払うよ。')
-          + `<div style="flex:1;overflow:auto;padding:4px 16px">${rows || '<p style="text-align:center;color:#8d7f9e;margin-top:40px">カゴは空だよ</p>'}</div>
+          + `<div class="sc" style="flex:1;overflow:auto;padding:4px 16px">${rows || '<p style="text-align:center;color:#8d7f9e;margin-top:40px">カゴは空だよ</p>'}</div>
           <div style="padding:10px 16px calc(14px + env(safe-area-inset-bottom,0px));background:#fffaf0;box-shadow:0 -2px 10px #0001">
             <div style="display:flex;justify-content:space-between;font-weight:800"><span>ごうけい（${n}点）</span><span>🪙 ${total}</span></div>
             <div style="display:flex;justify-content:space-between;font-size:13px;color:#8d7f9e;margin:2px 0 10px"><span>はらったあとの コイン</span><span>${short > 0 ? `<b style="color:#e0556b">あと ${short} たりない</b>` : '🪙 ' + (coins - total)}</span></div>
@@ -61,7 +67,7 @@ export const shopApp = {
       }
       box.innerHTML = head('ショップ', msg || '気に入った家具を、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけ。')
         + `<div style="display:flex;gap:6px;overflow-x:auto;padding:0 16px 8px">${CATS.map(c => `<button data-c="${c}" style="${btn(c === cat ? undefined : '#ece7f3', c === cat ? '#fff' : ink)};padding:6px 12px;font-size:13px">${c}</button>`).join('')}</div>
-        <div style="flex:1;overflow:auto;padding:4px 16px 12px"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">${ITEMS.filter(it => cat === 'すべて' || it.cat === cat).map(it => {
+        <div class="sc" style="flex:1;overflow:auto;padding:4px 16px 12px"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">${ITEMS.filter(it => cat === 'すべて' || it.cat === cat).map(it => {
           const own = furn.owned(it.id);
           return `<div style="background:#fff;border-radius:18px;padding:10px;box-shadow:0 2px 10px #0001;text-align:center">
             <div style="height:74px;display:flex;align-items:center;justify-content:center">${thumbs.get(it.id) ? `<img src="${thumbs.get(it.id)}" width="74" height="74" alt="">` : ''}</div>
