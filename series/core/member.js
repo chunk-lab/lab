@@ -26,10 +26,12 @@ export function createMember(wallet, ui) {
     if (M.day.k !== dayKey()) { M.day = { k: dayKey(), task: 0, cm: 0, game: 0 }; save(); }
   }
   tick();
+  wallet.setBoost && wallet.setBoost(() => (isPaid() ? ECON.paidCoinMult : 1));
   const api = {
     get plan() { return M.plan; },
     isPaid,
     coinCap: cap,
+    coinCapText: () => (isFinite(cap()) ? String(cap()) : 'なし'),
     setPlan(p) {   // 運営画面・課金から。やめたとき：枠は本人が選んだ1つ(選ばなければ最後に入れたもの)を残す
       if (!['free', 'paid'].includes(p) || p === M.plan) return;
       M.plan = p;
@@ -48,7 +50,7 @@ export function createMember(wallet, ui) {
       else if (kind === 'cm') { if (M.day.cm < D.cm.max) { g = D.cm.each; M.day.cm++; } }
       else if (kind === 'game') { g = Math.max(0, Math.min(Math.floor(+n || 0), D.game - M.day.game)); M.day.game += g; }
       else if (kind === 'once') g = Math.max(0, Math.min(500, Math.floor(+n || 0)));
-      if (g > 0) { wallet.add(g, 'earn:' + kind); save(); }
+      if (g > 0) { const before = wallet.get(); wallet.add(g, 'earn:' + kind); g = wallet.get() - before; save(); }
       return g;
     },
     today: () => ({ ...M.day, gameLeft: ECON.daily.game - M.day.game, cmLeft: ECON.daily.cm.max - M.day.cm }),

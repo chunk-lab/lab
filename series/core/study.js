@@ -77,7 +77,7 @@ export function createStudy(core) {
     const p = core.profile;
     return `<section class="cs-panel"><div class="cs-prof"><img src="${p.avatarURL()}" alt="アバター"><div><label class="cs-row cs-col"><span>なまえ</span><input data-name maxlength="12" placeholder="なまえを入れてね" value="${esc(p.name)}"></label></div></div>
       <p class="cs-note">アバターは作り直し中(いまは仮の絵)。</p></section>
-      <section class="cs-panel"><ul class="cs-stat"><li><span>会員</span><b>${core.member.isPaid() ? '有料会員' : '無料会員'}</b></li><li><span>コイン</span><b>${core.wallet.get()}(月替わりに残せる上限 ${core.member.coinCap()})</b></li><li><span>ダイヤ</span><b>${core.member.gems()}</b></li><li><span>共有の教材の枠</span><b>${core.member.slots().length} / ${core.member.slotMax()}</b></li>${core.member.isPaid() ? `<li><span>今月のAIの回数</span><b>あと${core.member.aiLeft()}回</b></li>` : ''}</ul>
+      <section class="cs-panel"><ul class="cs-stat"><li><span>会員</span><b>${core.member.isPaid() ? '有料会員' : '無料会員'}</b></li><li><span>コイン</span><b>${core.wallet.get()}(月替わりに残せる上限 ${core.member.coinCapText()})</b></li><li><span>ダイヤ</span><b>${core.member.gems()}</b></li><li><span>共有の教材の枠</span><b>${core.member.slots().length} / ${core.member.slotMax()}</b></li>${core.member.isPaid() ? `<li><span>今月のAIの回数</span><b>あと${core.member.aiLeft()}回</b></li>` : ''}</ul>
       ${core.member.today().cmLeft > 0 ? `<button class="cs-btn" data-cm>CMを見てコイン +${core.econ.daily.cm.each}(今日あと${core.member.today().cmLeft}回)</button>` : ''}</section>
       <button class="cs-btn" data-settings>設定</button>`;
   }

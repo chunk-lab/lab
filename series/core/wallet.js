@@ -10,10 +10,13 @@ export function createWallet() {
     coins = Number.isFinite(old) ? old : 50; st.set('coins', coins);
   }
   const fire = (delta, reason) => subs.forEach(f => { try { f({ coins, delta, reason }); } catch (e) { } });
+  let boost = () => 1;   // もらえるコインの倍率(有料会員は member が差し込む)。運営・テスト・月替わりの増減には掛けない
   return {
+    setBoost(f) { boost = f; },
     get: () => coins,
     add(n, reason = '') {   // 1回で増やせるのは500まで。持っている分より減らすことはできない
       n = Math.round(n); if (!Number.isFinite(n) || n === 0) return coins;
+      if (n > 0 && !/^(admin|test|month|refund)/.test(reason)) n *= boost();
       n = Math.max(-coins, Math.min(500, n)); coins += n; st.set('coins', coins); fire(n, reason); return coins;
     },
     set(n, reason = 'set') { n = Math.max(0, Math.min(999999, Math.round(+n) || 0)); const d = n - coins; coins = n; st.set('coins', coins); fire(d, reason); return coins; },   // テスト用

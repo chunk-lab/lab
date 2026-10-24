@@ -4,7 +4,8 @@
    - ダイヤ：課金（RevenueCat とつなぐまでは、運営画面で増やして試す）。消えない
    - 無料会員が毎日全部やると 1日 約100、1か月 約3,000。枠の入れ替え 2,500 は月に1回がやっと */
 export const ECON = {
-  coinCap: { free: 2000, paid: 6000 },          // 月替わりに残せる上限
+  coinCap: { free: 2000, paid: Infinity },       // 月替わりに残せる上限(有料会員は上限なし)
+  paidCoinMult: 4,                               // 有料会員がもらえるコインは無料会員の4倍(課題・CM・ゲーム・3Dの町、すべて)
   daily: {
     task: 40,                                    // 今日の課題(1日1回)
     cm: { each: 10, max: 3 },                    // CM(1日3回まで)
@@ -17,6 +18,8 @@ export const ECON = {
   test: { free: 'week', paid: 'day', extraGems: 20 },   // 実力テスト：無料は週1回、有料は1日1回。追加はダイヤ
   unlock: { packCoins: 200, packGems: 20 },      // 単語パック(約100語)の解放
   // 家具の値段は 3Dの町の town3d/src/game/furniture.js にある(元の約5倍：小物150〜250、中300〜500、大600〜800)
+  // 自宅の広げ方：コインは「1列・1行ごと」に 3,000。ダイヤなら 広げる(1列・1行 60)ことも 部屋そのものを増やす(1部屋 250)こともできる
+  house: { coinsPerLine: 3000, gemsPerLine: 60, gemsPerRoom: 250 },
   start: { coins: 50, gems: 0 },                 // はじめてのとき
 };
 export const PLAN_NAME = { free: '無料会員', paid: '有料会員' };

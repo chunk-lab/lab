@@ -3,6 +3,7 @@
    3Dの建物・住人から開くゲームは、2Dと同じ共通部品（core.host）で開く。セーブ・設定・記録は2Dと共通。 */
 import { loadScript } from '../../core/host.js';
 import { createStore } from '../../core/store.js';
+import { ECON } from '../../core/economy.js';
 import './mode.css';
 
 const st = createStore('town');
@@ -47,6 +48,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     box = document.createElement('div'); box.className = 'md-town3d'; document.body.appendChild(box);
     town = window.town3d = window.Hoshimiya.mount(box, {
       wallet: core.wallet,   // コインは2Dと共通
+      gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house') },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
+      house: ECON.house,   // 自宅の広げ方の値段(core/economy.js)
       features: ['study'],   // あなたの家に「勉強部屋」ボタンを出す
       switchLabel: '2Dの地図にする',
       onSwitchMode: () => go('2d'),
