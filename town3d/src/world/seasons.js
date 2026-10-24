@@ -15,7 +15,7 @@ function dotTex() {
 }
 
 // opts: foliage(fn)=葉の材質を順にわたす / groundMats=地面の材質 / colliders=町の当たり判定 / storage
-export function createSeasons(scene, { eachFoliage, groundMats = [], colliders = [], storage }) {
+export function createSeasons(scene, { eachFoliage, eachTex = () => {}, groundMats = [], colliders = [], storage }) {
   const base = new Map();   // 材質→もとの色
   const baseOf = m => { if (!base.has(m)) base.set(m, m.color.clone()); return base.get(m); };
   let season = 'summer';
@@ -84,6 +84,7 @@ export function createSeasons(scene, { eachFoliage, groundMats = [], colliders =
         const tint = s === 'autumn' ? new THREE.Color(AUTUMN[Math.abs(b.getHex()) % 4]) : s === 'winter' ? new THREE.Color(0xeaf2f0) : null;
         m.color.copy(b); if (tint) m.color.lerp(tint, s === 'autumn' ? 0.8 : 0.82); else if (s === 'summer') m.color.lerp(new THREE.Color(0x78cf86), 0.22);
       });
+      for (const [pre, k] of [['pave', 0.6], ['roof', 0.62]]) eachTex(pre, m => { const b = baseOf(m); m.color.copy(b); if (s === 'winter') m.color.lerp(new THREE.Color(0xffffff), k); });
       for (const g of groundMats) { const b = baseOf(g); g.color.copy(b); if (s === 'winter') g.color.lerp(new THREE.Color(0xf6f9ff), 0.88); else if (s === 'autumn') g.color.lerp(new THREE.Color(0xd8c98a), 0.35); else if (s === 'spring') g.color.lerp(new THREE.Color(0xd5eca8), 0.25); }
       setFall(s === 'winter' ? 'snow' : s === 'autumn' ? 'leaf' : null);   // 春の桜は既存の「桜」(木と花びら)がやる
       for (const m of men) { m.g.visible = s === 'winter'; const k = colliders.indexOf(m.col); if (s === 'winter' && k < 0) colliders.push(m.col); if (s !== 'winter' && k >= 0) colliders.splice(k, 1); }
