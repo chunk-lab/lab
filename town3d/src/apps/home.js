@@ -153,7 +153,7 @@ export const homeApp = {
       const p = room.find(x => x.uid === selUid);
       sel.visible = !!p; if (p) put(p);
       tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグか、ゆかをタップで動かせるよ。` : (Object.keys(furn.inv()).length ? 'かぐをタップするとえらべるよ。下の一覧から出すこともできるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
-      ctl.innerHTML = p ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button><button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : '';
+      ctl.innerHTML = p ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button><button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : '');
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
     }
@@ -161,7 +161,9 @@ export const homeApp = {
 
     // 操作
     ctl.onclick = e => {
-      const a = e.target.closest('[data-a]')?.dataset.a, p = room.find(x => x.uid === selUid); if (!a || !p) return;
+      const a = e.target.closest('[data-a]')?.dataset.a, p = room.find(x => x.uid === selUid);
+      if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(チャンクタウン)の勉強部屋を開く
+      if (!a || !p) return;
       if (a === 'off') selUid = null;
       else if (a === 'del') { scene.remove(meshes.get(p.uid)); meshes.delete(p.uid); room = room.filter(x => x !== p); selUid = null; save(); }
       else if (a === 'rot') {

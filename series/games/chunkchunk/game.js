@@ -35,7 +35,7 @@ export default {
     el.classList.add('ct-cc'); el.innerHTML = html;
     // レッスン（文を作る）。開いている間は「街へ」ボタンを隠す（レッスンの画面が全体をおおうため）
     const wallet = createWallet(ctx.store);
-    ENV.make = createMake({ base: ctx.base, store: ctx.store, Wallet: wallet, sfx, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
+    ENV.make = createMake({ base: ctx.base, store: ctx.store, Wallet: wallet, sfx, report: (n, d) => ctx.report(n, d), onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
     ENV.story = createStory({ speak: t => readTextAloud(t), base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
     loadSettings(); init_engine(); init_texts(); init_rank(); initTitle(face);
     initBgm(el); initSfx(); preloadSfx();   // 音楽・効果音・声（音量は共通の設定。mp3は小さめに調整済み）

@@ -9,6 +9,7 @@ import { ENV, loadSave, stopAll } from './src/base.js';
 import { init_screens } from './src/screens.js';
 import { init_play, endRun } from './src/play.js';
 import { init_fx } from './src/fx.js';
+import { playList } from './src/words.js';
 
 import { hush, bgmStop } from './src/sound.js';
 const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;600;700&display=swap';
@@ -22,6 +23,7 @@ export default {
     el.innerHTML = html.replace(/(src|href)="(img|audio)\//g, (m, at, d) => `${at}="${ctx.base}${d}/`);
     loadSave(); init_screens(); init_play(); init_fx();
     ctx.showBack(true);
+    if (ctx.opts && Array.isArray(ctx.opts.words)) setTimeout(() => { try { playList(ctx.opts.title, ctx.opts.words); } catch (e) { console.error(e); } }, 50);   // 勉強ノートから「練習する」
     return {
       unmount() {
         try { ctx.core.reader.close(); } catch (e) { } try { endRun(); } catch (e) { } try { hush(); } catch (e) { } try { bgmStop(); } catch (e) { }

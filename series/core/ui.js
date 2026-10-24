@@ -29,5 +29,5 @@ export function createUI(core) {
       ov.querySelector('#cs-name').onchange = e => p.setName(e.target.value);
     });
   };
-  return { sheet, toast, settings, profile };
+  return { root, sheet, toast, settings, profile };
 }

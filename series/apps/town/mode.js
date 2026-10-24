@@ -14,7 +14,7 @@ const ROUTE = {
   chunkcards: { game: 'cards' },          // カフェ＝チャンク・カード
 };
 
-export function createMode(core, { GAMES, enter, start2D }) {
+export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   let town = null, box = null;
 
   function chooser() {
@@ -47,6 +47,7 @@ export function createMode(core, { GAMES, enter, start2D }) {
     box = document.createElement('div'); box.className = 'md-town3d'; document.body.appendChild(box);
     town = window.town3d = window.Hoshimiya.mount(box, {
       wallet: core.wallet,   // コインは2Dと共通
+      features: ['study'],   // あなたの家に「勉強部屋」ボタンを出す
       switchLabel: '2Dの地図にする',
       onSwitchMode: () => go('2d'),
       openExternal(id) {
@@ -58,6 +59,8 @@ export function createMode(core, { GAMES, enter, start2D }) {
         if (name === 'start') { if (d?.name && !core.profile.name) core.profile.setName(d.name); core.events.report('town3d', 'open'); }
         else if (name === 'talk') core.events.report('town3d', 'talk', { id: d?.id });
         else if (name === 'app:open') core.events.report('town3d', 'app', { id: d?.id });
+        else if (name === 'app:event' && d?.name === 'study') openStudy();
+        else if (name === 'note' && d?.text) core.events.report('town3d', 'word', { en: d.text, ja: d.meaning || '', kind: d.kind === 'quote' ? 'quote' : d.kind === 'sentence' ? 'short' : undefined });
       },
     });
   }

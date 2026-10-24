@@ -96,7 +96,7 @@ export function mount(container, opt = {}) {
   setLook(settings.look);
 
   const hud = createHud(root, bus);
-  const appHost = createAppHost({ root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })) });
+  const appHost = createAppHost({ root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [] });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   hud.setCoins(wallet.get());
@@ -160,6 +160,7 @@ export function mount(container, opt = {}) {
     if (hit) { hit.count = (hit.count || 1) + 1; hit.npc = npc; saveNotes(); return `「${text}」をもう一度ほぞん(×${hit.count})`; }
     const n = { id: 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), kind, text: text.trim(), sentence, npc, date: new Date().toLocaleDateString('ja-JP'), count: 1, meaning: meaning || '' };
     notes.push(n); saveNotes(); fillMeaning(n);
+    opt.onEvent?.('note', { kind, text: n.text, meaning: n.meaning, npc });   // 組み込み先の勉強ノートにも入れる
     return `「${text}」をノートに入れたよ`;
   }
   function openNoteBook() {

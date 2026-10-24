@@ -231,16 +231,19 @@ export function previewBox(kind,x){
  tmp.pop(); buildLex(activeSets());
  return `<section><h3>ゲームではこう使われます</h3><div class="pv">${ex.map(s=>`<button class="pvl" data-pv="${esc(s.en)}"><span class="en">${esc(s.en)}</span><small>${esc(s.ja)}</small></button>`).join('')}</div><p class="note">おかしいときは、上の選択を変えてみてください。</p></section>`;
 }
+/* 登録した言葉・文は、全アプリ共通の勉強ノートにも入れる */
+function noteWord(en,ja,kind){ try{ ENV.ctx && ENV.ctx.report('word',{ en:String(en).trim(), ja:String(ja||'').trim(), kind }); }catch(e){} }
 export function saveReg(){
  const r=REG; const kind=r.kind||r.auto; const set=DB.sets.find(s=>s.id===$('#rSet').value)||DB.sets[0];
  if(!r.en.trim()){ toast('英語を入れてください'); return; }
  if(kind==='sentence'){
   set.sentences=set.sentences||[]; set.sentences.push({en:r.en.trim(),ja:r.ja.trim()}); let n=0;
   (r.sentence||[]).forEach(c=>{ if(!c.ja||!c.ja.trim()) return; const en = c.kind==='verbs'? c.lemma : c.en; if(c.kind==='verbs'&&c.known) return; if(LEX[c.kind]&&LEX[c.kind].find(x=>x.en.toLowerCase()===en.toLowerCase())) return; const bak={en:r.en,ja:r.ja,x:r.x,e:r.e}; r.en=en; r.ja=c.ja.trim(); r.e=''; r.x=autoExtra(c.kind,r.en,r.ja); set.items.push(makeItem(c.kind)); n++; Object.assign(r,bak); });
+  noteWord(r.en,r.ja,'short');
   save(); refreshLex(); toast(`文を保存しました${n?`（言葉を${n}個追加）`:''}`);
  } else {
   if(!r.ja.trim()){ toast('日本語も入れてください'); return; }
-  set.items.push(kind==='leads'? buildItem('leads',r.en,r.ja,r.e) : makeItem(kind)); save(); refreshLex(); toast(`「${r.en.trim()}」を${set.name}に登録しました`);
+  set.items.push(kind==='leads'? buildItem('leads',r.en,r.ja,r.e) : makeItem(kind)); save(); noteWord(r.en,r.ja); refreshLex(); toast(`「${r.en.trim()}」を${set.name}に登録しました`);
  }
  Object.assign(REG,{en:'',ja:'',e:'',ex:'',kind:null,auto:null,extra:{},sentence:null,x:null}); renderReg();
 }

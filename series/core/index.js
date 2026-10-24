@@ -13,6 +13,9 @@ import { createHost } from './host.js';
 import { createWallet } from './wallet.js';
 import { createDict } from './dict.js';
 import { createReader } from './reader.js';
+import { createNotebook } from './notebook.js';
+import { createRecord } from './record.js';
+import { createStudy } from './study.js';
 import './reader.css';
 export function createCore(config) {
   const base = config.base || './';
@@ -24,7 +27,10 @@ export function createCore(config) {
   core.events = createEvents();
   core.wallet = createWallet();       // 共通のコイン（2Dも3Dも同じ）
   core.profile = createProfile(core.events, base);
+  core.notebook = createNotebook();   // 勉強ノート（全アプリ共通の言葉の置き場）
+  core.record = createRecord(core.events, core.notebook);   // 学習の記録（done・word・resume の報告をまとめる）
   core.ui = createUI(core);
+  core.study = createStudy(core);     // 勉強部屋（自宅・アバターから開く）
   core.dict = createDict(base);       // 共通の辞書（使うときに読み込む）
   core.reader = createReader(core);   // 共通の「読む画面」
   const layer = document.createElement('div'); layer.className = 'cs-layer'; layer.hidden = true;

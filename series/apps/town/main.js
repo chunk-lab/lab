@@ -17,7 +17,7 @@ const PLACES = {
   house: { n: '自宅', img: 'house', profile: true },
   shop: { n: 'ショップ', img: 'supermarket', sub: '有料コンテンツ', items: [] },
   game: { n: 'ゲームセンター', img: 'gamecenter', sub: '遊んで鍛える', items: [
-    { t: 'チャンクストリーム', game: 'stream' }, { t: 'ぷにチャンク', game: 'punichunk' },
+    { t: 'チャンクストリーム', game: 'stream' },
     { t: 'チャンク・カード', game: 'cards' }, { t: 'チャンクチャンク', game: 'chunkchunk', opts: { face: 'arcade' } }] }
 };
 const BLD = [['school', 'bSchool', '学校'], ['library', 'bLibrary', '図書館'], ['house', 'bHouse', '自宅'], ['shop', 'bShop', 'ショップ'], ['game', 'bGame', 'ゲームセンター']];
@@ -30,7 +30,9 @@ const $ = id => document.getElementById(id);
 const refreshMe = () => { $('twMeImg').src = core.profile.avatarURL(); $('twMeName').textContent = core.profile.name || 'なまえ未設定'; };
 refreshMe();
 const showCoin = () => { $('twCoin').textContent = '🪙 ' + core.wallet.get(); }; showCoin(); core.wallet.onChange(showCoin);
-$('twMe').onclick = () => { core.ui.profile(); };
+$('twMe').onclick = () => openStudy();
+// 勉強部屋：自宅とアバターから開く。中の「練習する」などは、街と同じしくみでゲームを開く
+function openStudy() { core.study.open({ play: (g, o) => { if (GAMES[g]) core.host.open(GAMES[g], o || {}); }, has: g => !!GAMES[g] }); }
 $('twGear').onclick = () => core.ui.settings();
 const tour = createTour(core);
 $('twHelp').onclick = () => tour.menu();
@@ -41,7 +43,7 @@ addEventListener('resize', fit); fit();
 
 function enter(k) {
   const p = PLACES[k];
-  if (p.profile) { core.ui.profile(); return; }
+  if (p.profile) { openStudy(); return; }
   if (p.items.length === 1) { tour.entering(p.items[0].game, p.items[0].opts); core.host.open(GAMES[p.items[0].game], p.items[0].opts); return; }
   core.ui.sheet(`<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc(p.n)}</h3><p>${esc(p.sub)}</p></div></header>` +
     (p.items.length ? `<ul class="tw-list">${p.items.map((it, i) => `<li><button data-i="${i}">${esc(it.t)}<small>入る ›</small></button></li>`).join('')}</ul>` : '<p class="cs-note">売っているものは、まだありません。<br>家具は、3Dの町のショップで買えます。</p>'),
@@ -71,6 +73,6 @@ $('twTree').onclick = () => {
     (ov) => { ov.querySelector('#twSay').onclick = () => { try { core.speech.speak(en, { rate: .9 }); } catch (e) { } }; ov.querySelector('#twGotBtn').onclick = () => { ov.querySelector('#twGot').hidden = false; }; }), 500);
 };
 /* はじめに「3Dの町」か「2Dの地図」かを選ぶ（apps/town/mode.js） */
-const mode = createMode(core, { GAMES, enter, start2D: () => { fit(); tour.auto(); } });
+const mode = createMode(core, { GAMES, enter, openStudy, start2D: () => { fit(); tour.auto(); } });
 $('twTo3d').onclick = () => mode.to3D();
 mode.start();

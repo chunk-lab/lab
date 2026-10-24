@@ -1220,7 +1220,7 @@ body.nogram .gmT{display:none}
   /* ----- レッスン開始 ----- */
   function start(id){
     const lesson=ALL.find(l=>l.id===id);if(!lesson)return;
-    cur={lesson,i:0,miss:0};
+    cur={lesson,i:0,miss:0,t0:Date.now()};
     root.innerHTML=`<div class="mkTop"><button id="mkX">← 一覧</button><div class="mkTtl">${esc(lesson.id)}　${esc(lesson.name)}</div><div class="mkPg" id="mkPg"></div></div>
       <div class="mkBar"><i id="mkBarI"></i></div>
       <div id="mkMain" style="flex:1;min-height:0;display:flex;flex-direction:column"></div>`;
@@ -1477,6 +1477,7 @@ body.nogram .gmT{display:none}
   function finishLesson(){
     const L=cur.lesson,main=root.querySelector("#mkMain");
     const first=!st.done[L.id];st.done[L.id]=1;
+    try{HOST.report&&HOST.report("done",{play:"cc.lesson",title:L.name,min:Math.round((Date.now()-(cur.t0||Date.now()))/6e3)/10,first,finished:true})}catch(e){}
     let chapterClear=false;
     if(first){try{Wallet.add("coins",L.coin,"earn:play")}catch(e){}}
     const ch=CHAPTERS.find(c=>c.lessons&&c.lessons.some(l=>l.id===L.id));   // このレッスンがある章
