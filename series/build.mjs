@@ -11,6 +11,7 @@ const copy = (src, dest) => {
   if (fs.statSync(s).isDirectory()) { fs.mkdirSync(d, { recursive: true }); for (const f of fs.readdirSync(s)) { if (f === 'game.js') continue; copy(path.join(src, f), path.join(d, f)); } }
   else { fs.mkdirSync(path.dirname(d), { recursive: true }); fs.copyFileSync(s, d); }
 };
+const BUILD = Date.now().toString(36);   // 組み立てのたびに変わる印。ブラウザが古いファイルを使い続けないよう、読み込むファイル名の後ろにつける
 const want = process.argv.slice(2), apps = want.length ? want : Object.keys(APPS);
 for (const p of PREBUILD) execFileSync('python3', [path.join(ROOT, p)], { stdio: 'inherit' });
 for (const id of apps) {
@@ -37,9 +38,9 @@ for (const id of apps) {
     // { bundle: 入口, out: 公開先 } … 開いたときに読み込む別ファイル（大きいゲームを app.js に入れないため）。見た目は同じ名前の .css に出る
     await esbuild.build({ entryPoints: [path.join(ROOT, f.bundle)], bundle: true, format: 'iife', target: 'es2020', outfile: path.join(out, f.out), loader: { '.html': 'text' }, logLevel: 'warning', logOverride: { 'duplicate-object-key': 'silent' }, legalComments: 'none', minify: true });
   }
-  const cfg = JSON.stringify({ appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel, theme: app.theme, opts: app.opts || undefined }).replace(/</g, '\\u003c');
-  const head = `<title>${app.title}</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="app.css">`;
-  const body = `<script>window.__APP__=${cfg}</script>\n<script src="app.js"></script>`;
+  const cfg = JSON.stringify({ build: BUILD, appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel, theme: app.theme, opts: app.opts || undefined }).replace(/</g, '\\u003c');
+  const head = `<title>${app.title}</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="app.css?v=${BUILD}">`;
+  const body = `<script>window.__APP__=${cfg}</script>\n<script src="app.js?v=${BUILD}"></script>`;
   fs.writeFileSync(path.join(out, 'index.html'), `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n${head}\n</head><body>\n${body}\n</body></html>\n`);
   fs.writeFileSync(path.join(out, 'artifact.html'), `${head}\n${body}\n`);
   const size = (d) => fs.readdirSync(d, { withFileTypes: true }).reduce((a, e) => a + (e.isDirectory() ? size(path.join(d, e.name)) : fs.statSync(path.join(d, e.name)).size), 0);
