@@ -30,7 +30,7 @@ const CSS = `
 .fz .gauge .t b{position:absolute;top:-6px;width:6px;height:26px;margin-left:-3px;border-radius:3px;background:#2b2140;box-shadow:0 0 0 2px #fff}
 .fz .gauge .row{display:flex;justify-content:space-between;color:#fff;font-weight:800;font-size:12px;margin-top:4px;text-shadow:0 1px 3px #0008}
 .fz .gauge .brk{height:4px;margin-top:3px;border-radius:2px;background:#ff4f6a;transform-origin:left;transform:scaleX(0)}
-.fz .toast{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);background:rgba(255,255,255,.95);border-radius:18px;padding:12px 18px;font-weight:900;font-size:20px;box-shadow:0 8px 24px #0004;pointer-events:none;text-align:center;animation:fzPop .25s ease-out}
+.fz .toast{position:absolute;left:50%;top:70%;transform:translate(-50%,-50%);background:rgba(255,255,255,.95);border-radius:18px;padding:12px 18px;font-weight:900;font-size:20px;box-shadow:0 8px 24px #0004;pointer-events:none;text-align:center;animation:fzPop .25s ease-out}
 .fz .toast.hit{background:#ffe36b;font-size:30px;color:#c0392b}
 @keyframes fzPop{from{transform:translate(-50%,-50%) scale(.6);opacity:0}}
 .fz .sheet{position:absolute;inset:0;background:rgba(40,30,70,.45);display:flex;align-items:flex-end;justify-content:center;z-index:5}

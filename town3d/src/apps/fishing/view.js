@@ -175,7 +175,7 @@ export function createView(canvas, cond, { mini = false } = {}) {
         const p = proj(vs.lure.x, vs.lure.d);
         if (Math.random() < (hk.run ? 0.5 : 0.15) * (mini ? 0.5 : 1)) splash(vs.lure.x + (Math.random() - 0.5) * 0.02, vs.lure.d, hk.run ? 3 : 1, 0.6 + Math.min(1.5, hk.len / 80));
         if (Math.random() < 0.08) addRing(vs.lure.x, vs.lure.d, 0.7);
-        if (hk.jump && hk.sp) { const L = Math.max(30, Math.min(W * 0.45, hk.len * p.s * 2.4)), up = Math.sin(Math.max(0, hk.jumpK || 0.5) * Math.PI) * H * 0.12; g.save(); g.translate(p.x, p.y - up); g.rotate(-0.5 + (hk.jumpK || 0.5)); drawCreature(g, hk.sp, 0, 0, L); g.restore(); }
+        if (hk.jump && hk.sp) { const L = Math.max(mini ? 26 : 56, Math.min(W * 0.5, hk.len * p.s * 3.4)), up = Math.sin(Math.max(0, hk.jumpK || 0.5) * Math.PI) * H * 0.16; g.save(); g.translate(p.x, p.y - up); g.rotate(-0.5 + (hk.jumpK || 0.5)); drawCreature(g, hk.sp, 0, 0, L); g.restore(); }
         else { g.fillStyle = 'rgba(255,255,255,0.35)'; g.beginPath(); g.ellipse(p.x, p.y, 10 * p.s * 2 * (1 + Math.min(2, hk.len / 60)), 3 * p.s * 2, 0, 0, 7); g.fill(); }
       }
       // 竿(先に曲がりを決めて、糸はその先から)
