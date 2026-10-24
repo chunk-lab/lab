@@ -5,11 +5,33 @@
 import { createStore } from './store.js';
 import { ECON, PLAN_NAME } from './economy.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// 町のイベント予約(3D側が localStorage の town:events を読む)
+const evLoad = () => { try { const v = JSON.parse(localStorage.getItem('town:events')); return Array.isArray(v) ? v : []; } catch (e) { return []; } };
+const evSave = v => { try { localStorage.setItem('town:events', JSON.stringify(v)); } catch (e) { } };
+const pad = n => String(n).padStart(2, '0');
+const localIso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const T3 = () => window.town3d && window.town3d.event;
 const ST = { new: '新着(投票中)', shelf: '共有の棚', passed: '見送り' };
 export function createAdmin(core) {
   const st = createStore('core');
   try { const q = new URLSearchParams(location.search).get('admin'); if (q === '1') st.set('admin', true); if (q === '0') st.remove('admin'); } catch (e) { }
   const on = () => !!st.get('admin');
+  function evSection() {
+    const T = T3(), list = evLoad();
+    if (!T) return '<section class="cs-adm"><h4>イベント(花火・日食・月食)</h4><p class="cs-note">3Dの町を開いてから、ここを開いてください。</p></section>';
+    const opts = Object.entries(T.kinds).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+    const fwb = Object.keys(T.fwTypes).map(k => `<button data-ev="fw:${k}">${esc(T.fwTypes[k])}</button>`).join('');
+    const now = new Date(Date.now() + 60000);
+    return `<section class="cs-adm"><h4>イベント(花火・日食・月食)</h4>
+      <p class="cs-note">押すと運営画面が閉じて、町ですぐ始まります(夜に切りかわります)。</p>
+      <div class="cs-adm-row"><button data-ev="fw:digest">花火ダイジェスト</button><button data-ev="fw:full">花火フル</button><button data-ev="fw:starmine">スターマイン</button><button data-ev="fw:finale">フィナーレ</button><button data-ev="solar">🌑日食</button><button data-ev="lunar">🌕月食</button></div>
+      <p class="cs-note">花火1種類ずつ:</p><div class="cs-adm-row">${fwb}</div>
+      <p class="cs-note">予約(この端末の時計で。誕生日は町に登録された誕生日の夜に1回):</p>
+      <div class="cs-adm-row"><select id="evK" style="font:inherit;padding:6px">${opts}</select></div>
+      <div class="cs-adm-row" style="align-items:center"><input id="evAt" type="datetime-local" value="${localIso(now)}" style="font:inherit;padding:6px"><button data-evadd="date">この日時に予約</button></div>
+      <div class="cs-adm-row"><button data-evadd="birthday">みんなの誕生日の夜(20時〜)に予約</button><button data-evadd="soon">30秒後に始める</button></div>
+      <ul class="cs-adm-list">${list.map(e => `<li><b>${esc(T.kinds[e.kind] || e.kind)}</b><small>${e.when === 'birthday' ? '誕生日の夜' : esc((e.at || '').replace('T', ' '))}</small><div class="cs-adm-row"><button data-evdel="${esc(e.id)}">消す</button></div></li>`).join('') || '<li class="cs-note">予約はありません</li>'}</ul></section>`;
+  }
   function open() {
     const M = core.member, C = core.cloud, B = core.books;
     const items = C.all(), rev = C.reviewList(), reps = C.reports();
@@ -21,6 +43,7 @@ export function createAdmin(core) {
         <div class="cs-adm-row" style="align-items:center"><span>💎</span><input id="adG" type="number" inputmode="numeric" value="100" style="width:90px;padding:6px;border-radius:8px;border:2px solid #cbb;font:inherit"><button class="cs-btn" data-a="gems">ダイヤを増やす</button></div>
         <div class="cs-adm-row" style="align-items:center"><span>🪙</span><input id="adC" type="number" inputmode="numeric" value="1000" style="width:90px;padding:6px;border-radius:8px;border:2px solid #cbb;font:inherit"><button class="cs-btn" data-a="coins">コインを増やす</button></div>
         <p class="cs-note">数字を入れて押すと、その数だけ増えます(マイナスで減らせます)。</p></section>
+      ${evSection()}
       <section class="cs-adm"><h4>共有の教材(${items.length})</h4>
         ${reps.length ? `<p class="cs-note">通報 ${reps.length}件:${reps.map(r => esc((C.get(r.id) || {}).title || r.id) + '「' + esc(r.why) + '」').join(' / ')}</p>` : ''}
         ${rev.length ? `<p class="cs-note">見直しの候補:${rev.map(x => esc(x.title) + '(' + esc(x.why) + ')').join(' / ')}</p>` : ''}
@@ -40,6 +63,15 @@ export function createAdmin(core) {
           if (a === 'month') { const d = new Date(); d.setMonth(d.getMonth() - 1); M._forceMonth(M.keys.monthKey(d)); }
           re();
         });
+        ov.querySelectorAll('[data-ev]').forEach(b => b.onclick = () => { const k = b.dataset.ev; close(); setTimeout(() => T3() && T3().run(k), 150); });
+        ov.querySelectorAll('[data-evadd]').forEach(b => b.onclick = () => {
+          const kind = (ov.querySelector('#evK') || {}).value || 'fw:digest', t = b.dataset.evadd, l = evLoad(), id = 'e' + Date.now().toString(36);
+          if (t === 'birthday') l.push({ id, kind, when: 'birthday', hour: 20 });
+          else if (t === 'soon') l.push({ id, kind, when: 'date', at: 'soon' + id, _s: Date.now() + 30000 });
+          else { const v = (ov.querySelector('#evAt') || {}).value; if (!v) return; l.push({ id, kind, when: 'date', at: v }); }
+          evSave(l); re();
+        });
+        ov.querySelectorAll('[data-evdel]').forEach(b => b.onclick = () => { evSave(evLoad().filter(e => e.id !== b.dataset.evdel)); re(); });
         ov.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { C.setState(b.dataset.id, b.dataset.s); re(); });
         ov.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if (confirmDel(b)) { C.remove(b.dataset.del); re(); } });
       });

@@ -19,6 +19,8 @@ import { APPS } from './apps/registry.js';
 import { openFinder } from './ui/finder.js';
 import { openNotes } from './ui/notes.js';
 import { snapCanvas, shotCard, flash } from './game/photos.js';
+import { createFireworks, FW_TYPES, FW_SHOWS, FW_CENTER } from './world/fireworks.js';
+import { createSchedule, EVENT_KINDS } from './world/events.js';
 
 let styleRefs = 0;
 const VERSION = '0.1.0';
@@ -74,6 +76,8 @@ export function mount(container, opt = {}) {
     } else if (!on && fx) { fx.composer.dispose(); fx = null; }
   };
   const env = createEnv(scene, { shadows: settings.quality !== 'low' });
+  let fwBoomT = 0;
+  const fw = createFireworks(scene, { onBoom: (t, sc) => { if (t === 'mini') { if (Math.random() < 0.3) audio.play('boom', sc); return; } audio.play('boom', sc); } });
   env.hour = opt.hour ?? storage.get('hour') ?? 10;
   env.speed = settings.timeSpeed / 60;
   const _d = new Date(), _md = (_d.getMonth() + 1) * 100 + _d.getDate();
@@ -126,9 +130,24 @@ export function mount(container, opt = {}) {
   let focus = null, talkingTo = null, started = false;
   const input = createInput(root, { onAction: () => doAction() });
 
+  // ---- ベンチにすわる ----
+  let seat = null;
+  function sitOnBench(b) {
+    const c = Math.cos(b.ry), s = Math.sin(b.ry), dx = me.x - b.x, dz = me.z - b.z;
+    const lx = Math.max(-0.55, Math.min(0.55, dx * c - dz * s)), lz = -0.02;
+    me.x = b.x + lx * c + lz * s; me.z = b.z - lx * s + lz * c; me.ry = b.ry; me.speed = 0;
+    seat = { b }; me.ch.pose = 'sit'; input.clear();
+  }
+  function standFromSeat() {
+    if (!seat) return; const b = seat.b; seat = null; me.ch.pose = null;
+    [me.x, me.z] = collide(b.x + Math.sin(b.ry) * 1.1, b.z + Math.cos(b.ry) * 1.1);
+  }
+
   function doAction() {
     if (!started || appHost.current || hud.busy || !focus) return;
     audio.unlock();
+    if (focus.kind === 'stand') { standFromSeat(); return; }
+    if (focus.kind === 'bench') { sitOnBench(focus); return; }
     if (focus.kind === 'npc') {
       const near = nearNpcs();
       if (near.length >= 2) {   // 団子のときは、だれと話すか選べる
@@ -364,6 +383,8 @@ export function mount(container, opt = {}) {
       <div class="tw-row">桜${'<div class="tw-seg"><button class="tw-btn' + (blossomOn ? ' on' : '') + '" data-bl="1">あり</button><button class="tw-btn' + (!blossomOn ? ' on' : '') + '" data-bl="0">なし</button></div>'}</div>
       <div class="tw-row">流れ星<button class="tw-btn" data-act="meteor" style="padding:6px 14px">いま流す</button></div>
       <div class="tw-row">英語のヒント(すれ違い)${seg('tips', [[0, 'なし'], [1, 'あり']])}</div>
+      <div class="tw-row">誕生日(花火でお祝い)<button class="tw-btn" data-act="birth" style="padding:6px 14px">${settings.birth ? settings.birth.replace(/-/g, '/') : 'とうろく'}</button></div>
+      ${opt.openAdmin ? '<div class="tw-row">運営(花火・日食・月食の予約)<button class="tw-btn" data-act="admin" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
       <div class="tw-row">AIとおしゃべり<button class="tw-btn" data-act="ai" style="padding:6px 14px">${ai.ready ? 'せってい(つながっています)' : 'つなぐ'}</button></div>
       ${opt.onSwitchMode ? `<div class="tw-row">${opt.switchLabel || 'ほかのモード'}<button class="tw-btn" data-act="mode" style="padding:6px 14px">きりかえる</button></div>` : ''}
@@ -392,6 +413,8 @@ export function mount(container, opt = {}) {
         if (b.dataset.act === 'mode') { hud.closePanel(); setTimeout(() => opt.onSwitchMode(), 30); }
         if (b.dataset.act === 'title') { hud.closePanel(); showTitle(); }
         if (b.dataset.act === 'ai') openAiSetup({ hud, ai });
+        if (b.dataset.act === 'birth') { hud.closePanel(); setTimeout(openBirthSetup, 30); }
+        if (b.dataset.act === 'admin') { hud.closePanel(); setTimeout(() => opt.openAdmin(), 30); }
       });
     const hr = pn.querySelector('.tw-t-hour'), hv = pn.querySelector('.tw-t-hv'), dt = pn.querySelector('.tw-t-date');
     const fmt = v => `${String(Math.floor(v)).padStart(2, '0')}:${String(Math.round((v % 1) * 60)).padStart(2, '0')}`;
@@ -420,6 +443,99 @@ export function mount(container, opt = {}) {
 
   // ---- カメラ ----
   const cam = { yaw: Math.PI, pitch: 0.42, dist: 7.5, x: me.x, z: me.z };
+  // ---- カメラ:ふだん=自分についていく(follow) / 動かす(free:カメラだけ自由に) / 固定(fixed:そこに置いて、自分は歩ける) ----
+  let camMode = 'follow';
+  const fcam = { x: 0, y: 1.6, z: 0, yaw: 0, pitch: 0 };
+  const heightToV = y => Math.sqrt(Math.max(0, (y - 0.15) / 80)), vToHeight = v => 0.15 + v * v * 80;
+  function camFromView() {   // いまの見え方から、動かすカメラの出発点を作る
+    const d = new THREE.Vector3(); camera.getWorldDirection(d);
+    fcam.x = camera.position.x; fcam.y = camera.position.y; fcam.z = camera.position.z;
+    fcam.yaw = Math.atan2(-d.x, -d.z); fcam.pitch = clamp(-Math.asin(clamp(d.y, -1, 1)), -1.5, 1.5);
+  }
+  function camPreset(name) {
+    const sy = cam.yaw, behind = (k) => [me.x + Math.sin(sy) * k, me.z + Math.cos(sy) * k];
+    fcam.yaw = sy;
+    if (name === 'foot') { [fcam.x, fcam.z] = behind(2.4); fcam.y = 0.22; fcam.pitch = -0.38; }
+    else if (name === 'eye') { [fcam.x, fcam.z] = behind(3.4); fcam.y = 1.6; fcam.pitch = 0; }
+    else if (name === 'top') { fcam.x = me.x; fcam.z = me.z + 0.001; fcam.y = 40; fcam.pitch = 1.5; }
+    else if (name === 'sky') { [fcam.x, fcam.z] = behind(16); fcam.y = 16; fcam.pitch = 0.6; }
+    else if (name === 'front') { fcam.x = me.x + Math.sin(me.ry) * 3.4; fcam.z = me.z + Math.cos(me.ry) * 3.4; fcam.y = 1.5; fcam.yaw = me.ry; fcam.pitch = 0.05; }
+    camBarDraw();
+  }
+  const camBar = hud.camBar;
+  function camBarDraw() {
+    if (camMode === 'follow') { camBar.hidden = true; camBar.innerHTML = ''; return; }
+    camBar.hidden = false;
+    const free = camMode === 'free';
+    camBar.innerHTML = `<div>${free ? '🎥 カメラだけ動かしているよ(左下で移動・ドラッグで向き・ピンチで前後)' : '📌 カメラを固定中。自分は歩けるよ'}</div>
+      ${free ? `<div class="r"><button class="tw-btn" data-p="foot">👣 足元から</button><button class="tw-btn" data-p="eye">👀 目の高さ</button><button class="tw-btn" data-p="front">🙂 正面から</button><button class="tw-btn" data-p="sky">🚁 空から</button><button class="tw-btn" data-p="top">🦅 真上から</button></div>
+      <div class="r" style="align-items:center"><span>高さ</span><input type="range" class="hs" min="0" max="1" step="0.005" value="${heightToV(fcam.y).toFixed(3)}"></div>` : ''}
+      <div class="r">${free ? '<button class="tw-btn on" data-c="fix">📌 ここで固定</button>' : '<button class="tw-btn on" data-c="free">🎥 また動かす</button>'}<button class="tw-btn" data-c="back">↩ もどす</button></div>`;
+  }
+  camBar.onclick = e => {
+    const b = e.target.closest('button'); if (!b) return; audio.play('tap');
+    if (b.dataset.p) camPreset(b.dataset.p);
+    else if (b.dataset.c === 'fix') { camMode = 'fixed'; cam.yaw = fcam.yaw; me.ch.root.visible = true; camBarDraw(); hud.toast('カメラをここに固定したよ。📷で撮れるよ'); }
+    else if (b.dataset.c === 'free') { camFromView(); camMode = 'free'; camBarDraw(); }
+    else if (b.dataset.c === 'back') { camMode = 'follow'; camBarDraw(); }
+  };
+  camBar.oninput = e => { if (e.target.classList.contains('hs')) fcam.y = vToHeight(+e.target.value); };
+  // ---- イベント(花火・日食・月食) ----
+  let evt = null, banEl = null;
+  const clearBanner = () => { banEl?.remove(); banEl = null; };
+  function banner(text, label, fn, ms = 16000) {
+    clearBanner(); banEl = document.createElement('div'); banEl.className = 'tw-evt';
+    banEl.innerHTML = `<span style="flex:1">${text}</span><button class="tw-btn">${label}</button><button class="tw-btn" data-x style="background:#fff3;color:#fff">×</button>`;
+    banEl.querySelector('.tw-btn').onclick = () => { audio.play('tap'); fn && fn(); };
+    banEl.querySelector('[data-x]').onclick = clearBanner;
+    root.appendChild(banEl); const el = banEl; setTimeout(() => { if (banEl === el) clearBanner(); }, ms);
+  }
+  function aimAt(x, y, z) {   // 見たい方向へカメラをむける(固定中は動かさない)
+    if (camMode === 'fixed') return;
+    const bx = camMode === 'free' ? fcam.x : me.x, bz = camMode === 'free' ? fcam.z : me.z, by = camMode === 'free' ? fcam.y : 1.3;
+    const dx = x - bx, dz = z - bz, dy = y - by, hl = Math.hypot(dx, dz) || 1;
+    if (camMode === 'free') { fcam.yaw = Math.atan2(-dx, -dz); fcam.pitch = clamp(-Math.atan2(dy, hl), -1.5, 1.5); }
+    else { cam.yaw = Math.atan2(-dx, -dz); cam.pitch = clamp(-Math.atan2(dy, hl) * 0.9, -1.4, 0.5); }
+  }
+  const aimFw = () => aimAt(FW_CENTER.x, FW_CENTER.y, FW_CENTER.z);
+  const aimSky = kind => { const p = env.skyPos(kind); if (p) aimAt(p.x, p.y, p.z); };
+  function stopEvent() { fw.stop(); env.stopEclipse(); if (evt && evt.fw) env.release(); evt = null; clearBanner(); }
+  function runEvent(kind, meta = {}) {
+    stopEvent(); audio.unlock();
+    if (kind === 'solar' || kind === 'lunar') {
+      env.startEclipse(kind, kind === 'solar' ? 100 : 130); evt = { kind };
+      banner(kind === 'solar' ? '🌑 日食がはじまるよ！太陽がかけていくよ' : '🌕 月食がはじまるよ！月が赤くなっていくよ', '空を見る', () => aimSky(kind));
+      setTimeout(() => aimSky(kind), 500);
+    } else {
+      const name = String(kind).replace(/^fw:/, '');
+      env.hold(21); fw.show(name); evt = { kind, fw: true };
+      banner(meta.birthday ? '🎂 お誕生日おめでとう！ 🎆 花火をどうぞ' : '🎆 花火がはじまるよ！北の空を見てね', '花火を見る', aimFw);
+      setTimeout(aimFw, 500);
+    }
+  }
+  function endEvent() { if (evt && evt.fw) env.release(); evt = null; clearBanner(); hud.toast('おしまい。また見られるといいね'); }
+  const sched = createSchedule({ storage, getBirth: () => settings.birth, canFire: () => started && !appHost.current && !hud.busy && !evt, fire: (ev, meta) => runEvent(ev.kind, meta) });
+  let schedT = 2;
+  function openBirthSetup() {
+    const [py, pm, pd] = (settings.birth || '').split('-');
+    const pn = hud.panel(`<h2>誕生日をとうろく</h2><p class="tw-note">誕生日の夜に、町であなただけの花火が上がります。この端末の中だけに保存します。</p>
+      <div class="tw-row">誕生日<span style="display:flex;gap:6px;align-items:center"><input class="tw-by" inputmode="numeric" maxlength="4" placeholder="1990" value="${py || ''}" style="width:4.2em;font-size:16px;text-align:center"> 年 <input class="tw-bm" inputmode="numeric" maxlength="2" placeholder="5" value="${pm ? +pm : ''}" style="width:2.6em;font-size:16px;text-align:center"> 月 <input class="tw-bdd" inputmode="numeric" maxlength="2" placeholder="20" value="${pd ? +pd : ''}" style="width:2.6em;font-size:16px;text-align:center"> 日</span></div>
+      <p class="tw-note tw-bmsg"></p>
+      <div class="tw-actions"><button class="tw-btn main" data-b="save">ほぞん</button><button class="tw-btn" data-b="clear">けす</button><button class="tw-btn" data-b="close">とじる</button></div>`, (e, p) => {
+      const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return;
+      const msg = p.querySelector('.tw-bmsg');
+      if (b === 'close') { hud.closePanel(); return; }
+      if (b === 'clear') { settings.birth = ''; settings.adult = 0; save(); msg.textContent = 'けしました'; return; }
+      const y = +p.querySelector('.tw-by').value, m = +p.querySelector('.tw-bm').value, d = +p.querySelector('.tw-bdd').value, dt = new Date(y, m - 1, d);
+      if (!(y > 1900 && y <= new Date().getFullYear()) || dt.getMonth() !== m - 1 || dt.getDate() !== d) { msg.textContent = '日付をたしかめてね'; return; }
+      settings.birth = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`; save(); msg.textContent = 'ほぞんしました。誕生日を楽しみにしててね';
+    });
+  }
+  offs.push(bus.on('ui:cam', () => {
+    if (!started || appHost.current || hud.busy) return;
+    if (camMode === 'follow') { camFromView(); camMode = 'free'; } else camMode = 'follow';
+    camBarDraw(); input.clear();
+  }));
   const ray = new THREE.Raycaster();
 
   // ---- 当たり判定 ----
@@ -459,11 +575,22 @@ export function mount(container, opt = {}) {
     const inp = input.read();
 
     // 自分の移動(カメラの向き基準)
-    cam.yaw -= inp.camDX * 0.006; cam.pitch = clamp(cam.pitch + inp.camDY * 0.004, -1.5, 1.5);
-    cam.dist = clamp(cam.dist + inp.zoom * 0.6, 1.6, 14);   // もっと近くまで寄れる(寄りすぎたら自分は消える)
-    me.ch.root.visible = cam.dist > 1.9;
     let mx = inp.mx, my = inp.my;
+    if (camMode === 'follow') {
+      cam.yaw -= inp.camDX * 0.006; cam.pitch = clamp(cam.pitch + inp.camDY * 0.004, -1.5, 1.5);
+      cam.dist = clamp(cam.dist + inp.zoom * 0.6, 1.6, 14);   // もっと近くまで寄れる(寄りすぎたら自分は消える)
+      me.ch.root.visible = cam.dist > 1.9;
+    } else if (camMode === 'free') {   // カメラだけ動かす(自分はその場)
+      fcam.yaw -= inp.camDX * 0.006; fcam.pitch = clamp(fcam.pitch + inp.camDY * 0.004, -1.5, 1.5);
+      const sp = (inp.run ? 24 : 8) * dt, c = Math.cos(fcam.yaw), s = Math.sin(fcam.yaw), cp = Math.cos(fcam.pitch);
+      fcam.x += (mx * c + my * s) * sp; fcam.z += (-mx * s + my * c) * sp;
+      const z = -inp.zoom * 0.9; fcam.x += -s * cp * z; fcam.y += -Math.sin(fcam.pitch) * z; fcam.z += -c * cp * z;
+      fcam.x = clamp(fcam.x, -240, 240); fcam.z = clamp(fcam.z, -240, 240); fcam.y = clamp(fcam.y, 0.15, 90);
+      mx = my = 0; me.ch.root.visible = true;
+      const hs = camBar.querySelector('.hs'); if (hs && document.activeElement !== hs) hs.value = heightToV(fcam.y).toFixed(3);
+    } else me.ch.root.visible = true;
     if (!started || hud.busy) mx = my = 0;
+    if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my));
     const target = mag > 0.05 ? (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) : 0;
     me.speed += (target - me.speed) * Math.min(1, dt * 10);
@@ -473,11 +600,13 @@ export function mount(container, opt = {}) {
       me.ry = angleLerp(me.ry, Math.atan2(wx, wz), Math.min(1, dt * 12));
       [me.x, me.z] = collide(me.x + wx * me.speed * dt, me.z + wz * me.speed * dt);
     }
-    me.ch.root.position.set(me.x, 0, me.z); me.ch.root.rotation.y = me.ry;
+    me.ch.root.position.set(me.x, seat ? -0.04 : 0, me.z); me.ch.root.rotation.y = me.ry;
     me.ch.update(dt, me.speed);
 
     // カメラ:後ろから少し見下ろす。建物にめり込むときは手前に寄せる
     cam.x += (me.x - cam.x) * Math.min(1, dt * 8); cam.z += (me.z - cam.z) * Math.min(1, dt * 8);
+    if (camMode === 'free') { camera.position.set(fcam.x, fcam.y, fcam.z); const cp = Math.cos(fcam.pitch); camera.lookAt(fcam.x - Math.sin(fcam.yaw) * cp, fcam.y - Math.sin(fcam.pitch), fcam.z - Math.cos(fcam.yaw) * cp); }
+    if (camMode === 'follow') {
     const look = v3.set(cam.x, 1.3, cam.z);
     const op = Math.max(cam.pitch, 0.1);   // 下向きは、そのまま見上げる(カメラは地面にもぐらせない)
     const off = new THREE.Vector3(Math.sin(cam.yaw) * Math.cos(op), Math.sin(op), Math.cos(cam.yaw) * Math.cos(op));
@@ -494,11 +623,15 @@ export function mount(container, opt = {}) {
     camera.position.copy(look).addScaledVector(off, dist);
     camera.lookAt(look);
     if (cam.pitch < 0.1) camera.rotateX(0.1 - cam.pitch);   // 真上まで見上げられる
+    }
 
     if (talkingTo && !hud.busy) { talkingTo.talking = false; talkingTo = null; }   // 会話が終わっているのに止まったままの住人を放す
     for (const r of residents.list) if (r.talking && r !== talkingTo) r.talking = false;
     tipUpdate(dt);
     env.camera = camera; env.update(dt, me.ch.root.position);
+    if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
+    if (evt) { if (evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
+    if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); }
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
@@ -530,6 +663,7 @@ export function mount(container, opt = {}) {
       for (const it of city.interact) consider(it, it.x, it.z, it.r);
     }
     if (focus && focus.kind === 'npc') { const n = nearNpcs().length; if (n >= 2) focus.label = `ちかくの人と話す(${n}人)`; }
+    if (seat) focus = { kind: 'stand', label: '🧍 立つ' };
     hud.setAction(focus ? focus.label : null);
 
     // 名前と吹き出しの位置
@@ -579,6 +713,9 @@ export function mount(container, opt = {}) {
     getState: () => ({ speed: +me.speed.toFixed(1), npcs: Object.fromEntries(residents.list.map(r => [r.def.id, [+r.ch.root.position.x.toFixed(1), +r.ch.root.position.z.toFixed(1), r.ch.root.visible]])), cam: [+camera.position.x.toFixed(2), +camera.position.y.toFixed(2), +camera.position.z.toFixed(2)], started, app: appHost.current, area: city.areaName(me.x, me.z), x: me.x, z: me.z, hour: env.hour, coins: wallet.get(), fps: Math.round(fps), peers: peers.size, focus: focus?.label || null }),
     moveNpc: (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (r) r.ch.root.position.set(x, 0, z); },
     // 最初の画面を飛ばして町へ(前に選んだキャラ。はじめてなら最初のキャラ)
+    // イベント(運営画面から。テスト用)
+    event: { run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
+    cameraMode: () => camMode,
     quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
@@ -588,6 +725,7 @@ export function mount(container, opt = {}) {
     pause() { held = true; input.clear(); audio.suspend(); },
     resume() { held = false; timer.update(); input.clear(); audio.resume(); hud.setCoins(wallet.get(), gemsNow()); },
     unmount() {
+      fw.dispose(); clearBanner();
       cancelAnimationFrame(raf); ro.disconnect(); offs.forEach(f => f()); appHost.close(); input.dispose(); hud.dispose(); net?.disconnect(); audio.dispose(); bus.clear();
       scene.traverse(o => { o.geometry?.dispose(); });
       renderer.dispose(); renderer.forceContextLoss?.(); root.remove();

@@ -10,6 +10,14 @@ export const CSS = `
 .tw-root .tw-top{position:absolute;left:12px;right:12px;top:calc(10px + var(--tw-top));display:flex;gap:6px;align-items:center;pointer-events:none}
 .tw-chip{background:rgba(255,250,242,.9);border-radius:999px;padding:7px 10px;font-weight:700;font-size:14px;box-shadow:var(--tw-shadow);white-space:nowrap;flex:none}
 .tw-area[hidden]{display:none}
+.tw-cam{position:absolute;left:10px;right:10px;top:calc(60px + var(--tw-top));margin:0 auto;max-width:520px;background:rgba(255,250,242,.94);border-radius:16px;padding:8px 10px;box-shadow:var(--tw-shadow);z-index:12;font-size:13px;font-weight:700}
+.tw-cam[hidden]{display:none}
+.tw-cam .r{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tw-cam .tw-btn{padding:7px 11px;font-size:13px;box-shadow:none;border:2px solid #eadff3}
+.tw-cam .on{background:var(--tw-lav);color:#fff}
+.tw-cam input[type=range]{flex:1;min-width:0}
+.tw-evt{position:absolute;left:10px;right:10px;top:calc(60px + var(--tw-top));margin:0 auto;max-width:480px;background:linear-gradient(160deg,#3b2f6b,#6a3f8f);color:#fff;border-radius:16px;padding:10px 12px;box-shadow:var(--tw-shadow);z-index:13;display:flex;gap:10px;align-items:center;font-weight:800;font-size:14px}
+.tw-evt .tw-btn{padding:7px 12px;font-size:13px;flex:none;background:#ffe08a;color:#5a4a6b}
 .tw-corner{position:absolute;right:8px;bottom:calc(8px + var(--tw-bot));display:flex;flex-direction:column;gap:8px;align-items:center}
 .tw-corner .tw-icon{width:38px;height:38px;font-size:18px;opacity:.88}
 .tw-area{flex:0 1 auto;min-width:0;max-width:46%;overflow:hidden;text-overflow:ellipsis}
@@ -116,18 +124,20 @@ export const CSS = `
 export function createHud(root, bus) {
   const h = s => { const t = document.createElement('template'); t.innerHTML = s.trim(); return t.content.firstChild; };
   const top = h(`<div class="tw-top"><span class="tw-chip tw-area" hidden>ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-lang" aria-label="英語と日本語を切りかえ">日</button></div>`);
-  const corner = h(`<div class="tw-corner"><button class="tw-btn tw-icon tw-photo" aria-label="写真をとる">📷</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
+  const corner = h(`<div class="tw-corner"><button class="tw-btn tw-icon tw-cambtn" aria-label="カメラ">🎥</button><button class="tw-btn tw-icon tw-photo" aria-label="写真をとる">📷</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
   const labels = h('<div class="tw-labels"></div>');
   const action = h('<button class="tw-btn tw-action" hidden></button>');
   const emotes = h('<div class="tw-emotes"><button class="tw-btn" data-e="wave">👋 手をふる</button><button class="tw-btn" data-e="say">💬 ひとこと</button><button class="tw-btn" data-e="feed" hidden>🌾 えさをまく</button></div>');
   const grade = h('<div class="tw-grade"></div>'), vig = h('<div class="tw-vig"></div>');
   root.prepend(grade, vig);
   root.append(labels, top, emotes, action, corner);
+  const camBar = h('<div class="tw-cam" hidden></div>'); root.append(camBar);
   const area = top.querySelector('.tw-area'), clock = top.querySelector('.tw-clock'), coins = top.querySelector('.tw-coins');
   let dialog = null, toastEl = null, toastT = 0, panel = null, ptLast = 0;
 
   emotes.onclick = e => { const b = e.target.closest('[data-e]'); if (b) bus.emit('ui:emote', b.dataset.e); };
   corner.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
+  corner.querySelector('.tw-cambtn').onclick = () => bus.emit('ui:cam');
   corner.querySelector('.tw-photo').onclick = () => bus.emit('ui:photo');
   top.querySelector('.tw-find').onclick = () => bus.emit('ui:find');
   const langB = top.querySelector('.tw-lang');
@@ -137,6 +147,7 @@ export function createHud(root, bus) {
 
   const tags = new Map(); // id → {el, bubble, until}
   return {
+    camBar,
     setArea(t) { if (area.textContent !== t) area.textContent = t; },
     setLite(on) { grade.style.display = vig.style.display = on ? 'none' : ''; },
     setFeed(on) { const b = emotes.querySelector('[data-e="feed"]'); if (b && b.hidden === on) b.hidden = !on; },

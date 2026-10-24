@@ -46,11 +46,11 @@ export function createEnv(scene, { shadows = true } = {}) {
   // 月(その日の月齢で満ち欠けが変わる)
   const synodic = 29.530588853, jd = Date.now() / 86400000 + 2440587.5;
   let moonPhase = (((jd - 2451550.1) / synodic) % 1 + 1) % 1;   // 0=新月, 0.5=満月
-  const moonU = { uA: { value: moonPhase * Math.PI * 2 }, uO: { value: 0 } };
+  const moonU = { uA: { value: moonPhase * Math.PI * 2 }, uO: { value: 0 }, uC: { value: 9 } };   // uC=月食のとき、地球のかげの中心(9=なし)
   const moon = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({
     uniforms: moonU, transparent: true, depthWrite: false, fog: false, toneMapped: false,
     vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
-    fragmentShader: `varying vec2 vUv; uniform float uA, uO;
+    fragmentShader: `varying vec2 vUv; uniform float uA, uO, uC;
       float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
       void main(){
         vec2 p = (vUv - 0.5) * 2.0; float r2 = dot(p,p); if (r2 > 1.0) discard;
@@ -61,6 +61,9 @@ export function createEnv(scene, { shadows = true } = {}) {
         vec3 col = vec3(1.0, 0.9, 0.66) * shade * limb;                              // 白でなく、ほんのり黄色い月
         vec3 dark = vec3(0.16, 0.18, 0.3);
         float edge = 1.0 - smoothstep(0.94, 1.0, sqrt(r2));
+        float sh = 1.0 - smoothstep(1.28, 1.58, length(p - vec2(uC, 0.12)));   // 月食:地球のかげ(ふちは赤く、中は暗い赤銅色)
+        vec3 red = vec3(0.62, 0.15, 0.07) * shade;
+        col = mix(col, mix(red * 1.25, red * 0.55, smoothstep(0.0, 1.0, sh)), sh);
         gl_FragColor = vec4(col, lit * edge * uO);
       }`,
   }));
@@ -95,6 +98,15 @@ export function createEnv(scene, { shadows = true } = {}) {
   }
   scene.add(clouds);
 
+  // 日食:太陽(ふだんは出さない)と、それをかくす月。ここは日食のあいだだけ見える
+  const discGeo = new THREE.CircleGeometry(1, 40);
+  const sunDisc = new THREE.Mesh(discGeo, new THREE.MeshBasicMaterial({ color: 0xfff4d6, transparent: true, depthWrite: false, fog: false, toneMapped: false }));
+  const sunGlow = new THREE.Mesh(discGeo, new THREE.MeshBasicMaterial({ color: 0xffe9b0, transparent: true, opacity: 0.35, depthWrite: false, fog: false, toneMapped: false, blending: THREE.AdditiveBlending }));
+  const coronaTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 22, 64, 64, 64); gr.addColorStop(0, 'rgba(255,250,230,0.95)'); gr.addColorStop(0.3, 'rgba(255,230,170,0.45)'); gr.addColorStop(1, 'rgba(255,230,170,0)'); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c); })();
+  const corona = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: coronaTex, transparent: true, depthWrite: false, fog: false, toneMapped: false, blending: THREE.AdditiveBlending, opacity: 0 }));
+  const sunCover = new THREE.Mesh(discGeo, new THREE.MeshBasicMaterial({ color: 0x07060e, transparent: true, depthWrite: false, fog: false, toneMapped: false }));
+  for (const m of [sunGlow, sunDisc, sunCover, corona]) { m.visible = false; m.frustumCulled = false; m.renderOrder = -1; scene.add(m); }
+  sunGlow.renderOrder = -2; corona.renderOrder = 0;
   const hemi = new THREE.HemisphereLight(0xffffff, 0xb9a9d9, 1);
   scene.add(hemi);
   const sun = new THREE.DirectionalLight(0xffffff, 2);
@@ -130,11 +142,45 @@ export function createEnv(scene, { shadows = true } = {}) {
     },
     setMoonDate(d) { const j = d.getTime() / 86400000 + 2440587.5; moonPhase = (((j - 2451550.1) / synodic) % 1 + 1) % 1; moonU.uA.value = moonPhase * Math.PI * 2; },
     setMoon(ph) { moonPhase = ((ph % 1) + 1) % 1; moonU.uA.value = moonPhase * Math.PI * 2; },
+    // 時間を止めて、その時刻の空にする(花火・日食のあいだ)。release で元にもどる
+    hold(h) { if (!this._held) this._held = { hour: this.hour, speed: this.speed }; this.hour = h; this.speed = 0; },
+    release() { if (this._held) { this.hour = this._held.hour; this.speed = this._held.speed; this._held = null; } },
+    // 天体イベント:'solar'=日食 'lunar'=月食。dur=秒。ずっと進む(時間は止める)
+    startEclipse(kind, dur = 90) {
+      this.stopEclipse(); this.hold(kind === 'solar' ? 12.2 : 22.4);
+      this.eclipse = { kind, t: 0, dur, cover: 0, moonPhase0: moonPhase };
+      if (kind === 'lunar') this.setMoon(0.5);
+    },
+    stopEclipse() {
+      if (!this.eclipse) return; const e = this.eclipse; this.eclipse = null;
+      moonU.uC.value = 9; for (const m of [sunGlow, sunDisc, sunCover, corona]) m.visible = false;
+      if (e.kind === 'lunar') this.setMoon(e.moonPhase0);
+      this.release();
+    },
+    skyPos(kind) { return kind === 'solar' ? sunDisc.position.clone() : kind === 'lunar' ? moon.position.clone() : null; },
     meteorNow() { startMeteor(this.camera); },
     setShadows(on, size = 2048) { sun.castShadow = on; if (sun.shadow.mapSize.x !== size) { sun.shadow.mapSize.set(size, size); sun.shadow.map?.dispose(); sun.shadow.map = null; } },
     update(dt, focus) {
       this.hour = (this.hour + dt * this.speed) % 24;
       const s = sample(this.hour);
+      const E = this.eclipse; let ecl = 0;
+      if (E) {
+        E.t += dt; const p = Math.min(1, E.t / E.dur), u = p * 2 - 1;
+        if (E.kind === 'solar') {
+          // 太陽と月のずれ d(太陽の半径=1 にして)。真ん中ほどゆっくり動く → 皆既の時間がのびる
+          const R = 1, r = 1.04, off = 2.3 * u * u * u * (Math.abs(u) < 1 ? 1 : 1), d = Math.abs(off);
+          let cov; if (d >= R + r) cov = 0; else if (d <= r - R) cov = 1; else { const a = Math.acos((d * d + R * R - r * r) / (2 * d * R)), b = Math.acos((d * d + r * r - R * R) / (2 * d * r)); cov = (R * R * (a - Math.sin(2 * a) / 2) + r * r * (b - Math.sin(2 * b) / 2)) / (Math.PI * R * R); }
+          E.cover = ecl = Math.max(0, Math.min(1, cov)); E.off = off;
+        } else {
+          const cx = 2.75 * Math.sign(u) * Math.pow(Math.abs(u), 1.6); moonU.uC.value = cx; E.cover = ecl = Math.max(0, 1 - Math.max(0, Math.abs(cx) - 0.45) / 1.9);
+        }
+        if (p >= 1) { this.stopEclipse(); }
+      }
+      if (E && E.kind === 'solar') {   // 日食のあいだは、空と光を夕ぐれ→夜に近づける
+        const deep = new THREE.Color(0x1d1a40), warm = new THREE.Color(0xb86a5a);
+        s.sunI *= 1 - 0.88 * ecl; s.hemiI *= 1 - 0.5 * ecl; s.top.lerp(deep, 0.85 * ecl); s.bottom.lerp(warm, 0.55 * ecl).lerp(deep, 0.25 * ecl);
+        s.night = Math.max(s.night, ecl * 0.85);
+      }
       skyU.top.value.copy(s.top); skyU.bottom.value.copy(s.bottom);
       scene.fog.color.copy(s.bottom).lerp(s.top, 0.25);
       hemi.color.copy(s.top).lerp(new THREE.Color(0xffffff), 0.55);
@@ -148,6 +194,18 @@ export function createEnv(scene, { shadows = true } = {}) {
       const dir = new THREE.Vector3(Math.cos(ang) * 0.8, Math.max(0.35, Math.sin(ang)) * 1.0, 0.55).normalize();
       sun.position.copy(focus).addScaledVector(dir, 70);
       sun.target.position.copy(focus);
+      if (E && this.eclipse) {   // 太陽の向きに、日食の円を置く(カメラのほうを向ける)
+        const sd = dir.clone().normalize(), sp = focus.clone().addScaledVector(sd, 330), up = new THREE.Vector3(0, 1, 0), rt = new THREE.Vector3().crossVectors(up, sd).normalize();
+        if (E.kind === 'solar') {
+          const Rs = 15;
+          sunGlow.position.copy(sp); sunGlow.lookAt(focus); sunGlow.scale.setScalar(Rs * 2.6);
+          sunDisc.position.copy(sp); sunDisc.lookAt(focus); sunDisc.scale.setScalar(Rs);
+          sunCover.position.copy(sp).addScaledVector(rt, E.off * Rs).addScaledVector(sd, -1); sunCover.lookAt(focus); sunCover.scale.setScalar(Rs * 1.04);
+          corona.position.copy(sp).addScaledVector(sd, -2); corona.lookAt(focus); corona.scale.setScalar(Rs * 5); corona.material.opacity = Math.max(0, (ecl - 0.93) / 0.07);
+          sunGlow.material.opacity = 0.35 * (1 - ecl);
+          for (const m of [sunGlow, sunDisc, sunCover, corona]) m.visible = true;
+        }
+      }
       sky.position.copy(focus); stars.position.copy(focus);
       clouds.rotation.y += dt * 0.004;
       clouds.position.set(focus.x, 0, focus.z);

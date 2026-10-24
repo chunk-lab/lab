@@ -63,6 +63,9 @@ export function createAudio() {
     talk: () => tone(740, 0.1, { type: 'sine', gain: 0.18, slide: 1.3 }),
     coin: () => { tone(1320, 0.08, { type: 'square', gain: 0.06 }); tone(1760, 0.2, { type: 'square', gain: 0.06, delay: 0.07 }); },
     wave: () => tone(523, 0.2, { type: 'sine', gain: 0.12, slide: 1.5 }),
+    // 花火:のぼる笛のような音→ドン(おおきい花火ほど低く大きく)
+    whistle: () => tone(500, 0.8, { type: 'sine', gain: 0.05, slide: 3.2 }),
+    boom: sc => { const s = Math.max(0.3, Math.min(1.4, +sc || 1)); tone(95 / s, 0.7, { type: 'triangle', gain: 0.32 * Math.min(1, s), slide: 0.3 }); tone(55 / s, 1.0, { type: 'sine', gain: 0.3 * Math.min(1, s), slide: 0.5 }); tone(1800, 0.25, { type: 'square', gain: 0.02, slide: 0.4, delay: 0.1 }); },
     harmonica: kind => { const T = TUNES[kind] || TUNES.noon; let t = 0; for (const [f, b] of T.notes) { const d = b * T.beat; if (f) reed(f, d * 0.96, t); t += d; } return { sec: t, name: T.name }; },
   };
   return {
