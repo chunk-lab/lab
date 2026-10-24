@@ -11,7 +11,8 @@ import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
 import { buildAmbient } from './world/ambient.js';
 import { makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/character.js';
-import { setBuildingOutline } from './world/kit.js';
+import { setBuildingOutline, eachFoliage } from './world/kit.js';
+import { createSeasons, SEASONS, seasonOf } from './world/seasons.js';
 import { createResidents, period } from './game/npc.js';
 import { createInput } from './game/input.js';
 import { createHud, CSS } from './ui/hud.js';
@@ -86,7 +87,11 @@ export function mount(container, opt = {}) {
   const ambient = buildAmbient(scene, city, { quality: settings.quality, blossom });
   let blossomOn = blossom, testDate = new Date();
   const setBlossom = on => { blossomOn = on; city.setBlossom(on); ambient.setBlossom(on); };
+  const seasons = createSeasons(scene, { eachFoliage, groundMats: city.groundMats, colliders: city.colliders, storage });
+  const curSeason = () => settings.season && settings.season !== 'auto' ? settings.season : seasonOf();
+  const applySeason = () => { const s = curSeason(); seasons.set(s); setBlossom(opt.blossom ?? s === 'spring'); };
   const applyDate = d => { testDate = d; env.setMoonDate(d); const md = (d.getMonth() + 1) * 100 + d.getDate(); setBlossom(opt.blossom ?? (md >= 325 && md <= 420)); };
+  applySeason();
   const residents = createResidents(scene, city.graph, () => env.hour);
 
   // ---- 自分 ----
@@ -148,6 +153,8 @@ export function mount(container, opt = {}) {
     audio.unlock();
     if (focus.kind === 'stand') { standFromSeat(); return; }
     if (focus.kind === 'bench') { sitOnBench(focus); return; }
+    if (focus.kind === 'mksnow') { const f = seasons.build(me.x + Math.sin(me.ry) * 1.7, me.z + Math.cos(me.ry) * 1.7); if (f) { audio.play('open'); hud.toast('ころころ…雪だるまができた！'); } return; }
+    if (focus.kind === 'snowman') { seasons.remove(focus.idx); audio.play('close'); hud.toast('雪だるまをくずしたよ'); return; }
     if (focus.kind === 'npc') {
       const near = nearNpcs();
       if (near.length >= 2) {   // 団子のときは、だれと話すか選べる
@@ -383,6 +390,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">桜${'<div class="tw-seg"><button class="tw-btn' + (blossomOn ? ' on' : '') + '" data-bl="1">あり</button><button class="tw-btn' + (!blossomOn ? ' on' : '') + '" data-bl="0">なし</button></div>'}</div>
       <div class="tw-row">流れ星<button class="tw-btn" data-act="meteor" style="padding:6px 14px">いま流す</button></div>
       <div class="tw-row">英語のヒント(すれ違い)${seg('tips', [[0, 'なし'], [1, 'あり']])}</div>
+      <div class="tw-row">きせつ(桜・紅葉・雪)<button class="tw-btn" data-act="season" style="padding:6px 14px">${SEASONS[settings.season || 'auto']}</button></div>
       <div class="tw-row">誕生日(花火でお祝い)<button class="tw-btn" data-act="birth" style="padding:6px 14px">${settings.birth ? settings.birth.replace(/-/g, '/') : 'とうろく'}</button></div>
       ${opt.openAdmin ? '<div class="tw-row">運営(花火・日食・月食の予約)<button class="tw-btn" data-act="admin" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
@@ -413,6 +421,7 @@ export function mount(container, opt = {}) {
         if (b.dataset.act === 'mode') { hud.closePanel(); setTimeout(() => opt.onSwitchMode(), 30); }
         if (b.dataset.act === 'title') { hud.closePanel(); showTitle(); }
         if (b.dataset.act === 'ai') openAiSetup({ hud, ai });
+        if (b.dataset.act === 'season') { const ks = Object.keys(SEASONS), n = ks[(ks.indexOf(settings.season || 'auto') + 1) % ks.length]; settings.season = n; save(); b.textContent = SEASONS[n] + (n === 'auto' ? '(' + SEASONS[seasonOf()] + ')' : ''); applySeason(); }
         if (b.dataset.act === 'birth') { hud.closePanel(); setTimeout(openBirthSetup, 30); }
         if (b.dataset.act === 'admin') { hud.closePanel(); setTimeout(() => opt.openAdmin(), 30); }
       });
@@ -634,6 +643,7 @@ export function mount(container, opt = {}) {
     for (const r of residents.list) if (r.talking && r !== talkingTo) r.talking = false;
     tipUpdate(dt);
     env.camera = camera; env.update(dt, me.ch.root.position);
+    seasons.update(dt, camera.position);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
     if (env.weather || evt?.wx) audio.rain(env.rainLevel || 0);
     if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
@@ -669,6 +679,7 @@ export function mount(container, opt = {}) {
       for (const r of residents.list) if (r.ch.root.visible) consider({ kind: 'npc', ref: r, label: `${r.def.name}と話す` }, r.ch.root.position.x, r.ch.root.position.z, 2.3);
       for (const it of city.interact) consider(it, it.x, it.z, it.r);
     }
+    if (!focus && !seat && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = sn ? { kind: 'snowman', idx: sn.i, label: '⛄ こわす' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
     if (focus && focus.kind === 'npc') { const n = nearNpcs().length; if (n >= 2) focus.label = `ちかくの人と話す(${n}人)`; }
     if (seat) focus = { kind: 'stand', label: '🧍 立つ' };
     hud.setAction(focus ? focus.label : null);
@@ -721,8 +732,9 @@ export function mount(container, opt = {}) {
     moveNpc: (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (r) r.ch.root.position.set(x, 0, z); },
     // 最初の画面を飛ばして町へ(前に選んだキャラ。はじめてなら最初のキャラ)
     // イベント(運営画面から。テスト用)
-    event: { seek: f => { if (env.eclipse) env.eclipse.t = f * env.eclipse.dur; if (env.weather) env.weather.t = f * env.weather.dur; }, sec: evSec, run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
+    event: { lengths: () => { const o = {}; for (const n of Object.keys(FW_SHOWS)) { fw.show(n); o[n] = Math.round(fw.showLength); } fw.stop(); o.solar = 100; o.lunar = 130; o.rain = 120; return o; }, seek: f => { if (env.eclipse) env.eclipse.t = f * env.eclipse.dur; if (env.weather) env.weather.t = f * env.weather.dur; }, sec: evSec, run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
     cameraMode: () => camMode,
+    season: s => { if (s) { settings.season = s; save(); applySeason(); } return curSeason(); },
     quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
@@ -732,7 +744,7 @@ export function mount(container, opt = {}) {
     pause() { held = true; input.clear(); audio.suspend(); },
     resume() { held = false; timer.update(); input.clear(); audio.resume(); hud.setCoins(wallet.get(), gemsNow()); },
     unmount() {
-      fw.dispose(); clearBanner();
+      fw.dispose(); seasons.dispose(); clearBanner();
       cancelAnimationFrame(raf); ro.disconnect(); offs.forEach(f => f()); appHost.close(); input.dispose(); hud.dispose(); net?.disconnect(); audio.dispose(); bus.clear();
       scene.traverse(o => { o.geometry?.dispose(); });
       renderer.dispose(); renderer.forceContextLoss?.(); root.remove();

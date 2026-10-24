@@ -21,7 +21,9 @@ export function createAdmin(core) {
   function durRow() {
     const d = durLoad(), f = k => d[k] ? +(d[k] / 60).toFixed(2) : '';
     const one = (k, lab) => `<label style="display:flex;gap:4px;align-items:center">${lab}<input data-dur="${k}" type="number" step="0.5" min="0.2" inputmode="decimal" placeholder="標準" value="${f(k)}" style="width:62px;padding:5px;border-radius:8px;border:2px solid #cbb;font:inherit">分</label>`;
-    return `<p class="cs-note">ぜんたいの長さ(からっぽ=標準。変えたら下の「長さを保存」):</p><div class="cs-adm-row" style="flex-wrap:wrap">${one('fw', '🎆花火')}${one('solar', '🌑日食')}${one('lunar', '🌕月食')}${one('rain', '☔雨と虹')}</div><div class="cs-adm-row"><button data-durs="1">長さを保存</button></div>`;
+    const T = T3(), L = T && T.lengths ? T.lengths() : null, mm = x => { const m = Math.floor(x / 60), r = x % 60; return (m ? m + '分' : '') + (r ? r + '秒' : '') || '0秒'; };
+    const std = L ? `標準の長さ:花火(ダイジェスト ${mm(L.digest)}・フル ${mm(L.full)}・スターマイン ${mm(L.starmine)}・フィナーレ ${mm(L.finale)}) / 日食 ${mm(L.solar)} / 月食 ${mm(L.lunar)} / 雨と虹 ${mm(L.rain)}` : '';
+    return `<p class="cs-note">${std}</p><p class="cs-note">ぜんたいの長さ(からっぽ=標準。変えたら下の「長さを保存」):</p><div class="cs-adm-row" style="flex-wrap:wrap">${one('fw', '🎆花火')}${one('solar', '🌑日食')}${one('lunar', '🌕月食')}${one('rain', '☔雨と虹')}</div><div class="cs-adm-row"><button data-durs="1">長さを保存</button></div>`;
   }
   function evSection() {
     const T = T3(), list = evLoad();

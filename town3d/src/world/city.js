@@ -159,7 +159,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   for (const m of meshes) { const sn = m.material.userData.season; if (sn === 'blossom') m.visible = blossom; else if (sn === 'nonblossom') m.visible = !blossom; }
 
   return {
-    colliders, interact, buildings, animated, graph: GRAPH,
+    colliders, interact, buildings, animated, graph: GRAPH, groundMats: [ground.material, lawn.material],
     setLite(on) { animated.fountainLite?.(on); },
     areaName(x, z) {
       if (Math.hypot(x, z) < PLAZA_R + 1) return 'ほし広場';

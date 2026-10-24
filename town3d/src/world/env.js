@@ -190,7 +190,7 @@ export function createEnv(scene, { shadows = true } = {}) {
           let cov; if (d >= R + r) cov = 0; else if (d <= r - R) cov = 1; else { const a = Math.acos((d * d + R * R - r * r) / (2 * d * R)), b = Math.acos((d * d + r * r - R * R) / (2 * d * r)); cov = (R * R * (a - Math.sin(2 * a) / 2) + r * r * (b - Math.sin(2 * b) / 2)) / (Math.PI * R * R); }
           E.cover = ecl = Math.max(0, Math.min(1, cov)); E.off = off;
         } else {
-          const cx = 2.9 * (0.6 * u + 0.4 * u * u * u); moonU.uC.value = cx; E.cover = ecl = Math.max(0, 1 - Math.max(0, Math.abs(cx) - 0.45) / 1.9);
+          const cx = 2.4 * (0.6 * u + 0.4 * u * u * u); moonU.uC.value = cx; E.cover = ecl = Math.max(0, 1 - Math.max(0, Math.abs(cx) - 0.45) / 1.9);
         }
         if (p >= 1) { this.stopEclipse(); }
       }
