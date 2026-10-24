@@ -49,7 +49,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     town = window.town3d = window.Hoshimiya.mount(box, {
       wallet: core.wallet,   // コインは2Dと共通
       gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house') },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
-      house: ECON.house,   // 自宅の広げ方の値段(core/economy.js)
+      house: ECON.house,
+      photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
       features: ['study'],   // あなたの家に「勉強部屋」ボタンを出す
       switchLabel: '2Dの地図にする',
       onSwitchMode: () => go('2d'),

@@ -18,6 +18,7 @@ import { createHud, CSS } from './ui/hud.js';
 import { APPS } from './apps/registry.js';
 import { openFinder } from './ui/finder.js';
 import { openNotes } from './ui/notes.js';
+import { snapCanvas, shotCard, flash } from './game/photos.js';
 
 let styleRefs = 0;
 const VERSION = '0.1.0';
@@ -97,7 +98,7 @@ export function mount(container, opt = {}) {
 
   const hud = createHud(root, bus);
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
-  const appHost = createAppHost({ root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null });
+  const appHost = createAppHost({ root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   hud.setCoins(wallet.get(), gemsNow());
@@ -231,7 +232,7 @@ export function mount(container, opt = {}) {
       const go = () => openOgiri({ hud, ai, bus, def: r.def, getEn: () => ({ on: !!settings.en, level: settings.enLevel }), setEn: v => { settings.en = v.on ? 1 : 0; save(); bus.emit('lang', { on: !!settings.en }); } });
       if (ai.ready) go(); else openAiSetup({ hud, ai, onDone: go });
     } else if (m.act === 'quote') showQuote(r);
-    else if (m.act === 'harmonica') { audio.unlock(); audio.play('harmonica'); r.harpT = 7.6; hud.say('npc:' + r.def.id, '♪ ♪ ♪', 7); }
+    else if (m.act === 'harmonica') { audio.unlock(); const tune = audio.pickTune(env.hour), t = audio.play('harmonica', tune) || { sec: 7.6, name: '' }; r.harpT = t.sec; hud.say('npc:' + r.def.id, `♪ ${t.name} ♪`, Math.min(12, t.sec)); }
   }
   function showQuote(r) {
     const qs = r.def.quotes; let i = Math.floor(Math.random() * qs.length); if (i === r.qi) i = (i + 1) % qs.length; r.qi = i;
@@ -338,6 +339,14 @@ export function mount(container, opt = {}) {
   on(window, 'keydown', e => { if (e.code === 'KeyM' && !e.repeat && !e.target.closest?.('input,textarea')) { if (hud.busy) { hud.closePanel(); return; } openFind(); } });
   offs.push(bus.on('ui:lang', () => { settings.en = settings.en ? 0 : 1; save(); bus.emit('lang', { on: !!settings.en }); hud.toast(settings.en ? 'English モード' : '日本語モード'); }));
   bus.emit('lang', { on: !!settings.en });
+  // 写真:いま見えている画面のまま撮る(HUDは写らない)。のこすのは はじめ1枚、ダイヤで5枚まで。切り取りはアルバムで
+  offs.push(bus.on('ui:photo', () => {
+    if (!started || appHost.current || hud.busy) return;
+    renderer.render(scene, camera);
+    const src = snapCanvas(renderer.domElement);
+    flash(root); audio.unlock(); audio.play('tap');
+    shotCard(root, src, { gems: opt.gems, cfg: opt.photo, openAlbum: () => openApp('album') });
+  }));
   offs.push(bus.on('ui:menu', () => {
     if (!started) return;
     const seg = (key, opts) => `<div class="tw-seg">${opts.map(([v, l]) => `<button class="tw-btn${settings[key] == v ? ' on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
@@ -450,7 +459,8 @@ export function mount(container, opt = {}) {
 
     // 自分の移動(カメラの向き基準)
     cam.yaw -= inp.camDX * 0.006; cam.pitch = clamp(cam.pitch + inp.camDY * 0.004, -1.5, 1.5);
-    cam.dist = clamp(cam.dist + inp.zoom * 0.6, 4, 14);
+    cam.dist = clamp(cam.dist + inp.zoom * 0.6, 1.6, 14);   // もっと近くまで寄れる(寄りすぎたら自分は消える)
+    me.ch.root.visible = cam.dist > 1.9;
     let mx = inp.mx, my = inp.my;
     if (!started || hud.busy) mx = my = 0;
     const mag = Math.min(1, Math.hypot(mx, my));

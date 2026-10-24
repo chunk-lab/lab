@@ -19,6 +19,7 @@ export const ECON = {
   unlock: { packCoins: 200, packGems: 20 },      // 単語パック(約100語)の解放
   // 家具の値段は 3Dの町の town3d/src/game/furniture.js にある(元の約5倍：小物150〜250、中300〜500、大600〜800)
   // 自宅の広げ方：コインは「1列・1行ごと」に 3,000。ダイヤなら 広げる(1列・1行 60)ことも 部屋そのものを増やす(1部屋 250)こともできる
+  photo: { free: 1, max: 5, gemsPerSlot: 40 },   // 写真アルバム：はじめ1枚。ダイヤ40で1枠ずつ、5枚まで
   house: { coinsPerLine: 3000, gemsPerLine: 60, gemsPerRoom: 250 },
   start: { coins: 50, gems: 0 },                 // はじめてのとき
 };

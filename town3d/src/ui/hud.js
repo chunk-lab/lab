@@ -1,5 +1,6 @@
 // 画面の上に重ねる UI(DOM)。クラスはすべて tw- 接頭辞
 import { LOOKS, LOOK_IDS } from '../world/character.js';
+import { fmtN } from '../core/core.js';
 
 export const CSS = `
 .tw-root{position:absolute;inset:0;overflow:hidden;font-family:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;color:#5a4a6b;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-tap-highlight-color:transparent;
@@ -8,6 +9,9 @@ export const CSS = `
 .tw-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .tw-root .tw-top{position:absolute;left:12px;right:12px;top:calc(10px + var(--tw-top));display:flex;gap:6px;align-items:center;pointer-events:none}
 .tw-chip{background:rgba(255,250,242,.9);border-radius:999px;padding:7px 10px;font-weight:700;font-size:14px;box-shadow:var(--tw-shadow);white-space:nowrap;flex:none}
+.tw-area[hidden]{display:none}
+.tw-corner{position:absolute;right:8px;bottom:calc(8px + var(--tw-bot));display:flex;flex-direction:column;gap:8px;align-items:center}
+.tw-corner .tw-icon{width:38px;height:38px;font-size:18px;opacity:.88}
 .tw-area{flex:0 1 auto;min-width:0;max-width:46%;overflow:hidden;text-overflow:ellipsis}
 .tw-sp{flex:1;min-width:0}
 .tw-btn{pointer-events:auto;border:0;background:var(--tw-cream);color:var(--tw-ink);border-radius:999px;font:inherit;font-weight:700;box-shadow:var(--tw-shadow);cursor:pointer;transition:transform .12s}
@@ -15,7 +19,7 @@ export const CSS = `
 .tw-lang{height:40px;min-width:40px;padding:0 10px;flex:none;white-space:nowrap;font-size:15px;font-weight:800}.tw-lang.on{background:var(--tw-mint)}
 .tw-find{height:40px;padding:0 12px;flex:none;white-space:nowrap;font-size:14px;font-weight:700;letter-spacing:.03em}
 .tw-icon{width:40px;height:40px;flex:none;font-size:20px;display:grid;place-items:center;padding:0}
-.tw-action{position:absolute;right:20px;bottom:calc(26px + var(--tw-bot));min-width:96px;height:96px;border-radius:48px;padding:0 18px;font-size:17px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;text-shadow:0 1px 2px rgba(150,80,110,.4);animation:tw-pop .25s}
+.tw-action{position:absolute;right:20px;bottom:calc(112px + var(--tw-bot));min-width:96px;height:96px;border-radius:48px;padding:0 18px;font-size:17px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;text-shadow:0 1px 2px rgba(150,80,110,.4);animation:tw-pop .25s}
 .tw-action[hidden]{display:none}
 .tw-emotes{position:absolute;left:12px;bottom:calc(16px + var(--tw-bot));display:flex;gap:6px}
 .tw-stick.fixed{left:22px;top:auto;bottom:calc(68px + var(--tw-bot));width:132px;height:132px;pointer-events:auto;touch-action:none;background:rgba(255,255,255,.32);border:2px solid rgba(255,255,255,.75);box-shadow:var(--tw-shadow)}
@@ -111,18 +115,20 @@ export const CSS = `
 
 export function createHud(root, bus) {
   const h = s => { const t = document.createElement('template'); t.innerHTML = s.trim(); return t.content.firstChild; };
-  const top = h(`<div class="tw-top"><span class="tw-chip tw-area">ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-lang" aria-label="英語と日本語を切りかえ">日</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
+  const top = h(`<div class="tw-top"><span class="tw-chip tw-area" hidden>ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-lang" aria-label="英語と日本語を切りかえ">日</button></div>`);
+  const corner = h(`<div class="tw-corner"><button class="tw-btn tw-icon tw-photo" aria-label="写真をとる">📷</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
   const labels = h('<div class="tw-labels"></div>');
   const action = h('<button class="tw-btn tw-action" hidden></button>');
   const emotes = h('<div class="tw-emotes"><button class="tw-btn" data-e="wave">👋 手をふる</button><button class="tw-btn" data-e="say">💬 ひとこと</button><button class="tw-btn" data-e="feed" hidden>🌾 えさをまく</button></div>');
   const grade = h('<div class="tw-grade"></div>'), vig = h('<div class="tw-vig"></div>');
   root.prepend(grade, vig);
-  root.append(labels, top, emotes, action);
+  root.append(labels, top, emotes, action, corner);
   const area = top.querySelector('.tw-area'), clock = top.querySelector('.tw-clock'), coins = top.querySelector('.tw-coins');
   let dialog = null, toastEl = null, toastT = 0, panel = null, ptLast = 0;
 
   emotes.onclick = e => { const b = e.target.closest('[data-e]'); if (b) bus.emit('ui:emote', b.dataset.e); };
-  top.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
+  corner.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
+  corner.querySelector('.tw-photo').onclick = () => bus.emit('ui:photo');
   top.querySelector('.tw-find').onclick = () => bus.emit('ui:find');
   const langB = top.querySelector('.tw-lang');
   langB.onclick = () => bus.emit('ui:lang');
@@ -135,7 +141,7 @@ export function createHud(root, bus) {
     setLite(on) { grade.style.display = vig.style.display = on ? 'none' : ''; },
     setFeed(on) { const b = emotes.querySelector('[data-e="feed"]'); if (b && b.hidden === on) b.hidden = !on; },
     setClock(hh) { const H = Math.floor(hh), m = Math.floor((hh % 1) * 60); const ic = hh < 5 || hh >= 19 ? '🌙' : hh < 7 ? '🌅' : hh < 17 ? '☀️' : '🌇'; clock.textContent = `${ic} ${String(H).padStart(2, '0')}:${String(m).padStart(2, '0')}`; },
-    setCoins(n, g) { coins.textContent = '🪙 ' + n + (g == null ? '' : ' 💎 ' + g); },
+    setCoins(n, g) { coins.textContent = '🪙 ' + fmtN(n) + (g == null ? '' : ' 💎 ' + fmtN(g)); },
     setAction(label) { if (!label) { action.hidden = true; return; } action.hidden = false; if (action.textContent !== label) action.textContent = label; },
     get busy() { return !!dialog || !!panel; },
     toast(text) {

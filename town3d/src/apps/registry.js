@@ -1,4 +1,5 @@
 import { shopApp, homeApp } from './home.js';
+import { albumApp } from './album.js';
 // 町に置くアプリの一覧。新しい単発アプリを足すときは、ここに1行足して town_data.js の建物か NPC の menu に id を書く。
 const css = `font-family:inherit;color:#5a4a6b;padding:20px;max-width:560px;margin:0 auto;line-height:1.7`;
 const btn = `border:0;border-radius:999px;padding:12px 26px;font:inherit;font-weight:800;color:#fff;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);cursor:pointer`;
@@ -62,4 +63,5 @@ export const APPS = [
   { id: 'library', title: '図書館', type: 'module', module: soon('図書館', '集めた単語、作った文、名コンビ図鑑を読み返せる場所になります。') },
   { id: 'shop', title: 'ショップ', type: 'module', module: shopApp },
   { id: 'home', title: 'あなたの家', type: 'module', module: homeApp },
+  { id: 'album', title: 'アルバム', type: 'module', module: albumApp },
 ];

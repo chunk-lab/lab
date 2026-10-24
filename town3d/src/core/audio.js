@@ -29,8 +29,19 @@ export function createAudio() {
     o.connect(lp); o2.connect(lp); lp.connect(g).connect(master);
     [o, o2, lfo].forEach(x => { x.start(t); x.stop(t + dur + 0.05); });
   }
-  // オリジナルの短いメロディ(ペンタトニック)
-  const HARP = [[659, 1], [784, 1], [880, 2], [784, 1], [659, 1], [587, 2], [659, 1], [784, 1], [1047, 2], [880, 1], [784, 1], [659, 3], [587, 1], [659, 1], [523, 4]];
+  // ハーモニカのオリジナル曲(ペンタトニック)。[音の高さHz, 長さ(拍)] 0 は休み。朝・昼・夕・晩と、たまに吹くとくべつな曲の5曲
+  const TUNES = {
+    morning: { name: '朝のうた', beat: 0.30, notes: [[784, 1], [880, 1], [1047, 2], [880, 1], [1047, 1], [1175, 2], [1047, 1], [880, 1], [784, 2], [659, 1], [784, 1], [880, 3], [0, 1], [1047, 1], [1175, 1], [1319, 2], [1175, 1], [1047, 1], [880, 2], [784, 1], [880, 1], [1047, 4]] },
+    noon: { name: 'ひるさがりのうた', beat: 0.34, notes: [[659, 1.5], [784, 0.5], [880, 2], [784, 1], [659, 1], [587, 2], [523, 1], [587, 1], [659, 3], [0, 1], [784, 1.5], [880, 0.5], [1047, 2], [880, 1], [784, 1], [659, 2], [587, 1], [523, 1], [587, 4]] },
+    evening: { name: '夕やけのうた', beat: 0.38, notes: [[880, 2], [784, 1], [659, 1], [587, 2], [523, 2], [587, 1], [659, 1], [784, 3], [0, 1], [880, 1], [784, 1], [659, 2], [587, 1], [523, 1], [440, 2], [523, 1], [587, 1], [659, 4]] },
+    night: { name: 'おやすみのうた', beat: 0.45, notes: [[523, 2], [440, 2], [392, 3], [0, 1], [440, 2], [523, 2], [587, 3], [0, 1], [523, 1], [440, 1], [392, 2], [330, 2], [392, 1], [440, 1], [330, 5]] },
+    special: { name: 'とっておきの曲', beat: 0.28, notes: [[1047, 1], [1319, 1], [1568, 2], [1319, 1], [1047, 1], [784, 2], [880, 1], [1047, 1], [1175, 2], [0, 0.5], [1175, 0.5], [1319, 1], [1175, 1], [1047, 2], [1568, 1], [1319, 1], [1047, 1], [784, 1], [880, 1], [1047, 1], [1175, 1], [1319, 3], [0, 1], [1568, 0.5], [1319, 0.5], [1175, 0.5], [1047, 0.5], [1319, 2], [1047, 1], [784, 1], [1047, 5]] },
+  };
+  // 時間から曲をえらぶ(たまに「とくべつな曲」)
+  function pickTune(hour, special = Math.random() < 0.18) {
+    if (special) return 'special';
+    return hour >= 5 && hour < 10 ? 'morning' : hour >= 10 && hour < 16 ? 'noon' : hour >= 16 && hour < 19 ? 'evening' : 'night';
+  }
   // 広場の水音+遠いざわめき(フィルタをかけたノイズ)
   function ambience(on) {
     const a = ctx(); if (!a) return;
@@ -52,11 +63,12 @@ export function createAudio() {
     talk: () => tone(740, 0.1, { type: 'sine', gain: 0.18, slide: 1.3 }),
     coin: () => { tone(1320, 0.08, { type: 'square', gain: 0.06 }); tone(1760, 0.2, { type: 'square', gain: 0.06, delay: 0.07 }); },
     wave: () => tone(523, 0.2, { type: 'sine', gain: 0.12, slide: 1.5 }),
-    harmonica: () => { let t = 0; for (const [f, b] of HARP) { const d = b * 0.32; reed(f, d * 0.96, t); t += d; } },
+    harmonica: kind => { const T = TUNES[kind] || TUNES.noon; let t = 0; for (const [f, b] of T.notes) { const d = b * T.beat; if (f) reed(f, d * 0.96, t); t += d; } return { sec: t, name: T.name }; },
   };
   return {
     unlock() { ctx(); },
-    play(name) { try { SFX[name]?.(); } catch (e) {} },
+    play(name, arg) { try { return SFX[name]?.(arg); } catch (e) {} },
+    pickTune,
     ambience,
     get: () => ({ ...vol }),
     set(v) { Object.assign(vol, v); if (amb) amb.g.gain.value = 0.035 * vol.bgm; },

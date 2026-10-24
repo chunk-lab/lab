@@ -1,5 +1,9 @@
 // ショップ(家具を買う)と、あなたの家(家具を置く)。データは src/game/furniture.js
 import * as THREE from 'three';
+import { makeCharacter, LOOKS } from '../world/character.js';
+import { createInput } from '../game/input.js';
+import { snapCanvas, shotCard, flash } from '../game/photos.js';
+import { fmtN, clamp } from '../core/core.js';
 import { ITEMS, ITEM, CATS, U, WALL_H, MAX_OWN, SIDE_MAX, furn, houseData, size, wallLen, kindOf, heightOf, inside, stackY, findSpot } from '../game/furniture.js';
 
 const ink = '#5a4a6b';
@@ -43,7 +47,7 @@ export const shopApp = {
       const c = furn.cart()[id] || 0, room = MAX_OWN - furn.owned(id);
       return `<div style="display:flex;align-items:center;justify-content:center;gap:10px">${qtyBtn(id, -1, '−', c > 0)}<b style="min-width:20px;font-size:16px">${c}</b>${qtyBtn(id, 1, '＋', c < room)}</div>`;
     };
-    const head = (title, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${title}</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px">🪙 ${ctx.wallet.get()}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
+    const head = (title, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${title}</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px">🪙 ${fmtN(ctx.wallet.get())}${ctx.gems ? ` 💎 ${fmtN(ctx.gems.get())}` : ''}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
     let lastView = '', lastCat = '';
     const draw = () => {   // 数を変えるたびに作りなおすので、同じ画面なら見ていた位置(スクロール)を保つ
       const keep = lastView === view && lastCat === cat ? (box.querySelector('.sc')?.scrollTop || 0) : 0;
@@ -114,7 +118,7 @@ export const homeApp = {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     cv.appendChild(renderer.domElement);
-    renderer.domElement.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
+    renderer.domElement.className = 'tw-canvas'; renderer.domElement.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
     const scene = new THREE.Scene();
     scene.add(new THREE.AmbientLight(0xffffff, 2.1));
     const sun = new THREE.DirectionalLight(0xffffff, 1.3); sun.position.set(6, 12, 8); scene.add(sun);
@@ -122,9 +126,14 @@ export const homeApp = {
     const cam = new THREE.PerspectiveCamera(38, 1, 0.1, 140);
     const PAL = [[0xf8e6c8, 0xffe9ef, 0xe9f3ff], [0xe8dcc8, 0xe6f4e8, 0xfff3d9], [0xdfe6f3, 0xf3e8ff, 0xe8f6ff], [0xf3dcd0, 0xfff0e0, 0xf0f7ea], [0xe3e8d8, 0xeaf0ff, 0xfdeaf0]];
 
-    let dirty = true, raf = 0;
+    let dirty = true, raf = 0, walk = false, last = performance.now();
     const draw = () => { dirty = true; };
-    const loop = () => { raf = requestAnimationFrame(loop); if (dirty) { dirty = false; renderer.render(scene, cam); } };
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      const now = performance.now(), dt = Math.min(0.05, (now - last) / 1000); last = now;
+      if (walk) { updateWalk(dt); renderer.render(scene, cam); }
+      else if (dirty) { dirty = false; renderer.render(scene, cam); }
+    };
 
     // 家と配置のデータ
     let house = houseData.get(), curId = house.rooms[0].id, placed = furn.placed(), meshes = new Map(), selUid = null, Y = {};
@@ -139,6 +148,12 @@ export const homeApp = {
     function buildShell() {
       shell.children.slice().forEach(c => { shell.remove(c); dispose(c); });
       const r = cur(), C = r.cols, R = r.rows, pal = PAL[house.rooms.indexOf(r) % PAL.length];
+      if (walk) {   // 歩くとき:かべは「中から見える面だけ」の板(外から見ると消えるので、カメラが外に出ても部屋が見える)
+        const fl = new THREE.Mesh(new THREE.BoxGeometry(C, 0.3, R), lm(pal[0])); fl.position.set(C / 2, -0.15, R / 2);
+        const wl = (w, c, x, z, ry) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, WALL_H), lm(c)); m.position.set(x, WALL_H / 2, z); m.rotation.y = ry; return m; };
+        shell.add(fl, wl(C, pal[1], C / 2, 0, 0), wl(R, pal[2], 0, R / 2, Math.PI / 2), wl(R, pal[2], C, R / 2, -Math.PI / 2), wl(C, pal[1], C / 2, R, Math.PI));
+        return;
+      }
       const floor = new THREE.Mesh(new THREE.BoxGeometry(C, 0.3, R), lm(pal[0])); floor.position.set(C / 2, -0.15, R / 2);
       const grid = new THREE.GridHelper(Math.max(C, R), Math.max(C, R), 0xe9cfa6, 0xeed8b4); grid.scale.set(C / Math.max(C, R), 1, R / Math.max(C, R)); grid.position.set(C / 2, 0.01, R / 2);
       const w1 = new THREE.Mesh(new THREE.BoxGeometry(C, WALL_H, 0.25), lm(pal[1])); w1.position.set(C / 2, WALL_H / 2, -0.125);
@@ -152,6 +167,8 @@ export const homeApp = {
     function resize() {
       const w = cv.clientWidth || 300, h = cv.clientHeight || 300, r = cur(), big = Math.max(r.cols, r.rows);
       renderer.setSize(w, h, false); cam.aspect = w / h;
+      if (walk) { cam.fov = 55; cam.updateProjectionMatrix(); return; }
+      cam.fov = 38;   // 歩いているときのカメラは毎フレーム決める
       baseDist = Math.max(15, 6.4 / (cam.aspect * 0.344)) * Math.max(1, big / 8 * 0.97);
       const dist = baseDist / zoom, cx = r.cols / 2 + panX, cz = r.rows / 2 + panZ;
       cam.position.set(cx + dist * 0.62, dist * 0.55, cz + dist * 0.62); cam.lookAt(cx, 0.9, cz);
@@ -161,7 +178,7 @@ export const homeApp = {
     zm.innerHTML = `<button data-z="in" style="${zb}" aria-label="拡大">＋</button><button data-z="out" style="${zb}" aria-label="縮小">−</button><button data-z="reset" style="${zb};font-size:14px;background:#d9d2e3;color:${ink}" aria-label="もとの大きさ">⟲</button>`;
     zm.onpointerdown = e => e.stopPropagation();
     zm.onclick = e => { const z = e.target.closest('[data-z]')?.dataset.z; if (!z) return; if (z === 'reset') { panX = 0; panZ = 0; setZoom(1); } else setZoom(zoom * (z === 'in' ? 1.3 : 1 / 1.3)); };
-    cv.addEventListener('wheel', e => { e.preventDefault(); setZoom(zoom * Math.exp(-e.deltaY * 0.0015)); }, { passive: false });
+    cv.addEventListener('wheel', e => { if (walk) return; e.preventDefault(); setZoom(zoom * Math.exp(-e.deltaY * 0.0015)); }, { passive: false });
     const ro = new ResizeObserver(resize); ro.observe(cv);
 
     // 家具の表示
@@ -202,14 +219,14 @@ export const homeApp = {
       const xs = house.rooms.map(r => r.sx), ys = house.rooms.map(r => r.sy), x0 = Math.min(...xs), y0 = Math.min(...ys), W = Math.max(...xs) - x0 + 1, H = Math.max(...ys) - y0 + 1;
       const tiles = house.rooms.map(r => `<button data-room="${r.id}" style="grid-column:${r.sx - x0 + 1};grid-row:${r.sy - y0 + 1};${btn(r.id === cur().id ? undefined : '#fff', r.id === cur().id ? '#fff' : ink)};border-radius:10px;padding:4px 6px;font-size:11px;box-shadow:0 1px 5px #0002;min-width:56px;overflow:hidden;text-overflow:ellipsis">${r.name}<br><span style="font-weight:600;opacity:.75">${r.cols}×${r.rows}</span></button>`).join('');
       planEl.innerHTML = `<div style="flex:1;min-width:0;overflow:auto"><div style="display:grid;grid-template-columns:repeat(${W},auto);grid-template-rows:repeat(${H},auto);gap:4px;width:max-content" title="間取り">${tiles}</div></div>
-        <div style="text-align:right;font-weight:800;font-size:13px;line-height:1.5;white-space:nowrap">🪙 ${ctx.wallet.get()}${gemsOf() != null ? `<br>💎 ${gemsOf()}` : ''}</div>
+        <div style="text-align:right;font-weight:800;font-size:13px;line-height:1.5;white-space:nowrap">🪙 ${fmtN(ctx.wallet.get())}${gemsOf() != null ? `<br>💎 ${fmtN(gemsOf())}` : ''}</div>
         <button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 12px;font-size:13px">🏠 ひろげる</button>`;
     }
     function ui() {
       planUI();
       const p = placed.find(x => x.uid === selUid), k = p && kindOf(p.id);
       tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ(半マスずつ)。${k === 'wall' ? 'かべをタップでも動くよ。' : 'ほかの家具の上にも置けるよ。'}` : (Object.keys(furn.inv()).length ? 'かぐをタップするとえらべるよ。下の一覧から出すこともできるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
-      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button>` + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
+      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button>` + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
     }
@@ -226,7 +243,7 @@ export const homeApp = {
       };
       sheet.style.display = 'flex';
       sheet.innerHTML = `<div style="background:#fffaf0;border-radius:22px 22px 0 0;width:min(520px,100%);max-height:88%;overflow:auto;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))">
-        <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">🏠 ${r.name}を ひろげる</h3><b style="background:#fff3cf;border-radius:999px;padding:5px 12px;font-size:13px">🪙 ${ctx.wallet.get()}${g != null ? ` 💎 ${g}` : ''}</b></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">🏠 ${r.name}を ひろげる</h3><b style="background:#fff3cf;border-radius:999px;padding:5px 12px;font-size:13px">🪙 ${fmtN(ctx.wallet.get())}${g != null ? ` 💎 ${fmtN(g)}` : ''}</b></div>
         <p style="margin:6px 0 10px;font-size:13px;color:#8d7f9e">${sheetMsg || 'いまは ' + r.cols + '列 × ' + r.rows + '行。1列・1行ごとに、コインかダイヤで広げられるよ(かべの反対がわにのびるから、家具は動かないよ)。'}</p>
         ${row('cols', 'よこ（列）を1つ')}${row('rows', 'たて（行）を1つ')}
         ${g != null ? `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800">もうひとつ、部屋を増やす（${house.rooms.length}部屋）</div><div style="font-size:12px;color:#8d7f9e;margin:2px 0 8px">いまの部屋のとなりに、新しい部屋がつながるよ。ダイヤだけで増やせるよ。</div><button data-x="room" style="${btn(g >= C.gemsPerRoom ? 'linear-gradient(160deg,#9fd8ff,#6cb8f0)' : '#d9d2e3')};width:100%">💎 ${C.gemsPerRoom} で 部屋を増やす</button></div>` : ''}
@@ -255,6 +272,8 @@ export const homeApp = {
     };
     ctl.onclick = e => {
       const a = e.target.closest('[data-a]')?.dataset.a, p = placed.find(x => x.uid === selUid);
+      if (a === 'walk') { enterWalk(); return; }
+      if (a === 'album') { ctx.open('album'); return; }
       if (a === 'shop') { ctx.open('shop', { from: 'home' }); return; }   // ネットショッピング(家からそのままショップへ)
       if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(チャンクタウン)の勉強部屋を開く
       if (!a || !p) return;
@@ -304,6 +323,7 @@ export const homeApp = {
     const ptrs = new Map(); let pinch = null;
     const pinchState = () => { const [a, b] = [...ptrs.values()]; return { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 }; };
     cv.onpointerdown = e => {
+      if (walk) return;
       ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (ptrs.size === 2) {   // 2本指：つかんでいた家具はもとにもどして、拡大・縮小とスクロールに切りかえる
         if (drag) { Object.assign(drag.p, drag.from); drag = null; relayout(); }
@@ -322,6 +342,7 @@ export const homeApp = {
       }
     };
     cv.onpointermove = e => {
+      if (walk) return;
       if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (pinch && ptrs.size >= 2) {
         const c = pinchState(), k = baseDist / zoom * 2 * Math.tan(19 * Math.PI / 180) / (cv.clientHeight || 300);
@@ -342,12 +363,84 @@ export const homeApp = {
     };
     cv.onpointerup = up; cv.onpointercancel = up;
 
+    // ---- 歩く(自分が部屋の中に立って、歩きまわる。写真も撮れる) ----
+    let wInput = null, wme = null, wyaw = 0.8, wpitch = 0.3, wdist = 4.2, wx = 0, wz = 0, wry = 0, wspeed = 0, blockers = [], wUI = null;
+    const editEls = [planEl, tip, ctl, inv, zm];
+    function calcBlockers() {   // ゆかにじかに置いてある背の高い家具は、とおれない
+      blockers = []; Y = stackY(list());
+      for (const p of list()) {
+        const k = kindOf(p.id); if (k !== 'floor' || (Y[p.uid] || 0) > 0.05 || heightOf(p.id) < 0.35) continue;
+        const [w, d] = size(p); blockers.push({ x0: p.gx / U + 0.05, x1: (p.gx + w) / U - 0.05, z0: p.gz / U + 0.05, z1: (p.gz + d) / U - 0.05 });
+      }
+    }
+    function walkTo(nx, nz) {
+      const rm = cur(), R = 0.33;
+      nx = clamp(nx, R + 0.05, rm.cols - R - 0.05); nz = clamp(nz, R + 0.05, rm.rows - R - 0.05);
+      for (let it = 0; it < 2; it++) for (const b of blockers) {
+        const cx = clamp(nx, b.x0, b.x1), cz = clamp(nz, b.z0, b.z1), dx = nx - cx, dz = nz - cz, d = Math.hypot(dx, dz);
+        if (d < R) { if (d > 1e-4) { nx = cx + dx / d * R; nz = cz + dz / d * R; } else { nx = b.x0 - R; } }   // めりこんだら外へ
+      }
+      return [clamp(nx, R + 0.05, rm.cols - R - 0.05), clamp(nz, R + 0.05, rm.rows - R - 0.05)];
+    }
+    function updateWalk(dt) {
+      const inp = wInput.read();
+      wyaw -= inp.camDX * 0.006; wpitch = clamp(wpitch + inp.camDY * 0.004, 0.04, 1.3); wdist = clamp(wdist + inp.zoom * 0.6, 1.5, 9);
+      const mag = Math.min(1, Math.hypot(inp.mx, inp.my)), target = mag > 0.05 ? (inp.run ? 5.5 : 3.2) * Math.max(mag, 0.4) : 0;
+      wspeed += (target - wspeed) * Math.min(1, dt * 10);
+      if (mag > 0.05) {
+        const sn = Math.sin(wyaw), cs = Math.cos(wyaw), vx = (inp.mx * cs + inp.my * sn) / mag, vz = (-inp.mx * sn + inp.my * cs) / mag;
+        let d = Math.atan2(vx, vz) - wry; d = Math.atan2(Math.sin(d), Math.cos(d)); wry += d * Math.min(1, dt * 12);
+        [wx, wz] = walkTo(wx + vx * wspeed * dt, wz + vz * wspeed * dt);
+      }
+      wme.root.position.set(wx, 0, wz); wme.root.rotation.y = wry; wme.update(dt, wspeed); wme.root.visible = wdist > 1.9;
+      const look = new THREE.Vector3(wx, 1.1, wz), op = wpitch;
+      cam.position.set(wx + Math.sin(wyaw) * Math.cos(op) * wdist, 1.1 + Math.sin(op) * wdist, wz + Math.cos(wyaw) * Math.cos(op) * wdist);
+      cam.lookAt(look);
+    }
+    function enterWalk() {
+      if (walk) return;
+      const rm = cur(); selUid = null; mark(); drag = null; ptrs.clear(); pinch = null;
+      walk = true; buildShell(); outline.visible = false;
+      calcBlockers();
+      editEls.forEach(e => { e._d = e.style.display; e.style.display = 'none'; });
+      wme = makeCharacter(typeof ctx.player?.look === 'string' ? LOOKS[ctx.player.look] || LOOKS.hana : LOOKS.hana); scene.add(wme.root);
+      // はじめは、かべぎわのあいた場所
+      wx = rm.cols / 2; wz = rm.rows - 1; [wx, wz] = walkTo(wx, wz); wry = Math.PI; wyaw = 0.2; wpitch = 0.3; wdist = 4.2; wspeed = 0;
+      wInput = createInput(cv, { onAction: () => {} });
+      wUI = document.createElement('div');
+      const wb = 'position:absolute;z-index:4;border:0;border-radius:999px;font:inherit;font-weight:800;box-shadow:0 2px 8px #0003;cursor:pointer';
+      wUI.innerHTML = `<button data-w="back" style="${wb};left:10px;top:10px;padding:9px 14px;background:#fffaf2;color:${ink}">✏️ へんしゅうにもどる</button>
+        <button data-w="shot" aria-label="写真をとる" style="${wb};right:12px;bottom:12px;width:58px;height:58px;font-size:26px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1)">📷</button>
+        <button data-w="album" style="${wb};right:12px;bottom:80px;padding:8px 12px;font-size:13px;background:#fffaf2;color:${ink}">🖼 アルバム</button>
+        <div data-w="hint" style="position:absolute;left:0;right:0;top:56px;text-align:center;font-size:12px;color:#fff;text-shadow:0 1px 3px #0008;pointer-events:none">下を なぞって歩く／上を なぞって見まわす／ピンチで近づく(パソコンは WASD・ドラッグ・ホイール)</div>`;
+      cv.appendChild(wUI); setTimeout(() => wUI && wUI.querySelector('[data-w="hint"]')?.remove(), 6000);
+      wUI.onpointerdown = e => e.stopPropagation();
+      wUI.onclick = e => {
+        const w = e.target.closest('[data-w]')?.dataset.w;
+        if (w === 'back') exitWalk();
+        else if (w === 'album') ctx.open('album');
+        else if (w === 'shot') {   // 見えたまま撮る(ボタンなどは写らない)
+          const was = wme.root.visible; renderer.render(scene, cam);
+          const src = snapCanvas(renderer.domElement); flash(root);
+          shotCard(root, src, { gems: ctx.gems, cfg: ctx.photo, openAlbum: () => ctx.open('album') });
+        }
+      };
+      resize();
+    }
+    function exitWalk() {
+      if (!walk) return;
+      walk = false; wInput && wInput.dispose(); wInput = null; wUI && wUI.remove(); wUI = null;
+      if (wme) { scene.remove(wme.root); dispose(wme.root); wme = null; }
+      editEls.forEach(e => { e.style.display = e._d || ''; });
+      buildShell(); resize(); relayout(); ui();
+    }
+
     buildShell(); resize(); relayout(); ui(); loop();
     const offW = ctx.wallet.onChange ? ctx.wallet.onChange(() => planUI()) : null;
     ctx.setTitle?.('あなたの家');
     return {
       unmount() {
-        cancelAnimationFrame(raf); ro.disconnect(); offW && offW();
+        cancelAnimationFrame(raf); ro.disconnect(); offW && offW(); if (walk) exitWalk();
         clearMeshes(); dispose(shell); outline.geometry.dispose();
         renderer.dispose(); renderer.forceContextLoss?.(); root.remove();
       },

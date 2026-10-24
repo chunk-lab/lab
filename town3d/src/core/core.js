@@ -21,6 +21,9 @@ export function createBus() {
 }
 
 // 保存アダプタ(既定は localStorage)。scope() でアプリごとに名前空間を分ける
+// コイン・ダイヤの表示用:1万以上は「1.2万」、10万以上は「10万↑」
+export function fmtN(n) { n = Math.floor(+n) || 0; if (n >= 100000) return '10万↑'; if (n >= 10000) return (Math.floor(n / 1000) / 10) + '万'; return String(n); }
+
 export function createStorage(prefix = 'town:', backend = null) {
   const ls = backend || {
     getItem: k => { try { return localStorage.getItem(k); } catch (e) { return null; } },
