@@ -69,7 +69,7 @@ export const shopApp = {
             <div style="display:flex;gap:8px"><button data-v="list" style="${btn('#d9d2e3', ink)};flex:1">もどる</button><button data-pay style="${btn(n && short <= 0 ? undefined : '#d9d2e3')};flex:2;${n && short <= 0 ? '' : 'cursor:default'}">まとめて買う</button></div></div>`;
         return;
       }
-      box.innerHTML = head('ショップ', msg || '気に入った家具を、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけ。')
+      box.innerHTML = head('ショップ', msg || '気に入った家具を、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけ。') + `<div style="padding:0 16px 6px"><button data-fish style="border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;background:#e3f2ff;color:#3d6a8f">🎣 つり道具はこちら</button></div>`
         + `<div style="display:flex;gap:6px;overflow-x:auto;padding:0 16px 8px">${CATS.map(c => `<button data-c="${c}" style="${btn(c === cat ? undefined : '#ece7f3', c === cat ? '#fff' : ink)};padding:6px 12px;font-size:13px">${c}</button>`).join('')}</div>
         <div class="sc" style="flex:1;overflow:auto;padding:4px 16px 12px"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">${ITEMS.filter(it => cat === 'すべて' || it.cat === cat).map(it => {
           const own = furn.owned(it.id);
@@ -83,6 +83,7 @@ export const shopApp = {
           ${ctx.params && ctx.params.from === 'home' ? `<button data-home style="${btn('#d9d2e3', ink)}">🏠 家へ</button>` : ''}<button data-v="cart" style="${btn(n ? undefined : '#d9d2e3')};${n ? '' : 'cursor:default'}">カゴを見る</button></div>`;
     };
     box.onclick = e => {
+      if (e.target.closest('[data-fish]')) { ctx.open('fishing', { tab: 'shop' }); return; }
       if (e.target.closest('[data-home]')) { ctx.open('home'); return; }
       const ch = e.target.closest('[data-c]');
       if (ch) { cat = ch.dataset.c; draw(); return; }

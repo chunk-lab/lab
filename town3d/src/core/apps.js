@@ -5,7 +5,7 @@
 //   script … 別ファイルの JS を読み込み、window[global].mount(要素, options) を呼ぶ(ぷにチャンク型)
 //   iframe … 別の HTML をそのまま入れる。postMessage で町とやり取りする(sdk/town-sdk.js)
 
-export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [], features = [], gems = null, house = null, photo = null }) {
+export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [], features = [], gems = null, house = null, photo = null, paramsFor = null }) {
   const registry = new Map();
   const loadedScripts = new Map();
   let current = null;
@@ -38,6 +38,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
 
   async function open(id, params = {}) {
     const def = registry.get(id);
+    if (paramsFor) params = paramsFor(id, params) || params;   // 町の様子(時刻など)をアプリに足す
     if (!def) { bus.emit('toast', 'まだ準備中みたい'); return false; }
     if (current) close();
     const frame = document.createElement('div');
