@@ -636,6 +636,7 @@ export function mount(container, opt = {}) {
     env.camera = camera; env.update(dt, me.ch.root.position);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
     if (env.weather || evt?.wx) audio.rain(env.rainLevel || 0);
+    if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
     if (evt) { if (evt.wx ? !env.weather : evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
     if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); }
     city.update(t, env.hour);
