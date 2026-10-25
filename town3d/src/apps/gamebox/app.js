@@ -4,7 +4,7 @@
 //   相手:町の住人(CPU)か、1台のスマホを上下で向かい合わせて2人
 import { CPUS, cpuById, createSfx, INK } from './kit.js';
 import dictq from './games/dictq.js';
-import gomoku from './games/gomoku.js';
+import wordrace from './games/wordrace.js';
 import listen from './games/listen.js';
 import tug from './games/tug.js';
 import shiritori from './games/shiritori.js';
@@ -14,7 +14,7 @@ import race from './games/race.js';
 import party from './games/party.js';
 import snow from './games/snow.js';
 
-export const EN_GAMES = [dictq, gomoku, listen, tug, shiritori, sniper];
+export const EN_GAMES = [dictq, wordrace, listen, tug, shiritori, sniper];
 export const PLAY_GAMES = [hockey, race, party];
 const ALL = [...EN_GAMES, ...PLAY_GAMES, snow];
 // 値段(あとで変えられるようにここにまとめる)

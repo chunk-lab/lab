@@ -5,13 +5,13 @@ import { surface, pointers, loop, txt, banner, rr, clamp, btn, hit, COL, INK, sh
 const COLORS = [['RED', '#ff5a5a'], ['BLUE', '#4a8cff'], ['GREEN', '#3fbf6a'], ['YELLOW', '#ffcf3a'], ['PINK', '#ff8fc7'], ['PURPLE', '#a46be8']];
 
 export default {
-  id: 'party', title: 'パーティ連打', icon: '🎉', desc: '10秒のミニゲームを5本勝負', rule: '綱引き連打・早押しドン・風船・だるまさん・ぴったりストップ・カラータッチから5本。多く勝った方の勝ち。',
+  id: 'party', title: 'パーティ連打', icon: '🎉', desc: '10秒のミニゲームを5本勝負', rule: '綱引き連打・早押しガンマン・風船・だるまさん・ぴったりストップ・カラータッチ・あっち向いてホイから5本。多く勝った方の勝ち。',
   options: [{ key: 'n', label: '何本勝負', choices: [[3, '3本'], [5, '5本'], [7, '7本']], def: 5 }],
   start(host) {
     const S = surface(host.box), g = S.g, two = host.two, cpu = host.players[1].cpu, sfx = host.sfx, lv = cpu ? cpu.lv : 2;
     const total = host.opts.trial ? 2 : host.opts.n || 5;
     const wins = [0, 0];
-    const pool = shuffle(['tug', 'don', 'balloon', 'daruma', 'stop', 'color']);
+    const pool = shuffle(['tug', 'gun', 'balloon', 'daruma', 'stop', 'color', 'hoi']);
     const list = []; while (list.length < total) list.push(pool[list.length % pool.length]);
     let ri = -1, phase = 'intro', pt0 = 0, M = null, roundWin = -1;
     const R = () => ({ W: S.W, H: S.H, h: S.H / 2 });
@@ -36,6 +36,75 @@ export default {
     const cpuOn = !two;
     // ======== ミニゲーム ========
     const GAMES = {
+      gun: () => {   // 早押しガンマン:「FIRE!」で撃つ。にせの合図(FIVE! など)や早撃ちは負け
+        const at = 1.6 + Math.random() * 3, fakes = ['FIVE!', 'FINE!', 'FIRE?', 'FISH!', 'FIRST!'].sort(() => Math.random() - 0.5).slice(0, Math.floor(Math.random() * 3));
+        const cues = fakes.map((f, i) => ({ t: 0.8 + i * (at - 0.8) / Math.max(1, fakes.length) + Math.random() * 0.3, s: f })).filter(c => c.t < at - 0.5);
+        let t = 0, go = false, cpuAt = 0, shown = '', shot = -1, foul = -1;
+        return { title: '早撃ちガンマン', how: '「FIRE!」が出た瞬間に撃て! にせの合図や早撃ちは負け', dur: 9,
+          down(s) { if (shot >= 0 || foul >= 0) return; sfx.play('boom'); if (!go) { foul = s; finishRound(1 - s); return; } shot = s; finishRound(s); },
+          update(dt) {
+            t += dt; for (const c of cues) if (t >= c.t && t < c.t + 0.6) shown = c.s; if (!go && !cues.some(c => t >= c.t && t < c.t + 0.6)) shown = '';
+            if (!go && t >= at) { go = true; shown = 'FIRE!'; sfx.play('buzz'); cpuAt = t + [0, 0.4, 0.3, 0.22][lv] + (Math.random() - 0.5) * 0.1; }
+            if (cpuOn && !go && cues.some(c => Math.abs(t - c.t) < dt) && Math.random() < [0, 0.12, 0.06, 0.02][lv]) { foul = 1; finishRound(0); }   // CPUもたまにだまされる
+            if (go && cpuOn && t >= cpuAt && shot < 0) { shot = 1; sfx.play('boom'); finishRound(1); }
+          },
+          timeout() { finishRound(-1); },
+          draw() {
+            const { W, h } = R();
+            [0, 1].forEach(s => half(s, up => {
+              const hit0 = shot >= 0 && shot !== s, ok = shot === s;
+              T(up, foul === s ? '🙈' : hit0 ? '😵' : '🤠', W / 2, h * 0.42, { size: 64 });
+              T(up, foul === s ? 'はやすぎ!' : ok ? 'BANG!' : hit0 ? 'やられた…' : '…', W / 2, h * 0.68, { size: 20, color: ok ? '#ff5a5a' : '#8d7f9e' });
+              btn(g, { x: W / 2 - 90, y: h - 110, w: 180, h: 80, label: '🔫 撃つ' }, { fill: go ? '#ffd36b' : '#fff', size: 24, flip: up });
+            }));
+            if (shown) banner(g, S, two, shown, { size: 54, color: shown === 'FIRE!' ? '#ff5a5a' : '#8d7f9e' });
+          } };
+      },
+      hoi: () => {   // あっち向いてホイ:じゃんけん → 勝った方が指す向き、負けた方は顔の向き。同じなら勝った方の勝ち
+        const HANDS = ['✊', '✌️', '✋'], DIRS = [['⬆', 'up'], ['⬇', 'down'], ['⬅', 'left'], ['➡', 'right']];
+        let st = 'jan', t = 0, hand = [-1, -1], win = -1, dir = [null, null], msg = '', cpuT = 0;
+        const beats = (a, b) => (a === 0 && b === 1) || (a === 1 && b === 2) || (a === 2 && b === 0);
+        const jb = (W, h) => HANDS.map((x, i) => ({ x: 14 + i * ((W - 28) / 3), y: h - 120, w: (W - 28) / 3 - 8, h: 90, i, label: x }));
+        const db = (W, h) => DIRS.map((d, i) => { const cx = W / 2, cy = h - 110, off = [[0, -48], [0, 48], [-80, 0], [80, 0]][i]; return { x: cx + off[0] - 38, y: cy + off[1] - 26, w: 76, h: 52, i, label: d[0] }; });
+        const cpuPlan = () => { cpuT = st === 'jan' ? 0.5 + Math.random() * 0.8 : [0, 0.9, 0.7, 0.5][lv] * (0.6 + Math.random() * 0.6); };
+        cpuPlan();
+        const judge = () => {
+          if (st === 'jan' && hand[0] >= 0 && hand[1] >= 0) {
+            if (hand[0] === hand[1]) { msg = 'あいこで…'; t = -0.9; hand = [-1, -1]; st = 'jan'; cpuPlan(); return; }
+            win = beats(hand[0], hand[1]) ? 0 : 1; st = 'hoi'; t = 0; dir = [null, null]; msg = 'あっち向いて…'; sfx.play('whoosh'); cpuPlan();
+          } else if (st === 'hoi' && dir[0] != null && dir[1] != null) {
+            if (dir[0] === dir[1]) { msg = 'ホイ!! 同じ向き!'; finishRound(win); }
+            else { msg = 'ホイ! かわした!'; st = 'jan'; t = -1.2; hand = [-1, -1]; win = -1; cpuPlan(); }
+          }
+        };
+        return { title: 'あっち向いてホイ', how: 'じゃんけんで勝ったら向きを指す、負けたら顔をそらす。同じ向きならアウト!', dur: 30,
+          down(s, p) {
+            const { W, h } = R(); if (t < 0) return;
+            if (st === 'jan' && hand[s] < 0) { const b = jb(W, h).find(b => hit(b, p)); if (b) { hand[s] = b.i; sfx.play('tap'); judge(); } }
+            else if (st === 'hoi' && dir[s] == null) { const b = db(W, h).find(b => hit(b, p)); if (b) { dir[s] = b.i; sfx.play('tap'); judge(); } }
+          },
+          update(dt) {
+            t += dt;
+            if (st === 'hoi' && t > 2.2) { for (const s of [0, 1]) if (dir[s] == null) dir[s] = Math.floor(Math.random() * 4); judge(); }   // 時間切れは でたらめな向き
+            if (cpuOn && t >= 0) { cpuT -= dt; if (cpuT <= 0) { if (st === 'jan' && hand[1] < 0) { hand[1] = Math.floor(Math.random() * 3); judge(); } else if (st === 'hoi' && dir[1] == null) { dir[1] = Math.floor(Math.random() * 4); judge(); } cpuPlan(); } }
+          },
+          timeout() { finishRound(-1); },
+          draw() {
+            const { W, h } = R();
+            [0, 1].forEach(s => half(s, up => {
+              const canSee = !up || two;
+              if (st === 'jan') {
+                T(up, hand[s] >= 0 ? (hand[1 - s] >= 0 ? HANDS[hand[s]] : '✔ 出した') : 'じゃん けん…', W / 2, h * 0.36, { size: hand[s] >= 0 && hand[1 - s] >= 0 ? 54 : 20 });
+                if (canSee && hand[s] < 0) jb(W, h).forEach(b => btn(g, b, { size: 40, flip: up }));
+              } else {
+                T(up, win === s ? `指す! ${dir[s] != null ? DIRS[dir[s]][0] : ''}` : `顔をそらす! ${dir[s] != null ? DIRS[dir[s]][0] : ''}`, W / 2, h * 0.3, { size: 22, color: win === s ? '#ff7aa2' : '#5aa8f0' });
+                T(up, `じゃんけん ${HANDS[hand[s]] || ''}`, W / 2, h * 0.45, { size: 14, color: '#8d7f9e' });
+                if (canSee && dir[s] == null) db(W, h).forEach(b => btn(g, b, { size: 26, flip: up, fill: win === s ? '#ffe1ea' : '#e3f1ff' }));
+              }
+            }));
+            if (msg && t < 0.6) banner(g, S, two, msg, { size: 26 });
+          } };
+      },
       tug: () => {   // 連打で綱を引く
         let pos = 0, cpuT = 0; const lim = 12;
         return { title: '綱引き連打', how: 'ボタンを連打! 綱を自分のほうへ', dur: 9,

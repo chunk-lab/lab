@@ -10,7 +10,7 @@ import { createStorage } from '../core/core.js';
 
 export const U = 2;                 // 1マス = 2単位(半マス刻み)
 export const WALL_H = 3.4;          // 壁・天井の高さ
-export const MAX_OWN = 10;          // 同じ家具は10個まで(家が広がるので)
+export const MAX_OWN = 50;          // 同じ家具は50個まで
 export const SIDE_MIN = 4, SIDE_MAX = 20;   // 部屋の一辺(マス)の下限・上限
 export const ROOM = 8;              // はじめの部屋の広さ(8×8マス)
 export const CATS = ['すべて', 'ねる・すわる', 'つくえ・しゅうのう', 'あかり', 'かべ', 'かざり'];

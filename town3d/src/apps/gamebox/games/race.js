@@ -1,7 +1,7 @@
 // チャンクレース(自分の後ろから見るカート)。左・まん中・右の3レーンに、単語かチャンクが1つずつ。
 //   左右フリックでレーンを変えて、文の順に正しいものを通る。正解で加速(連続でどんどん速く)、まちがいで1段階減速。
 //   ★の文を完成させると特殊効果(ターボ・相手スリップ・ジャンプ)。文をたくさん作ってゴールへ。
-import { surface, pointers, loop, txt, wrapTxt, banner, rr, clamp, btn, hit, COL, INK, shuffle, halves, lerp } from '../kit.js';
+import { surface, pointers, loop, txt, wrapTxt, banner, rr, clamp, btn, hit, COL, INK, shuffle, halves, lerp, speak } from '../kit.js';
 import { pickSentence, sentences, words } from '../en_data.js';
 
 const GAP = 90, FOV = 15, LMAX = 7;   // 次の看板は、いちばん奥から近づいてくる
@@ -39,7 +39,7 @@ export default {
       if (ok) {
         r.k++; r.combo++; r.L = Math.min(LMAX, r.L + 1 + (r.rush ? 1 : 0)); sfx.play(r.combo >= 3 ? 'item' : 'ok');
         if (r.k >= r.units.length) {
-          r.done++; nSen++;
+          r.done++; nSen++; if (r.i === 0 || two) speak(r.sen.en, 1);   // 文ができたら読み上げる
           if (r.star) {
             const k = ['turbo', 'slip', 'jump'][Math.floor(Math.random() * 3)], o = R[1 - r.i];
             if (k === 'turbo') r.turbo = 3.2; else if (k === 'slip') { o.L = Math.max(0, o.L - 2); o.spin = 1; o.combo = 0; } else r.z += 60;

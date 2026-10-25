@@ -14,7 +14,7 @@ export default {
     layout(); const ro = new ResizeObserver(layout); ro.observe(host.box);
     const puck = { x: W / 2, y: H / 2, vx: 0, vy: 0, trail: [] };
     const mal = [{ x: W / 2, y: bot - 70, tx: W / 2, ty: bot - 70, vx: 0, vy: 0 }, { x: W / 2, y: top + 70, tx: W / 2, ty: top + 70, vx: 0, vy: 0 }];
-    const score = [0, 0]; let pause = 1.2, flash = null, over = false, sparks = [];
+    const score = [0, 0]; let pause = 1.2, flash = null, over = false, sparks = [], stuckT = 0, popT = 0, msg = null;
     const fingers = [null, null];
     const pt = pointers(S.cv, {
       onDown: p => { const s = two ? p.side : 0; if (!fingers[s]) fingers[s] = p.id; move(p, s); },
@@ -78,6 +78,16 @@ export default {
             const sp = Math.hypot(puck.vx, puck.vy), MAX = 2000; if (sp > MAX) { puck.vx *= MAX / sp; puck.vy *= MAX / sp; }
           }
           puck.trail.push([puck.x, puck.y]); if (puck.trail.length > 10) puck.trail.shift();
+          // はしで挟まって止まったら:まずはじき出す → それでもまた挟まったら仕切り直し(挟まった側の相手からスタート)
+          const edge = puck.x < R * 1.9 || puck.x > W - R * 1.9 || puck.y < top + R * 1.9 || puck.y > bot - R * 1.9, slow = Math.hypot(puck.vx, puck.vy) * KS < 420;
+          const pinned = edge && mal.some(m => Math.hypot(m.x - puck.x, m.y - puck.y) < (R + M) * 1.25);
+          stuckT = (edge && (slow || pinned)) ? stuckT + dt : Math.max(0, stuckT - dt * 2); popT = Math.max(0, popT - dt);
+          if (stuckT > 0.9) {
+            stuckT = 0; const side = puck.y > H / 2 ? 0 : 1;
+            if (popT > 0) { resetPuck(1 - side); pause = 0.9; msg = { t: 1.4, s: '仕切り直し!' }; popT = 0; }
+            else { const a = Math.atan2(H / 2 - puck.y, W / 2 - puck.x) + (Math.random() - 0.5) * 1.2, sp = 900; puck.x += Math.cos(a) * R; puck.y += Math.sin(a) * R; puck.vx = Math.cos(a) * sp; puck.vy = Math.sin(a) * sp;
+              mal.forEach(m => { const dx = m.x - puck.x, dy = m.y - puck.y, d = Math.hypot(dx, dy) || 1; if (d < (R + M) * 2) { m.x += dx / d * M; m.y += dy / d * M; } }); popT = 4; msg = { t: 0.9, s: 'ポン!' }; sfx.play('pop'); }
+          }
         }
       }
       draw(dt);
@@ -118,6 +128,7 @@ export default {
       });
       for (let i = sparks.length - 1; i >= 0; i--) { const p = sparks[i]; p.t -= dt; if (p.t <= 0) { sparks.splice(i, 1); continue; } p.x += p.vx * dt; p.y += p.vy * dt; g.fillStyle = `rgba(255,211,107,${p.t / 0.3})`; g.beginPath(); g.arc(p.x, p.y, 3, 0, 7); g.fill(); }
       if (flash) { flash.t -= dt; if (flash.t <= 0) flash = null; else { g.fillStyle = `rgba(255,255,255,${flash.t * 0.3})`; g.fillRect(0, 0, W, H); banner(g, S, two, 'GOAL!!', { color: flash.s === 0 ? COL.p1 : COL.p2 }); } }
+      if (msg) { msg.t -= dt; if (msg.t <= 0) msg = null; else banner(g, S, two, msg.s, { size: 26, color: '#ffb400' }); }
       if (pause > 0 && !flash && !over && score[0] + score[1] === 0) banner(g, S, two, `READY…  スピード ${SPD}`, { size: 24 });
     }
     return { stop() { stop(); pt.off(); ro.disconnect(); S.cv.remove(); } };
