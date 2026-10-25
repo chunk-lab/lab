@@ -648,14 +648,17 @@ export function mount(container, opt = {}) {
     runEvent('fw:digest', { birthday: true });
     hud.say('npc:hana', 'わぁ…! 花火、きれい!', 4); setTimeout(() => hud.say('npc:sora', `${settings.name || ''}、誕生日おめでとう!`, 4), 2500);
     bdayShot = { S, t: 0, t2: 0 };   // 写真は町の時間で数える(重い端末でも、花火が開いた瞬間に撮れるように)
-    residents.avoid = { x: S.x, z: S.z + 2.4, r: 3.4 };   // ほかの住人が、写真の前に入らないように
+    residents.avoid = { x: S.x, z: S.z + 2.6, r: 5 };   // ほかの住人が、写真の前に入らないように
   }
   function birthdayPhoto(S) {
     try {
       const w = renderer.domElement.width, h = renderer.domElement.height, c = new THREE.PerspectiveCamera(62, w / h, 0.1, 600);
       me.x = S.x; me.z = S.z; me.ry = 0; me.ch.root.position.set(S.x, 0, S.z); me.ch.root.rotation.y = 0; me.ch.root.visible = true;
       c.position.set(S.x, 1.25, S.z + 4.3); c.lookAt(S.x, 9, S.z - 40);
+      const hid = residents.list.filter(r => !r.def.companion && r.ch.root.visible && Math.hypot(r.ch.root.position.x - S.x, r.ch.root.position.z - (S.z + 3)) < 7);   // 写真の前にいる住人は、うつさない
+      hid.forEach(r => { r.ch.root.visible = false; });
       renderer.render(scene, c);
+      hid.forEach(r => { r.ch.root.visible = true; });
       const img = new Image();
       img.onload = () => {
         const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0);
