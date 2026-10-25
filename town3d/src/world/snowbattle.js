@@ -10,7 +10,7 @@ const LV = g => g < 1 ? 1 : g < 2.2 ? 2 : g < 3.6 ? 3 : 4;   // つくった秒 
 const RAD = [0, 0.09, 0.14, 0.22, 0.32], DMG = [0, 1, 2, 3, 3], NAMES = ['', 'S', 'M', 'L', 'MAX'];
 const G = 9.8, HP = 3, AR = 11;
 
-export function createSnowBattle({ scene, camera, root, me, residents, meshes, collide, audio, snowFx, onEnd }) {
+export function createSnowBattle({ scene, camera, root, me, residents, meshes, collide, audio, snowFx, onEnd, faceCam }) {
   const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.75 });
   const ballGeo = new THREE.SphereGeometry(1, 14, 10);
   const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), ground = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), v1 = new THREE.Vector3(), v2 = new THREE.Vector3();
@@ -71,7 +71,8 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   function resetRound() {
     B.F.forEach(f => { f.hp = HP; f.down = false; f.grow = 0; f.making = false; f.rollT = 0; f.ch.pose = null; f.ch.rig && (f.ch.rig.body.rotation.x = 0); removeMan(f); f.ai = { t: 0.8 + Math.random(), mode: 'move', goal: null, want: 0 }; });
     B.shots.forEach(s => scene.remove(s.m)); B.shots = [];
-    spawn(); B.phase = 'count'; B.t = 2.6; showMsg(`ラウンド ${B.round}`);
+    spawn(); const f0 = B.F[0]; me.x = f0.x; me.z = f0.z; me.ry = f0.ry; faceCam?.(f0.x, f0.z, f0.ry);   // カメラも相手の方へ
+    B.phase = 'count'; B.t = 2.6; showMsg(`ラウンド ${B.round}`);
   }
   function showMsg(s) { const el = B?.hud.querySelector('.sb-msg'); if (el) el.textContent = s; }
   function end(quit) {
