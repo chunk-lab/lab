@@ -71,12 +71,12 @@ export default {
     cv.addEventListener('pointerdown', e => { if (!myTurn()) return; drag = { x0: e.clientX, y0: e.clientY, bx0: bx, pts: [[e.clientX, e.clientY, performance.now()]] }; try { cv.setPointerCapture(e.pointerId); } catch (_) { } });
     cv.addEventListener('pointermove', e => {
       if (!drag) return; drag.pts.push([e.clientX, e.clientY, performance.now()]); if (drag.pts.length > 12) drag.pts.shift();
-      const dy = e.clientY - drag.y0; if (Math.abs(dy) < 18) bx = clamp(drag.bx0 + (e.clientX - drag.x0) * 0.004, -LW / 2 + BR, LW / 2 - BR);   // 横:立つ位置
+      const dy = e.clientY - drag.y0; if (Math.abs(dy) < 18) bx = clamp(drag.bx0 - (e.clientX - drag.x0) * 0.004, -LW / 2 + BR, LW / 2 - BR);   // 横:立つ位置
     });
     const upH = e => {
       if (!drag) return; const d = drag; drag = null; const P = d.pts, a = P[0], z = P[P.length - 1], dt = Math.max(16, z[2] - a[2]), dy = a[1] - z[1];
       if (dy < 40) return;   // 上へのフリックで投げる
-      const sp = clamp(dy / dt * 9, 3, 11), ang = clamp(Math.atan2(z[0] - a[0], dy) * 0.35, -0.1, 0.1), q = P[Math.max(0, P.length - 3)], spin = clamp((z[0] - q[0]) / 40, -1, 1);
+      const sp = clamp(4.5 + dy / dt * 5, 5, 11), ang = clamp(-Math.atan2(z[0] - a[0], dy) * 0.35, -0.1, 0.1), q = P[Math.max(0, P.length - 3)], spin = clamp(-(z[0] - q[0]) / 40, -1, 1);   // 画面の右 = 世界の -x
       throwBall(bx, sp, ang, spin);
     };
     cv.addEventListener('pointerup', upH); cv.addEventListener('pointercancel', () => (drag = null));
@@ -90,7 +90,7 @@ export default {
       if (!B) return;
       const n = 6, h = dt / n;
       for (let k = 0; k < n; k++) {
-        if (!B.gutter) { B.vx += B.spin * 0.9 * h * Math.min(1, B.z / 8); }
+        if (!B.gutter) { B.vx += B.spin * 0.35 * h * Math.min(1, B.z / 8); }
         B.x += B.vx * h; B.z += B.vz * h;
         if (!B.gutter && Math.abs(B.x) > LW / 2 - BR * 0.4) { B.gutter = true; B.x = Math.sign(B.x) * (LW / 2 + 0.1); B.vx = 0; sfx.play('wall'); }
         if (!B.gutter) for (const p of pins) { if (p.gone) continue; const dx = p.x - B.x, dz = p.z - B.z, d = Math.hypot(dx, dz); if (d < BR + PR && d > 0) { const nx = dx / d, nz = dz / d, rv = (B.vx - p.vx) * nx + (B.vz - p.vz) * nz; if (rv > 0) { p.vx += nx * rv * 1.7; p.vz += nz * rv * 1.7; B.vx -= nx * rv * 0.25; B.vz -= nz * rv * 0.25; if (!p.down) { p.down = true; p.td = Math.atan2(nx, nz); sfx.play('hit', 0.6); } } } }
