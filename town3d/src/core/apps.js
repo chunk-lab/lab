@@ -5,7 +5,7 @@
 //   script … 別ファイルの JS を読み込み、window[global].mount(要素, options) を呼ぶ(ぷにチャンク型)
 //   iframe … 別の HTML をそのまま入れる。postMessage で町とやり取りする(sdk/town-sdk.js)
 
-export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [], features = [], gems = null, house = null, photo = null, paramsFor = null }) {
+export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [], features = [], gems = null, house = null, photo = null, paramsFor = null, member = null, dictUrl = null }) {
   const registry = new Map();
   const loadedScripts = new Map();
   let current = null;
@@ -27,6 +27,8 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
       wallet: { get: wallet.get, add: (n, why) => wallet.add(n, def.id + (why ? ':' + why : '')) },
       gems,    // ダイヤ {get, spend}。組み込み先がなければ null(その場合コインだけで広げる)
       house,   // 自宅の広げ方の値段
+      member,  // 会員 {paid()}。組み込み先がなければ null(無料会員あつかい)
+      dictUrl, // 辞書データの場所(英語ゲーム用)
       photo,   // 写真の枠の設定(はじめの枚数・最大・ダイヤの値段)
       features: features.slice(),   // 組み込み先(チャンクタウン)が用意している機能。'study'＝勉強部屋を開ける
       emit: (name, data) => bus.emit('app:event', { app: def.id, name, data }),

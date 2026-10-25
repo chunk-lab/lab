@@ -50,6 +50,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       wallet: core.wallet,   // コインは2Dと共通
       gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house') },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
       house: ECON.house,
+      member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
+      dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
       features: ['study'],   // あなたの家に「勉強部屋」ボタンを出す

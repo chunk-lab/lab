@@ -107,7 +107,7 @@ export function mount(container, opt = {}) {
 
   const hud = createHud(root, bus);
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
-  const appHost = createAppHost({ paramsFor: (id, p) => id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null });
+  const appHost = createAppHost({ paramsFor: (id, p) => id === 'gamebox' || id === 'snowfight' ? { ...(p || {}), season: curSeason() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: opt.member || null, dictUrl: opt.dictUrl || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   hud.setCoins(wallet.get(), gemsNow());
@@ -677,7 +677,7 @@ export function mount(container, opt = {}) {
         if (score < best) { best = score; focus = o; }
       };
       for (const r of residents.list) if (r.ch.root.visible) consider({ kind: 'npc', ref: r, label: `${r.def.name}と話す` }, r.ch.root.position.x, r.ch.root.position.z, 2.3);
-      for (const it of city.interact) consider(it, it.x, it.z, it.r);
+      for (const it of city.interact) if (!it.season || it.season === seasons.season) consider(it, it.x, it.z, it.r);
     }
     if (!focus && !seat && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = sn ? { kind: 'snowman', idx: sn.i, label: '⛄ こわす' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
     if (focus && focus.kind === 'npc') { const n = nearNpcs().length; if (n >= 2) focus.label = `ちかくの人と話す(${n}人)`; }

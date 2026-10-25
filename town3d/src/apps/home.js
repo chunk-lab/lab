@@ -69,7 +69,7 @@ export const shopApp = {
             <div style="display:flex;gap:8px"><button data-v="list" style="${btn('#d9d2e3', ink)};flex:1">もどる</button><button data-pay style="${btn(n && short <= 0 ? undefined : '#d9d2e3')};flex:2;${n && short <= 0 ? '' : 'cursor:default'}">まとめて買う</button></div></div>`;
         return;
       }
-      box.innerHTML = head('ショップ', msg || '気に入った家具を、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけ。') + `<div style="padding:0 16px 6px"><button data-fish style="border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;background:#e3f2ff;color:#3d6a8f">🎣 つり道具はこちら</button></div>`
+      box.innerHTML = head('ショップ', msg || '気に入った家具を、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけ。') + `<div style="padding:0 16px 6px"><button data-fish style="border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;background:#e3f2ff;color:#3d6a8f">🎣 つり道具はこちら</button> <button data-gbox style="border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;background:#f3e9ff;color:#6b4a9a">🎮 ゲーム機(チャンクボックス)</button></div>`
         + `<div style="display:flex;gap:6px;overflow-x:auto;padding:0 16px 8px">${CATS.map(c => `<button data-c="${c}" style="${btn(c === cat ? undefined : '#ece7f3', c === cat ? '#fff' : ink)};padding:6px 12px;font-size:13px">${c}</button>`).join('')}</div>
         <div class="sc" style="flex:1;overflow:auto;padding:4px 16px 12px"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">${ITEMS.filter(it => cat === 'すべて' || it.cat === cat).map(it => {
           const own = furn.owned(it.id);
@@ -84,6 +84,7 @@ export const shopApp = {
     };
     box.onclick = e => {
       if (e.target.closest('[data-fish]')) { ctx.open('fishing', { tab: 'shop' }); return; }
+      if (e.target.closest('[data-gbox]')) { ctx.open('gamebox'); return; }
       if (e.target.closest('[data-home]')) { ctx.open('home'); return; }
       const ch = e.target.closest('[data-c]');
       if (ch) { cat = ch.dataset.c; draw(); return; }
@@ -227,7 +228,7 @@ export const homeApp = {
       planUI();
       const p = placed.find(x => x.uid === selUid), k = p && kindOf(p.id);
       tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ(半マスずつ)。${k === 'wall' ? 'かべをタップでも動くよ。' : 'ほかの家具の上にも置けるよ。'}` : (Object.keys(furn.inv()).length ? 'かぐをタップするとえらべるよ。下の一覧から出すこともできるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
-      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button>` + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
+      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button><button data-a="gbox" style="${btn('linear-gradient(160deg,#b9d8ff,#8fbaf0)')}">🎮 ゲーム機</button>` + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
     }
@@ -276,6 +277,7 @@ export const homeApp = {
       if (a === 'walk') { enterWalk(); return; }
       if (a === 'album') { ctx.open('album', { from: 'home' }); return; }
       if (a === 'shop') { ctx.open('shop', { from: 'home' }); return; }   // ネットショッピング(家からそのままショップへ)
+      if (a === 'gbox') { ctx.open('gamebox', { from: 'home' }); return; }   // チャンクボックス(英語対戦・あそびゲーム)
       if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(チャンクタウン)の勉強部屋を開く
       if (!a || !p) return;
       if (a === 'off') selUid = null;
