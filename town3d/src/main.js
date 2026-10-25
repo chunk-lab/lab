@@ -112,7 +112,7 @@ export function mount(container, opt = {}) {
   const me = { id: storage.get('pid') || 'p' + Math.random().toString(36).slice(2, 10), x: 0, z: 13, ry: Math.PI, speed: 0, ch: null };
   // 3Dの雪合戦(町のその場で 2×2)
   const battle = createSnowBattle({
-    faceCam: (x, z, ry) => { cam.yaw = ry + Math.PI; cam.x = x; cam.z = z; },
+    faceCam: (x, z, ry) => { cam.yaw = ry + Math.PI; cam.x = x; cam.z = z; cam.pitch = 0.8; cam.dist = 11.5; },   // 引いた斜め上から
     scene, camera, root, me, residents, meshes: city.meshes, collide: (x, z) => collide(x, z), audio, snowFx: (p, n, s) => snow.fx(p, n, s),
     onEnd({ win, quit, opp }) {
       if (quit) { hud.toast('雪合戦をやめた'); return; }

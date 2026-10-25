@@ -8,7 +8,7 @@ import * as THREE from 'three';
 
 const LV = g => g < 1 ? 1 : g < 2.2 ? 2 : g < 3.6 ? 3 : 4;   // つくった秒 → 大きさ
 const RAD = [0, 0.09, 0.14, 0.22, 0.32], DMG = [0, 1, 2, 3, 3], NAMES = ['', 'S', 'M', 'L', 'MAX'];
-const G = 9.8, HP = 3, AR = 11;
+const G = 9.8, AR = 11, MAN_MAX = 3;   // ライフは はじめる前に 1〜10 で選ぶ(はじめは5)
 
 export function createSnowBattle({ scene, camera, root, me, residents, meshes, collide, audio, snowFx, onEnd, faceCam }) {
   const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.75 });
@@ -28,7 +28,13 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
 .sb-mk small{display:block;font-size:10px;margin-top:2px}
 .sb-man,.sb-roll{position:absolute;width:62px;height:62px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #c9bfd8,0 6px 12px #0003;font-size:26px}
 .sb-man{right:118px;bottom:calc(150px + env(safe-area-inset-bottom,0px))}.sb-roll{right:118px;bottom:calc(76px + env(safe-area-inset-bottom,0px))}
-.sb-man[disabled],.sb-roll[disabled]{opacity:.45}
+.sb-man[disabled],.sb-roll[disabled]{opacity:.45}.sb-man small{display:block;font-size:10px}
+.sb-setup{position:absolute;left:50%;top:30%;transform:translateX(-50%);background:#fffffff2;border-radius:20px;padding:14px 18px;text-align:center;pointer-events:auto;box-shadow:0 6px 20px #0003;min-width:220px}
+.sb-setup b{font-size:17px}.sb-setup small{display:block;color:#8d7f9e;margin:4px 0 10px}
+.sb-hp{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 2px;font-size:20px;font-weight:900}
+.sb-hp button{width:44px;height:44px;border-radius:50%;background:#f3e9ff;font-size:18px}
+.sb-go{background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;border-radius:999px;padding:10px 28px;font-size:16px}
+.sb-tipx{position:absolute;left:0;right:0;top:46%;text-align:center;font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 4px #000c;pointer-events:none}
 .sb-quit{position:absolute;left:10px;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:#fffffff0;border-radius:999px;padding:8px 14px;font-size:12px;box-shadow:0 2px 6px #0002}
 .sb-msg{position:absolute;left:0;right:0;top:34%;text-align:center;font-size:34px;font-weight:900;color:#fff;text-shadow:0 3px 0 #5a4a6b,0 0 12px #0006;pointer-events:none}
 .sb-tip{position:absolute;left:0;right:0;bottom:calc(196px + env(safe-area-inset-bottom,0px));text-align:center;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 3px #000a;pointer-events:none}`;
@@ -41,7 +47,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   }
   // ---- 人 ----
   function fighter(kind, ch, team, name, r, lv) {
-    return { kind, ch, team, name, r, lv, x: 0, z: 0, ry: 0, hp: HP, down: false, grow: 0, making: false, rollT: 0, rollCd: 0, rdx: 0, rdz: 0, throwT: 0, cd: 0, man: null, ai: { t: 0.5, mode: 'move', goal: null, want: 0 }, ball: null };
+    return { kind, ch, team, name, r, lv, x: 0, z: 0, ry: 0, hp: 5, down: false, grow: 0, making: false, rollT: 0, rollCd: 0, rdx: 0, rdz: 0, throwT: 0, cd: 0, men: [], ai: { t: 0.5, mode: 'move', goal: null, want: 0 }, ball: null };
   }
   const handPos = f => { if (!f.ch.rig || f.ch.rig.fake) return new THREE.Vector3(f.x + Math.sin(f.ry) * 0.45, 0.75, f.z + Math.cos(f.ry) * 0.45); f.ch.root.updateMatrixWorld(true); return f.ch.rig.arms[1].localToWorld(v1.set(0, -0.42, 0.06)).clone(); };
   const headTop = (f, r) => { if (!f.ch.rig || f.ch.rig.fake) return new THREE.Vector3(f.x, 1.2 + r, f.z); f.ch.root.updateMatrixWorld(true); return f.ch.rig.head.localToWorld(v1.set(0, 0.3 + r, 0)).clone(); };
@@ -62,18 +68,30 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     const line = new THREE.Mesh(new THREE.PlaneGeometry(AR * 2, 0.12), new THREE.MeshBasicMaterial({ color: 0x9fd0ff, transparent: true, opacity: 0.5, side: THREE.DoubleSide }));
     line.rotation.x = -Math.PI / 2; line.rotation.z = -Math.atan2(az, ax) + Math.PI / 2; line.position.set(C.x, 0.05, C.z); scene.add(line); B.objs.push(line);
     [-1, 1].forEach(s => { const m = new THREE.Mesh(new THREE.SphereGeometry(0.9, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2), mat); m.scale.set(1.3, 0.75, 0.8); m.rotation.y = Math.atan2(ax, az); m.position.set(C.x - az * 3.2 * s, 0, C.z + ax * 3.2 * s); m.castShadow = true; scene.add(m); B.objs.push(m); B.mounds.push({ m, hp: 6, x: m.position.x, z: m.position.z, R: 1.0 }); });
-    bindHud(); resetRound(); root.classList.add('sb-on'); audio?.play?.('open');
+    bindHud(); root.classList.add('sb-on'); audio?.play?.('open');
+    // はじめる前に:ライフ(1〜10)
+    let hp0 = 5; try { hp0 = Math.min(10, Math.max(1, +localStorage.getItem('town:sb:hp') || 5)); } catch (e) { }
+    B.maxHp = hp0; B.phase = 'setup'; spawn(); const f0 = B.F[0]; me.x = f0.x; me.z = f0.z; me.ry = f0.ry; faceCam?.(f0.x, f0.z, f0.ry);
+    const pn = document.createElement('div'); pn.className = 'sb-setup';
+    const drawP = () => { pn.innerHTML = `<b>⛄ 雪合戦 2対2</b><div class="sb-hp"><button data-d="-1">◀</button><span>ライフ ${B.maxHp}</span><button data-d="1">▶</button></div><small>小さい玉=1・中=2・大きい玉=3 へる</small><button class="sb-go">はじめる!</button>`; };
+    drawP(); B.hud.appendChild(pn);
+    pn.addEventListener('pointerdown', e => e.stopPropagation());
+    pn.addEventListener('click', e => {
+      const d = e.target.closest('[data-d]'); if (d) { B.maxHp = Math.min(10, Math.max(1, B.maxHp + +d.dataset.d)); drawP(); return; }
+      if (e.target.closest('.sb-go')) { try { localStorage.setItem('town:sb:hp', B.maxHp); } catch (_) { } pn.remove(); resetRound(); }
+    });
   }
   function spawn() {
     const { C, ax, az } = B, px = -az, pz = ax;
     B.F.forEach(f => { const i = B.F.filter(o => o.team === f.team).indexOf(f), s = f.team ? 1 : -1, side = i ? 1.8 : -1.8; f.x = C.x + ax * 7 * s + px * side; f.z = C.z + az * 7 * s + pz * side; f.ry = Math.atan2(-ax * s, -az * s); });
   }
   function resetRound() {
-    B.F.forEach(f => { f.hp = HP; f.down = false; f.grow = 0; f.making = false; f.rollT = 0; f.ch.pose = null; f.ch.rig && (f.ch.rig.body.rotation.x = 0); removeMan(f); f.ai = { t: 0.8 + Math.random(), mode: 'move', goal: null, want: 0 }; });
+    B.F.forEach(f => { f.hp = B.maxHp; f.down = false; f.grow = 0; f.making = false; f.rollT = 0; f.ch.pose = null; f.ch.rig && (f.ch.rig.body.rotation.x = 0); removeMan(f); f.ai = { t: 0.8 + Math.random(), mode: 'move', goal: null, want: 0 }; });
     B.shots.forEach(s => scene.remove(s.m)); B.shots = [];
     spawn(); const f0 = B.F[0]; me.x = f0.x; me.z = f0.z; me.ry = f0.ry; faceCam?.(f0.x, f0.z, f0.ry);   // カメラも相手の方へ
     B.phase = 'count'; B.t = 2.6; showMsg(`ラウンド ${B.round}`);
   }
+  function showTip(t) { if (!B) return; let el = B.hud.querySelector('.sb-tipx'); if (!el) { el = document.createElement('div'); el.className = 'sb-tipx'; B.hud.appendChild(el); } el.textContent = t; clearTimeout(el._t); el._t = setTimeout(() => (el.textContent = ''), 1800); }
   function showMsg(s) { const el = B?.hud.querySelector('.sb-msg'); if (el) el.textContent = s; }
   function end(quit) {
     const win = !quit && B.wins[0] > B.wins[1];
@@ -94,7 +112,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     const up = () => { if (!d0 || !B) return; d0 = null; const f = B.F[0]; f.making = false; if (B.pull) { const p = pullTarget(); B.pull = null; if (p && canAct(f)) lob(f, p); } };
     mk.addEventListener('pointerup', up); mk.addEventListener('pointercancel', up); mk.addEventListener('contextmenu', e => e.preventDefault());
     H.querySelector('.sb-man').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); const f = B?.F[0]; if (f && canAct(f)) buildMan(f); });
-    H.querySelector('.sb-roll').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); const f = B?.F[0]; if (f && canAct(f)) roll(f, B.moveDir); });
+    H.querySelector('.sb-roll').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); const f = B?.F[0]; if (f && canAct(f)) roll(f); });
     H.querySelector('.sb-quit').addEventListener('click', () => end(true));
   }
   const canAct = f => B && B.phase === 'play' && !f.down && f.rollT <= 0;
@@ -129,17 +147,18 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   }
   function lob(f, to) { const lv = Math.max(2, LV(f.grow)), from = f.ball && f.ball.visible ? f.ball.position.clone() : handPos(f), d = Math.hypot(to.x - from.x, to.z - from.z); to.y = 0; launch(f, from, to, 0.9 + d / 16, lv); }
   function buildMan(f) {
-    removeMan(f);
+    if (f.men.length >= MAN_MAX) { if (f.kind === 'me') showTip('雪だるまは3つまで。こわされたら、また作れるよ'); return false; }
     const g = new THREE.Group(), s1 = new THREE.Mesh(ballGeo, mat), s2 = new THREE.Mesh(ballGeo, mat);
     s1.scale.setScalar(0.42); s1.position.y = 0.38; s2.scale.setScalar(0.28); s2.position.y = 0.98; g.add(s1, s2);
     const eye = new THREE.MeshBasicMaterial({ color: 0x2e2a3d }); [-1, 1].forEach(k => { const e = new THREE.Mesh(ballGeo, eye); e.scale.setScalar(0.03); e.position.set(k * 0.09, 1.04, 0.25); g.add(e); });
     const nose = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.16, 8), new THREE.MeshStandardMaterial({ color: 0xff9a4a })); nose.rotation.x = Math.PI / 2; nose.position.set(0, 0.98, 0.32); g.add(nose);
     const x = f.x + Math.sin(f.ry) * 1.2, z = f.z + Math.cos(f.ry) * 1.2; g.position.set(x, 0, z); g.rotation.y = f.ry + Math.PI; g.scale.setScalar(0.01);
-    scene.add(g); f.man = { g, hp: 3, x, z, R: 0.45, t: 0 }; B.men.push(f.man); audio?.play?.('open');
+    const m = { g, hp: 3, x, z, R: 0.45, t: 0, owner: f }; f.men.push(m); B.men.push(m); audio?.play?.('open'); return true;
   }
-  function removeMan(f) { if (!f.man) return; scene.remove(f.man.g); if (B) B.men = B.men.filter(m => m !== f.man); f.man = null; }
+  function killMan(m) { scene.remove(m.g); B.men = B.men.filter(x => x !== m); m.owner.men = m.owner.men.filter(x => x !== m); }
+  function removeMan(f) { f.men.slice().forEach(killMan); }
   function roll(f, dir) {
-    if (f.rollCd > 0) return; let dx = dir ? dir.x : -Math.sin(f.ry), dz = dir ? dir.z : -Math.cos(f.ry); const L = Math.hypot(dx, dz) || 1;
+    if (f.rollCd > 0) return; let dx = dir ? dir.x : Math.sin(f.ry), dz = dir ? dir.z : Math.cos(f.ry);   // ふつうは向いている方へ const L = Math.hypot(dx, dz) || 1;
     f.rdx = dx / L; f.rdz = dz / L; f.rollT = 0.42; f.rollCd = 1.4; f.making = false; audio?.play?.('wave');
   }
   function hitF(f, lv) {
@@ -162,11 +181,11 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     if (A.t > 0) return A.goal;
     A.t = [0, 0.9, 0.65, 0.45][f.lv] * (0.7 + Math.random() * 0.6);
     const r = Math.random();
-    if (!f.man && r < 0.12) { f.ry = Math.atan2(tgt.x - f.x, tgt.z - f.z); buildMan(f); return null; }
+    if (f.men.length < MAN_MAX && r < 0.12) { f.ry = Math.atan2(tgt.x - f.x, tgt.z - f.z); buildMan(f); return null; }
     if (f.grow === 0 && r < 0.45) { A.want = [1.05, 2.3, 3.7][Math.random() < 0.15 ? 2 : Math.random() < 0.5 ? 1 : 0]; f.making = true; A.goal = null; return null; }
     if (f.cd <= 0 && Math.hypot(tgt.x - f.x, tgt.z - f.z) < 15 && r < 0.85) {
       const err = [0, 1.3, 0.8, 0.4][f.lv], lead = 0.5, to = new THREE.Vector3(tgt.x + (tgt.vx || 0) * lead + (Math.random() - 0.5) * err * 2, 1.0, tgt.z + (tgt.vz || 0) * lead + (Math.random() - 0.5) * err * 2);
-      const behind = B.men.some(m => m !== f.man && Math.hypot(m.x - tgt.x, m.z - tgt.z) < 1.6);
+      const behind = B.men.some(m => !f.men.includes(m) && Math.hypot(m.x - tgt.x, m.z - tgt.z) < 1.6);
       throwAt(f, to, behind && f.grow >= 1); return null;
     }
     // うろうろ:相手から6〜10m
@@ -185,13 +204,13 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     const { C } = B;
     for (const f of B.F) {
       const isMe = f.kind === 'me';
-      if (isMe) { if (B.phase === 'count') { me.x = f.x; me.z = f.z; me.ry = f.ry; } else { f.x = me.x; f.z = me.z; if (f.throwT <= 0) f.ry = me.ry; } }
+      if (isMe) { if (B.phase === 'count' || B.phase === 'setup') { me.x = f.x; me.z = f.z; me.ry = f.ry; } else { f.x = me.x; f.z = me.z; if (f.throwT <= 0) f.ry = me.ry; } }
       const ox = f.x, oz = f.z;
       f.cd = Math.max(0, f.cd - dt); f.rollCd = Math.max(0, f.rollCd - dt); f.throwT = Math.max(0, f.throwT - dt);
       if (f.making && !f.down && B.phase === 'play') f.grow = Math.min(4.2, f.grow + dt);
       let speed = 0;
       if (!f.down && B.phase === 'play') {
-        if (f.rollT > 0) { f.rollT -= dt; f.x += f.rdx * 11 * dt; f.z += f.rdz * 11 * dt; }
+        if (f.rollT > 0) { f.rollT -= dt; f.x += f.rdx * 11 * dt; f.z += f.rdz * 11 * dt; f.ry = Math.atan2(f.rdx, f.rdz); for (const m of B.men.slice()) if (Math.hypot(m.x - f.x, m.z - f.z) < m.R + 0.5) { killMan(m); splash(new THREE.Vector3(m.x, 0.6, m.z), 3); audio?.play?.('close'); } }   // 転がってぶつかると雪だるまをつぶす
         else if (!isMe) {
           const goal = npc(f, dt);
           if (goal && !f.making) { const dx = goal.x - f.x, dz = goal.z - f.z, d = Math.hypot(dx, dz); if (d > 0.3) { const sp = 3.4 * (LV(f.grow) >= 3 && f.grow > 0 ? 0.7 : 1); f.x += dx / d * sp * dt; f.z += dz / d * sp * dt; speed = sp; f.ry = Math.atan2(dx, dz); } }
@@ -214,7 +233,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
       const s = B.shots[i]; s.life -= dt; s.v.y -= G * dt; s.p.addScaledVector(s.v, dt); s.m.position.copy(s.p); s.m.rotation.x += dt * 9;
       let hit = false;
       for (const f of B.F) if (f.team !== s.team && !f.down && Math.hypot(f.x - s.p.x, f.z - s.p.z) < 0.38 + RAD[s.lv] && s.p.y > 0 && s.p.y < 1.75) { if (hitF(f, s.lv)) { hit = true; snowFx?.(s.p.clone(), v1.set(s.v.x, 0, s.v.z).normalize().negate().clone(), Math.min(1, s.lv / 3)); } break; }
-      if (!hit) for (const m of [...B.men, ...B.mounds]) if (m.hp > 0 && Math.hypot(m.x - s.p.x, m.z - s.p.z) < m.R + RAD[s.lv] && s.p.y < (m.g ? 1.2 : 0.75)) { m.hp -= DMG[s.lv]; hit = true; splash(s.p, s.lv); audio?.play?.('close'); if (m.hp <= 0) { if (m.g) { scene.remove(m.g); B.men = B.men.filter(x => x !== m); B.F.forEach(f => { if (f.man === m) f.man = null; }); } else m.m.visible = false; } break; }
+      if (!hit) for (const m of [...B.men, ...B.mounds]) if (m.hp > 0 && Math.hypot(m.x - s.p.x, m.z - s.p.z) < m.R + RAD[s.lv] && s.p.y < (m.g ? 1.2 : 0.75)) { m.hp -= DMG[s.lv]; hit = true; splash(s.p, s.lv); audio?.play?.('close'); if (m.hp <= 0) { if (m.g) killMan(m); else m.m.visible = false; } break; }
       if (!hit && s.p.y <= 0.03) { hit = true; splash(s.p, s.lv); if (s.lv === 4) burst(s); }
       if (hit || s.life <= 0) { scene.remove(s.m); B.shots.splice(i, 1); }
     }
@@ -266,13 +285,14 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     else { arms[0].rotation.x = arms[1].rotation.x = -2.95; arms[0].rotation.z = 0.32; arms[1].rotation.z = -0.32; b.position.copy(headTop(f, R)); }   // 大きいのは頭の上で両手
   }
   function drawHud() {
-    const H = B.hud, row = tm => B.F.filter(f => f.team === tm).map(f => `<span class="sb-p ${f.down ? 'down' : ''}" style="color:${tm ? '#3b7fc4' : '#d4517c'}">${f.name} <b>${'❤️'.repeat(f.hp)}${'🤍'.repeat(HP - f.hp)}</b></span>`).join('');
+    const H = B.hud, row = tm => B.F.filter(f => f.team === tm).map(f => `<span class="sb-p ${f.down ? 'down' : ''}" style="color:${tm ? '#3b7fc4' : '#d4517c'}">${f.name} <b>${'❤️'.repeat(f.hp)}${'🤍'.repeat(B.maxHp - f.hp)}</b></span>`).join('');
     const key = B.F.map(f => f.hp + (f.down ? 'd' : '')).join() + B.wins.join();
     if (H.dataset.k !== key) { H.dataset.k = key; H.querySelector('.t0').innerHTML = row(0) + `<span class="sb-p">${B.wins[0]}勝</span>`; H.querySelector('.t1').innerHTML = `<span class="sb-p">${B.wins[1]}勝</span>` + row(1); }
     const f = B.F[0], lv = f.grow > 0 ? LV(f.grow) : 0, mk = H.querySelector('.sb-mk');
     const lab = f.making ? `${NAMES[Math.max(1, LV(f.grow))]}…` : lv ? `${NAMES[lv]} 持ってる` : '長おし/引く';
     if (mk.dataset.l !== lab) { mk.dataset.l = lab; mk.innerHTML = `❄️<small>${lab}</small>`; }
     H.querySelector('.sb-roll').disabled = f.rollCd > 0;
+    const mb = H.querySelector('.sb-man'), ml = `⛄<small>${f.men.length}/${MAN_MAX}</small>`; if (mb.dataset.l !== ml) { mb.dataset.l = ml; mb.innerHTML = ml; mb.disabled = f.men.length >= MAN_MAX; }
   }
   return {
     get active() { return !!B; },
