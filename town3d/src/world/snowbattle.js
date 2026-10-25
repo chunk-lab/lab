@@ -43,13 +43,13 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   function fighter(kind, ch, team, name, r, lv) {
     return { kind, ch, team, name, r, lv, x: 0, z: 0, ry: 0, hp: HP, down: false, grow: 0, making: false, rollT: 0, rollCd: 0, rdx: 0, rdz: 0, throwT: 0, cd: 0, man: null, ai: { t: 0.5, mode: 'move', goal: null, want: 0 }, ball: null };
   }
-  const handPos = f => { f.ch.root.updateMatrixWorld(true); return f.ch.rig.arms[1].localToWorld(v1.set(0, -0.42, 0.06)).clone(); };
-  const headTop = (f, r) => { f.ch.root.updateMatrixWorld(true); return f.ch.rig.head.localToWorld(v1.set(0, 0.3 + r, 0)).clone(); };
+  const handPos = f => { if (!f.ch.rig || f.ch.rig.fake) return new THREE.Vector3(f.x + Math.sin(f.ry) * 0.45, 0.75, f.z + Math.cos(f.ry) * 0.45); f.ch.root.updateMatrixWorld(true); return f.ch.rig.arms[1].localToWorld(v1.set(0, -0.42, 0.06)).clone(); };
+  const headTop = (f, r) => { if (!f.ch.rig || f.ch.rig.fake) return new THREE.Vector3(f.x, 1.2 + r, f.z); f.ch.root.updateMatrixWorld(true); return f.ch.rig.head.localToWorld(v1.set(0, 0.3 + r, 0)).clone(); };
   // ---- はじめる ----
   function start(opp, lvOpp = 2) {
     if (B) return;
-    const vis = residents.list.filter(r => r !== opp && !r.hidden).sort((a, b) => Math.hypot(a.ch.root.position.x - me.x, a.ch.root.position.z - me.z) - Math.hypot(b.ch.root.position.x - me.x, b.ch.root.position.z - me.z));
-    const pool = vis.length >= 2 ? vis : residents.list.filter(r => r !== opp);
+    const vis = residents.list.filter(r => r !== opp && !r.hidden && r.ch.rig).sort((a, b) => Math.hypot(a.ch.root.position.x - me.x, a.ch.root.position.z - me.z) - Math.hypot(b.ch.root.position.x - me.x, b.ch.root.position.z - me.z));
+    const pool = vis.length >= 2 ? vis : residents.list.filter(r => r !== opp && r.ch.rig);
     const ally = pool[0], partner = pool[1];
     const C = new THREE.Vector3((me.x + opp.ch.root.position.x) / 2, 0, (me.z + opp.ch.root.position.z) / 2);
     let ax = opp.ch.root.position.x - me.x, az = opp.ch.root.position.z - me.z; const L = Math.hypot(ax, az) || 1; ax /= L; az /= L;
@@ -69,14 +69,14 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     B.F.forEach(f => { const i = B.F.filter(o => o.team === f.team).indexOf(f), s = f.team ? 1 : -1, side = i ? 1.8 : -1.8; f.x = C.x + ax * 7 * s + px * side; f.z = C.z + az * 7 * s + pz * side; f.ry = Math.atan2(-ax * s, -az * s); });
   }
   function resetRound() {
-    B.F.forEach(f => { f.hp = HP; f.down = false; f.grow = 0; f.making = false; f.rollT = 0; f.ch.pose = null; f.ch.rig.body.rotation.x = 0; removeMan(f); f.ai = { t: 0.8 + Math.random(), mode: 'move', goal: null, want: 0 }; });
+    B.F.forEach(f => { f.hp = HP; f.down = false; f.grow = 0; f.making = false; f.rollT = 0; f.ch.pose = null; f.ch.rig && (f.ch.rig.body.rotation.x = 0); removeMan(f); f.ai = { t: 0.8 + Math.random(), mode: 'move', goal: null, want: 0 }; });
     B.shots.forEach(s => scene.remove(s.m)); B.shots = [];
     spawn(); B.phase = 'count'; B.t = 2.6; showMsg(`ラウンド ${B.round}`);
   }
   function showMsg(s) { const el = B?.hud.querySelector('.sb-msg'); if (el) el.textContent = s; }
   function end(quit) {
     const win = !quit && B.wins[0] > B.wins[1];
-    B.F.forEach(f => { removeMan(f); f.ch.pose = null; f.ch.rig.body.rotation.x = 0; if (f.ball) { scene.remove(f.ball); f.ball = null; } if (f.r) { f.r.battle = false; f.r.goal = { place: null }; f.r.path = []; f.r.ch.root.position.set(f.x, 0, f.z); } });
+    B.F.forEach(f => { removeMan(f); f.ch.pose = null; f.ch.rig && (f.ch.rig.body.rotation.x = 0); if (f.ball) { scene.remove(f.ball); f.ball = null; } if (f.r) { f.r.battle = false; f.r.goal = { place: null }; f.r.path = []; f.r.ch.root.position.set(f.x, 0, f.z); } });
     B.shots.forEach(s => scene.remove(s.m)); B.objs.forEach(o => scene.remove(o)); B.hud.remove(); if (B.preview) scene.remove(B.preview.line, B.preview.ring);
     root.classList.remove('sb-on');
     const opp = B.F[2]; B = null; onEnd?.({ win, quit, opp: opp.r });
@@ -247,6 +247,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   }
   // ---- ポーズと手の雪玉 ----
   function pose(f, dt) {
+    if (!f.ch.rig) { f.ch.rig = { arms: [new THREE.Object3D(), new THREE.Object3D()], body: new THREE.Object3D(), head: new THREE.Object3D(), fake: true }; }   // 腕のない住人(チャンクくん)
     const { arms, body } = f.ch.rig, lv = f.grow > 0 ? LV(f.grow) : 0, R = RAD[lv] * (f.making ? 0.6 + 0.4 * ((f.grow % 1)) : 1);
     if (f.down) { if (f.ball) f.ball.visible = false; return; }
     if (f.rollT > 0) { body.rotation.x = (1 - f.rollT / 0.42) * Math.PI * 2; if (f.ball) f.ball.visible = false; return; }
