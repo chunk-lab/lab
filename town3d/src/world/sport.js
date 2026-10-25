@@ -122,7 +122,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   }
   function drawHud() {
     const H = S.C.holes[S.i], dist = Math.hypot(H.goal[0] - S.pos.x, H.goal[1] - S.pos.z), tot = S.strokes.reduce((a, b) => a + b, 0);
-    S.hud.querySelector('.sp-top').innerHTML = `<span><b>${S.kind === 'golf' ? '⛳' : '🥏'} ホール ${S.i + 1}/${HOLES}</b> PAR ${H.par}</span><span>${S.n}${S.kind === 'golf' ? '打' : '投'}目まで ・ のこり ${Math.round(dist)}m</span><span>合計 ${tot}</span>`;
+    S.hud.querySelector('.sp-top').innerHTML = `<span><b>${S.kind === 'golf' ? '⛳' : '🥏'} ホール ${S.i + 1}/${HOLES}</b> PAR ${H.par}</span><span>${S.n + 1}${S.kind === 'golf' ? '打' : '投'}目 ・ のこり ${Math.round(dist)}m</span><span>合計 ${tot}</span>`;
     S.hud.querySelector('.sp-clubs').innerHTML = S.kind === 'golf'
       ? CLUBS.map((c, i) => `<button data-c="${i}" class="${S.club === i ? 'on' : ''}">${c.name}<br><small>〜${c.d}m</small></button>`).join('')
       : CURVES.map(([l, v]) => `<button data-c="${v}" class="${S.curve === v ? 'on' : ''}">${l}</button>`).join('');
