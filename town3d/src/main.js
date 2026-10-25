@@ -327,12 +327,13 @@ export function mount(container, opt = {}) {
   }));
   { let d0 = null; const cv = renderer.domElement;   // 雪玉を持っているとき:画面をタップした所へ投げる
     cv.addEventListener('pointerdown', e => { d0 = { x: e.clientX, y: e.clientY, t: performance.now() }; });
-    cv.addEventListener('pointerup', e => {
+    const onUp = e => {   // 町の操作が指をつかまえる(capture)ので、はなしたのは window で受ける
       if (!d0 || !snow.holding || hud.busy || appHost.current) { d0 = null; return; }
       const ok = Math.hypot(e.clientX - d0.x, e.clientY - d0.y) < 12 && performance.now() - d0.t < 400; d0 = null; if (!ok) return;
       const r = snow.throwAt(e.clientX, e.clientY, cv.getBoundingClientRect());
       if (r === 'far') hud.toast('そこは遠すぎるよ'); else if (r) { audio.play('wave'); me.ch.wave?.(); }
-    }); }
+    };
+    window.addEventListener('pointerup', onUp); offs.push(() => window.removeEventListener('pointerup', onUp)); }
   offs.push(bus.on('ui:emote', k => {
     if (!started) return;
     audio.unlock();
@@ -678,7 +679,7 @@ export function mount(container, opt = {}) {
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
-    hud.setSnow(started && seasons.season === 'winter', snow.making ? '❄️ ころころ…' : snow.holding ? '❄️ 持ってる(タップで投げる)' : '❄️ 雪玉');
+    hud.setSnow(started && seasons.season === 'winter', snow.making ? '❄️ ころころ' : snow.holding ? '❄️ 投げてね' : '❄️ 雪玉');
     snow.update(dt);
     residents.update(dt, env.hour, me);
 
