@@ -153,7 +153,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     const eye = new THREE.MeshBasicMaterial({ color: 0x2e2a3d }); [-1, 1].forEach(k => { const e = new THREE.Mesh(ballGeo, eye); e.scale.setScalar(0.03); e.position.set(k * 0.09, 1.04, 0.25); g.add(e); });
     const nose = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.16, 8), new THREE.MeshStandardMaterial({ color: 0xff9a4a })); nose.rotation.x = Math.PI / 2; nose.position.set(0, 0.98, 0.32); g.add(nose);
     const x = f.x + Math.sin(f.ry) * 1.2, z = f.z + Math.cos(f.ry) * 1.2; g.position.set(x, 0, z); g.rotation.y = f.ry + Math.PI; g.scale.setScalar(0.01);
-    const m = { g, hp: 3, x, z, R: 0.45, t: 0, owner: f }; f.men.push(m); B.men.push(m); audio?.play?.('open'); return true;
+    scene.add(g); const m = { g, hp: 3, x, z, R: 0.45, t: 0, owner: f }; f.men.push(m); B.men.push(m); audio?.play?.('open'); return true;
   }
   function killMan(m) { scene.remove(m.g); B.men = B.men.filter(x => x !== m); m.owner.men = m.owner.men.filter(x => x !== m); }
   function removeMan(f) { f.men.slice().forEach(killMan); }
