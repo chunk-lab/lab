@@ -104,6 +104,7 @@ export const CSS = `
 .tw-prov{display:grid;gap:6px;margin:10px 0}.tw-prov .tw-btn{border-radius:16px;padding:9px 12px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:none;border:2px solid #eadff3;font-size:14px}
 .tw-prov .tw-btn small{font-size:11px;color:var(--tw-sub);font-weight:700}.tw-prov .tw-btn.on{border-color:var(--tw-pink);background:#fff0f3}
 .tw-steps{margin:8px 0;padding-left:20px;font-size:14px;line-height:1.7}
+.tw-steps li{margin-bottom:4px}.tw-h3{margin:12px 0 2px;font-size:15px}
 .tw-link{display:block;text-align:center;text-decoration:none;color:var(--tw-ink);padding:11px;margin:8px 0;background:var(--tw-mint)}
 .tw-key,.tw-say,.tw-adv input{width:100%;font:inherit;font-size:16px;padding:10px 12px;border-radius:14px;border:2px solid #eadff3;background:#fff;color:var(--tw-ink);pointer-events:auto;user-select:text;-webkit-user-select:text}
 .tw-adv{margin:10px 0;font-size:13px}.tw-adv label{display:block;margin:8px 0 0;font-weight:700}

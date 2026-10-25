@@ -7,11 +7,13 @@ export function openAiSetup({ hud, ai, onDone }) {
   let prov = ai.state.provider;
   const render = () => {
     const P = PROVIDERS[prov], st = ai.state;
-    const p = hud.panel(`<h2>AIとおしゃべり</h2>
-      <p class="tw-note">自分のAIキーを使うと、住人と自由におしゃべりできます。料金はあなたのAI会社のアカウントにかかり、町の運営には一切かかりません。</p>
+    const p = hud.panel(`<h2>AIのキーを入れる</h2>
+      <p class="tw-note">住人と自由におしゃべりしたり、そら君に英語の相談をしたりするには、<b>自分のAIのキー</b>(AIを使うための合言葉のような長い文字)が必要です。料金がかかる場合は、あなたのAI会社のアカウントにかかります。町の運営は、キーもお金も受け取りません。</p>
+      <p class="tw-note"><b>はじめてなら Gemini がおすすめ</b>(無料で使えます)。下で会社を選ぶと、作り方が出ます。</p>
       <div class="tw-prov">${Object.entries(PROVIDERS).map(([id, v]) => `<button class="tw-btn${id === prov ? ' on' : ''}" data-p="${id}"><b>${esc(v.label)}</b><small>${esc(v.badge)}</small></button>`).join('')}</div>
+      <h3 class="tw-h3">作り方(${esc(P.label)})</h3>
       <ol class="tw-steps">${P.steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
-      <p class="tw-note">${esc(P.note)}</p>
+      <p class="tw-note">💰 ${esc(P.note)}</p>
       <a class="tw-btn tw-link" href="${P.keyUrl}" target="_blank" rel="noopener noreferrer">キーをつくるページを開く ↗</a>
       <input class="tw-key" type="password" autocomplete="off" spellcheck="false" placeholder="${esc(P.placeholder)}" value="${st.provider === prov && st.hasKey ? '••••••••••••' : ''}" data-saved="${st.provider === prov && st.hasKey ? 1 : 0}">
       <details class="tw-adv"><summary>くわしい設定</summary>
@@ -20,7 +22,13 @@ export function openAiSetup({ hud, ai, onDone }) {
         <p class="tw-note">きょう ${st.used} / ${st.cap} 回つかいました。</p></details>
       <div class="tw-status" role="status"></div>
       <div class="tw-actions"><button class="tw-btn main" data-a="test">つなげてためす</button><button class="tw-btn" data-a="clear">キーを消す</button><button class="tw-btn" data-a="close">とじる</button></div>
-      <p class="tw-note small">キーはこの端末の中にだけ保存します。会話の内容は、選んだAI会社に送られます。個人情報は書かないでね。</p>`);
+      <details class="tw-adv"><summary>うまくいかないとき</summary><ul class="tw-steps">
+        <li>キーの前後に空白や改行が入っていないか確かめる(もう一度コピーし直すのが早い)</li>
+        <li>上で選んだ会社と、キーを作った会社が同じか確かめる</li>
+        <li>OpenAI・Claude は、チャージ(支払い)をしていないと使えない</li>
+        <li>Gemini で「回数の上限」と出たら、その日の無料分を使い切っています。次の日にまた使えます</li>
+        <li>それでもだめなら、キーを作り直して貼り直す</li></ul></details>
+      <p class="tw-note small">🔒 キーはこの端末の中にだけ保存します。ほかの人に見せないでね(もれたら、キーを作ったページで消して作り直せばOK)。会話の内容は、選んだAI会社に送られるので、個人情報は書かないでね。</p>`);
     const key = p.querySelector('.tw-key'), status = p.querySelector('.tw-status');
     key.addEventListener('keydown', e => e.stopPropagation());
     key.addEventListener('focus', () => { if (key.dataset.saved === '1') { key.value = ''; key.dataset.saved = '0'; } });
@@ -47,12 +55,12 @@ export function openAiSetup({ hud, ai, onDone }) {
 }
 
 // 住人との自由なおしゃべり。ask(text) → Promise<string>
-export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote }) {
+export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, maxLen = 80 }) {
   const p = hud.panel(`<h2>${esc(name)}<small>${esc(role || '')}</small></h2>
     <div class="tw-enrow"><button class="tw-btn" data-a="en"></button><button class="tw-btn" data-a="lv"></button></div>
     <div class="tw-log" aria-live="polite"></div>
     <div class="tw-tools" hidden></div>
-    <div class="tw-chatrow"><input class="tw-say" maxlength="80" placeholder="話しかける"><button class="tw-btn main" data-a="send">送る</button></div>
+    <div class="tw-chatrow"><input class="tw-say" maxlength="${maxLen}" placeholder="話しかける"><button class="tw-btn main" data-a="send">送る</button></div>
     <div class="tw-actions"><button class="tw-btn" data-a="close">またね</button></div>`);
   const log = p.querySelector('.tw-log'), inp = p.querySelector('.tw-say'), tools = p.querySelector('.tw-tools');
   const enB = p.querySelector('[data-a="en"]'), lvB = p.querySelector('[data-a="lv"]');

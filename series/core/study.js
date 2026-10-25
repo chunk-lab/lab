@@ -67,8 +67,9 @@ export function createStudy(core) {
     const practice = (kind === 'word' || kind === 'phrase') && canPlay('stream') && withJa.length >= 4;
     return `<nav class="cs-chips">${KINDS.map(k => `<button data-kind="${k.k}" class="${k.k === kind ? 'on' : ''}">${k.n} ${nb.count(k.k)}</button>`).join('')}</nav>
       <nav class="cs-chips cs-marks"><button data-mark="" class="${!mark ? 'on' : ''}">ぜんぶ</button>${MARKS.map(x => `<button data-mark="${x.k}" class="${x.k === mark ? 'on' : ''}">${x.n}</button>`).join('')}</nav>
-      ${practice ? `<button class="cs-btn cs-go" data-practice>ストリームで練習する(${Math.min(20, withJa.length)}個)</button>` : ''}
+      ${practice ? `<div class="cs-practice"><b>ストリームで練習</b>${withJa.length > 20 ? `<button class="cs-btn cs-go" data-practice="r">ランダム20個</button>` : ''}${Array.from({ length: Math.min(30, Math.ceil(withJa.length / 20)) }, (_, k) => `<button class="cs-btn${withJa.length <= 20 ? ' cs-go' : ''}" data-practice="${k}">${k * 20 + 1}〜${Math.min(withJa.length, k * 20 + 20)}</button>`).join('')}</div>` : ''}
       <form class="cs-add" data-add><input name="en" placeholder="英語" autocomplete="off" autocapitalize="off" spellcheck="false" required><input name="ja" placeholder="日本語" autocomplete="off"><button class="cs-btn">登録</button></form>
+      <div class="cs-io"><button class="cs-btn" data-exp>📤 書き出す</button><button class="cs-btn" data-imp>📥 読み込む</button><small>ノートはこの端末の中だけに保存。機種変更のときは書き出したファイルを新しい端末で読み込んでね</small></div>
       ${items.length ? `<ul class="cs-nb">${items.slice(0, 300).map(x => `<li data-id="${x.id}"><div class="cs-nb-t"><b>${esc(x.en)}</b><span>${esc(x.ja)}</span><small>${esc(SRC[x.src] || x.src)}</small></div>
           <div class="cs-nb-a"><button data-say aria-label="読み上げ">🔊</button><button data-use class="cs-use">使ってみる</button>${MARKS.map(k => `<button data-m="${k.k}" class="${x.marks.includes(k.k) ? 'on' : ''}">${k.n}</button>`).join('')}<button data-del class="cs-del" aria-label="消す">🗑</button></div></li>`).join('')}</ul>`
         : '<p class="cs-sub">まだありません。ゲームでまちがえた言葉や、各アプリで登録した言葉がここに集まります。上の欄から手打ちでも登録できます。</p>'}`;
@@ -93,9 +94,21 @@ export function createStudy(core) {
     if (q('[data-cm]')) q('[data-cm]').onclick = () => { const g = core.member.earn('cm'); core.ui.toast(g ? `コイン +${g}(CMはアプリにしたときに本物を入れます)` : '今日はもう見られません'); draw(); };
     m.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { kind = b.dataset.kind; draw(); });
     m.querySelectorAll('[data-mark]').forEach(b => b.onclick = () => { mark = b.dataset.mark; draw(); });
-    if (q('[data-practice]')) q('[data-practice]').onclick = () => {
-      const ws = nb.list({ kind, mark }).filter(x => x.ja).slice(0, 20).map(x => [x.en, x.ja]);
-      go('stream', { words: ws, title: '勉強ノート:' + (KINDS.find(k => k.k === kind).n) + (mark ? '(' + MARKS.find(k => k.k === mark).n + ')' : '') });
+    m.querySelectorAll('[data-practice]').forEach(b => b.onclick = () => {
+      const all = nb.list({ kind, mark }).filter(x => x.ja), p = b.dataset.practice;
+      const pick = p === 'r' ? all.slice().sort(() => Math.random() - 0.5).slice(0, 20) : all.slice(+p * 20, +p * 20 + 20);
+      go('stream', { words: pick.map(x => [x.en, x.ja]), title: '勉強ノート:' + (KINDS.find(k => k.k === kind).n) + (mark ? '(' + MARKS.find(k => k.k === mark).n + ')' : '') + (p === 'r' ? ' ランダム' : ` ${+p * 20 + 1}〜`) });
+    });
+    if (q('[data-exp]')) q('[data-exp]').onclick = async () => {
+      const txt = nb.exportText(), d = new Date(), name = `chunk-note-${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}.json`;
+      try { const f = new File([txt], name, { type: 'application/json' }); if (navigator.canShare && navigator.canShare({ files: [f] })) { await navigator.share({ files: [f], title: '勉強ノート' }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+      try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], { type: 'application/json' })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000); core.ui.toast('書き出しました'); }
+      catch (e) { try { await navigator.clipboard.writeText(txt); core.ui.toast('コピーしました(メモなどに貼って保存してね)'); } catch (e2) { core.ui.toast('書き出せませんでした'); } }
+    };
+    if (q('[data-imp]')) q('[data-imp]').onclick = () => {
+      const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json,text/plain';
+      inp.onchange = async () => { const f = inp.files && inp.files[0]; if (!f) return; const n = nb.importText(await f.text()); core.ui.toast(n < 0 ? 'ノートのファイルではないみたい' : `${n}個 ふえました`); };
+      inp.click();
     };
     if (q('[data-add]')) q('[data-add]').onsubmit = e => {
       e.preventDefault(); const f = e.target, en = f.en.value.trim(), ja = f.ja.value.trim();

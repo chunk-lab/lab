@@ -6,6 +6,7 @@ import { createLocalNet, createWsNet } from './core/net.js';
 import { createAudio } from './core/audio.js';
 import { createAI, buildSystem } from './core/ai.js';
 import { openAiSetup, openChat } from './ui/aiui.js';
+import { openSoraNote } from './ui/sora.js';
 import { openOgiri } from './ui/ogiri.js';
 import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
@@ -32,7 +33,7 @@ const VERSION = '0.1.0';
 export function mount(container, opt = {}) {
   const bus = createBus();
   const storage = opt.storage || createStorage(opt.storagePrefix || 'town:');
-  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, adult: 0, birth: '', en: 0, enLevel: 'easy', tips: 1, look: 'hana', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
+  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, adult: 0, birth: '', en: 0, enLevel: 'easy', tips: 1, look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
   const save = () => storage.set('settings', settings);
   const wallet = opt.wallet || createWallet(storage, bus);   // 組み込み先から共通の財布を渡せる(2Dと3Dで同じコイン)
   const ai = createAI(storage);
@@ -95,7 +96,7 @@ export function mount(container, opt = {}) {
   const applySeason = () => { const s = curSeason(); seasons.set(s); setBlossom(opt.blossom ?? s === 'spring'); };
   const applyDate = d => { testDate = d; env.setMoonDate(d); const md = (d.getMonth() + 1) * 100 + d.getDate(); setBlossom(opt.blossom ?? (md >= 325 && md <= 420)); };
   applySeason();
-  const residents = createResidents(scene, city.graph, () => env.hour);
+  const residents = createResidents(scene, city.graph, () => env.hour, (x, z, r) => collide(x, z, r));
   // 町の雪玉(冬だけ)
   const NPC_SNOW = { mii: ['ひゃっ、つめたい〜! もう、やりましたね〜', 1], baron: ['ぬおっ! わが輩に雪玉とは、いい度胸だ!', 2], gon: ['つめてっ! やったな〜!', 3], koharu: ['きゃっ! ふふ、元気ですね', 1], shiori: ['……つめたい。……おかえし、しましょうか', 2], suna: ['おやおや、冷たいねえ', 2], maru: ['うわっ! まいったな〜!', 2], yuzu: ['ひゃっ! び、びっくりしたです', 1], chunkkun: ['ふわっ!? 雪だ〜!', 1] };
   const snow = createSnowballs(scene, {
@@ -131,9 +132,11 @@ export function mount(container, opt = {}) {
   const last = storage.get('pos'); if (last) { me.x = last[0]; me.z = last[1]; }
   function setLook(id) {
     if (me.ch) scene.remove(me.ch.root);
-    me.ch = makeCharacter(LOOKS[id] || LOOKS.hana);
+    me.ch = makeCharacter(LOOKS[id] || LOOKS.mio);
     scene.add(me.ch.root);
   }
+  // 自分のキャラは れん(男の子)・みお(女の子)の2人だけ。はな・そらは住人になったので、前に選んでいた人は近いほうへ
+  if (!LOOK_IDS.includes(settings.look)) { const was = settings.look, nw = was === 'sora' ? 'ren' : 'mio'; if (!settings.name || settings.name === (LOOKS[was] || {}).name) settings.name = settings.name ? LOOKS[nw].name : settings.name; settings.look = nw; save(); }
   setLook(settings.look);
 
   const hud = createHud(root, bus);
@@ -150,7 +153,7 @@ export function mount(container, opt = {}) {
   if (net) {
     net.on('join', p => {
       if (peers.has(p.id)) return;
-      const ch = makeCharacter(typeof p.look === 'string' ? LOOKS[p.look] || LOOKS.sora : p.look || LOOKS.sora);
+      const ch = makeCharacter(typeof p.look === 'string' ? LOOKS[p.look] || LOOKS.ren : p.look || LOOKS.ren);
       ch.root.position.set(p.x ?? 0, 0, p.z ?? 0); scene.add(ch.root);
       peers.set(p.id, { ch, tx: p.x ?? 0, tz: p.z ?? 0, ry: 0, mv: 0, name: p.name });
       hud.tag(p.id, p.name || 'だれか');
@@ -208,8 +211,9 @@ export function mount(container, opt = {}) {
     audio.play('talk');
     let text = residents.lineFor(r, env.hour);
     if (r.def.angler && seasons.season !== 'summer') text = '釣りは夏だけのお楽しみでねえ。夏になったら、また池においで。';
-    const choices = (r.def.menu || []).filter(m => !m.season || m.season === seasons.season).map(m => ({ label: m.label, fn: () => (m.act ? doAct(r, m) : openApp(m.app, m.params)) }));
-    choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
+    if (r.def.id === 'hana' && r.follow) text = ['なになに?', 'どうしたの?', 'ん? よんだ?'][Math.floor(Math.random() * 3)];
+    const choices = (r.def.menu || []).filter(m => !m.season || m.season === seasons.season).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => (m.act ? doAct(r, m) : openApp(m.app, m.params)) }));
+    if (r.def.id !== 'sora') choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
     hud.dialog({ name: r.def.name, role: r.def.role, text, choices });
     bus.emit('talk', { npc: r.def.id });
   }
@@ -291,6 +295,9 @@ export function mount(container, opt = {}) {
   }
   // メニューの「act」:大喜利・格言・ハーモニカ(アプリを開かない、住人ならではのあそび)
   function doAct(r, m) {
+    if (m.act === 'consult' || m.act === 'soranote') { r.talking = true; talkingTo = r; input.clear(); soraNote(r); return; }
+    if (m.act === 'follow') { hanaFollow(r, !r.follow); return; }
+    if (m.act === 'date') { startDate(r); return; }
     if (m.act === 'ogiri') {
       r.talking = true; talkingTo = r; input.clear();   // 大喜利をしている間は、その場にいる
       const go = () => openOgiri({ hud, ai, bus, def: r.def, getEn: () => ({ on: !!settings.en, level: settings.enLevel }), setEn: v => { settings.en = v.on ? 1 : 0; save(); bus.emit('lang', { on: !!settings.en }); } });
@@ -307,7 +314,8 @@ export function mount(container, opt = {}) {
     choices.push({ label: 'もうひとつ聞く', fn: () => showQuote(r) });
     hud.dialog({ name: r.def.name, role: r.def.role, text: en ? `"${q.en}"(${q.ja}) ― ${q.who}。${q.note}` : `「${q.ja}」― ${q.who}。${q.note}`, choices });
   }
-  function startChat(r, first) {
+  function startChat(r, first, situation) {
+    if (r.def.free) return freeChat(r, first, situation);
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
     openChat({
@@ -329,6 +337,97 @@ export function mount(container, opt = {}) {
         } catch (e) { hist.pop(); throw e; }
       },
     });
+  }
+  // ---- そら君ノート(英語の相談) ----
+  function soraNote(r) {
+    openSoraNote({
+      hud, ai, storage, level: settings.enLevel,
+      onNote: it => { const m = addNote({ ...it, npc: 'そら' }); hud.toast(m); return m; },
+      onSay: t => hud.say('npc:sora', t, 4),
+      openSetup: done => openAiSetup({ hud, ai, onDone: done }),
+      games: [
+        { label: '🎮 チャンクボックス', fn: () => openApp('gamebox', {}) },
+        { label: '📒 ことばノート', fn: () => openNoteBook() },
+        ...((opt.features || []).includes('study') ? [{ label: '📚 勉強部屋', fn: () => opt.onEvent?.('app:event', { name: 'study' }) }] : []),
+      ],
+    });
+  }
+  // ---- はなちゃん:自由なおしゃべり(決まりごとを足さない)、一緒に歩く、カフェでデート ----
+  function freeChat(r, first, situation) {
+    const hist = []; ai.warm();
+    r.talking = true; talkingTo = r; input.clear();
+    openChat({
+      hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400,
+      getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
+      setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
+      translate: text => ai.translate(text),
+      saveNote: it => addNote({ ...it, npc: r.def.name }),
+      ask: async (t, onPart) => {
+        hist.push({ role: 'user', text: t });
+        const H = Math.floor(env.hour), M = Math.floor((env.hour % 1) * 60), place = city.areaName(me.x, me.z);
+        const sit = situation || (r.follow ? `いま「${settings.name || 'あなた'}」と一緒に町を歩いている。場所は${place}。` : `いま町の${place}で、「${settings.name || 'あなた'}」に話しかけられた。`);
+        const system = [
+          `あなたは「${r.def.name}」。${r.def.persona}`,
+          `季節は${({ spring: '春', summer: '夏', autumn: '秋', winter: '冬' })[seasons.season] || ''}、${PERIOD[period(env.hour)]}の${H}時${M}分。${sit}`,
+          settings.en ? `English mode: reply in ${settings.enLevel === 'easy' ? 'simple' : 'natural'} English. After the reply, write " ||| " and a natural Japanese translation.` : '日本語で話す。返事のあとに「 ||| 」と、同じ内容の自然な英語訳を書く。',
+        ].join('\n');
+        try {
+          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-40)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, maxTokens: 900, maxChars: 2400 });
+          const shown = out.split('|||')[0].trim();
+          hist.push({ role: 'assistant', text: shown });
+          hud.say('npc:' + r.def.id, shown.length > 46 ? shown.slice(0, 44) + '…' : shown, 4);
+          return out;
+        } catch (e) { hist.pop(); throw e; }
+      },
+    });
+  }
+  function hanaFollow(r, on) {
+    r.follow = on; r.hintT = 25 + Math.random() * 20; r.lastArea = null;
+    hud.dialog({ name: r.def.name, role: r.def.role, text: on ? 'いいよ! どこ行く? ついてくね。' : 'うん、またね! 楽しかった〜。' });
+  }
+  const HANA_HINTS = {
+    spring: ['春と秋は、掲示板にミニゴルフのコースが貼り出されるんだって。毎日ちがうコースなの!'],
+    summer: ['夏は砂吹さんの池で釣りができるよ。夕方と朝は、よく釣れるんだって!', '魚影が見えても、真上に落とすと逃げちゃうんだって。少し先に落とすといいらしいよ'],
+    autumn: ['秋は掲示板からフリスビーに出られるよ。風を読むのがコツなんだって'],
+    winter: ['雪玉は長押しすると大きくなるよ! 雪だるまも作れるの', '広場で雪合戦できるって知ってた?'],
+    any: ['そら君に聞くと、英語の使い方をノートにまとめてくれるよ', '家のテレビで、チャンクボックスのゲームが遊べるんだよ', 'カフェでミイさんとカード勝負できるよ。ミイさん、ああ見えて強いの', '会話の英語をタップすると、ことばノートに入れられるんだって', '神社のおみくじ、毎日ひけるよ'],
+  };
+  const HANA_PLACE = [['広場', 'ここ、待ち合わせによく使うんだ〜'], ['カフェ', 'いいにおい…何か飲みたくなっちゃう'], ['公園', 'ここのベンチ、すわると落ちつくよね'], ['神社', 'しーん…ってしてて好きなんだ'], ['図書館', 'しずかにしなきゃね(小声)'], ['学校', 'なつかしい感じするね'], ['ゲームセンター', 'ちょっと遊んでいかない?'], ['ショップ', 'かわいいの売ってるかな?'], ['池', 'アヒルいるかな〜'], ['家', 'ここがあなたの家? いいなぁ']];
+  function hanaUpdate(dt) {
+    const r = residents.list.find(x => x.def.id === 'hana'); if (!r || !r.follow || r.pin) return;
+    if (hud.busy || appHost.current || !started || r.talking) return;
+    const area = city.areaName(me.x, me.z);
+    if (area !== r.lastArea) { r.areaT = (r.areaT || 0) + dt; if (r.areaT > 3) { const prev = r.lastArea; r.lastArea = area; r.areaT = 0; const pl = HANA_PLACE.find(([k]) => area.includes(k)); if (prev && pl && Math.random() < 0.8) { hud.say('npc:hana', pl[1], 4); r.hintT = Math.max(r.hintT, 15); } } }
+    else r.areaT = 0;
+    r.hintT -= dt;
+    if (r.hintT <= 0) { r.hintT = 50 + Math.random() * 50; const L = [...(HANA_HINTS[seasons.season] || []), ...HANA_HINTS.any]; let i = Math.floor(Math.random() * L.length); if (i === r.hintI) i = (i + 1) % L.length; r.hintI = i; hud.say('npc:hana', L[i], 6); }
+  }
+  // カフェのテラス席で、向かい合ってすわっておしゃべり
+  let date = null;
+  function startDate(r) {
+    const cafe = city.buildings.find(b => b.cafe); if (!cafe) { hud.toast('カフェが見つからないみたい'); return; }
+    if (!ai.ready) { openAiSetup({ hud, ai, onDone: () => startDate(r) }); return; }
+    endDate(true);
+    const [nx, nz] = cafe.cafe.face, T = cafe.cafe.tables[1], rx = nz, rz = -nx;   // テーブルの左右にすわる
+    const pA = { x: T.x + rx * 0.85, z: T.z + rz * 0.85 }, pB = { x: T.x - rx * 0.85, z: T.z - rz * 0.85 };
+    const stools = [pA, pB].map(q => { const m = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.2, 0.44, 14), new THREE.MeshLambertMaterial({ color: 0xc9a28c })); m.position.set(q.x, 0.22, q.z); m.castShadow = true; scene.add(m); return m; });
+    standFromSeat();
+    me.x = pA.x; me.z = pA.z; me.ry = Math.atan2(-rx, -rz); me.speed = 0; seat = { b: { x: pA.x, z: pA.z, ry: me.ry }, date: true }; me.ch.pose = 'sit';
+    r.pin = { x: pB.x, z: pB.z, y: -0.04, ry: Math.atan2(rx, rz), pose: 'sit' };
+    cam.x = T.x; cam.z = T.z; cam.yaw = Math.atan2(nx, nz); cam.pitch = 0.32; cam.dist = 5.2;
+    date = { r, stools, wasFollow: r.follow, cam0: { pitch: cam.pitch, dist: cam.dist } };
+    const H = env.hour, first = H < 11 ? 'モーニング、いい感じだね。何たのむ?' : H < 17 ? 'ここ、前から来てみたかったんだ〜。何にする?' : '夜のカフェって、ちょっと大人な感じしない?';
+    freeChat(r, first, `いま「${settings.name || 'あなた'}」と、町のカフェのテラス席で向かい合ってすわり、デートしている。`);
+    const off = bus.on('ui:panelClosed', () => { off(); endDate(); });
+    date.off = off;
+  }
+  function endDate(quiet) {
+    if (!date) return; const d = date; date = null;
+    d.off?.(); d.stools.forEach(m => { scene.remove(m); m.geometry.dispose(); m.material.dispose(); });
+    d.r.pin = null; d.r.ch.pose = null; d.r.follow = d.wasFollow; d.r.talking = false;
+    if (seat && seat.date) { seat = null; me.ch.pose = null; }
+    cam.pitch = d.cam0.pitch; cam.dist = d.cam0.dist;
+    if (!quiet) hud.say('npc:hana', '楽しかった〜! また来ようね', 4);
   }
   function openApp(id, params) {
     // 組み込み先(チャンクタウン)が開くアプリ(ゲームなど)は、そちらに任せる
@@ -715,7 +814,7 @@ export function mount(container, opt = {}) {
 
     if (talkingTo && !hud.busy) { talkingTo.talking = false; talkingTo = null; }   // 会話が終わっているのに止まったままの住人を放す
     for (const r of residents.list) if (r.talking && r !== talkingTo) r.talking = false;
-    tipUpdate(dt);
+    tipUpdate(dt); hanaUpdate(dt);
     env.camera = camera; env.update(dt, me.ch.root.position);
     seasons.update(dt, camera.position, env.night || 0);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);

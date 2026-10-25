@@ -479,7 +479,7 @@ export const homeApp = {
       walk = true; buildShell(); outline.visible = false;
       calcBlockers();
       editEls.forEach(e => { e._d = e.style.display; e.style.display = 'none'; });
-      wme = makeCharacter(typeof ctx.player?.look === 'string' ? LOOKS[ctx.player.look] || LOOKS.hana : LOOKS.hana); scene.add(wme.root);
+      wme = makeCharacter(typeof ctx.player?.look === 'string' ? LOOKS[ctx.player.look] || LOOKS.mio : LOOKS.mio); scene.add(wme.root);
       // はじめは、かべぎわのあいた場所
       wPose = null; wLast = ''; wx = rm.cols / 2; wz = rm.rows - 1; [wx, wz] = walkTo(wx, wz); wry = Math.PI; wyaw = 0.2; wpitch = 0.3; wdist = 4.2; wspeed = 0;
       wInput = createInput(cv, { onAction: () => {} });

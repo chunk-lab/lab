@@ -4,20 +4,20 @@ export const PROVIDERS = {
   gemini: {
     label: 'Gemini(Google)', badge: 'おすすめ・無料枠あり', model: 'gemini-flash-lite-latest', placeholder: 'コピーしたキーをそのまま貼る',
     keyUrl: 'https://aistudio.google.com/apikey',
-    steps: ['下のボタンで Google AI Studio を開く', 'Google アカウントでログインして「APIキーを作成」を押す', '出てきた文字列をコピーして、ここに貼る'],
-    note: '個人の利用なら無料枠の範囲で遊べます(上限は Google の規約しだい)。',
+    steps: ['下の「キーをつくるページを開く」を押す(Google AI Studio というページが開きます)', 'Google アカウントでログイン(Gmail と同じアカウントでOK)', 'はじめての人は、利用規約の画面が出ます。チェックを入れて「続行」(Continue)を押す', '左のメニューか画面の上にある「APIキーを作成」(Create API key)を押す', 'プロジェクトを選ぶ画面が出たら、何も変えずに「作成」を押す', '「AIza」で始まる長い文字が出ます。となりのコピーボタンを押してコピー', 'この画面にもどって、下の欄に貼り付けて「つなげてためす」を押す'],
+    note: '無料で使えます(お金の登録をしなければ、請求はきません)。1日に使える回数は Google が決めていて、使い切ったら次の日にまた使えます。',
   },
   openai: {
     label: 'ChatGPT(OpenAI API)', badge: '有料・少額から', model: 'gpt-4o-mini', placeholder: 'コピーしたキーをそのまま貼る',
     keyUrl: 'https://platform.openai.com/api-keys',
-    steps: ['下のボタンで OpenAI のページを開く', 'ログインして「Create new secret key」を押す', '表示された文字列をコピーして、ここに貼る(一度しか表示されません)'],
-    note: 'API は ChatGPT の月額プランとは別料金です。先に少額のチャージが要ります。',
+    steps: ['下の「キーをつくるページを開く」を押す(OpenAI のページが開きます)', 'ログイン(はじめてならメールアドレスで登録)', '右上の歯車(Settings)→「Billing」で支払い方法を登録して、少額(5ドルくらい〜)をチャージする', '左のメニューの「API keys」→「Create new secret key」を押す。名前は何でもOK', '「sk-」で始まる文字が出ます。この画面でしか見られないので、すぐコピー', 'この画面にもどって、下の欄に貼り付けて「つなげてためす」を押す'],
+    note: '有料です(使った分だけ。おしゃべり1回で1円もかからないくらい)。ChatGPT の月額プランとは別の支払いです。',
   },
   claude: {
     label: 'Claude(Anthropic API)', badge: '有料・少額から', model: 'claude-haiku-5-5', placeholder: 'コピーしたキーをそのまま貼る',
     keyUrl: 'https://console.anthropic.com/settings/keys',
-    steps: ['下のボタンで Anthropic Console を開く', 'ログインして「Create Key」を押す', '表示された文字列をコピーして、ここに貼る'],
-    note: 'API は Claude の月額プランとは別料金です。先に少額のチャージが要ります。',
+    steps: ['下の「キーをつくるページを開く」を押す(Anthropic Console が開きます)', 'ログイン(はじめてならメールアドレスで登録)', '「Billing」(請求)で支払い方法を登録して、少額(5ドルくらい〜)のクレジットを買う', '「API Keys」→「Create Key」を押す。名前は何でもOK', '「sk-ant-」で始まる文字が出ます。この画面でしか見られないので、すぐコピー', 'この画面にもどって、下の欄に貼り付けて「つなげてためす」を押す'],
+    note: '有料です(使った分だけ)。Claude の月額プランとは別の支払いです。',
   },
 };
 

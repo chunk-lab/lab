@@ -1247,7 +1247,13 @@ export function renderTrModal(){
 // ---------- 🔍 search by typing, and register a missing word on the spot ----------
 export function openSearch(){ const st=stageOf(); APP.search={q:'',ctx:{st,open:APP.open,lsub:APP.lsub,beKind:APP.beKind,side:APP.side,subjTab:APP.subjTab,active:APP.active}}; renderSearchBar(); renderScene(); setTimeout(()=>{ const i=document.getElementById('srchIn'); if(i) i.focus(); },50); }
 export function closeSearch(){ APP.search=null; const el=document.getElementById('srch'); if(el) el.remove(); renderScene(); }
-export function renderSearchBar(){ let el=document.getElementById('srch'); if(!APP.search){ if(el) el.remove(); return; } if(!el){ el=document.createElement('div'); el.id='srch'; el.innerHTML=`<span>🔍</span><input id="srchIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="英語か日本語で（例：te / 先生）"><button id="srchX">×</button>`; $('#canvas').appendChild(el); el.querySelector('#srchIn').addEventListener('input',e=>{ APP.search.q=e.target.value; renderScene(); }); el.querySelector('#srchX').onclick=closeSearch; } }
+export function renderSearchBar(){ let el=document.getElementById('srch'); if(!APP.search){ if(el) el.remove(); return; } if(!el){ el=document.createElement('div'); el.id='srch'; el.innerHTML=`<span>🔍</span><input id="srchIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="英語か日本語で（例：te / 先生）"><button id="srchEx" title="例文">📖</button><button id="srchX">×</button>`; $('#canvas').appendChild(el); el.querySelector('#srchIn').addEventListener('input',e=>{ APP.search.q=e.target.value; renderScene(); });
+  el.querySelector('#srchEx').onclick=()=>{ /* 例文：打った言葉(日本語なら一番上の候補)で、例文を探す・作る画面を開く */
+   const q=(APP.search&&APP.search.q||'').trim(); const core=ENV.ctx&&ENV.ctx.core; if(!q){ toast('言葉を打ってから📖を押してね'); return; }
+   let en=q, ja=''; const top=(()=>{ try{ return searchResults()[0]; }catch(e){ return null; } })();
+   if(!/[a-zA-Z]/.test(q)){ if(!top){ toast('その言葉が見つかりませんでした'); return; } en=String(top.en||'').replace(/^(a|an|the) /,''); ja=top.ja||q; }
+   else if(top && String(top.en||'').toLowerCase().replace(/^(a|an|the) /,'')===q.toLowerCase()) ja=top.ja||'';
+   if(core&&core.useit) core.useit.open({ en, ja }); else toast('この画面では使えません'); }; el.querySelector('#srchX').onclick=closeSearch; } }
 export function searchPool(){
  const x=APP.search.ctx, c=AC(), L=[];
  const add=(k)=>optList0(k,c).forEach(o=>L.push(o));

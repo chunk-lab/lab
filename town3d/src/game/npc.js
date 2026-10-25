@@ -1,10 +1,28 @@
 // 町の住人。時刻ごとの予定(schedule)に合わせて道すじを歩き、話しかけると会話する
-import { makeCharacter, makeChunkkun } from '../world/character.js';
+import { makeCharacter, makeChunkkun, LOOKS } from '../world/character.js';
 import { PLACES } from '../world/town_data.js';
 import { angleLerp } from '../core/core.js';
 
 // 予定は [時, 場所, 'in'(建物の中=見えない)]。台詞は時間帯ごと。menu は会話の選択肢
 export const RESIDENTS = [
+  {
+    // そら君:英語の相談役。単語や表現を聞くと、例文・場面・ちがい・練習のしかたをノートにまとめてくれる
+    id: 'sora', name: 'そら', yomi: 'そら', role: '英語の相談役', look: LOOKS.sora, adult: false,
+    persona: '英語が大好きな、気さくで面倒見のいい男の子。「〜だよ」「〜じゃん」と話す。人に教えるのが好きで、むずかしいことも、たとえ話でわかりやすく言いかえる。',
+    tips: ["「How do you say 〜 in English?」で『〜って英語で何て言うの?』って聞けるよ", "「I see.」は『なるほど』。あいづちの定番だよ", "迷ったら、まず短い文で言ってみる。それが一番の近道じゃん", "「Could you say that again?」で『もう一回言って』。聞き返すのは全然はずかしくないよ", "単語は、例文ごと覚えると忘れにくいんだ"],
+    schedule: [[7, 'school'], [12, 'library'], [17, 'plaza'], [21, 'home', 'in']],
+    lines: { morning: ['おはよう! 今日はどんな英語を使ってみる?', '朝は単語を覚えるのにいい時間なんだって。'], day: ['気になる単語や言い方があったら、なんでも聞いてよ。', '図書館で英語の本を読んでたんだ。'], evening: ['今日おぼえた英語、ひとつ使ってみた?', 'わかんない表現あったら、まとめてあげるよ。'], night: ['夜ふかしして英語の動画見ちゃうんだよね。'] },
+    menu: [{ label: '英語の相談をする', act: 'consult' }, { label: 'そら君ノートを見る', act: 'soranote' }],
+  },
+  {
+    // はなちゃん:おしゃべり好き。自由に話せて、一緒に歩いたり、カフェでデートしたりできる
+    id: 'hana', name: 'はな', yomi: 'はな', role: 'おしゃべり好きの女の子', look: LOOKS.hana, free: true,
+    persona: '明るくて、ちょっとおっちょこちょいな女の子。好奇心が強く、町のうわさや季節のことをよく知っている。話すのが大好きで、相手の話にも本気で興味を持つ。「〜だよね」「〜かも!」とくだけた話し方。',
+    tips: ["ねえねえ、「Guess what!」って『聞いて聞いて!』って意味なんだよ", "「I can't wait!」は『待ちきれない!』。わくわくしてる時に言うの", "「That's so cute!」って、かわいいもの見たらつい言っちゃう", "「No way!」は『うそでしょ!』。びっくりした時にね"],
+    schedule: [[8, 'park'], [11, 'cafe'], [14, 'shop'], [17, 'park2'], [20, 'home', 'in']],
+    lines: { morning: ['おはよ! 今日なにする? どこか行こうよ。', '朝の公園、気持ちいいね!'], day: ['ねえ、ひま? 一緒にぶらぶらしない?', 'カフェの新作、気になってるんだよね。'], evening: ['夕方の町って、なんかいいよね。', 'ちょっと歩かない?'], night: ['もう暗いね。また明日あそぼ!'] },
+    menu: [{ label: '一緒に歩こう', act: 'follow' }, { label: 'カフェでデートする', act: 'date' }],
+  },
   {
     id: 'mii', tips: ["「I'll have a coffee, please.」は、カフェで注文するときの定番ですよ〜", "「Could I have…?」は「Can I have…?」より、少していねいなんです", "「Take your time.」は『ゆっくりでいいよ』。わたし、よく言われます", "「Sounds good!」は、軽く『いいね』って返すのにぴったり", "「Cheers!」は乾杯だけじゃなく、『ありがとう』の意味でも使うんですって"], yomi: 'みい', persona: 'ゆったりしたお姉さん。やさしくて少しのんびり。カフェとカードが好きで、考えるのに時間をかける。', name: 'ミイ', role: 'カフェの常連', look: { skin: 0xffe6d6, hair: 0xf3c2a4, style: 'bob', top: 0xfff4e0, bottom: 0xffb3c1, shoes: 0xffffff, acc: 'ribbon', accColor: 0xa8e6cf },
     schedule: [[7, 'plaza'], [10, 'cafe'], [15, 'park'], [18, 'cafe'], [22, 'home', 'in']],
@@ -120,7 +138,7 @@ function nearestNode(graph, x, z) {
   return best;
 }
 
-export function createResidents(scene, graph, getHour) {
+export function createResidents(scene, graph, getHour, collide = null) {
   const list = RESIDENTS.map((d, i) => {
     const ch = d.mascot ? makeChunkkun() : makeCharacter(d.look);
     const goal = goalOf(d, getHour());
@@ -143,8 +161,13 @@ export function createResidents(scene, graph, getHour) {
       const anyTalking = list.some(q => q.talking);
       for (const r of list) {
         if (r.battle) continue;   // 雪合戦の最中は、雪合戦の方で動かす
+        if (r.pin) {   // デートなどで、決まった場所に座っている
+          const P = r.ch.root.position; P.set(r.pin.x, r.pin.y || 0, r.pin.z); r.ch.root.rotation.y = r.pin.ry;
+          if (!r.ch.root.visible) { r.ch.root.visible = true; r.hidden = false; } r.ch.pose = r.pin.pose || null; r.speed = 0; r.vx = r.vz = 0; r.ch.update(dt, 0); continue;
+        }
         const g = goalOf(r.def, h);
-        if (g.place !== r.goal.place) {
+        if (r.follow) { r.goal = g; r.path = []; r.idle = null; if (r.hidden) { r.hidden = false; r.ch.root.visible = true; } }   // 一緒に歩いている間は、予定どおりに動かない
+        else if (g.place !== r.goal.place) {
           r.goal = g;
           r.path = findPath(graph, nearestNode(graph, r.ch.root.position.x, r.ch.root.position.z), PLACES[g.place]);
           if (r.hidden) { r.hidden = false; r.ch.root.visible = true; }
@@ -160,7 +183,13 @@ export function createResidents(scene, graph, getHour) {
           if (r.stopWill === undefined) { r.stopWill = Math.random() < 0.6; r.stopLimit = 1 + Math.random() * 9; }
           if (!r.free) { r.stopT = (r.stopT || 0) + dt; if (!r.stopWill || anyTalking || r.stopT > r.stopLimit) r.free = true; }
         }
-        if (r.talking || r.harpT > 0 || (r.near && !r.hidden && !r.free)) {
+        if (r.follow && !r.talking) {   // プレイヤーのななめ後ろについていく。はなれすぎたら、そばに来る
+          r.free = true;
+          const ry = player.ry || 0, fx = player.x - Math.sin(ry) * 1.3 + Math.cos(ry) * 0.9, fz = player.z - Math.cos(ry) * 1.3 - Math.sin(ry) * 0.9, d = Math.hypot(fx - p.x, fz - p.z);
+          if (d > 16) { p.x = fx; p.z = fz; r.vx = r.vz = 0; }
+          else if (d > 0.7) target = [fx, fz];
+          else r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, ry, Math.min(1, dt * 3));
+        } else if (r.talking || r.harpT > 0 || (r.near && !r.hidden && !r.free)) {
           r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(player.x - p.x, player.z - p.z), Math.min(1, dt * 8));
         } else if (r.path.length) {
           const n = graph.nodes[r.path[0]];
@@ -195,7 +224,7 @@ export function createResidents(scene, graph, getHour) {
         // ---- 動き:行きたい方向(intent)と、よけ・押しのけ(avoid)を、なめらかな速度にまぜて進む ----
         // 以前は「目的地へ進む」と「押し出される」を毎フレーム別々に位置へ足していたので、境目でガクガクしていた。
         // いまは両方を1つの速度にまとめ、よけの強さは距離で少しずつ変える(境目でぱっと切りかわらない)。
-        const sp = (r.def.mascot ? 1.6 : 1.9) * (r.path.length > 3 ? 1.3 : 1);
+        const sp = r.follow && target ? Math.min(5.2, 1.9 + Math.hypot(target[0] - p.x, target[1] - p.z) * 1.1) : (r.def.mascot ? 1.6 : 1.9) * (r.path.length > 3 ? 1.3 : 1);
         let ix = 0, iz = 0, ax = 0, az = 0;
         if (target && !r.hidden) {
           const dx = target[0] - p.x, dz = target[1] - p.z, d = Math.hypot(dx, dz);
@@ -221,10 +250,10 @@ export function createResidents(scene, graph, getHour) {
         const bl = 1 - Math.exp(-dt * 6);
         r.vx = (r.vx || 0) + (dvx - (r.vx || 0)) * bl; r.vz = (r.vz || 0) + (dvz - (r.vz || 0)) * bl;
         if (r.hidden) { r.vx = r.vz = 0; }
-        else { p.x += r.vx * dt; p.z += r.vz * dt; }
+        else { p.x += r.vx * dt; p.z += r.vz * dt; if (r.follow && collide) { const c = collide(p.x, p.z, 0.3); p.x = c[0]; p.z = c[1]; } }
         speed = Math.hypot(r.vx, r.vz); if (speed < 0.05) speed = 0;
         // 向きは「行きたい方向」を優先(よけられて横にずれても、体は進む方を向いたまま)
-        if (!(r.talking || r.harpT > 0 || (r.near && !r.hidden && !r.free))) {
+        if (!(r.talking || r.harpT > 0 || (r.near && !r.hidden && !r.free)) && !(r.follow && !target)) {
           if (ix || iz) r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(ix, iz), Math.min(1, dt * 6));
           else if (speed > 0.3) r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(r.vx, r.vz), Math.min(1, dt * 4));
         }

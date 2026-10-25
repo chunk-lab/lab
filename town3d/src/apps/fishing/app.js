@@ -782,7 +782,7 @@ export const fishingApp = {
       const { vs, res, catches, oppC } = o;
       if (res !== 'win') { vsResult(o); return; }   // 人が見せるのは勝ったときだけ
       const best = l => { const f = l.filter(c => BYID[c.id] && BYID[c.id].kind === 'fish'); if (!f.length) return null; return f.slice().sort((a, b) => vs.rule === 'big' ? b.size - a.size : b.pts - a.pts)[0]; };
-      const mb = best(catches), ob = best(oppC), oppLook = vs.bot ? 'suna' : vs.name === '前回の自分' ? ctx.player?.look : 'sora';
+      const mb = best(catches), ob = best(oppC), oppLook = vs.bot ? 'suna' : vs.name === '前回の自分' ? ctx.player?.look : 'ren';
       const actor = (look, b, win) => ({ look, pose: win === false ? 'sad' : 'auto', sp: b ? BYID[b.id] : null, size: b ? b.size : 0 });
       const head = res === 'win' ? '🏆 かち!' : res === 'lose' ? 'まけ…' : 'ひきわけ';
       const R = RULES[vs.rule], oname = vs.bot ? '砂吹さん' : vs.name;

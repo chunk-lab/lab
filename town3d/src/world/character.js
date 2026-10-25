@@ -11,7 +11,7 @@ export const LOOKS = {
   mio: { name: 'みお', skin: 0xffe6d6, hair: 0xc9a28c, style: 'long', top: 0xc9b8ea, bottom: 0xfff4e0, shoes: 0xb79cd9, acc: null },
   ren: { name: 'れん', skin: 0xeec3a6, hair: 0x2e2a3d, style: 'spiky', top: 0xfdeeb0, bottom: 0x7d8fb3, shoes: 0x5a4a6b, acc: 'glasses', accColor: 0x5a4a6b },
 };
-export const LOOK_IDS = Object.keys(LOOKS);
+export const LOOK_IDS = ['ren', 'mio'];   // 自分のキャラに選べるのは2人(はな・そらは住人)
 
 // アニメ調のやわらかい3段の陰影と、ふちどり線(うらがえしの殻をふくらませる方式)
 const ramp = new THREE.DataTexture(new Uint8Array([120, 120, 120, 255, 185, 185, 185, 255, 235, 235, 235, 255, 255, 255, 255, 255]), 4, 1, THREE.RGBAFormat);

@@ -59,6 +59,8 @@
 .cs-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
 .cs-marks button{font-size:12px;padding:6px 10px}
 .cs-add{display:flex;gap:6px}
+.cs-practice{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 8px}.cs-practice b{width:100%;font-size:13px}.cs-practice .cs-btn{padding:6px 10px;font-size:13px}
+.cs-io{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}.cs-io .cs-btn{padding:6px 10px;font-size:13px}.cs-io small{width:100%;font-size:11px;opacity:.75}
 .cs-add input{flex:1;min-width:0;font:inherit;font-size:16px;padding:8px 10px;border:2px solid #ead9c2;border-radius:10px;background:#fff;color:var(--cs-ink)}
 .cs-add .cs-btn{padding:8px 12px;flex:none}
 .cs-nb{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}

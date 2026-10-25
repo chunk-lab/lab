@@ -284,6 +284,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
       for (let i = 0; i < 5; i++) B.add(sph(0.18, 8), i % 2 ? n1 : n2, -w / 2 + 1.5 + i * (w - 3) / 4, 5.6, front + 0.2, 0, 1, 1, 1, P4);
     }
     if (o.kind === 'cafe') {
+      bld.cafe = { face: [nx, nz], tables: [-1, 1].map(sg => { const v = new THREE.Vector3(sg * 2.2 + 0.5, 0, front + 2.4).applyMatrix4(P4); return { x: v.x, z: v.z }; }) };   // デートで座るテラス席
       for (const s of [-1, 1]) { B.add(cyl(0.45, 0.45, 0.06, 14), whiteM, s * 2.2 + 0.5, 0.75, front + 2.4, 0, 1, 1, 1, P4); B.add(cyl(0.05, 0.05, 0.75, 6), mat(C.metal), s * 2.2 + 0.5, 0.37, front + 2.4, 0, 1, 1, 1, P4); B.add(geo('para', () => new THREE.ConeGeometry(1.3, 0.6, 10)), mat(s < 0 ? C.coral : C.mint), s * 2.2 + 0.5, 2.3, front + 2.4, 0, 1, 1, 1, P4); B.add(cyl(0.03, 0.03, 2, 6), whiteM, s * 2.2 + 0.5, 1.2, front + 2.4, 0, 1, 1, 1, P4); }
     }
     if (o.kind === 'house') {

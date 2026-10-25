@@ -8,7 +8,7 @@ export const KINDS = [
   { k: 'word', n: '単語' }, { k: 'phrase', n: '熟語・表現' }, { k: 'short', n: '短文' }, { k: 'quote', n: '格言・会話' },
 ];
 export const MARKS = [{ k: 'miss', n: 'まちがえた' }, { k: 'fav', n: 'お気に入り' }, { k: 'test', n: 'テスト範囲' }];
-const MAX = 3000;
+const MAX = 10000;   // 端末の中だけ。多すぎると保存領域があふれるので1万まで
 // 英語の形から種類を決める（指定がないとき）：1語＝単語、2〜4語＝熟語・表現、それより長い＝短文
 export function guessKind(en) {
   const n = String(en).trim().split(/\s+/).filter(Boolean).length;
@@ -41,6 +41,14 @@ export function createNotebook() {
     mark(id, m, on) { const x = list.find(y => y.id === id); if (!x) return; const has = x.marks.includes(m); if (on == null) on = !has; if (on && !has) x.marks.push(m); if (!on && has) x.marks = x.marks.filter(y => y !== m); save(); },
     edit(id, patch) { const x = list.find(y => y.id === id); if (!x) return; ['en', 'ja', 'note', 'kind'].forEach(k => { if (patch[k] != null) x[k] = String(patch[k]).trim(); }); save(); },
     remove(id) { list = list.filter(x => x.id !== id); save(); },
+    // 書き出し・読み込み(機種変更など。サーバーは使わない)
+    exportText() { return JSON.stringify({ app: 'chunk-notebook', v: 1, at: Date.now(), list }); },
+    importText(txt) {
+      let d; try { d = JSON.parse(txt); } catch (e) { return -1; }
+      const arr = Array.isArray(d) ? d : d && Array.isArray(d.list) ? d.list : null; if (!arr) return -1;
+      const before = list.length; arr.forEach(it => it && this.add({ en: it.en, ja: it.ja, kind: it.kind, src: it.src, note: it.note, marks: Array.isArray(it.marks) ? it.marks : [] }, true)); save();
+      return list.length - before;
+    },
     onChange(f) { subs.add(f); return () => subs.delete(f); },
   };
 }
