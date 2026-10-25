@@ -155,8 +155,8 @@ export function createResidents(scene, graph, getHour, collide = null) {
     return { place: g[1], inside: g[2] === 'in' };
   }
 
-  return {
-    list,
+  const api = {
+    list, avoid: null,
     update(dt, h, player) {
       const anyTalking = list.some(q => q.talking);
       for (const r of list) {
@@ -234,6 +234,8 @@ export function createResidents(scene, graph, getHour, collide = null) {
           // プレイヤーに近すぎるときは、止まらずに横へよける(立ち止まっているプレイヤーのそばで固まらないように)
           const pd = Math.hypot(player.x - p.x, player.z - p.z);
           if ((ix || iz) && pd < 1.5 && pd > 0.001) { const w = 1 - pd / 1.5; ax += (p.x - player.x) / pd * w * sp * 1.6; az += (p.z - player.z) / pd * w * sp * 1.6; }
+          // デートの席など、近よらないでほしい場所(avoid)からは、はなれる
+          if (api.avoid && !r.pin && !r.follow) { const z = api.avoid, ox = p.x - z.x, oz = p.z - z.z, od = Math.hypot(ox, oz); if (od < z.r) { const w = 1 - od / z.r; ax += (od > 0.01 ? ox / od : 1) * w * sp * 2.2; az += (od > 0.01 ? oz / od : 0) * w * sp * 2.2; if (r.idle && Math.hypot(r.idle[0] - z.x, r.idle[1] - z.z) < z.r) r.idle = null; } }
           // 住人どうしが重なって団子にならないよう、ゆるく離れる
           if (!r.talking) for (const o of list) {
             if (o === r || o.hidden) continue;
@@ -274,4 +276,5 @@ export function createResidents(scene, graph, getHour, collide = null) {
       return all[r.lineIdx];
     },
   };
+  return api;
 }

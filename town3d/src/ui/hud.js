@@ -58,6 +58,7 @@ export const CSS = `
 .tw-choices .tw-btn.main{background:var(--tw-mint);border-color:var(--tw-mint)}
 .tw-toast{position:absolute;left:50%;top:calc(64px + var(--tw-top));transform:translateX(-50%);background:rgba(90,74,107,.88);color:#fff;padding:8px 16px;border-radius:999px;font-size:14px;font-weight:700;animation:tw-pop .2s;white-space:nowrap;pointer-events:none}
 .tw-panel{position:absolute;inset:0;background:rgba(90,74,107,.25);display:grid;place-items:center;pointer-events:auto;animation:tw-fade .2s}
+.tw-panel.tw-low{place-items:end center;background:transparent;padding-bottom:12px}.tw-panel.tw-low .tw-card{max-height:52%;display:flex;flex-direction:column}.tw-panel.tw-low .tw-log{height:auto;flex:1;min-height:60px}
 .tw-card{width:min(92%,420px);max-height:86%;overflow:auto;background:var(--tw-cream);border-radius:24px;padding:20px;box-shadow:0 14px 40px rgba(90,74,107,.3)}
 .tw-card h2{margin:0 0 12px;font-size:19px}
 .tw-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed #e6dcef;font-size:14px}

@@ -353,11 +353,11 @@ export function mount(container, opt = {}) {
     });
   }
   // ---- はなちゃん:自由なおしゃべり(決まりごとを足さない)、一緒に歩く、カフェでデート ----
-  function freeChat(r, first, situation) {
+  function freeChat(r, first, situation, low) {
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
     openChat({
-      hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400,
+      hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400, low,
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
       setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
@@ -415,16 +415,17 @@ export function mount(container, opt = {}) {
     me.x = pA.x; me.z = pA.z; me.ry = Math.atan2(-rx, -rz); me.speed = 0; seat = { b: { x: pA.x, z: pA.z, ry: me.ry }, date: true }; me.ch.pose = 'sit';
     r.pin = { x: pB.x, z: pB.z, y: -0.04, ry: Math.atan2(rx, rz), pose: 'sit' };
     cam.x = T.x; cam.z = T.z; cam.yaw = Math.atan2(nx, nz); cam.pitch = 0.32; cam.dist = 5.2;
-    date = { r, stools, wasFollow: r.follow, cam0: { pitch: cam.pitch, dist: cam.dist } };
+    date = { r, stools, wasFollow: r.follow, cam0: { pitch: cam.pitch, dist: cam.dist } }; residents.avoid = { x: T.x, z: T.z, r: 3.2 };
+    for (const o of residents.list) if (o !== r && !o.hidden && Math.hypot(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z) < 2.4) { const a = Math.atan2(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z); o.ch.root.position.x = T.x + Math.sin(a) * 3.3; o.ch.root.position.z = T.z + Math.cos(a) * 3.3; }
     const H = env.hour, first = H < 11 ? 'モーニング、いい感じだね。何たのむ?' : H < 17 ? 'ここ、前から来てみたかったんだ〜。何にする?' : '夜のカフェって、ちょっと大人な感じしない?';
-    freeChat(r, first, `いま「${settings.name || 'あなた'}」と、町のカフェのテラス席で向かい合ってすわり、デートしている。`);
+    freeChat(r, first, `いま「${settings.name || 'あなた'}」と、町のカフェのテラス席で向かい合ってすわり、デートしている。`, true);
     const off = bus.on('ui:panelClosed', () => { off(); endDate(); });
     date.off = off;
   }
   function endDate(quiet) {
     if (!date) return; const d = date; date = null;
     d.off?.(); d.stools.forEach(m => { scene.remove(m); m.geometry.dispose(); m.material.dispose(); });
-    d.r.pin = null; d.r.ch.pose = null; d.r.follow = d.wasFollow; d.r.talking = false;
+    d.r.pin = null; d.r.ch.pose = null; residents.avoid = null; d.r.follow = d.wasFollow; d.r.talking = false;
     if (seat && seat.date) { seat = null; me.ch.pose = null; }
     cam.pitch = d.cam0.pitch; cam.dist = d.cam0.dist;
     if (!quiet) hud.say('npc:hana', '楽しかった〜! また来ようね', 4);
