@@ -286,7 +286,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     proj, splash, addRing, underRect: () => cam.ud || UR(), underPad: () => underPad(cam.ud || UR()),
     // y0:カメラのときの上のあき(対戦の相手の画面の分)。池の絵はその下の大きさで作る
     resize(y0 = 0) {
-      const r = canvas.getBoundingClientRect(); dpr = Math.min(2, window.devicePixelRatio || 1);
+      const r = canvas.getBoundingClientRect(); dpr = Math.min(1.5, window.devicePixelRatio || 1);   // スマホのメモリを節約(見た目はほぼ同じ)
       MW = Math.max(10, r.width); MH = Math.max(10, r.height); canvas.width = Math.round(MW * dpr); canvas.height = Math.round(MH * dpr);
       W = MW; H = under ? Math.max(10, MH - y0) : MH;
       if (under) { pc = pc || document.createElement('canvas'); pc.width = Math.round(W * dpr); pc.height = Math.round(H * dpr); pcg = pc.getContext('2d'); areaY0 = y0; cam.init = false; }

@@ -421,7 +421,7 @@ export const fishingApp = {
         leap = { sp, x: E.S.lure.x, d: E.S.lure.d, len: d.size || 30, t: 0, dur: vs ? 0.7 : 1.15, then: () => { if (vs) return; showCatch(d, info); } };
         if (vs) { toast(`${sp.emoji || '🐟'} ${sp.name}${sp.kind === 'fish' ? ` <small>${d.size}cm</small>` : ''}${info.isNew ? ' <small style="color:#e0556b">NEW!</small>' : ''}`, 1300); return; }
       }
-      // 自分のキャラが魚を見せる(3Dが使えないときはカード)
+      // 釣れた魚を見せる(2Dの軽い画面。使えないときはカード)
       async function showCatch(d, info) {
         const sp = info.sp; card = { remove() {} };
         const head = `<div style="font-size:12px;font-weight:900;color:${RARITY_COL[sp.r]}">${'★'.repeat(sp.r)}${'☆'.repeat(5 - sp.r)} ${RARITY[sp.r] || 'はずれ'} ${MODE_BADGE(easy ? 'easy' : 'real')}</div>
@@ -591,9 +591,10 @@ export const fishingApp = {
 
     // ================= 見せる画面(3D) =================
     let showMod = null;
-    const loadShow = () => (showMod ? Promise.resolve(showMod) : import('./show3d.js').then(m => (showMod = m)).catch(e => { console.warn('[fishing] show3d', e); return null; }));
+    const loadShow = () => (showMod ? Promise.resolve(showMod) : import('./show2d.js').then(m => (showMod = m)).catch(e => { console.warn('[fishing] show3d', e); return null; }));
     const MODE_BADGE = m => m === 'easy' ? '<span class="badge" style="background:#7fcf8f">かんたん</span>' : '<span class="badge" style="background:#7aa8e8">ほんかく</span>';
     // actors:[{look,pose,sp,size}] / infoHtml / sayText / buttons:[[label, cls, fn]] / caption:[title, sub]
+    const shows = new Set();
     async function showScreen({ actors, bg, infoHtml, sayText, buttons, caption, confettiOn }) {
       const m = await loadShow(); if (!m) return null;
       const el = document.createElement('div'); el.className = 'show'; root.appendChild(el);
@@ -601,11 +602,11 @@ export const fishingApp = {
       const sc = m.createShow(el, { actors: actors.map(a => ({ ...a, look: m.lookOf(a.look) })), bg });
       el.insertAdjacentHTML('beforeend', `<div class="info">${infoHtml}</div>${sayText ? `<div class="say">${sayText}</div>` : ''}<div class="acts"></div>`);
       const acts = el.querySelector('.acts');
-      const close = () => { sc.dispose(); el.remove(); };
+      const close = () => { shows.delete(close); sc.dispose(); el.remove(); }; shows.add(close);   // どの方法で抜けても片付ける
       const photoBtn = document.createElement('button'); photoBtn.className = 'btn gold'; photoBtn.textContent = '📷 写真を撮る';
       photoBtn.onclick = async () => {
         const src = sc.snap(caption); sfx.play('coin');
-        try { const P2 = await import('../../game/photos.js'); P2.flash(root); P2.shotCard(root, src, { gems: ctx.gems, cfg: ctx.photo, openAlbum: () => ctx.open('album'), sfx: () => {} }); }
+        try { const P2 = await import('../../game/photos.js'); P2.flash(root); P2.shotCard(root, src, { gems: ctx.gems, cfg: ctx.photo, openAlbum: () => { close(); ctx.open('album'); }, sfx: () => {} }); }
         catch (e) { const a = document.createElement('a'); a.href = src; a.download = 'fish.jpg'; a.click(); }
       };
       acts.appendChild(photoBtn);
@@ -794,7 +795,7 @@ export const fishingApp = {
 
     menu();
     return {
-      unmount() { cancelAnimationFrame(raf); clear(); frame = null; sfx.close(); root.remove(); },
+      unmount() { [...shows].forEach(c => c()); cancelAnimationFrame(raf); clear(); frame = null; sfx.close(); root.remove(); },
     };
   },
 };
