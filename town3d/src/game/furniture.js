@@ -263,26 +263,30 @@ export function stackY(list) {
   return out;
 }
 // 買った家具を置く場所をさがす(あいている所を優先。なければ重ねる)
-export function findSpot(rm, list, p) {
+export function findSpot(rm, list, p, near = null) {   // near:{x,z}(マス×U)があれば、そこにいちばん近い空き(=カメラの手前)
   const k = kindOf(p.id);
   if (k === 'wall') {
     const it = ITEM[p.id], len = wallLen(p);
     for (const side of ['n', 'w']) {
       const total = (side === 'n' ? rm.cols : rm.rows) * U;
+      const cand = [];
       for (let gx = 0; gx + len <= total; gx += 1) {
         const q = { ...p, wall: side, gx, y: it.y0 };
         const clash = list.some(o => kindOf(o.id) === 'wall' && o.wall === side && o.uid !== p.uid && gx < o.gx + wallLen(o) && o.gx < gx + len && Math.abs((o.y ?? ITEM[o.id].y0) - it.y0) < 1.0);
-        if (!clash) return q;
+        if (!clash) { if (!near) return q; cand.push(q); }
       }
+      if (cand.length) { const c = side === 'n' ? near.x : near.z; cand.sort((a, b) => Math.abs(a.gx + len / 2 - c) - Math.abs(b.gx + len / 2 - c)); return cand[0]; }
     }
     return { ...p, wall: 'n', gx: 0, y: it.y0 };
   }
   if (k === 'ceil') { return { ...p, gx: Math.floor((rm.cols * U - U) / 2), gz: Math.floor((rm.rows * U - U) / 2), r: 0 }; }
+  let best = null, bd = 1e9;
   for (let r = 0; r < 2; r++) for (let gz = 0; gz <= rm.rows * U; gz += U) for (let gx = 0; gx <= rm.cols * U; gx += U) {
     const q = { ...p, gx, gz, r }; if (!inside(rm, q)) continue;
     const [w, d] = size(q);
     const clash = list.some(o => { if (o.uid === p.uid || (kindOf(o.id) !== 'floor' && kindOf(o.id) !== 'flat')) return false; const [ow, od] = size(o); return q.gx < o.gx + ow && o.gx < q.gx + w && q.gz < o.gz + od && o.gz < q.gz + d; });
-    if (!clash || kindOf(p.id) === 'flat') return q;
+    if (!clash || kindOf(p.id) === 'flat') { if (!near) return q; const dd = Math.hypot(gx + w / 2 - near.x, gz + d / 2 - near.z) + r * 0.01; if (dd < bd) { bd = dd; best = q; } }
   }
+  if (best) return best;
   return { ...p, gx: 0, gz: 0, r: 0 };   // あいている所がなければ、すみに重ねる
 }

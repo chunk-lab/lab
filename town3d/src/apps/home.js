@@ -143,9 +143,15 @@ export const homeApp = {
     const list = () => placed.filter(p => p.room === cur().id);
     const save = () => furn.savePlaced(placed);
     const uidOf = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    // ひとつもどる(何手か前まで)・一時記憶
+    const hist = [], snap = () => JSON.stringify(placed);
+    const remember = before => { if (before !== snap()) { hist.push(before); if (hist.length > 40) hist.shift(); } };
+    const restore = st => { placed = JSON.parse(st); save(); if (!placed.some(p => p.uid === selUid)) selUid = null; drag = null; bad = false; relayout(); ui(); };
 
     // 部屋のかべ・ゆか(広げたときも作りなおす)
     const shell = new THREE.Group(); scene.add(shell);
+    let walls = null;
+    const wallVis = () => { if (!walls) return; walls.n.visible = Math.cos(camYaw) > -0.05; walls.w.visible = Math.sin(camYaw) > -0.05; };   // カメラ側の壁は消す(向こうが見えるように)
     const dispose = g => g.traverse(o => { if (o.isMesh) { o.geometry.dispose(); o.material.dispose(); } });
     function buildShell() {
       shell.children.slice().forEach(c => { shell.remove(c); dispose(c); });
@@ -160,10 +166,10 @@ export const homeApp = {
       const grid = new THREE.GridHelper(Math.max(C, R), Math.max(C, R), 0xe9cfa6, 0xeed8b4); grid.scale.set(C / Math.max(C, R), 1, R / Math.max(C, R)); grid.position.set(C / 2, 0.01, R / 2);
       const w1 = new THREE.Mesh(new THREE.BoxGeometry(C, WALL_H, 0.25), lm(pal[1])); w1.position.set(C / 2, WALL_H / 2, -0.125);
       const w2 = new THREE.Mesh(new THREE.BoxGeometry(0.25, WALL_H, R), lm(pal[2])); w2.position.set(-0.125, WALL_H / 2, R / 2);
-      shell.add(floor, grid, w1, w2);
+      shell.add(floor, grid, w1, w2); walls = { n: w1, w: w2 }; wallVis();
     }
     // 拡大・縮小(ボタン・マウスのホイール・ピンチ)と、拡大中のスクロール(2本指でうごかす)
-    let zoom = 1, panX = 0, panZ = 0, baseDist = 15;
+    let zoom = 1, panX = 0, panZ = 0, baseDist = 15, camYaw = Math.PI / 4, camPitch = 0.56;   // 見る向き(ドラッグ・↺↻で変えられる)
     const ZMIN = 0.45, ZMAX = 3.2;
     const setZoom = z => { zoom = Math.max(ZMIN, Math.min(ZMAX, z)); resize(); };
     function resize() {
@@ -173,13 +179,25 @@ export const homeApp = {
       cam.fov = 38;   // 歩いているときのカメラは毎フレーム決める
       baseDist = Math.max(15, 6.4 / (cam.aspect * 0.344)) * Math.max(1, big / 8 * 0.97);
       const dist = baseDist / zoom, cx = r.cols / 2 + panX, cz = r.rows / 2 + panZ;
-      cam.position.set(cx + dist * 0.62, dist * 0.55, cz + dist * 0.62); cam.lookAt(cx, 0.9, cz);
+      const D = dist * 1.04, cp = Math.cos(camPitch); cam.position.set(cx + Math.sin(camYaw) * cp * D, Math.sin(camPitch) * D, cz + Math.cos(camYaw) * cp * D); cam.lookAt(cx, 0.9, cz); wallVis();
       cam.updateProjectionMatrix(); draw();
     }
     const zm = root.querySelector('.zm'), zb = 'width:40px;height:40px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:20px;line-height:1;color:#fff;background:linear-gradient(160deg,#c9b8ea,#b19cd9);box-shadow:0 2px 6px #0003;cursor:pointer';
     zm.innerHTML = `<button data-z="in" style="${zb}" aria-label="拡大">＋</button><button data-z="out" style="${zb}" aria-label="縮小">−</button><button data-z="reset" style="${zb};font-size:14px;background:#d9d2e3;color:${ink}" aria-label="もとの大きさ">⟲</button>`;
     zm.onpointerdown = e => e.stopPropagation();
-    zm.onclick = e => { const z = e.target.closest('[data-z]')?.dataset.z; if (!z) return; if (z === 'reset') { panX = 0; panZ = 0; setZoom(1); } else setZoom(zoom * (z === 'in' ? 1.3 : 1 / 1.3)); };
+    zm.onclick = e => { const z = e.target.closest('[data-z]')?.dataset.z; if (!z) return; if (z === 'reset') { panX = 0; panZ = 0; camYaw = Math.PI / 4; camPitch = 0.56; setZoom(1); } else setZoom(zoom * (z === 'in' ? 1.3 : 1 / 1.3)); };
+    // 左下:見る向き・一時記憶・記憶までもどる・ひとつもどる
+    const hz = document.createElement('div'); hz.style.cssText = 'position:absolute;left:8px;bottom:8px;display:flex;gap:6px;z-index:3'; cv.appendChild(hz);
+    const hb = (k, ic, lab) => `<button data-h="${k}" style="${zb};width:46px;height:46px;font-size:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;color:${ink}" aria-label="${lab}">${ic}<span style="font-size:8px;font-weight:800;margin-top:1px">${lab}</span></button>`;
+    hz.innerHTML = hb('l', '↺', '向き') + hb('r', '↻', '向き') + hb('memo', '💽', '記憶') + hb('back', '⏪', '記憶へ') + hb('undo', '↩️', 'ひとつ');
+    hz.onpointerdown = e => e.stopPropagation();
+    hz.onclick = e => {
+      const h = e.target.closest('[data-h]')?.dataset.h; if (!h) return;
+      if (h === 'l' || h === 'r') { camYaw += (h === 'l' ? -1 : 1) * Math.PI / 4; resize(); return; }
+      if (h === 'memo') { const m = snap(); ctx.storage.set('memo', m); tip.textContent = '💽 いまの配置を記憶したよ。⏪でここまで戻れるよ。'; return; }
+      if (h === 'back') { const m = ctx.storage.get('memo'); if (!m) { tip.textContent = 'まだ記憶していないよ。💽で記憶してね。'; return; } const before = snap(); restore(m); remember(before); tip.textContent = '⏪ 記憶した配置に戻したよ。(↩️でやり直しも取り消せる)'; return; }
+      if (h === 'undo') { if (!hist.length) { tip.textContent = 'これより前には戻れないよ。'; return; } restore(hist.pop()); tip.textContent = `↩️ ひとつ戻したよ。(あと${hist.length}回戻れる)`; }
+    };
     cv.addEventListener('wheel', e => { if (walk) return; e.preventDefault(); setZoom(zoom * Math.exp(-e.deltaY * 0.0015)); }, { passive: false });
     const ro = new ResizeObserver(resize); ro.observe(cv);
 
@@ -227,7 +245,7 @@ export const homeApp = {
     function ui() {
       planUI();
       const p = placed.find(x => x.uid === selUid), k = p && kindOf(p.id);
-      tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ(半マスずつ)。${k === 'wall' ? 'かべをタップでも動くよ。' : 'ほかの家具の上にも置けるよ。'}` : (Object.keys(furn.inv()).length ? 'かぐをタップするとえらべるよ。下の一覧から出すこともできるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
+      tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ。ほかの家具はダブルタップでえらぶ。` : (Object.keys(furn.inv()).length ? '家具はダブルタップでえらぶよ。何もない所をドラッグで向きを変えられるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
       ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button><button data-a="gbox" style="${btn('linear-gradient(160deg,#b9d8ff,#8fbaf0)')}">🎮 ゲーム機</button>` + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
@@ -280,6 +298,7 @@ export const homeApp = {
       if (a === 'gbox') { ctx.open('gamebox', { from: 'home' }); return; }   // チャンクボックス(英語対戦・あそびゲーム)
       if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(チャンクタウン)の勉強部屋を開く
       if (!a || !p) return;
+      const before = snap();
       if (a === 'off') selUid = null;
       else if (a === 'del') { placed = placed.filter(x => x !== p); selUid = null; save(); }
       else if (a === 'rot') {
@@ -291,12 +310,13 @@ export const homeApp = {
           if (inside(rm, q)) { Object.assign(p, q); save(); break; }
         }
       }
-      ui(); relayout();
+      remember(before); ui(); relayout();
     };
     inv.onclick = e => {
       const id = e.target.closest('[data-i]')?.dataset.i; if (!id || remaining(id) <= 0) return;
-      const p = findSpot(cur(), list(), { uid: uidOf(), id, room: cur().id, gx: 0, gz: 0, r: 0 });
-      placed.push(p); selUid = p.uid; save(); ui(); relayout();
+      const rm = cur(), near = { x: Math.max(0, Math.min(rm.cols, cam.position.x)) * U, z: Math.max(0, Math.min(rm.rows, cam.position.z)) * U };   // カメラにいちばん近い所(手前)に出す
+      const before = snap(), p = findSpot(rm, list(), { uid: uidOf(), id, room: rm.id, gx: 0, gz: 0, r: 0 }, near);
+      placed.push(p); selUid = p.uid; save(); remember(before); ui(); relayout();
     };
 
     const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), pt = new THREE.Vector3();
@@ -332,28 +352,48 @@ export const homeApp = {
       ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (ptrs.size === 2) {   // 2本指：つかんでいた家具はもとにもどして、拡大・縮小とスクロールに切りかえる
         if (drag) { Object.assign(drag.p, drag.from); drag = null; relayout(); }
-        pinch = { ...pinchState(), zoom }; return;
+        turn = null; pinch = { ...pinchState(), zoom }; return;
       }
       if (ptrs.size > 2) return;
       const u = hitUid(e);
-      if (u) {
-        selUid = u; const p = placed.find(x => x.uid === u), k = kindOf(p.id); bad = false;
+      if (u && u === selUid) {   // えらんでいる家具だけ、つかんで動かせる
+        const p = placed.find(x => x.uid === u), k = kindOf(p.id); bad = false;
         let off = null;
         if (k !== 'wall') { aim(e); if (ray.ray.intersectPlane(groundAt(Y[u] || 0), pt)) { const [w, d] = k === 'ceil' ? [U, U] : size(p); off = { x: p.gx + w / 2 - pt.x * U, z: p.gz + d / 2 - pt.z * U }; } }
-        drag = { p, from: { ...p }, off, moved: false, id: e.pointerId }; cv.setPointerCapture(e.pointerId); ui(); mark(); draw();
-      } else if (selUid) {
-        const p = placed.find(x => x.uid === selUid), c = p && mover(e, p, null);
-        if (c) { const from = { ...p }; Object.assign(p, c); if (inside(cur(), p)) { toTop(p); save(); } else { Object.assign(p, from); tip.textContent = 'そこには置けないよ。'; } relayout(); }
+        drag = { p, from: { ...p }, before: snap(), off, moved: false, id: e.pointerId }; cv.setPointerCapture(e.pointerId); mark(); draw();
+        return;
       }
+      // それ以外:ドラッグなら見る向きを変える。タップなら(はなしたときに)ダブルタップの判定・えらび中の家具をそこへ
+      turn = { id: e.pointerId, x: e.clientX, y: e.clientY, yaw: camYaw, pitch: camPitch, moved: false, uid: u }; cv.setPointerCapture(e.pointerId);
     };
+    let turn = null, lastTap = null;
+    function tapAt(e, u) {
+      const now = performance.now();
+      if (u) {
+        if (lastTap && lastTap.uid === u && now - lastTap.t < 450) { selUid = u; bad = false; lastTap = null; ui(); mark(); draw(); return; }   // ダブルタップでえらぶ
+        lastTap = { uid: u, t: now };
+        if (u !== selUid) tip.textContent = 'えらぶときは、ダブルタップしてね。';
+        return;
+      }
+      lastTap = null;
+      if (selUid) {
+        const p = placed.find(x => x.uid === selUid), c = p && mover(e, p, null);
+        if (c) { const before = snap(), from = { ...p }; Object.assign(p, c); if (inside(cur(), p)) { toTop(p); save(); remember(before); } else { Object.assign(p, from); tip.textContent = 'そこには置けないよ。'; } relayout(); }
+      }
+    }
     cv.onpointermove = e => {
       if (walk) return;
       if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (pinch && ptrs.size >= 2) {
         const c = pinchState(), k = baseDist / zoom * 2 * Math.tan(19 * Math.PI / 180) / (cv.clientHeight || 300);
         const dx = c.mx - pinch.mx, dy = c.my - pinch.my, r = cur();
-        panX = Math.max(-r.cols / 2, Math.min(r.cols / 2, panX + k * 0.7071 * (-dx - dy))); panZ = Math.max(-r.rows / 2, Math.min(r.rows / 2, panZ + k * 0.7071 * (dx - dy)));
+        const rx = Math.cos(camYaw), rz = -Math.sin(camYaw), fx = -Math.sin(camYaw), fz = -Math.cos(camYaw); panX = Math.max(-r.cols / 2, Math.min(r.cols / 2, panX + k * (-rx * dx + fx * dy))); panZ = Math.max(-r.rows / 2, Math.min(r.rows / 2, panZ + k * (-rz * dx + fz * dy)));
         pinch.mx = c.mx; pinch.my = c.my; zoom = Math.max(ZMIN, Math.min(ZMAX, pinch.zoom * c.d / pinch.d)); resize(); return;
+      }
+      if (turn && e.pointerId === turn.id) {
+        const dx = e.clientX - turn.x, dy = e.clientY - turn.y; if (Math.hypot(dx, dy) > 8) turn.moved = true;
+        if (turn.moved) { camYaw = turn.yaw - dx * 0.008; camPitch = Math.max(0.22, Math.min(1.4, turn.pitch + dy * 0.005)); resize(); }
+        return;
       }
       if (!drag || e.pointerId !== drag.id) return;
       const c = mover(e, drag.p, drag.off); if (!c) return;
@@ -361,16 +401,17 @@ export const homeApp = {
     };
     const up = e => {
       ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null;
+      if (turn && e.pointerId === turn.id) { const t0 = turn; turn = null; if (!t0.moved && e.type === 'pointerup') tapAt(e, t0.uid); return; }
       if (!drag || e.pointerId !== drag.id) return;
       const p = drag.p;
-      if (drag.moved && !inside(cur(), p)) { Object.assign(p, drag.from); tip.textContent = 'そこには置けないよ。'; } else if (drag.moved) { toTop(p); save(); }
+      if (drag.moved && !inside(cur(), p)) { Object.assign(p, drag.from); tip.textContent = 'そこには置けないよ。'; } else if (drag.moved) { toTop(p); save(); remember(drag.before); }
       drag = null; relayout();
     };
     cv.onpointerup = up; cv.onpointercancel = up;
 
     // ---- 歩く(自分が部屋の中に立って、歩きまわる。写真も撮れる) ----
     let wPose = null, wy = 0, wLast = '', wInput = null, wme = null, wyaw = 0.8, wpitch = 0.3, wdist = 4.2, wx = 0, wz = 0, wry = 0, wspeed = 0, blockers = [], wUI = null;
-    const editEls = [planEl, tip, ctl, inv, zm];
+    const editEls = [planEl, tip, ctl, inv, zm, hz];
     function calcBlockers() {   // ゆかにじかに置いてある背の高い家具は、とおれない
       blockers = []; Y = stackY(list());
       for (const p of list()) {
