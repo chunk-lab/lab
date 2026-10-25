@@ -7,6 +7,8 @@ import { createAudio } from './core/audio.js';
 import { createAI, buildSystem } from './core/ai.js';
 import { openAiSetup, openChat } from './ui/aiui.js';
 import { openSoraNote } from './ui/sora.js';
+import { openPianoMenu, playSong, runTapGame } from './ui/piano.js';
+import { SONGS } from './world/songs.js';
 import { furn } from './game/furniture.js';
 import { openOgiri } from './ui/ogiri.js';
 import { createEnv } from './world/env.js';
@@ -24,7 +26,7 @@ import { createHud, CSS } from './ui/hud.js';
 import { APPS } from './apps/registry.js';
 import { openFinder } from './ui/finder.js';
 import { openNotes } from './ui/notes.js';
-import { snapCanvas, shotCard, flash } from './game/photos.js';
+import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
 import { createFireworks, FW_TYPES, FW_SHOWS, FW_CENTER } from './world/fireworks.js';
 import { createSchedule, EVENT_KINDS } from './world/events.js';
 
@@ -143,7 +145,7 @@ export function mount(container, opt = {}) {
 
   const hud = createHud(root, bus);
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
-  const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: opt.member || null, dictUrl: opt.dictUrl || null });
+  const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   hud.setCoins(wallet.get(), gemsNow());
@@ -200,6 +202,7 @@ export function mount(container, opt = {}) {
     if (focus.kind === 'stand') { standFromSeat(); return; }
     if (focus.kind === 'benchtalk') { const r = seat.hana; if (!ai.ready) { openAiSetup({ hud, ai, onDone: () => freeChat(r, 'ねえねえ、なに話す?', benchSit(), true) }); return; } freeChat(r, ['ねえねえ、なに話す?', 'のんびりするの、いいね〜', 'ここ、風が気持ちいいね'][Math.floor(Math.random() * 3)], benchSit(), true); return; }
     if (focus.kind === 'bench') { sitOnBench(focus); return; }
+    if (focus.kind === 'piano') { pianoMenu(); return; }
     if (focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn') && !battle.active && !sport.active) {   // 春・秋は、掲示板からゴルフ/フリスビーに出る
       const k = seasons.season === 'spring' ? 'golf' : 'frisbee';
       hud.dialog({ name: 'ほし広場の掲示板', text: k === 'golf' ? '⛳ きょうのミニゴルフコース(5ホール)が貼り出されている。町じゅうがコースだ!' : '🥏 きょうのフリスビーコース(5ホール)が貼り出されている。町じゅうがコースだ!', choices: [{ label: k === 'golf' ? '⛳ ゴルフに出る' : '🥏 フリスビーに出る', fn: () => sport.start(k) }, { label: '📋 お知らせを見る', fn: () => openApp('board', { from: 'board' }) }] });
@@ -295,15 +298,16 @@ export function mount(container, opt = {}) {
       const t = new Date(y, m - 1, d); if (t.getFullYear() !== y || t.getMonth() !== m - 1 || t.getDate() !== d) return '';
       return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
     };
-    const inp = { get value() { return birthStr(); } };
+    const inp = { get value() { return settings.birthLock && settings.birth ? settings.birth : birthStr(); } };
+    if (settings.birthLock && settings.birth) [iy, im, id].forEach(el => { el.disabled = true; });   // 誕生日はとうろくずみ(変えられない)
     pn.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return;
       if (b.dataset.ad === 'close') return hud.closePanel();
       if (b.dataset.ad === 'off') { settings.adult = 0; save(); msg.textContent = 'オフにしました。'; return; }
       if (b.dataset.ad === 'on') {
         if (!inp.value || ageOf(inp.value) < 0) { msg.textContent = '生年月日を、年・月・日の順に数字で入れてね。'; return; }
-        if (ageOf(inp.value) < 18) { settings.adult = 0; settings.birth = ''; save(); msg.textContent = '18歳未満の人は使えません。'; return; }
-        settings.birth = inp.value; settings.adult = 1; save(); msg.textContent = 'オンにしました。';
+        if (ageOf(inp.value) < 18) { settings.adult = 0; if (!settings.birthLock) settings.birth = ''; save(); msg.textContent = '18歳未満の人は使えません。'; return; }
+        settings.birth = inp.value; settings.birthLock = 1; settings.adult = 1; save(); msg.textContent = 'オンにしました。';
       }
     });
   }
@@ -455,6 +459,7 @@ export function mount(container, opt = {}) {
       guide.path.shift();
       if (!guide.path.length) {
         const { r, p } = guide; guide = null; r.lagT = 0;
+        if (p.arrive) { p.arrive(); return true; }
         hud.dialog({ name: r.def.name, role: r.def.role, text: `着いた! ${p.n}、やる?`, choices: [{ label: 'やる!', fn: () => { markPlay(p.k); p.go(); } }, { label: 'また今度', fn: () => {} }] });
       }
       return true;
@@ -565,6 +570,112 @@ export function mount(container, opt = {}) {
     if (seat && seat.date) { seat = null; me.ch.pose = null; }
     cam.pitch = d.cam0.pitch; cam.dist = d.cam0.dist;
     if (!quiet) say1(d.r, d.r.def.id === 'sora' ? '楽しかったよ。また来よう!' : '楽しかった〜! また来ようね', 4);
+  }
+  // ---- ストリートピアノ ----
+  let pianoGame = null;
+  function sitAtPiano() {
+    standFromSeat(); const s = city.piano.seat;
+    me.x = s.x; me.z = s.z; me.ry = s.ry; me.speed = 0; seat = { b: { x: s.x, z: s.z, ry: 0 }, piano: true }; me.ch.pose = 'piano'; me.ch.holdTo = null; input.clear();
+  }
+  function pianoMenu() {
+    openPianoMenu({
+      hud,
+      onAuto: id => { sitAtPiano(); audio.unlock(); const sec = playSong(audio, id), nm = (SONGS.find(x => x.id === id) || {}).name; hud.say(me.id, `♪ ${nm} ♪`, Math.min(10, sec)); const s0 = seat; setTimeout(() => { if (seat === s0) me.ch.pose = 'sit'; }, sec * 1000); },
+      onTap: id => { sitAtPiano(); audio.unlock(); pianoGame = runTapGame({ root, audio, id, onEnd: r => { pianoGame = null; if (seat && seat.piano) me.ch.pose = 'sit'; if (r.quit) return; const k = r.total ? r.hit / r.total : 0; hud.dialog({ name: '🎹 ' + r.name, text: `${r.hit}/${r.total} 音 ・ Perfect ${r.per} ・ 最大 ${r.combo} combo — ${k >= 0.95 ? 'すばらしい! 拍手がきこえるよ👏' : k >= 0.75 ? 'じょうず!' : k >= 0.5 ? 'いい感じ! もう一回?' : 'れんしゅうあるのみ!'}`, choices: [{ label: 'もう一回', fn: () => pianoMenu() }, { label: 'おわる', fn: () => {} }] }); } }); },
+    });
+  }
+  // ---- 誕生日 ----
+  //   その日(この端末の日付で、登録した月日):住人がみんな1回ずつ「おめでとう」/砂吹さんがハーモニカ/そら君が花束/はなちゃんがピアノ
+  //   夜:とくべつな花火+記念写真(アルバムの特別枠・無料)。その月は家のゲーム機が全部無料。翌月はサブスク半額のお知らせ
+  let bdayTest = /[?&]bday=1/.test(location.search) ? 'day' : '';
+  const bdayMD = () => { const b = settings.birth; if (!b) return null; const [, m, d] = b.split('-').map(Number); return m && d ? { m, d } : null; };
+  const isBday = () => { if (bdayTest === 'day' || bdayTest === 'night') return true; const b = bdayMD(), n = new Date(); return !!b && n.getMonth() + 1 === b.m && n.getDate() === b.d; };
+  const isBirthMonth = () => { if (bdayTest === 'day' || bdayTest === 'night') return true; const b = bdayMD(); return !!b && new Date().getMonth() + 1 === b.m; };
+  const bst = () => { const y = new Date().getFullYear() + (bdayTest ? ':test' : ''); let s = storage.get('bday'); if (!s || s.y !== y) { s = { y, greet: [] }; storage.set('bday', s); } return s; };
+  const bsave = s => storage.set('bday', s);
+  let bdayCool = 0, bdayHello = false;
+  const B_LINES = ['お誕生日おめでとう!', 'Happy birthday! おめでとう!', '今日、誕生日なんだって? おめでとう!', 'おめでとう! すてきな一年になりますように'];
+  function birthdayUpdate(dt) {
+    if (!started || appHost.current || !isBday()) return;
+    const s = bst(), nm = settings.name || 'あなた';
+    if (!bdayHello) { bdayHello = true; hud.toast(`🎂 ${nm}さん、お誕生日おめでとう!`); }
+    bdayCool -= dt; if (bdayCool > 0 || hud.busy || pianoGame || evt) return;
+    const near = r => !r.hidden && r.ch.root.visible && Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) < 3.6;
+    const R = id => residents.list.find(x => x.def.id === id);
+    // 夜の花火と記念写真
+    if (!s.fw && (bdayTest === 'night' || env.hour >= 19 || env.hour < 3)) { s.fw = 1; bsave(s); birthdayNight(); return; }
+    // そら君:花束
+    const so = R('sora'); if (so && !s.sora && near(so) && !so.pin) { s.sora = 1; bsave(s); furn.give('bouquet'); hud.dialog({ name: 'そら', role: so.def.role, text: `あ、いたいた! ${nm}、誕生日おめでとう。これ、花束。部屋にかざってよ`, choices: [{ label: 'ありがとう!', fn: () => hud.toast('💐 そら君の花束をもらった! 家にかざれるよ') }] }); bdayCool = 3; return; }
+    // はなちゃん:ピアノでハッピーバースデー
+    const ha = R('hana'); if (ha && !s.hana && (near(ha) || ha.follow) && !ha.pin && (s.hanaT || 0) < Date.now()) {
+      hud.dialog({ name: 'はな', role: ha.def.role, text: `${nm}、お誕生日おめでとう! ねえ、ちょっと来て。プレゼントがあるの!`, choices: [
+        { label: 'うん!', fn: () => { s.hana = 1; bsave(s); if (!ha.follow) hanaFollow(ha, true, true); const P = city.piano; startGuide(ha, { n: 'ピアノ', where: () => ({ x: P.x + 1.6, z: P.z + 2.4 }), arrive: () => hanaPiano(ha) }); } },
+        { label: 'あとでね', fn: () => { s.hanaT = Date.now() + 120000; bsave(s); } }] });
+      bdayCool = 3; return;
+    }
+    // 砂吹さん:ハーモニカ
+    const su = R('suna'); if (su && !s.suna && near(su)) { s.suna = 1; bsave(s); audio.unlock(); const t = audio.play('harmonica', 'bday') || { sec: 10 }; su.harpT = t.sec; hud.say('npc:suna', '♪ Happy Birthday ♪', Math.min(12, t.sec)); setTimeout(() => hud.say('npc:suna', `おめでとさん、${nm}。いい一年をな`, 4), t.sec * 1000); bdayCool = t.sec; return; }
+    // ほかの住人:1回ずつ「おめでとう」
+    for (const r of residents.list) {
+      if (s.greet.includes(r.def.id) || !near(r) || r.talking) continue;
+      s.greet.push(r.def.id); bsave(s); hud.say('npc:' + r.def.id, B_LINES[Math.floor(Math.random() * B_LINES.length)], 4); bdayCool = 4; return;
+    }
+  }
+  function hanaPiano(r) {
+    const P = city.piano, st = P.seat;
+    r.pin = { x: st.x, z: st.z, y: -0.04, ry: st.ry, pose: 'piano' };
+    me.x = P.x + 1.3; me.z = P.z + 2.0; me.ry = Math.atan2(st.x - me.x, st.z - me.z);
+    audio.unlock(); const sec = playSong(audio, 'bday');
+    hud.say('npc:hana', '♪ Happy Birthday to you ♪', Math.min(12, sec));
+    setTimeout(() => { r.pin = null; r.ch.pose = null; hud.say('npc:hana', `${settings.name || ''}、お誕生日おめでとう! 🎂`, 5); }, sec * 1000 + 300);
+  }
+  // 夜:3人で花火を見て、記念写真
+  function birthdayNight() {
+    const S = { x: 0, z: 11.5 }, so = residents.list.find(x => x.def.id === 'sora'), ha = residents.list.find(x => x.def.id === 'hana');
+    standFromSeat(); guide = null;
+    me.x = S.x; me.z = S.z; me.ry = 0; me.speed = 0;
+    for (const [r, dx] of [[ha, -1.05], [so, 1.05]]) if (r) { r.follow = false; r.hold = false; r.pin = { x: S.x + dx, z: S.z, ry: 0, pose: null }; r.ch.holdTo = null; }
+    me.ch.holdTo = null;
+    cam.x = S.x; cam.z = S.z; cam.yaw = 0; cam.pitch = 0.15; cam.dist = 6;
+    runEvent('fw:digest', { birthday: true });
+    hud.say('npc:hana', 'わぁ…! 花火、きれい!', 4); setTimeout(() => hud.say('npc:sora', `${settings.name || ''}、誕生日おめでとう!`, 4), 2500);
+    setTimeout(() => birthdayPhoto(S), 13000);
+    setTimeout(() => { for (const r of [ha, so]) if (r && r.pin && !r.pin.bench) r.pin = null; }, 70000);
+  }
+  function birthdayPhoto(S) {
+    try {
+      const w = renderer.domElement.width, h = renderer.domElement.height, c = new THREE.PerspectiveCamera(62, w / h, 0.1, 600);
+      me.x = S.x; me.z = S.z; me.ry = 0; me.ch.root.position.set(S.x, 0, S.z); me.ch.root.rotation.y = 0; me.ch.root.visible = true;
+      c.position.set(S.x, 1.25, S.z + 4.3); c.lookAt(S.x, 9, S.z - 40);
+      renderer.render(scene, c);
+      const img = new Image();
+      img.onload = () => {
+        const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0);
+        const W = cv.width, fs = Math.round(W * 0.11);
+        g.textAlign = 'center'; g.font = `900 ${fs}px Georgia, serif`; g.lineWidth = fs * 0.12; g.strokeStyle = 'rgba(90,40,90,0.7)'; g.fillStyle = '#fff4c2';
+        g.strokeText('Happy Birthday!', W / 2, cv.height * 0.2); g.fillText('Happy Birthday!', W / 2, cv.height * 0.2);
+        g.font = `700 ${Math.round(fs * 0.32)}px sans-serif`; g.fillStyle = '#fff'; g.fillText(`${settings.name || ''}  ${new Date().toLocaleDateString('ja-JP')}  ほしみや町`, W / 2, cv.height * 0.2 + fs * 0.55);
+        photos.addSpecial(cv.toDataURL('image/jpeg', 0.88), 'birthday');
+        flash(root); hud.toast('📸 記念写真がアルバムに届いたよ(特別枠)');
+      };
+      img.src = snapCanvas(renderer.domElement);
+    } catch (e) { console.warn('[town] birthday photo', e); }
+  }
+  // 誕生月がおわった翌月:サブスク半額のお知らせ(1年に1回)
+  function birthdayAfter(force) {
+    const b = bdayMD(); if (!b && !force) return;
+    const n = new Date(), next = b ? b.m % 12 + 1 : 0, key = 'after' + n.getFullYear();
+    if (!force && (n.getMonth() + 1 !== next || storage.get('bdayAfter') === key)) return;
+    storage.set('bdayAfter', key);
+    hud.dialog({ name: '🎁 お誕生月のおまけ', text: '誕生月のゲーム無料はおしまい。ありがとう! いまだけ、サブスクが半額で始められるよ。', choices: [{ label: 'くわしく見る', fn: () => { if (opt.onSubscribe) opt.onSubscribe({ offer: 'birthday-half' }); else hud.toast('アプリ版では、ここから購入の画面が開きます'); } }, { label: 'またあとで', fn: () => {} }] });
+  }
+  function birthdayTestRun(k) {
+    if (k === 'off') { bdayTest = ''; hud.toast('誕生日テストをやめた'); return; }
+    if (k === 'after') { birthdayAfter(true); return; }
+    bdayTest = k === 'night' ? 'night' : 'day'; storage.set('bday', null); bdayHello = false; bdayCool = 0;
+    if (k === 'night') { const s = bst(); s.fw = 0; bsave(s); }
+    else { const s = bst(); s.fw = 1; bsave(s); }   // 昼のテストでは、花火は後で(夜のテストで見る)
+    hud.toast(k === 'night' ? '🎂 誕生日の夜のテスト:花火と写真' : '🎂 誕生日のテスト:住人に会いに行ってみてね');
   }
   function openApp(id, params) {
     if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox'].includes(id)) markPlay(id);
@@ -753,6 +864,9 @@ export function mount(container, opt = {}) {
       audio.unlock(); audio.play('open'); audio.ambience(true);
       if (!netStarted && net) { net.connect({ id: me.id, name, look }); netStarted = true; }
       started = true;
+      if (settings.birth && !settings.birthLock) { settings.birthLock = 1; save(); }
+      if (!settings.birth) setTimeout(() => { if (!hud.busy && !appHost.current) openBirthSetup(true); }, 1800);   // はじめに誕生日をとうろく
+      else setTimeout(() => birthdayAfter(), 2500);
       bus.emit('start', { name, look });
       opt.onEvent?.('start', { name, look });
   }
@@ -839,20 +953,28 @@ export function mount(container, opt = {}) {
   function endEvent() { if (evt && evt.fw) env.release(); evt = null; clearBanner(); hud.toast('おしまい。また見られるといいね'); }
   const sched = createSchedule({ storage, getBirth: () => settings.birth, canFire: () => started && !appHost.current && !hud.busy && !evt, fire: (ev, meta) => runEvent(ev.kind, meta) });
   let schedT = 2;
-  function openBirthSetup() {
-    const [py, pm, pd] = (settings.birth || '').split('-');
-    const pn = hud.panel(`<h2>誕生日をとうろく</h2><p class="tw-note">誕生日の夜に、町であなただけの花火が上がります。この端末の中だけに保存します。</p>
-      <div class="tw-row">誕生日<span style="display:flex;gap:6px;align-items:center"><input class="tw-by" inputmode="numeric" maxlength="4" placeholder="1990" value="${py || ''}" style="width:4.2em;font-size:16px;text-align:center"> 年 <input class="tw-bm" inputmode="numeric" maxlength="2" placeholder="5" value="${pm ? +pm : ''}" style="width:2.6em;font-size:16px;text-align:center"> 月 <input class="tw-bdd" inputmode="numeric" maxlength="2" placeholder="20" value="${pd ? +pd : ''}" style="width:2.6em;font-size:16px;text-align:center"> 日</span></div>
+  // 誕生日:はじめに1回だけ登録。あとから変えられない(誕生月の無料などのため)
+  function openBirthSetup(first) {
+    if (settings.birthLock && settings.birth) {
+      const [y, m, d] = settings.birth.split('-').map(Number);
+      hud.panel(`<h2>誕生日</h2><p class="tw-note">${y}年${m}月${d}日 で登録してあります。誕生日は、あとから変えられません。</p><p class="tw-note">誕生日には、町のみんながお祝いしてくれて、夜にはとくべつな花火が上がるよ。その月は、家のゲーム機のゲームが全部無料!</p><div class="tw-actions"><button class="tw-btn" data-b="close">とじる</button></div>`, e => { if (e.target.closest('[data-b]')) hud.closePanel(); });
+      return;
+    }
+    let sure = '';
+    const pn = hud.panel(`<h2>🎂 誕生日をとうろく</h2><p class="tw-note">誕生日には、町のみんながお祝いしてくれます。夜にはあなただけのとくべつな花火と記念写真。その月は、家のゲーム機のゲームが全部無料!</p><p class="tw-note"><b>一度とうろくすると、あとから変えられません。</b>この端末の中だけに保存して、どこにも送りません。</p>
+      <div class="tw-row">誕生日<span style="display:flex;gap:6px;align-items:center"><input class="tw-by" inputmode="numeric" maxlength="4" placeholder="2000" style="width:4.2em;font-size:16px;text-align:center"> 年 <input class="tw-bm" inputmode="numeric" maxlength="2" placeholder="5" style="width:2.6em;font-size:16px;text-align:center"> 月 <input class="tw-bdd" inputmode="numeric" maxlength="2" placeholder="20" style="width:2.6em;font-size:16px;text-align:center"> 日</span></div>
       <p class="tw-note tw-bmsg"></p>
-      <div class="tw-actions"><button class="tw-btn main" data-b="save">ほぞん</button><button class="tw-btn" data-b="clear">けす</button><button class="tw-btn" data-b="close">とじる</button></div>`, (e, p) => {
+      <div class="tw-actions"><button class="tw-btn main" data-b="save">とうろく</button><button class="tw-btn" data-b="close">${first ? 'あとで' : 'とじる'}</button></div>`, (e, p) => {
       const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return;
       const msg = p.querySelector('.tw-bmsg');
       if (b === 'close') { hud.closePanel(); return; }
-      if (b === 'clear') { settings.birth = ''; settings.adult = 0; save(); msg.textContent = 'けしました'; return; }
       const y = +p.querySelector('.tw-by').value, m = +p.querySelector('.tw-bm').value, d = +p.querySelector('.tw-bdd').value, dt = new Date(y, m - 1, d);
       if (!(y > 1900 && y <= new Date().getFullYear()) || dt.getMonth() !== m - 1 || dt.getDate() !== d) { msg.textContent = '日付をたしかめてね'; return; }
-      settings.birth = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`; save(); msg.textContent = 'ほぞんしました。誕生日を楽しみにしててね';
-    });
+      const v = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      if (sure !== v) { sure = v; msg.innerHTML = `<b>${y}年${m}月${d}日</b> でいい? あとから変えられないよ。もう一度「とうろく」を押すと決まります。`; return; }
+      settings.birth = v; settings.birthLock = 1; save(); hud.closePanel(); hud.toast('🎂 誕生日をとうろくしたよ。楽しみにしててね');
+    }, { sticky: true });
+    pn.querySelectorAll('input').forEach(el => { el.addEventListener('keydown', e => e.stopPropagation()); el.addEventListener('input', () => { el.value = el.value.replace(/\D/g, ''); }); });
   }
   offs.push(bus.on('ui:camreset', () => {   // カメラをワンボタンで もとに(少し引いた、見やすい位置)
     if (!started) return; camMode = 'follow'; cam.dist = 9; cam.pitch = 0.5; cam.yaw = me.ry + Math.PI; cam.x = me.x; cam.z = me.z; camBarDraw?.(); input.clear(); hud.toast('カメラをもとにもどした');
@@ -956,7 +1078,7 @@ export function mount(container, opt = {}) {
 
     if (talkingTo && !hud.busy) { talkingTo.talking = false; talkingTo = null; }   // 会話が終わっているのに止まったままの住人を放す
     for (const r of residents.list) if (r.talking && r !== talkingTo) r.talking = false;
-    tipUpdate(dt); hanaUpdate(dt);
+    tipUpdate(dt); hanaUpdate(dt); birthdayUpdate(dt);
     env.camera = camera; env.update(dt, me.ch.root.position);
     seasons.update(dt, camera.position, env.night || 0);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
@@ -1002,7 +1124,8 @@ export function mount(container, opt = {}) {
     if (focus && focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn')) focus = { ...focus, label: seasons.season === 'spring' ? '📋⛳ 掲示板(きょうのゴルフ)' : '📋🥏 掲示板(きょうのフリスビー)' };
     else if (!focus && !seat && !battle.active && !sport.active && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = sn ? { kind: 'snowman', idx: sn.i, label: '⛄ こわす' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
     if (focus && focus.kind === 'npc') { const n = nearNpcs().length; if (n >= 2) focus.label = `ちかくの人と話す(${n}人)`; }
-    if (seat) focus = seat.hana && seat.hana.pin ? { kind: 'benchtalk', label: `💬 ${seat.hana.def.name}と話す` } : { kind: 'stand', label: '🧍 立つ' };
+    if (seat && seat.piano) focus = { kind: 'piano', label: '🎹 曲をえらぶ' };
+    else if (seat) focus = seat.hana && seat.hana.pin ? { kind: 'benchtalk', label: `💬 ${seat.hana.def.name}と話す` } : { kind: 'stand', label: '🧍 立つ' };
     hud.setAction(focus ? focus.label : null);
 
     // 名前と吹き出しの位置
@@ -1053,7 +1176,7 @@ export function mount(container, opt = {}) {
     moveNpc: (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (r) r.ch.root.position.set(x, 0, z); },
     // 最初の画面を飛ばして町へ(前に選んだキャラ。はじめてなら最初のキャラ)
     // イベント(運営画面から。テスト用)
-    event: { lengths: () => { const o = {}; for (const n of Object.keys(FW_SHOWS)) { fw.show(n); o[n] = Math.round(fw.showLength); } fw.stop(); o.solar = 100; o.lunar = 130; o.rain = 120; return o; }, seek: f => { if (env.eclipse) env.eclipse.t = f * env.eclipse.dur; if (env.weather) env.weather.t = f * env.weather.dur; }, sec: evSec, run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
+    event: { birthday: k => birthdayTestRun(k), lengths: () => { const o = {}; for (const n of Object.keys(FW_SHOWS)) { fw.show(n); o[n] = Math.round(fw.showLength); } fw.stop(); o.solar = 100; o.lunar = 130; o.rain = 120; return o; }, seek: f => { if (env.eclipse) env.eclipse.t = f * env.eclipse.dur; if (env.weather) env.weather.t = f * env.weather.dur; }, sec: evSec, run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
     cameraMode: () => camMode,
     season: s => { if (s) { settings.season = s; save(); applySeason(); } return curSeason(); },
     quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },

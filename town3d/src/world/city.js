@@ -67,6 +67,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   scene.add(plaza);
   B.add(geo('ring', () => new THREE.TorusGeometry(PLAZA_R, 0.14, 6, 64)), curbM, 0, 0.05, 0, 0, 1, 1, 1, null, Math.PI / 2);
   fountain(0, 0);
+  const piano = streetPiano(-4.2, 6.9);   // 噴水の前のストリートピアノ
   interact.push({ kind: 'snowfight', id: 'snowfight', app: 'snowfight', season: 'winter', x: 0, z: 6.5, r: 2.4, label: '☃️ 雪合戦をする' });   // 冬だけ(ゲーム機なしで遊べる)
   for (let i = 0; i < 8; i++) {
     const a = (i + 0.5) / 8 * Math.PI * 2;
@@ -162,7 +163,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   for (const m of meshes) { const sn = m.material.userData.season; if (sn === 'blossom') m.visible = blossom; else if (sn === 'nonblossom') m.visible = !blossom; }
 
   return {
-    colliders, interact, buildings, animated, graph: GRAPH, groundMats: [ground.material, lawn.material], trees,
+    colliders, interact, buildings, animated, graph: GRAPH, piano, groundMats: [ground.material, lawn.material], trees,
     setLite(on) { animated.fountainLite?.(on); },
     areaName(x, z) {
       if (Math.hypot(x, z) < PLAZA_R + 1) return 'ほし広場';
@@ -335,6 +336,22 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     B.add(box(0.08, 0.08, 0.9), mat(0xa99bc0), 0, 4.1, 0.4, 0, 1, 1, 1, P4);
     B.add(sph(0.3, 12), glowMat('lamp', 0xfff6dc, 0xffd88a), 0, 3.85, 0.85, 0, 1, 0.8, 1, P4);
     B.add(cyl(0.34, 0.2, 0.15, 10), mat(0xa99bc0), 0, 4.05, 0.85, 0, 1, 1, 1, P4);
+  }
+  function streetPiano(x, z) {
+    const P4 = M4(x, z, 0), body = mat(C.mint), dk = mat(0x6b8f80), wh = mat(0xffffff), bk = mat(0x2b2b33), pk = mat(C.pink), yl = mat(C.butter);
+    colliders.push({ cx: x, cz: z - 0.1, r: 0.95 });
+    B.add(rbox(1.6, 1.25, 0.62, 0.05), body, 0, 0.66, -0.12, 0, 1, 1, 1, P4);
+    B.add(box(1.66, 0.06, 0.7), dk, 0, 1.3, -0.12, 0, 1, 1, 1, P4);
+    B.add(box(1.5, 0.1, 0.34), body, 0, 0.74, 0.3, 0, 1, 1, 1, P4);
+    B.add(box(1.4, 0.04, 0.24), wh, 0, 0.8, 0.33, 0, 1, 1, 1, P4);
+    for (let i = 0; i < 10; i++) if (i % 7 !== 2 && i % 7 !== 6) B.add(box(0.06, 0.04, 0.13), bk, -0.63 + i * 0.14, 0.83, 0.28, 0, 1, 1, 1, P4);
+    for (const sx of [-0.7, 0.7]) B.add(box(0.1, 0.72, 0.1), dk, sx, 0.36, 0.42, 0, 1, 1, 1, P4);
+    for (let i = 0; i < 5; i++) { B.add(sph(0.06, 8), i % 2 ? pk : yl, -0.5 + i * 0.25, 1.05, 0.2, 0, 1, 1, 1, P4); B.add(sph(0.03, 6), wh, -0.5 + i * 0.25, 1.05, 0.25, 0, 1, 1, 1, P4); }   // 前の板の花
+    B.add(rbox(0.9, 0.08, 0.38, 0.03), mat(0xc9a28c), 0, 0.46, 0.98, 0, 1, 1, 1, P4);
+    for (const sx of [-0.38, 0.38]) B.add(box(0.06, 0.44, 0.3), mat(0x9a7a64), sx, 0.22, 0.98, 0, 1, 1, 1, P4);
+    const seat = { x, z: z + 0.98, ry: Math.PI };
+    interact.push({ kind: 'piano', id: 'spiano', x, z: z + 1.7, r: 1.9, label: '🎹 ピアノをひく', seat });
+    return { x, z, seat };
   }
   function bench(x, z, ry) {
     const P4 = M4(x, z, ry);

@@ -22,12 +22,14 @@ export const photos = {
   },
   // 写真を足す。枠がいっぱいなら null
   add(src, cfg) {
-    const l = this.list(); if (l.length >= this.slots(cfg)) return null;
+    const l = this.list(); if (l.filter(p => !p.special).length >= this.slots(cfg)) return null;
     const p = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), t: Date.now(), src, crop: null };
     l.push(p); st.set('list', l); return p;
   },
+  // 特別な写真(誕生日の記念など)。枠を使わない(無料)
+  addSpecial(src, tag) { const l = this.list(), p = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), t: Date.now(), src, crop: null, special: tag || 'special' }; l.push(p); st.set('list', l); return p; },
   remove(id) { st.set('list', this.list().filter(p => p.id !== id)); },
-  oldest() { return this.list().slice().sort((a, b) => a.t - b.t)[0] || null; },
+  oldest() { return this.list().filter(p => !p.special).slice().sort((a, b) => a.t - b.t)[0] || null; },
   setCrop(id, crop) { const l = this.list(), p = l.find(x => x.id === id); if (p) { p.crop = crop; st.set('list', l); } },
 };
 
@@ -64,7 +66,7 @@ export function shotCard(root, src, { gems, cfg, openAlbum, sfx }) {
   const img = `<img src="${src}" style="width:100%;border-radius:10px;display:block;margin-bottom:4px">`;
   const close = () => card.remove();
   const done = p => {
-    const n = photos.list().length, s = photos.slots(cfg);
+    const n = photos.list().filter(p => !p.special).length, s = photos.slots(cfg);
     card.innerHTML = `${img}<div>📷 のこしたよ(${n}/${s}枚)</div>${bt('アルバムを見る')}${bt('とじる', '#d9d2e3', '#5a4a6b')}`;
     const [a, c] = card.querySelectorAll('button'); a.onclick = () => { close(); openAlbum && openAlbum(); }; c.onclick = close;
     clearTimeout(card._t); card._t = setTimeout(close, 6000);
@@ -72,7 +74,7 @@ export function shotCard(root, src, { gems, cfg, openAlbum, sfx }) {
   const p = photos.add(src, cfg);
   if (p) done(p);
   else {
-    card.innerHTML = `${img}<div>アルバムが いっぱい(${photos.list().length}/${photos.slots(cfg)}枚)</div>${bt('いちばん古いのと入れかえる')}${bt('アルバムを開く', '#c9b8ea')}${bt('やめる', '#d9d2e3', '#5a4a6b')}`;
+    card.innerHTML = `${img}<div>アルバムが いっぱい(${photos.list().filter(p => !p.special).length}/${photos.slots(cfg)}枚)</div>${bt('いちばん古いのと入れかえる')}${bt('アルバムを開く', '#c9b8ea')}${bt('やめる', '#d9d2e3', '#5a4a6b')}`;
     const [a, b, c] = card.querySelectorAll('button');
     a.onclick = () => { const o = photos.oldest(); if (o) photos.remove(o.id); photos.add(src, cfg); done(); };
     b.onclick = () => { close(); openAlbum && openAlbum(); };

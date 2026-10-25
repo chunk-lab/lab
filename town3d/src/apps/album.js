@@ -22,14 +22,14 @@ export const albumApp = {
       return drawCropped(i, p.crop, w).toDataURL('image/jpeg', 0.8);
     }
     async function grid() {
-      view = 'grid'; const list = photos.list(), slots = photos.slots(cfg), tiles = [];
+      view = 'grid'; const all = photos.list(), list = all.filter(p => !p.special), sp = all.filter(p => p.special), slots = photos.slots(cfg), tiles = [];
       for (let k = 0; k < C.max; k++) {
         const p = list[k];
         if (p) tiles.push(`<button data-p="${p.id}" style="border:0;padding:0;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 2px 10px #0002;aspect-ratio:1;cursor:pointer"><img src="${await thumb(p, 320)}" style="width:100%;height:100%;object-fit:cover;display:block" alt=""></button>`);
         else if (k < slots) tiles.push(`<div style="border-radius:16px;background:#ffffffaa;border:2px dashed #cbbfe0;aspect-ratio:1;display:grid;place-items:center;color:#a99bbb;font-size:13px;text-align:center">からっぽ<br>町や家で 📷</div>`);
         else tiles.push(`<button data-buy style="border:2px dashed #cbbfe0;border-radius:16px;background:#fff8;aspect-ratio:1;display:grid;place-items:center;cursor:pointer;font:inherit;color:${ink};font-size:13px;font-weight:800;text-align:center;${k > slots ? 'opacity:.55' : ''}">🔒<br>${k === slots ? `💎 ${C.gemsPerSlot} で<br>1枚ふやす` : 'ひとつ前を<br>ふやすと開く'}</button>`);
       }
-      box.innerHTML = head('アルバム', msg || '見えたままの写真を残せるよ。あとから切り取れるよ。') + `<div style="flex:1;overflow:auto;padding:4px 16px 16px"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px">${tiles.join('')}</div></div>`;
+      box.innerHTML = head('アルバム', msg || '見えたままの写真を残せるよ。あとから切り取れるよ。') + `<div style="flex:1;overflow:auto;padding:4px 16px 16px">${sp.length ? `<div style="font-weight:800;margin:4px 0 8px">🎂 特別な写真<small style="font-weight:600;color:#8d7f9e;margin-left:6px">(枠を使わないよ)</small></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:14px">${(await Promise.all(sp.map(async p => `<button data-p="${p.id}" style="border:3px solid #ffd36b;padding:0;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 2px 10px #0002;aspect-ratio:1;cursor:pointer"><img src="${await thumb(p, 320)}" style="width:100%;height:100%;object-fit:cover;display:block" alt=""></button>`))).join('')}</div><div style="font-weight:800;margin:4px 0 8px">📷 写真</div>` : ''}<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px">${tiles.join('')}</div></div>`;
     }
     async function open(id) {
       cur = photos.list().find(p => p.id === id); if (!cur) return grid();

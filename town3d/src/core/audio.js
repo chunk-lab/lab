@@ -29,12 +29,22 @@ export function createAudio() {
     o.connect(lp); o2.connect(lp); lp.connect(g).connect(master);
     [o, o2, lfo].forEach(x => { x.start(t); x.stop(t + dur + 0.05); });
   }
+  // ピアノのような音(打ってすぐ減る。倍音を少し)
+  function piano(f, dur, delay = 0, v = 1) {
+    const a = ctx(); if (!a || vol.sfx <= 0 || !f) return;
+    const t = a.currentTime + delay, g = a.createGain(), lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = Math.min(9000, f * 6);
+    const peak = 0.11 * vol.sfx * v, len = Math.max(0.35, Math.min(2.2, dur * 1.6));
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + 0.008); g.gain.exponentialRampToValueAtTime(peak * 0.35, t + 0.25); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+    lp.connect(g).connect(master);
+    [[1, 'triangle', 1], [2, 'sine', 0.35], [3, 'sine', 0.12]].forEach(([m, ty, k]) => { const o = a.createOscillator(), og = a.createGain(); o.type = ty; o.frequency.value = f * m; og.gain.value = k; o.connect(og).connect(lp); o.start(t); o.stop(t + len + 0.05); });
+  }
   // ハーモニカのオリジナル曲(ペンタトニック)。[音の高さHz, 長さ(拍)] 0 は休み。朝・昼・夕・晩と、たまに吹くとくべつな曲の5曲
   const TUNES = {
     morning: { name: '朝のうた', beat: 0.30, notes: [[784, 1], [880, 1], [1047, 2], [880, 1], [1047, 1], [1175, 2], [1047, 1], [880, 1], [784, 2], [659, 1], [784, 1], [880, 3], [0, 1], [1047, 1], [1175, 1], [1319, 2], [1175, 1], [1047, 1], [880, 2], [784, 1], [880, 1], [1047, 4]] },
     noon: { name: 'ひるさがりのうた', beat: 0.34, notes: [[659, 1.5], [784, 0.5], [880, 2], [784, 1], [659, 1], [587, 2], [523, 1], [587, 1], [659, 3], [0, 1], [784, 1.5], [880, 0.5], [1047, 2], [880, 1], [784, 1], [659, 2], [587, 1], [523, 1], [587, 4]] },
     evening: { name: '夕やけのうた', beat: 0.38, notes: [[880, 2], [784, 1], [659, 1], [587, 2], [523, 2], [587, 1], [659, 1], [784, 3], [0, 1], [880, 1], [784, 1], [659, 2], [587, 1], [523, 1], [440, 2], [523, 1], [587, 1], [659, 4]] },
     night: { name: 'おやすみのうた', beat: 0.45, notes: [[523, 2], [440, 2], [392, 3], [0, 1], [440, 2], [523, 2], [587, 3], [0, 1], [523, 1], [440, 1], [392, 2], [330, 2], [392, 1], [440, 1], [330, 5]] },
+    bday: { name: 'ハッピーバースデー', beat: 0.42, notes: [[392, 0.75], [392, 0.25], [440, 1], [392, 1], [523, 1], [494, 2], [392, 0.75], [392, 0.25], [440, 1], [392, 1], [587, 1], [523, 2], [392, 0.75], [392, 0.25], [784, 1], [659, 1], [523, 1], [494, 1], [440, 2], [698, 0.75], [698, 0.25], [659, 1], [523, 1], [587, 1], [523, 3]] },
     special: { name: 'とっておきの曲', beat: 0.28, notes: [[1047, 1], [1319, 1], [1568, 2], [1319, 1], [1047, 1], [784, 2], [880, 1], [1047, 1], [1175, 2], [0, 0.5], [1175, 0.5], [1319, 1], [1175, 1], [1047, 2], [1568, 1], [1319, 1], [1047, 1], [784, 1], [880, 1], [1047, 1], [1175, 1], [1319, 3], [0, 1], [1568, 0.5], [1319, 0.5], [1175, 0.5], [1047, 0.5], [1319, 2], [1047, 1], [784, 1], [1047, 5]] },
   };
   // 時間から曲をえらぶ(たまに「とくべつな曲」)
@@ -80,6 +90,7 @@ export function createAudio() {
     whistle: () => tone(500, 0.8, { type: 'sine', gain: 0.05, slide: 3.2 }),
     boom: sc => { const s = Math.max(0.3, Math.min(1.4, +sc || 1)); tone(95 / s, 0.7, { type: 'triangle', gain: 0.32 * Math.min(1, s), slide: 0.3 }); tone(55 / s, 1.0, { type: 'sine', gain: 0.3 * Math.min(1, s), slide: 0.5 }); tone(1800, 0.25, { type: 'square', gain: 0.02, slide: 0.4, delay: 0.1 }); },
     bigboom: () => { tone(70, 1.4, { type: 'triangle', gain: 0.42, slide: 0.25 }); tone(42, 2.2, { type: 'sine', gain: 0.45, slide: 0.5 }); tone(120, 0.9, { type: 'sawtooth', gain: 0.1, slide: 0.3, delay: 0.05 }); tone(1500, 0.5, { type: 'square', gain: 0.03, slide: 0.4, delay: 0.1 }); },
+    piano: ([f, dur, delay, v]) => piano(f, dur, delay, v),
     harmonica: kind => { const T = TUNES[kind] || TUNES.noon; let t = 0; for (const [f, b] of T.notes) { const d = b * T.beat; if (f) reed(f, d * 0.96, t); t += d; } return { sec: t, name: T.name }; },
   };
   return {

@@ -181,6 +181,8 @@ export const ITEMS = [
   { id: 'bathmat', cat: 'キッチン・おふろ', name: 'バスマット', price: 100, w: 1, d: 1, flat: true, build(g) { box(g, 0.8, 0.02, 0.55, 0xa8d8e8, 0, 0, 0); } },
   { id: 'towelrack', cat: 'キッチン・おふろ', wall: true, name: 'タオルかけ', price: 150, w: 1, d: 1, y0: 1.1, build(g) {
     box(g, 0.7, 0.03, 0.08, 0xc9d2d8, 0, 0.3, 0.06); box(g, 0.5, 0.45, 0.04, 0xffb3c1, 0, -0.12, 0.1); } },
+  { id: 'bouquet', cat: 'かざり', noshop: true, name: 'そら君の花束', price: 0, w: 1, d: 1, build(g) {
+    cyl(g, 0.16, 0.42, 0xbfe6ff, 0, 0, 0, 0.12); for (let i = 0; i < 7; i++) { const a = i / 7 * Math.PI * 2, r = i ? 0.12 : 0; cyl(g, 0.012, 0.3, 0x6fae6a, Math.cos(a) * r * 0.5, 0.42, Math.sin(a) * r * 0.5); ball(g, 0.08, [0xff9fb4, 0xffd36b, 0xffffff, 0xff7a9a, 0xc9b8ea][i % 5], Math.cos(a) * r, 0.75 + (i ? 0 : 0.06), Math.sin(a) * r); } } },
   // ---- ドア(となりの部屋へ) ----
   { id: 'door', cat: 'かべ', wall: true, door: true, name: 'ドア', price: 300, w: 1, d: 1, y0: 0, build(g) {
     box(g, 1.0, 2.15, 0.06, 0xb39c7c, 0, 0, 0.03); box(g, 0.86, 2.05, 0.05, 0xd9b99a, 0, 0, 0.07); ball(g, 0.045, 0xd8b04a, 0.32, 1.0, 0.12); } },
@@ -268,6 +270,7 @@ export const furn = {
   saveInv: v => st.set('inv', v),
   owned(id) { return this.inv()[id] || 0; },
   // 勉強を続けたメダル(もらった日数のリスト)を、持ち物に入れる。新しく入ったものを返す
+  give(id, n = 1) { const inv = this.inv(); inv[id] = (inv[id] || 0) + n; this.saveInv(inv); },
   grantMedals(days) { const inv = this.inv(), out = []; for (const n of days || []) { const id = 'medal' + n; if (ITEM[id] && !inv[id]) { inv[id] = 1; out.push(ITEM[id]); } } if (out.length) this.saveInv(inv); return out; },
   placedCount(id) { return this.placed().filter(p => p.id === id).length; },
   // カゴ {家具id: 個数}。お店を出ても残る。お金が減るのは「まとめて買う」を押したときだけ

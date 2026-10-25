@@ -33,7 +33,7 @@ export function createAdmin(core) {
     const now = new Date(Date.now() + 60000);
     return `<section class="cs-adm"><h4>イベント(花火・日食・月食)</h4>
       <p class="cs-note">押すと運営画面が閉じて、町ですぐ始まります(夜に切りかわります)。</p>
-      <div class="cs-adm-row"><button data-ev="fw:digest">花火ダイジェスト</button><button data-ev="fw:full">花火フル</button><button data-ev="fw:starmine">スターマイン</button><button data-ev="fw:finale">フィナーレ</button><button data-ev="solar">🌑日食</button><button data-ev="lunar">🌕月食</button><button data-ev="rain">☔雨と虹</button></div>
+      <div class="cs-adm-row"><button data-bday="day">🎂 誕生日をためす(今すぐ)</button><button data-bday="night">🎂 誕生日の夜をためす(花火と写真)</button><button data-bday="after">🎂 翌月の半額のお知らせ</button><button data-bday="off">誕生日テストをやめる</button></div><div class="cs-adm-row"><button data-ev="fw:digest">花火ダイジェスト</button><button data-ev="fw:full">花火フル</button><button data-ev="fw:starmine">スターマイン</button><button data-ev="fw:finale">フィナーレ</button><button data-ev="solar">🌑日食</button><button data-ev="lunar">🌕月食</button><button data-ev="rain">☔雨と虹</button></div>
       ${durRow()}
       <p class="cs-note">花火1種類ずつ:</p><div class="cs-adm-row">${fwb}</div>
       <p class="cs-note">予約(この端末の時計で。誕生日は町に登録された誕生日の夜に1回):</p>
@@ -73,6 +73,7 @@ export function createAdmin(core) {
           if (a === 'month') { const d = new Date(); d.setMonth(d.getMonth() - 1); M._forceMonth(M.keys.monthKey(d)); }
           re();
         });
+        ov.querySelectorAll('[data-bday]').forEach(b => b.onclick = () => { const k = b.dataset.bday; close(); setTimeout(() => T3() && T3().birthday && T3().birthday(k), 150); });   // 誕生日の動きをためす
         ov.querySelectorAll('[data-ev]').forEach(b => b.onclick = () => { const k = b.dataset.ev; close(); setTimeout(() => T3() && T3().run(k), 150); });
         ov.querySelectorAll('[data-durs]').forEach(b => b.onclick = () => { const o = {}; ov.querySelectorAll('[data-dur]').forEach(i => { const v = +i.value; if (v > 0) o[i.dataset.dur] = Math.round(v * 60); }); try { localStorage.setItem('town:evdur', JSON.stringify(o)); } catch (e) { } re(); });
         ov.querySelectorAll('[data-evadd]').forEach(b => b.onclick = () => {
