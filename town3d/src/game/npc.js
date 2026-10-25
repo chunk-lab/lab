@@ -7,16 +7,19 @@ import { angleLerp } from '../core/core.js';
 export const RESIDENTS = [
   {
     // そら君:英語の相談役。単語や表現を聞くと、例文・場面・ちがい・練習のしかたをノートにまとめてくれる
-    id: 'sora', name: 'そら', yomi: 'そら', role: '英語の相談役', look: LOOKS.sora, adult: false,
+    id: 'sora', name: 'そら', yomi: 'そら', role: '英語の相談役', look: LOOKS.sora, adult: false, companion: true, icon: '🧢',
+    personaOut: '気さくで面倒見のいい男の子。ちょっと照れ屋だけど、話しはじめると止まらない。ゲームと散歩と甘いものが好き。「〜だよ」「〜じゃん」と話す。いまは英語の先生役ではなく、ふつうの友だちとして話す。',
+    homeLines: { enter: ['おじゃましまーす。へぇ、いい部屋じゃん', 'お、ここが家? 落ちつくね'], sit: ['となり、すわるよ', 'ふかふかだな〜'], lie: ['ベッドでごろーん…やば、寝そう'], goro: ['床ごろごろ、けっこういいじゃん', 'ふぁ〜、天井ってこんな色だったんだ'], talkLie: ['こうしてると、なんか話しやすいね', 'ねえ、最近どう?'], talk: ['なに話す?', 'いい部屋だね'] },
     persona: '英語が大好きな、気さくで面倒見のいい男の子。「〜だよ」「〜じゃん」と話す。人に教えるのが好きで、むずかしいことも、たとえ話でわかりやすく言いかえる。',
     tips: ["「How do you say 〜 in English?」で『〜って英語で何て言うの?』って聞けるよ", "「I see.」は『なるほど』。あいづちの定番だよ", "迷ったら、まず短い文で言ってみる。それが一番の近道じゃん", "「Could you say that again?」で『もう一回言って』。聞き返すのは全然はずかしくないよ", "単語は、例文ごと覚えると忘れにくいんだ"],
     schedule: [[7, 'school'], [12, 'library'], [17, 'plaza'], [21, 'home', 'in']],
     lines: { morning: ['おはよう! 今日はどんな英語を使ってみる?', '朝は単語を覚えるのにいい時間なんだって。'], day: ['気になる単語や言い方があったら、なんでも聞いてよ。', '図書館で英語の本を読んでたんだ。'], evening: ['今日おぼえた英語、ひとつ使ってみた?', 'わかんない表現あったら、まとめてあげるよ。'], night: ['夜ふかしして英語の動画見ちゃうんだよね。'] },
-    menu: [{ label: '英語の相談をする', act: 'consult' }, { label: 'そら君ノートを見る', act: 'soranote' }],
+    menu: [{ label: '英語の相談をする', act: 'consult' }, { label: 'そら君ノートを見る', act: 'soranote' }, { label: '一緒に歩こう', act: 'follow' }, { label: 'カフェでデートする', act: 'date' }, { label: '家においでよ', act: 'invite' }],
   },
   {
     // はなちゃん:おしゃべり好き。自由に話せて、一緒に歩いたり、カフェでデートしたりできる
-    id: 'hana', name: 'はな', yomi: 'はな', role: 'おしゃべり好きの女の子', look: LOOKS.hana, free: true,
+    id: 'hana', name: 'はな', yomi: 'はな', role: 'おしゃべり好きの女の子', look: LOOKS.hana, free: true, companion: true, icon: '🎀',
+    homeLines: { enter: ['おじゃましま〜す!', 'わぁ、ここがあなたの家?', 'おじゃまします〜。いい部屋!'], sit: ['となり、すわるね〜', 'ふかふかだ!'], lie: ['えへへ、ならんでごろ〜ん', 'ベッドふかふか〜!'], goro: ['ごろ〜ん。床ひんやりしてきもちい〜', 'ふぁ〜、ねむくなっちゃう', 'こうやってゴロゴロするの、すき'], talkLie: ['ねえねえ、天井見てると落ちつくね', 'こうしてると、なんでも話せちゃう気がする', 'ふふ、ゴロゴロ最高〜'], talk: ['おじゃましてま〜す。なに話す?', 'いいお部屋だね!'] },
     persona: '明るくて、ちょっとおっちょこちょいな女の子。好奇心が強く、町のうわさや季節のことをよく知っている。話すのが大好きで、相手の話にも本気で興味を持つ。「〜だよね」「〜かも!」とくだけた話し方。',
     tips: ["ねえねえ、「Guess what!」って『聞いて聞いて!』って意味なんだよ", "「I can't wait!」は『待ちきれない!』。わくわくしてる時に言うの", "「That's so cute!」って、かわいいもの見たらつい言っちゃう", "「No way!」は『うそでしょ!』。びっくりした時にね"],
     schedule: [[8, 'park'], [11, 'cafe'], [14, 'shop'], [17, 'park2'], [20, 'home', 'in']],
@@ -117,7 +120,7 @@ export const RESIDENTS = [
 ];
 
 function period(h) { return h < 5 ? 'night' : h < 10 ? 'morning' : h < 16.5 ? 'day' : h < 19.5 ? 'evening' : 'night'; }
-export { period };
+export { period, findPath, nearestNode };
 
 function findPath(graph, from, to) {
   if (from === to) return [to];

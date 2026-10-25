@@ -412,6 +412,7 @@ export const homeApp = {
     // ---- 歩く(自分が部屋の中に立って、歩きまわる。写真も撮れる) ----
     // お客さん(はなちゃん):手をつないで歩く・となりにすわる/ねる・話す
     const guest = ctx.params && ctx.params.guest || null;
+    const GL = k => { const L = (guest && guest.lines && guest.lines[k]) || ['…']; return L[Math.floor(Math.random() * L.length)]; };
     let gch = null, gPose = null, gHold = false, gK = 0, gx = 0, gz = 0, gry = 0, gBub = null, gBubT = 0;
     const holdP = new THREE.Vector3();
     let wPose = null, wy = 0, wLast = '', wInput = null, wme = null, wyaw = 0.8, wpitch = 0.3, wdist = 4.2, wx = 0, wz = 0, wry = 0, wspeed = 0, blockers = [], wUI = null;
@@ -493,12 +494,12 @@ export const homeApp = {
       for (let k = 0; k < 3; k++) for (const [ox, oz] of [[0, 0], [-Math.sin(wry) * 1.3, -Math.cos(wry) * 1.3], ...(gch ? [[cs * 0.6, -sn * 0.6], [cs * 0.6 - Math.sin(wry) * 1.3, -sn * 0.6 - Math.cos(wry) * 1.3]] : [])]) { const [ax, az] = walkTo(wx + ox, wz + oz); wx += ax - (wx + ox); wz += az - (wz + oz); }
       wy = 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wspeed = 0; wyaw = wry; wpitch = 0.95; wdist = 3.0;
       guestPose('lie', 0.14);
-      if (gch) guestSay(['ごろ〜ん。床ひんやりしてきもちい〜', 'ふぁ〜、ねむくなっちゃう', 'こうやってゴロゴロするの、すき'][Math.floor(Math.random() * 3)]);
+      if (gch) guestSay(GL('goro'));
     }
     function guestTalk() {
       if (!gch) return;
       const where = wPose ? (wme.pose === 'lie' ? (wPose.floor ? '床にならんでゴロゴロ寝転んで' : 'ベッドにならんで寝転んで') : 'ならんですわって') : '部屋でくつろいで';
-      const first = wPose && wme.pose === 'lie' ? ['ねえねえ、天井見てると落ちつくね', 'こうしてると、なんでも話せちゃう気がする', 'ふふ、ゴロゴロ最高〜'][Math.floor(Math.random() * 3)] : ['おじゃましてま〜す。なに話す?', 'いいお部屋だね!', 'ねえ、あれなに?'][Math.floor(Math.random() * 3)];
+      const first = wPose && wme.pose === 'lie' ? GL('talkLie') : GL('talk');
       guest.chat(`いま「${ctx.player?.name || 'あなた'}」の家に遊びに来ていて、${where}、手をつないでおしゃべりしている。`, first);
     }
     function seatNear() {
@@ -520,7 +521,7 @@ export const homeApp = {
       wy = (Y[p.uid] || 0) + (it.sit ? it.sit - 0.58 : it.lie + 0.14);
       wPose = { p, lx, stand: it.sit ? [lx, it.d / 2 + 0.6] : [it.w / 2 + 0.55, 0.3], yaw, cx, cz };
       wme.pose = it.sit ? 'sit' : 'lie'; wspeed = 0; if (it.lie) { wyaw = wry; wpitch = 0.95; wdist = 3.0; }
-      if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy); guestSay(it.sit ? ['となり、すわるね〜', 'ふかふかだ!'][Math.floor(Math.random() * 2)] : ['えへへ、ならんでごろ〜ん', 'ベッドふかふか〜!'][Math.floor(Math.random() * 2)]); }
+      if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy); guestSay(GL(it.sit ? 'sit' : 'lie')); }
     }
     function standUp() {
       if (!wPose) return;
@@ -579,7 +580,7 @@ export const homeApp = {
 
     buildShell(); resize(); relayout(); ui(); loop();
     if (ctx.params && (ctx.params.walk || guest)) enterWalk();   // お客さんがいるときは、はじめから歩く(部屋の中で一緒に)
-    if (gch) setTimeout(() => guestSay(['おじゃましま〜す!', 'わぁ、ここがあなたの家?', 'おじゃまします〜。いい部屋!'][Math.floor(Math.random() * 3)]), 400);
+    if (gch) setTimeout(() => guestSay(GL('enter')), 400);
     function guestSayLate() { const b = document.createElement('div'); b.textContent = `${guest.name}「今日はもう遅いから、帰るね。また遊ぼ!」`; b.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);max-width:80%;background:#fffaf2;color:#5a4a6b;border-radius:16px;padding:8px 14px;font-size:14px;font-weight:700;box-shadow:0 2px 8px #0003;z-index:30'; root.appendChild(b); setTimeout(() => b.remove(), 3500); }   // アルバムから「部屋にもどる」で、歩いていたところへ
     const offW = ctx.wallet.onChange ? ctx.wallet.onChange(() => planUI()) : null;
     ctx.setTitle?.('あなたの家');

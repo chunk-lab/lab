@@ -35,6 +35,7 @@ export function createRecord(events, notebook) {
     total: id => Object.values(R.days).reduce((a, d) => a + ((d.plays || {})[id] || 0), 0),   // これまでの回数
     bookDone: id => !!(R.books || {})[id],   // その本を最後まで読んだ(通しクリアした)ことがあるか
     last: () => R.last,
+    daysSince(id) { const ks = Object.keys(R.days).filter(k => (R.days[k].plays || {})[id]).sort(); if (!ks.length) return 999; return Math.floor((new Date(day()) - new Date(ks[ks.length - 1])) / 864e5); },   // その遊びを最後にした日から何日
     clearLast() { R.last = null; save(); },
     goal: () => R.goal,
     setGoal(min) { R.goal.min = Math.max(5, Math.min(120, Math.round(+min) || 15)); save(); },

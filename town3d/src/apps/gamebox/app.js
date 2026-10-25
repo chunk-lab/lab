@@ -72,7 +72,7 @@ export const gameboxApp = {
     if (!document.getElementById('gb-css')) { const s = document.createElement('style'); s.id = 'gb-css'; s.textContent = CSS; document.head.appendChild(s); }
     const st = ctx.storage, P = ctx.params || {};
     // はなちゃんが遊びに来ているときは、相手に「はな」を入れる(終わったら一言)
-    const HANA = P.guest ? { id: 'hana', name: P.guest.name, lv: 2, icon: '🎀', say: [['えー、ひきわけ? もう一回やろ!', 'いい勝負だったね〜'], ['くやし〜! もう一回!', 'え〜、強すぎない!?', 'むぅ…次は負けないからね!'], ['やった〜! わたしの勝ち!', 'えへへ、勝っちゃった♪', 'ふふん、まだまだだね〜']] } : null;
+    const HANA = P.guest ? { id: 'hana', name: P.guest.name, lv: 2, icon: P.guest.icon || '🎀', say: P.guest.id === 'sora' ? [['ひきわけかぁ。もう一回!', 'いい勝負じゃん'], ['うわ、負けた! もう一回やろうぜ', 'やるじゃん…次は負けないよ', 'くっそ〜、強いな!'], ['よっしゃ、おれの勝ち!', 'へへっ、まだまだだね', '今日は調子いいかも']] : [['えー、ひきわけ? もう一回やろ!', 'いい勝負だったね〜'], ['くやし〜! もう一回!', 'え〜、強すぎない!?', 'むぅ…次は負けないからね!'], ['やった〜! わたしの勝ち!', 'えへへ、勝っちゃった♪', 'ふふん、まだまだだね〜']] } : null;
     const cpuList = HANA ? [HANA, ...CPUS] : CPUS, cpuOf = id => cpuList.find(c => c.id === id) || cpuById(id);
     const root = document.createElement('div'); root.className = 'gb'; el.appendChild(root);
     const sfx = createSfx(ctx.audio && ctx.audio.sfx != null ? ctx.audio.sfx : 0.6);
