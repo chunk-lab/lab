@@ -38,6 +38,8 @@ export const CSS = `
 .tw-ctl .wide{grid-column:1/3;font-size:14px}
 .tw-emotes .tw-btn{height:38px;padding:0 12px;font-size:13px}
 .tw-emotes .tw-btn[hidden]{display:none}
+.tw-snowb{position:absolute;left:12px;bottom:calc(64px + var(--tw-bot));height:52px;padding:0 16px;font-size:14px;font-weight:800;touch-action:none;user-select:none;-webkit-user-select:none}
+.tw-snowb[hidden]{display:none}
 .tw-grade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(176,168,255,.20),rgba(255,214,190,.12) 70%,rgba(255,190,200,.16));mix-blend-mode:soft-light}
 .tw-vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(70,40,110,.22) 100%)}
 .tw-stick{position:absolute;left:0;top:0;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.7);pointer-events:none}
@@ -127,15 +129,16 @@ export function createHud(root, bus) {
   const corner = h(`<div class="tw-corner"><button class="tw-btn tw-icon tw-cambtn" aria-label="カメラ">🎥</button><button class="tw-btn tw-icon tw-photo" aria-label="写真をとる">📷</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
   const labels = h('<div class="tw-labels"></div>');
   const action = h('<button class="tw-btn tw-action" hidden></button>');
-  const emotes = h('<div class="tw-emotes"><button class="tw-btn" data-e="wave">👋 手をふる</button><button class="tw-btn" data-e="say">💬 ひとこと</button><button class="tw-btn" data-e="feed" hidden>🌾 えさをまく</button><button class="tw-btn tw-snowb" hidden>❄️ 雪玉</button></div>');
+  const emotes = h('<div class="tw-emotes"><button class="tw-btn" data-e="wave">👋 手をふる</button><button class="tw-btn" data-e="say">💬 ひとこと</button><button class="tw-btn" data-e="feed" hidden>🌾 えさをまく</button></div>');
+  const snowB = h('<button class="tw-btn tw-snowb" hidden>❄️ 雪玉</button>');
   const grade = h('<div class="tw-grade"></div>'), vig = h('<div class="tw-vig"></div>');
   root.prepend(grade, vig);
-  root.append(labels, top, emotes, action, corner);
+  root.append(labels, top, emotes, action, corner, snowB);
   const camBar = h('<div class="tw-cam" hidden></div>'); root.append(camBar);
   const area = top.querySelector('.tw-area'), clock = top.querySelector('.tw-clock'), coins = top.querySelector('.tw-coins');
   let dialog = null, toastEl = null, toastT = 0, panel = null, ptLast = 0;
 
-  { const sb = emotes.querySelector('.tw-snowb'); let on = false;   // 長おしで雪玉をつくる
+  { const sb = snowB; let on = false;   // 長おしで雪玉をつくる
     sb.addEventListener('pointerdown', e => { e.preventDefault(); on = true; try { sb.setPointerCapture(e.pointerId); } catch (_) { } bus.emit('ui:snow', 'down'); });
     const up = () => { if (!on) return; on = false; bus.emit('ui:snow', 'up'); };
     sb.addEventListener('pointerup', up); sb.addEventListener('pointercancel', up); sb.addEventListener('contextmenu', e => e.preventDefault()); }
@@ -154,7 +157,7 @@ export function createHud(root, bus) {
     camBar,
     setArea(t) { if (area.textContent !== t) area.textContent = t; },
     setLite(on) { grade.style.display = vig.style.display = on ? 'none' : ''; },
-    setSnow(on, label) { const b = emotes.querySelector('.tw-snowb'); if (b.hidden === on) b.hidden = !on; if (label && b.textContent !== label) b.textContent = label; },
+    setSnow(on, label) { const b = snowB; if (b.hidden === on) b.hidden = !on; if (label && b.textContent !== label) b.textContent = label; },
     setFeed(on) { const b = emotes.querySelector('[data-e="feed"]'); if (b && b.hidden === on) b.hidden = !on; },
     setClock(hh) { const H = Math.floor(hh), m = Math.floor((hh % 1) * 60); const ic = hh < 5 || hh >= 19 ? '🌙' : hh < 7 ? '🌅' : hh < 17 ? '☀️' : '🌇'; clock.textContent = `${ic} ${String(H).padStart(2, '0')}:${String(m).padStart(2, '0')}`; },
     setCoins(n, g) { coins.textContent = '🪙 ' + fmtN(n) + (g == null ? '' : ' 💎 ' + fmtN(g)); },
