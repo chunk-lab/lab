@@ -30,7 +30,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 .sp-tim{position:absolute;right:16px;bottom:calc(240px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
 .sp-tim i{position:absolute;top:-4px;width:4px;height:24px;border-radius:2px;background:#5a4a6b;left:50%}.sp-tim[hidden]{display:none}
 .sp-wind{display:inline-block;transition:transform .2s}
-.sp-swing{position:absolute;left:16px;right:16px;bottom:calc(252px + env(safe-area-inset-bottom,0px));height:26px;border-radius:13px;background:linear-gradient(90deg,#8fe0b0 0 4%,#fff 4% 9%,#ffd36b 9% 11%,#fff 11%);box-shadow:0 2px 8px #0004;border:2px solid #fff}
+.sp-swing{position:absolute;left:16px;right:16px;bottom:calc(252px + env(safe-area-inset-bottom,0px));height:30px;border-radius:15px;background:linear-gradient(90deg,#fff 0 7%,#ffe08a 7% 13%,#fff 13%);box-shadow:0 2px 8px #0004;border:2px solid #fff}
 .sp-swing .pw{position:absolute;top:0;bottom:0;left:0;border-radius:11px;background:linear-gradient(90deg,#ffd36b,#ff7aa2);opacity:.55}
 .sp-swing .mk{position:absolute;top:-6px;width:5px;height:38px;border-radius:3px;background:#5a4a6b}
 .sp-swing .set{position:absolute;top:-8px;width:3px;height:42px;background:#ff5a5a}
@@ -121,7 +121,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const shot = h.querySelector('.sp-shot');
     let y0 = 0;
     shot.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!S || S.phase !== 'aim') return;
-      if (S.kind === 'golf') { swingTap(); return; }   // ゴルフ:タップ3回(スタート → 強さ → 左右)
+      if (S.kind === 'golf') { if (S.sw && S.sw.ph === 'shot') return; swingTap(); return; }   // ゴルフ:タップ3回(スタート → 強さ → 左右)
       S.charging = true; S.cT = 0; S.power = 0; y0 = e.clientY; try { shot.setPointerCapture(e.pointerId); } catch (_) { } });
     shot.addEventListener('pointermove', e => { if (!S || !S.charging || S.kind !== 'frisbee') return; S.power = Math.max(0, Math.min(1, (e.clientY - y0) / 150)); });   // 下へ引くほど強い
     const rel = () => {
@@ -217,22 +217,30 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   }
   // ---- ゴルフのスイング(みんゴル式):1回目でスタート → 2回目で強さ → もどってくる印を「インパクト」で3回目 ----
   const IMPACT = 0.1;
+  // パター:タップ2回(スタート → 強さ)で打つ。左右のメーターはなし
+  // ほかのクラブ:1回目スタート → 2回目で強さ → もどってくる印を「インパクト」で3回目
+  //   いちばん上(MAX)で少し止まる。そこで押すとMAXの強さ(3回目あつかいにはしない)。強さを決めた直後のタップは数えない
   function swingTap() {
-    const sw = S.sw;
-    if (!sw) { S.sw = { ph: 1, pos: 0 }; audio?.play?.('wave'); return; }
-    if (sw.ph === 1) { S.power = Math.max(0.05, sw.pos); sw.ph = 2; return; }
-    if (sw.ph === 2) { const d = (sw.pos - IMPACT) / 0.09; S.dev = Math.abs(d) < 0.25 ? 0 : Math.max(-1, Math.min(1, d)); S.sw = null; fire(); }
+    const sw = S.sw, putt = CLUBS[S.club].loft === 0;
+    if (!sw) { S.sw = { ph: 1, pos: 0, hold: 0, since: 0 }; audio?.play?.('wave'); return; }
+    if (sw.ph === 1 || sw.ph === 'top') { S.power = Math.max(0.05, sw.pos); sw.ph = 2; sw.since = 0; audio?.play?.('open'); if (putt) { S.dev = 0; S.sw = null; fire(); } return; }
+    if (sw.ph === 2) { if (sw.since < 0.22) return; const d = (sw.pos - IMPACT) / 0.13; S.dev = Math.abs(d) < 0.22 ? 0 : Math.max(-1, Math.min(1, d)); sw.ph = 'shot'; sw.shotT = 0; sw.hitAt = sw.pos; fire(); }
   }
   function swingStep(dt) {
     const sw = S.sw, el = S.hud.querySelector('.sp-swing'); if (!el) return;
+    const putt = CLUBS[S.club].loft === 0;
+    el.querySelector('span').style.display = putt ? 'none' : '';
     if (sw) {
-      if (sw.ph === 1) { sw.pos += dt * 0.8; if (sw.pos >= 1) { sw.pos = 1; S.power = 1; sw.ph = 2; } }   // 上まで行ったら最大の強さで もどり始める
-      else { sw.pos -= dt * 1.05; if (sw.pos < -0.04) { S.dev = -1; S.sw = null; msg('タイミングが合わなかった…'); fire(); return; } }
+      sw.since += dt;
+      if (sw.ph === 1) { sw.pos += dt * 0.75; if (sw.pos >= 1) { sw.pos = 1; sw.ph = 'top'; sw.hold = 0; } }
+      else if (sw.ph === 'top') { sw.hold += dt; if (sw.hold > 0.3) { S.power = 1; if (putt) { S.dev = 0; S.sw = null; fire(); return; } sw.ph = 2; sw.since = 0.3; } }   // MAXで少し止まってから もどる
+      else if (sw.ph === 2) { sw.pos -= dt * 0.8; if (sw.pos < -0.06) { S.dev = -1; sw.ph = 'shot'; sw.shotT = 0; sw.hitAt = sw.pos; msg('タイミングが合わなかった…'); fire(); } }
+      else if (sw.ph === 'shot') { sw.shotT += dt; if (sw.shotT > 0.9) S.sw = null; }   // 打ったあとも少しだけ結果を見せる
     }
-    const pos = sw ? sw.pos : 0;
-    el.querySelector('.mk').style.left = `calc(${pos * 100}% - 2px)`;
-    el.querySelector('.pw').style.width = `${(sw && sw.ph === 1 ? pos : sw ? S.power : 0) * 100}%`;
-    const st = el.querySelector('.set'); st.hidden = !(sw && sw.ph === 2); if (sw && sw.ph === 2) st.style.left = `calc(${S.power * 100}% - 1px)`;
+    const cur = S.sw, pos = cur ? (cur.ph === 'shot' ? cur.hitAt : cur.pos) : 0;
+    el.querySelector('.mk').style.left = `calc(${Math.max(0, pos) * 100}% - 2px)`;
+    el.querySelector('.pw').style.width = `${(cur && (cur.ph === 1 || cur.ph === 'top') ? pos : cur ? S.power : 0) * 100}%`;
+    const st = el.querySelector('.set'), showSet = !!(cur && cur.ph !== 1 && cur.ph !== 'top'); st.hidden = !showSet; if (showSet) st.style.left = `calc(${S.power * 100}% - 1px)`;
   }
   // ---- 毎フレーム ----
   const tmp = new THREE.Vector3();
