@@ -79,8 +79,9 @@ export default {
     cv.addEventListener('pointermove', e => { if (!aim) return; aim.pts.push([e.clientX, e.clientY, performance.now()]); if (aim.pts.length > 40) aim.pts.shift(); const p = toMM(e.clientX, e.clientY - OFF); if (p) aim.cur = p; });   // ゆっくり動かす=ねらう(指より上をねらう)
     cv.addEventListener('pointerup', e => {   // 上へサッとはじく=投げる。はじく速さで上下、向きで左右がずれる
       if (!aim) return; const a = aim; aim = null; const Pt = a.pts, end = [e.clientX, e.clientY, performance.now()];
-      let st = end; for (let k = Pt.length - 1; k >= 0; k--) { const q = Pt[k], sv = (q[1] - st[1]) / Math.max(1, st[2] - q[2]); if (sv < 0.25) break; st = q; }   // はじき始め(すばやく上へ動き出した所)
-      const dt = Math.max(16, end[2] - st[2]), up = st[1] - end[1], v = up / dt; window.__flick = { up, dt, v, n: Pt.length, pts: Pt.slice(-6).map(q => [q[1], Math.round(q[2])]), end: [end[1], Math.round(end[2])] }; if (up < 40 || v < 0.35) { msg = '上へサッとはじいて投げよう'; msgT = 1.2; return; }
+      let k = Pt.length - 1, fin = end; while (k >= 0 && Math.abs(Pt[k][1] - end[1]) < 2) { fin = Pt[k]; k--; }   // はなす前に止まっていた分はとばす
+      let st = fin; for (; k >= 0; k--) { const q = Pt[k], sv = (q[1] - st[1]) / Math.max(1, st[2] - q[2]); if (sv < 0.25) break; st = q; }   // はじき始め(すばやく上へ動き出した所)
+      const dt = Math.max(16, fin[2] - st[2]), up = st[1] - end[1], v = up / dt; if (up < 40 || v < 0.35) { msg = '上へサッとはじいて投げよう'; msgT = 1.2; return; }
       const base = toMM(st[0], st[1] - OFF) || a.cur; if (!base) return;
       const ey = (v - 1.5) * 38, ex = clamp((end[0] - st[0]) / Math.max(20, up), -1, 1) * 120, wob = () => (Math.random() - 0.5) * 8;
       throwAt([base[0] + ex + wob(), base[1] + ey + wob()]);
