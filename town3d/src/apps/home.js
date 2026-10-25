@@ -446,7 +446,7 @@ export const homeApp = {
       if (gch) guestUpdate(dt);
       wme.root.position.set(wx, wPose ? wy : 0, wz); wme.root.rotation.y = wry; wme.update(dt, wspeed); wme.root.visible = wdist > 1.9;
       const look = new THREE.Vector3(wx, 1.1, wz), op = wpitch;
-      if (wPose) { const lie = wme.pose === 'lie'; look.set(wx + Math.sin(wyaw) * (lie ? 1.0 : 0.7), lie ? wy + 0.1 : 0.6 + wy * 0.5, wz + Math.cos(wyaw) * (lie ? 1.0 : 0.7)); }   // すわる・ねるときは、2人が画面の上のほうに見えるように
+      if (wPose) { const lie = wme.pose === 'lie'; const mx = gPose ? (wx + gx) / 2 : wx, mz = gPose ? (wz + gz) / 2 : wz, k = lie ? 1.7 : 0.7; look.set(mx + Math.sin(wyaw) * k, lie ? wy : 0.6 + wy * 0.5, mz + Math.cos(wyaw) * k); }   // すわる・ねるときは、2人が画面の上のほうに見えるように
       cam.position.set(wx + Math.sin(wyaw) * Math.cos(op) * wdist, 1.1 + Math.sin(op) * wdist, wz + Math.cos(wyaw) * Math.cos(op) * wdist);
       cam.lookAt(look);
       cv.dataset.wp = wx.toFixed(2) + ',' + wz.toFixed(2);
@@ -489,7 +489,7 @@ export const homeApp = {
     function floorLie() {   // 家具がなくても、床にゴロゴロ
       const sn = Math.sin(wry), cs = Math.cos(wry);
       if (gch) { [wx, wz] = walkTo(wx - cs * 0.3, wz + sn * 0.3); }
-      wy = 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wspeed = 0; wpitch = Math.max(wpitch, 1.0); wdist = Math.min(wdist, 3.6);
+      wy = 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wspeed = 0; wpitch = 1.3; wdist = 3.6;
       guestPose('lie', 0.14);
       if (gch) guestSay(['ごろ〜ん。床ひんやりしてきもちい〜', 'ふぁ〜、ねむくなっちゃう', 'こうやってゴロゴロするの、すき'][Math.floor(Math.random() * 3)]);
     }
@@ -517,7 +517,7 @@ export const homeApp = {
       wx = cx + lx * cs + lz * sn; wz = cz - lx * sn + lz * cs; wry = yaw;
       wy = (Y[p.uid] || 0) + (it.sit ? it.sit - 0.58 : it.lie + 0.14);
       wPose = { p, lx, stand: it.sit ? [lx, it.d / 2 + 0.6] : [it.w / 2 + 0.55, 0.3], yaw, cx, cz };
-      wme.pose = it.sit ? 'sit' : 'lie'; wspeed = 0; if (it.lie) { wpitch = Math.max(wpitch, 1.0); wdist = Math.min(wdist, 3.8); }
+      wme.pose = it.sit ? 'sit' : 'lie'; wspeed = 0; if (it.lie) { wpitch = 1.3; wdist = 3.8; }
       if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy); guestSay(it.sit ? ['となり、すわるね〜', 'ふかふかだ!'][Math.floor(Math.random() * 2)] : ['えへへ、ならんでごろ〜ん', 'ベッドふかふか〜!'][Math.floor(Math.random() * 2)]); }
     }
     function standUp() {
