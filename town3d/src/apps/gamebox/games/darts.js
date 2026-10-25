@@ -74,11 +74,12 @@ export default {
     const OFF = 110;   // ねらいは指より上
     const cv = renderer.domElement;
     const mine = () => phase === 'aim' && !over && (two || turn === 0);
+    window.__darts = () => ({ phase, turn, dartN, msg, aim: !!aim, P });   // テスト用
     cv.addEventListener('pointerdown', e => { if (!mine()) return; aim = { pts: [[e.clientX, e.clientY, performance.now()]], cur: toMM(e.clientX, e.clientY - OFF) }; try { cv.setPointerCapture(e.pointerId); } catch (_) { } });
     cv.addEventListener('pointermove', e => { if (!aim) return; aim.pts.push([e.clientX, e.clientY, performance.now()]); if (aim.pts.length > 40) aim.pts.shift(); const p = toMM(e.clientX, e.clientY - OFF); if (p) aim.cur = p; });   // ゆっくり動かす=ねらう(指より上をねらう)
     cv.addEventListener('pointerup', e => {   // 上へサッとはじく=投げる。はじく速さで上下、向きで左右がずれる
-      if (!aim) return; const a = aim; aim = null; const P = a.pts, end = [e.clientX, e.clientY, performance.now()];
-      let k = P.length - 1; while (k > 0 && end[2] - P[k][2] < 110) k--; const st = P[k], dt = Math.max(16, end[2] - st[2]), up = st[1] - end[1];
+      if (!aim) return; const a = aim; aim = null; const Pt = a.pts, end = [e.clientX, e.clientY, performance.now()];
+      let k = Pt.length - 1; while (k > 0 && end[2] - Pt[k][2] < 110) k--; const st = Pt[k], dt = Math.max(16, end[2] - st[2]), up = st[1] - end[1];
       const v = up / dt; if (v < 0.45) { msg = '上へサッとはじいて投げよう'; msgT = 1.2; return; }
       const base = toMM(st[0], st[1] - OFF) || a.cur; if (!base) return;
       const ey = (v - 1.5) * 38, ex = clamp((end[0] - st[0]) / Math.max(20, up), -1, 1) * 120, wob = () => (Math.random() - 0.5) * 8;
