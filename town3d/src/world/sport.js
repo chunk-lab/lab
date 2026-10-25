@@ -27,7 +27,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 .sp-aim{position:absolute;bottom:calc(100px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 3px 0 #c9bfd8,0 5px 10px #0003;font-size:20px}
 .sp-l{left:16px}.sp-r{left:80px}
 .sp-gauge{position:absolute;right:122px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:18px;height:120px;border-radius:9px;background:#fffffff0;box-shadow:0 2px 6px #0003;overflow:hidden}
-.sp-tim{position:absolute;right:16px;bottom:calc(190px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
+.sp-tim{position:absolute;right:16px;bottom:calc(240px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
 .sp-tim i{position:absolute;top:-4px;width:4px;height:24px;border-radius:2px;background:#5a4a6b;left:50%}.sp-tim[hidden]{display:none}
 .sp-wind{display:inline-block;transition:transform .2s}
 .sp-gauge i{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(#ff5a5a,#ffd36b,#8fe0b0)}
@@ -110,7 +110,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const h = document.createElement('div'); h.className = 'sp-hud';
     h.innerHTML = `<div class="sp-top"></div><div class="sp-msg"></div><div class="sp-clubs"></div>
       <button class="sp-aim sp-l">◀</button><button class="sp-aim sp-r">▶</button><div class="sp-gauge"><i style="height:0"></i></div>
-      <div class="sp-tim" hidden><i></i></div><button class="sp-shot">${kind === 'golf' ? '⛳<small>おして はなす</small>' : '🥏<small>下へ引いて はなす</small>'}</button><button class="sp-quit">✕ やめる</button>`;
+      <div class="sp-tim" hidden><i></i></div><button class="sp-shot">${kind === 'golf' ? '⛳<small>おして はなす</small>' : '🥏<small>引いて はなす</small>'}</button><button class="sp-quit">✕ やめる</button>`;
     root.appendChild(h);
     const shot = h.querySelector('.sp-shot');
     let y0 = 0;
