@@ -574,7 +574,7 @@ export const fishingApp = {
       const S = E.S, ph = S.ph, lure = E.G.bait.type === 'lure';
       let lx = S.lure.x, ld = S.lure.d;
       if (ph === 'ready' || ph === 'charge' || ph === 'fly') { lx = S.aimT.x; ld = S.aimT.d; }
-      const vis = E.G.eye.vis, wid = vis >= 2 ? 0.2 : 0.14, ll = Math.hypot(lx, ld) || 1;
+      const vis = E.G.eye.vis, wid = vis >= 2 ? 0.28 : 0.22, ll = Math.hypot(lx, ld) || 1;
       const fish = S.fish.filter(f => f.vis > 0.5 && f.st !== 'gone' && Math.abs(lx * f.d - ld * f.x) / ll < wid).map(f => ({ d: f.d, y: f.y, len: Math.max(6, f.size), sp: f.sp, st: f.st, wig: f.wig, hd: f.hd || 0, int: f.st === 'roam' ? f.int || 0 : 0 }));
       const h = S.hooked;
       return { ph, lx, ld, depth: ph === 'water' || ph === 'fight' ? (h ? h.y : S.depth) : S.tana, tana: S.tana, isLure: lure, bait: E.G.bait.id, vis, eyeName: E.G.eye.icon + ' ' + E.G.eye.name, fish, canTana: !lure, nib: S.bob.nib, sunk: !!S.bite && !lure,

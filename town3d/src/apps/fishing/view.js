@@ -167,12 +167,12 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     // 魚
     for (const f of u.fish || []) {
       const near = Math.hypot(f.d - (u.ld ?? 0.3), (f.y - (u.depth ?? 0)) * 0.5);
-      if (vis < 2 && near > lit) continue;
+      if (vis < 2 && near > lit * 2.2) continue;   // 見る道具がなくても、近くの魚はうっすら見える
       const x = X(f.d), y = Y(f.y, f.d), L = Math.max(10, Math.min(r.w * 0.4, f.len * (vis >= 2 ? 1.0 : 0.9) + 6));
       const face = f.st === 'approach' || f.st === 'look' || f.st === 'nibble' || f.st === 'nibble2' || f.st === 'bite' ? (x < hx ? 1 : -1) : f.hd >= 0 ? 1 : -1;
       g.save(); g.translate(x, y + Math.sin(t * 3 + f.wig) * 1.5); g.scale(face, 1);
       if (vis >= 2) { drawCreature(g, f.sp, 0, 0, L); }
-      else { g.globalAlpha = vis === 1 ? 0.85 : 0.6 * (1 - near / lit); g.fillStyle = '#0d2238'; g.beginPath(); g.ellipse(0, 0, L * 0.45, L * 0.15 * (f.sp.art && f.sp.art.h ? f.sp.art.h / 0.34 : 1), 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(-L * 0.4, 0); g.lineTo(-L * 0.6, -L * 0.13); g.lineTo(-L * 0.6, L * 0.13); g.fill(); }
+      else { g.globalAlpha = Math.max(0.12, vis === 1 ? 0.85 * Math.min(1, 1.6 - near / lit * 0.6) : 0.6 * (1 - near / (lit * 2.2))); g.fillStyle = '#0d2238'; g.beginPath(); g.ellipse(0, 0, L * 0.45, L * 0.15 * (f.sp.art && f.sp.art.h ? f.sp.art.h / 0.34 : 1), 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(-L * 0.4, 0); g.lineTo(-L * 0.6, -L * 0.13); g.lineTo(-L * 0.6, L * 0.13); g.fill(); }
       g.restore();
       if (f.int > 0.04) { const w = 26; g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x - w / 2, y - 26, w, 5); g.fillStyle = f.int > 0.7 ? '#ffd36b' : '#8fe0ff'; g.fillRect(x - w / 2, y - 26, w * Math.min(1, f.int), 5); mark(x, y - 36, '?', f.int > 0.7 ? '#ffd36b' : '#fff'); }   // 気になり度
       if (f.st === 'look') mark(x, y - 12, '?', '#fff');
