@@ -295,6 +295,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     const mb = H.querySelector('.sb-man'), ml = `⛄<small>${f.men.length}/${MAN_MAX}</small>`; if (mb.dataset.l !== ml) { mb.dataset.l = ml; mb.innerHTML = ml; mb.disabled = f.men.length >= MAN_MAX; }
   }
   return {
+    get state() { return B; },   // テスト用
     get active() { return !!B; },
     get making() { return !!B && B.F[0].making; },
     get rolling() { return !!B && B.F[0].rollT > 0; },
