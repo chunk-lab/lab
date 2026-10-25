@@ -35,6 +35,15 @@ export function createRecord(events, notebook) {
     total: id => Object.values(R.days).reduce((a, d) => a + ((d.plays || {})[id] || 0), 0),   // これまでの回数
     bookDone: id => !!(R.books || {})[id],   // その本を最後まで読んだ(通しクリアした)ことがあるか
     last: () => R.last,
+    // メダル:課題(ミッション)を1つでもクリアした日・目標の勉強時間をこなした日・英語ゲームをした日が、何日続いたか
+    markMission() { const t = today(); t.mis = (t.mis || 0) + 1; save(); },
+    medalDay(k) { const t = R.days[k]; return !!t && (sumMin(t) >= R.goal.min || (t.mis || 0) > 0 || ((t.plays || {})['gamebox.en'] || 0) > 0); },
+    medalStreak() { const d = new Date(); if (!this.medalDay(day(d))) d.setDate(d.getDate() - 1); let n = 0; while (this.medalDay(day(d))) { n++; d.setDate(d.getDate() - 1); } return n; },
+    medals() {   // もらったメダルの日数(一度もらったら、とぎれても残る)
+      R.medals = R.medals || {}; const s = this.medalStreak(); let ch = false;
+      for (const n of [3, 7, 14, 30, 60, 100, 200, 365]) if (s >= n && !R.medals[n]) { R.medals[n] = day(); ch = true; }
+      if (ch) save(); return Object.keys(R.medals).map(Number);
+    },
     daysSince(id) { const ks = Object.keys(R.days).filter(k => (R.days[k].plays || {})[id]).sort(); if (!ks.length) return 999; return Math.floor((new Date(day()) - new Date(ks[ks.length - 1])) / 864e5); },   // その遊びを最後にした日から何日
     clearLast() { R.last = null; save(); },
     goal: () => R.goal,

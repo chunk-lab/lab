@@ -56,6 +56,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
       features: ['study'],
+      medals: () => core.record.medals(),   // 勉強を続けたメダル(家の壁にかざれる)
       studyInfo: () => PLAYS.filter(p => p.mood !== 'game' && p.go && p.go.to !== '3d' && p.go.to !== 'test').map(p => ({ id: p.id, n: p.n, days: core.record.daysSince(p.id) })),   // しばらくしていない勉強(そら君が勧める)   // あなたの家に「勉強部屋」ボタンを出す
       switchLabel: '2Dの地図にする',
       onSwitchMode: () => go('2d'),
@@ -70,6 +71,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         else if (name === 'app:open') { document.body.classList.add('md-app-open'); core.events.report('town3d', 'app', { id: d?.id }); }   // 家・ショップなどを開いている間は「今日なにする?」を隠す
         else if (name === 'app:close') document.body.classList.remove('md-app-open');
         else if (name === 'app:event' && d?.name === 'study') openStudy();
+        else if (name === 'app:event' && d?.name === 'done') core.events.report('gamebox', 'done', d.data || {});   // 家のゲーム機の英語ゲーム(メダルの日数に入る)
         else if (name === 'app:event' && d?.name === 'play') { const p = playOf(d.data?.id); if (p && core.today) core.today.go(p); }   // そら君が勧めた勉強を開く
         else if (name === 'note' && d?.text) core.events.report('town3d', 'word', { en: d.text, ja: d.meaning || '', kind: d.kind === 'quote' ? 'quote' : d.kind === 'sentence' ? 'short' : undefined });
       },

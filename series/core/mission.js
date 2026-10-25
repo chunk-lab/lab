@@ -35,7 +35,7 @@ export function createMission(core) {
     if (name !== 'done' || !M || M.done || !match(M.check, d)) return;
     M.got = (M.got || 0) + 1;
     if (M.got < (M.need || 1)) { save(); setTimeout(() => core.ui.toast(`ミッション ${M.got}/${M.need}`), 700); return; }
-    M.done = Date.now(); H.cleared = (H.cleared || 0) + 1; H.kinds[M.type] = Date.now(); save();
+    M.done = Date.now(); H.cleared = (H.cleared || 0) + 1; H.kinds[M.type] = Date.now(); save(); try { core.record && core.record.markMission(); } catch (e) { }   // メダルの日数に入る
     let coins = 0; if (M.kind === 'task') coins = core.member.earn('task');
     setTimeout(() => after(coins), 1200);
   });

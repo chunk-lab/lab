@@ -7,6 +7,7 @@ import { createAudio } from './core/audio.js';
 import { createAI, buildSystem } from './core/ai.js';
 import { openAiSetup, openChat } from './ui/aiui.js';
 import { openSoraNote } from './ui/sora.js';
+import { furn } from './game/furniture.js';
 import { openOgiri } from './ui/ogiri.js';
 import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
@@ -142,7 +143,7 @@ export function mount(container, opt = {}) {
 
   const hud = createHud(root, bus);
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
-  const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? { ...(p || {}), guest: hanaGuest() } : id === 'gamebox' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: opt.member || null, dictUrl: opt.dictUrl || null });
+  const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: opt.member || null, dictUrl: opt.dictUrl || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   hud.setCoins(wallet.get(), gemsNow());
@@ -576,6 +577,9 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('ui:action', doAction));
   offs.push(bus.on('ui:dialogClosed', () => { if (talkingTo) talkingTo.talking = false; talkingTo = null; }));
   offs.push(bus.on('ui:panelClosed', () => { if (talkingTo) talkingTo.talking = false; talkingTo = null; }));
+  // 勉強を続けたメダル:もらったら持ち物に入れて知らせる(家の壁にかざれる)
+  const medalCheck = () => { try { const nw = furn.grantMedals(opt.medals?.()); if (nw.length && started) hud.toast(`🏅 ${nw.map(i => i.name).join('・')}をもらった! 家の壁にかざれるよ`); } catch (e) { } };
+  { const mi = setInterval(medalCheck, 15000); offs.push(() => clearInterval(mi)); setTimeout(medalCheck, 3000); }
   offs.push(bus.on('app:close', () => { input.enabled = true; audio.play('close'); hud.setCoins(wallet.get(), gemsNow()); }));
   if (opt.wallet?.onChange) offs.push(opt.wallet.onChange(w => bus.emit('wallet', w)));
   offs.push(bus.on('wallet', w => { hud.setCoins(w.coins, gemsNow()); if (w.delta > 0) { audio.play('coin'); hud.toast(`🪙 +${w.delta}`); } }));

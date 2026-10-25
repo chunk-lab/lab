@@ -230,7 +230,7 @@ export const gameboxApp = {
 
     // ================= 試合 =================
     function play(G, opp, opts) {
-      clear(); ctx.setTitle(G.title);
+      clear(); ctx.setTitle(G.title); G._t0 = Date.now();
       const two = opp === '2p', cpu = two ? null : typeof opp === 'object' ? { id: 'npc', icon: '🙂', say: ['勝負だ!', 'やられた〜', 'へへっ'], lv: 2, ...opp } : cpuOf(opp);   // opp は CPU の id か、町の住人 {name, lv}
       const me = { name: ctx.player?.name || 'あなた', icon: '🙂' };
       const players = [{ name: two ? 'プレイヤー1' : me.name, cpu: null, icon: '🙂' }, two ? { name: 'プレイヤー2', cpu: null, icon: '😎' } : { name: cpu.name, cpu, icon: cpu.icon }];
@@ -252,6 +252,7 @@ export const gameboxApp = {
       setTimeout(() => { if (!stage.isConnected) return; cur = G.start(host); }, 1500);
     }
     function result(G, opp, opts, players, res) {
+      if (EN_GAMES.includes(G)) try { ctx.emit('done', { play: 'gamebox.en', game: G.id, min: Math.round((Date.now() - (G._t0 || Date.now())) / 6000) / 10 }); } catch (e) { }   // 英語ゲームは、勉強の記録(メダルの日数)に入る
       const w = res.winner, two = opp === '2p';
       const title = w === -1 ? 'ひきわけ' : two ? `${players[w].name} のかち!` : w === 0 ? '🏆 かち!' : 'まけ…';
       sfx.play(w === 0 || (two && w >= 0) ? 'win' : w === 1 ? 'lose' : 'point');

@@ -13,7 +13,7 @@ export const WALL_H = 3.4;          // 壁・天井の高さ
 export const MAX_OWN = 50;          // 同じ家具は50個まで
 export const SIDE_MIN = 4, SIDE_MAX = 20;   // 部屋の一辺(マス)の下限・上限
 export const ROOM = 8;              // はじめの部屋の広さ(8×8マス)
-export const CATS = ['すべて', 'ねる・すわる', 'つくえ・しゅうのう', 'あかり', 'かべ', 'かざり'];
+export const CATS = ['すべて', 'ねる・すわる', 'つくえ・しゅうのう', 'キッチン・おふろ', 'あかり', 'かべ', 'かざり'];
 
 const mat = c => new THREE.MeshLambertMaterial({ color: c });
 const glow = (m, c) => { m.material.emissive = new THREE.Color(c); return m; };
@@ -35,6 +35,15 @@ function disc(g, r, t, c, x, y, z) {
   m.rotation.x = Math.PI / 2; m.position.set(x, y, z); g.add(m); return m;
 }
 
+// メダル(勉強を続けた日数)。リボンと、数字の入った円
+const medTex = {};
+function medal(g, n, c) {
+  box(g, 0.12, 0.35, 0.02, 0xff7a9a, -0.07, 0.25, 0.02).rotation.z = 0.25; box(g, 0.12, 0.35, 0.02, 0x7ab8ff, 0.07, 0.25, 0.02).rotation.z = -0.25;
+  disc(g, 0.22, 0.05, c, 0, 0.12, 0.06);
+  if (!medTex[n] && typeof document !== 'undefined') { const cv = document.createElement('canvas'); cv.width = cv.height = 128; const x = cv.getContext('2d'); x.fillStyle = '#fff'; x.font = `900 ${n >= 100 ? 46 : 60}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(n), 64, 58); x.font = '700 20px sans-serif'; x.fillText('DAYS', 64, 100); medTex[n] = new THREE.CanvasTexture(cv); medTex[n].colorSpace = THREE.SRGBColorSpace; }
+  if (medTex[n]) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.36, 0.36), new THREE.MeshBasicMaterial({ map: medTex[n], transparent: true })); m.position.set(0, 0.12, 0.09); g.add(m); }
+}
+export const MEDALS = [3, 7, 14, 30, 60, 100, 200, 365];
 // 原点が床の中心、正面は +z。大きさは w×d マス(1マス=1)。壁かけは「壁にふれる面が z=0」「幅の中心が x=0」。
 export const ITEMS = [
   { id: 'bed', lie: 0.63, cat: 'ねる・すわる', name: 'ベッド', price: 700, w: 2, d: 3, build(g) {
@@ -138,6 +147,51 @@ export const ITEMS = [
   { id: 'clock', cat: 'かべ', wall: true, name: 'かけ時計', price: 200, w: 1, d: 1, y0: 2.2, build(g) {
     disc(g, 0.3, 0.06, 0xd8b38a, 0, 0.3, 0.03); disc(g, 0.25, 0.02, 0xffffff, 0, 0.3, 0.07);
     box(g, 0.025, 0.2, 0.01, 0x4a3b3b, 0, 0.3, 0.09); box(g, 0.14, 0.025, 0.01, 0x4a3b3b, 0.05, 0.3, 0.09); } },
+  // ---- キッチン ----
+  { id: 'stove', cat: 'キッチン・おふろ', name: 'コンロ', price: 450, w: 1, d: 1, build(g) {
+    box(g, 0.9, 0.85, 0.8, 0xfafafa, 0, 0, 0); box(g, 0.9, 0.04, 0.8, 0x2b2b33, 0, 0.85, 0);
+    for (const [x, z] of [[-0.2, -0.15], [0.2, 0.15]]) { cyl(g, 0.13, 0.02, 0x555560, x, 0.89, z); cyl(g, 0.07, 0.025, 0x777784, x, 0.9, z); }
+    for (const x of [-0.25, 0, 0.25]) cyl(g, 0.035, 0.04, 0x9aa8b2, x, 0.7, 0.41); box(g, 0.7, 0.35, 0.02, 0x3a3a44, 0, 0.15, 0.41); } },
+  { id: 'sink', cat: 'キッチン・おふろ', name: '流し台', price: 550, w: 2, d: 1, build(g) {
+    box(g, 1.9, 0.85, 0.8, 0xe8d6bc, 0, 0, 0); box(g, 1.94, 0.05, 0.84, 0xeef1f4, 0, 0.85, 0); box(g, 0.7, 0.03, 0.45, 0x9aa8b2, -0.3, 0.88, 0.02);
+    cyl(g, 0.025, 0.32, 0xc9d2d8, -0.3, 0.9, -0.3); box(g, 0.04, 0.03, 0.2, 0xc9d2d8, -0.3, 1.2, -0.2);
+    for (const x of [-0.5, 0, 0.5]) box(g, 0.04, 0.1, 0.03, 0xb39c7c, x + 0.2, 0.55, 0.41); } },
+  { id: 'counter', cat: 'キッチン・おふろ', name: 'キッチンカウンター', price: 400, w: 2, d: 1, build(g) {
+    box(g, 1.9, 0.85, 0.8, 0xf4ece0, 0, 0, 0); box(g, 1.96, 0.05, 0.86, 0xc9a28c, 0, 0.85, 0);
+    for (const x of [-0.5, 0.5]) box(g, 0.3, 0.03, 0.02, 0xb39c7c, x, 0.65, 0.41); } },
+  { id: 'cupboard', cat: 'キッチン・おふろ', name: '食器だな', price: 500, w: 1, d: 1, build(g) {
+    box(g, 0.9, 1.9, 0.5, 0xd9b99a, 0, 0, -0.15); box(g, 0.8, 0.9, 0.02, 0xcfe8f5, 0, 0.9, 0.11);
+    for (const y of [1.05, 1.4]) { box(g, 0.8, 0.02, 0.4, 0xc9a28c, 0, y, -0.15); for (const x of [-0.25, 0, 0.25]) cyl(g, 0.09, 0.02, 0xffffff, x, y + 0.02, -0.15); } } },
+  { id: 'microwave', cat: 'キッチン・おふろ', name: '電子レンジ', price: 300, w: 1, d: 1, build(g) {
+    box(g, 0.55, 0.32, 0.38, 0xf2f2f2, 0, 0, 0); box(g, 0.36, 0.24, 0.02, 0x2b2b33, -0.06, 0.04, 0.19); box(g, 0.08, 0.2, 0.02, 0xc9d2d8, 0.2, 0.06, 0.19); } },
+  { id: 'kettle', cat: 'キッチン・おふろ', name: 'ケトル', price: 120, w: 1, d: 1, build(g) {
+    cyl(g, 0.12, 0.2, 0xff9fb4, 0, 0, 0, 0.09); cyl(g, 0.03, 0.04, 0x5a4a6b, 0, 0.2, 0); box(g, 0.03, 0.12, 0.03, 0x5a4a6b, 0.13, 0.06, 0); } },
+  // ---- おふろ ----
+  { id: 'bathtub', sit: 0.12, cat: 'キッチン・おふろ', name: 'バスタブ', price: 900, w: 2, d: 1, build(g) {
+    box(g, 1.9, 0.55, 0.9, 0xffffff, 0, 0, 0); box(g, 1.7, 0.02, 0.7, 0x9fd8f0, 0, 0.45, 0);
+    for (const x of [-0.85, 0.85]) cyl(g, 0.05, 0.08, 0xd8b04a, x, 0, 0.35); cyl(g, 0.025, 0.3, 0xc9d2d8, -0.85, 0.55, -0.35); } },
+  { id: 'shower', cat: 'キッチン・おふろ', name: 'シャワー', price: 800, w: 1, d: 1, build(g) {
+    box(g, 0.95, 0.08, 0.95, 0xf4f8fa, 0, 0, 0); cyl(g, 0.025, 2.0, 0xc9d2d8, -0.35, 0.08, -0.4);
+    const hd = cyl(g, 0.12, 0.04, 0xc9d2d8, -0.2, 2.0, -0.3); hd.rotation.x = 0.3; box(g, 0.2, 0.03, 0.03, 0xc9d2d8, -0.3, 2.0, -0.38);
+    const gl = new THREE.Mesh(new THREE.BoxGeometry(0.95, 1.9, 0.02), new THREE.MeshLambertMaterial({ color: 0xcfeefa, transparent: true, opacity: 0.35 })); gl.position.set(0, 1.03, 0.46); g.add(gl);
+    const gl2 = gl.clone(); gl2.rotation.y = Math.PI / 2; gl2.position.set(0.46, 1.03, 0); g.add(gl2); } },
+  { id: 'washbasin', cat: 'キッチン・おふろ', name: '洗面台', price: 500, w: 1, d: 1, build(g) {
+    box(g, 0.8, 0.8, 0.5, 0xf4ece0, 0, 0, -0.15); box(g, 0.84, 0.05, 0.56, 0xffffff, 0, 0.8, -0.15); cyl(g, 0.17, 0.06, 0xe8eef2, 0, 0.83, -0.1);
+    cyl(g, 0.02, 0.2, 0xc9d2d8, 0, 0.85, -0.35); box(g, 0.6, 0.6, 0.03, 0xcfe8f5, 0, 1.15, -0.4); } },
+  { id: 'bathmat', cat: 'キッチン・おふろ', name: 'バスマット', price: 100, w: 1, d: 1, flat: true, build(g) { box(g, 0.8, 0.02, 0.55, 0xa8d8e8, 0, 0, 0); } },
+  { id: 'towelrack', cat: 'キッチン・おふろ', wall: true, name: 'タオルかけ', price: 150, w: 1, d: 1, y0: 1.1, build(g) {
+    box(g, 0.7, 0.03, 0.08, 0xc9d2d8, 0, 0.3, 0.06); box(g, 0.5, 0.45, 0.04, 0xffb3c1, 0, -0.12, 0.1); } },
+  // ---- ドア(となりの部屋へ) ----
+  { id: 'door', cat: 'かべ', wall: true, door: true, name: 'ドア', price: 300, w: 1, d: 1, y0: 0, build(g) {
+    box(g, 1.0, 2.15, 0.06, 0xb39c7c, 0, 0, 0.03); box(g, 0.86, 2.05, 0.05, 0xd9b99a, 0, 0, 0.07); ball(g, 0.045, 0xd8b04a, 0.32, 1.0, 0.12); } },
+  { id: 'medal3', cat: 'かべ', wall: true, noshop: true, medal: 3, name: '3日連続メダル', price: 0, w: 1, d: 1, y0: 1.5, build(g) { medal(g, 3, 0xc98a5a); } },
+  { id: 'medal7', cat: 'かべ', wall: true, noshop: true, medal: 7, name: '7日連続メダル', price: 0, w: 1, d: 1, y0: 1.5, build(g) { medal(g, 7, 0xc98a5a); } },
+  { id: 'medal14', cat: 'かべ', wall: true, noshop: true, medal: 14, name: '14日連続メダル', price: 0, w: 1, d: 1, y0: 1.5, build(g) { medal(g, 14, 0xc9d2d8); } },
+  { id: 'medal30', cat: 'かべ', wall: true, noshop: true, medal: 30, name: '30日連続メダル', price: 0, w: 1, d: 1, y0: 1.5, build(g) { medal(g, 30, 0xc9d2d8); } },
+  { id: 'medal60', cat: 'かべ', wall: true, noshop: true, medal: 60, name: '60日連続メダル', price: 0, w: 1, d: 1, y0: 1.5, build(g) { medal(g, 60, 0xf2c94c); } },
+  { id: 'medal100', cat: 'かべ', wall: true, noshop: true, medal: 100, name: '100日連続メダル', price: 0, w: 1, d: 1, y0: 1.5, build(g) { medal(g, 100, 0xf2c94c); } },
+  { id: 'medal200', cat: 'かべ', wall: true, noshop: true, medal: 200, name: '200日連続メダル', price: 0, w: 1, d: 1, y0: 1.5, build(g) { medal(g, 200, 0xb8a8ff); } },
+  { id: 'medal365', cat: 'かべ', wall: true, noshop: true, medal: 365, name: '365日連続メダル', price: 0, w: 1, d: 1, y0: 1.5, build(g) { medal(g, 365, 0xff9fd0); } },
   { id: 'window', cat: 'かべ', wall: true, name: 'まど', price: 500, w: 2, d: 1, y0: 1.0, build(g) {
     box(g, 1.7, 1.4, 0.08, 0xffffff, 0, 0, 0.04); glow(box(g, 1.5, 1.2, 0.02, 0xbfe6ff, 0, 0.1, 0.09), 0x4a7090);
     box(g, 0.06, 1.2, 0.04, 0xffffff, 0, 0.1, 0.11); box(g, 1.5, 0.06, 0.04, 0xffffff, 0, 0.7, 0.11); } },
@@ -155,6 +209,8 @@ export const kindOf = id => (ITEM[id].wall ? 'wall' : ITEM[id].ceil ? 'ceil' : I
 // ---- 家(部屋)：コインで1列・1行ずつ広げる/ダイヤで広げる・部屋ごと増やす ----
 // 部屋 {id, name, cols, rows, sx, sy(間取り図の上の場所), from(つながっている部屋)}
 const ROOM_NAMES = ['リビング', 'ベッドルーム', '書斎', 'ダイニング', 'ゲストルーム', 'サンルーム', 'ギャラリー', 'ホール', 'シアタールーム', 'ライブラリー', 'ガレージ', 'テラス'];
+export const ROOM_TYPES = [['', 'ふつう'], ['kitchen', 'キッチン'], ['bath', 'バスルーム']];
+const ROOM_TYPE_NAME = { kitchen: 'キッチン', bath: 'バスルーム' };
 const DEF_COST = { coinsPerLine: 3000, gemsPerLine: 60, gemsPerRoom: 250 };
 const st = createStorage('town:furn:');
 export const houseData = {
@@ -191,6 +247,7 @@ export const houseData = {
     const room = { id: 'r' + (Date.now().toString(36)), name: ROOM_NAMES[n] || `へや ${n + 1}`, cols: 6, rows: 6, sx: at.sx, sy: at.sy, from: at.r.id };
     h.rooms.push(room); this.save(h); return { room };
   },
+  setType(roomId, type) { const h = this.get(), r = h.rooms.find(x => x.id === roomId); if (!r) return; const was = r.type || ''; r.type = type || ''; if (!r.name || ROOM_NAMES.includes(r.name) || r.name === ROOM_TYPE_NAME[was]) r.name = ROOM_TYPE_NAME[r.type] || r.name; this.save(h); },
   rename(roomId, name) { const h = this.get(), r = h.rooms.find(x => x.id === roomId); if (r) { r.name = String(name).slice(0, 10) || r.name; this.save(h); } },
 };
 
@@ -210,6 +267,8 @@ export const furn = {
   savePlaced: v => st.set('put', v),
   saveInv: v => st.set('inv', v),
   owned(id) { return this.inv()[id] || 0; },
+  // 勉強を続けたメダル(もらった日数のリスト)を、持ち物に入れる。新しく入ったものを返す
+  grantMedals(days) { const inv = this.inv(), out = []; for (const n of days || []) { const id = 'medal' + n; if (ITEM[id] && !inv[id]) { inv[id] = 1; out.push(ITEM[id]); } } if (out.length) this.saveInv(inv); return out; },
   placedCount(id) { return this.placed().filter(p => p.id === id).length; },
   // カゴ {家具id: 個数}。お店を出ても残る。お金が減るのは「まとめて買う」を押したときだけ
   cart: () => { const c = st.get('cart') || {}, o = {}; for (const id in c) if (ITEM[id] && c[id] > 0) o[id] = c[id]; return o; },
