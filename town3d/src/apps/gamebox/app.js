@@ -49,6 +49,7 @@ const CSS = `
 .gb .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
 .gb .note{font-size:12px;color:#8d7f9e;font-weight:700;line-height:1.6}
 .gb .stage{position:absolute;inset:0;background:#fff8ef;z-index:10}
+.gb .stage .in{position:absolute;left:0;right:0;top:env(safe-area-inset-top,0px);bottom:calc(env(safe-area-inset-bottom,0px) + 14px)}
 .gb .quit{position:absolute;left:8px;top:8px;z-index:12;border:0;border-radius:999px;width:34px;height:34px;font:inherit;font-weight:900;background:rgba(255,255,255,.85);color:${INK};box-shadow:0 2px 6px #0003}
 .gb .vs{position:absolute;inset:0;z-index:13;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,#5aa8f0 0%,#5aa8f0 50%,#ff7aa2 50%,#ff7aa2 100%);color:#fff;font-weight:900;animation:gbFade 1.6s forwards}
 .gb .vs .n{font-size:26px;text-shadow:0 3px 0 #0003}.gb .vs .x{font-size:44px;background:#fff;color:${INK};border-radius:999px;padding:4px 18px;box-shadow:0 4px 0 #0003}
@@ -227,6 +228,7 @@ export const gameboxApp = {
       const me = { name: ctx.player?.name || 'あなた', icon: '🙂' };
       const players = [{ name: two ? 'プレイヤー1' : me.name, cpu: null, icon: '🙂' }, two ? { name: 'プレイヤー2', cpu: null, icon: '😎' } : { name: cpu.name, cpu, icon: cpu.icon }];
       const stage = document.createElement('div'); stage.className = 'stage'; root.appendChild(stage);
+      const inner = document.createElement('div'); inner.className = 'in'; stage.appendChild(inner);   // スマホの下のバーにかからないように
       const quit = document.createElement('button'); quit.className = 'quit'; quit.textContent = '✕'; root.appendChild(quit);
       quit.onclick = () => { const s = sheet(`<h2>やめる?</h2><div class="row"><button class="btn sub" data-n>つづける</button><button class="btn" data-y>やめる</button></div>`); s.querySelector('[data-n]').onclick = () => s.remove(); s.querySelector('[data-y]').onclick = () => { s.remove(); home(); }; };
       const vs = document.createElement('div'); vs.className = 'vs';
@@ -234,7 +236,7 @@ export const gameboxApp = {
       root.appendChild(vs); setTimeout(() => vs.remove(), 1700); sfx.play('whoosh');
       let done = false;
       const host = {
-        box: stage, sfx, players, two, opts, dictUrl: ctx.dictUrl || P.dictUrl, season: P.season,
+        box: inner, sfx, players, two, opts, dictUrl: ctx.dictUrl || P.dictUrl, season: P.season,
         end(res) {
           if (done) return; done = true;
           setTimeout(() => result(G, opp, opts, players, res), 900);

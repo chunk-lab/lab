@@ -57,12 +57,12 @@ export function wrapTxt(g, s, x, y, w, o = {}) {
 export function rr(g, x, y, w, h, r) { r = Math.min(r, w / 2, h / 2); g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
 // ボタン(描画とあたり判定)
 export function btn(g, b, o = {}) {
-  const { fill = '#fff', color = INK, size = 15, flip = false, shadow = true, border = null, alpha = 1 } = o;
+  const { fill = '#fff', color = INK, size = 15, flip = false, shadow = true, border = null, alpha = 1, font, weight } = o;
   g.save(); g.globalAlpha = alpha;
   if (shadow) { g.fillStyle = 'rgba(0,0,0,0.15)'; rr(g, b.x, b.y + 3, b.w, b.h, b.r ?? 14); g.fill(); }
   g.fillStyle = fill; rr(g, b.x, b.y, b.w, b.h, b.r ?? 14); g.fill();
   if (border) { g.lineWidth = 2.5; g.strokeStyle = border; g.stroke(); }
-  if (b.label != null) txt(g, b.label, b.x + b.w / 2, b.y + b.h / 2 + (flip ? -1 : 1), { size, color, flip, maxW: b.w - 8 });
+  if (b.label != null) txt(g, b.label, b.x + b.w / 2, b.y + b.h / 2 + (flip ? -1 : 1), { size, color, flip, maxW: b.w - 8, font, weight });
   g.restore();
 }
 export const hit = (b, p) => b && p.x >= b.x && p.x <= b.x + b.w && p.y >= b.y && p.y <= b.y + b.h;

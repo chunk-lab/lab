@@ -96,3 +96,9 @@ export function quizWords(D, lv) {
 }
 export const meaningText = e => e.ps.filter(p => POSJ[p[0]]).map(p => `【${POSJ[p[0]]}】${p[1]}`).join(' ');
 export const mainPos = e => (e.ps.find(p => ['n', 'v', 'adj', 'adv'].includes(p[0])) || e.ps[0])[0];
+
+// ---- カテゴリー(辞書早押しのヒント) ----
+import { CATS, CAT_RAW } from './cat_data.js';
+let CATM = null;
+export function catOf(w) { if (!CATM) { CATM = new Map(); CAT_RAW.split(' ').forEach(t => { const i = t.indexOf(':'); CATM.set(t.slice(0, i), CATS[+t.slice(i + 1)]); }); } return CATM.get(w) || ''; }
+export const posName = p => POSJ[p] || '';
