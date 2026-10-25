@@ -49,7 +49,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
     frame.querySelector('.tw-app-title').textContent = def.title;
     const back = params && params.from === 'home' && id !== 'home' && registry.get('home');   // 家から開いたものは「家にもどる」
     if (back) { const b = frame.querySelector('.tw-app-close'); b.textContent = '🏠 家にもどる'; b.setAttribute('aria-label', '家にもどる'); }
-    frame.querySelector('.tw-app-close').onclick = () => (back ? open('home', {}) : close());
+    frame.querySelector('.tw-app-close').onclick = () => { const go = () => (back ? open('home', {}) : close()); if (current?.frame === frame && current.inst?.beforeClose?.(go)) return; go(); };   // アプリが最後に見せたいものがあれば先に
     layer.appendChild(frame);
     layer.hidden = false;
     const body = frame.querySelector('.tw-app-body');

@@ -1,6 +1,6 @@
 // 釣りの効果音(Web Audio でその場で作る)とふるえ
 export function createSfx(volume = 0.7) {
-  let ac = null, out = null, noiseBuf = null, reelN = null, creakN = null, ambN = null;
+  let lastReel = -1, lastCreak = -1, ac = null, out = null, noiseBuf = null, reelN = null, creakN = null, ambN = null;
   const ctx = () => {
     if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); out = ac.createGain(); out.gain.value = volume; out.connect(ac.destination); } catch (e) { return null; } }
     if (ac.state === 'suspended') ac.resume();
@@ -72,12 +72,12 @@ export function createSfx(volume = 0.7) {
     vib,
     unlock() { ctx(); },
     // リールを巻く強さ 0〜1 / 糸の張り 0〜1.3
-    reel(v) { if (!ac) return; if (!reelN && v > 0.02) reelN = loopNoise('reel', 3200, 6); if (reelN) { const t = ac.currentTime; reelN.v.gain.setTargetAtTime(v > 0.02 ? 0.05 + v * 0.06 : 0, t, 0.03); reelN.fl.frequency.setTargetAtTime(2400 + v * 2400, t, 0.05); } },
-    creak(T) { if (!ac) return; if (!creakN && T > 0.75) creakN = loopNoise('creak', 260, 14); if (creakN) { const t = ac.currentTime, k = Math.max(0, T - 0.75) / 0.4; creakN.v.gain.setTargetAtTime(Math.min(0.35, k * 0.35), t, 0.05); creakN.fl.frequency.setTargetAtTime(200 + k * 260, t, 0.05); } },
+    reel(v) { if (!ac) return; v = Math.round(v * 20) / 20; if (v === lastReel) return; lastReel = v; if (!reelN && v > 0.02) reelN = loopNoise('reel', 3200, 6); if (reelN) { const t = ac.currentTime; reelN.v.gain.setTargetAtTime(v > 0.02 ? 0.05 + v * 0.06 : 0, t, 0.03); reelN.fl.frequency.setTargetAtTime(2400 + v * 2400, t, 0.05); } },
+    creak(T) { if (!ac) return; T = Math.round(T * 20) / 20; if (T === lastCreak) return; lastCreak = T; if (!creakN && T > 0.75) creakN = loopNoise('creak', 260, 14); if (creakN) { const t = ac.currentTime, k = Math.max(0, T - 0.75) / 0.4; creakN.v.gain.setTargetAtTime(Math.min(0.35, k * 0.35), t, 0.05); creakN.fl.frequency.setTargetAtTime(200 + k * 260, t, 0.05); } },
     // 水辺の音(風と水)
     ambience(on) { if (!ac) return; if (on && !ambN) { ambN = loopNoise('amb', 500, 0.4); if (ambN) ambN.v.gain.value = 0.025; } else if (!on && ambN) { ambN.s.stop(); ambN = null; } },
     setVolume(v) { volume = v; if (out) out.gain.value = v; },
-    stopLoops() { fight(0); for (const n of [reelN, creakN, ambN]) { try { n && n.s.stop(); } catch (e) { } } reelN = creakN = ambN = null; },
+    stopLoops() { fight(0); for (const n of [reelN, creakN, ambN]) { try { n && n.s.stop(); } catch (e) { } } reelN = creakN = ambN = null; lastReel = lastCreak = -1; },
     close() { this.stopLoops(); try { ac && ac.close(); } catch (e) { } ac = null; },
   };
 }

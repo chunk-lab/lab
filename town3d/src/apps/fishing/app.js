@@ -17,12 +17,12 @@ const CSS = `
 .fz .bar > *{pointer-events:auto}
 .fz .chip{border:0;border-radius:999px;padding:7px 10px;font:inherit;font-weight:800;font-size:12px;background:rgba(255,255,255,.88);color:${ink};box-shadow:0 2px 8px #0002;white-space:nowrap}
 .fz .hint{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(36px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 262px);box-sizing:border-box;margin-left:-14px;font-size:12px !important;background:rgba(40,30,70,.55);color:#fff;font-weight:700;font-size:13px;padding:6px 12px;border-radius:12px;text-align:center;pointer-events:none;transition:opacity .3s;line-height:1.45}
-.fz .big{position:absolute;right:18px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:108px;height:108px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:17px;color:#fff;background:radial-gradient(circle at 35% 30%,#ffb3c6,#f07a98);box-shadow:0 6px 0 #c9577a,0 10px 20px #0004;touch-action:none}
-.fz .rc{position:absolute;right:22px;bottom:calc(144px + env(safe-area-inset-bottom,0px));padding:9px 14px;border-radius:999px;border:0;font:inherit;font-weight:900;font-size:14px;color:${ink};background:#fffffff0;box-shadow:0 3px 0 #0002;touch-action:none}
+.fz .big{position:absolute;right:42px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:108px;height:108px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:17px;color:#fff;background:radial-gradient(circle at 35% 30%,#ffb3c6,#f07a98);box-shadow:0 6px 0 #c9577a,0 10px 20px #0004;touch-action:none}
+.fz .rc{position:absolute;right:46px;bottom:calc(144px + env(safe-area-inset-bottom,0px));padding:9px 14px;border-radius:999px;border:0;font:inherit;font-weight:900;font-size:14px;color:${ink};background:#fffffff0;box-shadow:0 3px 0 #0002;touch-action:none}
 .fz .rc:active{transform:translateY(2px)}
 .fz .big.on{transform:translateY(4px);box-shadow:0 2px 0 #c9577a,0 6px 12px #0004}
 .fz .big small{display:block;font-size:11px;font-weight:700;opacity:.9}
-.fz .hk{position:absolute;left:18px;bottom:calc(30px + env(safe-area-inset-bottom,0px));width:86px;height:86px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:16px;color:${ink};background:radial-gradient(circle at 35% 30%,#fff,#ffe9a8);box-shadow:0 5px 0 #d8b45a,0 8px 16px #0004;touch-action:none}
+.fz .hk{position:absolute;left:40px;bottom:calc(30px + env(safe-area-inset-bottom,0px));width:86px;height:86px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:16px;color:${ink};background:radial-gradient(circle at 35% 30%,#fff,#ffe9a8);box-shadow:0 5px 0 #d8b45a,0 8px 16px #0004;touch-action:none}
 .fz .hk.alert{animation:fzPulse .35s infinite alternate;background:radial-gradient(circle at 35% 30%,#fff,#ffcf4a)}
 .fz .hk:active{transform:translateY(3px)}
 @keyframes fzPulse{to{transform:scale(1.12)}}
@@ -44,7 +44,7 @@ const CSS = `
 .fz .show .say{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 .fz .badge{display:inline-block;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:900;color:#fff;vertical-align:middle}
 .fz .opflash{position:absolute;left:0;right:0;top:0;pointer-events:none;background:#fff;animation:fzFlash .5s ease-out forwards;z-index:2}
-.fz .thr{position:absolute;right:132px;bottom:calc(30px + env(safe-area-inset-bottom,0px));width:12px;height:90px;border-radius:8px;background:rgba(255,255,255,.35);overflow:hidden;pointer-events:none}
+.fz .thr{position:absolute;right:156px;bottom:calc(30px + env(safe-area-inset-bottom,0px));width:12px;height:90px;border-radius:8px;background:rgba(255,255,255,.35);overflow:hidden;pointer-events:none}
 .fz .thr i{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(#ffe36b,#7fd38c);border-radius:8px}
 .fz .area{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));background:rgba(40,30,70,.55);color:#fff;font-weight:800;font-size:12px;padding:4px 10px;border-radius:999px;pointer-events:none;white-space:nowrap}
 .fz .pw{position:absolute;right:132px;bottom:calc(30px + env(safe-area-inset-bottom,0px));width:16px;height:120px;border-radius:9px;background:rgba(255,255,255,.4);border:2px solid #fff;pointer-events:none;overflow:hidden}
@@ -245,7 +245,7 @@ export const fishingApp = {
       tackleChip();
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
-        if (b === 'back') { if (vs && !ended) { confirmQuit(); return; } menu(); }
+        if (b === 'back') { if (vs && !ended) { confirmQuit(); return; } if (!vs && tripShow(menu)) return; menu(); }
         if (b === 'tackle') { if (E.S.ph !== 'ready') { toast('投げる前に変えられるよ', 1200); return; } tackleSheet(() => { for (const k of ['rod', 'reel', 'line', 'bait', 'hook', 'eye']) E.setGear(k, eq[k]); E.setTana(eq.tana); tackleChip(); }); }
         if (b === 'help') help();
         if (b === 'ask') ask();
@@ -425,7 +425,9 @@ export const fishingApp = {
         if (vs) { toast(`${sp.emoji || '🐟'} ${sp.name}${sp.kind === 'fish' ? ` <small>${d.size}cm</small>` : ''}${info.isNew ? ' <small style="color:#e0556b">NEW!</small>' : ''}`, 1300); return; }
       }
       // 釣れた魚を見せる(2Dの軽い画面。使えないときはカード)
-      async function showCatch(d, info) {
+      async function showCatch(d, info) {   // 釣れた瞬間は魚だけ。人が持って見せるのは、帰るとき(新しい魚・記録更新があったら)
+        if ((info.isNew || info.best) && info.sp.kind === 'fish') trip.push({ sp: info.sp, size: d.size, isNew: info.isNew, best: info.best });
+        showCard(d, info); return;
         const sp = info.sp; card = { remove() {} };
         const head = `<div style="font-size:12px;font-weight:900;color:${RARITY_COL[sp.r]}">${'★'.repeat(sp.r)}${'☆'.repeat(5 - sp.r)} ${RARITY[sp.r] || 'はずれ'} ${MODE_BADGE(easy ? 'easy' : 'real')}</div>
           <div style="font-size:22px;font-weight:900">${esc(sp.name)}${info.isNew ? ' <span style="color:#e0556b;font-size:13px">NEW!</span>' : ''}</div>
@@ -520,7 +522,7 @@ export const fishingApp = {
         } else $('[data-b="info"]').textContent = `🐟${stats.today}`;
         // ボタンと案内
         const ph = E.S.ph, lure = E.G.bait.type === 'lure', h = E.S.hooked;
-        bigB.innerHTML = ph === 'ready' ? '投げる<small>長おし/動かして狙う</small>' : ph === 'charge' ? 'はなす!<small>いまの力で</small>' : ph === 'fight' ? '巻く<small>上にずらすと強く</small>' : ph === 'water' ? '巻く<small>上で速く</small>' : ph === 'fly' ? '…' : vs ? '…' : 'つぎへ';
+        { const bh = ph === 'ready' ? '投げる<small>長おし/動かして狙う</small>' : ph === 'charge' ? 'はなす!<small>いまの力で</small>' : ph === 'fight' ? '巻く<small>上にずらすと強く</small>' : ph === 'water' ? '巻く<small>上で速く</small>' : ph === 'fly' ? '…' : vs ? '…' : 'つぎへ'; if (bigB.__h !== bh) { bigB.__h = bh; bigB.innerHTML = bh; } }
         hkB.textContent = ph === 'water' ? (E.S.bite ? 'あわせ!' : lure ? 'しゃくる' : 'あわせ') : !vs && (ph === 'landed' || ph === 'lost') ? 'つぎへ' : 'あわせ';
         hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water';
         hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
@@ -598,6 +600,26 @@ export const fishingApp = {
     const MODE_BADGE = m => m === 'easy' ? '<span class="badge" style="background:#7fcf8f">かんたん</span>' : '<span class="badge" style="background:#7aa8e8">ほんかく</span>';
     // actors:[{look,pose,sp,size}] / infoHtml / sayText / buttons:[[label, cls, fn]] / caption:[title, sub]
     const shows = new Set();
+    // スマホの「もどる」ジェスチャー(画面の端からのスワイプ)で、うっかりページから出ないように
+    try { history.pushState({ fz: 1 }, ''); } catch (e) { }
+    const onPop = () => { try { history.pushState({ fz: 1 }, ''); } catch (e) { } };
+    window.addEventListener('popstate', onPop);
+    let trip = [];   // この釣りで、はじめて釣れた魚・記録を更新した魚
+    // 帰るとき:新しい魚や記録があれば、いちばんの魚を持って喜んで見せる
+    function tripShow(done) {
+      if (!trip.length) return false;
+      const t = trip; trip = [];
+      const top = t.slice().sort((a, b) => (b.isNew - a.isNew) * 1000 + (b.sp.r - a.sp.r) * 100 + (b.size - a.size) * 0.1)[0];
+      const list = t.map(c => `${c.isNew ? '<b style="color:#e0556b">NEW!</b>' : '<b style="color:#e0556b">記録更新!</b>'} ${esc(c.sp.name)} ${c.size}cm`).join('<br>');
+      showScreen({
+        actors: [{ look: ctx.player?.look, pose: 'auto', sp: top.sp, size: top.size }], bg: null,
+        infoHtml: `<div style="font-size:22px;font-weight:900">🎉 きょうの成果</div><div style="font-size:13px;font-weight:800">${list}</div>`,
+        sayText: '砂吹さん「What a great day!」',
+        caption: [`${top.sp.name} ${top.size}cm`, `ほしみや池 ${new Date().toLocaleDateString()}`], confettiOn: true,
+        buttons: [['帰る', '', done]],
+      }).then(r => { if (!r) done(); });
+      return true;
+    }
     async function showScreen({ actors, bg, infoHtml, sayText, buttons, caption, confettiOn }) {
       const m = await loadShow(); if (!m) return null;
       const el = document.createElement('div'); el.className = 'show'; root.appendChild(el);
@@ -758,6 +780,7 @@ export const fishingApp = {
     // 勝った方が魚を見せて、負けた方は落ちこむ
     async function vsShow(o) {
       const { vs, res, catches, oppC } = o;
+      if (res !== 'win') { vsResult(o); return; }   // 人が見せるのは勝ったときだけ
       const best = l => { const f = l.filter(c => BYID[c.id] && BYID[c.id].kind === 'fish'); if (!f.length) return null; return f.slice().sort((a, b) => vs.rule === 'big' ? b.size - a.size : b.pts - a.pts)[0]; };
       const mb = best(catches), ob = best(oppC), oppLook = vs.bot ? 'suna' : vs.name === '前回の自分' ? ctx.player?.look : 'sora';
       const actor = (look, b, win) => ({ look, pose: win === false ? 'sad' : 'auto', sp: b ? BYID[b.id] : null, size: b ? b.size : 0 });
@@ -798,7 +821,8 @@ export const fishingApp = {
 
     menu();
     return {
-      unmount() { [...shows].forEach(c => c()); showMod?.release?.(); cancelAnimationFrame(raf); clear(); frame = null; sfx.close(); root.remove(); },
+      beforeClose(go) { return tripShow(go); },   // 町にもどるボタンのとき
+      unmount() { window.removeEventListener('popstate', onPop); try { if (history.state && history.state.fz) history.back(); } catch (e) { } [...shows].forEach(c => c()); showMod?.release?.(); cancelAnimationFrame(raf); clear(); frame = null; sfx.close(); root.remove(); },
     };
   },
 };
