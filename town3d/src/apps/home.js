@@ -520,7 +520,7 @@ export const homeApp = {
       const go = id => {
         curId = id; selUid = null; clearMeshes(); buildShell(); relayout(); calcBlockers();
         const d = list().find(p => ITEM[p.id].door), rm = cur();
-        if (d) { const a = d.gx / U + wallLen(d) / U / 2; [wx, wz] = walkTo(d.wall === 'w' ? 0.8 : a, d.wall === 'w' ? a : 0.8); wry = d.wall === 'w' ? Math.PI / 2 : 0; }
+        if (d) { const a = d.gx / U + wallLen(d) / U / 2; [wx, wz] = walkTo(d.wall === 'w' ? 2.6 : a, d.wall === 'w' ? a : 2.6); wry = d.wall === 'w' ? Math.PI / 2 : 0; wdist = Math.min(wdist, 2.2); }
         else { [wx, wz] = walkTo(rm.cols / 2, rm.rows - 1); wry = Math.PI; }
         wyaw = wry + Math.PI; wPose = null; wme.pose = null; wLast = '';
         if (gch) { gPose = null; gHold = false; gx = wx + Math.cos(wry) * 0.62; gz = wz - Math.sin(wry) * 0.62; [gx, gz] = walkTo(gx, gz); }
