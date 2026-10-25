@@ -576,6 +576,7 @@ export function mount(container, opt = {}) {
   function sitAtPiano() {
     standFromSeat(); const s = city.piano.seat;
     me.x = s.x; me.z = s.z; me.ry = s.ry; me.speed = 0; seat = { b: { x: s.x, z: s.z, ry: 0 }, piano: true }; me.ch.pose = 'piano'; me.ch.holdTo = null; input.clear();
+    cam.yaw = 1.2; cam.pitch = 0.32; cam.dist = Math.min(cam.dist, 6);   // ななめ横から(うしろの木にかくれないように)
   }
   function pianoMenu() {
     openPianoMenu({
@@ -639,7 +640,8 @@ export function mount(container, opt = {}) {
     cam.x = S.x; cam.z = S.z; cam.yaw = 0; cam.pitch = 0.15; cam.dist = 6;
     runEvent('fw:digest', { birthday: true });
     hud.say('npc:hana', 'わぁ…! 花火、きれい!', 4); setTimeout(() => hud.say('npc:sora', `${settings.name || ''}、誕生日おめでとう!`, 4), 2500);
-    setTimeout(() => birthdayPhoto(S), 13000);
+    setTimeout(() => { ['heart', 'kamuro', 'star', 'botan'].forEach((t, i) => setTimeout(() => fw.launch(t), i * 250)); }, 9500);   // 写真のしゅんかんに、大きな花火が開くように
+    setTimeout(() => birthdayPhoto(S), 12800);
     setTimeout(() => { for (const r of [ha, so]) if (r && r.pin && !r.pin.bench) r.pin = null; }, 70000);
   }
   function birthdayPhoto(S) {
