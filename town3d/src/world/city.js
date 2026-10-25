@@ -67,8 +67,6 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   scene.add(plaza);
   B.add(geo('ring', () => new THREE.TorusGeometry(PLAZA_R, 0.14, 6, 64)), curbM, 0, 0.05, 0, 0, 1, 1, 1, null, Math.PI / 2);
   fountain(0, 0);
-  interact.push({ kind: 'sport', id: 'golf', what: 'golf', season: 'spring', x: 0, z: 6.5, r: 2.4, label: '⛳ きょうのゴルフコース' });   // 春:ゴルフ
-  interact.push({ kind: 'sport', id: 'frisbee', what: 'frisbee', season: 'autumn', x: 0, z: 6.5, r: 2.4, label: '🥏 きょうのフリスビーコース' });   // 秋:フリスビー
   interact.push({ kind: 'snowfight', id: 'snowfight', app: 'snowfight', season: 'winter', x: 0, z: 6.5, r: 2.4, label: '☃️ 雪合戦をする' });   // 冬だけ(ゲーム機なしで遊べる)
   for (let i = 0; i < 8; i++) {
     const a = (i + 0.5) / 8 * Math.PI * 2;

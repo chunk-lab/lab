@@ -184,6 +184,11 @@ export function mount(container, opt = {}) {
     audio.unlock();
     if (focus.kind === 'stand') { standFromSeat(); return; }
     if (focus.kind === 'bench') { sitOnBench(focus); return; }
+    if (focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn') && !battle.active && !sport.active) {   // 春・秋は、掲示板からゴルフ/フリスビーに出る
+      const k = seasons.season === 'spring' ? 'golf' : 'frisbee';
+      hud.dialog({ name: 'ほし広場の掲示板', text: k === 'golf' ? '⛳ きょうのミニゴルフコース(5ホール)が貼り出されている。町じゅうがコースだ!' : '🥏 きょうのフリスビーコース(5ホール)が貼り出されている。町じゅうがコースだ!', choices: [{ label: k === 'golf' ? '⛳ ゴルフに出る' : '🥏 フリスビーに出る', fn: () => sport.start(k) }, { label: '📋 お知らせを見る', fn: () => openApp('board', { from: 'board' }) }] });
+      return;
+    }
     if (focus.kind === 'sport') { if (!battle.active && !sport.active) sport.start(focus.what); return; }
     if (focus.kind === 'mksnow') { const f = seasons.build(me.x + Math.sin(me.ry) * 1.7, me.z + Math.cos(me.ry) * 1.7); if (f) { audio.play('open'); hud.toast('ころころ…雪だるまができた！'); } return; }
     if (focus.kind === 'snowman') { seasons.remove(focus.idx); audio.play('close'); hud.toast('雪だるまをくずしたよ'); return; }
@@ -748,7 +753,8 @@ export function mount(container, opt = {}) {
       for (const it of city.interact) if (!it.season || it.season === seasons.season) consider(it, it.x, it.z, it.r);
     }
     if (battle.active || sport.active) focus = null;
-    else if (!focus && !seat && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = sn ? { kind: 'snowman', idx: sn.i, label: '⛄ こわす' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
+    if (focus && focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn')) focus = { ...focus, label: seasons.season === 'spring' ? '📋⛳ 掲示板(きょうのゴルフ)' : '📋🥏 掲示板(きょうのフリスビー)' };
+    else if (!focus && !seat && !battle.active && !sport.active && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = sn ? { kind: 'snowman', idx: sn.i, label: '⛄ こわす' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
     if (focus && focus.kind === 'npc') { const n = nearNpcs().length; if (n >= 2) focus.label = `ちかくの人と話す(${n}人)`; }
     if (seat) focus = { kind: 'stand', label: '🧍 立つ' };
     hud.setAction(focus ? focus.label : null);
