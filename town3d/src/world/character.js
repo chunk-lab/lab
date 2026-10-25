@@ -140,6 +140,7 @@ export function makeCharacter(look, { scale = 1 } = {}) {
   let phase = 0, blinkT = 2 + Math.random() * 3, wave = 0, idleT = Math.random() * 10;
   const self = {
     root, head,
+    rig: { arms, legs, body, head, torso },   // ポーズを外から付けるとき(釣りの見せる画面など)
     height: 1.62 * scale,
     wave() { wave = 1.6; },
     update(dt, speed) {

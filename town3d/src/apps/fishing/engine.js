@@ -27,11 +27,13 @@ function pointIn(area, r) {
   return [0, 0.5];
 }
 
-export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', rain: false }, gear = {}, onEvent = () => {}, record = false } = {}) {
+export const REACH = 1.12;
+export const distOf = (x, d) => Math.hypot(x * 0.9, d);
+export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', rain: false }, gear = {}, onEvent = () => {}, record = false, easy = false } = {}) {
   const rs = rng(seed), rb = rng(seed ^ 0x5bd1e995);   // rs=池(魚の出かた。対戦では同じになる) / rb=ふるまい
   const G = { rod: gearById('rod', gear.rod), reel: gearById('reel', gear.reel), line: gearById('line', gear.line), bait: gearById('bait', gear.bait), hook: gearById('hook', gear.hook || 'm'), eye: gearById('eye', gear.eye) };
   const S = {
-    t: 0, ph: 'ready', aim: 0, p: 0, pDir: 1, chargeT: 0,
+    t: 0, ph: 'ready', aim: 0, aimT: { x: 0, d: 0.5 }, bonus: null, p: 0, pDir: 1, chargeT: 0, easy,
     lure: { x: 0, d: 0.3, sx: 0, sd: 0, tx: 0, td: 0, fly: 0, flyT: 1 }, baitOk: true, waitT: 0, twitchT: 0,
     bob: { dip: 0, sunk: 0, nib: 0 }, fish: [], engaged: null, bite: null, hooked: null, result: null, resultT: 0, locked: false,
     catches: [], score: { count: 0, big: 0, point: 0 },
@@ -44,7 +46,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
 
   // ---- 池の魚 ----
   function spawn(first) {
-    const cand = FISH.map(sp => [sp, weightOf(sp, cond)]).filter(a => a[1] > 0);
+    const cand = FISH.map(sp => [sp, weightOf(sp, cond) * (easy ? (sp.r >= 5 ? 0 : sp.r === 4 ? 0.3 : 1) : 1)]).filter(a => a[1] > 0);
     const sp = pickWeighted(cand, rs); if (!sp) return;
     const area = sp.area[Math.floor(rs() * sp.area.length)];
     const [x, d] = pointIn(area, rs);
@@ -92,7 +94,8 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     const bait = 0.2 + 0.8 * pref;
     const tana = 1 - Math.min(1, Math.abs(TANA[sp.tana].y - S.depth) / 0.6) * 0.55;
     const hs = Math.abs(HOOK_STEP[G.hook.id] - HOOK_STEP[sp.hook]), hook = hs === 0 ? 1 : hs === 1 ? 0.8 : 0.6;
-    return { bait, tana, hook, all: bait * tana * hook };
+    const all = bait * tana * hook;
+    return { bait, tana, hook, all: easy ? 0.55 + 0.45 * all : all };   // かんたん:相性の差を小さく
   }
   function attract(dt) {
     if (!S.baitOk || S.engaged) return;
@@ -110,7 +113,8 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
         else m = 0.8;
         if (G.bait.id === 'frog' && areaAt(lure.x, lure.d) === 'lily') m *= 1.6;
       } else m = moving ? 0.3 : 1 + Math.min(0.5, S.waitT * 0.03);
-      const near = 1 - dist / RAD, p = M.all * m * near * near * (isLure() ? 3.2 : 1.35);   // 目の前を通すほど寄る
+      const B = S.bonus, bk = B && B.t > 0 && Math.hypot(f.x - B.x, f.d - B.d) < 0.32 ? B.k : 1;   // うまく円に落とせたら寄りやすい
+      const near = 1 - dist / RAD, p = M.all * m * near * near * (isLure() ? 3.2 : 1.35) * bk;   // 目の前を通すほど寄る
       if (rb() < p * dt) { f.st = 'approach'; f.match = M; S.engaged = f; f.nibbles = isLure() ? 0 : Math.max(0, f.sp.wary + Math.floor(rb() * 2) - (rb() < 0.4 ? 1 : 0)); f.nibT = 0.5 + rb() * 0.8; return; }
     }
   }
@@ -140,7 +144,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
   function arrive(f) { f.st = f.nibbles > 0 ? 'nibble' : 'bite'; S.msg = null; if (f.st === 'bite') startBite(f); else f.nibT = 0.25 + rb() * 0.4; }
   function startBite(f) {
     const hs = HOOK_STEP[G.hook.id] - HOOK_STEP[f.sp.hook];   // 小さな魚に大きな針:アタリが一瞬になる
-    const win = f.sp.win * (isLure() ? 0.85 : 1) * (0.85 + 0.3 * rb()) * (hs >= 2 ? 0.45 : hs === 1 ? 0.7 : 1); S.bite = { f, t0: S.t, win }; ev('bite', { heavy: f.sp.str > 1 }); }
+    const win = f.sp.win * (isLure() ? 0.85 : 1) * (0.85 + 0.3 * rb()) * (hs >= 2 ? 0.45 : hs === 1 ? 0.7 : 1) * (easy ? 2.4 : 1); S.bite = { f, t0: S.t, win }; ev('bite', { heavy: f.sp.str > 1 }); }
   function leave(f, why) { f.st = 'flee'; f.fleeT = 1.5; const a = rb() * 6.28; f.tx = clamp(f.x + Math.cos(a) * 0.4, -0.9, 0.9); f.td = clamp(f.d + Math.abs(Math.sin(a)) * 0.4, 0.1, 1); if (S.engaged === f) S.engaged = null; S.bite = null; }
   function spookNear(x, d, r, chance) { for (const f of S.fish) if (f.st === 'roam' || f.st === 'approach') { if (Math.hypot(f.x - x, f.d - d) < r && rb() < chance) leave(f, 'spook'); } }
 
@@ -202,14 +206,14 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     // 最後のあがき:まだ元気な大物は、足もとでもう一度走る
     if (!h.heavy && h.L < 0.12 && h.S > 0.3 && F > 0.85 && h.mode !== 'run') { h.mode = 'run'; h.modeT = 1.2 + rb(); h.dir = rb() < 0.5 ? -1 : 1; h.jolt = 0.3; ev('run', { dir: h.dir, last: 1 }); }
     // 大物に小さな針:強く引きすぎると外れる(テンションを低めに保てば大丈夫)
-    if (h.small && h.T > 0.8 && rb() < (h.T - 0.8) * 1.6 * h.small * dt) return lose('hook');
+    if (h.small && h.T > 0.8 && rb() < (h.T - 0.8) * 1.6 * h.small * dt * (easy ? 0.3 : 1)) return lose('hook');
     h.y = clamp(h.y + ((h.jump > 0 ? 0 : h.mode === 'run' ? 0.8 : h.S < 0.3 ? 0.15 : 0.45) - h.y) * Math.min(1, dt * 1.5), 0, 1);
-    if (h.jump > 0) { h.jump -= dt; if (h.T > 0.72 && rb() < 2.2 * dt) return lose('jump'); }
+    if (h.jump > 0) { h.jump -= dt; if (h.T > (easy ? 0.95 : 0.72) && rb() < (easy ? 0.8 : 2.2) * dt) return lose('jump'); }
     // 切れる・はずれる
-    if (h.T > 1) h.bm += ((h.T - 1) * 5 + 0.7) * dt; else h.bm = Math.max(0, h.bm - 0.35 * dt);
+    if (h.T > 1) h.bm += ((h.T - 1) * 5 + 0.7) * dt * (easy ? 0.33 : 1); else h.bm = Math.max(0, h.bm - (easy ? 0.6 : 0.35) * dt);
     if (h.bm >= 1 || h.L > 1.3) return lose('snap');
     if (h.T < 0.1 && thr < 0.05 && !h.heavy) h.sl += dt; else h.sl = Math.max(0, h.sl - dt * 2);
-    if (h.sl > 1.8) return lose('slack');
+    if (h.sl > (easy ? 3.5 : 1.8)) return lose('slack');
     if (h.L < 0.035) return land();
     S.lure.x = Math.sin(h.phi) * h.L / 0.95; S.lure.d = Math.cos(h.phi) * h.L;
   }
@@ -231,21 +235,28 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     S, G, input, cond, log,
     get ph() { return S.ph; },
     setAim(a) { if (S.ph === 'ready' || S.ph === 'charge') S.aim = clamp(a, -1, 1); },
+    // 狙い:池のどこでも
+    setTarget(x, d) { if (S.ph === 'ready' || S.ph === 'charge') { S.aimT.x = clamp(x, -0.95, 0.95); S.aimT.d = clamp(d, 0.06, 0.98); } },
+    ringR() { return (0.035 + (1 - G.rod.acc) * 0.11) * (easy ? 1.5 : 1); },
+    pNeed() { return clamp((distOf(S.aimT.x, S.aimT.d) - 0.05) / (REACH - 0.05), 0, 1); },
     setGear(slot, id) { if (S.ph !== 'ready') return false; G[slot] = gearById(slot, id); return true; },
     setTana(v) { if (!isLure() && (S.ph === 'ready' || S.ph === 'charge' || S.ph === 'water' || S.ph === 'fly')) S.tana = clamp(v, 0.02, 0.98); },
     match: sp => match(sp),
     // 着水する予定の場所(ためている力 p から)
-    target(p = S.p) {
-      const dist = 0.1 + p * G.rod.dist * 0.92, a = S.aim * 0.78;
-      return [clamp(Math.sin(a) * dist * 1.08, -0.93, 0.93), clamp(Math.cos(a) * dist, 0.06, 0.98)];
+    target(p = S.p) {   // 力 p で落ちる場所(狙いの方向に)
+      const tl = distOf(S.aimT.x, S.aimT.d) || 1, L = 0.05 + p * (REACH - 0.05), k = L / tl;
+      return [clamp(S.aimT.x * k, -0.95, 0.95), clamp(S.aimT.d * k, 0.04, 0.99)];
     },
     castStart() { if (S.ph !== 'ready' || S.locked) return; S.ph = 'charge'; S.chargeT = 0; S.p = 0; },
     castRelease() {
       if (S.ph !== 'charge') return;
-      let [tx, td] = api.target(); const sc = (1 - G.rod.acc) * 0.13;
-      tx = clamp(tx + (rb() - 0.5) * sc, -0.93, 0.93); td = clamp(td + (rb() - 0.5) * sc, 0.06, 0.98);
+      let [tx, td] = api.target(); const sc = (1 - G.rod.acc) * 0.06 * (easy ? 0.6 : 1);
+      tx = clamp(tx + (rb() - 0.5) * sc, -0.95, 0.95); td = clamp(td + (rb() - 0.5) * sc, 0.04, 0.99);
+      const q = Math.hypot(tx - S.aimT.x, td - S.aimT.d) / api.ringR();
+      S.castQ = q < 0.35 ? 'perfect' : q < 1 ? 'nice' : '';
+      S.bonus = S.castQ ? { x: tx, d: td, k: S.castQ === 'perfect' ? 1.9 : 1.4, t: 14 } : null;
       Object.assign(S.lure, { sx: 0.05, sd: -0.02, tx, td, fly: 0, flyT: 0.55 + Math.hypot(tx, td) * 0.55, x: 0.05, d: 0 });
-      S.ph = 'fly'; ev('cast', { p: S.p });
+      S.ph = 'fly'; ev('cast', { p: S.p, q: S.castQ });
     },
     hookPress() {   // あわせ(ルアーのときは、しゃくりも兼ねる)
       if (S.ph !== 'water') return;
@@ -255,7 +266,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
         if (rb() < (q < 0.85 ? 0.95 : 0.7)) { hook(f); return; }
         ev('miss'); leave(f, 'miss'); return;
       }
-      if (f && (f.st === 'nibble' || f.st === 'nibble2')) { ev('early'); leave(f, 'early'); spookNear(S.lure.x, S.lure.d, 0.15, 0.3); return; }
+      if (f && (f.st === 'nibble' || f.st === 'nibble2')) { if (easy && rb() < 0.7) { ev('early', { soft: 1 }); return; } ev('early'); leave(f, 'early'); spookNear(S.lure.x, S.lure.d, 0.15, 0.3); return; }
       if (isLure()) { S.twitchT = 0.7; S.lure.d = Math.max(0, S.lure.d - 0.012); S.depth = clamp(S.depth + (G.bait.id === 'frog' ? 0 : 0.08), 0, 1); ev('twitch'); }
       else ev('jerk');
       if (f && f.st === 'look') {   // 迷っている魚の前で小さく誘う
@@ -280,9 +291,10 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
       while (S.fish.filter(f => f.st !== 'gone').length < POP()) spawn(false);
       for (const f of S.fish) fishUpdate(f, dt);
       S.bob.nib = Math.max(0, S.bob.nib - dt * 3);
+      if (S.bonus) S.bonus.t -= dt;
       S.twitchT = Math.max(0, S.twitchT - dt);
       switch (S.ph) {
-        case 'charge': S.chargeT += dt; S.p = tri(S.chargeT * 0.95); break;
+        case 'charge': S.chargeT += dt; S.p = tri(S.chargeT * (0.5 + (1 - G.rod.acc) * 1.1) * (easy ? 0.8 : 1)); break;
         case 'fly': {
           const L = S.lure; L.fly += dt; const u = Math.min(1, L.fly / L.flyT);
           L.x = L.sx + (L.tx - L.sx) * u; L.d = L.sd + (L.td - L.sd) * u; L.h = Math.sin(u * Math.PI) * (0.15 + Math.hypot(L.tx, L.td) * 0.25);
@@ -317,11 +329,11 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     // いまの様子を5文字に(相手の画面で再生する)
     snapCode() {
       const C = CH, q = (v, a, b) => C[clamp(Math.round((v - a) / (b - a) * 63), 0, 63)];
-      const ph = PH.indexOf(S.ph), x = S.ph === 'ready' || S.ph === 'charge' ? S.aim * 0.5 : S.lure.x, d = S.ph === 'ready' ? 0 : S.ph === 'charge' ? S.p : S.lure.d;
+      const ph = PH.indexOf(S.ph), x = S.ph === 'ready' || S.ph === 'charge' ? S.aimT.x : S.lure.x, d = S.ph === 'ready' || S.ph === 'charge' ? S.aimT.d : S.lure.d;
       const h = S.hooked;
       const bite = S.bite ? 2 : S.bob.nib > 0.3 ? 1 : 0, sz = h ? (h.size > 90 ? 3 : h.size > 45 ? 2 : h.size > 18 ? 1 : 0) : 0;
       const flags = bite | (h && h.jump > 0 ? 4 : 0) | (isLure() ? 8 : 0) | (sz << 4);
-      return C[ph] + q(x, -1, 1) + q(d, 0, 1) + q(h ? h.T : S.ph === 'fly' ? (S.lure.h || 0) : 0, 0, 1.3) + C[flags];
+      return C[ph] + q(x, -1, 1) + q(d, 0, 1) + q(h ? h.T : S.ph === 'fly' ? (S.lure.h || 0) : S.ph === 'charge' ? S.p * 1.3 : 0, 0, 1.3) + C[flags];
     },
   };
   return api;
@@ -360,8 +372,7 @@ export function createBot(engine, lv = 'easy', seed = 3) {
         E.input.reel = 0; if ((idle -= dt) > 0) return;
         const a = areas[Math.floor(r() * areas.length)], A = AREAS[a];
         let tx, td; if (A) { tx = (A.x0 + A.x1) / 2 + (r() - 0.5) * 0.15; td = (A.d0 + A.d1) / 2; } else { tx = (r() - 0.5) * 1.2; td = 0.3 + r() * 0.5; }
-        const dist = Math.hypot(tx / 1.08, td), want = clamp((dist - 0.1) / (E.G.rod.dist * 0.92), 0.15, 1);
-        E.setAim(clamp(Math.atan2(tx / 1.08, td) / 0.78, -1, 1)); plan = { want: clamp(want + (r() - 0.5) * K.aimErr * 2, 0.08, 0.96) }; E.castStart(); idle = K.idle + r() * 1.5; return;
+        E.setTarget(tx, td); plan = { want: clamp(E.pNeed() + (r() - 0.5) * K.aimErr * 2, 0.04, 0.98) }; E.castStart(); idle = K.idle + r() * 1.5; return;
       }
       if (ph === 'charge') { if ((Math.abs(S.p - plan.want) < 0.05 && S.chargeT > 0.3) || S.chargeT > 6) E.castRelease(); return; }
       if (ph === 'water') {

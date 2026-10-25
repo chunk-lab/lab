@@ -26,12 +26,13 @@ function palette(h) {
 const TREES = { spring: ['#f6b6cb', '#ffd0de', '#8ccf8c', '#a9dca0'], summer: ['#5aa866', '#79c27a', '#4f9a5c', '#8ccf86'], autumn: ['#e8803a', '#d9503a', '#f0b53c', '#c96a2e', '#9fbf6a'], winter: ['#eef3f5', '#d5e0e6', '#bfcfd8', '#e6eef2'] };
 
 export function createView(canvas, cond, { mini = false, under = false } = {}) {
-  const g = canvas.getContext('2d');
+  const mainG = canvas.getContext('2d');
+  let g = mainG, pc = null, pcg = null, MW = 0, MH = 0, areaY0 = 0;   // under=true:カメラ(池・水中・小窓)を組み合わせて描く
   let W = 0, H = 0, dpr = 1, bg = null, t = 0;
   const P = palette(cond.hour), night = P.night;
   const parts = [], rings = [], weather = [];
   const R = (() => { let s = 7; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
-  const HZ = () => H * (mini ? 0.3 : under ? 0.36 : 0.27), SY = () => H * (mini ? 0.9 : 0.84);
+  const HZ = () => H * (mini ? 0.3 : 0.27), SY = () => H * (mini ? 0.9 : 0.84);
   const UR = () => ({ x: 8, y: Math.max(46, H * 0.07), w: W - 16, h: H * 0.255 });   // 水中の窓
   // 池の座標 → 画面
   function proj(x, d) {
@@ -126,8 +127,8 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
   // ---- 水中の窓(横から見た池):左=手前(岸) 右=おく / 上=水面 下=底 ----
   const bubbles = [];
   const bottomAt = d => 0.55 + 0.45 * Math.min(1, d / 0.6);   // 手前ほど浅い(窓の高さに対する割合)
-  function drawUnder(vs, u, dt) {
-    const r = UR(), X = d => r.x + 22 + d * (r.w - 34), Y = (y, d) => r.y + 12 + y * (r.h - 18) * bottomAt(d);
+  function drawUnder(vs, u, dt, r) {
+    const X = d => r.x + 22 + d * (r.w - 34), Y = (y, d) => r.y + 12 + y * (r.h - 18) * bottomAt(d);
     g.save();
     // 枠と水
     g.beginPath(); g.roundRect ? g.roundRect(r.x, r.y, r.w, r.h, 14) : g.rect(r.x, r.y, r.w, r.h); g.clip();
@@ -199,9 +200,9 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     }
     g.restore();
     g.strokeStyle = 'rgba(255,255,255,0.85)'; g.lineWidth = 2; g.beginPath(); g.roundRect ? g.roundRect(r.x, r.y, r.w, r.h, 14) : g.rect(r.x, r.y, r.w, r.h); g.stroke();
-    g.font = '800 10px sans-serif'; g.textAlign = 'right'; g.fillStyle = 'rgba(255,255,255,0.85)'; g.fillText(u.eyeName || '', r.x + r.w - 8, r.y + r.h - 6);
-    if (u.isLure && u.ph === 'water') { g.textAlign = 'left'; g.fillText('ルアーは巻く速さで深さが変わる', r.x + 34, r.y + r.h - 6); }
-    else if (u.canTana && (u.ph === 'ready' || u.ph === 'water')) { g.textAlign = 'left'; g.fillText('窓を上下になぞってタナを変える', r.x + 34, r.y + r.h - 6); }
+    g.font = '800 10px sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,255,255,0.85)'; g.fillText(u.eyeName || '', r.x + 34, r.y + 40);
+    if (u.isLure && u.ph === 'water') { g.textAlign = 'left'; g.fillText('ルアーは巻く速さで深さが変わる', r.x + 34, r.y + 26); }
+    else if (u.canTana && (u.ph === 'ready' || u.ph === 'water')) { g.textAlign = 'left'; g.fillText('⇅ 上下にはじく・なぞる:タナ', r.x + 34, r.y + 26); }
   }
   function mark(x, y, ch, col) { g.font = '900 15px sans-serif'; g.textAlign = 'center'; g.lineWidth = 3; g.strokeStyle = 'rgba(0,0,0,0.5)'; g.strokeText(ch, x, y); g.fillStyle = col; g.fillText(ch, x, y); }
   function drawBait(u, x, y) {
@@ -272,14 +273,36 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
   }
 
   const api = {
-    proj, splash, addRing, underRect: UR,
-    resize() {
+    proj, splash, addRing, underRect: () => cam.ud || UR(),
+    // y0:カメラのときの上のあき(対戦の相手の画面の分)。池の絵はその下の大きさで作る
+    resize(y0 = 0) {
       const r = canvas.getBoundingClientRect(); dpr = Math.min(2, window.devicePixelRatio || 1);
-      W = Math.max(10, r.width); H = Math.max(10, r.height); canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); buildBg();
+      MW = Math.max(10, r.width); MH = Math.max(10, r.height); canvas.width = Math.round(MW * dpr); canvas.height = Math.round(MH * dpr);
+      W = MW; H = under ? Math.max(10, MH - y0) : MH;
+      if (under) { pc = pc || document.createElement('canvas'); pc.width = Math.round(W * dpr); pc.height = Math.round(H * dpr); pcg = pc.getContext('2d'); areaY0 = y0; cam.init = false; }
+      buildBg();
+    },
+    fx(kind, big) { fxs.push({ k: kind, t: 0, big }); },
+    // 画面の点 → 池の座標(池が見えているところだけ)
+    toPond(x, y) {
+      const c = cam.pd, s = cam.ps; if (!c) return null;
+      const px = s.x + (x - c.x) * s.w / c.w, py = s.y + (y - c.y) * s.h / c.h;
+      const fy = HZ() + (SY() - HZ()) * 0.035, k = (py - fy) / (SY() - fy);
+      const inv = Math.max(1 / 3.4, Math.min(1, k * (1 - 1 / 3.4) + 1 / 3.4)), z = 1 / inv, d = (z - 1) / 2.4, s2 = 1 / z;
+      return { x: (px - W / 2) / (W * 0.78 * Math.pow(s2, 0.75)), d };
+    },
+    // 池の座標 → 画面
+    toMain(x, d) { const p = proj(x, d), c = cam.pd, s = cam.ps; if (!c) return p; return { x: c.x + (p.x - s.x) * c.w / s.w, y: c.y + (p.y - s.y) * c.h / s.h, s: p.s * c.w / s.w }; },
+    draw(vs, dt) {
+      if (!under) return drawPond(vs, dt);
+      g = pcg; drawPond(vs, dt); g = mainG; compose(vs, dt);
     },
     get size() { return { W, H }; },
     // vs: { ph, aim, p, target:[x,d], maxTarget:[x,d], lure:{x,d,h}, isLure, nib, bite, sunk, moving, hooked:{x,d,T,jump,run,len,sp}, fish:[{x,d,len,vis,hx,hd,glow}], side, areaName, T }
-    draw(vs, dt) {
+    _unused() {},
+  };
+  function drawPond(vs, dt) {
+    {
       t += dt;
       if (!bg) return;
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -309,15 +332,18 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
       }
       // 波紋
       for (let i = rings.length - 1; i >= 0; i--) { const r = rings[i]; r.r += dt * 60 * r.big; r.a -= dt * 0.9; if (r.a <= 0) { rings.splice(i, 1); continue; } const p = proj(r.x, r.d); g.strokeStyle = `rgba(255,255,255,${r.a * 0.6})`; g.lineWidth = 1.5; g.beginPath(); g.ellipse(p.x, p.y, r.r * p.s * 1.6, r.r * p.s * 0.5, 0, 0, 7); g.stroke(); }
-      // ねらい
-      const aim = vs.aim || 0;
-      const tip = tipPos(vs.side || 0, (vs.ph === 'ready' || vs.ph === 'charge') ? aim : 0);
-      if (vs.ph === 'ready' || vs.ph === 'charge') {
-        const [mx, md] = vs.maxTarget || [0, 0.5], mp = proj(mx, md);
-        g.setLineDash([4, 6]); g.strokeStyle = 'rgba(255,255,255,0.6)'; g.lineWidth = 2; g.beginPath(); g.moveTo(tip.x, tip.y); g.quadraticCurveTo((tip.x + mp.x) / 2, Math.min(tip.y, mp.y) - H * 0.12, mp.x, mp.y); g.stroke(); g.setLineDash([]);
-        g.strokeStyle = 'rgba(255,255,255,0.35)'; g.beginPath(); g.ellipse(mp.x, mp.y, 18 * mp.s * 2, 6 * mp.s * 2, 0, 0, 7); g.stroke();
-        if (vs.ph === 'charge' && vs.target) { const tp = proj(vs.target[0], vs.target[1]); g.strokeStyle = '#ffe36b'; g.lineWidth = 3; g.beginPath(); g.ellipse(tp.x, tp.y, 16 * tp.s * 2, 5.5 * tp.s * 2, 0, 0, 7); g.stroke(); g.fillStyle = 'rgba(255,227,107,0.25)'; g.fill(); }
-        if (vs.areaName && !mini) { g.font = '700 12px sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,255,255,0.85)'; g.fillText(vs.areaName, mp.x, mp.y - 14 * mp.s * 2 - 4); }
+      // ねらい(池のどこでも)
+      const tip = tipPos(vs.side || 0, vs.aimT && (vs.ph === 'ready' || vs.ph === 'charge') ? vs.aimT.x : 0);
+      if (vs.bonus && vs.bonus.t > 0) { const bp = proj(vs.bonus.x, vs.bonus.d), a = Math.min(1, vs.bonus.t / 3) * (0.5 + 0.3 * Math.sin(t * 5)); g.strokeStyle = `rgba(255,220,90,${a})`; g.lineWidth = 2; g.beginPath(); g.ellipse(bp.x, bp.y, 60 * bp.s * 2.2 * 0.32, 20 * bp.s * 2.2 * 0.32, 0, 0, 7); g.stroke(); }
+      if ((vs.ph === 'ready' || vs.ph === 'charge') && vs.aimT) {
+        const mp = proj(vs.aimT.x, vs.aimT.d), rx = Math.max(10, vs.ringR * W * 0.78 * Math.pow(mp.s, 0.75)), ry = rx * (0.28 + 0.2 * (1 - mp.s));
+        g.setLineDash([4, 6]); g.strokeStyle = 'rgba(255,255,255,0.65)'; g.lineWidth = 2; g.beginPath(); g.moveTo(tip.x, tip.y); g.quadraticCurveTo((tip.x + mp.x) / 2, Math.min(tip.y, mp.y) - H * 0.12, mp.x, mp.y); g.stroke(); g.setLineDash([]);
+        const pulse = 1 + Math.sin(t * 4) * 0.05;
+        g.fillStyle = 'rgba(255,227,107,0.18)'; g.beginPath(); g.ellipse(mp.x, mp.y, rx * pulse, ry * pulse, 0, 0, 7); g.fill();
+        g.strokeStyle = '#ffe36b'; g.lineWidth = 3; g.stroke();
+        g.strokeStyle = 'rgba(255,255,255,0.9)'; g.lineWidth = 1.5; g.beginPath(); g.ellipse(mp.x, mp.y, rx * 0.35, ry * 0.35, 0, 0, 7); g.stroke();
+        if (vs.ph === 'charge' && vs.land) { const lp2 = proj(vs.land[0], vs.land[1]); g.fillStyle = '#fff'; g.strokeStyle = '#c0392b'; g.lineWidth = 2; g.beginPath(); g.arc(lp2.x, lp2.y, 5, 0, 7); g.fill(); g.stroke(); }
+        if (vs.areaName && !mini) { g.font = '800 12px sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,255,255,0.95)'; g.fillText(vs.areaName, mp.x, mp.y - ry - 8); }
       }
       // 釣れた魚が水面ではねる
       const hk = vs.hooked;
@@ -370,10 +396,72 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
         else if (w.k === 'petal' || w.k === 'leaf') { w.y += dt * 0.06 * w.v; w.x += (Math.sin(t * 1.3 + w.p) * 0.03 + 0.02) * dt; if (w.y > 1) { w.y = 0; w.x = Math.random(); } g.fillStyle = w.k === 'petal' ? 'rgba(255,190,210,0.9)' : ['#e8803a', '#d9503a', '#f0b53c'][Math.floor(w.p) % 3]; g.save(); g.translate(w.x * W, w.y * H); g.rotate(t * 2 + w.p); g.beginPath(); g.ellipse(0, 0, w.k === 'petal' ? 3.5 : 5, w.k === 'petal' ? 2 : 3, 0, 0, 7); g.fill(); g.restore(); }
         else if (w.k === 'fly') { const x = (w.x + Math.sin(t * 0.3 + w.p) * 0.05) * W, y = lerp(hz, sy, 0.3 + w.y * 0.6) + Math.sin(t * 0.8 + w.p * 2) * 10, a = 0.5 + 0.5 * Math.sin(t * 3 + w.p * 5); g.fillStyle = `rgba(220,255,140,${a})`; g.shadowColor = '#d8ff8a'; g.shadowBlur = 8; g.beginPath(); g.arc(x, y, 2, 0, 7); g.fill(); g.shadowBlur = 0; }
       }
-      if (under && vs.under) drawUnder(vs, vs.under, dt);
-      if (vs.leap) drawLeap(vs.leap);
-    },
-  };
+      if (!under && vs.leap) drawLeap(vs.leap);
+    }
+  }
+  // ---- カメラ:状態ごとに、池・水中・小窓の位置と大きさを、なめらかに動かす ----
+  const cam = { init: false, pd: null, ps: null, ud: null, ua: 0, pip: 0 };
+  const fxs = [];
+  const lerpR = (a, b, k) => ({ x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k, w: a.w + (b.w - a.w) * k, h: a.h + (b.h - a.h) * k });
+  const clampSrc = r => ({ x: Math.max(0, Math.min(W - r.w, r.x)), y: Math.max(0, Math.min(H - r.h, r.y)), w: r.w, h: r.h });
+  function compose(vs, dt) {
+    const y0 = vs.y0 ?? areaY0, A = { x: 0, y: y0, w: MW, h: MH - y0 }, mode = vs.cam || 'pond';
+    const fp = vs.focus ? proj(vs.focus.x, vs.focus.d) : { x: W / 2, y: H / 2 };
+    let pd, ps, ud, ua, pip = 0;
+    if (mode === 'under') {
+      const pw = Math.round(MW * 0.42), ph = Math.round(pw * 0.78);
+      pd = { x: MW - pw - 10, y: A.y + 54, w: pw, h: ph }; const z = 2.1; ps = clampSrc({ x: fp.x - pw / z / 2, y: fp.y - ph / z / 2, w: pw / z, h: ph / z });
+      ud = A; ua = 1; pip = 1;
+    } else if (mode === 'fight') {
+      const hh = A.h * 0.5, z = 1.2; pd = { x: 0, y: A.y, w: MW, h: hh }; ps = clampSrc({ x: fp.x - MW / z / 2, y: fp.y - hh / z / 2, w: MW / z, h: hh / z });
+      ud = { x: 0, y: A.y + hh, w: MW, h: A.h - hh }; ua = 1;
+    } else { pd = A; ps = { x: 0, y: 0, w: W, h: H }; const s = 0.2; ud = { x: MW * 0.3, y: A.y + A.h * 0.6, w: MW * 0.4, h: A.h * 0.2 }; ua = 0; }
+    if (!cam.init) { Object.assign(cam, { init: true, pd, ps, ud, ua, pip }); }
+    const k = 1 - Math.exp(-dt * (vs.calm ? 6 : 8));
+    cam.pd = lerpR(cam.pd, pd, k); cam.ps = lerpR(cam.ps, ps, k); cam.ud = lerpR(cam.ud, ud, k); cam.ua += (ua - cam.ua) * k; cam.pip += (pip - cam.pip) * k;
+    // ゆれ
+    let sx = 0, sy = 0; for (const e of fxs) if (e.k === 'hit' && e.t < 0.5 && !vs.calm) { const a = (0.5 - e.t) * (e.big ? 16 : 9); sx += (Math.random() - 0.5) * a; sy += (Math.random() - 0.5) * a; }
+    const G = mainG; G.setTransform(dpr, 0, 0, dpr, 0, 0); G.fillStyle = '#1d3a55'; G.fillRect(0, 0, MW, MH); G.translate(sx, sy);
+    // 水中
+    if (cam.ua > 0.02) { G.save(); G.globalAlpha = Math.min(1, cam.ua); g = G; drawUnder(vs, vs.under || {}, dt, cam.ud); g = mainG; G.restore(); }
+    // 池
+    const P = cam.pd, S = cam.ps;
+    G.save();
+    if (cam.pip > 0.05) { G.beginPath(); rr(G, P.x, P.y, P.w, P.h, 14 * cam.pip); G.clip(); }
+    G.drawImage(pc, S.x * dpr, S.y * dpr, S.w * dpr, S.h * dpr, P.x, P.y, P.w, P.h);
+    G.restore();
+    if (cam.pip > 0.05) { G.strokeStyle = `rgba(255,255,255,${0.9 * cam.pip})`; G.lineWidth = 3; G.beginPath(); rr(G, P.x, P.y, P.w, P.h, 14); G.stroke(); G.font = '800 10px sans-serif'; G.textAlign = 'left'; G.fillStyle = `rgba(255,255,255,${cam.pip})`; G.fillText('🎈 ウキのまわり', P.x + 8, P.y + P.h - 7); }
+    if (mode === 'fight' || cam.ua > 0.5 && cam.pip < 0.5) { G.fillStyle = 'rgba(255,255,255,0.9)'; G.fillRect(0, P.y + P.h - 1.5, MW, 3); }
+    // 釣り上げ
+    if (vs.leap) { g = G; drawLeapMain(vs.leap); g = mainG; }
+    // 演出
+    for (let i = fxs.length - 1; i >= 0; i--) {
+      const e = fxs[i]; e.t += dt; const L = e.k === 'hit' ? 0.9 : 0.8; if (e.t > L) { fxs.splice(i, 1); continue; }
+      const a = 1 - e.t / L;
+      if (vs.calm) { G.fillStyle = `rgba(255,255,255,${0.25 * a})`; G.fillRect(0, A.y, MW, A.h); continue; }
+      if (e.k === 'dive') {   // 水にとびこむ:青い幕と泡
+        G.fillStyle = `rgba(80,170,220,${0.55 * a})`; G.fillRect(0, A.y, MW, A.h * (1 - e.t / L));
+        if (!e.b) { e.b = Array.from({ length: 40 }, () => ({ x: Math.random() * MW, y: A.y + A.h * (0.4 + Math.random() * 0.6), r: 3 + Math.random() * 9, v: 120 + Math.random() * 260 })); }
+        for (const b of e.b) { b.y -= b.v * dt; G.strokeStyle = `rgba(255,255,255,${a})`; G.lineWidth = 2; G.beginPath(); G.arc(b.x, b.y, b.r, 0, 7); G.stroke(); }
+      } else if (e.k === 'hit') {   // ヒット:光・集中線・稲妻
+        G.fillStyle = `rgba(255,255,255,${Math.max(0, 0.9 - e.t * 3)})`; G.fillRect(0, A.y, MW, A.h);
+        const cx = MW / 2, cy = A.y + A.h * 0.5;
+        G.strokeStyle = `rgba(255,255,255,${0.7 * a})`; G.lineWidth = 2;
+        for (let j = 0; j < 36; j++) { const an = j / 36 * 6.28 + e.t, r0 = Math.min(MW, A.h) * (0.3 + Math.random() * 0.15), r1 = Math.max(MW, A.h); G.beginPath(); G.moveTo(cx + Math.cos(an) * r0, cy + Math.sin(an) * r0); G.lineTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1); G.stroke(); }
+        const yS = A.y + A.h * 0.5; G.strokeStyle = `rgba(255,240,140,${a})`; G.shadowColor = '#fff6a0'; G.shadowBlur = 16; G.lineWidth = 4;
+        G.beginPath(); for (let x = 0; x <= MW; x += MW / 12) G.lineTo(x, yS + (Math.random() - 0.5) * 26 * a); G.stroke(); G.shadowBlur = 0;
+      } else if (e.k === 'surface') { G.fillStyle = `rgba(255,255,255,${0.5 * a})`; G.fillRect(0, A.y, MW, A.h); }
+    }
+    G.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function rr(G, x, y, w, h, r) { G.moveTo(x + r, y); G.arcTo(x + w, y, x + w, y + h, r); G.arcTo(x + w, y + h, x, y + h, r); G.arcTo(x, y + h, x, y, r); G.arcTo(x, y, x + w, y, r); G.closePath(); }
+  function drawLeapMain(lp) {   // 池の絵の上の点から、画面のまん中へ
+    const k = Math.min(1, lp.t), m = api.toMain(lp.x, lp.d), cx = MW / 2, cy = areaY0 + (MH - areaY0) * 0.42;
+    const e = 1 - Math.pow(1 - k, 3), x = m.x + (cx - m.x) * e, y = m.y + (cy - m.y) * e - Math.sin(k * Math.PI) * MH * 0.15;
+    const L = 40 + k * Math.min(MW * 0.75, 120 + lp.len * 2);
+    g.save(); g.globalAlpha = 0.35 * k; g.fillStyle = '#fff'; g.beginPath(); g.arc(x, y, L * 0.7, 0, 7); g.fill(); g.restore();
+    g.save(); g.translate(x, y); g.rotate((1 - e) * -1.2 + Math.sin(k * 20) * 0.08 * (1 - k)); drawCreature(g, lp.sp, 0, 0, L); g.restore();
+  }
   let ringT = 0;
   function addRingSoft(vs, k) { ringT -= 0.016; if (ringT <= 0) { ringT = k; addRing(vs.lure.x, vs.lure.d, 0.35); } }
   function bang(x, y) { const k = 1 + Math.sin(t * 20) * 0.12; g.save(); g.translate(x, y); g.scale(k, k); g.fillStyle = '#ffe36b'; g.strokeStyle = '#c0392b'; g.lineWidth = 3; g.font = `900 ${mini ? 18 : 30}px sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.strokeText('!', 0, 0); g.fillText('!', 0, 0); g.restore(); }
