@@ -596,7 +596,13 @@ export function mount(container, opt = {}) {
   const bsave = s => storage.set('bday', s);
   let bdayCool = 0, bdayHello = false;
   const B_LINES = ['お誕生日おめでとう!', 'Happy birthday! おめでとう!', '今日、誕生日なんだって? おめでとう!', 'おめでとう! すてきな一年になりますように'];
+  let bdayShot = null;
   function birthdayUpdate(dt) {
+    if (bdayShot) {
+      const b = bdayShot; b.t += dt;
+      if (!b.go && b.t > 8) { b.go = true; ['heart', 'kamuro', 'star', 'botan'].forEach(t => fw.launch(t)); }   // 大きな花火を4つ
+      else if (b.go && (b.t2 += dt) > 2.8) { bdayShot = null; birthdayPhoto(b.S); }
+    }
     if (!started || appHost.current || !isBday()) return;
     const s = bst(), nm = settings.name || 'あなた';
     if (!bdayHello) { bdayHello = true; hud.toast(`🎂 ${nm}さん、お誕生日おめでとう!`); }
@@ -640,8 +646,7 @@ export function mount(container, opt = {}) {
     cam.x = S.x; cam.z = S.z; cam.yaw = 0; cam.pitch = 0.15; cam.dist = 6;
     runEvent('fw:digest', { birthday: true });
     hud.say('npc:hana', 'わぁ…! 花火、きれい!', 4); setTimeout(() => hud.say('npc:sora', `${settings.name || ''}、誕生日おめでとう!`, 4), 2500);
-    setTimeout(() => { ['heart', 'kamuro', 'star', 'botan'].forEach((t, i) => setTimeout(() => fw.launch(t), i * 250)); }, 9500);   // 写真のしゅんかんに、大きな花火が開くように
-    setTimeout(() => birthdayPhoto(S), 12800);
+    bdayShot = { S, t: 0, t2: 0 };   // 写真は町の時間で数える(重い端末でも、花火が開いた瞬間に撮れるように)
     setTimeout(() => { for (const r of [ha, so]) if (r && r.pin && !r.pin.bench) r.pin = null; }, 70000);
   }
   function birthdayPhoto(S) {
