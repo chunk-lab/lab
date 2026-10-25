@@ -52,13 +52,13 @@ export function createShow(box, { actors, bg }) {
     const g = new THREE.Group(); g.position.x = x; scene.add(g); g.add(ch.root);
     ch.root.rotation.y = n === 1 ? 0 : (i === 0 ? 0.25 : -0.25);
     const sh = new THREE.Mesh(new THREE.CircleGeometry(0.45, 20), shadowMat); sh.rotation.x = -Math.PI / 2; sh.position.y = 0.01; g.add(sh);
-    const len = a.sp ? Math.max(0.24, Math.min(3.2, (a.size || 30) / 100)) : 0;
+    const len = a.sp ? Math.max(0.34, Math.min(3.2, (a.size || 30) / 100 * 1.3)) : 0;   // 小さい魚も見えるように少し大きめ
     const item = { ch, pose, g, len, t: Math.random() * 3 };
     if (a.sp) {
       if (pose === 'item') { const tex = new THREE.CanvasTexture(artCanvas(a.sp, 256, 256)); disposeList.push(tex); item.fish = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.42), new THREE.MeshBasicMaterial({ map: tex, transparent: true, alphaTest: 0.05, side: THREE.DoubleSide })); item.fish.position.set(0.32, 1.32, 0.38); g.add(item.fish); }
       else {
         const f = fishMesh(a.sp, len); item.fish = f;
-        if (pose === 'raise') { f.position.set(0, 1.62 + len * 0.22, 0.12); g.add(f); maxY = Math.max(maxY, 1.7 + len * 0.5); }
+        if (pose === 'raise') { f.position.set(0, 1.98 + len * 0.25, 0.08); g.add(f); maxY = Math.max(maxY, 2.05 + len * 0.5); }
         else if (pose === 'hug') { f.position.set(0, 1.0, 0.45); g.add(f); minX = Math.min(minX, x - len / 2); maxX = Math.max(maxX, x + len / 2); }
         else if (pose === 'dangle') {   // 竿の糸にぶら下げたまま
           const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.022, 1.5, 6), new THREE.MeshLambertMaterial({ color: 0x8a6b4a })); disposeList.push(rod.geometry, rod.material);
@@ -102,7 +102,7 @@ export function createShow(box, { actors, bg }) {
       it.t += dt; const { ch, pose } = it, R = ch.rig;
       ch.update(dt, 0);
       const A = R.arms, b = Math.sin(it.t * 2.4);
-      if (pose === 'raise' || pose === 'cheer') { A[0].rotation.set(0, 0, -2.75 - b * 0.05); A[1].rotation.set(0, 0, 2.75 + b * 0.05); if (it.fish) it.fish.position.y = 1.62 + it.len * 0.22 + b * 0.03; R.head.rotation.set(-0.15, 0, 0); if (pose === 'cheer') R.body.position.y = Math.abs(Math.sin(it.t * 4)) * 0.06; }
+      if (pose === 'raise' || pose === 'cheer') { A[0].rotation.set(0, 0, -2.75 - b * 0.05); A[1].rotation.set(0, 0, 2.75 + b * 0.05); if (it.fish) it.fish.position.y = 1.98 + it.len * 0.25 + b * 0.03; R.head.rotation.set(-0.15, 0, 0); if (pose === 'cheer') R.body.position.y = Math.abs(Math.sin(it.t * 4)) * 0.06; }
       else if (pose === 'hug') { A[0].rotation.set(-1.3, 0, 0.3); A[1].rotation.set(-1.3, 0, -0.3); if (it.fish) it.fish.rotation.z = b * 0.04; }
       else if (pose === 'dangle') { A[1].rotation.set(-1.15, 0, 0.35); A[0].rotation.set(0, 0, -0.5 - b * 0.08); if (it.fish) { it.fish.rotation.y = Math.sin(it.t * 1.5) * 0.5; } }
       else if (pose === 'hang') { A[1].rotation.set(0, 0, 2.3 + b * 0.15); A[0].rotation.set(0, 0, -0.35); if (it.fish) it.fish.rotation.y = Math.sin(it.t * 0.9) * 0.15; }

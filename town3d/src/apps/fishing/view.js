@@ -200,9 +200,9 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     }
     g.restore();
     g.strokeStyle = 'rgba(255,255,255,0.85)'; g.lineWidth = 2; g.beginPath(); g.roundRect ? g.roundRect(r.x, r.y, r.w, r.h, 14) : g.rect(r.x, r.y, r.w, r.h); g.stroke();
-    g.font = '800 10px sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,255,255,0.85)'; g.fillText(u.eyeName || '', r.x + 34, r.y + 40);
-    if (u.isLure && u.ph === 'water') { g.textAlign = 'left'; g.fillText('ルアーは巻く速さで深さが変わる', r.x + 34, r.y + 26); }
-    else if (u.canTana && (u.ph === 'ready' || u.ph === 'water')) { g.textAlign = 'left'; g.fillText('⇅ 上下にはじく・なぞる:タナ', r.x + 34, r.y + 26); }
+    g.font = '800 10px sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,255,255,0.85)'; g.fillText(u.eyeName || '', r.x + 34, r.y + Math.min(76, r.h * 0.3 + 14));
+    if (u.isLure && u.ph === 'water') { g.textAlign = 'left'; g.fillText('ルアーは巻く速さで深さが変わる', r.x + 34, r.y + Math.min(62, r.h * 0.3)); }
+    else if (u.canTana && (u.ph === 'ready' || u.ph === 'water')) { g.textAlign = 'left'; g.fillText('⇅ 上下にはじく・なぞる:タナ', r.x + 34, r.y + Math.min(62, r.h * 0.3)); }
   }
   function mark(x, y, ch, col) { g.font = '900 15px sans-serif'; g.textAlign = 'center'; g.lineWidth = 3; g.strokeStyle = 'rgba(0,0,0,0.5)'; g.strokeText(ch, x, y); g.fillStyle = col; g.fillText(ch, x, y); }
   function drawBait(u, x, y) {
