@@ -26,7 +26,7 @@ export default {
     renderer.domElement.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block'; box.appendChild(renderer.domElement);
     const ov = document.createElement('canvas'); ov.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none'; box.appendChild(ov); const g = ov.getContext('2d');
     const scene = new THREE.Scene(); scene.background = new THREE.Color(0x2b2438);
-    const cam = new THREE.PerspectiveCamera(32, 1, 0.05, 30);
+    const cam = new THREE.PerspectiveCamera(21, 1, 0.05, 30);
     scene.add(new THREE.HemisphereLight(0xffffff, 0x443355, 1.4)); const sp = new THREE.SpotLight(0xfff2dd, 30, 8, 0.6, 0.5); sp.position.set(0, 2.6, 1.4); sp.target.position.set(0, 1.73, 0); scene.add(sp, sp.target);
     // ボード(キャンバスで描く)
     const tex = (() => {
@@ -48,7 +48,7 @@ export default {
     function newDart(col) { const d = dartGeo.clone(); const f = new THREE.Mesh(new THREE.ConeGeometry(0.018, 0.04, 4), new THREE.MeshStandardMaterial({ color: col })); f.rotation.x = -Math.PI / 2; f.position.z = 0.07; d.add(f); scene.add(d); darts.push(d); return d; }
     function resize() { const W = box.clientWidth || 300, H = box.clientHeight || 300; renderer.setSize(W, H, false); cam.aspect = W / H; cam.updateProjectionMatrix(); ov.width = W * 2; ov.height = H * 2; }
     resize(); const ro = new ResizeObserver(resize); ro.observe(box);
-    cam.position.set(0, BOARD_Y, 2.37); cam.lookAt(0, BOARD_Y, 0);
+    cam.position.set(0, BOARD_Y - 0.05, 2.37); cam.lookAt(0, BOARD_Y - 0.05, 0);   // 表にかくれないよう、ボードを少し上に
     // ---- 試合 ----
     const P = [0, 1].map(() => ({ marks: { 15: 0, 16: 0, 17: 0, 18: 0, 19: 0, 20: 0, 25: 0 }, pts: 0 }));
     let turn = 0, dartN = 0, round = 1, phase = 'aim', aim = null, fly = null, msg = '', msgT = 0, over = false, cpuT = 1.2, t = 0;
