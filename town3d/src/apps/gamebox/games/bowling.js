@@ -99,6 +99,7 @@ export default {
           if (Math.abs(p.x) > LW / 2 + 0.1 || p.z > LL + 0.4) p.down = true; }
       }
     }
+    box.__dbg = () => ({ B, phase, bx, pins: pins.map(p => [+p.x.toFixed(2), +p.z.toFixed(2), p.down, p.gone]), rolls: S.map(x => x.rolls) });   // テスト用
     // ---- 描く ----
     const stop = loop(dt => {
       t += dt; msgT = Math.max(0, msgT - dt);
