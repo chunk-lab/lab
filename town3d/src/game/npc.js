@@ -142,6 +142,7 @@ export function createResidents(scene, graph, getHour) {
     update(dt, h, player) {
       const anyTalking = list.some(q => q.talking);
       for (const r of list) {
+        if (r.battle) continue;   // 雪合戦の最中は、雪合戦の方で動かす
         const g = goalOf(r.def, h);
         if (g.place !== r.goal.place) {
           r.goal = g;

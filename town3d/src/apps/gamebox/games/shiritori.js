@@ -1,5 +1,5 @@
 // 単語しりとり爆弾:前の単語の最後の文字で始まる英単語を入れて、爆弾を相手にわたす。自分の番で爆発したら負け
-import { surface, pointers, loop, txt, wrapTxt, banner, rr, clamp, btn, hit, COL, INK, halves, keyboard } from '../kit.js';
+import { surface, pointers, loop, txt, wrapTxt, banner, rr, clamp, btn, hit, COL, INK, halves, keyboard3 } from '../kit.js';
 import { loadDict } from '../en_data.js';
 
 const STARTS = ['apple', 'music', 'garden', 'river', 'pencil', 'ocean', 'window', 'dream', 'travel', 'school', 'animal', 'flower'];
@@ -31,11 +31,15 @@ export default {
       if (bad) { err = bad; errT = 1.6; sfx.play('ng'); return; }
       used.add(w); history.push(w); if (history.length > 6) history.shift(); word = w; typed = ''; err = ''; turn = 1 - turn; sfx.play('whoosh'); planCpu();
     }
-    const kbd = (W, h) => keyboard(W, Math.max(156, h - 222));   // スマホの下のバーにかからないよう、上げておく
+    // 1人のとき:相手は上に小さく、自分の入力は画面の上の方から(下のバーにかからない)。2人のとき:半分ずつ
+    const L1 = () => { const cy = S.H * 0.25; return { cy, ty: cy + 116, ky: cy + 146 }; };
+    const kbd = (W, h) => two ? keyboard3(W, 150) : keyboard3(W, L1().ky);
+    const typeKey = (s, b) => { sfx.play('tap'); if (b.k === 'del') typed = typed.slice(0, -1); else if (b.k === 'ok') submit(s, (typed.startsWith(need()) ? '' : need()) + typed); else if (typed.length < 14) typed += b.k; };
     const pt = pointers(S.cv, {
       onDown: p => {
-        const s = two ? p.side : 0; if (s === 1 && !two) return; if (phase !== 'play' || s !== turn) return; const l = H2.local(p, s);
-        for (const b of kbd(S.W, S.H / 2)) if (hit(b, l)) { sfx.play('tap'); if (b.k === 'del') typed = typed.slice(0, -1); else if (b.k === 'ok') submit(s, (typed.startsWith(need()) ? '' : need()) + typed); else if (typed.length < 14) typed += b.k; return; }
+        if (!two) { if (phase !== 'play' || turn !== 0) return; for (const b of kbd(S.W)) if (hit(b, p)) return typeKey(0, b); return; }
+        const s = p.side; if (phase !== 'play' || s !== turn) return; const l = H2.local(p, s);
+        for (const b of kbd(S.W)) if (hit(b, l)) return typeKey(s, b);
       },
     });
     let tickT = 0;
@@ -53,6 +57,7 @@ export default {
       S.begin(); const W = S.W, H = S.H, h = H / 2;
       g.fillStyle = '#fff8ef'; g.fillRect(0, h, W, h); g.fillStyle = '#eef6ff'; g.fillRect(0, 0, W, h);
       if (!D) { banner(g, S, two, phase === 'err' ? '辞書が読めませんでした' : '辞書をよみこみ中…', { size: 20 }); return; }
+      if (!two) return draw1(W, H);
       // 爆弾(番の人のほうへ)
       const bx = W / 2, by = h + (turn === 0 ? 1 : -1) * 14, shake = phase === 'play' ? Math.sin(phT * 40) * (1 - fuse / fuseMax) * 4 : 0;
       if (phase === 'boom') { const r = phT * 300; g.fillStyle = `rgba(255,160,60,${Math.max(0, 1 - phT / 1.2)})`; g.beginPath(); g.arc(W / 2, boomSide === 0 ? h + h * 0.4 : h - h * 0.4, r, 0, 7); g.fill(); }
@@ -70,9 +75,28 @@ export default {
         if (!mine) { T('相手の番…(爆弾をわたした!)', W / 2, 160, { size: 15, color: '#8d7f9e' }); return; }
         if (!canSee) { T(`「${need()}」の単語を考え中…`, W / 2, 160, { size: 15, color: '#8d7f9e' }); return; }
         const shown = typed.startsWith(need()) ? typed : need() + typed;
-        T(shown + '_', W / 2, 136, { size: 24, font: 'Georgia,serif', color: INK });
+        T(shown + '_', W / 2, 132, { size: 24, font: 'Georgia,serif', color: INK });
         kbd(W, h).forEach(b => btn(g, b, { fill: b.k === 'ok' ? '#ffd36b' : '#fff', size: b.k === 'ok' ? 14 : 18, flip: up, shadow: false, border: '#e6dcf2' }));
       }));
+    }
+    function draw1(W, H) {   // 1人用の画面
+      const { cy, ty, ky } = L1(), mine = turn === 0, shake = phase === 'play' ? Math.sin(phT * 40) * (1 - fuse / fuseMax) * 4 : 0;
+      g.fillStyle = '#fff8ef'; g.fillRect(0, cy - 30, W, H); g.fillStyle = '#eef6ff'; g.fillRect(0, 0, W, cy - 30);
+      txt(g, `${host.players[1].icon || ''} ${host.players[1].name}  ${score[1]} / ${TO}`, 12, 22, { size: 13, align: 'left', color: COL.p2d });
+      txt(g, phase === 'boom' ? (boomSide === 1 ? '💥 ドカーン!' : '⭕ セーフ') : !mine ? `「${need()}」の単語を考え中…` : '爆弾をわたした!', W / 2, cy * 0.45, { size: 15, color: boomSide === 1 && phase === 'boom' ? '#ff5a5a' : '#8d7f9e' });
+      txt(g, `${host.players[0].name}  ${score[0]} / ${TO}`, 12, cy - 14, { size: 13, align: 'left', color: COL.p1d });
+      // 爆弾
+      const bx = mine ? W - 40 : W / 2, by = mine ? cy - 14 : cy * 0.72;
+      if (phase === 'boom') { const r = phT * 300; g.fillStyle = `rgba(255,160,60,${Math.max(0, 1 - phT / 1.2)})`; g.beginPath(); g.arc(W / 2, boomSide === 0 ? H * 0.6 : cy * 0.5, r, 0, 7); g.fill(); }
+      else { txt(g, '💣', bx + shake, by, { size: 30 }); g.fillStyle = '#ffd36b'; g.beginPath(); g.arc(bx + 15 + shake, by - 15, 2 + Math.random() * 4, 0, 7); g.fill(); }
+      g.fillStyle = mine && phase === 'play' ? '#fff3c4' : '#fff'; rr(g, 12, cy, W - 24, 80, 14); g.fill(); g.strokeStyle = '#e6dcf2'; g.lineWidth = 2; g.stroke();
+      if (errT > 0) txt(g, err, W / 2, cy + 15, { size: 13, color: '#ff5a5a' }); else txt(g, history.slice(0, -1).join(' → '), W / 2, cy + 15, { size: 11, color: '#a08fb8', maxW: W - 40 });
+      txt(g, word, W / 2, cy + 40, { size: 26, font: 'Georgia,serif' });
+      txt(g, `つぎは「 ${need()} 」で始まる単語`, W / 2, cy + 66, { size: 12, color: '#ff5a5a' });
+      if (phase === 'boom') { txt(g, boomSide === 0 ? '💥 ドカーン!' : '⭕ セーフ!', W / 2, ty, { size: 26, color: boomSide === 0 ? '#ff5a5a' : '#3fbf6a' }); return; }
+      const shown = mine ? (typed.startsWith(need()) ? typed : need() + typed) + '_' : '(相手の番)';
+      txt(g, shown, W / 2, ty, { size: 24, font: 'Georgia,serif', color: mine ? INK : '#b8aec4' });
+      kbd(W).forEach(b => btn(g, b, { fill: b.k === 'ok' ? '#ffd36b' : '#fff', size: b.k === 'ok' ? 14 : b.k === 'del' ? 16 : 18, shadow: false, border: '#e6dcf2', alpha: mine ? 1 : 0.4 }));
     }
     return { stop() { stop(); pt.off(); S.cv.remove(); } };
   },

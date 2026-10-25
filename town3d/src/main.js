@@ -14,6 +14,7 @@ import { makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/characte
 import { setBuildingOutline, eachFoliage, eachTex } from './world/kit.js';
 import { createSeasons, SEASONS, seasonOf } from './world/seasons.js';
 import { createSnowballs } from './world/snowballs.js';
+import { createSnowBattle } from './world/snowbattle.js';
 import { createResidents, period } from './game/npc.js';
 import { createInput } from './game/input.js';
 import { createHud, CSS } from './ui/hud.js';
@@ -102,12 +103,22 @@ export function mount(container, opt = {}) {
     onNpcHit(r) {
       const [line, lv] = NPC_SNOW[r.def.id] || ['わっ! つめたい!', 2];
       audio.play('wave'); hud.say('npc:' + r.def.id, line, 3);
-      setTimeout(() => { if (!started || hud.busy || appHost.current) return; hud.dialog({ name: r.def.name, role: r.def.role, text: `${line} 雪合戦で勝負する?`, choices: [{ label: '⛄ やる!', fn: () => openApp('snowfight', { npc: { id: r.def.id, name: r.def.name, lv } }) }, { label: 'やめておく', fn: () => { } }] }); }, 1100);
+      if (battle.active) return;
+      setTimeout(() => { if (!started || hud.busy || appHost.current || battle.active) return; hud.dialog({ name: r.def.name, role: r.def.role, text: `${line} 雪合戦で勝負する?`, choices: [{ label: '⛄ ここで勝負!(2対2)', fn: () => battle.start(r, lv) }, { label: '🎮 チャンクボックス版で', fn: () => openApp('snowfight', { npc: { id: r.def.id, name: r.def.name, lv } }) }, { label: 'やめておく', fn: () => { } }] }); }, 1100);
     },
   });
 
   // ---- 自分 ----
   const me = { id: storage.get('pid') || 'p' + Math.random().toString(36).slice(2, 10), x: 0, z: 13, ry: Math.PI, speed: 0, ch: null };
+  // 3Dの雪合戦(町のその場で 2×2)
+  const battle = createSnowBattle({
+    scene, camera, root, me, residents, meshes: city.meshes, collide: (x, z) => collide(x, z), audio, snowFx: (p, n, s) => snow.fx(p, n, s),
+    onEnd({ win, quit, opp }) {
+      if (quit) { hud.toast('雪合戦をやめた'); return; }
+      if (win) { wallet.add(30, 'snowfight'); }
+      setTimeout(() => hud.dialog({ name: opp?.def.name || '雪合戦', text: win ? 'まいった〜! 強いね。(🪙+30)' : 'へへっ、こっちの勝ち! また勝負しよう', choices: [{ label: 'もう一回!', fn: () => opp && battle.start(opp, 2) }, { label: 'おわる', fn: () => { } }] }), 300);
+    },
+  });
   storage.set('pid', me.id);
   const last = storage.get('pos'); if (last) { me.x = last[0]; me.z = last[1]; }
   function setLook(id) {
@@ -328,8 +339,9 @@ export function mount(container, opt = {}) {
   { let d0 = null; const cv = renderer.domElement;   // 雪玉を持っているとき:画面をタップした所へ投げる
     cv.addEventListener('pointerdown', e => { d0 = { x: e.clientX, y: e.clientY, t: performance.now() }; });
     const onUp = e => {   // 町の操作が指をつかまえる(capture)ので、はなしたのは window で受ける
-      if (!d0 || !snow.holding || hud.busy || appHost.current) { d0 = null; return; }
+      if (!d0 || hud.busy || appHost.current || !(snow.holding || battle.active)) { d0 = null; return; }
       const ok = Math.hypot(e.clientX - d0.x, e.clientY - d0.y) < 12 && performance.now() - d0.t < 400; d0 = null; if (!ok) return;
+      if (battle.active) { battle.tap(e.clientX, e.clientY, cv.getBoundingClientRect()); return; }
       const r = snow.throwAt(e.clientX, e.clientY, cv.getBoundingClientRect());
       if (r === 'far') hud.toast('そこは遠すぎるよ'); else if (r) { audio.play('wave'); me.ch.wave?.(); }
     };
@@ -630,14 +642,14 @@ export function mount(container, opt = {}) {
       const hs = camBar.querySelector('.hs'); if (hs && document.activeElement !== hs) hs.value = heightToV(fcam.y).toFixed(3);
     } else me.ch.root.visible = true;
     if (!started || hud.busy) mx = my = 0;
-    if (snow.making) mx = my = 0;   // 雪玉をつくっている間は動けない
+    if (snow.making || battle.making || battle.rolling) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
-    const mag = Math.min(1, Math.hypot(mx, my));
+    const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
     const target = mag > 0.05 ? (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) : 0;
     me.speed += (target - me.speed) * Math.min(1, dt * 10);
     if (mag > 0.05) {
       const s = Math.sin(cam.yaw), c = Math.cos(cam.yaw);
-      const wx = (mx * c + my * s) / mag, wz = (-mx * s + my * c) / mag;
+      const wx = (mx * c + my * s) / mag, wz = (-mx * s + my * c) / mag; lastMove = { x: wx, z: wz };
       me.ry = angleLerp(me.ry, Math.atan2(wx, wz), Math.min(1, dt * 12));
       [me.x, me.z] = collide(me.x + wx * me.speed * dt, me.z + wz * me.speed * dt);
     }
@@ -679,8 +691,9 @@ export function mount(container, opt = {}) {
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
-    hud.setSnow(started && seasons.season === 'winter', snow.making ? '❄️ ころころ' : snow.holding ? '❄️ 投げてね' : '❄️ 雪玉');
+    hud.setSnow(started && seasons.season === 'winter' && !battle.active, snow.making ? '❄️ ころころ' : snow.holding ? '❄️ 投げてね' : '❄️ 雪玉');
     snow.update(dt);
+    battle.update(dt, lastMove);
     residents.update(dt, env.hour, me);
 
     // ほかのプレイヤー(なめらかに追いかける)
@@ -708,7 +721,8 @@ export function mount(container, opt = {}) {
       for (const r of residents.list) if (r.ch.root.visible) consider({ kind: 'npc', ref: r, label: `${r.def.name}と話す` }, r.ch.root.position.x, r.ch.root.position.z, 2.3);
       for (const it of city.interact) if (!it.season || it.season === seasons.season) consider(it, it.x, it.z, it.r);
     }
-    if (!focus && !seat && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = sn ? { kind: 'snowman', idx: sn.i, label: '⛄ こわす' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
+    if (battle.active) focus = null;
+    else if (!focus && !seat && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = sn ? { kind: 'snowman', idx: sn.i, label: '⛄ こわす' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
     if (focus && focus.kind === 'npc') { const n = nearNpcs().length; if (n >= 2) focus.label = `ちかくの人と話す(${n}人)`; }
     if (seat) focus = { kind: 'stand', label: '🧍 立つ' };
     hud.setAction(focus ? focus.label : null);
@@ -767,6 +781,7 @@ export function mount(container, opt = {}) {
     quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
+    snowBattle: id => battle.start(residents.list.find(r => r.def.id === id) || residents.list[0], 2),   // テスト用
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,
     // 組み込み先がゲームを開いている間は止める(描画も音も)

@@ -149,6 +149,15 @@ export function halves(S, two) {
   };
 }
 // 英字キーボード(半分の中に描く)。押された文字を返す
+// 3段のキーボード(3段目の左右に ⌫ と 決定)。高さ 141
+export function keyboard3(W, y0, okLabel = '決定') {
+  const kw = (W - 16) / 10, kh = 42, keys = [];
+  ['qwertyuiop', 'asdfghjkl'].forEach((r, i) => { const off = (W - r.length * kw) / 2; [...r].forEach((ch, j) => keys.push({ x: off + j * kw + 2, y: y0 + i * (kh + 5), w: kw - 4, h: kh, label: ch, k: ch })); });
+  const y = y0 + 2 * (kh + 5); keys.push({ x: 8 + 2, y, w: kw * 1.5 - 4, h: kh, label: '⌫', k: 'del' });
+  [...'zxcvbnm'].forEach((ch, j) => keys.push({ x: 8 + kw * 1.5 + j * kw + 2, y, w: kw - 4, h: kh, label: ch, k: ch }));
+  keys.push({ x: 8 + kw * 8.5 + 2, y, w: kw * 1.5 - 4, h: kh, label: okLabel, k: 'ok' });
+  return keys;
+}
 export function keyboard(W, y0) {
   const rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'], keys = [], kw = (W - 16) / 10, kh = 40;
   rows.forEach((r, i) => { const off = (W - r.length * kw) / 2; [...r].forEach((ch, j) => keys.push({ x: off + j * kw + 2, y: y0 + i * (kh + 4), w: kw - 4, h: kh, label: ch, k: ch })); });

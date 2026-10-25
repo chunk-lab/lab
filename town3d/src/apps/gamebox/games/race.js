@@ -4,19 +4,19 @@
 import { surface, pointers, loop, txt, wrapTxt, banner, rr, clamp, btn, hit, COL, INK, shuffle, halves, lerp } from '../kit.js';
 import { pickSentence, sentences, words } from '../en_data.js';
 
-const GAP = 46, FOV = 56, LMAX = 7;
-const vOf = L => 8 + L * 3.5;
+const GAP = 90, FOV = 15, LMAX = 7;   // 次の看板は、いちばん奥から近づいてくる
+const vOf = L => 12 + L * 5;
 const FX = { turbo: ['🚀 ターボ!', 'しばらく超スピード'], slip: ['🍌 相手スリップ!', '相手が2段階ダウン'], jump: ['🦘 ジャンプ!', '60m ワープ'] };
 export default {
-  id: 'race', title: 'チャンクレース', icon: '🏎️', desc: 'フリックでレーンを選んで文をつくる', rule: '左・まん中・右のレーンに、単語(またはチャンク)が置いてあります。左右にフリックしてレーンを変え、文の順に正しいものを通ろう。正解で加速、連続正解でどんどん速くなる。まちがえると1段階ダウン。★の文を完成させると特殊効果! 先にゴールした方の勝ち。',
+  id: 'race', title: 'チャンクレース', icon: '🏎️', desc: 'フリックでレーンを選んで文をつくる', rule: '左・まん中・右のレーンに、単語(またはチャンク)が置いてあります。上の3つのボタンか、道の看板をタップすると、そのレーンへ移って取りに行く(加速!)。レーンをタップ・フリックでも移れる。文の順に正しいものを通ろう。正解でさらに加速、まちがえると大きく減速。いちばん速いときにまちがえるとクラッシュ! ★の文を完成させると特殊効果。先にゴールした方の勝ち。',
   options: [
     { key: 'unit', label: '置いてあるもの', choices: [['chunk', 'チャンク'], ['word', '単語']], def: 'chunk' },
     { key: 'lv', label: '文のむずかしさ', choices: [[1, 'やさしい'], [2, 'ふつう'], [3, 'むずかしい']], def: 1 },
-    { key: 'len', label: 'コースの長さ', choices: [[700, 'みじかい'], [1200, 'ふつう'], [1800, 'ながい']], def: 1200 },
+    { key: 'len', label: 'コースの長さ', choices: [[1000, 'みじかい'], [1800, 'ふつう'], [2700, 'ながい']], def: 1800 },
   ],
   start(host) {
     const S = surface(host.box), g = S.g, two = host.two, cpu = host.players[1].cpu, sfx = host.sfx, lv = cpu ? cpu.lv : 2, H2 = halves(S, two);
-    const O = host.opts, GOAL = O.trial ? 500 : O.len || 1200, WORD = O.unit === 'word', LV = O.lv || 1;
+    const O = host.opts, GOAL = O.trial ? 800 : O.len || 1800, WORD = O.unit === 'word', LV = O.lv || 1;
     let t = 0, count = 3, over = false, nSen = 0;
     const used = [];
     const unitsOf = s => WORD ? words(s) : s.chunks.map(c => c.en);
@@ -37,7 +37,7 @@ export default {
     function pass(r) {
       const row = r.row, ok = r.lane === row.ok; row.hit = r.lane;
       if (ok) {
-        r.k++; r.combo++; r.L = Math.min(LMAX, r.L + 1); sfx.play(r.combo >= 3 ? 'item' : 'ok');
+        r.k++; r.combo++; r.L = Math.min(LMAX, r.L + 1 + (r.rush ? 1 : 0)); sfx.play(r.combo >= 3 ? 'item' : 'ok');
         if (r.k >= r.units.length) {
           r.done++; nSen++;
           if (r.star) {
@@ -47,7 +47,9 @@ export default {
           } else pop(r, '文ができた!', r.sen.en, '#3fbf6a');
           newSen(r);
         } else if (r.combo >= 3) pop(r, `${r.combo}連続!`, 'スピードアップ', '#ff7aa2');
-      } else { r.combo = 0; r.L = Math.max(0, r.L - 1); r.spin = 0.7; sfx.play('ng'); pop(r, '× ちがう', `「${r.units[r.k]}」だった`, '#ff5a5a'); }
+      } else if (r.L >= LMAX) { r.combo = 0; r.L = 0; r.spin = 1.8; sfx.play('boom'); pop(r, '💥 クラッシュ!', `「${r.units[r.k]}」だった`, '#ff5a5a'); }   // いちばん速いときにまちがえると
+      else { r.combo = 0; r.L = Math.max(0, r.L - 3); r.spin = 0.8; sfx.play('ng'); pop(r, '× ちがう 大きく減速', `「${r.units[r.k]}」だった`, '#ff5a5a'); }
+      r.rush = false;
       r.row = makeRow(r, row.z + GAP);
     }
     // ---- 操作(左右フリック。左右のはしをタップでもOK) ----
@@ -58,10 +60,14 @@ export default {
       onUp: p => {
         const d = downs.get(p.id); downs.delete(p.id); if (!d || count > 0) return; const r = R[d.s]; if (r.fin >= 0) return;
         const l = loc(p, d.s), dx = l.x - d.l.x;
-        let m = 0; if (Math.abs(dx) > 22) m = Math.sign(dx); else if (l.x < S.W * 0.33) m = -1; else if (l.x > S.W * 0.67) m = 1;
-        if (m) { const nl = clamp(r.lane + m, 0, 2); if (nl !== r.lane) { r.lane = nl; sfx.play('whoosh'); } }
+        if (Math.abs(dx) > 22) { go(r, clamp(r.lane + Math.sign(dx), 0, 2), false); return; }   // フリック
+        const H = r.hits || {};
+        for (const [i, b] of (H.btn || []).entries()) if (hit(b, l)) return go(r, i, true);    // 上のボタン → 取りに行く
+        for (const [i, b] of (H.sign || []).entries()) if (hit(b, l)) return go(r, i, true);   // 道の看板 → 取りに行く
+        if (l.y > (H.road || 0)) go(r, l.x < S.W / 3 ? 0 : l.x < S.W * 2 / 3 ? 1 : 2, false);   // レーンをタップ → すぐそのレーン
       },
     });
+    function go(r, lane, rush) { if (lane !== r.lane) sfx.play('whoosh'); r.lane = lane; if (rush && !r.rush) { r.rush = true; sfx.play('item'); } }
     const stop = loop(dt => {
       t += dt;
       if (count > -1) { const c0 = Math.ceil(count); count -= dt; if (count > 0 && Math.ceil(count) !== c0) sfx.play('count'); if (count <= 0 && c0 === 1) sfx.play('go'); }
@@ -73,7 +79,7 @@ export default {
           const row = r.row; if (row.cpu == null) { const ok = Math.random() < [0, 0.72, 0.84, 0.93][lv] - (LV - 1) * 0.05; row.cpu = ok ? row.ok : [0, 1, 2].filter(x => x !== row.ok)[Math.floor(Math.random() * 2)]; row.cpuAt = row.z - GAP * (0.25 + Math.random() * 0.4); }
           if (r.z > row.cpuAt) r.lane = row.cpu;
         }
-        const v = vOf(r.L) * (r.turbo > 0 ? 1.5 : 1) * (r.spin > 0 ? 0.45 : 1);
+        const v = vOf(r.L) * (r.turbo > 0 ? 1.5 : 1) * (r.rush ? 1.7 : 1) * (r.spin > 0 ? (r.spin > 0.9 ? 0.05 : 0.45) : 1);
         r.z += v * dt;
         if (r.z >= r.row.z) pass(r);
         if (r.z >= GOAL && r.fin < 0) { r.fin = t; sfx.play('goal'); if (!over) { over = true; setTimeout(() => host.end({ winner: r.i, text: `${host.players[r.i].name} ゴール! (文 ${r.done}こ)` }), 2200); } }
@@ -93,7 +99,7 @@ export default {
       g.restore();
     }
     function view(r, W, h) {
-      const o = R[1 - r.i], hor = h * 0.3, BW = W * 1.25;
+      const o = R[1 - r.i], hor = Math.max(h * 0.36, 158), BW = W * 1.25; r.hits = { btn: [], sign: [], road: hor + (h - hor) * 0.25 };
       const yOf = d => hor + (h - hor) * FOV / (Math.max(-FOV * 0.9, d) + FOV), sOf = d => FOV / (Math.max(-FOV * 0.9, d) + FOV);
       const laneX = (ln, d) => W / 2 + (ln - 1) * (BW / 3) * sOf(d);
       // 空と山
@@ -120,7 +126,9 @@ export default {
         g.fillStyle = 'rgba(0,0,0,0.18)'; rr(g, x - bw / 2, y - bh - 4 * s, bw, bh, 8 * s); g.fill();
         g.fillStyle = r.star ? '#fff4c2' : '#fff'; rr(g, x - bw / 2, y - bh - 8 * s, bw, bh, 8 * s); g.fill();
         g.strokeStyle = r.star ? '#ffb400' : '#d8cfe6'; g.lineWidth = 2; g.stroke();
-        txt(g, u, x, y - bh / 2 - 8 * s, { size: Math.max(10, 20 * s), font: 'Georgia,serif', weight: 700, maxW: bw - 6 });
+        txt(g, u, x, y - bh / 2 - 8 * s, { size: Math.max(9, 20 * s), font: 'Georgia,serif', weight: 700, maxW: bw - 6 });
+        r.hits.sign[ln] = { x: x - Math.max(bw, 60) / 2, y: y - bh - 20, w: Math.max(bw, 60), h: bh + 26 };
+        if (ln === r.lane && r.rush) { g.strokeStyle = '#ffb400'; g.lineWidth = 3; rr(g, x - bw / 2 - 3, y - bh - 8 * s - 3, bw + 6, bh + 6, 8 * s); g.stroke(); }
       });
       g.globalAlpha = 1;
       // 相手のカート(近くにいたら)
@@ -129,21 +137,23 @@ export default {
       kart(laneX(r.lx, 3), yOf(3), sOf(3) * 0.95 * Math.min(1.2, W / 360), r.i ? COL.p2 : COL.p1, r.spin, true);
       if (r.turbo > 0) { g.fillStyle = 'rgba(255,180,0,0.25)'; g.fillRect(0, 0, W, h); for (let i = 0; i < 10; i++) { const a = Math.random() * 6.28, rr0 = W * 0.3; g.strokeStyle = 'rgba(255,255,255,0.7)'; g.lineWidth = 2; g.beginPath(); g.moveTo(W / 2 + Math.cos(a) * rr0, hor + Math.sin(a) * rr0); g.lineTo(W / 2 + Math.cos(a) * rr0 * 2, hor + Math.sin(a) * rr0 * 2); g.stroke(); } }
       // ---- 上のメーター ----
-      g.fillStyle = 'rgba(255,255,255,0.92)'; rr(g, 8, 8, W - 16, 96, 12); g.fill();
+      g.fillStyle = 'rgba(255,255,255,0.92)'; rr(g, 8, 8, W - 16, 142, 12); g.fill();
       // 文(できたところ・のこり)
       const parts = r.units.map((u, i) => i < r.k ? u : '＿'.repeat(Math.min(3, Math.max(1, Math.round(u.length / 4))))).join(' ');
       txt(g, (r.star ? '★ ' : '') + r.sen.ja, W / 2, 26, { size: 13, color: r.star ? '#c98a00' : '#6b5a80', maxW: W - 30 });
-      wrapTxt(g, parts, W / 2, 50, W - 32, { size: 15, font: 'Georgia,serif', weight: 700 });
+      wrapTxt(g, parts, W / 2, 48, W - 32, { size: 15, font: 'Georgia,serif', weight: 700 });
       // スピードと位置
-      for (let i = 0; i < LMAX; i++) { g.fillStyle = i < r.L ? (i < 3 ? '#8fe0b0' : i < 5 ? '#ffd36b' : '#ff7aa2') : '#e6e0ee'; rr(g, 16 + i * 14, 78, 11, 16, 3); g.fill(); }
-      txt(g, r.combo >= 2 ? `${r.combo}連続` : 'スピード', 16 + LMAX * 14 + 4, 86, { size: 11, align: 'left', color: '#8d7f9e' });
-      const bx = W * 0.52, bw = W * 0.44; g.fillStyle = '#e6e0ee'; rr(g, bx, 82, bw, 8, 4); g.fill();
-      [o, r].forEach(q => { const x = bx + clamp(q.z / GOAL, 0, 1) * bw; g.fillStyle = q.i ? COL.p2 : COL.p1; g.beginPath(); g.arc(x, 86, q === r ? 7 : 5, 0, 7); g.fill(); });
-      txt(g, '🏁', bx + bw + 2, 86, { size: 12, align: 'left' });
+      // つぎの3つ(遠くにあっても、ここで見える。タップで取りに行く)
+      const cw = (W - 40) / 3; row.lanes.forEach((u, ln) => { const b = { x: 14 + ln * (cw + 6), y: 70, w: cw, h: 42 }; r.hits.btn[ln] = b; btn(g, { ...b, label: u }, { size: 15, font: 'Georgia,serif', fill: ln === r.lane ? (r.rush ? '#ffe08a' : '#fff4c2') : '#fff', border: ln === r.lane ? '#ffb400' : '#e6dcf2', shadow: false }); });
+      for (let i = 0; i < LMAX; i++) { g.fillStyle = i < r.L ? (i < 3 ? '#8fe0b0' : i < 5 ? '#ffd36b' : '#ff7aa2') : '#e6e0ee'; rr(g, 16 + i * 14, 124, 11, 16, 3); g.fill(); }
+      txt(g, r.L >= LMAX ? 'MAX!注意' : r.combo >= 2 ? `${r.combo}連続` : 'スピード', 16 + LMAX * 14 + 4, 132, { size: 11, align: 'left', color: r.L >= LMAX ? '#ff5a5a' : '#8d7f9e' });
+      const bx = W * 0.52, bw = W * 0.42; g.fillStyle = '#e6e0ee'; rr(g, bx, 128, bw, 8, 4); g.fill();
+      [o, r].forEach(q => { const x = bx + clamp(q.z / GOAL, 0, 1) * bw; g.fillStyle = q.i ? COL.p2 : COL.p1; g.beginPath(); g.arc(x, 132, q === r ? 7 : 5, 0, 7); g.fill(); });
+      txt(g, '🏁', bx + bw + 2, 132, { size: 12, align: 'left' });
       // ポップ
       if (r.popT > 0) { const a = Math.min(1, r.popT * 2), y0 = hor + 30 - (1.4 - r.popT) * 20; g.globalAlpha = a; txt(g, r.pop.a, W / 2, y0, { size: 26, color: r.pop.col, stroke: '#fff', sw: 6 }); txt(g, r.pop.b, W / 2, y0 + 28, { size: 13, color: INK, stroke: '#fff', sw: 4, maxW: W - 30, font: r.pop.b === r.sen?.en ? 'Georgia,serif' : 'sans-serif' }); g.globalAlpha = 1; }
       if (r.fin >= 0) { g.fillStyle = 'rgba(255,255,255,0.6)'; g.fillRect(0, 0, W, h); txt(g, 'ゴール!', W / 2, h / 2, { size: 40, color: r.i ? COL.p2d : COL.p1d, stroke: '#fff', sw: 8 }); }
-      if (count > 0 || t < 3.3) { const c = count > 0.3 ? String(Math.ceil(count)) : 'GO!'; txt(g, c, W / 2, hor + 60, { size: 54, color: '#ff7aa2', stroke: '#fff', sw: 8 }); if (count > 0) txt(g, '← 左右にフリックでレーン変更 →', W / 2, h - 30, { size: 14, color: '#fff', stroke: INK, sw: 4 }); }
+      if (count > 0 || t < 3.3) { const c = count > 0.3 ? String(Math.ceil(count)) : 'GO!'; txt(g, c, W / 2, hor + 60, { size: 54, color: '#ff7aa2', stroke: '#fff', sw: 8 }); if (count > 0) txt(g, '上のボタン・看板・レーンをタップ / フリック', W / 2, h - 30, { size: 14, color: '#fff', stroke: INK, sw: 4 }); }
     }
     function draw() {
       S.begin(); const W = S.W, H = S.H;

@@ -44,6 +44,7 @@ export function createSnowballs(scene, { camera, meshes, residents, getHand, onN
   }
 
   return {
+    fx(p, n, s) { splash(p, n, s, null); },   // 雪合戦(3D)の当たりにも使う
     get making() { return making >= 0; },
     get holding() { return size > 0 && making < 0; },
     start() { if (making >= 0) return; making = 0; size = sizeOf(0); hand.visible = true; },
