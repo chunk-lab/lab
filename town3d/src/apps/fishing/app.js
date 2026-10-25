@@ -16,7 +16,7 @@ const CSS = `
 .fz .bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:8px;padding:8px 10px;pointer-events:none}
 .fz .bar > *{pointer-events:auto}
 .fz .chip{border:0;border-radius:999px;padding:7px 10px;font:inherit;font-weight:800;font-size:12px;background:rgba(255,255,255,.88);color:${ink};box-shadow:0 2px 8px #0002;white-space:nowrap}
-.fz .hint{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom,0px));max-width:92%;background:rgba(40,30,70,.55);color:#fff;font-weight:700;font-size:13px;padding:6px 12px;border-radius:12px;text-align:center;pointer-events:none;transition:opacity .3s;line-height:1.45}
+.fz .hint{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(36px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 262px);box-sizing:border-box;margin-left:-14px;font-size:12px !important;background:rgba(40,30,70,.55);color:#fff;font-weight:700;font-size:13px;padding:6px 12px;border-radius:12px;text-align:center;pointer-events:none;transition:opacity .3s;line-height:1.45}
 .fz .big{position:absolute;right:18px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:108px;height:108px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:17px;color:#fff;background:radial-gradient(circle at 35% 30%,#ffb3c6,#f07a98);box-shadow:0 6px 0 #c9577a,0 10px 20px #0004;touch-action:none}
 .fz .big.on{transform:translateY(4px);box-shadow:0 2px 0 #c9577a,0 6px 12px #0004}
 .fz .big small{display:block;font-size:11px;font-weight:700;opacity:.9}
@@ -297,7 +297,7 @@ export const fishingApp = {
       const local = e => { const r = W(); return { x: e.clientX - r.left, y: e.clientY - r.top, t: performance.now() }; };
       const camMode = () => { const ph = E.S.ph; return ph === 'fight' ? 'fight' : ph === 'water' && underReady ? 'under' : 'pond'; };
       const inUnder = p => { const u = view.underRect(); return u && p.x >= u.x && p.x <= u.x + u.w && p.y >= u.y && p.y <= u.y + u.h; };
-      const tanaFrom = p => { const u = view.underRect(), ld = E.S.lure.d, b = 0.55 + 0.45 * Math.min(1, ld / 0.6); E.setTana((p.y - u.y - 12) / ((u.h - 18) * b)); eq.tana = E.S.tana; };
+      const tanaFrom = p => { const u = view.underRect(), ld = E.S.lure.d, b = 0.55 + 0.45 * Math.min(1, ld / 0.6); E.setTana((p.y - u.y - 12) / ((u.h - 18 - view.underPad()) * b)); eq.tana = E.S.tana; };
       cv.addEventListener('pointerdown', e => {
         if (waterPid != null) return; waterPid = e.pointerId; wx0 = e.clientX; cv.setPointerCapture(e.pointerId);
         const p = local(e); pt = { p0: p, last: p, hist: [p], moved: 0, mode: camMode() };

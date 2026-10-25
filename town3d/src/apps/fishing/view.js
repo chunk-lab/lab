@@ -126,9 +126,15 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
   }
   // ---- 水中の窓(横から見た池):左=手前(岸) 右=おく / 上=水面 下=底 ----
   const bubbles = [];
+  let uCam = 0.4;
+  const underPad = r => Math.min(150, r.h * 0.42);   // 下のボタンの分
   const bottomAt = d => 0.55 + 0.45 * Math.min(1, d / 0.6);   // 手前ほど浅い(窓の高さに対する割合)
   function drawUnder(vs, u, dt, r) {
-    const X = d => r.x + 22 + d * (r.w - 34), Y = (y, d) => r.y + 12 + y * (r.h - 18) * bottomAt(d);
+    // 手元のボタン(下)にかくれないよう、深さは上に寄せる。横はウキ・ルアーを追いかける(いつも真ん中あたり)
+    const pad = underPad(r), DH = r.h - 18 - pad;
+    if (u.ld != null) uCam += ((u.ld ?? 0.3) - uCam) * Math.min(1, dt * 3);
+    const SW = r.w * 0.95, X = d => r.x + r.w * 0.5 + (d - uCam) * SW, Y = (y, d) => r.y + 12 + y * DH * bottomAt(d);
+    const d0 = Math.max(0, uCam - 0.55), d1 = Math.min(1, uCam + 0.55);
     g.save();
     // 枠と水
     g.beginPath(); g.roundRect ? g.roundRect(r.x, r.y, r.w, r.h, 14) : g.rect(r.x, r.y, r.w, r.h); g.clip();
@@ -143,9 +149,9 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     // 底(場所で変わる)
     const lane = d => { const k = u.lx != null && u.ld > 0.05 ? d / u.ld : d; return [u.lx != null ? u.lx * k : 0, d]; };
     g.fillStyle = shadeRgb('#c9b48a', -night * 0.55); g.beginPath(); g.moveTo(r.x, r.y + r.h);
-    for (let i = 0; i <= 40; i++) { const d = i / 40; g.lineTo(X(d), Y(1, d) + Math.sin(i * 1.7) * 2); } g.lineTo(r.x + r.w, r.y + r.h); g.closePath(); g.fill();
+    g.lineTo(X(d0) - 40, Y(1, d0)); for (let i = 0; i <= 40; i++) { const d = d0 + (d1 - d0) * i / 40; g.lineTo(X(d), Y(1, d) + Math.sin(d * 68) * 2); } g.lineTo(X(d1) + 40, Y(1, d1)); g.lineTo(r.x + r.w, r.y + r.h); g.closePath(); g.fill();
     for (let i = 0; i <= 30; i++) {
-      const d = i / 30, [lx] = lane(d), a = areaAt(lx, d), x = X(d), yb = Y(1, d);
+      const d = d0 + (d1 - d0) * i / 30, [lx] = lane(d), a = areaAt(lx, d), x = X(d), yb = Y(1, d);
       if (a === 'weed') { g.strokeStyle = 'rgba(70,150,80,0.8)'; g.lineWidth = 2; for (let k = 0; k < 3; k++) { g.beginPath(); g.moveTo(x + k * 4, yb); g.quadraticCurveTo(x + k * 4 + Math.sin(t + i + k) * 6, yb - 18, x + k * 4 + Math.sin(t * 1.3 + i) * 4, yb - 34 - k * 5); g.stroke(); } }
       if (a === 'rock' && i % 2 === 0) { g.fillStyle = shadeRgb('#8a8698', -night * 0.5); g.beginPath(); g.ellipse(x, yb, 9, 7, 0, Math.PI, 0); g.fill(); }
       if (a === 'log' && i % 3 === 0) { g.fillStyle = '#6e5340'; g.fillRect(x - 6, yb - 7, 16, 6); }
@@ -153,7 +159,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     }
     // タナのめもり
     g.font = '700 10px sans-serif'; g.textAlign = 'left'; g.fillStyle = 'rgba(255,255,255,0.75)';
-    for (const k of ['top', 'mid', 'bottom']) g.fillText(TANA[k].name, r.x + 3, r.y + 14 + TANA[k].y * (r.h - 24));
+    for (const k of ['top', 'mid', 'bottom']) g.fillText(TANA[k].name, r.x + 3, r.y + 14 + TANA[k].y * DH * 0.95);
     // 見える範囲
     const vis = u.vis, hx = X(u.ld ?? 0.3), hy = Y(u.depth ?? 0, u.ld ?? 0.3);
     const lit = vis >= 2 ? 9 : vis === 1 ? 0.34 : 0.15;
@@ -181,7 +187,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
         if (u.ph === 'water') drawBait(u, hx, hy);
       }
       // タナ(エサのとき)
-      if (!u.isLure && u.canTana) { const ty = r.y + 12 + u.tana * (r.h - 18) * bottomAt(u.ld ?? 0.3); g.setLineDash([4, 4]); g.strokeStyle = 'rgba(255,236,120,0.9)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(r.x + 34, ty); g.lineTo(r.x + r.w - 4, ty); g.stroke(); g.setLineDash([]); g.fillStyle = '#ffe36b'; g.font = '800 11px sans-serif'; g.textAlign = 'right'; g.fillText('タナ ▲▼', r.x + r.w - 6, ty - 4); }
+      if (!u.isLure && u.canTana) { const ty = r.y + 12 + u.tana * DH * bottomAt(u.ld ?? 0.3); g.setLineDash([4, 4]); g.strokeStyle = 'rgba(255,236,120,0.9)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(r.x + 34, ty); g.lineTo(r.x + r.w - 4, ty); g.stroke(); g.setLineDash([]); g.fillStyle = '#ffe36b'; g.font = '800 11px sans-serif'; g.textAlign = 'right'; g.fillText('タナ ▲▼', r.x + r.w - 6, ty - 4); }
     }
     // かかった魚
     if (u.ph === 'fight' && u.hooked) {
@@ -193,7 +199,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     for (let i = bubbles.length - 1; i >= 0; i--) { const b = bubbles[i]; b.y -= b.v * dt; b.a -= dt * 0.8; if (b.y < r.y + 10 || b.a <= 0) { bubbles.splice(i, 1); continue; } g.strokeStyle = `rgba(255,255,255,${b.a})`; g.lineWidth = 1; g.beginPath(); g.arc(b.x, b.y, 2, 0, 7); g.stroke(); }
     // にごり(見えない所)
     if (vis < 2) {
-      const R2 = lit * (r.w - 34);
+      const R2 = lit * SW;
       const mg = g.createRadialGradient(hx, hy, R2 * 0.35, hx, hy, R2 * 1.05);
       mg.addColorStop(0, 'rgba(20,45,60,0)'); mg.addColorStop(1, vis === 1 ? 'rgba(20,45,60,0.55)' : 'rgba(20,45,60,0.82)');
       g.fillStyle = mg; g.fillRect(r.x, r.y, r.w, r.h);
@@ -273,7 +279,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
   }
 
   const api = {
-    proj, splash, addRing, underRect: () => cam.ud || UR(),
+    proj, splash, addRing, underRect: () => cam.ud || UR(), underPad: () => underPad(cam.ud || UR()),
     // y0:カメラのときの上のあき(対戦の相手の画面の分)。池の絵はその下の大きさで作る
     resize(y0 = 0) {
       const r = canvas.getBoundingClientRect(); dpr = Math.min(2, window.devicePixelRatio || 1);
