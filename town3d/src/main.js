@@ -110,6 +110,7 @@ export function mount(container, opt = {}) {
 
   // ---- 自分 ----
   const me = { id: storage.get('pid') || 'p' + Math.random().toString(36).slice(2, 10), x: 0, z: 13, ry: Math.PI, speed: 0, ch: null };
+  let sport = null;   // 季節のスポーツ(ゴルフ・フリスビー)
   // 3Dの雪合戦(町のその場で 2×2)
   const battle = createSnowBattle({
     faceCam: (x, z, ry) => { cam.yaw = ry + Math.PI; cam.x = x; cam.z = z; cam.pitch = 0.8; cam.dist = 11.5; },   // 引いた斜め上から
@@ -332,6 +333,20 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('toast', t => hud.toast(t)));
   offs.push(bus.on('sfx', n => audio.play(n)));
   const SAY = ['こんにちは!', 'いい天気だね', 'いっしょに遊ぼう!', 'またね〜'];
+  // ゲーム機から「町の中で遊ぶ」もの
+  offs.push(bus.on('app:event', e => {
+    if (e?.name !== 'launch') return;
+    const what = e.data?.what;
+    setTimeout(() => {
+      if (what === 'snow3d') {   // 町のランダムな場所で
+        const ids = Object.keys(city.graph.nodes).filter(id => !/^pd|^p\d/.test(id)), n = city.graph.nodes[ids[Math.floor(Math.random() * ids.length)]];
+        me.x = n.x; me.z = n.z; me.ry = Math.random() * Math.PI * 2; cam.x = me.x; cam.z = me.z;
+        const cand = residents.list.filter(r => r.ch.rig); const opp = cand[Math.floor(Math.random() * cand.length)];
+        opp.ch.root.position.set(me.x + Math.sin(me.ry) * 8, 0, me.z + Math.cos(me.ry) * 8);
+        battle.start(opp, 2);
+      } else if (what === 'golf' || what === 'frisbee') sport?.start(what, { any: true });
+    }, 350);
+  }));
   offs.push(bus.on('ui:snow', ph => {
     if (!started || seasons.season !== 'winter') return; audio.unlock();
     if (ph === 'down') { if (!snow.holding) snow.start(); }

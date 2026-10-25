@@ -5,6 +5,9 @@
 import { CPUS, cpuById, createSfx, INK } from './kit.js';
 import dictq from './games/dictq.js';
 import wordrace from './games/wordrace.js';
+import bowling from './games/bowling.js';
+import darts from './games/darts.js';
+import { snow3d, fishvs, golf, frisbee } from './games/launchers.js';
 import listen from './games/listen.js';
 import tug from './games/tug.js';
 import shiritori from './games/shiritori.js';
@@ -15,7 +18,7 @@ import party from './games/party.js';
 import snow from './games/snow.js';
 
 export const EN_GAMES = [dictq, wordrace, listen, tug, shiritori, sniper];
-export const PLAY_GAMES = [hockey, race, party];
+export const PLAY_GAMES = [hockey, race, party, bowling, darts, snow3d, fishvs, golf, frisbee];
 const ALL = [...EN_GAMES, ...PLAY_GAMES, snow];
 // 値段(あとで変えられるようにここにまとめる)
 export const PRICE = { console: 700, title1: 500, title3: 1000, titleAll: 2000, usdMonth1: 1, usdDayAll: 1 };
@@ -106,7 +109,7 @@ export const gameboxApp = {
         <p class="note" style="color:#d8d0f0;margin-top:14px">英語ゲーム:無料会員は1日1試合(本体を借りた日は何回でも)。有料会員はいつでも。<br>あそびゲーム:ソフトを借りると遊べる(無料会員は本体も)。お試しは1日1回(どれか1本)。</p>`;
       sc.onclick = e => {
         const c = e.target.closest('[data-g]'), rb = e.target.closest('[data-rent]');
-        if (c) { sfx.play('tap'); setup(ALL.find(g => g.id === c.dataset.g)); }
+        if (c) { sfx.play('tap'); const G = ALL.find(g => g.id === c.dataset.g); if (G.launch) gate(G, trial => G.launch(ctx, trial)); else setup(G); }   // 町の中で遊ぶもの
         if (rb) { sfx.play('tap'); rb.dataset.rent === 'console' ? rentConsole() : rentTitles(); }
       };
     }
@@ -178,7 +181,7 @@ export const gameboxApp = {
       const draw = () => {
         s.querySelector('.panel').innerHTML = `<h2>${G.icon} ${G.title}</h2><p class="note">${G.rule}</p>
           <div class="lbl">あいて</div><div class="seg">${CPUS.map(c => `<button class="tab ${opp === c.id ? 'on' : ''}" data-o="${c.id}">${c.icon} ${c.name}${'★'.repeat(c.lv)}</button>`).join('')}
-            ${G.no2p ? '' : `<button class="tab ${opp === '2p' ? 'on' : ''}" data-o="2p">👥 2人で(1台を向かい合って)</button>`}</div>
+            ${G.no2p ? '' : `<button class="tab ${opp === '2p' ? 'on' : ''}" data-o="2p">👥 2人で(${G.pass ? '交代で手わたし' : '1台を向かい合って'})</button>`}</div>
           ${(G.options || []).filter(o => !o.only || o.only(opts, opp)).map(o => `<div class="lbl">${o.label}</div><div class="seg">${o.choices.map(([v, l]) => `<button class="tab ${opts[o.key] === v ? 'on' : ''}" data-k="${o.key}" data-v="${v}">${l}</button>`).join('')}</div>`).join('')}
           <div class="row"><button class="btn sub" data-x>もどる</button><button class="btn" data-go>${gateLabel(G)}</button></div>`;
       };
