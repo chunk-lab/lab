@@ -446,7 +446,7 @@ export const homeApp = {
       if (gch) guestUpdate(dt);
       wme.root.position.set(wx, wPose ? wy : 0, wz); wme.root.rotation.y = wry; wme.update(dt, wspeed); wme.root.visible = wdist > 1.9;
       const look = new THREE.Vector3(wx, 1.1, wz), op = wpitch;
-      if (wPose) { const lie = wme.pose === 'lie'; const mx = gPose ? (wx + gx) / 2 : wx, mz = gPose ? (wz + gz) / 2 : wz, k = lie ? 0.45 : 0.7; look.set(mx + Math.sin(wyaw) * k, lie ? wy : 0.6 + wy * 0.5, mz + Math.cos(wyaw) * k); }   // すわる・ねるときは、2人が画面の上のほうに見えるように
+      if (wPose) { const lie = wme.pose === 'lie'; const mx = gPose ? (wx + gx) / 2 : wx, mz = gPose ? (wz + gz) / 2 : wz, k = lie ? 0.1 : 0.7; look.set(mx + Math.sin(wyaw) * k, lie ? wy : 0.6 + wy * 0.5, mz + Math.cos(wyaw) * k); }   // すわる・ねるときは、2人が画面の上のほうに見えるように
       cam.position.set(wx + Math.sin(wyaw) * Math.cos(op) * wdist, 1.1 + Math.sin(op) * wdist, wz + Math.cos(wyaw) * Math.cos(op) * wdist);
       cam.lookAt(look);
       cv.dataset.wp = wx.toFixed(2) + ',' + wz.toFixed(2);
@@ -489,6 +489,8 @@ export const homeApp = {
     function floorLie() {   // 家具がなくても、床にゴロゴロ
       const sn = Math.sin(wry), cs = Math.cos(wry);
       if (gch) { [wx, wz] = walkTo(wx - cs * 0.3, wz + sn * 0.3); }
+      // 頭はうしろへのびるので、2人とも頭までへやの中に入るように、ずらす
+      for (let k = 0; k < 3; k++) for (const [ox, oz] of [[0, 0], [-Math.sin(wry) * 1.3, -Math.cos(wry) * 1.3], ...(gch ? [[cs * 0.6, -sn * 0.6], [cs * 0.6 - Math.sin(wry) * 1.3, -sn * 0.6 - Math.cos(wry) * 1.3]] : [])]) { const [ax, az] = walkTo(wx + ox, wz + oz); wx += ax - (wx + ox); wz += az - (wz + oz); }
       wy = 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wspeed = 0; wyaw = wry; wpitch = 0.95; wdist = 3.0;
       guestPose('lie', 0.14);
       if (gch) guestSay(['ごろ〜ん。床ひんやりしてきもちい〜', 'ふぁ〜、ねむくなっちゃう', 'こうやってゴロゴロするの、すき'][Math.floor(Math.random() * 3)]);
