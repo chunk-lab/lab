@@ -30,7 +30,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 .sp-tim{position:absolute;right:16px;bottom:calc(240px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
 .sp-tim i{position:absolute;top:-4px;width:4px;height:24px;border-radius:2px;background:#5a4a6b;left:50%}.sp-tim[hidden]{display:none}
 .sp-wind{display:inline-block;transition:transform .2s}
-.sp-swing{position:absolute;left:16px;right:16px;bottom:calc(196px + env(safe-area-inset-bottom,0px));height:26px;border-radius:13px;background:linear-gradient(90deg,#8fe0b0 0 4%,#fff 4% 9%,#ffd36b 9% 11%,#fff 11%);box-shadow:0 2px 8px #0004;border:2px solid #fff}
+.sp-swing{position:absolute;left:16px;right:16px;bottom:calc(252px + env(safe-area-inset-bottom,0px));height:26px;border-radius:13px;background:linear-gradient(90deg,#8fe0b0 0 4%,#fff 4% 9%,#ffd36b 9% 11%,#fff 11%);box-shadow:0 2px 8px #0004;border:2px solid #fff}
 .sp-swing .pw{position:absolute;top:0;bottom:0;left:0;border-radius:11px;background:linear-gradient(90deg,#ffd36b,#ff7aa2);opacity:.55}
 .sp-swing .mk{position:absolute;top:-6px;width:5px;height:38px;border-radius:3px;background:#5a4a6b}
 .sp-swing .set{position:absolute;top:-8px;width:3px;height:42px;background:#ff5a5a}
@@ -115,7 +115,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   function hudEl(kind) {
     const h = document.createElement('div'); h.className = 'sp-hud';
     h.innerHTML = `<div class="sp-top"></div><div class="sp-msg"></div><div class="sp-clubs"></div>
-      <button class="sp-aim sp-l">◀</button><button class="sp-aim sp-r">▶</button><div class="sp-gauge"><i style="height:0"></i></div>
+      <button class="sp-aim sp-l">◀</button><button class="sp-aim sp-r">▶</button>${kind === 'golf' ? '' : '<div class="sp-gauge"><i style="height:0"></i></div>'}
       <div class="sp-tim" hidden><i></i></div>${kind === 'golf' ? '<div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引いて はなす</small>'}</button><button class="sp-quit">✕ やめる</button>`;
     root.appendChild(h);
     const shot = h.querySelector('.sp-shot');
@@ -244,7 +244,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     if (S.kind === 'golf') swingStep(dt);
     if (S.kind === 'frisbee') { const tm = S.hud.querySelector('.sp-tim'), on = !!S.charging; if (tm.hidden === on) tm.hidden = !on; if (on) { S.needle = Math.sin(S.cT * 2.8); tm.firstChild.style.left = `calc(${50 + S.needle * 48}% - 2px)`; } }
     { const H = S.C.holes[S.i], w = S.hud.querySelector('.sp-wind'); if (w) { const y = getYaw() + Math.PI, fx = Math.sin(y), fz = Math.cos(y), up = H.wind[0] * fx + H.wind[1] * fz, rt = H.wind[0] * -fz + H.wind[1] * fx; w.style.transform = `rotate(${Math.atan2(rt, up) * 180 / Math.PI}deg)`; } }
-    S.hud.querySelector('.sp-gauge i').style.height = `${Math.round((S.charging ? S.power : 0) * 100)}%`;
+    const gq = S.hud.querySelector('.sp-gauge i'); if (gq) gq.style.height = `${Math.round((S.charging ? S.power : 0) * 100)}%`;
     if (S.phase === 'fly') { S.t += dt; stepFly(dt); }
     if (S.phase === 'holed') { S.t += dt; if (S.t > 2.2) next(); }
     if (S.phase === 'aim') { me.ry = Math.atan2(...aimDir()); }
