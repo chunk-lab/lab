@@ -414,8 +414,8 @@ export function mount(container, opt = {}) {
     standFromSeat();
     me.x = pA.x; me.z = pA.z; me.ry = Math.atan2(-rx, -rz); me.speed = 0; seat = { b: { x: pA.x, z: pA.z, ry: me.ry }, date: true }; me.ch.pose = 'sit';
     r.pin = { x: pB.x, z: pB.z, y: -0.04, ry: Math.atan2(rx, rz), pose: 'sit' };
-    cam.x = T.x; cam.z = T.z; cam.yaw = Math.atan2(nx, nz); cam.pitch = 0.32; cam.dist = 5.2;
-    date = { r, stools, wasFollow: r.follow, cam0: { pitch: cam.pitch, dist: cam.dist } }; residents.avoid = { x: T.x, z: T.z, r: 3.2 };
+    const F = { x: T.x + nx * 2.4, z: T.z + nz * 2.4 }; cam.x = F.x; cam.z = F.z; cam.yaw = Math.atan2(nx, nz); cam.pitch = 0.42; cam.dist = 5.5;
+    date = { r, stools, focus: F, wasFollow: r.follow, cam0: { pitch: cam.pitch, dist: cam.dist } }; residents.avoid = { x: T.x, z: T.z, r: 3.2 };
     for (const o of residents.list) if (o !== r && !o.hidden && Math.hypot(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z) < 2.4) { const a = Math.atan2(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z); o.ch.root.position.x = T.x + Math.sin(a) * 3.3; o.ch.root.position.z = T.z + Math.cos(a) * 3.3; }
     const H = env.hour, first = H < 11 ? 'モーニング、いい感じだね。何たのむ?' : H < 17 ? 'ここ、前から来てみたかったんだ〜。何にする?' : '夜のカフェって、ちょっと大人な感じしない?';
     freeChat(r, first, `いま「${settings.name || 'あなた'}」と、町のカフェのテラス席で向かい合ってすわり、デートしている。`, true);
@@ -791,7 +791,7 @@ export function mount(container, opt = {}) {
     me.ch.update(dt, me.speed);
 
     // カメラ:後ろから少し見下ろす。建物にめり込むときは手前に寄せる
-    const ft = sport.focus() || me;   // ゴルフ・フリスビーで飛んでいる間は、ボールを追う
+    const ft = (date && date.focus) || sport.focus() || me;   // ゴルフ・フリスビーで飛んでいる間は、ボールを追う
     cam.x += (ft.x - cam.x) * Math.min(1, dt * 8); cam.z += (ft.z - cam.z) * Math.min(1, dt * 8);
     if (camMode === 'free') { camera.position.set(fcam.x, fcam.y, fcam.z); const cp = Math.cos(fcam.pitch); camera.lookAt(fcam.x - Math.sin(fcam.yaw) * cp, fcam.y - Math.sin(fcam.pitch), fcam.z - Math.cos(fcam.yaw) * cp); }
     if (camMode === 'follow') {
