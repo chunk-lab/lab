@@ -410,6 +410,10 @@ export const homeApp = {
     cv.onpointerup = up; cv.onpointercancel = up;
 
     // ---- 歩く(自分が部屋の中に立って、歩きまわる。写真も撮れる) ----
+    // お客さん(はなちゃん):手をつないで歩く・となりにすわる/ねる・話す
+    const guest = ctx.params && ctx.params.guest || null;
+    let gch = null, gPose = null, gHold = false, gK = 0, gx = 0, gz = 0, gry = 0, gBub = null, gBubT = 0;
+    const holdP = new THREE.Vector3();
     let wPose = null, wy = 0, wLast = '', wInput = null, wme = null, wyaw = 0.8, wpitch = 0.3, wdist = 4.2, wx = 0, wz = 0, wry = 0, wspeed = 0, blockers = [], wUI = null;
     const editEls = [planEl, tip, ctl, inv, zm, hz];
     function calcBlockers() {   // ゆかにじかに置いてある背の高い家具は、とおれない
@@ -439,6 +443,7 @@ export const homeApp = {
         let d = Math.atan2(vx, vz) - wry; d = Math.atan2(Math.sin(d), Math.cos(d)); wry += d * Math.min(1, dt * 12);
         [wx, wz] = walkTo(wx + vx * wspeed * dt, wz + vz * wspeed * dt);
       }
+      if (gch) guestUpdate(dt);
       wme.root.position.set(wx, wPose ? wy : 0, wz); wme.root.rotation.y = wry; wme.update(dt, wspeed); wme.root.visible = wdist > 1.9;
       const look = new THREE.Vector3(wx, 1.1, wz), op = wpitch;
       cam.position.set(wx + Math.sin(wyaw) * Math.cos(op) * wdist, 1.1 + Math.sin(op) * wdist, wz + Math.cos(wyaw) * Math.cos(op) * wdist);
@@ -447,6 +452,51 @@ export const homeApp = {
       // 近くに座れる・寝られる家具があれば、ボタンを出す
       const near = wPose ? wPose.p : seatNear(), label = wPose ? '🧍 立つ' : near ? (ITEM[near.id].lie ? '🛏 寝る' : '🪑 座る') : '';
       if (label !== wLast && wUI) { wLast = label; const b = wUI.querySelector('[data-w="act"]'); b.style.display = label ? '' : 'none'; b.textContent = label; }
+    }
+    function guestSay(t, sec = 3) {
+      if (!wUI) return; gBub?.remove(); gBub = document.createElement('div'); gBub.textContent = `${guest.name}「${t}」`;
+      gBub.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);max-width:80%;background:#fffaf2;color:#5a4a6b;border-radius:16px;padding:8px 14px;font-size:14px;font-weight:700;box-shadow:0 2px 8px #0003;pointer-events:none;z-index:5;text-align:center';
+      wUI.appendChild(gBub); gBubT = sec;
+    }
+    function guestUpdate(dt) {
+      if (gBubT > 0 && (gBubT -= dt) <= 0) { gBub?.remove(); gBub = null; }
+      let sp = 0;
+      if (gPose) { gx = gPose.x; gz = gPose.z; gry = gPose.ry; }
+      else {
+        const tx = wx + Math.cos(wry) * 0.62, tz = wz - Math.sin(wry) * 0.62, [cx, cz] = walkTo(tx, tz), free = Math.hypot(cx - tx, cz - tz) < 0.06;
+        if (gHold && !free) gHold = false; else if (!gHold && free && Math.hypot(gx - tx, gz - tz) < 1.6) { gHold = true; gK = 0; }
+        const ox = gx, oz = gz;
+        if (gHold) { gK = Math.min(1, gK + dt * 2.5); const k = gK < 1 ? 1 - Math.exp(-dt * 8) : 1; gx += (tx - gx) * k; gz += (tz - gz) * k; gry = wry; }
+        else {   // 手をはなしているときは、うしろについてくる
+          const bx = wx - Math.sin(wry) * 0.9, bz = wz - Math.cos(wry) * 0.9, d = Math.hypot(bx - gx, bz - gz);
+          if (d > 0.3) { const v = Math.min(d * 3, 4) * dt; [gx, gz] = walkTo(gx + (bx - gx) / d * v, gz + (bz - gz) / d * v); gry = Math.atan2(bx - ox, bz - oz); }
+        }
+        sp = Math.hypot(gx - ox, gz - oz) / Math.max(dt, 1e-3);
+      }
+      gch.pose = gPose ? gPose.pose : null;
+      gch.root.position.set(gx, gPose ? gPose.y : 0, gz); gch.root.rotation.y = gry;
+      if ((gHold && !wPose) || (gPose && wPose)) { holdP.set((wx + gx) / 2, gPose ? gPose.y + (gPose.pose === 'lie' ? 0.12 : 0.55) : 0.66, (wz + gz) / 2); gch.holdTo = holdP; gch.holdArm = 0; wme.holdTo = holdP; wme.holdArm = 1; }
+      else { gch.holdTo = null; wme.holdTo = null; }
+      gch.update(dt, sp < 0.08 ? 0 : sp);
+    }
+    // となりにすわる/ねる(自分の左)
+    function guestPose(pose, y) {
+      if (!gch) return;
+      const sn = Math.sin(wry), cs = Math.cos(wry);
+      gPose = { x: wx + cs * 0.6, z: wz - sn * 0.6, ry: wry, y, pose };
+    }
+    function floorLie() {   // 家具がなくても、床にゴロゴロ
+      const sn = Math.sin(wry), cs = Math.cos(wry);
+      if (gch) { [wx, wz] = walkTo(wx - cs * 0.3, wz + sn * 0.3); }
+      wy = 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wspeed = 0;
+      guestPose('lie', 0.14);
+      if (gch) guestSay(['ごろ〜ん。床ひんやりしてきもちい〜', 'ふぁ〜、ねむくなっちゃう', 'こうやってゴロゴロするの、すき'][Math.floor(Math.random() * 3)]);
+    }
+    function guestTalk() {
+      if (!gch) return;
+      const where = wPose ? (wme.pose === 'lie' ? (wPose.floor ? '床にならんでゴロゴロ寝転んで' : 'ベッドにならんで寝転んで') : 'ならんですわって') : '部屋でくつろいで';
+      const first = wPose && wme.pose === 'lie' ? ['ねえねえ、天井見てると落ちつくね', 'こうしてると、なんでも話せちゃう気がする', 'ふふ、ゴロゴロ最高〜'][Math.floor(Math.random() * 3)] : ['おじゃましてま〜す。なに話す?', 'いいお部屋だね!', 'ねえ、あれなに?'][Math.floor(Math.random() * 3)];
+      guest.chat(`いま「${ctx.player?.name || 'あなた'}」の家に遊びに来ていて、${where}、手をつないでおしゃべりしている。`, first);
     }
     function seatNear() {
       let best = null, bd = 0.8;
@@ -461,17 +511,20 @@ export const homeApp = {
     function takePose(p) {
       const it = ITEM[p.id], [w, d] = size(p), cx = (p.gx + w / 2) / U, cz = (p.gz + d / 2) / U, yaw = -p.r * Math.PI / 2, sn = Math.sin(yaw), cs = Math.cos(yaw);
       let lx = (wx - cx) * cs - (wz - cz) * sn, lz;
-      if (it.sit) { const lim = Math.max(0, it.w / 2 - 0.5); lx = clamp(lx, -lim, lim); lz = -0.02; } else { lx = 0; lz = 0.8; }
+      const pair = gch && (it.lie || it.w / 2 - 0.5 >= 0.3);   // お客さんと2人:自分は右、お客さんは左
+      if (it.sit) { const lim = Math.max(0, it.w / 2 - 0.5); lx = pair ? -0.3 : clamp(lx, -lim, lim); lz = -0.02; } else { lx = pair ? -0.3 : 0; lz = 0.8; }
       wx = cx + lx * cs + lz * sn; wz = cz - lx * sn + lz * cs; wry = yaw;
       wy = (Y[p.uid] || 0) + (it.sit ? it.sit - 0.58 : it.lie + 0.14);
       wPose = { p, lx, stand: it.sit ? [lx, it.d / 2 + 0.6] : [it.w / 2 + 0.55, 0.3], yaw, cx, cz };
       wme.pose = it.sit ? 'sit' : 'lie'; wspeed = 0;
+      if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy); guestSay(it.sit ? ['となり、すわるね〜', 'ふかふかだ!'][Math.floor(Math.random() * 2)] : ['えへへ、ならんでごろ〜ん', 'ベッドふかふか〜!'][Math.floor(Math.random() * 2)]); }
     }
     function standUp() {
       if (!wPose) return;
       const { stand, yaw, cx, cz } = wPose, sn = Math.sin(yaw), cs = Math.cos(yaw);
       [wx, wz] = walkTo(cx + stand[0] * cs + stand[1] * sn, cz - stand[0] * sn + stand[1] * cs);
-      wPose = null; wme.pose = null;
+      wPose = null; wme.pose = null; wy = 0;
+      if (gPose) { gPose = null; gHold = false; gK = 0; gx = wx + Math.cos(wry) * 0.62; gz = wz - Math.sin(wry) * 0.62; [gx, gz] = walkTo(gx, gz); }
     }
     function enterWalk() {
       if (walk) return;
@@ -482,6 +535,10 @@ export const homeApp = {
       wme = makeCharacter(typeof ctx.player?.look === 'string' ? LOOKS[ctx.player.look] || LOOKS.mio : LOOKS.mio); scene.add(wme.root);
       // はじめは、かべぎわのあいた場所
       wPose = null; wLast = ''; wx = rm.cols / 2; wz = rm.rows - 1; [wx, wz] = walkTo(wx, wz); wry = Math.PI; wyaw = 0.2; wpitch = 0.3; wdist = 4.2; wspeed = 0;
+      if (guest && !gch) {
+        if (guest.late && guest.late()) { setTimeout(() => { guestSayLate(); }, 300); guest.leave?.(); }
+        else { gch = makeCharacter(guest.look); scene.add(gch.root); gx = wx - 0.9; gz = wz; gry = wry; gPose = null; gHold = false; }
+      }
       wInput = createInput(cv, { onAction: () => {} });
       wUI = document.createElement('div');
       const wb = 'position:absolute;z-index:4;border:0;border-radius:999px;font:inherit;font-weight:800;box-shadow:0 2px 8px #0003;cursor:pointer';
@@ -489,6 +546,7 @@ export const homeApp = {
         <button data-w="shot" aria-label="写真をとる" style="${wb};right:12px;bottom:12px;width:58px;height:58px;font-size:26px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1)">📷</button>
         <button data-w="album" style="${wb};right:12px;bottom:80px;padding:8px 12px;font-size:13px;background:#fffaf2;color:${ink}">🖼 アルバム</button>
         <button data-w="act" style="${wb};left:50%;transform:translateX(-50%);bottom:18px;padding:12px 22px;font-size:16px;background:linear-gradient(160deg,#ffe08a,#ffc93c);color:${ink};display:none">座る</button>
+        ${gch ? `<button data-w="talk" style="${wb};left:10px;bottom:18px;padding:11px 16px;font-size:14px;background:#fffaf2;color:${ink}">💬 ${guest.name}と話す</button>` : ''}<button data-w="goro" style="${wb};right:12px;bottom:148px;padding:8px 12px;font-size:13px;background:#fffaf2;color:${ink}">🛌 ゴロゴロ</button>
         <div data-w="hint" style="position:absolute;left:0;right:0;top:56px;text-align:center;font-size:12px;color:#fff;text-shadow:0 1px 3px #0008;pointer-events:none">下を なぞって歩く／上を なぞって見まわす／ピンチで近づく(パソコンは WASD・ドラッグ・ホイール)</div>`;
       cv.appendChild(wUI); setTimeout(() => wUI && wUI.querySelector('[data-w="hint"]')?.remove(), 6000);
       wUI.onpointerdown = e => e.stopPropagation();
@@ -497,6 +555,8 @@ export const homeApp = {
         if (w === 'back') exitWalk();
         else if (w === 'album') ctx.open('album', { from: 'home', walk: true });
         else if (w === 'act') { if (wPose) standUp(); else { const n = seatNear(); if (n) takePose(n); } }
+        else if (w === 'talk') guestTalk();
+        else if (w === 'goro') { if (wPose) standUp(); floorLie(); }
         else if (w === 'shot') {   // 見えたまま撮る(ボタンなどは写らない)
           const was = wme.root.visible; renderer.render(scene, cam);
           const src = snapCanvas(renderer.domElement); flash(root);
@@ -509,12 +569,15 @@ export const homeApp = {
       if (!walk) return;
       walk = false; wInput && wInput.dispose(); wInput = null; wUI && wUI.remove(); wUI = null;
       if (wme) { scene.remove(wme.root); dispose(wme.root); wme = null; }
+      if (gch) { scene.remove(gch.root); dispose(gch.root); gch = null; gPose = null; } gBub = null;
       editEls.forEach(e => { e.style.display = e._d || ''; });
       buildShell(); resize(); relayout(); ui();
     }
 
     buildShell(); resize(); relayout(); ui(); loop();
-    if (ctx.params && ctx.params.walk) enterWalk();   // アルバムから「部屋にもどる」で、歩いていたところへ
+    if (ctx.params && (ctx.params.walk || guest)) enterWalk();   // お客さんがいるときは、はじめから歩く(部屋の中で一緒に)
+    if (gch) setTimeout(() => guestSay(['おじゃましま〜す!', 'わぁ、ここがあなたの家?', 'おじゃまします〜。いい部屋!'][Math.floor(Math.random() * 3)]), 400);
+    function guestSayLate() { const b = document.createElement('div'); b.textContent = `${guest.name}「今日はもう遅いから、帰るね。また遊ぼ!」`; b.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);max-width:80%;background:#fffaf2;color:#5a4a6b;border-radius:16px;padding:8px 14px;font-size:14px;font-weight:700;box-shadow:0 2px 8px #0003;z-index:30'; root.appendChild(b); setTimeout(() => b.remove(), 3500); }   // アルバムから「部屋にもどる」で、歩いていたところへ
     const offW = ctx.wallet.onChange ? ctx.wallet.onChange(() => planUI()) : null;
     ctx.setTitle?.('あなたの家');
     return {

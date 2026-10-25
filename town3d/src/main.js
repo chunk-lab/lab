@@ -141,7 +141,7 @@ export function mount(container, opt = {}) {
 
   const hud = createHud(root, bus);
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
-  const appHost = createAppHost({ paramsFor: (id, p) => id === 'gamebox' || id === 'snowfight' ? { ...(p || {}), season: curSeason() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: opt.member || null, dictUrl: opt.dictUrl || null });
+  const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? { ...(p || {}), guest: hanaGuest() } : id === 'gamebox' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: opt.member || null, dictUrl: opt.dictUrl || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   hud.setCoins(wallet.get(), gemsNow());
@@ -171,21 +171,32 @@ export function mount(container, opt = {}) {
 
   // ---- ベンチにすわる ----
   let seat = null;
-  function sitOnBench(b) {
+  function sitOnBench(b0) {
+    // 背もたれがないので、立っている側を向いてすわる(前からでも後ろからでも)
+    const fx = Math.sin(b0.ry), fz = Math.cos(b0.ry), back = (me.x - b0.x) * fx + (me.z - b0.z) * fz < 0;
+    const b = { x: b0.x, z: b0.z, ry: back ? b0.ry + Math.PI : b0.ry };
     const c = Math.cos(b.ry), s = Math.sin(b.ry), dx = me.x - b.x, dz = me.z - b.z;
-    const lx = Math.max(-0.55, Math.min(0.55, dx * c - dz * s)), lz = -0.02;
+    const hana = residents.list.find(x => x.def.id === 'hana' && x.follow && !x.pin);
+    let lx = Math.max(-0.55, Math.min(0.55, dx * c - dz * s)); const lz = -0.02;
+    if (hana) lx = -0.36;   // はなちゃんと2人で:はなちゃんは左どなり
     me.x = b.x + lx * c + lz * s; me.z = b.z - lx * s + lz * c; me.ry = b.ry; me.speed = 0;
     seat = { b }; me.ch.pose = 'sit'; input.clear();
+    if (hana) {
+      const hx = 0.36; hana.pin = { x: b.x + hx * c + lz * s, z: b.z - hx * s + lz * c, y: -0.04, ry: b.ry, pose: 'sit', bench: true };
+      seat.hana = hana; hud.say('npc:hana', ['ふぅ〜、ちょっと休けい!', 'ここ、すわり心地いいね', 'となり、いい?'][Math.floor(Math.random() * 3)], 3);
+    }
   }
+  const benchSit = () => `いま「${settings.name || 'あなた'}」と、${city.areaName(me.x, me.z)}のベンチにならんですわって、手をつないでいる。`;
   function standFromSeat() {
-    if (!seat) return; const b = seat.b; seat = null; me.ch.pose = null;
+    if (!seat) return; const b = seat.b, h = seat.hana; seat = null; me.ch.pose = null;
     [me.x, me.z] = collide(b.x + Math.sin(b.ry) * 1.1, b.z + Math.cos(b.ry) * 1.1);
+    if (h && h.pin && h.pin.bench) { h.pin = null; h.ch.pose = null; h.ch.root.position.set(me.x + Math.cos(me.ry) * 0.62, 0, me.z - Math.sin(me.ry) * 0.62); h.hold = false; h.reT = 0.5; }
   }
-
   function doAction() {
     if (!started || appHost.current || hud.busy || !focus) return;
     audio.unlock();
     if (focus.kind === 'stand') { standFromSeat(); return; }
+    if (focus.kind === 'benchtalk') { const r = seat.hana; if (!ai.ready) { openAiSetup({ hud, ai, onDone: () => freeChat(r, 'ねえねえ、なに話す?', benchSit(), true) }); return; } freeChat(r, ['ねえねえ、なに話す?', 'のんびりするの、いいね〜', 'ここ、風が気持ちいいね'][Math.floor(Math.random() * 3)], benchSit(), true); return; }
     if (focus.kind === 'bench') { sitOnBench(focus); return; }
     if (focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn') && !battle.active && !sport.active) {   // 春・秋は、掲示板からゴルフ/フリスビーに出る
       const k = seasons.season === 'spring' ? 'golf' : 'frisbee';
@@ -298,6 +309,7 @@ export function mount(container, opt = {}) {
     if (m.act === 'consult' || m.act === 'soranote') { r.talking = true; talkingTo = r; input.clear(); soraNote(r); return; }
     if (m.act === 'follow') { hanaFollow(r, !r.follow); return; }
     if (m.act === 'date') { startDate(r); return; }
+    if (m.act === 'invite') { if (env.hour >= 21 || env.hour < 5) { hud.dialog({ name: r.def.name, role: r.def.role, text: '今日はもう遅いから、また今度ね!' }); return; } r.follow = true; r.hold = false; r.reT = 0; hud.dialog({ name: r.def.name, role: r.def.role, text: 'え、いいの? 行く行く!' }); setTimeout(() => { hud.closeDialog?.(); openApp('home', {}); }, 900); return; }
     if (m.act === 'ogiri') {
       r.talking = true; talkingTo = r; input.clear();   // 大喜利をしている間は、その場にいる
       const go = () => openOgiri({ hud, ai, bus, def: r.def, getEn: () => ({ on: !!settings.en, level: settings.enLevel }), setEn: v => { settings.en = v.on ? 1 : 0; save(); bus.emit('lang', { on: !!settings.en }); } });
@@ -365,7 +377,7 @@ export function mount(container, opt = {}) {
       ask: async (t, onPart) => {
         hist.push({ role: 'user', text: t });
         const H = Math.floor(env.hour), M = Math.floor((env.hour % 1) * 60), place = city.areaName(me.x, me.z);
-        const sit = situation || (r.follow ? `いま「${settings.name || 'あなた'}」と一緒に町を歩いている。場所は${place}。` : `いま町の${place}で、「${settings.name || 'あなた'}」に話しかけられた。`);
+        const sit = situation || (r.follow ? `いま「${settings.name || 'あなた'}」と${r.hold ? '手をつないで' : ''}一緒に町を歩いている。場所は${place}。` : `いま町の${place}で、「${settings.name || 'あなた'}」に話しかけられた。`);
         const system = [
           `あなたは「${r.def.name}」。${r.def.persona}`,
           `季節は${({ spring: '春', summer: '夏', autumn: '秋', winter: '冬' })[seasons.season] || ''}、${PERIOD[period(env.hour)]}の${H}時${M}分。${sit}`,
@@ -381,8 +393,18 @@ export function mount(container, opt = {}) {
       },
     });
   }
+  // 一緒にいるはなちゃんを、家やゲーム機に「お客さん」として渡す
+  function hanaGuest() {
+    const r = residents.list.find(x => x.def.id === 'hana'); if (!r || !r.follow) return null;
+    return {
+      id: 'hana', name: r.def.name, look: r.def.look,
+      late: () => env.hour >= 21 || env.hour < 5,
+      leave: () => { r.follow = false; r.hold = false; },
+      chat: (situation, first) => { if (!ai.ready) { openAiSetup({ hud, ai, onDone: () => freeChat(r, first, situation, true) }); return; } freeChat(r, first, situation, true); },
+    };
+  }
   function hanaFollow(r, on) {
-    r.follow = on; r.hintT = 25 + Math.random() * 20; r.lastArea = null;
+    r.follow = on; r.hintT = 25 + Math.random() * 20; r.lastArea = null; r.hold = false; r.reT = 0; r.ev = null; r.lag = r.lagT = 0;
     hud.dialog({ name: r.def.name, role: r.def.role, text: on ? 'いいよ! どこ行く? ついてくね。' : 'うん、またね! 楽しかった〜。' });
   }
   const HANA_HINTS = {
@@ -393,14 +415,55 @@ export function mount(container, opt = {}) {
     any: ['そら君に聞くと、英語の使い方をノートにまとめてくれるよ', '家のテレビで、チャンクボックスのゲームが遊べるんだよ', 'カフェでミイさんとカード勝負できるよ。ミイさん、ああ見えて強いの', '会話の英語をタップすると、ことばノートに入れられるんだって', '神社のおみくじ、毎日ひけるよ'],
   };
   const HANA_PLACE = [['広場', 'ここ、待ち合わせによく使うんだ〜'], ['カフェ', 'いいにおい…何か飲みたくなっちゃう'], ['公園', 'ここのベンチ、すわると落ちつくよね'], ['神社', 'しーん…ってしてて好きなんだ'], ['図書館', 'しずかにしなきゃね(小声)'], ['学校', 'なつかしい感じするね'], ['ゲームセンター', 'ちょっと遊んでいかない?'], ['ショップ', 'かわいいの売ってるかな?'], ['池', 'アヒルいるかな〜'], ['家', 'ここがあなたの家? いいなぁ']];
+  // 手をつなぐ:はなちゃんはプレイヤーの左。ときどき、おくれて手を引かれたり、前へ引っぱったりする
+  const holdM = new THREE.Vector3();
+  let pullBoost = 1, lastRy = 0;
+  function hanaHold(r, dt) {
+    const hc = r.ch;
+    const seated = r.pin && r.pin.bench;
+    if (!r.follow || (r.pin && !seated) || r.hidden) { r.hold = false; hc.holdTo = null; me.ch.holdTo = null; pullBoost = 1; return; }
+    if (!seated) {
+      const turn = Math.abs(((me.ry - lastRy + Math.PI * 3) % (Math.PI * 2)) - Math.PI) / Math.max(dt, 1e-3);
+      const ry = me.ry, tx = me.x + Math.cos(ry) * 0.62, tz = me.z - Math.sin(ry) * 0.62, c = collide(tx, tz, 0.3);
+      const blocked = Math.hypot(c[0] - tx, c[1] - tz) > 0.08, P = hc.root.position;
+      if (r.hold && (blocked || turn > 7)) { r.hold = false; r.holdK = 0; r.reT = 0; r.lag = r.lagT = 0; pullBoost = 1; }   // せまい所・急に曲がったら、いったん手をはなす
+      else if (!r.hold) { r.reT = (blocked || turn > 3 || Math.hypot(P.x - tx, P.z - tz) > 2.2 || r.talking) ? 0 : (r.reT || 0) + dt; if (r.reT > 0.8) { r.hold = true; r.holdK = 0; r.lag = r.lagT = 0; } }
+      // おくれる/引っぱる
+      if (r.hold) {
+        const moving = me.speed > 1;
+        r.evT = (r.evT ?? 15 + Math.random() * 15) - (moving ? dt : 0);
+        if (!r.ev && r.evT <= 0 && moving && !hud.busy) {
+          r.evT = 20 + Math.random() * 25;
+          if (Math.random() < 0.6) { r.ev = { k: 'lag', t: 0 }; hud.say('npc:hana', ['あっ、待って〜', 'わっ、ちょっと待って!', 'あれ見て…あっ、置いてかないで〜'][Math.floor(Math.random() * 3)], 2.5); }
+          else { r.ev = { k: 'pull', t: 0 }; hud.say('npc:hana', ['こっちこっち!', 'ねえ、あっち行ってみよ!', 'はやくはやく〜!'][Math.floor(Math.random() * 3)], 2.5); }
+        }
+        if (r.ev) {
+          const e = r.ev; e.t += dt;
+          if (e.k === 'lag') r.lagT = e.t < 1.3 ? -0.85 : 0;
+          else { r.lagT = e.t < 1.8 ? 0.8 : 0; }
+          pullBoost = e.k === 'pull' && e.t < 1.8 ? 1.3 : 1;
+          if (e.t > 2.6) { r.ev = null; r.lagT = 0; pullBoost = 1; }
+        }
+        r.lag = (r.lag || 0) + ((r.lagT || 0) - (r.lag || 0)) * Math.min(1, dt * (r.ev && r.ev.k === 'lag' && r.ev.t >= 1.3 ? 3.5 : 2.2));
+      } else pullBoost = 1;
+    }
+    lastRy = me.ry;
+    if (r.hold || seated) {
+      const P = hc.root.position;
+      holdM.set((me.x + P.x) / 2, seated ? 0.52 : 0.66, (me.z + P.z) / 2);
+      hc.holdTo = holdM; hc.holdArm = 0; me.ch.holdTo = holdM; me.ch.holdArm = 1;
+    } else { hc.holdTo = null; me.ch.holdTo = null; }
+  }
   function hanaUpdate(dt) {
-    const r = residents.list.find(x => x.def.id === 'hana'); if (!r || !r.follow || r.pin) return;
+    const r = residents.list.find(x => x.def.id === 'hana'); if (!r) return;
+    hanaHold(r, dt);
+    if (!r.follow || r.pin) return;
     if (hud.busy || appHost.current || !started || r.talking) return;
     const area = city.areaName(me.x, me.z);
     if (area !== r.lastArea) { r.areaT = (r.areaT || 0) + dt; if (r.areaT > 3) { const prev = r.lastArea; r.lastArea = area; r.areaT = 0; const pl = HANA_PLACE.find(([k]) => area.includes(k)); if (prev && pl && Math.random() < 0.8) { hud.say('npc:hana', pl[1], 4); r.hintT = Math.max(r.hintT, 15); } } }
     else r.areaT = 0;
     r.hintT -= dt;
-    if (r.hintT <= 0) { r.hintT = 50 + Math.random() * 50; const L = [...(HANA_HINTS[seasons.season] || []), ...HANA_HINTS.any]; let i = Math.floor(Math.random() * L.length); if (i === r.hintI) i = (i + 1) % L.length; r.hintI = i; hud.say('npc:hana', L[i], 6); }
+    if (r.hintT <= 0 && !r.ev) { r.hintT = 50 + Math.random() * 50; const L = [...(HANA_HINTS[seasons.season] || []), ...HANA_HINTS.any]; let i = Math.floor(Math.random() * L.length); if (i === r.hintI) i = (i + 1) % L.length; r.hintI = i; hud.say('npc:hana', L[i], 6); }
   }
   // カフェのテラス席で、向かい合ってすわっておしゃべり
   let date = null;
@@ -779,7 +842,7 @@ export function mount(container, opt = {}) {
     if (snow.making || battle.making || battle.rolling || sport.active) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
-    const target = mag > 0.05 ? (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) : 0;
+    const target = mag > 0.05 ? (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) * pullBoost : 0;
     me.speed += (target - me.speed) * Math.min(1, dt * 10);
     if (mag > 0.05) {
       const s = Math.sin(cam.yaw), c = Math.cos(cam.yaw);
@@ -861,7 +924,7 @@ export function mount(container, opt = {}) {
     if (focus && focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn')) focus = { ...focus, label: seasons.season === 'spring' ? '📋⛳ 掲示板(きょうのゴルフ)' : '📋🥏 掲示板(きょうのフリスビー)' };
     else if (!focus && !seat && !battle.active && !sport.active && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = sn ? { kind: 'snowman', idx: sn.i, label: '⛄ こわす' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
     if (focus && focus.kind === 'npc') { const n = nearNpcs().length; if (n >= 2) focus.label = `ちかくの人と話す(${n}人)`; }
-    if (seat) focus = { kind: 'stand', label: '🧍 立つ' };
+    if (seat) focus = seat.hana && seat.hana.pin ? { kind: 'benchtalk', label: '💬 はなと話す' } : { kind: 'stand', label: '🧍 立つ' };
     hud.setAction(focus ? focus.label : null);
 
     // 名前と吹き出しの位置
@@ -920,6 +983,8 @@ export function mount(container, opt = {}) {
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
     snowState: () => { const B = battle.state; return B && { phase: B.phase, men: B.men.map(m => { const v = new THREE.Vector3(m.x, 0.6, m.z).project(camera); return [m.x, m.z, m.hp, m.g.scale.x, !!m.g.parent, m.g.visible, +v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(3), m.g.children.length, m.g.children[0].visible]; }), me: [me.x, me.z, me.ry], F: B.F.map(f => [f.name, f.x, f.z, f.hp]) }; },
     sportStart: k => sport.start(k),   // テスト用
+    npc: id => residents.list.find(x => x.def.id === id),   // テスト用
+    benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用
     npcAct: (id, act) => { const r = residents.list.find(x => x.def.id === id); if (!r) return false; const p = r.ch.root.position; me.x = p.x + 1.2; me.z = p.z; if (act) doAct(r, { act }); else talkTo(r); return true; },   // テスト用
     snowBattle: id => battle.start(residents.list.find(r => r.def.id === id) || residents.list[0], 2),   // テスト用
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },

@@ -21,7 +21,7 @@ export const RESIDENTS = [
     tips: ["ねえねえ、「Guess what!」って『聞いて聞いて!』って意味なんだよ", "「I can't wait!」は『待ちきれない!』。わくわくしてる時に言うの", "「That's so cute!」って、かわいいもの見たらつい言っちゃう", "「No way!」は『うそでしょ!』。びっくりした時にね"],
     schedule: [[8, 'park'], [11, 'cafe'], [14, 'shop'], [17, 'park2'], [20, 'home', 'in']],
     lines: { morning: ['おはよ! 今日なにする? どこか行こうよ。', '朝の公園、気持ちいいね!'], day: ['ねえ、ひま? 一緒にぶらぶらしない?', 'カフェの新作、気になってるんだよね。'], evening: ['夕方の町って、なんかいいよね。', 'ちょっと歩かない?'], night: ['もう暗いね。また明日あそぼ!'] },
-    menu: [{ label: '一緒に歩こう', act: 'follow' }, { label: 'カフェでデートする', act: 'date' }],
+    menu: [{ label: '一緒に歩こう', act: 'follow' }, { label: 'カフェでデートする', act: 'date' }, { label: '家においでよ', act: 'invite' }],
   },
   {
     id: 'mii', tips: ["「I'll have a coffee, please.」は、カフェで注文するときの定番ですよ〜", "「Could I have…?」は「Can I have…?」より、少していねいなんです", "「Take your time.」は『ゆっくりでいいよ』。わたし、よく言われます", "「Sounds good!」は、軽く『いいね』って返すのにぴったり", "「Cheers!」は乾杯だけじゃなく、『ありがとう』の意味でも使うんですって"], yomi: 'みい', persona: 'ゆったりしたお姉さん。やさしくて少しのんびり。カフェとカードが好きで、考えるのに時間をかける。', name: 'ミイ', role: 'カフェの常連', look: { skin: 0xffe6d6, hair: 0xf3c2a4, style: 'bob', top: 0xfff4e0, bottom: 0xffb3c1, shoes: 0xffffff, acc: 'ribbon', accColor: 0xa8e6cf },
@@ -167,6 +167,15 @@ export function createResidents(scene, graph, getHour, collide = null) {
         }
         const g = goalOf(r.def, h);
         if (r.follow) { r.goal = g; r.path = []; r.idle = null; if (r.hidden) { r.hidden = false; r.ch.root.visible = true; } }   // 一緒に歩いている間は、予定どおりに動かない
+        if (r.follow && r.hold && !r.talking) {   // 手をつないで、プレイヤーの左にならんで歩く(lag:前後のずれ。マイナス=おくれる)
+          const P = r.ch.root.position, ry = player.ry || 0, tx = player.x + Math.cos(ry) * 0.62 + Math.sin(ry) * (r.lag || 0), tz = player.z - Math.sin(ry) * 0.62 + Math.cos(ry) * (r.lag || 0);
+          r.holdK = Math.min(1, (r.holdK || 0) + dt * 2.5);   // つなぎはじめは、なめらかに横へ来る
+          const k = r.holdK < 1 ? 1 - Math.exp(-dt * 8) : 1, ox = P.x, oz = P.z;
+          P.x += (tx - P.x) * k; P.z += (tz - P.z) * k;
+          const v = Math.hypot(P.x - ox, P.z - oz) / Math.max(dt, 1e-3);
+          r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, ry, Math.min(1, dt * 10));
+          r.speed = v < 0.08 ? 0 : v; r.vx = r.vz = 0; r.ch.pose = null; r.ch.update(dt, r.speed); continue;
+        }
         else if (g.place !== r.goal.place) {
           r.goal = g;
           r.path = findPath(graph, nearestNode(graph, r.ch.root.position.x, r.ch.root.position.z), PLACES[g.place]);

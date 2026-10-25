@@ -71,6 +71,9 @@ export const gameboxApp = {
   mount(el, ctx) {
     if (!document.getElementById('gb-css')) { const s = document.createElement('style'); s.id = 'gb-css'; s.textContent = CSS; document.head.appendChild(s); }
     const st = ctx.storage, P = ctx.params || {};
+    // はなちゃんが遊びに来ているときは、相手に「はな」を入れる(終わったら一言)
+    const HANA = P.guest ? { id: 'hana', name: P.guest.name, lv: 2, icon: '🎀', say: [['えー、ひきわけ? もう一回やろ!', 'いい勝負だったね〜'], ['くやし〜! もう一回!', 'え〜、強すぎない!?', 'むぅ…次は負けないからね!'], ['やった〜! わたしの勝ち!', 'えへへ、勝っちゃった♪', 'ふふん、まだまだだね〜']] } : null;
+    const cpuList = HANA ? [HANA, ...CPUS] : CPUS, cpuOf = id => cpuList.find(c => c.id === id) || cpuById(id);
     const root = document.createElement('div'); root.className = 'gb'; el.appendChild(root);
     const sfx = createSfx(ctx.audio && ctx.audio.sfx != null ? ctx.audio.sfx : 0.6);
     root.addEventListener('pointerdown', () => sfx.unlock(), { once: true });
@@ -175,12 +178,12 @@ export const gameboxApp = {
     // ================= 対戦の準備 =================
     function setup(G) {
       const saved = st.get('opt:' + G.id) || {};
-      let opp = saved.opp || 'mii', opts = {};
+      let opp = HANA ? 'hana' : saved.opp && saved.opp !== 'hana' ? saved.opp : 'mii', opts = {};
       for (const o of G.options || []) opts[o.key] = saved[o.key] ?? o.def;
       const s = sheet('');
       const draw = () => {
         s.querySelector('.panel').innerHTML = `<h2>${G.icon} ${G.title}</h2><p class="note">${G.rule}</p>
-          <div class="lbl">あいて</div><div class="seg">${CPUS.map(c => `<button class="tab ${opp === c.id ? 'on' : ''}" data-o="${c.id}">${c.icon} ${c.name}${'★'.repeat(c.lv)}</button>`).join('')}
+          <div class="lbl">あいて</div><div class="seg">${cpuList.map(c => `<button class="tab ${opp === c.id ? 'on' : ''}" data-o="${c.id}">${c.icon} ${c.name}${'★'.repeat(c.lv)}</button>`).join('')}
             ${G.no2p ? '' : `<button class="tab ${opp === '2p' ? 'on' : ''}" data-o="2p">👥 2人で(${G.pass ? '交代で手わたし' : '1台を向かい合って'})</button>`}</div>
           ${(G.options || []).filter(o => !o.only || o.only(opts, opp)).map(o => `<div class="lbl">${o.label}</div><div class="seg">${o.choices.map(([v, l]) => `<button class="tab ${opts[o.key] === v ? 'on' : ''}" data-k="${o.key}" data-v="${v}">${l}</button>`).join('')}</div>`).join('')}
           <div class="row"><button class="btn sub" data-x>もどる</button><button class="btn" data-go>${gateLabel(G)}</button></div>`;
@@ -228,7 +231,7 @@ export const gameboxApp = {
     // ================= 試合 =================
     function play(G, opp, opts) {
       clear(); ctx.setTitle(G.title);
-      const two = opp === '2p', cpu = two ? null : typeof opp === 'object' ? { id: 'npc', icon: '🙂', say: ['勝負だ!', 'やられた〜', 'へへっ'], lv: 2, ...opp } : cpuById(opp);   // opp は CPU の id か、町の住人 {name, lv}
+      const two = opp === '2p', cpu = two ? null : typeof opp === 'object' ? { id: 'npc', icon: '🙂', say: ['勝負だ!', 'やられた〜', 'へへっ'], lv: 2, ...opp } : cpuOf(opp);   // opp は CPU の id か、町の住人 {name, lv}
       const me = { name: ctx.player?.name || 'あなた', icon: '🙂' };
       const players = [{ name: two ? 'プレイヤー1' : me.name, cpu: null, icon: '🙂' }, two ? { name: 'プレイヤー2', cpu: null, icon: '😎' } : { name: cpu.name, cpu, icon: cpu.icon }];
       const stage = document.createElement('div'); stage.className = 'stage'; root.appendChild(stage);
@@ -252,7 +255,7 @@ export const gameboxApp = {
       const w = res.winner, two = opp === '2p';
       const title = w === -1 ? 'ひきわけ' : two ? `${players[w].name} のかち!` : w === 0 ? '🏆 かち!' : 'まけ…';
       sfx.play(w === 0 || (two && w >= 0) ? 'win' : w === 1 ? 'lose' : 'point');
-      const cpu = players[1].cpu, line = cpu ? cpu.say[w === 1 ? 2 : w === 0 ? 1 : 0] : '';
+      const cpu = players[1].cpu, ln = cpu ? cpu.say[w === 1 ? 2 : w === 0 ? 1 : 0] : '', line = Array.isArray(ln) ? ln[Math.floor(Math.random() * ln.length)] : ln;
       const box = document.createElement('div'); box.className = 'res';
       box.innerHTML = `<div class="box"><div class="big">${title}</div>
         ${res.score ? `<div style="font-size:22px;font-weight:900;margin:6px 0">${players[0].name} ${res.score[0]} - ${res.score[1]} ${players[1].name}</div>` : ''}

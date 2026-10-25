@@ -11,6 +11,7 @@ export const LOOKS = {
   mio: { name: 'みお', skin: 0xffe6d6, hair: 0xc9a28c, style: 'long', top: 0xc9b8ea, bottom: 0xfff4e0, shoes: 0xb79cd9, acc: null },
   ren: { name: 'れん', skin: 0xeec3a6, hair: 0x2e2a3d, style: 'spiky', top: 0xfdeeb0, bottom: 0x7d8fb3, shoes: 0x5a4a6b, acc: 'glasses', accColor: 0x5a4a6b },
 };
+const _hv = new THREE.Vector3();
 export const LOOK_IDS = ['ren', 'mio'];   // 自分のキャラに選べるのは2人(はな・そらは住人)
 
 // アニメ調のやわらかい3段の陰影と、ふちどり線(うらがえしの殻をふくらませる方式)
@@ -169,6 +170,12 @@ export function makeCharacter(look, { scale = 1 } = {}) {
       // すわる・ねころぶ(家の中で使う)
       if (self.pose === 'sit') { legs[0].rotation.x = legs[1].rotation.x = -1.45; arms[0].rotation.x = arms[1].rotation.x = -0.4; body.position.y = 0; body.rotation.x = 0; head.rotation.y = Math.sin(idleT * 0.4) * 0.25; }
       else if (self.pose === 'lie') { legs[0].rotation.x = legs[1].rotation.x = 0; arms[0].rotation.x = arms[1].rotation.x = 0; arms[0].rotation.z = 0.08; arms[1].rotation.z = -0.08; body.position.y = 0; body.rotation.x = -Math.PI / 2; head.rotation.y = 0; }
+      // 手をつなぐ:holdTo(手を合わせる点・世界の座標)へ、holdArm の腕を向ける(0=右腕 1=左腕)
+      if (self.holdTo) {
+        const a = arms[self.holdArm ?? 1]; self.root.updateMatrixWorld(true);
+        const L = body.worldToLocal(_hv.copy(self.holdTo)).sub(a.position), n = L.length() || 1; L.divideScalar(n);
+        a.rotation.set(Math.atan2(-L.z, -L.y), 0, Math.asin(Math.max(-1, Math.min(1, L.x))));
+      }
       blinkT -= dt;
       const b = blinkT < 0.12 ? 0.15 : 1;
       eyes.forEach(e => (e.scale.y = 1.25 * b));
