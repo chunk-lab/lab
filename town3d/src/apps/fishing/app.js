@@ -591,7 +591,7 @@ export const fishingApp = {
 
     // ================= 見せる画面(3D) =================
     let showMod = null;
-    const loadShow = () => (showMod ? Promise.resolve(showMod) : import('./show2d.js').then(m => (showMod = m)).catch(e => { console.warn('[fishing] show3d', e); return null; }));
+    const loadShow = () => (showMod ? Promise.resolve(showMod) : import('./show3d.js').then(m => (showMod = m)).catch(e => { console.warn('[fishing] show3d', e); return null; }));
     const MODE_BADGE = m => m === 'easy' ? '<span class="badge" style="background:#7fcf8f">かんたん</span>' : '<span class="badge" style="background:#7aa8e8">ほんかく</span>';
     // actors:[{look,pose,sp,size}] / infoHtml / sayText / buttons:[[label, cls, fn]] / caption:[title, sub]
     const shows = new Set();
@@ -795,7 +795,7 @@ export const fishingApp = {
 
     menu();
     return {
-      unmount() { [...shows].forEach(c => c()); cancelAnimationFrame(raf); clear(); frame = null; sfx.close(); root.remove(); },
+      unmount() { [...shows].forEach(c => c()); showMod?.release?.(); cancelAnimationFrame(raf); clear(); frame = null; sfx.close(); root.remove(); },
     };
   },
 };

@@ -40,10 +40,10 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
 .sb-msg{position:absolute;left:0;right:0;top:34%;text-align:center;font-size:34px;font-weight:900;color:#fff;text-shadow:0 3px 0 #5a4a6b,0 0 12px #0006;pointer-events:none}
 .sb-tip{position:absolute;left:0;right:0;bottom:calc(196px + env(safe-area-inset-bottom,0px));text-align:center;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 3px #000a;pointer-events:none}`;
   document.head.appendChild(css);
-  function hudEl() {
+  function hudEl(home) {
     const h = document.createElement('div'); h.className = 'sb-hud';
     h.innerHTML = `<div class="sb-top"><div class="sb-team t0"></div><div class="sb-team t1"></div></div><div class="sb-msg"></div><div class="sb-tip">❄️=つくる(長おしで大) タップ=投げる ❄️から引く=山なり</div>
-      <button class="sb-mk">❄️<small>つくる</small></button><button class="sb-man">⛄</button><button class="sb-roll">🌀</button><button class="sb-lift" hidden>🙌<small>持つ</small></button><button class="sb-quit">✕ やめる</button>`;
+      <button class="sb-mk">❄️<small>つくる</small></button><button class="sb-man">⛄</button><button class="sb-roll">🌀</button><button class="sb-lift" hidden>🙌<small>持つ</small></button><button class="sb-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
     root.appendChild(h); return h;
   }
   // ---- 人 ----
@@ -53,7 +53,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   const handPos = f => { if (!f.ch.rig || f.ch.rig.fake) return new THREE.Vector3(f.x + Math.sin(f.ry) * 0.45, 0.75, f.z + Math.cos(f.ry) * 0.45); f.ch.root.updateMatrixWorld(true); return f.ch.rig.arms[1].localToWorld(v1.set(0, -0.42, 0.06)).clone(); };
   const headTop = (f, r) => { if (!f.ch.rig || f.ch.rig.fake) return new THREE.Vector3(f.x, 1.2 + r, f.z); f.ch.root.updateMatrixWorld(true); return f.ch.rig.head.localToWorld(v1.set(0, 0.3 + r, 0)).clone(); };
   // ---- はじめる ----
-  function start(opp, lvOpp = 2) {
+  function start(opp, lvOpp = 2, home = false) {
     if (B) return;
     const vis = residents.list.filter(r => r !== opp && !r.hidden && r.ch.rig).sort((a, b) => Math.hypot(a.ch.root.position.x - me.x, a.ch.root.position.z - me.z) - Math.hypot(b.ch.root.position.x - me.x, b.ch.root.position.z - me.z));
     const pool = vis.length >= 2 ? vis : residents.list.filter(r => r !== opp && r.ch.rig);
@@ -61,7 +61,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     let ox = opp.ch.root.position.x, oz = opp.ch.root.position.z; if (Math.hypot(ox - me.x, oz - me.z) < 3) { ox = me.x + Math.sin(me.ry) * 8; oz = me.z + Math.cos(me.ry) * 8; }
     const C = new THREE.Vector3((me.x + ox) / 2, 0, (me.z + oz) / 2);
     let ax = ox - me.x, az = oz - me.z; const L = Math.hypot(ax, az) || 1; ax /= L; az /= L;
-    B = { C, ax, az, F: [], shots: [], men: [], mounds: [], wins: [0, 0], round: 1, phase: 'setup', t: 3, objs: [], hud: hudEl(), pull: null, preview: null };
+    B = { C, ax, az, F: [], shots: [], men: [], mounds: [], wins: [0, 0], round: 1, phase: 'setup', t: 3, objs: [], hud: hudEl(home), pull: null, preview: null };
     B.F = [fighter('me', me.ch, 0, 'あなた', null, 2), fighter('npc', ally.ch, 0, ally.def.name, ally, 2), fighter('npc', opp.ch, 1, opp.def.name, opp, lvOpp), fighter('npc', partner.ch, 1, partner.def.name, partner, Math.max(1, lvOpp - 1))];
     B.F.forEach(f => { if (f.r) { f.r.battle = true; f.r.talking = false; f.r.hidden = false; f.ch.root.visible = true; } });
     const ring = new THREE.Mesh(new THREE.RingGeometry(AR - 0.12, AR + 0.12, 64), new THREE.MeshBasicMaterial({ color: 0x9fd0ff, transparent: true, opacity: 0.7, side: THREE.DoubleSide }));

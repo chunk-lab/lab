@@ -358,8 +358,8 @@ export function mount(container, opt = {}) {
         me.x = n.x; me.z = n.z; me.ry = Math.random() * Math.PI * 2; cam.x = me.x; cam.z = me.z;
         const cand = residents.list.filter(r => r.ch.rig); const opp = cand[Math.floor(Math.random() * cand.length)];
         opp.ch.root.position.set(me.x + Math.sin(me.ry) * 8, 0, me.z + Math.cos(me.ry) * 8);
-        battle.start(opp, 2);
-      } else if (what === 'golf' || what === 'frisbee') sport?.start(what, { any: true });
+        battle.start(opp, 2, backHome);
+      } else if (what === 'golf' || what === 'frisbee') sport?.start(what, { any: true, home: backHome });
     }, 350);
   }));
   offs.push(bus.on('ui:snow', ph => {

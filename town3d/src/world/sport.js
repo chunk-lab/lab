@@ -85,7 +85,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   function start(kind, opt = {}) {
     if (S) return;
     const C = course(kind);
-    S = { kind, C, i: 0, strokes: [], n: 0, club: 0, curve: 0, hgt: 1, phase: 'aim', obj: null, power: 0, charging: false, cT: 0, last: null, objs: [], hud: hudEl(kind), flag: null, aimLine: null, msgT: 0 };
+    S = { kind, C, i: 0, strokes: [], n: 0, club: 0, curve: 0, hgt: 1, phase: 'aim', obj: null, power: 0, charging: false, cT: 0, last: null, objs: [], home: !!opt.home, hud: hudEl(kind, !!opt.home), flag: null, aimLine: null, msgT: 0 };
     root.classList.add('sp-on'); toast?.(kind === 'golf' ? `⛳ きょうのゴルフコース(${HOLES}ホール)` : `🥏 きょうのフリスビーコース(${HOLES}ホール)`);
     const pm = kind === 'golf' ? new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 10), mat(0xffffff)) : (() => { const d = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.12, 0.025, 24), mat(0xff7aa2)); return d; })();
     pm.castShadow = true; scene.add(pm); S.objs.push(pm); S.mesh = pm;
@@ -112,11 +112,11 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   }
   function msg(t) { if (!S) return; const el = S.hud.querySelector('.sp-msg'); el.textContent = t; S.msgT = 1.8; }
   // ---- 画面 ----
-  function hudEl(kind) {
+  function hudEl(kind, home) {
     const h = document.createElement('div'); h.className = 'sp-hud';
     h.innerHTML = `<div class="sp-top"></div><div class="sp-msg"></div><div class="sp-clubs"></div>
       <button class="sp-aim sp-l">◀</button><button class="sp-aim sp-r">▶</button>${kind === 'golf' ? '' : '<div class="sp-gauge"><i style="height:0"></i></div>'}
-      <div class="sp-tim" hidden><i></i></div>${kind === 'golf' ? '<div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引いて はなす</small>'}</button><button class="sp-quit">✕ やめる</button>`;
+      <div class="sp-tim" hidden><i></i></div>${kind === 'golf' ? '<div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引いて はなす</small>'}</button><button class="sp-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
     root.appendChild(h);
     const shot = h.querySelector('.sp-shot');
     let y0 = 0;
@@ -211,7 +211,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const tot = S.strokes.reduce((a, b) => a + b, 0), par = S.C.holes.reduce((a, h) => a + h.par, 0), coins = Math.max(10, 60 - Math.max(0, tot - par) * 5);
     wallet?.add?.(coins, S.kind);
     const c = document.createElement('div'); c.className = 'sp-card';
-    c.innerHTML = `<b style="font-size:17px">${S.kind === 'golf' ? '⛳ きょうのゴルフ' : '🥏 きょうのフリスビー'} おわり!</b><table>${S.C.holes.map((h, i) => `<tr><td>ホール${i + 1}</td><td>PAR ${h.par}</td><td><b>${S.strokes[i] ?? '-'}</b></td></tr>`).join('')}<tr><td>合計</td><td>${par}</td><td><b>${tot}</b> (${tot - par >= 0 ? '+' : ''}${tot - par})</td></tr></table>🪙 +${coins}<br><button class="go">おわる</button>`;
+    c.innerHTML = `<b style="font-size:17px">${S.kind === 'golf' ? '⛳ きょうのゴルフ' : '🥏 きょうのフリスビー'} おわり!</b><table>${S.C.holes.map((h, i) => `<tr><td>ホール${i + 1}</td><td>PAR ${h.par}</td><td><b>${S.strokes[i] ?? '-'}</b></td></tr>`).join('')}<tr><td>合計</td><td>${par}</td><td><b>${tot}</b> (${tot - par >= 0 ? '+' : ''}${tot - par})</td></tr></table>🪙 +${coins}<br><button class="go">${S.home ? '🏠 家にもどる' : 'おわる'}</button>`;
     c.addEventListener('pointerdown', e => e.stopPropagation()); c.querySelector('.go').addEventListener('click', () => end(false));
     S.hud.appendChild(c);
   }

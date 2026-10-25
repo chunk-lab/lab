@@ -84,7 +84,7 @@ export const shopApp = {
     };
     box.onclick = e => {
       if (e.target.closest('[data-fish]')) { ctx.open('fishing', { tab: 'shop' }); return; }
-      if (e.target.closest('[data-gbox]')) { ctx.open('gamebox'); return; }
+      if (e.target.closest('[data-gbox]')) { ctx.open('gamebox', { from: 'home' }); return; }
       if (e.target.closest('[data-home]')) { ctx.open('home'); return; }
       const ch = e.target.closest('[data-c]');
       if (ch) { cat = ch.dataset.c; draw(); return; }
