@@ -664,8 +664,9 @@ export function mount(container, opt = {}) {
         const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0);
         const W = cv.width, fs = Math.round(W * 0.11);
         g.textAlign = 'center'; g.font = `900 ${fs}px Georgia, serif`; g.lineWidth = fs * 0.12; g.strokeStyle = 'rgba(90,40,90,0.7)'; g.fillStyle = '#fff4c2';
-        g.strokeText('Happy Birthday!', W / 2, cv.height * 0.2); g.fillText('Happy Birthday!', W / 2, cv.height * 0.2);
-        g.font = `700 ${Math.round(fs * 0.32)}px sans-serif`; g.fillStyle = '#fff'; g.fillText(`${settings.name || ''}  ${new Date().toLocaleDateString('ja-JP')}  ほしみや町`, W / 2, cv.height * 0.2 + fs * 0.55);
+        const ty = cv.height * (cv.height > W ? 0.43 : 0.5);   // 花火(上)と3人(下)のあいだに
+        g.strokeText('Happy Birthday!', W / 2, ty); g.fillText('Happy Birthday!', W / 2, ty);
+        g.font = `700 ${Math.round(fs * 0.32)}px sans-serif`; g.fillStyle = '#fff'; g.fillText(`${settings.name || ''}  ${new Date().toLocaleDateString('ja-JP')}  ほしみや町`, W / 2, ty + fs * 0.55);
         photos.addSpecial(cv.toDataURL('image/jpeg', 0.88), 'birthday');
         flash(root); hud.toast('📸 記念写真がアルバムに届いたよ(特別枠)');
       };
