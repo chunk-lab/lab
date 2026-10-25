@@ -13,6 +13,7 @@ import { buildAmbient } from './world/ambient.js';
 import { makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/character.js';
 import { setBuildingOutline, eachFoliage, eachTex } from './world/kit.js';
 import { createSeasons, SEASONS, seasonOf } from './world/seasons.js';
+import { createSnowballs } from './world/snowballs.js';
 import { createResidents, period } from './game/npc.js';
 import { createInput } from './game/input.js';
 import { createHud, CSS } from './ui/hud.js';
@@ -93,6 +94,17 @@ export function mount(container, opt = {}) {
   const applyDate = d => { testDate = d; env.setMoonDate(d); const md = (d.getMonth() + 1) * 100 + d.getDate(); setBlossom(opt.blossom ?? (md >= 325 && md <= 420)); };
   applySeason();
   const residents = createResidents(scene, city.graph, () => env.hour);
+  // 町の雪玉(冬だけ)
+  const NPC_SNOW = { mii: ['ひゃっ、つめたい〜! もう、やりましたね〜', 1], baron: ['ぬおっ! わが輩に雪玉とは、いい度胸だ!', 2], gon: ['つめてっ! やったな〜!', 3], koharu: ['きゃっ! ふふ、元気ですね', 1], shiori: ['……つめたい。……おかえし、しましょうか', 2], suna: ['おやおや、冷たいねえ', 2], maru: ['うわっ! まいったな〜!', 2], yuzu: ['ひゃっ! び、びっくりしたです', 1], chunkkun: ['ふわっ!? 雪だ〜!', 1] };
+  const snow = createSnowballs(scene, {
+    camera, meshes: city.meshes, residents,
+    getHand: () => new THREE.Vector3(me.x + Math.sin(me.ry) * 0.38 + Math.cos(me.ry) * 0.22, 1.05, me.z + Math.cos(me.ry) * 0.38 - Math.sin(me.ry) * 0.22),
+    onNpcHit(r) {
+      const [line, lv] = NPC_SNOW[r.def.id] || ['わっ! つめたい!', 2];
+      audio.play('wave'); hud.say('npc:' + r.def.id, line, 3);
+      setTimeout(() => { if (!started || hud.busy || appHost.current) return; hud.dialog({ name: r.def.name, role: r.def.role, text: `${line} 雪合戦で勝負する?`, choices: [{ label: '⛄ やる!', fn: () => openApp('snowfight', { npc: { id: r.def.id, name: r.def.name, lv } }) }, { label: 'やめておく', fn: () => { } }] }); }, 1100);
+    },
+  });
 
   // ---- 自分 ----
   const me = { id: storage.get('pid') || 'p' + Math.random().toString(36).slice(2, 10), x: 0, z: 13, ry: Math.PI, speed: 0, ch: null };
@@ -308,6 +320,19 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('toast', t => hud.toast(t)));
   offs.push(bus.on('sfx', n => audio.play(n)));
   const SAY = ['こんにちは!', 'いい天気だね', 'いっしょに遊ぼう!', 'またね〜'];
+  offs.push(bus.on('ui:snow', ph => {
+    if (!started || seasons.season !== 'winter') return; audio.unlock();
+    if (ph === 'down') { if (!snow.holding) snow.start(); }
+    else if (snow.making) { snow.finish(); hud.toast('画面をタップした所へ投げよう'); }
+  }));
+  { let d0 = null; const cv = renderer.domElement;   // 雪玉を持っているとき:画面をタップした所へ投げる
+    cv.addEventListener('pointerdown', e => { d0 = { x: e.clientX, y: e.clientY, t: performance.now() }; });
+    cv.addEventListener('pointerup', e => {
+      if (!d0 || !snow.holding || hud.busy || appHost.current) { d0 = null; return; }
+      const ok = Math.hypot(e.clientX - d0.x, e.clientY - d0.y) < 12 && performance.now() - d0.t < 400; d0 = null; if (!ok) return;
+      const r = snow.throwAt(e.clientX, e.clientY, cv.getBoundingClientRect());
+      if (r === 'far') hud.toast('そこは遠すぎるよ'); else if (r) { audio.play('wave'); me.ch.wave?.(); }
+    }); }
   offs.push(bus.on('ui:emote', k => {
     if (!started) return;
     audio.unlock();
@@ -604,6 +629,7 @@ export function mount(container, opt = {}) {
       const hs = camBar.querySelector('.hs'); if (hs && document.activeElement !== hs) hs.value = heightToV(fcam.y).toFixed(3);
     } else me.ch.root.visible = true;
     if (!started || hud.busy) mx = my = 0;
+    if (snow.making) mx = my = 0;   // 雪玉をつくっている間は動けない
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my));
     const target = mag > 0.05 ? (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) : 0;
@@ -652,6 +678,8 @@ export function mount(container, opt = {}) {
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
+    hud.setSnow(started && seasons.season === 'winter', snow.making ? '❄️ ころころ…' : snow.holding ? '❄️ 持ってる(タップで投げる)' : '❄️ 雪玉');
+    snow.update(dt);
     residents.update(dt, env.hour, me);
 
     // ほかのプレイヤー(なめらかに追いかける)

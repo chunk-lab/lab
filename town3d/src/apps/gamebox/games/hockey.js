@@ -3,7 +3,9 @@ import { surface, pointers, loop, txt, banner, rr, clamp, COL, INK } from '../ki
 
 export default {
   id: 'hockey', title: 'ぷにホッケー', icon: '🏒', desc: '指でマレットを動かしてパックを打ち合う', rule: '自分のマレットを指で動かして、パックを相手のゴールに入れよう。',
-  options: [{ key: 'pts', label: '何点先取', choices: [[5, '5点'], [7, '7点'], [10, '10点']], def: 7 }],
+  options: [{ key: 'pts', label: '何点先取', choices: [[5, '5点'], [7, '7点'], [10, '10点']], def: 7 },
+    { key: 'spd', label: 'あなたの希望スピード(1おそい〜10はやい)', choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => [n, String(n)]), def: 4 },
+    { key: 'spd2', label: 'プレイヤー2の希望スピード', choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => [n, String(n)]), def: 4, only: (o, opp) => opp === '2p' }],
   start(host) {
     const S = surface(host.box), g = S.g, two = host.two, cpu = host.players[1].cpu, sfx = host.sfx;
     const goalTo = host.opts.trial ? 3 : host.opts.pts || 7;
@@ -23,7 +25,10 @@ export default {
     function resetPuck(toward) { puck.x = W / 2; puck.y = toward === 0 ? H / 2 + H * 0.12 : H / 2 - H * 0.12; puck.vx = puck.vy = 0; puck.trail = []; }
     resetPuck(Math.random() < 0.5 ? 0 : 1);
     // CPU
-    const lv = cpu ? cpu.lv : 2, cpuSpd = [0, 900, 1300, 1750][lv];
+    const lv = cpu ? cpu.lv : 2;
+    // スピード:2人の希望の まん中(たして2でわる)。8が もとの速さ
+    const want2 = two ? (host.opts.spd2 || 4) : [0, 3, 4, 5][lv], SPD = ((host.opts.spd || 4) + want2) / 2, KS = SPD / 8;
+    const cpuSpd = [0, 900, 1300, 1750][lv] * (0.55 + 0.45 * KS);
     let think = 0;
     function cpuMove(dt) {
       const m = mal[1]; think -= dt;
@@ -53,8 +58,8 @@ export default {
           const steps = 4;
           for (let i = 0; i < steps; i++) {
             const h = dt / steps;
-            puck.x += puck.vx * h; puck.y += puck.vy * h;
-            const f = Math.pow(0.992, h * 60); puck.vx *= f; puck.vy *= f;
+            puck.x += puck.vx * h * KS; puck.y += puck.vy * h * KS;
+            const f = Math.pow(0.992, h * 60 * KS); puck.vx *= f; puck.vy *= f;
             if (puck.x < R) { puck.x = R; puck.vx = Math.abs(puck.vx) * 0.9; sfx.play('wall'); }
             if (puck.x > W - R) { puck.x = W - R; puck.vx = -Math.abs(puck.vx) * 0.9; sfx.play('wall'); }
             const inGoal = Math.abs(puck.x - W / 2) < GW / 2 - R * 0.3;
@@ -113,7 +118,7 @@ export default {
       });
       for (let i = sparks.length - 1; i >= 0; i--) { const p = sparks[i]; p.t -= dt; if (p.t <= 0) { sparks.splice(i, 1); continue; } p.x += p.vx * dt; p.y += p.vy * dt; g.fillStyle = `rgba(255,211,107,${p.t / 0.3})`; g.beginPath(); g.arc(p.x, p.y, 3, 0, 7); g.fill(); }
       if (flash) { flash.t -= dt; if (flash.t <= 0) flash = null; else { g.fillStyle = `rgba(255,255,255,${flash.t * 0.3})`; g.fillRect(0, 0, W, H); banner(g, S, two, 'GOAL!!', { color: flash.s === 0 ? COL.p1 : COL.p2 }); } }
-      if (pause > 0 && !flash && !over && score[0] + score[1] === 0) banner(g, S, two, 'READY…', { size: 26 });
+      if (pause > 0 && !flash && !over && score[0] + score[1] === 0) banner(g, S, two, `READY…  スピード ${SPD}`, { size: 24 });
     }
     return { stop() { stop(); pt.off(); ro.disconnect(); S.cv.remove(); } };
   },

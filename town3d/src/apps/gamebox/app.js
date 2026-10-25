@@ -179,7 +179,7 @@ export const gameboxApp = {
         s.querySelector('.panel').innerHTML = `<h2>${G.icon} ${G.title}</h2><p class="note">${G.rule}</p>
           <div class="lbl">あいて</div><div class="seg">${CPUS.map(c => `<button class="tab ${opp === c.id ? 'on' : ''}" data-o="${c.id}">${c.icon} ${c.name}${'★'.repeat(c.lv)}</button>`).join('')}
             ${G.no2p ? '' : `<button class="tab ${opp === '2p' ? 'on' : ''}" data-o="2p">👥 2人で(1台を向かい合って)</button>`}</div>
-          ${(G.options || []).filter(o => !o.only || o.only(opts)).map(o => `<div class="lbl">${o.label}</div><div class="seg">${o.choices.map(([v, l]) => `<button class="tab ${opts[o.key] === v ? 'on' : ''}" data-k="${o.key}" data-v="${v}">${l}</button>`).join('')}</div>`).join('')}
+          ${(G.options || []).filter(o => !o.only || o.only(opts, opp)).map(o => `<div class="lbl">${o.label}</div><div class="seg">${o.choices.map(([v, l]) => `<button class="tab ${opts[o.key] === v ? 'on' : ''}" data-k="${o.key}" data-v="${v}">${l}</button>`).join('')}</div>`).join('')}
           <div class="row"><button class="btn sub" data-x>もどる</button><button class="btn" data-go>${gateLabel(G)}</button></div>`;
       };
       draw();
@@ -224,7 +224,7 @@ export const gameboxApp = {
     // ================= 試合 =================
     function play(G, opp, opts) {
       clear(); ctx.setTitle(G.title);
-      const two = opp === '2p', cpu = two ? null : cpuById(opp);
+      const two = opp === '2p', cpu = two ? null : typeof opp === 'object' ? { id: 'npc', icon: '🙂', say: ['勝負だ!', 'やられた〜', 'へへっ'], lv: 2, ...opp } : cpuById(opp);   // opp は CPU の id か、町の住人 {name, lv}
       const me = { name: ctx.player?.name || 'あなた', icon: '🙂' };
       const players = [{ name: two ? 'プレイヤー1' : me.name, cpu: null, icon: '🙂' }, two ? { name: 'プレイヤー2', cpu: null, icon: '😎' } : { name: cpu.name, cpu, icon: cpu.icon }];
       const stage = document.createElement('div'); stage.className = 'stage'; root.appendChild(stage);
@@ -262,7 +262,8 @@ export const gameboxApp = {
       const rb = box.querySelector('[data-rent]'); if (rb) rb.onclick = () => { home(); rentTitles(G.id); };
     }
 
-    if (P.game) { const G = ALL.find(g => g.id === P.game); if (G) { home(); setup(G); } else home(); }
+    if (P.game && P.npc) { const G = ALL.find(g => g.id === P.game); home(); if (G) { const o = {}; for (const x of G.options || []) o[x.key] = x.def; play(G, P.npc, o); } }   // 町で雪玉を当てた住人と、すぐ勝負
+    else if (P.game) { const G = ALL.find(g => g.id === P.game); if (G) { home(); setup(G); } else home(); }
     else home();
     return { unmount() { clear(); sfx.close(); root.remove(); try { speechSynthesis.cancel(); } catch (e) { } } };
   },
