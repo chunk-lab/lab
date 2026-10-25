@@ -156,6 +156,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
 
   for (const sp of SPOTS) interact.push({ kind: 'spot', ...sp, r: 2.2 });
+  { const bd = SPOTS.find(s => s.id === 'board'); if (bd) noticeBoard(bd.x, bd.z, Math.atan2(-bd.x, -bd.z)); }   // 掲示板(広場のほうを向く)
 
   const meshes = B.build(scene, { shadow: quality !== 'low' });
   for (const m of meshes) { const sn = m.material.userData.season; if (sn === 'blossom') m.visible = blossom; else if (sn === 'nonblossom') m.visible = !blossom; }
@@ -340,6 +341,23 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     interact.push({ kind: 'bench', id: 'bench' + interact.length, x, z, ry, r: 1.8, label: '🪑 座る' });
     B.add(rbox(1.8, 0.12, 0.5, 0.04), mat(0xe8c9a8), 0, 0.48, 0, 0, 1, 1, 1, P4);
     for (const s of [-1, 1]) B.add(box(0.1, 0.48, 0.45), mat(0xa99bc0), s * 0.75, 0.24, 0, 0, 1, 1, 1, P4);
+  }
+  function noticeBoard(x, z, ry) {
+    const P4 = M4(x, z, ry);
+    colliders.push({ cx: x, cz: z, r: 0.9 });
+    for (const sx of [-1, 1]) B.add(box(0.14, 2.3, 0.14), mat(0x8a6a4e), sx * 0.95, 1.15, 0, 0, 1, 1, 1, P4);   // 柱
+    B.add(rbox(2.2, 1.3, 0.12, 0.04), mat(0xb88a5e), 0, 1.55, 0, 0, 1, 1, 1, P4);   // 板
+    B.add(rbox(2.5, 0.12, 0.6, 0.04), mat(0xd9846f), 0, 2.32, -0.05, 0, 1, 1, 1, P4);   // 小さな屋根
+    const c = document.createElement('canvas'); c.width = 256; c.height = 150; const g = c.getContext('2d');
+    g.fillStyle = '#d9b48a'; g.fillRect(0, 0, 256, 150);
+    [['#fff0f3', 14, 12, 70, 58, -0.06], ['#eefaf4', 96, 10, 66, 52, 0.05], ['#f3efff', 172, 16, 70, 60, -0.03], ['#fff8e6', 30, 80, 84, 56, 0.04], ['#e8f3ff', 136, 84, 92, 52, -0.05]].forEach(([col, px, py, w, h, rot]) => {
+      g.save(); g.translate(px + w / 2, py + h / 2); g.rotate(rot); g.fillStyle = col; g.fillRect(-w / 2, -h / 2, w, h);
+      g.fillStyle = '#c9a6c8'; for (let i = 0; i < 4; i++) g.fillRect(-w / 2 + 8, -h / 2 + 14 + i * 10, w - 16 - (i % 2) * 14, 3);
+      g.fillStyle = '#ff6b6b'; g.beginPath(); g.arc(0, -h / 2 + 5, 3.5, 0, 7); g.fill(); g.restore();
+    });
+    const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+    const face = new THREE.Mesh(new THREE.PlaneGeometry(2.05, 1.18), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.9 }));
+    face.position.set(x + Math.sin(ry) * 0.07, 1.55, z + Math.cos(ry) * 0.07); face.rotation.y = ry; scene.add(face);
   }
   function flowerBed(x, z, ry) {
     const P4 = M4(x, z, ry);

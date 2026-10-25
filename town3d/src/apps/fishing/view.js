@@ -27,7 +27,8 @@ const TREES = { spring: ['#f6b6cb', '#ffd0de', '#8ccf8c', '#a9dca0'], summer: ['
 
 export function createView(canvas, cond, { mini = false, under = false } = {}) {
   const mainG = canvas.getContext('2d');
-  let g = mainG, pc = null, pcg = null, MW = 0, MH = 0, areaY0 = 0;   // under=true:カメラ(池・水中・小窓)を組み合わせて描く
+  let g = mainG, pc = null, pcg = null, MW = 0, MH = 0, areaY0 = 0;
+  let safeV = null; const safeB = () => { if (safeV == null) { try { const d = document.createElement('div'); d.style.cssText = 'position:fixed;bottom:0;height:env(safe-area-inset-bottom,0px)'; document.body.appendChild(d); safeV = d.getBoundingClientRect().height || 0; d.remove(); } catch (e) { safeV = 0; } } return safeV; };   // iPhoneの下のすきま   // under=true:カメラ(池・水中・小窓)を組み合わせて描く
   let W = 0, H = 0, dpr = 1, bg = null, t = 0;
   const P = palette(cond.hour), night = P.night;
   const parts = [], rings = [], weather = [];
@@ -133,7 +134,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     // 手元のボタン(下)にかくれないよう、深さは上に寄せる。横はウキ・ルアーを追いかける(いつも真ん中あたり)
     const pad = underPad(r), DH = r.h - 18 - pad;
     if (u.ld != null) uCam += ((u.ld ?? 0.3) - uCam) * Math.min(1, dt * 3);
-    const SW = r.w * 0.95, X = d => r.x + r.w * 0.5 + (d - uCam) * SW, Y = (y, d) => r.y + 12 + y * DH * bottomAt(d);
+    const SW = r.w * 0.95, cx = 0.5 + 0.14 * cam.pip, X = d => r.x + r.w * cx + (d - uCam) * SW, Y = (y, d) => r.y + 12 + y * DH * bottomAt(d);
     const d0 = Math.max(0, uCam - 0.55), d1 = Math.min(1, uCam + 0.55);
     g.save();
     // 枠と水
@@ -181,7 +182,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
       const show = u.ph === 'water' || u.ph === 'fight';
       if (show) {
         const sx = X(u.ld), sy2 = r.y + 10;
-        g.strokeStyle = 'rgba(255,255,255,0.75)'; g.lineWidth = 1;
+        g.strokeStyle = 'rgba(255,255,255,0.85)'; g.lineWidth = 1.4;
         g.beginPath(); if (u.isLure || u.ph === 'fight') { g.moveTo(r.x + 4, r.y + 2); g.quadraticCurveTo((r.x + hx) / 2, r.y + 10, hx, hy); } else { g.moveTo(sx, sy2); g.lineTo(hx, hy); } g.stroke();
         if (!u.isLure && u.ph === 'water') { g.fillStyle = '#ff5a5a'; g.beginPath(); g.ellipse(sx, sy2 - 2 + (u.sunk ? 8 : u.nib ? 3 : 0), 4, 5, 0, 0, 7); g.fill(); }
         if (u.ph === 'water') drawBait(u, hx, hy);
@@ -214,6 +215,8 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
   function drawBait(u, x, y) {
     const k = u.bait;
     g.save(); g.translate(x, y);
+    const glow = g.createRadialGradient(0, 0, 0, 0, 0, 22); glow.addColorStop(0, 'rgba(255,255,230,0.45)'); glow.addColorStop(1, 'rgba(255,255,230,0)'); g.fillStyle = glow; g.beginPath(); g.arc(0, 0, 22, 0, 7); g.fill();
+    g.scale(1.6, 1.6);
     if (k === 'worm') { g.strokeStyle = '#e88a8a'; g.lineWidth = 3; g.lineCap = 'round'; g.beginPath(); g.moveTo(-5, 0); g.quadraticCurveTo(0, Math.sin(t * 6) * 5, 5, 2); g.stroke(); }
     else if (k === 'bread') { g.fillStyle = '#fff6e0'; g.beginPath(); g.arc(0, 0, 4, 0, 7); g.fill(); }
     else if (k === 'shrimp') { g.strokeStyle = '#ff9a6a'; g.lineWidth = 3; g.beginPath(); g.arc(0, 0, 4, 0.5, 4.5); g.stroke(); }
@@ -221,7 +224,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     else if (k === 'spoon') { g.rotate(Math.sin(t * 14) * 0.8); g.fillStyle = '#e9edf5'; g.beginPath(); g.ellipse(0, 0, 6, 3, 0, 0, 7); g.fill(); g.fillStyle = 'rgba(255,255,255,0.9)'; g.fillRect(-2, -1, 3, 1); }
     else if (k === 'minnow') { g.rotate(Math.sin(t * 10) * 0.2); g.fillStyle = '#7fb0d0'; g.beginPath(); g.ellipse(0, 0, 8, 3, 0, 0, 7); g.fill(); g.fillStyle = '#fff'; g.fillRect(-6, 0, 12, 1.5); g.fillStyle = '#e8eef5'; g.beginPath(); g.moveTo(8, 0); g.lineTo(12, 3); g.lineTo(8, 2); g.fill(); }
     else if (k === 'frog') { g.fillStyle = '#6cc35a'; g.beginPath(); g.ellipse(0, -2, 6, 4, 0, 0, 7); g.fill(); g.fillStyle = '#fff'; g.beginPath(); g.arc(-3, -5, 1.5, 0, 7); g.arc(3, -5, 1.5, 0, 7); g.fill(); }
-    g.strokeStyle = '#d8d8e0'; g.lineWidth = 1.2; g.beginPath(); g.arc(-1, 4, 3, 0, Math.PI); g.stroke();   // 針
+    g.strokeStyle = '#2a2f3a'; g.lineWidth = 2.4; g.beginPath(); g.arc(-1, 4, 3.2, 0, Math.PI); g.stroke(); g.strokeStyle = '#f2f4fa'; g.lineWidth = 1.4; g.beginPath(); g.arc(-1, 4, 3.2, 0, Math.PI); g.stroke();   // 針(ふちどりで、どの背景でも見える)
     g.restore();
   }
   // 釣り上げ:魚が水からとび出して、こちらへ
@@ -414,8 +417,8 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     const fp = vs.focus ? proj(vs.focus.x, vs.focus.d) : { x: W / 2, y: H / 2 };
     let pd, ps, ud, ua, pip = 0;
     if (mode === 'under') {
-      const pw = Math.round(MW * 0.42), ph = Math.round(pw * 0.78);
-      pd = { x: MW - pw - 10, y: A.y + 54, w: pw, h: ph }; const z = 2.1; ps = clampSrc({ x: fp.x - pw / z / 2, y: fp.y - ph / z / 2, w: pw / z, h: ph / z });
+      const pw = Math.round(MW * 0.38), ph = Math.round(pw * 0.86);   // 左下:あわせボタンのすぐ上
+      pd = { x: 10, y: Math.max(A.y + 54, MH - 128 - ph - safeB()), w: pw, h: ph }; const z = 1.7; ps = clampSrc({ x: fp.x - pw / z / 2, y: fp.y - ph / z * 0.75, w: pw / z, h: ph / z });
       ud = A; ua = 1; pip = 1;
     } else if (mode === 'fight') {
       const hh = A.h * 0.5, z = 1.2; pd = { x: 0, y: A.y, w: MW, h: hh }; ps = clampSrc({ x: fp.x - MW / z / 2, y: fp.y - hh / z / 2, w: MW / z, h: hh / z });
