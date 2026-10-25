@@ -294,6 +294,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
       }
       if (!isLure()) spookNear(S.lure.x, S.lure.d, 0.1, 0.12);
     },
+    recall() { if (S.ph !== 'water' || S.locked) return false; S.engaged && leave(S.engaged, 'miss'); S.ph = 'ready'; S.baitOk = true; S.bite = null; if (S.lure) { S.lure.x = 0; S.lure.d = 0; } ev('retrieve'); return true; },   // 一瞬で回収
     ack() { if (S.ph === 'landed' || S.ph === 'lost') { S.ph = 'ready'; S.result = null; } },
     lock(on = true) { S.locked = on; },
     update(dt) {

@@ -18,6 +18,8 @@ const CSS = `
 .fz .chip{border:0;border-radius:999px;padding:7px 10px;font:inherit;font-weight:800;font-size:12px;background:rgba(255,255,255,.88);color:${ink};box-shadow:0 2px 8px #0002;white-space:nowrap}
 .fz .hint{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(36px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 262px);box-sizing:border-box;margin-left:-14px;font-size:12px !important;background:rgba(40,30,70,.55);color:#fff;font-weight:700;font-size:13px;padding:6px 12px;border-radius:12px;text-align:center;pointer-events:none;transition:opacity .3s;line-height:1.45}
 .fz .big{position:absolute;right:18px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:108px;height:108px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:17px;color:#fff;background:radial-gradient(circle at 35% 30%,#ffb3c6,#f07a98);box-shadow:0 6px 0 #c9577a,0 10px 20px #0004;touch-action:none}
+.fz .rc{position:absolute;right:22px;bottom:calc(144px + env(safe-area-inset-bottom,0px));padding:9px 14px;border-radius:999px;border:0;font:inherit;font-weight:900;font-size:14px;color:${ink};background:#fffffff0;box-shadow:0 3px 0 #0002;touch-action:none}
+.fz .rc:active{transform:translateY(2px)}
 .fz .big.on{transform:translateY(4px);box-shadow:0 2px 0 #c9577a,0 6px 12px #0004}
 .fz .big small{display:block;font-size:11px;font-weight:700;opacity:.9}
 .fz .hk{position:absolute;left:18px;bottom:calc(30px + env(safe-area-inset-bottom,0px));width:86px;height:86px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:16px;color:${ink};background:radial-gradient(circle at 35% 30%,#fff,#ffe9a8);box-shadow:0 5px 0 #d8b45a,0 8px 16px #0004;touch-action:none}
@@ -229,9 +231,10 @@ export const fishingApp = {
         <div class="hint"></div><div class="area" hidden></div><div class="pw" hidden><i class="band"></i><b></b></div><div class="ez" hidden></div>
         <div class="gauge" hidden><div class="t"><b></b></div><div class="brk"></div><div class="row"><span class="gl"></span><span class="gs"></span></div></div>
         <div class="thr" hidden><i></i></div>
-        <button class="hk">あわせ</button><button class="big">投げる<small>長おし</small></button>`;
+        <button class="hk">あわせ</button><button class="big">投げる<small>長おし</small></button><button class="rc" hidden>⏪ 回収</button>`;
       const $ = s => ui.querySelector(s);
-      const hintEl = $('.hint'), gauge = $('.gauge'), thrEl = $('.thr'), bigB = $('.big'), hkB = $('.hk');
+      const hintEl = $('.hint'), gauge = $('.gauge'), thrEl = $('.thr'), bigB = $('.big'), hkB = $('.hk'), rcB = $('.rc');
+      rcB.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (E.recall()) { thr = 0; if (bt) bt.mode = 'none'; sfx.play('whoosh'); } });
       let vsBar = null, bubEl = null;
       if (vs) {
         vsBar = document.createElement('div'); vsBar.className = 'vsbar'; vsBar.style.zIndex = 2; $('[data-b="info"]').style.display = 'none';
@@ -519,7 +522,7 @@ export const fishingApp = {
         const ph = E.S.ph, lure = E.G.bait.type === 'lure', h = E.S.hooked;
         bigB.innerHTML = ph === 'ready' ? '投げる<small>長おし/動かして狙う</small>' : ph === 'charge' ? 'はなす!<small>いまの力で</small>' : ph === 'fight' ? '巻く<small>上にずらすと強く</small>' : ph === 'water' ? '巻く<small>上で速く</small>' : ph === 'fly' ? '…' : vs ? '…' : 'つぎへ';
         hkB.textContent = ph === 'water' ? (E.S.bite ? 'あわせ!' : lure ? 'しゃくる' : 'あわせ') : !vs && (ph === 'landed' || ph === 'lost') ? 'つぎへ' : 'あわせ';
-        hkB.classList.toggle('alert', !!E.S.bite);
+        hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water';
         hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
         const showThr = reeling && (ph === 'water' || ph === 'fight');
         thrEl.hidden = !showThr; if (showThr) thrEl.firstChild.style.height = Math.round(E.input.reel * 100) + '%';

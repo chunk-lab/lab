@@ -126,7 +126,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     shot.addEventListener('pointermove', e => { if (!S || !S.charging || S.kind !== 'frisbee') return; S.power = Math.max(0, Math.min(1, (e.clientY - y0) / 150)); });   // 下へ引くほど強い
     const rel = () => {
       if (!S || !S.charging) return; S.charging = false;
-      if (S.kind === 'frisbee') { if (S.power < 0.08) return; const nd = S.needle; S.curve = Math.abs(nd) < 0.14 ? 0 : nd; }
+      if (S.kind === 'frisbee') { if (S.power < 0.08) return; const nd = S.needle; S.curve = Math.sign(nd) * Math.pow(Math.abs(nd), 0.8); }   // 少しでもズレると、その分だけ曲がろうとする
 
       fire();
     };
@@ -182,10 +182,13 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       } else {
         const sp = Math.hypot(v.x, v.z);
         if (p.y > 0.03) {
-          const lift = Math.min(0.85, sp / 20); v.y -= G * (1 - lift) * h; v.y *= Math.exp(-0.6 * h);
-          const ux = v.x / (sp || 1), uz = v.z / (sp || 1), slow = 1 - Math.min(1, sp / 24), side = (S.curveNow * 3.4 - 0.4) * slow * h;   // 曲がり(おそくなるほど強い。少しだけ左へ流れる)
+          const ux = v.x / (sp || 1), uz = v.z / (sp || 1);
+          const head = -(H.wind[0] * ux + H.wind[1] * uz), cross = H.wind[0] * -uz + H.wind[1] * ux;   // 向かい風(+)/追い風(-)、横風(右へ+)
+          const lift = Math.max(0, Math.min(0.92, sp / 20 + head * 0.05)); v.y -= G * (1 - lift) * h; v.y *= Math.exp(-0.6 * h);   // 向かい風で浮く、追い風で落ちる
+          S.curveNow += cross * 0.06 * h;   // 横風を受けると、そっちへ傾いて曲がりはじめる
+          const slow = 1 - Math.min(1, sp / 24), side = (S.curveNow * 3.8 - 0.5) * (0.25 + 0.75 * slow) * h;   // 曲がり(おそくなるほど強い。最後は少し左へ流れる)
           v.x += -uz * side; v.z += ux * side;   // (-uz, ux) = 進む向きの右
-          v.x *= Math.exp(-0.22 * h); v.z *= Math.exp(-0.22 * h); v.x += H.wind[0] * 0.32 * h; v.z += H.wind[1] * 0.32 * h;   // 風
+          v.x *= Math.exp(-(0.22 + Math.max(0, head) * 0.03) * h); v.z *= Math.exp(-(0.22 + Math.max(0, head) * 0.03) * h); v.x += H.wind[0] * 0.75 * h; v.z += H.wind[1] * 0.75 * h;   // 風(しっかり流される)
         } else { p.y = 0.03; v.y = 0; const dec = 7 * h; if (sp <= dec) { v.x = v.z = 0; } else { v.x *= (sp - dec) / sp; v.z *= (sp - dec) / sp; } }
         p.addScaledVector(v, h); hitWalls(p, v, 0.3);
         const dh = Math.hypot(p.x - H.goal[0], p.z - H.goal[1]);
