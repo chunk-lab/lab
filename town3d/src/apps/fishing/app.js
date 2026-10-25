@@ -360,6 +360,7 @@ export const fishingApp = {
         if (type === 'look') { toast('迷ってる…! 小さく誘え<br><small style="font-size:12px">「' + (E.G.bait.type === 'lure' ? 'しゃくる' : 'あわせ') + '」をちょんと</small>', 1500); sfx.play('nibble'); }
         if (type === 'entice') { note('entice'); }
         if (type === 'pass') { toast('見切られた…', 1000); note('pass'); }
+        if (type === 'spook') { toast('バシャッ! 魚がおどろいた<br><small style="font-size:12px">真上より、進む向きの少し先に落とそう</small>', 1500); note('land'); }
         if (type === 'spooked') { toast('おどろいて逃げた…', 1000); note('spook'); }
         if (type === 'stolen') { note('late'); toast('エサをとられた…<br><small style="font-size:13px">巻いて回収しよう</small>', 1400); }
         if (type === 'twitch') { view.splash(L.x, L.d, 3, 0.4); }
@@ -566,7 +567,7 @@ export const fishingApp = {
       v.nib = S.bob.nib; v.bite = !!S.bite; v.sunk = !!S.bite && !v.isLure;
       const h = S.hooked;
       if (h) v.hooked = { T: h.T, run: h.mode === 'run', jump: h.jump > 0, jumpK: 1 - h.jump / 0.9, len: h.size || 25, sp: h.sp };
-      if (withFish) v.fish = S.fish.map(f => ({ x: f.x, d: f.d, len: Math.max(6, f.size), vis: f.vis * (f.st === 'flee' ? 0.7 : 1), hx: f.hx || 1, hd: f.hd || 0, wig: f.wig, glow: f.sp.art && f.sp.art.glow }));
+      if (withFish) v.fish = S.fish.map(f => ({ x: f.x, d: f.d, len: Math.max(6, f.size), vis: f.vis * (f.st === 'flee' ? 0.7 : 1), hx: f.hx || 1, hd: f.hd || 0, wig: f.wig, int: f.st === 'roam' ? f.int || 0 : 0, glow: f.sp.art && f.sp.art.glow }));
       return v;
     }
     function underOf(E) {
@@ -574,7 +575,7 @@ export const fishingApp = {
       let lx = S.lure.x, ld = S.lure.d;
       if (ph === 'ready' || ph === 'charge' || ph === 'fly') { lx = S.aimT.x; ld = S.aimT.d; }
       const vis = E.G.eye.vis, wid = vis >= 2 ? 0.2 : 0.14, ll = Math.hypot(lx, ld) || 1;
-      const fish = S.fish.filter(f => f.vis > 0.5 && f.st !== 'gone' && Math.abs(lx * f.d - ld * f.x) / ll < wid).map(f => ({ d: f.d, y: f.y, len: Math.max(6, f.size), sp: f.sp, st: f.st, wig: f.wig, hd: f.hd || 0 }));
+      const fish = S.fish.filter(f => f.vis > 0.5 && f.st !== 'gone' && Math.abs(lx * f.d - ld * f.x) / ll < wid).map(f => ({ d: f.d, y: f.y, len: Math.max(6, f.size), sp: f.sp, st: f.st, wig: f.wig, hd: f.hd || 0, int: f.st === 'roam' ? f.int || 0 : 0 }));
       const h = S.hooked;
       return { ph, lx, ld, depth: ph === 'water' || ph === 'fight' ? (h ? h.y : S.depth) : S.tana, tana: S.tana, isLure: lure, bait: E.G.bait.id, vis, eyeName: E.G.eye.icon + ' ' + E.G.eye.name, fish, canTana: !lure, nib: S.bob.nib, sunk: !!S.bite && !lure,
         hooked: h ? { len: h.size || 25, sp: h.sp, run: h.mode === 'run', big: h.size >= 60 } : null };

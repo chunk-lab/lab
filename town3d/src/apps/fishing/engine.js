@@ -51,7 +51,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     const area = sp.area[Math.floor(rs() * sp.area.length)];
     const [x, d] = pointIn(area, rs);
     const u = Math.pow(rs(), 1.7), size = Math.round((sp.size[0] + (sp.size[1] - sp.size[0]) * u) * 10) / 10;
-    const ty = TANA[sp.tana].y; S.fish.push({ sp, size, u, x, d, y: clamp(ty + (rs() - 0.5) * 0.2, 0.03, 0.97), ty, hx: x, hd: d, area, tx: x, td: d, st: 'roam', cool: first ? 0 : 2, retarget: 0, vis: first ? 1 : 0, wig: rs() * 6 });
+    const ty = TANA[sp.tana].y; S.fish.push({ sp, size, u, x, d, y: clamp(ty + (rs() - 0.5) * 0.2, 0.03, 0.97), ty, hx: x, hd: d, area, tx: x, td: d, st: 'roam', cool: first ? 0 : 2, retarget: 0, vis: first ? 1 : 0, wig: rs() * 6, wary: 0.75 + rs() * 0.6, int: 0 });
   }
   const POP = () => 6 + (cond.rain ? 1 : 0) + (timeOf(cond.hour) === 'night' ? 1 : 0);
   for (let i = 0; i < POP(); i++) spawn(true);
@@ -63,7 +63,8 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     f.vis = Math.min(1, f.vis + dt * 0.5);
     f.cool = Math.max(0, f.cool - dt);
     let sx = 0.05 + 0.03 * Math.min(1, sp.str), tx = f.tx, td = f.td;
-    if (f.st === 'roam') {
+    if (f.st === 'roam' && S.ph === 'water' && S.baitOk && f.int > 0.2) { f.tx = f.x + (S.lure.x - f.x) * 0.6; f.td = f.d + (S.lure.d - f.d) * 0.6; f.retarget = 0.5; sx *= 0.8; }   // 気になっている:仕掛けのほうへ
+    else if (f.st === 'roam') {
       if ((f.retarget -= dt) <= 0 || Math.hypot(f.tx - f.x, f.td - f.d) < 0.02) {
         // 合う仕掛けがしずんでいると、その魚はだんだん寄ってくる(においや動きにひかれる)
         if (S.ph === 'water' && S.baitOk && rb() < match(sp).all * 0.55) { f.tx = clamp(S.lure.x + (rb() - 0.5) * 0.3, -0.9, 0.9); f.td = clamp(S.lure.d + (rb() - 0.5) * 0.2, 0.05, 0.98); }
@@ -74,7 +75,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
       tx = S.lure.x; td = S.lure.d; sx = f.st === 'approach' ? (isLure() ? 0.32 : 0.09) : 0.25;
       if (f.st === 'look') { tx += Math.sin(S.t * 1.7 + f.wig) * 0.025; td += 0.02 + Math.cos(S.t * 1.3 + f.wig) * 0.015; sx = 0.08; }
     } else if (f.st === 'flee') {
-      sx = 0.35; if ((f.fleeT -= dt) <= 0) { f.st = 'roam'; f.cool = 8; }
+      sx = f.startle ? 0.25 : 0.35; if ((f.fleeT -= dt) <= 0) { f.st = 'roam'; f.cool = f.startle ? 1.5 : 8; f.startle = false; }
     }
     if (f.st !== 'flee') { f.tx2 = tx; f.td2 = td; }
     const ax = (f.st === 'flee' ? f.tx : tx) - f.x, ad = (f.st === 'flee' ? f.td : td) - f.d, l = Math.hypot(ax, ad);
@@ -97,12 +98,15 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     const all = bait * tana * hook;
     return { bait, tana, hook, all: easy ? 0.55 + 0.45 * all : all };   // かんたん:相性の差を小さく
   }
+  // 気になり度(0〜1)をためる。条件が合っている間だけたまり、1になったら必ず寄ってくる(くじ引きなし)
+  //   場所:魚の進む向きの少し先が一番。真上は驚く、後ろは気づきにくい / タナ・エサ・針が合うほど速い / 誘い方が合っていないと減る
   function attract(dt) {
-    if (!S.baitOk || S.engaged) return;
+    if (!S.baitOk || S.engaged) { for (const f of S.fish) f.int = Math.max(0, (f.int || 0) - dt * 0.2); return; }
     const lure = S.lure, moving = input.reel > 0.05;
     for (const f of S.fish) {
       if (f.st !== 'roam' || f.cool > 0 || f.vis < 0.8) continue;
-      const M = match(f.sp), RAD = (isLure() ? 0.46 : 0.34) * (0.7 + 0.5 * M.all), dist = Math.hypot(f.x - lure.x, f.d - lure.d, (f.y - S.depth) * 0.3); if (dist > RAD) continue;
+      const M = match(f.sp), RAD = (isLure() ? 0.46 : 0.34) * (0.7 + 0.5 * M.all), dist = Math.hypot(f.x - lure.x, f.d - lure.d, (f.y - S.depth) * 0.3);
+      if (dist > RAD) { f.int = Math.max(0, f.int - dt * 0.12); continue; }
       let m;
       if (isLure()) {
         const want = f.sp.speed, thr = input.reel;
@@ -114,8 +118,20 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
         if (G.bait.id === 'frog' && areaAt(lure.x, lure.d) === 'lily') m *= 1.6;
       } else m = moving ? 0.3 : 1 + Math.min(0.5, S.waitT * 0.03);
       const B = S.bonus, bk = B && B.t > 0 && Math.hypot(f.x - B.x, f.d - B.d) < 0.32 ? B.k : 1;   // うまく円に落とせたら寄りやすい
-      const near = 1 - dist / RAD, p = M.all * m * near * near * (isLure() ? 3.2 : 1.35) * bk;   // 目の前を通すほど寄る
-      if (rb() < p * dt) { f.st = 'approach'; f.match = M; S.engaged = f; f.nibbles = isLure() ? 0 : Math.max(0, f.sp.wary + Math.floor(rb() * 2) - (rb() < 0.4 ? 1 : 0)); f.nibT = 0.5 + rb() * 0.8; return; }
+      const vx = lure.x - f.x, vd = lure.d - f.d, vl = Math.hypot(vx, vd) || 1, dot = ((f.hx || 0) * vx + (f.hd || 0) * vd) / vl;
+      const head = dot > 0.4 ? 1.5 : dot < -0.3 ? 0.55 : 1;   // 進む向きの先にあると気づきやすい
+      const near = 1 - dist / RAD;
+      const rate = M.all * m * (0.35 + 0.65 * near) * head * bk * (isLure() ? 0.75 : 0.45) / f.wary - (m < 0.5 ? 0.12 : 0);
+      f.int = clamp(f.int + rate * dt, 0, 1.05);
+      if (f.int >= 1) { f.int = 0; f.st = 'approach'; f.match = M; S.engaged = f; f.nibbles = isLure() ? 0 : Math.max(0, f.sp.wary + Math.floor(rb() * 2) - (rb() < 0.4 ? 1 : 0)); f.nibT = 0.5 + rb() * 0.8; ev('notice', { id: f.sp.id }); return; }
+    }
+  }
+  // 着水:真上の魚は少し驚いて離れる(すぐ戻る)。ブラックバス・ライギョは音に寄ってくる
+  function splashLand(x, d) {
+    for (const f of S.fish) {
+      if (f.st !== 'roam') continue; const dd = Math.hypot(f.x - x, f.d - d);
+      if ((f.sp.id === 'bass' || f.sp.id === 'raigyo') && dd < 0.3) { f.int = Math.min(0.9, f.int + 0.45); continue; }
+      if (dd < 0.08) { const a = Math.atan2(f.d - d, f.x - x); f.st = 'flee'; f.startle = true; f.fleeT = 0.8; f.tx = clamp(f.x + Math.cos(a) * 0.18, -0.9, 0.9); f.td = clamp(f.d + Math.sin(a) * 0.18, 0.06, 0.98); f.int = 0; ev('spook', { x: f.x, d: f.d }); }
     }
   }
   function engagedUpdate(dt) {
@@ -299,7 +315,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
           const L = S.lure; L.fly += dt; const u = Math.min(1, L.fly / L.flyT);
           L.x = L.sx + (L.tx - L.sx) * u; L.d = L.sd + (L.td - L.sd) * u; L.h = Math.sin(u * Math.PI) * (0.15 + Math.hypot(L.tx, L.td) * 0.25);
           S.depth = 0;
-          if (u >= 1) { L.h = 0; S.ph = 'water'; S.waitT = 0; S.baitOk = true; ev('land', { x: L.x, d: L.d }); spookNear(L.x, L.d, 0.07, 0.5); }
+          if (u >= 1) { L.h = 0; S.ph = 'water'; S.waitT = 0; S.baitOk = true; ev('land', { x: L.x, d: L.d }); splashLand(L.x, L.d); }
           break;
         }
         case 'water': {

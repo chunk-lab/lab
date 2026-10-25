@@ -174,6 +174,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
       if (vis >= 2) { drawCreature(g, f.sp, 0, 0, L); }
       else { g.globalAlpha = vis === 1 ? 0.85 : 0.6 * (1 - near / lit); g.fillStyle = '#0d2238'; g.beginPath(); g.ellipse(0, 0, L * 0.45, L * 0.15 * (f.sp.art && f.sp.art.h ? f.sp.art.h / 0.34 : 1), 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(-L * 0.4, 0); g.lineTo(-L * 0.6, -L * 0.13); g.lineTo(-L * 0.6, L * 0.13); g.fill(); }
       g.restore();
+      if (f.int > 0.04) { const w = 26; g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(x - w / 2, y - 26, w, 5); g.fillStyle = f.int > 0.7 ? '#ffd36b' : '#8fe0ff'; g.fillRect(x - w / 2, y - 26, w * Math.min(1, f.int), 5); mark(x, y - 36, '?', f.int > 0.7 ? '#ffd36b' : '#fff'); }   // 気になり度
       if (f.st === 'look') mark(x, y - 12, '?', '#fff');
       if (f.st === 'nibble' || f.st === 'nibble2') mark(x, y - 12, '…', '#fff');
     }
@@ -338,6 +339,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
         const w = Math.sin(t * 8 + f.wig) * 0.4;
         g.beginPath(); g.moveTo(-L * 0.42, 0); g.lineTo(-L * 0.68, -L * 0.14 + w * L * 0.1); g.lineTo(-L * 0.68, L * 0.14 + w * L * 0.1); g.fill();
         g.restore();
+        if (f.int > 0.25 && !mini) { g.globalAlpha = Math.min(1, f.int * 1.4); g.font = '900 14px sans-serif'; g.textAlign = 'center'; g.fillStyle = f.int > 0.7 ? '#ffd36b' : '#fff'; g.fillText('?', p.x, p.y - 10); g.globalAlpha = 1; }
       }
       // 波紋
       for (let i = rings.length - 1; i >= 0; i--) { const r = rings[i]; r.r += dt * 60 * r.big; r.a -= dt * 0.9; if (r.a <= 0) { rings.splice(i, 1); continue; } const p = proj(r.x, r.d); g.strokeStyle = `rgba(255,255,255,${r.a * 0.6})`; g.lineWidth = 1.5; g.beginPath(); g.ellipse(p.x, p.y, r.r * p.s * 1.6, r.r * p.s * 0.5, 0, 0, 7); g.stroke(); }

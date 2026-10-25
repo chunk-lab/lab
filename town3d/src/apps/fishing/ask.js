@@ -23,6 +23,7 @@ export function adviceFor(skill, eq) {
   if (c.jump) out.push(['When it jumps, stop reeling.', '魚がはねたら、巻くのをやめてゆるめるんだ']);
   if (c.hook) out.push(['Big fish need a big hook.', '大物には大針。小さい針なら、テンションを低めにね']);
   if ((c.pass || 0) >= 2) out.push(['If a fish hesitates, give it a little twitch.', '迷っている魚(？が出たら)には、ちょんと1回だけ誘ってごらん']);
+  if (c.land) out.push(['Cast a little ahead of the fish, then wait.', '魚の真上に落とすと驚くよ。進む向きの少し先に落として、寄ってくるのを待つんだ。ルアーなら奥に投げて、魚の前を通すといい']);
   if ((c.spook || 0) >= 2) out.push(['Gently, gently.', '誘いすぎると逃げちゃう。1回ちょんで、少し待とう']);
   if (eq && eq.eye === 'none' && (c.catch || 0) >= 4) out.push(['Polarized glasses help you see the fish.', '偏光グラスがあると、水の中の魚がよく見えるよ']);
   if (!out.length) out.push(skill.length ? ['You are getting good at this.', 'うまくなってきたね。次は めずらしい魚を狙ってみようか'] : ['Let us start by catching a few.', 'まずは何匹か釣ってごらん。ちゃんと見てるからさ']);
@@ -45,7 +46,7 @@ export function askScreen(o) {
       const tm = timeOf(cond.hour), list = FISH.filter(f => f.r >= 2).map(f => [f, weightOf(f, cond)]).filter(a => a[1] > 0);
       const pick = [];
       for (const r of [2, 3, 4, 5]) { const c = list.filter(([f]) => f.r === r).sort((a, b) => b[1] - a[1] + (Math.random() - 0.5)); if (c.length) pick.push(c[0][0]); }
-      sc.innerHTML = say(cond.rain ? 'Rain! The fish get bold on days like this.' : tm === 'night' ? 'At night, the big ones come up from the deep.' : tm === 'morning' ? 'Morning is a busy time for fish.' : 'Take it easy, and pick your spot.', `いまは${TIME_JP[tm]}・${SEASON_JP[cond.season]}${cond.rain ? '・雨' : ''}。こんな魚が出やすいな`)
+      sc.innerHTML = say(cond.rain ? 'Rain! The fish get bold on days like this.' : tm === 'night' ? 'At night, the big ones come up from the deep.' : tm === 'morning' ? 'Morning is a busy time for fish.' : 'Take it easy, and pick your spot.', `いまは${TIME_JP[tm]}・${SEASON_JP[cond.season]}${cond.rain ? '・雨' : ''}。こんな魚が出やすいな${pick[0] ? `。${SEASON_JP[cond.season]}なら${pick[0].name}が狙い目で、エサは${bestBaits(pick[0]).map(b => (gearById('bait', b) || {}).name || b).join('・')}がいいよ` : ''}。それと、魚の真上じゃなく、進む向きの少し先に落とすのがコツだ`)
         + pick.map(f => row(f)).join('');
       return;
     }

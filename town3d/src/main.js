@@ -117,14 +117,14 @@ export function mount(container, opt = {}) {
     faceCam: (x, z, ry) => { cam.yaw = ry + Math.PI; cam.x = x; cam.z = z; cam.pitch = 0.8; cam.dist = 11.5; },   // 引いた斜め上から
     scene, camera, root, me, residents, meshes: city.meshes, collide: (x, z) => collide(x, z), audio, snowFx: (p, n, s) => snow.fx(p, n, s),
     onEnd({ win, quit, opp }) {
-      if (quit) { hud.toast('雪合戦をやめた'); return; }
+      if (quit) { if (!goHome()) hud.toast('雪合戦をやめた'); return; }
       if (win) { wallet.add(30, 'snowfight'); }
-      setTimeout(() => hud.dialog({ name: opp?.def.name || '雪合戦', text: win ? 'まいった〜! 強いね。(🪙+30)' : 'へへっ、こっちの勝ち! また勝負しよう', choices: [{ label: 'もう一回!', fn: () => opp && battle.start(opp, 2) }, { label: 'おわる', fn: () => { } }] }), 300);
+      setTimeout(() => hud.dialog({ name: opp?.def.name || '雪合戦', text: win ? 'まいった〜! 強いね。(🪙+30)' : 'へへっ、こっちの勝ち! また勝負しよう', choices: [{ label: 'もう一回!', fn: () => opp && battle.start(opp, 2) }, { label: backHome ? '🏠 家にもどる' : 'おわる', fn: () => goHome() }] }), 300);
     },
   });  sport = createSport({
     scene, camera, root, me, city, collide: (x, z, r) => collide(x, z, r), audio, wallet, toast: t => hud.toast(t),
     getYaw: () => cam.yaw, setYaw: y => { cam.yaw = y; },
-    onEnd({ kind, quit, total, par }) { if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
+    onEnd({ kind, quit, total, par }) { if (goHome()) return; if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
   });
 
   storage.set('pid', me.id);
@@ -346,10 +346,12 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('toast', t => hud.toast(t)));
   offs.push(bus.on('sfx', n => audio.play(n)));
   const SAY = ['こんにちは!', 'いい天気だね', 'いっしょに遊ぼう!', 'またね〜'];
+  let backHome = false;   // 家のゲーム機から始めたら、終わったら家にもどる
+  const goHome = () => { if (!backHome) return false; backHome = false; setTimeout(() => openApp('home', {}), 400); return true; };
   // ゲーム機から「町の中で遊ぶ」もの
   offs.push(bus.on('app:event', e => {
     if (e?.name !== 'launch') return;
-    const what = e.data?.what;
+    const what = e.data?.what; backHome = e.data?.from === 'home';
     setTimeout(() => {
       if (what === 'snow3d') {   // 町のランダムな場所で
         const ids = Object.keys(city.graph.nodes).filter(id => !/^pd|^p\d/.test(id)), n = city.graph.nodes[ids[Math.floor(Math.random() * ids.length)]];
