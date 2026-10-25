@@ -294,7 +294,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
       if (S.bonus) S.bonus.t -= dt;
       S.twitchT = Math.max(0, S.twitchT - dt);
       switch (S.ph) {
-        case 'charge': S.chargeT += dt; S.p = tri(S.chargeT * (0.5 + (1 - G.rod.acc) * 1.1) * (easy ? 0.8 : 1)); break;
+        case 'charge': S.chargeT += dt; S.p = tri(S.chargeT * (0.5 + (1 - G.rod.acc) * 1.1) * (easy ? 0.4 : 1)); break;   // かんたん:ゲージがとてもゆっくり
         case 'fly': {
           const L = S.lure; L.fly += dt; const u = Math.min(1, L.fly / L.flyT);
           L.x = L.sx + (L.tx - L.sx) * u; L.d = L.sd + (L.td - L.sd) * u; L.h = Math.sin(u * Math.PI) * (0.15 + Math.hypot(L.tx, L.td) * 0.25);

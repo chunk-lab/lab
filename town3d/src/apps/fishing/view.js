@@ -343,7 +343,6 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
         g.strokeStyle = '#ffe36b'; g.lineWidth = 3; g.stroke();
         g.strokeStyle = 'rgba(255,255,255,0.9)'; g.lineWidth = 1.5; g.beginPath(); g.ellipse(mp.x, mp.y, rx * 0.35, ry * 0.35, 0, 0, 7); g.stroke();
         if (vs.ph === 'charge' && vs.land) { const lp2 = proj(vs.land[0], vs.land[1]); g.fillStyle = '#fff'; g.strokeStyle = '#c0392b'; g.lineWidth = 2; g.beginPath(); g.arc(lp2.x, lp2.y, 5, 0, 7); g.fill(); g.stroke(); }
-        if (vs.areaName && !mini) { g.font = '800 12px sans-serif'; g.textAlign = 'center'; g.fillStyle = 'rgba(255,255,255,0.95)'; g.fillText(vs.areaName, mp.x, mp.y - ry - 8); }
       }
       // 釣れた魚が水面ではねる
       const hk = vs.hooked;
