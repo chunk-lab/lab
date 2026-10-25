@@ -124,6 +124,16 @@ export function speak(text, rate = 0.92) {
     return true;
   } catch (e) { return false; }
 }
+// 読み終わったら cb(順番に読むとき用)
+export function speakCb(text, rate, cb) {
+  try {
+    if (!window.speechSynthesis) { setTimeout(cb, 600); return false; }
+    const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = rate || 0.95;
+    const v = speechSynthesis.getVoices().find(v => /en[-_]US/i.test(v.lang)) || speechSynthesis.getVoices().find(v => /^en/i.test(v.lang)); if (v) u.voice = v;
+    let done = false; const fin = () => { if (done) return; done = true; cb && cb(); }; u.onend = fin; u.onerror = fin; setTimeout(fin, 2500 + text.length * 120);
+    speechSynthesis.speak(u); return true;
+  } catch (e) { setTimeout(cb, 600); return false; }
+}
 // iPhone/iPad は、最初の読み上げをタップの中でしないと声が出ない。「はじめる」を押したときに呼ぶ
 export function unlockSpeech() { try { if (!window.speechSynthesis) return; const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); speechSynthesis.getVoices(); } catch (e) { } }
 

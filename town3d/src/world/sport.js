@@ -30,6 +30,12 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 .sp-tim{position:absolute;right:16px;bottom:calc(240px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
 .sp-tim i{position:absolute;top:-4px;width:4px;height:24px;border-radius:2px;background:#5a4a6b;left:50%}.sp-tim[hidden]{display:none}
 .sp-wind{display:inline-block;transition:transform .2s}
+.sp-swing{position:absolute;left:16px;right:16px;bottom:calc(196px + env(safe-area-inset-bottom,0px));height:26px;border-radius:13px;background:linear-gradient(90deg,#8fe0b0 0 4%,#fff 4% 9%,#ffd36b 9% 11%,#fff 11%);box-shadow:0 2px 8px #0004;border:2px solid #fff}
+.sp-swing .pw{position:absolute;top:0;bottom:0;left:0;border-radius:11px;background:linear-gradient(90deg,#ffd36b,#ff7aa2);opacity:.55}
+.sp-swing .mk{position:absolute;top:-6px;width:5px;height:38px;border-radius:3px;background:#5a4a6b}
+.sp-swing .set{position:absolute;top:-8px;width:3px;height:42px;background:#ff5a5a}
+.sp-swing span{position:absolute;left:10%;top:-20px;transform:translateX(-50%);font-size:10px;font-weight:900;color:#fff;text-shadow:0 1px 3px #000c;white-space:nowrap}
+.sp-swing[hidden]{display:none}
 .sp-gauge i{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(#ff5a5a,#ffd36b,#8fe0b0)}
 .sp-quit{position:absolute;left:10px;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:#fffffff0;border-radius:999px;padding:8px 14px;font-size:12px;box-shadow:0 2px 6px #0002}
 .sp-msg{position:absolute;left:0;right:0;top:32%;text-align:center;font-size:30px;font-weight:900;color:#fff;text-shadow:0 3px 0 #5a4a6b,0 0 12px #0006;pointer-events:none}
@@ -110,16 +116,18 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const h = document.createElement('div'); h.className = 'sp-hud';
     h.innerHTML = `<div class="sp-top"></div><div class="sp-msg"></div><div class="sp-clubs"></div>
       <button class="sp-aim sp-l">◀</button><button class="sp-aim sp-r">▶</button><div class="sp-gauge"><i style="height:0"></i></div>
-      <div class="sp-tim" hidden><i></i></div><button class="sp-shot">${kind === 'golf' ? '⛳<small>おして はなす</small>' : '🥏<small>引いて はなす</small>'}</button><button class="sp-quit">✕ やめる</button>`;
+      <div class="sp-tim" hidden><i></i></div>${kind === 'golf' ? '<div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引いて はなす</small>'}</button><button class="sp-quit">✕ やめる</button>`;
     root.appendChild(h);
     const shot = h.querySelector('.sp-shot');
     let y0 = 0;
-    shot.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!S || S.phase !== 'aim') return; S.charging = true; S.cT = 0; S.power = 0; y0 = e.clientY; try { shot.setPointerCapture(e.pointerId); } catch (_) { } });
+    shot.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!S || S.phase !== 'aim') return;
+      if (S.kind === 'golf') { swingTap(); return; }   // ゴルフ:タップ3回(スタート → 強さ → 左右)
+      S.charging = true; S.cT = 0; S.power = 0; y0 = e.clientY; try { shot.setPointerCapture(e.pointerId); } catch (_) { } });
     shot.addEventListener('pointermove', e => { if (!S || !S.charging || S.kind !== 'frisbee') return; S.power = Math.max(0, Math.min(1, (e.clientY - y0) / 150)); });   // 下へ引くほど強い
     const rel = () => {
       if (!S || !S.charging) return; S.charging = false;
       if (S.kind === 'frisbee') { if (S.power < 0.08) return; const nd = S.needle; S.curve = Math.abs(nd) < 0.14 ? 0 : nd; }
-      else { const nd = S.needle || 0; S.dev = Math.abs(nd) < 0.13 ? 0 : nd; }   // ゴルフ:はなした時の針で左右のずれ(まん中ならまっすぐ)   // はなした時の針で回転が決まる(まん中ならまっすぐ)
+
       fire();
     };
     shot.addEventListener('pointerup', rel); shot.addEventListener('pointercancel', rel); shot.addEventListener('contextmenu', e => e.preventDefault());
@@ -207,14 +215,34 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     c.addEventListener('pointerdown', e => e.stopPropagation()); c.querySelector('.go').addEventListener('click', () => end(false));
     S.hud.appendChild(c);
   }
+  // ---- ゴルフのスイング(みんゴル式):1回目でスタート → 2回目で強さ → もどってくる印を「インパクト」で3回目 ----
+  const IMPACT = 0.1;
+  function swingTap() {
+    const sw = S.sw;
+    if (!sw) { S.sw = { ph: 1, pos: 0 }; audio?.play?.('wave'); return; }
+    if (sw.ph === 1) { S.power = Math.max(0.05, sw.pos); sw.ph = 2; return; }
+    if (sw.ph === 2) { const d = (sw.pos - IMPACT) / 0.09; S.dev = Math.abs(d) < 0.25 ? 0 : Math.max(-1, Math.min(1, d)); S.sw = null; fire(); }
+  }
+  function swingStep(dt) {
+    const sw = S.sw, el = S.hud.querySelector('.sp-swing'); if (!el) return;
+    if (sw) {
+      if (sw.ph === 1) { sw.pos += dt * 0.8; if (sw.pos >= 1) { sw.pos = 1; S.power = 1; sw.ph = 2; } }   // 上まで行ったら最大の強さで もどり始める
+      else { sw.pos -= dt * 1.05; if (sw.pos < -0.04) { S.dev = -1; S.sw = null; msg('タイミングが合わなかった…'); fire(); return; } }
+    }
+    const pos = sw ? sw.pos : 0;
+    el.querySelector('.mk').style.left = `calc(${pos * 100}% - 2px)`;
+    el.querySelector('.pw').style.width = `${(sw && sw.ph === 1 ? pos : sw ? S.power : 0) * 100}%`;
+    const st = el.querySelector('.set'); st.hidden = !(sw && sw.ph === 2); if (sw && sw.ph === 2) st.style.left = `calc(${S.power * 100}% - 1px)`;
+  }
   // ---- 毎フレーム ----
   const tmp = new THREE.Vector3();
   function update(dt) {
     if (!S) return;
     S.msgT = Math.max(0, S.msgT - dt); if (S.msgT <= 0) S.hud.querySelector('.sp-msg').textContent = '';
     const held = S.hud._held(); if (held && S.phase === 'aim') setYaw(getYaw() + held * dt * 0.9);
-    if (S.charging) { S.cT += dt; if (S.kind === 'golf') S.power = 1 - Math.abs(((S.cT / 1.3) % 2) - 1); }   // ゴルフ:0→1→0 をくりかえす / フリスビー:引いた長さ
-    { const tm = S.hud.querySelector('.sp-tim'), on = !!S.charging; if (tm.hidden === on) tm.hidden = !on; if (on) { S.needle = Math.sin(S.cT * (S.kind === 'golf' ? 3.7 : 2.8)); tm.firstChild.style.left = `calc(${50 + S.needle * 48}% - 2px)`; } }
+    if (S.charging) S.cT += dt;
+    if (S.kind === 'golf') swingStep(dt);
+    if (S.kind === 'frisbee') { const tm = S.hud.querySelector('.sp-tim'), on = !!S.charging; if (tm.hidden === on) tm.hidden = !on; if (on) { S.needle = Math.sin(S.cT * 2.8); tm.firstChild.style.left = `calc(${50 + S.needle * 48}% - 2px)`; } }
     { const H = S.C.holes[S.i], w = S.hud.querySelector('.sp-wind'); if (w) { const y = getYaw() + Math.PI, fx = Math.sin(y), fz = Math.cos(y), up = H.wind[0] * fx + H.wind[1] * fz, rt = H.wind[0] * -fz + H.wind[1] * fx; w.style.transform = `rotate(${Math.atan2(rt, up) * 180 / Math.PI}deg)`; } }
     S.hud.querySelector('.sp-gauge i').style.height = `${Math.round((S.charging ? S.power : 0) * 100)}%`;
     if (S.phase === 'fly') { S.t += dt; stepFly(dt); }
@@ -228,7 +256,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const show = S.phase === 'aim'; S.aimLine.visible = S.land.visible = show;
     if (show) {
       const [dx, dz] = aimDir(); let L;
-      if (S.kind === 'golf') { const c = CLUBS[S.club]; L = c.d * (S.charging ? Math.max(0.05, S.power) : 1); } else L = 26 * (S.charging ? Math.max(0.05, S.power) : 1);
+      if (S.kind === 'golf') { const c = CLUBS[S.club]; L = c.d * (S.sw ? Math.max(0.05, S.sw.ph === 1 ? S.sw.pos : S.power) : 1); } else L = 26 * (S.charging ? Math.max(0.05, S.power) : 1);
       const a = S.aimLine.geometry.attributes.position, y0 = S.kind === 'golf' ? 0.08 : 1.1;
       for (let i = 0; i < 40; i++) { const q = i / 39, h = S.kind === 'golf' && CLUBS[S.club].loft ? Math.sin(q * Math.PI) * L * 0.18 : 0; a.setXYZ(i, S.pos.x + dx * L * q, y0 + h, S.pos.z + dz * L * q); }
       a.needsUpdate = true; S.aimLine.computeLineDistances(); S.land.position.set(S.pos.x + dx * L, 0.05, S.pos.z + dz * L);
