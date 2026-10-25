@@ -17,7 +17,7 @@ function aimPoint(n, m) {   // その数字・倍の まん中(mm)
 }
 export default {
   id: 'darts', title: 'ダーツ(クリケット)', icon: '🎯', desc: '3Dダーツでクリケット勝負', pass: 1,
-  rule: 'ボードを長おしすると、ねらいの円が出る(少し待つと ゆれが小さくなる。待ちすぎると また大きく)。はなすとそこへ投げる。1ターン3本。15〜20とブルを3回ずつ当てるとクローズ。自分だけクローズした数字に当てると点。全部クローズして点が上(か同じ)なら勝ち。',
+  rule: '画面をおさえて、ゆっくり動かすと ねらいが動く(指より少し上)。そこから上へサッとはじくと投げる。はじくのが速すぎると上へ、おそすぎると下へ、ななめだと横へずれる。1ターン3本。15〜20とブルを3回ずつ当てるとクローズ。自分だけクローズした数字に当てると点。全部クローズして点が上(か同じ)なら勝ち。',
   options: [{ key: 'rd', label: 'ラウンド数(上限)', choices: [[8, '8'], [15, '15'], [20, '20']], def: 15 }],
   start(host) {
     const box = host.box, two = host.two, cpu = host.players[1].cpu, sfx = host.sfx, lv = cpu ? cpu.lv : 2;
@@ -71,12 +71,19 @@ export default {
     // 画面 → ボードの mm
     const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), pl = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), v = new THREE.Vector3();
     function toMM(cx, cy) { const r = renderer.domElement.getBoundingClientRect(); ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1); ray.setFromCamera(ndc, cam); if (!ray.ray.intersectPlane(pl, v)) return null; return [v.x / SC, (v.y - BOARD_Y) / SC]; }
-    const sway = h => { const k = h < 0.9 ? 1 - h / 0.9 * 0.75 : 0.25 + (h - 0.9) * 0.5; return Math.min(1.2, k) * 34; };   // おさえた秒 → ゆれ(mm)
+    const OFF = 110;   // ねらいは指より上
     const cv = renderer.domElement;
     const mine = () => phase === 'aim' && !over && (two || turn === 0);
-    cv.addEventListener('pointerdown', e => { if (!mine()) return; const p = toMM(e.clientX, e.clientY); if (!p) return; aim = { base: p, hold: 0, off: [0, 0], ph: Math.random() * 6 }; try { cv.setPointerCapture(e.pointerId); } catch (_) { } });
-    cv.addEventListener('pointermove', e => { if (!aim) return; const p = toMM(e.clientX, e.clientY); if (p) aim.base = [p[0], p[1] + 30]; });   // 指でかくれないよう少し上をねらう
-    cv.addEventListener('pointerup', () => { if (!aim) return; const a = aim; aim = null; throwAt([a.base[0] + a.off[0], a.base[1] + a.off[1]]); });
+    cv.addEventListener('pointerdown', e => { if (!mine()) return; aim = { pts: [[e.clientX, e.clientY, performance.now()]], cur: toMM(e.clientX, e.clientY - OFF) }; try { cv.setPointerCapture(e.pointerId); } catch (_) { } });
+    cv.addEventListener('pointermove', e => { if (!aim) return; aim.pts.push([e.clientX, e.clientY, performance.now()]); if (aim.pts.length > 40) aim.pts.shift(); const p = toMM(e.clientX, e.clientY - OFF); if (p) aim.cur = p; });   // ゆっくり動かす=ねらう(指より上をねらう)
+    cv.addEventListener('pointerup', e => {   // 上へサッとはじく=投げる。はじく速さで上下、向きで左右がずれる
+      if (!aim) return; const a = aim; aim = null; const P = a.pts, end = [e.clientX, e.clientY, performance.now()];
+      let k = P.length - 1; while (k > 0 && end[2] - P[k][2] < 110) k--; const st = P[k], dt = Math.max(16, end[2] - st[2]), up = st[1] - end[1];
+      const v = up / dt; if (v < 0.45) { msg = '上へサッとはじいて投げよう'; msgT = 1.2; return; }
+      const base = toMM(st[0], st[1] - OFF) || a.cur; if (!base) return;
+      const ey = (v - 1.5) * 38, ex = clamp((end[0] - st[0]) / Math.max(20, up), -1, 1) * 120, wob = () => (Math.random() - 0.5) * 8;
+      throwAt([base[0] + ex + wob(), base[1] + ey + wob()]);
+    });
     function cpuThrow() {
       const me = P[1], op = P[0];
       let n = TARGETS.find(x => me.marks[x] < 3 && x !== 25) ?? 25;
@@ -87,7 +94,7 @@ export default {
     }
     const stop = loop(dt => {
       t += dt; msgT = Math.max(0, msgT - dt);
-      if (aim) { aim.hold += dt; const s = sway(aim.hold); aim.ph += dt; aim.off = [Math.sin(aim.ph * 2.3) * s * 0.7 + Math.sin(aim.ph * 5.1) * s * 0.3, Math.cos(aim.ph * 1.9) * s * 0.7 + Math.sin(aim.ph * 4.3) * s * 0.3]; }
+
       if (phase === 'aim' && !two && turn === 1 && !over) { cpuT -= dt; if (cpuT <= 0) { cpuThrow(); cpuT = 0.9; } }
       if (phase === 'fly' && fly) {
         fly.t += dt / 0.32; const k = Math.min(1, fly.t), x = fly.to[0] * SC, y = BOARD_Y + fly.to[1] * SC;
@@ -107,10 +114,11 @@ export default {
       TARGETS.forEach((n, i) => { const y = y0 + 10 + (i + 1) * rh; txt(g, mk(P[0].marks[n]), x0 + cw / 2, y, { size: 14, color: P[0].marks[n] >= 3 ? '#3fbf6a' : INK }); txt(g, n === 25 ? 'BULL' : String(n), x0 + cw * 1.5, y, { size: 12, color: INK }); txt(g, mk(P[1].marks[n]), x0 + cw * 2.5, y, { size: 14, color: P[1].marks[n] >= 3 ? '#3fbf6a' : INK }); });
       const yp = y0 + 10 + 8 * rh; txt(g, String(P[0].pts), x0 + cw / 2, yp, { size: 14, color: COL.p1d }); txt(g, '点', x0 + cw * 1.5, yp, { size: 11 }); txt(g, String(P[1].pts), x0 + cw * 2.5, yp, { size: 14, color: COL.p2d });
       // ねらい
-      if (aim) { const p = new THREE.Vector3((aim.base[0] + aim.off[0]) * SC, BOARD_Y + (aim.base[1] + aim.off[1]) * SC, 0).project(cam), sx = (p.x + 1) / 2 * W, sy = (1 - p.y) / 2 * H, q = new THREE.Vector3((aim.base[0] + aim.off[0] + sway(aim.hold)) * SC, BOARD_Y + (aim.base[1] + aim.off[1]) * SC, 0).project(cam), r = Math.max(6, Math.abs((q.x + 1) / 2 * W - sx)); g.strokeStyle = '#ffd36b'; g.lineWidth = 2.5; g.beginPath(); g.arc(sx, sy, r, 0, 7); g.stroke(); g.beginPath(); g.moveTo(sx - 6, sy); g.lineTo(sx + 6, sy); g.moveTo(sx, sy - 6); g.lineTo(sx, sy + 6); g.stroke(); }
+      if (aim && aim.cur) { const p = new THREE.Vector3(aim.cur[0] * SC, BOARD_Y + aim.cur[1] * SC, 0).project(cam), sx = (p.x + 1) / 2 * W, sy = (1 - p.y) / 2 * H; g.strokeStyle = '#ffd36b'; g.lineWidth = 2.5; g.beginPath(); g.arc(sx, sy, 10, 0, 7); g.stroke(); g.beginPath(); g.moveTo(sx - 16, sy); g.lineTo(sx + 16, sy); g.moveTo(sx, sy - 16); g.lineTo(sx, sy + 16); g.stroke();
+        const r = renderer.domElement.getBoundingClientRect(), f = aim.pts[aim.pts.length - 1]; txt(g, '🎯', f[0] - r.left, f[1] - r.top, { size: 30 }); }
       txt(g, `${'🎯'.repeat(3 - dartN)}`, W - 14, H - 26, { size: 16, align: 'right' });
       if (msgT > 0) txt(g, msg, W / 2, H * 0.78, { size: 22, color: '#ffd36b', stroke: '#2b2438', sw: 5 });
-      if (phase === 'aim' && !over) txt(g, (two || turn === 0) ? `${host.players[turn].name}の番:ボードを長おし → はなして投げる` : `${host.players[1].name}が ねらっている…`, W / 2, H - 26, { size: 12, color: '#fff', stroke: '#2b2438', sw: 4 });
+      if (phase === 'aim' && !over) txt(g, (two || turn === 0) ? `${host.players[turn].name}の番:ゆっくり動かして ねらう → 上へサッとはじいて投げる` : `${host.players[1].name}が ねらっている…`, W / 2, H - 26, { size: 12, color: '#fff', stroke: '#2b2438', sw: 4 });
     }
     return { stop() { stop(); ro.disconnect(); renderer.dispose(); renderer.forceContextLoss?.(); renderer.domElement.remove(); ov.remove(); } };
   },

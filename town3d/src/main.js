@@ -612,6 +612,9 @@ export function mount(container, opt = {}) {
       settings.birth = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`; save(); msg.textContent = 'ほぞんしました。誕生日を楽しみにしててね';
     });
   }
+  offs.push(bus.on('ui:camreset', () => {   // カメラをワンボタンで もとに(少し引いた、見やすい位置)
+    if (!started) return; camMode = 'follow'; cam.dist = 9; cam.pitch = 0.5; cam.yaw = me.ry + Math.PI; cam.x = me.x; cam.z = me.z; camBarDraw?.(); input.clear(); hud.toast('カメラをもとにもどした');
+  }));
   offs.push(bus.on('ui:cam', () => {
     if (!started || appHost.current || hud.busy) return;
     if (camMode === 'follow') { camFromView(); camMode = 'free'; } else camMode = 'follow';

@@ -119,9 +119,13 @@ export function speak(text, rate = 0.92) {
     if (!window.speechSynthesis) return false;
     const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = rate;
     const v = speechSynthesis.getVoices().find(v => /en[-_]US/i.test(v.lang)) || speechSynthesis.getVoices().find(v => /^en/i.test(v.lang)); if (v) u.voice = v;
-    speechSynthesis.cancel(); speechSynthesis.speak(u); return true;
+    if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(() => { try { speechSynthesis.speak(u); } catch (e) { } }, 60); }   // すぐ続けて言うと、iPhone/iPad で読まれないことがある
+    else speechSynthesis.speak(u);
+    return true;
   } catch (e) { return false; }
 }
+// iPhone/iPad は、最初の読み上げをタップの中でしないと声が出ない。「はじめる」を押したときに呼ぶ
+export function unlockSpeech() { try { if (!window.speechSynthesis) return; const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); speechSynthesis.getVoices(); } catch (e) { } }
 
 // 毎フレーム(止めるときは戻り値を呼ぶ)
 export function loop(fn) {

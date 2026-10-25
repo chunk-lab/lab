@@ -25,8 +25,8 @@ export default {
     }
     function answer(s, ja) {
       const me = P[s], w = seq[me.i % seq.length]; if (over || count > 0 || me.lock > 0) return;
-      if (ja === w[2]) { me.i++; me.flash = 0.3; sfx.play(me.i % 10 === 0 ? 'item' : 'ok'); if (me.i >= N) { over = true; sfx.play('win'); setTimeout(() => host.end({ winner: s, text: `${N}個 ゴール!` }), 1600); return; } deal(s); }
-      else { me.lock = 1; me.wrong = w[2]; sfx.play('ng'); setTimeout(() => { if (!over && seq[me.i % seq.length] === w) { me.opts = shuffle(me.opts); if (O.say !== 0 && (s === 0 || two)) speak(w[0], 1); } }, 1000); }
+      if (ja === w[2]) { me.i++; me.flash = 0.3; if (s === 0 || two) sfx.play(me.i % 10 === 0 ? 'item' : 'tap'); /* 相手の正解の音は鳴らさない(読み上げのじゃまになる) */ if (me.i >= N) { over = true; sfx.play('win'); setTimeout(() => host.end({ winner: s, text: `${N}個 ゴール!` }), 1600); return; } deal(s); }
+      else { me.lock = 1; me.wrong = w[2]; if (s === 0 || two) sfx.play('ng'); setTimeout(() => { if (!over && seq[me.i % seq.length] === w) { me.opts = shuffle(me.opts); if (O.say !== 0 && (s === 0 || two)) speak(w[0], 1); } }, 1000); }
     }
     const opts = (W, h) => [0, 1, 2, 3].map(i => ({ x: 12 + (i % 2) * ((W - 24) / 2 + 6), y: h - 150 + Math.floor(i / 2) * 66, w: (W - 36) / 2, h: 58, i }));
     const pt = pointers(S.cv, {
@@ -37,7 +37,7 @@ export default {
     });
     const stop = loop(dt => {
       t += dt;
-      if (count > -1) { const c0 = Math.ceil(count); count -= dt; if (count > 0 && Math.ceil(count) !== c0) sfx.play('count'); if (count <= 0 && c0 === 1) { sfx.play('go'); deal(0); deal(1); } }
+      if (count > -1) { const c0 = Math.ceil(count); count -= dt; if (count > 0 && Math.ceil(count) !== c0) sfx.play('count'); if (count <= 0 && c0 === 1) { sfx.play('go'); setTimeout(() => { deal(0); deal(1); }, 450); } /* GOの音と重ならないように */ }
       P.forEach(me => { me.lock = Math.max(0, me.lock - dt); me.flash = Math.max(0, me.flash - dt); });
       if (!over && count <= 0 && !two && cpu) { const me = P[1]; if (me.lock <= 0) { me.cpuT -= dt; if (me.cpuT <= 0) { const w = seq[me.i % seq.length]; answer(1, Math.random() < [0, 0.8, 0.88, 0.95][lv] - ((O.lv || 1) - 1) * 0.05 ? w[2] : me.opts.find(x => x !== w[2])); me.cpuT = 0.8; } } }
       draw();

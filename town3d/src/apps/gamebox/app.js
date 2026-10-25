@@ -2,7 +2,7 @@
 //   英語対戦ゲーム(無料。無料会員は1日1試合、ゲーム機を1日借りれば何回でも)
 //   あそびゲーム(ソフトを借りる。無料会員はゲーム機も借りる。お試しは1日1回)
 //   相手:町の住人(CPU)か、1台のスマホを上下で向かい合わせて2人
-import { CPUS, cpuById, createSfx, INK } from './kit.js';
+import { CPUS, cpuById, createSfx, INK, unlockSpeech } from './kit.js';
 import dictq from './games/dictq.js';
 import wordrace from './games/wordrace.js';
 import bowling from './games/bowling.js';
@@ -192,6 +192,7 @@ export const gameboxApp = {
         if (o) { opp = o.dataset.o; sfx.play('tap'); draw(); }
         if (k) { const def = G.options.find(x => x.key === k.dataset.k); const raw = k.dataset.v; opts[k.dataset.k] = typeof def.def === 'number' ? +raw : raw; sfx.play('tap'); draw(); }
         if (e.target.closest('[data-go]')) {
+          unlockSpeech();
           st.set('opt:' + G.id, { ...opts, opp });
           gate(G, trial => { s.remove(); play(G, opp, { ...opts, trial }); });
         }
