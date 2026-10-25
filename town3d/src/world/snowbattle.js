@@ -42,7 +42,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   document.head.appendChild(css);
   function hudEl() {
     const h = document.createElement('div'); h.className = 'sb-hud';
-    h.innerHTML = `<div class="sb-top"><div class="sb-team t0"></div><div class="sb-team t1"></div></div><div class="sb-msg"></div><div class="sb-tip">❄️=雪玉をつくる(長おしで大きく) 画面タップ=投げる ❄️から引く=山なり</div>
+    h.innerHTML = `<div class="sb-top"><div class="sb-team t0"></div><div class="sb-team t1"></div></div><div class="sb-msg"></div><div class="sb-tip">❄️=つくる(長おしで大) タップ=投げる ❄️から引く=山なり</div>
       <button class="sb-mk">❄️<small>つくる</small></button><button class="sb-man">⛄</button><button class="sb-roll">🌀</button><button class="sb-lift" hidden>🙌<small>持つ</small></button><button class="sb-quit">✕ やめる</button>`;
     root.appendChild(h); return h;
   }
