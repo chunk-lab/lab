@@ -117,12 +117,47 @@ export function createReview(core) {
         }
         go(`<h3>おつかれさま!</h3>${res.length ? `<p>覚えてる ${res.length - ng.length} ・ まだ ${ng.length}</p>${ng.length ? '<p class="cs-note">「まだ」の言葉は、あとで またでてくるよ。</p>' : ''}` : ''}
           ${g ? `<p class="rv-pt">+${g} コイン</p>` : '<p class="cs-note">このふりかえりのコインは、もらえなかったよ(受け取り済み、または忘れた日)。</p>'}
-          ${mode === 'today' ? `<p class="cs-note">${statusLine()}</p>` : ''}<button class="cs-btn" id="rv-e">${mode === 'today' ? '今日はここまで!' : 'つづける'}</button>`, () => { box.querySelector('#rv-e').onclick = () => close(); });
+          ${mode === 'today' ? `<p class="cs-note">${statusLine()}</p>` : ''}<button class="cs-btn" id="rv-e">${mode === 'today' ? '今日はここまで!' : 'つづける'}</button>${dl.pool().length >= 4 ? '<button class="cs-btn" id="rv-t">単語テストもやる</button>' : ''}`, () => { box.querySelector('#rv-e').onclick = () => close(); const tb = box.querySelector('#rv-t'); if (tb) tb.onclick = () => { close(); test(); }; });
       }
       stepTime();
     });
   }
   const statusLine = () => { const s = status(); return s.ok ? '今日の課題はぜんぶOK!また明日ね。' : !s.main ? '今日のメイン課題が まだだよ。' : `ほかの課題は あと${3 - s.n}つ でOK。`; };
+
+
+  // ---- 定期の単語テスト(いままで出会った言葉から、ランダムに10問。3日に1回すすめる) ----
+  const TEST_N = 10, TEST_DAYS = 3, SLOW = 10;
+  const testDue = () => { const p = dl.pool(); if (p.length < 8) return false; const l = dl.lastTest(); return !l || (Date.parse(dl.dayKey()) - Date.parse(l)) / 864e5 >= TEST_DAYS; };
+  function test() {
+    const pool = dl.pool(); if (pool.length < 4) { core.ui.toast('テストできる言葉が、まだ少ないよ'); return; }
+    const first = w => String(w.ja).split(/[、,・]/)[0].trim();
+    const qs = pool.slice().sort(() => Math.random() - 0.5).slice(0, TEST_N).map(w => {
+      const bad = pool.filter(x => x.en !== w.en && first(x) !== first(w)).sort(() => Math.random() - 0.5).slice(0, 3).map(first);
+      return { w, ans: first(w), ch: [first(w), ...bad].sort(() => Math.random() - 0.5) };
+    });
+    core.ui.sheet('<div class="rv"></div>', (ov, close) => {
+      const box = ov.querySelector('.rv'); let i = 0; const res = []; let t0 = 0;
+      const q = () => {
+        if (i >= qs.length) return end();
+        const Q = qs[i]; t0 = Date.now(); core.speech.speak(Q.w.en);
+        box.innerHTML = `<h3>単語テスト <small>${i + 1}/${qs.length}</small></h3><div class="rv-card" style="cursor:default"><div class="f"><b>${esc(Q.w.en)}</b>${Q.w.pos ? `<small>${esc(Q.w.pos)}</small>` : ''}</div></div>
+          <div class="rv-ch">${Q.ch.map((c, k) => `<button class="cs-btn" data-k="${k}">${esc(c)}</button>`).join('')}</div><p class="cs-note">10秒以上なやんだ言葉は、あとでもう一度出ます。</p>`;
+        box.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
+          const ok = Q.ch[+b.dataset.k] === Q.ans, slow = (Date.now() - t0) / 1000 > SLOW;
+          res.push({ ok, slow, w: Q.w }); b.style.background = ok ? '#bff0cf' : '#ffc9c9';
+          box.querySelectorAll('[data-k]').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.style.background = '#bff0cf'; });
+          setTimeout(() => { i++; q(); }, ok ? 450 : 1100);
+        });
+      };
+      function end() {
+        const again = res.filter(r => !r.ok || r.slow).map(r => r.w); if (again.length) dl.enqueue(again); dl.setTest(dl.dayKey());
+        box.innerHTML = `<h3>テストおわり</h3><p style="text-align:center;font-size:20px;font-weight:900">${res.filter(r => r.ok).length} / ${res.length} 正解</p>
+          ${again.length ? `<p class="cs-note">まちがえた言葉・10秒以上なやんだ言葉 ${again.length}こ は、あとの復習に入れたよ。</p>` : '<p class="cs-note">ぜんぶ すばやく正解!</p>'}<button class="cs-btn" id="rv-e">おわる</button>`;
+        box.querySelector('#rv-e').onclick = close;
+      }
+      q();
+    });
+  }
 
   // ---- 入り口:前回のふりかえり / ふりかえりを忘れたとき / 同じ日にもどってきたとき ----
   function entrance() {
@@ -150,8 +185,9 @@ export function createReview(core) {
       if (e.kind === 'forgot') core.ui.toast(e.say);
       setTimeout(() => open({ mode: 'prev', day: e.day, noPt: e.kind === 'forgot' && !e.grace }), e.kind === 'forgot' ? 600 : 300);
     }
+    if (!(e.kind === 'prev' || e.kind === 'forgot') && testDue()) { core.ui.toast('単語テストの日だよ!'); setTimeout(test, 1200); }
     return e;
   }
   const mark = k => { if (dl.flagged(k)) return 0; const g = give(k); core.ui.toast(`${OTHERS.find(o => o[0] === k)?.[1] || ''}${g ? ' +' + g + 'コイン' : ''}`); return g; };
-  return { open, status, entrance, enter, mark };
+  return { open, status, entrance, enter, mark, test, testDue };
 }

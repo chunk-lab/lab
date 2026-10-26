@@ -135,21 +135,24 @@ export default {
       const od = o.z - r.z; if (od > -5 && od < dFar) kart(laneX(o.lx, od + 3), yOf(od + 3), sOf(od + 3) * 0.9, o.i ? COL.p2 : COL.p1, o.spin, false);
       // 自分
       kart(laneX(r.lx, 3), yOf(3), sOf(3) * 0.95 * Math.min(1.2, W / 360), r.i ? COL.p2 : COL.p1, r.spin, true);
+      // いまの3つの選択肢を、キャラの目の前(せまってくる看板より手前)に出しっぱなしにする。タップで取りに行く/フリックでレーンを変える
+      { const ky = yOf(3), bh = clamp(h * 0.14, 40, 54), by = Math.max(hor + 8, ky - 66 - bh), bw = (W - 28) / 3;
+        row.lanes.forEach((u, ln) => { const b = { x: 8 + ln * (bw + 6), y: by, w: bw, h: bh }; r.hits.btn[ln] = b; btn(g, { ...b, label: u }, { size: clamp(bw / 7, 13, 18), font: 'Georgia,serif', fill: ln === r.lane ? (r.rush ? '#ffe08a' : '#fff4c2') : '#fff', border: ln === r.lane ? '#ffb400' : '#e6dcf2', shadow: false, maxW: bw - 8 }); }); }
       if (r.turbo > 0) { g.fillStyle = 'rgba(255,180,0,0.25)'; g.fillRect(0, 0, W, h); for (let i = 0; i < 10; i++) { const a = Math.random() * 6.28, rr0 = W * 0.3; g.strokeStyle = 'rgba(255,255,255,0.7)'; g.lineWidth = 2; g.beginPath(); g.moveTo(W / 2 + Math.cos(a) * rr0, hor + Math.sin(a) * rr0); g.lineTo(W / 2 + Math.cos(a) * rr0 * 2, hor + Math.sin(a) * rr0 * 2); g.stroke(); } }
       // ---- 上のメーター ----
-      g.fillStyle = 'rgba(255,255,255,0.92)'; rr(g, 8, 8, W - 16, 142, 12); g.fill();
+      g.fillStyle = 'rgba(255,255,255,0.92)'; rr(g, 8, 8, W - 16, 92, 12); g.fill();
       // 文(できたところ・のこり)
       const parts = r.units.map((u, i) => i < r.k ? u : '＿'.repeat(Math.min(3, Math.max(1, Math.round(u.length / 4))))).join(' ');
       txt(g, (r.star ? '★ ' : '') + r.sen.ja, W / 2, 26, { size: 13, color: r.star ? '#c98a00' : '#6b5a80', maxW: W - 30 });
       wrapTxt(g, parts, W / 2, 48, W - 32, { size: 15, font: 'Georgia,serif', weight: 700 });
       // スピードと位置
       // つぎの3つ(遠くにあっても、ここで見える。タップで取りに行く)
-      const cw = (W - 40) / 3; row.lanes.forEach((u, ln) => { const b = { x: 14 + ln * (cw + 6), y: 70, w: cw, h: 42 }; r.hits.btn[ln] = b; btn(g, { ...b, label: u }, { size: 15, font: 'Georgia,serif', fill: ln === r.lane ? (r.rush ? '#ffe08a' : '#fff4c2') : '#fff', border: ln === r.lane ? '#ffb400' : '#e6dcf2', shadow: false }); });
-      for (let i = 0; i < LMAX; i++) { g.fillStyle = i < r.L ? (i < 3 ? '#8fe0b0' : i < 5 ? '#ffd36b' : '#ff7aa2') : '#e6e0ee'; rr(g, 16 + i * 14, 124, 11, 16, 3); g.fill(); }
-      txt(g, r.L >= LMAX ? 'MAX!注意' : r.combo >= 2 ? `${r.combo}連続` : 'スピード', 16 + LMAX * 14 + 4, 132, { size: 11, align: 'left', color: r.L >= LMAX ? '#ff5a5a' : '#8d7f9e' });
-      const bx = W * 0.52, bw = W * 0.42; g.fillStyle = '#e6e0ee'; rr(g, bx, 128, bw, 8, 4); g.fill();
-      [o, r].forEach(q => { const x = bx + clamp(q.z / GOAL, 0, 1) * bw; g.fillStyle = q.i ? COL.p2 : COL.p1; g.beginPath(); g.arc(x, 132, q === r ? 7 : 5, 0, 7); g.fill(); });
-      txt(g, '🏁', bx + bw + 2, 132, { size: 12, align: 'left' });
+
+      for (let i = 0; i < LMAX; i++) { g.fillStyle = i < r.L ? (i < 3 ? '#8fe0b0' : i < 5 ? '#ffd36b' : '#ff7aa2') : '#e6e0ee'; rr(g, 16 + i * 14, 74, 11, 16, 3); g.fill(); }
+      txt(g, r.L >= LMAX ? 'MAX!注意' : r.combo >= 2 ? `${r.combo}連続` : 'スピード', 16 + LMAX * 14 + 4, 82, { size: 11, align: 'left', color: r.L >= LMAX ? '#ff5a5a' : '#8d7f9e' });
+      const bx = W * 0.52, bw = W * 0.42; g.fillStyle = '#e6e0ee'; rr(g, bx, 78, bw, 8, 4); g.fill();
+      [o, r].forEach(q => { const x = bx + clamp(q.z / GOAL, 0, 1) * bw; g.fillStyle = q.i ? COL.p2 : COL.p1; g.beginPath(); g.arc(x, 82, q === r ? 7 : 5, 0, 7); g.fill(); });
+      txt(g, '🏁', bx + bw + 2, 82, { size: 12, align: 'left' });
       // ポップ
       if (r.popT > 0) { const a = Math.min(1, r.popT * 2), y0 = hor + 30 - (1.4 - r.popT) * 20; g.globalAlpha = a; txt(g, r.pop.a, W / 2, y0, { size: 26, color: r.pop.col, stroke: '#fff', sw: 6 }); txt(g, r.pop.b, W / 2, y0 + 28, { size: 13, color: INK, stroke: '#fff', sw: 4, maxW: W - 30, font: r.pop.b === r.sen?.en ? 'Georgia,serif' : 'sans-serif' }); g.globalAlpha = 1; }
       if (r.fin >= 0) { g.fillStyle = 'rgba(255,255,255,0.6)'; g.fillRect(0, 0, W, h); txt(g, 'ゴール!', W / 2, h / 2, { size: 40, color: r.i ? COL.p2d : COL.p1d, stroke: '#fff', sw: 8 }); }

@@ -10,6 +10,7 @@ const LANE_COL = ['#ff7aa2', '#5aa8f0'], LANE_BG = ['rgba(255,122,162,0.13)', 'r
 export default {
   id: 'wordrace', en: 1, title: '単語ダッシュ', icon: '🏃', desc: '出てくる単語の意味を上下で選ぶ', rule: '左に4択(上のレーン用と下のレーン用)、右にそれぞれと同じ高さで単語が出ます。上の単語は上の4択、下の単語は下の4択で意味を選びます(上下どちらからでもOK)。手前の単語が読み上げられます。正解すると次の単語になってランナーが進み、先にゴールした方の勝ち。まちがえると、その答えは押せなくなり、少しの間おせません。',
   options: [
+    { key: 'mean', label: '意味の出し方', choices: [[1, '1つ'], [2, '2つ'], [0, 'ぜんぶ']], def: 1 },
     { key: 'lv', label: '単語のレベル', choices: [[1, 'レベル1(基本)'], [2, 'レベル2(標準)'], [3, 'レベル3(発展・熟語)']], def: 1 },
     { key: 'to', label: 'ゴールまで', choices: [[20, 'みじかい'], [30, 'ふつう'], [50, 'ながい']], def: 30 },
     { key: 'say', label: '読み上げ', choices: [[1, 'あり'], [0, 'なし']], def: 1 },
@@ -22,20 +23,21 @@ export default {
     const seq = shuffle(LIST.slice());
     const P = [0, 1].map(s => ({ s, dist: 0, flash: 0, k: s * 7, lanes: [0, 1].map(i => ({ i, now: null, next: null, slots: null, lock: 0, prev: new Set(), cpuT: 0, anim: 0 })) }));
     const parts = t => String(t).split(/[、,・]/).map(x => x.trim()).filter(Boolean);   // 意味はいくつか「、」でつながっている。4択には最初の意味だけ出す
-    const nextWord = me => { const w = seq[me.k % seq.length], ps = parts(w[2]); me.k++; return { en: w[0], pos: w[1], ans: ps[0] || w[2], all: w[2], multi: ps.length, dead: 0 }; };
+    const MN = O.mean === undefined ? 1 : +O.mean, shown = w => { const ps = parts(w[2]); return MN > 0 ? ps.slice(0, MN).join('、') || w[2] : ps.join('、') || w[2]; };   // 意味の出し方:1つ/2つ/ぜんぶ
+    const nextWord = me => { const w = seq[me.k % seq.length], ps = parts(w[2]); me.k++; return { en: w[0], pos: w[1], ans: shown(w), all: w[2], multi: ps.length, dead: 0 }; };
     P.forEach(me => me.lanes.forEach(L => { L.now = nextWord(me); L.next = nextWord(me); }));
     function distract(f, ex, old) {
       const out = [], bad = x => ex.has(x) || old.has(x) || out.includes(x);
       // 正解と同じ言葉のどの意味ともかぶらず、品詞も正解と同じものだけを出す(品詞がちがうものが混ざると、むだに迷うので)
       const same = LIST.filter(w => w[0] === f.en), mine = new Set(same.flatMap(w => parts(w[2])));
-      const tx = w => parts(w[2])[0] || w[2], near = t => [...mine].some(m => m.length > 1 && t.length > 1 && (m.includes(t) || t.includes(m)));
+      const tx = w => shown(w), near = t => [...mine].some(m => m.length > 1 && t.length > 1 && (m.includes(t) || t.includes(m)));
       const ok = w => w[0] !== f.en && !parts(w[2]).some(x => mine.has(x)) && !near(tx(w)) && !bad(tx(w));
       for (const w of shuffle(LIST.filter(w => w[1] === f.pos))) { if (out.length >= 3) break; if (ok(w)) out.push(tx(w)); }
       for (const w of shuffle(LIST.slice(0, 400))) { if (out.length >= 3) break; if (ok(w)) out.push(tx(w)); }   // 同じ品詞が足りないときだけ
       return out;
     }
     function front(me, L) {   // 手前の単語が変わった:4択を作り直して、読み上げにならべる
-      const f = L.now, other = me.lanes[1 - L.i].now, ex = new Set([f.ans, other && other.ans]);
+      const f = L.now; f.t0 = t; const other = me.lanes[1 - L.i].now, ex = new Set([f.ans, other && other.ans]);
       L.slots = shuffle([f.ans, ...distract(f, ex, L.prev)]).map(x => ({ text: x, dis: false })); L.prev = new Set(L.slots.map(x => x.text));
       if (me.s === 1 && !two) L.cpuT = CPU_T[lv] * (0.7 + Math.random() * 0.6);
       if (say && (me.s === 0 || two)) enq(f);
@@ -47,7 +49,8 @@ export default {
     function answer(me, li, si) {
       const L = me.lanes[li], f = L.now; if (!f || !L.slots || L.lock > 0 || over || count > 0) return; const sl = L.slots[si]; if (!sl || sl.dis) return;
       if (sl.text === f.ans) {
-        if ((me.s === 0 || two) && (f.miss || f.multi > 1) && host.learn) host.learn({ en: f.en, ja: f.all, pos: f.pos, multi: f.multi, miss: !!f.miss, src: '単語ダッシュ' });
+        const slow = t - (f.t0 || t) > 10;   // 10秒以上なやんだ言葉は、あとでかならず復習に入る
+        if ((me.s === 0 || two) && (f.miss || f.multi > 1 || slow) && host.learn) host.learn({ en: f.en, ja: f.all, pos: f.pos, multi: f.multi, miss: !!f.miss, slow, src: '単語ダッシュ' });
         f.dead = 1; me.dist += 1; me.flash = 0.25; if (me.s === 0 || two) sfx.play('tap');
         if (reading === f) { try { speechSynthesis.cancel(); } catch (e) { } reading = null; }
         if (me.dist >= N) { over = true; sfx.play('win'); setTimeout(() => host.end({ winner: me.s, text: 'ゴール!' }), 1600); return; }

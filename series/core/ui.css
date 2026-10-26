@@ -119,3 +119,4 @@
 .rv-card .f{display:flex;flex-direction:column;gap:6px;align-items:center}.rv-card b{font-size:26px}.rv-card small{font-size:12px;color:#7a6656}
 .rv-card .b{font-size:18px;font-weight:800;color:#c0561b}.rv-card .b em{display:block;font-style:normal;font-size:12px;color:#e08a3c;margin-top:4px}
 .rv-pt{font-size:22px;font-weight:900;text-align:center;color:#c0561b;margin:0}
+.rv-ch{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rv-ch .cs-btn{min-height:52px}

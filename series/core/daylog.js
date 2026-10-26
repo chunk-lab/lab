@@ -27,7 +27,7 @@ const dayNum = k => Math.round(Date.parse(k + 'T00:00:00Z') / 864e5);
 
 export function createDayLog(core) {
   const st = createStore('core');
-  const S = Object.assign({ days: {}, total: {}, queue: [], graceAt: null, lastEnter: null }, st.get('daylog') || {});
+  const S = Object.assign({ days: {}, total: {}, queue: [], graceAt: null, lastEnter: null, lastTest: null }, st.get('daylog') || {});
   const L = { chat: null, sub: null, app: null, base: null };
   let lastTouch = Date.now(), tickN = 0, dirty = false;
   const subs = new Set();
@@ -61,6 +61,7 @@ export function createDayLog(core) {
     addWord(d) {
       if (!d || !d.en) return; const day = dayOf(), key = String(d.en).toLowerCase().trim(), w = day.words[key] || (day.words[key] = { en: d.en, ja: '', pos: '', kind: d.kind || 'word', src: '', miss: false, multi: 0, slow: false, n: 0 });
       w.n++; if (d.ja) w.ja = d.ja; if (d.pos) w.pos = d.pos; if (d.src) w.src = d.src; if (d.miss) w.miss = true; if (d.slow) w.slow = true; w.multi = Math.max(w.multi || 0, d.multi || 0); dirty = true;
+      if (d.slow && !S.queue.some(q => q.en.toLowerCase() === key)) S.queue.push({ ...w, added: dayKey(), unk: 1, slow: true });   // 10秒以上なやんだ言葉は、あとの復習に入れる
     },
     words(k = dayKey()) { return Object.values((S.days[k] || { words: {} }).words); },
     wordCount: (k = dayKey()) => Object.keys((S.days[k] || { words: {} }).words).length,
@@ -91,6 +92,10 @@ export function createDayLog(core) {
     flag(name, v = true, k = dayKey()) { const d = dayOf(k); if (d.pts[name] === v) return; d.pts[name] = v; save(); },
     flagged: (name, k = dayKey()) => !!(S.days[k] && S.days[k].pts[name]),
     flags: (k = dayKey()) => ({ ...((S.days[k] || {}).pts || {}) }),
+    enqueue(list) { const q = new Map(S.queue.map(w => [w.en.toLowerCase(), w])); list.forEach(w => { const k = w.en.toLowerCase(), o = q.get(k) || { ...w, added: dayKey(), unk: 0 }; o.unk = (o.unk || 0) + 1; q.set(k, o); }); S.queue = [...q.values()].slice(-300); save(); },
+    lastTest: () => S.lastTest, setTest(k) { S.lastTest = k; save(); },
+    // 今までに出会った言葉(意味つき)すべて。定期の単語テストの出題もと
+    pool() { const m = new Map(); Object.values(S.days).forEach(d => Object.values(d.words).forEach(w => { if (w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), w); })); S.queue.forEach(w => { if (w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), w); }); return [...m.values()]; },
     graceAt: () => S.graceAt, setGrace(k) { S.graceAt = k; save(); },
     lastEnter: () => S.lastEnter, setEnter(k) { S.lastEnter = k; save(); },
     prevDay() { const ks = Object.keys(S.days).filter(k => k < dayKey()).sort(); return ks[ks.length - 1] || null; },

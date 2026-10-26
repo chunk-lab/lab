@@ -74,7 +74,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         else if (name === 'app:close') { document.body.classList.remove('md-app-open'); core.daylog.act('app', null); core.daylog.act('sub', null); core.daylog.act('chat', null); }
         else if (name === 'app:event' && d?.name === 'study') openStudy();
         else if (name === 'app:event' && d?.name === 'act') core.daylog.act(d.data?.layer || 'sub', d.data?.cat ? { cat: d.data.cat, label: d.data.label } : null);   // 1日の記録:いま何をしているか
-        else if (name === 'app:event' && d?.name === 'learn') core.daylog.addWord(d.data);   // 出会った単語・文
+        else if (name === 'app:event' && d?.name === 'learn') { if (d.data?.save) { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, src: d.data.src || 'gamebox' }); core.ui.toast('ノートに入れました'); } catch (e) { } } else core.daylog.addWord(d.data); }   // 出会った単語・文
+        else if (name === 'app:event' && d?.name === 'bonus') { const n = Math.max(1, d.data?.n | 0), g = core.member.earn('once', 50 * n); if (g) { core.ui.toast(`メダルのごほうび +${g}コイン`); } }   // メダル(勉強を続けた日数)を新しくもらったら、1つにつき50コイン
         else if (name === 'app:event' && d?.name === 'daily') core.review && core.review.open({ mode: 'today' });   // 「今日はここまで」
         else if (name === 'app:event' && d?.name === 'done') core.events.report('gamebox', 'done', d.data || {});   // 家のゲーム機の英語ゲーム(メダルの日数に入る)
         else if (name === 'app:event' && d?.name === 'play') { const p = playOf(d.data?.id); if (p && core.today) core.today.go(p); }   // そら君が勧めた勉強を開く

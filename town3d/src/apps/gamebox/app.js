@@ -58,6 +58,7 @@ const CSS = `
 .gb .vs .n{font-size:26px;text-shadow:0 3px 0 #0003}.gb .vs .x{font-size:44px;background:#fff;color:${INK};border-radius:999px;padding:4px 18px;box-shadow:0 4px 0 #0003}
 @keyframes gbFade{0%,75%{opacity:1}100%{opacity:0;visibility:hidden}}
 .gb .res{position:absolute;inset:0;z-index:14;display:flex;align-items:center;justify-content:center;background:rgba(20,10,40,.5)}
+.gb .res .wl{text-align:left;max-height:30vh;overflow:auto;margin:8px 0;background:#fff;border-radius:14px;padding:8px}.gb .res .wr{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:4px 0;border-top:1px solid #eee}.gb .res .wr small{color:#7a6656}.gb .res .wr em{font-style:normal;font-size:11px;color:#fff;background:#e08a3c;border-radius:8px;padding:0 5px}.gb .res .wr u{text-decoration:none;font-size:11px;color:#d24}.gb .res .wr .btn{padding:6px 8px;font-size:12px;flex:none}
 .gb .res .box{background:#fffaf3;border-radius:22px;padding:18px;width:min(340px,90%);text-align:center;box-shadow:0 10px 30px #0005;animation:gbPop .3s}
 @keyframes gbPop{from{transform:scale(.7);opacity:0}}
 .gb .res .big{font-size:30px;font-weight:900}
@@ -242,17 +243,17 @@ export const gameboxApp = {
       const vs = document.createElement('div'); vs.className = 'vs';
       vs.innerHTML = `<div class="n ${two ? 'flipped' : ''}">${players[1].icon} ${players[1].name}</div><div class="x">VS</div><div class="n">${players[0].icon} ${players[0].name}</div>`;
       root.appendChild(vs); setTimeout(() => vs.remove(), 1700); sfx.play('whoosh');
-      let done = false;
+      let done = false; const seen = new Map();
       const host = {
-        box: inner, sfx, players, two, opts, learn: d => { try { ctx.emit('learn', d); } catch (e) { } }, dictUrl: ctx.dictUrl || P.dictUrl, season: P.season,
+        box: inner, sfx, players, two, opts, learn: d => { try { if (d.kind !== 'sentence') seen.set(d.en, d); ctx.emit('learn', d); } catch (e) { } }, dictUrl: ctx.dictUrl || P.dictUrl, season: P.season,
         end(res) {
           if (done) return; done = true;
-          setTimeout(() => result(G, opp, opts, players, res), 900);
+          setTimeout(() => result(G, opp, opts, players, res, [...seen.values()]), 900);
         },
       };
       setTimeout(() => { if (!stage.isConnected) return; cur = G.start(host); }, 1500);
     }
-    function result(G, opp, opts, players, res) {
+    function result(G, opp, opts, players, res, seen = []) {
       if (EN_GAMES.includes(G)) try { ctx.emit('done', { play: 'gamebox.en', game: G.id, min: Math.round((Date.now() - (G._t0 || Date.now())) / 6000) / 10 }); } catch (e) { }   // 英語ゲームは、勉強の記録(メダルの日数)に入る
       const w = res.winner, two = opp === '2p';
       const title = w === -1 ? 'ひきわけ' : two ? `${players[w].name} のかち!` : w === 0 ? '🏆 かち!' : 'まけ…';
@@ -262,10 +263,12 @@ export const gameboxApp = {
       box.innerHTML = `<div class="box"><div class="big">${title}</div>
         ${res.score ? `<div style="font-size:22px;font-weight:900;margin:6px 0">${players[0].name} ${res.score[0]} - ${res.score[1]} ${players[1].name}</div>` : ''}
         ${res.text ? `<p class="note">${res.text}</p>` : ''}
+        ${seen.length ? `<div class="wl"><b>まちがえた言葉・ほかの意味もある言葉</b>${seen.map((w, i) => `<div class="wr"><span><b>${w.en}</b>${w.multi > 1 ? ` <em>＋${w.multi - 1}</em>` : ''}${w.miss ? ' <u>まちがえた</u>' : ''}<br><small>${w.ja || ''}</small></span><button class="btn sub" data-save="${i}">＋ノート</button></div>`).join('')}<p class="note">ぜんぶ「今日のふりかえり」にも入っています</p></div>` : ''}
         ${cpu ? `<p style="background:#fff;border-radius:14px;padding:8px;box-shadow:0 2px 8px #0001">${cpu.icon} ${cpu.name}「${line}」</p>` : ''}
         ${opts.trial ? '<p class="note">お試しはここまで。ソフトを借りると、ちゃんとした試合ができるよ。</p>' : ''}
         <div class="row"><button class="btn sub" data-m>えらびなおす</button>${opts.trial ? '<button class="btn gold" data-rent>ソフトを借りる</button>' : '<button class="btn" data-a>もう一回</button>'}</div></div>`;
       root.appendChild(box);
+      box.querySelectorAll('[data-save]').forEach(b => { b.onclick = () => { const w = seen[+b.dataset.save]; try { ctx.emit('learn', { ...w, save: true }); } catch (e) { } b.textContent = '✓ ノートに入れた'; b.disabled = true; }; });
       box.querySelector('[data-m]').onclick = () => home();
       const a = box.querySelector('[data-a]'); if (a) a.onclick = () => gate(G, trial => play(G, opp, { ...opts, trial }));
       const rb = box.querySelector('[data-rent]'); if (rb) rb.onclick = () => { home(); rentTitles(G.id); };

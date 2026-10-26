@@ -713,7 +713,7 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('ui:dialogClosed', () => { if (talkingTo) talkingTo.talking = false; talkingTo = null; }));
   offs.push(bus.on('ui:panelClosed', () => { if (talkingTo) talkingTo.talking = false; talkingTo = null; }));
   // 勉強を続けたメダル:もらったら持ち物に入れて知らせる(家の壁にかざれる)
-  const medalCheck = () => { try { const nw = furn.grantMedals(opt.medals?.()); if (nw.length && started) hud.toast(`🏅 ${nw.map(i => i.name).join('・')}をもらった! 家の壁にかざれるよ`); } catch (e) { } };
+  const medalCheck = () => { try { const nw = furn.grantMedals(opt.medals?.()); if (nw.length) opt.onEvent?.('app:event', { name: 'bonus', data: { kind: 'medal', n: nw.length } }); if (nw.length && started) hud.toast(`🏅 ${nw.map(i => i.name).join('・')}をもらった! 家の壁にかざれるよ`); } catch (e) { } };
   { const mi = setInterval(medalCheck, 15000); offs.push(() => clearInterval(mi)); setTimeout(medalCheck, 3000); }
   offs.push(bus.on('app:close', () => { input.enabled = true; audio.play('close'); hud.setCoins(wallet.get(), gemsNow()); }));
   if (opt.wallet?.onChange) offs.push(opt.wallet.onChange(w => bus.emit('wallet', w)));
