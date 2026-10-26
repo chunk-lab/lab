@@ -28,18 +28,19 @@ export default {
     const lv = cpu ? cpu.lv : 2;
     // スピード:CPU戦は自分の希望そのまま、2人対戦は2人の希望の平均。8が もとの速さ
     const SPD = two ? ((host.opts.spd || 4) + (host.opts.spd2 || 4)) / 2 : (host.opts.spd || 4), KS = SPD / 8;   // CPU戦=自分が選んだ速さそのまま / 人どうし=2人の希望の平均
-    const cpuSpd = [0, 900, 1300, 1750][lv] * (0.55 + 0.45 * KS);
+    const cpuSpd = [0, 560, 800, 1100][lv] * (0.55 + 0.45 * KS);
     let think = 0;
     function cpuMove(dt) {
       const m = mal[1]; think -= dt;
-      if (think > 0) return; think = [0, 0.12, 0.07, 0.03][lv];
+      if (think > 0) return; think = [0, 0.26, 0.18, 0.11][lv];
       const home = { x: W / 2, y: top + 60 };
       if (puck.y < H / 2 && (puck.vy < 120 || Math.hypot(puck.vx, puck.vy) < 250)) {   // 自陣にあって遅い → 打ちに行く(パックの上側から)
         const aim = (Math.random() - 0.5) * W * 0.3; m.tx = puck.x + aim * 0.15; m.ty = puck.y - M * 0.6;
-      } else if (puck.vy < 0) {   // こちらへ来る → ゴール前で受ける
+      } else if (puck.vy < 0) {   // こちらへ来る → ゴール前で受ける(ときどき見のがす)
+        if (Math.random() < [0, 0.3, 0.2, 0.1][lv]) return;
         const t = (puck.y - (top + 80)) / -puck.vy; let px = puck.x + puck.vx * t;
         for (let k = 0; k < 3; k++) { if (px < R) px = 2 * R - px; if (px > W - R) px = 2 * (W - R) - px; }
-        m.tx = clamp(px + (Math.random() - 0.5) * [0, 90, 50, 20][lv], W / 2 - GW * 0.7, W / 2 + GW * 0.7); m.ty = top + 70;
+        m.tx = clamp(px + (Math.random() - 0.5) * [0, 190, 130, 80][lv], W / 2 - GW * 0.7, W / 2 + GW * 0.7); m.ty = top + 70;
       } else { m.tx = home.x + (puck.x - W / 2) * 0.4; m.ty = home.y; }
     }
     const stop = loop(dt => {
