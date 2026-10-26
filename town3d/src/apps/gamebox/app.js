@@ -17,9 +17,10 @@ import race from './games/race.js';
 import party from './games/party.js';
 import snow from './games/snow.js';
 import boxes from './games/boxes.js';
+import billiards from './games/billiards.js';
 
 export const EN_GAMES = [chunksort, wordrace, listen, tug, shiritori, sniper, race];   // チャンクボックスは英語のゲームだけ
-export const PLAY_GAMES = [hockey, party, bowling, darts, boxes, snow3d, fishvs, golf, frisbee];   // アミューズメントセンター(センター全体が有料。コインでも遊べる。旬の外遊びだけ無料)
+export const PLAY_GAMES = [billiards, hockey, party, bowling, darts, boxes, snow3d, fishvs, golf, frisbee];   // アミューズメントセンター(センター全体が有料。コインでも遊べる。旬の外遊びだけ無料)
 const SEASON_OF = { snow3d: 'winter', snow: 'winter', golf: 'spring', frisbee: 'autumn', fishvs: 'summer' };
 const ALL = [...EN_GAMES, ...PLAY_GAMES, snow];
 // 値段(あとで変えられるようにここにまとめる)
