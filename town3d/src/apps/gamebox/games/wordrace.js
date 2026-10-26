@@ -21,7 +21,7 @@ export default {
     let over = false, count = 2.4, t = 0, started = false;
     const seq = shuffle(LIST.slice());
     const P = [0, 1].map(s => ({ s, dist: 0, flash: 0, k: s * 7, lanes: [0, 1].map(i => ({ i, now: null, next: null, slots: null, lock: 0, prev: new Set(), cpuT: 0, anim: 0 })) }));
-    const parts = t => String(t).split(/[、,]/).map(x => x.trim()).filter(Boolean);   // 意味はいくつか「、」でつながっている。4択には最初の意味だけ出す
+    const parts = t => String(t).split(/[、,・]/).map(x => x.trim()).filter(Boolean);   // 意味はいくつか「、」でつながっている。4択には最初の意味だけ出す
     const nextWord = me => { const w = seq[me.k % seq.length], ps = parts(w[2]); me.k++; return { en: w[0], pos: w[1], ans: ps[0] || w[2], all: w[2], multi: ps.length, dead: 0 }; };
     P.forEach(me => me.lanes.forEach(L => { L.now = nextWord(me); L.next = nextWord(me); }));
     function distract(f, ex, old) {
