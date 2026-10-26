@@ -16,7 +16,7 @@ export default {
   ],
   start(host) {
     const S = surface(host.box), g = S.g, two = host.two, cpu = host.players[1].cpu, sfx = host.sfx, lv = cpu ? cpu.lv : 2, H2 = halves(S, two);
-    const O = host.opts, N = O.trial ? 10 : O.to || 30, LIST = SW[String(O.lv || 1)] || SW['1'], TOP = 64;
+    const O = host.opts, N = O.trial ? 10 : O.to || 30, LIST = SW[String(O.lv || 1)] || SW['1'], PAD = 12;   // PAD=スマホの下のバーにかからないための余白
     const say = O.say !== 0, CPU_T = [0, 3.9, 3.0, 2.3], CPU_OK = [0, 0.62, 0.72, 0.84];
     let over = false, count = 2.4, t = 0, started = false;
     const seq = shuffle(LIST.slice());
@@ -49,17 +49,17 @@ export default {
       } else { sl.dis = true; L.lock = 0.5; if (me.s === 0 || two) sfx.play('ng'); }
     }
     // ---- 画面の割りふり(エリアの中) ----
-    const area = () => two ? { y0: 0, h: S.H / 2 } : { y0: TOP, h: S.H - TOP };
+    const area = () => ({ y0: two ? 0 : S.H / 2, h: S.H / 2 });   // どちらのときも、下の半分が自分、上の半分が相手
     function lay(W, h) {
-      const head = 28, gw = Math.min(W * 0.46, 210), gh = Math.min((h - head - 22) / 2, 230), blockH = gh * 2 + 10, top = head + Math.max(4, (h - head - blockH) / 2);
+      const head = 38, hh = h - PAD, gw = Math.min(W * 0.46, 210), gh = Math.min((hh - head - 14) / 2, 230), blockH = gh * 2 + 10, top = head + Math.max(2, (hh - head - blockH) / 2);
       const bx = 8 + gw + 8, bw = W - bx - 8;
       return { head, gw, gh, gy: [top, top + gh + 10], bx, bw, cw: (gw - 4) / 2, ch: (gh - 4) / 2 };
     }
     const cells = (W, h, li) => { const L0 = lay(W, h); return [0, 1, 2, 3].map(i => ({ x: 8 + (i % 2) * (L0.cw + 4), y: L0.gy[li] + Math.floor(i / 2) * (L0.ch + 4), w: L0.cw, h: L0.ch, li, i })); };
-    const repB = W => ({ x: W - 48, y: 3, w: 40, h: 22, label: '🔊' });
+    const repB = W => ({ x: W - 50, y: 8, w: 40, h: 22, label: '🔊' });
     const pt = pointers(S.cv, {
       onDown: p => {
-        const s = two ? p.side : 0; const A = area(), l = two ? H2.local(p, s) : { x: p.x, y: p.y - A.y0 }, me = P[s];
+        const s = two ? p.side : 0; if (!two && p.y < S.H / 2) return; const A = area(), l = two ? H2.local(p, s) : { x: p.x, y: p.y - A.y0 }, me = P[s];
         if (hit(repB(S.W), l)) { me.lanes.forEach(L => L.now && enq(L.now)); return; }
         for (const li of [0, 1]) for (const b of cells(S.W, A.h, li)) if (hit(b, l)) return answer(me, li, b.i);
       },
@@ -86,10 +86,14 @@ export default {
       if (o.now && reading === f) txt(g, '🔊', x + w - 8, y + 9, { size: 11 });
       g.restore();
     }
-    function drawArea(me, W, h) {
-      const L0 = lay(W, h), show = count <= 0;
-      txt(g, `${host.players[me.s].name}  ${Math.min(N, Math.floor(me.dist))} / ${N}`, 10, 14, { size: 12, align: 'left', color: me.s ? COL.p2d : COL.p1d });
-      btn(g, repB(W), { size: 13, shadow: false, border: '#e6dcf2' });
+    function drawArea(me, W, h, opp) {
+      const L0 = lay(W, h), show = count <= 0, pl = host.players[me.s];
+      // 見出し:自分(ピンク)/ 相手(青)がひと目でわかるように
+      g.fillStyle = opp ? '#dbe6fb' : '#ffe3ec'; rr(g, 6, 4, W - 12, 30, 10); g.fill(); g.strokeStyle = opp ? COL.p2 : COL.p1; g.lineWidth = 2; g.stroke();
+      const nm = opp && !two ? `▲ 相手  ${pl.icon || ''} ${pl.name}` : `${two ? '' : '▼ '}${me.s ? pl.name : two ? pl.name : 'あなた'}`;
+      txt(g, nm, opp && !two ? 50 : 16, 19, { size: 13, align: 'left', color: opp ? COL.p2d : COL.p1d });
+      txt(g, `${Math.min(N, Math.floor(me.dist))} / ${N}`, W - (opp ? 16 : 56), 19, { size: 13, align: 'right', color: opp ? COL.p2d : COL.p1d });
+      if (!opp) btn(g, repB(W), { size: 13, shadow: false, border: '#e6dcf2' });
       if (me.flash > 0) { g.fillStyle = `rgba(63,191,106,${me.flash * 0.6})`; g.fillRect(0, 0, W, h); }
       me.lanes.forEach((L, li) => {
         const y = L0.gy[li], gh = L0.gh;
@@ -119,16 +123,16 @@ export default {
       S.begin(); const W = S.W, H = S.H;
       g.fillStyle = '#f6fbff'; g.fillRect(0, 0, W, H);
       if (!two) {
-        // 上:2人のランナー
-        g.fillStyle = '#fff'; rr(g, 8, 8, W - 16, TOP - 14, 12); g.fill();
-        g.fillStyle = '#e8dfc8'; g.fillRect(20, 30, W - 70, 10); txt(g, '🏁', W - 34, 34, { size: 18 });
-        P.forEach((me, s) => { const x = 20 + (W - 80) * Math.min(1, me.dist / N); txt(g, '🏃', x, s ? 24 : 42, { size: 18 }); txt(g, s ? host.players[1].name : 'あなた', x, s ? 12 : 54, { size: 9, color: s ? COL.p2d : COL.p1d }); });
-        g.save(); g.translate(0, TOP); drawArea(P[0], W, H - TOP); g.restore();
+        g.fillStyle = '#eef3ff'; g.fillRect(0, 0, W, H / 2);   // 上の半分=相手の画面(うすい青)
+        drawArea(P[1], W, H / 2, true);
+        g.save(); g.translate(0, H / 2); drawArea(P[0], W, H / 2, false); g.restore();
       } else {
-        [0, 1].forEach(s => H2.half(s, () => drawArea(P[s], W, H / 2)));
-        g.fillStyle = INK; g.fillRect(0, H / 2 - 1, W, 2);
-        P.forEach((me, s) => { const x = 14 + (W - 40) * Math.min(1, me.dist / N); g.fillStyle = s ? COL.p2 : COL.p1; g.beginPath(); g.arc(x, H / 2 + (s ? -4 : 4), 5, 0, 7); g.fill(); });
+        g.fillStyle = '#eef3ff'; g.fillRect(0, 0, W, H / 2);
+        [0, 1].forEach(s => H2.half(s, () => drawArea(P[s], W, H / 2, false)));
       }
+      g.fillStyle = INK; g.fillRect(0, H / 2 - 1, W, 2);   // まん中:ゴールまでの進み
+      txt(g, '🏁', W - 12, H / 2, { size: 14 });
+      P.forEach((me, s) => { const x = 14 + (W - 44) * Math.min(1, me.dist / N); g.fillStyle = s ? COL.p2 : COL.p1; g.beginPath(); g.arc(x, H / 2 + (s ? -6 : 6), 6, 0, 7); g.fill(); });
       if (count > 0) banner(g, S, two, count > 0.4 ? String(Math.ceil(count)) : 'GO!', { size: 50 });
     }
     return { _dbg: () => ({ P, cells, lay, area }), stop() { stop(); pt.off(); S.cv.remove(); over = true; try { speechSynthesis.cancel(); } catch (e) { } } };
