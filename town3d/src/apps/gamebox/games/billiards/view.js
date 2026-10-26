@@ -191,23 +191,27 @@ export function createView(box, { cloth = 0 } = {}) {
   }
 
   // ---- カメラ ----
-  let camMode = 'top', aspect = 1; const cp = new THREE.Vector3(), cl = new THREE.Vector3(), tp = new THREE.Vector3(), tl = new THREE.Vector3(); let first = true, fov = 40, tfov = 40, mt = 0, mb = 0, offY = 0, toff = 0, vw = 1, vh = 1;
+  let camMode = 'top', aspect = 1; const cp = new THREE.Vector3(), cl = new THREE.Vector3(), tp = new THREE.Vector3(), tl = new THREE.Vector3(); let first = true, zoom = 1, fx = 0, fz = 0, fov = 40, tfov = 40, mt = 0, mb = 0, offY = 0, toff = 0, vw = 1, vh = 1;
   function camTarget(mode, cx, cz, ang) {
     if (mode === 'top') {
       tfov = 38; const t = Math.tan(THREE.MathUtils.degToRad(tfov) / 2), band = Math.max(0.4, (vh - mt - mb) / vh), need = Math.max((OZ + 0.05) / (t * band), (OX + 0.04) / (t * aspect)), tilt = 0.2;
       toff = -(mt - mb) / 2;   // 上の名前・下のボタンにかからない帯の まん中に台がくるように
-      tp.set(0, need * Math.cos(tilt), -need * Math.sin(tilt) - 0.02); tl.set(0, 0, 0.0);
+      const nz = need / zoom; tp.set(fx, nz * Math.cos(tilt), fz - nz * Math.sin(tilt) - 0.02); tl.set(fx, 0, fz);
     } else {
       toff = 0; tfov = 52; const dx = Math.sin(ang), dz = Math.cos(ang);
       tp.set(cx - dx * 0.95, 0.46, cz - dz * 0.95); tl.set(cx + dx * 0.85, 0, cz + dz * 0.85);
     }
   }
+  const clampPan = () => { const m = zoom <= 1.001 ? 0 : (1 - 1 / zoom) * 1.0; fx = Math.max(-W2 * m - 0.1 * (zoom > 1), Math.min(W2 * m + 0.1 * (zoom > 1), fx)); fz = Math.max(-L2 * m - 0.1 * (zoom > 1), Math.min(L2 * m + 0.1 * (zoom > 1), fz)); };
+  function setZoom(z, x, z2, snap) { zoom = Math.max(1, Math.min(3.2, z)); if (x != null) fx = x; if (z2 != null) fz = z2; if (zoom <= 1.02) { zoom = 1; fx = fz = 0; } clampPan(); if (snap) snapCam(); }
+  function panBy(dx, dz, snap) { if (zoom <= 1) return; fx += dx; fz += dz; clampPan(); if (snap) snapCam(); }
+  function snapCam() { if (camMode !== 'top') return; camTarget('top', 0, 0, 0); cp.copy(tp); cl.copy(tl); fov = tfov; cam.position.copy(cp); cam.lookAt(cl); cam.fov = fov; cam.updateProjectionMatrix(); cam.updateMatrixWorld(); }
   function setCam(mode, cx, cz, ang, dt = 1) {
     camMode = mode; camTarget(mode, cx, cz, ang); lamp.visible = mode !== 'top';
     const k = first ? 1 : Math.min(1, dt * 6); first = false;
     cp.lerp(tp, k); cl.lerp(tl, k); fov += (tfov - fov) * k;
     offY += (toff - offY) * k; cam.setViewOffset(vw, vh, 0, offY, vw, vh);
-    cam.position.copy(cp); cam.lookAt(cl); cam.fov = fov; cam.updateProjectionMatrix();
+    cam.position.copy(cp); cam.lookAt(cl); cam.fov = fov; cam.updateProjectionMatrix(); cam.updateMatrixWorld();
   }
 
   function resize() { const w = box.clientWidth || 300, h = box.clientHeight || 300; renderer.setSize(w, h, false); aspect = w / h; vw = w; vh = h; cam.aspect = aspect; cam.updateProjectionMatrix(); }
@@ -221,5 +225,5 @@ export function createView(box, { cloth = 0 } = {}) {
     disp.forEach(o => o.dispose && o.dispose()); envRT.dispose(); renderer.dispose(); renderer.forceContextLoss?.(); renderer.domElement.remove();
   }
   const setMargins = (t, b) => { mt = t; mb = b; };
-  return { setMargins, renderer, scene, cam, sync, drop, setCue, setCam, resize, project, pick, render, dispose, get camMode() { return camMode; }, meshes };
+  return { setZoom, panBy, get zoom() { return zoom; }, setMargins, renderer, scene, cam, sync, drop, setCue, setCam, resize, project, pick, render, dispose, get camMode() { return camMode; }, meshes };
 }

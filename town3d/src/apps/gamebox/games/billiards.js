@@ -38,6 +38,7 @@ const CSS = `.bd{position:absolute;inset:0;pointer-events:none;font-family:inher
 .bd .spp::before{content:'';position:absolute;inset:10%;border-radius:50%;border:1px dashed rgba(0,0,0,.25)}
 .bd .ov p{margin:0;font-size:12px;color:#e8dcc0;text-align:center;line-height:1.6}
 .bd .ov .row{display:flex;gap:10px}.bd .ov button{border:1px solid rgba(201,162,90,.6);background:#2a1f17;color:#f3ead8;font:inherit;font-weight:800;padding:10px 18px;border-radius:12px}
+.bd .tag{position:absolute;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:5px 11px 5px 7px;border-radius:999px;background:rgba(10,8,6,.85);border:1px solid rgba(201,162,90,.7);font-size:13px;white-space:nowrap;pointer-events:none;box-shadow:0 3px 10px #0008}.bd .tag .bi{width:22px;height:22px;font-size:12px}
 .bd [hidden]{display:none!important}`;
 const BC = ['#f6f2e8', '#f2b705', '#1d45a8', '#c8152d', '#4c2a85', '#f06a14', '#0d7044', '#7c1d22', '#151515'];
 const bicon = (n, gone) => { const c = BC[n > 8 ? n - 8 : n]; return `<span class="bi ${gone ? 'gone' : ''}" style="background:${n > 8 ? `linear-gradient(#f6f2e8 25%,${c} 25% 75%,#f6f2e8 75%)` : c};${n === 8 ? 'color:#fff' : ''}">${n}</span>`; };
@@ -167,15 +168,53 @@ export default {
     // ---- 入力 ----
     const cv = V.renderer.domElement; let drag = null;
     const local = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    // ---- さわる:球をタップ=番号を見る / ドラッグ=ねらう / 2本の指=ひろげて拡大・とじて縮小 ----
+    const pts = new Map(); let pinch = null, tapB = null, tagT = 0;
+    const tag = document.createElement('div'); tag.className = 'tag'; tag.hidden = true; ui.appendChild(tag);
+    const ballAt = (x, y) => {   // 画面の(x,y)にある球(手前のもの)。手球もふくむ
+      let best = null, bd = 1e9;
+      for (const b of balls) { if (!b.on) continue; const [bx, by, bz] = V.project(b.x, P.R, b.z), [ex] = V.project(b.x + P.R, P.R, b.z), r = Math.max(20, Math.abs(ex - bx) * 2.2), d = Math.hypot(x - bx, y - by); if (d < r && d < bd) { bd = d; best = b; } }
+      return best;
+    };
+    function showTag(b) {
+      const [bx, by] = V.project(b.x, P.R, b.z), kind = b.n === 0 ? '手球' : b.n === 8 && KIND === 8 ? '8番(ブラック)' : b.n === 9 && KIND === 9 ? '9番(ここを入れたら勝ち)' : KIND === 8 ? `${b.n}番 ${grp(b.n) === 'solid' ? 'ソリッド' : 'ストライプ'}` : `${b.n}番`;
+      tag.innerHTML = (b.n ? bicon(b.n) : '<span class="bi" style="background:#f7f4ec"></span>') + `<b>${kind}</b>`;
+      tag.hidden = false; tag.style.left = `${Math.max(70, Math.min(box.clientWidth - 70, bx))}px`; tag.style.top = `${Math.max(100, by - 34)}px`; tagT = 2.4;
+    }
     cv.addEventListener('pointerdown', e => {
-      snd.resume(); if (!mine()) return; const [x, y] = local(e), c = balls[0];
-      const [bx, by] = V.project(c.x, P.R, c.z), [ex] = V.project(c.x + P.R, P.R, c.z), rp = Math.max(26, Math.abs(ex - bx) * 3);
+      snd.resume(); const [x, y] = local(e); pts.set(e.pointerId, [x, y]); try { cv.setPointerCapture(e.pointerId); } catch (_) { }
+      if (pts.size === 2 && camMode === 'top') {   // ピンチはじめ
+        const [p1, p2] = [...pts.values()], mx = (p1[0] + p2[0]) / 2, my = (p1[1] + p2[1]) / 2;
+        drag = null; tag.hidden = true; pinch = { d0: Math.hypot(p1[0] - p2[0], p1[1] - p2[1]) || 1, z0: V.zoom, anchor: V.pick(mx, my) }; return;
+      }
+      if (pts.size > 1) return;
+      const hb = ballAt(x, y);
+      if (!mine()) { if (hb) showTag(hb); return; }
+      const c = balls[0], [bx, by] = V.project(c.x, P.R, c.z), [ex] = V.project(c.x + P.R, P.R, c.z), rp = Math.max(26, Math.abs(ex - bx) * 3);
       if (inHand && Math.hypot(x - bx, y - by) < rp) drag = { kind: 'ball' };
+      else if (hb && hb.n) { drag = { kind: 'tap', x0: x, y0: y, b: hb, a0: aim }; return; }   // 動かさず離したら「番号を見る」
       else drag = { kind: 'aim', x0: x, a0: aim };
-      cv.setPointerCapture?.(e.pointerId); move(x, y);
+      move(x, y);
     });
-    cv.addEventListener('pointermove', e => { if (drag) { const [x, y] = local(e); move(x, y); } });
-    const up = () => { drag = null; }; cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+    cv.addEventListener('pointermove', e => {
+      const [x, y] = local(e); if (pts.has(e.pointerId)) pts.set(e.pointerId, [x, y]);
+      if (pinch && pts.size >= 2) {
+        const [p1, p2] = [...pts.values()], mx = (p1[0] + p2[0]) / 2, my = (p1[1] + p2[1]) / 2, d = Math.hypot(p1[0] - p2[0], p1[1] - p2[1]);
+        V.setZoom(pinch.z0 * d / pinch.d0, null, null, true);
+        const q = V.pick(mx, my); if (q && pinch.anchor) V.panBy(pinch.anchor.x - q.x, pinch.anchor.z - q.z, true);
+        const q2 = V.pick(mx, my); if (q2 && pinch.anchor) V.panBy(pinch.anchor.x - q2.x, pinch.anchor.z - q2.z, true);
+        return;
+      }
+      if (!drag) return;
+      if (drag.kind === 'tap') { if (Math.hypot(x - drag.x0, y - drag.y0) < 9) return; drag = { kind: 'aim', x0: drag.x0, a0: drag.a0 }; }
+      move(x, y);
+    });
+    const up = e => {
+      pts.delete(e.pointerId);
+      if (drag && drag.kind === 'tap') showTag(drag.b);
+      if (pts.size < 2) pinch = null; if (pts.size === 0) drag = null;
+    };
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
     function move(x, y) {
       if (!mine()) return; const c = balls[0];
       if (drag.kind === 'ball') {
@@ -251,6 +290,8 @@ export default {
     const stop = loop(dt0 => {
       const dt = Math.min(0.05, dt0), W = box.clientWidth, H = box.clientHeight;
       if (msgT > 0) { msgT -= Math.min(0.5, dt0); if (msgT <= 0) msgEl.classList.remove('on'); }
+      if (tagT > 0) { tagT -= dt; if (tagT <= 0) tag.hidden = true; }
+      if (phase === 'strike' || phase === 'roll') tag.hidden = true;
       if (phase === 'aim' && pl[cur].cpu && cpuJob) cpuStep(dt);
       if (phase === 'strike') {   // キューを少し引いてから、すばやく前へ
         strikeT += dt * ff * FAST; const back = 0.03 + power * 0.22, k = strikeT < 0.18 ? strikeT / 0.18 : 1, f = strikeT < 0.18 ? 0 : Math.min(1, (strikeT - 0.18) / 0.07);
@@ -271,7 +312,7 @@ export default {
     });
     newRack();
     return {
-      _dbg: () => ({ fast: v => { FAST = v; }, phase, cur, balls, aim, groups, inHand, wins, shoot: p => shoot(p), setAim: a => { aim = a; }, setSpin: (a, b) => { spin = { a, b }; }, cam: m => { camMode = m; }, place: (x, z) => { balls[0].x = x; balls[0].z = z; } }),
+      _dbg: () => ({ proj: n => { const b = balls.find(q => q.n === n); return V.project(b.x, P.R, b.z); }, zoom: () => V.zoom, fast: v => { FAST = v; }, phase, cur, balls, aim, groups, inHand, wins, shoot: p => shoot(p), setAim: a => { aim = a; }, setSpin: (a, b) => { spin = { a, b }; }, cam: m => { camMode = m; }, place: (x, z) => { balls[0].x = x; balls[0].z = z; } }),
       stop() { over = true; stop(); ro.disconnect(); V.dispose(); snd.dispose(); ov.remove(); ui.remove(); },
     };
   },
