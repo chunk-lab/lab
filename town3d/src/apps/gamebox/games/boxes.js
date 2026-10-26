@@ -40,8 +40,8 @@ export default {
       return out;
     }
     function layout(cx, cy, size) {
-      const o = ring(cx, cy, size, N, DBL ? 0.42 : 0.39, theta, tilt, DBL ? 0.066 : 0.08, 0);
-      return DBL ? o.concat(ring(cx, cy, size, N2, 0.2, theta2, tilt2, 0.056, N)) : o;
+      const o = ring(cx, cy, size, N, DBL ? 0.42 : 0.39, theta, tilt, DBL ? 0.05 : 0.058, 0);
+      return DBL ? o.concat(ring(cx, cy, size, N2, 0.2, theta2, tilt2, 0.04, N)) : o;
     }
     const rgb = (c, k) => `rgb(${Math.min(255, Math.round(c[0] * k))},${Math.min(255, Math.round(c[1] * k))},${Math.min(255, Math.round(c[2] * k))})`;
     function drawBox(b, open, mark, col) {   // マジシャンの箱:ツヤのある濃い色、金のふち、星のしるし
@@ -65,14 +65,14 @@ export default {
       g.strokeStyle = gold; g.lineWidth = Math.max(1.2, s2 * 0.07); g.stroke();
       g.restore();
       g.strokeStyle = col || 'rgba(255,205,80,.55)'; g.lineWidth = col ? Math.max(4, s2 * 0.2) : 1.2; rr(g, x0, yT, s2 * 2, yB - yT, s2 * 0.12); g.stroke();
-      if (open) txt(g, '⭐', 0, -s2 * 1.5, { size: s2 * 1.3 });
+      if (open) txt(g, '⭐', 0, -s2 * 2.2, { size: Math.max(30, s2 * 2.4) });
       if (mark) txt(g, mark, 0, -s2 * 1.7, { size: Math.max(11, s2 * 0.7), color: INK, stroke: '#fff', sw: 4 });
       g.restore();
     }
     function drawRing(s, W, h) {   // 半分(または全体)の中に輪を描く。いちばん奥から順に
       const cx = W / 2, cy = h * 0.5, size = Math.min(W, h * 1.15), L = layout(cx, cy, size);
       P[s].rects = L.map(b => ({ i: b.i, x: b.x, y: b.y, r: b.s * 1.1, z: b.z }));
-      L.slice().sort((a, b) => a.z - b.z).forEach(b => {
+      L.slice().sort((a, b) => ((phase === 'show' || phase === 'reveal') && b.i === target ? -1 : 0) - ((phase === 'show' || phase === 'reveal') && a.i === target ? -1 : 0) || a.z - b.z).forEach(b => {
         const open = (phase === 'show' || phase === 'reveal') && b.i === target;
         const mine = pick[s] === b.i, theirs = pick[1 - s] === b.i && (phase === 'reveal' || two === false);
         const mark = phase === 'reveal' ? (mine && theirs ? (two ? '2人' : 'あなた/相手') : mine ? (s ? host.players[1].name : 'あなた') : theirs ? (two ? '相手' : host.players[1].name) : '') : mine ? '✔' : '';
@@ -121,21 +121,21 @@ export default {
       draw();
     });
     function head(s, W) {
-      txt(g, `${host.players[s].name}  ${score[s]} / ${TO}`, W / 2, 20, { size: 15, color: s ? '#9fc0ff' : '#ffb0b0' });
+      txt(g, `${host.players[s].name}  ${score[s]} / ${TO}`, W / 2, 20, { size: 15, color: s ? COL.p2d : COL.p1d });
       const msg = phase === 'show' ? '⭐ 当たりを よく見て!' : phase === 'spin' ? '目で追いかけて…' : phase === 'pick' ? (pick[s] >= 0 ? 'ほかの人を待っているよ' : '当たりはどれ? タップ!') : phase === 'reveal' ? (pick[s] === target ? '⭐ 当たり! +1' : 'ざんねん…') : '';
-      txt(g, msg, W / 2, 44, { size: 14, color: '#ffe9a8' });
+      txt(g, msg, W / 2, 44, { size: 14, color: INK });
     }
     function draw() {
       S.begin(); const W = S.W, H = S.H;
-      const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#2a1a4a'); bg.addColorStop(1, '#4a2a5e'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+      g.fillStyle = '#fff6e8'; g.fillRect(0, 0, W, H);
       if (!two) {
         head(0, W); g.save(); g.translate(0, 40); drawRing(0, W, H - 40); g.restore();
         P[0].rects.forEach(r => { r.y += 40; });
         if (phase === 'pick' && pick[1] >= 0 && pick[0] < 0) txt(g, `${host.players[1].name}は えらんだ!`, W / 2, H - 24, { size: 14, color: COL.p2d });
       } else {
-        g.fillStyle = 'rgba(80,120,255,.12)'; g.fillRect(0, 0, W, H / 2);
+        g.fillStyle = '#eef3ff'; g.fillRect(0, 0, W, H / 2);
         [0, 1].forEach(s => H2.half(s, () => { head(s, W); g.save(); g.translate(0, 40); drawRing(s, W, H / 2 - 40); g.restore(); P[s].rects.forEach(r => { r.y += 40; }); }));
-        g.fillStyle = '#ffd24d'; g.fillRect(0, H / 2 - 1, W, 2);
+        g.fillStyle = INK; g.fillRect(0, H / 2 - 1, W, 2);
       }
       if (phase === 'count') banner(g, S, two, count > 0.4 ? String(Math.ceil(count)) : 'GO!', { size: 50 });
     }
