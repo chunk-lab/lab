@@ -22,9 +22,9 @@ export default {
     ui.innerHTML = `<style>.bw b{pointer-events:auto;position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;user-select:none;-webkit-user-select:none;touch-action:none;box-shadow:0 4px 0 #0003}
       .bw .l,.bw .r{width:54px;height:54px;bottom:96px;background:#fff;color:#5a4a6b;font-size:20px}.bw .l{left:14px}.bw .r{left:76px}
       .bw .go{right:16px;bottom:84px;width:96px;height:96px;background:radial-gradient(circle at 35% 30%,#fff,#ffe1ea);font-size:34px;flex-direction:column}.bw .go small{font-size:11px;color:#5a4a6b}
-      .bw .tim{position:absolute;right:12px;bottom:196px;width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
+      .bw .skip{right:14px;bottom:200px;width:auto;height:44px;padding:0 16px;border-radius:22px;background:#fff;color:#5a4a6b;font-size:14px}.bw .tim{position:absolute;right:12px;bottom:196px;width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
       .bw .tim i{position:absolute;top:-4px;width:4px;height:24px;border-radius:2px;background:#5a4a6b;left:50%}.bw [hidden]{display:none!important}</style>
-      <div class="bw"><b class="l">◀</b><b class="r">▶</b><div class="tim" hidden><i></i></div><b class="go">🎳<small>下へ引く</small></b></div>`;
+      <div class="bw"><b class="skip" hidden>⏭ あいての番を とばす</b><b class="l">◀</b><b class="r">▶</b><div class="tim" hidden><i></i></div><b class="go">🎳<small>下へ引く</small></b></div>`;
     const scene = new THREE.Scene(); scene.background = new THREE.Color(0x231d38); scene.fog = new THREE.Fog(0x231d38, 22, 45);
     const cam = new THREE.PerspectiveCamera(48, 1, 0.05, 80);
     scene.add(new THREE.HemisphereLight(0xffffff, 0x554466, 1.5)); const sun = new THREE.DirectionalLight(0xffffff, 1.3); sun.position.set(2, 9, 6); sun.castShadow = true; sun.shadow.camera.top = 22; sun.shadow.camera.bottom = -6; sun.shadow.camera.left = -3; sun.shadow.camera.right = 3; sun.shadow.mapSize.set(1024, 2048); scene.add(sun); sun.target.position.set(0, 0, 10); scene.add(sun.target);
@@ -51,9 +51,11 @@ export default {
     function resize() { const W = box.clientWidth || 300, H = box.clientHeight || 300; renderer.setSize(W, H, false); cam.aspect = W / H; cam.updateProjectionMatrix(); ov.width = W * 2; ov.height = H * 2; }
     resize(); const ro = new ResizeObserver(resize); ro.observe(box);
     // ---- 試合 ----
-    const S = [0, 1].map(() => ({ rolls: [] }));
+    const S = [0, 1].map(() => ({ rolls: [] })), SK = ui.querySelector('.skip');
+    SK.addEventListener('pointerdown', e => { e.preventDefault(); skipOpp(); });
     let turn = 0, frame = 0, rollInFrame = 0, phase = 'aim', sx = 0, aimA = 0, B = null, t = 0, msg = '', msgT = 0, over = false, cpuT = 0;
     let run = null;   // 助走 {t, power, needle}
+    const FX = []; let flash = 0, shake = 0, face = '', dtv = 0.016, bigT = 0;   // 演出:紙ふぶき・フラッシュ・ゆれ・表情
     function standPins(all) { pins.forEach(p => { if (all) p.gone = false; if (!p.gone) { p.x = p.x0; p.z = p.z0; p.vx = p.vz = 0; p.tilt = 0; p.fall = false; p.wob = 0; } p.m.visible = !p.gone; }); }
     function framesOf(rolls) { const out = []; let i = 0; for (let f = 0; f < 10 && i < rolls.length; f++) { const a = rolls[i], b = rolls[i + 1], c = rolls[i + 2]; if (a === 10) { out.push({ r: ['X'], s: b != null && c != null ? 10 + b + c : null }); i += 1; } else if (b != null && a + b === 10) { out.push({ r: [a, '/'], s: c != null ? 10 + c : null }); i += 2; } else { out.push({ r: b != null ? [a, b] : [a], s: b != null ? a + b : null }); i += 2; } } return out; }
     function total(rolls) { const fr = framesOf(rolls).slice(0, FR); let s = 0; for (const f of fr) { if (f.s != null) s += f.s; else s += f.r.filter(x => typeof x === 'number').reduce((a, b) => a + b, 0) + (f.r[0] === 'X' ? 10 : 0) + (f.r[1] === '/' ? 10 - (f.r[0] || 0) : 0); } return s; }
@@ -66,10 +68,10 @@ export default {
       S[turn].rolls.push(knocked);
       const left = pins.filter(p => !p.gone).length;
       let next = false;
-      if (rollInFrame === 0 && knocked === 10) { msg = 'ストライク!!'; sfx.play('win'); next = !isLast(); }
-      else if (rollInFrame === 1 && left === 0) { msg = 'スペア!'; sfx.play('point'); next = !isLast(); }
-      else { msg = knocked ? `${knocked}本` : B && B.gutter ? 'ガター…' : 'ミス…'; sfx.play(knocked ? 'ok' : 'ng'); next = rollInFrame === 1 && !isLast(); }
-      msgT = 1.6;
+      if (rollInFrame === 0 && knocked === 10) { msg = 'ストライク!!'; sfx.play('win'); next = !isLast(); burst(90, 1); flash = 0.9; shake = 0.5; face = '🤩'; bigT = 2.6; }
+      else if (rollInFrame === 1 && left === 0) { msg = 'スペア!'; sfx.play('point'); next = !isLast(); burst(40, 0); flash = 0.5; shake = 0.2; face = '😄'; bigT = 2.2; }
+      else { msg = knocked ? `${knocked}本` : B && B.gutter ? 'ガター…' : 'ミス…'; sfx.play(knocked ? 'ok' : 'ng'); next = rollInFrame === 1 && !isLast(); face = knocked >= 7 ? '😆' : knocked ? '🙂' : '😭'; bigT = 1.6; }
+      msgT = bigT;
       if (isLast()) {
         const r = framesOf(S[turn].rolls)[frame], rollsHere = S[turn].rolls.length - sumRollsBefore(turn, frame), bonus = r && (r.r[0] === 'X' || r.r[1] === '/');
         if (rollsHere >= 3 || (rollsHere >= 2 && !bonus)) next = true;
@@ -78,6 +80,21 @@ export default {
       if (next) { rollInFrame = 0; standPins(true); if (turn === 1) frame++; turn = 1 - turn; if (frame >= FR) return finish(); }
       else { rollInFrame++; standPins(false); }
       phase = 'aim'; B = null; cpuT = 1.4;
+    }
+    function burst(n, big) {   // 紙ふぶき(ストライクは多く、スペアは星)
+      const W = ov.width / 2, cols = ['#ff7aa2', '#ffd36b', '#8fe0b0', '#7ab8ff', '#fff'];
+      for (let i = 0; i < n; i++) FX.push({ x: W * (0.1 + Math.random() * 0.8), y: -10 - Math.random() * 60, vx: (Math.random() - 0.5) * 120, vy: 80 + Math.random() * 220, c: cols[i % cols.length], r: 3 + Math.random() * 5, a: Math.random() * 6, star: !big });
+    }
+    function skipOpp() {   // あいての番を、ぜんぶ ひとっとびで終わらせる
+      if (two || turn !== 1 || over) return;
+      for (let guard = 0; guard < 6 && turn === 1 && !over; guard++) {
+        if (phase === 'aim') cpuThrow();
+        let n = 0; while ((phase === 'roll' || phase === 'wait') && n++ < 5000) {
+          t += 1 / 60; step(1 / 60);
+          if (phase === 'roll') { if (B.z > PIT || B.vz < 0.25) { phase = 'wait'; t = 0; } }
+          else { const moving = pins.some(p => !p.gone && Math.hypot(p.vx, p.vz) > 0.05); if ((t > 1.2 && !moving) || t > 4) settle(); }
+        }
+      }
     }
     function finish() { over = true; phase = 'end'; const a = total(S[0].rolls), b = total(S[1].rolls); setTimeout(() => host.end({ winner: a > b ? 0 : b > a ? 1 : -1, score: [a, b] }), 1800); }
     // ---- 操作 ----
@@ -140,7 +157,8 @@ export default {
     }
     // ---- 毎フレーム ----
     const stop = loop(dt => {
-      t += dt; msgT = Math.max(0, msgT - dt);
+      t += dt; dtv = dt; msgT = Math.max(0, msgT - dt); flash = Math.max(0, flash - dt * 1.6); shake = Math.max(0, shake - dt);
+      { const opp = turn === 1 && !over, c = opp ? 0x5aa8f0 : 0xff7aa2; ballM.material.color.setHex(c); mask.material.color.setHex(c); scene.background.setHex(opp ? 0x182640 : 0x231d38); scene.fog.color.setHex(opp ? 0x182640 : 0x231d38); SK.hidden = !(!two && opp && ['aim', 'roll', 'wait', 'run'].includes(phase)); }
       if (held && phase === 'aim') aimA = clamp(aimA + held * dt * 0.06, -0.07, 0.07);
       if (phase === 'aim' && !two && turn === 1 && !over) { cpuT -= dt; if (cpuT <= 0) cpuThrow(); }
       if (phase === 'run' && run) { run.t += dt; run.needle = Math.sin(run.t * 3.1); if (run.t >= 1.35) release(); }
@@ -156,7 +174,7 @@ export default {
       else if (phase === 'aim') bz = -3.6;
       if (B) { ballM.position.set(B.x, BR, B.z); ballM.rotation.set(B.rot, B.spin * 0.6, 0); } else ballM.position.set(bxx, BR + (phase === 'run' ? 0.25 * Math.sin(Math.min(1, run ? run.t / 1.25 : 0) * Math.PI) : 0.6), bz);
       const fz = B ? Math.min(B.z - 2.6, HEAD - 5.2) : bz - 2.2;
-      cam.position.set(B ? B.x * 0.25 : sx * 0.6, B ? 1.0 + Math.min(1, B.z / HEAD) * 0.6 : 1.55, fz); cam.lookAt(B ? B.x * 0.2 : 0, 0.1, fz + 9);
+      cam.position.set((B ? B.x * 0.25 : sx * 0.6) + (Math.random() - 0.5) * shake * 0.25, (B ? 1.0 + Math.min(1, B.z / HEAD) * 0.6 : 1.55) + (Math.random() - 0.5) * shake * 0.2, fz); cam.lookAt(B ? B.x * 0.2 : 0, 0.1, fz + 9);
       renderer.render(scene, cam); hud();
     });
     function hud() {
@@ -168,13 +186,26 @@ export default {
         for (let k = 0; k < FR; k++) { const f = fr[k], x = 68 + k * cw; g.strokeStyle = '#d8cfe6'; g.strokeRect(x, y + 3, cw - 2, 26); if (f) { txt(g, f.r.join(' '), x + cw / 2 - 1, y + 10, { size: 9 }); let ss = 0; for (let j = 0; j <= k; j++) ss += fr[j].s ?? 0; if (f.s != null) txt(g, String(ss), x + cw / 2 - 1, y + 22, { size: 10, color: INK }); } }
         txt(g, String(total(S[s].rolls)), W - 14, y + 16, { size: 15, align: 'right', color: s ? COL.p2d : COL.p1d });
       });
-      txt(g, `フレーム ${Math.min(FR, frame + 1)}/${FR}  ${rollInFrame + 1}投目`, W - 12, 90, { size: 11, align: 'right', color: '#e8e0ff' });
-      if (msgT > 0) txt(g, msg, W / 2, H * 0.4, { size: 34, color: '#ffd36b', stroke: '#5a4a6b', sw: 6 });
+      txt(g, `フレーム ${Math.min(FR, frame + 1)}/${FR}  ${rollInFrame + 1}投目`, W - 12, 134, { size: 11, align: 'right', color: '#e8e0ff' });
+      if (!over) {   // だれの番か:色つきの帯+顔
+        const pl = host.players[turn], col = turn ? COL.p2 : COL.p1;
+        g.fillStyle = col; g.beginPath(); g.roundRect ? g.roundRect(W / 2 - 110, 84, 220, 36, 18) : g.rect(W / 2 - 110, 84, 220, 36); g.fill();
+        txt(g, pl.icon || (turn ? '🤖' : '🙂'), W / 2 - 88, 102, { size: 26 });
+        txt(g, `${two || turn ? pl.name : 'あなた'} の番`, W / 2 + 12, 102, { size: 15, color: '#fff', stroke: 'rgba(0,0,0,.25)', sw: 3 });
+      }
+      if (flash > 0) { g.fillStyle = `rgba(255,255,255,${flash * 0.55})`; g.fillRect(0, 0, W, H); }
+      for (let i = FX.length - 1; i >= 0; i--) { const f = FX[i]; f.x += f.vx * dtv; f.y += f.vy * dtv; f.a += dtv * 6; f.vy += 90 * dtv; if (f.y > H + 20) { FX.splice(i, 1); continue; } g.save(); g.translate(f.x, f.y); g.rotate(f.a); g.fillStyle = f.c; if (f.star) txt(g, '★', 0, 0, { size: f.r * 3, color: f.c }); else g.fillRect(-f.r, -f.r / 2, f.r * 2, f.r); g.restore(); }
+      if (msgT > 0) {
+        const k = bigT > 2 ? 1 + 0.5 * Math.max(0, (msgT - (bigT - 0.35)) / 0.35) : 1;   // ポンっと大きく出る
+        const sz = (bigT > 2.3 ? 48 : 34) * k;
+        txt(g, msg, W / 2, H * 0.4, { size: sz, color: bigT > 2.3 ? '#fff25a' : '#ffd36b', stroke: '#5a4a6b', sw: 7 });
+        if (face) txt(g, face, W / 2, H * 0.4 - sz - 6, { size: 46 * k });
+      }
       if (phase === 'aim' && !over) txt(g, mine() ? `${host.players[turn].name}の番:ボールを左右に=位置 ◀▶=向き 🎳を下へ引く=助走` : `${host.players[1].name}の番…`, W / 2, H - 30, { size: 11, color: '#fff', stroke: '#231d38', sw: 4, maxW: W - 20 });
       if (phase === 'run') txt(g, 'はなすと投げる!(針がまん中=まっすぐ)', W / 2, H - 30, { size: 12, color: '#ffd36b', stroke: '#231d38', sw: 4 });
       // ねらいの線(スパットまで)
       if (phase === 'aim' && mine()) { const a = new THREE.Vector3(sx, 0.01, -3.6).project(cam), b = new THREE.Vector3(sx + Math.sin(aimA) * 8, 0.01, -3.6 + Math.cos(aimA) * 8).project(cam); g.strokeStyle = 'rgba(255,211,107,0.85)'; g.setLineDash([6, 6]); g.lineWidth = 2; g.beginPath(); g.moveTo((a.x + 1) / 2 * W, (1 - a.y) / 2 * H); g.lineTo((b.x + 1) / 2 * W, (1 - b.y) / 2 * H); g.stroke(); g.setLineDash([]); }
     }
-    return { stop() { stop(); ro.disconnect(); renderer.dispose(); renderer.forceContextLoss?.(); renderer.domElement.remove(); ov.remove(); ui.remove(); } };
+    return { _dbg: () => ({ phase, turn, throwMe: () => throwBall(sx, 8, 0, 0), skipOpp }), stop() { stop(); ro.disconnect(); renderer.dispose(); renderer.forceContextLoss?.(); renderer.domElement.remove(); ov.remove(); ui.remove(); } };
   },
 };
