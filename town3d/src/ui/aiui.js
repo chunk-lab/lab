@@ -61,7 +61,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     <div class="tw-log" aria-live="polite"></div>
     <div class="tw-tools" hidden></div>
     <div class="tw-chatrow"><input class="tw-say" maxlength="${maxLen}" placeholder="話しかける"><button class="tw-btn main" data-a="send">送る</button></div>
-    <div class="tw-actions"><button class="tw-btn" data-a="close">またね</button></div>`);
+    <div class="tw-actions"><button class="tw-btn" data-a="close">${low ? "おしゃべりをおわる" : "またね"}</button></div>`);
   if (low) p.classList.add('tw-low');   // 画面の下半分に出す(デート中は、上で2人が見えるように)
   const log = p.querySelector('.tw-log'), inp = p.querySelector('.tw-say'), tools = p.querySelector('.tw-tools');
   const enB = p.querySelector('[data-a="en"]'), lvB = p.querySelector('[data-a="lv"]');

@@ -82,29 +82,48 @@ export function createReview(core) {
       }
       // ③ フラッシュカード
       function stepCards() {
-        const res = []; let idx = 0;
+        const res = stepCards.resume || []; stepCards.resume = null; let idx = res.length;
         const card = () => {
-          if (idx >= items.length) return finish(res);
+          if (idx >= items.length) return stepCheck(res);
           const w = items[idx];
           go(`<h3>フラッシュカード <small>${idx + 1}/${items.length}</small></h3>
-            <p class="cs-note">右へフリック=覚えてる / 左へフリック=まだ / タップでめくる</p>
+            <p class="cs-note">右へチョン=覚えてる / 左へチョン=まだ / タップでめくる</p>
             <div class="rv-card" id="rv-c"><div class="f"><b>${esc(w.en)}</b>${w.pos ? `<small>${esc(w.pos)}</small>` : ''}<span class="b" hidden>${esc(w.ja || '(意味の記録なし)')}${w.multi > 1 ? `<em>ほかの意味もあるよ(＋${w.multi - 1})</em>` : ''}</span></div></div>
-            <div class="rv-two"><button class="cs-btn rv-no" id="rv-x">← まだ</button><button class="cs-btn rv-ok" id="rv-o">覚えてる →</button></div>`, () => {
-            const c = box.querySelector('#rv-c'), back = c.querySelector('.b'); let x0 = null, dx = 0, moved = false, flipped = false;
+            <div class="rv-two"><button class="cs-btn rv-no" id="rv-x">← まだ</button><button class="cs-btn rv-ok" id="rv-o">覚えてる →</button></div>
+            ${idx > 0 ? '<button class="cs-btn" id="rv-b">↩ ひとつ もどる</button>' : ''}`, () => {
+            const c = box.querySelector('#rv-c'), back = c.querySelector('.b'); let x0 = null, dx = 0, moved = false, flipped = false, done = false;
             core.speech.speak(w.en);
-            const answer = known => { res.push({ en: w.en, known, item: w }); c.style.transition = 'transform .18s,opacity .18s'; c.style.transform = `translateX(${known ? 140 : -140}%) rotate(${known ? 14 : -14}deg)`; c.style.opacity = 0; setTimeout(() => { idx++; card(); }, 170); };
+            const answer = known => { if (done) return; done = true; res.push({ en: w.en, known, item: w }); c.style.transition = 'transform .12s,opacity .12s'; c.style.transform = `translateX(${known ? 140 : -140}%) rotate(${known ? 14 : -14}deg)`; c.style.opacity = 0; setTimeout(() => { idx++; card(); }, 110); };
+            // ちょっと動かしただけで、すぐ反応する(ドラッグしきらなくてよい)
+            const FLICK = 22;
             c.onpointerdown = e => { x0 = e.clientX; dx = 0; moved = false; c.setPointerCapture && c.setPointerCapture(e.pointerId); c.style.transition = 'none'; };
-            c.onpointermove = e => { if (x0 == null) return; dx = e.clientX - x0; if (Math.abs(dx) > 8) moved = true; c.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`; c.classList.toggle('r', dx > 40); c.classList.toggle('l', dx < -40); };
+            c.onpointermove = e => { if (x0 == null || done) return; dx = e.clientX - x0; if (Math.abs(dx) > 6) moved = true; c.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`; c.classList.toggle('r', dx > 10); c.classList.toggle('l', dx < -10); if (dx > FLICK) answer(true); else if (dx < -FLICK) answer(false); };
             c.onpointerup = () => {
-              if (x0 == null) return; x0 = null;
-              if (dx > 70) return answer(true); if (dx < -70) return answer(false);
+              if (x0 == null || done) { x0 = null; return; } x0 = null;
               c.style.transition = 'transform .15s'; c.style.transform = ''; c.classList.remove('r', 'l');
               if (!moved) { flipped = !flipped; back.hidden = !flipped; c.classList.toggle('flip', flipped); if (flipped) core.speech.speak(w.en); }
             };
             box.querySelector('#rv-x').onclick = () => answer(false); box.querySelector('#rv-o').onclick = () => answer(true);
+            const bb = box.querySelector('#rv-b'); if (bb) bb.onclick = () => { res.pop(); idx--; card(); };   // まちがえたら もどれる
           });
         };
         card();
+      }
+      // さいごに一覧で、チェックボックスでまとめて直せる(チェック=覚えてる)
+      function stepCheck(res) {
+        go(`<h3>さいごに かくにん</h3><p class="cs-note">チェックが入っている言葉は「覚えてる」。まちがいは、ここで直せます。</p>
+          <div class="rv-two"><button class="cs-btn" id="rv-all">ぜんぶ 覚えてる</button><button class="cs-btn" id="rv-none">ぜんぶ まだ</button></div>
+          <ul class="rv-list rv-chk">${res.map((r, i) => `<li><label><input type="checkbox" data-i="${i}" ${r.known ? 'checked' : ''}><b>${esc(r.en)}</b><small>${esc(r.item.ja || '')}</small></label></li>`).join('')}</ul>
+          <div class="rv-two"><button class="cs-btn" id="rv-bk">↩ カードにもどる</button><button class="cs-btn rv-ok" id="rv-d">これで決定</button></div>`, () => {
+          const cbs = [...box.querySelectorAll('input[type=checkbox]')];
+          box.querySelector('#rv-all').onclick = () => cbs.forEach(c => { c.checked = true; });
+          box.querySelector('#rv-none').onclick = () => cbs.forEach(c => { c.checked = false; });
+          box.querySelector('#rv-bk').onclick = () => { res.pop(); stepCardsFrom(res); };
+          box.querySelector('#rv-d').onclick = () => { cbs.forEach(c => { res[+c.dataset.i].known = c.checked; }); finish(res); };
+        });
+      }
+      function stepCardsFrom(res) {   // さいごの1枚から やりなおす
+        const keep = res.slice(); stepCards.resume = keep; stepCards();
       }
       // おわり
       function finish(res) {
