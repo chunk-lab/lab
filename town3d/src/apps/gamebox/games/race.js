@@ -24,12 +24,16 @@ export default {
       const s = pickSentence(LV, 0, used); used.push(s); if (used.length > 24) used.shift();
       R.sen = s; R.units = unitsOf(s); R.k = 0; R.star = (R.done + 1) % 3 === 0;
     }
+    const ORD = 'FSVIOCPT', rk = r => { const i = ORD.indexOf(r); return i < 0 ? 9 : i; };
     function makeRow(R, z) {
-      const need = R.units[R.k], wrong = [];
-      R.units.slice(R.k + 1).forEach(u => { if (wrong.length < 1 && u !== need) wrong.push(u); });
-      for (const s of shuffle(sentences())) { if (wrong.length >= 2) break; for (const u of shuffle(unitsOf(s))) if (u !== need && !wrong.includes(u) && !R.units.slice(0, R.k).includes(u)) { wrong.push(u); break; } }
-      const lanes = shuffle([need, ...wrong.slice(0, 2)]);
-      return { z, lanes, ok: lanes.indexOf(need), born: t, hit: -1 };
+      const need = R.units[R.k], wrong = [], role = {}; role[need] = R.sen.chunks[R.k] ? R.sen.chunks[R.k].role : '';
+      R.units.slice(R.k + 1).forEach((u, i) => { if (wrong.length < 1 && u !== need) { wrong.push(u); role[u] = R.sen.chunks[R.k + 1 + i] ? R.sen.chunks[R.k + 1 + i].role : ''; } });
+      for (const s of shuffle(sentences())) { if (wrong.length >= 2) break; const us = unitsOf(s); for (const i of shuffle(us.map((_, i) => i))) { const u = us[i]; if (u !== need && !wrong.includes(u) && !R.units.slice(0, R.k).includes(u)) { wrong.push(u); role[u] = s.chunks[i] ? s.chunks[i].role : ''; break; } } }
+      let lanes = shuffle([need, ...wrong.slice(0, 2)]);
+      // チャンクは、英語の語順(主役→どうしてる→何を…)で、いつも同じ並びに置く。毎回ばらばらにならないので、読んで順に取っていける
+      if (!WORD) lanes = lanes.map((u, i) => ({ u, i })).sort((x, y) => rk(role[x.u]) - rk(role[y.u]) || x.i - y.i).map(x => x.u);
+      // 新しい文の最初は、日本語を読む時間をとるため、すこし遠くから来る
+      return { z: R.k === 0 ? z + GAP * 0.9 : z, lanes, ok: lanes.indexOf(need), born: t, hit: -1 };
     }
     const R = [0, 1].map(i => ({ i, z: 0, L: 1, lane: 1, lx: 1, combo: 0, done: 0, spin: 0, turbo: 0, fin: -1, pop: null, popT: 0, sen: null, units: [], k: 0, star: false, row: null, cpuLane: 1, log: [] }));
     R.forEach(r => { newSen(r); r.row = makeRow(r, GAP); });

@@ -27,7 +27,7 @@ const BLD = [['school', 'bSchool', '学校'], ['library', 'bLibrary', '図書館
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 document.body.insertAdjacentHTML('afterbegin', `<div class="tw-view"><div class="tw-map" id="twMap">${BLD.map(([k, id, alt]) => `<button class="tw-bld" id="${id}" data-k="${k}"><img src="img/${PLACES[k].img}.webp" alt="${alt}"></button>`).join('')}<button class="tw-tree" id="twTree" aria-label="木"></button></div></div>
-<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><span class="tw-coin" id="twCoin"></span><button class="tw-gear" id="twTo3d" aria-label="3Dの町へ">🏙</button><button class="tw-gear tw-help" id="twHelp" aria-label="街のツアー">？</button><button class="tw-gear" id="twGear" aria-label="設定">⚙</button></div></div>`);
+<div class="tw-top"><button class="tw-me" id="twMe"><img alt="" id="twMeImg"><span id="twMeName"></span></button><div class="tw-right"><span class="tw-coin" id="twCoin"></span><button class="tw-gear" id="twTo3d" aria-label="3Dの町へ">🏙</button><button class="tw-gear tw-help" id="twHelp" aria-label="街のツアー">？</button><button class="tw-gear" id="twDaily" aria-label="今日はここまで">🌙</button><button class="tw-gear" id="twGear" aria-label="設定">⚙</button></div></div>`);
 
 const $ = id => document.getElementById(id);
 const refreshMe = () => { $('twMeImg').src = core.profile.avatarURL(); $('twMeName').textContent = core.profile.name || 'なまえ未設定'; };
@@ -38,6 +38,7 @@ $('twMe').onclick = () => openStudy();
 // 勉強部屋：自宅とアバターから開く。中の「練習する」などは、街と同じしくみでゲームを開く
 function openStudy() { core.study.open({ play: core.openGame, has: g => !!GAMES[g] }); }
 $('twGear').onclick = () => core.ui.settings();
+$('twDaily').onclick = () => core.review.open({ mode: 'today' });   // 今日はここまで(どこからでも)
 const tour = createTour(core);
 $('twHelp').onclick = () => tour.menu();
 document.addEventListener('change', e => { if (e.target && e.target.id === 'cs-name') setTimeout(refreshMe, 0); });

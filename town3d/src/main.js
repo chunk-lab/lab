@@ -818,6 +818,7 @@ export function mount(container, opt = {}) {
     flash(root); audio.unlock(); audio.play('tap');
     shotCard(root, src, { gems: opt.gems, cfg: opt.photo, openAlbum: () => openApp('album') });
   }));
+  offs.push(bus.on('ui:daily', () => { if (started) opt.onEvent?.('app:event', { name: 'daily' }); }));   // 今日はここまで(どこからでも)
   offs.push(bus.on('ui:menu', () => {
     if (!started) return;
     const seg = (key, opts) => `<div class="tw-seg">${opts.map(([v, l]) => `<button class="tw-btn${settings[key] == v ? ' on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
