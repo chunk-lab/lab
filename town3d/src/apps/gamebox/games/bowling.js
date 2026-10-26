@@ -3,7 +3,7 @@
 //   🎳を下へ引く=助走スタート(引くほど強い)。針が左右にゆれる → はなした時の針で回転(まん中なら まっすぐ)。ファウルラインの近くで はなすほど力が伝わる
 //   ボールは手前でオイルにすべり、奥で回転が効いて曲がる。ピンは重さと はね返りで倒れ、横の壁(キックバック)でも はね返る
 import * as THREE from 'three';
-import { loop, txt, COL, INK, clamp } from '../kit.js';
+import { loop, txt, rr, COL, INK, clamp } from '../kit.js';
 
 const LW = 1.066, HEAD = 18.29, BR = 0.108, MB = 7, PR = 0.06, MP = 1.5, KICK = LW / 2 + 0.24, PIT = 19.4;
 const PINS = (() => { const p = [], d = 0.3048; for (let r = 0; r < 4; r++) for (let i = 0; i <= r; i++) p.push([(i - r / 2) * d, HEAD + r * d * 0.866]); return p; })();
@@ -55,7 +55,7 @@ export default {
     SK.addEventListener('pointerdown', e => { e.preventDefault(); skipOpp(); });
     let turn = 0, frame = 0, rollInFrame = 0, phase = 'aim', sx = 0, aimA = 0, B = null, t = 0, msg = '', msgT = 0, over = false, cpuT = 0;
     let run = null;   // 助走 {t, power, needle}
-    const FX = []; let flash = 0, shake = 0, face = '', dtv = 0.016, bigT = 0;   // 演出:紙ふぶき・フラッシュ・ゆれ・表情
+    const FX = []; let flash = 0, shake = 0, face = '', dtv = 0.016, bigT = 0, relT = 0, celeb = 0, tAll = 0, faceS = 0;   // 演出:紙ふぶき・フラッシュ・ゆれ・表情
     function standPins(all) { pins.forEach(p => { if (all) p.gone = false; if (!p.gone) { p.x = p.x0; p.z = p.z0; p.vx = p.vz = 0; p.tilt = 0; p.fall = false; p.wob = 0; } p.m.visible = !p.gone; }); }
     function framesOf(rolls) { const out = []; let i = 0; for (let f = 0; f < 10 && i < rolls.length; f++) { const a = rolls[i], b = rolls[i + 1], c = rolls[i + 2]; if (a === 10) { out.push({ r: ['X'], s: b != null && c != null ? 10 + b + c : null }); i += 1; } else if (b != null && a + b === 10) { out.push({ r: [a, '/'], s: c != null ? 10 + c : null }); i += 2; } else { out.push({ r: b != null ? [a, b] : [a], s: b != null ? a + b : null }); i += 2; } } return out; }
     function total(rolls) { const fr = framesOf(rolls).slice(0, FR); let s = 0; for (const f of fr) { if (f.s != null) s += f.s; else s += f.r.filter(x => typeof x === 'number').reduce((a, b) => a + b, 0) + (f.r[0] === 'X' ? 10 : 0) + (f.r[1] === '/' ? 10 - (f.r[0] || 0) : 0); } return s; }
@@ -71,7 +71,7 @@ export default {
       if (rollInFrame === 0 && knocked === 10) { msg = 'ストライク!!'; sfx.play('win'); next = !isLast(); burst(90, 1); flash = 0.9; shake = 0.5; face = '🤩'; bigT = 2.6; }
       else if (rollInFrame === 1 && left === 0) { msg = 'スペア!'; sfx.play('point'); next = !isLast(); burst(40, 0); flash = 0.5; shake = 0.2; face = '😄'; bigT = 2.2; }
       else { msg = knocked ? `${knocked}本` : B && B.gutter ? 'ガター…' : 'ミス…'; sfx.play(knocked ? 'ok' : 'ng'); next = rollInFrame === 1 && !isLast(); face = knocked >= 7 ? '😆' : knocked ? '🙂' : '😭'; bigT = 1.6; }
-      msgT = bigT;
+      faceS = turn; msgT = bigT; celeb = knocked >= 10 || (rollInFrame === 1 && left === 0) ? bigT : 0;
       if (isLast()) {
         const r = framesOf(S[turn].rolls)[frame], rollsHere = S[turn].rolls.length - sumRollsBefore(turn, frame), bonus = r && (r.r[0] === 'X' || r.r[1] === '/');
         if (rollsHere >= 3 || (rollsHere >= 2 && !bonus)) next = true;
@@ -115,7 +115,7 @@ export default {
       const spin = Math.abs(r.needle) < 0.14 ? 0 : r.needle;
       throwBall(sx, (5.5 + r.power * 4.2) * k, aimA, spin);
     }
-    function throwBall(x, speed, ang, spin) { B = { x, z: 0, vx: Math.sin(ang) * speed, vz: Math.cos(ang) * speed, spin, gutter: false, rot: 0 }; phase = 'roll'; t = 0; sfx.play('throw'); }
+    function throwBall(x, speed, ang, spin) { relT = 0.6; B = { x, z: 0, vx: Math.sin(ang) * speed, vz: Math.cos(ang) * speed, spin, gutter: false, rot: 0 }; phase = 'roll'; t = 0; sfx.play('throw'); }
     function cpuThrow() {
       const err = [0, 0.06, 0.035, 0.018][lv], spin = rollInFrame === 0 ? 0.55 + (Math.random() - 0.5) * 0.3 : (Math.random() - 0.5) * 0.3;
       const left = pins.filter(p => !p.gone), tx = left.length ? left.reduce((s, p) => s + p.x, 0) / left.length : 0;
@@ -157,7 +157,7 @@ export default {
     }
     // ---- 毎フレーム ----
     const stop = loop(dt => {
-      t += dt; dtv = dt; msgT = Math.max(0, msgT - dt); flash = Math.max(0, flash - dt * 1.6); shake = Math.max(0, shake - dt);
+      t += dt; dtv = dt; relT = Math.max(0, relT - dt); celeb = Math.max(0, celeb - dt); msgT = Math.max(0, msgT - dt); flash = Math.max(0, flash - dt * 1.6); shake = Math.max(0, shake - dt);
       { const opp = turn === 1 && !over, c = opp ? 0x5aa8f0 : 0xff7aa2; ballM.material.color.setHex(c); mask.material.color.setHex(c); scene.background.setHex(opp ? 0x182640 : 0x231d38); scene.fog.color.setHex(opp ? 0x182640 : 0x231d38); SK.hidden = !(!two && opp && ['aim', 'roll', 'wait', 'run'].includes(phase)); }
       if (held && phase === 'aim') aimA = clamp(aimA + held * dt * 0.06, -0.07, 0.07);
       if (phase === 'aim' && !two && turn === 1 && !over) { cpuT -= dt; if (cpuT <= 0) cpuThrow(); }
@@ -177,6 +177,22 @@ export default {
       cam.position.set((B ? B.x * 0.25 : sx * 0.6) + (Math.random() - 0.5) * shake * 0.25, (B ? 1.0 + Math.min(1, B.z / HEAD) * 0.6 : 1.55) + (Math.random() - 0.5) * shake * 0.2, fz); cam.lookAt(B ? B.x * 0.2 : 0, 0.1, fz + 9);
       renderer.render(scene, cam); hud();
     });
+    // 投げる人(キャラ):左=自分、右=相手。番の人は大きく動く(助走→ふる→よろこぶ)。ほかの人は、うすく小さく待っている
+    function fig(cx, cy, s, active) {
+      const pl = host.players[s], col = s ? COL.p2 : COL.p1, runK = phase === 'run' && run ? Math.min(1, run.t / 1.25) : 0;
+      const bob = active ? (phase === 'run' ? Math.sin(tAll * 14) * 4 : Math.sin(tAll * 3) * 2) : 0, jump = active && celeb > 0 ? -Math.abs(Math.sin(celeb * 9)) * 16 : 0;
+      const sw = !active ? 0.1 : phase === 'run' ? -1.5 * runK : relT > 0 ? 1.7 * (relT / 0.6) : celeb > 0 ? 3.0 : 0.15;   // うでの角度(0=下 / マイナス=うしろ / 3=ばんざい)
+      g.save(); g.translate(cx, cy + bob + jump); g.scale(active ? 1.15 : 0.8, active ? 1.15 : 0.8); g.globalAlpha = active ? 1 : 0.5;
+      g.fillStyle = 'rgba(0,0,0,.25)'; g.beginPath(); g.ellipse(0, 56, 30, 7, 0, 0, 7); g.fill();
+      g.fillStyle = '#4a3f66'; rr(g, -13, 30, 11, 24, 5); g.fill(); rr(g, 2, 30, 11, 24, 5); g.fill();
+      g.strokeStyle = col; g.lineWidth = 9; g.lineCap = 'round';
+      [[-1, 0.15], [1, sw]].forEach(([side, a]) => { g.save(); g.translate(side * 18, 2); g.rotate(side * -a * (side > 0 ? -1 : 1) * 1); g.beginPath(); g.moveTo(0, 0); g.lineTo(0, 24); g.stroke();
+        if (side > 0 && active && (phase === 'aim' || phase === 'run')) { g.fillStyle = turn ? '#5aa8f0' : '#ff7aa2'; g.beginPath(); g.arc(0, 30, 9, 0, 7); g.fill(); } g.restore(); });
+      g.fillStyle = col; rr(g, -19, -6, 38, 40, 13); g.fill();
+      txt(g, s === faceS && face && msgT > 0 ? face : (pl.icon || (s ? '🤖' : '🙂')), 0, -28, { size: 46 });
+      g.restore();
+      txt(g, `${!two && s === 0 ? 'あなた' : pl.name}`, cx, cy + 82, { size: 12, color: '#fff', stroke: col, sw: 5 });
+    }
     function hud() {
       const W = ov.width / 2, H = ov.height / 2; g.setTransform(2, 0, 0, 2, 0, 0); g.clearRect(0, 0, W, H);
       [0, 1].forEach(s => {
@@ -187,6 +203,7 @@ export default {
         txt(g, String(total(S[s].rolls)), W - 14, y + 16, { size: 15, align: 'right', color: s ? COL.p2d : COL.p1d });
       });
       txt(g, `フレーム ${Math.min(FR, frame + 1)}/${FR}  ${rollInFrame + 1}投目`, W - 12, 134, { size: 11, align: 'right', color: '#e8e0ff' });
+      tAll += dtv; if (!over) { fig(W * 0.17, 214, 0, turn === 0); fig(W * 0.83, 214, 1, turn === 1); }
       if (!over) {   // だれの番か:色つきの帯+顔
         const pl = host.players[turn], col = turn ? COL.p2 : COL.p1;
         g.fillStyle = col; g.beginPath(); g.roundRect ? g.roundRect(W / 2 - 110, 84, 220, 36, 18) : g.rect(W / 2 - 110, 84, 220, 36); g.fill();
@@ -199,7 +216,6 @@ export default {
         const k = bigT > 2 ? 1 + 0.5 * Math.max(0, (msgT - (bigT - 0.35)) / 0.35) : 1;   // ポンっと大きく出る
         const sz = (bigT > 2.3 ? 48 : 34) * k;
         txt(g, msg, W / 2, H * 0.4, { size: sz, color: bigT > 2.3 ? '#fff25a' : '#ffd36b', stroke: '#5a4a6b', sw: 7 });
-        if (face) txt(g, face, W / 2, H * 0.4 - sz - 6, { size: 46 * k });
       }
       if (phase === 'aim' && !over) txt(g, mine() ? `${host.players[turn].name}の番:ボールを左右に=位置 ◀▶=向き 🎳を下へ引く=助走` : `${host.players[1].name}の番…`, W / 2, H - 30, { size: 11, color: '#fff', stroke: '#231d38', sw: 4, maxW: W - 20 });
       if (phase === 'run') txt(g, 'はなすと投げる!(針がまん中=まっすぐ)', W / 2, H - 30, { size: 12, color: '#ffd36b', stroke: '#231d38', sw: 4 });
