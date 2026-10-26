@@ -3,7 +3,7 @@
 //   あそびゲーム(ソフトを借りる。無料会員はゲーム機も借りる。お試しは1日1回)
 //   相手:町の住人(CPU)か、1台のスマホを上下で向かい合わせて2人
 import { CPUS, cpuById, createSfx, INK, unlockSpeech } from './kit.js';
-import dictq from './games/dictq.js';
+import chunksort from './games/chunksort.js';
 import wordrace from './games/wordrace.js';
 import bowling from './games/bowling.js';
 import darts from './games/darts.js';
@@ -17,7 +17,7 @@ import race from './games/race.js';
 import party from './games/party.js';
 import snow from './games/snow.js';
 
-export const EN_GAMES = [dictq, wordrace, listen, tug, shiritori, sniper];
+export const EN_GAMES = [chunksort, wordrace, listen, tug, shiritori, sniper];
 export const PLAY_GAMES = [hockey, race, party, bowling, darts, snow3d, fishvs, golf, frisbee];
 const ALL = [...EN_GAMES, ...PLAY_GAMES, snow];
 // 値段(あとで変えられるようにここにまとめる)

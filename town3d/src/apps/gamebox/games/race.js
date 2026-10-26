@@ -76,7 +76,7 @@ export default {
         if (count > 0 || r.fin >= 0 || over) return;
         // CPU:レーンを選ぶ(正しい方へ。たまにまちがえる)
         if (!two && r.i === 1 && cpu) {
-          const row = r.row; if (row.cpu == null) { const ok = Math.random() < [0, 0.72, 0.84, 0.93][lv] - (LV - 1) * 0.05; row.cpu = ok ? row.ok : [0, 1, 2].filter(x => x !== row.ok)[Math.floor(Math.random() * 2)]; row.cpuAt = row.z - GAP * (0.25 + Math.random() * 0.4); }
+          const row = r.row; if (row.cpu == null) { const ok = Math.random() < [0, 0.88, 0.95, 0.99][lv] - (LV - 1) * 0.03; row.cpu = ok ? row.ok : [0, 1, 2].filter(x => x !== row.ok)[Math.floor(Math.random() * 2)]; row.cpuAt = row.z - GAP * (0.25 + Math.random() * 0.4); if (ok && Math.random() < [0, 0.35, 0.6, 0.85][lv]) r.rush = true; }
           if (r.z > row.cpuAt) r.lane = row.cpu;
         }
         const v = vOf(r.L) * (r.turbo > 0 ? 1.5 : 1) * (r.rush ? 1.7 : 1) * (r.spin > 0 ? (r.spin > 0.9 ? 0.05 : 0.45) : 1);

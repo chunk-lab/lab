@@ -31,7 +31,7 @@ export default {
       const f = L.q[0]; if (!f) { L.slots = null; return; }
       const other = me.lanes[1 - L.i].q[0], ex = new Set([f.ans, other && other.ans]);
       L.slots = shuffle([f.ans, ...distract(f, ex, L.prev)]).map(t => ({ text: t, dis: false })); L.prev = new Set(L.slots.map(x => x.text));
-      f.age = 0; if (me.s === 1 && !two) L.cpuT = [0, 2.6, 1.9, 1.35][lv] * (0.7 + Math.random() * 0.6);
+      f.age = 0; if (me.s === 1 && !two) L.cpuT = [0, 3.9, 3.0, 2.3][lv] * (0.7 + Math.random() * 0.6);
       if (say && (me.s === 0 || two)) enq(f);
     }
     // ---- 読み上げ(手前の上下を順に) ----
@@ -77,7 +77,7 @@ export default {
       if (!over && count <= 0) P.forEach(me => {
         me.flash = Math.max(0, me.flash - dt); if (me.missMsg) { me.missMsg.t -= dt; if (me.missMsg.t <= 0) me.missMsg = null; }
         me.lanes.forEach(L => { L.lock = Math.max(0, L.lock - dt); stepLane(me, L, dt); });
-        if (me.s === 1 && !two && cpu) me.lanes.forEach((L, li) => { const f = L.q[0]; if (!f || !L.slots || f.x > S.W - f.w) return; L.cpuT -= dt; if (L.cpuT <= 0) { const ok = Math.random() < [0, 0.8, 0.88, 0.95][lv] - ((O.lv || 1) - 1) * 0.05; const i = ok ? L.slots.findIndex(x => x.text === f.ans) : L.slots.findIndex(x => x.text !== f.ans && !x.dis); answer(me, li, Math.max(0, i)); L.cpuT = ok ? 99 : 1; if (ok) L.cpuT = [0, 2.6, 1.9, 1.35][lv] * (0.7 + Math.random() * 0.6); } });
+        if (me.s === 1 && !two && cpu) me.lanes.forEach((L, li) => { const f = L.q[0]; if (!f || !L.slots || f.x > S.W - f.w) return; L.cpuT -= dt; if (L.cpuT <= 0) { const ok = Math.random() < [0, 0.62, 0.72, 0.84][lv] - ((O.lv || 1) - 1) * 0.05; const i = ok ? L.slots.findIndex(x => x.text === f.ans) : L.slots.findIndex(x => x.text !== f.ans && !x.dis); answer(me, li, Math.max(0, i)); L.cpuT = ok ? 99 : 1; if (ok) L.cpuT = [0, 3.9, 3.0, 2.3][lv] * (0.7 + Math.random() * 0.6); } });
       });
       draw();
     });

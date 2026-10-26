@@ -26,8 +26,8 @@ export default {
     resetPuck(Math.random() < 0.5 ? 0 : 1);
     // CPU
     const lv = cpu ? cpu.lv : 2;
-    // スピード:2人の希望の まん中(たして2でわる)。8が もとの速さ
-    const want2 = two ? (host.opts.spd2 || 4) : [0, 3, 4, 5][lv], SPD = ((host.opts.spd || 4) + want2) / 2, KS = SPD / 8;
+    // スピード:CPU戦は自分の希望そのまま、2人対戦は2人の希望の平均。8が もとの速さ
+    const SPD = two ? ((host.opts.spd || 4) + (host.opts.spd2 || 4)) / 2 : (host.opts.spd || 4), KS = SPD / 8;   // CPU戦=自分が選んだ速さそのまま / 人どうし=2人の希望の平均
     const cpuSpd = [0, 900, 1300, 1750][lv] * (0.55 + 0.45 * KS);
     let think = 0;
     function cpuMove(dt) {
