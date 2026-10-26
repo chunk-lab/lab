@@ -26,10 +26,12 @@ export default {
     P.forEach(me => me.lanes.forEach(L => { L.now = nextWord(me); L.next = nextWord(me); }));
     function distract(f, ex, old) {
       const out = [], bad = x => ex.has(x) || old.has(x) || out.includes(x);
-      const mine = new Set(parts(f.all));   // 正解の言葉のどの意味ともかぶる選択肢は出さない
-      const clash = w => parts(w[2]).some(x => mine.has(x)), tx = w => parts(w[2])[0] || w[2];
-      for (const w of shuffle(LIST.filter(w => w[1] === f.pos && w[0] !== f.en)).slice(0, 30)) if (out.length < 2 && !clash(w) && !bad(tx(w))) out.push(tx(w));
-      for (const w of shuffle(LIST.slice(0, 400))) if (out.length < 3 && !clash(w) && !bad(tx(w)) && tx(w) !== f.ans) out.push(tx(w));
+      // 正解と同じ言葉のどの意味ともかぶらず、品詞も正解と同じものだけを出す(品詞がちがうものが混ざると、むだに迷うので)
+      const same = LIST.filter(w => w[0] === f.en), mine = new Set(same.flatMap(w => parts(w[2])));
+      const tx = w => parts(w[2])[0] || w[2], near = t => [...mine].some(m => m.length > 1 && t.length > 1 && (m.includes(t) || t.includes(m)));
+      const ok = w => w[0] !== f.en && !parts(w[2]).some(x => mine.has(x)) && !near(tx(w)) && !bad(tx(w));
+      for (const w of shuffle(LIST.filter(w => w[1] === f.pos))) { if (out.length >= 3) break; if (ok(w)) out.push(tx(w)); }
+      for (const w of shuffle(LIST.slice(0, 400))) { if (out.length >= 3) break; if (ok(w)) out.push(tx(w)); }   // 同じ品詞が足りないときだけ
       return out;
     }
     function front(me, L) {   // 手前の単語が変わった:4択を作り直して、読み上げにならべる
@@ -56,7 +58,7 @@ export default {
     const area = () => ({ y0: two ? 0 : S.H / 2, h: S.H / 2 });   // どちらのときも、下の半分が自分、上の半分が相手
     function lay(W, h, opp) {   // 4択は低く(1つ約46px)、2つの単語がまん中でいちばん近くなるように。自分は下に、相手の画面は上に寄せる
       const head = 38, hh = h - PAD, gw = Math.min(W * 0.46, 210), ch = clamp(Math.round(hh * 0.14), 40, 52), gh = ch * 2 + 4, blockH = gh * 2 + 4;
-      const top = opp ? head + 6 : Math.max(head + 6, hh - blockH), bx = 8 + gw + 8, bw = W - bx - 8;
+      const top = Math.max(head + 6, Math.round(head + 6 + (hh - head - 6 - blockH) / 2)), bx = 8 + gw + 8, bw = W - bx - 8;
       return { head, gw, gh, gy: [top, top + gh + 4], bx, bw, cw: (gw - 4) / 2, ch };
     }
     const cells = (W, h, li, opp) => { const L0 = lay(W, h, opp); return [0, 1, 2, 3].map(i => ({ x: 8 + (i % 2) * (L0.cw + 4), y: L0.gy[li] + Math.floor(i / 2) * (L0.ch + 4), w: L0.cw, h: L0.ch, li, i })); };
