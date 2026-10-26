@@ -13,6 +13,7 @@ export function createHost(core, layer, backBtn) {
     if (!cur) return; const c = cur; cur = null;
     try { c.inst && c.inst.unmount && c.inst.unmount(); } catch (e) { console.error(e); }
     core.speech.stop(); c.el.remove(); layer.hidden = true; backBtn.hidden = true; document.body.classList.remove('cs-in-game');
+    core.daylog && core.daylog.act('app', null);
     core.onClose && core.onClose(c.game.id);
   };
   backBtn.addEventListener('click', close);
@@ -30,6 +31,7 @@ export function createHost(core, layer, backBtn) {
         showBack: (on) => { backBtn.hidden = !(on && core.config.backButton); }, exit: close };
       cur = { game, el, inst: null };
       ctx.report('open');
+      core.daylog && core.daylog.act('app', { cat: 'study', label: game.name || game.title || game.id });   // 2Dのゲームは、すべて英語の勉強
       try { const inst = await game.mount(el, ctx); if (cur && cur.el === el) cur.inst = inst || {}; else inst && inst.unmount && inst.unmount(); }
       catch (e) { console.error(e); el.innerHTML = '<p class="cs-err">読み込めませんでした</p>'; backBtn.hidden = false; }
     },

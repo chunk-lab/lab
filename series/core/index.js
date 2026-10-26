@@ -15,6 +15,7 @@ import { createDict } from './dict.js';
 import { createReader } from './reader.js';
 import { createNotebook } from './notebook.js';
 import { createRecord } from './record.js';
+import { createDayLog } from './daylog.js';
 import { createStudy } from './study.js';
 import { importOld } from './import.js';
 import { createMember } from './member.js';
@@ -25,6 +26,7 @@ import { createToday } from './today.js';
 import { createUseit } from './useit.js';
 import { createLevel } from './level.js';
 import { createAdmin } from './admin.js';
+import { createReview } from './review.js';
 import { createMission } from './mission.js';
 import './reader.css';
 export function createCore(config) {
@@ -45,6 +47,7 @@ export function createCore(config) {
   core.notebook = createNotebook();   // 勉強ノート（全アプリ共通の言葉の置き場）
   importOld(core.notebook);           // 前から各アプリにあった言葉を1回だけ取り込む
   core.record = createRecord(core.events, core.notebook);   // 学習の記録（done・word・resume の報告をまとめる）
+  core.daylog = createDayLog(core);   // 1日の記録(時間・カテゴリー・出会った単語)
   core.ui = createUI(core);
   core.study = createStudy(core);     // 勉強部屋（自宅・アバターから開く）
   core.econ = ECON;                   // お金と会員の数字（economy.js）
@@ -52,6 +55,7 @@ export function createCore(config) {
   core.level = createLevel(core);     // レベル判定・実力テスト・総合の点数
   core.useit = createUseit(core);     // この言葉を使ってみる
   core.mission = createMission(core); // 今日なにする?(1つに決めて「これでいい?」→ その中身だけで判定)
+  core.review = createReview(core);   // 1日のふりかえり(今日はここまで)・前回のふりかえり
   core.today = createToday(core);     // 結果の帯
   core.admin = createAdmin(core);     // 運営画面（?admin=1）
   core.to3D = null;                   // 3Dの町があるアプリ(街)が入れる

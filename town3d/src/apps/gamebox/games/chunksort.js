@@ -45,7 +45,9 @@ export default {
       const map = placed && Object.keys(placed).length === sent.n ? { ...placed } : {};
       if (!Object.keys(map).length) sent.chunks.forEach((c, i) => { map[c.role] = i; });   // CPU が先に: 正しい並びを見せる
       const by = {}; for (const [r, i] of Object.entries(map)) by[r] = sent.chunks[i];
-      const en = buildEn(by); reveal = { map, en, front: map.F != null && sent.chunks[map.F].role === 'T' };
+      const en = buildEn(by);
+      if (host.learn && (s === 0 || two)) host.learn({ kind: 'sentence', en, ja: sent.chunks.map(c => c.ja).join(' / '), src: '文の並べ替え' });
+      reveal = { map, en, front: map.F != null && sent.chunks[map.F].role === 'T' };
       revDur = Math.max(1.4, en.split(' ').length * 0.42 + 0.5);
       if (score[s] >= TO) over = true;
       if (SAY) speakCb(en, 0.9, () => { readDone = true; }); else setTimeout(() => { readDone = true; }, 1200);

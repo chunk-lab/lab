@@ -118,7 +118,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   let busy = false;
   const send = async () => {
     const t = inp.value.trim(); if (!t || busy) return;
-    inp.value = ''; busy = true; clearSel(); add('me', t);
+    inp.value = ''; busy = true; clearSel(); add('me', t); try { bus && bus.emit('chat:say', { name, text: t }); } catch (e) { }
     const en = getEn().on;
     const wait = add('npc', '…'); wait.classList.add('wait');
     try {

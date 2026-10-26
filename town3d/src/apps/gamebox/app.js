@@ -94,7 +94,8 @@ export const gameboxApp = {
     const enLeft = () => (paid() || consoleOk() ? Infinity : Math.max(0, 1 - R().en.n));
 
     let cur = null;   // 遊んでいるゲーム
-    function clear() { if (cur) { try { cur.stop(); } catch (e) { } cur = null; } root.innerHTML = ''; }
+    const act = G => { try { ctx.emit('act', G ? { layer: 'sub', cat: G.en ? 'study' : ['snow3d', 'fishvs', 'golf', 'frisbee', 'snow'].includes(G.id) ? 'sport' : 'tv', label: G.title } : { layer: 'sub', cat: null }); } catch (e) { } };   // 1日の記録:どのゲームを遊んでいるか
+    function clear() { if (cur) { try { cur.stop(); } catch (e) { } cur = null; } root.innerHTML = ''; act(null); }
     function sheet(html) { const s = document.createElement('div'); s.className = 'sheet'; s.innerHTML = `<div class="panel">${html}</div>`; s.addEventListener('pointerdown', e => { if (e.target === s) s.remove(); }); root.appendChild(s); return s; }
     function msg(t, sub) { const s = sheet(`<h2>${t}</h2><p class="note">${sub || ''}</p><div class="row"><button class="btn sub" data-x>とじる</button></div>`); s.querySelector('[data-x]').onclick = () => s.remove(); return s; }
 
@@ -230,7 +231,7 @@ export const gameboxApp = {
 
     // ================= 試合 =================
     function play(G, opp, opts) {
-      clear(); ctx.setTitle(G.title); G._t0 = Date.now();
+      clear(); ctx.setTitle(G.title); G._t0 = Date.now(); act(G);
       const two = opp === '2p', cpu = two ? null : typeof opp === 'object' ? { id: 'npc', icon: '🙂', say: ['勝負だ!', 'やられた〜', 'へへっ'], lv: 2, ...opp } : cpuOf(opp);   // opp は CPU の id か、町の住人 {name, lv}
       const me = { name: ctx.player?.name || 'あなた', icon: '🙂' };
       const players = [{ name: two ? 'プレイヤー1' : me.name, cpu: null, icon: '🙂' }, two ? { name: 'プレイヤー2', cpu: null, icon: '😎' } : { name: cpu.name, cpu, icon: cpu.icon }];
@@ -243,7 +244,7 @@ export const gameboxApp = {
       root.appendChild(vs); setTimeout(() => vs.remove(), 1700); sfx.play('whoosh');
       let done = false;
       const host = {
-        box: inner, sfx, players, two, opts, dictUrl: ctx.dictUrl || P.dictUrl, season: P.season,
+        box: inner, sfx, players, two, opts, learn: d => { try { ctx.emit('learn', d); } catch (e) { } }, dictUrl: ctx.dictUrl || P.dictUrl, season: P.season,
         end(res) {
           if (done) return; done = true;
           setTimeout(() => result(G, opp, opts, players, res), 900);

@@ -68,7 +68,7 @@ export function openSoraNote(o) {
   css();
   const { hud, ai, storage } = o;
   let hist = storage.get(KEY) || [], cur = hist[0] || null, tab = 'ex', more = {}, busy = false;
-  const p = hud.panel(`<div class="sn-head"><h2>📘 そら君ノート</h2><button class="tw-btn sn-x" data-a="close" aria-label="とじる">✕</button></div>
+  const p = hud.panel(`<div class="sn-head"><h2>📘 そら君ノート</h2>${o.onDaily ? '<button class="tw-btn" data-a="daily" style="margin-left:auto;padding:6px 10px;font-size:12px">🌙 今日はここまで</button>' : ''}<button class="tw-btn sn-x" data-a="close" aria-label="とじる">✕</button></div>
     <div class="sn-ask"><input class="sn-q" maxlength="60" placeholder="単語や表現(英語でも日本語でも)" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="tw-btn main" data-a="ask">聞く</button></div>
     <div class="sn-hist"></div><div class="sn-body"></div>`, null, { sticky: true });
   const card = p.querySelector('.tw-card'); card.classList.add('sn-full');
@@ -116,6 +116,7 @@ export function openSoraNote(o) {
     const b = e.target.closest('button'); if (!b) return;
     const a = b.dataset.a;
     if (a === 'close') return hud.closePanel();
+    if (a === 'daily') { hud.closePanel(); return o.onDaily(); }
     if (a === 'ask') return ask();
     if (a === 'setup') return o.openSetup?.(() => openSoraNote(o));
     if (a === 'more') { more[tab] = true; return draw(); }

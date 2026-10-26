@@ -121,6 +121,7 @@ export function mount(container, opt = {}) {
     faceCam: (x, z, ry) => { cam.yaw = ry + Math.PI; cam.x = x; cam.z = z; cam.pitch = 0.8; cam.dist = 11.5; },   // 引いた斜め上から
     scene, camera, root, me, residents, meshes: city.meshes, collide: (x, z) => collide(x, z), audio, snowFx: (p, n, s) => snow.fx(p, n, s),
     onEnd({ win, quit, opp }) {
+      actSport(null);
       if (quit) { if (!goHome()) hud.toast('雪合戦をやめた'); return; }
       if (win) { wallet.add(30, 'snowfight'); }
       setTimeout(() => hud.dialog({ name: opp?.def.name || '雪合戦', text: win ? 'まいった〜! 強いね。(🪙+30)' : 'へへっ、こっちの勝ち! また勝負しよう', choices: [{ label: 'もう一回!', fn: () => opp && battle.start(opp, 2) }, { label: backHome ? '🏠 家にもどる' : 'おわる', fn: () => goHome() }] }), 300);
@@ -128,9 +129,19 @@ export function mount(container, opt = {}) {
   });  sport = createSport({
     scene, camera, root, me, city, collide: (x, z, r) => collide(x, z, r), audio, wallet, toast: t => hud.toast(t),
     getYaw: () => cam.yaw, setYaw: y => { cam.yaw = y; },
-    onEnd({ kind, quit, total, par }) { if (goHome()) return; if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
+    onEnd({ kind, quit, total, par }) { actSport(null); if (goHome()) return; if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
   });
-  { const s0 = sport.start; sport.start = (k, o) => { markPlay(k); return s0(k, o); }; }   // 最後に遊んだ日を記録(しばらく遊んでいないものに、さそう)
+  // 英語でのおしゃべりだけ「勉強」。日本語のときは何もしない(街でまったりのまま)。最後に話してから2分で終わり
+  let chatT = 0;
+  bus.on('chat:say', ({ text }) => {
+    const en = (String(text).match(/[A-Za-z]/g) || []).length, ja = (String(text).match(/[\u3040-\u30ff\u4e00-\u9fff]/g) || []).length;
+    if (en < 4 || en < ja) return;
+    opt.onEvent?.('app:event', { name: 'act', data: { layer: 'chat', cat: 'study', label: '英語のおしゃべり' } });
+    clearTimeout(chatT); chatT = setTimeout(() => opt.onEvent?.('app:event', { name: 'act', data: { layer: 'chat', cat: null } }), 120000);
+  });
+  const actSport = (label) => opt.onEvent?.('app:event', { name: 'act', data: { layer: 'sub', cat: label ? 'sport' : null, label } });   // 季節のスポーツの時間を記録(1日の記録)
+  { const b0 = battle.start; battle.start = (...a) => { actSport('雪合戦'); return b0(...a); }; }
+  { const s0 = sport.start; sport.start = (k, o) => { markPlay(k); actSport(k === 'golf' ? 'ミニゴルフ' : 'フリスビー'); return s0(k, o); }; }   // 最後に遊んだ日を記録(しばらく遊んでいないものに、さそう)
 
   storage.set('pid', me.id);
   const last = storage.get('pos'); if (last) { me.x = last[0]; me.z = last[1]; }
@@ -363,6 +374,7 @@ export function mount(container, opt = {}) {
       hud, ai, storage, level: settings.enLevel,
       onNote: it => { const m = addNote({ ...it, npc: 'そら' }); hud.toast(m); return m; },
       onSay: t => hud.say('npc:sora', t, 4),
+      onDaily: () => opt.onEvent?.('app:event', { name: 'daily' }),
       openSetup: done => openAiSetup({ hud, ai, onDone: done }),
       games: [
         { label: '🎮 チャンクボックス', fn: () => openApp('gamebox', {}) },

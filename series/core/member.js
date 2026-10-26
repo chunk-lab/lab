@@ -23,7 +23,7 @@ export function createMember(wallet, ui) {
       if (!isPaid() && M.slots.length > ECON.slots.free) M.slots = M.slots.slice(0, ECON.slots.free);
       save();
     }
-    if (M.day.k !== dayKey()) { M.day = { k: dayKey(), task: 0, cm: 0, game: 0 }; save(); }
+    if (M.day.k !== dayKey()) { M.day = { k: dayKey(), task: 0, cm: 0, game: 0, pt: {} }; save(); }
   }
   tick();
   wallet.setBoost && wallet.setBoost(() => (isPaid() ? ECON.paidCoinMult : 1));
@@ -47,13 +47,14 @@ export function createMember(wallet, ui) {
     earn(kind, n) {
       tick(); let g = 0; const D = ECON.daily;
       if (kind === 'task') { if (!M.day.task) { g = D.task; M.day.task = 1; } }
+      else if (D.pt[kind]) { M.day.pt = M.day.pt || {}; if (!M.day.pt[kind]) { g = D.pt[kind]; M.day.pt[kind] = 1; } }
       else if (kind === 'cm') { if (M.day.cm < D.cm.max) { g = D.cm.each; M.day.cm++; } }
       else if (kind === 'game') { g = Math.max(0, Math.min(Math.floor(+n || 0), D.game - M.day.game)); M.day.game += g; }
       else if (kind === 'once') g = Math.max(0, Math.min(500, Math.floor(+n || 0)));
       if (g > 0) { const before = wallet.get(); wallet.add(g, 'earn:' + kind); g = wallet.get() - before; save(); }
       return g;
     },
-    today: () => ({ ...M.day, gameLeft: ECON.daily.game - M.day.game, cmLeft: ECON.daily.cm.max - M.day.cm }),
+    today: () => ({ ...M.day, pt: { ...(M.day.pt || {}) }, gameLeft: ECON.daily.game - M.day.game, cmLeft: ECON.daily.cm.max - M.day.cm }),
     // ---- 共有の教材の枠 ----
     slots: () => M.slots.slice(),
     slotMax: () => ECON.slots[isPaid() ? 'paid' : 'free'],

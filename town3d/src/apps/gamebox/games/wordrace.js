@@ -21,12 +21,15 @@ export default {
     let over = false, count = 2.4, t = 0, started = false;
     const seq = shuffle(LIST.slice());
     const P = [0, 1].map(s => ({ s, dist: 0, flash: 0, k: s * 7, lanes: [0, 1].map(i => ({ i, now: null, next: null, slots: null, lock: 0, prev: new Set(), cpuT: 0, anim: 0 })) }));
-    const nextWord = me => { const w = seq[me.k % seq.length]; me.k++; return { en: w[0], pos: w[1], ans: w[2], dead: 0 }; };
+    const parts = t => String(t).split(/[、,]/).map(x => x.trim()).filter(Boolean);   // 意味はいくつか「、」でつながっている。4択には最初の意味だけ出す
+    const nextWord = me => { const w = seq[me.k % seq.length], ps = parts(w[2]); me.k++; return { en: w[0], pos: w[1], ans: ps[0] || w[2], all: w[2], multi: ps.length, dead: 0 }; };
     P.forEach(me => me.lanes.forEach(L => { L.now = nextWord(me); L.next = nextWord(me); }));
     function distract(f, ex, old) {
       const out = [], bad = x => ex.has(x) || old.has(x) || out.includes(x);
-      for (const w of shuffle(LIST.filter(w => w[1] === f.pos && w[0] !== f.en)).slice(0, 30)) if (out.length < 2 && !bad(w[2])) out.push(w[2]);
-      for (const w of shuffle(LIST.slice(0, 400))) if (out.length < 3 && !bad(w[2]) && w[2] !== f.ans) out.push(w[2]);
+      const mine = new Set(parts(f.all));   // 正解の言葉のどの意味ともかぶる選択肢は出さない
+      const clash = w => parts(w[2]).some(x => mine.has(x)), tx = w => parts(w[2])[0] || w[2];
+      for (const w of shuffle(LIST.filter(w => w[1] === f.pos && w[0] !== f.en)).slice(0, 30)) if (out.length < 2 && !clash(w) && !bad(tx(w))) out.push(tx(w));
+      for (const w of shuffle(LIST.slice(0, 400))) if (out.length < 3 && !clash(w) && !bad(tx(w)) && tx(w) !== f.ans) out.push(tx(w));
       return out;
     }
     function front(me, L) {   // 手前の単語が変わった:4択を作り直して、読み上げにならべる
@@ -42,11 +45,12 @@ export default {
     function answer(me, li, si) {
       const L = me.lanes[li], f = L.now; if (!f || !L.slots || L.lock > 0 || over || count > 0) return; const sl = L.slots[si]; if (!sl || sl.dis) return;
       if (sl.text === f.ans) {
+        if ((me.s === 0 || two) && (f.miss || f.multi > 1) && host.learn) host.learn({ en: f.en, ja: f.all, pos: f.pos, multi: f.multi, miss: !!f.miss, src: '単語ダッシュ' });
         f.dead = 1; me.dist += 1; me.flash = 0.25; if (me.s === 0 || two) sfx.play('tap');
         if (reading === f) { try { speechSynthesis.cancel(); } catch (e) { } reading = null; }
         if (me.dist >= N) { over = true; sfx.play('win'); setTimeout(() => host.end({ winner: me.s, text: 'ゴール!' }), 1600); return; }
         L.now = L.next; L.next = nextWord(me); L.anim = 1; front(me, L);
-      } else { sl.dis = true; L.lock = 0.5; if (me.s === 0 || two) sfx.play('ng'); }
+      } else { sl.dis = true; f.miss = 1; L.lock = 0.5; if (me.s === 0 || two) sfx.play('ng'); }
     }
     // ---- 画面の割りふり(エリアの中) ----
     const area = () => ({ y0: two ? 0 : S.H / 2, h: S.H / 2 });   // どちらのときも、下の半分が自分、上の半分が相手
@@ -83,6 +87,7 @@ export default {
       if (tag) { g.fillStyle = LANE_COL[li]; rr(g, x + 6, y + h / 2 - 9, 18, 18, 5); g.fill(); txt(g, tag, x + 15, y + h / 2, { size: 11, color: '#fff' }); }
       let size = o.size; g.font = `700 ${size}px Georgia,serif`; while (size > 11 && g.measureText(f.en).width > w - tw - 18) { size -= 1; g.font = `700 ${size}px Georgia,serif`; }
       if (o.show) txt(g, f.en, x + tw + (w - tw) / 2, y + h / 2 + 1, { size, font: 'Georgia,serif', weight: 700 });
+      if (f.multi > 1 && o.show) txt(g, '＋' + (f.multi - 1), x + w - 8, y + h - 9, { size: o.now ? 11 : 9, color: '#e08a3c', weight: 800, align: 'right' });
       if (o.now && reading === f) txt(g, '🔊', x + w - 8, y + 9, { size: 11 });
       g.restore();
     }
