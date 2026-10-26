@@ -3,6 +3,9 @@
 //   2人のときは、1台を上下で向かい合わせて、同じボックスを見て、それぞれ自分の側でえらぶ。
 import { surface, pointers, loop, txt, banner, rr, clamp, halves, COL, INK } from '../kit.js';
 
+const BGS = [['#000', 1], ['#07143a', 1], ['#052a1c', 1], ['#7b7f88', 0], ['#fff6e8', 0]];   // [背景色, 暗い背景か]
+// 箱の色: [正面, ふた, 留め金, ふち]
+const BXS = [[[222, 224, 232], [252, 252, 255], [140, 142, 156], 'rgba(40,40,60,.7)'], [[44, 44, 54], [86, 86, 100], [190, 190, 205], 'rgba(255,255,255,.4)'], [[150, 156, 170], [205, 210, 222], [80, 84, 98], 'rgba(30,30,50,.6)'], [[214, 150, 70], [244, 190, 110], [150, 96, 42], 'rgba(90,60,30,.55)']];
 const N = 12, N2 = 8;   // 外の輪12こ、二重のときは内の輪が8こ
 const LVN = ['', 'とてもゆっくり', 'ゆっくり', '', '', 'ふつう', '', '', '', '', 'ひとはじゅう'];
 export default {
@@ -11,11 +14,14 @@ export default {
   options: [
     { key: 'lv', label: '回る速さ(1〜10)', choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => [n, n === 5 ? '5 ふつう' : n === 10 ? '10 超はやい' : n === 1 ? '1 ゆっくり' : String(n)]), def: 5 },
     { key: 'ring', label: '輪のかたち', choices: [[1, 'ひとつ'], [2, '二重の輪(逆回り)']], def: 1 },
+    { key: 'bg', label: '背景の色', choices: [[0, 'くろ'], [1, 'こん'], [2, 'ふかみどり'], [3, 'はいいろ'], [4, 'クリーム']], def: 0 },
+    { key: 'bx', label: '箱の色', choices: [[0, 'しろ'], [1, 'くろ'], [2, 'ぎん'], [3, 'ダンボール']], def: 0 },
     { key: 'to', label: '何点先取', choices: [[3, '3点'], [5, '5点']], def: 3 },
   ],
   start(host) {
     const S = surface(host.box), g = S.g, two = host.two, cpu = host.players[1].cpu, sfx = host.sfx, H2 = halves(S, two);
     const O = host.opts, LV = clamp(O.lv || 5, 1, 10), TO = O.trial ? 2 : O.to || 3, DBL = O.ring === 2;
+    const BG = BGS[O.bg == null ? 0 : O.bg] || BGS[0], BX = BXS[O.bx == null ? 0 : O.bx] || BXS[0], DK = BG[1];
     const M = DBL ? N + N2 : N;
     const cl = cpu ? cpu.lv : 2;
     let flipped = false, t = 0, phase = 'count', phT = 0, count = 2.5, target = 0, theta = 0, theta2 = 0, omega = 0, dir = 1, over = false, round = 0, tilt = { x: 0.8, z: 0 }, tilt2 = { x: 0.8, z: 0 }, tp = 0;
@@ -44,16 +50,16 @@ export default {
     }
     const rgb = (c, k) => `rgb(${Math.min(255, Math.round(c[0] * k))},${Math.min(255, Math.round(c[1] * k))},${Math.min(255, Math.round(c[2] * k))})`;
     function drawBox(b, open, mark, col) {
-      const sh = clamp(0.55 + (b.z / (S.W * 0.4)) * 0.45, 0.45, 1.05), s2 = b.s;
+      const sh = clamp(0.78 + (b.z / (S.W * 0.4)) * 0.3, 0.7, 1.05), s2 = b.s;
       g.save(); g.translate(b.x, b.y);
-      g.fillStyle = 'rgba(0,0,0,.18)'; g.beginPath(); g.ellipse(s2 * 0.1, s2 * 0.95, s2 * 0.9, s2 * 0.28, 0, 0, 7); g.fill();
+      g.fillStyle = DK ? 'rgba(255,255,255,.1)' : 'rgba(0,0,0,.18)'; g.beginPath(); g.ellipse(s2 * 0.1, s2 * 0.95, s2 * 0.9, s2 * 0.28, 0, 0, 7); g.fill();
       const c = (r, gg, bb) => `rgb(${Math.round(r * sh)},${Math.round(gg * sh)},${Math.round(bb * sh)})`;
-      g.fillStyle = c(214, 150, 70); rr(g, -s2, -s2 * 0.75, s2 * 2, s2 * 1.75, s2 * 0.18); g.fill();           // 箱の正面
-      g.fillStyle = c(244, 190, 110); rr(g, -s2, -s2 * 0.75 - (open ? s2 * 0.55 : 0), s2 * 2, s2 * 0.62, s2 * 0.18); g.fill();   // ふた(開くと持ち上がる)
-      g.fillStyle = c(150, 96, 42); g.fillRect(-s2 * 0.12, -s2 * 0.13, s2 * 0.24, s2 * 0.38);                 // 留め金
-      g.strokeStyle = col || 'rgba(90,60,30,.55)'; g.lineWidth = col ? 4 : 1.5; rr(g, -s2, -s2 * 0.75, s2 * 2, s2 * 1.75, s2 * 0.18); g.stroke();
+      g.fillStyle = c(...BX[0]); rr(g, -s2, -s2 * 0.75, s2 * 2, s2 * 1.75, s2 * 0.18); g.fill();           // 箱の正面
+      g.fillStyle = c(...BX[1]); rr(g, -s2, -s2 * 0.75 - (open ? s2 * 0.55 : 0), s2 * 2, s2 * 0.62, s2 * 0.18); g.fill();   // ふた(開くと持ち上がる)
+      g.fillStyle = c(...BX[2]); g.fillRect(-s2 * 0.12, -s2 * 0.13, s2 * 0.24, s2 * 0.38);                 // 留め金
+      g.strokeStyle = col || BX[3]; g.lineWidth = col ? 4 : 1.5; rr(g, -s2, -s2 * 0.75, s2 * 2, s2 * 1.75, s2 * 0.18); g.stroke();
       if (open) { txt(g, '⭐', 0, -s2 * 0.2, { size: s2 * 1.5 }); }
-      if (mark) txt(g, mark, 0, -s2 * 1.35, { size: Math.max(11, s2 * 0.7), color: INK, stroke: '#fff', sw: 4 });
+      if (mark) txt(g, mark, 0, -s2 * 1.35, { size: Math.max(11, s2 * 0.7), color: DK ? '#fff' : INK, stroke: DK ? '#000' : '#fff', sw: 4 });
       g.restore();
     }
     function drawRing(s, W, h) {   // 半分(または全体)の中に輪を描く。いちばん奥から順に
@@ -108,21 +114,21 @@ export default {
       draw();
     });
     function head(s, W) {
-      txt(g, `${host.players[s].name}  ${score[s]} / ${TO}`, W / 2, 20, { size: 15, color: s ? COL.p2d : COL.p1d });
+      txt(g, `${host.players[s].name}  ${score[s]} / ${TO}`, W / 2, 20, { size: 15, color: DK ? (s ? '#9fc8ff' : '#ff9fbd') : (s ? COL.p2d : COL.p1d) });
       const msg = phase === 'show' ? '⭐ 当たりを よく見て!' : phase === 'spin' ? '目で追いかけて…' : phase === 'pick' ? (pick[s] >= 0 ? 'ほかの人を待っているよ' : '当たりはどれ? タップ!') : phase === 'reveal' ? (pick[s] === target ? '⭐ 当たり! +1' : 'ざんねん…') : '';
-      txt(g, msg, W / 2, 44, { size: 14, color: INK });
+      txt(g, msg, W / 2, 44, { size: 14, color: DK ? '#ffe9a8' : INK });
     }
     function draw() {
       S.begin(); const W = S.W, H = S.H;
-      g.fillStyle = '#fff6e8'; g.fillRect(0, 0, W, H);
+      g.fillStyle = BG[0]; g.fillRect(0, 0, W, H);
       if (!two) {
         head(0, W); g.save(); g.translate(0, 40); drawRing(0, W, H - 40); g.restore();
         P[0].rects.forEach(r => { r.y += 40; });
         if (phase === 'pick' && pick[1] >= 0 && pick[0] < 0) txt(g, `${host.players[1].name}は えらんだ!`, W / 2, H - 24, { size: 14, color: COL.p2d });
       } else {
-        g.fillStyle = '#eef3ff'; g.fillRect(0, 0, W, H / 2);
+        g.fillStyle = DK ? 'rgba(255,255,255,.07)' : '#eef3ff'; g.fillRect(0, 0, W, H / 2);
         [0, 1].forEach(s => H2.half(s, () => { head(s, W); g.save(); g.translate(0, 40); drawRing(s, W, H / 2 - 40); g.restore(); P[s].rects.forEach(r => { r.y += 40; }); }));
-        g.fillStyle = INK; g.fillRect(0, H / 2 - 1, W, 2);
+        g.fillStyle = DK ? '#ffd24d' : INK; g.fillRect(0, H / 2 - 1, W, 2);
       }
       if (phase === 'count') banner(g, S, two, count > 0.4 ? String(Math.ceil(count)) : 'GO!', { size: 50 });
     }
