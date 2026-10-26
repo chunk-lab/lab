@@ -262,6 +262,10 @@ export const furn = {
     if (!v) {
       const old = st.get('room');
       v = Array.isArray(old) ? old.filter(p => p.id && !p.room).map(p => ({ uid: p.uid, id: p.id, room: 'r1', gx: p.gx * U, gz: p.gz * U, r: p.r || 0 })) : [];
+      if (!Array.isArray(old) && !st.get('inv')) {   // はじめての人だけ、最初の部屋に机といすを置いておく(持ち物にも1つずつ入れる)
+        v = [{ uid: 'init-desk', id: 'desk', room: 'r1', gx: 6, gz: 2, r: 0 }, { uid: 'init-chair', id: 'chair', room: 'r1', gx: 7, gz: 4, r: 0 }];
+        st.set('inv', { desk: 1, chair: 1 });
+      }
       st.set('put', v);
     }
     return v.filter(p => ITEM[p.id]);

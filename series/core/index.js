@@ -39,9 +39,9 @@ export function createCore(config) {
   core.events = createEvents();
   core.wallet = createWallet();       // 共通のコイン（2Dも3Dも同じ）
   core.member = createMember(core.wallet, { toast: t => core.ui && core.ui.toast(t) });   // 会員・ダイヤ・枠・1日の上限（数字は economy.js）
-  core.profile = createProfile(core.events, base);
+  core.profile = createProfile(core.events, base, () => core.daylog);
   // 終わった報告の点数から、ゲームのごほうびコイン（1日の上限つき。d.coins があればそれを希望の枚数に）
-  core.events.on((game, name, d = {}) => { if (name === 'done' && (d.coins || d.score)) core.member.earn('game', d.coins != null ? d.coins : Math.round((+d.score || 0) / 10)); });
+  // ゲームの点数ではコインをもらえない(ランキングだけ)
   core.cloud = createCloud(core.member);   // 共有の教材（いまは端末の中だけ。Supabase につなぐときは cloud.js の中だけ直す）
   core.openGame = null;   // アプリ(main.js)が入れる：(ゲームid, opts) → ゲームを開く
   core.notebook = createNotebook();   // 勉強ノート（全アプリ共通の言葉の置き場）
