@@ -95,6 +95,7 @@ export default {
 
     // ---- 描く ----
     let K = 1;   // 画面の大きさに合わせた拡大率
+    const words = (str, w, size) => { g.font = `800 ${size}px sans-serif`; const out = []; let cur = ''; for (const wd of str.split(' ')) { const t2 = cur ? cur + ' ' + wd : wd; if (cur && g.measureText(t2).width > w) { out.push(cur); cur = wd; } else cur = t2; } if (cur) out.push(cur); return out; };   // 英語は単語で折り返す
     function chunkLayout(W) {
       g.font = `800 ${Math.round(15 * K)}px sans-serif`;
       const items = sent.chunks.map((c, i) => ({ i, c, w: Math.ceil(g.measureText(c.ja).width) + 26 * K, h: Math.round(38 * K) }));
@@ -119,7 +120,7 @@ export default {
       me.hintBtn = null;
       if (HINT === 'btn' && phase === 'play') { const b = { x: W - 98, y: 2, w: 90, h: 24, label: me.hint >= 3 ? '💡 ぜんぶ表示' : '💡 ヒント' }; me.hintBtn = b; btn(g, b, { size: 12, shadow: false, border: '#e6dcf2', alpha: me.hint >= 3 ? 0.5 : 1 }); }
       // 文型のヒント / ふだんの案内
-      if (phase !== 'count' && me.hint >= 1) wrapTxt(g, `${ty.name}(${ty.sub})・${ty.gram}\n英語の順:${sent.roles.map(r => ROLES[r].name).join(' → ')}`, W / 2, 42, W - 16, { size: 11, color: '#6b4a9a', lh: 14 });
+      if (phase !== 'count' && phase !== 'reveal' && me.hint >= 1) wrapTxt(g, `${ty.name}(${ty.sub})・${ty.gram}\n英語の順:${sent.roles.map(r => ROLES[r].name).join(' → ')}`, W / 2, 42, W - 16, { size: 11, color: '#6b4a9a', lh: 14 });
       else if (phase !== 'reveal') txt(g, '日本語を、英語の順番の枠にならべよう', W / 2, 40, { size: 11, color: '#8d7f9e' });
       const zoneTop = 62;
       const rows = chunkLayout(W), rowH = Math.round(44 * K), zoneH = Math.max(rows.length * rowH + 4, Math.round(104 * K));
@@ -145,20 +146,22 @@ export default {
       }
       // 英語の順番の枠
       const sTop = zoneTop + zoneH + 20;
-      txt(g, '▼ 英語の順番', 12, sTop - 9, { size: 10, align: 'left', color: '#8d7f9e' });
-      const nS = slots.length, rowsN = Math.ceil(nS / 2), sh = clamp((h - sTop - 8) / rowsN - 5, 34, 54 * K), sw = (W - 30) / 2;
+      txt(g, '英語の順番 →', 12, sTop - 9, { size: 10, align: 'left', color: '#8d7f9e' });
+      const nS = slots.length, gap = 4, maxPer = Math.max(1, Math.floor((W - 24 + gap) / (66 + gap))), nRows = Math.ceil(nS / maxPer), per = Math.ceil(nS / nRows);
+      const sw = (W - 24 - (per - 1) * gap) / per, sh = clamp((h - sTop - 8) / nRows - 5, 50, 72 * K);   // 横ならび(文のように左から右へ)。入りきらないときだけ折り返す
       me.srects = [];
       const filled = reveal ? ORDER.filter(r => reveal.map[r] != null) : [];
       const prog = reveal ? clamp(phT / revDur, 0, 1) * (filled.length + 0.6) : 0;
       slots.forEach((r, k) => {
-        const x = 12 + (k % 2) * (sw + 6), y = sTop + Math.floor(k / 2) * (sh + 5), R = ROLES[r];
-        me.srects.push({ x, y, w: sw, h: sh, r });
+        const row = Math.floor(k / per), x = 12 + (k % per) * (sw + gap), y = sTop + row * (sh + 5), R = ROLES[r], w = sw;   // 同じ幅で、左からならぶ
+        me.srects.push({ x, y, w, h: sh, r });
         const ci = reveal ? reveal.map[r] : me.placed[r], c = ci != null ? sent.chunks[ci] : null, fl = me.flash[r];
         const rank = filled.indexOf(r), lit = !reveal || rank < prog;
-        g.fillStyle = c ? ROLES[c.role].col : 'rgba(255,255,255,0.75)'; g.globalAlpha = c && !lit ? 0.35 : 1; rr(g, x, y, sw, sh, 12); g.fill(); g.globalAlpha = 1;
-        g.save(); if (!c) g.setLineDash([5, 4]); g.strokeStyle = fl ? (fl.ok ? '#3fbf6a' : '#ff5a5a') : c ? 'rgba(0,0,0,0.12)' : R.col; g.lineWidth = fl ? 3.5 : 2.5; rr(g, x, y, sw, sh, 12); g.stroke(); g.restore();
-        txt(g, `${k + 1} ${R.name}・${R.gram}`, x + 7, y + 9, { size: 9.5 * Math.min(K, 1.15), align: 'left', color: '#5a4a6b', maxW: sw - 12 });
-        if (c) txt(g, reveal ? c.en : c.ja, x + sw / 2, y + sh * 0.66, { size: (reveal ? 15 : 14) * K, font: reveal ? 'Georgia,serif' : 'sans-serif', maxW: sw - 14, color: INK, weight: reveal && rank >= prog - 1 && rank < prog ? 900 : 800 });
+        g.fillStyle = c ? ROLES[c.role].col : 'rgba(255,255,255,0.75)'; g.globalAlpha = c && !lit ? 0.35 : 1; rr(g, x, y, w, sh, 12); g.fill(); g.globalAlpha = 1;
+        g.save(); if (!c) g.setLineDash([5, 4]); g.strokeStyle = fl ? (fl.ok ? '#3fbf6a' : '#ff5a5a') : c ? 'rgba(0,0,0,0.12)' : R.col; g.lineWidth = fl ? 3.5 : 2.5; rr(g, x, y, w, sh, 12); g.stroke(); g.restore();
+        txt(g, R.name, x + w / 2, y + 10, { size: 10.5 * Math.min(K, 1.15), color: '#5a4a6b', maxW: w - 8 });
+        txt(g, R.gram, x + w / 2, y + 21 * Math.min(K, 1.15), { size: 8.5 * Math.min(K, 1.15), color: '#7a6a8b', weight: 700, maxW: w - 8 });
+        if (c) { const fs = 13 * Math.min(K, 1.2), ls = reveal ? words(reveal ? c.en : c.ja, w - 10, fs) : null; if (ls) ls.forEach((l, li) => txt(g, l, x + w / 2, y + sh * 0.7 + (li - (ls.length - 1) / 2) * fs * 1.1, { size: fs, color: INK, weight: rank >= prog - 1 && rank < prog ? 900 : 800 })); else wrapTxt(g, c.ja, x + w / 2, y + sh * 0.7, w - 10, { size: fs, color: INK, lh: fs * 1.1 }); }
       });
       if (dim) txt(g, '× そこじゃないよ', W / 2, sTop - 9, { size: 12, color: '#ff5a5a' });
       // ドラッグ中のチャンク
