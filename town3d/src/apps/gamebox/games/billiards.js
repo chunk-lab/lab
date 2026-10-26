@@ -82,7 +82,8 @@ export default {
       <div class="bot"><div class="sp"><i></i></div><div class="fine"></div><button class="cb">📷</button></div>
       <div class="ov" hidden><div class="spp"><i></i></div><p>当てる点をえらぶ<br>上=押し(前へ転がる) 下=引き(もどる) 左右=ひねり</p><div class="row"><button data-c>まん中にもどす</button><button data-ok>OK</button></div></div>`;
     const $ = s => ui.querySelector(s), msgEl = $('.msg'), tipEl = $('.tip'), pwEl = $('.pw'), pwFill = $('.pw i'), pwCue = $('.pw em'), spEl = $('.sp'), spDot = $('.sp i'), ovEl = $('.ov'), sppEl = $('.spp'), sppDot = $('.spp i'), skipEl = $('.skip');
-    function resize() { V.resize(); const w = box.clientWidth, h = box.clientHeight; ov.width = w * 2; ov.height = h * 2; g.setTransform(2, 0, 0, 2, 0, 0); }
+    function margins() { const r = box.getBoundingClientRect(), a = $('.hud').getBoundingClientRect(), b = $('.bot').getBoundingClientRect(); V.setMargins(Math.max(0, a.bottom - r.top + 4), Math.max(0, r.bottom - b.top + 4)); }
+    function resize() { V.resize(); margins(); const w = box.clientWidth, h = box.clientHeight; ov.width = w * 2; ov.height = h * 2; g.setTransform(2, 0, 0, 2, 0, 0); }
     resize(); const ro = new ResizeObserver(resize); ro.observe(box);
 
     // ---- 試合の状態 ----
@@ -101,6 +102,7 @@ export default {
         el.innerHTML = `<b>${pl[i].icon || ''} ${pl[i].name}</b><span class="w">${TO > 1 ? `${wins[i]}/${TO}勝 ` : ''}</span><span>${info}</span><div class="bl">${icons}</div>`;
         el.classList.toggle('on', i === cur);
       });
+      margins();
     }
     function newRack() {
       balls = P.rack(KIND); potted.length = 0; groups = [null, null]; cur = breaker; inHand = true; kitchen = true; breakShot = true;
