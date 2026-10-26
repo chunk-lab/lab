@@ -24,7 +24,7 @@ export default {
       const me = P[s], c = sen.chunks[me.k]; if (!c) return;
       me.opts = shuffle([c.ja, ...others(c)]); me.heardT = 0;
       if (s === 0 || two) voice = speak(c.en, RATE) && voice;
-      if (s === 1 && !two) me.cpuT = c.en.split(' ').length * 0.35 / RATE + [0, 1.6, 1.1, 0.7][lv] * (0.7 + Math.random() * 0.6);
+      if (s === 1 && !two) me.cpuT = 0.6 + c.en.split(' ').length * 0.4 / RATE + [0, 3.4, 2.6, 2.0][lv] * (0.75 + Math.random() * 0.5);   // 音が出るまで+聞く時間+選択肢を読んで押す時間(人と同じだけかかる)
     }
     function newRound() {
       if (over) return;
@@ -53,7 +53,7 @@ export default {
       phT += dt;
       P.forEach(me => { me.lock = Math.max(0, me.lock - dt); me.flash = Math.max(0, me.flash - dt); me.heardT += dt; });
       if (phase === 'play') {
-        if (!two && cpu) { const me = P[1]; if (me.lock <= 0) { me.cpuT -= dt; if (me.cpuT <= 0) { const c = sen.chunks[me.k]; answer(1, Math.random() < [0, 0.78, 0.87, 0.95][lv] ? c.ja : me.opts.find(x => x !== c.ja)); me.cpuT = 0.9; } } }
+        if (!two && cpu) { const me = P[1]; if (me.lock <= 0 && phT > 0.8) { me.cpuT -= dt; if (me.cpuT <= 0) { const c = sen.chunks[me.k], k0 = me.k; answer(1, Math.random() < [0, 0.78, 0.87, 0.95][lv] ? c.ja : me.opts.find(x => x !== c.ja)); if (me.k === k0) me.cpuT = 2.0; } } }
         if (phT > 60) { phase = 'show'; phT = 0; last = -1; }
       } else if (phase === 'show' && phT > 3.4 && !over) newRound();
       draw();
