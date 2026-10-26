@@ -20,14 +20,14 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 .sp-hud button{pointer-events:auto;border:0;font:inherit;font-weight:900;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .sp-top{position:absolute;left:8px;right:8px;top:calc(52px + env(safe-area-inset-top,0px));background:#fffffff0;border-radius:14px;padding:6px 10px;font-size:12px;font-weight:800;box-shadow:0 2px 8px #0002;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .sp-top b{font-size:14px}
-.sp-clubs{position:absolute;left:8px;right:8px;bottom:calc(196px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
-.sp-clubs button{background:#fff;border-radius:999px;padding:7px 11px;font-size:12px;box-shadow:0 2px 6px #0002}.sp-clubs button.on{background:#ffd36b}
-.sp-shot{position:absolute;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffe1ea);box-shadow:0 5px 0 #e0a0b4,0 8px 16px #0004;font-size:30px;line-height:1}
+.sp-clubs{position:absolute;left:8px;right:56px;bottom:calc(196px + env(safe-area-inset-bottom,0px));display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.sp-clubs button{background:#fff;border-radius:999px;padding:7px 8px;font-size:11px;box-shadow:0 2px 6px #0002}.sp-clubs button.on{background:#ffd36b}
+.sp-shot{position:absolute;right:58px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffe1ea);box-shadow:0 5px 0 #e0a0b4,0 8px 16px #0004;font-size:30px;line-height:1}
 .sp-shot small{display:block;font-size:11px}
 .sp-aim{position:absolute;bottom:calc(100px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 3px 0 #c9bfd8,0 5px 10px #0003;font-size:20px}
 .sp-l{left:16px}.sp-r{left:80px}
-.sp-gauge{position:absolute;right:122px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:18px;height:120px;border-radius:9px;background:#fffffff0;box-shadow:0 2px 6px #0003;overflow:hidden}
-.sp-tim{position:absolute;right:16px;bottom:calc(240px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
+.sp-gauge{position:absolute;right:164px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:18px;height:104px;border-radius:9px;background:#fffffff0;box-shadow:0 2px 6px #0003;overflow:hidden}
+.sp-tim{position:absolute;right:58px;bottom:calc(240px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
 .sp-tim i{position:absolute;top:-4px;width:4px;height:24px;border-radius:2px;background:#5a4a6b;left:50%}.sp-tim[hidden]{display:none}
 .sp-wind{display:inline-block;transition:transform .2s}
 .sp-swing{position:absolute;left:16px;right:16px;bottom:calc(252px + env(safe-area-inset-bottom,0px));height:30px;border-radius:15px;background:linear-gradient(90deg,#fff 0 7%,#ffe08a 7% 13%,#fff 13%);box-shadow:0 2px 8px #0004;border:2px solid #fff}
