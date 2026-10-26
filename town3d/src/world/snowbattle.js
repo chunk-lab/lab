@@ -24,11 +24,11 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
 .sb-top{position:absolute;left:8px;right:8px;top:calc(52px + env(safe-area-inset-top,0px));display:flex;justify-content:space-between;gap:6px}
 .sb-team{display:flex;gap:4px;flex-wrap:wrap}.sb-p{background:#fffffff0;border-radius:12px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 6px #0002}
 .sb-p.down{opacity:.45;text-decoration:line-through}.sb-p b{letter-spacing:-1px}
-.sb-mk{position:absolute;right:16px;bottom:calc(96px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d6ecff);box-shadow:0 5px 0 #8fb6dc,0 8px 16px #0004;font-size:28px;line-height:1}
+.sb-mk{position:absolute;right:58px;bottom:calc(81px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d6ecff);box-shadow:0 5px 0 #8fb6dc,0 8px 16px #0004;font-size:28px;line-height:1}
 .sb-mk small{display:block;font-size:10px;margin-top:2px}
 .sb-man,.sb-roll,.sb-lift{position:absolute;width:62px;height:62px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #c9bfd8,0 6px 12px #0003;font-size:24px;line-height:1}
-.sb-man{right:118px;bottom:calc(150px + env(safe-area-inset-bottom,0px))}.sb-roll{right:118px;bottom:calc(76px + env(safe-area-inset-bottom,0px))}
-.sb-lift{right:30px;bottom:calc(200px + env(safe-area-inset-bottom,0px));background:#fff3c4}
+.sb-man{right:160px;bottom:calc(135px + env(safe-area-inset-bottom,0px))}.sb-roll{right:160px;bottom:calc(61px + env(safe-area-inset-bottom,0px))}
+.sb-lift{right:72px;bottom:calc(185px + env(safe-area-inset-bottom,0px));background:#fff3c4}
 .sb-man[disabled],.sb-roll[disabled],.sb-mk[disabled]{opacity:.45}.sb-man small,.sb-lift small{display:block;font-size:10px}.sb-lift[hidden]{display:none}
 .sb-setup{position:absolute;left:50%;top:28%;transform:translateX(-50%);background:#fffffff2;border-radius:20px;padding:14px 18px;text-align:center;pointer-events:auto;box-shadow:0 6px 20px #0003;min-width:230px}
 .sb-setup b{font-size:17px}.sb-setup small{display:block;color:#8d7f9e;margin:4px 0 10px;line-height:1.5}

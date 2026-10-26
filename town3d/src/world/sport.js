@@ -22,14 +22,15 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 .sp-top b{font-size:14px}
 .sp-clubs{position:absolute;left:8px;right:8px;bottom:calc(196px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
 .sp-clubs button{background:#fff;border-radius:999px;padding:7px 11px;font-size:12px;box-shadow:0 2px 6px #0002}.sp-clubs button.on{background:#ffd36b}
-.sp-shot{position:absolute;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffe1ea);box-shadow:0 5px 0 #e0a0b4,0 8px 16px #0004;font-size:30px;line-height:1}
+.sp-shot{position:absolute;right:58px;bottom:calc(69px + env(safe-area-inset-bottom,0px));width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffe1ea);box-shadow:0 5px 0 #e0a0b4,0 8px 16px #0004;font-size:30px;line-height:1}
 .sp-shot small{display:block;font-size:11px}
 .sp-aim{position:absolute;bottom:calc(100px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 3px 0 #c9bfd8,0 5px 10px #0003;font-size:20px}
 .sp-l{left:16px}.sp-r{left:80px}
-.sp-gauge{position:absolute;right:122px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:18px;height:120px;border-radius:9px;background:#fffffff0;box-shadow:0 2px 6px #0003;overflow:hidden}
+.sp-gauge{position:absolute;right:164px;bottom:calc(69px + env(safe-area-inset-bottom,0px));width:18px;height:120px;border-radius:9px;background:#fffffff0;box-shadow:0 2px 6px #0003;overflow:hidden}
 .sp-tim{position:absolute;right:16px;bottom:calc(240px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
 .sp-tim i{position:absolute;top:-4px;width:4px;height:24px;border-radius:2px;background:#5a4a6b;left:50%}.sp-tim[hidden]{display:none}
 .sp-wind{display:inline-block;transition:transform .2s}
+.sp-bend{position:absolute;right:16px;bottom:calc(262px + env(safe-area-inset-bottom,0px));width:150px;text-align:center;font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 3px #000c,0 0 6px #0008;pointer-events:none}.sp-bend[hidden]{display:none}
 .sp-swing{position:absolute;left:16px;right:16px;bottom:calc(252px + env(safe-area-inset-bottom,0px));height:30px;border-radius:15px;background:linear-gradient(90deg,#fff 0 7%,#ffe08a 7% 13%,#fff 13%);box-shadow:0 2px 8px #0004;border:2px solid #fff}
 .sp-swing .pw{position:absolute;top:0;bottom:0;left:0;border-radius:11px;background:linear-gradient(90deg,#ffd36b,#ff7aa2);opacity:.55}
 .sp-swing .mk{position:absolute;top:-6px;width:5px;height:38px;border-radius:3px;background:#5a4a6b}
@@ -116,14 +117,14 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const h = document.createElement('div'); h.className = 'sp-hud';
     h.innerHTML = `<div class="sp-top"></div><div class="sp-msg"></div><div class="sp-clubs"></div>
       <button class="sp-aim sp-l">◀</button><button class="sp-aim sp-r">▶</button>${kind === 'golf' ? '' : '<div class="sp-gauge"><i style="height:0"></i></div>'}
-      <div class="sp-tim" hidden><i></i></div>${kind === 'golf' ? '<div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引いて はなす</small>'}</button><button class="sp-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
+      <div class="sp-tim" hidden><i></i></div><div class="sp-bend" hidden></div>${kind === 'golf' ? '<div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引く↓ ずらす↔</small>'}</button><button class="sp-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
     root.appendChild(h);
     const shot = h.querySelector('.sp-shot');
-    let y0 = 0;
+    let y0 = 0, x0 = 0;
     shot.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!S || S.phase !== 'aim') return;
       if (S.kind === 'golf') { if (S.sw && S.sw.ph === 'shot') return; swingTap(); return; }   // ゴルフ:タップ3回(スタート → 強さ → 左右)
-      S.charging = true; S.cT = 0; S.power = 0; y0 = e.clientY; try { shot.setPointerCapture(e.pointerId); } catch (_) { } });
-    shot.addEventListener('pointermove', e => { if (!S || !S.charging || S.kind !== 'frisbee') return; S.power = Math.max(0, Math.min(1, (e.clientY - y0) / 150)); });   // 下へ引くほど強い
+      S.charging = true; S.cT = 0; S.power = 0; S.bend = 0; y0 = e.clientY; x0 = e.clientX; try { shot.setPointerCapture(e.pointerId); } catch (_) { } });
+    shot.addEventListener('pointermove', e => { if (!S || !S.charging || S.kind !== 'frisbee') return; S.power = Math.max(0, Math.min(1, (e.clientY - y0) / 150)); const dx = e.clientX - x0; S.bend = Math.abs(dx) < 6 ? 0 : Math.max(-1, Math.min(1, (dx - Math.sign(dx) * 6) / 64)); });   // 下へ引くほど強い・横へずらすとその向きへ曲がる
     const rel = () => {
       if (!S || !S.charging) return; S.charging = false;
       if (S.kind === 'frisbee') { if (S.power < 0.08) return; const nd = S.needle; S.curve = Math.sign(nd) * Math.pow(Math.abs(nd), 0.8); }   // 少しでもズレると、その分だけ曲がろうとする
@@ -156,7 +157,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       [dx, dz] = [dx * cs + dz * sn, -dx * sn + dz * cs]; msg(S.dev ? (S.dev > 0 ? 'ちょっと右へ…' : 'ちょっと左へ…') : 'ナイスショット!');
       if (c.loft === 0) { const v = Math.sqrt(2 * 1.6 * c.d * p); S.v = new THREE.Vector3(dx * v, 0, dz * v); S.pos.y = 0.06; }
       else { const th = c.loft * Math.PI / 180, v = Math.sqrt(c.d * p * G / Math.sin(2 * th)); S.v = new THREE.Vector3(dx * v * Math.cos(th), v * Math.sin(th), dz * v * Math.cos(th)); }
-    } else { const v = 6 + 18 * p; S.v = new THREE.Vector3(dx * v, [0.6, 2.0, 3.6][S.hgt] + p * 1.2, dz * v); S.pos.y = 1.2; S.curveNow = S.curve; S.lastCurve = S.curve; }
+    } else { const v = 6 + 18 * p; S.v = new THREE.Vector3(dx * v, [0.6, 2.0, 3.6][S.hgt] + p * 1.2, dz * v); S.pos.y = 1.2; S.curveNow = S.curve; S.lastCurve = S.curve; S.bend = S.bend || 0; }
     drawHud();
   }
   function hitWalls(p, v, keep) {   // 建物・木などに当たったら はね返る
@@ -170,6 +171,24 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       }
     }
   }
+  // フリスビーが空を飛ぶ1ステップ(本番と、ねらいの線の先読みで同じ計算をつかう)。st={curveNow, bend}
+  function frisAir(p, v, st, H, h) {
+    const sp = Math.hypot(v.x, v.z), ux = v.x / (sp || 1), uz = v.z / (sp || 1);
+    const head = -(H.wind[0] * ux + H.wind[1] * uz), cross = H.wind[0] * -uz + H.wind[1] * ux;   // 向かい風(+)/追い風(-)、横風(右へ+)
+    const lift = Math.max(0, Math.min(0.92, sp / 20 + head * 0.05)); v.y -= G * (1 - lift) * h; v.y *= Math.exp(-0.6 * h);   // 向かい風で浮く、追い風で落ちる
+    st.curveNow += cross * 0.06 * h;   // 横風を受けると、そっちへ傾いて曲がりはじめる
+    const slow = 1 - Math.min(1, sp / 24), side = (st.curveNow * 3.8 - 0.5) * (0.25 + 0.75 * slow) * h;   // タイミングの針の曲がり(おそくなるほど強い)
+    const bs = (st.bend || 0) * 13 * (0.4 + 0.6 * slow) * h;   // 指でずらした分の曲がり:進む向きに対して横へ、大きく旋回する
+    v.x += -uz * (side + bs); v.z += ux * (side + bs);   // (-uz, ux) = 進む向きの右
+    v.x *= Math.exp(-(0.22 + Math.max(0, head) * 0.03) * h); v.z *= Math.exp(-(0.22 + Math.max(0, head) * 0.03) * h); v.x += H.wind[0] * 0.75 * h; v.z += H.wind[1] * 0.75 * h;   // 風(しっかり流される)
+  }
+  // いま はなしたら どう飛ぶか(点の列)
+  function simFris(power, bend, curve) {
+    const H = S.C.holes[S.i], [dx, dz] = aimDir(), p = S.pos.clone(), pw = Math.max(0.05, power), v0 = 6 + 18 * pw;
+    p.y = 1.2; const v = new THREE.Vector3(dx * v0, [0.6, 2.0, 3.6][S.hgt] + pw * 1.2, dz * v0), st = { curveNow: curve, bend }, h = 1 / 60, pts = [p.clone()];
+    for (let i = 0; i < 480 && p.y > 0.03; i++) { frisAir(p, v, st, H, h); p.addScaledVector(v, h); if (i % 3 === 2) pts.push(p.clone()); }
+    pts.push(p.clone()); return pts;
+  }
   function stepFly(dt) {
     const H = S.C.holes[S.i], p = S.pos, v = S.v, n = 4, h = dt / n;
     for (let k = 0; k < n; k++) {
@@ -182,13 +201,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       } else {
         const sp = Math.hypot(v.x, v.z);
         if (p.y > 0.03) {
-          const ux = v.x / (sp || 1), uz = v.z / (sp || 1);
-          const head = -(H.wind[0] * ux + H.wind[1] * uz), cross = H.wind[0] * -uz + H.wind[1] * ux;   // 向かい風(+)/追い風(-)、横風(右へ+)
-          const lift = Math.max(0, Math.min(0.92, sp / 20 + head * 0.05)); v.y -= G * (1 - lift) * h; v.y *= Math.exp(-0.6 * h);   // 向かい風で浮く、追い風で落ちる
-          S.curveNow += cross * 0.06 * h;   // 横風を受けると、そっちへ傾いて曲がりはじめる
-          const slow = 1 - Math.min(1, sp / 24), side = (S.curveNow * 3.8 - 0.5) * (0.25 + 0.75 * slow) * h;   // 曲がり(おそくなるほど強い。最後は少し左へ流れる)
-          v.x += -uz * side; v.z += ux * side;   // (-uz, ux) = 進む向きの右
-          v.x *= Math.exp(-(0.22 + Math.max(0, head) * 0.03) * h); v.z *= Math.exp(-(0.22 + Math.max(0, head) * 0.03) * h); v.x += H.wind[0] * 0.75 * h; v.z += H.wind[1] * 0.75 * h;   // 風(しっかり流される)
+          frisAir(p, v, S, H, h);
         } else { p.y = 0.03; v.y = 0; const dec = 7 * h; if (sp <= dec) { v.x = v.z = 0; } else { v.x *= (sp - dec) / sp; v.z *= (sp - dec) / sp; } }
         p.addScaledVector(v, h); hitWalls(p, v, 0.3);
         const dh = Math.hypot(p.x - H.goal[0], p.z - H.goal[1]);
@@ -264,13 +277,21 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     if (S.kind === 'frisbee') S.mesh.rotation.y += dt * (S.phase === 'fly' ? 20 : 0);
     if (S.flag?.userData.flag) S.flag.userData.flag.rotation.y = Math.sin(performance.now() / 300) * 0.3;
     // ねらいの線と、だいたいの落ちる場所
-    const show = S.phase === 'aim'; S.aimLine.visible = S.land.visible = show;
+    const show = S.phase === 'aim'; S.aimLine.visible = S.land.visible = show; if (S.kind === 'frisbee' && !(show && S.charging)) { const bt = S.hud.querySelector('.sp-bend'); if (bt) bt.hidden = true; }
     if (show) {
       const [dx, dz] = aimDir(); let L;
       if (S.kind === 'golf') { const c = CLUBS[S.club]; L = c.d * (S.sw ? Math.max(0.05, S.sw.ph === 1 ? S.sw.pos : S.power) : 1); } else L = 26 * (S.charging ? Math.max(0.05, S.power) : 1);
       const a = S.aimLine.geometry.attributes.position, y0 = S.kind === 'golf' ? 0.08 : 1.1;
+      if (S.kind === 'frisbee' && S.charging) {   // 引いている間は、いま はなしたときの曲がる道すじを見せる
+        const pts = simFris(S.power, S.bend || 0, Math.sign(S.needle || 0) * Math.pow(Math.abs(S.needle || 0), 0.8)), a2 = S.aimLine.geometry.attributes.position;
+        for (let i = 0; i < 40; i++) { const q = pts[Math.min(pts.length - 1, Math.round(i / 39 * (pts.length - 1)))]; a2.setXYZ(i, q.x, Math.max(0.1, q.y), q.z); }
+        a2.needsUpdate = true; S.aimLine.computeLineDistances(); const e = pts[pts.length - 1]; S.land.position.set(e.x, 0.05, e.z);
+        const bt = S.hud.querySelector('.sp-bend'), bd = S.bend || 0; bt.hidden = false; bt.textContent = Math.abs(bd) < 0.05 ? '↑ まっすぐ' : `${bd < 0 ? '↰ 左へ' : '右へ ↱'} 曲がる ${Math.round(Math.abs(bd) * 100)}%`;
+      } else {
+      const a = S.aimLine.geometry.attributes.position, y0 = S.kind === 'golf' ? 0.08 : 1.1;
       for (let i = 0; i < 40; i++) { const q = i / 39, h = S.kind === 'golf' && CLUBS[S.club].loft ? Math.sin(q * Math.PI) * L * 0.18 : 0; a.setXYZ(i, S.pos.x + dx * L * q, y0 + h, S.pos.z + dz * L * q); }
       a.needsUpdate = true; S.aimLine.computeLineDistances(); S.land.position.set(S.pos.x + dx * L, 0.05, S.pos.z + dz * L);
+      }
     }
   }
   // カメラが追う所(飛んでいる間はボール)
