@@ -112,12 +112,10 @@ export default {
                 face(up, s, W / 2, FY, 76, null, 0);
                 T(up, hand[s] >= 0 ? '✔ 出した! あいてを待っているよ' : 'じゃん けん…', W / 2, h * 0.52, { size: hand[s] >= 0 ? 14 : 20 });
                 if (canSee && hand[s] < 0) jb(W, h).forEach(b => btn(g, b, { size: 40, flip: up }));
-              } else if (st === 'janrev') {
-                const tie = hand[0] === hand[1], w = !tie && (beats(hand[s], hand[o])), k = ease(t / 0.3);
-                g.fillStyle = tie ? 'rgba(255,211,107,.35)' : w ? 'rgba(63,191,106,.28)' : 'rgba(90,168,240,.25)'; g.fillRect(0, 4, W, h * 0.62);
-                T(up, HANDS[hand[s]], W * 0.3, h * 0.2 + 14, { size: 64 * k }); T(up, '✕', W / 2, h * 0.2 + 14, { size: 20, color: '#8d7f9e' }); T(up, HANDS[hand[o]], W * 0.7, h * 0.2 + 14, { size: 64 * k });
-                T(up, host.players[s].name, W * 0.3, h * 0.2 + 56, { size: 12, color: '#8d7f9e', maxW: W * 0.35 }); T(up, host.players[o].name, W * 0.7, h * 0.2 + 56, { size: 12, color: '#8d7f9e', maxW: W * 0.35 });
-                T(up, tie ? 'あいこ!' : w ? '🏆 じゃんけん かち! → 指す側' : 'まけ… → 顔を向ける側', W / 2, h * 0.52, { size: tie ? 30 : 22, color: tie ? '#c98a00' : w ? '#2ca66a' : '#3a7fd0', stroke: '#fff', sw: 5 });
+              } else if (st === 'janrev') {   // 手の結果は、まん中に1つだけ(上下に2回出さない)。ここには自分のかち/まけだけ
+                const tie = hand[0] === hand[1], w = !tie && (beats(hand[s], hand[o]));
+                g.fillStyle = tie ? 'rgba(255,211,107,.3)' : w ? 'rgba(63,191,106,.28)' : 'rgba(90,168,240,.25)'; g.fillRect(0, 4, W, h * 0.7);
+                if (canSee) T(up, tie ? 'あいこ!' : w ? '🏆 かち! → 指す側' : 'まけ… → 顔を向ける側', W / 2, h * 0.62, { size: tie ? 30 : 22, color: tie ? '#c98a00' : w ? '#2ca66a' : '#3a7fd0', stroke: '#fff', sw: 5 });
               } else {   // hoi / rev
                 const reveal = st === 'rev', k = reveal ? t / 0.3 : 0;
                 g.fillStyle = mineWin ? 'rgba(255,122,162,.22)' : 'rgba(90,168,240,.2)'; g.fillRect(0, 4, W, h * 0.66);
@@ -135,6 +133,16 @@ export default {
                 if (canSee && !reveal && dir[s] == null) db(W, h).forEach(b => btn(g, b, { size: 26, flip: up, fill: mineWin ? '#ffe1ea' : '#e3f1ff' }));
               }
             }));
+            if (st === 'janrev') {   // まん中:2人の手。下の人=ピンク / 上の人=青。かった方に王冠
+              const cy = S.H / 2, k = ease(t / 0.3), tie = hand[0] === hand[1], w0 = !tie && beats(hand[0], hand[1]), w1 = !tie && !w0;
+              [[0, 1], [1, -1]].forEach(([s, sg]) => {
+                const x = W / 2, y = cy + sg * (62 + 18 * (1 - k)), win = s === 0 ? w0 : w1, col = s ? COL.p2 : COL.p1;
+                g.save(); g.globalAlpha = tie || win ? 1 : 0.55; g.fillStyle = col; g.beginPath(); g.arc(x, y, 50 * k, 0, 7); g.fill();
+                if (win) { g.strokeStyle = '#ffd36b'; g.lineWidth = 6; g.beginPath(); g.arc(x, y, 54 * k, 0, 7); g.stroke(); }
+                g.translate(x, y); if (s === 1 && two) g.rotate(Math.PI); txt(g, HANDS[hand[s]], 0, 2, { size: 62 * k }); g.restore();
+                if (win) txt(g, '👑', x, y - sg * 62, { size: 30 * k, flip: s === 1 && two });
+              });
+            }
             if (st === 'rev' && t > 0.4) {   // けっか:ど真ん中に大きく
               const w = win, txtm = same ? `同じ向き!! ${host.players[w].name}のかち!` : 'ちがう向き… かわした!';
               banner(g, S, two, same ? (two ? '同じ向き!! 指した方のかち!' : (w === 0 ? '同じ向き!! あなたのかち!' : '同じ向き!! あいてのかち…')) : 'ちがう向き… かわした!', { size: 24, color: same ? (two || w === 0 ? '#2ca66a' : '#d24') : '#8d7f9e' });
