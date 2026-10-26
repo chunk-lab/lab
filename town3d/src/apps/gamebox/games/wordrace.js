@@ -56,12 +56,15 @@ export default {
     }
     // ---- 画面の割りふり(エリアの中) ----
     const area = () => ({ y0: two ? 0 : S.H / 2, h: S.H / 2 });   // どちらのときも、下の半分が自分、上の半分が相手
-    function lay(W, h, opp) {   // 4択は低く(1つ約46px)、2つの単語がまん中でいちばん近くなるように。自分は下に、相手の画面は上に寄せる
-      const head = 38, hh = h - PAD, gw = Math.min(W * 0.46, 210), ch = clamp(Math.round(hh * 0.14), 40, 52), gh = ch * 2 + 4, blockH = gh * 2 + 4;
-      const top = Math.max(head + 6, Math.round(head + 6 + (hh - head - 6 - blockH) / 2)), bx = 8 + gw + 8, bw = W - bx - 8;
-      return { head, gw, gh, gy: [top, top + gh + 4], bx, bw, cw: (gw - 4) / 2, ch };
+    // 左右に2レーン(左の手・右の手)。単語は中央線に近いところ、4択(2×2)は下。相手の画面は上下を反対にして、単語が中央線に近くなるようにする
+    function lay(W, h, opp) {
+      const head = 38, hh = h - PAD, cw = (W - 24) / 2, ch = clamp(Math.round(hh * 0.17), 42, 66), gh = ch * 2 + 4, nowH = clamp(Math.round(hh * 0.2), 42, 74), nextH = 24;
+      const gridY = opp ? head + 8 : hh - gh;
+      const nowY = opp ? h - 8 - nowH : head + 8, nextY = opp ? nowY - 4 - nextH : nowY + nowH + 4;
+      const wy = Math.min(nowY, nextY) - 4, wh = nowH + nextH + 12;
+      return { head, cw, ch, gh, gridY, nowY, nowH, nextY, nextH, wy, wh, cx: [8, 16 + cw] };
     }
-    const cells = (W, h, li, opp) => { const L0 = lay(W, h, opp); return [0, 1, 2, 3].map(i => ({ x: 8 + (i % 2) * (L0.cw + 4), y: L0.gy[li] + Math.floor(i / 2) * (L0.ch + 4), w: L0.cw, h: L0.ch, li, i })); };
+    const cells = (W, h, li, opp) => { const L0 = lay(W, h, opp), cl = (L0.cw - 4) / 2; return [0, 1, 2, 3].map(i => ({ x: L0.cx[li] + (i % 2) * (cl + 4), y: L0.gridY + Math.floor(i / 2) * (L0.ch + 4), w: cl, h: L0.ch, li, i })); };
     const repB = W => ({ x: W - 50, y: 8, w: 40, h: 22, label: '🔊' });
     const pt = pointers(S.cv, {
       onDown: p => {
@@ -103,17 +106,14 @@ export default {
       if (!opp) btn(g, repB(W), { size: 13, shadow: false, border: '#e6dcf2' });
       if (me.flash > 0) { g.fillStyle = `rgba(63,191,106,${me.flash * 0.6})`; g.fillRect(0, 0, W, h); }
       me.lanes.forEach((L, li) => {
-        const y = L0.gy[li], gh = L0.gh, cx = L0.bx + 8, cw = L0.bw - 16, chipH = 24, ph = gh - chipH - 12;
-        g.fillStyle = LANE_BG[li]; rr(g, L0.bx, y, L0.bw, gh, 12); g.fill(); g.strokeStyle = LANE_COL[li]; g.lineWidth = 2.5; rr(g, L0.bx, y, L0.bw, gh, 12); g.stroke();
-        // 上のレーンは「次」を上、下のレーンは「次」を下 → 2つの「今の単語」がまん中でくっつく
-        const nowY = li === 0 ? y + 4 + chipH + 4 : y + 4, nextY = li === 0 ? y + 4 : y + 4 + ph + 4;
-        wordCard(li, cx, nowY, cw, ph, { f: L.now, now: true, alpha: 1 - L.anim * 0.4, size: 22, show });
-        wordCard(li, cx, nextY, cw, chipH, { f: L.next, now: false, alpha: 0.55, size: 13, show });
-        // 左:4択(2×2)
+        const x = L0.cx[li];
+        g.fillStyle = LANE_BG[li]; rr(g, x, L0.wy, L0.cw, L0.wh, 12); g.fill(); g.strokeStyle = LANE_COL[li]; g.lineWidth = 2.5; rr(g, x, L0.wy, L0.cw, L0.wh, 12); g.stroke();
+        wordCard(li, x + 6, L0.nowY, L0.cw - 12, L0.nowH, { f: L.now, now: true, alpha: 1 - L.anim * 0.4, size: 24, show });
+        wordCard(li, x + 6, L0.nextY, L0.cw - 12, L0.nextH, { f: L.next, now: false, alpha: 0.55, size: 13, show });
         cells(W, h, li, opp).forEach(b => {
           const sl = L.slots && L.slots[b.i], dis = sl && sl.dis;
           btn(g, { ...b, label: '' }, { fill: dis ? '#eee8f4' : '#fff', border: LANE_COL[li], shadow: false, alpha: L.lock > 0.1 ? 0.6 : 1 });
-          if (sl) { const fs = clamp(b.w / 7, 11, 14); wrapTxt(g, sl.text, b.x + b.w / 2, b.y + b.h / 2, b.w - 8, { size: fs, color: dis ? '#b8aec4' : INK, weight: 700, lh: fs * 1.15 }); }
+          if (sl) { const fs = clamp(b.w / 6.5, 11, 15); wrapTxt(g, sl.text, b.x + b.w / 2, b.y + b.h / 2, b.w - 8, { size: fs, color: dis ? '#b8aec4' : INK, weight: 700, lh: fs * 1.15 }); }
         });
       });
     }

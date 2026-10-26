@@ -263,11 +263,12 @@ export const furn = {
       const old = st.get('room');
       v = Array.isArray(old) ? old.filter(p => p.id && !p.room).map(p => ({ uid: p.uid, id: p.id, room: 'r1', gx: p.gx * U, gz: p.gz * U, r: p.r || 0 })) : [];
       if (!Array.isArray(old) && !st.get('inv')) {   // はじめての人だけ、最初の部屋に机といすを置いておく(持ち物にも1つずつ入れる)
-        v = [{ uid: 'init-desk', id: 'desk', room: 'r1', gx: 6, gz: 2, r: 0 }, { uid: 'init-chair', id: 'chair', room: 'r1', gx: 7, gz: 4, r: 0 }];
+        v = [{ uid: 'init-desk', id: 'desk', room: 'r1', gx: 6, gz: 2, r: 0 }, { uid: 'init-chair', id: 'chair', room: 'r1', gx: 7, gz: 4, r: 2 }];
         st.set('inv', { desk: 1, chair: 1 });
       }
       st.set('put', v);
     }
+    if (!st.get('chairFix')) { st.set('chairFix', 1); const c = v.find(p => p.uid === 'init-chair' && !p.r); if (c) { c.r = 2; st.set('put', v); } }   // 最初のいすの向きを180度反対に(1回だけ)
     return v.filter(p => ITEM[p.id]);
   },
   savePlaced: v => st.set('put', v),
