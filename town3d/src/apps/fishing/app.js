@@ -227,7 +227,7 @@ export const fishingApp = {
       if (vs && vs.bot) { oppE = createEngine({ seed: vs.seed, cond, gear: vs.bot === 'hard' ? { rod: 'carbon', reel: 'smooth', line: 'fluoro', bait: pickBotBait(cond), hook: 'm', tana: 0.85 } : { rod: 'bamboo', reel: 'basic', line: 'nylon', bait: 'worm', hook: 'm', tana: 0.5 }, onEvent: (t, d) => { oppE.onBot && oppE.onBot(t, d); oppEvent(t, d); }, easy }); bot = createBot(oppE, vs.bot, vs.seed + 5); }
 
       // ---- 画面の部品 ----
-      ui.innerHTML = `<div class="bar"><button class="chip" data-b="back">≡</button><span style="flex:1"></span><span class="chip" data-b="info" style="pointer-events:none"></span><button class="chip" data-b="tackle"></button><button class="chip" data-b="tana"></button>${vs ? '' : '<button class="chip" data-b="ask">💬</button>'}<button class="chip" data-b="help">？</button></div>
+      ui.innerHTML = `<div class="bar"><button class="chip" data-b="back">≡</button><span style="flex:1"></span><span class="chip" data-b="info" style="pointer-events:none"></span><button class="chip" data-b="tackle"></button><button class="chip" data-b="tana"></button>${vs ? '<button class="chip" data-b="skip">⏩ 終わる</button>' : '<button class="chip" data-b="ask">💬</button>'}<button class="chip" data-b="help">？</button></div>
         <div class="hint"></div><div class="area" hidden></div><div class="pw" hidden><i class="band"></i><b></b></div><div class="ez" hidden></div>
         <div class="gauge" hidden><div class="t"><b></b></div><div class="brk"></div><div class="row"><span class="gl"></span><span class="gs"></span></div></div>
         <div class="thr" hidden><i></i></div>
@@ -245,6 +245,13 @@ export const fishingApp = {
       tackleChip();
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
+        if (b === 'skip') {   // 勝負をとちゅうで切りあげる:2回おすと、あいての残り時間を一気に進めて結果を出す
+          if (!vs || ended || countT > 0) return;
+          const bt2 = e.target.closest('[data-b]');
+          if (!bt2.dataset.arm) { bt2.dataset.arm = 1; bt2.textContent = 'もう一度で 結果へ'; setTimeout(() => { delete bt2.dataset.arm; bt2.textContent = '⏩ 終わる'; }, 3000); return; }
+          if (bot) { const rem = Math.max(0, vs.dur - startT); for (let i = 0, n = Math.ceil(rem * 30); i < n; i++) { bot.update(1 / 30); oppE.update(1 / 30); } }
+          startT = vs.dur; finish(); return;
+        }
         if (b === 'back') { if (vs && !ended) { confirmQuit(); return; } if (!vs && tripShow(menu)) return; menu(); }
         if (b === 'tackle') { if (E.S.ph !== 'ready') { toast('投げる前に変えられるよ', 1200); return; } tackleSheet(() => { for (const k of ['rod', 'reel', 'line', 'bait', 'hook', 'eye']) E.setGear(k, eq[k]); E.setTana(eq.tana); tackleChip(); }); }
         if (b === 'help') help();
