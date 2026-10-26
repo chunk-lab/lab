@@ -45,7 +45,7 @@ export default {
     }
     const rgb = (c, k) => `rgb(${Math.min(255, Math.round(c[0] * k))},${Math.min(255, Math.round(c[1] * k))},${Math.min(255, Math.round(c[2] * k))})`;
     function drawBox(b, open, mark, col) {   // マジシャンの箱:ツヤのある濃い色、金のふち、星のしるし
-      const sh = clamp(0.62 + (b.z / (S.W * 0.4)) * 0.4, 0.5, 1.1), s2 = b.s, pal = PAL[b.i % PAL.length];
+      const sh = clamp(0.62 + (b.z / (S.W * 0.4)) * 0.4, 0.5, 1.1), s2 = b.s, pal = PAL[0];
       const x0 = -s2, x1 = s2, yT = -s2 * 0.55, yB = s2 * 0.95, gold = rgb([255, 205, 80], Math.min(1.05, sh + 0.2));
       g.save(); g.translate(b.x, b.y);
       g.fillStyle = 'rgba(0,0,0,.2)'; g.beginPath(); g.ellipse(s2 * 0.1, s2 * 1.05, s2 * 0.95, s2 * 0.26, 0, 0, 7); g.fill();
