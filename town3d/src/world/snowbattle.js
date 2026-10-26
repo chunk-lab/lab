@@ -26,8 +26,8 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
 .sb-p.down{opacity:.45;text-decoration:line-through}.sb-p b{letter-spacing:-1px}
 .sb-mk{position:absolute;right:58px;bottom:calc(96px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d6ecff);box-shadow:0 5px 0 #8fb6dc,0 8px 16px #0004;font-size:28px;line-height:1}
 .sb-mk small{display:block;font-size:10px;margin-top:2px}
-.sb-man,.sb-roll,.sb-lift{position:absolute;width:58px;height:58px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #c9bfd8,0 6px 12px #0003;font-size:24px;line-height:1}
-.sb-man{right:154px;bottom:calc(150px + env(safe-area-inset-bottom,0px))}.sb-roll{right:154px;bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+.sb-man,.sb-roll,.sb-lift{position:absolute;width:62px;height:62px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #c9bfd8,0 6px 12px #0003;font-size:24px;line-height:1}
+.sb-man{right:160px;bottom:calc(150px + env(safe-area-inset-bottom,0px))}.sb-roll{right:160px;bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 .sb-lift{right:72px;bottom:calc(200px + env(safe-area-inset-bottom,0px));background:#fff3c4}
 .sb-man[disabled],.sb-roll[disabled],.sb-mk[disabled]{opacity:.45}.sb-man small,.sb-lift small{display:block;font-size:10px}.sb-lift[hidden]{display:none}
 .sb-setup{position:absolute;left:50%;top:28%;transform:translateX(-50%);background:#fffffff2;border-radius:20px;padding:14px 18px;text-align:center;pointer-events:auto;box-shadow:0 6px 20px #0003;min-width:230px}
@@ -38,7 +38,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
 .sb-tipx{position:absolute;left:0;right:0;top:46%;text-align:center;font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 4px #000c;pointer-events:none}
 .sb-quit{position:absolute;left:10px;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:#fffffff0;border-radius:999px;padding:8px 14px;font-size:12px;box-shadow:0 2px 6px #0002}
 .sb-msg{position:absolute;left:0;right:0;top:34%;text-align:center;font-size:34px;font-weight:900;color:#fff;text-shadow:0 3px 0 #5a4a6b,0 0 12px #0006;pointer-events:none}
-.sb-tip{position:absolute;left:0;right:0;bottom:calc(216px + env(safe-area-inset-bottom,0px));text-align:center;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 3px #000a;pointer-events:none}`;
+.sb-tip{position:absolute;left:0;right:0;bottom:calc(196px + env(safe-area-inset-bottom,0px));text-align:center;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 3px #000a;pointer-events:none}`;
   document.head.appendChild(css);
   function hudEl(home) {
     const h = document.createElement('div'); h.className = 'sb-hud';
