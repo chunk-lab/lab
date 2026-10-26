@@ -119,7 +119,10 @@ export function createReview(core) {
           ${g ? `<p class="rv-pt">+${g} コイン</p>` : '<p class="cs-note">このふりかえりのコインは、もらえなかったよ(受け取り済み、または忘れた日)。</p>'}
           ${mode === 'today' ? `<p class="cs-note">${statusLine()}</p>` : ''}<button class="cs-btn" id="rv-e">${mode === 'today' ? '今日はここまで!' : 'つづける'}</button>${dl.pool().length >= 4 ? '<button class="cs-btn" id="rv-t">単語テストもやる</button>' : ''}`, () => { box.querySelector('#rv-e').onclick = () => close(); const tb = box.querySelector('#rv-t'); if (tb) tb.onclick = () => { close(); test(); }; });
       }
-      stepTime();
+      // 今日のふりかえりは、まちがって押しても勝手に終わらないよう、先に「ここまでにする?」と聞く
+      if (mode === 'today' && !o.noConfirm) go(`<h3>今日はここまでにする?</h3><p class="cs-note">この日のふりかえり(時間・言葉・カード)をして、今日を終わります。</p><p class="cs-note">${statusLine()}</p>
+        <button class="cs-btn" id="rv-y">ここまでにして、ふりかえる</button><button class="cs-btn" id="rv-no">まだ あそぶ</button>`, () => { box.querySelector('#rv-y').onclick = stepTime; box.querySelector('#rv-no').onclick = close; });
+      else stepTime();
     });
   }
   const statusLine = () => { const s = status(); return s.ok ? '今日の課題はぜんぶOK!また明日ね。' : !s.main ? '今日のメイン課題が まだだよ。' : `ほかの課題は あと${3 - s.n}つ でOK。`; };
