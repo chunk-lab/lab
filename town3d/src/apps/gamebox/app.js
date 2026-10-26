@@ -1,6 +1,6 @@
 // ゲーム機「チャンクボックス」。家とショップから開く。
 //   英語対戦ゲーム(無料。無料会員は1日1試合、ゲーム機を1日借りれば何回でも)
-//   あそびゲーム(ソフトを借りる。無料会員はゲーム機も借りる。お試しは1日1回)
+//   (あそびゲームは、アミューズメントセンター(mode:'amuse')に移した。センター全体が1日パス制(コインでも買える)。旬の外遊びだけ無料)
 //   相手:町の住人(CPU)か、1台のスマホを上下で向かい合わせて2人
 import { CPUS, cpuById, createSfx, INK, unlockSpeech } from './kit.js';
 import chunksort from './games/chunksort.js';
@@ -16,9 +16,11 @@ import hockey from './games/hockey.js';
 import race from './games/race.js';
 import party from './games/party.js';
 import snow from './games/snow.js';
+import boxes from './games/boxes.js';
 
-export const EN_GAMES = [chunksort, wordrace, listen, tug, shiritori, sniper];
-export const PLAY_GAMES = [hockey, race, party, bowling, darts, snow3d, fishvs, golf, frisbee];
+export const EN_GAMES = [chunksort, wordrace, listen, tug, shiritori, sniper, race];   // チャンクボックスは英語のゲームだけ
+export const PLAY_GAMES = [hockey, party, bowling, darts, boxes, snow3d, fishvs, golf, frisbee];   // アミューズメントセンター(センター全体が有料。コインでも遊べる。旬の外遊びだけ無料)
+const SEASON_OF = { snow3d: 'winter', snow: 'winter', golf: 'spring', frisbee: 'autumn', fishvs: 'summer' };
 const ALL = [...EN_GAMES, ...PLAY_GAMES, snow];
 // 値段(あとで変えられるようにここにまとめる)
 export const PRICE = { console: 700, title1: 500, title3: 1000, titleAll: 2000, usdMonth1: 1, usdDayAll: 1 };
@@ -78,7 +80,10 @@ export const gameboxApp = {
     const root = document.createElement('div'); root.className = 'gb'; el.appendChild(root);
     const sfx = createSfx(ctx.audio && ctx.audio.sfx != null ? ctx.audio.sfx : 0.6);
     root.addEventListener('pointerdown', () => sfx.unlock(), { once: true });
-    ctx.setTitle('チャンクボックス');
+    const AMUSE = P.mode === 'amuse', TTL = AMUSE ? 'アミューズメントセンター' : 'チャンクボックス';
+    ctx.setTitle(TTL);
+    const curSeason = () => { if (P.season && P.season !== 'auto') return P.season; const m = new Date().getMonth() + 1; return m >= 3 && m <= 5 ? 'spring' : m >= 6 && m <= 8 ? 'summer' : m >= 9 && m <= 11 ? 'autumn' : 'winter'; };
+    const inSeason = G => SEASON_OF[G.id] === curSeason();   // 旬の外遊びは無料
     const paid = () => !!(ctx.member && ctx.member.paid && ctx.member.paid());
     const admin = () => { try { return JSON.parse(localStorage.getItem('cs:core:admin')) === true; } catch (e) { return false; } };
     // ---- レンタルの記録 ----
@@ -102,25 +107,43 @@ export const gameboxApp = {
 
     // ================= ホーム =================
     function home() {
-      clear(); ctx.setTitle('チャンクボックス');
+      clear(); ctx.setTitle(TTL); if (AMUSE) return homeAmuse();
       const r = R(), sc = document.createElement('div'); sc.className = 'scr'; root.appendChild(sc);
       const consoleTxt = paid() ? '本体:有料会員はいつでも' : r.console === dayKey() ? '本体:きょうは借りている' : `本体:借りていない(1日 🪙${PRICE.console})`;
       const winter = P.season === 'winter' || (!P.season && [12, 1, 2].includes(new Date().getMonth() + 1));
       sc.innerHTML = `<div class="logo">CHUNK BOX</div><div class="sub">チャンクボックス ・ 1台で2人対戦</div>
         <div class="stat"><span class="pill ${consoleOk() ? 'ok' : ''}">🎮 ${consoleTxt}</span><span class="pill">🪙 ${ctx.wallet.get()}</span>${!consoleOk() ? `<span class="pill warn">英語ゲーム無料 あと${enLeft()}試合</span>` : ''}</div>
-        <div class="row" style="margin:0 0 4px">${!consoleOk() ? `<button class="btn gold" data-rent="console">🎮 本体を1日借りる 🪙${PRICE.console}</button>` : ''}<button class="btn blue" data-rent="titles">📀 ソフトを借りる</button></div>
+        <div class="row" style="margin:0 0 4px">${!consoleOk() ? `<button class="btn gold" data-rent="console">🎮 本体を1日借りる 🪙${PRICE.console}</button>` : ''}</div>
         <h3>📚 英語対戦ゲーム <span class="pill ok">無料</span></h3><div class="grid">${EN_GAMES.map(card).join('')}</div>
-        <h3>🎉 あそびゲーム</h3><div class="grid">${PLAY_GAMES.map(card).join('')}${winter ? card(snow) : ''}</div>
-        <p class="note" style="color:#d8d0f0;margin-top:14px">英語ゲーム:無料会員は1日1試合(本体を借りた日は何回でも)。有料会員はいつでも。<br>あそびゲーム:ソフトを借りると遊べる(無料会員は本体も)。お試しは1日1回(どれか1本)。</p>`;
+        <p class="note" style="color:#d8d0f0;margin-top:14px">英語ゲーム:無料会員は1日1試合(本体を借りた日は何回でも)。有料会員はいつでも。<br>あそびのゲームは、町の「アミューズメントセンター」にあります。</p>`;
       sc.onclick = e => {
         const c = e.target.closest('[data-g]'), rb = e.target.closest('[data-rent]');
         if (c) { sfx.play('tap'); const G = ALL.find(g => g.id === c.dataset.g); if (G.launch) gate(G, trial => G.launch(ctx, trial)); else setup(G); }   // 町の中で遊ぶもの
         if (rb) { sfx.play('tap'); rb.dataset.rent === 'console' ? rentConsole() : rentTitles(); }
       };
     }
+    function homeAmuse() {
+      const r = R(), sc = document.createElement('div'); sc.className = 'scr'; root.appendChild(sc);
+      const passTxt = paid() ? 'パス:有料会員はいつでも' : r.console === dayKey() ? 'パス:きょうは持っている' : `パス:持っていない(1日 🪙${PRICE.console})`;
+      const out = [snow3d, fishvs, golf, frisbee, ...(curSeason() === 'winter' ? [snow] : [])], seasonName = { spring: '春', summer: '夏', autumn: '秋', winter: '冬' }[curSeason()];
+      sc.innerHTML = `<div class="logo">AMUSEMENT</div><div class="sub">アミューズメントセンター</div>
+        <div class="stat"><span class="pill ${consoleOk() ? 'ok' : ''}">🎟 ${passTxt}</span><span class="pill">🪙 ${ctx.wallet.get()}</span></div>
+        ${!consoleOk() ? `<div class="row" style="margin:0 0 4px"><button class="btn gold" data-rent="console">🎟 1日パスを買う 🪙${PRICE.console}</button></div>` : ''}
+        <h3>🌳 外遊び <span class="pill ok">${seasonName}は ${out.filter(inSeason).map(g => g.title).join('・') || '旬のもの'} が無料</span></h3><div class="grid">${out.map(card).join('')}</div>
+        <h3>🎮 ゲーム</h3><div class="grid">${PLAY_GAMES.filter(g => !out.includes(g)).map(card).join('')}</div>
+        <div class="row" style="margin-top:12px"><button class="btn sub" data-pc>🐾 ぷにチャンク(英語)へ</button></div>
+        <p class="note" style="color:#d8d0f0;margin-top:14px">センターは有料(1日パス。有料会員は無料)。旬の季節の外遊びだけ、だれでも無料。お試しは1日1回。</p>`;
+      sc.onclick = e => {
+        const c = e.target.closest('[data-g]'), rb = e.target.closest('[data-rent]');
+        if (e.target.closest('[data-pc]')) { sfx.play('tap'); ctx.open && ctx.open('punichunk', {}); return; }
+        if (c) { sfx.play('tap'); const G = ALL.find(g => g.id === c.dataset.g); if (G.launch) gate(G, trial => G.launch(ctx, trial)); else setup(G); }
+        if (rb) { sfx.play('tap'); rentConsole(); }
+      };
+    }
     function card(g) {
       let tag = '';
       if (g.en || g.free) tag = '<span class="tag ok">無料</span>';
+      else if (AMUSE) tag = inSeason(g) ? '<span class="tag ok">旬・無料</span>' : consoleOk() ? '<span class="tag ok">パスOK</span>' : !R().trial.used ? '<span class="tag try">お試しOK</span>' : '<span class="tag">パス</span>';
       else if (titleOk(g.id)) tag = '<span class="tag ok">レンタル中</span>';
       else if (!R().trial.used) tag = '<span class="tag try">お試しOK</span>';
       else tag = '<span class="tag">借りる</span>';
@@ -135,7 +158,8 @@ export const gameboxApp = {
     }
     function rentConsole(after) {
       if (consoleOk()) { after && after(); return; }
-      const s = sheet(`<h2>🎮 本体を借りる</h2><p class="note">きょう1日、ゲーム機が使えます(英語ゲームは何回でも)。<br>有料会員は、いつでも無料で使えます。</p>
+      const s = sheet(AMUSE ? `<h2>🎟 1日パス</h2><p class="note">きょう1日、アミューズメントセンターのゲームが ぜんぶ遊べます。<br>有料会員は、いつでも無料です。</p>
+        <div class="row"><button class="btn sub" data-x>やめる</button><button class="btn gold" data-ok>🪙 ${PRICE.console} で買う</button></div>` : `<h2>🎮 本体を借りる</h2><p class="note">きょう1日、ゲーム機が使えます(英語ゲームは何回でも)。<br>有料会員は、いつでも無料で使えます。</p>
         <div class="row"><button class="btn sub" data-x>やめる</button><button class="btn gold" data-ok>🪙 ${PRICE.console} で借りる</button></div>`);
       s.querySelector('[data-x]').onclick = () => s.remove();
       s.querySelector('[data-ok]').onclick = () => { if (!payCoins(PRICE.console)) { s.remove(); msg('コインがたりない', `あと 🪙${PRICE.console - ctx.wallet.get()}`); return; } const r = R(); r.console = dayKey(); saveR(r); s.remove(); after ? after() : home(); };
@@ -205,6 +229,7 @@ export const gameboxApp = {
     }
     function gateLabel(G) {
       if (G.free) return 'はじめる!';
+      if (AMUSE && !G.en) return inSeason(G) || consoleOk() ? 'はじめる!' : !R().trial.used ? 'お試しで あそぶ' : 'パスを買って あそぶ';
       if (G.en) return enLeft() > 0 ? 'はじめる!' : '本体を借りて はじめる';
       if (titleOk(G.id) && consoleOk()) return 'はじめる!';
       if (!R().trial.used) return 'お試しで あそぶ';
@@ -213,6 +238,18 @@ export const gameboxApp = {
     // 遊べるか(必要なら借りる)。cb(trial)
     function gate(G, cb) {
       if (G.free) return cb(false);
+      if (AMUSE && !G.en) {   // アミューズメントセンター:旬の外遊びは無料。それ以外は1日パス(コインでも買える)。お試しは1日1回
+        if (inSeason(G) || consoleOk()) return cb(false);
+        const r = R();
+        if (!r.trial.used) {
+          const s = sheet(`<h2>お試しで あそぶ</h2><p class="note">お試しは1日1回(どれか1本)。短めの試合になります。<br>ちゃんと遊ぶときは、1日パスを買ってね(有料会員は無料)。</p>
+            <div class="row"><button class="btn sub" data-r>1日パスを買う</button><button class="btn" data-t>お試しする</button></div>`);
+          s.querySelector('[data-t]').onclick = () => { const r2 = R(); r2.trial.used = G.id; saveR(r2); s.remove(); cb(true); };
+          s.querySelector('[data-r]').onclick = () => { s.remove(); rentConsole(() => cb(false)); };
+          return;
+        }
+        return rentConsole(() => cb(false));
+      }
       if (G.en) {
         if (enLeft() > 0) { if (!consoleOk()) { const r = R(); r.en.n++; saveR(r); } return cb(false); }
         return rentConsole(() => cb(false));
@@ -266,12 +303,12 @@ export const gameboxApp = {
         ${seen.length ? `<div class="wl"><b>まちがえた言葉・ほかの意味もある言葉</b>${seen.map((w, i) => `<div class="wr"><span><b>${w.en}</b>${w.multi > 1 ? ` <em>＋${w.multi - 1}</em>` : ''}${w.miss ? ' <u>まちがえた</u>' : ''}<br><small>${w.ja || ''}</small></span><button class="btn sub" data-save="${i}">＋ノート</button></div>`).join('')}<p class="note">ぜんぶ「今日のふりかえり」にも入っています</p></div>` : ''}
         ${cpu ? `<p style="background:#fff;border-radius:14px;padding:8px;box-shadow:0 2px 8px #0001">${cpu.icon} ${cpu.name}「${line}」</p>` : ''}
         ${opts.trial ? '<p class="note">お試しはここまで。ソフトを借りると、ちゃんとした試合ができるよ。</p>' : ''}
-        <div class="row"><button class="btn sub" data-m>えらびなおす</button>${opts.trial ? '<button class="btn gold" data-rent>ソフトを借りる</button>' : '<button class="btn" data-a>もう一回</button>'}</div></div>`;
+        <div class="row"><button class="btn sub" data-m>えらびなおす</button>${opts.trial ? '<button class="btn gold" data-rent>' + (AMUSE ? '1日パスを買う' : 'ソフトを借りる') + '</button>' : '<button class="btn" data-a>もう一回</button>'}</div></div>`;
       root.appendChild(box);
       box.querySelectorAll('[data-save]').forEach(b => { b.onclick = () => { const w = seen[+b.dataset.save]; try { ctx.emit('learn', { ...w, save: true }); } catch (e) { } b.textContent = '✓ ノートに入れた'; b.disabled = true; }; });
       box.querySelector('[data-m]').onclick = () => home();
       const a = box.querySelector('[data-a]'); if (a) a.onclick = () => gate(G, trial => play(G, opp, { ...opts, trial }));
-      const rb = box.querySelector('[data-rent]'); if (rb) rb.onclick = () => { home(); rentTitles(G.id); };
+      const rb = box.querySelector('[data-rent]'); if (rb) rb.onclick = () => { home(); AMUSE ? rentConsole() : rentTitles(G.id); };
     }
 
     if (P.game && P.npc) { const G = ALL.find(g => g.id === P.game); home(); if (G) { const o = {}; for (const x of G.options || []) o[x.key] = x.def; play(G, P.npc, o); } }   // 町で雪玉を当てた住人と、すぐ勝負
@@ -282,6 +319,9 @@ export const gameboxApp = {
 };
 
 // 雪合戦だけを開くアプリ(冬の町の広場から。ゲーム機なしで遊べる)
+export const amuseApp = {
+  mount(el, ctx) { return gameboxApp.mount(el, { ...ctx, params: { ...(ctx.params || {}), mode: 'amuse' } }); },
+};
 export const snowApp = {
   mount(el, ctx) { return gameboxApp.mount(el, { ...ctx, params: { ...(ctx.params || {}), game: 'snow', season: 'winter' } }); },
 };

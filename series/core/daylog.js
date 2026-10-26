@@ -16,7 +16,7 @@ export const CATS = {
 export const TOPS = { study: { n: '勉強', col: '#5aa8f0' }, play: { n: '遊び', col: '#ff7aa2' }, relax: { n: '街でまったり', col: '#8fe0b0' } };
 // 3Dの町のアプリ → カテゴリーと名前(英語に関係あるものは「勉強」)
 export const TOWN_APPS = {
-  album: ['relax', '写真アルバム'], board: ['relax', '掲示板'], chunkcards: ['study', 'チャンク・カード'], fishing: ['sport', '釣り'], gamebox: ['tv', 'ゲーム機'],
+  album: ['relax', '写真アルバム'], board: ['relax', '掲示板'], chunkcards: ['study', 'チャンク・カード'], fishing: ['sport', '釣り'], gamebox: ['tv', 'ゲーム機'], amuse: ['tv', 'アミューズメントセンター'],
   hana: ['relax', 'はなちゃん'], npc: ['relax', '住人と話す'], home: ['relax', 'おうち'], library: ['study', '図書館'], omikuji: ['relax', 'おみくじ'],
   punichunk: ['study', 'ぷにチャンク'], school: ['study', '学校'], shop: ['relax', 'ショップ'], snowfight: ['sport', '雪合戦'],
 };

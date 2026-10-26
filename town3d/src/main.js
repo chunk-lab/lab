@@ -156,7 +156,7 @@ export function mount(container, opt = {}) {
 
   const hud = createHud(root, bus);
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
-  const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null });
+  const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'amuse' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   hud.setCoins(wallet.get(), gemsNow());
@@ -442,7 +442,7 @@ export function mount(container, opt = {}) {
     { k: 'frisbee', n: 'フリスビー', season: 'autumn', where: () => spotOf('board'), go: () => sport.start('frisbee'), ask: 'ねえ、フリスビーしに行かない? 掲示板にコースが出てるよ' },
     { k: 'chunkcards', n: 'カード', where: () => spotOf('chunkcards'), go: () => openApp('chunkcards', {}), ask: 'カフェでカード勝負、最近してないよね。行ってみる?' },
     { k: 'omikuji', n: 'おみくじ', where: () => spotOf('omikuji'), go: () => openApp('omikuji', {}), ask: '神社のおみくじ、最近ひいてないでしょ? 行こうよ' },
-    { k: 'punichunk', n: 'ゲームセンター', where: () => spotOf('punichunk'), go: () => openApp('punichunk', {}), ask: 'ゲームセンター、久しぶりに行かない?' },
+    { k: 'amuse', n: 'アミューズメントセンター', where: () => spotOf('amuse'), go: () => openApp('amuse', {}), ask: 'アミューズメントセンター、久しぶりに行かない?' },
     { k: 'gamebox', n: 'チャンクボックス', where: () => spotOf('home'), go: () => openApp('gamebox', { from: 'home' }), ask: 'ねえ、家のテレビでゲームしようよ! 最近やってないでしょ' },
   ];
   function neglected() {
@@ -702,7 +702,7 @@ export function mount(container, opt = {}) {
     hud.toast(k === 'night' ? '🎂 誕生日の夜のテスト:花火と写真' : '🎂 誕生日のテスト:住人に会いに行ってみてね');
   }
   function openApp(id, params) {
-    if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox'].includes(id)) markPlay(id);
+    if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox', 'amuse'].includes(id)) markPlay(id);
     // 組み込み先(チャンクタウン)が開くアプリ(ゲームなど)は、そちらに任せる
     if (opt.openExternal?.(id, params)) { input.clear(); return; }
     if (!appHost.has(id)) { hud.toast('まだ準備中みたい'); return; }

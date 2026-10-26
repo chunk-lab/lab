@@ -19,7 +19,7 @@ export const PLAZA_R = 15;
 export const LANDMARKS = [
   { id: 'school', name: 'まちの学校', x: 0, z: -70, w: 32, d: 14, h: 11, face: 's', wall: 0xfff4e0, roof: 'flat', trim: 0xee9a9a, sign: 'まちの学校', app: 'school', kind: 'school' },
   { id: 'library', name: '図書館', x: 11.5, z: -25, w: 13, d: 11, h: 8, face: 'w', wall: 0xc9b8ea, roof: 'gable', roofColor: 0x93b5e1, sign: '図書館', app: 'library', kind: 'library' },
-  { id: 'gamecenter', name: 'ゲームセンター', x: -11.5, z: 25, w: 13, d: 11, h: 9, face: 'e', wall: 0xffb3c1, roof: 'flat', trim: 0xb79cd9, sign: 'GAME', app: 'punichunk', kind: 'arcade' },
+  { id: 'gamecenter', name: 'アミューズメントセンター', x: -11.5, z: 25, w: 13, d: 11, h: 9, face: 'e', wall: 0xffb3c1, roof: 'flat', trim: 0xb79cd9, sign: 'GAME', app: 'amuse', kind: 'arcade' },
   { id: 'shop', name: 'ショップ', x: 11, z: 25, w: 13, d: 10, h: 7, face: 'w', wall: 0xa8e6cf, roof: 'flat', trim: 0xffc8a2, sign: 'ショップ', app: 'shop', kind: 'shop' },
   { id: 'cafe', name: 'カフェ', x: -10.5, z: 48, w: 11, d: 9, h: 6, face: 'e', wall: 0xffd3b6, roof: 'gable', roofColor: 0xc9a28c, sign: 'カフェ', app: 'chunkcards', kind: 'cafe' },
   { id: 'home', name: 'あなたの家', x: 30, z: -10.5, w: 9, d: 9, h: 5.5, face: 's', wall: 0xfdeeb0, roof: 'gable', roofColor: 0xee9a9a, sign: 'HOME', app: 'home', kind: 'house' },
