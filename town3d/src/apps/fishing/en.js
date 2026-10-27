@@ -41,6 +41,7 @@ const MIXCSS = `
 .mixfx .cd b{display:block;font-size:20px;margin-top:6px}.mixfx .cd small{display:block;font-style:italic;color:#d8cdf0}
 .mixfx .pt{position:absolute;left:50%;top:44%;font-size:22px;animation:mxPt 1.4s ease-out forwards;pointer-events:none}@keyframes mxPt{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.3);opacity:0}}
 .mixfx button{margin-top:18px}
+.ens .admf{position:absolute;left:2px;right:2px;top:2px;display:flex;justify-content:space-between;align-items:center;z-index:2}.ens .admf button{width:30px;height:30px;border-radius:50%;border:0;background:#e0556b;color:#fff;font-size:18px;font-weight:bold}.ens .admf i{font-style:normal;font-weight:bold;font-size:12px;background:#fff;border-radius:8px;padding:2px 5px}
 .ens .adm{position:absolute;left:4px;top:3px;width:24px;height:24px;z-index:2;accent-color:#e0556b}
 .rcp{margin:6px 0 10px;font-size:12px;line-height:1.9}.rcp .rr{margin:0 4px 0 0}
 `;
@@ -274,7 +275,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       let body;
       if (tab === 'f') {
         const gr = spec.grown();
-        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}">${adm ? `<input type="checkbox" class="adm" data-admf="${f.id}" ${spec.tank().some(x => x.id === f.id) ? 'checked' : ''}>` : ''}<span class="ic">${n ? '🐟' : '❔'}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
+        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}匹</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic">${n ? '🐟' : '❔'}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
       } else if (tab === 'd') {
         const dl = spec.decor();
         body = `<p class="nt">標本の形の組み合わせ(レシピ)で、水槽の飾りができる。できた飾りは、ぜんぶここに記録される。「混ぜる」でレシピのヒントが見られるよ。</p><div class="grid">${[1, 2, 3].flatMap(lv => DECOR[lv].map((_, r) => { const n = dl.filter(d => d.lv === lv && d.rar === r).length, k = decorOf({ lv, rar: r }); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? k.icon : '❔'}</span><b>${n ? esc(k.name) : '？？？'}<span class="rr rr${r}">${RAR[r]}</span></b><small>${n ? esc(k.en) + (n > 1 ? ' ×' + n : '') : LV_NAME[lv]}</small></div>`; })).join('')}</div>`;
@@ -283,7 +284,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         body = `<p class="nt">入手条件:そのセットの単語をぜんぶ完璧にする。💥=ひび(抜き打ちテストで まちがえすぎた)。🔀=混ぜて飾りになった(アルバムには残る)。</p><div class="grid">${sets.map(s => { const o = own[s.id], n = spec.perfCount(s.id); return `<button class="cell ${o ? (o.crack ? 'crk' : 'got') : ''} ${o && o.used ? 'used' : ''}" data-s="${s.id}">${adm ? `<input type="checkbox" class="adm" data-adm="${s.id}" ${o ? 'checked' : ''}>` : ''}${o && o.used ? '<span class="ub">🔀混ぜた</span>' : ''}${o ? `<i class="dot" style="background:${hexCol(s.look.col)}"></i>` : ''}<span class="ic">${o ? (o.crack ? '💥' : ICON[s.look.shape]) : '❔'}</span><b>${o ? esc(s.look.name) : 'セット' + s.no}</b><small>${o ? esc(s.look.en) : esc(s.words[0][0]) + '…'}</small>${o ? '' : `<div class="pg"><i style="width:${n / s.words.length * 100}%"></i></div>`}</button>`; }).join('')}</div>`;
       }
       const cnt = Object.keys(own).length, avail = Object.keys(own).filter(id => !own[id].used).length;
-      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn pri" data-a="mix">🎰 混ぜる</button></div><h2>📖 アルバム</h2>${adm ? `<p class="nt" style="background:#fff0d0;border-radius:10px;padding:6px 10px">🛠 運営テスト:チェックで標本・魚を取れる。${typeof tab === 'number' ? `<button class="sbtn" data-a="admall">このレベルを全部ON</button> <button class="sbtn" data-a="admnone">全部OFF</button>` : ''}</p>` : ''}<p class="nt">集めた標本 ${cnt} / ${SETS.length}(いま持っている ${avail}) ・ 飾り ${spec.decor().length} ・ 育てた魚 ${spec.grown().length}。</p>
+      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn pri" data-a="mix">🎰 混ぜる</button></div><h2>📖 アルバム</h2>${adm ? `<p class="nt" style="background:#fff0d0;border-radius:10px;padding:6px 10px">🛠 運営テスト:標本はチェック、魚は＋－で水槽に入れる(同じ魚を3匹入れれば混ぜられる)。${typeof tab === 'number' ? `<button class="sbtn" data-a="admall">このレベルを全部ON</button> <button class="sbtn" data-a="admnone">全部OFF</button>` : ''}</p>` : ''}<p class="nt">集めた標本 ${cnt} / ${SETS.length}(いま持っている ${avail}) ・ 飾り ${spec.decor().length} ・ 育てた魚 ${spec.grown().length}。</p>
         <div class="tabs">${[[1, '初級'], [2, '中級'], [3, '上級'], ['f', '魚'], ['d', '飾り']].map(([k, n]) => `<button data-t="${k}" class="${k === tab ? 'on' : ''}">${n}</button>`).join('')}</div>${body}`;
     };
     draw();
@@ -298,9 +299,10 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       const ad = e.target.closest('[data-adm]'), af = e.target.closest('[data-admf]');
       if (ad) { admSet(ad.dataset.adm, e.target.checked); draw(); return; }
       if (af) {
-        const id = af.dataset.admf, on = e.target.checked, f = FISH_SPEC.find(x => x.id === id), tk = spec.tank();
-        if (on) { if (tk.length >= TANK_MAX) { toast('水槽がいっぱい(6匹まで)'); draw(); return; } tk.push({ uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id, size: f && f.size ? f.size[1] : 30, g: GROW_NEED, day: '', n: 0, at: Date.now() }); spec.saveTank(tk); spec.markGrown(id); if (!spec.hasTank()) { spec.gotTank(); furn.give('tank'); } }
-        else spec.saveTank(tk.filter(x => x.id !== id));
+        const id = af.dataset.admf, d = +af.dataset.d, f = FISH_SPEC.find(x => x.id === id);
+        let tk = spec.tank();
+        if (d > 0) { if (tk.length >= TANK_MAX) { toast('水槽がいっぱい(6匹まで)'); return; } tk.push({ uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id, size: f && f.size ? f.size[1] : 30, g: GROW_NEED, day: '', n: 0, at: Date.now() }); spec.saveTank(tk); spec.markGrown(id); if (!spec.hasTank()) { spec.gotTank(); furn.give('tank'); } }
+        else { const i = tk.map(x => x.id).lastIndexOf(id); if (i >= 0) { tk.splice(i, 1); spec.saveTank(tk); } }
         draw(); return;
       }
       if (a === 'admall' && typeof tab === 'number') { SETS.filter(s => s.lv === tab).forEach(s => admSet(s.id, true)); draw(); return; }
