@@ -43,6 +43,18 @@ export const SET = Object.fromEntries(SETS.map(s => [s.id, s]));
 export const condOf = s => `${LV_NAME[s.lv]}の単語 セット${s.no}(${s.range})の${s.words.length}語を、ぜんぶ完璧にする`;
 export const FISH_SPEC = FISH.filter(f => f.kind === 'fish');
 
+// ---- 水槽の飾り(標本を混ぜてできる) ----
+export const MIX_N = 3;                         // 混ぜる標本の数(仮)
+export const RAR = ['N', 'R', 'SR', 'SSR'], RAR_W = [60, 28, 10, 2], RAR_PT = [1, 2, 4, 8];   // 出やすさ(%)・水槽ランクのポイント(仮)
+export const DECOR = {   // レベルごと、レア度の順(N→SSR)に4つ。[名前, English, 形]
+  1: [['海そう', 'Seaweed', 'weed'], ['サンゴの岩', 'Coral Rock', 'coralrock'], ['貝がらのお城', 'Shell Castle', 'castle'], ['光る真珠貝', 'Glowing Pearl Shell', 'pearlshell']],
+  2: [['化石の岩', 'Fossil Rock', 'fossil'], ['水晶のかたまり', 'Crystal Cluster', 'cluster'], ['古代の柱', 'Ancient Pillar', 'pillar'], ['琥珀のあかり', 'Amber Lamp', 'lamp']],
+  3: [['小さな宝箱', 'Small Chest', 'chest'], ['宝石の山', 'Gem Pile', 'gempile'], ['金の宝箱', 'Golden Chest', 'goldchest'], ['星のかけら', 'Star Fragment', 'star']],
+};
+export const DECOR_ICON = { weed: '🌿', coralrock: '🪸', castle: '🏰', pearlshell: '🦪', fossil: '🪨', cluster: '🔮', pillar: '🏛️', lamp: '🏮', chest: '🧰', gempile: '💎', goldchest: '👑', star: '🌠' };
+export const TANK_RANKS = [[0, 'ふつうの水槽'], [3, '飾りつきの水槽'], [8, '豪華な水槽'], [16, '特別な水槽']];   // [必要ポイント, 名前]
+export const decorOf = d => { const k = DECOR[d.lv][d.rar]; return { name: k[0], en: k[1], shape: k[2], icon: DECOR_ICON[k[2]] }; };
+
 // ---- 保存 ----
 const st = createStorage('town:spec:');
 export const spec = {
@@ -55,6 +67,15 @@ export const spec = {
   perf(id) { return st.get('perf:' + id) || []; },
   setPerf(id, i, v) { const p = this.perf(id).slice(); p[i] = v ? 1 : 0; st.set('perf:' + id, p); return p; },
   perfCount(id) { const s = SET[id]; if (!s) return 0; const p = this.perf(id); return s.words.reduce((a, _, i) => a + (p[i] ? 1 : 0), 0); },
+  // 混ぜて使った標本(持ち物からは消えるが、アルバムには残る)
+  use(id) { const o = this.own(); if (o[id]) { o[id].used = 1; st.set('own', o); } },
+  isUsed(id) { const o = this.own()[id]; return !!(o && o.used); },
+  decor: () => st.get('decor') || [],             // [{uid, lv, rar, at}] できた飾り
+  addDecor(d) { const l = this.decor(); l.push(d); st.set('decor', l); },
+  grown: () => st.get('grown') || [],             // 水槽で育てきった魚の種類(アルバム)
+  markGrown(id) { const g = this.grown(); if (!g.includes(id)) { g.push(id); st.set('grown', g); } },
+  pts() { return this.decor().reduce((a, d) => a + RAR_PT[d.rar], 0); },
+  rank() { const p = this.pts(); let r = 0; TANK_RANKS.forEach((x, i) => { if (p >= x[0]) r = i; }); return r; },
   played: () => st.get('played') || [],          // 釣ったことのあるセット(新しい順)
   markPlayed(id) { const p = this.played().filter(x => x !== id); p.unshift(id); st.set('played', p.slice(0, 40)); },
   test: () => st.get('test') || { last: 0 },

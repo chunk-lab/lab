@@ -7,7 +7,7 @@
 // 位置の単位は「半マス」(1マス=U=2)。真ん中にも置ける。
 import * as THREE from 'three';
 import { createStorage } from '../core/core.js';
-import { SETS, FISH_SPEC, spec } from './specimen.js';
+import { SETS, FISH_SPEC, spec, decorOf } from './specimen.js';
 
 export const U = 2;                 // 1マス = 2単位(半マス刻み)
 export const WALL_H = 3.4;          // 壁・天井の高さ
@@ -102,6 +102,22 @@ function tank(g) {
   for (const [w, d, x, z] of [[1.84, 0.04, 0, 0.4], [1.84, 0.04, 0, -0.4], [0.04, 0.84, 0.9, 0], [0.04, 0.84, -0.9, 0]]) box(g, w, 0.05, d, 0x2b2b30, x, 1.28, z);   // ふちの枠
   [[-0.7, 0.2], [-0.55, -0.15], [0.68, -0.2]].forEach(([x, z]) => { for (let i = 0; i < 3; i++) { const m = cyl(g, 0.02, 0.32 + i * 0.08, 0x3f9a5a, x + i * 0.04, 0.56, z, 0.008); m.rotation.z = (i - 1) * 0.25; } });
   ball(g, 0.09, 0x8a8a90, 0.4, 0.58, 0.18).scale.set(1.4, 0.7, 1);
+  // 混ぜてできた飾り(レアなものほど手前・目立つ)
+  const dc = spec.decor().slice().sort((a, b) => b.rar - a.rar).slice(0, 8);
+  dc.forEach((d, i) => {
+    const sh = decorOf(d).shape, x = -0.72 + (i % 4) * 0.48 + (i > 3 ? 0.2 : 0), z = i > 3 ? -0.2 : 0.2, y = 0.56, e = new THREE.Group(); e.position.set(x, y, z); g.add(e);
+    if (sh === 'weed') { for (let k = 0; k < 4; k++) { const m = cyl(e, 0.015, 0.3 + k * 0.06, 0x2f9a58, k * 0.04 - 0.06, 0, 0, 0.008); m.rotation.z = (k - 1.5) * 0.18; } }
+    else if (sh === 'coralrock') { ball(e, 0.1, 0x8a8a92, 0, 0.04, 0).scale.set(1.3, 0.7, 1); [[-0.05, 0.1, 0xff7a9a], [0.04, 0.12, 0xff9ab0], [0.1, 0.07, 0xff6a8a]].forEach(([dx, h, c]) => cyl(e, 0.014, h + 0.08, c, dx, 0.1, 0, 0.01)); }
+    else if (sh === 'castle') { box(e, 0.26, 0.14, 0.18, 0xf2dcc6, 0, 0.07, 0); [-0.12, 0.12].forEach(dx => { cyl(e, 0.05, 0.26, 0xf6e6d6, dx, 0.13, 0, 0.05); add(e, new THREE.ConeGeometry(0.06, 0.1, 8), 0xff8aa8, dx, 0.31, 0); }); box(e, 0.06, 0.1, 0.02, 0x6a4a3a, 0, 0.05, 0.1); }
+    else if (sh === 'pearlshell') { const s2 = add(e, new THREE.SphereGeometry(0.12, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), 0xf2dcd0, 0, 0.02, 0); s2.scale.set(1, 0.6, 0.9); const pb = ball(e, 0.05, 0xffffff, 0, 0.08, 0); pb.material.emissive = new THREE.Color(0xaaccff); }
+    else if (sh === 'fossil') { ball(e, 0.11, 0x8c8478, 0, 0.05, 0).scale.set(1.2, 0.8, 1); const t = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.02, 8, 18), mat(0xd8cdb0)); t.position.set(0, 0.1, 0.1); e.add(t); }
+    else if (sh === 'cluster') { [[0, 0.3, 0], [-0.07, 0.2, 0.35], [0.07, 0.22, -0.3], [0.02, 0.16, 0.6]].forEach(([dx, h, r]) => { const m = add(e, new THREE.ConeGeometry(0.04, h, 6), 0xb28cff, dx, h / 2, 0, 0.85); m.rotation.z = r; m.material.emissive = new THREE.Color(0x4a2a90); }); }
+    else if (sh === 'pillar') { box(e, 0.16, 0.04, 0.16, 0xe8dcc0, 0, 0.02, 0); cyl(e, 0.05, 0.34, 0xf0e6d0, 0, 0.2, 0, 0.055); box(e, 0.14, 0.04, 0.14, 0xe8dcc0, 0, 0.39, 0); }
+    else if (sh === 'lamp') { box(e, 0.14, 0.04, 0.14, 0x5a4a3a, 0, 0.02, 0); const b2 = ball(e, 0.08, 0xffb347, 0, 0.12, 0); b2.material.emissive = new THREE.Color(0xff8a00); b2.scale.set(1, 1.2, 1); }
+    else if (sh === 'chest' || sh === 'goldchest') { const gold = sh === 'goldchest', c1 = gold ? 0xe0b030 : 0x8a5a30, c2 = gold ? 0xffd54a : 0xa87040; box(e, 0.24, 0.12, 0.16, c1, 0, 0.06, 0); const l = box(e, 0.24, 0.07, 0.16, c2, 0, 0.15, 0); box(e, 0.04, 0.06, 0.02, 0xfff2a0, 0, 0.11, 0.09); if (gold) { const gb = ball(e, 0.04, 0xfff2a0, 0, 0.24, 0); gb.material.emissive = new THREE.Color(0xffc800); } }
+    else if (sh === 'gempile') { [[0, 0.06, 0xe0115f], [-0.07, 0.04, 0x2a5bd7], [0.07, 0.04, 0x1fa463], [0.02, 0.12, 0xbfe6ff]].forEach(([dx, dy, c]) => { const m = add(e, new THREE.OctahedronGeometry(0.06), c, dx, dy, 0, 0.9); m.material.emissive = new THREE.Color(c).multiplyScalar(0.4); }); }
+    else if (sh === 'star') { const m = add(e, new THREE.OctahedronGeometry(0.11), 0xfff2a0, 0, 0.2, 0, 0.95); m.material.emissive = new THREE.Color(0xffd000); m.scale.set(1, 1.6, 1); }
+  });
   const fish = spec.tank().slice(0, 6);
   fish.forEach((t, i) => {
     const f = FISH_SPEC.find(x => x.id === t.id); if (!f) return;
@@ -347,6 +363,7 @@ export const furn = {
   saveInv: v => st.set('inv', v),
   owned(id) { return this.inv()[id] || 0; },
   // 勉強を続けたメダル(もらった日数のリスト)を、持ち物に入れる。新しく入ったものを返す
+  take(id) { const inv = this.inv(); if (inv[id] > 0) { inv[id]--; if (!inv[id]) delete inv[id]; this.saveInv(inv); return true; } const put = this.placed(), i = put.findIndex(p => p.id === id); if (i >= 0) { put.splice(i, 1); this.savePlaced(put); return true; } return false; },   // 混ぜて使った標本を消す(持ち物 → なければ置いてあるもの)
   give(id, n = 1) { const inv = this.inv(); inv[id] = (inv[id] || 0) + n; this.saveInv(inv); },
   grantMedals(days) { const inv = this.inv(), out = []; for (const n of days || []) { const id = 'medal' + n; if (ITEM[id] && !inv[id]) { inv[id] = 1; out.push(ITEM[id]); } } if (out.length) this.saveInv(inv); return out; },
   placedCount(id) { return this.placed().filter(p => p.id === id).length; },
