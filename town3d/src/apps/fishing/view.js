@@ -194,7 +194,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     // かかった魚
     if (u.ph === 'fight' && u.hooked) {
       const h = u.hooked, L = Math.max(16, Math.min(r.w * 0.45, h.len * 1.1 + 8)), x = hx, y = hy;
-      if (vis >= 1 || h.big) { g.save(); g.translate(x, y); g.rotate(Math.sin(t * (h.run ? 22 : 9)) * (h.run ? 0.35 : 0.15)); g.scale(h.run ? -1 : 1, 1); if (vis >= 2) drawCreature(g, h.sp, L * 0.45, 0, L); else { g.fillStyle = 'rgba(10,25,45,0.8)'; g.beginPath(); g.ellipse(L * 0.45, 0, L * 0.45, L * 0.15, 0, 0, 7); g.fill(); } g.restore(); }
+      if (vis >= 1 || h.big) { g.save(); g.translate(x, y); g.rotate(Math.sin(t * (h.run ? 22 : 9)) * (h.run ? 0.35 : 0.15)); g.scale(h.run ? -1 : 1, 1); if (vis >= 2) drawCreature(g, h.sp, -L * 0.5, 0, L); else { g.fillStyle = 'rgba(10,25,45,0.8)'; g.beginPath(); g.ellipse(-L * 0.5, 0, L * 0.45, L * 0.15, 0, 0, 7); g.fill(); } g.restore(); }
       if (Math.random() < 0.4) bubbles.push({ x: x + (Math.random() - 0.5) * 10, y, v: 20 + Math.random() * 30, a: 1 });
     }
     // あわ
