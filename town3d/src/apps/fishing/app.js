@@ -17,6 +17,7 @@ const CSS = `
 .fz .bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:8px;padding:8px 10px;pointer-events:none}
 .fz .bar > *{pointer-events:auto}
 .fz .chip{border:0;border-radius:999px;padding:7px 10px;font:inherit;font-weight:800;font-size:12px;background:rgba(255,255,255,.88);color:${ink};box-shadow:0 2px 8px #0002;white-space:nowrap}
+.fz .imeter{position:absolute;left:50%;top:92px;transform:translateX(-50%);width:min(70%,260px);pointer-events:none;text-align:center;color:#fff;font-weight:800;font-size:12px;text-shadow:0 1px 3px #0009}.fz .imeter div{height:10px;border-radius:6px;background:rgba(0,0,0,.35);margin-top:3px;overflow:hidden;border:1px solid #fff8}.fz .imeter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd36b,#ff7a8a);transition:width .25s}
 .fz .hint{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(36px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 262px);box-sizing:border-box;margin-left:-14px;font-size:12px !important;background:rgba(40,30,70,.55);color:#fff;font-weight:700;font-size:13px;padding:6px 12px;border-radius:12px;text-align:center;pointer-events:none;transition:opacity .3s;line-height:1.45}
 .fz .big{position:absolute;right:42px;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:108px;height:108px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:17px;color:#fff;background:radial-gradient(circle at 35% 30%,#ffb3c6,#f07a98);box-shadow:0 6px 0 #c9577a,0 10px 20px #0004;touch-action:none}
 .fz .rc{position:absolute;right:46px;bottom:calc(144px + env(safe-area-inset-bottom,0px));padding:9px 14px;border-radius:999px;border:0;font:inherit;font-weight:900;font-size:14px;color:${ink};background:#fffffff0;box-shadow:0 3px 0 #0002;touch-action:none}
@@ -230,7 +231,7 @@ export const fishingApp = {
 
       let E = null, startT = 0, ended = false, oppScore = { count: 0, big: 0, point: 0 }, oppSeen = 0, oppE = null, bot = null;
       const onEv = (type, d) => handleEv(type, d);
-      const mk = () => createEngine({ seed: vs ? vs.seed : (Math.random() * 1e9) | 0, cond, gear: eq, onEvent: onEv, record: !!vs, easy, sortReel: !!en });
+      const mk = () => createEngine({ seed: vs ? vs.seed : (Math.random() * 1e9) | 0, cond, gear: eq, onEvent: onEv, record: !!vs, easy, sortReel: !!en, winK: en ? 2.2 : 1, holdMiss: !!en });
       E = mk(); if (P.debug) { window.__fzE = E; window.__fzOpp = () => oppE; }
       if (vs && vs.bot) { oppE = createEngine({ seed: vs.seed, cond, gear: vs.bot === 'hard' ? { rod: 'carbon', reel: 'smooth', line: 'fluoro', bait: pickBotBait(cond), hook: 'm', tana: 0.85 } : { rod: 'bamboo', reel: 'basic', line: 'nylon', bait: 'worm', hook: 'm', tana: 0.5 }, onEvent: (t, d) => { oppE.onBot && oppE.onBot(t, d); oppEvent(t, d); }, easy }); bot = createBot(oppE, vs.bot, vs.seed + 5); }
 
@@ -241,6 +242,7 @@ export const fishingApp = {
         <div class="thr" hidden><i></i></div>
         <button class="hk">あわせ</button><button class="big">投げる<small>長おし</small></button><button class="rc" hidden>⏪ 回収</button>`;
       const $ = s => ui.querySelector(s);
+      const imEl = document.createElement('div'); imEl.hidden = true; imEl.className = 'imeter'; imEl.innerHTML = '<span>🐟 魚が気になってる…</span><div><i></i></div>'; ui.appendChild(imEl);
       const hintEl = $('.hint'), gauge = $('.gauge'), thrEl = $('.thr'), bigB = $('.big'), hkB = $('.hk'), rcB = $('.rc');
       rcB.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (E.recall()) { thr = 0; if (bt) bt.mode = 'none'; sfx.play('whoosh'); } });
       let vsBar = null, bubEl = null;
@@ -392,8 +394,7 @@ export const fishingApp = {
       let reelUi = null, lastTh = -99; const closeReel = () => { if (reelUi) { try { reelUi.destroy(); } catch (e) { } reelUi = null; } };
       function enGate(type, d) {
         const stopIn = () => { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); };
-        if (type === 'land') { stopIn(); G.cast().then(ok => { if (ok) { E.bonusHere(); toast('✨ ナイス! 魚がよってくる', 1100); } }); }
-        else if (type === 'bite') { stopIn(); G.bite().then(r => { if (r.ok) { if (!E.forceHook()) toast('おそかった…', 900); } else { E.forceMiss(); toast('逃げられた…', 1000); } }); }
+        if (type === 'missq') { stopIn(); G.bite().then(r => { E.biteResult(r.ok); toast(r.ok ? 'もういちど! アタリを合わせろ' : '逃げられた…', 1000); }); }
         else if (type === 'hooked') {
           thrashN = 0; lastTh = -99; const h = E.S.hooked;
           if (h && h.sp.kind === 'fish' && E.sortStart()) {   // 巻き取りは、ぜんぶ文の並べ替えでする
@@ -535,7 +536,11 @@ export const fishingApp = {
         const reeling = (bt && bt.mode === 'reel') || keyReel;
         E.input.reel = reeling && (E.S.ph === 'water' || E.S.ph === 'fight') ? thr || 0.55 : 0;
         E.input.side += (sideT - E.input.side) * Math.min(1, dt * 6);
-        if (G && !EN.busy && E.S.ph === 'water' && !E.S.engaged && !E.S.bite) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = 0.5; if (r.ok) { E.bonusHere(2.2); toast('✨ 魚がよってきた!', 900); } }); } } else if (!(G && EN.busy)) waitQ = Math.min(waitQ, 1.2);
+        if (G) {   // 英語:魚が近づいて気にしはじめてから問題が出る。正解でメーターが上がる(10問くらいで満タン)
+          const ff = E.S.focusF, near = E.S.ph === 'water' && !E.S.engaged && !E.S.bite && ff && E.S.wt > 6;
+          imEl.hidden = !(E.S.ph === 'water' && !E.S.engaged && ff && E.S.wt > 6 && !E.S.bite); if (!imEl.hidden) imEl.querySelector('i').style.width = Math.min(100, ff.int * 100) + '%';
+          if (near && !EN.busy) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = G.gap(); if (r.ok) { E.addInterest(0.1); sfx.play('coin'); } }); } } else if (!EN.busy) waitQ = Math.min(waitQ, 1.2);
+        }
         if (G && EN.busy) { } else if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
         if (leap) { leap.t += dt / leap.dur; if (leap.t >= 1) { const fn = leap.then; leap = null; fn && fn(); } }
         if (vs && E.S.ph === 'landed' && E.S.resultT > 0.9) E.ack();

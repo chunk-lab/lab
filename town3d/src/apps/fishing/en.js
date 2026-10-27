@@ -11,6 +11,7 @@ import { localLearn } from './learnrec.js';
 import { sortReel } from './sortreel.js';
 
 export const PERFECT_C = 2;          // 続けて何回正解で「完璧」
+export const GAPS = { 1: 2, 2: 6, 3: 12 };   // 問題が出る間隔(秒):はやい/ふつう/ゆっくり(ポンド画面で選ぶ)
 export const T_BITE = 7, T_Q = 10;   // 答える時間(秒)。アタリは短め
 const TEST_EVERY = 3, TEST_MIN_OWN = 3, TEST_SETS = 3, TEST_PER = 4, TEST_BAD = 2;   // 抜き打ち:何日ごと・標本いくつから・何セット・1セット何問・何問まちがいでひび
 const FOOD_Q = 5;                    // えさを作る問題の数(1問正解=えさ1つ)
@@ -66,8 +67,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
 
   // ---- 問題を作る ----
   function choicesFor(ans, pool, field, n = 4) {
-    const out = [ans], used = new Set([ans]);
-    for (const w of shuffle(pool.slice())) { const v = w[field]; if (!v || used.has(v)) continue; used.add(v); out.push(v); if (out.length >= n) break; }
+    const parts = t => String(t).split(/[、,，・/／]/).map(x => x.trim()).filter(Boolean), used = new Set(parts(ans)), out = [ans];   // 正解の意味(「〜の上に、〜に」の「〜の上に」など)と重なる選択肢は出さない
+    for (const w of shuffle(pool.slice())) { const v = w[field]; if (!v) continue; const pv = parts(v); if (pv.some(x => used.has(x))) continue; pv.forEach(x => used.add(x)); out.push(v); if (out.length >= n) break; }
     return shuffle(out);
   }
   // セットの単語(w=[en,pos,ja])。dir 'ej'=英→日 / 'je'=日→英
@@ -161,7 +162,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     return {
       get busy() { return busy; },
       cast: () => idiom(s.lv, '🎯 投げた! 熟語に答えると魚がよく寄る', ui.parentNode),
-      bite: () => word('ej', '🎣 アタリ! 意味は?(まちがえると逃げる)', T_BITE),
+      bite: () => word('ej', '🎣 合わせそこねた! 正解でもういちどチャンス(まちがえると逃げる)', T_BITE),
+      gap: () => GAPS[+(ctx.storage.get('enGap') || 1)] || 2,
       thrash: () => idiom(s.lv, '🌊 あばれた! 熟語で落ち着かせろ', ui.parentNode),
       // 巻き取り:文の並べ替え(アミューズメントの並べ替えと同じデータ)。大物ほど長い文
       reel: (sp, size, cb) => { const n = sp.r >= 4 ? 5 : (sp.r >= 3 || size >= 60) ? 4 : 3;
@@ -202,9 +204,10 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     const draw = () => {
       const sets = SETS.filter(s => s.lv === lv), own = spec.own(), got = sets.filter(s => own[s.id]).length;
       sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn" data-a="tank">🐠 水槽</button><button class="sbtn" data-a="col">🏺 標本</button></div>
-        <h2>📚 英語の釣り堀</h2><p class="nt">えらんだセットの単語だけが出るよ。アタリ・取りこみで単語、投げる・あばれる時に熟語。<b>セットの単語をぜんぶ完璧</b>(続けて${PERFECT_C}回正解。ストリームで正解した分も入る)にすると、そのセットの標本がもらえる。魚はどのセットでもふつうに釣れるよ。</p>
+        <h2>📚 英語の釣り堀</h2><p class="nt">えらんだセットの単語だけが出るよ。魚が近づいたら単語に答えて「気になり度」をためよう。合わせ損ねた時は単語、あばれた時は熟語、巻き取りは文の並べ替え。<b>セットの単語をぜんぶ完璧</b>(続けて${PERFECT_C}回正解。ストリームで正解した分も入る)にすると、そのセットの標本がもらえる。魚はどのセットでもふつうに釣れるよ。</p>
         <div class="tabs">${[1, 2, 3].map(l => `<button data-lv="${l}" class="${l === lv ? 'on' : ''}">${LV_NAME[l]}<br><small style="font-weight:700;font-size:10px">${LV_SUB[l]}</small></button>`).join('')}</div>
         <p class="nt" style="margin:0 0 8px">標本 ${got} / ${sets.length}</p>
+        <p class="nt" style="margin:0 0 8px">問題の間隔: ${[[1, 'はやい'], [2, 'ふつう'], [3, 'ゆっくり']].map(([k, t]) => `<button class="sbtn" data-gap="${k}" style="${(+(ctx.storage.get('enGap') || 1)) === k ? 'background:#f58aa8;color:#fff' : ''}">${t}</button>`).join(' ')}</p>
         <div class="grid">${sets.map(s => { const n = spec.perfCount(s.id), o = own[s.id]; return `<button class="cell ${o ? (o.crack ? 'crk' : 'got') : ''}" data-s="${s.id}"><b>セット${s.no}</b><span class="ic">${o ? (o.crack ? '💥' : ICON[s.look.shape] || '🏺') : '🎣'}</span><small>${esc(s.words[0][0])}…</small><div class="pg"><i style="width:${n / s.words.length * 100}%"></i></div><small>完璧 ${n}/${s.words.length}</small></button>`; }).join('')}</div>`;
     };
     draw();
@@ -214,6 +217,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       if (a === 'back') { sc.remove(); onBack(); }
       else if (a === 'tank') { sc.remove(); tankScreen({ onBack: () => pondScreen({ onPick, onBack }) }); }
       else if (a === 'col') { sc.remove(); collection({ onBack: () => pondScreen({ onPick, onBack }) }); }
+      else if (e.target.closest('[data-gap]')) { sfx.play('tap'); ctx.storage.set('enGap', +e.target.closest('[data-gap]').dataset.gap); draw(); sc.scrollTop = sc.scrollTop; }
       else if (l) { sfx.play('tap'); lv = +l.dataset.lv; ctx.storage.set('enLv', lv); draw(); sc.scrollTop = 0; }
       else if (c) { sfx.play('tap'); setInfo(SET[c.dataset.s], () => { sc.remove(); onPick(c.dataset.s); }); }
     };

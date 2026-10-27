@@ -29,7 +29,7 @@ function pointIn(area, r) {
 
 export const REACH = 1.12;
 export const distOf = (x, d) => Math.hypot(x * 0.9, d);
-export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', rain: false }, gear = {}, onEvent = () => {}, record = false, easy = false, netGate = false } = {}) {   // netGate:英語モード。取りこむ直前に止まって 'net' を出す(netResult で決める)
+export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', rain: false }, gear = {}, onEvent = () => {}, record = false, easy = false, netGate = false, winK = 1, holdMiss = false } = {}) {   // netGate:英語モード。取りこむ直前に止まって 'net' を出す(netResult で決める)
   const rs = rng(seed), rb = rng(seed ^ 0x5bd1e995);   // rs=池(魚の出かた。対戦では同じになる) / rb=ふるまい
   const G = { rod: gearById('rod', gear.rod), reel: gearById('reel', gear.reel), line: gearById('line', gear.line), bait: gearById('bait', gear.bait), hook: gearById('hook', gear.hook || 'm'), eye: gearById('eye', gear.eye) };
   const S = {
@@ -101,8 +101,8 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
   // 気になり度(0〜1)をためる。条件が合っている間だけたまり、1になったら必ず寄ってくる(くじ引きなし)
   //   場所:魚の進む向きの少し先が一番。真上は驚く、後ろは気づきにくい / タナ・エサ・針が合うほど速い / 誘い方が合っていないと減る
   function attract(dt) {
-    if (!S.baitOk || S.engaged) { for (const f of S.fish) f.int = Math.max(0, (f.int || 0) - dt * 0.2); return; }
-    const lure = S.lure, moving = input.reel > 0.05;
+    if (!S.baitOk || S.engaged) { S.focusF = null; for (const f of S.fish) f.int = Math.max(0, (f.int || 0) - dt * 0.2); return; }
+    const lure = S.lure, moving = input.reel > 0.05; let best = null;   // best:いま一番気にしている近くの魚(英語の問題を出すきっかけ・メーターに出す)
     for (const f of S.fish) {
       if (f.st !== 'roam' || f.cool > 0 || f.vis < 0.8) continue;
       const M = match(f.sp), RAD = (isLure() ? 0.46 : 0.34) * (0.7 + 0.5 * M.all), dist = Math.hypot(f.x - lure.x, f.d - lure.d, (f.y - S.depth) * 0.3);
@@ -123,8 +123,11 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
       const near = 1 - dist / RAD;
       const rate = M.all * m * (0.35 + 0.65 * near) * head * bk * (isLure() ? 0.75 : 0.45) / f.wary - (m < 0.5 ? 0.12 : 0);
       f.int = clamp(f.int + rate * dt, 0, 1.05);
-      if (f.int >= 1) { f.int = 0; f.st = 'approach'; f.match = M; S.engaged = f; f.nibbles = isLure() ? 0 : Math.max(0, f.sp.wary + Math.floor(rb() * 2) - (rb() < 0.4 ? 1 : 0)); f.nibT = 0.5 + rb() * 0.8; ev('notice', { id: f.sp.id }); return; }
+      if (f.int > 0.03 && (!best || f.int > best.int)) best = f;
+      if (S.addInt && S.focusF === f) { f.int = clamp(f.int + S.addInt, 0, 1.05); S.addInt = 0; }
+      if (f.int >= 1) { f.int = 0; f.st = 'approach'; f.match = M; S.engaged = f; f.nibbles = isLure() ? 0 : Math.max(0, f.sp.wary + Math.floor(rb() * 2) - (rb() < 0.4 ? 1 : 0)); f.nibT = 0.5 + rb() * 0.8; ev('notice', { id: f.sp.id }); S.focusF = null; return; }
     }
+    S.focusF = best;
   }
   // 着水:真上の魚は少し驚いて離れる(すぐ戻る)。ブラックバス・ライギョは音に寄ってくる
   function splashLand(x, d) {
@@ -152,6 +155,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     } else if (f.st === 'nibble2') { if ((f.nibT -= dt) <= 0) { f.st = 'bite'; startBite(f); } }
     else if (f.st === 'bite') {
       if (S.t - S.bite.t0 > S.bite.win) {   // 合わせそこね
+        if (holdMiss) { f.st = 'hold'; S.bite = null; ev('missq', {}); return; }   // 英語:問題に正解すればもういちどアタリ・まちがえると逃げる
         if (!isLure() && rb() < 0.75) { S.baitOk = false; ev('stolen'); } else ev('miss');
         leave(f, 'miss');
       }
@@ -160,7 +164,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
   function arrive(f) { f.st = f.nibbles > 0 ? 'nibble' : 'bite'; S.msg = null; if (f.st === 'bite') startBite(f); else f.nibT = 0.25 + rb() * 0.4; }
   function startBite(f) {
     const hs = HOOK_STEP[G.hook.id] - HOOK_STEP[f.sp.hook];   // 小さな魚に大きな針:アタリが一瞬になる
-    const win = f.sp.win * (isLure() ? 0.85 : 1) * (0.85 + 0.3 * rb()) * (hs >= 2 ? 0.45 : hs === 1 ? 0.7 : 1) * (easy ? 2.4 : 1); S.bite = { f, t0: S.t, win }; ev('bite', { heavy: f.sp.str > 1 }); }
+    const win = f.sp.win * (isLure() ? 0.85 : 1) * (0.85 + 0.3 * rb()) * (hs >= 2 ? 0.45 : hs === 1 ? 0.7 : 1) * (easy ? 2.4 : 1) * winK; S.bite = { f, t0: S.t, win }; ev('bite', { heavy: f.sp.str > 1 }); }
   function leave(f, why) { f.st = 'flee'; f.fleeT = 1.5; const a = rb() * 6.28; f.tx = clamp(f.x + Math.cos(a) * 0.4, -0.9, 0.9); f.td = clamp(f.d + Math.abs(Math.sin(a)) * 0.4, 0.1, 1); if (S.engaged === f) S.engaged = null; S.bite = null; }
   function spookNear(x, d, r, chance) { for (const f of S.fish) if (f.st === 'roam' || f.st === 'approach') { if (Math.hypot(f.x - x, f.d - d) < r && rb() < chance) leave(f, 'spook'); } }
 
@@ -303,6 +307,8 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     forceMiss() { if (S.ph === 'water' && S.engaged) { ev('miss'); leave(S.engaged, 'miss'); } },   // まちがい=逃げる
     weaken(k = 0.55) { const h = S.hooked; if (S.ph !== 'fight' || !h) return; h.S = Math.max(0.05, h.S * k); h.mode = 'rest'; h.modeT = 1.2; h.jump = 0; h.jolt = 0; h.T = Math.min(h.T, 0.5); h.bm = 0; },   // 正解=おとなしくなる
     escape(reason = 'thrash') { if (S.ph === 'fight' && S.hooked) lose(reason); },
+    addInterest(k) { S.addInt = (S.addInt || 0) + k; },
+    biteResult(ok) { const f = S.engaged; if (!f || f.st !== 'hold') return; if (ok) { f.st = 'nibble2'; f.nibT = 0.7 + rb() * 0.6; } else { ev('miss'); leave(f, 'miss'); } },
     sortStart() { const h = S.hooked; if (S.ph !== 'fight' || !h) return false; h.sr = true; h.sortL0 = Math.max(0.2, h.L); h.tgt = h.sortL0; h.sortEnded = false; return true; },
     sortPlace(ok, got, total) { const h = S.hooked; if (!h || !h.sr) return; if (ok) h.tgt = h.sortL0 - (h.sortL0 - 0.035) * got / total; else h.L = Math.min(h.sortL0, h.L + 0.05); },
     sortEnd() { const h = S.hooked; if (h && h.sr) { h.tgt = 0.035; h.sortEnded = true; } },
@@ -327,12 +333,12 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
           const L = S.lure; L.fly += dt; const u = Math.min(1, L.fly / L.flyT);
           L.x = L.sx + (L.tx - L.sx) * u; L.d = L.sd + (L.td - L.sd) * u; L.h = Math.sin(u * Math.PI) * (0.15 + Math.hypot(L.tx, L.td) * 0.25);
           S.depth = 0;
-          if (u >= 1) { L.h = 0; S.ph = 'water'; S.waitT = 0; S.baitOk = true; ev('land', { x: L.x, d: L.d }); splashLand(L.x, L.d); }
+          if (u >= 1) { L.h = 0; S.ph = 'water'; S.waitT = 0; S.wt = 0; S.baitOk = true; ev('land', { x: L.x, d: L.d }); splashLand(L.x, L.d); }
           break;
         }
         case 'water': {
           const L = S.lure, thr = input.reel;
-          S.waitT = thr > 0.05 ? 0 : S.waitT + dt;
+          S.waitT = thr > 0.05 ? 0 : S.waitT + dt; S.wt = (S.wt || 0) + dt;
           // 針の深さ:エサはタナまでしずむ。ルアーは種類と巻き方で変わる
           let want, rate = 0.35;
           if (!isLure()) want = S.tana;
