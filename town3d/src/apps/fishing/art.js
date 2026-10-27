@@ -1,19 +1,39 @@
 // 魚とアイテムの絵(Canvas 2D でその場でかく)。右向き。
 // artCanvas(sp, w, h, {sil}) → 絵の canvas(同じものは使い回す)。sil=まだ見つけていない(かげだけ)
+import { FIMG } from './fishimg.js';
 const cache = new Map();
+// 描いてもらったイラスト(右向き)。読み込めたら、それをそのまま使う。まだなら null(その間は、コードで描いた絵)
+const IM = new Map();
+export function fishPic(id, rk = 0) {
+  const u = FIMG[id] && FIMG[id][Math.min(rk, 2)]; if (!u) return null;
+  let e = IM.get(u); if (!e) { const img = new Image(); e = { img, cbs: [] }; img.onload = () => { const l = e.cbs; e.cbs = []; l.forEach(f => f()); }; img.src = u; IM.set(u, e); }
+  return e;
+}
+export const picReady = e => !!(e && e.img.complete && e.img.naturalWidth);
+for (const id in FIMG) fishPic(id, 0);   // ふつうの絵は先に読んでおく
 export const shade = (hex, k) => { const n = parseInt(hex.slice(1), 16); let r = n >> 16, g = (n >> 8) & 255, b = n & 255; const f = v => Math.max(0, Math.min(255, Math.round(k < 0 ? v * (1 + k) : v + (255 - v) * k))); return `rgb(${f(r)},${f(g)},${f(b)})`; };
 
 export function artCanvas(sp, w, h, opt = {}) {
-  const dpr = Math.min(2, window.devicePixelRatio || 1), key = sp.id + '|' + w + 'x' + h + '|' + (opt.sil ? 1 : 0) + '|' + dpr;
+  const dpr = Math.min(2, window.devicePixelRatio || 1), rk = opt.rk || 0, key = sp.id + '|' + w + 'x' + h + '|' + (opt.sil ? 1 : 0) + '|' + rk + '|' + dpr;
   if (cache.has(key)) return cache.get(key);
   const c = document.createElement('canvas'); c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
-  const g = c.getContext('2d'); g.scale(dpr, dpr);
-  drawCreature(g, sp, w / 2 + w * 0.03, h / 2, Math.min(w * 0.8, h * 1.75));
-  if (opt.sil) { g.globalCompositeOperation = 'source-in'; g.fillStyle = '#4a4360'; g.fillRect(0, 0, w, h); }
+  const g = c.getContext('2d');
+  const paint = () => {
+    g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, c.width, c.height); g.scale(dpr, dpr);
+    drawCreature(g, sp, w / 2 + w * 0.03, h / 2, Math.min(w * 0.8, h * 1.75), rk);
+    if (opt.sil) { g.globalCompositeOperation = 'source-in'; g.fillStyle = '#4a4360'; g.fillRect(0, 0, w, h); g.globalCompositeOperation = 'source-over'; }
+  };
+  paint();
+  const e = fishPic(sp.id, rk); if (e && !picReady(e)) e.cbs.push(paint);
   cache.set(key, c); return c;
 }
 
-export function drawCreature(g, sp, cx, cy, len) {
+export function drawCreature(g, sp, cx, cy, len, rk = 0) {
+  const pe = fishPic(sp.id, rk);
+  if (picReady(pe)) {   // イラストがあるものは、それを枠にぴったり収めて描く
+    const im = pe.img, bw = len * 1.1, bh = len * 0.62, k = Math.min(bw / im.naturalWidth, bh / im.naturalHeight), dw = im.naturalWidth * k, dh = im.naturalHeight * k;
+    g.drawImage(im, cx - dw / 2, cy - dh / 2, dw, dh); return;
+  }
   const a = sp.art || {};
   g.save();
   if (sp.emoji) { g.font = `${Math.round(len * 0.62)}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(sp.emoji, cx, cy + len * 0.03); g.restore(); return; }
