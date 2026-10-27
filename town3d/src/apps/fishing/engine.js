@@ -122,7 +122,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
       const head = dot > 0.4 ? 1.5 : dot < -0.3 ? 0.55 : 1;   // 進む向きの先にあると気づきやすい
       const near = 1 - dist / RAD;
       const rate = M.all * m * (0.35 + 0.65 * near) * head * bk * (isLure() ? 0.75 : 0.45) / f.wary - (m < 0.5 ? 0.12 : 0);
-      f.int = clamp(f.int + rate * dt, 0, 1.05);
+      f.int = clamp(f.int + rate * dt, 0, holdMiss ? Math.max(f.int, 0.05) : 1.05);   // 英語:時間だけでは食いつかない(問題に答えてメーターをためる)
       if (f.int > 0.03 && (!best || f.int > best.int)) best = f;
       if (S.addInt && S.focusF === f) { f.int = clamp(f.int + S.addInt, 0, 1.05); S.addInt = 0; }
       if (f.int >= 1) { f.int = 0; f.st = 'approach'; f.match = M; S.engaged = f; f.nibbles = isLure() ? 0 : Math.max(0, f.sp.wary + Math.floor(rb() * 2) - (rb() < 0.4 ? 1 : 0)); f.nibT = 0.5 + rb() * 0.8; ev('notice', { id: f.sp.id }); S.focusF = null; return; }
@@ -133,7 +133,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
   function splashLand(x, d) {
     for (const f of S.fish) {
       if (f.st !== 'roam') continue; const dd = Math.hypot(f.x - x, f.d - d);
-      if ((f.sp.id === 'bass' || f.sp.id === 'raigyo') && dd < 0.3) { f.int = Math.min(0.9, f.int + 0.45); continue; }
+      if ((f.sp.id === 'bass' || f.sp.id === 'raigyo') && dd < 0.3) { f.int = Math.min(holdMiss ? 0.05 : 0.9, f.int + 0.45); continue; }
       if (dd < 0.08) { const a = Math.atan2(f.d - d, f.x - x); f.st = 'flee'; f.startle = true; f.fleeT = 0.8; f.tx = clamp(f.x + Math.cos(a) * 0.18, -0.9, 0.9); f.td = clamp(f.d + Math.sin(a) * 0.18, 0.06, 0.98); f.int = 0; ev('spook', { x: f.x, d: f.d }); }
     }
   }
@@ -214,8 +214,9 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     if (h.mode === 'run') { const k = input.side * h.dir; side = k < -0.3 ? 1.9 : k > 0.3 ? 0.55 : 1; } else if (Math.abs(input.side) > 0.3) side = 1.15;
     h.S = Math.max(0.05, h.S - (0.03 + 0.16 * h.T) * side * Math.sqrt(G.rod.power) / (sp.stam * (0.7 + 0.6 * h.u)) * dt);
     if (sr && h.mode === 'run') { const k = input.side * h.dir; if (k < -0.3) h.modeT -= dt * 0.8; else { const b = 0.05 * dt; h.L = Math.min(h.sortL0, h.L + b); h.tgt = Math.min(h.sortL0, (h.tgt == null ? h.L : h.tgt) + b); } }   // 英語:走る向きと逆に竿を倒すと早く落ち着く。倒さないと少し引き戻される(逃げはしない)
-    // あばれる/休む
-    if ((h.modeT -= dt) <= 0) {
+    // あばれる/休む(英語の巻き取りでは、並べ替えの合間だけ走る=rod。並べ替え中は走らない)
+    if (sr) { if (h.phase !== 'rod') { h.mode = 'rest'; h.modeT = 1; } else if (!h.hold && (h.modeT -= dt) <= 0) { h.mode = 'rest'; h.phase = 'sort'; ev('rodend', {}); } }
+    else if ((h.modeT -= dt) <= 0) {
       if (h.mode === 'run') { h.mode = 'rest'; h.modeT = (0.7 + rb() * 0.9) * (1.3 - h.S * 0.5); }
       else if (!h.heavy && rb() < 0.35 + 0.6 * h.S * sp.run) {
         h.mode = 'run'; h.jolt = 0.22 * Math.min(1.5, F); h.modeT = (0.8 + rb() * 1.4) * (0.5 + h.S) * (0.6 + 0.4 * sp.run);
@@ -225,7 +226,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
       } else { h.mode = 'rest'; h.modeT = 0.5 + rb() * 0.8; }
     }
     // 最後のあがき:まだ元気な大物は、足もとでもう一度走る
-    if (!h.heavy && h.L < 0.12 && h.S > 0.3 && F > 0.85 && h.mode !== 'run') { h.mode = 'run'; h.modeT = 1.2 + rb(); h.dir = rb() < 0.5 ? -1 : 1; h.jolt = 0.3; ev('run', { dir: h.dir, last: 1 }); }
+    if (!sr && !h.heavy && h.L < 0.12 && h.S > 0.3 && F > 0.85 && h.mode !== 'run') { h.mode = 'run'; h.modeT = 1.2 + rb(); h.dir = rb() < 0.5 ? -1 : 1; h.jolt = 0.3; ev('run', { dir: h.dir, last: 1 }); }
     // 大物に小さな針:強く引きすぎると外れる(テンションを低めに保てば大丈夫)
     if (!sr && h.small && h.T > 0.8 && rb() < (h.T - 0.8) * 1.6 * h.small * dt * (easy ? 0.3 : 1)) return lose('hook');
     h.y = clamp(h.y + ((h.jump > 0 ? 0 : h.mode === 'run' ? 0.8 : h.S < 0.3 ? 0.15 : 0.45) - h.y) * Math.min(1, dt * 1.5), 0, 1);
@@ -310,8 +311,10 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     escape(reason = 'thrash') { if (S.ph === 'fight' && S.hooked) lose(reason); },
     addInterest(k) { S.addInt = (S.addInt || 0) + k; },
     biteResult(ok) { const f = S.engaged; if (!f || f.st !== 'hold') return; if (ok) { f.st = 'nibble2'; f.nibT = 0.7 + rb() * 0.6; } else { ev('miss'); leave(f, 'miss'); } },
-    sortStart() { const h = S.hooked; if (S.ph !== 'fight' || !h) return false; h.sr = true; h.sortL0 = Math.max(0.2, h.L); h.tgt = h.sortL0; h.sortEnded = false; return true; },
+    sortStart() { const h = S.hooked; if (S.ph !== 'fight' || !h) return false; h.sr = true; h.phase = 'sort'; h.hold = false; h.sortL0 = Math.max(0.2, h.L); h.tgt = h.sortL0; h.sortEnded = false; return true; },
     sortProgress(k, N) { const h = S.hooked; if (!h || !h.sr) return; h.tgt = h.sortL0 - (h.sortL0 - 0.035) * k / N; },   // 1文ならべ終えるたびに少し寄る
+    rodPhase(last) { const h = S.hooked; if (!h || !h.sr) return; h.phase = 'rod'; h.mode = 'run'; h.modeT = 2.2 + rb() * 0.8; h.dir = Math.abs(h.phi) > 0.6 ? -Math.sign(h.phi) : rb() < 0.5 ? -1 : 1; h.jolt = 0.2; h.hold = !!last; ev('run', { dir: h.dir, last: last ? 1 : 0 }); },   // 1文ならべ終えた合間:魚が走る(竿を倒す)。last=熟語に答えるまで続く
+    rodDone() { const h = S.hooked; if (!h || !h.sr) return; h.hold = false; h.mode = 'rest'; h.phase = 'sort'; },
     setback(v) { const h = S.hooked; if (!h || !h.sr) return; h.L = Math.min(h.sortL0, h.L + v); h.tgt = Math.min(h.sortL0, (h.tgt == null ? h.L : h.tgt) + v); },
     sortEnd() { const h = S.hooked; if (h && h.sr) { h.tgt = 0.035; h.sortEnded = true; } },
     netResult(ok, shrink) { if (S.ph !== 'fight' || !S.hooked || !S.netWait) return; S.netWait = false; S.hooked.netOk = true; if (ok && shrink) { S.hooked.size *= 0.75; S.hooked.u *= 0.8; } if (ok) land(); else lose('net'); },

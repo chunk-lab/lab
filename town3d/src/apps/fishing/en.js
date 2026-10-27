@@ -11,7 +11,7 @@ import { localLearn } from './learnrec.js';
 import { sortReel } from './sortreel.js';
 
 export const PERFECT_C = 2;          // 続けて何回正解で「完璧」
-export const GAPS = { 1: 2, 2: 6, 3: 12 };   // 問題が出る間隔(秒):はやい/ふつう/ゆっくり(ポンド画面で選ぶ)
+export const GAPS = { 1: 1, 2: 4, 3: 10 };   // 問題が出る間隔(秒):はやい/ふつう/ゆっくり(ポンド画面で選ぶ)
 export const T_BITE = 7, T_Q = 10;   // 答える時間(秒)。アタリは短め
 const TEST_EVERY = 3, TEST_MIN_OWN = 3, TEST_SETS = 3, TEST_PER = 4, TEST_BAD = 2;   // 抜き打ち:何日ごと・標本いくつから・何セット・1セット何問・何問まちがいでひび
 const FOOD_Q = 5;                    // えさを作る問題の数(1問正解=えさ1つ)
@@ -25,7 +25,7 @@ const pick = a => a[Math.floor(Math.random() * a.length)];
 const hexCol = c => '#' + (c >>> 0).toString(16).padStart(6, '0');
 
 const CSS = `
-.fz .enq{position:absolute;inset:0;z-index:30;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,20,40,.35);padding:12px;box-sizing:border-box}
+.fz .enq.lk .qc{opacity:.45}.fz .enq{position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:rgba(10,20,40,.35);padding:12px;box-sizing:border-box}
 .fz .enq .qb{width:100%;max-width:440px;background:#fffdf7;border-radius:22px;padding:14px 14px 16px;box-shadow:0 10px 30px #0006;margin-bottom:calc(8px + env(safe-area-inset-bottom,0px));animation:enUp .18s ease-out}
 @keyframes enUp{from{transform:translateY(30px);opacity:0}}
 .fz .enq .ql{font-size:13px;font-weight:900;color:#e0556b;display:flex;justify-content:space-between;align-items:center}
@@ -104,7 +104,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       const bar = ov.querySelector('.qt i');
       requestAnimationFrame(() => { bar.style.transition = `width ${time}s linear`; bar.style.width = '0%'; });
       if (!q.ja) say(q.en);
-      let done = false;
+      let done = false; const t0 = Date.now();   // 出た直後0.7秒は押せない(合わせボタンを押した指が、答えに入ってしまわないように)
+      ov.classList.add('lk'); setTimeout(() => ov.classList.remove('lk'), 700);
       const fin = (i) => {
         if (done) return; done = true; clearTimeout(tm);
         const ok = i != null && q.choices[i] === q.ans, bs = ov.querySelectorAll('.qc button');
@@ -117,7 +118,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         setTimeout(() => { ov.remove(); busy = false; res(ok); }, ok ? 650 : 1600);
       };
       const tm = setTimeout(() => fin(null), time * 1000);
-      ov.onclick = e => { if (e.target.closest('[data-sp]')) { say(q.en); return; } const b = e.target.closest('[data-i]'); if (b) fin(+b.dataset.i); };
+      ov.onclick = e => { if (Date.now() - t0 < 700) return; if (e.target.closest('[data-sp]')) { say(q.en); return; } const b = e.target.closest('[data-i]'); if (b) fin(+b.dataset.i); };
     });
   }
 
@@ -173,10 +174,9 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       // 待っているあいだの問題(どんどん出る)。単語が多め、ときどき熟語
       wait: async () => {
         if (s.lv < 3 && Math.random() < aboveP()) {   // 今より1つ上のレベルの問題(竿が良いほど出にくい)。正解するとメーターが多く上がる
-          if (Math.random() < 0.7) { const w = pick(SW[s.lv + 1]), ok = await ask(wordQ(s.lv + 1, w, Math.random() < 0.5 ? 'ej' : 'je'), { label: '⏳ ちょっと上のレベル! 単語', time: T_Q + 3, host: ui.parentNode }); return { ok, above: true }; }
-          return { ok: await idiom(s.lv + 1, '⏳ ちょっと上のレベル! 熟語', ui.parentNode), above: true };
+          { const w = pick(SW[s.lv + 1]), ok = await ask(wordQ(s.lv + 1, w, Math.random() < 0.5 ? 'ej' : 'je'), { label: '⏳ ちょっと上のレベル! 単語', time: T_Q + 3, host: ui.parentNode }); return { ok, above: true }; }
         }
-        return Math.random() < 0.25 ? idiom(s.lv, '⏳ 気になってる! 熟語に答えよう', ui.parentNode).then(ok => ({ ok })) : word(Math.random() < 0.5 ? 'ej' : 'je', '⏳ 気になってる! 単語に答えよう', T_Q);
+        return word(Math.random() < 0.5 ? 'ej' : 'je', '⏳ 気になってる! 単語に答えよう', T_Q);   // 合わせまでは単語だけ
       },
       refresh: showProg,
     };
@@ -215,7 +215,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         <h2>📚 英語の釣り堀</h2><p class="nt">えらんだセットの単語だけが出るよ。魚が近づいたら単語に答えて「気になり度」をためよう。合わせ損ねた時は単語、あばれた時は熟語、巻き取りは文の並べ替え。<b>セットの単語をぜんぶ完璧</b>(続けて${PERFECT_C}回正解。ストリームで正解した分も入る)にすると、そのセットの標本がもらえる。魚はどのセットでもふつうに釣れるよ。</p>
         <div class="tabs">${[1, 2, 3].map(l => `<button data-lv="${l}" class="${l === lv ? 'on' : ''}">${LV_NAME[l]}<br><small style="font-weight:700;font-size:10px">${LV_SUB[l]}</small></button>`).join('')}</div>
         <p class="nt" style="margin:0 0 8px">標本 ${got} / ${sets.length}</p>
-        <p class="nt" style="margin:0 0 8px">問題の間隔: ${[[1, 'はやい'], [2, 'ふつう'], [3, 'ゆっくり']].map(([k, t]) => `<button class="sbtn" data-gap="${k}" style="${(+(ctx.storage.get('enGap') || 1)) === k ? 'background:#f58aa8;color:#fff' : ''}">${t}</button>`).join(' ')}</p>
+        <p class="nt" style="margin:0 0 8px">問題の間隔: ${[[1, 'はやい(1秒)'], [2, 'ふつう(4秒)'], [3, 'ゆっくり(10秒)']].map(([k, t]) => `<button class="sbtn" data-gap="${k}" style="${(+(ctx.storage.get('enGap') || 1)) === k ? 'background:#f58aa8;color:#fff' : ''}">${t}</button>`).join(' ')}</p>
         <div class="grid">${sets.map(s => { const n = spec.perfCount(s.id), o = own[s.id]; return `<button class="cell ${o ? (o.crack ? 'crk' : 'got') : ''}" data-s="${s.id}"><b>セット${s.no}</b><span class="ic">${o ? (o.crack ? '💥' : ICON[s.look.shape] || '🏺') : '🎣'}</span><small>${esc(s.words[0][0])}…</small><div class="pg"><i style="width:${n / s.words.length * 100}%"></i></div><small>完璧 ${n}/${s.words.length}</small></button>`; }).join('')}</div>`;
     };
     draw();

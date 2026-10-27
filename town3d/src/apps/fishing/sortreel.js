@@ -4,7 +4,7 @@
 import chunksort from '../gamebox/games/chunksort.js';
 import { createSfx as createBoxSfx } from '../gamebox/kit.js';
 
-// → {destroy()}。parent(釣り画面のUI)の下に重ねる。opt: {n:3|4|5, fishName, icon, volume, onSentence(k,N), onLearn(d), onEnd()}
+// → {destroy()}。parent(釣り画面のUI)の下に重ねる。opt: {n:3|4|5, fishName, icon, volume, onSentence(k,N), onGap(k,N), onLearn(d), onEnd()}
 export function sortReel(parent, opt) {
   const panel = document.createElement('div'); panel.className = 'fz-sort';
   panel.style.cssText = 'position:absolute;left:0;right:0;bottom:0;height:min(46%,330px);z-index:3;background:rgba(255,248,239,.95);border-radius:18px 18px 0 0;box-shadow:0 -4px 16px #0003;touch-action:none;pointer-events:auto;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 6px);box-sizing:border-box';
@@ -18,6 +18,7 @@ export function sortReel(parent, opt) {
     players: [{ name: 'あなた', cpu: null, icon: '🙂' }, { name: opt.fishName || 'さかな', cpu: null, icon: opt.icon || '🐟' }],
     opts: { to: opt.n, lv: opt.n <= 3 ? 1 : opt.n === 4 ? 2 : 3, board: 'few', hint: 'btn', say: 1, inline: 1 },
     learn: d => { k++; try { opt.onLearn && opt.onLearn(d); } catch (e) { } try { opt.onSentence && opt.onSentence(k, opt.n); } catch (e) { } tag.textContent = k >= opt.n ? '⭕ 巻き取り成功!' : `🎣 ${k} / ${opt.n} 文 巻いた! つぎも!`; if (k >= opt.n) tag.style.background = '#3aa067'; },
+    onRevealEnd: () => { if (k < opt.n) { try { opt.onGap && opt.onGap(k, opt.n); } catch (e) { } } },
     end: () => { if (done) return; try { opt.onEnd && opt.onEnd(); } catch (e) { } },
   };
   game = chunksort.start(host);

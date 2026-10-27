@@ -398,12 +398,12 @@ export const fishingApp = {
         else if (type === 'hooked') {
           thrashN = 0; lastTh = -99; const h = E.S.hooked;
           if (h && h.sp.kind === 'fish' && E.sortStart()) {   // 巻き取りは、ぜんぶ文の並べ替えでする
-            try { stopIn(); closeReel(); reelUi = G.reel(h.sp, h.size || 0, { onSentence: (k, N) => E.sortProgress(k, N), onEnd: () => E.sortEnd() }); } catch (err) { closeReel(); h.sr = false; }
+            try { stopIn(); closeReel(); reelUi = G.reel(h.sp, h.size || 0, { onSentence: (k, N) => E.sortProgress(k, N), onGap: (k, N) => { const hh = E.S.hooked; if (hh) E.rodPhase(k === N - 1 && (hh.sp.r >= 3 || (hh.size || 0) >= 60)); }, onEnd: () => E.sortEnd() }); } catch (err) { closeReel(); h.sr = false; }
           }
         }
         else if (type === 'lost' || type === 'catch') closeReel();
         else if (type === 'run' && E.S.hooked && E.S.hooked.sp.kind === 'fish') {
-          if (d.last) { if (thrashN < 2) { thrashN++; stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった!', 1000); } else { E.setback(0.15); toast('引き戻された…', 1000); } }); } }   // 最後のあがき=熟語
+          if (d.last) { stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった!', 1000); } else { E.setback(0.15); toast('引き戻された…', 1000); } E.rodDone(); }); }   // 最後のあがき=熟語
           else toast(d.dir > 0 ? '右へ走った! 竿を<b>左</b>に倒せ' : '左へ走った! 竿を<b>右</b>に倒せ', 1300);
         }
         else if (type === 'net') {
@@ -537,9 +537,9 @@ export const fishingApp = {
         E.input.reel = reeling && (E.S.ph === 'water' || E.S.ph === 'fight') ? thr || 0.55 : 0;
         E.input.side += (sideT - E.input.side) * Math.min(1, dt * 6);
         if (G) {   // 英語:魚が近づいて気にしはじめてから問題が出る。正解でメーターが上がる(10問くらいで満タン)
-          const ff = E.S.focusF, near = E.S.ph === 'water' && !E.S.engaged && !E.S.bite && ff && E.S.wt > 6;
-          imEl.hidden = !(E.S.ph === 'water' && !E.S.engaged && ff && E.S.wt > 6 && !E.S.bite); if (!imEl.hidden) imEl.querySelector('i').style.width = Math.min(100, ff.int * 100) + '%';
-          if (near && !EN.busy) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = G.gap(); if (r.ok) { E.addInterest(r.above ? 0.2 : 0.1); sfx.play('coin'); } }); } } else if (!EN.busy) waitQ = Math.min(waitQ, 1.2);
+          const ff = E.S.focusF, near = E.S.ph === 'water' && !E.S.engaged && !E.S.bite && ff;
+          imEl.hidden = !(E.S.ph === 'water' && !E.S.engaged && ff && !E.S.bite); if (!imEl.hidden) imEl.querySelector('i').style.width = Math.min(100, ff.int * 100) + '%';
+          if (near && !EN.busy) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = G.gap(); if (r.ok) { E.addInterest(r.above ? 0.2 : 0.1); sfx.play('coin'); } }); } } else if (!EN.busy) waitQ = (E.S.engaged || E.S.bite) ? Math.max(waitQ, 2) : Math.min(waitQ, 1.2);   // 合わせの間は問題のタイマーを止める
         }
         if (G && EN.busy) { } else if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
         if (leap) { leap.t += dt / leap.dur; if (leap.t >= 1) { const fn = leap.then; leap = null; fn && fn(); } }
@@ -572,7 +572,7 @@ export const fishingApp = {
         hkB.textContent = ph === 'water' ? (E.S.bite ? 'あわせ!' : lure ? 'しゃくる' : 'あわせ') : !vs && (ph === 'landed' || ph === 'lost') ? 'つぎへ' : 'あわせ';
         hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water';
         if (reelUi && ph !== 'fight') closeReel();
-        { const run = !!(h && h.sr && h.mode === 'run'), pshow = !!reelUi && !run && !EN.busy; if (reelUi) reelUi.show(pshow); bigB.style.visibility = reelUi && pshow ? 'hidden' : ''; }
+        { const run = !!(h && h.sr && h.phase === 'rod'), pshow = !!reelUi && !run && !EN.busy; if (reelUi) reelUi.show(pshow); bigB.style.visibility = reelUi && pshow ? 'hidden' : ''; }
         hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
         const showThr = reeling && (ph === 'water' || ph === 'fight');
         thrEl.hidden = !showThr; if (showThr) thrEl.firstChild.style.height = Math.round(E.input.reel * 100) + '%';
