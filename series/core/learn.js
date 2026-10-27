@@ -12,6 +12,7 @@ export function createLearn(events) {
   const api = {
     hit(en, ok, o = {}) { const k = key(en); if (!k) return null; const r = R[k] || (R[k] = { c: 0, ok: 0, ng: 0, t: 0 }); if (ok) { r.c++; r.ok++; } else { r.c = 0; r.ng++; } r.t = Date.now(); if (o.ja) r.ja = o.ja; save(); return { ...r }; },
     get(en) { const r = R[key(en)]; return r ? { ...r } : null; },
+    seen(n = 200) { return Object.entries(R).filter(([, r]) => r.ja).sort((a, b) => b[1].t - a[1].t).slice(0, n).map(([en, r]) => ({ en, ja: r.ja })); },   // 見たことのある単語(新しい順)
     weak(n = 30) { return Object.entries(R).filter(([, r]) => r.ja && r.ng > 0 && r.c < 3).sort((a, b) => b[1].t - a[1].t).slice(0, n).map(([en, r]) => ({ en, ja: r.ja })); },
   };
   events.on((game, name, d) => {

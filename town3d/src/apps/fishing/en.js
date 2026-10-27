@@ -335,12 +335,14 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     };
   }
   // えさを作る問題:まちがえたことのある言葉(ストリームなども)→ 釣り堀の完璧な単語(忘れないように)→ 初級
-  function reviewQs(n) {
-    const out = [], used = new Set();
-    for (const w of shuffle(learn.weak(40))) { if (out.length >= Math.ceil(n * 0.6)) break; if (used.has(w.en)) continue; used.add(w.en); out.push(freeQ(w.en, w.ja)); }
-    const pl = spec.played().map(id => SET[id]).filter(Boolean);
-    for (let k = 0; out.length < n && k < 40; k++) {
-      const s = pl.length ? pick(pl) : SETS[0], w = pick(s.words); if (used.has(w[0])) continue; used.add(w[0]); out.push(wordQ(s.lv, w, Math.random() < 0.5 ? 'ej' : 'je'));
+  function reviewQs(n) {   // えさ用:まちがえた単語・見たことのある単語・初級〜上級の単語を、ランダムにまぜる
+    const out = [], used = new Set(), weak = shuffle(learn.weak(40)), seen = shuffle(learn.seen ? learn.seen(200) : []);
+    const take = list => { while (list.length) { const w = list.pop(); if (!used.has(w.en)) { used.add(w.en); return freeQ(w.en, w.ja); } } return null; };
+    for (let k = 0; out.length < n && k < 60; k++) {
+      const r = Math.random();
+      let q = r < 0.25 ? take(weak) : r < 0.5 ? take(seen) : null;
+      if (!q) { const lv = Math.random() < 0.6 ? 1 : Math.random() < 0.65 ? 2 : 3, w = pick(SW[lv]); if (used.has(w[0])) continue; used.add(w[0]); q = wordQ(lv, w, Math.random() < 0.5 ? 'ej' : 'je'); }
+      out.push(q);
     }
     return out;
   }
