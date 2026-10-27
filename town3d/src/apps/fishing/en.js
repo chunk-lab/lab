@@ -19,7 +19,7 @@ const FOOD_Q = 5;                    // えさを作る問題の数(1問正解=�
 const POS = { n: '名詞', v: '動詞', a: '形容詞', r: '副詞', pp: '前置詞', cj: '接続詞', pn: '代名詞', ij: '間投詞', ph: '熟語' };
 const ICON = { shell: '🐚', conch: '🐚', stone: '🪨', glass: '💠', urchin: '🌰', star: '⭐', coral: '🪸', disc: '⚪', crystal: '🔮', ammonite: '🌀', trilobite: '🪲', tooth: '🦷', amber: '🟠', cube: '🟨', leaf: '🍂', gem: '💎', opal: '🫧', pearl: '🦪', meteor: '☄️' };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const isAdmin = () => { try { return JSON.parse(localStorage.getItem('cs:core:admin')) === true; } catch (e) { return false; } };   // 運営テスト(アミューズメントと同じ印)
+const isAdmin = () => { try { const q = new URLSearchParams(location.search).get('admin'); if (q === '1') localStorage.setItem('cs:core:admin', 'true'); if (q === '0') localStorage.removeItem('cs:core:admin'); } catch (e) { } try { return JSON.parse(localStorage.getItem('cs:core:admin')) === true; } catch (e) { return false; } };   // 運営テスト(アミューズメントと同じ印)
 const dayKey = () => { const d = new Date(Date.now() - 4 * 36e5); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const pick = a => a[Math.floor(Math.random() * a.length)];
