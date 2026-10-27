@@ -253,7 +253,7 @@ export const fishingApp = {
       }
       const tackleChip = () => { const b = gearById('bait', eq.bait); $('[data-b="tackle"]').textContent = `${b.icon} ${b.name}・${gearById('hook', eq.hook).name}`; const tc = $('[data-b="tana"]'); tc.style.display = b.type === 'lure' ? 'none' : ''; tc.textContent = TANA[tanaOf(E.S.tana)].name; };
       tackleChip();
-      const G = en ? EN.playGates(en, ui) : null; let thrashN = 0, waitQ = 1;
+      const G = en ? EN.playGates(en, ui, () => Math.max(0.05, 0.3 / Math.pow(E.G.rod.power, 1.5))) : null; let thrashN = 0, waitQ = 1;
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
         if (b === 'skip') {   // 勝負をとちゅうで切りあげる:2回おすと、あいての残り時間を一気に進めて結果を出す
@@ -398,17 +398,17 @@ export const fishingApp = {
         else if (type === 'hooked') {
           thrashN = 0; lastTh = -99; const h = E.S.hooked;
           if (h && h.sp.kind === 'fish' && E.sortStart()) {   // 巻き取りは、ぜんぶ文の並べ替えでする
-            try { stopIn(); closeReel(); reelUi = G.reel(h.sp, h.size || 0, { onPlace: (ok, got, total) => E.sortPlace(ok, got, total), onEnd: () => E.sortEnd() }); } catch (err) { closeReel(); h.sr = false; }
+            try { stopIn(); closeReel(); reelUi = G.reel(h.sp, h.size || 0, { onSentence: (k, N) => E.sortProgress(k, N), onEnd: () => E.sortEnd() }); } catch (err) { closeReel(); h.sr = false; }
           }
         }
         else if (type === 'lost' || type === 'catch') closeReel();
         else if (type === 'run' && E.S.hooked && E.S.hooked.sp.kind === 'fish') {
-          const h = E.S.hooked, lim = h.size >= 60 || h.sp.r >= 3 ? 2 : 1;
-          if (thrashN < lim + 1 && E.S.t - lastTh > 4 && !h.sortEnded) { thrashN++; lastTh = E.S.t; stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった! 巻け!', 1000); } else E.escape('thrash'); }); }
+          if (d.last) { if (thrashN < 2) { thrashN++; stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった!', 1000); } else { E.setback(0.15); toast('引き戻された…', 1000); } }); } }   // 最後のあがき=熟語
+          else toast(d.dir > 0 ? '右へ走った! 竿を<b>左</b>に倒せ' : '左へ走った! 竿を<b>右</b>に倒せ', 1300);
         }
         else if (type === 'net') {
           if (!E.S.hooked || E.S.hooked.sp.kind !== 'fish') { E.netResult(true); return; }
-          stopIn(); const h = E.S.hooked; try { G.reel(h.sp, h.size || 0).then(ok => E.netResult(ok), () => E.netResult(true)); } catch (err) { E.netResult(true); }   // 何かあっても釣れなくならない
+          stopIn(); const h = E.S.hooked; try { G.net(h.sp).then(r => { if (r.shrink) toast('ちょっと小さくなっちゃった…', 1400); E.netResult(true, r.shrink); }, () => E.netResult(true)); } catch (err) { E.netResult(true); }   // 何かあっても釣れなくならない
         }
       }
       function oppEvent(type, d) {
@@ -539,7 +539,7 @@ export const fishingApp = {
         if (G) {   // 英語:魚が近づいて気にしはじめてから問題が出る。正解でメーターが上がる(10問くらいで満タン)
           const ff = E.S.focusF, near = E.S.ph === 'water' && !E.S.engaged && !E.S.bite && ff && E.S.wt > 6;
           imEl.hidden = !(E.S.ph === 'water' && !E.S.engaged && ff && E.S.wt > 6 && !E.S.bite); if (!imEl.hidden) imEl.querySelector('i').style.width = Math.min(100, ff.int * 100) + '%';
-          if (near && !EN.busy) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = G.gap(); if (r.ok) { E.addInterest(0.1); sfx.play('coin'); } }); } } else if (!EN.busy) waitQ = Math.min(waitQ, 1.2);
+          if (near && !EN.busy) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = G.gap(); if (r.ok) { E.addInterest(r.above ? 0.2 : 0.1); sfx.play('coin'); } }); } } else if (!EN.busy) waitQ = Math.min(waitQ, 1.2);
         }
         if (G && EN.busy) { } else if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
         if (leap) { leap.t += dt / leap.dur; if (leap.t >= 1) { const fn = leap.then; leap = null; fn && fn(); } }
@@ -570,7 +570,9 @@ export const fishingApp = {
         const ph = E.S.ph, lure = E.G.bait.type === 'lure', h = E.S.hooked;
         { const bh = ph === 'ready' ? '投げる<small>長おし/動かして狙う</small>' : ph === 'charge' ? 'はなす!<small>いまの力で</small>' : ph === 'fight' ? '巻く<small>上にずらすと強く</small>' : ph === 'water' ? '巻く<small>上で速く</small>' : ph === 'fly' ? '…' : vs ? '…' : 'つぎへ'; if (bigB.__h !== bh) { bigB.__h = bh; bigB.innerHTML = bh; } }
         hkB.textContent = ph === 'water' ? (E.S.bite ? 'あわせ!' : lure ? 'しゃくる' : 'あわせ') : !vs && (ph === 'landed' || ph === 'lost') ? 'つぎへ' : 'あわせ';
-        hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water'; bigB.style.visibility = reelUi ? 'hidden' : '';
+        hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water';
+        if (reelUi && ph !== 'fight') closeReel();
+        { const run = !!(h && h.sr && h.mode === 'run'), pshow = !!reelUi && !run && !EN.busy; if (reelUi) reelUi.show(pshow); bigB.style.visibility = reelUi && pshow ? 'hidden' : ''; }
         hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
         const showThr = reeling && (ph === 'water' || ph === 'fight');
         thrEl.hidden = !showThr; if (showThr) thrEl.firstChild.style.height = Math.round(E.input.reel * 100) + '%';

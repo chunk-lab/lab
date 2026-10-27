@@ -213,6 +213,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     let side = 1;
     if (h.mode === 'run') { const k = input.side * h.dir; side = k < -0.3 ? 1.9 : k > 0.3 ? 0.55 : 1; } else if (Math.abs(input.side) > 0.3) side = 1.15;
     h.S = Math.max(0.05, h.S - (0.03 + 0.16 * h.T) * side * Math.sqrt(G.rod.power) / (sp.stam * (0.7 + 0.6 * h.u)) * dt);
+    if (sr && h.mode === 'run') { const k = input.side * h.dir; if (k < -0.3) h.modeT -= dt * 0.8; else { const b = 0.05 * dt; h.L = Math.min(h.sortL0, h.L + b); h.tgt = Math.min(h.sortL0, (h.tgt == null ? h.L : h.tgt) + b); } }   // 英語:走る向きと逆に竿を倒すと早く落ち着く。倒さないと少し引き戻される(逃げはしない)
     // あばれる/休む
     if ((h.modeT -= dt) <= 0) {
       if (h.mode === 'run') { h.mode = 'rest'; h.modeT = (0.7 + rb() * 0.9) * (1.3 - h.S * 0.5); }
@@ -234,7 +235,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     if (!sr && (h.bm >= 1 || h.L > 1.3)) return lose('snap');
     if (h.T < 0.1 && thr < 0.05 && !h.heavy) h.sl += dt; else h.sl = Math.max(0, h.sl - dt * 2);
     if (!sr && h.sl > (easy ? 3.5 : 1.8)) return lose('slack');
-    if (sr) { if (h.sortEnded && h.L <= 0.0351) return land(); S.lure.x = Math.sin(h.phi) * h.L / 0.95; S.lure.d = Math.cos(h.phi) * h.L; return; }
+    if (sr) { if (h.sortEnded && h.L <= 0.0351) { if (h.netOk) return land(); if (!S.netWait) { S.netWait = true; ev('net', { id: sp.id }); } return; } S.lure.x = Math.sin(h.phi) * h.L / 0.95; S.lure.d = Math.cos(h.phi) * h.L; return; }
     if (h.L < 0.035) { if (netGate && !h.netOk) { if (!S.netWait) { S.netWait = true; h.L = 0.035; ev('net', { id: sp.id }); } return; } return land(); }
     S.lure.x = Math.sin(h.phi) * h.L / 0.95; S.lure.d = Math.cos(h.phi) * h.L;
   }
@@ -310,9 +311,10 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     addInterest(k) { S.addInt = (S.addInt || 0) + k; },
     biteResult(ok) { const f = S.engaged; if (!f || f.st !== 'hold') return; if (ok) { f.st = 'nibble2'; f.nibT = 0.7 + rb() * 0.6; } else { ev('miss'); leave(f, 'miss'); } },
     sortStart() { const h = S.hooked; if (S.ph !== 'fight' || !h) return false; h.sr = true; h.sortL0 = Math.max(0.2, h.L); h.tgt = h.sortL0; h.sortEnded = false; return true; },
-    sortPlace(ok, got, total) { const h = S.hooked; if (!h || !h.sr) return; if (ok) h.tgt = h.sortL0 - (h.sortL0 - 0.035) * got / total; else h.L = Math.min(h.sortL0, h.L + 0.05); },
+    sortProgress(k, N) { const h = S.hooked; if (!h || !h.sr) return; h.tgt = h.sortL0 - (h.sortL0 - 0.035) * k / N; },   // 1文ならべ終えるたびに少し寄る
+    setback(v) { const h = S.hooked; if (!h || !h.sr) return; h.L = Math.min(h.sortL0, h.L + v); h.tgt = Math.min(h.sortL0, (h.tgt == null ? h.L : h.tgt) + v); },
     sortEnd() { const h = S.hooked; if (h && h.sr) { h.tgt = 0.035; h.sortEnded = true; } },
-    netResult(ok) { if (S.ph !== 'fight' || !S.hooked || !S.netWait) return; S.netWait = false; S.hooked.netOk = true; if (ok) land(); else lose('net'); },
+    netResult(ok, shrink) { if (S.ph !== 'fight' || !S.hooked || !S.netWait) return; S.netWait = false; S.hooked.netOk = true; if (ok && shrink) { S.hooked.size *= 0.75; S.hooked.u *= 0.8; } if (ok) land(); else lose('net'); },
     bonusHere(k = 1.9) { if (S.lure) S.bonus = { x: S.lure.x, d: S.lure.d, k, t: 16 }; },
     update(dt) {
       S.t += dt;

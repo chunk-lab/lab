@@ -145,7 +145,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
 
   const idiom = async (lv, label, host) => { const q = idiomQ(lv), ok = await ask(q, { label, time: T_Q, host }); learn.hit(q.w[0], ok, { ja: q.w[2], src: 'fishing' }); return ok; };
   // ---- 釣りの中の出題(app.js の play から使う) ----
-  function playGates(setId, ui) {
+  function playGates(setId, ui, aboveP = () => 0) {
     const s = SET[setId], recent = [];
     spec.markPlayed(setId);
     const prog = document.createElement('div'); prog.className = 'enprog'; ui.appendChild(prog);
@@ -164,12 +164,20 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       cast: () => idiom(s.lv, '🎯 投げた! 熟語に答えると魚がよく寄る', ui.parentNode),
       bite: () => word('ej', '🎣 合わせそこねた! 正解でもういちどチャンス(まちがえると逃げる)', T_BITE),
       gap: () => GAPS[+(ctx.storage.get('enGap') || 1)] || 2,
-      thrash: () => idiom(s.lv, '🌊 あばれた! 熟語で落ち着かせろ', ui.parentNode),
+      thrash: () => idiom(s.lv, '🌊 最後のあがき! 熟語で落ち着かせろ', ui.parentNode),
+      // 取りこむ直前:ふつうの魚は熟語、レアは難しい熟語。まちがえてももう1回、それもだめなら少し小さくなって釣れる
+      net: async sp => { const rare = sp.r >= 4, lq = rare ? 3 : s.lv; let ok = await idiom(lq, rare ? '🎣 取りこむ直前! レアは むずかしい熟語' : '🎣 取りこむ直前! 熟語に答えよう', ui.parentNode); if (ok) return { ok: true }; ok = await idiom(lq, '🎣 もう1回チャンス!', ui.parentNode); return ok ? { ok: true } : { ok: true, shrink: true }; },
       // 巻き取り:文の並べ替え(アミューズメントの並べ替えと同じデータ)。大物ほど長い文
       reel: (sp, size, cb) => { const n = sp.r >= 4 ? 5 : (sp.r >= 3 || size >= 60) ? 4 : 3;
         return sortReel(ui, { n, fishName: sp.name, icon: '🐟', volume: ctx.audio && ctx.audio.sfx, ...cb, onLearn: d => { try { ctx.emit('learn', { ...d, src: '釣りの巻き取り' }); } catch (e) { } } }); },
       // 待っているあいだの問題(どんどん出る)。単語が多め、ときどき熟語
-      wait: () => Math.random() < 0.25 ? idiom(s.lv, '⏳ 待ってるあいだに 熟語!', ui.parentNode).then(ok => ({ ok })) : word(Math.random() < 0.5 ? 'ej' : 'je', '⏳ 待ってるあいだに 単語!', T_Q),
+      wait: async () => {
+        if (s.lv < 3 && Math.random() < aboveP()) {   // 今より1つ上のレベルの問題(竿が良いほど出にくい)。正解するとメーターが多く上がる
+          if (Math.random() < 0.7) { const w = pick(SW[s.lv + 1]), ok = await ask(wordQ(s.lv + 1, w, Math.random() < 0.5 ? 'ej' : 'je'), { label: '⏳ ちょっと上のレベル! 単語', time: T_Q + 3, host: ui.parentNode }); return { ok, above: true }; }
+          return { ok: await idiom(s.lv + 1, '⏳ ちょっと上のレベル! 熟語', ui.parentNode), above: true };
+        }
+        return Math.random() < 0.25 ? idiom(s.lv, '⏳ 気になってる! 熟語に答えよう', ui.parentNode).then(ok => ({ ok })) : word(Math.random() < 0.5 ? 'ej' : 'je', '⏳ 気になってる! 単語に答えよう', T_Q);
+      },
       refresh: showProg,
     };
   }
