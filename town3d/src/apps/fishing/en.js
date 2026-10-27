@@ -43,6 +43,7 @@ const MIXCSS = `
 .mixfx .pt{position:absolute;left:50%;top:44%;font-size:22px;animation:mxPt 1.4s ease-out forwards;pointer-events:none}@keyframes mxPt{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.3);opacity:0}}
 .mixfx button{margin-top:18px}
 .ens .admf{position:absolute;left:2px;right:2px;top:2px;display:flex;justify-content:space-between;align-items:center;z-index:2}.ens .admf button{width:30px;height:30px;border-radius:50%;border:0;background:#e0556b;color:#fff;font-size:18px;font-weight:bold}.ens .admf i{font-style:normal;font-weight:bold;font-size:12px;background:#fff;border-radius:8px;padding:2px 5px}
+.ens .fdx{position:fixed;inset:0;background:rgba(20,15,40,.62);z-index:20;display:flex;align-items:center;justify-content:center;padding:16px}.ens .fdc{position:relative;width:min(92vw,380px);max-height:92vh;overflow:auto;background:linear-gradient(#fff,#f3eefb);border-radius:22px;padding:16px 16px 18px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.35)}.ens .fdc .x{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;border:0;background:#eee;font-size:16px}.ens .fdc .fpic{background:radial-gradient(#e9f6ff,#cfe6f5);border-radius:16px;padding:14px 8px;margin-top:22px}.ens .fdc .rt{display:inline-block;margin-top:10px;font-weight:900;color:#fff;background:#8d7f9e;border-radius:8px;padding:1px 10px;font-size:12px}.ens .fdc h3{margin:6px 0 0;font-size:20px}.ens .fdc .en{color:#8d7f9e;font-size:12px;margin-top:2px}.ens .fdc .tb{display:flex;gap:6px;justify-content:center;margin:10px 0}.ens .fdc .tb button{border:0;border-radius:14px;padding:6px 12px;background:#eee;font-weight:bold;font-size:12px}.ens .fdc .tb button.on{background:#5a4a78;color:#fff}.ens .fdc .tb button:disabled{opacity:.35}.ens .fdc .ds{font-size:14px;margin:6px 0}.ens .fdc table{margin:8px auto;font-size:13px;text-align:left}.ens .fdc th{color:#8d7f9e;padding-right:12px;font-weight:bold}.ens .fdc .sy{font-style:italic;color:#6b5d86;font-size:13px;margin:8px 0 0}
 .ens .adm{position:absolute;left:4px;top:3px;width:24px;height:24px;z-index:2;accent-color:#e0556b}
 .rcp{margin:6px 0 10px;font-size:12px;line-height:1.9}.rcp .rr{margin:0 4px 0 0}
 `;
@@ -278,7 +279,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       let body;
       if (tab === 'f') {
         const gr = spec.grown();
-        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}匹</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic fa">${fishImg(f.id, 112, !n, bk)}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
+        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}" data-fd="${f.id}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}匹</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic fa">${fishImg(f.id, 112, !n, bk)}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
       } else if (tab === 'd') {
         const dl = spec.decor();
         body = `<p class="nt">標本の形の組み合わせ(レシピ)で、水槽の飾りができる。できた飾りは、ぜんぶここに記録される。「混ぜる」でレシピのヒントが見られるよ。</p><div class="grid">${[1, 2, 3].flatMap(lv => DECOR[lv].map((_, r) => { const n = dl.filter(d => d.lv === lv && d.rar === r).length, k = decorOf({ lv, rar: r }); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? k.icon : '❔'}</span><b>${n ? esc(k.name) : '？？？'}<span class="rr rr${r}">${RAR[r]}</span></b><small>${n ? esc(k.en) + (n > 1 ? ' ×' + n : '') : LV_NAME[lv]}</small></div>`; })).join('')}</div>`;
@@ -291,6 +292,23 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         <div class="tabs">${[[1, '初級'], [2, '中級'], [3, '上級'], ['f', '魚'], ['d', '飾り']].map(([k, n]) => `<button data-t="${k}" class="${k === tab ? 'on' : ''}">${n}</button>`).join('')}</div>${body}`;
     };
     draw();
+    // 魚をタップ → 大きな絵と説明(持っている強さの絵だけ見られる。まだの魚は「？」)
+    const fishDetail = (id, rk0) => {
+      const f = FISHBY[id]; if (!f) return;
+      const gr = spec.grown().includes(id) || furn.owned('fs_' + id), best = spec.fishBest()[id] || 0, rk = Math.min(rk0 === undefined ? best : rk0, FISH_MAX_RANK);
+      let ov = sc.querySelector('.fdx'); if (!ov) { ov = document.createElement('div'); ov.className = 'fdx'; sc.appendChild(ov); }
+      const AN = { open: 'ひらけた所', weed: '水草', log: 'しずんだ木', lily: 'ハスの葉', rock: '岩場', deep: 'ふかみ' };
+      const TM = { day: '明るいうち', night: '夜', any: 'いつでも' };
+      const [lo, hi] = f.size || [10, 20], mul = RANK_MUL[rk];
+      const tabs = [0, 1, 2].map(k => `<button class="${k === rk ? 'on' : ''}" data-fr="${k}" ${gr && k <= best ? '' : 'disabled'}>${['ふつう', 'りっぱな', '伝説の'][k]}</button>`).join('');
+      ov.innerHTML = `<div class="fdc"><button class="x" data-fx>✕</button><div class="fpic">${fishImg(id, 320, !gr, rk)}</div>
+        ${gr ? `<div class="rt">${['N', 'SR', 'SSR'][rk]}</div><h3>${esc(RANK_PRE[rk] + f.name)}</h3><div class="en">${esc(f.en)}　${'★'.repeat(f.r)}</div>
+        <div class="tb">${tabs}</div>
+        <p class="ds">${esc(f.hint || '')}</p>
+        <table><tr><th>大きさ</th><td>${Math.round(lo * 1.5 * mul)}〜${Math.round(hi * 1.5 * mul)}cm</td></tr><tr><th>いる所</th><td>${(f.area || ['open']).map(a => AN[a] || a).join('・')}</td></tr><tr><th>時間</th><td>${TM[f.time] || 'いつでも'}</td></tr></table>
+        <p class="sy">“${esc(f.say || '')}”</p>` : `<h3>？？？</h3><div class="en">${'★'.repeat(f.r)}</div><p class="ds">まだ出会っていない魚。水槽で育てきるとアルバムに載るよ。</p>`}</div>`;
+      ov.onclick = e => { if (e.target === ov || e.target.closest('[data-fx]')) { sfx.play('tap'); ov.remove(); } else { const r = e.target.closest('[data-fr]'); if (r && !r.disabled) { sfx.play('tap'); fishDetail(id, +r.dataset.fr); } } };
+    };
     const admSet = (id, on) => {
       const s = SET[id]; if (!s) return;
       if (on) { if (!spec.own()[id]) { spec.give(id); furn.give('sp_' + id); } else if (spec.isUsed(id)) { const o = spec.own(); o[id].used = 0; spec.setCrack(id, 0); st0(o); furn.give('sp_' + id); } s.words.forEach((_, i) => spec.setPerf(id, i, 1)); }
@@ -308,6 +326,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         else { const i = tk.map(x => x.id).lastIndexOf(id); if (i >= 0) { tk.splice(i, 1); spec.saveTank(tk); } }
         draw(); return;
       }
+      const fd = e.target.closest('[data-fd]');
+      if (fd && !e.target.closest('.admf')) { sfx.play('tap'); fishDetail(fd.dataset.fd); return; }
       if (a === 'admall' && typeof tab === 'number') { SETS.filter(s => s.lv === tab).forEach(s => admSet(s.id, true)); draw(); return; }
       if (a === 'admnone' && typeof tab === 'number') { SETS.filter(s => s.lv === tab).forEach(s => admSet(s.id, false)); draw(); return; }
       if (a === 'back') { sfx.play('tap'); sc.remove(); onBack(); }
