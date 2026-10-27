@@ -30,7 +30,7 @@ const MIXCSS = `
 .ens .cell.sel{outline:3px solid #f58aa8;background:#ffe9f0}.ens .cell.used{opacity:.55}.ens .cell .ub{position:absolute;right:4px;top:3px;font-size:10px;background:#efe8f7;border-radius:8px;padding:0 5px;color:#6b4a9a}
 .ens .rr{display:inline-block;font-weight:900;font-size:10px;padding:0 6px;border-radius:6px;color:#fff;margin-left:3px}.rr0{background:#8a96a3}.rr1{background:#3b8fe0}.rr2{background:#a456f0}.rr3{background:linear-gradient(90deg,#ff9a00,#ff4d8d,#8a5cff);}
 .mixfx{position:absolute;inset:0;z-index:60;background:radial-gradient(circle at 50% 45%,#3a1d6e,#0b0618 70%);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;overflow:hidden;animation:mxIn .3s}
-.mixfx .ing{position:relative;width:240px;height:240px}.mixfx .ing span{position:absolute;left:50%;top:50%;margin:-24px 0 0 -24px;font-size:48px;animation:mxOrb 1.7s ease-in forwards}
+.mixfx .ing{position:relative;width:240px;height:240px}.mixfx .ing span{position:absolute;left:50%;top:50%;width:70px;margin:-24px 0 0 -35px;text-align:center;font-size:48px;animation:mxOrb 1.7s ease-in forwards}
 .mixfx .ring{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px;border-radius:50%;box-shadow:0 0 40px 16px #b890ff,inset 0 0 20px #fff8;animation:mxRing 1.7s ease-in forwards}
 @keyframes mxIn{from{opacity:0}to{opacity:1}}
 @keyframes mxOrb{0%{transform:rotate(var(--a)) translateX(95px) rotate(calc(var(--a)*-1)) scale(1)}100%{transform:rotate(calc(var(--a) + 900deg)) translateX(0) rotate(calc(var(--a)*-1 - 900deg)) scale(.15)}}
@@ -66,7 +66,7 @@ const CSS = `
 .fz .ens .tabs button.on{background:#5a4a6b;color:#fff}
 .fz .ens .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
 .fz .ens .cell{border:0;border-radius:14px;background:#fff;padding:8px 6px;font:inherit;color:#5a4a6b;box-shadow:0 2px 8px #0001;text-align:center;position:relative;min-height:92px}
-.fz .ens .cell b{display:block;font-size:13px}.fz .ens .cell .ic{font-size:26px;line-height:1.2;display:block}.fz .ens .cell small{display:block;font-size:10px;color:#8d7f9e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fz .ens .cell b{display:block;font-size:13px}.fz .ens .cell .ic.fa{height:auto;margin-bottom:2px}.fz .ens .cell .ic{font-size:26px;line-height:1.2;display:block}.fz .ens .cell small{display:block;font-size:10px;color:#8d7f9e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fz .ens .cell .pg{height:5px;border-radius:3px;background:#eee4f2;margin-top:5px;overflow:hidden}.fz .ens .cell .pg i{display:block;height:100%;background:#7fcf9f}
 .fz .ens .cell.got{background:linear-gradient(160deg,#fffbe6,#fff)}.fz .ens .cell.crk{background:linear-gradient(160deg,#ffe8e8,#fff)}
 .fz .ens .cell .dot{position:absolute;right:6px;top:6px;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px #fff}
@@ -80,6 +80,8 @@ const CSS = `
 `;
 
 export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast }) {
+  // 魚の絵(釣りの本体と同じ絵)を <img> として出す。sil=かげ
+  const fishImg = (id, w = 112, sil = false) => { const sp = FISHBY[id]; if (!sp) return '🐟'; try { return `<img src="${artCanvas(sp, w, Math.round(w * 0.58), { sil }).toDataURL()}" style="width:100%;max-width:${w}px;height:auto;display:block;margin:0 auto" alt="">`; } catch (e) { return '🐟'; } };
   if (!document.getElementById('fz-en-css')) { const s = document.createElement('style'); s.id = 'fz-en-css'; s.textContent = CSS + MIXCSS; document.head.appendChild(s); }
   const learn = ctx.learn || localLearn();
   const seen = new Set();
@@ -275,7 +277,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       let body;
       if (tab === 'f') {
         const gr = spec.grown();
-        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}匹</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic">${n ? '🐟' : '❔'}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
+        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}匹</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic fa">${fishImg(f.id, 112, !n)}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
       } else if (tab === 'd') {
         const dl = spec.decor();
         body = `<p class="nt">標本の形の組み合わせ(レシピ)で、水槽の飾りができる。できた飾りは、ぜんぶここに記録される。「混ぜる」でレシピのヒントが見られるよ。</p><div class="grid">${[1, 2, 3].flatMap(lv => DECOR[lv].map((_, r) => { const n = dl.filter(d => d.lv === lv && d.rar === r).length, k = decorOf({ lv, rar: r }); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? k.icon : '❔'}</span><b>${n ? esc(k.name) : '？？？'}<span class="rr rr${r}">${RAR[r]}</span></b><small>${n ? esc(k.en) + (n > 1 ? ' ×' + n : '') : LV_NAME[lv]}</small></div>`; })).join('')}</div>`;
@@ -335,7 +337,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       } else {
         const list = fishAvail();
         body = `<p class="nt">水槽で<b>育てきった、同じ種類・同じ強さの魚</b>を${MIX_N}匹選んで混ぜると、1匹の強い魚になる(大きく・称号つき。最大2段階)。元の魚はアルバムに残るよ。</p>
-          ${list.length ? `<div class="grid">${list.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''}" data-p="${f.uid}"><span class="ic">🐟</span><b>${esc(fname(f))}</b><small>${Math.round(f.size * 1.5)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。水槽で魚を育てよう。</p>`}`;
+          ${list.length ? `<div class="grid">${list.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''}" data-p="${f.uid}"><span class="ic fa">${fishImg(f.id, 96)}</span><b>${esc(fname(f))}</b><small>${Math.round(f.size * 1.5)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。水槽で魚を育てよう。</p>`}`;
       }
       sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button></div><h2>🎰 混ぜる</h2>${tabs}${body}
         <div style="position:sticky;bottom:0;padding:10px 0;background:linear-gradient(transparent,#fff8ef 30%)"><button class="btn" data-a="go" style="width:100%" ${ready ? '' : 'disabled'}>混ぜる! (${pick3.length}/${MIX_N})</button></div>`;
@@ -365,7 +367,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
           pick3 = []; const rk = (sel[0].rk || 0) + 1, size = Math.round(Math.max(...sel.map(f => f.size)) * RANK_MUL[rk] / RANK_MUL[rk - 1]);
           const nf = { uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id: sel[0].id, size, g: GROW_NEED, day: '', n: 0, at: Date.now(), rk };
           spec.saveTank(t.filter(f => !sel.includes(f)).concat([nf])); spec.markGrown(nf.id, rk);
-          await gacha(sel.map(() => '🐟'), { rar: rk + 1, icon: '🐟', name: fname(nf), en: (FISHBY[nf.id] || {}).en || '', line: `${size}cm の強い魚になった! 水槽で泳いでるよ` });
+          await gacha(sel.map(x => fishImg(x.id, 70)), { rar: rk + 1, icon: fishImg(nf.id, 200), name: fname(nf), en: (FISHBY[nf.id] || {}).en || '', line: `${size}cm の強い魚になった! 水槽で泳いでるよ` });
         }
         draw();
       }
