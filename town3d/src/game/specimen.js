@@ -82,6 +82,7 @@ export const spec = {
   perfCount(id) { const s = SET[id]; if (!s) return 0; const p = this.perf(id); return s.words.reduce((a, _, i) => a + (p[i] ? 1 : 0), 0); },
   // 混ぜて使った標本(持ち物からは消えるが、アルバムには残る)
   use(id) { const o = this.own(); if (o[id]) { o[id].used = 1; st.set('own', o); } },
+  drop(id) { const o = this.own(); if (o[id]) { delete o[id]; st.set('own', o); } st.set('perf:' + id, []); },   // 運営テスト用:標本をなかったことにする
   isUsed(id) { const o = this.own()[id]; return !!(o && o.used); },
   recipes: () => st.get('recipes') || [],         // 見つけたレシピ 'lv:rar'
   addRecipe(k) { const r = this.recipes(); if (!r.includes(k)) { r.push(k); st.set('recipes', r); } },
