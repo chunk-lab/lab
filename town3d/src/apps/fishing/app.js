@@ -230,7 +230,7 @@ export const fishingApp = {
 
       let E = null, startT = 0, ended = false, oppScore = { count: 0, big: 0, point: 0 }, oppSeen = 0, oppE = null, bot = null;
       const onEv = (type, d) => handleEv(type, d);
-      const mk = () => createEngine({ seed: vs ? vs.seed : (Math.random() * 1e9) | 0, cond, gear: eq, onEvent: onEv, record: !!vs, easy, netGate: !!en });
+      const mk = () => createEngine({ seed: vs ? vs.seed : (Math.random() * 1e9) | 0, cond, gear: eq, onEvent: onEv, record: !!vs, easy, sortReel: !!en });
       E = mk(); if (P.debug) { window.__fzE = E; window.__fzOpp = () => oppE; }
       if (vs && vs.bot) { oppE = createEngine({ seed: vs.seed, cond, gear: vs.bot === 'hard' ? { rod: 'carbon', reel: 'smooth', line: 'fluoro', bait: pickBotBait(cond), hook: 'm', tana: 0.85 } : { rod: 'bamboo', reel: 'basic', line: 'nylon', bait: 'worm', hook: 'm', tana: 0.5 }, onEvent: (t, d) => { oppE.onBot && oppE.onBot(t, d); oppEvent(t, d); }, easy }); bot = createBot(oppE, vs.bot, vs.seed + 5); }
 
@@ -251,7 +251,7 @@ export const fishingApp = {
       }
       const tackleChip = () => { const b = gearById('bait', eq.bait); $('[data-b="tackle"]').textContent = `${b.icon} ${b.name}・${gearById('hook', eq.hook).name}`; const tc = $('[data-b="tana"]'); tc.style.display = b.type === 'lure' ? 'none' : ''; tc.textContent = TANA[tanaOf(E.S.tana)].name; };
       tackleChip();
-      const G = en ? EN.playGates(en, ui) : null; let thrashN = 0, waitQ = 3;
+      const G = en ? EN.playGates(en, ui) : null; let thrashN = 0, waitQ = 1;
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
         if (b === 'skip') {   // 勝負をとちゅうで切りあげる:2回おすと、あいての残り時間を一気に進めて結果を出す
@@ -389,18 +389,25 @@ export const fishingApp = {
         if (type === 'catch') onCatch(d);
       }
       // 英語の釣り堀:答えるまで釣りは止まる(frame で E.update しない)
+      let reelUi = null, lastTh = -99; const closeReel = () => { if (reelUi) { try { reelUi.destroy(); } catch (e) { } reelUi = null; } };
       function enGate(type, d) {
         const stopIn = () => { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); };
         if (type === 'land') { stopIn(); G.cast().then(ok => { if (ok) { E.bonusHere(); toast('✨ ナイス! 魚がよってくる', 1100); } }); }
         else if (type === 'bite') { stopIn(); G.bite().then(r => { if (r.ok) { if (!E.forceHook()) toast('おそかった…', 900); } else { E.forceMiss(); toast('逃げられた…', 1000); } }); }
-        else if (type === 'hooked') thrashN = 0;
+        else if (type === 'hooked') {
+          thrashN = 0; lastTh = -99; const h = E.S.hooked;
+          if (h && h.sp.kind === 'fish' && E.sortStart()) {   // 巻き取りは、ぜんぶ文の並べ替えでする
+            try { stopIn(); closeReel(); reelUi = G.reel(h.sp, h.size || 0, { onPlace: (ok, got, total) => E.sortPlace(ok, got, total), onEnd: () => E.sortEnd() }); } catch (err) { closeReel(); h.sr = false; }
+          }
+        }
+        else if (type === 'lost' || type === 'catch') closeReel();
         else if (type === 'run' && E.S.hooked && E.S.hooked.sp.kind === 'fish') {
           const h = E.S.hooked, lim = h.size >= 60 || h.sp.r >= 3 ? 2 : 1;
-          if (thrashN < lim && (thrashN === 0 || h.S < 0.55)) { thrashN++; stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった! 巻け!', 1000); } else E.escape('thrash'); }); }
+          if (thrashN < lim + 1 && E.S.t - lastTh > 4 && !h.sortEnded) { thrashN++; lastTh = E.S.t; stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった! 巻け!', 1000); } else E.escape('thrash'); }); }
         }
         else if (type === 'net') {
           if (!E.S.hooked || E.S.hooked.sp.kind !== 'fish') { E.netResult(true); return; }
-          stopIn(); const h = E.S.hooked; G.reel(h.sp, h.size || 0).then(ok => E.netResult(ok));
+          stopIn(); const h = E.S.hooked; try { G.reel(h.sp, h.size || 0).then(ok => E.netResult(ok), () => E.netResult(true)); } catch (err) { E.netResult(true); }   // 何かあっても釣れなくならない
         }
       }
       function oppEvent(type, d) {
@@ -528,7 +535,7 @@ export const fishingApp = {
         const reeling = (bt && bt.mode === 'reel') || keyReel;
         E.input.reel = reeling && (E.S.ph === 'water' || E.S.ph === 'fight') ? thr || 0.55 : 0;
         E.input.side += (sideT - E.input.side) * Math.min(1, dt * 6);
-        if (G && !EN.busy && E.S.ph === 'water' && !E.S.engaged && !E.S.bite && !E.input.reel) { waitQ -= dt; if (waitQ <= 0 && E.S.waitT > 1.2) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = 1.6; if (r.ok) { E.bonusHere(2.2); toast('✨ 魚がよってきた!', 900); } }); } } else if (!(G && EN.busy)) waitQ = Math.min(waitQ, 3);
+        if (G && !EN.busy && E.S.ph === 'water' && !E.S.engaged && !E.S.bite) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = 0.5; if (r.ok) { E.bonusHere(2.2); toast('✨ 魚がよってきた!', 900); } }); } } else if (!(G && EN.busy)) waitQ = Math.min(waitQ, 1.2);
         if (G && EN.busy) { } else if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
         if (leap) { leap.t += dt / leap.dur; if (leap.t >= 1) { const fn = leap.then; leap = null; fn && fn(); } }
         if (vs && E.S.ph === 'landed' && E.S.resultT > 0.9) E.ack();
@@ -558,7 +565,7 @@ export const fishingApp = {
         const ph = E.S.ph, lure = E.G.bait.type === 'lure', h = E.S.hooked;
         { const bh = ph === 'ready' ? '投げる<small>長おし/動かして狙う</small>' : ph === 'charge' ? 'はなす!<small>いまの力で</small>' : ph === 'fight' ? '巻く<small>上にずらすと強く</small>' : ph === 'water' ? '巻く<small>上で速く</small>' : ph === 'fly' ? '…' : vs ? '…' : 'つぎへ'; if (bigB.__h !== bh) { bigB.__h = bh; bigB.innerHTML = bh; } }
         hkB.textContent = ph === 'water' ? (E.S.bite ? 'あわせ!' : lure ? 'しゃくる' : 'あわせ') : !vs && (ph === 'landed' || ph === 'lost') ? 'つぎへ' : 'あわせ';
-        hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water';
+        hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water'; bigB.style.visibility = reelUi ? 'hidden' : '';
         hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
         const showThr = reeling && (ph === 'water' || ph === 'fight');
         thrEl.hidden = !showThr; if (showThr) thrEl.firstChild.style.height = Math.round(E.input.reel * 100) + '%';

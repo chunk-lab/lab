@@ -15,7 +15,7 @@ export default {
   ],
   start(host) {
     const S = surface(host.box), g = S.g, two = host.two, cpu = host.players[1].cpu, sfx = host.sfx, lv = cpu ? cpu.lv : 2, H2 = halves(S, two);
-    const O = host.opts, TO = O.trial ? 2 : O.to || 5, LVL = O.lv || 1, ALL = O.board === 'all', HINT = O.hint || 'btn', SAY = O.say !== 0, TOP = 64;
+    const O = host.opts, TO = O.trial ? 2 : O.to || 5, LVL = O.lv || 1, ALL = O.board === 'all', HINT = O.hint || 'btn', SAY = O.say !== 0, INL = !!O.inline, TOP = INL ? 0 : 64;   // inline:釣りの巻き取りなど、ほかの画面に埋めこむとき(上のスコア欄・カウントダウンなし)
     const SLOTS_ALL = ORDER.slice();
     const pool = chunkSentences().filter(s => LVL === 1 ? s.n <= 3 : LVL === 2 ? s.n === 4 : s.n >= 5);
     let queue = [];
@@ -26,7 +26,7 @@ export default {
     const isPlaced = (me, i) => Object.values(me.placed).includes(i);
 
     function newRound(first) {
-      sent = nextSent(); phase = 'count'; phT = 0; count = first ? 2.2 : 0.7; win = -1; readDone = false; reveal = null;
+      sent = nextSent(); phase = INL ? 'play' : 'count'; phT = 0; count = first ? 2.2 : 0.7; win = -1; readDone = false; reveal = null;
       P.forEach(me => { me.placed = {}; me.sel = -1; me.drag = null; me.lock = 0; me.flash = {}; me.hint = HINT === 'full' ? 3 : 0; });
       cpuT = !two && cpu ? 2 + sent.n * [0, 3.6, 2.8, 2.1][lv] * (0.8 + Math.random() * 0.4) : 99;
     }
@@ -37,8 +37,8 @@ export default {
       const c = sent.chunks[ci];
       const ok = me.placed[slot] == null && (c.role === slot || (ALL && c.role === 'T' && slot === 'F' && !sent.roles.includes('F')));
       me.sel = -1;
-      if (ok) { me.placed[slot] = ci; me.flash[slot] = { t: 0.5, ok: true }; sfx.play('tap'); if (Object.keys(me.placed).length === sent.n) finish(me.s, me.placed); }
-      else { me.lock = 0.9; me.flash[slot] = { t: 0.7, ok: false }; sfx.play('ng'); }
+      if (ok) { me.placed[slot] = ci; me.flash[slot] = { t: 0.5, ok: true }; sfx.play('tap'); if (host.onPlace) host.onPlace(true, Object.keys(me.placed).length, sent.n); if (Object.keys(me.placed).length === sent.n) finish(me.s, me.placed); }
+      else { me.lock = 0.9; me.flash[slot] = { t: 0.7, ok: false }; sfx.play('ng'); if (host.onPlace) host.onPlace(false, Object.keys(me.placed).length, sent.n); }
     }
     function finish(s, placed) {
       phase = 'reveal'; phT = 0; win = s; score[s]++; sfx.play('point'); readDone = false;
@@ -171,8 +171,8 @@ export default {
     }
     function draw() {
       S.begin(); const W = S.W, H = S.H;
-      g.fillStyle = '#fff8ef'; g.fillRect(0, 0, W, H);
-      if (!two) {
+      if (INL) g.clearRect(0, 0, W, H); else { g.fillStyle = '#fff8ef'; g.fillRect(0, 0, W, H); }
+      if (!two && !INL) {
         g.fillStyle = '#fff'; rr(g, 8, 8, W - 16, TOP - 14, 12); g.fill();
         const me = P[0], got = Object.keys(me.placed).length, cp = phase === 'play' ? clamp(phT / cpuT, 0, 1) : phase === 'reveal' && win === 1 ? 1 : 0;
         txt(g, `あなた ${score[0]} / ${TO}`, 18, 22, { size: 12, align: 'left', color: COL.p1d }); txt(g, `${host.players[1].icon || ''} ${host.players[1].name} ${score[1]} / ${TO}`, W - 18, 22, { size: 12, align: 'right', color: COL.p2d });
@@ -180,13 +180,14 @@ export default {
         g.fillStyle = COL.p1; rr(g, 18, 34, Math.max(0, (W / 2 - 28) * (sent ? got / sent.n : 0)), 8, 4); g.fill();
         g.fillStyle = COL.p2; rr(g, W / 2 + 10, 34, Math.max(0, (W / 2 - 28) * cp), 8, 4); g.fill();
         g.save(); g.translate(0, TOP); drawArea(P[0], W, H - TOP); g.restore();
+      } else if (INL) { drawArea(P[0], W, H);
       } else {
         g.fillStyle = '#eef6ff'; g.fillRect(0, 0, W, H / 2);
         [0, 1].forEach(s => H2.half(s, () => drawArea(P[s], W, H / 2)));
         g.fillStyle = INK; g.fillRect(0, H / 2 - 1, W, 2);
       }
-      if (phase === 'count') banner(g, S, two, count > 1 ? String(Math.ceil(count - 0.2)) : 'READY', { size: 48 });
-      if (phase === 'reveal' && phT < 1.2 && win >= 0) banner(g, S, two, `${host.players[win].name} +1`, { size: 22, color: win ? COL.p2 : COL.p1 });
+      if (phase === 'count' && !INL) banner(g, S, two, count > 1 ? String(Math.ceil(count - 0.2)) : 'READY', { size: 48 });
+      if (phase === 'reveal' && phT < 1.2 && win >= 0 && !INL) banner(g, S, two, `${host.players[win].name} +1`, { size: 22, color: win ? COL.p2 : COL.p1 });
     }
     return { _dbg: () => ({ P, sent, phase, win, reveal, score }), stop() { stop(); pt.off(); S.cv.remove(); over = true; ended = true; try { speechSynthesis.cancel(); } catch (e) { } } };
   },

@@ -185,7 +185,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     ev('hooked', { id: f.sp.id, auto: !!auto, item: !!f.item });
   }
   function fight(dt) {
-    const h = S.hooked, sp = h.sp, thr = clamp(input.reel, 0, 1);
+    const h = S.hooked, sp = h.sp, sr = !!h.sr, thr = sr ? 0.3 : clamp(input.reel, 0, 1);   // sr:英語の巻き取り(チャンク並べ替えで巻く。糸が切れたり、ゆるんで逃げたりはしない)
     const F = sp.str * (0.75 + 0.5 * h.u);
     let pull = h.heavy ? F * 0.55 : F * (h.mode === 'run' ? 1 : 0.35) * (0.35 + 0.65 * h.S);
     pull /= Math.sqrt(G.rod.power);
@@ -196,9 +196,9 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     // 糸の長さ
     let dL = 0;
     if (!h.heavy && h.mode === 'run') dL += 0.1 * Math.sqrt(F) * (0.4 + 0.6 * h.S);
-    dL -= thr * G.reel.speed * 0.1 * (1 - Math.min(0.85, pull / (G.line.str * 1.6))) * (h.heavy ? 0.55 : 1);
+    if (!sr) dL -= thr * G.reel.speed * 0.1 * (1 - Math.min(0.85, pull / (G.line.str * 1.6))) * (h.heavy ? 0.55 : 1);
     dL += slip * 0.6;
-    h.L = Math.max(0, h.L + dL * dt);
+    if (sr) { dL *= 0.5; h.L = Math.min(h.sortL0 || 1, Math.max(0.035, h.L + dL * dt)); if (h.tgt != null && h.L > h.tgt) h.L = Math.max(h.tgt, h.L - 0.4 * dt); } else h.L = Math.max(0, h.L + dL * dt);
     // 左右
     if (!h.heavy) {
       if (h.mode === 'run') h.phi += h.dir * 0.42 * dt * (0.5 + h.S);
@@ -222,14 +222,15 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     // 最後のあがき:まだ元気な大物は、足もとでもう一度走る
     if (!h.heavy && h.L < 0.12 && h.S > 0.3 && F > 0.85 && h.mode !== 'run') { h.mode = 'run'; h.modeT = 1.2 + rb(); h.dir = rb() < 0.5 ? -1 : 1; h.jolt = 0.3; ev('run', { dir: h.dir, last: 1 }); }
     // 大物に小さな針:強く引きすぎると外れる(テンションを低めに保てば大丈夫)
-    if (h.small && h.T > 0.8 && rb() < (h.T - 0.8) * 1.6 * h.small * dt * (easy ? 0.3 : 1)) return lose('hook');
+    if (!sr && h.small && h.T > 0.8 && rb() < (h.T - 0.8) * 1.6 * h.small * dt * (easy ? 0.3 : 1)) return lose('hook');
     h.y = clamp(h.y + ((h.jump > 0 ? 0 : h.mode === 'run' ? 0.8 : h.S < 0.3 ? 0.15 : 0.45) - h.y) * Math.min(1, dt * 1.5), 0, 1);
-    if (h.jump > 0) { h.jump -= dt; if (h.T > (easy ? 0.95 : 0.72) && rb() < (easy ? 0.8 : 2.2) * dt) return lose('jump'); }
+    if (h.jump > 0) { h.jump -= dt; if (!sr && h.T > (easy ? 0.95 : 0.72) && rb() < (easy ? 0.8 : 2.2) * dt) return lose('jump'); }
     // 切れる・はずれる
     if (h.T > 1) h.bm += ((h.T - 1) * 5 + 0.7) * dt * (easy ? 0.33 : 1); else h.bm = Math.max(0, h.bm - (easy ? 0.6 : 0.35) * dt);
-    if (h.bm >= 1 || h.L > 1.3) return lose('snap');
+    if (!sr && (h.bm >= 1 || h.L > 1.3)) return lose('snap');
     if (h.T < 0.1 && thr < 0.05 && !h.heavy) h.sl += dt; else h.sl = Math.max(0, h.sl - dt * 2);
-    if (h.sl > (easy ? 3.5 : 1.8)) return lose('slack');
+    if (!sr && h.sl > (easy ? 3.5 : 1.8)) return lose('slack');
+    if (sr) { if (h.sortEnded && h.L <= 0.0351) return land(); S.lure.x = Math.sin(h.phi) * h.L / 0.95; S.lure.d = Math.cos(h.phi) * h.L; return; }
     if (h.L < 0.035) { if (netGate && !h.netOk) { if (!S.netWait) { S.netWait = true; h.L = 0.035; ev('net', { id: sp.id }); } return; } return land(); }
     S.lure.x = Math.sin(h.phi) * h.L / 0.95; S.lure.d = Math.cos(h.phi) * h.L;
   }
@@ -302,6 +303,9 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     forceMiss() { if (S.ph === 'water' && S.engaged) { ev('miss'); leave(S.engaged, 'miss'); } },   // まちがい=逃げる
     weaken(k = 0.55) { const h = S.hooked; if (S.ph !== 'fight' || !h) return; h.S = Math.max(0.05, h.S * k); h.mode = 'rest'; h.modeT = 1.2; h.jump = 0; h.jolt = 0; h.T = Math.min(h.T, 0.5); h.bm = 0; },   // 正解=おとなしくなる
     escape(reason = 'thrash') { if (S.ph === 'fight' && S.hooked) lose(reason); },
+    sortStart() { const h = S.hooked; if (S.ph !== 'fight' || !h) return false; h.sr = true; h.sortL0 = Math.max(0.2, h.L); h.tgt = h.sortL0; h.sortEnded = false; return true; },
+    sortPlace(ok, got, total) { const h = S.hooked; if (!h || !h.sr) return; if (ok) h.tgt = h.sortL0 - (h.sortL0 - 0.035) * got / total; else h.L = Math.min(h.sortL0, h.L + 0.05); },
+    sortEnd() { const h = S.hooked; if (h && h.sr) { h.tgt = 0.035; h.sortEnded = true; } },
     netResult(ok) { if (S.ph !== 'fight' || !S.hooked || !S.netWait) return; S.netWait = false; S.hooked.netOk = true; if (ok) land(); else lose('net'); },
     bonusHere(k = 1.9) { if (S.lure) S.bonus = { x: S.lure.x, d: S.lure.d, k, t: 16 }; },
     update(dt) {
