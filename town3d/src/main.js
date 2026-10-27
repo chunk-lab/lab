@@ -227,7 +227,7 @@ export function mount(container, opt = {}) {
       if (near.length >= 2) {   // 団子のときは、だれと話すか選べる
         hud.dialog({ name: 'ちかくの人', text: 'だれと話す?', choices: near.map(r => ({ label: r.def.name, fn: () => talkTo(r) })) });
       } else talkTo(focus.ref);
-    } else if (focus.app) openApp(focus.app, { from: focus.id });
+    } else if (focus.app) openApp(focus.app, focus.id === 'pond' && seasons.season !== 'summer' ? { from: focus.id, tab: 'en' } : { from: focus.id });
     else if (focus.msg) hud.dialog({ name: focus.name, text: focus.msg });
   }
   function nearNpcs() {
@@ -237,7 +237,7 @@ export function mount(container, opt = {}) {
     input.clear(); r.talking = true; talkingTo = r;
     audio.play('talk');
     let text = residents.lineFor(r, env.hour);
-    if (r.def.angler && seasons.season !== 'summer') text = '釣りは夏だけのお楽しみでねえ。夏になったら、また池においで。';
+    if (r.def.angler && seasons.season !== 'summer') text = 'のんびり釣りは夏だけのお楽しみでねえ。英語の釣り堀なら、いつでも池においで。';
     if (r.def.companion && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
     const choices = (r.def.menu || []).filter(m => !m.season || m.season === seasons.season).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => (m.act ? doAct(r, m) : openApp(m.app, m.params)) }));
     if (r.def.id === 'sora' && r.follow) choices.unshift({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); } });

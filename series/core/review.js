@@ -94,15 +94,23 @@ export function createReview(core) {
             const c = box.querySelector('#rv-c'), back = c.querySelector('.b'); let x0 = null, dx = 0, moved = false, flipped = false, done = false;
             core.speech.speak(w.en);
             const answer = known => { if (done) return; done = true; res.push({ en: w.en, known, item: w }); c.style.transition = 'transform .12s,opacity .12s'; c.style.transform = `translateX(${known ? 140 : -140}%) rotate(${known ? 14 : -14}deg)`; c.style.opacity = 0; setTimeout(() => { idx++; card(); }, 110); };
-            // ちょっと動かしただけで、すぐ反応する(ドラッグしきらなくてよい)
-            const FLICK = 22;
-            c.onpointerdown = e => { x0 = e.clientX; dx = 0; moved = false; c.setPointerCapture && c.setPointerCapture(e.pointerId); c.style.transition = 'none'; };
-            c.onpointermove = e => { if (x0 == null || done) return; dx = e.clientX - x0; if (Math.abs(dx) > 6) moved = true; c.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`; c.classList.toggle('r', dx > 10); c.classList.toggle('l', dx < -10); if (dx > FLICK) answer(true); else if (dx < -FLICK) answer(false); };
+            // ちょっと動かした・さっとはじいただけで、すぐ反応する(半分までドラッグしなくてよい)。途中でブラウザに取られても止まらない
+            const FLICK = 14, FAST = 0.45;   // 14px動かす or はやさ(px/ms)
+            let t0 = 0;
+            const reset = () => { x0 = null; if (done) return; c.style.transition = 'transform .15s'; c.style.transform = ''; c.classList.remove('r', 'l'); };
+            c.onpointerdown = e => { x0 = e.clientX; dx = 0; moved = false; t0 = e.timeStamp; try { c.setPointerCapture(e.pointerId); } catch (_) { } c.style.transition = 'none'; };
+            c.onpointermove = e => {
+              if (x0 == null || done) return; dx = e.clientX - x0; if (Math.abs(dx) > 6) moved = true;
+              c.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`; c.classList.toggle('r', dx > 8); c.classList.toggle('l', dx < -8);
+              const v = Math.abs(dx) / Math.max(16, e.timeStamp - t0);
+              if (dx > FLICK || (dx > 8 && v > FAST)) answer(true); else if (dx < -FLICK || (dx < -8 && v > FAST)) answer(false);
+            };
             c.onpointerup = () => {
               if (x0 == null || done) { x0 = null; return; } x0 = null;
               c.style.transition = 'transform .15s'; c.style.transform = ''; c.classList.remove('r', 'l');
               if (!moved) { flipped = !flipped; back.hidden = !flipped; c.classList.toggle('flip', flipped); if (flipped) core.speech.speak(w.en); }
             };
+            c.onpointercancel = reset; c.onlostpointercapture = () => { if (x0 != null) reset(); };
             box.querySelector('#rv-x').onclick = () => answer(false); box.querySelector('#rv-o').onclick = () => answer(true);
             const bb = box.querySelector('#rv-b'); if (bb) bb.onclick = () => { res.pop(); idx--; card(); };   // まちがえたら もどれる
           });
@@ -113,9 +121,16 @@ export function createReview(core) {
       function stepCheck(res) {
         go(`<h3>さいごに かくにん</h3><p class="cs-note">チェックが入っている言葉は「覚えてる」。まちがいは、ここで直せます。</p>
           <div class="rv-two"><button class="cs-btn" id="rv-all">ぜんぶ 覚えてる</button><button class="cs-btn" id="rv-none">ぜんぶ まだ</button></div>
-          <ul class="rv-list rv-chk">${res.map((r, i) => `<li><label><input type="checkbox" data-i="${i}" ${r.known ? 'checked' : ''}><b>${esc(r.en)}</b><small>${esc(r.item.ja || '')}</small></label></li>`).join('')}</ul>
+          <ul class="rv-list rv-chk">${res.map((r, i) => `<li><label><input type="checkbox" data-i="${i}" ${r.known ? 'checked' : ''}><span class="t"><b>${esc(r.en)}</b><small>${esc(r.item.ja || '')}</small></span></label></li>`).join('')}</ul>
           <div class="rv-two"><button class="cs-btn" id="rv-bk">↩ カードにもどる</button><button class="cs-btn rv-ok" id="rv-d">これで決定</button></div>`, () => {
           const cbs = [...box.querySelectorAll('input[type=checkbox]')];
+          // なぞるだけで、まとめて入れる・外せる(チェックの所から指をすべらせる)
+          let paint = null, swallow = false; const lst = box.querySelector('.rv-chk');
+          const under = e => { const el = document.elementFromPoint(e.clientX, e.clientY), cb = el && el.closest && el.closest('li') && el.closest('li').querySelector('input'); return cb || null; };
+          lst.onpointerdown = e => { if (e.target.type !== 'checkbox') return; e.preventDefault(); swallow = true; paint = !e.target.checked; e.target.checked = paint; try { lst.setPointerCapture(e.pointerId); } catch (_) { } };
+          lst.onpointermove = e => { if (paint == null) return; const cb = under(e); if (cb) cb.checked = paint; };
+          lst.onpointerup = lst.onpointercancel = () => { paint = null; };
+          lst.onclick = e => { if (swallow && e.target.type === 'checkbox') e.preventDefault(); swallow = false; };   // なぞり側で入れ替え済み
           box.querySelector('#rv-all').onclick = () => cbs.forEach(c => { c.checked = true; });
           box.querySelector('#rv-none').onclick = () => cbs.forEach(c => { c.checked = false; });
           box.querySelector('#rv-bk').onclick = () => { res.pop(); stepCardsFrom(res); };

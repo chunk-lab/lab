@@ -114,10 +114,10 @@
 .rv-list em{font-style:normal;font-size:11px;font-weight:800;color:#fff;background:#e08a3c;border-radius:8px;padding:1px 6px}
 .rv-list u{text-decoration:none;font-size:11px;font-weight:800;color:#d24;border:1px solid #d24;border-radius:8px;padding:0 5px}
 .rv-two{display:flex;gap:8px}.rv-two .cs-btn{flex:1}
-.rv-card{touch-action:pan-y;user-select:none;min-height:150px;border:3px solid var(--cs-wood);border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;cursor:grab}
+.rv-card{touch-action:none;user-select:none;min-height:150px;border:3px solid var(--cs-wood);border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;cursor:grab}
 .rv-card.r{border-color:#2ca66a;background:#eafaf1}.rv-card.l{border-color:#d24;background:#fdeeee}
 .rv-card .f{display:flex;flex-direction:column;gap:6px;align-items:center}.rv-card b{font-size:26px}.rv-card small{font-size:12px;color:#7a6656}
 .rv-card .b{font-size:18px;font-weight:800;color:#c0561b}.rv-card .b em{display:block;font-style:normal;font-size:12px;color:#e08a3c;margin-top:4px}
 .rv-pt{font-size:22px;font-weight:900;text-align:center;color:#c0561b;margin:0}
 .rv-ch{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rv-ch .cs-btn{min-height:52px}
-.rv-chk li label{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;width:100%}.rv-chk input{width:22px;height:22px;align-self:center}
+.rv-chk{max-height:56vh}.rv-chk li{padding:0}.rv-chk li label{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:6px 12px;box-sizing:border-box;cursor:pointer}.rv-chk .t{display:flex;flex-direction:column;gap:2px;min-width:0}.rv-chk input{width:30px;height:30px;flex:none;touch-action:none;accent-color:#2ca66a}.rv-chk li:has(input:checked){background:#eafaf1;border-color:#2ca66a}

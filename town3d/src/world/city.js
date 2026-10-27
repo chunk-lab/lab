@@ -441,7 +441,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
   function pond(x, z, rr) {
     colliders.push({ cx: x, cz: z, r: rr + 0.2 });
-    interact.push({ kind: 'pond', id: 'pond', app: 'fishing', season: 'summer', x: x + 3.2, z: z + 3.3, r: 2.2, label: '🎣 釣りをする' });   // 釣りは夏だけ
+    interact.push({ kind: 'pond', id: 'pond', app: 'fishing', x: x + 3.2, z: z + 3.3, r: 2.2, label: '🎣 釣りをする' });   // 池はいつでも(夏以外は、英語の釣り堀が直接ひらく)
     B.add(cyl(rr + 0.4, rr + 0.5, 0.25, 28), mat(C.stone), x, 0.08, z);
     const w = new THREE.Mesh(new THREE.CircleGeometry(rr, 28), new THREE.MeshStandardMaterial({ color: C.water, roughness: 0.1 }));
     w.rotation.x = -Math.PI / 2; w.position.set(x, 0.22, z); scene.add(w);
