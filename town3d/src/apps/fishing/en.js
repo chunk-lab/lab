@@ -5,7 +5,7 @@
 //   セットの単語がぜんぶ完璧 → そのセットの標本(1回だけ)。抜き打ちテストで悪いと、標本にひびが入る(もう一度ぜんぶ完璧で直る)
 import { SW } from '../gamebox/stream_words.js';
 import { IDIOMS } from './idioms.js';
-import { SETS, SET, LV_NAME, LV_SUB, TANK_MAX, GROW_NEED, FEED_PER_DAY, FISH_SPEC, spec, condOf, MIX_N, RAR, RAR_W, RAR_PT, DECOR, DECOR_ICON, TANK_RANKS, decorOf } from '../../game/specimen.js';
+import { SETS, SET, LV_NAME, LV_SUB, TANK_MAX, GROW_NEED, FEED_PER_DAY, FISH_SPEC, spec, condOf, MIX_N, RAR, RAR_PT, DECOR, DECOR_ICON, TANK_RANKS, decorOf, RECIPES, recipeFor, shapeName, FISH_MAX_RANK, RANK_PRE, RANK_MUL } from '../../game/specimen.js';
 import { furn } from '../../game/furniture.js';
 import { localLearn } from './learnrec.js';
 import { sortReel } from './sortreel.js';
@@ -40,6 +40,7 @@ const MIXCSS = `
 .mixfx .cd b{display:block;font-size:20px;margin-top:6px}.mixfx .cd small{display:block;font-style:italic;color:#d8cdf0}
 .mixfx .pt{position:absolute;left:50%;top:44%;font-size:22px;animation:mxPt 1.4s ease-out forwards;pointer-events:none}@keyframes mxPt{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.3);opacity:0}}
 .mixfx button{margin-top:18px}
+.rcp{margin:6px 0 10px;font-size:12px;line-height:1.9}.rcp .rr{margin:0 4px 0 0}
 `;
 const CSS = `
 .fz .enq.lk .qc{opacity:.45}.fz .enq{position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:rgba(10,20,40,.35);padding:12px;box-sizing:border-box}
@@ -271,10 +272,10 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       let body;
       if (tab === 'f') {
         const gr = spec.grown();
-        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? '🐟' : '❔'}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
+        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? '🐟' : '❔'}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
       } else if (tab === 'd') {
         const dl = spec.decor();
-        body = `<p class="nt">標本を${MIX_N}つ混ぜると、水槽の飾りになる。できた飾りは、ぜんぶここに記録される。</p><div class="grid">${[1, 2, 3].flatMap(lv => DECOR[lv].map((_, r) => { const n = dl.filter(d => d.lv === lv && d.rar === r).length, k = decorOf({ lv, rar: r }); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? k.icon : '❔'}</span><b>${n ? esc(k.name) : '？？？'}<span class="rr rr${r}">${RAR[r]}</span></b><small>${n ? esc(k.en) + (n > 1 ? ' ×' + n : '') : LV_NAME[lv]}</small></div>`; })).join('')}</div>`;
+        body = `<p class="nt">標本の形の組み合わせ(レシピ)で、水槽の飾りができる。できた飾りは、ぜんぶここに記録される。「混ぜる」でレシピのヒントが見られるよ。</p><div class="grid">${[1, 2, 3].flatMap(lv => DECOR[lv].map((_, r) => { const n = dl.filter(d => d.lv === lv && d.rar === r).length, k = decorOf({ lv, rar: r }); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? k.icon : '❔'}</span><b>${n ? esc(k.name) : '？？？'}<span class="rr rr${r}">${RAR[r]}</span></b><small>${n ? esc(k.en) + (n > 1 ? ' ×' + n : '') : LV_NAME[lv]}</small></div>`; })).join('')}</div>`;
       } else {
         const sets = SETS.filter(s => s.lv === tab);
         body = `<p class="nt">入手条件:そのセットの単語をぜんぶ完璧にする。💥=ひび(抜き打ちテストで まちがえすぎた)。🔀=混ぜて飾りになった(アルバムには残る)。</p><div class="grid">${sets.map(s => { const o = own[s.id], n = spec.perfCount(s.id); return `<button class="cell ${o ? (o.crack ? 'crk' : 'got') : ''} ${o && o.used ? 'used' : ''}" data-s="${s.id}">${o && o.used ? '<span class="ub">🔀混ぜた</span>' : ''}${o ? `<i class="dot" style="background:${hexCol(s.look.col)}"></i>` : ''}<span class="ic">${o ? (o.crack ? '💥' : ICON[s.look.shape]) : '❔'}</span><b>${o ? esc(s.look.name) : 'セット' + s.no}</b><small>${o ? esc(s.look.en) : esc(s.words[0][0]) + '…'}</small>${o ? '' : `<div class="pg"><i style="width:${n / s.words.length * 100}%"></i></div>`}</button>`; }).join('')}</div>`;
@@ -293,48 +294,74 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     };
   }
 
-  // ---- 画面:混ぜる(ガチャ) ----
-  //   同じレベルの標本を MIX_N つ → 水槽の飾り。レア度はくじ(RAR_W)。使った標本は持ち物から消えて、アルバムには残る
+  // ---- 画面:混ぜる ----
+  //   飾り:同じレベルの標本を MIX_N つ。形の組み合わせ(レシピ)が合うと決まった飾りができる(運なし)。使った標本は消えて、アルバムには残る
+  //   魚:水槽で育てきった同じ種類・同じ段階の魚を MIX_N 匹 → 1つ強い魚(大きく・称号つき)
   function mixScreen({ onBack }) {
     const sc = document.createElement('div'); sc.className = 'ens'; root.appendChild(sc);
-    let lv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
+    let mode = ctx.storage.get('mixMode') || 'd', lv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
     const avail = l => Object.entries(spec.own()).filter(([id, o]) => SET[id] && SET[id].lv === l && !o.crack && !o.used).map(([id]) => SET[id]);
+    const fishAvail = () => spec.tank().filter(f => f.g >= GROW_NEED && (f.rk || 0) < FISH_MAX_RANK);
+    const fname = f => { const sp = FISHBY[f.id]; return RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id); };
     const draw = () => {
-      const list = avail(lv), ready = pick3.length === MIX_N;
-      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button></div><h2>🎰 混ぜる</h2>
-        <p class="nt">同じレベルの標本を${MIX_N}つ混ぜると、水槽の飾りに変わる。元の標本は消えるけど、アルバムには残るよ。<br>出やすさ: ${RAR.map((r, i) => `<span class="rr rr${i}">${r}</span> ${RAR_W[i]}%`).join(' ')}</p>
-        <div class="tabs">${[1, 2, 3].map(l => `<button data-lv="${l}" class="${l === lv ? 'on' : ''}">${LV_NAME[l]}<br><small style="font-weight:700;font-size:10px">${avail(l).length}こ</small></button>`).join('')}</div>
-        ${list.length ? `<div class="grid">${list.map(s => `<button class="cell got ${pick3.includes(s.id) ? 'sel' : ''}" data-p="${s.id}"><span class="ic">${ICON[s.look.shape]}</span><b>${esc(s.look.name)}</b><small>${esc(s.look.en)}</small></button>`).join('')}</div>`
-          : `<p class="nt">このレベルの標本がまだないよ。英語の釣り堀で、セットの単語を ぜんぶ完璧にしよう。</p>`}
-        <div style="position:sticky;bottom:0;padding:10px 0;background:linear-gradient(transparent,#fff8ef 30%)"><button class="btn" data-a="go" style="width:100%" ${ready ? '' : 'disabled'}>🎰 混ぜる! (${pick3.length}/${MIX_N})</button></div>`;
+      const ready = pick3.length === MIX_N, tabs = `<div class="tabs">${[['d', '飾りを作る'], ['f', '魚を強くする']].map(([k, n]) => `<button data-mode="${k}" class="${k === mode ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+      let body;
+      if (mode === 'd') {
+        const list = avail(lv), rc = spec.recipes();
+        body = `<p class="nt">同じレベルの標本を${MIX_N}つ選んで混ぜる。<b>形の組み合わせ(レシピ)</b>が合うと、決まった飾りができる。合わないと何も起きず、標本も消えないよ。使った標本は消えるけど、アルバムには残る。</p>
+          <div class="tabs">${[1, 2, 3].map(l => `<button data-lv="${l}" class="${l === lv ? 'on' : ''}">${LV_NAME[l]}<br><small style="font-weight:700;font-size:10px">${avail(l).length}こ</small></button>`).join('')}</div>
+          <div class="rcp">${RECIPES[lv].map((r, i) => { const k = decorOf({ lv, rar: i }), got = rc.includes(lv + ':' + i); return `<div class="rr3x"><span class="rr rr${i}">${RAR[i]}</span> ${got ? `${k.icon} <b>${esc(k.name)}</b> = ${r.map(x => esc(shapeName(lv, x))).join(' + ')}` : `❔ ??? = <b>${esc(shapeName(lv, r[0]))}</b> + ？ + ？`}</div>`; }).join('')}</div>
+          ${list.length ? `<div class="grid">${list.map(s => `<button class="cell got ${pick3.includes(s.id) ? 'sel' : ''}" data-p="${s.id}"><span class="ic">${ICON[s.look.shape]}</span><b>${esc(s.look.name)}</b><small>${esc(shapeName(lv, s.look.shape))}</small></button>`).join('')}</div>` : `<p class="nt">このレベルの標本がまだないよ。英語の釣り堀で、セットの単語を ぜんぶ完璧にしよう。</p>`}`;
+      } else {
+        const list = fishAvail();
+        body = `<p class="nt">水槽で<b>育てきった、同じ種類・同じ強さの魚</b>を${MIX_N}匹選んで混ぜると、1匹の強い魚になる(大きく・称号つき。最大2段階)。元の魚はアルバムに残るよ。</p>
+          ${list.length ? `<div class="grid">${list.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''}" data-p="${f.uid}"><span class="ic">🐟</span><b>${esc(fname(f))}</b><small>${Math.round(f.size * 1.5)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。水槽で魚を育てよう。</p>`}`;
+      }
+      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button></div><h2>🎰 混ぜる</h2>${tabs}${body}
+        <div style="position:sticky;bottom:0;padding:10px 0;background:linear-gradient(transparent,#fff8ef 30%)"><button class="btn" data-a="go" style="width:100%" ${ready ? '' : 'disabled'}>混ぜる! (${pick3.length}/${MIX_N})</button></div>`;
     };
     draw();
     sc.onclick = async e => {
-      const a = e.target.closest('[data-a]')?.dataset.a, l = e.target.closest('[data-lv]'), p = e.target.closest('[data-p]');
+      const a = e.target.closest('[data-a]')?.dataset.a, l = e.target.closest('[data-lv]'), p = e.target.closest('[data-p]'), m = e.target.closest('[data-mode]');
       if (a === 'back') { sfx.play('tap'); sc.remove(); onBack(); }
+      else if (m) { sfx.play('tap'); mode = m.dataset.mode; ctx.storage.set('mixMode', mode); pick3 = []; draw(); }
       else if (l) { sfx.play('tap'); lv = +l.dataset.lv; ctx.storage.set('mixLv', lv); pick3 = []; draw(); }
-      else if (p) { sfx.play('tap'); const id = p.dataset.p, i = pick3.indexOf(id); if (i >= 0) pick3.splice(i, 1); else if (pick3.length < MIX_N) pick3.push(id); draw(); }
+      else if (p) {
+        sfx.play('tap'); const id = p.dataset.p, i = pick3.indexOf(id);
+        if (i >= 0) pick3.splice(i, 1); else if (pick3.length < MIX_N) pick3.push(id);
+        draw();
+      }
       else if (a === 'go' && pick3.length === MIX_N) {
-        const used = pick3.map(id => SET[id]); pick3 = [];
-        let r = Math.random() * 100, rar = 0; for (let i = 0; i < RAR_W.length; i++) { if (r < RAR_W[i]) { rar = i; break; } r -= RAR_W[i]; }
-        used.forEach(s => { spec.use(s.id); furn.take('sp_' + s.id); });
-        const d = { uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), lv, rar, at: Date.now() }; spec.addDecor(d);
-        await gacha(used.map(s => ICON[s.look.shape]), d);
+        if (mode === 'd') {
+          const used = pick3.map(id => SET[id]), rar = recipeFor(lv, used.map(x => x.look.shape));
+          if (rar < 0) { toast('何も起きなかった…別の組み合わせを試そう(標本は消えてないよ)'); sfx.play('early'); return; }
+          pick3 = []; used.forEach(x => { spec.use(x.id); furn.take('sp_' + x.id); });
+          const d = { uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), lv, rar, at: Date.now() }; spec.addDecor(d); spec.addRecipe(lv + ':' + rar);
+          const k = decorOf(d);
+          await gacha(used.map(x => ICON[x.look.shape]), { rar, icon: k.icon, name: k.name, en: k.en, line: (rar >= 2 ? '水槽がぐっと豪華に!' : '水槽に飾られたよ') + ' ・ 水槽ランク: ' + TANK_RANKS[spec.rank()][1] });
+        } else {
+          const t = spec.tank(), sel = pick3.map(id => t.find(f => f.uid === id)).filter(Boolean);
+          if (sel.length !== MIX_N || sel.some(f => f.id !== sel[0].id || (f.rk || 0) !== (sel[0].rk || 0))) { toast('同じ種類・同じ強さの魚を選んでね'); sfx.play('early'); return; }
+          pick3 = []; const rk = (sel[0].rk || 0) + 1, size = Math.round(Math.max(...sel.map(f => f.size)) * RANK_MUL[rk] / RANK_MUL[rk - 1]);
+          const nf = { uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id: sel[0].id, size, g: GROW_NEED, day: '', n: 0, at: Date.now(), rk };
+          spec.saveTank(t.filter(f => !sel.includes(f)).concat([nf])); spec.markGrown(nf.id, rk);
+          await gacha(sel.map(() => '🐟'), { rar: rk + 1, icon: '🐟', name: fname(nf), en: (FISHBY[nf.id] || {}).en || '', line: `${size}cm の強い魚になった! 水槽で泳いでるよ` });
+        }
         draw();
       }
     };
   }
-  function gacha(icons, d) {
+  function gacha(icons, c) {   // 混ぜた演出(運ではなく、できるものが決まっている)。c = {rar:0〜3, icon, name, en, line}
     return new Promise(res => {
-      const k = decorOf(d), G = ['#aab4c0', '#4aa8ff', '#c07bff', '#ffc400'][d.rar];
+      const G = ['#aab4c0', '#4aa8ff', '#c07bff', '#ffc400'][Math.min(3, c.rar)];
       const ov = document.createElement('div'); ov.className = 'mixfx'; ov.style.setProperty('--g', G);
       ov.innerHTML = `<div class="ing"><div class="ring"></div>${icons.map((ic, i) => `<span style="--a:${i * 120}deg">${ic}</span>`).join('')}</div><div style="margin-top:14px;font-weight:900;letter-spacing:2px">まざる…!</div>`;
       root.appendChild(ov); sfx.play('whoosh');
       setTimeout(() => sfx.play('nibble'), 700);
       setTimeout(() => {
-        sfx.play(d.rar >= 2 ? 'legend' : 'coin', d.rar >= 2);
-        const pts = Array.from({ length: 16 + d.rar * 10 }, () => { const a = Math.random() * 6.28, r = 90 + Math.random() * (140 + d.rar * 40); return `<span class="pt" style="--dx:${Math.cos(a) * r}px;--dy:${Math.sin(a) * r}px;animation-delay:${Math.random() * 0.2}s">${['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)]}</span>`; }).join('');
-        ov.innerHTML = `<div class="fl"></div>${pts}<div class="cd"><div class="rn">${RAR[d.rar]}${d.rar === 3 ? '!!' : d.rar === 2 ? '!' : ''}</div><div class="ic">${k.icon}</div><b>${esc(k.name)}</b><small>${esc(k.en)}</small><div style="margin-top:8px;font-size:12px">${d.rar >= 2 ? '水槽がぐっと豪華に!' : '水槽に飾られたよ'}・ 水槽ランク: ${esc(TANK_RANKS[spec.rank()][1])}</div><button class="btn" data-x>やったー</button></div>`;
+        sfx.play(c.rar >= 2 ? 'legend' : 'coin', c.rar >= 2);
+        const pts = Array.from({ length: 16 + c.rar * 10 }, () => { const a = Math.random() * 6.28, r = 90 + Math.random() * (140 + c.rar * 40); return `<span class="pt" style="--dx:${Math.cos(a) * r}px;--dy:${Math.sin(a) * r}px;animation-delay:${Math.random() * 0.2}s">${['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)]}</span>`; }).join('');
+        ov.innerHTML = `<div class="fl"></div>${pts}<div class="cd"><div class="rn">${RAR[Math.min(3, c.rar)]}${c.rar >= 3 ? '!!' : c.rar === 2 ? '!' : ''}</div><div class="ic">${c.icon}</div><b>${esc(c.name)}</b><small>${esc(c.en)}</small><div style="margin-top:8px;font-size:12px">${esc(c.line)}</div><button class="btn" data-x>やったー</button></div>`;
         ov.querySelector('[data-x]').onclick = () => { ov.remove(); res(); };
       }, 1750);
     });
@@ -346,7 +373,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     let raf = 0, swim = [];
     const today = dayKey();
     const draw = () => {
-      const t = spec.tank(), food = spec.food(); t.forEach(f => { if (f.g >= GROW_NEED) spec.markGrown(f.id); });
+      const t = spec.tank(), food = spec.food(); t.forEach(f => { if (f.g >= GROW_NEED) spec.markGrown(f.id, f.rk || 0); });
       const pts = spec.pts(), rk = spec.rank(), nx = TANK_RANKS[rk + 1];
       sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn" data-a="mix">🎰 混ぜる</button><span class="sbtn" style="pointer-events:none">🍤 えさ ${food}</span></div>
         <h2>🐠 水槽 <small style="font-size:13px;color:#8d7f9e">${t.length} / ${TANK_MAX}</small></h2>
@@ -354,7 +381,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         <p class="nt" style="margin-top:-6px">🏆 水槽ランク: <b>${esc(TANK_RANKS[rk][1])}</b> ・ 飾りポイント ${pts}${nx ? `(あと${nx[0] - pts}で「${esc(nx[1])}」)` : '(最高!)'} ・ 飾り ${spec.decor().length}こ</p>
         <div class="tankv"><canvas></canvas></div>
         <div style="display:flex;gap:8px;margin-bottom:10px"><button class="sbtn pri" data-a="make" style="flex:1">🍤 えさを作る(英語${FOOD_Q}問)</button><button class="sbtn" data-a="all" ${food && t.some(f => (f.day !== today ? 0 : f.n) < FEED_PER_DAY && f.g < GROW_NEED) ? '' : 'disabled'}>みんなにあげる</button></div>
-        ${t.length ? t.map(f => { const sp = FISHBY[f.id], n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED, sz = Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / GROW_NEED))); return `<div class="row"><div class="fx"><b>${esc(sp ? sp.name : f.id)}</b> <small style="color:#8d7f9e">${sz}cm ・ ${full ? '育ちきった!' : f.g >= GROW_NEED * 0.6 ? 'りっぱになってきた' : f.g >= GROW_NEED * 0.3 ? '育ちざかり' : 'ちびっこ'}</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small style="color:#8d7f9e">きょう ${n}/${FEED_PER_DAY} ・ そだち ${Math.min(f.g, GROW_NEED)}/${GROW_NEED}</small></div>
+        ${t.length ? t.map(f => { const sp = FISHBY[f.id], n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED, sz = Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / GROW_NEED)) * RANK_MUL[f.rk || 0]); return `<div class="row"><div class="fx"><b>${esc(RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id))}</b> <small style="color:#8d7f9e">${sz}cm ・ ${full ? '育ちきった!' : f.g >= GROW_NEED * 0.6 ? 'りっぱになってきた' : f.g >= GROW_NEED * 0.3 ? '育ちざかり' : 'ちびっこ'}</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small style="color:#8d7f9e">きょう ${n}/${FEED_PER_DAY} ・ そだち ${Math.min(f.g, GROW_NEED)}/${GROW_NEED}</small></div>
           ${full ? `<span class="sbtn" style="pointer-events:none;background:#fff3c8">🎉 育ちきった</span>` : `<button class="sbtn" data-feed="${f.uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-rel="${f.uid}" title="池にかえす">↩</button></div>`; }).join('')
         : `<div class="row"><div class="fx">まだ魚がいないよ。<b>英語の釣り堀</b>で釣った魚を「水槽に入れる」と、ここで育てられる。</div></div>`}`;
       startSwim();
@@ -364,7 +391,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       const cv = sc.querySelector('.tankv canvas'); if (!cv) return;
       const t = spec.tank(), W = cv.clientWidth, H = cv.clientHeight, dpr = Math.min(2, devicePixelRatio || 1);
       cv.width = W * dpr; cv.height = H * dpr; const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(120, 40 + Math.sqrt(f.size) * 9) * k); return { img: sp ? artCanvas(sp, w, Math.round(w * 0.6)) : null, w, h: Math.round(w * 0.6), x: Math.random() * (W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
+      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k); return { img: sp ? artCanvas(sp, w, Math.round(w * 0.6)) : null, w, h: Math.round(w * 0.6), x: Math.random() * (W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
       const bub = Array.from({ length: 10 }, () => ({ x: Math.random() * W, y: Math.random() * H, s: 1 + Math.random() * 3 }));
       let last = performance.now();
       const step = ts => {

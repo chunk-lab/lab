@@ -44,8 +44,21 @@ export const condOf = s => `${LV_NAME[s.lv]}の単語 セット${s.no}(${s.range
 export const FISH_SPEC = FISH.filter(f => f.kind === 'fish');
 
 // ---- 水槽の飾り(標本を混ぜてできる) ----
-export const MIX_N = 3;                         // 混ぜる標本の数(仮)
-export const RAR = ['N', 'R', 'SR', 'SSR'], RAR_W = [60, 28, 10, 2], RAR_PT = [1, 2, 4, 8];   // 出やすさ(%)・水槽ランクのポイント(仮)
+export const MIX_N = 3;                         // 混ぜる数(標本も魚も。仮)
+export const RAR = ['N', 'R', 'SR', 'SSR'], RAR_PT = [1, 2, 4, 8];   // レア度の名前・水槽ランクのポイント(仮)
+export const FISH_MAX_RANK = 2, RANK_PRE = ['', 'りっぱな', '伝説の'], RANK_MUL = [1, 1.4, 1.9];   // 魚を混ぜた強さ(仮)
+// 標本の形の名前(レシピの表示用)
+const SHAPE_JP = { 1: { shell: '貝がら', conch: '巻き貝', stone: '小石', glass: 'ビーチグラス', urchin: 'ウニのから', star: 'ヒトデ', coral: 'サンゴ', disc: 'タコノマクラ' },
+  2: { crystal: '水晶', ammonite: 'アンモナイト', trilobite: '三葉虫', tooth: 'サメの歯', amber: '琥珀', cube: '黄鉄鉱', stone: '孔雀石', leaf: '葉の化石' },
+  3: { gem: '宝石', opal: 'オパール', pearl: '真珠', stone: '翡翠', crystal: 'ダイヤの原石', meteor: '隕石' } };
+export const shapeName = (lv, sh) => (SHAPE_JP[lv] && SHAPE_JP[lv][sh]) || sh;
+// 飾りのレシピ(標本の形3つ → 飾り。順番は関係なし)。レベルごとに、レア度N→SSRの順(仮)
+export const RECIPES = {
+  1: [['shell', 'stone', 'glass'], ['coral', 'stone', 'urchin'], ['shell', 'conch', 'disc'], ['star', 'coral', 'glass']],
+  2: [['stone', 'leaf', 'trilobite'], ['crystal', 'stone', 'cube'], ['ammonite', 'tooth', 'trilobite'], ['amber', 'crystal', 'ammonite']],
+  3: [['stone', 'opal', 'crystal'], ['gem', 'gem', 'gem'], ['pearl', 'gem', 'opal'], ['meteor', 'crystal', 'gem']],
+};
+export const recipeFor = (lv, shapes) => { const k = shapes.slice().sort().join(); return (RECIPES[lv] || []).findIndex(r => r.slice().sort().join() === k); };   // 合うレア度(0〜3)・なければ -1
 export const DECOR = {   // レベルごと、レア度の順(N→SSR)に4つ。[名前, English, 形]
   1: [['海そう', 'Seaweed', 'weed'], ['サンゴの岩', 'Coral Rock', 'coralrock'], ['貝がらのお城', 'Shell Castle', 'castle'], ['光る真珠貝', 'Glowing Pearl Shell', 'pearlshell']],
   2: [['化石の岩', 'Fossil Rock', 'fossil'], ['水晶のかたまり', 'Crystal Cluster', 'cluster'], ['古代の柱', 'Ancient Pillar', 'pillar'], ['琥珀のあかり', 'Amber Lamp', 'lamp']],
@@ -70,10 +83,13 @@ export const spec = {
   // 混ぜて使った標本(持ち物からは消えるが、アルバムには残る)
   use(id) { const o = this.own(); if (o[id]) { o[id].used = 1; st.set('own', o); } },
   isUsed(id) { const o = this.own()[id]; return !!(o && o.used); },
+  recipes: () => st.get('recipes') || [],         // 見つけたレシピ 'lv:rar'
+  addRecipe(k) { const r = this.recipes(); if (!r.includes(k)) { r.push(k); st.set('recipes', r); } },
   decor: () => st.get('decor') || [],             // [{uid, lv, rar, at}] できた飾り
   addDecor(d) { const l = this.decor(); l.push(d); st.set('decor', l); },
   grown: () => st.get('grown') || [],             // 水槽で育てきった魚の種類(アルバム)
-  markGrown(id) { const g = this.grown(); if (!g.includes(id)) { g.push(id); st.set('grown', g); } },
+  markGrown(id, rk = 0) { const g = this.grown(); if (!g.includes(id)) { g.push(id); st.set('grown', g); } if (rk > 0) { const b = this.fishBest(); if ((b[id] || 0) < rk) { b[id] = rk; st.set('fishBest', b); } } },
+  fishBest: () => st.get('fishBest') || {},      // 魚の種類ごとの、いちばん強くした段階
   pts() { return this.decor().reduce((a, d) => a + RAR_PT[d.rar], 0); },
   rank() { const p = this.pts(); let r = 0; TANK_RANKS.forEach((x, i) => { if (p >= x[0]) r = i; }); return r; },
   played: () => st.get('played') || [],          // 釣ったことのあるセット(新しい順)

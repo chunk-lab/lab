@@ -121,7 +121,7 @@ function tank(g) {
   const fish = spec.tank().slice(0, 6);
   fish.forEach((t, i) => {
     const f = FISH_SPEC.find(x => x.id === t.id); if (!f) return;
-    const b = (f.art && f.art.body) || ['#888888'], s = 0.07 + 0.05 * Math.min(1, t.g || 0);
+    const b = (f.art && f.art.body) || ['#888888'], s = (0.07 + 0.05 * Math.min(1, t.g || 0)) * (1 + 0.3 * (t.rk || 0));
     const x = -0.6 + (i % 3) * 0.6 + (i > 2 ? 0.25 : 0), y = 0.75 + (i > 2 ? 0.25 : 0) + (i % 2) * 0.05, z = (i % 2 ? -0.12 : 0.12);
     const m = ball(g, s, hexOf(b[0]), x, y, z); m.scale.set(1.8, 0.8, 0.55);
     const tl = add(g, new THREE.ConeGeometry(s * 0.6, s * 0.9, 4), hexOf((f.art && f.art.fin) || b[0]), x - s * 1.9, y, z); tl.rotation.z = Math.PI / 2;
