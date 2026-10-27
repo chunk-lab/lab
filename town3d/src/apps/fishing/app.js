@@ -263,7 +263,7 @@ export const fishingApp = {
           if (bot) { const rem = Math.max(0, vs.dur - startT); for (let i = 0, n = Math.ceil(rem * 30); i < n; i++) { bot.update(1 / 30); oppE.update(1 / 30); } }
           startT = vs.dur; finish(); return;
         }
-        if (b === 'back') { if (vs && !ended) { confirmQuit(); return; } const back = en ? goPond : menu; if (!vs && tripShow(back)) return; back(); }
+        if (b === 'back') { if (G) G.flush(); if (vs && !ended) { confirmQuit(); return; } const back = en ? goPond : menu; if (!vs && tripShow(back)) return; back(); }
         if (b === 'tackle') { if (E.S.ph !== 'ready') { toast('投げる前に変えられるよ', 1200); return; } tackleSheet(() => { for (const k of ['rod', 'reel', 'line', 'bait', 'hook', 'eye']) E.setGear(k, eq[k]); E.setTana(eq.tana); tackleChip(); }); }
         if (b === 'help') help();
         if (b === 'ask') ask();
@@ -401,7 +401,7 @@ export const fishingApp = {
             try { stopIn(); closeReel(); reelUi = G.reel(h.sp, h.size || 0, { onSentence: (k, N) => E.sortProgress(k, N), onGap: (k, N) => { const hh = E.S.hooked; if (hh) E.rodPhase(k === N - 1 && (hh.sp.r >= 3 || (hh.size || 0) >= 60)); }, onEnd: () => E.sortEnd() }); } catch (err) { closeReel(); h.sr = false; }
           }
         }
-        else if (type === 'lost' || type === 'catch') closeReel();
+        else if (type === 'lost' || type === 'catch') { closeReel(); setTimeout(() => G.flush(), 1500); }   // 標本のお祝いは、結果が出てから
         else if (type === 'run' && E.S.hooked && E.S.hooked.sp.kind === 'fish') {
           if (d.last) { stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった!', 1000); } else { E.setback(0.15); toast('引き戻された…', 1000); } E.rodDone(); }); }   // 最後のあがき=熟語
           else toast(d.dir > 0 ? '右へ走った! 竿を<b>左</b>に倒せ' : '左へ走った! 竿を<b>右</b>に倒せ', 1300);

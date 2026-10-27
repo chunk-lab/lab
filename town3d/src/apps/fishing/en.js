@@ -152,16 +152,18 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     const prog = document.createElement('div'); prog.className = 'enprog'; ui.appendChild(prog);
     const showProg = () => { const n = spec.perfCount(setId); prog.innerHTML = `📚 ${esc(s.title)} ・ 完璧 ${n} / ${s.words.length}${spec.has(setId) ? (spec.cracked(setId) ? ' 💥' : ' 🏺') : ''}`; };
     showProg();
+    const pend = [];
     const word = async (dir, label, time) => {
       const i = nextIdx(setId, recent); recent.push(i); if (recent.length > 4) recent.shift();
       const ok = await ask(wordQ(s.lv, s.words[i], dir), { label, time, host: ui.parentNode });
       const m = markSet(setId, i, ok); showProg();
-      if (m.got) celebrate(setId, m.got);
+      if (m.got) pend.push(m.got);   // 標本のお祝いは釣りの途中では出さない(結果画面のあとで flush)
       else if (m.perfNow) toast(`✨ 「${s.words[i][0]}」完璧! (${m.n}/${m.total})`);
       return { ok, m };
     };
     return {
       get busy() { return busy; },
+      flush() { while (pend.length) celebrate(setId, pend.shift()); },
       cast: () => idiom(s.lv, '🎯 投げた! 熟語に答えると魚がよく寄る', ui.parentNode),
       bite: () => word('ej', '🎣 合わせそこねた! 正解でもういちどチャンス(まちがえると逃げる)', T_BITE),
       gap: () => GAPS[+(ctx.storage.get('enGap') || 1)] || 2,
