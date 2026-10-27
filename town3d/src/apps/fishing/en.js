@@ -335,15 +335,20 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     };
   }
   // えさを作る問題:まちがえたことのある言葉(ストリームなども)→ 釣り堀の完璧な単語(忘れないように)→ 初級
-  function reviewQs(n) {   // えさ用:まちがえた単語・見たことのある単語・初級〜上級の単語を、ランダムにまぜる
-    const out = [], used = new Set(), weak = shuffle(learn.weak(40)), seen = shuffle(learn.seen ? learn.seen(200) : []);
-    const take = list => { while (list.length) { const w = list.pop(); if (!used.has(w.en)) { used.add(w.en); return freeQ(w.en, w.ja); } } return null; };
-    for (let k = 0; out.length < n && k < 60; k++) {
-      const r = Math.random();
-      let q = r < 0.25 ? take(weak) : r < 0.5 ? take(seen) : null;
-      if (!q) { const lv = Math.random() < 0.6 ? 1 : Math.random() < 0.65 ? 2 : 3, w = pick(SW[lv]); if (used.has(w[0])) continue; used.add(w[0]); q = wordQ(lv, w, Math.random() < 0.5 ? 'ej' : 'je'); }
+  const recentFood = [];   // 直前に出した単語(同じ問題ばかりにならないように)
+  function reviewQs(n) {   // えさ用:いまのレベル(最後にあそんだ釣り堀)を中心に、1つ下・1つ上も少し。そのレベルの単語からランダムに幅広く
+    const out = [], used = new Set(), weak = shuffle(learn.weak(40));
+    const own = (spec.played().map(id => SET[id]).filter(Boolean)[0] || { lv: 1 }).lv;
+    for (let k = 0; out.length < n && k < 200; k++) {
+      let q = null;
+      if (Math.random() < 0.1) { while (weak.length && !q) { const w = weak.pop(); if (!used.has(w.en)) { used.add(w.en); q = freeQ(w.en, w.ja); } } }
+      if (!q) {
+        const r = Math.random(); let lv = r < 0.7 ? own : r < 0.85 ? own - 1 : own + 1; if (lv < 1 || lv > 3) lv = own;
+        const w = pick(SW[lv]); if (used.has(w[0]) || recentFood.includes(w[0])) continue; used.add(w[0]); q = wordQ(lv, w, Math.random() < 0.5 ? 'ej' : 'je');
+      }
       out.push(q);
     }
+    out.forEach(q => { recentFood.push(q.w[0]); }); while (recentFood.length > 40) recentFood.shift();
     return out;
   }
 
