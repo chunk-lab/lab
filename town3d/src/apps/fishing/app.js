@@ -6,6 +6,7 @@ import { createEngine, createBot, replayAt, timeOf, REACH } from './engine.js';
 import { createView } from './view.js';
 import { artCanvas } from './art.js';
 import { createSfx } from './sfx.js';
+import { createEnglish } from './en.js';
 
 const ink = '#5a4a6b';
 const CSS = `
@@ -103,7 +104,7 @@ const fmtT = s => `${Math.floor(s / 60)}:${String(Math.max(0, Math.floor(s % 60)
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const SEASON_JP = { spring: '春', summer: '夏', autumn: '秋', winter: '冬' }, TIME_JP = { morning: '朝', day: '昼', evening: '夕方', night: '夜' };
 const SUNA_SAY = { catch: ['Got one!', 'Not bad.', 'Nice and easy.', 'There we go.'], lost: ['Oops.', 'It got away...', 'Next time.'], big: ['Whoa, a big one!', 'Look at that!'] };
-const LOST_JP = { snap: '糸が切れた…', slack: 'バレた…(糸がゆるんで外れた)', jump: 'はねて外れた…', hook: '針が外れた…(針が小さかったかも)' };
+const LOST_JP = { snap: '糸が切れた…', slack: 'バレた…(糸がゆるんで外れた)', jump: 'はねて外れた…', hook: '針が外れた…(針が小さかったかも)', thrash: 'あばれて外れた…', net: 'あと少しで逃げられた…' };
 
 // 挑戦状のコード(記録をちぢめて文字にする)
 const b64u = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 8192) s += String.fromCharCode.apply(null, u8.subarray(i, i + 8192)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
@@ -151,6 +152,10 @@ export const fishingApp = {
     const loop = ts => { raf = requestAnimationFrame(loop); const dt = Math.min(0.05, (ts - (last || ts)) / 1000); last = ts; frame && frame(dt); };
     raf = requestAnimationFrame(loop);
     const unlock = () => sfx.unlock(); root.addEventListener('pointerdown', unlock, { once: true });
+    const appToast = (t, ms = 1800) => { const d = document.createElement('div'); d.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);z-index:60;background:rgba(40,30,60,.88);color:#fff;border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px;max-width:88%;text-align:center;pointer-events:none;box-shadow:0 4px 14px #0004'; d.innerHTML = t; root.appendChild(d); setTimeout(() => d.remove(), ms); };
+    const EN = createEnglish({ root, ctx, sfx, sheet: (h, c) => sheet(h, c), artCanvas, FISHBY: BYID, toast: appToast });
+    const goPond = () => { clear(); screen = 'en'; ctx.setTitle('英語の釣り堀'); try { ctx.emit('act', { layer: 'sub', cat: 'study', label: '英語の釣り堀' }); } catch (e) { } EN.pondScreen({ onPick: id => play({ en: id }), onBack: menu }); };
+    const goTank = () => { clear(); screen = 'tank'; ctx.setTitle('水槽'); EN.tankScreen({ onBack: goPond }); };
 
     // ================= メニュー =================
     function menu() {
@@ -165,14 +170,17 @@ export const fishingApp = {
       ui.innerHTML = `<p class="title">🎣 ほしみや池の釣り</p>
         <div class="say">砂吹さん「${esc(pickSay())}」</div>
         <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}${baseCond.rain ? '・雨' : ''} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
-        <button class="btn mb" data-m="free">🎣<span>のんびり釣る<br><small>時間を気にせず、好きなだけ</small></span></button>
+        <button class="btn mb" data-m="en" style="background:linear-gradient(160deg,#9fe3c0,#5fc79a)">📚<span>英語の釣り堀<br><small>英語で釣る・水槽で育てる・標本を集める</small></span></button>
+        <button class="btn mb" data-m="free">🎣<span>のんびり釣る<br><small>英語なし・時間を気にせず</small></span></button>
         <button class="btn mb gold" data-m="vs">⚔️<span>釣り勝負<br><small>砂吹さん・友だちと2画面で対戦</small></span></button>
         <button class="btn mb sub" data-m="dex">📖<span>図鑑<br><small>${found} / ${ALL.length} 見つけた</small></span></button>
         <button class="btn mb sub" data-m="ask">💬<span>砂吹さんに聞く<br><small>狙いの魚・いまのおすすめ・腕のアドバイス</small></span></button>
         <button class="btn mb sub" data-m="shop">🧰<span>道具屋<br><small>竿・リール・糸・エサ・ルアー・見る道具</small></span></button>
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="chip" data-m="mode">${st.get('mode') === 'easy' ? '🟢 かんたん' : '🔵 ほんかく'}</button><button class="chip" data-m="fx">${st.get('fx') === 'calm' ? '🍵 演出おとなしめ' : '🎆 演出 派手'}</button><button class="chip" data-m="help">？ あそびかた</button></div>`;
       root.appendChild(ui);
-      ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ free: () => play({}), vs: vsSetup, dex: dexScreen, shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
+      ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ en: goPond, free: () => play({}), vs: vsSetup, dex: dexScreen, shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
+      if (P.tab === 'en') { P.tab = null; setTimeout(goPond, 0); return; }
+      if (P.tab === 'tank') { P.tab = null; setTimeout(goTank, 0); return; }
       if (P.vs) { const o = P.vs; P.vs = null; setTimeout(() => vsSetup(o === 'hard' ? 'hard' : 'easy'), 0); }
       else if (P.tab === 'shop') { P.tab = null; setTimeout(() => shop(), 0); }
       else if (P.tab === 'ask') { P.tab = null; setTimeout(() => ask(), 0); }
@@ -204,8 +212,8 @@ export const fishingApp = {
     // ================= 釣り(のんびり・勝負の自分側) =================
     // mode: {vs:{...}} があれば勝負
     function play(opt) {
-      clear(); screen = 'play'; const vs = opt.vs;
-      ctx.setTitle(vs ? '釣り勝負' : 'のんびり釣り');
+      clear(); screen = 'play'; const vs = opt.vs, en = !vs && opt.en ? opt.en : null;
+      ctx.setTitle(vs ? '釣り勝負' : en ? '英語の釣り堀' : 'のんびり釣り');
       const cond = vs ? vs.cond : baseCond;
       const topH = vs ? 0.3 : 0, STRIP = 34;
       const easy = vs ? !!vs.easy : st.get('mode') === 'easy', calm = vs ? !!vs.calm : st.get('fx') === 'calm';
@@ -222,7 +230,7 @@ export const fishingApp = {
 
       let E = null, startT = 0, ended = false, oppScore = { count: 0, big: 0, point: 0 }, oppSeen = 0, oppE = null, bot = null;
       const onEv = (type, d) => handleEv(type, d);
-      const mk = () => createEngine({ seed: vs ? vs.seed : (Math.random() * 1e9) | 0, cond, gear: eq, onEvent: onEv, record: !!vs, easy });
+      const mk = () => createEngine({ seed: vs ? vs.seed : (Math.random() * 1e9) | 0, cond, gear: eq, onEvent: onEv, record: !!vs, easy, netGate: !!en });
       E = mk(); if (P.debug) { window.__fzE = E; window.__fzOpp = () => oppE; }
       if (vs && vs.bot) { oppE = createEngine({ seed: vs.seed, cond, gear: vs.bot === 'hard' ? { rod: 'carbon', reel: 'smooth', line: 'fluoro', bait: pickBotBait(cond), hook: 'm', tana: 0.85 } : { rod: 'bamboo', reel: 'basic', line: 'nylon', bait: 'worm', hook: 'm', tana: 0.5 }, onEvent: (t, d) => { oppE.onBot && oppE.onBot(t, d); oppEvent(t, d); }, easy }); bot = createBot(oppE, vs.bot, vs.seed + 5); }
 
@@ -243,6 +251,7 @@ export const fishingApp = {
       }
       const tackleChip = () => { const b = gearById('bait', eq.bait); $('[data-b="tackle"]').textContent = `${b.icon} ${b.name}・${gearById('hook', eq.hook).name}`; const tc = $('[data-b="tana"]'); tc.style.display = b.type === 'lure' ? 'none' : ''; tc.textContent = TANA[tanaOf(E.S.tana)].name; };
       tackleChip();
+      const G = en ? EN.playGates(en, ui) : null; let thrashN = 0;
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
         if (b === 'skip') {   // 勝負をとちゅうで切りあげる:2回おすと、あいての残り時間を一気に進めて結果を出す
@@ -252,7 +261,7 @@ export const fishingApp = {
           if (bot) { const rem = Math.max(0, vs.dur - startT); for (let i = 0, n = Math.ceil(rem * 30); i < n; i++) { bot.update(1 / 30); oppE.update(1 / 30); } }
           startT = vs.dur; finish(); return;
         }
-        if (b === 'back') { if (vs && !ended) { confirmQuit(); return; } if (!vs && tripShow(menu)) return; menu(); }
+        if (b === 'back') { if (vs && !ended) { confirmQuit(); return; } const back = en ? goPond : menu; if (!vs && tripShow(back)) return; back(); }
         if (b === 'tackle') { if (E.S.ph !== 'ready') { toast('投げる前に変えられるよ', 1200); return; } tackleSheet(() => { for (const k of ['rod', 'reel', 'line', 'bait', 'hook', 'eye']) E.setGear(k, eq[k]); E.setTana(eq.tana); tackleChip(); }); }
         if (b === 'help') help();
         if (b === 'ask') ask();
@@ -360,6 +369,7 @@ export const fishingApp = {
       function toast(text, ms = 1100, cls = '') { toastEl?.remove(); toastEl = document.createElement('div'); toastEl.className = 'toast ' + cls; toastEl.innerHTML = text; ui.appendChild(toastEl); toastT = ms / 1000; }
       function handleEv(type, d) {
         const L = E.S.lure;
+        if (G) enGate(type, d);
         if (type === 'cast') { sfx.play('whoosh'); if (d.q) castQ = d.q; }
         if (type === 'land') { sfx.play('plop'); view.splash(d.x, d.d, 8, 0.6); underReady = false; landT = 0; if (castQ) { toast(castQ === 'perfect' ? '<span style="font-size:24px;color:#e08a00">✨パーフェクト!!✨</span><br><small style="font-size:12px">まわりの魚がとても寄ってくる</small>' : 'ナイスキャスト!<br><small style="font-size:12px">魚が寄りやすい</small>', 1200); if (castQ === 'perfect') sfx.play('coin'); castQ = ''; } }
         if (type === 'nibble') sfx.play('nibble');
@@ -377,6 +387,21 @@ export const fishingApp = {
         if (type === 'jump') { sfx.play('jump'); view.splash(L.x, L.d, 22, 1.6); toast('はねた! ゆるめて!', 800); }
         if (type === 'lost') { endFightFx(); note(d.reason); sfx.play(d.reason === 'snap' ? 'snap' : 'lost'); if (vs) toast(LOST_JP[d.reason], 1300); else showLost(d); }
         if (type === 'catch') onCatch(d);
+      }
+      // 英語の釣り堀:答えるまで釣りは止まる(frame で E.update しない)
+      function enGate(type, d) {
+        const stopIn = () => { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); };
+        if (type === 'land') { stopIn(); G.cast().then(ok => { if (ok) { E.bonusHere(); toast('✨ ナイス! 魚がよってくる', 1100); } }); }
+        else if (type === 'bite') { stopIn(); G.bite().then(r => { if (r.ok) { if (!E.forceHook()) toast('おそかった…', 900); } else { E.forceMiss(); toast('逃げられた…', 1000); } }); }
+        else if (type === 'hooked') thrashN = 0;
+        else if (type === 'run' && E.S.hooked && E.S.hooked.sp.kind === 'fish') {
+          const h = E.S.hooked, lim = h.size >= 60 || h.sp.r >= 3 ? 2 : 1;
+          if (thrashN < lim && (thrashN === 0 || h.S < 0.55)) { thrashN++; stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった! 巻け!', 1000); } else E.escape('thrash'); }); }
+        }
+        else if (type === 'net') {
+          if (!E.S.hooked || E.S.hooked.sp.kind !== 'fish') { E.netResult(true); return; }
+          stopIn(); G.net().then(r => E.netResult(r.ok));
+        }
       }
       function oppEvent(type, d) {
         if (type === 'catch') { const sp = BYID[d.id]; oppPop(sp, d); }
@@ -455,9 +480,10 @@ export const fishingApp = {
           ${info.extra}
           <div class="say" style="margin:10px auto 0">砂吹さん「${esc(sp.say || 'Nice!')}」</div>
           ${info.wanted ? `<div style="margin-top:8px;font-weight:900">🪙 +${info.coins}${info.coins < info.wanted ? ' <small style="color:#8d7f9e">(きょうの上限)</small>' : ''}</div>` : ''}
-          </div><div style="padding:8px 16px 18px;text-align:center"><button class="btn" data-x>つづける</button></div>`, true);
+          </div><div style="padding:8px 16px 18px;text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${en && sp.kind === 'fish' ? `<button class="btn sub" data-k ${EN.tankRoom() ? '' : 'disabled'}>🐠 ${EN.tankRoom() ? '水槽に入れる' : '水槽がいっぱい'}</button>` : ''}<button class="btn" data-x>つづける</button></div>`, true);
         card.querySelector('.art').appendChild(a); a.style.cssText = 'width:100%;height:auto;position:static';
         card.querySelector('[data-x]').onclick = closeCard;
+        const kb = card.querySelector('[data-k]'); if (kb) kb.onclick = () => { const r = EN.keepFish(sp, d.size); if (!r) return; sfx.play('splash'); closeCard(); toast(r === 'first' ? '🐠 砂吹さんが水槽をくれた!<br><small style="font-size:12px">家の持ち物にも入ったよ。えさは英語で作る</small>' : '🐠 水槽に入れた!', 1800); };
         if (info.isNew || info.best || sp.r >= 4) confetti(card);
       }
       function showLost(d) { toast(LOST_JP[d.reason] + `<br><small style="font-size:13px">${BYID[d.id] && BYID[d.id].r >= 3 ? 'おしい! 大物だった…' : ''}</small>`, 1500); setTimeout(() => { if (E.S.ph === 'lost') E.ack(); }, 1400); }
@@ -502,7 +528,7 @@ export const fishingApp = {
         const reeling = (bt && bt.mode === 'reel') || keyReel;
         E.input.reel = reeling && (E.S.ph === 'water' || E.S.ph === 'fight') ? thr || 0.55 : 0;
         E.input.side += (sideT - E.input.side) * Math.min(1, dt * 6);
-        if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
+        if (G && EN.busy) { } else if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
         if (leap) { leap.t += dt / leap.dur; if (leap.t >= 1) { const fn = leap.then; leap = null; fn && fn(); } }
         if (vs && E.S.ph === 'landed' && E.S.resultT > 0.9) E.ack();
         if (vs && E.S.ph === 'lost' && E.S.resultT > 1.1) E.ack();

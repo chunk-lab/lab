@@ -27,6 +27,7 @@ import { createUseit } from './useit.js';
 import { createLevel } from './level.js';
 import { createAdmin } from './admin.js';
 import { createReview } from './review.js';
+import { createLearn } from './learn.js';
 import { createMission } from './mission.js';
 import './reader.css';
 export function createCore(config) {
@@ -48,6 +49,7 @@ export function createCore(config) {
   importOld(core.notebook);           // 前から各アプリにあった言葉を1回だけ取り込む
   core.record = createRecord(core.events, core.notebook);   // 学習の記録（done・word・resume の報告をまとめる）
   core.daylog = createDayLog(core);   // 1日の記録(時間・カテゴリー・出会った単語)
+  core.learn = createLearn(core.events);   // 単語ごとの学習の記録(ストリーム・英語の釣り堀など共通)
   core.ui = createUI(core);
   core.study = createStudy(core);     // 勉強部屋（自宅・アバターから開く）
   core.econ = ECON;                   // お金と会員の数字（economy.js）

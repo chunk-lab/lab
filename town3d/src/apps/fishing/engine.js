@@ -29,7 +29,7 @@ function pointIn(area, r) {
 
 export const REACH = 1.12;
 export const distOf = (x, d) => Math.hypot(x * 0.9, d);
-export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', rain: false }, gear = {}, onEvent = () => {}, record = false, easy = false } = {}) {
+export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', rain: false }, gear = {}, onEvent = () => {}, record = false, easy = false, netGate = false } = {}) {   // netGate:英語モード。取りこむ直前に止まって 'net' を出す(netResult で決める)
   const rs = rng(seed), rb = rng(seed ^ 0x5bd1e995);   // rs=池(魚の出かた。対戦では同じになる) / rb=ふるまい
   const G = { rod: gearById('rod', gear.rod), reel: gearById('reel', gear.reel), line: gearById('line', gear.line), bait: gearById('bait', gear.bait), hook: gearById('hook', gear.hook || 'm'), eye: gearById('eye', gear.eye) };
   const S = {
@@ -230,7 +230,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     if (h.bm >= 1 || h.L > 1.3) return lose('snap');
     if (h.T < 0.1 && thr < 0.05 && !h.heavy) h.sl += dt; else h.sl = Math.max(0, h.sl - dt * 2);
     if (h.sl > (easy ? 3.5 : 1.8)) return lose('slack');
-    if (h.L < 0.035) return land();
+    if (h.L < 0.035) { if (netGate && !h.netOk) { if (!S.netWait) { S.netWait = true; h.L = 0.035; ev('net', { id: sp.id }); } return; } return land(); }
     S.lure.x = Math.sin(h.phi) * h.L / 0.95; S.lure.d = Math.cos(h.phi) * h.L;
   }
   function lose(reason) { S.ph = 'lost'; S.result = { reason, sp: S.hooked.sp }; S.resultT = 0; ev('lost', { reason, id: S.hooked.sp.id }); S.hooked = null; S.baitOk = true; }
@@ -297,6 +297,13 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     recall() { if (S.ph !== 'water' || S.locked) return false; S.engaged && leave(S.engaged, 'miss'); S.ph = 'ready'; S.baitOk = true; S.bite = null; if (S.lure) { S.lure.x = 0; S.lure.d = 0; } ev('retrieve'); return true; },   // 一瞬で回収
     ack() { if (S.ph === 'landed' || S.ph === 'lost') { S.ph = 'ready'; S.result = null; } },
     lock(on = true) { S.locked = on; },
+    // ---- 英語モード:問題の答えで決める ----
+    forceHook() { if (S.ph === 'water' && S.engaged && (S.bite || S.engaged.st === 'bite')) { hook(S.engaged); return true; } return false; },   // 正解=かかる
+    forceMiss() { if (S.ph === 'water' && S.engaged) { ev('miss'); leave(S.engaged, 'miss'); } },   // まちがい=逃げる
+    weaken(k = 0.55) { const h = S.hooked; if (S.ph !== 'fight' || !h) return; h.S = Math.max(0.05, h.S * k); h.mode = 'rest'; h.modeT = 1.2; h.jump = 0; h.jolt = 0; h.T = Math.min(h.T, 0.5); h.bm = 0; },   // 正解=おとなしくなる
+    escape(reason = 'thrash') { if (S.ph === 'fight' && S.hooked) lose(reason); },
+    netResult(ok) { if (S.ph !== 'fight' || !S.hooked || !S.netWait) return; S.netWait = false; S.hooked.netOk = true; if (ok) land(); else lose('net'); },
+    bonusHere(k = 1.9) { if (S.lure) S.bonus = { x: S.lure.x, d: S.lure.d, k, t: 16 }; },
     update(dt) {
       S.t += dt;
       // 池の魚の入れかわり

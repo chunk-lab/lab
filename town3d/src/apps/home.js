@@ -247,7 +247,7 @@ export const homeApp = {
       planUI();
       const p = placed.find(x => x.uid === selUid), k = p && kindOf(p.id);
       tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ。ほかの家具はダブルタップでえらぶ。` : (Object.keys(furn.inv()).length ? '家具はダブルタップでえらぶよ。何もない所をドラッグで向きを変えられるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
-      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button><button data-a="gbox" style="${btn('linear-gradient(160deg,#b9d8ff,#8fbaf0)')}">🎮 ゲーム機</button>` + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
+      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button><button data-a="gbox" style="${btn('linear-gradient(160deg,#b9d8ff,#8fbaf0)')}">🎮 ゲーム機</button>` + (furn.owned('tank') ? `<button data-a="tank" style="${btn('linear-gradient(160deg,#9fe3ff,#6cc6e8)')}">🐠 水槽</button>` : '') + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
     }
@@ -299,6 +299,7 @@ export const homeApp = {
       if (a === 'album') { ctx.open('album', { from: 'home' }); return; }
       if (a === 'shop') { ctx.open('shop', { from: 'home' }); return; }   // ネットショッピング(家からそのままショップへ)
       if (a === 'gbox') { ctx.open('gamebox', { from: 'home' }); return; }   // チャンクボックス(英語対戦・あそびゲーム)
+      if (a === 'tank') { ctx.open('fishing', { tab: 'tank', from: 'home' }); return; }   // 水槽(英語の釣り堀で釣った魚を育てる)
       if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(チャンクタウン)の勉強部屋を開く
       if (!a || !p) return;
       const before = snap();

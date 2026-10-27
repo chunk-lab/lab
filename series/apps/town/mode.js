@@ -55,6 +55,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
+      learn: core.learn,   // 単語ごとの学習の記録(英語の釣り堀とストリームで共通)
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
       features: ['study'],

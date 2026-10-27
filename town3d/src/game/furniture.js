@@ -7,6 +7,7 @@
 // 位置の単位は「半マス」(1マス=U=2)。真ん中にも置ける。
 import * as THREE from 'three';
 import { createStorage } from '../core/core.js';
+import { SETS, FISH_SPEC, spec } from './specimen.js';
 
 export const U = 2;                 // 1マス = 2単位(半マス刻み)
 export const WALL_H = 3.4;          // 壁・天井の高さ
@@ -42,6 +43,73 @@ function medal(g, n, c) {
   disc(g, 0.22, 0.05, c, 0, 0.12, 0.06);
   if (!medTex[n] && typeof document !== 'undefined') { const cv = document.createElement('canvas'); cv.width = cv.height = 128; const x = cv.getContext('2d'); x.fillStyle = '#fff'; x.font = `900 ${n >= 100 ? 46 : 60}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(n), 64, 58); x.font = '700 20px sans-serif'; x.fillText('DAYS', 64, 100); medTex[n] = new THREE.CanvasTexture(cv); medTex[n].colorSpace = THREE.SRGBColorSpace; }
   if (medTex[n]) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.36, 0.36), new THREE.MeshBasicMaterial({ map: medTex[n], transparent: true })); m.position.set(0, 0.12, 0.09); g.add(m); }
+}
+
+// ---- 英語の釣り堀の標本(ガラスびん)・魚の標本・水槽 ----
+const glassMat = (c = 0xdff4ff, o = 0.28) => new THREE.MeshLambertMaterial({ color: c, transparent: true, opacity: o, depthWrite: false });
+const hexOf = s => parseInt(String(s || '#888888').slice(1), 16);
+function add(g, geo, c, x, y, z, o) { const m = new THREE.Mesh(geo, o ? glassMat(c, o) : mat(c)); m.position.set(x, y, z); g.add(m); return m; }
+const CAP = { 1: 0xb88a5a, 2: 0xc9ced6, 3: 0xe0b443 };
+function jar(g, lv, h, crack, liquid) {
+  box(g, 0.62, 0.06, 0.62, 0x6b4a32, 0, 0, 0);                  // 木の台
+  box(g, 0.34, 0.07, 0.012, 0xfff6dc, 0, 0.0, 0.312);            // 名札
+  if (liquid) add(g, new THREE.CylinderGeometry(0.225, 0.225, h * 0.86, 24), liquid, 0, 0.06 + h * 0.43, 0, 0.18);
+  add(g, new THREE.CylinderGeometry(0.24, 0.24, h, 24, 1, true), 0xf4fbff, 0, 0.06 + h / 2, 0, 0.13);   // ガラス(ふちだけ少し白く)
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.008, 6, 32), glassMat(0xffffff, 0.6)); rim.rotation.x = Math.PI / 2; rim.position.y = 0.08; g.add(rim);
+  const cap = cyl(g, 0.25, 0.08, CAP[lv] || CAP[1], 0, 0.06 + h, 0); cyl(g, 0.12, 0.05, CAP[lv] || CAP[1], 0, 0.14 + h, 0);
+  if (crack) {   // ひび:ガラスに黒い線、ふたがずれる
+    cap.rotation.z = 0.18; cap.position.x = 0.04;
+    [[0.05, 0.36, 0.5], [-0.07, 0.28, -0.7], [0.09, 0.22, 0.2], [-0.02, 0.44, 1.1]].forEach(([x, y, r]) => { const l = box(g, 0.012, 0.16, 0.006, 0x2a2a2a, x, y - 0.08, 0.243); l.rotation.z = r; });
+  }
+}
+function content(g, L, y) {
+  const c = L.col, S = L.shape;
+  if (S === 'shell') { const m = add(g, new THREE.SphereGeometry(0.12, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), c, 0, y - 0.05, 0); m.scale.set(1, 0.6, 0.8); m.rotation.x = -0.9; }
+  else if (S === 'conch') { const m = add(g, new THREE.ConeGeometry(0.09, 0.26, 12), c, 0, y, 0); m.rotation.z = 0.5; add(g, new THREE.SphereGeometry(0.075, 12, 8), c, -0.05, y - 0.08, 0); }
+  else if (S === 'stone') { const m = add(g, new THREE.DodecahedronGeometry(0.11), c, 0, y - 0.04, 0); m.scale.set(1.2, 0.7, 1); }
+  else if (S === 'glass') { const m = add(g, new THREE.DodecahedronGeometry(0.09), c, 0, y - 0.04, 0, 0.75); m.scale.set(1.3, 0.45, 1); }
+  else if (S === 'urchin') { const m = new THREE.Mesh(new THREE.IcosahedronGeometry(0.11, 1), new THREE.MeshLambertMaterial({ color: c, flatShading: true })); m.position.set(0, y - 0.03, 0); m.scale.set(1, 0.7, 1); g.add(m); }
+  else if (S === 'star') { for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2, m = box(g, 0.05, 0.13, 0.025, c, Math.sin(a) * 0.065, y - 0.06 + Math.cos(a) * 0.065, 0); m.rotation.z = -a; } }
+  else if (S === 'coral') { [[0, 0, 0.2, 0], [-0.05, 0.08, 0.12, 0.5], [0.05, 0.06, 0.13, -0.5], [0.0, 0.14, 0.08, 0.2]].forEach(([x, yy, h, r]) => { const m = cyl(g, 0.018, h, c, x, y - 0.12 + yy, 0, 0.012); m.rotation.z = r; }); }
+  else if (S === 'disc') { const m = cyl(g, 0.12, 0.02, c, 0, y - 0.02, 0); m.rotation.x = 1.25; }
+  else if (S === 'crystal') { [[0, 0.24, 0], [-0.06, 0.16, 0.35], [0.06, 0.18, -0.3]].forEach(([x, h, r]) => { const m = add(g, new THREE.ConeGeometry(0.04, h, 6), c, x, y - 0.12 + h / 2, 0, 0.8); m.rotation.z = r; }); }
+  else if (S === 'ammonite') { const t = new THREE.Mesh(new THREE.TorusGeometry(0.085, 0.035, 10, 24), mat(c)); t.position.set(0, y, 0); g.add(t); const t2 = new THREE.Mesh(new THREE.TorusGeometry(0.035, 0.02, 8, 16), mat(c)); t2.position.set(0, y, 0); g.add(t2); }
+  else if (S === 'trilobite') { const m = add(g, new THREE.SphereGeometry(0.1, 14, 10), c, 0, y - 0.06, 0); m.scale.set(0.8, 0.3, 1.3); for (let i = -2; i <= 2; i++) box(g, 0.17, 0.012, 0.012, 0x3a3030, 0, y - 0.04, i * 0.035); }
+  else if (S === 'tooth') add(g, new THREE.ConeGeometry(0.07, 0.2, 3), 0xf4efe2, 0, y - 0.02, 0);
+  else if (S === 'amber') { const m = add(g, new THREE.DodecahedronGeometry(0.1), 0xe39a2a, 0, y - 0.03, 0, 0.85); m.material.emissive = new THREE.Color(0x5a3000); add(g, new THREE.SphereGeometry(0.02, 8, 6), 0x2a1a10, 0, y - 0.03, 0); }
+  else if (S === 'cube') { box(g, 0.1, 0.1, 0.1, 0xd9b84a, -0.03, y - 0.12, 0); const m = box(g, 0.08, 0.08, 0.08, 0xe6c95a, 0.05, y - 0.1, 0.02); m.rotation.y = 0.6; }
+  else if (S === 'leaf') { box(g, 0.24, 0.04, 0.18, 0x9a8f7e, 0, y - 0.13, 0); const m = add(g, new THREE.SphereGeometry(0.08, 12, 8), c, 0, y - 0.09, 0); m.scale.set(1, 0.08, 0.55); }
+  else if (S === 'gem') { const m = add(g, new THREE.OctahedronGeometry(0.1), c, 0, y, 0, 0.9); m.material.emissive = new THREE.Color(c).multiplyScalar(0.35); m.scale.set(1, 1.3, 1); }
+  else if (S === 'opal') { const m = add(g, new THREE.SphereGeometry(0.09, 16, 12), c, 0, y - 0.03, 0); m.scale.set(1.2, 0.6, 1); m.material.emissive = new THREE.Color(0x553366); }
+  else if (S === 'pearl') { const sh = add(g, new THREE.SphereGeometry(0.12, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), 0xd8cfc2, 0, y - 0.12, 0); sh.scale.set(1, 0.35, 1); sh.rotation.x = Math.PI; sh.position.y = y - 0.06; ball(g, 0.06, c, 0, y - 0.04, 0); }
+  else if (S === 'meteor') { const m = new THREE.Mesh(new THREE.DodecahedronGeometry(0.11), new THREE.MeshLambertMaterial({ color: c, flatShading: true, emissive: 0x220a00 })); m.position.set(0, y - 0.03, 0); g.add(m); }
+}
+function specimenJar(g, s) { jar(g, s.lv, 0.5, spec.cracked(s.id)); const c = new THREE.Group(); content(c, s.look, 0); c.scale.setScalar(1.55); c.position.y = 0.33; g.add(c); }
+function fishJar(g, f) {
+  jar(g, 2, 0.62, false, 0xf6e7a8);
+  const a = f.art || {}, b = a.body || ['#888888', '#cccccc'], c1 = hexOf(b[0]), c2 = hexOf(b[1]), eel = a.shape === 'eel', crab = a.shape === 'crab';
+  const body = ball(g, 0.1, c1, 0, 0.38, 0); body.scale.set(eel ? 0.5 : 0.55, eel ? 2.4 : 1.5, eel ? 0.5 : 0.45);
+  if (crab) { body.scale.set(1.2, 0.6, 0.9); ball(g, 0.04, c2, -0.12, 0.42, 0.04); ball(g, 0.04, c2, 0.12, 0.42, 0.04); return; }
+  const belly = ball(g, 0.07, c2, 0, 0.36, 0.03); belly.scale.set(0.5, 1.4, 0.4);
+  const t = add(g, new THREE.ConeGeometry(0.06, 0.1, 4), hexOf(a.fin || b[0]), 0, eel ? 0.1 : 0.2, 0); t.rotation.z = Math.PI;
+  ball(g, 0.018, 0x111111, 0.035, eel ? 0.6 : 0.5, 0.04);
+}
+function tank(g) {
+  box(g, 1.86, 0.5, 0.86, 0x4a3a30, 0, 0, 0);                       // 台
+  box(g, 1.78, 0.06, 0.78, 0xe8dcc0, 0, 0.5, 0);                    // 砂
+  add(g, new THREE.BoxGeometry(1.76, 0.66, 0.76), 0x4fb8e8, 0, 0.88, 0, 0.3);   // 水
+  add(g, new THREE.BoxGeometry(1.8, 0.74, 0.8), 0xe8f8ff, 0, 0.93, 0, 0.12);    // ガラス
+  for (const [w, d, x, z] of [[1.84, 0.04, 0, 0.4], [1.84, 0.04, 0, -0.4], [0.04, 0.84, 0.9, 0], [0.04, 0.84, -0.9, 0]]) box(g, w, 0.05, d, 0x2b2b30, x, 1.28, z);   // ふちの枠
+  [[-0.7, 0.2], [-0.55, -0.15], [0.68, -0.2]].forEach(([x, z]) => { for (let i = 0; i < 3; i++) { const m = cyl(g, 0.02, 0.32 + i * 0.08, 0x3f9a5a, x + i * 0.04, 0.56, z, 0.008); m.rotation.z = (i - 1) * 0.25; } });
+  ball(g, 0.09, 0x8a8a90, 0.4, 0.58, 0.18).scale.set(1.4, 0.7, 1);
+  const fish = spec.tank().slice(0, 6);
+  fish.forEach((t, i) => {
+    const f = FISH_SPEC.find(x => x.id === t.id); if (!f) return;
+    const b = (f.art && f.art.body) || ['#888888'], s = 0.07 + 0.05 * Math.min(1, t.g || 0);
+    const x = -0.6 + (i % 3) * 0.6 + (i > 2 ? 0.25 : 0), y = 0.75 + (i > 2 ? 0.25 : 0) + (i % 2) * 0.05, z = (i % 2 ? -0.12 : 0.12);
+    const m = ball(g, s, hexOf(b[0]), x, y, z); m.scale.set(1.8, 0.8, 0.55);
+    const tl = add(g, new THREE.ConeGeometry(s * 0.6, s * 0.9, 4), hexOf((f.art && f.art.fin) || b[0]), x - s * 1.9, y, z); tl.rotation.z = Math.PI / 2;
+  });
 }
 export const MEDALS = [3, 7, 14, 30, 60, 100, 200, 365];
 // 原点が床の中心、正面は +z。大きさは w×d マス(1マス=1)。壁かけは「壁にふれる面が z=0」「幅の中心が x=0」。
@@ -198,6 +266,10 @@ export const ITEMS = [
     box(g, 1.7, 1.4, 0.08, 0xffffff, 0, 0, 0.04); glow(box(g, 1.5, 1.2, 0.02, 0xbfe6ff, 0, 0.1, 0.09), 0x4a7090);
     box(g, 0.06, 1.2, 0.04, 0xffffff, 0, 0.1, 0.11); box(g, 1.5, 0.06, 0.04, 0xffffff, 0, 0.7, 0.11); } },
 ];
+// 英語の釣り堀でもらうもの(お店では売らない)。標本はセットの数だけ、魚の標本は魚の数だけ
+ITEMS.push({ id: 'tank', cat: 'かざり', noshop: true, name: '砂吹さんの水槽', price: 0, w: 2, d: 1, build(g) { tank(g); } });
+for (const s of SETS) ITEMS.push({ id: 'sp_' + s.id, cat: 'かざり', noshop: true, spec: s.id, name: `${s.look.name}の標本`, price: 0, w: 1, d: 1, build(g) { specimenJar(g, s); } });
+for (const f of FISH_SPEC) ITEMS.push({ id: 'fs_' + f.id, cat: 'かざり', noshop: true, name: `${f.name}の標本`, price: 0, w: 1, d: 1, build(g) { fishJar(g, f); } });
 export const ITEM = Object.fromEntries(ITEMS.map(i => [i.id, i]));
 
 // 家具の高さ(上に重ねるときに使う)。見た目から測って覚えておく
