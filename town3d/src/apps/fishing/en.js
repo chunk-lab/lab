@@ -8,6 +8,7 @@ import { IDIOMS } from './idioms.js';
 import { SETS, SET, LV_NAME, LV_SUB, TANK_MAX, GROW_NEED, FEED_PER_DAY, FISH_SPEC, spec, condOf } from '../../game/specimen.js';
 import { furn } from '../../game/furniture.js';
 import { localLearn } from './learnrec.js';
+import { sortReel, SORT_CSS } from './sortreel.js';
 
 export const PERFECT_C = 2;          // 続けて何回正解で「完璧」
 export const T_BITE = 7, T_Q = 10;   // 答える時間(秒)。アタリは短め
@@ -57,7 +58,7 @@ const CSS = `
 `;
 
 export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast }) {
-  if (!document.getElementById('fz-en-css')) { const s = document.createElement('style'); s.id = 'fz-en-css'; s.textContent = CSS; document.head.appendChild(s); }
+  if (!document.getElementById('fz-en-css')) { const s = document.createElement('style'); s.id = 'fz-en-css'; s.textContent = CSS + SORT_CSS; document.head.appendChild(s); }
   const learn = ctx.learn || localLearn();
   const seen = new Set();
   const emitLearn = (en, ja) => { const k = en.toLowerCase(); if (seen.has(k)) return; seen.add(k); try { ctx.emit('learn', { en, ja, src: 'fishing' }); } catch (e) { } };
@@ -162,7 +163,11 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       cast: () => idiom(s.lv, '🎯 投げた! 熟語に答えると魚がよく寄る', ui.parentNode),
       bite: () => word('ej', '🎣 アタリ! 意味は?(まちがえると逃げる)', T_BITE),
       thrash: () => idiom(s.lv, '🌊 あばれた! 熟語で落ち着かせろ', ui.parentNode),
-      net: () => word('je', '🥅 あと少し! 英語で言うと?', T_Q),
+      // 巻き取り:文の並べ替え(アミューズメントの並べ替えと同じデータ)。大物ほど長い文
+      reel: (sp, size) => { const big = sp.r >= 4 ? [5, 8] : (sp.r >= 3 || size >= 60) ? [4, 4] : [3, 3];
+        return sortReel(ui.parentNode, { n: big, sfx, say, onDone: (en, ja, ok) => { try { ctx.emit('learn', { kind: 'sentence', en, ja, src: '釣りの巻き取り' }); } catch (e) { } } }); },
+      // 待っているあいだの問題(どんどん出る)。単語が多め、ときどき熟語
+      wait: () => Math.random() < 0.25 ? idiom(s.lv, '⏳ 待ってるあいだに 熟語!', ui.parentNode).then(ok => ({ ok })) : word(Math.random() < 0.5 ? 'ej' : 'je', '⏳ 待ってるあいだに 単語!', T_Q),
       refresh: showProg,
     };
   }

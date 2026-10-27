@@ -251,7 +251,7 @@ export const fishingApp = {
       }
       const tackleChip = () => { const b = gearById('bait', eq.bait); $('[data-b="tackle"]').textContent = `${b.icon} ${b.name}・${gearById('hook', eq.hook).name}`; const tc = $('[data-b="tana"]'); tc.style.display = b.type === 'lure' ? 'none' : ''; tc.textContent = TANA[tanaOf(E.S.tana)].name; };
       tackleChip();
-      const G = en ? EN.playGates(en, ui) : null; let thrashN = 0;
+      const G = en ? EN.playGates(en, ui) : null; let thrashN = 0, waitQ = 3;
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
         if (b === 'skip') {   // 勝負をとちゅうで切りあげる:2回おすと、あいての残り時間を一気に進めて結果を出す
@@ -400,7 +400,7 @@ export const fishingApp = {
         }
         else if (type === 'net') {
           if (!E.S.hooked || E.S.hooked.sp.kind !== 'fish') { E.netResult(true); return; }
-          stopIn(); G.net().then(r => E.netResult(r.ok));
+          stopIn(); const h = E.S.hooked; G.reel(h.sp, h.size || 0).then(ok => E.netResult(ok));
         }
       }
       function oppEvent(type, d) {
@@ -528,6 +528,7 @@ export const fishingApp = {
         const reeling = (bt && bt.mode === 'reel') || keyReel;
         E.input.reel = reeling && (E.S.ph === 'water' || E.S.ph === 'fight') ? thr || 0.55 : 0;
         E.input.side += (sideT - E.input.side) * Math.min(1, dt * 6);
+        if (G && !EN.busy && E.S.ph === 'water' && !E.S.engaged && !E.S.bite && !E.input.reel) { waitQ -= dt; if (waitQ <= 0 && E.S.waitT > 1.2) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = 1.6; if (r.ok) { E.bonusHere(2.2); toast('✨ 魚がよってきた!', 900); } }); } } else if (!(G && EN.busy)) waitQ = Math.min(waitQ, 3);
         if (G && EN.busy) { } else if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
         if (leap) { leap.t += dt / leap.dur; if (leap.t >= 1) { const fn = leap.then; leap = null; fn && fn(); } }
         if (vs && E.S.ph === 'landed' && E.S.resultT > 0.9) E.ack();
