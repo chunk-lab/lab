@@ -18,16 +18,16 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
 
   // ---- 画面 ----
   const css = document.createElement('style');
-  css.textContent = `.sb-on .tw-emotes,.sb-on .tw-snowb,.sb-on .tw-action,.sb-on .tw-corner{display:none!important}
+  css.textContent = `.sb-on .tw-emotes,.sb-on .tw-snowb,.sb-on .tw-action,.sb-on .tw-corner,.sb-on .tw-manb,.sb-on .tw-dodge{display:none!important}
 .sb-hud{position:absolute;inset:0;pointer-events:none;font-family:inherit;color:#5a4a6b;z-index:6}
 .sb-hud button{pointer-events:auto;border:0;font:inherit;font-weight:900;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .sb-top{position:absolute;left:8px;right:8px;top:calc(52px + env(safe-area-inset-top,0px));display:flex;justify-content:space-between;gap:6px}
 .sb-team{display:flex;gap:4px;flex-wrap:wrap}.sb-p{background:#fffffff0;border-radius:12px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 6px #0002}
 .sb-p.down{opacity:.45;text-decoration:line-through}.sb-p b{letter-spacing:-1px}
-.sb-mk{position:absolute;right:20px;bottom:calc(60px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d6ecff);box-shadow:0 5px 0 #8fb6dc,0 8px 16px #0004;font-size:28px;line-height:1}
+.sb-mk{position:absolute;right:66px;bottom:calc(60px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d6ecff);box-shadow:0 5px 0 #8fb6dc,0 8px 16px #0004;font-size:28px;line-height:1}
 .sb-mk small{display:block;font-size:10px;margin-top:2px}
 .sb-man,.sb-roll,.sb-cam{position:absolute;width:66px;height:66px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #c9bfd8,0 6px 12px #0003;font-size:24px;line-height:1}
-.sb-man{right:124px;bottom:calc(60px + env(safe-area-inset-bottom,0px))}.sb-roll{right:30px;bottom:calc(166px + env(safe-area-inset-bottom,0px))}
+.sb-man{right:170px;bottom:calc(60px + env(safe-area-inset-bottom,0px))}.sb-roll{right:80px;bottom:calc(166px + env(safe-area-inset-bottom,0px))}
 .sb-cam{right:12px;top:calc(118px + env(safe-area-inset-top,0px));width:52px;height:52px;font-size:20px;background:#ffffffd8}
 .sb-man[disabled],.sb-roll[disabled],.sb-mk[disabled]{opacity:.45}.sb-man small,.sb-roll small,.sb-cam small{display:block;font-size:10px}
 .sb-setup{position:absolute;left:50%;top:28%;transform:translateX(-50%);background:#fffffff2;border-radius:20px;padding:14px 18px;text-align:center;pointer-events:auto;box-shadow:0 6px 20px #0003;min-width:230px}

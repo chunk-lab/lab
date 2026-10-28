@@ -747,12 +747,35 @@ export function mount(container, opt = {}) {
     if (ph === 'down') { if (!snow.holding) snow.start(); }
     else if (snow.making) { snow.finish(); hud.toast('画面をタップした所へ投げよう'); }
   }));
+  // ⛄ 雪合戦と同じボタン:持っていれば置く / 近くに雪だるまがあれば持つ / なければつくる
+  offs.push(bus.on('ui:man', () => {
+    if (!started || hud.busy || appHost.current || battle.active || sport.active || seasons.season !== 'winter') return; audio.unlock();
+    const fx = me.x + Math.sin(me.ry) * 1.7, fz = me.z + Math.cos(me.ry) * 1.7;
+    if (seasons.carrying()) { if (seasons.put(fx, fz)) { audio.play('close'); hud.toast('雪だるまを置いた'); } return; }
+    if (snow.making || snow.holding) return;
+    const sn = seasons.nearest(me.x, me.z, 2.4);
+    if (sn) { if (seasons.lift(sn.i)) { audio.play('open'); hud.toast('雪だるまを持った(画面をタップで投げる)'); } }
+    else if (seasons.build(fx, fz)) { audio.play('open'); hud.toast('ころころ…雪だるまができた!'); }
+  }));
+  // 💨 よける(雪合戦と同じ:向いている方・動いている方へすばやく転がる)
+  let dodgeT = 0, dodgeCd = 0, ddx = 0, ddz = 0, dodgeRot = false;
+  offs.push(bus.on('ui:dodge', () => {
+    if (!started || hud.busy || appHost.current || battle.active || sport.active || seat || seasons.carrying() || snow.making || dodgeT > 0 || dodgeCd > 0) return;
+    const m = lastMoveDir || { x: Math.sin(me.ry), z: Math.cos(me.ry) }; ddx = m.x; ddz = m.z; dodgeT = 0.42; dodgeCd = 1.4; audio.play('wave');
+  }));
   { let d0 = null; const cv = renderer.domElement;   // 雪玉を持っているとき:画面をタップした所へ投げる
     cv.addEventListener('pointerdown', e => { d0 = { x: e.clientX, y: e.clientY, t: performance.now() }; });
     const onUp = e => {   // 町の操作が指をつかまえる(capture)ので、はなしたのは window で受ける
-      if (!d0 || hud.busy || appHost.current || !(snow.holding || battle.active)) { d0 = null; return; }
+      if (!d0 || hud.busy || appHost.current || !(snow.holding || battle.active || seasons.carrying())) { d0 = null; return; }
       const ok = Math.hypot(e.clientX - d0.x, e.clientY - d0.y) < 12 && performance.now() - d0.t < 400; d0 = null; if (!ok) return;
       if (battle.active) { battle.tap(e.clientX, e.clientY, cv.getBoundingClientRect()); return; }
+      if (seasons.carrying()) {   // 雪だるまを持っているとき:タップした地面へ投げる(着いたらそこに立つ)
+        const rc = cv.getBoundingClientRect(); ndc2.set(((e.clientX - rc.left) / rc.width) * 2 - 1, -((e.clientY - rc.top) / rc.height) * 2 + 1); ray.setFromCamera(ndc2, camera);
+        const pt = new THREE.Vector3(); if (!ray.ray.intersectPlane(groundPl, pt)) return;
+        if (Math.hypot(pt.x - me.x, pt.z - me.z) > 12) { hud.toast('そこは遠すぎるよ'); return; }
+        const [lx, lz] = collide(pt.x, pt.z, 0.5); if (seasons.launch(new THREE.Vector3(me.x, 1.9, me.z), new THREE.Vector3(lx, 0, lz), (x, z) => snow.fx(new THREE.Vector3(x, 0.2, z), new THREE.Vector3(0, 1, 0), 3))) { audio.play('wave'); me.ch.wave?.(); }
+        return;
+      }
       const r = snow.throwAt(e.clientX, e.clientY, cv.getBoundingClientRect());
       if (r === 'far') hud.toast('そこは遠すぎるよ'); else if (r) { audio.play('wave'); me.ch.wave?.(); }
     };
@@ -828,6 +851,7 @@ export function mount(container, opt = {}) {
     if (!started) return;
     const seg = (key, opts) => `<div class="tw-seg">${opts.map(([v, l]) => `<button class="tw-btn${settings[key] == v ? ' on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
     const pn = hud.panel(`<h2>せってい</h2>
+      <div class="tw-row">カメラの位置<button class="tw-btn" data-act="camdef" style="padding:6px 14px">もとにもどす</button></div>
       <div class="tw-row">ことばノート<button class="tw-btn" data-act="notes" style="padding:6px 14px">ひらく(${notes.length})</button></div>
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
       <div class="tw-row">低負荷モード${seg('lite', [[0, 'オフ'], [1, 'オン']])}</div>
@@ -865,6 +889,7 @@ export function mount(container, opt = {}) {
         if (b.dataset.bl) { setBlossom(b.dataset.bl === '1'); p.querySelectorAll('[data-bl]').forEach(x => x.classList.toggle('on', x === b)); }
         if (b.dataset.act === 'meteor') env.meteorNow();
         if (b.dataset.act === 'adult') { hud.closePanel(); setTimeout(openAdultSetup, 30); }
+        if (b.dataset.act === 'camdef') { delete settings.camView; save(); cam.pitch = CAM_DEF.pitch; cam.dist = CAM_DEF.dist; cam.yaw = me.ry + Math.PI; camMode = 'follow'; camBarDraw(); me.ch.root.visible = true; hud.toast('カメラの位置をもとにもどした'); }
         if (b.dataset.act === 'notes') { hud.closePanel(); setTimeout(openNoteBook, 30); }
         if (b.dataset.act === 'today') { applyDate(new Date()); const di = p.querySelector('.tw-t-date'); const d = testDate; di.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; p.querySelectorAll('[data-bl]').forEach(x => x.classList.toggle('on', (x.dataset.bl === '1') === blossomOn)); }
         if (b.dataset.act === 'close') hud.closePanel();
@@ -904,7 +929,8 @@ export function mount(container, opt = {}) {
   bus.on('*', (n, d) => { if (n.startsWith('app:') || n === 'talk' || n === 'wallet') opt.onEvent?.(n, d); });
 
   // ---- カメラ ----
-  const cam = { yaw: Math.PI, pitch: 0.42, dist: 7.5, x: me.x, z: me.z };
+  const CAM_DEF = { pitch: 0.5, dist: 9 };   // ふだんの見え方(引いた位置のうしろから)
+  const cam = { yaw: Math.PI, pitch: settings.camView ? settings.camView.pitch : CAM_DEF.pitch, dist: settings.camView ? settings.camView.dist : CAM_DEF.dist, x: me.x, z: me.z };
   // ---- カメラ:ふだん=自分についていく(follow) / 動かす(free:カメラだけ自由に) / 固定(fixed:そこに置いて、自分は歩ける) ----
   let camMode = 'follow';
   const fcam = { x: 0, y: 1.6, z: 0, yaw: 0, pitch: 0 };
@@ -939,7 +965,12 @@ export function mount(container, opt = {}) {
     if (b.dataset.p) camPreset(b.dataset.p);
     else if (b.dataset.c === 'fix') { camMode = 'fixed'; cam.yaw = fcam.yaw; me.ch.root.visible = true; camBarDraw(); hud.toast('カメラをここに固定したよ。📷で撮れるよ'); }
     else if (b.dataset.c === 'free') { camFromView(); camMode = 'free'; camBarDraw(); }
-    else if (b.dataset.c === 'back') { camMode = 'follow'; camBarDraw(); }
+    else if (b.dataset.c === 'back') {   // 合わせたカメラの位置のまま もどる(次からもその見え方。せっていでリセットできる)
+      const dx = fcam.x - me.x, dz = fcam.z - me.z, dy = fcam.y - 1.3, L = Math.hypot(dx, dy, dz) || 1;
+      cam.yaw = Math.atan2(dx, dz); cam.pitch = clamp(Math.asin(clamp(dy / L, -1, 1)), 0.1, 1.2); cam.dist = clamp(L, 3, 14); cam.x = me.x; cam.z = me.z;
+      settings.camView = { pitch: +cam.pitch.toFixed(3), dist: +cam.dist.toFixed(2) }; save();
+      camMode = 'follow'; camBarDraw(); me.ch.root.visible = true; input.clear();
+    }
   };
   camBar.oninput = e => { if (e.target.classList.contains('hs')) fcam.y = vToHeight(+e.target.value); };
   // ---- イベント(花火・日食・月食) ----
@@ -1011,10 +1042,11 @@ export function mount(container, opt = {}) {
   }));
   offs.push(bus.on('ui:cam', () => {
     if (!started || appHost.current || hud.busy) return;
-    if (camMode === 'follow') { camFromView(); camMode = 'free'; } else camMode = 'follow';
+    if (camMode === 'follow') { camFromView(); camMode = 'free'; } else { cam.pitch = CAM_DEF.pitch; cam.dist = CAM_DEF.dist; cam.yaw = me.ry + Math.PI; cam.x = me.x; cam.z = me.z; camMode = 'follow'; me.ch.root.visible = true; }   // 2回押し=ふだんの見え方(引いた位置のうしろから)にもどる
     camBarDraw(); input.clear();
   }));
   const ray = new THREE.Raycaster();
+  const ndc2 = new THREE.Vector2(), groundPl = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0); let lastMoveDir = null;
 
   // ---- 当たり判定 ----
   function collide(x, z, rad = 0.32) {
@@ -1070,7 +1102,7 @@ export function mount(container, opt = {}) {
       const hs = camBar.querySelector('.hs'); if (hs && document.activeElement !== hs) hs.value = heightToV(fcam.y).toFixed(3);
     } else me.ch.root.visible = true;
     if (!started || hud.busy) mx = my = 0;
-    if (snow.making || battle.making || battle.rolling || sport.active) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
+    if (snow.making || battle.making || battle.rolling || sport.active || dodgeT > 0) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
     const guided = guideStep(dt, mag);   // 住人に連れて行ってもらっている間は、自動で歩く
@@ -1080,10 +1112,16 @@ export function mount(container, opt = {}) {
       const s = Math.sin(cam.yaw), c = Math.cos(cam.yaw);
       const wx = (mx * c + my * s) / mag, wz = (-mx * s + my * c) / mag; lastMove = { x: wx, z: wz };
       me.ry = angleLerp(me.ry, Math.atan2(wx, wz), Math.min(1, dt * 12));
-      [me.x, me.z] = collide(me.x + wx * me.speed * dt, me.z + wz * me.speed * dt);
+      [me.x, me.z] = collide(me.x + wx * me.speed * dt * (seasons.carrying() ? 0.6 : 1), me.z + wz * me.speed * dt * (seasons.carrying() ? 0.6 : 1));   // 雪だるまを持っていると、ゆっくり
     }
+    lastMoveDir = lastMove;
+    if (dodgeCd > 0) dodgeCd -= dt;
+    if (dodgeT > 0) { dodgeT -= dt; me.ry = Math.atan2(ddx, ddz); me.speed = 8; [me.x, me.z] = collide(me.x + ddx * 11 * dt, me.z + ddz * 11 * dt); }
     me.ch.root.position.set(me.x, seat ? -0.04 : 0, me.z); me.ch.root.rotation.y = me.ry;
     me.ch.update(dt, me.speed);
+    { const rg = me.ch.rig;   // よけている間はくるっと回る / 雪だるまを持っている間は両手を上げる
+      if (rg) { if (dodgeT > 0) { rg.body.rotation.x = (1 - dodgeT / 0.42) * Math.PI * 2; dodgeRot = true; } else if (dodgeRot) { rg.body.rotation.x = 0; dodgeRot = false; }
+        if (seasons.carrying()) { rg.arms[0].rotation.x = rg.arms[1].rotation.x = -2.95; rg.arms[0].rotation.z = 0.35; rg.arms[1].rotation.z = -0.35; } } }
 
     // カメラ:後ろから少し見下ろす。建物にめり込むときは手前に寄せる
     const ft = (date && date.focus) || sport.focus() || me;   // ゴルフ・フリスビーで飛んでいる間は、ボールを追う
@@ -1125,7 +1163,9 @@ export function mount(container, opt = {}) {
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
-    hud.setSnow(started && seasons.season === 'winter' && !battle.active && !sport.active, snow.making ? '❄️ ころころ' : snow.holding ? '❄️ 投げてね' : '❄️ 雪玉');
+    { const sn = seasons.carrying() ? null : seasons.nearest(me.x, me.z, 2.4);
+      hud.setSnow(started && seasons.season === 'winter' && !battle.active && !sport.active, snow.making ? '❄️\nころころ' : snow.holding ? '❄️\n投げてね' : seasons.carrying() ? '❄️\n(もってる)' : '❄️\nつくる', seasons.carrying() ? '🙌\nおく' : sn ? '🙌\nもつ' : '⛄\nつくる', snow.making || snow.holding);
+      hud.setDodge(started && !battle.active && !sport.active); }
     snow.update(dt);
     battle.update(dt, lastMove);
     sport.update(dt);
@@ -1158,7 +1198,6 @@ export function mount(container, opt = {}) {
     }
     if (battle.active || sport.active) focus = null;
     if (focus && focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn')) focus = { ...focus, label: seasons.season === 'spring' ? '📋⛳ 掲示板(きょうのゴルフ)' : '📋🥏 掲示板(きょうのフリスビー)' };
-    else if (!focus && !seat && !battle.active && !sport.active && seasons.season === 'winter') { const sn = seasons.nearest(me.x, me.z, 1.5); focus = seasons.carrying() ? { kind: 'putsnow', label: '⛄ 置く' } : sn ? { kind: 'snowman', idx: sn.i, label: '⛄ 持つ' } : { kind: 'mksnow', label: '⛄ 雪だるまをつくる' }; }
     if (focus && focus.kind === 'npc') { const n = nearNpcs().length; if (n >= 2) focus.label = `ちかくの人と話す(${n}人)`; }
     if (seat && seat.piano) focus = { kind: 'piano', label: '🎹 曲をえらぶ' };
     else if (seat) focus = seat.hana && seat.hana.pin ? { kind: 'benchtalk', label: `💬 ${seat.hana.def.name}と話す` } : { kind: 'stand', label: '🧍 立つ' };

@@ -106,6 +106,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     return g;
   }
   let held = null;   // 町で持っている雪だるま
+  const flyers = [];   // 投げた雪だるま
   const save = () => storage && storage.set('snowmen', men.map(m => ({ x: +m.x.toFixed(2), z: +m.z.toFixed(2) })));
   function addMan(x, z, instant) {
     if (men.length >= MAX_MEN) removeMan(0, true);
@@ -148,12 +149,15 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     // 雪だるまを持つ(町)。持っている間は、頭の上にちいさく見える。もう一度で置く
     lift(i) { const m = men[i]; if (!m || held) return false; scene.remove(m.g); const k = colliders.indexOf(m.col); if (k >= 0) colliders.splice(k, 1); men.splice(i, 1); held = makeMan(); held.scale.setScalar(0.5); scene.add(held); return true; },
     carrying: () => !!held,
-    holdAt(x, z, ry) { if (held) { held.position.set(x, 1.9, z); held.rotation.y = ry; } },
+    holdAt(x, z, ry) { if (held) { held.position.set(x, 1.85, z); held.rotation.y = ry; } },
+    // 持っている雪だるまを (to) へ投げる。着いたら onLand(x,z) のあと、そこに立つ
+    launch(from, to, onLand) { if (!held) return false; const g = held; held = null; flyers.push({ g, from: from.clone(), to: to.clone(), u: 0, T: Math.max(0.5, from.distanceTo(to) / 13), onLand }); return true; },
     put(x, z) { if (!held) return null; scene.remove(held); held = null; return api.build(x, z); },
     nearest(x, z, r = 1.6) { let b = null, bd = r; men.forEach((m, i) => { const d = Math.hypot(m.x - x, m.z - z); if (d < bd) { bd = d; b = { i, m }; } }); return b; },
     remove: i => removeMan(i),
     // 毎フレーム。c=カメラの位置
     update(dt, c, night = 0) {
+      for (let i = flyers.length - 1; i >= 0; i--) { const f = flyers[i]; f.u += dt / f.T; const u = Math.min(1, f.u); f.g.position.lerpVectors(f.from, f.to, u); f.g.position.y += Math.sin(u * Math.PI) * 3.2; f.g.rotation.x += dt * 5; if (u >= 1) { scene.remove(f.g); flyers.splice(i, 1); f.onLand?.(f.to.x, f.to.z); api.build(f.to.x, f.to.z); } }
       leaves.update(dt, c, night);
       t += dt;
       if (kind) {
