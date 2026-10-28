@@ -123,8 +123,7 @@ export function mount(container, opt = {}) {
     onEnd({ win, quit, opp }) {
       actSport(null);
       if (quit) { if (!goHome()) hud.toast('雪合戦をやめた'); return; }
-      if (win) { wallet.add(30, 'snowfight'); }
-      setTimeout(() => hud.dialog({ name: opp?.def.name || '雪合戦', text: win ? 'まいった〜! 強いね。(🪙+30)' : 'へへっ、こっちの勝ち! また勝負しよう', choices: [{ label: 'もう一回!', fn: () => opp && battle.start(opp, 2) }, { label: backHome ? '🏠 家にもどる' : 'おわる', fn: () => goHome() }] }), 300);
+      setTimeout(() => hud.dialog({ name: opp?.def.name || '雪合戦', text: win ? 'まいった〜! 強いね。' : 'へへっ、こっちの勝ち! また勝負しよう', choices: [{ label: 'もう一回!', fn: () => opp && battle.start(opp, 2) }, { label: backHome ? '🏠 家にもどる' : 'おわる', fn: () => goHome() }] }), 300);
     },
   });  sport = createSport({
     scene, camera, root, me, city, collide: (x, z, r) => collide(x, z, r), audio, wallet, toast: t => hud.toast(t),

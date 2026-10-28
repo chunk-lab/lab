@@ -142,7 +142,8 @@ export const fishingApp = {
     const letters = st.get('letters') || [], claimed = st.get('claimed') || [];
     const save = () => { st.set('own', own); st.set('eq', eq); st.set('dex', dex); st.set('stats', stats); st.set('letters', letters); st.set('claimed', claimed); };
     if (stats.todayKey !== todayKey()) { stats.todayKey = todayKey(); stats.today = 0; stats.coinsToday = 0; }
-    function giveCoins(n, why) {   // 1日の上限つき
+    function giveCoins(n, why) {   // 釣り・対決ではコインは出ない(くり返しもらえるものは無し。図鑑の達成報酬と満腹コインだけ)
+      return 0;
       const left = Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0)), k = Math.min(left, Math.round(n));
       if (k > 0) { stats.coinsToday = (stats.coinsToday || 0) + k; ctx.wallet.add(k, why || 'fish'); sfx.play('coin'); }
       save(); return k;
@@ -455,7 +456,7 @@ export const fishingApp = {
         if (sp.letter) { const left = LETTERS.map((_, i) => i).filter(i => !letters.includes(i)); const i = left.length ? left[Math.floor(Math.random() * left.length)] : Math.floor(Math.random() * LETTERS.length); if (!letters.includes(i)) letters.push(i); extra = `<div style="background:#fff8e6;border-radius:12px;padding:8px 10px;margin-top:8px;font-size:14px"><b style="font-family:Georgia,serif">“${esc(LETTERS[i][0])}”</b><br><small>${esc(LETTERS[i][1])}</small></div>`; }
         if (sp.gift) { const L = ['spoon', 'minnow', 'frog', 'glow'].find(id => !own.bait.includes(id)); if (L) { own.bait.push(L); extra = `<div style="margin-top:6px">🎁 <b>${gearById('bait', L).name}</b> を手に入れた!</div>`; } else coins = 100; }
         if (easy) coins = Math.round(coins / 2);   // かんたんはコイン半分
-        const got = coins ? giveCoins(coins, 'fish') : 0;
+        coins = 0; const got = 0;
         save(); checkDex();
         return { sp, isNew, best, coins: got, wanted: coins, extra, r };
       }

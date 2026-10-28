@@ -47,19 +47,7 @@ const omikuji = simple((box, ctx) => {
 export const APPS = [
   { id: 'board', title: '掲示板', type: 'module', module: board },
   { id: 'omikuji', title: 'おみくじ', type: 'module', module: omikuji },
-  // 既存アプリ:dist/apps/<id>/ にファイルを置くと動く
-  {
-    id: 'punichunk', title: 'ぷにチャンク', type: 'script', src: 'apps/punichunk/punichunk.js', global: 'PuniChunk',
-    hint: 'apps/punichunk/punichunk.js を置くと遊べます',
-    options: ctx => ({
-      startScreen: 'title', storage: ctx.storage, storagePrefix: 'town:app:punichunk:',
-      audio: { bgm: ctx.audio.bgm, sfx: ctx.audio.sfx, voice: ctx.audio.voice },
-      onEvent: (name, data) => {
-        ctx.emit(name, data);
-        if (name === 'result' && data) ctx.wallet.add(Math.min(60, Math.floor((data.score || 0) / 200)), 'score');
-      },
-    }),
-  },
+  // (ぷにチャンクは町から外した)
   { id: 'chunkcards', title: 'チャンク・カード', type: 'iframe', url: 'apps/chunkcards/index.html', hint: 'apps/chunkcards/index.html を置くと遊べます(sdk/town-sdk.js を読み込むと町とつながります)' },
   { id: 'school', title: 'まちの学校', type: 'iframe', url: 'apps/sample/index.html' },
   { id: 'library', title: '図書館', type: 'module', module: soon('図書館', '集めた単語、作った文、名コンビ図鑑を読み返せる場所になります。') },

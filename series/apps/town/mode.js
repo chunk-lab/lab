@@ -11,7 +11,6 @@ import './mode.css';
 const st = createStore('town');
 // 3Dの町のアプリid → 2Dの施設（PLACES のキー）か、ゲームを直接
 const ROUTE = {
-  punichunk: { place: 'game' },          // ゲームセンター
   school: { place: 'school' },           // 学校
   library: { place: 'library' },         // 図書館
   chunkcards: { game: 'cards' },          // カフェ＝チャンク・カード

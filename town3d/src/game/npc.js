@@ -36,7 +36,7 @@ export const RESIDENTS = [
     id: 'baron', tips: ["ふはは、「Splendid!」は『素晴らしい!』。わが輩の口ぐせである!", "「I'm afraid…」で始めれば、悪い知らせも偉そうに言えるぞ", "「Indeed.」は『まったくだ』。重々しく言うのがコツだ!", "「Well done!」は『よくやった』。わが輩が言うと偉そうに聞こえるな", "「By the way」は『ところで』。話をそらすのはハッタリの基本だ"], yomi: 'はったりだんしゃく', persona: '大げさで自信家。「わが輩」と名乗り、ハッタリが多いが憎めない。ゲームセンターの記録の話が好き。', name: 'ハッタリ男爵', role: 'ゲームセンターの主', look: { skin: 0xf6d2bb, hair: 0xdcdcdc, style: 'short', top: 0xb79cd9, bottom: 0x4f4766, shoes: 0x2e2a3d, acc: 'tophat', accColor: 0x3f3a52 },
     schedule: [[9, 'north'], [11, 'gamecenter'], [16, 'plaza2'], [19, 'gamecenter'], [23, 'home', 'in']],
     lines: { morning: ['ふむ、朝からわが輩に会えるとは運がいい。'], day: ['ゲームセンターの記録、わが輩のものだ。たぶんな。', 'ハッタリも実力のうちである!'], evening: ['夕暮れは勝負の時間だ。'], night: ['夜のネオンは美しい……わが輩の次にな。'] },
-    menu: [{ label: 'ぷにチャンクで遊ぶ', app: 'punichunk' }, { label: 'カードで勝負する', app: 'chunkcards', params: { cpu: 'baron' } }],
+    menu: [{ label: 'カードで勝負する', app: 'chunkcards', params: { cpu: 'baron' } }],
   },
   {
     id: 'gon', tips: ["「Look what I found!」で『見ろよ、拾ったぞ!』って言えるぜ", "「It's a bit rusty.」は『ちょっとさびてる』。拾い物の説明に使えるな", "「Where did you get that?」で『それ、どこで手に入れた?』", "「Finders keepers!」は『拾った者の勝ち』。子どもがよく言うぜ", "「No worries.」は『気にすんな』。おれの口ぐせだ"], yomi: 'ひろいやごん', persona: '拾い物好きの気さくな兄ちゃん。くだけた口調。落とし物や変な単語を見つけた話をする。', name: 'ひろい屋ゴン', role: '何でも拾う人', look: { skin: 0xeec3a6, hair: 0x6b4a3a, style: 'spiky', top: 0xfdeeb0, bottom: 0x8fcfae, shoes: 0xc9a28c, acc: 'cap', accColor: 0xffc8a2 },
@@ -72,7 +72,6 @@ export const RESIDENTS = [
     id: 'chunkkun', adult: false, tips: ["ふわ…「cloud」は雲。ぼくのことだよ", "ふわふわは「fluffy」。ぼくにぴったり", "「Nice to meet you.」は、はじめましての魔法のことば", "「See you!」は『またね』。短くて言いやすいよ", "「It's raining cats and dogs.」は『どしゃ降り』……ふしぎだね"], yomi: 'ちゃんくくん', persona: 'おもちのようなイモムシ。語尾が「〜だよ」「もちもち」。無邪気で、文ができると体がのびるのが自慢。', name: 'チャンクくん', role: '町のマスコット', mascot: true,
     schedule: [[0, 'plaza'], [11, 'gamecenter'], [14, 'plaza2'], [18, 'plaza']],
     lines: { morning: ['もちもち〜! おはよう!'], day: ['いっしょにチャンクつくろ!', 'ぼく、文ができると、のびるんだ!'], evening: ['ゲーセン行こうよ〜。'], night: ['ねむねむ……でも、まだ遊べるよ。'] },
-    menu: [{ label: 'ぷにチャンクで遊ぶ', app: 'punichunk' }],
   },
   {
     // 大喜利チョコ:お題を出して、プレイヤーと答えを出し合う。点数と勝ち負けはチョコが決める(AIキーで遊ぶ)

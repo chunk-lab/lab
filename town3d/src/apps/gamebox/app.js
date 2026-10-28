@@ -132,11 +132,10 @@ export const gameboxApp = {
         ${!consoleOk() ? `<div class="row" style="margin:0 0 4px"><button class="btn gold" data-rent="console">🎟 1日パスを買う 🪙${PRICE.console}</button></div>` : ''}
         <h3>🌳 外遊び <span class="pill ok">${seasonName}は ${out.filter(inSeason).map(g => g.title).join('・') || '旬のもの'} が無料</span></h3><div class="grid">${out.map(card).join('')}</div>
         <h3>🎮 ゲーム</h3><div class="grid">${PLAY_GAMES.filter(g => !out.includes(g)).map(card).join('')}</div>
-        <div class="row" style="margin-top:12px"><button class="btn sub" data-pc>🐾 ぷにチャンク(英語)へ</button><button class="btn sub" data-enp>📚 英語の釣り堀へ(いつでも無料)</button></div>
+        <div class="row" style="margin-top:12px"><button class="btn sub" data-enp>📚 英語の釣り堀へ(いつでも無料)</button></div>
         <p class="note" style="color:#d8d0f0;margin-top:14px">センターは有料(1日パス。有料会員は無料)。旬の季節の外遊びだけ、だれでも無料。お試しは1日1回。</p>`;
       sc.onclick = e => {
         const c = e.target.closest('[data-g]'), rb = e.target.closest('[data-rent]');
-        if (e.target.closest('[data-pc]')) { sfx.play('tap'); ctx.open && ctx.open('punichunk', {}); return; }
         if (e.target.closest('[data-enp]')) { sfx.play('tap'); ctx.open && ctx.open('fishing', { tab: 'en' }); return; }
         if (c) { sfx.play('tap'); const G = ALL.find(g => g.id === c.dataset.g); if (G.launch) gate(G, trial => G.launch(ctx, trial)); else setup(G); }
         if (rb) { sfx.play('tap'); rentConsole(); }
