@@ -751,6 +751,7 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('ui:man', () => {
     if (!started || hud.busy || appHost.current || battle.active || sport.active || seasons.season !== 'winter') return; audio.unlock();
     const fx = me.x + Math.sin(me.ry) * 1.7, fz = me.z + Math.cos(me.ry) * 1.7;
+    if (seasons.building()) { hud.toast('できあがるまで待ってね'); return; }
     if (seasons.carrying()) { if (seasons.put(fx, fz)) { audio.play('close'); hud.toast('雪だるまを置いた'); } return; }
     if (snow.making || snow.holding) return;
     const sn = seasons.nearest(me.x, me.z, 2.4);
@@ -758,6 +759,15 @@ export function mount(container, opt = {}) {
     else if (seasons.build(fx, fz)) { audio.play('open'); hud.toast('ころころ…雪だるまができた!'); }
   }));
   // 💨 よける(雪合戦と同じ:向いている方・動いている方へすばやく転がる)
+  // 投げた雪だるまの当たり判定:壁・地面(あとが残る)と、住人への直接ヒット
+  const mcRay = new THREE.Raycaster();
+  function manCheck(a, b) {
+    const d = b.clone().sub(a), L = d.length(); if (L < 1e-5) return null; d.divideScalar(L);
+    for (const r of residents.list) { if (!r.ch.root.visible || r.hidden) continue; const q = r.ch.root.position; if (b.y > -0.1 && b.y < 1.8 && Math.hypot(q.x - b.x, q.z - b.z) < 0.7) return { p: b.clone(), n: d.clone().negate(), npc: r }; }
+    mcRay.set(a, d); mcRay.far = L + 0.3; const h = mcRay.intersectObjects(city.meshes, false)[0];
+    if (h && h.distance <= L + 0.3 && h.point.y > 0.05) return { p: h.point, n: h.face ? h.face.normal.clone().transformDirection(h.object.matrixWorld) : new THREE.Vector3(0, 1, 0) };
+    return null;
+  }
   let dodgeT = 0, dodgeCd = 0, ddx = 0, ddz = 0, dodgeRot = false;
   offs.push(bus.on('ui:dodge', () => {
     if (!started || hud.busy || appHost.current || battle.active || sport.active || seat || seasons.carrying() || snow.making || dodgeT > 0 || dodgeCd > 0) return;
@@ -773,7 +783,7 @@ export function mount(container, opt = {}) {
         const rc = cv.getBoundingClientRect(); ndc2.set(((e.clientX - rc.left) / rc.width) * 2 - 1, -((e.clientY - rc.top) / rc.height) * 2 + 1); ray.setFromCamera(ndc2, camera);
         const pt = new THREE.Vector3(); if (!ray.ray.intersectPlane(groundPl, pt)) return;
         if (Math.hypot(pt.x - me.x, pt.z - me.z) > 12) { hud.toast('そこは遠すぎるよ'); return; }
-        const [lx, lz] = collide(pt.x, pt.z, 0.5); if (seasons.launch(new THREE.Vector3(me.x, 1.9, me.z), new THREE.Vector3(lx, 0, lz), (x, z) => snow.fx(new THREE.Vector3(x, 0.2, z), new THREE.Vector3(0, 1, 0), 3))) { audio.play('wave'); me.ch.wave?.(); }
+        const [lx, lz] = collide(pt.x, pt.z, 0.5); if (seasons.launch(new THREE.Vector3(me.x, 1.9, me.z), new THREE.Vector3(lx, 0, lz), (x, z, h) => { if (h) { snow.fx(h.p, h.n, 3, h.npc ? h.npc.ch.root : null); if (h.npc) snow.hitNpc(h.npc, 3); } else snow.fx(new THREE.Vector3(x, 0.2, z), new THREE.Vector3(0, 1, 0), 3); }, manCheck)) { audio.play('wave'); me.ch.wave?.(); }
         return;
       }
       const r = snow.throwAt(e.clientX, e.clientY, cv.getBoundingClientRect());
@@ -1101,7 +1111,8 @@ export function mount(container, opt = {}) {
       const hs = camBar.querySelector('.hs'); if (hs && document.activeElement !== hs) hs.value = heightToV(fcam.y).toFixed(3);
     } else me.ch.root.visible = true;
     if (!started || hud.busy) mx = my = 0;
-    if (snow.making || battle.making || battle.rolling || sport.active || dodgeT > 0) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
+    const bld = seasons.building();
+    if (snow.making || bld || battle.making || battle.rolling || sport.active || dodgeT > 0) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
     const guided = guideStep(dt, mag);   // 住人に連れて行ってもらっている間は、自動で歩く
@@ -1117,11 +1128,11 @@ export function mount(container, opt = {}) {
     if (dodgeCd > 0) dodgeCd -= dt;
     if (dodgeT > 0) { dodgeT -= dt; me.ry = Math.atan2(ddx, ddz); me.speed = 8; [me.x, me.z] = collide(me.x + ddx * 11 * dt, me.z + ddz * 11 * dt); }
     me.ch.root.position.set(me.x, seat ? -0.04 : 0, me.z); me.ch.root.rotation.y = me.ry;
-    if (!seat && !battle.active) { if (snow.making) me.ch.pose = 'kneel'; else if (me.ch.pose === 'kneel') me.ch.pose = null; }
+    if (!seat && !battle.active) { if (snow.making || bld) me.ch.pose = 'kneel'; else if (me.ch.pose === 'kneel') me.ch.pose = null; }
     me.ch.update(dt, me.speed);
     { const rg = me.ch.rig;   // よけている間はくるっと回る / 雪だるまを持っている間は両手を上げる
       if (rg) { if (dodgeT > 0) { rg.body.rotation.x = (1 - dodgeT / 0.42) * Math.PI * 2; dodgeRot = true; } else if (dodgeRot) { rg.body.rotation.x = 0; dodgeRot = false; }
-        if (snow.making && !battle.active) { rg.body.rotation.x = 0.35; rg.arms[0].rotation.x = rg.arms[1].rotation.x = -1.25; rg.arms[0].rotation.z = -0.1; rg.arms[1].rotation.z = 0.1; } else if (!seasons.carrying() && !dodgeRot && rg.body.rotation.x === 0.35) rg.body.rotation.x = 0;
+        if ((snow.making || bld) && !battle.active) { rg.body.rotation.x = 0.35; rg.arms[0].rotation.x = rg.arms[1].rotation.x = -1.25; rg.arms[0].rotation.z = -0.1; rg.arms[1].rotation.z = 0.1; } else if (!seasons.carrying() && !dodgeRot && rg.body.rotation.x === 0.35) rg.body.rotation.x = 0;
         if (seasons.carrying()) { rg.arms[0].rotation.x = rg.arms[1].rotation.x = -2.95; rg.arms[0].rotation.z = 0.35; rg.arms[1].rotation.z = -0.35; } } }
 
     // カメラ:後ろから少し見下ろす。建物にめり込むときは手前に寄せる

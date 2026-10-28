@@ -152,20 +152,21 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     carrying: () => !!held,
     holdAt(x, z, ry) { if (held) { held.position.set(x, 1.85, z); held.rotation.y = ry; } },
     // 持っている雪だるまを (to) へ投げる。着いたら onLand(x,z) のあと、そこに立つ
-    launch(from, to, onLand) {   // 雪合戦と同じ放物線(T=0.55+距離/18, 重力9.8)。回りながら飛んで、着いたらくだける
+    building: () => men.some(m => m.born >= 0),   // つくっている最中(完成するまで持てない)
+    launch(from, to, onLand, check) {   // 雪合戦と同じ放物線(T=0.55+距離/18, 重力9.8)。回りながら飛んで、着いたらくだける
       if (!held) return false; const g = held; held = null; const d = Math.hypot(to.x - from.x, to.z - from.z), T = 0.55 + d / 18, G = 9.8;
       const v = new THREE.Vector3((to.x - from.x) / T, (to.y - from.y) / T + G * T / 2, (to.z - from.z) / T);
-      flyers.push({ g, p: from.clone(), v, life: 4, onLand }); return true; },
+      flyers.push({ g, p: from.clone(), v, life: 4, onLand, check }); return true; },
     put(x, z) { if (!held) return null; scene.remove(held); held = null; return api.build(x, z); },
-    nearest(x, z, r = 1.6) { let b = null, bd = r; men.forEach((m, i) => { const d = Math.hypot(m.x - x, m.z - z); if (d < bd) { bd = d; b = { i, m }; } }); return b; },
+    nearest(x, z, r = 1.6) { let b = null, bd = r; men.forEach((m, i) => { if (m.born >= 0) return; const d = Math.hypot(m.x - x, m.z - z); if (d < bd) { bd = d; b = { i, m }; } }); return b; },
     remove: i => removeMan(i),
     // 毎フレーム。c=カメラの位置
     update(dt, c, night = 0) {
       for (let i = flyers.length - 1; i >= 0; i--) {
-        const f = flyers[i]; f.life -= dt; f.v.y -= 9.8 * dt; f.p.addScaledVector(f.v, dt); f.g.position.copy(f.p); f.g.rotation.x += dt * 4;
-        if (f.frag ? (f.p.y <= 0.05 || f.life <= 0) : (f.p.y <= 0.03 || f.life <= 0)) {
+        const f = flyers[i]; f.life -= dt; f.v.y -= 9.8 * dt; const pv = f.p.clone(); f.p.addScaledVector(f.v, dt); const hit = !f.frag && f.check ? f.check(pv, f.p) : null; if (hit) f.p.copy(hit.p); f.g.position.copy(f.p); f.g.rotation.x += dt * 4;
+        if (hit || (f.frag ? (f.p.y <= 0.05 || f.life <= 0) : (f.p.y <= 0.03 || f.life <= 0))) {
           scene.remove(f.g); flyers.splice(i, 1);
-          if (!f.frag) { f.onLand?.(f.p.x, f.p.z);
+          if (!f.frag) { f.onLand?.(f.p.x, f.p.z, hit);
             for (let k = 0; k < 7; k++) { const an = k / 7 * Math.PI * 2 + Math.random() * 0.4, m = new THREE.Mesh(fragGeo, fragMat); m.scale.setScalar(0.11); m.position.set(f.p.x, 0.3, f.p.z); scene.add(m);
               flyers.push({ g: m, p: m.position.clone(), v: new THREE.Vector3(Math.cos(an) * 5, 2.4, Math.sin(an) * 5), life: 0.7, frag: true }); } }
         }
