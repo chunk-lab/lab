@@ -43,7 +43,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   function hudEl(home) {
     const h = document.createElement('div'); h.className = 'sb-hud';
     h.innerHTML = `<div class="sb-top"><div class="sb-team t0"></div><div class="sb-team t1"></div></div><div class="sb-msg"></div><div class="sb-tip">❄️=つくる(長おしで大) タップ=投げる ❄️から引く=山なり</div>
-      <button class="sb-mk">❄️<small>つくる</small></button><button class="sb-man">⛄</button><button class="sb-roll">💨<small>よける</small></button><button class="sb-cam">👁<small>視点</small></button><button class="sb-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
+      <button class="sb-mk">❄️<small>雪玉</small></button><button class="sb-man">⛄</button><button class="sb-roll">💨<small>よける</small></button><button class="sb-cam">👁<small>視点</small></button><button class="sb-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
     root.appendChild(h); return h;
   }
   // ---- 人 ----
@@ -317,6 +317,11 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     arms[1].rotation.x = f.throwT > 0 ? -2.6 + (1 - f.throwT / 0.3) * 3.2 : -0.55; arms[1].rotation.z = 0.15; b.position.copy(handPos(f));
   }
   function drawHud() {
+    for (const f of B.F) {   // 足元のわっか:相手は赤、味方は青(ふだんの住人と見分けるため、雪合戦中だけ)
+      if (!f.mark) { const col = f.team ? 0xff3b3b : 0x3b9bff; f.mark = new THREE.Group(); const r = new THREE.Mesh(new THREE.RingGeometry(0.55, 0.78, 32), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.9, side: THREE.DoubleSide, depthTest: false })); r.rotation.x = -Math.PI / 2; r.renderOrder = 5; f.mark.add(r);
+        if (f.team) { const a = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.34, 4), new THREE.MeshBasicMaterial({ color: col, depthTest: false })); a.rotation.x = Math.PI; a.position.y = 2.35; a.renderOrder = 5; f.mark.add(a); }
+        scene.add(f.mark); B.objs.push(f.mark); }
+      f.mark.position.set(f.x, 0.06, f.z); f.mark.visible = !f.down; }
     const H = B.hud, row = tm => B.F.filter(f => f.team === tm).map(f => `<span class="sb-p ${f.down ? 'down' : ''}" style="color:${tm ? '#3b7fc4' : '#d4517c'}">${f.name} <b>${'❤️'.repeat(f.hp)}${'🤍'.repeat(B.maxHp - f.hp)}</b></span>`).join('');
     const key = B.F.map(f => f.hp + (f.down ? 'd' : '')).join() + B.wins.join();
     if (H.dataset.k !== key) { H.dataset.k = key; H.querySelector('.t0').innerHTML = row(0) + `<span class="sb-p">${B.wins[0]}勝</span>`; H.querySelector('.t1').innerHTML = `<span class="sb-p">${B.wins[1]}勝</span>` + row(1); }
@@ -326,7 +331,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     if (mk.dataset.l !== lab) { mk.dataset.l = lab; mk.innerHTML = `❄️<small>${lab}</small>`; }
     H.querySelector('.sb-roll').disabled = f.rollCd > 0 || !!f.carry;
     const mb = H.querySelector('.sb-man'), near = !f.carry && !f.down && B.phase === 'play' && !!nearMan(f);   // ボタンは1つ:近くに雪だるまがあれば「持つ」、なければ「つくる」
-    const ml = f.carry ? '⛄<small>もってる</small>' : near ? '🙌<small>もつ</small>' : `⛄<small>つくる ${f.men.length}/${MAN_MAX}</small>`; if (mb.dataset.l !== ml) { mb.dataset.l = ml; mb.innerHTML = ml; } mb.disabled = !!f.carry || (!near && f.men.length >= MAN_MAX);
+    const ml = f.carry ? '🙌<small>もってる</small>' : near ? '🙌<small>雪だるま</small>' : `⛄${f.men.length ? f.men.length + "/" + MAN_MAX : ""}<small>雪だるま</small>`; if (mb.dataset.l !== ml) { mb.dataset.l = ml; mb.innerHTML = ml; } mb.disabled = !!f.carry || (!near && f.men.length >= MAN_MAX);
     H.querySelector('.sb-cam').innerHTML = B.view === 'fp' ? '👁<small>うしろ</small>' : '👁<small>一人称</small>';
   }
   return {

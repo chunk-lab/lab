@@ -851,8 +851,7 @@ export function mount(container, opt = {}) {
     if (!started) return;
     const seg = (key, opts) => `<div class="tw-seg">${opts.map(([v, l]) => `<button class="tw-btn${settings[key] == v ? ' on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
     const pn = hud.panel(`<h2>せってい</h2>
-      <div class="tw-row">カメラの位置<button class="tw-btn" data-act="camdef" style="padding:6px 14px">もとにもどす</button></div>
-      <div class="tw-row">ことばノート<button class="tw-btn" data-act="notes" style="padding:6px 14px">ひらく(${notes.length})</button></div>
+            <div class="tw-row">ことばノート<button class="tw-btn" data-act="notes" style="padding:6px 14px">ひらく(${notes.length})</button></div>
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
       <div class="tw-row">低負荷モード${seg('lite', [[0, 'オフ'], [1, 'オン']])}</div>
       <div class="tw-note">オンにすると、解像度・影・光のにじみ・ふちどり・噴水・月をかるくして、30fpsにします(流れ星は残ります)。</div>
@@ -889,7 +888,6 @@ export function mount(container, opt = {}) {
         if (b.dataset.bl) { setBlossom(b.dataset.bl === '1'); p.querySelectorAll('[data-bl]').forEach(x => x.classList.toggle('on', x === b)); }
         if (b.dataset.act === 'meteor') env.meteorNow();
         if (b.dataset.act === 'adult') { hud.closePanel(); setTimeout(openAdultSetup, 30); }
-        if (b.dataset.act === 'camdef') { delete settings.camView; save(); cam.pitch = CAM_DEF.pitch; cam.dist = CAM_DEF.dist; cam.yaw = me.ry + Math.PI; camMode = 'follow'; camBarDraw(); me.ch.root.visible = true; hud.toast('カメラの位置をもとにもどした'); }
         if (b.dataset.act === 'notes') { hud.closePanel(); setTimeout(openNoteBook, 30); }
         if (b.dataset.act === 'today') { applyDate(new Date()); const di = p.querySelector('.tw-t-date'); const d = testDate; di.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; p.querySelectorAll('[data-bl]').forEach(x => x.classList.toggle('on', (x.dataset.bl === '1') === blossomOn)); }
         if (b.dataset.act === 'close') hud.closePanel();
@@ -947,6 +945,7 @@ export function mount(container, opt = {}) {
     else if (name === 'eye') { [fcam.x, fcam.z] = behind(3.4); fcam.y = 1.6; fcam.pitch = 0; }
     else if (name === 'top') { fcam.x = me.x; fcam.z = me.z + 0.001; fcam.y = 40; fcam.pitch = 1.5; }
     else if (name === 'sky') { [fcam.x, fcam.z] = behind(16); fcam.y = 16; fcam.pitch = 0.6; }
+    else if (name === 'reset') { delete settings.camView; save(); cam.pitch = CAM_DEF.pitch; cam.dist = CAM_DEF.dist; cam.yaw = me.ry + Math.PI; camMode = 'follow'; me.ch.root.visible = true; hud.toast('カメラをリセットした'); }
     else if (name === 'front') { fcam.x = me.x + Math.sin(me.ry) * 3.4; fcam.z = me.z + Math.cos(me.ry) * 3.4; fcam.y = 1.5; fcam.yaw = me.ry; fcam.pitch = 0.05; }
     camBarDraw();
   }
@@ -956,7 +955,7 @@ export function mount(container, opt = {}) {
     camBar.hidden = false;
     const free = camMode === 'free';
     camBar.innerHTML = `<div>${free ? '🎥 カメラだけ動かしているよ(左下で移動・ドラッグで向き・ピンチで前後)' : '📌 カメラを固定中。自分は歩けるよ'}</div>
-      ${free ? `<div class="r"><button class="tw-btn" data-p="foot">👣 足元から</button><button class="tw-btn" data-p="eye">👀 目の高さ</button><button class="tw-btn" data-p="front">🙂 正面から</button><button class="tw-btn" data-p="sky">🚁 空から</button><button class="tw-btn" data-p="top">🦅 真上から</button></div>
+      ${free ? `<div class="r"><button class="tw-btn" data-p="foot">👣 足元から</button><button class="tw-btn" data-p="eye">👀 目の高さ</button><button class="tw-btn" data-p="front">🙂 正面から</button><button class="tw-btn" data-p="sky">🚁 空から</button><button class="tw-btn" data-p="top">🦅 真上から</button><button class="tw-btn" data-p="reset">↺ リセット</button></div>
       <div class="r" style="align-items:center"><span>高さ</span><input type="range" class="hs" min="0" max="1" step="0.005" value="${heightToV(fcam.y).toFixed(3)}"></div>` : ''}
       <div class="r">${free ? '<button class="tw-btn on" data-c="fix">📌 ここで固定</button>' : '<button class="tw-btn on" data-c="free">🎥 また動かす</button>'}<button class="tw-btn" data-c="back">↩ もどす</button></div>`;
   }
@@ -965,7 +964,7 @@ export function mount(container, opt = {}) {
     if (b.dataset.p) camPreset(b.dataset.p);
     else if (b.dataset.c === 'fix') { camMode = 'fixed'; cam.yaw = fcam.yaw; me.ch.root.visible = true; camBarDraw(); hud.toast('カメラをここに固定したよ。📷で撮れるよ'); }
     else if (b.dataset.c === 'free') { camFromView(); camMode = 'free'; camBarDraw(); }
-    else if (b.dataset.c === 'back') {   // 合わせたカメラの位置のまま もどる(次からもその見え方。せっていでリセットできる)
+    else if (b.dataset.c === 'back') {   // 合わせたカメラの位置のまま もどる(次からもその見え方。カメラ設定の「リセット」で戻せる)
       const dx = fcam.x - me.x, dz = fcam.z - me.z, dy = fcam.y - 1.3, L = Math.hypot(dx, dy, dz) || 1;
       cam.yaw = Math.atan2(dx, dz); cam.pitch = clamp(Math.asin(clamp(dy / L, -1, 1)), 0.1, 1.2); cam.dist = clamp(L, 3, 14); cam.x = me.x; cam.z = me.z;
       settings.camView = { pitch: +cam.pitch.toFixed(3), dist: +cam.dist.toFixed(2) }; save();
@@ -1164,7 +1163,7 @@ export function mount(container, opt = {}) {
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
     { const sn = seasons.carrying() ? null : seasons.nearest(me.x, me.z, 2.4);
-      hud.setSnow(started && seasons.season === 'winter' && !battle.active && !sport.active, snow.making ? '❄️\nころころ' : snow.holding ? '❄️\n投げてね' : seasons.carrying() ? '❄️\n(もってる)' : '❄️\nつくる', seasons.carrying() ? '🙌\nおく' : sn ? '🙌\nもつ' : '⛄\nつくる', snow.making || snow.holding);
+      hud.setSnow(started && seasons.season === 'winter' && !battle.active && !sport.active, snow.making ? '❄️\nころころ' : snow.holding ? '❄️\n投げてね' : seasons.carrying() ? '❄️\n雪玉' : '❄️\n雪玉', seasons.carrying() ? '🙌\n雪だるま' : sn ? '🙌\n雪だるま' : '⛄\n雪だるま', snow.making || snow.holding);
       hud.setDodge(started && !battle.active && !sport.active); }
     snow.update(dt);
     battle.update(dt, lastMove);
