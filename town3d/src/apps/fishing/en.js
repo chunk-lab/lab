@@ -74,7 +74,7 @@ const CSS = `
 .fz .ens .cell .dot{position:absolute;right:6px;top:6px;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px #fff}
 .fz .ens .row{background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001;display:flex;gap:10px;align-items:center}
 .fz .ens .row .fx{flex:1;min-width:0}.fz .ens .row .gb{height:7px;border-radius:4px;background:#eee4f2;overflow:hidden;margin:4px 0}.fz .ens .row .gb i{display:block;height:100%;background:linear-gradient(90deg,#7fd3ff,#7fcf9f)}
-.fz .ens .tankv{position:relative;height:200px;border-radius:18px;overflow:hidden;background:linear-gradient(#bfe9ff,#5fb3e0 70%,#e8d9b0 70%,#e8d9b0);box-shadow:inset 0 0 0 6px #2b2b30,0 4px 14px #0002;margin-bottom:10px}
+.fz .ens .tankv{position:relative;height:200px;border-radius:18px;overflow:hidden;box-shadow:0 4px 14px #0002;margin-bottom:10px;touch-action:pan-y;user-select:none}.fz .ens .tankv::after{content:'';position:absolute;inset:0;border-radius:18px;box-shadow:inset 0 0 0 6px #2b2b30;pointer-events:none;z-index:2}.fz .ens .tankv .tz{position:absolute;inset:0;transform-origin:0 0;background:linear-gradient(#bfe9ff,#5fb3e0 70%,#e8d9b0 70%,#e8d9b0)}.fz .ens .tankv .zh{position:absolute;right:12px;bottom:10px;z-index:3;font-size:11px;color:#fff;background:rgba(0,0,0,.4);border-radius:9px;padding:2px 7px;pointer-events:none}
 .fz .ens .tankv canvas{position:absolute;inset:0;width:100%;height:100%}
 .fz .ens .sbtn{border:0;border-radius:999px;padding:9px 14px;font:inherit;font-weight:900;font-size:13px;background:#fff;color:#5a4a6b;box-shadow:0 2px 6px #0002}
 .fz .ens .sbtn.pri{background:linear-gradient(160deg,#ffd36b,#ffb35c)}.fz .ens .sbtn:disabled{opacity:.45}
@@ -414,6 +414,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
   function tankScreen({ onBack }) {
     const sc = document.createElement('div'); sc.className = 'ens'; root.appendChild(sc);
     let raf = 0, swim = [];
+    const tankZoom = { z: 1, x: 0, y: 0 };
     const today = dayKey();
     const draw = () => {
       const t = spec.tank(), food = spec.food(); t.forEach(f => { if (f.g >= GROW_NEED) spec.markGrown(f.id, f.rk || 0); });
@@ -422,7 +423,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         <h2>🐠 水槽 <small style="font-size:13px;color:#8d7f9e">${t.length} / ${TANK_MAX}</small></h2>
         <p class="nt">英語の問題に答えて、えさを作ろう(1問正解=1つ)。問題は、あなたが今までにまちがえた言葉や、釣り堀の単語から出るよ。1匹に1日${FEED_PER_DAY}回まで。${GROW_NEED}回で育ちきって、アルバムに記録される。</p>
         <p class="nt" style="margin-top:-6px">🏆 水槽ランク: <b>${esc(TANK_RANKS[rk][1])}</b> ・ 飾りポイント ${pts}${nx ? `(あと${nx[0] - pts}で「${esc(nx[1])}」)` : '(最高!)'} ・ 飾り ${spec.decor().length}こ</p>
-        <div class="tankv"><canvas></canvas></div>
+        <div class="tankv"><div class="tz"><canvas></canvas></div><span class="zh">ピンチで拡大</span></div>
         <div style="display:flex;gap:8px;margin-bottom:10px"><button class="sbtn pri" data-a="make" style="flex:1">🍤 えさを作る(英語${FOOD_Q}問)</button><button class="sbtn" data-a="all" ${food && t.some(f => (f.day !== today ? 0 : f.n) < FEED_PER_DAY && f.g < GROW_NEED) ? '' : 'disabled'}>みんなにあげる</button></div>
         ${t.length ? t.map(f => { const sp = FISHBY[f.id], n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED, sz = Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / GROW_NEED)) * RANK_MUL[f.rk || 0]); return `<div class="row"><div class="fx"><b>${esc(RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id))}</b> <small style="color:#8d7f9e">${sz}cm ・ ${full ? '育ちきった!' : f.g >= GROW_NEED * 0.6 ? 'りっぱになってきた' : f.g >= GROW_NEED * 0.3 ? '育ちざかり' : 'ちびっこ'}</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small style="color:#8d7f9e">きょう ${n}/${FEED_PER_DAY} ・ そだち ${Math.min(f.g, GROW_NEED)}/${GROW_NEED}</small></div>
           ${full ? `<span class="sbtn" style="pointer-events:none;background:#fff3c8">🎉 育ちきった</span>` : `<button class="sbtn" data-feed="${f.uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-rel="${f.uid}" title="池にかえす">↩</button></div>`; }).join('')
@@ -434,7 +435,24 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       const cv = sc.querySelector('.tankv canvas'); if (!cv) return;
       const t = spec.tank(), W = cv.clientWidth, H = cv.clientHeight, dpr = Math.min(2, devicePixelRatio || 1);
       cv.width = W * dpr; cv.height = H * dpr; const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k); return { img: sp ? artCanvas(sp, w, Math.round(w * 0.6), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * (W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
+      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * 0.5); return { img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * (W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
+      // ピンチ・ホイールで拡大(1〜3倍)。拡大中は指1本でずらす。ダブルタップでもどす
+      { const box = cv.parentElement.parentElement, tz = cv.parentElement, hint = box.querySelector('.zh'), Zs = tankZoom;
+        const clampZ = () => { Zs.z = Math.max(1, Math.min(3, Zs.z)); Zs.x = Math.max(W * (1 - Zs.z), Math.min(0, Zs.x)); Zs.y = Math.max(H * (1 - Zs.z), Math.min(0, Zs.y)); };
+        const apply = () => { clampZ(); tz.style.transform = `translate(${Zs.x}px,${Zs.y}px) scale(${Zs.z})`; box.style.touchAction = Zs.z > 1.01 ? 'none' : 'pan-y'; if (hint) hint.style.display = Zs.z > 1.01 ? 'none' : ''; };
+        const P = new Map(); let g0 = null, lastTap = 0;
+        const rel = e => { const r = box.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+        const pinchStart = () => { const [a, b] = [...P.values()]; g0 = { d: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, z: Zs.z, cx: ((a[0] + b[0]) / 2 - Zs.x) / Zs.z, cy: ((a[1] + b[1]) / 2 - Zs.y) / Zs.z }; };
+        box.onpointerdown = e => { P.set(e.pointerId, rel(e)); try { box.setPointerCapture(e.pointerId); } catch (x) { } if (P.size === 2) pinchStart(); else { const n = Date.now(); if (n - lastTap < 320) { Zs.z = 1; Zs.x = Zs.y = 0; apply(); } lastTap = n; } };
+        box.onpointermove = e => {
+          if (!P.has(e.pointerId)) return; const old = P.get(e.pointerId), cur = rel(e); P.set(e.pointerId, cur);
+          if (P.size === 2 && g0) { const [a, b] = [...P.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2; Zs.z = g0.z * d / g0.d; Zs.x = mx - g0.cx * Zs.z; Zs.y = my - g0.cy * Zs.z; apply(); }
+          else if (P.size === 1 && Zs.z > 1.01) { Zs.x += cur[0] - old[0]; Zs.y += cur[1] - old[1]; apply(); }
+        };
+        const up = e => { P.delete(e.pointerId); g0 = null; if (P.size === 1) { /* 2本→1本に戻っても飛ばない */ } };
+        box.onpointerup = box.onpointercancel = up;
+        box.onwheel = e => { e.preventDefault(); const [mx, my] = rel(e), z0 = Zs.z, cx = (mx - Zs.x) / z0, cy = (my - Zs.y) / z0; Zs.z = z0 * (e.deltaY < 0 ? 1.15 : 1 / 1.15); Zs.x = mx - cx * Zs.z; Zs.y = my - cy * Zs.z; apply(); };
+        apply(); }
       const bub = Array.from({ length: 10 }, () => ({ x: Math.random() * W, y: Math.random() * H, s: 1 + Math.random() * 3 }));
       let last = performance.now();
       const step = ts => {

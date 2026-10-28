@@ -233,7 +233,7 @@ export function createHud(root, bus) {
     closePanel() { if (panel) { panel.remove(); panel = null; bus.emit('ui:panelClosed'); } },
     // 最初の画面:キャラを選んで名前を決める
     title({ look, name }, onStart) {
-      const el = h(`<div class="tw-title"><div class="tw-logo">ほしみや町</div><div class="tw-sub">パステルの町で、くらしてみよう</div><div class="tw-looks"></div><input class="tw-name" maxlength="8" placeholder="なまえ"><button class="tw-btn tw-start">町へ出かける</button><div class="tw-hint">PC:WASD で移動・ドラッグで見まわす・E で話す<br>スマホ:左側をなぞって移動・右側で見まわす</div></div>`);
+      const el = h(`<div class="tw-title"><div class="tw-logo">ほしみや町</div><div class="tw-sub">パステルの町で、くらしてみよう</div><div class="tw-looks"></div><input class="tw-name" maxlength="8" placeholder="なまえ"><button class="tw-btn tw-start">町へ出かける</button><div class="tw-ver" style="position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 62px);font:bold 12px/1 monospace;color:#fff;background:rgba(220,40,80,.85);padding:4px 9px;border-radius:8px;pointer-events:none;white-space:nowrap">ver ${typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'}</div><div class="tw-hint">PC:WASD で移動・ドラッグで見まわす・E で話す<br>スマホ:左側をなぞって移動・右側で見まわす</div></div>`);
       const box = el.querySelector('.tw-looks');
       let sel = look;
       LOOK_IDS.forEach(id => {
