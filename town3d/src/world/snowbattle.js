@@ -8,7 +8,7 @@ import * as THREE from 'three';
 
 const SIZE = t => t < 0.55 ? 1 : t < 1.3 ? 2 : 3;   // 押した秒 → 大きさ
 const RAD = [0, 0.09, 0.14, 0.21], DMG = [0, 1, 2, 3], NAMES = ['', 'S', 'M', 'L'];
-const G = 9.8, AR = 11, MAN_MAX = 3, STOCK = 3;
+const BUILD_T = 1.1, G = 9.8, AR = 11, MAN_MAX = 3, STOCK = 3;
 
 export function createSnowBattle({ scene, camera, root, me, residents, meshes, collide, audio, snowFx, onEnd, faceCam }) {
   const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.75 });
@@ -133,7 +133,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   }
   // 画面タップ:持っている雪玉(または雪だるま)をそこへ
   function tap(cx, cy, rect) {
-    if (!B) return false; const f = B.F[0]; if (!canAct(f) || f.cd > 0 || f.makeT >= 0) return true;
+    if (!B) return false; const f = B.F[0]; if (!canAct(f) || f.cd > 0 || f.makeT >= 0 || f.buildT > 0) return true;
     if (!f.carry && !f.stock.length) { showTip('❄️で雪玉をつくってね'); return true; }
     ndc.set(((cx - rect.left) / rect.width) * 2 - 1, -((cy - rect.top) / rect.height) * 2 + 1); ray.setFromCamera(ndc, camera); ray.far = 80;
     let best = null;
@@ -166,12 +166,12 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   }
   function buildMan(f) {
     if (f.men.length >= MAN_MAX) { if (f.kind === 'me') showTip('雪だるまは3つまで。こわされたら、また作れるよ'); return false; }
-    const g = manMesh(), x = f.x + Math.sin(f.ry) * 1.2, z = f.z + Math.cos(f.ry) * 1.2; g.position.set(x, 0, z); g.rotation.y = f.ry + Math.PI; g.scale.setScalar(0.01);
+    const g = manMesh(), x = f.x + Math.sin(f.ry) * 1.2, z = f.z + Math.cos(f.ry) * 1.2; g.position.set(x, 0, z); g.rotation.y = f.ry + Math.PI; g.scale.setScalar(1); g.children.forEach(c => c.scale.setScalar(0.001)); f.buildT = BUILD_T; f.makeT = -1;
     scene.add(g); const m = { g, hp: 3, x, z, R: 0.45, t: 0, owner: f }; f.men.push(m); B.men.push(m); audio?.play?.('open'); return true;
   }
   function killMan(m) { scene.remove(m.g); B.men = B.men.filter(x => x !== m); m.owner.men = m.owner.men.filter(x => x !== m); }
   function removeMan(f) { f.men.slice().forEach(killMan); }
-  const nearMan = f => B.men.filter(m => Math.hypot(m.x - f.x, m.z - f.z) < 1.5).sort((a, b) => Math.hypot(a.x - f.x, a.z - f.z) - Math.hypot(b.x - f.x, b.z - f.z))[0];
+  const nearMan = f => B.men.filter(m => m.t >= BUILD_T && Math.hypot(m.x - f.x, m.z - f.z) < 1.5).sort((a, b) => Math.hypot(a.x - f.x, a.z - f.z) - Math.hypot(b.x - f.x, b.z - f.z))[0];
   function lift(f) {   // 頭の上に持ち上げる(持ち主はまた作れるようになる)
     const m = nearMan(f); if (!m || f.carry) return false;
     B.men = B.men.filter(x => x !== m); m.owner.men = m.owner.men.filter(x => x !== m);
@@ -188,7 +188,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   }
   function hitF(f, dmg) {
     if (f.down || f.rollT > 0) return false; f.hp -= dmg; f.makeT = -1; audio?.play?.('close');
-    if (f.hp <= 0) { f.hp = 0; f.down = true; f.ch.pose = 'lie'; f.stock = []; if (f.carry) { const g = f.carry; f.carry = null; g.position.set(f.x + 0.6, 0, f.z); g.scale.setScalar(1); g.rotation.set(0, 0, 0); const m = { g, hp: 2, x: g.position.x, z: g.position.z, R: 0.45, t: 1, owner: f }; f.men.push(m); B.men.push(m); } }
+    if (f.hp <= 0) { f.hp = 0; f.down = true; f.ch.pose = 'lie'; f.stock = []; if (f.carry) { const g = f.carry; f.carry = null; g.position.set(f.x + 0.6, 0, f.z); g.scale.setScalar(1); g.rotation.set(0, 0, 0); const m = { g, hp: 2, x: g.position.x, z: g.position.z, R: 0.45, t: BUILD_T, owner: f }; f.men.push(m); B.men.push(m); } }
     return true;
   }
   function splash(p, lv) { snowFx?.(p.clone(), new THREE.Vector3(0, 1, 0), Math.min(1, lv / 3)); }
@@ -253,7 +253,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
           for (const m of B.men.slice()) if (Math.hypot(m.x - f.x, m.z - f.z) < m.R + 0.5) { killMan(m); splash(new THREE.Vector3(m.x, 0.6, m.z), 3); audio?.play?.('close'); }   // 転がってぶつかると つぶす
         } else if (!isMe) {
           const goal = npc(f, dt);
-          if (goal && f.makeT < 0) { const dx = goal.x - f.x, dz = goal.z - f.z, d = Math.hypot(dx, dz); if (d > 0.3) { const sp = 3.4 * (f.carry ? 0.5 : 1); f.x += dx / d * sp * dt; f.z += dz / d * sp * dt; speed = sp; f.ry = Math.atan2(dx, dz); } }
+          if (goal && f.makeT < 0 && !(f.buildT > 0)) { const dx = goal.x - f.x, dz = goal.z - f.z, d = Math.hypot(dx, dz); if (d > 0.3) { const sp = 3.4 * (f.carry ? 0.5 : 1); f.x += dx / d * sp * dt; f.z += dz / d * sp * dt; speed = sp; f.ry = Math.atan2(dx, dz); } }
           const tg = B.F.find(o => o.team !== f.team && !o.down); if (tg && speed === 0) f.ry = Math.atan2(tg.x - f.x, tg.z - f.z);
         } else if (f.carry) { f.x = ox + (f.x - ox) * 0.5; f.z = oz + (f.z - oz) * 0.5; }   // 持っていると半分の速さ
         [f.x, f.z] = collide(f.x, f.z);
@@ -265,7 +265,9 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
       else { f.ch.root.position.set(f.x, 0, f.z); f.ch.root.rotation.y = f.ry; f.ch.update(dt, speed); }
       pose(f, dt);
     }
-    B.men.forEach(m => { m.t += dt; m.g.scale.setScalar(Math.min(1, m.t * 5) * (0.75 + 0.25 * m.hp / 3)); });
+    B.men.forEach(m => { m.t += dt; const k = (0.75 + 0.25 * m.hp / 3), u = Math.min(1, m.t / BUILD_T), e = x => Math.max(0.001, Math.min(1, x)); m.g.scale.setScalar(k);   // 下から順にふくらむ(できあがるまで持てない)
+      if (u < 1 || m.shown !== 1) { const [s1, s2] = m.g.children; s1.scale.setScalar(0.42 * e(u / 0.5)); s2.scale.setScalar(0.28 * e((u - 0.5) / 0.4)); m.g.children.slice(2).forEach(c => c.scale.setScalar(e((u - 0.9) / 0.1) * (c.geometry.type === 'ConeGeometry' ? 1 : (c.geometry.type === 'SphereGeometry' ? 0.03 : 1)))); if (u >= 1) m.shown = 1; } });
+    B.F.forEach(f => { if (f.buildT > 0) f.buildT -= dt; });
     // 飛んでいる物
     for (let i = B.shots.length - 1; i >= 0; i--) {
       const s = B.shots[i]; s.life -= dt; s.v.y -= G * dt; s.p.addScaledVector(s.v, dt); s.m.position.copy(s.p); s.m.rotation.x += dt * (s.kind === 'man' ? 4 : 9);
@@ -307,6 +309,9 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
       arms[0].rotation.x = arms[1].rotation.x = -2.95; arms[0].rotation.z = 0.35; arms[1].rotation.z = -0.35;
       f.carry.position.copy(headTop(f, 0.05)); f.carry.position.y -= 0.12; f.carry.rotation.set(0, f.ry, 0); b.visible = false; return;
     }
+    if (f.buildT > 0) {   // 雪だるまをつくる間も、ひざをついて
+      if (f.ch.pose !== 'kneel') f.ch.pose = 'kneel'; body.rotation.x = 0.35; arms[0].rotation.x = arms[1].rotation.x = -1.25; arms[0].rotation.z = -0.1; arms[1].rotation.z = 0.1; b.visible = false; return;
+    }
     if (f.makeT >= 0) {   // ひざをついて、足もとで にぎる
       if (f.ch.pose !== 'kneel') f.ch.pose = 'kneel';
       body.rotation.x = 0.35; arms[0].rotation.x = arms[1].rotation.x = -1.25; arms[0].rotation.z = -0.1; arms[1].rotation.z = 0.1;
@@ -339,7 +344,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     get state() { return B; },   // テスト用
     get view() { return B ? B.view || 'back' : 'back'; },   // 'back'=うしろから / 'fp'=一人称
     get active() { return !!B; },
-    get making() { return !!B && B.F[0].makeT >= 0; },
+    get making() { return !!B && (B.F[0].makeT >= 0 || B.F[0].buildT > 0); },
     get rolling() { return !!B && B.F[0].rollT > 0; },
     start, update, tap, quit: () => B && end(true),
   };

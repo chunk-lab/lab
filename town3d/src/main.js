@@ -751,7 +751,6 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('ui:man', () => {
     if (!started || hud.busy || appHost.current || battle.active || sport.active || seasons.season !== 'winter') return; audio.unlock();
     const fx = me.x + Math.sin(me.ry) * 1.7, fz = me.z + Math.cos(me.ry) * 1.7;
-    if (seasons.building()) { hud.toast('できあがるまで待ってね'); return; }
     if (seasons.carrying()) { if (seasons.put(fx, fz)) { audio.play('close'); hud.toast('雪だるまを置いた'); } return; }
     if (snow.making || snow.holding) return;
     const sn = seasons.nearest(me.x, me.z, 2.4);

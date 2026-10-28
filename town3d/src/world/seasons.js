@@ -158,7 +158,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
       const v = new THREE.Vector3((to.x - from.x) / T, (to.y - from.y) / T + G * T / 2, (to.z - from.z) / T);
       flyers.push({ g, p: from.clone(), v, life: 4, onLand, check }); return true; },
     put(x, z) { if (!held) return null; scene.remove(held); held = null; return api.build(x, z); },
-    nearest(x, z, r = 1.6) { let b = null, bd = r; men.forEach((m, i) => { if (m.born >= 0) return; const d = Math.hypot(m.x - x, m.z - z); if (d < bd) { bd = d; b = { i, m }; } }); return b; },
+    nearest(x, z, r = 1.6) { let b = null, bd = r; men.forEach((m, i) => { const d = Math.hypot(m.x - x, m.z - z); if (d < bd) { bd = d; b = { i, m }; } }); return b; },
     remove: i => removeMan(i),
     // 毎フレーム。c=カメラの位置
     update(dt, c, night = 0) {
@@ -190,7 +190,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
         geo.attributes.position.needsUpdate = true;
       }
       for (const m of men) {   // 作るところ:下から順にふくらむ
-        if (m.born >= 0 || m.born === undefined) { m.born += dt; const a = m.born; const [b, mid, head, nose, scarf] = m.g.userData.parts, e = x => Math.min(1, Math.max(0, x)), o = x => { const k = e(x); return 1 - Math.pow(1 - k, 3) * (1 + 0.3 * Math.sin(k * 9)); };
+        if (m.born >= 0 || m.born === undefined) { m.born += dt * 1.8; const a = m.born; const [b, mid, head, nose, scarf] = m.g.userData.parts, e = x => Math.min(1, Math.max(0, x)), o = x => { const k = e(x); return 1 - Math.pow(1 - k, 3) * (1 + 0.3 * Math.sin(k * 9)); };
           b.scale.setScalar(Math.max(0.001, o(a / 0.7))); mid.scale.setScalar(Math.max(0.001, o((a - 0.7) / 0.7))); head.scale.setScalar(Math.max(0.001, o((a - 1.4) / 0.7)));
           const f = Math.max(0.001, o((a - 2.0) / 0.5)); nose.scale.setScalar(f); scarf.scale.setScalar(f);
           m.g.children.forEach(ch => { if (ch.geometry && ch.geometry.type === 'SphereGeometry' && ch.material === coalM) ch.scale.setScalar(f); });
