@@ -31,7 +31,9 @@ const MIXCSS = `
 .ens .cell.sel{outline:3px solid #f58aa8;background:#ffe9f0}.ens .cell.used{opacity:.55}.ens .cell .ub{position:absolute;right:4px;top:3px;font-size:10px;background:#efe8f7;border-radius:8px;padding:0 5px;color:#6b4a9a}
 .ens .rr{display:inline-block;font-weight:900;font-size:10px;padding:0 6px;border-radius:6px;color:#fff;margin-left:3px}.rr0{background:#8a96a3}.rr1{background:#3b8fe0}.rr2{background:#a456f0}.rr3{background:linear-gradient(90deg,#ff9a00,#ff4d8d,#8a5cff);}
 .mixfx{position:absolute;inset:0;z-index:60;background:radial-gradient(circle at 50% 45%,#3a1d6e,#0b0618 70%);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;overflow:hidden;animation:mxIn .3s}
-.mixfx .ing{position:relative;width:240px;height:240px}.mixfx .ing span{position:absolute;left:50%;top:50%;width:70px;margin:-24px 0 0 -35px;text-align:center;font-size:48px;animation:mxOrb 1.7s ease-in forwards}
+.mixfx .mxc{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.mixfx .mxi{position:absolute;inset:0;pointer-events:none}.mixfx .mxe{position:absolute;left:0;top:0;width:96px;text-align:center;font-size:56px;will-change:transform}.mixfx .mxe img{width:96px!important;max-width:96px!important;height:auto!important}
+.mixfx .mxt{position:absolute;left:0;right:0;top:calc(44% + 150px);text-align:center;font-weight:900;letter-spacing:3px;font-size:20px;text-shadow:0 0 12px var(--g);pointer-events:none}
+.mixfx .cd{position:relative}.mixfx .cd .rays{position:absolute;left:50%;top:44%;width:520px;height:520px;margin:-260px 0 0 -260px;z-index:-1;background:repeating-conic-gradient(from 0deg,var(--g) 0 7deg,transparent 7deg 20deg);opacity:.32;-webkit-mask-image:radial-gradient(circle,#000 8%,transparent 66%);mask-image:radial-gradient(circle,#000 8%,transparent 66%);animation:mxSpin 14s linear infinite}@keyframes mxSpin{to{transform:rotate(360deg)}}
 .mixfx .ring{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px;border-radius:50%;box-shadow:0 0 40px 16px #b890ff,inset 0 0 20px #fff8;animation:mxRing 1.7s ease-in forwards}
 @keyframes mxIn{from{opacity:0}to{opacity:1}}
 @keyframes mxOrb{0%{transform:rotate(var(--a)) translateX(95px) rotate(calc(var(--a)*-1)) scale(1)}100%{transform:rotate(calc(var(--a) + 900deg)) translateX(0) rotate(calc(var(--a)*-1 - 900deg)) scale(.15)}}
@@ -394,19 +396,97 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       }
     };
   }
-  function gacha(icons, c) {   // 混ぜた演出(運ではなく、できるものが決まっている)。c = {rar:0〜3, icon, name, en, line}
+  // 混ぜた演出(運ではなく、できるものが決まっている)。c = {rar:0〜3, icon, name, en, line}
+  //  素材が渦をまいて寄ってきて重なる → 稲妻がはしる → 閃光・衝撃波・火花 → カードがせり出す。ランクが上ほど長く・派手に
+  function gacha(icons, c) {
     return new Promise(res => {
-      const G = ['#aab4c0', '#4aa8ff', '#c07bff', '#ffc400'][Math.min(3, c.rar)];
+      const rar = Math.min(3, c.rar | 0);
+      const G = ['#aab4c0', '#4aa8ff', '#c07bff', '#ffc400'][rar], G2 = ['#e8eef5', '#bfe0ff', '#ecd4ff', '#fff2b0'][rar];
+      const tG = [1.4, 1.5, 1.7, 1.9][rar], tC = [0.55, 0.8, 1.1, 1.6][rar], tB = tG + tC;   // 寄る時間 / ため時間 / 爆発の時刻
       const ov = document.createElement('div'); ov.className = 'mixfx'; ov.style.setProperty('--g', G);
-      ov.innerHTML = `<div class="ing"><div class="ring"></div>${icons.map((ic, i) => `<span style="--a:${i * 120}deg">${ic}</span>`).join('')}</div><div style="margin-top:14px;font-weight:900;letter-spacing:2px">まざる…!</div>`;
+      ov.innerHTML = `<canvas class="mxc"></canvas><div class="mxi">${icons.map(ic => `<span class="mxe">${ic}</span>`).join('')}</div><div class="mxt">まざる…!</div>`;
       root.appendChild(ov); sfx.play('whoosh');
-      setTimeout(() => sfx.play('nibble'), 700);
-      setTimeout(() => {
-        sfx.play(c.rar >= 2 ? 'legend' : 'coin', c.rar >= 2);
-        const pts = Array.from({ length: 16 + c.rar * 10 }, () => { const a = Math.random() * 6.28, r = 90 + Math.random() * (140 + c.rar * 40); return `<span class="pt" style="--dx:${Math.cos(a) * r}px;--dy:${Math.sin(a) * r}px;animation-delay:${Math.random() * 0.2}s">${['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)]}</span>`; }).join('');
-        ov.innerHTML = `<div class="fl"></div>${pts}<div class="cd"><div class="rn">${RAR[Math.min(3, c.rar)]}${c.rar >= 3 ? '!!' : c.rar === 2 ? '!' : ''}</div><div class="ic">${c.icon}</div><b>${esc(c.name)}</b><small>${esc(c.en)}</small><div style="margin-top:8px;font-size:12px">${esc(c.line)}</div><button class="btn" data-x>やったー</button></div>`;
-        ov.querySelector('[data-x]').onclick = () => { ov.remove(); res(); };
-      }, 1750);
+      const cv = ov.querySelector('canvas'), els = [...ov.querySelectorAll('.mxe')], tx = ov.querySelector('.mxt');
+      const W = ov.clientWidth || 390, H = ov.clientHeight || 700, dpr = Math.min(2, devicePixelRatio || 1);
+      cv.width = W * dpr; cv.height = H * dpr; const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const cx = W / 2, cy = H * 0.44, R0 = Math.min(W, H) * 0.42, n = els.length, off = Math.random() * 6.28;
+      const ease = x => x * x * (3 - 2 * x), clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+      const bolts = [], parts = [], rings = [], trail = els.map(() => []);
+      let t0 = performance.now(), raf = 0, burst = false, shown = false, flash = 0, shake = 0, nextBolt = 0, closed = false, lastSp = 0;
+      const bolt = (x1, y1, x2, y2, life, w, col) => {   // ぎざぎざの稲妻
+        const pts = [[x1, y1]], segs = 9, dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
+        for (let i = 1; i < segs; i++) { const k = i / segs, j = (Math.random() - 0.5) * len * 0.16 * Math.sin(k * Math.PI); pts.push([x1 + dx * k + nx * j, y1 + dy * k + ny * j]); }
+        pts.push([x2, y2]); bolts.push({ pts, life, max: life, w, col });
+        if (Math.random() < 0.5) { const m = pts[3 + Math.floor(Math.random() * 3)], a = Math.atan2(dy, dx) + (Math.random() - 0.5) * 1.6, L2 = len * 0.3; bolts.push({ pts: [m, [m[0] + Math.cos(a) * L2 * 0.5 + (Math.random() - 0.5) * 12, m[1] + Math.sin(a) * L2 * 0.5], [m[0] + Math.cos(a) * L2, m[1] + Math.sin(a) * L2]], life: life * 0.8, max: life, w: w * 0.55, col }); }
+      };
+      const spark = (x, y, v, col, life, size = 3) => { const a = Math.random() * 6.28, s = v * (0.3 + Math.random()); parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life, max: life, col, size, g: 260 }); };
+      const doBurst = () => {
+        burst = true; flash = 1; shake = [5, 9, 15, 24][rar];
+        sfx.play(rar >= 2 ? 'legend' : 'coin', rar >= 2);
+        for (let i = 0; i < 1 + rar; i++) rings.push({ r: 6, v: 380 + i * 140, life: 0.9 + i * 0.12, max: 0.9 + i * 0.12, col: i % 2 ? G2 : G, delay: i * 0.1 });
+        const N = 50 + rar * 60; for (let i = 0; i < N; i++) spark(cx, cy, 300 + rar * 130, Math.random() < 0.4 ? '#fff' : (Math.random() < 0.5 ? G : G2), 0.9 + Math.random() * 1.0, 2 + Math.random() * 3);
+        for (let i = 0; i < 6 + rar * 6; i++) { const a = Math.random() * 6.28; bolt(cx, cy, cx + Math.cos(a) * W * (0.5 + Math.random() * 0.3), cy + Math.sin(a) * W * (0.5 + Math.random() * 0.3), 0.35, 3 + rar, G2); }
+        if (rar >= 3) setTimeout(() => { if (closed) return; flash = 0.8; shake = 16; sfx.play('coin'); for (let i = 0; i < 80; i++) spark(cx, cy, 460, ['#ffd84a', '#fff', '#ff9a3a', '#ff6fb0', '#7fd7ff'][i % 5], 1.3, 3 + Math.random() * 3); rings.push({ r: 6, v: 760, life: 1.1, max: 1.1, col: '#fff', delay: 0 }); }, 380);
+        els.forEach(e => { e.style.visibility = 'hidden'; }); tx.style.display = 'none';
+        setTimeout(show, 280);
+      };
+      const show = () => {
+        if (shown || closed) return; shown = true;
+        const card = document.createElement('div'); card.className = 'cd';
+        card.innerHTML = `<div class="rays"></div><div class="rn">${RAR[rar]}${rar >= 3 ? '!!' : rar === 2 ? '!' : ''}</div><div class="ic">${c.icon}</div><b>${esc(c.name)}</b><small>${esc(c.en)}</small><div style="margin-top:8px;font-size:12px">${esc(c.line)}</div><button class="btn" data-x>やったー</button>`;
+        ov.appendChild(card);
+        card.querySelector('[data-x]').onclick = e => { e.stopPropagation(); closed = true; cancelAnimationFrame(raf); ov.remove(); res(); };
+      };
+      ov.onclick = () => { if (!burst) t0 -= Math.max(0, (tB - (performance.now() - t0) / 1000) * 1000); };   // タップで早送り
+      const step = now => {
+        if (closed) return; raf = requestAnimationFrame(step);
+        const t = (now - t0) / 1000, dt = Math.min(0.05, (now - lastSp) / 1000 || 0.016); lastSp = now;
+        g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+        // 画面のゆれ
+        shake = Math.max(0, shake - dt * (rar >= 3 ? 14 : 22)); const sx = (Math.random() - 0.5) * shake * 2, sy = (Math.random() - 0.5) * shake * 2; g.translate(sx, sy); ov.style.setProperty('--sx', sx + 'px'); ov.style.setProperty('--sy', sy + 'px');
+        // ためている間の背景の光
+        const charge = clamp((t - tG) / tC), pull = clamp(t / tG);
+        if (!burst) { const rg = g.createRadialGradient(cx, cy, 0, cx, cy, 40 + 260 * (pull * 0.4 + charge)); rg.addColorStop(0, G + 'cc'); rg.addColorStop(1, G + '00'); g.fillStyle = rg; g.fillRect(-20, -20, W + 40, H + 40); }
+        // 素材:渦をまいて寄る → 重なる → ふるえる
+        els.forEach((e, i) => {
+          if (burst) return;
+          const ph = off + i * 6.28 / n, k = ease(pull), rad = R0 * (1 - k), ang = ph + k * (9 + rar * 2) + Math.sin(t * 3 + i) * 0.1;
+          let x = cx + Math.cos(ang) * rad, y = cy + Math.sin(ang) * rad * 0.8;
+          if (t > tG) { const j = 2 + charge * (5 + rar * 3); x += (Math.random() - 0.5) * j; y += (Math.random() - 0.5) * j; }
+          const sc = (1 - 0.25 * k) * (1 + (t > tG ? charge * 0.35 : 0)), rot = (1 - k) * (i % 2 ? 1 : -1) * 0.8;
+          e.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${rot}rad) scale(${sc})`; e.style.filter = `drop-shadow(0 0 ${6 + charge * 20}px ${G})`;
+          const tr = trail[i]; tr.push([x, y]); if (tr.length > 14) tr.shift();
+          g.lineCap = 'round'; for (let q = 1; q < tr.length; q++) { g.strokeStyle = G; g.globalAlpha = q / tr.length * 0.55; g.lineWidth = 2 + q * 0.5 + rar; g.beginPath(); g.moveTo(tr[q - 1][0], tr[q - 1][1]); g.lineTo(tr[q][0], tr[q][1]); g.stroke(); } g.globalAlpha = 1;
+          if (Math.random() < 0.3 + rar * 0.1) spark(x, y, 40, G2, 0.5, 2);
+        });
+        // ため:稲妻が走る
+        if (!burst && t > tG * 0.75) {
+          const rate = [0.14, 0.09, 0.055, 0.035][rar] * (1.1 - charge * 0.6);
+          if (t > nextBolt) {
+            nextBolt = t + rate * (0.6 + Math.random() * 0.8);
+            const a = Math.random() * 6.28, d = Math.min(W, H) * (0.4 + Math.random() * 0.25);
+            bolt(cx + Math.cos(a) * d, cy + Math.sin(a) * d * 0.9, cx + (Math.random() - 0.5) * 20, cy + (Math.random() - 0.5) * 20, 0.16 + Math.random() * 0.1, 2 + rar + charge * 2, G2);
+            if (rar >= 3 && Math.random() < 0.35) bolt(cx + (Math.random() - 0.5) * W * 0.5, -10, cx, cy, 0.22, 7, '#fff7c0');   // 天からの雷(SSR)
+            if (rar >= 1 && Math.random() < 0.5 && n > 1) { const i = Math.floor(Math.random() * n), j = (i + 1) % n, a1 = trail[i][trail[i].length - 1], b1 = trail[j][trail[j].length - 1]; if (a1 && b1) bolt(a1[0], a1[1], b1[0], b1[1], 0.14, 2 + rar, G2); }
+          }
+          if (t > tG && Math.random() < 0.7) spark(cx + (Math.random() - 0.5) * 200, cy + (Math.random() - 0.5) * 200, -80, G2, 0.5, 2);   // 中心へ吸い込まれる火花
+          const ch2 = clamp((t - tG) / tC); if (ch2 > 0.02) { const orb = 12 + ch2 * (28 + rar * 18) + Math.sin(t * 40) * 3; const og = g.createRadialGradient(cx, cy, 0, cx, cy, orb); og.addColorStop(0, '#fff'); og.addColorStop(0.5, G2); og.addColorStop(1, G + '00'); g.fillStyle = og; g.beginPath(); g.arc(cx, cy, orb * 1.6, 0, 7); g.fill(); }
+          tx.textContent = t < tG ? 'まざる…!' : ['', 'ビリビリ…!', 'バリバリ…!!', 'ゴゴゴゴ…!!!'][rar] || 'ビリビリ…!';
+        }
+        if (!burst && t >= tB) doBurst();
+        // 描画:稲妻・衝撃波・火花(加算合成)
+        g.globalCompositeOperation = 'lighter';
+        for (let i = bolts.length - 1; i >= 0; i--) { const b = bolts[i]; b.life -= dt; if (b.life <= 0) { bolts.splice(i, 1); continue; } const a = clamp(b.life / b.max * 1.6);
+          g.lineJoin = 'round'; g.lineCap = 'round'; g.shadowColor = b.col; g.shadowBlur = 14 + b.w * 3; g.strokeStyle = b.col; g.globalAlpha = a * 0.9; g.lineWidth = b.w * 1.8; g.beginPath(); b.pts.forEach((p, q) => q ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.stroke();
+          g.shadowBlur = 0; g.strokeStyle = '#fff'; g.globalAlpha = a; g.lineWidth = Math.max(1, b.w * 0.6); g.stroke(); }
+        g.globalAlpha = 1; g.shadowBlur = 0;
+        for (let i = rings.length - 1; i >= 0; i--) { const r = rings[i]; if (r.delay > 0) { r.delay -= dt; continue; } r.life -= dt; if (r.life <= 0) { rings.splice(i, 1); continue; } r.r += r.v * dt; const a = clamp(r.life / r.max); g.strokeStyle = r.col; g.globalAlpha = a; g.lineWidth = 3 + 14 * a; g.beginPath(); g.arc(cx, cy, r.r, 0, 6.3); g.stroke(); }
+        g.globalAlpha = 1;
+        for (let i = parts.length - 1; i >= 0; i--) { const p = parts[i]; p.life -= dt; if (p.life <= 0) { parts.splice(i, 1); continue; } p.x += p.vx * dt; p.y += p.vy * dt; p.vy += p.g * dt * (p.vx < 0 && !burst ? 0 : 1); p.vx *= 0.985; g.globalAlpha = clamp(p.life / p.max); g.fillStyle = p.col; g.beginPath(); g.arc(p.x, p.y, p.size * (0.5 + p.life / p.max * 0.5), 0, 6.3); g.fill(); }
+        g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+        if (flash > 0) { g.fillStyle = `rgba(255,255,255,${clamp(flash)})`; g.fillRect(-30, -30, W + 60, H + 60); flash = Math.max(0, flash - dt * 2.6); }
+      };
+      raf = requestAnimationFrame(step);
     });
   }
 
