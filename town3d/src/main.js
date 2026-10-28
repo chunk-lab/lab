@@ -118,7 +118,7 @@ export function mount(container, opt = {}) {
   let sport = null;   // 季節のスポーツ(ゴルフ・フリスビー)
   // 3Dの雪合戦(町のその場で 2×2)
   const battle = createSnowBattle({
-    faceCam: (x, z, ry) => { cam.yaw = ry + Math.PI; cam.x = x; cam.z = z; cam.pitch = 0.8; cam.dist = 11.5; },   // 引いた斜め上から
+    faceCam: (x, z, ry) => { cam.yaw = ry + Math.PI; cam.x = x; cam.z = z; cam.pitch = 0.55; cam.dist = 10; },   // やや引きの後ろから(雪合戦中は固定)
     scene, camera, root, me, residents, meshes: city.meshes, collide: (x, z) => collide(x, z), audio, snowFx: (p, n, s) => snow.fx(p, n, s),
     onEnd({ win, quit, opp }) {
       actSport(null);
@@ -1054,9 +1054,11 @@ export function mount(container, opt = {}) {
     // 自分の移動(カメラの向き基準)
     let mx = inp.mx, my = inp.my;
     if (camMode === 'follow') {
+      if (battle.active) { cam.pitch = 0.55; cam.dist = 10; me.ch.root.visible = true; }   // 雪合戦:カメラは「やや引きの後ろから」に固定(向きは自分の背中側のまま・操作は動くことに集中)
+      else {
       cam.yaw -= inp.camDX * 0.006; cam.pitch = clamp(cam.pitch + inp.camDY * 0.004, -1.5, 1.5);
       cam.dist = clamp(cam.dist + inp.zoom * 0.6, 1.6, 14);   // もっと近くまで寄れる(寄りすぎたら自分は消える)
-      me.ch.root.visible = cam.dist > 1.9;
+      me.ch.root.visible = cam.dist > 1.9; }
     } else if (camMode === 'free') {   // カメラだけ動かす(自分はその場)
       fcam.yaw -= inp.camDX * 0.006; fcam.pitch = clamp(fcam.pitch + inp.camDY * 0.004, -1.5, 1.5);
       const sp = (inp.run ? 24 : 8) * dt, c = Math.cos(fcam.yaw), s = Math.sin(fcam.yaw), cp = Math.cos(fcam.pitch);

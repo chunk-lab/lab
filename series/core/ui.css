@@ -121,3 +121,4 @@
 .rv-pt{font-size:22px;font-weight:900;text-align:center;color:#c0561b;margin:0}
 .rv-ch{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rv-ch .cs-btn{min-height:52px}
 .rv-chk{max-height:56vh}.rv-chk li{padding:0}.rv-chk li label{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:6px 12px;box-sizing:border-box;cursor:pointer}.rv-chk .t{display:flex;flex-direction:column;gap:2px;min-width:0}.rv-chk input{width:30px;height:30px;flex:none;touch-action:none;accent-color:#2ca66a}.rv-chk li:has(input:checked){background:#eafaf1;border-color:#2ca66a}
+.rv-chk2 li{align-items:center}.rv-k{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;margin:-6px 0 -6px -6px;flex:none}.rv-k input{width:24px;height:24px;accent-color:#3a9a5a}

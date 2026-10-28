@@ -37,6 +37,7 @@ export function createReview(core) {
     if (!day) { core.ui.toast('まだ記録がありません'); return; }
     const title = mode === 'prev' ? `${dayJa(day)}のふりかえり` : '今日のふりかえり';
     let items = dl.words(day).map(w => ({ ...w }));
+    const sents = items.filter(w => w.kind === 'sentence'); items = items.filter(w => w.kind !== 'sentence');   // 並べ替えの文は、ふだんは出さない(一覧の「文章」タブでだけ)
     const forced = dl.forced();
     if (forced || mode === 'prev') {   // たまった/3日たった:足りない分は、いままで覚えていなかったものでうめる
       const have = new Set(items.map(w => w.en.toLowerCase())), rest = dl.pending().filter(w => !have.has(w.en.toLowerCase())).sort((a, b) => (b.unk || 0) - (a.unk || 0));
@@ -63,22 +64,38 @@ export function createReview(core) {
         go(`<h3>${title}</h3>${s.total ? `<div class="rv-bar">${bar}</div>
           <div class="rv-leg"><span style="color:${TOPS.study.col}">■勉強 ${mm(s.study)}</span><span style="color:${TOPS.play.col}">■遊び ${mm(s.play)}</span><span style="color:${TOPS.relax.col}">■街でまったり ${mm(s.relax)}</span></div>
           ${rows}${say}` : '<p class="cs-note">この日の時間の記録はありません。</p>'}
-          <button class="cs-btn" id="rv-n">${items.length ? 'つぎへ(言葉の一覧)' : 'おわる'}</button>`, () => { box.querySelector('#rv-n').onclick = () => (items.length ? stepList() : finish([])); });
+          <button class="cs-btn" id="rv-n">${items.length || sents.length ? 'つぎへ(言葉の一覧)' : 'おわる'}</button>`, () => { box.querySelector('#rv-n').onclick = () => (items.length || sents.length ? stepList() : finish([])); });
       }
       // ② 一覧+音声
       function stepList() {
-        const row = (w, i) => `<li data-i="${i}"><b>${esc(w.en)}</b>${w.multi > 1 ? `<em>＋${w.multi - 1}</em>` : ''}${w.miss ? '<u>まちがえた</u>' : ''}${w.old ? '<u>前から</u>' : ''}<small>${esc(w.ja)}</small></li>`;
-        go(`<h3>出会った言葉(${items.length})</h3><p class="cs-note">音声が順番に流れます。「＋」は、ほかの意味もある言葉。</p>
-          <ul class="rv-list">${items.map(row).join('')}</ul>
-          <div class="rv-two"><button class="cs-btn" id="rv-p">▶ 音声</button><button class="cs-btn" id="rv-n">フラッシュカードへ</button></div>`, () => {
-          let on = false, i = 0; const lis = [...box.querySelectorAll('li')], pb = box.querySelector('#rv-p');
-          const stop = () => { on = false; core.speech.stop(); pb.textContent = '▶ 音声'; lis.forEach(l => l.classList.remove('now')); };
-          stopAudio = stop;
-          const next = () => { if (!on) return; if (i >= items.length) return stop(); const w = items[i]; lis.forEach(l => l.classList.remove('now')); lis[i].classList.add('now'); lis[i].scrollIntoView({ block: 'nearest' }); i++; core.speech.speak(w.en, { onend: () => setTimeout(next, 450) }); };
-          pb.onclick = () => { if (on) return stop(); on = true; i = 0; pb.textContent = '■ とめる'; next(); };
-          box.querySelector('#rv-n').onclick = () => { stop(); stepCards(); };
-          if (core.settings.get('voice')) setTimeout(() => { if (box.contains(pb) && !on) pb.click(); }, 400);
-        });
+        let tab = 'w';
+        const row = (w, i, chk) => `<li data-i="${i}">${chk ? `<label class="rv-k" title="覚えてる(カードを飛ばす)"><input type="checkbox" data-k="${i}" ${w._k ? 'checked' : ''}></label>` : ''}<b>${esc(w.en)}</b>${w.multi > 1 ? `<em>＋${w.multi - 1}</em>` : ''}${w.miss ? '<u>まちがえた</u>' : ''}${w.old ? '<u>前から</u>' : ''}<small>${esc(w.ja)}</small></li>`;
+        const draw = () => {
+          const cur = tab === 'w' ? items : sents;
+          go(`<h3>出会った${tab === 'w' ? '言葉' : '文章'}(${cur.length})</h3>
+            ${sents.length ? `<nav class="cs-chips"><button data-t="w" class="${tab === 'w' ? 'on' : ''}">言葉 ${items.length}</button><button data-t="s" class="${tab === 's' ? 'on' : ''}">文章 ${sents.length}</button></nav>` : ''}
+            <p class="cs-note">音声が順番に流れます。「＋」は、ほかの意味もある言葉。${tab === 'w' ? '<br>左の□にチェックを入れた言葉は「覚えてる」。フラッシュカードを飛ばせます。' : ''}</p>
+            <ul class="rv-list${tab === 'w' ? ' rv-chk2' : ''}">${cur.map((w, i) => row(w, i, tab === 'w')).join('')}</ul>
+            <div class="rv-two"><button class="cs-btn" id="rv-p">▶ 音声</button><button class="cs-btn" id="rv-n">${items.length ? 'フラッシュカードへ' : 'おわる'}</button></div>`, () => {
+            let on = false, i = 0; const lis = [...box.querySelectorAll('li')], pb = box.querySelector('#rv-p');
+            const stop = () => { on = false; core.speech.stop(); pb.textContent = '▶ 音声'; lis.forEach(l => l.classList.remove('now')); };
+            stopAudio = stop;
+            box.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { stop(); tab = b.dataset.t; draw(); });
+            box.querySelectorAll('input[data-k]').forEach(c => { c.onchange = () => { items[+c.dataset.k]._k = c.checked; }; });   // 読み上げ中でもチェックできる
+            const next = () => { if (!on) return; if (i >= cur.length) return stop(); const w = cur[i]; lis.forEach(l => l.classList.remove('now')); lis[i].classList.add('now'); lis[i].scrollIntoView({ block: 'nearest' }); i++; core.speech.speak(w.en, { onend: () => setTimeout(next, 450) }); };
+            pb.onclick = () => { if (on) return stop(); on = true; i = 0; pb.textContent = '■ とめる'; next(); };
+            box.querySelector('#rv-n').onclick = () => {
+              stop();
+              if (!items.length) return finish([]);
+              const known = items.filter(w => w._k), rest = items.filter(w => !w._k);   // チェック済みは先に「覚えてる」として入れて、カードは残りだけ
+              items = known.concat(rest); stepCards.pre = known.length;
+              stepCards.resume = known.map(w => ({ en: w.en, known: true, item: w }));
+              stepCards();
+            };
+            if (tab === 'w' && core.settings.get('voice')) setTimeout(() => { if (box.contains(pb) && !on) pb.click(); }, 400);
+          });
+        };
+        draw();
       }
       // ③ フラッシュカード
       function stepCards() {
@@ -90,7 +107,7 @@ export function createReview(core) {
             <p class="cs-note">右へチョン=覚えてる / 左へチョン=まだ / タップでめくる</p>
             <div class="rv-card" id="rv-c"><div class="f"><b>${esc(w.en)}</b>${w.pos ? `<small>${esc(w.pos)}</small>` : ''}<span class="b" hidden>${esc(w.ja || '(意味の記録なし)')}${w.multi > 1 ? `<em>ほかの意味もあるよ(＋${w.multi - 1})</em>` : ''}</span></div></div>
             <div class="rv-two"><button class="cs-btn rv-no" id="rv-x">← まだ</button><button class="cs-btn rv-ok" id="rv-o">覚えてる →</button></div>
-            ${idx > 0 ? '<button class="cs-btn" id="rv-b">↩ ひとつ もどる</button>' : ''}`, () => {
+            ${idx > (stepCards.pre || 0) ? '<button class="cs-btn" id="rv-b">↩ ひとつ もどる</button>' : ''}`, () => {
             const c = box.querySelector('#rv-c'), back = c.querySelector('.b'); let x0 = null, dx = 0, moved = false, flipped = false, done = false;
             core.speech.speak(w.en);
             const answer = known => { if (done) return; done = true; res.push({ en: w.en, known, item: w }); c.style.transition = 'transform .12s,opacity .12s'; c.style.transform = `translateX(${known ? 140 : -140}%) rotate(${known ? 14 : -14}deg)`; c.style.opacity = 0; setTimeout(() => { idx++; card(); }, 110); };
