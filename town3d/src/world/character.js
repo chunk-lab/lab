@@ -242,8 +242,9 @@ export function makeChunkkun() {
 // 前まわりのでんぐり返し(よける)。u=0〜1。体の真ん中を軸に、ひざをかかえて丸まって1回転する
 export function rollPose(rig, u) {
   const { body, legs, arms, head } = rig; if (!body || !legs) { if (body) body.rotation.x = u * Math.PI * 2; return; }
-  const c = 0.72, e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2, th = e * Math.PI * 2, k = Math.min(1, Math.sin(Math.PI * Math.min(1, u * 1.1)) * 1.8);
-  body.rotation.x = th; body.position.set(0, c - c * Math.cos(th) + 0.3 * k, -c * Math.sin(th));
-  legs[0].rotation.x = legs[1].rotation.x = -1.75 * k; arms[0].rotation.x = arms[1].rotation.x = -2.0 * k; arms[0].rotation.z = 0.25 * k; arms[1].rotation.z = -0.25 * k; head.rotation.x = 0.7 * k;
+  // 低く丸まった「たま」になって、地面すれすれで転がる(体を縮め、回転の中心を低くする)
+  const c = 0.72, e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2, th = e * Math.PI * 2, k = Math.min(1, Math.sin(Math.PI * u) * 3), s = 1 - 0.5 * k, a = c * s, H = c - 0.4 * k;
+  body.scale.setScalar(s); body.rotation.x = th; body.position.set(0, H - a * Math.cos(th), -a * Math.sin(th));
+  legs[0].rotation.x = legs[1].rotation.x = -2.0 * k; arms[0].rotation.x = arms[1].rotation.x = -2.3 * k; arms[0].rotation.z = 0.3 * k; arms[1].rotation.z = -0.3 * k; head.rotation.x = 0.9 * k;
 }
-export function rollReset(rig) { if (!rig || !rig.body) return; rig.body.rotation.x = 0; rig.body.position.z = 0; if (rig.head) rig.head.rotation.x = 0; }
+export function rollReset(rig) { if (!rig || !rig.body) return; rig.body.rotation.x = 0; rig.body.position.z = 0; rig.body.scale.setScalar(1); if (rig.head) rig.head.rotation.x = 0; }
