@@ -105,6 +105,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     g.userData.parts = [b, mid, head, nose, scarf];
     return g;
   }
+  let held = null;   // 町で持っている雪だるま
   const save = () => storage && storage.set('snowmen', men.map(m => ({ x: +m.x.toFixed(2), z: +m.z.toFixed(2) })));
   function addMan(x, z, instant) {
     if (men.length >= MAX_MEN) removeMan(0, true);
@@ -135,6 +136,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
       for (const g of groundMats) { const b = baseOf(g); g.color.copy(b); if (s === 'winter') g.color.lerp(new THREE.Color(0xf6f9ff), 0.88); else if (s === 'autumn') g.color.lerp(new THREE.Color(0xd8c98a), 0.35); else if (s === 'spring') g.color.lerp(new THREE.Color(0xd5eca8), 0.25); }
       setFall(s === 'winter' ? 'snow' : null);   // 春の桜は既存の「桜」(木と花びら)、秋の落ち葉は木から(leaves)
       leaves.on(s === 'autumn');
+      if (s !== 'winter' && held) { scene.remove(held); held = null; }
       for (const m of men) { m.g.visible = s === 'winter'; const k = colliders.indexOf(m.col); if (s === 'winter' && k < 0) colliders.push(m.col); if (s !== 'winter' && k >= 0) colliders.splice(k, 1); }
     },
     // 雪だるまを作る(x,z に)。ほかの雪だるまとかさならないよう少しずらす
@@ -143,6 +145,11 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
       for (let k = 0; k < 6; k++) { if (!men.some(m => Math.hypot(m.x - x, m.z - z) < 1.1)) break; x += 0.9; z += 0.4; }
       return addMan(x, z, false);
     },
+    // 雪だるまを持つ(町)。持っている間は、頭の上にちいさく見える。もう一度で置く
+    lift(i) { const m = men[i]; if (!m || held) return false; scene.remove(m.g); const k = colliders.indexOf(m.col); if (k >= 0) colliders.splice(k, 1); men.splice(i, 1); held = makeMan(); held.scale.setScalar(0.5); scene.add(held); return true; },
+    carrying: () => !!held,
+    holdAt(x, z, ry) { if (held) { held.position.set(x, 1.9, z); held.rotation.y = ry; } },
+    put(x, z) { if (!held) return null; scene.remove(held); held = null; return api.build(x, z); },
     nearest(x, z, r = 1.6) { let b = null, bd = r; men.forEach((m, i) => { const d = Math.hypot(m.x - x, m.z - z); if (d < bd) { bd = d; b = { i, m }; } }); return b; },
     remove: i => removeMan(i),
     // 毎フレーム。c=カメラの位置

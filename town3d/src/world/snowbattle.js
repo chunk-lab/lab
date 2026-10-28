@@ -18,18 +18,18 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
 
   // ---- 画面 ----
   const css = document.createElement('style');
-  css.textContent = `.sb-on .tw-emotes,.sb-on .tw-snowb,.sb-on .tw-action{display:none!important}
+  css.textContent = `.sb-on .tw-emotes,.sb-on .tw-snowb,.sb-on .tw-action,.sb-on .tw-corner{display:none!important}
 .sb-hud{position:absolute;inset:0;pointer-events:none;font-family:inherit;color:#5a4a6b;z-index:6}
 .sb-hud button{pointer-events:auto;border:0;font:inherit;font-weight:900;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .sb-top{position:absolute;left:8px;right:8px;top:calc(52px + env(safe-area-inset-top,0px));display:flex;justify-content:space-between;gap:6px}
 .sb-team{display:flex;gap:4px;flex-wrap:wrap}.sb-p{background:#fffffff0;border-radius:12px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 6px #0002}
 .sb-p.down{opacity:.45;text-decoration:line-through}.sb-p b{letter-spacing:-1px}
-.sb-mk{position:absolute;right:58px;bottom:calc(81px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d6ecff);box-shadow:0 5px 0 #8fb6dc,0 8px 16px #0004;font-size:28px;line-height:1}
+.sb-mk{position:absolute;right:20px;bottom:calc(60px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d6ecff);box-shadow:0 5px 0 #8fb6dc,0 8px 16px #0004;font-size:28px;line-height:1}
 .sb-mk small{display:block;font-size:10px;margin-top:2px}
-.sb-man,.sb-roll,.sb-lift{position:absolute;width:62px;height:62px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #c9bfd8,0 6px 12px #0003;font-size:24px;line-height:1}
-.sb-man{right:160px;bottom:calc(135px + env(safe-area-inset-bottom,0px))}.sb-roll{right:160px;bottom:calc(61px + env(safe-area-inset-bottom,0px))}
-.sb-lift{right:72px;bottom:calc(185px + env(safe-area-inset-bottom,0px));background:#fff3c4}
-.sb-man[disabled],.sb-roll[disabled],.sb-mk[disabled]{opacity:.45}.sb-man small,.sb-lift small{display:block;font-size:10px}.sb-lift[hidden]{display:none}
+.sb-man,.sb-roll,.sb-cam{position:absolute;width:66px;height:66px;border-radius:50%;background:#fff;box-shadow:0 4px 0 #c9bfd8,0 6px 12px #0003;font-size:24px;line-height:1}
+.sb-man{right:124px;bottom:calc(60px + env(safe-area-inset-bottom,0px))}.sb-roll{right:30px;bottom:calc(166px + env(safe-area-inset-bottom,0px))}
+.sb-cam{right:12px;top:calc(118px + env(safe-area-inset-top,0px));width:52px;height:52px;font-size:20px;background:#ffffffd8}
+.sb-man[disabled],.sb-roll[disabled],.sb-mk[disabled]{opacity:.45}.sb-man small,.sb-roll small,.sb-cam small{display:block;font-size:10px}
 .sb-setup{position:absolute;left:50%;top:28%;transform:translateX(-50%);background:#fffffff2;border-radius:20px;padding:14px 18px;text-align:center;pointer-events:auto;box-shadow:0 6px 20px #0003;min-width:230px}
 .sb-setup b{font-size:17px}.sb-setup small{display:block;color:#8d7f9e;margin:4px 0 10px;line-height:1.5}
 .sb-hp{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 2px;font-size:20px;font-weight:900}
@@ -38,12 +38,12 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
 .sb-tipx{position:absolute;left:0;right:0;top:46%;text-align:center;font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 4px #000c;pointer-events:none}
 .sb-quit{position:absolute;left:10px;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:#fffffff0;border-radius:999px;padding:8px 14px;font-size:12px;box-shadow:0 2px 6px #0002}
 .sb-msg{position:absolute;left:0;right:0;top:34%;text-align:center;font-size:34px;font-weight:900;color:#fff;text-shadow:0 3px 0 #5a4a6b,0 0 12px #0006;pointer-events:none}
-.sb-tip{position:absolute;left:0;right:0;bottom:calc(196px + env(safe-area-inset-bottom,0px));text-align:center;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 3px #000a;pointer-events:none}`;
+.sb-tip{position:absolute;left:0;right:0;bottom:calc(244px + env(safe-area-inset-bottom,0px));text-align:center;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 3px #000a;pointer-events:none}`;
   document.head.appendChild(css);
   function hudEl(home) {
     const h = document.createElement('div'); h.className = 'sb-hud';
     h.innerHTML = `<div class="sb-top"><div class="sb-team t0"></div><div class="sb-team t1"></div></div><div class="sb-msg"></div><div class="sb-tip">❄️=つくる(長おしで大) タップ=投げる ❄️から引く=山なり</div>
-      <button class="sb-mk">❄️<small>つくる</small></button><button class="sb-man">⛄</button><button class="sb-roll">🌀</button><button class="sb-lift" hidden>🙌<small>持つ</small></button><button class="sb-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
+      <button class="sb-mk">❄️<small>つくる</small></button><button class="sb-man">⛄</button><button class="sb-roll">💨<small>よける</small></button><button class="sb-cam">👁<small>視点</small></button><button class="sb-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
     root.appendChild(h); return h;
   }
   // ---- 人 ----
@@ -118,9 +118,9 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     });
     const up = () => { if (!d0 || !B) return; d0 = null; const f = B.F[0]; if (B.pull) { const p = pullTarget(); B.pull = null; if (p && canAct(f)) { if (f.carry) throwMan(f, p); else lob(f, p); } return; } finishMake(f); };
     mk.addEventListener('pointerup', up); mk.addEventListener('pointercancel', up); mk.addEventListener('contextmenu', e => e.preventDefault());
-    H.querySelector('.sb-man').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); const f = B?.F[0]; if (f && canAct(f) && !f.carry) buildMan(f); });
-    H.querySelector('.sb-roll').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); const f = B?.F[0]; if (f && canAct(f)) { if (f.carry) { showTip('雪だるまを持っていると転がれない'); return; } roll(f); } });
-    H.querySelector('.sb-lift').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); const f = B?.F[0]; if (f && canAct(f)) lift(f); });
+    H.querySelector('.sb-man').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); const f = B?.F[0]; if (f && canAct(f) && !f.carry) { if (nearMan(f)) lift(f); else buildMan(f); } });   // 近くに雪だるまがあれば持つ、なければ作る
+    H.querySelector('.sb-roll').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); const f = B?.F[0]; if (f && canAct(f)) { if (f.carry) { showTip('雪だるまを持っているとよけられない'); return; } roll(f); } });
+    H.querySelector('.sb-cam').addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!B) return; B.view = B.view === 'fp' ? 'back' : 'fp'; showTip(B.view === 'fp' ? '一人称の視点' : 'うしろからの視点'); });
     H.querySelector('.sb-quit').addEventListener('click', () => end(true));
   }
   const canAct = f => B && B.phase === 'play' && !f.down && f.rollT <= 0;
@@ -325,11 +325,13 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     const lab = f.carry ? '⛄ 引いて投げる' : f.makeT >= 0 ? `${NAMES[SIZE(f.makeT)]}…` : dots;
     if (mk.dataset.l !== lab) { mk.dataset.l = lab; mk.innerHTML = `❄️<small>${lab}</small>`; }
     H.querySelector('.sb-roll').disabled = f.rollCd > 0 || !!f.carry;
-    const mb = H.querySelector('.sb-man'), ml = `⛄<small>${f.men.length}/${MAN_MAX}</small>`; if (mb.dataset.l !== ml) { mb.dataset.l = ml; mb.innerHTML = ml; } mb.disabled = f.men.length >= MAN_MAX || !!f.carry;
-    const lb = H.querySelector('.sb-lift'), can = !f.carry && !f.down && B.phase === 'play' && !!nearMan(f); if (lb.hidden === can) lb.hidden = !can;
+    const mb = H.querySelector('.sb-man'), near = !f.carry && !f.down && B.phase === 'play' && !!nearMan(f);   // ボタンは1つ:近くに雪だるまがあれば「持つ」、なければ「つくる」
+    const ml = f.carry ? '⛄<small>もってる</small>' : near ? '🙌<small>もつ</small>' : `⛄<small>つくる ${f.men.length}/${MAN_MAX}</small>`; if (mb.dataset.l !== ml) { mb.dataset.l = ml; mb.innerHTML = ml; } mb.disabled = !!f.carry || (!near && f.men.length >= MAN_MAX);
+    H.querySelector('.sb-cam').innerHTML = B.view === 'fp' ? '👁<small>うしろ</small>' : '👁<small>一人称</small>';
   }
   return {
     get state() { return B; },   // テスト用
+    get view() { return B ? B.view || 'back' : 'back'; },   // 'back'=うしろから / 'fp'=一人称
     get active() { return !!B; },
     get making() { return !!B && B.F[0].makeT >= 0; },
     get rolling() { return !!B && B.F[0].rollT > 0; },
