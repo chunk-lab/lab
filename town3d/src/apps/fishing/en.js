@@ -464,7 +464,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         swim.forEach(s => {
           s.x += s.vx * dt; s.ph += dt * 2; if (s.x < 4 || s.x > W - s.w - 4) { s.vx *= -1; s.x = Math.max(4, Math.min(W - s.w - 4, s.x)); }
           const y = s.y + Math.sin(s.ph) * 6; if (!s.img) return;
-          g.save(); if (s.vx > 0) { g.translate(s.x + s.w, y); g.scale(-1, 1); g.drawImage(s.img, 0, 0, s.w, s.h); } else g.drawImage(s.img, s.x, y, s.w, s.h); g.restore();
+          g.save(); if (s.vx < 0) { g.translate(s.x + s.w, y); g.scale(-1, 1); g.drawImage(s.img, 0, 0, s.w, s.h); } else g.drawImage(s.img, s.x, y, s.w, s.h); g.restore();   // 絵は右向き。右へ泳ぐ時はそのまま、左へ泳ぐ時だけ反転
         });
       };
       raf = requestAnimationFrame(step);
