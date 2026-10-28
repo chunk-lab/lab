@@ -435,7 +435,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       const cv = sc.querySelector('.tankv canvas'); if (!cv) return;
       const t = spec.tank(), W = cv.clientWidth, H = cv.clientHeight, dpr = Math.min(2, devicePixelRatio || 1);
       cv.width = W * dpr; cv.height = H * dpr; const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * 0.5); return { img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * (W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
+      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * (f.id === 'ryugu' ? 1 : 0.5)); return { img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * (W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
       // ピンチ・ホイールで拡大(1〜3倍)。拡大中は指1本でずらす。ダブルタップでもどす
       { const box = cv.parentElement.parentElement, tz = cv.parentElement, hint = box.querySelector('.zh'), Zs = tankZoom;
         const clampZ = () => { Zs.z = Math.max(1, Math.min(3, Zs.z)); Zs.x = Math.max(W * (1 - Zs.z), Math.min(0, Zs.x)); Zs.y = Math.max(H * (1 - Zs.z), Math.min(0, Zs.y)); };
