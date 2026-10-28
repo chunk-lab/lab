@@ -102,6 +102,13 @@ export const spec = {
   saveTank: v => st.set('tank', v),
   food: () => st.get('food') || 0,
   setFood: n => st.set('food', Math.max(0, n | 0)),
+  // 図鑑の枠(持ち魚)。最初は1枠。ふやすのはコイン2回・ダイヤ1回
+  box: () => st.get('box') || [],
+  saveBox: v => st.set('box', v),
+  boxSlots: () => 1 + Math.min(3, st.get('boxX') | 0),
+  addBoxSlot() { st.set('boxX', Math.min(3, (st.get('boxX') | 0) + 1)); },
+  full: () => st.get('full') || {},          // 満腹コインをもらった魚の種類
+  saveFull: v => st.set('full', v),
   hasTank: () => !!st.get('tankGot'),
   gotTank: () => st.set('tankGot', 1),
 };

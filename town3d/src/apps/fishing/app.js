@@ -491,10 +491,10 @@ export const fishingApp = {
           ${info.extra}
           <div class="say" style="margin:10px auto 0">砂吹さん「${esc(sp.say || 'Nice!')}」</div>
           ${info.wanted ? `<div style="margin-top:8px;font-weight:900">🪙 +${info.coins}${info.coins < info.wanted ? ' <small style="color:#8d7f9e">(きょうの上限)</small>' : ''}</div>` : ''}
-          </div><div style="padding:8px 16px 18px;text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${en && sp.kind === 'fish' ? `<button class="btn sub" data-k ${EN.tankRoom() ? '' : 'disabled'}>🐠 ${EN.tankRoom() ? '水槽に入れる' : '水槽がいっぱい'}</button>` : ''}<button class="btn" data-x>つづける</button></div>`, true);
+          </div><div style="padding:8px 16px 18px;text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${en && sp.kind === 'fish' ? `<button class="btn sub" data-k ${EN.keepRoom() ? '' : 'disabled'}>🐠 ${EN.tankRoom() ? '水槽に入れる' : EN.keepRoom() ? '図鑑の枠に入れる' : '水槽も枠もいっぱい'}</button>` : ''}<button class="btn" data-x>つづける</button></div>`, true);
         card.querySelector('.art').appendChild(a); a.style.cssText = 'width:100%;height:auto;position:static';
         card.querySelector('[data-x]').onclick = closeCard;
-        const kb = card.querySelector('[data-k]'); if (kb) kb.onclick = () => { const r = EN.keepFish(sp, d.size); if (!r) return; sfx.play('splash'); closeCard(); toast(r === 'first' ? '🐠 砂吹さんが水槽をくれた!<br><small style="font-size:12px">家の持ち物にも入ったよ。えさは英語で作る</small>' : '🐠 水槽に入れた!', 1800); };
+        const kb = card.querySelector('[data-k]'); if (kb) kb.onclick = () => { const r = EN.keepFish(sp, d.size); if (!r) return; sfx.play('splash'); closeCard(); toast(r === 'first' ? '🐠 砂吹さんが水槽をくれた!<br><small style="font-size:12px">家の持ち物にも入ったよ。えさは英語で作る</small>' : r === 'box' ? '📖 図鑑の枠に入れた!' : '🐠 水槽に入れた!', 1800); };
         if (info.isNew || info.best || sp.r >= 4) confetti(card);
       }
       function showLost(d) { toast(LOST_JP[d.reason] + `<br><small style="font-size:13px">${BYID[d.id] && BYID[d.id].r >= 3 ? 'おしい! 大物だった…' : ''}</small>`, 1500); setTimeout(() => { if (E.S.ph === 'lost') E.ack(); }, 1400); }

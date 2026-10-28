@@ -226,9 +226,13 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
 
   // ---- 釣った魚を水槽へ ----
   const tankRoom = () => spec.tank().length < TANK_MAX;
+  const boxRoom = () => spec.box().length < spec.boxSlots();
+  const keepRoom = () => tankRoom() || boxRoom();
+  const BOX_COIN = [300, 1000], BOX_GEM = 30, FULL_COIN = 1;   // 仮:図鑑の枠のねだん(2枠目・3枠目はコイン、4枠目はダイヤ)/満腹コイン
   function keepFish(sp, size) {
-    const t = spec.tank(); if (t.length >= TANK_MAX) return false;
-    t.push({ uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id: sp.id, size, g: 0, day: '', n: 0, at: Date.now() }); spec.saveTank(t);
+    const fish = { uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id: sp.id, size, g: 0, day: '', n: 0, at: Date.now() };
+    if (!tankRoom()) { if (!boxRoom()) return false; const b = spec.box(); b.push(fish); spec.saveBox(b); return 'box'; }   // 水槽がいっぱいなら図鑑の枠へ
+    const t = spec.tank(); t.push(fish); spec.saveTank(t);
     if (!spec.hasTank()) { spec.gotTank(); furn.give('tank'); return 'first'; }
     return true;
   }
@@ -276,12 +280,23 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
   function collection({ onBack }) {
     const sc = document.createElement('div'); sc.className = 'ens'; root.appendChild(sc);
     let tab = ctx.storage.get('colTab') || 1;
+    const boxHTML = () => {   // 図鑑の枠(持ち魚):水槽と出し入れして育てる
+      const bx = spec.box(), n = spec.boxSlots(), gem = ctx.gems ? ctx.gems.get() : null;
+      const rows = [0, 1, 2, 3].map(i => {
+        if (i < n) { const f = bx[i]; if (!f) return `<div class="row"><div class="fx" style="color:#8d7f9e">あき(水槽の魚を「図鑑へ」で入れられるよ)</div></div>`;
+          const sp = FISHBY[f.id]; return `<div class="row"><span style="width:56px;flex:none">${fishImg(f.id, 56, false, f.rk || 0)}</span><div class="fx"><b>${esc(RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id))}</b> <small style="color:#8d7f9e">そだち ${f.g}/${GROW_NEED}${spec.full()[f.id] ? ' ・ 満腹ずみ' : ''}</small><div class="gb"><i style="width:${Math.min(100, f.g / GROW_NEED * 100)}%"></i></div></div><button class="sbtn" data-totank="${f.uid}">🐠水槽へ</button></div>`; }
+        if (i > n) return `<div class="row"><div class="fx" style="color:#b9aecb">🔒 ${i + 1}つ目の枠</div></div>`;
+        return i < 3 ? `<div class="row"><div class="fx">🔒 ${i + 1}つ目の枠</div><button class="sbtn pri" data-unl="coin">🪙 ${BOX_COIN[i - 1]}で開ける</button></div>`
+          : `<div class="row"><div class="fx">🔒 4つ目の枠(ダイヤ)</div><button class="sbtn pri" data-unl="gem">💎 ${BOX_GEM}で開ける</button></div>`;
+      }).join('');
+      return `<h3 style="margin:6px 0">🐟 図鑑の枠 ${bx.length} / ${n}</h3><p class="nt" style="margin:0 0 6px">魚を入れておく枠。水槽(6匹)と出し入れして、育てる魚をかえられる。そだち・満腹の記録は消えないよ。${gem !== null ? ` 💎 ${gem}` : ''}</p>${rows}<h3 style="margin:12px 0 6px">📖 魚ずかん</h3>`;
+    };
     const draw = () => {
       const own = spec.own(), adm = isAdmin();
       let body;
       if (tab === 'f') {
         const gr = spec.grown();
-        body = `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}" data-fd="${f.id}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}匹</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic fa">${fishImg(f.id, 112, !n, bk)}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
+        body = boxHTML() + `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}" data-fd="${f.id}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}匹</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic fa">${fishImg(f.id, 112, !n, bk)}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
       } else if (tab === 'd') {
         const dl = spec.decor();
         body = `<p class="nt">標本の形の組み合わせ(レシピ)で、水槽の飾りができる。できた飾りは、ぜんぶここに記録される。「混ぜる」でレシピのヒントが見られるよ。</p><div class="grid">${[1, 2, 3].flatMap(lv => DECOR[lv].map((_, r) => { const n = dl.filter(d => d.lv === lv && d.rar === r).length, k = decorOf({ lv, rar: r }); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? k.icon : '❔'}</span><b>${n ? esc(k.name) : '？？？'}<span class="rr rr${r}">${RAR[r]}</span></b><small>${n ? esc(k.en) + (n > 1 ? ' ×' + n : '') : LV_NAME[lv]}</small></div>`; })).join('')}</div>`;
@@ -327,6 +342,13 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         if (d > 0) { if (tk.length >= TANK_MAX) { toast('水槽がいっぱい(6匹まで)'); return; } tk.push({ uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id, size: f && f.size ? f.size[1] : 30, g: GROW_NEED, day: '', n: 0, at: Date.now() }); spec.saveTank(tk); spec.markGrown(id); if (!spec.hasTank()) { spec.gotTank(); furn.give('tank'); } }
         else { const i = tk.map(x => x.id).lastIndexOf(id); if (i >= 0) { tk.splice(i, 1); spec.saveTank(tk); } }
         draw(); return;
+      }
+      const tt = e.target.closest('[data-totank]'), ul = e.target.closest('[data-unl]');
+      if (tt) { const b = spec.box(), i = b.findIndex(x => x.uid === tt.dataset.totank); if (i < 0) return; if (!tankRoom()) { toast('水槽がいっぱい(6匹まで)。水槽から「図鑑へ」入れかえてね'); return; } const t = spec.tank(); t.push(b.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); if (!spec.hasTank()) spec.gotTank(); sfx.play('tap'); toast('🐠 水槽に入れた'); draw(); return; }
+      if (ul) {
+        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[spec.boxSlots() - 1] ?? BOX_COIN[1]; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } ctx.wallet.add(-p, 'boxslot'); }
+        else { if (!ctx.gems) { toast('ダイヤは準備中だよ'); return; } if (!ctx.gems.spend(BOX_GEM)) { toast('ダイヤがたりないよ'); sfx.play('early'); return; } }
+        spec.addBoxSlot(); sfx.play('coin'); toast('🔓 図鑑の枠が ふえた!'); draw(); return;
       }
       const fd = e.target.closest('[data-fd]');
       if (fd && !e.target.closest('.admf')) { sfx.play('tap'); fishDetail(fd.dataset.fd); return; }
@@ -502,12 +524,12 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       const pts = spec.pts(), rk = spec.rank(), nx = TANK_RANKS[rk + 1];
       sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn" data-a="mix">🎰 混ぜる</button><span class="sbtn" style="pointer-events:none">🍤 えさ ${food}</span></div>
         <h2>🐠 水槽 <small style="font-size:13px;color:#8d7f9e">${t.length} / ${TANK_MAX}</small></h2>
-        <p class="nt">英語の問題に答えて、えさを作ろう(1問正解=1つ)。問題は、あなたが今までにまちがえた言葉や、釣り堀の単語から出るよ。1匹に1日${FEED_PER_DAY}回まで。あげるたびに🪙コインが出るよ。${GROW_NEED}回で育ちきって、アルバムに記録される。</p>
+        <p class="nt">英語の問題に答えて、えさを作ろう(1問正解=1つ)。問題は、あなたが今までにまちがえた言葉や、釣り堀の単語から出るよ。1匹に1日${FEED_PER_DAY}回まで。1日の2回目で満腹になって、その種類ではじめてなら🪙コインがもらえるよ。図鑑の枠に出し入れして、いろんな魚を育てよう。${GROW_NEED}回で育ちきって、アルバムに記録される。</p>
         <p class="nt" style="margin-top:-6px">🏆 水槽ランク: <b>${esc(TANK_RANKS[rk][1])}</b> ・ 飾りポイント ${pts}${nx ? `(あと${nx[0] - pts}で「${esc(nx[1])}」)` : '(最高!)'} ・ 飾り ${spec.decor().length}こ</p>
         <div class="tankv"><div class="tz"><canvas></canvas></div><span class="zh">ピンチで拡大</span></div>
         <div style="display:flex;gap:8px;margin-bottom:10px"><button class="sbtn pri" data-a="make" style="flex:1">🍤 えさを作る(英語${FOOD_Q}問)</button><button class="sbtn" data-a="all" ${food && t.some(f => (f.day !== today ? 0 : f.n) < FEED_PER_DAY && f.g < GROW_NEED) ? '' : 'disabled'}>みんなにあげる</button></div>
         ${t.length ? t.map(f => { const sp = FISHBY[f.id], n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED, sz = Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / GROW_NEED)) * RANK_MUL[f.rk || 0]); return `<div class="row"><div class="fx"><b>${esc(RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id))}</b> <small style="color:#8d7f9e">${sz}cm ・ ${full ? '育ちきった!' : f.g >= GROW_NEED * 0.6 ? 'りっぱになってきた' : f.g >= GROW_NEED * 0.3 ? '育ちざかり' : 'ちびっこ'}</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small style="color:#8d7f9e">きょう ${n}/${FEED_PER_DAY} ・ そだち ${Math.min(f.g, GROW_NEED)}/${GROW_NEED}</small></div>
-          ${full ? `<span class="sbtn" style="pointer-events:none;background:#fff3c8">🎉 育ちきった</span>` : `<button class="sbtn" data-feed="${f.uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-rel="${f.uid}" title="池にかえす">↩</button></div>`; }).join('')
+          ${full ? `<span class="sbtn" style="pointer-events:none;background:#fff3c8">🎉 育ちきった</span>` : `<button class="sbtn" data-feed="${f.uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-tobox="${f.uid}">📖図鑑へ</button><button class="sbtn" data-rel="${f.uid}" title="池にかえす">↩</button></div>`; }).join('')
         : `<div class="row"><div class="fx">まだ魚がいないよ。<b>英語の釣り堀</b>で釣った魚を「水槽に入れる」と、ここで育てられる。</div></div>`}`;
       startSwim();
     };
@@ -578,33 +600,35 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
           const k = c.t / 1.1, yy = by - 14 - 46 * (1 - (1 - k) * (1 - k)), a = k < 0.75 ? 1 : Math.max(0, (1 - k) / 0.25);
           if (!c.sound) { c.sound = 1; sfx.play('coin'); }
           g.save(); g.globalAlpha = a; g.translate(bx, yy); const sc2 = Math.abs(Math.cos(c.t * 9));
-          g.fillStyle = '#ffd24a'; g.strokeStyle = '#c98a10'; g.lineWidth = 2; g.beginPath(); g.ellipse(0, 0, 9 * Math.max(0.25, sc2), 9, 0, 0, 6.3); g.fill(); g.stroke();
-          g.fillStyle = '#fff3b0'; g.beginPath(); g.ellipse(-1.5, -2, 3 * Math.max(0.25, sc2), 4, 0, 0, 6.3); g.fill();
-          g.font = '900 12px sans-serif'; g.textAlign = 'center'; g.fillStyle = '#fff'; g.strokeStyle = '#a06a00'; g.lineWidth = 3; g.strokeText('+' + c.n, 20, 4); g.fillText('+' + c.n, 20, 4); g.restore();
+          if (c.n) { g.fillStyle = '#ffd24a'; g.strokeStyle = '#c98a10'; g.lineWidth = 2; g.beginPath(); g.ellipse(0, 0, 9 * Math.max(0.25, sc2), 9, 0, 0, 6.3); g.fill(); g.stroke();
+          g.fillStyle = '#fff3b0'; g.beginPath(); g.ellipse(-1.5, -2, 3 * Math.max(0.25, sc2), 4, 0, 0, 6.3); g.fill(); }
+          g.font = '900 12px sans-serif'; g.textAlign = 'center'; g.fillStyle = '#fff'; g.strokeStyle = '#a06a00'; g.lineWidth = 3; const lb = c.n ? '満腹! +' + c.n : '満腹!'; g.strokeText(lb, c.n ? 34 : 0, c.n ? 4 : 2); g.fillText(lb, c.n ? 34 : 0, c.n ? 4 : 2); g.restore();
         });
         fx.coin = fx.coin.filter(c => c.t < 1.1);
       };
       raf = requestAnimationFrame(step);
     }
-    const COIN_PER_FEED = 1;   // 仮:えさ1回であげるコイン
-    const feedFx = uids => {
+    const feedFx = (uids, fulls = {}) => {
       const W = sc.querySelector('.tankv canvas')?.clientWidth || 320;
       uids.forEach((uid, k) => {
         const s = swim.find(q => q.uid === uid), cx = s ? s.x + s.w * (s.vx < 0 ? 0.2 : 0.8) : W / 2;
         for (let i = 0; i < 12; i++) fx.pel.push({ uid, x: Math.max(6, Math.min(W - 6, cx + (Math.random() - 0.5) * 70)), y: -6 - Math.random() * 40, vy: 55 + Math.random() * 35, r: 2 + Math.random() * 1.6, c: ['#e0883a', '#c9692a', '#f2b45a', '#a8521f'][i % 4], t: 0, ph: Math.random() * 6 });
-        fx.coin.push({ uid, n: COIN_PER_FEED, t: 0, delay: 0.9 + k * 0.12, x: cx, y: 60 });
+        if (fulls[uid]) fx.coin.push({ uid, n: fulls[uid] === 'coin' ? FULL_COIN : 0, t: 0, delay: 1.0 + k * 0.12, x: cx, y: 60 });
       });
-      try { ctx.wallet.add(COIN_PER_FEED * uids.length, 'feed'); } catch (e) { }
+      const cn = Object.values(fulls).filter(v => v === 'coin').length * FULL_COIN; if (cn) { try { ctx.wallet.add(cn, 'full'); } catch (e) { } }
     };
     const feed = uid => {
       const t = spec.tank(), f = t.find(x => x.uid === uid), food = spec.food(); if (!f || !food) return false;
       if (f.day !== today) { f.day = today; f.n = 0; }
       if (f.n >= FEED_PER_DAY || f.g >= GROW_NEED) return false;
-      f.n++; f.g++; spec.saveTank(t); spec.setFood(food - 1); return true;
+      f.n++; f.g++; spec.setFood(food - 1);
+      let r = true;
+      if (f.n >= FEED_PER_DAY) { r = 'full'; const fl = spec.full(); if (!fl[f.id]) { fl[f.id] = 1; spec.saveFull(fl); r = 'coin'; } }   // 1日の2回目で満腹。その種類ではじめてならコイン
+      spec.saveTank(t); return r;
     };
     draw();
     sc.onclick = async e => {
-      const a = e.target.closest('[data-a]')?.dataset.a, fd = e.target.closest('[data-feed]'), sp = e.target.closest('[data-spec]'), rl = e.target.closest('[data-rel]');
+      const a = e.target.closest('[data-a]')?.dataset.a, fd = e.target.closest('[data-feed]'), sp = e.target.closest('[data-spec]'), rl = e.target.closest('[data-rel]'), tb = e.target.closest('[data-tobox]');
       if (a === 'back') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); onBack(); }
       else if (a === 'mix') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); mixScreen({ onBack: () => tankScreen({ onBack }) }); }
       else if (a === 'make') {
@@ -612,8 +636,9 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         for (const q of reviewQs(FOOD_Q)) { const ok = await ask(q, { label: `🍤 えさを作る(${got}こ)`, time: T_Q }); learn.hit(q.w[0], ok, { ja: q.w[2], src: 'fishing' }); if (ok) got++; }
         spec.setFood(spec.food() + got); toast(`🍤 えさが ${got} こ できた!`); draw();
       }
-      else if (a === 'all') { let n = 0; const fed = []; for (const f of spec.tank()) { while (feed(f.uid)) { n++; fed.push(f.uid); } } if (n) { sfx.play('nibble'); feedFx(fed); toast(`🍤 ${n}回 あげた ・ 🪙 +${n * COIN_PER_FEED}`); } draw(); }
-      else if (fd) { if (feed(fd.dataset.feed)) { sfx.play('nibble'); feedFx([fd.dataset.feed]); } draw(); }
+      else if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { sfx.play('nibble'); feedFx(fed, fulls); const cn = Object.values(fulls).filter(v => v === 'coin').length * FULL_COIN; toast(`🍤 ${n}回 あげた${cn ? ' ・ 🪙 +' + cn : ''}`); } draw(); }
+      else if (fd) { const r = feed(fd.dataset.feed); if (r) { sfx.play('nibble'); feedFx([fd.dataset.feed], r === true ? {} : { [fd.dataset.feed]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${FULL_COIN}`); } draw(); }
+      else if (tb) { const t = spec.tank(), i = t.findIndex(x => x.uid === tb.dataset.tobox); if (i < 0) return; if (!boxRoom()) { toast('図鑑の枠がいっぱい(図鑑で枠をふやせるよ)'); return; } const b = spec.box(); b.push(t.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); sfx.play('tap'); toast('📖 図鑑の枠にもどした'); draw(); }
       else if (rl) { if (!rl.dataset.c) { rl.dataset.c = 1; rl.textContent = '池へ?'; return; } spec.saveTank(spec.tank().filter(x => x.uid !== rl.dataset.rel)); draw(); }
     };
   }
@@ -674,5 +699,5 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     try { const L = JSON.parse(localStorage.getItem('cs-wordlists') || '[]'), all = []; L.forEach(l => (l.lines || []).forEach(x => { const c = String(x).split('\t'); if (c[0] && c[1]) all.push([c[0], c[1]]); })); return shuffle(all).slice(0, n); } catch (e) { return []; }
   }
 
-  return { ask, playGates, pondScreen, tankScreen, collection, mixScreen, keepFish, tankRoom, get busy() { return busy; } };
+  return { ask, playGates, pondScreen, tankScreen, collection, mixScreen, keepFish, tankRoom, keepRoom, get busy() { return busy; } };
 }
