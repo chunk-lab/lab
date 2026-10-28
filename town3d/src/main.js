@@ -14,7 +14,7 @@ import { openOgiri } from './ui/ogiri.js';
 import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
 import { buildAmbient } from './world/ambient.js';
-import { makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/character.js';
+import { rollPose, rollReset, makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/character.js';
 import { setBuildingOutline, eachFoliage, eachTex } from './world/kit.js';
 import { createSeasons, SEASONS, seasonOf } from './world/seasons.js';
 import { createSnowballs } from './world/snowballs.js';
@@ -770,7 +770,7 @@ export function mount(container, opt = {}) {
   let dodgeT = 0, dodgeCd = 0, ddx = 0, ddz = 0, dodgeRot = false;
   offs.push(bus.on('ui:dodge', () => {
     if (!started || hud.busy || appHost.current || battle.active || sport.active || seat || seasons.carrying() || snow.making || dodgeT > 0 || dodgeCd > 0) return;
-    const m = lastMoveDir || { x: Math.sin(me.ry), z: Math.cos(me.ry) }; ddx = m.x; ddz = m.z; dodgeT = 0.42; dodgeCd = 1.4; audio.play('wave');
+    const m = lastMoveDir || { x: Math.sin(me.ry), z: Math.cos(me.ry) }; ddx = m.x; ddz = m.z; dodgeT = 0.55; dodgeCd = 1.4; audio.play('wave');
   }));
   { let d0 = null; const cv = renderer.domElement;   // 雪玉を持っているとき:画面をタップした所へ投げる
     cv.addEventListener('pointerdown', e => { d0 = { x: e.clientX, y: e.clientY, t: performance.now() }; });
@@ -1125,12 +1125,12 @@ export function mount(container, opt = {}) {
     }
     lastMoveDir = lastMove;
     if (dodgeCd > 0) dodgeCd -= dt;
-    if (dodgeT > 0) { dodgeT -= dt; me.ry = Math.atan2(ddx, ddz); me.speed = 8; [me.x, me.z] = collide(me.x + ddx * 11 * dt, me.z + ddz * 11 * dt); }
+    if (dodgeT > 0) { dodgeT -= dt; me.ry = Math.atan2(ddx, ddz); me.speed = 8; [me.x, me.z] = collide(me.x + ddx * 8.5 * dt, me.z + ddz * 8.5 * dt); }
     me.ch.root.position.set(me.x, seat ? -0.04 : 0, me.z); me.ch.root.rotation.y = me.ry;
     if (!seat && !battle.active) { if (snow.making || bld) me.ch.pose = 'kneel'; else if (me.ch.pose === 'kneel') me.ch.pose = null; }
     me.ch.update(dt, me.speed);
     { const rg = me.ch.rig;   // よけている間はくるっと回る / 雪だるまを持っている間は両手を上げる
-      if (rg) { if (dodgeT > 0) { rg.body.rotation.x = (1 - dodgeT / 0.42) * Math.PI * 2; dodgeRot = true; } else if (dodgeRot) { rg.body.rotation.x = 0; dodgeRot = false; }
+      if (rg) { if (dodgeT > 0) { rollPose(rg, 1 - dodgeT / 0.55); dodgeRot = true; } else if (dodgeRot) { rollReset(rg); dodgeRot = false; }
         if ((snow.making || bld) && !battle.active) { rg.body.rotation.x = 0.35; rg.arms[0].rotation.x = rg.arms[1].rotation.x = -1.25; rg.arms[0].rotation.z = -0.1; rg.arms[1].rotation.z = 0.1; } else if (!seasons.carrying() && !dodgeRot && rg.body.rotation.x === 0.35) rg.body.rotation.x = 0;
         if (seasons.carrying()) { rg.arms[0].rotation.x = rg.arms[1].rotation.x = -2.95; rg.arms[0].rotation.z = 0.35; rg.arms[1].rotation.z = -0.35; } } }
 

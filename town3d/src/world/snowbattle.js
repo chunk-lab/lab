@@ -4,11 +4,12 @@
 //   ⛄=雪だるま(すぐできる・1人3つまで) / 🙌=近くの雪だるまを頭の上に持ち上げる(自分のも相手のも)→タップで投げつける
 //     持っている間は遅い・むき出し。直撃で3ダメージ、くだけた玉は当たった数だけダメージ
 //   🌀=向いている方へ転がってよける(当たらない。雪だるまにぶつかると つぶす)
+import { rollPose, rollReset } from './character.js';
 import * as THREE from 'three';
 
 const SIZE = t => t < 0.55 ? 1 : t < 1.3 ? 2 : 3;   // 押した秒 → 大きさ
 const RAD = [0, 0.09, 0.14, 0.21], DMG = [0, 1, 2, 3], NAMES = ['', 'S', 'M', 'L'];
-const BUILD_T = 1.1, G = 9.8, AR = 11, MAN_MAX = 3, STOCK = 3;
+const ROLL_T = 0.55, BUILD_T = 1.1, G = 9.8, AR = 11, MAN_MAX = 3, STOCK = 3;
 
 export function createSnowBattle({ scene, camera, root, me, residents, meshes, collide, audio, snowFx, onEnd, faceCam }) {
   const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.75 });
@@ -184,7 +185,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   }
   function roll(f, dir) {
     if (f.rollCd > 0 || f.carry) return; let dx = dir ? dir.x : Math.sin(f.ry), dz = dir ? dir.z : Math.cos(f.ry); const L = Math.hypot(dx, dz) || 1;   // ふつうは向いている方へ
-    f.rdx = dx / L; f.rdz = dz / L; f.rollT = 0.42; f.rollCd = 1.4; f.makeT = -1; audio?.play?.('wave');
+    f.rdx = dx / L; f.rdz = dz / L; f.rollT = ROLL_T; f.rollCd = 1.4; f.makeT = -1; audio?.play?.('wave');
   }
   function hitF(f, dmg) {
     if (f.down || f.rollT > 0) return false; f.hp -= dmg; f.makeT = -1; audio?.play?.('close');
@@ -249,7 +250,7 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
       let speed = 0;
       if (!f.down && B.phase === 'play') {
         if (f.rollT > 0) {
-          f.rollT -= dt; f.x += f.rdx * 11 * dt; f.z += f.rdz * 11 * dt; f.ry = Math.atan2(f.rdx, f.rdz);
+          f.rollT -= dt; f.x += f.rdx * 8.5 * dt; f.z += f.rdz * 8.5 * dt; f.ry = Math.atan2(f.rdx, f.rdz);
           for (const m of B.men.slice()) if (Math.hypot(m.x - f.x, m.z - f.z) < m.R + 0.5) { killMan(m); splash(new THREE.Vector3(m.x, 0.6, m.z), 3); audio?.play?.('close'); }   // 転がってぶつかると つぶす
         } else if (!isMe) {
           const goal = npc(f, dt);
@@ -303,7 +304,8 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     if (!f.ball) { f.ball = new THREE.Mesh(ballGeo, mat); f.ball.castShadow = true; scene.add(f.ball); }
     const b = f.ball;
     if (f.down) { b.visible = false; return; }
-    if (f.rollT > 0) { body.rotation.x = (1 - f.rollT / 0.42) * Math.PI * 2; b.visible = false; return; }
+    if (f.rollT > 0) { rollPose(f.ch.rig, 1 - f.rollT / ROLL_T); b.visible = false; f.rolled = true; return; }
+    if (f.rolled) { rollReset(f.ch.rig); f.rolled = false; }
     body.rotation.x = 0; if (f.ch.pose === 'kneel') f.ch.pose = null;
     if (f.carry) {   // 雪だるまを頭の上で両手で
       arms[0].rotation.x = arms[1].rotation.x = -2.95; arms[0].rotation.z = 0.35; arms[1].rotation.z = -0.35;
