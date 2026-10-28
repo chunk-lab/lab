@@ -72,7 +72,8 @@ const CSS = `
 .fz .btn.sub{background:#efe8f7;color:${ink};box-shadow:0 3px 0 #d6cbe6}
 .fz .btn.gold{background:linear-gradient(160deg,#ffe58a,#f5b83d);color:#5a3a10;box-shadow:0 3px 0 #c98f22}
 .fz .btn:disabled{opacity:.45}
-.fz .menu{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,250,243,.15) 30%,rgba(255,250,243,.6) 100%)}
+.fz .menu{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;gap:10px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,250,243,.15) 30%,rgba(255,250,243,.6) 100%)}
+.fz .menu>*{flex:none}.fz .menu>:first-child{margin-top:auto}.fz .menu>:last-child{margin-bottom:auto}
 .fz .title{font-size:30px;font-weight:900;color:#fff;text-shadow:0 3px 0 #c9577a,0 6px 16px #0005;margin:0;letter-spacing:2px;text-align:center}
 .fz .mb{width:min(300px,86%);display:flex;align-items:center;gap:10px;justify-content:flex-start;font-size:17px;padding:14px 18px;border-radius:18px}
 .fz .mb span{flex:1;text-align:left}.fz .mb small{font-size:11px;opacity:.85;font-weight:700}
@@ -148,19 +149,21 @@ export const fishingApp = {
     }
 
     let screen = null, cleanup = [];
-    const clear = () => { cleanup.forEach(f => { try { f(); } catch (e) { } }); cleanup = []; root.innerHTML = ''; sfx.stopLoops(); };
+    const clear = () => { try { ctx.setHead?.([]); } catch (e) { } cleanup.forEach(f => { try { f(); } catch (e) { } }); cleanup = []; root.innerHTML = ''; sfx.stopLoops(); };
     let raf = 0, last = 0, frame = null;
     const loop = ts => { raf = requestAnimationFrame(loop); const dt = Math.min(0.05, (ts - (last || ts)) / 1000); last = ts; frame && frame(dt); };
     raf = requestAnimationFrame(loop);
     const unlock = () => sfx.unlock(); root.addEventListener('pointerdown', unlock, { once: true });
     const appToast = (t, ms = 1800) => { const d = document.createElement('div'); d.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);z-index:60;background:rgba(40,30,60,.88);color:#fff;border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px;max-width:88%;text-align:center;pointer-events:none;box-shadow:0 4px 14px #0004'; d.innerHTML = t; root.appendChild(d); setTimeout(() => d.remove(), ms); };
     const EN = createEnglish({ root, ctx, sfx, sheet: (h, c) => sheet(h, c), artCanvas, FISHBY: BYID, toast: appToast });
-    const goPond = () => { clear(); screen = 'en'; ctx.setTitle('英語の釣り堀'); try { ctx.emit('act', { layer: 'sub', cat: 'study', label: '英語の釣り堀' }); } catch (e) { } EN.pondScreen({ onPick: id => play({ en: id }), onBack: menu }); };
-    const goTank = () => { clear(); screen = 'tank'; ctx.setTitle('水槽'); EN.tankScreen({ onBack: goPond }); };
+    const goPond = () => { clear(); screen = 'en'; ctx.setTitle('英語の釣り堀'); head(); try { ctx.emit('act', { layer: 'sub', cat: 'study', label: '英語の釣り堀' }); } catch (e) { } EN.pondScreen({ onPick: id => play({ en: id }), onBack: menu }); };
+    const head = () => ctx.setHead?.([{ label: '🐠 水槽', fn: () => goTank() }, { label: '📖 図鑑', fn: () => goCol() }]);   // 上のバー:町にもどる の左
+    const goTank = () => { clear(); screen = 'tank'; ctx.setTitle('水槽'); head(); EN.tankScreen({ onBack: goPond }); };
+    const goCol = () => { clear(); screen = 'col'; ctx.setTitle('図鑑'); head(); EN.collection({ onBack: goPond }); };
 
     // ================= メニュー =================
     function menu() {
-      clear(); screen = 'menu'; ctx.setTitle('砂吹さんの池');
+      clear(); screen = 'menu'; ctx.setTitle('砂吹さんの池'); head();
       const cv = document.createElement('canvas'); cv.style.cssText = 'top:0;height:100%'; root.appendChild(cv);
       const view = createView(cv, baseCond); view.resize();
       const ro = new ResizeObserver(() => view.resize()); ro.observe(cv); cleanup.push(() => ro.disconnect());
@@ -174,7 +177,7 @@ export const fishingApp = {
         <button class="btn mb" data-m="en" style="background:linear-gradient(160deg,#9fe3c0,#5fc79a)">📚<span>英語の釣り堀<br><small>英語で釣る・水槽で育てる・標本を集める</small></span></button>
         <button class="btn mb" data-m="free">🎣<span>のんびり釣る<br><small>英語なし・時間を気にせず</small></span></button>
         <button class="btn mb gold" data-m="vs">⚔️<span>釣り勝負<br><small>砂吹さん・友だちと2画面で対戦</small></span></button>
-        <button class="btn mb sub" data-m="dex">📖<span>図鑑<br><small>${found} / ${ALL.length} 見つけた</small></span></button>
+        <button class="btn mb sub" data-m="dex">📖<span>つり図鑑<br><small>${found} / ${ALL.length} 見つけた</small></span></button>
         <button class="btn mb sub" data-m="ask">💬<span>砂吹さんに聞く<br><small>狙いの魚・いまのおすすめ・腕のアドバイス</small></span></button>
         <button class="btn mb sub" data-m="shop">🧰<span>道具屋<br><small>竿・リール・糸・エサ・ルアー・見る道具</small></span></button>
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="chip" data-m="mode">${st.get('mode') === 'easy' ? '🟢 かんたん' : '🔵 ほんかく'}</button><button class="chip" data-m="fx">${st.get('fx') === 'calm' ? '🍵 演出おとなしめ' : '🎆 演出 派手'}</button><button class="chip" data-m="help">？ あそびかた</button></div>`;
@@ -750,10 +753,10 @@ export const fishingApp = {
     // ================= 図鑑 =================
     function checkDex() {
       const r = Object.keys(dex).length / ALL.length;
-      for (const [k, c] of DEX_REWARDS) if (r >= k && !claimed.includes(k)) { claimed.push(k); save(); ctx.wallet.add(c, 'dex'); setTimeout(() => { const s = sheet(`<div class="ph" style="justify-content:center"><h2>📖 図鑑 ${Math.round(k * 100)}% たっせい!</h2></div><div class="sc" style="text-align:center;font-size:18px;font-weight:900">🪙 +${c}</div><div style="padding:8px 16px 16px;text-align:center"><button class="btn" data-x>やった!</button></div>`, true); s.querySelector('[data-x]').onclick = () => s.remove(); sfx.play('legend'); }, 600); }
+      for (const [k, c] of DEX_REWARDS) if (r >= k && !claimed.includes(k)) { claimed.push(k); save(); ctx.wallet.add(c, 'dex'); setTimeout(() => { const s = sheet(`<div class="ph" style="justify-content:center"><h2>📖 つり図鑑 ${Math.round(k * 100)}% たっせい!</h2></div><div class="sc" style="text-align:center;font-size:18px;font-weight:900">🪙 +${c}</div><div style="padding:8px 16px 16px;text-align:center"><button class="btn" data-x>やった!</button></div>`, true); s.querySelector('[data-x]').onclick = () => s.remove(); sfx.play('legend'); }, 600); }
     }
     function dexScreen() {
-      const s = sheet(`<div class="ph"><h2>📖 図鑑</h2><b class="pr" style="font-size:13px"></b></div><div class="tabs"></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>もどる</button></div>`);
+      const s = sheet(`<div class="ph"><h2>📖 つり図鑑</h2><b class="pr" style="font-size:13px"></b></div><div class="tabs"></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>もどる</button></div>`);
       let tab = 'all';
       const tabs = s.querySelector('.tabs'), sc = s.querySelector('.sc');
       const found = Object.keys(dex).length, next = DEX_REWARDS.find(([k]) => !claimed.includes(k));

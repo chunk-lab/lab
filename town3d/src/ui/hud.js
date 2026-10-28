@@ -79,6 +79,7 @@ export const CSS = `
 .tw-app{position:relative;flex:1;display:flex;flex-direction:column}
 .tw-app-head{display:flex;align-items:center;justify-content:space-between;padding:calc(8px + var(--tw-top)) 12px 8px;background:var(--tw-cream);box-shadow:0 2px 8px rgba(90,74,107,.08);z-index:1}
 .tw-app-title{font-weight:800}
+.tw-app-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tw-app-hb{display:flex;gap:6px;margin-right:6px;flex:none}.tw-app-hbtn{border:0;background:#fff;color:var(--tw-lav);box-shadow:inset 0 0 0 2px var(--tw-lav);border-radius:999px;padding:6px 10px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
 .tw-app-close{border:0;background:var(--tw-lav);color:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-weight:700;cursor:pointer}
 .tw-app-body{position:relative;flex:1;overflow:auto}
 .tw-app-frame{position:absolute;inset:0;width:100%;height:100%;border:0}

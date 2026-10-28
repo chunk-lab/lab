@@ -159,6 +159,10 @@ export function mount(container, opt = {}) {
   const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'amuse' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null, learn: opt.learn || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
+  { // 運営用:町から直接「英語の釣り堀」を開くボタン(?admin=1 で出る)
+    let adm = false; try { const q = new URLSearchParams(location.search).get('admin'); if (q === '1') localStorage.setItem('cs:core:admin', 'true'); else if (q === '0') localStorage.removeItem('cs:core:admin'); adm = JSON.parse(localStorage.getItem('cs:core:admin')) === true; } catch (e) { }
+    if (adm) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🎣 英語の釣り堀'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(124px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; openApp('fishing', { tab: 'en' }); }; root.append(b); const tg = setInterval(() => { b.style.display = (!started || appHost.current || hud.busy) ? "none" : ""; }, 400); offs.push(() => clearInterval(tg)); }
+  }
   hud.setCoins(wallet.get(), gemsNow());
   if (opt.gems) { const gi = setInterval(() => hud.setCoins(wallet.get(), gemsNow()), 1500); offs.push(() => clearInterval(gi)); }
 

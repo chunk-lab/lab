@@ -34,6 +34,13 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
       features: features.slice(),   // 組み込み先(チャンクタウン)が用意している機能。'study'＝勉強部屋を開ける
       emit: (name, data) => bus.emit('app:event', { app: def.id, name, data }),
       setTitle: t => { frame.querySelector('.tw-app-title').textContent = t; },
+      setHead: btns => {   // 上のバー「町にもどる」の左に、アプリ用のボタンを並べる([{label, fn}]。空で消す)
+        const hd = frame.querySelector('.tw-app-head'), cl = frame.querySelector('.tw-app-close'); hd.querySelector('.tw-app-hb')?.remove();
+        if (!btns || !btns.length) return;
+        const w = document.createElement('span'); w.className = 'tw-app-hb';
+        btns.forEach(b => { const e = document.createElement('button'); e.className = 'tw-app-hbtn'; e.textContent = b.label; e.onclick = () => b.fn(); w.appendChild(e); });
+        hd.insertBefore(w, cl);
+      },
       open: (id, p) => setTimeout(() => open(id, p), 0),   // ほかのアプリへ(いまのアプリは閉じる)。家→ショップなど
       close: result => close(result),
     };
