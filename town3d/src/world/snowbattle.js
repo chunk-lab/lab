@@ -302,13 +302,14 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
     const b = f.ball;
     if (f.down) { b.visible = false; return; }
     if (f.rollT > 0) { body.rotation.x = (1 - f.rollT / 0.42) * Math.PI * 2; b.visible = false; return; }
-    body.rotation.x = 0;
+    body.rotation.x = 0; if (f.ch.pose === 'kneel') f.ch.pose = null;
     if (f.carry) {   // 雪だるまを頭の上で両手で
       arms[0].rotation.x = arms[1].rotation.x = -2.95; arms[0].rotation.z = 0.35; arms[1].rotation.z = -0.35;
       f.carry.position.copy(headTop(f, 0.05)); f.carry.position.y -= 0.12; f.carry.rotation.set(0, f.ry, 0); b.visible = false; return;
     }
-    if (f.makeT >= 0) {   // しゃがんで、足もとで にぎる
-      body.rotation.x = 0.5; arms[0].rotation.x = arms[1].rotation.x = -1.1; arms[0].rotation.z = -0.1; arms[1].rotation.z = 0.1;
+    if (f.makeT >= 0) {   // ひざをついて、足もとで にぎる
+      if (f.ch.pose !== 'kneel') f.ch.pose = 'kneel';
+      body.rotation.x = 0.35; arms[0].rotation.x = arms[1].rotation.x = -1.25; arms[0].rotation.z = -0.1; arms[1].rotation.z = 0.1;
       const r = RAD[SIZE(f.makeT)] * (0.8 + 0.2 * Math.sin(f.makeT * 10)); b.visible = true; b.scale.setScalar(r); b.position.set(f.x + Math.sin(f.ry) * 0.5, r, f.z + Math.cos(f.ry) * 0.5);
       return;
     }

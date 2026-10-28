@@ -104,7 +104,7 @@ export function mount(container, opt = {}) {
   const NPC_SNOW = { mii: ['ひゃっ、つめたい〜! もう、やりましたね〜', 1], baron: ['ぬおっ! わが輩に雪玉とは、いい度胸だ!', 2], gon: ['つめてっ! やったな〜!', 3], koharu: ['きゃっ! ふふ、元気ですね', 1], shiori: ['……つめたい。……おかえし、しましょうか', 2], suna: ['おやおや、冷たいねえ', 2], maru: ['うわっ! まいったな〜!', 2], yuzu: ['ひゃっ! び、びっくりしたです', 1], chunkkun: ['ふわっ!? 雪だ〜!', 1] };
   const snow = createSnowballs(scene, {
     camera, meshes: city.meshes, residents,
-    getHand: () => new THREE.Vector3(me.x + Math.sin(me.ry) * 0.38 + Math.cos(me.ry) * 0.22, 1.05, me.z + Math.cos(me.ry) * 0.38 - Math.sin(me.ry) * 0.22),
+    getHand: () => snow.making ? new THREE.Vector3(me.x + Math.sin(me.ry) * 0.5, 0.2, me.z + Math.cos(me.ry) * 0.5) : new THREE.Vector3(me.x + Math.sin(me.ry) * 0.38 + Math.cos(me.ry) * 0.22, 1.05, me.z + Math.cos(me.ry) * 0.38 - Math.sin(me.ry) * 0.22),
     onNpcHit(r) {
       const [line, lv] = NPC_SNOW[r.def.id] || ['わっ! つめたい!', 2];
       audio.play('wave'); hud.say('npc:' + r.def.id, line, 3);
@@ -1117,9 +1117,11 @@ export function mount(container, opt = {}) {
     if (dodgeCd > 0) dodgeCd -= dt;
     if (dodgeT > 0) { dodgeT -= dt; me.ry = Math.atan2(ddx, ddz); me.speed = 8; [me.x, me.z] = collide(me.x + ddx * 11 * dt, me.z + ddz * 11 * dt); }
     me.ch.root.position.set(me.x, seat ? -0.04 : 0, me.z); me.ch.root.rotation.y = me.ry;
+    if (!seat && !battle.active) { if (snow.making) me.ch.pose = 'kneel'; else if (me.ch.pose === 'kneel') me.ch.pose = null; }
     me.ch.update(dt, me.speed);
     { const rg = me.ch.rig;   // よけている間はくるっと回る / 雪だるまを持っている間は両手を上げる
       if (rg) { if (dodgeT > 0) { rg.body.rotation.x = (1 - dodgeT / 0.42) * Math.PI * 2; dodgeRot = true; } else if (dodgeRot) { rg.body.rotation.x = 0; dodgeRot = false; }
+        if (snow.making && !battle.active) { rg.body.rotation.x = 0.35; rg.arms[0].rotation.x = rg.arms[1].rotation.x = -1.25; rg.arms[0].rotation.z = -0.1; rg.arms[1].rotation.z = 0.1; } else if (!seasons.carrying() && !dodgeRot && rg.body.rotation.x === 0.35) rg.body.rotation.x = 0;
         if (seasons.carrying()) { rg.arms[0].rotation.x = rg.arms[1].rotation.x = -2.95; rg.arms[0].rotation.z = 0.35; rg.arms[1].rotation.z = -0.35; } } }
 
     // カメラ:後ろから少し見下ろす。建物にめり込むときは手前に寄せる

@@ -170,6 +170,7 @@ export function makeCharacter(look, { scale = 1 } = {}) {
       // すわる・ねころぶ(家の中で使う)
       if (self.pose === 'sit') { legs[0].rotation.x = legs[1].rotation.x = -1.45; arms[0].rotation.x = arms[1].rotation.x = -0.4; body.position.y = 0; body.rotation.x = 0; head.rotation.y = Math.sin(idleT * 0.4) * 0.25; }
       else if (self.pose === 'piano') { legs[0].rotation.x = legs[1].rotation.x = -1.45; arms[0].rotation.set(-1.15 + Math.sin(idleT * 11) * 0.07, 0, 0.18); arms[1].rotation.set(-1.15 + Math.sin(idleT * 11 + 2) * 0.07, 0, -0.18); body.position.y = 0; body.rotation.x = 0.05; head.rotation.y = Math.sin(idleT * 1.2) * 0.12; }   // ピアノを弾く
+      else if (self.pose === 'kneel') { legs[0].rotation.x = -1.2; legs[1].rotation.x = 1.25; body.position.y = -0.3; head.rotation.y = 0; }   // 片ひざをついて雪玉をにぎる(腕・上体は外から)
       else if (self.pose === 'lie') { legs[0].rotation.x = legs[1].rotation.x = 0; arms[0].rotation.x = arms[1].rotation.x = 0; arms[0].rotation.z = 0.08; arms[1].rotation.z = -0.08; body.position.y = 0; body.rotation.x = -Math.PI / 2; head.rotation.y = 0; }
       // 手をつなぐ:holdTo(手を合わせる点・世界の座標)へ、holdArm の腕を向ける(0=右腕 1=左腕)
       if (self.holdTo) {

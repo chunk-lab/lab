@@ -106,6 +106,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     return g;
   }
   let held = null;   // 町で持っている雪だるま
+  const fragGeo = new THREE.SphereGeometry(1, 8, 6), fragMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.75 });
   const flyers = [];   // 投げた雪だるま
   const save = () => storage && storage.set('snowmen', men.map(m => ({ x: +m.x.toFixed(2), z: +m.z.toFixed(2) })));
   function addMan(x, z, instant) {
@@ -151,13 +152,24 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     carrying: () => !!held,
     holdAt(x, z, ry) { if (held) { held.position.set(x, 1.85, z); held.rotation.y = ry; } },
     // 持っている雪だるまを (to) へ投げる。着いたら onLand(x,z) のあと、そこに立つ
-    launch(from, to, onLand) { if (!held) return false; const g = held; held = null; flyers.push({ g, from: from.clone(), to: to.clone(), u: 0, T: Math.max(0.5, from.distanceTo(to) / 13), onLand }); return true; },
+    launch(from, to, onLand) {   // 雪合戦と同じ放物線(T=0.55+距離/18, 重力9.8)。回りながら飛んで、着いたらくだける
+      if (!held) return false; const g = held; held = null; const d = Math.hypot(to.x - from.x, to.z - from.z), T = 0.55 + d / 18, G = 9.8;
+      const v = new THREE.Vector3((to.x - from.x) / T, (to.y - from.y) / T + G * T / 2, (to.z - from.z) / T);
+      flyers.push({ g, p: from.clone(), v, life: 4, onLand }); return true; },
     put(x, z) { if (!held) return null; scene.remove(held); held = null; return api.build(x, z); },
     nearest(x, z, r = 1.6) { let b = null, bd = r; men.forEach((m, i) => { const d = Math.hypot(m.x - x, m.z - z); if (d < bd) { bd = d; b = { i, m }; } }); return b; },
     remove: i => removeMan(i),
     // 毎フレーム。c=カメラの位置
     update(dt, c, night = 0) {
-      for (let i = flyers.length - 1; i >= 0; i--) { const f = flyers[i]; f.u += dt / f.T; const u = Math.min(1, f.u); f.g.position.lerpVectors(f.from, f.to, u); f.g.position.y += Math.sin(u * Math.PI) * 3.2; f.g.rotation.x += dt * 5; if (u >= 1) { scene.remove(f.g); flyers.splice(i, 1); f.onLand?.(f.to.x, f.to.z); api.build(f.to.x, f.to.z); } }
+      for (let i = flyers.length - 1; i >= 0; i--) {
+        const f = flyers[i]; f.life -= dt; f.v.y -= 9.8 * dt; f.p.addScaledVector(f.v, dt); f.g.position.copy(f.p); f.g.rotation.x += dt * 4;
+        if (f.frag ? (f.p.y <= 0.05 || f.life <= 0) : (f.p.y <= 0.03 || f.life <= 0)) {
+          scene.remove(f.g); flyers.splice(i, 1);
+          if (!f.frag) { f.onLand?.(f.p.x, f.p.z);
+            for (let k = 0; k < 7; k++) { const an = k / 7 * Math.PI * 2 + Math.random() * 0.4, m = new THREE.Mesh(fragGeo, fragMat); m.scale.setScalar(0.11); m.position.set(f.p.x, 0.3, f.p.z); scene.add(m);
+              flyers.push({ g: m, p: m.position.clone(), v: new THREE.Vector3(Math.cos(an) * 5, 2.4, Math.sin(an) * 5), life: 0.7, frag: true }); } }
+        }
+      }
       leaves.update(dt, c, night);
       t += dt;
       if (kind) {
