@@ -1,6 +1,6 @@
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
-import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, SPOTS, areaAt, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
+import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, SPOTS, areaLabel, areaAt, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
 import { askScreen, adviceFor } from './ask.js';
 import { createEngine, createBot, replayAt, timeOf, REACH } from './engine.js';
 import { createView } from './view.js';
@@ -611,7 +611,7 @@ export const fishingApp = {
       };
       cleanup.push(() => { frame = null; sfx.ambience(false); });
     }
-    const areaName = ([x, d]) => { const a = areaAt(x, d); return a === 'open' ? 'ひらけた所' : AREAS[a].name; };
+    const areaName = ([x, d]) => areaLabel(baseCond.spot, areaAt(x, d));
     function pickBotBait(cond) { const tm = timeOf(cond.hour); return tm === 'night' ? 'worm' : tm === 'morning' ? 'spoon' : tm === 'evening' ? 'minnow' : 'bread'; }
     function ghostScore(g, dur) { const sc = { count: 0, big: 0, point: 0 }; for (const c of g.e) { if (c[0] / 10 > dur) continue; sc.point += c[3]; const sp = BYID[c[1]]; if (sp && sp.kind === 'fish') { sc.count++; sc.big = Math.max(sc.big, c[2]); } } return sc; }
 
@@ -776,7 +776,7 @@ export const fishingApp = {
         const m = sheet(`<div class="ph" style="flex-direction:column;gap:2px"><div style="font-size:12px;font-weight:900;color:${RARITY_COL[x.r]}">${'★'.repeat(x.r)} ${RARITY[x.r] || 'はずれ'}</div><h2>${d ? esc(x.name) : '？？？'}</h2>${d ? `<div style="font-family:Georgia,serif;font-style:italic;color:#8d7f9e">${esc(x.en)}</div>` : ''}</div>
           <div class="sc" style="text-align:center"><div class="ar" style="width:240px;max-width:100%;margin:0 auto"></div>
           ${d ? `<p>${x.kind === 'fish' ? `最大 <b>${d.best}cm</b>(${x.size[0]}〜${x.size[1]}cm)・` : ''}${d.n}${x.kind === 'fish' ? '匹' : 'こ'}・はじめて ${d.first}</p>${d.modes ? `<p style="margin:-6px 0 6px">${Object.entries(d.modes).map(([k, v]) => MODE_BADGE(k) + (x.kind === 'fish' ? ` 最大${v}cm` : '')).join(' ')}</p>` : ''}` : ''}
-          <p style="background:#fff;border-radius:12px;padding:8px">ヒント:${esc(x.hint || '')}${x.kind === 'fish' ? `<br><small>${x.time !== 'any' ? TIME_JP[x.time] + 'に ' : ''}${x.season ? x.season.map(s => SEASON_JP[s]).join('・') + 'だけ ' : ''}${x.rain ? '雨が好き ' : ''}場所:${x.area.map(a => a === 'open' ? 'ひらけた所' : AREAS[a].name).join('・')} ／ 釣り場:${(x.spots || ['pond']).map(s => SPOTS[s].name).join('・')}</small>` : ''}</p>
+          <p style="background:#fff;border-radius:12px;padding:8px">ヒント:${esc(x.hint || '')}${x.kind === 'fish' ? `<br><small>${x.time !== 'any' ? TIME_JP[x.time] + 'に ' : ''}${x.season ? x.season.map(s => SEASON_JP[s]).join('・') + 'だけ ' : ''}${x.rain ? '雨が好き ' : ''}場所:${x.area.map(a => areaLabel(baseCond.spot, a)).join('・')} ／ 釣り場:${(x.spots || ['pond']).map(s => SPOTS[s].name).join('・')}</small>` : ''}</p>
           ${d && x.say ? `<div class="say" style="margin:0 auto">“${esc(x.say)}”</div>` : ''}</div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>とじる</button></div>`, true);
         const cv = artCanvas(x, 240, 140, { sil: !d }); cv.style.cssText = 'width:100%;height:auto;position:static'; m.querySelector('.ar').appendChild(cv);
         m.querySelector('[data-x]').onclick = () => m.remove();

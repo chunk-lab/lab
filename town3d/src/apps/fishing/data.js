@@ -22,6 +22,12 @@ const SPOT_TAGS = {
   saba: ['sea'], namazu: ['pond', 'river'], unagi: ['river', 'sea'], raigyo: ['pond'], hirame: ['sea'], fugu: ['sea'], tako: ['sea'], kumanomi: ['sea'],
   kurage: ['sea'], tai: ['sea'], tatsu: ['sea'], sake: ['sea'], kingoi: ['pond', 'river'], nushi: ['pond'], maguro: ['sea'], ryugu: ['sea'],
 };
+// 釣り場ごとの場所の呼び名(場所のしくみは同じで、名前と絵だけ変わる)
+const AREA_NAME = {
+  river: { weed: 'アシのかげ', log: 'ながれ木', lily: 'ゆるい淀み', rock: '大きな岩', deep: 'ふち' },
+  sea: { weed: '海そうの林', log: 'テトラポッド', lily: 'ブイのまわり', rock: '岩礁', deep: 'ふかみ' },
+};
+export const areaLabel = (spot, k) => k === 'open' ? 'ひらけた所' : ((AREA_NAME[spot] || {})[k] || AREAS[k].name);
 export function areaAt(x, d) { for (const k in AREAS) { const a = AREAS[k]; if (x >= a.x0 && x <= a.x1 && d >= a.d0 && d <= a.d1) return k; } return 'open'; }
 
 const F = (o) => ({ kind: 'fish', area: ['open'], time: 'any', bait: {}, speed: 'still', str: 0.5, stam: 1, run: 0.5, win: 0.8, wary: 0, ...o });
