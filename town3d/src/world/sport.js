@@ -105,7 +105,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const pm = kind === 'golf' ? new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 10), mat(0xffffff)) : (() => { const d = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.12, 0.025, 24), mat(0xff7aa2)); return d; })();
     pm.castShadow = true; scene.add(pm); S.objs.push(pm); S.mesh = pm;
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(40 * 3), 3));
-    S.aimLine = new THREE.Line(g, new THREE.LineDashedMaterial({ color: 0xffffff, dashSize: 0.4, gapSize: 0.3, transparent: true, opacity: 0.9 })); scene.add(S.aimLine); S.objs.push(S.aimLine);
+    S.aimLine = new THREE.Line(g, new THREE.LineDashedMaterial({ color: 0xffff00, dashSize: 0.4, gapSize: 0.3, transparent: true, opacity: 1.0, linewidth: 4 })); scene.add(S.aimLine); S.objs.push(S.aimLine);
     S.land = new THREE.Mesh(new THREE.RingGeometry(0.5, 0.7, 28), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, side: THREE.DoubleSide })); S.land.rotation.x = -Math.PI / 2; scene.add(S.land); S.objs.push(S.land);
     hole(0);
   }
@@ -411,7 +411,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const show = S.phase === 'aim'; S.aimLine.visible = S.land.visible = show;
     { const spEl = S.hud.querySelector('.sp-spin'); if (spEl) spEl.hidden = !(show && S.kind === 'golf' && CLUBS[S.club].loft); if (S.kind === 'golf' && show && !CLUBS[S.club].loft) S.aimLine.material.color.set(0xffffff); } if (S.kind === 'frisbee' && !(show && S.charging)) { const bt = S.hud.querySelector('.sp-bend'); if (bt) bt.hidden = true; }
     if (show) {
-      const [dx, dz] = aimDir(); let L;
+      let [dx, dz] = aimDir(); let L;
       if (S.kind === 'golf') { const c = CLUBS[S.club]; L = c.d * (S.sw ? Math.max(0.05, S.sw.ph === 1 ? S.sw.pos : S.power) : 1); } else L = 26 * (S.charging ? Math.max(0.05, S.power) : 1);
       const a = S.aimLine.geometry.attributes.position, y0 = S.kind === 'golf' ? 0.08 : 1.1;
       if (S.kind === 'frisbee' && S.charging) {   // 引いている間は、いま はなしたときの曲がる道すじを見せる
@@ -420,6 +420,8 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
         a2.needsUpdate = true; S.aimLine.computeLineDistances(); const e = pts[pts.length - 1]; S.land.position.set(e.x, 0.05, e.z);
         const bt = S.hud.querySelector('.sp-bend'), bd = S.bend || 0; bt.hidden = false; bt.textContent = Math.abs(bd) < 0.05 ? '↑ まっすぐ' : `${bd < 0 ? '↰ 左へ' : '右へ ↱'} 曲がる ${Math.round(Math.abs(bd) * 100)}%`;
       } else if (S.kind === 'golf' && CLUBS[S.club].loft) {   // ゴルフ:回転ぶんの曲がりも見せる線(右へ=オレンジ / 左へ=水色 / もどる=ピンク)
+        // fireのdevのぶれと同じ修正を適用
+        { const c = CLUBS[S.club], dv = -(S.dev || 0) * (c.loft === 0 ? 0.08 : 0.06 + c.d / 70 * 0.1), cs = Math.cos(dv), sn = Math.sin(dv); [dx, dz] = [dx * cs + dz * sn, -dx * sn + dz * cs]; }
         const pw = Math.max(0.05, S.sw ? (S.sw.ph === 1 ? S.sw.pos : S.power) : 1), pts = simGolf(S.pos, dx, dz, pw), a2 = S.aimLine.geometry.attributes.position;
         for (let i = 0; i < 40; i++) { const q = pts[Math.min(pts.length - 1, Math.round(i / 39 * (pts.length - 1)))]; a2.setXYZ(i, q.x, Math.max(0.08, q.y), q.z); }
         a2.needsUpdate = true; S.aimLine.computeLineDistances(); const e = pts[pts.length - 1]; S.land.position.set(e.x, 0.05, e.z);
