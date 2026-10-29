@@ -2,6 +2,9 @@
 import * as THREE from 'three';
 import { createBus, createStorage, createWallet, angleLerp, clamp } from './core/core.js';
 import { weather } from './game/weather.js';
+import { social, PREFS } from './game/social.js';
+import { finds, setAreaName, loadHuntFile, TREASURES } from './game/finds.js';
+import { createSocialUI } from './ui/social_ui.js';
 import { createAppHost } from './core/apps.js';
 import { createLocalNet, createWsNet } from './core/net.js';
 import { createAudio } from './core/audio.js';
@@ -93,6 +96,7 @@ export function mount(container, opt = {}) {
   const _d = new Date(), _md = (_d.getMonth() + 1) * 100 + _d.getDate();
   const blossom = opt.blossom ?? (_md >= 325 && _md <= 420);   // 桜は春(3/25〜4/20)だけ
   const city = buildCity(scene, { quality: settings.quality, blossom });
+  setAreaName((x, z) => city.areaName(x, z)); loadHuntFile();   // 調べる:場所の名前・運営の宝探し(apps/hunt.json)
   const ambient = buildAmbient(scene, city, { quality: settings.quality, blossom });
   let blossomOn = blossom, testDate = new Date();
   const setBlossom = on => { blossomOn = on; city.setBlossom(on); ambient.setBlossom(on); };
@@ -218,6 +222,7 @@ export function mount(container, opt = {}) {
     if (focus.kind === 'stand') { standFromSeat(); return; }
     if (focus.kind === 'benchtalk') { const r = seat.hana; if (!ai.ready) { openAiSetup({ hud, ai, onDone: () => freeChat(r, 'ねえねえ、なに話す?', benchSit(), true) }); return; } freeChat(r, ['ねえねえ、なに話す?', 'のんびりするの、いいね〜', 'ここ、風が気持ちいいね'][Math.floor(Math.random() * 3)], benchSit(), true); return; }
     if (focus.kind === 'bench') { sitOnBench(focus); return; }
+    if (focus.kind === 'find') { soc.takeFind(focus.ref); return; }
     if (focus.kind === 'piano') { pianoMenu(); return; }
     if (focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn') && !battle.active && !sport.active) {   // 春・秋は、掲示板からゴルフ/フリスビーに出る
       const k = seasons.season === 'spring' ? 'golf' : 'frisbee';
@@ -245,10 +250,12 @@ export function mount(container, opt = {}) {
     let text = residents.lineFor(r, env.hour);
     if (r.def.angler && seasons.season !== 'summer') text = 'のんびり釣りは夏だけのお楽しみでねえ。英語の釣り堀なら、いつでも池においで。';
     if (r.def.companion && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
-    const choices = (r.def.menu || []).filter(m => !m.season || m.season === seasons.season).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、砂吹さんとの会話にもどる
+    soc.onTalk(r);
+    const choices = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m)).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、砂吹さんとの会話にもどる
     if (r.def.id === 'sora' && r.follow) choices.unshift({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); } });
+    choices.push(...soc.choices(r));
     if (r.def.id !== 'sora') choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
-    hud.dialog({ name: r.def.name, role: r.def.role, text, choices });
+    hud.dialog({ name: r.def.name, role: PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role, text, choices });
     bus.emit('talk', { npc: r.def.id });
   }
   // ---- ことばノート(英語の単語・フレーズ・文を集める。この端末の中だけに保存) ----
@@ -268,11 +275,14 @@ export function mount(container, opt = {}) {
     opt.onEvent?.('note', { kind, text: n.text, meaning: n.meaning, npc });   // 組み込み先の勉強ノートにも入れる
     return `「${text}」をノートに入れたよ`;
   }
+  // ---- 住人との仲(プレゼント・頼みごと)・調べる・宝探し ----
+  const soc = createSocialUI({ hud, wallet, audio, addNote, startDate: r => startDate(r), setRain: () => { curWx = 'rain'; env.setAmbient('rain'); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy });
+  if (social.admin()) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🔍 宝を隠す'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(168px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; soc.adminHunt(); }; root.appendChild(b); }
   function openNoteBook() {
     if (!started || appHost.current || hud.busy) return;
     input.clear(); audio.play('tap');
     openNotes({
-      hud, getNotes: () => notes,
+      hud, getNotes: () => notes, getInfo: () => social.info(), getTreasures: () => ({ got: finds.treasures(), all: TREASURES }),
       onDelete: id => { const i = notes.findIndex(n => n.id === id); if (i >= 0) { notes.splice(i, 1); saveNotes(); } },
       onMeaning: async id => { const n = notes.find(x => x.id === id); if (n) await fillMeaning(n); },
     });
@@ -1226,6 +1236,7 @@ export function mount(container, opt = {}) {
       };
       for (const r of residents.list) if (r.ch.root.visible) consider({ kind: 'npc', ref: r, label: `${r.def.name}と話す` }, r.ch.root.position.x, r.ch.root.position.z, 2.3);
       for (const it of city.interact) if (!it.season || it.season === seasons.season) consider(it, it.x, it.z, it.r);
+      { const fs = soc.nearFind(me.x, me.z); if (fs) consider({ kind: 'find', ref: fs, label: '🔍 調べる' }, fs.x, fs.z, 1.6); }
     }
     if (battle.active || sport.active) focus = null;
     if (focus && focus.kind === 'spot' && focus.id === 'board' && (seasons.season === 'spring' || seasons.season === 'autumn')) focus = { ...focus, label: seasons.season === 'spring' ? '📋⛳ 掲示板(きょうのゴルフ)' : '📋🥏 掲示板(きょうのフリスビー)' };
@@ -1292,6 +1303,7 @@ export function mount(container, opt = {}) {
     snowState: () => { const B = battle.state; return B && { phase: B.phase, men: B.men.map(m => { const v = new THREE.Vector3(m.x, 0.6, m.z).project(camera); return [m.x, m.z, m.hp, m.g.scale.x, !!m.g.parent, m.g.visible, +v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(3), m.g.children.length, m.g.children[0].visible]; }), me: [me.x, me.z, me.ry], F: B.F.map(f => [f.name, f.x, f.z, f.hp]) }; },
     sportStart: k => sport.start(k),   // テスト用
     npc: id => residents.list.find(x => x.def.id === id),   // テスト用
+    finds: () => finds.spots().map(s => ({ key: s.key, x: s.x, z: s.z, kind: s.kind })),   // テスト用
     benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用
     npcAct: (id, act) => { const r = residents.list.find(x => x.def.id === id); if (!r) return false; const p = r.ch.root.position; me.x = p.x + 1.2; me.z = p.z; if (act) doAct(r, { act }); else talkTo(r); return true; },   // テスト用
     snowBattle: id => battle.start(residents.list.find(r => r.def.id === id) || residents.list[0], 2),   // テスト用

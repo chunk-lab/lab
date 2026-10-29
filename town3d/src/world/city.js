@@ -157,6 +157,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
 
   for (const sp of SPOTS) interact.push({ kind: 'spot', ...sp, r: 2.2 });
+  for (const sp of SPOTS) if (sp.tent) fortuneTent(sp.x + 2.4, sp.z);   // 占いの館(神社の境内のテント)
   { const bd = SPOTS.find(s => s.id === 'board'); if (bd) noticeBoard(bd.x, bd.z, Math.atan2(-bd.x, -bd.z)); }   // 掲示板(広場のほうを向く)
 
   const meshes = B.build(scene, { shadow: quality !== 'low' });
@@ -495,6 +496,18 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     B.add(cyl(0.18, 0.22, 1.1, 8), mat(C.stone), x, 0.85, z);
     B.add(rbox(0.75, 0.6, 0.75, 0.08), glowMat('lamp', 0xfff1d6, 0xffc46b), x, 1.7, z);
     B.add(geo('lcone', () => new THREE.ConeGeometry(0.7, 0.5, 4)), mat(C.stone), x, 2.25, z, Math.PI / 4);
+  }
+  function fortuneTent(x, z) {   // 紫のテント。入口は西(神社の参道)向き
+    colliders.push({ cx: x, cz: z, r: 1.95 });
+    B.add(cyl(1.7, 1.9, 2.3, 6), mat(0x7b5aa6), x, 1.15, z, Math.PI / 6);
+    B.add(geo('ftcone', () => new THREE.ConeGeometry(2.3, 1.9, 6)), mat(0x4a2f73), x, 3.25, z, Math.PI / 6);
+    B.add(sph(0.28, 12), mat(0xffd76a, { emissive: 0xffb300, emissiveIntensity: 0.6 }), x, 4.35, z);
+    B.add(box(0.06, 1.7, 1.2), mat(0x2a1a44), x - 1.68, 0.85, z);   // 入口の幕
+    for (const s of [-1, 1]) B.add(cyl(0.05, 0.05, 2.4, 6), mat(0xd9b24a), x - 1.75, 1.2, z + s * 0.75);
+    B.add(signPlate('占いの館', 1.8, 0.45), signMat('占いの館', { bg: '#3a2560', fg: '#ffe7a8' }), x - 1.8, 2.15, z, -Math.PI / 2);
+    B.add(sph(0.22, 12), mat(0xbfe6ff), x - 2.3, 0.95, z - 1.3);   // 水晶玉の台
+    B.add(cyl(0.18, 0.24, 0.8, 8), mat(0x4a2f73), x - 2.3, 0.4, z - 1.3);
+    colliders.push({ cx: x - 2.3, cz: z - 1.3, r: 0.35 });
   }
   function busStop(x, z) {
     addRect(x - 1.8, x + 1.8, z - 0.2, z + 1.4);

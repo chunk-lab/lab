@@ -19,6 +19,7 @@ export function weightOf(sp, cond) {
   if (sp.rain) w *= cond.rain ? 3 : 0.7;
   if (sp.id === 'kingoi' && tm === 'morning') w *= 3;
   if (sp.id === 'nushi' && !cond.rain) w *= 0.35;
+  if (cond.luck && sp.r >= 3) w *= 1.8;   // ゆずちゃんの「運気アップ」の日は、大物・レアが出やすい(仮)
   return w;
 }
 function pickWeighted(list, r) { const tot = list.reduce((a, b) => a + b[1], 0); let x = r() * tot; for (const [v, w] of list) { if ((x -= w) <= 0) return v; } return list.length ? list[list.length - 1][0] : null; }

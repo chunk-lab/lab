@@ -20,6 +20,8 @@ import boxes from './games/boxes.js';
 import billiards from './games/billiards.js';
 
 export const EN_GAMES = [chunksort, wordrace, listen, tug, shiritori, sniper, race];   // チャンクボックスは英語のゲームだけ
+import { social, GAME_UNLOCK, NPC_NAME, LV_NAME } from '../../game/social.js';
+const CARDS = { id: 'cards', title: 'カード対戦', icon: '🃏', desc: 'ハッタリ男爵・ミイ・ゴンと勝負' };   // カフェから引っ越し(中身は chunkcards)
 export const PLAY_GAMES = [billiards, hockey, party, bowling, darts, boxes, snow3d, fishvs, golf, frisbee];   // アミューズメントセンター(センター全体が有料。コインでも遊べる。旬の外遊びだけ無料)
 const SEASON_OF = { snow3d: 'winter', snow: 'winter', golf: 'spring', frisbee: 'autumn', fishvs: 'summer' };
 const ALL = [...EN_GAMES, ...PLAY_GAMES, snow];
@@ -131,18 +133,23 @@ export const gameboxApp = {
         <div class="stat"><span class="pill ${consoleOk() ? 'ok' : ''}">🎟 ${passTxt}</span><span class="pill">🪙 ${ctx.wallet.get()}</span></div>
         ${!consoleOk() ? `<div class="row" style="margin:0 0 4px"><button class="btn gold" data-rent="console">🎟 1日パスを買う 🪙${PRICE.console}</button></div>` : ''}
         <h3>🌳 外遊び <span class="pill ok">${seasonName}は ${out.filter(inSeason).map(g => g.title).join('・') || '旬のもの'} が無料</span></h3><div class="grid">${out.map(card).join('')}</div>
-        <h3>🎮 ゲーム</h3><div class="grid">${PLAY_GAMES.filter(g => !out.includes(g)).map(card).join('')}</div>
+        <h3>🎮 ゲーム</h3><div class="grid">${[CARDS, ...PLAY_GAMES.filter(g => !out.includes(g))].map(card).join('')}</div>
+        <p class="note" style="color:#d8d0f0;margin-top:6px">🔒 のゲームは、町の人と仲良くなると遊べるようになる(好きなおみやげをあげよう)。</p>
         <div class="row" style="margin-top:12px"><button class="btn sub" data-enp>🎣 釣りへ</button></div>
         <p class="note" style="color:#d8d0f0;margin-top:14px">センターは有料(1日パス。有料会員は無料)。旬の季節の外遊びだけ、だれでも無料。お試しは1日1回。</p>`;
       sc.onclick = e => {
         const c = e.target.closest('[data-g]'), rb = e.target.closest('[data-rent]');
         if (e.target.closest('[data-enp]')) { sfx.play('tap'); ctx.open && ctx.open('fishing', { back: backOf(ctx) }); return; }
+        if (c && !social.gameOpen(c.dataset.g)) { sfx.play('tap'); const u = GAME_UNLOCK[c.dataset.g]; msg('🔒 まだ遊べない', `${NPC_NAME[u.npc]}と「${LV_NAME[u.lv]}」になると遊べるようになるよ。話しかけて、好きなおみやげをプレゼントしよう(カフェで買える)。`); return; }
+        if (c && c.dataset.g === 'cards') { sfx.play('tap'); ctx.open && ctx.open('chunkcards', { cpu: 'baron', back: backOf(ctx) }); return; }
         if (c) { sfx.play('tap'); const G = ALL.find(g => g.id === c.dataset.g); if (G.launch) gate(G, trial => G.launch(ctx, trial)); else setup(G); }
         if (rb) { sfx.play('tap'); rentConsole(); }
       };
     }
     function card(g) {
       let tag = '';
+      if (AMUSE && !social.gameOpen(g.id)) { const u = GAME_UNLOCK[g.id]; return `<button class="card" data-g="${g.id}" style="opacity:.6"><span class="tag">🔒</span><div class="ic">${g.icon}</div><b>${g.title}</b><small>${NPC_NAME[u.npc]}と仲良くなると</small></button>`; }
+      if (g.id === 'cards') return `<button class="card" data-g="cards"><span class="tag ok">無料</span><div class="ic">${g.icon}</div><b>${g.title}</b><small>${g.desc}</small></button>`;
       if (g.en || g.free) tag = '<span class="tag ok">無料</span>';
       else if (AMUSE) tag = inSeason(g) ? '<span class="tag ok">旬・無料</span>' : consoleOk() ? '<span class="tag ok">パスOK</span>' : !R().trial.used ? '<span class="tag try">お試しOK</span>' : '<span class="tag">パス</span>';
       else if (titleOk(g.id)) tag = '<span class="tag ok">レンタル中</span>';

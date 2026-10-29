@@ -91,6 +91,8 @@ export const spec = {
   drop(id) { const o = this.own(); if (o[id]) { delete o[id]; st.set('own', o); } st.set('perf:' + id, []); },   // 運営テスト用:標本をなかったことにする
   isUsed(id) { const o = this.own()[id]; return !!(o && o.used); },
   recipes: () => st.get('recipes') || [],         // 見つけたレシピ 'lv:rar'
+  known() { return st.get('rknown') || []; },   // 占いの館で教わったレシピ(作ったことがなくても、混ぜる画面のレシピ帳に出る)
+  knowRecipe(k) { const r = this.known(); if (!r.includes(k)) { r.push(k); st.set('rknown', r); return true; } return false; },
   addRecipe(k) { const r = this.recipes(); if (!r.includes(k)) { r.push(k); st.set('recipes', r); } },
   decor: () => st.get('decor') || [],             // [{uid, lv, rar, at}] できた飾り
   addDecor(d) { const l = this.decor(); l.push(d); st.set('decor', l); },

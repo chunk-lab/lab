@@ -1,6 +1,7 @@
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
 import { weather, wxStrip } from '../../game/weather.js';
+import { social } from '../../game/social.js';
 import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, SPOTS, areaLabel, areaAtIn, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
 import { askScreen, adviceFor } from './ask.js';
 import { createEngine, createBot, replayAt, timeOf, REACH } from './engine.js';
@@ -130,8 +131,8 @@ export const fishingApp = {
     if (!document.getElementById('fz-css')) { const st = document.createElement('style'); st.id = 'fz-css'; st.textContent = CSS; document.head.appendChild(st); }
     const st = ctx.storage, P = ctx.params || {};
     const now = new Date();
-    const baseCond = { hour: P.hour ?? now.getHours() + now.getMinutes() / 60, season: P.season || seasonOf(now), rain: P.rain != null ? !!P.rain : weather.isRain(), spot: st.get('spot') || 'pond' };
-    const wxRefresh = () => { if (P.rain == null) baseCond.rain = weather.isRain(); const d = new Date(); if (P.hour == null) baseCond.hour = d.getHours() + d.getMinutes() / 60; };   // 開いたまま天気・時間が変わっても、次の画面から反映
+    const baseCond = { hour: P.hour ?? now.getHours() + now.getMinutes() / 60, season: P.season || seasonOf(now), rain: P.rain != null ? !!P.rain : weather.isRain(), luck: social.luckToday(), spot: st.get('spot') || 'pond' };
+    const wxRefresh = () => { baseCond.luck = social.luckToday(); if (P.rain == null) baseCond.rain = weather.isRain(); const d = new Date(); if (P.hour == null) baseCond.hour = d.getHours() + d.getMinutes() / 60; };   // 開いたまま天気・時間が変わっても、次の画面から反映
     const sfx = createSfx(ctx.audio && ctx.audio.sfx != null ? ctx.audio.sfx : 0.7);
     const root = document.createElement('div'); root.className = 'fz'; el.appendChild(root);
     ctx.setTitle('砂吹さんの池');

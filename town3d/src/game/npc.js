@@ -116,6 +116,17 @@ export const RESIDENTS = [
     lines: { morning: ['おはよう。朝の池は、水がきらきらしてるのさ。', 'まだ一匹も釣れてないけど、いい朝だな。'], day: ['釣れなくていいんだ。のんびりしに来てるだけさ。', 'あのアヒル、ぼくのことを見張ってるみたいだな。'], evening: ['夕方は風がやさしいな。そろそろ歩きたくなる。', '今日はどこまで行こうかな。気のむくままさ。'], night: ['夜の池は静かだな。星が水に映ってるのさ。'] },
     menu: [{ label: '🎣 釣りへ行く', app: 'fishing' }, { label: 'ハーモニカをお願いする', act: 'harmonica' }],   // 入ると釣りのタイトル画面(英語・のんびり・勝負・図鑑…)
   },
+  {
+    // 占い師ルナ:神社の境内の「占いの館」の前にいる。10コインで、住人の好物・飾りのレシピ・かくれもののありかなどを教えてくれる
+    id: 'luna', name: 'ルナ', yomi: 'るな', role: '占い師',
+    tips: ["「What does the future hold?」は『未来には何が待っているの?』。占いの定番です", "「It's in the stars.」は『星のさだめ』。運命のことね", "「I have a hunch.」は『なんとなくそんな気がする』", "「Lucky you!」は『ついてるわね!』"],
+    persona: 'なぞめいた占い師の女性。ゆっくり、やさしく、少し芝居がかった口調で「〜わ」「〜なさい」と話す。星と水晶玉で占う。町の人のことをよく知っている。',
+    look: { skin: 0xf6dcc8, hair: 0x5b3f8c, style: 'long', top: 0x4a2f73, bottom: 0x2a1a44, shoes: 0x2a1a44, acc: 'ribbon', accColor: 0xffd76a },
+    post: { place: 'fortune', spot: [-40.6, -22.2], face: [-45, -22.2] },
+    schedule: [[0, 'fortune']],
+    lines: { morning: ['朝の星は見えないけれど、ちゃんとそこにあるのよ。'], day: ['占ってほしいことがあるなら、館にお入りなさい。', 'あなたのまわりに、いい風が吹いているわ。'], evening: ['夕暮れは、運命が変わりやすい時間よ。'], night: ['今夜は星がよく見えるわ…。'] },
+    menu: [{ label: '🔮 占ってもらう', app: 'fortune' }],
+  },
 ];
 
 function period(h) { return h < 5 ? 'night' : h < 10 ? 'morning' : h < 16.5 ? 'day' : h < 19.5 ? 'evening' : 'night'; }
@@ -208,9 +219,9 @@ export function createResidents(scene, graph, getHour, collide = null) {
           if (Math.hypot(n.x - p.x, n.z - p.z) < 0.4) { r.node = r.path.shift(); if (!r.path.length) r.wait = 1 + Math.random() * 2; }
         } else if (r.goal.inside) {
           if (!r.hidden) { r.hidden = true; r.ch.root.visible = false; }
-        } else if (r.def.angler && r.goal.place === 'pond') {
-          // 池のほとりの決まった場所で、釣りをする(うろうろしない)
-          const a = r.def.angler;
+        } else if ((r.def.angler && r.goal.place === 'pond') || (r.def.post && r.goal.place === r.def.post.place)) {
+          // 池のほとりの決まった場所で、釣りをする / 占い師は館の前に立つ(うろうろしない)
+          const a = r.def.angler || r.def.post;
           if (Math.hypot(a.spot[0] - p.x, a.spot[1] - p.z) > 0.3) target = a.spot;
           else r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(a.face[0] - p.x, a.face[1] - p.z), Math.min(1, dt * 4));
         } else {

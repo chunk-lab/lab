@@ -2,6 +2,7 @@ import { shopApp, homeApp } from './home.js';
 import { albumApp } from './album.js';
 import { fishingApp } from './fishing/app.js';
 import { gameboxApp, snowApp, amuseApp } from './gamebox/app.js';
+import { cafeApp, fortuneApp } from './social_apps.js';
 // 町に置くアプリの一覧。新しい単発アプリを足すときは、ここに1行足して town_data.js の建物か NPC の menu に id を書く。
 const css = `font-family:inherit;color:#5a4a6b;padding:20px;max-width:560px;margin:0 auto;line-height:1.7`;
 const btn = `border:0;border-radius:999px;padding:12px 26px;font:inherit;font-weight:800;color:#fff;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);cursor:pointer`;
@@ -20,7 +21,8 @@ const board = simple((box, ctx) => {
   const key = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
   const notes = [
     ['きょうのお知らせ', `${today.getMonth() + 1}月${today.getDate()}日。ゲームセンターで「ぷにチャンク」が遊べます。`],
-    ['カフェより', 'カードの対戦相手を募集中。ミイ・ハッタリ男爵・ゴンが待っています。'],
+    ['カフェより', 'ケーキやコーヒーを、おみやげにどうぞ。町のみんなにも好物があるみたいです。'],
+    ['占いの館より', '神社のそばに、占いの館がオープン。住人の好物や、飾りのレシピを占います。'],
     ['神社より', 'おみくじは1日1回。よいことがありますように。'],
     ['町内会', 'となり町へのバスは、ただいま準備中です。'],
   ];
@@ -47,6 +49,8 @@ const omikuji = simple((box, ctx) => {
 export const APPS = [
   { id: 'board', title: '掲示板', type: 'module', module: board },
   { id: 'omikuji', title: 'おみくじ', type: 'module', module: omikuji },
+  { id: 'cafe', title: 'カフェ', type: 'module', module: cafeApp },
+  { id: 'fortune', title: '占いの館', type: 'module', module: fortuneApp },
   // (ぷにチャンクは町から外した)
   { id: 'chunkcards', title: 'チャンク・カード', type: 'iframe', url: 'apps/chunkcards/index.html', hint: 'apps/chunkcards/index.html を置くと遊べます(sdk/town-sdk.js を読み込むと町とつながります)' },
   { id: 'school', title: 'まちの学校', type: 'iframe', url: 'apps/sample/index.html' },

@@ -21,7 +21,7 @@ export const LANDMARKS = [
   { id: 'library', name: '図書館', x: 11.5, z: -25, w: 13, d: 11, h: 8, face: 'w', wall: 0xc9b8ea, roof: 'gable', roofColor: 0x93b5e1, sign: '図書館', app: 'library', kind: 'library' },
   { id: 'gamecenter', name: 'アミューズメントセンター', x: -11.5, z: 25, w: 13, d: 11, h: 9, face: 'e', wall: 0xffb3c1, roof: 'flat', trim: 0xb79cd9, sign: 'GAME', app: 'amuse', kind: 'arcade' },
   { id: 'shop', name: 'ショップ', x: 11, z: 25, w: 13, d: 10, h: 7, face: 'w', wall: 0xa8e6cf, roof: 'flat', trim: 0xffc8a2, sign: 'ショップ', app: 'shop', kind: 'shop' },
-  { id: 'cafe', name: 'カフェ', x: -10.5, z: 48, w: 11, d: 9, h: 6, face: 'e', wall: 0xffd3b6, roof: 'gable', roofColor: 0xc9a28c, sign: 'カフェ', app: 'chunkcards', kind: 'cafe' },
+  { id: 'cafe', name: 'カフェ', x: -10.5, z: 48, w: 11, d: 9, h: 6, face: 'e', wall: 0xffd3b6, roof: 'gable', roofColor: 0xc9a28c, sign: 'カフェ', app: 'cafe', kind: 'cafe' },
   { id: 'home', name: 'あなたの家', x: 30, z: -10.5, w: 9, d: 9, h: 5.5, face: 's', wall: 0xfdeeb0, roof: 'gable', roofColor: 0xee9a9a, sign: 'HOME', app: 'home', kind: 'house' },
 ];
 
@@ -35,6 +35,7 @@ export const AREAS = {
 export const SPOTS = [
   { id: 'board', name: '掲示板', x: -9.5, z: -9.5, face: 'se', app: 'board', label: '掲示板を見る' },
   { id: 'omikuji', name: 'おさいせん箱', x: -45, z: -21.5, app: 'omikuji', label: 'おまいりする' },
+  { id: 'fortune', name: '占いの館', x: -40.9, z: -20, app: 'fortune', label: '🔮 占いの館に入る', tent: true },
   { id: 'busstop', name: 'バス停', x: -58, z: 6.2, app: null, label: 'バスを待つ', msg: 'となり町行きのバスは、まだ走っていないみたい。' },
 ];
 
@@ -49,7 +50,7 @@ function chain(...ids) { for (let i = 1; i < ids.length; i++) { N[ids[i - 1]].li
 [-30, -18, 18, 30].forEach(x => { node('nc' + x, x, -36); node('sc' + x, x, 36); });
 for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2; node('p' + i, Math.sin(a) * 9.5, -Math.cos(a) * 9.5); }
 node('pk1', 40, 11); node('pk2', 30, 19); node('pk3', 41, 26); node('pk4', 53, 20); node('pk5', 53, 10); node('pd1', 46, 22.5);
-node('sh1', -45, -9); node('sh2', -45, -18);
+node('sh1', -45, -9); node('sh2', -45, -18); node('ft1', -40.5, -18.2);
 chain('ns-60', 'ns-48', 'ns-36', 'ns-25', 'ns-16', 'p0');
 chain('p4', 'ns16', 'ns25', 'ns36', 'ns47', 'ns60');
 chain('p2', 'ew16', 'ew24', 'ew30', 'ew40', 'ew48', 'ew60');
@@ -59,11 +60,11 @@ chain('sc-30', 'sc-18', 'ns36', 'sc18', 'sc30');
 chain('p0', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p0');
 chain('ew40', 'pk1', 'pk2', 'pk3', 'pk4', 'pk5', 'pk1');
 chain('pk3', 'pd1', 'pk4');
-chain('ew-45', 'sh1', 'sh2');
+chain('ew-45', 'sh1', 'sh2', 'ft1');
 export const GRAPH = { nodes: N };
 
 // NPC の予定で使う場所の名前 → 道すじの点
 export const PLACES = {
   school: 'ns-60', library: 'ns-25', gamecenter: 'ns25', shop: 'ns25', cafe: 'ns47', home: 'ew30',
-  plaza: 'p3', plaza2: 'p7', park: 'pk3', park2: 'pk4', pond: 'pd1', shrine: 'sh2', busstop: 'ew-58', north: 'nc18', south: 'sc-18',
+  plaza: 'p3', plaza2: 'p7', park: 'pk3', park2: 'pk4', pond: 'pd1', shrine: 'sh2', fortune: 'ft1', busstop: 'ew-58', north: 'nc18', south: 'sc-18',
 };

@@ -605,7 +605,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       let result = '？', list = '', note = '';
       if (mixMode === 'd') {
         const avail = l => Object.entries(spec.own()).filter(([id, o]) => SET[id] && SET[id].lv === l && !o.crack && !o.used).map(([id]) => SET[id]);
-        const items = avail(mixLv), rc = spec.recipes();
+        const items = avail(mixLv), rc = spec.recipes().concat(spec.known());
         if (pick3.length === MIX_N) { const rar = recipeFor(mixLv, pick3.map(id => SET[id].look.shape)); result = rar >= 0 && rc.includes(mixLv + ':' + rar) ? `${decorOf({ lv: mixLv, rar }).icon}<small>${esc(decorOf({ lv: mixLv, rar }).name)}</small>` : '❔<small>やってみよう</small>'; }
         note = `<p class="nt">同じレベルの標本を${MIX_N}つ。<b>形の組み合わせ</b>がレシピに合うと飾りができる。合わなければ何も起きず、標本も消えない。</p>
           <div class="tabs">${[1, 2, 3].map(l => `<button data-ml="${l}" class="${l === mixLv ? 'on' : ''}">${LV_NAME[l]} <small>${avail(l).length}</small></button>`).join('')}</div>`;
