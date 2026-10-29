@@ -14,6 +14,14 @@ export const AREAS = {
   rock: { name: '岩場', x0: -0.66, x1: -0.26, d0: 0.64, d1: 0.86 },
   deep: { name: 'ふかみ', x0: -0.24, x1: 0.28, d0: 0.62, d1: 1.0 },
 };
+// 釣り場(池・川・海)。魚には spots のタグをつける(1匹が複数の釣り場に出てよい)。魚をふやすときは SPOT_TAGS に1行たすだけ
+export const SPOTS = { pond: { name: '池', emoji: '🏞️' }, river: { name: '川', emoji: '🌊' }, sea: { name: '海', emoji: '🏖️' } };
+const SPOT_TAGS = {
+  motsugo: ['pond', 'river'], funa: ['pond', 'river'], oikawa: ['river'], bluegill: ['pond'], haze: ['river', 'sea'], zarigani: ['pond', 'river'],
+  medaka: ['pond', 'river'], kingyo: ['pond'], koi: ['pond', 'river'], herabuna: ['pond'], bass: ['pond', 'river'], aji: ['sea'], nijimasu: ['river'],
+  saba: ['sea'], namazu: ['pond', 'river'], unagi: ['river', 'sea'], raigyo: ['pond'], hirame: ['sea'], fugu: ['sea'], tako: ['sea'], kumanomi: ['sea'],
+  kurage: ['sea'], tai: ['sea'], tatsu: ['sea'], sake: ['sea'], kingoi: ['pond', 'river'], nushi: ['pond'], maguro: ['sea'], ryugu: ['sea'],
+};
 export function areaAt(x, d) { for (const k in AREAS) { const a = AREAS[k]; if (x >= a.x0 && x <= a.x1 && d >= a.d0 && d <= a.d1) return k; } return 'open'; }
 
 const F = (o) => ({ kind: 'fish', area: ['open'], time: 'any', bait: {}, speed: 'still', str: 0.5, stam: 1, run: 0.5, win: 0.8, wary: 0, ...o });
@@ -83,6 +91,7 @@ export const tanaOf = y => (y < 0.3 ? 'top' : y < 0.7 ? 'mid' : 'bottom');
 export const BAIT_EN = { worm: 'worms', bread: 'bread', shrimp: 'shrimp', spoon: 'a spoon', minnow: 'a minnow lure', frog: 'a frog lure', glow: 'the glow worm' };
 export const SPEED_JP = { still: '止めて待つ', slow: 'ゆっくり巻く', fast: '速く巻く', twitch: 'しゃくって誘う' };
 export const SPEED_EN = { still: 'let it sit still', slow: 'reel slowly', fast: 'reel fast', twitch: 'give it a twitch' };
+FISH.forEach(f => { f.spots = SPOT_TAGS[f.id] || ['pond']; });   // タグがない魚は池
 export const ALL = [...FISH, ...ITEMS];
 export const BYID = Object.fromEntries(ALL.map(x => [x.id, x]));
 

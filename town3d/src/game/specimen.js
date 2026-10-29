@@ -68,6 +68,11 @@ export const DECOR_ICON = { weed: '🌿', coralrock: '🪸', castle: '🏰', pea
 export const TANK_RANKS = [[0, 'ふつうの水槽'], [3, '飾りつきの水槽'], [8, '豪華な水槽'], [16, '特別な水槽']];   // [必要ポイント, 名前]
 export const decorOf = d => { const k = DECOR[d.lv][d.rar]; return { name: k[0], en: k[1], shape: k[2], icon: DECOR_ICON[k[2]] }; };
 
+// ---- 水槽の「元気」と「汚れ」(要素だけ。いまは何も起きない。あとで弱る・そうじを入れるときの置き場) ----
+//   enabled を true にして、ここの数字を使う処理を足すだけで動かせるようにしてある(魚ごとの元気 vigor は 0〜1、水槽の汚れ dirt は 0〜1)
+export const CARE = { enabled: false, weakAfterDays: 3, dirtPerDay: 0.2, cleanCost: 0 };
+export const vigorOf = f => (f && f.vigor != null ? f.vigor : 1);
+
 // ---- 保存 ----
 const st = createStorage('town:spec:');
 export const spec = {
@@ -100,6 +105,8 @@ export const spec = {
   // 水槽
   tank: () => st.get('tank') || [],
   saveTank: v => st.set('tank', v),
+  tankState: () => st.get('tankState') || { dirt: 0, cleanedAt: null },   // 水槽のよごれ(要素だけ)
+  saveTankState: v => st.set('tankState', v),
   food: () => st.get('food') || 0,
   setFood: n => st.set('food', Math.max(0, n | 0)),
   // 図鑑の枠(持ち魚)。最初は1枠。ふやすのはコイン2回・ダイヤ1回

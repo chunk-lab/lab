@@ -1,12 +1,12 @@
 /* 1日のふりかえり(「今日はここまで」)と、入り口の「前回のふりかえり」。
    流れ:①時間のグラフ(勉強・遊び・街でまったり) → ②言葉・表現の一覧(音声が順番に流れる) → ③フラッシュカード(右フリック=覚えてる / 左=覚えてない / タップ=めくる)
    - ポイント:今日のふりかえり=review(10) / 前回のふりかえり=prev(10)。忘れていた日は、7日に1回だけ特別にあげる
-   - 1日のOK:メイン課題(必須)+ほかの課題(前回・それ以外の勉強・目標時間・おみくじ・ふりかえり)のうち3つ以上 */
+   - 1日のOK:メイン課題(必須)+ほかの課題(前回・それ以外の勉強・目標時間・ふりかえり)のうち3つ以上 */
 import { TOPS, CATS, FORCE_N } from './daylog.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const mm = s => { const m = Math.round(s / 60); return s > 0 && m === 0 ? '1分未満' : m + '分'; };
 const dayJa = k => { const [, m, d] = k.split('-'); return `${+m}月${+d}日`; };
-export const OTHERS = [['prev', '前回のふりかえり'], ['other', 'それ以外の勉強'], ['goal', '目標時間'], ['omikuji', 'おみくじ'], ['review', '今日のふりかえり']];
+export const OTHERS = [['prev', '前回のふりかえり'], ['other', 'それ以外の勉強'], ['goal', '目標時間'], ['review', '今日のふりかえり']];
 
 export function createReview(core) {
   const dl = core.daylog;
@@ -181,9 +181,12 @@ export function createReview(core) {
 
   // ---- 定期の単語テスト(いままで出会った言葉から、ランダムに10問。3日に1回すすめる) ----
   const TEST_N = 10, TEST_DAYS = 3, SLOW = 10;
-  const testDue = () => { const p = dl.pool(); if (p.length < 8) return false; const l = dl.lastTest(); return !l || (Date.parse(dl.dayKey()) - Date.parse(l)) / 864e5 >= TEST_DAYS; };
-  function test() {
-    const pool = dl.pool(); if (pool.length < 4) { core.ui.toast('テストできる言葉が、まだ少ないよ'); return; }
+  const testDue = () => { if (dl.pool().length + dl.knownKeys().length < 8) return false; const l = dl.lastTest(); return !l || (Date.parse(dl.dayKey()) - Date.parse(l)) / 864e5 >= TEST_DAYS; };
+  async function test() {
+    // 「覚えてる」にした言葉は出さない。数がたりなければ、その人のレベル帯の単語でうめる
+    let pool = dl.pool();
+    if (pool.length < TEST_N) { try { const ex = new Set([...dl.knownKeys(), ...pool.map(w => w.en.toLowerCase())]); pool = pool.concat(await core.level.fillWords(TEST_N - pool.length + 3, ex)); } catch (e) { } }
+    if (pool.length < 4) { core.ui.toast('テストできる言葉が、まだ少ないよ'); return; }
     const first = w => String(w.ja).split(/[、,・]/)[0].trim();
     const qs = pool.slice().sort(() => Math.random() - 0.5).slice(0, TEST_N).map(w => {
       const bad = pool.filter(x => x.en !== w.en && first(x) !== first(w)).sort(() => Math.random() - 0.5).slice(0, 3).map(first);

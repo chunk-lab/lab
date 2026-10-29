@@ -1,6 +1,6 @@
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
-import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, areaAt, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
+import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, SPOTS, areaAt, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
 import { askScreen, adviceFor } from './ask.js';
 import { createEngine, createBot, replayAt, timeOf, REACH } from './engine.js';
 import { createView } from './view.js';
@@ -128,7 +128,7 @@ export const fishingApp = {
     if (!document.getElementById('fz-css')) { const st = document.createElement('style'); st.id = 'fz-css'; st.textContent = CSS; document.head.appendChild(st); }
     const st = ctx.storage, P = ctx.params || {};
     const now = new Date();
-    const baseCond = { hour: P.hour ?? now.getHours() + now.getMinutes() / 60, season: P.season || seasonOf(now), rain: !!P.rain };
+    const baseCond = { hour: P.hour ?? now.getHours() + now.getMinutes() / 60, season: P.season || seasonOf(now), rain: !!P.rain, spot: st.get('spot') || 'pond' };
     const sfx = createSfx(ctx.audio && ctx.audio.sfx != null ? ctx.audio.sfx : 0.7);
     const root = document.createElement('div'); root.className = 'fz'; el.appendChild(root);
     ctx.setTitle('砂吹さんの池');
@@ -164,7 +164,7 @@ export const fishingApp = {
 
     // ================= メニュー =================
     function menu() {
-      clear(); screen = 'menu'; ctx.setTitle('砂吹さんの池'); head();
+      clear(); screen = 'menu'; ctx.setTitle('砂吹さんの' + SPOTS[baseCond.spot].name); head();
       const cv = document.createElement('canvas'); cv.style.cssText = 'top:0;height:100%'; root.appendChild(cv);
       const view = createView(cv, baseCond); view.resize();
       const ro = new ResizeObserver(() => view.resize()); ro.observe(cv); cleanup.push(() => ro.disconnect());
@@ -172,7 +172,7 @@ export const fishingApp = {
       frame = dt => { fake.update(dt); view.draw(vsOf(fake, true), dt); };
       const found = Object.keys(dex).length, tm = timeOf(baseCond.hour);
       const ui = document.createElement('div'); ui.className = 'menu';
-      ui.innerHTML = `<p class="title">🎣 ほしみや池の釣り</p>
+      ui.innerHTML = `<p class="title">🎣 ほしみや${SPOTS[baseCond.spot].name}の釣り</p>
         <div class="say">砂吹さん「${esc(pickSay())}」</div>
         <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}${baseCond.rain ? '・雨' : ''} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
         <button class="btn mb" data-m="en" style="background:linear-gradient(160deg,#9fe3c0,#5fc79a)">📚<span>英語の釣り堀<br><small>英語で釣る・水槽で育てる・標本を集める</small></span></button>
@@ -181,9 +181,9 @@ export const fishingApp = {
         <button class="btn mb sub" data-m="dex">📖<span>つり図鑑<br><small>${found} / ${ALL.length} 見つけた</small></span></button>
         <button class="btn mb sub" data-m="ask">💬<span>砂吹さんに聞く<br><small>狙いの魚・いまのおすすめ・腕のアドバイス</small></span></button>
         <button class="btn mb sub" data-m="shop">🧰<span>道具屋<br><small>竿・リール・糸・エサ・ルアー・見る道具</small></span></button>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="chip" data-m="mode">${st.get('mode') === 'easy' ? '🟢 かんたん' : '🔵 ほんかく'}</button><button class="chip" data-m="fx">${st.get('fx') === 'calm' ? '🍵 演出おとなしめ' : '🎆 演出 派手'}</button><button class="chip" data-m="help">？ あそびかた</button></div>`;
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="chip" data-m="spot">${SPOTS[baseCond.spot].emoji} 釣り場:${SPOTS[baseCond.spot].name}</button><button class="chip" data-m="mode">${st.get('mode') === 'easy' ? '🟢 かんたん' : '🔵 ほんかく'}</button><button class="chip" data-m="fx">${st.get('fx') === 'calm' ? '🍵 演出おとなしめ' : '🎆 演出 派手'}</button><button class="chip" data-m="help">？ あそびかた</button></div>`;
       root.appendChild(ui);
-      ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ en: goPond, free: () => play({}), vs: vsSetup, dex: dexScreen, shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
+      ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ spot: () => { const ks = Object.keys(SPOTS); baseCond.spot = ks[(ks.indexOf(baseCond.spot) + 1) % ks.length]; st.set('spot', baseCond.spot); menu(); }, en: goPond, free: () => play({}), vs: vsSetup, dex: dexScreen, shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
       if (P.tab === 'en') { P.tab = null; setTimeout(goPond, 0); return; }
       if (P.tab === 'tank') { P.tab = null; setTimeout(goTank, 0); return; }
       if (P.vs) { const o = P.vs; P.vs = null; setTimeout(() => vsSetup(o === 'hard' ? 'hard' : 'easy'), 0); }
@@ -511,7 +511,7 @@ export const fishingApp = {
         const me = scoreOf(E.S.score, vs.rule), op = scoreOf(vs.bot ? oppE.S.score : oppScore, vs.rule);
         const res = me > op ? 'win' : me < op ? 'lose' : 'draw';
         stats[res]++; save();
-        const myRec = { v: 1, n: ctx.player?.name || 'ともだち', r: vs.rule, du: vs.dur, sd: vs.seed, h: Math.round(cond.hour * 10) / 10, se: cond.season, rn: cond.rain ? 1 : 0, s: E.log.s, e: E.S.catches.map(c => [Math.round(c.t * 10), c.id, c.size, c.pts]), sc: me };
+        const myRec = { v: 1, n: ctx.player?.name || 'ともだち', r: vs.rule, du: vs.dur, sd: vs.seed, h: Math.round(cond.hour * 10) / 10, se: cond.season, rn: cond.rain ? 1 : 0, sp: cond.spot || '', s: E.log.s, e: E.S.catches.map(c => [Math.round(c.t * 10), c.id, c.size, c.pts]), sc: me };
         st.set('ghost', myRec);
         const oppC = bot ? oppE.S.catches.map(c => ({ id: c.id, size: c.size, pts: c.pts })) : (vs.ghost.e || []).filter(c => c[0] / 10 <= vs.dur).map(c => ({ id: c[1], size: c[2], pts: c[3] }));
         myRec.mo = easy ? 1 : 0;
@@ -776,7 +776,7 @@ export const fishingApp = {
         const m = sheet(`<div class="ph" style="flex-direction:column;gap:2px"><div style="font-size:12px;font-weight:900;color:${RARITY_COL[x.r]}">${'★'.repeat(x.r)} ${RARITY[x.r] || 'はずれ'}</div><h2>${d ? esc(x.name) : '？？？'}</h2>${d ? `<div style="font-family:Georgia,serif;font-style:italic;color:#8d7f9e">${esc(x.en)}</div>` : ''}</div>
           <div class="sc" style="text-align:center"><div class="ar" style="width:240px;max-width:100%;margin:0 auto"></div>
           ${d ? `<p>${x.kind === 'fish' ? `最大 <b>${d.best}cm</b>(${x.size[0]}〜${x.size[1]}cm)・` : ''}${d.n}${x.kind === 'fish' ? '匹' : 'こ'}・はじめて ${d.first}</p>${d.modes ? `<p style="margin:-6px 0 6px">${Object.entries(d.modes).map(([k, v]) => MODE_BADGE(k) + (x.kind === 'fish' ? ` 最大${v}cm` : '')).join(' ')}</p>` : ''}` : ''}
-          <p style="background:#fff;border-radius:12px;padding:8px">ヒント:${esc(x.hint || '')}${x.kind === 'fish' ? `<br><small>${x.time !== 'any' ? TIME_JP[x.time] + 'に ' : ''}${x.season ? x.season.map(s => SEASON_JP[s]).join('・') + 'だけ ' : ''}${x.rain ? '雨が好き ' : ''}場所:${x.area.map(a => a === 'open' ? 'ひらけた所' : AREAS[a].name).join('・')}</small>` : ''}</p>
+          <p style="background:#fff;border-radius:12px;padding:8px">ヒント:${esc(x.hint || '')}${x.kind === 'fish' ? `<br><small>${x.time !== 'any' ? TIME_JP[x.time] + 'に ' : ''}${x.season ? x.season.map(s => SEASON_JP[s]).join('・') + 'だけ ' : ''}${x.rain ? '雨が好き ' : ''}場所:${x.area.map(a => a === 'open' ? 'ひらけた所' : AREAS[a].name).join('・')} ／ 釣り場:${(x.spots || ['pond']).map(s => SPOTS[s].name).join('・')}</small>` : ''}</p>
           ${d && x.say ? `<div class="say" style="margin:0 auto">“${esc(x.say)}”</div>` : ''}</div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>とじる</button></div>`, true);
         const cv = artCanvas(x, 240, 140, { sil: !d }); cv.style.cssText = 'width:100%;height:auto;position:static'; m.querySelector('.ar').appendChild(cv);
         m.querySelector('[data-x]').onclick = () => m.remove();
@@ -824,7 +824,7 @@ export const fishingApp = {
       };
     }
     function startGhost(g, name) {
-      const cond = { hour: g.h ?? 12, season: g.se || 'summer', rain: !!g.rn };
+      const cond = { hour: g.h ?? 12, season: g.se || 'summer', rain: !!g.rn, spot: g.sp || undefined };
       play({ vs: { rule: g.r, dur: g.du, seed: g.sd, cond, ghost: { s: g.s, e: g.e || [] }, name, easy: !!g.mo, calm: st.get('fx') === 'calm' } });   // 挑戦状のモードに合わせる
     }
 

@@ -11,6 +11,7 @@ const PH = ['ready', 'charge', 'fly', 'water', 'fight', 'landed', 'lost'];
 // 出やすさ(条件に合わないものは 0)
 export function weightOf(sp, cond) {
   if (sp.season && !sp.season.includes(cond.season)) return 0;
+  if (cond.spot && sp.spots && !sp.spots.includes(cond.spot)) return 0;   // 釣り場(池・川・海)に合わない魚は出ない
   const tm = timeOf(cond.hour);
   if (sp.time !== 'any' && sp.time !== tm && !(sp.rain && cond.rain && tm !== 'day')) return 0;
   let w = [0, 100, 40, 14, 4.2, 1.1][sp.r];

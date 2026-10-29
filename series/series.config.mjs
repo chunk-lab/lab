@@ -15,7 +15,6 @@ export const GAMES = {   // ゲーム → 公開するファイル [元, 公開�
 export const APPS = {
   town: { shell: 'town', title: 'チャンクタウン', theme: 'cute', games: ['stream', 'cards', 'chunkchunk', 'eigonou', 'library', 'listen'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']], town3d: true },   // town3d：3Dの町（../town3d を組み立てて g/town3d/town.js に置く）
   stream: { shell: 'solo', theme: 'chic', title: 'チャンクストリーム', games: ['stream'], grants: ['game:stream'] },
-  punichunk: { shell: 'solo', theme: 'chic', title: 'ぷにチャンク', games: ['punichunk'], grants: ['game:punichunk'] },
   cards: { shell: 'solo', theme: 'chic', title: 'チャンク・カード', games: ['cards'], grants: ['game:cards'] },
   eigonou: { shell: 'solo', theme: 'chic', title: '英語脳アプリ', games: ['eigonou'], grants: ['game:eigonou'] },
   chunkchunk: { shell: 'solo', theme: 'chic', title: 'チャンクチャンク', games: ['chunkchunk'], grants: ['game:chunkchunk'], opts: { face: 'all' } },   // 単体：学校・図書館・ゲームセンターを下のタブで切りかえる

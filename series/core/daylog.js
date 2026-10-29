@@ -27,7 +27,7 @@ const dayNum = k => Math.round(Date.parse(k + 'T00:00:00Z') / 864e5);
 
 export function createDayLog(core) {
   const st = createStore('core');
-  const S = Object.assign({ days: {}, total: {}, queue: [], graceAt: null, lastEnter: null, lastTest: null }, st.get('daylog') || {});
+  const S = Object.assign({ days: {}, total: {}, queue: [], known: {}, graceAt: null, lastEnter: null, lastTest: null }, st.get('daylog') || {});
   const L = { chat: null, sub: null, app: null, base: null };
   let lastTouch = Date.now(), tickN = 0, dirty = false;
   const subs = new Set();
@@ -82,7 +82,8 @@ export function createDayLog(core) {
     // 復習の結果をしまう:known=覚えている → キューから外す / 覚えていない → キューに残す
     finishReview(k, results) {
       const d = dayOf(k); const q = new Map(S.queue.map(w => [w.en.toLowerCase(), w]));
-      for (const r of results) { const key = r.en.toLowerCase(); if (r.known) q.delete(key); else { const o = q.get(key) || { ...r.item, added: k, unk: 0 }; o.unk = (o.unk || 0) + 1; delete o.known; q.set(key, o); } }
+      S.known = S.known || {};
+      for (const r of results) { const key = r.en.toLowerCase(); if (r.known) { q.delete(key); S.known[key] = 1; } else { delete S.known[key]; const o = q.get(key) || { ...r.item, added: k, unk: 0 }; o.unk = (o.unk || 0) + 1; delete o.known; q.set(key, o); } }
       S.queue = [...q.values()].slice(-300);
       Object.keys(S.days).forEach(x => { if (x < dayKey()) S.days[x].carried = true; });   // 前の日の分は、いまのキューに入ったので二重に出さない
       d.rev = { at: Date.now(), n: results.length, known: results.filter(r => r.known).length }; save();
@@ -92,10 +93,11 @@ export function createDayLog(core) {
     flag(name, v = true, k = dayKey()) { const d = dayOf(k); if (d.pts[name] === v) return; d.pts[name] = v; save(); },
     flagged: (name, k = dayKey()) => !!(S.days[k] && S.days[k].pts[name]),
     flags: (k = dayKey()) => ({ ...((S.days[k] || {}).pts || {}) }),
-    enqueue(list) { const q = new Map(S.queue.map(w => [w.en.toLowerCase(), w])); list.forEach(w => { const k = w.en.toLowerCase(), o = q.get(k) || { ...w, added: dayKey(), unk: 0 }; o.unk = (o.unk || 0) + 1; q.set(k, o); }); S.queue = [...q.values()].slice(-300); save(); },
+    enqueue(list) { const q = new Map(S.queue.map(w => [w.en.toLowerCase(), w])); S.known = S.known || {}; list.forEach(w => { const k = w.en.toLowerCase(); delete S.known[k]; const o = q.get(k) || { ...w, added: dayKey(), unk: 0 }; o.unk = (o.unk || 0) + 1; q.set(k, o); }); S.queue = [...q.values()].slice(-300); save(); },
     lastTest: () => S.lastTest, setTest(k) { S.lastTest = k; save(); },
     // 今までに出会った言葉(意味つき)すべて。定期の単語テストの出題もと
-    pool() { const m = new Map(); Object.values(S.days).forEach(d => Object.values(d.words).forEach(w => { if (w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), w); })); S.queue.forEach(w => { if (w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), w); }); return [...m.values()]; },
+    knownKeys: () => Object.keys(S.known || {}),   // フラッシュカードで「覚えてる」にした言葉(テストには出さない)
+    pool() { const m = new Map(); Object.values(S.days).forEach(d => Object.values(d.words).forEach(w => { if (w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), w); })); S.queue.forEach(w => { if (w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), w); }); return [...m.values()].filter(w => !(S.known || {})[w.en.toLowerCase()]); },
     graceAt: () => S.graceAt, setGrace(k) { S.graceAt = k; save(); },
     lastEnter: () => S.lastEnter, setEnter(k) { S.lastEnter = k; save(); },
     prevDay() { const ks = Object.keys(S.days).filter(k => k < dayKey()).sort(); return ks[ks.length - 1] || null; },
