@@ -1110,6 +1110,7 @@ export function mount(container, opt = {}) {
     } else me.ch.root.visible = true;
     if (!started || hud.busy) mx = my = 0;
     const bld = seasons.building();
+    if (sport.active && camMode === 'follow' && started && !hud.busy) sport.pan(mx, my, dt);   // ゴルフ中は、左下スティック=カメラを前後左右にずらす
     if (snow.making || bld || battle.making || battle.rolling || sport.active || dodgeT > 0) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
