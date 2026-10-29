@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import { createBus, createStorage, createWallet, angleLerp, clamp } from './core/core.js';
 import { weather } from './game/weather.js';
-import { social, PREFS } from './game/social.js';
+import { social, PREFS, memory, DATE_FIRST } from './game/social.js';
 import { finds, setAreaName, loadHuntFile, TREASURES } from './game/finds.js';
 import { createSocialUI } from './ui/social_ui.js';
 import { createAppHost } from './core/apps.js';
@@ -40,7 +40,7 @@ const VERSION = '0.1.0';
 export function mount(container, opt = {}) {
   const bus = createBus();
   const storage = opt.storage || createStorage(opt.storagePrefix || 'town:');
-  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, adult: 0, birth: '', en: 0, enLevel: 'easy', tips: 1, look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
+  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, replyLen: 'normal', adult: 0, birth: '', en: 0, enLevel: 'easy', tips: 1, look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
   const save = () => storage.set('settings', settings);
   const wallet = opt.wallet || createWallet(storage, bus);   // 組み込み先から共通の財布を渡せる(2Dと3Dで同じコイン)
   const ai = createAI(storage);
@@ -276,7 +276,7 @@ export function mount(container, opt = {}) {
     return `「${text}」をノートに入れたよ`;
   }
   // ---- 住人との仲(プレゼント・頼みごと)・調べる・宝探し ----
-  const soc = createSocialUI({ hud, wallet, audio, addNote, startDate: r => startDate(r), setRain: () => { curWx = 'rain'; env.setAmbient('rain'); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy });
+  const soc = createSocialUI({ hud, wallet, audio, addNote, startDate: r => startDate(r), setRain: () => { curWx = 'rain'; env.setAmbient('rain'); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
   if (social.admin()) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🔍 宝を隠す'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(168px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; soc.adminHunt(); }; root.appendChild(b); }
   function openNoteBook() {
     if (!started || appHost.current || hud.busy) return;
@@ -365,7 +365,7 @@ export function mount(container, opt = {}) {
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
     openChat({
-      hud, bus, name: r.def.name, role: r.def.role, first,
+      hud, bus, name: r.def.name, role: r.def.role, first, onClose: () => soc.remember(r, hist),
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
       setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
@@ -373,7 +373,7 @@ export function mount(container, opt = {}) {
       ask: async (t, onPart) => {
         hist.push({ role: 'user', text: t.slice(0, 80) });
         const H = Math.floor(env.hour), M = Math.floor((env.hour % 1) * 60);
-        const system = buildSystem({ npc: r.def, player: settings.name || 'あなた', hourText: `${H}時${M}分`, periodText: PERIOD[period(env.hour)], place: city.areaName(r.ch.root.position.x, r.ch.root.position.z), english: settings.en ? settings.enLevel : '', adult: ageOk() && !!settings.adult && r.def.adult !== false });
+        const system = buildSystem({ npc: r.def, player: settings.name || 'あなた', hourText: `${H}時${M}分`, periodText: PERIOD[period(env.hour)], place: city.areaName(r.ch.root.position.x, r.ch.root.position.z), english: settings.en ? settings.enLevel : '', adult: ageOk() && !!settings.adult && r.def.adult !== false }) + (memory.prompt(r.def.id, settings.name || 'あなた') ? '\n' + memory.prompt(r.def.id, settings.name || 'あなた') : '');
         try {
           const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-6)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, ...(settings.en ? { maxChars: 300, maxTokens: 300 } : { maxChars: (r.def.maxChars || 90) + 240, maxTokens: (r.def.maxTokens || 160) + 200 }) });
           const shown = out.split('|||')[0].trim();   // 英語・日本語の両方が入っている。履歴とふきだしには、話した側だけを使う
@@ -406,7 +406,7 @@ export function mount(container, opt = {}) {
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
     openChat({
-      hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400, low,
+      hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400, low, onClose: () => soc.remember(r, hist),
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
       setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
@@ -418,10 +418,12 @@ export function mount(container, opt = {}) {
         const system = [
           `あなたは「${r.def.name}」。${r.def.personaOut || r.def.persona}`,
           `季節は${({ spring: '春', summer: '夏', autumn: '秋', winter: '冬' })[seasons.season] || ''}、${PERIOD[period(env.hour)]}の${H}時${M}分。${sit}`,
+          memory.prompt(r.def.id, settings.name || 'あなた'),
+          `返事の長さは会話に合わせて自然に。長く話す場面では「${({ short: '短め', normal: 'ふつう', long: '長め' })[settings.replyLen] || 'ふつう'}」を目安にする。`,
           settings.en ? `English mode: reply in ${settings.enLevel === 'easy' ? 'simple' : 'natural'} English. After the reply, write " ||| " and a natural Japanese translation.` : '日本語で話す。返事のあとに「 ||| 」と、同じ内容の自然な英語訳を書く。',
         ].join('\n');
         try {
-          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-40)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, maxTokens: 900, maxChars: 2400 });
+          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-40)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, maxTokens: 2048, maxChars: 8000 });
           const shown = out.split('|||')[0].trim();
           hist.push({ role: 'assistant', text: shown });
           hud.say('npc:' + r.def.id, shown.length > 46 ? shown.slice(0, 44) + '…' : shown, 4);
@@ -587,7 +589,7 @@ export function mount(container, opt = {}) {
     for (const o of residents.list) if (o !== r && !o.hidden && !(o.def.companion && o.follow) && Math.hypot(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z) < 2.4) { const a = Math.atan2(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z); o.ch.root.position.x = T.x + Math.sin(a) * 3.3; o.ch.root.position.z = T.z + Math.cos(a) * 3.3; }
     const H = env.hour, so = r.def.id === 'sora';
     const first = so ? (H < 11 ? '朝のカフェっていいよな。何たのむ?' : H < 17 ? 'ここのケーキ、うまいんだよ。何にする?' : '夜のカフェって、なんか落ちつくよな') : (H < 11 ? 'モーニング、いい感じだね。何たのむ?' : H < 17 ? 'ここ、前から来てみたかったんだ〜。何にする?' : '夜のカフェって、ちょっと大人な感じしない?');
-    freeChat(r, first, `いま「${settings.name || 'あなた'}」と、町のカフェのテラス席で向かい合ってすわり、デートしている。`, true);
+    freeChat(r, DATE_FIRST[r.def.id] || first, `いま「${settings.name || 'あなた'}」と、町のカフェのテラス席で向かい合ってすわり、デートしている。`, true);
     const off = bus.on('ui:panelClosed', () => { off(); endDate(); });
     date.off = off;
   }
@@ -887,6 +889,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">誕生日(花火でお祝い)<button class="tw-btn" data-act="birth" style="padding:6px 14px">${settings.birth ? settings.birth.replace(/-/g, '/') : 'とうろく'}</button></div>
       ${opt.openAdmin ? '<div class="tw-row">運営(花火・日食・月食の予約)<button class="tw-btn" data-act="admin" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
+      <div class="tw-row">おしゃべりの返事の長さ${seg('replyLen', [['short', '短め'], ['normal', 'ふつう'], ['long', '長め']])}</div>
       <div class="tw-row">AIとおしゃべり<button class="tw-btn" data-act="ai" style="padding:6px 14px">${ai.ready ? 'せってい(つながっています)' : 'つなぐ'}</button></div>
       ${opt.onSwitchMode ? `<div class="tw-row">${opt.switchLabel || 'ほかのモード'}<button class="tw-btn" data-act="mode" style="padding:6px 14px">きりかえる</button></div>` : ''}
       <div class="tw-row">キャラクター<button class="tw-btn" data-act="title" style="padding:6px 14px">えらびなおす</button></div>

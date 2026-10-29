@@ -1,5 +1,5 @@
 // 住人とのやりとり(プレゼント・頼みごと・お話)・町の「調べる」・宝探しの運営ツール。main.js から使う
-import { social, ITEMS, PREFS, NPC_NAME, EPISODES, LV_NAME, LV, PTS } from '../game/social.js';
+import { social, ITEMS, PREFS, NPC_NAME, EPISODES, LV_NAME, LV, PTS, memory, MEM } from '../game/social.js';
 import { finds, WORDS, PHRASES, PROVERBS, PASSAGES, TREASURES, dayKey } from '../game/finds.js';
 import { weather } from '../game/weather.js';
 import { FISH } from '../apps/fishing/data.js';
@@ -13,7 +13,7 @@ const REACT = {
   no: ['あ…ありがとう。…じつは、ちょっとにがてなんだ。', 'う、うん…。気持ちだけ、もらっておくね。'],
 };
 
-export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain, areaName, getMe, canAct }) {
+export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain, areaName, getMe, canAct, ai = null, player = () => 'あなた' }) {
   if (!document.getElementById('tw-soc-css')) { const st = document.createElement('style'); st.id = 'tw-soc-css'; st.textContent = '.tw-in{border:1px solid #d9cfe8;border-radius:10px;padding:8px 10px;font:inherit;font-size:14px;background:#fff;color:#5a4a6b;box-sizing:border-box;min-width:0}'; document.head.appendChild(st); }
   const name = r => (r && r.def && r.def.name) || '';
   const heart = id => { const l = social.level(id); return `♥ ${LV_NAME[l]}`; };
@@ -78,6 +78,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain
   function choices(r) {
     const id = r.def.id; if (!PREFS[id]) return [];
     const out = [{ label: '🎁 プレゼントする', fn: () => gift(r) }];
+    if ((ai && ai.ready) || memory.of(id).auto.length || memory.of(id).keep.length) out.push({ label: '🗒 覚えていること', fn: () => memoryPanel(r) });
     for (const u of social.unlocksOf(id)) {
       if (u.kind === 'ability' && u.label && !['secret', 'discount'].includes(u.id)) out.push({ label: u.label, fn: () => ability(r, u) });
       if (u.kind === 'date' && !(r.def.menu || []).some(m => m.act === 'date')) out.push({ label: u.label, fn: () => startDate(r) });
@@ -123,5 +124,51 @@ export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain
     };
     draw();
   }
-  return { onTalk, choices, menuOk, heart, nearFind, takeFind, adminHunt, gift };
+  // ---- 記憶:おしゃべりが終わったら、覚えておく話題をAIにまとめてもらう ----
+  async function remember(r, hist) {
+    const id = r.def.id; if (!PREFS[id] || !ai || !ai.ready) return;
+    const said = hist.filter(h => h.role === 'user'); if (!said.length) return;
+    const talk = hist.slice(-40).map(h => `${h.role === 'user' ? player() : r.def.name}:${h.text}`).join('\n').slice(-6000);
+    const known = memory.of(id).auto.map(x => '- ' + x.t).join('\n');
+    const system = `あなたは会話の記録係。${r.def.name}が、友だちの「${player()}」との会話から、次に会ったときにも覚えておくとよいことを書き出す。\n` +
+      `- ${player()}本人のこと(出来事・予定・好み・悩み・家族・夢・約束など)や、ふたりで話した話題を、1つ1行・短い日本語で。\n- その人にとって大事そうなことは imp:1、ちょっとした話は imp:0。\n- すでに覚えていることと同じ内容は書かない。何もなければ空。\n` +
+      `- 出力はJSONだけ:{"items":[{"t":"...","imp":1}]}\n(すでに覚えていること)\n${known || 'なし'}`;
+    try {
+      const out = await ai.chat({ system, messages: [{ role: 'user', text: talk }], maxTokens: 1500, maxChars: 4000, free: true });
+      const j = JSON.parse((out.match(/\{[\s\S]*\}/) || ['{}'])[0]); const items = Array.isArray(j.items) ? j.items : [];
+      if (!items.length) return;
+      const big = memory.addAuto(id, items);
+      if (big > MEM.BIG_SOFT) {   // 大事なことが多くなったら、消さずにまとめ直す
+        const lines = memory.of(id).auto.filter(x => x.imp).map(x => '- ' + x.t).join('\n');
+        const o2 = await ai.chat({ system: `次の「覚えていること」を、内容を1つも落とさずに、重なりをまとめて ${Math.round(MEM.BIG_SOFT / 2)} 行以内にする。出力はJSONだけ:{"items":["...","..."]}`, messages: [{ role: 'user', text: lines }], maxTokens: 2000, maxChars: 6000, free: true });
+        const j2 = JSON.parse((o2.match(/\{[\s\S]*\}/) || ['{}'])[0]); if (Array.isArray(j2.items) && j2.items.length >= 3) memory.replaceBig(id, j2.items);
+      }
+    } catch (e) { }
+  }
+  // ---- 「覚えていること」の画面(見る・直す・消す・覚えておいてほしいことを書く) ----
+  function memoryPanel(r) {
+    const id = r.def.id;
+    const draw = () => {
+      const m = memory.of(id), n = memory.slots(id);
+      const p = hud.panel(`<h2>🗒 ${esc(r.def.name)}が覚えていること</h2>
+        <p class="tw-note">おしゃべりのあとに自動で覚える(★=大事なこと。消えない)。ちがっていたら、けしたり★を変えたりできる。この端末の中だけに保存。</p>
+        <div style="max-height:34vh;overflow:auto">${m.auto.length ? m.auto.map((x, i) => `<div class="tw-nrow"><div style="display:flex;gap:6px;align-items:center;width:100%"><button class="tw-btn" data-imp="${i}" style="padding:2px 8px">${x.imp ? '★' : '☆'}</button><span style="flex:1">${esc(x.t)}</span><button class="tw-btn" data-del="${i}" style="padding:2px 9px;font-size:11px">けす</button></div></div>`).join('') : '<p class="tw-note">まだありません(AIとおしゃべりすると増えていく)</p>'}</div>
+        <h3 style="margin:10px 0 4px;font-size:15px">💌 覚えておいてほしいこと(${m.keep.length} / ${n})</h3>
+        <p class="tw-note">仲良くなるほど、たのめる数がふえる(${LV_NAME.map((l, i) => `${l}${i}`).join('・')})。</p>
+        ${m.keep.map((t, i) => `<div style="display:flex;gap:6px;margin:4px 0"><input class="tw-in" data-k="${i}" value="${esc(t)}" style="flex:1"><button class="tw-btn" data-kd="${i}" style="padding:2px 9px;font-size:11px">けす</button></div>`).join('')}
+        ${m.keep.length < n ? `<div style="display:flex;gap:6px;margin:4px 0"><input class="tw-in" data-new placeholder="例:わたしの誕生日は5月3日" style="flex:1"><button class="tw-btn main" data-add>たのむ</button></div>` : n ? '' : '<p class="tw-note">もう少し仲良くなると、たのめるようになるよ。</p>'}
+        <div class="tw-actions"><button class="tw-btn" data-x>とじる</button></div>`);
+      p.addEventListener('change', e => { const k = e.target.closest('[data-k]'); if (k) memory.setKeep(id, +k.dataset.k, k.value); });
+      p.addEventListener('click', e => {
+        const b = e.target.closest('button'); if (!b) return;
+        if (b.dataset.x !== undefined) return hud.closePanel();
+        if (b.dataset.imp) { memory.toggleImp(id, +b.dataset.imp); hud.closePanel(); setTimeout(draw, 20); }
+        if (b.dataset.del) { memory.removeAuto(id, +b.dataset.del); hud.closePanel(); setTimeout(draw, 20); }
+        if (b.dataset.kd) { memory.setKeep(id, +b.dataset.kd, ''); hud.closePanel(); setTimeout(draw, 20); }
+        if (b.dataset.add !== undefined) { const v = p.querySelector('[data-new]').value.trim(); if (!v) return; const mm = memory.of(id); memory.setKeep(id, mm.keep.length, v); audio.play('coin'); hud.toast(`💌 ${r.def.name}が覚えてくれた`); hud.closePanel(); setTimeout(draw, 20); }
+      });
+    };
+    draw();
+  }
+  return { onTalk, choices, menuOk, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel };
 }

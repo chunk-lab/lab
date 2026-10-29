@@ -143,3 +143,35 @@ export const social = {
   info() { return get('info', []); },
   addInfo(cat, text, key) { const L = this.info(); if (key && L.some(x => x.key === key)) return false; L.push({ cat, text, key: key || '', at: Date.now() }); st.set('info', L.slice(-400)); return true; },
 };
+
+// ---- 住人の記憶(AIとのおしゃべりで話したこと)。端末の中だけ ----
+//   auto: 会話のあとAIがまとめた話題 [{t, imp:1=大事/0=ちょっとした話, at}]。大事なものは消さない(多くなったらまとめ直す)。ちょっとした話は新しい6つだけ
+//   keep: 本人が「覚えておいてほしい」と書いたこと。枠は仲良し度(しりあい0 → だいすき4)
+export const MEM = { SMALL_MAX: 6, BIG_SOFT: 24 };
+export const memory = {
+  all() { return get('mem', {}); },
+  of(id) { const m = this.all()[id] || {}; return { auto: m.auto || [], keep: m.keep || [] }; },
+  save(id, m) { const A = this.all(); A[id] = m; st.set('mem', A); },
+  slots(id) { return social.level(id); },
+  addAuto(id, items) {
+    const m = this.of(id), now = Date.now();
+    for (const it of items) { const t = String(it.t || '').trim().slice(0, 120); if (!t || m.auto.some(x => x.t === t)) continue; m.auto.push({ t, imp: it.imp ? 1 : 0, at: now }); }
+    const big = m.auto.filter(x => x.imp), small = m.auto.filter(x => !x.imp).slice(-MEM.SMALL_MAX);
+    m.auto = [...big, ...small].sort((a, b) => a.at - b.at); this.save(id, m); return big.length;
+  },
+  replaceBig(id, lines) { const m = this.of(id), small = m.auto.filter(x => !x.imp), now = Date.now(); m.auto = [...lines.map((t, i) => ({ t: String(t).slice(0, 160), imp: 1, at: now - 1000 + i })), ...small]; this.save(id, m); },
+  removeAuto(id, i) { const m = this.of(id); m.auto.splice(i, 1); this.save(id, m); },
+  toggleImp(id, i) { const m = this.of(id); if (m.auto[i]) m.auto[i].imp = m.auto[i].imp ? 0 : 1; this.save(id, m); },
+  setKeep(id, i, t) { const m = this.of(id); t = String(t || '').trim().slice(0, 120); if (t) m.keep[i] = t; else m.keep.splice(i, 1); this.save(id, m); },
+  // おしゃべりのときにAIへ渡す文
+  prompt(id, player) {
+    const m = this.of(id); if (!m.auto.length && !m.keep.length) return '';
+    return [`(これまでの「${player}」とのおしゃべりで、あなたが覚えていること)`, ...m.keep.map(t => `- 「覚えておいてね」と頼まれたこと:${t}`), ...m.auto.map(x => `- ${x.t}`), '友だちとして自然に知っていることとして持っておく。話の流れで思い出したら、ときどき話題にしてもいい。'].join('\n');
+  },
+};
+// デートのはじめのひとこと(住人ごと)
+export const DATE_FIRST = {
+  mii: 'ふふ、ここの窓ぎわ、わたしのお気に入りなの。なに飲む?', baron: 'ふはは! わが輩とお茶とは、光栄に思うがよい! …で、何を頼むのだ?', gon: 'カフェなんて久しぶりだぜ。…なんか落ちつかねえな、へへ',
+  koharu: '先生とカフェなんて、ちょっと照れますね。きょうは授業の話はなしですよ', shiori: '本を持たないでカフェに来るの、ひさしぶりです。…なんだか新鮮ですね', maru: 'たまには店をまかせて、のんびりするのもいいね! なに食べる?',
+  choco: 'カフェでデート…これはネタになる…いや、きょうはちゃんと楽しむぞ!', tetsu: '人と向かい合ってお茶を飲む時間は、いちばんぜいたくな時間かもしれません', suna: 'カフェもいいもんだな。池とはちがう落ちつきがある', luna: 'あなたと来るのは、星で決まっていたのかもね…ふふ、冗談よ',
+};
