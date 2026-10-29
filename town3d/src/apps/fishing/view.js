@@ -142,7 +142,23 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     b.fillStyle = 'rgba(255,255,255,0.12)'; b.fillRect(0, sy2, W, 3);
     if (cond.season === 'winter') { b.fillStyle = 'rgba(250,252,255,0.7)'; b.fillRect(0, sy2, W, 5); }
     if (SP !== 'sea') for (const side of [-1, 1]) for (let i = 0; i < (mini ? 10 : 22); i++) { const x = side < 0 ? R() * W * 0.14 : W - R() * W * 0.14, h = H * (0.08 + R() * 0.12); b.strokeStyle = shadeRgb(cond.season === 'autumn' ? '#b89a5a' : cond.season === 'winter' ? '#c8c0a8' : '#7aa860', -night * 0.5 - R() * 0.2); b.lineWidth = 2; b.beginPath(); b.moveTo(x, sy2 + 4); b.quadraticCurveTo(x + side * -6, sy2 - h * 0.5, x + side * -10 + (R() - 0.5) * 10, sy2 - h); b.stroke(); if (R() < 0.3) { b.fillStyle = '#7a5a3a'; b.beginPath(); b.ellipse(x + side * -10, sy2 - h, 2.5, 7, 0, 0, 7); b.fill(); } }
-    if (!mini) drawBranch(b);
+    if (!mini) {
+      if (SP === 'pond') drawBranch(b);
+      else if (SP === 'river') {   // 川:手前に竹(松の枝は池だけ)
+        for (const [bx, lean, w] of [[W * 0.06, 0.05, 17], [W * 0.14, -0.03, 12], [W * 0.95, -0.05, 14]]) {
+          const gx = b.createLinearGradient(bx - w / 2, 0, bx + w / 2, 0); gx.addColorStop(0, shadeRgb('#6aa653', -night * 0.5)); gx.addColorStop(1, shadeRgb('#3f7a3a', -night * 0.5)); b.fillStyle = gx;
+          b.beginPath(); b.moveTo(bx - w / 2, H); b.lineTo(bx - w / 2 + lean * H, 0); b.lineTo(bx + w / 2 + lean * H, 0); b.lineTo(bx + w / 2, H); b.fill();
+          for (let y = H * 0.07, k = 0; y < H; y += H * 0.15, k++) { const xx = bx + lean * (H - y); b.fillStyle = 'rgba(25,55,28,0.55)'; b.fillRect(xx - w / 2 - 1, y, w + 2, 3); if (k < 5) { b.save(); b.translate(xx, y + 2); b.rotate((k % 2 ? 1 : -1) * (0.8 + k * 0.08)); b.fillStyle = shadeRgb('#78b862', -night * 0.5); b.beginPath(); b.ellipse(30, 0, 32, 5, 0, 0, 7); b.fill(); b.restore(); } }
+        }
+      } else {   // 海:係留杭とロープ、かもめ
+        const px = W * 0.09, pw = 28, top = H * 0.3; const gx = b.createLinearGradient(px - pw / 2, 0, px + pw / 2, 0); gx.addColorStop(0, shadeRgb('#9a7a58', -night * 0.5)); gx.addColorStop(1, shadeRgb('#5e452f', -night * 0.5)); b.fillStyle = gx; b.fillRect(px - pw / 2, top, pw, H - top);
+        b.fillStyle = shadeRgb('#b08f69', -night * 0.5); b.beginPath(); b.ellipse(px, top, pw / 2, 6, 0, 0, 7); b.fill();
+        b.strokeStyle = shadeRgb('#e0d2a8', -night * 0.5); b.lineWidth = 4; b.lineCap = 'round'; for (let k = 0; k < 5; k++) { const y = top + 18 + k * 9; b.beginPath(); b.moveTo(px - pw / 2 - 1, y); b.quadraticCurveTo(px, y + 7, px + pw / 2 + 1, y - 2); b.stroke(); }
+        b.beginPath(); b.moveTo(px + pw / 2, top + 24); b.quadraticCurveTo(W * 0.2, H * 0.58, W * 0.27, H * 0.52); b.stroke();
+        b.fillStyle = shadeRgb('#ff8a3c', -night * 0.5); b.beginPath(); b.arc(W * 0.27, H * 0.52 + 6, 9, 0, 7); b.fill(); b.fillStyle = 'rgba(255,255,255,0.4)'; b.beginPath(); b.arc(W * 0.27 - 3, H * 0.52 + 3, 3, 0, 7); b.fill();
+        b.fillStyle = shadeRgb('#f6f6f6', -night * 0.4); b.beginPath(); b.ellipse(px, top - 12, 13, 9, 0, 0, 7); b.fill(); b.beginPath(); b.arc(px + 10, top - 20, 6, 0, 7); b.fill(); b.fillStyle = '#f0a030'; b.beginPath(); b.moveTo(px + 15, top - 21); b.lineTo(px + 23, top - 19); b.lineTo(px + 15, top - 17); b.fill(); b.fillStyle = '#222'; b.fillRect(px + 11, top - 22, 2, 2);
+      }
+    }
     if (night > 0) { b.fillStyle = `rgba(10,15,45,${0.25 * night})`; b.fillRect(0, 0, W, H); }
   }
   // 手前の左からはり出した木の枝(季節で葉が変わる)。落ち葉・花びらはここから落ちる
@@ -307,6 +323,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     else { g2.beginPath(); g2.ellipse(0, 0, s * 0.7, s * 0.45, 0, 0, 7); g2.fill(); }
   }
   function spawnFall(f) {
+    if (!branchPts.length && SP !== 'pond') return;   // 枝があるのは池だけ
     const p = branchPts[Math.floor(Math.random() * branchPts.length)] || [W * 0.2, HZ()];
     const autumn = cond.season === 'autumn';
     Object.assign(f, { x: p[0], y: p[1], vy: 14 + Math.random() * 12, p: Math.random() * 6, k: autumn ? (Math.random() < 0.5 ? 'ginkgo' : 'maple') : 'petal', c: autumn ? null : ['#ffc6d9', '#ffe0ea', '#ffb3cc'][Math.floor(Math.random() * 3)], land: HZ() + (SY() - HZ()) * (0.15 + Math.random() * 0.75), t: 0, float: 0, s: autumn ? 5 + Math.random() * 3 : 3 + Math.random() * 1.5 });

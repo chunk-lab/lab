@@ -231,7 +231,7 @@ export function mount(container, opt = {}) {
       if (near.length >= 2) {   // 団子のときは、だれと話すか選べる
         hud.dialog({ name: 'ちかくの人', text: 'だれと話す?', choices: near.map(r => ({ label: r.def.name, fn: () => talkTo(r) })) });
       } else talkTo(focus.ref);
-    } else if (focus.app) openApp(focus.app, focus.id === 'pond' && seasons.season !== 'summer' ? { from: focus.id, tab: 'en' } : { from: focus.id });
+    } else if (focus.app) openApp(focus.app, { from: focus.id });
     else if (focus.msg) hud.dialog({ name: focus.name, text: focus.msg });
   }
   function nearNpcs() {
