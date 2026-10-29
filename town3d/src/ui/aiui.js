@@ -55,7 +55,7 @@ export function openAiSetup({ hud, ai, onDone }) {
 }
 
 // 住人との自由なおしゃべり。ask(text) → Promise<string>
-export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, maxLen = 80, low = false }) {
+export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, maxLen = 80, low = false }) {
   const p = hud.panel(`<h2>${esc(name)}<small>${esc(role || '')}</small></h2>
     <div class="tw-enrow"><button class="tw-btn" data-a="en"></button><button class="tw-btn" data-a="lv"></button></div>
     <div class="tw-log" aria-live="polite"></div>
@@ -146,6 +146,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
       if (tr) { tr.hidden = !tr.hidden; return; }
       tr = document.createElement('div'); tr.className = 'tw-tr'; tr.textContent = d._ja || '…'; d.appendChild(tr);
       if (!d._ja) { try { d._ja = await translate(d._text); tr.textContent = d._ja; } catch (err) { tr.textContent = err.message || '訳せなかったよ'; } }
+      if (!d._seen && d._ja && d._en && onSeen) { d._seen = 1; try { onSeen(d._en, d._ja); } catch (e) { } }   // 訳を見た英文は、あしたのふりかえりに出す
       log.scrollTop = log.scrollHeight;
     }
   });

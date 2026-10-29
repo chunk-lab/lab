@@ -194,6 +194,8 @@ export function createReview(core) {
     });
     core.ui.sheet('<div class="rv"></div>', (ov, close) => {
       const box = ov.querySelector('.rv'); let i = 0; const res = []; let t0 = 0;
+      dl.act('sub', { cat: 'study', label: '単語テスト' });   // テスト中は「勉強」の時間に入れる(とじたら元にもどす)
+      const wt = setInterval(() => { if (!ov.isConnected) { clearInterval(wt); dl.act('sub', null); } }, 800);
       const q = () => {
         if (i >= qs.length) return end();
         const Q = qs[i]; t0 = Date.now(); core.speech.speak(Q.w.en);
@@ -201,7 +203,9 @@ export function createReview(core) {
           <div class="rv-ch">${Q.ch.map((c, k) => `<button class="cs-btn" data-k="${k}">${esc(c)}</button>`).join('')}</div><p class="cs-note">10秒以上なやんだ言葉は、あとでもう一度出ます。</p>`;
         box.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
           const ok = Q.ch[+b.dataset.k] === Q.ans, slow = (Date.now() - t0) / 1000 > SLOW;
-          res.push({ ok, slow, w: Q.w }); b.style.background = ok ? '#bff0cf' : '#ffc9c9';
+          res.push({ ok, slow, w: Q.w });
+          try { dl.addWord({ en: Q.w.en, ja: Q.ans, pos: Q.w.pos, src: 'test', miss: !ok, slow }); core.learn && core.learn.hit(Q.w.en, ok, { ja: Q.ans }); } catch (e) { }   // その日に触れた単語・共通の学習記録に入れる
+          b.style.background = ok ? '#bff0cf' : '#ffc9c9';
           box.querySelectorAll('[data-k]').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.style.background = '#bff0cf'; });
           setTimeout(() => { i++; q(); }, ok ? 450 : 1100);
         });

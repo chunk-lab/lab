@@ -43,7 +43,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     try { await loadScript(core.base + 'g/town3d/town.js'); }
     catch (e) { wait.remove(); core.ui.toast('3Dの町を読みこめませんでした'); go('2d'); return; }
     wait.remove(); core.daylog.act('base', { cat: 'relax', label: '街を歩く' });
-    setTimeout(() => { try { core.review && core.review.enter(); } catch (e) { } }, 1500);   // 前回のふりかえり・忘れた日のお知らせ・同じ日にもどった一言
+    let entered = false;   // 前回のふりかえり・単語テストは、キャラをえらんで町に入ってから(タイトル画面のあいだは出さない)
     // テスト用: ?coins=10000 で3Dの町のコインを増やして始められる（この端末の保存だけが変わる）
     const qc = new URLSearchParams(location.search).get('coins');
     if (/^\d{1,6}$/.test(qc || '')) core.wallet.set(+qc, 'test');
@@ -68,7 +68,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         return true;
       },
       onEvent(name, d) {   // 3Dの町でしたことも、共通の記録に残す（ステータス・あとで課題やコインに使える）
-        if (name === 'start') { if (d?.name && !core.profile.name) core.profile.setName(d.name); core.events.report('town3d', 'open'); }
+        if (name === 'start') { if (d?.name && !core.profile.name) core.profile.setName(d.name); core.events.report('town3d', 'open'); if (!entered) { entered = true; setTimeout(() => { try { core.review && core.review.enter(); } catch (e) { } }, 1500); } }
         else if (name === 'talk') core.events.report('town3d', 'talk', { id: d?.id });
         else if (name === 'app:open') { document.body.classList.add('md-app-open'); core.events.report('town3d', 'app', { id: d?.id }); core.daylog.act('app', catOfApp(d?.id)); if (d?.id === 'omikuji') core.review && core.review.mark('omikuji'); }   // 家・ショップなどを開いている間は「今日なにする?」を隠す
         else if (name === 'app:close') { document.body.classList.remove('md-app-open'); core.daylog.act('app', null); core.daylog.act('sub', null); core.daylog.act('chat', null); }

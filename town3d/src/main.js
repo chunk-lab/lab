@@ -40,7 +40,7 @@ const VERSION = '0.1.0';
 export function mount(container, opt = {}) {
   const bus = createBus();
   const storage = opt.storage || createStorage(opt.storagePrefix || 'town:');
-  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, replyLen: 'normal', adult: 0, birth: '', en: 0, enLevel: 'easy', tips: 1, look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
+  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, replyLen: 'normal', adult: 0, birth: '', en: 1, enShort: 0, enLevel: 'easy', tips: 1, look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
   const save = () => storage.set('settings', settings);
   const wallet = opt.wallet || createWallet(storage, bus);   // 組み込み先から共通の財布を渡せる(2Dと3Dで同じコイン)
   const ai = createAI(storage);
@@ -267,11 +267,15 @@ export function mount(container, opt = {}) {
     n.pending = true;
     try { n.meaning = await ai.explain(n.text, n.sentence); } catch (_) {} finally { n.pending = false; saveNotes(); }
   }
+  // 会話で出会った言葉を、その日の記録に入れる(あしたの「前回のふりかえり」の一覧とフラッシュカードに出る)
+  const logWord = (en, ja, kind, src) => { en = String(en || '').trim().slice(0, 160); if (en) opt.onEvent?.('app:event', { name: 'learn', data: { en, ja: String(ja || '').slice(0, 80), kind, src: src || 'chat' } }); };
+  const seenLine = (en, ja) => logWord(en, ja, 'sentence', 'chat');   // 「訳」を見た文
   function addNote({ kind, text, sentence, npc, meaning }) {
     const key = text.trim().toLowerCase(), hit = notes.find(n => n.kind === kind && n.text.toLowerCase() === key);
-    if (hit) { hit.count = (hit.count || 1) + 1; hit.npc = npc; saveNotes(); return `「${text}」をもう一度ほぞん(×${hit.count})`; }
+    if (hit) { hit.count = (hit.count || 1) + 1; hit.npc = npc; saveNotes(); logWord(hit.text, hit.meaning, kind === 'sentence' ? 'sentence' : 'word', 'chat'); return `「${text}」をもう一度ほぞん(×${hit.count})`; }
     const n = { id: 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), kind, text: text.trim(), sentence, npc, date: new Date().toLocaleDateString('ja-JP'), count: 1, meaning: meaning || '' };
     notes.push(n); saveNotes(); fillMeaning(n);
+    logWord(n.text, n.meaning, kind === 'sentence' ? 'sentence' : 'word', 'chat');
     opt.onEvent?.('note', { kind, text: n.text, meaning: n.meaning, npc });   // 組み込み先の勉強ノートにも入れる
     return `「${text}」をノートに入れたよ`;
   }
@@ -364,18 +368,20 @@ export function mount(container, opt = {}) {
     if (r.def.free) return freeChat(r, first, situation);
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
+    const enS = () => !!(settings.en && settings.enShort);   // ふだんの短いおしゃべりは、設定で英語にできる(みじかい返事だと不自然になりやすいので、はじめは日本語)
     openChat({
       hud, bus, name: r.def.name, role: r.def.role, first, onClose: () => soc.remember(r, hist),
-      getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
-      setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
+      getEn: () => ({ on: enS(), level: settings.enLevel }),
+      setEn: v => { if (v.on) { settings.en = 1; settings.enShort = 1; } else settings.en = 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
       saveNote: it => addNote({ ...it, npc: r.def.name }),
+      onSeen: seenLine,
       ask: async (t, onPart) => {
         hist.push({ role: 'user', text: t.slice(0, 80) });
         const H = Math.floor(env.hour), M = Math.floor((env.hour % 1) * 60);
-        const system = buildSystem({ npc: r.def, player: settings.name || 'あなた', hourText: `${H}時${M}分`, periodText: PERIOD[period(env.hour)], place: city.areaName(r.ch.root.position.x, r.ch.root.position.z), english: settings.en ? settings.enLevel : '', adult: ageOk() && !!settings.adult && r.def.adult !== false }) + (memory.prompt(r.def.id, settings.name || 'あなた') ? '\n' + memory.prompt(r.def.id, settings.name || 'あなた') : '');
+        const system = buildSystem({ npc: r.def, player: settings.name || 'あなた', hourText: `${H}時${M}分`, periodText: PERIOD[period(env.hour)], place: city.areaName(r.ch.root.position.x, r.ch.root.position.z), english: enS() ? settings.enLevel : '', adult: ageOk() && !!settings.adult && r.def.adult !== false }) + (memory.prompt(r.def.id, settings.name || 'あなた') ? '\n' + memory.prompt(r.def.id, settings.name || 'あなた') : '');
         try {
-          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-6)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, ...(settings.en ? { maxChars: 300, maxTokens: 300 } : { maxChars: (r.def.maxChars || 90) + 240, maxTokens: (r.def.maxTokens || 160) + 200 }) });
+          const out = await ai.chat({ system, messages: [{ role: 'assistant', text: first }, ...hist.slice(-6)], onDelta: onPart, adult: ageOk() && !!settings.adult && r.def.adult !== false, ...(enS() ? { maxChars: 300, maxTokens: 300 } : { maxChars: (r.def.maxChars || 90) + 240, maxTokens: (r.def.maxTokens || 160) + 200 }) });
           const shown = out.split('|||')[0].trim();   // 英語・日本語の両方が入っている。履歴とふきだしには、話した側だけを使う
           hist.push({ role: 'assistant', text: shown });
           hud.say('npc:' + r.def.id, shown.length > 46 ? shown.slice(0, 44) + '…' : shown, 4);
@@ -407,6 +413,7 @@ export function mount(container, opt = {}) {
     r.talking = true; talkingTo = r; input.clear();
     openChat({
       hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400, low, onClose: () => soc.remember(r, hist),
+      onSeen: seenLine,
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
       setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
@@ -889,6 +896,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">誕生日(花火でお祝い)<button class="tw-btn" data-act="birth" style="padding:6px 14px">${settings.birth ? settings.birth.replace(/-/g, '/') : 'とうろく'}</button></div>
       ${opt.openAdmin ? '<div class="tw-row">運営(花火・日食・月食の予約)<button class="tw-btn" data-act="admin" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
+      <div class="tw-row">ふだんの短いおしゃべりも英語${seg('enShort', [[0, '日本語'], [1, '英語']])}</div>
       <div class="tw-row">おしゃべりの返事の長さ${seg('replyLen', [['short', '短め'], ['normal', 'ふつう'], ['long', '長め']])}</div>
       <div class="tw-row">AIとおしゃべり<button class="tw-btn" data-act="ai" style="padding:6px 14px">${ai.ready ? 'せってい(つながっています)' : 'つなぐ'}</button></div>
       ${opt.onSwitchMode ? `<div class="tw-row">${opt.switchLabel || 'ほかのモード'}<button class="tw-btn" data-act="mode" style="padding:6px 14px">きりかえる</button></div>` : ''}
