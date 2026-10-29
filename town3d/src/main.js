@@ -939,6 +939,7 @@ export function mount(container, opt = {}) {
   const cam = { yaw: Math.PI, pitch: settings.camView ? settings.camView.pitch : CAM_DEF.pitch, dist: settings.camView ? settings.camView.dist : CAM_DEF.dist, x: me.x, z: me.z };
   // ---- カメラ:ふだん=自分についていく(follow) / 動かす(free:カメラだけ自由に) / 固定(fixed:そこに置いて、自分は歩ける) ----
   let camMode = 'follow';
+  const panOff = { x: 0, z: 0 };   // 2本指でずらしたカメラ位置
   const fcam = { x: 0, y: 1.6, z: 0, yaw: 0, pitch: 0 };
   const heightToV = y => Math.sqrt(Math.max(0, (y - 0.15) / 80)), vToHeight = v => 0.15 + v * v * 80;
   function camFromView() {   // いまの見え方から、動かすカメラの出発点を作る
@@ -1135,7 +1136,13 @@ export function mount(container, opt = {}) {
         if (seasons.carrying()) { rg.arms[0].rotation.x = rg.arms[1].rotation.x = -2.95; rg.arms[0].rotation.z = 0.35; rg.arms[1].rotation.z = -0.35; } } }
 
     // カメラ:後ろから少し見下ろす。建物にめり込むときは手前に寄せる
-    const ft = (date && date.focus) || sport.focus() || me;   // ゴルフ・フリスビーで飛んでいる間は、ボールを追う
+    if (camMode === 'follow' && !battle.active && (inp.panX || inp.panY)) {   // 2本指でそろえて動かすと、見ている向き基準でカメラ位置がずれる(指についてくる)
+      const k = 0.0022 * cam.dist, sy = Math.sin(cam.yaw), cy = Math.cos(cam.yaw);
+      panOff.x += cy * -inp.panX * k + -sy * inp.panY * k; panOff.z += -sy * -inp.panX * k + -cy * inp.panY * k;
+      const pm = Math.hypot(panOff.x, panOff.z); if (pm > 60) { panOff.x *= 60 / pm; panOff.z *= 60 / pm; }
+    }
+    if (mag > 0.05 || battle.active) { const dk = Math.max(0, 1 - dt * 4); panOff.x *= dk; panOff.z *= dk; }   // 歩きだしたら、もとの位置へもどる
+    const ft0 = (date && date.focus) || sport.focus() || me, ft = { x: ft0.x + panOff.x, z: ft0.z + panOff.z };   // ゴルフ・フリスビーで飛んでいる間は、ボールを追う
     cam.x += (ft.x - cam.x) * Math.min(1, dt * 8); cam.z += (ft.z - cam.z) * Math.min(1, dt * 8);
     if (camMode === 'free') { camera.position.set(fcam.x, fcam.y, fcam.z); const cp = Math.cos(fcam.pitch); camera.lookAt(fcam.x - Math.sin(fcam.yaw) * cp, fcam.y - Math.sin(fcam.pitch), fcam.z - Math.cos(fcam.yaw) * cp); }
     if (camMode === 'follow') {

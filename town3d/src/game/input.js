@@ -2,7 +2,7 @@
 // スマホは画面の下半分でスティック(移動)、上半分のドラッグで見まわし。最初に触れた側が、離すまで続く。
 export function createInput(el, { onAction }) {
   const keys = new Set();
-  const st = { mx: 0, my: 0, run: false, camDX: 0, camDY: 0, zoom: 0 };
+  const st = { mx: 0, my: 0, run: false, camDX: 0, camDY: 0, zoom: 0, panX: 0, panY: 0 };
   let stick = null, look = null;
   const knob = document.createElement('div'); knob.className = 'tw-stick'; knob.innerHTML = '<i></i>'; knob.hidden = true; el.appendChild(knob);
   let look2 = null, pinch0 = 0;
@@ -19,11 +19,11 @@ export function createInput(el, { onAction }) {
     if (e.target !== el && !e.target.classList?.contains('tw-canvas')) return;
     el.setPointerCapture?.(e.pointerId);
     const left = e.pointerType !== 'mouse' && e.clientY - el.getBoundingClientRect().top >= el.clientHeight * 0.5;   // スマホ:下半分=移動、上半分=見まわし(最初に触れた側のまま、はなれるまで変わらない)
-    if (stick && !stick.moved && !look && !look2) {   // 動かしていない指がある状態で、もう1本ふれたら、つまみ(ズーム)にする
+    if (stick && (!stick.moved || e.timeStamp - stick.t < 300) && !look && !look2) {   // 動かしていない指がある状態で、もう1本ふれたら、つまみ(ズーム)にする
       look = { id: stick.id, x: stick.cx, y: stick.cy }; stick = null; knob.hidden = true;
       look2 = { id: e.pointerId, x: e.clientX, y: e.clientY }; pinch0 = Math.hypot(look.x - look2.x, look.y - look2.y);
     } else if (left && !stick) {
-      stick = { id: e.pointerId, x: e.clientX, y: e.clientY, cx: e.clientX, cy: e.clientY, dx: 0, dy: 0, moved: false };
+      stick = { id: e.pointerId, x: e.clientX, y: e.clientY, cx: e.clientX, cy: e.clientY, dx: 0, dy: 0, moved: false, t: e.timeStamp };
       knob.hidden = false; knob.style.transform = `translate(${e.clientX - el.getBoundingClientRect().left - 60}px,${e.clientY - el.getBoundingClientRect().top - 60}px)`;
       knob.firstChild.style.transform = 'translate(0,0)';
     } else if (!look) look = { id: e.pointerId, x: e.clientX, y: e.clientY };
@@ -40,10 +40,10 @@ export function createInput(el, { onAction }) {
       knob.firstChild.style.transform = `translate(${dx}px,${dy}px)`;
     } else if (look && e.pointerId === look.id) {
       const ddx = e.clientX - look.x, ddy = e.clientY - look.y; look.x = e.clientX; look.y = e.clientY;
-      if (look2) { const d = Math.hypot(look.x - look2.x, look.y - look2.y); st.zoom -= (d - pinch0) / 40; pinch0 = d; }   // 2本指でズーム
+      if (look2) { const d = Math.hypot(look.x - look2.x, look.y - look2.y); st.zoom -= (d - pinch0) / 40; pinch0 = d; st.panX += ddx / 2; st.panY += ddy / 2; }   // 2本指:ひろげる/つまむ=ズーム、そろえて動かす=カメラ位置をずらす
       else { const k = e.pointerType === 'mouse' ? 1 : 1.35; st.camDX += ddx * k; st.camDY += ddy * k; }
     } else if (look2 && e.pointerId === look2.id) {
-      look2.x = e.clientX; look2.y = e.clientY; const d = Math.hypot(look.x - look2.x, look.y - look2.y); st.zoom -= (d - pinch0) / 40; pinch0 = d;
+      const ddx = e.clientX - look2.x, ddy = e.clientY - look2.y; look2.x = e.clientX; look2.y = e.clientY; const d = Math.hypot(look.x - look2.x, look.y - look2.y); st.zoom -= (d - pinch0) / 40; pinch0 = d; st.panX += ddx / 2; st.panY += ddy / 2;
     }
   };
   const pu = e => {
@@ -72,7 +72,7 @@ export function createInput(el, { onAction }) {
       }
       st.mx = x; st.my = y;
       const out = { ...st };
-      st.camDX = st.camDY = st.zoom = 0;
+      st.camDX = st.camDY = st.zoom = st.panX = st.panY = 0;
       return out;
     },
     clear: blur,
