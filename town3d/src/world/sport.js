@@ -264,6 +264,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       c.strokeStyle = `rgb(${Math.round(70 + st * 185)},${Math.round(160 - st * 100)},${Math.round(255 - st * 215)})`; c.lineWidth = 2.2 + st * 1.6; c.beginPath(); c.moveTo(sx, sy); c.lineTo(ex, ey); c.lineTo(ex - Math.cos(an - 0.5) * hs, ey - Math.sin(an - 0.5) * hs); c.moveTo(ex, ey); c.lineTo(ex - Math.cos(an + 0.5) * hs, ey - Math.sin(an + 0.5) * hs); c.stroke();
     }
     function rr2(x, y) { return Math.hypot(x, y) / g.rad(Math.atan2(y, x)); }
+    { const [hx, hy] = P(g.pin[0], g.pin[1]); c.save(); c.globalCompositeOperation = 'destination-out'; c.beginPath(); c.arc(hx, hy, 0.26 * N / (2 * Sx), 0, 7); c.fill(); c.restore(); }   // カップの所だけ、絵をぬく(下のホールが見える)
     g.tex = cv; g.Sx = Sx; return g;
   }
   function greenMesh(g) {   // 町の地面にはる(1まい)。まちは平らなまま、ボールにだけ傾斜が効く
