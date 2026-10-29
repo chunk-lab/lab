@@ -243,7 +243,7 @@ export function mount(container, opt = {}) {
     let text = residents.lineFor(r, env.hour);
     if (r.def.angler && seasons.season !== 'summer') text = 'のんびり釣りは夏だけのお楽しみでねえ。英語の釣り堀なら、いつでも池においで。';
     if (r.def.companion && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
-    const choices = (r.def.menu || []).filter(m => !m.season || m.season === seasons.season).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => (m.act ? doAct(r, m) : openApp(m.app, m.params)) }));
+    const choices = (r.def.menu || []).filter(m => !m.season || m.season === seasons.season).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、砂吹さんとの会話にもどる
     if (r.def.id === 'sora' && r.follow) choices.unshift({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); } });
     if (r.def.id !== 'sora') choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
     hud.dialog({ name: r.def.name, role: r.def.role, text, choices });

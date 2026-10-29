@@ -1,7 +1,7 @@
 // 釣り場の絵。岸から池を見わたす(手前が大きく、奥が小さい)。
 //   createView(canvas, cond, {mini}) → { resize(), draw(vs, dt) }
 //   vs(見た目の状態) は app.js が、自分の釣り(エンジン)か、相手の記録(再生)から作ってわたす。
-import { AREAS, TANA, areaAt } from './data.js';
+import { areasOf, TANA, areaAtIn } from './data.js';
 import { drawCreature } from './art.js';
 
 const lerp = (a, b, k) => a + (b - a) * k;
@@ -32,10 +32,10 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
   let W = 0, H = 0, dpr = 1, bg = null, t = 0;
   const P = palette(cond.hour), night = P.night;
   const US = (Math.random() * 1e9) | 0;   // 水中の底のかざりを変えるための種(開くたびに変わる)
-  const SP = cond.spot || 'pond';   // 釣り場(pond=池 / river=川 / sea=海)。背景と水中の絵が変わる
+  const SP = cond.spot || 'pond', AR = areasOf(SP);   // 釣り場(pond=池 / river=川 / sea=海)。背景と水中の絵が変わる
   const parts = [], rings = [], weather = [];
   const R = (() => { let s = 7; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
-  const HZ = () => H * (mini ? 0.3 : 0.27), SY = () => H * (mini ? 0.9 : 0.84);
+  const HZ = () => H * (SP === 'sea' ? (mini ? 0.36 : 0.34) : SP === 'river' ? (mini ? 0.25 : 0.21) : (mini ? 0.3 : 0.27)), SY = () => H * (mini ? 0.9 : 0.84);
   const UR = () => ({ x: 8, y: Math.max(46, H * 0.07), w: W - 16, h: H * 0.255 });   // 水中の窓
   // 池の座標 → 画面
   function proj(x, d) {
@@ -89,26 +89,38 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     // むこう岸の映りこみ
     b.globalAlpha = 0.18; for (let i = 0; i < 30; i++) { const x = R() * W, r = W * (0.02 + R() * 0.03); b.fillStyle = TC[i % TC.length]; b.beginPath(); b.ellipse(x, base + r * 0.4, r, r * 0.35, 0, 0, 7); b.fill(); } b.globalAlpha = 1;
     }
+    if (SP === 'river') {   // 川:右から岸が張り出している(池とはちがう形)
+      const wh = sy - base, by = base + wh * 0.42, lg = b.createLinearGradient(0, base, 0, by + wh * 0.1); lg.addColorStop(0, shadeRgb('#5f8f55', -night * 0.5)); lg.addColorStop(1, shadeRgb('#a89a78', -night * 0.5));
+      b.fillStyle = lg; b.beginPath(); b.moveTo(W, base + 1); b.lineTo(W * 0.6, base + 1); b.quadraticCurveTo(W * 0.64, base + wh * 0.2, W * 0.74, by); b.quadraticCurveTo(W * 0.9, by + wh * 0.06, W, by + wh * 0.1); b.closePath(); b.fill();
+      b.strokeStyle = 'rgba(255,255,255,0.55)'; b.lineWidth = 2; b.beginPath(); b.moveTo(W * 0.6, base + 1); b.quadraticCurveTo(W * 0.64, base + wh * 0.2, W * 0.74, by); b.quadraticCurveTo(W * 0.9, by + wh * 0.06, W, by + wh * 0.1); b.stroke();
+      for (let i = 0; i < 9; i++) { const x = W * (0.66 + R() * 0.32), y = base + wh * (0.04 + R() * 0.26), r = W * (0.02 + R() * 0.02); b.fillStyle = shadeRgb(['#2f6a4a', '#3f7d58', '#4b8a5a'][i % 3], -night * 0.5); b.beginPath(); b.arc(x, y, r, 0, 7); b.fill(); }
+    } else if (SP === 'sea') {   // 海:左に岩の岬がつき出している
+      const wh = sy - base, cy = base + wh * 0.3, cg = b.createLinearGradient(0, base - hz * 0.25, 0, cy); cg.addColorStop(0, shadeRgb('#8a8478', -night * 0.5)); cg.addColorStop(1, shadeRgb('#5e5a56', -night * 0.5));
+      b.fillStyle = cg; b.beginPath(); b.moveTo(0, cy + wh * 0.05); b.lineTo(0, base - hz * 0.24); b.lineTo(W * 0.09, base - hz * 0.3); b.lineTo(W * 0.17, base - hz * 0.12); b.lineTo(W * 0.27, base + wh * 0.04); b.quadraticCurveTo(W * 0.3, cy, W * 0.2, cy + wh * 0.04); b.quadraticCurveTo(W * 0.1, cy + wh * 0.08, 0, cy + wh * 0.05); b.closePath(); b.fill();
+      b.fillStyle = shadeRgb('#4f7a4a', -night * 0.5); b.beginPath(); b.ellipse(W * 0.08, base - hz * 0.27, W * 0.07, hz * 0.04, 0, Math.PI, 0); b.fill();
+      b.strokeStyle = 'rgba(255,255,255,0.85)'; b.lineWidth = 3; b.beginPath(); b.moveTo(W * 0.27, base + wh * 0.04); b.quadraticCurveTo(W * 0.3, cy, W * 0.2, cy + wh * 0.04); b.quadraticCurveTo(W * 0.1, cy + wh * 0.08, 0, cy + wh * 0.05); b.stroke();
+      for (let i = 0; i < 8; i++) { b.fillStyle = 'rgba(255,255,255,0.7)'; b.beginPath(); b.ellipse(W * (0.03 + i * 0.035), cy + wh * (0.05 - i * 0.002), 6 + R() * 5, 2.5, 0, 0, 7); b.fill(); }
+    }
     // ふかみ
-    poly(b, AREAS.deep, 'rgba(10,30,60,0.22)', 0.6);
+    poly(b, AR.deep, 'rgba(10,30,60,0.22)', 0.6);
     if (SP === 'sea') {
-    for (let i = 0; i < (mini ? 20 : 46); i++) { const a = AREAS.weed, p = proj(lerp(a.x0, a.x1, R()), lerp(a.d0, a.d1, R())), h = 48 * p.s * (0.7 + R()), sw = (R() - 0.5) * 14 * p.s; b.strokeStyle = `rgba(${100 + R() * 40},${110 + R() * 40},${40 + R() * 20},0.7)`; b.lineWidth = Math.max(1.5, 3.2 * p.s); b.beginPath(); b.moveTo(p.x, p.y); b.bezierCurveTo(p.x + sw, p.y - h * 0.35, p.x - sw, p.y - h * 0.7, p.x + sw * 0.6, p.y - h); b.stroke(); }
+    for (let i = 0; i < (mini ? 20 : 46); i++) { const a = AR.weed, p = proj(lerp(a.x0, a.x1, R()), lerp(a.d0, a.d1, R())), h = 48 * p.s * (0.7 + R()), sw = (R() - 0.5) * 14 * p.s; b.strokeStyle = `rgba(${100 + R() * 40},${110 + R() * 40},${40 + R() * 20},0.7)`; b.lineWidth = Math.max(1.5, 3.2 * p.s); b.beginPath(); b.moveTo(p.x, p.y); b.bezierCurveTo(p.x + sw, p.y - h * 0.35, p.x - sw, p.y - h * 0.7, p.x + sw * 0.6, p.y - h); b.stroke(); }
     } else {
     // 水草(水の中)
-    const A = AREAS.weed;
+    const A = AR.weed;
     for (let i = 0; i < (mini ? 30 : 70); i++) { const x = lerp(A.x0, A.x1, R()), d = lerp(A.d0, A.d1, R()), p = proj(x, d), h = 26 * p.s * (0.6 + R()); b.strokeStyle = `rgba(${40 + R() * 30},${110 + R() * 40},${70 + R() * 20},0.55)`; b.lineWidth = Math.max(1, 3 * p.s); b.beginPath(); b.moveTo(p.x, p.y); b.quadraticCurveTo(p.x + 6 * p.s, p.y - h * 0.5, p.x - 3 * p.s, p.y - h); b.stroke(); }
     }
     if (SP === 'sea') {
-    { const a = AREAS.log; for (let i = 0; i < 4; i++) { const p = proj(lerp(a.x0 + 0.05, a.x1 - 0.05, i / 3), lerp(a.d0 + 0.03, a.d1 - 0.03, (i * 0.37) % 1)), s = 15 * p.s * 2.2; b.strokeStyle = shadeRgb('#a9adb6', -night * 0.5); b.lineCap = 'round'; b.lineWidth = s * 0.55; for (const ag of [-0.6, 0.6, Math.PI / 2 + 0.1]) { b.beginPath(); b.moveTo(p.x, p.y - s * 0.2); b.lineTo(p.x + Math.sin(ag) * s, p.y - s * 0.2 - Math.cos(ag) * s * 0.9); b.stroke(); } b.fillStyle = 'rgba(0,0,0,0.12)'; b.beginPath(); b.ellipse(p.x, p.y + 1, s, s * 0.2, 0, 0, 7); b.fill(); } }
+    { const a = AR.log; for (let i = 0; i < 4; i++) { const p = proj(lerp(a.x0 + 0.05, a.x1 - 0.05, i / 3), lerp(a.d0 + 0.03, a.d1 - 0.03, (i * 0.37) % 1)), s = 15 * p.s * 2.2; b.strokeStyle = shadeRgb('#a9adb6', -night * 0.5); b.lineCap = 'round'; b.lineWidth = s * 0.55; for (const ag of [-0.6, 0.6, Math.PI / 2 + 0.1]) { b.beginPath(); b.moveTo(p.x, p.y - s * 0.2); b.lineTo(p.x + Math.sin(ag) * s, p.y - s * 0.2 - Math.cos(ag) * s * 0.9); b.stroke(); } b.fillStyle = 'rgba(0,0,0,0.12)'; b.beginPath(); b.ellipse(p.x, p.y + 1, s, s * 0.2, 0, 0, 7); b.fill(); } }
     } else {
     // しずんだ木
-    { const a = AREAS.log, p0 = proj(a.x0 + 0.04, a.d1 - 0.05), p1 = proj(a.x1 - 0.02, a.d0 + 0.05);
+    { const a = AR.log, p0 = proj(a.x0 + 0.04, a.d1 - 0.05), p1 = proj(a.x1 - 0.02, a.d0 + 0.05);
       b.lineCap = 'round'; b.strokeStyle = 'rgba(70,50,40,0.45)'; b.lineWidth = 22 * p1.s; b.beginPath(); b.moveTo(p0.x, p0.y); b.lineTo(p1.x, p1.y); b.stroke();
       b.strokeStyle = '#8a6a50'; b.lineWidth = 12 * p1.s; b.beginPath(); b.moveTo(lerp(p0.x, p1.x, 0.55), lerp(p0.y, p1.y, 0.55) - 3); b.lineTo(p1.x, p1.y - 6 * p1.s); b.stroke();
       b.strokeStyle = '#6e5340'; b.lineWidth = 5 * p1.s; b.beginPath(); b.moveTo(lerp(p0.x, p1.x, 0.75), lerp(p0.y, p1.y, 0.75) - 4); b.lineTo(lerp(p0.x, p1.x, 0.8) + 10 * p1.s, lerp(p0.y, p1.y, 0.8) - 28 * p1.s); b.stroke(); }
     }
     // 岩
-    { const a = AREAS.rock; const rs = []; const NR = SP === 'pond' ? 7 : 12; for (let i = 0; i < NR; i++) rs.push([lerp(a.x0, a.x1, (i + R() * 0.6) / NR), lerp(a.d0, a.d1, R())]); rs.sort((p, q) => q[1] - p[1]);
+    { const a = AR.rock; const rs = []; const NR = SP === 'pond' ? 7 : 12; for (let i = 0; i < NR; i++) rs.push([lerp(a.x0, a.x1, (i + R() * 0.6) / NR), lerp(a.d0, a.d1, R())]); rs.sort((p, q) => q[1] - p[1]);
       for (const [x, d] of rs) { const p = proj(x, d), r = (12 + R() * 16) * p.s * 2.4, n = 7, pts = [];
         for (let k = 0; k <= n; k++) { const t = Math.PI + (k / n) * Math.PI, rr = r * (0.75 + R() * 0.35); pts.push([p.x + Math.cos(t) * rr, p.y + Math.sin(t) * rr * (0.7 + R() * 0.2)]); }
         b.fillStyle = 'rgba(0,0,0,0.12)'; b.beginPath(); b.ellipse(p.x, p.y + 1, r * 1.15, r * 0.2, 0, 0, 7); b.fill();
@@ -118,12 +130,12 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
         if (cond.season === 'winter') { b.fillStyle = 'rgba(255,255,255,0.85)'; b.beginPath(); b.ellipse(p.x - r * 0.05, p.y - r * 0.72, r * 0.45, r * 0.14, 0, 0, 7); b.fill(); }
         b.strokeStyle = 'rgba(255,255,255,0.35)'; b.lineWidth = 1; b.beginPath(); b.ellipse(p.x, p.y, r * 1.05, r * 0.16, 0, 0, Math.PI); b.stroke(); } }
     if (SP === 'sea') {
-    { const a = AREAS.lily; for (let i = 0; i < 4; i++) { const p = proj(lerp(a.x0, a.x1, (i + 0.5) / 4), lerp(a.d0, a.d1, ((i * 0.61) % 1))), r = 9 * p.s * 2.2; b.fillStyle = shadeRgb('#e0453b', -night * 0.45); b.beginPath(); b.arc(p.x, p.y - r * 0.4, r, Math.PI, 0); b.fill(); b.fillStyle = shadeRgb('#ffffff', -night * 0.45); b.fillRect(p.x - r, p.y - r * 0.55, r * 2, r * 0.35); b.fillStyle = 'rgba(0,0,0,0.12)'; b.beginPath(); b.ellipse(p.x, p.y, r * 1.1, r * 0.25, 0, 0, 7); b.fill(); } }
+    { const a = AR.lily; for (let i = 0; i < 4; i++) { const p = proj(lerp(a.x0, a.x1, (i + 0.5) / 4), lerp(a.d0, a.d1, ((i * 0.61) % 1))), r = 9 * p.s * 2.2; b.fillStyle = shadeRgb('#e0453b', -night * 0.45); b.beginPath(); b.arc(p.x, p.y - r * 0.4, r, Math.PI, 0); b.fill(); b.fillStyle = shadeRgb('#ffffff', -night * 0.45); b.fillRect(p.x - r, p.y - r * 0.55, r * 2, r * 0.35); b.fillStyle = 'rgba(0,0,0,0.12)'; b.beginPath(); b.ellipse(p.x, p.y, r * 1.1, r * 0.25, 0, 0, 7); b.fill(); } }
     } else if (SP === 'river') {
-    { const a = AREAS.lily; for (let i = 0; i < 9; i++) { const p = proj(lerp(a.x0, a.x1, R()), lerp(a.d0, a.d1, R())), r = (12 + R() * 14) * p.s * 2; b.strokeStyle = 'rgba(255,255,255,0.5)'; b.lineWidth = 1.5; for (let k = 0; k < 3; k++) { b.beginPath(); b.ellipse(p.x, p.y, r * (1 - k * 0.28), r * 0.28 * (1 - k * 0.28), 0, 0, 7); b.stroke(); } } }
+    { const a = AR.lily; for (let i = 0; i < 9; i++) { const p = proj(lerp(a.x0, a.x1, R()), lerp(a.d0, a.d1, R())), r = (12 + R() * 14) * p.s * 2; b.strokeStyle = 'rgba(255,255,255,0.5)'; b.lineWidth = 1.5; for (let k = 0; k < 3; k++) { b.beginPath(); b.ellipse(p.x, p.y, r * (1 - k * 0.28), r * 0.28 * (1 - k * 0.28), 0, 0, 7); b.stroke(); } } }
     } else {
     // ハスの葉
-    { const a = AREAS.lily; for (let i = 0; i < (mini ? 9 : 16); i++) { const p = proj(lerp(a.x0, a.x1, R()), lerp(a.d0, a.d1, R())), r = (16 + R() * 10) * p.s * 2; b.fillStyle = shadeRgb(cond.season === 'autumn' ? '#a8b860' : cond.season === 'winter' ? '#9fb8a8' : '#6fbf6a', -night * 0.45 - R() * 0.1); b.beginPath(); b.ellipse(p.x, p.y, r, r * 0.38, 0, 0.25, Math.PI * 2 - 0.05); b.lineTo(p.x, p.y); b.fill(); b.strokeStyle = 'rgba(255,255,255,0.18)'; b.lineWidth = 1; b.stroke(); if (R() < 0.35 && cond.season !== 'winter') { b.fillStyle = '#ffc2d6'; for (let k = 0; k < 5; k++) { b.beginPath(); b.ellipse(p.x + Math.cos(k * 1.25) * r * 0.12, p.y - r * 0.12 + Math.sin(k * 1.25) * r * 0.05, r * 0.12, r * 0.06, k * 1.25, 0, 7); b.fill(); } b.fillStyle = '#ffe28a'; b.beginPath(); b.arc(p.x, p.y - r * 0.12, r * 0.05, 0, 7); b.fill(); } } }
+    { const a = AR.lily; for (let i = 0; i < (mini ? 9 : 16); i++) { const p = proj(lerp(a.x0, a.x1, R()), lerp(a.d0, a.d1, R())), r = (16 + R() * 10) * p.s * 2; b.fillStyle = shadeRgb(cond.season === 'autumn' ? '#a8b860' : cond.season === 'winter' ? '#9fb8a8' : '#6fbf6a', -night * 0.45 - R() * 0.1); b.beginPath(); b.ellipse(p.x, p.y, r, r * 0.38, 0, 0.25, Math.PI * 2 - 0.05); b.lineTo(p.x, p.y); b.fill(); b.strokeStyle = 'rgba(255,255,255,0.18)'; b.lineWidth = 1; b.stroke(); if (R() < 0.35 && cond.season !== 'winter') { b.fillStyle = '#ffc2d6'; for (let k = 0; k < 5; k++) { b.beginPath(); b.ellipse(p.x + Math.cos(k * 1.25) * r * 0.12, p.y - r * 0.12 + Math.sin(k * 1.25) * r * 0.05, r * 0.12, r * 0.06, k * 1.25, 0, 7); b.fill(); } b.fillStyle = '#ffe28a'; b.beginPath(); b.arc(p.x, p.y - r * 0.12, r * 0.05, 0, 7); b.fill(); } } }
     }
     // 手前の岸(木の桟橋)とアシ
     const sy2 = sy;
@@ -145,7 +157,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     if (!mini) {
       if (SP === 'pond') drawBranch(b);
       else if (SP === 'river') {   // 川:手前に竹(松の枝は池だけ)
-        for (const [bx, lean, w] of [[W * 0.06, 0.05, 17], [W * 0.14, -0.03, 12], [W * 0.95, -0.05, 14]]) {
+        for (const [bx, lean, w] of [[W * 0.06, 0.05, 17], [W * 0.14, -0.03, 12]]) {
           const gx = b.createLinearGradient(bx - w / 2, 0, bx + w / 2, 0); gx.addColorStop(0, shadeRgb('#6aa653', -night * 0.5)); gx.addColorStop(1, shadeRgb('#3f7a3a', -night * 0.5)); b.fillStyle = gx;
           b.beginPath(); b.moveTo(bx - w / 2, H); b.lineTo(bx - w / 2 + lean * H, 0); b.lineTo(bx + w / 2 + lean * H, 0); b.lineTo(bx + w / 2, H); b.fill();
           for (let y = H * 0.07, k = 0; y < H; y += H * 0.15, k++) { const xx = bx + lean * (H - y); b.fillStyle = 'rgba(25,55,28,0.55)'; b.fillRect(xx - w / 2 - 1, y, w + 2, 3); if (k < 5) { b.save(); b.translate(xx, y + 2); b.rotate((k % 2 ? 1 : -1) * (0.8 + k * 0.08)); b.fillStyle = shadeRgb('#78b862', -night * 0.5); b.beginPath(); b.ellipse(30, 0, 32, 5, 0, 0, 7); b.fill(); b.restore(); } }
@@ -207,7 +219,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
     g.fillStyle = shadeRgb(SP === 'sea' ? '#ecdcab' : SP === 'river' ? '#9d9482' : '#c9b48a', -night * 0.55); g.beginPath(); g.moveTo(r.x, r.y + r.h);
     g.lineTo(X(d0) - 40, Y(1, d0)); for (let i = 0; i <= 40; i++) { const d = d0 + (d1 - d0) * i / 40; g.lineTo(X(d), Y(1, d) + Math.sin(d * 68) * 2); } g.lineTo(X(d1) + 40, Y(1, d1)); g.lineTo(r.x + r.w, r.y + r.h); g.closePath(); g.fill();
     for (let i = 0; i <= 30; i++) {
-      const d = d0 + (d1 - d0) * i / 30, [lx] = lane(d), a = areaAt(lx, d), x = X(d), yb = Y(1, d);
+      const d = d0 + (d1 - d0) * i / 30, [lx] = lane(d), a = areaAtIn(SP, lx, d), x = X(d), yb = Y(1, d);
       if (a === 'weed') { g.strokeStyle = 'rgba(70,150,80,0.8)'; g.lineWidth = 2; for (let k = 0; k < 3; k++) { g.beginPath(); g.moveTo(x + k * 4, yb); g.quadraticCurveTo(x + k * 4 + Math.sin(t + i + k) * 6, yb - 18, x + k * 4 + Math.sin(t * 1.3 + i) * 4, yb - 34 - k * 5); g.stroke(); } }
       if (a === 'rock' && i % 2 === 0) { g.fillStyle = shadeRgb('#8a8698', -night * 0.5); g.beginPath(); g.ellipse(x, yb, 9, 7, 0, Math.PI, 0); g.fill(); }
       if (a === 'log' && i % 3 === 0) { g.fillStyle = '#6e5340'; g.fillRect(x - 6, yb - 7, 16, 6); }

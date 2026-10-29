@@ -1,6 +1,6 @@
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
-import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, SPOTS, areaLabel, areaAt, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
+import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, SPOTS, areaLabel, areaAtIn, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
 import { askScreen, adviceFor } from './ask.js';
 import { createEngine, createBot, replayAt, timeOf, REACH } from './engine.js';
 import { createView } from './view.js';
@@ -201,7 +201,7 @@ export const fishingApp = {
       ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ en: goPond, free: () => spotPick('のんびり釣り', () => play({})), vs: () => spotPick('釣り勝負', () => vsSetup()), dex: dexScreen, shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
       if (P.tab === 'en') { P.tab = null; setTimeout(goPond, 0); return; }
       if (P.tab === 'tank') { P.tab = null; setTimeout(goTank, 0); return; }
-      if (P.vs) { const o = P.vs; P.vs = null; setTimeout(() => vsSetup(o === 'hard' ? 'hard' : 'easy'), 0); }
+      if (P.vs) { const o = P.vs; P.vs = null; setTimeout(() => spotPick('釣り勝負', () => vsSetup(o === 'hard' ? 'hard' : 'easy')), 0); }   // 外から勝負に来ても、かならず釣り場を選ぶ
       else if (P.tab === 'shop') { P.tab = null; setTimeout(() => shop(), 0); }
       else if (P.tab === 'ask') { P.tab = null; setTimeout(() => ask(), 0); }
       else if (!st.get('tut')) setTimeout(() => help(), 300);
@@ -626,7 +626,7 @@ export const fishingApp = {
       };
       cleanup.push(() => { frame = null; sfx.ambience(false); });
     }
-    const areaName = ([x, d]) => areaLabel(baseCond.spot, areaAt(x, d));
+    const areaName = ([x, d]) => areaLabel(baseCond.spot, areaAtIn(baseCond.spot, x, d));
     function pickBotBait(cond) { const tm = timeOf(cond.hour); return tm === 'night' ? 'worm' : tm === 'morning' ? 'spoon' : tm === 'evening' ? 'minnow' : 'bread'; }
     function ghostScore(g, dur) { const sc = { count: 0, big: 0, point: 0 }; for (const c of g.e) { if (c[0] / 10 > dur) continue; sc.point += c[3]; const sp = BYID[c[1]]; if (sp && sp.kind === 'fish') { sc.count++; sc.big = Math.max(sc.big, c[2]); } } return sc; }
 

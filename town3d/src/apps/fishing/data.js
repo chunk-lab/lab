@@ -28,6 +28,26 @@ const AREA_NAME = {
   sea: { weed: '海そうの林', log: 'テトラポッド', lily: 'ブイのまわり', rock: '岩礁', deep: 'ふかみ' },
 };
 export const areaLabel = (spot, k) => k === 'open' ? 'ひらけた所' : ((AREA_NAME[spot] || {})[k] || AREAS[k].name);
+// 釣り場ごとの場所の配置(同じ名前の場所でも、あるところがちがう。魚の好みは名前で決まる)
+export const AREA_SETS = {
+  pond: AREAS,
+  river: {
+    weed: { name: 'アシのかげ', x0: -0.88, x1: -0.5, d0: 0.06, d1: 0.34 },
+    log: { name: 'ながれ木', x0: 0.5, x1: 0.88, d0: 0.06, d1: 0.26 },
+    lily: { name: 'ゆるい淀み', x0: 0.3, x1: 0.88, d0: 0.42, d1: 0.72 },
+    rock: { name: '大きな岩', x0: -0.5, x1: 0.1, d0: 0.3, d1: 0.58 },
+    deep: { name: 'ふち', x0: -0.9, x1: -0.3, d0: 0.62, d1: 1.0 },
+  },
+  sea: {
+    weed: { name: '海そうの林', x0: 0.25, x1: 0.88, d0: 0.32, d1: 0.62 },
+    log: { name: 'テトラポッド', x0: -0.88, x1: -0.5, d0: 0.06, d1: 0.3 },
+    lily: { name: 'ブイのまわり', x0: -0.2, x1: 0.3, d0: 0.08, d1: 0.28 },
+    rock: { name: '岩礁', x0: -0.88, x1: -0.3, d0: 0.5, d1: 0.85 },
+    deep: { name: 'ふかみ', x0: 0.05, x1: 0.7, d0: 0.7, d1: 1.0 },
+  },
+};
+export const areasOf = spot => AREA_SETS[spot] || AREAS;
+export function areaAtIn(spot, x, d) { const A = areasOf(spot); for (const k in A) { const a = A[k]; if (x >= a.x0 && x <= a.x1 && d >= a.d0 && d <= a.d1) return k; } return 'open'; }
 export function areaAt(x, d) { for (const k in AREAS) { const a = AREAS[k]; if (x >= a.x0 && x <= a.x1 && d >= a.d0 && d <= a.d1) return k; } return 'open'; }
 
 const F = (o) => ({ kind: 'fish', area: ['open'], time: 'any', bait: {}, speed: 'still', str: 0.5, stam: 1, run: 0.5, win: 0.8, wary: 0, ...o });

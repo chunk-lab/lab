@@ -7,7 +7,7 @@ import chunksort from './games/chunksort.js';
 import wordrace from './games/wordrace.js';
 import bowling from './games/bowling.js';
 import darts from './games/darts.js';
-import { snow3d, fishvs, golf, frisbee } from './games/launchers.js';
+import { snow3d, fishvs, golf, frisbee, backOf } from './games/launchers.js';
 import listen from './games/listen.js';
 import tug from './games/tug.js';
 import shiritori from './games/shiritori.js';
@@ -136,7 +136,7 @@ export const gameboxApp = {
         <p class="note" style="color:#d8d0f0;margin-top:14px">センターは有料(1日パス。有料会員は無料)。旬の季節の外遊びだけ、だれでも無料。お試しは1日1回。</p>`;
       sc.onclick = e => {
         const c = e.target.closest('[data-g]'), rb = e.target.closest('[data-rent]');
-        if (e.target.closest('[data-enp]')) { sfx.play('tap'); ctx.open && ctx.open('fishing', {}); return; }
+        if (e.target.closest('[data-enp]')) { sfx.play('tap'); ctx.open && ctx.open('fishing', { back: backOf(ctx) }); return; }
         if (c) { sfx.play('tap'); const G = ALL.find(g => g.id === c.dataset.g); if (G.launch) gate(G, trial => G.launch(ctx, trial)); else setup(G); }
         if (rb) { sfx.play('tap'); rentConsole(); }
       };

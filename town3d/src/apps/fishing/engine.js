@@ -1,7 +1,7 @@
 // 釣りのしくみ(画面とは別)。自分・砂吹さん(ボット)・記録の再生で同じものを使う。
 //   池の座標:x = -1(左)〜1(右)、d = 0(手前の岸)〜1(むこう岸)。岸の自分は (0, 0)
 //   流れ:ready(ねらう) → charge(ためる) → fly(とんでいる) → water(水の中:待つ/巻く) → fight(ファイト) → landed / lost
-import { FISH, ITEMS, AREAS, areaAt, RARITY_PTS, gearById, TANA, HOOK_STEP, tanaOf } from './data.js';
+import { FISH, ITEMS, areasOf, areaAtIn, RARITY_PTS, gearById, TANA, HOOK_STEP, tanaOf } from './data.js';
 
 export function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -22,9 +22,10 @@ export function weightOf(sp, cond) {
   return w;
 }
 function pickWeighted(list, r) { const tot = list.reduce((a, b) => a + b[1], 0); let x = r() * tot; for (const [v, w] of list) { if ((x -= w) <= 0) return v; } return list.length ? list[list.length - 1][0] : null; }
-function pointIn(area, r) {
-  if (area !== 'open' && AREAS[area]) { const a = AREAS[area]; return [a.x0 + (a.x1 - a.x0) * r(), a.d0 + (a.d1 - a.d0) * r()]; }
-  for (let k = 0; k < 20; k++) { const x = -0.85 + r() * 1.7, d = 0.12 + r() * 0.82; if (areaAt(x, d) === 'open') return [x, d]; }
+function pointIn(area, r, spot) {
+  const AR = areasOf(spot);
+  if (area !== 'open' && AR[area]) { const a = AR[area]; return [a.x0 + (a.x1 - a.x0) * r(), a.d0 + (a.d1 - a.d0) * r()]; }
+  for (let k = 0; k < 20; k++) { const x = -0.85 + r() * 1.7, d = 0.12 + r() * 0.82; if (areaAtIn(spot, x, d) === 'open') return [x, d]; }
   return [0, 0.5];
 }
 
@@ -50,7 +51,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     const cand = FISH.map(sp => [sp, weightOf(sp, cond) * (easy ? (sp.r >= 5 ? 0 : sp.r === 4 ? 0.3 : 1) : 1)]).filter(a => a[1] > 0);
     const sp = pickWeighted(cand, rs); if (!sp) return;
     const area = sp.area[Math.floor(rs() * sp.area.length)];
-    const [x, d] = pointIn(area, rs);
+    const [x, d] = pointIn(area, rs, cond.spot);
     const u = Math.pow(rs(), 1.7), size = Math.round((sp.size[0] + (sp.size[1] - sp.size[0]) * u) * 10) / 10;
     const ty = TANA[sp.tana].y; S.fish.push({ sp, size, u, x, d, y: clamp(ty + (rs() - 0.5) * 0.2, 0.03, 0.97), ty, hx: x, hd: d, area, tx: x, td: d, st: 'roam', cool: first ? 0 : 2, retarget: 0, vis: first ? 1 : 0, wig: rs() * 6, wary: 0.75 + rs() * 0.6, int: 0 });
   }
@@ -69,7 +70,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
       if ((f.retarget -= dt) <= 0 || Math.hypot(f.tx - f.x, f.td - f.d) < 0.02) {
         // 合う仕掛けがしずんでいると、その魚はだんだん寄ってくる(においや動きにひかれる)
         if (S.ph === 'water' && S.baitOk && rb() < match(sp).all * 0.55) { f.tx = clamp(S.lure.x + (rb() - 0.5) * 0.3, -0.9, 0.9); f.td = clamp(S.lure.d + (rb() - 0.5) * 0.2, 0.05, 0.98); }
-        else { const area = sp.area[Math.floor(rb() * sp.area.length)]; [f.tx, f.td] = pointIn(area, rb); }
+        else { const area = sp.area[Math.floor(rb() * sp.area.length)]; [f.tx, f.td] = pointIn(area, rb, cond.spot); }
         f.retarget = 3 + rb() * 5;
       }
     } else if (f.st === 'approach' || f.st === 'nibble' || f.st === 'nibble2' || f.st === 'bite' || f.st === 'look') {
@@ -116,7 +117,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
         else if (want === 'fast') m = thr > 0.6 ? 1.3 : 0.4;
         else if (want === 'twitch') m = S.twitchT > 0 ? 1.7 : 0.55;
         else m = 0.8;
-        if (G.bait.id === 'frog' && areaAt(lure.x, lure.d) === 'lily') m *= 1.6;
+        if (G.bait.id === 'frog' && areaAtIn(cond.spot, lure.x, lure.d) === 'lily') m *= 1.6;
       } else m = moving ? 0.3 : 1 + Math.min(0.5, S.waitT * 0.03);
       const B = S.bonus, bk = B && B.t > 0 && Math.hypot(f.x - B.x, f.d - B.d) < 0.32 ? B.k : 1;   // うまく円に落とせたら寄りやすい
       const vx = lure.x - f.x, vd = lure.d - f.d, vl = Math.hypot(vx, vd) || 1, dot = ((f.hx || 0) * vx + (f.hd || 0) * vd) / vl;
@@ -172,7 +173,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
   // ---- 引っかかる(ゴミ・アイテム) ----
   function snag(dt) {
     if (!S.baitOk || S.engaged) return;
-    const a = areaAt(S.lure.x, S.lure.d), mult = a === 'open' ? 1 : a === 'lily' ? 1.2 : 2;
+    const a = areaAtIn(cond.spot, S.lure.x, S.lure.d), mult = a === 'open' ? 1 : a === 'lily' ? 1.2 : 2;
     const p = (input.reel > 0.05 ? 0.012 * input.reel : S.waitT > 6 ? 0.006 : 0) * mult;
     if (rb() < p * dt) {
       const tm = timeOf(cond.hour);
@@ -410,7 +411,7 @@ export function createBot(engine, lv = 'easy', seed = 3) {
       if (ph === 'landed' || ph === 'lost') { if (S.resultT > 1.6) E.ack(); E.input.reel = 0; return; }
       if (ph === 'ready') {
         E.input.reel = 0; if ((idle -= dt) > 0) return;
-        const a = areas[Math.floor(r() * areas.length)], A = AREAS[a];
+        const a = areas[Math.floor(r() * areas.length)], A = areasOf(E.cond && E.cond.spot)[a];
         let tx, td; if (A) { tx = (A.x0 + A.x1) / 2 + (r() - 0.5) * 0.15; td = (A.d0 + A.d1) / 2; } else { tx = (r() - 0.5) * 1.2; td = 0.3 + r() * 0.5; }
         E.setTarget(tx, td); plan = { want: clamp(E.pNeed() + (r() - 0.5) * K.aimErr * 2, 0.04, 0.98) }; E.castStart(); idle = K.idle + r() * 1.5; return;
       }
