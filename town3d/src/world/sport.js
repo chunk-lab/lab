@@ -439,6 +439,6 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     }
   }
   // カメラが追う所(飛んでいる間はボール、ただし建物内に入らないようにオフセット)
-  function focus() { if (!S || S.phase !== 'fly') return null; const off = 1.5, dx = Math.sin(me.ry) * off, dz = Math.cos(me.ry) * off; return { x: S.pos.x + dx, z: S.pos.z + dz }; }
+  function focus() { if (!S || S.phase !== 'fly') return null; const off = 2, dx = Math.sin(me.ry) * off, dz = Math.cos(me.ry) * off; return { x: S.pos.x + dx, z: S.pos.z + dz }; }
   return { get active() { return !!S; }, get busy() { return !!S; }, start, update, focus, quit: () => S && end(true) };
 }
