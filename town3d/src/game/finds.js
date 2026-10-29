@@ -3,6 +3,7 @@
 //   近く(1.6m)まで行くと「🔍 調べる」が出る。目印は出さない(占い師・哲学者が手がかりをくれる)
 import { createStorage } from '../core/core.js';
 import { GRAPH } from '../world/town_data.js';
+import { HUNTS } from './hunt_data.js';
 const st = createStorage('town:find:');
 export const dayKey = () => { const d = new Date(Date.now() - 4 * 36e5); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
 const hash = n => { let x = (n * 2654435761) >>> 0; x ^= x >>> 15; x = Math.imul(x, 0x2c1b3c6d) >>> 0; x ^= x >>> 12; x = Math.imul(x, 0x297a2d39) >>> 0; x ^= x >>> 15; return (x >>> 0) / 4294967296; };
@@ -45,9 +46,9 @@ const fixedSpots = () => FIXED.map(([id, dx, dz], i) => { const nd = GRAPH.nodes
 
 // ---- 宝探し大会(運営が決める) ----
 //   形: { id, x, z, day:'2026-10-30'(空ならいつでも), title, text, ja, coins }
-let huntFile = [], areaFn = (x, z) => `(${Math.round(x)}, ${Math.round(z)})のあたり`;
+let huntFile = HUNTS.slice(), areaFn = (x, z) => `(${Math.round(x)}, ${Math.round(z)})のあたり`;
 export const setAreaName = fn => { areaFn = fn; };
-export function loadHuntFile(url = 'apps/hunt.json') { try { fetch(url, { cache: 'no-store' }).then(r => r.ok ? r.json() : []).then(j => { if (Array.isArray(j)) huntFile = j; else if (j && Array.isArray(j.items)) huntFile = j.items; }).catch(() => { }); } catch (e) { } }
+export function loadHuntFile(url = 'apps/hunt.json') { try { fetch(url, { cache: 'no-store' }).then(r => r.ok ? r.json() : []).then(j => { const L = Array.isArray(j) ? j : j && Array.isArray(j.items) ? j.items : []; const ids = new Set(huntFile.map(h => h.id)); huntFile = huntFile.concat(L.filter(h => h && !ids.has(h.id))); }).catch(() => { }); } catch (e) { } }   // 置いてあれば足す(なくてもいい)
 const dayIso = () => { const d = new Date(Date.now() - 4 * 36e5); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 
 export const finds = {

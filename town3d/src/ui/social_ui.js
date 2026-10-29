@@ -107,7 +107,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain
     const draw = () => {
       const L = finds.localHunts(), me = getMe();
       const p = hud.panel(`<h2>🛠 宝探し大会(運営)</h2>
-        <p class="tw-note">いま立っている場所(${me.x.toFixed(1)}, ${me.z.toFixed(1)})に隠す。日付を空にすると毎日出る。<br>ここで置いたものはこの端末だけ。全員に出すには、下のJSONを <b>town3d/apps/hunt.json</b> に入れて公開する。</p>
+        <p class="tw-note">いま立っている場所(${me.x.toFixed(1)}, ${me.z.toFixed(1)})に隠す。日付を空にすると毎日出る。<br>ここで置いたものはこの端末だけ。全員に出すには、下のJSONを <b>town3d/src/game/hunt_data.js</b> の HUNTS に貼って公開する(Claudeに頼めばやります)。</p>
         <div style="display:grid;gap:6px;margin:8px 0"><input class="tw-in" data-f="title" placeholder="名前(例:金のどんぐり)"><input class="tw-in" data-f="text" placeholder="英語・メッセージ(例:You found it!)"><input class="tw-in" data-f="ja" placeholder="日本語(なくてもいい)"><div style="display:flex;gap:6px"><input class="tw-in" data-f="day" type="date" value="${today}" style="flex:1"><input class="tw-in" data-f="coins" type="number" value="100" style="width:90px" placeholder="コイン"></div></div>
         <div class="tw-actions"><button class="tw-btn main" data-h="put">📍 ここに隠す</button><button class="tw-btn" data-h="reset">見つけた記録をけす</button></div>
         <div style="max-height:30vh;overflow:auto;margin:8px 0">${L.length ? L.map(h => `<div class="tw-nrow"><div><b>${esc(h.title || 'たから')}</b> <small>${esc(h.day || '毎日')} ・ (${(+h.x).toFixed(1)}, ${(+h.z).toFixed(1)}) ・ 🪙${h.coins || 0}</small><br><small>${esc(h.text || '')}</small> <button class="tw-btn" data-del="${h.id}" style="padding:2px 9px;font-size:11px">けす</button></div></div>`).join('') : '<p class="tw-note">まだありません</p>'}</div>
