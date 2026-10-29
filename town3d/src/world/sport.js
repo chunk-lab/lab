@@ -97,10 +97,18 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     return g;
   }
   // ---- はじめる ----
+  let touch1 = null, touch2 = null, camOffset = { x: 0, z: 0 };
   function start(kind, opt = {}) {
     if (S) return;
     const C = course(kind);
     S = { kind, C, i: 0, strokes: [], n: 0, club: 0, curve: 0, hgt: 1, phase: 'aim', obj: null, power: 0, charging: false, cT: 0, last: null, objs: [], home: !!opt.home, hud: hudEl(kind, !!opt.home), flag: null, aimLine: null, msgT: 0 };
+    camOffset = { x: 0, z: 0 };
+    const onTouchStart = e => { if (S && e.touches.length === 2) { touch1 = { x: e.touches[0].clientX, y: e.touches[0].clientY }; touch2 = { x: e.touches[1].clientX, y: e.touches[1].clientY }; } };
+    const onTouchMove = e => { if (S && e.touches.length === 2 && touch1 && touch2) { const dx = (e.touches[0].clientX - touch1.x + e.touches[1].clientX - touch2.x) / 2, dz = (e.touches[0].clientY - touch1.y + e.touches[1].clientY - touch2.y) / 2; camOffset.x += dx * 0.005; camOffset.z += dz * 0.005; touch1.x = e.touches[0].clientX; touch1.y = e.touches[0].clientY; touch2.x = e.touches[1].clientX; touch2.y = e.touches[1].clientY; } };
+    const onTouchEnd = e => { if (e.touches.length < 2) { touch1 = null; touch2 = null; } };
+    root.addEventListener('touchstart', onTouchStart, { passive: true });
+    root.addEventListener('touchmove', onTouchMove, { passive: true });
+    root.addEventListener('touchend', onTouchEnd, { passive: true });
     root.classList.add('sp-on'); toast?.(kind === 'golf' ? `⛳ きょうのゴルフコース(${HOLES}ホール)` : `🥏 きょうのフリスビーコース(${HOLES}ホール)`);
     const pm = kind === 'golf' ? new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 10), mat(0xffffff)) : (() => { const d = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.12, 0.025, 24), mat(0xff7aa2)); return d; })();
     pm.castShadow = true; scene.add(pm); S.objs.push(pm); S.mesh = pm;
@@ -438,7 +446,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       }
     }
   }
-  // カメラが追う所(飛んでいる間はボール、ただし建物内に入らないようにオフセット)
-  function focus() { if (!S || S.phase !== 'fly') return null; const off = 2, dx = Math.sin(me.ry) * off, dz = Math.cos(me.ry) * off; return { x: S.pos.x + dx, z: S.pos.z + dz }; }
+  // カメラが追う所(飛んでいる間はボール、ユーザーの2本指ドラッグでずらせる)
+  function focus() { if (!S || S.phase !== 'fly') return null; return { x: S.pos.x + camOffset.x, z: S.pos.z + camOffset.z }; }
   return { get active() { return !!S; }, get busy() { return !!S; }, start, update, focus, quit: () => S && end(true) };
 }
