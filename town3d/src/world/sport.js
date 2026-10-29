@@ -153,8 +153,8 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     { const mb = h.querySelector('.sp-mapb'), mp = h.querySelector('.sp-map'); if (mb) { mb.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!S || !S.gdef) return; mp.hidden = false; drawMap(); }); mp.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); mp.hidden = true; }); } }
     { const sp = h.querySelector('.sp-spin'), dsc = h.querySelector('.dsc');   // ボールのどこに当てるか(中心=ふつう / 下=バックスピン / 上=トップスピン / 横=曲がる)
       const setSpin = e => { if (!S || S.phase !== 'aim') return; const r = dsc.getBoundingClientRect(); let x = (e.clientX - (r.left + r.width / 2)) / (r.width / 2), y = -(e.clientY - (r.top + r.height / 2)) / (r.height / 2); const m = Math.hypot(x, y); if (m > 1) { x /= m; y /= m; } if (Math.hypot(x, y) < 0.12) { x = y = 0; } S.spin = { x, y }; };
-      let dn = false; sp.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); dn = true; try { sp.setPointerCapture(e.pointerId); } catch (_) { } setSpin(e); });
-      sp.addEventListener('pointermove', e => { if (dn) setSpin(e); }); sp.addEventListener('pointerup', () => { dn = false; }); sp.addEventListener('pointercancel', () => { dn = false; }); }
+      let dn = false; if (sp) { sp.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); dn = true; try { sp.setPointerCapture(e.pointerId); } catch (_) { } setSpin(e); });
+      sp.addEventListener('pointermove', e => { if (dn) setSpin(e); }); sp.addEventListener('pointerup', () => { dn = false; }); sp.addEventListener('pointercancel', () => { dn = false; }); } }
     shot.addEventListener('pointerup', rel); shot.addEventListener('pointercancel', rel); shot.addEventListener('contextmenu', e => e.preventDefault());
     let held = null;
     const aimBtn = (el, d) => { el.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); held = d; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => el.addEventListener(t, () => (held = null))); };
