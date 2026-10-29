@@ -318,6 +318,13 @@ export const fishingApp = {
         if (bt.mode === 'reel') { thr = Math.max(0.15, Math.min(1, 0.55 + (bt.p0.y - p.y) / 110)); if (E.S.ph === 'fight') sideT = Math.max(-1, Math.min(1, dx / 70)); }
         bt.last = p;
       });
+      // 英語のファイト:魚が走る時は、竿の先を左右にスワイプして竿をたおす(選択肢や🎣と重ならない)
+      const tipZ = document.createElement('div'); tipZ.style.cssText = 'position:absolute;width:150px;height:130px;margin:-65px 0 0 -75px;z-index:2;display:none;touch-action:none;border-radius:50%;border:3px dashed rgba(255,255,255,.9);background:rgba(255,255,255,.18);color:#fff;font-weight:900;font-size:26px;text-shadow:0 1px 4px #0008;align-items:center;justify-content:space-between;padding:0 14px;box-sizing:border-box;animation:tz 1s infinite alternate'; tipZ.innerHTML = '<span>◀</span><span>▶</span>';
+      if (!document.getElementById('tzcss')) { const st0 = document.createElement('style'); st0.id = 'tzcss'; st0.textContent = '@keyframes tz{from{opacity:.55}to{opacity:1}}'; document.head.appendChild(st0); }
+      root.appendChild(tipZ); let tzPid = null, tzX0 = 0;
+      tipZ.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); tzPid = e.pointerId; tzX0 = e.clientX; try { tipZ.setPointerCapture(e.pointerId); } catch (x) { } });
+      tipZ.addEventListener('pointermove', e => { if (e.pointerId !== tzPid) return; sideT = Math.max(-1, Math.min(1, (e.clientX - tzX0) / 45)); });
+      const tzUp = e => { if (e.pointerId !== tzPid) return; tzPid = null; sideT = 0; }; tipZ.addEventListener('pointerup', tzUp); tipZ.addEventListener('pointercancel', tzUp);
       const reelUp = e => {
         if (e.pointerId !== reelPid) return; reelPid = null; bigB.classList.remove('on'); thr = 0; sideT = 0;
         const b = bt; bt = null; if (!b) return;
@@ -591,6 +598,7 @@ export const fishingApp = {
         hkB.textContent = ph === 'water' ? (E.S.bite ? 'あわせ!' : lure ? 'しゃくる' : 'あわせ') : !vs && (ph === 'landed' || ph === 'lost') ? 'つぎへ' : 'あわせ';
         hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water';
         if (reelUi && ph !== 'fight') closeReel();
+        { const on = !!(h && h.sr && h.phase === 'rod' && ph === 'fight'); if (on) { const tp = view.rodTip(); tipZ.style.left = tp.x + 'px'; tipZ.style.top = tp.y + 'px'; } tipZ.style.display = on ? 'flex' : 'none'; if (!on && tzPid != null) { tzPid = null; } }
         { const run = !!(h && h.sr && h.phase === 'rod'), pshow = !!reelUi && !run && !EN.busy; if (reelUi) reelUi.show(pshow); bigB.style.visibility = reelUi && pshow ? 'hidden' : ''; }
         hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
         const showThr = reeling && (ph === 'water' || ph === 'fight');

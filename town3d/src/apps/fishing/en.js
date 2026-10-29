@@ -564,6 +564,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       cancelAnimationFrame(raf);
       const cv = sc.querySelector('.tankv canvas'); if (!cv) return;
       const t = spec.tank(), W = cv.clientWidth, H = cv.clientHeight, dpr = Math.min(2, devicePixelRatio || 1);
+      cv.style.touchAction = editMode ? 'none' : ''; cv.parentElement.parentElement.style.touchAction = editMode ? 'none' : 'pan-y';   // スマホで、ドラッグが画面スクロールに取られないように
       if (editMode) {   // 飾りをえらぶ・ドラッグでうごかす(水槽をピンチで拡大している時も、そのまま)
         let drag = null;
         const at = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };

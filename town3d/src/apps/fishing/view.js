@@ -366,7 +366,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
   }
 
   const api = {
-    proj, splash, addRing, underRect: () => cam.ud || UR(), underPad: () => underPad(cam.ud || UR()),
+    rodTip: () => tipPos(0), proj, splash, addRing, underRect: () => cam.ud || UR(), underPad: () => underPad(cam.ud || UR()),
     // y0:カメラのときの上のあき(対戦の相手の画面の分)。池の絵はその下の大きさで作る
     resize(y0 = 0) {
       const r = canvas.getBoundingClientRect(); dpr = Math.min(1.5, window.devicePixelRatio || 1);   // スマホのメモリを節約(見た目はほぼ同じ)
