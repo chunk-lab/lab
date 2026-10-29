@@ -85,7 +85,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       const hole = new THREE.Mesh(new THREE.CircleGeometry(0.22, 24), new THREE.MeshBasicMaterial({ color: 0x1a1a1a })); hole.rotation.x = -Math.PI / 2; hole.position.y = 0.03; g.add(hole);
       const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 2.4, 8), mat(0xffffff)); pole.position.y = 1.2; g.add(pole);
       const sh = new THREE.Shape(); sh.moveTo(0, 0); sh.lineTo(0.7, -0.22); sh.lineTo(0, -0.45);
-      const fl = new THREE.Mesh(new THREE.ShapeGeometry(sh), new THREE.MeshStandardMaterial({ color: 0xff5a5a, side: THREE.DoubleSide })); fl.position.set(0.01, 2.4, 0); g.add(fl); g.userData.flag = fl;
+      const fl = new THREE.Mesh(new THREE.ShapeGeometry(sh), new THREE.MeshStandardMaterial({ color: 0xff5a5a, side: THREE.DoubleSide })); fl.position.set(0.01, 2.4, 0); fl.renderOrder = 100; g.add(fl); g.userData.flag = fl;
     } else {
       const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.5, 8), mat(0xc0c0c8)); pole.position.y = 0.75; g.add(pole);
       const basket = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.34, 0.22, 20, 1, true), new THREE.MeshStandardMaterial({ color: 0xffcf3a, side: THREE.DoubleSide, metalness: 0.4 })); basket.position.y = 0.62; g.add(basket);
@@ -317,8 +317,8 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     p.addScaledVector(v, h);
   }
   function simGolf(p0, dx, dz, pw) {   // いま打ったらどう飛ぶか(点の列)
-    const H = S.C.holes[S.i], c = CLUBS[S.club], gs = spinOf(), p = S.pos.clone(), v = golfV(c, pw, dx, dz, gs), pts = [p.clone()], h = 0.025;
-    for (let k = 0; k < 400; k++) { golfPhys(p, v, h, H, gs, c, false); if (k % 4 === 0) pts.push(p.clone()); if (k > 20 && p.y <= 0.07 && Math.hypot(v.x, v.z) < 0.08) break; }
+    const H = S.C.holes[S.i], c = CLUBS[S.club], gs = spinOf(), p = S.pos.clone(), v = golfV(c, pw, dx, dz, gs), pts = [p.clone()], h = 0.01;
+    for (let k = 0; k < 1000; k++) { golfPhys(p, v, h, H, gs, c, false); if (k % 2 === 0) pts.push(p.clone()); if (k > 20 && p.y <= 0.07 && Math.hypot(v.x, v.z) < 0.05) break; }
     pts.push(p.clone()); return pts;
   }
   function stepFly(dt) {
@@ -438,7 +438,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       }
     }
   }
-  // カメラが追う所(飛んでいる間はボール)
-  function focus() { if (!S || S.phase !== 'fly') return null; return { x: S.pos.x, z: S.pos.z }; }
+  // カメラが追う所(飛んでいる間はボール、ただし建物内に入らないようにオフセット)
+  function focus() { if (!S || S.phase !== 'fly') return null; const off = 1.5, dx = Math.sin(me.ry) * off, dz = Math.cos(me.ry) * off; return { x: S.pos.x - dx, z: S.pos.z - dz }; }
   return { get active() { return !!S; }, get busy() { return !!S; }, start, update, focus, quit: () => S && end(true) };
 }
