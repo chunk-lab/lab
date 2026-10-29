@@ -107,7 +107,15 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const pm = kind === 'golf' ? new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 10), mat(0xffffff)) : (() => { const d = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.12, 0.025, 24), mat(0xff7aa2)); return d; })();
     pm.castShadow = true; scene.add(pm); S.objs.push(pm); S.mesh = pm;
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(40 * 3), 3));
-    S.aimLine = new THREE.Line(g, new THREE.LineDashedMaterial({ color: 0xffff00, dashSize: 0.4, gapSize: 0.3, transparent: true, opacity: 1.0, linewidth: 4 })); S.aimLine.frustumCulled = false; scene.add(S.aimLine); S.objs.push(S.aimLine);   // 線の形は毎フレーム変わるので、さいしょの位置で見えなくならないように
+    S.aimLine = new THREE.Line(g, new THREE.LineDashedMaterial({ color: 0xffff00, dashSize: 0.4, gapSize: 0.3, transparent: true, opacity: 1.0, linewidth: 4 })); S.aimLine.frustumCulled = false; scene.add(S.aimLine); S.objs.push(S.aimLine); S.aimLine.material.visible = false;
+    { // 予定のコース:太い帯(カメラのほうを向く・画面での太さはほぼ一定・点線もよう)。線の点列(aimLine)を毎フレームこの帯に写す
+      const NP = 40, bg = new THREE.BufferGeometry(), idx = [];
+      bg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(NP * 2 * 3), 3)); bg.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(NP * 2 * 2), 2));
+      for (let i = 0; i < NP - 1; i++) { const a = i * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); } bg.setIndex(idx);
+      const cv = document.createElement('canvas'); cv.width = 32; cv.height = 4; const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, 20, 4);
+      const tx = new THREE.CanvasTexture(cv); tx.wrapS = THREE.RepeatWrapping; tx.magFilter = THREE.NearestFilter;
+      S.band = new THREE.Mesh(bg, new THREE.MeshBasicMaterial({ map: tx, color: 0xffff00, transparent: true, depthTest: false, depthWrite: false, side: THREE.DoubleSide, opacity: 0.95 })); S.band.frustumCulled = false; S.band.renderOrder = 10; scene.add(S.band); S.objs.push(S.band);
+    }   // 線の形は毎フレーム変わるので、さいしょの位置で見えなくならないように
     S.land = new THREE.Mesh(new THREE.RingGeometry(0.5, 0.7, 28), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, side: THREE.DoubleSide })); S.land.rotation.x = -Math.PI / 2; scene.add(S.land); S.objs.push(S.land);
     hole(0);
   }
@@ -441,6 +449,20 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       a.needsUpdate = true; S.aimLine.computeLineDistances(); S.land.position.set(S.pos.x + dx * L, 0.05, S.pos.z + dz * L);
       }
     }
+    updateBand();
+  }
+  function updateBand() {   // 点の列(aimLine)を、太い帯にうつす
+    const b = S.band; if (!b) return; b.visible = S.aimLine.visible; if (!b.visible) return;
+    const a = S.aimLine.geometry.attributes.position, P = b.geometry.attributes.position, U = b.geometry.attributes.uv, cp = camera.position, n = a.count; let len = 0;
+    for (let i = 0; i < n; i++) {
+      const x = a.getX(i), y = a.getY(i), z = a.getZ(i), j = Math.min(n - 1, i + 1), k = Math.max(0, i - 1);
+      let tx = a.getX(j) - a.getX(k), ty = a.getY(j) - a.getY(k), tz = a.getZ(j) - a.getZ(k); const tl = Math.hypot(tx, ty, tz) || 1; tx /= tl; ty /= tl; tz /= tl;
+      const vx = cp.x - x, vy = cp.y - y, vz = cp.z - z, vd = Math.hypot(vx, vy, vz) || 1;
+      let sx = ty * vz - tz * vy, sy = tz * vx - tx * vz, sz = tx * vy - ty * vx; const sl = Math.hypot(sx, sy, sz) || 1, w = Math.max(0.06, Math.min(0.6, 0.013 * vd)) / 2 / sl; sx *= w; sy *= w; sz *= w;
+      P.setXYZ(i * 2, x - sx, y - sy, z - sz); P.setXYZ(i * 2 + 1, x + sx, y + sy, z + sz); U.setXY(i * 2, len / 0.9, 0); U.setXY(i * 2 + 1, len / 0.9, 1);
+      if (i < n - 1) len += Math.hypot(a.getX(i + 1) - x, a.getY(i + 1) - y, a.getZ(i + 1) - z);
+    }
+    P.needsUpdate = U.needsUpdate = true; b.material.color.copy(S.aimLine.material.color);
   }
   // カメラが追う所(飛んでいる間はボール / 2本指でずらしている間は、立っている所+ずらし分)
   function focus() { if (!S) return null; const fly = S.phase === 'fly'; if (!fly && !camOffset.x && !camOffset.z) return null; const b = fly ? S.pos : me; return { x: b.x + camOffset.x, z: b.z + camOffset.z }; }
