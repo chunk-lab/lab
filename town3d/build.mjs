@@ -2,7 +2,7 @@
 import { build } from 'esbuild';
 import fs from 'fs';
 import { execSync } from 'child_process';
-const sha = (process.env.GITHUB_SHA || (() => { try { return execSync('git rev-parse HEAD').toString(); } catch (e) { return 'local'; } })()).slice(0, 5);
+const sha = ((() => { try { return execSync('git rev-parse HEAD').toString(); } catch (e) { return ''; } })() || process.env.GITHUB_SHA || 'local').slice(0, 5);   // lab のコミット(lab-preview で組み立てても lab の番号になる)
 const jst = new Date(Date.now() + 9 * 36e5).toISOString().slice(5, 16).replace('T', ' ');
 const BUILD = `${jst} ${sha}`;
 const r = await build({ entryPoints: ['src/entry.js'], bundle: true, minify: true, format: 'iife', globalName: 'Hoshimiya', write: false, target: 'es2020', legalComments: 'none', loader: { '.webp': 'dataurl' }, define: { __BUILD__: JSON.stringify(BUILD) } });
