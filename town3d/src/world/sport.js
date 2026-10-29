@@ -107,7 +107,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const pm = kind === 'golf' ? new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 10), mat(0xffffff)) : (() => { const d = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.12, 0.025, 24), mat(0xff7aa2)); return d; })();
     pm.castShadow = true; scene.add(pm); S.objs.push(pm); S.mesh = pm;
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(40 * 3), 3));
-    S.aimLine = new THREE.Line(g, new THREE.LineDashedMaterial({ color: 0xffff00, dashSize: 0.4, gapSize: 0.3, transparent: true, opacity: 1.0, linewidth: 4 })); scene.add(S.aimLine); S.objs.push(S.aimLine);
+    S.aimLine = new THREE.Line(g, new THREE.LineDashedMaterial({ color: 0xffff00, dashSize: 0.4, gapSize: 0.3, transparent: true, opacity: 1.0, linewidth: 4 })); S.aimLine.frustumCulled = false; scene.add(S.aimLine); S.objs.push(S.aimLine);   // 線の形は毎フレーム変わるので、さいしょの位置で見えなくならないように
     S.land = new THREE.Mesh(new THREE.RingGeometry(0.5, 0.7, 28), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, side: THREE.DoubleSide })); S.land.rotation.x = -Math.PI / 2; scene.add(S.land); S.objs.push(S.land);
     hole(0);
   }
