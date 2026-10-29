@@ -103,12 +103,21 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const C = course(kind);
     S = { kind, C, i: 0, strokes: [], n: 0, club: 0, curve: 0, hgt: 1, phase: 'aim', obj: null, power: 0, charging: false, cT: 0, last: null, objs: [], home: !!opt.home, hud: hudEl(kind, !!opt.home), flag: null, aimLine: null, msgT: 0 };
     camOffset = { x: 0, z: 0 };
+    // 2本指ドラッグ:真上から見た地図をずらす感覚で、カメラを(いまの向き基準の)前後左右にずらす
     const onTouchStart = e => { if (S && e.touches.length === 2) { touch1 = { x: e.touches[0].clientX, y: e.touches[0].clientY }; touch2 = { x: e.touches[1].clientX, y: e.touches[1].clientY }; } };
-    const onTouchMove = e => { if (S && e.touches.length === 2 && touch1 && touch2) { const dx = (e.touches[0].clientX - touch1.x + e.touches[1].clientX - touch2.x) / 2, dz = (e.touches[0].clientY - touch1.y + e.touches[1].clientY - touch2.y) / 2; camOffset.x += dx * 0.005; camOffset.z += dz * 0.005; touch1.x = e.touches[0].clientX; touch1.y = e.touches[0].clientY; touch2.x = e.touches[1].clientX; touch2.y = e.touches[1].clientY; } };
+    const onTouchMove = e => {
+      if (!S || e.touches.length !== 2 || !touch1 || !touch2) return;
+      const dx = (e.touches[0].clientX - touch1.x + e.touches[1].clientX - touch2.x) / 2, dy = (e.touches[0].clientY - touch1.y + e.touches[1].clientY - touch2.y) / 2;
+      touch1 = { x: e.touches[0].clientX, y: e.touches[0].clientY }; touch2 = { x: e.touches[1].clientX, y: e.touches[1].clientY };
+      const y = getYaw(), fx = -Math.sin(y), fz = -Math.cos(y), rx = Math.cos(y), rz = -Math.sin(y), k = 0.04;   // 見ている向き(前)と右。指についてくる=カメラは逆へ
+      camOffset.x += rx * -dx * k + fx * dy * k; camOffset.z += rz * -dx * k + fz * dy * k;
+      const m = Math.hypot(camOffset.x, camOffset.z); if (m > 40) { camOffset.x *= 40 / m; camOffset.z *= 40 / m; }
+    };
     const onTouchEnd = e => { if (e.touches.length < 2) { touch1 = null; touch2 = null; } };
     root.addEventListener('touchstart', onTouchStart, { passive: true });
     root.addEventListener('touchmove', onTouchMove, { passive: true });
     root.addEventListener('touchend', onTouchEnd, { passive: true });
+    S.offTouch = () => { root.removeEventListener('touchstart', onTouchStart); root.removeEventListener('touchmove', onTouchMove); root.removeEventListener('touchend', onTouchEnd); };
     root.classList.add('sp-on'); toast?.(kind === 'golf' ? `⛳ きょうのゴルフコース(${HOLES}ホール)` : `🥏 きょうのフリスビーコース(${HOLES}ホール)`);
     const pm = kind === 'golf' ? new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 10), mat(0xffffff)) : (() => { const d = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.12, 0.025, 24), mat(0xff7aa2)); return d; })();
     pm.castShadow = true; scene.add(pm); S.objs.push(pm); S.mesh = pm;
@@ -127,10 +136,12 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     standAt(S.pos); msg(`ホール ${i + 1}  PAR ${H.par}`); drawHud();
   }
   function standAt(p) {   // ボールのうしろに立って、ゴールの方を向く
+    camOffset = { x: 0, z: 0 };
     const H = S.C.holes[S.i], a = Math.atan2(H.goal[0] - p.x, H.goal[1] - p.z);
     me.x = p.x - Math.sin(a) * 0.7 + Math.cos(a) * 0.3; me.z = p.z - Math.cos(a) * 0.7 - Math.sin(a) * 0.3; me.ry = a; setYaw(a + Math.PI);
   }
   function end(quit) {
+    if (S.offTouch) S.offTouch();
     const total = S.strokes.reduce((a, b) => a + b, 0), par = S.C.holes.slice(0, S.strokes.length).reduce((a, h) => a + h.par, 0), kind = S.kind;
     S.objs.forEach(o => scene.remove(o)); if (S.flag) scene.remove(S.flag); if (S.gMesh) scene.remove(S.gMesh); S.hud.remove(); root.classList.remove('sp-on');
     S = null; onEnd?.({ kind, quit, total, par });
@@ -179,7 +190,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   // ---- 打つ・投げる ----
   function aimDir() { const y = getYaw() + Math.PI; return [Math.sin(y), Math.cos(y)]; }   // カメラの向き=ねらう向き
   function fire() {
-    const p = Math.max(0.05, S.power); let [dx, dz] = aimDir(); S.n++; S.last = S.pos.clone(); S.phase = 'fly'; S.t = 0; audio?.play?.('wave');
+    camOffset = { x: 0, z: 0 }; const p = Math.max(0.05, S.power); let [dx, dz] = aimDir(); S.n++; S.last = S.pos.clone(); S.phase = 'fly'; S.t = 0; audio?.play?.('wave');
     me.ry = Math.atan2(dx, dz);
     if (S.kind === 'golf') {
       const c = CLUBS[S.club], dv = -(S.dev || 0) * (c.loft === 0 ? 0.08 : 0.06 + c.d / 70 * 0.1), cs = Math.cos(dv), sn = Math.sin(dv);   // 左右のずれ(長いクラブほど大きい)
@@ -446,7 +457,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       }
     }
   }
-  // カメラが追う所(飛んでいる間はボール、ユーザーの2本指ドラッグでずらせる)
-  function focus() { if (!S || S.phase !== 'fly') return null; return { x: S.pos.x + camOffset.x, z: S.pos.z + camOffset.z }; }
+  // カメラが追う所(飛んでいる間はボール / 2本指でずらしている間は、立っている所+ずらし分)
+  function focus() { if (!S) return null; const fly = S.phase === 'fly'; if (!fly && !camOffset.x && !camOffset.z) return null; const b = fly ? S.pos : me; return { x: b.x + camOffset.x, z: b.z + camOffset.z }; }
   return { get active() { return !!S; }, get busy() { return !!S; }, start, update, focus, quit: () => S && end(true) };
 }
