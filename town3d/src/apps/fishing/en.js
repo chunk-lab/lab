@@ -9,6 +9,7 @@ import { FIMG } from './fishimg.js';
 import { SETS, SET, LV_NAME, LV_SUB, TANK_MAX, GROW_NEED, FEED_PER_DAY, FISH_SPEC, spec, condOf, MIX_N, RAR, RAR_PT, DECOR, DECOR_ICON, TANK_RANKS, decorOf, RECIPES, recipeFor, shapeName, FISH_MAX_RANK, RANK_PRE, RANK_MUL } from '../../game/specimen.js';
 import { furn } from '../../game/furniture.js';
 import { vch, VCH } from '../../game/voucher.js';
+import { wxStrip } from '../../game/weather.js';
 import { localLearn } from './learnrec.js';
 import { sortReel } from './sortreel.js';
 
@@ -29,6 +30,32 @@ const hexCol = c => '#' + (c >>> 0).toString(16).padStart(6, '0');
 
 
 const MIXCSS = `
+.fz .ens.aq{overflow:hidden;padding:0;display:flex;flex-direction:column;touch-action:auto}
+.aq .aqh{display:flex;align-items:center;gap:8px;padding:8px 10px 6px;flex:none}.aq .aqtt{font-size:16px;white-space:nowrap}
+.aq .aqw{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.aq .aqc{background:#fff;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:900;box-shadow:0 1px 4px #0001}
+.aq .aqt{position:relative;flex:none;height:clamp(190px,36vh,300px);margin:0 10px;border-radius:18px;overflow:hidden;box-shadow:0 4px 14px #0002;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.aq .aqt canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.aq .aqrk{position:absolute;left:10px;top:6px;font-size:11px;font-weight:900;color:#fff;text-shadow:0 1px 3px #0009;pointer-events:none}
+.aq .aqhint{position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:10px;color:#fff;text-shadow:0 1px 3px #000a;pointer-events:none}
+.aq .aqpop{position:absolute;z-index:3;background:#fffdf7;border-radius:14px;padding:8px 10px;box-shadow:0 6px 18px #0004;font-size:13px;min-width:170px;max-width:250px}
+.aq .aqpop .aqpb{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}.aq .aqpop .sbtn{padding:7px 10px;font-size:12px}
+.aq .aqpop .gb{height:6px;border-radius:3px;background:#eee4f2;overflow:hidden;margin:4px 0}.aq .aqpop .gb i{display:block;height:100%;background:linear-gradient(90deg,#7fd3ff,#7fcf9f)}
+.aq .aqtabs{position:relative;display:flex;gap:4px;margin:8px 10px 0;flex:none}
+.aq .aqtabs button{flex:1;border:0;border-radius:12px 12px 0 0;padding:10px 2px;font:inherit;font-weight:900;font-size:13px;background:#efe8f7;color:#5a4a6b}.aq .aqtabs button.on{background:#fff}
+.aq .aqdrop{position:absolute;inset:0;border-radius:12px 12px 0 0;display:none;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;background:rgba(90,74,107,.8);pointer-events:none}.aq .aqdrop.on{display:flex}.aq .aqdrop.hot{background:#e0556b}
+.aq .aqb{flex:1;overflow:auto;background:#fff;margin:0 10px;padding:10px 10px calc(20px + env(safe-area-inset-bottom,0px));touch-action:pan-y;-webkit-overflow-scrolling:touch}
+.aq .aqb .row{background:#fbf8ff}
+.aq .aqrow{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.aq .aqs{margin:12px 0 6px;font-size:14px}.aq .aqs small{font-weight:700;color:#8d7f9e;font-size:11px}
+.aq .aqth{width:64px;flex:none}.aq .aqok{font-size:20px}
+.aq .aqcb{display:flex;gap:4px;justify-content:center;margin-top:6px}.aq .aqcb .sbtn{padding:6px 10px;font-size:12px}
+.aq .aqmix{display:flex;align-items:center;justify-content:center;gap:4px;margin:8px 0}
+.aq .aqslot{width:70px;height:80px;border:2px dashed #cdbfe0;border-radius:14px;background:#fff;font:inherit;color:#5a4a6b;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px;overflow:hidden;flex:none}
+.aq .aqslot.on{border-style:solid;border-color:#f58aa8;background:#ffe9f0}.aq .aqslot.res{border-color:#ffc400;border-style:solid;background:#fffbe6;font-size:28px}
+.aq .aqslot small{font-size:10px;line-height:1.1;font-weight:800}.aq .aqslot .ic{font-size:28px}.aq .aqslot img{max-width:58px}
+.aq .aqplus{font-weight:900;color:#b9aecb}.aq .aqgo{width:100%;margin:4px 0 10px}
+.aq .aqchips{display:flex;gap:6px;overflow-x:auto;margin-bottom:8px;padding-bottom:2px}.aq .aqchips button{flex:none;border:0;border-radius:999px;padding:7px 12px;font:inherit;font-weight:900;font-size:12px;background:#f1ebf7;color:#5a4a6b}.aq .aqchips button.on{background:#5a4a6b;color:#fff}
+.aq .aqrc{margin-top:10px;font-size:12px}
 .ens .cell.sel{outline:3px solid #f58aa8;background:#ffe9f0}.ens .cell.used{opacity:.55}.ens .cell .ub{position:absolute;right:4px;top:3px;font-size:10px;background:#efe8f7;border-radius:8px;padding:0 5px;color:#6b4a9a}
 .ens .rr{display:inline-block;font-weight:900;font-size:10px;padding:0 6px;border-radius:6px;color:#fff;margin-left:3px}.rr0{background:#8a96a3}.rr1{background:#3b8fe0}.rr2{background:#a456f0}.rr3{background:linear-gradient(90deg,#ff9a00,#ff4d8d,#8a5cff);}
 .mixfx{position:absolute;inset:0;z-index:60;background:radial-gradient(circle at 50% 45%,#3a1d6e,#0b0618 70%);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;overflow:hidden;animation:mxIn .3s}
@@ -84,7 +111,7 @@ const CSS = `
 .fz .enprog{position:absolute;right:10px;top:46px;z-index:3;background:rgba(255,255,255,.9);border-radius:999px;padding:5px 12px;font-weight:900;font-size:12px;box-shadow:0 2px 8px #0002;pointer-events:none;white-space:nowrap}
 `;
 
-export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast }) {
+export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast, dex = null, openDex = null }) {
   // 魚の絵(釣りの本体と同じ絵)を <img> として出す。sil=かげ
   const fishImg = (id, w = 112, sil = false, rk = 0) => { const u = FIMG[id] && FIMG[id][Math.min(2, rk)]; if (!u) return '🐟'; return `<img src="${u}" style="width:100%;max-width:${w}px;height:${Math.round(w * 0.62)}px;object-fit:contain;display:block;margin:0 auto${sil ? ';filter:brightness(0) opacity(.3)' : ''}" alt="">`; };
   if (!document.getElementById('fz-en-css')) { const s = document.createElement('style'); s.id = 'fz-en-css'; s.textContent = CSS + MIXCSS; document.head.appendChild(s); }
@@ -247,6 +274,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       const sets = SETS.filter(s => s.lv === lv), own = spec.own(), got = sets.filter(s => own[s.id]).length;
       sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span></div>
         <h2>📚 英語の釣り堀</h2><p class="nt">えらんだセットの単語だけが出るよ。魚が近づいたら単語に答えて「気になり度」をためよう。合わせ損ねた時は単語、あばれた時は熟語、巻き取りは文の並べ替え。<b>セットの単語をぜんぶ完璧</b>(続けて${PERFECT_C}回正解。ストリームで正解した分も入る)にすると、そのセットの標本がもらえる。魚はどのセットでもふつうに釣れるよ。</p>
+        ${wxStrip(Object.values(FISHBY).filter(f => f.rain).map(f => f.name).join('・'))}
         <div class="tabs">${[1, 2, 3].map(l => `<button data-lv="${l}" class="${l === lv ? 'on' : ''}">${LV_NAME[l]}<br><small style="font-weight:700;font-size:10px">${LV_SUB[l]}</small></button>`).join('')}</div>
         <p class="nt" style="margin:0 0 8px">標本 ${got} / ${sets.length}</p>
         <p class="nt" style="margin:0 0 8px">巻き取りの並べ替え: ${[[1, '🔊 最初に聞く'], [0, '聞かない']].map(([k, t]) => `<button class="sbtn" data-pre="${k}" style="${(+(ctx.storage.get('enPre') ?? 1)) === k ? 'background:#f58aa8;color:#fff' : ''}">${t}</button>`).join(' ')} ${[['ja', '日本語を並べる'], ['en', '英文を並べる']].map(([k, t]) => `<button class="sbtn" data-sm="${k}" style="${(ctx.storage.get('enSm') || 'ja') === k ? 'background:#f58aa8;color:#fff' : ''}">${t}</button>`).join(' ')}</p>
@@ -280,148 +308,6 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     sh.querySelector('[data-g]').onclick = () => { sh.remove(); go(); };
   }
 
-  // ---- 画面:標本コレクション(入手条件つき) ----
-  function collection({ onBack }) {
-    const sc = document.createElement('div'); sc.className = 'ens'; root.appendChild(sc);
-    let tab = ctx.storage.get('colTab') || 1;
-    const boxHTML = () => {   // 図鑑の枠(持ち魚):水槽と出し入れして育てる
-      const bx = spec.box(), n = spec.boxSlots(), gem = ctx.gems ? ctx.gems.get() : null;
-      const rows = [0, 1, 2, 3].map(i => {
-        if (i < n) { const f = bx[i]; if (!f) return `<div class="row"><div class="fx" style="color:#8d7f9e">あき(水槽の魚を「図鑑へ」で入れられるよ)</div></div>`;
-          const sp = FISHBY[f.id]; return `<div class="row"><span style="width:56px;flex:none">${fishImg(f.id, 56, false, f.rk || 0)}</span><div class="fx"><b>${esc(RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id))}</b> <small style="color:#8d7f9e">そだち ${f.g}/${GROW_NEED}${spec.full()[f.id] ? ' ・ 満腹ずみ' : ''}</small><div class="gb"><i style="width:${Math.min(100, f.g / GROW_NEED * 100)}%"></i></div></div><button class="sbtn" data-totank="${f.uid}">🐠水槽へ</button></div>`; }
-        if (i > n) return `<div class="row"><div class="fx" style="color:#b9aecb">🔒 ${i + 1}つ目の枠</div></div>`;
-        return i < 3 ? `<div class="row"><div class="fx">🔒 ${i + 1}つ目の枠</div><button class="sbtn pri" data-unl="coin">🪙 ${BOX_COIN[i - 1]}で開ける</button></div>`
-          : `<div class="row"><div class="fx">🔒 4つ目の枠(ダイヤ)</div><button class="sbtn pri" data-unl="gem">💎 ${BOX_GEM}で開ける</button></div>`;
-      }).join('');
-      return `<h3 style="margin:6px 0">🐟 図鑑の枠 ${bx.length} / ${n}</h3><p class="nt" style="margin:0 0 6px">魚を入れておく枠。水槽(6匹)と出し入れして、育てる魚をかえられる。そだち・満腹の記録は消えないよ。${gem !== null ? ` 💎 ${gem}` : ''}</p>${rows}<h3 style="margin:12px 0 6px">📖 魚ずかん</h3>`;
-    };
-    const draw = () => {
-      const own = spec.own(), adm = isAdmin();
-      let body;
-      if (tab === 'f') {
-        const gr = spec.grown();
-        body = boxHTML() + `<p class="nt">水槽で育てきった魚が、アルバムに記録される(えさ${GROW_NEED}回・1日${FEED_PER_DAY}回まで)。</p><div class="grid">${FISH_SPEC.map(f => { const n = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = spec.fishBest()[f.id] || 0; return `<div class="cell ${n ? 'got' : ''}" data-fd="${f.id}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}匹</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic fa">${fishImg(f.id, 112, !n, bk)}</span><b>${n ? esc(f.name) : '？？？'}</b><small>${n ? esc(f.en) + (bk ? ' ・ ' + esc(RANK_PRE[bk]) : '') : '★'.repeat(f.r)}</small></div>`; }).join('')}</div>`;
-      } else if (tab === 'd') {
-        const dl = spec.decor();
-        body = `<p class="nt">標本の形の組み合わせ(レシピ)で、水槽の飾りができる。できた飾りは、ぜんぶここに記録される。「混ぜる」でレシピのヒントが見られるよ。</p><div class="grid">${[1, 2, 3].flatMap(lv => DECOR[lv].map((_, r) => { const n = dl.filter(d => d.lv === lv && d.rar === r).length, k = decorOf({ lv, rar: r }); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? k.icon : '❔'}</span><b>${n ? esc(k.name) : '？？？'}<span class="rr rr${r}">${RAR[r]}</span></b><small>${n ? esc(k.en) + (n > 1 ? ' ×' + n : '') : LV_NAME[lv]}</small></div>`; })).join('')}</div>`;
-      } else {
-        const sets = SETS.filter(s => s.lv === tab);
-        body = `<p class="nt">入手条件:そのセットの単語をぜんぶ完璧にする。💥=ひび(抜き打ちテストで まちがえすぎた)。🔀=混ぜて飾りになった(アルバムには残る)。</p><div class="grid">${sets.map(s => { const o = own[s.id], n = spec.perfCount(s.id); return `<button class="cell ${o ? (o.crack ? 'crk' : 'got') : ''} ${o && o.used ? 'used' : ''}" data-s="${s.id}">${adm ? `<input type="checkbox" class="adm" data-adm="${s.id}" ${o ? 'checked' : ''}>` : ''}${o && o.used ? '<span class="ub">🔀混ぜた</span>' : ''}${o ? `<i class="dot" style="background:${hexCol(s.look.col)}"></i>` : ''}<span class="ic">${o ? (o.crack ? '💥' : ICON[s.look.shape]) : '❔'}</span><b>${o ? esc(s.look.name) : 'セット' + s.no}</b><small>${o ? esc(s.look.en) : esc(s.words[0][0]) + '…'}</small>${o ? '' : `<div class="pg"><i style="width:${n / s.words.length * 100}%"></i></div>`}</button>`; }).join('')}</div>`;
-      }
-      const cnt = Object.keys(own).length, avail = Object.keys(own).filter(id => !own[id].used).length;
-      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn pri" data-a="mix">🎰 混ぜる</button></div><h2>📖 図鑑</h2>${adm ? `<p class="nt" style="background:#fff0d0;border-radius:10px;padding:6px 10px">🛠 運営テスト:標本はチェック、魚は＋－で水槽に入れる(同じ魚を3匹入れれば混ぜられる)。${typeof tab === 'number' ? `<button class="sbtn" data-a="admall">このレベルを全部ON</button> <button class="sbtn" data-a="admnone">全部OFF</button>` : ''}</p>` : ''}<p class="nt">集めた標本 ${cnt} / ${SETS.length}(いま持っている ${avail}) ・ 飾り ${spec.decor().length} ・ 育てた魚 ${spec.grown().length}。</p>
-        <div class="tabs">${[[1, '初級'], [2, '中級'], [3, '上級'], ['f', '魚'], ['d', '飾り']].map(([k, n]) => `<button data-t="${k}" class="${k === tab ? 'on' : ''}">${n}</button>`).join('')}</div>${body}`;
-    };
-    draw();
-    // 魚をタップ → 大きな絵と説明(持っている強さの絵だけ見られる。まだの魚は「？」)
-    const fishDetail = (id, rk0) => {
-      const f = FISHBY[id]; if (!f) return;
-      const gr = spec.grown().includes(id) || furn.owned('fs_' + id), best = spec.fishBest()[id] || 0, rk = Math.min(rk0 === undefined ? best : rk0, FISH_MAX_RANK);
-      let ov = sc.querySelector('.fdx'); if (!ov) { ov = document.createElement('div'); ov.className = 'fdx'; sc.appendChild(ov); }
-      const AN = { open: 'ひらけた所', weed: '水草', log: 'しずんだ木', lily: 'ハスの葉', rock: '岩場', deep: 'ふかみ' };
-      const TM = { day: '明るいうち', night: '夜', any: 'いつでも' };
-      const [lo, hi] = f.size || [10, 20], mul = RANK_MUL[rk];
-      const tabs = [0, 1, 2].map(k => `<button class="${k === rk ? 'on' : ''}" data-fr="${k}" ${gr && k <= best ? '' : 'disabled'}>${['ふつう', 'りっぱな', '伝説の'][k]}</button>`).join('');
-      ov.innerHTML = `<div class="fdc"><button class="x" data-fx>✕</button><div class="fpic">${fishImg(id, 320, !gr, rk)}</div>
-        ${gr ? `<div class="rt">${['N', 'SR', 'SSR'][rk]}</div><h3>${esc(RANK_PRE[rk] + f.name)}</h3><div class="en">${esc(f.en)}　${'★'.repeat(f.r)}</div>
-        <div class="tb">${tabs}</div>
-        <p class="ds">${esc(f.hint || '')}</p>
-        <table><tr><th>大きさ</th><td>${Math.round(lo * 1.5 * mul)}〜${Math.round(hi * 1.5 * mul)}cm</td></tr><tr><th>いる所</th><td>${(f.area || ['open']).map(a => AN[a] || a).join('・')}</td></tr><tr><th>時間</th><td>${TM[f.time] || 'いつでも'}</td></tr></table>
-        <p class="sy">“${esc(f.say || '')}”</p>` : `<h3>？？？</h3><div class="en">${'★'.repeat(f.r)}</div><p class="ds">まだ出会っていない魚。水槽で育てきるとアルバムに載るよ。</p>`}</div>`;
-      ov.onclick = e => { if (e.target === ov || e.target.closest('[data-fx]')) { sfx.play('tap'); ov.remove(); } else { const r = e.target.closest('[data-fr]'); if (r && !r.disabled) { sfx.play('tap'); fishDetail(id, +r.dataset.fr); } } };
-    };
-    const admSet = (id, on) => {
-      const s = SET[id]; if (!s) return;
-      if (on) { if (!spec.own()[id]) { spec.give(id); furn.give('sp_' + id); } else if (spec.isUsed(id)) { const o = spec.own(); o[id].used = 0; spec.setCrack(id, 0); st0(o); furn.give('sp_' + id); } s.words.forEach((_, i) => spec.setPerf(id, i, 1)); }
-      else { if (spec.own()[id] && !spec.isUsed(id)) furn.take('sp_' + id); spec.drop(id); }
-    };
-    const st0 = o => { try { localStorage.setItem('town:spec:own', JSON.stringify(o)); } catch (e) { } };
-    sc.onclick = e => {
-      const a = e.target.closest('[data-a]')?.dataset.a, t = e.target.closest('[data-t]'), c = e.target.closest('[data-s]');
-      const ad = e.target.closest('[data-adm]'), af = e.target.closest('[data-admf]');
-      if (ad) { admSet(ad.dataset.adm, e.target.checked); draw(); return; }
-      if (af) {
-        const id = af.dataset.admf, d = +af.dataset.d, f = FISH_SPEC.find(x => x.id === id);
-        let tk = spec.tank();
-        if (d > 0) { if (tk.length >= TANK_MAX) { toast('水槽がいっぱい(6匹まで)'); return; } tk.push({ uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id, size: f && f.size ? f.size[1] : 30, g: GROW_NEED, day: '', n: 0, at: Date.now() }); spec.saveTank(tk); spec.markGrown(id); if (!spec.hasTank()) { spec.gotTank(); furn.give('tank'); } }
-        else { const i = tk.map(x => x.id).lastIndexOf(id); if (i >= 0) { tk.splice(i, 1); spec.saveTank(tk); } }
-        draw(); return;
-      }
-      const tt = e.target.closest('[data-totank]'), ul = e.target.closest('[data-unl]');
-      if (tt) { const b = spec.box(), i = b.findIndex(x => x.uid === tt.dataset.totank); if (i < 0) return; if (!tankRoom()) { toast('水槽がいっぱい(6匹まで)。水槽から「図鑑へ」入れかえてね'); return; } const t = spec.tank(); t.push(b.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); if (!spec.hasTank()) spec.gotTank(); sfx.play('tap'); toast('🐠 水槽に入れた'); draw(); return; }
-      if (ul) {
-        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[spec.boxSlots() - 1] ?? BOX_COIN[1]; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } ctx.wallet.add(-p, 'boxslot'); }
-        else { if (!ctx.gems) { toast('ダイヤは準備中だよ'); return; } if (!ctx.gems.spend(BOX_GEM)) { toast('ダイヤがたりないよ'); sfx.play('early'); return; } }
-        spec.addBoxSlot(); sfx.play('coin'); toast('🔓 図鑑の枠が ふえた!'); draw(); return;
-      }
-      const fd = e.target.closest('[data-fd]');
-      if (fd && !e.target.closest('.admf')) { sfx.play('tap'); fishDetail(fd.dataset.fd); return; }
-      if (a === 'admall' && typeof tab === 'number') { SETS.filter(s => s.lv === tab).forEach(s => admSet(s.id, true)); draw(); return; }
-      if (a === 'admnone' && typeof tab === 'number') { SETS.filter(s => s.lv === tab).forEach(s => admSet(s.id, false)); draw(); return; }
-      if (a === 'back') { sfx.play('tap'); sc.remove(); onBack(); }
-      else if (a === 'mix') { sfx.play('tap'); sc.remove(); mixScreen({ onBack: () => collection({ onBack }) }); }
-      else if (t) { sfx.play('tap'); tab = t.dataset.t === 'f' || t.dataset.t === 'd' ? t.dataset.t : +t.dataset.t; ctx.storage.set('colTab', tab); draw(); }
-      else if (c) { const s = SET[c.dataset.s], o = spec.own()[s.id]; toast(o ? `${s.look.name}(${s.look.en})・${s.title}${o.used ? '・混ぜた' : ''}` : condOf(s)); }
-    };
-  }
-
-  // ---- 画面:混ぜる ----
-  //   飾り:同じレベルの標本を MIX_N つ。形の組み合わせ(レシピ)が合うと決まった飾りができる(運なし)。使った標本は消えて、アルバムには残る
-  //   魚:水槽で育てきった同じ種類・同じ段階の魚を MIX_N 匹 → 1つ強い魚(大きく・称号つき)
-  function mixScreen({ onBack }) {
-    const sc = document.createElement('div'); sc.className = 'ens'; root.appendChild(sc);
-    let mode = ctx.storage.get('mixMode') || 'd', lv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
-    const avail = l => Object.entries(spec.own()).filter(([id, o]) => SET[id] && SET[id].lv === l && !o.crack && !o.used).map(([id]) => SET[id]);
-    const fishAvail = () => spec.tank().filter(f => f.g >= GROW_NEED && (f.rk || 0) < FISH_MAX_RANK);
-    const fname = f => { const sp = FISHBY[f.id]; return RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id); };
-    const draw = () => {
-      const ready = pick3.length === MIX_N, tabs = `<div class="tabs">${[['d', '飾りを作る'], ['f', '魚を強くする']].map(([k, n]) => `<button data-mode="${k}" class="${k === mode ? 'on' : ''}">${n}</button>`).join('')}</div>`;
-      let body;
-      if (mode === 'd') {
-        const list = avail(lv), rc = spec.recipes();
-        body = `<p class="nt">同じレベルの標本を${MIX_N}つ選んで混ぜる。<b>形の組み合わせ(レシピ)</b>が合うと、決まった飾りができる。合わないと何も起きず、標本も消えないよ。使った標本は消えるけど、アルバムには残る。</p>
-          <div class="tabs">${[1, 2, 3].map(l => `<button data-lv="${l}" class="${l === lv ? 'on' : ''}">${LV_NAME[l]}<br><small style="font-weight:700;font-size:10px">${avail(l).length}こ</small></button>`).join('')}</div>
-          <div class="rcp">${RECIPES[lv].map((r, i) => { const k = decorOf({ lv, rar: i }), got = rc.includes(lv + ':' + i); return `<div class="rr3x"><span class="rr rr${i}">${RAR[i]}</span> ${got ? `${k.icon} <b>${esc(k.name)}</b> = ${r.map(x => esc(shapeName(lv, x))).join(' + ')}` : `❔ ??? = <b>${esc(shapeName(lv, r[0]))}</b> + ？ + ？`}</div>`; }).join('')}</div>
-          ${list.length ? `<div class="grid">${list.map(s => `<button class="cell got ${pick3.includes(s.id) ? 'sel' : ''}" data-p="${s.id}"><span class="ic">${ICON[s.look.shape]}</span><b>${esc(s.look.name)}</b><small>${esc(shapeName(lv, s.look.shape))}</small></button>`).join('')}</div>` : `<p class="nt">このレベルの標本がまだないよ。英語の釣り堀で、セットの単語を ぜんぶ完璧にしよう。</p>`}`;
-      } else {
-        const list = fishAvail();
-        body = `<p class="nt">水槽で<b>育てきった、同じ種類・同じ強さの魚</b>を${MIX_N}匹選んで混ぜると、1匹の強い魚になる(大きく・称号つき。最大2段階)。元の魚はアルバムに残るよ。</p>
-          ${list.length ? `<div class="grid">${list.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''}" data-p="${f.uid}"><span class="ic fa">${fishImg(f.id, 96, false, f.rk || 0)}</span><b>${esc(fname(f))}</b><small>${Math.round(f.size * 1.5)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。水槽で魚を育てよう。</p>`}`;
-      }
-      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button></div><h2>🎰 混ぜる</h2>${tabs}${body}
-        <div style="position:sticky;bottom:0;padding:10px 0;background:linear-gradient(transparent,#fff8ef 30%)"><button class="btn" data-a="go" style="width:100%" ${ready ? '' : 'disabled'}>混ぜる! (${pick3.length}/${MIX_N})</button></div>`;
-    };
-    draw();
-    sc.onclick = async e => {
-      const a = e.target.closest('[data-a]')?.dataset.a, l = e.target.closest('[data-lv]'), p = e.target.closest('[data-p]'), m = e.target.closest('[data-mode]');
-      if (a === 'back') { sfx.play('tap'); sc.remove(); onBack(); }
-      else if (m) { sfx.play('tap'); mode = m.dataset.mode; ctx.storage.set('mixMode', mode); pick3 = []; draw(); }
-      else if (l) { sfx.play('tap'); lv = +l.dataset.lv; ctx.storage.set('mixLv', lv); pick3 = []; draw(); }
-      else if (p) {
-        sfx.play('tap'); const id = p.dataset.p, i = pick3.indexOf(id);
-        if (i >= 0) pick3.splice(i, 1); else if (pick3.length < MIX_N) pick3.push(id);
-        draw();
-      }
-      else if (a === 'go' && pick3.length === MIX_N) {
-        if (mode === 'd') {
-          const used = pick3.map(id => SET[id]), rar = recipeFor(lv, used.map(x => x.look.shape));
-          if (rar < 0) { toast('何も起きなかった…別の組み合わせを試そう(標本は消えてないよ)'); sfx.play('early'); return; }
-          pick3 = []; used.forEach(x => { spec.use(x.id); furn.take('sp_' + x.id); });
-          const d = { uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), lv, rar, at: Date.now() }; spec.addDecor(d); spec.addRecipe(lv + ':' + rar);
-          const k = decorOf(d);
-          await gacha(used.map(x => ICON[x.look.shape]), { rar, icon: k.icon, name: k.name, en: k.en, line: (rar >= 2 ? '水槽がぐっと豪華に!' : '水槽に飾られたよ') + ' ・ 水槽ランク: ' + TANK_RANKS[spec.rank()][1] });
-        } else {
-          const t = spec.tank(), sel = pick3.map(id => t.find(f => f.uid === id)).filter(Boolean);
-          if (sel.length !== MIX_N || sel.some(f => f.id !== sel[0].id || (f.rk || 0) !== (sel[0].rk || 0))) { toast('同じ種類・同じ強さの魚を選んでね'); sfx.play('early'); return; }
-          pick3 = []; const rk = (sel[0].rk || 0) + 1, size = Math.round(Math.max(...sel.map(f => f.size)) * RANK_MUL[rk] / RANK_MUL[rk - 1]);
-          const nf = { uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id: sel[0].id, size, g: GROW_NEED, day: '', n: 0, at: Date.now(), rk };
-          spec.saveTank(t.filter(f => !sel.includes(f)).concat([nf])); spec.markGrown(nf.id, rk);
-          await gacha(sel.map(x => fishImg(x.id, 70, false, x.rk || 0)), { rar: rk + 1, icon: fishImg(nf.id, 200, false, rk), name: fname(nf), en: (FISHBY[nf.id] || {}).en || '', line: `${size}cm の強い魚になった! 水槽で泳いでるよ` });
-        }
-        draw();
-      }
-    };
-  }
   // 混ぜた演出(運ではなく、できるものが決まっている)。c = {rar:0〜3, icon, name, en, line}
   //  素材が渦をまいて寄ってきて重なる → 稲妻がはしる → 閃光・衝撃波・火花 → カードがせり出す。ランクが上ほど長く・派手に
   function gacha(icons, c) {
@@ -516,143 +402,156 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     });
   }
 
-  // ---- 画面:水槽 ----
-  function tankScreen({ onBack }) {
-    const sc = document.createElement('div'); sc.className = 'ens'; root.appendChild(sc);
-    let raf = 0, swim = [];
-    let editMode = false, selUid = null, PL = [], DM = {};   // 飾りを置く画面:えらんだ飾り・置いてある飾り・飾りの一覧
-    const tankZoom = { z: 1, x: 0, y: 0 };
-    const fx = { pel: [], coin: [], bub: [] };   // えさのつぶ・コイン・もぐもぐの泡
+  // ================= 🐠 アクアリウム(水槽・魚・飾り・合成・図鑑を1つの画面に) =================
+  //   釣り堀・家・アミューズメントセンター、どこから開いてもこの画面。
+  //   上=水槽(いつでも指で飾りを動かせる。下へ引っぱって離すと、しまう。魚をタップ=えさ・ひかえへ)
+  //   下=タブ:🐟魚 / 🪸飾り / 🧪合成 / 📖図鑑
+  function aquarium({ tab: tab0, onBack }) {
+    vch.bindGems && vch.bindGems(ctx.gems);
+    const sc = document.createElement('div'); sc.className = 'ens aq'; root.appendChild(sc);
+    let tab = tab0 || ctx.storage.get('aqTab') || 'fish';
+    let dexT = ctx.storage.get('aqDex') || 'f';
+    let mixMode = ctx.storage.get('mixMode') || 'd', mixLv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
+    let raf = 0, swim = [], PL = [], DM = {}, selUid = null, pop = null;
+    const Z = { z: 1, x: 0, y: 0 };
+    const fx = { pel: [], coin: [], bub: [] };
     const today = dayKey();
-    function dupPanel(ks, kinds) {   // 同じ飾りをふやす(金券・かけら・ダイヤ)
-      const nx = vch.nextExpire(), exp = nx ? ` ・いちばん近い期限 ${new Date(nx).getMonth() + 1}/${new Date(nx).getDate()}` : '';
-      const pr = (k) => { const r = +k.split(':')[1], b = [];
-        if (VCH.PRICE_V[r] != null) b.push(`<button class="sbtn" data-dup="${k}" data-pay="v" ${vch.total() < VCH.PRICE_V[r] ? 'disabled' : ''}>🎫${VCH.PRICE_V[r]}</button>`);
-        if (VCH.PRICE_F[r] != null) b.push(`<button class="sbtn" data-dup="${k}" data-pay="f" ${vch.frag() < VCH.PRICE_F[r] ? 'disabled' : ''}>🧩${VCH.PRICE_F[r]}</button>`);
-        b.push(`<button class="sbtn" data-dup="${k}" data-pay="d" ${vch.dia() < VCH.PRICE_D[r] ? 'disabled' : ''}>💎${VCH.PRICE_D[r]}</button>`); return b.join(' '); };
-      return `<details style="margin:0 0 10px"><summary class="nt" style="cursor:pointer">➕ 同じ飾りをふやす (🎫金券 ${vch.total()} ・🧩かけら ${vch.frag()} ・💎 ${vch.dia()})</summary>
-        <p class="nt" style="margin:6px 0">🎫金券=コインを換金してためる(今日はあと ${vch.todayLeft()} まで・3か月でなくなる${exp}) / 🧩かけら=単語を完璧にするともらえる / 💎ダイヤ=期限なし。値段(仮)はレア度が高いほど高いよ。</p>
-        <button class="sbtn" data-a="vx" ${vch.todayLeft() > 0 && ctx.wallet.get() > 0 ? '' : 'disabled'}>🪙→🎫 コイン${Math.min(vch.todayLeft(), ctx.wallet.get())}まいを金券に</button>
-        ${ks.map(k => { const it = decorOf(kinds[k][0]); return `<div style="display:flex;align-items:center;gap:6px;margin-top:6px"><span style="flex:1">${it.icon} ${esc(it.name)} <small>${RAR[kinds[k][0].rar]} もっている${kinds[k].length}</small></span>${pr(k)}</div>`; }).join('')}</details>`;
-    }
-    function decoPalette() {   // 持っている飾りの種類ごと:置く・しまう
-      const kinds = {}; spec.decor().forEach(d => { const k = d.lv + ':' + d.rar; (kinds[k] = kinds[k] || []).push(d); });
-      const ks = Object.keys(kinds).sort((a, b) => { const [l1, r1] = a.split(':'), [l2, r2] = b.split(':'); return (+r2 - +r1) || (+l2 - +l1); });
-      const placedUid = new Set(spec.placed().map(q => q.uid));
-      return `<p class="nt" style="margin:0 0 6px">🎨 飾りをタップ → 水槽に出るよ。水槽の中でドラッグして、好きな所へ。しまうときは、えらんで「しまう」。いくつでも置けるよ。</p>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">${ks.map(k => { const ds = kinds[k], d0 = ds[0], it = decorOf(d0), n = ds.filter(d => placedUid.has(d.uid)).length; return `<button class="sbtn" data-dadd="${k}" ${n >= ds.length ? 'disabled' : ''}>${it.icon} ${esc(it.name)} <small>${RAR[d0.rar]} 置いた${n}/${ds.length}</small></button>`; }).join('') || '<span class="nt">まだ飾りがないよ。「🎰 混ぜる」で作ろう。</span>'}</div>
-        ${dupPanel(ks, kinds)}
-        <div style="display:flex;gap:8px;margin-bottom:10px"><button class="sbtn" data-a="dtake" ${selUid ? '' : 'disabled'}>↩ しまう</button><button class="sbtn" data-a="dtakeall" ${placedUid.size ? '' : 'disabled'}>ぜんぶしまう</button></div>`;
-    }
-    const draw = () => {
-      const t = spec.tank(), food = spec.food(); t.forEach(f => { if (f.g >= GROW_NEED) spec.markGrown(f.id, f.rk || 0); });
+    sc.innerHTML = `<div class="aqh"><button class="sbtn" data-a="back">← もどる</button><b class="aqtt">🐠 アクアリウム</b><span class="aqw"></span></div>
+      <div class="aqt"><canvas></canvas><div class="aqrk"></div><div class="aqhint">飾りは指で動かせるよ・下のタブまで引っぱって離すと、しまう</div></div>
+      <div class="aqtabs">${[['fish', '🐟 魚'], ['deco', '🪸 飾り'], ['mix', '🧪 合成'], ['dex', '📖 図鑑']].map(([k, n]) => `<button data-tab="${k}">${n}</button>`).join('')}<div class="aqdrop">↩ ここで離すと しまう</div></div>
+      <div class="aqb"></div>`;
+    const tankEl = sc.querySelector('.aqt'), cv = tankEl.querySelector('canvas'), body = sc.querySelector('.aqb'), dropEl = sc.querySelector('.aqdrop');
+    const fname = f => { const sp = FISHBY[f.id]; return RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id); };
+    const fsize = f => Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / GROW_NEED)) * RANK_MUL[f.rk || 0]);
+    const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    const kindsOf = () => { const kinds = {}; spec.decor().forEach(d => { const k = d.lv + ':' + d.rar; (kinds[k] = kinds[k] || []).push(d); }); return kinds; };
+    const sortK = ks => ks.sort((a, b) => { const [l1, r1] = a.split(':'), [l2, r2] = b.split(':'); return (+r2 - +r1) || (+l2 - +l1); });
+
+    // ---------- 上のバー(えさ・金券・ダイヤ)と水槽ランク ----------
+    function drawHead() {
+      sc.querySelector('.aqw').innerHTML = `<span class="aqc">🍤 ${spec.food()}</span><span class="aqc">🎫 ${vch.total()}</span><span class="aqc">💎 ${vch.dia()}</span>`;
       const pts = spec.pts(), rk = spec.rank(), nx = TANK_RANKS[rk + 1];
-      PL = spec.placed(); DM = Object.fromEntries(spec.decor().map(d => [d.uid, d]));
-      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn ${editMode ? 'pri' : ''}" data-a="decor">🎨 ${editMode ? '飾りをおわる' : '飾る'}</button><button class="sbtn" data-a="mix">🎰 混ぜる</button><span class="sbtn" style="pointer-events:none">🍤 えさ ${food}</span></div>
-        <h2>🐠 水槽 <small style="font-size:13px;color:#8d7f9e">${t.length} / ${TANK_MAX}</small></h2>
-        <p class="nt">英語の問題に答えて、えさを作ろう(1問正解=1つ)。問題は、あなたが今までにまちがえた言葉や、釣り堀の単語から出るよ。1匹に1日${FEED_PER_DAY}回まで。1日の2回目で満腹になって、その種類ではじめてなら🪙コインがもらえるよ。図鑑の枠に出し入れして、いろんな魚を育てよう。${GROW_NEED}回で育ちきって、アルバムに記録される。</p>
-        <p class="nt" style="margin-top:-6px">🏆 水槽ランク: <b>${esc(TANK_RANKS[rk][1])}</b> ・ 飾りポイント ${pts}${nx ? `(あと${nx[0] - pts}で「${esc(nx[1])}」)` : '(最高!)'} ・ 飾り ${spec.decor().length}こ</p>
-        <div class="tankv"><div class="tz"><canvas></canvas></div><span class="zh">ピンチで拡大</span></div>
-        ${editMode ? decoPalette() : ''}
-        <div style="display:flex;gap:8px;margin-bottom:10px"><button class="sbtn pri" data-a="make" style="flex:1">🍤 えさを作る(英語${FOOD_Q}問)</button><button class="sbtn" data-a="all" ${food && t.some(f => (f.day !== today ? 0 : f.n) < FEED_PER_DAY && f.g < GROW_NEED) ? '' : 'disabled'}>みんなにあげる</button></div>
-        ${t.length ? t.map(f => { const sp = FISHBY[f.id], n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED, sz = Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / GROW_NEED)) * RANK_MUL[f.rk || 0]); return `<div class="row"><div class="fx"><b>${esc(RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id))}</b> <small style="color:#8d7f9e">${sz}cm ・ ${full ? '育ちきった!' : f.g >= GROW_NEED * 0.6 ? 'りっぱになってきた' : f.g >= GROW_NEED * 0.3 ? '育ちざかり' : 'ちびっこ'}</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small style="color:#8d7f9e">きょう ${n}/${FEED_PER_DAY} ・ そだち ${Math.min(f.g, GROW_NEED)}/${GROW_NEED}</small></div>
-          ${full ? `<span class="sbtn" style="pointer-events:none;background:#fff3c8">🎉 育ちきった</span>` : `<button class="sbtn" data-feed="${f.uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-tobox="${f.uid}">📖図鑑へ</button><button class="sbtn" data-rel="${f.uid}" title="池にかえす">↩</button></div>`; }).join('')
-        : `<div class="row"><div class="fx">まだ魚がいないよ。<b>英語の釣り堀</b>で釣った魚を「水槽に入れる」と、ここで育てられる。</div></div>`}`;
-      startSwim();
-    };
-    function startSwim() {
-      cancelAnimationFrame(raf);
-      const cv = sc.querySelector('.tankv canvas'); if (!cv) return;
-      const t = spec.tank(), W = cv.clientWidth, H = cv.clientHeight, dpr = Math.min(2, devicePixelRatio || 1);
-      for (let n = cv; n && n !== sc; n = n.parentElement) n.style.touchAction = editMode ? 'none' : (n.classList.contains('tankv') ? 'pan-y' : '');   // 親のどこかが pan-y だと効かないので、全部しらべて none にする   // スマホで、ドラッグが画面スクロールに取られないように
-      if (editMode) {   // 飾りをえらぶ・ドラッグでうごかす(水槽をピンチで拡大している時も、そのまま)
-        let drag = null;
-        const at = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
-        cv.onpointerdown = e => {
-          const [nx, ny] = at(e), x = nx * W, y = ny * H; let hit = null;
-          PL.slice().sort((a, b) => b.y - a.y).forEach(q => { if (!hit && Math.abs(x - q.x * W) < 26 && y > q.y * H - 40 && y < q.y * H + 10) hit = q; });
-          if (!hit) { if (selUid) { selUid = null; draw(); } return; }
-          e.stopPropagation(); selUid = hit.uid; drag = { q: hit, dx: hit.x - nx, dy: hit.y - ny, id: e.pointerId, moved: false };
-          try { cv.setPointerCapture(e.pointerId); } catch (x2) { }
-          const tb = sc.querySelector('[data-a="dtake"]'); if (tb) tb.disabled = false;
-        };
-        cv.onpointermove = e => { if (!drag || drag.id !== e.pointerId) return; const [nx, ny] = at(e); drag.q.x = Math.max(0.04, Math.min(0.96, nx + drag.dx)); drag.q.y = Math.max(0.18, Math.min(0.98, ny + drag.dy)); drag.moved = true; };
-        const up = e => { if (!drag || drag.id !== e.pointerId) return; spec.placeMove(drag.q.uid, drag.q.x, drag.q.y); drag = null; };
-        cv.onpointerup = cv.onpointercancel = up;
-      }
-      cv.width = W * dpr; cv.height = H * dpr; const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const oldSwim = swim;
-      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * (f.id === 'ryugu' ? 1 : 0.5)); return { uid: f.uid, img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * (W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
-      swim.forEach(s => { const o = oldSwim.find(q => q.uid === s.uid); if (o) { s.x = Math.max(4, Math.min(W - s.w - 4, o.x)); s.y = o.y; s.vx = o.vx > 0 ? Math.abs(s.vx) : -Math.abs(s.vx); s.ph = o.ph; s.munch = o.munch || 0; } });   // 描きなおしても魚の位置はそのまま
-      // ピンチ・ホイールで拡大(1〜3倍)。拡大中は指1本でずらす。ダブルタップでもどす
-      { const box = cv.parentElement.parentElement, tz = cv.parentElement, hint = box.querySelector('.zh'), Zs = tankZoom;
-        const clampZ = () => { Zs.z = Math.max(1, Math.min(3, Zs.z)); Zs.x = Math.max(W * (1 - Zs.z), Math.min(0, Zs.x)); Zs.y = Math.max(H * (1 - Zs.z), Math.min(0, Zs.y)); };
-        const apply = () => { clampZ(); tz.style.transform = `translate(${Zs.x}px,${Zs.y}px) scale(${Zs.z})`; box.style.touchAction = (editMode || Zs.z > 1.01) ? 'none' : 'pan-y'; if (hint) hint.style.display = Zs.z > 1.01 ? 'none' : ''; };
-        const P = new Map(); let g0 = null, lastTap = 0;
-        const rel = e => { const r = box.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-        const pinchStart = () => { const [a, b] = [...P.values()]; g0 = { d: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, z: Zs.z, cx: ((a[0] + b[0]) / 2 - Zs.x) / Zs.z, cy: ((a[1] + b[1]) / 2 - Zs.y) / Zs.z }; };
-        box.onpointerdown = e => { P.set(e.pointerId, rel(e)); try { box.setPointerCapture(e.pointerId); } catch (x) { } if (P.size === 2) pinchStart(); else { const n = Date.now(); if (n - lastTap < 320) { Zs.z = 1; Zs.x = Zs.y = 0; apply(); } lastTap = n; } };
-        box.onpointermove = e => {
-          if (!P.has(e.pointerId)) return; const old = P.get(e.pointerId), cur = rel(e); P.set(e.pointerId, cur);
-          if (P.size === 2 && g0) { const [a, b] = [...P.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2; Zs.z = g0.z * d / g0.d; Zs.x = mx - g0.cx * Zs.z; Zs.y = my - g0.cy * Zs.z; apply(); }
-          else if (P.size === 1 && Zs.z > 1.01) { Zs.x += cur[0] - old[0]; Zs.y += cur[1] - old[1]; apply(); }
-        };
-        const up = e => { P.delete(e.pointerId); g0 = null; if (P.size === 1) { /* 2本→1本に戻っても飛ばない */ } };
-        box.onpointerup = box.onpointercancel = up;
-        box.onwheel = e => { e.preventDefault(); const [mx, my] = rel(e), z0 = Zs.z, cx = (mx - Zs.x) / z0, cy = (my - Zs.y) / z0; Zs.z = z0 * (e.deltaY < 0 ? 1.15 : 1 / 1.15); Zs.x = mx - cx * Zs.z; Zs.y = my - cy * Zs.z; apply(); };
-        apply(); }
-      const bub = Array.from({ length: 10 }, () => ({ x: Math.random() * W, y: Math.random() * H, s: 1 + Math.random() * 3 }));
+      sc.querySelector('.aqrk').innerHTML = `🏆 ${esc(TANK_RANKS[rk][1])}<small> ${pts}pt${nx ? ` ・あと${nx[0] - pts}` : ''}</small> ・ 🐟 ${spec.tank().length}/${TANK_MAX}`;
+      sc.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+    }
+
+    // ---------- 水槽(canvas) ----------
+    let W = 0, H = 0, dpr = 1;
+    function sizeTank() { W = cv.clientWidth || 320; H = cv.clientHeight || 220; dpr = Math.min(2, devicePixelRatio || 1); cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+    function rebuildSwim() {
+      const t = spec.tank(), old = swim;
+      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * (f.id === 'ryugu' ? 1 : 0.5)); return { uid: f.uid, img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * Math.max(10, W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
+      swim.forEach(s => { const o = old.find(q => q.uid === s.uid); if (o) { s.x = Math.max(4, Math.min(W - s.w - 4, o.x)); s.y = o.y; s.vx = o.vx > 0 ? Math.abs(s.vx) : -Math.abs(s.vx); s.ph = o.ph; s.munch = o.munch || 0; } });
+    }
+    function refreshDecor() { PL = spec.placed(); DM = Object.fromEntries(spec.decor().map(d => [d.uid, d])); }
+    // 画面の点 → 水槽の中の点(拡大・ずらしを戻す)
+    const toTank = e => { const r = cv.getBoundingClientRect(), sx = e.clientX - r.left, sy = e.clientY - r.top; return { sx, sy, x: (sx - Z.x) / Z.z, y: (sy - Z.y) / Z.z, below: e.clientY > r.bottom + 2 }; };
+    const hitDecor = (x, y) => { let hit = null, best = 1e9; PL.forEach(q => { const dx = x - q.x * W, dy = y - (q.y * H - 14), d = Math.hypot(dx, dy); if (d < 30 && d < best) { best = d; hit = q; } }); return hit; };
+    const hitFish = (x, y) => swim.slice().reverse().find(s => x > s.x - 6 && x < s.x + s.w + 6 && y > s.y - 10 && y < s.y + s.h + 10);
+    const clampZ = () => { Z.z = Math.max(1, Math.min(3, Z.z)); Z.x = Math.max(W * (1 - Z.z), Math.min(0, Z.x)); Z.y = Math.max(H * (1 - Z.z), Math.min(0, Z.y)); };
+    { // 指の操作。水槽の中はスクロールしない(touch-action:none)。下のリストだけスクロールする
+      const P = new Map(); let drag = null, pinch = null, lastTap = 0;
+      cv.addEventListener('pointerdown', e => {
+        e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { }
+        const p = toTank(e); P.set(e.pointerId, p);
+        if (P.size === 2) { drag = null; dropEl.classList.remove('on', 'hot'); const [a, b] = [...P.values()]; pinch = { d: Math.hypot(a.sx - b.sx, a.sy - b.sy) || 1, z: Z.z, cx: ((a.sx + b.sx) / 2 - Z.x) / Z.z, cy: ((a.sy + b.sy) / 2 - Z.y) / Z.z }; return; }
+        closePop();
+        const q = hitDecor(p.x, p.y);
+        if (q) { drag = { kind: 'd', q, ox: q.x - p.x / W, oy: q.y - p.y / H, sx: p.sx, sy: p.sy, moved: false, id: e.pointerId }; selUid = q.uid; return; }
+        const s = hitFish(p.x, p.y);
+        drag = { kind: s ? 'f' : 'pan', s, sx: p.sx, sy: p.sy, lx: p.sx, ly: p.sy, moved: false, id: e.pointerId };
+      });
+      cv.addEventListener('pointermove', e => {
+        if (!P.has(e.pointerId)) return; const p = toTank(e); P.set(e.pointerId, p);
+        if (pinch && P.size === 2) { const [a, b] = [...P.values()], d = Math.hypot(a.sx - b.sx, a.sy - b.sy) || 1, mx = (a.sx + b.sx) / 2, my = (a.sy + b.sy) / 2; Z.z = pinch.z * d / pinch.d; Z.x = mx - pinch.cx * Z.z; Z.y = my - pinch.cy * Z.z; clampZ(); return; }
+        if (!drag || drag.id !== e.pointerId) return;
+        if (!drag.moved && Math.hypot(p.sx - drag.sx, p.sy - drag.sy) > 6) { drag.moved = true; if (drag.kind === 'd') dropEl.classList.add('on'); }
+        if (!drag.moved) return;
+        if (drag.kind === 'd') { drag.q.x = Math.max(0.04, Math.min(0.96, p.x / W + drag.ox)); drag.q.y = Math.max(0.18, Math.min(0.98, p.y / H + drag.oy)); drag.out = p.below; dropEl.classList.toggle('hot', !!p.below); }
+        else if (drag.kind === 'pan' && Z.z > 1.01) { Z.x += p.sx - drag.lx; Z.y += p.sy - drag.ly; clampZ(); }
+        drag.lx = p.sx; drag.ly = p.sy;
+      });
+      const up = e => {
+        if (!P.has(e.pointerId)) return; P.delete(e.pointerId);
+        if (pinch) { if (P.size < 2) pinch = null; return; }
+        const d = drag; if (!d || d.id !== e.pointerId) return; drag = null; dropEl.classList.remove('on', 'hot');
+        if (d.kind === 'd') {
+          if (d.moved && d.out) { spec.placeRemove(d.q.uid); selUid = null; sfx.play('tap'); toast('↩ しまった'); refreshDecor(); drawHead(); if (tab === 'deco') drawBody(); return; }
+          if (d.moved) { spec.placeMove(d.q.uid, d.q.x, d.q.y); return; }
+          openDecorPop(d.q); return;
+        }
+        if (!d.moved && d.kind === 'f' && d.s) { openFishPop(d.s.uid); return; }
+        if (!d.moved) { const n = Date.now(); if (n - lastTap < 320 && Z.z > 1) { Z.z = 1; Z.x = Z.y = 0; } lastTap = n; selUid = null; }
+      };
+      cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+      cv.addEventListener('wheel', e => { e.preventDefault(); const p = toTank(e), z0 = Z.z; Z.z = z0 * (e.deltaY < 0 ? 1.15 : 1 / 1.15); Z.x = p.sx - p.x * Z.z; Z.y = p.sy - p.y * Z.z; clampZ(); }, { passive: false });
+    }
+    // 小さなメニュー(水槽の上に出る)
+    function closePop() { if (pop) { pop.remove(); pop = null; } }
+    function popAt(x, y, html) {
+      closePop(); pop = document.createElement('div'); pop.className = 'aqpop'; pop.innerHTML = html; tankEl.appendChild(pop);
+      const sx = x * Z.z + Z.x, sy = y * Z.z + Z.y, pw = pop.offsetWidth || 180, ph = pop.offsetHeight || 80;
+      pop.style.left = Math.max(6, Math.min(W - pw - 6, sx - pw / 2)) + 'px'; pop.style.top = Math.max(6, Math.min(H - ph - 6, sy - ph - 16)) + 'px';
+      pop.onclick = e => { e.stopPropagation(); const b = e.target.closest('[data-pa]'); if (!b) return; act(b.dataset.pa, b.dataset.v); };
+    }
+    function openDecorPop(q) {
+      const d = DM[q.uid]; if (!d) return; const k = decorOf(d); sfx.play('tap');
+      popAt(q.x * W, q.y * H - 30, `<b>${k.icon} ${esc(k.name)}</b> <span class="rr rr${d.rar}">${RAR[d.rar]}</span><div class="aqpb"><button class="sbtn" data-pa="dtake" data-v="${q.uid}">↩ しまう</button><button class="sbtn" data-pa="dup" data-v="${d.lv}:${d.rar}">➕ ふやす</button></div>`);
+    }
+    function openFishPop(uid) {
+      const f = spec.tank().find(x => x.uid === uid), s = swim.find(x => x.uid === uid); if (!f || !s) return; sfx.play('tap');
+      const n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED, food = spec.food();
+      popAt(s.x + s.w / 2, s.y, `<b>${esc(fname(f))}</b> <small>${fsize(f)}cm</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small>${full ? '🎉 育ちきった' : `そだち ${f.g}/${GROW_NEED} ・ きょう ${n}/${FEED_PER_DAY}`}</small>
+        <div class="aqpb">${full ? '' : `<button class="sbtn pri" data-pa="feed" data-v="${uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる${food ? '' : '(えさ0)'}</button>`}<button class="sbtn" data-pa="tobox" data-v="${uid}">📦 ひかえへ</button><button class="sbtn" data-pa="info" data-v="${f.id}:${f.rk || 0}">ℹ︎</button></div>`);
+    }
+    function startLoop() {
+      cancelAnimationFrame(raf); sizeTank(); rebuildSwim(); refreshDecor();
+      const g = cv.getContext('2d'), bub = Array.from({ length: 10 }, () => ({ x: Math.random() * W, y: Math.random() * H, s: 1 + Math.random() * 3 }));
       let last = performance.now();
       const step = ts => {
         if (!sc.isConnected) return; raf = requestAnimationFrame(step); const dt = Math.min(0.05, (ts - last) / 1000); last = ts;
-        g.clearRect(0, 0, W, H);
+        if (cv.clientWidth && Math.abs(cv.clientWidth - W) > 2) { sizeTank(); }
+        g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+        g.setTransform(dpr * Z.z, 0, 0, dpr * Z.z, dpr * Z.x, dpr * Z.y);
+        const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#8fd3ff'); sky.addColorStop(0.72, '#3f9bd6'); sky.addColorStop(0.72, '#e9d9b0'); sky.addColorStop(1, '#d9c28d'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
         g.fillStyle = 'rgba(255,255,255,.55)'; bub.forEach(b => { b.y -= (12 + b.s * 6) * dt; if (b.y < -5) { b.y = H * 0.7; b.x = Math.random() * W; } g.beginPath(); g.arc(b.x, b.y, b.s, 0, 6.3); g.fill(); });
-        { g.textAlign = 'center'; g.font = '34px serif'; PL.slice().sort((a, b2) => a.y - b2.y).forEach((q, i) => { const d = DM[q.uid]; if (!d) return; const k = decorOf(d), x = q.x * W, y = q.y * H; g.save(); if (d.rar >= 2) { g.shadowColor = d.rar === 3 ? '#ffd24a' : '#c07bff'; g.shadowBlur = 10 + 6 * Math.sin(ts / 300 + i); } g.fillText(k.icon, x, y); g.restore(); if (editMode && q.uid === selUid) { g.save(); g.strokeStyle = '#f58aa8'; g.lineWidth = 2.5; g.setLineDash([5, 4]); g.strokeRect(x - 24, y - 38, 48, 46); g.restore(); } }); g.textAlign = 'start'; }
-        g.fillStyle = '#3f9a5a'; for (let i = 0; i < 5; i++) { const x = 20 + i * (W - 40) / 4; g.beginPath(); g.moveTo(x, H * 0.7); g.quadraticCurveTo(x + Math.sin(ts / 700 + i) * 10, H * 0.45, x + 4, H * 0.3); g.lineTo(x + 7, H * 0.7); g.fill(); }
+        g.fillStyle = '#3f9a5a'; for (let i = 0; i < 5; i++) { const x = 20 + i * (W - 40) / 4; g.beginPath(); g.moveTo(x, H * 0.74); g.quadraticCurveTo(x + Math.sin(ts / 700 + i) * 10, H * 0.48, x + 4, H * 0.32); g.lineTo(x + 7, H * 0.74); g.fill(); }
+        g.textAlign = 'center'; g.font = '34px serif';
+        PL.slice().sort((a, b2) => a.y - b2.y).forEach((q, i) => { const d = DM[q.uid]; if (!d) return; const k = decorOf(d), x = q.x * W, y = q.y * H; g.save(); if (d.rar >= 2) { g.shadowColor = d.rar === 3 ? '#ffd24a' : '#c07bff'; g.shadowBlur = 10 + 6 * Math.sin(ts / 300 + i); } g.fillText(k.icon, x, y); g.restore();
+          if (q.uid === selUid) { g.save(); g.strokeStyle = '#f58aa8'; g.lineWidth = 2.5; g.setLineDash([5, 4]); g.strokeRect(x - 24, y - 38, 48, 46); g.restore(); } });
+        g.textAlign = 'start';
         swim.forEach(s => {
-          // えさがあれば、いちばん近いつぶへ寄っていく。口(向いている側)で食べる
           const mine = fx.pel.filter(p => p.uid === s.uid && p.y > -4); let eating = false;
-          if (mine.length) {
-            const dir = s.vx < 0 ? -1 : 1, mx = s.x + (dir > 0 ? s.w * 0.9 : s.w * 0.1), my = s.y + s.h * 0.5;
-            const p = mine.reduce((a, b) => Math.hypot(a.x - mx, a.y - my) < Math.hypot(b.x - mx, b.y - my) ? a : b);
-            const tw = Math.sign(p.x - mx) || dir; s.vx = tw * Math.max(Math.abs(s.vx), 40); s.y += Math.max(-60, Math.min(60, p.y - my)) * dt * 1.6; s.y = Math.max(10, Math.min(H - s.h - 10, s.y)); eating = true;
-          }
+          if (mine.length) { const dir = s.vx < 0 ? -1 : 1, mx = s.x + (dir > 0 ? s.w * 0.9 : s.w * 0.1), my = s.y + s.h * 0.5; const p = mine.reduce((a, b) => Math.hypot(a.x - mx, a.y - my) < Math.hypot(b.x - mx, b.y - my) ? a : b); const tw = Math.sign(p.x - mx) || dir; s.vx = tw * Math.max(Math.abs(s.vx), 40); s.y += Math.max(-60, Math.min(60, p.y - my)) * dt * 1.6; s.y = Math.max(10, Math.min(H - s.h - 10, s.y)); eating = true; }
           if (!eating && Math.abs(s.vx) > 34) s.vx *= 0.97;
           s.x += s.vx * dt * (eating ? 1.4 : 1); s.ph += dt * 2; if (s.x < 4 || s.x > W - s.w - 4) { s.vx *= -1; s.x = Math.max(4, Math.min(W - s.w - 4, s.x)); }
           if (s.munch > 0) s.munch -= dt;
           const y = s.y + Math.sin(s.ph) * (eating ? 2 : 6); if (!s.img) return;
-          const mk = s.munch > 0 ? Math.sin(s.munch * 30) : 0;   // もぐもぐ:口まわりがぱくぱく(ぷるぷる伸び縮み)
-          const sx = 1 + 0.09 * mk, sy = 1 - 0.14 * mk;
-          g.save(); if (s.vx < 0) { g.translate(s.x + s.w, y + s.h / 2); g.scale(-sx, sy); g.drawImage(s.img, 0, -s.h / 2, s.w, s.h); } else { g.translate(s.x, y + s.h / 2); g.scale(sx, sy); g.drawImage(s.img, 0, -s.h / 2, s.w, s.h); } g.restore();   // 絵は右向き。右へ泳ぐ時はそのまま、左へ泳ぐ時だけ反転
+          const mk = s.munch > 0 ? Math.sin(s.munch * 30) : 0, sx = 1 + 0.09 * mk, sy = 1 - 0.14 * mk;
+          g.save(); if (s.vx < 0) { g.translate(s.x + s.w, y + s.h / 2); g.scale(-sx, sy); } else { g.translate(s.x, y + s.h / 2); g.scale(sx, sy); } g.drawImage(s.img, 0, -s.h / 2, s.w, s.h); g.restore();
           s.mouth = [s.vx < 0 ? s.x + s.w * 0.08 : s.x + s.w * 0.92, y + s.h * 0.5];
         });
-        // えさのつぶ:上からパラパラ落ちて、魚の口もとに入ると食べられる
         fx.pel.forEach(p => {
           p.t += dt; p.y += p.vy * dt; p.x += Math.sin(p.t * 5 + p.ph) * 10 * dt;
           const s = swim.find(q => q.uid === p.uid);
-          if (s && p.y > 0 && Math.abs(p.x - (s.mouth ? s.mouth[0] : s.x + s.w / 2)) < s.w * 0.28 && Math.abs(p.y - (s.mouth ? s.mouth[1] : s.y + s.h / 2)) < s.h * 0.4) { p.dead = true; s.munch = 0.7; for (let i = 0; i < 2; i++) fx.bub.push({ x: s.mouth[0], y: s.mouth[1], vx: (Math.random() - 0.5) * 20, vy: -24 - Math.random() * 20, r: 1.5 + Math.random() * 2, life: 0.8 }); }
+          if (s && s.mouth && p.y > 0 && Math.abs(p.x - s.mouth[0]) < s.w * 0.28 && Math.abs(p.y - s.mouth[1]) < s.h * 0.4) { p.dead = true; s.munch = 0.7; for (let i = 0; i < 2; i++) fx.bub.push({ x: s.mouth[0], y: s.mouth[1], vx: (Math.random() - 0.5) * 20, vy: -24 - Math.random() * 20, r: 1.5 + Math.random() * 2, life: 0.8 }); }
           else if (p.y > H + 6 || p.t > 6) p.dead = true;
-          if (!p.dead) { g.fillStyle = p.c; g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.3); g.fill(); g.fillStyle = 'rgba(255,255,255,.55)'; g.beginPath(); g.arc(p.x - p.r * 0.3, p.y - p.r * 0.3, p.r * 0.35, 0, 6.3); g.fill(); }
+          if (!p.dead) { g.fillStyle = p.c; g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.3); g.fill(); }
         });
         fx.pel = fx.pel.filter(p => !p.dead);
         fx.bub.forEach(b => { b.life -= dt; b.x += b.vx * dt; b.y += b.vy * dt; g.strokeStyle = `rgba(255,255,255,${Math.max(0, b.life)})`; g.lineWidth = 1.2; g.beginPath(); g.arc(b.x, b.y, b.r, 0, 6.3); g.stroke(); });
         fx.bub = fx.bub.filter(b => b.life > 0);
-        // コイン:魚からぽんと出て、ふわっと上がって消える
         fx.coin.forEach(c => {
           c.delay -= dt; if (c.delay > 0) return; c.t += dt; const s = swim.find(q => q.uid === c.uid), bx = s ? s.x + s.w / 2 : c.x, by = (s ? s.y : c.y) - 4;
           const k = c.t / 1.1, yy = by - 14 - 46 * (1 - (1 - k) * (1 - k)), a = k < 0.75 ? 1 : Math.max(0, (1 - k) / 0.25);
           if (!c.sound) { c.sound = 1; sfx.play('coin'); }
-          g.save(); g.globalAlpha = a; g.translate(bx, yy); const sc2 = Math.abs(Math.cos(c.t * 9));
-          if (c.n) { g.fillStyle = '#ffd24a'; g.strokeStyle = '#c98a10'; g.lineWidth = 2; g.beginPath(); g.ellipse(0, 0, 9 * Math.max(0.25, sc2), 9, 0, 0, 6.3); g.fill(); g.stroke();
-          g.fillStyle = '#fff3b0'; g.beginPath(); g.ellipse(-1.5, -2, 3 * Math.max(0.25, sc2), 4, 0, 0, 6.3); g.fill(); }
-          g.font = '900 12px sans-serif'; g.textAlign = 'center'; g.fillStyle = '#fff'; g.strokeStyle = '#a06a00'; g.lineWidth = 3; const lb = c.n ? '満腹! +' + c.n : '満腹!'; g.strokeText(lb, c.n ? 34 : 0, c.n ? 4 : 2); g.fillText(lb, c.n ? 34 : 0, c.n ? 4 : 2); g.restore();
+          g.save(); g.globalAlpha = a; g.translate(bx, yy); g.font = '900 12px sans-serif'; g.textAlign = 'center'; g.fillStyle = '#fff'; g.strokeStyle = '#a06a00'; g.lineWidth = 3; const lb = c.n ? '満腹! 🪙+' + c.n : '満腹!'; g.strokeText(lb, 0, 2); g.fillText(lb, 0, 2); g.restore();
         });
         fx.coin = fx.coin.filter(c => c.t < 1.1);
       };
       raf = requestAnimationFrame(step);
     }
     const feedFx = (uids, fulls = {}) => {
-      const W = sc.querySelector('.tankv canvas')?.clientWidth || 320;
       uids.forEach((uid, k) => {
         const s = swim.find(q => q.uid === uid), cx = s ? s.x + s.w * (s.vx < 0 ? 0.2 : 0.8) : W / 2;
         for (let i = 0; i < 12; i++) fx.pel.push({ uid, x: Math.max(6, Math.min(W - 6, cx + (Math.random() - 0.5) * 70)), y: -6 - Math.random() * 40, vy: 55 + Math.random() * 35, r: 2 + Math.random() * 1.6, c: ['#e0883a', '#c9692a', '#f2b45a', '#a8521f'][i % 4], t: 0, ph: Math.random() * 6 });
@@ -666,39 +565,205 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       if (f.n >= FEED_PER_DAY || f.g >= GROW_NEED) return false;
       f.n++; f.g++; spec.setFood(food - 1);
       let r = true;
-      if (f.n >= FEED_PER_DAY) { r = 'full'; const fl = spec.full(); if (!fl[f.id]) { fl[f.id] = 1; spec.saveFull(fl); r = 'coin'; } }   // 1日の2回目で満腹。その種類ではじめてならコイン
+      if (f.n >= FEED_PER_DAY) { r = 'full'; const fl = spec.full(); if (!fl[f.id]) { fl[f.id] = 1; spec.saveFull(fl); r = 'coin'; } }
+      if (f.g >= GROW_NEED) spec.markGrown(f.id, f.rk || 0);
       spec.saveTank(t); return r;
     };
-    draw();
-    sc.onclick = async e => {
-      const a = e.target.closest('[data-a]')?.dataset.a, fd = e.target.closest('[data-feed]'), sp = e.target.closest('[data-spec]'), rl = e.target.closest('[data-rel]'), tb = e.target.closest('[data-tobox]');
-      if (a === 'back') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); onBack(); }
-      else if (a === 'mix') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); mixScreen({ onBack: () => tankScreen({ onBack }) }); }
-      else if (a === 'decor') { sfx.play('tap'); editMode = !editMode; selUid = null; draw(); }
-      else if (e.target.closest('[data-dadd]')) {   // その種類の、まだ置いていない1こを置く
-        sfx.play('tap'); const k = e.target.closest('[data-dadd]').dataset.dadd, placed = new Set(spec.placed().map(q => q.uid)), d = spec.decor().find(x => x.lv + ':' + x.rar === k && !placed.has(x.uid));
-        if (d) { spec.placeAdd(d.uid, 0.3 + Math.random() * 0.4, 0.74 + Math.random() * 0.2); selUid = d.uid; draw(); }
+
+    // ---------- 下のタブ ----------
+    function fishRow(f, where) {
+      const n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED;
+      const btns = where === 'tank'
+        ? `${full ? '<span class="aqok">🎉</span>' : `<button class="sbtn" data-feed="${f.uid}" ${spec.food() && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-tobox="${f.uid}">📦 ひかえへ</button>`
+        : `<button class="sbtn pri" data-totank="${f.uid}" ${spec.tank().length < TANK_MAX ? '' : 'disabled'}>🐠 水槽へ</button>`;
+      return `<div class="row"><span class="aqth" data-fi="${f.id}:${f.rk || 0}">${fishImg(f.id, 64, false, f.rk || 0)}</span><div class="fx"><b>${esc(fname(f))}</b> <small style="color:#8d7f9e">${fsize(f)}cm</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small style="color:#8d7f9e">${full ? '育ちきった!' : `そだち ${f.g}/${GROW_NEED} ・ きょう ${n}/${FEED_PER_DAY}`}</small></div>${btns}</div>`;
+    }
+    function tabFish() {
+      const t = spec.tank(), bx = spec.box(), n = spec.boxSlots(), food = spec.food();
+      const canAll = food && t.some(f => (f.day !== today ? 0 : f.n) < FEED_PER_DAY && f.g < GROW_NEED);
+      let h = `<div class="aqrow"><button class="sbtn pri" data-a="make" style="flex:1">🍤 えさを作る(英語${FOOD_Q}問)</button><button class="sbtn" data-a="all" ${canAll ? '' : 'disabled'}>みんなにあげる</button></div>
+        <p class="nt">1匹に1日${FEED_PER_DAY}回まで・${GROW_NEED}回で育ちきる。水槽の魚をタップしても、えさをあげられるよ。</p>
+        <h3 class="aqs">🐠 水槽 ${t.length}/${TANK_MAX}</h3>${t.length ? t.map(f => fishRow(f, 'tank')).join('') : '<p class="nt">まだ魚がいないよ。英語の釣り堀で釣った魚を「水槽に入れる」と、ここで育てられる。</p>'}
+        <h3 class="aqs">📦 ひかえ ${bx.length}/${n} <small>(水槽に入りきらない魚の置き場。そだちは消えない)</small></h3>`;
+      h += [0, 1, 2, 3].map(i => {
+        if (i < n) { const f = bx[i]; return f ? fishRow(f, 'box') : `<div class="row"><div class="fx" style="color:#8d7f9e">あき</div></div>`; }
+        if (i > n) return '';
+        return i < 3 ? `<div class="row"><div class="fx">🔒 ひかえの${i + 1}つ目</div><button class="sbtn pri" data-unl="coin">🪙 ${BOX_COIN[i - 1]}</button></div>` : `<div class="row"><div class="fx">🔒 ひかえの4つ目</div><button class="sbtn pri" data-unl="gem">💎 ${BOX_GEM}</button></div>`;
+      }).join('');
+      return h;
+    }
+    function tabDeco() {
+      const kinds = kindsOf(), ks = sortK(Object.keys(kinds)), placedUid = new Set(spec.placed().map(q => q.uid));
+      if (!ks.length) return `<p class="nt">まだ飾りがないよ。標本を3つ<b>🧪 合成</b>で混ぜると、飾りができる。</p><button class="sbtn pri" data-tab="mix">🧪 合成へ</button>`;
+      return `<p class="nt">タップで水槽に出る → 水槽の中で指で動かす。しまうときは、水槽の下まで引っぱって離す(または飾りをタップ →「しまう」)。いくつでも置けるよ(同じ種類の2こ目からは水槽ランクのポイントに入らない)。</p>
+        <div class="aqrow"><button class="sbtn" data-a="takeall" ${placedUid.size ? '' : 'disabled'}>ぜんぶしまう</button><span style="flex:1"></span><button class="sbtn" data-a="wallet">🎫 金券・💎</button></div>
+        <div class="grid">${ks.map(k => { const ds = kinds[k], d0 = ds[0], it = decorOf(d0), n = ds.filter(d => placedUid.has(d.uid)).length; return `<div class="cell got"><span class="ic">${it.icon}</span><b>${esc(it.name)}<span class="rr rr${d0.rar}">${RAR[d0.rar]}</span></b><small>置いた ${n} / ${ds.length}</small><div class="aqcb"><button class="sbtn pri" data-dadd="${k}" ${n >= ds.length ? 'disabled' : ''}>置く</button><button class="sbtn" data-dupk="${k}">➕</button></div></div>`; }).join('')}</div>`;
+    }
+    function tabMix() {
+      const tabs = `<div class="tabs">${[['d', '🪸 飾りを作る'], ['f', '🐟 魚を強くする']].map(([k, n]) => `<button data-mm="${k}" class="${k === mixMode ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+      const slotIc = id => { if (mixMode === 'd') { const s = SET[id]; return s ? `<span class="ic">${ICON[s.look.shape]}</span><small>${esc(s.look.name)}</small>` : ''; } const f = spec.tank().find(x => x.uid === id); return f ? `${fishImg(f.id, 56, false, f.rk || 0)}<small>${esc(fname(f))}</small>` : ''; };
+      let result = '？', list = '', note = '';
+      if (mixMode === 'd') {
+        const avail = l => Object.entries(spec.own()).filter(([id, o]) => SET[id] && SET[id].lv === l && !o.crack && !o.used).map(([id]) => SET[id]);
+        const items = avail(mixLv), rc = spec.recipes();
+        if (pick3.length === MIX_N) { const rar = recipeFor(mixLv, pick3.map(id => SET[id].look.shape)); result = rar >= 0 && rc.includes(mixLv + ':' + rar) ? `${decorOf({ lv: mixLv, rar }).icon}<small>${esc(decorOf({ lv: mixLv, rar }).name)}</small>` : '❔<small>やってみよう</small>'; }
+        note = `<p class="nt">同じレベルの標本を${MIX_N}つ。<b>形の組み合わせ</b>がレシピに合うと飾りができる。合わなければ何も起きず、標本も消えない。</p>
+          <div class="tabs">${[1, 2, 3].map(l => `<button data-ml="${l}" class="${l === mixLv ? 'on' : ''}">${LV_NAME[l]} <small>${avail(l).length}</small></button>`).join('')}</div>`;
+        list = items.length ? `<div class="grid">${items.map(s => `<button class="cell got ${pick3.includes(s.id) ? 'sel' : ''}" data-p="${s.id}"><span class="ic">${ICON[s.look.shape]}</span><b>${esc(s.look.name)}</b><small>${esc(shapeName(mixLv, s.look.shape))}</small></button>`).join('')}</div>` : `<p class="nt">このレベルの標本がまだないよ。英語の釣り堀で、セットの単語をぜんぶ完璧にするともらえる。</p>`;
+        list += `<details class="aqrc"><summary>📜 レシピ帳(${LV_NAME[mixLv]})</summary><div class="rcp">${RECIPES[mixLv].map((r, i) => { const k = decorOf({ lv: mixLv, rar: i }), got = rc.includes(mixLv + ':' + i); return `<div><span class="rr rr${i}">${RAR[i]}</span> ${got ? `${k.icon} <b>${esc(k.name)}</b> = ${r.map(x => esc(shapeName(mixLv, x))).join(' + ')}` : `❔ ??? = <b>${esc(shapeName(mixLv, r[0]))}</b> + ？ + ？`}</div>`; }).join('')}</div></details>`;
+      } else {
+        const items = spec.tank().filter(f => f.g >= GROW_NEED && (f.rk || 0) < FISH_MAX_RANK);
+        if (pick3.length === MIX_N) { const sel = pick3.map(id => spec.tank().find(f => f.uid === id)).filter(Boolean); if (sel.length === MIX_N && sel.every(f => f.id === sel[0].id && (f.rk || 0) === (sel[0].rk || 0))) result = `${fishImg(sel[0].id, 56, false, (sel[0].rk || 0) + 1)}<small>${esc(RANK_PRE[(sel[0].rk || 0) + 1] + (FISHBY[sel[0].id] || {}).name)}</small>`; else result = '✖<small>同じ種類・同じ強さを3匹</small>'; }
+        note = `<p class="nt">水槽で<b>育てきった、同じ種類・同じ強さ</b>の魚を${MIX_N}匹 → 1匹の強い魚(大きく・称号つき。最大2段階)。元の魚は図鑑に残るよ。</p>`;
+        list = items.length ? `<div class="grid">${items.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''}" data-p="${f.uid}"><span class="ic fa">${fishImg(f.id, 80, false, f.rk || 0)}</span><b>${esc(fname(f))}</b><small>${fsize(f)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。🐟 魚タブで、えさをあげて育てよう。</p>`;
       }
-      else if (a === 'dtake') { if (selUid) { sfx.play('tap'); spec.placeRemove(selUid); selUid = null; draw(); } }
-      else if (a === 'vx') { const n = vch.exchange(ctx.wallet, Math.min(vch.todayLeft(), ctx.wallet.get())); if (n) { sfx.play('coin'); toast(`🎫 金券 ${n} まい ためたよ(3か月まで)`); } draw(); }
-      else if (e.target.closest('[data-dup]')) {
-        const b = e.target.closest('[data-dup]'), k = b.dataset.dup, pay = b.dataset.pay, [lv, rar] = k.split(':').map(Number), src = spec.decor().find(x => x.lv === lv && x.rar === rar);
-        if (!src) return; const ok = pay === 'v' ? vch.spend(VCH.PRICE_V[rar]) : pay === 'f' ? vch.spendFrag(VCH.PRICE_F[rar]) : vch.spendDia(VCH.PRICE_D[rar]);
+      const slots = Array.from({ length: MIX_N }, (_, i) => `<button class="aqslot ${pick3[i] ? 'on' : ''}" data-slot="${i}">${pick3[i] ? slotIc(pick3[i]) : '<span class="ic" style="opacity:.35">＋</span>'}</button>`).join('<span class="aqplus">+</span>');
+      return `${tabs}${note}<div class="aqmix">${slots}<span class="aqplus">→</span><div class="aqslot res">${result}</div></div>
+        <button class="btn aqgo" data-a="go" ${pick3.length === MIX_N ? '' : 'disabled'}>🧪 混ぜる! (${pick3.length}/${MIX_N})</button>${list}`;
+    }
+    function tabDex() {
+      const own = spec.own(), adm = isAdmin(), D = dex || {};
+      const chips = [['f', '🐟 魚'], [1, '🐚 初級'], [2, '🪨 中級'], [3, '💎 上級'], ['d', '🪸 飾り']].concat(openDex ? [['i', '🎁 宝物・手紙']] : []);
+      let h = `<div class="aqchips">${chips.map(([k, n]) => `<button data-dx="${k}" class="${String(k) === String(dexT) ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+      if (dexT === 'f') {
+        const gr = spec.grown(), best = spec.fishBest(), caught = FISH_SPEC.filter(f => D[f.id]).length, grown = FISH_SPEC.filter(f => gr.includes(f.id) || furn.owned('fs_' + f.id)).length;
+        h += `<p class="nt">🎣 釣った ${caught} / ${FISH_SPEC.length} ・ 🐠 育てた ${grown} / ${FISH_SPEC.length}(英語ありでも、なしでも、釣ればここに載る)</p>${adm ? '<p class="nt" style="background:#fff0d0;border-radius:10px;padding:6px 10px">🛠 運営テスト:＋－で水槽に入れる</p>' : ''}
+          <div class="grid">${FISH_SPEC.map(f => { const c = D[f.id], g = gr.includes(f.id) || furn.owned('fs_' + f.id), bk = best[f.id] || 0, seen = c || g; return `<div class="cell ${seen ? 'got' : ''}" data-fd="${f.id}">${adm ? `<div class="admf"><button data-admf="${f.id}" data-d="-1">－</button><i>${spec.tank().filter(x => x.id === f.id).length}</i><button data-admf="${f.id}" data-d="1">＋</button></div>` : ''}<span class="ic fa">${fishImg(f.id, 100, !seen, bk)}</span><b>${seen ? esc(f.name) : '？？？'}</b><small>${c ? `🎣${c.best}cm` : ''}${g ? ` 🐠${bk ? esc(RANK_PRE[bk]) : '育てた'}` : ''}${!seen ? '★'.repeat(f.r) + (f.rain ? ' ☔' : '') : ''}</small></div>`; }).join('')}</div>`;
+      } else if (dexT === 'd') {
+        const dl = spec.decor();
+        h += `<p class="nt">合成でできた飾りの記録。</p><div class="grid">${[1, 2, 3].flatMap(lv => DECOR[lv].map((_, r) => { const n = dl.filter(d => d.lv === lv && d.rar === r).length, k = decorOf({ lv, rar: r }); return `<div class="cell ${n ? 'got' : ''}"><span class="ic">${n ? k.icon : '❔'}</span><b>${n ? esc(k.name) : '？？？'}<span class="rr rr${r}">${RAR[r]}</span></b><small>${n ? esc(k.en) + (n > 1 ? ' ×' + n : '') : LV_NAME[lv]}</small></div>`; })).join('')}</div>`;
+      } else if (dexT === 'i') {
+        h += `<p class="nt">釣りでひろった宝物と、ビンの手紙。</p><button class="sbtn pri" data-a="idex">🎁 宝物・手紙を見る</button>`;
+      } else {
+        const lv = +dexT, sets = SETS.filter(s => s.lv === lv), cnt = sets.filter(s => own[s.id]).length;
+        h += `<p class="nt">標本 ${cnt} / ${sets.length}。そのセットの単語をぜんぶ完璧にするともらえる。💥=ひび(抜き打ちテスト)・🔀=合成に使った。</p>${adm ? `<p class="nt" style="background:#fff0d0;border-radius:10px;padding:6px 10px">🛠 運営テスト <button class="sbtn" data-a="admall">全部ON</button> <button class="sbtn" data-a="admnone">全部OFF</button></p>` : ''}
+          <div class="grid">${sets.map(s => { const o = own[s.id], n = spec.perfCount(s.id); return `<button class="cell ${o ? (o.crack ? 'crk' : 'got') : ''} ${o && o.used ? 'used' : ''}" data-s="${s.id}">${adm ? `<input type="checkbox" class="adm" data-adm="${s.id}" ${o ? 'checked' : ''}>` : ''}${o && o.used ? '<span class="ub">🔀</span>' : ''}${o ? `<i class="dot" style="background:${hexCol(s.look.col)}"></i>` : ''}<span class="ic">${o ? (o.crack ? '💥' : ICON[s.look.shape]) : '❔'}</span><b>${o ? esc(s.look.name) : 'セット' + s.no}</b><small>${o ? esc(s.look.en) : esc(s.words[0][0]) + '…'}</small>${o ? '' : `<div class="pg"><i style="width:${n / s.words.length * 100}%"></i></div>`}</button>`; }).join('')}</div>`;
+      }
+      return h;
+    }
+    function drawBody() {
+      const y = body.scrollTop;
+      body.innerHTML = tab === 'fish' ? tabFish() : tab === 'deco' ? tabDeco() : tab === 'mix' ? tabMix() : tabDex();
+      body.scrollTop = y;
+    }
+    function redraw(all) { drawHead(); drawBody(); if (all) { rebuildSwim(); } refreshDecor(); }
+
+    // ---------- 金券・ふやす ----------
+    function walletSheet(k) {
+      const draw = () => {
+        const nx = vch.nextExpire(), exp = nx ? `いちばん近い期限 ${new Date(nx).getMonth() + 1}/${new Date(nx).getDate()}` : '期限のある金券はないよ';
+        let dupH = '';
+        if (k) { const [lv, rar] = k.split(':').map(Number), it = decorOf({ lv, rar }), have = spec.decor().filter(d => d.lv === lv && d.rar === rar).length;
+          const opt = (pay, ic, price, cur) => price == null ? '' : `<button class="sbtn ${cur >= price ? 'pri' : ''}" data-pay="${pay}" ${cur >= price ? '' : 'disabled'}>${ic} ${price}</button>`;
+          dupH = `<div class="row" style="flex-wrap:wrap"><div class="fx"><b>${it.icon} ${esc(it.name)}</b> <span class="rr rr${rar}">${RAR[rar]}</span><br><small>もっている ${have}こ ・ 同じものを1つ ふやす</small></div><div style="display:flex;gap:6px;flex-wrap:wrap">${opt('v', '🎫', VCH.PRICE_V[rar], vch.total())}${opt('f', '🧩', VCH.PRICE_F[rar], vch.frag())}${opt('d', '💎', VCH.PRICE_D[rar], vch.dia())}</div></div>`; }
+        sh.querySelector('.sc').innerHTML = `${dupH}
+          <div class="row" style="flex-wrap:wrap"><div class="fx"><b>🎫 金券 ${vch.total()}</b><br><small>コインを換金してためておける(3か月で消える・${exp})。きょうは あと ${vch.todayLeft()} まで</small></div><button class="sbtn pri" data-vx ${vch.todayLeft() > 0 && ctx.wallet.get() > 0 ? '' : 'disabled'}>🪙→🎫 ${Math.min(vch.todayLeft(), ctx.wallet.get())}</button></div>
+          <div class="row"><div class="fx"><b>🧩 かけら ${vch.frag()}</b><br><small>単語をはじめて完璧にするともらえる(1日${VCH.FRAG_DAY}まで)</small></div></div>
+          <div class="row"><div class="fx"><b>💎 ダイヤ ${vch.dia()}</b><br><small>期限なし。いちばんレアな飾りは、ダイヤでだけ ふやせる</small></div></div>
+          <p style="font-size:11px;color:#8d7f9e;margin:4px 2px">値段はレア度で決まる(仮): 🎫 N${VCH.PRICE_V[0]}・R${VCH.PRICE_V[1]}・SR${VCH.PRICE_V[2]} / 🧩 N${VCH.PRICE_F[0]}・R${VCH.PRICE_F[1]}・SR${VCH.PRICE_F[2]} / 💎 N${VCH.PRICE_D[0]}・R${VCH.PRICE_D[1]}・SR${VCH.PRICE_D[2]}・SSR${VCH.PRICE_D[3]}</p>`;
+      };
+      const sh = sheet(`<div class="ph"><h2>${k ? '➕ 飾りをふやす' : '🎫 金券・かけら・ダイヤ'}</h2></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>とじる</button></div>`, true);
+      draw();
+      sh.onclick = e => {
+        if (e.target.closest('[data-x]')) { sh.remove(); redraw(); return; }
+        if (e.target.closest('[data-vx]')) { const n = vch.exchange(ctx.wallet, Math.min(vch.todayLeft(), ctx.wallet.get())); if (n) { sfx.play('coin'); toast(`🎫 金券 ${n} まい ためた(3か月まで)`); } draw(); drawHead(); return; }
+        const p = e.target.closest('[data-pay]'); if (!p || !k) return;
+        const [lv, rar] = k.split(':').map(Number), pay = p.dataset.pay;
+        const ok = pay === 'v' ? vch.spend(VCH.PRICE_V[rar]) : pay === 'f' ? vch.spendFrag(VCH.PRICE_F[rar]) : vch.spendDia(VCH.PRICE_D[rar]);
         if (!ok) { toast('たりないよ'); sfx.play('early'); return; }
-        spec.addDecor({ uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), lv, rar, at: Date.now() }); sfx.play('coin'); toast('✨ 同じ飾りが ふえた!'); draw();
-      }
-      else if (a === 'dtakeall') { sfx.play('tap'); spec.placed().forEach(q => spec.placeRemove(q.uid)); selUid = null; draw(); }
-      else if (a === 'make') {
+        spec.addDecor({ uid: newUid(), lv, rar, at: Date.now() }); sfx.play('coin'); toast('✨ 同じ飾りが ふえた!'); draw(); drawHead(); if (tab === 'deco') drawBody();
+      };
+    }
+
+    // ---------- 魚の説明(釣った記録と育てた記録をいっしょに) ----------
+    function fishDetail(id, rk0) {
+      const f = FISHBY[id]; if (!f) return;
+      const c = (dex || {})[id], gr = spec.grown().includes(id) || furn.owned('fs_' + id), best = spec.fishBest()[id] || 0, rk = Math.min(rk0 === undefined ? best : rk0, FISH_MAX_RANK), seen = gr || c;
+      let ov = sc.querySelector('.fdx'); if (!ov) { ov = document.createElement('div'); ov.className = 'fdx'; sc.appendChild(ov); }
+      const AN = { open: 'ひらけた所', weed: '水草', log: 'しずんだ木', lily: 'ハスの葉', rock: '岩場', deep: 'ふかみ' }, TM = { day: '明るいうち', night: '夜', morning: '朝', evening: '夕方', any: 'いつでも' };
+      const [lo, hi] = f.size || [10, 20], mul = RANK_MUL[rk];
+      const tabs = [0, 1, 2].map(k => `<button class="${k === rk ? 'on' : ''}" data-fr="${k}" ${gr && k <= best ? '' : 'disabled'}>${['ふつう', 'りっぱな', '伝説の'][k]}</button>`).join('');
+      ov.innerHTML = `<div class="fdc"><button class="x" data-fx>✕</button><div class="fpic">${fishImg(id, 320, !seen, rk)}</div>
+        ${seen ? `<div class="rt">${['N', 'SR', 'SSR'][rk]}</div><h3>${esc(RANK_PRE[rk] + f.name)}</h3><div class="en">${esc(f.en)}　${'★'.repeat(f.r)}</div>
+        <div class="tb">${tabs}</div>
+        <p class="ds">${esc(f.hint || '')}</p>
+        <table><tr><th>🎣 釣った</th><td>${c ? `${c.n}匹・最大 ${c.best}cm` : 'まだ'}</td></tr><tr><th>🐠 育てた</th><td>${gr ? (best ? RANK_PRE[best] + 'まで' : '育てきった') : 'まだ'}</td></tr><tr><th>大きさ</th><td>${Math.round(lo * 1.5 * mul)}〜${Math.round(hi * 1.5 * mul)}cm</td></tr><tr><th>いる所</th><td>${(f.area || ['open']).map(a => AN[a] || a).join('・')}</td></tr><tr><th>時間</th><td>${TM[f.time] || 'いつでも'}${f.rain ? '・☔ 雨が好き' : ''}</td></tr></table>
+        <p class="sy">“${esc(f.say || '')}”</p>` : `<h3>？？？</h3><div class="en">${'★'.repeat(f.r)}${f.rain ? ' ☔' : ''}</div><p class="ds">まだ出会っていない魚。${f.rain ? '雨の日に出やすいみたい。' : ''}</p>`}</div>`;
+      ov.onclick = e => { if (e.target === ov || e.target.closest('[data-fx]')) { sfx.play('tap'); ov.remove(); } else { const r = e.target.closest('[data-fr]'); if (r && !r.disabled) { sfx.play('tap'); fishDetail(id, +r.dataset.fr); } } };
+    }
+    const admSet = (id, on) => {
+      const s = SET[id]; if (!s) return;
+      if (on) { if (!spec.own()[id]) { spec.give(id); furn.give('sp_' + id); } else if (spec.isUsed(id)) { const o = spec.own(); o[id].used = 0; spec.setCrack(id, 0); try { localStorage.setItem('town:spec:own', JSON.stringify(o)); } catch (e) { } furn.give('sp_' + id); } s.words.forEach((_, i) => spec.setPerf(id, i, 1)); }
+      else { if (spec.own()[id] && !spec.isUsed(id)) furn.take('sp_' + id); spec.drop(id); }
+    };
+
+    // ---------- 操作 ----------
+    async function act(a, v, e) {
+      if (a === 'back') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); onBack(); return; }
+      if (a === 'dtake') { spec.placeRemove(v); selUid = null; closePop(); sfx.play('tap'); refreshDecor(); drawHead(); if (tab === 'deco') drawBody(); return; }
+      if (a === 'dup') { closePop(); walletSheet(v); return; }
+      if (a === 'feed') { const r = feed(v); closePop(); if (r) { sfx.play('nibble'); feedFx([v], r === true ? {} : { [v]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${FULL_COIN}`); } else toast(spec.food() ? 'きょうは もうおなかいっぱい' : 'えさがないよ。🐟タブの「えさを作る」で作ろう'); redraw(); return; }
+      if (a === 'tobox') { closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; if (!boxRoom()) { toast('ひかえがいっぱい(🐟タブで ふやせるよ)'); return; } const b = spec.box(); b.push(t.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); sfx.play('tap'); toast('📦 ひかえに入れた'); redraw(true); return; }
+      if (a === 'info') { closePop(); const [id, rk] = v.split(':'); fishDetail(id, +rk); return; }
+      if (a === 'make') {
         sfx.play('tap'); let got = 0;
         for (const q of reviewQs(FOOD_Q)) { const ok = await ask(q, { label: `🍤 えさを作る(${got}こ)`, time: T_Q }); learn.hit(q.w[0], ok, { ja: q.w[2], src: 'fishing' }); if (ok) got++; }
-        spec.setFood(spec.food() + got); toast(`🍤 えさが ${got} こ できた!`); draw();
+        spec.setFood(spec.food() + got); toast(`🍤 えさが ${got} こ できた!`); redraw(); return;
       }
-      else if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { sfx.play('nibble'); feedFx(fed, fulls); const cn = Object.values(fulls).filter(v => v === 'coin').length * FULL_COIN; toast(`🍤 ${n}回 あげた${cn ? ' ・ 🪙 +' + cn : ''}`); } draw(); }
-      else if (fd) { const r = feed(fd.dataset.feed); if (r) { sfx.play('nibble'); feedFx([fd.dataset.feed], r === true ? {} : { [fd.dataset.feed]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${FULL_COIN}`); } draw(); }
-      else if (tb) { const t = spec.tank(), i = t.findIndex(x => x.uid === tb.dataset.tobox); if (i < 0) return; if (!boxRoom()) { toast('図鑑の枠がいっぱい(図鑑で枠をふやせるよ)'); return; } const b = spec.box(); b.push(t.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); sfx.play('tap'); toast('📖 図鑑の枠にもどした'); draw(); }
-      else if (rl) { if (!rl.dataset.c) { rl.dataset.c = 1; rl.textContent = '池へ?'; return; } spec.saveTank(spec.tank().filter(x => x.uid !== rl.dataset.rel)); draw(); }
-    };
+      if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { sfx.play('nibble'); feedFx(fed, fulls); const cn = Object.values(fulls).filter(x => x === 'coin').length * FULL_COIN; toast(`🍤 ${n}回 あげた${cn ? ' ・ 🪙 +' + cn : ''}`); } redraw(); return; }
+      if (a === 'takeall') { spec.placed().forEach(q => spec.placeRemove(q.uid)); selUid = null; sfx.play('tap'); refreshDecor(); redraw(); return; }
+      if (a === 'wallet') { walletSheet(null); return; }
+      if (a === 'idex') { openDex && openDex(); return; }
+      if (a === 'admall' || a === 'admnone') { SETS.filter(s => s.lv === +dexT).forEach(s => admSet(s.id, a === 'admall')); redraw(); return; }
+      if (a === 'go' && pick3.length === MIX_N) {
+        if (mixMode === 'd') {
+          const used = pick3.map(id => SET[id]), rar = recipeFor(mixLv, used.map(x => x.look.shape));
+          if (rar < 0) { toast('何も起きなかった…別の組み合わせを試そう(標本は消えてないよ)'); sfx.play('early'); return; }
+          pick3 = []; used.forEach(x => { spec.use(x.id); furn.take('sp_' + x.id); });
+          const d = { uid: newUid(), lv: mixLv, rar, at: Date.now() }; spec.addDecor(d); spec.addRecipe(mixLv + ':' + rar);
+          const k = decorOf(d);
+          await gacha(used.map(x => ICON[x.look.shape]), { rar, icon: k.icon, name: k.name, en: k.en, line: '🪸 飾りタブから水槽に置けるよ ・ 水槽ランク: ' + TANK_RANKS[spec.rank()][1] });
+        } else {
+          const t = spec.tank(), sel = pick3.map(id => t.find(f => f.uid === id)).filter(Boolean);
+          if (sel.length !== MIX_N || sel.some(f => f.id !== sel[0].id || (f.rk || 0) !== (sel[0].rk || 0))) { toast('同じ種類・同じ強さの魚を選んでね'); sfx.play('early'); return; }
+          pick3 = []; const rk = (sel[0].rk || 0) + 1, size = Math.round(Math.max(...sel.map(f => f.size)) * RANK_MUL[rk] / RANK_MUL[rk - 1]);
+          const nf = { uid: newUid(), id: sel[0].id, size, g: GROW_NEED, day: '', n: 0, at: Date.now(), rk };
+          spec.saveTank(t.filter(f => !sel.includes(f)).concat([nf])); spec.markGrown(nf.id, rk);
+          await gacha(sel.map(x => fishImg(x.id, 70, false, x.rk || 0)), { rar: rk + 1, icon: fishImg(nf.id, 200, false, rk), name: fname(nf), en: (FISHBY[nf.id] || {}).en || '', line: `${size}cm の強い魚になった! 水槽で泳いでるよ` });
+        }
+        redraw(true); return;
+      }
+    }
+    sc.addEventListener('click', e => {
+      const q = (s) => e.target.closest(s);
+      const tb = q('[data-tab]'); if (tb) { sfx.play('tap'); tab = tb.dataset.tab; ctx.storage.set('aqTab', tab); closePop(); body.scrollTop = 0; drawHead(); drawBody(); return; }
+      const a = q('[data-a]'); if (a) { act(a.dataset.a); return; }
+      const fd = q('[data-feed]'); if (fd) { act('feed', fd.dataset.feed); return; }
+      const tob = q('[data-tobox]'); if (tob) { act('tobox', tob.dataset.tobox); return; }
+      const tt = q('[data-totank]'); if (tt) { const b = spec.box(), i = b.findIndex(x => x.uid === tt.dataset.totank); if (i < 0) return; if (spec.tank().length >= TANK_MAX) { toast(`水槽がいっぱい(${TANK_MAX}匹まで)`); return; } const t = spec.tank(); t.push(b.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); if (!spec.hasTank()) spec.gotTank(); sfx.play('tap'); toast('🐠 水槽に入れた'); redraw(true); return; }
+      const ul = q('[data-unl]'); if (ul) {
+        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[spec.boxSlots() - 1] ?? BOX_COIN[1]; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } ctx.wallet.add(-p, 'boxslot'); }
+        else { if (!ctx.gems) { toast('ダイヤは準備中だよ'); return; } if (!ctx.gems.spend(BOX_GEM)) { toast('ダイヤがたりないよ'); sfx.play('early'); return; } }
+        spec.addBoxSlot(); sfx.play('coin'); toast('🔓 ひかえが ふえた!'); redraw(); return;
+      }
+      const fi = q('[data-fi]'); if (fi) { const [id, rk] = fi.dataset.fi.split(':'); sfx.play('tap'); fishDetail(id, +rk); return; }
+      const da = q('[data-dadd]'); if (da) { const k = da.dataset.dadd, placed = new Set(spec.placed().map(x => x.uid)), d = spec.decor().find(x => x.lv + ':' + x.rar === k && !placed.has(x.uid)); if (d) { spec.placeAdd(d.uid, 0.3 + Math.random() * 0.4, 0.78 + Math.random() * 0.14); selUid = d.uid; sfx.play('tap'); refreshDecor(); drawHead(); drawBody(); } return; }
+      const du = q('[data-dupk]'); if (du) { walletSheet(du.dataset.dupk); return; }
+      const mm = q('[data-mm]'); if (mm) { sfx.play('tap'); mixMode = mm.dataset.mm; ctx.storage.set('mixMode', mixMode); pick3 = []; drawBody(); return; }
+      const ml = q('[data-ml]'); if (ml) { sfx.play('tap'); mixLv = +ml.dataset.ml; ctx.storage.set('mixLv', mixLv); pick3 = []; drawBody(); return; }
+      const sl = q('[data-slot]'); if (sl) { const i = +sl.dataset.slot; if (pick3[i]) { pick3.splice(i, 1); sfx.play('tap'); drawBody(); } return; }
+      const p = q('[data-p]'); if (p) { sfx.play('tap'); const id = p.dataset.p, i = pick3.indexOf(id); if (i >= 0) pick3.splice(i, 1); else if (pick3.length < MIX_N) pick3.push(id); else toast(`${MIX_N}つまで。枠をタップすると外せるよ`); drawBody(); return; }
+      const dx = q('[data-dx]'); if (dx) { sfx.play('tap'); dexT = isNaN(+dx.dataset.dx) ? dx.dataset.dx : +dx.dataset.dx; ctx.storage.set('aqDex', dexT); drawBody(); return; }
+      const ad = q('[data-adm]'); if (ad) { admSet(ad.dataset.adm, e.target.checked); drawBody(); return; }
+      const af = q('[data-admf]'); if (af) { const id = af.dataset.admf, d = +af.dataset.d, f = FISH_SPEC.find(x => x.id === id); let tk = spec.tank(); if (d > 0) { if (tk.length >= TANK_MAX) { toast(`水槽がいっぱい(${TANK_MAX}匹まで)`); return; } tk.push({ uid: newUid(), id, size: f && f.size ? f.size[1] : 30, g: GROW_NEED, day: '', n: 0, at: Date.now() }); spec.saveTank(tk); spec.markGrown(id); if (!spec.hasTank()) { spec.gotTank(); furn.give('tank'); } } else { const i = tk.map(x => x.id).lastIndexOf(id); if (i >= 0) { tk.splice(i, 1); spec.saveTank(tk); } } redraw(true); return; }
+      const fdd = q('[data-fd]'); if (fdd) { sfx.play('tap'); fishDetail(fdd.dataset.fd); return; }
+      const ss = q('[data-s]'); if (ss) { const s = SET[ss.dataset.s], o = spec.own()[s.id]; toast(o ? `${s.look.name}(${s.look.en})・${s.title}${o.used ? '・合成に使った' : ''}` : condOf(s)); return; }
+    });
+    spec.tank().forEach(f => { if (f.g >= GROW_NEED) spec.markGrown(f.id, f.rk || 0); });
+    drawHead(); drawBody();
+    requestAnimationFrame(() => startLoop());
   }
+  const tankScreen = o => aquarium({ ...o, tab: 'fish' }), collection = o => aquarium({ ...o, tab: 'dex' }), mixScreen = o => aquarium({ ...o, tab: 'mix' });
   // えさを作る問題:まちがえたことのある言葉(ストリームなども)→ 釣り堀の完璧な単語(忘れないように)→ 初級
   const recentFood = [];   // 直前に出した単語(同じ問題ばかりにならないように)
   function reviewQs(n) {   // えさ用:いまのレベル(最後にあそんだ釣り堀)を中心に、1つ下・1つ上も少し。そのレベルの単語からランダムに幅広く
@@ -756,5 +821,5 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
     try { const L = JSON.parse(localStorage.getItem('cs-wordlists') || '[]'), all = []; L.forEach(l => (l.lines || []).forEach(x => { const c = String(x).split('\t'); if (c[0] && c[1]) all.push([c[0], c[1]]); })); return shuffle(all).slice(0, n); } catch (e) { return []; }
   }
 
-  return { ask, playGates, pondScreen, tankScreen, collection, mixScreen, keepFish, tankRoom, keepRoom, get busy() { return busy; } };
+  return { ask, playGates, pondScreen, aquarium, tankScreen, collection, mixScreen, keepFish, tankRoom, keepRoom, get busy() { return busy; } };
 }

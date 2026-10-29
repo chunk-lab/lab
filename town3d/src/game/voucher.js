@@ -14,6 +14,7 @@ export const VCH = {
   PRICE_F: [10, 30, 100, null],       // かけら
   PRICE_D: [5, 15, 50, 150],          // ダイヤ(どのレア度でも可。SSR はこれだけ)
 };
+let gems = null;
 const dayN = () => Math.floor(Date.now() / 864e5);
 function list() { const now = Date.now(), l = (st.get('v') || []).filter(x => x.exp > now && x.n > 0); return l; }
 export const vch = {
@@ -29,9 +30,11 @@ export const vch = {
     const l = list(); l.push({ n: g, exp: Date.now() + VCH.EXPIRE_DAYS * 864e5 }); st.set('v', l); return g;
   },
   spend(n) { if (this.total() < n) return false; const l = list().sort((a, b) => a.exp - b.exp); let r = n; for (const x of l) { const u = Math.min(x.n, r); x.n -= u; r -= u; if (!r) break; } st.set('v', l.filter(x => x.n > 0)); return true; },
-  dia() { return st.get('dia') || 0; },
-  addDia(n) { st.set('dia', Math.max(0, this.dia() + Math.round(n))); },
-  spendDia(n) { if (this.dia() < n) return false; st.set('dia', this.dia() - n); return true; },
+  // ダイヤは組み込み先の財布(ctx.gems)があればそれを使う。なければこの端末の仮のダイヤ
+  bindGems(g) { gems = g && typeof g.get === 'function' ? g : null; },
+  dia() { return gems ? (gems.get() || 0) : (st.get('dia') || 0); },
+  addDia(n) { if (gems) return; st.set('dia', Math.max(0, this.dia() + Math.round(n))); },
+  spendDia(n) { if (this.dia() < n) return false; if (gems) return !!gems.spend(n); st.set('dia', this.dia() - n); return true; },
   frag() { return st.get('frag') || 0; },
   addFrag(n = 1) { const t = st.get('fd') || { d: 0, n: 0 }, used = t.d === dayN() ? t.n : 0, g = Math.max(0, Math.min(n, VCH.FRAG_DAY - used)); if (!g) return 0; st.set('fd', { d: dayN(), n: used + g }); st.set('frag', this.frag() + g); return g; },
   spendFrag(n) { if (this.frag() < n) return false; st.set('frag', this.frag() - n); return true; },

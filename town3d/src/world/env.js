@@ -172,6 +172,8 @@ export function createEnv(scene, { shadows = true } = {}) {
       if (e.kind === 'lunar') this.setMoon(e.moonPhase0);
       this.release();
     },
+    // ふだんの天気:'sun' / 'cloud' / 'rain'
+    setAmbient(kind, snap = false) { const A = this.amb || (this.amb = { r: 0, c: 0, tr: 0, tc: 0 }); A.tr = kind === 'rain' ? 1 : 0; A.tc = kind === 'cloud' || kind === 'rain' ? 1 : 0; if (snap) { A.r = A.tr; A.c = A.tc; } },
     // 天気:'rain' = 雨→あがって虹。dur=秒(全体)
     startWeather(dur = 120) { this.stopWeather(); this.hold(14); this.weather = { t: 0, dur, rain: 0, bow: 0 }; },
     stopWeather() { if (!this.weather) return; this.weather = null; rainLines.visible = false; rainMat.opacity = 0; bow.visible = false; scene.fog.near = 75; scene.fog.far = 210; cm.color.setScalar(1); this.rainLevel = 0; this.release(); },
@@ -206,8 +208,9 @@ export function createEnv(scene, { shadows = true } = {}) {
         s.sunI *= 1 - 0.88 * ecl; s.hemiI *= 1 - 0.5 * ecl; s.top.lerp(deep, 0.85 * ecl); s.bottom.lerp(warm, 0.55 * ecl).lerp(deep, 0.25 * ecl);
         s.night = Math.max(s.night, ecl * 0.85);
       }
-      if (this.weather) {
-        const rn = this.weather.rain, gr = new THREE.Color(0x7a8499), gb = new THREE.Color(0xb0b7c6);
+      // ふだんの天気(game/weather.js)。雨・くもりへ、ゆっくり近づける。雨と虹のイベント中はそちらが優先
+      { const A = this.amb || (this.amb = { r: 0, c: 0, tr: 0, tc: 0 }), k = Math.min(1, dt * 0.25); A.r += (A.tr - A.r) * k; A.c += (A.tc - A.c) * k; if (!this.weather) this.rainLevel = A.r; }
+      { const rn = this.weather ? this.weather.rain : Math.max(this.amb.r, this.amb.c * 0.45), gr = new THREE.Color(0x7a8499), gb = new THREE.Color(0xb0b7c6);
         s.sunI *= 1 - 0.7 * rn; s.hemiI *= 1 - 0.22 * rn; s.top.lerp(gr, 0.85 * rn); s.bottom.lerp(gb, 0.8 * rn);
         scene.fog.near = 75 - 40 * rn; scene.fog.far = 210 - 95 * rn; cm.color.setScalar(1 - 0.38 * rn);
       }
@@ -238,14 +241,14 @@ export function createEnv(scene, { shadows = true } = {}) {
           for (const m of [sunGlow, sunDisc, sunCover, corona, flare]) m.visible = true;
         }
       }
-      if (this.weather) {
-        const W = this.weather, cp = (this.camera && this.camera.position) || focus;
-        if (W.rain > 0.01) {
-          rainLines.visible = true; rainMat.opacity = 0.55 * W.rain; rainLines.position.set(cp.x, Math.max(0, cp.y - 12), cp.z);
+      { const R = this.weather ? this.weather.rain : this.amb.r, cp = (this.camera && this.camera.position) || focus;
+        if (R > 0.01) {
+          rainLines.visible = true; rainMat.opacity = 0.55 * R; rainLines.position.set(cp.x, Math.max(0, cp.y - 12), cp.z);
           for (let i = 0; i < RN; i++) { const sd = rainSeed[i]; sd[1] -= 34 * dt; if (sd[1] < 0) sd[1] += 30; rainPos.set([sd[0], sd[1], sd[2], sd[0] - 0.12, sd[1] + 1.1, sd[2]], i * 6); }
           rainGeo.attributes.position.needsUpdate = true;
         } else rainLines.visible = false;
-        if (W.bow > 0.01) {
+        const W = this.weather;
+        if (W && W.bow > 0.01) {
           const hx = -dir.x, hz = -dir.z, hl = Math.hypot(hx, hz) || 1;
           bow.position.set(focus.x + hx / hl * 300, -2, focus.z + hz / hl * 300); bow.lookAt(focus.x, -2, focus.z); bow.visible = true;
           bow.children.forEach(m => { m.material.opacity = m.userData.op * W.bow * 1.6; });

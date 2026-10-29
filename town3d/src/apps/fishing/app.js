@@ -1,5 +1,6 @@
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
+import { weather, wxStrip } from '../../game/weather.js';
 import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, SPOTS, areaLabel, areaAtIn, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
 import { askScreen, adviceFor } from './ask.js';
 import { createEngine, createBot, replayAt, timeOf, REACH } from './engine.js';
@@ -7,6 +8,7 @@ import { createView } from './view.js';
 import { artCanvas } from './art.js';
 import { createSfx } from './sfx.js';
 import { createEnglish } from './en.js';
+const RAIN_FISH = FISH.filter(f => f.rain).map(f => f.name).join('・');
 
 const ink = '#5a4a6b';
 const CSS = `
@@ -128,7 +130,8 @@ export const fishingApp = {
     if (!document.getElementById('fz-css')) { const st = document.createElement('style'); st.id = 'fz-css'; st.textContent = CSS; document.head.appendChild(st); }
     const st = ctx.storage, P = ctx.params || {};
     const now = new Date();
-    const baseCond = { hour: P.hour ?? now.getHours() + now.getMinutes() / 60, season: P.season || seasonOf(now), rain: !!P.rain, spot: st.get('spot') || 'pond' };
+    const baseCond = { hour: P.hour ?? now.getHours() + now.getMinutes() / 60, season: P.season || seasonOf(now), rain: P.rain != null ? !!P.rain : weather.isRain(), spot: st.get('spot') || 'pond' };
+    const wxRefresh = () => { if (P.rain == null) baseCond.rain = weather.isRain(); const d = new Date(); if (P.hour == null) baseCond.hour = d.getHours() + d.getMinutes() / 60; };   // 開いたまま天気・時間が変わっても、次の画面から反映
     const sfx = createSfx(ctx.audio && ctx.audio.sfx != null ? ctx.audio.sfx : 0.7);
     const root = document.createElement('div'); root.className = 'fz'; el.appendChild(root);
     ctx.setTitle('砂吹さんの池');
@@ -156,12 +159,13 @@ export const fishingApp = {
     raf = requestAnimationFrame(loop);
     const unlock = () => sfx.unlock(); root.addEventListener('pointerdown', unlock, { once: true });
     const appToast = (t, ms = 1800) => { const d = document.createElement('div'); d.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);z-index:60;background:rgba(40,30,60,.88);color:#fff;border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px;max-width:88%;text-align:center;pointer-events:none;box-shadow:0 4px 14px #0004'; d.innerHTML = t; root.appendChild(d); setTimeout(() => d.remove(), ms); };
-    const EN = createEnglish({ root, ctx, sfx, sheet: (h, c) => sheet(h, c), artCanvas, FISHBY: BYID, toast: appToast });
+    const EN = createEnglish({ root, ctx, sfx, sheet: (h, c) => sheet(h, c), artCanvas, FISHBY: BYID, toast: appToast, dex, openDex: () => dexScreen('item') });
     const EN_SPOT = { 1: 'pond', 2: 'river', 3: 'sea' };   // 英語の釣り堀:初級=池・中級=川・上級=海(セクションで釣り場が決まる)
-    const goPond = () => { clear(); screen = 'en'; ctx.setTitle('英語の釣り堀'); head(); try { ctx.emit('act', { layer: 'sub', cat: 'study', label: '英語の釣り堀' }); } catch (e) { } EN.pondScreen({ onPick: (id, lv) => { baseCond.spot = EN_SPOT[lv] || 'pond'; play({ en: id }); }, onBack: menu }); };
-    const head = () => ctx.setHead?.([{ label: '🐠 水槽', fn: () => goTank() }, { label: '📖 図鑑', fn: () => goCol() }]);   // 上のバー:町にもどる の左
-    const goTank = () => { clear(); screen = 'tank'; ctx.setTitle('水槽'); head(); EN.tankScreen({ onBack: goPond }); };
-    const goCol = () => { clear(); screen = 'col'; ctx.setTitle('図鑑'); head(); EN.collection({ onBack: goPond }); };
+    const goPond = () => { wxRefresh(); clear(); screen = 'en'; ctx.setTitle('英語の釣り堀'); head(); try { ctx.emit('act', { layer: 'sub', cat: 'study', label: '英語の釣り堀' }); } catch (e) { } EN.pondScreen({ onPick: (id, lv) => { baseCond.spot = EN_SPOT[lv] || 'pond'; play({ en: id }); }, onBack: menu }); };
+    const head = () => ctx.setHead?.([{ label: '🐠 アクアリウム', fn: () => goAq(null, screen === 'menu' ? menu : null) }]);   // 上のバー:町にもどる の左
+    // 水槽・魚・飾り・合成・図鑑は、ぜんぶ同じ「アクアリウム」の画面(どこから開いても同じ)
+    const goAq = (tab, back) => { clear(); screen = 'aq'; ctx.setTitle('アクアリウム'); head(); EN.aquarium({ tab, onBack: back || goPond }); };
+    const goTank = () => goAq('fish'), goCol = () => goAq('dex');
 
     // ================= 釣り場をえらぶ(のんびり・勝負のとき。かならず選ぶ) =================
     function spotPick(title, go) {
@@ -179,7 +183,7 @@ export const fishingApp = {
 
     // ================= メニュー =================
     function menu() {
-      clear(); screen = 'menu'; ctx.setTitle('砂吹さんの釣り堀'); head();
+      clear(); screen = 'menu'; ctx.setTitle('砂吹さんの釣り堀'); head(); wxRefresh();
       const cv = document.createElement('canvas'); cv.style.cssText = 'top:0;height:100%'; root.appendChild(cv);
       const view = createView(cv, baseCond); view.resize();
       const ro = new ResizeObserver(() => view.resize()); ro.observe(cv); cleanup.push(() => ro.disconnect());
@@ -189,16 +193,17 @@ export const fishingApp = {
       const ui = document.createElement('div'); ui.className = 'menu';
       ui.innerHTML = `<p class="title">🎣 ほしみやの釣り</p>
         <div class="say">砂吹さん「${esc(pickSay())}」</div>
-        <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}${baseCond.rain ? '・雨' : ''} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
+        <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}・${weather.label(weather.now(), tm === 'night')} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
+        <div style="background:rgba(255,255,255,.88);border-radius:14px;padding:6px 10px">${wxStrip(RAIN_FISH)}</div>
         <button class="btn mb" data-m="en" style="background:linear-gradient(160deg,#9fe3c0,#5fc79a)">📚<span>英語の釣り堀<br><small>英語で釣る・水槽で育てる・標本を集める</small></span></button>
         <button class="btn mb" data-m="free">🎣<span>のんびり釣る<br><small>英語なし・時間を気にせず</small></span></button>
         <button class="btn mb gold" data-m="vs">⚔️<span>釣り勝負<br><small>砂吹さん・友だちと2画面で対戦</small></span></button>
-        <button class="btn mb sub" data-m="dex">📖<span>つり図鑑<br><small>${found} / ${ALL.length} 見つけた</small></span></button>
+        <button class="btn mb sub" data-m="dex">🐠<span>アクアリウム<br><small>図鑑 ${found} / ${ALL.length} ・水槽・飾り・合成</small></span></button>
         <button class="btn mb sub" data-m="ask">💬<span>砂吹さんに聞く<br><small>狙いの魚・いまのおすすめ・腕のアドバイス</small></span></button>
         <button class="btn mb sub" data-m="shop">🧰<span>道具屋<br><small>竿・リール・糸・エサ・ルアー・見る道具</small></span></button>
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="chip" data-m="mode">${st.get('mode') === 'easy' ? '🟢 かんたん' : '🔵 ほんかく'}</button><button class="chip" data-m="fx">${st.get('fx') === 'calm' ? '🍵 演出おとなしめ' : '🎆 演出 派手'}</button><button class="chip" data-m="help">？ あそびかた</button></div>`;
       root.appendChild(ui);
-      ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ en: goPond, free: () => spotPick('のんびり釣り', () => play({})), vs: () => spotPick('釣り勝負', () => vsSetup()), dex: dexScreen, shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
+      ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ en: goPond, free: () => spotPick('のんびり釣り', () => play({})), vs: () => spotPick('釣り勝負', () => vsSetup()), dex: () => goAq('dex', menu), shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
       if (P.tab === 'en') { P.tab = null; setTimeout(goPond, 0); return; }
       if (P.tab === 'tank') { P.tab = null; setTimeout(goTank, 0); return; }
       if (P.vs) { const o = P.vs; P.vs = null; setTimeout(() => spotPick('釣り勝負', () => vsSetup(o === 'hard' ? 'hard' : 'easy')), 0); }   // 外から勝負に来ても、かならず釣り場を選ぶ
@@ -232,6 +237,7 @@ export const fishingApp = {
     // ================= 釣り(のんびり・勝負の自分側) =================
     // mode: {vs:{...}} があれば勝負
     function play(opt) {
+      if (!opt.vs) wxRefresh();
       clear(); screen = 'play'; const vs = opt.vs, en = !vs && opt.en ? opt.en : null;
       ctx.setTitle(vs ? '釣り勝負' : en ? '英語の釣り堀' : 'のんびり釣り');
       const cond = vs ? vs.cond : baseCond;
@@ -779,9 +785,9 @@ export const fishingApp = {
       const r = Object.keys(dex).length / ALL.length;
       for (const [k, c] of DEX_REWARDS) if (r >= k && !claimed.includes(k)) { claimed.push(k); save(); ctx.wallet.add(c, 'dex'); setTimeout(() => { const s = sheet(`<div class="ph" style="justify-content:center"><h2>📖 つり図鑑 ${Math.round(k * 100)}% たっせい!</h2></div><div class="sc" style="text-align:center;font-size:18px;font-weight:900">🪙 +${c}</div><div style="padding:8px 16px 16px;text-align:center"><button class="btn" data-x>やった!</button></div>`, true); s.querySelector('[data-x]').onclick = () => s.remove(); sfx.play('legend'); }, 600); }
     }
-    function dexScreen() {
+    function dexScreen(t0) {
       const s = sheet(`<div class="ph"><h2>📖 つり図鑑</h2><b class="pr" style="font-size:13px"></b></div><div class="tabs"></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>もどる</button></div>`);
-      let tab = 'all';
+      let tab = t0 || 'all';
       const tabs = s.querySelector('.tabs'), sc = s.querySelector('.sc');
       const found = Object.keys(dex).length, next = DEX_REWARDS.find(([k]) => !claimed.includes(k));
       s.querySelector('.pr').innerHTML = `${found}/${ALL.length}(${Math.round(found / ALL.length * 100)}%)${next ? `<br><small>${Math.round(next[0] * 100)}%で 🪙${next[1]}</small>` : ''}`;

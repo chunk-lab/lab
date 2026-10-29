@@ -1,6 +1,7 @@
 // ほしみや町:公開 API は mount(要素, 設定) → { unmount, ... } だけ
 import * as THREE from 'three';
 import { createBus, createStorage, createWallet, angleLerp, clamp } from './core/core.js';
+import { weather } from './game/weather.js';
 import { createAppHost } from './core/apps.js';
 import { createLocalNet, createWsNet } from './core/net.js';
 import { createAudio } from './core/audio.js';
@@ -88,6 +89,7 @@ export function mount(container, opt = {}) {
   const fw = createFireworks(scene, { onBoom: (t, sc) => { if (t === 'dai') { audio.play('bigboom'); return; } if (t === 'mini') { if (Math.random() < 0.3) audio.play('boom', sc); return; } audio.play('boom', sc); } });
   env.hour = opt.hour ?? storage.get('hour') ?? 10;
   env.speed = settings.timeSpeed / 60;
+  let curWx = weather.now(); env.setAmbient(curWx, true);   // ふだんの天気(3時間ごと。町と釣りで共通)
   const _d = new Date(), _md = (_d.getMonth() + 1) * 100 + _d.getDate();
   const blossom = opt.blossom ?? (_md >= 325 && _md <= 420);   // 桜は春(3/25〜4/20)だけ
   const city = buildCity(scene, { quality: settings.quality, blossom });
@@ -1185,10 +1187,10 @@ export function mount(container, opt = {}) {
     env.camera = camera; env.update(dt, me.ch.root.position);
     seasons.update(dt, camera.position, env.night || 0); seasons.holdAt(me.x, me.z, me.ry);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
-    if (env.weather || evt?.wx) audio.rain(env.rainLevel || 0);
+    if (env.weather || evt?.wx || (env.rainLevel || 0) > 0.01) audio.rain(env.rainLevel || 0);
     if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
     if (evt) { if (evt.wx ? !env.weather : evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
-    if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); }
+    if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); curWx = weather.now(); env.setAmbient(curWx); }
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
@@ -1247,7 +1249,7 @@ export function mount(container, opt = {}) {
     hud.placeTags(tagPos);
 
     hud.setArea(city.areaName(me.x, me.z));
-    hud.setClock(env.hour);
+    hud.setClock(env.hour, curWx);
     saveT += dt;
     if (saveT > 5) { saveT = 0; storage.set('pos', [+me.x.toFixed(1), +me.z.toFixed(1)]); storage.set('hour', +env.hour.toFixed(2)); }
 
@@ -1273,6 +1275,7 @@ export function mount(container, opt = {}) {
     closeApp: () => appHost.close(),
     registerApp: def => appHost.register(def),
     setHour: h => { env.hour = h; },
+    weather: () => ({ kind: curWx, rain: env.rainLevel || 0, amb: env.amb ? { ...env.amb } : null }),
     meteor: () => env.meteorNow(),
     setMoon: ph => env.setMoon(ph),
     notes: () => notes.map(n => ({ ...n })),
