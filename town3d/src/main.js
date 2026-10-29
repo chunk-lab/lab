@@ -940,6 +940,21 @@ export function mount(container, opt = {}) {
   // ---- カメラ:ふだん=自分についていく(follow) / 動かす(free:カメラだけ自由に) / 固定(fixed:そこに置いて、自分は歩ける) ----
   let camMode = 'follow';
   const panOff = { x: 0, z: 0 };   // 2本指でずらしたカメラ位置
+  {   // 2本指ドラッグ:真上から見た地図をずらす感覚で、見ている向き基準の前後左右にカメラ位置をずらす(ゴルフ中に使っていたものと同じ)
+    let t1 = null, t2 = null;
+    const tg = e => !appHost.current && camMode === 'follow' && !battle.active;
+    root.addEventListener('touchstart', e => { if (e.touches.length === 2) { t1 = { x: e.touches[0].clientX, y: e.touches[0].clientY }; t2 = { x: e.touches[1].clientX, y: e.touches[1].clientY }; } }, { passive: true });
+    root.addEventListener('touchmove', e => {
+      if (e.touches.length !== 2 || !t1 || !t2) return;
+      const dx = (e.touches[0].clientX - t1.x + e.touches[1].clientX - t2.x) / 2, dy = (e.touches[0].clientY - t1.y + e.touches[1].clientY - t2.y) / 2;
+      t1 = { x: e.touches[0].clientX, y: e.touches[0].clientY }; t2 = { x: e.touches[1].clientX, y: e.touches[1].clientY };
+      if (!tg(e)) return;
+      const y = cam.yaw, fx = -Math.sin(y), fz = -Math.cos(y), rx = Math.cos(y), rz = -Math.sin(y), k = 0.04;   // 見ている向き(前)と右。指についてくる=カメラは逆へ
+      panOff.x += rx * -dx * k + fx * dy * k; panOff.z += rz * -dx * k + fz * dy * k;
+      const m = Math.hypot(panOff.x, panOff.z); if (m > 60) { panOff.x *= 60 / m; panOff.z *= 60 / m; }
+    }, { passive: true });
+    root.addEventListener('touchend', e => { if (e.touches.length < 2) { t1 = null; t2 = null; } }, { passive: true });
+  }
   const fcam = { x: 0, y: 1.6, z: 0, yaw: 0, pitch: 0 };
   const heightToV = y => Math.sqrt(Math.max(0, (y - 0.15) / 80)), vToHeight = v => 0.15 + v * v * 80;
   function camFromView() {   // いまの見え方から、動かすカメラの出発点を作る
@@ -1136,11 +1151,6 @@ export function mount(container, opt = {}) {
         if (seasons.carrying()) { rg.arms[0].rotation.x = rg.arms[1].rotation.x = -2.95; rg.arms[0].rotation.z = 0.35; rg.arms[1].rotation.z = -0.35; } } }
 
     // カメラ:後ろから少し見下ろす。建物にめり込むときは手前に寄せる
-    if (camMode === 'follow' && !battle.active && (inp.panX || inp.panY)) {   // 2本指でそろえて動かすと、見ている向き基準でカメラ位置がずれる(指についてくる)
-      const k = 0.0022 * cam.dist, sy = Math.sin(cam.yaw), cy = Math.cos(cam.yaw);
-      panOff.x += cy * -inp.panX * k + -sy * inp.panY * k; panOff.z += -sy * -inp.panX * k + -cy * inp.panY * k;
-      const pm = Math.hypot(panOff.x, panOff.z); if (pm > 60) { panOff.x *= 60 / pm; panOff.z *= 60 / pm; }
-    }
     if (mag > 0.05 || battle.active) { const dk = Math.max(0, 1 - dt * 4); panOff.x *= dk; panOff.z *= dk; }   // 歩きだしたら、もとの位置へもどる
     const ft0 = (date && date.focus) || sport.focus() || me, ft = { x: ft0.x + panOff.x, z: ft0.z + panOff.z };   // ゴルフ・フリスビーで飛んでいる間は、ボールを追う
     cam.x += (ft.x - cam.x) * Math.min(1, dt * 8); cam.z += (ft.z - cam.z) * Math.min(1, dt * 8);
