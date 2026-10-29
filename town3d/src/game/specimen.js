@@ -5,6 +5,7 @@
 //   魚の標本 = 水槽で育てきった魚から作る
 //   数字(1セットの語数・完璧の条件・水槽の大きさ・えさの数など)は、ここと fishing/en.js の上にまとめる
 import { createStorage } from '../core/core.js';
+import { vch } from './voucher.js';
 import { SW } from '../apps/gamebox/stream_words.js';
 import { FISH } from '../apps/fishing/data.js';
 
@@ -83,7 +84,7 @@ export const spec = {
   setCrack(id, v) { const o = this.own(); if (!o[id]) return; o[id].crack = v ? 1 : 0; st.set('own', o); },
   // 完璧の印(セットの何番目の語か)
   perf(id) { return st.get('perf:' + id) || []; },
-  setPerf(id, i, v) { const p = this.perf(id).slice(); p[i] = v ? 1 : 0; st.set('perf:' + id, p); return p; },
+  setPerf(id, i, v) { const p = this.perf(id).slice(); if (v && !p[i]) vch.addFrag(1); p[i] = v ? 1 : 0; st.set('perf:' + id, p); return p; },
   perfCount(id) { const s = SET[id]; if (!s) return 0; const p = this.perf(id); return s.words.reduce((a, _, i) => a + (p[i] ? 1 : 0), 0); },
   // 混ぜて使った標本(持ち物からは消えるが、アルバムには残る)
   use(id) { const o = this.own(); if (o[id]) { o[id].used = 1; st.set('own', o); } },
@@ -96,7 +97,16 @@ export const spec = {
   grown: () => st.get('grown') || [],             // 水槽で育てきった魚の種類(アルバム)
   markGrown(id, rk = 0) { const g = this.grown(); if (!g.includes(id)) { g.push(id); st.set('grown', g); } if (rk > 0) { const b = this.fishBest(); if ((b[id] || 0) < rk) { b[id] = rk; st.set('fishBest', b); } } },
   fishBest: () => st.get('fishBest') || {},      // 魚の種類ごとの、いちばん強くした段階
-  pts() { return this.decor().reduce((a, d) => a + RAR_PT[d.rar], 0); },
+  pts() { const seen = new Set(); return this.decor().reduce((a, d) => { const k = d.lv + ':' + d.rar; if (seen.has(k)) return a; seen.add(k); return a + RAR_PT[d.rar]; }, 0); },   // 同じ種類の2個目以降はポイントに入れない
+  // 水槽に置いた飾り:[{uid(飾りのuid), x, y}] x・yは水槽の中の位置(0〜1)。数の上限なし。はじめて開いた時だけ、これまでの自動のならびで置く
+  placed() {
+    const dl = this.decor(); let p = st.get('placed');
+    if (!p) { const top = dl.slice().sort((a, b) => b.rar - a.rar).slice(0, 8); p = top.map((d, i) => ({ uid: d.uid, x: top.length > 1 ? 0.08 + 0.84 * i / (top.length - 1) : 0.5, y: 0.86 - (i % 2) * 0.1 })); st.set('placed', p); }
+    return p.filter(q => dl.some(d => d.uid === q.uid));
+  },
+  placeAdd(uid, x = 0.5, y = 0.84) { const p = this.placed(); if (p.some(q => q.uid === uid)) return; p.push({ uid, x, y }); st.set('placed', p); },
+  placeMove(uid, x, y) { const p = this.placed(), q = p.find(r => r.uid === uid); if (!q) return; q.x = Math.max(0.04, Math.min(0.96, x)); q.y = Math.max(0.18, Math.min(0.98, y)); st.set('placed', p); },
+  placeRemove(uid) { st.set('placed', this.placed().filter(q => q.uid !== uid)); },
   rank() { const p = this.pts(); let r = 0; TANK_RANKS.forEach((x, i) => { if (p >= x[0]) r = i; }); return r; },
   played: () => st.get('played') || [],          // 釣ったことのあるセット(新しい順)
   markPlayed(id) { const p = this.played().filter(x => x !== id); p.unshift(id); st.set('played', p.slice(0, 40)); },

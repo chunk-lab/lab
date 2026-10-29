@@ -8,6 +8,7 @@ import { IDIOMS } from './idioms.js';
 import { FIMG } from './fishimg.js';
 import { SETS, SET, LV_NAME, LV_SUB, TANK_MAX, GROW_NEED, FEED_PER_DAY, FISH_SPEC, spec, condOf, MIX_N, RAR, RAR_PT, DECOR, DECOR_ICON, TANK_RANKS, decorOf, RECIPES, recipeFor, shapeName, FISH_MAX_RANK, RANK_PRE, RANK_MUL } from '../../game/specimen.js';
 import { furn } from '../../game/furniture.js';
+import { vch, VCH } from '../../game/voucher.js';
 import { localLearn } from './learnrec.js';
 import { sortReel } from './sortreel.js';
 
@@ -199,7 +200,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       net: async sp => { const rare = sp.r >= 4, lq = rare ? 3 : s.lv; let ok = await idiom(lq, rare ? '🎣 取りこむ直前! レアは むずかしい熟語' : '🎣 取りこむ直前! 熟語に答えよう', ui.parentNode); if (ok) return { ok: true }; ok = await idiom(lq, '🎣 もう1回チャンス!', ui.parentNode); return ok ? { ok: true } : { ok: true, shrink: true }; },
       // 巻き取り:文の並べ替え(アミューズメントの並べ替えと同じデータ)。大物ほど長い文
       reel: (sp, size, cb) => { const n = sp.r >= 4 ? 5 : (sp.r >= 3 || size >= 60) ? 4 : 3;
-        return sortReel(ui, { n, fishName: sp.name, icon: '🐟', volume: ctx.audio && ctx.audio.sfx, ...cb, onLearn: d => { try { ctx.emit('learn', { ...d, src: '釣りの巻き取り' }); } catch (e) { } } }); },
+        return sortReel(ui, { n, fishName: sp.name, icon: '🐟', volume: ctx.audio && ctx.audio.sfx, pre: +(ctx.storage.get('enPre') ?? 1), mode: ctx.storage.get('enSm') || 'ja', ...cb, onLearn: d => { try { ctx.emit('learn', { ...d, src: '釣りの巻き取り' }); } catch (e) { } } }); },
       // 待っているあいだの問題(どんどん出る)。単語が多め、ときどき熟語
       wait: async () => {
         if (s.lv < 3 && Math.random() < aboveP()) {   // 今より1つ上のレベルの問題(竿が良いほど出にくい)。正解するとメーターが多く上がる
@@ -248,6 +249,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         <h2>📚 英語の釣り堀</h2><p class="nt">えらんだセットの単語だけが出るよ。魚が近づいたら単語に答えて「気になり度」をためよう。合わせ損ねた時は単語、あばれた時は熟語、巻き取りは文の並べ替え。<b>セットの単語をぜんぶ完璧</b>(続けて${PERFECT_C}回正解。ストリームで正解した分も入る)にすると、そのセットの標本がもらえる。魚はどのセットでもふつうに釣れるよ。</p>
         <div class="tabs">${[1, 2, 3].map(l => `<button data-lv="${l}" class="${l === lv ? 'on' : ''}">${LV_NAME[l]}<br><small style="font-weight:700;font-size:10px">${LV_SUB[l]}</small></button>`).join('')}</div>
         <p class="nt" style="margin:0 0 8px">標本 ${got} / ${sets.length}</p>
+        <p class="nt" style="margin:0 0 8px">巻き取りの並べ替え: ${[[1, '🔊 最初に聞く'], [0, '聞かない']].map(([k, t]) => `<button class="sbtn" data-pre="${k}" style="${(+(ctx.storage.get('enPre') ?? 1)) === k ? 'background:#f58aa8;color:#fff' : ''}">${t}</button>`).join(' ')} ${[['ja', '日本語を並べる'], ['en', '英文を並べる']].map(([k, t]) => `<button class="sbtn" data-sm="${k}" style="${(ctx.storage.get('enSm') || 'ja') === k ? 'background:#f58aa8;color:#fff' : ''}">${t}</button>`).join(' ')}</p>
         <p class="nt" style="margin:0 0 8px">問題の間隔: ${[[1, 'はやい(1秒)'], [2, 'ふつう(4秒)'], [3, 'ゆっくり(10秒)']].map(([k, t]) => `<button class="sbtn" data-gap="${k}" style="${(+(ctx.storage.get('enGap') || 1)) === k ? 'background:#f58aa8;color:#fff' : ''}">${t}</button>`).join(' ')}</p>
         <div class="grid">${sets.map(s => { const n = spec.perfCount(s.id), o = own[s.id]; return `<button class="cell ${o ? (o.crack ? 'crk' : 'got') : ''}" data-s="${s.id}"><b>セット${s.no}</b><span class="ic">${o ? (o.crack ? '💥' : ICON[s.look.shape] || '🏺') : '🎣'}</span><small>${esc(s.words[0][0])}…</small><div class="pg"><i style="width:${n / s.words.length * 100}%"></i></div><small>完璧 ${n}/${s.words.length}</small></button>`; }).join('')}</div>`;
     };
@@ -258,6 +260,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       if (a === 'back') { sc.remove(); onBack(); }
       else if (a === 'tank') { sc.remove(); tankScreen({ onBack: () => pondScreen({ onPick, onBack }) }); }
       else if (a === 'col') { sc.remove(); collection({ onBack: () => pondScreen({ onPick, onBack }) }); }
+      else if (e.target.closest('[data-pre]')) { sfx.play('tap'); ctx.storage.set('enPre', +e.target.closest('[data-pre]').dataset.pre); draw(); }
+      else if (e.target.closest('[data-sm]')) { sfx.play('tap'); ctx.storage.set('enSm', e.target.closest('[data-sm]').dataset.sm); draw(); }
       else if (e.target.closest('[data-gap]')) { sfx.play('tap'); ctx.storage.set('enGap', +e.target.closest('[data-gap]').dataset.gap); draw(); sc.scrollTop = sc.scrollTop; }
       else if (l) { sfx.play('tap'); lv = +l.dataset.lv; ctx.storage.set('enLv', lv); draw(); sc.scrollTop = 0; }
       else if (c) { sfx.play('tap'); setInfo(SET[c.dataset.s], () => { sc.remove(); onPick(c.dataset.s, SET[c.dataset.s].lv); }); }
@@ -516,17 +520,40 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
   function tankScreen({ onBack }) {
     const sc = document.createElement('div'); sc.className = 'ens'; root.appendChild(sc);
     let raf = 0, swim = [];
+    let editMode = false, selUid = null, PL = [], DM = {};   // 飾りを置く画面:えらんだ飾り・置いてある飾り・飾りの一覧
     const tankZoom = { z: 1, x: 0, y: 0 };
     const fx = { pel: [], coin: [], bub: [] };   // えさのつぶ・コイン・もぐもぐの泡
     const today = dayKey();
+    function dupPanel(ks, kinds) {   // 同じ飾りをふやす(金券・かけら・ダイヤ)
+      const nx = vch.nextExpire(), exp = nx ? ` ・いちばん近い期限 ${new Date(nx).getMonth() + 1}/${new Date(nx).getDate()}` : '';
+      const pr = (k) => { const r = +k.split(':')[1], b = [];
+        if (VCH.PRICE_V[r] != null) b.push(`<button class="sbtn" data-dup="${k}" data-pay="v" ${vch.total() < VCH.PRICE_V[r] ? 'disabled' : ''}>🎫${VCH.PRICE_V[r]}</button>`);
+        if (VCH.PRICE_F[r] != null) b.push(`<button class="sbtn" data-dup="${k}" data-pay="f" ${vch.frag() < VCH.PRICE_F[r] ? 'disabled' : ''}>🧩${VCH.PRICE_F[r]}</button>`);
+        b.push(`<button class="sbtn" data-dup="${k}" data-pay="d" ${vch.dia() < VCH.PRICE_D[r] ? 'disabled' : ''}>💎${VCH.PRICE_D[r]}</button>`); return b.join(' '); };
+      return `<details style="margin:0 0 10px"><summary class="nt" style="cursor:pointer">➕ 同じ飾りをふやす (🎫金券 ${vch.total()} ・🧩かけら ${vch.frag()} ・💎 ${vch.dia()})</summary>
+        <p class="nt" style="margin:6px 0">🎫金券=コインを換金してためる(今日はあと ${vch.todayLeft()} まで・3か月でなくなる${exp}) / 🧩かけら=単語を完璧にするともらえる / 💎ダイヤ=期限なし。値段(仮)はレア度が高いほど高いよ。</p>
+        <button class="sbtn" data-a="vx" ${vch.todayLeft() > 0 && ctx.wallet.get() > 0 ? '' : 'disabled'}>🪙→🎫 コイン${Math.min(vch.todayLeft(), ctx.wallet.get())}まいを金券に</button>
+        ${ks.map(k => { const it = decorOf(kinds[k][0]); return `<div style="display:flex;align-items:center;gap:6px;margin-top:6px"><span style="flex:1">${it.icon} ${esc(it.name)} <small>${RAR[kinds[k][0].rar]} もっている${kinds[k].length}</small></span>${pr(k)}</div>`; }).join('')}</details>`;
+    }
+    function decoPalette() {   // 持っている飾りの種類ごと:置く・しまう
+      const kinds = {}; spec.decor().forEach(d => { const k = d.lv + ':' + d.rar; (kinds[k] = kinds[k] || []).push(d); });
+      const ks = Object.keys(kinds).sort((a, b) => { const [l1, r1] = a.split(':'), [l2, r2] = b.split(':'); return (+r2 - +r1) || (+l2 - +l1); });
+      const placedUid = new Set(spec.placed().map(q => q.uid));
+      return `<p class="nt" style="margin:0 0 6px">🎨 飾りをタップ → 水槽に出るよ。水槽の中でドラッグして、好きな所へ。しまうときは、えらんで「しまう」。いくつでも置けるよ。</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">${ks.map(k => { const ds = kinds[k], d0 = ds[0], it = decorOf(d0), n = ds.filter(d => placedUid.has(d.uid)).length; return `<button class="sbtn" data-dadd="${k}" ${n >= ds.length ? 'disabled' : ''}>${it.icon} ${esc(it.name)} <small>${RAR[d0.rar]} 置いた${n}/${ds.length}</small></button>`; }).join('') || '<span class="nt">まだ飾りがないよ。「🎰 混ぜる」で作ろう。</span>'}</div>
+        ${dupPanel(ks, kinds)}
+        <div style="display:flex;gap:8px;margin-bottom:10px"><button class="sbtn" data-a="dtake" ${selUid ? '' : 'disabled'}>↩ しまう</button><button class="sbtn" data-a="dtakeall" ${placedUid.size ? '' : 'disabled'}>ぜんぶしまう</button></div>`;
+    }
     const draw = () => {
       const t = spec.tank(), food = spec.food(); t.forEach(f => { if (f.g >= GROW_NEED) spec.markGrown(f.id, f.rk || 0); });
       const pts = spec.pts(), rk = spec.rank(), nx = TANK_RANKS[rk + 1];
-      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn" data-a="mix">🎰 混ぜる</button><span class="sbtn" style="pointer-events:none">🍤 えさ ${food}</span></div>
+      PL = spec.placed(); DM = Object.fromEntries(spec.decor().map(d => [d.uid, d]));
+      sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span><button class="sbtn ${editMode ? 'pri' : ''}" data-a="decor">🎨 ${editMode ? '飾りをおわる' : '飾る'}</button><button class="sbtn" data-a="mix">🎰 混ぜる</button><span class="sbtn" style="pointer-events:none">🍤 えさ ${food}</span></div>
         <h2>🐠 水槽 <small style="font-size:13px;color:#8d7f9e">${t.length} / ${TANK_MAX}</small></h2>
         <p class="nt">英語の問題に答えて、えさを作ろう(1問正解=1つ)。問題は、あなたが今までにまちがえた言葉や、釣り堀の単語から出るよ。1匹に1日${FEED_PER_DAY}回まで。1日の2回目で満腹になって、その種類ではじめてなら🪙コインがもらえるよ。図鑑の枠に出し入れして、いろんな魚を育てよう。${GROW_NEED}回で育ちきって、アルバムに記録される。</p>
         <p class="nt" style="margin-top:-6px">🏆 水槽ランク: <b>${esc(TANK_RANKS[rk][1])}</b> ・ 飾りポイント ${pts}${nx ? `(あと${nx[0] - pts}で「${esc(nx[1])}」)` : '(最高!)'} ・ 飾り ${spec.decor().length}こ</p>
         <div class="tankv"><div class="tz"><canvas></canvas></div><span class="zh">ピンチで拡大</span></div>
+        ${editMode ? decoPalette() : ''}
         <div style="display:flex;gap:8px;margin-bottom:10px"><button class="sbtn pri" data-a="make" style="flex:1">🍤 えさを作る(英語${FOOD_Q}問)</button><button class="sbtn" data-a="all" ${food && t.some(f => (f.day !== today ? 0 : f.n) < FEED_PER_DAY && f.g < GROW_NEED) ? '' : 'disabled'}>みんなにあげる</button></div>
         ${t.length ? t.map(f => { const sp = FISHBY[f.id], n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED, sz = Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / GROW_NEED)) * RANK_MUL[f.rk || 0]); return `<div class="row"><div class="fx"><b>${esc(RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id))}</b> <small style="color:#8d7f9e">${sz}cm ・ ${full ? '育ちきった!' : f.g >= GROW_NEED * 0.6 ? 'りっぱになってきた' : f.g >= GROW_NEED * 0.3 ? '育ちざかり' : 'ちびっこ'}</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small style="color:#8d7f9e">きょう ${n}/${FEED_PER_DAY} ・ そだち ${Math.min(f.g, GROW_NEED)}/${GROW_NEED}</small></div>
           ${full ? `<span class="sbtn" style="pointer-events:none;background:#fff3c8">🎉 育ちきった</span>` : `<button class="sbtn" data-feed="${f.uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-tobox="${f.uid}">📖図鑑へ</button><button class="sbtn" data-rel="${f.uid}" title="池にかえす">↩</button></div>`; }).join('')
@@ -537,6 +564,21 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       cancelAnimationFrame(raf);
       const cv = sc.querySelector('.tankv canvas'); if (!cv) return;
       const t = spec.tank(), W = cv.clientWidth, H = cv.clientHeight, dpr = Math.min(2, devicePixelRatio || 1);
+      if (editMode) {   // 飾りをえらぶ・ドラッグでうごかす(水槽をピンチで拡大している時も、そのまま)
+        let drag = null;
+        const at = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; };
+        cv.onpointerdown = e => {
+          const [nx, ny] = at(e), x = nx * W, y = ny * H; let hit = null;
+          PL.slice().sort((a, b) => b.y - a.y).forEach(q => { if (!hit && Math.abs(x - q.x * W) < 26 && y > q.y * H - 40 && y < q.y * H + 10) hit = q; });
+          if (!hit) { if (selUid) { selUid = null; draw(); } return; }
+          e.stopPropagation(); selUid = hit.uid; drag = { q: hit, dx: hit.x - nx, dy: hit.y - ny, id: e.pointerId, moved: false };
+          try { cv.setPointerCapture(e.pointerId); } catch (x2) { }
+          const tb = sc.querySelector('[data-a="dtake"]'); if (tb) tb.disabled = false;
+        };
+        cv.onpointermove = e => { if (!drag || drag.id !== e.pointerId) return; const [nx, ny] = at(e); drag.q.x = Math.max(0.04, Math.min(0.96, nx + drag.dx)); drag.q.y = Math.max(0.18, Math.min(0.98, ny + drag.dy)); drag.moved = true; };
+        const up = e => { if (!drag || drag.id !== e.pointerId) return; spec.placeMove(drag.q.uid, drag.q.x, drag.q.y); drag = null; };
+        cv.onpointerup = cv.onpointercancel = up;
+      }
       cv.width = W * dpr; cv.height = H * dpr; const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
       const oldSwim = swim;
       swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * (f.id === 'ryugu' ? 1 : 0.5)); return { uid: f.uid, img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * (W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
@@ -544,7 +586,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       // ピンチ・ホイールで拡大(1〜3倍)。拡大中は指1本でずらす。ダブルタップでもどす
       { const box = cv.parentElement.parentElement, tz = cv.parentElement, hint = box.querySelector('.zh'), Zs = tankZoom;
         const clampZ = () => { Zs.z = Math.max(1, Math.min(3, Zs.z)); Zs.x = Math.max(W * (1 - Zs.z), Math.min(0, Zs.x)); Zs.y = Math.max(H * (1 - Zs.z), Math.min(0, Zs.y)); };
-        const apply = () => { clampZ(); tz.style.transform = `translate(${Zs.x}px,${Zs.y}px) scale(${Zs.z})`; box.style.touchAction = Zs.z > 1.01 ? 'none' : 'pan-y'; if (hint) hint.style.display = Zs.z > 1.01 ? 'none' : ''; };
+        const apply = () => { clampZ(); tz.style.transform = `translate(${Zs.x}px,${Zs.y}px) scale(${Zs.z})`; box.style.touchAction = (editMode || Zs.z > 1.01) ? 'none' : 'pan-y'; if (hint) hint.style.display = Zs.z > 1.01 ? 'none' : ''; };
         const P = new Map(); let g0 = null, lastTap = 0;
         const rel = e => { const r = box.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
         const pinchStart = () => { const [a, b] = [...P.values()]; g0 = { d: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, z: Zs.z, cx: ((a[0] + b[0]) / 2 - Zs.x) / Zs.z, cy: ((a[1] + b[1]) / 2 - Zs.y) / Zs.z }; };
@@ -564,7 +606,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
         if (!sc.isConnected) return; raf = requestAnimationFrame(step); const dt = Math.min(0.05, (ts - last) / 1000); last = ts;
         g.clearRect(0, 0, W, H);
         g.fillStyle = 'rgba(255,255,255,.55)'; bub.forEach(b => { b.y -= (12 + b.s * 6) * dt; if (b.y < -5) { b.y = H * 0.7; b.x = Math.random() * W; } g.beginPath(); g.arc(b.x, b.y, b.s, 0, 6.3); g.fill(); });
-        { const dl = spec.decor().slice().sort((a, b) => b.rar - a.rar).slice(0, 8); g.textAlign = 'center'; g.font = '30px serif'; dl.forEach((d, i) => { const k = decorOf(d), x = 24 + i * (W - 48) / Math.max(1, dl.length - 1 || 1) * (dl.length > 1 ? 1 : 0) + (dl.length === 1 ? W / 2 - 24 : 0); g.save(); if (d.rar >= 2) { g.shadowColor = d.rar === 3 ? '#ffd24a' : '#c07bff'; g.shadowBlur = 10 + 6 * Math.sin(ts / 300 + i); } g.fillText(k.icon, x, H - 6 - (i % 2) * 10); g.restore(); }); g.textAlign = 'start'; }
+        { g.textAlign = 'center'; g.font = '34px serif'; PL.slice().sort((a, b2) => a.y - b2.y).forEach((q, i) => { const d = DM[q.uid]; if (!d) return; const k = decorOf(d), x = q.x * W, y = q.y * H; g.save(); if (d.rar >= 2) { g.shadowColor = d.rar === 3 ? '#ffd24a' : '#c07bff'; g.shadowBlur = 10 + 6 * Math.sin(ts / 300 + i); } g.fillText(k.icon, x, y); g.restore(); if (editMode && q.uid === selUid) { g.save(); g.strokeStyle = '#f58aa8'; g.lineWidth = 2.5; g.setLineDash([5, 4]); g.strokeRect(x - 24, y - 38, 48, 46); g.restore(); } }); g.textAlign = 'start'; }
         g.fillStyle = '#3f9a5a'; for (let i = 0; i < 5; i++) { const x = 20 + i * (W - 40) / 4; g.beginPath(); g.moveTo(x, H * 0.7); g.quadraticCurveTo(x + Math.sin(ts / 700 + i) * 10, H * 0.45, x + 4, H * 0.3); g.lineTo(x + 7, H * 0.7); g.fill(); }
         swim.forEach(s => {
           // えさがあれば、いちばん近いつぶへ寄っていく。口(向いている側)で食べる
@@ -631,6 +673,20 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast 
       const a = e.target.closest('[data-a]')?.dataset.a, fd = e.target.closest('[data-feed]'), sp = e.target.closest('[data-spec]'), rl = e.target.closest('[data-rel]'), tb = e.target.closest('[data-tobox]');
       if (a === 'back') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); onBack(); }
       else if (a === 'mix') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); mixScreen({ onBack: () => tankScreen({ onBack }) }); }
+      else if (a === 'decor') { sfx.play('tap'); editMode = !editMode; selUid = null; draw(); }
+      else if (e.target.closest('[data-dadd]')) {   // その種類の、まだ置いていない1こを置く
+        sfx.play('tap'); const k = e.target.closest('[data-dadd]').dataset.dadd, placed = new Set(spec.placed().map(q => q.uid)), d = spec.decor().find(x => x.lv + ':' + x.rar === k && !placed.has(x.uid));
+        if (d) { spec.placeAdd(d.uid, 0.3 + Math.random() * 0.4, 0.74 + Math.random() * 0.2); selUid = d.uid; draw(); }
+      }
+      else if (a === 'dtake') { if (selUid) { sfx.play('tap'); spec.placeRemove(selUid); selUid = null; draw(); } }
+      else if (a === 'vx') { const n = vch.exchange(ctx.wallet, Math.min(vch.todayLeft(), ctx.wallet.get())); if (n) { sfx.play('coin'); toast(`🎫 金券 ${n} まい ためたよ(3か月まで)`); } draw(); }
+      else if (e.target.closest('[data-dup]')) {
+        const b = e.target.closest('[data-dup]'), k = b.dataset.dup, pay = b.dataset.pay, [lv, rar] = k.split(':').map(Number), src = spec.decor().find(x => x.lv === lv && x.rar === rar);
+        if (!src) return; const ok = pay === 'v' ? vch.spend(VCH.PRICE_V[rar]) : pay === 'f' ? vch.spendFrag(VCH.PRICE_F[rar]) : vch.spendDia(VCH.PRICE_D[rar]);
+        if (!ok) { toast('たりないよ'); sfx.play('early'); return; }
+        spec.addDecor({ uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), lv, rar, at: Date.now() }); sfx.play('coin'); toast('✨ 同じ飾りが ふえた!'); draw();
+      }
+      else if (a === 'dtakeall') { sfx.play('tap'); spec.placed().forEach(q => spec.placeRemove(q.uid)); selUid = null; draw(); }
       else if (a === 'make') {
         sfx.play('tap'); let got = 0;
         for (const q of reviewQs(FOOD_Q)) { const ok = await ask(q, { label: `🍤 えさを作る(${got}こ)`, time: T_Q }); learn.hit(q.w[0], ok, { ja: q.w[2], src: 'fishing' }); if (ok) got++; }

@@ -103,9 +103,9 @@ function tank(g) {
   [[-0.7, 0.2], [-0.55, -0.15], [0.68, -0.2]].forEach(([x, z]) => { for (let i = 0; i < 3; i++) { const m = cyl(g, 0.02, 0.32 + i * 0.08, 0x3f9a5a, x + i * 0.04, 0.56, z, 0.008); m.rotation.z = (i - 1) * 0.25; } });
   ball(g, 0.09, 0x8a8a90, 0.4, 0.58, 0.18).scale.set(1.4, 0.7, 1);
   // 混ぜてできた飾り(レアなものほど手前・目立つ)
-  const dc = spec.decor().slice().sort((a, b) => b.rar - a.rar).slice(0, 8);
-  dc.forEach((d, i) => {
-    const sh = decorOf(d).shape, x = -0.72 + (i % 4) * 0.48 + (i > 3 ? 0.2 : 0), z = i > 3 ? -0.2 : 0.2, y = 0.56, e = new THREE.Group(); e.position.set(x, y, z); g.add(e);
+  const dmap = Object.fromEntries(spec.decor().map(d => [d.uid, d])), dc = spec.placed().filter(q => dmap[q.uid]).slice(0, 40);   // 水槽の画面で置いた位置(左右=x、下ほど手前)
+  dc.forEach((q, i) => {
+    const d = dmap[q.uid], sh = decorOf(d).shape, x = -0.78 + q.x * 1.56, z = -0.25 + q.y * 0.5, y = 0.56, e = new THREE.Group(); e.position.set(x, y, z); g.add(e);
     if (sh === 'weed') { for (let k = 0; k < 4; k++) { const m = cyl(e, 0.015, 0.3 + k * 0.06, 0x2f9a58, k * 0.04 - 0.06, 0, 0, 0.008); m.rotation.z = (k - 1.5) * 0.18; } }
     else if (sh === 'coralrock') { ball(e, 0.1, 0x8a8a92, 0, 0.04, 0).scale.set(1.3, 0.7, 1); [[-0.05, 0.1, 0xff7a9a], [0.04, 0.12, 0xff9ab0], [0.1, 0.07, 0xff6a8a]].forEach(([dx, h, c]) => cyl(e, 0.014, h + 0.08, c, dx, 0.1, 0, 0.01)); }
     else if (sh === 'castle') { box(e, 0.26, 0.14, 0.18, 0xf2dcc6, 0, 0.07, 0); [-0.12, 0.12].forEach(dx => { cyl(e, 0.05, 0.26, 0xf6e6d6, dx, 0.13, 0, 0.05); add(e, new THREE.ConeGeometry(0.06, 0.1, 8), 0xff8aa8, dx, 0.31, 0); }); box(e, 0.06, 0.1, 0.02, 0x6a4a3a, 0, 0.05, 0.1); }

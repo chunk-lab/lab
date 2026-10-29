@@ -5,33 +5,39 @@ import { surface, pointers, loop, txt, wrapTxt, banner, rr, clamp, btn, hit, COL
 import { chunkSentences, ROLES, ORDER, buildEn } from '../../../../../series/data/chunk_sentences.js';
 
 export default {
-  id: 'chunksort', en: 1, title: '文の並べ替え', icon: '🧩', desc: '日本語のチャンクを、英語の順番の枠へ!', rule: '日本語の順に浮かんでいるチャンクを、英語の順番の枠に入れていきます(タップで選んで枠をタップ / ドラッグでもOK)。全部正しく入れると、英文が音声つきで流れます。先に入れ終わった方が1点。ヒントは 💡 で、文型の名前 → 色 → 役割の名前の順に少しずつ見られます。',
+  id: 'chunksort', en: 1, title: '文の並べ替え', icon: '🧩', desc: '日本語のチャンクを、英語の順番の枠へ!', rule: '最初に英文が音声で流れます。聞いた順に、チャンクを英語の順番の枠に入れていきます(タップで左から順に入る / ドラッグでもOK)。全部正しく入れると、英文が音声つきで流れます。先に入れ終わった方が1点。ヒントは 💡 で、文型の名前 → 色 → 役割の名前の順に少しずつ見られます。',
   options: [
     { key: 'lv', label: '文の長さ', choices: [[1, 'かんたん(3つ)'], [2, 'ふつう(4つ)'], [3, 'むずかしい(5つ以上)']], def: 1 },
     { key: 'to', label: '何本先取', choices: [[3, '3本'], [5, '5本'], [7, '7本']], def: 5 },
     { key: 'board', label: '枠', choices: [['few', '必要な枠だけ'], ['all', '8つの枠から自分で選ぶ']], def: 'few' },
     { key: 'hint', label: 'ヒント(文型の名前・色・役割)', choices: [['btn', 'ボタンで少しずつ'], ['full', '最初から全部'], ['off', 'なし']], def: 'btn' },
-    { key: 'say', label: '読み上げ', choices: [[1, 'あり'], [0, 'なし']], def: 1 },
+    { key: 'say', label: '読み上げ(できたあと)', choices: [[1, 'あり'], [0, 'なし']], def: 1 },
+    { key: 'pre', label: '最初に英文を聞く', choices: [[1, 'あり'], [0, 'なし']], def: 1 },
+    { key: 'mode', label: '並べるもの', choices: [['ja', '日本語'], ['en', '英文(日本語なし)']], def: 'ja' },
   ],
   start(host) {
     const S = surface(host.box), g = S.g, two = host.two, cpu = host.players[1].cpu, sfx = host.sfx, lv = cpu ? cpu.lv : 2, H2 = halves(S, two);
-    const O = host.opts, TO = O.trial ? 2 : O.to || 5, LVL = O.lv || 1, ALL = O.board === 'all', HINT = O.hint || 'btn', SAY = O.say !== 0, INL = !!O.inline, TOP = INL ? 0 : 64;   // inline:釣りの巻き取りなど、ほかの画面に埋めこむとき(上のスコア欄・カウントダウンなし)
+    const O = host.opts, TO = O.trial ? 2 : O.to || 5, LVL = O.lv || 1, ALL = O.board === 'all', HINT = O.hint || 'btn', SAY = O.say !== 0, PRE = O.pre !== 0, EN = O.mode === 'en', INL = !!O.inline, TOP = INL ? 0 : 64;   // inline:釣りの巻き取りなど、ほかの画面に埋めこむとき(上のスコア欄・カウントダウンなし)
     const SLOTS_ALL = ORDER.slice();
     const pool = chunkSentences().filter(s => LVL === 1 ? s.n <= 3 : LVL === 2 ? s.n === 4 : s.n >= 5);
     let queue = [];
     const nextSent = () => { if (!queue.length) queue = shuffle(pool.length ? pool : chunkSentences()); return queue.pop(); };
-    let sent = null, phase = 'count', phT = 0, count = 2.2, t = 0, score = [0, 0], over = false, win = -1, readDone = false, ended = false, cpuT = 99, reveal = null, revDur = 2;
+    let preSaid = false, sent = null, phase = 'count', phT = 0, count = 2.2, t = 0, score = [0, 0], over = false, win = -1, readDone = false, ended = false, cpuT = 99, reveal = null, revDur = 2;
     const P = [0, 1].map(s => ({ s, placed: {}, sel: -1, drag: null, lock: 0, hint: 0, flash: {}, rects: [], srects: [], hintBtn: null }));
     const slotsOf = () => ALL ? SLOTS_ALL : sent.roles;
+    const lab = c => EN ? c.en : c.ja;   // 並べるもの(日本語 / 英文)
     const isPlaced = (me, i) => Object.values(me.placed).includes(i);
 
     function newRound(first) {
-      sent = nextSent(); phase = INL ? 'play' : 'count'; phT = 0; count = first ? 2.2 : 0.7; win = -1; readDone = false; reveal = null;
+      sent = nextSent(); { const by = {}; sent.chunks.forEach(c => { by[c.role] = c; }); sent.en = buildEn(by); }
+      phase = INL ? 'play' : 'count'; phT = 0; count = first ? 2.2 : 0.7; win = -1; readDone = false; reveal = null;
       P.forEach(me => { me.placed = {}; me.sel = -1; me.drag = null; me.lock = 0; me.flash = {}; me.hint = HINT === 'full' ? 3 : 0; });
+      preSaid = false;
       cpuT = !two && cpu ? 2 + sent.n * [0, 3.6, 2.8, 2.1][lv] * (0.8 + Math.random() * 0.4) : 99;
     }
     newRound(true);
 
+    function say1() { if (!PRE || !sent) return; try { speechSynthesis.cancel(); } catch (e) { } speakCb(sent.en, 0.9, () => { }); }   // 最初の英文(もういちども聞ける)
     function tryPlace(me, ci, slot) {
       if (phase !== 'play' || me.lock > 0 || isPlaced(me, ci)) return;
       const c = sent.chunks[ci];
@@ -66,6 +72,7 @@ export default {
         const s = two ? p.side : 0, me = P[s], l = loc(p, s);
         if (phase === 'reveal') { skipReveal(); return; }
         if (phase !== 'play' || me.lock > 0) return;
+        if (me.sayBtn && hit(me.sayBtn, l)) { say1(); sfx.play('tap'); return; }
         if (me.hintBtn && hit(me.hintBtn, l)) { me.hint = Math.min(3, me.hint + 1); sfx.play('tap'); return; }
         const c = me.rects.find(r => hit(r, l));
         if (c) { me.drag = { id: p.id, i: c.i, x: l.x, y: l.y, sx: l.x, sy: l.y, moved: false, was: me.sel === c.i }; me.sel = c.i; return; }
@@ -82,12 +89,15 @@ export default {
           const px = d.x, py = d.y - 26;   // 指より少し上に浮かせて持つ
           const sl = me.srects.find(r => hit(r, { x: px, y: py })) || me.srects.find(r => hit(r, { x: d.x, y: d.y }));
           if (sl) tryPlace(me, d.i, sl.r); else me.sel = -1;
+        } else if (!ALL && phase === 'play') {   // タップ:いちばん左の空いている枠に入る
+          me.sel = -1; const sl = slotsOf().find(r => me.placed[r] == null); if (sl) tryPlace(me, d.i, sl);
         } else if (d.was) me.sel = -1;   // 選んでいたチャンクをもういちどタップ → 解除
       },
     });
 
     const stop = loop(dt => {
       t += dt; phT += dt;
+      if (phase === 'play' && !preSaid) { preSaid = true; say1(); }
       P.forEach(me => { me.lock = Math.max(0, me.lock - dt); for (const k in me.flash) { me.flash[k].t -= dt; if (me.flash[k].t <= 0) delete me.flash[k]; } });
       if (phase === 'count') { const c0 = Math.ceil(count); count -= dt; if (count > 0 && Math.ceil(count) !== c0 && count > 0.8) sfx.play('count'); if (count <= 0) { phase = 'play'; phT = 0; sfx.play('go'); } }
       else if (phase === 'play') { if (!two && cpu && phT >= cpuT && win < 0) finish(1, null); }
@@ -100,7 +110,7 @@ export default {
     const words = (str, w, size) => { g.font = `800 ${size}px sans-serif`; const out = []; let cur = ''; for (const wd of str.split(' ')) { const t2 = cur ? cur + ' ' + wd : wd; if (cur && g.measureText(t2).width > w) { out.push(cur); cur = wd; } else cur = t2; } if (cur) out.push(cur); return out; };   // 英語は単語で折り返す
     function chunkLayout(W) {
       g.font = `800 ${Math.round(15 * K)}px sans-serif`;
-      const items = sent.chunks.map((c, i) => ({ i, c, w: Math.ceil(g.measureText(c.ja).width) + 26 * K, h: Math.round(38 * K) }));
+      const items = sent.chunks.map((c, i) => ({ i, c, w: Math.ceil(g.measureText(lab(c)).width) + 26 * K, h: Math.round(38 * K) }));
       const rows = []; let cur = [], cw = 0;
       for (const it of items) { if (cur.length && cw + it.w + 8 > W - 20) { rows.push(cur); cur = []; cw = 0; } cur.push(it); cw += it.w + (cur.length > 1 ? 8 : 0); }
       if (cur.length) rows.push(cur);
@@ -112,18 +122,19 @@ export default {
       g.fillStyle = 'rgba(0,0,0,0.12)'; rr(g, -w / 2 + 1, -h / 2 + 3, w, h, 14); g.fill();
       g.fillStyle = o.color ? col : '#fff'; rr(g, -w / 2, -h / 2, w, h, 14); g.fill();
       g.strokeStyle = o.sel ? INK : o.color ? 'rgba(0,0,0,0.12)' : '#d9cdea'; g.lineWidth = o.sel ? 3 : 2; g.stroke();
-      if (o.label) { txt(g, ROLES[c.role].name, 0, -h / 2 + 8 * K, { size: 9 * K, color: '#5a4a6b', weight: 800 }); txt(g, c.ja, 0, 5 * K, { size: 15 * K, maxW: w - 14 }); }
-      else txt(g, c.ja, 0, 1, { size: 15 * K, maxW: w - 14 });
+      if (o.label) { txt(g, ROLES[c.role].name, 0, -h / 2 + 8 * K, { size: 9 * K, color: '#5a4a6b', weight: 800 }); txt(g, lab(c), 0, 5 * K, { size: 15 * K, maxW: w - 14 }); }
+      else txt(g, lab(c), 0, 1, { size: 15 * K, maxW: w - 14 });
       g.restore();
     }
     function drawArea(me, W, h) {
       const s = me.s, slots = slotsOf(), ty = sent.type, dim = me.lock > 0; K = clamp((h - 90) / 430, 0.85, 1.3);
       if (two) txt(g, `${host.players[s].name}  ${score[s]} / ${TO}`, 10, 13, { size: 12, align: 'left', color: s ? COL.p2d : COL.p1d });
-      me.hintBtn = null;
+      me.hintBtn = null; me.sayBtn = null;
+      if (PRE && phase === 'play') { const b = { x: 8, y: 2, w: 100, h: 24, label: '🔊 もう一度' }; me.sayBtn = b; btn(g, b, { size: 12, shadow: false, border: '#e6dcf2' }); }
       if (HINT === 'btn' && phase === 'play') { const b = { x: W - 98, y: 2, w: 90, h: 24, label: me.hint >= 3 ? '💡 ぜんぶ表示' : '💡 ヒント' }; me.hintBtn = b; btn(g, b, { size: 12, shadow: false, border: '#e6dcf2', alpha: me.hint >= 3 ? 0.5 : 1 }); }
       // 文型のヒント / ふだんの案内
       if (phase !== 'count' && phase !== 'reveal' && me.hint >= 1) wrapTxt(g, `${ty.name}(${ty.sub})・${ty.gram}\n英語の順:${sent.roles.map(r => ROLES[r].name).join(' → ')}`, W / 2, 42, W - 16, { size: 11, color: '#6b4a9a', lh: 14 });
-      else if (phase !== 'reveal') txt(g, '日本語を、英語の順番の枠にならべよう', W / 2, 40, { size: 11, color: '#8d7f9e' });
+      else if (phase !== 'reveal') txt(g, PRE ? '聞いた順に、枠にならべよう' : (EN ? '英文を、英語の順番の枠にならべよう' : '日本語を、英語の順番の枠にならべよう'), W / 2, 40, { size: 11, color: '#8d7f9e' });
       const zoneTop = 62;
       const rows = chunkLayout(W), rowH = Math.round(44 * K), zoneH = Math.max(rows.length * rowH + 4, Math.round(104 * K));
       // 日本語のチャンク(日本語の順にふわふわ浮かぶ)
@@ -143,7 +154,7 @@ export default {
         const mine = win === s;
         txt(g, win >= 0 && two ? (mine ? '⭕ 先にできた!' : '…先をこされた') : (mine ? '⭕ 正解!' : `${host.players[win].name} が先に完成`), W / 2, zoneTop + 8, { size: 14, color: mine ? '#3fbf6a' : '#8d7f9e' });
         const n = wrapTxt(g, reveal.en, W / 2, zoneTop + 42, W - 24, { size: 19 * Math.min(K, 1.15), color: INK, lh: 24 * Math.min(K, 1.15), weight: 900 });
-        wrapTxt(g, sent.ja, W / 2, zoneTop + 42 + n * 12 * Math.min(K, 1.15) + 30, W - 24, { size: 12, color: '#8d7f9e', lh: 15 });
+        if (!EN) wrapTxt(g, sent.ja, W / 2, zoneTop + 42 + n * 12 * Math.min(K, 1.15) + 30, W - 24, { size: 12, color: '#8d7f9e', lh: 15 });
         txt(g, '🔊', W - 16, zoneTop + 8, { size: 14 });
       }
       // 英語の順番の枠
@@ -163,7 +174,7 @@ export default {
         g.save(); if (!c) g.setLineDash([5, 4]); g.strokeStyle = fl ? (fl.ok ? '#3fbf6a' : '#ff5a5a') : c ? 'rgba(0,0,0,0.12)' : R.col; g.lineWidth = fl ? 3.5 : 2.5; rr(g, x, y, w, sh, 12); g.stroke(); g.restore();
         txt(g, R.name, x + w / 2, y + 10, { size: 10.5 * Math.min(K, 1.15), color: '#5a4a6b', maxW: w - 8 });
         txt(g, R.gram, x + w / 2, y + 21 * Math.min(K, 1.15), { size: 8.5 * Math.min(K, 1.15), color: '#7a6a8b', weight: 700, maxW: w - 8 });
-        if (c) { const fs = 13 * Math.min(K, 1.2), ls = reveal ? words(reveal ? c.en : c.ja, w - 10, fs) : null; if (ls) ls.forEach((l, li) => txt(g, l, x + w / 2, y + sh * 0.7 + (li - (ls.length - 1) / 2) * fs * 1.1, { size: fs, color: INK, weight: rank >= prog - 1 && rank < prog ? 900 : 800 })); else wrapTxt(g, c.ja, x + w / 2, y + sh * 0.7, w - 10, { size: fs, color: INK, lh: fs * 1.1 }); }
+        if (c) { const fs = 13 * Math.min(K, 1.2), ls = reveal ? words(reveal ? c.en : c.ja, w - 10, fs) : null; if (ls) ls.forEach((l, li) => txt(g, l, x + w / 2, y + sh * 0.7 + (li - (ls.length - 1) / 2) * fs * 1.1, { size: fs, color: INK, weight: rank >= prog - 1 && rank < prog ? 900 : 800 })); else wrapTxt(g, lab(c), x + w / 2, y + sh * 0.7, w - 10, { size: fs, color: INK, lh: fs * 1.1 }); }
       });
       if (dim) txt(g, '× そこじゃないよ', W / 2, sTop - 9, { size: 12, color: '#ff5a5a' });
       // ドラッグ中のチャンク
