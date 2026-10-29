@@ -974,7 +974,7 @@ export function mount(container, opt = {}) {
     else if (b.dataset.c === 'free') { camFromView(); camMode = 'free'; camBarDraw(); }
     else if (b.dataset.c === 'back') {   // 合わせたカメラの位置のまま もどる(次からもその見え方。カメラ設定の「リセット」で戻せる)
       const dx = fcam.x - me.x, dz = fcam.z - me.z, dy = fcam.y - 1.3, L = Math.hypot(dx, dy, dz) || 1;
-      cam.yaw = Math.atan2(dx, dz); cam.pitch = clamp(Math.asin(clamp(dy / L, -1, 1)), 0.1, 1.2); cam.dist = clamp(L, 3, 14); cam.x = me.x; cam.z = me.z;
+      cam.yaw = Math.atan2(dx, dz); cam.pitch = clamp(Math.asin(clamp(dy / L, -1, 1)), -1.5, 1.5); cam.dist = clamp(L, 1.6, 40);   // 合わせた見え方をそのまま(丸めない) cam.x = me.x; cam.z = me.z;
       settings.camView = { pitch: +cam.pitch.toFixed(3), dist: +cam.dist.toFixed(2) }; save();
       camMode = 'follow'; camBarDraw(); me.ch.root.visible = true; input.clear();
     }
