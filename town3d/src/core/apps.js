@@ -10,6 +10,14 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
   const loadedScripts = new Map();
   let current = null;
 
+  // コイン・ダイヤの表示は、写しを持たず、財布の変化のたびに [data-bind] を書きかえる(ずれない)
+  const fmtLive = n => (Math.floor(+n) || 0).toLocaleString('ja-JP');
+  const live = () => {
+    const c = wallet.get(), g = gems ? gems.get() : null;
+    layer.querySelectorAll('[data-bind="coins"]').forEach(e => { e.textContent = fmtLive(c); });
+    if (g != null) layer.querySelectorAll('[data-bind="gems"]').forEach(e => { e.textContent = fmtLive(g); });
+  };
+  bus.on('wallet', live);
   const layer = document.createElement('div');
   layer.className = 'tw-app-layer';
   layer.hidden = true;

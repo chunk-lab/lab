@@ -551,13 +551,14 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       };
       raf = requestAnimationFrame(step);
     }
+    let fullGain = 0;   // 満腹コインで、実際に増えた量(会員の倍率のあと)。ふき出しも、お知らせも、これを使う
     const feedFx = (uids, fulls = {}) => {
+      const nCoin = Object.values(fulls).filter(v => v === 'coin').length; fullGain = nCoin ? ctx.wallet.give(nCoin * FULL_COIN, 'full') : 0; const fullEach = nCoin ? Math.round(fullGain / nCoin) : 0;
       uids.forEach((uid, k) => {
         const s = swim.find(q => q.uid === uid), cx = s ? s.x + s.w * (s.vx < 0 ? 0.2 : 0.8) : W / 2;
         for (let i = 0; i < 12; i++) fx.pel.push({ uid, x: Math.max(6, Math.min(W - 6, cx + (Math.random() - 0.5) * 70)), y: -6 - Math.random() * 40, vy: 55 + Math.random() * 35, r: 2 + Math.random() * 1.6, c: ['#e0883a', '#c9692a', '#f2b45a', '#a8521f'][i % 4], t: 0, ph: Math.random() * 6 });
-        if (fulls[uid]) fx.coin.push({ uid, n: fulls[uid] === 'coin' ? FULL_COIN : 0, t: 0, delay: 1.0 + k * 0.12, x: cx, y: 60 });
+        if (fulls[uid]) fx.coin.push({ uid, n: fulls[uid] === 'coin' ? fullEach : 0, t: 0, delay: 1.0 + k * 0.12, x: cx, y: 60 });
       });
-      const cn = Object.values(fulls).filter(v => v === 'coin').length * FULL_COIN; if (cn) { try { ctx.wallet.give(cn, 'full'); } catch (e) { } }
     };
     const feed = uid => {
       const t = spec.tank(), f = t.find(x => x.uid === uid), food = spec.food(); if (!f || !food) return false;
@@ -702,7 +703,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       if (a === 'back') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); onBack(); return; }
       if (a === 'dtake') { spec.placeRemove(v); selUid = null; closePop(); sfx.play('tap'); refreshDecor(); drawHead(); if (tab === 'deco') drawBody(); return; }
       if (a === 'dup') { closePop(); walletSheet(v); return; }
-      if (a === 'feed') { const r = feed(v); closePop(); if (r) { sfx.play('nibble'); feedFx([v], r === true ? {} : { [v]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${FULL_COIN}`); } else toast(spec.food() ? 'きょうは もうおなかいっぱい' : 'えさがないよ。🐟タブの「えさを作る」で作ろう'); redraw(); return; }
+      if (a === 'feed') { const r = feed(v); closePop(); if (r) { sfx.play('nibble'); feedFx([v], r === true ? {} : { [v]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${fullGain}`); } else toast(spec.food() ? 'きょうは もうおなかいっぱい' : 'えさがないよ。🐟タブの「えさを作る」で作ろう'); redraw(); return; }
       if (a === 'tobox') { closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; if (!boxRoom()) { toast('ひかえがいっぱい(🐟タブで ふやせるよ)'); return; } const b = spec.box(); b.push(t.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); sfx.play('tap'); toast('📦 ひかえに入れた'); redraw(true); return; }
       if (a === 'info') { closePop(); const [id, rk] = v.split(':'); fishDetail(id, +rk); return; }
       if (a === 'make') {
@@ -710,7 +711,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         for (const q of reviewQs(FOOD_Q)) { const ok = await ask(q, { label: `🍤 えさを作る(${got}こ)`, time: T_Q }); learn.hit(q.w[0], ok, { ja: q.w[2], src: 'fishing' }); if (ok) got++; }
         spec.setFood(spec.food() + got); toast(`🍤 えさが ${got} こ できた!`); redraw(); return;
       }
-      if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { sfx.play('nibble'); feedFx(fed, fulls); const cn = Object.values(fulls).filter(x => x === 'coin').length * FULL_COIN; toast(`🍤 ${n}回 あげた${cn ? ' ・ 🪙 +' + cn : ''}`); } redraw(); return; }
+      if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { sfx.play('nibble'); feedFx(fed, fulls); toast(`🍤 ${n}回 あげた${fullGain ? ' ・ 🪙 +' + fullGain : ''}`); } redraw(); return; }
       if (a === 'takeall') { spec.placed().forEach(q => spec.placeRemove(q.uid)); selUid = null; sfx.play('tap'); refreshDecor(); redraw(); return; }
       if (a === 'wallet') { walletSheet(null); return; }
       if (a === 'idex') { openDex && openDex(); return; }

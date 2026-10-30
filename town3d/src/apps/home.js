@@ -47,7 +47,7 @@ export const shopApp = {
       const c = furn.cart()[id] || 0, room = MAX_OWN - furn.owned(id);
       return `<div style="display:flex;align-items:center;justify-content:center;gap:10px">${qtyBtn(id, -1, '−', c > 0)}<b style="min-width:20px;font-size:16px">${c}</b>${qtyBtn(id, 1, '＋', c < room)}</div>`;
     };
-    const head = (title, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${title}</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px">🪙 ${fmtN(ctx.wallet.get())}${ctx.gems ? ` 💎 ${fmtN(ctx.gems.get())}` : ''}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
+    const head = (title, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${title}</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${ctx.gems ? ` 💎 <span data-bind="gems">${fmtN(ctx.gems.get())}</span>` : ''}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
     let lastView = '', lastCat = '';
     const draw = () => {   // 数を変えるたびに作りなおすので、同じ画面なら見ていた位置(スクロール)を保つ
       const keep = lastView === view && lastCat === cat ? (box.querySelector('.sc')?.scrollTop || 0) : 0;
@@ -240,7 +240,7 @@ export const homeApp = {
       const xs = house.rooms.map(r => r.sx), ys = house.rooms.map(r => r.sy), x0 = Math.min(...xs), y0 = Math.min(...ys), W = Math.max(...xs) - x0 + 1, H = Math.max(...ys) - y0 + 1;
       const tiles = house.rooms.map(r => `<button data-room="${r.id}" style="grid-column:${r.sx - x0 + 1};grid-row:${r.sy - y0 + 1};${btn(r.id === cur().id ? undefined : '#fff', r.id === cur().id ? '#fff' : ink)};border-radius:10px;padding:4px 6px;font-size:11px;box-shadow:0 1px 5px #0002;min-width:56px;overflow:hidden;text-overflow:ellipsis">${r.name}<br><span style="font-weight:600;opacity:.75">${r.cols}×${r.rows}</span></button>`).join('');
       planEl.innerHTML = `<div style="flex:1;min-width:0;overflow:auto"><div style="display:grid;grid-template-columns:repeat(${W},auto);grid-template-rows:repeat(${H},auto);gap:4px;width:max-content" title="間取り">${tiles}</div></div>
-        <div style="text-align:right;font-weight:800;font-size:13px;line-height:1.5;white-space:nowrap">🪙 ${fmtN(ctx.wallet.get())}${gemsOf() != null ? `<br>💎 ${fmtN(gemsOf())}` : ''}</div>
+        <div style="text-align:right;font-weight:800;font-size:13px;line-height:1.5;white-space:nowrap">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${gemsOf() != null ? `<br>💎 <span data-bind="gems">${fmtN(gemsOf())}</span>` : ''}</div>
         <button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 12px;font-size:13px">🏠 ひろげる</button>`;
     }
     function ui() {
@@ -264,7 +264,7 @@ export const homeApp = {
       };
       sheet.style.display = 'flex';
       sheet.innerHTML = `<div style="background:#fffaf0;border-radius:22px 22px 0 0;width:min(520px,100%);max-height:88%;overflow:auto;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))">
-        <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">🏠 ${r.name}を ひろげる</h3><b style="background:#fff3cf;border-radius:999px;padding:5px 12px;font-size:13px">🪙 ${fmtN(ctx.wallet.get())}${g != null ? ` 💎 ${fmtN(g)}` : ''}</b></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">🏠 ${r.name}を ひろげる</h3><b style="background:#fff3cf;border-radius:999px;padding:5px 12px;font-size:13px">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${g != null ? ` 💎 <span data-bind="gems">${fmtN(g)}</span>` : ''}</b></div>
         <p style="margin:6px 0 10px;font-size:13px;color:#8d7f9e">${sheetMsg || 'いまは ' + r.cols + '列 × ' + r.rows + '行。1列・1行ごとに、コインかダイヤで広げられるよ(かべの反対がわにのびるから、家具は動かないよ)。'}</p>
         ${row('cols', 'よこ（列）を1つ')}${row('rows', 'たて（行）を1つ')}
         ${g != null ? `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800">もうひとつ、部屋を増やす（${house.rooms.length}部屋）</div><div style="font-size:12px;color:#8d7f9e;margin:2px 0 8px">いまの部屋のとなりに、新しい部屋がつながるよ。ダイヤだけで増やせるよ。</div><button data-x="room" style="${btn(g >= C.gemsPerRoom ? 'linear-gradient(160deg,#9fd8ff,#6cb8f0)' : '#d9d2e3')};width:100%">💎 ${C.gemsPerRoom} で 部屋を増やす</button></div>` : ''}

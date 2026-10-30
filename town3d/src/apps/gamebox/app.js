@@ -115,7 +115,7 @@ export const gameboxApp = {
       const consoleTxt = paid() ? '本体:有料会員はいつでも' : r.console === dayKey() ? '本体:きょうは借りている' : `本体:借りていない(1日 🪙${PRICE.console})`;
       const winter = P.season === 'winter' || (!P.season && [12, 1, 2].includes(new Date().getMonth() + 1));
       sc.innerHTML = `<div class="logo">CHUNK BOX</div><div class="sub">チャンクボックス ・ 1台で2人対戦</div>
-        <div class="stat"><span class="pill ${consoleOk() ? 'ok' : ''}">🎮 ${consoleTxt}</span><span class="pill">🪙 ${ctx.wallet.get()}</span>${!consoleOk() ? `<span class="pill warn">英語ゲーム無料 あと${enLeft()}試合</span>` : ''}</div>
+        <div class="stat"><span class="pill ${consoleOk() ? 'ok' : ''}">🎮 ${consoleTxt}</span><span class="pill">🪙 <span data-bind="coins">${ctx.wallet.get().toLocaleString("ja-JP")}</span></span>${!consoleOk() ? `<span class="pill warn">英語ゲーム無料 あと${enLeft()}試合</span>` : ''}</div>
         <div class="row" style="margin:0 0 4px">${!consoleOk() ? `<button class="btn gold" data-rent="console">🎮 本体を1日借りる 🪙${PRICE.console}</button>` : ''}</div>
         <h3>📚 英語対戦ゲーム <span class="pill ok">無料</span></h3><div class="grid">${EN_GAMES.map(card).join('')}</div>
         <p class="note" style="color:#d8d0f0;margin-top:14px">英語ゲーム:無料会員は1日1試合(本体を借りた日は何回でも)。有料会員はいつでも。<br>あそびのゲームは、町の「アミューズメントセンター」にあります。</p>`;
@@ -130,7 +130,7 @@ export const gameboxApp = {
       const passTxt = paid() ? 'パス:有料会員はいつでも' : r.console === dayKey() ? 'パス:きょうは持っている' : `パス:持っていない(1日 🪙${PRICE.console})`;
       const out = [snow3d, fishvs, golf, frisbee, ...(curSeason() === 'winter' ? [snow] : [])], seasonName = { spring: '春', summer: '夏', autumn: '秋', winter: '冬' }[curSeason()];
       sc.innerHTML = `<div class="logo">AMUSEMENT</div><div class="sub">アミューズメントセンター</div>
-        <div class="stat"><span class="pill ${consoleOk() ? 'ok' : ''}">🎟 ${passTxt}</span><span class="pill">🪙 ${ctx.wallet.get()}</span></div>
+        <div class="stat"><span class="pill ${consoleOk() ? 'ok' : ''}">🎟 ${passTxt}</span><span class="pill">🪙 <span data-bind="coins">${ctx.wallet.get().toLocaleString("ja-JP")}</span></span></div>
         ${!consoleOk() ? `<div class="row" style="margin:0 0 4px"><button class="btn gold" data-rent="console">🎟 1日パスを買う 🪙${PRICE.console}</button></div>` : ''}
         <h3>🌳 外遊び <span class="pill ok">${seasonName}は ${out.filter(inSeason).map(g => g.title).join('・') || '旬のもの'} が無料</span></h3><div class="grid">${out.map(card).join('')}</div>
         <h3>🎮 ゲーム</h3><div class="grid">${[CARDS, ...PLAY_GAMES.filter(g => !out.includes(g))].map(card).join('')}</div>

@@ -31,7 +31,7 @@ export function createToday(core) {
     const rec = pick(P), main = rec[0], more = rec.slice(1, 3);
     core.ui.sheet(`<h3>今日なにする?</h3>
       ${last && core.openGame && hasGame(last.game) ? `<button class="cs-btn cs-resume" data-resume>つづきから:${esc(last.label || (playOf(last.play) || {}).n || '')}</button>` : ''}
-      ${wk.length ? `<button class="cs-btn ${taskDone ? '' : 'cs-go'}" data-task>今日の課題:課題図書を1冊${taskDone ? '(今日はクリア済み)' : `(コイン +${core.econ.daily.task})`}<small>${wk.map(b => esc(b.title)).join(' ・ ')}</small></button>` : ''}
+      ${wk.length ? `<button class="cs-btn ${taskDone ? '' : 'cs-go'}" data-task>今日の課題:課題図書を1冊${taskDone ? '(今日はクリア済み)' : `(コイン +${core.member.coinPreview(core.econ.daily.task)})`}<small>${wk.map(b => esc(b.title)).join(' ・ ')}</small></button>` : ''}
       <p class="cs-note">したいこと</p>${sel('want', WANTS, P.want)}
       <p class="cs-note">時間と気分</p>${sel('time', TIMES, P.time)}${sel('mood', MOODS, P.mood)}
       ${main ? `<button class="cs-btn cs-go cs-big" data-p="${main.id}">${esc(main.n)}<small>おすすめ</small></button>` : '<p class="cs-note">この組み合わせの遊びは、このアプリにはありません。</p>'}

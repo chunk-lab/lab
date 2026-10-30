@@ -25,11 +25,13 @@ export function createMember(wallet, ui) {
     }
     if (M.day.k !== dayKey()) { M.day = { k: dayKey(), task: 0, cm: 0, game: 0, pt: {} }; save(); }
   }
+  try { window.addEventListener('storage', e => { if (e.key !== 'cs:core:member' || !e.newValue) return; try { Object.assign(M, JSON.parse(e.newValue)); subs.forEach(f => { try { f(); } catch (x) { } }); } catch (x) { } }); } catch (e) { }   // 別のタブの変更に合わせる
   tick();
   wallet.setBoost && wallet.setBoost(() => (isPaid() ? ECON.paidCoinMult : 1));
   const api = {
     get plan() { return M.plan; },
     isPaid,
+    coinPreview: n => Math.round(n * (isPaid() ? ECON.paidCoinMult : 1)),   // 「コイン +N」と予告するときは、これを通した数(会員の倍率のあと)を出す
     coinCap: cap,
     coinCapText: () => (isFinite(cap()) ? String(cap()) : 'なし'),
     setPlan(p) {   // 運営画面・課金から。やめたとき：枠は本人が選んだ1つ(選ばなければ最後に入れたもの)を残す

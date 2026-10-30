@@ -50,7 +50,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     box = document.createElement('div'); box.className = 'md-town3d'; document.body.appendChild(box);
     town = window.town3d = window.Hoshimiya.mount(box, {
       wallet: core.wallet,   // コインは2Dと共通
-      gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house') },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
+      gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house'), onChange: f => core.member.onChange(f) },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書

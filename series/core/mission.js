@@ -106,7 +106,7 @@ export function createMission(core) {
     const t = task();
     if (t && !core.member.today().task && !o.skipTask) {
       const ways = taskWays(t);
-      return sheet(`<h3>今日なにする?</h3><div class="cs-mis"><b>今日の課題:「${esc(t.title)}」</b><small>${esc(t.ja || '')} ・ クリアでコイン +${core.econ.daily.task}</small></div><p class="cs-note">どうやって読む?</p>${btns([...ways.map(w => [w[0], w[1], 'cs-go']), ['other', 'ほかのことをする']])}`, (ov, close) => on(ov, close, { ...Object.fromEntries(ways.map(w => [w[0], () => begin(w[2])])), other: () => open({ ...o, skipTask: true }) }));
+      return sheet(`<h3>今日なにする?</h3><div class="cs-mis"><b>今日の課題:「${esc(t.title)}」</b><small>${esc(t.ja || '')} ・ クリアでコイン +${core.member.coinPreview(core.econ.daily.task)}</small></div><p class="cs-note">どうやって読む?</p>${btns([...ways.map(w => [w[0], w[1], 'cs-go']), ['other', 'ほかのことをする']])}`, (ov, close) => on(ov, close, { ...Object.fromEntries(ways.map(w => [w[0], () => begin(w[2])])), other: () => open({ ...o, skipTask: true }) }));
     }
     mood();
   }

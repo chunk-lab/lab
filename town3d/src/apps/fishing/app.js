@@ -755,7 +755,7 @@ export const fishingApp = {
       const bar = (label, v, max) => `<span class="stat">${label}<i style="width:${Math.round(v / max * 60)}px"></i></span>`;
       const draw = () => {
         const g = ctx.gems ? ctx.gems.get() : null;
-        s.querySelector('.wal').innerHTML = `🪙 ${ctx.wallet.get()}${g != null ? `<br>💎 ${g}` : ''}`;
+        s.querySelector('.wal').innerHTML = `🪙 <span data-bind="coins">${ctx.wallet.get().toLocaleString('ja-JP')}</span>${g != null ? `<br>💎 <span data-bind="gems">${Number(g).toLocaleString('ja-JP')}</span>` : ''}`;
         tabs.innerHTML = [['bait', 'エサ・ルアー'], ['eye', '見る道具'], ['rod', '竿'], ['reel', 'リール'], ['line', '糸']].map(([k, n]) => `<button class="tab ${k === tab ? 'on' : ''}" data-t="${k}">${n}</button>`).join('');
         sc.innerHTML = (msg ? `<p style="text-align:center;font-weight:800;color:#e0556b">${esc(msg)}</p>` : '') + GEAR[tab].map(it => {
           const has = own[tab].includes(it.id), on = eq[tab] === it.id;

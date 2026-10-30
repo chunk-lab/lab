@@ -41,7 +41,7 @@ export const cafeApp = {
     const stepBtn = (k, d, label, on) => `<button data-q="${k}" data-d="${d}" ${on ? '' : 'disabled'} style="width:34px;height:34px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:18px;color:#fff;background:${on ? 'linear-gradient(160deg,#ffb35c,#ff9a3c)' : '#d9d2e3'}">${label}</button>`;
     const draw = () => {
       const bag = social.bag(), menu = menuNow(), coins = ctx.wallet.get(), { n, sum } = totals(), short = sum - coins;
-      box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>☕ カフェ「ほしの木」</h2><span class="pill">🪙 ${fmt(coins)}</span></div>
+      box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>☕ カフェ「ほしの木」</h2><span class="pill">🪙 <span data-bind="coins">${fmt(coins)}</span></span></div>
         <div class="say">マスター「いらっしゃい。ぜんぶ、おみやげにできますよ。町のみんなにも好きなものがあってね…だれが何を好きかは、占いの館のルナさんがよく知ってるみたいです」</div>
         ${last ? `<div class="res" style="color:#4a3a6b">${last}</div>` : ''}
         <div class="grid">${menu.map(k => { const it = ITEMS[k], q = qty[k] || 0, own = bag[k] || 0; return `<div class="it" style="${q ? 'outline:3px solid #ffb35c' : ''}"><span class="ic">${it.icon}</span><b>${esc(it.name)}</b><small>${esc(it.en)}</small><span class="pr">🪙 ${fmt(it.price)}</span><small style="margin-top:4px">もっている: <b style="display:inline">${own}</b></small><div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px">${stepBtn(k, -1, '−', q > 0)}<b style="min-width:22px;font-size:17px">${q}</b>${stepBtn(k, 1, '＋', q < MAXQ)}</div>${q ? `<small style="margin-top:4px;color:#c26a00;font-weight:800">買うと ${own + q}こ ・ 🪙 ${fmt(q * it.price)}</small>` : ''}</div>`; }).join('')}</div>
@@ -96,7 +96,7 @@ export const fortuneApp = {
     const pay = () => { const p = price(); if (ctx.wallet.get() < p) { toast(box, `コインが ${p} まい いるわ`); return false; } if (!ctx.wallet.spend(p, 'fortune')) { toast(box, `コインが ${p} まい いるわ`); return false; } return true; };
     const say = t => `<div class="say">🔮 ルナ「${t}」</div>`;
     const draw = () => {
-      let h = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>🔮 占いの館</h2><span class="pill">🪙 ${ctx.wallet.get()}</span></div>`;
+      let h = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>🔮 占いの館</h2><span class="pill">🪙 <span data-bind="coins">${Number(ctx.wallet.get()).toLocaleString("ja-JP")}</span></span></div>`;
       if (view !== 'top') h += `<button class="back" data-v="top">← もどる</button>`;
       if (result) h += `<div class="res">${result}</div>`;
       if (out) {

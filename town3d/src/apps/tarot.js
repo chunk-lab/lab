@@ -289,7 +289,7 @@ export function mountTarot(box, o) {
     const sm = S.sum ? (S.sum.tr || S.sum.text) : '', fs = sm.split(/(?<=[。!?.])\s*/)[0].slice(0, 90);
     o.rec('タロット', `${dt.getMonth() + 1}/${dt.getDate()} ${sp.n}${S.q ? '「' + S.q.slice(0, 20) + '」' : ''}:${cards}${fs ? ' → ' + fs : ''}`, 'tarot:' + S.t);
   };
-  const head = (sub) => `<div class="tz-top"><h2>🃏 タロット<small>${esc(sub || 'Tarot Reading')}</small></h2><span class="tz-pill">🪙 ${ctx.wallet.get()}${gems() != null ? ` ・ 💎 ${gems()}` : ''}${st.tk ? ` ・ 🎫 ${st.tk}` : ''}</span></div>`;
+  const head = (sub) => `<div class="tz-top"><h2>🃏 タロット<small>${esc(sub || 'Tarot Reading')}</small></h2><span class="tz-pill">🪙 <span data-bind="coins">${Number(ctx.wallet.get()).toLocaleString('ja-JP')}</span>${gems() != null ? ` ・ 💎 <span data-bind="gems">${Number(gems()).toLocaleString('ja-JP')}</span>` : ''}${st.tk ? ` ・ 🎫 ${st.tk}` : ''}</span></div>`;
   let dead = false, raf = 0, frame = null, last = performance.now(), T = 0;
 
   // ---------- 星空(背景) ----------

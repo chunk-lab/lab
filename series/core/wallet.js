@@ -10,6 +10,8 @@ export function createWallet() {
     coins = Number.isFinite(old) ? old : 50; st.set('coins', coins);
   }
   const fire = (delta, reason) => subs.forEach(f => { try { f({ coins, delta, reason }); } catch (e) { } });
+  // 別のタブで変わったら、保存されている数字に合わせる(財布をメモリに写したまま食い違わせない)
+  try { window.addEventListener('storage', e => { if (e.key !== 'cs:core:coins') return; const v = JSON.parse(e.newValue); if (Number.isFinite(v) && v !== coins) { const d = v - coins; coins = v; fire(d, 'sync'); } }); } catch (e) { }
   let boost = () => 1;   // もらえるコインの倍率(有料会員は member が差し込む)。運営・テスト・月替わりの増減には掛けない
   return {
     setBoost(f) { boost = f; },

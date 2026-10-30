@@ -13,7 +13,7 @@ export const albumApp = {
     box.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;font-family:inherit;color:${ink};background:linear-gradient(#fdf0f3,#eaf4ff)`;
     el.appendChild(box);
     let view = 'grid', msg = '', cur = null, img = null, crop = null, sure = false;
-    const gemsTxt = () => (ctx.gems ? `　💎 ${fmtN(ctx.gems.get())}` : '');
+    const gemsTxt = () => (ctx.gems ? `　💎 <span data-bind="gems">${fmtN(ctx.gems.get())}</span>` : '');
     const fromHome = ctx.params && ctx.params.from === 'home';   // 家から来たときは「部屋にもどる」を出す
     const head = (t, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${t}</h2>${fromHome ? `<button data-home style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:7px 12px;font-size:13px">🏠 部屋にもどる</button>` : ''}<b style="background:#fff3cf;border-radius:999px;padding:6px 14px;font-size:13px">📷 ${photos.list().length}/${photos.slots(cfg)}${gemsTxt()}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
 
