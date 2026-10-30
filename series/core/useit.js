@@ -81,7 +81,8 @@ export function createUseit(core) {
           const lv = core.level ? core.level.name() : '';
           const r = await ai.examples(x.en, lv), list = [...(r.examples || []), ...(r.passage || [])].filter(s => s && s.en).map(s => ({ en: s.en, ja: s.ja || '', from: 'AI', src: 'ai' }));
           core.notebook.addMany(list.map(s => ({ en: s.en, ja: s.ja, kind: 'short', src: 'ai' })));
-          const ul = q('[data-gened]'); ul.innerHTML = list.map(sent).join(''); bindList(ul, list); btn.textContent = '勉強ノートに入れました';
+          try { core.eigo.send([{ en: x.en, ja: x.ja || '', ex: list[0] && list[0].en, exja: list[0] && list[0].ja }, ...list.slice(1).map(t => ({ en: t.en, ja: t.ja, kind: 'sentence' }))]); } catch (e) { console.error(e); }   // 英語脳にも自動で登録(次に英語脳を開いたとき)
+          const ul = q('[data-gened]'); ul.innerHTML = list.map(sent).join(''); bindList(ul, list); btn.textContent = '勉強ノートと英語脳に入れました';
         } catch (e) { if (byGems) M.addGems(ECON.ai.gems, 'refund'); btn.disabled = false; btn.textContent = '作る'; core.ui.toast(e.message + '(使った分は戻しました)'); }
       };
     });

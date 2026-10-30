@@ -7,7 +7,7 @@ const SPARE = [
 ];
 function rng(seed) { let s = 0; for (const c of seed) s = (s * 31 + c.charCodeAt(0)) >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
 export function holeExpr(pool, key, i) {
-  const L = (pool && pool.length >= 10 ? pool : SPARE.map(([en, ja]) => ({ en, ja }))).slice(), r = rng('expr:' + key);
+  const L = (pool && pool.length >= 5 ? pool : SPARE.map(([en, ja]) => ({ en, ja }))).slice(), r = rng('expr:' + key);
   for (let k = L.length - 1; k > 0; k--) { const j = Math.floor(r() * (k + 1)); [L[k], L[j]] = [L[j], L[k]]; }
   const x = L[i % L.length]; return { en: x.en, ja: x.ja };
 }

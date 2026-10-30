@@ -17,6 +17,22 @@ const ROUTE = {
 };
 
 export function createMode(core, { GAMES, enter, start2D, openStudy }) {
+
+  // ---- 今日の表現:使っている人のAIで、表現・意味・例文・英語脳に入れる情報までまとめて作る(1日1回) ----
+  const exprStore = createStore('core'), exprDay = () => new Date(Date.now() + 9 * 36e5).toISOString().slice(0, 10);
+  let exprBusy = false;
+  const exprToday = () => { const d = exprStore.get('exprDay'); return d && d.day === exprDay() && d.list && d.list.length >= 5 ? d.list : null; };
+  async function genExpr() {
+    if (exprBusy || exprToday() || !core.ai || !core.ai.ready) return; exprBusy = true;
+    try {
+      const seen = exprStore.get('exprSeen') || [], lv = core.level ? core.level.name() : '中級';
+      const r = await core.ai.askJSON('You create English learning material for Japanese learners. Natural, correct English. Japanese meanings are short and natural.',
+        `Give 5 useful everyday English phrasal verbs or idioms (level: ${lv}) that are NOT in this list: ${seen.slice(-80).join(', ') || '(none)'}.\nReturn a JSON array of exactly 5 objects: [{"kind":"verbs","en":"base verb, first word only (no 'to')","tail":"the rest after the first word, or empty","ja":"short Japanese meaning","past":"past form","pp":"past participle","fr":"intr | tr | both","t":["up to 3 of: food, drink, read, write, watch, sport, instr, game, music, lang, ride, thing, person, animal, any"],"e":"one emoji","ex":"one natural example sentence using it","exja":"Japanese translation of the example"}]. For an idiom that is not a verb phrase use kind leads|states|times|places|manners|things|people instead and put the whole idiom in "en" with empty tail.`, 1800);
+      const ok = ['leads', 'people', 'things', 'verbs', 'states', 'times', 'places', 'manners'];
+      const list = (Array.isArray(r) ? r : []).filter(x => x && x.en && x.ja && x.ex && ok.includes(x.kind)).slice(0, 5).map(x => ({ en: (x.en + (x.tail ? ' ' + x.tail : '')).trim(), ja: x.ja, ex: x.ex, exja: x.exja || '', ai: { kind: x.kind, en: x.en, tail: x.tail || '', ja: x.ja, past: x.past, pp: x.pp, fr: x.fr, t: x.t, e: x.e } }));
+      if (list.length >= 5) { exprStore.set('exprDay', { day: exprDay(), list }); exprStore.set('exprSeen', seen.concat(list.map(x => x.en)).slice(-200)); }
+    } catch (e) { console.error(e); } finally { exprBusy = false; }
+  }
   let town = null, box = null;
 
   function chooser() {
@@ -58,7 +74,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
       features: ['study'],
-      exprPool: () => { try { if (!core.dict.loaded) { core.dict.ready().catch(() => { }); return null; } return core.dict.phrases(); } catch (e) { return null; } },   // 毎日の表現のもと(辞書の熟語)
+      exprPool: () => { const t = exprToday(); if (t) return t; genExpr(); try { if (!core.dict.loaded) { core.dict.ready().catch(() => { }); return null; } return core.dict.phrases(); } catch (e) { return null; } },   // 毎日の表現のもと(AIがあればAIが作った今日の5つ・なければ辞書の熟語)
       medals: () => core.record.medals(),   // 勉強を続けたメダル(家の壁にかざれる)
       studyInfo: () => PLAYS.filter(p => p.mood !== 'game' && p.go && p.go.to !== '3d' && p.go.to !== 'test').map(p => ({ id: p.id, n: p.n, days: core.record.daysSince(p.id) })),   // しばらくしていない勉強(そら君が勧める)   // あなたの家に「勉強部屋」ボタンを出す
       switchLabel: '2Dの地図にする',
@@ -76,9 +92,9 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         else if (name === 'app:event' && d?.name === 'snap') { if (d.data) createStore('core').set('townInfo', d.data); }
         else if (name === 'app:event' && d?.name === 'study') { const x = d.data || {}; if (x.snap) createStore('core').set('townInfo', x.snap); openStudy(x.tab ? { tab: x.tab, sec: x.sec || 'words' } : {}); }   // 町のノートボタン→勉強ノート(町のひみつの記録もいっしょに渡す)
         else if (name === 'app:event' && d?.name === 'act') core.daylog.act(d.data?.layer || 'sub', d.data?.cat ? { cat: d.data.cat, label: d.data.label } : null);   // 1日の記録:いま何をしているか
-        else if (name === 'app:event' && d?.name === 'learn' && d.data?.kind === 'expr') { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, kind: 'phrase', src: d.data.src || '今日の表現' }); } catch (e) { console.error(e); } core.daylog.addWord(d.data); }   // ホールでもらった表現:勉強ノートにも入れる(ここから「使ってみる」→英語脳へ行ける)
+        else if (name === 'app:event' && d?.name === 'learn' && d.data?.kind === 'expr') { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, kind: 'phrase', src: d.data.src || '今日の表現' }); if (d.data.ex) core.notebook.add({ en: d.data.ex, ja: d.data.exja || '', kind: 'short', src: d.data.src || '今日の表現' }); } catch (e) { console.error(e); } core.daylog.addWord(d.data); }   // ホールでもらった表現:勉強ノートにも入れる(ここから「使ってみる」→英語脳へ行ける)
         else if (name === 'app:event' && d?.name === 'learn') { if (d.data?.save) { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, src: d.data.src || 'gamebox' }); core.ui.toast('ノートに入れました'); } catch (e) { } } else core.daylog.addWord(d.data); }   // 出会った単語・文
-        else if (name === 'app:event' && d?.name === 'eigo') { try { core.eigo.send(d.data.items || []); core.ui.toast('英語脳を開いています…'); setTimeout(() => core.openGame('eigonou'), 300); } catch (e) { console.error(e); core.ui.toast('英語脳を開けませんでした:' + String(e && e.message || e).slice(0, 80)); } }   // ホールでもらった表現を英語脳で使う
+        else if (name === 'app:event' && d?.name === 'eigo') { try { core.eigo.send(d.data.items || []); if (d.data.open) { core.ui.toast('英語脳を開いています…'); setTimeout(() => core.openGame('eigonou'), 300); } } catch (e) { console.error(e); core.ui.toast('英語脳に渡せませんでした:' + String(e && e.message || e).slice(0, 80)); } }   // 英語脳の箱に入れる(次に英語脳を開くと自動で登録される)
         else if (name === 'app:event' && d?.name === 'bonus') { const n = Math.max(1, d.data?.n | 0), g = core.member.earn('once', 50 * n); if (g) { core.ui.toast(`メダルのごほうび +${g}コイン`); } }   // メダル(勉強を続けた日数)を新しくもらったら、1つにつき50コイン
         else if (name === 'app:event' && d?.name === 'daily') core.review && core.review.open({ mode: 'today' });   // 「今日はここまで」
         else if (name === 'app:event' && d?.name === 'done') core.events.report('gamebox', 'done', d.data || {});   // 家のゲーム機の英語ゲーム(メダルの日数に入る)

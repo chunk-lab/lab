@@ -140,8 +140,10 @@ export function mount(container, opt = {}) {
     onGive(x, kind) {   // 1ホールごとにもらった表現:その場で勉強ノートと今日のふりかえりに入れる
       opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src: '今日の表現' } });
     },
-    onExpr(list, practice, kind) {   // 「すぐ使ってみる」なら英語脳へ渡す
-      if (practice && list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { items: list.map(x => ({ en: x.en, ja: x.ja })) } });
+    onExpr(list, practice, kind) {   // ホールでもらった表現:勉強ノート・今日のふりかえり・英語脳(自動登録)へ。開くのは「英語脳で使ってみる」を押したときだけ
+      const src = '今日の表現';
+      list.forEach(x => opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src, ex: x.ex, exja: x.exja } }));
+      if (list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { open: !!practice, items: list.map(x => ({ en: x.en, ja: x.ja, ex: x.ex, exja: x.exja, ai: x.ai })) } });
     },
     onEnd({ kind, quit, total, par }) { actSport(null); if (goHome()) return; if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
   });

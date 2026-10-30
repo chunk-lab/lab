@@ -368,7 +368,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const X = holeExpr(exprPool && exprPool(), S.C.key + S.kind, S.i); (S.got = S.got || []).push(X); try { onGive?.(X, S.kind); } catch (e) { console.error(e); }   // もらった瞬間に、勉強ノートと今日の記録へ
     const el = document.createElement('div'); el.className = 'sp-expr';
     el.style.cssText = 'position:absolute;left:12px;right:12px;bottom:calc(150px + env(safe-area-inset-bottom,0px));background:#fffffff2;border-radius:16px;padding:8px 12px;box-shadow:0 4px 14px #0003;text-align:center;font-weight:800;color:#5a4a6b;pointer-events:none';
-    el.innerHTML = `<small style="color:#8d7f9e">🎁 ホール${S.i + 1}の英語表現</small><div style="font-size:19px;font-weight:900">${X.en}</div><div style="font-size:12px">${X.ja}</div>`;
+    el.innerHTML = `<small style="color:#8d7f9e">🎁 ホール${S.i + 1}の英語表現</small><div style="font-size:19px;font-weight:900">${X.en}</div><div style="font-size:12px">${X.ja}</div>${X.ex ? `<small style="color:#8d7f9e">${X.ex}</small>` : ''}`;
     S.hud.appendChild(el);
     try { const u = new SpeechSynthesisUtterance(X.en); u.lang = 'en-US'; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) { }
   }
@@ -380,7 +380,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const tot = S.strokes.reduce((a, b) => a + b, 0), par = S.C.holes.reduce((a, h) => a + h.par, 0), coins = Math.max(10, 60 - Math.max(0, tot - par) * 5);
     wallet?.add?.(coins, S.kind);
     const c = document.createElement('div'); c.className = 'sp-card';
-    c.innerHTML = `<b style="font-size:17px">${S.kind === 'golf' ? '⛳ きょうのゴルフ' : '🥏 きょうのフリスビー'} おわり!</b><table>${S.C.holes.map((h, i) => `<tr><td>ホール${i + 1}</td><td>PAR ${h.par}</td><td><b>${S.strokes[i] ?? '-'}</b></td></tr>`).join('')}<tr><td>合計</td><td>${par}</td><td><b>${tot}</b> (${tot - par >= 0 ? '+' : ''}${tot - par})</td></tr></table>🪙 +${coins}<br>${(S.got || []).length ? `<div style="margin-top:8px;font-size:12px">🎁 もらった表現<br>${S.got.map(x => `<b>${x.en}</b> <small>${x.ja}</small>`).join('<br>')}</div><button class="pr" style="background:#d6f0ff;border-radius:999px;padding:9px 18px;font-size:13px;margin-top:8px">🗣 すぐ使ってみる(英語脳)</button><br>` : ''}<button class="go">${S.home ? '🏠 家にもどる' : 'あとで(今日のふりかえりに出るよ)'}</button>`;
+    c.innerHTML = `<b style="font-size:17px">${S.kind === 'golf' ? '⛳ きょうのゴルフ' : '🥏 きょうのフリスビー'} おわり!</b><table>${S.C.holes.map((h, i) => `<tr><td>ホール${i + 1}</td><td>PAR ${h.par}</td><td><b>${S.strokes[i] ?? '-'}</b></td></tr>`).join('')}<tr><td>合計</td><td>${par}</td><td><b>${tot}</b> (${tot - par >= 0 ? '+' : ''}${tot - par})</td></tr></table>🪙 +${coins}<br>${(S.got || []).length ? `<div style="margin-top:8px;font-size:12px">🎁 もらった表現(勉強ノートと英語脳に入りました)<br>${S.got.map(x => `<b>${x.en}</b> <small>${x.ja}</small>`).join('<br>')}</div><button class="pr" style="background:#d6f0ff;border-radius:999px;padding:9px 18px;font-size:13px;margin-top:8px">🧠 英語脳で使ってみる</button><br>` : ''}<button class="go">${S.home ? '🏠 家にもどる' : 'おわる'}</button>`;
     c.addEventListener('pointerdown', e => e.stopPropagation()); const fin = pr => { const g = S.got || [], kd = S.kind; end(false); try { onExpr?.(g, pr, kd); } catch (e) { console.error(e); } };
     c.querySelector('.go').addEventListener('click', () => fin(false)); c.querySelector('.pr')?.addEventListener('click', () => fin(true));
     S.hud.appendChild(c);
