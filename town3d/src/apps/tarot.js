@@ -208,10 +208,16 @@ function sumBuilt(sp, draws, theme) {
   out.push(C[C.length - 1].rev ? '未来は、今日からの選び方でいくらでも変わるわ。' : 'カードは、あなたの味方よ。');
   return out.join('\n');
 }
-function parseAI(t) {   // 「#1 …」「#2 …」「#S …」に分ける
-  const out = {}, re = /(?:^|\n)\s*#\s*(\d+|S)\s*[:：.、]?\s*/g, idx = []; let m;
-  while ((m = re.exec(t))) idx.push([m[1].toUpperCase(), m.index, re.lastIndex]);
-  idx.forEach((x, i) => { const body = t.slice(x[2], i + 1 < idx.length ? idx[i + 1][1] : t.length).trim(); const [en, ja] = body.split('|||'); out[x[0]] = { body, en: (en || '').trim(), ja: (ja || '').trim(), done: i + 1 < idx.length }; });
+function parseAI(t, n) {   // 「#1 …」「#2 …」「#S …」に分ける。AIの書き方がゆれても読めるように(**#2**、＃2、【2】、行の途中の #2 など)
+  t = String(t || '').replace(/\*\*/g, '').replace(/＃/g, '#').replace(/Ｓ/g, 'S').replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+  const out = {}, re = /(?:^|\s)[\[【(（]?\s*#\s*(\d{1,2}|S)\b\s*[\]】)）]?\s*[:：.、]?\s*/g, idx = []; let m;
+  while ((m = re.exec(t))) { const k = m[1].toUpperCase(); if (k === 'S' || (+k >= 1 && +k <= n)) idx.push([k, m.index, re.lastIndex]); }
+  const put = (k, body, done) => { body = body.trim().replace(/^[-—–]+\s*/, ''); const [en, ja] = body.split('|||'); out[k] = { body: body.replace(/\s*\|\|\|\s*/, '\n'), en: (en || '').trim(), ja: (ja || '').trim(), done }; };
+  if (idx.length) idx.forEach((x, i) => put(x[0], t.slice(x[2], i + 1 < idx.length ? idx[i + 1][1] : t.length), i + 1 < idx.length));
+  else {   // 番号がまったく無いとき:空行で分かれた段落を、カードの順に当てはめる(まとめを含めて n+1 段落か、n 段落のときだけ)
+    const ps = t.split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
+    if (ps.length === n + 1 || ps.length === n) ps.forEach((p, i) => put(i < n ? String(i + 1) : 'S', p, true));
+  }
   return out;
 }
 
@@ -623,7 +629,7 @@ export function mountTarot(box, o) {
   function rectOf(c) { const sr = R.stage.getBoundingClientRect(), rr = root.getBoundingClientRect(); return { x: sr.left - rr.left + c.x, y: sr.top - rr.top + c.y }; }
   function narrFor(i) {
     const a = S.aiP[String(i + 1)], en = enMode();
-    if (a && (a.done || S.aiState === 'done') && a.body.length > 12) return en && a.ja ? { text: a.en, tr: a.ja, ai: 1 } : { text: a.body.replace(/\|\|\|[\s\S]*$/, '').trim(), tr: '', ai: 1 };
+    if (a && (a.done || S.aiState === 'done') && a.body.length > 12 && a.body.length < (en ? 1100 : 600)) return en && a.ja ? { text: a.en, tr: a.ja, ai: 1 } : { text: a.body.replace(/\|\|\|[\s\S]*$/, '').trim(), tr: '', ai: 1 };
     return { text: narrBuilt(S.sp, S.draws[i], i), tr: '' };
   }
   function typeOut(el, text, speed = 26) {   // 1文字ずつ。タップで最後まで
@@ -696,7 +702,7 @@ export function mountTarot(box, o) {
       await Promise.race([S.aiPromise, sleep(25000)]);
     }
     const a = S.aiP.S, en = enMode();
-    S.sum = a && a.body.length > 12 ? (en && a.ja ? { text: a.en, tr: a.ja } : { text: a.body.replace(/\|\|\|[\s\S]*$/, '').trim(), tr: '' }) : { text: sumBuilt(S.sp, S.draws, S.theme), tr: '' };
+    S.sum = a && a.body.length > 12 && a.body.length < 2400 ? (en && a.ja ? { text: a.en, tr: a.ja } : { text: a.body.replace(/\|\|\|[\s\S]*$/, '').trim(), tr: '' }) : { text: sumBuilt(S.sp, S.draws, S.theme), tr: '' };
     const h = st.hist.find(x => x.t === S.t); if (h) { h.narr = S.narr; h.sum = S.sum; save(); }
     if (en && a && a.en) o.logWord && o.logWord(a.en.split(/(?<=[.!?])\s+/)[0], (a.ja.split(/(?<=[。!?])/)[0] || ''), 'sentence');
     const ty = typeOut(tx, S.sum.text, 28); np.onclick = e => { if (!e.target.closest('button')) ty.fin(); };
@@ -716,14 +722,14 @@ export function mountTarot(box, o) {
     const system = [
       'あなたは町の占い師「ルナ」。なぞめいて、やさしく、少し芝居がかった口調で「〜わ」「〜なさい」と話す。タロットの伝統的な意味をふまえ、カード同士のつながり(流れ・対比・くり返し)を読み、相談者の質問に寄りそう。',
       '断定的な予言や、こわがらせる言い方はしない。健康・お金・法律の大きな決断は専門家に相談するよう、必要ならさりげなく添える。',
-      `カード1枚ずつ、段落を分けて語る。各段落の先頭に「#1」「#2」…と番号をつける(全部で${n}段落)。最後に「#S」として全体のまとめを書く。見出しや箇条書き、記号の飾りは使わない。`,
+      `カード1枚ずつ、順番に語る(1つのかたまりに、1枚のカードのことだけ)。必ず次の形だけで出力する。番号の行は「#1」のように、それだけを1行に書く。#Sは全体のまとめ。前置き・見出し・箇条書き・太字・記号の飾りは書かない。\n` + [...Array.from({ length: n }, (_, k) => `#${k + 1}\n(${k + 1}枚目「${sp.pos[k][0]}」のカードの語り)`), '#S\n(全体のまとめ)'].join('\n'),
       deep ? '各カードは2〜3文。#S は4〜6文で、全体の流れと、今日からできる具体的な助言を1つ。' : (n === 1 ? '#1 は3〜4文。#S は1〜2文の短い言葉。' : '各カードは2〜3文。#S は3〜4文で、過去→現在→未来の流れと助言。'),
-      en ? `Write every paragraph in ${getEn().level === 'easy' ? 'simple, easy' : 'natural'} English (keep the mysterious, gentle tone). In each paragraph, after the English, write " ||| " and a natural Japanese translation. Keep the "#1", "#S" markers.` : '日本語で書く。',
+      en ? `Write every paragraph in ${getEn().level === 'easy' ? 'simple, easy' : 'natural'} English (keep the mysterious, gentle tone). In each block, write the English, then " ||| ", then a natural Japanese translation. Keep the "#1" … "#S" lines exactly as shown.` : '日本語で書く。',
     ].join('\n');
     const user = `占い方:${sp.n}\nテーマ:${th}\n${S.q ? '質問:' + S.q + '\n' : ''}出たカード:\n${list}`;
     S.aiState = 'wait';
-    S.aiPromise = ai.chat({ system, messages: [{ role: 'user', text: user }], maxTokens: deep ? 2600 : 1400, maxChars: deep ? 7000 : 3500, onDelta: part => { S.aiState = 'stream'; S.aiRaw = part; S.aiP = parseAI(part); } })
-      .then(out => { S.aiRaw = String(out); S.aiP = parseAI(S.aiRaw); Object.values(S.aiP).forEach(x => { x.done = true; }); S.aiState = 'done'; })
+    S.aiPromise = ai.chat({ system, messages: [{ role: 'user', text: user }], maxTokens: deep ? 2600 : 1400, maxChars: deep ? 7000 : 3500, onDelta: part => { S.aiState = 'stream'; S.aiRaw = part; S.aiP = parseAI(part, n); } })
+      .then(out => { S.aiRaw = String(out); S.aiP = parseAI(S.aiRaw, n); Object.values(S.aiP).forEach(x => { x.done = true; }); S.aiState = 'done'; })
       .catch(() => { S.aiState = 'err'; });
   }
 
