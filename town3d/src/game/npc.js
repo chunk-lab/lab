@@ -123,12 +123,19 @@ export const RESIDENTS = [
     persona: 'なぞめいた占い師の女性。ゆっくり、やさしく、少し芝居がかった口調で「〜わ」「〜なさい」と話す。星と水晶玉で占う。町の人のことをよく知っている。',
     look: { skin: 0xf6dcc8, hair: 0x5b3f8c, style: 'long', top: 0x4a2f73, bottom: 0x2a1a44, shoes: 0x2a1a44, acc: 'ribbon', accColor: 0xffd76a },
     post: { place: 'fortune', spot: [-40.6, -22.2], face: [-45, -22.2] },
-    schedule: [[0, 'fortune']],
+    schedule: [[0, 'fortune', 'in']],   // ふだんは館の中(外には立たない)
+    outing: [[0, 'fortune', 'in'], [13, 'shrine'], [14, 'park'], [15.5, 'plaza2'], [17, 'fortune', 'in']],   // たまの お出かけの日(5日に1日くらい):昼すぎから夕方まで町を散歩
     lines: { morning: ['朝の星は見えないけれど、ちゃんとそこにあるのよ。'], day: ['占ってほしいことがあるなら、館にお入りなさい。', 'あなたのまわりに、いい風が吹いているわ。'], evening: ['夕暮れは、運命が変わりやすい時間よ。'], night: ['今夜は星がよく見えるわ…。'] },
     menu: [{ label: '🔮 占ってもらう', app: 'fortune' }],
   },
 ];
 
+// お出かけの日:日付から決まる(同じ日なら、だれが見ても同じ)。いまはルナだけ
+export function outingOf(date) {
+  const k = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`; let h = 7;
+  for (const c of k) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return new Set(h % 5 === 0 ? ['luna'] : []);
+}
 function period(h) { return h < 5 ? 'night' : h < 10 ? 'morning' : h < 16.5 ? 'day' : h < 19.5 ? 'evening' : 'night'; }
 export { period, findPath, nearestNode };
 
@@ -152,6 +159,7 @@ function nearestNode(graph, x, z) {
 }
 
 export function createResidents(scene, graph, getHour, collide = null) {
+  let outing = new Set();   // きょう お出かけの日の住人
   const list = RESIDENTS.map((d, i) => {
     const ch = d.mascot ? makeChunkkun() : makeCharacter(d.look);
     const goal = goalOf(d, getHour());
@@ -163,13 +171,15 @@ export function createResidents(scene, graph, getHour, collide = null) {
   });
 
   function goalOf(d, h) {
-    let g = d.schedule[d.schedule.length - 1];
-    for (const s of d.schedule) if (h >= s[0]) g = s;
+    const sc = (d.outing && outing.has(d.id)) ? d.outing : d.schedule;   // お出かけの日は、別の予定
+    let g = sc[sc.length - 1];
+    for (const s of sc) if (h >= s[0]) g = s;
     return { place: g[1], inside: g[2] === 'in' };
   }
 
   const api = {
     list, avoid: null,
+    get outing() { return outing; }, set outing(v) { outing = v || new Set(); },
     update(dt, h, player) {
       const anyTalking = list.some(q => q.talking);
       for (const r of list) {

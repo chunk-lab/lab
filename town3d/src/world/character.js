@@ -240,11 +240,27 @@ export function makeChunkkun() {
 }
 
 // 前まわりのでんぐり返し(よける)。u=0〜1。体の真ん中を軸に、ひざをかかえて丸まって1回転する
+// よける:かがんで前へ飛びこみ、低く丸まって1回転し、しゃがんだ姿勢から立ち上がる(体の大きさは変えない)
+// 丸まっている間は、首をちぢめて頭を胸に寄せる(ボールが小さくなり、地面すれすれで回れる)
+const _q = { y: 0.8 }, _cl = t => Math.max(0, Math.min(1, t)), _sm = t => t * t * (3 - 2 * t);
 export function rollPose(rig, u) {
   const { body, legs, arms, head } = rig; if (!body || !legs) { if (body) body.rotation.x = u * Math.PI * 2; return; }
-  // 低く丸まった「たま」になって、地面すれすれで転がる(体を縮め、回転の中心を低くする)
-  const c = 0.72, e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2, th = e * Math.PI * 2, k = Math.min(1, Math.sin(Math.PI * u) * 3), s = 1 - 0.5 * k, a = c * s, H = c - 0.4 * k;
-  body.scale.setScalar(s); body.rotation.x = th; body.position.set(0, H - a * Math.cos(th), -a * Math.sin(th));
-  legs[0].rotation.x = legs[1].rotation.x = -2.0 * k; arms[0].rotation.x = arms[1].rotation.x = -2.3 * k; arms[0].rotation.z = 0.3 * k; arms[1].rotation.z = -0.3 * k; head.rotation.x = 0.9 * k;
+  u = _cl(u);
+  const k = _sm(_cl((u - 0.02) / 0.22)) * (1 - _sm(_cl((u - 0.7) / 0.2)));   // 丸まり
+  const r = _cl((u - 0.06) / 0.7), e = r < 0.5 ? 4 * r * r * r : 1 - Math.pow(-2 * r + 2, 3) / 2;   // 回転(飛びこみは速く、起き上がりはゆっくり)
+  const c = Math.sin(Math.PI * _cl((u - 0.66) / 0.34)) * (1 - _sm(_cl((u - 0.9) / 0.1)) * 0.35);   // おわりの しゃがみ
+  const dip = Math.sin(Math.PI * _cl(u / 0.2)) * (1 - k);   // はじめの ぐっと かがむ
+  const th = e * Math.PI * 2, Q = _q.y + 0.2 * k, H = _q.y - 0.45 * k - 0.25 * c - 0.2 * dip;   // Q:回す点(丸まると体の真ん中) H:その高さ
+  body.scale.setScalar(1); body.rotation.x = th;
+  body.position.set(0, H - Q * Math.cos(th), -Q * Math.sin(th));   // 回転の中心(腰の上)を、低い位置に置く
+  const hip = 0.62 + H - Q, pl = Math.acos(Math.max(-1, Math.min(1, hip / 0.62)));   // 足が地面にとどく角度(かがむと、片足を前・片足を後ろへ)
+  let l0 = -2.25 * k - pl * (1 - k), l1 = -2.25 * k + pl * (1 - k);
+  if (Math.cos(th) > 0.3) {   // 起きている間は、足が地面にめりこまないように(体のかたむきの分も足す)
+    const t2 = Math.atan2(Math.sin(th), Math.cos(th)), hy = H + (0.62 - Q) * Math.cos(th), g = Math.acos(Math.max(-1, Math.min(1, hy / 0.62)));
+    const w = 1 - k * k; l0 += (Math.min(l0, -g - t2) - l0) * w; l1 += (Math.max(l1, g - t2) - l1) * w;   // しっかり丸まっている間は、足をたたんだまま
+  }
+  legs[0].rotation.x = l0; legs[1].rotation.x = l1;
+  arms[0].rotation.x = arms[1].rotation.x = -1.35 * k - 0.5 * c - 0.7 * dip; arms[0].rotation.z = -0.25 * k - 0.12; arms[1].rotation.z = 0.25 * k + 0.12;
+  head.rotation.x = 0.85 * k + 0.25 * c; head.position.set(0, 1.38 - 0.2 * k, 0.12 * k);
 }
-export function rollReset(rig) { if (!rig || !rig.body) return; rig.body.rotation.x = 0; rig.body.position.z = 0; rig.body.scale.setScalar(1); if (rig.head) rig.head.rotation.x = 0; }
+export function rollReset(rig) { if (!rig || !rig.body) return; rig.body.rotation.x = 0; rig.body.position.set(0, 0, 0); rig.body.scale.setScalar(1); if (rig.head) { rig.head.rotation.x = 0; rig.head.position.set(0, 1.38, 0); } if (rig.arms) { rig.arms[0].rotation.z = -0.12; rig.arms[1].rotation.z = 0.12; } }

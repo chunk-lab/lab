@@ -3,6 +3,7 @@ import { social, ITEMS, CAFE_MENU, PREFS, NPC_NAME } from '../game/social.js';
 import { spec, SET, LV_NAME, RAR, DECOR, decorOf, RECIPES, shapeName } from '../game/specimen.js';
 import { finds } from '../game/finds.js';
 import { weather, WX_INFO } from '../game/weather.js';
+import { mountTarot, TAROT_PRICE } from './tarot.js';
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const CSS = `
@@ -55,20 +56,41 @@ export const cafeApp = {
 const ASK_NPCS = Object.keys(PREFS);
 export const fortuneApp = {
   mount(el, ctx) {
-    const box = frame(el, 'ft');
+    const box = frame(el, 'ft'), P = ctx.params || {};
     const price = () => (social.has('luna', 'discount') ? 5 : 10);
-    let view = 'top', result = '';
+    let view = 'top', result = '', tarot = null;
+    // ルナは館の中で、何かをしている(入るたびに変わる)。お出かけの日の昼すぎ〜夕方は、館にいない
+    const H = typeof P.hour === 'function' ? P.hour() : 12;
+    const DOING = H < 10 ? ['朝の光で、水晶玉をみがいていた', 'ハーブティーを いれていた', '窓をあけて、空気を入れかえていた']
+      : H < 17 ? ['タロットカードを1枚ずつ、ていねいに並べていた', '古い星の本を読んでいた', '水晶玉を、じっとのぞきこんでいた', 'カードを静かにシャッフルしていた']
+      : ['ろうそくに火をともしていた', '星図に、何かを書きこんでいた', '窓から、夜空をながめていた', 'カードを月の光に当てていた'];
+    const doing = DOING[Math.floor(Math.random() * DOING.length)];
+    const out = typeof P.lunaOut === 'function' && P.lunaOut();
+    const openTarot = () => {
+      box.style.display = 'none';
+      tarot = mountTarot(el, { ctx, social, ai: P.ai, getEn: P.getEn, artBase: P.tarotArt || '', logWord: P.logWord, onRead: P.onTarot,
+        lunaLine: 'カードは、あなたの心をうつす鏡。…なにを たずねたいの?',
+        onExit: () => { tarot && tarot.unmount(); tarot = null; box.style.display = ''; draw(); } });
+    };
     const pay = () => { const p = price(); if (ctx.wallet.get() < p) { toast(box, `コインが ${p} まい いるわ`); return false; } ctx.wallet.add(-p, 'fortune'); return true; };
     const say = t => `<div class="say">🔮 ルナ「${t}」</div>`;
     const draw = () => {
       let h = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>🔮 占いの館</h2><span class="pill">🪙 ${ctx.wallet.get()}</span></div>`;
       if (view !== 'top') h += `<button class="back" data-v="top">← もどる</button>`;
       if (result) h += `<div class="res">${result}</div>`;
+      if (out) {
+        h += `<p class="nt" style="font-size:14px;color:#e7dcff">(館の中は、しんとしている。テーブルに置き手紙がある)</p>${say('ちょっと町を散歩してくるわ。夕方にはもどるから、またいらっしゃい。 ― ルナ')}`;
+        h += `<p class="nt">お出かけの日は、昼すぎから夕方まで館にいません。町のどこかで会えるかも…。</p>`;
+        box.innerHTML = h; return;
+      }
       if (view === 'top') {
+        if (!result) h += `<p class="nt" style="font-size:13px;color:#e7dcff;margin:4px 0 0">(ルナは${doing})</p>`;
+        h += `<button class="opt" data-v="tarot" style="border:1px solid #ffd76a;background:linear-gradient(135deg,rgba(255,215,106,.28),rgba(255,255,255,.08))"><span class="ic">🃏</span><span><b>タロット占い</b><small>78枚のカードで、本格的に占う(かんたん・じっくり)</small></span><span class="c">🪙${social.has('luna', 'discount') ? TAROT_PRICE.coin / 2 : TAROT_PRICE.coin}〜</span></button>`;
         h += say(result ? 'ほかにも、知りたいことはあるかしら?' : 'ようこそ、星の館へ…。ひとつ ' + price() + 'コインで、なんでも占ってあげる。わかったことは、ことばノートの「情報」に書いておきなさいね');
         h += [['pref', '💝', 'だれかの好きなもの', '住人の好物・にがてなものを1つ'], ['recipe', '🪸', '飾りのレシピ', 'まだ知らない飾りの材料(合成のレシピ帳に入る)'], ['show', '🐚', '標本を見せる', '見せた標本が、どの飾りの材料になるか'], ['hide', '🔍', 'かくれもののありか', '町に隠れているものが、どのあたりにあるか'], ['sky', '☀️', '天気を占う', 'この先1日の天気']]
           .map(([v, ic, t, s]) => `<button class="opt" data-v="${v}"><span class="ic">${ic}</span><span><b>${t}</b><small>${s}</small></span><span class="c">🪙${price()}</span></button>`).join('');
         h += `<p class="nt">占い師ルナと仲良くなると、占いが安くなるかも…。</p>`;
+        if (P.talkLuna) h += `<button class="opt" data-v="talk"><span class="ic">💬</span><span><b>ルナとおしゃべり・プレゼント</b><small>仲良くなると、いいことがあるかも</small></span></button>`;
       } else if (view === 'pref') {
         h += say('だれのことを知りたいの?');
         const K = social.knownPrefs();
@@ -88,6 +110,8 @@ export const fortuneApp = {
     box.onclick = e => {
       const v = e.target.closest('[data-v]'); if (v) {
         const k = v.dataset.v; result = '';
+        if (k === 'tarot') { openTarot(); return; }
+        if (k === 'talk') { P.talkLuna(); return; }
         if (k === 'hide') { if (!pay()) return; const a = finds.hint(); result = a ? `🔍 きょうは「<b>${esc(a)}</b>」のあたりに、なにかが隠れているわ。近くで「調べる」をしてみなさい` : 'きょうは もう、ぜんぶ見つけたみたいね'; if (a) rec('かくれもの', `${new Date().getMonth() + 1}/${new Date().getDate()}:${a}のあたりに何かある(ルナ)`); view = 'top'; }
         else if (k === 'sky') { if (!pay()) return; const f = weather.forecast(8); result = '☀️ この先の天気よ<br>' + f.map(x => `${weather.hm(x.start)}〜 ${WX_INFO[x.kind].icon}`).join(' ・ '); rec('天気', f.map(x => `${weather.hm(x.start)}${WX_INFO[x.kind].icon}`).join(' ') + '(ルナ)'); view = 'top'; }
         else view = k;
@@ -114,6 +138,7 @@ export const fortuneApp = {
       }
     };
     draw();
-    return { unmount() { box.remove(); } };
+    if (P.tarot) openTarot();   // 「タロットで占って」から来たとき
+    return { unmount() { tarot && tarot.unmount(); box.remove(); } };
   },
 };

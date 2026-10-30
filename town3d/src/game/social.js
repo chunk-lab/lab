@@ -64,7 +64,8 @@ export const UNLOCKS = {
   shiori: [{ lv: 2, kind: 'ability', id: 'book', label: '📖 おすすめの一節を聞く', text: '1日1回、本の中の英文(短い長文)を教えてくれる(ノートに入る)' }],
   koharu: [{ lv: 2, kind: 'ability', id: 'lesson', label: '✏️ きょうの表現を教わる', text: '1日1回、使える英語の表現を教えてくれる(ノートに入る)' }],
   tetsu: [{ lv: 2, kind: 'ability', id: 'hint', label: '🔍 かくれたものの手がかりを聞く', text: '1日1回、町のどこかに隠れているものの手がかりをくれる' }],
-  luna: [{ lv: 2, kind: 'ability', id: 'discount', label: '🔮 占いが半額', text: '占いが 5コインになった' }],
+  luna: [{ lv: 2, kind: 'ability', id: 'discount', label: '🔮 占いが半額', text: '占いが半額になった(かんたんタロットも)' },
+    { lv: 3, kind: 'ability', id: 'tarot', label: '🃏 かんたんタロットが毎日1回無料', text: 'かんたんタロットが、毎日1回無料になった' }],
   hana: [], sora: [],
 };
 for (const id of Object.keys(PREFS)) {   // デート(大人)・お礼(子ども)は全員 Lv4

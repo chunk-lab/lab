@@ -24,7 +24,7 @@ import { createSeasons, SEASONS, seasonOf } from './world/seasons.js';
 import { createSnowballs } from './world/snowballs.js';
 import { createSnowBattle } from './world/snowbattle.js';
 import { createSport } from './world/sport.js';
-import { createResidents, period, findPath, nearestNode } from './game/npc.js';
+import { createResidents, period, findPath, nearestNode, outingOf } from './game/npc.js';
 import { createInput } from './game/input.js';
 import { createHud, CSS } from './ui/hud.js';
 import { APPS } from './apps/registry.js';
@@ -106,6 +106,7 @@ export function mount(container, opt = {}) {
   const applyDate = d => { testDate = d; env.setMoonDate(d); const md = (d.getMonth() + 1) * 100 + d.getDate(); setBlossom(opt.blossom ?? (md >= 325 && md <= 420)); };
   applySeason();
   const residents = createResidents(scene, city.graph, () => env.hour, (x, z, r) => collide(x, z, r));
+  residents.outing = outingOf(testDate);   // お出かけの日(ルナ)
   // 町の雪玉(冬だけ)
   const NPC_SNOW = { mii: ['ひゃっ、つめたい〜! もう、やりましたね〜', 1], baron: ['ぬおっ! わが輩に雪玉とは、いい度胸だ!', 2], gon: ['つめてっ! やったな〜!', 3], koharu: ['きゃっ! ふふ、元気ですね', 1], shiori: ['……つめたい。……おかえし、しましょうか', 2], suna: ['おやおや、冷たいねえ', 2], maru: ['うわっ! まいったな〜!', 2], yuzu: ['ひゃっ! び、びっくりしたです', 1], chunkkun: ['ふわっ!? 雪だ〜!', 1] };
   const snow = createSnowballs(scene, {
@@ -161,7 +162,7 @@ export function mount(container, opt = {}) {
 
   const hud = createHud(root, bus);
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
-  const appHost = createAppHost({ paramsFor: (id, p) => id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'amuse' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null, learn: opt.learn || null });
+  const appHost = createAppHost({ paramsFor: (id, p) => id === 'fortune' ? { ...(p || {}), ...fortuneParams() } : id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'amuse' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null, learn: opt.learn || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   { // 運営用:町から直接「英語の釣り堀」を開くボタン(?admin=1 で出る)
@@ -249,9 +250,11 @@ export function mount(container, opt = {}) {
     audio.play('talk');
     let text = residents.lineFor(r, env.hour);
     if (r.def.angler && seasons.season !== 'summer') text = 'のんびり釣りは夏だけのお楽しみでねえ。英語の釣り堀なら、いつでも池においで。';
+    const lunaOut = r.def.id === 'luna' && r.ch.root.visible && !appHost.current;   // ルナが外にいる=お出かけ中(館の道具がないので占いはできない)
+    if (lunaOut) text = ['たまには外の空気を吸わないとね。星も、昼は休んでいるのよ。', 'あら、こんなところで会うなんて。…これも星の導きかしら。', '夕方には館にもどるわ。占いはそれからね。'][Math.floor(Math.random() * 3)];
     if (r.def.companion && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
     soc.onTalk(r);
-    const choices = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m)).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、砂吹さんとの会話にもどる
+    const choices = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m) && !(lunaOut && m.app === 'fortune')).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、砂吹さんとの会話にもどる
     if (r.def.id === 'sora' && r.follow) choices.unshift({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); } });
     choices.push(...soc.choices(r));
     if (r.def.id !== 'sora') choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
@@ -270,6 +273,21 @@ export function mount(container, opt = {}) {
   // 会話で出会った言葉を、その日の記録に入れる(あしたの「前回のふりかえり」の一覧とフラッシュカードに出る)
   const logWord = (en, ja, kind, src) => { en = String(en || '').trim().slice(0, 160); if (en) opt.onEvent?.('app:event', { name: 'learn', data: { en, ja: String(ja || '').slice(0, 80), kind, src: src || 'chat' } }); };
   const seenLine = (en, ja) => logWord(en, ja, 'sentence', 'chat');   // 「訳」を見た文
+  // 会話の終わりに、AIが「覚えると役立つ英語の表現」を最大5つ拾って、あしたのふりかえりに入れる(英語のやりとりが3往復以上のときだけ・1回だけ)
+  const isEnText = t => { const en = (String(t).match(/[A-Za-z]/g) || []).length, ja = (String(t).match(/[\u3040-\u30ff\u4e00-\u9fff]/g) || []).length; return en >= 8 && en > ja * 2; };
+  async function pickPhrases(r, hist) {
+    if (!ai.ready || !hist) return;
+    const enA = hist.filter(m => m.role === 'assistant' && isEnText(m.text)).length, enU = hist.filter(m => m.role === 'user' && isEnText(m.text)).length;
+    if (Math.min(enA, enU) < 3 && enA < 4) return;
+    const talk = hist.slice(-24).map(m => (m.role === 'user' ? 'Me: ' : r.def.name + ': ') + m.text).join('\n').slice(-5000);
+    try {
+      const out = await ai.chat({ system: 'You help a Japanese learner of English review a chat. From the conversation, pick up to 5 natural, reusable English expressions (phrases or short sentences, 2-8 words, as they appeared or in base form) worth remembering. Prefer everyday idioms and collocations over single easy words. Reply ONLY with JSON: [{"en":"...","ja":"自然な日本語の意味"}]', messages: [{ role: 'user', text: talk }], maxTokens: 600, maxChars: 2000 });
+      const m = String(out).match(/\[[\s\S]*\]/); if (!m) return;
+      const list = JSON.parse(m[0]).filter(x => x && x.en && /[A-Za-z]/.test(x.en)).slice(0, 5);
+      list.forEach(x => logWord(String(x.en).trim(), String(x.ja || '').trim(), String(x.en).trim().split(/\s+/).length <= 4 ? 'word' : 'sentence', 'chat'));
+      if (list.length) hud.toast(`📝 きょうの表現 ${list.length}こ を、ふりかえりに入れたよ`);
+    } catch (e) { }
+  }
   function addNote({ kind, text, sentence, npc, meaning }) {
     const key = text.trim().toLowerCase(), hit = notes.find(n => n.kind === kind && n.text.toLowerCase() === key);
     if (hit) { hit.count = (hit.count || 1) + 1; hit.npc = npc; saveNotes(); logWord(hit.text, hit.meaning, kind === 'sentence' ? 'sentence' : 'word', 'chat'); return `「${text}」をもう一度ほぞん(×${hit.count})`; }
@@ -370,7 +388,7 @@ export function mount(container, opt = {}) {
     r.talking = true; talkingTo = r; input.clear();
     const enS = () => !!(settings.en && settings.enShort);   // ふだんの短いおしゃべりは、設定で英語にできる(みじかい返事だと不自然になりやすいので、はじめは日本語)
     openChat({
-      hud, bus, name: r.def.name, role: r.def.role, first, onClose: () => soc.remember(r, hist),
+      hud, bus, name: r.def.name, role: r.def.role, first, onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
       getEn: () => ({ on: enS(), level: settings.enLevel }),
       setEn: v => { if (v.on) { settings.en = 1; settings.enShort = 1; } else settings.en = 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
@@ -412,7 +430,7 @@ export function mount(container, opt = {}) {
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
     openChat({
-      hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400, low, onClose: () => soc.remember(r, hist),
+      hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400, low, onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
       onSeen: seenLine,
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
       setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
@@ -825,9 +843,21 @@ export function mount(container, opt = {}) {
     }
     else if (k === 'say') { const t = SAY[Math.floor(Math.random() * SAY.length)]; hud.say(me.id, t); net?.say(t); }
   }));
+  // ---- 占いの館(ルナは館の中。タロットにはAI・英語モード・ふりかえりを渡す) ----
+  function fortuneParams() {
+    const luna = () => residents.list.find(x => x.def.id === 'luna');
+    return {
+      ai, hour: () => env.hour, getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
+      lunaOut: () => { const r = luna(); return !!(r && r.ch.root.visible); },
+      talkLuna: () => { const r = luna(); if (!r) return; appHost.close(); setTimeout(() => { if (!hud.busy) talkTo(r); }, 200); },
+      logWord: (en, ja, kind) => logWord(en, ja, kind, 'tarot'),
+      tarotArt: opt.tarotArt || '',   // タロットの絵の差し替え先(<ここ><カードid>.webp)
+    };
+  }
   // ---- さがす(マップ・一覧・ワープ) ----
   const entities = () => {
-    const out = residents.list.map(r => ({ id: 'npc:' + r.def.id, kind: 'npc', name: r.def.name, yomi: r.def.yomi, role: r.def.role, x: r.ch.root.position.x, z: r.ch.root.position.z, away: !r.ch.root.visible }));
+    const out = residents.list.map(r => r.def.id === 'luna' && !r.ch.root.visible ? { id: 'npc:luna', kind: 'npc', name: r.def.name, yomi: r.def.yomi, role: r.def.role, x: -40.5, z: -20, inside: '占いの館の中' }   // ルナは館の中(入口へ飛べる)
+      : ({ id: 'npc:' + r.def.id, kind: 'npc', name: r.def.name, yomi: r.def.yomi, role: r.def.role, x: r.ch.root.position.x, z: r.ch.root.position.z, away: !r.ch.root.visible }));
     for (const [id, q] of peers) out.push({ id, kind: 'player', name: q.name || 'だれか', role: 'プレイヤー', x: q.ch.root.position.x, z: q.ch.root.position.z });
     return out;
   };
@@ -844,6 +874,7 @@ export function mount(container, opt = {}) {
     return best;
   }
   function jumpTo(e) {
+    if (e.kind === 'npc' && e.inside) return jumpTo({ id: 'pl:fortune', kind: 'place', name: '占いの館', x: -40.5, z: -20, fx: -1, fz: 0 });   // ルナは館の中:館の入口へ
     // 相手の手前(南側)に立つ。建物の中なら押し出す。向きは、壁でなく開けた方へ
     // 入口のある場所は、入口の正面(そのまま入れる距離 1.6。入口の範囲は 2.4)に立って、入口のほうを向く
     const front = e.kind === 'place' && e.fx !== undefined;
@@ -1273,7 +1304,7 @@ export function mount(container, opt = {}) {
     hud.setArea(city.areaName(me.x, me.z));
     hud.setClock(env.hour, curWx);
     saveT += dt;
-    if (saveT > 5) { saveT = 0; storage.set('pos', [+me.x.toFixed(1), +me.z.toFixed(1)]); storage.set('hour', +env.hour.toFixed(2)); }
+    if (saveT > 5) { saveT = 0; residents.outing = outingOf(testDate); storage.set('pos', [+me.x.toFixed(1), +me.z.toFixed(1)]); storage.set('hour', +env.hour.toFixed(2)); }
 
     if (fx) fx.composer.render(dt); else renderer.render(scene, camera);
     frames++; fpsT += dt;
