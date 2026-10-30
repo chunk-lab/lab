@@ -29,15 +29,18 @@ export function createUseit(core) {
     }
     if (btn) btn.textContent = '聞いてまねる';
   }
-  function open(x) {
+  function open(x0) {
+    const x = Object.assign({ en: '', ja: '' }, x0 || {});
     const ai = core.ai, M = core.member, aiPrice = M.isPaid() && M.aiLeft() > 0 ? `今月あと${M.aiLeft()}回` : `ダイヤ ${ECON.ai.gems}`;
     const sent = (s, i) => `<li><b>${esc(s.en)}</b><span>${esc(s.ja)}</span><small>${esc(s.from || '')}</small><div class="cs-nb-a"><button data-say="${i}">🔊</button><button data-mim="${i}">聞いてまねる</button><button data-add="${i}">ノートに入れる</button></div></li>`;
     let found = [];
-    core.ui.sheet(`<h3>${esc(x.en)}</h3><p class="cs-note">${esc(x.ja)}</p>
+    core.ui.sheet(`<h3>✨ 使ってみる</h3>
+      <div class="cs-adm"><input class="cs-ta" data-en placeholder="英語(単語・熟語・チャンク・文 なんでも)" value="${esc(x.en)}" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:100%;margin-bottom:6px"><input class="cs-ta" data-ja placeholder="日本語(空でもOK)" value="${esc(x.ja)}" autocomplete="off" style="width:100%">
+        ${core.openGame ? '<button class="cs-btn cs-go" data-eigo style="width:100%;margin-top:8px;font-size:16px">🧠 英語脳で文にして、すぐ遊ぶ</button><p class="cs-note">AIがふさわしい文を作って、英語脳にセットします。気に入った文は英語脳の「💾 記憶」で残せます。</p>' : ''}</div>
       <section class="cs-adm"><h4>1. 文の中で見てみる</h4><ul class="cs-nb" data-found><li class="cs-note">さがしています…</li></ul></section>
       <section class="cs-adm"><h4>2. 自分で文を作る</h4>
         <textarea class="cs-ta" data-mine rows="2" placeholder="「${esc(x.en)}」を使って英文を書いてみよう" autocapitalize="off" spellcheck="false"></textarea>
-        <div class="cs-adm-row">${ai.ready ? '<button class="cs-btn" data-check>自然な文か判定(AI)</button>' : ''}<button class="cs-btn" data-keep>ノートに入れる</button>${core.openGame ? '<button class="cs-btn" data-eigo>英語脳で作る</button>' : ''}</div>
+        <div class="cs-adm-row">${ai.ready ? '<button class="cs-btn" data-check>自然な文か判定(AI)</button>' : ''}<button class="cs-btn" data-keep>ノートに入れる</button></div>
         ${ai.ready ? '' : '<p class="cs-note">設定でAIのキーを入れると、自然な文かを判定できます(無料)。</p>'}<p class="cs-note" data-judge></p></section>
       <section class="cs-adm"><h4>3. AIで例文とお話を作る</h4><p class="cs-note">「${esc(x.en)}」を使った例文3つと、短いお話を作ります(${aiPrice})。できた文は勉強ノートに入ります。</p>
         ${ai.ready ? `<button class="cs-btn" data-gen>作る</button>` : '<p class="cs-note">AIのキーが必要です。</p>'}<ul class="cs-nb" data-gened></ul></section>`, (ov) => {
@@ -47,14 +50,20 @@ export function createUseit(core) {
         ul.querySelectorAll('[data-mim]').forEach(b => b.onclick = () => mimic(list[+b.dataset.mim].en, b));
         ul.querySelectorAll('[data-add]').forEach(b => b.onclick = () => { const s = list[+b.dataset.add]; core.notebook.add({ en: s.en, ja: s.ja, kind: 'short', src: s.src || 'useit' }); b.textContent = '入れました'; b.disabled = true; });
       };
-      find(x.en).then(list => { found = list; const ul = q('[data-found]'); if (!ul) return; ul.innerHTML = list.length ? list.map(sent).join('') : `<li class="cs-note">内蔵の文には見つかりませんでした。2か3で文を作ってみよう。</li>`; bindList(ul, list); });
+      const doFind = () => { find(x.en).then(list => { found = list; const ul = q('[data-found]'); if (!ul) return; ul.innerHTML = list.length ? list.map(sent).join('') : `<li class="cs-note">内蔵の文には見つかりませんでした。2か3で文を作ってみよう。</li>`; bindList(ul, list); }); };
+      q('[data-en]').oninput = e => { x.en = e.target.value; x.kind = ''; }; q('[data-ja]').oninput = e => { x.ja = e.target.value; };
+      q('[data-en]').onchange = () => { if (x.en.trim()) doFind(); };
+      if (x.en) doFind();
       q('[data-keep]').onclick = () => { const en = q('[data-mine]').value.trim(); if (!/[a-zA-Z]/.test(en)) return core.ui.toast('英文を書いてね'); core.notebook.add({ en, ja: '', kind: 'short', src: 'note' }); core.ui.toast('ノートに入れました'); };
       if (q('[data-eigo]')) q('[data-eigo]').onclick = function () {
         // 1) 押した瞬間に、ボタンそのものの文字を変える(トーストや重なりに頼らない)
         const btn = this, say = t => { btn.textContent = t; };
+        const en0 = String(x.en || '').trim(); if (!/[a-zA-Z]/.test(en0)) { say('英語を入れてね'); setTimeout(() => { btn.textContent = '🧠 英語脳で文にして、すぐ遊ぶ'; }, 1500); return; }
+        const isSen = x.kind === 'short' || x.kind === 'quote' || /[.!?]$/.test(en0) || en0.split(/\s+/).length >= 6;
+        try { if (!core.notebook.list({}).some(n => n.en.toLowerCase() === en0.toLowerCase())) core.notebook.add({ en: en0, ja: x.ja || '', kind: isSen ? 'short' : (/\s/.test(en0) ? 'phrase' : 'word'), src: 'useit' }); } catch (e) { console.error(e); }
         say('⏳ 送っています…');
         try {
-          core.eigo.send([{ en: x.en, ja: x.ja || '', kind: x.kind === 'short' || x.kind === 'quote' ? 'sentence' : '', play: true, ex: found[0] && found[0].en, exja: found[0] && found[0].ja }]);   // play=開いたら、完成した文をそのまま「つくる」に出す(見つかった例文があればAIでその文を組み立てる)
+          core.eigo.send([{ en: en0, ja: x.ja || '', kind: isSen ? 'sentence' : '', play: true, ex: found[0] && found[0].en, exja: found[0] && found[0].ja }]);   // play=開いたら、完成した文をそのまま「つくる」に出す(見つかった例文があればAIでその文を組み立てる)
           say('✅ 送りました。英語脳を開きます…');
           if (!core.openGame) throw new Error('この画面では英語脳を開けません');
           // 2) 閉じる→開くを同じ瞬間にやらない(閉じる側の後片づけに、開いた画面が巻き込まれないように)

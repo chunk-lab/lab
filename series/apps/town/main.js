@@ -102,3 +102,10 @@ document.body.insertAdjacentHTML('beforeend', '<div class="tw-dock"><button clas
 $('twToday').onclick = () => core.today.open({ has: g => !!GAMES[g] });
 $('twChat').onclick = () => { if (mode.is3D) core.ui.toast('住人に近づいて、話しかけてみよう'); else { core.ui.toast('3Dの町で、住人に話しかけてみよう'); mode.to3D(); } };
 mode.start();
+
+// どの場面でも、すぐ「使ってみる」(英語を打ち込む→AIが文を作る→英語脳で遊ぶ)を開けるボタン
+try {
+  const f = document.createElement('button'); f.textContent = '✨'; f.setAttribute('aria-label', '使ってみる');
+  f.style.cssText = 'position:fixed;left:8px;bottom:92px;z-index:50;width:40px;height:40px;border-radius:50%;border:2px solid #fff;background:#7b5cff;color:#fff;font-size:20px;opacity:.85;box-shadow:0 2px 8px #0005;padding:0';
+  f.onclick = () => core.useit.open({}); document.body.appendChild(f);
+} catch (e) { console.error(e); }

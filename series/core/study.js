@@ -81,6 +81,7 @@ export function createStudy(core) {
       ${practice ? `<div class="cs-practice"><b>ストリームで練習</b>${withJa.length > 20 ? `<button class="cs-btn cs-go" data-practice="r">ランダム20個</button>` : ''}${Array.from({ length: Math.min(30, Math.ceil(withJa.length / 20)) }, (_, k) => `<button class="cs-btn${withJa.length <= 20 ? ' cs-go' : ''}" data-practice="${k}">${k * 20 + 1}〜${Math.min(withJa.length, k * 20 + 20)}</button>`).join('')}</div>` : ''}
       <form class="cs-add" data-add><input name="en" placeholder="英語" autocomplete="off" autocapitalize="off" spellcheck="false" required><input name="ja" placeholder="日本語" autocomplete="off"><button class="cs-btn">登録</button></form>
       <div class="cs-io"><button class="cs-btn" data-exp>📤 書き出す</button><button class="cs-btn" data-imp>📥 読み込む</button><small>ノートはこの端末の中だけに保存。機種変更のときは書き出したファイルを新しい端末で読み込んでね</small></div>
+      <div class="cs-io"><button class="cs-btn cs-go" data-free>✨ 使ってみる(英語を打ち込む)</button></div>
       ${items.length ? `<div class="cs-io"><button class="cs-btn" data-egall>🧠 この一覧(${Math.min(items.length, 50)}件)をまとめて英語脳へ</button></div>` : ''}
       ${items.length ? `<ul class="cs-nb">${items.slice(0, 300).map(x => `<li data-id="${x.id}"><div class="cs-nb-t"><b>${esc(x.en)}</b><span>${esc(x.ja)}</span><small>${esc(SRC[x.src] || x.src)}</small></div>
           <div class="cs-nb-a"><button data-say aria-label="読み上げ">🔊</button><button data-eg class="cs-use" aria-label="英語脳へ送る">🧠英語脳へ</button><button data-use class="cs-use">使ってみる</button>${MARKS.map(k => `<button data-m="${k.k}" class="${x.marks.includes(k.k) ? 'on' : ''}">${k.n}</button>`).join('')}<button data-del class="cs-del" aria-label="消す">🗑</button></div></li>`).join('')}</ul>`
@@ -138,6 +139,7 @@ export function createStudy(core) {
         setTimeout(() => { try { core.study.close(); setTimeout(() => core.openGame('eigonou'), 120); } catch (e) { console.error(e); core.ui.toast('英語脳を開けませんでした'); } }, 250);
       } catch (e) { console.error(e); core.ui.toast('送れませんでした:' + String(e && e.message || e).slice(0, 60)); }
     };
+    const fr = m.querySelector('[data-free]'); if (fr) fr.onclick = () => core.useit.open({});
     const egAll = m.querySelector('[data-egall]'); if (egAll) egAll.onclick = () => toEigo(nb.list({ kind, mark }).slice(0, 50), false);
     m.querySelectorAll('.cs-nb li').forEach(li => {
       const id = li.dataset.id, x = nb.list().find(y => y.id === id);
