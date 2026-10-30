@@ -19,6 +19,8 @@ function addItem(kind, en, ja, x) {   // REG を一時的に借りて、ふだ�
     REG.en = en; REG.ja = ja; REG.e = ''; REG.x = Object.assign({}, autoExtra(kind, en, ja), x || {});
     const it = makeItem(kind); if (!it || !it.en) return false;
     if (have(kind, it.en, it.tail)) return false;
+    // 元からゲームに入っている言葉は、二重に入れない(「入っている」扱い)
+    { const key = (it.en + ' ' + (it.tail || '')).trim().toLowerCase(); if ((LEX[kind] || []).some(x => !x.custom && (x.en + ' ' + (x.tail || '') + ' ' + (x.prep || '')).trim().replace(/\s+/g, ' ').toLowerCase() === key.replace(/\s+/g, ' '))) return true; }
     mySet().items.push(it); return true;
   } finally { Object.assign(REG, bak); }
 }
