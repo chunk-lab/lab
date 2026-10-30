@@ -37,6 +37,7 @@ import { init_drill } from './drill.js';
 import { init_geo } from './geo.js';
 import { init_slot } from './slot.js';
 import { drainInbox } from './inbox.js';
+import { showPlays } from './playsent.js';
 const INITS = [init_i18n, init_vocab, init_vocab_a1, init_vocab_a2, init_cefr_map, init_engine, init_pv_user, init_idioms, init_vcomp, init_loc, init_of, init_emoji_fix, init_common, init_noto_map, init_pack, init_addword, init_play, init_motion, init_reel, init_fuku, init_embed, init_big, init_bigdict, init_objrank, init_qbar, init_qfw, init_qsp, init_qfr, init_qfx, init_coord, init_prac_data, init_prac, init_drill, init_geo, init_slot];
 let started = false;
 window.__EIGONOU = {
@@ -44,6 +45,7 @@ window.__EIGONOU = {
     Object.assign(ENV, { root, ctx, core: ctx.core, store: ctx.store });
     attach();
     if (!started) { started = true; INITS.forEach(f => f()); }
+    try { const top = root.querySelector('.top'); if (top && !top.querySelector('.eg-pl')) { const b = document.createElement('button'); b.className = 'ib eg-pl'; b.textContent = '📚 表現の文'; b.style.cssText = 'font-size:12px;padding:4px 8px;white-space:nowrap'; b.onclick = () => showPlays(); top.appendChild(b); } } catch (e) { }
     setTimeout(() => { try { drainInbox(); } catch (e) { } }, 400);   // ほかのアプリから送られた言葉・表現・文を、マイことばに入れる
   },
   stop() { detach(); }

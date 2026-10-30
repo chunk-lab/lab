@@ -54,7 +54,7 @@ export function createUseit(core) {
         const btn = this, say = t => { btn.textContent = t; };
         say('⏳ 送っています…');
         try {
-          core.eigo.send([{ en: x.en, ja: x.ja || '', kind: x.kind === 'short' ? 'sentence' : '' }]);
+          core.eigo.send([{ en: x.en, ja: x.ja || '', kind: x.kind === 'short' ? 'sentence' : '', play: x.kind !== 'short', ex: found[0] && found[0].en, exja: found[0] && found[0].ja }]);   // play=開いたら、完成した文をそのまま「つくる」に出す(見つかった例文があればAIでその文を組み立てる)
           say('✅ 送りました。英語脳を開きます…');
           if (!core.openGame) throw new Error('この画面では英語脳を開けません');
           // 2) 閉じる→開くを同じ瞬間にやらない(閉じる側の後片づけに、開いた画面が巻き込まれないように)
