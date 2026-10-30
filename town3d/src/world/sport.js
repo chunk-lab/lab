@@ -2,6 +2,7 @@
 //   毎日かわるコース(日付でスタートとゴールを決める・5ホール)。ゲーム機からは季節に関係なく遊べる。
 //   向き=カメラの向き(ドラッグか ◀▶)。大きいボタンを押している間ゲージが動く → はなすと打つ/投げる
 import * as THREE from 'three';
+import { holeExpr } from '../game/expressions.js';
 import { STREETS, ROAD_HALF, WALK, PLAZA_R } from './town_data.js';
 
 const HOLES = 5, G = 9.8;
@@ -12,7 +13,7 @@ const CLUBS = [   // ゴルフのクラブ:飛ぶ距離(m)・打ち出し角
 const HGTS = [['低め', 0], ['ふつう', 1], ['高め', 2]];   // フリスビーの高さ
 function rng(seed) { let s = 0; for (const c of seed) s = (s * 31 + c.charCodeAt(0)) >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
 
-export function createSport({ scene, camera, root, me, city, collide, audio, wallet, getYaw, setYaw, onEnd, toast }) {
+export function createSport({ scene, camera, root, me, city, collide, audio, wallet, getYaw, setYaw, onEnd, onExpr, toast }) {
   const mat = c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.6 });
   let S = null;
   const css = document.createElement('style');
@@ -120,7 +121,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     hole(0);
   }
   function hole(i) {
-    S.i = i; S.n = 0; const H = S.C.holes[i];
+    S.i = i; S.n = 0; const H = S.C.holes[i]; S.hud.querySelector('.sp-expr')?.remove();
     if (S.flag) scene.remove(S.flag);
     if (S.gMesh) { scene.remove(S.gMesh); S.gMesh = null; } S.gdef = null;
     S.flag = flagMesh(S.kind); S.flag.position.set(H.goal[0], 0, H.goal[1]); scene.add(S.flag);
@@ -136,7 +137,8 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   function end(quit) {
     const total = S.strokes.reduce((a, b) => a + b, 0), par = S.C.holes.slice(0, S.strokes.length).reduce((a, h) => a + h.par, 0), kind = S.kind;
     S.objs.forEach(o => scene.remove(o)); if (S.flag) scene.remove(S.flag); if (S.gMesh) scene.remove(S.gMesh); S.hud.remove(); root.classList.remove('sp-on');
-    S = null; onEnd?.({ kind, quit, total, par });
+    const got = S.got || []; S = null; if (quit && got.length) { try { onExpr?.(got, false, kind); } catch (e) { } }
+    onEnd?.({ kind, quit, total, par });
   }
   function msg(t) { if (!S) return; const el = S.hud.querySelector('.sp-msg'); el.textContent = t; S.msgT = 1.8; }
   // ---- 画面 ----
@@ -359,7 +361,16 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   function holed() {
     const H = S.C.holes[S.i], d = S.n - H.par;
     const nm = S.n === 1 ? 'ホールインワン!!' : d <= -2 ? 'イーグル!' : d === -1 ? 'バーディー!' : d === 0 ? 'パー!' : d === 1 ? 'ボギー' : `${S.n}${S.kind === 'golf' ? '打' : '投'}`;
-    msg(nm); audio?.play?.(d <= 0 ? 'coin' : 'open'); S.strokes.push(S.n); S.phase = 'holed'; S.t = 0;
+    msg(nm); audio?.play?.(d <= 0 ? 'coin' : 'open'); S.strokes.push(S.n); S.phase = 'holed'; S.t = 0; giveExpr();
+  }
+  // 1ホールごとに英語の表現(句動詞・慣用句)を1つもらう
+  function giveExpr() {
+    const X = holeExpr(S.kind, S.C.key, S.i); (S.got = S.got || []).push(X);
+    const el = document.createElement('div'); el.className = 'sp-expr';
+    el.style.cssText = 'position:absolute;left:12px;right:12px;bottom:calc(150px + env(safe-area-inset-bottom,0px));background:#fffffff2;border-radius:16px;padding:8px 12px;box-shadow:0 4px 14px #0003;text-align:center;font-weight:800;color:#5a4a6b;pointer-events:none';
+    el.innerHTML = `<small style="color:#8d7f9e">🎁 ホール${S.i + 1}の英語表現</small><div style="font-size:19px;font-weight:900">${X.en}</div><div style="font-size:12px">${X.ja}</div><small style="color:#8d7f9e">${X.ex}</small>`;
+    S.hud.appendChild(el);
+    try { const u = new SpeechSynthesisUtterance(X.en); u.lang = 'en-US'; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) { }
   }
   function next() {
     if (S.i + 1 >= HOLES) { S.phase = 'done'; showCard(); return; }
@@ -369,8 +380,9 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const tot = S.strokes.reduce((a, b) => a + b, 0), par = S.C.holes.reduce((a, h) => a + h.par, 0), coins = Math.max(10, 60 - Math.max(0, tot - par) * 5);
     wallet?.add?.(coins, S.kind);
     const c = document.createElement('div'); c.className = 'sp-card';
-    c.innerHTML = `<b style="font-size:17px">${S.kind === 'golf' ? '⛳ きょうのゴルフ' : '🥏 きょうのフリスビー'} おわり!</b><table>${S.C.holes.map((h, i) => `<tr><td>ホール${i + 1}</td><td>PAR ${h.par}</td><td><b>${S.strokes[i] ?? '-'}</b></td></tr>`).join('')}<tr><td>合計</td><td>${par}</td><td><b>${tot}</b> (${tot - par >= 0 ? '+' : ''}${tot - par})</td></tr></table>🪙 +${coins}<br><button class="go">${S.home ? '🏠 家にもどる' : 'おわる'}</button>`;
-    c.addEventListener('pointerdown', e => e.stopPropagation()); c.querySelector('.go').addEventListener('click', () => end(false));
+    c.innerHTML = `<b style="font-size:17px">${S.kind === 'golf' ? '⛳ きょうのゴルフ' : '🥏 きょうのフリスビー'} おわり!</b><table>${S.C.holes.map((h, i) => `<tr><td>ホール${i + 1}</td><td>PAR ${h.par}</td><td><b>${S.strokes[i] ?? '-'}</b></td></tr>`).join('')}<tr><td>合計</td><td>${par}</td><td><b>${tot}</b> (${tot - par >= 0 ? '+' : ''}${tot - par})</td></tr></table>🪙 +${coins}<br>${(S.got || []).length ? `<div style="margin-top:8px;font-size:12px">🎁 もらった表現<br>${S.got.map(x => `<b>${x.en}</b> <small>${x.ja}</small>`).join('<br>')}</div><button class="pr" style="background:#d6f0ff;border-radius:999px;padding:9px 18px;font-size:13px;margin-top:8px">🗣 すぐ使ってみる(英語脳)</button><br>` : ''}<button class="go">${S.home ? '🏠 家にもどる' : 'あとで(今日のふりかえりに出るよ)'}</button>`;
+    c.addEventListener('pointerdown', e => e.stopPropagation()); const fin = pr => { const g = S.got || []; end(false); try { onExpr?.(g, pr, S.kind); } catch (e) { } };
+    c.querySelector('.go').addEventListener('click', () => fin(false)); c.querySelector('.pr')?.addEventListener('click', () => fin(true));
     S.hud.appendChild(c);
   }
   // ---- ゴルフのスイング(みんゴル式):1回目でスタート → 2回目で強さ → もどってくる印を「インパクト」で3回目 ----

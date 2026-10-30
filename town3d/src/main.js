@@ -136,6 +136,11 @@ export function mount(container, opt = {}) {
   });  sport = createSport({
     scene, camera, root, me, city, collide: (x, z, r) => collide(x, z, r), audio, wallet, toast: t => hud.toast(t),
     getYaw: () => cam.yaw, setYaw: y => { cam.yaw = y; },
+    onExpr(list, practice, kind) {   // ホールでもらった表現:今日のふりかえりに入れる。「すぐ使う」なら英語脳へ渡す
+      const src = kind === 'golf' ? 'ゴルフの表現' : 'フリスビーの表現';
+      list.forEach(x => opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src } }));
+      if (practice && list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { items: list.flatMap(x => [{ en: x.en, ja: x.ja }, { en: x.ex, ja: x.exja, kind: 'sentence' }]) } });
+    },
     onEnd({ kind, quit, total, par }) { actSport(null); if (goHome()) return; if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
   });
   // 英語でのおしゃべりだけ「勉強」。日本語のときは何もしない(街でまったりのまま)。最後に話してから2分で終わり
@@ -163,7 +168,7 @@ export function mount(container, opt = {}) {
 
   const hud = createHud(root, bus);
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
-  const appHost = createAppHost({ paramsFor: (id, p) => id === 'fortune' ? { ...(p || {}), ...fortuneParams() } : id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'amuse' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null, learn: opt.learn || null });
+  const appHost = createAppHost({ route: (id, p) => openApp(id, p), paramsFor: (id, p) => id === 'fortune' ? { ...(p || {}), ...fortuneParams() } : id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'amuse' || id === 'snowfight' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null, learn: opt.learn || null });
   APPS.forEach(a => appHost.register(a));
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   { // 運営用:町から直接「英語の釣り堀」を開くボタン(?admin=1 で出る)

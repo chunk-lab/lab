@@ -5,7 +5,7 @@
 //   script … 別ファイルの JS を読み込み、window[global].mount(要素, options) を呼ぶ(ぷにチャンク型)
 //   iframe … 別の HTML をそのまま入れる。postMessage で町とやり取りする(sdk/town-sdk.js)
 
-export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [], features = [], gems = null, house = null, photo = null, paramsFor = null, member = null, dictUrl = null, learn = null }) {
+export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [], features = [], gems = null, house = null, photo = null, paramsFor = null, route = null, member = null, dictUrl = null, learn = null }) {
   const registry = new Map();
   const loadedScripts = new Map();
   let current = null;
@@ -49,7 +49,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
         btns.forEach(b => { const e = document.createElement('button'); e.className = 'tw-app-hbtn'; e.textContent = b.label; e.onclick = () => b.fn(); w.appendChild(e); });
         hd.insertBefore(w, cl);
       },
-      open: (id, p) => setTimeout(() => open(id, p), 0),   // ほかのアプリへ(いまのアプリは閉じる)。家→ショップなど
+      open: (id, p) => setTimeout(() => (route ? route(id, p) : open(id, p)), 0),   // route＝町の入口(組み込み先のゲームへも行ける)   // ほかのアプリへ(いまのアプリは閉じる)。家→ショップなど
       close: result => close(result),
     };
   }

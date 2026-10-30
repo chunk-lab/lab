@@ -25,6 +25,8 @@ export const catOfApp = id => { const t = TOWN_APPS[id]; return t ? { cat: t[0],
 export const dayKey = (d = new Date()) => { const z = new Date(d.getTime() - DAY_START_H * 36e5); return `${z.getFullYear()}-${String(z.getMonth() + 1).padStart(2, '0')}-${String(z.getDate()).padStart(2, '0')}`; };
 const dayNum = k => Math.round(Date.parse(k + 'T00:00:00Z') / 864e5);
 
+// ただのチャンク(チャンクのゲームで出会った2語以上の言い回し)は、フラッシュカード・テストには出さない。表現(kind:'expr')・単語・文は別
+export const isChunk = w => !!w && (w.kind === 'chunk' || (w.kind === 'word' && /\s/.test(String(w.en).trim()) && /chunk|チャンク/i.test(String(w.src || ''))));
 export function createDayLog(core) {
   const st = createStore('core');
   const S = Object.assign({ days: {}, total: {}, queue: [], known: {}, graceAt: null, lastEnter: null, lastTest: null }, st.get('daylog') || {});
@@ -71,7 +73,7 @@ export function createDayLog(core) {
       const today = dayKey(), out = new Map();
       S.queue.forEach(w => out.set(w.en.toLowerCase(), w));
       for (const k of Object.keys(S.days).sort()) { if (k >= today) continue; const d = S.days[k]; if (d.rev || d.carried) continue; Object.values(d.words).forEach(w => { const key = w.en.toLowerCase(); if (!out.has(key)) out.set(key, { ...w, day: k, unk: 0 }); }); }
-      return [...out.values()];
+      return [...out.values()].filter(w => w.kind !== 'sentence' && !isChunk(w));
     },
     // 前回(きのう)のふりかえりを忘れていたか(単語があったのに「今日はここまで」を押していない)
     forgotten() {
@@ -97,7 +99,7 @@ export function createDayLog(core) {
     lastTest: () => S.lastTest, setTest(k) { S.lastTest = k; save(); },
     // 今までに出会った言葉(意味つき)すべて。定期の単語テストの出題もと
     knownKeys: () => Object.keys(S.known || {}),   // フラッシュカードで「覚えてる」にした言葉(テストには出さない)
-    pool() { const m = new Map(); Object.values(S.days).forEach(d => Object.values(d.words).forEach(w => { if (w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), w); })); S.queue.forEach(w => { if (w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), w); }); return [...m.values()].filter(w => !(S.known || {})[w.en.toLowerCase()]); },
+    pool() { const m = new Map(); Object.values(S.days).forEach(d => Object.values(d.words).forEach(w => { if (w.ja && w.kind !== 'sentence' && !isChunk(w)) m.set(w.en.toLowerCase(), w); })); S.queue.forEach(w => { if (w.ja && w.kind !== 'sentence' && !isChunk(w)) m.set(w.en.toLowerCase(), w); }); return [...m.values()].filter(w => !(S.known || {})[w.en.toLowerCase()]); },
     graceAt: () => S.graceAt, setGrace(k) { S.graceAt = k; save(); },
     lastEnter: () => S.lastEnter, setEnter(k) { S.lastEnter = k; save(); },
     prevDay() { const ks = Object.keys(S.days).filter(k => k < dayKey()).sort(); return ks[ks.length - 1] || null; },
@@ -107,7 +109,7 @@ export function createDayLog(core) {
   // 2Dの勉強ゲームの「まちがえた言葉」「登録した言葉」も、その日の記録に入れる
   core.events.on((game, name, d = {}) => {
     if (name === 'done' && Array.isArray(d.missed)) d.missed.slice(0, 50).forEach(x => api.addWord({ en: x.en, ja: x.ja, src: x.src || game, miss: true }));
-    else if (name === 'word' && d.en) api.addWord({ en: d.en, ja: d.ja || '', src: d.src || game, kind: d.kind === 'quote' || d.kind === 'sentence' || d.kind === 'short' ? 'sentence' : 'word' });
+    else if (name === 'word' && d.en) api.addWord({ en: d.en, ja: d.ja || '', src: d.src || game, kind: d.kind === 'quote' || d.kind === 'sentence' || d.kind === 'short' ? 'sentence' : d.kind === 'expr' ? 'expr' : 'word' });
   });
   return api;
 }

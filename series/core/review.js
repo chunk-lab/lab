@@ -2,7 +2,7 @@
    流れ:①時間のグラフ(勉強・遊び・街でまったり) → ②言葉・表現の一覧(音声が順番に流れる) → ③フラッシュカード(右フリック=覚えてる / 左=覚えてない / タップ=めくる)
    - ポイント:今日のふりかえり=review(10) / 前回のふりかえり=prev(10)。忘れていた日は、7日に1回だけ特別にあげる
    - 1日のOK:メイン課題(必須)+ほかの課題(前回・それ以外の勉強・目標時間・ふりかえり)のうち3つ以上 */
-import { TOPS, CATS, FORCE_N } from './daylog.js';
+import { TOPS, CATS, FORCE_N, isChunk } from './daylog.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const mm = s => { const m = Math.round(s / 60); return s > 0 && m === 0 ? '1分未満' : m + '分'; };
 const dayJa = k => { const [, m, d] = k.split('-'); return `${+m}月${+d}日`; };
@@ -37,7 +37,7 @@ export function createReview(core) {
     if (!day) { core.ui.toast('まだ記録がありません'); return; }
     const title = mode === 'prev' ? `${dayJa(day)}のふりかえり` : '今日のふりかえり';
     let items = dl.words(day).map(w => ({ ...w }));
-    const sents = items.filter(w => w.kind === 'sentence'); items = items.filter(w => w.kind !== 'sentence');   // 並べ替えの文は、ふだんは出さない(一覧の「文章」タブでだけ)
+    const sents = items.filter(w => w.kind === 'sentence'); items = items.filter(w => w.kind !== 'sentence' && !isChunk(w));   // 並べ替えの文は、ふだんは出さない(一覧の「文章」タブでだけ)
     const forced = dl.forced();
     if (forced || mode === 'prev') {   // たまった/3日たった:足りない分は、いままで覚えていなかったものでうめる
       const have = new Set(items.map(w => w.en.toLowerCase())), rest = dl.pending().filter(w => !have.has(w.en.toLowerCase())).sort((a, b) => (b.unk || 0) - (a.unk || 0));
