@@ -49,14 +49,22 @@ export function createUseit(core) {
       };
       find(x.en).then(list => { found = list; const ul = q('[data-found]'); if (!ul) return; ul.innerHTML = list.length ? list.map(sent).join('') : `<li class="cs-note">内蔵の文には見つかりませんでした。2か3で文を作ってみよう。</li>`; bindList(ul, list); });
       q('[data-keep]').onclick = () => { const en = q('[data-mine]').value.trim(); if (!/[a-zA-Z]/.test(en)) return core.ui.toast('英文を書いてね'); core.notebook.add({ en, ja: '', kind: 'short', src: 'note' }); core.ui.toast('ノートに入れました'); };
-      if (q('[data-eigo]')) q('[data-eigo]').onclick = () => {
+      if (q('[data-eigo]')) q('[data-eigo]').onclick = function () {
+        // 1) 押した瞬間に、ボタンそのものの文字を変える(トーストや重なりに頼らない)
+        const btn = this, say = t => { btn.textContent = t; };
+        say('⏳ 送っています…');
         try {
           core.eigo.send([{ en: x.en, ja: x.ja || '', kind: x.kind === 'short' ? 'sentence' : '' }]);
-          core.ui.toast('英語脳を開いています…(「' + x.en + '」を「ことば登録」に入れます)');
-          ov.remove(); core.study && core.study.close();
+          say('✅ 送りました。英語脳を開きます…');
           if (!core.openGame) throw new Error('この画面では英語脳を開けません');
-          core.openGame('eigonou');
-        } catch (e) { console.error(e); core.ui.toast('英語脳を開けませんでした:' + String(e && e.message || e).slice(0, 80)); }
+          // 2) 閉じる→開くを同じ瞬間にやらない(閉じる側の後片づけに、開いた画面が巻き込まれないように)
+          setTimeout(() => {
+            try {
+              ov.remove(); core.study && core.study.close();
+              setTimeout(() => { try { core.openGame('eigonou'); } catch (e) { console.error(e); core.ui.toast('英語脳を開けませんでした:' + String(e && e.message || e).slice(0, 80)); } }, 120);
+            } catch (e) { console.error(e); say('❌ ' + String(e && e.message || e).slice(0, 60)); }
+          }, 350);
+        } catch (e) { console.error(e); say('❌ 失敗:' + String(e && e.message || e).slice(0, 60)); }
       };
       if (q('[data-check]')) q('[data-check]').onclick = async () => {
         const en = q('[data-mine]').value.trim(), out = q('[data-judge]'); if (!/[a-zA-Z]/.test(en)) return core.ui.toast('英文を書いてね');
