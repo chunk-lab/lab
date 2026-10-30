@@ -40,20 +40,36 @@ async function addPhrase(q) {
   return addItem(kind, q.en, (ai && ai.ja) || q.ja || '', x);
 }
 // 開いたときに1回:箱の中身を登録して、知らせる
+// 登録したあとに、何が入ったかを見せて、すぐ「つくる」「れんしゅう」へ行けるようにする
+function showDone(got, gotS, chunks) {
+  const root = ENV.root; if (!root) return toast('📥 マイことばに入れたよ');
+  root.querySelector('.eg-inbox')?.remove();
+  const esc = t => String(t).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const el = document.createElement('div'); el.className = 'eg-inbox';
+  el.style.cssText = 'position:absolute;inset:0;z-index:50;background:#0006;display:flex;align-items:center;justify-content:center;padding:16px';
+  el.innerHTML = `<div style="background:#fff;border-radius:18px;padding:16px;max-width:360px;width:100%;box-shadow:0 8px 28px #0005;text-align:center;color:#3b3552;font-weight:700">
+    <div style="font-size:16px;font-weight:900">📥 マイことばに入れたよ</div>
+    <div style="margin:10px 0;font-size:14px;text-align:left;max-height:34vh;overflow:auto">${got.map(x => `<div>✅ <b>${esc(x.en)}</b> <small style="color:#8d7f9e">${esc(x.ja || '')}</small></div>`).join('')}${gotS.map(x => `<div>✅ 📝 ${esc(x.en)}</div>`).join('')}${chunks ? `<small style="color:#8d7f9e">文のまとまり +${chunks}</small>` : ''}</div>
+    <button data-g="make" style="width:100%;border:0;border-radius:999px;padding:12px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;font:inherit;font-size:15px">🎨 この表現で文をつくる</button>
+    <button data-g="prac" style="width:100%;border:0;border-radius:999px;padding:10px;margin-top:8px;background:#d6f0ff;font:inherit;font-size:14px">🎯 れんしゅうする</button>
+    <button data-g="" style="width:100%;border:0;background:none;margin-top:6px;padding:8px;font:inherit;font-size:12px;color:#8d7f9e">あとで</button></div>`;
+  el.querySelectorAll('button').forEach(b => b.onclick = () => { el.remove(); const v = b.dataset.g; if (v) root.querySelector(`.nav [data-v="${v}"]`)?.click(); });
+  (root.closest('.cs-mount') || root).appendChild(el);
+}
 export async function drainInbox() {
   const box = ENV.core && ENV.core.eigo; if (!box || !box.count()) return;
-  const list = box.take(), aiOk = !!(ENV.core.ai && ENV.core.ai.ready), left = []; let n = 0, chunks = 0, firstEn = '';
+  const list = box.take(), aiOk = !!(ENV.core.ai && ENV.core.ai.ready), left = []; let n = 0, chunks = 0, firstEn = ''; const got = [], gotS = [];
   for (const q of list) {
     try {
       const isSen = q.kind === 'sentence' || judge(q.en, q.ja) === 'sentence';
-      if (isSen) { chunks += await addSentence(q); n++; }
+      if (isSen) { chunks += await addSentence(q); n++; gotS.push(q); }
       else if (!q.ja && !aiOk) { left.push(q); continue; }   // 日本語の意味がなく、AIもないなら、まだ登録できない(箱にもどす)
-      else if (await addPhrase(q)) n++; else continue;
+      else if (await addPhrase(q)) { n++; got.push(q); } else continue;
       if (!firstEn) firstEn = q.en;
     } catch (e) { left.push(q); }
   }
   if (left.length) box.send(left);
   save(); refreshLex();
-  if (n) toast(`📥 「${firstEn}」${n > 1 ? `など ${n}こ` : ''}を、マイことばに入れたよ${chunks ? `(文のまとまり +${chunks})` : ''}`);
+  if (n) showDone(got, gotS, chunks);
   else if (left.length) toast('📥 日本語の意味がないので、まだ登録できません(AIのキーを入れるか、意味を足してね)');
 }
