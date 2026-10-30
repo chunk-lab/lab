@@ -13,7 +13,7 @@ const CLUBS = [   // ゴルフのクラブ:飛ぶ距離(m)・打ち出し角
 const HGTS = [['低め', 0], ['ふつう', 1], ['高め', 2]];   // フリスビーの高さ
 function rng(seed) { let s = 0; for (const c of seed) s = (s * 31 + c.charCodeAt(0)) >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
 
-export function createSport({ scene, camera, root, me, city, collide, audio, wallet, getYaw, setYaw, onEnd, onExpr, toast }) {
+export function createSport({ scene, camera, root, me, city, collide, audio, wallet, getYaw, setYaw, onEnd, onExpr, exprPool, toast }) {
   const mat = c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.6 });
   let S = null;
   const css = document.createElement('style');
@@ -365,10 +365,10 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   }
   // 1ホールごとに英語の表現(句動詞・慣用句)を1つもらう
   function giveExpr() {
-    const X = holeExpr(S.kind, S.C.key, S.i); (S.got = S.got || []).push(X);
+    const X = holeExpr(exprPool && exprPool(), S.C.key + S.kind, S.i); (S.got = S.got || []).push(X);
     const el = document.createElement('div'); el.className = 'sp-expr';
     el.style.cssText = 'position:absolute;left:12px;right:12px;bottom:calc(150px + env(safe-area-inset-bottom,0px));background:#fffffff2;border-radius:16px;padding:8px 12px;box-shadow:0 4px 14px #0003;text-align:center;font-weight:800;color:#5a4a6b;pointer-events:none';
-    el.innerHTML = `<small style="color:#8d7f9e">🎁 ホール${S.i + 1}の英語表現</small><div style="font-size:19px;font-weight:900">${X.en}</div><div style="font-size:12px">${X.ja}</div><small style="color:#8d7f9e">${X.ex}</small>`;
+    el.innerHTML = `<small style="color:#8d7f9e">🎁 ホール${S.i + 1}の英語表現</small><div style="font-size:19px;font-weight:900">${X.en}</div><div style="font-size:12px">${X.ja}</div>`;
     S.hud.appendChild(el);
     try { const u = new SpeechSynthesisUtterance(X.en); u.lang = 'en-US'; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) { }
   }

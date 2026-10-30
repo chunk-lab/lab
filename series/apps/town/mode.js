@@ -58,6 +58,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
       features: ['study'],
+      exprPool: () => { try { if (!core.dict.loaded) { core.dict.ready().catch(() => { }); return null; } return core.dict.phrases(); } catch (e) { return null; } },   // 毎日の表現のもと(辞書の熟語)
       medals: () => core.record.medals(),   // 勉強を続けたメダル(家の壁にかざれる)
       studyInfo: () => PLAYS.filter(p => p.mood !== 'game' && p.go && p.go.to !== '3d' && p.go.to !== 'test').map(p => ({ id: p.id, n: p.n, days: core.record.daysSince(p.id) })),   // しばらくしていない勉強(そら君が勧める)   // あなたの家に「勉強部屋」ボタンを出す
       switchLabel: '2Dの地図にする',

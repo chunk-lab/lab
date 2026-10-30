@@ -136,10 +136,11 @@ export function mount(container, opt = {}) {
   });  sport = createSport({
     scene, camera, root, me, city, collide: (x, z, r) => collide(x, z, r), audio, wallet, toast: t => hud.toast(t),
     getYaw: () => cam.yaw, setYaw: y => { cam.yaw = y; },
+    exprPool: () => opt.exprPool?.() || null,
     onExpr(list, practice, kind) {   // ホールでもらった表現:今日のふりかえりに入れる。「すぐ使う」なら英語脳へ渡す
-      const src = kind === 'golf' ? 'ゴルフの表現' : 'フリスビーの表現';
+      const src = '今日の表現';
       list.forEach(x => opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src } }));
-      if (practice && list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { items: list.flatMap(x => [{ en: x.en, ja: x.ja }, { en: x.ex, ja: x.exja, kind: 'sentence' }]) } });
+      if (practice && list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { items: list.map(x => ({ en: x.en, ja: x.ja })) } });
     },
     onEnd({ kind, quit, total, par }) { actSport(null); if (goHome()) return; if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
   });
@@ -153,7 +154,7 @@ export function mount(container, opt = {}) {
   });
   const actSport = (label) => opt.onEvent?.('app:event', { name: 'act', data: { layer: 'sub', cat: label ? 'sport' : null, label } });   // 季節のスポーツの時間を記録(1日の記録)
   { const b0 = battle.start; battle.start = (...a) => { actSport('雪合戦'); return b0(...a); }; }
-  { const s0 = sport.start; sport.start = (k, o) => { markPlay(k); actSport(k === 'golf' ? 'ミニゴルフ' : 'フリスビー'); return s0(k, o); }; }   // 最後に遊んだ日を記録(しばらく遊んでいないものに、さそう)
+  { const s0 = sport.start; sport.start = (k, o) => { opt.exprPool?.(); markPlay(k); actSport(k === 'golf' ? 'ミニゴルフ' : 'フリスビー'); return s0(k, o); }; }   // 最後に遊んだ日を記録(しばらく遊んでいないものに、さそう)
 
   storage.set('pid', me.id);
   const last = storage.get('pos'); if (last) { me.x = last[0]; me.z = last[1]; }
