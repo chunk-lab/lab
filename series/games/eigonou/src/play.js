@@ -1495,7 +1495,11 @@ export function initTimeline(){
 }
 // ---------- nav ----------
 export function go(v){ APP.view = v==='make'?'play':v; if(v==='prac'){ if(!PR.cur) prNew(); else renderPrac(); } if(v==='sets') renderSets(); if(v==='settings') renderSettings(); if(v==='reg') renderReg(); render(); }
-export function setLevel(l){ if(String(LV())===String(l)) return; SET().slv=String(l); if(typeof save==='function') save(); APP.level=String(l); resetAll(); }
+export function setLevel(l){ if(String(LV())===String(l)) return; SET().slv=String(l); if(typeof save==='function') save(); APP.level=String(l);
+ // レベルを切り替えても、いまの文はそのまま残す(レベルで使える時制・助動詞が変わるだけ)
+ const m0=APP.S&&APP.S.main, keep=m0&&(m0.pred||m0.subj)?JSON.stringify({S:APP.S,fin:APP.finished,act:APP.active}):null;
+ resetAll();
+ if(keep){ try{ const k=JSON.parse(keep); APP.S=k.S; APP.active=k.act||'main'; APP.finished=!!k.fin; normalize(); render(); }catch(e){ console.error(e); } } }
 export function init(){
  I18N.lang=(DB.settings.ui && I18N.tables[DB.settings.ui])?DB.settings.ui:'ja'; applyI18n();
  document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));

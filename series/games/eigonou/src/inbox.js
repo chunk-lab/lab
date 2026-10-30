@@ -76,7 +76,7 @@ export async function drainInbox() {
   for (const q of list) {
     try {
       const isSen = q.kind === 'sentence' || judge(q.en, q.ja) === 'sentence';
-      if (isSen) { chunks += await addSentence(q); n++; gotS.push(q); if (aiOk) { const p = await makePlay({ en: q.en, ex: q.en, exja: q.ja, ja: q.ja }, 'verbs', true); if (p) plays.push(p); } }
+      if (isSen) { chunks += await addSentence(q); n++; gotS.push(q); if (aiOk) { const p = await makePlay({ en: q.en, ex: q.en, exja: q.ja, ja: q.ja }, 'verbs', true); if (p) { plays.push(p); if (q.play) wantPlay = true; } } else if (q.play) toast('文を組み立てるには、AIのキーが必要です'); }
       else if (!q.ja && !aiOk) { left.push(q); continue; }   // 日本語の意味がなく、AIもないなら、まだ登録できない(箱にもどす)
       else { const k = await addPhrase(q); if (k) { n++; got.push(q); const p = await makePlay(q, k); if (p) { p.expr = q.en; plays.push(p); if (q.play) wantPlay = true; } } else if (!q.ex) continue; }
       if (q.ex && /[a-z]/i.test(q.ex)) { const set = mySet(); set.sentences = set.sentences || []; if (!set.sentences.some(s => s.en.toLowerCase() === String(q.ex).toLowerCase())) { set.sentences.push({ en: String(q.ex), ja: q.exja || '' }); gotS.push({ en: q.ex }); } }
