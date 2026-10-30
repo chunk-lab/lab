@@ -14,6 +14,7 @@ import { createWallet } from './wallet.js';
 import { createDict } from './dict.js';
 import { createReader } from './reader.js';
 import { createNotebook } from './notebook.js';
+import { createEigoInbox } from './eigo.js';
 import { createRecord } from './record.js';
 import { createDayLog } from './daylog.js';
 import { createStudy } from './study.js';
@@ -45,6 +46,7 @@ export function createCore(config) {
   // ゲームの点数ではコインをもらえない(ランキングだけ)
   core.cloud = createCloud(core.member);   // 共有の教材（いまは端末の中だけ。Supabase につなぐときは cloud.js の中だけ直す）
   core.openGame = null;   // アプリ(main.js)が入れる：(ゲームid, opts) → ゲームを開く
+  core.eigo = createEigoInbox();      // 英語脳アプリへの受け渡し箱(言葉・表現・文を送っておくと、英語脳を開いたとき登録される)
   core.notebook = createNotebook();   // 勉強ノート（全アプリ共通の言葉の置き場）
   importOld(core.notebook);           // 前から各アプリにあった言葉を1回だけ取り込む
   core.record = createRecord(core.events, core.notebook);   // 学習の記録（done・word・resume の報告をまとめる）
