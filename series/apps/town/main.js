@@ -13,7 +13,7 @@ import { createStore } from '../../core/store.js';
 import { createMode } from './mode.js';
 
 const core = createCore(window.__APP__);
-core.openGame = (g, o) => { if (GAMES[g]) core.host.open(GAMES[g], o || {}); };
+core.openGame = (g, o) => { if (!GAMES[g]) { core.ui.toast('このアプリには「' + g + '」が入っていません'); return; } Promise.resolve(core.host.open(GAMES[g], o || {})).catch(e => { console.error(e); core.ui.toast('開けませんでした:' + String(e && e.message || e).slice(0, 80)); }); };
 core.books = createBooks(core);
 /* 施設：中身は遊びの属性表(core/plays.js)の place から作る（2Dも3Dも同じ）。extra は表にない入口 */
 const PLACES = {

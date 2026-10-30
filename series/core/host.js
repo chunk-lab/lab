@@ -33,7 +33,7 @@ export function createHost(core, layer, backBtn) {
       ctx.report('open');
       core.daylog && core.daylog.act('app', { cat: 'study', label: game.name || game.title || game.id });   // 2Dのゲームは、すべて英語の勉強
       try { const inst = await game.mount(el, ctx); if (cur && cur.el === el) cur.inst = inst || {}; else inst && inst.unmount && inst.unmount(); }
-      catch (e) { console.error(e); el.innerHTML = '<p class="cs-err">読み込めませんでした</p>'; backBtn.hidden = false; }
+      catch (e) { console.error(e); el.innerHTML = '<p class="cs-err">読み込めませんでした<br><small>' + String(e && e.message || e).slice(0, 160).replace(/[<>&]/g, '') + '</small></p>'; backBtn.hidden = false; }
     },
     close
   };
