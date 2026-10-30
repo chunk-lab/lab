@@ -137,9 +137,10 @@ export function mount(container, opt = {}) {
     scene, camera, root, me, city, collide: (x, z, r) => collide(x, z, r), audio, wallet, toast: t => hud.toast(t),
     getYaw: () => cam.yaw, setYaw: y => { cam.yaw = y; },
     exprPool: () => opt.exprPool?.() || null,
-    onExpr(list, practice, kind) {   // ホールでもらった表現:今日のふりかえりに入れる。「すぐ使う」なら英語脳へ渡す
-      const src = '今日の表現';
-      list.forEach(x => opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src } }));
+    onGive(x, kind) {   // 1ホールごとにもらった表現:その場で勉強ノートと今日のふりかえりに入れる
+      opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src: '今日の表現' } });
+    },
+    onExpr(list, practice, kind) {   // 「すぐ使ってみる」なら英語脳へ渡す
       if (practice && list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { items: list.map(x => ({ en: x.en, ja: x.ja })) } });
     },
     onEnd({ kind, quit, total, par }) { actSport(null); if (goHome()) return; if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
@@ -1359,7 +1360,7 @@ export function mount(container, opt = {}) {
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
     snowState: () => { const B = battle.state; return B && { phase: B.phase, men: B.men.map(m => { const v = new THREE.Vector3(m.x, 0.6, m.z).project(camera); return [m.x, m.z, m.hp, m.g.scale.x, !!m.g.parent, m.g.visible, +v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(3), m.g.children.length, m.g.children[0].visible]; }), me: [me.x, me.z, me.ry], F: B.F.map(f => [f.name, f.x, f.z, f.hp]) }; },
-    sportStart: k => sport.start(k),   // テスト用
+    sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(),   // テスト用
     npc: id => residents.list.find(x => x.def.id === id),   // テスト用
     finds: () => finds.spots().map(s => ({ key: s.key, x: s.x, z: s.z, kind: s.kind })),   // テスト用
     benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用
