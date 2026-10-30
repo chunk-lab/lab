@@ -65,7 +65,13 @@ export const finds = {
   treasures() { return st.get('tre') || []; },
   addTreasure(name) { const T = this.treasures(); if (!T.includes(name)) { T.push(name); st.set('tre', T); } },
   // 手がかり(占い・哲学者):まだ見つけていない、きょうのかくれものの近くの場所の名前
-  hint(areaName = areaFn) { const s = this.spots().filter(x => x.kind !== 'treasure'); const f = s.length ? s[Math.floor(Math.random() * s.length)] : this.spots()[0]; return f ? areaName(f.x, f.z) : null; },
+  hint(areaName = areaFn) {
+    const s = this.spots().filter(x => x.kind !== 'treasure'); const f = s.length ? s[Math.floor(Math.random() * s.length)] : this.spots()[0];
+    if (f) { const H = st.get('hinted'), d = dayKey(), cur = H && H.day === d ? H.keys : []; if (!cur.includes(f.key)) cur.push(f.key); st.set('hinted', { day: d, keys: cur }); }   // 地図に印を出す(きょうの分だけ)
+    return f ? areaName(f.x, f.z) : null;
+  },
+  // 占い・ヒントでありかを教えてもらった、まだ見つけていない場所(地図の印とキラッに使う)
+  hinted() { const H = st.get('hinted'); if (!H || H.day !== dayKey()) return []; return this.spots().filter(s => H.keys.includes(s.key)); },
   // 運営テスト:ここに隠す / けす
   addHunt(h) { const L = st.get('hunt') || []; L.push({ id: 'h' + Date.now().toString(36), ...h }); st.set('hunt', L); },
   removeHunt(id) { st.set('hunt', (st.get('hunt') || []).filter(h => h.id !== id)); const g = this.got(); delete g['h:' + id]; st.set('got', g); },

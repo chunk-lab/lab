@@ -30,6 +30,7 @@ import { createHud, CSS } from './ui/hud.js';
 import { APPS } from './apps/registry.js';
 import { openFinder } from './ui/finder.js';
 import { openNotes } from './ui/notes.js';
+import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
 import { createFireworks, FW_TYPES, FW_SHOWS, FW_CENTER } from './world/fireworks.js';
 import { createSchedule, EVENT_KINDS } from './world/events.js';
@@ -298,11 +299,14 @@ export function mount(container, opt = {}) {
     return `「${text}」をノートに入れたよ`;
   }
   // ---- 住人との仲(プレゼント・頼みごと)・調べる・宝探し ----
+  const sparkles = createSparkles(scene, finds);
   const soc = createSocialUI({ hud, wallet, audio, addNote, startDate: r => startDate(r), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
   if (social.admin()) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🔍 宝を隠す'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(168px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; soc.adminHunt(); }; root.appendChild(b); }
+  const townSnap = () => { const got = finds.treasures(); return { info: social.info(), tre: TREASURES.map(t => ({ i: t[0], n: t[1], g: got.includes(t[1]) })), at: Date.now() }; };   // 勉強ノートの「町のひみつ」に渡す
   function openNoteBook() {
     if (!started || appHost.current || hud.busy) return;
     input.clear(); audio.play('tap');
+    if ((opt.features || []).includes('study')) { opt.onEvent?.('app:event', { name: 'study', data: { tab: 'note', sec: 'words', snap: townSnap() } }); return; }   // 勉強ノートにまとめた(単語・表現・文は、ふだんから勉強ノートへ入っている)
     openNotes({
       hud, getNotes: () => notes, getInfo: () => social.info(), getTreasures: () => ({ got: finds.treasures(), all: TREASURES }),
       onDelete: id => { const i = notes.findIndex(n => n.id === id); if (i >= 0) { notes.splice(i, 1); saveNotes(); } },
@@ -419,7 +423,7 @@ export function mount(container, opt = {}) {
       games: [
         { label: '🎮 チャンクボックス', fn: () => openApp('gamebox', {}) },
         { label: '📒 ことばノート', fn: () => openNoteBook() },
-        ...((opt.features || []).includes('study') ? [{ label: '📚 勉強部屋', fn: () => opt.onEvent?.('app:event', { name: 'study' }) }] : []),
+        ...((opt.features || []).includes('study') ? [{ label: '📚 勉強部屋', fn: () => opt.onEvent?.('app:event', { name: 'study', data: { snap: townSnap() } }) }] : []),
       ],
     });
   }
@@ -891,10 +895,11 @@ export function mount(container, opt = {}) {
   function openFind() {
     if (!started || appHost.current || hud.busy) return;
     input.clear(); audio.unlock(); audio.play('tap');
-    openFinder({ hud, city, areaName: city.areaName, getMe: () => me, getEntities: entities, onJump: jumpTo });
+    openFinder({ hud, city, areaName: city.areaName, getMe: () => me, getEntities: entities, onJump: jumpTo, getHints: () => finds.hinted() });
   }
   offs.push(bus.on('ui:find', openFind));
   on(window, 'keydown', e => { if (e.code === 'KeyM' && !e.repeat && !e.target.closest?.('input,textarea')) { if (hud.busy) { hud.closePanel(); return; } openFind(); } });
+  offs.push(bus.on('ui:notes', () => openNoteBook()));
   offs.push(bus.on('ui:lang', () => { settings.en = settings.en ? 0 : 1; save(); bus.emit('lang', { on: !!settings.en }); hud.toast(settings.en ? 'English モード' : '日本語モード'); }));
   bus.emit('lang', { on: !!settings.en });
   // 写真:いま見えている画面のまま撮る(HUDは写らない)。のこすのは はじめ1枚、ダイヤで5枚まで。切り取りはアルバムで
@@ -911,7 +916,7 @@ export function mount(container, opt = {}) {
     if (!started) return;
     const seg = (key, opts) => `<div class="tw-seg">${opts.map(([v, l]) => `<button class="tw-btn${settings[key] == v ? ' on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
     const pn = hud.panel(`<h2>せってい</h2>
-            <div class="tw-row">ことばノート<button class="tw-btn" data-act="notes" style="padding:6px 14px">ひらく(${notes.length})</button></div>
+      <div class="tw-row">住人との会話${seg('en', [[1, '英語'], [0, '日本語']])}</div>
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
       <div class="tw-row">低負荷モード${seg('lite', [[0, 'オフ'], [1, 'オン']])}</div>
       <div class="tw-note">オンにすると、解像度・影・光のにじみ・ふちどり・噴水・月をかるくして、30fpsにします(流れ星は残ります)。</div>
@@ -1242,6 +1247,7 @@ export function mount(container, opt = {}) {
     if (env.weather || evt?.wx || (env.rainLevel || 0) > 0.01) audio.rain(env.rainLevel || 0);
     if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
     if (evt) { if (evt.wx ? !env.weather : evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
+    sparkles.update(dt, me);
     if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); curWx = weather.now(); env.setAmbient(curWx); }
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);

@@ -107,7 +107,7 @@ export function createReview(core) {
             <p class="cs-note">右へチョン=覚えてる / 左へチョン=まだ / タップでめくる</p>
             <div class="rv-card" id="rv-c"><div class="f"><b>${esc(w.en)}</b>${w.pos ? `<small>${esc(w.pos)}</small>` : ''}<span class="b" hidden>${esc(w.ja || '(意味の記録なし)')}${w.multi > 1 ? `<em>ほかの意味もあるよ(＋${w.multi - 1})</em>` : ''}</span></div></div>
             <div class="rv-two"><button class="cs-btn rv-no" id="rv-x">← まだ</button><button class="cs-btn rv-ok" id="rv-o">覚えてる →</button></div>
-            ${idx > (stepCards.pre || 0) ? '<button class="cs-btn" id="rv-b">↩ ひとつ もどる</button>' : ''}`, () => {
+            ${idx > (stepCards.pre || 0) ? '<button class="cs-btn" id="rv-b">↩ ひとつ もどる</button>' : '<button class="cs-btn" id="rv-qt">すぐ単語力テストをする</button>'}`, () => {
             const c = box.querySelector('#rv-c'), back = c.querySelector('.b'); let x0 = null, dx = 0, moved = false, flipped = false, done = false;
             core.speech.speak(w.en);
             const answer = known => { if (done) return; done = true; res.push({ en: w.en, known, item: w }); c.style.transition = 'transform .12s,opacity .12s'; c.style.transform = `translateX(${known ? 140 : -140}%) rotate(${known ? 14 : -14}deg)`; c.style.opacity = 0; setTimeout(() => { idx++; card(); }, 110); };
@@ -129,6 +129,7 @@ export function createReview(core) {
             };
             c.onpointercancel = reset; c.onlostpointercapture = () => { if (x0 != null) reset(); };
             box.querySelector('#rv-x').onclick = () => answer(false); box.querySelector('#rv-o').onclick = () => answer(true);
+            const qt = box.querySelector('#rv-qt'); if (qt) qt.onclick = () => { close(); test(); };   // 1枚目は「もどる」がないので、かわりに(2回目いご、ぜんぶ選ばなくてよい)
             const bb = box.querySelector('#rv-b'); if (bb) bb.onclick = () => { res.pop(); idx--; card(); };   // まちがえたら もどれる
           });
         };

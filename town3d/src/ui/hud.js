@@ -130,7 +130,7 @@ export const CSS = `
 
 export function createHud(root, bus) {
   const h = s => { const t = document.createElement('template'); t.innerHTML = s.trim(); return t.content.firstChild; };
-  const top = h(`<div class="tw-top"><span class="tw-chip tw-area" hidden>ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-lang" aria-label="英語と日本語を切りかえ">日</button></div>`);
+  const top = h(`<div class="tw-top"><span class="tw-chip tw-area" hidden>ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-lang" aria-label="ノートをひらく">📒</button></div>`);
   const corner = h(`<div class="tw-corner"><button class="tw-btn tw-icon tw-homebtn" aria-label="自宅にもどる">🏠</button><button class="tw-btn tw-icon tw-cambtn" aria-label="カメラ">🎥</button><button class="tw-btn tw-icon tw-photo" aria-label="写真をとる">📷</button><button class="tw-btn tw-icon tw-daily" aria-label="今日はここまで">🌙</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
   const labels = h('<div class="tw-labels"></div>');
   const action = h('<button class="tw-btn tw-action" hidden></button>');
@@ -158,8 +158,7 @@ export function createHud(root, bus) {
   corner.querySelector('.tw-daily').onclick = () => bus.emit('ui:daily');
   top.querySelector('.tw-find').onclick = () => bus.emit('ui:find');
   const langB = top.querySelector('.tw-lang');
-  langB.onclick = () => bus.emit('ui:lang');
-  const offLang = bus.on('lang', v => { langB.textContent = v.on ? 'EN' : '日'; langB.classList.toggle('on', !!v.on); });
+  langB.onclick = () => bus.emit('ui:notes');   // 右上のノート(勉強ノートへ)
   action.onclick = () => bus.emit('ui:action');
 
   const tags = new Map(); // id → {el, bubble, until}

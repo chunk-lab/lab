@@ -36,7 +36,7 @@ const fmtN = n => { n = Math.floor(+n) || 0; return n >= 100000 ? '10万↑' : n
 const showCoin = () => { $('twCoin').textContent = '🪙 ' + fmtN(core.wallet.get()) + ' 💎 ' + fmtN(core.member.gems()); }; showCoin(); core.wallet.onChange(showCoin); core.member.onChange(showCoin);
 $('twMe').onclick = () => openStudy();
 // 勉強部屋：自宅とアバターから開く。中の「練習する」などは、街と同じしくみでゲームを開く
-function openStudy() { core.study.open({ play: core.openGame, has: g => !!GAMES[g] }); }
+function openStudy(o = {}) { core.study.open({ play: core.openGame, has: g => !!GAMES[g], ...o }); }
 $('twGear').onclick = () => core.ui.settings();
 $('twDaily').onclick = () => core.review.open({ mode: 'today' });   // 今日はここまで(どこからでも)
 const tour = createTour(core);

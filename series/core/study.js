@@ -3,17 +3,19 @@
    開くとき open({ play(gameId, opts) }) でゲームを開く手段を渡す（単体版で使えない遊びのボタンは出さない） */
 import { WANTS, playOf } from './plays.js';
 import { KINDS, MARKS } from './notebook.js';
+import { createStore } from './store.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const SRC = { stream: 'ストリーム', chunkchunk: 'チャンクチャンク', eigonou: '英語脳', cards: 'カード', town3d: '3Dの町', note: '手打ち' };
 export function createStudy(core) {
-  let ov = null, tab = 'today', kind = 'word', mark = '', opt = {};
+  let ov = null, tab = 'today', kind = 'word', mark = '', opt = {}, nsec = 'words';
+  const tst = createStore('core');   // 3Dの町が置いていく「町のひみつ」(占い・調べる・住人から聞いたこと・たからもの)
   const rec = core.record, nb = core.notebook;
   const canPlay = g => typeof opt.play === 'function' && (!opt.has || opt.has(g));
   const close = () => { if (!ov) return; ov.remove(); ov = null; offs.forEach(f => f()); offs = []; };
   let offs = [];
   function open(o = {}) {
     opt = o; if (ov) close();
-    if (o.tab) tab = o.tab; if (o.kind) kind = o.kind; if (o.mark != null) mark = o.mark;
+    if (o.tab) tab = o.tab; if (o.sec) nsec = o.sec; if (o.kind) kind = o.kind; if (o.mark != null) mark = o.mark;
     ov = document.createElement('div'); ov.className = 'cs-ov cs-study-ov';
     ov.innerHTML = `<div class="cs-study" role="dialog" aria-label="勉強部屋"><header><b>勉強部屋</b><button class="cs-x" aria-label="とじる">✕</button></header>
       <nav class="cs-tabs">${[['today', '今日'], ['log', '記録'], ['note', '勉強ノート'], ['me', 'プロフィール']].map(([k, n]) => `<button data-t="${k}">${n}</button>`).join('')}</nav><main></main></div>`;
@@ -62,10 +64,19 @@ export function createStudy(core) {
         <div class="cs-key">${WANTS.map(w => `<span><i class="w-${w.k}"></i>${w.n} ${Math.round(wk[w.k])}分</span>`).join('')}</div></section>
       <section class="cs-panel"><ul class="cs-stat"><li><span>読んだ語数(7日)</span><b>${words}語</b></li><li><span>勉強ノートの言葉</span><b>${nb.count()}個</b></li><li><span>まちがえた言葉</span><b>${nb.list({ mark: 'miss' }).length}個</b></li></ul></section>`;
   }
+  function secret() {   // 町のひみつ:占い・調べる・住人から聞いたこと(3Dの町が記録したもの)
+    const d = tst.get('townInfo'), L = d && d.info ? d.info.slice().reverse() : [], cats = [...new Set(L.map(x => x.cat))], T = d && d.tre;
+    if (!d) return '<p class="cs-sub">まだ何もありません。3Dの町で、占いの館で聞いたこと・住人のプレゼントの好み・町で調べて見つけたものが、ここに記録されます。</p>';
+    return (T && T.length ? `<section class="cs-panel"><h4>たからもの ${T.filter(x => x.g).length} / ${T.length}</h4><p>${T.map(x => x.g ? esc(x.i) : '❔').join(' ')}</p></section>` : '')
+      + (L.length ? cats.map(c => `<section class="cs-panel"><h4>${esc(c)}</h4>${L.filter(x => x.cat === c).map(x => `<p class="cs-sub" style="margin:4px 0">${esc(x.text)}</p>`).join('')}</section>`).join('')
+        : '<p class="cs-sub">占いの館で聞いたこと、住人のプレゼントの好み、町で調べて見つけたものが、ここに記録されます。</p>');
+  }
   function note() {
+    const sec = `<nav class="cs-chips cs-sec"><button data-sec="words" class="${nsec === 'words' ? 'on' : ''}">言葉 ${nb.count()}</button><button data-sec="secret" class="${nsec === 'secret' ? 'on' : ''}">🔮 町のひみつ</button></nav>`;
+    if (nsec === 'secret') return sec + secret();
     const items = nb.list({ kind, mark }), withJa = items.filter(x => x.ja);
     const practice = (kind === 'word' || kind === 'phrase') && canPlay('stream') && withJa.length >= 4;
-    return `<nav class="cs-chips">${KINDS.map(k => `<button data-kind="${k.k}" class="${k.k === kind ? 'on' : ''}">${k.n} ${nb.count(k.k)}</button>`).join('')}</nav>
+    return sec + `<nav class="cs-chips">${KINDS.map(k => `<button data-kind="${k.k}" class="${k.k === kind ? 'on' : ''}">${k.n} ${nb.count(k.k)}</button>`).join('')}</nav>
       <nav class="cs-chips cs-marks"><button data-mark="" class="${!mark ? 'on' : ''}">ぜんぶ</button>${MARKS.map(x => `<button data-mark="${x.k}" class="${x.k === mark ? 'on' : ''}">${x.n}</button>`).join('')}</nav>
       ${practice ? `<div class="cs-practice"><b>ストリームで練習</b>${withJa.length > 20 ? `<button class="cs-btn cs-go" data-practice="r">ランダム20個</button>` : ''}${Array.from({ length: Math.min(30, Math.ceil(withJa.length / 20)) }, (_, k) => `<button class="cs-btn${withJa.length <= 20 ? ' cs-go' : ''}" data-practice="${k}">${k * 20 + 1}〜${Math.min(withJa.length, k * 20 + 20)}</button>`).join('')}</div>` : ''}
       <form class="cs-add" data-add><input name="en" placeholder="英語" autocomplete="off" autocapitalize="off" spellcheck="false" required><input name="ja" placeholder="日本語" autocomplete="off"><button class="cs-btn">登録</button></form>
@@ -92,6 +103,7 @@ export function createStudy(core) {
     if (q('[data-name]')) q('[data-name]').onchange = e => core.profile.setName(e.target.value);
     if (q('[data-settings]')) q('[data-settings]').onclick = () => core.ui.settings();
     if (q('[data-cm]')) q('[data-cm]').onclick = () => { const g = core.member.earn('cm'); core.ui.toast(g ? `コイン +${g}(CMはアプリにしたときに本物を入れます)` : '今日はもう見られません'); draw(); };
+    m.querySelectorAll('[data-sec]').forEach(b => b.onclick = () => { nsec = b.dataset.sec; draw(); });
     m.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { kind = b.dataset.kind; draw(); });
     m.querySelectorAll('[data-mark]').forEach(b => b.onclick = () => { mark = b.dataset.mark; draw(); });
     m.querySelectorAll('[data-practice]').forEach(b => b.onclick = () => {

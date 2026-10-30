@@ -9,7 +9,7 @@ const kana = e => (e.yomi || e.name).replace(/[ァ-ヶ]/g, c => String.fromCharC
 const PYOMI = { school: 'まちのがっこう', library: 'としょかん', gamecenter: 'げーむせんたー', shop: 'しょっぷ', cafe: 'かふぇ', home: 'あなたのいえ', plaza: 'ほしひろば', park: 'こもれびこうえん', shrine: 'ほしみやじんじゃ', bus: 'ばすてい' };
 const hex = n => '#' + n.toString(16).padStart(6, '0');
 
-export function openFinder({ hud, city, getMe, getEntities, areaName, onJump }) {
+export function openFinder({ hud, city, getMe, getEntities, areaName, onJump, getHints = () => [] }) {
   const places = [
     ...city.interact.filter(i => i.kind === 'door').map(d => ({ id: 'pl:' + d.id, kind: 'place', name: d.name, role: '建物', yomi: PYOMI[d.id], x: d.x, z: d.z, fx: d.fx, fz: d.fz, face: 0 })),
     { id: 'pl:plaza', yomi: PYOMI.plaza, kind: 'place', name: 'ほし広場(噴水)', role: '広場', x: 0, z: 11, face: 0 },
@@ -80,6 +80,13 @@ export function openFinder({ hud, city, getMe, getEntities, areaName, onJump }) 
       ctx.fillStyle = '#fff'; ctx.font = 'bold 10px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText([...(e.name || '?')][0], sx(e.x), sz(e.z) + 0.5);   // 頭文字だけ
       ctx.globalAlpha = 1;
+    }
+    for (const h of getHints()) {   // 占い・ヒントでおしえてもらった「かくれもの」の印(きらきら)
+      const px = sx(h.x), pz = sz(h.z), k = 0.5 + 0.5 * Math.sin(Date.now() / 260);
+      ctx.beginPath(); ctx.arc(px, pz, 13 + k * 5, 0, 7); ctx.fillStyle = `rgba(255,214,102,${0.18 + 0.2 * k})`; ctx.fill();
+      ctx.fillStyle = '#ffb300'; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath();
+      for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4 - Math.PI / 2, r = i % 2 ? 4 : 9; ctx.lineTo(px + Math.cos(a) * r, pz + Math.sin(a) * r); }
+      ctx.closePath(); ctx.stroke(); ctx.fill();
     }
     dot(me, '#ff6f91', 6.5);
     ctx.lineWidth = 2; ctx.strokeStyle = '#ff6f91'; ctx.beginPath(); ctx.arc(sx(me.x), sz(me.z), 10 + (Date.now() / 200 % 3), 0, 7); ctx.globalAlpha = 0.4; ctx.stroke(); ctx.globalAlpha = 1;
