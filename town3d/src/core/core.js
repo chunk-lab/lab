@@ -22,7 +22,7 @@ export function createBus() {
 
 // 保存アダプタ(既定は localStorage)。scope() でアプリごとに名前空間を分ける
 // コイン・ダイヤの表示用:1万以上は「1.2万」、10万以上は「10万↑」
-export function fmtN(n) { n = Math.floor(+n) || 0; if (n >= 100000) return '10万↑'; if (n >= 10000) return (Math.floor(n / 1000) / 10) + '万'; return String(n); }
+export function fmtN(n) { return (Math.floor(+n) || 0).toLocaleString('ja-JP'); }   // 丸めずに、全部の桁を出す(内部の数と表示をずらさない)
 
 export function createStorage(prefix = 'town:', backend = null) {
   const ls = backend || {
@@ -43,14 +43,19 @@ export function createWallet(storage, bus) {
   let coins = storage.get('coins') ?? 50;
   return {
     get: () => coins,
-    add(n, reason = '') {
+    add(n, reason = '') {   // 増やす量に上限はない。持っている分より減らすことはできない
       n = Math.round(n);
       if (!Number.isFinite(n) || n === 0) return coins;
-      n = Math.max(-coins, Math.min(500, n)); // 1回で増える上限
+      n = Math.max(-coins, n);
       coins += n;
       storage.set('coins', coins);
       bus.emit('wallet', { coins, delta: n, reason });
       return coins;
+    },
+    give(n, reason = '') { const b = coins; this.add(n, reason); return coins - b; },
+    spend(n, reason = '') {   // 足りなければ何も減らさず false
+      n = Math.round(n); if (!Number.isFinite(n) || n < 0 || coins < n) return false;
+      if (n > 0) { coins -= n; storage.set('coins', coins); bus.emit('wallet', { coins, delta: -n, reason }); } return true;
     },
   };
 }

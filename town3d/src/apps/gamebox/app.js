@@ -159,7 +159,7 @@ export const gameboxApp = {
     }
 
     // ================= レンタル =================
-    function payCoins(n) { if (ctx.wallet.get() < n) return false; ctx.wallet.add(-n, 'gamebox'); sfx.play('item'); return true; }
+    function payCoins(n) { if (!ctx.wallet.spend(n, 'gamebox')) return false; sfx.play('item'); return true; }
     function payUsd(label, fn) {   // 本物の支払いはアプリ版で(いまは運営テストのみ)
       if (admin()) { fn(); sfx.play('item'); msg('テスト:借りました', `${label}(運営テスト。本当のお支払いはしていません)`); return; }
       msg('💳 お支払いは準備中', `${label}は、アプリ版のお支払い(App Store / Google Play)とつないでから使えるようになります。いまはコインで借りられます。`);

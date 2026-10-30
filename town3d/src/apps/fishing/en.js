@@ -557,7 +557,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         for (let i = 0; i < 12; i++) fx.pel.push({ uid, x: Math.max(6, Math.min(W - 6, cx + (Math.random() - 0.5) * 70)), y: -6 - Math.random() * 40, vy: 55 + Math.random() * 35, r: 2 + Math.random() * 1.6, c: ['#e0883a', '#c9692a', '#f2b45a', '#a8521f'][i % 4], t: 0, ph: Math.random() * 6 });
         if (fulls[uid]) fx.coin.push({ uid, n: fulls[uid] === 'coin' ? FULL_COIN : 0, t: 0, delay: 1.0 + k * 0.12, x: cx, y: 60 });
       });
-      const cn = Object.values(fulls).filter(v => v === 'coin').length * FULL_COIN; if (cn) { try { ctx.wallet.add(cn, 'full'); } catch (e) { } }
+      const cn = Object.values(fulls).filter(v => v === 'coin').length * FULL_COIN; if (cn) { try { ctx.wallet.give(cn, 'full'); } catch (e) { } }
     };
     const feed = uid => {
       const t = spec.tank(), f = t.find(x => x.uid === uid), food = spec.food(); if (!f || !food) return false;
@@ -666,7 +666,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       draw();
       sh.onclick = e => {
         if (e.target.closest('[data-x]')) { sh.remove(); redraw(); return; }
-        if (e.target.closest('[data-vx]')) { const n = vch.exchange(ctx.wallet, Math.min(vch.todayLeft(), ctx.wallet.get())); if (n) { sfx.play('coin'); toast(`🎫 金券 ${n} まい ためた(3か月まで)`); } draw(); drawHead(); return; }
+        if (e.target.closest('[data-vx]')) { const c0 = ctx.wallet.get(), n = vch.exchange(ctx.wallet, Math.min(vch.todayLeft(), c0)); if (n) { sfx.play('coin'); toast(`🪙 ${c0 - ctx.wallet.get()} → 🎫 金券 ${n} まい ためた(3か月まで)`); } draw(); drawHead(); return; }
         const p = e.target.closest('[data-pay]'); if (!p || !k) return;
         const [lv, rar] = k.split(':').map(Number), pay = p.dataset.pay;
         const ok = pay === 'v' ? vch.spend(VCH.PRICE_V[rar]) : pay === 'f' ? vch.spendFrag(VCH.PRICE_F[rar]) : vch.spendDia(VCH.PRICE_D[rar]);
@@ -742,7 +742,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       const tob = q('[data-tobox]'); if (tob) { act('tobox', tob.dataset.tobox); return; }
       const tt = q('[data-totank]'); if (tt) { const b = spec.box(), i = b.findIndex(x => x.uid === tt.dataset.totank); if (i < 0) return; if (spec.tank().length >= TANK_MAX) { toast(`水槽がいっぱい(${TANK_MAX}匹まで)`); return; } const t = spec.tank(); t.push(b.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); if (!spec.hasTank()) spec.gotTank(); sfx.play('tap'); toast('🐠 水槽に入れた'); redraw(true); return; }
       const ul = q('[data-unl]'); if (ul) {
-        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[spec.boxSlots() - 1] ?? BOX_COIN[1]; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } ctx.wallet.add(-p, 'boxslot'); }
+        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[spec.boxSlots() - 1] ?? BOX_COIN[1]; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } if (!ctx.wallet.spend(p, 'boxslot')) { toast('コインがたりないよ'); return; } }
         else { if (!ctx.gems) { toast('ダイヤは準備中だよ'); return; } if (!ctx.gems.spend(BOX_GEM)) { toast('ダイヤがたりないよ'); sfx.play('early'); return; } }
         spec.addBoxSlot(); sfx.play('coin'); toast('🔓 ひかえが ふえた!'); redraw(); return;
       }

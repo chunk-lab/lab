@@ -25,7 +25,7 @@ export const vch = {
   // コイン → 金券。wallet は共通の財布。換金できた金券の数を返す
   exchange(wallet, coins) {
     coins = Math.floor(coins); const left = this.todayLeft(), n = Math.min(coins, Math.floor(left / VCH.RATE), wallet.get());
-    if (n <= 0) return 0; wallet.add(-n, 'voucher'); const g = Math.round(n * VCH.RATE);
+    if (n <= 0 || !wallet.spend(n, 'voucher')) return 0; const g = Math.round(n * VCH.RATE);
     const t = st.get('xd') || { d: 0, n: 0 }; st.set('xd', { d: dayN(), n: (t.d === dayN() ? t.n : 0) + g });
     const l = list(); l.push({ n: g, exp: Date.now() + VCH.EXPIRE_DAYS * 864e5 }); st.set('v', l); return g;
   },

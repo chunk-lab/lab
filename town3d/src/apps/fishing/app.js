@@ -149,7 +149,7 @@ export const fishingApp = {
     function giveCoins(n, why) {   // 釣り・対決ではコインは出ない(くり返しもらえるものは無し。図鑑の達成報酬と満腹コインだけ)
       return 0;
       const left = Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0)), k = Math.min(left, Math.round(n));
-      if (k > 0) { stats.coinsToday = (stats.coinsToday || 0) + k; ctx.wallet.add(k, why || 'fish'); sfx.play('coin'); }
+      if (k > 0) { stats.coinsToday = (stats.coinsToday || 0) + k; const g = ctx.wallet.give(k, why || 'fish'); sfx.play('coin'); save(); return g; }   // 会員の倍率のあとの、実際に増えた量を返す
       save(); return k;
     }
 
@@ -774,7 +774,7 @@ export const fishingApp = {
         if (b) {
           const it = GEAR[tab].find(x => x.id === b.dataset.buy);
           if (it.gems && ctx.gems) { if (!ctx.gems.spend(it.gems)) { msg = 'ダイヤがたりないよ'; draw(); return; } }
-          else { const p = it.gems ? it.gems * 150 : it.price; if (ctx.wallet.get() < p) { msg = `コインがあと ${p - ctx.wallet.get()} たりないよ`; draw(); return; } ctx.wallet.add(-p, 'gear'); }
+          else { const p = it.gems ? it.gems * 150 : it.price; if (ctx.wallet.get() < p) { msg = `コインがあと ${p - ctx.wallet.get()} たりないよ`; draw(); return; } if (!ctx.wallet.spend(p, 'gear')) { msg = 'コインがたりないよ'; draw(); return; } }
           own[tab].push(it.id); eq[tab] = it.id; msg = `${it.name} を買った!`; save(); sfx.play('coin'); draw();
         }
       };
@@ -784,7 +784,7 @@ export const fishingApp = {
     // ================= 図鑑 =================
     function checkDex() {
       const r = Object.keys(dex).length / ALL.length;
-      for (const [k, c] of DEX_REWARDS) if (r >= k && !claimed.includes(k)) { claimed.push(k); save(); ctx.wallet.add(c, 'dex'); setTimeout(() => { const s = sheet(`<div class="ph" style="justify-content:center"><h2>📖 つり図鑑 ${Math.round(k * 100)}% たっせい!</h2></div><div class="sc" style="text-align:center;font-size:18px;font-weight:900">🪙 +${c}</div><div style="padding:8px 16px 16px;text-align:center"><button class="btn" data-x>やった!</button></div>`, true); s.querySelector('[data-x]').onclick = () => s.remove(); sfx.play('legend'); }, 600); }
+      for (const [k, c] of DEX_REWARDS) if (r >= k && !claimed.includes(k)) { claimed.push(k); save(); const gd = ctx.wallet.give(c, 'dex'); setTimeout(() => { const s = sheet(`<div class="ph" style="justify-content:center"><h2>📖 つり図鑑 ${Math.round(k * 100)}% たっせい!</h2></div><div class="sc" style="text-align:center;font-size:18px;font-weight:900">🪙 +${gd}</div><div style="padding:8px 16px 16px;text-align:center"><button class="btn" data-x>やった!</button></div>`, true); s.querySelector('[data-x]').onclick = () => s.remove(); sfx.play('legend'); }, 600); }
     }
     function dexScreen(t0) {
       const s = sheet(`<div class="ph"><h2>📖 つり図鑑</h2><b class="pr" style="font-size:13px"></b></div><div class="tabs"></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>もどる</button></div>`);

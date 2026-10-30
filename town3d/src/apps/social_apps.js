@@ -34,19 +34,40 @@ const toast = (box, t) => { const d = document.createElement('div'); d.textConte
 export const cafeApp = {
   mount(el, ctx) {
     const box = frame(el, 'cafe');
+    const MAXQ = 20, qty = {}; let last = '';   // qty:{おみやげid: 買う数}。last:さっき買ったものの結果(画面に残す)
+    const fmt = n => Number(n).toLocaleString('ja-JP');
+    const menuNow = () => CAFE_MENU.filter(k => !ITEMS[k].secret || social.has(ITEMS[k].secret, 'secret'));
+    const totals = () => { let n = 0, sum = 0; for (const k in qty) if (qty[k] > 0 && ITEMS[k]) { n += qty[k]; sum += qty[k] * ITEMS[k].price; } return { n, sum }; };
+    const stepBtn = (k, d, label, on) => `<button data-q="${k}" data-d="${d}" ${on ? '' : 'disabled'} style="width:34px;height:34px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:18px;color:#fff;background:${on ? 'linear-gradient(160deg,#ffb35c,#ff9a3c)' : '#d9d2e3'}">${label}</button>`;
     const draw = () => {
-      const bag = social.bag(), menu = CAFE_MENU.filter(k => !ITEMS[k].secret || social.has(ITEMS[k].secret, 'secret'));
-      box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>☕ カフェ「ほしの木」</h2><span class="pill">🪙 ${ctx.wallet.get()}</span></div>
+      const bag = social.bag(), menu = menuNow(), coins = ctx.wallet.get(), { n, sum } = totals(), short = sum - coins;
+      box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>☕ カフェ「ほしの木」</h2><span class="pill">🪙 ${fmt(coins)}</span></div>
         <div class="say">マスター「いらっしゃい。ぜんぶ、おみやげにできますよ。町のみんなにも好きなものがあってね…だれが何を好きかは、占いの館のルナさんがよく知ってるみたいです」</div>
-        <div class="grid">${menu.map(k => { const it = ITEMS[k]; return `<button class="it" data-buy="${k}" ${ctx.wallet.get() < it.price ? 'disabled' : ''}><span class="ic">${it.icon}</span><b>${esc(it.name)}</b><small>${esc(it.en)}</small><span class="pr">🪙 ${it.price}</span></button>`; }).join('')}</div>
-        <h3>🎒 もっているおみやげ</h3><div class="bag">${Object.keys(bag).length ? Object.entries(bag).map(([k, n]) => `<span>${ITEMS[k] ? ITEMS[k].icon + ' ' + esc(ITEMS[k].name) : k} ×${n}</span>`).join('') : '<span style="opacity:.6">まだないよ</span>'}</div>
-        <p class="nt">住人に話しかけて「🎁 プレゼントする」で渡せるよ(1人に1日1回)。好きなものだと仲良くなれて、ゲームや頼みごと、お話が増えていく。<br>🃏 カード対戦は、アミューズメントセンターに引っ越しました(ハッタリ男爵と仲良くなると遊べる)。</p>`;
+        ${last ? `<div class="res" style="color:#4a3a6b">${last}</div>` : ''}
+        <div class="grid">${menu.map(k => { const it = ITEMS[k], q = qty[k] || 0, own = bag[k] || 0; return `<div class="it" style="${q ? 'outline:3px solid #ffb35c' : ''}"><span class="ic">${it.icon}</span><b>${esc(it.name)}</b><small>${esc(it.en)}</small><span class="pr">🪙 ${fmt(it.price)}</span><small style="margin-top:4px">もっている: <b style="display:inline">${own}</b></small><div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px">${stepBtn(k, -1, '−', q > 0)}<b style="min-width:22px;font-size:17px">${q}</b>${stepBtn(k, 1, '＋', q < MAXQ)}</div>${q ? `<small style="margin-top:4px;color:#c26a00;font-weight:800">買うと ${own + q}こ ・ 🪙 ${fmt(q * it.price)}</small>` : ''}</div>`; }).join('')}</div>
+        <h3>🎒 もっているおみやげ</h3><div class="bag">${Object.keys(bag).length ? Object.entries(bag).map(([k, c]) => `<span>${ITEMS[k] ? ITEMS[k].icon + ' ' + esc(ITEMS[k].name) : k} ×${c}</span>`).join('') : '<span style="opacity:.6">まだないよ</span>'}</div>
+        <p class="nt">住人に話しかけて「🎁 プレゼントする」で渡せるよ(1人に1日1回)。好きなものだと仲良くなれて、ゲームや頼みごと、お話が増えていく。<br>🃏 カード対戦は、アミューズメントセンターに引っ越しました(ハッタリ男爵と仲良くなると遊べる)。</p>
+        <div style="height:150px"></div>
+        <div style="position:sticky;bottom:0;margin:0 -14px;padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));background:#fffaf0;box-shadow:0 -2px 10px #0002">
+          <div style="display:flex;justify-content:space-between;font-weight:800"><span>カゴ ${n}こ</span><span>ごうけい 🪙 ${fmt(sum)}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:#8d7f9e;margin:2px 0 8px"><span>いまの 🪙 ${fmt(coins)}</span><span>${n ? (short > 0 ? `<b style="color:#e0556b">あと ${fmt(short)} たりない</b>` : `買ったあと 🪙 ${fmt(coins - sum)}`) : 'ほしい数を ＋ で えらんでね'}</span></div>
+          <button data-pay ${n && short <= 0 ? '' : 'disabled'} style="width:100%;border:0;border-radius:999px;padding:12px;font:inherit;font-weight:900;font-size:16px;color:#fff;background:${n && short <= 0 ? 'linear-gradient(160deg,#ffb35c,#ff9a3c)' : '#d9d2e3'}">${n ? `まとめて買う(🪙 ${fmt(sum)})` : 'まとめて買う'}</button>
+        </div>`;
     };
     draw();
+    let busy = false;
     box.onclick = e => {
-      const b = e.target.closest('[data-buy]'); if (!b) return; const k = b.dataset.buy, it = ITEMS[k];
-      if (ctx.wallet.get() < it.price) { toast(box, 'コインがたりないよ'); return; }
-      ctx.wallet.add(-it.price, 'cafe'); social.addItem(k); toast(box, `${it.icon} ${it.name} を買った!`); draw();
+      const q = e.target.closest('[data-q]');
+      if (q && !q.disabled) { const k = q.dataset.q; qty[k] = Math.max(0, Math.min(MAXQ, (qty[k] || 0) + +q.dataset.d)); last = ''; const sc = box.scrollTop; draw(); box.scrollTop = sc; return; }
+      const pay = e.target.closest('[data-pay]'); if (!pay || pay.disabled || busy) return;
+      busy = true;
+      try {
+        const { n, sum } = totals(); if (!n) return;
+        if (!ctx.wallet.spend(sum, 'cafe')) { toast(box, 'コインがたりないよ'); return; }   // 払えなければ、なにも買わない
+        const got = []; for (const k in qty) if (qty[k] > 0 && ITEMS[k]) { social.addItem(k, qty[k]); got.push(`${ITEMS[k].icon}${esc(ITEMS[k].name)} ×${qty[k]}`); qty[k] = 0; }
+        last = `🛍 買ったもの: ${got.join('、')}<br><small>ごうけい 🪙 ${fmt(sum)} をはらったよ。のこり 🪙 ${fmt(ctx.wallet.get())}</small>`;
+        box.scrollTop = 0; draw();
+      } finally { busy = false; }
     };
     return { unmount() { box.remove(); } };
   },
@@ -72,7 +93,7 @@ export const fortuneApp = {
         lunaLine: 'カードは、あなたの心をうつす鏡。…なにを たずねたいの?',
         onExit: () => { tarot && tarot.unmount(); tarot = null; box.style.display = ''; draw(); } });
     };
-    const pay = () => { const p = price(); if (ctx.wallet.get() < p) { toast(box, `コインが ${p} まい いるわ`); return false; } ctx.wallet.add(-p, 'fortune'); return true; };
+    const pay = () => { const p = price(); if (ctx.wallet.get() < p) { toast(box, `コインが ${p} まい いるわ`); return false; } if (!ctx.wallet.spend(p, 'fortune')) { toast(box, `コインが ${p} まい いるわ`); return false; } return true; };
     const say = t => `<div class="say">🔮 ルナ「${t}」</div>`;
     const draw = () => {
       let h = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>🔮 占いの館</h2><span class="pill">🪙 ${ctx.wallet.get()}</span></div>`;

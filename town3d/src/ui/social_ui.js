@@ -24,7 +24,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain
     for (let l = before + 1; l <= after; l++) {
       if ((l === 1 || l === 3) && EPISODES[id] && social.seenEpisode(id, l)) msgs.push(EPISODES[id][l === 1 ? 0 : 1]);
       for (const u of social.unlocksOf(id).filter(u => u.lv === l)) {
-        if (u.kind === 'gift') { if (social.once('thanks:' + id)) { wallet.add(100, 'thanks'); msgs.push(`いつもありがとう! これ、お礼だよ。(🪙+100)`); } }
+        if (u.kind === 'gift') { if (social.once('thanks:' + id)) { const g = wallet.give(100, 'thanks'); msgs.push(`いつもありがとう! これ、お礼だよ。(🪙+${g})`); } }
         else msgs.push(`🔓 ${u.text}`);
       }
     }
@@ -76,7 +76,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain
     if (u.id === 'pickup') {
       social.markUsed(key); const have = finds.treasures(), left = TREASURES.filter(t => !have.includes(t[1])), t = left.length ? pick(left) : null;
       if (t) { finds.addTreasure(t[1]); social.addInfo('たからもの', `${t[0]}${t[1]}:${t[2]}(ゴンからもらった)`); say(`ほらよ、きょうの拾いもんだ。「${t[0]} ${t[1]}」…${t[2]}。大事にしな!`); }
-      else { wallet.add(30, 'gon'); say('もう町のたからものは全部そろってるじゃねえか! これでも持ってきな。(🪙+30)'); }
+      else { const g = wallet.give(30, 'gon'); say(`もう町のたからものは全部そろってるじゃねえか! これでも持ってきな。(🪙+${g})`); }
       return;
     }
     if (u.id === 'bigfish') {
@@ -114,7 +114,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain
     else if (s.kind === 'proverb') { addNote({ kind: 'phrase', text: c[0], meaning: c[1] + '(' + c[2] + ')', npc: '格言' }); n('格言', `「${c[0]}」— ${c[2]}\n${c[1]}`); }
     else if (s.kind === 'passage') { addNote({ kind: 'sentence', text: c[0], meaning: c[1], npc: '調べる' }); n('ちいさな物語', `${c[0]}\n(ことばノートに入れたよ)`); }
     else if (s.kind === 'treasure') { social.addInfo('たからもの', `${c[0]}${c[1]}:${c[2]}`, 'tre:' + c[1]); n('町のたからもの', `${c[0]} ${c[1]} … ${c[2]}(${finds.treasures().length} / ${TREASURES.length})`); }
-    else if (s.kind === 'hunt') { const coins = +c.coins || 0; if (coins) wallet.add(coins, 'hunt'); social.addInfo('宝探し', `${c.title || 'たから'}:${c.text || ''}`, 'hunt:' + c.id); n('🏆 宝探し大会', `${c.title || 'たからもの'}${c.text ? '\n' + c.text : ''}${c.ja ? '\n' + c.ja : ''}${coins ? `\n(🪙+${coins})` : ''}`); }
+    else if (s.kind === 'hunt') { const coins = (+c.coins || 0) > 0 ? wallet.give(+c.coins, 'hunt') : 0; social.addInfo('宝探し', `${c.title || 'たから'}:${c.text || ''}`, 'hunt:' + c.id); n('🏆 宝探し大会', `${c.title || 'たからもの'}${c.text ? '\n' + c.text : ''}${c.ja ? '\n' + c.ja : ''}${coins ? `\n(🪙+${coins})` : ''}`); }
   }
 
   // ---- 運営テスト:宝探しのたからを置く ----

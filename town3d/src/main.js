@@ -171,7 +171,7 @@ export function mount(container, opt = {}) {
     if (adm) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🎣 英語の釣り堀'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(124px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; openApp('fishing', { tab: 'en' }); }; root.append(b); const tg = setInterval(() => { b.style.display = (!started || appHost.current || hud.busy) ? "none" : ""; }, 400); offs.push(() => clearInterval(tg)); }
   }
   hud.setCoins(wallet.get(), gemsNow());
-  if (opt.gems) { const gi = setInterval(() => hud.setCoins(wallet.get(), gemsNow()), 1500); offs.push(() => clearInterval(gi)); }
+  if (opt.gems) { const gi = setInterval(() => hud.setCoins(wallet.get(), gemsNow()), 400); offs.push(() => clearInterval(gi)); }
 
   // ---- 他のプレイヤー ----
   const peers = new Map();

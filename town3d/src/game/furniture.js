@@ -318,7 +318,7 @@ export const houseData = {
     if (r[axis] >= SIDE_MAX) return `これ以上は広げられないよ(${SIDE_MAX}マスまで)`;
     const c = this.cost(ctx.house);
     if (via === 'gems') { if (!ctx.gems) return 'ダイヤが使えない場所だよ'; if (ctx.gems.get() < c.gemsPerLine) return `ダイヤが足りないよ(あと ${c.gemsPerLine - ctx.gems.get()})`; if (!ctx.gems.spend(c.gemsPerLine)) return 'ダイヤが足りないよ'; }
-    else { if (ctx.wallet.get() < c.coinsPerLine) return `コインが足りないよ(あと ${c.coinsPerLine - ctx.wallet.get()})`; ctx.wallet.add(-c.coinsPerLine, 'house'); }
+    else { if (ctx.wallet.get() < c.coinsPerLine) return `コインが足りないよ(あと ${c.coinsPerLine - ctx.wallet.get()})`; if (!ctx.wallet.spend(c.coinsPerLine, 'house')) return 'コインが足りないよ'; }
     r[axis]++; this.save(h); return '';
   },
   // 部屋を増やす(ダイヤだけ)。つながる部屋 parentId の空いている側(間取り図で)にくっつける
@@ -383,7 +383,7 @@ export const furn = {
     for (const id of ids) if (this.owned(id) + cart[id] > MAX_OWN) return `${ITEM[id].name}は${MAX_OWN}個までだよ`;
     const total = this.total(cart);
     if (wallet.get() < total) return `コインが足りないよ(あと ${total - wallet.get()})`;
-    wallet.add(-total, 'furniture');
+    if (!wallet.spend(total, 'furniture')) return 'コインが足りないよ';
     const inv = this.inv(); for (const id of ids) inv[id] = (inv[id] || 0) + cart[id];
     this.saveInv(inv); this.saveCart({}); return '';
   },

@@ -40,8 +40,9 @@ const omikuji = simple((box, ctx) => {
     if (ctx.storage.get('day') === key) return;
     const x = R[Math.floor(Math.random() * R.length)];
     ctx.storage.set('day', key); ctx.storage.set('last', x);
-    box.querySelector('.r').textContent = x[0]; box.querySelector('.t').textContent = `${x[2]}(🪙+${x[1]})`;
-    ctx.wallet.add(x[1], 'omikuji'); ctx.emit('omikuji', { result: x[0] });
+    const og = ctx.wallet.give(x[1], 'omikuji');
+    box.querySelector('.r').textContent = x[0]; box.querySelector('.t').textContent = `${x[2]}(🪙+${og})`;
+     ctx.emit('omikuji', { result: x[0] });
     b.disabled = true; b.style.opacity = 0.6; b.textContent = 'またあした';
   };
 });

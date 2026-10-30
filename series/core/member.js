@@ -50,7 +50,7 @@ export function createMember(wallet, ui) {
       else if (D.pt[kind]) { M.day.pt = M.day.pt || {}; if (!M.day.pt[kind]) { g = D.pt[kind]; M.day.pt[kind] = 1; } }
       else if (kind === 'cm') { if (M.day.cm < D.cm.max) { g = D.cm.each; M.day.cm++; } }
       else if (kind === 'game') { g = Math.max(0, Math.min(Math.floor(+n || 0), D.game - M.day.game)); M.day.game += g; }
-      else if (kind === 'once') g = Math.max(0, Math.min(500, Math.floor(+n || 0)));
+      else if (kind === 'once') g = Math.max(0, Math.floor(+n || 0));
       if (g > 0) { const before = wallet.get(); wallet.add(g, 'earn:' + kind); g = wallet.get() - before; save(); }
       return g;
     },
@@ -67,7 +67,7 @@ export function createMember(wallet, ui) {
       if (full && !isPaid()) {
         const price = ECON.swap.free;
         if (pay === 'gems') { if (!api.spendGems(price.gems)) return { ok: false, why: 'gems' }; }
-        else { if (wallet.get() < price.coins) return { ok: false, why: 'coins' }; wallet.add(-price.coins, 'buy:swap'); }
+        else { if (!wallet.spend(price.coins, 'buy:swap')) return { ok: false, why: 'coins' }; }
         M.swaps.push({ at: Date.now(), pay: pay || 'coins' });
       }
       if (full) M.slots = M.slots.filter(s => s.id !== out);

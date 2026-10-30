@@ -339,7 +339,7 @@ export function mountTarot(box, o) {
     }
     if (freeNow()) { if (dailyFree()) st.dk = dayKey(); else st.wk = weekKey(); save(); return 'free'; }
     const p = coinPrice(); if (ctx.wallet.get() < p) { toast(`コインが ${p}まい いるわ`); return null; }
-    ctx.wallet.add(-p, 'tarot'); return 'coin';
+    if (!ctx.wallet.spend(p, 'tarot')) { toast(`コインが ${p} まい いるわ`); return null; } return 'coin';
   }
   function buyPack() {
     if (!ctx.gems) return toast('ダイヤは チャンクタウンで使えます');

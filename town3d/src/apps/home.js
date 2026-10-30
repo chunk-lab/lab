@@ -59,7 +59,7 @@ export const shopApp = {
       if (view === 'cart') {
         const rows = Object.entries(cart).map(([id, q]) => `<div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:8px 10px;margin-bottom:8px;box-shadow:0 2px 8px #0001">
           ${thumbs.get(id) ? `<img src="${thumbs.get(id)}" width="48" height="48" alt="">` : ''}
-          <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:14px">${ITEM[id].name}</div><div style="font-size:12px;color:#8d7f9e">🪙 ${ITEM[id].price} × ${q} = <b style="color:${ink}">${ITEM[id].price * q}</b></div></div>${stepper(id)}</div>`).join('');
+          <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:14px">${ITEM[id].name}</div><div style="font-size:12px;color:#8d7f9e">🪙 ${ITEM[id].price} × ${q} = <b style="color:${ink}">${ITEM[id].price * q}</b></div><div style="font-size:12px;color:#8d7f9e">いま ${furn.owned(id)}こ → 買うと ${furn.owned(id) + q}こ</div></div>${stepper(id)}</div>`).join('');
         const short = total - coins;
         box.innerHTML = head('カゴ', msg || 'ここで数を変えて、さいごに まとめて払うよ。')
           + `<div class="sc" style="flex:1;overflow:auto;padding:4px 16px">${rows || '<p style="text-align:center;color:#8d7f9e;margin-top:40px">カゴは空だよ</p>'}</div>
@@ -93,8 +93,8 @@ export const shopApp = {
       const v = e.target.closest('[data-v]')?.dataset.v;
       if (v) { if (v === 'cart' && !Object.keys(furn.cart()).length) return; view = v; msg = ''; draw(); return; }
       if (e.target.closest('[data-pay]')) {
-        const items = Object.keys(furn.cart()), err = furn.buyCart(ctx.wallet);
-        if (err) msg = err; else { msg = '買ったよ！「あなたの家」に置いてみよう。'; view = 'list'; ctx.emit('buy', { items }); }
+        const snap = furn.cart(), items = Object.keys(snap), tot = furn.total(snap), err = furn.buyCart(ctx.wallet);
+        if (err) msg = err; else { msg = `買ったよ！ ${items.map(id => ITEM[id].name + '×' + snap[id]).join('、')}(🪙 ${tot}) のこり 🪙 ${ctx.wallet.get()}。「あなたの家」に置いてみよう。`; view = 'list'; ctx.emit('buy', { items }); }
         draw();
       }
     };

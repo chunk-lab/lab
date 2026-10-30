@@ -24,7 +24,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
       audio: getAudio(),
       storage: storage.scope('app:' + def.id),
       notes: { list: getNotes },   // ことばノート(読み取り専用)。チャンクストリームなどの復習アプリが使う
-      wallet: { get: wallet.get, add: (n, why) => wallet.add(n, def.id + (why ? ':' + why : '')) },
+      wallet: { get: wallet.get, add: (n, why) => wallet.add(n, def.id + (why ? ':' + why : '')), give: (n, why) => wallet.give(n, def.id + (why ? ':' + why : '')), spend: (n, why) => wallet.spend(n, def.id + (why ? ':' + why : '')) },
       gems,    // ダイヤ {get, spend}。組み込み先がなければ null(その場合コインだけで広げる)
       house,   // 自宅の広げ方の値段
       member,  // 会員 {paid()}。組み込み先がなければ null(無料会員あつかい)
@@ -132,7 +132,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
             case 'ready': hello(); break;
             case 'close': ctx.close(m.result); break;
             case 'event': ctx.emit(m.name, m.data); break;
-            case 'coins': send({ type: 'coins', id: m.id, coins: ctx.wallet.add(m.amount, m.reason) }); break;
+            case 'coins': send({ type: 'coins', id: m.id, coins: ctx.wallet.add(Math.min(500, +m.amount || 0), m.reason) }); break;   // 外のページ(iframe)のアプリは信用できないので、1回に増やせるのは500まで(ここだけ)
             case 'storage:get': send({ type: 'storage', id: m.id, value: ctx.storage.get(m.key) }); break;
             case 'storage:set': ctx.storage.set(m.key, m.value); break;
             case 'title': ctx.setTitle(String(m.title || '')); break;

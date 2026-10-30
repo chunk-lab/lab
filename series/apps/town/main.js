@@ -32,7 +32,7 @@ document.body.insertAdjacentHTML('afterbegin', `<div class="tw-view"><div class=
 const $ = id => document.getElementById(id);
 const refreshMe = () => { $('twMeImg').src = core.profile.avatarURL(); $('twMeName').textContent = core.profile.name || 'なまえ未設定'; };
 refreshMe();
-const fmtN = n => { n = Math.floor(+n) || 0; return n >= 100000 ? '10万↑' : n >= 10000 ? (Math.floor(n / 1000) / 10) + '万' : String(n); };   // 1万以上は1.2万、10万以上は10万↑
+const fmtN = n => (Math.floor(+n) || 0).toLocaleString('ja-JP');   // 丸めずに全部の桁(内部の数と表示をずらさない)   // 1万以上は1.2万、10万以上は10万↑
 const showCoin = () => { $('twCoin').textContent = '🪙 ' + fmtN(core.wallet.get()) + ' 💎 ' + fmtN(core.member.gems()); }; showCoin(); core.wallet.onChange(showCoin); core.member.onChange(showCoin);
 $('twMe').onclick = () => openStudy();
 // 勉強部屋：自宅とアバターから開く。中の「練習する」などは、街と同じしくみでゲームを開く
