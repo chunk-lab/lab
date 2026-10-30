@@ -1,7 +1,7 @@
 // 住人とのやりとり(プレゼント・頼みごと・お話)・町の「調べる」・宝探しの運営ツール。main.js から使う
 import { social, ITEMS, PREFS, NPC_NAME, EPISODES, LV_NAME, LV, PTS, memory, MEM } from '../game/social.js';
 import { finds, WORDS, PHRASES, PROVERBS, PASSAGES, TREASURES, dayKey } from '../game/finds.js';
-import { weather } from '../game/weather.js';
+import { weather, WX_INFO } from '../game/weather.js';
 import { FISH } from '../apps/fishing/data.js';
 
 const pick = a => a[Math.floor(Math.random() * a.length)];
@@ -56,7 +56,22 @@ export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain
     const id = r.def.id, key = id + ':' + u.id;
     if (social.usedToday(key)) { hud.dialog({ name: name(r), role: heart(id), text: 'きょうはもうやったよ。また明日ね!', choices: [] }); return; }
     const say = (text, role) => hud.dialog({ name: name(r), role: role || heart(id), text, choices: [] });
-    if (u.id === 'amagoi') { social.markUsed(key); weather.callRain(2); setRain(); audio.play('open'); say('…天の神さま、雨をおめぐみください〜! ……ほら、くもってきましたよ。(2時間くらい雨がふる)'); social.addInfo('天気', `ゆずちゃんの「あまごい」で雨(${new Date().getHours()}時ごろから2時間)`); return; }
+    if (u.id === 'amagoi') {   // 天気おねがい:雨・晴れ・くもりから選ぶ。たまに失敗(失敗しても1日1回はつかう)
+      const cur = weather.now(), L = social.level(id), p = Math.min(0.9, 0.6 + 0.1 * (L - 2));
+      const opts = [['rain', '☔ 雨にしてもらう'], ['sun', '☀️ 晴れにしてもらう'], ['cloud', '☁️ くもりにしてもらう']].filter(o => o[0] !== cur);
+      hud.dialog({ name: name(r), role: heart(id), text: `どんな天気にしましょう? ……うまくいくとは、かぎりませんけど…(いまは${WX_INFO[cur].name}・1日1回)`, choices: [...opts.map(([k, lb]) => ({ label: lb, fn: () => {
+        social.markUsed(key);
+        if (Math.random() < p) {
+          weather.call(k); setRain(); audio.play('open');
+          say({ rain: '…天の神さま、雨をおめぐみください〜! ……ほら、くもってきましたよ。', sun: '…おひさまさん、出てきてくださ〜い! ……ほら、光がさしてきましたよ。', cloud: '…ふわふわの雲さん、おいでください〜! ……ほら、くもってきましたよ。' }[k] + `(次の予報の時間まで${WX_INFO[k].name})`);
+          social.addInfo('天気', `ゆずちゃんの「おねがい」で${WX_INFO[k].name}(${new Date().getHours()}時ごろ〜次の予報まで)`);
+        } else if (k === 'rain' && cur === 'sun') {
+          weather.call('cloud'); setRain(); audio.play('tap');
+          say('あれれ…? くもっただけでした…。ごめんなさい、雨にはなりませんでした〜。(くもりになった)');
+        } else { audio.play('tap'); say('あれ…? 神さまに、とどかなかったみたいです…。ごめんなさい。(天気はそのまま)'); }
+      } })), { label: 'やめておく', fn: () => say('そうですか。また言ってくださいね。') }] });
+      return;
+    }
     if (u.id === 'luck') { social.markUsed(key); social.setLuck(); audio.play('coin'); say('えいっ! …運気、上がりましたよ。きょうは釣りで大物やレアが出やすいはずです!'); return; }
     if (u.id === 'pickup') {
       social.markUsed(key); const have = finds.treasures(), left = TREASURES.filter(t => !have.includes(t[1])), t = left.length ? pick(left) : null;

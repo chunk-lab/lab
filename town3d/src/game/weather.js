@@ -10,17 +10,19 @@ function kindOfBlock(b) {
   for (const [k, p] of WX.P) { acc += p; if (r < acc) return k; }
   return 'sun';
 }
-function rainUntil() { try { return +(localStorage.getItem('town:wx:rainUntil') || 0); } catch (e) { return 0; } }   // ゆずちゃんの「あまごい」
+// ゆずちゃんの「天気おねがい」:いまのブロックと、次のブロック(=次の予報)まで、その天気がつづく
+function ov() { try { const o = JSON.parse(localStorage.getItem('town:wx:ov') || 'null'); return o && WX_INFO[o.kind] ? o : null; } catch (e) { return null; } }
+function kindAt(ms) { const o = ov(); return o && ms < o.until ? o.kind : kindOfBlock(blockOf(ms)); }
 function forced() { try { const v = localStorage.getItem('town:wx:force'); return v && WX_INFO[v] ? v : null; } catch (e) { return null; } }
 export const weather = {
-  at(ms = Date.now()) { return forced() || (ms < rainUntil() ? 'rain' : kindOfBlock(blockOf(ms))); },
-  // あまごい:いまから hours 時間、雨にする
-  callRain(hours = 2) { try { localStorage.setItem('town:wx:rainUntil', String(Date.now() + hours * 36e5)); } catch (e) { } },
+  at(ms = Date.now()) { return forced() || kindAt(ms); },
+  // 天気おねがい:いまから「つぎの予報のブロックの終わりまで」kind にする
+  call(kind) { try { localStorage.setItem('town:wx:ov', JSON.stringify({ kind, until: (blockOf(Date.now()) + 2) * BMS - JST })); } catch (e) { } },
   now() { return this.at(Date.now()); },
   isRain(ms) { return this.at(ms) === 'rain'; },
   // いまから先の予報:[{ start(ms), kind }] いまのブロックをふくめて n 個
-  forecast(n = 4) { const b0 = blockOf(Date.now()), f = forced(), ru = rainUntil(); return Array.from({ length: n }, (_, i) => { const start = (b0 + i) * BMS - JST; return { start, kind: f || ((i === 0 ? Date.now() : start) < ru ? 'rain' : kindOfBlock(b0 + i)) }; }); },
-  nextChange() { const b0 = blockOf(Date.now()), k = this.now(); for (let i = 1; i < 16; i++) if (kindOfBlock(b0 + i) !== k) return { start: (b0 + i) * BMS - JST, kind: kindOfBlock(b0 + i) }; return null; },
+  forecast(n = 4) { const b0 = blockOf(Date.now()), f = forced(); return Array.from({ length: n }, (_, i) => { const start = (b0 + i) * BMS - JST; return { start, kind: f || kindAt(i === 0 ? Date.now() : start) }; }); },
+  nextChange() { const b0 = blockOf(Date.now()), k = this.now(); for (let i = 1; i < 16; i++) { const st = (b0 + i) * BMS - JST, kk = kindAt(st); if (kk !== k) return { start: st, kind: kk }; } return null; },
   label(k, night = false) { const i = WX_INFO[k] || WX_INFO.sun; return (night && i.night ? i.night : i.icon) + ' ' + i.name; },
   hm(ms) { const d = new Date(ms + JST); return d.getUTCHours() + '時'; },
 };

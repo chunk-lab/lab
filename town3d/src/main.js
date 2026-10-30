@@ -298,7 +298,7 @@ export function mount(container, opt = {}) {
     return `「${text}」をノートに入れたよ`;
   }
   // ---- 住人との仲(プレゼント・頼みごと)・調べる・宝探し ----
-  const soc = createSocialUI({ hud, wallet, audio, addNote, startDate: r => startDate(r), setRain: () => { curWx = 'rain'; env.setAmbient('rain'); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
+  const soc = createSocialUI({ hud, wallet, audio, addNote, startDate: r => startDate(r), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
   if (social.admin()) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🔍 宝を隠す'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(168px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; soc.adminHunt(); }; root.appendChild(b); }
   function openNoteBook() {
     if (!started || appHost.current || hud.busy) return;

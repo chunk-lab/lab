@@ -383,7 +383,7 @@ export function mountTarot(box, o) {
     R.script = null;
     frame = dt => {
       if (R.script) R.script(dt);
-      if (R.mode === 'wash') wash(dt);
+      if (R.mode === 'wash') { for (let k = 0; k < 3; k++) wash(dt, k === 0); }   // 手で混ぜるときは、動きが3倍はやい(時間を3回ぶん進める)
       else for (const c of R.cards) { if (c.wait > 0) { c.wait -= dt; continue; } spring(c, dt); }
       for (const c of R.cards) put(c);
     };
@@ -411,9 +411,9 @@ export function mountTarot(box, o) {
     luna('両手でテーブルをなでるように…<br>ぐるぐると、<i>心ゆくまで</i>混ぜて');
     ctl('<button class="tz-btn" data-a="gather">まとめる</button><div class="tz-hint">もっと混ぜたいときは、そのまま なぞり続けて</div>');
   }
-  function wash(dt) {   // 手で混ぜる:指のまわりのカードが、指の動きについてきて回る。テーブルの外へは出ない。重なりすぎない
+  function wash(dt, first = true) {   // 手で混ぜる:指のまわりのカードが、指の動きについてきて回る。テーブルの外へは出ない。重なりすぎない
     const { W, H, ptr } = R, sc = R.sc, cw = BW * sc, hw = cw / 2, hh = BH * sc / 2, Rr = Math.max(W, H) * 0.32, cx = W / 2, cy = H / 2;
-    if (ptr.down) R.energy += Math.hypot(ptr.vx, ptr.vy) * dt;
+    if (ptr.down && first) R.energy += Math.hypot(ptr.vx, ptr.vy) * dt;
     const cs = R.cards;
     for (let a = 0; a < cs.length; a++) for (let b = a + 1; b < cs.length; b++) {   // ゆるく離れる
       const p = cs[a], q = cs[b], dx = q.x - p.x, dy = q.y - p.y, d = Math.hypot(dx, dy) + 0.01, m = cw * 0.55;

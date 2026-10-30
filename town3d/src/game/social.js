@@ -52,7 +52,7 @@ export const LV_NAME = ['しりあい', 'なかよし', 'ともだち', 'しん�
 //   kind: game=アミューズメントセンターのゲーム / ability=頼めること / episode=お話 / date=カフェでデート / gift=お礼
 export const UNLOCKS = {
   baron: [{ lv: 2, kind: 'game', id: 'cards', label: '🃏 カード対戦', text: 'アミューズメントセンターでカード対戦ができるようになった(男爵・ミイ・ゴンとも勝負できる)' }],
-  yuzu: [{ lv: 2, kind: 'ability', id: 'amagoi', label: '☔ あまごいをお願いする', text: '1日1回、雨をよんでもらえる(雨の魚が出るようになる)' },
+  yuzu: [{ lv: 2, kind: 'ability', id: 'amagoi', label: '🌦 天気をお願いする', text: '1日1回、雨・晴れ・くもりにしてもらえる(たまに失敗。仲良しほど成功しやすい)' },
     { lv: 3, kind: 'ability', id: 'luck', label: '🍀 運気をあげてもらう', text: '1日1回、その日の運気が上がる(釣りで大物・レアが出やすい)' }],
   chunkkun: [{ lv: 2, kind: 'game', id: 'hockey', label: '🏒 ぷにホッケー', text: 'アミューズメントセンターで「ぷにホッケー」が遊べるようになった' }],
   choco: [{ lv: 2, kind: 'game', id: 'party', label: '🎉 パーティ連打', text: 'アミューズメントセンターで「パーティ連打」が遊べるようになった' }],
