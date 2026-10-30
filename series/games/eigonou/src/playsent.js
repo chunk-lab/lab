@@ -40,8 +40,34 @@ function nounRef(word, kind, ja) {
 }
 const TENSES = ['pres', 'past', 'fut', 'prog', 'pastprog', 'perf'];
 // AIが返した枠(spec)→ clause。作れなければ null
+// AIが「has / goes / got over / looking forward to」のように活用した形で返しても、英語脳が使う原形(have / go / get over)に戻す
+const IRR = { has: 'have', had: 'have', having: 'have', does: 'do', did: 'do', done: 'do', doing: 'do', goes: 'go', went: 'go', gone: 'go', going: 'go', is: 'be', am: 'be', are: 'be', was: 'be', were: 'be', been: 'be', being: 'be', gets: 'get', got: 'get', gotten: 'get', getting: 'get', makes: 'make', made: 'make', making: 'make', takes: 'take', took: 'take', taken: 'take', taking: 'take', comes: 'come', came: 'come', coming: 'come', sees: 'see', saw: 'see', seen: 'see', puts: 'put', says: 'say', said: 'say', runs: 'run', ran: 'run', running: 'run', sits: 'sit', sat: 'sit', sitting: 'sit', gives: 'give', gave: 'give', given: 'give', keeps: 'keep', kept: 'keep', looks: 'look', thinks: 'think', thought: 'think', brings: 'bring', brought: 'bring', finds: 'find', found: 'find', knows: 'know', knew: 'know', known: 'know', tells: 'tell', told: 'tell', leaves: 'leave', left: 'leave', stands: 'stand', stood: 'stand', falls: 'fall', fell: 'fall', fallen: 'fall', breaks: 'break', broke: 'break', broken: 'break', holds: 'hold', held: 'hold', turns: 'turn', sets: 'set', lets: 'let', lies: 'lie', ties: 'tie', dies: 'die' };
+function baseHead(w) {
+  const lw = w.toLowerCase(); if (IRR[lw]) return IRR[lw];
+  const has = x => LEX.verbs.some(v => String(v.en || '').toLowerCase().split(' ')[0] === x);
+  if (has(lw)) return lw;
+  const c = [];
+  if (/ies$/.test(lw)) c.push(lw.slice(0, -3) + 'y');
+  if (/(s|x|z|ch|sh|o)es$/.test(lw)) c.push(lw.slice(0, -2));
+  if (/s$/.test(lw) && !/ss$/.test(lw)) c.push(lw.slice(0, -1));
+  if (/ied$/.test(lw)) c.push(lw.slice(0, -3) + 'y');
+  if (/ed$/.test(lw)) { c.push(lw.slice(0, -2), lw.slice(0, -1)); if (/(.)\1ed$/.test(lw)) c.push(lw.slice(0, -3)); }
+  if (/ing$/.test(lw)) { c.push(lw.slice(0, -3), lw.slice(0, -3) + 'e'); if (/(.)\1ing$/.test(lw)) c.push(lw.slice(0, -4)); }
+  const hit = c.find(has); if (hit) return hit;
+  // 辞書に無い語は、三単現の -s/-es だけ安全に直す
+  if (/ies$/.test(lw)) return lw.slice(0, -3) + 'y';
+  if (/(s|x|z|ch|sh|o)es$/.test(lw)) return lw.slice(0, -2);
+  if (/[^s]s$/.test(lw) && !/(us|is)$/.test(lw)) return lw.slice(0, -1);
+  return lw;
+}
+export function baseVerb(p) {
+  const ws = String(p || '').trim().replace(/^to\s+/i, '').split(/\s+/); if (!ws[0]) return '';
+  if (ws[0].toLowerCase() === 'be' && ws.length > 1) return ws.join(' ').toLowerCase();   // be going to など
+  ws[0] = baseHead(ws[0]); return ws.join(' ');
+}
 export function clauseFromSpec(sp) {
   if (!sp || !sp.verb) return null;
+  sp = Object.assign({}, sp, { verb: baseVerb(sp.verb) || sp.verb });
   const c = newClause(), subj = nounRef(sp.subject || 'I', sp.subject_kind, sp.subject_ja); if (!subj) return null; c.subj = subj;
   const vid = ensure('verbs', sp.verb, sp.verb_ja, { fr: ['intr', 'tr', 'both'].includes(sp.verb_fr) ? sp.verb_fr : undefined, past: sp.past || undefined, pp: sp.pp || undefined });
   if (!vid) return null; c.pred = { k: 'v', id: vid };
@@ -66,7 +92,7 @@ export function autoClause(kind, id, item) {
 }
 // clause を実際に組み立てて、英語・日本語を確かめる(組めなければ null)
 export function render1(c) { try { const en = sentenceText({ main: c }), ja = sentenceJa({ main: c }); return en && /[a-z]/i.test(en) ? { en, ja } : null; } catch (e) { return null; } }
-const SPEC_SYS = 'You convert an English example sentence into the slots of a word-order learning game for Japanese learners. Output ONE JSON object. Keep the target expression exactly. Rewrite the sentence so that it is ONE simple clause with at most: a subject, the verb phrase, one object, and optional time / place / manner chunks. Subject pronouns: I, you, he, she, we, they. Object pronouns: me, you, him, her, us, them, it. Everything else is a noun phrase with its article (e.g. "a great idea", "my friend").';
+const SPEC_SYS = 'You convert an English example sentence into the slots of a word-order learning game for Japanese learners. Output ONE JSON object. Keep the target expression exactly. Rewrite the sentence so that it is ONE simple clause with at most: a subject, the verb phrase, one object, and optional time / place / manner chunks. The verb MUST be the dictionary base form ("have", "go", "get over", "look forward to"), never "has", "goes", "got" or "-ing"; put the real tense in "tense". Subject pronouns: I, you, he, she, we, they. Object pronouns: me, you, him, her, us, them, it. Everything else is a noun phrase with its article (e.g. "a great idea", "my friend").';
 const SPEC_FMT = '{"subject":"","subject_kind":"people|things","subject_ja":"","verb":"verb phrase in base form, with particles/prepositions","verb_ja":"short Japanese in dictionary form","verb_fr":"intr|tr","past":"","pp":"","object":"","object_kind":"people|things","object_ja":"","time":"","time_ja":"","place":"","place_ja":"","manner":"","manner_ja":"","tense":"pres|past|fut|prog"}';
 // 表現 q(+種類 kind)から、遊べる文を1つ作る。AIがあれば、その言葉にふさわしい文をAIが考えて枠に分ける。なければ型どおり
 export async function makePlay(q, kind, onlyAi) {
