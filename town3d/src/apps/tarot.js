@@ -51,7 +51,7 @@ function faceSVG(c) {
     art = PIPS[c.rank].map(([x, y]) => `<g fill="${S.ink}" color="${S.ink}" transform="translate(${x - 10 * sc} ${y - 10 * sc}) scale(${sc})">${SYM[c.suit]}</g>`).join('');
   }
   const name = c.en.length > 17 ? c.en.replace(' of ', ' / ') : c.en;
-  return `<svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" class="tz-svg">
+  return `<svg viewBox="0 0 120 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" class="tz-svg">
     <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${S.col[0]}"/><stop offset="1" stop-color="${S.col[1]}"/></linearGradient></defs>
     <rect x="1" y="1" width="118" height="198" rx="9" fill="url(#${gid})"/>
     <rect x="6" y="6" width="108" height="188" rx="6" fill="none" stroke="${S.ink}" stroke-opacity=".75" stroke-width="1.2"/>
@@ -62,13 +62,13 @@ function faceSVG(c) {
     <text x="60" y="184" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fff" fill-opacity=".85">${esc(c.n)}</text>
   </svg>`;
 }
-const BACK = `<svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" class="tz-svg">
+const BACK = `<svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg" class="tz-svg">
   <defs><linearGradient id="tzbk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1a55"/><stop offset="1" stop-color="#140b2e"/></linearGradient>
   <pattern id="tzst" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="4" cy="5" r=".8" fill="#ffd76a" fill-opacity=".55"/><circle cx="14" cy="15" r=".6" fill="#fff" fill-opacity=".45"/></pattern></defs>
-  <rect x="1" y="1" width="118" height="198" rx="9" fill="url(#tzbk)"/><rect x="1" y="1" width="118" height="198" rx="9" fill="url(#tzst)"/>
-  <rect x="6" y="6" width="108" height="188" rx="6" fill="none" stroke="#ffd76a" stroke-opacity=".8" stroke-width="1.2"/>
-  <circle cx="60" cy="100" r="30" fill="none" stroke="#ffd76a" stroke-opacity=".7"/><circle cx="60" cy="100" r="23" fill="none" stroke="#ffd76a" stroke-opacity=".35"/>
-  <path d="M66 86a15 15 0 1 0 0 28a12 12 0 1 1 0-28z" fill="#ffd76a"/><path d="M60 40l2 6 6 2-6 2-2 6-2-6-6-2 6-2zM60 144l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#ffd76a" fill-opacity=".8"/>
+  <rect x="1" y="1" width="118" height="158" rx="9" fill="url(#tzbk)"/><rect x="1" y="1" width="118" height="158" rx="9" fill="url(#tzst)"/>
+  <rect x="6" y="6" width="108" height="148" rx="6" fill="none" stroke="#ffd76a" stroke-opacity=".8" stroke-width="1.2"/>
+  <circle cx="60" cy="80" r="28" fill="none" stroke="#ffd76a" stroke-opacity=".7"/><circle cx="60" cy="80" r="21" fill="none" stroke="#ffd76a" stroke-opacity=".35"/>
+  <path d="M66 66a15 15 0 1 0 0 28a12 12 0 1 1 0-28z" fill="#ffd76a"/><path d="M60 24l2 6 6 2-6 2-2 6-2-6-6-2 6-2zM60 120l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#ffd76a" fill-opacity=".8"/>
 </svg>`;
 
 const CSS = `
@@ -103,35 +103,35 @@ const CSS = `
 .tz .tc.open .tc-in{transform:rotateY(180deg)}
 .tz .tc-f,.tz .tc-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:7%;box-shadow:0 4px 14px rgba(0,0,0,.45);overflow:hidden}
 .tz .tc-f{transform:rotateY(180deg)}.tz .tc.rev .tc-f>div{transform:rotate(180deg)}.tz .tc-f>div{position:absolute;inset:0}
-.tz .tc-f img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tz .tc-f img,.tz .tz-cr .th img,.tz .tz-zoom .z img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .tz .tc.glow .tc-b{box-shadow:0 0 0 2px #ffd76a,0 0 18px #ffd76a}
 .tz .tc-lab{position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:3px;font-size:10px;font-weight:800;color:#ffd76a;white-space:nowrap;text-shadow:0 1px 2px #000}
 .tz .tc-no{position:absolute;left:-5px;top:-5px;width:18px;height:18px;border-radius:50%;background:#ffd76a;color:#3b2470;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;z-index:2}
 /* シャッフル */
-.tz .tz-deck{position:relative;width:120px;height:200px;margin:24px auto 14px;cursor:pointer}
+.tz .tz-deck{position:relative;width:120px;height:160px;margin:24px auto 14px;cursor:pointer}
 .tz .tz-deck .dk{position:absolute;inset:0;transition:transform .35s}
 .tz .tz-deck.sh .dk:nth-child(odd){animation:tzL .45s ease-in-out}.tz .tz-deck.sh .dk:nth-child(even){animation:tzR .45s ease-in-out}
 @keyframes tzL{50%{transform:translate(-62px,6px) rotate(-14deg)}}@keyframes tzR{50%{transform:translate(62px,-4px) rotate(12deg)}}
-.tz .tz-piles{display:flex;justify-content:center;gap:16px;margin:26px 0}.tz .tz-pile{position:relative;width:84px;height:140px;cursor:pointer;transition:transform .25s}
+.tz .tz-piles{display:flex;justify-content:center;gap:16px;margin:26px 0}.tz .tz-pile{position:relative;width:84px;height:112px;cursor:pointer;transition:transform .25s}
 .tz .tz-pile:hover,.tz .tz-pile:active{transform:translateY(-8px)}.tz .tz-pile .dk{position:absolute;inset:0}
 /* えらぶ(扇) */
 .tz .tz-fanw{overflow-x:auto;overflow-y:hidden;margin:6px -14px;padding:26px 14px 18px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
-.tz .tz-fan{position:relative;height:126px}
-.tz .tz-fan .fc{position:absolute;top:0;width:70px;height:117px;transition:transform .25s,opacity .4s;transform-origin:50% 140%}
+.tz .tz-fan{position:relative;height:100px}
+.tz .tz-fan .fc{position:absolute;top:0;width:70px;height:93px;transition:transform .25s,opacity .4s;transform-origin:50% 140%}
 .tz .tz-fan .fc:active{transform:translateY(-14px)}.tz .tz-fan .fc.gone{opacity:0;transform:translateY(-60px) scale(.8);pointer-events:none}
 /* 並べ方 */
 .tz .tz-lay{position:relative;margin:8px auto 20px}
 .tz .tz-read{background:rgba(255,255,255,.96);color:#3b2b55;border-radius:18px;padding:14px;margin:12px 0;line-height:1.75;font-size:15px;animation:tzIn .5s}
 .tz .tz-read h3{margin:0 0 6px;font-size:16px;color:#5b3f8c}.tz .tz-read p{margin:6px 0}
 .tz .tz-cr{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px dashed #d9cdee}.tz .tz-cr:first-of-type{border-top:0}
-.tz .tz-cr .th{flex:0 0 52px;height:86px;position:relative;border-radius:5px;overflow:hidden;box-shadow:0 2px 6px #0003}.tz .tz-cr .th.rev>div{transform:rotate(180deg)}.tz .tz-cr .th>div{position:absolute;inset:0}
+.tz .tz-cr .th{flex:0 0 56px;height:75px;position:relative;border-radius:5px;overflow:hidden;box-shadow:0 2px 6px #0003}.tz .tz-cr .th.rev>div{transform:rotate(180deg)}.tz .tz-cr .th>div{position:absolute;inset:0}
 .tz .tz-cr .pos{font-size:11px;font-weight:900;color:#8d6cc0}.tz .tz-cr b{font-size:15px}.tz .tz-cr .or{font-size:11px;font-weight:900;border-radius:999px;padding:1px 7px;margin-left:4px;background:#efe6ff;color:#5b3f8c}.tz .tz-cr .or.r{background:#ffe3ea;color:#b0466a}
 .tz .tz-cr .en{font:italic 12px Georgia,serif;color:#8d7f9e}
 .tz .tz-kw{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.tz .tz-kw button{border:0;border-radius:999px;padding:3px 9px;font:inherit;font-size:12px;background:#f3ecff;color:#4a3a6b}.tz .tz-kw button i{font-style:normal;color:#8d7f9e;margin-left:3px}
 .tz .tz-luna{background:linear-gradient(160deg,#fff8e6,#fff);border:1px solid #f2d58a}
 .tz .tz-luna .ai{white-space:pre-wrap}.tz .tz-luna .tr{margin-top:8px;padding-top:8px;border-top:1px dashed #e7cf8f;color:#6b5b80;font-size:14px;white-space:pre-wrap}
 .tz .tz-zoom{position:fixed;inset:0;z-index:50;background:rgba(10,5,25,.85);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;animation:tzIn .25s}
-.tz .tz-zoom .z{width:min(62vw,260px);aspect-ratio:3/5;position:relative;border-radius:12px;overflow:hidden;box-shadow:0 0 40px #ffd76a66}.tz .tz-zoom .z.rev>div{transform:rotate(180deg)}.tz .tz-zoom .z>div{position:absolute;inset:0}
+.tz .tz-zoom .z{width:min(70vw,300px);aspect-ratio:3/4;position:relative;border-radius:12px;overflow:hidden;box-shadow:0 0 40px #ffd76a66}.tz .tz-zoom .z.rev>div{transform:rotate(180deg)}.tz .tz-zoom .z>div{position:absolute;inset:0}
 .tz .tz-zoom p{margin:0;color:#fff;font-weight:800;text-align:center;padding:0 20px;line-height:1.6}
 .tz .tz-hist{display:flex;gap:10px;align-items:center;width:100%;border:0;border-radius:14px;padding:10px 12px;margin:6px 0;background:rgba(255,255,255,.1);color:#fff;font:inherit;text-align:left}
 .tz .tz-hist small{display:block;color:#cdbbea;font-size:11px}
@@ -141,7 +141,7 @@ const CSS = `
 `;
 
 function faceHTML(c, artBase) {
-  return `<div>${faceSVG(c)}${artBase ? `<img src="${esc(artBase + c.id)}.webp" alt="" onerror="this.remove()">` : ''}</div>`;
+  return `<div>${faceSVG(c)}${artBase ? `<img src="${esc(artBase + c.id)}.webp" alt="${esc(c.en)}" decoding="async" onerror="this.remove()">` : ''}</div>`;
 }
 
 // AIなしの鑑定(カードの意味と並び方から組み立てる)
@@ -185,8 +185,11 @@ function compose(sp, draws, theme) {
   return out;
 }
 
+// 絵の場所:組みこみ先が town.js を読みこんだ場所の横の tarot/(1つのHTMLで動かすときは、ページの横の tarot/)
+const ART_BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('tarot/', s).href : 'tarot/'; } catch (e) { return 'tarot/'; } })();
 export function mountTarot(box, o) {
   const { ctx, social, ai, getEn } = o;
+  if (o.artBase == null || o.artBase === '') o = { ...o, artBase: ART_BASE };
   if (!document.getElementById('tz-css')) { const s = document.createElement('style'); s.id = 'tz-css'; s.textContent = CSS; document.head.appendChild(s); }
   const el = document.createElement('div'); el.className = 'tz'; box.appendChild(el);
   const st = Object.assign({ wk: '', dk: '', tk: 0, hist: [] }, ctx.storage.get('tarot') || {});
@@ -279,14 +282,14 @@ export function mountTarot(box, o) {
   function layout() {
     const lay = el.querySelector('.tz-lay'), Wb = Math.min(el.clientWidth - 28, 520), sp = S.sp;
     let w, P;
-    if (sp === 'one') { w = Math.min(150, Wb / 2.4); P = [[Wb / 2, w * 5 / 6 + 4]]; }
-    else if (sp === 'three') { w = Math.min(110, Wb / 3.6); const g = w * 1.18; P = [-1, 0, 1].map(i => [Wb / 2 + i * g, w * 5 / 6 + 4]); }
+    if (sp === 'one') { w = Math.min(170, Wb / 2.2); P = [[Wb / 2, w * 2 / 3 + 4]]; }
+    else if (sp === 'three') { w = Math.min(110, Wb / 3.6); const g = w * 1.14; P = [-1, 0, 1].map(i => [Wb / 2 + i * g, w * 2 / 3 + 4]); }
     else {
-      w = Math.min(80, Wb / 6.3); const h = w * 5 / 3, cx = w * 2.35, cy = h * 2.05, sx = w * 5.35;
+      w = Math.min(84, Wb / 6.1); const h = w * 4 / 3, cx = w * 2.35, cy = h * 2.05, sx = w * 5.35;
       P = [[cx, cy], [cx, cy], [cx, cy - h * 1.12], [cx, cy + h * 1.12], [cx - w * 1.5, cy], [cx + w * 1.5, cy], [sx, h * 3.55], [sx, h * 2.45], [sx, h * 1.35], [sx, h * 0.25 + h * 0.0]];
       P = P.map(([x, y]) => [x + (Wb - w * 6.1) / 2, y]);
     }
-    const h = w * 5 / 3, H = sp === 'celtic' ? h * 4.2 + 14 : h + 40;
+    const h = w * 4 / 3, H = sp === 'celtic' ? h * 4.2 + 14 : h + 40;
     lay.style.cssText = `width:${Wb}px;height:${H}px`;
     lay.innerHTML = S.draws.map((d, i) => {
       const c = CARD[d.id], [x, y] = P[i], open = S.opened.has(i), rot = sp === 'celtic' && i === 1 ? 'transform:rotate(90deg);z-index:3;' : '';
@@ -381,7 +384,7 @@ export function mountTarot(box, o) {
     if (t.dataset.pk != null) {
       const i = +t.dataset.pk, n = SPREADS[S.sp].pos.length; if (S.picked.includes(i) || S.picked.length >= n) return;
       S.picked.push(i); t.classList.add('gone'); el.querySelector('.tz-c[style*="font-size:16px"]').textContent = `${S.picked.length} / ${n}`;
-      if (S.picked.length >= n) { S.draws = S.picked.map(k => S.deck[k]); S.opened = new Set(); setTimeout(() => { S.step = 'spread'; draw(); }, 450); }
+      if (S.picked.length >= n) { S.draws = S.picked.map(k => S.deck[k]); S.draws.forEach(d => { const im = new Image(); im.src = o.artBase + d.id + '.webp'; }); S.opened = new Set(); setTimeout(() => { S.step = 'spread'; draw(); }, 450); }
       return;
     }
     if (t.dataset.op != null) return openCard(+t.dataset.op);

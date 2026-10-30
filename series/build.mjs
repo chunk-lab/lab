@@ -32,6 +32,7 @@ for (const id of apps) {
     execFileSync('node', ['build.mjs'], { cwd: t3, stdio: 'inherit' });
     fs.mkdirSync(path.join(out, 'g', 'town3d'), { recursive: true });
     fs.copyFileSync(path.join(t3, 'dist', 'town.js'), path.join(out, 'g', 'town3d', 'town.js'));
+    fs.cpSync(path.join(t3, 'dist', 'tarot'), path.join(out, 'g', 'town3d', 'tarot'), { recursive: true });   // タロットの絵
   }
   for (const g of app.games) for (const f of GAMES[g]) {
     if (Array.isArray(f)) { copy(f[0], path.join(out, f[1])); continue; }
