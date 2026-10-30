@@ -49,7 +49,7 @@ export function createUseit(core) {
       };
       find(x.en).then(list => { found = list; const ul = q('[data-found]'); if (!ul) return; ul.innerHTML = list.length ? list.map(sent).join('') : `<li class="cs-note">内蔵の文には見つかりませんでした。2か3で文を作ってみよう。</li>`; bindList(ul, list); });
       q('[data-keep]').onclick = () => { const en = q('[data-mine]').value.trim(); if (!/[a-zA-Z]/.test(en)) return core.ui.toast('英文を書いてね'); core.notebook.add({ en, ja: '', kind: 'short', src: 'note' }); core.ui.toast('ノートに入れました'); };
-      if (q('[data-eigo]')) q('[data-eigo]').onclick = () => { core.eigo.send([{ en: x.en, ja: x.ja || '', kind: x.kind === 'short' ? 'sentence' : '' }]); core.ui.toast(`「${x.en}」を英語脳に送ったよ。マイことばに入っているから、文を作って使ってみよう`); ov.remove(); core.study && core.study.close(); core.openGame('eigonou'); };
+      if (q('[data-eigo]')) q('[data-eigo]').onclick = () => { core.eigo.send([{ en: x.en, ja: x.ja || '', kind: x.kind === 'short' ? 'sentence' : '' }]); core.ui.toast(`「${x.en}」を英語脳の「ことば登録」に入れたよ。場所と意味を確かめて登録してね`); ov.remove(); core.study && core.study.close(); core.openGame('eigonou'); };
       if (q('[data-check]')) q('[data-check]').onclick = async () => {
         const en = q('[data-mine]').value.trim(), out = q('[data-judge]'); if (!/[a-zA-Z]/.test(en)) return core.ui.toast('英文を書いてね');
         out.textContent = '判定しています…';

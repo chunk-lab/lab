@@ -1,10 +1,10 @@
-import { SLOT_OF_KIND, aiBox, buildItem, skelHtml } from './addword.js';
+import { SLOT_OF_KIND, aiBox, aiPrompt, buildItem, parseAi, skelHtml } from './addword.js';
 import { artCheck } from './emoji_fix.js';
 import { FRONTS, LEX, OFFICIAL, TENSES, buildLex, ing, newClause, past, pp, s3, sentenceJa, sentenceText } from './engine.js';
 import { ENV, onDoc } from './env.js';
 import { tx } from './i18n.js';
 import { basePack, exportPack, importPackUI, packFromSet } from './pack.js';
-import { $, APP, esc, ico, resetAll } from './play.js';
+import { $, APP, esc, go, ico, resetAll } from './play.js';
 // ================= APP STATE =================
 export let STORE_KEY;
 export let DEF_SETTINGS;
@@ -172,6 +172,7 @@ export function renderReg(){
   h+=`<section><div class="rowb"><span class="note">保存先</span><select id="rSet">${DB.sets.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div><button class="wide" id="rSave">この言葉を登録してゲームで使う</button></section>`;
  }
  $('#reg').innerHTML=h;
+ inboxBanner();
  const rEn=$('#rEn'), rJa=$('#rJa');
  const upd=()=>{ r.en=rEn.value; r.ja=rJa.value; r.auto=judge(r.en,r.ja); r.extra={}; clearTimeout(r._t); r._t=setTimeout(()=>{ const a=document.activeElement&&document.activeElement.id; renderReg(); if(a){ const el=$('#'+a); if(el){ el.focus(); const n=el.value.length; el.setSelectionRange&&el.setSelectionRange(n,n);} } },450); };
  rEn.oninput=upd; rJa.oninput=upd; $('#rE').oninput=e=>{ r.e=e.target.value; };
@@ -179,7 +180,7 @@ export function renderReg(){
  document.querySelectorAll('[data-kd]').forEach(b=>b.onclick=()=>{ r.kind=b.dataset.kd; r.extra={}; renderReg(); });
  document.querySelectorAll('#reg .skel [data-sk]').forEach(b=>b.onclick=()=>{ const sl=b.dataset.sk; const cur=r.kind||r.auto; const def={front:'leads',noun:(cur==='things'?'things':'people'),verb:'verbs',adj:'states',back:(['times','places','manners'].includes(cur)?cur:'manners')}[sl]; r.kind=def; r.extra={}; renderReg(); });
  { const ex=$('#rEx'); if(ex) ex.oninput=()=>{ r.ex=ex.value; }; }
- if($('#rAi')) aiBox($('#rAi'), ()=>({en:r.en, ja:r.ja, ex:r.ex}), a=>{ r.kind=a.kind; if(a.kind==='verbs' && a.en){ r.en=(a.en+(a.tail?' '+a.tail:'')).trim(); } if(!r.ja && a.ja) r.ja=a.ja; if(!r.e && a.e) r.e=a.e; r.extra={}; if(a.kind==='verbs'){ if(a.fr) r.extra.fr=a.fr; if(a.past) r.extra.past=a.past; if(a.pp) r.extra.pp=a.pp; if(Array.isArray(a.t)&&a.t.length) r.extra.t=a.t; } if((a.kind==='people'||a.kind==='things')&&a.pl!=null) r.extra.pl=+a.pl; if(a.kind==='people'&&a.animal!=null) r.extra.animal=+a.animal; renderReg(); }, false);
+ if($('#rAi')) aiBox($('#rAi'), ()=>({en:r.en, ja:r.ja, ex:r.ex}), a=>{ applyAi(a); renderReg(); }, false);
  document.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{ const k=b.dataset.x, v=b.dataset.v; if(k==='t'){ const t=(r.x.t||[]).slice(); const i=t.indexOf(v); i>=0?t.splice(i,1):t.push(v); r.extra.t=t; } else if(k==='tsx'){ const t=(r.x.ts||[]).slice(); const i=t.indexOf(v); i>=0?t.splice(i,1):t.push(v); r.extra.ts=t.length?t:['pres']; } else r.extra[k]=isNaN(+v)?v:+v; renderReg(); });
  document.querySelectorAll('[data-xi]').forEach(b=>b.onchange=()=>{ r.extra[b.dataset.xi]=b.value; renderReg(); });
  document.querySelectorAll('[data-sk]').forEach(s=>s.onchange=()=>{ r.sentence[+s.dataset.sk].kind=s.value; });
@@ -245,7 +246,36 @@ export function saveReg(){
   if(!r.ja.trim()){ toast('日本語も入れてください'); return; }
   set.items.push(kind==='leads'? buildItem('leads',r.en,r.ja,r.e) : makeItem(kind)); save(); noteWord(r.en,r.ja); refreshLex(); toast(`「${r.en.trim()}」を${set.name}に登録しました`);
  }
- Object.assign(REG,{en:'',ja:'',e:'',ex:'',kind:null,auto:null,extra:{},sentence:null,x:null}); renderReg();
+ Object.assign(REG,{en:'',ja:'',e:'',ex:'',kind:null,auto:null,extra:{},sentence:null,x:null});
+ if(INBOX.cur){ INBOX.done++; inboxNext(); return; }
+ renderReg();
+}
+// AIの判定結果を、ことば登録の入力に入れる(登録画面のAIボタンと、外から届いたことばの自動判定で使う)
+function applyAi(a){ const r=REG; r.kind=a.kind; if(a.kind==='verbs' && a.en){ r.en=(a.en+(a.tail?' '+a.tail:'')).trim(); } if(!r.ja && a.ja) r.ja=a.ja; if(!r.e && a.e) r.e=a.e; r.extra={}; if(a.kind==='verbs'){ if(a.fr) r.extra.fr=a.fr; if(a.past) r.extra.past=a.past; if(a.pp) r.extra.pp=a.pp; if(Array.isArray(a.t)&&a.t.length) r.extra.t=a.t; } if((a.kind==='people'||a.kind==='things')&&a.pl!=null) r.extra.pl=+a.pl; if(a.kind==='people'&&a.animal!=null) r.extra.animal=+a.animal; }
+// ===== 外から届いたことば(勉強ノート・町など → core.eigo の箱)=====
+// ふつうの「ことば登録」の画面に1つずつ入れて開く。本人が場所・意味を確かめて「登録」を押すと、次のことばが入る。
+export const INBOX = { cur: null, q: [], total: 0, done: 0 };
+export function inboxLoad(list){ list=(list||[]).filter(x=>x&&x.en&&/[a-z]/i.test(x.en)); if(!list.length) return; INBOX.q=INBOX.q.concat(list); INBOX.total+=list.length; if(!INBOX.cur) inboxNext(); else renderReg(); }
+export function inboxNext(){
+ const c=INBOX.q.shift(); INBOX.cur=c||null;
+ if(!c){ const d=INBOX.done; INBOX.total=0; INBOX.done=0; if(d) toast(`届いたことばを ${d}こ 登録しました。「つくる」で使ってみよう`); go(d?'make':'reg'); return; }
+ const en=String(c.en).trim(), ja=String(c.ja||'').trim();
+ Object.assign(REG,{en, ja, e:'', ex:c.ex||'', kind:c.kind==='sentence'?'sentence':null, auto:judge(en,ja), extra:{}, sentence:null, x:null});
+ go('reg');
+ // 使っている人のAIがあれば、文以外は場所・意味・活用をAIで決めて入れる(本人は確かめて登録するだけ)
+ const ai=ENV.core&&ENV.core.ai;
+ if(REG.kind!=='sentence' && REG.auto!=='sentence' && ai && ai.ready){
+  toast('AIで、どこに入る言葉か調べています…');
+  ai.ask('You are a careful JSON-only API.', aiPrompt({en, ja, ex:c.ex||''}), 500).then(t=>{ const a=parseAi(t); if(!a || INBOX.cur!==c) return; applyAi(a); renderReg(); }).catch(()=>{});
+ }
+}
+// 途中でやめたとき:残りを返す(箱にもどす)
+export function inboxRest(){ const r=(INBOX.cur?[INBOX.cur]:[]).concat(INBOX.q); INBOX.cur=null; INBOX.q=[]; INBOX.total=0; INBOX.done=0; return r; }
+function inboxBanner(){
+ if(!INBOX.cur) return; const reg=$('#reg'); if(!reg) return;
+ reg.insertAdjacentHTML('afterbegin',`<div class="inbx" style="background:#fff3c8;border-radius:14px;padding:10px 12px;margin:0 0 10px;font-size:13px;font-weight:700;line-height:1.5">📥 届いたことば <b>${INBOX.done+1} / ${INBOX.total}</b>${INBOX.q.length?`(このあと ${INBOX.q.length}こ)`:''}<br><span style="font-weight:500">場所と意味を確かめて、下の「この言葉を登録してゲームで使う」を押してね。</span><div class="rowb" style="margin-top:6px"><button class="chip" data-inb="skip">これはとばす</button><button class="chip" data-inb="later">あとでやる</button></div></div>`);
+ reg.querySelector('[data-inb="skip"]').onclick=()=>inboxNext();
+ reg.querySelector('[data-inb="later"]').onclick=()=>{ const r=inboxRest(); try{ ENV.core&&ENV.core.eigo&&ENV.core.eigo.send(r); }catch(e){} toast(`のこり ${r.length}こは、次に開いたときにまた出ます`); go('make'); };
 }
 
 
