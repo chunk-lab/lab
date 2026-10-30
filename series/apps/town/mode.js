@@ -72,6 +72,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         else if (name === 'talk') core.events.report('town3d', 'talk', { id: d?.id });
         else if (name === 'app:open') { document.body.classList.add('md-app-open'); core.events.report('town3d', 'app', { id: d?.id }); core.daylog.act('app', catOfApp(d?.id)); if (d?.id === 'omikuji') core.review && core.review.mark('omikuji'); }   // 家・ショップなどを開いている間は「今日なにする?」を隠す
         else if (name === 'app:close') { document.body.classList.remove('md-app-open'); core.daylog.act('app', null); core.daylog.act('sub', null); core.daylog.act('chat', null); }
+        else if (name === 'app:event' && d?.name === 'snap') { if (d.data) createStore('core').set('townInfo', d.data); }
         else if (name === 'app:event' && d?.name === 'study') { const x = d.data || {}; if (x.snap) createStore('core').set('townInfo', x.snap); openStudy(x.tab ? { tab: x.tab, sec: x.sec || 'words' } : {}); }   // 町のノートボタン→勉強ノート(町のひみつの記録もいっしょに渡す)
         else if (name === 'app:event' && d?.name === 'act') core.daylog.act(d.data?.layer || 'sub', d.data?.cat ? { cat: d.data.cat, label: d.data.label } : null);   // 1日の記録:いま何をしているか
         else if (name === 'app:event' && d?.name === 'learn') { if (d.data?.save) { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, src: d.data.src || 'gamebox' }); core.ui.toast('ノートに入れました'); } catch (e) { } } else core.daylog.addWord(d.data); }   // 出会った単語・文

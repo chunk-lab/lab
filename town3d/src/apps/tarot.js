@@ -4,6 +4,7 @@
 //       じっくり(ケルト十字・10枚)= 3ダイヤ(10回券 25ダイヤ)。ルナの長い鑑定と、鑑定書(記録)
 // 鑑定の文:AIがつながっていれば、ルナがAIで読む(英語モードなら英語+訳)。なければ、カードの意味と並び方から組み立てる
 // 絵の差し替え:o.artBase に画像の場所を入れると、<artBase><カードid>.webp を使う(なければ下の仮の絵)
+import { loadDict, meaningText } from './gamebox/en_data.js';
 import { CARDS, CARD, SUITS } from './tarot_cards.js';
 
 export const TAROT_PRICE = { coin: 100, gem: 3, pack: { n: 10, gem: 25 } };
@@ -143,6 +144,13 @@ const CSS = `
 .tz .tz-np .tx{font-size:15px;line-height:1.9;margin-top:8px;white-space:pre-wrap}.tz .tz-np .tr{font-size:13.5px;color:#cdbbea;line-height:1.75;margin-top:8px;white-space:pre-wrap;animation:tzFade 1s both}
 .tz .tz-np .cur::after{content:"✦";color:#ffd76a;margin-left:2px;animation:tzBl .9s steps(1) infinite}@keyframes tzBl{50%{opacity:0}}
 .tz .tz-np .go{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.tz .tz-w{border-bottom:1px dotted rgba(255,215,106,.6);cursor:pointer}.tz .tz-w:active{background:rgba(255,215,106,.25)}
+.tz .tz-ws{position:absolute;inset:0;z-index:60;display:flex;align-items:flex-end;background:rgba(10,5,25,.55);animation:tzFade .2s}
+.tz .tz-wsb{width:100%;box-sizing:border-box;background:#2b1b4d;border-top:1px solid rgba(255,215,106,.45);border-radius:20px 20px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));color:#fff}
+.tz .tz-wsb .h{display:flex;align-items:center;gap:10px}.tz .tz-wsb .h b{font:700 22px Georgia,serif}.tz .tz-wsb .h small{color:#cdbbea;font-size:12px}
+.tz .tz-wsb .h button{border:1px solid rgba(255,215,106,.5);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:4px 12px;font:inherit}
+.tz .tz-wsb .m{margin:10px 0 4px;line-height:1.7;font-size:14.5px}.tz .tz-wsb .c{color:#cdbbea;font-size:13px;margin:10px 0 8px}
+.tz .tz-wsb .b{display:flex;gap:8px}.tz .tz-wsb .b button{flex:1;border:0;border-radius:14px;padding:11px;font:inherit;font-weight:800;background:#ffd76a;color:#3a2760}.tz .tz-wsb .b button.sub{background:rgba(255,255,255,.14);color:#fff}
 .tz .tz-np .wait{display:flex;gap:10px;align-items:center;justify-content:center;padding:20px 0;color:#e6d4ff}
 .tz .tz-orb{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#c9a7ff 40%,#5b3f8c 75%);box-shadow:0 0 16px #b48cff;animation:tzOrb 1.6s ease-in-out infinite}@keyframes tzOrb{50%{transform:scale(.8);box-shadow:0 0 28px #ffd76a}}
 .tz .tz-cert{border:1.5px solid #d9b24a;border-radius:14px;padding:8px 10px;margin:10px 0 0;background:rgba(255,215,106,.08);text-align:center;font-size:12.5px}
@@ -245,6 +253,42 @@ export function mountTarot(box, o) {
   const snd = n => { try { ctx.audio && ctx.audio.play && ctx.audio.play(n); } catch (e) { } };
   const toast = t => { const d = document.createElement('div'); d.textContent = t; d.style.cssText = 'position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(40,30,60,.94);color:#fff;padding:10px 16px;border-radius:999px;font-weight:800;font-size:14px;z-index:99;pointer-events:none;max-width:86%;text-align:center'; root.appendChild(d); setTimeout(() => d.remove(), 2000); };
   const speak = t => { try { const s = window.speechSynthesis; if (!s) return; s.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = 'en-US'; u.rate = 0.9; s.speak(u); } catch (e) { } };
+  // ---- 英語の答えの単語をタップ:辞書にある語は、音声+意味+(えらんで)ノートへ登録 ----
+  const dictP = o.dictUrl ? loadDict(o.dictUrl).catch(() => null) : Promise.resolve(null);
+  let DICT = null; dictP.then(d => { DICT = d; });
+  const look = raw => {
+    if (!DICT) return null; const w = raw.toLowerCase().replace(/['’]s$/, ''); if (w.length < 3 || !/^[a-z]+$/.test(w)) return null;
+    const c = [w]; if (/ies$/.test(w)) c.push(w.slice(0, -3) + 'y'); if (/(es|ed)$/.test(w)) c.push(w.slice(0, -2), w.slice(0, -1)); if (/s$/.test(w)) c.push(w.slice(0, -1));
+    if (/ied$/.test(w)) c.push(w.slice(0, -3) + 'y'); if (/ing$/.test(w)) { const b = w.slice(0, -3); c.push(b, b + 'e'); if (/(.)\1$/.test(b)) c.push(b.slice(0, -1)); } if (/ly$/.test(w)) c.push(w.slice(0, -2)); if (/(er|est)$/.test(w)) c.push(w.replace(/(er|est)$/, ''), w.replace(/r$|st$/, ''));
+    for (const b of c) { const e = DICT.byW.get(b); if (e) return { base: b, e }; } return null;
+  };
+  function tapify(el) {
+    if (!el || el.dataset.tp || !o.dictUrl) return; el.dataset.tp = '1';
+    dictP.then(() => {
+      if (!DICT || !el.isConnected) return; const t = el.textContent; if (!/[A-Za-z]{3}/.test(t)) return;
+      let h = '', last = 0; t.replace(/[A-Za-z][A-Za-z'’]*/g, (w, i) => { h += esc(t.slice(last, i)) + (look(w) ? `<span class="tz-w" data-w="${esc(w)}">${esc(w)}</span>` : esc(w)); last = i + w.length; return w; });
+      el.innerHTML = h + esc(t.slice(last));
+    });
+  }
+  function wordSheet(raw) {
+    const f = look(raw); if (!f) return; speak(raw);
+    const ja = f.e.ps.map(p => p[1]).join(' / ').slice(0, 60); o.logWord && o.logWord(f.base, ja, 'word');
+    const sh = document.createElement('div'); sh.className = 'tz-ws';
+    sh.innerHTML = `<div class="tz-wsb"><div class="h"><b>${esc(f.base)}</b>${f.base !== raw.toLowerCase() ? `<small>(${esc(raw)} の原形)</small>` : ''}<button data-ws="say">🔊</button></div><div class="m">${esc(meaningText(f.e))}</div><div class="c">単語ノートに登録しますか?</div><div class="b"><button data-ws="reg">📒 登録する</button><button class="sub" data-ws="no">やめる</button></div></div>`;
+    sh.onclick = e => {
+      const b = e.target.closest('[data-ws]');
+      if (e.target === sh || (b && b.dataset.ws === 'no')) return sh.remove();
+      if (!b) return; if (b.dataset.ws === 'say') return speak(raw);
+      if (b.dataset.ws === 'reg') { o.saveWord && o.saveWord(f.base, ja); sh.remove(); }
+    };
+    root.appendChild(sh);
+  }
+  root.addEventListener('click', e => { const w = e.target.closest('.tz-w'); if (w) wordSheet(w.dataset.w); });
+  const recTarot = () => {   // 「町のひみつ」(勉強ノート)に、占いの結果を残す
+    if (!o.rec || !S.t) return; const sp = SPREADS[S.sp], dt = new Date(S.t), cards = S.draws.map(d => CARD[d.id].n + (d.rev ? '(逆)' : '')).join('・');
+    const sm = S.sum ? (S.sum.tr || S.sum.text) : '', fs = sm.split(/(?<=[。!?.])\s*/)[0].slice(0, 90);
+    o.rec('タロット', `${dt.getMonth() + 1}/${dt.getDate()} ${sp.n}${S.q ? '「' + S.q.slice(0, 20) + '」' : ''}:${cards}${fs ? ' → ' + fs : ''}`, 'tarot:' + S.t);
+  };
   const head = (sub) => `<div class="tz-top"><h2>🃏 タロット<small>${esc(sub || 'Tarot Reading')}</small></h2><span class="tz-pill">🪙 ${ctx.wallet.get()}${gems() != null ? ` ・ 💎 ${gems()}` : ''}${st.tk ? ` ・ 🎫 ${st.tk}` : ''}</span></div>`;
   let dead = false, raf = 0, frame = null, last = performance.now(), T = 0;
 
@@ -313,6 +357,7 @@ export function mountTarot(box, o) {
   function page() {
     frame = null; pg.className = 'tz-pg';
     pg.innerHTML = { menu, theme, hist, detail }[S.step](); pg.scrollTop = 0;
+    if (S.step === 'detail') pg.querySelectorAll('.tz-read p:not(.tr)').forEach(tapify);
   }
   function menu() {
     const free = freeNow(), cp = coinPrice();
@@ -595,7 +640,7 @@ export function mountTarot(box, o) {
     S.draws.forEach(d => { const c = CARD[d.id], k = (d.rev ? c.rv : c.up).kw[0]; o.logWord && o.logWord(k[0], k[1], 'word'); });
     S.t = Date.now(); S.narr = []; S.sum = null;
     st.hist.push({ t: S.t, sp: S.sp, th: S.theme, q: S.q, d: S.draws.map(d => [d.id, d.rev ? 1 : 0]) }); while (st.hist.length > 40) st.hist.shift(); save();
-    o.onRead && o.onRead(S.sp);
+    o.onRead && o.onRead(S.sp); recTarot();
     aiStart();
     toLay();
   }
@@ -668,8 +713,8 @@ export function mountTarot(box, o) {
       kw.innerHTML = or.kw.map(([en, ja], k) => `<button data-say="${esc(en)}" style="animation-delay:${0.5 + k * 0.12}s">🔊 ${esc(en)}<i>${esc(ja)}</i></button>`).join('');
       await sleep(700);
       const nr = narrFor(i); S.narr[i] = nr;
-      const ty = typeOut(tx, nr.text); np.onclick = e => { if (!e.target.closest('button')) ty.fin(); };
-      await ty.p;
+      const ty = typeOut(tx, nr.text); np.onclick = e => { if (!e.target.closest('button,.tz-w')) ty.fin(); };
+      await ty.p; tapify(tx);
       if (nr.tr) { tr.hidden = false; tr.textContent = nr.tr; }
       const lastOne = i === S.draws.length - 1;
       go.innerHTML = `<button class="tz-btn" data-nx="1">${lastOne ? (S.draws.length > 1 ? '✦ ルナのまとめを聞く' : '✦ ルナの言葉を聞く') : 'つぎのカードへ ›'}</button>`;
@@ -705,8 +750,9 @@ export function mountTarot(box, o) {
     S.sum = a && a.body.length > 12 && a.body.length < 2400 ? (en && a.ja ? { text: a.en, tr: a.ja } : { text: a.body.replace(/\|\|\|[\s\S]*$/, '').trim(), tr: '' }) : { text: sumBuilt(S.sp, S.draws, S.theme), tr: '' };
     const h = st.hist.find(x => x.t === S.t); if (h) { h.narr = S.narr; h.sum = S.sum; save(); }
     if (en && a && a.en) o.logWord && o.logWord(a.en.split(/(?<=[.!?])\s+/)[0], (a.ja.split(/(?<=[。!?])/)[0] || ''), 'sentence');
-    const ty = typeOut(tx, S.sum.text, 28); np.onclick = e => { if (!e.target.closest('button')) ty.fin(); };
-    await ty.p;
+    recTarot();
+    const ty = typeOut(tx, S.sum.text, 28); np.onclick = e => { if (!e.target.closest('button,.tz-w')) ty.fin(); };
+    await ty.p; tapify(tx);
     if (S.sum.tr) { tr.hidden = false; tr.textContent = S.sum.tr; }
     const ce = np.querySelector('.tz-cert'); if (ce) { ce.style.display = ''; ce.animate([{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 600 }); }
     go.innerHTML = '<button class="tz-btn sub" data-a="detail">カードの意味をくわしく</button><button class="tz-btn" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button>';

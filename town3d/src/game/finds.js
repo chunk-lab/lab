@@ -63,7 +63,7 @@ export const finds = {
   near(x, z, r = 1.6) { let best = null, bd = r; for (const s of this.spots()) { const d = Math.hypot(s.x - x, s.z - z); if (d < bd) { bd = d; best = s; } } return best; },
   take(s) { const g = this.got(); if (g[s.key]) return false; g[s.key] = Date.now(); st.set('got', g); if (s.kind === 'treasure') { const T = st.get('tre') || []; if (!T.includes(s.c[1])) { T.push(s.c[1]); st.set('tre', T); } } return true; },
   treasures() { return st.get('tre') || []; },
-  addTreasure(name) { const T = this.treasures(); if (!T.includes(name)) { T.push(name); st.set('tre', T); } },
+  addTreasure(name) { const T = this.treasures(); if (!T.includes(name)) { T.push(name); st.set('tre', T); this.onChange && this.onChange(); } },
   // 手がかり(占い・哲学者):まだ見つけていない、きょうのかくれものの近くの場所の名前
   hint(areaName = areaFn) {
     const s = this.spots().filter(x => x.kind !== 'treasure'); const f = s.length ? s[Math.floor(Math.random() * s.length)] : this.spots()[0];

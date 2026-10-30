@@ -142,7 +142,8 @@ export const social = {
   },
   // ---- 情報ノート(ことばノートの「情報」タブ) ----
   info() { return get('info', []); },
-  addInfo(cat, text, key) { const L = this.info(); if (key && L.some(x => x.key === key)) return false; L.push({ cat, text, key: key || '', at: Date.now() }); st.set('info', L.slice(-400)); return true; },
+  addInfo(cat, text, key) { const L = this.info(); if (key && L.some(x => x.key === key)) return false; L.push({ cat, text, key: key || '', at: Date.now() }); st.set('info', L.slice(-400)); this.onInfo && this.onInfo(); return true; },
+  putInfo(cat, text, key) { const L = this.info(), x = key && L.find(y => y.key === key); if (x) { x.text = text; x.cat = cat; } else L.push({ cat, text, key: key || '', at: Date.now() }); st.set('info', L.slice(-400)); this.onInfo && this.onInfo(); return true; },   // 同じkeyなら書きかえ(タロットのまとめがあとから届くため)
 };
 
 // ---- 住人の記憶(AIとのおしゃべりで話したこと)。端末の中だけ ----

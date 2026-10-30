@@ -68,7 +68,7 @@ export const fortuneApp = {
     const out = typeof P.lunaOut === 'function' && P.lunaOut();
     const openTarot = () => {
       box.style.display = 'none';
-      tarot = mountTarot(el, { ctx, social, ai: P.ai, getEn: P.getEn, artBase: P.tarotArt || '', logWord: P.logWord, onRead: P.onTarot,
+      tarot = mountTarot(el, { ctx, social, ai: P.ai, getEn: P.getEn, artBase: P.tarotArt || '', logWord: P.logWord, onRead: P.onTarot, rec: P.rec, saveWord: P.saveWord, dictUrl: ctx.dictUrl || '',
         lunaLine: 'カードは、あなたの心をうつす鏡。…なにを たずねたいの?',
         onExit: () => { tarot && tarot.unmount(); tarot = null; box.style.display = ''; draw(); } });
     };

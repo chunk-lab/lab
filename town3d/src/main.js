@@ -300,6 +300,8 @@ export function mount(container, opt = {}) {
   }
   // ---- 住人との仲(プレゼント・頼みごと)・調べる・宝探し ----
   const sparkles = createSparkles(scene, finds);
+  social.onInfo = finds.onChange = () => opt.onEvent?.('app:event', { name: 'snap', data: townSnap() });   // 勉強ノートの「町のひみつ」を、ふえるたびに最新にする
+  setTimeout(() => social.onInfo(), 3000);
   const soc = createSocialUI({ hud, wallet, audio, addNote, startDate: r => startDate(r), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
   if (social.admin()) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🔍 宝を隠す'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(168px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; soc.adminHunt(); }; root.appendChild(b); }
   const townSnap = () => { const got = finds.treasures(); return { info: social.info(), tre: TREASURES.map(t => ({ i: t[0], n: t[1], g: got.includes(t[1]) })), at: Date.now() }; };   // 勉強ノートの「町のひみつ」に渡す
@@ -855,6 +857,8 @@ export function mount(container, opt = {}) {
       lunaOut: () => { const r = luna(); return !!(r && r.ch.root.visible); },
       talkLuna: () => { const r = luna(); if (!r) return; appHost.close(); setTimeout(() => { if (!hud.busy) talkTo(r); }, 200); },
       logWord: (en, ja, kind) => logWord(en, ja, kind, 'tarot'),
+      rec: (cat, text, key) => social.putInfo(cat, text, key),   // 占いの結果を「町のひみつ」へ
+      saveWord: (en, ja) => hud.toast(addNote({ kind: 'word', text: en, meaning: ja, npc: 'タロット占い' })),   // 単語ノートへ(タップで選んだときだけ)
       tarotArt: opt.tarotArt || '',   // タロットの絵の差し替え先(<ここ><カードid>.webp)
     };
   }
