@@ -397,7 +397,7 @@ export function mountTarot(box, o) {
   function hist() {
     return head('Records') + `<div class="tz-say tz-in">🔮 ルナ「これまでの鑑定よ。カードは、あとから見返すと意味がわかることも多いの」</div>
       ${st.hist.length ? st.hist.slice().reverse().map((h, i) => { const sp = SPREADS[h.sp]; return `<button class="tz-hist tz-in"${D(Math.min(i + 1, 8))} data-h="${st.hist.length - 1 - i}"><span style="font-size:24px">${sp.tier === 'deep' ? '📜' : '🃏'}</span><span><b>${esc(sp.n)}</b> ・ ${esc((THEMES.find(t => t[0] === h.th) || THEMES[0])[2])}<small>${new Date(h.t).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} ・ ${h.d.map(d => CARD[d[0]].n + (d[1] ? '(逆)' : '')).slice(0, 3).join('、')}${h.d.length > 3 ? '…' : ''}</small></span></button>`; }).join('') : '<p class="tz-nt">まだ記録はないわ。</p>'}
-      <button class="tz-back" data-a="menu">← もどる</button>`;
+      ${st.hist.length ? `<div class="tz-c tz-sub" style="justify-content:center;margin:8px 0"><button class="tz-btn sub" data-a="delall" style="font-size:12px">🗑 記録をぜんぶ消す(${st.hist.length}件)</button></div>` : ''}<button class="tz-back" data-a="menu">← もどる</button>`;
   }
   // 鑑定書の最後に、AIの答えをそのまま(崩れていてもそのまま)見られるようにする
   function rawBox() {
@@ -406,6 +406,10 @@ export function mountTarot(box, o) {
     if (r.trimmed || !r.raw) return `<details class="tz-raw" style="margin-top:12px;font-size:12px;opacity:.85"><summary>📜 ルナの答え(記録)</summary><p>${esc(when)}${r.bad ? ' ・ 乱れあり' : ''}${r.err ? ' ・ エラー:' + esc(r.err) : ''}${r.trimmed ? '(古い記録のため、全文は手放しました)' : ''}</p></details>`;
     return `<details class="tz-raw" style="margin-top:12px;font-size:12px;opacity:.9"><summary>📜 ルナの答え(記録・そのまま)${r.bad ? ' ⚠ 乱れあり' : ''}</summary><p style="margin:6px 0">${esc(when)} ・ ${r.en ? '英語' : '日本語'}${r.rr ? ' ・ 読み直し ' + r.rr + '回' : ''}${r.err ? ' ・ エラー:' + esc(r.err) : ''}</p><pre style="white-space:pre-wrap;word-break:break-word;margin:0;font:inherit;font-size:12px;background:rgba(0,0,0,.06);border-radius:8px;padding:8px">${esc(r.raw)}</pre>${(r.tries || []).length > 1 ? `<p style="margin:8px 0 2px">頼み直した前の答え(${r.tries.length - 1}件)</p>${r.tries.slice(0, -1).map(t => `<pre style="white-space:pre-wrap;word-break:break-word;margin:4px 0;font:inherit;font-size:12px;background:rgba(0,0,0,.06);border-radius:8px;padding:8px">${esc(t)}</pre>`).join('')}` : ''}</details>`;
   }
+  // 記録を消す:1回目で「もう一度押すと消えるよ」、4秒以内の2回目で消える
+  function armed(key) { const ok = S.arm === key && Date.now() - (S.armT || 0) < 4000; S.arm = ok ? '' : key; S.armT = Date.now(); if (!ok) toast('もう一度押すと消えるわ'); return ok; }
+  function delHist() { const i = st.hist.findIndex(x => x.t === S.t); if (i < 0 || !armed('one:' + S.t)) return; st.hist.splice(i, 1); save(); toast('🗑 この記録を消したわ'); S.step = 'hist'; page(); }
+  function delAll() { if (!st.hist.length || !armed('all')) return; st.hist = []; save(); toast('🗑 記録をぜんぶ消したわ'); page(); }
   function detail() {
     const sp = SPREADS[S.sp];
     const narr = S.draws.map((d, i) => { const n = S.narr[i]; return n ? `<div class="pp">${S.sp === 'celtic' ? i + 1 + '. ' : ''}${esc(sp.pos[i][0])} ・ ${esc(CARD[d.id].n)}${d.rev ? '(逆)' : ''}</div><p>${esc(n.text)}</p>${n.tr ? `<p class="tr">${esc(n.tr)}</p>` : ''}` : ''; }).join('');
@@ -420,7 +424,7 @@ export function mountTarot(box, o) {
     const cert = sp.tier === 'deep' ? `<div class="tz-cert">📜 <b>鑑定書</b> ・ ${new Date(S.t || Date.now()).toLocaleDateString('ja-JP')} ・ 占い師ルナ</div>` : '';
     return head(sp.en) + cert + `<div class="tz-read"><h3>🔮 ルナの鑑定</h3>${S.q ? `<p style="font-size:13px;color:#8d7f9e">「${esc(S.q)}」</p>` : ''}${narr || `<p>${esc(sumBuilt(S.sp, S.draws, S.theme))}</p>`}${sum}${rawBox()}</div>
       <div class="tz-read"${D(1)}><h3>🃏 カードの意味</h3>${rows}</div>
-      <div class="tz-c tz-sub" style="justify-content:center"><button class="tz-btn" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button></div>`;
+      <div class="tz-c tz-sub" style="justify-content:center"><button class="tz-btn" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button></div>${st.hist.some(x => x.t === S.t) ? `<div class="tz-c tz-sub" style="justify-content:center;margin-top:6px"><button class="tz-btn sub" data-a="delhist" style="font-size:12px">🗑 この記録を消す</button></div>` : ''}`;
   }
 
   // ---------- 儀式の画面(混ぜる → 切る → えらぶ → 読む) ----------
@@ -661,7 +665,7 @@ export function mountTarot(box, o) {
     // 記録・ふりかえり
     S.draws.forEach(d => { const c = CARD[d.id], k = (d.rev ? c.rv : c.up).kw[0]; o.logWord && o.logWord(k[0], k[1], 'word'); });
     S.t = Date.now(); S.narr = []; S.sum = null; S.rr = 0;
-    st.hist.push({ t: S.t, sp: S.sp, th: S.theme, q: S.q, d: S.draws.map(d => [d.id, d.rev ? 1 : 0]) }); while (st.hist.length > 40) st.hist.shift(); save();
+    st.hist.push({ t: S.t, sp: S.sp, th: S.theme, q: S.q, d: S.draws.map(d => [d.id, d.rev ? 1 : 0]) }); save();
     o.onRead && o.onRead(S.sp); recTarot();
     aiStart();
     toLay();
@@ -792,8 +796,9 @@ export function mountTarot(box, o) {
       const h = st.hist.find(x => x.t === S.t); if (!h) return;
       h.narr = S.narr; if (S.sum) h.sum = S.sum;
       h.ai = { raw: S.aiRaw || '', tries: (S.aiTries || []).slice(-3), bad: !!S.aiBad, err: S.aiErr || '', rr: S.rr || 0, at: Date.now(), en };
-      st.hist.slice(0, -20).forEach(x => { if (x.ai) x.ai = { bad: x.ai.bad, at: x.ai.at, trimmed: 1 }; });   // 古い記録は、場所をとるので答えの全文だけ手放す(最近の20件は全文を残す)
-      save();
+      try { save(); } catch (e) {   // 端末の保存場所がいっぱいのときだけ、いちばん古い答えの全文から外して入れなおす
+        for (const x of st.hist) { if (x.ai && x.ai.raw) { x.ai = { bad: x.ai.bad, at: x.ai.at, trimmed: 1 }; try { save(); break; } catch (e2) { } } }
+      }
     } catch (e) { console.error(e); }
   }
   // 崩れたときの救済:お金をいただかずに、同じカードでルナにもう一度読んでもらう(1回の占いにつき2回まで)
@@ -857,6 +862,8 @@ export function mountTarot(box, o) {
     if (a === 'hist') { S.step = 'hist'; return page(); }
     if (a === 'pack') return buyPack();
     if (a === 'reread') return reread();
+    if (a === 'delhist') return delHist();
+    if (a === 'delall') return delAll();
     if (a === 'detail') { leaveRitual(); S.step = 'detail'; return page(); }
     if (a === 'again') { leaveRitual(); S.step = 'theme'; return page(); }
     if (a === 'go') {
