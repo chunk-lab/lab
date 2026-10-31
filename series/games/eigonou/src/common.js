@@ -68,6 +68,12 @@ function setBody(s){
  if(!W.length&&!P.length&&!T.length) return '<div class="items"><p class="note">まだありません。「ことば登録」から追加できます。</p></div>';
  return (W.length?sec('単語 '+W.length,W.map(itH).join('')):'')+(P.length?sec('熟語・慣用句 '+P.length,P.map(itH).join('')):'')+(T.length?sec('文章 '+T.length,T.map((t,i)=>`<span class="it"><small style="margin-right:4px">📝</small>${esc(t.en)} <small>${esc(t.ja||'')}</small><button data-trys="${s.id}|${i}" aria-label="使ってみる" style="color:#2a8">▶</button></span>`).join('')):'');
 }
+// 画面を描き直すと、スクロールが一番上に戻ってしまう(連続で選びにくい)。描き直しの前後で位置を保つ
+function keepScroll(el, put){
+ let sc=el; while(sc&&sc!==document.body){ const o=getComputedStyle(sc).overflowY; if((o==='auto'||o==='scroll')&&sc.scrollHeight>sc.clientHeight) break; sc=sc.parentElement; }
+ const top=sc&&sc!==document.body?sc.scrollTop:0; put();
+ if(sc&&top){ sc.scrollTop=top; requestAnimationFrame(()=>{ sc.scrollTop=top; }); }
+}
 export function renderSets(){
  const mine=DB.sets.map(s=>`<div class="setc"><div class="sethd"><label class="tgl"><input type="checkbox" data-on="${s.id}" ${s.on?'checked':''}><span><b>${esc(s.name)}</b></span></label><span class="cnt">${s.items.length}語${s.sentences&&s.sentences.length?' / '+s.sentences.length+'文':''}</span></div>
   ${setBody(s)}
@@ -76,11 +82,11 @@ export function renderSets(){
   <div class="items">${c.items.map(it=>`<span class="it pos-${kindPos(it.kind)}">${ico(it.e,'ic sm')} ${esc(it.en)} <small>${esc(it.ja)}</small></span>`).join('')}</div>
   <div class="rate">${[['easy','👍','わかりやすい'],['useful','💡','役立った'],['again','🔁','また使う'],['wrong','⚠️','まちがいを報告']].map(([k,e,l])=>`<button class="${r[k]?'on':''}" data-rt="${c.id}|${k}">${e} ${l} <b>${sc[k]+(r[k]?1:0)}</b></button>`).join('')}</div>
   <div class="rowb"><button class="chip ${DB.community[c.id]?'on':''}" data-add="${c.id}">${DB.community[c.id]?'✓ ゲームに入っています':'＋ ゲームに追加'}</button></div></div>`; }).join('');
- $('#sets').innerHTML=`<h2>ことばセット</h2><p class="note">オンにしたセットの言葉が「つくる」「みつける」の候補にそのまま出てきます。</p>
+ keepScroll($('#sets'),()=>{ $('#sets').innerHTML=`<h2>ことばセット</h2><p class="note">オンにしたセットの言葉が「つくる」「みつける」の候補にそのまま出てきます。</p>
  <section><h3>公式</h3><div class="setc"><div class="sethd"><b>きほんセット</b><span class="cnt">${OFFICIAL.people.length+OFFICIAL.things.length+OFFICIAL.verbs.length+OFFICIAL.states.length+OFFICIAL.places.length+OFFICIAL.times.length+OFFICIAL.manners.length}語・いつもオン</span></div></div></section>
  <section><h3>自分のセット</h3>${mine}<div class="rowb wrap"><button class="chip" id="newset">＋ 新しいセット</button><button class="chip" id="impPack">📥 ${tx('pack.import')}</button></div><p class="note">パックは「英語の中身」と「言語ごとの意味」に分かれた共有用のファイルです。ほかの人のパックを読みこんだり、自分のセットを渡したりできます。</p><details><summary class="note">翻訳・開発用</summary><button class="chip" id="basePack">📤 ${tx('pack.base')}</button></details></section>
  <section><h3>みんなのセット <span class="note">（試作：サンプル表示）</span></h3><div class="pts">🪙 あなたのポイント <b>${DB.points}</b><span class="note">公開したセットが評価されるとたまります</span></div>${com}</section>
- ${DB.log.length?`<section><h3>作った文</h3>${DB.log.slice(0,12).map(l=>`<button class="logl" data-say="${esc(l.en)}"><span class="en">${esc(l.en)}</span><small>${esc(l.ja)}</small></button>`).join('')}</section>`:''}`;
+ ${DB.log.length?`<section><h3>作った文</h3>${DB.log.slice(0,12).map(l=>`<button class="logl" data-say="${esc(l.en)}"><span class="en">${esc(l.en)}</span><small>${esc(l.ja)}</small></button>`).join('')}</section>`:''}`; });
  const R=$('#sets');
  R.querySelectorAll('[data-on]').forEach(b=>b.onchange=()=>{ DB.sets.find(s=>s.id===b.dataset.on).on=b.checked; save(); refreshLex(); });
  R.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const [sid,iid]=b.dataset.del.split('|'); const s=DB.sets.find(x=>x.id===sid); s.items=s.items.filter(i=>i.id!==iid); save(); refreshLex(); renderSets(); });
@@ -185,7 +191,7 @@ export function renderReg(){
   else if(kind){ const x=Object.assign(autoExtra(kind,r.en,r.ja), r.extra); r.x=x; h+=extraForm(kind,x); h+=previewBox(kind,x); }
   h+=`<section><div class="rowb"><span class="note">保存先</span><select id="rSet">${DB.sets.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div><button class="wide" id="rSave">この言葉を登録してゲームで使う</button><button class="wide" id="rTry" style="margin-top:8px;background:linear-gradient(160deg,#cfe9ff,#b9d9ff)">✨ 使ってみる(AIが文を考えて「つくる」へ)</button></section>`;
  }
- $('#reg').innerHTML=h;
+ keepScroll($('#reg'),()=>{ $('#reg').innerHTML=h; });
  inboxBanner();
  const rEn=$('#rEn'), rJa=$('#rJa');
  const upd=()=>{ r.en=rEn.value; r.ja=rJa.value; r.auto=judge(r.en,r.ja); r.extra={}; clearTimeout(r._t); r._t=setTimeout(()=>{ const a=document.activeElement&&document.activeElement.id; renderReg(); if(a){ const el=$('#'+a); if(el){ el.focus(); const n=el.value.length; el.setSelectionRange&&el.setSelectionRange(n,n);} } },450); };

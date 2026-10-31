@@ -184,7 +184,7 @@ export function createHud(root, bus) {
       dialog = h(`<div class="tw-dialog"><div class="tw-dname"></div><div class="tw-dtext"></div><div class="tw-choices"></div></div>`);
       dialog.querySelector('.tw-dname').innerHTML = `${esc(name)}${role ? `<small>${esc(role)}</small>` : ''}`;
       const tx = dialog.querySelector('.tw-dtext'), ch = dialog.querySelector('.tw-choices');
-      const all = [...choices, { label: 'またね', fn: null }];
+      const all = [...choices, { label: 'とじる', fn: null }];
       all.forEach((c, i) => { const b = h(`<button class="tw-btn${i === 0 && choices.length ? ' main' : ''}"></button>`); b.textContent = c.label; b.onclick = ev => { ev.stopPropagation(); this.closeDialog(); c.fn?.(); }; ch.appendChild(b); });
       ch.style.visibility = 'hidden';
       root.appendChild(dialog);
@@ -232,7 +232,14 @@ export function createHud(root, bus) {
     panel(html, onClick, opt = {}) {
       this.closePanel();
       panel = h(`<div class="tw-panel"><div class="tw-card">${html}</div></div>`);
-      panel.onclick = e => { if (e.target === panel) return opt.sticky ? undefined : this.closePanel(); onClick?.(e, panel); };
+      panel.onclick = e => {
+        if (e.target === panel) {   // 外をタップ=とじる。ただし会話(sticky)と、入力の途中のときは閉じない
+          if (opt.sticky) return;
+          if ([...panel.querySelectorAll('textarea,input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=button])')].some(i => String(i.value || '').trim())) { try { this.toast('入力があるので「とじる」ボタンで閉じてね'); } catch (e2) { } return; }
+          return this.closePanel();
+        }
+        onClick?.(e, panel);
+      };
       root.appendChild(panel);
       return panel;
     },

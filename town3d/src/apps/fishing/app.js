@@ -232,7 +232,7 @@ export const fishingApp = {
     }
     function sheet(html, center) {
       const s = document.createElement('div'); s.className = 'sheet'; s.innerHTML = `<div class="panel ${center ? 'center' : ''}">${html}</div>`;
-      s.addEventListener('pointerdown', e => e.stopPropagation());
+      s.addEventListener('pointerdown', e => { e.stopPropagation(); if (e.target === s && !center) { const x = s.querySelector('[data-x]'); if (x) x.click(); } });   // 外をタップ=「とじる」
       root.appendChild(s); return s;
     }
 

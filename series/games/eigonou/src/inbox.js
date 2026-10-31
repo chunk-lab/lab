@@ -58,6 +58,7 @@ function showDone(got, gotS, chunks, plays) {
   root.querySelector('.eg-inbox')?.remove();
   const esc = t => String(t).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   const el = document.createElement('div'); el.className = 'eg-inbox';
+  el.addEventListener('click', e => { if (e.target === el) el.remove(); });   // 外をタップ=とじる
   el.style.cssText = 'position:absolute;inset:0;z-index:50;background:#0006;display:flex;align-items:center;justify-content:center;padding:16px';
   el.innerHTML = `<div style="background:#fff;border-radius:18px;padding:16px;max-width:360px;width:100%;box-shadow:0 8px 28px #0005;text-align:center;color:#3b3552;font-weight:700">
     <div style="font-size:16px;font-weight:900">📥 マイことばに入れたよ</div>

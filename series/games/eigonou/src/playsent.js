@@ -132,6 +132,7 @@ export function showPlays() {
     const memo = DB.memo || [], pl = allPlays(); root.querySelector('.eg-plays')?.remove();
     const row = (p, src, i) => `<div style="display:flex;gap:6px;margin-bottom:6px"><button data-l="${src}${i}" style="flex:1;text-align:left;border:0;border-radius:12px;background:#f4f1fb;padding:9px 12px;font:inherit"><b style="font-size:14px">▶ ${esc(p.en)}</b><br><small style="color:#8d7f9e">${esc(p.ja || '')}${p.expr && p.expr !== p.en ? '　(' + esc(p.expr) + ')' : ''}</small></button><button data-d="${src}${i}" aria-label="消す" style="border:0;background:none;font:inherit;color:#b06;padding:0 6px">×</button></div>`;
     const el = document.createElement('div'); el.className = 'eg-plays';
+    el.addEventListener('click', e => { if (e.target === el) el.remove(); });   // 外をタップ=とじる
     el.style.cssText = 'position:absolute;inset:0;z-index:50;background:#0006;display:flex;align-items:center;justify-content:center;padding:16px';
     el.innerHTML = `<div style="background:#fff;border-radius:18px;padding:14px;max-width:380px;width:100%;max-height:82vh;display:flex;flex-direction:column;color:#3b3552;font-weight:700"><div style="font-size:16px;font-weight:900;text-align:center">📚 記憶した文</div><div style="overflow:auto;margin:10px 0">
       <div style="font-size:12px;color:#8d7f9e;margin:4px 0">💾 自分で記憶した文</div>${memo.length ? memo.map((p, i) => row(p, 'm', i)).join('') : '<div style="font-size:12px;color:#8d7f9e;margin-bottom:6px">まだありません。文を作ったら、上の「💾 記憶」を押してね。</div>'}
@@ -169,6 +170,7 @@ export async function runTry({ en, ja, cls, kind, x }, say) {
 export function openTry(pre) {
   const root = ENV.root; if (!root) return; root.querySelector('.eg-try')?.remove();
   const el = document.createElement('div'); el.className = 'eg-try'; let cls = pre && pre.cls || '';
+  el.addEventListener('click', e => { if (e.target === el && !(el.querySelector('[data-en]') || {}).value) el.remove(); });   // 外をタップ=とじる(英語を打ち込み中は閉じない)
   el.style.cssText = 'position:absolute;inset:0;z-index:50;background:#0006;display:flex;align-items:center;justify-content:center;padding:16px';
   const seg = (v, l) => `<button data-c="${v}" style="flex:1;border:0;border-radius:999px;padding:7px 4px;font:inherit;font-size:12px;background:${cls === v ? '#ffd36b' : '#f4f1fb'}">${l}</button>`;
   const draw = () => {
