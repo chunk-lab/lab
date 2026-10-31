@@ -1,10 +1,31 @@
 // 町の住人。時刻ごとの予定(schedule)に合わせて道すじを歩き、話しかけると会話する
-import { makeCharacter, makeChunkkun } from '../world/character.js';
+import { makeCharacter, makeChunkkun, LOOKS } from '../world/character.js';
 import { PLACES } from '../world/town_data.js';
 import { angleLerp } from '../core/core.js';
 
 // 予定は [時, 場所, 'in'(建物の中=見えない)]。台詞は時間帯ごと。menu は会話の選択肢
 export const RESIDENTS = [
+  {
+    // そら君:英語の相談役。単語や表現を聞くと、例文・場面・ちがい・練習のしかたをノートにまとめてくれる
+    id: 'sora', name: 'そら', yomi: 'そら', role: '英語の相談役', look: LOOKS.sora, adult: false, companion: true, icon: '🧢',
+    personaOut: '気さくで面倒見のいい男の子。ちょっと照れ屋だけど、話しはじめると止まらない。ゲームと散歩と甘いものが好き。「〜だよ」「〜じゃん」と話す。いまは英語の先生役ではなく、ふつうの友だちとして話す。',
+    homeLines: { enter: ['おじゃましまーす。へぇ、いい部屋じゃん', 'お、ここが家? 落ちつくね'], sit: ['となり、すわるよ', 'ふかふかだな〜'], lie: ['ベッドでごろーん…やば、寝そう'], goro: ['床ごろごろ、けっこういいじゃん', 'ふぁ〜、天井ってこんな色だったんだ'], talkLie: ['こうしてると、なんか話しやすいね', 'ねえ、最近どう?'], talk: ['なに話す?', 'いい部屋だね'] },
+    persona: '英語が大好きな、気さくで面倒見のいい男の子。「〜だよ」「〜じゃん」と話す。人に教えるのが好きで、むずかしいことも、たとえ話でわかりやすく言いかえる。',
+    tips: ["「How do you say 〜 in English?」で『〜って英語で何て言うの?』って聞けるよ", "「I see.」は『なるほど』。あいづちの定番だよ", "迷ったら、まず短い文で言ってみる。それが一番の近道じゃん", "「Could you say that again?」で『もう一回言って』。聞き返すのは全然はずかしくないよ", "単語は、例文ごと覚えると忘れにくいんだ"],
+    schedule: [[7, 'school'], [12, 'library'], [17, 'plaza'], [21, 'home', 'in']],
+    lines: { morning: ['おはよう! 今日はどんな英語を使ってみる?', '朝は単語を覚えるのにいい時間なんだって。'], day: ['気になる単語や言い方があったら、なんでも聞いてよ。', '図書館で英語の本を読んでたんだ。'], evening: ['今日おぼえた英語、ひとつ使ってみた?', 'わかんない表現あったら、まとめてあげるよ。'], night: ['夜ふかしして英語の動画見ちゃうんだよね。'] },
+    menu: [{ label: '英語の相談をする', act: 'consult' }, { label: 'そら君ノートを見る', act: 'soranote' }, { label: '一緒に歩こう', act: 'follow' }, { label: 'カフェでデートする', act: 'date' }, { label: '家においでよ', act: 'invite' }],
+  },
+  {
+    // はなちゃん:おしゃべり好き。自由に話せて、一緒に歩いたり、カフェでデートしたりできる
+    id: 'hana', name: 'はな', yomi: 'はな', role: 'おしゃべり好きの女の子', look: LOOKS.hana, free: true, companion: true, icon: '🎀',
+    homeLines: { enter: ['おじゃましま〜す!', 'わぁ、ここがあなたの家?', 'おじゃまします〜。いい部屋!'], sit: ['となり、すわるね〜', 'ふかふかだ!'], lie: ['えへへ、ならんでごろ〜ん', 'ベッドふかふか〜!'], goro: ['ごろ〜ん。床ひんやりしてきもちい〜', 'ふぁ〜、ねむくなっちゃう', 'こうやってゴロゴロするの、すき'], talkLie: ['ねえねえ、天井見てると落ちつくね', 'こうしてると、なんでも話せちゃう気がする', 'ふふ、ゴロゴロ最高〜'], talk: ['おじゃましてま〜す。なに話す?', 'いいお部屋だね!'] },
+    persona: '明るくて、ちょっとおっちょこちょいな女の子。好奇心が強く、町のうわさや季節のことをよく知っている。話すのが大好きで、相手の話にも本気で興味を持つ。「〜だよね」「〜かも!」とくだけた話し方。',
+    tips: ["ねえねえ、「Guess what!」って『聞いて聞いて!』って意味なんだよ", "「I can't wait!」は『待ちきれない!』。わくわくしてる時に言うの", "「That's so cute!」って、かわいいもの見たらつい言っちゃう", "「No way!」は『うそでしょ!』。びっくりした時にね"],
+    schedule: [[8, 'park'], [11, 'cafe'], [14, 'shop'], [17, 'park2'], [20, 'home', 'in']],
+    lines: { morning: ['おはよ! 今日なにする? どこか行こうよ。', '朝の公園、気持ちいいね!'], day: ['ねえ、ひま? 一緒にぶらぶらしない?', 'カフェの新作、気になってるんだよね。'], evening: ['夕方の町って、なんかいいよね。', 'ちょっと歩かない?'], night: ['もう暗いね。また明日あそぼ!'] },
+    menu: [{ label: '一緒に歩こう', act: 'follow' }, { label: 'カフェでデートする', act: 'date' }, { label: '家においでよ', act: 'invite' }],
+  },
   {
     id: 'mii', tips: ["「I'll have a coffee, please.」は、カフェで注文するときの定番ですよ〜", "「Could I have…?」は「Can I have…?」より、少していねいなんです", "「Take your time.」は『ゆっくりでいいよ』。わたし、よく言われます", "「Sounds good!」は、軽く『いいね』って返すのにぴったり", "「Cheers!」は乾杯だけじゃなく、『ありがとう』の意味でも使うんですって"], yomi: 'みい', persona: 'ゆったりしたお姉さん。やさしくて少しのんびり。カフェとカードが好きで、考えるのに時間をかける。', name: 'ミイ', role: 'カフェの常連', look: { skin: 0xffe6d6, hair: 0xf3c2a4, style: 'bob', top: 0xfff4e0, bottom: 0xffb3c1, shoes: 0xffffff, acc: 'ribbon', accColor: 0xa8e6cf },
     schedule: [[7, 'plaza'], [10, 'cafe'], [15, 'park'], [18, 'cafe'], [22, 'home', 'in']],
@@ -15,7 +36,7 @@ export const RESIDENTS = [
     id: 'baron', tips: ["ふはは、「Splendid!」は『素晴らしい!』。わが輩の口ぐせである!", "「I'm afraid…」で始めれば、悪い知らせも偉そうに言えるぞ", "「Indeed.」は『まったくだ』。重々しく言うのがコツだ!", "「Well done!」は『よくやった』。わが輩が言うと偉そうに聞こえるな", "「By the way」は『ところで』。話をそらすのはハッタリの基本だ"], yomi: 'はったりだんしゃく', persona: '大げさで自信家。「わが輩」と名乗り、ハッタリが多いが憎めない。ゲームセンターの記録の話が好き。', name: 'ハッタリ男爵', role: 'ゲームセンターの主', look: { skin: 0xf6d2bb, hair: 0xdcdcdc, style: 'short', top: 0xb79cd9, bottom: 0x4f4766, shoes: 0x2e2a3d, acc: 'tophat', accColor: 0x3f3a52 },
     schedule: [[9, 'north'], [11, 'gamecenter'], [16, 'plaza2'], [19, 'gamecenter'], [23, 'home', 'in']],
     lines: { morning: ['ふむ、朝からわが輩に会えるとは運がいい。'], day: ['ゲームセンターの記録、わが輩のものだ。たぶんな。', 'ハッタリも実力のうちである!'], evening: ['夕暮れは勝負の時間だ。'], night: ['夜のネオンは美しい……わが輩の次にな。'] },
-    menu: [{ label: 'ぷにチャンクで遊ぶ', app: 'punichunk' }, { label: 'カードで勝負する', app: 'chunkcards', params: { cpu: 'baron' } }],
+    menu: [{ label: 'カードで勝負する', app: 'chunkcards', params: { cpu: 'baron' } }],
   },
   {
     id: 'gon', tips: ["「Look what I found!」で『見ろよ、拾ったぞ!』って言えるぜ", "「It's a bit rusty.」は『ちょっとさびてる』。拾い物の説明に使えるな", "「Where did you get that?」で『それ、どこで手に入れた?』", "「Finders keepers!」は『拾った者の勝ち』。子どもがよく言うぜ", "「No worries.」は『気にすんな』。おれの口ぐせだ"], yomi: 'ひろいやごん', persona: '拾い物好きの気さくな兄ちゃん。くだけた口調。落とし物や変な単語を見つけた話をする。', name: 'ひろい屋ゴン', role: '何でも拾う人', look: { skin: 0xeec3a6, hair: 0x6b4a3a, style: 'spiky', top: 0xfdeeb0, bottom: 0x8fcfae, shoes: 0xc9a28c, acc: 'cap', accColor: 0xffc8a2 },
@@ -51,12 +72,72 @@ export const RESIDENTS = [
     id: 'chunkkun', adult: false, tips: ["ふわ…「cloud」は雲。ぼくのことだよ", "ふわふわは「fluffy」。ぼくにぴったり", "「Nice to meet you.」は、はじめましての魔法のことば", "「See you!」は『またね』。短くて言いやすいよ", "「It's raining cats and dogs.」は『どしゃ降り』……ふしぎだね"], yomi: 'ちゃんくくん', persona: 'おもちのようなイモムシ。語尾が「〜だよ」「もちもち」。無邪気で、文ができると体がのびるのが自慢。', name: 'チャンクくん', role: '町のマスコット', mascot: true,
     schedule: [[0, 'plaza'], [11, 'gamecenter'], [14, 'plaza2'], [18, 'plaza']],
     lines: { morning: ['もちもち〜! おはよう!'], day: ['いっしょにチャンクつくろ!', 'ぼく、文ができると、のびるんだ!'], evening: ['ゲーセン行こうよ〜。'], night: ['ねむねむ……でも、まだ遊べるよ。'] },
-    menu: [{ label: 'ぷにチャンクで遊ぶ', app: 'punichunk' }],
+  },
+  {
+    // 大喜利チョコ:お題を出して、プレイヤーと答えを出し合う。点数と勝ち負けはチョコが決める(AIキーで遊ぶ)
+    id: 'choco', tips: ["「Good one!」は『うまい!』。大喜利で、いい答えが出たときに使うよ", "「You got me!」は『やられた!』。笑わされたときの一言!", "「That's hilarious!」は『めっちゃ笑った』。ほめ言葉の最上級だね", "「Nailed it!」は『ばっちり決まった!』", "「punchline」は話のオチのこと。ここが大事なんだよ〜"], yomi: 'おおぎりちょこ', name: '大喜利チョコ', role: '大喜利の達人',
+    persona: 'お笑いと大喜利が好きな女の子。落ち着いた普通のため口で、テンションは上げすぎない。ツッコミは短く、聞かれたことにまっすぐ答える。大喜利の話が出たら「大喜利で勝負する」から遊べると伝える。',
+    look: { skin: 0xffe1cf, hair: 0x5b3a2e, style: 'bob', top: 0x9c6a4a, bottom: 0xffd6e0, shoes: 0xffffff, acc: 'ribbon', accColor: 0xffb3c1 },
+    schedule: [[7, 'plaza'], [11, 'cafe'], [15, 'gamecenter'], [19, 'plaza2'], [22, 'home', 'in']],
+    lines: { morning: ['おはよう。今日のお題を考えてるところ。', '朝は頭がすっきりしてて、いい答えが出やすいんだよね。'], day: ['大喜利、やる? いつでもいいよ。', '答えは短いほうが、意外とおもしろいんだ。'], evening: ['夕方になると、ひねった答えが浮かぶんだよね。', 'そろそろ一本、やっておく?'], night: ['夜は静かだから、考えるのにちょうどいいね。'] },
+    menu: [{ label: '大喜利で勝負する', act: 'ogiri' }],
+  },
+  {
+    // 哲学者:人生についていつも考えている。偉人の格言を教えてくれる(英語モードなら英語+訳)
+    id: 'tetsu', tips: ["「Food for thought.」は『考えさせられること』。哲学者の口ぐせです", "「Think twice.」は『よく考えて』。急がないほうがいいときの一言", "「deep down」は『心の奥では』。本音を話すときに使います", "「What's the point?」は『何の意味があるの?』。哲学的な問いの入口です", "「the meaning of life」は『人生の意味』。大きな話題ですね"], yomi: 'てつがくしゃ', name: '哲学者', role: '考えごとの人',
+    persona: '人生についていつも深く考えている、おだやかな人。ゆっくり、少し詩的に話す。ときどき偉人の言葉(ソクラテス・デカルト・老子・孔子・ニーチェなど)を引いて、そのあと自分の言葉で一言そえる。説教くさくならない。',
+    replyRule: '- 日本語で、2文、70文字ほど。絵文字は使わない。',
+    extraRules: ['- 偉人の言葉を引くときは、出典が確かなものだけにする。あやふやなときは引用せず、自分の言葉で話す。'],
+    maxChars: 100, maxTokens: 220,
+    quotes: [
+      { en: 'The unexamined life is not worth living.', ja: '吟味されない人生は、生きるに値しない。', who: 'ソクラテス', note: '立ち止まって考える時間も、人生のうちなんだね。' },
+      { en: 'I think, therefore I am.', ja: 'われ思う、ゆえにわれあり。', who: 'デカルト', note: '疑っている自分がいる。それだけは、たしかなことなんだ。' },
+      { en: 'A journey of a thousand miles begins with a single step.', ja: '千里の道も、一歩から。', who: '老子', note: '大きなことも、足もとの一歩から始まるよ。' },
+      { en: 'It does not matter how slowly you go, as long as you do not stop.', ja: 'どんなにゆっくりでもいい。止まらなければ。', who: '孔子(の言葉とされる)', note: '速さより、続けることのほうが力になる。' },
+      { en: 'Life can only be understood backwards; but it must be lived forwards.', ja: '人生は後ろ向きにしか理解できない。でも、前に向かって生きるしかない。', who: 'キルケゴール', note: 'わからないまま進んで、あとから意味に気づくんだね。' },
+      { en: 'He who has a why to live can bear almost any how.', ja: '生きる理由をもつ人は、ほとんどどんなやり方にも耐えられる。', who: 'ニーチェ', note: '「なぜ」があると、人は強くなれるのかもしれない。' },
+      { en: 'Happiness depends upon ourselves.', ja: '幸せは、自分しだい。', who: 'アリストテレス', note: '外ではなく、自分の中に答えがあるって、すてきだよね。' },
+      { en: 'Knowing others is wisdom; knowing yourself is enlightenment.', ja: '人を知る者は知恵があり、自分を知る者は明るい。', who: '老子', note: '自分のことが、いちばんむずかしい。' },
+      { en: 'Nothing is permanent except change.', ja: '変わらないものは、変わるということだけ。', who: 'ヘラクレイトス(とされる言葉)', note: '今日のつらさも楽しさも、少しずつ形をかえていくよ。' },
+      { en: 'The only thing we have to fear is fear itself.', ja: '恐れるべきは、恐れそのものだけだ。', who: 'ルーズベルト', note: '不安は、考えているうちに大きくなるものだからね。' },
+    ],
+    look: { skin: 0xf6d2bb, hair: 0xe3e0dc, style: 'short', top: 0x8a7bb0, bottom: 0x5a4a6b, shoes: 0x7a6a5a, acc: 'glasses', accColor: 0x8a5a44 },
+    schedule: [[6, 'shrine'], [10, 'library'], [15, 'park'], [19, 'busstop'], [22, 'home', 'in']],
+    lines: { morning: ['朝の静けさは、考えごとにぴったりなんだ。', 'おはよう。今日は、どんなことを考えようか。'], day: ['ふと思ったんだ。「ふつう」って、だれが決めたんだろうね。', '本を読んでいると、昔の人と話している気分になるよ。'], evening: ['夕ぐれは、一日をふり返るのにいい時間だね。', '空の色が変わるのを見ていると、時間の流れを感じるよ。'], night: ['夜は、考えが深いところまで降りていくんだ。', '星を見ていると、自分の悩みが小さく思えてくるね。'] },
+    menu: [{ label: '格言をひとつ聞く', act: 'quote' }],
+  },
+  {
+    // 砂吹さん:さすらいの旅人。池のほとりで釣りをしている。頼むとハーモニカを吹いてくれる
+    id: 'suna', tips: ["「Any luck?」は釣りの定番の声かけ。『釣れた?』ってことさ", "「Nothing's biting.」は『ぜんぜん食いつかない』。釣れない日のぼやきだな", "「Take it easy.」は『のんびりいこう』。ぼくの生き方みたいなものさ", "「Go with the flow.」は『流れにまかせて』。川と同じだね", "「catch of the day」は『今日の釣果』。とれたら自慢できる"], yomi: 'すなぶきさん', name: '砂吹さん', role: 'さすらいの旅人',
+    persona: '自由なさすらいの旅人。ひょうひょうとしていて、口数は少なめでおだやか。「〜さ」「〜だな」と話す。持ち物はハーモニカと釣り竿だけ。池でアヒルをながめながら釣りをするのが好きで、釣れなくても気にしない。',
+    look: { skin: 0xf2c9ac, hair: 0x8a5a44, style: 'short', top: 0x7f9a52, bottom: 0x8a6b4a, shoes: 0x5a4a3a, acc: 'snuf', accColor: 0x7a8f4a },
+    angler: { spot: [46, 22.5], face: [46, 18] },
+    schedule: [[5, 'pond'], [17, 'park2'], [19, 'plaza2'], [21, 'pond']],
+    lines: { morning: ['おはよう。朝の池は、水がきらきらしてるのさ。', 'まだ一匹も釣れてないけど、いい朝だな。'], day: ['釣れなくていいんだ。のんびりしに来てるだけさ。', 'あのアヒル、ぼくのことを見張ってるみたいだな。'], evening: ['夕方は風がやさしいな。そろそろ歩きたくなる。', '今日はどこまで行こうかな。気のむくままさ。'], night: ['夜の池は静かだな。星が水に映ってるのさ。'] },
+    menu: [{ label: '🎣 釣りへ行く', app: 'fishing' }, { label: 'ハーモニカをお願いする', act: 'harmonica' }],   // 入ると釣りのタイトル画面(英語・のんびり・勝負・図鑑…)
+  },
+  {
+    // 占い師ルナ:神社の境内の「占いの館」の前にいる。10コインで、住人の好物・飾りのレシピ・かくれもののありかなどを教えてくれる
+    id: 'luna', name: 'ルナ', yomi: 'るな', role: '占い師',
+    tips: ["「What does the future hold?」は『未来には何が待っているの?』。占いの定番です", "「It's in the stars.」は『星のさだめ』。運命のことね", "「I have a hunch.」は『なんとなくそんな気がする』", "「Lucky you!」は『ついてるわね!』"],
+    persona: 'なぞめいた占い師の女性。ゆっくり、やさしく、少し芝居がかった口調で「〜わ」「〜なさい」と話す。星と水晶玉で占う。町の人のことをよく知っている。',
+    look: { skin: 0xf6dcc8, hair: 0x5b3f8c, style: 'long', top: 0x4a2f73, bottom: 0x2a1a44, shoes: 0x2a1a44, acc: 'ribbon', accColor: 0xffd76a },
+    post: { place: 'fortune', spot: [-40.6, -22.2], face: [-45, -22.2] },
+    schedule: [[0, 'fortune', 'in']],   // ふだんは館の中(外には立たない)
+    outing: [[0, 'fortune', 'in'], [13, 'shrine'], [14, 'park'], [15.5, 'plaza2'], [17, 'fortune', 'in']],   // たまの お出かけの日(5日に1日くらい):昼すぎから夕方まで町を散歩
+    lines: { morning: ['朝の星は見えないけれど、ちゃんとそこにあるのよ。'], day: ['占ってほしいことがあるなら、館にお入りなさい。', 'あなたのまわりに、いい風が吹いているわ。'], evening: ['夕暮れは、運命が変わりやすい時間よ。'], night: ['今夜は星がよく見えるわ…。'] },
+    menu: [{ label: '🔮 占ってもらう', app: 'fortune' }],
   },
 ];
 
+// お出かけの日:日付から決まる(同じ日なら、だれが見ても同じ)。いまはルナだけ
+export function outingOf(date) {
+  const k = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`; let h = 7;
+  for (const c of k) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return new Set(h % 5 === 0 ? ['luna'] : []);
+}
 function period(h) { return h < 5 ? 'night' : h < 10 ? 'morning' : h < 16.5 ? 'day' : h < 19.5 ? 'evening' : 'night'; }
-export { period };
+export { period, findPath, nearestNode };
 
 function findPath(graph, from, to) {
   if (from === to) return [to];
@@ -77,7 +158,8 @@ function nearestNode(graph, x, z) {
   return best;
 }
 
-export function createResidents(scene, graph, getHour) {
+export function createResidents(scene, graph, getHour, collide = null) {
+  let outing = new Set();   // きょう お出かけの日の住人
   const list = RESIDENTS.map((d, i) => {
     const ch = d.mascot ? makeChunkkun() : makeCharacter(d.look);
     const goal = goalOf(d, getHour());
@@ -89,18 +171,35 @@ export function createResidents(scene, graph, getHour) {
   });
 
   function goalOf(d, h) {
-    let g = d.schedule[d.schedule.length - 1];
-    for (const s of d.schedule) if (h >= s[0]) g = s;
+    const sc = (d.outing && outing.has(d.id)) ? d.outing : d.schedule;   // お出かけの日は、別の予定
+    let g = sc[sc.length - 1];
+    for (const s of sc) if (h >= s[0]) g = s;
     return { place: g[1], inside: g[2] === 'in' };
   }
 
-  return {
-    list,
+  const api = {
+    list, avoid: null,
+    get outing() { return outing; }, set outing(v) { outing = v || new Set(); },
     update(dt, h, player) {
       const anyTalking = list.some(q => q.talking);
       for (const r of list) {
+        if (r.battle) continue;   // 雪合戦の最中は、雪合戦の方で動かす
+        if (r.pin) {   // デートなどで、決まった場所に座っている
+          const P = r.ch.root.position; P.set(r.pin.x, r.pin.y || 0, r.pin.z); r.ch.root.rotation.y = r.pin.ry;
+          if (!r.ch.root.visible) { r.ch.root.visible = true; r.hidden = false; } r.ch.pose = r.pin.pose || null; r.speed = 0; r.vx = r.vz = 0; r.ch.update(dt, 0); continue;
+        }
         const g = goalOf(r.def, h);
-        if (g.place !== r.goal.place) {
+        if (r.follow) { r.goal = g; r.path = []; r.idle = null; if (r.hidden) { r.hidden = false; r.ch.root.visible = true; } }   // 一緒に歩いている間は、予定どおりに動かない
+        if (r.follow && r.hold && !r.talking) {   // 手をつないで、プレイヤーの左にならんで歩く(lag:前後のずれ。マイナス=おくれる)
+          const P = r.ch.root.position, ry = player.ry || 0, tx = player.x + Math.cos(ry) * 0.62 + Math.sin(ry) * (r.lag || 0), tz = player.z - Math.sin(ry) * 0.62 + Math.cos(ry) * (r.lag || 0);
+          r.holdK = Math.min(1, (r.holdK || 0) + dt * 2.5);   // つなぎはじめは、なめらかに横へ来る
+          const k = r.holdK < 1 ? 1 - Math.exp(-dt * 8) : 1, ox = P.x, oz = P.z;
+          P.x += (tx - P.x) * k; P.z += (tz - P.z) * k;
+          const v = Math.hypot(P.x - ox, P.z - oz) / Math.max(dt, 1e-3);
+          r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, ry, Math.min(1, dt * 10));
+          r.speed = v < 0.08 ? 0 : v; r.vx = r.vz = 0; r.ch.pose = null; r.ch.update(dt, r.speed); continue;
+        }
+        else if (g.place !== r.goal.place) {
           r.goal = g;
           r.path = findPath(graph, nearestNode(graph, r.ch.root.position.x, r.ch.root.position.z), PLACES[g.place]);
           if (r.hidden) { r.hidden = false; r.ch.root.visible = true; }
@@ -116,7 +215,13 @@ export function createResidents(scene, graph, getHour) {
           if (r.stopWill === undefined) { r.stopWill = Math.random() < 0.6; r.stopLimit = 1 + Math.random() * 9; }
           if (!r.free) { r.stopT = (r.stopT || 0) + dt; if (!r.stopWill || anyTalking || r.stopT > r.stopLimit) r.free = true; }
         }
-        if (r.talking || (r.near && !r.hidden && !r.free)) {
+        if (r.follow && !r.talking) {   // プレイヤーのななめ後ろについていく。はなれすぎたら、そばに来る
+          r.free = true;
+          const ry = player.ry || 0, fx = player.x - Math.sin(ry) * 1.3 + Math.cos(ry) * 0.9, fz = player.z - Math.cos(ry) * 1.3 - Math.sin(ry) * 0.9, d = Math.hypot(fx - p.x, fz - p.z);
+          if (d > 16) { p.x = fx; p.z = fz; r.vx = r.vz = 0; }
+          else if (d > 0.7) target = [fx, fz];
+          else r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, ry, Math.min(1, dt * 3));
+        } else if (r.talking || r.harpT > 0 || (r.near && !r.hidden && !r.free)) {
           r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(player.x - p.x, player.z - p.z), Math.min(1, dt * 8));
         } else if (r.path.length) {
           const n = graph.nodes[r.path[0]];
@@ -124,6 +229,11 @@ export function createResidents(scene, graph, getHour) {
           if (Math.hypot(n.x - p.x, n.z - p.z) < 0.4) { r.node = r.path.shift(); if (!r.path.length) r.wait = 1 + Math.random() * 2; }
         } else if (r.goal.inside) {
           if (!r.hidden) { r.hidden = true; r.ch.root.visible = false; }
+        } else if ((r.def.angler && r.goal.place === 'pond') || (r.def.post && r.goal.place === r.def.post.place)) {
+          // 池のほとりの決まった場所で、釣りをする / 占い師は館の前に立つ(うろうろしない)
+          const a = r.def.angler || r.def.post;
+          if (Math.hypot(a.spot[0] - p.x, a.spot[1] - p.z) > 0.3) target = a.spot;
+          else r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(a.face[0] - p.x, a.face[1] - p.z), Math.min(1, dt * 4));
         } else {
           // 目的地のまわりをうろうろ。ときどき、町のほかの場所へ散歩に出る(もどるときは、予定の場所へ)
           r.roamT = (r.roamT ?? 6 + Math.random() * 20) - dt;
@@ -143,27 +253,51 @@ export function createResidents(scene, graph, getHour) {
           }
           if (r.idle) { target = r.idle; if (Math.hypot(r.idle[0] - p.x, r.idle[1] - p.z) < 0.25) r.idle = null; }
         }
+        // ---- 動き:行きたい方向(intent)と、よけ・押しのけ(avoid)を、なめらかな速度にまぜて進む ----
+        // 以前は「目的地へ進む」と「押し出される」を毎フレーム別々に位置へ足していたので、境目でガクガクしていた。
+        // いまは両方を1つの速度にまとめ、よけの強さは距離で少しずつ変える(境目でぱっと切りかわらない)。
+        const sp = r.follow && target ? Math.min(5.2, 1.9 + Math.hypot(target[0] - p.x, target[1] - p.z) * 1.1) : (r.def.mascot ? 1.6 : 1.9) * (r.path.length > 3 ? 1.3 : 1);
+        let ix = 0, iz = 0, ax = 0, az = 0;
         if (target && !r.hidden) {
           const dx = target[0] - p.x, dz = target[1] - p.z, d = Math.hypot(dx, dz);
-          const sp = (r.def.mascot ? 1.6 : 1.9) * (r.path.length > 3 ? 1.3 : 1);
-          // プレイヤーに近すぎるときは、止まらずに横へよけながら進む(立ち止まっているプレイヤーのそばで、ずっと固まらないように)
+          if (d > 0.01) { const k = r.path.length ? 1 : Math.min(1, d / 0.8); ix = dx / d * sp * k; iz = dz / d * sp * k; }   // 道の途中は止まらず、うろうろの目的地ではゆっくり着く
+        }
+        if (!r.hidden) {
+          // プレイヤーに近すぎるときは、止まらずに横へよける(立ち止まっているプレイヤーのそばで固まらないように)
           const pd = Math.hypot(player.x - p.x, player.z - p.z);
-          if (d > 0.01) {
-            let mx = dx / d, mz = dz / d;
-            if (pd < 0.9 && pd > 0.001) { mx += (p.x - player.x) / pd * 1.6; mz += (p.z - player.z) / pd * 1.6; const l = Math.hypot(mx, mz) || 1; mx /= l; mz /= l; }
-            const s = Math.min(Math.max(d, 0.3), sp * dt);
-            p.x += mx * s; p.z += mz * s;
-            speed = sp;
-            r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(mx, mz), Math.min(1, dt * 6));
+          if ((ix || iz) && pd < 1.5 && pd > 0.001) { const w = 1 - pd / 1.5; ax += (p.x - player.x) / pd * w * sp * 1.6; az += (p.z - player.z) / pd * w * sp * 1.6; }
+          // デートの席など、近よらないでほしい場所(avoid)からは、はなれる
+          if (api.avoid && !r.pin && !r.follow) { const z = api.avoid, ox = p.x - z.x, oz = p.z - z.z, od = Math.hypot(ox, oz); if (od < z.r) { const w = 1 - od / z.r; ax += (od > 0.01 ? ox / od : 1) * w * sp * 2.2; az += (od > 0.01 ? oz / od : 0) * w * sp * 2.2; if (r.idle && Math.hypot(r.idle[0] - z.x, r.idle[1] - z.z) < z.r) r.idle = null; } }
+          // 住人どうしが重なって団子にならないよう、ゆるく離れる
+          if (!r.talking) for (const o of list) {
+            if (o === r || o.hidden) continue;
+            const ox = p.x - o.ch.root.position.x, oz = p.z - o.ch.root.position.z, od = Math.hypot(ox, oz);
+            if (od < 1.2) {
+              const w = 1 - od / 1.2;
+              if (od > 0.01) { ax += ox / od * w * sp * 1.1; az += oz / od * w * sp * 1.1; }
+              else { r.jit ??= Math.random() * 6.283; ax += Math.sin(r.jit) * sp; az += Math.cos(r.jit) * sp; }
+            }
           }
         }
-        // 住人どうしが重なって団子にならないよう、ゆるく押しのけ合う
-        if (!r.hidden && !r.talking) for (const o of list) {
-          if (o === r || o.hidden) continue;
-          const ox = p.x - o.ch.root.position.x, oz = p.z - o.ch.root.position.z, od = Math.hypot(ox, oz);
-          if (od < 1.1) { const k = od > 0.01 ? (1.1 - od) * Math.min(1, dt * 2.5) / od : 0.02; p.x += (od > 0.01 ? ox : Math.random() - 0.5) * k; p.z += (od > 0.01 ? oz : Math.random() - 0.5) * k; }
+        let dvx = ix + ax, dvz = iz + az; const dl = Math.hypot(dvx, dvz), cap = sp * 1.4;
+        if (dl > cap) { dvx *= cap / dl; dvz *= cap / dl; }
+        const bl = 1 - Math.exp(-dt * 6);
+        r.vx = (r.vx || 0) + (dvx - (r.vx || 0)) * bl; r.vz = (r.vz || 0) + (dvz - (r.vz || 0)) * bl;
+        if (r.hidden) { r.vx = r.vz = 0; }
+        else { p.x += r.vx * dt; p.z += r.vz * dt; if (r.follow && collide) { const c = collide(p.x, p.z, 0.3); p.x = c[0]; p.z = c[1]; } }
+        speed = Math.hypot(r.vx, r.vz); if (speed < 0.05) speed = 0;
+        // 向きは「行きたい方向」を優先(よけられて横にずれても、体は進む方を向いたまま)
+        if (!(r.talking || r.harpT > 0 || (r.near && !r.hidden && !r.free)) && !(r.follow && !target)) {
+          if (ix || iz) r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(ix, iz), Math.min(1, dt * 6));
+          else if (speed > 0.3) r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(r.vx, r.vz), Math.min(1, dt * 4));
         }
         r.speed = speed;
+        // ポーズ:ハーモニカを吹いている間 / 池のそばで釣り竿を構えているとき
+        if (r.harpT > 0) r.harpT -= dt;
+        if (r.def.angler) {
+          const a = r.def.angler;
+          r.ch.pose = r.harpT > 0 ? 'harp' : (r.goal.place === 'pond' && !r.hidden && Math.hypot(a.spot[0] - p.x, a.spot[1] - p.z) < 0.6 ? 'fish' : null);
+        }
         if (r.ch.root.visible) r.ch.update(dt, speed);
       }
     },
@@ -174,4 +308,5 @@ export function createResidents(scene, graph, getHour) {
       return all[r.lineIdx];
     },
   };
+  return api;
 }

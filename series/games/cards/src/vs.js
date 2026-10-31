@@ -1,4 +1,5 @@
 import { Kit as K } from './play.js';
+import { CORE } from './sound.js';
 /* ===== チャンク・カード:CPU対戦(ポーカー型) =====
    ・2人で山札と「場」を共有。手札8枚。交換を3回ずつ(捨てたカードは表向きで場へ)。
    ・1回目の交換のあとと、最後に「賭け」。最後に文を見せ合って、点が高いほうがポットを取る。 */
@@ -120,7 +121,7 @@ import { Kit as K } from './play.js';
     if (!opp) { pickOpp(); return; }
     ME = player(); CPU = player(); K.setR(ME);
     var all = K.starterDeck(); for (var i = 0; i < 25; i++) { var c = K.randomCard(); if (c) all.push(c); } all.push(K.mk('pron', 'it'));
-    V = { opp: opp, all: all, n: 0, med: { me: START, cpu: START }, first: rnd() < .5 ? 'me' : 'cpu', stats: { win: 0, lose: 0 } };
+    V = { opp: opp, all: all, n: 0, med: { me: START, cpu: START }, first: rnd() < .5 ? 'me' : 'cpu', stats: { win: 0, lose: 0 }, t0: Date.now() };
     showVS(); nextHand();
   }
   function pickOpp() {
@@ -223,7 +224,11 @@ import { Kit as K } from './play.js';
     V.quest = K.pickQuest(V.usedQ = V.usedQ || []); QCTX = V.quest; V.mission = K.pickMissions(V.usedM = V.usedM || [], 1)[0].m;
     V.rule = pick(K.JOKERS.filter(function (j) { return !/^(bank|lucky|first|last)$/.test(j.id); }));
     V.pot = 0; V.c = { me: 0, cpu: 0 }; pay('me', ANTE); pay('cpu', ANTE);
-    withP(CPU, function () { K.fillTo(8); }); K.fillTo(8);
+    // 最初の8枚は敵とあなたで1枚ずつ交互に引く(先に引くのは先攻側)。入れかえ補正は最後に1回
+    for (var di = 1; di <= 8; di++) {
+      var order = V.first === 'cpu' ? ['cpu', 'me'] : ['me', 'cpu'];
+      order.forEach(function (who) { if (who === 'cpu') withP(CPU, function () { K.fillTo(di, di < 8); }); else K.fillTo(di, di < 8); });
+    }
     var g = K.guestCard(); if (g) { g.by = 'guest'; ME.field.unshift(g); }
     G_.mode = 'play'; G_.mark = []; say(pick(['よろしく!', 'いくよ〜', 'ふふふ…', 'さあ勝負!']));
     renderAll(); SFX.put();
@@ -355,6 +360,7 @@ import { Kit as K } from './play.js';
     var won = !quit && V.med.me > V.med.cpu, draw = !quit && V.med.me === V.med.cpu;
     var rec = K.store.get('vs') || {}, r = rec[V.opp.id] || { w: 0, l: 0 }; if (won) r.w++; else if (!draw) r.l++; rec[V.opp.id] = r; K.store.set('vs', rec);
     G_.vs = null; if (won) SFX.win(); else SFX.lose();
+    try { if (!quit && CORE && CORE.report) CORE.report('done', { play: 'cards', opp: V.opp.id, won: won, title: V.opp.name + 'との対戦', min: Math.round((Date.now() - V.t0) / 6e3) / 10, score: won ? 100 : draw ? 50 : 20, finished: true }); } catch (e) { }   // 記録へ(勝つとゲームのごほうびコイン)
     var s = K.screen('<div class="end"><h1>' + (won ? '🏆 勝ち!' : draw ? '引き分け' : '負け…') + '</h1><div class="st">' + V.opp.face + ' ' + V.opp.name + ' との対戦</div>' +
       '<div class="tot">あなた 🪙' + V.med.me + ' ・ ' + V.opp.name + ' 🪙' + V.med.cpu + '</div><div class="st">ハンド ' + V.stats.win + '勝 ' + V.stats.lose + '敗 ・ 通算 ' + r.w + '勝 ' + r.l + '敗</div>' +
       ((V.hist || []).length ? '<button class="btn ghost" id="hs">📚 今回の文をふりかえる(' + V.hist.length + ')</button>' : '') + '<button class="btn go" id="re">もう一回</button><button class="btn vs" id="ot">相手をかえる</button><button class="btn ghost" id="tt">タイトルへ</button></div>');
@@ -362,4 +368,5 @@ import { Kit as K } from './play.js';
     $('#re', s).onclick = function () { start(V.opp); }; $('#ot', s).onclick = function () { K.showTitle(); pickOpp(); }; $('#tt', s).onclick = function () { K.showTitle(); };
   }
 
-  export var VS = { start: start, _search: search, _score: scoreRow, _V: function () { return V; }, _me: function () { return ME; }, _cpu: function () { return CPU; }, OPPS: OPPS };
+  export function startById(id) { var o = OPPS.find(function (x) { return x.id === id; }); if (o) start(o); }
+  export var VS = { start: start, startById: startById, _search: search, _score: scoreRow, _V: function () { return V; }, _me: function () { return ME; }, _cpu: function () { return CPU; }, OPPS: OPPS };

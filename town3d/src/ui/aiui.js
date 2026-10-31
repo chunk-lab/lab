@@ -7,11 +7,13 @@ export function openAiSetup({ hud, ai, onDone }) {
   let prov = ai.state.provider;
   const render = () => {
     const P = PROVIDERS[prov], st = ai.state;
-    const p = hud.panel(`<h2>AIとおしゃべり</h2>
-      <p class="tw-note">自分のAIキーを使うと、住人と自由におしゃべりできます。料金はあなたのAI会社のアカウントにかかり、町の運営には一切かかりません。</p>
+    const p = hud.panel(`<h2>AIのキーを入れる</h2>
+      <p class="tw-note">住人と自由におしゃべりしたり、そら君に英語の相談をしたりするには、<b>自分のAIのキー</b>(AIを使うための合言葉のような長い文字)が必要です。料金がかかる場合は、あなたのAI会社のアカウントにかかります。町の運営は、キーもお金も受け取りません。</p>
+      <p class="tw-note"><b>はじめてなら Gemini がおすすめ</b>(無料で使えます)。下で会社を選ぶと、作り方が出ます。</p>
       <div class="tw-prov">${Object.entries(PROVIDERS).map(([id, v]) => `<button class="tw-btn${id === prov ? ' on' : ''}" data-p="${id}"><b>${esc(v.label)}</b><small>${esc(v.badge)}</small></button>`).join('')}</div>
+      <h3 class="tw-h3">作り方(${esc(P.label)})</h3>
       <ol class="tw-steps">${P.steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
-      <p class="tw-note">${esc(P.note)}</p>
+      <p class="tw-note">💰 ${esc(P.note)}</p>
       <a class="tw-btn tw-link" href="${P.keyUrl}" target="_blank" rel="noopener noreferrer">キーをつくるページを開く ↗</a>
       <input class="tw-key" type="password" autocomplete="off" spellcheck="false" placeholder="${esc(P.placeholder)}" value="${st.provider === prov && st.hasKey ? '••••••••••••' : ''}" data-saved="${st.provider === prov && st.hasKey ? 1 : 0}">
       <details class="tw-adv"><summary>くわしい設定</summary>
@@ -20,7 +22,13 @@ export function openAiSetup({ hud, ai, onDone }) {
         <p class="tw-note">きょう ${st.used} / ${st.cap} 回つかいました。</p></details>
       <div class="tw-status" role="status"></div>
       <div class="tw-actions"><button class="tw-btn main" data-a="test">つなげてためす</button><button class="tw-btn" data-a="clear">キーを消す</button><button class="tw-btn" data-a="close">とじる</button></div>
-      <p class="tw-note small">キーはこの端末の中にだけ保存します。会話の内容は、選んだAI会社に送られます。個人情報は書かないでね。</p>`);
+      <details class="tw-adv"><summary>うまくいかないとき</summary><ul class="tw-steps">
+        <li>キーの前後に空白や改行が入っていないか確かめる(もう一度コピーし直すのが早い)</li>
+        <li>上で選んだ会社と、キーを作った会社が同じか確かめる</li>
+        <li>OpenAI・Claude は、チャージ(支払い)をしていないと使えない</li>
+        <li>Gemini で「回数の上限」と出たら、その日の無料分を使い切っています。次の日にまた使えます</li>
+        <li>それでもだめなら、キーを作り直して貼り直す</li></ul></details>
+      <p class="tw-note small">🔒 キーはこの端末の中にだけ保存します。ほかの人に見せないでね(もれたら、キーを作ったページで消して作り直せばOK)。会話の内容は、選んだAI会社に送られるので、個人情報は書かないでね。</p>`);
     const key = p.querySelector('.tw-key'), status = p.querySelector('.tw-status');
     key.addEventListener('keydown', e => e.stopPropagation());
     key.addEventListener('focus', () => { if (key.dataset.saved === '1') { key.value = ''; key.dataset.saved = '0'; } });
@@ -47,13 +55,15 @@ export function openAiSetup({ hud, ai, onDone }) {
 }
 
 // 住人との自由なおしゃべり。ask(text) → Promise<string>
-export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote }) {
+export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, maxLen = 80, low = false }) {
   const p = hud.panel(`<h2>${esc(name)}<small>${esc(role || '')}</small></h2>
     <div class="tw-enrow"><button class="tw-btn" data-a="en"></button><button class="tw-btn" data-a="lv"></button></div>
     <div class="tw-log" aria-live="polite"></div>
     <div class="tw-tools" hidden></div>
-    <div class="tw-chatrow"><input class="tw-say" maxlength="80" placeholder="話しかける"><button class="tw-btn main" data-a="send">送る</button></div>
-    <div class="tw-actions"><button class="tw-btn" data-a="close">またね</button></div>`);
+    <div class="tw-chatrow"><input class="tw-say" maxlength="${maxLen}" placeholder="話しかける"><button class="tw-btn main" data-a="send">送る</button></div>
+    <div class="tw-actions"><button class="tw-btn" data-a="close">${low ? "おしゃべりをおわる" : "とじる"}</button></div>`, null, { sticky: true });   // 会話は、外をタップしても消えない(「とじる」で終える)
+  if (low) p.classList.add('tw-low');   // 画面の下半分に出す(デート中は、上で2人が見えるように)
+  if (onClose && bus) { const offC = bus.on('ui:panelClosed', () => { offC && offC(); try { onClose(); } catch (e) { } }); }   // とじたら(住人の記憶をまとめる など)
   const log = p.querySelector('.tw-log'), inp = p.querySelector('.tw-say'), tools = p.querySelector('.tw-tools');
   const enB = p.querySelector('[data-a="en"]'), lvB = p.querySelector('[data-a="lv"]');
   const showEn = () => { const e = getEn(); enB.textContent = 'English: ' + (e.on ? 'ON' : 'OFF'); enB.classList.toggle('on', e.on); lvB.hidden = !e.on; lvB.textContent = e.level === 'easy' ? 'やさしい' : 'ふつう'; };
@@ -66,6 +76,22 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     log.appendChild(d); log.scrollTop = log.scrollHeight; d._t = t; return d;
   };
   // 英語の返事:単語ごとにタップできる形にして、「訳」ボタンを付ける
+  const isJa = s => /[\u3040-\u30ff\u4e00-\u9fff]/.test(s);
+  // 返事は「英語」と「日本語」の両方を持っておき、いまのモードに合わせて見せる(切りかえても、AIを呼びなおさない)
+  const msgs = [];
+  const render = d => {
+    d.querySelectorAll('.tw-trbtn,.tw-tr').forEach(x => x.remove());
+    d._w = [];
+    const en = getEn().on;
+    if (en && d._en) enable(d, d._en);
+    else if (!en && d._ja) { d._text = d._ja; d._t.textContent = d._ja; }
+    else if (d._en) enable(d, d._en);   // 日本語がないときは、あるほうをそのまま見せる
+    else { d._text = d._ja || ''; d._t.textContent = d._ja || ''; }
+  };
+  const setPair = (d, parts) => {   // 「英語 ||| 日本語」(または逆)を、文字の種類で見わけて入れる
+    d._en = d._ja = '';
+    for (const x of parts.map(q => q.trim().replace(/^["「『]|["」』]$/g, '')).filter(Boolean)) { if (isJa(x)) d._ja = d._ja || x; else d._en = d._en || x; }
+  };
   const enable = (d, text) => {
     d._text = text; d._w = [];
     d._t.textContent = '';
@@ -89,16 +115,17 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     showTools();
   };
   const toast = msg => { const x = tools; x.hidden = false; x.innerHTML = `<span class="tw-seltxt">${esc(msg)}</span>`; setTimeout(() => { if (!sel) x.hidden = true; }, 1600); };
-  add('npc', first);
+  { const d0 = add('npc', first); d0._ja = first; msgs.push(d0); render(d0); }
   let busy = false;
   const send = async () => {
     const t = inp.value.trim(); if (!t || busy) return;
-    inp.value = ''; busy = true; clearSel(); add('me', t);
+    inp.value = ''; busy = true; clearSel(); add('me', t); try { bus && bus.emit('chat:say', { name, text: t }); } catch (e) { }
     const en = getEn().on;
     const wait = add('npc', '…'); wait.classList.add('wait');
     try {
-      const out = await ask(t, part => { wait.classList.remove('wait'); wait._t.textContent = part; log.scrollTop = log.scrollHeight; });
-      if (en && /[A-Za-z]/.test(out)) enable(wait, out); else wait._t.textContent = out;
+      const out = await ask(t, part => { wait.classList.remove('wait'); wait._t.textContent = part.split('|||')[0].trim(); log.scrollTop = log.scrollHeight; });
+      setPair(wait, String(out).split('|||')); msgs.push(wait); render(wait);
+      log.scrollTop += wait.getBoundingClientRect().top - log.getBoundingClientRect().top - 6;   // 長い返事は、頭から読めるように
     } catch (e) { wait._t.textContent = e.message || 'うまく話せなかったよ'; wait.classList.add('err'); }
     wait.classList.remove('wait'); busy = false; inp.focus();
   };
@@ -109,7 +136,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     const a = b.dataset.a;
     if (a === 'send') send();
     else if (a === 'close') hud.closePanel();
-    else if (a === 'en') { const c = getEn(); setEn({ on: !c.on, level: c.level }); showEn(); }
+    else if (a === 'en') { const c = getEn(); setEn({ on: !c.on, level: c.level }); }
     else if (a === 'lv') { const c = getEn(); setEn({ on: c.on, level: c.level === 'easy' ? 'normal' : 'easy' }); showEn(); }
     else if (a === 'unsel') clearSel();
     else if (a === 'savesel' && sel) { const txt = sel.el._w.slice(sel.a, sel.b + 1).map(x => x.textContent).join(' '), single = sel.a === sel.b, sentence = sel.el._text; clearSel(); toast(saveNote({ kind: single ? 'word' : 'phrase', text: txt, sentence })); }
@@ -117,10 +144,14 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     else if (a === 'tr') {
       const d = b.closest('.tw-msg'); let tr = d.querySelector('.tw-tr');
       if (tr) { tr.hidden = !tr.hidden; return; }
-      tr = document.createElement('div'); tr.className = 'tw-tr'; tr.textContent = '…'; d.appendChild(tr);
-      try { tr.textContent = await translate(d._text); } catch (err) { tr.textContent = err.message || '訳せなかったよ'; }
+      tr = document.createElement('div'); tr.className = 'tw-tr'; tr.textContent = d._ja || '…'; d.appendChild(tr);
+      if (!d._ja) { try { d._ja = await translate(d._text); tr.textContent = d._ja; } catch (err) { tr.textContent = err.message || '訳せなかったよ'; } }
+      if (!d._seen && d._ja && d._en && onSeen) { d._seen = 1; try { onSeen(d._en, d._ja); } catch (e) { } }   // 訳を見た英文は、あしたのふりかえりに出す
       log.scrollTop = log.scrollHeight;
     }
   });
+  // 英日の切りかえ(上バーのボタンからも)が来たら、いまある返事も全部切りかえる。パネルを閉じたら受け取りをやめる
+  const offLang = bus.on('lang', () => { clearSel(); showEn(); msgs.forEach(render); });
+  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); });
   setTimeout(() => inp.focus(), 50);
 }

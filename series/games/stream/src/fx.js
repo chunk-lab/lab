@@ -68,7 +68,7 @@ export function comboPop(){
   const c=RUN.combo;if(c<5||c%5)return;
   $("arena").querySelectorAll(".cpop").forEach(e=>e.remove());
   const who=popTurn++%2?"boy":"girl";const d=document.createElement("div");d.className="cpop";
-  d.innerHTML=`<div class="say"><b>${CWORD[c]||(c%20?"Excellent!!":"Unstoppable!!")}</b><span>${c} COMBO</span></div><img alt="" src="img/chara/${who}/joy.webp">`;
+  d.innerHTML=`<div class="say"><b>${CWORD[c]||(c%20?"Excellent!!":"Unstoppable!!")}</b><span>${c} COMBO</span></div><img alt="" src="${ENV.base}img/chara/${who}/joy.webp">`;
   $("arena").appendChild(d);if(innerHeight>innerWidth){const t=$("txt");d.style.top=Math.max(4,t.offsetTop+t.offsetHeight-d.offsetHeight+6)+"px"}setTimeout(()=>d.remove(),innerHeight>innerWidth?1700:1300);
   if(c%10===0)voice({10:"nice",20:"excellent",30:"wow",40:"excellent",50:"perfect"}[c]||"wow");
 }

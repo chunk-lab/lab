@@ -5,11 +5,19 @@
 //   script … 別ファイルの JS を読み込み、window[global].mount(要素, options) を呼ぶ(ぷにチャンク型)
 //   iframe … 別の HTML をそのまま入れる。postMessage で町とやり取りする(sdk/town-sdk.js)
 
-export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [] }) {
+export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio, getNotes = () => [], features = [], gems = null, house = null, photo = null, paramsFor = null, route = null, member = null, dictUrl = null, learn = null }) {
   const registry = new Map();
   const loadedScripts = new Map();
   let current = null;
 
+  // コイン・ダイヤの表示は、写しを持たず、財布の変化のたびに [data-bind] を書きかえる(ずれない)
+  const fmtLive = n => (Math.floor(+n) || 0).toLocaleString('ja-JP');
+  const live = () => {
+    const c = wallet.get(), g = gems ? gems.get() : null;
+    layer.querySelectorAll('[data-bind="coins"]').forEach(e => { e.textContent = fmtLive(c); });
+    if (g != null) layer.querySelectorAll('[data-bind="gems"]').forEach(e => { e.textContent = fmtLive(g); });
+  };
+  bus.on('wallet', live);
   const layer = document.createElement('div');
   layer.className = 'tw-app-layer';
   layer.hidden = true;
@@ -24,22 +32,42 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
       audio: getAudio(),
       storage: storage.scope('app:' + def.id),
       notes: { list: getNotes },   // ことばノート(読み取り専用)。チャンクストリームなどの復習アプリが使う
-      wallet: { get: wallet.get, add: (n, why) => wallet.add(n, def.id + (why ? ':' + why : '')) },
+      wallet: { get: wallet.get, add: (n, why) => wallet.add(n, def.id + (why ? ':' + why : '')), give: (n, why) => wallet.give(n, def.id + (why ? ':' + why : '')), spend: (n, why) => wallet.spend(n, def.id + (why ? ':' + why : '')) },
+      gems,    // ダイヤ {get, spend}。組み込み先がなければ null(その場合コインだけで広げる)
+      house,   // 自宅の広げ方の値段
+      member,  // 会員 {paid()}。組み込み先がなければ null(無料会員あつかい)
+      dictUrl, // 辞書データの場所(英語ゲーム用)
+      learn,   // 単語ごとの学習の記録(組み込み先の共通の記録)。なければ null(アプリが自分で持つ)
+      photo,   // 写真の枠の設定(はじめの枚数・最大・ダイヤの値段)
+      features: features.slice(),   // 組み込み先(チャンクタウン)が用意している機能。'study'＝勉強部屋を開ける
       emit: (name, data) => bus.emit('app:event', { app: def.id, name, data }),
       setTitle: t => { frame.querySelector('.tw-app-title').textContent = t; },
+      setHead: btns => {   // 上のバー「町にもどる」の左に、アプリ用のボタンを並べる([{label, fn}]。空で消す)
+        const hd = frame.querySelector('.tw-app-head'), cl = frame.querySelector('.tw-app-close'); hd.querySelector('.tw-app-hb')?.remove();
+        if (!btns || !btns.length) return;
+        const w = document.createElement('span'); w.className = 'tw-app-hb';
+        btns.forEach(b => { const e = document.createElement('button'); e.className = 'tw-app-hbtn'; e.textContent = b.label; e.onclick = () => b.fn(); w.appendChild(e); });
+        hd.insertBefore(w, cl);
+      },
+      open: (id, p) => setTimeout(() => (route ? route(id, p) : open(id, p)), 0),   // route＝町の入口(組み込み先のゲームへも行ける)   // ほかのアプリへ(いまのアプリは閉じる)。家→ショップなど
       close: result => close(result),
     };
   }
 
   async function open(id, params = {}) {
     const def = registry.get(id);
+    if (paramsFor) params = paramsFor(id, params) || params;   // 町の様子(時刻など)をアプリに足す
     if (!def) { bus.emit('toast', 'まだ準備中みたい'); return false; }
     if (current) close();
     const frame = document.createElement('div');
     frame.className = 'tw-app';
     frame.innerHTML = `<header class="tw-app-head"><span class="tw-app-title"></span><button class="tw-app-close" aria-label="町にもどる">町にもどる</button></header><div class="tw-app-body"></div>`;
     frame.querySelector('.tw-app-title').textContent = def.title;
-    frame.querySelector('.tw-app-close').onclick = () => close();
+    const back = params && params.from === 'home' && id !== 'home' && registry.get('home');   // 家から開いたものは「家にもどる」
+    if (back) { const b = frame.querySelector('.tw-app-close'); b.textContent = '🏠 家にもどる'; b.setAttribute('aria-label', '家にもどる'); }
+    const rb = params && params.back && params.back.id && registry.get(params.back.id) ? params.back : null;   // 来た施設(アミューズメントセンターなど)にもどる
+    if (rb) { const b = frame.querySelector('.tw-app-close'); b.textContent = rb.label || 'もどる'; b.setAttribute('aria-label', rb.label || 'もどる'); }
+    frame.querySelector('.tw-app-close').onclick = () => { const go = () => (rb ? open(rb.id, rb.params || {}) : back ? open('home', {}) : close()); if (current?.frame === frame && current.inst?.beforeClose?.(go)) return; go(); };   // アプリが最後に見せたいものがあれば先に
     layer.appendChild(frame);
     layer.hidden = false;
     const body = frame.querySelector('.tw-app-body');
@@ -112,7 +140,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
             case 'ready': hello(); break;
             case 'close': ctx.close(m.result); break;
             case 'event': ctx.emit(m.name, m.data); break;
-            case 'coins': send({ type: 'coins', id: m.id, coins: ctx.wallet.add(m.amount, m.reason) }); break;
+            case 'coins': send({ type: 'coins', id: m.id, coins: ctx.wallet.add(Math.min(500, +m.amount || 0), m.reason) }); break;   // 外のページ(iframe)のアプリは信用できないので、1回に増やせるのは500まで(ここだけ)
             case 'storage:get': send({ type: 'storage', id: m.id, value: ctx.storage.get(m.key) }); break;
             case 'storage:set': ctx.storage.set(m.key, m.value); break;
             case 'title': ctx.setTitle(String(m.title || '')); break;

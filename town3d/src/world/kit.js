@@ -185,6 +185,8 @@ export const wallMat = c => texMat(c, texWall, 1 / 2.4, 'wall');
 export const roofMat = c => texMat(c, texRoof, 1 / 1.6, 'roof');
 export const paveMat = c => texMat(c, texPave, 1 / 2.4, 'pave');
 
+export function eachTex(prefix, fn) { for (const [k, m] of mats) if (k.startsWith('tex|' + prefix)) fn(m); }
+export function eachFoliage(fn) { for (const m of mats.values()) if (m.userData && m.userData.vc === 'foliage') fn(m); }
 export function foliageMat(color, season = '') {   // 木の葉(上ほど明るく、下ほど暗い陰影を焼きこむ専用の材質)。season は桜の切りかえ用
   const k = 'foliage|' + color + season;
   if (!mats.has(k)) { const m = new THREE.MeshToonMaterial({ color, gradientMap: rampSoft(), vertexColors: true }); m.userData.vc = 'foliage'; if (season) m.userData.season = season; mats.set(k, m); }

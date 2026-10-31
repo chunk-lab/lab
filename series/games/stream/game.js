@@ -7,8 +7,10 @@ import html from './src/stream.html';
 import './src/stream.css';
 import { ENV, loadSave, stopAll } from './src/base.js';
 import { init_screens } from './src/screens.js';
-import { init_play, endRun } from './src/play.js';
+import { init_play, endRun, startRun } from './src/play.js';
 import { init_fx } from './src/fx.js';
+import { playList, wordSet } from './src/words.js';
+import { P, setCur, renderDetail, show } from './src/screens.js';
 
 import { hush, bgmStop } from './src/sound.js';
 const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;600;700&display=swap';
@@ -22,6 +24,9 @@ export default {
     el.innerHTML = html.replace(/(src|href)="(img|audio)\//g, (m, at, d) => `${at}="${ctx.base}${d}/`);
     loadSave(); init_screens(); init_play(); init_fx();
     ctx.showBack(true);
+    if (ctx.opts && ctx.opts.passage) setTimeout(() => { try { const p = P(ctx.opts.passage); if (p) { setCur(p); renderDetail(); show('sDetail'); if (ctx.opts.run) startRun(1); } } catch (e) { console.error(e); } }, 50);   // 図書館・ミッションから本を指定(run:最初から通しで始める)
+    if (ctx.opts && ctx.opts.wordset) setTimeout(() => { try { const w = ctx.opts.wordset; setCur(wordSet(w.lv, w.k, w.kind || 'w')); startRun(1); } catch (e) { console.error(e); } }, 50);   // ミッション:単語セットを指定
+    if (ctx.opts && Array.isArray(ctx.opts.words)) setTimeout(() => { try { playList(ctx.opts.title, ctx.opts.words); } catch (e) { console.error(e); } }, 50);   // 勉強ノートから「練習する」
     return {
       unmount() {
         try { ctx.core.reader.close(); } catch (e) { } try { endRun(); } catch (e) { } try { hush(); } catch (e) { } try { bgmStop(); } catch (e) { }

@@ -34,7 +34,7 @@ export function chunkHTML(c,gs,ge,fill){
 
 /* ---- 通しプレイ ---- */
 export function startRun(from){
-  goFull();hush();closeOv();RUN={p:CUR,from,res:[],combo:0,maxc:0,review:[],flow:true};
+  goFull();hush();closeOv();RUN={p:CUR,from,res:[],combo:0,maxc:0,review:[],flow:true,t0:Date.now(),missed:[]};
   show("sPlay");ac();bgmStart(118,"game");crowd().innerHTML="";BK.S=1;setTimeout(()=>{try{bigK()}catch(e){}},300);
   buildGrids();cancelAnimationFrame(RAF);LAST=performance.now();RAF=requestAnimationFrame(loop);
   const beat=60/118*1000;
@@ -217,6 +217,7 @@ export function correct(L,it,btn){
 }
 export function wrong(L,it,s,btn){
   G.wrong++;RUN.combo=0;SE.ng();face("surprise");it.flawed=true;s.dis=true;
+  noteMiss(it);
   try{bkShrink(.5)}catch(e){}
   if(it.el){const e=it.el;e.classList.remove("oops");void e.offsetWidth;e.classList.add("oops");setTimeout(()=>e.classList.remove("oops"),460)}
   btn.classList.remove("ng");void btn.offsetWidth;btn.classList.add("ng","dis");
@@ -225,6 +226,7 @@ export function wrong(L,it,s,btn){
 }
 export function missIt(L,it){
   try{bkShrink(.6)}catch(e){}
+  noteMiss(it);
   L.q.shift();it.flawed=true;resolve(it);G.miss++;RUN.combo=0;SE.miss();face("sad");G.pen+=3;penFx("+3.0");
   if(G.rqCur===it)G.rqCur=null;
   it.el.classList.add("miss");it.el.classList.remove("spk");setJa(it,null);const a=document.createElement("div");a.className="ans";a.textContent=it.ans;it.el.appendChild(a);
@@ -295,6 +297,10 @@ export function pause(){if(!RUN||PAUSED||$("sPlay").hidden)return;PAUSED=true;hu
     b.querySelector("#pRes").onclick=go;const pf=b.querySelector("#pFull");if(pf)pf.onclick=()=>{goFull();go()};
     b.querySelector("#pRe").onclick=()=>{go();const f=RUN.from;endRun();startRun(f)};
     b.querySelector("#pQuit").onclick=()=>{go();endRun();bgmStart(84,"menu");if(CUR&&CUR.word){renderWords();show("sWords")}else{renderDetail();show("sDetail")}}})}
+/* まちがえた単語は、終わったときに勉強ノートへ（単語の段だけ。長いチャンクは入れない） */
+function noteMiss(it){try{if(RUN&&it&&it.kind===1&&it.en&&it.ans&&!RUN.missed.some(x=>x.en===it.en))RUN.missed.push({en:it.en,ja:it.ans})}catch(e){}}
+function reportDone(r,T,acc,rank){try{const p=r.p,wc=p.word?0:(p.chunks||[]).reduce((a,c)=>a+String(plain(c)).split(/\s+/).filter(Boolean).length,0);
+  ENV.ctx&&ENV.ctx.report("done",{play:p.word?"stream.word":"stream.read",passage:p.word?undefined:p.id,set:p.word?p.id:undefined,whole:r.from===1,title:p.title,min:Math.round((Date.now()-r.t0)/6e3)/10,words:r.from===1?wc:0,score:Math.round(acc*100),rank,missed:r.missed,wl:p.word&&r.from===1?(p.words||[]).map(w=>[w[0],w[2]]):undefined,finished:true})}catch(e){}}
 export function endRun(){cancelAnimationFrame(RAF);hush();bgmStop();if(G)G.over=true;G=null;RUN=null;$("arena").querySelectorAll(".inter,.cpop").forEach(e=>e.remove())}
 
 /* ---- 段の終わり：ランクと星をちらっと見せて、そのまま次の段へ ---- */
@@ -315,6 +321,7 @@ export function stageEnd(){
 export function finalResult(){
   const r=RUN,p=r.p;const T=r.res.reduce((a,x)=>a+x.time,0),par=r.res.reduce((a,x)=>a+x.par,0),tot=r.res.reduce((a,x)=>a+x.total,0),fst=r.res.reduce((a,x)=>a+x.first,0),acc=fst/tot;
   const {rank}=rankOf(acc,T,par);let isNew=false;
+  reportDone(r,T,acc,rank);
   if(r.from===1){const b=SV.best[p.id]=SV.best[p.id]||{};if(!b.run||T<b.run.time){isNew=!!b.run;b.run={time:+T.toFixed(2),rank}}save()}
   bgmStop();voice(rank==="S"?"perfect":"stage_clear");
   const rc={S:"var(--gold)",A:"var(--accent)",B:"var(--great)",C:"var(--muted)"}[rank];

@@ -1,10 +1,11 @@
-import { SLOT_OF_KIND, aiBox, buildItem, skelHtml } from './addword.js';
+import { SLOT_OF_KIND, aiBox, aiPrompt, buildItem, parseAi, skelHtml } from './addword.js';
 import { artCheck } from './emoji_fix.js';
 import { FRONTS, LEX, OFFICIAL, TENSES, buildLex, ing, newClause, past, pp, s3, sentenceJa, sentenceText } from './engine.js';
 import { ENV, onDoc } from './env.js';
 import { tx } from './i18n.js';
 import { basePack, exportPack, importPackUI, packFromSet } from './pack.js';
-import { $, APP, esc, ico, resetAll } from './play.js';
+import { $, APP, esc, go, ico, resetAll } from './play.js';
+import { loadPlay, runTry } from './playsent.js';
 // ================= APP STATE =================
 export let STORE_KEY;
 export let DEF_SETTINGS;
@@ -58,22 +59,39 @@ ${S.adv?`<div class="advset">
  { const tv=$('#testv'); if(tv) tv.onclick=()=>say('I am playing soccer in the park with my friends.'); } { const cs=$('#commonSet'); if(cs) cs.onclick=()=>ENV.core.ui.settings(); }
 }
 export function refreshLex(){ buildLex(activeSets()); }
+// マイセットの中身:単語/熟語・慣用句/文章に分けて出す。それぞれ ▶ を押すと、AIが文を考えて「つくる」に入る
+const clsOf=it=>it.cls||(/\s/.test((it.en+(it.tail?' '+it.tail:'')).trim())?'phrase':'word');
+function setBody(s){
+ const itH=it=>`<span class="it pos-${kindPos(it.kind)}">${ico(it.e,'ic sm')} ${esc(it.en+(it.tail?' '+it.tail:''))} <small>${esc(it.ja)}</small><button data-try="${s.id}|${it.id}" aria-label="使ってみる" style="color:#2a8">▶</button><button data-del="${s.id}|${it.id}" aria-label="削除">×</button></span>`;
+ const W=s.items.filter(i=>clsOf(i)==='word'), P=s.items.filter(i=>clsOf(i)==='phrase'), T=s.sentences||[];
+ const sec=(t,h)=>`<div class="note" style="margin:8px 0 2px">${t}</div><div class="items">${h}</div>`;
+ if(!W.length&&!P.length&&!T.length) return '<div class="items"><p class="note">まだありません。「ことば登録」から追加できます。</p></div>';
+ return (W.length?sec('単語 '+W.length,W.map(itH).join('')):'')+(P.length?sec('熟語・慣用句 '+P.length,P.map(itH).join('')):'')+(T.length?sec('文章 '+T.length,T.map((t,i)=>`<span class="it"><small style="margin-right:4px">📝</small>${esc(t.en)} <small>${esc(t.ja||'')}</small><button data-trys="${s.id}|${i}" aria-label="使ってみる" style="color:#2a8">▶</button></span>`).join('')):'');
+}
+// 画面を描き直すと、スクロールが一番上に戻ってしまう(連続で選びにくい)。描き直しの前後で位置を保つ
+function keepScroll(el, put){
+ let sc=el; while(sc&&sc!==document.body){ const o=getComputedStyle(sc).overflowY; if((o==='auto'||o==='scroll')&&sc.scrollHeight>sc.clientHeight) break; sc=sc.parentElement; }
+ const top=sc&&sc!==document.body?sc.scrollTop:0; put();
+ if(sc&&top){ sc.scrollTop=top; requestAnimationFrame(()=>{ sc.scrollTop=top; }); }
+}
 export function renderSets(){
  const mine=DB.sets.map(s=>`<div class="setc"><div class="sethd"><label class="tgl"><input type="checkbox" data-on="${s.id}" ${s.on?'checked':''}><span><b>${esc(s.name)}</b></span></label><span class="cnt">${s.items.length}語${s.sentences&&s.sentences.length?' / '+s.sentences.length+'文':''}</span></div>
-  <div class="items">${s.items.map(it=>`<span class="it pos-${kindPos(it.kind)}">${ico(it.e,'ic sm')} ${esc(it.en+(it.tail?' '+it.tail:''))} <small>${esc(it.ja)}</small><button data-del="${s.id}|${it.id}" aria-label="削除">×</button></span>`).join('')||'<p class="note">まだありません。「ことば登録」から追加できます。</p>'}</div>
+  ${setBody(s)}
   <div class="rowb"><button class="chip" data-pub="${s.id}">${s.published?'公開中（試作）':'公開する'}</button><button class="chip" data-ren="${s.id}">名前を変える</button><button class="chip" data-exp="${s.id}">📤 ${tx('pack.export')}</button></div></div>`).join('');
  const com=COMMUNITY.map(c=>{ const r=DB.ratings[c.id]||{}; const sc=c.score; return `<div class="setc"><div class="sethd"><b>${esc(c.name)}</b><span class="cnt">by ${esc(c.by)}・${c.uses+(DB.community[c.id]?1:0)}人が使用</span></div><p class="note">${esc(c.desc)}</p>
   <div class="items">${c.items.map(it=>`<span class="it pos-${kindPos(it.kind)}">${ico(it.e,'ic sm')} ${esc(it.en)} <small>${esc(it.ja)}</small></span>`).join('')}</div>
   <div class="rate">${[['easy','👍','わかりやすい'],['useful','💡','役立った'],['again','🔁','また使う'],['wrong','⚠️','まちがいを報告']].map(([k,e,l])=>`<button class="${r[k]?'on':''}" data-rt="${c.id}|${k}">${e} ${l} <b>${sc[k]+(r[k]?1:0)}</b></button>`).join('')}</div>
   <div class="rowb"><button class="chip ${DB.community[c.id]?'on':''}" data-add="${c.id}">${DB.community[c.id]?'✓ ゲームに入っています':'＋ ゲームに追加'}</button></div></div>`; }).join('');
- $('#sets').innerHTML=`<h2>ことばセット</h2><p class="note">オンにしたセットの言葉が「つくる」「みつける」の候補にそのまま出てきます。</p>
+ keepScroll($('#sets'),()=>{ $('#sets').innerHTML=`<h2>ことばセット</h2><p class="note">オンにしたセットの言葉が「つくる」「みつける」の候補にそのまま出てきます。</p>
  <section><h3>公式</h3><div class="setc"><div class="sethd"><b>きほんセット</b><span class="cnt">${OFFICIAL.people.length+OFFICIAL.things.length+OFFICIAL.verbs.length+OFFICIAL.states.length+OFFICIAL.places.length+OFFICIAL.times.length+OFFICIAL.manners.length}語・いつもオン</span></div></div></section>
  <section><h3>自分のセット</h3>${mine}<div class="rowb wrap"><button class="chip" id="newset">＋ 新しいセット</button><button class="chip" id="impPack">📥 ${tx('pack.import')}</button></div><p class="note">パックは「英語の中身」と「言語ごとの意味」に分かれた共有用のファイルです。ほかの人のパックを読みこんだり、自分のセットを渡したりできます。</p><details><summary class="note">翻訳・開発用</summary><button class="chip" id="basePack">📤 ${tx('pack.base')}</button></details></section>
  <section><h3>みんなのセット <span class="note">（試作：サンプル表示）</span></h3><div class="pts">🪙 あなたのポイント <b>${DB.points}</b><span class="note">公開したセットが評価されるとたまります</span></div>${com}</section>
- ${DB.log.length?`<section><h3>作った文</h3>${DB.log.slice(0,12).map(l=>`<button class="logl" data-say="${esc(l.en)}"><span class="en">${esc(l.en)}</span><small>${esc(l.ja)}</small></button>`).join('')}</section>`:''}`;
+ ${DB.log.length?`<section><h3>作った文</h3>${DB.log.slice(0,12).map(l=>`<button class="logl" data-say="${esc(l.en)}"><span class="en">${esc(l.en)}</span><small>${esc(l.ja)}</small></button>`).join('')}</section>`:''}`; });
  const R=$('#sets');
  R.querySelectorAll('[data-on]').forEach(b=>b.onchange=()=>{ DB.sets.find(s=>s.id===b.dataset.on).on=b.checked; save(); refreshLex(); });
  R.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const [sid,iid]=b.dataset.del.split('|'); const s=DB.sets.find(x=>x.id===sid); s.items=s.items.filter(i=>i.id!==iid); save(); refreshLex(); renderSets(); });
+ R.querySelectorAll('[data-try]').forEach(b=>b.onclick=async()=>{ const [sid,iid]=b.dataset.try.split('|'); const st=DB.sets.find(x=>x.id===sid), it=st&&st.items.find(i=>i.id===iid); if(!it) return; b.textContent='…'; try{ const p=await runTry({en:(it.en+(it.tail?' '+it.tail:'')).trim(), ja:it.ja, cls:clsOf(it), kind:it.kind}); if(p){ loadPlay(p); return; } }catch(e){ toast(String(e&&e.message||e)); } b.textContent='▶'; });
+ R.querySelectorAll('[data-trys]').forEach(b=>b.onclick=async()=>{ const [sid,i]=b.dataset.trys.split('|'); const st=DB.sets.find(x=>x.id===sid), t=st&&(st.sentences||[])[+i]; if(!t) return; b.textContent='…'; try{ const p=await runTry({en:t.en, ja:t.ja, cls:'sentence'}); if(p){ loadPlay(p); return; } }catch(e){ toast(String(e&&e.message||e)); } b.textContent='▶'; });
  R.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{ const id=b.dataset.add; DB.community[id]=!DB.community[id]; save(); refreshLex(); renderSets(); toast(DB.community[id]?'ゲームに追加しました':'ゲームから外しました'); });
  R.querySelectorAll('[data-rt]').forEach(b=>b.onclick=()=>{ const [id,k]=b.dataset.rt.split('|'); DB.ratings[id]=DB.ratings[id]||{}; DB.ratings[id][k]=!DB.ratings[id][k]; save(); renderSets(); });
  R.querySelectorAll('[data-pub]').forEach(b=>b.onclick=()=>publishCheck(b.dataset.pub));
@@ -87,7 +105,7 @@ export function kindPos(k){ return {people:'noun',things:'noun',verbs:'verb',sta
 export function publishCheck(sid){
  const s=DB.sets.find(x=>x.id===sid); const issues=[];
  if(!s.items.length) issues.push('言葉が1つもありません');
- const seen={}; s.items.forEach(it=>{ const k=it.kind+it.en.toLowerCase(); if(seen[k]) issues.push(`「${it.en}」が重複しています`); seen[k]=1; if(!it.ja) issues.push(`「${it.en}」に日本語がありません`); if(/[^\x20-\x7E’]/.test(it.en)) issues.push(`「${it.en}」に英語以外の文字があります`); const off=[...LEX.people,...LEX.things,...LEX.verbs].find(o=>!o.custom && o.en.toLowerCase()===it.en.toLowerCase()); if(off) issues.push(`「${it.en}」は公式セットにもあります`); });
+ const fullOf=o=>(String(o.en||'')+(o.tail?' '+o.tail:'')).trim().toLowerCase(); const seen={}; s.items.forEach(it=>{ const k=it.kind+fullOf(it); if(seen[k]) issues.push(`「${fullOf(it)}」が重複しています`); seen[k]=1; if(!it.ja) issues.push(`「${it.en}」に日本語がありません`); if(/[^\x20-\x7E’]/.test(it.en)) issues.push(`「${it.en}」に英語以外の文字があります`); const off=[...LEX.people,...LEX.things,...LEX.verbs].find(o=>!o.custom && fullOf(o)===fullOf(it)); if(off) issues.push(`「${fullOf(it)}」は公式セットにもあります(公式にないものだけ公開できます)`); });
  if(issues.length){ alert('公開前のチェック\n\n'+issues.slice(0,8).map(x=>'・'+x).join('\n')+'\n\n直してからもう一度お試しください。'); return; }
  s.published=!s.published; save(); renderSets(); toast(s.published?'公開しました（試作ではこの端末の中だけ）':'公開をやめました');
 }
@@ -163,29 +181,34 @@ export function renderReg(){
  <label>日本語<input id="rJa" value="${esc(r.ja)}" placeholder="例：ラテ / 練習する / ジムで" autocomplete="off"></label>
  <div class="rowb"><label class="pic">絵文字か画像<input id="rE" value="${/^data:/.test(r.e)?'':esc(r.e)}" placeholder="🧁" maxlength="4"></label><label class="chip upl">画像を選ぶ<input type="file" id="rImg" accept="image/*" hidden></label>${/^data:/.test(r.e)?ico(r.e,'ic prev'):''}</div></section>`;
  if(r.en.trim()){
+  const cls=kind==='sentence'?'sentence':(r.cls||(/\s/.test(r.en.trim())?'phrase':'word'));
+  h+=`<section><h3>区分</h3><div class="rowb">${[['word','単語'],['phrase','熟語・慣用句'],['sentence','文章']].map(([k,l])=>`<button class="chip ${cls===k?'on':''}" data-cls="${k}">${l}</button>`).join('')}</div><p class="note">単語と熟語は別々に登録できます。マイセットでも、この区分で分かれます。</p></section>`;
   const slot=kind==='sentence'?null:SLOT_OF_KIND[kind];
   const SUB={noun:[['people','人・動物'],['things','もの']],back:[['times','いつ'],['places','どこ'],['manners','どんなふうに']]};
   h+=`<section><h3>文のどこに入る？ ${r.auto&&!r.kind?'<span class="autot">自動判定</span>':''}</h3>${skelHtml(slot,false)}${slot&&SUB[slot]?`<div class="rowb">${SUB[slot].map(([k,l])=>`<button class="chip ${kind===k?'on':''}" data-kd="${k}">${l}</button>`).join('')}</div>`:''}<div class="rowb"><button class="chip ${kind==='sentence'?'on':''}" data-kd="sentence">文ごと登録する</button></div>
   <label class="note">例文（あれば。AIが文の中の位置から判断します）<input id="rEx" value="${esc(r.ex)}" placeholder="例：I usually hang out with my friends on Sundays." autocomplete="off"></label><div class="aibox" id="rAi"></div></section>`;
   if(kind==='sentence'){ const sp=splitSentence(r.en); r.sentence=sp; h+=`<section><h3>文をまとまりに分けました</h3><p class="note">それぞれの日本語を入れると、ほかの文でも使えるようになります（空のままなら文だけ保存）。</p><div class="spl">${sp.map((c,i)=>`<div class="spr"><span class="ck pos-${kindPos(c.kind)}"><span class="en">${esc(c.kind==='verbs'&&!c.known?c.lemma:c.en)}</span></span><select data-sk="${i}">${KINDS.filter(k=>k[0]!=='sentence').map(([k,l])=>`<option value="${k}" ${c.kind===k?'selected':''}>${l}</option>`).join('')}</select><input data-sj="${i}" placeholder="日本語" value="${esc(c.ja||'')}"></div>`).join('')}</div></section>`; }
   else if(kind){ const x=Object.assign(autoExtra(kind,r.en,r.ja), r.extra); r.x=x; h+=extraForm(kind,x); h+=previewBox(kind,x); }
-  h+=`<section><div class="rowb"><span class="note">保存先</span><select id="rSet">${DB.sets.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div><button class="wide" id="rSave">この言葉を登録してゲームで使う</button></section>`;
+  h+=`<section><div class="rowb"><span class="note">保存先</span><select id="rSet">${DB.sets.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div><button class="wide" id="rSave">この言葉を登録してゲームで使う</button><button class="wide" id="rTry" style="margin-top:8px;background:linear-gradient(160deg,#cfe9ff,#b9d9ff)">✨ 使ってみる(AIが文を考えて「つくる」へ)</button></section>`;
  }
- $('#reg').innerHTML=h;
+ keepScroll($('#reg'),()=>{ $('#reg').innerHTML=h; });
+ inboxBanner();
  const rEn=$('#rEn'), rJa=$('#rJa');
  const upd=()=>{ r.en=rEn.value; r.ja=rJa.value; r.auto=judge(r.en,r.ja); r.extra={}; clearTimeout(r._t); r._t=setTimeout(()=>{ const a=document.activeElement&&document.activeElement.id; renderReg(); if(a){ const el=$('#'+a); if(el){ el.focus(); const n=el.value.length; el.setSelectionRange&&el.setSelectionRange(n,n);} } },450); };
  rEn.oninput=upd; rJa.oninput=upd; $('#rE').oninput=e=>{ r.e=e.target.value; };
  $('#rImg').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const fr=new FileReader(); fr.onload=()=>{ const img=new Image(); img.onload=()=>{ const cv=document.createElement('canvas'); const S=96; const sc=Math.min(S/img.width,S/img.height); cv.width=Math.round(img.width*sc); cv.height=Math.round(img.height*sc); cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height); r.e=cv.toDataURL('image/webp',.8); renderReg(); }; img.src=fr.result; }; fr.readAsDataURL(f); };
  document.querySelectorAll('[data-kd]').forEach(b=>b.onclick=()=>{ r.kind=b.dataset.kd; r.extra={}; renderReg(); });
+ document.querySelectorAll('[data-cls]').forEach(b=>b.onclick=()=>{ const v=b.dataset.cls; r.cls=v; if(v==='sentence') r.kind='sentence'; else if(r.kind==='sentence') r.kind=null; r.extra={}; renderReg(); });
  document.querySelectorAll('#reg .skel [data-sk]').forEach(b=>b.onclick=()=>{ const sl=b.dataset.sk; const cur=r.kind||r.auto; const def={front:'leads',noun:(cur==='things'?'things':'people'),verb:'verbs',adj:'states',back:(['times','places','manners'].includes(cur)?cur:'manners')}[sl]; r.kind=def; r.extra={}; renderReg(); });
  { const ex=$('#rEx'); if(ex) ex.oninput=()=>{ r.ex=ex.value; }; }
- if($('#rAi')) aiBox($('#rAi'), ()=>({en:r.en, ja:r.ja, ex:r.ex}), a=>{ r.kind=a.kind; if(a.kind==='verbs' && a.en){ r.en=(a.en+(a.tail?' '+a.tail:'')).trim(); } if(!r.ja && a.ja) r.ja=a.ja; if(!r.e && a.e) r.e=a.e; r.extra={}; if(a.kind==='verbs'){ if(a.fr) r.extra.fr=a.fr; if(a.past) r.extra.past=a.past; if(a.pp) r.extra.pp=a.pp; if(Array.isArray(a.t)&&a.t.length) r.extra.t=a.t; } if((a.kind==='people'||a.kind==='things')&&a.pl!=null) r.extra.pl=+a.pl; if(a.kind==='people'&&a.animal!=null) r.extra.animal=+a.animal; renderReg(); }, false);
+ if($('#rAi')) aiBox($('#rAi'), ()=>({en:r.en, ja:r.ja, ex:r.ex}), a=>{ applyAi(a); renderReg(); }, false);
  document.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{ const k=b.dataset.x, v=b.dataset.v; if(k==='t'){ const t=(r.x.t||[]).slice(); const i=t.indexOf(v); i>=0?t.splice(i,1):t.push(v); r.extra.t=t; } else if(k==='tsx'){ const t=(r.x.ts||[]).slice(); const i=t.indexOf(v); i>=0?t.splice(i,1):t.push(v); r.extra.ts=t.length?t:['pres']; } else r.extra[k]=isNaN(+v)?v:+v; renderReg(); });
  document.querySelectorAll('[data-xi]').forEach(b=>b.onchange=()=>{ r.extra[b.dataset.xi]=b.value; renderReg(); });
  document.querySelectorAll('[data-sk]').forEach(s=>s.onchange=()=>{ r.sentence[+s.dataset.sk].kind=s.value; });
  document.querySelectorAll('[data-sj]').forEach(s=>s.oninput=()=>{ r.sentence[+s.dataset.sj].ja=s.value; });
  document.querySelectorAll('[data-pv]').forEach(b=>b.onclick=()=>say(b.dataset.pv));
  const sv=$('#rSave'); if(sv) sv.onclick=saveReg;
+ const tr=$('#rTry'); if(tr) tr.onclick=async()=>{ const cls=kind==='sentence'?'sentence':(r.cls||(/\s/.test(r.en.trim())?'phrase':'word')); tr.disabled=true; tr.textContent='AIが考えています…'; try{ const p=await runTry({en:r.en, ja:r.ja, cls, kind:(kind&&kind!=='sentence')?kind:null, x:r.x}); if(p){ loadPlay(p); return; } }catch(e){ toast(String(e&&e.message||e)); } tr.disabled=false; tr.textContent='✨ 使ってみる(AIが文を考えて「つくる」へ)'; };
 }
 export function extraForm(kind,x){
  const opt=(k,v,l)=>`<button class="chip ${String(x[k])===String(v)?'on':''}" data-x="${k}" data-v="${v}">${l}</button>`;
@@ -231,18 +254,50 @@ export function previewBox(kind,x){
  tmp.pop(); buildLex(activeSets());
  return `<section><h3>ゲームではこう使われます</h3><div class="pv">${ex.map(s=>`<button class="pvl" data-pv="${esc(s.en)}"><span class="en">${esc(s.en)}</span><small>${esc(s.ja)}</small></button>`).join('')}</div><p class="note">おかしいときは、上の選択を変えてみてください。</p></section>`;
 }
+/* 登録した言葉・文は、全アプリ共通の勉強ノートにも入れる */
+function noteWord(en,ja,kind){ try{ ENV.ctx && ENV.ctx.report('word',{ en:String(en).trim(), ja:String(ja||'').trim(), kind }); }catch(e){} }
 export function saveReg(){
  const r=REG; const kind=r.kind||r.auto; const set=DB.sets.find(s=>s.id===$('#rSet').value)||DB.sets[0];
  if(!r.en.trim()){ toast('英語を入れてください'); return; }
  if(kind==='sentence'){
   set.sentences=set.sentences||[]; set.sentences.push({en:r.en.trim(),ja:r.ja.trim()}); let n=0;
   (r.sentence||[]).forEach(c=>{ if(!c.ja||!c.ja.trim()) return; const en = c.kind==='verbs'? c.lemma : c.en; if(c.kind==='verbs'&&c.known) return; if(LEX[c.kind]&&LEX[c.kind].find(x=>x.en.toLowerCase()===en.toLowerCase())) return; const bak={en:r.en,ja:r.ja,x:r.x,e:r.e}; r.en=en; r.ja=c.ja.trim(); r.e=''; r.x=autoExtra(c.kind,r.en,r.ja); set.items.push(makeItem(c.kind)); n++; Object.assign(r,bak); });
+  noteWord(r.en,r.ja,'short');
   save(); refreshLex(); toast(`文を保存しました${n?`（言葉を${n}個追加）`:''}`);
  } else {
   if(!r.ja.trim()){ toast('日本語も入れてください'); return; }
-  set.items.push(kind==='leads'? buildItem('leads',r.en,r.ja,r.e) : makeItem(kind)); save(); refreshLex(); toast(`「${r.en.trim()}」を${set.name}に登録しました`);
+  { const itm=kind==='leads'? buildItem('leads',r.en,r.ja,r.e) : makeItem(kind); itm.cls=r.cls||(/\s/.test(r.en.trim())?'phrase':'word'); set.items.push(itm); } save(); noteWord(r.en,r.ja); refreshLex(); toast(`「${r.en.trim()}」を${set.name}に登録しました`);
  }
- Object.assign(REG,{en:'',ja:'',e:'',ex:'',kind:null,auto:null,extra:{},sentence:null,x:null}); renderReg();
+ Object.assign(REG,{en:'',ja:'',e:'',ex:'',kind:null,auto:null,extra:{},sentence:null,x:null,cls:null});
+ if(INBOX.cur){ INBOX.done++; inboxNext(); return; }
+ renderReg();
+}
+// AIの判定結果を、ことば登録の入力に入れる(登録画面のAIボタンと、外から届いたことばの自動判定で使う)
+function applyAi(a){ const r=REG; r.kind=a.kind; if(a.kind==='verbs' && a.en){ r.en=(a.en+(a.tail?' '+a.tail:'')).trim(); } if(!r.ja && a.ja) r.ja=a.ja; if(!r.e && a.e) r.e=a.e; r.extra={}; if(a.kind==='verbs'){ if(a.fr) r.extra.fr=a.fr; if(a.past) r.extra.past=a.past; if(a.pp) r.extra.pp=a.pp; if(Array.isArray(a.t)&&a.t.length) r.extra.t=a.t; } if((a.kind==='people'||a.kind==='things')&&a.pl!=null) r.extra.pl=+a.pl; if(a.kind==='people'&&a.animal!=null) r.extra.animal=+a.animal; }
+// ===== 外から届いたことば(勉強ノート・町など → core.eigo の箱)=====
+// ふつうの「ことば登録」の画面に1つずつ入れて開く。本人が場所・意味を確かめて「登録」を押すと、次のことばが入る。
+export const INBOX = { cur: null, q: [], total: 0, done: 0 };
+export function inboxLoad(list){ list=(list||[]).filter(x=>x&&x.en&&/[a-z]/i.test(x.en)); if(!list.length) return; INBOX.q=INBOX.q.concat(list); INBOX.total+=list.length; if(!INBOX.cur) inboxNext(); else renderReg(); }
+export function inboxNext(){
+ const c=INBOX.q.shift(); INBOX.cur=c||null;
+ if(!c){ const d=INBOX.done; INBOX.total=0; INBOX.done=0; if(d) toast(`届いたことばを ${d}こ 登録しました。「つくる」で使ってみよう`); go(d?'make':'reg'); return; }
+ const en=String(c.en).trim(), ja=String(c.ja||'').trim();
+ Object.assign(REG,{en, ja, e:'', ex:c.ex||'', kind:c.kind==='sentence'?'sentence':null, auto:judge(en,ja), extra:{}, sentence:null, x:null});
+ go('reg');
+ // 使っている人のAIがあれば、文以外は場所・意味・活用をAIで決めて入れる(本人は確かめて登録するだけ)
+ const ai=ENV.core&&ENV.core.ai;
+ if(REG.kind!=='sentence' && REG.auto!=='sentence' && ai && ai.ready){
+  toast('AIで、どこに入る言葉か調べています…');
+  ai.ask('You are a careful JSON-only API.', aiPrompt({en, ja, ex:c.ex||''}), 500).then(t=>{ const a=parseAi(t); if(!a || INBOX.cur!==c) return; applyAi(a); renderReg(); }).catch(()=>{});
+ }
+}
+// 途中でやめたとき:残りを返す(箱にもどす)
+export function inboxRest(){ const r=(INBOX.cur?[INBOX.cur]:[]).concat(INBOX.q); INBOX.cur=null; INBOX.q=[]; INBOX.total=0; INBOX.done=0; return r; }
+function inboxBanner(){
+ if(!INBOX.cur) return; const reg=$('#reg'); if(!reg) return;
+ reg.insertAdjacentHTML('afterbegin',`<div class="inbx" style="background:#fff3c8;border-radius:14px;padding:10px 12px;margin:0 0 10px;font-size:13px;font-weight:700;line-height:1.5">📥 届いたことば <b>${INBOX.done+1} / ${INBOX.total}</b>${INBOX.q.length?`(このあと ${INBOX.q.length}こ)`:''}<br><span style="font-weight:500">場所と意味を確かめて、下の「この言葉を登録してゲームで使う」を押してね。</span><div class="rowb" style="margin-top:6px"><button class="chip" data-inb="skip">これはとばす</button><button class="chip" data-inb="later">あとでやる</button></div></div>`);
+ reg.querySelector('[data-inb="skip"]').onclick=()=>inboxNext();
+ reg.querySelector('[data-inb="later"]').onclick=()=>{ const r=inboxRest(); try{ ENV.core&&ENV.core.eigo&&ENV.core.eigo.send(r); }catch(e){} toast(`のこり ${r.length}こは、次に開いたときにまた出ます`); go('make'); };
 }
 
 

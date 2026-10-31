@@ -10,7 +10,8 @@ const SHOP_NAMES = ['パン', '花屋', '文房具', 'やおや', '本屋', '古
 export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   const r = rng(20261021);
   const B = new Batcher();
-  const colliders = [];     // { x0,x1,z0,z1 } か { cx,cz,r }
+  const colliders = [];
+  const trees = [];         // 木の位置(秋の落ち葉が落ちてくる所)     // { x0,x1,z0,z1 } か { cx,cz,r }
   const interact = [];      // 入口・調べる場所
   const buildings = [];     // 建物の外形(マップのダブルタップで、入口の前へ案内するため)
   const animated = [];      // 毎フレーム動かすもの
@@ -66,6 +67,8 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   scene.add(plaza);
   B.add(geo('ring', () => new THREE.TorusGeometry(PLAZA_R, 0.14, 6, 64)), curbM, 0, 0.05, 0, 0, 1, 1, 1, null, Math.PI / 2);
   fountain(0, 0);
+  const piano = streetPiano(-4.2, 6.9);   // 噴水の前のストリートピアノ
+  interact.push({ kind: 'snowfight', id: 'snowfight', app: 'snowfight', season: 'winter', x: 0, z: 6.5, r: 2.4, label: '☃️ 雪合戦をする' });   // 冬だけ(ゲーム機なしで遊べる)
   for (let i = 0; i < 8; i++) {
     const a = (i + 0.5) / 8 * Math.PI * 2;
     if (i % 2) bench(Math.sin(a) * 13, -Math.cos(a) * 13, -a + Math.PI);
@@ -154,12 +157,14 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
 
   for (const sp of SPOTS) interact.push({ kind: 'spot', ...sp, r: 2.2 });
+  for (const sp of SPOTS) if (sp.tent) fortuneTent(sp.x + 2.4, sp.z);   // 占いの館(神社の境内のテント)
+  { const bd = SPOTS.find(s => s.id === 'board'); if (bd) noticeBoard(bd.x, bd.z, Math.atan2(-bd.x, -bd.z)); }   // 掲示板(広場のほうを向く)
 
   const meshes = B.build(scene, { shadow: quality !== 'low' });
   for (const m of meshes) { const sn = m.material.userData.season; if (sn === 'blossom') m.visible = blossom; else if (sn === 'nonblossom') m.visible = !blossom; }
 
   return {
-    colliders, interact, buildings, animated, graph: GRAPH,
+    colliders, interact, buildings, animated, graph: GRAPH, piano, groundMats: [ground.material, lawn.material], trees,
     setLite(on) { animated.fountainLite?.(on); },
     areaName(x, z) {
       if (Math.hypot(x, z) < PLAZA_R + 1) return 'ほし広場';
@@ -281,6 +286,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
       for (let i = 0; i < 5; i++) B.add(sph(0.18, 8), i % 2 ? n1 : n2, -w / 2 + 1.5 + i * (w - 3) / 4, 5.6, front + 0.2, 0, 1, 1, 1, P4);
     }
     if (o.kind === 'cafe') {
+      bld.cafe = { face: [nx, nz], tables: [-1, 1].map(sg => { const v = new THREE.Vector3(sg * 2.2 + 0.5, 0, front + 2.4).applyMatrix4(P4); return { x: v.x, z: v.z }; }) };   // デートで座るテラス席
       for (const s of [-1, 1]) { B.add(cyl(0.45, 0.45, 0.06, 14), whiteM, s * 2.2 + 0.5, 0.75, front + 2.4, 0, 1, 1, 1, P4); B.add(cyl(0.05, 0.05, 0.75, 6), mat(C.metal), s * 2.2 + 0.5, 0.37, front + 2.4, 0, 1, 1, 1, P4); B.add(geo('para', () => new THREE.ConeGeometry(1.3, 0.6, 10)), mat(s < 0 ? C.coral : C.mint), s * 2.2 + 0.5, 2.3, front + 2.4, 0, 1, 1, 1, P4); B.add(cyl(0.03, 0.03, 2, 6), whiteM, s * 2.2 + 0.5, 1.2, front + 2.4, 0, 1, 1, 1, P4); }
     }
     if (o.kind === 'house') {
@@ -310,6 +316,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     });
   }
   function tree(x, z, kind = 'green', s = 1) {
+    trees.push({ x, z, s });
     colliders.push({ cx: x, cz: z, r: 0.35 * s });
     const pinkTree = kind === 'pink';   // 桜は春だけ(ピンクと緑の葉を両方つくり、季節で切りかえる)
     const leaf = foliageMat(pinkTree ? C.leafPink : kind === 'deep' ? 0x8cc89a : r() < 0.5 ? C.leaf : C.leaf2, pinkTree ? 'blossom' : '');
@@ -331,12 +338,45 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     B.add(sph(0.3, 12), glowMat('lamp', 0xfff6dc, 0xffd88a), 0, 3.85, 0.85, 0, 1, 0.8, 1, P4);
     B.add(cyl(0.34, 0.2, 0.15, 10), mat(0xa99bc0), 0, 4.05, 0.85, 0, 1, 1, 1, P4);
   }
+  function streetPiano(x, z) {
+    const P4 = M4(x, z, 0), body = mat(C.mint), dk = mat(0x6b8f80), wh = mat(0xffffff), bk = mat(0x2b2b33), pk = mat(C.pink), yl = mat(C.butter);
+    colliders.push({ cx: x, cz: z - 0.1, r: 0.95 });
+    B.add(rbox(1.6, 1.25, 0.62, 0.05), body, 0, 0.66, -0.12, 0, 1, 1, 1, P4);
+    B.add(box(1.66, 0.06, 0.7), dk, 0, 1.3, -0.12, 0, 1, 1, 1, P4);
+    B.add(box(1.5, 0.1, 0.34), body, 0, 0.74, 0.3, 0, 1, 1, 1, P4);
+    B.add(box(1.4, 0.04, 0.24), wh, 0, 0.8, 0.33, 0, 1, 1, 1, P4);
+    for (let i = 0; i < 10; i++) if (i % 7 !== 2 && i % 7 !== 6) B.add(box(0.06, 0.04, 0.13), bk, -0.63 + i * 0.14, 0.83, 0.28, 0, 1, 1, 1, P4);
+    for (const sx of [-0.7, 0.7]) B.add(box(0.1, 0.72, 0.1), dk, sx, 0.36, 0.42, 0, 1, 1, 1, P4);
+    for (let i = 0; i < 5; i++) { B.add(sph(0.06, 8), i % 2 ? pk : yl, -0.5 + i * 0.25, 1.05, 0.2, 0, 1, 1, 1, P4); B.add(sph(0.03, 6), wh, -0.5 + i * 0.25, 1.05, 0.25, 0, 1, 1, 1, P4); }   // 前の板の花
+    B.add(rbox(0.9, 0.08, 0.38, 0.03), mat(0xc9a28c), 0, 0.46, 0.98, 0, 1, 1, 1, P4);
+    for (const sx of [-0.38, 0.38]) B.add(box(0.06, 0.44, 0.3), mat(0x9a7a64), sx, 0.22, 0.98, 0, 1, 1, 1, P4);
+    const seat = { x, z: z + 0.98, ry: Math.PI };
+    interact.push({ kind: 'piano', id: 'spiano', x, z: z + 1.7, r: 1.9, label: '🎹 ピアノをひく', seat });
+    return { x, z, seat };
+  }
   function bench(x, z, ry) {
     const P4 = M4(x, z, ry);
     colliders.push({ cx: x, cz: z, r: 0.8 });
+    interact.push({ kind: 'bench', id: 'bench' + interact.length, x, z, ry, r: 1.8, label: '🪑 座る' });
     B.add(rbox(1.8, 0.12, 0.5, 0.04), mat(0xe8c9a8), 0, 0.48, 0, 0, 1, 1, 1, P4);
-    B.add(rbox(1.8, 0.4, 0.1, 0.04), mat(0xe8c9a8), 0, 0.85, -0.22, 0, 1, 1, 1, P4);
     for (const s of [-1, 1]) B.add(box(0.1, 0.48, 0.45), mat(0xa99bc0), s * 0.75, 0.24, 0, 0, 1, 1, 1, P4);
+  }
+  function noticeBoard(x, z, ry) {
+    const P4 = M4(x, z, ry);
+    colliders.push({ cx: x, cz: z, r: 0.9 });
+    for (const sx of [-1, 1]) B.add(box(0.14, 2.3, 0.14), mat(0x8a6a4e), sx * 0.95, 1.15, 0, 0, 1, 1, 1, P4);   // 柱
+    B.add(rbox(2.2, 1.3, 0.12, 0.04), mat(0xb88a5e), 0, 1.55, 0, 0, 1, 1, 1, P4);   // 板
+    B.add(rbox(2.5, 0.12, 0.6, 0.04), mat(0xd9846f), 0, 2.32, -0.05, 0, 1, 1, 1, P4);   // 小さな屋根
+    const c = document.createElement('canvas'); c.width = 256; c.height = 150; const g = c.getContext('2d');
+    g.fillStyle = '#d9b48a'; g.fillRect(0, 0, 256, 150);
+    [['#fff0f3', 14, 12, 70, 58, -0.06], ['#eefaf4', 96, 10, 66, 52, 0.05], ['#f3efff', 172, 16, 70, 60, -0.03], ['#fff8e6', 30, 80, 84, 56, 0.04], ['#e8f3ff', 136, 84, 92, 52, -0.05]].forEach(([col, px, py, w, h, rot]) => {
+      g.save(); g.translate(px + w / 2, py + h / 2); g.rotate(rot); g.fillStyle = col; g.fillRect(-w / 2, -h / 2, w, h);
+      g.fillStyle = '#c9a6c8'; for (let i = 0; i < 4; i++) g.fillRect(-w / 2 + 8, -h / 2 + 14 + i * 10, w - 16 - (i % 2) * 14, 3);
+      g.fillStyle = '#ff6b6b'; g.beginPath(); g.arc(0, -h / 2 + 5, 3.5, 0, 7); g.fill(); g.restore();
+    });
+    const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+    const face = new THREE.Mesh(new THREE.PlaneGeometry(2.05, 1.18), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.9 }));
+    face.position.set(x + Math.sin(ry) * 0.07, 1.55, z + Math.cos(ry) * 0.07); face.rotation.y = ry; scene.add(face);
   }
   function flowerBed(x, z, ry) {
     const P4 = M4(x, z, ry);
@@ -402,6 +442,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
   function pond(x, z, rr) {
     colliders.push({ cx: x, cz: z, r: rr + 0.2 });
+    interact.push({ kind: 'pond', id: 'pond', app: 'fishing', x: x + 3.2, z: z + 3.3, r: 2.2, label: '🎣 釣りをする' });   // 池はいつでも(夏以外は、英語の釣り堀が直接ひらく)
     B.add(cyl(rr + 0.4, rr + 0.5, 0.25, 28), mat(C.stone), x, 0.08, z);
     const w = new THREE.Mesh(new THREE.CircleGeometry(rr, 28), new THREE.MeshStandardMaterial({ color: C.water, roughness: 0.1 }));
     w.rotation.x = -Math.PI / 2; w.position.set(x, 0.22, z); scene.add(w);
@@ -412,6 +453,11 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     const bk = new THREE.Mesh(sph(0.07, 6), mat(0xffb38a)); bk.position.set(0.45, 0.22, 0); bk.scale.set(1.6, 0.6, 1); duck.add(bk);
     scene.add(duck);
     animated.push(t => { const a = t * 0.25; duck.position.set(x + Math.cos(a) * rr * 0.55, 0.3 + Math.sin(t * 2) * 0.02, z + Math.sin(a) * rr * 0.55); duck.rotation.y = Math.atan2(-Math.cos(a), -Math.sin(a)); });
+    // こがもを2羽(反対まわり・小さめ)
+    [[-0.18, 2.1, 0.55, 0.6], [0.31, 4.0, 0.35, 0.5]].forEach(([w, ph, rf, sc]) => {
+      const d = duck.clone(); d.scale.setScalar(sc); scene.add(d);
+      animated.push(t => { const a = t * w + ph; d.position.set(x + Math.cos(a) * rr * rf, 0.22 + Math.sin(t * 2 + ph) * 0.02, z + Math.sin(a) * rr * rf); d.rotation.y = Math.atan2(-Math.cos(a) * Math.sign(w), -Math.sin(a) * Math.sign(w)); });
+    });
   }
   function slide(x, z) {
     colliders.push({ x0: x - 1.2, x1: x + 1.2, z0: z - 2.2, z1: z + 2.2 });
@@ -450,6 +496,18 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     B.add(cyl(0.18, 0.22, 1.1, 8), mat(C.stone), x, 0.85, z);
     B.add(rbox(0.75, 0.6, 0.75, 0.08), glowMat('lamp', 0xfff1d6, 0xffc46b), x, 1.7, z);
     B.add(geo('lcone', () => new THREE.ConeGeometry(0.7, 0.5, 4)), mat(C.stone), x, 2.25, z, Math.PI / 4);
+  }
+  function fortuneTent(x, z) {   // 紫のテント。入口は西(神社の参道)向き
+    colliders.push({ cx: x, cz: z, r: 1.95 });
+    B.add(cyl(1.7, 1.9, 2.3, 6), mat(0x7b5aa6), x, 1.15, z, Math.PI / 6);
+    B.add(geo('ftcone', () => new THREE.ConeGeometry(2.3, 1.9, 6)), mat(0x4a2f73), x, 3.25, z, Math.PI / 6);
+    B.add(sph(0.28, 12), mat(0xffd76a, { emissive: 0xffb300, emissiveIntensity: 0.6 }), x, 4.35, z);
+    B.add(box(0.06, 1.7, 1.2), mat(0x2a1a44), x - 1.68, 0.85, z);   // 入口の幕
+    for (const s of [-1, 1]) B.add(cyl(0.05, 0.05, 2.4, 6), mat(0xd9b24a), x - 1.75, 1.2, z + s * 0.75);
+    B.add(signPlate('占いの館', 1.8, 0.45), signMat('占いの館', { bg: '#3a2560', fg: '#ffe7a8' }), x - 1.8, 2.15, z, -Math.PI / 2);
+    B.add(sph(0.22, 12), mat(0xbfe6ff), x - 2.3, 0.95, z - 1.3);   // 水晶玉の台
+    B.add(cyl(0.18, 0.24, 0.8, 8), mat(0x4a2f73), x - 2.3, 0.4, z - 1.3);
+    colliders.push({ cx: x - 2.3, cz: z - 1.3, r: 0.35 });
   }
   function busStop(x, z) {
     addRect(x - 1.8, x + 1.8, z - 0.2, z + 1.4);

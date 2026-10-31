@@ -11,7 +11,8 @@ export const LOOKS = {
   mio: { name: 'みお', skin: 0xffe6d6, hair: 0xc9a28c, style: 'long', top: 0xc9b8ea, bottom: 0xfff4e0, shoes: 0xb79cd9, acc: null },
   ren: { name: 'れん', skin: 0xeec3a6, hair: 0x2e2a3d, style: 'spiky', top: 0xfdeeb0, bottom: 0x7d8fb3, shoes: 0x5a4a6b, acc: 'glasses', accColor: 0x5a4a6b },
 };
-export const LOOK_IDS = Object.keys(LOOKS);
+const _hv = new THREE.Vector3();
+export const LOOK_IDS = ['ren', 'mio'];   // 自分のキャラに選べるのは2人(はな・そらは住人)
 
 // アニメ調のやわらかい3段の陰影と、ふちどり線(うらがえしの殻をふくらませる方式)
 const ramp = new THREE.DataTexture(new Uint8Array([120, 120, 120, 255, 185, 185, 185, 255, 235, 235, 235, 255, 255, 255, 255, 255]), 4, 1, THREE.RGBAFormat);
@@ -83,6 +84,14 @@ export function makeCharacter(look, { scale = 1 } = {}) {
   if (look.acc === 'ribbon') { [-1, 1].forEach(s => { const r = add(geo('rib', () => new THREE.ConeGeometry(0.07, 0.14, 4)), M(look.accColor), 0.14 + s * 0.07, 0.2, 0.02, head); r.rotation.z = s * Math.PI / 2; }); add(sph(0.035, 8), M(look.accColor), 0.14, 0.2, 0.02, head); }
   if (look.acc === 'cap') { const c = add(geo('hat', () => new THREE.SphereGeometry(0.25, 24, 12, 0, Math.PI * 2, 0, 1.3)), toon(look.accColor, { side: THREE.DoubleSide }), 0, 0.06, -0.01, head); const v = add(cyl(0.16, 0.16, 0.025, 14), M(look.accColor), 0, 0.12, 0.2, head); v.scale.z = 0.7; }
   if (look.acc === 'tophat') { add(cyl(0.15, 0.15, 0.22, 14), M(look.accColor), 0, 0.3, 0, head); add(cyl(0.24, 0.24, 0.025, 16), M(look.accColor), 0, 0.2, 0, head); add(cyl(0.152, 0.152, 0.04, 14), M(0xff9aa2), 0, 0.23, 0, head); }
+  // 砂吹さんの帽子:つばの広い、くたっとした帽子に羽
+  if (look.acc === 'snuf') {
+    const hm = toon(look.accColor, { side: THREE.DoubleSide });
+    add(cyl(0.31, 0.31, 0.02, 20), hm, 0, 0.17, 0, head);
+    const dome = add(geo('snufdome', () => new THREE.SphereGeometry(0.23, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2)), hm, 0, 0.17, 0, head); dome.scale.y = 1.15;
+    add(cyl(0.235, 0.235, 0.045, 20), M(0x6b4a3a), 0, 0.2, 0, head);
+    const fe = add(geo('snuff', () => new THREE.ConeGeometry(0.03, 0.2, 6)), M(0xf0e6c8), 0.22, 0.3, 0.02, head); fe.rotation.z = -0.9;
+  }
   // 本(ノート)は、片手に下げて持つ(うでは、ふつうに振る)
   if (look.acc === 'apron') {
     add(geo('bookc', () => new THREE.BoxGeometry(0.05, 0.24, 0.18)), M(look.accColor), 0, -0.45, 0.01, arms[0]);
@@ -109,6 +118,18 @@ export function makeCharacter(look, { scale = 1 } = {}) {
     if (outG.length) { const ol = new THREE.Mesh(mergeGeometries(outG.map(g => g.clone()), false), outlineMat); grp.add(ol); }
   };
   [body, head, ...legs, ...arms].forEach(bakeGroup);
+  // 砂吹さんの持ち物:釣り竿とハーモニカ(動かすので、合体させずにあとから付ける)
+  const snuf = look.acc === 'snuf';
+  let fishG = null, harp = null;
+  if (snuf) {
+    fishG = new THREE.Group(); fishG.visible = false; arms[1].add(fishG);
+    const rodG = new THREE.Group(); rodG.position.set(0, -0.45, 0.05); rodG.rotation.x = 1.78; fishG.add(rodG);
+    add(cyl(0.012, 0.025, 1.9, 6), M(0x8a6b4a), 0, 0.95, 0, rodG);
+    const lineG = new THREE.Group(); lineG.position.set(0, -1.24, 1.4); lineG.rotation.x = -2.24; fishG.add(lineG);
+    add(cyl(0.004, 0.004, 1.3, 4), M(0xf5f5f5), 0, 0, 0, lineG);
+    add(sph(0.04, 8), M(0xff6b6b), 0, -1.64, 0.89, fishG);
+    harp = add(geo('harp', () => new THREE.BoxGeometry(0.2, 0.045, 0.05)), M(0xc8ccd4), 0, -0.1, 0.235, head); harp.visible = false;
+  }
   { const ol = new THREE.Mesh(torso.geometry, outlineMat); ol.position.copy(torso.position); ol.scale.copy(torso.scale); torso.userData.ol = ol; body.add(ol); }
   for (const e of eyes) { /* 目はまばたきするので別メッシュのまま */ }
 
@@ -118,8 +139,9 @@ export function makeCharacter(look, { scale = 1 } = {}) {
 
   root.scale.setScalar(scale);
   let phase = 0, blinkT = 2 + Math.random() * 3, wave = 0, idleT = Math.random() * 10;
-  return {
+  const self = {
     root, head,
+    rig: { arms, legs, body, head, torso },   // ポーズを外から付けるとき(釣りの見せる画面など)
     height: 1.62 * scale,
     wave() { wave = 1.6; },
     update(dt, speed) {
@@ -139,12 +161,30 @@ export function makeCharacter(look, { scale = 1 } = {}) {
         arms[1].rotation.z = Math.PI * 0.85 + Math.sin(wave * 14) * 0.25;
         arms[1].rotation.x = 0;
       } else arms[1].rotation.z = 0.12;
+      if (snuf) {
+        const ps = self.pose;
+        fishG.visible = ps === 'fish'; harp.visible = ps === 'harp';
+        if (ps === 'fish') { arms[1].rotation.x = -0.9 + Math.sin(idleT * 1.3) * 0.03; arms[1].rotation.z = 0.12; arms[0].rotation.x = 0; head.rotation.y = 0; }
+        else if (ps === 'harp') { arms[0].rotation.x = arms[1].rotation.x = -2.1; arms[1].rotation.z = 0; head.rotation.y = 0; }
+      }
+      // すわる・ねころぶ(家の中で使う)
+      if (self.pose === 'sit') { legs[0].rotation.x = legs[1].rotation.x = -1.45; arms[0].rotation.x = arms[1].rotation.x = -0.4; body.position.y = 0; body.rotation.x = 0; head.rotation.y = Math.sin(idleT * 0.4) * 0.25; }
+      else if (self.pose === 'piano') { legs[0].rotation.x = legs[1].rotation.x = -1.45; arms[0].rotation.set(-1.15 + Math.sin(idleT * 11) * 0.07, 0, 0.18); arms[1].rotation.set(-1.15 + Math.sin(idleT * 11 + 2) * 0.07, 0, -0.18); body.position.y = 0; body.rotation.x = 0.05; head.rotation.y = Math.sin(idleT * 1.2) * 0.12; }   // ピアノを弾く
+      else if (self.pose === 'kneel') { legs[0].rotation.x = -1.2; legs[1].rotation.x = 1.25; body.position.y = -0.3; head.rotation.y = 0; }   // 片ひざをついて雪玉をにぎる(腕・上体は外から)
+      else if (self.pose === 'lie') { legs[0].rotation.x = legs[1].rotation.x = 0; arms[0].rotation.x = arms[1].rotation.x = 0; arms[0].rotation.z = 0.08; arms[1].rotation.z = -0.08; body.position.y = 0; body.rotation.x = -Math.PI / 2; head.rotation.y = 0; }
+      // 手をつなぐ:holdTo(手を合わせる点・世界の座標)へ、holdArm の腕を向ける(0=右腕 1=左腕)
+      if (self.holdTo) {
+        const a = arms[self.holdArm ?? 1]; self.root.updateMatrixWorld(true);
+        const L = body.worldToLocal(_hv.copy(self.holdTo)).sub(a.position), n = L.length() || 1; L.divideScalar(n);
+        a.rotation.set(Math.atan2(-L.z, -L.y), 0, Math.asin(Math.max(-1, Math.min(1, L.x))));
+      }
       blinkT -= dt;
       const b = blinkT < 0.12 ? 0.15 : 1;
       eyes.forEach(e => (e.scale.y = 1.25 * b));
       if (blinkT < 0) blinkT = 2 + Math.random() * 4;
     },
   };
+  return self;
 }
 
 // 町のマスコット「チャンクくん」:雲。角のとれたクッションのサイコロが3つ、つながったような体
@@ -198,3 +238,29 @@ export function makeChunkkun() {
     },
   };
 }
+
+// 前まわりのでんぐり返し(よける)。u=0〜1。体の真ん中を軸に、ひざをかかえて丸まって1回転する
+// よける:かがんで前へ飛びこみ、低く丸まって1回転し、しゃがんだ姿勢から立ち上がる(体の大きさは変えない)
+// 丸まっている間は、首をちぢめて頭を胸に寄せる(ボールが小さくなり、地面すれすれで回れる)
+const _q = { y: 0.8 }, _cl = t => Math.max(0, Math.min(1, t)), _sm = t => t * t * (3 - 2 * t);
+export function rollPose(rig, u) {
+  const { body, legs, arms, head } = rig; if (!body || !legs) { if (body) body.rotation.x = u * Math.PI * 2; return; }
+  u = _cl(u);
+  const k = _sm(_cl((u - 0.02) / 0.22)) * (1 - _sm(_cl((u - 0.7) / 0.2)));   // 丸まり
+  const r = _cl((u - 0.06) / 0.7), e = r < 0.5 ? 4 * r * r * r : 1 - Math.pow(-2 * r + 2, 3) / 2;   // 回転(飛びこみは速く、起き上がりはゆっくり)
+  const c = Math.sin(Math.PI * _cl((u - 0.66) / 0.34)) * (1 - _sm(_cl((u - 0.9) / 0.1)) * 0.35);   // おわりの しゃがみ
+  const dip = Math.sin(Math.PI * _cl(u / 0.2)) * (1 - k);   // はじめの ぐっと かがむ
+  const th = e * Math.PI * 2, Q = _q.y + 0.2 * k, H = _q.y - 0.45 * k - 0.25 * c - 0.2 * dip;   // Q:回す点(丸まると体の真ん中) H:その高さ
+  body.scale.setScalar(1); body.rotation.x = th;
+  body.position.set(0, H - Q * Math.cos(th), -Q * Math.sin(th));   // 回転の中心(腰の上)を、低い位置に置く
+  const hip = 0.62 + H - Q, pl = Math.acos(Math.max(-1, Math.min(1, hip / 0.62)));   // 足が地面にとどく角度(かがむと、片足を前・片足を後ろへ)
+  let l0 = -2.25 * k - pl * (1 - k), l1 = -2.25 * k + pl * (1 - k);
+  if (Math.cos(th) > 0.3) {   // 起きている間は、足が地面にめりこまないように(体のかたむきの分も足す)
+    const t2 = Math.atan2(Math.sin(th), Math.cos(th)), hy = H + (0.62 - Q) * Math.cos(th), g = Math.acos(Math.max(-1, Math.min(1, hy / 0.62)));
+    const w = 1 - k * k; l0 += (Math.min(l0, -g - t2) - l0) * w; l1 += (Math.max(l1, g - t2) - l1) * w;   // しっかり丸まっている間は、足をたたんだまま
+  }
+  legs[0].rotation.x = l0; legs[1].rotation.x = l1;
+  arms[0].rotation.x = arms[1].rotation.x = -1.35 * k - 0.5 * c - 0.7 * dip; arms[0].rotation.z = -0.25 * k - 0.12; arms[1].rotation.z = 0.25 * k + 0.12;
+  head.rotation.x = 0.85 * k + 0.25 * c; head.position.set(0, 1.38 - 0.2 * k, 0.12 * k);
+}
+export function rollReset(rig) { if (!rig || !rig.body) return; rig.body.rotation.x = 0; rig.body.position.set(0, 0, 0); rig.body.scale.setScalar(1); if (rig.head) { rig.head.rotation.x = 0; rig.head.position.set(0, 1.38, 0); } if (rig.arms) { rig.arms[0].rotation.z = -0.12; rig.arms[1].rotation.z = 0.12; } }

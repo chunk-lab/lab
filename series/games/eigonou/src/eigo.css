@@ -694,6 +694,7 @@
 .ct-eigo #srch{position:absolute;left:8px;right:8px;top:6px;z-index:40;display:flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--noun);border-radius:14px;padding:4px 6px 4px 10px;box-shadow:0 4px 14px rgba(45,107,224,.25)}
 .ct-eigo #srch input{flex:1;border:0;outline:0;font:600 17px var(--en);color:#1c2242;background:transparent;min-width:0;padding:6px 0}
 .ct-eigo #srch button{width:32px;height:32px;border-radius:50%;background:#1c2242;color:#fff;font-size:16px}
+.ct-eigo #srch #srchEx{background:#ffd36b;color:#1c2242}
 .ct-eigo #qrModal{position:fixed;inset:0;background:rgba(15,18,38,.55);z-index:80;display:grid;place-items:center;padding:16px}
 .ct-eigo .qrl{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:6px 0}
 .ct-eigo .qrl input{display:block;width:100%;margin-top:4px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--chrome);color:var(--ink);font:500 16px var(--en)}
