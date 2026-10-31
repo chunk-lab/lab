@@ -35,7 +35,7 @@ export function createUseit(core) {
     const sent = (s, i) => `<li><b>${esc(s.en)}</b><span>${esc(s.ja)}</span><small>${esc(s.from || '')}</small><div class="cs-nb-a"><button data-say="${i}">🔊</button><button data-mim="${i}">聞いてまねる</button><button data-add="${i}">ノートに入れる</button></div></li>`;
     let found = [];
     core.ui.sheet(`<h3>✨ 使ってみる</h3>
-      <div class="cs-adm"><input class="cs-ta" data-en placeholder="英語(単語・熟語・チャンク・文 なんでも)" value="${esc(x.en)}" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:100%;margin-bottom:6px"><input class="cs-ta" data-ja placeholder="日本語(空でもOK)" value="${esc(x.ja)}" autocomplete="off" style="width:100%">
+      <div class="cs-adm"><input class="cs-ta" data-en placeholder="英語(単語・熟語・チャンク・文 なんでも)" value="${esc(x.en)}" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:100%;box-sizing:border-box;margin-bottom:6px"><input class="cs-ta" data-ja placeholder="日本語(空でもOK)" value="${esc(x.ja)}" autocomplete="off" style="width:100%;box-sizing:border-box">
         ${core.openGame ? '<button class="cs-btn cs-go" data-eigo style="width:100%;margin-top:8px;font-size:16px">🧠 英語脳で文にして、すぐ遊ぶ</button><p class="cs-note">AIがふさわしい文を作って、英語脳にセットします。気に入った文は英語脳の「💾 記憶」で残せます。</p>' : ''}</div>
       <section class="cs-adm"><h4>1. 文の中で見てみる</h4><ul class="cs-nb" data-found><li class="cs-note">さがしています…</li></ul></section>
       <section class="cs-adm"><h4>2. 自分で文を作る</h4>

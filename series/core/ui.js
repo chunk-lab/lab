@@ -1,10 +1,27 @@
 /* 共通の画面：設定・プロフィール（仮）・お知らせ。見た目は core/ui.css（.cs- で始まるものだけ） */
+// スクロールできる画面に、続きがあることを知らせる ▲ ▼(上や下に隠れた部分があるときだけ薄く出る)
+export function scrollHint(el) {
+  if (!el || !el.parentElement) return;
+  const p = el.parentElement; if (getComputedStyle(p).position === 'static') p.style.position = 'relative';
+  const mk = (c, t) => { const d = document.createElement('div'); d.className = 'cs-sh ' + c; d.textContent = t; p.appendChild(d); return d; };
+  const up = mk('up', '▲'), dn = mk('dn', '▼');
+  const upd = () => {
+    if (!el.isConnected) { window.removeEventListener('resize', upd); return; }
+    const t = el.scrollTop, rest = el.scrollHeight - el.clientHeight - t, x = el.offsetLeft, w = el.offsetWidth;
+    up.style.cssText = `left:${x}px;width:${w}px;top:${el.offsetTop}px`; dn.style.cssText = `left:${x}px;width:${w}px;top:${el.offsetTop + el.offsetHeight - 34}px`;
+    up.classList.toggle('on', t > 8); dn.classList.toggle('on', rest > 8);
+  };
+  el.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd);
+  try { new ResizeObserver(upd).observe(el); new MutationObserver(upd).observe(el, { childList: true, subtree: true }); } catch (e) { }
+  setTimeout(upd, 0); setTimeout(upd, 350);
+}
 export function createUI(core) {
   const root = document.createElement('div'); root.className = 'cs-ui'; document.body.appendChild(root);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const sheet = (html, bind) => {
     const ov = document.createElement('div'); ov.className = 'cs-ov'; ov.innerHTML = '<div class="cs-sheet" role="dialog">' + html + '<button class="cs-btn cs-close">とじる</button></div>';
-    root.appendChild(ov); const close = () => ov.remove();
+    const fx = document.createElement('button'); fx.className = 'cs-fx'; fx.setAttribute('aria-label', 'とじる'); fx.textContent = '✕'; ov.appendChild(fx);
+    root.appendChild(ov); const close = () => ov.remove(); fx.onclick = close; scrollHint(ov.querySelector('.cs-sheet'));
     ov.addEventListener('click', e => { if (e.target === ov) close(); }); ov.querySelector('.cs-close').onclick = close; bind && bind(ov, close); return close;
   };
   const toast = (t) => { const d = document.createElement('div'); d.className = 'cs-toast'; d.textContent = t; root.appendChild(d); setTimeout(() => d.remove(), 2200); };
@@ -38,5 +55,5 @@ export function createUI(core) {
       ov.querySelector('#cs-name').onchange = e => p.setName(e.target.value);
     });
   };
-  return { root, sheet, toast, settings, profile };
+  return { root, sheet, scrollHint, toast, settings, profile };
 }

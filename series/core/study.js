@@ -19,7 +19,7 @@ export function createStudy(core) {
     ov = document.createElement('div'); ov.className = 'cs-ov cs-study-ov';
     ov.innerHTML = `<div class="cs-study" role="dialog" aria-label="勉強部屋"><header><b>勉強部屋</b><button class="cs-x" aria-label="とじる">✕</button></header>
       <nav class="cs-tabs">${[['today', '今日'], ['log', '記録'], ['note', '勉強ノート'], ['me', 'プロフィール']].map(([k, n]) => `<button data-t="${k}">${n}</button>`).join('')}</nav><main></main></div>`;
-    core.ui.root.appendChild(ov);
+    core.ui.root.appendChild(ov); core.ui.scrollHint && core.ui.scrollHint(ov.querySelector('main'));
     ov.querySelector('.cs-x').onclick = close;
     ov.addEventListener('click', e => { if (e.target === ov) close(); });
     ov.querySelectorAll('.cs-tabs button').forEach(b => b.onclick = () => { tab = b.dataset.t; draw(); });

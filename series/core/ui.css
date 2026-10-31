@@ -122,3 +122,11 @@
 .rv-ch{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rv-ch .cs-btn{min-height:52px}
 .rv-chk{max-height:56vh}.rv-chk li{padding:0}.rv-chk li label{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:6px 12px;box-sizing:border-box;cursor:pointer}.rv-chk .t{display:flex;flex-direction:column;gap:2px;min-width:0}.rv-chk input{width:30px;height:30px;flex:none;touch-action:none;accent-color:#2ca66a}.rv-chk li:has(input:checked){background:#eafaf1;border-color:#2ca66a}
 .rv-chk2 li{align-items:center}.rv-k{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;margin:-6px 0 -6px -6px;flex:none}.rv-k input{width:24px;height:24px;accent-color:#3a9a5a}
+
+/* 画面を閉じるフロートの✕(右下)と、スクロールできる印 ▲▼ */
+.cs-fx{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:3;width:46px;height:46px;border-radius:50%;border:2px solid var(--cs-wood);background:rgba(255,255,255,.88);color:var(--cs-ink);font-size:20px;line-height:1;padding:0;box-shadow:0 2px 8px rgba(0,0,0,.3);opacity:.9}
+.cs-sheet{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))!important}
+.cs-sh{position:absolute;z-index:2;height:34px;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;opacity:0;transition:opacity .2s;font-size:13px;color:var(--cs-ink);box-sizing:border-box;padding-bottom:2px}
+.cs-sh.up{background:linear-gradient(var(--cs-paper),transparent);align-items:flex-start;padding:2px 0 0}
+.cs-sh.dn{background:linear-gradient(transparent,var(--cs-paper))}
+.cs-sh.on{opacity:.85}
