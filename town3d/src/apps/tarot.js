@@ -219,9 +219,11 @@ function sumBuilt(sp, draws, theme) {
 }
 function parseAI(t, n) {   // 「#1 …」「#2 …」「#S …」に分ける。AIの書き方がゆれても読めるように(**#2**、＃2、【2】、行の途中の #2 など)
   t = String(t || '').replace(/\*\*/g, '').replace(/＃/g, '#').replace(/Ｓ/g, 'S').replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
-  const out = {}, re = /(?:^|\s)[\[【(（]?\s*#\s*(\d{1,2}|S)\b\s*[\]】)）]?\s*[:：.、]?\s*/g, idx = []; let m;
-  while ((m = re.exec(t))) { const k = m[1].toUpperCase(); if (k === 'S' || (+k >= 1 && +k <= n)) idx.push([k, m.index, re.lastIndex]); }
-  const put = (k, body, done) => { body = body.trim().replace(/^[-—–]+\s*/, ''); const [en, ja] = body.split('|||'); out[k] = { body: body.replace(/\s*\|\|\|\s*/, '\n'), en: (en || '').trim(), ja: (ja || '').trim(), done }; };
+  const out = {}, re = /(?:^|\s)[\[【(（]?\s*#{1,4}\s*(\d{1,2}|S(?:UMMARY)?)(?![A-Za-z])\s*[\]】)）]?\s*[:：.、]?\s*/gi, idx = []; let m;
+  while ((m = re.exec(t))) { const k = m[1].toUpperCase().startsWith('S') ? 'S' : m[1]; if (k === 'S' || (+k >= 1 && +k <= n)) idx.push([k, m.index, re.lastIndex]); }
+  const put = (k, body, done) => { body = body.trim().replace(/^[-—–]+\s*/, ''); let [en, ja] = body.split('|||'); en = (en || '').trim(); ja = (ja || '').trim();
+    if (en && !/[A-Za-z]/.test(en) && !ja) { ja = en; en = ''; }   // 英語のはずが日本語だけのとき:日本語として扱う(日本語を2つ並べない)
+    out[k] = { body: body.replace(/\s*\|\|\|\s*/, '\n'), en, ja, done }; };
   if (idx.length) idx.forEach((x, i) => put(x[0], t.slice(x[2], i + 1 < idx.length ? idx[i + 1][1] : t.length), i + 1 < idx.length));
   else {   // 番号がまったく無いとき:空行で分かれた段落を、カードの順に当てはめる(まとめを含めて n+1 段落か、n 段落のときだけ)
     const ps = t.split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
@@ -773,12 +775,16 @@ export function mountTarot(box, o) {
       '断定的な予言や、こわがらせる言い方はしない。健康・お金・法律の大きな決断は専門家に相談するよう、必要ならさりげなく添える。',
       `カード1枚ずつ、順番に語る(1つのかたまりに、1枚のカードのことだけ)。必ず次の形だけで出力する。番号の行は「#1」のように、それだけを1行に書く。#Sは全体のまとめ。前置き・見出し・箇条書き・太字・記号の飾りは書かない。\n` + [...Array.from({ length: n }, (_, k) => `#${k + 1}\n(${k + 1}枚目「${sp.pos[k][0]}」のカードの語り)`), '#S\n(全体のまとめ)'].join('\n'),
       deep ? '各カードは2〜3文。#S は4〜6文で、全体の流れと、今日からできる具体的な助言を1つ。' : (n === 1 ? '#1 は3〜4文。#S は1〜2文の短い言葉。' : '各カードは2〜3文。#S は3〜4文で、過去→現在→未来の流れと助言。'),
-      en ? `Write every paragraph in ${getEn().level === 'easy' ? 'simple, easy' : 'natural'} English (keep the mysterious, gentle tone). In each block, write the English, then " ||| ", then a natural Japanese translation. Keep the "#1" … "#S" lines exactly as shown.` : '日本語で書く。',
+      en ? `Write every paragraph in ${getEn().level === 'easy' ? 'simple, easy' : 'natural'} English (keep the mysterious, gentle tone). In each block, write the English, then " ||| ", then a natural Japanese translation. Keep the "#1" … "#S" lines exactly as shown, with a single # (never ##). The text BEFORE " ||| " MUST be English and the text AFTER it MUST be Japanese, even if the question below is written in Japanese. Never write Japanese before " ||| ".` : '日本語で書く。',
     ].join('\n');
     const user = `占い方:${sp.n}\nテーマ:${th}\n${S.q ? '質問:' + S.q + '\n' : ''}出たカード:\n${list}`;
     S.aiState = 'wait';
-    S.aiPromise = ai.chat({ system, messages: [{ role: 'user', text: user }], maxTokens: deep ? 2600 : 1400, maxChars: deep ? 7000 : 3500, onDelta: part => { S.aiState = 'stream'; S.aiRaw = part; S.aiP = parseAI(part, n); } })
-      .then(out => { S.aiRaw = String(out); S.aiP = parseAI(S.aiRaw, n); Object.values(S.aiP).forEach(x => { x.done = true; }); S.aiState = 'done'; })
+    const ask = more => ai.chat({ system: system + more, messages: [{ role: 'user', text: user }], maxTokens: deep ? 2600 : 1400, maxChars: deep ? 7000 : 3500, onDelta: part => { S.aiState = 'stream'; S.aiRaw = part; S.aiP = parseAI(part, n); } });
+    const bad = p => en && Object.entries(p).some(([k, x]) => k !== 'S' && x.body && !/[A-Za-z]/.test(x.en || ''));   // 英語のはずが日本語だった段落がある
+    const take = out => { S.aiRaw = String(out); S.aiP = parseAI(S.aiRaw, n); return S.aiP; };
+    S.aiPromise = ask('')
+      .then(out => { const p = take(out); if (!bad(p)) return; S.aiState = 'wait'; return ask('\n\nIMPORTANT: In every block, write the English FIRST, then " ||| ", then the Japanese. The part before " ||| " must be English words only.').then(out2 => { const p2 = take(out2); if (bad(p2) && !bad(p)) take(out); }); })
+      .then(() => { Object.values(S.aiP || {}).forEach(x => { x.done = true; }); S.aiState = 'done'; })
       .catch(() => { S.aiState = 'err'; });
   }
 
