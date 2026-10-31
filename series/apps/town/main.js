@@ -103,9 +103,17 @@ $('twToday').onclick = () => core.today.open({ has: g => !!GAMES[g] });
 $('twChat').onclick = () => { if (mode.is3D) core.ui.toast('住人に近づいて、話しかけてみよう'); else { core.ui.toast('3Dの町で、住人に話しかけてみよう'); mode.to3D(); } };
 mode.start();
 
-// どの場面でも、すぐ「使ってみる」(英語を打ち込む→AIが文を作る→英語脳で遊ぶ)を開けるボタン
+// 街を歩いているとき(キャラが動いている場面)だけ出る「使ってみる」ボタン(英語を打ち込む→AIが文を作る→英語脳で遊ぶ)。
+// 占い・釣り・ゲーム・勉強部屋・会話・開始画面など、画面が重なっているときは出さない(文字が読めなくなるため)
 try {
   const f = document.createElement('button'); f.textContent = '✨'; f.setAttribute('aria-label', '使ってみる');
-  f.style.cssText = 'position:fixed;left:8px;bottom:92px;z-index:50;width:40px;height:40px;border-radius:50%;border:2px solid #fff;background:#7b5cff;color:#fff;font-size:20px;opacity:.85;box-shadow:0 2px 8px #0005;padding:0';
+  f.style.cssText = 'position:fixed;left:8px;bottom:calc(215px + env(safe-area-inset-bottom,0px));z-index:50;width:40px;height:40px;border-radius:50%;border:2px solid #fff;background:#7b5cff;color:#fff;font-size:20px;opacity:.85;box-shadow:0 2px 8px #0005;padding:0;display:none';
   f.onclick = () => core.useit.open({}); document.body.appendChild(f);
+  const walking = () => {
+    if (document.body.classList.contains('md-app-open') || document.querySelector('.cs-ov')) return false;
+    const x = 28, y = innerHeight - 235;   // ボタンの中心(隠れているときも位置は同じ)
+    const top = document.elementsFromPoint(x, y).find(e => e !== f);
+    return !!top && (top.tagName === 'CANVAS' || /tw-canvas/.test(top.className || ''));   // いちばん上が3Dの画面そのもの=何も重なっていない
+  };
+  setInterval(() => { let on = false; try { on = walking(); } catch (e) { } if (f.style.display !== (on ? 'block' : 'none')) f.style.display = on ? 'block' : 'none'; }, 400);
 } catch (e) { console.error(e); }
