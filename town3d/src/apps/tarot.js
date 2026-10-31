@@ -217,6 +217,16 @@ function sumBuilt(sp, draws, theme) {
   out.push(C[C.length - 1].rev ? '未来は、今日からの選び方でいくらでも変わるわ。' : 'カードは、あなたの味方よ。');
   return out.join('\n');
 }
+// AIの読みが、ちゃんと使える形か(段落が全部あって、まとめもあって、英語モードなら英語と日本語が分かれているか)
+function aiQuality(p, n, en) {
+  const JA = /[ぁ-んァ-ン一-龥]/, EN = /[A-Za-z]/, leak = b => /(^|\s)#{1,4}\s*(\d{1,2}|S(UMMARY)?)(?![A-Za-z])/i.test(b);
+  const keys = [...Array.from({ length: n }, (_, i) => String(i + 1)), 'S'];
+  for (const k of keys) {
+    const x = p && p[k]; if (!x || !x.body || x.body.length < 12 || leak(x.body)) return { ok: false, why: k };
+    if (en && !(EN.test(x.en || '') && JA.test(x.ja || ''))) return { ok: false, why: k };
+  }
+  return { ok: true };
+}
 function parseAI(t, n) {   // 「#1 …」「#2 …」「#S …」に分ける。AIの書き方がゆれても読めるように(**#2**、＃2、【2】、行の途中の #2 など)
   t = String(t || '').replace(/\*\*/g, '').replace(/＃/g, '#').replace(/Ｓ/g, 'S').replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
   const out = {}, re = /(?:^|\s)[\[【(（]?\s*#{1,4}\s*(\d{1,2}|S(?:UMMARY)?)(?![A-Za-z])\s*[\]】)）]?\s*[:：.、]?\s*/gi, idx = []; let m;
@@ -643,7 +653,7 @@ export function mountTarot(box, o) {
   function finishPick() {
     // 記録・ふりかえり
     S.draws.forEach(d => { const c = CARD[d.id], k = (d.rev ? c.rv : c.up).kw[0]; o.logWord && o.logWord(k[0], k[1], 'word'); });
-    S.t = Date.now(); S.narr = []; S.sum = null;
+    S.t = Date.now(); S.narr = []; S.sum = null; S.rr = 0;
     st.hist.push({ t: S.t, sp: S.sp, th: S.theme, q: S.q, d: S.draws.map(d => [d.id, d.rev ? 1 : 0]) }); while (st.hist.length > 40) st.hist.shift(); save();
     o.onRead && o.onRead(S.sp); recTarot();
     aiStart();
@@ -760,12 +770,26 @@ export function mountTarot(box, o) {
     await ty.p; tapify(tx);
     if (S.sum.tr) { tr.hidden = false; tr.textContent = S.sum.tr; }
     const ce = np.querySelector('.tz-cert'); if (ce) { ce.style.display = ''; ce.animate([{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 600 }); }
-    go.innerHTML = '<button class="tz-btn sub" data-a="detail">カードの意味をくわしく</button><button class="tz-btn" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button>';
+    const broken = !!(ai && ai.ready && S.aiBad), canRe = broken && (S.rr || 0) < 2;
+    if (broken) { const nt = document.createElement('div'); nt.className = 'tz-note'; nt.style.cssText = 'margin-top:8px;font-size:13px;opacity:.9'; nt.textContent = canRe ? '🌙 ルナの声が乱れてしまったわ。カードの意味をそのままお伝えしたの。もう一度、読み直してもらう?(お代はいらないわ)' : '🌙 ルナの声が乱れてしまったの。今回は、カードの意味をそのままお届けするわ。'; tx.parentNode.insertBefore(nt, go); }
+    go.innerHTML = (canRe ? '<button class="tz-btn" data-a="reread">🔁 もう一度 読み直す(無料)</button>' : '') + '<button class="tz-btn sub" data-a="detail">カードの意味をくわしく</button><button class="tz-btn' + (canRe ? ' sub' : '') + '" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button>';
   }
 
+  // 崩れたときの救済:お金をいただかずに、同じカードでルナにもう一度読んでもらう(1回の占いにつき2回まで)
+  async function reread() {
+    if (S.rerun || (S.rr || 0) >= 2) return; S.rr = (S.rr || 0) + 1; S.rerun = true;
+    toast('ルナに、もう一度読んでもらうわ…'); aiStart();
+    await Promise.race([S.aiPromise, sleep(25000)]); S.rerun = false;
+    if (S.aiBad || S.aiState !== 'done') { toast(S.rr < 2 ? 'まだ声が乱れているみたい…' : '今回は、カードの意味をそのままお届けするわ'); leaveRitual(); S.step = 'detail'; return page(); }
+    const en = enMode();
+    S.draws.forEach((_, i) => { S.narr[i] = narrFor(i); });
+    const a = S.aiP.S; S.sum = en && a.ja ? { text: a.en, tr: a.ja } : { text: a.body.replace(/\|\|\|[\s\S]*$/, '').trim(), tr: '' };
+    const h = st.hist.find(x => x.t === S.t); if (h) { h.narr = S.narr; h.sum = S.sum; save(); }
+    toast('✨ 読み直せたわ'); leaveRitual(); S.step = 'detail'; return page();
+  }
   // ---------- AI(ルナの声) ----------
   function aiStart() {
-    S.aiState = ''; S.aiRaw = ''; S.aiP = {}; S.aiPromise = Promise.resolve();
+    S.aiState = ''; S.aiRaw = ''; S.aiP = {}; S.aiBad = false; S.aiPromise = Promise.resolve();
     if (!(ai && ai.ready)) return;
     const sp = SPREADS[S.sp], en = enMode(), deep = sp.tier === 'deep', n = S.draws.length;
     const th = (THEMES.find(t => t[0] === S.theme) || THEMES[0])[2];
@@ -780,12 +804,12 @@ export function mountTarot(box, o) {
     const user = `占い方:${sp.n}\nテーマ:${th}\n${S.q ? '質問:' + S.q + '\n' : ''}出たカード:\n${list}`;
     S.aiState = 'wait';
     const ask = more => ai.chat({ system: system + more, messages: [{ role: 'user', text: user }], maxTokens: deep ? 2600 : 1400, maxChars: deep ? 7000 : 3500, onDelta: part => { S.aiState = 'stream'; S.aiRaw = part; S.aiP = parseAI(part, n); } });
-    const bad = p => en && Object.entries(p).some(([k, x]) => k !== 'S' && x.body && !/[A-Za-z]/.test(x.en || ''));   // 英語のはずが日本語だった段落がある
+    const bad = p => !aiQuality(p, n, en).ok;   // 崩れている(段落の欠け・まとめなし・英語が日本語・目印の混ざり)
     const take = out => { S.aiRaw = String(out); S.aiP = parseAI(S.aiRaw, n); return S.aiP; };
     S.aiPromise = ask('')
       .then(out => { const p = take(out); if (!bad(p)) return; S.aiState = 'wait'; return ask('\n\nIMPORTANT: In every block, write the English FIRST, then " ||| ", then the Japanese. The part before " ||| " must be English words only.').then(out2 => { const p2 = take(out2); if (bad(p2) && !bad(p)) take(out); }); })
-      .then(() => { Object.values(S.aiP || {}).forEach(x => { x.done = true; }); S.aiState = 'done'; })
-      .catch(() => { S.aiState = 'err'; });
+      .then(() => { Object.values(S.aiP || {}).forEach(x => { x.done = true; }); S.aiBad = !aiQuality(S.aiP, n, en).ok; S.aiState = 'done'; })
+      .catch(() => { S.aiState = 'err'; S.aiBad = true; });
   }
 
   // ---------- 操作 ----------
@@ -811,6 +835,7 @@ export function mountTarot(box, o) {
     if (a === 'menu') { leaveRitual(); S.step = 'menu'; return page(); }
     if (a === 'hist') { S.step = 'hist'; return page(); }
     if (a === 'pack') return buyPack();
+    if (a === 'reread') return reread();
     if (a === 'detail') { leaveRitual(); S.step = 'detail'; return page(); }
     if (a === 'again') { leaveRitual(); S.step = 'theme'; return page(); }
     if (a === 'go') {
