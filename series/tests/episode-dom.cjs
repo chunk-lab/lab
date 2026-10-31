@@ -42,11 +42,11 @@ try{
  assert.match(cw.document.querySelector('#chunks').textContent,/I.*want to.*play/,'complete starting sentence');
  assert.equal(cw.document.querySelector('[inert]'),null,'normal app controls stay enabled');
  assert.equal(panel.querySelectorAll('button').length,1,'guide has no duplicate word choices');
- cw.document.querySelector('#chunks [data-cat="subj"]').click();
- await sleep(250);
- const who=[...cw.document.querySelectorAll('#scene .cat .en')].find(e=>e.textContent==='Who？');assert.ok(who);who.closest('.nd').click();await sleep(250);
- const she=[...cw.document.querySelectorAll('#scene .en')].find(e=>e.textContent==='She');assert.ok(she,'native subject choice');she.closest('.nd').click();await sleep(250);
- assert.match(cw.document.querySelector('#chunks').textContent,/She.*wants to.*play/,'native subject changes sentence agreement');
+ cw.document.querySelector('#slot .slp[data-r="S"]').click();
+ const she=[...cw.document.querySelectorAll('#slot .slm b')].find(e=>e.textContent==='she');assert.ok(she,'native subject choice');she.closest('.slm').click();
+ assert.match(cw.document.querySelector('#slot').textContent,/she.*wants to.*play/,'native subject change preserves want to and agreement');
+ cw.document.querySelector('#sldone').click();await sleep(50);
+ assert.match(cw.document.querySelector('#chunks').textContent,/She.*wants to.*play/,'finished sentence follows actual slot choices');
  click('物語にもどる',panel);await sleep(30);assert.equal(state().index,19);
  assert.equal(w.localStorage.getItem('cs:eigonou:db'),initialDb,'English brain saved data must be byte-for-byte unchanged');assert.equal(w.localStorage.getItem('cs:town:cont'),homeSeed);
  while(state().index<25)click('つぎへ');click('ドアを開けて町へ');await sleep(20);
