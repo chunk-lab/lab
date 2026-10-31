@@ -7,6 +7,7 @@ import { ECON } from '../../core/economy.js';
 import { PLAYS, playOf } from '../../core/plays.js';
 import { catOfApp } from '../../core/daylog.js';
 import { createHome } from './home.js';
+import { createEpisodes } from './episodes/view.js';
 import './mode.css';
 
 const st = createStore('town');
@@ -36,7 +37,15 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   }
   let town = null, box = null;
 
-  const home = createHome(core, { st, go3D: () => go('3d'), openStudy, has: g => !!GAMES[g] });
+  const episodes = createEpisodes(core, {
+    games: GAMES, pauseTown: () => town?.pause(), resumeTown: () => town?.resume(),
+    onStop: ({ departed }) => { if (!departed && !town) home.show(); },
+    depart: async mode => {
+      if (mode === '3d') { await go('3d'); if (!town) throw new Error('町を開けませんでした'); town.quickStart(); }
+      else { stop3D(); document.body.classList.remove('md-3d-on'); home.hide(); }
+    },
+  });
+  const home = createHome(core, { st, go3D: () => go('3d'), openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
 
   async function go(m) {
     if (m !== '3d') { stop3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 勉強部屋(ホーム)へ
