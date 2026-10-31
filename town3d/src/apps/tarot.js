@@ -399,6 +399,13 @@ export function mountTarot(box, o) {
       ${st.hist.length ? st.hist.slice().reverse().map((h, i) => { const sp = SPREADS[h.sp]; return `<button class="tz-hist tz-in"${D(Math.min(i + 1, 8))} data-h="${st.hist.length - 1 - i}"><span style="font-size:24px">${sp.tier === 'deep' ? '📜' : '🃏'}</span><span><b>${esc(sp.n)}</b> ・ ${esc((THEMES.find(t => t[0] === h.th) || THEMES[0])[2])}<small>${new Date(h.t).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} ・ ${h.d.map(d => CARD[d[0]].n + (d[1] ? '(逆)' : '')).slice(0, 3).join('、')}${h.d.length > 3 ? '…' : ''}</small></span></button>`; }).join('') : '<p class="tz-nt">まだ記録はないわ。</p>'}
       <button class="tz-back" data-a="menu">← もどる</button>`;
   }
+  // 鑑定書の最後に、AIの答えをそのまま(崩れていてもそのまま)見られるようにする
+  function rawBox() {
+    const h = st.hist.find(x => x.t === S.t), r = h && h.ai; if (!r) return '';
+    const when = new Date(r.at || S.t).toLocaleString('ja-JP');
+    if (r.trimmed || !r.raw) return `<details class="tz-raw" style="margin-top:12px;font-size:12px;opacity:.85"><summary>📜 ルナの答え(記録)</summary><p>${esc(when)}${r.bad ? ' ・ 乱れあり' : ''}${r.err ? ' ・ エラー:' + esc(r.err) : ''}${r.trimmed ? '(古い記録のため、全文は手放しました)' : ''}</p></details>`;
+    return `<details class="tz-raw" style="margin-top:12px;font-size:12px;opacity:.9"><summary>📜 ルナの答え(記録・そのまま)${r.bad ? ' ⚠ 乱れあり' : ''}</summary><p style="margin:6px 0">${esc(when)} ・ ${r.en ? '英語' : '日本語'}${r.rr ? ' ・ 読み直し ' + r.rr + '回' : ''}${r.err ? ' ・ エラー:' + esc(r.err) : ''}</p><pre style="white-space:pre-wrap;word-break:break-word;margin:0;font:inherit;font-size:12px;background:rgba(0,0,0,.06);border-radius:8px;padding:8px">${esc(r.raw)}</pre>${(r.tries || []).length > 1 ? `<p style="margin:8px 0 2px">頼み直した前の答え(${r.tries.length - 1}件)</p>${r.tries.slice(0, -1).map(t => `<pre style="white-space:pre-wrap;word-break:break-word;margin:4px 0;font:inherit;font-size:12px;background:rgba(0,0,0,.06);border-radius:8px;padding:8px">${esc(t)}</pre>`).join('')}` : ''}</details>`;
+  }
   function detail() {
     const sp = SPREADS[S.sp];
     const narr = S.draws.map((d, i) => { const n = S.narr[i]; return n ? `<div class="pp">${S.sp === 'celtic' ? i + 1 + '. ' : ''}${esc(sp.pos[i][0])} ・ ${esc(CARD[d.id].n)}${d.rev ? '(逆)' : ''}</div><p>${esc(n.text)}</p>${n.tr ? `<p class="tr">${esc(n.tr)}</p>` : ''}` : ''; }).join('');
@@ -411,7 +418,7 @@ export function mountTarot(box, o) {
         <div class="tz-kw">${or.kw.map(([en, ja]) => `<button data-say="${esc(en)}">🔊 ${esc(en)}<i>${esc(ja)}</i></button>`).join('')}</div><div>${esc(or.m)}</div></div></div>`;
     }).join('');
     const cert = sp.tier === 'deep' ? `<div class="tz-cert">📜 <b>鑑定書</b> ・ ${new Date(S.t || Date.now()).toLocaleDateString('ja-JP')} ・ 占い師ルナ</div>` : '';
-    return head(sp.en) + cert + `<div class="tz-read"><h3>🔮 ルナの鑑定</h3>${S.q ? `<p style="font-size:13px;color:#8d7f9e">「${esc(S.q)}」</p>` : ''}${narr || `<p>${esc(sumBuilt(S.sp, S.draws, S.theme))}</p>`}${sum}</div>
+    return head(sp.en) + cert + `<div class="tz-read"><h3>🔮 ルナの鑑定</h3>${S.q ? `<p style="font-size:13px;color:#8d7f9e">「${esc(S.q)}」</p>` : ''}${narr || `<p>${esc(sumBuilt(S.sp, S.draws, S.theme))}</p>`}${sum}${rawBox()}</div>
       <div class="tz-read"${D(1)}><h3>🃏 カードの意味</h3>${rows}</div>
       <div class="tz-c tz-sub" style="justify-content:center"><button class="tz-btn" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button></div>`;
   }
@@ -775,6 +782,20 @@ export function mountTarot(box, o) {
     go.innerHTML = (canRe ? '<button class="tz-btn" data-a="reread">🔁 もう一度 読み直す(無料)</button>' : '') + '<button class="tz-btn sub" data-a="detail">カードの意味をくわしく</button><button class="tz-btn' + (canRe ? ' sub' : '') + '" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button>';
   }
 
+  // AIの答えを、そのまま記録に残す(崩れていても、そのまま。あとで問い合わせがあったときに確かめられる)。
+  //   ついでに、カードごとの説明とまとめも、AIの文で記録を更新する(儀式の途中でAIがまだ終わっていなくても、あとから入れ替える)
+  function finishAI() {
+    try {
+      const en = enMode();
+      S.draws.forEach((_, i) => { if (S.aiP[String(i + 1)]) S.narr[i] = narrFor(i); });
+      const a = S.aiP.S; if (a && a.body && a.body.length > 12) S.sum = en && a.ja ? { text: a.en, tr: a.ja } : { text: a.body.replace(/\|\|\|[\s\S]*$/, '').trim(), tr: '' };
+      const h = st.hist.find(x => x.t === S.t); if (!h) return;
+      h.narr = S.narr; if (S.sum) h.sum = S.sum;
+      h.ai = { raw: S.aiRaw || '', tries: (S.aiTries || []).slice(-3), bad: !!S.aiBad, err: S.aiErr || '', rr: S.rr || 0, at: Date.now(), en };
+      st.hist.slice(0, -20).forEach(x => { if (x.ai) x.ai = { bad: x.ai.bad, at: x.ai.at, trimmed: 1 }; });   // 古い記録は、場所をとるので答えの全文だけ手放す(最近の20件は全文を残す)
+      save();
+    } catch (e) { console.error(e); }
+  }
   // 崩れたときの救済:お金をいただかずに、同じカードでルナにもう一度読んでもらう(1回の占いにつき2回まで)
   async function reread() {
     if (S.rerun || (S.rr || 0) >= 2) return; S.rr = (S.rr || 0) + 1; S.rerun = true;
@@ -789,7 +810,7 @@ export function mountTarot(box, o) {
   }
   // ---------- AI(ルナの声) ----------
   function aiStart() {
-    S.aiState = ''; S.aiRaw = ''; S.aiP = {}; S.aiBad = false; S.aiPromise = Promise.resolve();
+    S.aiState = ''; S.aiRaw = ''; S.aiP = {}; S.aiBad = false; S.aiErr = ''; if (!S.rerun) S.aiTries = []; S.aiPromise = Promise.resolve();
     if (!(ai && ai.ready)) return;
     const sp = SPREADS[S.sp], en = enMode(), deep = sp.tier === 'deep', n = S.draws.length;
     const th = (THEMES.find(t => t[0] === S.theme) || THEMES[0])[2];
@@ -805,11 +826,11 @@ export function mountTarot(box, o) {
     S.aiState = 'wait';
     const ask = more => ai.chat({ system: system + more, messages: [{ role: 'user', text: user }], maxTokens: deep ? 2600 : 1400, maxChars: deep ? 7000 : 3500, onDelta: part => { S.aiState = 'stream'; S.aiRaw = part; S.aiP = parseAI(part, n); } });
     const bad = p => !aiQuality(p, n, en).ok;   // 崩れている(段落の欠け・まとめなし・英語が日本語・目印の混ざり)
-    const take = out => { S.aiRaw = String(out); S.aiP = parseAI(S.aiRaw, n); return S.aiP; };
+    const take = out => { S.aiRaw = String(out); (S.aiTries = S.aiTries || []).push(S.aiRaw); S.aiP = parseAI(S.aiRaw, n); return S.aiP; };
     S.aiPromise = ask('')
       .then(out => { const p = take(out); if (!bad(p)) return; S.aiState = 'wait'; return ask('\n\nIMPORTANT: In every block, write the English FIRST, then " ||| ", then the Japanese. The part before " ||| " must be English words only.').then(out2 => { const p2 = take(out2); if (bad(p2) && !bad(p)) take(out); }); })
-      .then(() => { Object.values(S.aiP || {}).forEach(x => { x.done = true; }); S.aiBad = !aiQuality(S.aiP, n, en).ok; S.aiState = 'done'; })
-      .catch(() => { S.aiState = 'err'; S.aiBad = true; });
+      .then(() => { Object.values(S.aiP || {}).forEach(x => { x.done = true; }); S.aiBad = !aiQuality(S.aiP, n, en).ok; S.aiState = 'done'; finishAI(); })
+      .catch(e => { S.aiState = 'err'; S.aiBad = true; S.aiErr = String(e && e.message || e).slice(0, 200); finishAI(); });
   }
 
   // ---------- 操作 ----------
