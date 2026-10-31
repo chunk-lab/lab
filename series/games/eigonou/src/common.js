@@ -99,7 +99,7 @@ export function kindPos(k){ return {people:'noun',things:'noun',verbs:'verb',sta
 export function publishCheck(sid){
  const s=DB.sets.find(x=>x.id===sid); const issues=[];
  if(!s.items.length) issues.push('言葉が1つもありません');
- const seen={}; s.items.forEach(it=>{ const k=it.kind+it.en.toLowerCase(); if(seen[k]) issues.push(`「${it.en}」が重複しています`); seen[k]=1; if(!it.ja) issues.push(`「${it.en}」に日本語がありません`); if(/[^\x20-\x7E’]/.test(it.en)) issues.push(`「${it.en}」に英語以外の文字があります`); const off=[...LEX.people,...LEX.things,...LEX.verbs].find(o=>!o.custom && o.en.toLowerCase()===it.en.toLowerCase()); if(off) issues.push(`「${it.en}」は公式セットにもあります`); });
+ const fullOf=o=>(String(o.en||'')+(o.tail?' '+o.tail:'')).trim().toLowerCase(); const seen={}; s.items.forEach(it=>{ const k=it.kind+fullOf(it); if(seen[k]) issues.push(`「${fullOf(it)}」が重複しています`); seen[k]=1; if(!it.ja) issues.push(`「${it.en}」に日本語がありません`); if(/[^\x20-\x7E’]/.test(it.en)) issues.push(`「${it.en}」に英語以外の文字があります`); const off=[...LEX.people,...LEX.things,...LEX.verbs].find(o=>!o.custom && fullOf(o)===fullOf(it)); if(off) issues.push(`「${fullOf(it)}」は公式セットにもあります(公式にないものだけ公開できます)`); });
  if(issues.length){ alert('公開前のチェック\n\n'+issues.slice(0,8).map(x=>'・'+x).join('\n')+'\n\n直してからもう一度お試しください。'); return; }
  s.published=!s.published; save(); renderSets(); toast(s.published?'公開しました（試作ではこの端末の中だけ）':'公開をやめました');
 }
