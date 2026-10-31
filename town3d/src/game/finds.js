@@ -31,7 +31,7 @@ const FIXED = [['pk2', 1.2, 1.0], ['sh1', 2.4, -1.5], ['ew-58', 0.5, -1.8], ['nc
 
 // ---- 場所 ----
 const nodeIds = Object.keys(GRAPH.nodes).sort();
-function dailySpots(n = 6) {
+function dailySpots(n = 12) {
   const out = [], used = new Set(), d = dayNum();
   for (let i = 0; out.length < n && i < 60; i++) {
     const id = nodeIds[Math.floor(hash(d * 31 + i * 7 + 1) * nodeIds.length)]; if (used.has(id)) continue; used.add(id);
@@ -64,9 +64,22 @@ export const finds = {
   take(s) { const g = this.got(); if (g[s.key]) return false; g[s.key] = Date.now(); st.set('got', g); if (s.kind === 'treasure') { const T = st.get('tre') || []; if (!T.includes(s.c[1])) { T.push(s.c[1]); st.set('tre', T); } } return true; },
   treasures() { return st.get('tre') || []; },
   addTreasure(name) { const T = this.treasures(); if (!T.includes(name)) { T.push(name); st.set('tre', T); this.onChange && this.onChange(); } },
+  // ---- かくしもの(きょうの分) ----
+  daily() { return dailySpots(); },
+  dailyFound() { const g = this.got(); return dailySpots().filter(s => g[s.key]); },   // きょう見つけた分(中身つき)
+  // まだ見つけていなくて、まだありかを聞いていないもの(聞いてよいもの)
+  hintable() { const H = st.get('hinted'), cur = H && H.day === dayKey() ? H.keys : []; return this.spots().filter(s => s.kind !== 'treasure' && !cur.includes(s.key)); },
+  remaining() { return this.spots().filter(s => s.kind !== 'treasure').length; },   // きょうの分の、まだ見つけていない数
+  // 全部集めたときに、きょう1回だけ「使ってみる?」を出すための印
+  allDonePending() { return this.remaining() === 0 && st.get('allDone') !== dayKey(); },
+  markAllDone() { st.set('allDone', dayKey()); },
+  // まとめて聞く:まだ聞いていない分をぜんぶ(場所の名前の一覧を返す)
+  hintAll(areaName = areaFn) { const L = this.hintable(); if (!L.length) return []; const H = st.get('hinted'), d = dayKey(), cur = H && H.day === d ? H.keys : []; L.forEach(s => cur.push(s.key)); st.set('hinted', { day: d, keys: cur }); return L.map(s => areaName(s.x, s.z)); },
+  // いま教えてもらっていて、まだ見つけていない場所の名前(占いの館に出し続ける)
+  hintedAreas(areaName = areaFn) { return this.hinted().map(s => areaName(s.x, s.z)); },
   // 手がかり(占い・哲学者):まだ見つけていない、きょうのかくれものの近くの場所の名前
   hint(areaName = areaFn) {
-    const s = this.spots().filter(x => x.kind !== 'treasure'); const f = s.length ? s[Math.floor(Math.random() * s.length)] : this.spots()[0];
+    const s = this.hintable(); const f = s.length ? s[Math.floor(Math.random() * s.length)] : null;
     if (f) { const H = st.get('hinted'), d = dayKey(), cur = H && H.day === d ? H.keys : []; if (!cur.includes(f.key)) cur.push(f.key); st.set('hinted', { day: d, keys: cur }); }   // 地図に印を出す(きょうの分だけ)
     return f ? areaName(f.x, f.z) : null;
   },

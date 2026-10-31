@@ -1,5 +1,6 @@
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
+import { confirmPay } from '../../ui/pay.js';
 import { weather, wxStrip } from '../../game/weather.js';
 import { social } from '../../game/social.js';
 import { FISH, ITEMS, ALL, BYID, LETTERS, RARITY, RARITY_COL, GEAR, gearById, DEX_REWARDS, DAILY_COIN_CAP, RULES, DURATIONS, AREAS, SPOTS, areaLabel, areaAtIn, TANA, tanaOf, BAIT_EN, SPEED_JP, SPEED_EN } from './data.js';
@@ -768,11 +769,13 @@ export const fishingApp = {
       };
       draw();
       tabs.onclick = e => { const b = e.target.closest('[data-t]'); if (!b) return; tab = b.dataset.t; msg = ''; sfx.play('tap'); draw(); };
-      sc.onclick = e => {
+      sc.onclick = async e => {
         const u = e.target.closest('[data-use]'), b = e.target.closest('[data-buy]');
         if (u) { eq[tab] = u.dataset.use; save(); sfx.play('tap'); draw(); }
         if (b) {
           const it = GEAR[tab].find(x => x.id === b.dataset.buy);
+          if (it.gems && ctx.gems) { if (!(await confirmPay({ label: it.name, price: it.gems, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; }
+          else if (!(await confirmPay({ label: it.name, price: it.gems ? it.gems * 150 : it.price, have: ctx.wallet.get() }))) return;
           if (it.gems && ctx.gems) { if (!ctx.gems.spend(it.gems)) { msg = 'ダイヤがたりないよ'; draw(); return; } }
           else { const p = it.gems ? it.gems * 150 : it.price; if (ctx.wallet.get() < p) { msg = `コインがあと ${p - ctx.wallet.get()} たりないよ`; draw(); return; } if (!ctx.wallet.spend(p, 'gear')) { msg = 'コインがたりないよ'; draw(); return; } }
           own[tab].push(it.id); eq[tab] = it.id; msg = `${it.name} を買った!`; save(); sfx.play('coin'); draw();

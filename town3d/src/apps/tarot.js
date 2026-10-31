@@ -5,6 +5,7 @@
 // 鑑定の文:AIがつながっていれば、ルナがAIで読む(英語モードなら英語+訳)。なければ、カードの意味と並び方から組み立てる
 // 絵の差し替え:o.artBase に画像の場所を入れると、<artBase><カードid>.webp を使う(なければ下の仮の絵)
 import { loadDict, meaningText } from './gamebox/en_data.js';
+import { confirmPay } from '../ui/pay.js';
 import { CARDS, CARD, SUITS } from './tarot_cards.js';
 
 export const TAROT_PRICE = { coin: 100, gem: 3, pack: { n: 10, gem: 25 } };
@@ -329,20 +330,22 @@ export function mountTarot(box, o) {
   }
 
   // ---------- 支払い ----------
-  function pay() {
+  async function pay() {
     const sp = SPREADS[S.sp];
     if (sp.tier === 'deep') {
       if (st.tk > 0) { st.tk--; save(); return 'ticket'; }
       if (!ctx.gems) { toast('ダイヤは チャンクタウンで使えます'); return null; }
+      if (!(await confirmPay({ label: 'タロット(じっくり)', price: TAROT_PRICE.gem, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return null;
       if (!ctx.gems.spend(TAROT_PRICE.gem, 'tarot')) { toast(`ダイヤが ${TAROT_PRICE.gem}こ いるわ`); return null; }
       return 'gem';
     }
     if (freeNow()) { if (dailyFree()) st.dk = dayKey(); else st.wk = weekKey(); save(); return 'free'; }
-    const p = coinPrice(); if (ctx.wallet.get() < p) { toast(`コインが ${p}まい いるわ`); return null; }
+    const p = coinPrice(); if (!(await confirmPay({ label: 'タロット占い', price: p, have: ctx.wallet.get() }))) return null;
     if (!ctx.wallet.spend(p, 'tarot')) { toast(`コインが ${p} まい いるわ`); return null; } return 'coin';
   }
-  function buyPack() {
+  async function buyPack() {
     if (!ctx.gems) return toast('ダイヤは チャンクタウンで使えます');
+    if (!(await confirmPay({ label: `ケルト十字の券 ${TAROT_PRICE.pack.n}まい`, price: TAROT_PRICE.pack.gem, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return;
     if (!ctx.gems.spend(TAROT_PRICE.pack.gem, 'tarot-pack')) return toast(`ダイヤが ${TAROT_PRICE.pack.gem}こ いるわ`);
     st.tk += TAROT_PRICE.pack.n; save(); toast(`🎫 ケルト十字の券を ${TAROT_PRICE.pack.n}まい 受け取ったわ`); page();
   }
@@ -786,7 +789,7 @@ export function mountTarot(box, o) {
     zz.onclick = () => zz.remove(); root.appendChild(zz);
   }
   const leaveRitual = () => { root.querySelectorAll('.tz-fx,.tz-big,.tz-halo,.tz-spk').forEach(x => x.remove()); R = null; };
-  root.addEventListener('click', e => {
+  root.addEventListener('click', async e => {
     const t = e.target.closest('[data-a],[data-sp],[data-th],[data-h],[data-zm],[data-say]'); if (!t) return;
     const a = t.dataset.a;
     if (t.dataset.say) return speak(t.dataset.say);
@@ -806,7 +809,7 @@ export function mountTarot(box, o) {
     if (a === 'again') { leaveRitual(); S.step = 'theme'; return page(); }
     if (a === 'go') {
       S.q = ((pg.querySelector('.tz-q') || {}).value || '').trim().slice(0, 80);
-      const how = pay(); if (!how) return;
+      const how = await pay(); if (!how) return;
       if (how === 'free') toast('きょうは、お代はいらないわ');
       startDeck(); S.shuffles = 0; S.step = 'ritual'; return ritual();
     }

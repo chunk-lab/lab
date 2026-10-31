@@ -1,5 +1,6 @@
 // ショップ(家具を買う)と、あなたの家(家具を置く)。データは src/game/furniture.js
 import * as THREE from 'three';
+import { confirmPay } from '../ui/pay.js';
 import { makeCharacter, LOOKS } from '../world/character.js';
 import { createInput } from '../game/input.js';
 import { snapCanvas, shotCard, flash } from '../game/photos.js';
@@ -82,7 +83,7 @@ export const shopApp = {
           <div style="flex:1;font-weight:800">カゴ ${n}点<br><span style="font-size:13px;color:#8d7f9e">ごうけい 🪙 ${total}</span></div>
           ${ctx.params && ctx.params.from === 'home' ? `<button data-home style="${btn('#d9d2e3', ink)}">🏠 家へ</button>` : ''}<button data-v="cart" style="${btn(n ? undefined : '#d9d2e3')};${n ? '' : 'cursor:default'}">カゴを見る</button></div>`;
     };
-    box.onclick = e => {
+    box.onclick = async e => {
       if (e.target.closest('[data-fish]')) { ctx.open('fishing', { tab: 'shop' }); return; }
       if (e.target.closest('[data-gbox]')) { ctx.open('gamebox', { from: 'home' }); return; }
       if (e.target.closest('[data-home]')) { ctx.open('home'); return; }
@@ -93,7 +94,9 @@ export const shopApp = {
       const v = e.target.closest('[data-v]')?.dataset.v;
       if (v) { if (v === 'cart' && !Object.keys(furn.cart()).length) return; view = v; msg = ''; draw(); return; }
       if (e.target.closest('[data-pay]')) {
-        const snap = furn.cart(), items = Object.keys(snap), tot = furn.total(snap), err = furn.buyCart(ctx.wallet);
+        const snap = furn.cart(), items = Object.keys(snap), tot = furn.total(snap);
+        if (tot > 0 && !(await confirmPay({ label: `家具のカゴ(${items.length}しゅるい)`, price: tot, have: ctx.wallet.get(), yes: 'かう' }))) return;   // 買う前に確認
+        const err = furn.buyCart(ctx.wallet);
         if (err) msg = err; else { msg = `買ったよ！ ${items.map(id => ITEM[id].name + '×' + snap[id]).join('、')}(🪙 ${tot}) のこり 🪙 ${ctx.wallet.get()}。「あなたの家」に置いてみよう。`; view = 'list'; ctx.emit('buy', { items }); }
         draw();
       }
@@ -272,17 +275,19 @@ export const homeApp = {
         <div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px;box-shadow:0 2px 8px #0001"><div style="font-weight:800;margin-bottom:6px">部屋の名前</div><input class="nm" value="${r.name}" maxlength="10" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e3d9f0;font:inherit;color:${ink}"></div>
         <button data-x="close" style="${btn('#d9d2e3', ink)};width:100%">とじる</button></div>`;
     }
-    sheet.onclick = e => {
+    sheet.onclick = async e => {
       if (e.target === sheet) { sheet.style.display = 'none'; return; }
       const b = e.target.closest('[data-x]'); if (!b) return;
       const x = b.dataset.x, r = cur();
       if (x === 'close') { const nm = sheet.querySelector('.nm'); if (nm && nm.value.trim() && nm.value !== r.name) { houseData.rename(r.id, nm.value.trim()); house = houseData.get(); } sheet.style.display = 'none'; sheetMsg = ''; ui(); return; }
       if (x === 'type') { houseData.setType(r.id, b.dataset.t); house = houseData.get(); buildShell(); ui(); openSheet(); return; }
       if (x === 'room') {
+        { const c = houseData.cost(ctx.house); if (ctx.gems && !(await confirmPay({ label: '部屋をふやす', price: c.gemsPerRoom, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; }
         const res = houseData.addRoom(r.id, ctx);
         if (res.err) sheetMsg = res.err; else { house = houseData.get(); sheetMsg = ''; sheet.style.display = 'none'; enterRoom(res.room.id); tip.textContent = `「${res.room.name}」ができたよ！ 家具を置いてみよう。`; return; }
         openSheet(); return;
       }
+      { const c = houseData.cost(ctx.house), g = b.dataset.via === 'gems'; if (!(await confirmPay(g ? { label: `${x === 'cols' ? 'よこ' : 'たて'}に 1マス 広げる`, price: c.gemsPerLine, have: ctx.gems ? ctx.gems.get() : 0, icon: '💎', unit: 'ダイヤ' } : { label: `${x === 'cols' ? 'よこ' : 'たて'}に 1マス 広げる`, price: c.coinsPerLine, have: ctx.wallet.get() }))) return; }
       const err = houseData.expand(r.id, x, b.dataset.via, ctx);
       sheetMsg = err || `${x === 'cols' ? 'よこ' : 'たて'}に 1マス 広がったよ！`;
       house = houseData.get(); buildShell(); resize(); relayout(); ui(); openSheet();

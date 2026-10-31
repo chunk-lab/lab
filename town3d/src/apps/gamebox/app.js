@@ -2,6 +2,7 @@
 //   英語対戦ゲーム(無料。無料会員は1日1試合、ゲーム機を1日借りれば何回でも)
 //   (あそびゲームは、アミューズメントセンター(mode:'amuse')に移した。センター全体が1日パス制(コインでも買える)。旬の外遊びだけ無料)
 //   相手:町の住人(CPU)か、1台のスマホを上下で向かい合わせて2人
+import { confirmPay } from '../../ui/pay.js';
 import { CPUS, cpuById, createSfx, INK, unlockSpeech } from './kit.js';
 import chunksort from './games/chunksort.js';
 import wordrace from './games/wordrace.js';
@@ -170,7 +171,7 @@ export const gameboxApp = {
         <div class="row"><button class="btn sub" data-x>やめる</button><button class="btn gold" data-ok>🪙 ${PRICE.console} で買う</button></div>` : `<h2>🎮 本体を借りる</h2><p class="note">きょう1日、ゲーム機が使えます(英語ゲームは何回でも)。<br>有料会員は、いつでも無料で使えます。</p>
         <div class="row"><button class="btn sub" data-x>やめる</button><button class="btn gold" data-ok>🪙 ${PRICE.console} で借りる</button></div>`);
       s.querySelector('[data-x]').onclick = () => s.remove();
-      s.querySelector('[data-ok]').onclick = () => { if (!payCoins(PRICE.console)) { s.remove(); msg('コインがたりない', `あと 🪙${PRICE.console - ctx.wallet.get()}`); return; } const r = R(); r.console = dayKey(); saveR(r); s.remove(); after ? after() : home(); };
+      s.querySelector('[data-ok]').onclick = async () => { if (!(await confirmPay({ label: AMUSE ? '1日パス' : '本体を借りる', price: PRICE.console, have: ctx.wallet.get() }))) return; if (!payCoins(PRICE.console)) { s.remove(); msg('コインがたりない', `あと 🪙${PRICE.console - ctx.wallet.get()}`); return; } const r = R(); r.console = dayKey(); saveR(r); s.remove(); after ? after() : home(); };
     }
     function rentTitles(preset) {
       let mode = 'one', picks = preset ? [preset] : [];
@@ -191,13 +192,14 @@ export const gameboxApp = {
           <div class="row"><button class="btn sub" data-x>もどる</button></div>`;
       };
       draw();
-      s.onclick = e => {
+      s.onclick = async e => {
         const m = e.target.closest('[data-m]'), p = e.target.closest('[data-p]'), coin = e.target.closest('[data-coin]'), usd = e.target.closest('[data-usd]');
         if (e.target.closest('[data-x]')) { s.remove(); home(); return; }
         if (m) { mode = m.dataset.m; picks = picks.slice(0, mode === 'one' ? 1 : 3); draw(); }
         if (p) { const id = p.dataset.p, max = mode === 'one' ? 1 : 3; picks = picks.includes(id) ? picks.filter(x => x !== id) : mode === 'one' ? [id] : picks.length < max ? [...picks, id] : picks; draw(); }
         if (coin) {
           const cost = mode === 'one' ? PRICE.title1 : mode === 'three' ? PRICE.title3 : PRICE.titleAll;
+          if (!(await confirmPay({ label: mode === 'all' ? 'ぜんぶ遊べる(きょう1日)' : `ゲームを借りる(${picks.length}本)`, price: cost, have: ctx.wallet.get() }))) return;
           if (!payCoins(cost)) { msg('コインがたりない', `あと 🪙${cost - ctx.wallet.get()}`); return; }
           const r = R(); if (mode === 'all') r.all = Math.max(r.all, endOfDay()); else picks.forEach(id => { r.titles[id] = Math.max(r.titles[id] || 0, endOfDay()); }); saveR(r);
           s.remove(); home(); msg('借りました!', 'きょう1日あそべます。' + (consoleOk() ? '' : `<br>本体(🪙${PRICE.console})も借りてね。`));

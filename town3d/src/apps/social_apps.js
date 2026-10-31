@@ -2,6 +2,7 @@
 import { social, ITEMS, CAFE_MENU, PREFS, NPC_NAME } from '../game/social.js';
 import { spec, SET, LV_NAME, RAR, DECOR, decorOf, RECIPES, shapeName } from '../game/specimen.js';
 import { finds } from '../game/finds.js';
+import { confirmPay } from '../ui/pay.js';
 import { weather, WX_INFO } from '../game/weather.js';
 import { mountTarot, TAROT_PRICE } from './tarot.js';
 
@@ -56,13 +57,14 @@ export const cafeApp = {
     };
     draw();
     let busy = false;
-    box.onclick = e => {
+    box.onclick = async e => {
       const q = e.target.closest('[data-q]');
       if (q && !q.disabled) { const k = q.dataset.q; qty[k] = Math.max(0, Math.min(MAXQ, (qty[k] || 0) + +q.dataset.d)); last = ''; const sc = box.scrollTop; draw(); box.scrollTop = sc; return; }
       const pay = e.target.closest('[data-pay]'); if (!pay || pay.disabled || busy) return;
       busy = true;
       try {
         const { n, sum } = totals(); if (!n) return;
+        if (!(await confirmPay({ label: `カフェのかご(${n}こ)`, price: sum, have: ctx.wallet.get(), yes: 'かう' }))) return;   // 買う前に、いくら・いま・あとで、を見せて確認
         if (!ctx.wallet.spend(sum, 'cafe')) { toast(box, 'コインがたりないよ'); return; }   // 払えなければ、なにも買わない
         const got = []; for (const k in qty) if (qty[k] > 0 && ITEMS[k]) { social.addItem(k, qty[k]); got.push(`${ITEMS[k].icon}${esc(ITEMS[k].name)} ×${qty[k]}`); qty[k] = 0; }
         last = `🛍 買ったもの: ${got.join('、')}<br><small>ごうけい 🪙 ${fmt(sum)} をはらったよ。のこり 🪙 ${fmt(ctx.wallet.get())}</small>`;
@@ -93,7 +95,7 @@ export const fortuneApp = {
         lunaLine: 'カードは、あなたの心をうつす鏡。…なにを たずねたいの?',
         onExit: () => { tarot && tarot.unmount(); tarot = null; box.style.display = ''; draw(); } });
     };
-    const pay = () => { const p = price(); if (ctx.wallet.get() < p) { toast(box, `コインが ${p} まい いるわ`); return false; } if (!ctx.wallet.spend(p, 'fortune')) { toast(box, `コインが ${p} まい いるわ`); return false; } return true; };
+    const pay = async (label, n) => { const p = n == null ? price() : n; if (!(await confirmPay({ label, price: p, have: ctx.wallet.get() }))) return false; if (!ctx.wallet.spend(p, 'fortune')) { toast(box, `コインが ${p} まい いるわ`); return false; } return true; };   // 買う前に必ず確認(いくらで、いま・あとで いくらか)
     const say = t => `<div class="say">🔮 ルナ「${t}」</div>`;
     const draw = () => {
       let h = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>🔮 占いの館</h2><span class="pill">🪙 <span data-bind="coins">${Number(ctx.wallet.get()).toLocaleString("ja-JP")}</span></span></div>`;
@@ -107,9 +109,16 @@ export const fortuneApp = {
       if (view === 'top') {
         if (!result) h += `<p class="nt" style="font-size:13px;color:#e7dcff;margin:4px 0 0">(ルナは${doing})</p>`;
         h += `<button class="opt" data-v="tarot" style="border:1px solid #ffd76a;background:linear-gradient(135deg,rgba(255,215,106,.28),rgba(255,255,255,.08))"><span class="ic">🃏</span><span><b>タロット占い</b><small>78枚のカードで、本格的に占う(かんたん・じっくり)</small></span><span class="c">🪙${social.has('luna', 'discount') ? TAROT_PRICE.coin / 2 : TAROT_PRICE.coin}〜</span></button>`;
+        { const areas = finds.hintedAreas(); if (areas.length) h += `<div class="res" style="font-size:15px;line-height:1.7"><b>📍 きょう教えたかくしもの(まだ見つけていない ${areas.length}こ)</b><br>${areas.map(x => '・' + esc(x) + ' のあたり').join('<br>')}<br><small>近くで「🔍 調べる」を押してね</small></div>`; }
         h += say(result ? 'ほかにも、知りたいことはあるかしら?' : 'ようこそ、星の館へ…。ひとつ ' + price() + 'コインで、なんでも占ってあげる。わかったことは、ことばノートの「情報」に書いておきなさいね');
-        h += [['pref', '💝', 'だれかの好きなもの', '住人の好物・にがてなものを1つ'], ['recipe', '🪸', '飾りのレシピ', 'まだ知らない飾りの材料(合成のレシピ帳に入る)'], ['show', '🐚', '標本を見せる', '見せた標本が、どの飾りの材料になるか'], ['hide', '🔍', 'かくれもののありか', '町に隠れているものが、どのあたりにあるか'], ['sky', '☀️', '天気を占う', 'この先1日の天気']]
-          .map(([v, ic, t, s]) => `<button class="opt" data-v="${v}"><span class="ic">${ic}</span><span><b>${t}</b><small>${s}</small></span><span class="c">🪙${price()}</span></button>`).join('');
+        h += [['pref', '💝', 'だれかの好きなもの', '住人の好物・にがてなものを1つ'], ['recipe', '🪸', '飾りのレシピ', 'まだ知らない飾りの材料(合成のレシピ帳に入る)'], ['show', '🐚', '標本を見せる', '見せた標本が、どの飾りの材料になるか'], ['hide', '🔍', 'かくしもののありか(1つ)', '町に隠れているものが、どのあたりにあるか'], ['hideAll', '🔍', 'かくしもののありか(まとめて)', 'まだ聞いていないものを、ぜんぶ'], ['sky', '☀️', '天気を占う', 'この先1日の天気']]
+          .map(([v, ic, t, s]) => {
+            const hn = finds.hintable().length, rem = finds.remaining();
+            let dis = false, sub = s, cost = v === 'hideAll' ? 100 : price();
+            if (v === 'hide') { if (!rem) { dis = true; sub = 'きょうは ぜんぶ見つけたわ ✓(お金はかからないわ)'; } else if (!hn) { dis = true; sub = 'のこりの場所は、もう ぜんぶ教えたわ ✓'; } else sub = `まだ聞いていないものが ${hn}こ`; }
+            if (v === 'hideAll') { if (!rem) { dis = true; sub = 'きょうは ぜんぶ見つけたわ ✓'; } else if (hn <= 10) { dis = true; sub = hn ? `のこりが ${hn}こ。ひとつずつ聞く方が安いわ(🪙${hn * price()})` : 'のこりの場所は、もう ぜんぶ教えたわ ✓'; } else sub = `まだ聞いていない ${hn}こ ぜんぶ(ひとつずつより お得)`; }
+            return `<button class="opt" data-v="${v}" ${dis ? 'disabled style="opacity:.55"' : ''}><span class="ic">${ic}</span><span><b>${t}</b><small>${sub}</small></span><span class="c">${dis ? '' : '🪙' + cost}</span></button>`;
+          }).join('');
         h += `<p class="nt">占い師ルナと仲良くなると、占いが安くなるかも…。</p>`;
         if (P.talkLuna) h += `<button class="opt" data-v="talk"><span class="ic">💬</span><span><b>ルナとおしゃべり・プレゼント</b><small>仲良くなると、いいことがあるかも</small></span></button>`;
       } else if (view === 'pref') {
@@ -128,30 +137,31 @@ export const fortuneApp = {
       box.innerHTML = h;
     };
     const rec = (cat, text, key) => social.addInfo(cat, text, key);
-    box.onclick = e => {
+    box.onclick = async e => {
       const v = e.target.closest('[data-v]'); if (v) {
         const k = v.dataset.v; result = '';
         if (k === 'tarot') { openTarot(); return; }
         if (k === 'talk') { P.talkLuna(); return; }
-        if (k === 'hide') { if (!pay()) return; const a = finds.hint(); result = a ? `🔍 きょうは「<b>${esc(a)}</b>」のあたりに、なにかが隠れているわ。近くで「調べる」をしてみなさい` : 'きょうは もう、ぜんぶ見つけたみたいね'; if (a) rec('かくれもの', `${new Date().getMonth() + 1}/${new Date().getDate()}:${a}のあたりに何かある(ルナ)`); view = 'top'; }
-        else if (k === 'sky') { if (!pay()) return; const f = weather.forecast(8); result = '☀️ この先の天気よ<br>' + f.map(x => `${weather.hm(x.start)}〜 ${WX_INFO[x.kind].icon}`).join(' ・ '); rec('天気', f.map(x => `${weather.hm(x.start)}${WX_INFO[x.kind].icon}`).join(' ') + '(ルナ)'); view = 'top'; }
+        if (k === 'hide') { if (!finds.hintable().length) { result = finds.remaining() ? 'のこりの場所は、もう ぜんぶ教えたわ' : 'きょうは もう、ぜんぶ見つけたみたいね'; view = 'top'; draw(); return; } if (!(await pay('かくしもののありか(1つ)'))) return; const a = finds.hint(); result = a ? `🔍 きょうは「<b>${esc(a)}</b>」のあたりに、なにかが隠れているわ。近くで「調べる」をしてみなさい` : 'もう ぜんぶ教えたみたいね'; if (a) rec('かくれもの', `${new Date().getMonth() + 1}/${new Date().getDate()}:${a}のあたりに何かある(ルナ)`); view = 'top'; }
+        else if (k === 'hideAll') { const hn = finds.hintable().length; if (hn <= 10) { draw(); return; } if (!(await pay(`かくしもののありか(まとめて ${hn}こ)`, 100))) return; const L = finds.hintAll(); result = `🔍 まだ聞いていない ${L.length}こ、ぜんぶ教えたわ。下の一覧を見てね`; rec('かくれもの', `${new Date().getMonth() + 1}/${new Date().getDate()}:まとめて ${L.length}こ(ルナ)`); view = 'top'; }
+        else if (k === 'sky') { if (!(await pay('天気を占う'))) return; const f = weather.forecast(8); result = '☀️ この先の天気よ<br>' + f.map(x => `${weather.hm(x.start)}〜 ${WX_INFO[x.kind].icon}`).join(' ・ '); rec('天気', f.map(x => `${weather.hm(x.start)}${WX_INFO[x.kind].icon}`).join(' ') + '(ルナ)'); view = 'top'; }
         else view = k;
         draw(); return;
       }
       const np = e.target.closest('[data-np]'); if (np) {
         const id = np.dataset.np, p = PREFS[id], K = social.knownPrefs();
         const order = [...p.love.map(x => [x, 'love']), ...p.no.map(x => [x, 'no']), ...p.like.map(x => [x, 'like'])].filter(([x]) => !K[id + ':' + x]);
-        if (!order.length) return; if (!pay()) return;
+        if (!order.length) return; if (!(await pay('だれかの好きなもの(' + NPC_NAME[id] + ')'))) return;
         const [it, r] = order[0]; social.learnPref(id, it, r);
         result = `💝 ${esc(NPC_NAME[id])}は… ${ITEMS[it].icon} <b>${esc(ITEMS[it].name)}</b> が ${{ love: '<b>大好物</b>', like: '好き', no: 'にがて' }[r]} みたいね`; view = 'top'; draw(); return;
       }
       const rk = e.target.closest('[data-rk]'); if (rk) {
-        if (!pay()) return; const [lv, r] = rk.dataset.rk.split(':').map(Number), d = decorOf({ lv, rar: r }), parts = RECIPES[lv][r].map(x => shapeName(lv, x));
+        if (!(await pay('飾りのレシピ'))) return; const [lv, r] = rk.dataset.rk.split(':').map(Number), d = decorOf({ lv, rar: r }), parts = RECIPES[lv][r].map(x => shapeName(lv, x));
         spec.knowRecipe(lv + ':' + r); rec('レシピ', `${d.icon}${d.name}(${LV_NAME[lv]} ${RAR[r]})= ${parts.join(' + ')}`, 'rcp:' + lv + ':' + r);
         result = `🪸 ${d.icon} <b>${esc(d.name)}</b> は… ${parts.map(esc).join(' + ')} を混ぜるとできるわ。<br><small>アクアリウムの合成のレシピ帳にも書いておいたわよ</small>`; view = 'top'; draw(); return;
       }
       const sp = e.target.closest('[data-sp]'); if (sp) {
-        if (!pay()) return; const s = SET[sp.dataset.sp], lv = s.lv, sh = s.look.shape;
+        if (!(await pay('標本を見せる'))) return; const s = SET[sp.dataset.sp], lv = s.lv, sh = s.look.shape;
         const uses = RECIPES[lv].map((rr, i) => rr.includes(sh) ? i : -1).filter(i => i >= 0);
         const txt = uses.length ? uses.map(i => { const d = decorOf({ lv, rar: i }); return `${d.icon}${d.name}(${RAR[i]})`; }).join('、') : 'どの飾りにも使わない';
         rec('レシピ', `${s.look.name}(${shapeName(lv, sh)})→ ${txt}`, 'use:' + lv + ':' + sh);

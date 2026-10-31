@@ -1,4 +1,5 @@
 // アルバム:撮った写真を見る・切り取る(トリミング)・端末に保存する・消す・枠をダイヤでふやす。データは src/game/photos.js
+import { confirmPay } from '../ui/pay.js';
 import { photos, cfgOf, ASPECTS, cropRect, drawCropped } from '../game/photos.js';
 import { fmtN } from '../core/core.js';
 
@@ -63,7 +64,7 @@ export const albumApp = {
       const t = e.target.closest('button'); if (!t) return;
       if (t.dataset.home !== undefined) { if (cur && view === 'edit') saveCrop(); ctx.open('home', { walk: !!(ctx.params && ctx.params.walk) }); return; }
       if (t.dataset.p) return open(t.dataset.p);
-      if (t.dataset.buy !== undefined) { const err = photos.buySlot(ctx.gems, cfg); msg = err || '枠が1つふえたよ！'; return grid(); }
+      if (t.dataset.buy !== undefined) { if (ctx.gems && !(await confirmPay({ label: '写真の枠をふやす', price: cfg.gemsPerSlot, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; const err = photos.buySlot(ctx.gems, cfg); msg = err || '枠が1つふえたよ！'; return grid(); }
       if (view !== 'edit') return;
       if (t.dataset.a) { crop.a = t.dataset.a; crop.x = 0.5; crop.y = 0.5; saveCrop(); return edit(); }
       if (t.dataset.reset !== undefined) { crop = { a: 'free', z: 1, x: 0.5, y: 0.5 }; saveCrop(); return edit(); }

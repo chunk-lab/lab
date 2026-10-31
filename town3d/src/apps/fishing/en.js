@@ -3,6 +3,7 @@
 //   出るところ:投げる(熟語・正解でよく寄る) / アタリ(英→日・まちがえると逃げる) / あばれる(熟語・まちがえると外れる) / 取りこむ(日→英・まちがえると逃げる)
 //   「完璧」= 続けて PERFECT_C 回正解(ストリームで正解した分も数える=予習になる)。ここでまちがえると完璧が消える
 //   セットの単語がぜんぶ完璧 → そのセットの標本(1回だけ)。抜き打ちテストで悪いと、標本にひびが入る(もう一度ぜんぶ完璧で直る)
+import { confirmPay } from '../../ui/pay.js';
 import { SW } from '../gamebox/stream_words.js';
 import { IDIOMS } from './idioms.js';
 import { FIMG } from './fishimg.js';
@@ -665,11 +666,13 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       };
       const sh = sheet(`<div class="ph"><h2>${k ? '➕ 飾りをふやす' : '🎫 金券・かけら・ダイヤ'}</h2></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>とじる</button></div>`, true);
       draw();
-      sh.onclick = e => {
+      sh.onclick = async e => {
         if (e.target.closest('[data-x]')) { sh.remove(); redraw(); return; }
-        if (e.target.closest('[data-vx]')) { const c0 = ctx.wallet.get(), n = vch.exchange(ctx.wallet, Math.min(vch.todayLeft(), c0)); if (n) { sfx.play('coin'); toast(`🪙 ${c0 - ctx.wallet.get()} → 🎫 金券 ${n} まい ためた(3か月まで)`); } draw(); drawHead(); return; }
+        if (e.target.closest('[data-vx]')) { const amt = Math.min(vch.todayLeft(), ctx.wallet.get()); if (amt > 0 && !(await confirmPay({ label: '金券にこうかん', price: amt, have: ctx.wallet.get(), note: `金券 ${Math.round(amt * VCH.RATE)}まい になるよ` }))) return; const c0 = ctx.wallet.get(), n = vch.exchange(ctx.wallet, Math.min(vch.todayLeft(), c0)); if (n) { sfx.play('coin'); toast(`🪙 ${c0 - ctx.wallet.get()} → 🎫 金券 ${n} まい ためた(3か月まで)`); } draw(); drawHead(); return; }
         const p = e.target.closest('[data-pay]'); if (!p || !k) return;
         const [lv, rar] = k.split(':').map(Number), pay = p.dataset.pay;
+        if (pay === 'v' && !(await confirmPay({ label: '飾りをふやす', price: VCH.PRICE_V[rar], have: vch.total(), icon: '🎫', unit: '金券' }))) return;
+        if (pay === 'd' && !(await confirmPay({ label: '飾りをふやす', price: VCH.PRICE_D[rar], have: vch.dia(), icon: '💎', unit: 'ダイヤ' }))) return;
         const ok = pay === 'v' ? vch.spend(VCH.PRICE_V[rar]) : pay === 'f' ? vch.spendFrag(VCH.PRICE_F[rar]) : vch.spendDia(VCH.PRICE_D[rar]);
         if (!ok) { toast('たりないよ'); sfx.play('early'); return; }
         spec.addDecor({ uid: newUid(), lv, rar, at: Date.now() }); sfx.play('coin'); toast('✨ 同じ飾りが ふえた!'); draw(); drawHead(); if (tab === 'deco') drawBody();
@@ -735,7 +738,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         redraw(true); return;
       }
     }
-    sc.addEventListener('click', e => {
+    sc.addEventListener('click', async e => {
       const q = (s) => e.target.closest(s);
       const tb = q('[data-tab]'); if (tb) { sfx.play('tap'); tab = tb.dataset.tab; ctx.storage.set('aqTab', tab); closePop(); body.scrollTop = 0; drawHead(); drawBody(); return; }
       const a = q('[data-a]'); if (a) { act(a.dataset.a); return; }
@@ -743,8 +746,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       const tob = q('[data-tobox]'); if (tob) { act('tobox', tob.dataset.tobox); return; }
       const tt = q('[data-totank]'); if (tt) { const b = spec.box(), i = b.findIndex(x => x.uid === tt.dataset.totank); if (i < 0) return; if (spec.tank().length >= TANK_MAX) { toast(`水槽がいっぱい(${TANK_MAX}匹まで)`); return; } const t = spec.tank(); t.push(b.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); if (!spec.hasTank()) spec.gotTank(); sfx.play('tap'); toast('🐠 水槽に入れた'); redraw(true); return; }
       const ul = q('[data-unl]'); if (ul) {
-        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[spec.boxSlots() - 1] ?? BOX_COIN[1]; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } if (!ctx.wallet.spend(p, 'boxslot')) { toast('コインがたりないよ'); return; } }
-        else { if (!ctx.gems) { toast('ダイヤは準備中だよ'); return; } if (!ctx.gems.spend(BOX_GEM)) { toast('ダイヤがたりないよ'); sfx.play('early'); return; } }
+        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[spec.boxSlots() - 1] ?? BOX_COIN[1]; if (!(await confirmPay({ label: 'ひかえを ふやす', price: p, have: ctx.wallet.get() }))) return; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } if (!ctx.wallet.spend(p, 'boxslot')) { toast('コインがたりないよ'); return; } }
+        else { if (!ctx.gems) { toast('ダイヤは準備中だよ'); return; } if (!(await confirmPay({ label: 'ひかえを ふやす', price: BOX_GEM, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; if (!ctx.gems.spend(BOX_GEM)) { toast('ダイヤがたりないよ'); sfx.play('early'); return; } }
         spec.addBoxSlot(); sfx.play('coin'); toast('🔓 ひかえが ふえた!'); redraw(); return;
       }
       const fi = q('[data-fi]'); if (fi) { const [id, rk] = fi.dataset.fi.split(':'); sfx.play('tap'); fishDetail(id, +rk); return; }

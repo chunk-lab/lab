@@ -1,4 +1,5 @@
 // ほしみや町:公開 API は mount(要素, 設定) → { unmount, ... } だけ
+import { receipt } from './ui/pay.js';
 import * as THREE from 'three';
 import { createBus, createStorage, createWallet, angleLerp, clamp } from './core/core.js';
 import { weather } from './game/weather.js';
@@ -311,7 +312,14 @@ export function mount(container, opt = {}) {
   const sparkles = createSparkles(scene, finds);
   social.onInfo = finds.onChange = () => opt.onEvent?.('app:event', { name: 'snap', data: townSnap() });   // 勉強ノートの「町のひみつ」を、ふえるたびに最新にする
   setTimeout(() => social.onInfo(), 3000);
-  const soc = createSocialUI({ hud, wallet, audio, addNote, startDate: r => startDate(r), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
+  const soc = createSocialUI({ hud, wallet, audio, addNote,
+    onAllFound: () => {   // きょうのかくしもの、ぜんぶ見つけた! → 見つけた言葉を英語脳で使ってみるか聞く(断れる)
+      const list = finds.dailyFound().filter(s => ['word', 'phrase', 'proverb', 'passage'].includes(s.kind)).map(s => ({ en: s.c[0], ja: s.c[1], sen: s.kind === 'passage' || s.kind === 'proverb' || /[.!?]$/.test(s.c[0]) }));
+      if (!list.length) return;
+      hud.dialog({ name: '🎉 ぜんぶ見つけた!', role: 'きょうのかくしもの', text: `きょうのかくしもの ${list.length}こ、ぜんぶ見つけたね! 見つけた言葉を、英語脳で文にして使ってみる?`, choices: [
+        { label: '🧠 使ってみる', fn: () => opt.onEvent?.('app:event', { name: 'eigo', data: { open: true, items: list.map((x, i) => ({ en: x.en, ja: x.ja, kind: x.sen ? 'sentence' : '', play: i === 0 })) } }) },
+        { label: 'あとで', fn: () => { } }] });
+    }, startDate: r => startDate(r), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
   if (social.admin()) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🔍 宝を隠す'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(168px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; soc.adminHunt(); }; root.appendChild(b); }
   const townSnap = () => { const got = finds.treasures(); return { info: social.info(), tre: TREASURES.map(t => ({ i: t[0], n: t[1], g: got.includes(t[1]) })), at: Date.now() }; };   // 勉強ノートの「町のひみつ」に渡す
   function openNoteBook() {
@@ -775,7 +783,12 @@ export function mount(container, opt = {}) {
   { const mi = setInterval(medalCheck, 15000); offs.push(() => clearInterval(mi)); setTimeout(medalCheck, 3000); }
   offs.push(bus.on('app:close', () => { input.enabled = true; audio.play('close'); hud.setCoins(wallet.get(), gemsNow()); }));
   if (opt.wallet?.onChange) offs.push(opt.wallet.onChange(w => bus.emit('wallet', w)));
-  offs.push(bus.on('wallet', w => { hud.setCoins(w.coins, gemsNow()); if (w.delta > 0) { audio.play('coin'); hud.toast(`🪙 +${w.delta}`); } }));
+  const PAYN = [['fortune', '占いの館'], ['tarot', 'タロット'], ['cafe', 'カフェ'], ['gamebox', 'ゲーム'], ['furniture', '家具'], ['voucher', '商品券'], ['fishing', '釣りのお店'], ['photo', '写真'], ['luna', '占い']];
+  offs.push(bus.on('wallet', w => {
+    hud.setCoins(w.coins, gemsNow());
+    if (w.delta > 0) { audio.play('coin'); hud.toast(`🪙 +${w.delta}`); }
+    else if (w.delta < 0) { audio.play('pay'); try { receipt({ label: (PAYN.find(([k]) => String(w.reason || '').includes(k)) || [0, 'おかいもの'])[1], before: w.coins - w.delta, spent: -w.delta, after: w.coins }); } catch (e) { console.error(e); } }   // 買ったら、音と一緒に「元いくら − いくら = のこり」を出す
+  }));
   offs.push(bus.on('toast', t => hud.toast(t)));
   offs.push(bus.on('sfx', n => audio.play(n)));
   const SAY = ['こんにちは!', 'いい天気だね', 'いっしょに遊ぼう!', 'またね〜'];

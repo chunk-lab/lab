@@ -13,7 +13,7 @@ const REACT = {
   no: ['あ…ありがとう。…じつは、ちょっとにがてなんだ。', 'う、うん…。気持ちだけ、もらっておくね。'],
 };
 
-export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain, areaName, getMe, canAct, ai = null, player = () => 'あなた' }) {
+export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startDate, setRain, areaName, getMe, canAct, ai = null, player = () => 'あなた' }) {
   if (!document.getElementById('tw-soc-css')) { const st = document.createElement('style'); st.id = 'tw-soc-css'; st.textContent = '.tw-in{border:1px solid #d9cfe8;border-radius:10px;padding:8px 10px;font:inherit;font-size:14px;background:#fff;color:#5a4a6b;box-sizing:border-box;min-width:0}'; document.head.appendChild(st); }
   const name = r => (r && r.def && r.def.name) || '';
   const heart = id => { const l = social.level(id); return `♥ ${LV_NAME[l]}`; };
@@ -108,7 +108,13 @@ export function createSocialUI({ hud, wallet, audio, addNote, startDate, setRain
   function nearFind(x, z) { const now = performance.now(); if (now - cacheT > 1000) { cache = finds.spots(); cacheT = now; } let best = null, bd = 1.6; for (const s of cache) { const d = Math.hypot(s.x - x, s.z - z); if (d < bd) { bd = d; best = s; } } return best; }
   function takeFind(s) {
     if (!finds.take(s)) return; cacheT = 0; audio.play('coin');
-    const c = s.c, n = (t, txt) => hud.dialog({ name: '🔍 みつけた!', role: t, text: txt, choices: [] });
+    const prize = ['word', 'phrase', 'proverb', 'passage'].includes(s.kind) ? wallet.give(10, 'find') : 0;   // かくしもの1つ見つけるごとに10コイン(きょうの12個ぜんぶで120)
+    const c = s.c, n = (t, txt) => {
+      txt += prize ? `\n(🪙+${prize})` : '';
+      const last = finds.allDonePending();   // これで、きょうの分をぜんぶ見つけた
+      if (last && onAllFound) { finds.markAllDone(); hud.dialog({ name: '🔍 みつけた!', role: t, text: txt, choices: [{ label: 'つぎへ', fn: () => onAllFound() }] }); }
+      else hud.dialog({ name: '🔍 みつけた!', role: t, text: txt, choices: [] });
+    };
     if (s.kind === 'word') { addNote({ kind: 'word', text: c[0], meaning: c[1], npc: '調べる' }); n('単語', `「${c[0]}」= ${c[1]}(ことばノートに入れたよ)`); }
     else if (s.kind === 'phrase') { addNote({ kind: 'phrase', text: c[0], meaning: c[1], npc: '調べる' }); n('表現', `「${c[0]}」= ${c[1]}(ことばノートに入れたよ)`); }
     else if (s.kind === 'proverb') { addNote({ kind: 'phrase', text: c[0], meaning: c[1] + '(' + c[2] + ')', npc: '格言' }); n('格言', `「${c[0]}」— ${c[2]}\n${c[1]}`); }

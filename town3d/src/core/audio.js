@@ -84,6 +84,7 @@ export function createAudio() {
     open: () => { tone(660, 0.12, { type: 'triangle' }); tone(990, 0.18, { type: 'triangle', delay: 0.08 }); },
     close: () => { tone(880, 0.1, { type: 'triangle' }); tone(587, 0.16, { type: 'triangle', delay: 0.07 }); },
     talk: () => tone(740, 0.1, { type: 'sine', gain: 0.18, slide: 1.3 }),
+    pay: () => { tone(988, 0.07, { type: 'square', gain: 0.05 }); tone(1319, 0.07, { type: 'square', gain: 0.05, delay: 0.07 }); tone(880, 0.22, { type: 'triangle', gain: 0.07, delay: 0.14 }); },
     coin: () => { tone(1320, 0.08, { type: 'square', gain: 0.06 }); tone(1760, 0.2, { type: 'square', gain: 0.06, delay: 0.07 }); },
     wave: () => tone(523, 0.2, { type: 'sine', gain: 0.12, slide: 1.5 }),
     // 花火:のぼる笛のような音→ドン(おおきい花火ほど低く大きく)
