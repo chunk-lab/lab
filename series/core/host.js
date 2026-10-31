@@ -4,7 +4,9 @@
 import { createStore } from './store.js';
 const loaded = {};
 export function loadScript(src) {
-  try { const v = window.__APP__ && window.__APP__.build; if (v && !/\?/.test(src)) src += '?v=' + v; } catch (e) { }   // 組み立てごとの印(古いファイルが残らないように)
+  try {   // ファイルごとの中身の印(変わったファイルだけ読み直す)。印がないファイルは組み立てごとの印
+    const A = window.__APP__ || {}; if (!/\?/.test(src)) { const k = Object.keys(A.hashes || {}).find(k => src.endsWith(k)); const v = k ? A.hashes[k] : A.build; if (v) src += '?v=' + v; }
+  } catch (e) { }
   return loaded[src] || (loaded[src] = new Promise((ok, ng) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => { delete loaded[src]; ng(new Error(src)); }; document.head.appendChild(s); }));
 }
 export function createHost(core, layer, backBtn) {

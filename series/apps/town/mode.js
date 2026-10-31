@@ -6,6 +6,7 @@ import { createStore } from '../../core/store.js';
 import { ECON } from '../../core/economy.js';
 import { PLAYS, playOf } from '../../core/plays.js';
 import { catOfApp } from '../../core/daylog.js';
+import { createHome } from './home.js';
 import './mode.css';
 
 const st = createStore('town');
@@ -35,35 +36,26 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   }
   let town = null, box = null;
 
-  function chooser() {
-    const ov = document.createElement('div'); ov.className = 'md-ov';
-    ov.innerHTML = `<div class="md-box"><h1>チャンクタウン</h1><p class="md-q">どっちで はじめる？</p>
-      <button class="md-card md-3d" data-m="3d"><b>🏙 街であそぶ</b><span>3Dの町を歩いて、住人と話したり、お店に入ったり</span><small>少し重め・Wi-Fiがおすすめ</small></button>
-      <button class="md-card md-2d" data-m="2d"><b>📚 すぐに勉強・ゲーム</b><span>地図からすぐ選べる。軽くてサクサク</span></button>
-      <label class="md-keep"><input type="checkbox" id="mdKeep"> つぎからは聞かない</label>
-      <p class="md-note">あとから、どちらの画面でも切りかえられます</p></div>`;
-    document.body.appendChild(ov);
-    ov.addEventListener('click', e => {
-      const b = e.target.closest('[data-m]'); if (!b) return;
-      st.set('mode', { last: b.dataset.m, keep: ov.querySelector('#mdKeep').checked });
-      ov.remove(); go(b.dataset.m);
-    });
-  }
+  const home = createHome(core, { st, go3D: () => go('3d'), openStudy, has: g => !!GAMES[g] });
 
   async function go(m) {
-    const v = Object.assign({ keep: false }, st.get('mode') || {}); v.last = m; st.set('mode', v);
-    if (m === '2d') { stop3D(); document.body.classList.remove('md-3d-on'); start2D(); return; }
-    document.body.classList.add('md-3d-on');
-    if (town) return;
+    if (m !== '3d') { stop3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 勉強部屋(ホーム)へ
+    if (town) { home.hide(); return; }
+    home.hide(); document.body.classList.add('md-3d-on');
     const wait = document.createElement('div'); wait.className = 'md-wait'; wait.textContent = '町を読みこんでいます…'; document.body.appendChild(wait);
-    try { await loadScript(core.base + 'g/town3d/town.js'); }
-    catch (e) { wait.remove(); core.ui.toast('3Dの町を読みこめませんでした'); go('2d'); return; }
+    const fail = (why) => { wait.remove(); try { stop3D(); } catch (e) { } if (box) { box.remove(); box = null; } town = null; document.body.classList.remove('md-3d-on'); console.error(why); home.show({ text: '3Dの町を開けませんでした（' + (why && why.message ? String(why.message).slice(0, 80) : '読みこみに失敗') + '）。通信のよいところで、もう一度ためしてください。' }); };
+    try { await loadScript(core.base + 'g/town3d/three.js'); await loadScript(core.base + 'g/town3d/town.js'); }
+    catch (e) { fail(e); return; }
+    try { await mount3D(wait); } catch (e) { fail(e); }
+  }
+  async function mount3D(wait) {
     wait.remove(); core.daylog.act('base', { cat: 'relax', label: '街を歩く' });
     let entered = false;   // 前回のふりかえり・単語テストは、キャラをえらんで町に入ってから(タイトル画面のあいだは出さない)
     // テスト用: ?coins=10000 で3Dの町のコインを増やして始められる（この端末の保存だけが変わる）
     const qc = new URLSearchParams(location.search).get('coins');
     if (/^\d{1,6}$/.test(qc || '')) core.wallet.set(+qc, 'test');
     box = document.createElement('div'); box.className = 'md-town3d'; document.body.appendChild(box);
+    home.remember({ kind: '3d' });
     town = window.town3d = window.Hoshimiya.mount(box, {
       wallet: core.wallet,   // コインは2Dと共通
       gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house'), onChange: f => core.member.onChange(f) },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
@@ -77,8 +69,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       exprPool: () => { const t = exprToday(); if (t) return t; genExpr(); try { if (!core.dict.loaded) { core.dict.ready().catch(() => { }); return null; } return core.dict.phrases(); } catch (e) { return null; } },   // 毎日の表現のもと(AIがあればAIが作った今日の5つ・なければ辞書の熟語)
       medals: () => core.record.medals(),   // 勉強を続けたメダル(家の壁にかざれる)
       studyInfo: () => PLAYS.filter(p => p.mood !== 'game' && p.go && p.go.to !== '3d' && p.go.to !== 'test').map(p => ({ id: p.id, n: p.n, days: core.record.daysSince(p.id) })),   // しばらくしていない勉強(そら君が勧める)   // あなたの家に「勉強部屋」ボタンを出す
-      switchLabel: '2Dの地図にする',
-      onSwitchMode: () => go('2d'),
+      switchLabel: '勉強部屋にもどる',
+      onSwitchMode: () => go('home'),
       openExternal(id) {
         const r = ROUTE[id]; if (!r) return false;   // ショップ・家・掲示板などは3Dの町の中で開く
         if (r.place) enter(r.place); else core.host.open(GAMES[r.game]);
@@ -110,7 +102,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   const resume = () => { if (town) town.resume(); };
 
   return {
-    start() { const v = st.get('mode'); if (v && v.keep && v.last) go(v.last); else chooser(); },
+    start() { home.show(); },
     to3D: () => go('3d'),
     resume,
     get is3D() { return !!town; },
