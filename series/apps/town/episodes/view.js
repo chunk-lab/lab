@@ -29,6 +29,17 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
   function button(label, action, cls = '') {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'ep-btn ' + cls; b.textContent = label; b.onclick = action; return b;
   }
+  function pauseMenu() {
+    const menu = document.createElement('details'); menu.className = 'ep-menu';
+    const toggle = document.createElement('summary'); toggle.textContent = '物語メニュー';
+    const body = document.createElement('div'); body.className = 'ep-menu-body';
+    const note = document.createElement('p'); note.textContent = '進み具合を保存して勉強部屋にもどります。';
+    body.append(note, button('物語を中断する', () => {
+      const game = waiting?.game; stop();
+      if (game && core.host.current === game) core.host.close();
+    }), button('閉じて続ける', () => { menu.open = false; toggle.focus(); }));
+    menu.append(toggle, body); return menu;
+  }
   function build() {
     root = document.createElement('section'); root.className = 'ep-root'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', '第1話 ちょっと、外に出たい');
     background = [...document.querySelectorAll('.hm-ov,.tw-view,.tw-top,.tw-dock')].map(el => [el, el.inert]);
@@ -37,7 +48,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     document.body.appendChild(root); stage = root.querySelector('.ep-stage'); content = root.querySelector('.ep-content');
     root.querySelector('.ep-hana').src = face('hana'); root.querySelector('.ep-sora').src = face('sora');
     const nav = root.querySelector('nav');
-    nav.append(button('2D / 3D', () => chooseMode()), button('中断', stop));
+    nav.append(button('2D / 3D', () => chooseMode()), pauseMenu());
     document.body.classList.add('ep-on');
   }
   async function setMode(mode) {
@@ -80,7 +91,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
   function drawBar() {
     bar?.remove();
     bar = document.createElement('aside'); bar.className = 'ep-gamebar'; bar.setAttribute('aria-label', '物語の進行');
-    bar.append(button('物語を中断', () => { const game = waiting?.game; stop(); if (game && core.host.current === game) core.host.close(); }));
+    const tools = document.createElement('div'); tools.className = 'ep-game-tools'; tools.append(pauseMenu()); bar.append(tools);
     if (progress.state.passed) bar.append(button('物語のつづきへ', () => {
       if (waiting && core.host.current === waiting.game) core.host.close();
     }, 'ep-primary'));

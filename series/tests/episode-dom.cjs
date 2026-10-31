@@ -16,8 +16,8 @@ try{
  const core=w.qa.core;await core.host.open(w.qa.games.eigonou);const ordinaryChunks=w.document.querySelector('#chunks').innerHTML;const ordinaryInput=w.document.querySelector('#slin');if(ordinaryInput)ordinaryInput.value='unfinished';core.host.close();const initialDb=w.localStorage.getItem('cs:eigonou:db');const homeSeed=w.localStorage.getItem('cs:town:cont');
  const click=(label,parent=w.document)=>{const b=[...parent.querySelectorAll('button')].find(b=>b.textContent.trim()===label);assert.ok(b,'missing '+label);b.click()};
  const state=()=>JSON.parse(w.localStorage.getItem('cs:town-episodes:first'));
- w.qa.episodes.open();click('軽い2Dで進める');await sleep(10);click('つぎへ');click('はじめる');await sleep(180);
- assert.equal(core.host.current,'stream');assert.equal(w.document.querySelector('#sPlay').hidden,false);
+ w.qa.episodes.open();assert.equal([...w.document.querySelectorAll('.ep-head button')].some(b=>b.textContent==='中断'),false);const menu=w.document.querySelector('.ep-menu');assert.equal(menu.open,false);menu.open=true;click('閉じて続ける',menu);assert.equal(menu.open,false);assert.equal(w.qa.episodes.active,true);click('軽い2Dで進める');await sleep(10);click('つぎへ');click('はじめる');await sleep(180);
+ assert.equal(core.host.current,'stream');assert.equal(w.document.querySelector('.ep-gamebar .ep-menu').open,false);assert.equal(w.document.querySelector('.ep-gamebar>button'),null,'no interrupt button beside game controls');assert.equal(w.document.querySelector('#sPlay').hidden,false);
  assert.equal([...w.document.scripts].some(s=>s.src.includes('town3d')),false,'2D must not load 3D');
  core.host.close();assert.equal(state().index,1);assert.match(w.document.querySelector('.ep-error').textContent,/途中/);
  click('もう一度開く');await sleep(180);
@@ -39,8 +39,14 @@ try{
  click('はじめる');await sleep(30);const frame=w.document.querySelector('iframe');assert.ok(frame);assert.equal(frame.getAttribute('sandbox'),'allow-scripts');
  const frameDOM=new JSDOM(frame.srcdoc,{url:'about:blank',runScripts:'dangerously',resources:resources(),pretendToBeVisual:true,virtualConsole:vc,beforeParse(cw){stubs(cw);Object.defineProperty(cw,'parent',{value:{postMessage(data){w.dispatchEvent(new w.MessageEvent('message',{source:frame.contentWindow,origin:'null',data}))}}});Object.defineProperty(cw,'localStorage',{get(){throw new cw.DOMException('blocked','SecurityError')}})}});children.push(frameDOM);
  await sleep(500);const cw=frameDOM.window;const panel=cw.document.querySelector('[aria-label="そらの案内"]');assert.ok(panel,'real English brain app loaded');
- for(const label of ['I（私は）','want to（〜したい）','rest（休む）','play（遊ぶ）'])click(label,panel);
- assert.match(cw.document.querySelector('#chunks').textContent,/want to.*play/);
+ assert.match(cw.document.querySelector('#chunks').textContent,/I.*want to.*play/,'complete starting sentence');
+ assert.equal(cw.document.querySelector('[inert]'),null,'normal app controls stay enabled');
+ assert.equal(panel.querySelectorAll('button').length,1,'guide has no duplicate word choices');
+ cw.document.querySelector('#chunks [data-cat="subj"]').click();
+ await sleep(250);
+ const who=[...cw.document.querySelectorAll('#scene .cat .en')].find(e=>e.textContent==='Who？');assert.ok(who);who.closest('.nd').click();await sleep(250);
+ const she=[...cw.document.querySelectorAll('#scene .en')].find(e=>e.textContent==='She');assert.ok(she,'native subject choice');she.closest('.nd').click();await sleep(250);
+ assert.match(cw.document.querySelector('#chunks').textContent,/She.*wants to.*play/,'native subject changes sentence agreement');
  click('物語にもどる',panel);await sleep(30);assert.equal(state().index,19);
  assert.equal(w.localStorage.getItem('cs:eigonou:db'),initialDb,'English brain saved data must be byte-for-byte unchanged');assert.equal(w.localStorage.getItem('cs:town:cont'),homeSeed);
  while(state().index<25)click('つぎへ');click('ドアを開けて町へ');await sleep(20);
