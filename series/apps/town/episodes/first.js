@@ -1,0 +1,33 @@
+// 台本だけを置く。既存ゲームのデータ・解放条件は変更しない。
+const say = (who, text, face = 'normal', en = '', ja = '') => ({ type: 'say', who, text, face, en, ja });
+export const FIRST_EPISODE = {
+  id: 'first', title: 'ちょっと、外に出たい', character: 'はな',
+  steps: [
+    say('hana', 'よし。今日はちょっと英語やろう。', 'joy'),
+    { type: 'game', game: 'stream', title: 'ストリームで単語練習', text: 'はなちゃんと、音を聞きながら意味を選んでみよう。初級の単語セットを1つ練習します。', opts: { wordset: { lv: 1, k: 0 } }, match: { name: 'done', play: 'stream.word', set: 'w1-1' } },
+    say('hana', 'はぁー、疲れた……。', 'sad'),
+    say('sora', 'おつかれ。頑張ってたね。', 'joy'),
+    say('hana', '単語は分かるのもあるんだけど、文になると、どこから読めばいいのか分かんなくなるんだよね。', 'think'),
+    say('sora', 'じゃあ、読むコツを教えてあげるね。'),
+    say('hana', '覚えること、多い？', 'think'),
+    say('sora', 'まずは一つ。「誰の話？」を見つけるんだ。', 'idea'),
+    { type: 'game', game: 'chunkchunk', title: '読む・聞くレッスン 第1章', text: '「まずは主役を探そう」。二人の会話と、英文を区切る練習を進めよう。', opts: { face: 'lesson', storyChapter: 1 }, match: { name: 'story_clear', chapter: 1 } },
+    say('hana', '最初に、誰の話か見つければいいんだね。', 'idea'),
+    say('sora', 'そう。そこから順番に読んでいけばいいんだ。', 'joy'),
+    say('hana', 'ちょっと分かった気がする。でも、今日はひと休みしたい。'),
+    say('sora', '「休みたい」なら、I want to rest. だね。', 'normal', 'I want to rest.', '休みたい。'),
+    say('sora', 'want to のあとに、したいことを続けるんだ。', 'idea', 'want to', '〜したい'),
+    say('hana', 'じゃあ、遊びたい！', 'joy'),
+    say('sora', 'I want to play. rest を play に替えると、「遊びたい」になるよ。', 'joy', 'I want to play.', '遊びたい。'),
+    say('hana', '自分のしたいことに、言葉を替えればいいんだね。', 'idea'),
+    say('sora', '英語脳アプリなら、言葉を選びながら英文を作れるよ。今の表現でやってみよう。'),
+    { type: 'game', game: 'eigonou', title: '英語脳アプリで「〜したい」', text: 'I → want to → rest の順に選んで文を作り、rest を play に替えてみよう。この体験で、普段の作りかけの文や登録した言葉は変わりません。', opts: { episodePractice: 'want-to' }, match: { name: 'episode_practice', exercise: 'want-to' } },
+    say('hana', 'できた！ I want to play!', 'joy', 'I want to play.', '遊びたい。'),
+    say('sora', 'ほかにも、何かしたいことある？'),
+    say('hana', '今は……外に出たい！', 'joy'),
+    say('sora', '外に出る、は go out。I want to go out. だね。', 'idea', 'I want to go out.', '外に出たい。'),
+    say('hana', 'I want to go out!', 'joy', 'I want to go out.', '外に出たい。'),
+    say('sora', 'よし。じゃあ、ほんとに町に出かけよう！', 'joy'),
+    { type: 'door' },
+  ],
+};

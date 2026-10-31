@@ -11,19 +11,22 @@ export function loadScript(src) {
 }
 export function createHost(core, layer, backBtn) {
   let cur = null;
+  const closeListeners = new Set();
   const close = () => {
     if (!cur) return; const c = cur; cur = null;
     try { c.inst && c.inst.unmount && c.inst.unmount(); } catch (e) { console.error(e); }
     core.speech.stop(); c.el.remove(); layer.hidden = true; backBtn.hidden = true; document.body.classList.remove('cs-in-game');
     core.daylog && core.daylog.act('app', null);
     core.onClose && core.onClose(c.game.id);
+    closeListeners.forEach(f => { try { f(c.game.id); } catch (e) { console.error(e); } });
   };
   backBtn.addEventListener('click', close);
   return {
     get current() { return cur && cur.game.id; },
+    onClose(f) { closeListeners.add(f); return () => closeListeners.delete(f); },
     async open(game, opts = {}) {
       if (cur) close();
-      if (game.right && !core.rights.has(game.right)) { core.ui.toast('このゲームはまだ使えません'); return; }
+      if (game.right && !core.rights.has(game.right)) { core.ui.toast('このゲームはまだ使えません'); return false; }
       const el = document.createElement('div'); el.className = 'cs-mount'; layer.appendChild(el); layer.hidden = false; backBtn.hidden = !core.config.backButton;
       document.body.classList.add('cs-in-game');
       const ctx = { core, store: createStore(game.id), settings: core.settings, speech: core.speech, sound: core.sound, opts,
@@ -34,8 +37,8 @@ export function createHost(core, layer, backBtn) {
       cur = { game, el, inst: null };
       ctx.report('open');
       core.daylog && core.daylog.act('app', { cat: 'study', label: game.name || game.title || game.id });   // 2Dのゲームは、すべて英語の勉強
-      try { const inst = await game.mount(el, ctx); if (cur && cur.el === el) cur.inst = inst || {}; else inst && inst.unmount && inst.unmount(); }
-      catch (e) { console.error(e); el.innerHTML = '<p class="cs-err">読み込めませんでした<br><small>' + String(e && e.message || e).slice(0, 160).replace(/[<>&]/g, '') + '</small></p>'; backBtn.hidden = false; }
+      try { const inst = await game.mount(el, ctx); if (cur && cur.el === el) { cur.inst = inst || {}; return true; } else inst && inst.unmount && inst.unmount(); }
+      catch (e) { console.error(e); el.innerHTML = '<p class="cs-err">読み込めませんでした<br><small>' + String(e && e.message || e).slice(0, 160).replace(/[<>&]/g, '') + '</small></p>'; backBtn.hidden = false; return false; }
     },
     close
   };

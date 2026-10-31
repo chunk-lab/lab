@@ -3,7 +3,7 @@
 import { PLAYS } from '../../core/plays.js';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
-export function createHome(core, { st, go3D, openStudy, has }) {
+export function createHome(core, { st, go3D, openStudy, has, openEpisode, episodeLabel }) {
   let el = null;
   const usable = p => p.go.to === '3d' ? true : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level : !!core.openGame && has(p.go.game);
   const cont = () => st.get('cont') || null;
@@ -15,6 +15,7 @@ export function createHome(core, { st, go3D, openStudy, has }) {
     const c = cont(), cp = c && c.kind === 'play' ? PLAYS.find(p => p.id === c.id) : null;
     const row = p => `<button class="hm-row" data-p="${p.id}"><span>${WANT_ICON[p.want] || '・'}</span><b>${esc(p.n)}</b></button>`;
     el.innerHTML = `<div class="hm-box"><h1>勉強部屋</h1>
+      ${openEpisode ? `<button class="hm-row" data-episode><span>📖</span><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}<small style="display:block;font-weight:400;margin-top:3px">はな・そら「ちょっと、外に出たい」</small></b></button>` : ''}
       ${msg ? `<div class="hm-err">${esc(msg.text)}<button class="hm-retry" data-retry>もう一度</button></div>` : ''}
       ${c ? `<button class="hm-cont" data-cont><small>つづきから</small><b>${c.kind === '3d' ? '🏙 街であそぶ' : esc(c.label || '')}</b></button>` : ''}
       <button class="hm-3d" data-3d><b>🏙 街であそぶ（3D）</b><span>歩いて、住人と話したり、お店に入ったり</span><small>少し重め・Wi-Fiがおすすめ</small></button>
@@ -26,7 +27,8 @@ export function createHome(core, { st, go3D, openStudy, has }) {
       </div>`;
     el.onclick = e => {
       const b = e.target.closest('button'); if (!b) return;
-      if (b.dataset.p) start(PLAYS.find(p => p.id === b.dataset.p));
+      if ('episode' in b.dataset) openEpisode();
+      else if (b.dataset.p) start(PLAYS.find(p => p.id === b.dataset.p));
       else if ('cont' in b.dataset) { if (c.kind === '3d') { go3D(); } else if (cp) start(cp); }
       else if ('note' in b.dataset) { remember({ kind: 'study', label: '勉強ノート' }); openStudy(); }
       else if ('3d' in b.dataset || 'retry' in b.dataset) go3D();
