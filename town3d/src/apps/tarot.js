@@ -396,8 +396,8 @@ export function mountTarot(box, o) {
   }
   function hist() {
     return head('Records') + `<div class="tz-say tz-in">🔮 ルナ「これまでの鑑定よ。カードは、あとから見返すと意味がわかることも多いの」</div>
-      ${st.hist.length ? st.hist.slice().reverse().map((h, i) => { const sp = SPREADS[h.sp]; return `<button class="tz-hist tz-in"${D(Math.min(i + 1, 8))} data-h="${st.hist.length - 1 - i}"><span style="font-size:24px">${sp.tier === 'deep' ? '📜' : '🃏'}</span><span><b>${esc(sp.n)}</b> ・ ${esc((THEMES.find(t => t[0] === h.th) || THEMES[0])[2])}<small>${new Date(h.t).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} ・ ${h.d.map(d => CARD[d[0]].n + (d[1] ? '(逆)' : '')).slice(0, 3).join('、')}${h.d.length > 3 ? '…' : ''}</small></span></button>`; }).join('') : '<p class="tz-nt">まだ記録はないわ。</p>'}
-      ${st.hist.length ? `<div class="tz-c tz-sub" style="justify-content:center;margin:8px 0"><button class="tz-btn sub" data-a="delall" style="font-size:12px">🗑 記録をぜんぶ消す(${st.hist.length}件)</button></div>` : ''}<button class="tz-back" data-a="menu">← もどる</button>`;
+      ${st.hist.length ? st.hist.slice().reverse().map((h, i) => { const sp = SPREADS[h.sp]; return `<button class="tz-hist tz-in"${D(Math.min(i + 1, 8))} data-h="${st.hist.length - 1 - i}"><span style="font-size:24px">${sp.tier === 'deep' ? '📜' : '🃏'}</span><span><b>${h.lock ? '🔒 ' : ''}${esc(sp.n)}</b> ・ ${esc((THEMES.find(t => t[0] === h.th) || THEMES[0])[2])}<small>${new Date(h.t).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} ・ ${h.d.map(d => CARD[d[0]].n + (d[1] ? '(逆)' : '')).slice(0, 3).join('、')}${h.d.length > 3 ? '…' : ''}</small></span></button>`; }).join('') : '<p class="tz-nt">まだ記録はないわ。</p>'}
+      ${st.hist.length ? `<div class="tz-c tz-sub" style="justify-content:center;margin:8px 0"><button class="tz-btn sub" data-a="delall" style="font-size:12px">🗑 記録を消す(ロック以外 ${st.hist.filter(x => !x.lock).length}件)</button></div>` : ''}<button class="tz-back" data-a="menu">← もどる</button>`;
   }
   // 鑑定書の最後に、AIの答えをそのまま(崩れていてもそのまま)見られるようにする
   function rawBox() {
@@ -408,8 +408,9 @@ export function mountTarot(box, o) {
   }
   // 記録を消す:1回目で「もう一度押すと消えるよ」、4秒以内の2回目で消える
   function armed(key) { const ok = S.arm === key && Date.now() - (S.armT || 0) < 4000; S.arm = ok ? '' : key; S.armT = Date.now(); if (!ok) toast('もう一度押すと消えるわ'); return ok; }
-  function delHist() { const i = st.hist.findIndex(x => x.t === S.t); if (i < 0 || !armed('one:' + S.t)) return; st.hist.splice(i, 1); save(); toast('🗑 この記録を消したわ'); S.step = 'hist'; page(); }
-  function delAll() { if (!st.hist.length || !armed('all')) return; st.hist = []; save(); toast('🗑 記録をぜんぶ消したわ'); page(); }
+  function delHist() { const i = st.hist.findIndex(x => x.t === S.t); if (i < 0) return; if (st.hist[i].lock) { toast('🔒 ロック中よ。ロックをはずすと消せるわ'); return; } if (!armed('one:' + S.t)) return; st.hist.splice(i, 1); save(); toast('🗑 この記録を消したわ'); S.step = 'hist'; page(); }
+  function lockHist() { const h = st.hist.find(x => x.t === S.t); if (!h) return; h.lock = h.lock ? 0 : 1; save(); toast(h.lock ? '🔒 ロックしたわ(消えないよ)' : '🔓 ロックをはずしたわ'); page(); }
+  function delAll() { const del = st.hist.filter(x => !x.lock); if (!del.length) { toast(st.hist.length ? '🔒 ロック中の記録だけだから、消すものがないわ' : '消す記録がないわ'); return; } if (!armed('all')) return; const kept = st.hist.length - del.length; st.hist = st.hist.filter(x => x.lock); save(); toast(`🗑 ${del.length}件を消したわ${kept ? `(🔒 ${kept}件は残したわ)` : ''}`); page(); }
   function detail() {
     const sp = SPREADS[S.sp];
     const narr = S.draws.map((d, i) => { const n = S.narr[i]; return n ? `<div class="pp">${S.sp === 'celtic' ? i + 1 + '. ' : ''}${esc(sp.pos[i][0])} ・ ${esc(CARD[d.id].n)}${d.rev ? '(逆)' : ''}</div><p>${esc(n.text)}</p>${n.tr ? `<p class="tr">${esc(n.tr)}</p>` : ''}` : ''; }).join('');
@@ -424,7 +425,7 @@ export function mountTarot(box, o) {
     const cert = sp.tier === 'deep' ? `<div class="tz-cert">📜 <b>鑑定書</b> ・ ${new Date(S.t || Date.now()).toLocaleDateString('ja-JP')} ・ 占い師ルナ</div>` : '';
     return head(sp.en) + cert + `<div class="tz-read"><h3>🔮 ルナの鑑定</h3>${S.q ? `<p style="font-size:13px;color:#8d7f9e">「${esc(S.q)}」</p>` : ''}${narr || `<p>${esc(sumBuilt(S.sp, S.draws, S.theme))}</p>`}${sum}${rawBox()}</div>
       <div class="tz-read"${D(1)}><h3>🃏 カードの意味</h3>${rows}</div>
-      <div class="tz-c tz-sub" style="justify-content:center"><button class="tz-btn" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button></div>${st.hist.some(x => x.t === S.t) ? `<div class="tz-c tz-sub" style="justify-content:center;margin-top:6px"><button class="tz-btn sub" data-a="delhist" style="font-size:12px">🗑 この記録を消す</button></div>` : ''}`;
+      <div class="tz-c tz-sub" style="justify-content:center"><button class="tz-btn" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button></div>${st.hist.some(x => x.t === S.t) ? `<div class="tz-c tz-sub" style="justify-content:center;margin-top:6px"><button class="tz-btn sub" data-a="lockhist" style="font-size:12px">${(st.hist.find(x => x.t === S.t) || {}).lock ? '🔓 ロックをはずす' : '🔒 ロックする'}</button><button class="tz-btn sub" data-a="delhist" style="font-size:12px">🗑 この記録を消す</button></div>` : ''}`;
   }
 
   // ---------- 儀式の画面(混ぜる → 切る → えらぶ → 読む) ----------
@@ -862,6 +863,7 @@ export function mountTarot(box, o) {
     if (a === 'hist') { S.step = 'hist'; return page(); }
     if (a === 'pack') return buyPack();
     if (a === 'reread') return reread();
+    if (a === 'lockhist') return lockHist();
     if (a === 'delhist') return delHist();
     if (a === 'delall') return delAll();
     if (a === 'detail') { leaveRitual(); S.step = 'detail'; return page(); }

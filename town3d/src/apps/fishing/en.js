@@ -412,7 +412,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     const sc = document.createElement('div'); sc.className = 'ens aq'; root.appendChild(sc);
     let tab = tab0 || ctx.storage.get('aqTab') || 'fish';
     let dexT = ctx.storage.get('aqDex') || 'f';
-    let mixMode = ctx.storage.get('mixMode') || 'd', mixLv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
+    let lockMode = false, mixMode = ctx.storage.get('mixMode') || 'd', mixLv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
     let raf = 0, swim = [], PL = [], DM = {}, selUid = null, pop = null;
     const Z = { z: 1, x: 0, y: 0 };
     const fx = { pel: [], coin: [], bub: [] };
@@ -611,14 +611,15 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         if (pick3.length === MIX_N) { const rar = recipeFor(mixLv, pick3.map(id => SET[id].look.shape)); result = rar >= 0 && rc.includes(mixLv + ':' + rar) ? `${decorOf({ lv: mixLv, rar }).icon}<small>${esc(decorOf({ lv: mixLv, rar }).name)}</small>` : '❔<small>やってみよう</small>'; }
         note = `<p class="nt">同じレベルの標本を${MIX_N}つ。<b>形の組み合わせ</b>がレシピに合うと飾りができる。合わなければ何も起きず、標本も消えない。</p>
           <div class="tabs">${[1, 2, 3].map(l => `<button data-ml="${l}" class="${l === mixLv ? 'on' : ''}">${LV_NAME[l]} <small>${avail(l).length}</small></button>`).join('')}</div>`;
-        list = items.length ? `<div class="grid">${items.map(s => `<button class="cell got ${pick3.includes(s.id) ? 'sel' : ''}" data-p="${s.id}"><span class="ic">${ICON[s.look.shape]}</span><b>${esc(s.look.name)}</b><small>${esc(shapeName(mixLv, s.look.shape))}</small></button>`).join('')}</div>` : `<p class="nt">このレベルの標本がまだないよ。英語の釣り堀で、セットの単語をぜんぶ完璧にするともらえる。</p>`;
+        list = items.length ? `<div class="grid">${items.map(s => `<button class="cell got ${pick3.includes(s.id) ? 'sel' : ''}" data-p="${s.id}"><span class="ic">${ICON[s.look.shape]}</span><b>${spec.isLocked(s.id) ? '🔒 ' : ''}${esc(s.look.name)}</b><small>${esc(shapeName(mixLv, s.look.shape))}</small></button>`).join('')}</div>` : `<p class="nt">このレベルの標本がまだないよ。英語の釣り堀で、セットの単語をぜんぶ完璧にするともらえる。</p>`;
         list += `<details class="aqrc"><summary>📜 レシピ帳(${LV_NAME[mixLv]})</summary><div class="rcp">${RECIPES[mixLv].map((r, i) => { const k = decorOf({ lv: mixLv, rar: i }), got = rc.includes(mixLv + ':' + i); return `<div><span class="rr rr${i}">${RAR[i]}</span> ${got ? `${k.icon} <b>${esc(k.name)}</b> = ${r.map(x => esc(shapeName(mixLv, x))).join(' + ')}` : `❔ ??? = <b>${esc(shapeName(mixLv, r[0]))}</b> + ？ + ？`}</div>`; }).join('')}</div></details>`;
       } else {
         const items = spec.tank().filter(f => f.g >= GROW_NEED && (f.rk || 0) < FISH_MAX_RANK);
         if (pick3.length === MIX_N) { const sel = pick3.map(id => spec.tank().find(f => f.uid === id)).filter(Boolean); if (sel.length === MIX_N && sel.every(f => f.id === sel[0].id && (f.rk || 0) === (sel[0].rk || 0))) result = `${fishImg(sel[0].id, 56, false, (sel[0].rk || 0) + 1)}<small>${esc(RANK_PRE[(sel[0].rk || 0) + 1] + (FISHBY[sel[0].id] || {}).name)}</small>`; else result = '✖<small>同じ種類・同じ強さを3匹</small>'; }
         note = `<p class="nt">水槽で<b>育てきった、同じ種類・同じ強さ</b>の魚を${MIX_N}匹 → 1匹の強い魚(大きく・称号つき。最大2段階)。元の魚は図鑑に残るよ。</p>`;
-        list = items.length ? `<div class="grid">${items.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''}" data-p="${f.uid}"><span class="ic fa">${fishImg(f.id, 80, false, f.rk || 0)}</span><b>${esc(fname(f))}</b><small>${fsize(f)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。🐟 魚タブで、えさをあげて育てよう。</p>`;
+        list = items.length ? `<div class="grid">${items.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''}" data-p="${f.uid}"><span class="ic fa">${fishImg(f.id, 80, false, f.rk || 0)}</span><b>${f.lock ? '🔒 ' : ''}${esc(fname(f))}</b><small>${fsize(f)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。🐟 魚タブで、えさをあげて育てよう。</p>`;
       }
+      note += `<div class="aqrow"><button class="sbtn" data-lm="1" style="${lockMode ? 'background:#ffe9a8' : ''}">🔒 ${lockMode ? 'ロックを切りかえ中(タップで ロック/はずす)' : 'ロックする・はずす'}</button></div>`;
       const slots = Array.from({ length: MIX_N }, (_, i) => `<button class="aqslot ${pick3[i] ? 'on' : ''}" data-slot="${i}">${pick3[i] ? slotIc(pick3[i]) : '<span class="ic" style="opacity:.35">＋</span>'}</button>`).join('<span class="aqplus">+</span>');
       return `${tabs}${note}<div class="aqmix">${slots}<span class="aqplus">→</span><div class="aqslot res">${result}</div></div>
         <button class="btn aqgo" data-a="go" ${pick3.length === MIX_N ? '' : 'disabled'}>🧪 混ぜる! (${pick3.length}/${MIX_N})</button>${list}`;
@@ -720,6 +721,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       if (a === 'idex') { openDex && openDex(); return; }
       if (a === 'admall' || a === 'admnone') { SETS.filter(s => s.lv === +dexT).forEach(s => admSet(s.id, a === 'admall')); redraw(); return; }
       if (a === 'go' && pick3.length === MIX_N) {
+        if (pick3.some(id => mixMode === 'd' ? spec.isLocked(id) : (spec.tank().find(f => f.uid === id) || {}).lock)) { toast('🔒 ロック中のものが入っているよ'); sfx.play('early'); return; }
         if (mixMode === 'd') {
           const used = pick3.map(id => SET[id]), rar = recipeFor(mixLv, used.map(x => x.look.shape));
           if (rar < 0) { toast('何も起きなかった…別の組み合わせを試そう(標本は消えてないよ)'); sfx.play('early'); return; }
@@ -756,7 +758,10 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       const mm = q('[data-mm]'); if (mm) { sfx.play('tap'); mixMode = mm.dataset.mm; ctx.storage.set('mixMode', mixMode); pick3 = []; drawBody(); return; }
       const ml = q('[data-ml]'); if (ml) { sfx.play('tap'); mixLv = +ml.dataset.ml; ctx.storage.set('mixLv', mixLv); pick3 = []; drawBody(); return; }
       const sl = q('[data-slot]'); if (sl) { const i = +sl.dataset.slot; if (pick3[i]) { pick3.splice(i, 1); sfx.play('tap'); drawBody(); } return; }
-      const p = q('[data-p]'); if (p) { sfx.play('tap'); const id = p.dataset.p, i = pick3.indexOf(id); if (i >= 0) pick3.splice(i, 1); else if (pick3.length < MIX_N) pick3.push(id); else toast(`${MIX_N}つまで。枠をタップすると外せるよ`); drawBody(); return; }
+      const lm = q('[data-lm]'); if (lm) { sfx.play('tap'); lockMode = !lockMode; drawBody(); return; }
+      const p = q('[data-p]'); if (p && lockMode) { sfx.play('tap'); const on = mixMode === 'd' ? spec.toggleLock(p.dataset.p) : spec.toggleFishLock(p.dataset.p); const j = pick3.indexOf(p.dataset.p); if (on && j >= 0) pick3.splice(j, 1); toast(on ? '🔒 ロックしたよ(混ぜる材料に使われないよ)' : '🔓 ロックをはずしたよ'); drawBody(); return; }
+      if (p && (mixMode === 'd' ? spec.isLocked(p.dataset.p) : (spec.tank().find(f => f.uid === p.dataset.p) || {}).lock) && !pick3.includes(p.dataset.p)) { sfx.play('early'); toast('🔒 ロック中だよ(「ロックする・はずす」ではずせるよ)'); return; }
+      if (p) { sfx.play('tap'); const id = p.dataset.p, i = pick3.indexOf(id); if (i >= 0) pick3.splice(i, 1); else if (pick3.length < MIX_N) pick3.push(id); else toast(`${MIX_N}つまで。枠をタップすると外せるよ`); drawBody(); return; }
       const dx = q('[data-dx]'); if (dx) { sfx.play('tap'); dexT = isNaN(+dx.dataset.dx) ? dx.dataset.dx : +dx.dataset.dx; ctx.storage.set('aqDex', dexT); drawBody(); return; }
       const ad = q('[data-adm]'); if (ad) { admSet(ad.dataset.adm, e.target.checked); drawBody(); return; }
       const af = q('[data-admf]'); if (af) { const id = af.dataset.admf, d = +af.dataset.d, f = FISH_SPEC.find(x => x.id === id); let tk = spec.tank(); if (d > 0) { if (tk.length >= TANK_MAX) { toast(`水槽がいっぱい(${TANK_MAX}匹まで)`); return; } tk.push({ uid: newUid(), id, size: f && f.size ? f.size[1] : 30, g: GROW_NEED, day: '', n: 0, at: Date.now() }); spec.saveTank(tk); spec.markGrown(id); if (!spec.hasTank()) { spec.gotTank(); furn.give('tank'); } } else { const i = tk.map(x => x.id).lastIndexOf(id); if (i >= 0) { tk.splice(i, 1); spec.saveTank(tk); } } redraw(true); return; }

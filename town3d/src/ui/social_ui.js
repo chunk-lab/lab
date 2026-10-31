@@ -42,7 +42,8 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
     if (!social.canGive(id)) { hud.dialog({ name: name(r), role: heart(id), text: 'きょうはもう、いいものをもらったよ。また明日ね!', choices: [] }); return; }
     if (!ks.length) { hud.dialog({ name: name(r), role: heart(id), text: '(おみやげを持っていない…。カフェで買えるよ)', choices: [] }); return; }
     const K = social.knownPrefs();
-    hud.dialog({ name: '🎁 なにをあげる?', role: `${NPC_NAME[id] || name(r)} ・ ${heart(id)}`, text: 'おみやげをえらんでね(1人に1日1回)', choices: ks.map(k => ({ label: `${ITEMS[k].icon} ${ITEMS[k].name}${bag[k] > 1 ? ' ×' + bag[k] : ''}${K[id + ':' + k] === 'love' ? ' 💗' : K[id + ':' + k] === 'no' ? ' 💦' : ''}`, fn: () => {
+    hud.dialog({ name: '🎁 なにをあげる?', role: `${NPC_NAME[id] || name(r)} ・ ${heart(id)}`, text: 'おみやげをえらんでね(1人に1日1回)', choices: ks.map(k => ({ label: `${social.isItemLocked(k) ? '🔒 ' : ''}${ITEMS[k].icon} ${ITEMS[k].name}${bag[k] > 1 ? ' ×' + bag[k] : ''}${K[id + ':' + k] === 'love' ? ' 💗' : K[id + ':' + k] === 'no' ? ' 💦' : ''}`, fn: () => {
+      if (social.isItemLocked(k)) { hud.toast('🔒 ロック中だよ(カフェのバッグでロックをはずせるよ)'); return gift(r, back); }
       const res = social.give(id, k); if (!res) return;
       audio.play(res.r === 'no' ? 'tap' : 'coin');
       const d = PTS[res.r];

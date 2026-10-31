@@ -117,7 +117,10 @@ export const social = {
   // ---- 持っているおみやげ ----
   bag() { return get('bag', {}); },
   addItem(k, n = 1) { const B = this.bag(); B[k] = (B[k] || 0) + n; st.set('bag', B); },
-  useItem(k) { const B = this.bag(); if (!B[k]) return false; B[k]--; if (!B[k]) delete B[k]; st.set('bag', B); return true; },
+  lockedItems() { return get('lockItem', {}); },
+  isItemLocked(k) { return !!this.lockedItems()[k]; },
+  toggleItemLock(k) { const L = this.lockedItems(); if (L[k]) delete L[k]; else L[k] = 1; st.set('lockItem', L); return !!L[k]; },   // ロック中のおみやげは、プレゼントなどで減らない
+  useItem(k) { if (this.isItemLocked(k)) return false; const B = this.bag(); if (!B[k]) return false; B[k]--; if (!B[k]) delete B[k]; st.set('bag', B); return true; },
   // ---- 解放 ----
   unlocksOf(id) { return (UNLOCKS[id] || []).filter(u => this.level(id) >= u.lv); },
   has(npc, uid) { return this.unlocksOf(npc).some(u => u.id === uid); },

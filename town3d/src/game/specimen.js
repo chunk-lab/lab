@@ -89,6 +89,9 @@ export const spec = {
   // 混ぜて使った標本(持ち物からは消えるが、アルバムには残る)
   use(id) { const o = this.own(); if (o[id]) { o[id].used = 1; st.set('own', o); } },
   drop(id) { const o = this.own(); if (o[id]) { delete o[id]; st.set('own', o); } st.set('perf:' + id, []); },   // 運営テスト用:標本をなかったことにする
+  isLocked(id) { const o = this.own()[id]; return !!(o && o.lock); },   // ロック中の標本は、混ぜる材料に使わない
+  toggleLock(id) { const o = this.own(); if (!o[id]) return false; o[id].lock = o[id].lock ? 0 : 1; st.set('own', o); return !!o[id].lock; },
+  toggleFishLock(uid) { const t = this.tank(), f = t.find(x => x.uid === uid); if (!f) return false; f.lock = f.lock ? 0 : 1; this.saveTank(t); return !!f.lock; },
   isUsed(id) { const o = this.own()[id]; return !!(o && o.used); },
   recipes: () => st.get('recipes') || [],         // 見つけたレシピ 'lv:rar'
   known() { return st.get('rknown') || []; },   // 占いの館で教わったレシピ(作ったことがなくても、混ぜる画面のレシピ帳に出る)

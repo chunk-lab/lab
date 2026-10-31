@@ -46,7 +46,7 @@ export const cafeApp = {
         <div class="say">マスター「いらっしゃい。ぜんぶ、おみやげにできますよ。町のみんなにも好きなものがあってね…だれが何を好きかは、占いの館のルナさんがよく知ってるみたいです」</div>
         ${last ? `<div class="res" style="color:#4a3a6b">${last}</div>` : ''}
         <div class="grid">${menu.map(k => { const it = ITEMS[k], q = qty[k] || 0, own = bag[k] || 0; return `<div class="it" style="${q ? 'outline:3px solid #ffb35c' : ''}"><span class="ic">${it.icon}</span><b>${esc(it.name)}</b><small>${esc(it.en)}</small><span class="pr">🪙 ${fmt(it.price)}</span><small style="margin-top:4px">もっている: <b style="display:inline">${own}</b></small><div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px">${stepBtn(k, -1, '−', q > 0)}<b style="min-width:22px;font-size:17px">${q}</b>${stepBtn(k, 1, '＋', q < MAXQ)}</div>${q ? `<small style="margin-top:4px;color:#c26a00;font-weight:800">買うと ${own + q}こ ・ 🪙 ${fmt(q * it.price)}</small>` : ''}</div>`; }).join('')}</div>
-        <h3>🎒 もっているおみやげ</h3><div class="bag">${Object.keys(bag).length ? Object.entries(bag).map(([k, c]) => `<span>${ITEMS[k] ? ITEMS[k].icon + ' ' + esc(ITEMS[k].name) : k} ×${c}</span>`).join('') : '<span style="opacity:.6">まだないよ</span>'}</div>
+        <h3>🎒 もっているおみやげ</h3><p class="nt" style="margin:0 0 6px">タップで 🔒ロック(ロック中は、プレゼントで減らないよ)</p><div class="bag">${Object.keys(bag).length ? Object.entries(bag).map(([k, c]) => `<button data-lk="${k}" style="border:0;font:inherit;cursor:pointer;background:${social.isItemLocked(k) ? '#ffe9a8' : '#fff'};border-radius:999px;padding:4px 10px;font-size:13px;font-weight:800">${social.isItemLocked(k) ? '🔒 ' : ''}${ITEMS[k] ? ITEMS[k].icon + ' ' + esc(ITEMS[k].name) : k} ×${c}</button>`).join('') : '<span style="opacity:.6">まだないよ</span>'}</div>
         <p class="nt">住人に話しかけて「🎁 プレゼントする」で渡せるよ(1人に1日1回)。好きなものだと仲良くなれて、ゲームや頼みごと、お話が増えていく。<br>🃏 カード対戦は、アミューズメントセンターに引っ越しました(ハッタリ男爵と仲良くなると遊べる)。</p>
         <div style="height:150px"></div>
         <div style="position:sticky;bottom:0;margin:0 -14px;padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));background:#fffaf0;box-shadow:0 -2px 10px #0002">
@@ -58,6 +58,7 @@ export const cafeApp = {
     draw();
     let busy = false;
     box.onclick = async e => {
+      const lk = e.target.closest('[data-lk]'); if (lk) { const on = social.toggleItemLock(lk.dataset.lk); toast(box, on ? '🔒 ロックしたよ' : '🔓 ロックをはずしたよ'); const sc = box.scrollTop; draw(); box.scrollTop = sc; return; }
       const q = e.target.closest('[data-q]');
       if (q && !q.disabled) { const k = q.dataset.q; qty[k] = Math.max(0, Math.min(MAXQ, (qty[k] || 0) + +q.dataset.d)); last = ''; const sc = box.scrollTop; draw(); box.scrollTop = sc; return; }
       const pay = e.target.closest('[data-pay]'); if (!pay || pay.disabled || busy) return;
