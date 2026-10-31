@@ -13,7 +13,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
   const episode = FIRST_EPISODE;
   const progress = createEpisodeProgress(createStore('town-episodes'), episode);
   let root = null, bar = null, scene = null, stage = null, content = null, active = false, waiting = null, epoch = 0, error = '', pending = false, busy = false;
-  let offEvent = null, offClose = null, previousFocus = null;
+  let offEvent = null, offClose = null, previousFocus = null, background = [];
   const face = (who, f = 'normal') => core.base + 'g/chunkchunk/img/chara/' + (who === 'sora' ? 'boy' : 'girl') + '/' + f + '.webp';
   const stateText = () => progress.state.completed ? '第1話をもう一度見る' : progress.state.index ? '第1話のつづき' : '第1話をはじめる';
   function disposeScene() { scene?.dispose(); scene = null; }
@@ -22,6 +22,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     active = false; epoch++; waiting = null; offEvent?.(); offClose?.(); offEvent = offClose = null;
     bar?.remove(); bar = null;
     disposeScene(); root?.remove(); root = null; stage = content = null;
+    background.forEach(([el, inert]) => { el.inert = inert; }); background = [];
     document.body.classList.remove('ep-on'); core.speech.stop(); resumeTown(); previousFocus?.focus();
     onStop({ departed: options.departed === true });
   }
@@ -29,7 +30,9 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     const b = document.createElement('button'); b.type = 'button'; b.className = 'ep-btn ' + cls; b.textContent = label; b.onclick = action; return b;
   }
   function build() {
-    root = document.createElement('section'); root.className = 'ep-root'; root.setAttribute('aria-label', '第1話 ちょっと、外に出たい');
+    root = document.createElement('section'); root.className = 'ep-root'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', '第1話 ちょっと、外に出たい');
+    background = [...document.querySelectorAll('.hm-ov,.tw-view,.tw-top,.tw-dock')].map(el => [el, el.inert]);
+    background.forEach(([el]) => { el.inert = true; });
     root.innerHTML = `<header class="ep-head"><div><small>ほしみや町の物語 ／ はなちゃんの視点</small><b>第1話　${episode.title}</b></div><nav></nav></header><div class="ep-stage">${ROOM}<div class="ep-portraits"><img class="ep-hana" alt="はな"><img class="ep-sora" alt="そら"></div></div><div class="ep-content" aria-live="polite"></div>`;
     document.body.appendChild(root); stage = root.querySelector('.ep-stage'); content = root.querySelector('.ep-content');
     root.querySelector('.ep-hana').src = face('hana'); root.querySelector('.ep-sora').src = face('sora');
@@ -89,11 +92,14 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     const s = progress.step, game = games[s.game];
     if (!game) { error = 'このアプリでは開けません。'; render(); return; }
     if (core.host.current) { error = '開いているゲームを閉じてから、もう一度試してください。'; render(); return; }
-    waiting = { game: s.game }; error = ''; scene?.pause(); root.hidden = true; drawBar();
+    waiting = { game: s.game }; error = ''; scene?.pause();
+    content.innerHTML = `<div class="ep-card" role="status"><h2>${esc(s.title)}を読み込んでいます…</h2></div>`;
+    drawBar();
     const request = waiting;
     try {
       const ok = await core.host.open(game, { ...s.opts });
       if (!active || waiting !== request) return;
+      if (ok) root.hidden = true;
       if (!ok) {
         // 読み込み失敗や権限不足では進行しない。
         error = 'ゲームを開けませんでした。もう一度試すか、物語を中断できます。';
@@ -133,7 +139,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
       content.innerHTML = `<div class="ep-dialog"><b class="ep-name">${NAME[s.who]}</b><p class="ep-line">${esc(s.text)}</p>${s.en ? `<div class="ep-expression"><strong lang="en">${esc(s.en)}</strong><span>${esc(s.ja)}</span></div>` : ''}<div class="ep-actions"></div>${err}</div>`;
       const actions = content.querySelector('.ep-actions');
       if (s.en) actions.append(button('英語を聞く', () => core.speech.speak(s.en, { lang: 'en-US' })));
-      actions.append(button('つぎへ', () => { core.speech.stop(); progress.next(); render(); }, 'ep-primary'));
+      actions.append(button('つぎへ', () => { core.speech.stop(); error = ''; progress.next(); render(); }, 'ep-primary'));
     } else if (s.type === 'game') {
       content.innerHTML = `<div class="ep-card"><small>やってみよう</small><h2>${esc(s.title)}</h2><p>${esc(s.text)}</p>${err}</div>`;
       const card = content.firstChild;
