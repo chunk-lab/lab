@@ -23,7 +23,9 @@ try{
 
  await sleep(400);const cw=frameDOM.window,panel=cw.document.querySelector('[aria-label="そらの案内"]');assert.ok(panel);
  const next=panel.querySelector('button');assert.equal(next.hidden,true);
- cw.document.querySelector('#slot .slp[data-r="V"]').click();await sleep(0);assert.equal(cw.document.querySelector('#slin'),null,'unrelated controls cannot divert tutorial');
+ cw.document.querySelector('#sldone').click();await sleep(0);
+ assert.match(cw.document.querySelector('#chunks').textContent,/I.*want to.*play/,'native completion is never blocked');
+ cw.document.querySelector('#chunks [data-cat="subj"]').click();await sleep(0);
  cw.document.querySelector('#slot .slp[data-r="S"]').click();await sleep(0);
  assert.match(panel.textContent,/she/);
  const she=[...cw.document.querySelectorAll('#slot .slbar .slm')].find(e=>e.querySelector('b')?.textContent==='she');assert.ok(she);she.click();await sleep(0);
@@ -35,6 +37,6 @@ try{
  await core.host.open(w.qa.games.stream,{fontSize:1.4,wordset:{lv:1,k:0}});await sleep(100);
  assert.equal(w.document.querySelector('.ct-stream').style.getPropertyValue('--fs'),'1.4');core.host.close();
  const css=fs.readFileSync(root+'/apps/town/episodes/view.css','utf8');assert.match(css,/ep-sora.*scaleX\(-1\)/);assert.match(css,/body.ep-on>\.cs-back\{display:none!important/);assert.match(css,/#7a4ad9/);
- if(errors.length)throw Error(errors.join('\n'));console.log('PASS: changed controls only — 2D dialogue, auxiliary color, native guided subject choice, blocked detours, story return, stream size large, mirrored boy, hidden town back button');
+ if(errors.length)throw Error(errors.join('\n'));console.log('PASS: changed controls only — 2D dialogue, auxiliary color, native guided subject choice, native completion and subject editing, story return, stream size large, mirrored boy, hidden town back button');
 }catch(e){console.error(e.stack);process.exitCode=1}finally{children.forEach(c=>c.window.close());w.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

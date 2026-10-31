@@ -27,30 +27,26 @@ export function startEpisodePractice({ finish }) {
   const style = document.createElement('style');
   style.textContent = '.ct-eigo .ep-tutorial-target{outline:4px solid var(--noun);outline-offset:3px;box-shadow:0 0 0 7px #2d6be022}.ct-eigo .ep-guide-aux{color:var(--aux);font-weight:800}';
   panel.append(style);
-  let step = 0;
-  function target() {
+  let completed = false;
+  // 通常の「完成」や主役の編集を制限しない。案内は実際の文の状態に追従する。
+  holder.querySelector('.nav')?.setAttribute('inert', '');
+  function updateGuide() {
+    if (!completed && APP.S.main.subj === 'p:she') {
+      completed = true; APP.finished = true; render();
+      guide.innerHTML = 'そら：できたね！ She <span class="ep-guide-aux">wants to</span> play.「彼女は遊びたい」になったよ。ほかにも文の要素をいろいろ替えられるから、別の機会に試してみてね。';
+      back.hidden = false; back.focus({ preventScroll: true });
+    }
     holder.querySelectorAll('.ep-tutorial-target').forEach(el => el.classList.remove('ep-tutorial-target'));
-    const next = step === 0 ? holder.querySelector('#slot .slp[data-r="S"]') : step === 1 ? [...holder.querySelectorAll('#slot .slbar .slm')].find(el => el.querySelector('b')?.textContent === 'she') : null;
-    holder.querySelectorAll('button,input,[data-a]').forEach(el => { el.tabIndex = el === next ? 0 : -1; });
-    next?.classList.add('ep-tutorial-target');
-    next?.focus({ preventScroll: true });
+    if (!completed) {
+      const she = [...holder.querySelectorAll('#slot .slbar .slm')].find(el => el.querySelector('b')?.textContent === 'she');
+      const next = she || (APP.finished ? holder.querySelector('#chunks [data-cat="subj"]') : holder.querySelector('#sldone'));
+      guide.textContent = she ? 'そら：主役の中から she（彼女）を選んでね。' : APP.finished ? 'そら：文の I を押して、主役を she（彼女）に替えてみよう。' : 'そら：「完成」を押して文を見てみよう。主役の I から she（彼女）に替えるよ。';
+      next?.classList.add('ep-tutorial-target');
+    }
+    resize();
   }
-  holder.addEventListener('click', e => {
-    const subject = e.target.closest('#slot .slp[data-r="S"]');
-    const choice = e.target.closest('#slot .slbar .slm');
-    const allowed = step === 0 && subject || step === 1 && choice?.querySelector('b')?.textContent === 'she';
-    if (!allowed) { e.preventDefault(); e.stopImmediatePropagation(); return; }
-    queueMicrotask(() => {
-      if (step === 0) {
-        step = 1; guide.textContent = 'そら：出てきた主役の中から she（彼女）を選んでね。';
-      } else if (APP.S.main.subj === 'p:she') {
-        step = 2; APP.finished = true; render();
-        guide.innerHTML = 'そら：できたね！ She <span class="ep-guide-aux">wants to</span> play.「彼女は遊びたい」になったよ。ほかにも文の要素をいろいろ替えられるから、別の機会に試してみてね。';
-        back.hidden = false; back.focus({ preventScroll: true });
-      }
-      target(); resize();
-    });
-  }, true);
-  target();
-  back.onclick = () => { if (step !== 2) return; ro.disconnect(); finish(); };
+  const changes = new MutationObserver(updateGuide);
+  changes.observe(holder, { childList: true, subtree: true });
+  updateGuide();
+  back.onclick = () => { if (!completed) return; changes.disconnect(); ro.disconnect(); finish(); };
 }
