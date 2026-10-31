@@ -18,7 +18,7 @@ try{
  assert.equal([...w.document.querySelectorAll('button')].some(b=>b.textContent==='2D / 3D'),false);
  assert.equal(w.document.querySelector('.ep-aux').textContent,'want to');
  const click=(label,parent=w.document)=>{const b=[...parent.querySelectorAll('button')].find(b=>b.textContent.trim()===label);assert.ok(b,label);b.click()};
- click('はじめる');await sleep(30);const frame=w.document.querySelector('iframe');assert.ok(frame);
+ click('はじめる');await sleep(30);const frame=w.document.querySelector('iframe');assert.ok(frame);assert.equal(w.document.querySelector('.cs-back').hidden,true,'town back hidden only in tutorial');
  const frameDOM=new JSDOM(frame.srcdoc,{url:'about:blank',runScripts:'dangerously',resources:resources(),pretendToBeVisual:true,virtualConsole:vc,beforeParse(cw){stubs(cw);Object.defineProperty(cw,'parent',{value:{postMessage(data){w.dispatchEvent(new w.MessageEvent('message',{source:frame.contentWindow,origin:'null',data}))}}});Object.defineProperty(cw,'localStorage',{get(){throw new cw.DOMException('blocked','SecurityError')}})}});children.push(frameDOM);
 
  await sleep(400);const cw=frameDOM.window,panel=cw.document.querySelector('[aria-label="そらの案内"]');assert.ok(panel);
@@ -35,8 +35,8 @@ try{
  assert.equal(JSON.parse(w.localStorage.getItem('cs:town-episodes:first')).index,19);
  w.qa.episodes.stop();
  await core.host.open(w.qa.games.stream,{fontSize:1.4,wordset:{lv:1,k:0}});await sleep(100);
- assert.equal(w.document.querySelector('.ct-stream').style.getPropertyValue('--fs'),'1.4');core.host.close();
- const css=fs.readFileSync(root+'/apps/town/episodes/view.css','utf8');assert.match(css,/ep-sora.*scaleX\(-1\)/);assert.match(css,/body.ep-on>\.cs-back\{display:none!important/);assert.match(css,/#7a4ad9/);
+ assert.equal(w.document.querySelector('.ct-stream').style.getPropertyValue('--fs'),'1.4');core.host.close();await core.host.open(w.qa.games.stream);assert.equal(w.document.querySelector('.cs-back').hidden,false,'town back restored in ordinary game menu');core.host.close();
+ const css=fs.readFileSync(root+'/apps/town/episodes/view.css','utf8');assert.match(css,/ep-sora.*scaleX\(-1\)/);assert.doesNotMatch(css,/body.ep-on>\.cs-back/);assert.match(css,/#7a4ad9/);
  if(errors.length)throw Error(errors.join('\n'));console.log('PASS: changed controls only — 2D dialogue, auxiliary color, native guided subject choice, native completion and subject editing, story return, stream size large, mirrored boy, hidden town back button');
 }catch(e){console.error(e.stack);process.exitCode=1}finally{children.forEach(c=>c.window.close());w.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -22,4 +22,3 @@ body.ep-on .cs-ui>.cs-ov{display:none}
 
 .ep-portraits img.ep-sora{transform:translateY(9px) scaleX(-1)}.ep-portraits img.ep-sora.ep-speaking{transform:translateY(0) scaleX(-1)}
 .ep-aux{color:#7a4ad9;font-weight:800}
-body.ep-on>.cs-back{display:none!important}

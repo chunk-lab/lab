@@ -18,7 +18,7 @@ export async function mountEpisodeFrame(el, ctx) {
   let ready = false, timer = 0, disposed = false;
   let resolveReady, rejectReady;
   const started = new Promise((resolve, reject) => { resolveReady = resolve; rejectReady = reject; });
-  function cleanup() { if (disposed) return; disposed = true; clearTimeout(timer); window.removeEventListener('message', receive); frame.remove(); ctx.core.speech.stop(); }
+  function cleanup() { if (disposed) return; disposed = true; clearTimeout(timer); window.removeEventListener('message', receive); frame.remove(); ctx.showBack(true); ctx.core.speech.stop(); }
   function receive(e) {
     if (disposed || e.source !== frame.contentWindow || e.origin !== 'null' || e.data?.token !== token) return;
     const d = e.data;
@@ -41,7 +41,7 @@ export async function mountEpisodeFrame(el, ctx) {
   script.onload=()=>{try{window.__EIGONOU.start(document.getElementById('episode-eigo-root'),ctx);window.__EIGONOU.practice({finish:()=>send('finish'),exit:()=>send('exit')});send('ready')}catch(e){send('error')}};
   document.head.appendChild(script);
   <\/script></body></html>`;
-  el.appendChild(frame); ctx.showBack(true);
+  el.appendChild(frame); ctx.showBack(false);
   timer = setTimeout(() => rejectReady(new Error('英語脳アプリの体験の読み込みが時間切れになりました')), 30000);
   try { await started; } catch (e) { cleanup(); throw e; }
   return { unmount: cleanup };
