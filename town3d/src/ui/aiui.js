@@ -1,5 +1,6 @@
 // AIまわりの画面:つなぎかた(キー取得の案内つき)と、住人とのおしゃべり
 import { PROVIDERS } from '../core/ai.js';
+import { portrait } from './portraits.js';
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -56,7 +57,7 @@ export function openAiSetup({ hud, ai, onDone }) {
 
 // 住人との自由なおしゃべり。ask(text) → Promise<string>
 export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, maxLen = 80, low = false }) {
-  const p = hud.panel(`<h2>${esc(name)}<small>${esc(role || '')}</small></h2>
+  const p = hud.panel(`<h2>${portrait(name) ? `<img src="${portrait(name)}" alt="" style="height:44px;vertical-align:middle;margin-right:8px">` : ''}${esc(name)}<small>${esc(role || '')}</small></h2>
     <div class="tw-enrow"><button class="tw-btn" data-a="en"></button><button class="tw-btn" data-a="lv"></button></div>
     <div class="tw-log" aria-live="polite"></div>
     <div class="tw-tools" hidden></div>

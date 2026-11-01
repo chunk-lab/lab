@@ -1,6 +1,7 @@
 // 画面の上に重ねる UI(DOM)。クラスはすべて tw- 接頭辞
 import { LOOKS, LOOK_IDS } from '../world/character.js';
 import { fmtN } from '../core/core.js';
+import { portrait } from './portraits.js';
 
 export const CSS = `
 .tw-root{position:absolute;inset:0;overflow:hidden;font-family:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;color:#5a4a6b;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-tap-highlight-color:transparent;
@@ -53,6 +54,7 @@ export const CSS = `
 .tw-bubble:after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:#fff}
 .tw-dialog{position:absolute;left:12px;right:12px;bottom:calc(16px + var(--tw-bot));max-width:620px;margin:0 auto;background:rgba(255,250,242,.97);border-radius:22px;padding:16px 18px 14px;box-shadow:0 10px 30px rgba(90,74,107,.25);animation:tw-up .22s;pointer-events:auto}
 .tw-dname{position:absolute;top:-14px;left:18px;background:var(--tw-pink);color:#fff;padding:4px 14px;border-radius:999px;font-weight:800;font-size:14px}
+.tw-dpic{position:absolute;right:12px;bottom:calc(100% - 22px);height:112px;width:auto;max-width:120px;object-fit:contain;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(90,74,107,.25));animation:tw-up .22s}
 .tw-dname small{font-weight:600;opacity:.85;margin-left:6px}
 .tw-dtext{max-height:min(34vh,180px);overflow-y:auto;overscroll-behavior:contain;min-height:48px;font-size:16px;line-height:1.6;margin-top:6px}
 .tw-choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:flex-end}
@@ -179,7 +181,7 @@ export function createHud(root, bus) {
       toastT = setTimeout(() => { toastEl?.remove(); toastEl = null; }, 2200);
     },
     // 会話:文字送り。choices を押すか、最後まで出たあとに押すと閉じる
-    dialog({ name, role, text, choices = [] }) {
+    dialog({ name, role, text, choices = [], face }) {
       this.closeDialog();
       dialog = h(`<div class="tw-dialog"><div class="tw-dname"></div><div class="tw-dtext"></div><div class="tw-choices"></div></div>`);
       dialog.querySelector('.tw-dname').innerHTML = `${esc(name)}${role ? `<small>${esc(role)}</small>` : ''}`;
@@ -187,6 +189,7 @@ export function createHud(root, bus) {
       const all = [...choices, { label: 'とじる', fn: null }];
       all.forEach((c, i) => { const b = h(`<button class="tw-btn${i === 0 && choices.length ? ' main' : ''}"></button>`); b.textContent = c.label; b.onclick = ev => { ev.stopPropagation(); this.closeDialog(); c.fn?.(); }; ch.appendChild(b); });
       ch.style.visibility = 'hidden';
+      const pic = portrait(face || name); if (pic) { const im = document.createElement('img'); im.className = 'tw-dpic'; im.src = pic; im.alt = ''; dialog.appendChild(im); }   // 顔絵
       root.appendChild(dialog);
       let i = 0; const chars = [...text];
       const tick = setInterval(() => {
