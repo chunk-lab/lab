@@ -24,3 +24,36 @@ body.ep-on .cs-ui>.cs-ov{display:none}
 .ep-aux{color:#7a4ad9;font-weight:800}
 
 .ep-expression strong .ep-aux{display:inline;font-size:inherit;line-height:inherit;margin:0}
+
+/* ---- 見た目の作り直し: やわらかいパステル(町の画面と同じ系統)。会話枠は高さを固定して、目が散らないように ---- */
+.ep-root{--ep-h:clamp(250px,37vh,310px);--ep-pink:#e0457b;--ep-ink:#4a3426;background:linear-gradient(160deg,#cfeaff,#ffe6ef);color:var(--ep-ink)}
+.ep-head{background:rgba(255,255,255,.72);backdrop-filter:blur(10px);border-bottom:0;box-shadow:0 2px 14px #8a5a3220}
+.ep-head small{color:#b07a8f;font-weight:700;letter-spacing:.04em}
+.ep-head b{color:var(--ep-ink);font-size:16px}
+.ep-menu summary{border-color:#f1c9d8;background:#fff;color:#a8486c;border-radius:999px;font-weight:800}
+.ep-stage{background:linear-gradient(#dff1ff,#fff0f5)}
+.ep-stage>svg{opacity:.78;filter:saturate(.8) brightness(1.06)}
+.ep-portraits{inset:8px 4% calc(var(--ep-h) + 22px)}
+.ep-portraits img{filter:brightness(.8) saturate(.85);transition:filter .25s,transform .25s}
+.ep-portraits img.ep-speaking{filter:none;transform:translateY(-6px)}
+.ep-portraits img.ep-sora.ep-speaking{transform:translateY(-6px) scaleX(-1)}
+.ep-content{height:var(--ep-h);min-height:0;max-height:none;overflow:visible;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px));margin:auto auto 0}
+.ep-dialog,.ep-card{position:relative;height:100%;display:flex;flex-direction:column;padding:26px 18px 12px;background:rgba(255,255,255,.97);border:3px solid #fff;border-radius:26px;box-shadow:0 8px 28px #8a5a3226;backdrop-filter:none;overflow:hidden}
+.ep-dialog{overflow:visible}
+.ep-name{position:absolute;top:-15px;left:18px;margin:0;background:var(--ep-pink);color:#fff;border-radius:999px;padding:5px 18px;font-size:15px;font-weight:800;box-shadow:0 3px 8px #e0457b40}
+.ep-line{flex:1 1 auto;min-height:0;overflow-y:auto;margin:0 0 6px;font-size:17px;line-height:1.7;color:var(--ep-ink)}
+.ep-expression{background:#eaf6ff;border-left:5px solid #5aaee0;border-radius:10px;padding:7px 12px;margin:0 0 6px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.ep-expression strong{font-size:19px;color:#2f6f9a}
+.ep-expression>span{margin:0;font-size:13px;color:#5a7488}
+.ep-actions{flex:0 0 auto;gap:8px}
+.ep-actions .ep-btn{margin:0;min-height:42px;padding:8px 16px}
+.ep-btn{border-radius:999px;border-color:#f1c9d8;color:#a8486c;background:#fff}
+.ep-btn:hover{background:#fff1f6}
+.ep-primary{background:var(--ep-pink);border-color:var(--ep-pink);color:#fff;box-shadow:0 3px 0 #b02d5b}
+.ep-primary:hover{background:#cf3a70}
+.ep-card{justify-content:flex-start;overflow-y:auto}
+.ep-card>small{color:#b07a8f;font-weight:800}
+.ep-card h2{font-size:19px;margin:2px 0 6px;color:var(--ep-ink)}
+.ep-card p{font-size:14px;line-height:1.6;margin:4px 0 10px}
+.ep-card>.ep-btn{margin-top:auto}
+@media(max-height:520px){.ep-root{--ep-h:140px}.ep-line{font-size:14px;line-height:1.5}.ep-dialog,.ep-card{padding:20px 14px 8px}}
