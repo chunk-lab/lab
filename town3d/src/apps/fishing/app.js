@@ -10,6 +10,7 @@ import { createView } from './view.js';
 import { artCanvas } from './art.js';
 import { createSfx } from './sfx.js';
 import { createEnglish } from './en.js';
+import { reelWheel } from './reelwheel.js';
 const RAIN_FISH = FISH.filter(f => f.rain).map(f => f.name).join('・');
 
 const ink = '#5a4a6b';
@@ -280,7 +281,7 @@ export const fishingApp = {
       }
       const tackleChip = () => { const b = gearById('bait', eq.bait); $('[data-b="tackle"]').textContent = `${b.icon} ${b.name}・${gearById('hook', eq.hook).name}`; const tc = $('[data-b="tana"]'); tc.style.display = b.type === 'lure' ? 'none' : ''; tc.textContent = TANA[tanaOf(E.S.tana)].name; };
       tackleChip();
-      const G = en ? EN.playGates(en, ui, () => Math.max(0.05, 0.3 / Math.pow(E.G.rod.power, 1.5))) : null; let thrashN = 0, waitQ = 1;
+      const G = en ? EN.playGates(en, ui, () => Math.max(0.05, 0.3 / Math.pow(E.G.rod.power, 1.5))) : null; let thrashN = 0, waitQ = 1, okRun = true;   // okRun:前の問題が正解(連続正解)なら、気になり度が2倍たまる=5問くらいで食い付く
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
         if (b === 'skip') {   // 勝負をとちゅうで切りあげる:2回おすと、あいての残り時間を一気に進めて結果を出す
@@ -425,14 +426,39 @@ export const fishingApp = {
         if (type === 'catch') onCatch(d);
       }
       // 英語の釣り堀:答えるまで釣りは止まる(frame で E.update しない)
-      let reelUi = null, lastTh = -99; const closeReel = () => { if (reelUi) { try { reelUi.destroy(); } catch (e) { } reelUi = null; } };
+      let reelUi = null, lastTh = -99, wheelUi = null, wheelCur = null, wheelRest = 0, flow = 0, sortHide = false;
+      const closeWheel = () => { if (wheelUi) { try { wheelUi.destroy(); } catch (e) { } wheelUi = null; } wheelCur = null; };
+      const closeReel = () => { flow++; closeWheel(); sortHide = false; if (reelUi) { try { reelUi.destroy(); } catch (e) { } reelUi = null; } };
+      // 英語の巻き取り:円をぐるぐる回して巻く → 英語の問題(並べ替え) → また円を回す … の繰り返しで引き寄せる
+      function startReelFlow(h, stopIn) {
+        const my = ++flow, N = G.reelN(h.sp, h.size || 0), L0 = h.sortL0, big = h.sp.r >= 3 || (h.size || 0) >= 60, turns = h.sp.r >= 4 ? 3 : 2;
+        const base = i => L0 - (L0 - 0.035) * i / (N + 1);
+        const wheel = i => new Promise(res => {
+          if (my !== flow) return res();
+          closeWheel(); sortHide = true; stopIn(); const cur = wheelCur = { a: base(i), b: base(i + 1), p: 0 }; wheelRest = 0.7;
+          wheelUi = reelWheel(ui, { turns, sfx,
+            gain: () => { const hh = E.S.hooked; if (!hh || hh.phase !== 'rod') return 1; return sideT * hh.dir < -0.3 ? 1 : 0.35; },   // 魚が走っている間は、竿を逆にたおさないと進みにくい
+            onProgress: p => { cur.p = p; },
+            onDone: () => { cur.p = 1; E.reelTgt(cur.b); closeWheel(); E.rodDone(); sideT = 0; res(); } });
+        });
+        (async () => {
+          await wheel(0); if (my !== flow) return;
+          reelUi = G.reel(h.sp, h.size || 0, { onSentence: () => { }, onEnd: () => E.sortEnd(),
+            onGap: (k, n) => (async () => {   // 1文ならべ終えたら:(最後の合間は熟語)→ また円を回して巻く → 次の文
+              sortHide = true;
+              if (k === n - 1 && big) { stopIn(); const ok = await G.thrash(); if (my !== flow) return; if (ok) { E.weaken(); toast('おとなしくなった!', 1000); } else { E.setback(0.15); toast('引き戻された…', 1000); } }
+              await wheel(k); if (my !== flow) return; sortHide = false;
+            })() });
+          sortHide = false;
+        })();
+      }
       function enGate(type, d) {
         const stopIn = () => { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); };
         if (type === 'missq') { stopIn(); G.bite().then(r => { E.biteResult(r.ok); toast(r.ok ? 'もういちど! アタリを合わせろ' : '逃げられた…', 1000); }); }
         else if (type === 'hooked') {
           thrashN = 0; lastTh = -99; const h = E.S.hooked;
           if (h && h.sp.kind === 'fish' && E.sortStart()) {   // 巻き取りは、ぜんぶ文の並べ替えでする
-            try { stopIn(); closeReel(); reelUi = G.reel(h.sp, h.size || 0, { onSentence: (k, N) => E.sortProgress(k, N), onGap: (k, N) => { const hh = E.S.hooked; if (hh) E.rodPhase(k === N - 1 && (hh.sp.r >= 3 || (hh.size || 0) >= 60)); }, onEnd: () => E.sortEnd() }); } catch (err) { closeReel(); h.sr = false; }
+            try { stopIn(); closeReel(); startReelFlow(h, stopIn); } catch (err) { closeReel(); h.sr = false; }
           }
         }
         else if (type === 'lost' || type === 'catch') { closeReel(); setTimeout(() => G.flush(), 1500); }   // 標本のお祝いは、結果が出てから
@@ -573,7 +599,7 @@ export const fishingApp = {
         if (G) {   // 英語:魚が近づいて気にしはじめてから問題が出る。正解でメーターが上がる(10問くらいで満タン)
           const ff = E.S.focusF, near = E.S.ph === 'water' && !E.S.engaged && !E.S.bite && ff;
           imEl.hidden = !(E.S.ph === 'water' && !E.S.engaged && ff && !E.S.bite); if (!imEl.hidden) imEl.querySelector('i').style.width = Math.min(100, ff.int * 100) + '%';
-          if (near && !EN.busy) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = G.gap(); if (r.ok) { E.addInterest(r.above ? 0.2 : 0.1); sfx.play('coin'); } }); } } else if (!EN.busy) waitQ = (E.S.engaged || E.S.bite) ? Math.max(waitQ, 2) : Math.min(waitQ, 1.2);   // 合わせの間は問題のタイマーを止める
+          if (near && !EN.busy) { waitQ -= dt; if (waitQ <= 0) { waitQ = 99; bt = null; thr = 0; G.wait().then(r => { waitQ = G.gap(); if (r.ok) { E.addInterest((okRun ? 0.2 : 0.1) + (r.above ? 0.1 : 0)); sfx.play('coin'); } okRun = !!r.ok; }); } } else if (!EN.busy) waitQ = (E.S.engaged || E.S.bite) ? Math.max(waitQ, 2) : Math.min(waitQ, 1.2);   // 合わせの間は問題のタイマーを止める
         }
         if (G && EN.busy) { } else if (hitStop > 0) hitStop -= dt; else if (!(vs && countT > 0)) E.update(dt);
         if (leap) { leap.t += dt / leap.dur; if (leap.t >= 1) { const fn = leap.then; leap = null; fn && fn(); } }
@@ -607,7 +633,7 @@ export const fishingApp = {
         hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water';
         if (reelUi && ph !== 'fight') closeReel();
         { const on = !!(h && h.sr && h.phase === 'rod' && ph === 'fight'); if (on) { const tp = view.rodTip(); tipZ.style.left = tp.x + 'px'; tipZ.style.top = tp.y + 'px'; } tipZ.style.display = on ? 'flex' : 'none'; if (!on && tzPid != null) { tzPid = null; } }
-        { const run = !!(h && h.sr && h.phase === 'rod'), pshow = !!reelUi && !run && !EN.busy; if (reelUi) reelUi.show(pshow); bigB.style.visibility = reelUi && pshow ? 'hidden' : ''; }
+        { const run = false, pshow = !!reelUi && !sortHide && !EN.busy; if (reelUi) reelUi.show(pshow); bigB.style.visibility = (G && h && h.sr && ph === 'fight') ? 'hidden' : ''; if (wheelCur && h && h.sr && ph === 'fight' && !EN.busy) { E.reelTgt(wheelCur.a + (wheelCur.b - wheelCur.a) * wheelCur.p); if (h.phase !== 'rod') { wheelRest -= dt; if (wheelRest <= 0 && wheelCur.p < 0.85) { E.rodPhase(false); wheelRest = 1.3 + Math.random() * 1.3; } } } }
         hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
         const showThr = reeling && (ph === 'water' || ph === 'fight');
         thrEl.hidden = !showThr; if (showThr) thrEl.firstChild.style.height = Math.round(E.input.reel * 100) + '%';

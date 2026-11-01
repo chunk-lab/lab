@@ -168,7 +168,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
   function startBite(f) {
     const hs = HOOK_STEP[G.hook.id] - HOOK_STEP[f.sp.hook];   // 小さな魚に大きな針:アタリが一瞬になる
     const win = f.sp.win * (isLure() ? 0.85 : 1) * (0.85 + 0.3 * rb()) * (hs >= 2 ? 0.45 : hs === 1 ? 0.7 : 1) * (easy ? 2.4 : 1) * winK; S.bite = { f, t0: S.t, win }; ev('bite', { heavy: f.sp.str > 1 }); }
-  function leave(f, why) { f.st = 'flee'; f.fleeT = 1.5; const a = rb() * 6.28; f.tx = clamp(f.x + Math.cos(a) * 0.4, -0.9, 0.9); f.td = clamp(f.d + Math.abs(Math.sin(a)) * 0.4, 0.1, 1); if (S.engaged === f) S.engaged = null; S.bite = null; }
+  function leave(f, why) { if (holdMiss && (why === 'miss' || why === 'early' || why === 'pass')) f.int = Math.max(f.int || 0, 0.7); f.st = 'flee'; f.fleeT = 1.5; const a = rb() * 6.28; f.tx = clamp(f.x + Math.cos(a) * 0.4, -0.9, 0.9); f.td = clamp(f.d + Math.abs(Math.sin(a)) * 0.4, 0.1, 1); if (S.engaged === f) S.engaged = null; S.bite = null; }
   function spookNear(x, d, r, chance) { for (const f of S.fish) if (f.st === 'roam' || f.st === 'approach') { if (Math.hypot(f.x - x, f.d - d) < r && rb() < chance) leave(f, 'spook'); } }
 
   // ---- 引っかかる(ゴミ・アイテム) ----
@@ -317,6 +317,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     sortStart() { const h = S.hooked; if (S.ph !== 'fight' || !h) return false; h.sr = true; h.phase = 'sort'; h.hold = false; h.sortL0 = Math.max(0.2, h.L); h.tgt = h.sortL0; h.sortEnded = false; return true; },
     sortProgress(k, N) { const h = S.hooked; if (!h || !h.sr) return; h.tgt = h.sortL0 - (h.sortL0 - 0.035) * k / N; },   // 1文ならべ終えるたびに少し寄る
     rodPhase(last) { const h = S.hooked; if (!h || !h.sr) return; h.phase = 'rod'; h.mode = 'run'; h.modeT = 2.2 + rb() * 0.8; h.dir = Math.abs(h.phi) > 0.6 ? -Math.sign(h.phi) : rb() < 0.5 ? -1 : 1; h.jolt = 0.2; h.hold = !!last; ev('run', { dir: h.dir, last: last ? 1 : 0 }); },   // 1文ならべ終えた合間:魚が走る(竿を倒す)。last=熟語に答えるまで続く
+    reelTgt(v) { const h = S.hooked; if (!h || !h.sr) return; h.tgt = Math.max(0.035, Math.min(h.sortL0, v)); },   // 円を回して巻いた分だけ、魚を寄せる
     rodDone() { const h = S.hooked; if (!h || !h.sr) return; h.hold = false; h.mode = 'rest'; h.phase = 'sort'; },
     setback(v) { const h = S.hooked; if (!h || !h.sr) return; h.L = Math.min(h.sortL0, h.L + v); h.tgt = Math.min(h.sortL0, (h.tgt == null ? h.L : h.tgt) + v); },
     sortEnd() { const h = S.hooked; if (h && h.sr) { h.tgt = 0.035; h.sortEnded = true; } },

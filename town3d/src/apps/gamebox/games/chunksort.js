@@ -62,7 +62,7 @@ export default {
     function skipReveal() {
       if (phase !== 'reveal' || phT < 1 || ended) return;
       try { speechSynthesis.cancel(); } catch (e) { }
-      if (over) { ended = true; host.end({ winner: score[0] > score[1] ? 0 : 1, score }); } else { if (host.onRevealEnd) host.onRevealEnd(); newRound(false); }
+      if (over) { ended = true; host.end({ winner: score[0] > score[1] ? 0 : 1, score }); } else { let r = null; if (host.onRevealEnd) { try { r = host.onRevealEnd(); } catch (e) { } } if (r && r.then) { phase = 'hold'; const go = () => { if (!ended) newRound(false); }; r.then(go, go); } else newRound(false); }   /* onRevealEnd が Promise を返したら、それが終わるまで次の文を出さない(釣り:熟語・巻き取りのあとに次の英文) */
     }
 
     // ---- 入力 ----

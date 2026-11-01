@@ -227,6 +227,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       // 取りこむ直前:ふつうの魚は熟語、レアは難しい熟語。まちがえてももう1回、それもだめなら少し小さくなって釣れる
       net: async sp => { const rare = sp.r >= 4, lq = rare ? 3 : s.lv; let ok = await idiom(lq, rare ? '🎣 取りこむ直前! レアは むずかしい熟語' : '🎣 取りこむ直前! 熟語に答えよう', ui.parentNode); if (ok) return { ok: true }; ok = await idiom(lq, '🎣 もう1回チャンス!', ui.parentNode); return ok ? { ok: true } : { ok: true, shrink: true }; },
       // 巻き取り:文の並べ替え(アミューズメントの並べ替えと同じデータ)。大物ほど長い文
+      reelN: (sp, size) => sp.r >= 4 ? 5 : (sp.r >= 3 || size >= 60) ? 4 : 3,
       reel: (sp, size, cb) => { const n = sp.r >= 4 ? 5 : (sp.r >= 3 || size >= 60) ? 4 : 3;
         return sortReel(ui, { n, fishName: sp.name, icon: '🐟', volume: ctx.audio && ctx.audio.sfx, pre: +(ctx.storage.get('enPre') ?? 1), mode: ctx.storage.get('enSm') || 'ja', ...cb, onLearn: d => { try { ctx.emit('learn', { ...d, src: '釣りの巻き取り' }); } catch (e) { } } }); },
       // 待っているあいだの問題(どんどん出る)。単語が多め、ときどき熟語
