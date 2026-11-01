@@ -23,16 +23,16 @@ export function createStudy(core) {
     ov.querySelector('.cs-x').onclick = close;
     ov.addEventListener('click', e => { if (e.target === ov) close(); });
     ov.querySelectorAll('.cs-tabs button').forEach(b => b.onclick = () => { tab = b.dataset.t; draw(); });
-    offs.push(nb.onChange(() => tab === 'note' && draw()), rec.onChange(() => tab !== 'note' && draw()), core.member.onChange(() => tab !== 'note' && draw()), core.level.onChange(() => tab === 'today' && draw()));
+    offs.push(nb.onChange(() => tab === 'note' && draw(true)), rec.onChange(() => tab !== 'note' && draw()), core.member.onChange(() => tab !== 'note' && draw()), core.level.onChange(() => tab === 'today' && draw()));
     draw();
   }
   const go = (g, o) => { close(); opt.play(g, o); };
-  function draw() {
+  function draw(keep) {   // keep=true:ノートの言葉を捨てた・印をつけたときなど。いまの位置のまま描き直す(上に飛ばさない)
     if (!ov) return;
     ov.querySelectorAll('.cs-tabs button').forEach(b => b.classList.toggle('on', b.dataset.t === tab));
-    const m = ov.querySelector('main'); m.scrollTop = 0;
+    const m = ov.querySelector('main'), top = keep ? m.scrollTop : 0;
     m.innerHTML = tab === 'today' ? today() : tab === 'log' ? log() : tab === 'note' ? note() : me();
-    bind(m);
+    bind(m); m.scrollTop = top;
   }
   function today() {
     const t = rec.today(), mins = rec.sumMin(t), goal = rec.goal().min, pct = Math.min(100, Math.round(mins / goal * 100)), last = rec.last();
