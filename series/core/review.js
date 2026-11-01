@@ -129,7 +129,7 @@ export function createReview(core) {
             };
             c.onpointercancel = reset; c.onlostpointercapture = () => { if (x0 != null) reset(); };
             box.querySelector('#rv-x').onclick = () => answer(false); box.querySelector('#rv-o').onclick = () => answer(true);
-            const qt = box.querySelector('#rv-qt'); if (qt) qt.onclick = () => { close(); test(); };   // 1枚目は「もどる」がないので、かわりに(2回目いご、ぜんぶ選ばなくてよい)
+            const qt = box.querySelector('#rv-qt'); if (qt) qt.onclick = () => { close(); test(items); };   // 1枚目は「もどる」がないので、かわりに(2回目いご、ぜんぶ選ばなくてよい)
             const bb = box.querySelector('#rv-b'); if (bb) bb.onclick = () => { res.pop(); idx--; card(); };   // まちがえたら もどれる
           });
         };
@@ -169,7 +169,7 @@ export function createReview(core) {
         }
         go(`<h3>おつかれさま!</h3>${res.length ? `<p>覚えてる ${res.length - ng.length} ・ まだ ${ng.length}</p>${ng.length ? '<p class="cs-note">「まだ」の言葉は、あとで またでてくるよ。</p>' : ''}` : ''}
           ${g ? `<p class="rv-pt">+${g} コイン</p>` : '<p class="cs-note">このふりかえりのコインは、もらえなかったよ(受け取り済み、または忘れた日)。</p>'}
-          ${mode === 'today' ? `<p class="cs-note">${statusLine()}</p>` : ''}<button class="cs-btn" id="rv-e">${mode === 'today' ? '今日はここまで!' : 'つづける'}</button>${dl.pool().length >= 4 ? '<button class="cs-btn" id="rv-t">単語テストもやる</button>' : ''}`, () => { box.querySelector('#rv-e').onclick = () => close(); const tb = box.querySelector('#rv-t'); if (tb) tb.onclick = () => { close(); test(); }; });
+          ${mode === 'today' ? `<p class="cs-note">${statusLine()}</p>` : ''}<button class="cs-btn" id="rv-e">${mode === 'today' ? '今日はここまで!' : 'つづける'}</button>${items.length ? '<button class="cs-btn" id="rv-t">単語テストもやる</button>' : ''}`, () => { box.querySelector('#rv-e').onclick = () => close(); const tb = box.querySelector('#rv-t'); if (tb) tb.onclick = () => { close(); test(items); }; });
       }
       // 今日のふりかえりは、まちがって押しても勝手に終わらないよう、先に「ここまでにする?」と聞く
       if (mode === 'today' && !o.noConfirm) go(`<h3>今日はここまでにする?</h3><p class="cs-note">この日のふりかえり(時間・言葉・カード)をして、今日を終わります。</p><p class="cs-note">${statusLine()}</p>
@@ -183,14 +183,19 @@ export function createReview(core) {
   // ---- 定期の単語テスト(いままで出会った言葉から、ランダムに10問。3日に1回すすめる) ----
   const TEST_N = 10, TEST_DAYS = 3, SLOW = 10;
   const testDue = () => { if (dl.pool().length + dl.knownKeys().length < 8) return false; const l = dl.lastTest(); return !l || (Date.parse(dl.dayKey()) - Date.parse(l)) / 864e5 >= TEST_DAYS; };
-  async function test() {
+  // only = ふりかえりのフラッシュカードで出てきた単語。渡されたら、問題はその単語だけにする(まぎらわしい選択肢だけ、ほかの単語から借りる)
+  async function test(only) {
     // 「覚えてる」にした言葉は出さない。数がたりなければ、その人のレベル帯の単語でうめる
-    let pool = dl.pool();
-    if (pool.length < TEST_N) { try { const ex = new Set([...dl.knownKeys(), ...pool.map(w => w.en.toLowerCase())]); pool = pool.concat(await core.level.fillWords(TEST_N - pool.length + 3, ex)); } catch (e) { } }
-    if (pool.length < 4) { core.ui.toast('テストできる言葉が、まだ少ないよ'); return; }
+    const fixed = Array.isArray(only) && only.length ? only.filter(w => w && w.en && w.ja).filter((w, i, a) => a.findIndex(x => x.en.toLowerCase() === w.en.toLowerCase()) === i) : null;
+    let pool = fixed ? fixed.slice() : dl.pool(), extra = [];
+    if (fixed) {   // 選択肢のまぎれ用(問題には出さない)
+      try { const ex = new Set(pool.map(w => w.en.toLowerCase())); extra = dl.pool().filter(w => !ex.has(w.en.toLowerCase())); if (pool.length + extra.length < 6) extra = extra.concat(await core.level.fillWords(6, new Set([...ex, ...extra.map(w => w.en.toLowerCase())]))); } catch (e) { }
+    } else if (pool.length < TEST_N) { try { const ex = new Set([...dl.knownKeys(), ...pool.map(w => w.en.toLowerCase())]); pool = pool.concat(await core.level.fillWords(TEST_N - pool.length + 3, ex)); } catch (e) { } }
+    if (pool.length < (fixed ? 1 : 4)) { core.ui.toast('テストできる言葉が、まだ少ないよ'); return; }
+    const dist = pool.concat(extra);
     const first = w => String(w.ja).split(/[、,・]/)[0].trim();
     const qs = pool.slice().sort(() => Math.random() - 0.5).slice(0, TEST_N).map(w => {
-      const bad = pool.filter(x => x.en !== w.en && first(x) !== first(w)).sort(() => Math.random() - 0.5).slice(0, 3).map(first);
+      const bad = dist.filter(x => x.en !== w.en && first(x) !== first(w)).sort(() => Math.random() - 0.5).slice(0, 3).map(first);
       return { w, ans: first(w), ch: [first(w), ...bad].sort(() => Math.random() - 0.5) };
     });
     core.ui.sheet('<div class="rv"></div>', (ov, close) => {
