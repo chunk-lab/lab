@@ -41,7 +41,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     games: GAMES, pauseTown: () => town?.pause(), resumeTown: () => town?.resume(),
     onStop: ({ departed }) => { if (!departed && !town) home.show(); },
     depart: async mode => {
-      if (mode === '3d') { await go('3d'); if (!town) throw new Error('町を開けませんでした'); town.quickStart(); }
+      if (mode === '3d') { await go('3d'); if (!town) throw new Error('町を開けませんでした'); town.showArrival(); }
       else { stop3D(); document.body.classList.remove('md-3d-on'); home.hide(); }
     },
   });

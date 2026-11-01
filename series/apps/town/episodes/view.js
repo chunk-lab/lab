@@ -52,7 +52,8 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     document.body.classList.add('ep-on');
   }
   function drawBar() {
-    bar?.remove();
+    bar?.remove(); bar = null;
+    if (waiting?.game === 'eigonou') return;
     bar = document.createElement('aside'); bar.className = 'ep-gamebar'; bar.setAttribute('aria-label', '物語の進行');
     const tools = document.createElement('div'); tools.className = 'ep-game-tools'; tools.append(pauseMenu()); bar.append(tools);
     if (progress.state.passed) bar.append(button('物語のつづきへ', () => {
