@@ -117,3 +117,34 @@ try {
   };
   setInterval(() => { let on = false; try { on = walking(); } catch (e) { } if (f.style.display !== (on ? 'block' : 'none')) f.style.display = on ? 'block' : 'none'; }, 400);
 } catch (e) { console.error(e); }
+
+// 第1話を終えたあと、英語脳を使える場所を「その場所そのもの」に指マークで示す(街の✨ボタン／勉強部屋の「英語脳で文を作る」)。1回ずつだけ。
+try {
+  const seen = k => { try { return !!localStorage.getItem('cs:tip:' + k); } catch (e) { return true; } };
+  const mark = k => { try { localStorage.setItem('cs:tip:' + k, '1'); } catch (e) { } };
+  const epDone = () => { try { return !!JSON.parse(localStorage.getItem('cs:town-episodes:first') || '{}').completed; } catch (e) { return false; } };
+  let cur = null;
+  const hideTip = () => { if (cur) { cur.els.forEach(e => e.remove()); document.removeEventListener('pointerdown', cur.dismiss, true); cur = null; } };
+  const showTip = (key, el, text) => {
+    const r = el.getBoundingClientRect(), upper = r.top < innerHeight * .5, pad = 6;
+    const spot = document.createElement('div'), hand = document.createElement('div'), cap = document.createElement('div');
+    spot.style.cssText = `position:fixed;z-index:2147483000;pointer-events:none;border-radius:16px;box-shadow:0 0 0 200vmax rgba(8,12,30,.62),0 0 0 3px #ffd36b;left:${r.left - pad}px;top:${r.top - pad}px;width:${r.width + pad * 2}px;height:${r.height + pad * 2}px`;
+    hand.textContent = upper ? '👆' : '👇'; hand.style.cssText = `position:fixed;z-index:2147483001;pointer-events:none;font-size:42px;line-height:1;transform:translateX(-50%);left:${r.left + r.width / 2}px;top:${upper ? r.bottom + 4 : r.top - 54}px`;
+    cap.textContent = text; cap.style.cssText = `position:fixed;z-index:2147483001;pointer-events:none;left:6%;right:6%;padding:10px 14px;border-radius:14px;background:#fffaf0;color:#4b3e58;font:700 16px/1.5 sans-serif;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.35)`;
+    document.body.append(spot, hand, cap);
+    const ch = cap.offsetHeight; cap.style.top = Math.max(8, Math.min(innerHeight - ch - 8, upper ? r.bottom + 58 : r.top - 54 - ch - 6)) + 'px';
+    const dismiss = () => { mark(key); hideTip(); };   // どこかをタップしたら消える(タップ自体は止めない)
+    cur = { key, el, els: [spot, hand, cap], dismiss }; document.addEventListener('pointerdown', dismiss, true);
+  };
+  setInterval(() => {
+    try {
+      if (!epDone()) return;
+      if (cur) { if (!cur.el.isConnected || !cur.el.offsetParent && cur.el.style.position !== 'fixed' || document.querySelector('.cs-ov,.tw-dialog')) hideTip(); return; }
+      if (document.querySelector('.cs-ov,.tw-dialog,.ep-root,.md-app-open')) return;
+      const sp = document.querySelector('button[aria-label="使ってみる"]');
+      if (!seen('town') && sp && sp.style.display === 'block') return showTip('town', sp, '町を歩いているとき、この ✨ に英語を入れると、文にして絵で動かしてくれるよ(英語脳)。');
+      const row = document.querySelector('.hm-row[data-p="eigo"]');
+      if (!seen('home') && row && row.offsetParent) { row.scrollIntoView({ block: 'center' }); return showTip('home', row, '英語脳は、ここ「英語脳で文を作る」から、いつでも開けるよ。'); }
+    } catch (e) { }
+  }, 700);
+} catch (e) { console.error(e); }

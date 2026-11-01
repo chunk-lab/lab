@@ -78,6 +78,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
       social.markUsed(key); const have = finds.treasures(), left = TREASURES.filter(t => !have.includes(t[1])), t = left.length ? pick(left) : null;
       if (t) { finds.addTreasure(t[1]); social.addInfo('たからもの', `${t[0]}${t[1]}:${t[2]}(ゴンからもらった)`); say(`ほらよ、きょうの拾いもんだ。「${t[0]} ${t[1]}」…${t[2]}。大事にしな!`); }
       else { const g = wallet.give(30, 'gon'); say(`もう町のたからものは全部そろってるじゃねえか! これでも持ってきな。(🪙+${g})`); }
+      hud.closeOnOutside();   // 受け取ったあとは、枠の外をタップして閉じられる
       return;
     }
     if (u.id === 'bigfish') {

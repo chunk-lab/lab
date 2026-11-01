@@ -77,16 +77,12 @@ export function startEpisodePractice({ finish }) {
     const box = document.createElement('div'); box.className = 'ep-done';
     box.innerHTML = `<div class="top"><img alt="そら" src="${sora}"><span class="msg"></span></div><div class="row"></div>`;
     const msg = box.querySelector('.msg'), row = box.querySelector('.row');
-    msg.textContent = 'おおっ、絵が女の子に変わった！ 主役を替えるだけで、文も絵も一緒に変わるよ。ほかも触ってみて。';
+    msg.textContent = 'おおっ、絵が女の子に変わった！ 主役を替えるだけで、文も絵も一緒に変わるよ。ほかも触ってみて。町や勉強部屋に戻ったら、英語脳の場所を教えるね。';
     const act = (b, fn) => { b.type = 'button'; b.onclick = () => { fn(b); APP.finished = true; render(); flash(); msg.textContent = cheers[ci++ % cheers.length]; }; return b; };
     const b1 = act(document.createElement('button'), () => pick('self', verbs[vi++ % verbs.length])); b1.textContent = '🎲 動きをかえる';
     const b2 = act(document.createElement('button'), b => { past = !past; pick('tense', past ? 'past' : 'pres'); b.textContent = past ? '▶ 今のことにもどす' : '⏪ 昔のことにする'; }); b2.textContent = '⏪ 昔のことにする';
     const go = document.createElement('button'); go.type = 'button'; go.className = 'go'; go.textContent = '物語のつづきへ';
-    let asked = false;
-    go.onclick = () => {
-      if (!asked) { asked = true; b1.remove(); b2.remove(); go.textContent = 'わかった！つづきへ'; msg.textContent = '英語脳は、勉強部屋のゲーム「英語脳」からいつでも開けるよ。勉強ノートの「✨ 使ってみる」や、町を歩いているときの ✨ ボタンに英語を入れると、その言葉を文にして絵にしてくれる。'; return; }
-      box.remove(); css.remove(); [spot, hand, cap].forEach(e => e.remove()); finish();
-    };
+    go.onclick = () => { box.remove(); css.remove(); [spot, hand, cap].forEach(e => e.remove()); finish(); };
     row.append(b1, b2, go); app.appendChild(box);
   }
   function flash() { const fl = document.createElement('div'); fl.className = 'ep-flash'; app.appendChild(fl); setTimeout(() => fl.remove(), 800); }
