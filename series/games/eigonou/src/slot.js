@@ -1,9 +1,9 @@
 import { set_renderScene, set_render } from './play.js';
 import { DB, SET, save, say, toast } from './common.js';
-import { CJ, FRONTS, FRP, FRT, LEADF, LEX, MD, MN, MODALS, N, P, PL, ST, T, TM, V, agrOf, allowedModals, cap, genClause, needsObj, newClause, nounTags, predS, predV, sentenceComplete, sentenceJa, sentenceParts, sentenceText, setModal } from './engine.js';
+import { allowedTenses, CJ, FRONTS, FRP, FRT, LEADF, LEX, MD, MN, MODALS, N, P, PL, ST, T, TM, V, agrOf, allowedModals, cap, genClause, needsObj, newClause, nounTags, predS, predV, sentenceComplete, sentenceJa, sentenceParts, sentenceText, setModal } from './engine.js';
 import { ENV, onDoc, onTick } from './env.js';
 import { IRRPL, cntForm, objRankRefs } from './objrank.js';
-import { APP, LV, finModal, finSubj, finToggle, go, normalize, objFits, openFinish, passOk, pick, render, renderScene, resetAll, snapshot, stateFitsSubj, verbFitsSubj } from './play.js';
+import { APP, LV, optList, finModal, finSubj, finToggle, go, normalize, objFits, openFinish, passOk, pick, render, renderScene, resetAll, snapshot, stateFitsSubj, verbFitsSubj } from './play.js';
 import { qbPick, qbRes } from './qbar.js';
 import { FRAME_IDS, reelCands, reelFits, reelFix, reelLabel, reelSet } from './reel.js';
 import { FREQADV } from './vocab_a1.js';
@@ -520,14 +520,36 @@ SB_XL = [['me','わたし'],['you','あなた'],['him','彼'],['her','彼女'],[
 
 
 // ---- 完成後の役割タブ:1回押すとサイコロが出て、もう1回押すとその役割の言葉がランダムに入れかわる(組み立てに戻らず、「完成」も押さない) ----
-const diceHook=function(el){
-  const cat=el.dataset.cat, key=el.dataset.key;
-  if(cat!=='subj'&&cat!=='pred') return false;   // 主役・動詞のタブだけ(ほかは、いつもの動き)
-  if(APP.diceKey!==key){ APP.diceKey=key; render(); return true; }
-  APP.diceKey=null;
+// 完成後の役割タブ:1回押すとサイコロが出て、もう1回押すとその役割の言葉がランダムに入れかわる(組み立てに戻らず、「完成」も押さない)。
+// どの役割でも同じ。時制・いつ・どこで・様子などが合わなくなるものは、入れかえ候補(optList)や allowedTenses の中からだけ選ぶ。
+function diceRoll(cat, cl){
+  const prevActive=APP.active; APP.active=(cl==='m'||!cl)?'main':cl;
   try{
-    if(cat==='subj'){ const cur=APP.S.main.subj, ids=['p:i','p:you','p:he','p:she','p:we','p:they'].filter(x=>x!==cur); pick('subj',sbRnd(ids)); }
-    else sbRandVerb('act');
-  }catch(e){ console.error(e); }
+    const c=APP.active==='main'?APP.S.main:(APP.S.main.subs[APP.active]?APP.S.main.subs[APP.active].c:APP.S.main);
+    if(cat==='subj'){ const cur=c.subj, ids=['p:i','p:you','p:he','p:she','p:we','p:they'].filter(x=>x!==cur); pick('subj',sbRnd(ids)); return true; }
+    if(cat==='pred'||cat==='state'){ sbRandVerb(cat==='state'?'state':'act'); return true; }
+    if(cat==='tense'){ const al=(allowedTenses(c,{kind:APP.active})||[]).filter(t=>t!==c.tense); if(!al.length) return false; pick('tense',sbRnd(al)); return true; }
+    const map={obj:'obj',comp:'obj',modal:'modal',place:'place',time:'time',manner:'manner',with:'with',than:'than',thing:'thing',exist:'thing',conj:'conj',rel:'rel',purpose:'purpose'};
+    const k=map[cat]; if(!k) return false;
+    const O=(optList(k,c)||[]).filter(o=>o&&o.act&&!o.sel&&!o.none&&!/(self|selves)$/i.test(o.en||''));
+    if(!O.length) return false;
+    sbRnd(O).act(); APP.open=null; return true;
+  }finally{ APP.active=prevActive; }
+}
+// 入れかえたあとに「何を？」などの空きができたら、ランダムに埋めて、文が完成するところまで進める
+function diceFill(){
+  for(let i=0;i<5;i++){
+    let done=false; try{ done=sentenceComplete(APP.S); }catch(e){ return; }
+    if(done) return;
+    const h=sentenceParts(APP.S).find(p=>p.hole); if(!h) return;
+    if(!diceRoll(h.cat,h.clause)) return;
+  }
+}
+const diceHook=function(el){
+  const cat=el.dataset.cat, key=el.dataset.key, cl=el.dataset.cl;
+  if(APP.diceKey!==key){ APP.diceKey=key; render(); return true; }
+  APP.diceKey=null; let ok=false;
+  try{ ok=diceRoll(cat,cl); if(ok) diceFill(); }catch(e){ console.error(e); }
+  if(!ok) toast('ここは、ほかの言葉に入れかえられないみたい');
   APP.finished=true; render(); return true;
 };

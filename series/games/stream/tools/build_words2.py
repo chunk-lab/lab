@@ -63,6 +63,25 @@ for n, l in enumerate(dsrc(DICT + 'chunkchunk_dict.js').split('\n')):
         if '=' in seg:
             p, ms = seg.split('=', 1)
             if p in POSMAP and p not in ('art', 'det', 'num'): D2.setdefault((f[0], POSMAP[p]), ms.split(','))
+# ---- 1語は「いちばんよく使う品詞」の1枚だけにする(exact を動詞「強要する」で出さない) ----
+# 手直し済みの辞書(D2)→頻度順の辞書(DX)の、先に書いてある品詞を、その語の主な品詞とする。
+CONTENT = {'n', 'v', 'a', 'r'}
+PRIM = {}
+for src_ in (D2, DX):
+    for (w_, p_) in src_:
+        if p_ in CONTENT: PRIM.setdefault(w_, p_)
+BSC = {}
+for k_, v_ in secs.items():
+    for l_ in v_.split('\n'):
+        f_ = l_.split('\t')
+        if len(f_) >= 3 and re.fullmatch(r"[a-z][a-z'-]*", f_[0]):
+            pp_ = POSMAP[k_]
+            if pp_ in CONTENT: BSC[(f_[0], pp_)] = max(BSC.get((f_[0], pp_), 0), int(f_[2]))
+def prim_of(w, cands):
+    """主な品詞を返す。cands = いまカードがある(または候補の)内容語の品詞"""
+    if w in PRIM and (not cands or PRIM[w] in cands or True): return PRIM[w]
+    cands = [c for c in cands if c in CONTENT]
+    return max(cands, key=lambda c: (BSC.get((w, c), 0), 'nvar'.index(c) * -1)) if cands else None
 rank = lambda w: RANK.get(w, 20000 + (100 - SCORE.get(w, 0)) * 1000 + zlib.crc32(w.encode()) % 997)
 
 def inflected(w, p):
@@ -147,6 +166,11 @@ for (w, p), ms in D2.items():
     if (w, p) not in CARD and w not in BAD_W and not inflected(w, p) and len(w) > 1:
         put(w, p, ms, 1 if RANK[w] < 1200 else 2)
 
+_cands = C.defaultdict(list)
+for (w_, p_) in CARD:
+    if p_ in CONTENT: _cands[w_].append(p_)
+for (w_, p_) in list(CARD):
+    if p_ in CONTENT and prim_of(w_, _cands[w_]) != p_: del CARD[(w_, p_)]
 free = {}; usew = []
 for (w, p), (ms, lv) in CARD.items():
     ja = join(ms)
@@ -174,6 +198,10 @@ for (w, p) in set(BIG) | set(DX):
     if not ja: continue
     bank.append((rank(w), w, p, ja))
 for w, p, ja in usew: bank.append((rank(w), w, p, ja))
+_bc = C.defaultdict(list)
+for _r, w_, p_, _j in bank:
+    if p_ in CONTENT: _bc[w_].append(p_)
+bank = [x for x in bank if x[2] not in CONTENT or prim_of(x[1], _bc[x[1]]) == x[2]]
 bank.sort()
 seen = set(); b2 = []
 for x in bank:            # 同じ語で訳が同じ品詞違い（eleven 形/名 など）は1枚に

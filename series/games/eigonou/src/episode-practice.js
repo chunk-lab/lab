@@ -82,10 +82,9 @@ export function startEpisodePractice({ finish }) {
     const msg = box.querySelector('.msg'), row = box.querySelector('.row');
     msg.textContent = 'おおっ、言葉を入れかえるだけで、文も絵も一緒に変わるよ！ 上のタブを押して、サイコロを出して、ほかも遊んでみて。';
     const act = (b, fn) => { b.type = 'button'; b.onclick = () => { fn(b); APP.finished = true; render(); flash(); msg.textContent = cheers[ci++ % cheers.length]; app.style.paddingBottom = box.offsetHeight + 'px'; }; return b; };
-    const b2 = act(document.createElement('button'), b => { past = !past; pick('tense', past ? 'past' : 'pres'); b.textContent = past ? '▶ 今にもどす' : '⏪ 昔のこと'; }); b2.textContent = '⏪ 昔のこと';
     const go = document.createElement('button'); go.type = 'button'; go.className = 'go'; go.textContent = 'つづきへ';
     go.onclick = () => { app.style.paddingBottom = ''; box.remove(); css.remove(); [spot, hand, cap].forEach(e => e.remove()); finish(); };
-    row.append(b2, go); app.appendChild(box); app.style.boxSizing = 'border-box'; app.style.paddingBottom = box.offsetHeight + 'px';   // 絵がカードに隠れないよう、下をあける
+    row.append(go); app.appendChild(box); app.style.boxSizing = 'border-box'; app.style.paddingBottom = box.offsetHeight + 'px';   // 絵がカードに隠れないよう、下をあける
   }
   function flash() { const fl = document.createElement('div'); fl.className = 'ep-flash'; app.appendChild(fl); setTimeout(() => fl.remove(), 800); }
   tick();

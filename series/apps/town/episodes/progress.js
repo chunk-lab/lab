@@ -16,6 +16,7 @@ export function createEpisodeProgress(store, episode) {
       if (name === 'done' && data.finished !== true) return false;
       state.passed = true; save(); return true;
     },
+    skip() { state.passed = true; save(); return this.next(); },   // 「あとで」で、練習をせずに先へ進む
     next() {
       if (episode.steps[state.index].type === 'game' && !state.passed) return false;
       if (state.index >= episode.steps.length - 1) return false;

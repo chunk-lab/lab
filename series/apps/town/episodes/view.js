@@ -73,7 +73,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     drawBar();
     const request = waiting;
     try {
-      const lvNow = Math.min(3, Math.max(1, +(core.level && core.level.lv) || 1));   // 単語力テストの結果に合う単語セット(テストなしは初級)
+      const vocab = +(core.level && core.level.vocab && core.level.vocab()) || 0, lvNow = !vocab ? 1 : vocab < 2500 ? 1 : vocab < 6000 ? 2 : 3;   // 推定語彙に合う単語セット(単語練習のレベルは、1:〜2500語 2:〜6000語 3:それ以上)   // 単語力テストの結果に合う単語セット(テストなしは初級)
       const opts = { ...s.opts }; if (opts.wordset) opts.wordset = { ...opts.wordset, lv: lvNow };
       const ok = await core.host.open(game, opts);
       if (!active || waiting !== request) return;
@@ -136,7 +136,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
       content.innerHTML = `<div class="ep-card"><small>やってみよう</small><h2>${esc(s.title)}</h2><p>${rich(s.text)}</p>${err}</div>`;
       const card = content.firstChild;
       if (progress.state.passed) card.append(button('物語のつづきへ', () => { progress.next(); render(); }, 'ep-primary'));
-      else card.append(button(error ? 'もう一度開く' : 'はじめる', launch, 'ep-primary'));
+      else { card.append(button(error ? 'もう一度開く' : 'はじめる', launch, 'ep-primary')); if (error) card.append(button('あとで(先へ進む)', () => { error = ''; progress.skip(); render(); })); }
     } else {
       content.innerHTML = `<div class="ep-card"><small>第1話のおわり</small><h2>二人で、町へ。</h2><p>はな「I <span class="ep-aux">want to</span> go out!」<br>そら「行こう！」</p>${err}</div>`;
       content.firstChild.append(button('ドアを開けて3Dの町へ', () => leave('3d'), 'ep-primary'), button('軽い2Dの町へ', () => leave('2d')));
