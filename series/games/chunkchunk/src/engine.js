@@ -38,7 +38,7 @@ export const wait=ms=>new Promise(r=>setTimeout(r,ms));   // ゲームの時間�
 export const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 export const bare=w=>w.toLowerCase().replace(/[^a-z']/g,"");
 
-export const settings={lvSys:"grade",myLevel:0,lvAuto:true,lvSort:"rec",lvFilter:"all",qRange:3,qChoice:3,qLang:"ja",advance:"auto",speed:4,font:"m",rdLines:1,tts:true,sound:"both",disp:"easy",mode:"one"};
+export const settings={lvSys:"grade",myLevel:0,lvAuto:true,lvSort:"rec",lvFilter:"all",qRange:3,qChoice:3,qLang:"ja",advance:"auto",speed:4,font:"m",rdLines:1,tts:true,sound:"both",disp:"easy",rlab:"q",mode:"one"};
 export function loadSettings(){try{Object.assign(settings,JSON.parse(LS.getItem("ccs3-settings")||"{}"))}catch(e){}
 settings.speed={slow:3,normal:4,fast:5}[settings.speed]||+settings.speed||4;if(!FONT[settings.font])settings.font="m";
   document.body.classList.toggle("nogram",settings.gram===false);ENV.offs.push(()=>document.body.classList.remove("nogram"))}
@@ -437,12 +437,17 @@ export function renderLane(noAnim){
   const st=$("strip");if(!S.flat.length){st.innerHTML="";return}
   st.innerHTML=S.flat.map((f,i)=>{
     const ch=chunkAt(i);
-    let cls=i<S.passed-KEEP_LEFT?" gone":i<S.passed?" past":i===S.passed?" next":"";
-    if(ch&&ch.roles&&i<S.passed)cls+=" r"+ch.roles[f.li-ch.a]+" done";
+    let cls=i<S.passed-KEEP_LEFT?" gone":i<S.passed?" past":i===S.passed?" next":"",sty="";
+    if(ch&&i<S.passed){   // 切ったチャンク:縁をつけて明るく。うまく切れていれば役割の色、そうでなければ別の色・暗め
+      const ok=ch.kind==="excellent"||ch.kind==="great"||ch.kind==="mini",meh=ch.kind==="good"||ch.kind==="cross",rl=ch.roles?ch.roles[f.li-ch.a]:null;
+      cls+=" cj "+(ok?"ok":meh?"meh":"bad")+(f.li===ch.a?" cs":"")+(f.li===ch.b?" ce":"");
+      const first=ch.roles?ch.roles[0]:null,ec=ok?ROLE_COLOR[first]||"#7cc4ff":meh?"#ffd166":"#ff6b6b";
+      sty=` style="--rc:${ec};--wc:${ok&&rl?ROLE_COLOR[rl]:"#dfe8f5"}"`;
+    }
     if(S.mode==="cont"&&f.li===S.sens[f.si].words.length-1&&i<S.flat.length-1)cls+=" eos";
     const cm=S.cuts.get(i);
     const endMk=f.li===S.sens[f.si].words.length-1?`<span class="endmk">■</span>`:"";
-    return `<span class="w${cls}">${esc(f.t)}</span>${cm?`<span class="cutmark${cm==="forced"?" forced":""}">｜</span>`:""}${endMk}`;
+    return `<span class="w${cls}"${sty}>${esc(f.t)}</span>${cm?`<span class="cutmark${cm==="forced"?" forced":""}">｜</span>`:""}${endMk}`;
   }).join("");
   const ws=st.querySelectorAll(".w");let gx;
   if(S.passed<=0)gx=ws[0].offsetLeft-4;
@@ -559,9 +564,9 @@ export function cut(){
   if(now-S.lastStepAt<late()&&w-1>S.lastCut&&gapRank(w-1)>rw)w--;            // 遅れた
   S.cuts.set(w,"cut");
   const lw=$("laneWrap");lw.classList.remove("flash");void lw.offsetWidth;lw.classList.add("flash");
-  judgeChunk(S.lastCut+1,w);
+  const ga=S.lastCut+1,jc=judgeChunk(ga,w);
   const f=S.flat[w];if(w===endOf(f.k))closeSentence(f.k);
-  renderLane();renderLine();
+  renderLane();renderLine();roleBurst(jc,ga,w);
   if(w===S.flat.length-1){clearTimeout(S.timer);finishSeq()}
 }
 export function judgeChunk(ga,gb,forced){
@@ -602,6 +607,25 @@ export function burst(c){
     const ang=Math.PI*2*i/n+Math.random()*.5,dist=30+Math.random()*26;
     d.animate([{transform:"translate(-50%,-50%) scale(1)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(ang)*dist}px),calc(-50% + ${Math.sin(ang)*dist}px)) scale(.3)`,opacity:0}],{duration:480+Math.random()*120,easing:"cubic-bezier(.1,.7,.3,1)"}).onfinish=()=>d.remove();
   }
+}
+/* 切った瞬間、そのチャンクの上に「役割」がはじけて出る(S だれが！／主役！／主語 …は設定で切りかえ) */
+export const RLAB={
+  q:{S:"だれが！",V:"どうしてる！",O:"なにを！",I:"だれに！",C:"どうだ！",P:"どこ！",T:"いつ！",M:"どうやって！",R:"なぜ！",F:"もし！",X:"つけたし！"},
+  p:{S:"主役！",V:"どうしてる！",O:"お相手！",I:"お相手！",C:"ようす！",P:"つけたし！",T:"つけたし！",M:"つけたし！",R:"つけたし！",F:"つけたし！",X:"つけたし！"},
+  g:{S:"主語",V:"動詞",O:"目的語",I:"間接目的語",C:"補語",P:"修飾",T:"修飾",M:"修飾",R:"修飾",F:"修飾",X:"修飾"}};
+export function roleTagsHTML(roles,mode){
+  const m=RLAB[mode||settings.rlab||"q"];if(!m||!roles)return "";
+  const seq=roles.filter((r,i)=>!i||r!==roles[i-1]).slice(0,3);
+  return seq.map((r,i)=>`<span class="rtag" style="--rc:${ROLE_COLOR[r]||"#9fb0c6"};--d:${i*90}ms">${(mode||settings.rlab||"q")==="q"&&r!=="X"?`<i>${r}</i>`:""}${m[r]||""}</span>`).join("");
+}
+export function roleBurst(c,ga,gb){
+  if(!c||!c.roles||settings.rlab==="off"||!"excellentgreatmini".includes(c.kind))return;
+  const wrap=$("laneWrap"),ws=$("strip").querySelectorAll(".w"),a=ws[ga],b=ws[gb];if(!a||!b)return;
+  wrap.querySelectorAll(".rtags").forEach(x=>x.remove());
+  const el=document.createElement("div");el.className="rtags";el.innerHTML=roleTagsHTML(c.roles);
+  const w=b.offsetLeft+b.offsetWidth-a.offsetLeft;
+  el.style.left=Math.max(50,lineX()-w/2-4)+"px";wrap.append(el);
+  setTimeout(()=>{el.animate([{opacity:1},{opacity:0}],{duration:400,fill:"forwards"}).onfinish=()=>el.remove()},1700);
 }
 export let popEl=null;
 export function showPop(c){
@@ -721,6 +745,7 @@ export function settingRows(){return `
     <div class="row"><label for="optSpeed">単語が入ってくる速さ（自動の時）</label>${opt("optSpeed",String(settings.speed),Object.keys(SPEED).map(k=>[k,`${k}　${SPEED_NAME[k]}`]))}</div>
     <div class="row"><label for="optFont">流れる文字の大きさ</label>${opt("optFont",settings.font,Object.keys(FONT).map(k=>[k,FONT_NAME[k]]))}</div>
     <div class="row"><label for="optDisp">チャンクの説明</label>${opt("optDisp",settings.disp,[["easy","かんたん（する＋何を）"],["gram","文法（動詞＋目的語）"],["both","両方"],["none","色だけ"]])}</div>
+    <div class="row"><label for="optRlab">切ったときの役割の出し方</label>${opt("optRlab",settings.rlab||"q",[["q","S だれが！／V どうしてる！"],["p","主役！／どうしてる！／お相手！"],["g","主語／動詞／目的語"],["off","出さない"]])}</div>
     <div class="row"><label for="optVoice">声・読み上げ</label>${opt("optVoice",(settings.sound==="both"||settings.sound==="voice")?"on":"off",[["on","オン"],["off","オフ"]])}</div>
     <div class="row"><label for="optSe">効果音</label>${opt("optSe",(settings.sound==="both"||settings.sound==="sfx")?"on":"off",[["on","オン"],["off","オフ"]])}</div>
     <div class="row"><label for="optBgm">BGM</label>${opt("optBgm",settings.bgm||"low",[["low","小さめ"],["mid","ふつう"],["off","なし"]])}</div>
@@ -735,6 +760,7 @@ export function bindSettingRows(){
   $("optSpeed").onchange=e=>{settings.speed=+e.target.value;saveSettings();applyVisual()};
   $("optFont").onchange=e=>{settings.font=e.target.value;saveSettings();applyVisual();if(S){renderLane(true);renderPreview()}};
   $("optDisp").onchange=e=>{settings.disp=e.target.value;saveSettings();if(S)renderLine()};
+  $("optRlab").onchange=e=>{settings.rlab=e.target.value;saveSettings()};
   $("optTts").onchange=e=>{settings.tts=e.target.value==="on";saveSettings()};
   $("optBgm").onchange=e=>{settings.bgm=e.target.value;saveSettings();unlockAudio();bgmTick()};
   const sndSet=()=>{const v=$("optVoice").value==="on",e=$("optSe").value==="on";settings.sound=v&&e?"both":v?"voice":e?"sfx":"off";saveSettings();unlockAudio()};

@@ -70,9 +70,9 @@ window.CS_STORY = {
               cut:"切れたね！切ったところをタップすると元に戻せるよ。",
               end:"最後まで進んだら『かんせい』を押してね。" },
       items:[
-        { s:"Tom | plays / soccer.", ja:"トムはサッカーをする。" },
-        { s:"My sister | likes / cats.", ja:"わたしの姉はネコが好き。" },
-        { s:"The dog | runs / fast.", ja:"その犬は速く走る。" }
+        { s:"Tom | plays / soccer.", r:"S V O", ja:"トムはサッカーをする。" },
+        { s:"My sister | likes / cats.", r:"S V O", ja:"わたしの姉はネコが好き。" },
+        { s:"The dog | runs / fast.", r:"S V M", ja:"その犬は速く走る。" }
       ] } },
 
   { no:2, title:"「＝」のことばと「うごき」のことば", sub:"主役のようすを見つける",
@@ -581,13 +581,15 @@ const FX = {
 };
 
 /* ================= ステージ ================= */
-function parseCut(s){
-  const words = [], B = new Set(), O = new Set();
+function parseCut(s, r){   // r:"S V O" = | と / で分けた1まとまりごとの役割(なくてもよい)
+  const words = [], B = new Set(), O = new Set(), rs = r ? r.split(/\s+/) : [], roles = []; let seg = 0;
   s.split(/\s+/).filter(Boolean).forEach(tk => {
-    if (tk === "|") B.add(words.length); else if (tk === "/") O.add(words.length); else words.push(tk);
+    if (tk === "|") { B.add(words.length); seg++; } else if (tk === "/") { O.add(words.length); seg++; } else { words.push(tk); roles.push(rs[seg] || null); }
   });
-  return { words, B, O };
+  return { words, B, O, roles, hasRoles: rs.length > 0 };
 }
+const RCOL = { S:"#7cc4ff", V:"#ff8f8f", O:"#8ee6a8", I:"#6fe0d8", C:"#ffb870", P:"#d6a8ff", T:"#ffd166", M:"#e6ecf5", X:"#9fb0c6" };
+const RTAG = { S:"主役！", V:"どうしてる！", O:"お相手！", I:"お相手！", C:"ようす！", P:"つけたし！", T:"つけたし！", M:"つけたし！", X:"つけたし！" };
 function judge(p, cuts){
   const n = p.words.length, pts = [0, ...[...cuts].sort((a, b) => a - b), n];
   const ok = new Set([0, n, ...p.B, ...p.O]);
@@ -649,7 +651,7 @@ function cutStage(ch, st, finish){
   function next(){
     if (!f.alive) return;
     if (n >= st.items.length) return finish(all);
-    const item = st.items[n], p = parseCut(item.s), len = p.words.length;
+    const item = st.items[n], p = parseCut(item.s, item.r), len = p.words.length;
     f.cnt.textContent = (n + 1) + " / " + st.items.length;
     f.ja.textContent = item.ja || "";
     try { opts.speak && opts.speak(p.words.join(" ")); } catch (e) {}
@@ -680,9 +682,18 @@ function cutStage(ch, st, finish){
 
     function render(anim){
       strip.innerHTML = "";
+      const cs = [...cuts].sort((a, b) => a - b), jr = judge(p, cuts), jc = [];   // 切ったチャンク(いちばん右の区切りより左だけ)
+      { let a0 = 0; cs.forEach((c, k) => { jc.push({ a: a0, b: c - 1, r: jr[k].r }); a0 = c; }); }
       p.words.forEach((w, i) => {
-        const cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "";
-        strip.appendChild(el("span", "w" + cls, esc(w)));
+        let cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "", sty = "";
+        const ch = jc.find(c => i >= c.a && i <= c.b);
+        if (ch) {
+          const rl = p.roles[i], fr = p.roles[ch.a], ok = ch.r === "o", meh = ch.r === "t";
+          cls += " cj " + (ok ? "ok" : meh ? "meh" : "bad") + (i === ch.a ? " cst" : "") + (i === ch.b ? " cen" : "");
+          sty = `--rc:${ok ? RCOL[fr] || "#7cc4ff" : meh ? "#ffd166" : "#ff6b6b"};--wc:${ok && rl ? RCOL[rl] : "#dfe8f5"}`;
+        }
+        const wd = el("span", "w" + cls, esc(w)); if (sty) wd.style.cssText = sty;
+        strip.appendChild(wd);
         if (i + 1 < len && !cuts.has(i + 1) && hintAt === i + 1) strip.appendChild(el("span", "hintmk", "◆"));
         if (i + 1 < len && cuts.has(i + 1)){
           const c = el("span", "cutmark", "｜"); c.title = "タップで元に戻す";
@@ -704,6 +715,17 @@ function cutStage(ch, st, finish){
       bCut.classList.toggle("cs-fin", fin);
       bCut.innerHTML = fin ? "かんせい<small>おしまいまで進んだよ</small>" : "区切る<small>▶で進んで、ここだと思ったら押す</small>";
       bCut.disabled = !fin && (over || passed === 0 || cuts.has(passed));
+    }
+    // 切った瞬間、そのチャンクの上に役割が はじけて出る(役割データのある問題だけ)
+    function burst(e){
+      if (!p.hasRoles) return; const cs = [...cuts].filter(c => c < e).sort((a, b) => a - b), a = cs.length ? cs[cs.length - 1] : 0;
+      const ws = strip.querySelectorAll(".cs-w"), wa = ws[a], wb = ws[e - 1]; if (!wa || !wb) return;
+      if (((judge(p, cuts).find(c => c.text === p.words.slice(a, e).join(" ")) || {}).r) !== "o") return;
+      const rl = p.roles.slice(a, e).filter((r, i, arr) => r && (!i || r !== arr[i - 1])).slice(0, 3); if (!rl.length) return;
+      lw.querySelectorAll(".cs-rtags").forEach(x => x.remove());
+      const box = el("div", "rtags"); box.innerHTML = rl.map((r, i) => `<span class="cs-rtag" style="--rc:${RCOL[r] || "#9fb0c6"};--d:${i * 90}ms">${RTAG[r] || ""}</span>`).join("");
+      const w = wb.offsetLeft + wb.offsetWidth - wa.offsetLeft; box.style.left = Math.max(50, Math.round(lw.clientWidth * 0.34) - w / 2 - 4) + "px"; lw.appendChild(box);
+      setTimeout(() => { box.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: "forwards" }).onfinish = () => box.remove(); }, 1700);
     }
     function done(){
       over = true;
@@ -730,7 +752,7 @@ function cutStage(ch, st, finish){
       if (!drag) return; const d = drag; drag = null; paint(); if (!d.moved || over) return;
       const a = Math.min(d.a, d.b), b = Math.max(d.a, d.b);
       if (a > 0) cuts.add(a); if (b + 1 < len) cuts.add(b + 1);
-      passed = Math.max(passed, b + 1); hintAt = null; render(true); tell("cut");
+      passed = Math.max(passed, b + 1); hintAt = null; render(true); burst(b + 1 < len ? b + 1 : len); tell("cut");
     };
     strip.addEventListener("pointerup", dragEnd); strip.addEventListener("pointercancel", () => { drag = null; paint(); });
     bBack.onclick = () => { if (over || bBack.disabled) return; passed--; [...cuts].forEach(i => { if (i > passed) cuts.delete(i); }); render(true); };   // 戻った範囲の区切りは取り消す
@@ -738,7 +760,7 @@ function cutStage(ch, st, finish){
     bCut.onclick = () => {
       if (bCut.disabled || over) return;
       if (passed >= len) return done();
-      cuts.add(passed); if (hintAt === passed) hintAt = null; render(true); tell("cut");
+      cuts.add(passed); if (hintAt === passed) hintAt = null; render(true); burst(passed); tell("cut");
     };
     // はじめて切る人向け:操作する場所を、暗い背景のくり抜き＋指マークで順番に示す(最初の1回切るまで)
     if (n === 0 && (opts.episode || ch.no === 1)) {
