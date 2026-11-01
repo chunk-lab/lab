@@ -114,7 +114,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
     const c = s.c, n = (t, txt) => {
       txt += prize ? `\n(🪙+${prize})` : '';
       const last = finds.allDonePending();   // これで、きょうの分をぜんぶ見つけた
-      if (last && onAllFound) { finds.markAllDone(); hud.dialog({ name: '🔍 みつけた!', role: t, text: txt, choices: [{ label: 'つぎへ', fn: () => onAllFound() }] }); }
+      if (last && onAllFound) { finds.markAllDone(); let gone = false; const go = () => { if (gone) return; gone = true; onAllFound(); }; hud.dialog({ name: '🔍 みつけた!', role: t, text: txt, choices: [{ label: 'つぎへ', fn: () => go() }] }); hud.closeOnOutside(go); }   // 外タップで閉じても「つぎへ」と同じ
       else { hud.dialog({ name: '🔍 みつけた!', role: t, text: txt, choices: [] }); hud.closeOnOutside(); }   // 枠の外をタップして閉じられる
     };
     if (s.kind === 'word') { addNote({ kind: 'word', text: c[0], meaning: c[1], npc: '調べる' }); n('単語', `「${c[0]}」= ${c[1]}(ことばノートに入れたよ)`); }

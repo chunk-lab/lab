@@ -201,9 +201,9 @@ export function createHud(root, bus) {
       dialog._stop = () => clearInterval(tick);
     },
     // 会話は閉じないまま、「ひろいもの」を受け取った直後だけ、枠の外をタップして閉じられるようにする
-    closeOnOutside() {
+    closeOnOutside(after) {
       const d = dialog; if (!d) return;
-      const fn = e => { if (dialog !== d) { document.removeEventListener('pointerdown', fn, true); return; } if (d.contains(e.target)) return; document.removeEventListener('pointerdown', fn, true); e.stopPropagation(); e.preventDefault(); this.closeDialog(); };
+      const fn = e => { if (dialog !== d) { document.removeEventListener('pointerdown', fn, true); return; } if (d.contains(e.target)) return; document.removeEventListener('pointerdown', fn, true); e.stopPropagation(); e.preventDefault(); this.closeDialog(); try { after && after(); } catch (x) { } };
       setTimeout(() => { if (dialog === d) document.addEventListener('pointerdown', fn, true); }, 300);
     },
     closeDialog() { if (dialog) { dialog._stop(); dialog.remove(); dialog = null; document.body.classList.remove('tw-talking'); bus.emit('ui:dialogClosed'); } },
