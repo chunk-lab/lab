@@ -46,7 +46,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     background.forEach(([el]) => { el.inert = true; });
     root.innerHTML = `<header class="ep-head"><div><small>ほしみや町の物語 ／ はなちゃんの視点</small><b>第1話　${episode.title}</b></div><nav></nav></header><div class="ep-stage">${ROOM}<div class="ep-portraits"><img class="ep-hana" alt="はな"><img class="ep-sora" alt="そら"></div></div><div class="ep-content" aria-live="polite"></div>`;
     document.body.appendChild(root); stage = root.querySelector('.ep-stage'); content = root.querySelector('.ep-content');
-    try { sizer = new ResizeObserver(() => stage && content && stage.style.setProperty('--ep-box', content.offsetHeight + 'px')); sizer.observe(content); } catch (e) { }   // 会話枠の高さぶん、キャラを上にずらして重ならないように
+    try { let boxMax = 0; sizer = new ResizeObserver(() => { if (!stage || !content) return; boxMax = Math.max(boxMax, content.offsetHeight); stage.style.setProperty('--ep-box', boxMax + 'px'); }); sizer.observe(content); } catch (e) { }   // 小さくはしない=文の長さでキャラが上下にぶれない。会話枠の高さぶん、キャラを上にずらして重ならないように
     root.querySelector('.ep-hana').src = face('hana'); root.querySelector('.ep-sora').src = face('sora');
     const nav = root.querySelector('nav');
     nav.append(pauseMenu());
