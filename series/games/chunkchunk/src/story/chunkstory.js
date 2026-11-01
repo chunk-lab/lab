@@ -792,6 +792,7 @@ function showResult(ch, results){
   if (unlockedMode) s.appendChild(el("div", "unl", `「${esc(unlockedMode.name)}」があそべるようになった！`));
   const col = el("div", "col");
   const nextCh = S.chapters.find(c => c.no === ch.no + 1);
+  if (opts.episode){ const be = el("button", "bb go", "物語のつづきへ"); be.onclick = () => opts.onEpisodeNext && opts.onEpisodeNext(); col.appendChild(be); const br0 = el("button", "bb", "もう一回あそぶ"); br0.onclick = () => runStage(ch); col.appendChild(br0); s.appendChild(col); opts.onChapterClear && opts.onChapterClear(ch.no, { pct, firstClear }); return; }   // 物語の中では「次の章へ・マップへ」を出さず、物語に戻る道を1本にする
   if (nextCh){ const bn = el("button", "bb go", "つぎの章へ"); bn.onclick = () => playChapter(nextCh.no); col.appendChild(bn); }
   else if (opts.onFinish){ const bf2 = el("button", "bb go", "ゲームへ"); bf2.onclick = () => opts.onFinish(prog); col.appendChild(bf2); }
   const br = el("button", "bb", "もう一回あそぶ"); br.onclick = () => runStage(ch);

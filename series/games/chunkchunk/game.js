@@ -39,7 +39,7 @@ export default {
     // コインは全アプリ共通の財布へ（レッスンの初回クリアなど一度きりのごほうび）。前の別財布(createWallet)は使わない
     const wallet = { add: (kind, n) => kind === 'coins' ? ctx.core.member.earn('once', n) > 0 : false };
     ENV.make = createMake({ base: ctx.base, store: ctx.store, Wallet: wallet, sfx, report: (n, d) => ctx.report(n, d), onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
-    ENV.story = createStory({ speak: t => readTextAloud(t), base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
+    ENV.story = createStory({ exit: () => ctx.exit(), speak: t => readTextAloud(t), base: ctx.base, store: ctx.store, report: ctx.report, onOpen: () => ctx.showBack(false), onClose: () => ctx.showBack(!el.querySelector('#title').hidden) });
     loadSettings(); init_engine(); init_texts(); init_rank(); initTitle(face);
     initBgm(el); initSfx(); preloadSfx();   // 音楽・効果音・声（音量は共通の設定。mp3は小さめに調整済み）
     initShared();   // みんなの長文・難易度（共有データベース）。使えない環境では何も出ない
@@ -47,7 +47,7 @@ export default {
     const title = el.querySelector('#title'), mo = new MutationObserver(() => ctx.showBack(!title.hidden && !ctx.core.reader.isOpen && !ENV.make.visible() && !ENV.story.visible()));
     mo.observe(title, { attributes: true, attributeFilter: ['hidden'] });
     showTitle(); ctx.showBack(true);
-    if (ctx.opts.storyChapter === 1) ENV.story.open({ chapter: 1 });   // 物語から読む・聞く第1章へ。通常の入口・保存方法は共通
+    if (ctx.opts.storyChapter === 1) ENV.story.open({ chapter: 1, episode: true });   // 物語から読む・聞く第1章へ。通常の入口・保存方法は共通
     if (ctx.opts && ctx.opts.lesson) setTimeout(() => { try { ENV.make.openLesson(ctx.opts.lesson === 'next' ? (ENV.make.nextLesson() || {}).id : ctx.opts.lesson); } catch (e) { console.error(e); } }, 60);   // ミッション:レッスンを指定
     if (ctx.opts && ctx.opts.open === 'mytexts') setTimeout(() => { try { el.querySelector('#title').hidden = true; openMyTexts(); } catch (e) { console.error(e); } }, 50);   // 図書館の「自分の本」から
     ctx.report('enter', { face, name: NAMES[face] });

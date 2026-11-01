@@ -50,7 +50,7 @@ window.__EIGONOU = {
     try {
       const top = root.querySelector('.top');
       if (top && !top.querySelector('.eg-try-b')) {
-        const mk = (cls, label, fn) => { const b = document.createElement('button'); b.className = 'ib ' + cls; b.textContent = label; b.style.cssText = 'font-size:12px;padding:4px 8px;white-space:nowrap'; b.onclick = fn; top.appendChild(b); };
+        const mk = (cls, label, fn) => { const b = document.createElement('button'); b.className = 'ib ' + cls; b.textContent = label; b.style.cssText = 'font-size:12px;padding:4px 8px;white-space:nowrap;width:auto;height:34px;flex:0 0 auto'; b.onclick = fn; top.appendChild(b); };
         mk('eg-try-b', '✨ 使ってみる', () => openTry()); mk('eg-memo-b', '💾 記憶', () => saveMemo()); mk('eg-pl', '📚 記憶した文', () => showPlays());
       }
     } catch (e) { }

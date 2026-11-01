@@ -16,8 +16,8 @@
 .ct-eigo #app{height:100%;height:100dvh;display:flex;flex-direction:column;max-width:760px;margin:0 auto}
 .ct-eigo .view{flex:1;min-height:0;display:flex;flex-direction:column}
 .ct-eigo .view[hidden]{display:none}
-.ct-eigo .top{display:flex;align-items:center;gap:6px;padding:8px 10px 6px}
-.ct-eigo .top h1{font-size:15px;font-weight:900;margin:0;flex:1;white-space:nowrap}
+.ct-eigo .top{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 10px 6px}
+.ct-eigo .top h1{font-size:15px;font-weight:900;margin:0;flex:1 1 auto;min-width:0;white-space:nowrap}
 .ct-eigo .top h1 small{font-weight:500;color:var(--muted);font-size:11px;margin-left:5px}
 .ct-eigo .ib{width:36px;height:36px;border-radius:11px;background:var(--panel);border:1px solid var(--line);font-size:16px;display:grid;place-items:center}
 .ct-eigo .ib:disabled{opacity:.35}

@@ -13,14 +13,14 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
   const episode = FIRST_EPISODE;
   const progress = createEpisodeProgress(createStore('town-episodes'), episode);
   let root = null, bar = null, scene = null, stage = null, content = null, active = false, waiting = null, epoch = 0, error = '', pending = false, busy = false;
-  let offEvent = null, offClose = null, previousFocus = null, background = [];
+  let sizer = null, offEvent = null, offClose = null, previousFocus = null, background = [];
   const face = (who, f = 'normal') => core.base + 'g/chunkchunk/img/chara/' + (who === 'sora' ? 'boy' : 'girl') + '/' + f + '.webp';
   const stateText = () => progress.state.completed ? '第1話をもう一度見る' : progress.state.index ? '第1話のつづき' : '第1話をはじめる';
   function disposeScene() { scene?.dispose(); scene = null; }
   function stop(options = {}) {
     if (!active) return;
     active = false; epoch++; waiting = null; offEvent?.(); offClose?.(); offEvent = offClose = null;
-    bar?.remove(); bar = null;
+    bar?.remove(); bar = null; sizer?.disconnect(); sizer = null;
     disposeScene(); root?.remove(); root = null; stage = content = null;
     background.forEach(([el, inert]) => { el.inert = inert; }); background = [];
     document.body.classList.remove('ep-on'); core.speech.stop(); resumeTown(); previousFocus?.focus();
@@ -46,6 +46,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     background.forEach(([el]) => { el.inert = true; });
     root.innerHTML = `<header class="ep-head"><div><small>ほしみや町の物語 ／ はなちゃんの視点</small><b>第1話　${episode.title}</b></div><nav></nav></header><div class="ep-stage">${ROOM}<div class="ep-portraits"><img class="ep-hana" alt="はな"><img class="ep-sora" alt="そら"></div></div><div class="ep-content" aria-live="polite"></div>`;
     document.body.appendChild(root); stage = root.querySelector('.ep-stage'); content = root.querySelector('.ep-content');
+    try { sizer = new ResizeObserver(() => stage && content && stage.style.setProperty('--ep-box', content.offsetHeight + 'px')); sizer.observe(content); } catch (e) { }   // 会話枠の高さぶん、キャラを上にずらして重ならないように
     root.querySelector('.ep-hana').src = face('hana'); root.querySelector('.ep-sora').src = face('sora');
     const nav = root.querySelector('nav');
     nav.append(pauseMenu());

@@ -12,13 +12,14 @@ export function createStory(HOST) {
   document.head.appendChild(css); document.body.appendChild(root);
   const rep = (k, d) => { try { HOST.report && HOST.report(k, d); } catch (e) { } };
   function open(o = {}) {
+    const episode = !!o.episode;
     root.hidden = false; HOST.onOpen && HOST.onOpen();
     window.ChunkStory.mount(host, {
       save: p => HOST.store.set('story', p),
       load: () => { try { const v = HOST.store.get('story'); return typeof v === 'string' ? JSON.parse(v) : v; } catch (e) { return null; } },
       onUnlock: key => rep('story_unlock', { key }),
       onChapterClear: (no, r) => rep('story_clear', { chapter: no, pct: r && r.pct, firstClear: r && r.firstClear }),
-      onFinish: () => close(), onExit: () => close(),
+      onFinish: () => close(), onExit: () => { close(); if (episode && HOST.exit) HOST.exit(); }, episode, onEpisodeNext: () => { close(); if (HOST.exit) HOST.exit(); },
       speak: t => { try { HOST.speak && HOST.speak(t); } catch (e) { } },
       assets: { base: HOST.base + 'img/chara/', ext: '.webp', picBase: HOST.base + 'img/story/', picExt: '.svg' }
     });
