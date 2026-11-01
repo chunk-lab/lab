@@ -513,7 +513,21 @@ onDoc('keydown',e=>{ if(e.target&&e.target.classList&&e.target.classList.contain
 (function(){ const o=renderScene; set_renderScene(function(){ const r=o.apply(this,arguments); try{ dkSync(); }catch(e){} return r; }); })();
 SB_CATS = [['cond','条件'],['idm','慣用句'],['col','口語'],['plc','どこで'],['tm','いつ']];
 SB_XL = [['me','わたし'],['you','あなた'],['him','彼'],['her','彼女'],['us','わたしたち'],['them','彼ら'],['the weather','天気'],['the news','ニュース'],['the teacher','先生'],['my mom','母'],['the map','地図']];
-(function(){ const o=sbDraw; sbDraw=function(){ o.apply(this,arguments); const el=document.getElementById('slot'); if(!el) return;
+(function(){ const o=sbDraw; sbDraw=function(){ o.apply(this,arguments); if(!APP.diceHook) APP.diceHook=diceHook; const el=document.getElementById('slot'); if(!el) return;
  el.querySelectorAll('.slcb').forEach(b=>b.onclick=()=>{ const k=b.dataset.cat, m=sbM(), f=m.lead&&LEADF(m.lead); if((k==='idm'||k==='col')&&f&&f.need&&m.leadX&&sbLeadCat(f)===k){ sbDo(()=>{ m.leadX=null; m.leadXja=null; }); return; } sbCatRand(k); });
  el.querySelectorAll('.slcx').forEach(b=>b.onclick=()=>{ const k=b.dataset.cx; sbDo(()=>sbCatClr(k)); }); }; })();
 }
+
+
+// ---- 完成後の役割タブ:1回押すとサイコロが出て、もう1回押すとその役割の言葉がランダムに入れかわる(組み立てに戻らず、「完成」も押さない) ----
+const diceHook=function(el){
+  const cat=el.dataset.cat, key=el.dataset.key;
+  if(cat!=='subj'&&cat!=='pred') return false;   // 主役・動詞のタブだけ(ほかは、いつもの動き)
+  if(APP.diceKey!==key){ APP.diceKey=key; render(); return true; }
+  APP.diceKey=null;
+  try{
+    if(cat==='subj'){ const cur=APP.S.main.subj, ids=['p:i','p:you','p:he','p:she','p:we','p:they'].filter(x=>x!==cur); pick('subj',sbRnd(ids)); }
+    else sbRandVerb('act');
+  }catch(e){ console.error(e); }
+  APP.finished=true; render(); return true;
+};

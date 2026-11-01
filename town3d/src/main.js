@@ -1001,7 +1001,7 @@ export function mount(container, opt = {}) {
   function showTitle(intro = false) {
     root.querySelectorAll('.tw-title').forEach(el => el.remove());
     started = false;
-    hud.title({ look: settings.look, name: settings.name, intro }, startAs);
+    hud.title({ look: settings.look, name: settings.name || (opt.playerName && opt.playerName()) || '', intro }, startAs);
   }
   // 町へ出かける(最初の画面のボタン・組み込み先からの quickStart の両方)
   function startAs({ look, name }) {

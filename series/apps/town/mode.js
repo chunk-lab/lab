@@ -66,6 +66,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     box = document.createElement('div'); box.className = 'md-town3d'; document.body.appendChild(box);
     home.remember({ kind: '3d' });
     town = window.town3d = window.Hoshimiya.mount(box, {
+      playerName: () => core.profile.name,   // 物語ではじめに入れた名前を、3Dのはじめの画面に入れておく
       wallet: core.wallet,   // コインは2Dと共通
       gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house'), onChange: f => core.member.onChange(f) },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
       house: ECON.house,

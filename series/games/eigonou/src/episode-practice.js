@@ -7,8 +7,8 @@ import { ENV } from './env.js';
 
 export function startEpisodePractice({ finish }) {
   setLevel('4'); // want to を維持できる設定。保存先はこのフレームのメモリだけ。
-  pick('subj', 'p:i'); pick('modal', 'want');
-  APP.finished = false; render(); sbDraw();
+  pick('subj', 'p:i'); pick('modal', 'want'); pick('self', 'rest');   // 文は、できあがった状態から始める(「文を変化させて遊ぶ」が基本の流れ)
+  APP.finished = true; APP.diceKey = null; render(); sbDraw();
 
   const app = ENV.root; if (getComputedStyle(app).position === 'static') app.style.position = 'relative';
   const q = s => app.querySelector(s);
@@ -35,25 +35,19 @@ export function startEpisodePractice({ finish }) {
   const hideAll = on => [spot, hand, cap].forEach(e => e.classList.toggle('ep-off', on));
   hideAll(true);
 
-  let key = '', completed = false, sawView = false, vi = 0, ci = 0, past = false, timer = 0, offT = 0;
+  let key = '', completed = false, vi = 0, ci = 0, past = false, timer = 0, offT = 0;
   const verbs = ['eat', 'sing', 'run', 'swim', 'dance', 'read', 'cook'], cheers = ['おおっ、絵が変わった！', 'ほら、動きも変わったよ！', 'すごい、そのまま絵になるね！', 'もう1回いってみよう！'];
 
+  const chip = c => q(`#chunks .ck[data-cat="${c}"]`);
+  const subjDone = () => APP.S.main.subj !== 'p:i';
+  const predDone = () => { const c = chip('pred'); return !!c && !/^rest$/i.test(c.querySelector('.en')?.textContent || 'rest'); };
   const find = () => {
-    const she = [...app.querySelectorAll('#slot .slbar .slm')].find(el => el.querySelector('b')?.textContent === 'she');
-    if (she) return { k: 'she', el: she, t: 'she（彼女）を押してみよう！' };
-    if (APP.finished) { sawView = true; const el = q('#chunks [data-cat="subj"]'); return el && { k: 'subj', el, t: '絵ができたね！ 次は「I」を押して、主役を替えてみよう。' }; }
-    const vb0 = q('.slsk .ck.pos-verb'), filled = !!vb0 && /rest/.test(vb0.textContent);
-    const inp = [...app.querySelectorAll('#slin')].find(e => e.offsetParent);   // 「動き」を打つ欄(いま開いているとき)
-    if (inp && !sawView && !filled) {
-      const chip = [...app.querySelectorAll('.slchips b')].find(b => b.textContent === 'rest')?.parentElement;
-      if (chip) return { k: 'chip', el: chip, t: 'rest（休む）を押そう！' };
-      return { k: 'type', el: inp, t: 'ここに「rest」と打ってみよう。（休む＝rest）' };
-    }
-    const vb = q('.slsk .ck.pos-verb');
-    if (!sawView && vb && !filled) return { k: 'verb', el: vb, t: '「休みたい」の「休む」を入れよう。「want to」のカードを押してね。' };
-    const card = sawView && q('.slsk .ck.subject');
-    if (card) return { k: 'card', el: card, t: '光っている「I」のカードを押して、she に替えよう。' };
-    const el = q('#sldone'); return el && { k: 'done', el, t: '文ができたよ！「完成」を押して、絵にしてみよう。' };
+    if (!APP.finished) { APP.finished = true; render(); }   // 組み立てに戻らない。完成した文のまま、タブを押して遊ぶ
+    const t = !subjDone() ? 'subj' : 'pred', c = chip(t);
+    if (!c) return null;
+    const dice = APP.diceKey === c.dataset.key;
+    const word = t === 'subj' ? '主役（I）' : '動き（rest）';
+    return { k: t + (dice ? '1' : '0'), el: c, t: dice ? `サイコロが出たよ！ もう一度押すと、${t === 'subj' ? '主役' : '動き'}がランダムに入れかわるよ。` : `上の「${t === 'subj' ? 'I' : 'rest'}」のタブを押してみよう。（${word}のタブ）` };
   };
   const place = (el, text) => {
     const ar = app.getBoundingClientRect(), r = el.getBoundingClientRect(), pad = 6;
@@ -67,7 +61,7 @@ export function startEpisodePractice({ finish }) {
   };
   const tick = () => {
     if (completed) return;
-    if (APP.S.main.subj === 'p:she') return complete();
+    if (subjDone() && predDone()) return complete();
     app.querySelectorAll('.ep-tutorial-target').forEach(e => e.classList.remove('ep-tutorial-target'));
     const f = find();
     if (!f) { hideAll(true); return; }
@@ -86,13 +80,12 @@ export function startEpisodePractice({ finish }) {
     const box = document.createElement('div'); box.className = 'ep-done';
     box.innerHTML = `<div class="msg"></div><div class="row"></div>`;
     const msg = box.querySelector('.msg'), row = box.querySelector('.row');
-    msg.textContent = 'おおっ、絵が女の子に変わった！ 主役を替えるだけで、文も絵も一緒に変わるよ。ほかも触ってみて。';
+    msg.textContent = 'おおっ、言葉を入れかえるだけで、文も絵も一緒に変わるよ！ 上のタブを押して、サイコロを出して、ほかも遊んでみて。';
     const act = (b, fn) => { b.type = 'button'; b.onclick = () => { fn(b); APP.finished = true; render(); flash(); msg.textContent = cheers[ci++ % cheers.length]; app.style.paddingBottom = box.offsetHeight + 'px'; }; return b; };
-    const b1 = act(document.createElement('button'), () => pick('self', verbs[vi++ % verbs.length])); b1.textContent = '🎲 動き';
     const b2 = act(document.createElement('button'), b => { past = !past; pick('tense', past ? 'past' : 'pres'); b.textContent = past ? '▶ 今にもどす' : '⏪ 昔のこと'; }); b2.textContent = '⏪ 昔のこと';
     const go = document.createElement('button'); go.type = 'button'; go.className = 'go'; go.textContent = 'つづきへ';
     go.onclick = () => { app.style.paddingBottom = ''; box.remove(); css.remove(); [spot, hand, cap].forEach(e => e.remove()); finish(); };
-    row.append(b1, b2, go); app.appendChild(box); app.style.boxSizing = 'border-box'; app.style.paddingBottom = box.offsetHeight + 'px';   // 絵がカードに隠れないよう、下をあける
+    row.append(b2, go); app.appendChild(box); app.style.boxSizing = 'border-box'; app.style.paddingBottom = box.offsetHeight + 'px';   // 絵がカードに隠れないよう、下をあける
   }
   function flash() { const fl = document.createElement('div'); fl.className = 'ep-flash'; app.appendChild(fl); setTimeout(() => fl.remove(), 800); }
   tick();

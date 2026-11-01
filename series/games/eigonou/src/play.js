@@ -400,7 +400,7 @@ export function renderBar(){
   texts[p.key]=p.hole?'':en;
   if(ck!==actKey){ if(foldKey!==ck) flush(); foldKey=ck; if(en) fold.push(en); return; }
   flush(); foldKey=null;
-  const cls=['ck','pos-'+p.pos]; if(p.hole) cls.push('hole'); if(isNegChunk(p)) cls.push('negc'); if(p.subject) cls.push('subject');
+  const cls=['ck','pos-'+p.pos]; if(p.hole) cls.push('hole'); if(APP.finished&&APP.diceKey===p.key) cls.push('dice'); if(isNegChunk(p)) cls.push('negc'); if(p.subject) cls.push('subject');
   if(!p.hole && prevTexts[p.key]!==en) cls.push('pop');
   html+=`<button class="${cls.join(' ')}" data-key="${p.key}" data-cat="${p.cat}" data-cl="${ck}">${p.hole?'':`<span class="en">${esc(en)}</span>`}<span class="ja">${esc(p.ja||'')}</span></button>`;
  });
@@ -417,7 +417,7 @@ export function renderBar(){
    const hp=$('#htPre'); if(hp) hp.onclick=()=>{ APP.active='main'; APP.open = APP.open==='pre'?null:'pre'; APP.finished=false; render(); }; }
  bar.querySelectorAll('[data-key]').forEach(el=>{ const r0=rects[el.dataset.key]; if(!r0) return; const r1=el.getBoundingClientRect(); const dx=r0.left-r1.left, dy=r0.top-r1.top; if(Math.abs(dx)>2||Math.abs(dy)>2){ el.classList.remove('pop'); } });
  { const last=bar.querySelector('.ck:not(.hole):last-of-type')||bar.lastElementChild; const target=bar.querySelector('.ck.hole')||last; if(target) requestAnimationFrame(()=>{ bar.scrollLeft = Math.max(0, target.offsetLeft - bar.clientWidth*0.55); }); }
- bar.querySelectorAll('.ck').forEach(el=>el.onclick=()=>{ const t=el.querySelector('.en'); if(t) say(t.textContent); chunkTap(el.dataset.cl, el.dataset.cat); });
+ bar.querySelectorAll('.ck').forEach(el=>el.onclick=()=>{ if(APP.finished&&APP.diceHook&&APP.diceHook(el)) return; const t=el.querySelector('.en'); if(t) say(t.textContent); chunkTap(el.dataset.cl, el.dataset.cat); });
  bar.querySelectorAll('.fold').forEach(el=>el.onclick=()=>setActive(el.dataset.act==='m'?'main':el.dataset.act));
  const fin=$('#finish'); fin.disabled=!complete; fin.classList.toggle('ready',complete && !APP.finished);
  $('#barnote').textContent = parts.futNote? 'when / if の中では「これから」の話も現在形で言います' : '';

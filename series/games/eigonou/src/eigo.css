@@ -1546,3 +1546,7 @@
 .ct-eigo #tline .tnm small{font-size:10.5px;color:#6b7191;margin-left:6px;font-weight:700}
 .ct-eigo{position:absolute;inset:0;overflow:hidden}
 .ct-eigo #app{height:100%}
+/* 完成後の役割タブ:1回押すとサイコロ、もう1回でランダムに入れかわる */
+.ck.dice{position:relative;overflow:visible;outline:3px solid #ffd36b;outline-offset:2px}
+.ck.dice::after{content:'🎲';position:absolute;right:-8px;top:-14px;font-size:26px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3));animation:ckDice .55s ease-in-out infinite alternate}
+@keyframes ckDice{from{transform:rotate(-14deg) scale(1)}to{transform:rotate(14deg) scale(1.15)}}

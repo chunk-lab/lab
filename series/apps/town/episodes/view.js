@@ -73,7 +73,9 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
     drawBar();
     const request = waiting;
     try {
-      const ok = await core.host.open(game, { ...s.opts });
+      const lvNow = Math.min(3, Math.max(1, +(core.level && core.level.lv) || 1));   // 単語力テストの結果に合う単語セット(テストなしは初級)
+      const opts = { ...s.opts }; if (opts.wordset) opts.wordset = { ...opts.wordset, lv: lvNow };
+      const ok = await core.host.open(game, opts);
       if (!active || waiting !== request) return;
       if (ok) root.hidden = true;
       if (!ok) {
@@ -116,6 +118,20 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
       const actions = content.querySelector('.ep-actions');
       if (s.en) actions.append(button('英語を聞く', () => core.speech.speak(s.en, { lang: 'en-US' })));
       actions.append(button('つぎへ', () => { core.speech.stop(); error = ''; progress.next(); render(); }, 'ep-primary'));
+    } else if (s.type === 'name') {
+      content.innerHTML = `<div class="ep-dialog"><b class="ep-name">${NAME[s.who || 'hana']}</b><p class="ep-line">${rich(s.text)}</p><input class="ep-input" maxlength="8" placeholder="なまえ" aria-label="あなたの名前" value="${esc(core.profile.name || '')}"><div class="ep-actions"></div></div>`;
+      const inp = content.querySelector('.ep-input'), go = () => { const v = inp.value.trim(); if (v) core.profile.setName(v); progress.next(); render(); };
+      content.querySelector('.ep-actions').append(button('きめた', go, 'ep-primary'));
+      inp.onkeydown = e => { if (e.key === 'Enter') go(); };
+    } else if (s.type === 'level') {
+      content.innerHTML = `<div class="ep-card"><small>はじめに</small><h2>${esc(s.title)}</h2><p>${rich(s.text)}</p><div class="ep-actions"></div></div>`;
+      const acts = content.querySelector('.ep-actions'), skip = () => { progress.next(); render(); };
+      acts.append(button('テストをはじめる', async () => {
+        root.hidden = true; document.body.classList.add('ep-level');
+        try { await core.level.placement(); } catch (e) { console.error(e); }
+        // テストの画面が閉じるまで待ってから、物語にもどる(結果が出ていなくても、やめたなら先へ進む)
+        let gone = 0; const tm = setInterval(() => { if (!active) { clearInterval(tm); document.body.classList.remove('ep-level'); return; } gone = document.querySelector('.cs-ov') ? 0 : gone + 1; if (gone >= 3) { clearInterval(tm); document.body.classList.remove('ep-level'); root.hidden = false; skip(); } }, 500);
+      }, 'ep-primary'), button('あとで（初級から）', skip));
     } else if (s.type === 'game') {
       content.innerHTML = `<div class="ep-card"><small>やってみよう</small><h2>${esc(s.title)}</h2><p>${rich(s.text)}</p>${err}</div>`;
       const card = content.firstChild;
