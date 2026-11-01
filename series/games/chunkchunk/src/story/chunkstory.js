@@ -665,6 +665,7 @@ function cutStage(ch, st, finish){
     nav.append(bBack, bFwd);
     const bCut = el("button", "cutBtn"); bCut.innerHTML = "区切る<small>▶で進んで、ここだと思ったら押す</small>";
     bar.append(nav, bCut); f.foot.appendChild(bar);
+    f.foot.appendChild(el("div", "dragnote", "指で単語をなぞって、チャンクを囲んでもOK"));
 
     let passed = 0, over = false, hintAt = null;
     const cuts = new Set();   // 「i番目のことばの前で切る」
@@ -719,6 +720,19 @@ function cutStage(ch, st, finish){
       go.onclick = () => { n++; next(); };
       f.foot.appendChild(go);
     }
+    // 指でなぞって囲む:なぞった範囲の前とうしろで区切る(▶と「区切る」の操作も、そのまま使える)
+    let drag = null; strip.style.touchAction = "none";
+    const wordAt = (x, y) => { const t = document.elementsFromPoint(x, y).find(q => q.classList && q.classList.contains("cs-w") && strip.contains(q)); return t ? [...strip.querySelectorAll(".cs-w")].indexOf(t) : -1; };
+    const paint = () => strip.querySelectorAll(".cs-w").forEach((w, i) => w.classList.toggle("cs-pick", !!drag && i >= Math.min(drag.a, drag.b) && i <= Math.max(drag.a, drag.b)));
+    strip.addEventListener("pointerdown", e => { if (over) return; const i = wordAt(e.clientX, e.clientY); if (i < 0) return; drag = { a: i, b: i, moved: false }; try { strip.setPointerCapture(e.pointerId); } catch (_) {} });
+    strip.addEventListener("pointermove", e => { if (!drag) return; const i = wordAt(e.clientX, e.clientY); if (i >= 0 && i !== drag.b) { drag.b = i; drag.moved = true; paint(); } });
+    const dragEnd = () => {
+      if (!drag) return; const d = drag; drag = null; paint(); if (!d.moved || over) return;
+      const a = Math.min(d.a, d.b), b = Math.max(d.a, d.b);
+      if (a > 0) cuts.add(a); if (b + 1 < len) cuts.add(b + 1);
+      passed = Math.max(passed, b + 1); hintAt = null; render(true); tell("cut");
+    };
+    strip.addEventListener("pointerup", dragEnd); strip.addEventListener("pointercancel", () => { drag = null; paint(); });
     bBack.onclick = () => { if (over || bBack.disabled) return; passed--; [...cuts].forEach(i => { if (i > passed) cuts.delete(i); }); render(true); };   // 戻った範囲の区切りは取り消す
     bFwd.onclick = () => { if (over || passed >= len) return; passed++; render(true); if (passed >= len) tell("end"); };
     bCut.onclick = () => {

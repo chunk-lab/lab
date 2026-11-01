@@ -29,26 +29,39 @@ export function startEpisodePractice({ finish }) {
   const style = document.createElement('style');
   style.textContent = '.ep-coach{display:flex;align-items:center;gap:12px}.ep-coach-bubble{position:relative;flex:1;min-width:0;border:2px solid #d7c8e0;border-radius:18px;background:white;padding:12px 16px}.ep-coach-bubble:after{content:"";position:absolute;right:-9px;top:40px;width:14px;height:14px;background:white;border-right:2px solid #d7c8e0;border-top:2px solid #d7c8e0;transform:rotate(45deg)}.ep-coach-sora{width:100px;height:145px;object-fit:contain;transform:scaleX(-1);flex:none}@media(max-width:500px){.ep-coach{gap:8px}.ep-coach-sora{width:76px;height:130px}.ep-coach-bubble{padding:10px 12px}} .ct-eigo .ep-tutorial-target{outline:4px solid var(--noun);outline-offset:3px;box-shadow:0 0 0 7px #2d6be022}.ct-eigo .ep-guide-aux{color:var(--aux);font-weight:800}';
   panel.append(style);
-  let completed = false;
-  // 通常の「完成」や主役の編集を制限しない。案内は実際の文の状態に追従する。
-  holder.querySelector('.nav')?.setAttribute('inert', '');
+  let completed = false, sawView = false;
+  // いま何をすればいいかを、3つの手順の印と、指のマークで見せる(通常の「完成」や主役の編集は制限しない)
+  const steps = document.createElement('div'); steps.className = 'ep-steps';
+  const demo = document.createElement('div'); demo.className = 'ep-demo'; demo.innerHTML = '<span>I</span> want to play. <i>→</i> <span class="to">She</span> wants to play.';
+  const hand = document.createElement('div'); hand.className = 'ep-hand'; hand.textContent = '👆'; hand.hidden = true;
+  bubble.insertBefore(steps, guide); bubble.insertBefore(demo, back); document.body.appendChild(hand);
+  const hintStyle = document.createElement('style');
+  hintStyle.textContent = '.ep-steps{display:flex;gap:5px;margin:0 0 6px;flex-wrap:wrap}.ep-steps span{font-size:12px;font-weight:800;padding:2px 9px;border-radius:99px;background:#efe8f4;color:#8a7898}.ep-steps span.on{background:#7b5cff;color:#fff}.ep-steps span.done{background:#d9f2e4;color:#2f8a5a}.ep-demo{margin-top:6px;font-size:15px;color:#4b3e58}.ep-demo span{font-weight:800;color:#2d6be0}.ep-demo .to{color:#e0457b}.ep-demo i{font-style:normal;color:#9a8aa8;margin:0 4px}.ep-hand{position:fixed;z-index:2147483000;font-size:34px;line-height:1;pointer-events:none;transform:translate(-50%,0);animation:epBob .7s ease-in-out infinite alternate}@keyframes epBob{to{transform:translate(-50%,9px)}}@keyframes epPulse{50%{box-shadow:0 0 0 12px #2d6be033}}.ct-eigo .ep-tutorial-target{animation:epPulse 1s ease-in-out infinite}';
+  panel.append(hintStyle);
+  const setSteps = n => { steps.innerHTML = ['① 「完成」を押す', '② 主役の I を押す', '③ she を選ぶ'].map((t, i) => `<span class="${i + 1 < n ? 'done' : i + 1 === n ? 'on' : ''}">${i + 1 < n ? '✓ ' : ''}${t}</span>`).join(''); };
+  const point = el => { if (!el) { hand.hidden = true; return; } try { el.scrollIntoView({ block: 'nearest' }); } catch (e) { } const r = el.getBoundingClientRect(); hand.style.left = (r.left + r.width / 2) + 'px'; hand.style.top = (r.bottom - 6) + 'px'; hand.hidden = false; };
   function updateGuide() {
     if (!completed && APP.S.main.subj === 'p:she') {
       completed = true; APP.finished = true; render();
-      guide.innerHTML = 'できたね！ She <span class="ep-guide-aux">wants to</span> play.「彼女は遊びたい」になったよ。ほかにも文の要素をいろいろ替えられるから、別の機会に試してみてね。';
+      setSteps(4); demo.hidden = false; point(null);
+      guide.innerHTML = 'できたね！ She <span class="ep-guide-aux">wants to</span> play.「彼女は遊びたい」になったよ。<br>主役が she になると、want に s がついて <b>wants</b> になるんだ。ほかにも文の要素をいろいろ替えられるから、別の機会に試してみてね。';
       back.hidden = false; back.focus({ preventScroll: true });
     }
     holder.querySelectorAll('.ep-tutorial-target').forEach(el => el.classList.remove('ep-tutorial-target'));
     if (!completed) {
       const she = [...holder.querySelectorAll('#slot .slbar .slm')].find(el => el.querySelector('b')?.textContent === 'she');
-      const next = she || (APP.finished ? holder.querySelector('#chunks [data-cat="subj"]') : holder.querySelector('#sldone'));
-      guide.textContent = she ? '主役の中から she（彼女）を選んでね。' : APP.finished ? '文の I を押して、主役を she（彼女）に替えてみよう。' : '「完成」を押して文を見てみよう。主役の I から she（彼女）に替えるよ。';
-      next?.classList.add('ep-tutorial-target');
+      if (APP.finished) sawView = true;
+      const card = !APP.finished && sawView && !she ? holder.querySelector('.slsk .ck.subject') : null; // 文の画面から骨組みに戻った状態
+      const next = she || (APP.finished ? holder.querySelector('#chunks [data-cat="subj"]') : card || holder.querySelector('#sldone'));
+      setSteps(she || card ? 3 - (she ? 0 : 1) : APP.finished ? 2 : 1);
+      guide.textContent = she ? '光っているところの she（彼女）を押してね。' : card ? '骨組みの画面に戻ったよ。光っている「I」のカードを押して、she に替えよう。' : APP.finished ? '光っているところの「主役」を押すと、骨組みの画面に戻るよ。' : '光っている「完成」を押して、文を見てみよう。';
+      next?.classList.add('ep-tutorial-target'); point(next);
     }
     resize();
   }
   const changes = new MutationObserver(updateGuide);
   changes.observe(holder, { childList: true, subtree: true });
   updateGuide();
-  back.onclick = () => { if (!completed) return; changes.disconnect(); ro.disconnect(); finish(); };
+  window.addEventListener('resize', () => { if (!completed) point(holder.querySelector('.ep-tutorial-target')); });
+  back.onclick = () => { if (!completed) return; changes.disconnect(); ro.disconnect(); hand.remove(); finish(); };
 }

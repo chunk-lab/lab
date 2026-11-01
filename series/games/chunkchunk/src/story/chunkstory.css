@@ -248,10 +248,13 @@
 .cs-rs .cs-col{display:flex;flex-direction:column;gap:10px;width:100%}
 
 @media (prefers-reduced-motion:reduce){.cs-root *{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-.cs-cutscr .cs-foot{display:flex}
+.cs-cutscr .cs-foot{display:flex;position:relative}
 .cs-cutscr .cs-nav{gap:46px}
 .cs-cutscr .cs-navb{width:52px}
 .cs-map .cs-ch:not(.cs-lock):active{transform:scale(.99)}
 .cs-card img{width:100%;max-height:92px;object-fit:contain;border-radius:12px}
 .cs-cutscr .cs-strip .cs-hintmk{color:#ffd166;font-size:16px;padding:0 3px;text-shadow:0 0 10px #ffd166;animation:cs-hint 1s ease-in-out infinite}
 @keyframes cs-hint{50%{opacity:.35;transform:scale(1.3)}}
+/* 指でなぞって囲む(切る場面) */
+.cs-cutscr .cs-w.cs-pick{background:rgba(255,120,160,.28);border-radius:6px;box-shadow:0 0 0 2px rgba(255,120,160,.5)}
+.cs-dragnote{position:absolute;left:0;right:0;top:-24px;margin:0;text-align:center;font-size:11px;color:var(--muted,#9a7f8c);pointer-events:none}
