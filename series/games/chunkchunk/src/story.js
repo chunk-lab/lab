@@ -11,7 +11,7 @@ export function createStory(HOST) {
   css.textContent = '.ccStoryApp{position:fixed;inset:0;z-index:75;background:#fbf1f6;overflow:hidden}.ccStoryApp[hidden]{display:none}';
   document.head.appendChild(css); document.body.appendChild(root);
   const rep = (k, d) => { try { HOST.report && HOST.report(k, d); } catch (e) { } };
-  function open() {
+  function open(o = {}) {
     root.hidden = false; HOST.onOpen && HOST.onOpen();
     window.ChunkStory.mount(host, {
       save: p => HOST.store.set('story', p),
@@ -22,6 +22,7 @@ export function createStory(HOST) {
       speak: t => { try { HOST.speak && HOST.speak(t); } catch (e) { } },
       assets: { base: HOST.base + 'img/chara/', ext: '.webp', picBase: HOST.base + 'img/story/', picExt: '.svg' }
     });
+    if (o.chapter === 1) window.ChunkStory.playChapter(1);
   }
   function close() { try { window.ChunkStory.unmount(); } catch (e) { } root.hidden = true; HOST.onClose && HOST.onClose(); }
   function destroy() { try { window.ChunkStory.unmount(); } catch (e) { } try { root.remove(); css.remove(); } catch (e) { } }

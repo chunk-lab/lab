@@ -998,9 +998,10 @@ export function mount(container, opt = {}) {
     dt.addEventListener('change', () => { if (!dt.value) return; const [y, m, d] = dt.value.split('-').map(Number); applyDate(new Date(y, m - 1, d, 12)); pn.querySelectorAll('[data-bl]').forEach(x => x.classList.toggle('on', (x.dataset.bl === '1') === blossomOn)); });
   }));
 
-  function showTitle() {
+  function showTitle(intro = false) {
+    root.querySelectorAll('.tw-title').forEach(el => el.remove());
     started = false;
-    hud.title({ look: settings.look, name: settings.name }, startAs);
+    hud.title({ look: settings.look, name: settings.name, intro }, startAs);
   }
   // 町へ出かける(最初の画面のボタン・組み込み先からの quickStart の両方)
   function startAs({ look, name }) {
@@ -1371,6 +1372,7 @@ export function mount(container, opt = {}) {
     event: { birthday: k => birthdayTestRun(k), lengths: () => { const o = {}; for (const n of Object.keys(FW_SHOWS)) { fw.show(n); o[n] = Math.round(fw.showLength); } fw.stop(); o.solar = 100; o.lunar = 130; o.rain = 120; return o; }, seek: f => { if (env.eclipse) env.eclipse.t = f * env.eclipse.dur; if (env.weather) env.weather.t = f * env.weather.dur; }, sec: evSec, run: runEvent, stop: stopEvent, kinds: EVENT_KINDS, fwTypes: FW_TYPES, fwShows: FW_SHOWS, check: () => sched.check(), list: () => sched.list(), get now() { return evt ? evt.kind : null; } },
     cameraMode: () => camMode,
     season: s => { if (s) { settings.season = s; save(); applySeason(); } return curSeason(); },
+    showArrival: () => showTitle(true),
     quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },

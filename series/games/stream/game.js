@@ -5,7 +5,7 @@
    データ（長文・単語・予習の文章）は data/ の別ファイルで、開くときに読み込む（tools/ の道具で作る）。 */
 import html from './src/stream.html';
 import './src/stream.css';
-import { ENV, loadSave, stopAll } from './src/base.js';
+import { ENV, SV, loadSave, stopAll } from './src/base.js';
 import { init_screens } from './src/screens.js';
 import { init_play, endRun, startRun } from './src/play.js';
 import { init_fx } from './src/fx.js';
@@ -22,7 +22,7 @@ export default {
     Object.assign(ENV, { root: el, ctx, core: ctx.core, base: ctx.base, offs: [] });
     el.classList.add('ct-stream');
     el.innerHTML = html.replace(/(src|href)="(img|audio)\//g, (m, at, d) => `${at}="${ctx.base}${d}/`);
-    loadSave(); init_screens(); init_play(); init_fx();
+    loadSave(); if ([1, 1.2, 1.4, 1.6].includes(ctx.opts?.fontSize)) SV.set.fs = ctx.opts.fontSize; init_screens(); init_play(); init_fx();
     ctx.showBack(true);
     if (ctx.opts && ctx.opts.passage) setTimeout(() => { try { const p = P(ctx.opts.passage); if (p) { setCur(p); renderDetail(); show('sDetail'); if (ctx.opts.run) startRun(1); } } catch (e) { console.error(e); } }, 50);   // 図書館・ミッションから本を指定(run:最初から通しで始める)
     if (ctx.opts && ctx.opts.wordset) setTimeout(() => { try { const w = ctx.opts.wordset; setCur(wordSet(w.lv, w.k, w.kind || 'w')); startRun(1); } catch (e) { console.error(e); } }, 50);   // ミッション:単語セットを指定

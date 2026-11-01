@@ -248,8 +248,15 @@ export function createHud(root, bus) {
     },
     closePanel() { if (panel) { panel.remove(); panel = null; bus.emit('ui:panelClosed'); } },
     // 最初の画面:キャラを選んで名前を決める
-    title({ look, name }, onStart) {
+    title({ look, name, intro = false }, onStart) {
       const el = h(`<div class="tw-title"><div class="tw-logo">ほしみや町</div><div class="tw-sub">パステルの町で、くらしてみよう</div><div class="tw-looks"></div><input class="tw-name" maxlength="8" placeholder="なまえ"><button class="tw-btn tw-start">町へ出かける</button><div class="tw-ver" style="position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 62px);font:bold 12px/1 monospace;color:#fff;background:rgba(220,40,80,.85);padding:4px 9px;border-radius:8px;pointer-events:none;white-space:nowrap">ver ${typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'}</div><div class="tw-hint">PC:WASD で移動・ドラッグで見まわす・E で話す<br>スマホ:左側をなぞって移動・右側で見まわす</div></div>`);
+      if (intro) {
+        el.style.overflowY = 'auto'; el.style.justifyContent = 'safe center';
+        const greeting = document.createElement('p'); greeting.className = 'tw-arrival'; greeting.textContent = 'ここはチャンクタウン。今から君は、街の住人の一人として過ごせるよ。まずは名前を入れてね。';
+        greeting.style.cssText = 'max-width:340px;margin:12px 20px;font-size:18px;line-height:1.7;text-align:left;color:inherit';
+        el.querySelector('.tw-looks').before(greeting);
+        el.querySelector('.tw-name').setAttribute('aria-label', '町で使う名前');
+      }
       const box = el.querySelector('.tw-looks');
       let sel = look;
       LOOK_IDS.forEach(id => {
@@ -258,9 +265,9 @@ export function createHud(root, bus) {
         b.onclick = () => { sel = id; box.querySelectorAll('.tw-look').forEach(x => x.classList.remove('on')); b.classList.add('on'); if (!inp.value || LOOK_IDS.some(k => LOOKS[k].name === inp.value)) inp.value = L.name; bus.emit('sfx', 'tap'); };
         box.appendChild(b);
       });
-      const inp = el.querySelector('.tw-name'); inp.value = name || LOOKS[sel].name;
+      const inp = el.querySelector('.tw-name'); inp.value = name || (intro ? '' : LOOKS[sel].name);
       inp.addEventListener('keydown', e => e.stopPropagation());
-      el.querySelector('.tw-start').onclick = () => { el.remove(); onStart({ look: sel, name: (inp.value.trim() || LOOKS[sel].name).slice(0, 8) }); };
+      el.querySelector('.tw-start').onclick = () => { if (intro && !inp.value.trim()) { inp.focus(); return; } el.remove(); onStart({ look: sel, name: (inp.value.trim() || LOOKS[sel].name).slice(0, 8) }); };
       root.appendChild(el);
     },
     dispose() { offLang(); this.closeDialog(); this.closePanel(); toastEl?.remove(); [top, labels, action, emotes].forEach(e => e.remove()); },

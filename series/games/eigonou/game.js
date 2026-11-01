@@ -4,6 +4,7 @@
    セーブ・読み上げは共通の部品。読み込み時に付けていた document の受け口やタイマーは、開いている間だけ動く（src/env.js）。 */
 import html from './src/view.html';
 import { runCoach } from '../../core/coach.js';
+import { mountEpisodeFrame } from './episode-frame.js';
 const HOW = [
   { w: 'g', f: 'joy', t: '英語脳アプリは、絵を見ながら英文を組み立てる、英語のシミュレータだよ。' },
   { w: 'b', t: '下のメニューの「つくる」で、文を作ってみよう。' },
@@ -16,6 +17,7 @@ const link = (href, key) => new Promise(res => { if (document.querySelector(`lin
 export default {
   id: 'eigonou', name: '英語脳アプリ', right: 'game:eigonou',
   async mount(el, ctx) {
+    if (ctx.opts.episodePractice === 'want-to') return mountEpisodeFrame(el, ctx);
     el.classList.add('ct-eigo');
     el.innerHTML = '<div class="eg-loading" style="display:grid;place-items:center;height:100%;font-weight:700;color:#6b7191">読み込み中…</div>';
     link(FONT, 'eigo-font');

@@ -406,7 +406,7 @@ async function run(ch){
   if (adv !== me) return;
   runStage(ch);
 }
-function waitTap(){ return new Promise(r => { if (adv.skip) return r("skip"); adv.resolve = v => { adv.resolve = null; r(v); }; }); }
+function waitTap(){ return new Promise(r => { const me = adv; if (!me) return r("cancel"); if (me.skip) return r("skip"); me.resolve = v => { me.resolve = null; r(v); }; }); }
 
 function slotOf(who){ return adv.chars[who]; }
 function setFace(who, face){
@@ -417,6 +417,7 @@ function setFace(who, face){
   slot.innerHTML = ""; slot.appendChild(charaNode(who, face)); if (q) slot.appendChild(q);
 }
 async function say(st){
+  const me = adv; if (!me) return;
   const c = A.chara[st.say];
   if (st.f) setFace(st.say, st.f);
   Object.entries(adv.chars).forEach(([w, sl]) => sl.classList.toggle("cs-off", w !== st.say));
@@ -425,22 +426,27 @@ async function say(st){
   adv.tbox.classList.remove("cs-ask"); adv.tbox.classList.toggle("cs-big", !!st.big);
   adv.log.push({ who: c ? c.name : "", t: st.t });
   await type(st.t);
+  if (adv !== me) return;
   adv.nx.hidden = false;
   await waitTap();
+  if (adv !== me) return;
   adv.nx.hidden = true; adv.tbox.classList.remove("cs-big");
 }
 async function type(text){
-  adv.tx.textContent = "";
+  const me = adv; if (!me) return;
+  me.tx.textContent = "";
   let done = false, i = 0;
   const p = waitTap().then(() => { done = true; });
-  while (!done && i < text.length && !adv.skip){ adv.tx.textContent += text[i++]; await sleep(26); }
-  adv.tx.textContent = text;
-  if (!done && adv.resolve) { adv.resolve = null; }
+  while (adv === me && !done && i < text.length && !me.skip){ me.tx.textContent += text[i++]; await sleep(26); }
+  if (adv !== me) return;
+  me.tx.textContent = text;
+  if (!done && me.resolve) { me.resolve = null; }
 }
 async function ask(st){
-  const line = adv.lines[st.ask]; if (!line) return;
-  Object.values(adv.chars).forEach(sl => sl.classList.add("cs-off"));
-  adv.nm.textContent = ""; adv.tbox.classList.add("cs-ask"); adv.tx.textContent = st.t;
+  const me = adv; if (!me) return;
+  const line = me.lines[st.ask]; if (!line) return;
+  Object.values(me.chars).forEach(sl => sl.classList.add("cs-off"));
+  me.nm.textContent = ""; me.tbox.classList.add("cs-ask"); me.tx.textContent = st.t;
   const tok = line.tokens[st.i];
   line.tokens.forEach(t => { t.classList.add("cs-tapme"); t.tabIndex = 0; });
   await new Promise(res => {
@@ -449,14 +455,14 @@ async function ask(st){
         e.stopPropagation();
         if (t === tok){ res(); return; }
         t.classList.remove("cs-wrong"); void t.offsetWidth; t.classList.add("cs-wrong");
-        adv.tx.textContent = st.ng || "もう一回！";
+        me.tx.textContent = st.ng || "もう一回！";
       };
       t.onkeydown = e => { if (e.key === "Enter" || e.key === " ") t.onclick(e); };
     });
-    adv.resolve = v => { if (v === "skip") { adv.resolve = null; res(); } };
+    me.resolve = v => { if (v === "skip" || v === "cancel") { me.resolve = null; res(); } };
   });
   line.tokens.forEach(t => { t.classList.remove("cs-tapme"); t.onclick = null; t.onkeydown = null; t.removeAttribute("tabindex"); });
-  adv.tbox.classList.remove("cs-ask");
+  if (adv === me) me.tbox.classList.remove("cs-ask");
 }
 function showLog(){
   const o = el("div", "log"); const inn = el("div", "in");
@@ -483,8 +489,10 @@ const FX = {
     });
   },
   clear: async () => {
-    const kids = [...adv.board.children]; kids.forEach(k => k.classList.add("cs-fade"));
-    await sleep(kids.length ? 330 : 0); adv.board.innerHTML = ""; adv.lines = {};
+    const me = adv; if (!me) return;
+    const kids = [...me.board.children]; kids.forEach(k => k.classList.add("cs-fade"));
+    await sleep(kids.length ? 330 : 0); if (adv !== me) return;
+    me.board.innerHTML = ""; me.lines = {};
   },
   wait: st => sleep(st.ms || 400),
   wall: () => {
@@ -811,6 +819,7 @@ window.ChunkStory = {
   isUnlocked: key => !!prog.unlocked[key],
   reset(){ prog = { cleared:{}, unlocked:{} }; save(prog); openMap(); },
   unmount(){
+    if (adv && adv.resolve) adv.resolve("cancel");
     adv = null; if (curFrame) curFrame.alive = false;
     if (root){ root.innerHTML = ""; root.classList.remove("cs-root"); }
     root = app = null;
