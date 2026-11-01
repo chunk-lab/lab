@@ -29,22 +29,32 @@ export function startEpisodePractice({ finish }) {
   const style = document.createElement('style');
   style.textContent = '.ep-coach{display:flex;align-items:center;gap:12px}.ep-coach-bubble{position:relative;flex:1;min-width:0;border:2px solid #d7c8e0;border-radius:18px;background:white;padding:12px 16px}.ep-coach-bubble:after{content:"";position:absolute;right:-9px;top:40px;width:14px;height:14px;background:white;border-right:2px solid #d7c8e0;border-top:2px solid #d7c8e0;transform:rotate(45deg)}.ep-coach-sora{width:100px;height:145px;object-fit:contain;transform:scaleX(-1);flex:none}@media(max-width:500px){.ep-coach{gap:8px}.ep-coach-sora{width:76px;height:130px}.ep-coach-bubble{padding:10px 12px}} .ct-eigo .ep-tutorial-target{outline:4px solid var(--noun);outline-offset:3px;box-shadow:0 0 0 7px #2d6be022}.ct-eigo .ep-guide-aux{color:var(--aux);font-weight:800}';
   panel.append(style);
-  let completed = false, sawView = false;
+  let completed = false, sawView = false, asked = false;
   // いま何をすればいいかを、3つの手順の印と、指のマークで見せる(通常の「完成」や主役の編集は制限しない)
   const steps = document.createElement('div'); steps.className = 'ep-steps';
   const demo = document.createElement('div'); demo.className = 'ep-demo'; demo.innerHTML = '<span>I</span> want to play. <i>→</i> <span class="to">She</span> wants to play.';
   const hand = document.createElement('div'); hand.className = 'ep-hand'; hand.textContent = '👆'; hand.hidden = true;
+  const verbs = ['eat', 'sing', 'run', 'swim', 'dance', 'read', 'cook'], cheers = ['おおっ、絵が変わった！', 'ほら、動きも変わったよ！', 'すごい、そのまま絵になるね！', 'もう1回いってみよう！'];
+  let vi = 0, ci = 0, past = false;
+  const tryRow = document.createElement('div'); tryRow.hidden = true; tryRow.className = 'ep-try';
+  const mkBtn = (t, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.onclick = () => { fn(b); APP.finished = true; render(); guide.textContent = cheers[ci++ % cheers.length]; resize(); }; return b; };
+  tryRow.append(
+    mkBtn('🎲 動きをかえる', () => pick('self', verbs[vi++ % verbs.length])),
+    mkBtn('⏪ 昔のことにする', b => { past = !past; pick('tense', past ? 'past' : 'pres'); b.textContent = past ? '▶ 今のことにもどす' : '⏪ 昔のことにする'; }));
+  const whereText = '英語脳は、勉強部屋のゲーム「英語脳」からいつでも開けるよ。勉強ノートの「✨ 使ってみる」や、町を歩いているときの ✨ ボタンに英語を入れると、その言葉を文にして絵にしてくれる。';
+  bubble.insertBefore(tryRow, back);
   bubble.insertBefore(steps, guide); bubble.insertBefore(demo, back); document.body.appendChild(hand);
   const hintStyle = document.createElement('style');
-  hintStyle.textContent = '.ep-steps{display:flex;gap:5px;margin:0 0 6px;flex-wrap:wrap}.ep-steps span{font-size:12px;font-weight:800;padding:2px 9px;border-radius:99px;background:#efe8f4;color:#8a7898}.ep-steps span.on{background:#7b5cff;color:#fff}.ep-steps span.done{background:#d9f2e4;color:#2f8a5a}.ep-demo{margin-top:6px;font-size:15px;color:#4b3e58}.ep-demo span{font-weight:800;color:#2d6be0}.ep-demo .to{color:#e0457b}.ep-demo i{font-style:normal;color:#9a8aa8;margin:0 4px}.ep-hand{position:fixed;z-index:2147483000;font-size:34px;line-height:1;pointer-events:none;transform:translate(-50%,0);animation:epBob .7s ease-in-out infinite alternate}@keyframes epBob{to{transform:translate(-50%,9px)}}@keyframes epPulse{50%{box-shadow:0 0 0 12px #2d6be033}}.ct-eigo .ep-tutorial-target{animation:epPulse 1s ease-in-out infinite}';
+  hintStyle.textContent = '.ep-steps[hidden],.ep-try[hidden],.ep-demo[hidden]{display:none}.ep-try{display:flex;gap:6px;margin-top:6px}.ep-try button{flex:1;font:inherit;font-size:13px;font-weight:800;min-height:40px;border:2px solid #d7c8e0;border-radius:10px;padding:4px 10px;background:#fff;color:#66507d;cursor:pointer}.ep-where{margin-top:8px;font-size:13px;line-height:1.5;color:#6b5a78}.ep-steps{display:flex;gap:5px;margin:0 0 6px;flex-wrap:wrap}.ep-steps span{font-size:12px;font-weight:800;padding:2px 9px;border-radius:99px;background:#efe8f4;color:#8a7898}.ep-steps span.on{background:#7b5cff;color:#fff}.ep-steps span.done{background:#d9f2e4;color:#2f8a5a}.ep-demo{margin-top:6px;font-size:15px;color:#4b3e58}.ep-demo span{font-weight:800;color:#2d6be0}.ep-demo .to{color:#e0457b}.ep-demo i{font-style:normal;color:#9a8aa8;margin:0 4px}.ep-hand{position:fixed;z-index:2147483000;font-size:34px;line-height:1;pointer-events:none;transform:translate(-50%,0);animation:epBob .7s ease-in-out infinite alternate}@keyframes epBob{to{transform:translate(-50%,9px)}}@keyframes epPulse{50%{box-shadow:0 0 0 12px #2d6be033}}.ct-eigo .ep-tutorial-target{animation:epPulse 1s ease-in-out infinite}';
   panel.append(hintStyle);
   const setSteps = n => { steps.innerHTML = ['① 「完成」を押す', '② 主役の I を押す', '③ she を選ぶ'].map((t, i) => `<span class="${i + 1 < n ? 'done' : i + 1 === n ? 'on' : ''}">${i + 1 < n ? '✓ ' : ''}${t}</span>`).join(''); };
   const point = el => { if (!el) { hand.hidden = true; return; } try { el.scrollIntoView({ block: 'nearest' }); } catch (e) { } const r = el.getBoundingClientRect(); hand.style.left = (r.left + r.width / 2) + 'px'; hand.style.top = (r.bottom - 6) + 'px'; hand.hidden = false; };
   function updateGuide() {
     if (!completed && APP.S.main.subj === 'p:she') {
       completed = true; APP.finished = true; render();
-      setSteps(4); demo.hidden = false; point(null);
-      guide.innerHTML = 'できたね！ She <span class="ep-guide-aux">wants to</span> play.「彼女は遊びたい」になったよ。<br>主役が she になると、want に s がついて <b>wants</b> になるんだ。ほかにも文の要素をいろいろ替えられるから、別の機会に試してみてね。';
+      point(null);
+      guide.innerHTML = 'おおっ、絵が女の子に変わった！ 主役を替えるだけで、文も絵も一緒に変わるよ。ほかも触ってみて。';
+      steps.hidden = true; demo.hidden = true; tryRow.hidden = false;
       back.hidden = false; back.focus({ preventScroll: true });
     }
     holder.querySelectorAll('.ep-tutorial-target').forEach(el => el.classList.remove('ep-tutorial-target'));
@@ -63,5 +73,5 @@ export function startEpisodePractice({ finish }) {
   changes.observe(holder, { childList: true, subtree: true });
   updateGuide();
   window.addEventListener('resize', () => { if (!completed) point(holder.querySelector('.ep-tutorial-target')); });
-  back.onclick = () => { if (!completed) return; changes.disconnect(); ro.disconnect(); hand.remove(); finish(); };
+  back.onclick = () => { if (!completed) return; if (!asked) { asked = true; tryRow.hidden = true; guide.textContent = whereText; back.textContent = 'わかった！つづきへ'; resize(); return; } changes.disconnect(); ro.disconnect(); hand.remove(); finish(); };
 }

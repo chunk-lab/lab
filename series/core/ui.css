@@ -1,7 +1,7 @@
 /* 共通の画面（設定・プロフィール・お知らせ・「戻る」ボタン）。.cs- で始まるものだけに効く */
 .cs-ui{--cs-ink:#2b2320;--cs-paper:#fffaf0;--cs-wood:#8a5a32;--cs-leaf:#4fa34a;--cs-sun:#ffc93c;font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP","M PLUS Rounded 1c",system-ui,sans-serif}
 .cs-ov{position:fixed;inset:0;z-index:100;background:rgba(20,30,40,.4);display:flex;align-items:flex-end;justify-content:center}
-.cs-sheet{width:min(100%,480px);max-height:85vh;overflow-y:auto;background:var(--cs-paper);color:var(--cs-ink);border:3px solid var(--cs-wood);border-bottom:0;border-radius:22px 22px 0 0;
+.cs-sheet{width:min(100%,480px);max-height:min(85vh,calc(100dvh - 84px));overflow-y:auto;background:var(--cs-paper);color:var(--cs-ink);border:3px solid var(--cs-wood);border-bottom:0;border-radius:22px 22px 0 0;
   padding:16px max(18px,env(safe-area-inset-left,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:12px;animation:csup .22s ease-out}
 @keyframes csup{from{transform:translateY(100%)}}
 .cs-sheet h3{margin:0;font-size:20px;text-align:center}
@@ -130,3 +130,4 @@
 .cs-sh.up{background:linear-gradient(var(--cs-paper),transparent);align-items:flex-start;padding:2px 0 0}
 .cs-sh.dn{background:linear-gradient(transparent,var(--cs-paper))}
 .cs-sh.on{opacity:.85}
+.cs-mimnow{background:#ffe9a8;color:inherit;border-radius:4px;padding:0 2px}.cs-nb-a .cs-busy{opacity:.55}

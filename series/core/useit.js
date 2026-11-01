@@ -20,14 +20,37 @@ export function createUseit(core) {
     core.notebook.list({ kind: 'short' }).forEach(x => push(x.en, x.ja, '勉強ノート'));
     return out.slice(0, 8);
   }
-  // 聞いてまねる：ゆっくり→ふつう→ふつう。間に、まねする時間をあける
+  // 文をチャンク(意味のまとまり)に分ける：カンマのあと／前置詞・接続詞の前で区切り、1語だけのかたまりは隣にくっつける
+  const BRK = /^(to|in|on|at|with|for|from|of|about|by|into|over|under|after|before|because|when|while|if|that|which|who|and|but|or|so|than|as|until|since|during|through|around|near)$/i;
+  const chunksOf = en => {
+    const ws = String(en).trim().split(/\s+/).filter(Boolean), out = []; let cur = [];
+    ws.forEach((w, i) => { if (cur.length >= 2 && (BRK.test(w.replace(/[^\w']/g, '')) || /[,;:]$/.test(ws[i - 1]))) { out.push(cur); cur = []; } cur.push(w); });
+    if (cur.length) out.push(cur);
+    for (let i = out.length - 1; i > 0; i--) if (out[i].length === 1) { out[i - 1].push(...out[i]); out.splice(i, 1); }
+    if (out.length > 1 && out[0].length === 1) { out[1].unshift(...out[0]); out.shift(); }
+    return out;
+  };
+  // 聞いてまねる：チャンクごとに1回ずつ読み、そのたびにまねする間をあける(全体で1回だけ。文全体のくり返しは、ボタンをまた押す)
+  let mimicRun = null;   // いま動いている聞いてまねる({stop})。二重に起動しない
   async function mimic(en, btn) {
-    const sp = core.speech, gap = Math.min(6000, 1200 + en.split(/\s+/).length * 450);
-    for (const [i, r] of [[1, .8], [2, 1], [3, 1]]) {
-      if (btn) btn.textContent = `${i}回目:聞いて…`; sp.speak(en, { rate: r }); await wait(gap);
-      if (btn) btn.textContent = `${i}回目:まねして言ってみよう`; await wait(gap);
+    if (mimicRun && mimicRun.btn === btn) return;   // 同じ文を読んでいる最中の押し直しは無視
+    if (mimicRun) mimicRun.stop();                   // ほかの文なら、前のを止めてから始める
+    const sp = core.speech, li = btn && btn.closest('li'), b = li && li.querySelector('b'), plain = b && b.textContent;
+    const parts = chunksOf(en), run = { btn, dead: false, stop() { this.dead = true; try { sp.stop(); } catch (e) { } } };
+    mimicRun = run;
+    if (btn) { btn.classList.add('cs-busy'); btn.setAttribute('aria-pressed', 'true'); }
+    const mark = k => { if (!b) return; b.innerHTML = parts.map((c, j) => j === k ? '<mark class="cs-mimnow">' + esc(c.join(' ')) + '</mark>' : esc(c.join(' '))).join(' '); };
+    try {
+      for (let k = 0; k < parts.length && !run.dead && (!b || b.isConnected); k++) {
+        const text = parts[k].join(' '); mark(k);
+        await new Promise(res => { let done = false; const fin = () => { if (!done) { done = true; res(); } }; try { sp.speak(text, { rate: .85, onend: fin }); } catch (e) { fin(); } setTimeout(fin, 1500 + parts[k].length * 700); });
+        if (!run.dead) await wait(500 + parts[k].length * 450);   // まねして言う時間
+      }
+    } finally {
+      if (b && plain != null) b.textContent = plain;
+      if (btn) { btn.classList.remove('cs-busy'); btn.removeAttribute('aria-pressed'); }
+      if (mimicRun === run) mimicRun = null;
     }
-    if (btn) btn.textContent = '聞いてまねる';
   }
   function open(x0) {
     const x = Object.assign({ en: '', ja: '' }, x0 || {});
