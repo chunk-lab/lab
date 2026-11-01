@@ -95,7 +95,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       },
     });
   }
-  function stop3D() { document.body.classList.remove('md-app-open'); core.daylog.act('base', null); if (!town) return; try { town.unmount(); } catch (e) { console.error(e); } box.remove(); town = null; box = null; }
+  function stop3D() { document.body.classList.remove('md-app-open', 'tw-talking'); core.daylog.act('base', null); if (!town) return; try { town.unmount(); } catch (e) { console.error(e); } box.remove(); town = null; box = null; }
 
   // ゲームを開いている間は3Dの町を止め、閉じたら再開する
   core.events.on((game, name) => { if (name === 'open' && game !== 'town3d' && town) town.pause(); });

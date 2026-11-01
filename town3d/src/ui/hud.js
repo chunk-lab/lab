@@ -190,7 +190,7 @@ export function createHud(root, bus) {
       all.forEach((c, i) => { const b = h(`<button class="tw-btn${i === 0 && choices.length ? ' main' : ''}"></button>`); b.textContent = c.label; b.onclick = ev => { ev.stopPropagation(); this.closeDialog(); c.fn?.(); }; ch.appendChild(b); });
       ch.style.visibility = 'hidden';
       const pic = portrait(face || name); if (pic) { const im = document.createElement('img'); im.className = 'tw-dpic'; im.src = pic; im.alt = ''; dialog.appendChild(im); }   // 顔絵
-      root.appendChild(dialog);
+      root.appendChild(dialog); document.body.classList.add('tw-talking');   // 会話中は画面の下の「今日なにする?」を隠す
       let i = 0; const chars = [...text];
       const tick = setInterval(() => {
         i++; tx.textContent = chars.slice(0, i).join('');
@@ -200,7 +200,7 @@ export function createHud(root, bus) {
       dialog.onclick = () => { if (i < chars.length) { i = chars.length - 1; } };
       dialog._stop = () => clearInterval(tick);
     },
-    closeDialog() { if (dialog) { dialog._stop(); dialog.remove(); dialog = null; bus.emit('ui:dialogClosed'); } },
+    closeDialog() { if (dialog) { dialog._stop(); dialog.remove(); dialog = null; document.body.classList.remove('tw-talking'); bus.emit('ui:dialogClosed'); } },
     // 頭の上の名前と吹き出し
     tag(id, name, me = false) {
       if (tags.has(id)) return;
