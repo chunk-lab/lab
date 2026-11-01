@@ -57,3 +57,8 @@ body.ep-on .cs-ui>.cs-ov{display:none}
 .ep-card p{font-size:14px;line-height:1.6;margin:4px 0 10px}
 .ep-card>.ep-btn{margin-top:auto}
 @media(max-height:520px){.ep-root{--ep-h:140px}.ep-line{font-size:14px;line-height:1.5}.ep-dialog,.ep-card{padding:20px 14px 8px}}
+/* 立ち絵の大きさをそろえる(そらは縦いっぱいに描かれているので少し小さく)。話している方を大きく、もう一人は暗く */
+.ep-portraits img{transform-origin:50% 100%;scale:1;transition:filter .25s,transform .25s,scale .25s}
+.ep-portraits img.ep-sora{scale:.86}
+.ep-portraits img.ep-speaking{scale:1.06}
+.ep-portraits img.ep-sora.ep-speaking{scale:.93}
