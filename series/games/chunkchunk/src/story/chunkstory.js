@@ -746,12 +746,16 @@ function cutStage(ch, st, finish){
       f.s.append(spot, hand, cap);
       const off = () => { clearInterval(tm); spot.remove(); hand.remove(); cap.remove(); };
       const tick = () => {
-        if (!f.alive || !spot.isConnected || over || cuts.size > 0) return off();
-        const tg = passed === 0 ? bFwd : bCut, r = tg.getBoundingClientRect(), sr = f.s.getBoundingClientRect();
+        if (!f.alive || !spot.isConnected || over) return off();
+        // ①▶で進む → ②区切る → ③つづけて▶(切るたびにくり返し) → ④最後まで来たら「かんせい」
+        const fin = passed >= len, tg = fin ? bCut : (passed === 0 || cuts.size > 0) ? bFwd : bCut, r = tg.getBoundingClientRect(), sr = f.s.getBoundingClientRect();
         spot.style.cssText = `left:${r.left - sr.left - 6}px;top:${r.top - sr.top - 6}px;width:${r.width + 12}px;height:${r.height + 12}px`;
         hand.style.cssText = `left:${r.left - sr.left + r.width / 2}px;top:${r.top - sr.top - 52}px`;
         cap.style.cssText = `top:${Math.max(8, r.top - sr.top - 150)}px`;
-        cap.innerHTML = passed === 0 ? "<b>① ▶を押す</b><br>言葉が1つずつ、オレンジの線へ進むよ。" : "<b>② 線の左までが ひとまとまり</b><br>ここで区切りたいと思ったら、<b>「区切る」</b>を押そう。<small>（言葉を指でなぞって囲んでもOK）</small>";
+        cap.innerHTML = fin ? "<b>④ 最後まで来たよ！</b><br><b>「かんせい」</b>を押して、答え合わせしよう。"
+          : passed === 0 ? "<b>① ▶を押す</b><br>言葉が1つずつ、オレンジの線へ進むよ。"
+          : cuts.size === 0 ? "<b>② 線の左までが ひとまとまり</b><br>ここで区切りたいと思ったら、<b>「区切る」</b>を押そう。<small>（言葉を指でなぞって囲んでもOK）</small>"
+          : "<b>③ 切れたね！</b><br>つづけて<b>▶</b>で進もう。区切りたいところで「区切る」。<small>最後の言葉まで進めたら終わりだよ。</small>";
       };
       const tm = setInterval(tick, 200); tick();
     }

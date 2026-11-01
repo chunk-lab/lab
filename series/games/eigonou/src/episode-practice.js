@@ -7,7 +7,7 @@ import { ENV } from './env.js';
 
 export function startEpisodePractice({ finish }) {
   setLevel('4'); // want to を維持できる設定。保存先はこのフレームのメモリだけ。
-  pick('subj', 'p:i'); pick('modal', 'want'); pick('self', 'play');
+  pick('subj', 'p:i'); pick('modal', 'want');
   APP.finished = false; render(); sbDraw();
 
   const app = ENV.root; if (getComputedStyle(app).position === 'static') app.style.position = 'relative';
@@ -16,16 +16,16 @@ export function startEpisodePractice({ finish }) {
   const css = document.createElement('style');
   css.textContent = `
 .ct-eigo .ep-tutorial-target{animation:epPulse 1s ease-in-out infinite}@keyframes epPulse{50%{box-shadow:0 0 0 10px #ffd36b55}}
-.ep-spot{position:absolute;z-index:2000;pointer-events:none;border-radius:16px;box-shadow:0 0 0 200vmax rgba(8,12,30,.66),0 0 0 3px #ffd36b;transition:opacity .25s}
+.ep-spot{position:absolute;z-index:2000;pointer-events:none;border-radius:16px;box-shadow:0 0 0 200vmax rgba(8,12,30,.5),0 0 0 3px #ffd36b;transition:opacity .25s}
 .ep-hand{position:absolute;z-index:2001;pointer-events:none;font-size:42px;line-height:1;transform:translateX(-50%);transition:opacity .25s;animation:epBob .7s ease-in-out infinite alternate}
 @keyframes epBob{to{margin-top:10px}}
 .ep-cap{position:absolute;z-index:2001;pointer-events:none;left:5%;right:5%;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:#fffaf0;color:#4b3e58;font:700 16px/1.5 sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.35);transition:opacity .25s}
 .ep-cap img{width:54px;height:54px;object-fit:contain;flex:none;transform:scaleX(-1)}
 .ep-off{opacity:0!important}
 .ep-flash{position:absolute;inset:0;z-index:1500;pointer-events:none;background:radial-gradient(circle at 50% 35%,#fff9,#ffd36b55 40%,transparent 70%);animation:epFlash .7s ease-out forwards}@keyframes epFlash{from{opacity:1}to{opacity:0}}
-.ep-done{position:absolute;z-index:2002;left:0;right:0;bottom:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));background:#fffaf0;border-top:2px solid #d7c8e0;border-radius:18px 18px 0 0;color:#4b3e58;font:700 16px/1.55 sans-serif;box-shadow:0 -6px 18px rgba(0,0,0,.25)}
-.ep-done .row{display:flex;gap:6px;margin-top:8px}.ep-done button{flex:1;font:inherit;font-size:14px;font-weight:800;min-height:44px;border:2px solid #d7c8e0;border-radius:12px;padding:4px 8px;background:#fff;color:#66507d;cursor:pointer}
-.ep-done button.go{background:#786184;border-color:#786184;color:#fff}.ep-done .top{display:flex;align-items:center;gap:10px}.ep-done img{width:48px;height:48px;object-fit:contain;transform:scaleX(-1)}`;
+.ep-done{position:absolute;z-index:2002;left:0;right:0;bottom:0;box-sizing:border-box;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:#fffaf0;border-top:2px solid #d7c8e0;border-radius:16px 16px 0 0;color:#4b3e58;font:700 clamp(12px,3.7vw,15px)/1.5 sans-serif;box-shadow:0 -6px 18px rgba(0,0,0,.25)}
+.ep-done .row{display:flex;gap:6px;margin-top:8px}.ep-done button{flex:1;min-width:0;font:inherit;font-weight:800;min-height:42px;border:2px solid #d7c8e0;border-radius:12px;padding:4px 6px;background:#fff;color:#66507d;cursor:pointer}
+.ep-done button.go{background:#786184;border-color:#786184;color:#fff}`;
   document.head.appendChild(css);
   const spot = document.createElement('div'), hand = document.createElement('div'), cap = document.createElement('div');
   spot.className = 'ep-spot'; hand.className = 'ep-hand'; cap.className = 'ep-cap';
@@ -42,6 +42,15 @@ export function startEpisodePractice({ finish }) {
     const she = [...app.querySelectorAll('#slot .slbar .slm')].find(el => el.querySelector('b')?.textContent === 'she');
     if (she) return { k: 'she', el: she, t: 'she（彼女）を押してみよう！' };
     if (APP.finished) { sawView = true; const el = q('#chunks [data-cat="subj"]'); return el && { k: 'subj', el, t: '絵ができたね！ 次は「I」を押して、主役を替えてみよう。' }; }
+    const vb0 = q('.slsk .ck.pos-verb'), filled = !!vb0 && /rest/.test(vb0.textContent);
+    const inp = [...app.querySelectorAll('#slin')].find(e => e.offsetParent);   // 「動き」を打つ欄(いま開いているとき)
+    if (inp && !sawView && !filled) {
+      const chip = [...app.querySelectorAll('.slchips b')].find(b => b.textContent === 'rest')?.parentElement;
+      if (chip) return { k: 'chip', el: chip, t: 'rest（休む）を押そう！' };
+      return { k: 'type', el: inp, t: 'ここに「rest」と打ってみよう。（休む＝rest）' };
+    }
+    const vb = q('.slsk .ck.pos-verb');
+    if (!sawView && vb && !filled) return { k: 'verb', el: vb, t: '「休みたい」の「休む」を入れよう。「want to」のカードを押してね。' };
     const card = sawView && q('.slsk .ck.subject');
     if (card) return { k: 'card', el: card, t: '光っている「I」のカードを押して、she に替えよう。' };
     const el = q('#sldone'); return el && { k: 'done', el, t: '文ができたよ！「完成」を押して、絵にしてみよう。' };
@@ -75,15 +84,15 @@ export function startEpisodePractice({ finish }) {
     app.querySelectorAll('.ep-tutorial-target').forEach(e => e.classList.remove('ep-tutorial-target'));
     APP.finished = true; render(); flash();
     const box = document.createElement('div'); box.className = 'ep-done';
-    box.innerHTML = `<div class="top"><img alt="そら" src="${sora}"><span class="msg"></span></div><div class="row"></div>`;
+    box.innerHTML = `<div class="msg"></div><div class="row"></div>`;
     const msg = box.querySelector('.msg'), row = box.querySelector('.row');
-    msg.textContent = 'おおっ、絵が女の子に変わった！ 主役を替えるだけで、文も絵も一緒に変わるよ。ほかも触ってみて。町や勉強部屋に戻ったら、英語脳の場所を教えるね。';
-    const act = (b, fn) => { b.type = 'button'; b.onclick = () => { fn(b); APP.finished = true; render(); flash(); msg.textContent = cheers[ci++ % cheers.length]; }; return b; };
-    const b1 = act(document.createElement('button'), () => pick('self', verbs[vi++ % verbs.length])); b1.textContent = '🎲 動きをかえる';
-    const b2 = act(document.createElement('button'), b => { past = !past; pick('tense', past ? 'past' : 'pres'); b.textContent = past ? '▶ 今のことにもどす' : '⏪ 昔のことにする'; }); b2.textContent = '⏪ 昔のことにする';
-    const go = document.createElement('button'); go.type = 'button'; go.className = 'go'; go.textContent = '物語のつづきへ';
-    go.onclick = () => { box.remove(); css.remove(); [spot, hand, cap].forEach(e => e.remove()); finish(); };
-    row.append(b1, b2, go); app.appendChild(box);
+    msg.textContent = 'おおっ、絵が女の子に変わった！ 主役を替えるだけで、文も絵も一緒に変わるよ。ほかも触ってみて。';
+    const act = (b, fn) => { b.type = 'button'; b.onclick = () => { fn(b); APP.finished = true; render(); flash(); msg.textContent = cheers[ci++ % cheers.length]; app.style.paddingBottom = box.offsetHeight + 'px'; }; return b; };
+    const b1 = act(document.createElement('button'), () => pick('self', verbs[vi++ % verbs.length])); b1.textContent = '🎲 動き';
+    const b2 = act(document.createElement('button'), b => { past = !past; pick('tense', past ? 'past' : 'pres'); b.textContent = past ? '▶ 今にもどす' : '⏪ 昔のこと'; }); b2.textContent = '⏪ 昔のこと';
+    const go = document.createElement('button'); go.type = 'button'; go.className = 'go'; go.textContent = 'つづきへ';
+    go.onclick = () => { app.style.paddingBottom = ''; box.remove(); css.remove(); [spot, hand, cap].forEach(e => e.remove()); finish(); };
+    row.append(b1, b2, go); app.appendChild(box); app.style.boxSizing = 'border-box'; app.style.paddingBottom = box.offsetHeight + 'px';   // 絵がカードに隠れないよう、下をあける
   }
   function flash() { const fl = document.createElement('div'); fl.className = 'ep-flash'; app.appendChild(fl); setTimeout(() => fl.remove(), 800); }
   tick();
