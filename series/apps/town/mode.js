@@ -37,7 +37,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     } catch (e) { console.error(e); } finally { exprBusy = false; }
   }
   let town = null, box = null;
-  const launcher = createLauncher(core, { openApp: (id, p) => town && town.openApp(id, p), to2D: () => go('home'), openStudy });
+  const launcher = createLauncher(core, { openApp: (id, p) => town && town.openApp(id, p), goTo: id => { if (town && !town.goToApp(id)) core.ui.toast('その建物は、まだ町にありません'); }, to2D: () => go('home'), openStudy });
 
   const episodes = createEpisodes(core, {
     games: GAMES, pauseTown: () => town?.pause(), resumeTown: () => town?.resume(),
