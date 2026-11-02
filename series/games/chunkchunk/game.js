@@ -50,6 +50,7 @@ export default {
     if (ctx.opts.storyChapter === 1) ENV.story.open({ chapter: 1, episode: true });   // 物語から読む・聞く第1章へ。通常の入口・保存方法は共通
     if (ctx.opts && ctx.opts.lesson) setTimeout(() => { try { ENV.make.openLesson(ctx.opts.lesson === 'next' ? (ENV.make.nextLesson() || {}).id : ctx.opts.lesson); } catch (e) { console.error(e); } }, 60);   // ミッション:レッスンを指定
     if (ctx.opts && ctx.opts.open === 'mytexts') setTimeout(() => { try { el.querySelector('#title').hidden = true; openMyTexts(); } catch (e) { console.error(e); } }, 50);   // 図書館の「自分の本」から
+    if (ctx.opts && ctx.opts.play) setTimeout(() => { try { const b = el.querySelector('[data-play="' + ctx.opts.play + '"]'); b && b.click(); } catch (e) { console.error(e); } }, 80);   // 🎮一覧から「さらさら/よーいどん」を直接始める(auto-one/manual-one)
     ctx.report('enter', { face, name: NAMES[face] });
     return {
       unmount() {

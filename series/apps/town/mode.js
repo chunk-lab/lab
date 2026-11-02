@@ -16,7 +16,8 @@ const st = createStore('town');
 const ROUTE = {
   school: { place: 'school' },           // 学校
   library: { place: 'library' },         // 図書館
-  chunkcards: { game: 'cards' },          // カフェ＝チャンク・カード
+  chunkcards: { game: 'cards' },
+  cinema: { game: 'stream' },             // 映画館＝Storyミング！          // カフェ＝チャンク・カード
 };
 
 export function createMode(core, { GAMES, enter, start2D, openStudy }) {
@@ -37,7 +38,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     } catch (e) { console.error(e); } finally { exprBusy = false; }
   }
   let town = null, box = null;
-  const launcher = createLauncher(core, { openApp: (id, p) => town && town.openApp(id, p), goTo: id => { if (town && !town.goToApp(id)) core.ui.toast('その建物は、まだ町にありません'); }, to2D: () => go('home'), openStudy });
+  const launcher = createLauncher(core, { openApp: (id, p) => town && town.openApp(id, p), to2D: () => go('home'), openStudy });
 
   const episodes = createEpisodes(core, {
     games: GAMES, pauseTown: () => town?.pause(), resumeTown: () => town?.resume(),

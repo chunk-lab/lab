@@ -7,9 +7,9 @@ import { playOf } from '../../core/plays.js';
 const SECS = [
   { k: 'cc', icon: '🏫', title: '学校', sub: '今スラ！ ― 切って鍛える', color: '#2d6be0', warp: 'school', groups: [
     { h: '基礎', items: [{ t: 'レッスン', i: '📘', kind: 'game', game: 'chunkchunk', opts: { face: 'lesson' } }] },
-    { h: 'スピード・力だめし', note: '同じ「ゲームセンター」画面から選びます', items: [
-      { t: 'さらさら', i: '🌊', kind: 'game', game: 'chunkchunk', opts: { face: 'arcade' } },
-      { t: 'よーいどん', i: '🏁', kind: 'game', game: 'chunkchunk', opts: { face: 'arcade' } },
+    { h: 'スピード・力だめし', note: 'さらさら・よーいどんは「ランダム」で始まります。チャレンジは30秒/1分を選びます', items: [
+      { t: 'さらさら', i: '🌊', kind: 'game', game: 'chunkchunk', opts: { face: 'arcade', play: 'auto-one' } },
+      { t: 'よーいどん', i: '🏁', kind: 'game', game: 'chunkchunk', opts: { face: 'arcade', play: 'manual-one' } },
       { t: 'チャレンジ', i: '⏱', kind: 'play', id: 'cc.game' }] },
     { h: '確かめる・読む', items: [
       { t: '実力テスト', i: '📝', kind: 'play', id: 'test' },
@@ -24,7 +24,7 @@ const SECS = [
       { t: '課題図書', i: '📕', kind: 'play', id: 'lib.weekly' },
       { t: 'My Texts（短文の登録）', i: '✏️', kind: 'game', game: 'chunkchunk', opts: { face: 'library' } }] },
   ] },
-  { k: 'story', icon: '🎬', title: '映画館', sub: 'Storyミング！ ― 物語で読む', color: '#df7a1a', groups: [
+  { k: 'story', icon: '🎬', title: '映画館', sub: 'Storyミング！ ― 物語で読む', color: '#df7a1a', warp: 'cinema', groups: [
     { h: '作品・タイムアタック', items: [{ t: 'Storyミング！', i: '🎞', kind: 'game', game: 'stream' }] },
     { h: '単語・長文', items: [
       { t: '単語練習', i: '🔤', kind: 'play', id: 'stream.word' },
@@ -87,7 +87,7 @@ const CSS = `
 .lc-ft button{flex:1;border:0;border-radius:14px;padding:12px;font:inherit;font-weight:900;cursor:pointer;background:#ece7f6;color:#3d3452}
 `;
 
-export function createLauncher(core, { openApp, goTo, to2D, openStudy }) {
+export function createLauncher(core, { openApp, to2D, openStudy }) {
   let ov = null;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const itemOk = it => it.kind === 'play' ? !!playOf(it.id) : true;
@@ -106,7 +106,7 @@ export function createLauncher(core, { openApp, goTo, to2D, openStudy }) {
     const body = SECS.map(s => `<section class="lc-sec" data-k="${s.k}" style="--c:${s.color}">
       <button class="lc-bar" data-bar><b>${s.icon}</b><span><i>${esc(s.title)}</i><small>${esc(s.sub)}</small></span></button>
       <div class="lc-pn">${s.groups.map(g => `<div class="lc-g">${esc(g.h)}</div>${g.note ? `<div class="lc-n">${esc(g.note)}</div>` : ''}${g.items.length ? `<div class="lc-grid">${g.items.filter(itemOk).map(it => { all.push(it); return `<button class="lc-it" data-i="${all.length - 1}"><b>${it.i}</b>${esc(it.t)}</button>`; }).join('')}</div>` : ''}`).join('')}
-      ${s.warp ? `<button class="lc-wp" data-warp="${s.warp}">📍 この建物の前へ行く</button>` : ''}</div>
+      ${s.warp ? `<button class="lc-wp" data-warp="${s.warp}">🚪 中に入る</button>` : ''}</div>
     </section>`).join('');
     ov = document.createElement('div'); ov.className = 'lc-ov';
     ov.innerHTML = `<div class="lc-sh" role="dialog"><div class="lc-hd"><span>🎮 どこへ行く？</span><button class="lc-x" aria-label="とじる">✕</button></div>
@@ -118,7 +118,7 @@ export function createLauncher(core, { openApp, goTo, to2D, openStudy }) {
       const bar = e.target.closest('[data-bar]');
       if (bar) { const sec = bar.parentNode, was = sec.classList.contains('open'); ov.querySelectorAll('.lc-sec.open').forEach(x => x.classList.remove('open')); if (!was) { sec.classList.add('open'); const bd = ov.querySelector('.lc-body'); bd.scrollTop = Math.max(0, sec.offsetTop - bd.offsetTop - 4); } return; }
       if (e.target.closest('[data-2d]')) { close(); to2D(); return; }
-      const w = e.target.closest('[data-warp]'); if (w) { close(); goTo(w.dataset.warp); return; }
+      const w = e.target.closest('[data-warp]'); if (w) { close(); openApp(w.dataset.warp, {}); return; }
       const b = e.target.closest('[data-i]'); if (b) run(all[+b.dataset.i]);
     };
   }

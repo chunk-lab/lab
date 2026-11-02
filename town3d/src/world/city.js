@@ -214,7 +214,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     }
     const front = d / 2 + 0.02;
     const floors = Math.max(1, Math.floor((h - 0.6) / 3.1));
-    const storefront = o.kind === 'shop' || o.kind === 'cafe' || o.kind === 'arcade' || (o.landmark && o.kind !== 'house');
+    const storefront = o.kind === 'shop' || o.kind === 'cafe' || o.kind === 'arcade' || o.kind === 'cinema' || (o.landmark && o.kind !== 'house');
     const dW = o.landmark ? 2.2 : 1.3;
     const doorLX = storefront && w > 6 && o.kind !== 'school' ? w / 2 - dW / 2 - 1.2 : 0;
     // 1階の正面
@@ -264,7 +264,9 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     if (o.sign) {
       const big = !!o.landmark;
       const sw = big ? Math.min(w - 2, 6.5) : Math.min(w - 1.5, 3.4), sh = big ? 1.4 : 0.9;
-      const style = o.kind === 'arcade'
+      const style = o.kind === 'cinema'
+        ? { bg: '#1d1a2e', fg: '#ffe29a', border: '#ffd166', font: 'bold 80px sans-serif' }
+        : o.kind === 'arcade'
         ? { bg: '#3d2c5e', fg: '#ffd1f0', border: '#ff8fd8', font: 'bold 80px sans-serif' }
         : { bg: '#fffaf2', fg: '#6b5a7e', border: big ? '#' + (o.trim || 0xee9a9a).toString(16).padStart(6, '0') : null, font: 'bold 66px sans-serif' };
       const sy = o.kind === 'house' ? h - 0.9 : Math.min(h - 0.9, big ? 4.6 : 3.9);
@@ -283,6 +285,12 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
       B.add(box(w - 0.4, 0.12, 0.12), n2, 0, 3.55, front + 0.1, 0, 1, 1, 1, P4);
       for (const s of [-1, 1]) B.add(box(0.12, h - 3.8, 0.12), s < 0 ? n1 : n2, s * (w / 2 - 0.2), 3.55 + (h - 3.8) / 2, front + 0.1, 0, 1, 1, 1, P4);
       for (let i = 0; i < 5; i++) B.add(sph(0.18, 8), i % 2 ? n1 : n2, -w / 2 + 1.5 + i * (w - 3) / 4, 5.6, front + 0.2, 0, 1, 1, 1, P4);
+    }
+    // 映画館のマーキー(ひさしの黄色い電球)
+    if (o.kind === 'cinema') {
+      const n1 = glowMat('neon', 0xffe29a, 0xffc94d);
+      B.add(box(w - 0.4, 0.14, 0.14), n1, 0, h - 0.25, front + 0.1, 0, 1, 1, 1, P4);
+      for (let i = 0; i < 9; i++) B.add(sph(0.14, 8), n1, -w / 2 + 1 + i * (w - 2) / 8, 3.45, front + 0.2, 0, 1, 1, 1, P4);
     }
     if (o.kind === 'cafe') {
       bld.cafe = { face: [nx, nz], tables: [-1, 1].map(sg => { const v = new THREE.Vector3(sg * 2.2 + 0.5, 0, front + 2.4).applyMatrix4(P4); return { x: v.x, z: v.z }; }) };   // デートで座るテラス席
