@@ -1,7 +1,7 @@
 import { set_renderScene, set_render } from './play.js';
 import { DB, SET, save, say, toast } from './common.js';
 import { allowedTenses, CJ, FRONTS, FRP, FRT, LEADF, LEX, MD, MN, MODALS, N, P, PL, ST, T, TM, V, agrOf, allowedModals, cap, genClause, needsObj, newClause, nounTags, predS, predV, sentenceComplete, sentenceJa, sentenceParts, sentenceText, setModal } from './engine.js';
-import { ENV, onDoc, onTick } from './env.js';
+import { ENV, onDoc, onTick, onWin } from './env.js';
 import { IRRPL, cntForm, objRankRefs } from './objrank.js';
 import { APP, LV, optList, finModal, finSubj, finToggle, go, normalize, objFits, openFinish, passOk, pick, render, renderScene, resetAll, snapshot, stateFitsSubj, verbFitsSubj } from './play.js';
 import { qbPick, qbRes } from './qbar.js';
@@ -376,7 +376,17 @@ export function dkSync(){ const cv=document.getElementById('canvas'), app=docume
  let st=document.getElementById('dkstrip'); if(!st){ st=document.createElement('div'); st.id='dkstrip'; st.textContent='＋ 文を変化させてあそぶ'; cv.appendChild(st); st.onclick=e=>{ e.stopPropagation(); const f=APP.reelFA&&APP.reelFA.jaok; if(f) f(); }; st.addEventListener('pointerdown',e=>e.stopPropagation()); }
  const tl=document.getElementById('tline'), bars=pn.querySelector('#dkbars');
  if(open){ pn.hidden=false; const fb=document.querySelector('#scene .finbar'); if(fb) bars.replaceChildren(fb); if(tl&&tl.parentNode!==pn) pn.insertBefore(tl,pn.querySelector('#dkmenu')); }
- else { pn.hidden=true; bars.replaceChildren(); if(tl&&tl.parentNode!==cv) cv.appendChild(tl); } }
+ else { pn.hidden=true; bars.replaceChildren(); if(tl&&tl.parentNode!==cv) cv.appendChild(tl); }
+ dkFit(); }
+// メニューが開いている間は、絵の領域をメニューの上までにする（絵の下側がメニューに隠れないように）。英文が長いときは絵を小さく
+export function dkFit(){ const cv=document.getElementById('canvas'), pn=document.getElementById('dkpanel'), sc=document.getElementById('scene'); if(!cv) return;
+ const open=!!pn&&!pn.hidden&&cv.classList.contains('dkx');
+ if(!open){ if(cv.style.paddingBottom) cv.style.paddingBottom=''; return; }
+ cv.style.paddingBottom='';
+ const ov=Math.ceil(cv.getBoundingClientRect().bottom-pn.getBoundingClientRect().top);
+ cv.style.paddingBottom=ov>0?ov+'px':'';
+ try{ if(sc){ const cd=sc.querySelector('.fincard2'); if(cd) cv.classList.toggle('finsm', cd.getBoundingClientRect().height>sc.clientHeight*0.3 || sc.clientHeight<330); } }catch(e){} }
+onWin('resize',()=>{ try{ dkFit(); }catch(e){} });
 
 
 // ---- 前提タブ：条件／慣用句／口語／どこで／いつ（各🎲）＋ 入力バー（語の途中でも探せる・続きを書ける） ----
