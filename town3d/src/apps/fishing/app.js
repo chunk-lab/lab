@@ -411,7 +411,7 @@ export const fishingApp = {
         if (type === 'land') { sfx.play('plop'); view.splash(d.x, d.d, 8, 0.6); underReady = false; landT = 0; if (castQ) { toast(castQ === 'perfect' ? '<span style="font-size:24px;color:#e08a00">✨パーフェクト!!✨</span><br><small style="font-size:12px">まわりの魚がとても寄ってくる</small>' : 'ナイスキャスト!<br><small style="font-size:12px">魚が寄りやすい</small>', 1200); if (castQ === 'perfect') sfx.play('coin'); castQ = ''; } }
         if (type === 'nibble') sfx.play('nibble');
         if (type === 'bite') { sfx.play('bite'); if (E.G.bait.type !== 'bait') view.splash(L.x, L.d, 6, 0.7); }
-        if (type === 'hooked') { onHit(d); if (!G && !vs) { const h = E.S.hooked; try { if (h && E.sortStart()) { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); closeReel(); startReelFlow(h, () => { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); }); } } catch (err) { closeReel(); if (h) h.sr = false; } } }
+        if (type === 'hooked') { onHit(d); if (!G) { const h = E.S.hooked; try { if (h && E.sortStart()) { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); closeReel(); startReelFlow(h, () => { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); }); } } catch (err) { closeReel(); if (h) h.sr = false; } } }
         if (!G && type === 'net') E.netResult(true);
         if (!G && (type === 'lost' || type === 'catch')) closeReel();
         if (type === 'early') { sfx.play('early'); toast('はやすぎた!', 900); note('early'); }
@@ -436,7 +436,7 @@ export const fishingApp = {
       //   小さい魚=持ち上げ1回・ゆっくり巻く / 大きい魚=持ち上げ2回・はやく巻く。ときどき魚が左右に走る・はねる(矢印で知らせる)。英語でない釣りも同じ(問題なし)。
       function startReelFlow(h, stopIn) {
         const my = ++flow, N = G ? G.reelN(h.sp, h.size || 0) : (h.sp.r >= 4 ? 5 : (h.sp.r >= 3 || (h.size || 0) >= 60) ? 4 : 3), L0 = h.sortL0, big = h.sp.r >= 3 || (h.size || 0) >= 60;
-        const NS = G ? N : (big ? 3 : 2), base = i => L0 - (L0 - 0.035) * i / (NS + 1);
+        const NS = G ? N : (vs ? 2 : big ? 3 : 2), base = i => L0 - (L0 - 0.035) * i / (NS + 1);
         const doSeg = (turns, events, a, b) => new Promise(res => {   // 竿をあやつりながら、ぐるぐる回して巻く(1本の操作)
           if (my !== flow) return res();
           closeWheel(); stopIn(); const cur = wheelCur = { a, b, p: 0 };
@@ -449,7 +449,7 @@ export const fishingApp = {
         const segment = async i => {
           sortHide = true; if (my !== flow) return;
           const hh = E.S.hooked; if (!hh || !hh.sr) return;
-          const turns = h.sp.r >= 4 ? 6 : big ? 5 : 4;   // 長めに巻く
+          const turns = (h.sp.r >= 4 ? 6 : big ? 5 : 4) * (vs ? 0.7 : 1);   // 長めに巻く(対戦は時間勝負なので、すこし短く)
           await doSeg(turns, i === 0 ? 0 : big ? 2 : 1, base(i), base(i + 1));
         };
         (async () => {
