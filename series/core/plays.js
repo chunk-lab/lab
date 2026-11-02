@@ -18,7 +18,7 @@ export const PLAYS = [
   { id: 'lib.weekly', n: '課題図書を読む', want: 'read', mood: 'study', time: [15, 30], place: 'library', go: { game: 'library', opts: { tab: 'weekly' } } },
   { id: 'stream.read', n: '長文をストリームで読む', want: 'read', mood: 'both', time: [5, 15], place: 'library', go: { game: 'library', opts: { tab: 'level' } } },
   { id: 'cc.read', n: 'リーディング(読む・解く)', want: 'read', mood: 'study', time: [15, 30], place: 'library', go: { game: 'library', opts: { tab: 'featured' } } },
-  { id: 'cc.game', n: 'チャンクチャンクのチャレンジ', want: 'read', mood: 'game', time: [5], place: 'game', go: { game: 'chunkchunk', opts: { face: 'arcade' } } },
+  { id: 'cc.game', n: 'チャンクチャンクのチャレンジ', want: 'read', mood: 'study', time: [5], place: 'school', go: { game: 'chunkchunk', opts: { face: 'arcade' } } },
   { id: 'cc.lesson', n: 'チャンクレッスン', want: 'make', mood: 'study', time: [15, 30], place: 'school', go: { game: 'chunkchunk', opts: { face: 'lesson' } } },
   { id: 'eigo', n: '英語脳で文を作る', want: 'make', mood: 'study', time: [15, 30], place: 'library', go: { game: 'eigonou' } },
   { id: 'cards', n: 'チャンク・カード', want: 'make', mood: 'game', time: [5, 15], place: 'game', go: { game: 'cards' } },
