@@ -10,8 +10,7 @@ import { createView } from './view.js';
 import { artCanvas } from './art.js';
 import { createSfx } from './sfx.js';
 import { createEnglish } from './en.js';
-import { reelWheel } from './reelwheel.js';
-import { rodPad } from './rodpad.js';
+import { rodReel } from './rodreel.js';
 const RAIN_FISH = FISH.filter(f => f.rain).map(f => f.name).join('・');
 
 const ink = '#5a4a6b';
@@ -227,7 +226,7 @@ export const fishingApp = {
         <p><b>① ねらって投げる</b><br>池を<b>タップ</b>でそこへ、<b>はじく</b>と大きく、<b>なぞる</b>と細かく、狙いの円が動く(池のどこでもOK)。🎣を<b>おしたまま</b>で力がたまり、ゲージが<b>黄色の帯</b>に入ったら<b>はなす</b>。円に落とせば魚が寄りやすく、真ん中なら<b>パーフェクト</b>!</p>
         <p><b>② さそう</b><br>しずむと水の中の画面に切りかわる。エサは<b>上下にはじくとタナ(深さ)</b>が変わる。エサ(ウキ)はじっと待つ。ルアーは🎣をおしたままで<b>巻く</b>(おしたまま上にずらすと速く)。左のボタンで<b>しゃくる</b>と強い魚がよってくる。</p>
         <p><b>③ アタリとあわせ</b><br>ウキがツンツン→<b>グッとしずんだら</b>左の<b>「あわせ」</b>! 早すぎると逃げられる。ルアーは「！」が出たらすぐ。</p>
-        <p><b>④ ファイト</b><br>魚がかかったら、<b>矢印の向きに指をスライド</b>して竿を動かし(持ち上げる↑・魚が走ったら左右にたおす←→・はねたら下げる↓)、そのあと<b>円をぐるぐるなぞって巻く</b>。これをくり返して引き寄せる。大物は持ち上げが2回!</p>
+        <p><b>④ ファイト</b><br>魚がかかったら、<b>矢印の向きに指をスライド</b>(持ち上げる↑・魚が走ったら左右にたおす←→・はねたら下げる↓。大物は持ち上げ2回)。<b>指を離さずに</b>そのまま画面のどこでも<b>ぐるぐる回す</b>と、回した分だけじわじわ巻ける。離すと巻きは止まって、また持ち上げから。</p>
         <p><b>⑤ 集める・きそう</b><br>釣れた魚は図鑑へ。時間(朝・昼・夕方・夜)・季節・雨・場所・エサで釣れる魚がかわる。道具屋で道具をそろえて、大物と伝説をねらおう。</p>
       </div><div style="padding:10px 16px 16px;text-align:center"><button class="btn" data-x>わかった</button></div>`, true);
       s.querySelector('[data-x]').onclick = () => { st.set('tut', 1); s.remove(); after && after(); };
@@ -439,15 +438,14 @@ export const fishingApp = {
         const my = ++flow, N = G ? G.reelN(h.sp, h.size || 0) : (h.sp.r >= 4 ? 5 : (h.sp.r >= 3 || (h.size || 0) >= 60) ? 4 : 3), L0 = h.sortL0, big = h.sp.r >= 3 || (h.size || 0) >= 60;
         const base = i => L0 - (L0 - 0.035) * i / (N + 1);
         let first = true;
-        const doPad = (kind, label) => new Promise(res => {
-          if (my !== flow) return res();
-          closePad(); stopIn();
-          padUi = rodPad(ui, { kind, label, sfx, onMove: p => { sideT = kind === 'left' ? -p : kind === 'right' ? p : 0; }, onDone: () => { closePad(); sideT = 0; res(); } });
-        });
-        const doWheel = (a, b, turns) => new Promise(res => {
+        const doSet = (kind, lifts, turns, a, b) => new Promise(res => {   // 竿をうごかす → 指を離さずにぐるぐる回して巻く(1本の操作)
           if (my !== flow) return res();
           closeWheel(); stopIn(); const cur = wheelCur = { a, b, p: 0 };
-          wheelUi = reelWheel(ui, { turns, sfx, onProgress: p => { cur.p = p; }, onDone: () => { cur.p = 1; E.reelTgt(b); closeWheel(); res(); } });
+          wheelUi = rodReel(ui, { kind, lifts, turns, sfx,
+            onMove: p => { sideT = kind === 'left' ? -p : kind === 'right' ? p : 0; },
+            onStroke: () => { sideT = 0; if (kind !== 'lift') E.rodDone(); },
+            onProgress: p => { cur.p = p; },
+            onDone: () => { cur.p = 1; E.reelTgt(b); closeWheel(); sideT = 0; res(); } });
         });
         const segment = async i => {
           sortHide = true;
@@ -458,18 +456,10 @@ export const fishingApp = {
             let kind = 'lift';
             if (!first) { if (h.sp.jump && r < 0.2) kind = 'jump'; else if (r < (big ? 0.42 : 0.3)) kind = Math.random() < 0.5 ? 'left' : 'right'; }
             first = false;
-            let turns = 1;
-            if (kind === 'lift') {
-              const n = big ? 2 : 1; if (big) turns = 0.75;   // 持ち上げが2回の時は、巻き取りもはやく
-              for (let k = 0; k < n; k++) { await doPad('lift', k ? '🎣 もういちど持ち上げろ！' : '🎣 竿を持ち上げろ！'); if (my !== flow) return; }
-            } else if (kind === 'jump') {
-              sfx.play('jump'); E.rodJump(); const L = E.S.lure; view.splash(L.x, L.d, 14, 1.2);
-              await doPad('down', '⬇ はねた！ 竿を下げろ！'); if (my !== flow) return; E.rodDone();
-            } else {
-              E.rodPhase(false, kind === 'left' ? 1 : -1);   // 魚は逆に走る(竿はその反対にたおす)
-              await doPad(kind, kind === 'left' ? '⬅ 左にたおせ！' : '右にたおせ！ ➡'); if (my !== flow) return; E.rodDone();
-            }
-            await doWheel(a, b, turns); if (my !== flow) return;
+            const turns = h.sp.r >= 4 ? 1.5 : big ? 1.2 : 1.5;   // 大物は持ち上げ2回・巻きはすこしはやく
+            if (kind === 'jump') { sfx.play('jump'); E.rodJump(); const L = E.S.lure; view.splash(L.x, L.d, 14, 1.2); }
+            else if (kind !== 'lift') E.rodPhase(false, kind === 'left' ? 1 : -1);   // 魚は逆に走る(竿はその反対にたおす)
+            await doSet(kind === 'jump' ? 'down' : kind, kind === 'lift' && big ? 2 : 1, turns, a, b); if (my !== flow) return;
           }
         };
         (async () => {
