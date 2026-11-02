@@ -1361,7 +1361,7 @@ export function renderCanvasSentence(){
  const done=sentenceComplete(APP.S);
  if(!parts.length||!done){ el.classList.remove('show'); el.innerHTML=''; return; }
  const spot = null; const spotKey = spot==='intens'?'state':'verb';
- const words=parts.map((q,i)=>{ let t=q.en; if(i===0) t=cap(t); const g = spot && q.clause==='m' && String(q.key).split('.').pop()===spotKey ? `<span class="plusg" data-spot="${spot}">＋<i class="plusarr">⬆<b>ここに足せる</b></i></span>` : ''; return `${g}<span class="pos-${q.pos} ${isNegChunk(q)?'negc':''}">${esc(t)}</span>${q.comma?'<span class="p">,</span>':''}`; }).join(' ');
+ const words=parts.map((q,i)=>{ let t=q.en; if(i===0) t=cap(t); const g = spot && q.clause==='m' && String(q.key).split('.').pop()===spotKey ? `<span class="plusg" data-spot="${spot}">＋<i class="plusarr">⬆<b>ここに足せる</b></i></span>` : ''; return `${g}<span class="pos-${q.pos} ${isNegChunk(q)?'negc':''}" data-cat="${q.cat||''}">${esc(t)}</span>${q.comma?'<span class="p">,</span>':''}`; }).join(' ');
  parts.punct=raw.punct;
  let ja=''; try{ ja = jaFull().replace(/\s+/g,' ').replace(/ ([、。？！])/g,'$1'); }catch(e){ ja=''; }
  const src=trSource();

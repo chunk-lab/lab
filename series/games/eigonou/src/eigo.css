@@ -1552,14 +1552,14 @@
 @keyframes ckDice{from{transform:rotate(-14deg) scale(1)}to{transform:rotate(14deg) scale(1.15)}}
 
 /* 役割の色（今スラ！・英ラボなど全アプリ共通）：主語=青・動詞=赤・目的語=緑・補語=橙・場所=紫・時=黄 */
-.ct-eigo .ck[data-cat="subj"]{--c:var(--rS)}
-.ct-eigo .ck[data-cat="obj"]{--c:var(--rO)}
-.ct-eigo .ck[data-cat="iobj"]{--c:var(--rI)}
-.ct-eigo .ck[data-cat="pred"],.ct-eigo .ck.pos-aux{--c:var(--rV)}
-.ct-eigo .ck[data-cat="state"]{--c:var(--rC)}
-.ct-eigo .ck[data-cat="place"]{--c:var(--rP)}
-.ct-eigo .ck[data-cat="time"]{--c:var(--rT)}
-.ct-eigo .ck[data-cat="freq"],.ct-eigo .ck[data-cat="with"],.ct-eigo .ck[data-cat="scope"],.ct-eigo .ck[data-cat="mthan"],.ct-eigo .ck[data-cat="tag"],.ct-eigo .ck[data-cat="lead"]{--c:var(--rM)}
+.ct-eigo .ck[data-cat="subj"],.ct-eigo .fc2[data-cat="subj"],.ct-eigo .cse span[data-cat="subj"]{--c:var(--rS)}
+.ct-eigo .ck[data-cat="obj"],.ct-eigo .fc2[data-cat="obj"],.ct-eigo .cse span[data-cat="obj"]{--c:var(--rO)}
+.ct-eigo .ck[data-cat="iobj"],.ct-eigo .fc2[data-cat="iobj"],.ct-eigo .cse span[data-cat="iobj"]{--c:var(--rI)}
+.ct-eigo .ck[data-cat="pred"],.ct-eigo .ck.pos-aux,.ct-eigo .fc2[data-cat="pred"],.ct-eigo .fc2.pos-aux,.ct-eigo .cse span[data-cat="pred"],.ct-eigo .cse span.pos-aux{--c:var(--rV)}
+.ct-eigo .ck[data-cat="state"],.ct-eigo .fc2[data-cat="state"],.ct-eigo .cse span[data-cat="state"]{--c:var(--rC)}
+.ct-eigo .ck[data-cat="place"],.ct-eigo .fc2[data-cat="place"],.ct-eigo .cse span[data-cat="place"]{--c:var(--rP)}
+.ct-eigo .ck[data-cat="time"],.ct-eigo .fc2[data-cat="time"],.ct-eigo .cse span[data-cat="time"]{--c:var(--rT)}
+.ct-eigo .ck[data-cat="freq"],.ct-eigo .ck[data-cat="with"],.ct-eigo .ck[data-cat="scope"],.ct-eigo .ck[data-cat="mthan"],.ct-eigo .ck[data-cat="tag"],.ct-eigo .ck[data-cat="lead"],.ct-eigo .fc2[data-cat="freq"],.ct-eigo .fc2[data-cat="with"],.ct-eigo .fc2[data-cat="scope"],.ct-eigo .fc2[data-cat="mthan"],.ct-eigo .fc2[data-cat="tag"],.ct-eigo .fc2[data-cat="lead"]{--c:var(--rM)}
 /* 組み立て中のスロット（誰が？／どうする？／何を？…）も役割の色 */
 .ct-eigo .ck[data-r="S"],.ct-eigo .ck[data-rc="S"]{--c:var(--rS)}
 .ct-eigo .ck[data-r="V"],.ct-eigo .ck[data-rc="V"]{--c:var(--rV)}
