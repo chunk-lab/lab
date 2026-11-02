@@ -316,7 +316,8 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     biteResult(ok) { const f = S.engaged; if (!f || f.st !== 'hold') return; if (ok) { f.st = 'nibble2'; f.nibT = 0.7 + rb() * 0.6; } else { ev('miss'); leave(f, 'miss'); } },
     sortStart() { const h = S.hooked; if (S.ph !== 'fight' || !h) return false; h.sr = true; h.phase = 'sort'; h.hold = false; h.sortL0 = Math.max(0.2, h.L); h.tgt = h.sortL0; h.sortEnded = false; return true; },
     sortProgress(k, N) { const h = S.hooked; if (!h || !h.sr) return; h.tgt = h.sortL0 - (h.sortL0 - 0.035) * k / N; },   // 1文ならべ終えるたびに少し寄る
-    rodPhase(last) { const h = S.hooked; if (!h || !h.sr) return; h.phase = 'rod'; h.mode = 'run'; h.modeT = 2.2 + rb() * 0.8; h.dir = Math.abs(h.phi) > 0.6 ? -Math.sign(h.phi) : rb() < 0.5 ? -1 : 1; h.jolt = 0.2; h.hold = !!last; ev('run', { dir: h.dir, last: last ? 1 : 0 }); },   // 1文ならべ終えた合間:魚が走る(竿を倒す)。last=熟語に答えるまで続く
+    rodPhase(last, dir) { const h = S.hooked; if (!h || !h.sr) return; h.phase = 'rod'; h.mode = 'run'; h.modeT = 2.2 + rb() * 0.8; h.dir = dir || (Math.abs(h.phi) > 0.6 ? -Math.sign(h.phi) : rb() < 0.5 ? -1 : 1); h.jolt = 0.2; h.hold = !!last; ev('run', { dir: h.dir, last: last ? 1 : 0 }); },   // 1文ならべ終えた合間:魚が走る(竿を倒す)。last=熟語に答えるまで続く
+    rodJump() { const h = S.hooked; if (!h || !h.sr) return; h.jump = 0.9; h.y = 0; },   // 魚がはねる(見た目だけ。巻き取りでは外れない)
     reelTgt(v) { const h = S.hooked; if (!h || !h.sr) return; h.tgt = Math.max(0.035, Math.min(h.sortL0, v)); },   // 円を回して巻いた分だけ、魚を寄せる
     rodDone() { const h = S.hooked; if (!h || !h.sr) return; h.hold = false; h.mode = 'rest'; h.phase = 'sort'; },
     setback(v) { const h = S.hooked; if (!h || !h.sr) return; h.L = Math.min(h.sortL0, h.L + v); h.tgt = Math.min(h.sortL0, (h.tgt == null ? h.L : h.tgt) + v); },

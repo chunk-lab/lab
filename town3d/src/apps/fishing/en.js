@@ -171,7 +171,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         sfx.play(ok ? 'coin' : 'early');
         if (q.ja && ok) say(q.en);
         emitLearn(q.w[0], q.w[2]);
-        setTimeout(() => { ov.remove(); busy = false; res(ok); }, ok ? 650 : 1600);
+        setTimeout(() => { ov.remove(); busy = false; res(ok); }, ok ? 450 : 1400);
       };
       const tm = setTimeout(() => fin(null), time * 1000);
       ov.onclick = e => { if (Date.now() - t0 < 700) return; if (e.target.closest('[data-sp]')) { say(q.en); return; } const b = e.target.closest('[data-i]'); if (b) fin(+b.dataset.i); };

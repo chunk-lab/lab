@@ -14,7 +14,7 @@ export function sortReel(parent, opt) {
   tag.textContent = `🎣 文を並べよう (0 / ${opt.n})`; panel.appendChild(tag);
   let done = false, game = null, k = 0;
   const host = {
-    box: inner, sfx: createBoxSfx(opt.volume != null ? opt.volume : 0.6), two: false,
+    fast: 1, box: inner, sfx: createBoxSfx(opt.volume != null ? opt.volume : 0.6), two: false,
     players: [{ name: 'あなた', cpu: null, icon: '🙂' }, { name: opt.fishName || 'さかな', cpu: null, icon: opt.icon || '🐟' }],
     opts: { to: opt.n, lv: opt.n <= 3 ? 1 : opt.n === 4 ? 2 : 3, board: 'few', hint: 'btn', say: 1, inline: 1, pre: opt.pre != null ? opt.pre : 1, mode: opt.mode || 'ja' },
     learn: d => { k++; try { opt.onLearn && opt.onLearn(d); } catch (e) { } try { opt.onSentence && opt.onSentence(k, opt.n); } catch (e) { } tag.textContent = k >= opt.n ? '⭕ 巻き取り成功!' : `🎣 ${k} / ${opt.n} 文 できた!`; if (k >= opt.n) tag.style.background = '#3aa067'; },

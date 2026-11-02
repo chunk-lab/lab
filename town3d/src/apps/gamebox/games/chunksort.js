@@ -61,7 +61,7 @@ export default {
     }
     function skipReveal() {
       if (phase !== 'reveal' || phT < 1 || ended) return;
-      try { speechSynthesis.cancel(); } catch (e) { }
+      if (!host.fast) { try { speechSynthesis.cancel(); } catch (e) { } }
       if (over) { ended = true; host.end({ winner: score[0] > score[1] ? 0 : 1, score }); } else { let r = null; if (host.onRevealEnd) { try { r = host.onRevealEnd(); } catch (e) { } } if (r && r.then) { phase = 'hold'; const go = () => { if (!ended) newRound(false); }; r.then(go, go); } else newRound(false); }   /* onRevealEnd が Promise を返したら、それが終わるまで次の文を出さない(釣り:熟語・巻き取りのあとに次の英文) */
     }
 
@@ -101,7 +101,7 @@ export default {
       P.forEach(me => { me.lock = Math.max(0, me.lock - dt); for (const k in me.flash) { me.flash[k].t -= dt; if (me.flash[k].t <= 0) delete me.flash[k]; } });
       if (phase === 'count') { const c0 = Math.ceil(count); count -= dt; if (count > 0 && Math.ceil(count) !== c0 && count > 0.8) sfx.play('count'); if (count <= 0) { phase = 'play'; phT = 0; sfx.play('go'); } }
       else if (phase === 'play') { if (!two && cpu && phT >= cpuT && win < 0) finish(1, null); }
-      else if (phase === 'reveal' && readDone && phT > Math.max(2.2, revDur + 0.6) && !ended) skipReveal();
+      else if (phase === 'reveal' && !ended && (host.fast ? phT > Math.max(1.4, revDur) : readDone && phT > Math.max(2.2, revDur + 0.6))) skipReveal();   /* 釣り(host.fast):読み上げが終わるのを待たず、並べ終わりの演出が済んだら先へ(読み上げは続く) */
       draw();
     });
 

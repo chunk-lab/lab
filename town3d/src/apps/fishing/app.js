@@ -11,6 +11,7 @@ import { artCanvas } from './art.js';
 import { createSfx } from './sfx.js';
 import { createEnglish } from './en.js';
 import { reelWheel } from './reelwheel.js';
+import { rodPad } from './rodpad.js';
 const RAIN_FISH = FISH.filter(f => f.rain).map(f => f.name).join('・');
 
 const ink = '#5a4a6b';
@@ -226,7 +227,7 @@ export const fishingApp = {
         <p><b>① ねらって投げる</b><br>池を<b>タップ</b>でそこへ、<b>はじく</b>と大きく、<b>なぞる</b>と細かく、狙いの円が動く(池のどこでもOK)。🎣を<b>おしたまま</b>で力がたまり、ゲージが<b>黄色の帯</b>に入ったら<b>はなす</b>。円に落とせば魚が寄りやすく、真ん中なら<b>パーフェクト</b>!</p>
         <p><b>② さそう</b><br>しずむと水の中の画面に切りかわる。エサは<b>上下にはじくとタナ(深さ)</b>が変わる。エサ(ウキ)はじっと待つ。ルアーは🎣をおしたままで<b>巻く</b>(おしたまま上にずらすと速く)。左のボタンで<b>しゃくる</b>と強い魚がよってくる。</p>
         <p><b>③ アタリとあわせ</b><br>ウキがツンツン→<b>グッとしずんだら</b>左の<b>「あわせ」</b>! 早すぎると逃げられる。ルアーは「！」が出たらすぐ。</p>
-        <p><b>④ ファイト</b><br>🎣で巻く。上のメーターが<b>赤</b>になったら手をはなしてゆるめる(切れる)。ゆるめすぎると外れる。魚が走る方向と<b>反対側に</b>画面をドラッグ(竿をたおす)と早く弱る。はねたらゆるめて!</p>
+        <p><b>④ ファイト</b><br>魚がかかったら、<b>矢印の向きに指をスライド</b>して竿を動かし(持ち上げる↑・魚が走ったら左右にたおす←→・はねたら下げる↓)、そのあと<b>円をぐるぐるなぞって巻く</b>。これをくり返して引き寄せる。大物は持ち上げが2回!</p>
         <p><b>⑤ 集める・きそう</b><br>釣れた魚は図鑑へ。時間(朝・昼・夕方・夜)・季節・雨・場所・エサで釣れる魚がかわる。道具屋で道具をそろえて、大物と伝説をねらおう。</p>
       </div><div style="padding:10px 16px 16px;text-align:center"><button class="btn" data-x>わかった</button></div>`, true);
       s.querySelector('[data-x]').onclick = () => { st.set('tut', 1); s.remove(); after && after(); };
@@ -411,7 +412,9 @@ export const fishingApp = {
         if (type === 'land') { sfx.play('plop'); view.splash(d.x, d.d, 8, 0.6); underReady = false; landT = 0; if (castQ) { toast(castQ === 'perfect' ? '<span style="font-size:24px;color:#e08a00">✨パーフェクト!!✨</span><br><small style="font-size:12px">まわりの魚がとても寄ってくる</small>' : 'ナイスキャスト!<br><small style="font-size:12px">魚が寄りやすい</small>', 1200); if (castQ === 'perfect') sfx.play('coin'); castQ = ''; } }
         if (type === 'nibble') sfx.play('nibble');
         if (type === 'bite') { sfx.play('bite'); if (E.G.bait.type !== 'bait') view.splash(L.x, L.d, 6, 0.7); }
-        if (type === 'hooked') onHit(d);
+        if (type === 'hooked') { onHit(d); if (!G && !vs) { const h = E.S.hooked; try { if (h && E.sortStart()) { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); closeReel(); startReelFlow(h, () => { bt = null; thr = 0; keyReel = false; sfx.reel(0); sfx.creak(0); }); } } catch (err) { closeReel(); if (h) h.sr = false; } } }
+        if (!G && type === 'net') E.netResult(true);
+        if (!G && (type === 'lost' || type === 'catch')) closeReel();
         if (type === 'early') { sfx.play('early'); toast('はやすぎた!', 900); note('early'); }
         if (type === 'miss') { toast('のがした…', 900); note('late'); }
         if (type === 'look') { toast('迷ってる…! 小さく誘え<br><small style="font-size:12px">「' + (E.G.bait.type === 'lure' ? 'しゃくる' : 'あわせ') + '」をちょんと</small>', 1500); sfx.play('nibble'); }
@@ -426,28 +429,57 @@ export const fishingApp = {
         if (type === 'catch') onCatch(d);
       }
       // 英語の釣り堀:答えるまで釣りは止まる(frame で E.update しない)
-      let reelUi = null, lastTh = -99, wheelUi = null, wheelCur = null, wheelRest = 0, flow = 0, sortHide = false;
+      let reelUi = null, lastTh = -99, wheelUi = null, wheelCur = null, wheelRest = 0, flow = 0, sortHide = false, padUi = null;
       const closeWheel = () => { if (wheelUi) { try { wheelUi.destroy(); } catch (e) { } wheelUi = null; } wheelCur = null; };
-      const closeReel = () => { flow++; closeWheel(); sortHide = false; if (reelUi) { try { reelUi.destroy(); } catch (e) { } reelUi = null; } };
-      // 英語の巻き取り:円をぐるぐる回して巻く → 英語の問題(並べ替え) → また円を回す … の繰り返しで引き寄せる
+      const closePad = () => { if (padUi) { try { padUi.destroy(); } catch (e) { } padUi = null; } };
+      const closeReel = () => { flow++; closeWheel(); closePad(); sideT = 0; sortHide = false; if (reelUi) { try { reelUi.destroy(); } catch (e) { } reelUi = null; } };
+      // 巻き取り:「竿をうごかす(持ち上げる/左右にたおす/はねたら下げる)」→「円をぐるぐる回して巻く」を2セット → (英語なら)文の並べ替え → また2セット … で引き寄せる。
+      //   小さい魚=持ち上げ1回・ゆっくり巻く / 大きい魚=持ち上げ2回・はやく巻く。ときどき魚が左右に走る・はねる(矢印で知らせる)。英語でない釣りも同じ(問題なし)。
       function startReelFlow(h, stopIn) {
-        const my = ++flow, N = G.reelN(h.sp, h.size || 0), L0 = h.sortL0, big = h.sp.r >= 3 || (h.size || 0) >= 60, turns = h.sp.r >= 4 ? 3 : 2;
+        const my = ++flow, N = G ? G.reelN(h.sp, h.size || 0) : (h.sp.r >= 4 ? 5 : (h.sp.r >= 3 || (h.size || 0) >= 60) ? 4 : 3), L0 = h.sortL0, big = h.sp.r >= 3 || (h.size || 0) >= 60;
         const base = i => L0 - (L0 - 0.035) * i / (N + 1);
-        const wheel = i => new Promise(res => {
+        let first = true;
+        const doPad = (kind, label) => new Promise(res => {
           if (my !== flow) return res();
-          closeWheel(); sortHide = true; stopIn(); const cur = wheelCur = { a: base(i), b: base(i + 1), p: 0 }; wheelRest = 0.7;
-          wheelUi = reelWheel(ui, { turns, sfx,
-            gain: () => { const hh = E.S.hooked; if (!hh || hh.phase !== 'rod') return 1; return sideT * hh.dir < -0.3 ? 1 : 0.35; },   // 魚が走っている間は、竿を逆にたおさないと進みにくい
-            onProgress: p => { cur.p = p; },
-            onDone: () => { cur.p = 1; E.reelTgt(cur.b); closeWheel(); E.rodDone(); sideT = 0; res(); } });
+          closePad(); stopIn();
+          padUi = rodPad(ui, { kind, label, sfx, onMove: p => { sideT = kind === 'left' ? -p : kind === 'right' ? p : 0; }, onDone: () => { closePad(); sideT = 0; res(); } });
         });
+        const doWheel = (a, b, turns) => new Promise(res => {
+          if (my !== flow) return res();
+          closeWheel(); stopIn(); const cur = wheelCur = { a, b, p: 0 };
+          wheelUi = reelWheel(ui, { turns, sfx, onProgress: p => { cur.p = p; }, onDone: () => { cur.p = 1; E.reelTgt(b); closeWheel(); res(); } });
+        });
+        const segment = async i => {
+          sortHide = true;
+          for (let s = 0; s < 2; s++) {
+            if (my !== flow) return;
+            const a = base(i) + (base(i + 1) - base(i)) * s / 2, b = base(i) + (base(i + 1) - base(i)) * (s + 1) / 2, r = Math.random(), hh = E.S.hooked;
+            if (!hh || !hh.sr) return;
+            let kind = 'lift';
+            if (!first) { if (h.sp.jump && r < 0.2) kind = 'jump'; else if (r < (big ? 0.42 : 0.3)) kind = Math.random() < 0.5 ? 'left' : 'right'; }
+            first = false;
+            let turns = 1;
+            if (kind === 'lift') {
+              const n = big ? 2 : 1; if (big) turns = 0.75;   // 持ち上げが2回の時は、巻き取りもはやく
+              for (let k = 0; k < n; k++) { await doPad('lift', k ? '🎣 もういちど持ち上げろ！' : '🎣 竿を持ち上げろ！'); if (my !== flow) return; }
+            } else if (kind === 'jump') {
+              sfx.play('jump'); E.rodJump(); const L = E.S.lure; view.splash(L.x, L.d, 14, 1.2);
+              await doPad('down', '⬇ はねた！ 竿を下げろ！'); if (my !== flow) return; E.rodDone();
+            } else {
+              E.rodPhase(false, kind === 'left' ? 1 : -1);   // 魚は逆に走る(竿はその反対にたおす)
+              await doPad(kind, kind === 'left' ? '⬅ 左にたおせ！' : '右にたおせ！ ➡'); if (my !== flow) return; E.rodDone();
+            }
+            await doWheel(a, b, turns); if (my !== flow) return;
+          }
+        };
         (async () => {
-          await wheel(0); if (my !== flow) return;
+          await segment(0); if (my !== flow) return;
+          if (!G) { for (let i = 1; i <= N; i++) { await segment(i); if (my !== flow) return; } E.sortEnd(); return; }   // 英語でない釣りは、問題なしでつづけて巻く
           reelUi = G.reel(h.sp, h.size || 0, { onSentence: () => { }, onEnd: () => E.sortEnd(),
-            onGap: (k, n) => (async () => {   // 1文ならべ終えたら:(最後の合間は熟語)→ また円を回して巻く → 次の文
+            onGap: (k, n) => (async () => {   // 1文ならべ終えたら:(最後の合間は熟語)→ 竿をうごかして巻く → 次の文
               sortHide = true;
               if (k === n - 1 && big) { stopIn(); const ok = await G.thrash(); if (my !== flow) return; if (ok) { E.weaken(); toast('おとなしくなった!', 1000); } else { E.setback(0.15); toast('引き戻された…', 1000); } }
-              await wheel(k); if (my !== flow) return; sortHide = false;
+              await segment(k); if (my !== flow) return; sortHide = false;
             })() });
           sortHide = false;
         })();
@@ -464,7 +496,7 @@ export const fishingApp = {
         else if (type === 'lost' || type === 'catch') { closeReel(); setTimeout(() => G.flush(), 1500); }   // 標本のお祝いは、結果が出てから
         else if (type === 'run' && E.S.hooked && E.S.hooked.sp.kind === 'fish') {
           if (d.last) { stopIn(); G.thrash().then(ok => { if (ok) { E.weaken(); toast('おとなしくなった!', 1000); } else { E.setback(0.15); toast('引き戻された…', 1000); } E.rodDone(); }); }   // 最後のあがき=熟語
-          else toast(d.dir > 0 ? '右へ走った! 竿を<b>左</b>に倒せ' : '左へ走った! 竿を<b>右</b>に倒せ', 1300);
+          else if (!(E.S.hooked && E.S.hooked.sr)) toast(d.dir > 0 ? '右へ走った! 竿を<b>左</b>に倒せ' : '左へ走った! 竿を<b>右</b>に倒せ', 1300);
         }
         else if (type === 'net') {
           if (!E.S.hooked || E.S.hooked.sp.kind !== 'fish') { E.netResult(true); return; }
@@ -632,12 +664,12 @@ export const fishingApp = {
         hkB.textContent = ph === 'water' ? (E.S.bite ? 'あわせ!' : lure ? 'しゃくる' : 'あわせ') : !vs && (ph === 'landed' || ph === 'lost') ? 'つぎへ' : 'あわせ';
         hkB.classList.toggle('alert', !!E.S.bite); rcB.hidden = ph !== 'water';
         if (reelUi && ph !== 'fight') closeReel();
-        { const on = !!(h && h.sr && h.phase === 'rod' && ph === 'fight'); if (on) { const tp = view.rodTip(); tipZ.style.left = tp.x + 'px'; tipZ.style.top = tp.y + 'px'; } tipZ.style.display = on ? 'flex' : 'none'; if (!on && tzPid != null) { tzPid = null; } }
-        { const run = false, pshow = !!reelUi && !sortHide && !EN.busy; if (reelUi) reelUi.show(pshow); bigB.style.visibility = (G && h && h.sr && ph === 'fight') ? 'hidden' : ''; if (wheelCur && h && h.sr && ph === 'fight' && !EN.busy) { E.reelTgt(wheelCur.a + (wheelCur.b - wheelCur.a) * wheelCur.p); if (h.phase !== 'rod') { wheelRest -= dt; if (wheelRest <= 0 && wheelCur.p < 0.85) { E.rodPhase(false); wheelRest = 1.3 + Math.random() * 1.3; } } } }
-        hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
+        { const on = false; if (on) { const tp = view.rodTip(); tipZ.style.left = tp.x + 'px'; tipZ.style.top = tp.y + 'px'; } tipZ.style.display = on ? 'flex' : 'none'; if (!on && tzPid != null) { tzPid = null; } }
+        { const run = false, pshow = !!reelUi && !sortHide && !EN.busy; if (reelUi) reelUi.show(pshow); bigB.style.visibility = (h && h.sr && ph === 'fight') ? 'hidden' : ''; if (wheelCur && h && h.sr && ph === 'fight' && !EN.busy) E.reelTgt(wheelCur.a + (wheelCur.b - wheelCur.a) * wheelCur.p); }
+        hkB.style.visibility = (h && h.sr && ph === 'fight') ? 'hidden' : ''; hkB.style.opacity = ph === 'water' || (!vs && (ph === 'landed' || ph === 'lost')) ? 1 : 0.45;
         const showThr = reeling && (ph === 'water' || ph === 'fight');
         thrEl.hidden = !showThr; if (showThr) thrEl.firstChild.style.height = Math.round(E.input.reel * 100) + '%';
-        if (ph === 'fight' && h) {
+        if (ph === 'fight' && h && !h.sr) {
           if (!gaugeOn) { gauge.hidden = false; gaugeOn = true; }
           gauge.querySelector('b').style.left = Math.min(100, h.T / 1.3 * 100) + '%';
           gauge.querySelector('.brk').style.transform = `scaleX(${Math.min(1, h.bm)})`;
@@ -651,7 +683,7 @@ export const fishingApp = {
         let ez = '';
         if (easy && !ended) {
           if (ph === 'water' && E.S.bite) ez = '<span style="color:#ffe36b">今!</span> あわせ!';
-          else if (ph === 'fight' && h) ez = h.jump > 0 || h.T > 0.85 ? '✋ ゆるめて!' : h.mode === 'run' ? (h.dir > 0 ? '⬅⬅ こっちにたおす!' : 'こっちにたおす! ➡➡') : h.T < 0.3 ? '🎣 巻いて!' : '';
+          else if (ph === 'fight' && h && !h.sr) ez = h.jump > 0 || h.T > 0.85 ? '✋ ゆるめて!' : h.mode === 'run' ? (h.dir > 0 ? '⬅⬅ こっちにたおす!' : 'こっちにたおす! ➡➡') : h.T < 0.3 ? '🎣 巻いて!' : '';
         }
         if (ez !== ezKey) { ezKey = ez; ezEl.innerHTML = ez; ezEl.hidden = !ez; ezEl.className = 'ez' + (ez.includes('⬅') ? ' l' : ez.includes('➡') ? ' r' : ''); }
         let hint = '';
@@ -660,7 +692,7 @@ export const fishingApp = {
         else if (ph === 'charge') hint = 'ゲージが黄色の帯に入ったら、はなす!';
         else if (ph === 'water' && underReady && !lure && stats.casts < 6) hint = '🎣を上下にはじくとタナが変わる';
         else if (ph === 'water') hint = !E.S.baitOk ? 'エサがない。🎣で巻いて回収' : E.S.bite ? '今だ! あわせ!' : lure ? (stats.catches < 3 ? '🎣おしたままで巻く(上にずらすと速く)。左でしゃくる' : '') : (stats.catches < 3 ? 'ウキがグッとしずんだら「あわせ」' : '');
-        else if (ph === 'fight' && h) hint = h.jump > 0 ? 'はねた! ゆるめて!' : h.T > 1 ? 'あぶない! ゆるめて!' : h.T < 0.08 ? 'ゆるみすぎ! 巻いて!' : h.mode === 'run' ? (h.dir > 0 ? '← 左へドラッグして竿をたおせ!' : '右へドラッグして竿をたおせ! →') : '今のうちに巻け!';
+        else if (ph === 'fight' && h && !h.sr) hint = h.jump > 0 ? 'はねた! ゆるめて!' : h.T > 1 ? 'あぶない! ゆるめて!' : h.T < 0.08 ? 'ゆるみすぎ! 巻いて!' : h.mode === 'run' ? (h.dir > 0 ? '← 左へドラッグして竿をたおせ!' : '右へドラッグして竿をたおせ! →') : '今のうちに巻け!';
         if (hint !== hintKey) { hintKey = hint; hintEl.textContent = hint; hintEl.style.opacity = hint ? 1 : 0; }
         // 音
         sfx.reel(E.input.reel); sfx.creak(ph === 'fight' && h ? h.T : 0);
