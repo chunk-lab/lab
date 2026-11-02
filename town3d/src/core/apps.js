@@ -31,7 +31,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
       player: getPlayer(),
       audio: getAudio(),
       storage: storage.scope('app:' + def.id),
-      notes: { list: getNotes },   // ことばノート(読み取り専用)。チャンクストリームなどの復習アプリが使う
+      notes: { list: getNotes },   // ことばノート(読み取り専用)。Storyミング！などの復習アプリが使う
       wallet: { get: wallet.get, add: (n, why) => wallet.add(n, def.id + (why ? ':' + why : '')), give: (n, why) => wallet.give(n, def.id + (why ? ':' + why : '')), spend: (n, why) => wallet.spend(n, def.id + (why ? ':' + why : '')) },
       gems,    // ダイヤ {get, spend}。組み込み先がなければ null(その場合コインだけで広げる)
       house,   // 自宅の広げ方の値段
@@ -39,7 +39,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
       dictUrl, // 辞書データの場所(英語ゲーム用)
       learn,   // 単語ごとの学習の記録(組み込み先の共通の記録)。なければ null(アプリが自分で持つ)
       photo,   // 写真の枠の設定(はじめの枚数・最大・ダイヤの値段)
-      features: features.slice(),   // 組み込み先(チャンクタウン)が用意している機能。'study'＝勉強部屋を開ける
+      features: features.slice(),   // 組み込み先(かまってチャンクTOWN)が用意している機能。'study'＝勉強部屋を開ける
       emit: (name, data) => bus.emit('app:event', { app: def.id, name, data }),
       setTitle: t => { frame.querySelector('.tw-app-title').textContent = t; },
       setHead: btns => {   // 上のバー「町にもどる」の左に、アプリ用のボタンを並べる([{label, fn}]。空で消す)

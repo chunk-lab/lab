@@ -11,7 +11,7 @@ export async function mountEpisodeFrame(el, ctx) {
     if (version) url.searchParams.set('v', version);
     return url.href;
   };
-  const frame = document.createElement('iframe'); frame.title = '英語脳アプリ：want to の体験';
+  const frame = document.createElement('iframe'); frame.title = '英文組み立てラボ：want to の体験';
   frame.setAttribute('sandbox', 'allow-scripts');
   frame.style.cssText = 'width:100%;height:100%;border:0;display:block;background:#fff';
   const origin = location.origin === 'null' ? '*' : location.origin;
@@ -23,7 +23,7 @@ export async function mountEpisodeFrame(el, ctx) {
     if (disposed || e.source !== frame.contentWindow || e.origin !== 'null' || e.data?.token !== token) return;
     const d = e.data;
     if (d.type === 'ready') { ready = true; clearTimeout(timer); resolveReady(); }
-    else if (d.type === 'error') { if (!ready) rejectReady(new Error('英語脳アプリの体験を読み込めませんでした')); }
+    else if (d.type === 'error') { if (!ready) rejectReady(new Error('英文組み立てラボの体験を読み込めませんでした')); }
     else if (d.type === 'speak' && typeof d.text === 'string') ctx.core.speech.speak(d.text.slice(0, 300), { rate: .9 });
     else if (d.type === 'finish' && ready) { ctx.report('episode_practice', { exercise: 'want-to' }); ctx.exit(); }
     else if (d.type === 'exit') ctx.exit();
@@ -42,7 +42,7 @@ export async function mountEpisodeFrame(el, ctx) {
   document.head.appendChild(script);
   <\/script></body></html>`;
   el.appendChild(frame); ctx.showBack(false);
-  timer = setTimeout(() => rejectReady(new Error('英語脳アプリの体験の読み込みが時間切れになりました')), 30000);
+  timer = setTimeout(() => rejectReady(new Error('英文組み立てラボの体験の読み込みが時間切れになりました')), 30000);
   try { await started; } catch (e) { cleanup(); throw e; }
   return { unmount: cleanup };
 }

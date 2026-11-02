@@ -6,7 +6,7 @@ import html from './src/view.html';
 import { runCoach } from '../../core/coach.js';
 import { mountEpisodeFrame } from './episode-frame.js';
 const HOW = [
-  { w: 'g', f: 'joy', t: '英語脳アプリは、絵を見ながら英文を組み立てる、英語のシミュレータだよ。' },
+  { w: 'g', f: 'joy', t: '英文組み立てラボは、絵を見ながら英文を組み立てる、英語のシミュレータだよ。' },
   { w: 'b', t: '下のメニューの「つくる」で、文を作ってみよう。' },
   { w: 'g', t: '「れんしゅう」で練習して、「ことば登録」「セット」で、使うことばを増やせるよ。' },
   { w: 'b', f: 'idea', t: '音や読み上げは、「設定」で変えられるよ。' }];
@@ -15,7 +15,7 @@ let SAVED = null, SAVED_CLS = '';   // 閉じたときの画面をそのまま�
 const link = (href, key) => new Promise(res => { if (document.querySelector(`link[data-ct="${key}"]`)) return res(); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; l.dataset.ct = key; l.onload = l.onerror = () => res(); document.head.appendChild(l); });
 
 export default {
-  id: 'eigonou', name: '英語脳アプリ', right: 'game:eigonou',
+  id: 'eigonou', name: '英文組み立てラボ', right: 'game:eigonou',
   async mount(el, ctx) {
     if (ctx.opts.episodePractice === 'want-to') return mountEpisodeFrame(el, ctx);
     el.classList.add('ct-eigo');

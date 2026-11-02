@@ -15,7 +15,7 @@ import { init_texts, initShared, openMyTexts } from './src/texts.js';
 import { init_rank } from './src/rank.js';
 import { initTitle, showTitle } from './src/title.js';
 const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;700&family=Mochiy+Pop+One&family=Zen+Maru+Gothic:wght@500;700&family=Quicksand:wght@500;700&display=swap';
-const NAMES = { lesson: 'チャンクチャンク（学校）', library: 'チャンクチャンク（図書館）', arcade: 'チャンクチャンク', all: 'チャンクチャンク' };
+const NAMES = { lesson: '今スラ！（学校）', library: '今スラ！（図書館）', arcade: '今スラ！', all: '今スラ！' };
 
 /* 前のチャンクチャンク（街の中の枠で動いていたとき）のセーブを、共通のセーブへ1回だけ引っ越す */
 function migrate(store) {
@@ -25,7 +25,7 @@ function migrate(store) {
 }
 
 export default {
-  id: 'chunkchunk', name: 'チャンクチャンク', right: 'game:chunkchunk',
+  id: 'chunkchunk', name: '今スラ！', right: 'game:chunkchunk',
   async mount(el, ctx) {
     const face = ctx.opts.face || 'arcade';
     if (!document.querySelector('link[data-ct="cc"]')) { const lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = FONT; lk.dataset.ct = 'cc'; document.head.appendChild(lk); }

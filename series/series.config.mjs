@@ -9,13 +9,13 @@ export const GAMES = {   // ゲーム → 公開するファイル [元, 公開�
   stream: [['games/stream/data', 'g/stream'], ['games/stream/assets', 'g/stream']],
   chunkchunk: [['games/chunkchunk/assets', 'g/chunkchunk']],   // 本体は app.js / app.css に入る。レッスンの2人の絵だけ別ファイル
   library: [],
-  listen: [],     // ランダムチャンク（聞き取り。ストリームの長文データを使う）   // 図書館（本の一覧。ストリームの長文データ g/stream を使う）
+  listen: [],     // ランダムチャンク（聞き取り。ストミンの長文データを使う）   // 図書館（本の一覧。ストミンの長文データ g/stream を使う）
   eigonou: [{ bundle: 'games/eigonou/src/main.js', out: 'g/eigonou/eigo.js' }, ['games/chunkchunk/assets/img/chara', 'g/chunkchunk/img/chara']],   // 大きいので、開いたときに読み込む別ファイル（eigo.js / eigo.css）
 };
 export const APPS = {
-  town: { shell: 'town', title: 'チャンクタウン', theme: 'cute', games: ['stream', 'cards', 'chunkchunk', 'eigonou', 'library', 'listen'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']], town3d: true },   // town3d：3Dの町（../town3d を組み立てて g/town3d/town.js に置く）
-  stream: { shell: 'solo', theme: 'chic', title: 'チャンクストリーム', games: ['stream'], grants: ['game:stream'] },
+  town: { shell: 'town', title: 'かまってチャンクTOWN', theme: 'cute', games: ['stream', 'cards', 'chunkchunk', 'eigonou', 'library', 'listen'], grants: ['sub:all'], backButton: true, backLabel: '🏠 街へ', assets: [['apps/town/img', 'img']], town3d: true },   // town3d：3Dの町（../town3d を組み立てて g/town3d/town.js に置く）
+  stream: { shell: 'solo', theme: 'chic', title: 'Storyミング！', games: ['stream'], grants: ['game:stream'] },
   cards: { shell: 'solo', theme: 'chic', title: 'チャンク・カード', games: ['cards'], grants: ['game:cards'] },
-  eigonou: { shell: 'solo', theme: 'chic', title: '英語脳アプリ', games: ['eigonou'], grants: ['game:eigonou'] },
-  chunkchunk: { shell: 'solo', theme: 'chic', title: 'チャンクチャンク', games: ['chunkchunk'], grants: ['game:chunkchunk'], opts: { face: 'all' } },   // 単体：学校・図書館・ゲームセンターを下のタブで切りかえる
+  eigonou: { shell: 'solo', theme: 'chic', title: '英文組み立てラボ', games: ['eigonou'], grants: ['game:eigonou'] },
+  chunkchunk: { shell: 'solo', theme: 'chic', title: '今スラ！', games: ['chunkchunk'], grants: ['game:chunkchunk'], opts: { face: 'all' } },   // 単体：学校・図書館・ゲームセンターを下のタブで切りかえる
 };

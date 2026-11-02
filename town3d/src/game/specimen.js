@@ -9,7 +9,7 @@ import { vch } from './voucher.js';
 import { SW } from '../apps/gamebox/stream_words.js';
 import { FISH } from '../apps/fishing/data.js';
 
-export const WSET = { 1: 20, 2: 25, 3: 30 };   // ストリームと同じ
+export const WSET = { 1: 20, 2: 25, 3: 30 };   // ストミンと同じ
 export const LV_NAME = { 1: '初級', 2: '中級', 3: '上級' }, LV_SUB = { 1: '高校受験', 2: '共通テスト', 3: '難関大' };
 export const TANK_MAX = 6;          // 水槽に入る魚の数
 export const GROW_NEED = 10;        // 育ちきるまでのえさの数

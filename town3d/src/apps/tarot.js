@@ -346,7 +346,7 @@ export function mountTarot(box, o) {
     const sp = SPREADS[S.sp];
     if (sp.tier === 'deep') {
       if (st.tk > 0) { st.tk--; save(); return 'ticket'; }
-      if (!ctx.gems) { toast('ダイヤは チャンクタウンで使えます'); return null; }
+      if (!ctx.gems) { toast('ダイヤは かまってチャンクTOWNで使えます'); return null; }
       if (!(await confirmPay({ label: 'タロット(じっくり)', price: TAROT_PRICE.gem, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return null;
       if (!ctx.gems.spend(TAROT_PRICE.gem, 'tarot')) { toast(`ダイヤが ${TAROT_PRICE.gem}こ いるわ`); return null; }
       return 'gem';
@@ -356,7 +356,7 @@ export function mountTarot(box, o) {
     if (!ctx.wallet.spend(p, 'tarot')) { toast(`コインが ${p} まい いるわ`); return null; } return 'coin';
   }
   async function buyPack() {
-    if (!ctx.gems) return toast('ダイヤは チャンクタウンで使えます');
+    if (!ctx.gems) return toast('ダイヤは かまってチャンクTOWNで使えます');
     if (!(await confirmPay({ label: `ケルト十字の券 ${TAROT_PRICE.pack.n}まい`, price: TAROT_PRICE.pack.gem, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return;
     if (!ctx.gems.spend(TAROT_PRICE.pack.gem, 'tarot-pack')) return toast(`ダイヤが ${TAROT_PRICE.pack.gem}こ いるわ`);
     st.tk += TAROT_PRICE.pack.n; save(); toast(`🎫 ケルト十字の券を ${TAROT_PRICE.pack.n}まい 受け取ったわ`); page();

@@ -1,5 +1,5 @@
 /* 勉強ノートができる前に各アプリへ登録してあった言葉を、1回だけ勉強ノートに取り込む。
-   ストリームの単語集・英語脳で登録した言葉と文・3Dの町のことばノート。取り込んだ元は消さない（元のアプリでもそのまま使える）。 */
+   ストミンの単語集・英ラボで登録した言葉と文・3Dの町のことばノート。取り込んだ元は消さない（元のアプリでもそのまま使える）。 */
 import { createStore } from './store.js';
 const json = v => { if (typeof v !== 'string') return v; try { return JSON.parse(v); } catch (e) { return null; } };
 export function importOld(nb) {

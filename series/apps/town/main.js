@@ -21,7 +21,7 @@ const PLACES = {
   library: { n: '図書館', img: 'library', sub: '読む・調べる・登録する', extra: [{ t: 'My Texts・短文の登録と共有', game: 'chunkchunk', opts: { face: 'library' } }] },
   house: { n: '自宅', img: 'house', profile: true },
   shop: { n: 'ショップ', img: 'supermarket', sub: '買う', shop: true },
-  game: { n: 'ゲームセンター', img: 'gamecenter', sub: 'ゲームで鍛える', extra: [{ t: 'チャンクストリーム(タイムアタック・単語練習)', game: 'stream' }] },
+  game: { n: 'ゲームセンター', img: 'gamecenter', sub: 'ゲームで鍛える', extra: [{ t: 'Storyミング！(タイムアタック・単語練習)', game: 'stream' }] },
 };
 const BLD = [['school', 'bSchool', '学校'], ['library', 'bLibrary', '図書館'], ['house', 'bHouse', '自宅'], ['shop', 'bShop', 'ショップ'], ['game', 'bGame', 'ゲームセンター']];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -142,9 +142,9 @@ try {
       if (cur) { if (!cur.el.isConnected || !cur.el.offsetParent && cur.el.style.position !== 'fixed' || document.querySelector('.cs-ov,.tw-dialog')) hideTip(); return; }
       if (document.querySelector('.cs-ov,.tw-dialog,.ep-root,.md-app-open')) return;
       const sp = document.querySelector('button[aria-label="使ってみる"]');
-      if (!seen('town') && sp && sp.style.display === 'block') return showTip('town', sp, '町を歩いているとき、この ✨ に英語を入れると、文にして絵で動かしてくれるよ(英語脳)。');
+      if (!seen('town') && sp && sp.style.display === 'block') return showTip('town', sp, '町を歩いているとき、この ✨ に英語を入れると、文にして絵で動かしてくれるよ(英ラボ)。');
       const row = document.querySelector('.hm-row[data-p="eigo"]');
-      if (!seen('home') && row && row.offsetParent) { row.scrollIntoView({ block: 'center' }); return showTip('home', row, '英語脳は、ここ「英語脳で文を作る」から、いつでも開けるよ。'); }
+      if (!seen('home') && row && row.offsetParent) { row.scrollIntoView({ block: 'center' }); return showTip('home', row, '英ラボは、ここ「英ラボで文を作る」から、いつでも開けるよ。'); }
     } catch (e) { }
   }, 700);
 } catch (e) { console.error(e); }

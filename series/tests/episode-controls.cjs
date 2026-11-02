@@ -39,7 +39,7 @@ try{
  const css=fs.readFileSync(root+'/apps/town/episodes/view.css','utf8');assert.match(css,/ep-sora.*scaleX\(-1\)/);assert.doesNotMatch(css,/body.ep-on>\.cs-back/);assert.match(css,/#7a4ad9/);
  const hudRoot=w.document.createElement('div');w.document.body.append(hudRoot);const hud=w.qa.createHud(hudRoot,{emit(){},on(){return ()=>{}}});let named=null;
  hud.title({look:w.qa.look,name:'',intro:true},p=>named=p);
- assert.match(hudRoot.querySelector('.tw-arrival').textContent,/チャンクタウン/);assert.equal(hudRoot.querySelector('.tw-name').value,'');
+ assert.match(hudRoot.querySelector('.tw-arrival').textContent,/かまってチャンクTOWN/);assert.equal(hudRoot.querySelector('.tw-name').value,'');
  hudRoot.querySelector('.tw-start').click();assert.equal(named,null,'ask for a name before starting');hudRoot.querySelector('.tw-name').value='テスト';hudRoot.querySelector('.tw-start').click();assert.equal(named.name,'テスト');
  assert.match(css,/\.ep-expression>span/);assert.match(css,/strong \.ep-aux\{display:inline;font-size:inherit/);
  if(errors.length)throw Error(errors.join('\n'));console.log('PASS: changed controls only — 2D dialogue, auxiliary color, native guided subject choice, native completion and subject editing, story return, stream size large, mirrored boy, hidden town back button');

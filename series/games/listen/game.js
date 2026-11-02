@@ -1,5 +1,5 @@
 /* ランダムチャンク（聞き取り）：ストリームの長文のまとまりを、声だけで聞いて意味を選ぶ。最後にそのまとまりをまねして言う。
-   10問。まちがえたまとまりは勉強ノートへ。材料はストリームの長文データ(g/stream/data.js)。 */
+   10問。まちがえたまとまりは勉強ノートへ。材料はストミンの長文データ(g/stream/data.js)。 */
 import { loadScript } from '../../core/host.js';
 import './listen.css';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

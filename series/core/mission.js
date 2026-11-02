@@ -47,17 +47,17 @@ export function createMission(core) {
     const unread = f => { const a = books.filter(f), u = a.filter(b => !core.record.bookDone(b.id)); return u.length ? u : a; };
     const k6 = () => Math.floor(Math.random() * 6), k3 = () => Math.floor(Math.random() * 3);
     if (can('stream')) {
-      const k = k6(); out.push({ type: 'ws', cats: ['word', 'game'], time: 's', title: `${LVN[L]}の単語 セット${k + 1}`, how: 'ストリームで最後まで練習するとクリア', go: { game: 'stream', opts: { wordset: { lv: L, k } } }, check: { play: 'stream.word', set: `w${L}-${k + 1}` } });
-      const i = k3(); out.push({ type: 'wi', cats: ['word'], time: 's', title: `${LVN[L]}の熟語 セット${i + 1}`, how: 'ストリームで最後まで練習するとクリア', go: { game: 'stream', opts: { wordset: { lv: L, k: i, kind: 'i' } } }, check: { play: 'stream.word', set: `i${L}-${i + 1}` } });
-      out.push({ type: 'ws2', cats: ['word'], time: 'l', need: 2, title: `${LVN[L]}の単語セットを2つ`, how: 'ストリームの単語練習を2セット、最後までやるとクリア(セットは自由)', go: { game: 'stream', opts: { wordset: { lv: L, k: k6() } } }, check: { play: 'stream.word' } });
-      if (nb.length >= 4) out.push({ type: 'nb', cats: ['word'], time: 's', title: `まちがえた言葉 ${Math.min(20, nb.length)}個の練習`, how: 'ストリームで最後まで練習するとクリア', go: { game: 'stream', opts: { words: nb.slice(0, 20).map(x => [x.en, x.ja]), title: '勉強ノート:まちがえた言葉' } }, check: { play: 'stream.word', nb: true } });
-      const s = unread(b => b.canStream); if (s.length) { const b = pick(s); out.push({ type: 'st', cats: ['read', 'game'], time: 'l', title: `「${b.title}」をストリームで最初から最後まで`, how: 'ストリームで1段目から通しでクリアするとクリア', go: { game: 'stream', opts: { passage: b.pid, run: true } }, check: { play: 'stream.read', passage: b.pid } }); }
+      const k = k6(); out.push({ type: 'ws', cats: ['word', 'game'], time: 's', title: `${LVN[L]}の単語 セット${k + 1}`, how: 'ストミンで最後まで練習するとクリア', go: { game: 'stream', opts: { wordset: { lv: L, k } } }, check: { play: 'stream.word', set: `w${L}-${k + 1}` } });
+      const i = k3(); out.push({ type: 'wi', cats: ['word'], time: 's', title: `${LVN[L]}の熟語 セット${i + 1}`, how: 'ストミンで最後まで練習するとクリア', go: { game: 'stream', opts: { wordset: { lv: L, k: i, kind: 'i' } } }, check: { play: 'stream.word', set: `i${L}-${i + 1}` } });
+      out.push({ type: 'ws2', cats: ['word'], time: 'l', need: 2, title: `${LVN[L]}の単語セットを2つ`, how: 'ストミンの単語練習を2セット、最後までやるとクリア(セットは自由)', go: { game: 'stream', opts: { wordset: { lv: L, k: k6() } } }, check: { play: 'stream.word' } });
+      if (nb.length >= 4) out.push({ type: 'nb', cats: ['word'], time: 's', title: `まちがえた言葉 ${Math.min(20, nb.length)}個の練習`, how: 'ストミンで最後まで練習するとクリア', go: { game: 'stream', opts: { words: nb.slice(0, 20).map(x => [x.en, x.ja]), title: '勉強ノート:まちがえた言葉' } }, check: { play: 'stream.word', nb: true } });
+      const s = unread(b => b.canStream); if (s.length) { const b = pick(s); out.push({ type: 'st', cats: ['read', 'game'], time: 'l', title: `「${b.title}」をストミンで最初から最後まで`, how: 'ストミンで1段目から通しでクリアするとクリア', go: { game: 'stream', opts: { passage: b.pid, run: true } }, check: { play: 'stream.read', passage: b.pid } }); }
     }
     if (can('listen')) out.push({ type: 'ls', cats: ['word', 'chunk', 'game'], time: 's', title: `ランダムチャンク(${LVN[L]})を10問`, how: '声だけ聞いて意味を選ぶ。10問答えるとクリア', go: { game: 'listen', opts: { lv: L } }, check: { play: 'listen', lv: L } });
     if (can('chunkchunk')) {
       out.push({ type: 'le', cats: ['lesson', 'chunk'], time: 's', title: '英語レッスン(次のレッスンを1つ)', how: 'レッスンを最後まで終えるとクリア', go: { game: 'chunkchunk', opts: { face: 'lesson', lesson: 'next' } }, check: { play: 'cc.lesson' } });
       out.push({ type: 'le2', cats: ['lesson', 'chunk'], time: 'l', need: 2, title: '英語レッスン(次のレッスンを2つ)', how: 'レッスンを2つ、最後まで終えるとクリア', go: { game: 'chunkchunk', opts: { face: 'lesson', lesson: 'next' } }, check: { play: 'cc.lesson' } });
-      out.push({ type: 'cg', cats: ['game'], time: 's', title: 'チャンクチャンクのチャレンジを1回', how: 'チャレンジを時間いっぱいまでやるとクリア', go: { game: 'chunkchunk', opts: { face: 'arcade' } }, check: { play: 'cc.game' } });
+      out.push({ type: 'cg', cats: ['game'], time: 's', title: '今スラのチャレンジを1回', how: 'チャレンジを時間いっぱいまでやるとクリア', go: { game: 'chunkchunk', opts: { face: 'arcade' } }, check: { play: 'cc.game' } });
     }
     if (can('cards')) {
       const o = OPP[L]; out.push({ type: 'ca', cats: ['chunk', 'game'], time: 's', title: `チャンク・カードで${OPPN[o]}と1試合`, how: '試合を最後までやるとクリア(勝ち負けは問わない)', go: { game: 'cards', opts: { cpu: o } }, check: { play: 'cards', opp: o } });
@@ -83,7 +83,7 @@ export function createMission(core) {
     const out = [];
     if (core.books.hasQ(b)) out.push(['slow', 'じっくり読む(リーディングで問題を解く)', { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」の問題を全部解く`, how: 'リーディングで問題に全部答えて「答え合わせ」するとクリア(まちがっていてもOK)', go: { book: b.id, view: 'solve' }, check: { play: 'cc.read', book: b.id, solved: true } }]);
     else out.push(['slow', 'じっくり読む(リーディング)', { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」を最後の文まで読む`, how: '読む画面で最後の文まで進むとクリア', go: { book: b.id }, check: { play: 'cc.read', book: b.id } }]);
-    if (b.canStream && can('stream')) out.push(['game', 'ゲームで読む(チャンクストリーム)', { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」をストリームで最初から最後まで`, how: 'ストリームで1段目から通しでクリアするとクリア', go: { game: 'stream', opts: { passage: b.pid, run: true } }, check: { play: 'stream.read', passage: b.pid } }]);
+    if (b.canStream && can('stream')) out.push(['game', 'ゲームで読む(Storyミング！)', { kind: 'task', type: 'task', cats: ['read'], title: `今日の課題:「${b.title}」をストミンで最初から最後まで`, how: 'ストミンで1段目から通しでクリアするとクリア', go: { game: 'stream', opts: { passage: b.pid, run: true } }, check: { play: 'stream.read', passage: b.pid } }]);
     return out;
   }
   // ---- 始める ----
@@ -173,7 +173,7 @@ export function createMission(core) {
   function records() {
     const json = v => { if (typeof v !== 'string') return v; try { return JSON.parse(v); } catch (e) { return null; } };
     const sv = json(createStore('stream').get('chunkstream.v1')) || {}, cs = json(createStore('chunkchunk').get('ccs3-settings')) || {}, vs = createStore('cards').get('vs') || {};
-    const runs = Object.entries(sv.best || {}).filter(([, b]) => b && b.run).map(([id, b]) => `<li><span>ストリーム ${esc(id)} 通し</span><b>${b.run.time}秒 ${b.run.rank}</b></li>`);
+    const runs = Object.entries(sv.best || {}).filter(([, b]) => b && b.run).map(([id, b]) => `<li><span>ストミン ${esc(id)} 通し</span><b>${b.run.time}秒 ${b.run.rank}</b></li>`);
     const chal = Object.entries(cs.bestTimed || {}).flatMap(([band, o]) => Object.entries(o || {}).map(([sec, v]) => `<li><span>チャレンジ ${sec}秒(${esc(band)})</span><b>${v}点</b></li>`));
     const cards = Object.entries(vs).map(([id, r]) => `<li><span>カード ${esc(OPPN[id] || id)}</span><b>${r.w}勝 ${r.l}敗</b></li>`);
     const sc = core.level ? core.level.score() : null;

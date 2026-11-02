@@ -11,22 +11,22 @@ export const WANTS = [
 export const MOODS = [{ k: 'study', n: '勉強' }, { k: 'game', n: 'ゲーム' }, { k: 'any', n: '決めてない' }];
 export const TIMES = [{ k: 5, n: '5分' }, { k: 15, n: '15分' }, { k: 30, n: 'じっくり' }];
 export const PLAYS = [
-  { id: 'stream.word', n: '単語練習(ストリーム)', want: 'word', mood: 'both', time: [5, 15], place: 'school', go: { game: 'stream' } },
+  { id: 'stream.word', n: '単語練習(ストミン)', want: 'word', mood: 'both', time: [5, 15], place: 'school', go: { game: 'stream' } },
   { id: 'note.practice', n: 'まちがえた言葉のやり直し', want: 'word', mood: 'study', time: [5, 15, 30], place: 'home', go: { to: 'note' } },
   { id: 'test', n: '実力テスト', want: 'word', mood: 'study', time: [5, 15], place: 'school', go: { to: 'test' } },
-  { id: 'eigo.prac', n: '熟語・句動詞のれんしゅう(英語脳)', want: 'word', mood: 'study', time: [15, 30], place: 'school', go: { game: 'eigonou' } },
+  { id: 'eigo.prac', n: '熟語・句動詞のれんしゅう(英ラボ)', want: 'word', mood: 'study', time: [15, 30], place: 'school', go: { game: 'eigonou' } },
   { id: 'lib.weekly', n: '課題図書を読む', want: 'read', mood: 'study', time: [15, 30], place: 'library', go: { game: 'library', opts: { tab: 'weekly' } } },
-  { id: 'stream.read', n: '長文をストリームで読む', want: 'read', mood: 'both', time: [5, 15], place: 'library', go: { game: 'library', opts: { tab: 'level' } } },
+  { id: 'stream.read', n: '長文をストミンで読む', want: 'read', mood: 'both', time: [5, 15], place: 'library', go: { game: 'library', opts: { tab: 'level' } } },
   { id: 'cc.read', n: 'リーディング(読む・解く)', want: 'read', mood: 'study', time: [15, 30], place: 'library', go: { game: 'library', opts: { tab: 'featured' } } },
-  { id: 'cc.game', n: 'チャンクチャンクのチャレンジ', want: 'read', mood: 'study', time: [5], place: 'school', go: { game: 'chunkchunk', opts: { face: 'arcade' } } },
+  { id: 'cc.game', n: '今スラのチャレンジ', want: 'read', mood: 'study', time: [5], place: 'school', go: { game: 'chunkchunk', opts: { face: 'arcade' } } },
   { id: 'cc.lesson', n: 'チャンクレッスン', want: 'make', mood: 'study', time: [15, 30], place: 'school', go: { game: 'chunkchunk', opts: { face: 'lesson' } } },
-  { id: 'eigo', n: '英語脳で文を作る', want: 'make', mood: 'study', time: [15, 30], place: 'library', go: { game: 'eigonou' } },
+  { id: 'eigo', n: '英ラボで文を作る', want: 'make', mood: 'study', time: [15, 30], place: 'library', go: { game: 'eigonou' } },
   { id: 'cards', n: 'チャンク・カード', want: 'make', mood: 'game', time: [5, 15], place: 'game', go: { game: 'cards' } },
   { id: 'listen', n: 'ランダムチャンク(聞き取り)', want: 'talk', mood: 'game', time: [5, 15], place: 'game', go: { game: 'listen' } },
   { id: 'note.mimic', n: '聞いてまねる(勉強ノート)', want: 'talk', mood: 'study', time: [5, 15], place: 'home', go: { to: 'note', kind: 'short' } },
   { id: 'town.chat', n: '住人と英語でおしゃべり', want: 'talk', mood: 'both', time: [5, 15, 30], place: 'town', go: { to: '3d' } },
   { id: 'town.ogiri', n: '英語で大喜利', want: 'chill', mood: 'any', time: [15], place: 'town', go: { to: '3d' } },
   { id: 'town.walk', n: '町を散歩(格言・ハーモニカ・おみくじ)', want: 'chill', mood: 'any', time: [5, 15, 30], place: 'town', go: { to: '3d' } },
-  { id: 'eigo.dict', n: '英語脳で気になる言葉を調べる', want: 'chill', mood: 'study', time: [5, 15], place: 'library', go: { game: 'eigonou' } },
+  { id: 'eigo.dict', n: '英ラボで気になる言葉を調べる', want: 'chill', mood: 'study', time: [5, 15], place: 'library', go: { game: 'eigonou' } },
 ];
 export const playOf = id => PLAYS.find(p => p.id === id) || null;

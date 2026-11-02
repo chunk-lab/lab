@@ -1,11 +1,11 @@
 /* レベル診断・実力テスト・総合の点数。
-   - 単語は「よく使う順」の約3万語(ストリームの単語 約4,900＋単語バンク 約27,000)を10段に分け、
+   - 単語は「よく使う順」の約3万語(ストミンの単語 約4,900＋単語バンク 約27,000)を10段に分け、
      正解なら上の段・まちがい/わからないなら下の段から出す（20問）。結果は推定語彙(語数)で出す
    - 当てずっぽう対策：「わからない」ボタン。答えるのに20秒以上かかった問題は「保留」にして結果に入れない(調べるのを防ぐ)
    - まちがいの選択肢は、同じ品詞で近い難しさの語から選ぶ
    - レベル診断は最初に1回。実力テストは、前のテストのあとミッションを10個クリアすると受けられる(さらに 無料は週1・有料は1日1)
      ミッションや課題には入れない
-   - 総合の点数は「どのアプリの何を解放したか」(ストリームの星・レッスン・読み終えた本・レベルの上がり) */
+   - 総合の点数は「どのアプリの何を解放したか」(ストミンの星・レッスン・読み終えた本・レベルの上がり) */
 import { createStore } from './store.js';
 import { loadScript } from './host.js';
 export const LV_NAME = { 1: '初級', 2: '中級', 3: '上級' };
@@ -128,7 +128,7 @@ export function createLevel(core) {
     const sv = json(createStore('stream').get('chunkstream.v1')) || {}, mk = createStore('chunkchunk').get('make') || {};
     let stars = 0; Object.values(sv.best || {}).forEach(b => Object.values(b).forEach(s => { if (s && typeof s === 'object') stars += Math.max(s.ta ? s.ta.stars || 0 : 0, s.rh ? s.rh.stars || 0 : 0); }));
     const lessons = Object.keys(mk.done || {}).length, books = core.record.total('cc.read');
-    const parts = [{ n: 'ストリームの星', v: stars, p: stars * 10 }, { n: 'レッスンのクリア', v: lessons, p: lessons * 20 }, { n: '読み終えた本', v: books, p: books * 15 }, { n: 'レベルの合格', v: L.passed.length, p: L.passed.length * 300 }];
+    const parts = [{ n: 'ストミンの星', v: stars, p: stars * 10 }, { n: 'レッスンのクリア', v: lessons, p: lessons * 20 }, { n: '読み終えた本', v: books, p: books * 15 }, { n: 'レベルの合格', v: L.passed.length, p: L.passed.length * 300 }];
     const total = parts.reduce((a, x) => a + x.p, 0), ri = RANKS.reduce((a, r, i) => total >= r[0] ? i : a, 0);
     return { total, parts, rank: RANKS[ri][1], next: RANKS[ri + 1] ? { name: RANKS[ri + 1][1], need: RANKS[ri + 1][0] - total, at: RANKS[ri + 1][0], from: RANKS[ri][0] } : null };
   }

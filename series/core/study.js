@@ -5,7 +5,7 @@ import { WANTS, playOf } from './plays.js';
 import { KINDS, MARKS } from './notebook.js';
 import { createStore } from './store.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const SRC = { stream: 'ストリーム', chunkchunk: 'チャンクチャンク', eigonou: '英語脳', cards: 'カード', town3d: '3Dの町', note: '手打ち' };
+const SRC = { stream: 'ストミン', chunkchunk: '今スラ！', eigonou: '英ラボ', cards: 'カード', town3d: '3Dの町', note: '手打ち' };
 export function createStudy(core) {
   let ov = null, tab = 'today', kind = 'word', mark = '', opt = {}, nsec = 'words';
   const tst = createStore('core');   // 3Dの町が置いていく「町のひみつ」(占い・調べる・住人から聞いたこと・たからもの)
@@ -78,13 +78,13 @@ export function createStudy(core) {
     const practice = (kind === 'word' || kind === 'phrase') && canPlay('stream') && withJa.length >= 4;
     return sec + `<nav class="cs-chips">${KINDS.map(k => `<button data-kind="${k.k}" class="${k.k === kind ? 'on' : ''}">${k.n} ${nb.count(k.k)}</button>`).join('')}</nav>
       <nav class="cs-chips cs-marks"><button data-mark="" class="${!mark ? 'on' : ''}">ぜんぶ</button>${MARKS.map(x => `<button data-mark="${x.k}" class="${x.k === mark ? 'on' : ''}">${x.n}</button>`).join('')}</nav>
-      ${practice ? `<div class="cs-practice"><b>ストリームで練習</b>${withJa.length > 20 ? `<button class="cs-btn cs-go" data-practice="r">ランダム20個</button>` : ''}${Array.from({ length: Math.min(30, Math.ceil(withJa.length / 20)) }, (_, k) => `<button class="cs-btn${withJa.length <= 20 ? ' cs-go' : ''}" data-practice="${k}">${k * 20 + 1}〜${Math.min(withJa.length, k * 20 + 20)}</button>`).join('')}</div>` : ''}
+      ${practice ? `<div class="cs-practice"><b>ストミンで練習</b>${withJa.length > 20 ? `<button class="cs-btn cs-go" data-practice="r">ランダム20個</button>` : ''}${Array.from({ length: Math.min(30, Math.ceil(withJa.length / 20)) }, (_, k) => `<button class="cs-btn${withJa.length <= 20 ? ' cs-go' : ''}" data-practice="${k}">${k * 20 + 1}〜${Math.min(withJa.length, k * 20 + 20)}</button>`).join('')}</div>` : ''}
       <form class="cs-add" data-add><input name="en" placeholder="英語" autocomplete="off" autocapitalize="off" spellcheck="false" required><input name="ja" placeholder="日本語" autocomplete="off"><button class="cs-btn">登録</button></form>
       <div class="cs-io"><button class="cs-btn" data-exp>📤 書き出す</button><button class="cs-btn" data-imp>📥 読み込む</button><small>ノートはこの端末の中だけに保存。機種変更のときは書き出したファイルを新しい端末で読み込んでね</small></div>
       <div class="cs-io"><button class="cs-btn cs-go" data-free>✨ 使ってみる(英語を打ち込む)</button></div>
-      ${items.length ? `<div class="cs-io"><button class="cs-btn" data-egall>🧠 この一覧(${Math.min(items.length, 50)}件)をまとめて英語脳へ</button></div>` : ''}
+      ${items.length ? `<div class="cs-io"><button class="cs-btn" data-egall>🧠 この一覧(${Math.min(items.length, 50)}件)をまとめて英ラボへ</button></div>` : ''}
       ${items.length ? `<ul class="cs-nb">${items.slice(0, 300).map(x => `<li data-id="${x.id}"><div class="cs-nb-t"><b>${esc(x.en)}</b><span>${esc(x.ja)}</span><small>${esc(SRC[x.src] || x.src)}</small></div>
-          <div class="cs-nb-a"><button data-say aria-label="読み上げ">🔊</button><button data-eg class="cs-use" aria-label="英語脳へ送る">🧠英語脳へ</button><button data-use class="cs-use">使ってみる</button>${MARKS.map(k => `<button data-m="${k.k}" class="${x.marks.includes(k.k) ? 'on' : ''}">${k.n}</button>`).join('')}<button data-del class="cs-del" aria-label="消す">🗑</button></div></li>`).join('')}</ul>`
+          <div class="cs-nb-a"><button data-say aria-label="読み上げ">🔊</button><button data-eg class="cs-use" aria-label="英ラボへ送る">🧠英ラボへ</button><button data-use class="cs-use">使ってみる</button>${MARKS.map(k => `<button data-m="${k.k}" class="${x.marks.includes(k.k) ? 'on' : ''}">${k.n}</button>`).join('')}<button data-del class="cs-del" aria-label="消す">🗑</button></div></li>`).join('')}</ul>`
         : '<p class="cs-sub">まだありません。ゲームでまちがえた言葉や、各アプリで登録した言葉がここに集まります。上の欄から手打ちでも登録できます。</p>'}`;
   }
   function me() {
@@ -133,10 +133,10 @@ export function createStudy(core) {
     };
     const toEigo = (list, play) => {
       try {
-        if (!core.openGame) throw new Error('この画面では英語脳を開けません');
+        if (!core.openGame) throw new Error('この画面では英ラボを開けません');
         core.eigo.send(list.map(x => ({ en: x.en, ja: x.ja || '', kind: x.kind === 'short' || x.kind === 'quote' ? 'sentence' : '', play: !!play })));
-        core.ui.toast('🧠 英語脳へ送りました。開きます…');
-        setTimeout(() => { try { core.study.close(); setTimeout(() => core.openGame('eigonou'), 120); } catch (e) { console.error(e); core.ui.toast('英語脳を開けませんでした'); } }, 250);
+        core.ui.toast('🧠 英ラボへ送りました。開きます…');
+        setTimeout(() => { try { core.study.close(); setTimeout(() => core.openGame('eigonou'), 120); } catch (e) { console.error(e); core.ui.toast('英ラボを開けませんでした'); } }, 250);
       } catch (e) { console.error(e); core.ui.toast('送れませんでした:' + String(e && e.message || e).slice(0, 60)); }
     };
     const fr = m.querySelector('[data-free]'); if (fr) fr.onclick = () => core.useit.open({});

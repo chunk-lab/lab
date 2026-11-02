@@ -1,5 +1,5 @@
 /* 図書館：本を選んで「ストリームで読む」か「読む・解く」。棚は 課題図書／話題の本／レベル別／共有の棚／新着(投票)／自分の本。
-   運営の本(ストリームの長文・お話)は誰でも読める。共有の棚の本は「枠」に入れて使う（無料1・有料3。数字は core/economy.js）。 */
+   運営の本(ストミンの長文・お話)は誰でも読める。共有の棚の本は「枠」に入れて使う（無料1・有料3。数字は core/economy.js）。 */
 import { createStore } from '../../core/store.js';
 import { myToStory } from '../chunkchunk/src/texts.js';
 import { ECON } from '../../core/economy.js';
@@ -23,7 +23,7 @@ export default {
       $('.lib-tabs').innerHTML = TABS.map(([k, n]) => `<button data-t="${k}" class="${k === tab ? 'on' : ''}">${n}</button>`).join('');
       el.querySelectorAll('.lib-tabs button').forEach(b => b.onclick = () => { tab = b.dataset.t; ctx.store.set('tab', tab); draw(); });
     }
-    const card = b => `<button class="lib-book lv${b.lv}" data-id="${esc(b.id)}"><span class="lib-lv">${B.LV[b.lv] || ''}</span><b>${esc(b.title)}</b>${b.ja ? `<small>${esc(b.ja)}</small>` : ''}<i>${esc(b.tag)}${b.canStream ? ' ・ ストリーム' : ''}${b.shared && M.hasSlot(b.sid) ? ' ・ 枠に入れている' : ''}</i></button>`;
+    const card = b => `<button class="lib-book lv${b.lv}" data-id="${esc(b.id)}"><span class="lib-lv">${B.LV[b.lv] || ''}</span><b>${esc(b.title)}</b>${b.ja ? `<small>${esc(b.ja)}</small>` : ''}<i>${esc(b.tag)}${b.canStream ? ' ・ ストミン' : ''}${b.shared && M.hasSlot(b.sid) ? ' ・ 枠に入れている' : ''}</i></button>`;
     function draw() {
       head(); main.scrollTop = 0;
       let h = '';
@@ -73,7 +73,7 @@ export default {
       const acts = [];
       if (needSlot) acts.push(`<button class="cs-btn" data-a="slot">枠に入れる(${M.slots().length}/${M.slotMax()})</button>`);
       else {
-        if (b.canStream && core.openGame) acts.push(`<button class="cs-btn lib-go" data-a="stream">ストリームで読む</button>`);
+        if (b.canStream && core.openGame) acts.push(`<button class="cs-btn lib-go" data-a="stream">ストミンで読む</button>`);
         if (b.canRead) acts.push(`<button class="cs-btn" data-a="read">読む・解く</button>`);
       }
       core.ui.sheet(`<h3>${esc(b.title)}</h3><p class="cs-note">${B.LV[b.lv] || ''} ・ ${esc(b.tag)}${b.ja ? '<br>' + esc(b.ja) : ''}</p>${acts.join('')}`, (ov, close) => {

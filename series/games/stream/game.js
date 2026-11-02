@@ -15,7 +15,7 @@ import { P, setCur, renderDetail, show } from './src/screens.js';
 import { hush, bgmStop } from './src/sound.js';
 const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;600;700&display=swap';
 export default {
-  id: 'stream', name: 'チャンクストリーム', right: 'game:stream',
+  id: 'stream', name: 'Storyミング！', right: 'game:stream',
   async mount(el, ctx) {
     for (const f of ['data.js', 'pool.js', 'words.js', 'texts.js']) await ctx.loadScript(ctx.base + f);
     if (!document.querySelector('link[data-ct="stream"]')) { const lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = FONT; lk.dataset.ct = 'stream'; document.head.appendChild(lk); }

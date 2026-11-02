@@ -1,5 +1,5 @@
 /* 本の一覧（図書館・今日なにする?・使ってみる・実力テストが使う）。
-   ストリームの長文（ストリームでも、読む・解くでも開ける）・チャンクチャンクのお話・共有の棚・自分の本をまとめて「本」として扱う。 */
+   ストミンの長文（ストミンでも、読む・解くでも開ける）・今スラのお話・共有の棚・自分の本をまとめて「本」として扱う。 */
 import { STORIES } from '../chunkchunk/src/data.js';
 import { builtinStory } from '../chunkchunk/src/reading.js';
 import { LIBRARY, weeklyBooks } from '../../data/library.js';

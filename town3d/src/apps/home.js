@@ -305,7 +305,7 @@ export const homeApp = {
       if (a === 'shop') { ctx.open('shop', { from: 'home' }); return; }   // ネットショッピング(家からそのままショップへ)
       if (a === 'gbox') { ctx.open('gamebox', { from: 'home' }); return; }   // チャンクボックス(英語対戦・あそびゲーム)
       if (a === 'tank') { ctx.open('fishing', { tab: 'tank', from: 'home' }); return; }   // 水槽(英語の釣り堀で釣った魚を育てる)
-      if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(チャンクタウン)の勉強部屋を開く
+      if (a === 'study') { ctx.emit('study'); return; }   // 組み込み先(かまってチャンクTOWN)の勉強部屋を開く
       if (!a || !p) return;
       const before = snap();
       if (a === 'off') selUid = null;

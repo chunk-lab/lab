@@ -141,7 +141,7 @@ export function mount(container, opt = {}) {
     onGive(x, kind) {   // 1ホールごとにもらった表現:その場で勉強ノートと今日のふりかえりに入れる
       opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src: '今日の表現' } });
     },
-    onExpr(list, practice, kind) {   // ホールでもらった表現:勉強ノート・今日のふりかえり・英語脳(自動登録)へ。開くのは「英語脳で使ってみる」を押したときだけ
+    onExpr(list, practice, kind) {   // ホールでもらった表現:勉強ノート・今日のふりかえり・英ラボ(自動登録)へ。開くのは「英ラボで使ってみる」を押したときだけ
       const src = '今日の表現';
       list.forEach(x => opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src, ex: x.ex, exja: x.exja } }));
       if (list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { open: !!practice, items: list.map((x, i) => ({ en: x.en, ja: x.ja, ex: x.ex, exja: x.exja, ai: x.ai, play: !!practice && i === 0 })) } });
@@ -313,10 +313,10 @@ export function mount(container, opt = {}) {
   social.onInfo = finds.onChange = () => opt.onEvent?.('app:event', { name: 'snap', data: townSnap() });   // 勉強ノートの「町のひみつ」を、ふえるたびに最新にする
   setTimeout(() => social.onInfo(), 3000);
   const soc = createSocialUI({ hud, wallet, audio, addNote,
-    onAllFound: () => {   // きょうのかくしもの、ぜんぶ見つけた! → 見つけた言葉を英語脳で使ってみるか聞く(断れる)
+    onAllFound: () => {   // きょうのかくしもの、ぜんぶ見つけた! → 見つけた言葉を英ラボで使ってみるか聞く(断れる)
       const list = finds.dailyFound().filter(s => ['word', 'phrase', 'proverb', 'passage'].includes(s.kind)).map(s => ({ en: s.c[0], ja: s.c[1], sen: s.kind === 'passage' || s.kind === 'proverb' || /[.!?]$/.test(s.c[0]) }));
       if (!list.length) return;
-      hud.dialog({ name: '🎉 ぜんぶ見つけた!', role: 'きょうのかくしもの', text: `きょうのかくしもの ${list.length}こ、ぜんぶ見つけたね! 見つけた言葉を、英語脳で文にして使ってみる?`, choices: [
+      hud.dialog({ name: '🎉 ぜんぶ見つけた!', role: 'きょうのかくしもの', text: `きょうのかくしもの ${list.length}こ、ぜんぶ見つけたね! 見つけた言葉を、英ラボで文にして使ってみる?`, choices: [
         { label: '🧠 使ってみる', fn: () => opt.onEvent?.('app:event', { name: 'eigo', data: { open: true, items: list.map((x, i) => ({ en: x.en, ja: x.ja, kind: x.sen ? 'sentence' : '', play: i === 0 })) } }) },
         { label: 'あとで', fn: () => { } }] });
     }, startDate: r => startDate(r), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
@@ -744,7 +744,7 @@ export function mount(container, opt = {}) {
         g.textAlign = 'center'; g.font = `900 ${fs}px Georgia, serif`; g.lineWidth = fs * 0.12; g.strokeStyle = 'rgba(90,40,90,0.7)'; g.fillStyle = '#fff4c2';
         const ty = cv.height * (cv.height > W ? 0.43 : 0.5);   // 花火(上)と3人(下)のあいだに
         g.strokeText('Happy Birthday!', W / 2, ty); g.fillText('Happy Birthday!', W / 2, ty);
-        g.font = `700 ${Math.round(fs * 0.32)}px sans-serif`; g.fillStyle = '#fff'; g.fillText(`${settings.name || ''}  ${new Date().toLocaleDateString('ja-JP')}  ほしみや町`, W / 2, ty + fs * 0.55);
+        g.font = `700 ${Math.round(fs * 0.32)}px sans-serif`; g.fillStyle = '#fff'; g.fillText(`${settings.name || ''}  ${new Date().toLocaleDateString('ja-JP')}  かまってチャンクTOWN`, W / 2, ty + fs * 0.55);
         photos.addSpecial(cv.toDataURL('image/jpeg', 0.88), 'birthday');
         flash(root); hud.toast('📸 記念写真がアルバムに届いたよ(特別枠)');
       };

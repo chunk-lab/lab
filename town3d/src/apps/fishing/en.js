@@ -275,7 +275,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     const draw = () => {
       const sets = SETS.filter(s => s.lv === lv), own = spec.own(), got = sets.filter(s => own[s.id]).length;
       sc.innerHTML = `<div class="top"><button class="sbtn" data-a="back">← もどる</button><span style="flex:1"></span></div>
-        <h2>📚 英語の釣り堀</h2><p class="nt">えらんだセットの単語だけが出るよ。魚が近づいたら単語に答えて「気になり度」をためよう。合わせ損ねた時は単語、あばれた時は熟語、巻き取りは文の並べ替え。<b>セットの単語をぜんぶ完璧</b>(続けて${PERFECT_C}回正解。ストリームで正解した分も入る)にすると、そのセットの標本がもらえる。魚はどのセットでもふつうに釣れるよ。</p>
+        <h2>📚 英語の釣り堀</h2><p class="nt">えらんだセットの単語だけが出るよ。魚が近づいたら単語に答えて「気になり度」をためよう。合わせ損ねた時は単語、あばれた時は熟語、巻き取りは文の並べ替え。<b>セットの単語をぜんぶ完璧</b>(続けて${PERFECT_C}回正解。ストミンで正解した分も入る)にすると、そのセットの標本がもらえる。魚はどのセットでもふつうに釣れるよ。</p>
         ${wxStrip(Object.values(FISHBY).filter(f => f.rain).map(f => f.name).join('・'))}
         <div class="tabs">${[1, 2, 3].map(l => `<button data-lv="${l}" class="${l === lv ? 'on' : ''}">${LV_NAME[l]}<br><small style="font-weight:700;font-size:10px">${LV_SUB[l]}</small></button>`).join('')}</div>
         <p class="nt" style="margin:0 0 8px">標本 ${got} / ${sets.length}</p>
@@ -304,7 +304,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       <div><b>${o ? esc(s.look.name) + 'の標本' + (o.crack ? '(ひび)' : '') : 'ごほうび:？？？の標本'}</b><br><small>${esc(condOf(s))}</small></div></div>
       <b>完璧 ${n} / ${s.words.length}</b>
       <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">${s.words.map((w, i) => `<span style="background:${p[i] ? '#d8f3e2' : '#f1ebf7'};border-radius:8px;padding:2px 7px;font-size:12px">${p[i] ? '✓ ' : ''}${esc(w[0])}</span>`).join('')}</div>
-      <p style="font-size:12px;color:#8d7f9e">先にストリームの「単語練習」で同じセット(${esc(s.id)})をやっておくと、完璧が早くなるよ。</p></div>
+      <p style="font-size:12px;color:#8d7f9e">先にストミンの「単語練習」で同じセット(${esc(s.id)})をやっておくと、完璧が早くなるよ。</p></div>
       <div style="padding:8px 16px 16px;display:flex;gap:8px;justify-content:center"><button class="btn sub" data-n>やめる</button><button class="btn" data-g>🎣 この釣り堀で釣る</button></div>`, true);
     sh.querySelector('[data-n]').onclick = () => sh.remove();
     sh.querySelector('[data-g]').onclick = () => { sh.remove(); go(); };
@@ -827,7 +827,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       sh.querySelector('[data-x]').onclick = () => { sh.remove(); res(); };
     });
   }
-  function myListWords(n) {   // ストリームで作った自分の単語集(同じ端末)。標本には関係しない
+  function myListWords(n) {   // ストミンで作った自分の単語集(同じ端末)。標本には関係しない
     try { const L = JSON.parse(localStorage.getItem('cs-wordlists') || '[]'), all = []; L.forEach(l => (l.lines || []).forEach(x => { const c = String(x).split('\t'); if (c[0] && c[1]) all.push([c[0], c[1]]); })); return shuffle(all).slice(0, n); } catch (e) { return []; }
   }
 

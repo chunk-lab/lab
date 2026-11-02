@@ -59,7 +59,7 @@ export const APPS = [
   { id: 'shop', title: 'ショップ', type: 'module', module: shopApp },
   { id: 'home', title: 'あなたの家', type: 'module', module: homeApp },
   { id: 'album', title: 'アルバム', type: 'module', module: albumApp },
-  { id: 'fishing', title: '砂吹さんの池', type: 'module', module: fishingApp },
+  { id: 'fishing', title: 'イングフィッシュ', type: 'module', module: fishingApp },
   { id: 'gamebox', title: 'チャンクボックス', type: 'module', module: gameboxApp },
   { id: 'amuse', title: 'アミューズメントセンター', type: 'module', module: amuseApp },
   { id: 'snowfight', title: '雪合戦', type: 'module', module: snowApp },

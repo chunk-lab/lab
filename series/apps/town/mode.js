@@ -72,7 +72,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
-      learn: core.learn,   // 単語ごとの学習の記録(英語の釣り堀とストリームで共通)
+      learn: core.learn,   // 単語ごとの学習の記録(英語の釣り堀とストミンで共通)
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
       features: ['study'],
@@ -94,9 +94,9 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         else if (name === 'app:event' && d?.name === 'snap') { if (d.data) createStore('core').set('townInfo', d.data); }
         else if (name === 'app:event' && d?.name === 'study') { const x = d.data || {}; if (x.snap) createStore('core').set('townInfo', x.snap); openStudy(x.tab ? { tab: x.tab, sec: x.sec || 'words' } : {}); }   // 町のノートボタン→勉強ノート(町のひみつの記録もいっしょに渡す)
         else if (name === 'app:event' && d?.name === 'act') core.daylog.act(d.data?.layer || 'sub', d.data?.cat ? { cat: d.data.cat, label: d.data.label } : null);   // 1日の記録:いま何をしているか
-        else if (name === 'app:event' && d?.name === 'learn' && d.data?.kind === 'expr') { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, kind: 'phrase', src: d.data.src || '今日の表現' }); if (d.data.ex) core.notebook.add({ en: d.data.ex, ja: d.data.exja || '', kind: 'short', src: d.data.src || '今日の表現' }); } catch (e) { console.error(e); } core.daylog.addWord(d.data); }   // ホールでもらった表現:勉強ノートにも入れる(ここから「使ってみる」→英語脳へ行ける)
+        else if (name === 'app:event' && d?.name === 'learn' && d.data?.kind === 'expr') { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, kind: 'phrase', src: d.data.src || '今日の表現' }); if (d.data.ex) core.notebook.add({ en: d.data.ex, ja: d.data.exja || '', kind: 'short', src: d.data.src || '今日の表現' }); } catch (e) { console.error(e); } core.daylog.addWord(d.data); }   // ホールでもらった表現:勉強ノートにも入れる(ここから「使ってみる」→英ラボへ行ける)
         else if (name === 'app:event' && d?.name === 'learn') { if (d.data?.save) { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, src: d.data.src || 'gamebox' }); core.ui.toast('ノートに入れました'); } catch (e) { } } else core.daylog.addWord(d.data); }   // 出会った単語・文
-        else if (name === 'app:event' && d?.name === 'eigo') { try { core.eigo.send(d.data.items || []); if (d.data.open) { core.ui.toast('英語脳を開いています…'); setTimeout(() => core.openGame('eigonou'), 300); } } catch (e) { console.error(e); core.ui.toast('英語脳に渡せませんでした:' + String(e && e.message || e).slice(0, 80)); } }   // 英語脳の箱に入れる(次に英語脳を開くと自動で登録される)
+        else if (name === 'app:event' && d?.name === 'eigo') { try { core.eigo.send(d.data.items || []); if (d.data.open) { core.ui.toast('英ラボを開いています…'); setTimeout(() => core.openGame('eigonou'), 300); } } catch (e) { console.error(e); core.ui.toast('英ラボに渡せませんでした:' + String(e && e.message || e).slice(0, 80)); } }   // 英ラボの箱に入れる(次に英ラボを開くと自動で登録される)
         else if (name === 'app:event' && d?.name === 'bonus') { const n = Math.max(1, d.data?.n | 0), g = core.member.earn('once', 50 * n); if (g) { core.ui.toast(`メダルのごほうび +${g}コイン`); } }   // メダル(勉強を続けた日数)を新しくもらったら、1つにつき50コイン
         else if (name === 'app:event' && d?.name === 'daily') core.review && core.review.open({ mode: 'today' });   // 「今日はここまで」
         else if (name === 'app:event' && d?.name === 'done') core.events.report('gamebox', 'done', d.data || {});   // 家のゲーム機の英語ゲーム(メダルの日数に入る)

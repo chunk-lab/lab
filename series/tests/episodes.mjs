@@ -30,7 +30,7 @@ test('再起動で進行とクリア済み判定を保つ。次へを押す前�
   assert.equal(resumed.next(), true); assert.match(resumed.step.text, /疲れた/);
 });
 
-test('レッスンの別章や英語脳アプリを開いただけではクリアしない', () => {
+test('レッスンの別章や英文組み立てラボを開いただけではクリアしない', () => {
   const episode = { id: 'test', steps: [FIRST_EPISODE.steps.find(x => x.game === 'chunkchunk'), FIRST_EPISODE.steps.find(x => x.game === 'eigonou'), { type: 'door' }] };
   const p = createEpisodeProgress(memory(), episode);
   assert.equal(p.accept('chunkchunk', 'story_clear', { chapter: 2 }), false);
