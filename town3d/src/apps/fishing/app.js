@@ -450,7 +450,9 @@ export const fishingApp = {
           sortHide = true; if (my !== flow) return;
           const hh = E.S.hooked; if (!hh || !hh.sr) return;
           const turns = (h.sp.r >= 4 ? 6 : big ? 5 : 4) * (vs ? 0.7 : 1);   // 長めに巻く(対戦は時間勝負なので、すこし短く)
-          await doSeg(turns, i === 0 ? 0 : big ? 2 : 1, base(i), base(i + 1));
+          const run = h.sp.heavy ? 0 : (h.sp.run == null ? 0.5 : h.sp.run);   // 暴れるのは、暴れる魚だけ(ゴミ・重いもの・おとなしい魚は、ただ引き寄せる)
+          const evs = i === 0 || run < 0.25 || Math.random() > Math.min(1, run + 0.3) ? 0 : (big && run >= 0.6 ? 2 : 1);
+          await doSeg(turns, evs, base(i), base(i + 1));
         };
         (async () => {
           await segment(0); if (my !== flow) return;
