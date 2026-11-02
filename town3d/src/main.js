@@ -544,7 +544,17 @@ export function mount(container, opt = {}) {
     }
     me.ry = angleLerp(me.ry, Math.atan2(dx, dz), Math.min(1, dt * 6));
     me.speed += (4.6 - me.speed) * Math.min(1, dt * 6);
+    const px = me.x, pz = me.z;
     [me.x, me.z] = collide(me.x + Math.sin(me.ry) * me.speed * dt, me.z + Math.cos(me.ry) * me.speed * dt);
+    // 途中で何かにぶつかって進めないとき:道すじを今いる所から引きなおす。それでもだめなら次の目印へ進む(案内は最後まで続ける)
+    guide.stuck = Math.hypot(me.x - px, me.z - pz) < me.speed * dt * 0.3 ? (guide.stuck || 0) + dt : 0;
+    if (guide.stuck > 0.8) {
+      guide.stuck = 0; guide.fix = (guide.fix || 0) + 1;
+      const dest = guide.path[guide.path.length - 1];
+      if (guide.fix % 2 === 1 && dest) { const fr = nearestNode(city.graph, me.x, me.z), to = nearestNode(city.graph, dest.x, dest.z); guide.path = [...findPath(city.graph, fr, to).map(id => city.graph.nodes[id]), dest]; }
+      else if (guide.path.length > 1) guide.path.shift();
+      else { [me.x, me.z] = [n.x, n.z]; }   // 最後の1歩でも進めないときだけ、その場所に着いたことにする
+    }
     return true;
   }
   const HANA_HINTS = {
