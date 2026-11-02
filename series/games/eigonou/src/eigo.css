@@ -1,10 +1,10 @@
 /* 英語脳アプリの見た目（.ct-eigo の中だけに効く。アニメーション名は eg- つき） */
 .ct-eigo{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
  --ink:#1c2242;--muted:#6b7191;--chrome:#eceff6;--panel:#ffffff;--line:#d8dcea;--line2:#b9bfd6;--paper:#ffffff;
- --noun:#2d6be0;--verb:#df3f35;--aux:#7a4ad9;--adj:#e2870a;--adv:#11936a;--conj:#566079;--wh:#d23a8c;
+ --rS:#2d6be0;--rV:#df3f35;--rO:#1f9d55;--rI:#0f9ea0;--rC:#e2870a;--rP:#8a55d6;--rT:#c99a00;--rM:#566079;--noun:#2d6be0;--verb:#df3f35;--aux:#7a4ad9;--adj:#e2870a;--adv:#11936a;--conj:#566079;--wh:#d23a8c;
  --en:'Lexend',system-ui,sans-serif;--ja:'Zen Maru Gothic','Hiragino Maru Gothic ProN','Yu Gothic',system-ui,sans-serif;
  color-scheme:light}
-@media (prefers-color-scheme:dark){.ct-eigo :root:not([data-theme="light"]){--ink:#e9ecfb;--muted:#9aa0bf;--chrome:#141729;--panel:#1d2138;--line:#2e3352;--line2:#4a5176;--paper:#f7f8fc;--noun:#5b8ff0;--verb:#f06258;--aux:#9b74ee;--adj:#f2a23a;--adv:#2fb487;--conj:#8a93ad;--wh:#ec5ea9;color-scheme:dark}}
+@media (prefers-color-scheme:dark){.ct-eigo :root:not([data-theme="light"]){--ink:#e9ecfb;--muted:#9aa0bf;--chrome:#141729;--panel:#1d2138;--line:#2e3352;--line2:#4a5176;--paper:#f7f8fc;--rS:#7cc4ff;--rV:#ff8f8f;--rO:#8ee6a8;--rI:#6fe0d8;--rC:#ffb870;--rP:#d6a8ff;--rT:#ffd166;--rM:#e6ecf5;--noun:#5b8ff0;--verb:#f06258;--aux:#9b74ee;--adj:#f2a23a;--adv:#2fb487;--conj:#8a93ad;--wh:#ec5ea9;color-scheme:dark}}
 .ct-eigo :root[data-theme="dark"]{--ink:#e9ecfb;--muted:#9aa0bf;--chrome:#141729;--panel:#1d2138;--line:#2e3352;--line2:#4a5176;--paper:#f7f8fc;color-scheme:dark}
 .ct-eigo *{box-sizing:border-box}
 .ct-eigo,.ct-eigo{height:100%;margin:0}
@@ -1224,7 +1224,7 @@
 .ct-eigo .slsk .ck.cur.gram .gw.g-idm{color:var(--idm)!important}
 .ct-eigo .slsk .ck.cur.gram .gw small{color:inherit!important}
 .ct-eigo #slot .slsubj .swb{flex:0 0 auto;min-width:0;padding:5px 12px}
-@media (prefers-color-scheme:dark){.ct-eigo :root:not([data-theme="light"]){--ink:#1c2242;--muted:#6b7191;--chrome:#eceff6;--panel:#ffffff;--line:#d8dcea;--line2:#b9bfd6;--paper:#ffffff;--noun:#2d6be0;--verb:#df3f35;--aux:#7a4ad9;--adj:#e2870a;--adv:#11936a;--conj:#566079;--wh:#d23a8c;color-scheme:light}}
+@media (prefers-color-scheme:dark){.ct-eigo :root:not([data-theme="light"]){--ink:#1c2242;--muted:#6b7191;--chrome:#eceff6;--panel:#ffffff;--line:#d8dcea;--line2:#b9bfd6;--paper:#ffffff;--rS:#2d6be0;--rV:#df3f35;--rO:#1f9d55;--rI:#0f9ea0;--rC:#e2870a;--rP:#8a55d6;--rT:#c99a00;--rM:#566079;--noun:#2d6be0;--verb:#df3f35;--aux:#7a4ad9;--adj:#e2870a;--adv:#11936a;--conj:#566079;--wh:#d23a8c;color-scheme:light}}
 .ct-eigo #slot .slbar{display:flex;align-items:center;gap:4px;background:var(--panel);border:1.5px solid var(--line);border-radius:999px;padding:5px 8px;margin:2px 0 12px;flex-wrap:nowrap}
 .ct-eigo #slot .slbar .auxcap{flex:none;font-size:10px;padding:1px 6px;background:var(--chrome)}
 .ct-eigo #slot .slbar .mbstop.slm{flex:1 1 0;min-width:0;padding:5px 1px;border-radius:999px}
@@ -1550,3 +1550,23 @@
 .ck.dice{position:relative;overflow:visible;outline:3px solid #ffd36b;outline-offset:2px}
 .ck.dice::after{content:'🎲';position:absolute;right:-8px;top:-14px;font-size:26px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3));animation:ckDice .55s ease-in-out infinite alternate}
 @keyframes ckDice{from{transform:rotate(-14deg) scale(1)}to{transform:rotate(14deg) scale(1.15)}}
+
+/* 役割の色（今スラ！・英ラボなど全アプリ共通）：主語=青・動詞=赤・目的語=緑・補語=橙・場所=紫・時=黄 */
+.ct-eigo .ck[data-cat="subj"]{--c:var(--rS)}
+.ct-eigo .ck[data-cat="obj"]{--c:var(--rO)}
+.ct-eigo .ck[data-cat="iobj"]{--c:var(--rI)}
+.ct-eigo .ck[data-cat="pred"],.ct-eigo .ck.pos-aux{--c:var(--rV)}
+.ct-eigo .ck[data-cat="state"]{--c:var(--rC)}
+.ct-eigo .ck[data-cat="place"]{--c:var(--rP)}
+.ct-eigo .ck[data-cat="time"]{--c:var(--rT)}
+.ct-eigo .ck[data-cat="freq"],.ct-eigo .ck[data-cat="with"],.ct-eigo .ck[data-cat="scope"],.ct-eigo .ck[data-cat="mthan"],.ct-eigo .ck[data-cat="tag"],.ct-eigo .ck[data-cat="lead"]{--c:var(--rM)}
+/* 組み立て中のスロット（誰が？／どうする？／何を？…）も役割の色 */
+.ct-eigo .ck[data-r="S"],.ct-eigo .ck[data-rc="S"]{--c:var(--rS)}
+.ct-eigo .ck[data-r="V"],.ct-eigo .ck[data-rc="V"]{--c:var(--rV)}
+.ct-eigo .ck[data-r="O"],.ct-eigo .ck[data-rc="O"]{--c:var(--rO)}
+.ct-eigo .ck[data-r="I"],.ct-eigo .ck[data-rc="I"]{--c:var(--rI)}
+.ct-eigo .ck[data-r="C"],.ct-eigo .ck[data-rc="C"]{--c:var(--rC)}
+.ct-eigo .ck[data-r="L"],.ct-eigo .ck[data-rc="L"]{--c:var(--rM)}
+.ct-eigo .ck[data-r="P"],.ct-eigo .ck[data-rc="P"]{--c:var(--rP)}
+.ct-eigo .ck[data-r="T"],.ct-eigo .ck[data-rc="T"]{--c:var(--rT)}
+.ct-eigo .ck[data-r="M"],.ct-eigo .ck[data-rc="M"]{--c:var(--rM)}
