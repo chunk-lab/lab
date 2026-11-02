@@ -37,9 +37,9 @@ export async function mountEpisodeFrame(el, ctx) {
   const store={get:k=>memory.has(k)?JSON.parse(memory.get(k)):null,set:(k,v)=>memory.set(k,JSON.stringify(v)),remove:k=>memory.delete(k)};
   const ctx={store,core:{speech:{speak:t=>send('speak',{text:t}),stop:()=>{}},eigo:{count:()=>0},ai:{ready:false}},report:()=>{},opts:{},base:${safeJSON(base)}};
   document.getElementById('episode-eigo-root').innerHTML=${safeJSON(html)};
-  const script=document.createElement('script');script.src=${safeJSON(asset('eigo.js'))};script.onerror=()=>send('error');
-  script.onload=()=>{try{window.__EIGONOU.start(document.getElementById('episode-eigo-root'),ctx);window.__EIGONOU.practice({finish:()=>send('finish'),exit:()=>send('exit')});send('ready')}catch(e){send('error')}};
-  document.head.appendChild(script);
+  const script=document.createElement('script');
+  const go=()=>{try{Promise.resolve(window.__EIGONOU.start(document.getElementById('episode-eigo-root'),ctx)).then(()=>{window.__EIGONOU.practice({finish:()=>send('finish'),exit:()=>send('exit')});send('ready')}).catch(()=>send('error'))}catch(e){send('error')}};
+  script.src=${safeJSON(asset('eigo.js'))};script.onerror=()=>send('error');script.onload=go;document.head.appendChild(script);
   <\/script></body></html>`;
   el.appendChild(frame); ctx.showBack(false);
   timer = setTimeout(() => rejectReady(new Error('英文組み立てラボの体験の読み込みが時間切れになりました')), 30000);

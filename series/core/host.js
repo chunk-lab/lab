@@ -3,10 +3,14 @@
    ctx = { store（そのゲーム専用のセーブ）, settings, speech, sound, report, showBack, exit, opts, base（そのゲームのファイルの場所）, loadScript } */
 import { createStore } from './store.js';
 const loaded = {};
-export function loadScript(src) {
+export function versioned(src) {
   try {   // ファイルごとの中身の印(変わったファイルだけ読み直す)。印がないファイルは組み立てごとの印
     const A = window.__APP__ || {}; if (!/\?/.test(src)) { const k = Object.keys(A.hashes || {}).find(k => src.endsWith(k)); const v = k ? A.hashes[k] : A.build; if (v) src += '?v=' + v; }
   } catch (e) { }
+  return src;
+}
+export function loadScript(src) {
+  src = versioned(src);
   return loaded[src] || (loaded[src] = new Promise((ok, ng) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => { delete loaded[src]; ng(new Error(src)); }; document.head.appendChild(s); }));
 }
 export function createHost(core, layer, backBtn) {

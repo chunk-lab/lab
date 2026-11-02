@@ -5,6 +5,7 @@
 import html from './src/view.html';
 import { runCoach } from '../../core/coach.js';
 import { mountEpisodeFrame } from './episode-frame.js';
+import { prefetchEigo } from './prefetch.js';
 const HOW = [
   { w: 'g', f: 'joy', t: '英文組み立てラボは、絵を見ながら英文を組み立てる、英語のシミュレータだよ。' },
   { w: 'b', t: '下のメニューの「つくる」で、文を作ってみよう。' },
@@ -16,6 +17,7 @@ const link = (href, key) => new Promise(res => { if (document.querySelector(`lin
 
 export default {
   id: 'eigonou', name: '英文組み立てラボ', right: 'game:eigonou',
+  prefetch(core) { prefetchEigo(core.base + 'g/eigonou/'); },   // 町で遊んでいる間に先読み
   async mount(el, ctx) {
     if (ctx.opts.episodePractice === 'want-to') return mountEpisodeFrame(el, ctx);
     el.classList.add('ct-eigo');
@@ -24,7 +26,7 @@ export default {
     await Promise.all([link(ctx.base + 'eigo.css', 'eigo'), ctx.loadScript(ctx.base + 'eigo.js')]);
     if (SAVED) { el.innerHTML = ''; el.appendChild(SAVED); el.className = SAVED_CLS; SAVED = null; }
     else el.innerHTML = html;
-    window.__EIGONOU.start(el, ctx);
+    await window.__EIGONOU.start(el, ctx);   // 初期化は少しずつ進める（途中で画面が固まらないように）
     // 「街へ」は下のメニューと重なるので、共通のボタンは出さずに上の帯に小さく置く（街の中で開いたときだけ）
     ctx.showBack(false);
     const app = window.__APP__ || {};

@@ -43,10 +43,13 @@ const INITS = [init_i18n, init_vocab, init_vocab_a1, init_vocab_a2, init_cefr_ma
 let started = false;
 window.__EIGONOU = {
   practice: startEpisodePractice,
-  start(root, ctx) {
+  async start(root, ctx) {
     Object.assign(ENV, { root, ctx, core: ctx.core, store: ctx.store });
     attach();
-    if (!started) { started = true; INITS.forEach(f => f()); }
+    if (!started) {   // 35個の初期化を、少しずつ進める（一気に動かすと画面が固まるため）
+      started = true; let t = performance.now();
+      for (const f of INITS) { f(); if (performance.now() - t > 12) { await new Promise(r => setTimeout(r, 0)); t = performance.now(); } }
+    }
     try {
       const top = root.querySelector('.top');
       if (top && !top.querySelector('.eg-try-b')) {

@@ -15,6 +15,8 @@ import { createMode } from './mode.js';
 const core = createCore(window.__APP__);
 core.openGame = (g, o) => { if (!GAMES[g]) { core.ui.toast('このアプリには「' + g + '」が入っていません'); return; } Promise.resolve(core.host.open(GAMES[g], o || {})).catch(e => { console.error(e); core.ui.toast('開けませんでした:' + String(e && e.message || e).slice(0, 80)); }); };
 core.books = createBooks(core);
+// 重いゲームは、町で遊んでいる間に先読みしておく（開くときの待ち時間を減らす）
+(window.requestIdleCallback || (f => setTimeout(f, 2500)))(() => { try { Object.values(GAMES).forEach(g => g.prefetch && g.prefetch(core)); } catch (e) { } }, { timeout: 6000 });
 /* 施設：中身は遊びの属性表(core/plays.js)の place から作る（2Dも3Dも同じ）。extra は表にない入口 */
 const PLACES = {
   school: { n: '学校', img: 'school', sub: '勉強する(身につける)', extra: [] },
