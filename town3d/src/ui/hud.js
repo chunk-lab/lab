@@ -2,6 +2,7 @@
 import { LOOKS, LOOK_IDS } from '../world/character.js';
 import { fmtN } from '../core/core.js';
 import { portrait } from './portraits.js';
+import { LOGO } from './logos.js';
 
 export const CSS = `
 .tw-root{position:absolute;inset:0;overflow:hidden;font-family:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;color:#5a4a6b;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-tap-highlight-color:transparent;
@@ -68,6 +69,7 @@ export const CSS = `
 .tw-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed #e6dcef;font-size:14px}
 .tw-seg{display:flex;gap:4px}.tw-seg .tw-btn{padding:6px 11px;font-size:13px;box-shadow:none;border:2px solid #eadff3}.tw-seg .tw-btn.on{background:var(--tw-pink);border-color:var(--tw-pink);color:#fff}
 .tw-title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(180deg,rgba(255,236,242,.55),rgba(232,224,255,.75));pointer-events:auto;padding:20px}
+.tw-logo img{display:block;width:min(80vw,360px);height:auto;filter:drop-shadow(0 4px 10px rgba(160,100,150,.3))}
 .tw-logo{font-size:clamp(22px,6.2vw,40px);font-weight:900;color:#fff;letter-spacing:.06em;text-shadow:0 3px 0 #f5a3b8,0 6px 16px rgba(160,100,150,.35)}
 .tw-sub{font-size:14px;color:var(--tw-sub);font-weight:700;margin-top:-8px}
 .tw-looks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(100%,420px)}
@@ -256,7 +258,7 @@ export function createHud(root, bus) {
     closePanel() { if (panel) { panel.remove(); panel = null; bus.emit('ui:panelClosed'); } },
     // 最初の画面:キャラを選んで名前を決める
     title({ look, name, intro = false }, onStart) {
-      const el = h(`<div class="tw-title"><div class="tw-logo">かまってチャンクTOWN</div><div class="tw-sub">パステルの町で、くらしてみよう</div><div class="tw-looks"></div><input class="tw-name" maxlength="8" placeholder="なまえ"><button class="tw-btn tw-start">町へ出かける</button><div class="tw-ver" style="position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 62px);font:bold 12px/1 monospace;color:#fff;background:rgba(220,40,80,.85);padding:4px 9px;border-radius:8px;pointer-events:none;white-space:nowrap">ver ${typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'}</div><div class="tw-hint">PC:WASD で移動・ドラッグで見まわす・E で話す<br>スマホ:左側をなぞって移動・右側で見まわす</div></div>`);
+      const el = h(`<div class="tw-title"><div class="tw-logo"><img src="${LOGO.town}" alt="かまってチャンクTOWN"></div><div class="tw-sub">パステルの町で、くらしてみよう</div><div class="tw-looks"></div><input class="tw-name" maxlength="8" placeholder="なまえ"><button class="tw-btn tw-start">町へ出かける</button><div class="tw-ver" style="position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 62px);font:bold 12px/1 monospace;color:#fff;background:rgba(220,40,80,.85);padding:4px 9px;border-radius:8px;pointer-events:none;white-space:nowrap">ver ${typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'}</div><div class="tw-hint">PC:WASD で移動・ドラッグで見まわす・E で話す<br>スマホ:左側をなぞって移動・右側で見まわす</div></div>`);
       if (intro) {
         el.style.overflowY = 'auto'; el.style.justifyContent = 'safe center';
         const greeting = document.createElement('p'); greeting.className = 'tw-arrival'; greeting.textContent = 'ここはかまってチャンクTOWN。今から君は、街の住人の一人として過ごせるよ。まずは名前を入れてね。';

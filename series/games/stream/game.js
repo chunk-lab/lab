@@ -4,6 +4,7 @@
    画面は src/stream.html、見た目は src/stream.css（.ct-stream の中だけに効く）。
    データ（長文・単語・予習の文章）は data/ の別ファイルで、開くときに読み込む（tools/ の道具で作る）。 */
 import html from './src/stream.html';
+import { LOGO } from '../../core/logos.js';
 import './src/stream.css';
 import { ENV, SV, loadSave, stopAll } from './src/base.js';
 import { init_screens } from './src/screens.js';
@@ -22,6 +23,7 @@ export default {
     Object.assign(ENV, { root: el, ctx, core: ctx.core, base: ctx.base, offs: [] });
     el.classList.add('ct-stream');
     el.innerHTML = html.replace(/(src|href)="(img|audio)\//g, (m, at, d) => `${at}="${ctx.base}${d}/`);
+    el.querySelectorAll('.logo').forEach(lg => { lg.innerHTML = `<img src="${LOGO.story}" alt="Storyミング！" style="display:block;margin:0 auto;height:min(26vh,150px);width:auto;max-width:90%">`; });
     loadSave(); if ([1, 1.2, 1.4, 1.6].includes(ctx.opts?.fontSize)) SV.set.fs = ctx.opts.fontSize; init_screens(); init_play(); init_fx();
     ctx.showBack(true);
     if (ctx.opts && ctx.opts.passage) setTimeout(() => { try { const p = P(ctx.opts.passage); if (p) { setCur(p); renderDetail(); show('sDetail'); if (ctx.opts.run) startRun(1); } } catch (e) { console.error(e); } }, 50);   // 図書館・ミッションから本を指定(run:最初から通しで始める)

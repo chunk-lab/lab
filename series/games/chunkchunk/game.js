@@ -5,6 +5,7 @@
    中身は src/（engine＝流れる文を切るゲーム本体／pick＝文章を選ぶ／reading＝リーディング／texts＝My Texts と共有／
    shorts＝短文／rank＝チャレンジとランキング／title＝施設の入口／data＝内蔵の文と問題）。画面は src/view.html、見た目は src/cc.css */
 import html from './src/view.html';
+import { LOGO } from '../../core/logos.js';
 import './src/cc.css';
 import { ENV, init_engine, loadSettings, S, nextRun, clearPop, readTextAloud } from './src/engine.js';
 import { sfx, preloadSfx, stopSfxVoice, initSfx } from './src/sfx.js';
@@ -32,6 +33,7 @@ export default {
     Object.assign(ENV, { root: el, ctx, core: ctx.core, offs: [] });
     migrate(ctx.store);
     el.classList.add('ct-cc'); el.innerHTML = html;
+    el.querySelectorAll('.gLogo').forEach(lg => { lg.innerHTML = `<img src="${LOGO.cc}" alt="今スラ！" style="display:block;margin:0 auto;width:min(66vw,300px);height:auto">`; });
     // 無料会員は手打ちだけ：AIを使う登録(コピペ方式・AIで分ける・ファイル用の指示文)を隠す(設計書「共有・自分だけ・会員」)
     const freeMark = () => el.classList.toggle('cc-free', !(ctx.core.member && ctx.core.member.isPaid()));
     freeMark(); const offPlan = ctx.core.member ? ctx.core.member.onChange(freeMark) : null;

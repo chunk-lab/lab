@@ -1,3 +1,4 @@
+import { LOGO } from '../../ui/logos.js';
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
 import { confirmPay } from '../../ui/pay.js';
@@ -194,7 +195,7 @@ export const fishingApp = {
       frame = dt => { fake.update(dt); view.draw(vsOf(fake, true), dt); };
       const found = Object.keys(dex).length, tm = timeOf(baseCond.hour);
       const ui = document.createElement('div'); ui.className = 'menu';
-      ui.innerHTML = `<p class="title">🎣 ほしみやの釣り</p>
+      ui.innerHTML = `<p class="title"><img src="${LOGO.fish}" alt="イングフィッシュ" style="display:block;margin:0 auto;width:min(72vw,270px);height:auto;filter:drop-shadow(0 3px 8px #0004)"></p>
         <div class="say">砂吹さん「${esc(pickSay())}」</div>
         <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}・${weather.label(weather.now(), tm === 'night')} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
         <div style="background:rgba(255,255,255,.88);border-radius:14px;padding:6px 10px">${wxStrip(RAIN_FISH)}</div>

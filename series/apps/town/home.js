@@ -1,6 +1,7 @@
 /* 勉強部屋(ホーム)：アプリを開いたときの最初の画面。ここから「勉強する」か「街であそぶ(3D)」を選ぶ。
    2Dの地図のかわりに「行き先のリスト」（core/plays.js の表から作る）。3Dの町は、えらんだときだけ読み込む。 */
 import { PLAYS } from '../../core/plays.js';
+import { LOGO } from '../../core/logos.js';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
 export function createHome(core, { st, go3D, openStudy, has, openEpisode, episodeLabel }) {
@@ -14,7 +15,7 @@ export function createHome(core, { st, go3D, openStudy, has, openEpisode, episod
     const fun = PLAYS.filter(p => (p.mood === 'game') && usable(p));
     const c = cont(), cp = c && c.kind === 'play' ? PLAYS.find(p => p.id === c.id) : null;
     const row = p => `<button class="hm-row" data-p="${p.id}"><span>${WANT_ICON[p.want] || '・'}</span><b>${esc(p.n)}</b></button>`;
-    el.innerHTML = `<div class="hm-box"><h1>勉強部屋</h1>
+    el.innerHTML = `<div class="hm-box"><img class="hm-logo" src="${LOGO.town}" alt="かまってチャンクTOWN"><h1>勉強部屋</h1>
       ${openEpisode ? `<button class="hm-row" data-episode><span>📖</span><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}<small style="display:block;font-weight:400;margin-top:3px">はな・そら「ちょっと、外に出たい」</small></b></button>` : ''}
       ${msg ? `<div class="hm-err">${esc(msg.text)}<button class="hm-retry" data-retry>もう一度</button></div>` : ''}
       ${c ? `<button class="hm-cont" data-cont><small>つづきから</small><b>${c.kind === '3d' ? '🏙 街であそぶ' : esc(c.label || '')}</b></button>` : ''}

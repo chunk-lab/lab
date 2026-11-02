@@ -3,6 +3,7 @@
    4つのアプリの施設は色つき、ほかはグレー。warp がある施設は「この建物の前へ行く」も出す。
    開き方 kind：play=遊びの属性表(core/plays.js)の id ／ game=ゲームを直接 ／ app=3Dの町のアプリ ／ study=勉強ノート */
 import { playOf } from '../../core/plays.js';
+import { LOGO } from '../../core/logos.js';
 
 const SECS = [
   { k: 'cc', icon: '🏫', title: '学校', sub: '今スラ！ ― 切って鍛える', color: '#2d6be0', warp: 'school', groups: [
@@ -75,6 +76,7 @@ const CSS = `
 .lc-bar{width:100%;border:0;display:flex;align-items:center;gap:10px;padding:12px;background:var(--c);color:#fff;font:inherit;text-align:left;cursor:pointer}
 .lc-bar b{font-size:20px;font-weight:400}.lc-bar span{flex:1;display:flex;flex-direction:column;line-height:1.3}
 .lc-bar span i{font-style:normal;font-weight:900;font-size:16px}.lc-bar span small{font-weight:700;opacity:.92;font-size:12px}
+.lc-lg{flex:none;background:#fff;border-radius:10px;padding:2px 6px;display:flex;align-items:center}.lc-lg img{height:26px;width:auto;display:block}
 .lc-bar:after{content:"▾";font-size:16px;transition:transform .15s}.lc-sec.open .lc-bar:after{transform:rotate(180deg)}
 .lc-pn{display:none;padding:4px 12px 12px}.lc-sec.open .lc-pn{display:block}
 .lc-g{margin:8px 0 2px;padding-left:8px;font-size:12px;font-weight:900;color:var(--c);border-left:4px solid var(--c)}
@@ -104,7 +106,7 @@ export function createLauncher(core, { openApp, to2D, openStudy }) {
     if (!document.getElementById('lc-css')) { const s = document.createElement('style'); s.id = 'lc-css'; s.textContent = CSS; document.head.appendChild(s); }
     const all = [];
     const body = SECS.map(s => `<section class="lc-sec" data-k="${s.k}" style="--c:${s.color}">
-      <button class="lc-bar" data-bar><b>${s.icon}</b><span><i>${esc(s.title)}</i><small>${esc(s.sub)}</small></span></button>
+      <button class="lc-bar" data-bar><b>${s.icon}</b><span><i>${esc(s.title)}</i><small>${esc(s.sub)}</small></span>${LOGO[s.k] ? `<em class="lc-lg"><img src="${LOGO[s.k]}" alt=""></em>` : ''}</button>
       <div class="lc-pn">${s.groups.map(g => `<div class="lc-g">${esc(g.h)}</div>${g.note ? `<div class="lc-n">${esc(g.note)}</div>` : ''}${g.items.length ? `<div class="lc-grid">${g.items.filter(itemOk).map(it => { all.push(it); return `<button class="lc-it" data-i="${all.length - 1}"><b>${it.i}</b>${esc(it.t)}</button>`; }).join('')}</div>` : ''}`).join('')}
       ${s.warp ? `<button class="lc-wp" data-warp="${s.warp}">🚪 中に入る</button>` : ''}</div>
     </section>`).join('');

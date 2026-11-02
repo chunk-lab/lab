@@ -6,6 +6,7 @@ import html from './src/view.html';
 import { runCoach } from '../../core/coach.js';
 import { mountEpisodeFrame } from './episode-frame.js';
 import { prefetchEigo } from './prefetch.js';
+import { LOGO } from '../../core/logos.js';
 const HOW = [
   { w: 'g', f: 'joy', t: '英文組み立てラボは、絵を見ながら英文を組み立てる、英語のシミュレータだよ。' },
   { w: 'b', t: '下のメニューの「つくる」で、文を作ってみよう。' },
@@ -26,7 +27,8 @@ export default {
     await Promise.all([link(ctx.base + 'eigo.css', 'eigo'), ctx.loadScript(ctx.base + 'eigo.js')]);
     if (SAVED) { el.innerHTML = ''; el.appendChild(SAVED); el.className = SAVED_CLS; SAVED = null; }
     else el.innerHTML = html;
-    await window.__EIGONOU.start(el, ctx);   // 初期化は少しずつ進める（途中で画面が固まらないように）
+    await window.__EIGONOU.start(el, ctx);
+    el.querySelectorAll('.top h1').forEach(h1 => { h1.innerHTML = `<img src="${LOGO.eigo}" alt="英文組み立てラボ" style="display:block;height:44px;width:auto">`; });   // 初期化は少しずつ進める（途中で画面が固まらないように）
     // 「街へ」は下のメニューと重なるので、共通のボタンは出さずに上の帯に小さく置く（街の中で開いたときだけ）
     ctx.showBack(false);
     const app = window.__APP__ || {};
