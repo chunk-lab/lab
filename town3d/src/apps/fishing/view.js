@@ -435,6 +435,7 @@ export function createView(canvas, cond, { mini = false, under = false } = {}) {
       for (let i = rings.length - 1; i >= 0; i--) { const r = rings[i]; r.r += dt * 60 * r.big; r.a -= dt * 0.9; if (r.a <= 0) { rings.splice(i, 1); continue; } const p = proj(r.x, r.d); g.strokeStyle = `rgba(255,255,255,${r.a * 0.6})`; g.lineWidth = 1.5; g.beginPath(); g.ellipse(p.x, p.y, r.r * p.s * 1.6, r.r * p.s * 0.5, 0, 0, 7); g.stroke(); }
       // ねらい(池のどこでも)
       const tip = tipPos(vs.side || 0, vs.aimT && (vs.ph === 'ready' || vs.ph === 'charge') ? vs.aimT.x : 0);
+      if (vs.rod) { tip.x += vs.rod.x * W * 0.34; tip.y -= vs.rod.y * H * 0.24; }   // 竿を大げさに動かす(英語/ふつうの巻き取りで、指のうごきにあわせる)
       if (vs.bonus && vs.bonus.t > 0) { const bp = proj(vs.bonus.x, vs.bonus.d), a = Math.min(1, vs.bonus.t / 3) * (0.5 + 0.3 * Math.sin(t * 5)); g.strokeStyle = `rgba(255,220,90,${a})`; g.lineWidth = 2; g.beginPath(); g.ellipse(bp.x, bp.y, 60 * bp.s * 2.2 * 0.32, 20 * bp.s * 2.2 * 0.32, 0, 0, 7); g.stroke(); }
       if ((vs.ph === 'ready' || vs.ph === 'charge') && vs.aimT) {
         const mp = proj(vs.aimT.x, vs.aimT.d), rx = Math.max(10, vs.ringR * W * 0.78 * Math.pow(mp.s, 0.75)), ry = rx * (0.28 + 0.2 * (1 - mp.s));

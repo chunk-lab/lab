@@ -226,7 +226,7 @@ export const fishingApp = {
         <p><b>① ねらって投げる</b><br>池を<b>タップ</b>でそこへ、<b>はじく</b>と大きく、<b>なぞる</b>と細かく、狙いの円が動く(池のどこでもOK)。🎣を<b>おしたまま</b>で力がたまり、ゲージが<b>黄色の帯</b>に入ったら<b>はなす</b>。円に落とせば魚が寄りやすく、真ん中なら<b>パーフェクト</b>!</p>
         <p><b>② さそう</b><br>しずむと水の中の画面に切りかわる。エサは<b>上下にはじくとタナ(深さ)</b>が変わる。エサ(ウキ)はじっと待つ。ルアーは🎣をおしたままで<b>巻く</b>(おしたまま上にずらすと速く)。左のボタンで<b>しゃくる</b>と強い魚がよってくる。</p>
         <p><b>③ アタリとあわせ</b><br>ウキがツンツン→<b>グッとしずんだら</b>左の<b>「あわせ」</b>! 早すぎると逃げられる。ルアーは「！」が出たらすぐ。</p>
-        <p><b>④ ファイト</b><br>魚がかかったら、<b>矢印の向きに指をスライド</b>(持ち上げる↑・魚が走ったら左右にたおす←→・はねたら下げる↓。大物は持ち上げ2回)。<b>指を離さずに</b>そのまま画面のどこでも<b>ぐるぐる回す</b>と、回した分だけじわじわ巻ける。離すと巻きは止まって、また持ち上げから。</p>
+        <p><b>④ ファイト</b><br>魚がかかったら、<b>指をおいたまま上にずらして竿を持ち上げ</b>、<b>指を離さずに画面のどこでもぐるぐる回す</b>と巻ける。竿は指のうごきにあわせて動く。魚が左右に走ったら、竿をその<b>反対</b>にたおす(←→の矢印)。はねたら竿を下げる(↓)。向きが合わないと巻きがおそくなる。離すと巻きは止まる。</p>
         <p><b>⑤ 集める・きそう</b><br>釣れた魚は図鑑へ。時間(朝・昼・夕方・夜)・季節・雨・場所・エサで釣れる魚がかわる。道具屋で道具をそろえて、大物と伝説をねらおう。</p>
       </div><div style="padding:10px 16px 16px;text-align:center"><button class="btn" data-x>わかった</button></div>`, true);
       s.querySelector('[data-x]').onclick = () => { st.set('tut', 1); s.remove(); after && after(); };
@@ -436,35 +436,25 @@ export const fishingApp = {
       //   小さい魚=持ち上げ1回・ゆっくり巻く / 大きい魚=持ち上げ2回・はやく巻く。ときどき魚が左右に走る・はねる(矢印で知らせる)。英語でない釣りも同じ(問題なし)。
       function startReelFlow(h, stopIn) {
         const my = ++flow, N = G ? G.reelN(h.sp, h.size || 0) : (h.sp.r >= 4 ? 5 : (h.sp.r >= 3 || (h.size || 0) >= 60) ? 4 : 3), L0 = h.sortL0, big = h.sp.r >= 3 || (h.size || 0) >= 60;
-        const base = i => L0 - (L0 - 0.035) * i / (N + 1);
-        let first = true;
-        const doSet = (kind, lifts, turns, a, b) => new Promise(res => {   // 竿をうごかす → 指を離さずにぐるぐる回して巻く(1本の操作)
+        const NS = G ? N : (big ? 3 : 2), base = i => L0 - (L0 - 0.035) * i / (NS + 1);
+        const doSeg = (turns, events, a, b) => new Promise(res => {   // 竿をあやつりながら、ぐるぐる回して巻く(1本の操作)
           if (my !== flow) return res();
           closeWheel(); stopIn(); const cur = wheelCur = { a, b, p: 0 };
-          wheelUi = rodReel(ui, { kind, lifts, turns, sfx,
-            onMove: p => { sideT = kind === 'left' ? -p : kind === 'right' ? p : 0; },
-            onStroke: () => { sideT = 0; if (kind !== 'lift') E.rodDone(); },
+          wheelUi = rodReel(ui, { turns, events, jump: !!h.sp.jump, sfx,
+            onEvent: k => { if (k === 'end') { E.rodDone(); return; } if (k === 'jump') { E.rodJump(); const L = E.S.lure; view.splash(L.x, L.d, 14, 1.2); } else E.rodPhase(false, k === 'left' ? 1 : -1); },   // 魚は逆に走る(竿はその反対にたおす)
+            onPose: pz => { rodTarget = pz; sideT = pz ? pz.x : 0; },
             onProgress: p => { cur.p = p; },
-            onDone: () => { cur.p = 1; E.reelTgt(b); closeWheel(); sideT = 0; res(); } });
+            onDone: () => { cur.p = 1; E.reelTgt(b); closeWheel(); sideT = 0; rodTarget = null; E.rodDone(); res(); } });
         });
         const segment = async i => {
-          sortHide = true;
-          for (let s = 0; s < 2; s++) {
-            if (my !== flow) return;
-            const a = base(i) + (base(i + 1) - base(i)) * s / 2, b = base(i) + (base(i + 1) - base(i)) * (s + 1) / 2, r = Math.random(), hh = E.S.hooked;
-            if (!hh || !hh.sr) return;
-            let kind = 'lift';
-            if (!first) { if (h.sp.jump && r < 0.2) kind = 'jump'; else if (r < (big ? 0.42 : 0.3)) kind = Math.random() < 0.5 ? 'left' : 'right'; }
-            first = false;
-            const turns = h.sp.r >= 4 ? 1.5 : big ? 1.2 : 1.5;   // 大物は持ち上げ2回・巻きはすこしはやく
-            if (kind === 'jump') { sfx.play('jump'); E.rodJump(); const L = E.S.lure; view.splash(L.x, L.d, 14, 1.2); }
-            else if (kind !== 'lift') E.rodPhase(false, kind === 'left' ? 1 : -1);   // 魚は逆に走る(竿はその反対にたおす)
-            await doSet(kind === 'jump' ? 'down' : kind, kind === 'lift' && big ? 2 : 1, turns, a, b); if (my !== flow) return;
-          }
+          sortHide = true; if (my !== flow) return;
+          const hh = E.S.hooked; if (!hh || !hh.sr) return;
+          const turns = h.sp.r >= 4 ? 6 : big ? 5 : 4;   // 長めに巻く
+          await doSeg(turns, i === 0 ? 0 : big ? 2 : 1, base(i), base(i + 1));
         };
         (async () => {
           await segment(0); if (my !== flow) return;
-          if (!G) { for (let i = 1; i <= N; i++) { await segment(i); if (my !== flow) return; } E.sortEnd(); return; }   // 英語でない釣りは、問題なしでつづけて巻く
+          if (!G) { for (let i = 1; i <= NS; i++) { await segment(i); if (my !== flow) return; } E.sortEnd(); return; }   // 英語でない釣りは、問題なしでつづけて巻く
           reelUi = G.reel(h.sp, h.size || 0, { onSentence: () => { }, onEnd: () => E.sortEnd(),
             onGap: (k, n) => (async () => {   // 1文ならべ終えたら:(最後の合間は熟語)→ 竿をうごかして巻く → 次の文
               sortHide = true;
@@ -695,8 +685,10 @@ export const fishingApp = {
     function ghostScore(g, dur) { const sc = { count: 0, big: 0, point: 0 }; for (const c of g.e) { if (c[0] / 10 > dur) continue; sc.point += c[3]; const sp = BYID[c[1]]; if (sp && sp.kind === 'fish') { sc.count++; sc.big = Math.max(sc.big, c[2]); } } return sc; }
 
     // エンジン → 絵の状態
+    let rodTarget = null; const rodShown = { x: 0, y: 0 };   // 竿の見せる位置(指でずらした分を、大げさに・なめらかに)
     function vsOf(E, withFish) {
       const S = E.S, ph = S.ph, v = { ph, aim: S.aim, p: S.p, isLure: E.G.bait.type === 'lure', moving: E.input.reel > 0.05, side: E.input.side };
+      { const sr = !!(S.hooked && S.hooked.sr && ph === 'fight'); rodShown.x += ((sr && rodTarget ? rodTarget.x : 0) - rodShown.x) * 0.22; rodShown.y += ((sr && rodTarget ? rodTarget.y : 0) - rodShown.y) * 0.22; if (sr && (rodTarget || Math.abs(rodShown.x) + Math.abs(rodShown.y) > 0.02)) v.rod = rodShown; }
       if (ph === 'ready' || ph === 'charge') { v.aimT = S.aimT; v.ringR = E.ringR(); v.areaName = areaName([S.aimT.x, S.aimT.d]); if (ph === 'charge') v.land = E.target(); }
       v.bonus = S.bonus;
       v.lure = { x: S.lure.x, d: S.lure.d, h: S.lure.h };
