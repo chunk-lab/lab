@@ -1147,6 +1147,9 @@ export function mount(container, opt = {}) {
     }, { sticky: true });
     pn.querySelectorAll('input').forEach(el => { el.addEventListener('keydown', e => e.stopPropagation()); el.addEventListener('input', () => { el.value = el.value.replace(/\D/g, ''); }); });
   }
+  offs.push(bus.on('ui:apps', () => {   // 🎮 ぜんぶの入口(組み込み先が一覧を持っているときだけ)
+    if (!started || appHost.current || hud.busy || battle.active || sport.active) return; opt.openLauncher?.();
+  }));
   offs.push(bus.on('ui:home', () => {   // 🏠 自宅にもどる(カメラは、カメラボタンを2回押せばもとにもどる)
     if (!started || appHost.current || hud.busy || battle.active || sport.active) return; openApp('home', {});
   }));

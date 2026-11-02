@@ -8,6 +8,7 @@ import { PLAYS, playOf } from '../../core/plays.js';
 import { catOfApp } from '../../core/daylog.js';
 import { createHome } from './home.js';
 import { createEpisodes } from './episodes/view.js';
+import { createLauncher } from './launcher.js';
 import './mode.css';
 
 const st = createStore('town');
@@ -36,6 +37,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     } catch (e) { console.error(e); } finally { exprBusy = false; }
   }
   let town = null, box = null;
+  const launcher = createLauncher(core, { openApp: (id, p) => town && town.openApp(id, p), to2D: () => go('home'), openStudy });
 
   const episodes = createEpisodes(core, {
     games: GAMES, pauseTown: () => town?.pause(), resumeTown: () => town?.resume(),
@@ -75,6 +77,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       learn: core.learn,   // 単語ごとの学習の記録(英語の釣り堀とストミンで共通)
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
+      openLauncher: () => launcher.open(),   // 🎮 カテゴリ別の「ぜんぶの入口」
       features: ['study'],
       exprPool: () => { const t = exprToday(); if (t) return t; genExpr(); try { if (!core.dict.loaded) { core.dict.ready().catch(() => { }); return null; } return core.dict.phrases(); } catch (e) { return null; } },   // 毎日の表現のもと(AIがあればAIが作った今日の5つ・なければ辞書の熟語)
       medals: () => core.record.medals(),   // 勉強を続けたメダル(家の壁にかざれる)
