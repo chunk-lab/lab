@@ -451,7 +451,7 @@ export const fishingApp = {
           sortHide = true; if (my !== flow) return;
           const hh = E.S.hooked; if (!hh || !hh.sr) return;
           const turns = (h.sp.r >= 4 ? 6 : big ? 5 : 4) * (vs ? 0.7 : 1);   // 長めに巻く(対戦は時間勝負なので、すこし短く)
-          const run = h.sp.heavy ? 0 : (h.sp.run == null ? 0.5 : h.sp.run);   // 暴れるのは、暴れる魚だけ(ゴミ・重いもの・おとなしい魚は、ただ引き寄せる)
+          const run = (h.sp.kind !== 'fish' || h.sp.heavy) ? 0 : (h.sp.run == null ? 0.5 : h.sp.run);   // 暴れるのは、暴れる魚だけ(ゴミ・重いもの・おとなしい魚は、ただ引き寄せる)
           const evs = i === 0 || run < 0.25 || Math.random() > Math.min(1, run + 0.3) ? 0 : (big && run >= 0.6 ? 2 : 1);
           await doSeg(turns, evs, base(i), base(i + 1));
         };
@@ -472,7 +472,7 @@ export const fishingApp = {
         if (type === 'missq') { stopIn(); G.bite().then(r => { E.biteResult(r.ok); toast(r.ok ? 'もういちど! アタリを合わせろ' : '逃げられた…', 1000); }); }
         else if (type === 'hooked') {
           thrashN = 0; lastTh = -99; const h = E.S.hooked;
-          if (h && h.sp.kind === 'fish' && E.sortStart()) {   // 巻き取りは、ぜんぶ文の並べ替えでする
+          if (h && E.sortStart()) {   // 巻き取りは、ぜんぶ文の並べ替えでする(魚以外も、円を回して巻く。暴れるのは暴れる魚だけ)
             try { stopIn(); closeReel(); startReelFlow(h, stopIn); } catch (err) { closeReel(); h.sr = false; }
           }
         }
