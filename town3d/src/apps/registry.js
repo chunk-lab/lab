@@ -1,7 +1,7 @@
 import { shopApp, homeApp } from './home.js';
 import { albumApp } from './album.js';
 import { fishingApp } from './fishing/app.js';
-import { gameboxApp, snowApp, amuseApp } from './gamebox/app.js';
+import { gameboxApp, amuseApp } from './gamebox/app.js';
 import { cafeApp, fortuneApp } from './social_apps.js';
 // 町に置くアプリの一覧。新しい単発アプリを足すときは、ここに1行足して town_data.js の建物か NPC の menu に id を書く。
 const css = `font-family:inherit;color:#5a4a6b;padding:20px;max-width:560px;margin:0 auto;line-height:1.7`;
@@ -62,5 +62,4 @@ export const APPS = [
   { id: 'fishing', title: 'イングフィッシュ', type: 'module', module: fishingApp },
   { id: 'gamebox', title: 'チャンクボックス', type: 'module', module: gameboxApp },
   { id: 'amuse', title: 'アミューズメントセンター', type: 'module', module: amuseApp },
-  { id: 'snowfight', title: '雪合戦', type: 'module', module: snowApp },
 ];

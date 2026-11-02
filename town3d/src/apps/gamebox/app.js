@@ -16,7 +16,6 @@ import sniper from './games/sniper.js';
 import hockey from './games/hockey.js';
 import race from './games/race.js';
 import party from './games/party.js';
-import snow from './games/snow.js';
 import boxes from './games/boxes.js';
 import billiards from './games/billiards.js';
 
@@ -24,8 +23,8 @@ export const EN_GAMES = [chunksort, wordrace, listen, tug, shiritori, sniper, ra
 import { social, GAME_UNLOCK, NPC_NAME, LV_NAME } from '../../game/social.js';
 const CARDS = { id: 'cards', title: 'カード対戦', icon: '🃏', desc: 'ハッタリ男爵・ミイ・ゴンと勝負' };   // カフェから引っ越し(中身は chunkcards)
 export const PLAY_GAMES = [billiards, hockey, party, bowling, darts, boxes, snow3d, fishvs, golf, frisbee];   // アミューズメントセンター(センター全体が有料。コインでも遊べる。旬の外遊びだけ無料)
-const SEASON_OF = { snow3d: 'winter', snow: 'winter', golf: 'spring', frisbee: 'autumn', fishvs: 'summer' };
-const ALL = [...EN_GAMES, ...PLAY_GAMES, snow];
+const SEASON_OF = { snow3d: 'winter', golf: 'spring', frisbee: 'autumn', fishvs: 'summer' };
+const ALL = [...EN_GAMES, ...PLAY_GAMES];
 // 値段(あとで変えられるようにここにまとめる)
 export const PRICE = { console: 700, title1: 500, title3: 1000, titleAll: 2000, usdMonth1: 1, usdDayAll: 1 };
 
@@ -104,7 +103,7 @@ export const gameboxApp = {
     const enLeft = () => (paid() || consoleOk() ? Infinity : Math.max(0, 1 - R().en.n));
 
     let cur = null;   // 遊んでいるゲーム
-    const act = G => { try { ctx.emit('act', G ? { layer: 'sub', cat: G.en ? 'study' : ['snow3d', 'fishvs', 'golf', 'frisbee', 'snow'].includes(G.id) ? 'sport' : 'tv', label: G.title } : { layer: 'sub', cat: null }); } catch (e) { } };   // 1日の記録:どのゲームを遊んでいるか
+    const act = G => { try { ctx.emit('act', G ? { layer: 'sub', cat: G.en ? 'study' : ['snow3d', 'fishvs', 'golf', 'frisbee'].includes(G.id) ? 'sport' : 'tv', label: G.title } : { layer: 'sub', cat: null }); } catch (e) { } };   // 1日の記録:どのゲームを遊んでいるか
     function clear() { if (cur) { try { cur.stop(); } catch (e) { } cur = null; } root.innerHTML = ''; act(null); }
     function sheet(html) { const s = document.createElement('div'); s.className = 'sheet'; s.innerHTML = `<div class="panel">${html}</div>`; s.addEventListener('pointerdown', e => { if (e.target === s) s.remove(); }); root.appendChild(s); return s; }
     function msg(t, sub) { const s = sheet(`<h2>${t}</h2><p class="note">${sub || ''}</p><div class="row"><button class="btn sub" data-x>とじる</button></div>`); s.querySelector('[data-x]').onclick = () => s.remove(); return s; }
@@ -129,7 +128,7 @@ export const gameboxApp = {
     function homeAmuse() {
       const r = R(), sc = document.createElement('div'); sc.className = 'scr'; root.appendChild(sc);
       const passTxt = paid() ? 'パス:有料会員はいつでも' : r.console === dayKey() ? 'パス:きょうは持っている' : `パス:持っていない(1日 🪙${PRICE.console})`;
-      const out = [snow3d, fishvs, golf, frisbee, ...(curSeason() === 'winter' ? [snow] : [])], seasonName = { spring: '春', summer: '夏', autumn: '秋', winter: '冬' }[curSeason()];
+      const out = [snow3d, fishvs, golf, frisbee], seasonName = { spring: '春', summer: '夏', autumn: '秋', winter: '冬' }[curSeason()];
       sc.innerHTML = `<div class="logo">AMUSEMENT</div><div class="sub">アミューズメントセンター</div>
         <div class="stat"><span class="pill ${consoleOk() ? 'ok' : ''}">🎟 ${passTxt}</span><span class="pill">🪙 <span data-bind="coins">${ctx.wallet.get().toLocaleString("ja-JP")}</span></span></div>
         ${!consoleOk() ? `<div class="row" style="margin:0 0 4px"><button class="btn gold" data-rent="console">🎟 1日パスを買う 🪙${PRICE.console}</button></div>` : ''}
@@ -331,7 +330,4 @@ export const gameboxApp = {
 // 雪合戦だけを開くアプリ(冬の町の広場から。ゲーム機なしで遊べる)
 export const amuseApp = {
   mount(el, ctx) { return gameboxApp.mount(el, { ...ctx, params: { ...(ctx.params || {}), mode: 'amuse' } }); },
-};
-export const snowApp = {
-  mount(el, ctx) { return gameboxApp.mount(el, { ...ctx, params: { ...(ctx.params || {}), game: 'snow', season: 'winter' } }); },
 };
