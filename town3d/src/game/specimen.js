@@ -109,7 +109,10 @@ export const spec = {
     if (!p) { const top = dl.slice().sort((a, b) => b.rar - a.rar).slice(0, 8); p = top.map((d, i) => ({ uid: d.uid, x: top.length > 1 ? 0.08 + 0.84 * i / (top.length - 1) : 0.5, y: 0.86 - (i % 2) * 0.1 })); st.set('placed', p); }
     return p.filter(q => dl.some(d => d.uid === q.uid));
   },
-  placeAdd(uid, x = 0.5, y = 0.84) { const p = this.placed(); if (p.some(q => q.uid === uid)) return; p.push({ uid, x, y }); st.set('placed', p); },
+  placeAdd(uid, x = 0.5, y = 0.84) { const p = this.placed(); if (p.some(q => q.uid === uid)) return; const o = { uid, x, y }; const hasLz = p.filter(r => r.lz != null); if (hasLz.length) o.lz = Math.max(...hasLz.map(r => r.lz)) + 1; p.push(o); st.set('placed', p); },
+  // 飾りの大きさ(sc: 0.5〜4倍)・前後(lz: 大きいほど手前)を保存する
+  placeSet(uid, o) { const p = this.placed(), q = p.find(r => r.uid === uid); if (!q) return; Object.assign(q, o); st.set('placed', p); },
+  placeLayers(list) { const p = this.placed(); list.forEach(([uid, lz]) => { const q = p.find(r => r.uid === uid); if (q) q.lz = lz; }); st.set('placed', p); },
   placeMove(uid, x, y) { const p = this.placed(), q = p.find(r => r.uid === uid); if (!q) return; q.x = Math.max(0.04, Math.min(0.96, x)); q.y = Math.max(0.18, Math.min(0.98, y)); st.set('placed', p); },
   placeRemove(uid) { st.set('placed', this.placed().filter(q => q.uid !== uid)); },
   rank() { const p = this.pts(); let r = 0; TANK_RANKS.forEach((x, i) => { if (p >= x[0]) r = i; }); return r; },

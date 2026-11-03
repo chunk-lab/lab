@@ -5,7 +5,7 @@ import { makeCharacter, LOOKS } from '../world/character.js';
 import { createInput } from '../game/input.js';
 import { snapCanvas, shotCard, flash } from '../game/photos.js';
 import { fmtN, clamp } from '../core/core.js';
-import { ITEMS, ITEM, CATS, U, WALL_H, MAX_OWN, SIDE_MAX, furn, houseData, size, wallLen, kindOf, heightOf, inside, stackY, findSpot, ROOM_TYPES, isDeco, scOf, scaleCap, SC_MIN } from '../game/furniture.js';
+import { ITEMS, ITEM, CATS, U, WALL_H, MAX_OWN, SIDE_MAX, furn, houseData, size, wallLen, kindOf, heightOf, inside, stackY, findSpot, ROOM_TYPES } from '../game/furniture.js';
 
 const ink = '#5a4a6b';
 const btn = (bg = 'linear-gradient(160deg,#ffd0dc,#ffb3c1)', fg = '#fff') => `border:0;border-radius:999px;padding:9px 16px;font:inherit;font-weight:800;color:${fg};background:${bg};cursor:pointer;white-space:nowrap`;
@@ -223,7 +223,7 @@ export const homeApp = {
           const len = wallLen(p) / U, a = p.gx / U + len / 2;
           if (p.wall === 'w') { m.position.set(0, y, a); m.rotation.y = Math.PI / 2; } else { m.position.set(a, y, 0); m.rotation.y = 0; }
         } else if (k === 'ceil') { m.position.set((p.gx + U / 2) / U, y, (p.gz + U / 2) / U); m.rotation.y = 0; }
-        else { const [w, d] = size(p); m.position.set((p.gx + w / 2) / U, y, (p.gz + d / 2) / U); m.rotation.y = -p.r * Math.PI / 2; m.scale.setScalar(scOf(p)); }
+        else { const [w, d] = size(p); m.position.set((p.gx + w / 2) / U, y, (p.gz + d / 2) / U); m.rotation.y = -p.r * Math.PI / 2; }
       }
       for (const [uid, m] of meshes) if (!L.some(p => p.uid === uid)) { scene.remove(m); dispose(m); meshes.delete(uid); }
       mark(); draw();
@@ -246,27 +246,11 @@ export const homeApp = {
         <div style="text-align:right;font-weight:800;font-size:13px;line-height:1.5;white-space:nowrap">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${gemsOf() != null ? `<br>💎 <span data-bind="gems">${fmtN(gemsOf())}</span>` : ''}</div>
         <button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 12px;font-size:13px">🏠 ひろげる</button>`;
     }
-    // かざりの前後:おなじ場所に重なっている、おなじ種類(ラグどうし/ふつうの家具どうし)のかざりの並びで入れかえる
-    const overlaps = (a, b) => { const [aw, ad] = size(a), [bw, bd] = size(b); return a.gx < b.gx + bw && b.gx < a.gx + aw && a.gz < b.gz + bd && b.gz < a.gz + ad; };
-    function layerInfo(p) {
-      const g = kindOf(p.id), L = list().filter(o => o.uid !== p.uid && kindOf(o.id) === g && overlaps(p, o)), i0 = list().indexOf(p);
-      const lst = list(); return { n: L.length, up: L.some(o => lst.indexOf(o) > i0), down: L.some(o => lst.indexOf(o) < i0), L };
-    }
-    function moveLayer(p, how) {
-      const info = layerInfo(p), lst = list(), i0 = lst.indexOf(p), idx = o => lst.indexOf(o);
-      const above = info.L.filter(o => idx(o) > i0).sort((a, b) => idx(a) - idx(b)), below = info.L.filter(o => idx(o) < i0).sort((a, b) => idx(a) - idx(b));
-      let ref = null, after = true;
-      if (how === 'lup') ref = above[0]; else if (how === 'ltop') ref = above[above.length - 1]; else if (how === 'ldown') { ref = below[below.length - 1]; after = false; } else if (how === 'lbot') { ref = below[0]; after = false; }
-      if (!ref) return false;
-      placed = placed.filter(x => x !== p); const j = placed.indexOf(ref); placed.splice(after ? j + 1 : j, 0, p); return true;
-    }
     function ui() {
       planUI();
       const p = placed.find(x => x.uid === selUid), k = p && kindOf(p.id);
       tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ。ほかの家具はダブルタップでえらぶ。` : (Object.keys(furn.inv()).length ? '家具はダブルタップでえらぶよ。何もない所をドラッグで向きを変えられるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
-      const lay = p && isDeco(p.id) ? layerInfo(p) : null, lb = (a, t, on) => `<button data-a="${a}" ${on ? '' : 'disabled'} style="${btn(on ? '#8f7bd0' : '#d9d2e3', on ? '#fff' : '#a99bbb')};padding:7px 11px;font-size:12px">${t}</button>`;
-      if (p && isDeco(p.id)) tip.textContent = `${ITEM[p.id].name}をえらび中(${Math.round(scOf(p) * 100)}%)。ドラッグで動かす・2本指で大きさを変えられるよ。`;
-      ctl.innerHTML = p ? `${lay && lay.n ? `<span style="display:flex;gap:5px;flex-wrap:wrap;width:100%;justify-content:center">${lb('ltop', 'いちばん前', lay.up)}${lb('lup', '▲1つ前へ', lay.up)}${lb('ldown', '▼1つ後ろへ', lay.down)}${lb('lbot', 'いちばん後ろ', lay.down)}</span>` : ''}${p && isDeco(p.id) && scOf(p) !== 1 ? `<button data-a="sc1" style="${btn('#8f7bd0')}">もとの大きさ</button>` : ''}${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button><button data-a="gbox" style="${btn('linear-gradient(160deg,#b9d8ff,#8fbaf0)')}">🎮 ゲーム機</button>` + (furn.owned('tank') ? `<button data-a="tank" style="${btn('linear-gradient(160deg,#9fe3ff,#6cc6e8)')}">🐠 水槽</button>` : '') + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
+      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button><button data-a="gbox" style="${btn('linear-gradient(160deg,#b9d8ff,#8fbaf0)')}">🎮 ゲーム機</button>` + (furn.owned('tank') ? `<button data-a="tank" style="${btn('linear-gradient(160deg,#9fe3ff,#6cc6e8)')}">🐠 水槽</button>` : '') + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
     }
@@ -325,8 +309,6 @@ export const homeApp = {
       if (!a || !p) return;
       const before = snap();
       if (a === 'off') selUid = null;
-      else if (a === 'lup' || a === 'ltop' || a === 'ldown' || a === 'lbot') { if (moveLayer(p, a)) save(); }
-      else if (a === 'sc1') { const [w0, d0] = size(p); const cx = p.gx + w0 / 2, cz = p.gz + d0 / 2; p.sc = 1; const [w, d] = size(p); p.gx = Math.max(0, Math.round(cx - w / 2)); p.gz = Math.max(0, Math.round(cz - d / 2)); save(); }
       else if (a === 'del') { placed = placed.filter(x => x !== p); selUid = null; save(); }
       else if (a === 'rot') {
         const rm = cur();
@@ -379,9 +361,7 @@ export const homeApp = {
       ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (ptrs.size === 2) {   // 2本指：つかんでいた家具はもとにもどして、拡大・縮小とスクロールに切りかえる
         if (drag) { Object.assign(drag.p, drag.from); drag = null; relayout(); }
-        turn = null; const sp = placed.find(x => x.uid === selUid);
-        if (sp && isDeco(sp.id)) { pinch = { ...pinchState(), zoom, item: sp, sc0: scOf(sp), c0: { x: sp.gx + size(sp)[0] / 2, z: sp.gz + size(sp)[1] / 2 }, before: snap(), changed: false }; return; }   // かざりをえらび中:2本指は大きさ変更
-        pinch = { ...pinchState(), zoom }; return;
+        turn = null; pinch = { ...pinchState(), zoom }; return;
       }
       if (ptrs.size > 2) return;
       const u = hitUid(e);
@@ -413,14 +393,6 @@ export const homeApp = {
     cv.onpointermove = e => {
       if (walk) return;
       if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (pinch && pinch.item && ptrs.size >= 2) {   // かざりの大きさ(0.5〜4倍。部屋や天井に入らない大きさにはならない)
-        const p = pinch.item, c = pinchState(), rm = cur(), cap = scaleCap(rm, p), want = Math.max(SC_MIN, Math.min(4, pinch.sc0 * c.d / pinch.d)), sc = Math.min(want, cap);
-        p.sc = Math.round(sc * 100) / 100; const [w, d] = size(p);
-        p.gx = Math.max(0, Math.min(rm.cols * U - w, Math.round(pinch.c0.x - w / 2))); p.gz = Math.max(0, Math.min(rm.rows * U - d, Math.round(pinch.c0.z - d / 2)));
-        pinch.changed = true;
-        if (want > cap + 0.01) { tip.textContent = '⚠ これ以上大きくすると、部屋に入らないよ。'; bad = true; } else { bad = false; tip.textContent = `${ITEM[p.id].name} ${Math.round(sc * 100)}%`; }
-        relayout(); return;
-      }
       if (pinch && ptrs.size >= 2) {
         const c = pinchState(), k = baseDist / zoom * 2 * Math.tan(19 * Math.PI / 180) / (cv.clientHeight || 300);
         const dx = c.mx - pinch.mx, dy = c.my - pinch.my, r = cur();
@@ -437,8 +409,7 @@ export const homeApp = {
       if (Object.keys(c).some(k => c[k] !== drag.p[k])) { drag.moved = true; Object.assign(drag.p, c); relayout(); }
     };
     const up = e => {
-      ptrs.delete(e.pointerId);
-      if (ptrs.size < 2 && pinch) { const pc = pinch; pinch = null; if (pc.item && pc.changed) { bad = false; save(); remember(pc.before); ui(); relayout(); } }
+      ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null;
       if (turn && e.pointerId === turn.id) { const t0 = turn; turn = null; if (!t0.moved && e.type === 'pointerup') tapAt(e, t0.uid); return; }
       if (!drag || e.pointerId !== drag.id) return;
       const p = drag.p;
