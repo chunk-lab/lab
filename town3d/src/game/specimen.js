@@ -21,6 +21,14 @@ const _R = Object.fromEntries(FISH.filter(f => f.kind === 'fish').map(f => [f.id
 export const rarOf = id => _R[id] || 1;
 export const growNeed = f => { const r = rarOf(f.id); return r <= 2 ? GROW_NEED : r === 3 ? GROW_NEED * 2 : GROW_NEED * 4; };   // 普通の魚10・レア20・超レア40
 export const minTier = id => { const r = rarOf(id); return r <= 2 ? 0 : r === 3 ? 1 : 2; };                                    // レアは上等以上・超レアは特上だけ
+// ---- えさの種類(品詞で決まる)と、魚ごとの好み ----
+export const FOOD_TYPES = ['n', 'v', 'a', 'r', 'o'];
+export const FOOD_INFO = { n: ['🪱', 'ミミズ', '名詞'], v: ['🦐', '小エビ', '動詞'], a: ['🌿', '水草', '形容詞'], r: ['🫧', 'ミジンコ', '副詞'], o: ['🍞', 'パン', '熟語・前置詞など'] };
+export const foodTypeOf = pos => (['n', 'v', 'a', 'r'].includes(pos) ? pos : 'o');
+// 魚ごとの好きなえさ(好き=育つ量2倍。レアな魚(★3以上)は、好きなえさしか食べない)
+const FAVS = { motsugo: 'no', funa: 'na', oikawa: 'rv', bluegill: 'vn', haze: 'nv', zarigani: 'no', medaka: 'ra', kingyo: 'ao', koi: 'oa', herabuna: 'ao', bass: 'vn', aji: 'rn', nijimasu: 'vr', saba: 'rv', namazu: 'no', unagi: 'nv', raigyo: 'vn', hirame: 'vr', fugu: 'an', tako: 'nv', kumanomi: 'ra', kurage: 'r', tai: 'vn', tatsu: 'ra', sake: 'vr', kingoi: 'oa', nushi: 'nv', maguro: 'vr', ryugu: 'ro' };
+export const favOf = id => (FAVS[id] || 'n').split('');
+export const eatsType = (id, type) => rarOf(id) <= 2 || favOf(id).includes(type);
 export const rankNeed = rk => 2 ** (rk + 1);                                                                                   // ランクアップに必要な数: 2匹→4匹→…(倍々)
 
 // ---- 標本の見た目と名前 ----
@@ -133,12 +141,18 @@ export const spec = {
   saveTank: v => st.set('tank', v),
   tankState: () => st.get('tankState') || { dirt: 0, cleanedAt: null },   // 水槽のよごれ(要素だけ)
   saveTankState: v => st.set('tankState', v),
-  foods: () => [st.get('food') || 0, st.get('foodG') || 0, st.get('foodS') || 0],   // えさのストック [普通, 上等, 特上]
-  setFoods(a) { st.set('food', Math.max(0, a[0] | 0)); st.set('foodG', Math.max(0, a[1] | 0)); st.set('foodS', Math.max(0, a[2] | 0)); },
-  food() { return this.foods().reduce((s, n) => s + n, 0); },
+  // えさのストック: { 種類: [普通, 上等, 特上] }。むかしの「えさ」(種類なし)は、パンに入れる
+  foodStock() {
+    let s = st.get('foodX');
+    if (!s) { s = {}; FOOD_TYPES.forEach(t => { s[t] = [0, 0, 0]; }); s.o = [st.get('food') | 0, st.get('foodG') | 0, st.get('foodS') | 0]; st.set('foodX', s); }
+    FOOD_TYPES.forEach(t => { if (!s[t]) s[t] = [0, 0, 0]; }); return s;
+  },
+  saveFoodStock(s) { st.set('foodX', s); },
+  food() { const s = this.foodStock(); return FOOD_TYPES.reduce((a, t) => a + s[t].reduce((b, n) => b + n, 0), 0); },
+  addFood(type, tier, n = 1) { const s = this.foodStock(); s[type][tier] += n; this.saveFoodStock(s); },
   setFood: n => st.set('food', Math.max(0, n | 0)),
   // えさの合成:3つ→ひとつ上の品質
-  mergeFood(tier) { const a = this.foods(); if (tier < 0 || tier > 1 || a[tier] < 3) return false; a[tier] -= 3; a[tier + 1]++; this.setFoods(a); return true; },
+  mergeFood(type, tier) { const s = this.foodStock(), a = s[type]; if (!a || tier < 0 || tier > 1 || a[tier] < 3) return false; a[tier] -= 3; a[tier + 1]++; this.saveFoodStock(s); return true; },
   // 育てる枠(最初1・買って最大4)・展示枠(最初3・買って最大6)
   growX: () => Math.min(3, st.get('growX') | 0),
   growSlots() { return 1 + this.growX(); },
