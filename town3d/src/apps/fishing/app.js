@@ -89,18 +89,19 @@ const CSS = `
 .fz .btn.sub{background:#efe8f7;color:${ink};box-shadow:0 3px 0 #d6cbe6}
 .fz .btn.gold{background:linear-gradient(160deg,#ffe58a,#f5b83d);color:#5a3a10;box-shadow:0 3px 0 #c98f22}
 .fz .btn:disabled{opacity:.45}
-.fz .menu{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;gap:10px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,250,243,.15) 30%,rgba(255,250,243,.6) 100%)}
+.fz .menu{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;gap:10px;padding:8px 8px 18px;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,250,243,.15) 30%,rgba(255,250,243,.6) 100%)}
 .fz .menu>*{flex:none}.fz .menu>:first-child{margin-top:auto}.fz .menu>:last-child{margin-bottom:auto}
 .fz .title{font-size:30px;font-weight:900;color:#fff;text-shadow:0 3px 0 #c9577a,0 6px 16px #0005;margin:0;letter-spacing:2px;text-align:center}
-.fz .say3{display:flex;align-items:flex-end;gap:8px;width:min(430px,94%)}.fz .say3 .sp{width:66px;height:auto;flex:none;filter:drop-shadow(0 2px 4px #0003)}.fz .say3 .say{font-size:14px;flex:1;max-width:none;text-align:left;position:relative}
+.fz .say3{display:flex;align-items:flex-end;gap:8px;width:min(100%,560px)}.fz .say3 .sp{width:66px;height:auto;flex:none;filter:drop-shadow(0 2px 4px #0003)}.fz .say3 .say{font-size:14px;flex:1;max-width:none;text-align:left;position:relative}
 .fz .say3 .say:before{content:"";position:absolute;left:-7px;bottom:14px;border:7px solid transparent;border-left:0;border-right-color:#fff}
-.fz .mtop{display:flex;align-items:center;justify-content:space-between;gap:6px;width:min(450px,98%)}
-.fz .mlogo{flex:1 1 0;min-width:0;max-width:320px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 3px 8px #0004)}
-.fz .mwx{flex:none;display:flex;flex-direction:column;align-items:center;gap:1px;background:rgba(255,255,255,.9);border-radius:14px;padding:5px 8px;box-shadow:0 2px 6px #0002;font-size:12px;font-weight:900;color:#3a4a7a;text-align:center}.fz .mwx small{font-size:10px;font-weight:700;color:#7d7a99}
-.fz .mwal{flex:none;display:flex;flex-direction:column;gap:4px;align-items:flex-end}.fz .mwal span{background:rgba(255,255,255,.9);border-radius:999px;padding:3px 9px;font-size:11px;font-weight:900;color:#3a4a7a;box-shadow:0 2px 6px #0002;white-space:nowrap}
-.fz .mgrid{width:min(430px,94%);display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fz .mtop{display:flex;flex-direction:column;align-items:center;gap:6px;width:min(100%,560px)}
+.fz .mlogo{width:100%;max-width:520px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 3px 8px #0004)}
+.fz .mrow{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%}
+.fz .mwx{flex:none;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.9);border-radius:999px;padding:5px 12px;box-shadow:0 2px 6px #0002;font-size:13px;font-weight:900;color:#3a4a7a}.fz .mwx small{font-size:12px;font-weight:700;color:#6d6a8c}
+.fz .mwal{flex:none;display:flex;flex-direction:row;gap:6px;align-items:center}.fz .mwal span{background:rgba(255,255,255,.9);border-radius:999px;padding:3px 9px;font-size:12px;font-weight:900;color:#3a4a7a;box-shadow:0 2px 6px #0002;white-space:nowrap}
+.fz .mgrid{width:min(100%,560px);display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fz .ib{border:0;background:none;padding:0;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}.fz .ib img{display:block;width:100%;height:auto;pointer-events:none}.fz .ib:active{transform:scale(.97)}
-.fz .mpills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(430px,94%)}
+.fz .mpills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(100%,560px)}
 .fz .pl{border:0;padding:0;cursor:pointer;aspect-ratio:220/77;background:center/100% 100% no-repeat;position:relative;-webkit-tap-highlight-color:transparent}.fz .pl span{position:absolute;left:36%;right:6%;top:50%;transform:translateY(-50%);font-size:11px;font-weight:900;color:#3a4a7a;white-space:nowrap}.fz .pl:active{transform:scale(.97)}
 .fz .mb{width:min(300px,86%);display:flex;align-items:center;gap:10px;justify-content:flex-start;font-size:17px;padding:14px 18px;border-radius:18px}
 .fz .mb span{flex:1;text-align:left}.fz .mb small{font-size:11px;opacity:.85;font-weight:700}
@@ -217,9 +218,11 @@ export const fishingApp = {
       const found = Object.keys(dex).length, tm = timeOf(baseCond.hour);
       const ui = document.createElement('div'); ui.className = 'menu';
       ui.innerHTML = `<div class="mtop">
-          <div class="mwx"><b>${weather.label(weather.now(), tm === 'night')}</b><small>${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}</small></div>
           <img class="mlogo" src="${LOGO.fish}" alt="イングフィッシュ">
-          <div class="mwal"><span>🪙 <b data-bind="coins">${ctx.wallet.get().toLocaleString('ja-JP')}</b></span>${ctx.gems ? `<span>💎 <b data-bind="gems">${ctx.gems.get().toLocaleString('ja-JP')}</b></span>` : ''}</div>
+          <div class="mrow">
+            <div class="mwx"><b>${weather.label(weather.now(), tm === 'night')}</b><small>${SEASON_JP[baseCond.season]}・${TIME_JP[tm]}</small></div>
+            <div class="mwal"><span>🪙 <b data-bind="coins">${ctx.wallet.get().toLocaleString('ja-JP')}</b></span>${ctx.gems ? `<span>💎 <b data-bind="gems">${ctx.gems.get().toLocaleString('ja-JP')}</b></span>` : ''}</div>
+          </div>
         </div>
         <div class="say3"><img class="sp" src="${portrait('suna') || ''}" alt="砂吹さん"><div class="say">砂吹さん「${esc(pickSay())}」</div></div>
         <div class="mgrid">
