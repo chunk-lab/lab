@@ -107,6 +107,7 @@ export function mount(container, opt = {}) {
   const applySeason = () => { const s = curSeason(); seasons.set(s); setBlossom(opt.blossom ?? s === 'spring'); };
   const applyDate = d => { testDate = d; env.setMoonDate(d); const md = (d.getMonth() + 1) * 100 + d.getDate(); setBlossom(opt.blossom ?? (md >= 325 && md <= 420)); };
   applySeason();
+  let sportHid = null;
   const residents = createResidents(scene, city.graph, () => env.hour, (x, z, r) => collide(x, z, r));
   residents.outing = outingOf(testDate);   // お出かけの日(ルナ)
   // 町の雪玉(冬だけ)
@@ -1298,7 +1299,12 @@ export function mount(container, opt = {}) {
     snow.update(dt);
     battle.update(dt, lastMove);
     sport.update(dt);
-    residents.update(dt, env.hour, me);
+    if (sport.active) {   // ゴルフ・フリスビーなどの間は、ほかの人を止めて見えなくする(軽くなる・じゃまにならない)
+      if (!sportHid) { sportHid = new Map(); for (const r of residents.list) { sportHid.set(r.ch.root, r.ch.root.visible); r.ch.root.visible = false; } for (const [, q] of peers) { sportHid.set(q.ch.root, q.ch.root.visible); q.ch.root.visible = false; } }
+    } else {
+      if (sportHid) { for (const [o, v] of sportHid) o.visible = v; sportHid = null; }
+      residents.update(dt, env.hour, me);
+    }
 
     // ほかのプレイヤー(なめらかに追いかける)
     for (const [, q] of peers) {

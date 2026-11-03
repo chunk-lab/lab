@@ -8,7 +8,7 @@ import { STREETS, ROAD_HALF, WALK, PLAZA_R } from './town_data.js';
 const HOLES = 5, G = 9.8;
 // ゴルフの弾道(5段階): th=打ち出し角の倍率 / rng=飛ぶ距離 / roll=着地のあとの転がり / wind=風の受けやすさ
 const TRAJ = [   // th=打ち出し角の倍率 / tw=ウェッジ用の倍率 / add=角度にたす(度) / rng=飛距離 / rd=ドライバー用 / roll=着地で のこす速さ / wind=風の受けやすさ(ライナー〜ロブ)
-  { l: 'ライナー', th: 0.35, tw: 0.3, rng: 0.65, rd: 0.3, roll: 0.9, wind: 0.5 }, { l: '低め', th: 0.8, tw: 0.6, rng: 0.92, rd: 0.7, roll: 0.9, wind: 0.8 }, { l: 'ふつう', th: 1.3, tw: 1, rng: 1.08, rd: 1, roll: 1, wind: 1 },
+  { l: '低め', th: 0.8, tw: 0.6, rng: 0.92, rd: 0.7, roll: 0.9, wind: 0.8 }, { l: 'ふつう', th: 1.3, tw: 1, rng: 1.08, rd: 1, roll: 1, wind: 1 },
   { l: '高め', th: 1.8, tw: 1.2, add: 5, rng: 1.05, rd: 0.9, roll: 0.7, wind: 1.3 }, { l: 'ロブ', th: 2.6, tw: 1.42, add: 12, rng: 1.0, rd: 0.75, roll: 0.35, wind: 1.7 },
 ];
 const CLUBS = [   // ゴルフのクラブ:飛ぶ距離(m)・打ち出し角
@@ -190,11 +190,11 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     let held = null;
     const aimBtn = (el, d) => { el.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); held = d; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => el.addEventListener(t, () => (held = null))); };
     if (h.querySelector('.sp-l')) { aimBtn(h.querySelector('.sp-l'), 1); aimBtn(h.querySelector('.sp-r'), -1); }
-    { const hs = h.querySelector('.sp-hsl'); if (hs) { let on = false; const set = e => { if (!S || S.phase !== 'aim' || !CLUBS[S.club].loft) return; const r = hs.querySelector('.tr').getBoundingClientRect(), q = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)), n = 2 - Math.round(q * 4); if (n !== S.traj) { S.traj = n; drawHud(); } };
+    { const hs = h.querySelector('.sp-hsl'); if (hs) { let on = false; const set = e => { if (!S || S.phase !== 'aim' || !CLUBS[S.club].loft) return; const r = hs.querySelector('.tr').getBoundingClientRect(), q = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)), n = 2 - Math.round(q * 3); if (n !== S.traj) { S.traj = n; drawHud(); } };
       hs.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); on = true; try { hs.setPointerCapture(e.pointerId); } catch (_) { } set(e); }); hs.addEventListener('pointermove', e => { if (on) set(e); }); hs.addEventListener('pointerup', () => on = false); hs.addEventListener('pointercancel', () => on = false); } }
     { // ゴルフ:ねらいパッド。左右=向きをまわす(おしている間) / 上下=弾道を1段ずつ(おしつづけると くりかえす)
       const pad = h.querySelector('.sp-pad'), knob = pad && pad.querySelector('i'); let on = false, vt = 0, tmr = 0;
-      const stepT = d => { if (!S || S.phase !== 'aim' || !CLUBS[S.club].loft) return; const n = Math.max(-2, Math.min(2, (S.traj || 0) + d)); if (n !== S.traj) { S.traj = n; drawHud(); audio?.play?.('wave'); } };
+      const stepT = d => { if (!S || S.phase !== 'aim' || !CLUBS[S.club].loft) return; const n = Math.max(-1, Math.min(2, (S.traj || 0) + d)); if (n !== S.traj) { S.traj = n; drawHud(); audio?.play?.('wave'); } };
       const upd = e => {
         const r = pad.getBoundingClientRect(), R = r.width / 2; let dx = (e.clientX - (r.left + R)) / R, dy = (e.clientY - (r.top + R)) / R; const m = Math.hypot(dx, dy); if (m > 1) { dx /= m; dy /= m; }
         knob.style.transform = `translate(${dx * 30}px,${dy * 30}px)`;
@@ -212,7 +212,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   function drawHud() {
     const H = S.C.holes[S.i], dist = Math.hypot(H.goal[0] - S.pos.x, H.goal[1] - S.pos.z), tot = S.strokes.reduce((a, b) => a + b, 0);
     S.hud.querySelector('.sp-top').innerHTML = `<span><b>${S.kind === 'golf' ? '⛳' : '🥏'} ホール ${S.i + 1}/${HOLES}</b> PAR ${H.par}</span><span>${S.n + 1}${S.kind === 'golf' ? '打' : '投'}目 ・ のこり ${Math.round(dist)}m</span><span>風 <span class="sp-wind">⬆</span> ${H.wind[2]}m/s</span><span>合計 ${tot}</span>`;
-    { const hs = S.hud.querySelector('.sp-hsl'); if (hs) { const putt = !CLUBS[S.club].loft; hs.classList.toggle('off', putt); hs.querySelector('u').style.top = `${6 + (2 - (S.traj || 0)) / 4 * 88}%`; hs.querySelector('u').style.top = `calc(${(2 - (S.traj || 0)) * 25}% * 0.84 + 8%)`; hs.querySelector('small').textContent = putt ? '' : TRAJ[(S.traj || 0) + 2].l; } }
+    { const hs = S.hud.querySelector('.sp-hsl'); if (hs) { const putt = !CLUBS[S.club].loft; hs.classList.toggle('off', putt); hs.querySelector('u').style.top = `${6 + (2 - (S.traj || 0)) / 4 * 88}%`; hs.querySelector('u').style.top = `calc(${(2 - (S.traj || 0)) / 3 * 84 + 8}%)`; hs.querySelector('small').textContent = putt ? '' : TRAJ[(S.traj || 0) + 1].l; } }
     S.hud.querySelector('.sp-clubs').innerHTML = S.kind === 'golf'
       ? CLUBS.map((c, i) => `<button data-c="${i}" class="${S.club === i ? 'on' : ''}">${S.rec === i ? '⭐' : ''}${c.name}<br><small>〜${c.d}m</small></button>`).join('')
       : `<span style="pointer-events:none;background:#fffffff0;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800">高さ</span>` + HGTS.map(([l, v]) => `<button data-c="${v}" class="${S.hgt === v ? 'on' : ''}">${l}</button>`).join('');
@@ -360,19 +360,19 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   // ---- ゴルフのスピン:spin={x:横(右+),y:縦(上=トップ+/下=バック-)} ----
   function spinOf() { const sp = S.spin || { x: 0, y: 0 }, k = LIES[lieNow()].spin; return { side: sp.x, back: Math.max(0, -sp.y) * k, top: Math.max(0, sp.y) * k, used: false }; }
   function golfV(c, p, dx, dz, gs) {   // 打ち出し速度。回転をかけるほど少し飛ばなくなる / バックスピンは高く上がる
-    const mag = Math.min(1, Math.hypot(gs.side, gs.back + gs.top)), pw = p * (1 - 0.18 * mag) * LIES[lieNow()].dist, T = c.loft ? TRAJ[(S.traj || 0) + 2] : TRAJ[2], thd = Math.min(c.loft > 40 ? c.loft * T.tw : c.loft * T.th + (T.add || 0), 72) + gs.back * 6, th = thd * Math.PI / 180, v = Math.sqrt(c.d * (c.d >= 60 && T.rd ? T.rd : T.rng) * pw * G / Math.sin(2 * Math.min(th, 0.78)));
+    const mag = Math.min(1, Math.hypot(gs.side, gs.back + gs.top)), pw = p * (1 - 0.18 * mag) * LIES[lieNow()].dist, T = c.loft ? TRAJ[(S.traj || 0) + 1] : TRAJ[1], thd = Math.min(c.loft > 40 ? c.loft * T.tw : c.loft * T.th + (T.add || 0), 72) + gs.back * 6, th = thd * Math.PI / 180, v = Math.sqrt(c.d * (c.d >= 60 && T.rd ? T.rd : T.rng) * pw * G / Math.sin(2 * Math.min(th, 0.78)));
     const e = gs.side * 0.03, ex = dx - dz * e, ez = dz + dx * e, el = Math.hypot(ex, ez);   // 打ち出しは、曲がる側へほんの少しだけ向く(そこから曲がっていく)
     return new THREE.Vector3(ex / el * v * Math.cos(th), v * Math.sin(th), ez / el * v * Math.cos(th));
   }
   function golfPhys(p, v, h, H, gs, c, snd) {   // 1ステップ(本番とねらい線の先読みで同じ計算)
     if (p.y > 0.06 || v.y > 0) {
-      v.y -= G * h; v.multiplyScalar(Math.exp(-0.05 * h)); { const wk = c && c.loft ? TRAJ[(S.traj || 0) + 2].wind : 1; v.x += H.wind[0] * 0.07 * h * wk; v.z += H.wind[1] * 0.07 * h * wk; }
+      v.y -= G * h; v.multiplyScalar(Math.exp(-0.05 * h)); { const wk = c && c.loft ? TRAJ[(S.traj || 0) + 1].wind : 1; v.x += H.wind[0] * 0.07 * h * wk; v.z += H.wind[1] * 0.07 * h * wk; }
       if (gs && gs.side) { const sp = Math.hypot(v.x, v.z) || 1, ux = v.x / sp, uz = v.z / sp, a = gs.side * (1.2 + 1.2 * c.d / 70) * h; v.x += -uz * a; v.z += ux * a; }   // 横回転:進む向きの右(+)/左(-)へ曲がる
     } else {
       p.y = 0.06;
       if (v.y < -1.5 || (c && c.loft && gs && !gs.used)) {
         let f = 0.7; if (gs && !gs.used) { gs.used = true; f = 0.7 * (1 - 1.7 * gs.back + 0.7 * gs.top); if (gs.back > 0.15 && snd) msg('キュキュッ! もどる!'); }
-        if (c && c.loft) f *= TRAJ[(S.traj || 0) + 2].roll;   // 高い球ほど止まる・低い球ほどころがる   // 落ちた時にスピンが効く:バック=ブレーキや逆もどり、トップ=前へころがる
+        if (c && c.loft) f *= TRAJ[(S.traj || 0) + 1].roll;   // 高い球ほど止まる・低い球ほどころがる   // 落ちた時にスピンが効く:バック=ブレーキや逆もどり、トップ=前へころがる
         v.y = -v.y * (gs && gs.top ? 0.4 : 0.35); { const hs = Math.hypot(v.x, v.z) || 1, kx = gs ? -v.z / hs * gs.side * 0.2 * hs : 0, kz = gs ? v.x / hs * gs.side * 0.2 * hs : 0; v.x = v.x * f + kx; v.z = v.z * f + kz; }   // 横回転は、着地でも少し横へそれる
         if (lieAt(p.x, p.z) === 'rough') { v.x *= 0.6; v.z *= 0.6; v.y *= 0.5; }   // ラフはボールが止まりやすい
         if (snd) audio?.play?.('close');
