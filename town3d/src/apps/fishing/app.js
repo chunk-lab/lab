@@ -1,8 +1,5 @@
 import { LOGO } from '../../ui/logos.js';
-import a_bubble from './art/bubble.webp';
-import a_night from './art/night.webp';
-import a_sun from './art/sun.webp';
-import a_coin from './art/coin.webp';
+import { portrait } from '../../ui/portraits.js';
 import a_b_en from './art/b_en.webp';
 import a_b_free from './art/b_free.webp';
 import a_b_vs from './art/b_vs.webp';
@@ -12,7 +9,7 @@ import a_b_shop from './art/b_shop.webp';
 import a_p_mode from './art/p_mode.webp';
 import a_p_fx from './art/p_fx.webp';
 import a_p_help from './art/p_help.webp';
-const ART = { bubble: a_bubble, night: a_night, sun: a_sun, coin: a_coin, b_en: a_b_en, b_free: a_b_free, b_vs: a_b_vs, b_dex: a_b_dex, b_ask: a_b_ask, b_shop: a_b_shop, p_mode: a_p_mode, p_fx: a_p_fx, p_help: a_p_help };
+const ART = { b_en: a_b_en, b_free: a_b_free, b_vs: a_b_vs, b_dex: a_b_dex, b_ask: a_b_ask, b_shop: a_b_shop, p_mode: a_p_mode, p_fx: a_p_fx, p_help: a_p_help };
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
 import { confirmPay } from '../../ui/pay.js';
@@ -95,10 +92,9 @@ const CSS = `
 .fz .menu{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;gap:10px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,250,243,.15) 30%,rgba(255,250,243,.6) 100%)}
 .fz .menu>*{flex:none}.fz .menu>:first-child{margin-top:auto}.fz .menu>:last-child{margin-bottom:auto}
 .fz .title{font-size:30px;font-weight:900;color:#fff;text-shadow:0 3px 0 #c9577a,0 6px 16px #0005;margin:0;letter-spacing:2px;text-align:center}
-.fz .say2{width:min(360px,92%);aspect-ratio:520/89;background:center/100% 100% no-repeat;display:flex;align-items:center;padding:0 7% 0 11%;box-sizing:border-box;font-weight:800;font-size:13px;line-height:1.25;color:#3d3452}
-.fz .mstat{display:flex;gap:8px;align-items:center;width:min(360px,92%)}.fz .mic{height:40px;width:auto;flex:none}
-.fz .coinbar{position:relative;flex:1;aspect-ratio:420/68;background:center/100% 100% no-repeat}
-.fz .coinbar b{position:absolute;top:50%;transform:translateY(-50%);font-size:13px;color:#3a4a7a;text-align:left;white-space:nowrap;overflow:hidden}.fz .coinbar .c1{left:21%;width:27%}.fz .coinbar .c2{left:70%;width:26%}
+.fz .say3{display:flex;align-items:flex-end;gap:8px;width:min(360px,92%)}.fz .say3 .sp{width:58px;height:auto;flex:none;filter:drop-shadow(0 2px 4px #0003)}.fz .say3 .say{flex:1;max-width:none;text-align:left;position:relative}
+.fz .say3 .say:before{content:"";position:absolute;left:-7px;bottom:14px;border:7px solid transparent;border-left:0;border-right-color:#fff}
+.fz .mwal{position:absolute;top:62px;right:10px;display:flex;flex-direction:column;gap:4px;align-items:flex-end}.fz .mwal span{background:rgba(255,255,255,.9);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:900;color:#3a4a7a;box-shadow:0 2px 6px #0002}
 .fz .mgrid{width:min(360px,92%);display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fz .ib{border:0;background:none;padding:0;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}.fz .ib img{display:block;width:100%;height:auto;pointer-events:none}.fz .ib:active{transform:scale(.97)}
 .fz .mpills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(360px,92%)}
@@ -217,12 +213,9 @@ export const fishingApp = {
       frame = dt => { fake.update(dt); view.draw(vsOf(fake, true), dt); };
       const found = Object.keys(dex).length, tm = timeOf(baseCond.hour);
       const ui = document.createElement('div'); ui.className = 'menu';
-      ui.innerHTML = `<p class="title"><img src="${LOGO.fish}" alt="イングフィッシュ" style="display:block;margin:0 auto;width:min(72vw,270px);height:auto;filter:drop-shadow(0 3px 8px #0004)"></p>
-        <div class="say2" style="background-image:url(${ART.bubble})"><span>砂吹さん「${esc(pickSay())}」</span></div>
-        <div class="mstat"><img class="mic" src="${tm === 'night' ? ART.night : ART.sun}" alt="">
-          <div class="coinbar" style="background-image:url(${ART.coin})"><b class="c1">${ctx.wallet.get().toLocaleString('ja-JP')}</b><b class="c2">${ctx.gems ? ctx.gems.get().toLocaleString('ja-JP') : '-'}</b></div></div>
-        <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}・${weather.label(weather.now(), tm === 'night')} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
-        <div style="background:rgba(255,255,255,.88);border-radius:14px;padding:6px 10px">${wxStrip(RAIN_FISH)}</div>
+      ui.innerHTML = `<p class="title"><img src="${LOGO.fish}" alt="イングフィッシュ" style="display:block;margin:0 auto;width:min(62vw,240px);height:auto;filter:drop-shadow(0 3px 8px #0004)"></p>
+        <div class="say3"><img class="sp" src="${portrait('suna') || ''}" alt="砂吹さん"><div class="say">砂吹さん「${esc(pickSay())}」</div></div>
+        <div class="mwal"><span>🪙 <b data-bind="coins">${ctx.wallet.get().toLocaleString('ja-JP')}</b></span>${ctx.gems ? `<span>💎 <b data-bind="gems">${ctx.gems.get().toLocaleString('ja-JP')}</b></span>` : ''}</div>
         <div class="mgrid">
           <button class="ib" data-m="en" aria-label="英語の釣り堀"><img src="${ART.b_en}" alt=""></button>
           <button class="ib" data-m="free" aria-label="のんびり釣る"><img src="${ART.b_free}" alt=""></button>
@@ -231,6 +224,8 @@ export const fishingApp = {
           <button class="ib" data-m="ask" aria-label="砂吹さんに聞く"><img src="${ART.b_ask}" alt=""></button>
           <button class="ib" data-m="shop" aria-label="道具屋"><img src="${ART.b_shop}" alt=""></button>
         </div>
+        <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}・${weather.label(weather.now(), tm === 'night')} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
+        <div style="background:rgba(255,255,255,.88);border-radius:14px;padding:6px 10px;width:min(360px,92%);box-sizing:border-box">${wxStrip(RAIN_FISH)}</div>
         <div class="mpills">
           <button class="pl" data-m="mode" style="background-image:url(${ART.p_mode})"><span>${st.get('mode') === 'easy' ? 'かんたん' : 'ほんかく'}</span></button>
           <button class="pl" data-m="fx" style="background-image:url(${ART.p_fx})"><span>${st.get('fx') === 'calm' ? 'おとなしめ' : '派手'}</span></button>
