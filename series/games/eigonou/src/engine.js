@@ -436,8 +436,11 @@ export function sentenceText(S){
  });
  let t=words.join(' ').replace(/ ,/g,',').replace(/,,/g,',').replace(/\s+/g,' ').trim();
  t=cap(t); t=t.replace(/,$/,'');
- return t + (parts.punct||'.');
+ return dedupEn(t + (parts.punct||'.'));
 }
+// 前置詞・副詞のだぶり(on on)を1つに。助詞のだぶり(はは・をを)は日本語側で
+export function dedupEn(t){ return String(t).replace(/\b(on|in|out|up|off|over|down|at|to|of|for|with|about|from|into|away|back|through|around|along|after|against|by)\s+\1\b/gi,'$1'); }
+export function dedupJa(j){ return String(j).replace(/([はがをにへ])\1+/g,'$1'); }
 
 // ================= JAPANESE =================
 export let GD;
@@ -662,7 +665,7 @@ export function jaClause(c, ctx){
  if(q && /(予定|ところ|つもり)(ではない)?だ$/.test(out)) out=out.replace(/だ$/,'').replace(/ではない$/,'じゃない'); // 予定だ？→予定？
  return q? (cop? out.replace(/([^ん])だ$/,'$1') : out)+'？' : out;
 }
-export function sentenceJa(S){ let j=sentenceJa0(S); j=j.replace(/((?:も|だけでなく)[^もをがは、。]+)も(?:を|が(?=好き|ほし|でき|わか|いる|ある|見え|聞こえ))/g,'$1も'); try{ if(S.main.tagText) j=j.replace(/[。？！]$/,'')+'よね？'; }catch(e){} return j; }
+export function sentenceJa(S){ let j=dedupJa(sentenceJa0(S)); j=j.replace(/((?:も|だけでなく)[^もをがは、。]+)も(?:を|が(?=好き|ほし|でき|わか|いる|ある|見え|聞こえ))/g,'$1も'); try{ if(S.main.tagText) j=j.replace(/[。？！]$/,'')+'よね？'; }catch(e){} return j; }
 export function sentenceJa0(S){
  const c=S.main, subs=c.subs; const ctx={kind:'main',rels:{}};
  if(subs.rel){ const rs=predS(subs.rel.c); ctx.rels[subs.rel.head]=jaClause(subs.rel.c,{kind:'rel',gap:subs.rel.gap,inf:subs.rel.inf}).replace(/[。？]$/,'').replace(/だ$/, rs&&rs.noun?'である':'な'); }

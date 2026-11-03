@@ -71,6 +71,9 @@ function showDone(got, gotS, chunks, plays) {
   el.querySelectorAll('[data-p]').forEach(b => b.onclick = () => loadPlay(plays[+b.dataset.p]));
   (root.closest('.cs-mount') || root).appendChild(el);
 }
+// 英ラボの作業中は何も出さない。登録した数をためておき、英ラボを出るときに知らせる
+let PENDING = 0;
+export function announceInbox() { const n = PENDING; PENDING = 0; if (n > 0) { try { const ui = ENV.core && ENV.core.ui; ui && ui.toast && ui.toast('📥 ' + n + '件をマイことばに入れました'); } catch (e) { } } }
 export async function drainInbox() {
   const box = ENV.core && ENV.core.eigo; if (!box || !box.count()) return;
   const list = box.take(), aiOk = !!(ENV.core.ai && ENV.core.ai.ready), left = []; let n = 0, chunks = 0, firstEn = ''; const got = [], gotS = [], plays = []; let wantPlay = false;
@@ -87,6 +90,5 @@ export async function drainInbox() {
   if (left.length) box.send(left);
   plays.forEach(savePlay); save(); refreshLex();
   if (wantPlay && plays.length) { toast('▶ ' + plays[0].en); loadPlay(plays[0]); return; }
-  if (n) showDone(got, gotS, chunks, plays);
-  else if (left.length) toast('📥 日本語の意味がないので、まだ登録できません(AIのキーを入れるか、意味を足してね)');
+  if (n) PENDING += n;   // 画面には出さない(英ラボを出るときに知らせる)
 }
