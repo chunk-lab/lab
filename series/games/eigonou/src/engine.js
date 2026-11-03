@@ -68,8 +68,8 @@ export let VOW;
 export function s3(v){ if(v.s3) return v.s3; const b=v.en; if(/(s|sh|ch|x|z|o)$/.test(b)) return b+'es'; if(/[^aeiou]y$/.test(b)) return b.slice(0,-1)+'ies'; return b+'s'; }
 // 1音節で「子音＋母音1つ＋子音」の語は語尾を重ねる（get→getting, stop→stopped）。dbl:0 と明示した語は重ねない
 export function dblOf(v){ return v.dbl!=null ? !!v.dbl : /^[^aeiou]*[aeiou][bdgklmnprt]$/.test(String(v.en||'')); }
-export function past(v){ if(v.past) return v.past; const b=v.en; if(/e$/.test(b)) return b+'d'; if(/[^aeiou]y$/.test(b)) return b.slice(0,-1)+'ied'; if(dblOf(v)) return b+b.slice(-1)+'ed'; return b+'ed'; }
-export function pp(v){ return v.pp || past(v); }
+export function past(v){ if(v.past) return String(v.past).trim().split(/\s+/)[0]; const b=v.en; if(/e$/.test(b)) return b+'d'; if(/[^aeiou]y$/.test(b)) return b.slice(0,-1)+'ied'; if(dblOf(v)) return b+b.slice(-1)+'ed'; return b+'ed'; }
+export function pp(v){ return v.pp ? String(v.pp).trim().split(/\s+/)[0] : past(v); }
 export function ing(v){ if(v.ing) return v.ing; const b=v.en; if(/ie$/.test(b)) return b.slice(0,-2)+'ying'; if(/[^e]e$/.test(b) && b!=='be') return b.slice(0,-1)+'ing'; if(dblOf(v)) return b+b.slice(-1)+'ing'; return b+'ing'; }
 export let BE, HAVE, DO;
 export function vform(lem, form, agr){

@@ -36,7 +36,7 @@ function nounRef(word, kind, ja) {
   const w = norm(word); if (!w) return null;
   if (SUBJ[w]) return 'p:' + SUBJ[w]; if (OBJ[w]) return 'p:' + OBJ[w];
   if (w === 'it' && LEX.things.find(t => t.id === 'it')) return 't:it';
-  const k = NOUNK.includes(kind) ? kind : 'things', id = ensure(k, word, ja); return id ? (k === 'people' ? 'p:' : 't:') + id : null;
+  const k = NOUNK.includes(kind) ? kind : 'things', id = ensure(k, word, String(ja || '').trim().replace(/[はがをにもへ]$/, '')); return id ? (k === 'people' ? 'p:' : 't:') + id : null;
 }
 const TENSES = ['pres', 'past', 'fut', 'prog', 'pastprog', 'perf'];
 // AIが返した枠(spec)→ clause。作れなければ null
@@ -69,7 +69,10 @@ export function clauseFromSpec(sp) {
   if (!sp || !sp.verb) return null;
   sp = Object.assign({}, sp, { verb: baseVerb(sp.verb) || sp.verb });
   const c = newClause(), subj = nounRef(sp.subject || 'I', sp.subject_kind, sp.subject_ja); if (!subj) return null; c.subj = subj;
-  const vid = ensure('verbs', sp.verb, sp.verb_ja, { fr: ['intr', 'tr', 'both'].includes(sp.verb_fr) ? sp.verb_fr : undefined, past: sp.past || undefined, pp: sp.pp || undefined });
+  // 「be + 名詞」(be the tip of ...)は動詞の活用に乗らない(be のまま出る)ので、この方法では組まない
+  if (/^be\s+(?!going to\b|about to\b|able to\b|supposed to\b|used to\b)/i.test(sp.verb)) return null;
+  const head1 = w => { const a = String(w || '').trim().split(/\s+/); return a[0] || undefined; }, multi = /\s/.test(sp.verb);
+  const vid = ensure('verbs', sp.verb, String(sp.verb_ja || ''), { fr: ['intr', 'tr', 'both'].includes(sp.verb_fr) ? sp.verb_fr : undefined, past: multi ? head1(sp.past) : (sp.past || undefined), pp: multi ? head1(sp.pp) : (sp.pp || undefined) });
   if (!vid) return null; c.pred = { k: 'v', id: vid };
   const v = LEX.verbs.find(x => x.id === vid);
   if (sp.object && v && v.fr !== 'intr') { const o = nounRef(sp.object, sp.object_kind, sp.object_ja); if (o) { c.useObj = true; c.obj = o; } }
