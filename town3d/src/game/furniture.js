@@ -391,7 +391,16 @@ export const furn = {
 
 // ---- 置き場所の計算(単位は半マス) ----
 // 床の家具の大きさ(半マス単位、まわした向き込み)
-export function size(p) { const it = ITEM[p.id]; const w = it.w * U, d = it.d * U; return p.r % 2 ? [d, w] : [w, d]; }
+// かざり(cat:'かざり')だけ、ピンチで大きさを変えられる(p.sc = 倍率。0.5〜4倍)
+export const isDeco = id => !!ITEM[id] && ITEM[id].cat === 'かざり';
+export const SC_MIN = 0.5, SC_MAX = 4;
+export const scOf = p => (isDeco(p.id) && p.sc) || 1;
+export function size(p) { const it = ITEM[p.id]; const s = scOf(p), w = it.w * U * s, d = it.d * U * s; return p.r % 2 ? [d, w] : [w, d]; }
+// 部屋に入る最大の倍率(部屋の広さ・天井の高さ・4倍まで)。これを超えて大きくできない
+export function scaleCap(rm, p) {
+  const it = ITEM[p.id], w0 = (p.r % 2 ? it.d : it.w) * U, d0 = (p.r % 2 ? it.w : it.d) * U;
+  return Math.max(SC_MIN, Math.min(SC_MAX, rm.cols * U / w0, rm.rows * U / d0, WALL_H / heightOf(p.id)));
+}
 // 壁かけの壁にそった幅(半マス単位)
 export const wallLen = p => ITEM[p.id].w * U;
 // 部屋の中におさまっているか(重なりは自由なので、はみ出しだけを見る)
@@ -411,7 +420,7 @@ export function stackY(list) {
     const [w, d] = size(p); let y = 0;
     for (const o of done) {
       const [ow, od] = size(o.p);
-      if (p.gx < o.p.gx + ow && o.p.gx < p.gx + w && p.gz < o.p.gz + od && o.p.gz < p.gz + d) y = Math.max(y, o.y + heightOf(o.p.id));
+      if (p.gx < o.p.gx + ow && o.p.gx < p.gx + w && p.gz < o.p.gz + od && o.p.gz < p.gz + d) y = Math.max(y, o.y + heightOf(o.p.id) * scOf(o.p));
     }
     out[p.uid] = y; done.push({ p, y });
   }

@@ -440,9 +440,11 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     // ---------- 水槽(canvas) ----------
     let W = 0, H = 0, dpr = 1;
     function sizeTank() { W = cv.clientWidth || 320; H = cv.clientHeight || 220; dpr = Math.min(2, devicePixelRatio || 1); cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+    // 魚の大きさは水槽の広さに比例させる(幅390×高さ280の水槽を基準)。機種で水槽の広さが違っても、水槽に対する魚の割合を同じにする
+    const fishScale = () => Math.max(0.6, Math.min(1.8, Math.min(W / 390, H / 280)));
     function rebuildSwim() {
-      const t = spec.tank(), old = swim;
-      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * (f.id === 'ryugu' ? 1 : 0.5)); return { uid: f.uid, img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * Math.max(10, W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
+      const t = spec.tank(), old = swim, FS = fishScale();
+      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * (f.id === 'ryugu' ? 1 : 0.5) * FS); return { uid: f.uid, img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * Math.max(10, W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
       swim.forEach(s => { const o = old.find(q => q.uid === s.uid); if (o) { s.x = Math.max(4, Math.min(W - s.w - 4, o.x)); s.y = o.y; s.vx = o.vx > 0 ? Math.abs(s.vx) : -Math.abs(s.vx); s.ph = o.ph; s.munch = o.munch || 0; } });
     }
     function refreshDecor() { PL = spec.placed(); DM = Object.fromEntries(spec.decor().map(d => [d.uid, d])); }
@@ -512,7 +514,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       let last = performance.now();
       const step = ts => {
         if (!sc.isConnected) return; raf = requestAnimationFrame(step); const dt = Math.min(0.05, (ts - last) / 1000); last = ts;
-        if (cv.clientWidth && Math.abs(cv.clientWidth - W) > 2) { sizeTank(); }
+        if (cv.clientWidth && (Math.abs(cv.clientWidth - W) > 2 || Math.abs(cv.clientHeight - H) > 2)) { sizeTank(); rebuildSwim(); }
         g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
         g.setTransform(dpr * Z.z, 0, 0, dpr * Z.z, dpr * Z.x, dpr * Z.y);
         const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#8fd3ff'); sky.addColorStop(0.72, '#3f9bd6'); sky.addColorStop(0.72, '#e9d9b0'); sky.addColorStop(1, '#d9c28d'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
