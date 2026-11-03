@@ -5,5 +5,5 @@ import yuzu from './portraits/yuzu.webp'; import chunkkun from './portraits/chun
 import luna from './portraits/luna.webp'; import tetsu from './portraits/tetsu.webp'; import suna from './portraits/suna.webp';
 import sora from './portraits/sora.webp'; import hana from './portraits/hana.webp';
 const BY_ID = { sora, hana, shiori, koharu, mii, baron, gon, maru, yuzu, chunkkun, choco, luna, tetsu, suna };
-const BY_NAME = { 'そら': sora, 'はな': hana, 'しおりさん': shiori, 'こはる先生': koharu, 'ミイ': mii, 'ハッタリ男爵': baron, 'ひろい屋ゴン': gon, 'マルさん': maru, 'ゆず': yuzu, 'チャンクくん': chunkkun, '大喜利チョコ': choco, 'ルナ': luna, '哲学者': tetsu, '砂吹さん': suna };
+const BY_NAME = { 'そら': sora, 'はな': hana, 'しおりさん': shiori, 'こはる先生': koharu, 'ミイ': mii, 'ハッタリ男爵': baron, 'ひろい屋ゴン': gon, 'マルさん': maru, 'ゆず': yuzu, 'チャンクくん': chunkkun, '大喜利チョコ': choco, 'ルナ': luna, '哲学者': tetsu, '潮見さん': suna };
 export const portrait = k => BY_ID[k] || BY_NAME[k] || null;

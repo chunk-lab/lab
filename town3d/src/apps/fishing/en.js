@@ -801,7 +801,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
   }
   function testIntro(onBack, after) {
     const sh = sheet(`<div class="ph"><h2>📝 抜き打ちテスト!</h2></div><div class="sc" style="font-size:14px;line-height:1.7">
-      <div class="say">砂吹さん「Pop quiz! 前に完璧にした単語、まだ覚えてるかな?」</div>
+      <div class="say">潮見さん「Pop quiz! 前に完璧にした単語、まだ覚えてるかな?」</div>
       <p>もらった標本のセットから、いくつかまとめて出すよ。1セットで${TEST_PER}問中${TEST_BAD}問以上まちがえると、その標本に<b>ひび</b>が入る。まちがえた単語は完璧が消えるので、釣り堀でもう一度完璧にすれば直る。</p>
       <p style="font-size:12px;color:#8d7f9e">自分の単語集の言葉も少し出るよ(標本には関係なし)。テストが終わるまで、英語の釣り堀は始められない。</p></div>
       <div style="padding:8px 16px 16px;display:flex;gap:8px;justify-content:center"><button class="btn sub" data-n>あとで</button><button class="btn" data-g>はじめる</button></div>`, true);

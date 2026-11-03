@@ -6,7 +6,7 @@ import { makeCharacter } from '../../world/character.js';
 import { artCanvas } from './art.js';
 import { LOOKS } from '../../world/character.js';
 import { RESIDENTS } from '../../game/npc.js';
-// 見た目:'suna'(砂吹さん) / LOOKS のid / look そのもの
+// 見た目:'suna'(潮見さん) / LOOKS のid / look そのもの
 export function lookOf(k) { if (k && typeof k === 'object') return k; if (k === 'suna') return (RESIDENTS.find(r => r.id === 'suna') || {}).look || LOOKS.sora; return LOOKS[k] || LOOKS.mio; }
 
 export function poseFor(sp, size) {

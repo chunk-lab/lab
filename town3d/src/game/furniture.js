@@ -283,7 +283,7 @@ export const ITEMS = [
     box(g, 0.06, 1.2, 0.04, 0xffffff, 0, 0.1, 0.11); box(g, 1.5, 0.06, 0.04, 0xffffff, 0, 0.7, 0.11); } },
 ];
 // 英語の釣り堀でもらうもの(お店では売らない)。標本はセットの数だけ、魚の標本は魚の数だけ
-ITEMS.push({ id: 'tank', cat: 'かざり', noshop: true, name: '砂吹さんの水槽', price: 0, w: 2, d: 1, build(g) { tank(g); } });
+ITEMS.push({ id: 'tank', cat: 'かざり', noshop: true, name: '潮見さんの水槽', price: 0, w: 2, d: 1, build(g) { tank(g); } });
 for (const s of SETS) ITEMS.push({ id: 'sp_' + s.id, cat: 'かざり', noshop: true, spec: s.id, name: `${s.look.name}の標本`, price: 0, w: 1, d: 1, build(g) { specimenJar(g, s); } });
 for (const f of FISH_SPEC) ITEMS.push({ id: 'fs_' + f.id, cat: 'かざり', noshop: true, name: `${f.name}の標本`, price: 0, w: 1, d: 1, build(g) { fishJar(g, f); } });
 export const ITEM = Object.fromEntries(ITEMS.map(i => [i.id, i]));

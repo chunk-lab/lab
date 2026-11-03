@@ -26,7 +26,7 @@ export const PLAYS = [
   { id: 'note.mimic', n: '聞いてまねる(勉強ノート)', want: 'talk', mood: 'study', time: [5, 15], place: 'home', go: { to: 'note', kind: 'short' } },
   { id: 'town.chat', n: '住人と英語でおしゃべり', want: 'talk', mood: 'both', time: [5, 15, 30], place: 'town', go: { to: '3d' } },
   { id: 'town.ogiri', n: '英語で大喜利', want: 'chill', mood: 'any', time: [15], place: 'town', go: { to: '3d' } },
-  { id: 'town.walk', n: '町を散歩(格言・ハーモニカ・おみくじ)', want: 'chill', mood: 'any', time: [5, 15, 30], place: 'town', go: { to: '3d' } },
+  { id: 'town.walk', n: '町を散歩(格言・オカリナ・おみくじ)', want: 'chill', mood: 'any', time: [5, 15, 30], place: 'town', go: { to: '3d' } },
   { id: 'eigo.dict', n: '英ラボで気になる言葉を調べる', want: 'chill', mood: 'study', time: [5, 15], place: 'library', go: { game: 'eigonou' } },
 ];
 export const playOf = id => PLAYS.find(p => p.id === id) || null;

@@ -1,4 +1,4 @@
-// 釣りのしくみ(画面とは別)。自分・砂吹さん(ボット)・記録の再生で同じものを使う。
+// 釣りのしくみ(画面とは別)。自分・潮見さん(ボット)・記録の再生で同じものを使う。
 //   池の座標:x = -1(左)〜1(右)、d = 0(手前の岸)〜1(むこう岸)。岸の自分は (0, 0)
 //   流れ:ready(ねらう) → charge(ためる) → fly(とんでいる) → water(水の中:待つ/巻く) → fight(ファイト) → landed / lost
 import { FISH, ITEMS, areasOf, areaAtIn, RARITY_PTS, gearById, TANA, HOOK_STEP, tanaOf } from './data.js';
@@ -397,7 +397,7 @@ export function replayAt(rec, t) {
   return { ...a, x: a.x + (b.x - a.x) * k, d: a.d + (b.d - a.d) * k, T: a.T + (b.T - a.T) * k };
 }
 
-// 砂吹さん(ボット)。lv: 'easy' | 'hard'
+// 潮見さん(ボット)。lv: 'easy' | 'hard'
 export function createBot(engine, lv = 'easy', seed = 3) {
   const r = rng(seed), E = engine, S = E.S;
   const K = lv === 'hard' ? { react: 0.24, sd: 0.08, aimErr: 0.03, early: 0.03, lo: 0.62, hi: 0.9, side: 0.85, wait: 14, lag: 0.22, idle: 1 } : { react: 0.5, sd: 0.22, aimErr: 0.1, early: 0.25, lo: 0.6, hi: 0.95, side: 0.4, wait: 20, lag: 0.45, idle: 3 };

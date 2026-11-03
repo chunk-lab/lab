@@ -10,8 +10,8 @@ import a_p_mode from './art/p_mode.webp';
 import a_p_fx from './art/p_fx.webp';
 import a_p_help from './art/p_help.webp';
 const ART = { b_en: a_b_en, b_free: a_b_free, b_vs: a_b_vs, b_dex: a_b_dex, b_ask: a_b_ask, b_shop: a_b_shop, p_mode: a_p_mode, p_fx: a_p_fx, p_help: a_p_help };
-// 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
-//   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
+// 釣り(潮見さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
+//   のんびり釣り / 釣り勝負(2画面:潮見さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
 import { confirmPay } from '../../ui/pay.js';
 import { weather, wxStrip } from '../../game/weather.js';
 import { social } from '../../game/social.js';
@@ -100,7 +100,10 @@ const CSS = `
 .fz .mwx{flex:none;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.9);border-radius:999px;padding:5px 12px;box-shadow:0 2px 6px #0002;font-size:13px;font-weight:900;color:#3a4a7a}.fz .mwx small{font-size:12px;font-weight:700;color:#6d6a8c}
 .fz .mwal{flex:none;display:flex;flex-direction:row;gap:6px;align-items:center}.fz .mwal span{background:rgba(255,255,255,.9);border-radius:999px;padding:3px 9px;font-size:12px;font-weight:900;color:#3a4a7a;box-shadow:0 2px 6px #0002;white-space:nowrap}
 .fz .mgrid{width:min(100%,560px);display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.fz .ib{border:0;background:none;padding:0;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}.fz .ib img{display:block;width:100%;height:auto;pointer-events:none}.fz .ib:active{transform:scale(.97)}
+.fz .ib{border:0;background:none;padding:0;cursor:pointer;display:block;position:relative;container-type:inline-size;-webkit-tap-highlight-color:transparent}.fz .ib img{display:block;width:100%;height:auto;pointer-events:none}.fz .ib:active{transform:scale(.97)}
+.fz .ib .tx{position:absolute;pointer-events:none;white-space:nowrap;font-weight:900}
+.fz .ib .txa{left:30%;top:50%;transform:translateY(-50%);font-size:9.2cqw;color:#fff;-webkit-text-stroke:5px #1d2f7a;paint-order:stroke fill;letter-spacing:.02em}
+.fz .ib .txv{left:0;right:0;bottom:9%;text-align:center;font-size:6.6cqw;color:#6a3b10;-webkit-text-stroke:3px #fff3c2;paint-order:stroke fill}
 .fz .mpills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(100%,560px)}
 .fz .pl{border:0;padding:0;cursor:pointer;aspect-ratio:220/77;background:center/100% 100% no-repeat;position:relative;-webkit-tap-highlight-color:transparent}.fz .pl span{position:absolute;left:36%;right:6%;top:50%;transform:translateY(-50%);font-size:11px;font-weight:900;color:#3a4a7a;white-space:nowrap}.fz .pl:active{transform:scale(.97)}
 .fz .mb{width:min(300px,86%);display:flex;align-items:center;gap:10px;justify-content:flex-start;font-size:17px;padding:14px 18px;border-radius:18px}
@@ -160,7 +163,7 @@ export const fishingApp = {
     const wxRefresh = () => { baseCond.luck = social.luckToday(); if (P.rain == null) baseCond.rain = weather.isRain(); const d = new Date(); if (P.hour == null) baseCond.hour = d.getHours() + d.getMinutes() / 60; };   // 開いたまま天気・時間が変わっても、次の画面から反映
     const sfx = createSfx(ctx.audio && ctx.audio.sfx != null ? ctx.audio.sfx : 0.7);
     const root = document.createElement('div'); root.className = 'fz'; el.appendChild(root);
-    ctx.setTitle('砂吹さんの池');
+    ctx.setTitle('潮見さんの池');
 
     // ---- 保存 ----
     const own = Object.assign({ rod: ['bamboo'], reel: ['basic'], line: ['nylon'], bait: ['worm'], eye: ['none'] }, st.get('own') || {}); own.hook = ['s', 'm', 'l']; if (!own.eye) own.eye = ['none'];
@@ -209,7 +212,7 @@ export const fishingApp = {
 
     // ================= メニュー =================
     function menu() {
-      clear(); screen = 'menu'; ctx.setTitle('砂吹さんの釣り堀'); head(); wxRefresh();
+      clear(); screen = 'menu'; ctx.setTitle('潮見さんの釣り堀'); head(); wxRefresh();
       const cv = document.createElement('canvas'); cv.style.cssText = 'top:0;height:100%'; root.appendChild(cv);
       const view = createView(cv, baseCond); view.resize();
       const ro = new ResizeObserver(() => view.resize()); ro.observe(cv); cleanup.push(() => ro.disconnect());
@@ -224,13 +227,13 @@ export const fishingApp = {
             <div class="mwal"><span>🪙 <b data-bind="coins">${ctx.wallet.get().toLocaleString('ja-JP')}</b></span>${ctx.gems ? `<span>💎 <b data-bind="gems">${ctx.gems.get().toLocaleString('ja-JP')}</b></span>` : ''}</div>
           </div>
         </div>
-        <div class="say3"><img class="sp" src="${portrait('suna') || ''}" alt="砂吹さん"><div class="say">砂吹さん「${esc(pickSay())}」</div></div>
+        <div class="say3"><img class="sp" src="${portrait('suna') || ''}" alt="潮見さん"><div class="say">潮見さん「${esc(pickSay())}」</div></div>
         <div class="mgrid">
           <button class="ib" data-m="en" aria-label="英語の釣り堀"><img src="${ART.b_en}" alt=""></button>
           <button class="ib" data-m="free" aria-label="のんびり釣る"><img src="${ART.b_free}" alt=""></button>
-          <button class="ib" data-m="vs" aria-label="釣り勝負"><img src="${ART.b_vs}" alt=""></button>
+          <button class="ib" data-m="vs" aria-label="釣り勝負"><img src="${ART.b_vs}" alt=""><span class="tx txv">潮見さん・友だちと対戦</span></button>
           <button class="ib" data-m="dex" aria-label="アクアリウム"><img src="${ART.b_dex}" alt=""></button>
-          <button class="ib" data-m="ask" aria-label="砂吹さんに聞く"><img src="${ART.b_ask}" alt=""></button>
+          <button class="ib" data-m="ask" aria-label="潮見さんに聞く"><img src="${ART.b_ask}" alt=""><span class="tx txa">潮見さんに聞く</span></button>
           <button class="ib" data-m="shop" aria-label="道具屋"><img src="${ART.b_shop}" alt=""></button>
         </div>
         <div class="mpills">
@@ -528,7 +531,7 @@ export const fishingApp = {
         if (!sp) return;
         bubble(`${sp.name}${sp.kind === 'fish' ? ' ' + d.size + 'cm' : ''}!` + (vs.bot ? ' ' + (sp.r >= 3 ? SUNA_SAY.big[0] : SUNA_SAY.catch[Math.floor(Math.random() * 4)]) : ''));
       }
-      function bubble(text) { bubEl?.remove(); bubEl = document.createElement('div'); bubEl.className = 'bub'; bubEl.textContent = (vs.bot ? '砂吹さん: ' : vs.name + ': ') + text; root.appendChild(bubEl); const b = bubEl; setTimeout(() => { if (bubEl === b) { b.remove(); bubEl = null; } }, 2200); }
+      function bubble(text) { bubEl?.remove(); bubEl = document.createElement('div'); bubEl.className = 'bub'; bubEl.textContent = (vs.bot ? '潮見さん: ' : vs.name + ': ') + text; root.appendChild(bubEl); const b = bubEl; setTimeout(() => { if (bubEl === b) { b.remove(); bubEl = null; } }, 2200); }
 
       // ---- 演出 ----
       let hitStop = 0, hitBig = false, leap = null, vign = null;
@@ -581,7 +584,7 @@ export const fishingApp = {
           <div style="font-family:Georgia,serif;font-style:italic;color:#8d7f9e;font-size:13px">${esc(sp.en)}</div>
           ${sp.kind === 'fish' ? `<div style="font-size:24px;font-weight:900">${d.size}<small style="font-size:13px">cm</small>${info.best && !info.isNew ? ' <span style="font-size:12px;color:#e0556b">記録更新!</span>' : ''}</div>` : ''}
           ${info.extra}${info.wanted ? `<div style="font-weight:900;font-size:13px">🪙 +${info.coins}${info.coins < info.wanted ? ' <small style="color:#8d7f9e">(きょうの上限)</small>' : ''}</div>` : ''}`;
-        const r = await showScreen({ actors: [{ look: ctx.player?.look, pose: 'auto', sp, size: d.size }], bg: cv, infoHtml: head, sayText: `砂吹さん「${esc(sp.say || 'Nice!')}」`, caption: [`${sp.name}${sp.kind === 'fish' ? ' ' + d.size + 'cm' : ''}`, `ほしみや池 ${new Date().toLocaleDateString()}`], confettiOn: info.isNew || info.best || sp.r >= 4, buttons: [['つづける', '', () => closeCard()]] });
+        const r = await showScreen({ actors: [{ look: ctx.player?.look, pose: 'auto', sp, size: d.size }], bg: cv, infoHtml: head, sayText: `潮見さん「${esc(sp.say || 'Nice!')}」`, caption: [`${sp.name}${sp.kind === 'fish' ? ' ' + d.size + 'cm' : ''}`, `ほしみや池 ${new Date().toLocaleDateString()}`], confettiOn: info.isNew || info.best || sp.r >= 4, buttons: [['つづける', '', () => closeCard()]] });
         if (!r) { card = null; showCard(d, info); } else card = { remove: r.close };
       }
       function showCard(d, info) {
@@ -593,12 +596,12 @@ export const fishingApp = {
           <div class="sc" style="text-align:center;padding-top:0"><div class="art" style="margin:4px auto;width:260px;max-width:100%"></div>
           ${sp.kind === 'fish' ? `<div style="font-size:28px;font-weight:900">${d.size}<small style="font-size:14px">cm</small>${info.best && !info.isNew ? ' <span style="font-size:13px;color:#e0556b">記録更新!</span>' : ''}</div><div style="font-size:12px;color:#8d7f9e">自己ベスト ${info.r.best}cm ・ ${info.r.n}匹目</div>` : ''}
           ${info.extra}
-          <div class="say" style="margin:10px auto 0">砂吹さん「${esc(sp.say || 'Nice!')}」</div>
+          <div class="say" style="margin:10px auto 0">潮見さん「${esc(sp.say || 'Nice!')}」</div>
           ${info.wanted ? `<div style="margin-top:8px;font-weight:900">🪙 +${info.coins}${info.coins < info.wanted ? ' <small style="color:#8d7f9e">(きょうの上限)</small>' : ''}</div>` : ''}
           </div><div style="padding:8px 16px 18px;text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">${en && sp.kind === 'fish' ? `<button class="btn sub" data-k ${EN.keepRoom() ? '' : 'disabled'}>🐠 ${EN.tankRoom() ? '水槽に入れる' : EN.keepRoom() ? '図鑑の枠に入れる' : '水槽も枠もいっぱい'}</button>` : ''}<button class="btn" data-x>つづける</button></div>`, true);
         card.querySelector('.art').appendChild(a); a.style.cssText = 'width:100%;height:auto;position:static';
         card.querySelector('[data-x]').onclick = closeCard;
-        const kb = card.querySelector('[data-k]'); if (kb) kb.onclick = () => { const r = EN.keepFish(sp, d.size); if (!r) return; sfx.play('splash'); closeCard(); toast(r === 'first' ? '🐠 砂吹さんが水槽をくれた!<br><small style="font-size:12px">家の持ち物にも入ったよ。えさは英語で作る</small>' : r === 'box' ? '📖 図鑑の枠に入れた!' : '🐠 水槽に入れた!', 1800); };
+        const kb = card.querySelector('[data-k]'); if (kb) kb.onclick = () => { const r = EN.keepFish(sp, d.size); if (!r) return; sfx.play('splash'); closeCard(); toast(r === 'first' ? '🐠 潮見さんが水槽をくれた!<br><small style="font-size:12px">家の持ち物にも入ったよ。えさは英語で作る</small>' : r === 'box' ? '📖 図鑑の枠に入れた!' : '🐠 水槽に入れた!', 1800); };
         if (info.isNew || info.best || sp.r >= 4) confetti(card);
       }
       function showLost(d) { toast(LOST_JP[d.reason] + `<br><small style="font-size:13px">${BYID[d.id] && BYID[d.id].r >= 3 ? 'おしい! 大物だった…' : ''}</small>`, 1500); setTimeout(() => { if (E.S.ph === 'lost') E.ack(); }, 1400); }
@@ -669,7 +672,7 @@ export const fishingApp = {
           }
           const R = RULES[vs.rule], ms = scoreOf(E.S.score, vs.rule), os = scoreOf(bot ? oppE.S.score : oppScore, vs.rule);
           const oph = bot ? oppE.S.ph : (replayAt(vs.ghost, t) || {}).ph;
-          vsBar.querySelector('.on').textContent = `${vs.bot ? '砂吹さん' : vs.name} ${os}${R.unit}${oph === 'fight' ? ' 🎣ファイト中!' : ''}`;
+          vsBar.querySelector('.on').textContent = `${vs.bot ? '潮見さん' : vs.name} ${os}${R.unit}${oph === 'fight' ? ' 🎣ファイト中!' : ''}`;
           vsBar.querySelector('.me').textContent = `あなた ${ms}${R.unit}`;
           vsBar.querySelector('.tm').textContent = countT > 0 ? fmtT(vs.dur) : fmtT(vs.dur - startT);
         } else $('[data-b="info"]').textContent = `🐟${stats.today}`;
@@ -772,7 +775,7 @@ export const fishingApp = {
       showScreen({
         actors: [{ look: ctx.player?.look, pose: 'auto', sp: top.sp, size: top.size }], bg: null,
         infoHtml: `<div style="font-size:22px;font-weight:900">🎉 きょうの成果</div><div style="font-size:13px;font-weight:800">${list}</div>`,
-        sayText: '砂吹さん「What a great day!」',
+        sayText: '潮見さん「What a great day!」',
         caption: [`${top.sp.name} ${top.size}cm`, `ほしみや池 ${new Date().toLocaleDateString()}`], confettiOn: true,
         buttons: [['帰る', '', done]],
       }).then(r => { if (!r) done(); });
@@ -798,7 +801,7 @@ export const fishingApp = {
       return { el, close };
     }
 
-    // ================= 砂吹さんに聞く =================
+    // ================= 潮見さんに聞く =================
     let onEqChange = null;
     function ask(tab) {
       askScreen({ sheet, dex, cond: baseCond, eq, own, st, sfx, skill, tab, onSet: (c, bb) => {
@@ -904,8 +907,8 @@ export const fishingApp = {
           <div class="lbl">モード(ふたりとも同じ)</div><div class="seg"><button class="tab ${mode === 'real' ? 'on' : ''}" data-mo="real">🔵 ほんかく</button><button class="tab ${mode === 'easy' ? 'on' : ''}" data-mo="easy">🟢 かんたん</button></div>
           <div class="lbl">演出</div><div class="seg"><button class="tab ${fx === 'high' ? 'on' : ''}" data-fx="high">🎆 派手</button><button class="tab ${fx === 'calm' ? 'on' : ''}" data-fx="calm">🍵 おとなしめ</button></div>
           <div class="lbl">あいて</div><div class="seg" style="flex-direction:column">
-            <button class="tab ${opp === 'easy' ? 'on' : ''}" data-o="easy">🧢 砂吹さん(のんびり)</button>
-            <button class="tab ${opp === 'hard' ? 'on' : ''}" data-o="hard">🔥 砂吹さん(ほんき)</button>
+            <button class="tab ${opp === 'easy' ? 'on' : ''}" data-o="easy">🧢 潮見さん(のんびり)</button>
+            <button class="tab ${opp === 'hard' ? 'on' : ''}" data-o="hard">🔥 潮見さん(ほんき)</button>
             <button class="tab ${opp === 'code' ? 'on' : ''}" data-o="code">✉️ 友だちの挑戦状をうける</button>
             ${ghost ? `<button class="tab ${opp === 'self' ? 'on' : ''}" data-o="self">👤 前回の自分(${RULES[ghost.r].name}・${ghost.du / 60}分)</button>` : ''}
           </div>
@@ -945,11 +948,11 @@ export const fishingApp = {
       const mb = best(catches), ob = best(oppC), oppLook = vs.bot ? 'suna' : vs.name === '前回の自分' ? ctx.player?.look : 'ren';
       const actor = (look, b, win) => ({ look, pose: win === false ? 'sad' : 'auto', sp: b ? BYID[b.id] : null, size: b ? b.size : 0 });
       const head = res === 'win' ? '🏆 かち!' : res === 'lose' ? 'まけ…' : 'ひきわけ';
-      const R = RULES[vs.rule], oname = vs.bot ? '砂吹さん' : vs.name;
+      const R = RULES[vs.rule], oname = vs.bot ? '潮見さん' : vs.name;
       const r = await showScreen({
         actors: [actor(ctx.player?.look, mb, res === 'lose' ? false : true), actor(oppLook, ob, res === 'win' ? false : true)], bg: null,
         infoHtml: `<div style="font-size:24px;font-weight:900">${head}</div><div style="font-weight:900">あなた ${o.me}${R.unit}　vs　${esc(oname)} ${o.op}${R.unit}</div><div style="font-size:12px;color:#8d7f9e">${R.name}・${vs.dur / 60}分 ${MODE_BADGE(vs.easy ? 'easy' : 'real')}</div>`,
-        sayText: vs.bot ? `砂吹さん「${res === 'win' ? 'You got me. Well done.' : res === 'lose' ? 'Better luck next time.' : 'A tie! Good game.'}」` : '',
+        sayText: vs.bot ? `潮見さん「${res === 'win' ? 'You got me. Well done.' : res === 'lose' ? 'Better luck next time.' : 'A tie! Good game.'}」` : '',
         caption: [`釣り勝負 ${head}`, `${R.name} ${o.me}${R.unit} vs ${o.op}${R.unit}  ほしみや池`], confettiOn: res === 'win',
         buttons: [['結果を見る', '', () => vsResult(o)]],
       });
@@ -962,11 +965,11 @@ export const fishingApp = {
       const list = catches.length ? catches.map(c => { const sp = BYID[c.id]; return `${sp.emoji || '🐟'} ${esc(sp.name)}${sp.kind === 'fish' ? ` ${c.size}cm` : ''} <small style="color:#8d7f9e">${c.pts}pt</small>`; }).join('<br>') : '<span style="color:#8d7f9e">なし</span>';
       const s = sheet(`<div class="ph" style="justify-content:center"><h2 style="font-size:28px">${head}</h2></div>
         <div class="sc" style="text-align:center">
-          <div style="display:flex;justify-content:center;gap:16px;align-items:center;font-weight:900"><div>あなた<br><span style="font-size:32px">${me}</span>${R.unit}</div><div style="font-size:20px">vs</div><div>${vs.bot ? '砂吹さん' : esc(vs.name)}<br><span style="font-size:32px">${op}</span>${R.unit}</div></div>
+          <div style="display:flex;justify-content:center;gap:16px;align-items:center;font-weight:900"><div>あなた<br><span style="font-size:32px">${me}</span>${R.unit}</div><div style="font-size:20px">vs</div><div>${vs.bot ? '潮見さん' : esc(vs.name)}<br><span style="font-size:32px">${op}</span>${R.unit}</div></div>
           <p style="font-size:12px;color:#8d7f9e">${R.name}・${vs.dur / 60}分</p>
           <div style="background:#fff;border-radius:12px;padding:8px;text-align:left;font-size:13px;line-height:1.7">${list}</div>
           ${coins ? `<p style="font-weight:900">🪙 +${coins}</p>` : ''}
-          ${vs.bot ? `<div class="say" style="margin:6px auto">砂吹さん「${res === 'win' ? 'You got me. Well done.' : res === 'lose' ? 'Better luck next time.' : 'A tie! Good game.'}」</div>` : ''}
+          ${vs.bot ? `<div class="say" style="margin:6px auto">潮見さん「${res === 'win' ? 'You got me. Well done.' : res === 'lose' ? 'Better luck next time.' : 'A tie! Good game.'}」</div>` : ''}
           <div class="code" hidden><p style="font-size:12px;margin:6px 0">この文字をぜんぶコピーして友だちに送ってね(友だちは「釣り勝負 → 友だちの挑戦状をうける」にはりつけ)</p><textarea rows="4" readonly></textarea><div style="display:flex;gap:8px;justify-content:center;margin-top:6px"><button class="btn sub" data-copy>コピー</button>${navigator.share ? '<button class="btn sub" data-share>送る</button>' : ''}</div></div>
         </div>
         <div style="display:flex;gap:8px;padding:8px 12px 16px;justify-content:center;flex-wrap:wrap"><button class="btn sub" data-m>メニュー</button><button class="btn gold" data-c>✉️ 挑戦状をつくる</button><button class="btn" data-a>もういちど</button></div>`, true);

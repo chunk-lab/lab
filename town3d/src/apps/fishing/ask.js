@@ -1,4 +1,4 @@
-// 砂吹さんに聞く:狙いの魚(いい組み合わせ)・いまのおすすめ・腕のアドバイス
+// 潮見さんに聞く:狙いの魚(いい組み合わせ)・いまのおすすめ・腕のアドバイス
 import { FISH, AREAS, TANA, GEAR, gearById, BAIT_EN, SPEED_JP, SPEED_EN, RARITY, RARITY_COL } from './data.js';
 import { weightOf, timeOf } from './engine.js';
 import { artCanvas } from './art.js';
@@ -36,12 +36,12 @@ export function askScreen(o) {
   const day = new Date().toDateString();
   const rumor = st.get('rumor') && st.get('rumor').day === day ? st.get('rumor') : { day, n: 0, seen: [] };
   let tab = o.tab || 'now';
-  const s = sheet(`<div class="ph"><h2>💬 砂吹さんに聞く</h2></div><div class="tabs"></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>もどる</button></div>`);
+  const s = sheet(`<div class="ph"><h2>💬 潮見さんに聞く</h2></div><div class="tabs"></div><div class="sc"></div><div style="padding:8px 16px 16px;text-align:center"><button class="btn sub" data-x>もどる</button></div>`);
   const tabs = s.querySelector('.tabs'), sc = s.querySelector('.sc');
   const say = (en, jp) => `<div class="item" style="display:block"><b style="font-family:Georgia,serif">“${esc(en)}”</b><div style="font-size:13px;color:#8d7f9e">${esc(jp)}</div></div>`;
   const draw = () => {
     tabs.innerHTML = [['now', 'いまのおすすめ'], ['target', '狙いの魚'], ['skill', '腕のアドバイス']].map(([k, n]) => `<button class="tab ${k === tab ? 'on' : ''}" data-t="${k}">${n}</button>`).join('');
-    if (tab === 'skill') { sc.innerHTML = `<p style="font-size:13px">砂吹さん「最近の釣りを見てたけど…」</p>` + adviceFor(skill, eq).map(([e, j]) => say(e, j)).join(''); return; }
+    if (tab === 'skill') { sc.innerHTML = `<p style="font-size:13px">潮見さん「最近の釣りを見てたけど…」</p>` + adviceFor(skill, eq).map(([e, j]) => say(e, j)).join(''); return; }
     if (tab === 'now') {
       const tm = timeOf(cond.hour), list = FISH.filter(f => f.r >= 2).map(f => [f, weightOf(f, cond)]).filter(a => a[1] > 0);
       const pick = [];

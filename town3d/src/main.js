@@ -265,7 +265,7 @@ export function mount(container, opt = {}) {
     if (lunaOut) text = ['たまには外の空気を吸わないとね。星も、昼は休んでいるのよ。', 'あら、こんなところで会うなんて。…これも星の導きかしら。', '夕方には館にもどるわ。占いはそれからね。'][Math.floor(Math.random() * 3)];
     if (r.def.companion && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
     soc.onTalk(r);
-    const choices = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m) && !(lunaOut && m.app === 'fortune')).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、砂吹さんとの会話にもどる
+    const choices = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m) && !(lunaOut && m.app === 'fortune')).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、潮見さんとの会話にもどる
     if (r.def.id === 'sora' && r.follow) choices.unshift({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); } });
     choices.push(...soc.choices(r));
     if (r.def.id !== 'sora') choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
@@ -383,7 +383,7 @@ export function mount(container, opt = {}) {
       }
     });
   }
-  // メニューの「act」:大喜利・格言・ハーモニカ(アプリを開かない、住人ならではのあそび)
+  // メニューの「act」:大喜利・格言・オカリナ(アプリを開かない、住人ならではのあそび)
   function doAct(r, m) {
     if (m.act === 'consult' || m.act === 'soranote') { r.talking = true; talkingTo = r; input.clear(); soraNote(r); return; }
     if (m.act === 'follow') { hanaFollow(r, !r.follow); return; }
@@ -503,7 +503,7 @@ export function mount(container, opt = {}) {
   const spotOf = id => city.interact.find(i => i.app === id || i.id === id);
   // where:連れて行く場所 / go:着いたらすること
   const PLAYSPOTS = [
-    { k: 'fishing', n: '釣り', season: 'summer', where: () => ({ x: 46, z: 21 }), go: () => openApp('fishing', {}), ask: '最近、釣りしてないね。砂吹さんの池、行ってみる?' },
+    { k: 'fishing', n: '釣り', season: 'summer', where: () => ({ x: 46, z: 21 }), go: () => openApp('fishing', {}), ask: '最近、釣りしてないね。潮見さんの池、行ってみる?' },
     { k: 'golf', n: 'ミニゴルフ', season: 'spring', where: () => spotOf('board'), go: () => sport.start('golf'), ask: '今日のゴルフのコース、もう見た? やりに行こうよ!' },
     { k: 'frisbee', n: 'フリスビー', season: 'autumn', where: () => spotOf('board'), go: () => sport.start('frisbee'), ask: 'ねえ、フリスビーしに行かない? 掲示板にコースが出てるよ' },
     { k: 'chunkcards', n: 'カード', where: () => spotOf('chunkcards'), go: () => openApp('chunkcards', {}), ask: 'カフェでカード勝負、最近してないよね。行ってみる?' },
@@ -559,15 +559,15 @@ export function mount(container, opt = {}) {
   }
   const HANA_HINTS = {
     spring: ['春と秋は、掲示板にミニゴルフのコースが貼り出されるんだって。毎日ちがうコースなの!'],
-    summer: ['夏は砂吹さんの池で釣りができるよ。夕方と朝は、よく釣れるんだって!', '魚影が見えても、真上に落とすと逃げちゃうんだって。少し先に落とすといいらしいよ'],
+    summer: ['夏は潮見さんの池で釣りができるよ。夕方と朝は、よく釣れるんだって!', '魚影が見えても、真上に落とすと逃げちゃうんだって。少し先に落とすといいらしいよ'],
     autumn: ['秋は掲示板からフリスビーに出られるよ。風を読むのがコツなんだって'],
     winter: ['雪玉は長押しすると大きくなるよ! 雪だるまも作れるの', '広場で雪合戦できるって知ってた?'],
     any: ['そら君に聞くと、英語の使い方をノートにまとめてくれるよ', '家のテレビで、チャンクボックスのゲームが遊べるんだよ', 'カフェでミイさんとカード勝負できるよ。ミイさん、ああ見えて強いの', '会話の英語をタップすると、ことばノートに入れられるんだって', '神社のおみくじ、毎日ひけるよ'],
   };
-  const SORA_HINTS = { any: ['この町、歩いてるだけで楽しいよな', '腹へったな…カフェ寄ってく?', 'ゲーセンのぷにチャンク、けっこうハマるんだよ', '夕方の空、いい色じゃん'], winter: ['雪合戦なら負けないよ?'], summer: ['夏は池で釣りだよな。砂吹さん、たまに大物あげてる'] };
+  const SORA_HINTS = { any: ['この町、歩いてるだけで楽しいよな', '腹へったな…カフェ寄ってく?', 'ゲーセンのぷにチャンク、けっこうハマるんだよ', '夕方の空、いい色じゃん'], winter: ['雪合戦なら負けないよ?'], summer: ['夏は池で釣りだよな。潮見さん、たまに大物あげてる'] };
   const PLACE_LINES = {
     hana: [['広場', 'ここ、待ち合わせによく使うんだ〜'], ['カフェ', 'いいにおい…何か飲みたくなっちゃう'], ['公園', 'ここのベンチ、すわると落ちつくよね'], ['神社', 'しーん…ってしてて好きなんだ'], ['図書館', 'しずかにしなきゃね(小声)'], ['学校', 'なつかしい感じするね'], ['ゲームセンター', 'ちょっと遊んでいかない?'], ['ショップ', 'かわいいの売ってるかな?'], ['池', 'アヒルいるかな〜'], ['家', 'ここがあなたの家? いいなぁ']],
-    sora: [['広場', '噴水の音、落ちつくよな'], ['カフェ', 'ここのケーキ、うまいんだよ'], ['公園', 'ベンチでぼーっとするの、好きなんだ'], ['神社', 'おみくじ、大吉出たことある?'], ['図書館', 'ここ、よく来るんだ'], ['学校', '懐かしいなぁ'], ['ゲームセンター', '一回だけ遊んでいく?'], ['池', '砂吹さん、今日も釣ってるかな']],
+    sora: [['広場', '噴水の音、落ちつくよな'], ['カフェ', 'ここのケーキ、うまいんだよ'], ['公園', 'ベンチでぼーっとするの、好きなんだ'], ['神社', 'おみくじ、大吉出たことある?'], ['図書館', 'ここ、よく来るんだ'], ['学校', '懐かしいなぁ'], ['ゲームセンター', '一回だけ遊んでいく?'], ['池', '潮見さん、今日も釣ってるかな']],
   };
   // 手をつなぐ:プレイヤーの左にならぶ。ときどき少しおくれたり、前へ引っぱったりする(手ははなさない)
   const holdM = new THREE.Vector3();
@@ -674,7 +674,7 @@ export function mount(container, opt = {}) {
     });
   }
   // ---- 誕生日 ----
-  //   その日(この端末の日付で、登録した月日):住人がみんな1回ずつ「おめでとう」/砂吹さんがハーモニカ/そら君が花束/はなちゃんがピアノ
+  //   その日(この端末の日付で、登録した月日):住人がみんな1回ずつ「おめでとう」/潮見さんがオカリナ/そら君が花束/はなちゃんがピアノ
   //   夜:とくべつな花火+記念写真(アルバムの特別枠・無料)。その月は家のゲーム機が全部無料。翌月はサブスク半額のお知らせ
   let bdayTest = /[?&]bday=1/.test(location.search) ? 'day' : '';
   const bdayMD = () => { const b = settings.birth; if (!b) return null; const [, m, d] = b.split('-').map(Number); return m && d ? { m, d } : null; };
@@ -709,7 +709,7 @@ export function mount(container, opt = {}) {
         { label: 'あとでね', fn: () => { s.hanaT = Date.now() + 120000; bsave(s); } }] });
       bdayCool = 3; return;
     }
-    // 砂吹さん:ハーモニカ
+    // 潮見さん:オカリナ
     const su = R('suna'); if (su && !s.suna && near(su)) { s.suna = 1; bsave(s); audio.unlock(); const t = audio.play('harmonica', 'bday') || { sec: 10 }; su.harpT = t.sec; hud.say('npc:suna', '♪ Happy Birthday ♪', Math.min(12, t.sec)); setTimeout(() => hud.say('npc:suna', `おめでとさん、${nm}。いい一年をな`, 4), t.sec * 1000); bdayCool = t.sec; return; }
     // ほかの住人:1回ずつ「おめでとう」
     for (const r of residents.list) {

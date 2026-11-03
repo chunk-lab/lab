@@ -35,7 +35,7 @@ const SECS = [
     { h: '釣る', items: [
       { t: '普通の釣り', i: '🎣', kind: 'app', app: 'fishing', params: {} },
       { t: '英語の釣り', i: '🐟', kind: 'app', app: 'fishing', params: { tab: 'en' } }] },
-    { h: '勝負', items: [{ t: '砂吹さんと勝負', i: '⚔️', kind: 'app', app: 'fishing', params: { vs: 'easy' } }] },
+    { h: '勝負', items: [{ t: '潮見さんと勝負', i: '⚔️', kind: 'app', app: 'fishing', params: { vs: 'easy' } }] },
   ] },
   { k: 'amuse', icon: '🎮', title: 'アミューズメント', sub: '息抜き・カード対戦', color: '#c2417a', warp: 'amuse', groups: [
     { h: '遊ぶ', items: [

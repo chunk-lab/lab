@@ -8,7 +8,7 @@ export const COL = { p1: '#ff7aa2', p2: '#5aa8f0', p1d: '#d4517c', p2d: '#3b7fc4
 export const CPUS = [
   { id: 'chunk', name: 'チャンクくん', lv: 1, icon: '☁️', say: ['Let\'s play!', 'Oops!', 'Yay!'] },
   { id: 'mii', name: 'ミイ', lv: 1, icon: '🐱', say: ['Good luck~', 'Nice one!', 'Hehe, I won!'] },
-  { id: 'suna', name: '砂吹さん', lv: 2, icon: '🎣', say: ['Take it easy.', 'Well done.', 'Not bad, huh?'] },
+  { id: 'suna', name: '潮見さん', lv: 2, icon: '🎣', say: ['Take it easy.', 'Well done.', 'Not bad, huh?'] },
   { id: 'baron', name: 'ハッタリ男爵', lv: 2, icon: '🎩', say: ['Splendid!', 'Impossible!', 'Ha ha ha!'] },
   { id: 'gon', name: 'ゴン', lv: 3, icon: '🦊', say: ['Bring it on!', 'No way!', 'Too easy!'] },
 ];

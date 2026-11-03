@@ -17,17 +17,21 @@ export function createAudio() {
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(gain * vol.sfx, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     o.connect(g).connect(master); o.start(t); o.stop(t + dur + 0.02);
   }
-  // ハーモニカのような、のばす音(ゆれ=ビブラートつき)
+  // オカリナのような、まるくてやさしい音(ほぼ正弦波＋かすかな息の音。ゆれは、音がのびてから少しだけかかる)
   function reed(f, dur, delay = 0) {
     const a = ctx(); if (!a || vol.sfx <= 0) return;
-    const t = a.currentTime + delay, o = a.createOscillator(), o2 = a.createOscillator(), g = a.createGain(), lp = a.createBiquadFilter(), lfo = a.createOscillator(), lg = a.createGain();
-    o.type = 'sawtooth'; o2.type = 'triangle'; o.frequency.value = f; o2.frequency.value = f * 1.005;
-    lp.type = 'lowpass'; lp.frequency.value = 2200;
-    lfo.frequency.value = 5.2; lg.gain.value = f * 0.007; lfo.connect(lg); lg.connect(o.frequency); lg.connect(o2.frequency);
-    const v = 0.05 * vol.sfx;
-    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 0.07); g.gain.setValueAtTime(v * 0.85, Math.max(t + 0.08, t + dur - 0.12)); g.gain.linearRampToValueAtTime(0, t + dur);
-    o.connect(lp); o2.connect(lp); lp.connect(g).connect(master);
+    const t = a.currentTime + delay, o = a.createOscillator(), o2 = a.createOscillator(), g2 = a.createGain(), g = a.createGain(), lp = a.createBiquadFilter(), lfo = a.createOscillator(), lg = a.createGain();
+    o.type = 'sine'; o2.type = 'sine'; o.frequency.value = f; o2.frequency.value = f * 2; g2.gain.value = 0.10;
+    lp.type = 'lowpass'; lp.frequency.value = 2600;
+    lfo.frequency.value = 4.4; lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(f * 0.0035, t + Math.min(0.35, dur * 0.6)); lfo.connect(lg); lg.connect(o.frequency); lg.connect(o2.frequency);
+    const v = 0.085 * vol.sfx;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 0.06); g.gain.setValueAtTime(v * 0.9, Math.max(t + 0.07, t + dur - 0.14)); g.gain.linearRampToValueAtTime(0, t + dur);
+    o.connect(lp); o2.connect(g2).connect(lp); lp.connect(g).connect(master);
     [o, o2, lfo].forEach(x => { x.start(t); x.stop(t + dur + 0.05); });
+    // 吹きはじめの、かすかな息の音
+    const n = Math.floor(a.sampleRate * 0.12), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0); for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const ns = a.createBufferSource(), bp = a.createBiquadFilter(), ng = a.createGain(); ns.buffer = buf; bp.type = 'bandpass'; bp.frequency.value = Math.min(6000, f * 2.5); bp.Q.value = 1.2; ng.gain.value = 0.35 * v;
+    ns.connect(bp).connect(ng).connect(master); ns.start(t);
   }
   // ピアノのような音(打ってすぐ減る。倍音を少し)
   function piano(f, dur, delay = 0, v = 1) {
@@ -38,7 +42,7 @@ export function createAudio() {
     lp.connect(g).connect(master);
     [[1, 'triangle', 1], [2, 'sine', 0.35], [3, 'sine', 0.12]].forEach(([m, ty, k]) => { const o = a.createOscillator(), og = a.createGain(); o.type = ty; o.frequency.value = f * m; og.gain.value = k; o.connect(og).connect(lp); o.start(t); o.stop(t + len + 0.05); });
   }
-  // ハーモニカのオリジナル曲(ペンタトニック)。[音の高さHz, 長さ(拍)] 0 は休み。朝・昼・夕・晩と、たまに吹くとくべつな曲の5曲
+  // オカリナのオリジナル曲(ペンタトニック)。[音の高さHz, 長さ(拍)] 0 は休み。朝・昼・夕・晩と、たまに吹くとくべつな曲の5曲
   const TUNES = {
     morning: { name: '朝のうた', beat: 0.30, notes: [[784, 1], [880, 1], [1047, 2], [880, 1], [1047, 1], [1175, 2], [1047, 1], [880, 1], [784, 2], [659, 1], [784, 1], [880, 3], [0, 1], [1047, 1], [1175, 1], [1319, 2], [1175, 1], [1047, 1], [880, 2], [784, 1], [880, 1], [1047, 4]] },
     noon: { name: 'ひるさがりのうた', beat: 0.34, notes: [[659, 1.5], [784, 0.5], [880, 2], [784, 1], [659, 1], [587, 2], [523, 1], [587, 1], [659, 3], [0, 1], [784, 1.5], [880, 0.5], [1047, 2], [880, 1], [784, 1], [659, 2], [587, 1], [523, 1], [587, 4]] },

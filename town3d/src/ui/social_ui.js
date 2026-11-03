@@ -84,7 +84,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
     if (u.id === 'bigfish') {
       social.markUsed(key); const rare = FISH.filter(f => f.kind === 'fish' && f.r >= 4), f = pick(rare);
       const tm = { day: '昼', night: '夜', morning: '朝', evening: '夕方', any: 'いつでも' }[f.time] || 'いつでも';
-      const t = `きょうは「${f.name}」が近くまで来てるかもな。${tm}に${f.rain ? '、雨の日に' : ''}ねらってみな。`; social.addInfo('大物', `${f.name}:${tm}${f.rain ? '・雨' : ''}(砂吹さん)`); say(t); return;
+      const t = `きょうは「${f.name}」が近くまで来てるかもな。${tm}に${f.rain ? '、雨の日に' : ''}ねらってみな。`; social.addInfo('大物', `${f.name}:${tm}${f.rain ? '・雨' : ''}(潮見さん)`); say(t); return;
     }
     if (u.id === 'book') { social.markUsed(key); const p = pick(PASSAGES); addNote({ kind: 'sentence', text: p[0], meaning: p[1], npc: 'しおりさん' }); say(`この一節が好きなんです。「${p[0].slice(0, 60)}…」 ノートに書いておきましたね。`); return; }
     if (u.id === 'lesson') { social.markUsed(key); const p = pick(PHRASES); addNote({ kind: 'phrase', text: p[0], meaning: p[1], npc: 'こはる先生' }); say(`きょうの表現は「${p[0]}」。意味は「${p[1]}」です。ノートに入れておきましたよ。`); return; }

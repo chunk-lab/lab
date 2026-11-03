@@ -41,7 +41,7 @@ export const PREFS = {
   suna: { love: ['coffee', 'sandwich'], like: ['dango', 'cookie', 'croissant'], no: ['parfait'] },
   luna: { love: ['cupcake', 'matcha'], like: ['cake', 'cocoa', 'pudding'], no: ['donut'] },
 };
-export const NPC_NAME = { sora: 'そら君', hana: 'はなちゃん', mii: 'ミイ', baron: 'ハッタリ男爵', gon: 'ひろい屋ゴン', koharu: 'こはる先生', shiori: 'しおりさん', maru: 'マルさん', yuzu: 'ゆずちゃん', chunkkun: 'チャンクくん', choco: '大喜利チョコ', tetsu: '哲学者', suna: '砂吹さん', luna: '占い師ルナ' };
+export const NPC_NAME = { sora: 'そら君', hana: 'はなちゃん', mii: 'ミイ', baron: 'ハッタリ男爵', gon: 'ひろい屋ゴン', koharu: 'こはる先生', shiori: 'しおりさん', maru: 'マルさん', yuzu: 'ゆずちゃん', chunkkun: 'チャンクくん', choco: '大喜利チョコ', tetsu: '哲学者', suna: '潮見さん', luna: '占い師ルナ' };
 const KIDS = ['sora', 'yuzu', 'chunkkun'];   // デートの代わりに、お礼のプレゼント
 // いちばん好きなものは+12 / 好き+6 / ふつう+3 / にがて-3。1人に1日1回。その日はじめて話すと+1
 export const PTS = { love: 12, like: 6, normal: 3, no: -3, talk: 1 };

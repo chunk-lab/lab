@@ -84,7 +84,7 @@ export function makeCharacter(look, { scale = 1 } = {}) {
   if (look.acc === 'ribbon') { [-1, 1].forEach(s => { const r = add(geo('rib', () => new THREE.ConeGeometry(0.07, 0.14, 4)), M(look.accColor), 0.14 + s * 0.07, 0.2, 0.02, head); r.rotation.z = s * Math.PI / 2; }); add(sph(0.035, 8), M(look.accColor), 0.14, 0.2, 0.02, head); }
   if (look.acc === 'cap') { const c = add(geo('hat', () => new THREE.SphereGeometry(0.25, 24, 12, 0, Math.PI * 2, 0, 1.3)), toon(look.accColor, { side: THREE.DoubleSide }), 0, 0.06, -0.01, head); const v = add(cyl(0.16, 0.16, 0.025, 14), M(look.accColor), 0, 0.12, 0.2, head); v.scale.z = 0.7; }
   if (look.acc === 'tophat') { add(cyl(0.15, 0.15, 0.22, 14), M(look.accColor), 0, 0.3, 0, head); add(cyl(0.24, 0.24, 0.025, 16), M(look.accColor), 0, 0.2, 0, head); add(cyl(0.152, 0.152, 0.04, 14), M(0xff9aa2), 0, 0.23, 0, head); }
-  // 砂吹さんの帽子:つばの広い、くたっとした帽子に羽
+  // 潮見さんの帽子:つばの広い、くたっとした帽子に羽
   if (look.acc === 'snuf') {
     const hm = toon(look.accColor, { side: THREE.DoubleSide });
     add(cyl(0.31, 0.31, 0.02, 20), hm, 0, 0.17, 0, head);
@@ -118,7 +118,7 @@ export function makeCharacter(look, { scale = 1 } = {}) {
     if (outG.length) { const ol = new THREE.Mesh(mergeGeometries(outG.map(g => g.clone()), false), outlineMat); grp.add(ol); }
   };
   [body, head, ...legs, ...arms].forEach(bakeGroup);
-  // 砂吹さんの持ち物:釣り竿とハーモニカ(動かすので、合体させずにあとから付ける)
+  // 潮見さんの持ち物:釣り竿とオカリナ(動かすので、合体させずにあとから付ける)
   const snuf = look.acc === 'snuf';
   let fishG = null, harp = null;
   if (snuf) {
@@ -128,7 +128,7 @@ export function makeCharacter(look, { scale = 1 } = {}) {
     const lineG = new THREE.Group(); lineG.position.set(0, -1.24, 1.4); lineG.rotation.x = -2.24; fishG.add(lineG);
     add(cyl(0.004, 0.004, 1.3, 4), M(0xf5f5f5), 0, 0, 0, lineG);
     add(sph(0.04, 8), M(0xff6b6b), 0, -1.64, 0.89, fishG);
-    harp = add(geo('harp', () => new THREE.BoxGeometry(0.2, 0.045, 0.05)), M(0xc8ccd4), 0, -0.1, 0.235, head); harp.visible = false;
+    harp = add(geo('ocarina', () => { const g = new THREE.SphereGeometry(0.075, 12, 8); g.scale(1.35, 0.78, 0.85); return g; }), M(0xd49a6a), 0, -0.1, 0.235, head); harp.visible = false;
   }
   { const ol = new THREE.Mesh(torso.geometry, outlineMat); ol.position.copy(torso.position); ol.scale.copy(torso.scale); torso.userData.ol = ol; body.add(ol); }
   for (const e of eyes) { /* 目はまばたきするので別メッシュのまま */ }

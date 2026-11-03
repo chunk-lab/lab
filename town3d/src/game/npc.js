@@ -107,14 +107,14 @@ export const RESIDENTS = [
     menu: [{ label: '格言をひとつ聞く', act: 'quote' }],
   },
   {
-    // 砂吹さん:さすらいの旅人。池のほとりで釣りをしている。頼むとハーモニカを吹いてくれる
-    id: 'suna', tips: ["「Any luck?」は釣りの定番の声かけ。『釣れた?』ってことさ", "「Nothing's biting.」は『ぜんぜん食いつかない』。釣れない日のぼやきだな", "「Take it easy.」は『のんびりいこう』。ぼくの生き方みたいなものさ", "「Go with the flow.」は『流れにまかせて』。川と同じだね", "「catch of the day」は『今日の釣果』。とれたら自慢できる"], yomi: 'すなぶきさん', name: '砂吹さん', role: 'さすらいの旅人',
-    persona: '自由なさすらいの旅人。ひょうひょうとしていて、口数は少なめでおだやか。「〜さ」「〜だな」と話す。持ち物はハーモニカと釣り竿だけ。池でアヒルをながめながら釣りをするのが好きで、釣れなくても気にしない。',
+    // 潮見さん:さすらいの旅人。池のほとりで釣りをしている。頼むとオカリナを吹いてくれる
+    id: 'suna', tips: ["「Any luck?」は釣りの定番の声かけ。『釣れた?』ってことさ", "「Nothing's biting.」は『ぜんぜん食いつかない』。釣れない日のぼやきだな", "「Take it easy.」は『のんびりいこう』。ぼくの生き方みたいなものさ", "「Go with the flow.」は『流れにまかせて』。川と同じだね", "「catch of the day」は『今日の釣果』。とれたら自慢できる"], yomi: 'すなぶきさん', name: '潮見さん', role: 'さすらいの旅人',
+    persona: '自由なさすらいの旅人。ひょうひょうとしていて、口数は少なめでおだやか。「〜さ」「〜だな」と話す。持ち物はオカリナと釣り竿だけ。池でアヒルをながめながら釣りをするのが好きで、釣れなくても気にしない。',
     look: { skin: 0xf2c9ac, hair: 0x8a5a44, style: 'short', top: 0x7f9a52, bottom: 0x8a6b4a, shoes: 0x5a4a3a, acc: 'snuf', accColor: 0x7a8f4a },
     angler: { spot: [46, 22.5], face: [46, 18] },
     schedule: [[5, 'pond'], [17, 'park2'], [19, 'plaza2'], [21, 'pond']],
     lines: { morning: ['おはよう。朝の池は、水がきらきらしてるのさ。', 'まだ一匹も釣れてないけど、いい朝だな。'], day: ['釣れなくていいんだ。のんびりしに来てるだけさ。', 'あのアヒル、ぼくのことを見張ってるみたいだな。'], evening: ['夕方は風がやさしいな。そろそろ歩きたくなる。', '今日はどこまで行こうかな。気のむくままさ。'], night: ['夜の池は静かだな。星が水に映ってるのさ。'] },
-    menu: [{ label: '🎣 釣りへ行く', app: 'fishing' }, { label: 'ハーモニカをお願いする', act: 'harmonica' }],   // 入ると釣りのタイトル画面(英語・のんびり・勝負・図鑑…)
+    menu: [{ label: '🎣 釣りへ行く', app: 'fishing' }, { label: 'オカリナをお願いする', act: 'harmonica' }],   // 入ると釣りのタイトル画面(英語・のんびり・勝負・図鑑…)
   },
   {
     // 占い師ルナ:神社の境内の「占いの館」の前にいる。10コインで、住人の好物・飾りのレシピ・かくれもののありかなどを教えてくれる
@@ -292,7 +292,7 @@ export function createResidents(scene, graph, getHour, collide = null) {
           else if (speed > 0.3) r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(r.vx, r.vz), Math.min(1, dt * 4));
         }
         r.speed = speed;
-        // ポーズ:ハーモニカを吹いている間 / 池のそばで釣り竿を構えているとき
+        // ポーズ:オカリナを吹いている間 / 池のそばで釣り竿を構えているとき
         if (r.harpT > 0) r.harpT -= dt;
         if (r.def.angler) {
           const a = r.def.angler;
