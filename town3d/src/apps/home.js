@@ -250,7 +250,9 @@ export const homeApp = {
       planUI();
       const p = placed.find(x => x.uid === selUid), k = p && kindOf(p.id);
       tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ。ほかの家具はダブルタップでえらぶ。` : (Object.keys(furn.inv()).length ? '家具はダブルタップでえらぶよ。何もない所をドラッグで向きを変えられるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
-      ctl.innerHTML = p ? `${k === 'floor' || k === 'flat' ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button><button data-a="gbox" style="${btn('linear-gradient(160deg,#b9d8ff,#8fbaf0)')}">🎮 ゲーム機</button>` + (furn.owned('tank') ? `<button data-a="tank" style="${btn('linear-gradient(160deg,#9fe3ff,#6cc6e8)')}">🐠 水槽</button>` : '') + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
+      const canLock = p && ITEM[p.id].cat === 'かざり';   // かざりだけ、ロックできる(まちがって動かさない・しまわない)
+      if (p && p.lk) tip.textContent = `${ITEM[p.id].name}は🔒位置ロック中(動かないよ)。動かすときは、ロックをはずしてね。`;
+      ctl.innerHTML = p ? `${canLock ? `<button data-a="lock" style="${btn(p.lk ? '#8f7bd0' : '#a99bbb')}">${p.lk ? '🔓 ロックをはずす' : '🔒 ロック'}</button>` : ''}${(k === 'floor' || k === 'flat') ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="walk" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')}">🚶 中に入る</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 ネットで買う</button><button data-a="album" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">🖼 アルバム</button><button data-a="gbox" style="${btn('linear-gradient(160deg,#b9d8ff,#8fbaf0)')}">🎮 ゲーム機</button>` + (furn.owned('tank') ? `<button data-a="tank" style="${btn('linear-gradient(160deg,#9fe3ff,#6cc6e8)')}">🐠 水槽</button>` : '') + ((ctx.features || []).includes('study') ? `<button data-a="study" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">📒 勉強部屋</button>` : ''));
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
     }
@@ -309,6 +311,7 @@ export const homeApp = {
       if (!a || !p) return;
       const before = snap();
       if (a === 'off') selUid = null;
+      else if (a === 'lock') { if (ITEM[p.id].cat === 'かざり') { p.lk = p.lk ? 0 : 1; save(); } }
       else if (a === 'del') { placed = placed.filter(x => x !== p); selUid = null; save(); }
       else if (a === 'rot') {
         const rm = cur();
@@ -365,7 +368,7 @@ export const homeApp = {
       }
       if (ptrs.size > 2) return;
       const u = hitUid(e);
-      if (u && u === selUid) {   // えらんでいる家具だけ、つかんで動かせる
+      if (u && u === selUid && !(placed.find(x => x.uid === u) || {}).lk) {   // えらんでいる家具だけ、つかんで動かせる(ロック中は動かせない)
         const p = placed.find(x => x.uid === u), k = kindOf(p.id); bad = false;
         let off = null;
         if (k !== 'wall') { aim(e); if (ray.ray.intersectPlane(groundAt(Y[u] || 0), pt)) { const [w, d] = k === 'ceil' ? [U, U] : size(p); off = { x: p.gx + w / 2 - pt.x * U, z: p.gz + d / 2 - pt.z * U }; } }
@@ -386,7 +389,8 @@ export const homeApp = {
       }
       lastTap = null;
       if (selUid) {
-        const p = placed.find(x => x.uid === selUid), c = p && mover(e, p, null);
+        const p = placed.find(x => x.uid === selUid); if (p && p.lk) { tip.textContent = '🔒 位置ロック中だよ(動かせない)'; return; }
+        const c = p && mover(e, p, null);
         if (c) { const before = snap(), from = { ...p }; Object.assign(p, c); if (inside(cur(), p)) { toTop(p); save(); remember(before); } else { Object.assign(p, from); tip.textContent = 'そこには置けないよ。'; } relayout(); }
       }
     }

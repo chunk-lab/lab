@@ -500,6 +500,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         }
         if (pinch && P.size === 2) { const [a, b] = [...P.values()], d = Math.hypot(a.sx - b.sx, a.sy - b.sy) || 1, mx = (a.sx + b.sx) / 2, my = (a.sy + b.sy) / 2; Z.z = pinch.z * d / pinch.d; Z.x = mx - pinch.cx * Z.z; Z.y = my - pinch.cy * Z.z; clampZ(); return; }
         if (!drag || drag.id !== e.pointerId) return;
+        if (drag.kind === 'd' && drag.q.lk) return;   // ロック中の飾りは動かない
         if (!drag.moved && Math.hypot(p.sx - drag.sx, p.sy - drag.sy) > 6) { drag.moved = true; if (drag.kind === 'd') dropEl.classList.add('on'); }
         if (!drag.moved) return;
         if (drag.kind === 'd') { drag.q.x = Math.max(0.04, Math.min(0.96, p.x / W + drag.ox)); drag.q.y = Math.max(0.18, Math.min(0.98, p.y / H + drag.oy)); drag.out = p.below; dropEl.classList.toggle('hot', !!p.below); }
@@ -532,14 +533,15 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     function openDecorPop(q) {
       const d = DM[q.uid]; if (!d) return; const k = decorOf(d); sfx.play('tap');
       const lay = layerInfoD(q), lb = (op, t, on) => `<button class="sbtn" data-pa="dlay" data-v="${q.uid}:${op}" ${on ? '' : 'disabled'}>${t}</button>`;
-      popAt(q.x * W, q.y * H - 30, `<b>${k.icon} ${esc(k.name)}</b> <span class="rr rr${d.rar}">${RAR[d.rar]}</span><div class="aqpb"><button class="sbtn" data-pa="dtake" data-v="${q.uid}">↩ しまう</button><button class="sbtn" data-pa="dup" data-v="${d.lv}:${d.rar}">➕ ふやす</button>${scOf(q) !== 1 ? `<button class="sbtn" data-pa="dsc1" data-v="${q.uid}">もとの大きさ</button>` : ''}</div>${lay.L.length ? `<div class="aqpb">${lb('top', 'いちばん前', lay.up)}${lb('up', '▲1つ前へ', lay.up)}${lb('down', '▼1つ後ろへ', lay.down)}${lb('bot', 'いちばん後ろ', lay.down)}</div>` : ''}<small>2本指で大きさ(${Math.round(scOf(q) * 100)}%)</small>`);
+      const lk = `<button class="sbtn ${q.lk ? 'pri' : ''}" data-pa="dlock" data-v="${q.uid}">${q.lk ? '🔓 位置ロックをはずす' : '🔒 位置をロック'}</button>`;
+      popAt(q.x * W, q.y * H - 30, `<b>${k.icon} ${esc(k.name)}</b> <span class="rr rr${d.rar}">${RAR[d.rar]}</span><div class="aqpb"><button class="sbtn" data-pa="dtake" data-v="${q.uid}">↩ しまう</button><button class="sbtn" data-pa="dup" data-v="${d.lv}:${d.rar}">➕ ふやす</button>${lk}${scOf(q) !== 1 ? `<button class="sbtn" data-pa="dsc1" data-v="${q.uid}">もとの大きさ</button>` : ''}</div>${lay.L.length ? `<div class="aqpb">${lb('top', 'いちばん前', lay.up)}${lb('up', '▲1つ前へ', lay.up)}${lb('down', '▼1つ後ろへ', lay.down)}${lb('bot', 'いちばん後ろ', lay.down)}</div>` : ''}<small>2本指で大きさ(${Math.round(scOf(q) * 100)}%)</small>`);
     }
     function openFishPop(uid) {
       if (String(uid).startsWith('show:')) { const [, id, rk] = uid.split(':'); sfx.play('tap'); toast(`🖼 ${fname({ id, rk: +rk })}(とうろく済み・てんじ中)`); return; }
       const f = spec.tank().find(x => x.uid === uid), s = swim.find(x => x.uid === uid); if (!f || !s) return; sfx.play('tap');
       const n = f.day === today ? f.n : 0, full = f.g >= growNeed(f), food = !!pickFood(f, spec.foodStock(), feedT);
       popAt(s.x + s.w / 2, s.y, `<b>${esc(fname(f))}</b> <small>${fsize(f)}cm</small><div class="gb"><i style="width:${Math.min(1, f.g / growNeed(f)) * 100}%"></i></div><small>${full ? '🎉 育ちきった' : `そだち ${f.g}/${growNeed(f)} ・ きょう ${n}/${FEED_PER_DAY}`}</small>
-        <div class="aqpb">${full ? `<button class="sbtn pri" data-pa="reg" data-v="${uid}">📖 とうろく</button>` : `<button class="sbtn pri" data-pa="feed" data-v="${uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる${food ? '' : '(えさ0)'}</button>`}<button class="sbtn" data-pa="tobox" data-v="${uid}">📦 まちへ</button><button class="sbtn" data-pa="info" data-v="${f.id}:${f.rk || 0}">ℹ︎</button></div>`);
+        <div class="aqpb">${full ? `<button class="sbtn pri" data-pa="reg" data-v="${uid}" ${f.lock ? 'disabled' : ''}>📖 とうろく</button>` : `<button class="sbtn pri" data-pa="feed" data-v="${uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる${food ? '' : '(えさ0)'}</button>`}<button class="sbtn" data-pa="tobox" data-v="${uid}" ${f.lock ? 'disabled' : ''}>📦 まちへ</button><button class="sbtn" data-pa="flk" data-v="${uid}">${f.lock ? '🔓' : '🔒'}</button><button class="sbtn" data-pa="info" data-v="${f.id}:${f.rk || 0}">ℹ︎</button></div>`);
     }
     function startLoop() {
       cancelAnimationFrame(raf); sizeTank(); rebuildSwim(); refreshDecor();
@@ -555,7 +557,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         g.fillStyle = '#3f9a5a'; for (let i = 0; i < 5; i++) { const x = 20 + i * (W - 40) / 4; g.beginPath(); g.moveTo(x, H * 0.74); g.quadraticCurveTo(x + Math.sin(ts / 700 + i) * 10, H * 0.48, x + 4, H * 0.32); g.lineTo(x + 7, H * 0.74); g.fill(); }
         g.textAlign = 'center'; g.font = '34px serif';
         ordDecor().forEach((q, i) => { const d = DM[q.uid]; if (!d) return; const k = decorOf(d), x = q.x * W, y = q.y * H, s = scOf(q); g.font = (34 * s) + 'px serif'; g.save(); if (d.rar >= 2) { g.shadowColor = d.rar === 3 ? '#ffd24a' : '#c07bff'; g.shadowBlur = 10 + 6 * Math.sin(ts / 300 + i); } g.fillText(k.icon, x, y); g.restore();
-          if (q.uid === selUid) { g.save(); g.strokeStyle = '#f58aa8'; g.lineWidth = 2.5; g.setLineDash([5, 4]); g.strokeRect(x - 24 * s, y - 38 * s, 48 * s, 46 * s); g.restore(); } });
+          if (q.uid === selUid) { g.save(); g.strokeStyle = '#f58aa8'; g.lineWidth = 2.5; g.setLineDash([5, 4]); g.strokeRect(x - 24 * s, y - 38 * s, 48 * s, 46 * s); g.restore(); }
+          if (q.lk) { g.save(); g.font = '14px serif'; g.fillText('🔒', x + 18 * s, y - 30 * s); g.restore(); } });
         g.font = '34px serif';
         g.textAlign = 'start';
         swim.forEach(s => {
@@ -623,10 +626,10 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     function fishRow(f, where, cnt) {
       const n = f.day === today ? f.n : 0, need = growNeed(f), full = f.g >= need, min = minTier(f.id), can = !!pickFood(f, spec.foodStock(), feedT);
       const btns = where === 'tank'
-        ? `${full ? `<button class="sbtn pri" data-reg="${f.uid}">📖 とうろく</button>` : `<button class="sbtn" data-feed="${f.uid}" ${can && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-tobox="${f.uid}">📦 まちへ</button>`
+        ? `${full ? `<button class="sbtn pri" data-reg="${f.uid}" ${f.lock ? 'disabled' : ''}>📖 とうろく</button>` : `<button class="sbtn" data-feed="${f.uid}" ${can && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-tobox="${f.uid}" ${f.lock ? 'disabled' : ''}>📦 まちへ</button>`
         : `<button class="sbtn pri" data-totank="${f.uid}" ${spec.tank().length < spec.growSlots() ? '' : 'disabled'}>🐠 育てる</button>`;
       const need2 = `<small style="margin-left:4px;color:#8d7f9e">すき:${favOf(f.id).map(t => FOOD_INFO[t][0]).join('')}${rarOf(f.id) >= 3 ? ' (すきなえさだけ)' : ''}${min ? ` ・ ${FOOD_NAME[min]}〜` : ''}</small>`;
-      return `<div class="row"><span class="aqth" data-fi="${f.id}:${f.rk || 0}">${fishImg(f.id, 64, false, f.rk || 0)}</span><div class="fx"><b>${esc(fname(f))}</b>${cnt > 1 ? ` <b>×${cnt}</b>` : ''} <small style="color:#8d7f9e">${fsize(f)}cm</small>${need2}<div class="gb"><i style="width:${Math.min(1, f.g / need) * 100}%"></i></div><small style="color:#8d7f9e">${full ? '育ちきった!' : `そだち ${f.g}/${need} ・ きょう ${n}/${FEED_PER_DAY}`}</small></div>${btns}</div>`;
+      return `<div class="row"><span class="aqth" data-fi="${f.id}:${f.rk || 0}">${fishImg(f.id, 64, false, f.rk || 0)}</span><div class="fx"><b>${f.lock ? '🔒 ' : ''}${esc(fname(f))}</b>${cnt > 1 ? ` <b>×${cnt}</b>` : ''} <small style="color:#8d7f9e">${fsize(f)}cm</small>${need2}<div class="gb"><i style="width:${Math.min(1, f.g / need) * 100}%"></i></div><small style="color:#8d7f9e">${full ? '育ちきった!' : `そだち ${f.g}/${need} ・ きょう ${n}/${FEED_PER_DAY}`}</small></div>${cnt > 1 ? '' : `<button class="sbtn" data-lk="${f.uid}" style="padding:4px 8px">${f.lock ? '🔒' : '🔓'}</button>`}${btns}</div>`;
     }
     const unlRow = (ty, label) => {   // 枠をふやす(1つ目・2つ目はコイン、3つ目はダイヤ)
       const bought = ty === 'grow' ? spec.growX() : spec.showX(); if (bought >= 3) return '';
@@ -770,13 +773,15 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     // ---------- 操作 ----------
     async function act(a, v, e) {
       if (a === 'back') { sfx.play('tap'); cancelAnimationFrame(raf); sc.remove(); onBack(); return; }
+      if (a === 'dlock') { const q = PL.find(r => r.uid === v); if (q) { spec.placeSet(q.uid, { lk: q.lk ? 0 : 1 }); refreshDecor(); sfx.play('tap'); toast(q.lk ? '🔓 位置ロックをはずした' : '🔒 位置をロックした(動かない)'); openDecorPop(PL.find(r => r.uid === v) || q); } return; }
       if (a === 'dlay') { const [u, op] = String(v).split(':'), q = PL.find(r => r.uid === u); if (q && moveLayerD(q, op)) { sfx.play('tap'); openDecorPop(PL.find(r => r.uid === u) || q); } return; }
       if (a === 'dsc1') { const q = PL.find(r => r.uid === v); if (q) { q.sc = 1; spec.placeSet(q.uid, { sc: 1 }); refreshDecor(); sfx.play('tap'); closePop(); } return; }
       if (a === 'dtake') { spec.placeRemove(v); selUid = null; closePop(); sfx.play('tap'); refreshDecor(); drawHead(); if (tab === 'deco') drawBody(); return; }
       if (a === 'dup') { closePop(); walletSheet(v); return; }
       if (a === 'feed') { const r = feed(v); closePop(); if (r) { sfx.play('nibble'); feedFx([v], r === true ? {} : { [v]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${fullGain}`); } else toast(spec.food() ? 'きょうは もうおなかいっぱい' : 'えさがないよ。🐟タブの「えさを作る」で作ろう'); redraw(); return; }
-      if (a === 'reg') { closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; const f = t[i]; if (f.g < growNeed(f)) return; t.splice(i, 1); spec.saveTank(t); spec.collAdd(f.id, f.rk || 0, 1); spec.markGrown(f.id, f.rk || 0); sfx.play('coin'); toast(`📖 とうろく! ${fname(f)} ×${spec.coll()[f.id + ':' + (f.rk || 0)]}`); redraw(true); return; }
-      if (a === 'tobox') { closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; if (!boxRoom()) { toast('ひかえがいっぱい(🐟タブで ふやせるよ)'); return; } const b = spec.box(); b.push(t.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); sfx.play('tap'); toast('📦 ひかえに入れた'); redraw(true); return; }
+      if (a === 'reg') { closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; const f = t[i]; if (f.g < growNeed(f)) return; if (f.lock) { toast('🔒 ロック中(水槽にいる)。ロックをはずすととうろくできるよ'); return; } t.splice(i, 1); spec.saveTank(t); spec.collAdd(f.id, f.rk || 0, 1); spec.markGrown(f.id, f.rk || 0); sfx.play('coin'); toast(`📖 とうろく! ${fname(f)} ×${spec.coll()[f.id + ':' + (f.rk || 0)]}`); redraw(true); return; }
+      if (a === 'flk') { const t = spec.tank(), b = spec.box(), f = t.find(z => z.uid === v) || b.find(z => z.uid === v); if (f) { f.lock = f.lock ? 0 : 1; spec.saveTank(t); spec.saveBox(b); sfx.play('tap'); toast(f.lock ? '🔒 この魚は水槽にいるよ(まち・とうろくには動かない)' : '🔓 ロックをはずした'); redraw(); } return; }
+      if (a === 'tobox') { { const f0 = spec.tank().find(z => z.uid === v); if (f0 && f0.lock) { closePop(); toast('🔒 ロック中だよ'); return; } } closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; if (!boxRoom()) { toast('ひかえがいっぱい(🐟タブで ふやせるよ)'); return; } const b = spec.box(); b.push(t.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); sfx.play('tap'); toast('📦 ひかえに入れた'); redraw(true); return; }
       if (a === 'info') { closePop(); const [id, rk] = v.split(':'); fishDetail(id, +rk); return; }
       if (a === 'make') {
         sfx.play('tap'); let got = 0; const gain = {};
@@ -823,6 +828,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       }
       const ft = q('[data-ft]'); if (ft) { feedT = ft.dataset.ft; sfx.play('tap'); drawBody(); return; }
       const fm = q('[data-fm]'); if (fm) { const [tp, ti] = fm.dataset.fm.split(':'); if (spec.mergeFood(tp, +ti)) { sfx.play('coin'); toast(`✨ ${FOOD_INFO[tp][1]}の${FOOD_NAME[+ti + 1]}ができた`); } drawHead(); drawBody(); return; }
+      const lkb = q('[data-lk]'); if (lkb) { act('flk', lkb.dataset.lk); return; }
       const rg = q('[data-reg]'); if (rg) { act('reg', rg.dataset.reg); return; }
       const sw = q('[data-sh]'); if (sw) { const k = sw.dataset.sh, s = spec.show(), i = s.indexOf(k); if (i >= 0) s.splice(i, 1); else { if (s.length >= spec.showSlots()) { toast(`てんじ枠がいっぱい(${spec.showSlots()}匹まで)`); return; } s.push(k); } spec.saveShow(s); sfx.play('tap'); redraw(true); return; }
       const ru = q('[data-ru]'); if (ru) { const k = ru.dataset.ru, [id, r] = k.split(':'), rk = +r, need = rankNeed(rk), co = spec.coll(); if ((co[k] || 0) < need || rk >= FISH_MAX_RANK) return; spec.collAdd(id, rk, -need); spec.collAdd(id, rk + 1, 1); spec.markGrown(id, rk + 1); const sh = spec.show().filter(z => spec.coll()[z]); spec.saveShow(sh); sfx.play('coin'); toast(`⬆ ${fname({ id, rk: rk + 1 })} になった!`); redraw(true); return; }

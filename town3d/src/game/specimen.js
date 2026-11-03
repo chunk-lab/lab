@@ -163,6 +163,8 @@ export const spec = {
   // とうろく(育ちきった魚): { 'id:ランク': 数 }
   coll: () => st.get('coll') || {},
   collAdd(id, rk, n = 1) { const c = this.coll(), k = id + ':' + (rk || 0); c[k] = (c[k] || 0) + n; if (c[k] <= 0) delete c[k]; st.set('coll', c); },
+  collLocks: () => st.get('collLock') || [],
+  toggleCollLock(k) { const l = this.collLocks(), i = l.indexOf(k); if (i >= 0) l.splice(i, 1); else l.push(k); st.set('collLock', l); return i < 0; },
   show: () => st.get('show') || [],
   saveShow: v => st.set('show', v),
   // 図鑑の枠(持ち魚)。最初は1枠。ふやすのはコイン2回・ダイヤ1回
