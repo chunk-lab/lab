@@ -1,4 +1,18 @@
 import { LOGO } from '../../ui/logos.js';
+import a_bubble from './art/bubble.webp';
+import a_night from './art/night.webp';
+import a_sun from './art/sun.webp';
+import a_coin from './art/coin.webp';
+import a_b_en from './art/b_en.webp';
+import a_b_free from './art/b_free.webp';
+import a_b_vs from './art/b_vs.webp';
+import a_b_dex from './art/b_dex.webp';
+import a_b_ask from './art/b_ask.webp';
+import a_b_shop from './art/b_shop.webp';
+import a_p_mode from './art/p_mode.webp';
+import a_p_fx from './art/p_fx.webp';
+import a_p_help from './art/p_help.webp';
+const ART = { bubble: a_bubble, night: a_night, sun: a_sun, coin: a_coin, b_en: a_b_en, b_free: a_b_free, b_vs: a_b_vs, b_dex: a_b_dex, b_ask: a_b_ask, b_shop: a_b_shop, p_mode: a_p_mode, p_fx: a_p_fx, p_help: a_p_help };
 // 釣り(砂吹さんの池)。町のアプリ(mount(el, ctx) → {unmount})。
 //   のんびり釣り / 釣り勝負(2画面:砂吹さん・友だちの挑戦状・前回の自分) / 図鑑 / 道具屋
 import { confirmPay } from '../../ui/pay.js';
@@ -81,6 +95,14 @@ const CSS = `
 .fz .menu{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;gap:10px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,250,243,.15) 30%,rgba(255,250,243,.6) 100%)}
 .fz .menu>*{flex:none}.fz .menu>:first-child{margin-top:auto}.fz .menu>:last-child{margin-bottom:auto}
 .fz .title{font-size:30px;font-weight:900;color:#fff;text-shadow:0 3px 0 #c9577a,0 6px 16px #0005;margin:0;letter-spacing:2px;text-align:center}
+.fz .say2{width:min(360px,92%);aspect-ratio:520/89;background:center/100% 100% no-repeat;display:flex;align-items:center;padding:0 7% 0 11%;box-sizing:border-box;font-weight:800;font-size:13px;line-height:1.25;color:#3d3452}
+.fz .mstat{display:flex;gap:8px;align-items:center;width:min(360px,92%)}.fz .mic{height:40px;width:auto;flex:none}
+.fz .coinbar{position:relative;flex:1;aspect-ratio:420/68;background:center/100% 100% no-repeat}
+.fz .coinbar b{position:absolute;top:50%;transform:translateY(-50%);font-size:13px;color:#3a4a7a;text-align:left;white-space:nowrap;overflow:hidden}.fz .coinbar .c1{left:21%;width:27%}.fz .coinbar .c2{left:70%;width:26%}
+.fz .mgrid{width:min(360px,92%);display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fz .ib{border:0;background:none;padding:0;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}.fz .ib img{display:block;width:100%;height:auto;pointer-events:none}.fz .ib:active{transform:scale(.97)}
+.fz .mpills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(360px,92%)}
+.fz .pl{border:0;padding:0;cursor:pointer;aspect-ratio:220/77;background:center/100% 100% no-repeat;position:relative;-webkit-tap-highlight-color:transparent}.fz .pl span{position:absolute;left:36%;right:6%;top:50%;transform:translateY(-50%);font-size:11px;font-weight:900;color:#3a4a7a;white-space:nowrap}.fz .pl:active{transform:scale(.97)}
 .fz .mb{width:min(300px,86%);display:flex;align-items:center;gap:10px;justify-content:flex-start;font-size:17px;padding:14px 18px;border-radius:18px}
 .fz .mb span{flex:1;text-align:left}.fz .mb small{font-size:11px;opacity:.85;font-weight:700}
 .fz .say{background:#fff;border-radius:16px;padding:8px 14px;font-weight:700;font-size:13px;box-shadow:0 3px 10px #0002;max-width:86%;text-align:center}
@@ -196,16 +218,24 @@ export const fishingApp = {
       const found = Object.keys(dex).length, tm = timeOf(baseCond.hour);
       const ui = document.createElement('div'); ui.className = 'menu';
       ui.innerHTML = `<p class="title"><img src="${LOGO.fish}" alt="イングフィッシュ" style="display:block;margin:0 auto;width:min(72vw,270px);height:auto;filter:drop-shadow(0 3px 8px #0004)"></p>
-        <div class="say">砂吹さん「${esc(pickSay())}」</div>
+        <div class="say2" style="background-image:url(${ART.bubble})"><span>砂吹さん「${esc(pickSay())}」</span></div>
+        <div class="mstat"><img class="mic" src="${tm === 'night' ? ART.night : ART.sun}" alt="">
+          <div class="coinbar" style="background-image:url(${ART.coin})"><b class="c1">${ctx.wallet.get().toLocaleString('ja-JP')}</b><b class="c2">${ctx.gems ? ctx.gems.get().toLocaleString('ja-JP') : '-'}</b></div></div>
         <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}・${weather.label(weather.now(), tm === 'night')} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
         <div style="background:rgba(255,255,255,.88);border-radius:14px;padding:6px 10px">${wxStrip(RAIN_FISH)}</div>
-        <button class="btn mb" data-m="en" style="background:linear-gradient(160deg,#9fe3c0,#5fc79a)">📚<span>英語の釣り堀<br><small>英語で釣る・水槽で育てる・標本を集める</small></span></button>
-        <button class="btn mb" data-m="free">🎣<span>のんびり釣る<br><small>英語なし・時間を気にせず</small></span></button>
-        <button class="btn mb gold" data-m="vs">⚔️<span>釣り勝負<br><small>砂吹さん・友だちと2画面で対戦</small></span></button>
-        <button class="btn mb sub" data-m="dex">🐠<span>アクアリウム<br><small>図鑑 ${found} / ${ALL.length} ・水槽・飾り・合成</small></span></button>
-        <button class="btn mb sub" data-m="ask">💬<span>砂吹さんに聞く<br><small>狙いの魚・いまのおすすめ・腕のアドバイス</small></span></button>
-        <button class="btn mb sub" data-m="shop">🧰<span>道具屋<br><small>竿・リール・糸・エサ・ルアー・見る道具</small></span></button>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="chip" data-m="mode">${st.get('mode') === 'easy' ? '🟢 かんたん' : '🔵 ほんかく'}</button><button class="chip" data-m="fx">${st.get('fx') === 'calm' ? '🍵 演出おとなしめ' : '🎆 演出 派手'}</button><button class="chip" data-m="help">？ あそびかた</button></div>`;
+        <div class="mgrid">
+          <button class="ib" data-m="en" aria-label="英語の釣り堀"><img src="${ART.b_en}" alt=""></button>
+          <button class="ib" data-m="free" aria-label="のんびり釣る"><img src="${ART.b_free}" alt=""></button>
+          <button class="ib" data-m="vs" aria-label="釣り勝負"><img src="${ART.b_vs}" alt=""></button>
+          <button class="ib" data-m="dex" aria-label="アクアリウム"><img src="${ART.b_dex}" alt=""></button>
+          <button class="ib" data-m="ask" aria-label="砂吹さんに聞く"><img src="${ART.b_ask}" alt=""></button>
+          <button class="ib" data-m="shop" aria-label="道具屋"><img src="${ART.b_shop}" alt=""></button>
+        </div>
+        <div class="mpills">
+          <button class="pl" data-m="mode" style="background-image:url(${ART.p_mode})"><span>${st.get('mode') === 'easy' ? 'かんたん' : 'ほんかく'}</span></button>
+          <button class="pl" data-m="fx" style="background-image:url(${ART.p_fx})"><span>${st.get('fx') === 'calm' ? 'おとなしめ' : '派手'}</span></button>
+          <button class="pl" data-m="help" style="background-image:url(${ART.p_help})"><span>あそびかた</span></button>
+        </div>`;
       root.appendChild(ui);
       ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ en: goPond, free: () => spotPick('のんびり釣り', () => play({})), vs: () => spotPick('釣り勝負', () => vsSetup()), dex: () => goAq('dex', menu), shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
       if (P.tab === 'en') { P.tab = null; setTimeout(goPond, 0); return; }
