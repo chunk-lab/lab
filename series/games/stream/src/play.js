@@ -101,7 +101,7 @@ export function stepLanes(dt){
       if(k===0){if(moveFront(it,v,dt)>v*1.6)fast=true;if(it.x+it.w<W)it.ready+=dt;
         if(!it.el.classList.contains("front")){it.el.classList.add("front");it.el.classList.remove("next")}
         if(it.v!=null){const r=Math.max(0,1-it.age/limitOf());if(!it.tb){it.tb=document.createElement("span");it.tb.className="tb";it.tb.innerHTML="<i></i>";it.el.appendChild(it.tb)}it.tb.firstChild.style.transform=`scaleX(${r})`;it.tb.classList.toggle("low",r<.3);
-          if(r<=0){place(it);missIt(L,it);return}}}
+          if(r<=0){it.late=true;it.tb.firstChild.style.transform='scaleX(0)'}}}
       else{const a=L.q[k-1];it.x=Math.max(a.x+a.w+30,it.x>inView(it)?Math.max(inView(it),it.x-ENTER*dt):it.x-(L.q[0].v||v)*dt);it.el.classList.add("next")}
       place(it)});
   });
@@ -205,7 +205,7 @@ export function resolve(it){G.done++;if(it.flawed)RUN.review.push({st:G.st,it,p:
 export function correct(L,it,btn){
   G.lastBtn=btn;
   if(G.st<=3){L.q.shift();if(L.q[0])L.q[0].boost=true}else{G.cq.shift();if(G.cq[0])G.cq[0].boost=true}if(G.st>=2)G.lock4=.08;
-  resolve(it);RUN.combo++;RUN.maxc=Math.max(RUN.maxc,RUN.combo);L.lock=.08;
+  resolve(it);if(it.late)RUN.combo=0;RUN.combo++;RUN.maxc=Math.max(RUN.maxc,RUN.combo);L.lock=.08;speedBonus(it);
   btn.classList.remove("ok");void btn.offsetWidth;btn.classList.add("ok");setTimeout(()=>btn.classList.remove("ok"),170);
   try{SE.ok(RUN.combo);fxCorrect(it);comboPop()}catch(e){}
   const c=it.ci!=null?G.p.chunks[it.ci]:null;
@@ -214,6 +214,22 @@ export function correct(L,it,btn){
     laneFront(L);if(G.rqCur==null){const nf=L.q[0];if(nf){G.rq=G.rq.filter(x=>x!==nf);readEnq(nf,true)}}}
   else if(G.st===3){speakAfter(fromGap(c,it.gs));flyTo(it,chunkHTML(c,it.gs,it.ge,it.ans)+`<i>${esc(c.ja)}</i>`);laneFront(L)}
   else{G.lock4=.08;front4();try{speakAfter(fromGap(c,it.gs));SE.merge();flyTo(it,chunkHTML(c,it.gs,it.ge,it.ans))}catch(e){it.el&&it.el.remove()}}
+}
+// 持ち時間(limitOf)の半分より早く答えたら、タイムから0.3秒ひく(早さのボーナス)。時間切れでは消えない
+export function speedBonus(it){try{const e=G.st===4?it.ready:it.age;if(e!=null&&!it.flawed&&!it.late&&e<limitOf()*.5){G.pen-=.3;penFx("-0.3");RUN.fast=(RUN.fast||0)+1}}catch(e){}}
+// パス:フリックで、その1問を飛ばす(間違い扱い。すぐ次へ)
+export function passFront(l){
+  if(!G||!G.started||G.over||PAUSED)return;
+  if(G.st===4){const it=G.cq[0];if(!it||G.lock4>0)return;G.lock4=.08;missIt({q:G.cq,i:it.lane||0},it);return}
+  const L=G.lanes[G.st===1?l:0],it=L&&L.q[0];if(!it||L.lock>0)return;missIt(L,it);
+}
+export function initPass(){
+  const f=$("field");if(!f||f._pass)return;f._pass=1;let s=null;
+  f.addEventListener("pointerdown",e=>{if(!G||!G.started||G.over||e.target.closest("#g0,#g1,button"))return;s={x:e.clientX,y:e.clientY,t:Date.now()}});
+  f.style.touchAction="none";window.addEventListener("pointerup",e=>{if(!s)return;const o=s;s=null;if(!G||Date.now()-o.t>700)return;const dx=e.clientX-o.x,dy=e.clientY-o.y,ax=Math.abs(dx),ay=Math.abs(dy);
+    if(G.st===1){if(ax<50||ax<ay*1.5)return;const r=f.getBoundingClientRect(),y=o.y-r.top;passFront(Math.abs(y-laneY(0))<=Math.abs(y-laneY(1))?0:1)}   // 単語ダッシュ:左右にフリック(指のある段を飛ばす)
+    else{if(ay<50||ay<ax*1.5)return;passFront(0)}   // ストミン:上下にフリック
+  });
 }
 export function wrong(L,it,s,btn){
   G.wrong++;RUN.combo=0;SE.ng();face("surprise");it.flawed=true;s.dis=true;
@@ -231,7 +247,7 @@ export function missIt(L,it){
   if(G.rqCur===it)G.rqCur=null;
   it.el.classList.add("miss");it.el.classList.remove("spk");setJa(it,null);const a=document.createElement("div");a.className="ans";a.textContent=it.ans;it.el.appendChild(a);
   const g=G,c=it.ci!=null?G.p.chunks[it.ci]:null;setTimeout(()=>{if(G===g&&it.el.isConnected)flyTo(it,c&&G.st===3?chunkHTML(c,it.gs,it.ge,it.ans)+`<i>${esc(c.ja)}</i>`:`${esc(it.en)}<i>${esc(it.ans)}</i>`,"bad")},650);
-  laneFront(L);
+  if(G.st===4)front4();else laneFront(L);
 }
 
 /* ---- 答えたものは下の文章エリアへ飛んでいく（長文の段は1つの段落になっていく） ---- */
@@ -275,6 +291,7 @@ export function fxCorrect(it){return;
 
 /* 開くたびに動かすこと（画面のボタンをつなぐ など）。game.js が呼ぶ */
 export function init_play(){
+  initPass();
   $("btnPause").onclick=()=>pause();
   $("rep").addEventListener("pointerdown",repTap);
   $("side").addEventListener("pointerdown",e=>{if(e.target.closest(".ch"))LASTCH=performance.now()},true);
