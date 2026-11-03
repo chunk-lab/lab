@@ -7,9 +7,9 @@ import { STREETS, ROAD_HALF, WALK, PLAZA_R } from './town_data.js';
 
 const HOLES = 5, G = 9.8;
 // ゴルフの弾道(5段階): th=打ち出し角の倍率 / rng=飛ぶ距離 / roll=着地のあとの転がり / wind=風の受けやすさ
-const TRAJ = [   // th=打ち出し角の倍率 / rng=飛距離 / roll=着地で のこす速さ / wind=風の受けやすさ(ライナー〜フロップ)
-  { l: 'ライナー', th: 0.3, rng: 0.6, rd: 0.3, roll: 0.9, wind: 0.5 }, { l: '低め', th: 0.62, rng: 0.85, rd: 0.7, roll: 0.9, wind: 0.8 }, { l: 'ふつう', th: 1, rng: 1, roll: 1, wind: 1 },
-  { l: '高め', th: 1.65, add: 6, rng: 1.15, rd: 1, roll: 0.7, wind: 1.3 }, { l: 'ロブ', th: 2.5, add: 14, rng: 1.6, rd: 1.05, roll: 0.35, wind: 1.7 },
+const TRAJ = [   // th=打ち出し角の倍率 / tw=ウェッジ用の倍率 / add=角度にたす(度) / rng=飛距離 / rd=ドライバー用 / roll=着地で のこす速さ / wind=風の受けやすさ(ライナー〜ロブ)
+  { l: 'ライナー', th: 0.35, tw: 0.3, rng: 0.65, rd: 0.3, roll: 0.9, wind: 0.5 }, { l: '低め', th: 0.8, tw: 0.6, rng: 0.92, rd: 0.7, roll: 0.9, wind: 0.8 }, { l: 'ふつう', th: 1.3, tw: 1, rng: 1.08, rd: 1, roll: 1, wind: 1 },
+  { l: '高め', th: 1.8, tw: 1.2, add: 5, rng: 1.05, rd: 0.9, roll: 0.7, wind: 1.3 }, { l: 'ロブ', th: 2.6, tw: 1.42, add: 12, rng: 1.0, rd: 0.75, roll: 0.35, wind: 1.7 },
 ];
 const CLUBS = [   // ゴルフのクラブ:飛ぶ距離(m)・打ち出し角
   { id: 'dr', name: 'ドライバー', d: 70, loft: 13 }, { id: 'ir', name: 'アイアン', d: 45, loft: 24 },
@@ -360,7 +360,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   // ---- ゴルフのスピン:spin={x:横(右+),y:縦(上=トップ+/下=バック-)} ----
   function spinOf() { const sp = S.spin || { x: 0, y: 0 }, k = LIES[lieNow()].spin; return { side: sp.x, back: Math.max(0, -sp.y) * k, top: Math.max(0, sp.y) * k, used: false }; }
   function golfV(c, p, dx, dz, gs) {   // 打ち出し速度。回転をかけるほど少し飛ばなくなる / バックスピンは高く上がる
-    const mag = Math.min(1, Math.hypot(gs.side, gs.back + gs.top)), pw = p * (1 - 0.18 * mag) * LIES[lieNow()].dist, T = c.loft ? TRAJ[(S.traj || 0) + 2] : TRAJ[2], thd = Math.min(c.loft * T.th + (T.add || 0), T.th > 2 ? 72 : 62) + gs.back * 6, th = thd * Math.PI / 180, v = Math.sqrt(c.d * (c.d >= 60 && T.rd ? T.rd : T.rng) * pw * G / Math.sin(2 * Math.min(th, 0.78)));
+    const mag = Math.min(1, Math.hypot(gs.side, gs.back + gs.top)), pw = p * (1 - 0.18 * mag) * LIES[lieNow()].dist, T = c.loft ? TRAJ[(S.traj || 0) + 2] : TRAJ[2], thd = Math.min(c.loft > 40 ? c.loft * T.tw : c.loft * T.th + (T.add || 0), 72) + gs.back * 6, th = thd * Math.PI / 180, v = Math.sqrt(c.d * (c.d >= 60 && T.rd ? T.rd : T.rng) * pw * G / Math.sin(2 * Math.min(th, 0.78)));
     const e = gs.side * 0.03, ex = dx - dz * e, ez = dz + dx * e, el = Math.hypot(ex, ez);   // 打ち出しは、曲がる側へほんの少しだけ向く(そこから曲がっていく)
     return new THREE.Vector3(ex / el * v * Math.cos(th), v * Math.sin(th), ez / el * v * Math.cos(th));
   }
