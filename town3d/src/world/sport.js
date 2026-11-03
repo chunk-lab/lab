@@ -232,9 +232,18 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     drawHud();
   }
   function hitWalls(p, v, keep) {   // 建物・木などに当たったら はね返る(ゴルフは高さをこえれば のりこえられる)
+    if (S && S.kind === 'golf' && city.solids) {   // 描かれたベンチ・噴水・街灯などの形どおりに
+      const sh = city.solids.hit(p);
+      if (sh) {
+        let nx = p.x - sh.cx, nz = p.z - sh.cz; const m = Math.hypot(nx, nz) || 1; nx /= m; nz /= m;
+        const pv = S.prevP; if (pv && !city.solids.hit(pv)) p.copy(pv); else { p.x += nx * 0.06; p.z += nz * 0.06; }
+        const vn = v.x * nx + v.z * nz; if (vn < 0) { v.x -= (1 + keep) * vn * nx; v.z -= (1 + keep) * vn * nz; }
+        audio?.play?.('close');
+      }
+    }
     if (p.y > 9.5) return;
     for (const c of city.colliders) {
-      if (S && S.kind === 'golf' && p.y > (c.h ?? 9)) continue;   // 球が その物の高さより上なら のりこえる
+      if (S && S.kind === 'golf' && (!c.g || p.y > (c.h ?? 9))) continue;   // ゴルフは建物・池だけ。ほかは描かれた形(city.solids)で判定
       if (c.r !== undefined) { const dx = p.x - c.cx, dz = p.z - c.cz, d = Math.hypot(dx, dz), m = c.r + 0.06; if (d < m && d > 1e-4) { const nx = dx / d, nz = dz / d, vn = v.x * nx + v.z * nz; p.x = c.cx + nx * m; p.z = c.cz + nz * m; if (vn < 0) { v.x -= (1 + keep) * vn * nx; v.z -= (1 + keep) * vn * nz; audio?.play?.('close'); } } }
       else if (p.x > c.x0 && p.x < c.x1 && p.z > c.z0 && p.z < c.z1) {
         const l = p.x - c.x0, r = c.x1 - p.x, t = p.z - c.z0, b = c.z1 - p.z, m = Math.min(l, r, t, b);
@@ -386,7 +395,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const H = S.C.holes[S.i], p = S.pos, v = S.v, n = 4, h = dt / n;
     for (let k = 0; k < n; k++) {
       if (S.kind === 'golf') {
-        golfPhys(p, v, h, H, S.gs, CLUBS[S.club], true); hitWalls(p, v, 0.45);
+        S.prevP = (S.prevP || new THREE.Vector3()).copy(p); golfPhys(p, v, h, H, S.gs, CLUBS[S.club], true); hitWalls(p, v, 0.45);
         const dh = Math.hypot(p.x - H.goal[0], p.z - H.goal[1]), sp = Math.hypot(v.x, v.z);
         if (dh < 0.34 && p.y < 0.2 && sp < 2.8) return holed();   // カップイン(はやすぎるとはずんで外れる)
       } else {

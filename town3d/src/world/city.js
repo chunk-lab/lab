@@ -1,6 +1,7 @@
 // 町を組み立てる。town_data.js の設計図から、道・建物・小物を作り、当たり判定と調べられる場所を返す
 import * as THREE from 'three';
-import { C, WALLS, ROOFS, mat, glowMat, wallMat, roofMat, foliageMat, paveMat, texPane, texShop, box, rbox, cyl, sph, geo, Batcher, textTexture, signMat } from './kit.js';
+import { C, WALLS, ROOFS, mat, glowMat, wallMat, roofMat, foliageMat, paveMat, texPane, texShop, box, rbox, cyl, sph, geo, geoKeys, Batcher, textTexture, signMat } from './kit.js';
+import { makeSolids } from './golfsolids.js';
 import { STREETS, ROAD_HALF, WALK, PLAZA_R, LANDMARKS, AREAS, SPOTS, GRAPH } from './town_data.js';
 import { rng } from '../core/core.js';
 
@@ -18,7 +19,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   const reserved = [];      // 建物を置いてはいけない範囲
   const lampSpots = [];
 
-  const addRect = (x0, x1, z0, z1, col = true, h = 9) => { reserved.push({ x0, x1, z0, z1 }); if (col) colliders.push({ x0, x1, z0, z1, h }); };
+  const addRect = (x0, x1, z0, z1, col = true, h = 9, g = false) => { reserved.push({ x0, x1, z0, z1 }); if (col) colliders.push({ x0, x1, z0, z1, h, g }); };
   const overlaps = (a, m = 0.6) => reserved.some(b => a.x0 < b.x1 + m && a.x1 > b.x0 - m && a.z0 < b.z1 + m && a.z1 > b.z0 - m)
     || rectCircleDist(a, 0, 0) < PLAZA_R + 1.5 || Math.max(Math.abs(a.x0), Math.abs(a.x1), Math.abs(a.z0), Math.abs(a.z1)) > 66;
   const M4 = (x, z, ry) => new THREE.Matrix4().compose(new THREE.Vector3(x, 0, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), ry), new THREE.Vector3(1, 1, 1));
@@ -159,11 +160,12 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   for (const sp of SPOTS) if (sp.tent) fortuneTent(sp.x + 2.4, sp.z);   // 占いの館(神社の境内のテント)
   { const bd = SPOTS.find(s => s.id === 'board'); if (bd) noticeBoard(bd.x, bd.z, Math.atan2(-bd.x, -bd.z)); }   // 掲示板(広場のほうを向く)
 
+  const solids = makeSolids(B.parts, geoKeys); B.parts = [];
   const meshes = B.build(scene, { shadow: quality !== 'low' });
   for (const m of meshes) { const sn = m.material.userData.season; if (sn === 'blossom') m.visible = blossom; else if (sn === 'nonblossom') m.visible = !blossom; }
 
   return {
-    colliders, interact, buildings, animated, graph: GRAPH, piano, groundMats: [ground.material, lawn.material], trees,
+    colliders, solids, interact, buildings, animated, graph: GRAPH, piano, groundMats: [ground.material, lawn.material], trees,
     setLite(on) { animated.fountainLite?.(on); },
     areaName(x, z) {
       if (Math.hypot(x, z) < PLAZA_R + 1) return 'ほし広場';
@@ -193,7 +195,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     const { w, d, h } = o;
     const rot = Math.abs(nx) > 0.5;
     const hw = rot ? d / 2 : w / 2, hd = rot ? w / 2 : d / 2;
-    addRect(o.x - hw, o.x + hw, o.z - hd, o.z + hd, true, o.h || 9);
+    addRect(o.x - hw, o.x + hw, o.z - hd, o.z + hd, true, o.h || 9, true);
     const bld = { x0: o.x - hw, x1: o.x + hw, z0: o.z - hd, z1: o.z + hd, door: null }; buildings.push(bld);
     const wallM = wallMat(o.wall), trimM = mat(o.trim || 0xffffff), whiteM = mat(0xfffdf8);
     const winM = glowMat('window', C.glass, 0xffd99a, { tag: 'pane', map: texPane() });
@@ -448,7 +450,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     animated.hourHands = hands;
   }
   function pond(x, z, rr) {
-    colliders.push({ cx: x, cz: z, r: rr + 0.2, h: 0.3 });
+    colliders.push({ cx: x, cz: z, r: rr + 0.2, h: 0.3, g: true });
     interact.push({ kind: 'pond', id: 'pond', app: 'fishing', x: x + 3.2, z: z + 3.3, r: 2.2, label: '🎣 釣りをする' });   // 池はいつでも(夏以外は、英語の釣り堀が直接ひらく)
     B.add(cyl(rr + 0.4, rr + 0.5, 0.25, 28), mat(C.stone), x, 0.08, z);
     const w = new THREE.Mesh(new THREE.CircleGeometry(rr, 28), new THREE.MeshStandardMaterial({ color: C.water, roughness: 0.1 }));
