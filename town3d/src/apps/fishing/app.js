@@ -92,12 +92,15 @@ const CSS = `
 .fz .menu{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;gap:10px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,250,243,.15) 30%,rgba(255,250,243,.6) 100%)}
 .fz .menu>*{flex:none}.fz .menu>:first-child{margin-top:auto}.fz .menu>:last-child{margin-bottom:auto}
 .fz .title{font-size:30px;font-weight:900;color:#fff;text-shadow:0 3px 0 #c9577a,0 6px 16px #0005;margin:0;letter-spacing:2px;text-align:center}
-.fz .say3{display:flex;align-items:flex-end;gap:8px;width:min(360px,92%)}.fz .say3 .sp{width:58px;height:auto;flex:none;filter:drop-shadow(0 2px 4px #0003)}.fz .say3 .say{flex:1;max-width:none;text-align:left;position:relative}
+.fz .say3{display:flex;align-items:flex-end;gap:8px;width:min(430px,94%)}.fz .say3 .sp{width:66px;height:auto;flex:none;filter:drop-shadow(0 2px 4px #0003)}.fz .say3 .say{font-size:14px;flex:1;max-width:none;text-align:left;position:relative}
 .fz .say3 .say:before{content:"";position:absolute;left:-7px;bottom:14px;border:7px solid transparent;border-left:0;border-right-color:#fff}
-.fz .mwal{position:absolute;top:62px;right:10px;display:flex;flex-direction:column;gap:4px;align-items:flex-end}.fz .mwal span{background:rgba(255,255,255,.9);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:900;color:#3a4a7a;box-shadow:0 2px 6px #0002}
-.fz .mgrid{width:min(360px,92%);display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fz .mtop{display:flex;align-items:center;justify-content:space-between;gap:6px;width:min(450px,98%)}
+.fz .mlogo{flex:1 1 0;min-width:0;max-width:320px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 3px 8px #0004)}
+.fz .mwx{flex:none;display:flex;flex-direction:column;align-items:center;gap:1px;background:rgba(255,255,255,.9);border-radius:14px;padding:5px 8px;box-shadow:0 2px 6px #0002;font-size:12px;font-weight:900;color:#3a4a7a;text-align:center}.fz .mwx small{font-size:10px;font-weight:700;color:#7d7a99}
+.fz .mwal{flex:none;display:flex;flex-direction:column;gap:4px;align-items:flex-end}.fz .mwal span{background:rgba(255,255,255,.9);border-radius:999px;padding:3px 9px;font-size:11px;font-weight:900;color:#3a4a7a;box-shadow:0 2px 6px #0002;white-space:nowrap}
+.fz .mgrid{width:min(430px,94%);display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fz .ib{border:0;background:none;padding:0;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}.fz .ib img{display:block;width:100%;height:auto;pointer-events:none}.fz .ib:active{transform:scale(.97)}
-.fz .mpills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(360px,92%)}
+.fz .mpills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(430px,94%)}
 .fz .pl{border:0;padding:0;cursor:pointer;aspect-ratio:220/77;background:center/100% 100% no-repeat;position:relative;-webkit-tap-highlight-color:transparent}.fz .pl span{position:absolute;left:36%;right:6%;top:50%;transform:translateY(-50%);font-size:11px;font-weight:900;color:#3a4a7a;white-space:nowrap}.fz .pl:active{transform:scale(.97)}
 .fz .mb{width:min(300px,86%);display:flex;align-items:center;gap:10px;justify-content:flex-start;font-size:17px;padding:14px 18px;border-radius:18px}
 .fz .mb span{flex:1;text-align:left}.fz .mb small{font-size:11px;opacity:.85;font-weight:700}
@@ -213,9 +216,12 @@ export const fishingApp = {
       frame = dt => { fake.update(dt); view.draw(vsOf(fake, true), dt); };
       const found = Object.keys(dex).length, tm = timeOf(baseCond.hour);
       const ui = document.createElement('div'); ui.className = 'menu';
-      ui.innerHTML = `<p class="title"><img src="${LOGO.fish}" alt="イングフィッシュ" style="display:block;margin:0 auto;width:min(62vw,240px);height:auto;filter:drop-shadow(0 3px 8px #0004)"></p>
+      ui.innerHTML = `<div class="mtop">
+          <div class="mwx"><b>${weather.label(weather.now(), tm === 'night')}</b><small>${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}</small></div>
+          <img class="mlogo" src="${LOGO.fish}" alt="イングフィッシュ">
+          <div class="mwal"><span>🪙 <b data-bind="coins">${ctx.wallet.get().toLocaleString('ja-JP')}</b></span>${ctx.gems ? `<span>💎 <b data-bind="gems">${ctx.gems.get().toLocaleString('ja-JP')}</b></span>` : ''}</div>
+        </div>
         <div class="say3"><img class="sp" src="${portrait('suna') || ''}" alt="砂吹さん"><div class="say">砂吹さん「${esc(pickSay())}」</div></div>
-        <div class="mwal"><span>🪙 <b data-bind="coins">${ctx.wallet.get().toLocaleString('ja-JP')}</b></span>${ctx.gems ? `<span>💎 <b data-bind="gems">${ctx.gems.get().toLocaleString('ja-JP')}</b></span>` : ''}</div>
         <div class="mgrid">
           <button class="ib" data-m="en" aria-label="英語の釣り堀"><img src="${ART.b_en}" alt=""></button>
           <button class="ib" data-m="free" aria-label="のんびり釣る"><img src="${ART.b_free}" alt=""></button>
@@ -224,8 +230,6 @@ export const fishingApp = {
           <button class="ib" data-m="ask" aria-label="砂吹さんに聞く"><img src="${ART.b_ask}" alt=""></button>
           <button class="ib" data-m="shop" aria-label="道具屋"><img src="${ART.b_shop}" alt=""></button>
         </div>
-        <div class="chip" style="pointer-events:none">${TIME_JP[tm]}・${SEASON_JP[baseCond.season]}・${weather.label(weather.now(), tm === 'night')} ／ きょうのコイン あと ${Math.max(0, DAILY_COIN_CAP - (stats.coinsToday || 0))}</div>
-        <div style="background:rgba(255,255,255,.88);border-radius:14px;padding:6px 10px;width:min(360px,92%);box-sizing:border-box">${wxStrip(RAIN_FISH)}</div>
         <div class="mpills">
           <button class="pl" data-m="mode" style="background-image:url(${ART.p_mode})"><span>${st.get('mode') === 'easy' ? 'かんたん' : 'ほんかく'}</span></button>
           <button class="pl" data-m="fx" style="background-image:url(${ART.p_fx})"><span>${st.get('fx') === 'calm' ? 'おとなしめ' : '派手'}</span></button>
