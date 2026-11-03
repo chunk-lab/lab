@@ -18,7 +18,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   const reserved = [];      // 建物を置いてはいけない範囲
   const lampSpots = [];
 
-  const addRect = (x0, x1, z0, z1, col = true) => { reserved.push({ x0, x1, z0, z1 }); if (col) colliders.push({ x0, x1, z0, z1 }); };
+  const addRect = (x0, x1, z0, z1, col = true, h = 9) => { reserved.push({ x0, x1, z0, z1 }); if (col) colliders.push({ x0, x1, z0, z1, h }); };
   const overlaps = (a, m = 0.6) => reserved.some(b => a.x0 < b.x1 + m && a.x1 > b.x0 - m && a.z0 < b.z1 + m && a.z1 > b.z0 - m)
     || rectCircleDist(a, 0, 0) < PLAZA_R + 1.5 || Math.max(Math.abs(a.x0), Math.abs(a.x1), Math.abs(a.z0), Math.abs(a.z1)) > 66;
   const M4 = (x, z, ry) => new THREE.Matrix4().compose(new THREE.Vector3(x, 0, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), ry), new THREE.Vector3(1, 1, 1));
@@ -82,7 +82,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   const sch = LANDMARKS.find(l => l.id === 'school');
   fence(sch.x - 26, sch.z - 7, sch.x - 18, sch.z + 9);
   fence(sch.x + 18, sch.z - 7, sch.x + 26, sch.z + 9);
-  for (const s of [-1, 1]) { B.add(rbox(0.8, 2.2, 0.8, 0.15), mat(C.stone), sch.x + s * 5, 1.1, sch.z + 9.5); colliders.push({ cx: sch.x + s * 5, cz: sch.z + 9.5, r: 0.6 }); }
+  for (const s of [-1, 1]) { B.add(rbox(0.8, 2.2, 0.8, 0.15), mat(C.stone), sch.x + s * 5, 1.1, sch.z + 9.5); colliders.push({ cx: sch.x + s * 5, cz: sch.z + 9.5, r: 0.6, h: 2.2 }); }
   B.add(signPlate('まちの学校', 2.8, 0.7, { bg: '#fffaf0', fg: '#7a6a8b' }), signMat('まちの学校', { bg: '#fffaf0', fg: '#7a6a8b' }), sch.x - 5, 1.7, sch.z + 9.92);
 
   // ---------- 公園 ----------
@@ -193,7 +193,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     const { w, d, h } = o;
     const rot = Math.abs(nx) > 0.5;
     const hw = rot ? d / 2 : w / 2, hd = rot ? w / 2 : d / 2;
-    addRect(o.x - hw, o.x + hw, o.z - hd, o.z + hd);
+    addRect(o.x - hw, o.x + hw, o.z - hd, o.z + hd, true, o.h || 9);
     const bld = { x0: o.x - hw, x1: o.x + hw, z0: o.z - hd, z1: o.z + hd, door: null }; buildings.push(bld);
     const wallM = wallMat(o.wall), trimM = mat(o.trim || 0xffffff), whiteM = mat(0xfffdf8);
     const winM = glowMat('window', C.glass, 0xffd99a, { tag: 'pane', map: texPane() });
@@ -324,7 +324,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
   function tree(x, z, kind = 'green', s = 1) {
     trees.push({ x, z, s });
-    colliders.push({ cx: x, cz: z, r: 0.35 * s });
+    colliders.push({ cx: x, cz: z, r: 0.35 * s, h: 4 });
     const pinkTree = kind === 'pink';   // 桜は春だけ(ピンクと緑の葉を両方つくり、季節で切りかえる)
     const leaf = foliageMat(pinkTree ? C.leafPink : kind === 'deep' ? 0x8cc89a : r() < 0.5 ? C.leaf : C.leaf2, pinkTree ? 'blossom' : '');
     const leafAlt = pinkTree ? foliageMat(0x8cc89a, 'nonblossom') : null;
@@ -338,7 +338,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     for (const [bx, by, bz, br] of blobs) { const px = x + (bx * Math.cos(a) - bz * Math.sin(a)) * s, pz = z + (bx * Math.sin(a) + bz * Math.cos(a)) * s, ry = r() * 6; B.add(sph(br * s, 14), leaf, px, by * s, pz, ry); if (leafAlt) B.add(sph(br * s, 14), leafAlt, px, by * s, pz, ry); }
   }
   function lamp(x, z, ry) {
-    colliders.push({ cx: x, cz: z, r: 0.2 });
+    colliders.push({ cx: x, cz: z, r: 0.2, h: 4.5 });
     const P4 = M4(x, z, ry);
     B.add(cyl(0.07, 0.1, 4.2, 8), mat(0xa99bc0), 0, 2.1, 0, 0, 1, 1, 1, P4);
     B.add(box(0.08, 0.08, 0.9), mat(0xa99bc0), 0, 4.1, 0.4, 0, 1, 1, 1, P4);
@@ -347,7 +347,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
   function streetPiano(x, z) {
     const P4 = M4(x, z, 0), body = mat(C.mint), dk = mat(0x6b8f80), wh = mat(0xffffff), bk = mat(0x2b2b33), pk = mat(C.pink), yl = mat(C.butter);
-    colliders.push({ cx: x, cz: z - 0.1, r: 0.95 });
+    colliders.push({ cx: x, cz: z - 0.1, r: 0.95, h: 1.5 });
     B.add(rbox(1.6, 1.25, 0.62, 0.05), body, 0, 0.66, -0.12, 0, 1, 1, 1, P4);
     B.add(box(1.66, 0.06, 0.7), dk, 0, 1.3, -0.12, 0, 1, 1, 1, P4);
     B.add(box(1.5, 0.1, 0.34), body, 0, 0.74, 0.3, 0, 1, 1, 1, P4);
@@ -363,14 +363,14 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
   function bench(x, z, ry) {
     const P4 = M4(x, z, ry);
-    colliders.push({ cx: x, cz: z, r: 0.8 });
+    colliders.push({ cx: x, cz: z, r: 0.8, h: 0.55 });
     interact.push({ kind: 'bench', id: 'bench' + interact.length, x, z, ry, r: 1.8, label: '🪑 座る' });
     B.add(rbox(1.8, 0.12, 0.5, 0.04), mat(0xe8c9a8), 0, 0.48, 0, 0, 1, 1, 1, P4);
     for (const s of [-1, 1]) B.add(box(0.1, 0.48, 0.45), mat(0xa99bc0), s * 0.75, 0.24, 0, 0, 1, 1, 1, P4);
   }
   function noticeBoard(x, z, ry) {
     const P4 = M4(x, z, ry);
-    colliders.push({ cx: x, cz: z, r: 0.9 });
+    colliders.push({ cx: x, cz: z, r: 0.9, h: 2.3 });
     for (const sx of [-1, 1]) B.add(box(0.14, 2.3, 0.14), mat(0x8a6a4e), sx * 0.95, 1.15, 0, 0, 1, 1, 1, P4);   // 柱
     B.add(rbox(2.2, 1.3, 0.12, 0.04), mat(0xb88a5e), 0, 1.55, 0, 0, 1, 1, 1, P4);   // 板
     B.add(rbox(2.5, 0.12, 0.6, 0.04), mat(0xd9846f), 0, 2.32, -0.05, 0, 1, 1, 1, P4);   // 小さな屋根
@@ -395,7 +395,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     for (let i = 0; i < 4; i++) B.add(sph(0.15, 6), mat([C.coral, C.butter, C.lavender][i % 3]), lx - 0.42 + i * 0.28, 0.48, lz, 0, 1, 1, 1, P4);
   }
   function fountain(x, z) {
-    colliders.push({ cx: x, cz: z, r: 4.2 });
+    colliders.push({ cx: x, cz: z, r: 4.2, h: 1.0 });
     const stone = mat(C.stone), stone2 = mat(0xd9d0e2);
     // 水ぞこと、ふちのある水槽(上ぶたがないので、水が見える)
     B.add(cyl(4.15, 4.2, 0.34, 40), stone2, x, 0.17, z);
@@ -439,7 +439,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     });
   }
   function clockPole(x, z) {
-    colliders.push({ cx: x, cz: z, r: 0.35 });
+    colliders.push({ cx: x, cz: z, r: 0.35, h: 5 });
     B.add(cyl(0.12, 0.16, 4, 8), mat(0xb7a8cf), x, 2, z);
     const face = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.2, 24), mat(0xfffaf0));
     face.rotation.x = Math.PI / 2; face.position.set(x, 4.2, z); scene.add(face);
@@ -448,7 +448,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     animated.hourHands = hands;
   }
   function pond(x, z, rr) {
-    colliders.push({ cx: x, cz: z, r: rr + 0.2 });
+    colliders.push({ cx: x, cz: z, r: rr + 0.2, h: 0.3 });
     interact.push({ kind: 'pond', id: 'pond', app: 'fishing', x: x + 3.2, z: z + 3.3, r: 2.2, label: '🎣 釣りをする' });   // 池はいつでも(夏以外は、英語の釣り堀が直接ひらく)
     B.add(cyl(rr + 0.4, rr + 0.5, 0.25, 28), mat(C.stone), x, 0.08, z);
     const w = new THREE.Mesh(new THREE.CircleGeometry(rr, 28), new THREE.MeshStandardMaterial({ color: C.water, roughness: 0.1 }));
@@ -467,7 +467,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     });
   }
   function slide(x, z) {
-    colliders.push({ x0: x - 1.2, x1: x + 1.2, z0: z - 2.2, z1: z + 2.2 });
+    colliders.push({ x0: x - 1.2, x1: x + 1.2, z0: z - 2.2, z1: z + 2.2, h: 2 });
     B.add(rbox(1.6, 2.4, 1.6, 0.2), mat(C.coral), x, 1.2, z - 1.2);
     B.add(box(1.2, 0.12, 3.2), mat(C.butter), x, 1.3, z + 0.9, 0, 1, 1, 1, null, -0.65);
   }
@@ -482,14 +482,14 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
   }
   function torii(x, z) {
     const red = mat(0xf59a8c);
-    for (const s of [-1, 1]) { B.add(cyl(0.22, 0.26, 4.4, 10), red, x + s * 2, 2.2, z); colliders.push({ cx: x + s * 2, cz: z, r: 0.35 }); B.add(cyl(0.32, 0.32, 0.35, 10), mat(0x6b5a7e), x + s * 2, 0.17, z); }
+    for (const s of [-1, 1]) { B.add(cyl(0.22, 0.26, 4.4, 10), red, x + s * 2, 2.2, z); colliders.push({ cx: x + s * 2, cz: z, r: 0.35, h: 4.4 }); B.add(cyl(0.32, 0.32, 0.35, 10), mat(0x6b5a7e), x + s * 2, 0.17, z); }
     B.add(rbox(6, 0.38, 0.5, 0.1), red, x, 4.5, z);
     B.add(rbox(5.2, 0.22, 0.35, 0.05), red, x, 3.7, z);
     B.add(rbox(0.3, 0.9, 0.25, 0.04), mat(0x6b5a7e), x, 4.05, z);
   }
   function shrineHall(x, z) {
     const P4 = M4(x, z, 0);
-    addRect(x - 4, x + 4, z - 3.5, z + 3);
+    addRect(x - 4, x + 4, z - 3.5, z + 3, true, 5);
     B.add(rbox(8, 1, 6.5, 0.2), mat(C.stone), 0, 0.5, -0.25, 0, 1, 1, 1, P4);
     B.add(rbox(6, 3, 4.5, 0.15), mat(0xfff4e0), 0, 2.5, -0.5, 0, 1, 1, 1, P4);
     for (const s of [-1, 1]) B.add(cyl(0.2, 0.2, 3, 8), mat(0xf59a8c), s * 2.8, 2.5, 1.8, 0, 1, 1, 1, P4);
@@ -498,14 +498,14 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     B.add(sph(0.35, 10), mat(0xffd98a), 0, 3.4, 2.1, 0, 1, 1, 1, P4); // 鈴
   }
   function lantern(x, z) {
-    colliders.push({ cx: x, cz: z, r: 0.45 });
+    colliders.push({ cx: x, cz: z, r: 0.45, h: 2.5 });
     B.add(cyl(0.45, 0.55, 0.3, 8), mat(C.stone), x, 0.15, z);
     B.add(cyl(0.18, 0.22, 1.1, 8), mat(C.stone), x, 0.85, z);
     B.add(rbox(0.75, 0.6, 0.75, 0.08), glowMat('lamp', 0xfff1d6, 0xffc46b), x, 1.7, z);
     B.add(geo('lcone', () => new THREE.ConeGeometry(0.7, 0.5, 4)), mat(C.stone), x, 2.25, z, Math.PI / 4);
   }
   function fortuneTent(x, z) {   // 紫のテント。入口は西(神社の参道)向き
-    colliders.push({ cx: x, cz: z, r: 1.95 });
+    colliders.push({ cx: x, cz: z, r: 1.95, h: 2.3 });
     B.add(cyl(1.7, 1.9, 2.3, 6), mat(0x7b5aa6), x, 1.15, z, Math.PI / 6);
     B.add(geo('ftcone', () => new THREE.ConeGeometry(2.3, 1.9, 6)), mat(0x4a2f73), x, 3.25, z, Math.PI / 6);
     B.add(sph(0.28, 12), mat(0xffd76a, { emissive: 0xffb300, emissiveIntensity: 0.6 }), x, 4.35, z);
@@ -514,10 +514,10 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     B.add(signPlate('占いの館', 1.8, 0.45), signMat('占いの館', { bg: '#3a2560', fg: '#ffe7a8' }), x - 1.8, 2.15, z, -Math.PI / 2);
     B.add(sph(0.22, 12), mat(0xbfe6ff), x - 2.3, 0.95, z - 1.3);   // 水晶玉の台
     B.add(cyl(0.18, 0.24, 0.8, 8), mat(0x4a2f73), x - 2.3, 0.4, z - 1.3);
-    colliders.push({ cx: x - 2.3, cz: z - 1.3, r: 0.35 });
+    colliders.push({ cx: x - 2.3, cz: z - 1.3, r: 0.35, h: 1.0 });
   }
   function busStop(x, z) {
-    addRect(x - 1.8, x + 1.8, z - 0.2, z + 1.4);
+    addRect(x - 1.8, x + 1.8, z - 0.2, z + 1.4, true, 2.5);
     B.add(rbox(3.6, 0.12, 1.6, 0.05), mat(C.sky), x, 2.5, z + 0.6);
     for (const s of [-1, 1]) B.add(cyl(0.06, 0.06, 2.5, 6), mat(C.metal), x + s * 1.6, 1.25, z + 0.1);
     B.add(box(3.4, 1.6, 0.06), new THREE.MeshStandardMaterial({ color: 0xdff1ff, transparent: true, opacity: 0.55 }), x, 1.5, z + 1.3);
@@ -530,10 +530,10 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     const m = mat(0xffffff);
     for (let x = x0; x <= x1; x += 1.2) B.add(box(0.1, 1, 0.1), m, x, 0.5, z1);
     B.add(box(x1 - x0, 0.08, 0.06), m, (x0 + x1) / 2, 0.85, z1);
-    colliders.push({ x0, x1, z0: z1 - 0.15, z1: z1 + 0.15 });
+    colliders.push({ x0, x1, z0: z1 - 0.15, z1: z1 + 0.15, h: 1 });
   }
   function vending(x, z, ry) {
-    colliders.push({ cx: x, cz: z, r: 0.6 });
+    colliders.push({ cx: x, cz: z, r: 0.6, h: 1.9 });
     const P4 = M4(x, z, ry);
     B.add(rbox(1, 1.9, 0.75, 0.08), mat(r() < 0.5 ? C.sky : C.coral), 0, 0.95, 0, 0, 1, 1, 1, P4);
     B.add(box(0.8, 0.9, 0.04), glowMat('vend', 0xdfe9f2, 0xcfe0f0), 0, 1.3, 0.38, 0, 1, 1, 1, P4);
@@ -544,7 +544,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     for (let x = -60; x <= 62; x += 13) if (Math.abs(x) > 18) pts.push([x, -(ROAD_HALF + WALK + 0.1)]);
     const lm = new THREE.LineBasicMaterial({ color: 0x8a7aa0, transparent: true, opacity: 0.6 });
     for (const [x, z] of pts) {
-      colliders.push({ cx: x, cz: z, r: 0.25 });
+      colliders.push({ cx: x, cz: z, r: 0.25, h: 7.5 });
       B.add(cyl(0.12, 0.15, 7.5, 8), mat(0xd7cfe0), x, 3.75, z);
       B.add(box(1.4, 0.1, 0.1), mat(0xd7cfe0), x, 7, z);
       B.add(cyl(0.18, 0.18, 0.5, 8), mat(0xb8b0c8), x + 0.3, 6.3, z);

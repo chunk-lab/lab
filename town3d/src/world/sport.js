@@ -234,7 +234,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   function hitWalls(p, v, keep) {   // 建物・木などに当たったら はね返る(ゴルフは高さをこえれば のりこえられる)
     if (p.y > 9.5) return;
     for (const c of city.colliders) {
-      if (S && S.kind === 'golf' && p.y > (c.r === undefined ? 9 : c.r < 1 ? 4.5 : 2.2)) continue;
+      if (S && S.kind === 'golf' && p.y > (c.h ?? 9)) continue;   // 球が その物の高さより上なら のりこえる
       if (c.r !== undefined) { const dx = p.x - c.cx, dz = p.z - c.cz, d = Math.hypot(dx, dz), m = c.r + 0.06; if (d < m && d > 1e-4) { const nx = dx / d, nz = dz / d, vn = v.x * nx + v.z * nz; p.x = c.cx + nx * m; p.z = c.cz + nz * m; if (vn < 0) { v.x -= (1 + keep) * vn * nx; v.z -= (1 + keep) * vn * nz; audio?.play?.('close'); } } }
       else if (p.x > c.x0 && p.x < c.x1 && p.z > c.z0 && p.z < c.z1) {
         const l = p.x - c.x0, r = c.x1 - p.x, t = p.z - c.z0, b = c.z1 - p.z, m = Math.min(l, r, t, b);
