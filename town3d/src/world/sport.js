@@ -126,7 +126,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     if (S.gMesh) { scene.remove(S.gMesh); S.gMesh = null; } S.gdef = null;
     S.flag = flagMesh(S.kind); S.flag.position.set(H.goal[0], 0, H.goal[1]); scene.add(S.flag);
     if (S.kind === 'golf') { S.gdef = makeGreen(H, rng(S.C.key + ':g' + i)); S.gMesh = greenMesh(S.gdef); }
-    S.pos = new THREE.Vector3(H.tee[0], S.kind === 'golf' ? 0.06 : 1.2, H.tee[1]); S.phase = 'aim'; S.club = S.kind === 'golf' ? (H.dist > 55 ? 0 : 1) : 0;
+    S.pos = new THREE.Vector3(H.tee[0], S.kind === 'golf' ? 0.06 : 1.2, H.tee[1]); S.phase = 'aim'; S.club = 0; autoClub();
     standAt(S.pos); msg(`ホール ${i + 1}  PAR ${H.par}`); drawHud();
   }
   function standAt(p) {   // ボールのうしろに立って、ゴールの方を向く
@@ -178,7 +178,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const H = S.C.holes[S.i], dist = Math.hypot(H.goal[0] - S.pos.x, H.goal[1] - S.pos.z), tot = S.strokes.reduce((a, b) => a + b, 0);
     S.hud.querySelector('.sp-top').innerHTML = `<span><b>${S.kind === 'golf' ? '⛳' : '🥏'} ホール ${S.i + 1}/${HOLES}</b> PAR ${H.par}</span><span>${S.n + 1}${S.kind === 'golf' ? '打' : '投'}目 ・ のこり ${Math.round(dist)}m</span><span>風 <span class="sp-wind">⬆</span> ${H.wind[2]}m/s</span><span>合計 ${tot}</span>`;
     S.hud.querySelector('.sp-clubs').innerHTML = S.kind === 'golf'
-      ? CLUBS.map((c, i) => `<button data-c="${i}" class="${S.club === i ? 'on' : ''}">${c.name}<br><small>〜${c.d}m</small></button>`).join('')
+      ? CLUBS.map((c, i) => `<button data-c="${i}" class="${S.club === i ? 'on' : ''}">${S.rec === i ? '⭐' : ''}${c.name}<br><small>〜${c.d}m</small></button>`).join('')
       : `<span style="pointer-events:none;background:#fffffff0;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800">高さ</span>` + HGTS.map(([l, v]) => `<button data-c="${v}" class="${S.hgt === v ? 'on' : ''}">${l}</button>`).join('');
   }
   // ---- 打つ・投げる ----
@@ -284,6 +284,15 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const tx = new THREE.CanvasTexture(g.tex); tx.anisotropy = 4; const m = new THREE.Mesh(ge, new THREE.MeshBasicMaterial({ map: tx, transparent: true, depthWrite: false, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 })); m.renderOrder = 2; scene.add(m); return m;
   }
   function lieNow() { return lieAt(S.pos.x, S.pos.z); }
+  // ゴルフ:ゴールまでの距離とボールの位置(グリーン・ラフ)から、ちょうどいいクラブを自動でえらぶ(あとから自分で切りかえてもよい)
+  function autoClub() {
+    if (!S || S.kind !== 'golf') return;
+    const H = S.C.holes[S.i], dist = Math.hypot(H.goal[0] - S.pos.x, H.goal[1] - S.pos.z), lie = lieAt(S.pos.x, S.pos.z), f = ({ rough: 0.78, fringe: 0.95 })[lie] || 1;
+    let k;
+    if (lie === 'green' || (lie === 'fringe' && dist <= CLUBS[3].d * f)) k = 3;           // グリーン上(とフリンジから近いとき)はパター
+    else { k = 0; for (const i of [2, 1]) if (CLUBS[i].d * f >= dist) { k = i; break; } }   // 届くいちばん短いクラブ(どれも届かないときはドライバー)
+    S.club = k; S.rec = k;
+  }
   function drawMap() {   // グリーン全体図(真上から・よみとり用)
     const g = S.gdef, cv = S.hud.querySelector('.sp-map canvas'), c = cv.getContext('2d'), N = cv.width, Sx = g.Sx, P = (x, y) => [(x / Sx + 1) / 2 * N, (1 - (y / Sx + 1) / 2) * N];
     c.clearRect(0, 0, N, N); c.fillStyle = '#17402a'; c.fillRect(0, 0, N, N); c.drawImage(g.tex, 0, 0, N, N);
@@ -351,10 +360,10 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
         const dh = Math.hypot(p.x - H.goal[0], p.z - H.goal[1]);
         if (dh < 0.8 && p.y > 0.05 && p.y < 2.0) return holed();   // バスケットに入った
       }
-      if (Math.abs(p.x) > 72 || p.z < -80 || p.z > 72) { msg('OB! もとの場所から(+1)'); S.n++; S.pos.copy(S.last); S.phase = 'aim'; standAt(S.pos); drawHud(); return; }
+      if (Math.abs(p.x) > 72 || p.z < -80 || p.z > 72) { msg('OB! もとの場所から(+1)'); S.n++; S.pos.copy(S.last); S.phase = 'aim'; autoClub(); standAt(S.pos); drawHud(); return; }
     }
     if (Math.hypot(v.x, v.z) < 0.08 && (S.kind === 'golf' ? p.y <= 0.07 : p.y <= 0.04)) {   // 止まった
-      S.phase = 'aim'; if (S.kind === 'frisbee') p.y = 1.2; standAt(p); drawHud();
+      S.phase = 'aim'; if (S.kind === 'frisbee') p.y = 1.2; autoClub(); standAt(p); drawHud();
       if (S.n >= 12) { msg('ギブアップ… つぎのホールへ'); S.strokes.push(S.n + 1); next(); }
     }
   }
