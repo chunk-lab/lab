@@ -14,6 +14,14 @@ export const LV_NAME = { 1: '初級', 2: '中級', 3: '上級' }, LV_SUB = { 1: 
 export const TANK_MAX = 6;          // 水槽に入る魚の数
 export const GROW_NEED = 10;        // 育ちきるまでのえさの数
 export const FEED_PER_DAY = 2;      // 1匹が1日に食べられる数(育つのに日にちがかかる)
+// ---- えさの品質(普通/上等/特上)と、魚のレア度による必要量 ----
+export const FOOD_VAL = [1, 3, 9];                       // 1回あげたときに育つ量
+export const FOOD_NAME = ['普通', '上等', '特上'];
+const _R = Object.fromEntries(FISH.filter(f => f.kind === 'fish').map(f => [f.id, f.r || 1]));
+export const rarOf = id => _R[id] || 1;
+export const growNeed = f => { const r = rarOf(f.id); return r <= 2 ? GROW_NEED : r === 3 ? GROW_NEED * 2 : GROW_NEED * 4; };   // 普通の魚10・レア20・超レア40
+export const minTier = id => { const r = rarOf(id); return r <= 2 ? 0 : r === 3 ? 1 : 2; };                                    // レアは上等以上・超レアは特上だけ
+export const rankNeed = rk => 2 ** (rk + 1);                                                                                   // ランクアップに必要な数: 2匹→4匹→…(倍々)
 
 // ---- 標本の見た目と名前 ----
 const KINDS = {
@@ -125,8 +133,24 @@ export const spec = {
   saveTank: v => st.set('tank', v),
   tankState: () => st.get('tankState') || { dirt: 0, cleanedAt: null },   // 水槽のよごれ(要素だけ)
   saveTankState: v => st.set('tankState', v),
-  food: () => st.get('food') || 0,
+  foods: () => [st.get('food') || 0, st.get('foodG') || 0, st.get('foodS') || 0],   // えさのストック [普通, 上等, 特上]
+  setFoods(a) { st.set('food', Math.max(0, a[0] | 0)); st.set('foodG', Math.max(0, a[1] | 0)); st.set('foodS', Math.max(0, a[2] | 0)); },
+  food() { return this.foods().reduce((s, n) => s + n, 0); },
   setFood: n => st.set('food', Math.max(0, n | 0)),
+  // えさの合成:3つ→ひとつ上の品質
+  mergeFood(tier) { const a = this.foods(); if (tier < 0 || tier > 1 || a[tier] < 3) return false; a[tier] -= 3; a[tier + 1]++; this.setFoods(a); return true; },
+  // 育てる枠(最初1・買って最大4)・展示枠(最初3・買って最大6)
+  growX: () => Math.min(3, st.get('growX') | 0),
+  growSlots() { return 1 + this.growX(); },
+  addGrowSlot() { st.set('growX', Math.min(3, this.growX() + 1)); },
+  showX: () => Math.min(3, st.get('showX') | 0),
+  showSlots() { return 3 + this.showX(); },
+  addShowSlot() { st.set('showX', Math.min(3, this.showX() + 1)); },
+  // とうろく(育ちきった魚): { 'id:ランク': 数 }
+  coll: () => st.get('coll') || {},
+  collAdd(id, rk, n = 1) { const c = this.coll(), k = id + ':' + (rk || 0); c[k] = (c[k] || 0) + n; if (c[k] <= 0) delete c[k]; st.set('coll', c); },
+  show: () => st.get('show') || [],
+  saveShow: v => st.set('show', v),
   // 図鑑の枠(持ち魚)。最初は1枠。ふやすのはコイン2回・ダイヤ1回
   box: () => st.get('box') || [],
   saveBox: v => st.set('box', v),

@@ -7,7 +7,7 @@ import { confirmPay } from '../../ui/pay.js';
 import { SW } from '../gamebox/stream_words.js';
 import { IDIOMS } from './idioms.js';
 import { FIMG } from './fishimg.js';
-import { SETS, SET, LV_NAME, LV_SUB, TANK_MAX, GROW_NEED, FEED_PER_DAY, FISH_SPEC, spec, condOf, MIX_N, RAR, RAR_PT, DECOR, DECOR_ICON, TANK_RANKS, decorOf, RECIPES, recipeFor, shapeName, FISH_MAX_RANK, RANK_PRE, RANK_MUL } from '../../game/specimen.js';
+import { growNeed, minTier, FOOD_VAL, FOOD_NAME, rankNeed, rarOf, SETS, SET, LV_NAME, LV_SUB, TANK_MAX, GROW_NEED, FEED_PER_DAY, FISH_SPEC, spec, condOf, MIX_N, RAR, RAR_PT, DECOR, DECOR_ICON, TANK_RANKS, decorOf, RECIPES, recipeFor, shapeName, FISH_MAX_RANK, RANK_PRE, RANK_MUL } from '../../game/specimen.js';
 import { furn } from '../../game/furniture.js';
 import { vch, VCH } from '../../game/voucher.js';
 import { wxStrip } from '../../game/weather.js';
@@ -255,8 +255,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
   }
 
   // ---- 釣った魚を水槽へ ----
-  const tankRoom = () => spec.tank().length < TANK_MAX;
-  const boxRoom = () => spec.box().length < spec.boxSlots();
+  const tankRoom = () => spec.tank().length < spec.growSlots();   // 育てる枠(最初1・買って最大4)
+  const boxRoom = () => true;   // つりたての魚の待ち場所は、いくつでも(釣りまくれるように)
   const keepRoom = () => tankRoom() || boxRoom();
   const BOX_COIN = [300, 1000], BOX_GEM = 30, FULL_COIN = 1;   // 仮:図鑑の枠のねだん(2枠目・3枠目はコイン、4枠目はダイヤ)/満腹コイン
   function keepFish(sp, size) {
@@ -413,7 +413,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     const sc = document.createElement('div'); sc.className = 'ens aq'; root.appendChild(sc);
     let tab = tab0 || ctx.storage.get('aqTab') || 'fish';
     let dexT = ctx.storage.get('aqDex') || 'f';
-    let lockMode = false, mixMode = ctx.storage.get('mixMode') || 'd', mixLv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
+    let lockMode = false, mixMode = 'd', mixLv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
     let raf = 0, swim = [], PL = [], DM = {}, selUid = null, pop = null;
     const Z = { z: 1, x: 0, y: 0 };
     const fx = { pel: [], coin: [], bub: [] };
@@ -424,7 +424,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       <div class="aqb"></div>`;
     const tankEl = sc.querySelector('.aqt'), cv = tankEl.querySelector('canvas'), body = sc.querySelector('.aqb'), dropEl = sc.querySelector('.aqdrop');
     const fname = f => { const sp = FISHBY[f.id]; return RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id); };
-    const fsize = f => Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / GROW_NEED)) * RANK_MUL[f.rk || 0]);
+    const fsize = f => Math.round(f.size * (1 + 0.5 * Math.min(1, f.g / growNeed(f))) * RANK_MUL[f.rk || 0]);
     const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
     const kindsOf = () => { const kinds = {}; spec.decor().forEach(d => { const k = d.lv + ':' + d.rar; (kinds[k] = kinds[k] || []).push(d); }); return kinds; };
     const sortK = ks => ks.sort((a, b) => { const [l1, r1] = a.split(':'), [l2, r2] = b.split(':'); return (+r2 - +r1) || (+l2 - +l1); });
@@ -433,7 +433,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     function drawHead() {
       sc.querySelector('.aqw').innerHTML = `<span class="aqc">🍤 ${spec.food()}</span><span class="aqc">🎫 ${vch.total()}</span><span class="aqc">💎 ${vch.dia()}</span>`;
       const pts = spec.pts(), rk = spec.rank(), nx = TANK_RANKS[rk + 1];
-      sc.querySelector('.aqrk').innerHTML = `🏆 ${esc(TANK_RANKS[rk][1])}<small> ${pts}pt${nx ? ` ・あと${nx[0] - pts}` : ''}</small> ・ 🐟 ${spec.tank().length}/${TANK_MAX}`;
+      sc.querySelector('.aqrk').innerHTML = `🏆 ${esc(TANK_RANKS[rk][1])}<small> ${pts}pt${nx ? ` ・あと${nx[0] - pts}` : ''}</small> ・ 🐟 ${spec.tank().length}/${spec.growSlots()}`;
       sc.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
     }
 
@@ -444,7 +444,13 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     const fishScale = () => Math.max(0.6, Math.min(1.8, Math.min(W / 390, H / 280)));
     function rebuildSwim() {
       const t = spec.tank(), old = swim, FS = fishScale();
-      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / GROW_NEED), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * (f.id === 'ryugu' ? 1 : 0.5) * FS); return { uid: f.uid, img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * Math.max(10, W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
+      swim = t.map((f, i) => { const sp = FISHBY[f.id], k = 0.55 + 0.45 * Math.min(1, f.g / growNeed(f)), w = Math.round(Math.min(150, (40 + Math.sqrt(f.size) * 9) * (1 + 0.25 * (f.rk || 0))) * k * (f.id === 'ryugu' ? 1 : 0.5) * FS); return { uid: f.uid, img: sp ? artCanvas(sp, w * 3, Math.round(w * 1.8), { rk: f.rk || 0 }) : null, w, h: Math.round(w * 0.6), x: Math.random() * Math.max(10, W - w), y: 20 + (i % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 18), ph: Math.random() * 6 }; });
+      // とうろくして「てんじ」にした魚も、水槽で泳ぐ(えさは食べない)
+      spec.show().forEach((k, j) => {
+        const [id, r] = k.split(':'), rk = +r, sp = FISHBY[id]; if (!sp || !spec.coll()[k]) return;
+        const size = sp.size ? (sp.size[0] + sp.size[1]) / 2 : 10, w = Math.round(Math.min(150, (40 + Math.sqrt(size) * 9) * (1 + 0.25 * rk)) * (id === 'ryugu' ? 1 : 0.5) * FS);
+        swim.push({ uid: 'show:' + k, img: artCanvas(sp, w * 3, Math.round(w * 1.8), { rk }), w, h: Math.round(w * 0.6), x: Math.random() * Math.max(10, W - w), y: 20 + ((t.length + j) % 3) * (H * 0.18) + Math.random() * 20, vx: (Math.random() < 0.5 ? -1 : 1) * (12 + Math.random() * 14), ph: Math.random() * 6 });
+      });
       swim.forEach(s => { const o = old.find(q => q.uid === s.uid); if (o) { s.x = Math.max(4, Math.min(W - s.w - 4, o.x)); s.y = o.y; s.vx = o.vx > 0 ? Math.abs(s.vx) : -Math.abs(s.vx); s.ph = o.ph; s.munch = o.munch || 0; } });
     }
     function refreshDecor() { PL = spec.placed(); DM = Object.fromEntries(spec.decor().map(d => [d.uid, d])); }
@@ -529,10 +535,11 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       popAt(q.x * W, q.y * H - 30, `<b>${k.icon} ${esc(k.name)}</b> <span class="rr rr${d.rar}">${RAR[d.rar]}</span><div class="aqpb"><button class="sbtn" data-pa="dtake" data-v="${q.uid}">↩ しまう</button><button class="sbtn" data-pa="dup" data-v="${d.lv}:${d.rar}">➕ ふやす</button>${scOf(q) !== 1 ? `<button class="sbtn" data-pa="dsc1" data-v="${q.uid}">もとの大きさ</button>` : ''}</div>${lay.L.length ? `<div class="aqpb">${lb('top', 'いちばん前', lay.up)}${lb('up', '▲1つ前へ', lay.up)}${lb('down', '▼1つ後ろへ', lay.down)}${lb('bot', 'いちばん後ろ', lay.down)}</div>` : ''}<small>2本指で大きさ(${Math.round(scOf(q) * 100)}%)</small>`);
     }
     function openFishPop(uid) {
+      if (String(uid).startsWith('show:')) { const [, id, rk] = uid.split(':'); sfx.play('tap'); toast(`🖼 ${fname({ id, rk: +rk })}(とうろく済み・てんじ中)`); return; }
       const f = spec.tank().find(x => x.uid === uid), s = swim.find(x => x.uid === uid); if (!f || !s) return; sfx.play('tap');
-      const n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED, food = spec.food();
-      popAt(s.x + s.w / 2, s.y, `<b>${esc(fname(f))}</b> <small>${fsize(f)}cm</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small>${full ? '🎉 育ちきった' : `そだち ${f.g}/${GROW_NEED} ・ きょう ${n}/${FEED_PER_DAY}`}</small>
-        <div class="aqpb">${full ? '' : `<button class="sbtn pri" data-pa="feed" data-v="${uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる${food ? '' : '(えさ0)'}</button>`}<button class="sbtn" data-pa="tobox" data-v="${uid}">📦 ひかえへ</button><button class="sbtn" data-pa="info" data-v="${f.id}:${f.rk || 0}">ℹ︎</button></div>`);
+      const n = f.day === today ? f.n : 0, full = f.g >= growNeed(f), food = spec.food();
+      popAt(s.x + s.w / 2, s.y, `<b>${esc(fname(f))}</b> <small>${fsize(f)}cm</small><div class="gb"><i style="width:${Math.min(1, f.g / growNeed(f)) * 100}%"></i></div><small>${full ? '🎉 育ちきった' : `そだち ${f.g}/${growNeed(f)} ・ きょう ${n}/${FEED_PER_DAY}`}</small>
+        <div class="aqpb">${full ? `<button class="sbtn pri" data-pa="reg" data-v="${uid}">📖 とうろく</button>` : `<button class="sbtn pri" data-pa="feed" data-v="${uid}" ${food && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる${food ? '' : '(えさ0)'}</button>`}<button class="sbtn" data-pa="tobox" data-v="${uid}">📦 まちへ</button><button class="sbtn" data-pa="info" data-v="${f.id}:${f.rk || 0}">ℹ︎</button></div>`);
     }
     function startLoop() {
       cancelAnimationFrame(raf); sizeTank(); rebuildSwim(); refreshDecor();
@@ -591,37 +598,60 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         if (fulls[uid]) fx.coin.push({ uid, n: fulls[uid] === 'coin' ? fullEach : 0, t: 0, delay: 1.0 + k * 0.12, x: cx, y: 60 });
       });
     };
-    const feed = uid => {
-      const t = spec.tank(), f = t.find(x => x.uid === uid), food = spec.food(); if (!f || !food) return false;
+    let feedT = 'auto';   // えさの品質のえらび(おまかせ=その魚が食べられるいちばん普通のえさ)
+    const feed = (uid, tier) => {
+      const t = spec.tank(), f = t.find(x => x.uid === uid); if (!f) return false;
       if (f.day !== today) { f.day = today; f.n = 0; }
-      if (f.n >= FEED_PER_DAY || f.g >= GROW_NEED) return false;
-      f.n++; f.g++; spec.setFood(food - 1);
+      const need = growNeed(f), fo = spec.foods(), min = minTier(f.id);
+      if (f.n >= FEED_PER_DAY || f.g >= need) return false;
+      const want = tier == null ? feedT : tier, ti = want === 'auto' ? [0, 1, 2].find(i => i >= min && fo[i] > 0) : +want;
+      if (ti == null || ti < min || !fo[ti]) return false;
+      f.n++; f.g = Math.min(need, f.g + FOOD_VAL[ti]); fo[ti]--; spec.setFoods(fo);
       let r = true;
       if (f.n >= FEED_PER_DAY) { r = 'full'; const fl = spec.full(); if (!fl[f.id]) { fl[f.id] = 1; spec.saveFull(fl); r = 'coin'; } }
-      if (f.g >= GROW_NEED) spec.markGrown(f.id, f.rk || 0);
+      if (f.g >= need) spec.markGrown(f.id, f.rk || 0);
       spec.saveTank(t); return r;
     };
 
     // ---------- 下のタブ ----------
-    function fishRow(f, where) {
-      const n = f.day === today ? f.n : 0, full = f.g >= GROW_NEED;
+    function fishRow(f, where, cnt) {
+      const n = f.day === today ? f.n : 0, need = growNeed(f), full = f.g >= need, min = minTier(f.id), fo = spec.foods();
+      const can = [0, 1, 2].some(i => i >= min && fo[i] > 0 && (feedT === 'auto' || +feedT === i));
       const btns = where === 'tank'
-        ? `${full ? '<span class="aqok">🎉</span>' : `<button class="sbtn" data-feed="${f.uid}" ${spec.food() && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-tobox="${f.uid}">📦 ひかえへ</button>`
-        : `<button class="sbtn pri" data-totank="${f.uid}" ${spec.tank().length < TANK_MAX ? '' : 'disabled'}>🐠 水槽へ</button>`;
-      return `<div class="row"><span class="aqth" data-fi="${f.id}:${f.rk || 0}">${fishImg(f.id, 64, false, f.rk || 0)}</span><div class="fx"><b>${esc(fname(f))}</b> <small style="color:#8d7f9e">${fsize(f)}cm</small><div class="gb"><i style="width:${Math.min(1, f.g / GROW_NEED) * 100}%"></i></div><small style="color:#8d7f9e">${full ? '育ちきった!' : `そだち ${f.g}/${GROW_NEED} ・ きょう ${n}/${FEED_PER_DAY}`}</small></div>${btns}</div>`;
+        ? `${full ? `<button class="sbtn pri" data-reg="${f.uid}">📖 とうろく</button>` : `<button class="sbtn" data-feed="${f.uid}" ${can && n < FEED_PER_DAY ? '' : 'disabled'}>🍤 あげる</button>`}<button class="sbtn" data-tobox="${f.uid}">📦 まちへ</button>`
+        : `<button class="sbtn pri" data-totank="${f.uid}" ${spec.tank().length < spec.growSlots() ? '' : 'disabled'}>🐠 育てる</button>`;
+      const need2 = min ? `<small class="rr rr${min}" style="margin-left:4px">${FOOD_NAME[min]}のえさ〜</small>` : '';
+      return `<div class="row"><span class="aqth" data-fi="${f.id}:${f.rk || 0}">${fishImg(f.id, 64, false, f.rk || 0)}</span><div class="fx"><b>${esc(fname(f))}</b>${cnt > 1 ? ` <b>×${cnt}</b>` : ''} <small style="color:#8d7f9e">${fsize(f)}cm</small>${need2}<div class="gb"><i style="width:${Math.min(1, f.g / need) * 100}%"></i></div><small style="color:#8d7f9e">${full ? '育ちきった!' : `そだち ${f.g}/${need} ・ きょう ${n}/${FEED_PER_DAY}`}</small></div>${btns}</div>`;
     }
+    const unlRow = (ty, label) => {   // 枠をふやす(1つ目・2つ目はコイン、3つ目はダイヤ)
+      const bought = ty === 'grow' ? spec.growX() : spec.showX(); if (bought >= 3) return '';
+      return `<div class="row"><div class="fx">🔒 ${label}をふやす</div>${bought < 2 ? `<button class="sbtn pri" data-unl="coin" data-ut="${ty}">🪙 ${BOX_COIN[bought]}</button>` : `<button class="sbtn pri" data-unl="gem" data-ut="${ty}">💎 ${BOX_GEM}</button>`}</div>`;
+    };
     function tabFish() {
-      const t = spec.tank(), bx = spec.box(), n = spec.boxSlots(), food = spec.food();
-      const canAll = food && t.some(f => (f.day !== today ? 0 : f.n) < FEED_PER_DAY && f.g < GROW_NEED);
-      let h = `<div class="aqrow"><button class="sbtn pri" data-a="make" style="flex:1">🍤 えさを作る(英語${FOOD_Q}問)</button><button class="sbtn" data-a="all" ${canAll ? '' : 'disabled'}>みんなにあげる</button></div>
-        <p class="nt">1匹に1日${FEED_PER_DAY}回まで・${GROW_NEED}回で育ちきる。水槽の魚をタップしても、えさをあげられるよ。</p>
-        <h3 class="aqs">🐠 水槽 ${t.length}/${TANK_MAX}</h3>${t.length ? t.map(f => fishRow(f, 'tank')).join('') : '<p class="nt">まだ魚がいないよ。英語の釣り堀で釣った魚を「水槽に入れる」と、ここで育てられる。</p>'}
-        <h3 class="aqs">📦 ひかえ ${bx.length}/${n} <small>(水槽に入りきらない魚の置き場。そだちは消えない)</small></h3>`;
-      h += [0, 1, 2, 3].map(i => {
-        if (i < n) { const f = bx[i]; return f ? fishRow(f, 'box') : `<div class="row"><div class="fx" style="color:#8d7f9e">あき</div></div>`; }
-        if (i > n) return '';
-        return i < 3 ? `<div class="row"><div class="fx">🔒 ひかえの${i + 1}つ目</div><button class="sbtn pri" data-unl="coin">🪙 ${BOX_COIN[i - 1]}</button></div>` : `<div class="row"><div class="fx">🔒 ひかえの4つ目</div><button class="sbtn pri" data-unl="gem">💎 ${BOX_GEM}</button></div>`;
-      }).join('');
+      const t = spec.tank(), bx = spec.box(), fo = spec.foods(), co = spec.coll(), sh = spec.show();
+      const canAll = fo.some(Boolean) && t.some(f => (f.day !== today ? 0 : f.n) < FEED_PER_DAY && f.g < growNeed(f));
+      const chip = (k, lab, on) => `<button class="chipb ${String(feedT) === String(k) ? 'on' : ''}" data-ft="${k}" ${on ? '' : 'style="opacity:.45"'}>${lab}</button>`;
+      let h = `<div class="aqrow"><button class="sbtn pri" data-a="make" style="flex:1">🍤 えさを作る(英語${FOOD_Q}問・何度でも)</button></div>
+        <div class="aqrow" style="flex-wrap:wrap;gap:6px"><span class="aqc">普通 ${fo[0]}</span><span class="aqc">上等 ${fo[1]}</span><span class="aqc">特上 ${fo[2]}</span>
+          <button class="sbtn" data-fm="0" ${fo[0] >= 3 ? '' : 'disabled'}>普通3→上等</button><button class="sbtn" data-fm="1" ${fo[1] >= 3 ? '' : 'disabled'}>上等3→特上</button></div>
+        <p class="nt">難しい単語ほど、いいえさになる(やさしい=普通1・ふつう=普通2・難しい=上等1)。いいえさは1回で育つ量が多い(上等×${FOOD_VAL[1]}・特上×${FOOD_VAL[2]})。レアな魚は、いいえさでないと食べないよ。</p>
+        <div class="aqchips">${chip('auto', 'おまかせ', 1)}${chip(0, '普通', fo[0])}${chip(1, '上等', fo[1])}${chip(2, '特上', fo[2])}<button class="sbtn" data-a="all" ${canAll ? '' : 'disabled'}>みんなにあげる</button></div>
+        <p class="nt">1匹に1日${FEED_PER_DAY}回まで。育ちきったら「とうろく」。水槽の魚をタップしても、あげられるよ。</p>
+        <h3 class="aqs">🐠 育てる枠 ${t.length}/${spec.growSlots()}</h3>${t.length ? t.map(f => fishRow(f, 'tank')).join('') : '<p class="nt">育てている魚がいないよ。下の「つりたて」から「育てる」で、枠に入れよう。</p>'}${t.length < spec.growSlots() ? '' : ''}${unlRow('grow', '育てる枠')}`;
+      // つりたて(待ち):そだち0の魚は、種類・強さごとにまとめて数える
+      const fresh = {}, other = [];
+      bx.forEach(f => { if (!f.g && !f.lock) { const k = f.id + ':' + (f.rk || 0); (fresh[k] = fresh[k] || []).push(f); } else other.push(f); });
+      const fk = Object.keys(fresh);
+      h += `<h3 class="aqs">📦 つりたて(まち) ${bx.length}匹 <small>(いくつでも置ける。育てたい魚を「育てる」で枠に入れる)</small></h3>`;
+      h += fk.length || other.length ? fk.map(k => fishRow(fresh[k][0], 'box', fresh[k].length)).join('') + other.map(f => fishRow(f, 'box')).join('') : '<p class="nt">まだいないよ。英語の釣り堀で釣ると、ここに入る。</p>';
+      // とうろく済み:数・てんじ・ランクアップ
+      const keys = Object.keys(co).sort((a, b) => a.localeCompare(b));
+      h += `<h3 class="aqs">📖 とうろく済み <small>(同じ魚・同じ強さを ${rankNeed(0)}匹→${rankNeed(1)}匹…と集めると、ひとつ上の強さ)</small></h3>`;
+      h += keys.length ? keys.map(k => {
+        const [id, r] = k.split(':'), rk = +r, n = co[k], need = rankNeed(rk), up = rk < FISH_MAX_RANK, on = sh.includes(k);
+        return `<div class="row"><span class="aqth" data-fi="${id}:${rk}">${fishImg(id, 64, false, rk)}</span><div class="fx"><b>${esc(fname({ id, rk }))}</b> <b>×${n}</b>${up ? `<br><small style="color:#8d7f9e">次の強さまで あと ${Math.max(0, need - n)}匹(${need}匹で1匹)</small>` : '<br><small style="color:#8d7f9e">いちばん強い</small>'}</div><div style="display:flex;flex-direction:column;gap:4px"><button class="sbtn ${on ? 'pri' : ''}" data-sh="${k}">${on ? '🖼 てんじ中' : '🖼 てんじ'}</button>${up ? `<button class="sbtn pri" data-ru="${k}" ${n >= need ? '' : 'disabled'}>⬆ 強くする</button>` : ''}</div></div>`;
+      }).join('') : '<p class="nt">まだ登録した魚がいないよ。育ちきった魚を「とうろく」すると、ここに数が増えていく。</p>';
+      h += `<p class="nt">🖼 てんじ: ${sh.length}/${spec.showSlots()}(登録した魚が水槽で泳ぐ)</p>${unlRow('show', 'てんじ枠')}`;
       return h;
     }
     function tabDeco() {
@@ -632,7 +662,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         <div class="grid">${ks.map(k => { const ds = kinds[k], d0 = ds[0], it = decorOf(d0), n = ds.filter(d => placedUid.has(d.uid)).length; return `<div class="cell got"><span class="ic">${it.icon}</span><b>${esc(it.name)}<span class="rr rr${d0.rar}">${RAR[d0.rar]}</span></b><small>置いた ${n} / ${ds.length}</small><div class="aqcb"><button class="sbtn pri" data-dadd="${k}" ${n >= ds.length ? 'disabled' : ''}>置く</button><button class="sbtn" data-dupk="${k}">➕</button></div></div>`; }).join('')}</div>`;
     }
     function tabMix() {
-      const tabs = `<div class="tabs">${[['d', '🪸 飾りを作る'], ['f', '🐟 魚を強くする']].map(([k, n]) => `<button data-mm="${k}" class="${k === mixMode ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+      const tabs = `<div class="tabs">${[['d', '🪸 飾りを作る']].map(([k, n]) => `<button data-mm="${k}" class="${k === mixMode ? 'on' : ''}">${n}</button>`).join('')}</div>`;
       const slotIc = id => { if (mixMode === 'd') { const s = SET[id]; return s ? `<span class="ic">${ICON[s.look.shape]}</span><small>${esc(s.look.name)}</small>` : ''; } const f = spec.tank().find(x => x.uid === id); return f ? `${fishImg(f.id, 56, false, f.rk || 0)}<small>${esc(fname(f))}</small>` : ''; };
       let result = '？', list = '', note = '';
       if (mixMode === 'd') {
@@ -739,15 +769,17 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       if (a === 'dsc1') { const q = PL.find(r => r.uid === v); if (q) { q.sc = 1; spec.placeSet(q.uid, { sc: 1 }); refreshDecor(); sfx.play('tap'); closePop(); } return; }
       if (a === 'dtake') { spec.placeRemove(v); selUid = null; closePop(); sfx.play('tap'); refreshDecor(); drawHead(); if (tab === 'deco') drawBody(); return; }
       if (a === 'dup') { closePop(); walletSheet(v); return; }
-      if (a === 'feed') { const r = feed(v); closePop(); if (r) { sfx.play('nibble'); feedFx([v], r === true ? {} : { [v]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${fullGain}`); } else toast(spec.food() ? 'きょうは もうおなかいっぱい' : 'えさがないよ。🐟タブの「えさを作る」で作ろう'); redraw(); return; }
+      if (a === 'feed') { const r = feed(v, feedT); closePop(); if (r) { sfx.play('nibble'); feedFx([v], r === true ? {} : { [v]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${fullGain}`); } else toast(spec.food() ? 'きょうは もうおなかいっぱい' : 'えさがないよ。🐟タブの「えさを作る」で作ろう'); redraw(); return; }
+      if (a === 'reg') { closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; const f = t[i]; if (f.g < growNeed(f)) return; t.splice(i, 1); spec.saveTank(t); spec.collAdd(f.id, f.rk || 0, 1); spec.markGrown(f.id, f.rk || 0); sfx.play('coin'); toast(`📖 とうろく! ${fname(f)} ×${spec.coll()[f.id + ':' + (f.rk || 0)]}`); redraw(true); return; }
       if (a === 'tobox') { closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; if (!boxRoom()) { toast('ひかえがいっぱい(🐟タブで ふやせるよ)'); return; } const b = spec.box(); b.push(t.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); sfx.play('tap'); toast('📦 ひかえに入れた'); redraw(true); return; }
       if (a === 'info') { closePop(); const [id, rk] = v.split(':'); fishDetail(id, +rk); return; }
       if (a === 'make') {
-        sfx.play('tap'); let got = 0;
-        for (const q of reviewQs(FOOD_Q)) { const ok = await ask(q, { label: `🍤 えさを作る(${got}こ)`, time: T_Q }); learn.hit(q.w[0], ok, { ja: q.w[2], src: 'fishing' }); if (ok) got++; }
-        spec.setFood(spec.food() + got); toast(`🍤 えさが ${got} こ できた!`); redraw(); return;
+        sfx.play('tap'); let got = 0; const gain = [0, 0, 0];
+        for (const q of reviewQs(FOOD_Q)) { const ok = await ask(q, { label: `🍤 えさを作る(${got}問せいかい)`, time: T_Q }); learn.hit(q.w[0], ok, { ja: q.w[2], src: 'fishing' }); if (ok) { got++; const lv = q.lv || 1; if (lv >= 3) gain[1]++; else gain[0] += lv >= 2 ? 2 : 1; } }   // やさしい=普通1・ふつう=普通2・難しい=上等1
+        const fo = spec.foods(); spec.setFoods([fo[0] + gain[0], fo[1] + gain[1], fo[2]]);
+        toast(got ? `🍤 えさができた! 普通 +${gain[0]}${gain[1] ? ` ・ 上等 +${gain[1]}` : ''}` : '🍤 まちがえた…また やってみよう'); redraw(); return;
       }
-      if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { sfx.play('nibble'); feedFx(fed, fulls); toast(`🍤 ${n}回 あげた${fullGain ? ' ・ 🪙 +' + fullGain : ''}`); } redraw(); return; }
+      if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid, feedT))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { sfx.play('nibble'); feedFx(fed, fulls); toast(`🍤 ${n}回 あげた${fullGain ? ' ・ 🪙 +' + fullGain : ''}`); } redraw(); return; }
       if (a === 'takeall') { spec.placed().forEach(q => spec.placeRemove(q.uid)); selUid = null; sfx.play('tap'); refreshDecor(); redraw(); return; }
       if (a === 'wallet') { walletSheet(null); return; }
       if (a === 'idex') { openDex && openDex(); return; }
@@ -778,12 +810,18 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       const a = q('[data-a]'); if (a) { act(a.dataset.a); return; }
       const fd = q('[data-feed]'); if (fd) { act('feed', fd.dataset.feed); return; }
       const tob = q('[data-tobox]'); if (tob) { act('tobox', tob.dataset.tobox); return; }
-      const tt = q('[data-totank]'); if (tt) { const b = spec.box(), i = b.findIndex(x => x.uid === tt.dataset.totank); if (i < 0) return; if (spec.tank().length >= TANK_MAX) { toast(`水槽がいっぱい(${TANK_MAX}匹まで)`); return; } const t = spec.tank(); t.push(b.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); if (!spec.hasTank()) spec.gotTank(); sfx.play('tap'); toast('🐠 水槽に入れた'); redraw(true); return; }
+      const tt = q('[data-totank]'); if (tt) { const b = spec.box(), i = b.findIndex(x => x.uid === tt.dataset.totank); if (i < 0) return; if (spec.tank().length >= spec.growSlots()) { toast(`育てる枠がいっぱい(${spec.growSlots()}匹まで。育ちきったら「とうろく」。枠はふやせるよ)`); return; } const t = spec.tank(); t.push(b.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); if (!spec.hasTank()) spec.gotTank(); sfx.play('tap'); toast('🐠 水槽に入れた'); redraw(true); return; }
       const ul = q('[data-unl]'); if (ul) {
-        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[spec.boxSlots() - 1] ?? BOX_COIN[1]; if (!(await confirmPay({ label: 'ひかえを ふやす', price: p, have: ctx.wallet.get() }))) return; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } if (!ctx.wallet.spend(p, 'boxslot')) { toast('コインがたりないよ'); return; } }
-        else { if (!ctx.gems) { toast('ダイヤは準備中だよ'); return; } if (!(await confirmPay({ label: 'ひかえを ふやす', price: BOX_GEM, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; if (!ctx.gems.spend(BOX_GEM)) { toast('ダイヤがたりないよ'); sfx.play('early'); return; } }
-        spec.addBoxSlot(); sfx.play('coin'); toast('🔓 ひかえが ふえた!'); redraw(); return;
+        const ty = ul.dataset.ut || 'grow', lab = ty === 'show' ? 'てんじ枠を ふやす' : '育てる枠を ふやす', bought = ty === 'show' ? spec.showX() : spec.growX();
+        if (ul.dataset.unl === 'coin') { const p = BOX_COIN[bought] ?? BOX_COIN[1]; if (!(await confirmPay({ label: lab, price: p, have: ctx.wallet.get() }))) return; if (ctx.wallet.get() < p) { toast(`コインがあと ${p - ctx.wallet.get()} たりないよ`); sfx.play('early'); return; } if (!ctx.wallet.spend(p, ty + 'slot')) { toast('コインがたりないよ'); sfx.play('early'); return; } }
+        else { if (!ctx.gems) { toast('ダイヤは準備中だよ'); return; } if (!(await confirmPay({ label: lab, price: BOX_GEM, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; if (!ctx.gems.spend(BOX_GEM)) { toast('ダイヤがたりないよ'); sfx.play('early'); return; } }
+        if (ty === 'show') spec.addShowSlot(); else spec.addGrowSlot(); sfx.play('coin'); toast('🔓 枠が ふえた!'); redraw(true); return;
       }
+      const ft = q('[data-ft]'); if (ft) { feedT = ft.dataset.ft; sfx.play('tap'); drawBody(); return; }
+      const fm = q('[data-fm]'); if (fm) { if (spec.mergeFood(+fm.dataset.fm)) { sfx.play('coin'); toast(`✨ ${FOOD_NAME[+fm.dataset.fm + 1]}のえさができた`); } drawHead(); drawBody(); return; }
+      const rg = q('[data-reg]'); if (rg) { act('reg', rg.dataset.reg); return; }
+      const sw = q('[data-sh]'); if (sw) { const k = sw.dataset.sh, s = spec.show(), i = s.indexOf(k); if (i >= 0) s.splice(i, 1); else { if (s.length >= spec.showSlots()) { toast(`てんじ枠がいっぱい(${spec.showSlots()}匹まで)`); return; } s.push(k); } spec.saveShow(s); sfx.play('tap'); redraw(true); return; }
+      const ru = q('[data-ru]'); if (ru) { const k = ru.dataset.ru, [id, r] = k.split(':'), rk = +r, need = rankNeed(rk), co = spec.coll(); if ((co[k] || 0) < need || rk >= FISH_MAX_RANK) return; spec.collAdd(id, rk, -need); spec.collAdd(id, rk + 1, 1); spec.markGrown(id, rk + 1); const sh = spec.show().filter(z => spec.coll()[z]); spec.saveShow(sh); sfx.play('coin'); toast(`⬆ ${fname({ id, rk: rk + 1 })} になった!`); redraw(true); return; }
       const fi = q('[data-fi]'); if (fi) { const [id, rk] = fi.dataset.fi.split(':'); sfx.play('tap'); fishDetail(id, +rk); return; }
       const da = q('[data-dadd]'); if (da) { const k = da.dataset.dadd, placed = new Set(spec.placed().map(x => x.uid)), d = spec.decor().find(x => x.lv + ':' + x.rar === k && !placed.has(x.uid)); if (d) { spec.placeAdd(d.uid, 0.3 + Math.random() * 0.4, 0.78 + Math.random() * 0.14); selUid = d.uid; sfx.play('tap'); refreshDecor(); drawHead(); drawBody(); } return; }
       const du = q('[data-dupk]'); if (du) { walletSheet(du.dataset.dupk); return; }
@@ -800,7 +838,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       const fdd = q('[data-fd]'); if (fdd) { sfx.play('tap'); fishDetail(fdd.dataset.fd); return; }
       const ss = q('[data-s]'); if (ss) { const s = SET[ss.dataset.s], o = spec.own()[s.id]; toast(o ? `${s.look.name}(${s.look.en})・${s.title}${o.used ? '・合成に使った' : ''}` : condOf(s)); return; }
     });
-    spec.tank().forEach(f => { if (f.g >= GROW_NEED) spec.markGrown(f.id, f.rk || 0); });
+    spec.tank().forEach(f => { if (f.g >= growNeed(f)) spec.markGrown(f.id, f.rk || 0); });
     drawHead(); drawBody();
     requestAnimationFrame(() => startLoop());
   }
@@ -815,7 +853,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       if (Math.random() < 0.1) { while (weak.length && !q) { const w = weak.pop(); if (!used.has(w.en)) { used.add(w.en); q = freeQ(w.en, w.ja); } } }
       if (!q) {
         const r = Math.random(); let lv = r < 0.7 ? own : r < 0.85 ? own - 1 : own + 1; if (lv < 1 || lv > 3) lv = own;
-        const w = pick(SW[lv]); if (used.has(w[0]) || recentFood.includes(w[0])) continue; used.add(w[0]); q = wordQ(lv, w, Math.random() < 0.5 ? 'ej' : 'je');
+        const w = pick(SW[lv]); if (used.has(w[0]) || recentFood.includes(w[0])) continue; used.add(w[0]); q = Object.assign(wordQ(lv, w, Math.random() < 0.5 ? 'ej' : 'je'), { lv });
       }
       out.push(q);
     }
