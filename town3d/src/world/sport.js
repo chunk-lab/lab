@@ -6,6 +6,11 @@ import { holeExpr } from '../game/expressions.js';
 import { STREETS, ROAD_HALF, WALK, PLAZA_R } from './town_data.js';
 
 const HOLES = 5, G = 9.8;
+// ゴルフの弾道(5段階): th=打ち出し角の倍率 / rng=飛ぶ距離 / roll=着地のあとの転がり / wind=風の受けやすさ
+const TRAJ = [
+  { l: '⏬ とても低く', th: 0.55, rng: 1, roll: 1.25, wind: 0.7 }, { l: '🔽 低く', th: 0.78, rng: 1, roll: 1.1, wind: 0.85 }, { l: '⏺ ふつう', th: 1, rng: 1, roll: 1, wind: 1 },
+  { l: '🔼 高く', th: 1.25, rng: 0.97, roll: 0.8, wind: 1.15 }, { l: '⏫ とても高く', th: 1.55, rng: 0.93, roll: 0.6, wind: 1.3 },
+];
 const CLUBS = [   // ゴルフのクラブ:飛ぶ距離(m)・打ち出し角
   { id: 'dr', name: 'ドライバー', d: 70, loft: 13 }, { id: 'ir', name: 'アイアン', d: 45, loft: 24 },
   { id: 'wd', name: 'ウェッジ', d: 22, loft: 50 }, { id: 'pt', name: 'パター', d: 16, loft: 0 },
@@ -29,6 +34,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 .sp-aim{position:absolute;bottom:calc(100px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 3px 0 #c9bfd8,0 5px 10px #0003;font-size:20px}
 .sp-l{left:16px}.sp-r{left:80px}
 .sp-gauge{position:absolute;right:164px;bottom:calc(69px + env(safe-area-inset-bottom,0px));width:18px;height:120px;border-radius:9px;background:#fffffff0;box-shadow:0 2px 6px #0003;overflow:hidden}
+.k-golf .sp-swing{bottom:calc(292px + env(safe-area-inset-bottom,0px))}.k-golf .sp-spin{bottom:calc(332px + env(safe-area-inset-bottom,0px))}   /* 弾道のボタンの1段ぶん、上へ */
 .sp-tim{position:absolute;right:16px;bottom:calc(240px + env(safe-area-inset-bottom,0px));width:150px;height:16px;border-radius:8px;background:linear-gradient(90deg,#9fc8ff,#fff 42%,#8fe0b0 44%,#8fe0b0 56%,#fff 58%,#ffb3c1);box-shadow:0 2px 6px #0003}
 .sp-tim i{position:absolute;top:-4px;width:4px;height:24px;border-radius:2px;background:#5a4a6b;left:50%}.sp-tim[hidden]{display:none}
 .sp-wind{display:inline-block;transition:transform .2s}
@@ -102,7 +108,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   function start(kind, opt = {}) {
     if (S) return;
     const C = course(kind);
-    S = { kind, C, i: 0, strokes: [], n: 0, club: 0, curve: 0, hgt: 1, phase: 'aim', obj: null, power: 0, charging: false, cT: 0, last: null, objs: [], home: !!opt.home, hud: hudEl(kind, !!opt.home), flag: null, aimLine: null, msgT: 0 };
+    S = { kind, C, i: 0, strokes: [], n: 0, club: 0, traj: 0, curve: 0, hgt: 1, phase: 'aim', obj: null, power: 0, charging: false, cT: 0, last: null, objs: [], home: !!opt.home, hud: hudEl(kind, !!opt.home), flag: null, aimLine: null, msgT: 0 };
     camOffset = { x: 0, z: 0 };
     root.classList.add('sp-on'); toast?.(kind === 'golf' ? `⛳ きょうのゴルフコース(${HOLES}ホール)` : `🥏 きょうのフリスビーコース(${HOLES}ホール)`);
     const pm = kind === 'golf' ? new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 10), mat(0xffffff)) : (() => { const d = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.12, 0.025, 24), mat(0xff7aa2)); return d; })();
@@ -126,7 +132,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     if (S.gMesh) { scene.remove(S.gMesh); S.gMesh = null; } S.gdef = null;
     S.flag = flagMesh(S.kind); S.flag.position.set(H.goal[0], 0, H.goal[1]); scene.add(S.flag);
     if (S.kind === 'golf') { S.gdef = makeGreen(H, rng(S.C.key + ':g' + i)); S.gMesh = greenMesh(S.gdef); }
-    S.pos = new THREE.Vector3(H.tee[0], S.kind === 'golf' ? 0.06 : 1.2, H.tee[1]); S.phase = 'aim'; S.club = 0; autoClub();
+    S.pos = new THREE.Vector3(H.tee[0], S.kind === 'golf' ? 0.06 : 1.2, H.tee[1]); S.phase = 'aim'; S.club = 0; S.traj = 0; autoClub();
     standAt(S.pos); msg(`ホール ${i + 1}  PAR ${H.par}`); drawHud();
   }
   function standAt(p) {   // ボールのうしろに立って、ゴールの方を向く
@@ -143,7 +149,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   function msg(t) { if (!S) return; const el = S.hud.querySelector('.sp-msg'); el.textContent = t; S.msgT = 1.8; }
   // ---- 画面 ----
   function hudEl(kind, home) {
-    const h = document.createElement('div'); h.className = 'sp-hud';
+    const h = document.createElement('div'); h.className = 'sp-hud' + (kind === 'golf' ? ' k-golf' : '');
     h.innerHTML = `<div class="sp-top"></div><div class="sp-lie"></div><div class="sp-msg"></div><div class="sp-clubs"></div>
       <button class="sp-aim sp-l">◀</button><button class="sp-aim sp-r">▶</button>${kind === 'golf' ? '' : '<div class="sp-gauge"><i style="height:0"></i></div>'}
       <div class="sp-tim" hidden><i></i></div><div class="sp-bend" hidden></div>${kind === 'golf' ? '<div class="sp-spin" hidden><small>タップで回転</small><div class="dsc"><em style="top:3px;left:50%;transform:translateX(-50%)">ころがる</em><em style="bottom:3px;left:50%;transform:translateX(-50%)">もどる</em><em style="left:4px;top:50%;transform:translateY(-50%)">左</em><em style="right:4px;top:50%;transform:translateY(-50%)">右</em><i></i></div></div><div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引く↓ ずらす↔</small>'}</button>${kind === 'golf' ? '<button class="sp-mapb">🗺<small>グリーン</small></button><div class="sp-map" hidden><div><canvas width="360" height="360"></canvas>青=ゆるい傾斜 赤=強い傾斜 / 矢印=ボールが流れる向き / 明るい所が高い<br>(さわると閉じる)</div></div>' : ''}<button class="sp-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
@@ -170,7 +176,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const aimBtn = (el, d) => { el.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); held = d; }); ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => el.addEventListener(t, () => (held = null))); };
     aimBtn(h.querySelector('.sp-l'), 1); aimBtn(h.querySelector('.sp-r'), -1);
     h._held = () => held;
-    h.querySelector('.sp-clubs').addEventListener('pointerdown', e => { const b = e.target.closest('[data-c]'); if (!b || !S || S.phase !== 'aim') return; e.stopPropagation(); if (S.kind === 'golf') S.club = +b.dataset.c; else S.hgt = +b.dataset.c; drawHud(); audio?.play?.('wave'); });
+    h.querySelector('.sp-clubs').addEventListener('pointerdown', e => { const b = e.target.closest('[data-c],[data-t]'); if (!b || !S || S.phase !== 'aim') return; e.stopPropagation(); if (b.dataset.t != null) S.traj = +b.dataset.t; else if (S.kind === 'golf') S.club = +b.dataset.c; else S.hgt = +b.dataset.c; drawHud(); audio?.play?.('wave'); });
     h.querySelector('.sp-quit').addEventListener('click', () => S && end(true));
     return h;
   }
@@ -178,7 +184,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const H = S.C.holes[S.i], dist = Math.hypot(H.goal[0] - S.pos.x, H.goal[1] - S.pos.z), tot = S.strokes.reduce((a, b) => a + b, 0);
     S.hud.querySelector('.sp-top').innerHTML = `<span><b>${S.kind === 'golf' ? '⛳' : '🥏'} ホール ${S.i + 1}/${HOLES}</b> PAR ${H.par}</span><span>${S.n + 1}${S.kind === 'golf' ? '打' : '投'}目 ・ のこり ${Math.round(dist)}m</span><span>風 <span class="sp-wind">⬆</span> ${H.wind[2]}m/s</span><span>合計 ${tot}</span>`;
     S.hud.querySelector('.sp-clubs').innerHTML = S.kind === 'golf'
-      ? CLUBS.map((c, i) => `<button data-c="${i}" class="${S.club === i ? 'on' : ''}">${S.rec === i ? '⭐' : ''}${c.name}<br><small>〜${c.d}m</small></button>`).join('')
+      ? CLUBS.map((c, i) => `<button data-c="${i}" class="${S.club === i ? 'on' : ''}">${S.rec === i ? '⭐' : ''}${c.name}<br><small>〜${c.d}m</small></button>`).join('') + (CLUBS[S.club].loft ? `<span style="flex-basis:100%;height:0"></span>` + TRAJ.map((t, i) => `<button data-t="${i - 2}" class="${(S.traj || 0) === i - 2 ? 'on' : ''}" style="padding:5px 8px;font-size:11px">${t.l}</button>`).join('') : '')
       : `<span style="pointer-events:none;background:#fffffff0;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800">高さ</span>` + HGTS.map(([l, v]) => `<button data-c="${v}" class="${S.hgt === v ? 'on' : ''}">${l}</button>`).join('');
   }
   // ---- 打つ・投げる ----
@@ -314,18 +320,19 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   // ---- ゴルフのスピン:spin={x:横(右+),y:縦(上=トップ+/下=バック-)} ----
   function spinOf() { const sp = S.spin || { x: 0, y: 0 }, k = LIES[lieNow()].spin; return { side: sp.x, back: Math.max(0, -sp.y) * k, top: Math.max(0, sp.y) * k, used: false }; }
   function golfV(c, p, dx, dz, gs) {   // 打ち出し速度。回転をかけるほど少し飛ばなくなる / バックスピンは高く上がる
-    const mag = Math.min(1, Math.hypot(gs.side, gs.back + gs.top)), pw = p * (1 - 0.18 * mag) * LIES[lieNow()].dist, th = (c.loft + gs.back * 6) * Math.PI / 180, v = Math.sqrt(c.d * pw * G / Math.sin(2 * Math.min(th, 1.2)));
+    const mag = Math.min(1, Math.hypot(gs.side, gs.back + gs.top)), pw = p * (1 - 0.18 * mag) * LIES[lieNow()].dist, T = c.loft ? TRAJ[(S.traj || 0) + 2] : TRAJ[2], th = (c.loft * T.th + gs.back * 6) * Math.PI / 180, v = Math.sqrt(c.d * T.rng * pw * G / Math.sin(2 * Math.min(th, 1.2)));
     const e = gs.side * 0.03, ex = dx - dz * e, ez = dz + dx * e, el = Math.hypot(ex, ez);   // 打ち出しは、曲がる側へほんの少しだけ向く(そこから曲がっていく)
     return new THREE.Vector3(ex / el * v * Math.cos(th), v * Math.sin(th), ez / el * v * Math.cos(th));
   }
   function golfPhys(p, v, h, H, gs, c, snd) {   // 1ステップ(本番とねらい線の先読みで同じ計算)
     if (p.y > 0.06 || v.y > 0) {
-      v.y -= G * h; v.multiplyScalar(Math.exp(-0.05 * h)); v.x += H.wind[0] * 0.07 * h; v.z += H.wind[1] * 0.07 * h;
+      v.y -= G * h; v.multiplyScalar(Math.exp(-0.05 * h)); { const wk = c && c.loft ? TRAJ[(S.traj || 0) + 2].wind : 1; v.x += H.wind[0] * 0.07 * h * wk; v.z += H.wind[1] * 0.07 * h * wk; }
       if (gs && gs.side) { const sp = Math.hypot(v.x, v.z) || 1, ux = v.x / sp, uz = v.z / sp, a = gs.side * (1.2 + 1.2 * c.d / 70) * h; v.x += -uz * a; v.z += ux * a; }   // 横回転:進む向きの右(+)/左(-)へ曲がる
     } else {
       p.y = 0.06;
       if (v.y < -1.5) {
-        let f = 0.7; if (gs && !gs.used) { gs.used = true; f = 0.7 * (1 - 1.7 * gs.back + 0.7 * gs.top); if (gs.back > 0.15 && snd) msg('キュキュッ! もどる!'); }   // 落ちた時にスピンが効く:バック=ブレーキや逆もどり、トップ=前へころがる
+        let f = 0.7; if (gs && !gs.used) { gs.used = true; f = 0.7 * (1 - 1.7 * gs.back + 0.7 * gs.top); if (gs.back > 0.15 && snd) msg('キュキュッ! もどる!'); }
+        if (c && c.loft) f *= TRAJ[(S.traj || 0) + 2].roll;   // 高い球ほど止まる・低い球ほどころがる   // 落ちた時にスピンが効く:バック=ブレーキや逆もどり、トップ=前へころがる
         v.y = -v.y * (gs && gs.top ? 0.4 : 0.35); { const hs = Math.hypot(v.x, v.z) || 1, kx = gs ? -v.z / hs * gs.side * 0.2 * hs : 0, kz = gs ? v.x / hs * gs.side * 0.2 * hs : 0; v.x = v.x * f + kx; v.z = v.z * f + kz; }   // 横回転は、着地でも少し横へそれる
         if (lieAt(p.x, p.z) === 'rough') { v.x *= 0.6; v.z *= 0.6; v.y *= 0.5; }   // ラフはボールが止まりやすい
         if (snd) audio?.play?.('close');
