@@ -65,6 +65,13 @@ registry.js に1件足し、town_data.js の建物 `app:` か NPC の `menu` に
 - 通信の形(`server/relay.js`)を変えるときは、古い版でも動くよう「足す」だけにする。
 - 人数上限: 1部屋8人・全体40人(環境変数 `MAX_ROOM` / `MAX_ALL`)。
 
+## 家具(ショップと家)
+- データと保存: `src/game/furniture.js`(家具は `ITEMS` に1件足すだけ。見た目は箱や円柱の組み合わせ `build`)。保存キーは `town:furn:inv`(持ち物)・`town:furn:room`(配置)。
+- アプリ: `src/apps/home.js`(ショップ=買う、あなたの家=3Dの部屋に置く)。部屋は8×8マス、同じ家具は5個まで、ラグは他の家具の下に重ねられる。
+- 操作: 下の一覧から出す → ドラッグかゆかタップで移動 → まわす/しまう。
+- テスト用にコインを増やす: 町のURLの末尾に `?coins=10000`(その端末の保存だけが変わる。URLの他の指定とは `&` でつなぐ)
+- テスト: `node tests/furn.mjs`(コインを渡して買う→置く→ドラッグまで確認)。
+
 ## 公開手順(無料)
 1. GitHub にこのフォルダを置く。町の画面: `dist/index.html` を `docs/index.html` にコピー → Settings → Pages → Branch main / `/docs`。
 2. サーバー: Render で New → Blueprint → このリポジトリ(`render.yaml` を自動で読む)。できた URL が `https://xxxx.onrender.com`。

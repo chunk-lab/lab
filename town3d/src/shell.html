@@ -7,5 +7,7 @@
 <script>/*APP*/</script>
 <script>
 var q = new URLSearchParams(location.search);
+// テスト用: ?coins=10000 でコインを増やして始められる(この端末の保存だけが変わる)
+if (/^\d{1,6}$/.test(q.get('coins') || '')) { try { localStorage.setItem('town:coins', JSON.stringify(+q.get('coins'))); } catch (e) {} }
 window.town = Hoshimiya.mount(document.getElementById('town'), { netUrl: q.get('server') || undefined, room: q.get('room') || 'town' });
 </script></body></html>
