@@ -88,7 +88,9 @@ for k_, v_ in secs.items():
         if len(f_) >= 3 and re.fullmatch(r"[a-z][a-z'-]*", f_[0]):
             pp_ = POSMAP[k_]
             if pp_ in CONTENT: BSC[(f_[0], pp_)] = max(BSC.get((f_[0], pp_), 0), int(f_[2]))
+PRIM_X = {'curry': 'n'}   # 主な品詞を決め打ち(extra_ja.tsv で足した語など)
 def prim_of(w, cands):
+    if w in PRIM_X: return PRIM_X[w]
     """主な品詞を返す。cands = いまカードがある(または候補の)内容語の品詞"""
     if w in PRIM and (not cands or PRIM[w] in cands or True): return PRIM[w]
     cands = [c for c in cands if c in CONTENT]
@@ -235,6 +237,10 @@ for (w, p) in set(BIG) | set(DX):
     ja = join(_c2)
     if not ja: continue
     bank.append((rank(w), w, p, ja))
+for _l in open(HERE + '../../../data/words/extra_ja.tsv', encoding='utf8'):   # 抜けているカードを足す
+    _f = _l.rstrip('\n').split('\t')
+    if _l[0] != '#' and len(_f) >= 3:
+        bank = [b for b in bank if not (b[1] == _f[0] and b[2] == _f[1])]; bank.append((rank(_f[0]), _f[0], _f[1], _f[2]))
 for w, p, ja in usew: bank.append((rank(w), w, p, ja))
 _bc = C.defaultdict(list)
 for _r, w_, p_, _j in bank:
