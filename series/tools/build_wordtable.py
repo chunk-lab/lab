@@ -61,13 +61,14 @@ def base_in_dict(w):   # 語尾の変化だけなら、原形が辞書にある�
 # --- 区分(出題していいか) ---
 FIRST = {l.strip().lower() for l in open(P('data', 'words', 'src_first_names_us.txt'), encoding='utf8', errors='ignore') if l.strip()}   # 人名(名)。パブリックドメイン(smashew/NameDatabases)
 FRAG = set("don won ll ve re isn aren wasn weren doesn didn hasn haven hadn couldn wouldn shouldn mustn ain gonna wanna gotta gimme lemme uh um hmm huh mm ah ha ya em cuz cos hm oop whoa woo".split())
+SHORT = set('me an us am oh ex up so do go no to of in on it is as at be by he if my or we hi ok ah ox pa ma id'.split())   # 本物の短い語
 NAMEWORD = re.compile(r'人名|愛称|男の名|女の名|姓|名字')
 PLACE = re.compile(r'国名|地名|都市|[〜…]州|州都|首都|\bの川|湖|山脈|半島|諸島|大陸|洋|海峡')
 def classify(w, mean, cefr_known, z, is_phrase):
     wl = w.lower(); m0 = mean
     if is_phrase: return '熟語・複合語', '○'
     if wl in FRAG or re.search(r"[\d_]", w): return '話しことばの断片', '×'
-    if len(wl) <= 2 and not cefr_known: return '略語・短すぎる', '×'
+    if len(wl) <= 2 and not cefr_known and wl not in SHORT: return '略語・短すぎる', '×'
     if NAMEWORD.search(m0): return '人名', '×'
     if wl in FIRST and not cefr_known: return '人名にもなる語', '△'
     if w[:1].isupper() or PLACE.search(m0): return '固有名詞(地名・国・言語など)', '△'
