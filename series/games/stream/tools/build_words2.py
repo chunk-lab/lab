@@ -208,10 +208,24 @@ if os.path.exists(_sp):
 # ---- 全単語バンク（解放して遊ぶ分） ----
 have = set(CARD); FREEW = {w for (w, p) in CARD}
 bank = []
+MYJA = {}
+_fl = {}
+for _l in open(HERE + '../../../data/words/' + 'flag_translations.tsv', encoding='utf8'):
+    _f = _l.rstrip('\n').split('\t')
+    if _l[0] != '#' and len(_f) >= 6: _fl.setdefault(_f[2], []).append(_f[3])
+for _l in open(HERE + '../../../data/words/' + 'my_ja.tsv', encoding='utf8'):
+    _f = _l.rstrip('\n').split('\t')
+    if _l[0] == '#' or len(_f) < 3: continue
+    _o = _f[1] if _f[1] in _fl.get(_f[0], []) else (_fl.get(_f[0]) or [_f[1]])[0]
+    MYJA[(_f[0], _o)] = (_f[1], _f[2])
 for (w, p) in set(BIG) | set(DX):
     if (w, p) in have or w in BAD_W or len(w) < 2 or inflected(w, p): continue
     if w in FREEW and (w, p) not in DX and (w, p) not in D2: continue   # よく使う語の、辞書のおまけの品詞（say＝すれば など）は入れない
     if w in FIX and FIX[w] is None and (w in PAST or inflected(w, 'n')): continue
+    if (w, p) in MYJA:   # 自分たちで書き直した訳(品詞が変わる語もある)
+        p2, ja2 = MYJA[(w, p)]
+        if p2 != p and ((w, p2) in BIG or (w, p2) in DX or (w, p2) in have): continue   # 同じ品詞の別カードがあるなら重複させない
+        bank.append((rank(w), w, p2, join(ja2.split('、')) or ja2)); continue
     cands = DX.get((w, p), []) + [m for m in re.split(r'[、,]', BIG.get((w, p), '')) if m.strip()]
     if (w, p) in SENSE: cands = sorted(cands, key=lambda m: -SENSE[(w, p)].get(m.strip(), 0))   # v12で よく書かれている意味(主な意味)を先に
     _seen = set(); _c2 = []
