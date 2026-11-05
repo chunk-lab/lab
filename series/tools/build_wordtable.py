@@ -57,6 +57,24 @@ def base_in_dict(w):   # 語尾の変化だけなら、原形が辞書にある�
             if b in INDICT: return b
             if len(b) > 2 and b[-1] == b[-2] and b[:-1] in INDICT: return b[:-1]
     return ''
+
+# --- 区分(出題していいか) ---
+FIRST = {l.strip().lower() for l in open(P('data', 'words', 'src_first_names_us.txt'), encoding='utf8', errors='ignore') if l.strip()}   # 人名(名)。パブリックドメイン(smashew/NameDatabases)
+FRAG = set("don won ll ve re isn aren wasn weren doesn didn hasn haven hadn couldn wouldn shouldn mustn ain gonna wanna gotta gimme lemme uh um hmm huh mm ah ha ya em cuz cos hm oop whoa woo".split())
+NAMEWORD = re.compile(r'人名|愛称|男の名|女の名|姓|名字')
+PLACE = re.compile(r'国名|地名|都市|[〜…]州|州都|首都|\bの川|湖|山脈|半島|諸島|大陸|洋|海峡')
+def classify(w, mean, cefr_known, z, is_phrase):
+    wl = w.lower(); m0 = mean
+    if is_phrase: return '熟語・複合語', '○'
+    if wl in FRAG or re.search(r"[\d_]", w): return '話しことばの断片', '×'
+    if len(wl) <= 2 and not cefr_known: return '略語・短すぎる', '×'
+    if NAMEWORD.search(m0): return '人名', '×'
+    if wl in FIRST and not cefr_known: return '人名にもなる語', '△'
+    if w[:1].isupper() or PLACE.search(m0): return '固有名詞(地名・国・言語など)', '△'
+    if not cefr_known and z is not None and z < 2.3: return '専門・ほぼ使わない', '△'
+    if not cefr_known and z is None: return '頻度なし', '△'
+    return '通常', '○'
+
 rows = []   # 単語表(CEFR-Jなど1行=単語×品詞)
 best = {}   # 辞書の語 → 最小CEFR(数字)
 def add(path, srcname):
@@ -71,11 +89,11 @@ def add(path, srcname):
             else: status = '辞書にない' + ('（熟語・複合語）' if re.search(r"[ \-.']", main) else '')
         if i is not None: best[i] = min(best.get(i, 9), LV[lv])
         c = count_of(i) if i is not None else CNT.get(main.lower(), 0); z = zipf(c)
-        rows.append([main, hw if hw != main else '', pos, lv, LV[lv], EIKEN[lv], TOEIC[lv], SCHOOL[lv], tier(z), z if z else '', DICT[i][1].split(';')[0][:60] if i is not None else '', status, srcname])
+        rows.append([main, hw if hw != main else '', pos, lv, LV[lv], EIKEN[lv], TOEIC[lv], SCHOOL[lv], tier(z), z if z else '', DICT[i][1].split(';')[0][:60] if i is not None else '', status, srcname, *classify(main, DICT[i][1] if i is not None else '', True, z, ' ' in main)])
 add(P('data', 'words', 'src_cefrj_vocabulary_1.5.csv'), 'CEFR-J 1.5')
 add(P('data', 'words', 'src_octanove_c1c2_1.0.csv'), 'Octanove C1/C2')
 rows.sort(key=lambda r: (r[4], -(r[9] or 0), r[0].lower()))
-HEAD = ['単語', '表記ゆれ', '品詞', 'CEFR', 'レベル(1-6)', '英検の目安', 'TOEIC(L&R)の目安', '学校の段階の目安', '頻度ランク', '頻度Zipf', 'いまの辞書の意味', '辞書との関係', '出典']
+HEAD = ['単語', '表記ゆれ', '品詞', 'CEFR', 'レベル(1-6)', '英検の目安', 'TOEIC(L&R)の目安', '学校の段階の目安', '頻度ランク', '頻度Zipf', 'いまの辞書の意味', '辞書との関係', '出典', '区分', '出題']
 # --- 辞書全体：レベルがない語には、頻度から推定レベルを付ける ---
 zs = collections.defaultdict(list)
 for i, lv in best.items():
@@ -95,8 +113,12 @@ for i, (w, m, fo) in enumerate(DICT):
     if lv: how = 'CEFR-J'
     elif isph: lv, how = None, ''
     else: lv, how = est(z), '推定(頻度から)'
-    full.append([w, m.split(';')[0][:60], ', '.join(fo[:6]), '熟語' if isph else '', LVN[lv] if lv else '', lv or '', how, EIKEN[LVN[lv]] if lv else '', TOEIC[LVN[lv]] if lv else '', SCHOOL[LVN[lv]] if lv else '', tier(z), z if z else '', c or ''])
-HEAD2 = ['単語', '意味(先頭)', '変化形', '熟語', 'CEFR', 'レベル(1-6)', 'レベルの出どころ', '英検の目安', 'TOEIC(L&R)の目安', '学校の段階の目安', '頻度ランク', '頻度Zipf', '出現数(原形+変化形)']
+    full.append([w, m.split(';')[0][:60], ', '.join(fo[:6]), '熟語' if isph else '', LVN[lv] if lv else '', lv or '', how, EIKEN[LVN[lv]] if lv else '', TOEIC[LVN[lv]] if lv else '', SCHOOL[LVN[lv]] if lv else '', tier(z), z if z else '', c or '', *classify(w, m, bool(best.get(i)), z, isph)])
+HEAD2 = ['単語', '意味(先頭)', '変化形', '熟語', 'CEFR', 'レベル(1-6)', 'レベルの出どころ', '英検の目安', 'TOEIC(L&R)の目安', '学校の段階の目安', '頻度ランク', '頻度Zipf', '出現数(原形+変化形)', '区分', '出題']
+for r in full:   # 出題しない語(×)には、推定レベルを付けない
+    if r[14] == '×':
+        if r[6] == '推定(頻度から)': r[4] = r[5] = ''; r[6] = '推定しない(' + r[13] + ')'
+        if r[14] == '×': r[7] = r[8] = r[9] = ''
 full.sort(key=lambda r: (-(r[11] or 0) if r[11] != '' else 99, r[0].lower()))
 with open(P('data', 'words', 'word_levels.csv'), 'w', encoding='utf-8-sig', newline='') as f:
     w = csv.writer(f); w.writerow(HEAD); w.writerows(rows)
@@ -109,9 +131,9 @@ def sheet(ws, head, data, widths):
     ws.append(head); [ws.append(r) for r in data]
     for c in ws[1]: c.font = Font(bold=True, color='FFFFFF'); c.fill = PatternFill('solid', fgColor='5B4B8A')
     ws.freeze_panes = 'B2'; ws.auto_filter.ref = ws.dimensions
-    for col, wd in zip('ABCDEFGHIJKLM', widths): ws.column_dimensions[col].width = wd
-sheet(wb.active, HEAD, rows, [18, 22, 10, 7, 9, 11, 14, 16, 12, 9, 36, 28, 15]); wb.active.title = 'レベル表(CEFR-J)'
-sheet(wb.create_sheet('辞書の全単語'), HEAD2, full, [20, 34, 26, 7, 7, 9, 14, 11, 14, 16, 12, 9, 12])
+    for col, wd in zip('ABCDEFGHIJKLMNO', widths): ws.column_dimensions[col].width = wd
+sheet(wb.active, HEAD, rows, [18, 22, 10, 7, 9, 11, 14, 16, 12, 9, 36, 28, 15, 22, 7]); wb.active.title = 'レベル表(CEFR-J)'
+sheet(wb.create_sheet('辞書の全単語'), HEAD2, full, [20, 34, 26, 7, 7, 9, 14, 11, 14, 16, 12, 9, 12, 22, 7])
 wb.save(P('data', 'words', 'word_levels.xlsx'))
 print('levels', len(rows), 'dict', len(full), 'cuts', [round(c, 2) for c in cut], 'med', {LVN[k]: v for k, v in med.items()})
-print(collections.Counter(r[11].split('（')[0] for r in rows)); print(collections.Counter(r[6] for r in full)); print(collections.Counter((r[4], r[6]) for r in full if r[6]).most_common(14))
+print(collections.Counter((r[13], r[14]) for r in rows).most_common(8), collections.Counter((r[13], r[14]) for r in full).most_common(12)); print(collections.Counter(r[6] for r in full)); print(collections.Counter((r[4], r[6]) for r in full if r[6]).most_common(14))
