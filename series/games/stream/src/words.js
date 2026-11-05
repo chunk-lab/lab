@@ -31,16 +31,34 @@ export function ulPlay(L,k){const ws=L.lines.map(lineToW),a=k*USET,part=ws.slice
 export function playList(title,pairs){const ws=pairs.filter(w=>w&&w[0]&&w[1]).slice(0,USET).map(w=>[String(w[0]),"x",String(w[1])]);if(ws.length<2)return false;
   setCur({id:"nb-"+Date.now().toString(36),lv:+SV.lv||1,word:true,title:title||"勉強ノート",ja:`${ws[0][0]} 〜 ${ws[ws.length-1][0]}`,tag:"勉強ノート・単語練習",words:ws,chunks:[]});startRun(1);return true}
 export function renderWords(){const t=SV.wtab||"w",lv=SV.lv;
-  $("wtabs").innerHTML=[["w","単語"],["i","熟語"],["u","単語集"]].map(([k,n])=>`<button data-t="${k}" class="${k===t?"on":""}">${n}</button>`).join("");
+  $("wtabs").innerHTML=[["w","単語"],["l","レベル別"],["i","熟語"],["u","単語集"]].map(([k,n])=>`<button data-t="${k}" class="${k===t?"on":""}">${n}</button>`).join("");
   $("wtabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{SE.tap();SV.wtab=b.dataset.t;save();renderWords()});
   $("wtools").innerHTML="";$("wsets").classList.toggle("ul",t==="u");
   if(t==="u"){renderUL();return}
+  if(t==="l"){renderLevel();return}
   const src=t==="i"?IDIOMS:WORDS,n=WSET[lv],m=Math.ceil(src[lv].length/n),nm=t==="i"?"熟語":"単語";
   $("wTitle").textContent=`${LV[lv].name}の${nm}練習`;
   $("wNote").textContent=t==="i"?`${LV[lv].name}によく出る熟語を${n}個ずつ。読み上げを聞いて、意味を選ぶ。`:`よく使われる順に${n}語ずつ。読み上げを聞いて、意味を選ぶ（単語ダッシュ）。`;
   $("wsets").innerHTML=Array.from({length:m},(_,k)=>{const id=`${t==="i"?"i":"w"}${lv}-${k+1}`,st=starsOf(id,1),b=rec(id,1,"ta");
     return `<button class="wset" data-k="${k}"><b>${k+1}</b><span class="ws">${esc(src[lv][k*n][0])}…</span><span class="st">${"★".repeat(st)}<i>${"★".repeat(3-st)}</i></span>${b?`<small>${b.time.toFixed(1)}s</small>`:""}</button>`}).join("");
   $("wsets").querySelectorAll(".wset").forEach(b=>b.onclick=()=>{SE.tap();setCur(wordSet(lv,+b.dataset.k,t));startRun(1)});}
+/* ===== レベル別・品詞別の単語練習（レベルは単語表 data/words の CEFR。中学=A1〜A2／高校=B1／大学=B2以上） ===== */
+let WL=null;export function wlv(){if(!WL){WL={};try{WLV_SRC.split(",").forEach(s=>{const i=s.lastIndexOf(":");WL[s.slice(0,i)]=+s.slice(i+1)})}catch(e){}}return WL}
+const LGRP=[["all","すべて",0,9,"",1],["jh","中学",1,2,"英検5〜準2級くらい・TOEIC 〜545点くらい",1],["hs","高校",3,3,"英検2級くらい・TOEIC 550〜780点くらい",2],["un","大学",4,9,"英検準1級〜・TOEIC 785点〜くらい",3]];
+const LPOS=[["","すべて"],["n","名詞"],["v","動詞"],["a","形容詞"],["r","副詞"],["o","その他"]];
+function levelPool(){const L=wlv(),g=LGRP.find(x=>x[0]===(SV.lgrp||"all"))||LGRP[0],pp=SV.lpos||"",seen=new Set(),out=[];
+  [1,2,3].forEach(l=>WORDS[l].forEach(w=>{const k=w[0]+"|"+w[1];if(seen.has(k))return;seen.add(k);const lv=L[w[0].toLowerCase()];
+    if(g[0]!=="all"&&!(lv>=g[2]&&lv<=g[3]))return;if(pp&&(["n","v","a","r"].includes(w[1])?w[1]:"o")!==pp)return;out.push(w)}));return out}
+export function renderLevel(){const pool=levelPool(),n=20,m=Math.ceil(pool.length/n),g=SV.lgrp||"all",p=SV.lpos||"",gi=LGRP.find(x=>x[0]===g)||LGRP[0],pn=(LPOS.find(x=>x[0]===p)||LPOS[0])[1];
+  $("wTitle").textContent="レベル・品詞で選ぶ";
+  $("wNote").textContent=`${gi[4]?gi[4]+"。":""}${pool.length}語を${n}語ずつ。読み上げを聞いて、意味を選ぶ。`;
+  $("wtools").innerHTML=LGRP.map(x=>`<button class="chip ${x[0]===g?"on":""}" data-g="${x[0]}">${x[1]}</button>`).join("")+`<span style="flex-basis:100%;height:0"></span>`+LPOS.map(x=>`<button class="chip ${x[0]===p?"on":""}" data-p="${x[0]}">${x[1]}</button>`).join("");
+  $("wtools").querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{SE.tap();SV.lgrp=b.dataset.g;save();renderWords()});
+  $("wtools").querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{SE.tap();SV.lpos=b.dataset.p;save();renderWords()});
+  $("wsets").innerHTML=m?Array.from({length:m},(_,k)=>{const id=`l-${g}-${p||"all"}-${k+1}`,st=starsOf(id,1),b=rec(id,1,"ta");
+    return `<button class="wset" data-k="${k}"><b>${k+1}</b><span class="ws">${esc(pool[k*n][0])}…</span><span class="st">${"★".repeat(st)}<i>${"★".repeat(3-st)}</i></span>${b?`<small>${b.time.toFixed(1)}s</small>`:""}</button>`}).join(""):`<div class="ulempty">この条件の単語はありません。</div>`;
+  $("wsets").querySelectorAll(".wset").forEach(b=>b.onclick=()=>{SE.tap();const k=+b.dataset.k,ws=pool.slice(k*n,k*n+n);
+    setCur({id:`l-${g}-${p||"all"}-${k+1}`,lv:gi[5],word:true,title:`${gi[1]}の${p?pn:"単語"} セット${k+1}`,ja:`${ws[0][0]} 〜 ${ws[ws.length-1][0]}`,tag:`${gi[1]}・${p?pn+"・":""}単語練習`,words:ws,chunks:[]});startRun(1)})}
 export function renderUL(){const all=allLists(),cats=[...new Set(all.map(l=>l.cat).filter(Boolean))];if(UCAT&&!cats.includes(UCAT))UCAT="";
   $("wTitle").textContent="単語集";
   $("wNote").textContent=WDB?"自分で作った単語集と、みんなが共有した単語集（🌐）。カテゴリーで絞り込めます。":"自分で作った単語集。英語と訳を1行ずつ貼り付けるか、ファイルから読み込めます。";

@@ -24,7 +24,7 @@ export function createLevel(core) {
   const save = () => { st.set('level', L); subs.forEach(f => { try { f(); } catch (e) { } }); };
   // ---- 材料：よく使う順の単語 ----
   let G = null, ready = null;
-  const load = () => ready || (ready = Promise.all(['words.js', 'data.js', 'bank.js'].map(f => loadScript(core.base + 'g/stream/' + f))).then(() => true).catch(() => false));
+  const load = () => ready || (ready = Promise.all(['words.js', 'data.js', 'bank.js', 'wlv.js'].map(f => loadScript(core.base + 'g/stream/' + f))).then(() => true).catch(() => false));
   function list() {
     if (G) return G;
     let W = null, B = ''; try { W = WORDS; } catch (e) { } try { B = BANK_SRC; } catch (e) { }
@@ -34,6 +34,19 @@ export function createLevel(core) {
     [1, 2, 3].forEach(l => (W[l] || []).forEach(w => add(w[0], w[1], w[2])));
     String(B).split('\n').forEach(l => { const c = l.split('\t'); add(c[0], c[1], c[2]); });
     return G;
+  }
+  // 推定語彙のあたりの単語のレベル(CEFR)から、英検・TOEIC・学校の目安を出す(単語表 data/words のレベル。公式の対応ではない目安)
+  let WL = null;
+  const CEFR = ['', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'], EIKEN = ['', '5〜3級', '準2級', '2級', '準1級', '1級', '1級以上'], TOEIC = ['', '〜220点', '225〜545点', '550〜780点', '785〜940点', '945点〜', '945点〜'], SCH = ['', '中学', '中学', '高校', '大学受験・大学', '大学以上', '大学以上'];
+  function cefrNote(v) {
+    try {
+      if (!WL) { WL = {}; WLV_SRC.split(',').forEach(s => { const i = s.lastIndexOf(':'); WL[s.slice(0, i)] = +s.slice(i + 1); }); }
+      const g = list(), lo = Math.max(0, Math.round(v) - 200), hi = Math.min(g.length, Math.round(v) + 200), ls = [];
+      for (let i = lo; i < hi; i++) { const l = WL[String(g[i][0]).toLowerCase()]; if (l) ls.push(l); }
+      if (ls.length < 20) return '';
+      ls.sort((a, b) => a - b); const m = ls[Math.floor(ls.length / 2)];
+      return `（CEFR ${CEFR[m]}・英検${EIKEN[m]}・TOEIC ${TOEIC[m]}・${SCH[m]}くらいの単語。公式の対応ではなく目安です）`;
+    } catch (e) { return ''; }
   }
   const bandOf = i => Math.max(0, EDGES.findIndex(e => e > i) - 1);
   function wordQ(band, used) {
@@ -98,7 +111,7 @@ export function createLevel(core) {
     intro('レベル診断', QN, () => run('レベル診断', 3, [], (res, hold) => {
       const v = estimate(res), lv = lvOfVocab(v);
       L.vocab = v; L.lv = lv; L.max = Math.max(L.max, lv); L.allowed = [lv - 1, lv, lv + 1].filter(x => x >= 1 && x <= 3); L.at = Date.now(); L.lastCleared = core.mission ? core.mission.cleared() : 0; save(); miss(res);
-      core.ui.sheet(`<h3>推定語彙 約${v.toLocaleString()}語</h3><p class="cs-note">${vocabNote(v)}。アプリのレベルは「${LV_NAME[lv]}」から始まります(選べるのは ${L.allowed.map(x => LV_NAME[x]).join('・')})。${hold ? `<br>20秒以上かかった ${hold} 問は、結果に入れていません。` : ''}<br>まちがえた単語は勉強ノートに入りました。</p>`);
+      core.ui.sheet(`<h3>推定語彙 約${v.toLocaleString()}語</h3><p class="cs-note">${vocabNote(v)}${cefrNote(v)}。アプリのレベルは「${LV_NAME[lv]}」から始まります(選べるのは ${L.allowed.map(x => LV_NAME[x]).join('・')})。${hold ? `<br>20秒以上かかった ${hold} 問は、結果に入れていません。` : ''}<br>まちがえた単語は勉強ノートに入りました。</p>`);
     }));
   }
   // 実力テスト：ミッションを NEED 個クリアするごとに受けられる
@@ -120,7 +133,7 @@ export function createLevel(core) {
         if (nl > L.lv && cacc >= .6) { L.passed.push({ lv: nl, at: Date.now(), vocab: v }); L.lv = nl; L.max = Math.max(L.max, nl); msg = `合格! ${LV_NAME[nl]}が開きました。`; }
         L.allowed = [L.lv - 1, L.lv, L.lv + 1].filter(x => x >= 1 && x <= Math.min(3, L.max + 1)); save(); miss(res);
         core.events.report('level', 'done', { play: 'test', min: Math.round(res.length * .25 * 10) / 10, score: Math.round(res.filter(x => x.ok).length / Math.max(1, res.length) * 100), finished: true });
-        core.ui.sheet(`<h3>推定語彙 約${v.toLocaleString()}語</h3><p class="cs-note">${vocabNote(v)}(前回 ${before.toLocaleString()}語)。チャンクの意味 ${Math.round(cacc * 100)}%。<br>${msg || (L.lv < 3 ? `次のレベルは 推定語彙 ${nl < 2 ? '2,000' : '4,500'}語 と、チャンクの意味6割 で開きます。` : 'いちばん上のレベルです。')}${hold ? `<br>20秒以上かかった ${hold} 問は、結果に入れていません。` : ''}<br>まちがえた言葉は勉強ノートに入りました。</p>`);
+        core.ui.sheet(`<h3>推定語彙 約${v.toLocaleString()}語</h3><p class="cs-note">${vocabNote(v)}${cefrNote(v)}(前回 ${before.toLocaleString()}語)。チャンクの意味 ${Math.round(cacc * 100)}%。<br>${msg || (L.lv < 3 ? `次のレベルは 推定語彙 ${nl < 2 ? '2,000' : '4,500'}語 と、チャンクの意味6割 で開きます。` : 'いちばん上のレベルです。')}${hold ? `<br>20秒以上かかった ${hold} 問は、結果に入れていません。` : ''}<br>まちがえた言葉は勉強ノートに入りました。</p>`);
       });
     });
   }

@@ -225,3 +225,15 @@ with open(APP + 'bank.js', 'w', encoding='utf8') as fp:
 print('free', {l: len(v) for l, v in WORDS.items()}, 'cards', sum(len(v) for v in WORDS.values()), 'usew', len(usew))
 print('bank', len(bank), 'stages', -(-len(bank) // 300), 'pos', C.Counter(b[2] for b in bank))
 print('sample free', WORDS[1][:12]); print('sample bank', [b[1:] for b in bank[:15]], [b[1:] for b in bank[5000:5010]], [b[1:] for b in bank[-8:]])
+
+# ---- 単語ごとのレベル(CEFR 1=A1〜6=C2)：単語表 data/words/dict_all_words.csv から。レベル別の練習と、レベル診断の目安で使う ----
+def _wlv():
+    path = HERE + '../../../data/words/dict_all_words.csv'; out = {}
+    if not os.path.exists(path): return out
+    for r in csv.DictReader(open(path, encoding='utf-8-sig')):
+        if r['レベル(1-6)'] and r['熟語'] == '' and re.fullmatch(r"[a-z][a-z'-]*", r['単語']): out[r['単語']] = r['レベル(1-6)']
+    return out
+WLV = _wlv()
+with open(APP + 'wlv.js', 'w', encoding='utf8') as fp:
+    fp.write('// 単語のレベル(CEFR 1=A1〜6=C2)。build/build_words2.py が 単語表(data/words)から作る。1語=「語:数字」を , でつなぐ\nconst WLV_SRC=' + json.dumps(','.join(f'{w}:{v}' for w, v in sorted(WLV.items())), ensure_ascii=False) + ';\n')
+print('wlv', len(WLV))

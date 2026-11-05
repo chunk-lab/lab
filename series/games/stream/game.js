@@ -18,7 +18,7 @@ const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+
 export default {
   id: 'stream', name: 'Storyミング！', right: 'game:stream',
   async mount(el, ctx) {
-    for (const f of ['data.js', 'pool.js', 'words.js', 'texts.js']) await ctx.loadScript(ctx.base + f);
+    for (const f of ['data.js', 'pool.js', 'words.js', 'texts.js', 'wlv.js']) await ctx.loadScript(ctx.base + f);
     if (!document.querySelector('link[data-ct="stream"]')) { const lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = FONT; lk.dataset.ct = 'stream'; document.head.appendChild(lk); }
     Object.assign(ENV, { root: el, ctx, core: ctx.core, base: ctx.base, offs: [] });
     el.classList.add('ct-stream');
