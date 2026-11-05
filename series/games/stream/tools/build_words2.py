@@ -88,9 +88,21 @@ for k_, v_ in secs.items():
         if len(f_) >= 3 and re.fullmatch(r"[a-z][a-z'-]*", f_[0]):
             pp_ = POSMAP[k_]
             if pp_ in CONTENT: BSC[(f_[0], pp_)] = max(BSC.get((f_[0], pp_), 0), int(f_[2]))
+PSUM = {}   # 語 → {品詞: v12での点数の合計}。sense_scores.tsv から(点数だけ。訳文は使わない)
+for _l in open(HERE + '../../../data/words/sense_scores.tsv', encoding='utf8'):
+    _f = _l.rstrip('\n').split('\t')
+    if _l[0] != '#' and len(_f) >= 4: PSUM.setdefault(_f[0], {}).setdefault(_f[1], 0.0); PSUM[_f[0]][_f[1]] += float(_f[3])
+KEEP_POS = set('bicycle dizzy flute nickname magic log objective fossil pagan canine convict leak snip screech pout'.split())   # 点数では別の品詞が高いが、今の品詞のままにする語
+def _best_pos(w, cands):
+    d = {c: PSUM.get(w, {}).get(c, 0) for c in cands if c in CONTENT}
+    return d
 PRIM_X = {'curry': 'n'}   # 主な品詞を決め打ち(extra_ja.tsv で足した語など)
 def prim_of(w, cands):
     if w in PRIM_X: return PRIM_X[w]
+    d = _best_pos(w, cands)
+    if len(d) >= 2 and w not in KEEP_POS:
+        b = max(d, key=d.get); cur = PRIM.get(w)
+        if cur in d and b != cur and d[b] >= max(6, 3 * d[cur]): return b   # 外部辞書でずっと多い品詞を主にする
     """主な品詞を返す。cands = いまカードがある(または候補の)内容語の品詞"""
     if w in PRIM and (not cands or PRIM[w] in cands or True): return PRIM[w]
     cands = [c for c in cands if c in CONTENT]
@@ -245,7 +257,17 @@ for w, p, ja in usew: bank.append((rank(w), w, p, ja))
 _bc = C.defaultdict(list)
 for _r, w_, p_, _j in bank:
     if p_ in CONTENT: _bc[w_].append(p_)
-bank = [x for x in bank if x[2] not in CONTENT or prim_of(x[1], _bc[x[1]]) == x[2]]
+_pm = {w_: prim_of(w_, ps_) for w_, ps_ in _bc.items()}
+_sec = set()   # 別の品詞でも よく使う語は、別カードにして「別の意味」の印(4列目の2)を付ける
+def _second(w_, p_):
+    d = _best_pos(w_, _bc[w_]); t = sum(d.values())
+    return w_ not in KEEP_POS2 and len(d) >= 2 and d.get(p_, 0) >= 3 and d.get(p_, 0) >= 0.3 * t
+KEEP_POS2 = set('bicycle flute nickname log'.split())   # 派生にすぎない品詞は別カードにしない
+bank2_ = []
+for x_ in bank:
+    if x_[2] not in CONTENT or _pm.get(x_[1]) == x_[2]: bank2_.append(x_)
+    elif _second(x_[1], x_[2]): bank2_.append((x_[0] + 600, x_[1], x_[2], x_[3])); _sec.add((x_[1], x_[2]))
+bank = bank2_
 bank.sort()
 seen = set(); b2 = []
 for x in bank:            # 同じ語で訳が同じ品詞違い（eleven 形/名 など）は1枚に
@@ -254,7 +276,7 @@ for x in bank:            # 同じ語で訳が同じ品詞違い（eleven 形/�
 bank = b2
 with open(APP + 'bank.js', 'w', encoding='utf8') as fp:
     fp.write('// 全単語バンク（解放して遊ぶ分）。build/build_words2.py で生成。1行＝英語<TAB>品詞<TAB>訳。よく使う順。BANK_STAGE語で1ステージ\nconst BANK_STAGE=300;\nconst BANK_SRC=' +
-             json.dumps('\n'.join(f'{w}\t{p}\t{ja}' for _, w, p, ja in bank), ensure_ascii=False) + ';\n')
+             json.dumps('\n'.join(f'{w}\t{p}\t{ja}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in bank), ensure_ascii=False) + ';\n')
 print('free', {l: len(v) for l, v in WORDS.items()}, 'cards', sum(len(v) for v in WORDS.values()), 'usew', len(usew))
 print('bank', len(bank), 'stages', -(-len(bank) // 300), 'pos', C.Counter(b[2] for b in bank))
 print('sample free', WORDS[1][:12]); print('sample bank', [b[1:] for b in bank[:15]], [b[1:] for b in bank[5000:5010]], [b[1:] for b in bank[-8:]])
