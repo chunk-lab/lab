@@ -13,7 +13,18 @@ MAXJA = 12          # ボタン2行に収まる長さ。意味はこの長さに
 POSMAP = {'n': 'n', 'p': 'n', 'an': 'n', 'v': 'v', 'a': 'a', 'r': 'r', 'adj': 'a', 'adv': 'r', 'prep': 'pp', 'conj': 'cj', 'pr': 'pn', 'int': 'ij', 'num': 'n', 'det': 'a'}
 JTAG = {'名': 'n', '動': 'v', '形': 'a', '副': 'r', '前': 'pp', '接': 'cj', '代': 'pn', '間': 'ij', '形・副': 'a', '名・形': 'n', '前・副': 'pp', '名・動': 'n', '名・副': 'n'}
 BAD_W = set('fuck fucking fucker shit shitty cunt dick pussy bitch whore slut cock nigger nigga fag faggot fagot rape rapist porn porno penis vagina boob boobs tit tits horny dildo masturbate orgasm sperm semen bastard asshole ass arse damn goddamn piss crap gay queer homo lesbian tranny retard'.split())
+# 出題しない語：単語表(data/words/dict_all_words.csv)の「出題＝×」(話しことばの断片・短すぎる略語・人名)と、
+# 人名にもなる語のうち、ほぼ人名として使われる語(NAMES。見て選んだ。rose・ivy・jasmine のような本物の語は残す)。表は tools/build_wordtable.py が作る
+NAMES = set("""benjamin burton chad charlotte don donna henry jonah kris marc marguerite morris phoebe rhea john johnny jenny sonny victoria graham nelson tom""".split())
+def _excl():
+    out = set(NAMES); path = HERE + '../../../data/words/dict_all_words.csv'
+    if not os.path.exists(path): return out
+    for r in csv.DictReader(open(path, encoding='utf-8-sig')):
+        if r['出題'] == '×': out.add(r['単語'].lower())
+    return out
+EXCL = _excl()
 BAD_J = re.compile('性交|売春|性器|陰茎|陰部|膣|精液|ペニス|大便|小便|くそ|ちくしょう|同性愛|乳房|強姦|ポルノ|自慰|淫|売女|娼婦|白痴|気違い|きちがい|めくら|つんぼ|おし（|かたわ|びっこ|黒んぼ')
+BAD_W |= EXCL
 
 def clean(m):
     m = re.sub(r'[（(][^）)]*[）)]', '', m).strip(' 　・')
