@@ -42,10 +42,19 @@ def count_of(i):   # 辞書の i 番目の語の頻度＝原形＋変化形
     w, _, fo = DICT[i]; return sum(CNT.get(x.lower(), 0) for x in {w.lower(), *[f.lower() for f in fo]})
 TIER = [(5.5, '1 超頻出'), (4.7, '2 頻出'), (3.9, '3 ふつう'), (3.1, '4 やや珍しい'), (-9, '5 珍しい')]
 def tier(z): return next(t for th, t in TIER if z is not None and z >= th) if z is not None else ''
+# --- v12単語帳の集計(英検の級・意味の数・出典の数。tools/build_v12_levels.py が作る。訳と出典名は入れていない) ---
+V12 = {}
+_vp = P('data', 'words', 'v12_levels.csv')
+if os.path.exists(_vp):
+    for r in csv.DictReader(open(_vp, encoding='utf-8-sig')): V12[r['単語']] = r
+def v12cols(w):
+    r = V12.get(w.lower()); return [r['最低の級'], r['最高の級'], r['意味の数'], r['出典の数']] if r else ['', '', '', '']
+V12HEAD = ['英検の級(実データ)', '級の幅(最高)', '意味の数(v12)', '出典の数(v12)']
 # --- CEFR ---
 POSJ = {'noun': '名詞', 'verb': '動詞', 'adjective': '形容詞', 'adverb': '副詞', 'preposition': '前置詞', 'pronoun': '代名詞', 'conjunction': '接続詞', 'determiner': '限定詞', 'interjection': '間投詞', 'modal verb': '助動詞', 'auxiliary verb': '助動詞', 'number': '数詞', 'infinitive-to': '不定詞のto', 'be-verb': 'be動詞', 'do-verb': '助動詞', 'have-verb': '助動詞', 'article': '冠詞'}
 LV = {'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6}
 LVN = {v: k for k, v in LV.items()}
+EIKEN_ORDER = ['5級', '4級', '3級', '準2級', '準2級プラス', '2級', '準1級', '1級']
 EIKEN = {'A1': '5〜3級', 'A2': '準2級', 'B1': '2級', 'B2': '準1級', 'C1': '1級', 'C2': '1級以上'}
 TOEIC = {'A1': '〜220', 'A2': '225〜545', 'B1': '550〜780', 'B2': '785〜940', 'C1': '945〜', 'C2': '945〜'}
 SCHOOL = {'A1': '中学', 'A2': '中学', 'B1': '高校', 'B2': '大学受験・大学', 'C1': '大学以上', 'C2': '大学以上'}
@@ -90,11 +99,11 @@ def add(path, srcname):
             else: status = '辞書にない' + ('（熟語・複合語）' if re.search(r"[ \-.']", main) else '')
         if i is not None: best[i] = min(best.get(i, 9), LV[lv])
         c = count_of(i) if i is not None else CNT.get(main.lower(), 0); z = zipf(c)
-        rows.append([main, hw if hw != main else '', pos, lv, LV[lv], EIKEN[lv], TOEIC[lv], SCHOOL[lv], tier(z), z if z else '', DICT[i][1].split(';')[0][:60] if i is not None else '', status, srcname, *classify(main, DICT[i][1] if i is not None else '', True, z, ' ' in main)])
+        rows.append([main, hw if hw != main else '', pos, lv, LV[lv], EIKEN[lv], TOEIC[lv], SCHOOL[lv], tier(z), z if z else '', DICT[i][1].split(';')[0][:60] if i is not None else '', status, srcname, *classify(main, DICT[i][1] if i is not None else '', True, z, ' ' in main), *v12cols(main)])
 add(P('data', 'words', 'src_cefrj_vocabulary_1.5.csv'), 'CEFR-J 1.5')
 add(P('data', 'words', 'src_octanove_c1c2_1.0.csv'), 'Octanove C1/C2')
 rows.sort(key=lambda r: (r[4], -(r[9] or 0), r[0].lower()))
-HEAD = ['単語', '表記ゆれ', '品詞', 'CEFR', 'レベル(1-6)', '英検の目安', 'TOEIC(L&R)の目安', '学校の段階の目安', '頻度ランク', '頻度Zipf', 'いまの辞書の意味', '辞書との関係', '出典', '区分', '出題']
+HEAD = ['単語', '表記ゆれ', '品詞', 'CEFR', 'レベル(1-6)', '英検の目安', 'TOEIC(L&R)の目安', '学校の段階の目安', '頻度ランク', '頻度Zipf', 'いまの辞書の意味', '辞書との関係', '出典', '区分', '出題', *V12HEAD]
 # --- 辞書全体：レベルがない語には、頻度から推定レベルを付ける ---
 zs = collections.defaultdict(list)
 for i, lv in best.items():
@@ -114,8 +123,8 @@ for i, (w, m, fo) in enumerate(DICT):
     if lv: how = 'CEFR-J'
     elif isph: lv, how = None, ''
     else: lv, how = est(z), '推定(頻度から)'
-    full.append([w, m.split(';')[0][:60], ', '.join(fo[:6]), '熟語' if isph else '', LVN[lv] if lv else '', lv or '', how, EIKEN[LVN[lv]] if lv else '', TOEIC[LVN[lv]] if lv else '', SCHOOL[LVN[lv]] if lv else '', tier(z), z if z else '', c or '', *classify(w, m, bool(best.get(i)), z, isph)])
-HEAD2 = ['単語', '意味(先頭)', '変化形', '熟語', 'CEFR', 'レベル(1-6)', 'レベルの出どころ', '英検の目安', 'TOEIC(L&R)の目安', '学校の段階の目安', '頻度ランク', '頻度Zipf', '出現数(原形+変化形)', '区分', '出題']
+    full.append([w, m.split(';')[0][:60], ', '.join(fo[:6]), '熟語' if isph else '', LVN[lv] if lv else '', lv or '', how, EIKEN[LVN[lv]] if lv else '', TOEIC[LVN[lv]] if lv else '', SCHOOL[LVN[lv]] if lv else '', tier(z), z if z else '', c or '', *classify(w, m, bool(best.get(i)), z, isph), *v12cols(w)])
+HEAD2 = ['単語', '意味(先頭)', '変化形', '熟語', 'CEFR', 'レベル(1-6)', 'レベルの出どころ', '英検の目安', 'TOEIC(L&R)の目安', '学校の段階の目安', '頻度ランク', '頻度Zipf', '出現数(原形+変化形)', '区分', '出題', *V12HEAD]
 for r in full:   # 出題しない語(×)には、推定レベルを付けない
     if r[14] == '×':
         if r[6] == '推定(頻度から)': r[4] = r[5] = ''; r[6] = '推定しない(' + r[13] + ')'
@@ -132,9 +141,22 @@ def sheet(ws, head, data, widths):
     ws.append(head); [ws.append(r) for r in data]
     for c in ws[1]: c.font = Font(bold=True, color='FFFFFF'); c.fill = PatternFill('solid', fgColor='5B4B8A')
     ws.freeze_panes = 'B2'; ws.auto_filter.ref = ws.dimensions
-    for col, wd in zip('ABCDEFGHIJKLMNO', widths): ws.column_dimensions[col].width = wd
-sheet(wb.active, HEAD, rows, [18, 22, 10, 7, 9, 11, 14, 16, 12, 9, 36, 28, 15, 22, 7]); wb.active.title = 'レベル表(CEFR-J)'
-sheet(wb.create_sheet('辞書の全単語'), HEAD2, full, [20, 34, 26, 7, 7, 9, 14, 11, 14, 16, 12, 9, 12, 22, 7])
+    for col, wd in zip('ABCDEFGHIJKLMNOPQRS', widths): ws.column_dimensions[col].width = wd
+sheet(wb.active, HEAD, rows, [18, 22, 10, 7, 9, 11, 14, 16, 12, 9, 36, 28, 15, 22, 7, 12, 10, 9, 9]); wb.active.title = 'レベル表(CEFR-J)'
+sheet(wb.create_sheet('辞書の全単語'), HEAD2, full, [20, 34, 26, 7, 7, 9, 14, 11, 14, 16, 12, 9, 12, 22, 7, 12, 10, 9, 9])
+# 熟語・句動詞などの候補(v12に あって、辞書にない・または辞書にある)。訳は空欄(自分たちで作る)
+ph = []; add_words = []
+for w, r in V12.items():
+    if ' ' in w or w.startswith('(') or '~' in w or '〜' in w:
+        i = INDICT.get(w); ph.append([w, r['区分'], r['最低の級'], r['最高の級'], int(r['意味の数']), int(r['出典の数']), 'ある' if i is not None else 'ない', DICT[i][1].split(';')[0][:60] if i is not None else '', ''])
+    else:
+        i = INDICT.get(w)
+        if i is None:
+            b = base_in_dict(w); add_words.append([w, r['区分'], r['品詞(多い順)'], r['最低の級'], r['最高の級'], int(r['意味の数']), int(r['出典の数']), ('変化形(原形 ' + b + ' は辞書にある)') if b else '新しい語の候補'])
+ph.sort(key=lambda r: (EIKEN_ORDER.index(r[2]) if r[2] in EIKEN_ORDER else 9, -r[5], r[0])); add_words.sort(key=lambda r: (r[7] != '新しい語の候補', EIKEN_ORDER.index(r[3]) if r[3] in EIKEN_ORDER else 9, r[0]))
+sheet(wb.create_sheet('熟語の候補(訳は自作)'), ['熟語・句動詞など', '区分', '最低の級', '最高の級', '意味の数', '出典の数', '今の辞書', '今の辞書の訳(先頭)', '自分たちの訳(記入用)'], ph, [32, 14, 10, 10, 8, 8, 8, 30, 30])
+sheet(wb.create_sheet('辞書に足す単語の候補'), ['単語', '区分', '品詞(多い順)', '最低の級', '最高の級', '意味の数', '出典の数', '辞書との関係'], add_words, [20, 12, 16, 10, 10, 8, 8, 28])
+print('phrases', len(ph), 'new words', sum(1 for r in add_words if r[7] == '新しい語の候補'), 'inflected', sum(1 for r in add_words if r[7] != '新しい語の候補'))
 wb.save(P('data', 'words', 'word_levels.xlsx'))
 print('levels', len(rows), 'dict', len(full), 'cuts', [round(c, 2) for c in cut], 'med', {LVN[k]: v for k, v in med.items()})
 print(collections.Counter((r[13], r[14]) for r in rows).most_common(8), collections.Counter((r[13], r[14]) for r in full).most_common(12)); print(collections.Counter(r[6] for r in full)); print(collections.Counter((r[4], r[6]) for r in full if r[6]).most_common(14))
