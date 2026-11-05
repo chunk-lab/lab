@@ -198,6 +198,13 @@ with open(APP + 'words.js', 'w', encoding='utf8') as fp:
     fp.write('// 単語練習（無料分）。build/build_words2.py で生成。1カード＝1単語の1品詞\nconst WORDS=' + json.dumps(WORDS, ensure_ascii=False, separators=(',', ':')) +
              ';\nconst WSET=' + json.dumps(WSET) + ';\nconst IDIOMS=' + json.dumps(ID, ensure_ascii=False, separators=(',', ':')) + ';\n')
 
+# ---- 訳の順：v12との照らし合わせ(data/words/sense_scores.tsv。tools/build_sense_scores.py が作る)で、主な意味を先に ----
+SENSE = {}
+_sp = HERE + '../../../data/words/sense_scores.tsv'
+if os.path.exists(_sp):
+    for l in open(_sp, encoding='utf8'):
+        if l.startswith('#') or not l.strip(): continue
+        w_, p_, m_, s_ = l.rstrip('\n').split('\t'); SENSE.setdefault((w_, p_), {})[m_] = float(s_)
 # ---- 全単語バンク（解放して遊ぶ分） ----
 have = set(CARD); FREEW = {w for (w, p) in CARD}
 bank = []
@@ -205,7 +212,13 @@ for (w, p) in set(BIG) | set(DX):
     if (w, p) in have or w in BAD_W or len(w) < 2 or inflected(w, p): continue
     if w in FREEW and (w, p) not in DX and (w, p) not in D2: continue   # よく使う語の、辞書のおまけの品詞（say＝すれば など）は入れない
     if w in FIX and FIX[w] is None and (w in PAST or inflected(w, 'n')): continue
-    ja = join(DX.get((w, p), []) + [BIG.get((w, p), '')])
+    cands = DX.get((w, p), []) + [m for m in re.split(r'[、,]', BIG.get((w, p), '')) if m.strip()]
+    if (w, p) in SENSE: cands = sorted(cands, key=lambda m: -SENSE[(w, p)].get(m.strip(), 0))   # v12で よく書かれている意味(主な意味)を先に
+    _seen = set(); _c2 = []
+    for m in cands:   # 「最高位の」と「最高位」のような、ほぼ同じ訳は1つに
+        kk = re.sub(r'[〜～\s]|(的な|的に|的|する|した|して|な|の|に)$', '', m.strip())
+        if kk and kk not in _seen: _seen.add(kk); _c2.append(m)
+    ja = join(_c2)
     if not ja: continue
     bank.append((rank(w), w, p, ja))
 for w, p, ja in usew: bank.append((rank(w), w, p, ja))
