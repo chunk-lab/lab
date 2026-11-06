@@ -38,7 +38,7 @@ M| {than|then|that|as} for one :: 病気よりも
 X| {that|what|who|whom} spreads less easily. :: 広がりにくい
 == はしかのような感染力の強い病気では、広がりにくい病気よりも閾値がずっと高い。
 S| Herd immunity {matters|matter|mattering|material} :: 集団免疫が重要だ
-M| {most|almost|utmost|the more} :: 最も
+M| {most|almost|utmost|mostly of} :: 最も
 P| {for|at|by|on} people :: 人々にとって
 X| {who|whom|which|whose} cannot be vaccinated, :: 接種できない
 M| {such as|such|so as|as like} newborns :: 新生児や
@@ -268,7 +268,7 @@ P| {of|for|at|by} cholera :: コレラの
 V| {struck|strike|stroke|striking} :: 襲った
 O| the Soho district {of|for|at|on} London, :: ソーホー地区を
 X| {killing|killed|to killing|kills} hundreds of people :: 何百人も死なせ
-T| {within|inside of|among|during of} a few weeks. :: 数週間で
+T| {within|inside to|among|during of} a few weeks. :: 数週間で
 == 1854年、ロンドンのソーホー地区をひどいコレラの流行が襲い、数週間で何百人もの命を奪った。
 T| {At|In|On|By} the time, :: 当時
 S| most {experts|expertise|expert's|expertly} :: 大半の専門家は
@@ -283,7 +283,7 @@ M| {however|whatever|whenever|howsoever}, :: しかし
 V| {suspected|suspect of|suspicion|suspicious} :: 疑っていた
 O| {that|what|which|whom} the disease :: その病気は…と
 V| was {carried|carry|carrying|carries} :: 運ばれる
-P| {in|at|on|with of} contaminated water. :: 汚染された水で
+P| {in|at|to|with of} contaminated water. :: 汚染された水で
 == しかし医師ジョン・スノーは、この病気は汚染された水によって運ばれるのではないかと疑っていた。
 R| {To test|Testing of|For test|To testing} his idea, :: 考えを確かめるため
 S| he {marked|mark|marking|marks of} each death :: 彼は死者を記した
@@ -543,7 +543,7 @@ X| {called|calling|call|calls} the corpus callosum. :: 脳梁と呼ばれる
 T| {In|On|At|Of} the mid-twentieth century, :: 20世紀半ばに
 S| surgeons {began|begun|begin of|beginning} :: 外科医は始めた
 O| {cutting|cut of|cuts|to cutting} this structure :: これを切ることを
-P| {in|on|at of|to} some patients :: 一部の患者で
+P| {in|by|at of|to} some patients :: 一部の患者で
 P| {with|of whom|whose|which} severe epilepsy, :: 重いてんかんの
 R| {to stop|stopping|stop|to stopping} seizures from spreading. :: 発作の拡大を防ぐため
 == 20世紀半ば、外科医は発作が広がるのを防ぐため、重いてんかんの一部の患者でこの構造を切断し始めた。
@@ -646,7 +646,7 @@ M| {Astonishingly|Astonishing|Astonish|Astonishment}, :: 驚くべきことに
 S| Gage {survived|survive|survival|surviving} :: ゲージは生き延びた
 M| {and|nor|than|whom} was able :: そして…できた
 X| {to speak|speaking|speak|to speaking} :: 話すことが
-T| {within|inside of|among|during of} minutes of the accident. :: 事故から数分で
+T| {within|inside to|among|during of} minutes of the accident. :: 事故から数分で
 == 驚くべきことに、ゲージは生き延び、事故から数分のうちに話すことができた。
 P| {According|Accordingly|Accord|According of} to his physician, :: 主治医によると
 M| {however|whatever|whenever|howsoever}, :: しかし
