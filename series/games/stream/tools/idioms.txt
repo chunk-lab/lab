@@ -331,3 +331,320 @@
 3	not to mention	〜は言うまでもなく
 3	on account of	〜のために
 3	put an end to	〜を終わらせる
+# --- 以下、TOEIC語表の「候補」の熟語から追加(例文は data/sentences/toeic_idioms.tsv)。600点=1, 700点=2, 800点以上=3 ---
+1	city hall	市役所
+1	down payment	頭金
+1	head office	本社
+1	heat wave	熱波
+1	sign up for	〜に登録する、申し込む
+1	surface mail	船便、普通郵便
+1	time line	予定表、年表
+2	a bit of	少しの
+2	a couple of	2、3の
+2	a handful of	ひと握りの、少数の
+2	a host of	たくさんの
+2	a pile of	山積みの
+2	a series of	一連の
+2	across from	〜の向かいに
+2	afford to do	〜する余裕がある
+2	agree to do	〜することに同意する
+2	ahead of	〜より前に、先に
+2	aim to do	〜することを目指す
+2	all but	ほとんど
+2	all the time	いつも
+2	along with	〜と一緒に
+2	amount to	(合計が)〜になる
+2	apart from	〜を除いて、〜のほかに
+2	appeal to	〜の心に訴える
+2	apply to	〜に当てはまる
+2	as if	まるで〜のように
+2	as of	〜の時点で、〜から
+2	as to	〜について
+2	aside from	〜を除いて
+2	at all times	いつでも、常に
+2	at best	せいぜい
+2	at ease	くつろいで
+2	at hand	手元に、間近に
+2	at large	逃走中で、全体として
+2	at work	職場で、仕事中で
+2	avoid doing	〜するのを避ける
+2	be bound for	〜行きである
+2	be eager for	〜を切望している
+2	be equal to	〜に等しい、〜をこなせる
+2	be fit for	〜に適している
+2	be free of	〜がない
+2	be proper to	〜に特有の、ふさわしい
+2	be seated on	〜に座っている
+2	bend over	かがむ
+2	by accident	偶然に
+2	by hand	手で
+2	by heart	暗記して
+2	by mistake	間違って
+2	call on	〜を訪ねる、〜に求める
+2	calm down	落ち着く
+2	care for	〜の世話をする
+2	check in	チェックインする
+2	compared to	〜と比べて
+2	contrary to	〜に反して
+2	decide to do	〜することに決める
+2	deny doing	〜したことを否定する
+2	do business	取引する
+2	dozens of	何十もの
+2	enroll in	〜に入学する、登録する
+2	even though	〜なのに
+2	fail to do	〜しない、〜できない
+2	for nothing	無料で、むだに
+2	for sale	売り物の
+2	for starters	まず第一に
+2	for sure	確かに
+2	gaze at	〜をじっと見つめる
+2	get lost	道に迷う
+2	go off	(警報などが)鳴る
+2	go over	〜を見直す
+2	hand out	〜を配る
+2	happen to do	たまたま〜する
+2	How come	どうして
+2	in a moment	すぐに
+2	in a row	連続して
+2	in a sense	ある意味で
+2	in brief	手短に言えば
+2	in case of	〜の場合には
+2	in detail	詳しく
+2	in effect	実際には、有効で
+2	in honor of	〜をたたえて
+2	in line	列に並んで
+2	in person	直接に、本人が
+2	in practice	実際には
+2	in progress	進行中で
+2	in public	人前で
+2	in search of	〜を探して
+2	in the past	過去に
+2	in writing	書面で
+2	intend to do	〜するつもりである
+2	later on	あとで
+2	lean against	〜にもたれる
+2	let out	〜を外に出す
+2	let up	(雨などが)弱まる
+2	line up	並ぶ
+2	long before	ずっと前に
+2	look over	〜にざっと目を通す
+2	make out	〜を理解する、見分ける
+2	manage to do	なんとか〜する
+2	object to	〜に反対する
+2	occur to	(考えが)浮かぶ
+2	on average	平均して
+2	on board	乗って
+2	on business	仕事で
+2	on display	展示されて
+2	on duty	勤務中で
+2	on foot	徒歩で
+2	on occasion	時々
+2	on sale	販売中で、特売で
+2	on the side	副業で、添えて
+2	on the way	途中で
+2	on top of	〜に加えて、〜の上に
+2	other than	〜以外に
+2	out of stock	在庫切れで
+2	out of town	町を離れて、出張中で
+2	pass out	気を失う、配る
+2	pay off	〜を完済する、報われる
+2	plenty of	たくさんの
+2	point at	〜を指さす
+2	prefer to do	〜するほうを好む
+2	prepare for	〜に備える
+2	prior to	〜より前に
+2	pull over	(車を)道の端に寄せる
+2	put away	〜を片付ける
+2	put in	〜を取り付ける
+2	quite a few	かなりの数の
+2	reach for	〜に手を伸ばす
+2	real estate	不動産
+2	reflect on	〜をよく考える
+2	reply to	〜に返事をする
+2	right away	すぐに
+2	search for	〜を探す
+2	sell off	〜を売り払う
+2	send out	〜を発送する
+2	shake hands	握手する
+2	side by side	並んで
+2	side effect	副作用
+2	so far	今までのところ
+2	speaking of	〜と言えば
+2	stop by	立ち寄る
+2	stop over	途中で立ち寄る
+2	subscribe to	〜を定期購読する
+2	succeed in	〜に成功する
+2	take a nap	昼寝をする
+2	turn in	〜を提出する
+2	wait on	〜に給仕する
+2	what's more	さらに
+2	work on	〜に取り組む
+2	zip code	郵便番号
+3	aim at	〜をねらう
+3	approve of	〜に賛成する
+3	attend to	〜に対応する
+3	back up	〜を保存する
+3	benefit from	〜から利益を得る
+3	bring in	〜を導入する、もたらす
+3	call in	〜を呼ぶ、電話を入れる
+3	clear up	晴れる、〜を解決する
+3	comment on	〜について意見を述べる
+3	comply with	〜に従う
+3	consent to	〜に同意する
+3	consult with	〜と相談する
+3	dress code	服装規定
+3	drop by	ちょっと立ち寄る
+3	drop off	〜を届ける、降ろす
+3	eat out	外食する
+3	embark on	〜に乗り出す
+3	file for	〜を申請する
+3	get together	集まる
+3	hang up	電話を切る
+3	hold on	(電話を切らずに)待つ
+3	insist on	〜を強く求める
+3	kneel down	ひざまずく
+3	lay out	〜を広げる、配置する
+3	look through	〜に目を通す
+3	look to	〜に期待する、頼る
+3	page through	〜をぱらぱらめくる
+3	per capita	1人あたり
+3	persist in	〜し続ける
+3	power outage	停電
+3	proceed to	〜へ進む
+3	proceed with	〜を続行する
+3	qualify as	〜の資格を得る
+3	recover from	〜から回復する
+3	refrain from	〜を控える
+3	register for	〜に登録する
+3	report to	〜の部下である
+3	respond to	〜に応える、返答する
+3	run short of	〜が不足する
+3	set off	出発する、〜を引き起こす
+3	shut down	〜を閉鎖する、停止する
+3	stem from	〜から生じる
+3	succeed to	〜を継ぐ
+3	sum up	〜を要約する
+3	throw away	〜を捨てる
+3	time sheet	勤務時間表
+3	above all	何よりも
+3	adhere to	〜に従う、固守する
+3	admit doing	〜したことを認める
+3	after all	結局、何しろ
+3	all in all	全体として
+3	all the way	はるばる、ずっと
+3	all told	全部で
+3	as a whole	全体として
+3	as for	〜について言えば
+3	as it is	実際は、現状で
+3	at a stretch	一気に、続けて
+3	at a time	一度に
+3	at any price	どんな犠牲を払っても
+3	at any rate	とにかく
+3	at fault	責任がある
+3	at no time	決して〜ない
+3	at risk	危険にさらされて
+3	at this rate	この調子では
+3	at times	時々
+3	bargain with	〜と交渉する
+3	be adept at	〜が上手だ
+3	be averse to	〜を嫌う
+3	be based in	〜に拠点がある
+3	be keen to	〜したがっている
+3	be native to	〜原産である
+3	be open to	〜を受け入れる
+3	be short of	〜が不足している
+3	be sited in	〜に位置している
+3	be stuck in	〜で動けなくなる
+3	be worthy of	〜に値する
+3	bear to do	〜するのに耐える
+3	before long	まもなく
+3	bid for	〜に入札する
+3	bother to do	わざわざ〜する
+3	bring out	〜を発売する、引き出す
+3	buy out	〜を買収する
+3	by far	はるかに
+3	carry over	〜を持ち越す
+3	cater to	〜の要望に応える
+3	check with	〜に確認する
+3	choose to do	〜することを選ぶ
+3	claim to do	〜すると主張する
+3	collide with	〜と衝突する
+3	conform to	〜に従う
+3	consist in	〜にある
+3	cover letter	添え状
+3	culminate in	ついに〜となる
+3	cut down	〜を減らす
+3	defer to	〜に従う
+3	draw up	〜を作成する
+3	elaborate on	〜を詳しく述べる
+3	excel in	〜に秀でる
+3	fill in for	〜の代わりをする
+3	fiscal year	会計年度
+3	for a change	気分転換に
+3	for free	無料で
+3	for now	今のところ
+3	for want of	〜がないために
+3	from scratch	一から
+3	get nowhere	うまくいかない
+3	go in for	〜を好む、〜に参加する
+3	go with	〜に合う、〜を選ぶ
+3	hand over	〜を手渡す
+3	hand truck	手押し車、台車
+3	hardly ever	めったに〜ない
+3	in bulk	大量に
+3	in demand	需要がある
+3	in force	有効で
+3	in full	全額で
+3	in light of	〜を考慮して
+3	in need of	〜を必要として
+3	in no time	すぐに
+3	in order	整って、順番に
+3	in question	問題の
+3	in return	お返しに
+3	in stock	在庫があって
+3	inquire into	〜を調査する
+3	insofar as	〜する限りにおいて
+3	make it	間に合う、成功する
+3	make sure	確かめる
+3	mark down	〜を値下げする
+3	mean to do	〜するつもりである
+3	merge with	〜と合併する
+3	mind doing	〜するのを嫌がる
+3	move on to	〜に移る
+3	much less	まして〜ない
+3	no doubt	きっと
+3	on a budget	予算を抑えて
+3	on end	続けて
+3	on hand	手元に
+3	on offer	売り出し中で
+3	on the road	旅に出て、移動中で
+3	on the whole	全体として
+3	originate in	〜に始まる
+3	out of place	場違いで
+3	out of print	絶版で
+3	personal effects	身の回り品
+3	plug in	〜をコンセントにつなぐ
+3	pledge to do	〜すると誓う
+3	prevail in	〜で勝つ
+3	quit doing	〜するのをやめる
+3	recall doing	〜したことを思い出す
+3	refuse to do	〜するのを断る
+3	regret doing	〜したことを後悔する
+3	regret to do	残念ながら〜する
+3	reside in	〜に住む
+3	revert to	〜に戻る
+3	serve to do	〜するのに役立つ
+3	set forth	〜を述べる、示す
+3	speculate in	〜に投機する
+3	step down	辞任する
+3	strive for	〜を目指して努力する
+3	strive to do	〜しようと努力する
+3	take effect	効力を生じる
+3	take steps	手段を講じる
+3	tend to do	〜しがちである
+3	turn around	好転させる、向きを変える
+3	wish to do	〜したいと思う
+3	with care	注意して
+3	with caution	用心して
+3	with ease	楽々と
+3	wrap up	〜を終える
