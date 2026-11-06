@@ -41,7 +41,7 @@ P| {into|of|than|since} a triangle. :: 三角形に
 == それからさらにごはんでおおい、やさしく三角形ににぎろう。
 T| Finally, {wrap|wraps|wrapping|wrapped} it :: 最後に包む
 P| {in|at|of|to} a sheet :: 1枚の…で
-P| {of|for|by|on} dried seaweed :: 干した海藻の
+P| {of|by|on|than} dried seaweed :: 干した海藻の
 M| {called|calling|calls|to call} nori. :: のりと呼ばれる
 == 最後に、のりと呼ばれる干した海藻1枚で包もう。
 S| Many people {wrap|wraps|wrapping|to wrap} the seaweed :: 多くの人はのりを巻く
@@ -293,7 +293,7 @@ V| {are welcome|is welcome|be welcome|being welcome}. :: 歓迎です
 == 講師は英語を話すので、初心者も歓迎です。
 S| All ingredients {and|nor|than|whom} aprons :: 材料とエプロンは全部
 V| {are included|are include|is included|including} :: 含まれている
-P| {in|at|on|by} the price. :: 料金に
+P| {in|of|on|than} the price. :: 料金に
 == 材料とエプロンはすべて料金に含まれています。
 T| {After|Ago|Among|Above} cooking, :: 料理の後で
 S| you can {enjoy|enjoys|enjoying|enjoyed} the meal :: 食事を楽しめる
@@ -305,7 +305,7 @@ M| {if|than|nor|whom} you ask :: 頼めば
 T| {in advance|in advanced|on advance|at advance}. :: 事前に
 == 事前に頼めば、菜食のメニューも用意できます。
 S| Classes {start|starts|starting|to start} :: 教室は始まる
-T| {at|on|in|by} 10 a.m. and 3 p.m. :: 午前10時と午後3時に
+T| {at|on|in|to} 10 a.m. and 3 p.m. :: 午前10時と午後3時に
 T| every day {except|expect|accept|excess} Tuesday. :: 火曜以外毎日
 == 教室は火曜日以外の毎日、午前10時と午後3時に始まります。
 V| {Book|Books|Booking|Booked} on our website, :: サイトで予約を

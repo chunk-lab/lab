@@ -1,0 +1,534 @@
+@id int107
+@lv 2
+@level 6
+@title Where the Sandwich Got Its Name
+@ja サンドイッチの名前の由来
+@tag 共通テストレベル・説明文
+@gloss earl=伯爵, nobleman=貴族, legend=伝説, slice=薄切り, historian=歴史家, order=注文する, simply=単に
+S| {Almost|Mostly|Most of|Nearly of} everyone :: ほぼ誰もが
+V| {has eaten|have eaten|has ate|eating} :: 食べたことがある
+O| a sandwich {at|on|in|by} least once. :: 少なくとも一度サンドを
+== ほとんどの人が、少なくとも一度はサンドイッチを食べたことがある。
+M| {But|Nor|Than|Whom} do you know :: でも知っている？
+O| {where|whom|whose|which} its name :: その名前がどこから
+V| {came from|come from|coming from|came of}? :: 来たのか
+== でも、その名前がどこから来たのか知っているだろうか。
+S| The word {comes|come|coming|to come} :: その語は来ている
+P| {from|by|for|with} the Earl of Sandwich, :: サンドイッチ伯爵から
+X| an English {nobleman|nobly|nobility|noblest} :: イギリスの貴族
+T| {in|on|at|by} the 1700s. :: 1700年代の
+== その語は、1700年代のイギリスの貴族、サンドイッチ伯爵から来ている。
+P| {According to|According|Accord to|According with} a famous legend, :: 有名な伝説では
+S| he {loved|love|loving|lovely} :: 彼は大好きだった
+O| {playing|to playing|played|play} cards. :: トランプをするのが
+== 有名な伝説によると、彼はトランプ遊びが大好きだった。
+S| He {did not|does not|was not|not} want :: 彼は…したくなかった
+O| {to stop|stopping|stop|stopped} his game :: ゲームを止めるのを
+R| {just|alone|lonely|justly} to eat. :: 食べるためだけに
+== 彼は食べるためだけにゲームを止めたくなかった。
+M| {So|Unless|Although|Because of} :: そこで
+V| he {asked for|asking for|ask for|asked to} :: 彼は頼んだ
+O| meat {between|among|during|across} two slices of bread. :: パン2枚にはさんだ肉を
+== そこで彼は、2枚のパンに肉をはさんだものを頼んだ。
+S| This way, he {could|could to|can be|couldn't to} eat :: こうして食べられた
+P| {with|by|for|from} one hand :: 片手で
+M| {while|during|for|among} he kept playing. :: 遊び続けながら
+== こうして彼は、遊び続けながら片手で食べることができた。
+S| Other people {began|beginning|begins|begun} :: 他の人も始めた
+O| {to order|ordering to|order|ordered} :: 頼むことを
+O| "the same {as|like|so|than} Sandwich." :: 「サンドイッチと同じ物」
+== ほかの人々も「サンドイッチと同じもの」を頼むようになった。
+M| {However|Though of|Despite|Even}, :: しかし
+S| some historians {say|says|saying|said to} :: 歴史家は言う
+O| the story {may not|may not to|not may|may no} be true. :: その話は本当でないかも
+== しかし、この話は本当ではないかもしれないと言う歴史家もいる。
+S| He {may have been|may have be|may had been|may been} :: 彼は…だったかも
+C| {simply|simple|simplify|simplicity} busy :: 単に忙しい
+P| {with|of|to|than} his work instead. :: 実は仕事で
+== 実際には、彼は単に仕事で忙しかっただけかもしれない。
+?? 2 1 その語は誰から来ている？
+?? 3 2 伯爵は何が大好きだった？
+?? 5 2 彼は何を頼んだ？
+?? 8 2 その話について歴史家は何と言う？
+
+@id int108
+@lv 2
+@level 6
+@title Gutenberg and the Printing Press
+@ja グーテンベルクと印刷機
+@tag 共通テストレベル・説明文
+@gloss copy=写す, expensive=高価な, printing press=印刷機, metal=金属, spread=広まる, invention=発明, as a result=その結果
+T| {Long ago|Long of|Lengthy ago|Ago long}, :: 昔は
+S| books {were copied|copied|were copy|was copied} :: 本は写された
+P| {by|with|from|at} hand. :: 手で
+== 昔、本は手で書き写されていた。
+S| It {took|taken|taking|takes to} :: かかった
+O| {months|monthly|month|month's} :: 何か月も
+R| {to make|making of|make|made} just one book. :: 本1冊作るのに
+== 本1冊を作るのに何か月もかかった。
+M| {As a result|As result|As a resulted|At result}, :: その結果
+S| books {were|was|been|being} :: 本は…だった
+C| very {expensive|expense|expensively|expend}. :: とても高価
+== その結果、本はとても高価だった。
+T| {Around|Among|Along|Above} 1450, :: 1450年ごろ
+S| a German man {named|naming|names|name} Johannes Gutenberg :: ドイツ人グーテンベルクが
+V| {built|build|builds|building} :: 作った
+O| a new kind {of|for|in|with} printing press. :: 新しい印刷機を
+== 1450年ごろ、ドイツ人のヨハネス・グーテンベルクが新しい種類の印刷機を作った。
+S| It {used|uses|using|use} :: それは使った
+O| small {metal|metals|metally|medal} letters :: 小さな金属の文字を
+M| {that|what|whose|who} could be moved :: 動かせる
+M| {and|nor|than|so} used again. :: 再利用できる
+== それは、動かして何度も使える小さな金属の文字を使った。
+P| {With|Of|To|Than} this machine, :: この機械で
+S| workers {could print|could printed|could printing|can printed} :: 職人は印刷できた
+O| hundreds {of|for|in|with} pages :: 何百ページも
+T| {a day|an day|a days|one days}. :: 1日に
+== この機械で、職人たちは1日に何百ページも印刷できた。
+S| Books {became|becoming|was become|becamed} :: 本はなった
+C| {cheaper|cheap|cheapest|cheaply} :: より安く
+M| {and|nor|than|whom} easier :: そしてより簡単に
+R| {to find|finding|find|found}. :: 手に入れるのが
+== 本はより安くなり、手に入りやすくなった。
+S| Ideas and news {spread|spreaded|spreading|spreads} :: 考えや知らせは広まった
+P| {across|cross|crossing|acrossed} Europe :: ヨーロッパ中に
+M| {faster|fastest|more fast|most fast} than ever. :: かつてなく速く
+== 考えや知らせは、かつてないほど速くヨーロッパ中に広まった。
+S| Many people {say|says|saying|to say} :: 多くの人が言う
+O| {that|what|which|whom} the press :: 印刷機は…と
+V| {was|were|is being|be} :: …だった
+C| one of the most important {inventions|invention|invent|inventive}. :: 最も重要な発明の一つ
+== 多くの人が、印刷機は最も重要な発明の一つだったと言う。
+?? 1 1 本1冊作るのにどれくらいかかった？
+?? 3 0 新しい印刷機が作られたのはいつごろ？
+?? 4 1 その印刷機は何を使った？
+?? 5 2 1日に何ページ印刷できた？
+
+@id int109
+@lv 2
+@level 6
+@title Before the Eraser
+@ja 消しゴムができる前
+@tag 共通テストレベル・説明文
+@gloss graphite=黒鉛, lead=鉛・芯, mistake=間違い, rub out=こすって消す, rubber=ゴム, eraser=消しゴム, surprisingly=意外に, discover=発見する
+S| A pencil {is|are|be|being} :: 鉛筆は…だ
+C| {one|ones|once|one's} of the simplest tools :: 最も単純な道具の一つ
+P| {in|on|at|of} the world. :: 世界で
+== 鉛筆は、世界で最も単純な道具の一つだ。
+S| {Yet|Yes|Yeah|Yell} its history :: でもその歴史は
+V| {is|are|be|been} :: …だ
+C| {surprisingly|surprising|surprise|surprised} interesting. :: 意外におもしろい
+== でも、その歴史は意外におもしろい。
+T| {In|On|For|Of} the 1500s, :: 1500年代に
+S| people in England {found|founded|find|finding} :: イギリスの人が見つけた
+O| a large amount {of|for|in|with} graphite. :: 大量の黒鉛を
+== 1500年代、イギリスの人々が大量の黒鉛を見つけた。
+S| They {thought|think|thinking|thoughts} :: 彼らは思った
+O| it {was|were|be|being} a kind of lead, :: それは鉛の一種だと
+M| {so|than|nor|whom} we still say :: だから今も言う
+O| pencil "{lead|led|leading|leaded}." :: 鉛筆の「芯」と
+== 彼らはそれを鉛の一種だと思ったので、今でも鉛筆の芯を「lead（鉛）」と呼ぶ。
+S| Erasing mistakes, {however|whatever|whenever|wherever}, :: しかし消すのは
+V| {was|were|been|being} :: …だった
+C| {not|no|none|nor} easy. :: 簡単でない
+== しかし、間違いを消すのは簡単ではなかった。
+P| {For|Of|To|At} a long time, :: 長い間
+S| people {used|use to|using|uses} :: 人々は使った
+O| {pieces|piece|peace|pieced} of bread :: パンのかけらを
+R| {to rub|rubbing|rub|rubbed} out their mistakes. :: 間違いを消すために
+== 長い間、人々は間違いをこすって消すのにパンのかけらを使っていた。
+T| {Later|Latter|Latest|Laterly}, :: 後に
+S| people {discovered|discover|discovering|discovers} :: 人々は発見した
+O| {that|what|which|who} rubber worked :: ゴムが…と
+C| much {better|best|good|well}. :: ずっとよく消える
+== 後に、人々はゴムのほうがずっとよく消えることを発見した。
+T| {In|On|At|To} the 1800s, :: 1800年代に
+S| an American man {had|has|having|have} :: アメリカ人が持った
+O| the idea {of|by|at|than} putting an eraser :: 消しゴムを付ける案を
+P| {on|of|from|than} the end of a pencil. :: 鉛筆の端に
+== 1800年代、あるアメリカ人が鉛筆の端に消しゴムを付けることを思いついた。
+M| {Thanks to|Thanks for|Thank to|Thanking} him, :: 彼のおかげで
+S| we {can|cans|could to|can to} fix mistakes :: 間違いを直せる
+P| {without|with out|withouts|not with} looking for bread. :: パンを探さずに
+== 彼のおかげで、私たちはパンを探さずに間違いを直せる。
+?? 2 2 1500年代、イギリスで何が見つかった？
+?? 5 2 昔の人は何で間違いを消していた？
+?? 6 2 後に何のほうがよく消えるとわかった？
+?? 7 3 消しゴムは鉛筆のどこに付けられた？
+
+@id int110
+@lv 2
+@level 6
+@title The Lady with the Lamp
+@ja ランプの貴婦人
+@tag 共通テストレベル・説明文
+@gloss nurse=看護師, expect=期待する, military=軍の, wounded=負傷した, soldier=兵士, crowded=混み合った, ward=病棟, chart=図表
+S| Florence Nightingale {was born|born|was bear|is born} :: ナイチンゲールは生まれた
+P| {into|onto|upon|inside} a rich family :: 裕福な家庭に
+T| {in|on|at|by} 1820. :: 1820年に
+== フローレンス・ナイチンゲールは1820年、裕福な家庭に生まれた。
+P| {At|Of|To|Than} that time, :: 当時
+S| women {like|likes|liking|alike} her :: 彼女のような女性は
+V| {were not expected|was not expected|were not expect|not expected} :: 期待されなかった
+R| {to work|working|work|worked}. :: 働くことを
+== 当時、彼女のような女性は働くことを期待されていなかった。
+M| {However|Whatever|Whenever|Wherever}, :: しかし
+S| she {decided|decide|deciding|decision} :: 彼女は決めた
+O| {to become|becoming|become|became} a nurse. :: 看護師になると
+== しかし、彼女は看護師になると決めた。
+T| {In|On|Of|To} the 1850s, :: 1850年代に
+S| she {went|go|gone|going} :: 彼女は行った
+P| {to|for|at|in} a military hospital :: 軍の病院へ
+R| {to care|for care|care|cared} for wounded soldiers. :: 負傷兵を看るために
+== 1850年代、彼女は負傷した兵士の世話をするため軍の病院へ行った。
+S| The hospital {was|were|been|being} :: 病院は…だった
+C| {dirty|dirt|dirtily|dirtiness} and crowded, :: 不潔で混んでいて
+M| {and|nor|than|whom} many soldiers :: 多くの兵士が
+V| {were dying|was dying|were die|dying}. :: 死にかけていた
+== 病院は不潔で混み合い、多くの兵士が死にかけていた。
+P| {At|In|On|By} night, :: 夜は
+S| she {walked|walk|walking|walks} :: 彼女は歩いた
+P| {through|thorough|though|thought} the wards :: 病棟を通って
+P| {with|of|than|to} a lamp in her hand. :: ランプを手に
+== 夜には、彼女はランプを手に病棟を見回った。
+M| {That is why|That why|What is why|This why} :: だから
+S| she {was called|called|was call|is calling} :: 彼女は呼ばれた
+C| "the Lady {with|than|as|nor} the Lamp." :: 「ランプの貴婦人」と
+== だから彼女は「ランプの貴婦人」と呼ばれた。
+S| She {also|alike|else|ever} used :: 彼女は…も使った
+O| {numbers|number|numbered|numbering} and charts :: 数字や図を
+R| {to show|showing|show|shown} :: 示すために
+O| {why|what|which|who} the soldiers died. :: 兵士が死んだ理由を
+== 彼女はまた、兵士たちがなぜ死んだのかを示すために数字や図を使った。
+T| {In|On|At|To} 1860, :: 1860年に
+S| she {opened|open|opening|opens} :: 彼女は開いた
+O| a school {for|to|at|than} nurses :: 看護師の学校を
+P| {in|on|at|to} London. :: ロンドンに
+== 1860年、彼女はロンドンに看護師のための学校を開いた。
+?? 0 2 彼女が生まれたのは何年？
+?? 3 3 何のために軍の病院へ行った？
+?? 6 2 彼女は何と呼ばれた？
+?? 8 1 1860年に何を開いた？
+
+@id int111
+@lv 2
+@level 6
+@title The Man Who Invented Instant Noodles
+@ja 即席めんを発明した人
+@tag 共通テストレベル・記事
+@gloss instant=即席の, invent=発明する, hungry=空腹な, shed=小屋, fry=揚げる, go on sale=発売される, hit=ヒット作
+S| Instant noodles {were invented|invented|were invent|was invented} :: 即席めんは発明された
+P| {in|on|of|to} Japan :: 日本で
+P| {by|with|of|at} a man named Momofuku Ando. :: 安藤百福という人に
+== 即席めんは日本で、安藤百福という人によって発明された。
+T| {After|Later|Ago|Afterward} World War II, :: 第二次大戦後
+S| he {saw|seen|seeing|sees} :: 彼は見た
+O| long lines {of|to|by|than} hungry people :: 空腹な人の長い列を
+M| {waiting|waited|wait|to waiting} for ramen. :: ラーメンを待つ
+== 第二次世界大戦の後、彼はラーメンを待つ空腹な人々の長い列を見た。
+S| He {wanted|want|wanting|wants} :: 彼は思った
+O| {to make|making|make|made} a food :: 食べ物を作りたいと
+M| {that|what|whom|whose} anyone could cook :: 誰でも作れる
+P| {at|in|on|by} home easily. :: 家で簡単に
+== 彼は、誰でも家で簡単に作れる食べ物を作りたいと思った。
+P| {In|Of|To|Than} a small shed :: 小さな小屋で
+P| {behind|behind of|beside of|behinds} his house, :: 家の裏の
+S| he {tried|try|trying|tries} again and again. :: 彼は何度も試した
+== 自宅の裏の小さな小屋で、彼は何度も試した。
+S| One day, he {watched|watch|watching|watches} :: ある日見ていた
+O| his wife {making|made|makes|to making} tempura. :: 妻が天ぷらを作るのを
+== ある日、彼は妻が天ぷらを揚げるのを見ていた。
+S| This {gave|give|given|giving} him :: これが彼に与えた
+O| the idea {of|to|at|than} frying noodles :: めんを揚げる案を
+R| {to dry|drying|dry|dried} them. :: 乾かすために
+== これが、めんを油で揚げて乾かすというアイデアを彼に与えた。
+T| {In|On|At|To} 1958, :: 1958年に
+S| his "Chicken Ramen" {went|gone|go|going} :: チキンラーメンが出た
+P| {on|in|at|to} sale. :: 発売されて
+== 1958年、彼の「チキンラーメン」が発売された。
+S| It {was|were|been|be} :: それは…だった
+C| a big {hit|hits|hitting|hitted}, :: 大ヒット
+M| {and|nor|than|whom} he was already 48 :: 彼はもう48歳
+T| {at|in|on|of} the time. :: その時
+== それは大ヒットし、そのとき彼はすでに48歳だった。
+S| He {later|latter|latest|lateness} :: 彼は後に
+V| {invented|invent|invents|inventing} :: 発明した
+O| Cup Noodles {as|so|such|than} well. :: カップヌードルも
+== 彼は後に、カップヌードルも発明した。
+?? 1 2 戦後、安藤は何を見た？
+?? 4 1 ある日、彼は何を見ていた？
+?? 6 1 1958年に何が発売された？
+?? 7 2 そのとき彼は何歳だった？
+
+@id int112
+@lv 2
+@level 6
+@title Louis Braille's Six Dots
+@ja ブライユの6つの点
+@tag 共通テストレベル・説明文
+@gloss accident=事故, sight=視力, blind=目の見えない, raised=浮き出た, code=暗号, dot=点, fingertip=指先, system=方式
+S| Louis Braille {was born|born|was bear|is born} :: ブライユは生まれた
+P| {in|on|of|by} a small town :: 小さな町で
+P| {near|nearly|nearby of|nears} Paris. :: パリの近くの
+== ルイ・ブライユはパリ近くの小さな町で生まれた。
+T| {When|What|Which|Who} he was three, :: 3歳のとき
+S| he {hurt|hurts|hurting|hurted} :: 彼は傷つけた
+O| {his|him|he|himself} eye :: 自分の目を
+P| {in|on|at|by} an accident. :: 事故で
+== 3歳のとき、彼は事故で目をけがした。
+T| {Soon|Soonly|Sooner of|Soonest} after, :: その後まもなく
+S| he {lost|lose|losing|loses} :: 彼は失った
+O| his sight {in|on|at|to} both eyes. :: 両目の視力を
+== その後まもなく、彼は両目の視力を失った。
+P| {At|Of|To|Than} a school for blind children, :: 盲学校では
+S| the books {were|was|been|being} :: 本は…だった
+C| {huge|hugely|hugeness|hug} and heavy. :: 大きくて重い
+== 盲学校では、本は大きくて重かった。
+S| Each {page|pages|paging|paged} :: どのページも
+V| {had|have|having|has to} :: 持っていた
+O| large {raised|raising|raise|rise} letters. :: 浮き出た大きな文字を
+== どのページにも、浮き出た大きな文字が並んでいた。
+S| Reading them {was|were|being|be} :: 読むのは…だった
+C| {very|much|many|such} slow :: とても時間がかかる
+P| {for|by|with|of} the students. :: 生徒にとって
+== 生徒たちにとって、それを読むのはとても時間がかかった。
+T| {Later|Latter|Latest|Laterly}, :: 後に
+S| Braille {learned|learn|learning|learns} :: ブライユは知った
+P| {about|above|around of|abouts} a code of dots :: 点の暗号について
+M| {made|making|makes|make} for soldiers. :: 兵士向けに作られた
+== 後に、ブライユは兵士向けに作られた点の暗号について知った。
+S| He {made|make|making|makes} :: 彼は…した
+O| the code {simpler|more simpler|simplest|simply} :: 暗号をより簡単に
+M| {by|with|at|for} using only six dots :: 6つの点だけで
+T| {when|what|which|whom} he was only fifteen. :: まだ15歳のとき
+== 彼はまだ15歳のとき、6つの点だけを使ってその暗号をより簡単にした。
+S| Each letter {could|could to|can to|could of} :: どの文字も…できた
+V| be {felt|feel|feeling|fell} :: 感じ取られる
+P| {with|of|in|at} one fingertip. :: 指先一つで
+== どの文字も、指先一つで感じ取ることができた。
+S| Today, his system {is used|uses|is use|using} :: 今その方式は使われる
+P| {by|with|of|from} blind people :: 目の見えない人々に
+P| {around|aground|arounds|surround} the world. :: 世界中の
+== 今日、彼の方式は世界中の目の見えない人々に使われている。
+?? 1 3 彼は何が原因で目をけがした？
+?? 3 2 盲学校の本はどんなものだった？
+?? 7 2 彼の方式はいくつの点を使う？
+?? 7 3 暗号を簡単にしたとき彼は何歳だった？
+
+@id int113
+@lv 2
+@level 6
+@title A Short History of Glasses
+@ja メガネの短い歴史
+@tag 共通テストレベル・説明文
+@gloss glasses=メガネ, eyesight=視力, have a hard time=苦労する, arm=つる, hold=支える, rest=のる, fall off=落ちる, basic=基本の
+S| {Glasses|Glass|Glassy|Glassed} :: メガネは
+V| {have|has|having|to have} :: 持っている
+O| a very long {history|historic|historical|historian}. :: とても長い歴史を
+== メガネにはとても長い歴史がある。
+S| The first glasses {were made|made|were make|was made} :: 最初のメガネは作られた
+P| {in|on|at|of} Italy :: イタリアで
+T| {in|on|at|to} the late 1200s. :: 1200年代末に
+== 最初のメガネは1200年代の終わりにイタリアで作られた。
+T| {Before|Because|Unless|Since of} that, :: それ以前は
+S| people {with|by|at|to} poor eyesight :: 目の悪い人は
+V| {had|has|having|have} :: 持っていた
+O| a hard time {reading|to reading|read|reads}. :: 読むのに苦労を
+== それ以前、目の悪い人は文字を読むのに苦労していた。
+S| Early glasses {had|have|having|has} :: 初期のメガネは持った
+O| {no|not|none|nor} arms :: つるがない
+M| {to hold|for hold|hold|held} them :: それを支える
+P| {on|in|at|by} the ears. :: 耳に
+== 初期のメガネには、耳にかけるためのつるがなかった。
+S| People {held|helded|holding|holds} them :: 人々はそれを持った
+P| {in|on|at|by} their hands :: 手に
+M| {or|nor|than|whom} put them on their noses. :: または鼻にのせた
+== 人々はそれを手で持つか、鼻の上にのせていた。
+M| {Because of|Because|Despite of|Due} this, :: このため
+S| the glasses {often|oftenly|ofted|often of} :: メガネはよく
+V| {fell|fall|fallen|felled} off. :: 落ちた
+== このため、メガネはよく落ちてしまった。
+T| {In|On|At|To} the 1700s, :: 1700年代に
+S| a maker {in|on|to|than} London :: ロンドンの職人が
+V| {added|add|adding|adds} :: 付けた
+O| arms {that|what|whom|whose} rested on the ears. :: 耳にかかるつるを
+== 1700年代、ロンドンのある職人が耳にかかるつるを付けた。
+M| {Since|For|Ago|Than} then, :: それ以来
+S| glasses {have changed|has changed|have change|changing} :: メガネは変わった
+P| {in|on|at|by} many ways. :: 多くの点で
+== それ以来、メガネは多くの点で変わってきた。
+M| {But|Nor|Than|Whom} the basic idea :: しかし基本の考えは
+V| {has|have|is|having} stayed :: ずっと…だ
+C| {the same|same as|the sames|a same}. :: 同じまま
+== しかし、基本の考えは同じままだ。
+?? 1 1 最初のメガネはどこで作られた？
+?? 3 1 初期のメガネには何がなかった？
+?? 4 2 人々は手で持つほかにどうした？
+?? 6 1 つるを付けたのはどこの職人？
+
+@id int114
+@lv 2
+@level 6
+@title Ino Tadataka's Long Walk
+@ja 伊能忠敬の長い旅
+@tag 共通テストレベル・記事
+@gloss merchant=商人, retire=引退する, astronomy=天文学, measure=測る, coast=海岸, distance=距離, complete=完成させる, accurate=正確な
+S| Ino Tadataka {was|were|been|being} :: 伊能忠敬は…だった
+C| a {successful|success|successfully|succeed} merchant :: 成功した商人
+P| {in|on|at|by} the Edo period. :: 江戸時代の
+== 伊能忠敬は江戸時代の成功した商人だった。
+T| {After|Ago|Afterward|Behind} he retired, :: 引退した後
+S| he {moved|move|moving|moves} :: 彼は移った
+P| {to|at|in|for} Edo :: 江戸へ
+R| {to study|for study|study|studied} astronomy. :: 天文学を学ぶため
+== 引退した後、彼は天文学を学ぶために江戸へ移った。
+S| His teacher {was|were|been|be} :: 彼の先生は…だった
+C| {much|many|very|more} younger :: ずっと若い
+P| {than|then|that|as} he was. :: 彼よりも
+== 彼の先生は彼よりずっと若かった。
+T| {At|In|On|To} the age of 55, :: 55歳で
+S| Ino {started|start|starting|starts} :: 伊能は始めた
+O| {to measure|measure|measured|to measuring} the land :: 土地を測ることを
+P| {of|on|at|to} Japan. :: 日本の
+== 55歳で、伊能は日本の土地を測り始めた。
+S| He and his team {walked|walks|walking|walken} :: 彼と仲間は歩いた
+P| {along|alone|among|alongs} the coasts :: 海岸に沿って
+T| {for|since|during of|ago} many years. :: 何年も
+== 彼と仲間たちは何年もの間、海岸に沿って歩いた。
+S| He {measured|measure|measuring|measures} :: 彼は測った
+O| distances {by|with|for|at} counting his steps :: 歩数を数えて距離を
+M| {and|nor|than|whom} looking at the stars. :: そして星を見て
+== 彼は歩数を数えたり、星を観測したりして距離を測った。
+M| {Sadly|Sad|Sadness|Sadder}, :: 悲しいことに
+S| he {died|dead|dying|death} :: 彼は亡くなった
+M| {before|behind|below|beyond} the map :: 地図が…前に
+V| {was finished|has finish|was finish|finishing}. :: 完成する
+== 悲しいことに、彼は地図が完成する前に亡くなった。
+S| His {students|student's|studying|studied} :: 弟子たちが
+V| {completed|completion|completes|completing} it :: それを完成させた
+T| {after|afterward|later|ago} his death. :: 彼の死後に
+== 弟子たちが、彼の死後にそれを完成させた。
+S| The map {was|were|been|be} :: 地図は…だった
+C| {surprisingly|surprising|surprise|surprised} accurate :: 驚くほど正確
+P| {for|to|by|of} its time. :: 当時としては
+== その地図は、当時としては驚くほど正確だった。
+S| His life {shows|show|showing|shown} :: 彼の人生は示す
+O| {that|what|which|whom} learning :: 学ぶことには…と
+V| {has|have|having|is} :: ない
+O| no age {limit|limited|limiting|limits of}. :: 年齢制限は
+== 彼の人生は、学ぶことに年齢制限はないと教えてくれる。
+?? 1 3 江戸へ移った目的は？
+?? 3 0 何歳で測量を始めた？
+?? 5 1 距離をどうやって測った？
+?? 7 2 地図はいつ完成した？
+
+@id int115
+@lv 2
+@level 6
+@title The First Bicycle
+@ja 最初の自転車
+@tag 共通テストレベル・記事
+@gloss pedal=ペダル, push=押す, forward=前へ, inventor=発明者, control=操る, wheel=車輪, uncomfortable=乗り心地が悪い, rough=ひどく揺れる, tire=タイヤ
+S| The first bicycle {was built|built|was build|is built} :: 最初の自転車は作られた
+P| {in|on|at|to} Germany :: ドイツで
+T| {in|on|at|to} 1817. :: 1817年に
+== 最初の自転車は1817年にドイツで作られた。
+S| It {was|were|be|been} :: それは…だった
+C| {made|make|making|makes} of wood :: 木でできた
+M| {and|nor|than|whom} had no pedals. :: ペダルはなかった
+== それは木でできていて、ペダルがなかった。
+S| Riders {pushed|pushes|pushing|pushen} :: 乗る人は押した
+O| the ground {with|at|to|than} their feet :: 足で地面を
+R| {to move|for move|move|moved} forward. :: 前に進むため
+== 乗る人は、前に進むために足で地面をけった。
+S| Its {inventor|invention|invent|inventive}, Karl Drais, :: 発明者ドライスは
+V| {called|calls|calling|call} it :: それを呼んだ
+C| a "{running|run|ran|runs} machine." :: 「走る機械」と
+== 発明者のカール・ドライスは、それを「走る機械」と呼んだ。
+S| It {was|were|been|be} :: それは…だった
+C| {faster|fast|fastest|more fast} :: より速い
+P| {than|then|that|as} walking, :: 歩くより
+M| {but|nor|whom|than} it was hard to control. :: でも操りにくかった
+== それは歩くより速かったが、操るのが難しかった。
+T| {In|On|At|To} the 1860s, :: 1860年代に
+S| pedals {were added|added|were add|was added} :: ペダルが付けられた
+P| {to|of|for|with} the front wheel :: 前輪に
+P| {in|on|at|to} France. :: フランスで
+== 1860年代、フランスで前輪にペダルが付けられた。
+M| {However|Whatever|Whenever|Wherever}, :: しかし
+S| these bikes {were|was|been|being} :: この自転車は…だった
+C| {very|much|many|such} uncomfortable. :: とても乗り心地が悪い
+== しかし、これらの自転車はとても乗り心地が悪かった。
+S| People {called|calls|calling|callen} them :: 人々はそれを呼んだ
+C| "{boneshakers|boneshaker|boneshaking|boneshook}" :: 「骨ゆすり」と
+M| {because|because of|despite|due} the ride :: 乗り心地が…ので
+C| was so {rough|roughly|roughness|roughen}. :: とてもひどかった
+== 乗り心地がとてもひどかったので、人々はそれを「ボーンシェイカー（骨ゆすり）」と呼んだ。
+T| {Later|Latter|Latest|Lateness}, :: 後に
+S| chains and rubber tires {made|makes|making|maked} :: チェーンとタイヤが
+O| bikes {safer|safest|safely|more safer} :: 自転車をより安全に
+M| {and|nor|than|whom} more comfortable. :: そして快適に
+== 後に、チェーンとゴムタイヤによって自転車はより安全で快適になった。
+S| The bicycle {we|us|our|ours} ride today :: 今日乗る自転車は
+V| {is|are|be|been} :: …だ
+C| the result {of|for|to|by} many small ideas. :: 多くの工夫の結果
+== 私たちが今日乗る自転車は、たくさんの小さな工夫の結果なのだ。
+?? 0 2 最初の自転車は何年に作られた？
+?? 1 2 最初の自転車には何がなかった？
+?? 5 2 1860年代、ペダルはどこに付けられた？
+?? 8 1 何が自転車を安全にした？
+
+@id int116
+@lv 2
+@level 6
+@title Fleming's Lucky Mess
+@ja フレミングの幸運な散らかし
+@tag 共通テストレベル・記事
+@gloss scientist=科学者, bacteria=細菌, lab=研究室, messy=散らかった, holiday=休暇, mold=カビ, substance=物質, medicine=薬
+T| {In|On|At|To} 1928, :: 1928年に
+S| a scientist {named|naming|names|name} Alexander Fleming :: 科学者フレミングは
+V| {was studying|was study|were studying|studying} :: 研究していた
+O| bacteria {in|on|at|by} London. :: ロンドンで細菌を
+== 1928年、アレクサンダー・フレミングという科学者がロンドンで細菌を研究していた。
+S| His lab {was|were|be|been} :: 彼の研究室は…だった
+C| {famous|fame|famously|fames} :: 有名
+P| {for|by|to|at} being messy. :: 散らかっていることで
+== 彼の研究室は、散らかっていることで有名だった。
+T| {One|Once|Ones|One's} summer, :: ある夏
+S| he {went|go|gone|going} :: 彼は出かけた
+P| {on|to|of|at} holiday :: 休暇に
+M| {without|with out|withouts|not with} cleaning his dishes. :: 皿を片付けずに
+== ある夏、彼は皿を片付けないまま休暇に出かけた。
+T| {When|What|Which|Whom} he came back, :: 戻ったとき
+S| he {noticed|notice|noticing|notices} :: 彼は気づいた
+O| {something|somewhere|sometime|somehow} strange. :: 奇妙なことに
+== 戻ってきたとき、彼は奇妙なことに気づいた。
+S| A mold {had grown|had grew|has grow|growing} :: カビが生えていた
+P| {on|of|to|than} one of the dishes :: 皿の一つに
+T| {during|while|among|since of} his trip. :: 旅行中に
+== 旅行の間に、皿の一つにカビが生えていた。
+P| {Around|Arounds|Aroundly|Round of} the mold, :: カビの周りでは
+S| the bacteria {had|has|having|have} :: 細菌は…していた
+V| {died|dead|death|dying}. :: 死んで
+== カビの周りでは、細菌が死んでいた。
+S| The mold {was making|was make|were making|making} :: カビは作っていた
+O| a {substance|substantial|substantially|subsist} :: ある物質を
+M| {that|what|whom|whose} killed bacteria. :: 細菌を殺す
+== そのカビは、細菌を殺す物質を作っていた。
+S| Fleming {named|naming|namen|to named} it :: フレミングは名付けた
+C| "{penicillin|penicillins|penicilling|penicillining}" :: 「ペニシリン」と
+P| {after|afterward|ago|later} the mold. :: そのカビにちなんで
+== フレミングはそのカビにちなんで、それを「ペニシリン」と名付けた。
+M| {However|Whatever|Whenever|Wherever}, :: しかし
+S| it {took|taken|taking|takes} :: かかった
+O| {more|many|much of|most} than ten years :: 10年以上
+R| {to turn|for turn|turn|turned} it into medicine. :: それを薬にするのに
+== しかし、それを薬にするまでには10年以上かかった。
+S| Today, penicillin {has saved|have saved|has save|saving} :: ペニシリンは救った
+O| {millions|million|millioned|millionth} of lives :: 何百万もの命を
+P| {all over|all on|over all|all of} the world. :: 世界中で
+== 今日まで、ペニシリンは世界中で何百万もの命を救ってきた。
+?? 2 3 休暇の前に彼は何をしなかった？
+?? 4 1 カビはどこに生えていた？
+?? 5 2 カビの周りで何が起きていた？
+?? 8 2 薬にするまで何年かかった？

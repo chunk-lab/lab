@@ -95,7 +95,7 @@ O| {an application|a application|an applying|a apply} form :: 申込書に
 P| {at|than|whom|nor} the front desk. :: 受付で
 == 興味のある方は、受付で申込書に記入してください。
 S| The deadline {is|are|be|being} :: 締め切りは
-C| {the end|an end|the ending|the ended} :: 末
+C| {the end|an end|the endless|the ended} :: 末
 P| {of|on|for|at} this month. :: 今月の
 == 締め切りは今月末です。
 S| {Reading|Read|Reads|To reading} together :: 一緒に読むことは
@@ -105,7 +105,7 @@ P| {into|onto|than|whom} lifelong readers. :: 一生本を読む人に
 == 一緒に読むことは、子どもが一生本を読む人に育つ助けになります。
 S| We {look|looks|looking|to look} forward :: 楽しみにしています
 P| {to meeting|to meet|meeting|for meet} you :: お会いするのを
-T| {soon|ago|yet|already}. :: もうすぐ
+T| {soon|ago|yet|since}. :: もうすぐ
 == もうすぐお会いできるのを楽しみにしています。
 ?? 1 1 お話会はいつ開かれる？
 ?? 3 3 研修はいつ受ける？
@@ -313,7 +313,7 @@ V| {be put|be putted|putting|be puts} :: 入れなければならない
 P| in {separate|separately|separation|separates} bags. :: 別々の袋に
 == 缶とびんは別々の袋に入れなければなりません。
 S| Garbage {should|shoulds|should to|ought} :: ごみは…ください
-V| {be put out|be put on|be putting out|put out be} :: 出して
+V| {be put out|be put outed|be putting out|put out be} :: 出して
 T| {by|since|ago|while} 8 a.m. :: 朝8時までに
 P| {on|in|at|than} collection day. :: 回収日の
 == ごみは回収日の朝8時までに出してください。
@@ -347,7 +347,7 @@ O| {to keep|keeps|kept|keeping} our city clean. :: 町をきれいに保つの�
 @tag 共通テストレベル・記事
 @gloss route=路線, rural=田舎の, elderly=高齢の, retired=退職した, ride=送迎, share=分け合う, fuel=燃料, passenger=乗客, support=支える
 T| {Last|Latest|Lastly|Late} year, :: 昨年
-S| the {only|alone|lonely|once} bus route :: 唯一のバス路線が
+S| the {only|alone|once|ever} bus route :: 唯一のバス路線が
 P| {in|than|whom|nor} a small rural town :: ある田舎町の
 V| {was stopped|was stop|stopped was|were stopped}. :: 廃止された
 == 昨年、ある田舎町で唯一のバス路線が廃止された。
@@ -453,7 +453,7 @@ S| I {hope|hopes|hoping|to hope} :: 私は願う
 O| {that|what|whom|whose} we never :: 決して…ないことを
 V| {need|needs|needing|to need} it, :: それを必要としない
 M| {but|nor|than|whom} now I feel :: でも今は感じる
-C| {ready|readily|readiness|readied}. :: 準備ができたと
+C| {ready|readily|readiness|readying}. :: 準備ができたと
 == 使う日が来ないことを願うが、今は備えができたと感じる。
 ?? 2 1 その学校は何として使われる？
 ?? 3 3 体育館で何の組み立て方を学んだ？
@@ -550,7 +550,7 @@ R| {to cool|cooling|cooled|cools} :: 冷やすのに
 O| the {buildings|builded|builds|built} below. :: 下の建物を
 == 屋根の植物は、下の建物を冷やすのに役立つ。
 M| {As a result|As result|In a result|As the results}, :: その結果
-S| {less|fewer|little|least} energy :: より少ない電力が
+S| {less|fewer|lessen|lessly} energy :: より少ない電力が
 V| {is needed|is need|needed is|are needed} :: 必要とされる
 P| {for|than|whom|nor} air conditioning. :: 冷房のために
 == その結果、冷房に必要な電力が少なくて済む。
