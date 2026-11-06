@@ -213,55 +213,58 @@ R| {to protect|protected|protects|to protecting} savers. :: 預金者を守る�
 @id int81
 @lv 2
 @level 6
-@title Should Phones Be Banned in Class?
-@ja 授業中のスマホは禁止すべき？
-@tag 共通テストレベル・論説文
-@gloss ban=禁止する, distract=気を散らす, concentrate=集中する, solution=解決策, look up=調べる, record=録音する, emergency=緊急事態, self-control=自制心
-S| Some schools {have|has|having|to have} :: 一部の学校は
-V| {banned|ban|banning|bans} :: 禁止した
-O| {smartphones|smartphone|smart|smartly} :: スマホを
-P| {in|on|at|by} classrooms. :: 教室での
-== 一部の学校は、教室でのスマホを禁止した。
-S| They {say|says|saying|said of} :: 彼らは言う
-O| phones {distract|distracts|distracting|distraction} students :: スマホが気を散らす
-M| {and|nor|than|whom} make it hard :: そして難しくする
-R| {to concentrate|concentration|concentrated|concentrates}. :: 集中するのを
-== 彼らは、スマホが生徒の気を散らし、集中しにくくすると言う。
-S| I {agree|agrees|agreeing|agreement} :: 私は賛成する
-O| {that|what|which|whom} this is :: これが…だと
-C| a real {problem|problematic|problematically|problems}. :: 本当の問題
-== これが本当の問題であることには賛成だ。
-M| {However|Whatever|Whenever|Wherever}, I do not think :: しかし思わない
-S| a total ban {is|are|be|being} :: 全面禁止が
-C| the best {solution|solve|solvable|solving}. :: 最善の解決策だと
-== しかし、全面禁止が最善の解決策だとは思わない。
-S| Phones {can|can to|must to|has} :: スマホは…ありうる
-C| {be|being|been|is} useful tools :: 役立つ道具で
-P| {for|on|at|by} learning. :: 学習の
-== スマホは学習に役立つ道具になりうる。
-S| Students {are able|able|ability|enable} :: 生徒は…できる
-V| to {look up|looks up|looked up|looking up} :: 調べる
-O| new words {or|nor|than|whom} :: 新しい単語や
-V| {record|records|recording|recorded} their speeches. :: スピーチを録音
-== 生徒は新しい単語を調べたり、自分のスピーチを録音したりできる。
-M| {Also|Too|Either|Neither}, parents :: また親は
-V| {want|wants|wanting|to want} :: 望む
-O| {to contact|contacting|contacted|contact to} their children :: 子どもとの連絡を
-T| {in|on|at|by} an emergency. :: 緊急時に
-== また、親は緊急時に子どもと連絡を取りたいと思っている。
-M| {Instead|Instance|Instant|Instantly} of banning phones, :: 禁止する代わりに
-S| schools {should|should to|ought|must to} :: 学校は…べきだ
-V| {teach|teaches|teaching|taught} students :: 生徒に教える
-O| {how|what|which|whom} to use them :: 使い方を
-== スマホを禁止するのではなく、学校は生徒に使い方を教えるべきだ。
-S| {Learning|Learn|Learned|Learns} self-control :: 自制心を学ぶのは
+@title Making a Strong Password
+@ja 強いパスワードの作り方
+@tag 共通テストレベル・説明文
+@gloss password=パスワード, dangerous=危険な, leak=流出, account=アカウント, guess=推測する, combination=組み合わせ, random=でたらめな, password manager=パスワード管理アプリ
+S| {Many|Much|Every|A little} people :: 多くの人は
+V| {use|uses|using|useful} :: 使っている
+O| the {same|similar|alike|equal} password :: 同じパスワードを
+P| {for|of|than|by} every website. :: すべてのサイトで
+== 多くの人は、すべてのサイトで同じパスワードを使っている。
+S| This {is|are|be|being} :: これは…だ
+C| {dangerous|danger|dangerously|endanger} :: 危険だ
+M| {because|because of|despite|due} one leak :: 1回の流出で
+V| can {open|opens|opening|opened} all your accounts. :: 全アカウントが開く
+== 1回の流出ですべてのアカウントが開いてしまうので、これは危険だ。
+M| Also, {short|shortly|shortage|shorten} passwords :: また短いパスワードは
+V| are {easy|easily|ease|easier of} :: 簡単だ
+R| {to guess|guessing|guessed|guesses}. :: 推測するのが
+== また、短いパスワードは簡単に推測されてしまう。
+S| Computers {can|cans|can to|must to} :: コンピュータは…できる
+V| {try|tries|trying|tried} :: 試す
+O| {millions|million|millionth|a million of} of combinations :: 何百万もの組み合わせを
+T| {in|on|at|by} a second. :: 1秒で
+== コンピュータは1秒で何百万通りもの組み合わせを試せる。
+M| {So|Nor|Than|Whom} how can you :: では、どうすれば
+V| {make|makes|making|made of} :: 作れる
+O| a {strong|strongly|strength|strongest of} one? :: 強いものを
+== では、どうすれば強いパスワードを作れるだろうか。
+S| {One|Once|Ones|Won} good way :: よい方法の1つは
 V| {is|are|be|being} :: …だ
-C| {part|parted|parting|partly} of growing up. :: 成長の一部
-== 自制心を学ぶことも、成長の一部なのだ。
-?? 1 1 学校側はスマホが生徒に何をすると言っている？
-?? 5 2 生徒はスマホで何を調べられる？
-?? 6 3 親はどんなときに子どもに連絡したい？
-?? 7 3 筆者は学校が何を教えるべきだと考えている？
+R| {to join|joins|joined|to joining} :: つなげること
+O| {several|severe|severely|several of} random words. :: いくつかの無関係な語を
+== よい方法の1つは、関係のない語をいくつかつなげることだ。
+M| {For|At|By|On} example, :: たとえば
+S| "blue-river-pencil-cloud" {is|are|be|being} :: この例は
+C| long {but|nor|than|whom} :: 長いが
+C| easy {to remember|remembering|remembered|remembers}. :: 覚えやすい
+== たとえば「blue-river-pencil-cloud」は長いが覚えやすい。
+S| You {should|should to|ought|must to} also :: また…べきだ
+V| {use|uses|using|used of} :: 使う
+O| a {different|difference|differently|differ} password :: 別のパスワードを
+P| {for|than|whom|nor} each account. :: アカウントごとに
+== また、アカウントごとに別のパスワードを使うべきだ。
+S| A password manager {can|cans|can to|must to} :: 管理アプリは…できる
+V| {remember|remembers|remembering|remembered} :: 覚える
+O| them {all|every|each of|whole} :: それらを全部
+P| {for|of|at|by} you. :: あなたの代わりに
+== パスワード管理アプリなら、それらを全部代わりに覚えてくれる。
+?? 0 2 多くの人はすべてのサイトでどんなパスワードを使っている？
+?? 3 2 コンピュータは1秒で何を試せる？
+?? 5 3 強いパスワードを作るよい方法は？
+?? 7 2 アカウントごとに何を使うべき？
+?? 8 0 パスワードを全部覚えてくれるのは何？
 
 @id int82
 @lv 2

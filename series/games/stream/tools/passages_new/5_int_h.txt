@@ -1,59 +1,59 @@
 @id int87
 @lv 2
 @level 6
-@title Should Cities Close Streets to Cars?
-@ja 通りから車をなくすべき?
+@title Should Parks Remove Risky Play Equipment?
+@ja 危ない遊具は撤去すべき?
 @tag 共通テストレベル・論説文
-@gloss supporter=賛成派, pollution=汚染, store owner=店主, customer=客, elderly=高齢の, delivery=配達, trial=試行, resident=住民, opinion=意見
-S| Some cities {have closed|have close|has closed|having closed} :: 一部の都市は閉鎖した
-O| their {main|mainly|maintain|mains} streets :: 中心の通りを
-P| {to|than|whose|nor} cars. :: 車に対して
-== いくつかの都市は、中心部の通りを車に対して閉鎖した。
+@gloss remove=撤去する, slide=滑り台, swing=ブランコ, relieved=ほっとした, repair=修理, expert=専門家, risk=危険, judge=判断する, confident=自信がある, equipment=遊具
+S| Many parks {have removed|have remove|has removed|having removed} :: 多くの公園は撤去した
+O| {tall|tallly|tallness|taller than} slides and swings :: 高い滑り台やブランコを
+T| {in|on|at|by} recent years. :: 近年
+== 近年、多くの公園が高い滑り台やブランコを撤去した。
 V| {Is|Are|Do|Have} this :: これは…か
-C| a good {idea|ideal|ideally|idealize} :: 良い考え
-P| {for|than|whom|nor} local people? :: 地元の人にとって
-== これは地元の人にとって良い考えだろうか。
-S| Supporters {say|says|saying|to say} :: 賛成派は言う
-O| {that|what|whom|whose} streets without cars :: 車のない通りは
-V| {are|is|be|being} safer :: より安全だ
-M| {and|than|nor|whom} quieter. :: そして静かだと
-== 賛成派は、車のない通りはより安全で静かだと言う。
-S| There {is|are|be|being} less pollution, :: 汚染が減る
-M| {so|than|whom|nor} people :: だから人々は
-V| {enjoy|enjoys|enjoying|to enjoy} :: 楽しむ
-O| {walking|walk|walked|to walk} and shopping. :: 歩きや買い物を
-== 汚染が減るので、人々は歩いたり買い物をしたりするのを楽しめる。
+C| the right {choice|choose|chose|chosen} :: 正しい選択
+P| {for|than|whom|nor} children? :: 子どもにとって
+== これは子どもにとって正しい選択だろうか。
+S| Some parents {feel|feels|feeling|to feel} :: 一部の親は感じる
+C| {relieved|relieve|relieving|relievedly} :: ほっとしたと
+M| {because|because of|due|despite} fewer children :: 子どもが減ったので
+V| {get|gets|getting|to get} hurt. :: けがをする
+== けがをする子どもが減ったので、ほっとしている親もいる。
+S| Parks {must|musts|must to|has} :: 公園は…ならない
+V| {also|either|neither|else} pay :: 払うことも
+P| {for|than|whom|nor} repairs :: 修理代を
+M| {and|nor|than|whom} safety checks. :: と安全点検の
+== 公園は修理や安全点検の費用も払わなければならない。
 M| {On the other hand|On other hand|In the other hand|At the other hand}, :: 一方で
-S| some store owners {worry|worries|worrying|to worry} :: 心配する店主もいる
-M| {that|what|whom|whose} fewer customers :: 客が減ると
-V| will {come|comes|coming|came}. :: 来るのではと
-== 一方で、客が減るのではと心配する店主もいる。
-S| Elderly people {may|maybe|must to|may to} find it :: 高齢者は…かも
-C| {hard|hardly|hardness|harden} :: 難しいと感じる
-R| {to reach|reaching|reach|reached} the shops :: 店に行くのが
-T| {without|unless|despite of|nor} a car. :: 車なしで
-== 高齢者は、車なしで店に行くのは難しいと感じるかもしれない。
-S| {Deliveries|Deliver|Delivers|Delivered} to stores :: 店への配達も
-V| {can|cans|can to|could to} :: …ありうる
-V| {also|either|neither|else} become difficult. :: 難しくなることも
-== 店への配達も難しくなるおそれがある。
-M| {Because of|Because|Due|Since of} this, :: このため
-S| many cities {start|starts|starting|to start} :: 多くの都市は始める
-P| {with|by|at|on} a short trial. :: 短い試行から
-== このため、多くの都市は短い試行から始める。
-S| They {close|closes|closing|to close} the streets :: 通りを閉じる
-T| {only|alone|lonely|single} on weekends :: 週末だけ
-M| {and|nor|than|whom} listen :: そして聞く
-P| {to|on|of|by} residents' opinions. :: 住民の意見に
-== 週末だけ通りを閉じ、住民の意見に耳を傾けるのだ。
-S| A good plan {needs|need|needing|to need} :: 良い計画には必要
-O| {to protect|protect|protects|protected} :: 守ることが
-O| {both|either|neither|each} safety and business. :: 安全と商売の両方を
-== 良い計画には、安全と商売の両方を守ることが必要だ。
-?? 2 2 賛成派は、車のない通りはどうだと言っている？
-?? 4 1 客が減ることを心配しているのはだれ？
-?? 7 2 多くの都市は何から始める？
-?? 8 1 通りを閉じるのはいつ？
+S| {some|any|every|each} experts :: 一部の専門家は
+V| {say|says|saying|to say} :: 言う
+O| {that|what|whom|whose} a little risk is good. :: 少しの危険は良いと
+== 一方で、少しの危険は良いことだと言う専門家もいる。
+S| Children {learn|learns|learning|to learn} :: 子どもは学ぶ
+O| {how to judge|how judge|how judging|what to judging} danger :: 危険の判断の仕方を
+M| {by|with|on|at} trying hard things. :: 難しいことに挑んで
+== 子どもは難しいことに挑戦することで、危険の判断の仕方を学ぶ。
+M| {Without|Unless|Despite of|Nor} such chances, :: そうした機会がないと
+S| they {may|maybe|must to|may to} :: …かもしれない
+V| {become|becomes|became|becoming} :: なる
+C| {less|fewer|lessen|lessly} confident. :: 自信のない子に
+== そうした機会がないと、子どもは自信を持てなくなるかもしれない。
+S| {Some|Any|Every|Each} cities :: 一部の都市は
+V| {are trying|are try|trying|is trying} :: 試している
+O| {a middle way|an middle way|a middle ways|middle a way}. :: 中間の方法を
+== 中間の方法を試している都市もある。
+S| They {build|builds|building|to build} :: 作る
+O| {play areas|play area|plays areas|playing area of} :: 遊び場を
+M| {with|than|whom|nor} soft ground :: 柔らかい地面と
+M| {and|nor|than|whom} lower equipment. :: 低めの遊具の
+== 柔らかい地面と低めの遊具のある遊び場を作るのだ。
+S| The goal {is|are|be|being} :: 目標は
+C| {to keep|keep|keeps|kept} play :: 遊びを保つこと
+C| {both|either|neither|each} safe and exciting. :: 安全でわくわくする
+== 目標は、遊びを安全でわくわくするものに保つことだ。
+?? 0 1 多くの公園は何を撤去した？
+?? 2 2 親がほっとしているのはなぜ？
+?? 5 1 子どもは挑戦することで何を学ぶ？
+?? 8 2 新しい遊び場の地面はどんなもの？
 
 @id int88
 @lv 2
@@ -493,7 +493,7 @@ V| {would cost|would costs|would costing|would to cost} :: かかるだろう
 O| {a lot of|a lot|lots|many of} money. :: 多くのお金が
 == 修理に多くのお金がかかることは理解している。
 S| The station {is|are|be|being} :: 駅は
-C| {also|either|neither|too} hard :: …も難しい
+C| {also|either|neither|alike} hard :: …も難しい
 R| {to use|use|used|uses} :: 使うのが
 P| {for|than|whom|nor} people in wheelchairs. :: 車いすの人には
 == 駅が車いすの人には使いにくいのも確かだ。

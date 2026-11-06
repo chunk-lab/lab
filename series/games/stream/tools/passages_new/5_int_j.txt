@@ -115,7 +115,7 @@ S| A pencil {is|are|be|being} :: 鉛筆は…だ
 C| {one|ones|once|one's} of the simplest tools :: 最も単純な道具の一つ
 P| {in|on|at|of} the world. :: 世界で
 == 鉛筆は、世界で最も単純な道具の一つだ。
-S| {Yet|Yes|Yeah|Yell} its history :: でもその歴史は
+S| {Yet|Yell|Yeast|Yearly} its history :: でもその歴史は
 V| {is|are|be|been} :: …だ
 C| {surprisingly|surprising|surprise|surprised} interesting. :: 意外におもしろい
 == でも、その歴史は意外におもしろい。
@@ -290,7 +290,7 @@ O| large {raised|raising|raise|rise} letters. :: 浮き出た大きな文字を
 == どのページにも、浮き出た大きな文字が並んでいた。
 S| Reading them {was|were|being|be} :: 読むのは…だった
 C| {very|much|many|such} slow :: とても時間がかかる
-P| {for|by|with|of} the students. :: 生徒にとって
+P| {for|by|than|of} the students. :: 生徒にとって
 == 生徒たちにとって、それを読むのはとても時間がかかった。
 T| {Later|Latter|Latest|Laterly}, :: 後に
 S| Braille {learned|learn|learning|learns} :: ブライユは知った
