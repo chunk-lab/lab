@@ -5,11 +5,12 @@
   問題:        ?? 文番号 チャンク番号 問題文   (答えはそのチャンク。番号は0から)
   見出し:      @id @lv(1-3) @level(読む画面 4/6/8) @title @ja @tag @gloss @skip
 役割: S誰が V する O何を I誰に C どうだ P どこで T いつ M どうやって・つなぎ R なぜ F もし X 説明"""
-import os, re, json, glob
+import os, re, json, glob, sys
+CHECK = sys.argv[1:]   # ファイルを渡すと、チェックだけ(何も書かない)
 H = os.path.dirname(os.path.abspath(__file__)) + '/'
 BR = re.compile(r'\{([^}]*)\}')
 out_p, out_r, errs = [], {}, []
-for f in sorted(glob.glob(H + 'passages_new/*.txt')):
+for f in (CHECK or sorted(glob.glob(H + 'passages_new/*.txt'))):
     cur = None
     for raw in open(f, encoding='utf8'):
         l = raw.rstrip('\n')
@@ -31,17 +32,22 @@ for f in sorted(glob.glob(H + 'passages_new/*.txt')):
         m = BR.search(en)
         if len(BR.findall(en)) != 1: errs.append(f"{cur['id']}: {{}} が1つでない {en}")
         if not m or len(m.group(1).split('|')) != 4: errs.append(f"{cur['id']}: 選択肢が4つでない {en}")
+        if m and len(set(x.strip() for x in m.group(1).split('|'))) != 4: errs.append(f"{cur['id']}: 選択肢が重複 {en}")
         if len(ja) > 12: errs.append(f"{cur['id']}: 訳が12字超 {ja}")
         if role.strip() not in list('SVOICPTMRFX'): errs.append(f"{cur['id']}: 役割 {role}")
         cur['chunks'].append(f'{en} :: {ja}')
         plain = BR.sub(lambda m: m.group(1).split('|')[0], en)
         cur['cur'].append(f"{role.strip()}:{plain}={ja}")
     if cur and cur['cur']: errs.append(f"{cur['id']}: 最後の文に == がない")
+ids = [p['id'] for p in out_p]
+errs += [f'id が重複 {i}' for i in set(ids) if ids.count(i) > 1]
 for p in out_p:
+    if not 8 <= len(p['sent']) <= 12 and p['level'] < 9: errs.append(f"{p['id']}: 文の数 {len(p['sent'])}")
     for s, c, q in p['q']:
         if s >= len(p['sent']) or c >= len(p['sent'][s][0].split(' | ')): errs.append(f"{p['id']}: 問題の番号 {s},{c}")
     out_r[p['id']] = dict(level=p['level'], title=p['title'], list=p['sent'], q=p['q'])
 if errs: print('\n'.join(errs)); raise SystemExit(1)
+if CHECK: print('OK', {p['id']: len(p['sent']) for p in out_p}); raise SystemExit(0)
 # passages.txt の自動生成部分を差し替え
 P = H + 'passages.txt'; t = open(P, encoding='utf8').read()
 MK = '# ==== ここから下は make_passages.py が passages_new/ から作る(手で直さない) ===='
