@@ -350,92 +350,85 @@ X| their mechanisms {are understood|understand|are understanding|understood}. ::
 @id adv72
 @lv 3
 @level 8
-@title The Doctor Nobody Believed
-@ja 信じてもらえなかった医師
-@tag 難関大レベル・説明文
-@gloss maternity=出産の, childbed fever=産褥熱, midwife=助産師, autopsy=解剖, corpse=遺体, chlorine=塩素, germ theory=細菌説, profession=専門職
-T| {In|On|At|Of} the 1840s, :: 1840年代に
-S| the {Vienna|Viennese of|Vienna's of|Viennas} General Hospital :: ウィーン総合病院は
-V| {ran|run|running|runs of} :: 運営していた
-O| two {maternity|maternal of|mother|maternally} clinics, :: 2つの産科病棟を
-M| {and|nor|than|whom} the death rates :: そして死亡率は
-P| {in|on of|at of|to} them :: そこでの
-V| differed {strikingly|striking|strike|struck}. :: 著しく違った
-== 1840年代、ウィーン総合病院には2つの産科病棟があり、その死亡率は著しく異なっていた。
-P| {In|On|To|Of} the clinic :: 病棟では
-X| {staffed|staffing|staff|staffs} by doctors :: 医師が勤める
-M| {and|nor|than|but} medical students, :: そして医学生が
-S| far {more|many|most|much} mothers :: ずっと多くの母親が
-V| died {of|for|at|with of} childbed fever :: 産褥熱で死んだ
-M| {than|then|as|that} in the one :: 病棟より
-X| {run|ran|running|runs} by midwives. :: 助産師が担う
-== 医師と医学生が担当する病棟では、助産師が担当する病棟よりはるかに多くの母親が産褥熱で亡くなっていた。
-S| A young {doctor|doctoral|doctored|doctoring} :: ある若い医師
-X| {named|naming|name|names} Ignaz Semmelweis :: ゼンメルワイスは
-V| was {determined|determining|determine|determination} :: 決意していた
-X| {to find|finding|to finding|find} out why. :: 理由を突き止めると
-== イグナーツ・ゼンメルワイスという若い医師は、その理由を突き止めようと決意した。
-S| The key {clue|clueless|clued|clues} :: 重要な手がかりは
-V| {came|come|coming|comes of} :: 訪れた
-M| {when|what|which|whom} a colleague :: 同僚が…とき
-V| cut {himself|him|his|itself} :: 自分を傷つけた
-P| {during|while|while of|for of} an autopsy :: 解剖中に
-M| {and|nor|than|whom} died :: そして死んだ
-P| {of|at|on|by of} an illness resembling childbed fever. :: 産褥熱に似た病で
-== 決定的な手がかりは、同僚が解剖中に傷を負い、産褥熱に似た病気で亡くなったときに得られた。
-S| Semmelweis {reasoned|reason|reasoning|reasonable} :: 彼は推論した
-O| {that|what|which|whom} doctors :: 医師たちが…と
-X| {who|whom|which|whose} came straight :: 直行してきた
-P| {from|of|at|to of} dissecting corpses :: 遺体の解剖から
-V| were {carrying|carried|carry|carries} :: 運んでいる
-O| something deadly {on|at of|in of|onto of} their hands. :: 手に致命的な何かを
-== ゼンメルワイスは、遺体の解剖から直接やって来る医師たちが、手に何か命に関わるものを付けて運んでいるのだと推論した。
-M| {When|What|Which|Whom} he required staff :: 職員に課すと
-X| {to wash|washing|wash|to washing} their hands :: 手を洗うよう
-P| {in|on|at of|to} a chlorine solution, :: 塩素の溶液で
-S| the death {rate|rated|rating|rates of} :: 死亡率は
-P| {in|on of|at of|to} his clinic :: 彼の病棟の
-V| fell {dramatically|dramatic|drama|dramatize}. :: 劇的に下がった
-== 職員に塩素の溶液で手を洗わせると、彼の病棟の死亡率は劇的に下がった。
-S| One {might|might to|mights|maybe} :: …と思うだろう
-V| {expect|expected to|expecting|expectation} :: 予想する
-O| such {a|an|the|one} striking result :: これほどの成果が
-X| {to have been welcomed|to has been welcomed|to have be welcomed|to having welcomed} :: 歓迎されたと
-M| {at once|at one|at ones|in once}. :: すぐに
-== これほど目覚ましい成果なら、すぐに歓迎されたと思うかもしれない。
-M| {Instead|Instead of|Instant|Insteadly}, :: ところが
-S| many senior {physicians|physics|physical|physically} :: 多くの年長医師は
-V| {rejected|rejection|reject of|rejecting} :: 拒んだ
-O| his {conclusions|conclude|conclusive|concluded}, :: 彼の結論を
-R| partly {because|because of|due|since of} the idea :: その考えが…ため
-X| {that|what|which|whom} doctors themselves were spreading disease :: 医師が病気を広める
-V| was deeply {offensive|offend|offense|offensively} to them. :: 不愉快だった
-== ところが多くの年長の医師は彼の結論を退けた。医師自身が病気を広めているという考えが、ひどく不愉快だったことも一因だ。
-S| Semmelweis also {failed|fail|failure|failing} :: 彼はまた…できず
-X| {to offer|offering|offer|to offering} :: 示すことが
-O| a {convincing|convinced|convince|conviction} explanation :: 説得力ある説明を
-P| {of|at|by|on} how the contamination worked, :: 汚染のしくみの
-R| {since|due|because of|owing} germ theory :: 細菌説が…ので
-V| had not yet {been established|established|being established|establish}. :: 確立していなかった
-== また、細菌説がまだ確立されていなかったため、ゼンメルワイスは汚染のしくみを説得力をもって説明できなかった。
-M| Only {after|later|ago|since of} his death :: 彼の死後ようやく
-V| {did|was|were|had} germ theory, :: 細菌説が
-X| {developed|developing|develop|develops} by Pasteur and others, :: パスツールらが築いた
-V| {show|shown|showed|showing} :: 示した
-O| {that|what|which|whom} he had been right. :: 彼の正しさを
-== 彼の死後になってようやく、パスツールらが築いた細菌説によって、彼が正しかったことが示された。
-S| His story {is|are|be|has} often told :: 彼の話はよく語られる
-P| {as|so|than|such} a warning: :: 警告として
-S| evidence {alone|lonely|along|alike} :: 証拠だけでは
-V| does not always {overcome|overcomes|overcame|overcoming} :: 必ずしも破れない
-O| the {resistance|resist|resistant|resisting} :: 抵抗を
-P| {of|for|at|to} an established profession. :: 確立した専門職の
-== 彼の物語はしばしば警告として語られる。証拠だけで、確立した専門家集団の抵抗を打ち破れるとは限らないのだ。
-?? 1 4 医師の病棟で母親たちは何で亡くなった？
-?? 3 4 同僚はいつ傷を負った？
-?? 5 2 職員は何で手を洗った？
-?? 7 5 年長の医師たちが不愉快に思った考えは？
-?? 8 4 汚染のしくみを説明できなかったのはなぜ？
+@title Why We Feel Pain
+@ja 痛みはなぜあるのか
+@tag 難関大レベル・論説文
+@gloss protective=保護の, accumulate=蓄積する, malfunction=故障, tissue=組織, phantom limb=幻肢, amputate=切断する, chronic=慢性の, persist=続く
+S| {Pain|Painful|Pained|Painfully} :: 痛みは
+V| is usually {regarded|regard|regarding|regards} :: ふつう見なされる
+P| {as|so|than|such} an enemy :: 敵として
+X| {to be eliminated|to eliminated|being eliminate|to be eliminating}, :: 取り除くべき
+M| {yet|despite|although of|however of} it serves :: だがそれは果たす
+O| a {vital|vitally|vitality|vitals} protective function. :: 重要な保護の役割を
+== 痛みはふつう取り除くべき敵とみなされるが、体を守るという重要な役割を果たしている。
+S| This {becomes|become|becoming|became of} clear :: これは明らかになる
+P| {in|on|at|to} people :: 人々を見ると
+X| {born|borne of|bear|bearing} with a rare condition :: まれな体質で生まれた
+X| {that|what|whom|whose} leaves them :: 彼らを…にする
+C| {unable|disable|inability|unably} to feel pain. :: 痛みを感じない状態
+== このことは、痛みを感じられないまれな体質を持って生まれた人々を見るとよくわかる。
+M| Far {from|of|to|by} being fortunate, :: 幸運どころか
+S| such people {often|oftenly|oft of|often of} :: そうした人はよく
+V| {suffer|suffers|suffering|sufferance} :: 負う
+O| {serious|seriously|seriousness|series} injuries :: 重いけがを
+M| {without|within|with out|out of} noticing them. :: 気づかないまま
+== そうした人々は幸運などではなく、気づかないうちに重いけがを負ってしまうことが多い。
+S| A broken bone {or|nor|than|whom} a burned hand :: 骨折ややけどが
+V| {goes|go|going|gone} unnoticed, :: 気づかれない
+M| {and|nor|than|whom} repeated damage :: そして繰り返す損傷が
+V| can {accumulate|accumulates|accumulated|accumulation} :: 蓄積しうる
+P| {over|above|upon of|beyond of} the years. :: 年月とともに
+== 骨折ややけどにも気づかず、繰り返される損傷が年月とともに積み重なっていく。
+S| Pain, {in|on|at|by} other words, :: つまり痛みは
+V| {is|are|be|being} :: …だ
+C| {less|fewer|lesser|least} a malfunction :: 故障というより
+M| {than|then|as|that} an alarm :: 警報だ
+X| {that|what|whom|whose} urges us :: 私たちに促す
+X| {to protect|protecting|protect|to protecting} the body. :: 体を守るよう
+== つまり痛みは、故障というより、体を守るよう私たちを促す警報なのだ。
+M| {Yet|Already|Still yet|Even yet} pain :: しかし痛みは
+V| is not {a|an|the of|one of} simple measure :: 単純な尺度ではない
+P| {of|for|at|by} tissue damage; :: 組織の損傷の
+S| it {is|are|has|be} constructed :: それは作られる
+P| {by|with|for|at} the brain. :: 脳によって
+== しかし痛みは組織の損傷を測る単純な目盛りではなく、脳によって作り出されるものだ。
+S| The same {injury|injure|injured|injurious} :: 同じけがでも
+V| can {hurt|hurts|hurting|hurted} :: 痛みうる
+M| more {or|nor|than|whom} less :: 強くも弱くも
+M| {depending|depend|depends|dependent of} on attention, :: 注意によって
+O| {emotion|emotional|emotionally|emote}, and expectation. :: 感情や予期によって
+== 同じけがでも、注意や感情、予期によって痛みが強くも弱くもなる。
+S| Striking {evidence|evident|evidently|evidences} :: 驚くべき証拠は
+V| {comes|come|coming|came of} :: 得られる
+P| {from|of from|at|to} phantom limb pain, :: 幻肢痛から
+X| {in which|which|in what|where of} people feel pain :: 人が痛みを感じる
+P| {in|on of|at of|to} an arm or leg :: 腕や脚に
+X| {that|what|whom|whose} has been amputated. :: 切断された
+== 驚くべき証拠は幻肢痛から得られる。切断された腕や脚に痛みを感じる現象だ。
+R| {Since|Due|Because of|Owing} the limb :: その手足は…ので
+V| no longer {exists|exist|existing|existence}, :: もう存在しない
+S| the pain {must|must to|musts|mustn} :: その痛みは…はずだ
+V| be {produced|producing|produce|product} :: 生み出される
+P| {by|with|for|at} the brain and nervous system themselves. :: 脳と神経系自体に
+== 手足はもう存在しないのだから、その痛みは脳と神経系そのものが生み出しているはずだ。
+S| This {understanding|understand|understood|understandably} :: この理解は
+V| {matters|matter|mattering|material} :: 重要だ
+P| {for|at|by|on} patients :: 患者にとって
+P| {with|of whom|whose|which} chronic pain, :: 慢性の痛みの
+X| {which|what|whom|who} can persist :: 続きうる
+T| long {after|ago|later|since of} an injury has healed. :: 傷が治った後も
+== この理解は慢性痛を抱える患者にとって重要だ。慢性痛は、けがが治ったずっと後まで続くことがある。
+S| Their suffering {is|are|be|being} real, :: 苦しみは本物だ
+M| even {when|what|which|whom} no damage :: 損傷がない時も
+V| can be {found|foundation|find|finding}, :: 見つかる
+R| {because|because of|due|owing} pain lives :: 痛みは存在するから
+M| {as|so|such|than} much in the brain :: 脳にも同じだけ
+M| {as|than|so|that} in the body. :: 体と
+== 損傷が見つからなくても彼らの苦しみは本物だ。痛みは体と同じくらい脳の中にも存在するからである。
+?? 2 3 痛みを感じない人はどんなけがを負いやすい？
+?? 4 3 痛みは故障というより何だと言える？
+?? 7 4 幻肢痛ではどこに痛みを感じる？
+?? 9 5 慢性痛はいつまで続くことがある？
 
 @id adv73
 @lv 3
