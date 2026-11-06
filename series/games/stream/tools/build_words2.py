@@ -25,6 +25,7 @@ def _excl():
 EXCL = _excl()
 BAD_J = re.compile('性交|売春|性器|陰茎|陰部|膣|精液|ペニス|大便|小便|くそ|ちくしょう|同性愛|乳房|強姦|ポルノ|自慰|淫|売女|娼婦|白痴|気違い|きちがい|めくら|つんぼ|おし（|かたわ|びっこ|黒んぼ')
 BAD_W |= EXCL
+BAD_W |= set('bugger hooker sucker puss peter tucker turner potter miller fuller wheeler mister welter glower bummer'.split())   # 俗語・人名の語尾変化形もどき
 
 def clean(m):
     m = re.sub(r'[（(][^）)]*[）)]', '', m).strip(' 　・')
@@ -112,12 +113,15 @@ rank = lambda w: RANK.get(w, 20000 + (100 - SCORE.get(w, 0)) * 1000 + zlib.crc32
 _CORE = set()   # 英検の級データかCEFR-Jに載っている語は、career・container・employer のように語尾が -er/-ing でも 独立した語として扱う
 for _r in csv.DictReader(open(HERE + '../../../data/words/dict_all_words.csv', encoding='utf-8-sig')):
     if _r['出題'] == '○' and (_r['英検の級(実データ)'] or _r['レベルの出どころ'].startswith('CEFR-J')): _CORE.add(_r['単語'].lower())
+PLURALIA = set('news species scissors pants shorts clothes means odds belongings jeans glasses trousers goods savings earnings premises'.split())
 def inflected(w, p):
     if w in PAST: return True
     if w in _CORE and w not in ('higher', 'warmer') and not re.search(r'(ies|ied|s)$', w): return False
     if p == 'a' and re.search(r'(ing|ed)$', w): return False      # boring・excited などの形容詞は残す
+    if w in PLURALIA or re.search(r'(ss|us|is|ics)$', w): return False   # news・politics・pass・discuss など(語尾が s でも変化形ではない)
     for suf, rep in (('ies', 'y'), ('es', ''), ('s', ''), ('ied', 'y'), ('ed', ''), ('ed', 'e'), ('ing', ''), ('ing', 'e'), ('er', ''), ('est', ''), ('ier', 'y'), ('iest', 'y')):
         if w.endswith(suf):
+            if suf in ('er', 'est', 'ier', 'iest') and p not in ('a', 'r'): continue   # 名詞・動詞の -er は 比較級ではない(career・employer・buyer など)
             b = w[:-len(suf)] + rep
             if len(b) >= 3 and (b in HEAD or (len(b) > 3 and b[-1] == b[-2] and b[:-1] in HEAD)): return True
     return False
