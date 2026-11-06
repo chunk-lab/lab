@@ -1,0 +1,542 @@
+@id int57
+@lv 2
+@level 6
+@title Why Do Onions Make Us Cry?
+@ja 玉ねぎで涙が出るわけ
+@tag 共通テストレベル・説明文
+@gloss chop=刻む, cell=細胞, release=放出する, chemical=化学物質, gas=気体, sting=しみる, tear=涙, chill=冷やす, fridge=冷蔵庫
+S| {Have|Has|Are|Did} you :: あなたは
+V| ever {cried|cry|crying|cries} :: 泣いたことある？
+P| {while|during|among|between} chopping onions? :: 玉ねぎを刻みながら
+== 玉ねぎを刻みながら泣いたことはありますか。
+S| It {is|are|be|been} :: それは
+M| {not|no|none|nor} because :: …からではない
+R| you {are|is|be|being} sad. :: 悲しい
+== それは悲しいからではありません。
+S| An {onion|onions|oniony|onion's} :: 玉ねぎは
+V| {is made|makes|is make|made} :: できている
+P| {of|at|on|among} many tiny cells. :: 小さな細胞で
+== 玉ねぎはたくさんの小さな細胞でできています。
+M| {When|What|Which|Whom} you cut it, :: 切ると
+S| the cells {break|breaks|broken|breaking} :: 細胞が壊れ
+M| {and|nor|than|whom} release :: 放出する
+O| a {chemical|chemistry|chemically|chemicals}. :: 化学物質を
+== 切ると細胞が壊れ、ある化学物質を放出します。
+S| This chemical {quickly|quick|quicker|quickness} :: この物質はすぐに
+V| {turns|turn|turning|to turn} :: 変わる
+P| {into|onto|inside of|unto} a gas. :: 気体に
+== この物質はすぐに気体に変わります。
+M| {When|What|Whose|Whom} the gas reaches :: 気体が届くと
+O| your {eyes|eye's|eyed|eyeing}, :: 目に
+S| it {makes|make|making|made of} :: それは…させる
+C| them {sting|to sting|stinging|stung}. :: 目をしみるように
+== 気体が目に届くと、目がしみます。
+S| Your eyes then {produce|product|production|productive} :: 目はそれから出す
+O| {tears|tear's|teary|tearful} :: 涙を
+R| {to wash|to washing|washed|wash} the gas away. :: 気体を流すために
+== 目はそれから、気体を洗い流すために涙を出します。
+M| {So|Such|Too|Very}, :: では
+S| how {can|cans|being|are} you :: どうしたら…できる
+V| {stop|stops|stopping|stopped} the tears? :: 涙を止める
+== では、どうしたら涙を止められるでしょうか。
+S| One {easy|easily|ease|easiness} way :: 簡単な方法の一つは
+V| is {to chill|chill|chilled to|chilling to} :: 冷やすことだ
+O| the onion {in|at|into|onto} the fridge :: 玉ねぎを冷蔵庫で
+T| {before|ago|since|during} cutting it. :: 切る前に
+== 簡単な方法の一つは、切る前に玉ねぎを冷蔵庫で冷やすことです。
+S| Cold {makes|make|making|made} :: 冷たさは…させる
+O| the chemical {work|works|working|worked} slowly, :: 物質の働きを遅く
+M| {so|such|too|very} you will cry less. :: だから涙が減る
+== 冷たいと物質の働きが遅くなるので、涙が少なくなります。
+?? 2 2 玉ねぎは何でできている？
+?? 3 3 細胞が壊れると何を放出する？
+?? 6 2 涙は何のために出る？
+?? 8 1 切る前に玉ねぎをどうするとよい？
+
+@id int58
+@lv 2
+@level 6
+@title A School Nurse on Drinking Water
+@ja 保健の先生に聞く水分補給
+@tag 共通テストレベル・インタビュー
+@gloss important=大切な, cell=細胞, sweat=汗をかく, breathe=息をする, thirsty=のどがかわいた, especially=特に, contain=含む, exercise=運動
+S| Q: Ms. Mori, {why|what|whose|whom} is water :: 森先生、なぜ水は
+C| {so|such|so much|such a} important :: そんなに大切
+P| {for|at|by|on} our bodies? :: 体にとって
+== 森先生、水はなぜ体にとってそんなに大切なのですか。
+S| A: More {than|then|that|as} half :: 半分以上が
+P| {of|from|at|on} your body :: 体の
+V| {is|are|be|being} water. :: 水だ
+== 体の半分以上は水なんです。
+S| It {carries|carry|carrying|carried to} :: 水は運ぶ
+O| food {to|at|until|among} your cells :: 細胞へ栄養を
+M| {and|nor|than|whom} keeps :: そして保つ
+C| you {cool|coolly|coolness|to cool}. :: 体を涼しく
+== 水は細胞に栄養を運び、体を涼しく保ちます。
+S| Q: {How|What|Which|Who} do we :: どうやって私たちは
+V| {lose|loose|lost|losing} :: 失う
+O| {water|watery|watered|watering}? :: 水を
+== 私たちはどうやって水を失うのですか。
+S| A: We {lose|loose|losing|loses} it :: 水を失うのは
+T| {when|what|which|whom} we sweat, :: 汗をかくときや
+M| and {even|ever|every|evenly} :: さらには
+T| when we {breathe|breath|breathing|breathes}. :: 息をするとき
+== 汗をかくとき、そして息をするときにさえ、水を失います。
+S| Q: When {should|shoulds|should to|shall to} students :: 生徒はいつ…べき
+V| {drink|drinks|drank|drinking} water :: 水を飲む
+T| {during|while|among|since} the school day? :: 学校にいる間
+== 学校にいる間、生徒はいつ水を飲むべきですか。
+S| A: Don't {wait|waits|waiting|waited} :: 待たないで
+T| {until|by|during|among} you feel :: 感じるまで
+C| {thirsty|thirst|thirstily|thirsts}. :: のどのかわきを
+== のどがかわくまで待たないでください。
+V| {Drink|Drinks|Drinking|Drank} a little :: 少し飲んで
+O| water {every|each of|all|both} hour, :: 1時間ごとに水を
+M| {especially|special|specialty|specialize} :: 特に
+T| {during|while|among|between} sports. :: スポーツ中は
+== 特にスポーツ中は、1時間ごとに少し水を飲んでください。
+S| Q: {Are|Is|Do|Does} sports drinks :: スポーツドリンクは
+C| {better|good|best|well} :: よりよい
+P| {than|then|that|as} water? :: 水より
+== スポーツドリンクは水よりよいのですか。
+S| A: They {can|cans|able|being} help :: 役に立つ
+T| {after|ago|later|yet} long exercise, :: 長い運動の後は
+M| {but|nor|than|whom} they contain :: でも含んでいる
+O| a lot {of|for|in|with} sugar. :: たくさんの砂糖を
+== 長い運動の後には役に立ちますが、砂糖がたくさん入っています。
+?? 1 0 体のどのくらいが水？
+?? 4 1 汗をかくとき以外に、いつ水を失う？
+?? 6 1 何を感じるまで待ってはいけない？
+?? 9 3 スポーツドリンクには何が多く入っている？
+
+@id int59
+@lv 2
+@level 6
+@title My First 5K Race
+@ja 初めての5キロレース
+@tag 共通テストレベル・ブログ
+@gloss race=レース, mix=混ぜる, little by little=少しずつ, nervous=緊張して, along=…に沿って, cheer=応援する, energy=元気, proud=誇らしい, look forward to=楽しみにする
+T| Last {Sunday|Sundays|Sunday's|on Sunday}, :: 先週の日曜
+S| I {ran|run|runs|running} :: 私は走った
+O| my {first|one|firstly|once} 5K race :: 初めての5キロを
+P| {in|on|of|until} the park. :: 公園で
+== 先週の日曜日、公園で初めての5キロレースを走った。
+T| Three months {ago|since|for|during}, :: 3か月前は
+S| I could {not|no|none|nor} run :: 走れなかった
+P| {for|since|during|while} even five minutes. :: 5分さえも
+== 3か月前は、5分さえ走れなかった。
+S| A friend {told|said|talked|spoke} me :: 友人は私に言った
+O| {to start|start|started|starting} slowly :: ゆっくり始めるよう
+P| {by|on|at|of} mixing walking :: 歩くのを混ぜて
+M| {and|nor|than|either} running. :: 走るのと
+== 友人は、歩くのと走るのを混ぜてゆっくり始めるように言った。
+T| At {first|firstly|firsts|one}, :: 最初は
+S| I {ran|run|runs|running} :: 走った
+P| for one minute {and|nor|than|whom} walked :: 1分、そして歩いた
+P| for {two|second|twice|double}. :: 2分
+== 最初は、1分走って2分歩いた。
+M| Little {by|to|for|in} little, :: 少しずつ
+S| I {was|were|am being|be} able :: 私はできた
+O| to run {longer|long than|length|lengthy}. :: 長く走ることが
+== 少しずつ、長く走れるようになった。
+T| {On|In|At|By} race day, :: レース当日
+S| I was {so|such|too|very} nervous :: とても緊張して
+M| {that|what|which|as} I could not eat :: 食べられなかった
+O| {breakfast|breakfasts|breakfasted|breakfasting}. :: 朝食を
+== レース当日は緊張しすぎて、朝食が食べられなかった。
+M| But {when|what|which|whom} the race started, :: でも始まると
+S| people {along|alone|alike|aloud} the road :: 沿道の人々が
+V| {cheered|cheer|cheering|cheerful} :: 応援してくれた
+P| {for|by|of|than} us. :: 私たちを
+== でもレースが始まると、沿道の人たちが応援してくれた。
+S| Their voices {gave|give|giving|given} me :: その声は私にくれた
+O| {energy|energetic|energize|energetically}, :: 元気を
+M| and I {never|ever|no|none} stopped :: 一度も止まらず
+R| {to walk|walk|walked|to walking}. :: 歩くために
+== その声が元気をくれて、一度も立ち止まって歩くことはなかった。
+S| I {finished|finish|finishing|finishes} :: ゴールした
+P| {in|on|of|to} 32 minutes, :: 32分で
+M| {which|what|who|whom} was not fast. :: 速くはなかった
+== 32分でゴールしたが、速くはなかった。
+M| {Still|Steal|Stiff|Stall}, :: それでも
+S| I am {already|all ready|yet|ever} :: もう
+V| looking forward {to|for|at|on} :: 楽しみにしている
+O| my next {race|races|racing|raced}. :: 次のレースを
+== それでも、もう次のレースが楽しみだ。
+?? 1 2 3か月前は何分さえ走れなかった？
+?? 3 3 最初は何分歩いた？
+?? 5 3 レース当日、何が食べられなかった？
+?? 8 1 何分でゴールした？
+
+@id int60
+@lv 2
+@level 6
+@title Why Do We Get Goosebumps?
+@ja 鳥肌が立つのはなぜ？
+@tag 共通テストレベル・説明文
+@gloss bump=ぶつぶつ, appear=現れる, muscle=筋肉, fur=毛皮, trap=閉じこめる, scared=怖がって, interestingly=おもしろいことに, moving=感動的な
+M| {When|What|Which|Whom} you feel cold, :: 寒いと感じると
+S| small bumps {sometimes|sometime|some times|someday} :: 小さな粒が時々
+V| {appear|appears|appearing|appearance} :: 現れる
+P| {on|at|of|for} your skin. :: 肌に
+== 寒いと感じると、肌に小さなぶつぶつが現れることがある。
+S| These {are called|call|are call|calling} :: これらは呼ばれる
+O| {goosebumps|gooses|goosebumping|goosebumpy} :: goosebumpsと
+P| {in|on|at|by} English. :: 英語で
+== これらは英語で goosebumps と呼ばれる。
+S| They {happen|happens|happening|happened to} :: それは起こる
+R| {because|because of|due to|thanks to} tiny muscles :: 小さな筋肉が…から
+V| {pull|pulls|pulling|pulled to} :: 引っぱる
+O| the hairs on your skin {up|upon|upper|uppers}. :: 肌の毛を上に
+== 鳥肌は、小さな筋肉が肌の毛を引っぱって立たせるために起こる。
+P| {For|By|At|Of} animals with thick fur, :: 毛の厚い動物には
+S| this {is|are|be|being} :: これは
+C| very {useful|use|usefully|usage}. :: とても役立つ
+== 毛の厚い動物にとって、これはとても役に立つ。
+S| {Raised|Raise|Raises|To raised} fur :: 立った毛は
+V| {traps|trap|trapping|to trap} :: 閉じこめる
+O| {warm|warmly|warmth|warmer than} air :: 温かい空気を
+P| {near|nearly|nearness|nears} the body. :: 体の近くに
+== 立った毛は、体の近くに温かい空気を閉じこめる。
+S| It also {makes|make|making|to make} :: それはまた…させる
+O| the animal {look|looks|looking|to look} bigger :: 動物を大きく見せる
+T| {when|what|which|whom} it is scared. :: 怖いときに
+== また、怖いときには動物を大きく見せる。
+S| {Humans|Human|Humanity's|Humanly} :: 人間は
+V| {have lost|have lose|has lost|losing} :: 失った
+O| most {of|in|at|for} their thick body hair. :: 濃い体毛の大半を
+== 人間は濃い体毛のほとんどを失った。
+M| {However|Because|Although|Unless}, :: しかし
+S| the muscles {are|is|be|being} still there, :: 筋肉はまだある
+M| {so|such|too|very} we still get :: だから今も出る
+O| {goosebumps|goose|gooses|goosey}. :: 鳥肌が
+== しかし筋肉はまだ残っているので、今でも鳥肌が立つ。
+M| {Interestingly|Interesting|Interest|Interested}, :: おもしろいことに
+S| some people also {get|gets|getting|got to} them :: 鳥肌が立つ人も
+T| {when|what|which|whom} they hear :: 聞いたときに
+O| {moving|moved|move|moves} music. :: 感動的な音楽を
+== おもしろいことに、感動的な音楽を聞いたときに鳥肌が立つ人もいる。
+?? 2 1 鳥肌は何が毛を引っぱって起こる？
+?? 4 2 立った毛は何を閉じこめる？
+?? 7 1 人間に今も残っているものは？
+?? 8 3 鳥肌が立つ人もいるのは何を聞いたとき？
+
+@id int61
+@lv 2
+@level 6
+@title Standing Desks in the Classroom
+@ja 教室に立ち机
+@tag 共通テストレベル・記事
+@gloss raise=上げる, lower=下げる, whenever=…するときはいつでも, health=健康, focus=集中する, sleepy=眠い, though=…だけれど, tired=疲れた
+S| A junior high school {in|on|into|of} Nagano :: 長野のある中学校が
+V| {has started|has start|have started|starting} :: 始めた
+O| {using|use|used|uses} standing desks. :: 立ち机を使うのを
+== 長野のある中学校が、立ったまま使う机を使い始めた。
+S| Students {can|cans|could to|able} :: 生徒は…できる
+V| {raise|rise|raised|raising} :: 上げる
+M| {or|nor|than|whom} lower :: または下げる
+O| the desks {easily|easy|ease|easiness}. :: 机を簡単に
+== 生徒は机を簡単に上げ下げできる。
+S| They {can|cans|could to|able} :: 生徒は…できる
+V| sit {or|nor|than|whom} stand :: 座るか立つか
+T| {whenever|whatever|however|whoever} they like. :: 好きなときに
+== 生徒は好きなときに座ることも立つこともできる。
+S| {Sitting|Sit|Sat|Sits} for many hours :: 長時間座るのは
+V| {is|are|be|being} not good :: よくない
+P| {for|at|by|on} our health. :: 健康に
+== 何時間も座っているのは健康によくない。
+S| Mr. Ito, {who|which|whose|whom} started the idea, :: 発案した伊藤先生は
+V| {says|say|saying|said to} :: 言う
+O| students {focus|focuses|focusing|focused on} better. :: 生徒の集中が増すと
+== 発案した伊藤先生は、生徒の集中力も上がると言う。
+M| "{When|What|Which|Whom} they get sleepy, :: 眠くなると
+S| they just {stand|stands|standing|stood} up," :: 立ち上がるだけ
+V| he {says|say|saying|tell}. :: と彼は言う
+== 「眠くなったら、ただ立ち上がればいいんです」と彼は言う。
+S| Not {everyone|every|each|anyone} :: 全員が…ではない
+V| {likes|like|liking|to like} :: 気に入っている
+O| the new desks, {though|through|thorough|thought}. :: 新しい机を、ただ
+== ただし、全員が新しい机を気に入っているわけではない。
+S| One student {said|told|talked|spoke} :: ある生徒は言った
+O| {that|what|which|whose} her legs :: 足が…と
+V| {got|get|getting|gets} tired :: 疲れた
+T| {at|in|on|by} first. :: 最初は
+== ある生徒は、最初は足が疲れたと言った。
+T| {Now|Know|No|Nor}, :: 今では
+S| most students {stand|stands|standing|stood} :: 大半の生徒が立つ
+P| {for|since|while|among} part of every class. :: 毎回授業の一部で
+== 今では、ほとんどの生徒が毎回の授業の一部の時間は立っている。
+S| The school {hopes|hope|hoping|hopeful} :: 学校は望んでいる
+O| {to add|adding|add|added} more desks :: 机を増やすことを
+T| {next|nest|near|nearly} year. :: 来年
+== 学校は来年、机をさらに増やしたいと考えている。
+?? 1 1 生徒は机をどうできる？
+?? 4 0 この考えを始めたのはだれ？
+?? 7 2 ある生徒は最初どうなったと言った？
+?? 9 1 学校は来年何をしたい？
+
+@id int62
+@lv 2
+@level 6
+@title Why Does Ice Float?
+@ja 氷が浮くのはなぜ？
+@tag 共通テストレベル・説明文
+@gloss liquid=液体, shrink=縮む, solid=固体, opposite=反対, freeze=凍る, volume=体積, float=浮く, cover=ふた, alive=生きて
+S| Most liquids {shrink|shrinks|shrank to|shrinking} :: たいていの液体は縮む
+T| {when|what|which|whom} they become :: …になると
+C| {solid|solidly|solidity|solidify}. :: 固体に
+== たいていの液体は、固体になると縮む。
+S| Water, {however|whatever|whoever|wherever}, :: しかし水は
+V| {does|do|doing|done} :: する
+O| the {opposite|oppose|opposed|opposes}. :: 反対のことを
+== しかし、水は反対のことをする。
+T| {When|What|Which|Whom} water freezes, :: 水が凍ると
+S| it {gets|get|getting|to get} :: それは…なる
+C| about nine percent {larger|large|largely|largest}. :: 約9%大きく
+== 水は凍ると、約9パーセント大きくなる。
+S| This {means|mean|meaning|meant to} :: つまり
+O| ice is {lighter|light|lightly|lightest} :: 氷はより軽い
+P| {than|then|that|as} the same volume :: 同じ体積より
+P| {of|for|in|at} water. :: 水の
+== つまり、氷は同じ体積の水よりも軽いということだ。
+S| That {is|are|be|being} why :: だから
+S| ice {floats|float|floating|floated to} :: 氷が浮く
+P| {on|at|by|of} water. :: 水に
+== だから氷は水に浮くのだ。
+S| This {is|are|be|being} :: これは
+C| very {important|importance|importantly|import} :: とても重要だ
+P| {for|at|by|of} fish in cold places. :: 寒い所の魚に
+== これは寒い地域の魚にとってとても重要だ。
+T| {In|On|At|Of} winter, :: 冬には
+S| ice {forms|form|forming|formal} :: 氷ができる
+P| {on|of|into|onto} the top of lakes. :: 湖の表面に
+== 冬には、湖の表面に氷ができる。
+S| The ice {works|work|working|worker} :: 氷は働く
+P| {like|likely|alike|liking} a cover :: ふたのように
+M| and {keeps|keep|keeping|kept to} :: そして防ぐ
+O| the water below {from|for|of|by} freezing. :: 下の水が凍るのを
+== 氷はふたのような役割をして、下の水が凍るのを防ぐ。
+M| {So|Such|Too|Very} fish can :: だから魚は…できる
+V| stay {alive|live|lively|life} :: 生きていられる
+P| {under|undo|until|understand} the ice :: 氷の下で
+T| {until|since|unless|among} spring. :: 春まで
+== だから魚は、春まで氷の下で生きていられる。
+?? 2 2 水は凍るとどのくらい大きくなる？
+?? 3 1 氷は同じ体積の水と比べてどう？
+?? 7 3 氷は下の水が何をするのを防ぐ？
+?? 8 3 魚はいつまで氷の下で生きられる？
+
+@id int63
+@lv 2
+@level 6
+@title Taller in Space
+@ja 宇宙では背が伸びる
+@tag 共通テストレベル・記事
+@gloss astronaut=宇宙飛行士, spine=背骨, cushion=クッション, gravity=重力, press=押す, stretch=伸びる, height=身長, last=続く, normal=ふつうの
+S| Did you {know|knew|knows|knowing} :: 知っていた？
+O| {that|what|which|whose} astronauts :: 宇宙飛行士が…と
+V| {become|becomes|became|becoming} taller :: 背が高くなる
+P| {in|on|at|by} space? :: 宇宙で
+== 宇宙飛行士が宇宙で背が高くなることを知っていましたか。
+S| Some {grow|grows|growing|grown} :: 伸びる人もいる
+P| {by|with|at|on} a few centimeters :: 数センチ
+T| {during|while|among|since} their stay. :: 滞在中に
+== 滞在中に数センチ伸びる人もいる。
+S| This {happens|happen|happening|to happen} :: これは起こる
+R| {because of|because|due|so that} the spine, :: 背骨が原因で
+P| the line {of|in|at|for} bones :: 骨の列
+P| {in|into|onto|unto} your back. :: 背中の
+== これは背中にある骨の列、つまり背骨が原因で起こる。
+S| There {are|is|be|being} soft parts :: やわらかい部分がある
+P| {between|betweens|among of|both} the bones, :: 骨と骨の間に
+P| {like|likely|alike|liking} small cushions. :: 小さなクッション状
+== 骨と骨の間には、小さなクッションのようなやわらかい部分がある。
+P| {On|In|At|By} Earth, :: 地球では
+S| gravity always {presses|press|pressing|pressure} :: 重力が常に押す
+O| these parts {together|altogether|gather|gathering}. :: これらを縮めて
+== 地球では、重力がいつもこれらの部分を押し縮めている。
+P| {In|On|At|By} space, :: 宇宙では
+S| there is {almost|most|the most|almost of} no gravity, :: 重力がほぼない
+M| {so|such|too|very} the spine :: だから背骨は
+V| {stretches|stretch|stretching|stretched to} out. :: 伸びる
+== 宇宙ではほとんど重力がないので、背骨が伸びる。
+M| {However|Because|Although|Unless}, :: しかし
+S| the extra {height|high|highly|heighten} :: 伸びた身長は
+V| does not {last|lasts|lasting|lasted}. :: 続かない
+== しかし、伸びた身長は長くは続かない。
+T| {After|Ago|Later|Since then} astronauts return :: 戻った後
+P| {to|at|for|in} Earth, :: 地球に
+S| they {go|goes|going|gone} back :: 彼らは戻る
+P| {to|at|for|by} their normal height. :: 元の身長に
+== 宇宙飛行士は地球に戻ると、元の身長に戻る。
+S| Many {of|in|for|at} them :: 彼らの多くは
+V| also {have|has|having|to have} :: …もある
+O| {back pain|back painful|backing pain|pain back} :: 背中の痛みが
+T| {while|during|among|between} in space. :: 宇宙にいる間
+== 彼らの多くは、宇宙にいる間に背中の痛みも感じる。
+?? 1 1 滞在中にどのくらい伸びる人がいる？
+?? 4 1 地球で骨の間の部分を押し縮めているのは？
+?? 7 3 地球に戻ると身長はどうなる？
+?? 8 2 宇宙にいる間に多くの人が感じるのは？
+
+@id int64
+@lv 2
+@level 6
+@title The Heart Never Rests
+@ja 休まない心臓
+@tag 共通テストレベル・説明文
+@gloss heart=心臓, fist=こぶし, beat=打つ・鼓動, blood=血液, oxygen=酸素, muscle=筋肉, athlete=スポーツ選手, heart rate=心拍数
+S| Your heart {is|are|be|being} :: 心臓は…だ
+C| about {the size|the sized|a size of|sizes} :: …ぐらいの大きさ
+P| {of|for|at|in} your fist. :: こぶしの
+== 心臓はだいたい、こぶしぐらいの大きさだ。
+S| But it never {stops|stop|stopping|stopped to} :: でも決してやめない
+O| {working|to working|worked|works}, :: 働くのを
+T| day {or|nor|than|whom} night. :: 昼も夜も
+== でも、昼も夜も決して働くのをやめない。
+S| It {beats|beat|beating|to beat} :: それは打つ
+O| about 100,000 {times|time|timed|timing} :: 約10万回
+T| {a|an|the|one's} day. :: 1日に
+== 心臓は1日に約10万回打つ。
+S| Each {beat|beats|beating|beaten} :: 1回の鼓動が
+V| {pushes|push|pushing|to push} blood :: 血液を送る
+P| {around|arose|arise|aroused} your body. :: 体じゅうに
+== 1回1回の鼓動が、血液を体じゅうに送り出す。
+S| Blood {carries|carry|carrying|to carry} :: 血液は運ぶ
+O| {oxygen|oxygens|oxygenly|oxygenate} :: 酸素を
+P| {to|at|on|until} every part of you. :: 体のすみずみへ
+== 血液は体のすみずみまで酸素を運ぶ。
+P| {Like|Likely|Alike|Liking} other muscles, :: ほかの筋肉と同じく
+S| the heart {gets|get|getting|to get} :: 心臓は…なる
+C| {stronger|strongly|strength|strengthen} :: より強く
+P| {with|at|on|of} exercise. :: 運動で
+== ほかの筋肉と同じように、心臓も運動で強くなる。
+S| A strong heart {can|cans|able|being} :: 強い心臓は…できる
+V| {send|sends|sent to|sending} :: 送る
+O| {more|many|lot|few} blood :: より多くの血液を
+P| {with|at|on|of} each beat. :: 1回ごとに
+== 強い心臓は、1回の鼓動でより多くの血液を送れる。
+S| That {is|are|be|being} why :: だから
+S| many athletes {have|has|having|to have} :: 多くの選手は…ある
+O| slow heart {rates|rated|rating|rater} :: 遅い心拍数が
+T| {when|what|which|whom} they rest. :: 休んでいるとき
+== だから多くのスポーツ選手は、休んでいるときの心拍数が少ない。
+S| Their hearts {do|does|is|are} not :: 彼らの心臓は…ない
+V| {need|needs|needed|needing} to work :: 働く必要が
+M| {as|such|than|much} hard. :: それほど懸命に
+== 彼らの心臓は、それほど懸命に働かなくてもよいのだ。
+V| So {go|goes|going|gone} for a walk :: だから散歩しよう
+T| {today|todays|to day|toady} :: 今日
+M| {and|nor|than|whom} give your heart :: 心臓にあげよう
+O| {some|many|a|few} exercise. :: 運動を
+== だから今日は散歩に出かけて、心臓を少し動かしてあげよう。
+?? 0 2 心臓は何ぐらいの大きさ？
+?? 2 1 心臓は1日に何回打つ？
+?? 4 1 血液は何を運ぶ？
+?? 7 2 多くの選手は休んでいるとき心拍数がどう？
+
+@id int65
+@lv 2
+@level 6
+@title Walking to Work for a Month
+@ja 1か月の歩いて通勤
+@tag 共通テストレベル・ブログ
+@gloss decide=決める, instead of=…の代わりに, each way=片道, hurt=痛む, a pair of=1足の, comfortable=心地よい, notice=気づく, plan=予定する
+T| Last {month|months|monthly|month's}, :: 先月
+S| I {decided|decide|deciding|decision} :: 決めた
+O| {to walk|walking|walk|walked} to work :: 歩いて通勤すると
+P| {instead of|instead|in spite|because} taking the bus. :: バスに乗らずに
+== 先月、私はバスに乗る代わりに歩いて通勤することにした。
+S| It {takes|take|taking|took to} :: かかる
+O| about {forty|fourty|fortieth|forties} minutes :: 約40分
+T| each {way|ways|weigh|away}. :: 片道
+== 片道約40分かかる。
+S| The first week {was|were|been|be} :: 最初の週は
+C| {hard|hardly|hardness|harden} :: きつかった
+R| {because|because of|due to|thanks to} my feet hurt. :: 足が痛かったので
+== 最初の週は足が痛くてつらかった。
+M| {So|Such|Too|Very} I bought :: だから買った
+O| a pair {of|for|at|in} :: 1足の
+O| {comfortable|comfort|comfortably|comforted} shoes. :: 履きやすい靴を
+== そこで、履き心地のいい靴を1足買った。
+T| After {that|this one|those|what}, :: その後
+S| {walking|walk|walked|to walking} :: 歩くことは
+V| {became|become|becoming|becomes to} :: なった
+C| much {easier|easy|easily|ease}. :: ずっと楽に
+== その後、歩くのがずっと楽になった。
+S| I began {to notice|notice|noticed|to noticing} :: 気づき始めた
+O| small {things|thing|thinks|thinking}, :: 小さなことに
+P| {such as|such like|as such|so as} flowers :: 花や
+M| and new {shops|shop|shopped|shoped}. :: 新しい店など
+== 花や新しいお店など、小さなことに気づくようになった。
+S| I also {slept|sleeped|sleeping|asleep} :: 眠れた
+M| {better|good|best|well than} :: よりよく
+T| {at|in|on|by} night. :: 夜に
+== 夜もよく眠れるようになった。
+P| {On|In|At|By} rainy days, :: 雨の日には
+S| I {still|steal|yet|ever} take :: 今も乗る
+O| the {bus|busy|buss|busing}. :: バスに
+== 雨の日は今でもバスに乗る。
+M| But {on|in|at|by} other days, :: でもほかの日は
+S| I {plan|plans|planning|planned to} :: つもりだ
+O| to keep {walking|walk|walked|to walk}. :: 歩き続ける
+== でもそれ以外の日は、歩き続けるつもりだ。
+?? 1 1 片道何分かかる？
+?? 2 2 最初の週はなぜつらかった？
+?? 3 3 何を買った？
+?? 7 2 雨の日はどうしている？
+
+@id int66
+@lv 2
+@level 6
+@title An Interview with a Wheelchair Basketball Player
+@ja 車いすバスケ選手に聞く
+@tag 共通テストレベル・インタビュー
+@gloss wheelchair=車いす, accident=事故, handle=扱う, regular=ふつうの, basket=ゴール, height=高さ, crash=ぶつかる, decide=決める
+S| Q: When {did|was|does|were} you :: いつ…しましたか
+V| start {playing|to playing|played|plays} :: 始めた
+O| wheelchair {basketball|basketballs|basket ball|basketballer}? :: 車いすバスケを
+== 車いすバスケットボールはいつ始めたのですか。
+S| A: I {started|start|starting|starts} :: 始めた
+T| {at|in|on|for} sixteen, :: 16歳で
+T| a year {after|ago|later|since} a car accident. :: 事故の1年後
+== 交通事故の1年後、16歳で始めました。
+S| Q: {Was|Were|Did|Does} it :: それは…だった？
+C| {difficult|difficulty|difficultly|differ} :: 難しい
+T| {at|in|on|by} first? :: 最初は
+== 最初は難しかったですか。
+S| A: Yes. {Pushing|Push|Pushed|Pushes} the chair :: 車いすをこぐのと
+M| {and|nor|than|whom} handling the ball :: ボールを扱うのを
+T| {at|in|on|by} the same time :: 同時に
+V| {was|be|being|been} hard. :: 大変だった
+== はい。車いすをこぐのとボールを扱うのを同時にするのは大変でした。
+S| Q: {Are|Is|Do|Does} the rules :: ルールは
+C| {different|difference|differently|differ} :: 違う？
+P| {from|of|at|by} regular basketball? :: ふつうのバスケと
+== ふつうのバスケットボールとルールは違いますか。
+X| A: Not {much|mach|many of|muchly}. :: あまり違いません
+S| The basket {is|are|be|being} :: ゴールは…だ
+C| the same {height|high|highly|heighten} :: 同じ高さ
+P| {as|than|that|so} in regular games. :: ふつうの試合と
+== あまり違いません。ゴールの高さもふつうの試合と同じです。
+S| Q: What {do|does|is|are} you :: 何が…ですか
+V| {love|loves|loving|loved} most :: いちばん好き
+P| {about|above|abroad|aboard} the sport? :: このスポーツの
+== このスポーツのどこがいちばん好きですか。
+X| A: The {speed|speedy|speedily|sped}. :: スピードです
+S| Our chairs move {so|such|very|too} fast :: いすがとても速く
+M| {that|what|which|as} players sometimes :: 選手は時々
+V| {crash|crashes|crashing|crashed to}. :: ぶつかる
+== スピードです。いすがとても速く動くので、選手どうしがぶつかることもあります。
+S| Q: What {is|are|be|being} :: 何ですか
+O| your {message|messy|messaged|messagely} :: メッセージは
+P| {for|at|on|into} young people? :: 若い人への
+== 若い人へのメッセージは何ですか。
+S| A: Don't {decide|decides|deciding|decided} :: 決めないで
+O| {what|whose|whom|when} you can't do :: できないことを
+T| {before|ago|since|during} you try. :: やってみる前に
+== やってみる前に、できないことを決めつけないでください。
+?? 1 1 何歳で始めた？
+?? 3 1 車いすをこぐのと同時に何をするのが大変だった？
+?? 5 2 ゴールの高さはふつうの試合と比べてどう？
+?? 7 0 このスポーツのいちばん好きなところは？
