@@ -210,7 +210,7 @@ X| {Best|Better|Well|Bests} regards, Yuki Sato :: 敬具 佐藤ゆき
 @ja 乗りまちがえたバス
 @tag 共通テストレベル・物語文
 @gloss wrong=まちがった, castle=城, realize=気づく, nervous=不安な, Portuguese=ポルトガル語, kindly=優しく, stop=停留所, grateful=感謝して
-P| {On|In|At|By} my first day :: 初日に
+P| {On|Of|At|By} my first day :: 初日に
 P| {in|on|to|onto} Lisbon, :: リスボンでの
 S| I {got|get|gotten|getting} on :: 私は乗った
 O| the {wrong|wrongly|wrongful|wrongs} bus. :: 違うバスに
@@ -357,7 +357,7 @@ M| {or|nor|than|whom} ask station staff. :: または駅員に
 == 詳しくはウェブサイトをご覧いただくか、駅員におたずねください。
 S| We {apologize|apology|apologetic|apologizes} :: おわびします
 P| {for|to|at|of} any inconvenience :: ご不便について
-M| {this|these|those|they} may cause. :: これが生む
+M| this {may|mays|may to|maybe} cause. :: これが生む
 == ご不便をおかけしますことをおわびします。
 ?? 0 0 運休の理由は何？
 ?? 3 1 シャトルバスは何分ごとに出る？
@@ -384,7 +384,7 @@ S| the {answer|answers|answered|answering} :: 答えは
 V| {is|are|be|being} yes. :: イエスだ
 == 私の考えでは、答えはイエスだ。
 M| {First|Fast|Fist|Firm}, :: まず
-S| {fewer|less|little|lesser} cars :: 車が減ることは
+S| {fewer|fewest|little|lesser} cars :: 車が減ることは
 V| {mean|means|meaning|meant to} :: 意味する
 O| cleaner air {and|nor|than|whom} less noise. :: きれいな空気と静けさ
 == まず、車が減れば空気がきれいになり、騒音も減る。
