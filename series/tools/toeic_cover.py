@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """TOEIC例文づくりの「使った語・まだの語」を数える。
-  python3 tools/toeic_cover.py <ユーザーの語表.csv> [帯 例:500点] [分類 例:重要]
- 語表(単語,分類,難易度目安)はリポジトリに入れない(ユーザーの手元の表)。例文は data/sentences/toeic_sentences.tsv。
+  python3 tools/toeic_cover.py [帯 例:500点] [分類 例:重要]
+ 語表(単語,分類,難易度目安)は data/words/toeic_user_list.csv(ユーザーが振り分けた表)。例文は data/sentences/toeic_sentences.tsv。
  英文の中に語(変化形も)があれば「使った」とする。"""
 import csv, re, sys, os, collections
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LIST = os.path.join(ROOT, 'data', 'words', 'toeic_user_list.csv')
 SENT = os.path.join(ROOT, 'data', 'sentences', 'toeic_sentences.tsv')
 def forms(w):
     w = w.lower(); f = {w, w + 's', w + 'es', w + 'ed', w + 'd', w + 'ing', w + 'er', w + 'ly'}
@@ -13,8 +14,8 @@ def forms(w):
     if re.search(r'[^aeiou][aeiou][bdgklmnprt]$', w): f |= {w + w[-1] + 'ed', w + w[-1] + 'ing'}
     return f
 def main():
-    rows = [r for r in csv.DictReader(open(sys.argv[1], encoding='utf-8-sig'))]
-    band = sys.argv[2] if len(sys.argv) > 2 else None; cls = sys.argv[3] if len(sys.argv) > 3 else None
+    rows = [r for r in csv.DictReader(open(LIST, encoding='utf-8-sig'))]
+    band = sys.argv[1] if len(sys.argv) > 1 else None; cls = sys.argv[2] if len(sys.argv) > 2 else None
     S = [l.rstrip('\n').split('\t') for l in open(SENT, encoding='utf8') if l.strip() and l[0] != '#'] if os.path.exists(SENT) else []
     text = ' '.join(s[2].replace('/', ' ') for s in S).lower()
     toks = set(re.findall(r"[a-z][a-z'-]*", text)); low = ' ' + re.sub(r'[^a-z\' -]', ' ', text) + ' '
