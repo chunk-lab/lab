@@ -432,11 +432,11 @@ R| {since|sense|science|sincere} each one :: 各人が…ので
 V| {adds|add|adding|addition} :: 加える
 O| {another|other|others|the another} contact. :: 連絡先を1つ
 == 新しい利用者が1人増えるたびに連絡できる相手が増えるので、その価値は高まる。
-S| {Economists|Economy|Economic|Economize} call :: 経済学者は呼ぶ
-O| this {pattern|patterned|patterning|patterns} :: この型を
+M| {In|On|At|By} economics, :: 経済学では
+S| this {pattern|patterned|patterning|patterns} :: この型は
+V| {is|are|be|being} called :: 呼ばれる
 C| a "network {effect|affect of|effective|effectively}." :: ネットワーク効果と
-M| {quite|quiet|quit|quiets} naturally. :: ごく自然に
-== 経済学者はこの型を、ごく自然に「ネットワーク効果」と呼ぶ。
+== 経済学では、この型は「ネットワーク効果」と呼ばれる。
 S| It {helps|help|helping|helpful} explain :: …説明に役立つ
 O| {why|what|whom|whose} a handful :: なぜ一握りの
 P| {of|for|at|by} platforms :: 基盤企業が
