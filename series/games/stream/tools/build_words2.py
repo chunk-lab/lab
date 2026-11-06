@@ -274,6 +274,23 @@ for x in bank:            # 同じ語で訳が同じ品詞違い（eleven 形/�
     if (x[1], x[3]) in seen: continue
     seen.add((x[1], x[3])); b2.append(x)
 bank = b2
+# ---- 覚える語に絞る(辞書としては data.js に残る)：専門・頻度なし・人名の語、どの単語帳にも載らず頻度が低い語は、バンクから外す ----
+_T = {}
+for _r in csv.DictReader(open(HERE + '../../../data/words/dict_all_words.csv', encoding='utf-8-sig')): _T.setdefault(_r['単語'].lower(), _r)
+def _keep(w):
+    r = _T.get(w)
+    if not r: return True
+    z = float(r['頻度Zipf'] or 0)
+    core = bool(r['英検の級(実データ)']) or r['レベルの出どころ'].startswith('CEFR-J')
+    listed = core or int(r['出典の数(v12)'] or 0) > 0
+    if r['区分'] in ('専門・ほぼ使わない', '頻度なし', '人名にもなる語', '略語・短すぎる') and not core: return False
+    return listed or z >= BANK_ZIPF
+BANK_ZIPF = 3.5
+_learn = [b for b in bank if _keep(b[1])]   # 練習で覚える語(bank.js は 実力テストの語彙サイズ推定のため全語のまま)
+print('覚える語に絞り込み:', len(_learn), '/ 全', len(bank))
+with open(APP + 'learn.js', 'w', encoding='utf8') as fp:
+    fp.write('// 練習で覚える語(専門・頻度なし・人名の語、どの単語帳にも載らず頻度が低い語を除く)。build_words2.py が bank.js から作る。1行＝英語<TAB>品詞<TAB>訳[<TAB>2=別の意味]\nconst LEARN_SRC=' +
+             json.dumps('\n'.join(f'{w}\t{p}\t{ja}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in _learn), ensure_ascii=False) + ';\n')
 with open(APP + 'bank.js', 'w', encoding='utf8') as fp:
     fp.write('// 全単語バンク（解放して遊ぶ分）。build/build_words2.py で生成。1行＝英語<TAB>品詞<TAB>訳。よく使う順。BANK_STAGE語で1ステージ\nconst BANK_STAGE=300;\nconst BANK_SRC=' +
              json.dumps('\n'.join(f'{w}\t{p}\t{ja}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in bank), ensure_ascii=False) + ';\n')
