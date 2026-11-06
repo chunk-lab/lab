@@ -332,7 +332,7 @@ X| {apparently|apparent|appearance|appear} having a seizure. :: 発作らしき�
 S| Those {who|whom|which|whose} believed :: …と信じた人は
 O| they were the {only|alone|lonely|once} listener :: 聞き手は自分だけだと
 V| {usually|usual|usage|use} went :: たいてい行った
-P| {for|to|at|on} help. :: 助けを呼びに
+P| {for|at|on|by} help. :: 助けを呼びに
 == 聞いているのは自分だけだと思った人は、たいてい助けを呼びに行った。
 M| {However|Despite|Although|Whereas}, :: 一方
 S| those who {thought|thinked|thinking|think of} :: …と思った人は

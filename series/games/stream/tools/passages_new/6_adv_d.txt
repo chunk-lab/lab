@@ -1,0 +1,813 @@
+@id adv38
+@lv 3
+@level 8
+@title Did Wolves Save Yellowstone?
+@ja オオカミは公園を救ったか
+@tag 難関大レベル・論説文
+@gloss reintroduce=再導入する, predator=捕食者, elk=エルク(大型のシカ), willow=ヤナギ, aspen=ポプラの一種, trophic cascade=栄養カスケード(食物連鎖を通じた連鎖的影響), narrative=物語・筋書き, ambush=待ち伏せする
+S| In 1995, {wolves|wolf|wolfs|wolve} :: 1995年オオカミが
+V| {were|was|been|being} reintroduced :: 再導入された
+P| into Yellowstone {National|Nation|Nationally|Nationality} Park, :: 国立公園に
+T| {decades|decade|decadal|decadent} after hunters :: 狩猟者が…数十年後
+V| had {wiped|wipe|wiping|wipes} out :: 絶滅させた
+O| the {native|natively|nativity|natives} population. :: 在来の群れを
+== 1995年、狩猟者が在来の群れを絶滅させてから数十年後に、オオカミがイエローストーン国立公園に再導入された。
+S| What {followed|follow|following|followings} :: その後の出来事は
+V| has {become|became|becoming|becomes} :: なった
+C| one of the {most|more|much|mostly} celebrated stories :: 最も有名な話の一つに
+M| in modern {ecology|ecological|ecologist|ecologically}. :: 現代生態学で
+== その後に起きたことは、現代生態学で最も有名な話の一つとなった。
+M| {According|Accorded|Accordance|Accordingly} to the popular account, :: 通説によれば
+S| the wolves {reduced|reduce|reducing|reduction} :: オオカミは減らした
+O| the {number|numbers of|numerous|numeral} of elk :: エルクの数を
+M| and, {just|justly|justice|justify} as importantly, :: 同じく重要なことに
+V| {changed|change|changing|changes} :: 変えた
+O| how the {surviving|survival|survive|survivor of} elk behaved. :: 生き残りの行動を
+== 通説によれば、オオカミはエルクの数を減らし、同じく重要なことに、生き残ったエルクのふるまいを変えた。
+M| {Afraid|Afraidly|Fearful of|Fright} of being ambushed, :: 待ち伏せを恐れ
+S| elk {supposedly|suppose|supposed|supposing} :: エルクはどうやら
+V| {avoided|avoidance|avoiding|to avoided} :: 避けた
+O| river {valleys|valley|valleyed|valleying}, :: 川沿いの谷を
+R| {allowing|allowed|allow|allows} willows and aspens :: ヤナギなどが
+X| {to recover|recover|recovering|recovered}. :: 回復できた
+== 待ち伏せを恐れたエルクが川沿いの谷を避けたため、ヤナギやポプラが回復したとされる。
+S| The {recovering|recovery|recovers|recovered of} trees, :: 回復した木々は
+M| in {turn|turnt|turning|turned}, :: 今度は
+V| were {said|say|saying|says} :: …と言われた
+X| to {benefit|benefits|benefited|beneficial} :: 恩恵を与えた
+O| beavers {and|nor|than|either} songbirds. :: ビーバーや鳥に
+== 回復した木々は、今度はビーバーや鳴き鳥に恩恵をもたらしたと言われた。
+S| This {chain|chained|chaining|chains} of effects, :: この影響の連鎖は
+X| {known|knowing|knew|know} as a trophic cascade, :: 栄養カスケードという
+V| {seemed|seem|seeming|seemly} :: …ように見えた
+X| to {prove|proof|proving|proven} :: 証明する
+O| that a single predator {could|cans|can to|could to} reshape :: 1種の捕食者が変え得る
+O| an {entire|entirely|entirety|entireness} landscape. :: 景観全体を
+== 栄養カスケードと呼ばれるこの連鎖は、一種の捕食者が景観全体を作り変えうることを証明したかに見えた。
+T| In {recent|recently|recency|recentness} years, :: 近年
+M| {however|whatever|whenever|wherever}, :: しかし
+S| a number of {ecologists|ecologist|ecology|ecological} :: 多くの生態学者が
+V| have {questioned|question|questioning|questions} :: 疑問を呈した
+O| this {tidy|tidily|tidiness|tidies} narrative. :: この整った筋書きに
+== しかし近年、多くの生態学者がこのきれいな筋書きに疑問を投げかけている。
+S| They {point|points|pointing|pointed to} out :: 彼らは指摘する
+O| that elk numbers {were|was|being|be} also affected :: エルクの数は左右された
+P| {by|of|at|on} human hunting, drought, :: 人間の狩猟や干ばつ
+M| and other predators {such|so|as|like as} as bears :: クマなど他の捕食者
+M| {and|nor|but|than} cougars. :: そしてピューマに
+== エルクの数は、人間の狩猟や干ばつ、クマやピューマといった他の捕食者にも左右されていたと彼らは指摘する。
+M| {Moreover|Whereas|Although|Despite}, :: さらに
+S| studies {that|what|whom|whose} tracked elk :: エルクを追った研究は
+P| {with|within|whereby|whose} GPS collars :: GPS首輪で
+V| {found|finded|founding|to find} :: 見出した
+O| little evidence {that|what|which|whom} they actually :: …という証拠はほぼ無く
+V| avoided {risky|riskily|riskiness|riskest} areas. :: 危険な所を避けた
+== さらに、GPS首輪でエルクを追跡した研究では、彼らが実際に危険な場所を避けていた証拠はほとんど見つからなかった。
+S| {None|No|Nothing of|Neither} of this :: このどれも
+V| {means|mean|meaning|meant to} :: 意味しない
+O| that wolves {have|has|having|haves} had no impact; :: 影響がなかったと
+M| {rather|instead of|whereas|despite}, it suggests :: むしろ示すのは
+O| that ecosystems {rarely|rare|rarity|rarer} respond :: 生態系はまず反応しない
+P| {to|toward of|into|onto} a single cause. :: 単一の原因には
+== だからといってオオカミに影響がなかったわけではない。むしろ、生態系が単一の原因だけで動くことはまれだということだ。
+S| The real {lesson|lessen|lessoning|lessoned} of Yellowstone :: 本当の教訓は
+V| may {be|being|been|is} :: …かもしれない
+C| that a good story {is|are|be|being} not :: 良い話は…でない
+M| the same {as|than|from|for} good evidence. :: 良い証拠と同じで
+== イエローストーンの本当の教訓は、よくできた話が必ずしも確かな証拠ではないということかもしれない。
+?? 0 3 オオカミの再導入は、どんな出来事の数十年後に行われたか
+?? 3 3 通説では、エルクは何を避けたとされたか
+?? 7 2 批判的な生態学者は、エルクの数に影響した要因として何を挙げたか
+?? 8 3 GPS首輪を使った研究で何が分かったか
+
+@id adv39
+@lv 3
+@level 8
+@title The Idea That Came Too Early
+@ja 早すぎた大陸移動説
+@tag 難関大レベル・説明文
+@gloss continent=大陸, landmass=陸塊, fossil=化石, extinct=絶滅した, mechanism=仕組み, coincidence=偶然の一致, expedition=探検, crust=地殻, plate tectonics=プレートテクトニクス
+T| In 1912, the German {scientist|science|scientific|scientifically} :: 1912年ドイツの学者
+S| Alfred Wegener {proposed|proposal|propose to|proposing} :: ウェゲナーは提唱した
+O| that the continents {had|has|having|haves} once :: 大陸がかつて
+V| been {joined|join|joins|jointly} :: つながっていたと
+P| in a single {landmass|landmasses|landmassed|landly}. :: 1つの陸塊として
+== 1912年、ドイツの科学者ウェゲナーは、大陸がかつて1つの陸塊につながっていたと提唱した。
+S| His evidence {was|were|being|be} striking: :: 証拠は印象的だった
+S| the {coastlines|coastline of|coastal|coasting} :: 海岸線が
+P| of South America {and|nor|than|either} Africa :: 南米とアフリカの
+V| {fit|fits|fitting|to fit} together :: ぴったり合う
+M| {like|alike|likely|liking} puzzle pieces. :: パズルのように
+== 証拠は目を引くものだった。南米とアフリカの海岸線は、パズルのピースのようにぴったり合うのだ。
+M| {Moreover|Whereas|Although|Despite}, fossils :: さらに化石が
+P| of the same {extinct|extinction|extinctly|extinguish} plants and animals :: 同じ絶滅動植物の
+V| were {discovered|discover|discovering|discovery} :: 発見された
+P| on continents {now|nowly|nowadays of|knowing} separated :: 今は離れた大陸で
+P| by thousands {of|for|in|with} kilometers of ocean. :: 何千キロもの海で
+== さらに、同じ絶滅した動植物の化石が、いまは何千キロもの海で隔てられた大陸から見つかっていた。
+M| {Yet|Despite|In spite|Regardless} most geologists :: だが地質学者の大半は
+V| {rejected|rejection|reject of|rejecting} the idea, :: その説を退けた
+R| {largely|large|largeness|larger} because Wegener :: 主にウェゲナーが
+V| {could|cans|can to|could to} not explain :: 説明できず
+O| {what|that|which of|whom} force could move :: どんな力が動かすか
+O| {entire|entirely|entirety|entireness} continents. :: 大陸全体を
+== だがほとんどの地質学者はこの説を退けた。主な理由は、大陸全体を動かす力をウェゲナーが説明できなかったことだ。
+P| {Without|Withouts|Withouting|Whereas} a plausible mechanism, :: もっともな仕組みなしに
+X| critics {argued|argue to|arguing|argument}, :: と批判者は論じた
+S| the {matching|matchingly|match of|matchful} coastlines :: 一致する海岸線は
+V| might {be|being|been|are} :: …かもしれない
+C| nothing more {than|then|that|as} a coincidence. :: 偶然にすぎない
+== もっともらしい仕組みがない以上、海岸線の一致は偶然にすぎないかもしれない、と批判者は論じた。
+S| Wegener {died|dead|death|dying} :: ウェゲナーは死んだ
+P| on an {expedition|expedite|expeditious|expeditionary} :: 探検中に
+P| in Greenland {in|on|at|for} 1930, :: 1930年グリーンランドで
+X| his theory still {largely|large|largest|largeness} :: 説はなお大部分
+X| {dismissed|dismiss|dismissing|dismissal}. :: 退けられたまま
+== ウェゲナーは1930年、グリーンランドでの探検中に亡くなった。その説はまだほとんど相手にされていなかった。
+X| It {was|were|is to|being} not until :: …になって初めて
+T| the 1950s {and|nor|than|or both} 1960s :: 1950〜60年代
+X| {that|what|which|when of} new technology :: 新しい技術が
+V| {allowed|allow|allowing|allowance} scientists :: 科学者に可能にした
+X| {to map|mapping|map|mapped} the ocean floor :: 海底を地図にする
+M| {in|on|at|by} detail. :: 詳しく
+== 1950〜60年代になって初めて、新しい技術によって科学者は海底を詳しく地図にできるようになった。
+S| They {discovered|discover of|discovery|discovering} :: 彼らは発見した
+O| long {underwater|underwaters|underwatered|underwatering} mountain ranges :: 長い海底山脈を
+X| {where|which|what|whom} new crust :: そこで新しい地殻が
+V| is {constantly|constant|constancy|constants} :: 絶えず
+V| being {created|create|creating|creation} :: 作られ
+M| and pushed {outward|outwarding|outwards of|outwardly of}. :: 外へ押し出される
+== 彼らは長い海底山脈を発見した。そこでは新しい地殻が絶えず作られ、外側へ押し出されていた。
+S| This process, {called|calling|calls|call} seafloor spreading, :: 海洋底拡大という過程が
+M| {finally|final|finalize|finality} :: ついに
+V| {supplied|supply of|supplier|supplying} :: 与えた
+O| the {mechanism|mechanic of|mechanical|mechanize} :: 仕組みを
+X| that Wegener {had|has|have|having} lacked. :: ウェゲナーに欠けていた
+== 海洋底拡大と呼ばれるこの過程が、ウェゲナーに欠けていた仕組みをついに与えた。
+T| {By|Until|Since|For} the end of the 1960s, :: 60年代末までに
+S| the theory of plate {tectonics|tectonic|tectonical|tectonically} :: プレート理論は
+V| had {become|became|becoming|becomes} :: なっていた
+C| {widely|wide|width|widen} accepted. :: 広く受け入れられて
+== 1960年代の終わりまでには、プレートテクトニクス理論が広く受け入れられていた。
+S| Some {see|sees|seeing|seen} the story :: この話を見る人もいる
+M| {as|for|like as|to} proof of :: …の証拠として
+O| scientific {stubbornness|stubborn|stubbornly|stubborned}, :: 科学者の頑固さの
+M| {but|nor|than|either} the critics :: しかし批判者は
+V| were not simply {wrong|wrongly|wrongful of|wrongs} :: 誤りではなかった
+X| to {demand|demands|demanded|demanding} a mechanism. :: 仕組みを求めたのは
+== この話を科学者の頑固さの証拠と見る人もいるが、仕組みを求めた批判者が単純に間違っていたわけではない。
+S| Good science, after {all|whole|every|each}, :: 結局よい科学は
+V| {requires|require|requiring|requirement} :: 必要とする
+O| not only patterns {that|what|whom|whose} fit, :: 合う型だけでなく
+O| but also {explanations|explain|explanatory|explained} :: 説明も
+P| of {why|what|which|whom} they exist. :: なぜそれがあるかの
+== 結局のところ、よい科学には一致するパターンだけでなく、それがなぜあるのかの説明も必要なのだ。
+?? 1 1 ウェゲナーの証拠の一つとして、何が挙げられているか
+?? 3 2 地質学者の多くが説を退けた主な理由は何か
+?? 7 2 海底山脈では何が起きていたか
+?? 9 0 プレートテクトニクス理論はいつまでに広く受け入れられたか
+
+@id adv40
+@lv 3
+@level 8
+@title Different Lineages, Similar Solutions
+@ja 収斂進化
+@tag 難関大レベル・論説文
+@gloss independently=別々に, convergent evolution=収斂進化, organism=生物, resemble=似ている, retina=網膜, ancestor=祖先, vertebrate=脊椎動物, predictable=予測可能な
+S| Bats, birds, {and|nor|than|either} insects :: コウモリ、鳥、昆虫は
+V| all {fly|flies|flying|flew of}, :: みな飛ぶ
+M| {yet|despite|in spite|regardless} their wings :: だが翼は
+V| {evolved|evolve of|evolution|evolving} independently :: 別々に進化した
+P| from very {different|differ|difference|differently} starting points. :: 全く違う出発点から
+== コウモリ、鳥、昆虫はみな空を飛ぶが、その翼はまったく異なる出発点から別々に進化した。
+S| Biologists {call|calls|calling|called of} :: 生物学者は呼ぶ
+O| this {phenomenon|phenomena|phenomenal|phenomenally} :: この現象を
+C| convergent {evolution|evolve|evolutionary|evolved}: :: 収斂進化と
+X| the {tendency|tend|tendentious|tending} of unrelated organisms :: 無縁の生物の傾向
+X| to {arrive|arrival|arriving|arrives} at similar solutions. :: 似た解決に至る
+== 生物学者はこの現象を収斂進化と呼ぶ。無関係な生物が似た解決策にたどり着く傾向のことだ。
+M| {Perhaps|Perhap|Perhapsly|Perchance of} :: おそらく
+S| the most {striking|strike|struck|strikingly} example :: 最も顕著な例は
+V| {is|are|be|being} the eye of the octopus, :: タコの目だ
+X| {which|what|who|whom} closely :: それはとても
+V| {resembles|resemble|resembling|resemblance} our own. :: 我々の目に似る
+== おそらく最も驚くべき例はタコの目で、それは私たちの目とよく似ている。
+S| Both {possess|possesses|possessing|possession} :: どちらも持つ
+O| a lens {that|what|whom|whose} focuses light :: 光を集めるレンズを
+P| {onto|into of|onward|upon of} a layer :: 層の上へ
+P| of {sensitive|sense|sensitively|sensation} cells :: 感覚細胞の
+X| {called|calling|calls|call} the retina. :: 網膜と呼ばれる
+== どちらも、網膜と呼ばれる感覚細胞の層へ光を集めるレンズを持っている。
+M| {Yet|Despite|In spite|Regardless} their last common ancestor, :: だが共通祖先は
+X| which {lived|live|living|lives of} :: 生きていた
+T| hundreds {of|for|in|with} millions of years ago, :: 何億年も前に
+V| probably {had|has|have|having} :: おそらく持っていた
+O| no such eye {at|in|on|by} all. :: そんな目は全くない
+== だが、何億年も前に生きていた両者の共通祖先は、おそらくそのような目をまったく持っていなかった。
+M| {Tellingly|Telling|Tell|Told}, :: 示唆的なことに
+S| the two {designs|design|designed|designing} :: 2つの設計は
+V| {differ|differs|different|difference} :: 異なる
+P| {in|into|onto|unto} one revealing detail. :: ある重要な一点で
+== 示唆的なことに、二つの設計はある一点で異なっている。
+P| In {vertebrate|vertebrally|vertebrating|vertebrated} eyes, :: 脊椎動物の目では
+S| the nerve {fibers|fiber|fibrous|fibered} :: 神経線維が
+V| {lie|lain|lies|lying} :: ある
+P| in {front|frontal|fronting|fronts} of the retina, :: 網膜の前に
+X| {creating|created|create|creation} a blind spot. :: 盲点を生む
+== 脊椎動物の目では神経線維が網膜の前を通るため、盲点ができる。
+S| The octopus eye, {by|on|at|for} contrast, :: 対照的にタコの目は
+V| {is|are|be|being} wired :: 配線されている
+P| {from|to|at|on} behind :: 後ろから
+M| and {has|have|having|had of} no blind spot. :: 盲点がない
+== 対照的にタコの目は後ろから配線されており、盲点がない。
+S| Some biologists {argue|argues|arguing|argument} :: 主張する学者もいる
+O| that such {repeated|repeat|repeating of|repeatedly} solutions :: 繰り返す解決策は
+V| {show|shows|showing|shown} :: 示す
+O| evolution {to be|being of|be|been} :: 進化が…だと
+C| more {predictable|predict|prediction|predictably} :: より予測可能だ
+M| {than|then|that|as} we assume. :: 我々の想定より
+== こうした繰り返される解決策は、進化が想定以上に予測可能であることを示すと主張する生物学者もいる。
+S| Others, {following|followed|follows|follow} Stephen Jay Gould, :: グールドに続く人は
+V| {maintain|maintains|maintenance|maintaining} :: 主張する
+O| {that|what|which|whom} if the history of life :: 生命の歴史が…なら
+V| {were|are to|is to|being} replayed, :: やり直されたら
+S| the outcome {would|wills|will to|would to} be :: 結果は…だろう
+C| very {different|differ|difference|differently}. :: 全く違う
+== 一方グールドの立場に立つ人々は、生命の歴史をやり直せば結果はまったく違うだろうと主張する。
+S| The truth {may|mays|may to|maybe} :: 真実は…かもしれない
+V| {lie|lay|lain|lies} :: ある
+M| somewhere {in between|between of|among of|inbetweens}: :: 中間のどこかに
+S| physics {limits|limit|limitation|limiting} :: 物理法則が絞り
+O| the {options|optional|optionally|opt}, :: 選択肢を
+M| but chance {decides|decide|decision|deciding} :: 偶然が決める
+O| which ones {are|is|be|being} taken. :: どれが選ばれるか
+== 真実はその中間にあるのかもしれない。物理法則が選択肢を絞り、偶然がどれを選ぶかを決めるのだ。
+?? 0 3 コウモリ・鳥・昆虫の翼はどのように進化したか
+?? 4 4 タコと人間の共通祖先は、どんな目を持っていたと考えられるか
+?? 6 3 脊椎動物の目に盲点ができるのはなぜか
+?? 9 5 グールドの立場に立つ人々は何を主張するか
+
+@id adv41
+@lv 3
+@level 8
+@title Should Every Invader Be Removed?
+@ja 外来種はすべて悪か
+@tag 難関大レベル・論説文
+@gloss cane toad=オオヒキガエル, invasive=侵略的な, synonymous=同義の, pollinate=受粉させる, native=原産の, prejudice=偏見, prudence=慎重さ, merit=長所・実情
+S| In 1935, cane {toads|toad|toady|toaded} :: 1935年オオヒキガエルが
+V| were {brought|bring|bringing|brung} :: 持ち込まれた
+P| {to|at|on|onto of} Australia :: オーストラリアに
+M| in the {hope|hoping|hopeful|hoped} :: …を期待して
+X| that they {would|wills|will to|would to} control beetles :: 甲虫を退治すると
+X| {damaging|damaged|damage|damages} sugar cane crops. :: サトウキビを荒らす
+== 1935年、サトウキビを荒らす甲虫を退治してくれると期待して、オオヒキガエルがオーストラリアに持ち込まれた。
+S| The plan {failed|fail of|failure|failing} :: 計画は失敗した
+M| {spectacularly|spectacular|spectacle|spectacles}: :: 見事なまでに
+S| the toads {largely|large|largeness|larger} :: カエルはおおむね
+V| {ignored|ignorant|ignorance|ignore of} the beetles :: 甲虫を無視し
+M| and {spread|spreaded|spreading|spreads of} :: 広がった
+P| {across|acrossing|cross of|crossly} much of the continent. :: 大陸の大部分に
+== 計画は見事に失敗した。カエルは甲虫をほとんど相手にせず、大陸の広い範囲に広がったのだ。
+R| {Because|Because of|Owing|Due} their skin :: 皮膚が…ので
+V| {contains|contain|containing|container} :: 含む
+O| a {powerful|power|powerfully|powered} poison, :: 強い毒を
+S| native predators {that|what|whose|whom} eat them :: 食べた在来捕食者は
+M| {often|oftenly|oft of|oftener of} :: しばしば
+V| {die|dies|dying|dead}. :: 死ぬ
+== 皮膚に強い毒があるため、それを食べた在来の捕食者はしばしば死んでしまう。
+S| Stories {like|alike|likely|liking} this :: こうした話は
+V| have {made|make|making|makes} :: …にした
+O| the {word|words|wording|worded} "invasive" :: 「侵略的」の語を
+C| almost {synonymous|synonym|synonymously|synonyms} :: ほぼ同義に
+P| {with|to of|for|at} "harmful." :: 「有害」と
+== こうした話によって、「侵略的」という語は「有害」とほぼ同じ意味になった。
+M| {Yet|Despite|In spite|Regardless} a growing number :: だが増えつつある
+P| of {ecologists|ecology|ecological|ecologic} argue :: 生態学者が主張する
+O| that species {should|shoulds|should to|shall to} :: 種は…べきだと
+V| be {judged|judge|judging|judgment} :: 判断される
+P| by what they {do|does|doing|done}, :: 何をするかで
+M| not by {where|which|whom|whose} they come from. :: 出身ではなく
+== だが、種は出身ではなく何をするかで判断すべきだと主張する生態学者が増えている。
+M| After all, many {non-native|non-natives|non-nativity|non-natively} species :: 結局多くの外来種は
+V| {cause|causes|causing|caused of} :: もたらす
+O| {little|few|a few|fewer} damage, :: 害はほとんどない
+M| {and|nor|than|either} some even :: なかには…さえ
+V| {provide|provides|providing|provision} benefits, :: 利益を与える
+X| such as {pollinating|pollinate|pollinated|pollination of} crops. :: 作物の受粉など
+== 結局、多くの外来種はほとんど害を与えず、作物の受粉のように利益をもたらすものさえいる。
+S| Honeybees, for {instance|instant|instantly|instances}, :: 例えばミツバチは
+V| are not {native|natively|nativity|nativeness} :: 原産ではない
+P| {to|for|with|at} the Americas, :: 南北アメリカの
+M| {yet|despite|in spite|regardless} farmers there :: だが現地の農家は
+V| {rely|relies|reliance|reliant} heavily :: 大いに頼る
+P| {on|in|at|for} them. :: それらに
+== たとえばミツバチは南北アメリカ原産ではないが、現地の農家はミツバチに大きく頼っている。
+S| Critics of this view, {however|whatever|whenever|wherever}, :: しかし批判者は
+V| {warn|warns|warning|warned of} :: 警告する
+O| that the harm {caused|causing|cause|causes} :: 引き起こされる害は
+P| by an {introduced|introduce|introducing|introduction} species :: 持ち込まれた種による
+V| may not {appear|appears|appearing|appearance} :: 現れないこともある
+T| {for|since|while|ago} decades. :: 何十年も
+== しかし批判者は、持ち込まれた種の害が何十年も表に出ないことがあると警告する。
+T| By the time a problem {becomes|become|becoming|became of} :: 問題が…になるころ
+C| {obvious|obviously|obviousness|obviate}, :: 明らかに
+S| it is {often|oftenly|oft of|oftener of} :: しばしば
+C| too late {to remove|removing|remove|removed} :: 除去には遅すぎる
+O| the species {at|in|on|by} a reasonable cost. :: 妥当な費用で
+== 問題が明らかになるころには、妥当な費用で取り除くにはもう遅いことが多い。
+P| From this {perspective|perspect|perspectively|perspicacious}, :: この観点からは
+S| {caution|cautious|cautiously|cautionary} toward newcomers :: 新参者への警戒は
+V| {is|are|be|being} not prejudice :: 偏見ではなく
+M| {but|nor|than|either} prudence. :: 慎重さだ
+== この観点に立てば、新参者への警戒は偏見ではなく慎重さなのだ。
+S| Perhaps the {wisest|wisely|wiseness of|wisen} approach :: 最も賢明な方法は
+V| is {to assess|assess|assessed|assessment of} :: 評価することだ
+O| each case {on|in|at|by} its own merits, :: 個々の実情で
+M| without {assuming|assume|assumed|assumption of} :: 決めつけずに
+O| that native always {means|mean|meaning|meant to} good. :: 在来は善だと
+== 最も賢明なのは、在来なら常に良いと決めつけず、一件ごとに実情で判断することかもしれない。
+?? 0 5 オオヒキガエルは何を期待されて持ち込まれたか
+?? 2 1 カエルを食べた在来の捕食者が死ぬのはなぜか
+?? 6 0 外来種なのに農家が頼っている例として、何が挙げられているか
+?? 7 4 批判者は何を警告しているか
+
+@id adv42
+@lv 3
+@level 8
+@title Bringing Back the Dead?
+@ja 絶滅種の復活
+@tag 難関大レベル・論説文
+@gloss passenger pigeon=リョコウバト, genetic engineering=遺伝子工学, clone=クローンを作る, insert=挿入する, grazer=草食動物, endangered=絶滅危惧の, genetic diversity=遺伝的多様性, revival=復活
+S| The last {known|knowing|knew|know} passenger pigeon :: 最後のリョコウバトが
+V| {died|dead|death|dying} :: 死んだ
+P| in a zoo {in|on|at|for} 1914, :: 1914年動物園で
+X| {ending|ended|end|ends} a species :: ある種を終わらせ
+X| {that|what|whom|whose} had once :: かつて…だった
+V| {numbered|number|numbering|numeral} in the billions. :: 数十億を数えた
+== 確認された最後のリョコウバトは1914年に動物園で死に、かつて数十億羽いた種が途絶えた。
+T| Today, advances in {genetic|genetics|genetically|gene of} engineering :: 今日遺伝子工学の進歩が
+V| have {raised|risen|rose|raising} :: もたらした
+O| a once {unthinkable|unthink|unthinkably|unthinkability} possibility: :: かつてない可能性を
+X| {bringing|bring|brought|brings} such species back. :: そうした種の復活だ
+== 今日、遺伝子工学の進歩によって、かつては考えられなかった可能性が生まれた。そうした種をよみがえらせることだ。
+M| {Rather|Rath|Instead|Prefer} than cloning :: クローンではなく
+O| an {extinct|extinction|extinctly|extinguish} animal directly, :: 絶滅動物を直接
+S| scientists {would|wills|will to|would to} edit :: 科学者は編集する
+O| the genes of a close {living|alive|lived|lives} relative. :: 近い現生種の遺伝子を
+== 科学者は絶滅動物を直接クローンするのではなく、近縁の現生種の遺伝子を編集することになる。
+S| A mammoth-like elephant, {for|as|in|by} example, :: 例えばマンモス風の象は
+V| might be {created|create|creating|creation} :: 作られうる
+P| by {inserting|insert|inserted|insertion of} genes :: 遺伝子を入れて
+P| for thick hair {and|nor|than|either} fat :: 厚い毛や脂肪の
+P| {into|intos|inward|inside to} an Asian elephant. :: アジアゾウに
+== たとえば、厚い毛や脂肪の遺伝子をアジアゾウに組み込めば、マンモスに似た象が作れるかもしれない。
+S| Supporters {claim|claims|claiming|claimed of} :: 支持者は主張する
+O| that such animals {could|cans|can to|could to} restore :: その動物が取り戻せる
+O| lost ecological {functions|function of|functional|functionally}, :: 失われた生態系機能を
+M| much {as|like as|than|so} large grazers :: 大型草食獣が…ように
+T| once {shaped|shape|shaping|shapes of} :: かつて形作った
+O| the {northern|north of|northly|northernly} grasslands. :: 北方の草原を
+== 支持者は、かつて大型草食獣が北方の草原を形作ったように、こうした動物が失われた生態系の機能を取り戻せると主張する。
+S| They also {argue|argues|arguing|argument} :: また主張する
+O| that the technology {could|cans|can to|could to} help :: 技術が助けうると
+O| {endangered|endanger|endangerly|endangerment} species :: 絶滅危惧種を
+X| {whose|who|whom|which of} genetic diversity :: その遺伝的多様性が
+V| has {become|became|becoming|becomes} :: なった
+C| {dangerously|dangerous|danger|endanger} low. :: 危険なほど低く
+== また、遺伝的多様性が危険なほど低下した絶滅危惧種を、この技術が助けうるとも主張する。
+S| Critics, {however|whatever|whenever|wherever}, point out :: しかし批判者は指摘する
+O| that an {edited|edit|editing|editor} elephant :: 編集された象は
+V| would not {truly|true|truth|truthful} be a mammoth, :: 真のマンモスではなく
+M| {but|nor|than|either} a new animal :: 新しい動物だと
+P| with an {uncertain|uncertainly|uncertainty|certain of} place :: 居場所の定まらない
+M| {in|on|at|by} the world. :: この世界で
+== しかし批判者は、編集された象は本当のマンモスではなく、世界での居場所が定まらない新しい動物だと指摘する。
+S| Others {worry|worries|worrying|worried of} :: 心配する人もいる
+O| that the {promise|promising|promissory|promises of} of revival :: 復活の約束が
+V| could {weaken|weak|weakly|weakness} :: 弱めうる
+O| the {urgency|urgent|urgently|urge of} :: 切迫感を
+P| of {protecting|protect|protected|protection} species :: 種を守ることの
+X| {that|what|whom|whose} still exist. :: まだ存在する
+== 復活の約束が、いま生きている種を守る切迫感を弱めかねないと心配する人もいる。
+R| If {extinction|extinct|extinctly|extinguish} :: もし絶滅が
+M| no {longer|long|lengthy|length} :: もはや…ない
+V| {seems|seem|seeming|seemed of} final, :: 決定的に見え
+X| they {ask|asks|asking|asked of}, :: と彼らは問う
+S| why {should|shoulds|should to|ought} anyone pay :: なぜ費用を払うのか
+X| {to prevent|preventing|prevent|prevented} it? :: それを防ぐために
+== 絶滅が取り返しのつかないものに見えなくなれば、なぜ誰かがそれを防ぐためにお金を払うのか、と彼らは問う。
+S| Both sides {agree|agrees|agreeing|agreement} :: 双方が一致する
+P| {on|at|by|of} one point: :: 一つの点で
+S| no laboratory {can|cans|can to|could to} replace :: 研究所は代われない
+O| the forests {and|nor|than|either} wetlands :: 森や湿地に
+X| {that|what|whose|whom} species need :: 種が必要とする
+X| {to survive|surviving|survive|survived}. :: 生き延びるのに
+== 双方が一致する点が一つある。種が生き延びるのに必要な森や湿地を、研究所が代わりに作ることはできないということだ。
+?? 0 5 リョコウバトはかつてどれくらいいたか
+?? 3 2 マンモスに似た象はどうやって作られるか
+?? 6 3 批判者によると、編集された象は何だと言えるか
+?? 7 3 復活の約束は何を弱めると心配されているか
+
+@id adv43
+@lv 3
+@level 8
+@title The Other Carbon Problem
+@ja 海の酸性化
+@tag 難関大レベル・説明文
+@gloss emit=排出する, absorb=吸収する, dissolve=溶ける, carbonic acid=炭酸, logarithmic=対数の, acidity=酸性度, carbonate=炭酸塩, tolerant=耐性のある, sink=吸収源
+T| When we think {about|above|aboard|abroad} carbon dioxide, :: CO2を考えるとき
+S| we {usually|usual|usage|usually of} :: 我々はたいてい
+V| {think|thinks|thinking|thought of} :: 思い浮かべる
+P| of {rising|rose|rises|rised} temperatures. :: 気温の上昇を
+== 二酸化炭素と聞くと、ふつうは気温の上昇を思い浮かべる。
+M| {Yet|Despite|In spite|Regardless} a large share :: だがかなりの部分は
+P| of the carbon dioxide {we|us|our|ours} emit :: 我々の出すCO2の
+V| does not {remain|remains|remaining|remained} :: とどまらない
+P| {in|on|at|to} the atmosphere; :: 大気中に
+S| it is {absorbed|absorb|absorbing|absorption} :: 吸収される
+P| {by|with|from|at} the oceans instead. :: 代わりに海に
+== だが、私たちが出す二酸化炭素のかなりの部分は大気にとどまらず、海に吸収される。
+P| At first {glance|glanced|glancing|glances}, :: 一見すると
+S| this {seems|seem|seeming|seemed of} :: これは思える
+P| {like|alike|likely|liking} good news, :: 良い知らせに
+R| {since|for of|during|while of} it slows :: 遅らせるので
+O| the {warming|warmth of|warmed|warms} of the planet. :: 地球の温暖化を
+== 一見これは良い知らせに思える。地球の温暖化を遅らせてくれるからだ。
+M| But when carbon dioxide {dissolves|dissolve|dissolving|dissolution} :: だがCO2が溶けると
+P| {in|on|at|by} seawater, :: 海水に
+S| it {forms|form|forming|formation} :: それは作る
+O| carbonic {acid|acidic|acidly|acidity of}, :: 炭酸を
+X| {gradually|gradual|graduate|gradation} lowering :: 徐々に下げる
+O| the {ocean's|oceans|ocean of|oceanic's} pH. :: 海のpHを
+== だが二酸化炭素が海水に溶けると炭酸ができ、海のpHを少しずつ下げていく。
+T| {Since|From of|During|While} the Industrial Revolution, :: 産業革命以来
+S| the {average|averagely|averaged of|averaging} pH :: 平均pHは
+P| {of|for|with|at} surface seawater :: 表層海水の
+V| has {fallen|fell|fall|falling} :: 下がった
+M| {by|in|at|with} about 0.1 units. :: 約0.1
+== 産業革命以来、表層海水の平均pHは約0.1下がった。
+S| That may {sound|sounds|sounding|sounded of} trivial, :: ささいに聞こえるが
+M| but because the pH scale {is|are|be|being} :: pHの尺度は
+C| {logarithmic|logarithm|logarithmically|logarithms}, :: 対数なので
+S| it {represents|represent|representing|representation} :: それは表す
+O| {roughly|rough|roughness|roughen} a 30 percent increase :: 約30%の上昇を
+P| {in|on|at|onto} acidity. :: 酸性度の
+== ささいに聞こえるかもしれないが、pHは対数尺度なので、これは酸性度がおよそ30%上がったことを意味する。
+S| More {acidic|acid of|acidly|acidity} water :: 酸性化した水は
+V| {reduces|reduce|reducing|reduction} :: 減らす
+O| the {carbonate|carbonated|carbonating|carbonates of} :: 炭酸塩を
+X| that corals, oysters, {and|nor|than|either} other organisms :: サンゴやカキなどが
+V| need {to build|building|build|built} :: 作るのに必要な
+O| their shells {and|nor|than|either} skeletons. :: 殻や骨格を
+== 酸性化した水では、サンゴやカキなどが殻や骨格を作るのに必要な炭酸塩が減ってしまう。
+S| Experiments {suggest|suggests|suggesting|suggestion} :: 実験が示唆する
+O| that some species {struggle|struggler|struggling|struggled of} :: 苦労する種もいる
+X| {to grow|growth|grow|grown} :: 育つのに
+P| in such {conditions|condition of|conditional|conditioned}, :: そうした環境で
+M| {while|whilst of|during|meanwhile} others :: 一方ほかの種は
+V| appear {surprisingly|surprising|surprise|surprised} tolerant. :: 意外に強いようだ
+== 実験によれば、そうした環境で育ちにくい種がいる一方、意外なほど耐性を示す種もいる。
+S| Some researchers {therefore|wherefore|therein|thereof} :: そのため研究者は
+V| {caution|cautious|cautiously|cautioned of} :: 戒める
+P| {against|again|agains|aginst} assuming :: 想定しないよう
+O| that every marine ecosystem {will|wills|will to|would to} :: 全海洋生態系が
+V| be {affected|affection|affecting|affect} equally. :: 同等に影響されると
+== そのため、すべての海の生態系が同じように影響を受けると決めつけないよう戒める研究者もいる。
+S| Others {reply|replies|replying|replied of} :: 反論する人もいる
+O| that the speed of {today's|todays|today|todays'} change :: 今日の変化の速さが
+V| {is|are|be|being} :: …だ
+C| {what|that|which|whom} matters most, :: 最も重要なこと
+R| {since|during|while of|for of} it leaves :: 残さないので
+O| {little|few|a few|fewer} time for adaptation. :: 適応の時間をほぼ
+== それに対し、肝心なのは今日の変化の速さであり、それでは適応する時間がほとんどないと反論する人もいる。
+M| Either {way|ways|wayward|wise}, :: いずれにせよ
+S| acidification {reminds|remind|reminding|reminder} us :: 酸性化は思い出させる
+O| that the ocean {is|are|be|being} not simply :: 海は単なる…ではない
+C| a {convenient|convenience of|conveniently|convene} sink :: 便利な捨て場では
+P| {for|of the|at|on} our waste. :: 我々の廃棄物の
+== いずれにせよ酸性化は、海が私たちの出す廃棄物の便利な捨て場ではないことを思い出させる。
+?? 1 4 大気にとどまらない二酸化炭素はどうなるか
+?? 4 4 産業革命以来、表層海水のpHはどれだけ下がったか
+?? 6 2 酸性化した水では何が減るか
+?? 9 5 変化の速さが重要だと考える人は、その理由として何を挙げているか
+
+@id adv44
+@lv 3
+@level 8
+@title Have We Entered a New Epoch?
+@ja 人新世は来たか
+@tag 難関大レベル・論説文
+@gloss epoch=(地質時代の)世, Holocene=完新世, Anthropocene=人新世, profoundly=深く, radioactive=放射性の, timescale=年代区分, deforestation=森林伐採, unprecedented=前例のない
+S| Geologists {divide|divides|division|dividing} :: 地質学者は分ける
+O| {Earth's|Earths|Earth of|Earthly's} history :: 地球の歴史を
+P| {into|onto|unto|toward} periods :: 時代に
+X| {marked|marking|marks|mark} by changes :: 変化で区切られた
+X| {recorded|recording|records|record} in layers of rock. :: 岩の層に記録された
+== 地質学者は地球の歴史を、岩の層に記録された変化で区切られた時代に分けている。
+M| {According|Accorded|Accordance|Accordingly} to this scheme, :: この区分によれば
+S| we {live|lives|living|lived of} :: 我々は生きている
+P| {in|on|at|by} the Holocene, :: 完新世に
+X| an epoch {that|what|whom|whose} began :: 始まった時代
+T| about 11,700 years {ago|before of|since|after}, :: 約1万1700年前に
+P| at the end {of|for|in|with} the last ice age. :: 最終氷期の終わりに
+== この区分では、私たちは約1万1700年前、最終氷期の終わりに始まった完新世に生きている。
+T| In recent decades, {however|whatever|whenever|wherever}, :: しかし近年
+S| many scientists {have|has|having|haves} argued :: 多くの科学者が論じた
+O| that humanity has {altered|alter|altering|alteration} :: 人類が変えたと
+O| the planet {so|such|very|too} profoundly :: 地球をとても深く
+X| that a new epoch {should|shoulds|should to|shall to} :: 新時代を…べきほど
+V| be {declared|declare|declaring|declaration}. :: 宣言される
+== しかし近年、多くの科学者が、人類は地球を大きく変えたので新しい時代を宣言すべきだと論じてきた。
+S| They {proposed|proposal|proposing|propose of} :: 彼らは提案した
+O| {calling|call|called|to calling} it :: それを呼ぶことを
+C| the {Anthropocene|Anthropocenes|Anthropocenic|Anthropocened}, :: 人新世と
+P| {from|for|of|by} the Greek word :: ギリシャ語から
+P| for "{human|humanly|humanity of|humans of}." :: 「人間」を表す
+== 彼らはそれを、「人間」を意味するギリシャ語から人新世と呼ぶことを提案した。
+S| Possible {markers|marker of|marked|marking} :: 考えられる指標は
+P| of this new {epoch|epochs|epochal|epochally} :: この新時代の
+V| {include|includes|including|inclusion} :: 含む
+O| plastic particles {and|nor|than|either} radioactive material :: プラスチックや放射性物質
+X| {spread|spreading of|spreads|spreaded} by nuclear weapons tests :: 核実験で広がった
+T| {in|on|at|to} the 1950s. :: 1950年代の
+== この新時代の指標の候補には、プラスチック粒子や、1950年代の核実験で広まった放射性物質がある。
+T| In 2024, {however|whatever|whenever|wherever}, :: しかし2024年
+S| a committee {of|at|from of|onto} geologists :: 地質学者の委員会が
+V| {voted|vote|voting|votes of} against :: 反対票を投じた
+X| {formally|formal|formality|formalize} adding :: 正式に加えることに
+O| the Anthropocene {to|at|on|with} :: 人新世を
+O| the {official|officially|office|officiate} timescale. :: 公式の年代区分に
+== しかし2024年、地質学者の委員会は人新世を公式の年代区分に正式に加えることに反対票を投じた。
+S| Some members {argued|argue of|argument|arguing} :: 一部の委員は論じた
+O| that seventy years {is|has|be|being} :: 70年は…と
+C| {far|farther|further|very} too short :: あまりに短すぎる
+X| {to qualify|qualifying|qualify|qualified} as an epoch, :: 時代とみなすには
+X| which {typically|typical|type|typify} lasts :: それは通常続く
+T| thousands {of|for|in|with} years or longer. :: 数千年以上
+== 一部の委員は、70年は時代とみなすには短すぎ、時代は通常数千年以上続くものだと論じた。
+S| Others {pointed|point of|pointing|points of} out :: ほかは指摘した
+O| that humans had {been|being|be|was} reshaping :: 人間が変え続けていた
+O| {landscapes|landscape of|landscaped|landscaping of} :: 景観を
+P| {through|though|thorough|thought} farming and deforestation :: 農業や森林伐採で
+T| long before {the|an|these|those} twentieth century. :: 20世紀のずっと前
+== また、人間は20世紀よりずっと前から、農業や森林伐採によって景観を変えてきたと指摘する者もいた。
+S| Supporters of the {proposal|propose|proposing|proposed of}, :: 提案の支持者は
+M| on the {other|another|others|otherwise} hand, :: 一方で
+V| {insist|insists|insisting|insistence} :: 主張する
+O| that the speed {and|nor|than|either} scale :: 速さと規模が
+P| of recent {change|changing of|changed|changes of} :: 近年の変化の
+V| are {unprecedented|unprecedence|unprecedent|unprecedentedly}. :: 前例がないと
+== 一方、提案の支持者は、近年の変化の速さと規模は前例がないと主張する。
+X| {Whatever|Whenever|Wherever|However} its official status, :: 公式の地位はどうあれ
+S| the term {has|have|having|haves} proved :: この語は…と分かった
+C| {useful|usefully|usefulness|use} :: 役に立つ
+P| for {prompting|prompt|prompted|prompts} people :: 人々を促すのに
+X| {to consider|considering|consider|considered} :: 考えるよう
+O| their long-term impact {on|in|at|by} the planet. :: 地球への長い影響を
+== 公式な位置づけがどうであれ、この語は人々に地球への長期的な影響を考えさせるのに役立ってきた。
+?? 1 4 完新世はいつ始まったか
+?? 4 3 人新世の指標の候補として何が挙げられているか
+?? 5 2 2024年、地質学者の委員会は何をしたか
+?? 6 2 一部の委員は、70年という期間をどう評価したか
+
+@id adv45
+@lv 3
+@level 8
+@title The Moth That Changed Color
+@ja 色を変えたガ
+@tag 難関大レベル・説明文
+@gloss peppered moth=オオシモフリエダシャク(ガの一種), speckle=小さな斑点, soot=すす, natural selection=自然選択, density=密度, predation=捕食, decline=減少する, threshold=しきい値
+T| Before the Industrial {Revolution|Revolt|Revolve|Revolutionary}, :: 産業革命前
+S| almost {all|every|each|whole} peppered moths :: ほぼ全てのそのガは
+P| {in|on|at|by} Britain :: 英国の
+V| {were|was|being|be} pale :: 白っぽかった
+P| {with|within|without of|withal} dark speckles. :: 黒い斑点のある
+== 産業革命以前、英国のオオシモフリエダシャクはほとんどすべてが黒い斑点のある白っぽい色だった。
+T| As factories {filled|fill of|filling|fills of} the air :: 工場が空気を満たすと
+P| {with|by|of|at} soot, :: すすで
+M| {however|whatever|whenever|wherever}, :: しかし
+S| a dark form {became|become|becoming|becomes of} :: 黒い型が…になった
+C| {increasingly|increasing|increase|increased} common :: ますます一般的に
+P| in {industrial|industry of|industrially|industrialize} areas. :: 工業地帯で
+== しかし工場がすすで空気を満たすにつれ、工業地帯では黒い型がしだいに増えていった。
+S| The explanation {seemed|seem|seeming|seemly} simple: :: 説明は単純に思えた
+P| on trees {darkened|darkening|darken|darkness} by pollution, :: 汚染で黒ずんだ木で
+S| pale moths {stood|stand of|standing|stands of} out :: 白いガは目立った
+P| {to|for of|at|in} hungry birds, :: 腹をすかせた鳥に
+M| {while|whilst of|during|meanwhile} dark ones :: 一方黒いガは
+V| were {hidden|hide|hid|hides}. :: 隠れていた
+== 説明は単純に思えた。汚染で黒ずんだ木の上では白いガが鳥の目につき、黒いガは隠れていたのだ。
+T| In the {1950s|1950|1950th|1950's of}, :: 1950年代に
+S| experiments by the {biologist|biology|biological|biologic} Bernard Kettlewell :: ケトルウェルの実験が
+V| {appeared|appear of|appearance|appearing} :: …ように見えた
+X| to {confirm|confirms|confirmed|confirmation} :: 確かめる
+O| that birds were {indeed|in deed of|indeeds|deedly} eating :: 鳥が実際に食べていた
+O| the more {visible|visibly|visibility|vision} moths. :: より目立つガを
+== 1950年代、生物学者ケトルウェルの実験は、鳥が実際に目立つほうのガを食べていることを裏づけたかに見えた。
+S| The case soon {became|become|becoming|becomes of} :: この例はすぐになった
+C| a {textbook|textbooks|textbooked|textbooking} example :: 教科書的な例に
+P| of natural {selection|select|selective|selectively} :: 自然選択の
+M| {in|on|at|by} action. :: 働いている
+== この例はすぐに、自然選択が働いている様子を示す教科書的な例となった。
+T| Later, {however|whatever|whenever|wherever}, :: しかしのちに
+S| critics {questioned|question of|questioning|questionable} :: 批判者が疑問視した
+O| his {methods|method of|methodical|methodically}, :: 彼の方法を
+X| {noting|noted|note|notes} that moths :: ガが…と指摘し
+V| had been {released|release|releasing|releases} :: 放たれていた
+P| in daylight and at {unnatural|unnature|unnaturally|unnaturalness} densities. :: 昼に不自然な密度で
+== しかしのちに批判者は、ガが昼間に、しかも不自然な密度で放たれていたと指摘し、彼の方法を疑問視した。
+S| Some even {suggested|suggestion|suggest of|suggesting} :: …と言う者さえいた
+O| that the {entire|entirely|entirety|entireness} story :: 話全体が
+V| {was|were|be|being} :: …だった
+C| too neat {to be|being|be|been} true. :: 出来すぎていた
+== 話全体が出来すぎていて本当とは思えない、と言う者さえいた。
+R| To {settle|settled|settling|settlement} the question, :: 決着をつけるため
+S| another {researcher|researchers|research of|researching} :: 別の研究者が
+V| {carried|carry of|carrying|carries of} out :: 行った
+O| a {much|many|very|more of} larger study :: はるかに大きな研究を
+T| {over|overly|overs|overt} several years, :: 数年にわたって
+X| {using|used|use|uses} more natural conditions. :: より自然な条件で
+== この問題に決着をつけるため、別の研究者がより自然な条件で、数年がかりのはるかに大規模な研究を行った。
+S| His results {confirmed|confirmation|confirm of|confirming} :: その結果は確かめた
+O| that bird {predation|predator of|predatory|predate} :: 鳥による捕食が
+V| {was|were|been|being} :: …だったと
+C| the main {factor|factors|factorial|factored} :: 主な要因
+P| {behind|beside of|between|beneath of} :: …の背後の
+O| the moths' {changing|changingly|changeful of|changes of} colors. :: ガの色の変化
+== 彼の結果は、ガの色の変化の主な要因が鳥による捕食であることを確かめた。
+M| {Moreover|Whereas|Although|Despite}, after clean air laws :: さらに大気浄化法が
+V| {reduced|reduce of|reducing|reduction} pollution, :: 汚染を減らすと
+S| the dark form {steadily|steady|steadiness|steadied} :: 黒い型は着実に
+V| {declined|decline of|declining|declination} :: 減少した
+M| just {as|like as|than|so as} the theory :: 理論が…とおり
+V| {predicted|prediction|predict of|predictable}. :: 予測した
+== さらに、大気浄化法で汚染が減ると、理論の予測どおり黒い型は着実に減っていった。
+S| The story of the peppered moth {shows|show|showing|shown} :: このガの話は示す
+O| that {criticism|critic|critical|criticize}, :: 批判が
+M| far {from|form|for|of} weakening science, :: 科学を弱めるどころか
+V| {can|cans|can to|could to} make :: …しうる
+O| its {conclusions|conclude|conclusive|concluded} :: その結論を
+C| {stronger|strongly|strength|strengthen}. :: より強く
+== オオシモフリエダシャクの話は、批判が科学を弱めるどころか、その結論をより強固にしうることを示している。
+?? 2 2 汚染で黒ずんだ木の上で、白いガはどうなったか
+?? 5 5 批判者は、ガの放し方のどこを問題にしたか
+?? 8 1 大規模な研究で、色の変化の主な要因は何だと確かめられたか
+?? 9 3 大気浄化法で汚染が減ると、黒い型はどうなったか
+
+@id adv46
+@lv 3
+@level 8
+@title Is a Sixth Mass Extinction Under Way?
+@ja 第六の大量絶滅か
+@tag 難関大レベル・論説文
+@gloss mass extinction=大量絶滅, asteroid=小惑星, non-avian=鳥類以外の, habitat=生息地, background rate=通常の(絶滅)速度, definition=定義, threshold=基準・しきい値, exaggerate=誇張する
+T| {Over|Overly|Overt|Overs} the past 500 million years, :: 過去5億年で
+S| life {on|in|at|by} Earth :: 地球の生命は
+V| has {suffered|suffer|suffering|sufferance} :: 経験した
+O| five mass {extinctions|extinction|extinct|extinctive}, :: 5回の大量絶滅を
+X| events {in which|which|in what|whose} :: …という出来事
+X| a large share of all species {disappeared|disappear of|disappearance|disappearing}. :: 多くの種が消えた
+== 過去5億年に地球の生命は5回の大量絶滅、つまり全種の大部分が消えた出来事を経験してきた。
+S| The most {recent|recently|recency|recentness}, :: 最も新しいものは
+T| about 66 million years {ago|before of|since|after}, :: 約6600万年前の
+V| was {triggered|trigger|triggering|triggers} :: 引き起こされた
+P| {by|with|from|at} an asteroid impact :: 小惑星の衝突で
+M| {and|nor|than|either} wiped out :: そして滅ぼした
+O| the {non-avian|non-avians|non-aviation|non-avianly} dinosaurs. :: 鳥以外の恐竜を
+== 最も新しいものは約6600万年前、小惑星の衝突によって起こり、鳥類以外の恐竜を絶滅させた。
+T| Today, {many|much|a much|every} scientists :: 今日多くの科学者が
+V| {warn|warns|warning|warned of} :: 警告する
+O| that human activity {is|are|be|been} driving :: 人間活動が起こしている
+O| a {sixth|six|sixty|sixths} mass extinction. :: 第六の大量絶滅を
+== 今日、多くの科学者が、人間の活動が第六の大量絶滅を引き起こしていると警告している。
+S| Habitat loss, overhunting, {and|nor|than|either} pollution :: 生息地喪失や乱獲、汚染が
+V| are all {pushing|pushed|push|pushes} :: みな追いやっている
+O| species {toward|towarding|towards of|toward of} extinction :: 種を絶滅へ
+M| {at|in|on|by} an alarming rate. :: 驚くべき速さで
+== 生息地の喪失や乱獲、汚染が、どれも驚くべき速さで種を絶滅へと追いやっている。
+S| Estimates {suggest|suggests|suggesting|suggestion} :: 推計が示す
+O| that current extinction {rates|rate of|rated|rating of} :: 現在の絶滅速度は
+V| are many times {higher|high|highly|height} :: 何倍も高いと
+P| {than|then|that|as} the natural background rate. :: 自然な通常速度より
+== 推計によれば、現在の絶滅の速さは自然な通常の速さの何倍も高い。
+S| Some researchers, {however|whatever|whenever|wherever}, :: しかし一部の研究者は
+V| {urge|urges|urging|urgent} :: 促す
+O| {caution|cautious|cautiously|cautionary} :: 慎重さを
+P| in {using|used|uses|useful} the term. :: この語を使う際の
+== しかし一部の研究者は、この言葉を使うことに慎重であるよう促す。
+P| By the standard geological {definition|define|definite|definitely}, :: 標準的な定義では
+S| a mass extinction {involves|involve|involving|involvement} :: 大量絶滅は伴う
+O| the loss of {roughly|rough|roughness|roughen} three-quarters :: 約4分の3の喪失を
+P| {of|for|in|with} all species :: 全種の
+M| in a short {span|spans|spanned|spanning} of time. :: 短期間に
+== 地質学の標準的な定義では、大量絶滅とは短期間に全種の約4分の3が失われることだ。
+S| The extinctions {documented|documenting|documents|documentary} so far :: これまでの記録上の絶滅は
+V| {fall|falls|falling|fell of} :: 及ばない
+M| {well|good|goodly|better} short :: はるかに
+P| of that {threshold|threshed|thresh|threshing}. :: その基準に
+== これまでに記録された絶滅は、その基準にはるかに及ばない。
+S| To {call|calling|called|calls} the present crisis :: 今の危機を呼ぶことは
+C| a mass {extinction|extinct|extinctive|extinctly}, :: 大量絶滅と
+X| they {argue|argues|arguing|argument}, :: と彼らは論じる
+V| {risks|risk|risking|risky} :: 恐れがある
+O| {exaggerating|exaggerate|exaggerated|exaggeration of} :: 誇張する
+O| {what|that|which|whom} has happened. :: 起きたことを
+== 現在の危機を大量絶滅と呼ぶことは、起きたことを誇張する恐れがあると彼らは論じる。
+S| Supporters of the term {respond|responds|response|responding} :: 支持者は答える
+O| that if present trends {continue|continues|continual|continuity}, :: 今の傾向が続けば
+S| that threshold {could|cans|can to|could to} :: その基準に…しうる
+V| be {reached|reach|reaching|reaches} :: 達する
+M| in a {geologically|geological|geology|geologic of} brief time. :: 地質学的に短期間で
+== この語の支持者は、今の傾向が続けば、その基準に地質学的にはごく短期間で達しうると答える。
+S| The debate, in other {words|word|wording|worded}, :: つまりこの議論は
+V| {is|are|be|being} less :: …というより
+P| about the present {than|then|that|as} :: 現在のことより
+P| about {where|which|whom|whose} we are heading. :: 向かう先についてだ
+== つまりこの議論は、現在のことというより、私たちがどこへ向かっているかについてのものなのだ。
+?? 1 3 最も新しい大量絶滅は何によって起きたか
+?? 4 2 現在の絶滅の速さは、自然な通常の速さと比べてどうか
+?? 6 2 標準的な定義では、大量絶滅とはどれだけの種が失われることか
+?? 9 4 支持者は、今の傾向が続けば基準にどのくらいで達しうると答えているか
+
+@id adv47
+@lv 3
+@level 8
+@title Do Trees Really Talk?
+@ja 木は語り合うか
+@tag 難関大レベル・論説文
+@gloss fungal=菌類の, fungi=菌類(fungusの複数形), nutrient=養分, photosynthesis=光合成, offspring=子孫, seedling=苗木, overinterpret=過大に解釈する, notoriously=悪名高いほど
+P| {Beneath|Beside of|Besides of|Below of} almost every forest :: ほぼ全ての森の下に
+V| {lies|lays|lie|lying} :: 横たわる
+S| a vast {network|networks|networky|networked} :: 広大な網が
+P| of {fungal|fungus of|fungi of|fungally} threads :: 菌類の糸の
+X| {woven|wove|weaves|weave} around :: 絡みついた
+P| the {roots|root of|rooted|rooting} of trees. :: 木の根に
+== ほとんどすべての森の地下には、木の根に絡みつく菌類の糸が広大な網を張っている。
+S| These {fungi|fungus|fungal|fungis} :: これらの菌類は
+V| {supply|supplies|supplying|supplier} trees :: 木に与える
+P| {with|for of|to|at} water and nutrients :: 水や養分を
+P| {from|form|fro|frome} the soil, :: 土から
+X| {receiving|received|receive|receipt} sugars :: 糖を受け取る
+X| {produced|producing|produce|product} by photosynthesis :: 光合成で作られた
+M| {in|on|at|by} return. :: 見返りに
+== これらの菌類は土から水や養分を木に与え、見返りに光合成で作られた糖を受け取る。
+S| That {much|many|more of|most of}, :: そこまでは
+M| at {least|less|lest|lesser}, :: 少なくとも
+V| {is|are|be|being} :: …だ
+C| {well|good|goodly|wells} established. :: 十分に確立されて
+== 少なくともそこまでは、十分に確かめられている。
+T| In recent years, {however|whatever|whenever|wherever}, :: しかし近年
+S| a {far|farther|further|very} more dramatic picture :: はるかに劇的な像が
+V| has {captured|capture|capturing|captures} :: とらえた
+O| the public {imagination|imagine|imaginative|imagined}. :: 世間の想像力を
+== しかし近年、はるかに劇的な像が世間の想像力をとらえている。
+M| {According|Accorded|Accordance|Accordingly} to this view, :: この見方によれば
+S| trees {use|uses|using|usage} fungal networks :: 木は菌の網を使い
+X| {to communicate|communicating|communicate|communicated}, :: 交信する
+X| {warning|warned|warn|warns} neighbors :: 隣の木に知らせ
+P| {of|with|at|in} danger :: 危険を
+M| {and|nor|than|either} sharing food :: 養分を分け合う
+P| with their {offspring|offsprings|offspringly|offspringing}. :: 子の木と
+== この見方によれば、木は菌の網を使って交信し、隣の木に危険を知らせ、子どもの木と養分を分け合う。
+S| Some have even {described|describe|describing|description} :: …を説く者さえいる
+O| old "mother {trees|tree|treed|treeing}" :: 古い「母なる木」を
+X| {that|what|whom|whose} nurture :: 育てる
+O| the young {seedlings|seedlinged|seeded|seedy} :: 若い苗木を
+P| {around|aroundly|arounds|arounding} them. :: 周りの
+== 周りの若木を育てる古い「母なる木」の存在を説く者さえいる。
+S| These ideas {are|is|be|being} appealing, :: これらは魅力的だが
+M| {but|nor|than|either} a review of the research :: 研究の再検討が
+X| {published|publishing|publish|publishes} in 2023 :: 2023年発表の
+V| {found|finded|founding|to find} :: 明らかにした
+O| that the evidence {for|of the|at|on the} them :: それらの証拠は
+V| is {surprisingly|surprising|surprise|surprised} weak. :: 意外に弱いと
+== これらの考えは魅力的だが、2023年に発表された研究の再検討では、その証拠が意外なほど弱いことが分かった。
+S| Many field studies {were|was|been|being} small, :: 多くの野外研究は小規模
+M| {and|nor|than|either} their results :: その結果は
+V| were {often|oftenly|oft of|oftener of} :: しばしば
+V| {overinterpreted|overinterpret|overinterprets|overinterpretation} :: 過大に解釈され
+M| or cited {selectively|selective|selection|select}. :: 選んで引用された
+== 多くの野外研究は小規模で、その結果はしばしば過大に解釈されたり、都合よく引用されたりしていた。
+S| {Defenders|Defend|Defensive|Defended} of the network idea, :: 網の説の擁護者は
+M| on the {other|another|others|otherwise} hand, :: 一方
+V| {argue|argues|arguing|argument} :: 主張する
+O| that the {absence|absent|absently|absenting} of proof :: 証拠がないことは
+V| is not the same {as|than|from|for} :: …と同じでない
+O| proof of {absence|absent|absently|absents}. :: 無いことの証拠と
+== 一方、網の説の擁護者は、証拠がないことは、存在しないことの証拠と同じではないと主張する。
+S| Underground ecosystems {are|is|be|being} :: 地下の生態系は
+C| {notoriously|notorious|notoriety|notoriousness} difficult :: 非常に難しい
+X| {to study|studying|study|studied}, :: 研究するのが
+M| {and|nor|than|either} new methods :: 新しい方法が
+V| may {yet|still of|ever of|even of} reveal :: いずれ明かすかも
+O| {surprising|surprised|surprisedly|surprisingly} interactions. :: 驚くべき相互作用を
+== 地下の生態系は研究がきわめて難しく、新しい方法がいずれ驚くべき相互作用を明らかにするかもしれない。
+T| For now, the most {honest|honestly|honesty|honester} answer :: 今最も正直な答えは
+P| to {whether|weather|wether|whethers} trees talk :: 木が話すかへの
+V| {is|are|be|being} :: …だ
+C| that we simply {do|does|doing|done} not know. :: 分からないということ
+== 今のところ、木が話すかどうかについて最も正直な答えは、単に分からないということだ。
+?? 1 2 菌類は木に何を与えるか
+?? 1 4 菌類は見返りに何を受け取るか
+?? 6 5 2023年の研究の再検討で何が分かったか
+?? 7 0 証拠が弱いとされる理由の一つは何か
