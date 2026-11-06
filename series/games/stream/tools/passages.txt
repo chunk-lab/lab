@@ -1304,3 +1304,3864 @@ sunlight {travels|travel|traveling|travel to} :: 日光は進む
 Most of the blue light {is scattered|scatters is|is scatter|are scattered} away, :: 青い光の大半は散る
 {so|but|nor|than} red and orange :: だから赤やオレンジが
 {remain|remains|remaining|to remain}. :: 残る
+
+@id int17
+@lv 2
+@title Morning Reading Time
+@ja 朝の読書時間
+@tag 共通テストレベル・記事
+@gloss quiet=静かな, allow=許す, boring=退屈な, focus=集中する, survey=調査, improve=向上させる, lifelong=一生の, habit=習慣
+Many schools {in|on|at|to} Japan :: 日本の多くの学校は
+{have|has|having|to have} :: ある
+a {quiet|quite|quietly|quiet's} reading time :: 静かな読書時間が
+{before|ago|during|between} classes start. :: 授業が始まる前に
+{For|Since|While|During} about ten minutes, :: 約10分間
+every {student|students|studying|studied} :: すべての生徒が
+{reads|read|reading|to read} a book :: 本を読む
+{of|at|on|into} their own choice. :: 自分で選んだ
+Nobody {is|are|be|being} allowed :: だれも許されない
+{to talk|talking|talk|talked} :: 話すことを
+or {use|uses|used|using} phones :: スマホを使うことを
+{during|while|among|between} this time. :: この時間中は
+At {first|firstly|fast|front}, :: 最初は
+some {students|student|studying|studies} :: 一部の生徒は
+{found|finds|finding|founded} it :: それを…と感じた
+{boring|bored|bore|boringly}. :: 退屈だと
+{However|Because|Unless|Although}, :: しかし
+many {of|in|from|with} them :: 彼らの多くが
+now {say|says|saying|to say} :: 今は言う
+{that|what|which|who} it helps them :: それが役立つと
+{focus|focusing|focused|focuses} in class. :: 授業に集中するのに
+{According to|According|Accord to|Accorded to} one survey, :: ある調査によると
+students {at|on|to|into} these schools :: これらの学校の生徒は
+read {more|most|much|many} books :: より多くの本を読む
+{than|then|that|as} before. :: 以前より
+Some teachers {also|too|either|as well} believe :: …と考える教師もいる
+that reading {every day|everyday|every days|all days} :: 毎日読むことが
+{improves|improve|improving|improvement} :: 向上させると
+students' {writing|write|wrote|written}. :: 生徒の文章力を
+Reading time {is|are|be|being} short, :: 読書時間は短い
+{but|nor|than|whom} it can become :: しかしなりうる
+a {lifelong|life longs|lifelongly|living long} habit. :: 一生の習慣に
+
+@id int18
+@lv 2
+@title Asking My Teacher for Help
+@ja 先生へのお願いメール
+@tag 共通テストレベル・メール
+@gloss absent=欠席の, fever=熱, assignment=課題, due=期限の, notes=ノート, possible=可能な, grateful=ありがたく思う, explain=説明する, sincerely=敬具
+{Dear|Dearly|Dears|Dear to} Mr. Brown, :: ブラウン先生
+I {was|were|am|be} absent :: 私は欠席した
+{from|of|at|to} school :: 学校を
+{last|latest|later|lately} week :: 先週
+{because of|because|due|owing} a fever. :: 熱のために
+I {heard|hear of|hearing|hears} :: 聞きました
+that you {gave|given|giving|gives} us :: 先生が出したと
+an {assignment|assign|assigned|assigning} :: 課題を
+{on|in|at|into} Tuesday. :: 火曜日に
+{Could|Have to|Does|Are} you tell me :: 教えてくれませんか
+{what|that|whose|whom} I need to do :: 何をすべきか
+and {when|what|who|whose} it is due? :: いつが期限か
+My friend Ken {showed|show|showing|shown} me :: 友人のケンが見せた
+his {notes|note's|noted|noting}, :: 彼のノートを
+{but|nor|than|whom} I couldn't understand :: でも理解できなかった
+one {part|parts|parting|partly}. :: 一か所を
+{Would|Will to|Should to|Does} it be possible :: …は可能でしょうか
+{to see|seeing|see|saw} you :: お会いすることは
+{after|later|since|ago} school :: 放課後に
+{on|in|at|to} Friday? :: 金曜日の
+I would be {grateful|gratitude|gratefully|great full} :: ありがたいです
+{if|what|which|whose} you could explain it :: 説明していただければ
+{to|at|on|from} me. :: 私に
+Thank {you|your|yours|you're} :: ありがとうございます
+{for|to|with|of} your help. :: ご協力に
+{Sincerely|Sincere|Sincerity|Sincerer}, Aya Tanaka :: 敬具 田中アヤ
+
+@id int19
+@lv 2
+@title The Last Relay
+@ja 最後のリレー
+@tag 共通テストレベル・物語文
+@gloss relay=リレー, nervous=緊張して, baton=バトン, pass=追い抜く, finish line=ゴール, trip=つまずく, cheer=応援する, hug=抱きしめること, matter=重要である
+{On|Of|Into|Onto} sports day, :: 運動会の日
+Yuta {was chosen|chose|was choose|choosing} :: ユウタは選ばれた
+{as|so|such|than} the last runner :: アンカーとして
+{in|into|onto|than} the class relay. :: クラスリレーの
+He was {nervous|nerve|nervously|nerves} :: 彼は緊張していた
+because he had {never|ever|none|no} :: 一度もなかったので
+{run|ran|running|runs} in front of :: …の前で走ったことが
+so {many|much|more|lot} people. :: とても多くの人の
+When he {got|get|gotten|getting} the baton, :: バトンを受けたとき
+his team {was|been|be|being} :: チームは
+{in|on|by|of} third place. :: 3位だった
+He {ran|run|runs|running} :: 彼は走った
+as fast {as|than|so|that} he could :: できる限り速く
+and {passed|past|passing|passes} one runner. :: 一人を抜いた
+Just {before|ago|since|front} the finish line, :: ゴールの直前で
+{however|because|unless|although}, :: しかし
+he {tripped|trip|tripping|tripps} :: 彼はつまずいた
+and {fell|fall|fallen|falled} down. :: 転んだ
+His {classmates|classmate's|classmating|classmated} :: クラスメートは
+{did not stop|did not stopped|not stopped|does stop not} :: やめなかった
+{cheering|to cheering|cheer|cheered} for him. :: 彼を応援するのを
+He {got|get|gets|getting} up :: 彼は起き上がった
+and {finished|finish|finishing|finishes} the race, :: レースを終えた
+{but|nor|than|whom} his team :: しかしチームは
+came {in|into|onto|than} last. :: 最下位になった
+Yuta felt {terrible|terribly|terror|terrify}, :: ユウタは落ちこんだ
+{but|nor|than|whom} his friends :: でも友だちは
+{gave|give|given|gives} him :: 彼にした
+a big {hug|hugs|hugged|hugging}. :: 大きなハグを
+"You {never|ever|none|no} :: きみは決して
+{gave up|given up|giving up|gaves up}," :: あきらめなかった
+one {of|in|from|for} them said. :: 一人が言った
+"That {is|are|be|am} :: それこそが
+{what|which|that|who} really :: 本当に…ことだ
+{matters|matter|mattering|to matter}." :: 大切な
+
+@id int20
+@lv 2
+@title My Brass Band Diary
+@ja 吹奏楽部日記
+@tag 共通テストレベル・ブログ
+@gloss brass band=吹奏楽部, contest=コンクール, practice=練習する, especially=特に, shake=震える, nerves=緊張, prize=賞, disappointed=がっかりした, proud=誇りに思う, aim=目指す
+{Hi|High|Hay|Hit} everyone! :: みなさん、こんにちは
+My name {is|are|be|am} Mika, :: 私の名前はミカ
+{and|nor|than|whom} I play the trumpet :: トランペットを吹く
+{in|on|to|into} our school brass band. :: 学校の吹奏楽部で
+{Today|Todays|To days|Tomorrow's} :: 今日は
+I want {to write|writing|write|wrote} :: 書きたい
+{about|above|around|across} our summer contest. :: 夏のコンクールについて
+We {practiced|practicing|practices|to practice} :: 私たちは練習した
+{for|since|during|while} three hours :: 3時間
+every {day|days|daily|day's} :: 毎日
+{during|while|among|between} the summer vacation. :: 夏休みの間
+It {was|were|is being|be} hard, :: 大変だった
+{especially|especial|special|speciality} on hot days, :: 特に暑い日は
+{but|nor|than|whom} nobody :: でもだれも
+{gave up|give up|given up|giving up}. :: あきらめなかった
+On the day {of|at|on|to} the contest, :: コンクール当日
+my hands {were shaking|was shaking|were shake|shaking} :: 手が震えていた
+{before|ago|front|during} we went on stage. :: 舞台に出る前
+But {once|one|ones|one's} we started playing, :: でも演奏を始めると
+I {forgot|forget|forgotten|forgetting} :: 忘れた
+{about|above|around|among} my nerves. :: 緊張のことを
+We {won|win|wins|winning} :: 私たちは取った
+a silver {prize|price|prized|prizes}, :: 銀賞を
+{not|no|none|nor} gold. :: 金賞ではなく
+I was a little {disappointed|disappoint|disappointment|disappoints} :: 少しがっかりした
+at {first|firstly|fast|front}, :: 最初は
+{but|nor|than|whom} our teacher said :: でも先生は言った
+she was proud {of|for|to|with} us. :: 私たちを誇りに思うと
+Next {year|years|yearly|year's}, :: 来年は
+we {will aim|will aims|aiming|will aimed} :: 目指します
+{for|to|by|of} gold! :: 金賞を
+
+@id int21
+@lv 2
+@title Notice: Study Room Open for Exams
+@ja 自習室開放のお知らせ
+@tag 共通テストレベル・お知らせ
+@gloss study room=自習室, exam=試験, alone=1人で, voice=声, allow=許す, bottled water=ペットボトルの水, save a seat=席を取る, empty=空いている, do one's best=全力を尽くす
+The library {study room|studying rooms|studies room|studied room} :: 図書館の自習室は
+will {be open|open be|be opening to|opens} :: 開いている
+{until|since|ago|among} 7 p.m. :: 午後7時まで
+{during|while|among|between} exam week. :: 試験週間は
+{Students|Student|Studying|Studied} :: 生徒は
+can {use|used|using|uses} it :: 使える
+{to study|studying|study|studied} :: 勉強するために
+alone {or|nor|than|but} in groups. :: 1人かグループで
+Group {tables|table|tabled|tabling} :: グループ用の机は
+{are|is|be|being} in the back, :: 奥にある
+{so|nor|than|whom} please keep :: なので保ってください
+your voices {down|downs|downing|downed}. :: 声を小さく
+Teachers {will be|will being|will are|are be} there :: 先生がいる
+{on|in|at|into} Tuesday and Thursday :: 火曜と木曜に
+{to answer|answer|answered|answers} questions. :: 質問に答えるため
+Food {is not|are not|not is|does not} allowed, :: 食べ物は禁止
+{but|nor|than|whom} you may :: でも…してよい
+{bring|brings|brought|bringing} :: 持ってくる
+{bottled|bottles|bottling|bottly} water. :: ペットボトルの水を
+Please {do not|not|does not|not do} :: …しないでください
+{save|saves|saving|saved} seats :: 席を取る
+{for|to|by|at} your friends. :: 友だちのために
+If a seat {is|are|be|been} empty :: 席が空いていたら
+for more {than|then|that|as} 30 minutes, :: 30分以上
+{anyone|anything|anywhere|any} :: だれでも
+may {use|used|using|uses} it. :: 使ってよい
+We {hope|hopes|hoping|hoped to} :: 私たちは願う
+this space {helps|help|helping|helpful} you :: この場所が役立つと
+{do|doing|did|done} your best :: 全力を出すのに
+{on|by|to|of} your exams. :: 試験で
+
+@id int22
+@lv 2
+@title Interview with a Soccer Captain
+@ja サッカー部キャプテンに聞く
+@tag 共通テストレベル・インタビュー
+@gloss captain=キャプテン, older brother=兄, hardest=いちばん大変な, disagree=意見が違う, balance=両立させる, member=部員, afraid=恐れて, mistake=間違い
+This {month|months|monthly|month's}, :: 今月は
+we {talked|talking|talks|to talk} :: 私たちは話した
+{to|at|by|onto} Ren, :: レンに
+the captain {of|onto|into|than} the soccer club. :: サッカー部のキャプテン
+Q: When {did|does|done|doing} you :: Q: いつあなたは
+start {playing|play|played|plays} :: 始めたか
+{soccer|soccers|the soccers|soccer's}? :: サッカーを
+A: I {started|start|starting|starts} :: A: 始めた
+when I {was|were|am|be} seven, :: 7歳のときに
+{because|because of|due|owing} my older brother played. :: 兄がしていたので
+Q: What {is|are|be|am} :: Q: 何ですか
+the {hardest|hard|hardly|hardness} part :: いちばん大変な点は
+{of|to|at|on} being captain? :: キャプテンであることの
+A: I {have to|has to|having to|have} :: A: 私は…なければ
+listen {to|at|on|of} everyone, :: 全員の話を聞く
+{even when|even|even so|although when} :: …ときでも
+we {disagree|disagrees|disagreeing|disagreement}. :: 意見が違う
+Q: How {do|does|did to|are} you :: Q: どうやって
+{balance|balances|balancing|balanced} soccer :: サッカーを両立させる
+and {studying|studied|study's|studys}? :: 勉強と
+A: I {study|studies|studying|studied to} :: A: 勉強する
+{for|since|during|while} an hour :: 1時間
+{on|at|onto|than} the train :: 電車の中で
+every {morning|mornings|morning's|mornings'}. :: 毎朝
+Q: Do you have {a message|a messages|an message|message} :: Q: メッセージはあるか
+{for|at|on|into} new members :: 新入部員へ
+{this|these|those|they} year? :: 今年の
+A: Don't be {afraid|afraidly|afrayed|fears} :: A: 恐れないで
+{of|to|for|with} making mistakes, :: 間違えることを
+{because|because of|due|owing} everyone makes them. :: だれでもするから
+
+@id int23
+@lv 2
+@title How to Take Good Notes
+@ja 上手なノートの取り方
+@tag 共通テストレベル・説明文
+@gloss notes=ノート, remember=覚える, carefully=注意深く, instead=そのかわりに, key word=キーワード, main idea=要点, arrow=矢印, within=…以内に, tool=道具
+Good {notes|note|noting|noted} :: よいノートは
+can {help|helps|helping|helped} you :: 助けになる
+{remember|remembers|remembered|remembering} :: 覚えるのに
+{what|that|which|who} you learned in class. :: 授業で学んだことを
+{However|Because|Unless|Although}, :: しかし
+many {students|student|studying|studies} :: 多くの生徒は
+try {to write down|to writing down|write down|wrote down} :: 書き取ろうとする
+everything {the teacher says|the teacher say|the teachers says|teacher say}. :: 先生の言うことすべて
+This {is|are|be|am} :: これは
+not a good {idea|ideas|idealy|idly}, :: よい考えではない
+{because|because of|due|owing} you can't listen :: 聞けないから
+{carefully|careful|care|careless} at the same time. :: 同時にしっかり
+{Instead|Instead of|In stead|Insteadly}, :: そのかわりに
+write {only|alone|lonely|once} :: …だけを書こう
+the key {words|wordy|worded|wordly} :: キーワードと
+and main {ideas|idea|ideal|idle}. :: 要点を
+You can {also|too|either|as well} :: …こともできる
+{use|used|using|uses} arrows :: 矢印を使う
+and simple {drawings|drew|drawn|draws} :: 簡単な絵を
+{to save|save|saved|saves} time. :: 時間を節約するため
+{After|Later|Since|Ago} class, :: 授業のあと
+read your notes {again|against|gain|agains} :: ノートを読み直そう
+{within|during|while|among} a day. :: 1日以内に
+If {something|somewhere|sometime|somehow} :: もし何かが
+{is not|are not|not is|does not} clear, :: はっきりしないなら
+{ask|asks|asking|asked} a friend :: 友だちに聞こう
+{or|nor|than|but} your teacher. :: か先生に
+Notes {are|is|be|being} a tool :: ノートは道具だ
+{for|to|at|by} thinking, :: 考えるための
+not just {for|to|at|by} writing. :: 書くためだけでなく
+
+@id int24
+@lv 2
+@title Phones in the Classroom
+@ja 教室のスマホ
+@tag 共通テストレベル・論説文
+@gloss allow=許す, out of date=時代遅れの, useful=便利な, emergency=緊急事態, attention=注意, ignore=無視する, opinion=意見, wisely=賢く
+Many {schools|school|schooling|schooled} :: 多くの学校は
+{do not allow|does not allow|not allow|do not allows} students :: 生徒に許さない
+{to use|using|use|used} smartphones :: スマホを使うことを
+{during|while|among|between} the day. :: 日中に
+Some people {say|says|saying|to say} :: …と言う人もいる
+{that|what|which|who} this rule :: この規則は
+is {out of date|out date|out of dated|outing date}. :: 時代遅れだ
+{Phones|Phone|Phoning|Phoned} :: スマホは
+can {be|being|been|is} useful tools :: 便利な道具になる
+{for|to|at|by} learning, :: 学習のための
+{such as|such like|as such|so as} looking up words. :: 単語を調べるなど
+Students can {also|too|either|as well} :: 生徒は…もできる
+{contact|contacts|contacting|contacted} :: 連絡する
+{their|there|they're|them} families :: 家族に
+{in|on|at|by} an emergency. :: 緊急時に
+On the other {hand|hands|handed|handy}, :: 一方で
+phones can {easily|easy|ease|easier} :: スマホは簡単に
+{take|takes|took|taking} students' attention :: 生徒の注意を奪う
+away {from|to|of|by} lessons. :: 授業から
+Messages and games {are|is|be|being} :: メッセージやゲームは
+{hard|hardly|hardness|harden} :: 難しい
+{to ignore|ignoring|ignore|ignored}. :: 無視するのが
+In my {opinion|opine|opinions|opinioned}, :: 私の考えでは
+schools {should allow|should allows|should allowing|should to allow} phones :: 学校は許可すべき
+{but|nor|than|whom} set clear rules :: でも明確な規則を作る
+{for|to|at|by} using them. :: 使い方について
+For {example|examples|exam|sample}, :: たとえば
+students {could use|could used|could using|could uses} them :: 生徒は使えるだろう
+only {when|what|who|whose} the teacher :: 先生が…ときだけ
+{says|say|saying|said to} it is OK. :: いいと言う
+Learning {to use|using|use|used} phones wisely :: 賢く使うのを学ぶのは
+is an {important|importance|importantly|import} skill :: 大切な技能だ
+{for|to|at|by} the future. :: 将来のための
+
+@id int25
+@lv 2
+@title A Letter to My Old Classmate
+@ja 前の同級生への手紙
+@tag 共通テストレベル・手紙
+@gloss move=引っ越す, lonely=寂しい, join=入る, named=…という名前の, favorite=大好きな, show ~ around=案内する, miss=恋しく思う, visit=訪ねる
+{Dear|Dearly|Dears|Dear to} Haruka, :: ハルカへ
+It {has been|have been|has be|has being} :: …になる
+three {months|month|monthly|month's} :: 3か月
+{since|for|from|ago} I moved :: 引っ越してから
+{to|at|on|for} Sapporo. :: 札幌に
+My new school {is|are|be|being} :: 新しい学校は
+much {bigger|big|biggest|more big} :: ずっと大きい
+{than|then|that|as} our old one. :: 前の学校より
+At {first|firstly|fast|front}, :: 最初は
+I had {no one|no ones|not one's|nobody's} :: だれもいなかった
+to eat lunch {with|by|at|for}, :: 一緒に昼食を食べる
+and I felt {lonely|lonelily|loneliness|loneliest}. :: 寂しかった
+But {last|latest|lately|later} month, :: でも先月
+I {joined|join|joining|joins} :: 私は入った
+the art {club|clubbed|clubbing|clubby}, :: 美術部に
+{and|nor|than|whom} things changed. :: それで状況が変わった
+A girl {named|name|naming|names} Saki :: サキという子が
+sits {next to|next|nearly|beside to} me, :: 隣に座っている
+{and|nor|than|whom} we often talk :: よく話す
+{about|above|around|across} our favorite manga. :: 好きな漫画について
+She {even|ever|every|evenly} :: 彼女は…さえ
+{showed|show|shown|showing} me :: 案内してくれた
+{around|among|aroundly|between} the city :: 町を
+{last|latest|lately|lastly} weekend. :: 先週末
+I {still|stilly|stillness|steel} :: 私は今でも
+{miss|misses|missing|to miss} you :: あなたが恋しい
+and {everyone|every|ever|evenly} :: みんなが
+{in|on|at|to} our old class. :: 前のクラスの
+Please {come|comes|coming|came} :: ぜひ来てね
+{to visit|visits|visited|visitor} me :: 遊びに
+{during|while|among|between} summer vacation! :: 夏休みに
+Your {friend|friendly|friendship|friends}, Nana :: あなたの友 ナナ
+
+@id int26
+@lv 2
+@title Join the Science Club!
+@ja 科学部へようこそ
+@tag 共通テストレベル・広告
+@gloss perfect=ぴったりの, robot=ロボット, crystal=結晶, grow=育てる, plan=計画する, curiosity=好奇心, interested=興味がある, experience=経験
+Do you {like|likes|liking|liked} :: 好きですか
+{asking|ask|asked|to asking} questions :: 疑問をもつのが
+{about|above|around|across} the world :: 世界について
+{around|among|between|aside} you? :: 身の回りの
+{Then|Than|That|Them} the Science Club :: それなら科学部が
+is the {perfect|perfectly|perfection|perfects} place :: ぴったりの場所だ
+{for|to|at|by} you! :: あなたに
+We {meet|meets|meeting|met to} :: 活動する
+every {Wednesday|Wednesdays|Wednesday's|Wednesdays'} :: 毎週水曜
+{in|on|to|into} Room 204 :: 204教室で
+{after|later|since|ago} school. :: 放課後に
+Last {year|years|yearly|year's}, :: 去年は
+we {made|make|making|makes} :: 作った
+a small {robot|robots|robotic|robotics} :: 小さなロボットを
+and {grew|grow|grown|growing} crystals. :: 結晶を育てた
+This {year|years|yearly|year's}, :: 今年は
+we are {planning|plan|planned|plans} :: 計画している
+{to study|studying|study|studied} :: 調べることを
+the stars {at|in|on|to} night. :: 夜の星を
+You {do not need|does not need|not need|do not needs} :: 必要はない
+{to be|being|be|been} good :: 得意である
+{at|on|to|by} science. :: 理科が
+All you {need|needs|needing|needed to} :: 必要なのは
+{is|are|be|being} curiosity :: 好奇心だ
+and a love {of|to|at|by} learning. :: 学ぶことへの愛
+If you {are|is|be|being} interested, :: 興味があれば
+come and {see|sees|seeing|saw} us :: 見に来て
+{on|in|at|to} April 15. :: 4月15日に
+No {experience|experienced|experiences|experiencing} :: 経験は
+is {necessary|necessity|necessarily|need} :: 必要ない
+{and|nor|than|whom} everyone :: そしてだれでも
+is {welcome|welcomes|welcomely|to welcome}! :: 歓迎だ
+
+@id int27
+@lv 2
+@title Your Order Has Been Delayed
+@ja 注文の配送遅れ
+@tag 共通テストレベル・メール
+@gloss shipment=発送, delay=遅らせる, warehouse=倉庫, apologize=謝る, inconvenience=不便, discount=割引, cancel=取り消す, refund=返金
+Thank you {for|to|at|by} your order :: ご注文ありがとう
+{from|of|to|into} our online store :: 当オンライン店での
+{on|in|at|to} October 3. :: 10月3日の
+We are sorry {to tell|telling|told|tells} you :: 申し訳なく伝えます
+{that|what|which|who} your shipment :: お客様の発送が
+{has been|have been|has being|having been} delayed. :: 遅れていると
+{Because of|Because|Because to|Since of} heavy snow, :: 大雪のため
+our warehouse {was closed|was close|were closed|closed was} :: 倉庫は閉鎖された
+{for|since|during|while} two days. :: 2日間
+Your package {will|is|has|was} arrive :: 荷物は届きます
+{on|in|at|to} October 12 :: 10月12日に
+{instead of|instead|in place|rather} October 9. :: 9日ではなく
+We {sincerely|sincere|sincerity|sincerer} :: 私たちは心から
+{apologize|apology|apologetic|apologizing} :: おわびします
+{for|to|at|on} the inconvenience. :: ご不便について
+To thank you {for|to|of|at} waiting, :: お待ちいただいたお礼に
+we {have added|has added|have add|adding} :: 加えました
+a 20% {discount|discounted|discounting|discounts} :: 20%の割引を
+{to|at|of|until} your next order. :: 次回のご注文に
+If you {prefer|prefers|preferring|preferred to} :: もし…がよければ
+{to cancel|cancel|canceling to|canceled} your order, :: 注文の取り消しが
+we will {give|gave|giving|given} you :: お渡しします
+a full {refund|refunds|refunded|refunding}. :: 全額の返金を
+Please {contact|contacting|contacts|to contact} us :: ご連絡ください
+{by|with|on|in} phone or email :: 電話かメールで
+{if|what|whose|than} you have questions. :: 質問があれば
+
+@id int28
+@lv 2
+@title New Rules for the Office Kitchen
+@ja 給湯室の新しいルール
+@tag 共通テストレベル・お知らせ
+@gloss staff=職員, complain=不満を言う, fridge=冷蔵庫, sink=流し, label=ラベル, dishwasher=食器洗い機, empty=空にする, throw away=捨てる
+Recently, {many|much|lots|a lot} staff members :: 最近多くの職員が
+{have complained|has complained|have complain|complaining} :: 不満を言っている
+{about|for|on|at} the kitchen. :: 給湯室について
+The fridge is often {full of|full with|fill of|full by} old food, :: 冷蔵庫は古い食品で一杯
+{and|nor|than|whom} the sink :: そして流しは
+is {covered|covering|cover|covers} :: おおわれている
+{with|of|to|from} dirty cups. :: 汚れたカップで
+{Starting|Started|Starter|Starts} next Monday, :: 来週月曜から
+please {follow|follows|following|followed} :: 守ってください
+{these|this|that|there} three rules. :: この3つのルールを
+First, {put|puts|putting|to putting} a label :: 1つ目、ラベルをはる
+{with|by|at|into} your name :: 名前を書いた
+{on|in|at|to} any food in the fridge. :: 冷蔵庫の食品に
+Second, {wash|washes|washing|washed} your cup :: 2つ目、カップを洗う
+{right after|right later|rightly after|right behind} you use it, :: 使ったらすぐに
+{or|nor|than|whom} put it :: またはそれを入れる
+{in|of|for|to} the dishwasher. :: 食器洗い機に
+Third, the fridge {will be|will is|is be|will being} emptied :: 3つ目、冷蔵庫を空に
+{every|any of|each of|both} Friday afternoon. :: 毎週金曜の午後に
+Any food {without|with out|within|throughout} a name :: 名前のない食品は
+will be {thrown|threw|throw|throwing} away :: 捨てられる
+{at|in|on|of} three o'clock. :: 3時に
+We {hope|hopes|hoping|to hope} :: 私たちは願っている
+{to keep|keeping|keep|kept} the kitchen :: 給湯室を保つことを
+{clean|cleanly|cleaning|cleanness} together. :: 一緒にきれいに
+
+@id int29
+@lv 2
+@title Grand Opening: Green Leaf Bakery
+@ja パン屋の開店
+@tag 共通テストレベル・広告
+@gloss grand opening=開店, bake=焼く, local=地元の, flour=小麦粉, loaf=(パンの)1斤, sample=試食品, seat=座席, except=〜を除いて
+Green Leaf Bakery {will open|will opens|opening|will opened} :: パン屋が開店する
+{on|of|to|for} Main Street :: 大通りに
+{this|these|those|that's} Saturday. :: 今週の土曜に
+All our bread {is baked|is bake|are baked|baked is} :: パンはすべて焼かれる
+{every|any of|each of|both} morning :: 毎朝
+{with|of|by|at} local flour. :: 地元の小麦粉で
+{On|In|At|Of} opening day, :: 開店日には
+the {first|one|firstly|once} 50 customers :: 先着50名は
+will {receive|receives|received|receiving} :: もらえる
+a free {loaf|loaves|loafs|loafing} of bread. :: 無料のパン1斤を
+You can also {try|tried|trying|tries} :: …も試せる
+free {samples|sample|sampled|sampler} :: 無料の試食を
+{of|to|at|by} our cakes. :: ケーキの
+Our café corner {has|have|having|is} :: カフェコーナーには
+{twenty|twelfth|twentieth|twenties} seats, :: 20席ある
+{so|nor|than|whom} you can enjoy :: だから楽しめる
+coffee {with|of|to|from} your bread. :: パンとコーヒーを
+We are {open|opens|openness|opener} :: 営業しています
+{from|since|at|on} 7 a.m. :: 午前7時から
+{to|at|by|in} 6 p.m., :: 午後6時まで
+{except|expect|accept|excepted} Mondays. :: 月曜を除き
+Bring {this|these|those|they} ad :: この広告を持参
+{and|nor|than|whom} get :: そしてもらう
+10% {off|of|out|over} :: 10%引きを
+{until|since|while|unless} the end of May. :: 5月末まで
+We {look|looks|looking|looked to} forward :: 楽しみにしている
+{to seeing|to see|seeing|for seeing} you :: あなたに会うのを
+{at|on|to|of} Green Leaf! :: グリーンリーフで
+
+@id int30
+@lv 2
+@title A Guide for New Employees
+@ja 新入社員の初日案内
+@tag 共通テストレベル・案内
+@gloss employee=社員, congratulations=おめでとう, reception=受付, laptop=ノートパソコン, department=部署, training=研修, cafeteria=社員食堂, manager=上司
+{Welcome|Welcoming|Welcomes|Welcomed by} :: ようこそ
+{to|at|in|for} Tanaka Trading, :: 田中商事へ
+and {congratulations|congratulation|congratulate|congratulated} :: そしておめでとう
+{on|to|at|by} your new job. :: 新しい仕事に
+This guide {explains|explain|explaining|explanation} :: この案内は説明する
+{what|that|which|who} to do :: 何をすべきかを
+{on|in|at|by} your first day. :: 初日に
+Please {come|comes|coming|came} :: 来てください
+{to|on|of|with} the reception desk :: 受付に
+{on|in|at|of} the first floor :: 1階の
+{by|until|since|for} 9 a.m. :: 午前9時までに
+There, you {will receive|will received|receive will|will receiving} :: そこで受け取る
+your ID card {and|nor|than|whom} a laptop. :: 社員証とパソコンを
+{After|Ago|Behind|Later} that, :: そのあと
+a staff member {will take|will took|will takes|will taking} you :: 職員が連れていく
+{to|at|for|of} your department. :: 部署まで
+Training {starts|start|starting|to start} :: 研修は始まる
+{at|on|in|of} 10:30 :: 10時半に
+{and|nor|than|whom} lasts :: そして続く
+{until|by|since|on} noon. :: 正午まで
+Lunch {is|are|be|were} free :: 昼食は無料
+{at|on|to|for} the cafeteria :: 社員食堂で
+{for|to|of|by} your first week. :: 最初の1週間は
+{If|What|Whose|Than} you have any questions, :: 質問があれば
+{feel|feels|feeling|felt} free :: 遠慮なく
+{to ask|asking|ask|asked} your manager. :: 上司に聞いて
+
+@id int31
+@lv 2
+@title The Rise of Self-Checkout
+@ja 増えるセルフレジ
+@tag 共通テストレベル・記事
+@gloss self-checkout=セルフレジ, scan=読み取る, shortage=不足, cashier=レジ係, especially=特に, avoid=避ける, elderly=高齢の, balance=バランス
+{More and more|More and many|Most and more|Much and more} stores :: ますます多くの店が
+{are using|are use|is using|using} :: 使っている
+self-checkout {machines|machine|machinery's|machined}. :: セルフレジを
+{With|Of|At|To} these machines, :: この機械では
+customers {scan|scans|scanning|to scan} :: 客が読み取る
+{their own|their owns|they own|theirs own} items :: 自分の商品を
+{and|nor|than|whom} pay. :: そして支払う
+One reason {is|are|be|being} :: 理由の1つは
+a {shortage|short|shortly|shorten} :: 不足だ
+{of|to|at|by} workers. :: 働き手の
+Many stores {cannot find|cannot found|cannot finding|not can find} :: 多くの店は見つけられない
+{enough|enough of|much|plenty} cashiers, :: 十分なレジ係を
+{especially|especial|specially of|special} at night. :: 特に夜は
+Self-checkout {also|too|either|as well} lets :: セルフレジはまた
+customers {avoid|avoids|to avoid|avoided} :: 客に避けさせる
+{long|length|lengthy of|longly} lines. :: 長い列を
+{However|Because|Although|Unless}, :: しかし
+not {everyone|anyone|each|every} :: 全員が…ではない
+{likes|like|liking|to like} :: 好む
+{them|they|their|themself}. :: それらを
+{Some|Any|Much|Every} elderly shoppers :: 一部の高齢の客は
+{find|finds|finding|found to} :: 感じる
+the machines {hard|hardly|hardness|harden} :: 機械を難しいと
+{to use|using|use|used}. :: 使うのが
+{Others|Other|Another|The other} :: ほかの人は
+{miss|misses|missing|missed to} :: 恋しく思う
+{talking|to talking|talk|talked} :: 話すことを
+{with|at|by|on} the cashier. :: レジ係と
+Stores {need|needs|needing|to need} :: 店は必要だ
+{to find|finding|find|found} a balance :: バランスを見つけることが
+{between|among|during|across} machines and people. :: 機械と人の間の
+
+@id int32
+@lv 2
+@title Our Bookshop Is Closing
+@ja 本屋の閉店のあいさつ
+@tag 共通テストレベル・手紙
+@gloss run=営む, retire=引退する, for good=永久に, customer=客, comic=漫画, half price=半額, support=支え, over the years=長年
+I {have run|has run|have ran|having run} :: 私は営んできた
+this small {bookshop|bookshops|bookshopping|booked shop} :: この小さな本屋を
+{for|since|during|in} twenty years. :: 20年間
+{Sadly|Sad|Sadness|Saddest}, :: 残念ながら
+I {have decided|have decide|has decided|deciding} :: 私は決めた
+{to retire|retiring|retire|retired} :: 引退することを
+{at|in|on|for} the end of March. :: 3月末で
+The shop {will close|will closes|will closing|closes will} :: 店は閉まる
+{for|to|by|at} good :: 永久に
+{on|in|at|to} March 31. :: 3月31日に
+{During|While|Though|Whose} these years, :: この年月の間に
+{many|much|every|each of} customers :: 多くの客が
+{have become|have became|has become|becoming} :: なった
+{my friends|my friend|mine friends|my friendly}. :: 私の友人に
+I still {remember|remembers|remembering|to remember} :: 今も覚えている
+children {who|which|whose|what} came :: 来ていた子どもを
+{after|before to|behind|later} school :: 放課後に
+{to read|to reading|read|reads} comics. :: 漫画を読みに
+Some of them {now|ago|yet|ever} bring :: 今では連れてくる人も
+{their own|their owns|theirs own|they own} children :: 自分の子どもを
+{to|at|in|on} the shop. :: 店に
+{Until|Since|Unless|While} the last day, :: 最終日まで
+all books {will be|will is|will being|will been} :: 全ての本は…になる
+half {price|prize|prices|pricy}. :: 半額に
+Thank you {so|such|much of|so of} much :: 本当にありがとう
+{for|to|of|by} your support :: ご支援に
+{over|on|into|onto} the years. :: 長年の
+
+@id int33
+@lv 2
+@title An Interview with a Delivery Driver
+@ja 配達ドライバーに聞く
+@tag 共通テストレベル・インタビュー
+@gloss delivery=配達, load=積む, package=荷物, van=バン, parking=駐車場所, deal with=対処する, app=アプリ, choose=選ぶ
+Q: What time {do|does|are|is} you :: Q：何時にあなたは
+{start|starts|started|starting} :: 始める
+{work|works|worker|worked} each day? :: 毎日仕事を
+Ken: I {arrive|arrives|arriving|arrival} :: ケン：着きます
+{at|to|on|for} the delivery center :: 配送センターに
+{at|on|in|for} seven. :: 7時に
+{Then|Than|Them|They} I load :: それから積む
+about 150 {packages|package|packaging|packed} :: 約150個の荷物を
+{into|at|of|by} my van. :: バンに
+Q: What {is|are|do|does} :: Q：何ですか
+the {hardest|hardly|hardness|harder than} part :: いちばん大変な部分は
+{of|to|by|at} your job? :: 仕事の
+Ken: {Finding|Find|Found|To finding} parking :: ケン：駐車場所探しは
+{is|are|be|being} :: …だ
+{often|ever|yet|ago} difficult :: よく難しい
+{in|on|at|to} the city. :: 都会では
+{Also|Too|Either|As well}, :: また
+many people {are not|is not|do not are|not are} :: 多くの人が…いない
+{at|in|on|to} home :: 家に
+{when|what|which|whom} I arrive. :: 私が着いたとき
+Q: {How|What|Who|Which} do you :: Q：どのように
+{deal|deals|dealing|dealt} :: 対処する
+{with|to|on|by} that? :: それに
+Ken: Our app {lets|letting|to let|lettings} :: ケン：アプリでは
+people {choose|chooses|to choose|choosing} :: 人が選べる
+{a|an|much|few} better time. :: より都合のよい時間を
+Q: What do you {enjoy|enjoys|enjoying|enjoyed} :: Q：何が楽しい
+{most|almost|more than|the most of} :: いちばん
+{about|on|to|by} your work? :: 仕事について
+Ken: When people {say|says|saying|said to} :: ケン：人が言うと
+{thank|thanks|thanked|thanking} you, :: ありがとうと
+I feel {happy|happily|happiness|happier than}. :: うれしく感じる
+
+@id int34
+@lv 2
+@title Applying for a Sales Job
+@ja 販売員の仕事への応募
+@tag 共通テストレベル・メール
+@gloss apply=応募する, position=職, advertise=広告を出す, clothing=衣料品, useful=役に立つ, resume=履歴書, attach=添付する, available=都合がつく
+I am writing {to apply|applying|to applying|apply} :: 応募するため書く
+{for|to|at|on} the sales assistant position :: 販売員の職に
+{advertised|advertising|advertise|advertisement} on your website. :: ウェブに出ていた
+I {have worked|have work|has worked|have working} :: 私は働いてきた
+{at|on|to|of} a clothing store :: 洋服店で
+{for|since|during|while} two years. :: 2年間
+{In|On|Of|By} this job, :: この仕事で
+I {learned|learning|learns|learnt to} :: 学んだ
+{how|what|which|who} to help customers :: 客の助け方を
+{find|finds|finding|found} the right items. :: 合う商品を探す
+I {also|too|either|as well} speak :: 私は…も話せる
+English {and|nor|than|whom} Korean, :: 英語と韓国語を
+{which|what|who|whom} could be useful :: 役立つかもしれない
+{for|of|on|by} your store. :: 御店で
+I enjoy {working|to work|work|worked} :: 働くのが好き
+{with|to|at|by} people :: 人と
+{and|nor|than|whom} am good :: そして得意だ
+{at|on|to|of} teamwork. :: チームワークが
+I {have attached|have attach|has attached|have attaching} :: 添付しました
+my {resume|resumes|resuming|resumed} :: 履歴書を
+{to|at|on|by} this email. :: このメールに
+I am {available|availability|avail|availably} :: 都合がつきます
+{for|to|at|with} an interview :: 面接に
+{on|in|at|by} weekday afternoons. :: 平日の午後に
+Thank you {for|to|of|by} :: …ありがとう
+{reading|read|reads|to reading} my email, :: メールを読んで
+and I {hope|hopes|hoping|hoped to} :: そして願う
+{to hear|hearing|hear|heard} from you soon. :: すぐお返事をもらうことを
+
+@id int35
+@lv 2
+@title Bike Repair at Your Door
+@ja 出張自転車修理
+@tag 共通テストレベル・広告
+@gloss repair=修理, mechanic=整備士, tool=道具, flat tire=パンク, basic=基本の, extra charge=追加料金, book=予約する, bell=ベル
+Is your bike {broken|broke|break|breaks}, :: 自転車が壊れている
+{but|nor|than|whom} you have :: でも…がない
+{no|none|not|nothing} time :: 時間がない
+{to take|taking|take|took} it to a shop? :: 店に持っていく
+Bike Doctor {comes|come|coming|to come} :: バイクドクターが来る
+{to|on|of|into} you :: あなたのもとへ
+{anywhere|anyhow|anyone|anything} in the city! :: 市内どこでも
+Our mechanic {will visit|will visits|will visiting|visit will} :: 整備士が訪ねる
+{your|you|yours|yourself} home or office :: ご自宅か職場を
+{with|of|by|for} all the tools. :: 道具を全部持って
+{Most|Almost|Mostly|The most of} repairs, :: たいていの修理は
+{such as|such like|so as|as such} flat tires, :: パンクなどの
+{take|takes|taking|taken} :: かかる
+{less than|less then|fewer then|little than} 30 minutes. :: 30分未満
+A basic check {costs|costing|to cost|costly} :: 基本点検は…かかる
+{only|alone|lonely|once} $15, :: たった15ドル
+{and|nor|than|whom} there is :: そして…ある
+no {extra|extremely|extract|extend} charge :: 追加料金なし
+{for|to|at|by} the visit. :: 出張に
+{Book|Books|Booking|Booked} a visit :: 訪問を予約して
+{through|though|thorough|throughout} our app :: アプリから
+{or|nor|than|whom} call us :: または電話して
+{between|among|during|across} 8 a.m. and 8 p.m. :: 朝8時〜夜8時に
+First-time customers {get|gets|getting|got to} :: 初めての客はもらえる
+a free {bell|bells|belled|belling} :: 無料のベルを
+{for|to|at|by} their bike! :: 自転車用の
+{Let|Lets|Letting|To let} us :: 私たちに…させて
+{keep|keeps|kept|keeping} :: 保たせて
+your bike {safe|safety|saves|safer than} :: 自転車を安全に
+{and|nor|than|whom} ready to ride. :: すぐ乗れる状態に
+
+@id int36
+@lv 2
+@title Our Return and Exchange Policy
+@ja 返品・交換のご案内
+@tag 共通テストレベル・案内
+@gloss purchase=買ったもの, satisfied=満足した, return=返品する, receipt=レシート, original=元の, condition=状態, store credit=店のポイント, exchange=交換する
+We want {every|all|each of|both} customer :: すべての客に
+{to be|being|be|been} happy :: 満足してほしい
+{with|of|at|to} their purchase. :: 買ったものに
+{If|What|Whose|Than} you are not satisfied, :: 満足できなければ
+you {can|cans|could to|can to} return :: 返品できる
+{most|almost|mostly|the most of} items :: たいていの商品を
+{within|during|since|until} 30 days. :: 30日以内に
+Please {bring|brings|brought|bringing} :: 持ってきて
+{your|you|yours|yourself} receipt :: レシートを
+{and|nor|than|whom} keep the item :: 商品は入れておく
+{in|on|at|to} its original box. :: 元の箱に
+Items {must be|must is|must being|must been} :: 商品は…であること
+{in|on|at|of} good condition :: 良い状態
+{and|nor|than|whom} not used. :: そして未使用
+{Without|Withdraw|Within|Throughout} a receipt, :: レシートがなければ
+we {can only|cans only|can only to|could only to} give :: お渡しできるのは
+store {credit|credited|creditor|crediting} :: 店のポイントだけ
+{instead of|instead|in place|rather} cash. :: 現金の代わりに
+Sale items {can be|can is|can being|can been} :: セール品は…できる
+{exchanged|exchanging|exchange|exchanges}, :: 交換が
+{but|nor|than|whom} not returned. :: でも返品はできない
+{For|To|At|By} safety reasons, :: 安全上の理由で
+food and underwear {cannot be|cannot is|cannot being|not can be} :: 食品と下着は…できない
+{returned|returning|return|returns} :: 返品
+{at all|at any|on all|of all}. :: いっさい
+Our staff {will be|will is|will being|will been} :: スタッフは…でしょう
+{glad|gladly|gladness|gladder than} :: 喜んで
+{to help|helping|help|helped} you :: お手伝いする
+{at|on|in|to} the service counter. :: サービス窓口で
+
+@id int37
+@lv 2
+@title My First Night Train
+@ja 初めての夜行列車
+@tag 共通テストレベル・ブログ
+@gloss compartment=個室, bunk=寝台, share=共有する, scenery=景色, narrow=狭い, cozy=居心地のよい, cross=越える, forget=忘れる
+{Last|Lastly|Latest|Lasting} summer, :: 去年の夏
+I {took|taken|taking|takes} :: 私は乗った
+my {first|firstly|one|once} night train :: 初めての夜行列車に
+{in|on|at|by} Europe. :: ヨーロッパで
+I {had|has|having|be} always wanted :: ずっと…したかった
+{to sleep|sleep|sleeping|slept} :: 眠ることを
+{while|during|among|between} traveling. :: 移動しながら
+My ticket {was|were|been|being} :: 私の切符は
+{for|since|than|among} a small compartment :: 小さな個室用だった
+{with|within|as|than} three bunks. :: 寝台3つの
+I {shared|sharing|shares|to share} it :: 私はそこを使った
+{with|to|than|at} two students :: 2人の学生と
+{from|by|at|than} Canada. :: カナダから来た
+We {talked|talking|talks|to talk} :: 私たちは話した
+and {watched|watch|watching|watches} :: そして眺めた
+the {scenery|scenic|scenically|sceneries} :: 景色を
+{until|by|during|unless} it got dark. :: 暗くなるまで
+The bed {was|were|be|been} narrow, :: ベッドは狭かった
+{but|nor|than|whom} it was :: でも…だった
+{surprisingly|surprising|surprise|surprised} cozy. :: 意外に快適
+I {fell|fallen|falling|felt} asleep :: 私は眠りについた
+{to|than|of|onto} the sound :: 音を聞きながら
+{of|by|for|at} the wheels. :: 車輪の
+When I {woke|woken|waking|wakes} up, :: 目が覚めたとき
+we had {already|yet|ever|ago} :: 私たちはすでに
+{crossed|cross|crossing|crosses} :: 越えていた
+{into|onto|than|among} Italy. :: イタリアへと
+Flying {is|are|be|being} faster, :: 飛行機の方が速い
+{but|nor|than|whom} I will never :: でも決して…ない
+{forget|forgot|forgetting|forgotten} :: 忘れない
+{that|those|these|them} trip. :: あの旅を
+
+@id int38
+@lv 2
+@title Using the City Bike Share
+@ja シェア自転車の使い方
+@tag 共通テストレベル・案内
+@gloss station=ステーション, download=ダウンロードする, account=アカウント, scan=読み取る, unlock=鍵を開ける, charge=料金を取る, damaged=壊れた, report=知らせる, safety=安全
+{Welcome|Welcomed|Welcoming|Welcomes} to Green City Bikes, :: シェア自転車へようこそ
+the {easiest|easily|ease|easiness} way :: 一番簡単な方法
+{to get|getting|get|got} around town. :: 町を回るための
+There {are|is|be|has} :: …がある
+{over|upon|onto|until} 50 bike stations :: 50以上の駐輪所が
+{across|cross|crossing|crossed} the city. :: 市内の各地に
+To {start|started|starting|starts}, :: 始めるには
+{download|downloads|downloaded|downloading} our app :: アプリを入れて
+and {create|creates|created|creating} :: そして作ろう
+{an|a|much|few} account. :: アカウントを
+Then {scan|scans|scanned|scanning} :: 次に読み取ろう
+the code {on|onto|into|since} any bike :: 自転車のコードを
+{to unlock|unlock|unlocked|unlocking} it. :: 鍵を開けるため
+The {first|firstly|one|once} 30 minutes :: 最初の30分は
+{are|be|being|been} free :: 無料だ
+{for|since|than|until} every ride. :: 毎回の乗車で
+After {that|those|then|thus}, :: その後は
+you will {be charged|charge|charging|be charge} :: 料金がかかる
+{one|once|first|ones} dollar :: 1ドル
+{for|by|to|of} every 15 minutes. :: 15分ごとに
+{Always|Ever|Already|Yet} return :: 必ず返そう
+your bike {to|than|as|of} a station, :: 自転車を駐輪所に
+{not|no|none|nor} on the street. :: 道ではなく
+If a bike {is damaged|damages|is damage|damaging}, :: 自転車が壊れていたら
+please {report|reports|reported|reporting} it :: 知らせてください
+{through|though|thorough|throw} the app. :: アプリを通して
+We also {recommend|recommends|recommended to|recommending} :: またおすすめする
+{wearing|wear|wore|worn} a helmet :: ヘルメット着用を
+{for|to|at|by} your safety. :: 安全のために
+
+@id int39
+@lv 2
+@title Too Many Tourists
+@ja 観光客が多すぎる
+@tag 共通テストレベル・記事
+@gloss crowded=混雑した, overtourism=観光公害, resident=住民, freely=自由に, rent=家賃, limit=制限する, fee=料金, income=収入, balance=バランス
+Travel {has become|has became|have become|becoming} :: 旅行はなった
+easier {and|nor|whom|so} cheaper :: より楽で安く
+{than|then|that|as} ever. :: かつてないほど
+As a {result|results|resulted|resulting}, :: その結果
+some {popular|popularity|popularly|populate} towns :: 人気の町は
+are now {too|to|two|so much} crowded. :: 混みすぎている
+{This|These|Those|They} problem :: この問題は
+is {known|knew|know|knowing} :: 知られている
+{as|than|onto|until} "overtourism." :: 観光公害として
+In {some|much|a|every} places, :: ある場所では
+streets are {so|such|too|very} full :: 通りがとても混み
+{that|which|what|as} residents :: 住民は
+cannot walk {freely|freedom|freed|freeing}. :: 自由に歩けない
+Rents also {rise|raise|rises|rising} :: 家賃も上がる
+when homes {are turned|are turn|turning|is turned} :: 家が変えられると
+{into|onto|upon|among} hotels :: ホテルに
+{for|to|at|than} visitors. :: 旅行者向けの
+To {solve|solves|solved|solving} this, :: これを解決するため
+some cities have {started|start|starting|starts} :: 始めた都市もある
+{to limit|limit|limited|limits} visitors. :: 観光客の制限を
+Venice, {for|by|in|to} example, :: 例えばベネチアは
+now {charges|charge|charging|to charge} :: 今は取っている
+{a|an|much|many} fee :: 料金を
+{to|of|at|by} some day visitors. :: 一部の日帰り客に
+{However|Because|Although|Unless}, :: しかし
+tourism also {brings|bring|brought to|bringing} :: 観光はもたらす
+jobs {and|nor|whom|than} income :: 仕事と収入を
+{to|at|than|into} local people. :: 地元の人々に
+The {challenge|challenging|challenged|challenges} :: 課題は
+is {finding|find|finds|to finding} :: 見つけることだ
+a {balance|balanced|balancing|balances} :: バランスを
+{between|among|beside|besides} visitors and residents. :: 観光客と住民の間の
+
+@id int40
+@lv 2
+@title Asking About an Airport Pickup
+@ja 空港送迎の問い合わせ
+@tag 共通テストレベル・メール
+@gloss reservation=予約, arrive=到着する, pickup=送迎, scheduled=予定された, land=着陸する, suitcase=スーツケース, driver=運転手, delayed=遅れた
+{Dear|Dearly|Dear to|Dears} Mr. Brown, :: ブラウン様
+My name {is|are|be|am} Yuki Sato, :: 私は佐藤ゆき
+{and|nor|than|whom} I have :: そして…がある
+{a|an|much|many} reservation :: 予約が
+{at|on|to|by} your hotel. :: 貴ホテルに
+I will {arrive|arrival|arrived|arriving} :: 到着します
+{at|to|on|for} the airport :: 空港に
+{on|in|at|since} March 3. :: 3月3日に
+I would {like|liked|likes|liking} :: …したいです
+{to use|use|using|used} :: 利用することを
+your {pickup|picked|picking|picks} service. :: 送迎サービスを
+My flight {is|are|be|been} scheduled :: 私の便の予定は
+{to land|landing|land|landed} :: 着陸すること
+{at|in|on|since} 6:30 p.m. :: 午後6時半に
+I will be {traveling|travel|traveled|travels} :: 私は旅行します
+{with|within|onto|than} my mother, :: 母と一緒に
+{and|nor|than|whom} we have :: そして持っている
+three {large|largely|largeness|enlarge} suitcases. :: 大きな荷物3つを
+Could you {tell|say|talk|speak} me :: 教えてくれますか
+{where|which|what|who} we should meet :: どこで会うべきか
+the {driver|drive|driving|drives}? :: 運転手に
+Also, please {let|make|allow|have} me know :: また知らせて
+{what|whose|who|whom} to do :: どうすればよいか
+if my flight {is delayed|is delay|delaying|be delayed}. :: 便が遅れたら
+I {look|looks|looking|to look} forward :: 楽しみにしている
+{to hearing|to hear|hearing|hear} :: 聞くことを
+{from|of|by|at} you. :: あなたから
+{Best|Better|Well|Bests} regards, Yuki Sato :: 敬具 佐藤ゆき
+
+@id int41
+@lv 2
+@title The Wrong Bus
+@ja 乗りまちがえたバス
+@tag 共通テストレベル・物語文
+@gloss wrong=まちがった, castle=城, realize=気づく, nervous=不安な, Portuguese=ポルトガル語, kindly=優しく, stop=停留所, grateful=感謝して
+{On|Of|At|By} my first day :: 初日に
+{in|on|to|onto} Lisbon, :: リスボンでの
+I {got|get|gotten|getting} on :: 私は乗った
+the {wrong|wrongly|wrongful|wrongs} bus. :: 違うバスに
+I {wanted|wanting|wants|to want} :: 私は…たかった
+{to visit|visit|visiting|visited} the old castle, :: 古い城を訪ねること
+{but|nor|than|whom} the bus :: でもバスは
+was going {the other way|other way|the another way|another the way}. :: 反対に向かっていた
+I did not {realize|realized|realizing|realizes} this :: 気づかなかった
+{until|by|during|among} I saw :: …を見るまで
+the {sea|see|seen|saw}. :: 海を
+I {felt|fell|feeling|felled} :: 私は感じた
+{nervous|nervously|nerve|nerves} :: 不安に
+{because|because of|due to|in case of} I could not :: …できないので
+{speak|speaks|spoke|spoken} Portuguese. :: ポルトガル語を話す
+Then {an|a|any|much} old woman :: すると老婦人が
+{next to|next|nearby to|beside to} me :: 私の隣の
+{asked|ask|asking|asks}, :: たずねた
+"Where {are|is|do|does} you going?" :: どこへ行くの
+I {showed|show|shown|showing} her :: 彼女に見せた
+{my|mine|me|myself} map, :: 私の地図を
+{and|nor|than|whom} she smiled :: 彼女はほほえんだ
+{kindly|kind|kindness|kinder}. :: 優しく
+She {got|gets|getting|gotten} off :: 彼女は降りた
+{with|within|than|onto} me :: 私と一緒に
+{at|in|on|for} the next stop. :: 次の停留所で
+Then she {walked|walk|walking|walks} me :: 私を連れていった
+{to|at|than|of} the right bus :: 正しいバスまで
+{and|nor|than|whom} waved goodbye. :: 手を振って別れた
+I never {learned|learn|learning|learns} :: 知らないままだ
+{her|she|hers|herself} name, :: 彼女の名前を
+{but|nor|than|whom} I am still :: でも今も
+{grateful|gratefully|gratitude|great} to her. :: 彼女に感謝して
+
+@id int42
+@lv 2
+@title Why Do We Get Jet Lag?
+@ja 時差ぼけはなぜ起きる？
+@tag 共通テストレベル・説明文
+@gloss sleepy=眠い, flight=飛行, jet lag=時差ぼけ, natural=自然の, cycle=周期, time zone=時間帯, adjust=慣れる, sunlight=日光, reset=調整し直す
+Have you {ever|ago|every|evening} felt :: 感じたことは
+{sleepy|sleep|sleepily|slept} :: 眠く
+{during|while|among|between} the day :: 日中に
+{after|later|lately|afterward} a long flight? :: 長い飛行の後
+This is {known|knew|know|knowing} :: これは知られる
+{as|than|onto|until} jet lag, :: 時差ぼけとして
+{and|nor|than|whom} it is very :: そしてとても
+{common|commonly|commons|commonness}. :: よくある
+Our bodies {have|has|having|to have} :: 体は持っている
+a {natural|nature|naturally|naturalize} clock :: 自然の時計を
+{that|what|who|whom} follows :: …に従う
+{about|above|abroad|aboard} a 24-hour cycle. :: 約24時間の周期
+This clock {tells|tell|telling|told to} :: この時計は教える
+us {when|what|who|whom} to sleep :: いつ眠るかを
+{and|nor|than|whom} when :: そしていつ
+{to wake|wake|waking|woke} up. :: 起きるかを
+When we {fly|flies|flown|flying} :: 飛行機で…と
+{across|cross|crossed|crossing} several time zones, :: 時間帯を越えて
+the clock {does|do|is|has} not change :: 時計は変わらない
+right {away|way|ahead|out}. :: すぐには
+Your body {thinks|think|thinking|thought of} :: 体は思う
+it {is|are|be|being} night :: 夜だと
+{even when|even|even so|ever when} :: …ときでさえ
+the sun is {shining|shine|shined|shone to}. :: 太陽が照っている
+Most people {need|needs|needing|to need} :: 多くの人は必要だ
+{about|above|aboard|abroad} one day :: 約1日
+{to adjust|adjust|adjusted|adjusts} :: 慣れるのに
+{for|than|at|since} each time zone. :: 時間帯1つごとに
+{Going|Go|Gone|Went} outside :: 外に出ることは
+{in|on|at|by} the morning sunlight :: 朝日の中で
+can {help|helps|helped|helping} :: 助けになる
+your clock {reset|resets|resetting|to resets}. :: 時計が整うのを
+{Knowing|Know|Known|Knew} this :: これを知ることは
+can {make|makes|made|making} :: …にできる
+your next {trip|tripped|tripping|trippy} :: 次の旅を
+more {enjoyable|enjoy|enjoyed|enjoying}. :: もっと楽しく
+
+@id int43
+@lv 2
+@title Notice: Weekend Train Closure
+@ja お知らせ：週末の運休
+@tag 共通テストレベル・お知らせ
+@gloss track=線路, repair=修理, shuttle=シャトル, replace=代わりをする, exit=出口, allow=見込む, extra=余分の, apologize=おわびする, inconvenience=不便
+{Due to|Due|Because|Owing} track repairs, :: 線路修理のため
+the Blue Line {will be|will|is be|being} closed :: ブルー線は運休
+{this|these|those|next to} weekend. :: 今週末
+{No|Not|None|Nor} trains :: 列車は…ない
+will {run|ran|running|runs} :: 運行し
+{between|among|beside|besides} Park Station :: パーク駅と
+{and|nor|than|whom} Lake Station. :: レイク駅の間
+{Free|Freely|Freedom|Freed} shuttle buses :: 無料シャトルバスが
+will {replace|replaced|replacing|replaces} :: 代わりをする
+{the|a|an|much} trains :: 列車の
+{during|while|among|since} this time. :: この期間
+Buses will {leave|left|leaving|leaves} :: バスは出発する
+every 10 {minutes|minute|minuted|minutely} :: 10分ごとに
+{from|of|than|since} the station's north exit. :: 駅の北口から
+Please {allow|allows|allowed|allowing} :: 見込んでください
+{an|a|much|many} extra 30 minutes :: 余分に30分
+{for|to|at|by} your trip. :: 移動のために
+Bicycles {are|is|be|been} not :: 自転車は…ない
+{allowed|allow|allowing|allows} :: 許可されて
+{on|of|to|than} the shuttle buses. :: シャトルバスに
+{Normal|Normally|Norm|Normality} service :: 通常運行は
+will {start|started|starting|starts} again :: 再開する
+{on|in|at|since} Monday morning. :: 月曜の朝に
+For more {information|informations|inform|informative}, :: 詳しくは
+please {check|checks|checked|checking} our website :: サイトを見て
+{or|nor|than|whom} ask station staff. :: または駅員に
+We {apologize|apology|apologetic|apologizes} :: おわびします
+{for|to|at|of} any inconvenience :: ご不便について
+this {may|mays|may to|maybe} cause. :: これが生む
+
+@id int44
+@lv 2
+@title Should City Centers Be Car-Free?
+@ja 町の中心から車をなくすべき？
+@tag 共通テストレベル・論説文
+@gloss ban=禁止する, opinion=意見, noise=騒音, pedestrian=歩行者, especially=特に, elderly=高齢の, disabled=障害のある, permit=許可証, benefit=役に立つ
+Some cities {in|at|on|to} Europe :: ヨーロッパの都市は
+have {banned|ban|banning|bans} :: 締め出した
+cars {from|of|to|at} their centers. :: 中心部から車を
+{Should|Ought|Must to|Does} :: …べきか
+other {cities|city|citys|city's} :: ほかの都市も
+{follow|follows|followed|following} them? :: それにならう
+In my {opinion|opinions|opine|opinionated}, :: 私の意見では
+the {answer|answers|answered|answering} :: 答えは
+{is|are|be|being} yes. :: イエスだ
+{First|Fast|Fist|Firm}, :: まず
+{fewer|fewest|little|lesser} cars :: 車が減ることは
+{mean|means|meaning|meant to} :: 意味する
+cleaner air {and|nor|than|whom} less noise. :: きれいな空気と静けさ
+{Second|Seconds|Secondary|Seconded}, :: 次に
+streets {become|becomes|becoming|became to} :: 通りはなる
+{safer|safety|safely|saved} for pedestrians, :: 歩行者により安全に
+{especially|special|specialty|specialize} children. :: 特に子どもに
+{Finally|Final|Finalize|Finality}, :: 最後に
+people {tend|tends|tending|tension} :: 人々は傾向がある
+{to spend|spend|spending|spent} more time :: 長く過ごす
+{at|on|to|than} local shops. :: 地元の店で
+Of {course|coarse|courses|cause}, :: もちろん
+some people still {need|needs|needed to|needing} :: 今も必要な人もいる
+cars, {such as|such like|as such|so as} :: 車が、例えば
+elderly {or|nor|than|whom} disabled people. :: 高齢者や障害者
+Cities {should|should to|must to|ought} :: 都市は…べきだ
+therefore {offer|offers|offered|offering} :: だから用意する
+good public {transportation|transported|transporting|transportable} :: よい公共交通を
+{and|nor|than|whom} special permits. :: 特別な許可証も
+{With|Within|Than|Onto} careful planning, :: 慎重な計画があれば
+a car-free center {can|can to|cans|could to} :: 車のない中心部は
+{benefit|benefits|benefited|beneficial} everyone. :: みんなの役に立つ
+
+@id int45
+@lv 2
+@title Island Ferry Day Tour
+@ja 島めぐりフェリーの旅
+@tag 共通テストレベル・広告
+@gloss escape=逃れる, ferry=フェリー, depart=出発する, pier=桟橋, bay=湾, dolphin=イルカ, lighthouse=灯台, include=含む, book=予約する
+{Escape|Escapes|Escaped|Escaping} :: 離れよう
+the {busy|busily|business|busier than} city :: にぎやかな町を
+{and|nor|than|whom} spend a day :: そして1日過ごそう
+{on|onto|to|than} Pine Island! :: パイン島で
+Our ferry {departs|depart|departing|departure} :: フェリーは出発する
+{from|of|than|onto} Harbor Pier :: ハーバー桟橋から
+{at|in|on|since} 9:00 :: 9時に
+every {morning|mornings|morn|morning's}. :: 毎朝
+The trip {across|cross|crossed|crosses} the bay :: 湾を渡る船旅は
+{takes|take|taking|took to} :: かかる
+{about|above|aboard|abroad} 40 minutes. :: 約40分
+On the {way|ways|weigh|wave}, :: 途中で
+you {may|may to|mays|maybe} see :: 見られるかも
+{dolphins|dolphin|a dolphins|dolphin's} :: イルカが
+{swimming|swam|swum|swims} next to the boat. :: 船の横を泳ぐ
+On the {island|islanded|islanding|island's}, :: 島では
+a local guide will {show|shows|showed|showing} :: ガイドが案内する
+you {an|a|much|any} old lighthouse. :: 古い灯台を
+Lunch {at|on|to|than} a seaside restaurant :: 海辺の店での昼食は
+is {included|include|including|includes} :: 含まれる
+{in|on|at|by} the price. :: 料金に
+The ferry {returns|return|returning|to return} :: フェリーは戻る
+{to|at|of|than} the city :: 町へ
+{at|in|on|since} 4:30 p.m. :: 午後4時半に
+Tickets {are|is|be|been} $45 :: チケットは45ドル
+{for|of|by|at} adults :: 大人は
+{and|nor|than|whom} $20 for children :: 子どもは20ドル
+{under|underneath|undergo|underground} 12. :: 12歳未満の
+{Book|Books|Booked|Booking} online :: ネットで予約して
+{by|at|in|among} Friday :: 金曜日までに
+{and|nor|than|whom} get 10% off! :: 1割引に
+
+@id int46
+@lv 2
+@title Talking with a Tour Guide
+@ja ツアーガイドに聞く
+@tag 共通テストレベル・インタビュー
+@gloss reporter=記者, mostly=主に, guidebook=ガイドブック, quiet=静かな, advice=助言, comfortable=楽な, temple=寺, avoid=避ける, crowd=人ごみ
+Reporter: How long {have|has|having|be} you :: 記者:どのくらい
+{worked|work|working|works} :: 働いているか
+{as|than|of|by} a tour guide? :: ガイドとして
+Mori: {For|Since|During|While} ten years, :: 森:10年です
+{mostly|most|mostly of|utmost} :: 主に
+{in|on|to|than} the old parts :: 古い地区で
+{of|by|for|at} Kyoto. :: 京都の
+Reporter: What {do|does|is|are} :: 記者:何を
+visitors {enjoy|enjoys|enjoyed|enjoying} :: 旅行者は楽しむ
+{most|mostest|almost|utmost}? :: 一番
+Mori: Many {of|from|in|at} them :: 森:多くの人が
+{love|loves|loving|lover} :: 大好きだ
+the {small|smally|smallness|smaller than} streets :: 小さな通りが
+{that|what|who|whose} are not in guidebooks. :: 案内書にない
+They {are|is|be|being} quiet, :: そこは静かだ
+{and|nor|than|whom} you can see :: そして見られる
+{how|what|which|who} people :: 人々がどう
+{really|real|reality|realize} live. :: 本当に暮らすか
+Reporter: Do you {have|has|having|had} :: 記者:ありますか
+any {advice|advices|advise|advised} :: 何か助言は
+{for|at|than|onto} first-time visitors? :: 初めての人へ
+Mori: {Wear|Wears|Wearing|Wore} :: 森:はいてください
+{comfortable|comfort|comfortably|comforted} shoes, :: 楽な靴を
+{because|because of|due to|in spite} you :: …ので
+will walk {a lot|lots|a lots|lot}. :: たくさん歩く
+Also, {visit|visits|visited|visiting} :: また訪ねよう
+{famous|fame|famously|fames} temples :: 有名な寺は
+early {in|at|on|by} the morning :: 朝早くに
+{to avoid|avoid|avoiding|avoided} the crowds. :: 人ごみを避けて
+Reporter: {Thank|Thanks|Thanked|Thanking} you :: 記者:ありがとう
+{for|to|of|at} your time :: お時間を
+{today|todays|to day|today's}. :: 今日は
+
+@id int47
+@lv 2
+@title Why Do Leaves Change Color?
+@ja 葉の色が変わるわけ
+@tag 共通テストレベル・説明文
+@gloss pigment=色素, chlorophyll=葉緑素, contain=含む, sunlight=日光, disappear=消える, hidden=隠れた, produce=作り出す, maple=カエデ
+{In|On|To|Of} autumn, :: 秋には
+{many|much|every|a} trees :: 多くの木が
+{change|changes|changing|to change} color. :: 色を変える
+Leaves {look|looks|looking|to look} green :: 葉は緑に見える
+{because|because of|due|despite} they contain :: …を含むから
+a pigment {called|calling|calls|call} chlorophyll. :: 葉緑素という色素を
+This pigment {helps|help|helping|helpful} :: この色素は助ける
+the tree {make|makes|made|making} food :: 木が栄養を作るのを
+{from|since|than|until} sunlight. :: 日光から
+{As|Than|Whom|Whose} autumn comes, :: 秋が来ると
+the {days|day|daily|day's} :: 日は
+{get|gets|getting|to get} shorter :: 短くなる
+and {cooler|coolly|coolness|coolest}. :: そして涼しく
+Trees {stop|stops|stopped to|stopping} :: 木はやめる
+{making|to making|make|made} chlorophyll, :: 葉緑素を作るのを
+and the green color {slowly|slow|slowness|slower} :: 緑色はゆっくり
+{disappears|disappear|disappearing|disappeared to}. :: 消えていく
+{Then|Than|Them|Thin}, :: すると
+yellow and orange {colors|colorfully|colorless|colorize} :: 黄色やだいだい色が
+{can be seen|can be saw|can seen|can been seen}. :: 見えるようになる
+These colors {were|was|been|being} :: これらの色はあった
+in the leaves {all|whole|entire|total} summer, :: 夏の間ずっと葉に
+{but|nor|than|whom} they were hidden :: でも隠れていた
+{by|on|than|into} the green. :: 緑によって
+Some trees, {such as|such like|as such|so as} maples, :: カエデなどの木は
+also {produce|produces|producing|production} :: さらに作り出す
+{bright|brightly|brightness|brighten} red pigments :: 明るい赤い色素を
+{in|on|to|of} autumn. :: 秋に
+{That|What|Whom|Whose} is why :: だから
+mountains {look|looks|looking|to look} :: 山は見える
+{so|such|much|very much} beautiful. :: とても美しく
+
+@id int48
+@lv 2
+@title Why Do Camels Have Humps?
+@ja ラクダのこぶの秘密
+@tag 共通テストレベル・説明文
+@gloss hump=こぶ, store=蓄える, fat=脂肪, energy=エネルギー, rest=残り, amount=量, protect=守る, suited=適した, desert=砂漠
+Many people {believe|believes|believing|belief} :: 多くの人は信じている
+{that|what|whom|whose} a camel's hump :: ラクダのこぶは…と
+is full {of|by|at|on} water. :: 水でいっぱいだ
+{However|Because|Unless|Although}, :: しかし
+this {is|are|be|being} not :: これは…ない
+{true|truth|truly|trust}. :: 本当で
+The hump {actually|actual|actuality|act} :: こぶは実は
+{stores|store|storing|storage} :: 蓄えている
+{fat|fatty|fatten|fats of}. :: 脂肪を
+{When|What|Whom|Which} food is :: 食べ物が…とき
+hard {to find|finding|find|found}, :: 見つけにくい
+camels can {use|used|using|uses} the fat :: ラクダは脂肪を使える
+{for|of|at|since} energy. :: エネルギーとして
+{Keeping|Keep|Kept|To keeping} fat in one place :: 脂肪を1か所に集めると
+also {helps|help|helping|helpful} them :: ラクダを助けもする
+{stay|stays|stayed|staying} cool. :: 涼しくいるのを
+Heat {can leave|can leaves|can leaving|can left} :: 熱が逃げられる
+the rest {of|for|by|at} the body :: 体のほかの部分から
+more {easily|easy|ease|easier}. :: より簡単に
+Camels {can also|can also to|also can to|can also be} :: ラクダはさらにできる
+{drink|drank|drinking|drinks} :: 飲む
+a {large|lot|many|much} amount of water :: 大量の水を
+{at|in|on|by} one time. :: 一度に
+Their {thick|thickly|thickness|thicken} fur :: 厚い毛が
+{protects|protect|protecting|protection} them :: 彼らを守る
+{from|of|into|than} the hot sun. :: 強い日差しから
+{In|On|To|Of} these ways, :: このようにして
+camels {are|is|be|being} :: ラクダは
+well {suited|suit|suiting|suits} :: よく適している
+{to|at|with|by} desert life. :: 砂漠の生活に
+
+@id int49
+@lv 2
+@title Where Does Thunder Come From?
+@ja 雷の音の正体
+@tag 共通テストレベル・説明文
+@gloss lightning=稲妻, thunder=雷鳴, spark=火花, electricity=電気, heat=熱する, expand=膨らむ, flash=閃光, guess=推測する, second=秒
+{During|While|Among|Unless} a storm, :: 嵐のとき
+we often {see|sees|seeing|seen} lightning :: よく稲妻を見る
+and then {hear|hears|heard of|hearing} thunder. :: その後雷鳴を聞く
+Lightning {is|are|be|being} :: 稲妻は…だ
+a {huge|hugely|hugeness|huger} spark :: 巨大な火花
+{of|by|on|at} electricity. :: 電気の
+It {heats|heat|heating|hot} :: それは熱する
+the air {around|aside|apart|away} it :: 周りの空気を
+very {quickly|quick|quickness|quicken}. :: とても速く
+The hot air {expands|expand|expanding|expansion} :: 熱い空気は膨らむ
+so {suddenly|sudden|suddenness|sudden of} :: とても急に
+{that|what|which|whom} it makes :: その結果出す
+a {loud|loudly|loudness|louden} sound. :: 大きな音を
+This {is|are|be|were} :: これが…だ
+the sound {that|what|whom|whose} :: …音
+we {call|calls|calling|called to} thunder. :: 雷鳴と呼ぶ
+Light {travels|travel|traveling|travel to} :: 光は進む
+{much|very|many|more} faster :: はるかに速く
+{than|then|that|as} sound. :: 音よりも
+{That|What|Whom|Whose} is why :: だから
+we {see|sees|seeing|seen} the flash :: 光が見える
+{before|ago|front|previous} we hear it. :: 音を聞く前に
+You can {use|using|used|uses} this fact :: この事実を使える
+{to guess|guess|guessing|guessed} :: 推測するために
+how {far|much|many|often} away the storm is. :: 嵐までの距離を
+{Count|Counts|Counting|Counted} the seconds :: 秒数を数えよう
+{between|among|either|across} the flash :: 光と…の間の
+{and|or|nor|but} the sound. :: 音
+{If|Whom|Than|Whose} it is three seconds, :: 3秒なら
+the storm {is|are|be|being} :: 嵐は
+about one kilometer {away|along|apart|aside}. :: 約1キロ先だ
+
+@id int50
+@lv 2
+@title The Swallows at Our Bakery
+@ja 店先のツバメ
+@tag 共通テストレベル・物語文
+@gloss swallow=ツバメ, nest=巣, mud=泥, complain=苦情を言う, chick=ひな, board=板, mess=汚れ, hatch=かえる, customer=客
+Every {spring|springs|spring's|springy}, :: 毎年春に
+swallows {build|builds|building|built of} :: ツバメが作る
+a nest {above|among|between|beside of} the door :: 入り口の上に巣を
+{of|than|onto|since} our bakery. :: うちのパン屋の
+They {make|makes|making|made of} it :: ツバメはそれを作る
+{from|by|at|onto} mud :: 泥から
+{and|nor|than|whom} dry grass. :: と枯れ草で
+Last year, my father {said|says|saying|say} :: 去年父は言った
+{that|what|whom|whose} the nest :: 巣は…と
+{was|were|been|being} a problem. :: 問題だと
+The birds {made|making|maked|makes to} :: 鳥たちはした
+the floor {dirty|dirt|dirtily|dirtiness}, :: 床を汚く
+and some customers {complained|complain to|complaining|complaint}. :: 苦情を言う客もいた
+I {asked|ask to|asking|asks} him :: 私は父に頼んだ
+{to wait|wait|waiting|waited} :: 待つように
+{until|by|during|among} the chicks left. :: ひなが巣立つまで
+So we {put|putting|puts|to put} :: そこで私たちは置いた
+a board {under|among|between|across of} the nest :: 巣の下に板を
+{to catch|catch|caught|catches} the mess. :: 汚れを受けるため
+Soon {four|fourth|forty of|for} chicks :: まもなく4羽のひなが
+{hatched|hatching|was hatched|hatches of}, :: かえった
+and customers {began|begin to|beginning|begun} :: 客たちは始めた
+{to watch|watch|watched|watches} them. :: ひなを見守ることを
+Some people even {came|come to|coming|comes} :: 来る人さえいた
+{to|at|on|of} the shop :: 店に
+just {to see|see|saw|sees} the birds. :: 鳥を見るためだけに
+Now my father {is|are|be|being} :: 今では父が…だ
+the first person {to say|says|said|to saying}, :: 最初に言う人
+"{Welcome|Welcoming|Welcomed|Welcomes} back," :: 「おかえり」と
+{every|both|whole|entire} spring. :: 毎年春に
+
+@id int51
+@lv 2
+@title Monkeys in the Hot Spring
+@ja 温泉に入るサル
+@tag 共通テストレベル・記事
+@gloss valley=谷, wild=野生の, macaque=マカク(サルの一種), temperature=気温, behavior=行動, normal=ふつうの, scientist=科学者, stressed=ストレスを感じた, tourist=観光客
+In a {snowy|snowily|snows|snowed of} valley :: 雪深い谷で
+{in|on|to|into} Nagano, :: 長野の
+wild monkeys {take|takes|taking|took of} :: 野生のサルが入る
+{hot baths|hot bath|hotly baths|heat baths}. :: 温泉に
+They {are|is|be|being} :: 彼らは…だ
+Japanese {macaques|macaque|macaque's|macaquely}, :: ニホンザル
+often {called|calling|calls|call} snow monkeys. :: スノーモンキーと呼ばれる
+No other monkeys {live|lives|living|lived of} :: ほかのサルは住まない
+{as|than|such|very} far north :: これほど北に
+{as|than|that|so} they do. :: 彼らほど
+Winter there {is|are|be|being} long, :: そこの冬は長い
+{and|nor|than|whom} the temperature :: そして気温は
+often {falls|fall|falling|fallen} :: よく下がる
+{below|among|between|beside of} zero. :: 0度より下に
+{In|On|At|Of} the 1960s, :: 1960年代に
+a young monkey {went|go|going|gone} :: 若いサルが入った
+{into|onto|than|unless} the hot spring :: 温泉の中に
+{to get|getting|get|got} some food. :: えさを取るため
+Other monkeys {soon|soonly|sooner of|soonest} :: ほかのサルもすぐに
+{copied|copying|copyed|copies of} :: まねした
+{this|these|those|they} behavior. :: この行動を
+Today, {bathing|bath|bathed|bathes} :: 今では入浴は
+{is|are|be|being} :: …だ
+a {normal|normally|normality|norm of} part :: ふつうの一部
+{of|for|by|at} their winter life. :: 冬の生活の
+Some scientists {believe|believes|believing|belief} :: 考える科学者もいる
+the warm water also {helps|help|helping|helpful} :: 温かい湯は助けもする
+them {feel|feeling|felt|feels} :: サルが感じるのを
+{less|fewer|lesser|lessen} stressed. :: ストレスを少なく
+Many {tourists|tourism|touristy|tour} :: 多くの観光客が
+{come|comes|coming|came to} :: やって来る
+{to see|see|saw|sees} them :: 彼らを見るために
+{from|of|by|at} around the world. :: 世界中から
+
+@id int52
+@lv 2
+@title How Do Plants Drink Water?
+@ja 植物が水を吸うしくみ
+@tag 共通テストレベル・説明文
+@gloss instead=その代わりに, root=根, soil=土, collect=集める, stem=茎, tube=管, tiny=とても小さい, surface=表面, escape=出ていく
+Plants {cannot|cannot to|do not can|not can} :: 植物はできない
+{walk|walking|walked|walks} :: 歩いて行く
+{to|at|on|of} a river :: 川まで
+{to drink|drinking|drink|drank} water. :: 水を飲みに
+{Instead|Instead of|Inside|Instant}, :: その代わりに
+they take {in|of|at|than} water :: 水を取り入れる
+{through|thorough|though|thought} their roots. :: 根を通して
+The roots {spread|spreads|spreading|to spread} out :: 根は広がる
+{in|of|than|since} the soil :: 土の中に
+{and|nor|than|whom} collect water. :: そして水を集める
+The water then {moves|move|moving|movement} :: 水はそれから進む
+{up|upon|upper|upward of} the stem :: 茎を上へ
+{through|throughout of|thought|threw} thin tubes. :: 細い管を通って
+But how {does|do|is|are} water :: でも水はどうやって
+{climb|climbs|climbing|climbed} :: のぼる
+{so|such|very much|too much} high :: そんなに高く
+{in|of|than|since} tall trees? :: 高い木の中で
+The {answer|answers|answered|answering} :: その答えは
+can be {found|find|finding|finds} :: 見つかる
+{in|of|than|since} the leaves. :: 葉の中に
+Leaves {have|has|having|to have} :: 葉にはある
+{many|much|a|every} tiny holes :: たくさんの小さな穴が
+{on|at|than|since} their surface. :: 表面に
+Water {escapes|escape|escaping|escaped of} :: 水が出ていく
+{from|than|since|whom} these holes :: これらの穴から
+{into|onto|than|unless} the air. :: 空気中へ
+{As|Than|Whom|Whose} water leaves, :: 水が出ていくと
+it {pulls|pull|pulling|pulled of} :: それは引っぱる
+more water up {from|than|since|whom} the roots, :: 根からさらに水を
+{like|likely|alike|liking} a straw. :: ストローのように
+
+@id int53
+@lv 2
+@title The Longest Journey in the Sky
+@ja 世界一の長旅をする鳥
+@tag 共通テストレベル・説明文
+@gloss distance=距離, seasonal=季節の, migration=渡り, champion=チャンピオン, tern=アジサシ, pigeon=ハト, journey=旅, raise=育てる, daylight=日光
+Many {birds|bird|birdie's|bird's} :: 多くの鳥が
+{fly|flies|flying|flew of} :: 飛ぶ
+long {distances|distant|distantly|distance of} :: 長い距離を
+{every|each of|whole|both} year. :: 毎年
+This {seasonal|seasonally|seasoning|seasons of} travel :: この季節の移動は
+is {called|calling|call|calls} :: …と呼ばれる
+{migration|migrate|migrated|migrates}. :: 渡りと
+The champion {of|by|at|than} migration :: 渡りのチャンピオンは
+{is|are|be|being} :: …だ
+a small bird {called|calling|calls|call} :: …という小さな鳥
+the Arctic {tern|terns|tern's|ternly}. :: キョクアジサシ
+It {is|are|be|being} :: それは…だ
+{lighter|light|lightly|lightest} than a pigeon, :: ハトより軽い
+{but|nor|than|whom} its journey :: でもその旅は
+is {amazing|amaze|amazingly|amazes}. :: 驚くべきものだ
+{In|On|To|Of} summer, :: 夏には
+Arctic terns {raise|rise|raises|rising} :: キョクアジサシは育てる
+their {chicks|chicked|chickly|chicking} :: ひなを
+{in|of|than|since} the Arctic. :: 北極圏で
+Then they {fly|flies|flying|flown} :: その後飛んでいく
+all the {way|ways|wayside|wait} :: はるばる
+{to|than|of|since} the Antarctic. :: 南極まで
+{When|What|Whom|Which} it is winter :: 冬のとき
+{in|on|than|since} the north, :: 北で
+it {is|are|be|being} summer :: 夏だ
+{in|on|than|since} the south. :: 南では
+So the terns {enjoy|enjoys|enjoying|enjoyed of} :: だから楽しむ
+two {summers|summer|summery|summer's} :: 2回の夏を
+{each|every of|whole|both} year. :: 毎年
+They probably {see|sees|seeing|seen} :: おそらく浴びている
+more {daylight|daily|day's|days of} :: より多くの日光を
+{than|then|that|as} any other animal :: ほかのどの動物よりも
+{on|at|than|since} Earth. :: 地球上の
+
+@id int54
+@lv 2
+@title When Coral Turns White
+@ja 白くなるサンゴ
+@tag 共通テストレベル・記事
+@gloss coral=サンゴ, reef=サンゴ礁, colorful=色鮮やかな, algae=藻, bleaching=白化, temperature=温度, serious=深刻な, depend on=頼る, shelter=すみか
+Coral reefs {are|is|be|being} :: サンゴ礁は…だ
+some {of|for|by|at} the most :: 最も…の一部
+{colorful|color|colorfully|colorless of} places :: 色鮮やかな場所
+{in|on|than|since} the ocean. :: 海で
+Many people {think|thinks|thinking|thought of} :: 多くの人は思う
+coral {is|are|be|being} a plant, :: サンゴは植物だと
+{but|nor|than|whom} it is actually :: でも実は…だ
+{an|a|many|much} animal. :: 動物
+Tiny algae {live|lives|living|lived of} :: 小さな藻が住む
+{inside|insides|inner|innerly} the coral :: サンゴの中に
+and {give|gives|giving|given} it :: そしてそれに与える
+food {and|nor|than|whom} color. :: 栄養と色を
+When the water {gets|get|getting|got of} :: 水が…になると
+{too|to|two|so much} warm, :: 温かくなりすぎる
+the coral {pushes|push|pushing|pushed of} :: サンゴは押し出す
+the algae {out|off of|out of|outside of}. :: 藻を外へ
+{Without|Withdraw|Without of|Withhold} the algae, :: 藻がいないと
+the coral {turns|turn|turning|turned of} :: サンゴは変わる
+{white|whitely|whiten|whiteness}. :: 白く
+This {is|are|be|were} :: これは
+{called|calling|call|calls} :: …と呼ばれる
+coral {bleaching|bleached|bleaches|bleachy}. :: サンゴの白化と
+{If|Whom|Than|Whose} the water stays warm :: 水が温かいままなら
+{for|since|during|while} too long, :: 長く続くと
+the coral {may die|may dies|may dead|may died}. :: サンゴは死ぬかも
+{Rising|Raising|Rise|Risen of} ocean temperatures :: 上がる海水温が
+are {making|make|made of|makes} :: …にしている
+bleaching more {common|commonly|commonness|commons}. :: 白化を起きやすく
+This {is|are|be|being} :: これは…だ
+a {serious|seriously|seriousness|series} problem :: 深刻な問題
+{because|because of|due|despite} many fish :: 多くの魚が…ので
+depend {on|in|at|to} reefs :: サンゴ礁に頼る
+{for|of|than|since} food and shelter. :: 食べ物とすみかを
+
+@id int55
+@lv 2
+@title The Night of the Typhoon
+@ja 台風の夜
+@tag 共通テストレベル・物語文
+@gloss typhoon=台風, toward=…に向かって, yard=庭, flashlight=懐中電灯, shake=揺れる, scared=こわい, calmly=落ち着いて, candle=ろうそく, warn=知らせる
+{Last|Latest|Lastly|Late of} September, :: 去年の9月
+a big typhoon {was coming|were coming|was come|is coming of} :: 大きな台風が来ていた
+{toward|towards of|forward|upward} our town. :: 私たちの町に向かって
+My {grandfather|grandfather's|grandfathers of|grand} and I :: 祖父と私は
+put {away|aside of|off of|out of} :: 片づけた
+everything {in|than|since|whom} the yard. :: 庭のものを全部
+We also {filled|fill of|filling|fills} bottles :: ボトルも満たした
+{with|by|at|than} water :: 水で
+and {checked|check of|checking|checks} :: そして点検した
+the {flashlights|flashlight's|flashly|flashing of}. :: 懐中電灯を
+That night, the wind {was|were|been|being} :: その夜風は…だった
+so {strong|strongly|strength|stronger of} :: とても強く
+{that|what|which|whom} the windows :: 窓が
+{shook|shake|shaken|shaking}. :: 揺れた
+{Suddenly|Sudden|Suddenness|Suddener}, :: 突然
+all the {lights|light of|lighting of|lightly} :: 明かりがすべて
+{went out|go out|gone out|going out}. :: 消えた
+I {was|were|been|being} scared, :: 私はこわかった
+{but|nor|than|whom} my grandfather :: でも祖父は
+{calmly|calm|calmness|calmed} lit :: 落ち着いてつけた
+{a candle|candle|an candle|the candles of}. :: ろうそくを
+Then he {told|tell of|telling|said} me :: それから祖父は話した
+stories {about|above|around of|among} typhoons :: 台風の話を
+{from|since of|than|whom} when he was a boy. :: 子どものころの
+{Back then|Back than|Then back|Back them}, :: そのころは
+people {had|has|having|have of} no TV news :: テレビの報道がなかった
+{to warn|warning of|warns|warned} them. :: 知らせてくれる
+{By|Until|Since|While} morning, :: 朝までに
+the storm {had passed|had past|has pass|had passing}, :: 嵐は過ぎ去っていた
+and the sky {was|were|been|being} :: そして空は…だった
+{bright|brightly|brightness|brighten} blue. :: 明るい青
+I {learned|learn of|learning|learns} :: 私は学んだ
+{that|what|whom|whose} being ready :: 準備しておくことが
+{is|are|be|being} the best way :: いちばんの方法だと
+{to stay|staying of|stays|stayed} calm. :: 落ち着くための
+
+@id int56
+@lv 2
+@title How Seeds Travel
+@ja 種の旅のしかた
+@tag 共通テストレベル・説明文
+@gloss seed=種, parent=親, develop=身につける, clever=賢い, dandelion=タンポポ, fluffy=ふわふわの, hook=かぎ, fur=毛, coconut=ヤシの実
+Plants {cannot|cannot to|not can|do not can} move, :: 植物は動けない
+{but|nor|than|whom} their seeds :: でもその種は
+can {travel|travels|traveling|traveled} far. :: 遠くへ旅できる
+{If|Whom|Than|Whose} seeds fall :: 種が落ちると
+right {under|among|between|across of} their parent, :: 親のすぐ下に
+they must {share|shares|sharing|shared} :: 分け合うしかない
+sunlight {and|nor|than|whom} water. :: 日光と水を
+So plants {have developed|has developed|have develop|have developing} :: だから植物は身につけた
+many {clever|cleverly|cleverness|clever of} ways :: 多くの賢い方法を
+{to send|sending of|sends|sent} their seeds away. :: 種を遠くへ送る
+Dandelion seeds {have|has|having|to have} :: タンポポの種にはある
+{fluffy|fluff|fluffily|fluffed of} parts :: ふわふわした部分が
+{that|what|whom|whose} catch the wind. :: 風を受ける
+Some seeds {have|has|having|to have} :: ある種は持っている
+small {hooks|hook|hooking of|hooky} :: 小さなかぎを
+{and|nor|than|whom} stick :: そしてくっつく
+{to|at|than|since} animals' fur. :: 動物の毛に
+The animals {carry|carries|carrying|carried of} them :: 動物はそれを運ぶ
+{to|than|since|whom} new places :: 新しい場所へ
+{without|within|withdraw|with no of} knowing it. :: 知らないうちに
+Other plants {grow|grows|growing|grown} :: ほかの植物は実らせる
+{sweet|sweetly|sweetness|sweeten} fruit :: 甘い実を
+{that|what|whom|whose} birds love :: 鳥が大好きな
+{to eat|eat|ate|eats}. :: 食べるのが
+The seeds {pass|passes|passing|passed of} :: 種は通り抜ける
+{through|thorough|though|thought} the bird's body :: 鳥の体を
+{and|nor|than|whom} are dropped :: そして落とされる
+far {away|awake|aware|awful}. :: 遠くに
+Coconuts can even {float|floats|floating|floated} :: ヤシの実は浮かべる
+{across|cross|crossing of|acrossed} the sea :: 海を渡って
+{to reach|reach of|reaching of|reached} other islands. :: ほかの島へ着くため
+
+@id int57
+@lv 2
+@title Why Do Onions Make Us Cry?
+@ja 玉ねぎで涙が出るわけ
+@tag 共通テストレベル・説明文
+@gloss chop=刻む, cell=細胞, release=放出する, chemical=化学物質, gas=気体, sting=しみる, tear=涙, chill=冷やす, fridge=冷蔵庫
+{Have|Has|Are|Did} you :: あなたは
+ever {cried|cry|crying|cries} :: 泣いたことある？
+{while|during|among|between} chopping onions? :: 玉ねぎを刻みながら
+It {is|are|be|been} :: それは
+{not|no|none|nor} because :: …からではない
+you {are|is|be|being} sad. :: 悲しい
+An {onion|onions|oniony|onion's} :: 玉ねぎは
+{is made|makes|is make|made} :: できている
+{of|at|on|among} many tiny cells. :: 小さな細胞で
+{When|What|Which|Whom} you cut it, :: 切ると
+the cells {break|breaks|broken|breaking} :: 細胞が壊れ
+{and|nor|than|whom} release :: 放出する
+a {chemical|chemistry|chemically|chemicals}. :: 化学物質を
+This chemical {quickly|quick|quicker|quickness} :: この物質はすぐに
+{turns|turn|turning|to turn} :: 変わる
+{into|onto|inside of|unto} a gas. :: 気体に
+{When|What|Whose|Whom} the gas reaches :: 気体が届くと
+your {eyes|eye's|eyed|eyeing}, :: 目に
+it {makes|make|making|made of} :: それは…させる
+them {sting|to sting|stinging|stung}. :: 目をしみるように
+Your eyes then {produce|product|production|productive} :: 目はそれから出す
+{tears|tear's|teary|tearful} :: 涙を
+{to wash|to washing|washed|wash} the gas away. :: 気体を流すために
+{So|Such|Too|Very}, :: では
+how {can|cans|being|are} you :: どうしたら…できる
+{stop|stops|stopping|stopped} the tears? :: 涙を止める
+One {easy|easily|ease|easiness} way :: 簡単な方法の一つは
+is {to chill|chill|chilled to|chilling to} :: 冷やすことだ
+the onion {in|at|into|onto} the fridge :: 玉ねぎを冷蔵庫で
+{before|ago|since|during} cutting it. :: 切る前に
+Cold {makes|make|making|made} :: 冷たさは…させる
+the chemical {work|works|working|worked} slowly, :: 物質の働きを遅く
+{so|such|too|very} you will cry less. :: だから涙が減る
+
+@id int58
+@lv 2
+@title A School Nurse on Drinking Water
+@ja 保健の先生に聞く水分補給
+@tag 共通テストレベル・インタビュー
+@gloss important=大切な, cell=細胞, sweat=汗をかく, breathe=息をする, thirsty=のどがかわいた, especially=特に, contain=含む, exercise=運動
+Q: Ms. Mori, {why|what|whose|whom} is water :: 森先生、なぜ水は
+{so|such|so much|such a} important :: そんなに大切
+{for|at|by|on} our bodies? :: 体にとって
+A: More {than|then|that|as} half :: 半分以上が
+{of|from|at|on} your body :: 体の
+{is|are|be|being} water. :: 水だ
+It {carries|carry|carrying|carried to} :: 水は運ぶ
+food {to|at|until|among} your cells :: 細胞へ栄養を
+{and|nor|than|whom} keeps :: そして保つ
+you {cool|coolly|coolness|to cool}. :: 体を涼しく
+Q: {How|What|Which|Who} do we :: どうやって私たちは
+{lose|loose|lost|losing} :: 失う
+{water|watery|watered|watering}? :: 水を
+A: We {lose|loose|losing|loses} it :: 水を失うのは
+{when|what|which|whom} we sweat, :: 汗をかくときや
+and {even|ever|every|evenly} :: さらには
+when we {breathe|breath|breathing|breathes}. :: 息をするとき
+Q: When {should|shoulds|should to|shall to} students :: 生徒はいつ…べき
+{drink|drinks|drank|drinking} water :: 水を飲む
+{during|while|among|since} the school day? :: 学校にいる間
+A: Don't {wait|waits|waiting|waited} :: 待たないで
+{until|by|during|among} you feel :: 感じるまで
+{thirsty|thirst|thirstily|thirsts}. :: のどのかわきを
+{Drink|Drinks|Drinking|Drank} a little :: 少し飲んで
+water {every|each of|all|both} hour, :: 1時間ごとに水を
+{especially|special|specialty|specialize} :: 特に
+{during|while|among|between} sports. :: スポーツ中は
+Q: {Are|Is|Do|Does} sports drinks :: スポーツドリンクは
+{better|good|best|well} :: よりよい
+{than|then|that|as} water? :: 水より
+A: They {can|cans|able|being} help :: 役に立つ
+{after|ago|later|yet} long exercise, :: 長い運動の後は
+{but|nor|than|whom} they contain :: でも含んでいる
+a lot {of|for|in|with} sugar. :: たくさんの砂糖を
+
+@id int59
+@lv 2
+@title My First 5K Race
+@ja 初めての5キロレース
+@tag 共通テストレベル・ブログ
+@gloss race=レース, mix=混ぜる, little by little=少しずつ, nervous=緊張して, along=…に沿って, cheer=応援する, energy=元気, proud=誇らしい, look forward to=楽しみにする
+Last {Sunday|Sundays|Sunday's|on Sunday}, :: 先週の日曜
+I {ran|run|runs|running} :: 私は走った
+my {first|one|firstly|once} 5K race :: 初めての5キロを
+{in|on|of|until} the park. :: 公園で
+Three months {ago|since|for|during}, :: 3か月前は
+I could {not|no|none|nor} run :: 走れなかった
+{for|since|during|while} even five minutes. :: 5分さえも
+A friend {told|said|talked|spoke} me :: 友人は私に言った
+{to start|start|started|starting} slowly :: ゆっくり始めるよう
+{by|on|at|of} mixing walking :: 歩くのを混ぜて
+{and|nor|than|either} running. :: 走るのと
+At {first|firstly|firsts|one}, :: 最初は
+I {ran|run|runs|running} :: 走った
+for one minute {and|nor|than|whom} walked :: 1分、そして歩いた
+for {two|second|twice|double}. :: 2分
+Little {by|to|for|in} little, :: 少しずつ
+I {was|were|am being|be} able :: 私はできた
+to run {longer|long than|length|lengthy}. :: 長く走ることが
+{On|In|At|By} race day, :: レース当日
+I was {so|such|too|very} nervous :: とても緊張して
+{that|what|which|as} I could not eat :: 食べられなかった
+{breakfast|breakfasts|breakfasted|breakfasting}. :: 朝食を
+But {when|what|which|whom} the race started, :: でも始まると
+people {along|alone|alike|aloud} the road :: 沿道の人々が
+{cheered|cheer|cheering|cheerful} :: 応援してくれた
+{for|by|of|than} us. :: 私たちを
+Their voices {gave|give|giving|given} me :: その声は私にくれた
+{energy|energetic|energize|energetically}, :: 元気を
+and I {never|ever|no|none} stopped :: 一度も止まらず
+{to walk|walk|walked|to walking}. :: 歩くために
+I {finished|finish|finishing|finishes} :: ゴールした
+{in|on|of|to} 32 minutes, :: 32分で
+{which|what|who|whom} was not fast. :: 速くはなかった
+{Still|Steal|Stiff|Stall}, :: それでも
+I am {already|all ready|yet|ever} :: もう
+looking forward {to|for|at|on} :: 楽しみにしている
+my next {race|races|racing|raced}. :: 次のレースを
+
+@id int60
+@lv 2
+@title Why Do We Get Goosebumps?
+@ja 鳥肌が立つのはなぜ？
+@tag 共通テストレベル・説明文
+@gloss bump=ぶつぶつ, appear=現れる, muscle=筋肉, fur=毛皮, trap=閉じこめる, scared=怖がって, interestingly=おもしろいことに, moving=感動的な
+{When|What|Which|Whom} you feel cold, :: 寒いと感じると
+small bumps {sometimes|sometime|some times|someday} :: 小さな粒が時々
+{appear|appears|appearing|appearance} :: 現れる
+{on|at|of|for} your skin. :: 肌に
+These {are called|are call|is called|calling} :: これらは呼ばれる
+{goosebumps|gooses|goosebumping|goosebumpy} :: goosebumpsと
+{in|on|at|by} English. :: 英語で
+They {happen|happens|happening|happened to} :: それは起こる
+{because|because of|due to|thanks to} tiny muscles :: 小さな筋肉が…から
+{pull|pulls|pulling|pulled to} :: 引っぱる
+the hairs on your skin {up|upon|upper|uppers}. :: 肌の毛を上に
+{For|By|At|Of} animals with thick fur, :: 毛の厚い動物には
+this {is|are|be|being} :: これは
+very {useful|use|usefully|usage}. :: とても役立つ
+{Raised|Raise|Raises|To raised} fur :: 立った毛は
+{traps|trap|trapping|to trap} :: 閉じこめる
+{warm|warmly|warmth|warmer than} air :: 温かい空気を
+{near|nearly|nearness|nears} the body. :: 体の近くに
+It also {makes|make|making|to make} :: それはまた…させる
+the animal {look|looks|looking|to look} bigger :: 動物を大きく見せる
+{when|what|which|whom} it is scared. :: 怖いときに
+{Humans|Human|Humanity's|Humanly} :: 人間は
+{have lost|have lose|has lost|losing} :: 失った
+most {of|in|at|for} their thick body hair. :: 濃い体毛の大半を
+{However|Because|Although|Unless}, :: しかし
+the muscles {are|is|be|being} still there, :: 筋肉はまだある
+{so|such|too|very} we still get :: だから今も出る
+{goosebumps|goose|gooses|goosey}. :: 鳥肌が
+{Interestingly|Interesting|Interest|Interested}, :: おもしろいことに
+some people also {get|gets|getting|got to} them :: 鳥肌が立つ人も
+{when|what|which|whom} they hear :: 聞いたときに
+{moving|moved|move|moves} music. :: 感動的な音楽を
+
+@id int61
+@lv 2
+@title Standing Desks in the Classroom
+@ja 教室に立ち机
+@tag 共通テストレベル・記事
+@gloss raise=上げる, lower=下げる, whenever=…するときはいつでも, health=健康, focus=集中する, sleepy=眠い, though=…だけれど, tired=疲れた
+A junior high school {in|on|into|of} Nagano :: 長野のある中学校が
+{has started|has start|have started|starting} :: 始めた
+{using|use|used|uses} standing desks. :: 立ち机を使うのを
+Students {can|cans|could to|able} :: 生徒は…できる
+{raise|rise|raised|raising} :: 上げる
+{or|nor|than|whom} lower :: または下げる
+the desks {easily|easy|ease|easiness}. :: 机を簡単に
+They {can|cans|could to|able} :: 生徒は…できる
+sit {or|nor|than|whom} stand :: 座るか立つか
+{whenever|whatever|however|whoever} they like. :: 好きなときに
+{Sitting|Sit|Sat|Sits} for many hours :: 長時間座るのは
+{is|are|be|being} not good :: よくない
+{for|at|by|on} our health. :: 健康に
+Mr. Ito, {who|which|whose|whom} started the idea, :: 発案した伊藤先生は
+{says|say|saying|said to} :: 言う
+students {focus|focuses|focusing|focused on} better. :: 生徒の集中が増すと
+"{When|What|Which|Whom} they get sleepy, :: 眠くなると
+they just {stand|stands|standing|stood} up," :: 立ち上がるだけ
+he {says|say|saying|tell}. :: と彼は言う
+Not {everyone|every|each|anyone} :: 全員が…ではない
+{likes|like|liking|to like} :: 気に入っている
+the new desks, {though|through|thorough|thought}. :: 新しい机を、ただ
+One student {said|told|talked|spoke} :: ある生徒は言った
+{that|what|which|whose} her legs :: 足が…と
+{got|get|getting|gets} tired :: 疲れた
+{at|in|on|by} first. :: 最初は
+{Now|Know|No|Nor}, :: 今では
+most students {stand|stands|standing|stood} :: 大半の生徒が立つ
+{for|since|while|among} part of every class. :: 毎回授業の一部で
+The school {hopes|hope|hoping|hopeful} :: 学校は望んでいる
+{to add|adding|add|added} more desks :: 机を増やすことを
+{next|nest|near|nearly} year. :: 来年
+
+@id int62
+@lv 2
+@title Why Does Ice Float?
+@ja 氷が浮くのはなぜ？
+@tag 共通テストレベル・説明文
+@gloss liquid=液体, shrink=縮む, solid=固体, opposite=反対, freeze=凍る, volume=体積, float=浮く, cover=ふた, alive=生きて
+Most liquids {shrink|shrinks|shrank to|shrinking} :: たいていの液体は縮む
+{when|what|which|whom} they become :: …になると
+{solid|solidly|solidity|solidify}. :: 固体に
+Water, {however|whatever|whoever|wherever}, :: しかし水は
+{does|do|doing|done} :: する
+the {opposite|oppose|opposed|opposes}. :: 反対のことを
+{When|What|Which|Whom} water freezes, :: 水が凍ると
+it {gets|get|getting|to get} :: それは…なる
+about nine percent {larger|large|largely|largest}. :: 約9%大きく
+This {means|mean|meaning|meant to} :: つまり
+ice is {lighter|light|lightly|lightest} :: 氷はより軽い
+{than|then|that|as} the same volume :: 同じ体積より
+{of|for|in|at} water. :: 水の
+That {is|are|be|being} why :: だから
+ice {floats|float|floating|floated to} :: 氷が浮く
+{on|at|by|of} water. :: 水に
+This {is|are|be|being} :: これは
+very {important|importance|importantly|import} :: とても重要だ
+{for|at|by|of} fish in cold places. :: 寒い所の魚に
+{In|On|At|Of} winter, :: 冬には
+ice {forms|form|forming|formal} :: 氷ができる
+{on|of|into|onto} the top of lakes. :: 湖の表面に
+The ice {works|work|working|worker} :: 氷は働く
+{like|likely|alike|liking} a cover :: ふたのように
+and {keeps|keep|keeping|kept to} :: そして防ぐ
+the water below {from|for|of|by} freezing. :: 下の水が凍るのを
+{So|Such|Too|Very} fish can :: だから魚は…できる
+stay {alive|live|lively|life} :: 生きていられる
+{under|undo|until|understand} the ice :: 氷の下で
+{until|since|unless|among} spring. :: 春まで
+
+@id int63
+@lv 2
+@title Taller in Space
+@ja 宇宙では背が伸びる
+@tag 共通テストレベル・記事
+@gloss astronaut=宇宙飛行士, spine=背骨, cushion=クッション, gravity=重力, press=押す, stretch=伸びる, height=身長, last=続く, normal=ふつうの
+Did you {know|knew|knows|knowing} :: 知っていた？
+{that|what|which|whose} astronauts :: 宇宙飛行士が…と
+{become|becomes|became|becoming} taller :: 背が高くなる
+{in|on|at|by} space? :: 宇宙で
+Some {grow|grows|growing|grown} :: 伸びる人もいる
+{by|with|at|on} a few centimeters :: 数センチ
+{during|while|among|since} their stay. :: 滞在中に
+This {happens|happen|happening|to happen} :: これは起こる
+{because of|because|due|so that} the spine, :: 背骨が原因で
+the line {of|in|at|for} bones :: 骨の列
+{in|into|onto|unto} your back. :: 背中の
+There {are|is|be|being} soft parts :: やわらかい部分がある
+{between|betweens|among of|both} the bones, :: 骨と骨の間に
+{like|likely|alike|liking} small cushions. :: 小さなクッション状
+{On|In|At|By} Earth, :: 地球では
+gravity always {presses|press|pressing|pressure} :: 重力が常に押す
+these parts {together|altogether|gather|gathering}. :: これらを縮めて
+{In|On|At|By} space, :: 宇宙では
+there is {almost|most|the most|almost of} no gravity, :: 重力がほぼない
+{so|such|too|very} the spine :: だから背骨は
+{stretches|stretch|stretching|stretched to} out. :: 伸びる
+{However|Because|Although|Unless}, :: しかし
+the extra {height|high|highly|heighten} :: 伸びた身長は
+does not {last|lasts|lasting|lasted}. :: 続かない
+{After|Ago|Later|Since then} astronauts return :: 戻った後
+{to|at|for|in} Earth, :: 地球に
+they {go|goes|going|gone} back :: 彼らは戻る
+{to|at|for|by} their normal height. :: 元の身長に
+Many {of|in|for|at} them :: 彼らの多くは
+also {have|has|having|to have} :: …もある
+{back pain|back painful|backing pain|pain back} :: 背中の痛みが
+{while|during|among|between} in space. :: 宇宙にいる間
+
+@id int64
+@lv 2
+@title The Heart Never Rests
+@ja 休まない心臓
+@tag 共通テストレベル・説明文
+@gloss heart=心臓, fist=こぶし, beat=打つ・鼓動, blood=血液, oxygen=酸素, muscle=筋肉, athlete=スポーツ選手, heart rate=心拍数
+Your heart {is|are|be|being} :: 心臓は…だ
+about {the size|the sized|a size of|sizes} :: …ぐらいの大きさ
+{of|for|at|in} your fist. :: こぶしの
+But it never {stops|stop|stopping|stopped to} :: でも決してやめない
+{working|to working|worked|works}, :: 働くのを
+day {or|nor|than|whom} night. :: 昼も夜も
+It {beats|beat|beating|to beat} :: それは打つ
+about 100,000 {times|time|timed|timing} :: 約10万回
+{a|an|the|one's} day. :: 1日に
+Each {beat|beats|beating|beaten} :: 1回の鼓動が
+{pushes|push|pushing|to push} blood :: 血液を送る
+{around|arose|arise|aroused} your body. :: 体じゅうに
+Blood {carries|carry|carrying|to carry} :: 血液は運ぶ
+{oxygen|oxygens|oxygenly|oxygenate} :: 酸素を
+{to|at|on|until} every part of you. :: 体のすみずみへ
+{Like|Likely|Alike|Liking} other muscles, :: ほかの筋肉と同じく
+the heart {gets|get|getting|to get} :: 心臓は…なる
+{stronger|strongly|strength|strengthen} :: より強く
+{with|at|on|of} exercise. :: 運動で
+A strong heart {can|cans|able|being} :: 強い心臓は…できる
+{send|sends|sent to|sending} :: 送る
+{more|many|lot|few} blood :: より多くの血液を
+{with|at|on|of} each beat. :: 1回ごとに
+That {is|are|be|being} why :: だから
+many athletes {have|has|having|to have} :: 多くの選手は…ある
+slow heart {rates|rated|rating|rater} :: 遅い心拍数が
+{when|what|which|whom} they rest. :: 休んでいるとき
+Their hearts {do|does|is|are} not :: 彼らの心臓は…ない
+{need|needs|needed|needing} to work :: 働く必要が
+{as|such|than|much} hard. :: それほど懸命に
+So {go|goes|going|gone} for a walk :: だから散歩しよう
+{today|todays|to day|toady} :: 今日
+{and|nor|than|whom} give your heart :: 心臓にあげよう
+{some|many|a|few} exercise. :: 運動を
+
+@id int65
+@lv 2
+@title Walking to Work for a Month
+@ja 1か月の歩いて通勤
+@tag 共通テストレベル・ブログ
+@gloss decide=決める, instead of=…の代わりに, each way=片道, hurt=痛む, a pair of=1足の, comfortable=心地よい, notice=気づく, plan=予定する
+Last {month|months|monthly|month's}, :: 先月
+I {decided|decide|deciding|decision} :: 決めた
+{to walk|walking|walk|walked} to work :: 歩いて通勤すると
+{instead of|instead|in spite|because} taking the bus. :: バスに乗らずに
+It {takes|take|taking|took to} :: かかる
+about {forty|fourty|fortieth|forties} minutes :: 約40分
+each {way|ways|weigh|away}. :: 片道
+The first week {was|were|been|be} :: 最初の週は
+{hard|hardly|hardness|harden} :: きつかった
+{because|because of|due to|thanks to} my feet hurt. :: 足が痛かったので
+{So|Such|Too|Very} I bought :: だから買った
+a pair {of|for|at|in} :: 1足の
+{comfortable|comfort|comfortably|comforted} shoes. :: 履きやすい靴を
+After {that|this one|those one|what}, :: その後
+{walking|walk|walked|to walking} :: 歩くことは
+{became|become|becoming|becomes to} :: なった
+much {easier|easy|easily|ease}. :: ずっと楽に
+I began {to notice|notice|noticed|to noticing} :: 気づき始めた
+small {things|thing|thinks|thinking}, :: 小さなことに
+{such as|such like|as such|so as} flowers :: 花や
+and new {shops|shop|shopped|shoped}. :: 新しい店など
+I also {slept|sleeped|sleeping|asleep} :: 眠れた
+{better|good|best|well than} :: よりよく
+{at|in|on|by} night. :: 夜に
+{On|In|At|By} rainy days, :: 雨の日には
+I {still|steal|yet|ever} take :: 今も乗る
+the {bus|busy|buss|busing}. :: バスに
+But {on|in|at|by} other days, :: でもほかの日は
+I {plan|plans|planning|planned to} :: つもりだ
+to keep {walking|walk|walked|to walk}. :: 歩き続ける
+
+@id int66
+@lv 2
+@title An Interview with a Wheelchair Basketball Player
+@ja 車いすバスケ選手に聞く
+@tag 共通テストレベル・インタビュー
+@gloss wheelchair=車いす, accident=事故, handle=扱う, regular=ふつうの, basket=ゴール, height=高さ, crash=ぶつかる, decide=決める
+Q: When {did|was|does|were} you :: いつ…しましたか
+start {playing|to playing|played|plays} :: 始めた
+wheelchair {basketball|basketballs|basket ball|basketballer}? :: 車いすバスケを
+A: I {started|start|starting|starts} :: 始めた
+{at|in|on|for} sixteen, :: 16歳で
+a year {after|ago|later|since} a car accident. :: 事故の1年後
+Q: {Was|Were|Did|Does} it :: それは…だった？
+{difficult|difficulty|difficultly|differ} :: 難しい
+{at|in|on|by} first? :: 最初は
+A: Yes. {Pushing|Push|Pushed|Pushes} the chair :: 車いすをこぐのと
+{and|nor|than|whom} handling the ball :: ボールを扱うのを
+{at|in|on|by} the same time :: 同時に
+{was|be|being|been} hard. :: 大変だった
+Q: {Are|Is|Do|Does} the rules :: ルールは
+{different|difference|differently|differ} :: 違う？
+{from|of|at|by} regular basketball? :: ふつうのバスケと
+A: Not {much|mach|many of|muchly}. :: あまり違いません
+The basket {is|are|be|being} :: ゴールは…だ
+the same {height|high|highly|heighten} :: 同じ高さ
+{as|than|that|so} in regular games. :: ふつうの試合と
+Q: What {do|does|is|are} you :: 何が…ですか
+{love|loves|loving|loved} most :: いちばん好き
+{about|above|abroad|aboard} the sport? :: このスポーツの
+A: The {speed|speedy|speedily|sped}. :: スピードです
+Our chairs move {so|such|very|too} fast :: いすがとても速く
+{that|what|which|as} players sometimes :: 選手は時々
+{crash|crashes|crashing|crashed to}. :: ぶつかる
+Q: What {is|are|be|being} :: 何ですか
+your {message|messy|messaged|messagely} :: メッセージは
+{for|at|on|into} young people? :: 若い人への
+A: Don't {decide|decides|deciding|decided} :: 決めないで
+{what|whose|whom|when} you can't do :: できないことを
+{before|ago|since|during} you try. :: やってみる前に
+
+@id int67
+@lv 2
+@title Making Onigiri at Home
+@ja 家でおにぎりを作ろう
+@tag 共通テストレベル・説明文
+@gloss convenient=便利な, wet=ぬらす, palm=手のひら, stick=くっつく, handful=一つかみ, fill=詰める, pickled plum=梅干し, wrap=包む, crisp=パリパリの
+Onigiri, {or|nor|than|whom} rice balls, :: おにぎり、つまり
+{are|is|be|being} :: …である
+a {popular|popularity|popularly|populate} food :: 人気の食べ物
+{in|on|at|to} Japan. :: 日本で
+They {are|is|be|been} easy :: それらは簡単だ
+{to make|making|made|makes} :: 作るのが
+{and|nor|than|so that} convenient :: そして便利だ
+{to carry|carrying|carried|carries}. :: 持ち運ぶのに
+First, {wash|washing|washed|to washing} your hands :: まず手を洗う
+{and|nor|than|whom} wet them :: そしてぬらす
+{with|by|at|on} a little water. :: 少しの水で
+{Put|Puts|Putting|To putting} some salt :: 塩を少しつける
+{on|of|at|from} your palms :: 手のひらに
+{so|such|too|very} the rice :: ごはんが…ように
+will not {stick|sticks|sticking|stuck}. :: くっつかない
+Next, {take|takes|taking|took} :: 次に取る
+a {handful|handfully|handed|hands} of warm rice :: 温かいごはんを一つかみ
+{and|nor|than|whom} make a hole :: そして穴を作る
+{in|on|of|to} the middle. :: 真ん中に
+{Fill|Fills|Filling|Filled} the hole :: 穴に詰める
+{with|by|at|on} something tasty, :: おいしい物を
+{such as|such like|as such|so as} salmon :: 鮭など
+{or|nor|than|whom} pickled plum. :: または梅干し
+Then {cover|covers|covering|covered} it :: それからおおう
+{with|by|at|for} more rice :: さらにごはんで
+{and|nor|than|whom} press it gently :: やさしくにぎる
+{into|of|than|since} a triangle. :: 三角形に
+Finally, {wrap|wraps|wrapping|wrapped} it :: 最後に包む
+{in|at|of|to} a sheet :: 1枚の…で
+{of|by|on|than} dried seaweed :: 干した海藻の
+{called|calling|calls|to call} nori. :: のりと呼ばれる
+Many people {wrap|wraps|wrapping|to wrap} the seaweed :: 多くの人はのりを巻く
+just {before|ago|since|among} eating :: 食べる直前に
+{to keep|kept|keeps|to keeping} it crisp. :: パリパリに保つため
+{Try|Tries|Trying|Tried} making :: 作ってみよう
+your {own|owner|owned|owning} :: 自分のものを
+{and|nor|than|whom} take it :: そして持っていこう
+{to|at|on|by} school or work. :: 学校や仕事に
+
+@id int68
+@lv 2
+@title A Letter from Kyoto
+@ja 京都からの手紙
+@tag 共通テストレベル・手紙
+@gloss festival=祭り, last=続く, highlight=見どころ, parade=行列, wooden=木の, float=山車, crowded=混雑した, paper fan=うちわ, souvenir=おみやげ
+Dear Emma, I {hope|hopes|hoping|hoped to} :: エマへ、願っています
+you {are doing|is doing|are do|doing} well :: 元気でいることを
+{in|on|to|by} London. :: ロンドンで
+{Last|Next|Later|Lately} week, :: 先週
+I {visited|visit|visiting|have visited} Kyoto :: 京都を訪れた
+{to see|saw|sees|to seeing} the Gion Festival. :: 祇園祭を見るために
+It {is|are|be|being} one :: それは一つだ
+{of|on|at|by} the most famous festivals :: 最も有名な祭りの
+{in|on|at|to} Japan. :: 日本で
+The festival {lasts|last|lasting|to last} :: 祭りは続く
+{for|since|ago|among} the whole month :: まる1か月間
+{of|on|at|by} July. :: 7月の
+The {highlight|highlights|highly|highlighted} :: いちばんの見どころ
+{was|were|been|being} :: …だった
+a parade {of|at|than|since} huge wooden floats. :: 巨大な木の山車の行列
+Some {of|in|at|by} them :: そのうちいくつかは
+{were|was|be|being} :: …だった
+{taller|tall|tallest|more tall} :: より高い
+{than|then|that|as} a house. :: 家よりも
+Dozens {of|in|at|for} men :: 何十人もの男性が
+{pulled|pulling|pulls|to pull} them :: それらを引いた
+{slowly|slowness|slowest|slowed} :: ゆっくりと
+{through|thorough|though|throw} the streets. :: 通りを通って
+It was very hot {and|nor|than|whom} crowded, :: とても暑く混んでいた
+{so|than|nor|whom} I bought :: だから買った
+{a|an|much|many} paper fan. :: うちわを
+I {am sending|am send|sending|is sending} you :: あなたに送ります
+{one|ones|it one|once} :: 一つ
+{as|for as|like as|so} a souvenir. :: おみやげとして
+I hope you {can come|can came|can coming|can to come} :: 来られるといいな
+{to|at|on|for} Japan :: 日本に
+{next|last|the next of|nextly} summer. Love, Yui :: 来年の夏に ユイより
+
+@id int69
+@lv 2
+@title Why Do We Say "Itadakimasu"?
+@ja 「いただきます」の意味
+@tag 共通テストレベル・説明文
+@gloss meal=食事, translate=訳す, exactly=正確に, verb=動詞, receive=受け取る, thanks=感謝, farmer=農家, culture=文化
+{Before|Since|Ago|Among} meals, :: 食事の前に
+people in Japan {usually|usual|usualness|unusual} :: 日本の人はふつう
+{say|says|saying|to say} "itadakimasu." :: 「いただきます」と言う
+It is often {translated|translate|translating|translates} :: よく訳される
+{as|at|on|of} "Let's eat," :: 「食べよう」と
+{but|nor|than|whom} that is :: しかしそれは
+not {exactly|exact|exactness|exacting} right. :: 正確には正しくない
+The word {comes|come|coming|to come} :: その言葉は来ている
+{from|at|on|than} a verb :: ある動詞から
+{that|what|whom|whose} means "to receive." :: 「受け取る」という意味の
+By {saying|say|said|says} it, :: それを言うことで
+people {show|shows|showing|showed to} thanks :: 人々は感謝を示す
+{for|at|by|on} the food :: 食べ物への
+they {receive|receives|receiving|to receive}. :: 受け取る
+They also {thank|thanks|thanking|to thank} the farmers :: 農家にも感謝する
+{who|which|whose|whom} grew it :: それを育てた
+and the cook {who|which|whose|whom} made it. :: 作った料理人に
+Some people {believe|believes|believing|belief} :: …と考える人もいる
+it also {thanks|thank|thanking|thanked to} :: それはまた感謝する
+the plants and animals {themselves|themself|itself|ourselves}. :: 動植物そのものに
+This is {because|because of|due|since of} :: これは…だからだ
+their lives {became|becoming|becomes|to become} :: その命が…になった
+{our|ours|us|we} food. :: 私たちの食べ物に
+{After|Ago|Among|Above} eating, :: 食べた後に
+people {say|says|saying|to say} "gochisosama" :: 「ごちそうさま」と言う
+{to show|shows|showed|to showing} thanks again. :: また感謝を示すため
+These short words {are|is|be|being} :: この短い言葉は
+a small {but|nor|than|whom} important part :: 小さいが大切な一部
+{of|at|by|from} Japanese culture. :: 日本文化の
+
+@id int70
+@lv 2
+@title The Tomato Festival in Spain
+@ja スペインのトマト祭り
+@tag 共通テストレベル・記事
+@gloss messy=汚れる, throw=投げる, take place=行われる, rule=規則, crush=つぶす, goggles=ゴーグル, protect=守る, juice=汁, fire truck=消防車
+{Every|All|Whole|Each of} year, :: 毎年
+a small town {in|on|at|to} Spain :: スペインの小さな町が
+{holds|hold|holding|held to} :: 開く
+a very {messy|mess|messily|messed} festival. :: とても汚れる祭りを
+It {is called|is calling|calls|is call} La Tomatina, :: ラ・トマティーナと呼ばれ
+{and|nor|than|whom} people throw :: 人々は投げる
+{tomatoes|tomatos|tomato|tomatoe} :: トマトを
+{at|of|from|than} each other. :: お互いに
+It {takes|take|taking|took to} place :: それは行われる
+{on|in|at|by} the last Wednesday :: 最後の水曜日に
+{of|at|by|to} August. :: 8月の
+Thousands {of|in|at|for} visitors :: 何千人もの観光客が
+{come|comes|coming|came to} :: やって来る
+from {around|among|along|across of} the world :: 世界中から
+{to join|joined|joins|to joining} it. :: 参加するために
+{However|Because|Unless|Although}, :: しかし
+there {are|is|be|being} some rules :: いくつか規則がある
+{to keep|kept|keeps|to keeping} everyone safe. :: 全員の安全を守るため
+You must {crush|crushes|crushing|crushed} :: つぶさなければならない
+{each|every of|all|both} tomato :: トマトを一つずつ
+{before|ago|since|among} you throw it. :: 投げる前に
+Many people also {wear|wears|wearing|worn} goggles :: ゴーグルもつける
+{to protect|protected|protects|to protecting} :: 守るために
+{their|there|they|them} eyes. :: 目を
+After {about|above|along|among} an hour, :: 約1時間後
+the streets {are covered|are cover|covering|is covered} :: 通りはおおわれる
+{in|on|at|to} red juice. :: 赤い汁で
+Then fire trucks {wash|washes|washing|to wash} :: それから消防車が洗う
+the town {clean|cleaning|cleanness|cleaned up of} :: 町をきれいに
+{with|at|on|of} water. :: 水で
+
+@id int71
+@lv 2
+@title My Week with Chopsticks
+@ja はしと過ごした1週間
+@tag 共通テストレベル・ブログ
+@gloss chopsticks=はし, host family=ホストファミリー, slip=すべる, explain=説明する, upright=まっすぐ立てて, funeral=葬式, bad luck=縁起が悪いこと, bean=豆
+When I {arrived|arrive|arriving|arrives} :: 着いたとき
+{in|to|on|for} Osaka, :: 大阪に
+I could not {use|used|using|uses} chopsticks :: はしを使えなかった
+{at all|of all|by all|on all}. :: まったく
+My host family {kindly|kind|kindness|kinder} :: ホストファミリーは親切に
+{gave|giving|given|gives to} me a fork, :: フォークをくれた
+{but|nor|than|whom} I wanted :: でもぼくは望んだ
+{to try|trying|tried|tries}. :: 挑戦することを
+{At first|At firstly|In first|On first}, :: 最初は
+the food {kept|keep|keeping|keeps to} :: 食べ物はずっと
+{slipping|slip|slipped|to slip} :: すべって
+and {falling|fall|falls|to falling} on the table. :: テーブルに落ちた
+My host brother {taught|teached|teach|teaching} me :: ホストの弟が教えてくれた
+{to hold|holding|held|holds} :: 持つことを
+the {lower|lowly|lowness|lows} stick still. :: 下の1本を動かさずに
+He also {explained|explain|explaining|explains to} :: 彼はまた説明した
+{some|much|a|every} rules :: いくつかの決まりを
+for {using|use|used|to using} them. :: 使うときの
+{For example|For examples|By example|In example}, :: たとえば
+you should never {stick|sticks|sticking|stuck} them :: 絶対に刺してはいけない
+{upright|uprights|upriser|uprighted} :: まっすぐ立てて
+{in|of|at|by} a bowl of rice. :: ご飯茶わんに
+This {is done|is do|does|is doing} :: これはされる
+only {at|on|of|by} funerals, :: 葬式のときだけ
+{so|than|nor|whom} it is considered :: だから考えられる
+{bad luck|bad lucky|badly luck|bad lucks}. :: 縁起が悪いと
+After one week {of|at|by|than} practice, :: 1週間の練習の後
+I can now {pick up|picked up|picking up|picks up} :: 今はつまめる
+{a single|single|singles|a singles} bean. :: 豆1粒を
+My host mother {says|say|saying|said to} :: ホストの母は言う
+I eat {more slowly|most slowly|slowlier|more slowness} now, :: 前よりゆっくり食べる
+{which|what|whom|whose} is a good thing! :: それは良いことだ
+
+@id int72
+@lv 2
+@title Japanese Cooking Class for Visitors
+@ja 旅行者向け和食教室
+@tag 共通テストレベル・広告
+@gloss tempura=天ぷら, beginner=初心者, welcome=歓迎される, ingredient=材料, apron=エプロン, include=含む, vegetarian=菜食の, in advance=事前に, except=…以外
+Do you {want|wants|wanting|wanted to} :: …したいですか
+{to learn|learning|learned|learns} :: 学ぶことを
+{how|whose|whom|than} to cook :: 作り方を
+{Japanese|Japan|Japaneses|Japans} food? :: 和食の
+{Join|Joins|Joining|Joined} :: 参加しよう
+our {cooking|cook|cooked|cooks} class :: 料理教室に
+{at|on|than|to} Sakura Kitchen :: さくらキッチンで
+{in|on|to|than} Asakusa. :: 浅草の
+{During|While|Since|Among} the two-hour class, :: 2時間の教室で
+you will {make|makes|making|made} :: 作ります
+miso soup, tempura, {and|nor|than|or but} rice balls. :: みそ汁、天ぷら、おにぎり
+Our teachers {speak|speaks|speaking|spoken} English, :: 講師は英語を話す
+{so|than|nor|whom} beginners :: だから初心者も
+{are welcome|is welcome|be welcome|being welcome}. :: 歓迎です
+All ingredients {and|nor|than|whom} aprons :: 材料とエプロンは全部
+{are included|are include|is included|including} :: 含まれている
+{in|of|on|than} the price. :: 料金に
+{After|Ago|Among|Above} cooking, :: 料理の後で
+you can {enjoy|enjoys|enjoying|enjoyed} the meal :: 食事を楽しめる
+{with|at|than|onto} other students. :: ほかの生徒と
+Vegetarian {menus|menu|menuing|menued} :: 菜食メニューも
+{are|is|be|being} available :: 用意できます
+{if|than|nor|whom} you ask :: 頼めば
+{in advance|in advanced|on advance|at advance}. :: 事前に
+Classes {start|starts|starting|to start} :: 教室は始まる
+{at|on|in|to} 10 a.m. and 3 p.m. :: 午前10時と午後3時に
+every day {except|expect|accept|excess} Tuesday. :: 火曜以外毎日
+{Book|Books|Booking|Booked} on our website, :: サイトで予約を
+{as|than|nor|whom} each class :: 各教室は…ので
+{has|have|having|to have} only eight seats. :: 8席しかない
+
+@id int73
+@lv 2
+@title Osechi: Food for the New Year
+@ja 正月のおせち料理
+@tag 共通テストレベル・説明文
+@gloss dish=料理, serve=出す, stack=重ねる, meaning=意味, wish=願い, health=健康, shrimp=えび, bent=曲がった, rest=休む
+{In|On|At|To} Japan, :: 日本では
+people {eat|eats|eating|eaten} special dishes :: 人々は特別な料理を食べる
+{called|calling|calls|call} osechi :: おせちと呼ばれる
+{at|of|than|since} New Year. :: 正月に
+They are usually {served|serve|serving|serves} :: ふつう出される
+{in|at|by|of} beautiful boxes :: 美しい箱に入れて
+{stacked|stack|stacks|to stacking} :: 重ねられた
+on top {of|in|at|by} each other. :: 互いの上に
+{Each|Every of|Both|Many} food :: それぞれの料理は
+{has|have|having|to have} :: 持つ
+a special {meaning|mean|meant|meaningful} :: 特別な意味を
+{or|nor|than|whom} wish :: または願いを
+{for|than|whom|since} the new year. :: 新年への
+For {example|examples|exam|sample}, :: たとえば
+black beans {are eaten|are eat|eating|is eaten} :: 黒豆は食べられる
+{for|at|on|by} good health. :: 健康のために
+Fish eggs {called|calling|calls|call} kazunoko :: 数の子という魚卵は
+{are|is|be|being} :: …である
+a wish {for|at|on|than} many children. :: 子だくさんの願い
+Shrimp, {with|by|at|on} their bent backs, :: 曲がった背中のえびは
+{stand|standing|stood to|to stand} :: 表す
+{for|at|of|than} a long life. :: 長生きを
+{Most|Almost|Mostly|The most of} osechi dishes :: おせちの多くは
+{are cooked|are cook|is cooked|cooking} :: 作られる
+{before|ago|among|above} New Year's Day. :: 元日の前に
+They {keep|keeps|keeping|kept to} well :: 日持ちする
+{for|since|ago|among} days, :: 何日も
+{so|than|nor|whom} the cook :: だから作る人も
+can {rest|rests|resting|rested} :: 休める
+{during|while|among|beside} the holidays. :: 休みの間
+{Today|Todays|Today's|Yesterday's}, :: 今では
+many families {buy|buys|buying|bought to} osechi :: 多くの家庭がおせちを買う
+{at|on|to|of} stores :: 店で
+instead {of|for|to|from} making it. :: 作るかわりに
+
+@id int74
+@lv 2
+@title Tea Around the World
+@ja 世界のお茶
+@tag 共通テストレベル・記事
+@gloss spice=香辛料, mint=ミント, pour=注ぐ, foam=泡, respect=敬意, guest=客, ceremony=儀式, whisk=泡立てる, habit=習慣
+Tea {is|are|be|being} one :: お茶は一つだ
+{of|on|at|by} the most popular drinks :: 最も人気の飲み物の
+{in|on|at|to} the world. :: 世界で
+{However|Because|Unless|Although}, :: しかし
+people {drink|drinks|drinking|drunk} it :: 人々はそれを飲む
+{in|on|at|to} very different ways. :: とても違う方法で
+{In|On|At|To} India, :: インドでは
+many people {enjoy|enjoys|enjoying|enjoyed to} chai, :: チャイを楽しむ
+a sweet tea {with|by|at|on} milk and spices. :: ミルクと香辛料の甘い茶
+{In|On|At|To} Morocco, :: モロッコでは
+mint tea {is poured|is pour|pouring|are poured} :: ミント茶は注がれる
+{from|for|by|of} high above the glass. :: グラスの上高くから
+This {makes|make|making|made to} foam :: これは泡を作る
+{on|in|at|of} top :: 上に
+{and|nor|than|whom} shows respect :: そして敬意を示す
+{for|at|by|on} the guest. :: 客への
+In Japan, green tea {called|calling|calls|call} matcha :: 日本では抹茶という茶が
+{is used|is use|uses|are used} :: 使われる
+{in|on|of|than} the tea ceremony. :: 茶道で
+It {is whisked|is whisk|whisks|are whisked} :: それは泡立てられる
+{with|by|at|on} hot water :: お湯と
+{until|during|among|despite} it becomes foamy. :: 泡立つまで
+{In|On|At|To} Britain, :: イギリスでは
+many people {like|likes|liking|liked to} tea :: 多くの人がお茶を好む
+{with|by|at|for} milk :: ミルク入りの
+{in|on|at|by} the afternoon. :: 午後に
+Next time you {drink|drinks|drinking|drunk} tea, :: 次にお茶を飲むとき
+{think|thinks|thinking|thought} :: 考えてみよう
+{about|above|along|across} the people :: 人々のことを
+{who|which|whose|whom} share this habit. :: この習慣を共にする
+
+@id int75
+@lv 2
+@title Guide to the Minato Summer Festival
+@ja みなと夏祭りのご案内
+@tag 共通テストレベル・案内
+@gloss lantern=ちょうちん, food stall=屋台, take part=参加する, fireworks=花火, light up=照らす, rent=借りる, shuttle bus=シャトルバス, trash=ごみ
+The Minato Summer Festival {will be held|will held|will be hold|will holding} :: みなと夏祭りが開かれる
+{on|in|at|to} August 15 and 16. :: 8月15日と16日に
+The park {will be filled|will filled|will be fill|will filling} :: 公園はいっぱいになる
+{with|at|on|than} lanterns :: ちょうちんで
+{and|nor|than|whom} food stalls. :: そして屋台で
+{On|To|Of|Than} the first night, :: 初日の夜に
+you can {join|joins|joining|joined} :: 参加できる
+the Bon {dance|danced|dancer's|danceful} :: 盆踊りに
+{from|since|ago|until of} 7 p.m. :: 午後7時から
+Anyone {can take|can takes|can took|can taking} part, :: だれでも参加できる
+even {if|so|than|whom} you have never :: たとえ一度も…なくても
+{danced|dance|dancing|dances} before. :: 踊ったことが
+{On|To|Of|Than} the second night, :: 2日目の夜に
+fireworks {will light|will lights|will lighting|will lit} :: 花火が照らす
+up the {sky|skies of|sky's|skied} :: 空を
+{at|on|in|to} 8 p.m. :: 午後8時に
+Visitors {wearing|wear|wore|wears} yukata :: 浴衣を着た来場者は
+{will get|will gets|will got|will getting} :: もらえる
+a {free|freely|freedom|freed} drink :: 無料の飲み物を
+{at|on|of|than} the information tent. :: 案内テントで
+You can also {rent|rents|renting|rented} one :: 借りることもできる
+{at|on|of|than} the community center :: 公民館で
+{for|by|on|than} 1,000 yen. :: 1,000円で
+There {is|are|be|has} no parking, :: 駐車場はない
+{so|than|nor|whom} please take :: だから乗ってください
+the shuttle bus {from|than|whom|since} the station. :: 駅からのシャトルバス
+Please {take|takes|taking|took} your trash :: ごみを持って
+{home|homes|homely|homing} :: 家に
+{to keep|kept|keeps|to keeping} the park clean. :: 公園をきれいに保つため
+
+@id int76
+@lv 2
+@title Shoes Off, Please!
+@ja 靴を脱いでね
+@tag 共通テストレベル・メール
+@gloss custom=習慣, take off=脱ぐ, entrance=玄関, dirt=汚れ, slippers=スリッパ, tatami mat=畳, grass=草, damage=傷つける, separate=別の
+Hi Lucas, we {are excited|are exciting|is excited|excited are} :: ルーカス、楽しみです
+{to welcome|welcoming|welcomed|welcomes} you :: あなたを迎えるのが
+{next|last|the next of|nextly} month. :: 来月
+{Before|Ago|Among|Above} you come, :: 来る前に
+I want {to tell|telling|told|tells} you :: 伝えたい
+{about|above|along|across} a Japanese home custom. :: 日本の家の習慣を
+In Japan, we {take off|take of|took of|taking off} :: 日本では脱ぐ
+our {shoes|shoed|shoeing|shoe's} :: 靴を
+{at|on|of|than} the entrance. :: 玄関で
+This {keeps|keep|keeping|kept to} :: これは保つ
+the floor {clean|cleanly|cleanness|cleaning}, :: 床をきれいに
+{because|because of|due|so that of} shoes bring in dirt :: 靴は汚れを持ちこむから
+{from|for|by|of} outside. :: 外から
+{Inside|Insides|Inner|Innerly} the house, :: 家の中では
+you can {wear|wears|wearing|wore} slippers :: スリッパをはける
+{that|what|whose|whom} we will give you. :: 私たちが渡す
+{However|Because|Unless|Although}, please :: ただし…ください
+{take|takes|taking|took} them off :: それを脱いで
+{before|ago|among|above} you walk :: 歩く前に
+{on|at|of|than} tatami mats. :: 畳の上を
+Tatami {is made|is make|makes|are make} :: 畳は作られている
+{of|at|on|than} dried grass :: 乾いた草で
+and can be {damaged|damage|damaging|damages} :: 傷つきうる
+{easily|easy|ease|easiness}. :: 簡単に
+There {are|is|be|has} also :: …もある
+{separate|separately|separation|separated of} slippers :: 別のスリッパが
+{for|than|since|whom} the bathroom. :: トイレ用の
+Don't {worry|worries|worrying|worried} :: 心配しないで
+{if|than|nor|whom} you forget :: 忘れても
+{at first|at firstly|in first|on first}. We will help you! :: 最初は。手伝うよ！
+
+@id int77
+@lv 2
+@title How Spam Filters Learn
+@ja 迷惑メールフィルターのしくみ
+@tag 共通テストレベル・説明文
+@gloss spam=迷惑メール, unwanted=不要な, filter=フィルター, pattern=パターン, mark=印をつける, spot=見つける, suspicious=怪しい, folder=フォルダ, wise=賢明な
+Every day, {millions|million|millionth|a million of} of emails :: 毎日何百万ものメールが
+are {sent|send|sending|sends} :: 送られる
+{around|along|among|across of} the world. :: 世界中で
+{Many|Much|Every|A little} of them :: その多くは
+are {called|calling|call|calls} "spam," :: スパムと呼ばれる
+unwanted messages {that|what|whom|whose} :: …する不要なメール
+try {to sell|sold|sells|to selling} things. :: 物を売ろうとする
+Luckily, {most|almost|mostly|the most} email services :: 幸い大半のサービスは
+{use|uses|using|useful} :: 使っている
+filters {to catch|to catching|catch|catches} them. :: 捕まえるフィルターを
+These filters {do not|does not|are not|is not} just :: これらは…だけでない
+{follow|follows|following|followed} :: 従う
+{fixed|fix|fixes|fixedly} rules; :: 決まった規則に
+they also {learn|learns|learning|to learn}. :: 学習もする
+{When|What|Which|Whom} you mark a message :: メールに印をつけると
+{as|so|by|than} spam, :: スパムとして
+the filter {studies|study|studying|to study} :: フィルターは調べる
+{its|it's|it|itself} words and patterns. :: その語やパターンを
+{Over|Above|Upon|Onto} time, :: やがて
+it becomes {better|best|more good|goodly} :: 上手になる
+{at|to|on|of} spotting :: 見つけるのが
+{suspicious|suspicion|suspiciously|suspicions} emails. :: 怪しいメールを
+{However|Whatever|Whenever|Wherever}, filters :: しかしフィルターも
+{sometimes|sometime|some times|somewhat} make :: 時々してしまう
+{mistakes|mistake|mistaken|mistaking}. :: まちがいを
+An important email {from|by|at|of} your school :: 学校からの大事なメール
+might {end up|end on|end at|end of} :: 結局…かもしれない
+{in|by|from|of} the spam folder. :: 迷惑フォルダに
+{That is why|That why is|What is why|This is what why} :: だから
+it is {wise|wisely|wisdom|wiser of} :: 賢明だ
+{to check|checked|check|checks} it :: それを確認するのは
+{once|one|ones|one's} in a while. :: 時々
+
+@id int78
+@lv 2
+@title Notice: Our Cafeteria Goes Cashless
+@ja お知らせ：食堂のキャッシュレス化
+@tag 共通テストレベル・お知らせ
+@gloss cafeteria=食堂, cashless=現金を使わない, accept=受け付ける, entrance=入口, balance=残高, staff=職員, graduate=卒業する, return=返す
+{Starting|Start|Started|Starts} next month, :: 来月から
+the school cafeteria {will|is|has|does} :: 学校の食堂は
+{no longer|no long|not longer|any longer} accept :: もう受け付けない
+{cash|cashes|cashing|cashed}. :: 現金を
+Students {will|have|are|does} pay :: 生徒は支払う
+{with|at|of|into} their student ID cards :: 学生証で
+{or|nor|than|whom} a smartphone app. :: またはスマホアプリで
+{To|For|In|By} add money, :: お金を入れるには
+{use|using|used|uses} :: 使ってください
+the machine {near|nearly|nearby of|nearest of} the entrance :: 入口近くの機械を
+{or|nor|than|whom} the app. :: またはアプリを
+You {can|must to|should to|have} :: …できる
+{check|checks|checking|checked} :: 確認する
+your {balance|balanced|balancing|balances of} :: 残高を
+{at|on|of|with} any time. :: いつでも
+{During|While|Since|When} the first two weeks, :: 最初の2週間は
+staff members {will|are|has|does} :: 職員が
+{be|being|been|are} there :: そこにいる
+{to help|helped|help to|helps} you. :: 手伝うために
+{If|What|Which|Whom} you do not have :: …がない場合
+a {smartphone|smart|smartly|smartness}, :: スマホが
+please {visit|visiting|visited|visits} the office. :: 事務室に来て
+Any money {left|leave|leaving|leaves} :: 残ったお金は
+{on|at|of|to} your card :: カードに
+{will|is|has|being} be returned :: 返される
+{when|what|which|whom} you graduate. :: 卒業するときに
+We {hope|hopes|hoping|hoped to} :: …を願っている
+this {makes|make|making|made of} lunch time :: これで昼食時間が
+{faster|fast|fastest|more fast} and easier. :: より速く楽に
+
+@id int79
+@lv 2
+@title A Week Without My Smartphone
+@ja スマホなしの1週間
+@tag 共通テストレベル・ブログ
+@gloss experiment=実験, reach for=手を伸ばす, habit=習慣, notice=気づく, bored=退屈した, calm=穏やかな, rule=決まり, be over=終わる
+{Last|Late|Lately|Latest} month, :: 先月
+I {tried|try|trying|tries} :: 私は試した
+a simple {experiment|experimental|experimentally|experimented}: :: 簡単な実験を
+no smartphone {for|since|while|until} a week. :: 1週間スマホなし
+On the {first|one|firstly|once} day, :: 初日は
+I {kept|keeping|keeps|to keep} :: 私は何度も
+{reaching|reach|reached|to reach} :: 手を伸ばした
+{for|of|at|on} my pocket. :: ポケットに
+It {had become|had became|has became|becoming} :: それはなっていた
+a {habit|habitual|habitually|habits} :: 習慣に
+I {did not|was not|had not|am not} even notice. :: 気づきもしない
+I also {felt|feeling|feels|to feel} :: 私はまた感じた
+{bored|boring|boredom|bore} :: 退屈に
+{while|during|for|since} waiting for the bus. :: バスを待つ間
+{By|Of|To|With} the third day, :: 3日目には
+{however|whatever|whenever|wherever}, things :: しかし状況は
+{began|begun|beginning|begins} :: …し始めた
+to {change|changing|changed|changes}. :: 変わり
+I {read|reads|reading|to read} :: 私は読んだ
+two {books|book|booking|booked} :: 本を2冊
+and {talked|talking|talks|to talk} more :: もっと話した
+{with|at|by|from} my family. :: 家族と
+My mind {felt|feel|feeling|to feel} :: 頭の中が感じられた
+{calmer|calmly|calmness|more calmer} :: より穏やかに
+{than|then|that|as} before. :: 以前より
+Now {that|what|which|whose} :: 今では
+the week {is|are|be|being} over, :: 1週間が終わり
+I {use|uses|using|useful} my phone again. :: またスマホを使う
+{But|Nor|Than|Whom} I have :: でも私は
+{set|sets|setting|seted} :: 作った
+one {rule|rules|ruler|ruling}: :: 1つの決まりを
+no phone {at|of|to|into} the dinner table. :: 食卓ではスマホなし
+
+@id int80
+@lv 2
+@title How Banks Use Your Money
+@ja 銀行はお金をどう使う？
+@tag 共通テストレベル・説明文
+@gloss safe=金庫, lend=貸す, borrow=借りる, borrower=借り手, loan=ローン, interest=利子, earn=稼ぐ, government=政府, protect=守る
+{When|What|Which|Whom} you put money :: お金を入れると
+{into|onto|over|upon} a bank, :: 銀行に
+it does not just {sit|sits|sitting|sat} :: ただ置かれていない
+in a {safe|safety|safely|save}. :: 金庫に
+The bank {lends|lend|lending|lent of} :: 銀行は貸す
+{most|almost|mostly|the most} of it :: その大部分を
+{to|of|at|by} other people :: ほかの人に
+and {businesses|businessing|busy|busily}. :: そして会社に
+{For|At|By|On} example, :: たとえば
+a family {might|might to|may to|can to} :: ある家族は…かも
+{borrow|borrows|borrowing|borrowed} money :: お金を借りる
+{to buy|buying|bought|buys} a house. :: 家を買うために
+Borrowers {must|must to|have|has} :: 借り手は…ねばならない
+{pay back|pay off of|paid back|paying back} :: 返す
+the loan {with|by|at|for} interest. :: 利子つきでローンを
+The bank also {pays|pay|paying|paid of} :: 銀行も払う
+you {a little|a few|few|many} interest, :: あなたに少し利子を
+{but|nor|than|whom} it is :: でもそれは
+{less|fewer|little|least} than :: …より少ない
+what borrowers {pay|pays|paying|paid of}. :: 借り手が払う額
+The difference {between|among|from|during} the two :: 両者の差が
+{is|are|be|being} :: …だ
+{how|what|which|whom} the bank earns money. :: 銀行のもうけ方
+{But|Nor|Than|Whom} what happens :: でもどうなる？
+{if|which|what|whom} everyone wants :: 全員が求めたら
+{their|there|they're|them} money back :: お金の返却を
+at the {same|similar|alike|equal} time? :: 同時に
+Banks {keep|keeps|keeping|kept of} :: 銀行は持っている
+{only|alone|lonely|once} a small part :: ごく一部だけを
+{of|for|than|at} their money :: お金の
+{as|than|so|such} cash. :: 現金として
+{This|These|Those|Them} is why :: だから
+{governments|government's|governing|governed} :: 政府は
+{make|makes|making|made of} rules :: 規則を作る
+{to protect|protected|protects|to protecting} savers. :: 預金者を守るため
+
+@id int81
+@lv 2
+@title Making a Strong Password
+@ja 強いパスワードの作り方
+@tag 共通テストレベル・説明文
+@gloss password=パスワード, dangerous=危険な, leak=流出, account=アカウント, guess=推測する, combination=組み合わせ, random=でたらめな, password manager=パスワード管理アプリ
+{Many|Much|Every|A little} people :: 多くの人は
+{use|uses|using|useful} :: 使っている
+the {same|similar|alike|equal} password :: 同じパスワードを
+{for|of|than|by} every website. :: すべてのサイトで
+This {is|are|be|being} :: これは…だ
+{dangerous|danger|dangerously|endanger} :: 危険だ
+{because|because of|despite|due} one leak :: 1回の流出で
+can {open|opens|opening|opened} all your accounts. :: 全アカウントが開く
+Also, {short|shortly|shortage|shorten} passwords :: また短いパスワードは
+are {easy|easily|ease|easier of} :: 簡単だ
+{to guess|guessing|guessed|guesses}. :: 推測するのが
+Computers {can|cans|can to|must to} :: コンピュータは…できる
+{try|tries|trying|tried} :: 試す
+{millions|million|millionth|a million of} of combinations :: 何百万もの組み合わせを
+{in|on|at|by} a second. :: 1秒で
+{So|Nor|Than|Whom} how can you :: では、どうすれば
+{make|makes|making|made of} :: 作れる
+a {strong|strongly|strength|strongest of} one? :: 強いものを
+{One|Once|Ones|Won} good way :: よい方法の1つは
+{is|are|be|being} :: …だ
+{to join|joins|joined|to joining} :: つなげること
+{several|severe|severely|several of} random words. :: いくつかの無関係な語を
+{For|At|By|On} example, :: たとえば
+"blue-river-pencil-cloud" {is|are|be|being} :: この例は
+long {but|nor|than|whom} :: 長いが
+easy {to remember|remembering|remembered|remembers}. :: 覚えやすい
+You {should|should to|ought|must to} also :: また…べきだ
+{use|uses|using|used of} :: 使う
+a {different|difference|differently|differ} password :: 別のパスワードを
+{for|than|whom|nor} each account. :: アカウントごとに
+A password manager {can|cans|can to|must to} :: 管理アプリは…できる
+{remember|remembers|remembering|remembered} :: 覚える
+them {all|every|each of|whole} :: それらを全部
+{for|of|at|by} you. :: あなたの代わりに
+
+@id int82
+@lv 2
+@title Why False News Travels Fast
+@ja 誤ったニュースが速く広まる理由
+@tag 共通テストレベル・記事
+@gloss social media=SNS, spread=広がる, false=誤った, surprising=驚くような, emotion=感情, headline=見出し, source=情報源, trusted=信頼できる, pause=立ち止まること
+{On|Of|At|By} social media, :: SNSでは
+news {can|cans|can to|could to} :: ニュースは…ありうる
+{spread|spreads|spreading|spreaded} :: 広がる
+{around|along|about of|across of} the world :: 世界中に
+{in|on|at|by} minutes. :: 数分で
+{Unfortunately|Unfortunate|Unfortune|Misfortune}, false stories :: 残念ながら誤報も
+{travel|travels|traveling|traveled of} :: 伝わる
+just {as|than|such|too} fast, :: 同じくらい速く
+{or|nor|than|whom} even faster. :: あるいはもっと速く
+{One|Once|Ones|Won} reason :: 理由の1つは
+{is|are|be|being} :: …だ
+{that|what|which|whom} false news :: 誤報は…ということ
+is often {surprising|surprised|surprise|surprisingly}. :: よく驚きがある
+Surprising stories {make|makes|making|made of} :: 驚く話は…させる
+people {feel|feeling|to feel|felt} :: 人に感じ
+{strong|strongly|strength|stronger of} emotions, :: 強い感情を
+{so|nor|than|whom} they share them. :: だから共有する
+Many people {also|too|either|neither} :: 多くの人はまた
+{share|shares|sharing|shared of} articles :: 記事を共有する
+after {looking|look|looked|looks} only :: …だけ見た後で
+{at|of|by|from} the headline. :: 見出しを
+{So|Nor|Than|Whom}, before :: だから…前に
+you {share|shares|sharing|shared of} a story, :: 話を共有する
+{take|takes|taking|taken} a moment :: 少し時間をとり
+{to check|to checking|checked|checks} its source. :: 情報源を確かめよう
+{Is|Are|Does|Do} it from :: それは…からか
+a {trusted|trust|trusts|trustful of} news site, :: 信頼できるサイト
+{or|nor|than|whom} from a stranger? :: それとも知らない人
+A short {pause|pauses|paused|pausing} :: 少し立ち止まると
+can {stop|stops|stopping|stopped} :: 止められる
+{false|falsely|falseness|falsity of} news :: 誤報が
+{from|to|at|on} spreading. :: 広がるのを
+
+@id int83
+@lv 2
+@title The Hidden Price of Free Apps
+@ja 無料アプリの見えない代金
+@tag 共通テストレベル・論説文
+@gloss download=ダウンロードする, somehow=何とかして, collect=集める, user=利用者, data=データ, advertiser=広告主, match=合う, personal=個人の
+Most of the apps {on|onto|at|by} our phones :: スマホのアプリの大半は
+{are|is|be|being} :: …だ
+{free|freely|freedom|freed} :: 無料
+{to|of|at|by} download. :: ダウンロードが
+{But|Nor|Than|Whom} companies :: しかし企業は
+{need|needs|needing|to need} :: 必要がある
+{to make|making|made|makes} money :: お金を稼ぐ
+{somehow|somewhat|somewhere of|someone}. :: 何らかの方法で
+{Many|Much|Every|A little} free apps :: 多くの無料アプリは
+{collect|collects|collecting|collection} :: 集める
+{information|informations|inform|informative} :: 情報を
+{about|over|onto|upon} their users. :: 利用者についての
+{This|These|Those|Them} includes :: これには含まれる
+{where|what|which|whom} you go :: 行く場所
+and {what|whom|whose|whatever of} you buy. :: そして買う物が
+The companies {then|than|thus of|them} :: 企業はその後
+{sell|sells|selling|sold of} :: 売る
+this data {to|of|at|by} advertisers. :: データを広告主に
+Advertisers {use|uses|using|useful} it :: 広告主はそれを使う
+{to show|to showing|showed|shows} you ads :: 広告を見せるために
+{that|what|whom|whose} match your interests. :: 興味に合う
+In other {words|word|wording|worded}, :: 言いかえれば
+you {pay|pays|paying|paid of} :: あなたは払っている
+{with|of|at|on} your personal information. :: 個人情報で
+This {is|are|be|being} not always :: いつも…ではない
+a {bad|badly|badness|worstly} thing. :: 悪いこと
+{However|Whatever|Whenever|Wherever}, before :: しかし…前に
+you {download|downloads|downloading|downloaded} an app, :: アプリを入れる
+{check|checking|checks|checked} :: 確認しよう
+{what|whom|whose|whatever of} it asks for. :: 何を求めているか
+
+@id int84
+@lv 2
+@title Fast Internet Comes to a Village
+@ja 山の村に速いネットがやってきた
+@tag 共通テストレベル・記事
+@gloss village=村, cable=ケーブル, connection=接続, chance=機会, clinic=診療所, remotely=遠隔で, local=地元の, join=加わる
+{In|On|Of|By} the small village of Kitayama, :: 小さな北山村では
+the internet {used to|use to|used|using to} be :: ネットは以前…だった
+very {slow|slowly|slowness|slows}. :: とても遅い
+{Watching|Watch|Watched|Watches} a short video :: 短い動画を見るのに
+{took|take|taking|taken} :: かかった
+{several|severe|several of|severely} minutes. :: 数分
+{Last|Late|Lately|Latest} year, :: 昨年
+{however|whatever|whenever|wherever}, the village :: しかし村は
+{laid|lay|lied|lain} :: 敷いた
+{new|newly|news|newness} cables. :: 新しいケーブルを
+{Now|No|Not|Nor} the connection :: 今では接続は
+{is|are|be|being} :: …だ
+as {fast|faster|fastest|fastly} :: 同じくらい速い
+{as|than|so|then} in big cities. :: 大都市と
+The change {has|have|having|is} :: この変化は
+{brought|bring|bringing|brings} :: もたらした
+{many|much|a little|every} new chances. :: 多くの新しい機会を
+The local clinic {can|cans|can to|must to} now :: 診療所は今…できる
+{talk|talks|talking|talked} :: 話す
+{with|of|into|from} doctors in the city :: 都会の医師と
+{by|of|into|at} video call. :: ビデオ通話で
+Some young people {have|has|having|to have} :: 若者の中には
+{moved|move|moving|moves} :: 移ってきた
+{to|at|of|on} the village :: 村に
+{to work|to working|worked|works} remotely. :: リモートで働くため
+One of them {runs|run|running|to run} :: そのうち1人は営む
+an online shop {selling|sell|to selling|sells} :: …を売るネット店を
+{local|locally|locality|locale} vegetables. :: 地元の野菜を
+The village {hopes|hope|hoping|hoped of} :: 村は願っている
+{that|what|which|whom} more people :: もっと多くの人が
+{will|is|are|has} join them. :: 加わることを
+
+@id int85
+@lv 2
+@title How Credit Cards Work
+@ja クレジットカードのしくみ
+@tag 共通テストレベル・説明文
+@gloss right away=すぐに, bill=請求書, whole=全部の, amount=金額, interest=利息, unpaid=未払いの, debt=借金, convenient=便利な, keep track of=把握する
+A credit card {lets|let|letting|to let} you :: カードがあれば
+{buy|buys|buying|to buy} things :: 物を買える
+{without|with|within|withdraw} paying :: 払わずに
+{right|rightly|righter|rights} away. :: すぐに
+{In|On|At|By} fact, the company :: 実はカード会社が
+{pays|pay|paying|paid of} :: 払う
+{for|of|at|by} you first. :: 先に代わりに
+{Once|One|Ones|Won} a month, :: 月に1回
+you {receive|receives|receiving|receipt} :: あなたは受け取る
+a {bill|build|billed|bills} :: 請求書を
+{for|to|at|into} everything you bought. :: 買った物すべての
+{If|What|Which|Whom} you pay :: 払えば
+the {whole|hole|wholly|whole of} amount, :: 全額を
+there {is|are|be|has} no extra cost. :: 追加の費用はない
+{But|Nor|Than|Whom} if you pay :: でも払うのが
+{only|alone|lonely|once} part of it, :: 一部だけだと
+the company {adds|add|adding|addition} :: 会社は加える
+{interest|interesting|interested|interests of}. :: 利息を
+The {unpaid|unpay|unpaying|unpays} amount :: 未払いの額は
+can {grow|grows|growing|grew} :: 増えることがある
+{quickly|quickness|quicken|quickly of}. :: すぐに
+Some people {end up|end on|end at|end of} :: 結局…人もいる
+{with|by|at|for} a large debt :: 大きな借金を抱える
+{because|because of|despite|due} they forget :: 忘れたせいで
+{how|what|which|whom} much they spent. :: いくら使ったか
+Credit cards {are|is|be|being} :: カードは…だ
+{convenient|convenience|conveniently|convene} :: 便利だ
+{and|nor|than|whom} safe :: そして安全だ
+{to carry|carrying|carried|carries}. :: 持ち歩くのに
+{Still|Steal|Stall|Stiller}, it is :: それでも…だ
+{important|importance|importantly|import} :: 大切だ
+{to keep|to keeping|kept|keeps} track :: 把握することが
+{of|for|at|by} your spending. :: 自分の支出を
+
+@id int86
+@lv 2
+@title Why Prices Go Up
+@ja 物価が上がるのはなぜ？
+@tag 共通テストレベル・説明文
+@gloss snack=お菓子, inflation=インフレ, cause=原因, goods=品物, seller=売り手, raise=上げる, fuel=燃料, wage=賃金, economy=経済
+Your grandparents {may|may to|must to|has} :: 祖父母は…かも
+{remember|remembers|remembering|remembered} :: 覚えている
+{when|what|which|whom} a snack :: お菓子が…ころを
+cost {only|alone|lonely|once} ten yen. :: 10円だった
+{Today|Todays|Today's|Tomorrow's}, the same snack :: 今は同じお菓子が
+{costs|costing|costed|to cost} :: かかる
+{much|many|very|more of} more. :: ずっと多く
+This general rise {in|on|at|by} prices :: 物価の全体的な上昇
+{is|are|be|being} called :: …と呼ばれる
+"{inflation|inflate|inflated|inflating}." :: 「インフレ」と
+{One|Once|Ones|Won} cause :: 原因の1つは
+{is|are|be|being} :: …だ
+{when|what|which|whom} many people :: 多くの人が…とき
+want {the same|same|the similar|the alike} goods. :: 同じ品物を欲しがる
+{If|Which|What|Whom} there are :: もし…なら
+not {enough|enough of|enougher|enoughly} goods, :: 品物が足りない
+sellers {can|cans|can to|must to} :: 売り手は…できる
+{raise|rise|raising|rises} their prices. :: 値段を上げる
+{Costs|Cost of|Costing|Costed} for companies :: 企業の費用も
+can also {go up|go on up|going up|goes up}, :: 上がることがある
+{such as|such like|as such|so as} fuel and wages. :: 燃料や賃金など
+{When|What|Which|Whom} this happens, :: そうなると
+companies {often|oft|often of|oftenly} :: 企業はよく
+{charge|charges|charging|to charge} more. :: 値段を上げる
+{A little|A few|Few|Many} inflation :: 少しのインフレは
+{is|are|be|being} :: …だ
+{normal|normally|norm|normality} :: ふつうのこと
+{in|on|at|by} a growing economy. :: 成長する経済では
+{But|Nor|Than|Whom} if prices :: でも物価が
+rise too {fast|fastly|faster of|fasting}, :: 速く上がりすぎると
+your money {buys|buy|buying|bought of} :: お金で買える物は
+{less|lesser|little of|least of} than before. :: 以前より少ない
+
+@id int87
+@lv 2
+@title Should Parks Remove Risky Play Equipment?
+@ja 危ない遊具は撤去すべき?
+@tag 共通テストレベル・論説文
+@gloss remove=撤去する, slide=滑り台, swing=ブランコ, relieved=ほっとした, repair=修理, expert=専門家, risk=危険, judge=判断する, confident=自信がある, equipment=遊具
+Many parks {have removed|have remove|has removed|having removed} :: 多くの公園は撤去した
+{tall|tallly|tallness|taller than} slides and swings :: 高い滑り台やブランコを
+{in|on|at|by} recent years. :: 近年
+{Is|Are|Do|Have} this :: これは…か
+the right {choice|choose|chose|chosen} :: 正しい選択
+{for|than|whom|nor} children? :: 子どもにとって
+Some parents {feel|feels|feeling|to feel} :: 一部の親は感じる
+{relieved|relieve|relieving|relievedly} :: ほっとしたと
+{because|because of|due|despite} fewer children :: 子どもが減ったので
+{get|gets|getting|to get} hurt. :: けがをする
+Parks {must|musts|must to|has} :: 公園は…ならない
+{also|either|neither|else} pay :: 払うことも
+{for|than|whom|nor} repairs :: 修理代を
+{and|nor|than|whom} safety checks. :: と安全点検の
+{On the other hand|On other hand|In the other hand|At the other hand}, :: 一方で
+{some|any|every|each} experts :: 一部の専門家は
+{say|says|saying|to say} :: 言う
+{that|what|whom|whose} a little risk is good. :: 少しの危険は良いと
+Children {learn|learns|learning|to learn} :: 子どもは学ぶ
+{how to judge|how judge|how judging|what to judging} danger :: 危険の判断の仕方を
+{by|with|on|at} trying hard things. :: 難しいことに挑んで
+{Without|Unless|Despite of|Nor} such chances, :: そうした機会がないと
+they {may|maybe|must to|may to} :: …かもしれない
+{become|becomes|became|becoming} :: なる
+{less|fewer|lessen|lessly} confident. :: 自信のない子に
+{Some|Any|Every|Each} cities :: 一部の都市は
+{are trying|are try|trying|is trying} :: 試している
+{a middle way|an middle way|a middle ways|middle a way}. :: 中間の方法を
+They {build|builds|building|to build} :: 作る
+{play areas|play area|plays areas|playing area of} :: 遊び場を
+{with|than|whom|nor} soft ground :: 柔らかい地面と
+{and|nor|than|whom} lower equipment. :: 低めの遊具の
+The goal {is|are|be|being} :: 目標は
+{to keep|keep|keeps|kept} play :: 遊びを保つこと
+{both|either|neither|each} safe and exciting. :: 安全でわくわくする
+
+@id int88
+@lv 2
+@title Volunteers Wanted: Story Time
+@ja 読み聞かせボランティア募集
+@tag 共通テストレベル・お知らせ
+@gloss volunteer=ボランティア, experience=経験, training=研修, session=回, interested=興味がある, application=申し込み, deadline=締め切り, lifelong=一生の
+Green Hill Library {is looking|is look|looking|are looking} :: 図書館は探している
+{for|of|than|whom} volunteers :: ボランティアを
+{who|which|whose|what} can read :: 読める人を
+{to|than|whom|nor} young children. :: 幼い子どもに
+Our story time {is held|is hold|holds|is holding} :: お話会は開かれる
+{every|all of|each of|any of} Saturday morning :: 毎週土曜の朝
+{in|on|than|of} the children's room. :: 児童室で
+You {don't need|doesn't need|don't needs|not need} :: 必要ない
+{any|none|nothing|no} special experience :: 特別な経験は
+{as long as|as long|so long|long as} you enjoy books. :: 本が好きなら
+{All|Every|Each|Whole} volunteers :: ボランティアは全員
+will {take|takes|taking|took} :: 受けます
+a one-hour {training|trained|train|trainer} session :: 1時間の研修を
+{before|ago|until to|since} their first day. :: 初日の前に
+{During|While|Among|Between} the training, :: 研修では
+you {will learn|will learning|will learned|learning} :: 学びます
+{how to choose|how choose|how choosing|what to choosing} books :: 本の選び方を
+{and|nor|than|whom} keep children interested. :: 子どもを飽きさせない
+Volunteers {should|shoulds|should to|ought} :: ボランティアは…して
+{come|comes|coming|came} :: 来てください
+at least {twice|two|second|double} a month. :: 月に2回以上
+{If|Although of|Despite|Because of} you are interested, :: 興味があれば
+please {fill|fills|filling|filled} out :: 記入してください
+{an application|a application|an applying|a apply} form :: 申込書に
+{at|than|whom|nor} the front desk. :: 受付で
+The deadline {is|are|be|being} :: 締め切りは
+{the end|an end|the endless|the ended} :: 末
+{of|on|for|at} this month. :: 今月の
+{Reading|Read|Reads|To reading} together :: 一緒に読むことは
+{helps|help|helping|to help} :: 助けになる
+children {grow|grows|growing|grown} :: 子どもが育つ
+{into|onto|than|whom} lifelong readers. :: 一生本を読む人に
+We {look|looks|looking|to look} forward :: 楽しみにしています
+{to meeting|to meet|meeting|for meet} you :: お会いするのを
+{soon|ago|yet|since}. :: もうすぐ
+
+@id int89
+@lv 2
+@title Bicycles on Our Sidewalks
+@ja 歩道を走る自転車
+@tag 共通テストレベル・投書
+@gloss sidewalk=歩道, rider=乗る人, ring=鳴らす, cyclist=自転車に乗る人, narrow=狭い, suggest=提案する, council=議会, bike lane=自転車レーン
+I {am writing|am write|writing|have writing} :: 私は書いています
+{about|than|whom|nor} bicycles :: 自転車について
+{on|than|whose|nor} the sidewalks :: 歩道の
+{in|than|whom|nor} our town. :: 私たちの町の
+{Last|Next|Latest|Lastly} week, :: 先週
+my mother {was almost hit|was almost hitting|almost hit was|were almost hit} :: 母はひかれかけた
+{by|with|from|of} a fast bike. :: 速い自転車に
+The rider {didn't ring|didn't rang|doesn't rang|not ring} :: 乗っていた人は鳴らさず
+{his|he|him|himself} bell :: ベルを
+{and|nor|than|whom} didn't stop. :: 止まらなかった
+{Many|Much|A lot|Lots} older people :: 多くの高齢者は
+now {feel|feels|feeling|to feel} :: 今は感じている
+{afraid|afraidly|fright|frighten} :: 怖いと
+{of walking|to walking|of walk|for walk} downtown. :: 中心街を歩くのが
+{However|Because|Unless|Although}, :: しかし
+I {understand|understands|understanding|to understand} :: 私は理解している
+{why|what|which|whom} cyclists use sidewalks. :: 歩道を使うわけを
+The roads {are|is|be|being} :: 車道は
+{narrow|narrowly|narrowness|narrows} :: 狭い
+and {full|fully|fill|fullness} of trucks. :: トラックでいっぱい
+Riding there {is|are|be|being} :: そこを走るのは
+{dangerous|danger|dangerously|endanger} :: 危険だ
+{for|of|than|whom} cyclists, too. :: 自転車にとっても
+I {suggest|suggests|suggesting|to suggest} :: 私は提案する
+{that|what|whom|whose} the town council :: 町議会が
+{create|creating|to creating|to create} :: 作ることを
+{bike lanes|a bike lanes|bike lane|bikes lane} on main roads. :: 幹線道路に自転車道を
+{Until|Since|Despite|During} then, :: それまでは
+please {ride|rides|riding|rode} slowly :: ゆっくり走って
+{and|nor|than|whom} ring your bell. :: ベルを鳴らして
+Sidewalks {should|shoulds|should to|ought} :: 歩道は…べきだ
+{be|being|been|is} safe :: 安全である
+{for|than|whom|nor} everyone. :: みんなにとって
+
+@id int90
+@lv 2
+@title An Empty House Gets a New Life
+@ja 空き家が生まれ変わる
+@tag 共通テストレベル・記事
+@gloss empty=空いた, rural=田舎の, owner=持ち主, take care of=手入れする, rent=家賃, repair=修理する, elderly=高齢の, resident=住民, lonely=さびしい
+{In|At|On|By} many parts of Japan, :: 日本の多くの地域で
+{the number|a number|the numbers|number} of empty houses :: 空き家の数が
+{is rising|are rising|rising|is rise}. :: 増えている
+{In|On|Of|With} one small town, :: ある小さな町で
+a group of students {turned|turn|turns|turning} :: 学生たちは変えた
+{an old|a old|an olds|a olds} house :: 古い家を
+{into|onto|than|whom} a café. :: カフェに
+The owner {had moved|had move|has moved to|had moving} away :: 持ち主は引っ越していた
+{and|nor|than|whom} could not :: そしてできなかった
+{take care of|take care|take cared of|taking care of} it. :: 手入れが
+She {agreed|agree|agreeing|agreement} :: 彼女は同意した
+{to let|letting|let|to letting} the students :: 学生たちに
+{use|used|using|to use} it :: 使わせることに
+{for|than|whom|nor} a low rent. :: 安い家賃で
+The students {spent|spend|spending|spends} :: 学生たちはかけた
+{three months|three month|third months|three monthly} :: 3か月を
+{repairing|repair|repaired|to repairing} the walls :: 壁を修理して
+{and|nor|than|whom} floors. :: そして床を
+Now the café {is|are|be|being} :: 今そのカフェは
+{a popular|an popular|a popularity|popular a} place :: 人気の場所だ
+{for|than|whom|nor} local people. :: 地元の人に
+Elderly residents {come|comes|coming|to come} :: 高齢の住民が来る
+{to chat|chats|chatted|to chatting} :: おしゃべりしに
+{while|during|among|despite} children :: 一方子どもたちは
+{do|does|doing|done} their homework. :: 宿題をする
+One woman {said|sayed|saying|to say}, :: ある女性は言った
+"I {used to|use to|used|using to} feel lonely, :: 前はさびしかった
+{but|nor|than|whom} now :: でも今は
+I {have|has|having|to have} friends here." :: ここに友達がいる
+{Other|Another|Others|Otherwise} towns :: ほかの町も
+{are planning|are plan|planning|is planning} :: 計画している
+{similar|similarly|similarity|same} projects. :: 似た取り組みを
+An empty house {can|cans|can to|could to} :: 空き家は…できる
+{become|becomes|became|becoming} :: なる
+{the heart|heart|hearts|the heartily} of a town. :: 町の中心に
+
+@id int91
+@lv 2
+@title Should Streetlights Be Dimmed at Night?
+@ja 夜の街灯を暗くすべき?
+@tag 共通テストレベル・論説文
+@gloss dim=暗くする, streetlight=街灯, electricity=電気, insect=昆虫, confused=混乱した, crime=犯罪, expert=専門家, sensor=センサー, balance=両立させる
+Some towns {are dimming|are dim|dimming|is dimming} :: 一部の町は暗くしている
+{their|there|they're|they} streetlights :: 街灯を
+{late|lately|later than|latest} at night. :: 夜遅くに
+This {saves|save|saving|to save} :: これは節約する
+{a lot of|a lot|lots|many of} electricity :: たくさんの電気を
+{and|nor|than|whom} money. :: そしてお金を
+{Darker|Darkly|Darkness|Darken} skies :: より暗い空は
+{also|either|neither|too} help :: …にも役立つ
+{insects|insect|insecting|insected} and birds, :: 昆虫や鳥の
+{which|who|whose|what} can be confused :: 混乱しがちな
+{by|than|whom|nor} bright light. :: 明るい光で
+{However|Because|Unless|Since}, :: しかし
+{many|much|a lot|lots} residents :: 多くの住民は
+{feel|feels|feeling|to feel} :: 感じる
+{less safe|less safety|fewer safe|less safely} on dark streets. :: 暗い道で不安に
+Women {walking|walk|walks|to walking} home alone :: 一人で帰る女性は
+{are|is|be|being} especially :: 特に
+{worried|worry|worries|worriedly} :: 心配している
+{about|than|whom|nor} crime. :: 犯罪を
+{Some|Any|Every|Each} experts :: 一部の専門家は
+{say|says|saying|to say} :: 言う
+{that|what|whom|whose} darker streets :: 暗い道で
+{do not always|does not always|not always do|do not always to} increase crime. :: 犯罪が増えるとは限らない
+{But|Nor|Than|Whom} feeling safe :: しかし安心感も
+{is|are|be|being} :: …だ
+{important|importance|importantly|import}, too. :: 大切
+One {solution|solve|solving|solved} :: 一つの解決策は
+{is|are|be|being} :: …だ
+{to use|use|uses|used} lights :: 明かりを使うこと
+{that|what|whom|whose} turn on :: つくような
+{when|what|which|whom} people pass. :: 人が通るときに
+These {sensor|sensorly|sensored|sensoring} lights :: センサー付きの明かりは
+{save|saves|saving|to save} energy :: 電力を節約する
+{and|nor|than|whom} still :: それでも
+{keep|keeps|keeping|to keep} people safe. :: 人の安全を守る
+Each town {must|musts|must to|have} decide :: 各町は決めねばならない
+{how to balance|how balance|how balancing|what to balancing} :: どう両立させるか
+{these|this|that|thats} two needs. :: この二つの必要を
+
+@id int92
+@lv 2
+@title Notice: New Garbage Rules
+@ja ごみ分別の新ルール
+@tag 共通テストレベル・お知らせ
+@gloss sort=分別する, container=容器, rinse=すすぐ, label=ラベル, burnable=燃える, separate=別々の, collection=回収, cooperation=協力
+{From|Since|Among|Between} April 1, :: 4月1日から
+the city {will change|will changes|changes will|will changing} :: 市は変更します
+{its|it's|it|itself} rules :: ルールを
+{for|than|whom|nor} sorting garbage. :: ごみの分別の
+Plastic containers {will be|will being|will are|will been} :: プラ容器は
+{collected|collect|collecting|collects} :: 回収されます
+{on|in|at|by} Wednesdays :: 水曜日に
+{instead of|instead|in stead|instead to} Fridays. :: 金曜日ではなく
+Please {rinse|rinses|rinsing|rinsed} them :: すすいでください
+{and|nor|than|whom} remove :: そしてはがして
+{the labels|a labels|labeled|the labeled} :: ラベルを
+{before|ago|since|until} putting them out. :: 出す前に
+{Dirty|Dirt|Dirtily|Dirtiness} plastic :: 汚れたプラは
+{should go|should goes|should going|should to go} :: 入れてください
+{into|than|whom|nor} burnable garbage. :: 燃えるごみに
+Cans and bottles {must|musts|must to|has} :: 缶とびんは
+{be put|be putted|putting|be puts} :: 入れなければならない
+in {separate|separately|separation|separates} bags. :: 別々の袋に
+Garbage {should|shoulds|should to|ought} :: ごみは…ください
+{be put out|be put outed|be putting out|put out be} :: 出して
+{by|since|ago|while} 8 a.m. :: 朝8時までに
+{on|in|at|than} collection day. :: 回収日の
+Bags {that|what|whom|whose} do not follow :: 守っていない袋は
+{the rules|the rule of|a rules|rule} :: ルールを
+{will not|will be not|not will|will no} be collected. :: 回収されません
+A {new|newly|news|newness} guide :: 新しい案内が
+{will be sent|will be send|will sent|will sending} :: 送られます
+{to|than|whom|nor} every home :: 全家庭に
+{in|on|at|since} March. :: 3月に
+You {can|cans|can to|could to} also :: …もできます
+{check|checks|checking|checked} the rules :: ルールを確認
+{on|than|whom|nor} the city's website. :: 市のサイトで
+{Thank|Thanks|Thanking|Thanked} you :: ありがとうございます
+{for|to|with|than} helping :: 協力してくれて
+{to keep|keeps|kept|keeping} our city clean. :: 町をきれいに保つのに
+
+@id int93
+@lv 2
+@title Volunteer Drivers for a Quiet Town
+@ja ボランティアの送迎サービス
+@tag 共通テストレベル・記事
+@gloss route=路線, rural=田舎の, elderly=高齢の, retired=退職した, ride=送迎, share=分け合う, fuel=燃料, passenger=乗客, support=支える
+{Last|Latest|Lastly|Late} year, :: 昨年
+the {only|alone|once|ever} bus route :: 唯一のバス路線が
+{in|than|whom|nor} a small rural town :: ある田舎町の
+{was stopped|was stop|stopped was|were stopped}. :: 廃止された
+Many elderly people {could no longer|could no long|can no longer to|could not longer} get :: 高齢者は行けなくなった
+{to|than|whom|nor} the hospital :: 病院へ
+{or|nor|than|whom} the supermarket. :: やスーパーへ
+{To solve|Solve|Solved|To solving} this problem, :: この問題を解くため
+{retired|retire|retires|retirement} residents :: 退職した住民が
+{started|starting|to start|have start} :: 始めた
+{a volunteer|an volunteer|a volunteering of|volunteer a} driving service. :: 送迎サービスを
+People {who|which|whose|what} need a ride :: 送迎が必要な人は
+{call|calls|calling|to call} :: 電話する
+{the town office|town office the|the town offices of|a town offices} :: 役場に
+{a day|one days|a days|day a} before. :: 前日に
+The office {then|than|thus of|them} :: 役場はそれから
+{finds|find|finding|to find} :: 見つける
+{a driver|an driver|driver a|a drivers} :: 運転手を
+{who|which|whose|what} is free. :: 空いている
+The drivers {are not paid|are not pay|not paid are|is not paid}, :: 運転手は無給だが
+{but|nor|than|whom} riders :: 利用者は
+{share|shares|sharing|to share} :: 分け合う
+{the cost|the costly|a costs|the costing} of fuel. :: 燃料代を
+One driver, {aged|age|aging|ages} 70, :: 70歳の運転手は
+{said|sayed|saying|to say}, :: 言った
+"I {enjoy|enjoys|enjoying|to enjoy} :: …が楽しい
+{talking|talk|to talking|talked} with my passengers." :: 乗客と話すのが
+The service {has grown|has grow|have grown|has growing} :: サービスは広がった
+{to|than|whom|nor} 25 drivers :: 運転手25人に
+{since|ago|during|while} it began. :: 始まって以来
+{However|Because|Unless|Since}, :: しかし
+most drivers {are|is|be|being} :: 運転手の多くは
+{over|than|more|most} 65, :: 65歳を超える
+{so|nor|than|whom} the town :: そのため町は
+{needs|need|needing|to need} younger helpers. :: 若い協力者が必要
+The project {shows|show|showing|to show} :: その取り組みは示す
+{how|what|which|whom} neighbors :: 近所の人々がいかに
+{can|cans|can to|could to} support :: 支えられるか
+{each other|each others|one other|every other}. :: 互いに
+
+@id int94
+@lv 2
+@title My First Disaster Drill
+@ja はじめての防災訓練
+@tag 共通テストレベル・ブログ
+@gloss disaster drill=防災訓練, siren=サイレン, shelter=避難所, emergency=緊急事態, gym=体育館, cardboard=段ボール, firefighter=消防士, realize=気づく, prepare=準備する
+{Last|Latest|Lastly|Late} Sunday, :: 先週の日曜
+I {joined|join|joining|joins} :: 参加した
+{a disaster drill|an disaster drill|a disaster drilled|disaster a drill} :: 防災訓練に
+{in|than|whom|nor} my neighborhood. :: 近所の
+{At|In|On|Of} 9 a.m., :: 午前9時に
+a siren {sounded|sound|sounding|to sound} :: サイレンが鳴った
+{and|nor|than|whom} everyone :: そして皆が
+{walked|walk|walking|to walk} to the school. :: 学校へ歩いた
+The school {is used|is use|uses|is using} :: 学校は使われる
+{as|than|whom|nor} a shelter :: 避難所として
+{during|while|among|between} emergencies. :: 緊急時に
+{In|On|Of|Than} the gym, :: 体育館で
+we {learned|learning|learns|to learn} :: 私たちは学んだ
+{how to set up|how set up|how setting up|what to set up} :: 組み立て方を
+{cardboard|cardboards|cardboarded|cardboarding} beds. :: 段ボールベッドの
+They {were|was|be|being} :: それは…だった
+{stronger|strong|strongest|strongly} :: より丈夫
+{than|then|that|as} I expected. :: 思ったより
+{Next|Nextly|Neighbor|Near}, :: 次に
+a firefighter {showed|show|showing|to show} us :: 消防士が見せた
+{what|whom|whose|whoever} to keep :: 備えておく物を
+{at|than|whom|nor} home. :: 家に
+{Water|Waters|Watering|Watered}, food, and a radio :: 水、食料、ラジオは
+{are|is|be|being} :: …だ
+{among|between|amongst of|along} the most important. :: 特に大切な物
+I {realized|realizing|realizes|to realize} :: 気づいた
+{that|what|whom|whose} my family :: 家族が…と
+{had not prepared|had not prepare|has not preparing|had not preparing} :: 準備していなかった
+{anything|nothing|none|everything of}. :: 何も
+{That|What|Which|Whom} evening, :: その晩
+we {made|make|making|makes} :: 私たちは作った
+{an emergency bag|a emergency bag|an emergency bags|emergency an bag} :: 非常袋を
+{together|togetherness|altogether of|gather}. :: 一緒に
+I {hope|hopes|hoping|to hope} :: 私は願う
+{that|what|whom|whose} we never :: 決して…ないことを
+{need|needs|needing|to need} it, :: それを必要としない
+{but|nor|than|whom} now I feel :: でも今は感じる
+{ready|readily|readiness|readying}. :: 準備ができたと
+
+@id int95
+@lv 2
+@title Save Our Old Station
+@ja 古い駅を残してほしい
+@tag 共通テストレベル・投書
+@gloss tear down=取り壊す, wooden=木造の, clock tower=時計塔, platform=ホーム, symbol=象徴, repair=修理, wheelchair=車いす, attract=引きつける, consider=検討する
+I {was|were|be|being} :: 私は…だった
+{sad|sadly|sadness|sadden} :: 悲しかった
+{to hear|hear|heard|hears} :: 聞いて
+{that|what|whom|whose} the old station :: 古い駅が…と
+{will be torn down|will torn down|will be tear down|will be tearing down}. :: 取り壊される
+The wooden building {is|are|be|being} :: その木造の建物は
+{over|than|more|most} 100 years old :: 築100年を超える
+{and|nor|than|whom} has :: そして持つ
+{a beautiful|an beautiful|a beautifully|beauty a} clock tower. :: 美しい時計塔を
+My grandparents {met|meeting|meets|to meet} :: 祖父母は出会った
+{on|than|whom|nor} its platform :: そのホームで
+{many|much|lot|plenty} years ago. :: 何年も前に
+{For|Than|Whom|Nor} many people, :: 多くの人にとって
+it {is|are|be|being} :: それは…だ
+{a symbol|an symbol|a symbolic|symbol a} :: 象徴
+{of|than|whom|nor} our town. :: 町の
+I {understand|understands|understanding|to understand} :: 私は理解している
+{that|what|whom|whose} repairs :: 修理には…と
+{would cost|would costs|would costing|would to cost} :: かかるだろう
+{a lot of|a lot|lots|many of} money. :: 多くのお金が
+The station {is|are|be|being} :: 駅は
+{also|either|neither|alike} hard :: …も難しい
+{to use|use|used|uses} :: 使うのが
+{for|than|whom|nor} people in wheelchairs. :: 車いすの人には
+{However|Because|Unless|Since}, :: しかし
+{other|another|others|otherwise} towns :: ほかの町は
+{have kept|have keep|has kept|have keeping} :: 残してきた
+{their|there|they're|them} old stations :: 古い駅を
+{while|during|among|despite} adding elevators. :: エレベーターを付けつつ
+Some {even|ever|every|eve} :: 中には…さえ
+{attract|attracts|attracting|to attract} :: 引きつけている
+{more|much|mostly|muchly} tourists :: より多くの観光客を
+{than|then|that|as} before. :: 以前より
+I {ask|asks|asking|to ask} :: 私はお願いする
+{the city|city|cities the|a cities} :: 市に
+{to consider|considering|consider|considered} :: 検討することを
+{this|these|those|they} option. :: この選択肢を
+Once {it|its|it's|itself} is gone, :: 一度なくなれば
+we {cannot|can't not|cannot to|not can} :: できない
+{get|gets|getting|got} it back. :: 取り戻すことは
+
+@id int96
+@lv 2
+@title Green Roofs in the City
+@ja 都会の緑の屋根
+@tag 共通テストレベル・説明文
+@gloss roof=屋根, common=一般的な, concrete=コンクリート, air conditioning=冷房, absorb=吸収する, flooding=浸水, weight=重さ, soil=土, benefit=利点
+A green roof {is|are|be|being} :: 緑の屋根とは
+{a roof|an roof|roof a|a roofs} :: 屋根のこと
+{that|what|whom|whose} is covered :: おおわれた
+{with|than|of|whom} plants. :: 植物で
+{Such|So|Such a|Very} roofs :: そのような屋根は
+{are becoming|is becoming|becoming|are become} :: なりつつある
+{common|commonly|commonness|commons} :: 一般的に
+{in|than|whom|nor} large cities. :: 大都市で
+Cities {are|is|be|being} :: 都市は
+often {hotter|hot|hottest|hotly} :: しばしば暑い
+{than|then|that|as} the countryside :: 郊外よりも
+{because|because of|due|despite} concrete holds heat. :: 熱をためるので
+Plants {on|than|whom|nor} roofs :: 屋根の植物は
+{help|helps|helping|to help} :: 役立つ
+{to cool|cooling|cooled|cools} :: 冷やすのに
+the {buildings|builded|builds|built} below. :: 下の建物を
+{As a result|As result|In a result|As the results}, :: その結果
+{less|fewer|lessen|lessly} energy :: より少ない電力が
+{is needed|is need|needed is|are needed} :: 必要とされる
+{for|than|whom|nor} air conditioning. :: 冷房のために
+Green roofs {also|either|neither|too} :: 緑の屋根は…も
+{absorb|absorbs|absorbing|to absorb} rainwater, :: 雨水を吸収する
+{which|who|whose|what} can reduce :: それは減らせる
+{flooding|flooded|floody|flooden} :: 浸水を
+{during|while|among|since} heavy rain. :: 大雨の時の
+{In addition|In additional|On addition|At addition}, :: さらに
+they {give|gives|giving|given} :: 与える
+{birds|bird|birding|birded} and bees :: 鳥やハチに
+{a place|an place|place a|a places} to rest. :: 休む場所を
+{However|Because|Unless|Since}, :: しかし
+{not|no|none|nor} every building :: すべての建物が…ない
+{can|cans|can to|could to} support :: 支えられる
+{the weight|the weigh|the weighty|a weights} of soil. :: 土の重さを
+The plants {need|needs|needing|to need} :: 植物には必要だ
+{regular|regularly|regulate|regularity} care, :: 定期的な手入れが
+{which|who|whose|what} costs money. :: それはお金がかかる
+{Even so|Even though|Even if|Even as}, :: それでも
+{many|much|a lot|lots} experts :: 多くの専門家は
+{believe|believes|believing|to believe} :: 考える
+{that|what|whom|whose} the benefits are worth it. :: 利点は見合うと
+
+@id int97
+@lv 2
+@title The Wrong Cake
+@ja 名前ちがいのケーキ
+@tag 共通テストレベル・物語文
+@gloss order=注文する, baker=菓子職人, retirement=退職, nervously=おそるおそる, burst out laughing=どっと笑い出す, retire=退職する, apologize=謝る, receive=受け取る
+Kenji {ordered|order|ordering|orders} :: ケンジは注文した
+a cake {for|to|at|of} his mother's birthday. :: 母の誕生日ケーキを
+He {asked|ask|asking|asks} the baker :: 彼は職人に頼んだ
+{to write|writing|write|wrote} "Happy Birthday, Mom" :: 「誕生日おめでとう」と
+{on|of|at|to} top. :: 上に書くよう
+{When|What|Which|Whom} he opened the box :: 箱を開けたとき
+at home {that|those|these|them} evening, :: その晩、家で
+he {couldn't|can't|doesn't|won't} believe his eyes. :: 彼は目を疑った
+The cake {said|says|saying|say} :: ケーキにはあった
+"Happy {Retirement|Retire|Retired|Retiring}, Tom" :: 「退職おめでとうトム」と
+{in|on|at|by} blue letters. :: 青い文字で
+There {was|were|be|being} no time :: 時間はなかった
+{to go|going|go|went} back to the shop. :: 店に戻る
+{So|Than|Nor|Whom} Kenji :: そこでケンジは
+{nervously|nervous|nerve|nervousness} carried :: おそるおそる運んだ
+the cake {to|at|for|on} the table. :: ケーキを食卓へ
+His mother {read|reads|reading|readed} it :: 母はそれを読んだ
+and {burst|bursted|bursting|bursts} :: そして…し出した
+{out|off|up|over} laughing. :: どっと笑い
+"I've {always|ever|yet|every} wanted :: ずっと…したかった
+{to retire|retiring|retire|retired}," :: 仕事をやめたいと
+she {said|told|talked|spoke}. :: 彼女は言った
+{The next day|The next days|Next the day|The day next}, :: 翌日
+the baker {called|calls|calling|call} :: 職人が電話してきた
+{to apologize|apologizing|apologize|apologized}. :: 謝るために
+A man {named|naming|names|name} Tom :: トムという男性が
+had {received|receive|receiving|receives} :: 受け取っていた
+a birthday cake {instead|instead of|in place|rather}. :: 代わりに誕生日ケーキを
+
+@id int98
+@lv 2
+@title The Parrot Next Door
+@ja となりのオウム
+@tag 共通テストレベル・物語文
+@gloss pick up=(電話に)出る, broken=壊れた, balcony=ベランダ, parrot=オウム, copy=まねる, ringtone=着信音, neighbor=隣人, perfectly=完璧に
+{For|Since|Until|While} a week, :: 1週間ずっと
+Lucy {kept|keep|keeping|keeps} hearing :: ルーシーは聞き続けた
+her phone {ring|rang|rung|to ring}. :: 電話が鳴るのを
+{But|Nor|Than|Whom} every time :: でも毎回
+she {picked|pick|picking|picks} it up, :: 彼女が出ると
+{nobody|nowhere|no one's|none of} was there. :: だれもいなかった
+She {thought|think|thinking|thinks} :: 彼女は思った
+{her|she|hers|herself} phone :: 自分の電話が
+{was broken|was break|broke was|broken was}. :: 壊れていると
+{One|Once|Ones|Any} afternoon, :: ある日の午後
+she {heard|hear|hearing|hears} the sound :: 彼女はその音を聞いた
+{through|thorough|though|throw} the open window. :: 開いた窓から
+It {was coming|was come|coming|is came} :: それは聞こえていた
+{from|for|off|by} the balcony next door. :: 隣のベランダから
+There {sat|sit|seat|sitting} :: そこにいたのは
+a {green|greenly|greens|greenery} parrot :: 緑のオウム
+{copying|copied|copy|copies} her ringtone! :: 着信音をまねる
+Her neighbor {laughed|laugh|laughing|laughs} :: 隣人は笑った
+and {said|told|talked|spoke}, :: そして言った
+"He {learns|learn|learning|to learn} sounds fast." :: 音をすぐ覚えるの
+Lucy {decided|decide|decision|deciding} :: ルーシーは決めた
+{to change|changing|change|changed} her ringtone :: 着信音を変えると
+{to|on|at|of} a song. :: 曲に
+{Two|Second|Twice|Double} days later, :: 2日後
+the parrot {was singing|was sing|singing was|sang was} :: オウムは歌っていた
+{it|its|it's|itself} perfectly. :: それを完璧に
+
+@id int99
+@lv 2
+@title A Seat on the Bus
+@ja バスの席
+@tag 共通テストレベル・物語文
+@gloss crowded=混んだ, elderly=年配の, offer=差し出す, get off=降りる, auditorium=講堂, guest speaker=講演者, stage=舞台, recognize=だれだかわかる
+The bus {was|were|be|being} :: バスは…だった
+{crowded|crowd|crowding|crowds} :: 混んで
+{that|those|these|them} rainy morning. :: その雨の朝
+Aya {noticed|notice|noticing|notices} :: アヤは気づいた
+an {elderly|elders|eldest|elderness} man :: 年配の男性に
+{standing|stood|stand|stands} near the door. :: ドアの近くに立つ
+She {stood|stand|standing|stands} up :: 彼女は立ち上がった
+and {offered|offer|offering|offers} him :: そして彼に差し出した
+{her|she|hers|herself} seat. :: 自分の席を
+"{Thank|Thanks|Thanking|Thanked} you, young lady," :: ありがとうお嬢さん
+he {said|told|talked|spoke} :: と彼は言った
+{with|by|at|on} a warm smile. :: 温かい笑顔で
+Aya {got|get|gotten|getting} off :: アヤは降りた
+{at|in|on|to} the next stop :: 次の停留所で
+and {forgot|forget|forgotten|forgetting} about him. :: 彼のことを忘れた
+{That|Those|These|Them} afternoon, :: その日の午後
+her school {held|hold|holding|holds} :: 学校は開いた
+a {special|specially|specialty|special's} talk :: 特別な講演会を
+{in|into|to|for} the auditorium. :: 講堂で
+{When|What|Which|Whom} the guest speaker :: 講演者が…とき
+{walked|walk|walking|walks} onto the stage, :: 舞台に上がった
+Aya {recognized|recognize|recognizing|recognizes} him. :: アヤは彼に気づいた
+It {was|were|is|be} :: それは…だった
+the man {from|for|off|of} the bus! :: バスの男性
+He {began|begun|begin|beginning} his talk :: 彼は話を始めた
+{by|with|at|on} saying, :: …と言って
+"A student {gave|give|given|giving} me her seat today." :: 今日生徒が席をくれた
+{At|In|On|By} that moment, :: その瞬間
+Aya's face {turned|turn|turning|turns} :: アヤの顔はなった
+{bright|brightly|brightness|brighten} red. :: 真っ赤に
+
+@id int100
+@lv 2
+@title A Note on the Doorstep
+@ja 玄関先のメモ
+@tag 共通テストレベル・物語文
+@gloss deliver=配達する, package=荷物, for a living=生計のために, freezing=凍えるほど, thermos=水筒, doorstep=玄関先, sign=署名する, envelope=封筒
+Mr. Ito {delivered|deliver|delivering|delivery} :: 伊藤さんは配達した
+packages {for|to|at|on} a living. :: 仕事として荷物を
+{One|Once|Ones|Any} snowy day, :: ある雪の日
+it {was|were|is|be} :: …だった
+{freezing|freeze|froze|freezes} cold. :: 凍えるほど寒く
+He {had|has|have|having} :: 彼には…あった
+{more than|more then|most than|much than} fifty packages :: 50個以上の荷物が
+{to deliver|delivering|deliver|delivered}. :: 配達すべき
+{At|In|On|To} one house, :: ある家で
+he {found|find|founded|finding} :: 彼は見つけた
+a thermos {and|nor|than|whom} a note :: 水筒とメモを
+{on|in|to|for} the doorstep. :: 玄関先に
+The note {said|says|saying|say}, :: メモにはあった
+"Hot cocoa {for|to|at|of} you. :: あなたにココアを
+{Stay|Stays|Staying|Stayed} warm!" :: 暖かくしてね
+It {was signed|was sign|signed was|is signing} :: 署名があった
+{at|of|to|for} the bottom :: 下のほうに
+{by|at|on|of} "Kota, age 8." :: 「コウタ8歳」と
+The warm drink {made|make|making|makes} :: 温かい飲み物は…した
+{him|he|his|himself} :: 彼を
+{feel|felt|feeling|to feel} much better. :: ずっと元気に
+{The next|Next the|The nearest|Then next} week, :: 翌週
+he {left|leave|leaving|leaves} :: 彼は置いていった
+a {small|smally|smallness|smalls} envelope :: 小さな封筒を
+{at|in|of|to} Kota's door. :: コウタの家の戸口に
+{Inside|Inner|Insider|Inward} was :: 中にあったのは
+a toy {truck|trucks|trucked|trucking} :: おもちゃのトラック
+{and|nor|than|whom} a thank-you card. :: とお礼のカード
+
+@id int101
+@lv 2
+@title Where Did the Socks Go?
+@ja 消えたくつした
+@tag 共通テストレベル・物語文
+@gloss disappear=消える, go missing=なくなる, blame=…のせいにする, washing machine=洗濯機, stairs=階段, pile=山, puppy=子犬, collection=コレクション, lid=ふた
+{In|On|At|To} the Mori family, :: 森家では
+socks {started|start|starting|starts} :: くつしたが始めた
+{disappearing|disappear|disappeared|disappears}. :: 消えることを
+{Every|Ever|Very|Everything} week, :: 毎週
+one {or|nor|than|whom} two socks :: 1、2足のくつしたが
+{went|go|gone|going} missing. :: なくなった
+Dad {blamed|blame|blaming|blames} :: 父は…のせいにした
+{the|an|those|these} washing machine, :: 洗濯機の
+{and|nor|than|whom} Mom blamed the kids. :: 母は子どものせいに
+The kids {said|told|talked|spoke} :: 子どもたちは言った
+{angrily|angry|anger|angered}, :: 怒って
+"We didn't {take|took|taken|taking} them!" :: 取ってないよ
+{One|Once|Ones|Any} Sunday, :: ある日曜日
+Mom {heard|hear|hearing|hears} :: 母は聞いた
+a {strange|strangely|strangeness|strangers} noise :: 変な音を
+{under|unless|until|undo} the stairs. :: 階段の下で
+She {looked|look|looking|looks} :: 彼女はのぞいた
+{inside|inner|insider|inward} the dog's bed :: 犬のベッドの中を
+and {found|find|founded|finding} :: そして見つけた
+{a pile|a piles|an pile|a pilot} of socks. :: くつしたの山を
+Their puppy, Choco, {had been|has been|had be|have be} :: 子犬のチョコが
+{hiding|hide|hid|hidden} them :: それらを隠していた
+{for|since|during|while} weeks. :: 何週間も
+Choco {looked|look|looking|looks} :: チョコは見えた
+{proud|pride|proudly|prides} :: 得意げに
+{of|with|at|for} his collection. :: 自分の収集品を
+{Now|Know|Snow|No} :: 今では
+the family {keeps|keep|keeping|to keep} :: 家族はしまっている
+{their|there|they're|them} socks :: くつしたを
+in a box {with|by|at|of} a lid. :: ふた付きの箱に
+
+@id int102
+@lv 2
+@title A Happy Mistake
+@ja うれしい乗りすごし
+@tag 共通テストレベル・物語文
+@gloss exhausted=疲れ切った, doze off=うとうとする, empty=からの, announcement=アナウンス, reach=着く, seaside=海辺の, sunset=夕日, in months=ここ数か月で
+{After|Among|Since|Until} a long week, :: 長い1週間の後
+Ryo {was|were|be|being} :: リョウは…だった
+{exhausted|exhaustedly|exhaust|exhaustion}. :: 疲れ切って
+He {got|get|gotten|getting} on :: 彼は乗った
+the train {home|house|homes|housed} :: 帰りの電車に
+and soon {dozed|doze|dozing|dozes} off. :: すぐうとうとした
+{When|What|Which|Whom} he woke up, :: 目が覚めると
+the train {was|were|be|been} :: 電車は…だった
+{almost|most|the most|almighty} empty. :: ほとんど空っぽ
+The announcement {said|says|saying|say} :: アナウンスが告げた
+{they|them|their|there} had reached :: 着いたと
+the {last|lastly|least|lasting} stop. :: 終点に
+Ryo {stepped|step|stepping|steps} out :: リョウは降りた
+{and|nor|than|whom} smelled :: そしてかいだ
+the {sea|see|seed|seas} air. :: 潮の香りを
+He {was|were|is|be} :: 彼はいた
+{in|into|on|to} a small seaside town :: 小さな海辺の町に
+{far|for|fur|fair} from home. :: 家から遠い
+The next train {back|backs|backed|backing} :: 帰りの次の電車は
+{wasn't|weren't|isn't|aren't} leaving :: 出なかった
+{for|since|by|until} two hours. :: 2時間
+{So|Than|Nor|Whom} he walked :: そこで彼は歩いた
+{along|alone|long|belong} the beach :: 浜辺にそって
+and {watched|watch|watching|watches} the sunset. :: 夕日をながめた
+It {was|were|is|be} :: それは…だった
+the {best|better|good|well} evening :: 最高の夜
+{he'd had|he's had|he'd have|he has had} in months. :: ここ数か月で
+
+@id int103
+@lv 2
+@title Grandpa's Old Camera
+@ja 祖父の古いカメラ
+@tag 共通テストレベル・物語文
+@gloss attic=屋根裏, belong to=…のものである, film=フィルム, develop=現像する, faded=色あせた, blurry=ぼやけた, festival=祭り, shy=はずかしがりの, ask out=デートに誘う
+{While|During|For|Whom} cleaning the attic, :: 屋根裏の掃除中に
+Mei {found|find|founded|finding} :: メイは見つけた
+an {old|olds|oldly|age} camera. :: 古いカメラを
+{It|Its|It's|Itself} belonged :: それは…のものだった
+{to|for|at|with} her grandfather, :: 祖父の
+{and|nor|than|whom} there was still film :: まだフィルムが
+{inside|insider|inner|inward}. :: 中に
+Mei {took|take|taken|taking} it :: メイは持っていった
+{to|at|on|by} a photo shop :: 写真店に
+{to have|having|have|had} it developed. :: 現像してもらいに
+Most {of|in|at|on} the pictures :: 写真のほとんどは
+{were|was|be|being} :: …だった
+{faded|fade|fadedly|fades} and blurry. :: 色あせてぼやけて
+{But|Nor|Than|Whom} one photo :: しかし1枚の写真は
+{showed|show|shown|showing} :: 写していた
+a young woman {laughing|laughed|laugh|laughs} :: 笑う若い女性を
+{at|on|to|of} a summer festival. :: 夏祭りで
+Mei {showed|show|shown|showing} it :: メイはそれを見せた
+{to|for|at|with} her grandfather :: 祖父に
+{right|rightly|righter|rights} away. :: すぐに
+He {smiled|smile|smiling|smiles} :: 彼はほほえんだ
+and {said|told|talked|spoke}, :: そして言った
+"That's your grandmother {at|in|on|by} nineteen." :: 19歳の祖母だよ
+"I {was|were|am|be} too shy :: はずかしすぎて
+{to talk|talking|talk|talked} to her, :: 話しかけられず
+{so|than|nor|whom} I took pictures :: だから写真を撮った
+{instead|instead of|in place|rather}." :: 代わりに
+A month {later|latter|late|lately}, :: 1か月後
+he {finally|final|finale|finality} :: 彼はついに
+{asked|ask|asking|asks} her out. :: 彼女をデートに誘った
+
+@id int104
+@lv 2
+@title A Cat with Two Names
+@ja 二つの名前をもつネコ
+@tag 共通テストレベル・物語文
+@gloss missing=行方不明の, put up=はる, poster=ポスター, asleep=眠って, feed=えさをやる, no wonder=どうりで, chubby=ぽっちゃりした, home=家
+Ben's cat, Pepper, {had been|has been|had be|have be} :: ベンのネコのペッパーは
+{missing|miss|mist|misses} :: いなくなっていた
+{for|since|during|while} three days. :: 3日間
+He {put up|put on|put in|put off} posters :: 彼はポスターをはった
+{with|by|at|of} Pepper's photo :: ペッパーの写真つきの
+{all|every|whole|each} around town. :: 町じゅうに
+{That|Those|These|Them} evening, :: その晩
+an {old|olds|oldly|age} woman :: 老婦人が
+{from|for|of|off} the next street :: となりの通りの
+{called|call|calling|calls} him. :: 彼に電話してきた
+"Your cat {is|are|be|being} :: あなたのネコは
+{at|on|to|of} my house," :: うちにいるわ
+she {said|told|talked|spoke}. :: と彼女は言った
+Ben {ran|run|runs|running} :: ベンは走っていった
+{over|overly|above|onto} there :: そこへ
+{and|nor|than|whom} found Pepper :: ペッパーを見つけた
+{asleep|sleep|sleeps|slept} on a sofa. :: ソファで眠って
+"Oh, {that's|that|those|there} :: あら、その子は
+{Tiger|Tigers|Tigerly|Tigered}!" :: タイガーよ
+the woman {said|told|talked|spoke}. :: と女性は言った
+She {had been|has been|had be|have be} :: 彼女は…いた
+{feeding|feed|fed|feeds} him :: えさをあげて
+{every|ever|very|everything} afternoon :: 毎日午後に
+{for|since|during|while} a year. :: 1年間
+{No|Not|None|Nor} wonder :: どうりで
+Pepper {was|were|be|been} :: ペッパーは…だった
+so {chubby|chub|chubbily|chubbiness}! :: とても太って
+{Now|Know|Snow|No} :: 今では
+the cat {has|have|having|haves} :: そのネコは持つ
+two homes {and|nor|than|whom} two names. :: 二つの家と名前を
+
+@id int105
+@lv 2
+@title The Salty Cookies
+@ja しょっぱいクッキー
+@tag 共通テストレベル・物語文
+@gloss enter=参加する, contest=コンテスト, nervous=緊張した, mix up=取りちがえる, judge=審査員, taste=味見する, chew=かむ, unique=独特な, recipe=レシピ
+Sora {entered|enter|entrance|entering} :: ソラは参加した
+a {baking|baked|bake|bakes} contest :: お菓子作りの大会に
+{at|on|to|by} her school festival. :: 学園祭の
+She {decided|decide|deciding|decision} :: 彼女は決めた
+{to make|making|make|made} :: 作ることに
+{her|she|hers|herself} grandmother's cookies. :: 祖母のクッキーを
+{Because|Because of|Due|Despite} she was nervous, :: 緊張していたので
+she {mixed|mix|mixing|mixes} up :: 彼女は取りちがえた
+the sugar {and|nor|than|whom} the salt. :: 砂糖と塩を
+She {didn't|doesn't|don't|wasn't} notice :: 気づかなかった
+{until|by|since|during} the judges :: 審査員が…まで
+{tasted|taste|tasting|tastes} them. :: それを味見する
+{One|Once|Ones|Won} judge :: ある審査員が
+{stopped|stop|stoped|stopping} chewing :: かむのをやめた
+and {looked|look|looking|looks} :: そして見えた
+{surprised|surprisedly|surprise|surprisingly}. :: 驚いた様子に
+Sora {wanted|want|wants|wanting} :: ソラは思った
+{to hide|hiding|hide|hid} :: 隠れたいと
+{under|unless|until|upon} the table. :: テーブルの下に
+{Then|Than|Thin|Them} :: すると
+the judge {smiled|smile|smiling|smiles} :: 審査員はほほえんだ
+and {said|told|talked|spoke}, :: そして言った
+"Salty and sweet. {How|What|Which|Who} unique!" :: なんて独特なの
+Her cookies {won|win|winning|wins} :: 彼女のクッキーは取った
+{second|two|twice|double} prize :: 2等を
+{in|on|to|into} the contest. :: コンテストで
+{Now|Know|Snow|No} :: 今では
+her grandmother {uses|use|using|to use} :: 祖母が使っている
+{Sora's|Soras|Sora|Soras'} new recipe! :: ソラの新レシピを
+
+@id int106
+@lv 2
+@title A Note in a Library Book
+@ja 図書館の本のメモ
+@tag 共通テストレベル・物語文
+@gloss borrow=借りる, space=宇宙, folded=折りたたまれた, fall out=落ちる, pencil=鉛筆, someday=いつか, sign=署名する, add=付け加える
+Hana {borrowed|borrow|borrowing|borrows} :: ハナは借りた
+an old book {about|above|around|among} space :: 宇宙の古い本を
+{from|for|off|of} the school library. :: 学校の図書館から
+{When|What|Which|Whom} she opened it, :: 開くと
+a {folded|fold|foldly|folds} note :: 折りたたんだメモが
+{fell|fall|fallen|felled} out. :: 落ちてきた
+It {was written|was write|written was|was wrote} :: それは書かれていた
+{in|on|at|to} pencil :: 鉛筆で
+{thirty|thirtieth|third|thirties} years ago. :: 30年前に
+"{Someday|Somewhat|Someone|Somebody's} :: いつか
+I {will|was|did|am} go to space," :: 宇宙に行く
+it {said|told|talked|spoke}. :: と書いてあった
+The note {was signed|was sign|signed was|is signing} :: 署名があった
+{by|of|to|for} "K. Mori" :: 「K・モリ」と
+{in|on|at|to} small letters. :: 小さな字で
+{Her|She|Hers|Herself} father, Kenji Mori, :: 彼女の父、森ケンジも
+{had gone|has gone|had go|have gone} :: 通っていた
+{to|at|for|by} the same school. :: 同じ学校に
+{That|Those|These|Them} night, :: その夜
+she {showed|show|shown|showing} :: 彼女は見せた
+him {the|an|those|these} note. :: 父にそのメモを
+He {laughed|laugh|laughing|laughs} :: 彼は笑った
+and {said|told|talked|spoke}, :: そして言った
+"I {forgot|forgotten|forgetting|forgets} all about it!" :: すっかり忘れてた
+He {never|ever|either|neither} went to space, :: 宇宙には行かなかった
+{but|nor|than|whom} he became :: でも彼はなった
+a {science|sciences|scientist|scientifically} teacher. :: 理科の先生に
+"{And|Nor|Than|Whom} I still :: それに今も
+{look|looks|looking|to look} at :: …を見ている
+the stars {every|ever|very|everything} night," :: 毎晩星を
+he {added|add|adding|adds}. :: と彼は付け加えた
+
+@id int107
+@lv 2
+@title Where the Sandwich Got Its Name
+@ja サンドイッチの名前の由来
+@tag 共通テストレベル・説明文
+@gloss earl=伯爵, nobleman=貴族, legend=伝説, slice=薄切り, historian=歴史家, order=注文する, simply=単に
+{Almost|Mostly|Most of|Nearly of} everyone :: ほぼ誰もが
+{has eaten|have eaten|has ate|eating} :: 食べたことがある
+a sandwich {at|on|in|by} least once. :: 少なくとも一度サンドを
+{But|Nor|Than|Whom} do you know :: でも知っている？
+{where|whom|whose|which} its name :: その名前がどこから
+{came from|come from|coming from|came of}? :: 来たのか
+The word {comes|come|coming|to come} :: その語は来ている
+{from|by|for|with} the Earl of Sandwich, :: サンドイッチ伯爵から
+an English {nobleman|nobly|nobility|noblest} :: イギリスの貴族
+{in|on|at|by} the 1700s. :: 1700年代の
+{According to|According|Accord to|According with} a famous legend, :: 有名な伝説では
+he {loved|love|loving|lovely} :: 彼は大好きだった
+{playing|to playing|played|play} cards. :: トランプをするのが
+He {did not|does not|was not|not} want :: 彼は…したくなかった
+{to stop|stopping|stop|stopped} his game :: ゲームを止めるのを
+{just|alone|lonely|justly} to eat. :: 食べるためだけに
+{So|Unless|Although|Because of} :: そこで
+he {asked for|asking for|ask for|asked to} :: 彼は頼んだ
+meat {between|among|during|across} two slices of bread. :: パン2枚にはさんだ肉を
+This way, he {could|could to|can be|couldn't to} eat :: こうして食べられた
+{with|by|for|from} one hand :: 片手で
+{while|during|for|among} he kept playing. :: 遊び続けながら
+Other people {began|beginning|begins|begun} :: 他の人も始めた
+{to order|ordering to|order|ordered} :: 頼むことを
+"the same {as|like|so|than} Sandwich." :: 「サンドイッチと同じ物」
+{However|Though of|Despite|Even}, :: しかし
+some historians {say|says|saying|said to} :: 歴史家は言う
+the story {may not|may not to|not may|may no} be true. :: その話は本当でないかも
+He {may have been|may have be|may had been|may been} :: 彼は…だったかも
+{simply|simple|simplify|simplicity} busy :: 単に忙しい
+{with|of|to|than} his work instead. :: 実は仕事で
+
+@id int108
+@lv 2
+@title Gutenberg and the Printing Press
+@ja グーテンベルクと印刷機
+@tag 共通テストレベル・説明文
+@gloss copy=写す, expensive=高価な, printing press=印刷機, metal=金属, spread=広まる, invention=発明, as a result=その結果
+{Long ago|Long of|Lengthy ago|Ago long}, :: 昔は
+books {were copied|copied|were copy|was copied} :: 本は写された
+{by|with|from|at} hand. :: 手で
+It {took|taken|taking|takes to} :: かかった
+{months|monthly|month|month's} :: 何か月も
+{to make|making of|make|made} just one book. :: 本1冊作るのに
+{As a result|As result|As a resulted|At result}, :: その結果
+books {were|was|been|being} :: 本は…だった
+very {expensive|expense|expensively|expend}. :: とても高価
+{Around|Among|Along|Above} 1450, :: 1450年ごろ
+a German man {named|naming|names|name} Johannes Gutenberg :: ドイツ人グーテンベルクが
+{built|build|builds|building} :: 作った
+a new kind {of|for|in|with} printing press. :: 新しい印刷機を
+It {used|uses|using|use} :: それは使った
+small {metal|metals|metally|medal} letters :: 小さな金属の文字を
+{that|what|whose|who} could be moved :: 動かせる
+{and|nor|than|so} used again. :: 再利用できる
+{With|Of|To|Than} this machine, :: この機械で
+workers {could print|could printed|could printing|can printed} :: 職人は印刷できた
+hundreds {of|for|in|with} pages :: 何百ページも
+{a day|an day|a days|one days}. :: 1日に
+Books {became|becoming|was become|becamed} :: 本はなった
+{cheaper|cheap|cheapest|cheaply} :: より安く
+{and|nor|than|whom} easier :: そしてより簡単に
+{to find|finding|find|found}. :: 手に入れるのが
+Ideas and news {spread|spreaded|spreading|spreads} :: 考えや知らせは広まった
+{across|cross|crossing|acrossed} Europe :: ヨーロッパ中に
+{faster|fastest|more fast|most fast} than ever. :: かつてなく速く
+Many people {say|says|saying|to say} :: 多くの人が言う
+{that|what|which|whom} the press :: 印刷機は…と
+{was|were|is being|be} :: …だった
+one of the most important {inventions|invention|invent|inventive}. :: 最も重要な発明の一つ
+
+@id int109
+@lv 2
+@title Before the Eraser
+@ja 消しゴムができる前
+@tag 共通テストレベル・説明文
+@gloss graphite=黒鉛, lead=鉛・芯, mistake=間違い, rub out=こすって消す, rubber=ゴム, eraser=消しゴム, surprisingly=意外に, discover=発見する
+A pencil {is|are|be|being} :: 鉛筆は…だ
+{one|ones|once|one's} of the simplest tools :: 最も単純な道具の一つ
+{in|on|at|of} the world. :: 世界で
+{Yet|Yell|Yeast|Yearly} its history :: でもその歴史は
+{is|are|be|been} :: …だ
+{surprisingly|surprising|surprise|surprised} interesting. :: 意外におもしろい
+{In|On|For|Of} the 1500s, :: 1500年代に
+people in England {found|founded|find|finding} :: イギリスの人が見つけた
+a large amount {of|for|in|with} graphite. :: 大量の黒鉛を
+They {thought|think|thinking|thoughts} :: 彼らは思った
+it {was|were|be|being} a kind of lead, :: それは鉛の一種だと
+{so|than|nor|whom} we still say :: だから今も言う
+pencil "{lead|led|leading|leaded}." :: 鉛筆の「芯」と
+Erasing mistakes, {however|whatever|whenever|wherever}, :: しかし消すのは
+{was|were|been|being} :: …だった
+{not|no|none|nor} easy. :: 簡単でない
+{For|Of|To|At} a long time, :: 長い間
+people {used|use to|using|uses} :: 人々は使った
+{pieces|piece|peace|pieced} of bread :: パンのかけらを
+{to rub|rubbing|rub|rubbed} out their mistakes. :: 間違いを消すために
+{Later|Latter|Latest|Laterly}, :: 後に
+people {discovered|discover|discovering|discovers} :: 人々は発見した
+{that|what|which|who} rubber worked :: ゴムが…と
+much {better|best|good|well}. :: ずっとよく消える
+{In|On|At|To} the 1800s, :: 1800年代に
+an American man {had|has|having|have} :: アメリカ人が持った
+the idea {of|by|at|than} putting an eraser :: 消しゴムを付ける案を
+{on|of|from|than} the end of a pencil. :: 鉛筆の端に
+{Thanks to|Thanks for|Thank to|Thanking} him, :: 彼のおかげで
+we {can|cans|could to|can to} fix mistakes :: 間違いを直せる
+{without|with out|withouts|not with} looking for bread. :: パンを探さずに
+
+@id int110
+@lv 2
+@title The Lady with the Lamp
+@ja ランプの貴婦人
+@tag 共通テストレベル・説明文
+@gloss nurse=看護師, expect=期待する, military=軍の, wounded=負傷した, soldier=兵士, crowded=混み合った, ward=病棟, chart=図表
+Florence Nightingale {was born|born|was bear|is born} :: ナイチンゲールは生まれた
+{into|onto|upon|inside} a rich family :: 裕福な家庭に
+{in|on|at|by} 1820. :: 1820年に
+{At|Of|To|Than} that time, :: 当時
+women {like|likes|liking|alike} her :: 彼女のような女性は
+{were not expected|was not expected|were not expect|not expected} :: 期待されなかった
+{to work|working|work|worked}. :: 働くことを
+{However|Whatever|Whenever|Wherever}, :: しかし
+she {decided|decide|deciding|decision} :: 彼女は決めた
+{to become|becoming|become|became} a nurse. :: 看護師になると
+{In|On|Of|To} the 1850s, :: 1850年代に
+she {went|go|gone|going} :: 彼女は行った
+{to|for|at|in} a military hospital :: 軍の病院へ
+{to care|for care|care|cared} for wounded soldiers. :: 負傷兵を看るために
+The hospital {was|were|been|being} :: 病院は…だった
+{dirty|dirt|dirtily|dirtiness} and crowded, :: 不潔で混んでいて
+{and|nor|than|whom} many soldiers :: 多くの兵士が
+{were dying|was dying|were die|dying}. :: 死にかけていた
+{At|In|On|By} night, :: 夜は
+she {walked|walk|walking|walks} :: 彼女は歩いた
+{through|thorough|though|thought} the wards :: 病棟を通って
+{with|of|than|to} a lamp in her hand. :: ランプを手に
+{That is why|That why|What is why|This why} :: だから
+she {was called|called|was call|is calling} :: 彼女は呼ばれた
+"the Lady {with|than|as|nor} the Lamp." :: 「ランプの貴婦人」と
+She {also|alike|else|ever} used :: 彼女は…も使った
+{numbers|number|numbered|numbering} and charts :: 数字や図を
+{to show|showing|show|shown} :: 示すために
+{why|what|which|who} the soldiers died. :: 兵士が死んだ理由を
+{In|On|At|To} 1860, :: 1860年に
+she {opened|open|opening|opens} :: 彼女は開いた
+a school {for|to|at|than} nurses :: 看護師の学校を
+{in|on|at|to} London. :: ロンドンに
+
+@id int111
+@lv 2
+@title The Man Who Invented Instant Noodles
+@ja 即席めんを発明した人
+@tag 共通テストレベル・記事
+@gloss instant=即席の, invent=発明する, hungry=空腹な, shed=小屋, fry=揚げる, go on sale=発売される, hit=ヒット作
+Instant noodles {were invented|invented|were invent|was invented} :: 即席めんは発明された
+{in|on|of|to} Japan :: 日本で
+{by|with|of|at} a man named Momofuku Ando. :: 安藤百福という人に
+{After|Later|Ago|Afterward} World War II, :: 第二次大戦後
+he {saw|seen|seeing|sees} :: 彼は見た
+long lines {of|to|by|than} hungry people :: 空腹な人の長い列を
+{waiting|waited|wait|to waiting} for ramen. :: ラーメンを待つ
+He {wanted|want|wanting|wants} :: 彼は思った
+{to make|making|make|made} a food :: 食べ物を作りたいと
+{that|what|whom|whose} anyone could cook :: 誰でも作れる
+{at|in|on|by} home easily. :: 家で簡単に
+{In|Of|To|Than} a small shed :: 小さな小屋で
+{behind|behind of|beside of|behinds} his house, :: 家の裏の
+he {tried|try|trying|tries} again and again. :: 彼は何度も試した
+One day, he {watched|watch|watching|watches} :: ある日見ていた
+his wife {making|made|makes|to making} tempura. :: 妻が天ぷらを作るのを
+This {gave|give|given|giving} him :: これが彼に与えた
+the idea {of|to|at|than} frying noodles :: めんを揚げる案を
+{to dry|drying|dry|dried} them. :: 乾かすために
+{In|On|At|To} 1958, :: 1958年に
+his "Chicken Ramen" {went|gone|go|going} :: チキンラーメンが出た
+{on|in|at|to} sale. :: 発売されて
+It {was|were|been|be} :: それは…だった
+a big {hit|hits|hitting|hitted}, :: 大ヒット
+{and|nor|than|whom} he was already 48 :: 彼はもう48歳
+{at|in|on|of} the time. :: その時
+He {later|latter|latest|lateness} :: 彼は後に
+{invented|invent|invents|inventing} :: 発明した
+Cup Noodles {as|so|such|than} well. :: カップヌードルも
+
+@id int112
+@lv 2
+@title Louis Braille's Six Dots
+@ja ブライユの6つの点
+@tag 共通テストレベル・説明文
+@gloss accident=事故, sight=視力, blind=目の見えない, raised=浮き出た, code=暗号, dot=点, fingertip=指先, system=方式
+Louis Braille {was born|born|was bear|is born} :: ブライユは生まれた
+{in|on|of|by} a small town :: 小さな町で
+{near|nearly|nearby of|nears} Paris. :: パリの近くの
+{When|What|Which|Who} he was three, :: 3歳のとき
+he {hurt|hurts|hurting|hurted} :: 彼は傷つけた
+{his|him|he|himself} eye :: 自分の目を
+{in|on|at|by} an accident. :: 事故で
+{Soon|Soonly|Sooner of|Soonest} after, :: その後まもなく
+he {lost|lose|losing|loses} :: 彼は失った
+his sight {in|on|at|to} both eyes. :: 両目の視力を
+{At|Of|To|Than} a school for blind children, :: 盲学校では
+the books {were|was|been|being} :: 本は…だった
+{huge|hugely|hugeness|hug} and heavy. :: 大きくて重い
+Each {page|pages|paging|paged} :: どのページも
+{had|have|having|has to} :: 持っていた
+large {raised|raising|raise|rise} letters. :: 浮き出た大きな文字を
+Reading them {was|were|being|be} :: 読むのは…だった
+{very|much|many|such} slow :: とても時間がかかる
+{for|by|than|of} the students. :: 生徒にとって
+{Later|Latter|Latest|Laterly}, :: 後に
+Braille {learned|learn|learning|learns} :: ブライユは知った
+{about|above|around of|abouts} a code of dots :: 点の暗号について
+{made|making|makes|make} for soldiers. :: 兵士向けに作られた
+He {made|make|making|makes} :: 彼は…した
+the code {simpler|more simpler|simplest|simply} :: 暗号をより簡単に
+{by|with|at|for} using only six dots :: 6つの点だけで
+{when|what|which|whom} he was only fifteen. :: まだ15歳のとき
+Each letter {could|could to|can to|could of} :: どの文字も…できた
+be {felt|feel|feeling|fell} :: 感じ取られる
+{with|of|in|at} one fingertip. :: 指先一つで
+Today, his system {is used|uses|is use|using} :: 今その方式は使われる
+{by|with|of|from} blind people :: 目の見えない人々に
+{around|aground|arounds|surround} the world. :: 世界中の
+
+@id int113
+@lv 2
+@title A Short History of Glasses
+@ja メガネの短い歴史
+@tag 共通テストレベル・説明文
+@gloss glasses=メガネ, eyesight=視力, have a hard time=苦労する, arm=つる, hold=支える, rest=のる, fall off=落ちる, basic=基本の
+{Glasses|Glass|Glassy|Glassed} :: メガネは
+{have|has|having|to have} :: 持っている
+a very long {history|historic|historical|historian}. :: とても長い歴史を
+The first glasses {were made|made|were make|was made} :: 最初のメガネは作られた
+{in|on|at|of} Italy :: イタリアで
+{in|on|at|to} the late 1200s. :: 1200年代末に
+{Before|Because|Unless|Since of} that, :: それ以前は
+people {with|by|at|to} poor eyesight :: 目の悪い人は
+{had|has|having|have} :: 持っていた
+a hard time {reading|to reading|read|reads}. :: 読むのに苦労を
+Early glasses {had|have|having|has} :: 初期のメガネは持った
+{no|not|none|nor} arms :: つるがない
+{to hold|for hold|hold|held} them :: それを支える
+{on|in|at|by} the ears. :: 耳に
+People {held|helded|holding|holds} them :: 人々はそれを持った
+{in|on|at|by} their hands :: 手に
+{or|nor|than|whom} put them on their noses. :: または鼻にのせた
+{Because of|Because|Despite of|Due} this, :: このため
+the glasses {often|oftenly|ofted|often of} :: メガネはよく
+{fell|fall|fallen|felled} off. :: 落ちた
+{In|On|At|To} the 1700s, :: 1700年代に
+a maker {in|on|to|than} London :: ロンドンの職人が
+{added|add|adding|adds} :: 付けた
+arms {that|what|whom|whose} rested on the ears. :: 耳にかかるつるを
+{Since|For|Ago|Than} then, :: それ以来
+glasses {have changed|has changed|have change|changing} :: メガネは変わった
+{in|on|at|by} many ways. :: 多くの点で
+{But|Nor|Than|Whom} the basic idea :: しかし基本の考えは
+{has|have|is|having} stayed :: ずっと…だ
+{the same|same as|the sames|a same}. :: 同じまま
+
+@id int114
+@lv 2
+@title Ino Tadataka's Long Walk
+@ja 伊能忠敬の長い旅
+@tag 共通テストレベル・記事
+@gloss merchant=商人, retire=引退する, astronomy=天文学, measure=測る, coast=海岸, distance=距離, complete=完成させる, accurate=正確な
+Ino Tadataka {was|were|been|being} :: 伊能忠敬は…だった
+a {successful|success|successfully|succeed} merchant :: 成功した商人
+{in|on|at|by} the Edo period. :: 江戸時代の
+{After|Ago|Afterward|Behind} he retired, :: 引退した後
+he {moved|move|moving|moves} :: 彼は移った
+{to|at|in|for} Edo :: 江戸へ
+{to study|for study|study|studied} astronomy. :: 天文学を学ぶため
+His teacher {was|were|been|be} :: 彼の先生は…だった
+{much|many|very|more} younger :: ずっと若い
+{than|then|that|as} he was. :: 彼よりも
+{At|In|On|To} the age of 55, :: 55歳で
+Ino {started|start|starting|starts} :: 伊能は始めた
+{to measure|measure|measured|to measuring} the land :: 土地を測ることを
+{of|on|at|to} Japan. :: 日本の
+He and his team {walked|walks|walking|walken} :: 彼と仲間は歩いた
+{along|alone|among|alongs} the coasts :: 海岸に沿って
+{for|since|during of|ago} many years. :: 何年も
+He {measured|measure|measuring|measures} :: 彼は測った
+distances {by|with|for|at} counting his steps :: 歩数を数えて距離を
+{and|nor|than|whom} looking at the stars. :: そして星を見て
+{Sadly|Sad|Sadness|Sadder}, :: 悲しいことに
+he {died|dead|dying|death} :: 彼は亡くなった
+{before|behind|below|beyond} the map :: 地図が…前に
+{was finished|has finish|was finish|finishing}. :: 完成する
+His {students|student's|studying|studied} :: 弟子たちが
+{completed|completion|completes|completing} it :: それを完成させた
+{after|afterward|later|ago} his death. :: 彼の死後に
+The map {was|were|been|be} :: 地図は…だった
+{surprisingly|surprising|surprise|surprised} accurate :: 驚くほど正確
+{for|to|by|of} its time. :: 当時としては
+His life {shows|show|showing|shown} :: 彼の人生は示す
+{that|what|which|whom} learning :: 学ぶことには…と
+{has|have|having|is} :: ない
+no age {limit|limited|limiting|limits of}. :: 年齢制限は
+
+@id int115
+@lv 2
+@title The First Bicycle
+@ja 最初の自転車
+@tag 共通テストレベル・記事
+@gloss pedal=ペダル, push=押す, forward=前へ, inventor=発明者, control=操る, wheel=車輪, uncomfortable=乗り心地が悪い, rough=ひどく揺れる, tire=タイヤ
+The first bicycle {was built|built|was build|is built} :: 最初の自転車は作られた
+{in|on|at|to} Germany :: ドイツで
+{in|on|at|to} 1817. :: 1817年に
+It {was|were|be|been} :: それは…だった
+{made|make|making|makes} of wood :: 木でできた
+{and|nor|than|whom} had no pedals. :: ペダルはなかった
+Riders {pushed|pushes|pushing|pushen} :: 乗る人は押した
+the ground {with|at|to|than} their feet :: 足で地面を
+{to move|for move|move|moved} forward. :: 前に進むため
+Its {inventor|invention|invent|inventive}, Karl Drais, :: 発明者ドライスは
+{called|calls|calling|call} it :: それを呼んだ
+a "{running|run|ran|runs} machine." :: 「走る機械」と
+It {was|were|been|be} :: それは…だった
+{faster|fast|fastest|more fast} :: より速い
+{than|then|that|as} walking, :: 歩くより
+{but|nor|whom|than} it was hard to control. :: でも操りにくかった
+{In|On|At|To} the 1860s, :: 1860年代に
+pedals {were added|added|were add|was added} :: ペダルが付けられた
+{to|of|for|with} the front wheel :: 前輪に
+{in|on|at|to} France. :: フランスで
+{However|Whatever|Whenever|Wherever}, :: しかし
+these bikes {were|was|been|being} :: この自転車は…だった
+{very|much|many|such} uncomfortable. :: とても乗り心地が悪い
+People {called|calls|calling|callen} them :: 人々はそれを呼んだ
+"{boneshakers|boneshaker|boneshaking|boneshook}" :: 「骨ゆすり」と
+{because|because of|despite|due} the ride :: 乗り心地が…ので
+was so {rough|roughly|roughness|roughen}. :: とてもひどかった
+{Later|Latter|Latest|Lateness}, :: 後に
+chains and rubber tires {made|makes|making|maked} :: チェーンとタイヤが
+bikes {safer|safest|safely|more safer} :: 自転車をより安全に
+{and|nor|than|whom} more comfortable. :: そして快適に
+The bicycle {we|us|our|ours} ride today :: 今日乗る自転車は
+{is|are|be|been} :: …だ
+the result {of|for|to|by} many small ideas. :: 多くの工夫の結果
+
+@id int116
+@lv 2
+@title Fleming's Lucky Mess
+@ja フレミングの幸運な散らかし
+@tag 共通テストレベル・記事
+@gloss scientist=科学者, bacteria=細菌, lab=研究室, messy=散らかった, holiday=休暇, mold=カビ, substance=物質, medicine=薬
+{In|On|At|To} 1928, :: 1928年に
+a scientist {named|naming|names|name} Alexander Fleming :: 科学者フレミングは
+{was studying|was study|were studying|studying} :: 研究していた
+bacteria {in|on|at|by} London. :: ロンドンで細菌を
+His lab {was|were|be|been} :: 彼の研究室は…だった
+{famous|fame|famously|fames} :: 有名
+{for|by|to|at} being messy. :: 散らかっていることで
+{One|Once|Ones|One's} summer, :: ある夏
+he {went|go|gone|going} :: 彼は出かけた
+{on|to|of|at} holiday :: 休暇に
+{without|with out|withouts|not with} cleaning his dishes. :: 皿を片付けずに
+{When|What|Which|Whom} he came back, :: 戻ったとき
+he {noticed|notice|noticing|notices} :: 彼は気づいた
+{something|somewhere|sometime|somehow} strange. :: 奇妙なことに
+A mold {had grown|had grew|has grow|growing} :: カビが生えていた
+{on|of|to|than} one of the dishes :: 皿の一つに
+{during|while|among|since of} his trip. :: 旅行中に
+{Around|Arounds|Aroundly|Round of} the mold, :: カビの周りでは
+the bacteria {had|has|having|have} :: 細菌は…していた
+{died|dead|death|dying}. :: 死んで
+The mold {was making|was make|were making|making} :: カビは作っていた
+a {substance|substantial|substantially|subsist} :: ある物質を
+{that|what|whom|whose} killed bacteria. :: 細菌を殺す
+Fleming {named|naming|namen|to named} it :: フレミングは名付けた
+"{penicillin|penicillins|penicilling|penicillining}" :: 「ペニシリン」と
+{after|afterward|ago|later} the mold. :: そのカビにちなんで
+{However|Whatever|Whenever|Wherever}, :: しかし
+it {took|taken|taking|takes} :: かかった
+{more|many|much of|most} than ten years :: 10年以上
+{to turn|for turn|turn|turned} it into medicine. :: それを薬にするのに
+Today, penicillin {has saved|have saved|has save|saving} :: ペニシリンは救った
+{millions|million|millioned|millionth} of lives :: 何百万もの命を
+{all over|all on|over all|all of} the world. :: 世界中で
