@@ -109,8 +109,12 @@ def prim_of(w, cands):
     return max(cands, key=lambda c: (BSC.get((w, c), 0), 'nvar'.index(c) * -1)) if cands else None
 rank = lambda w: RANK.get(w, 20000 + (100 - SCORE.get(w, 0)) * 1000 + zlib.crc32(w.encode()) % 997)
 
+_CORE = set()   # 英検の級データかCEFR-Jに載っている語は、career・container・employer のように語尾が -er/-ing でも 独立した語として扱う
+for _r in csv.DictReader(open(HERE + '../../../data/words/dict_all_words.csv', encoding='utf-8-sig')):
+    if _r['出題'] == '○' and (_r['英検の級(実データ)'] or _r['レベルの出どころ'].startswith('CEFR-J')): _CORE.add(_r['単語'].lower())
 def inflected(w, p):
     if w in PAST: return True
+    if w in _CORE and w not in ('higher', 'warmer') and not re.search(r'(ies|ied|s)$', w): return False
     if p == 'a' and re.search(r'(ing|ed)$', w): return False      # boring・excited などの形容詞は残す
     for suf, rep in (('ies', 'y'), ('es', ''), ('s', ''), ('ied', 'y'), ('ed', ''), ('ed', 'e'), ('ing', ''), ('ing', 'e'), ('er', ''), ('est', ''), ('ier', 'y'), ('iest', 'y')):
         if w.endswith(suf):
