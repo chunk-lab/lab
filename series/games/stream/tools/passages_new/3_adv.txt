@@ -1,0 +1,370 @@
+@id adv3
+@lv 3
+@level 8
+@title The Tragedy of the Commons
+@ja 共有地の悲劇
+@tag 難関大レベル・論説文
+@gloss commons=共有地, graze=草を食べさせる, individual=個人, rational=合理的な, collective=集団の, deplete=使い果たす, resource=資源, inevitably=必然的に, regulation=規制, incentive=動機づけ, sustain=持続させる, devastating=壊滅的な
+T| {In|On|At|By} 1968, :: 1968年に
+S| the {ecologist|ecology|ecologic|ecologists} Garrett Hardin :: 生態学者ハーディンは
+V| {described|describe|description|describing} :: 説明した
+O| {a|an|the|one} situation :: ある状況を
+X| {that|what|whose|where} has since become known :: のちに知られる
+X| {as|for|like|to} "the tragedy of the commons." :: 「共有地の悲劇」として
+== 1968年、生態学者ハーディンは、のちに「共有地の悲劇」と呼ばれる状況を説明した。
+V| {Imagine|Imagination|Imaginary|Imagining} :: 想像してみよう
+O| a pasture {open|opened|opening|openly} to all, :: 誰でも使える牧草地を
+P| {on|in|at|to} which each herder :: そこで各牧夫は
+V| {is|are|be|being} free :: 自由である
+X| {to graze|grazing|to grazing|graze} as many cows :: 牛を何頭も放牧する
+X| {as|than|so|that} he likes. :: 好きなだけ
+== 誰でも使える牧草地で、各牧夫が好きなだけ牛を放牧できるとしよう。
+M| {From|For|By|Of} each herder's point of view, :: 各牧夫の立場からは
+S| adding {one|once|a one|ones} more cow :: 牛をもう1頭増やすことは
+V| {is|are|be|being} :: …だ
+C| {perfectly|perfect|perfection|perfected} rational: :: 全く合理的
+== 牧夫一人ひとりにとって、牛をもう1頭増やすことは全く合理的だ。
+S| he {alone|lonely|along|alike} :: 彼だけが
+V| {enjoys|enjoy|enjoying|enjoyed} :: 得る
+O| the {benefit|benefits of|beneficial|benefiting}, :: 利益を
+M| {while|whilst of|during|meanwhile} the cost :: 一方でその代償は
+X| {of|for|in|to} the damaged grass :: 傷んだ草の
+V| {is|are|be|been} shared :: 分け合われる
+P| {by|with|for|to} everyone. :: 全員で
+== 利益は自分だけのものだが、草が傷む代償は全員で分け合うことになるからだ。
+S| {Yet|Still yet|Already|Even yet} if every herder :: しかし全員が
+V| {reasons|reason|reasoning|reasoned} :: 考えるなら
+M| {in|on|at|by} the same way, :: 同じように
+S| the pasture {will|would to|shall to|is} :: 牧草地は…だろう
+M| {inevitably|inevitable|inevitability|inevitableness} :: 必然的に
+V| {be|being|been|is} destroyed, :: 破壊される
+M| {and|but|or|nor} all of them :: そして全員が
+V| {will|would to|shall|are} suffer. :: 損をする
+== しかし全員が同じように考えれば、牧草地は必ず荒れ果て、皆が損をする。
+S| {What|That|Which|It} makes the situation tragic :: 状況を悲劇にするのは
+V| {is|are|be|has} :: …だ
+O| {that|what|which|it} no one behaves foolishly; :: 誰も愚かでないことだ
+== 状況を悲劇的にしているのは、誰も愚かな行動をとっていないという点だ。
+S| {it is|it has|there is|this has} :: それは…だ
+C| {precisely|precise|precision|preciser} individual rationality :: まさに個人の合理性
+X| {that|what|which|who} leads to :: …につながる
+O| {collective|collection|collect|collectively} ruin. :: 集団の破滅に
+== 集団の破滅を招くのは、まさに個人の合理性なのだ。
+S| {Similar|Same|Similarly|Similarity} problems :: 同じような問題は
+V| {can|could to|cans|can to} :: …しうる
+V| {be|being|been|are} seen :: 見られる
+M| {in|on|at|by} overfishing, :: 魚の取りすぎに
+M| {traffic|traffics|trafficking|trafficked} jams, :: 交通渋滞に
+M| {and|but|or|so} climate change. :: そして気候変動に
+== 同様の問題は、魚の取りすぎや渋滞、気候変動にも見られる。
+S| Hardin {argued|argue|argument|arguing} :: ハーディンは主張した
+O| {that|what|which|this} the only solution :: 唯一の解決策は
+V| {lay|lie|laid|lain} :: …にあると
+P| {in|on|at|by} regulation :: 規制に
+M| {or|nor|but|and} private ownership. :: あるいは私有に
+== ハーディンは、唯一の解決策は規制か私有化だと主張した。
+M| {However|Therefore|Thus|Hence}, :: しかし
+S| the {economist|economy|economic|economics} Elinor Ostrom :: 経済学者オストロムは
+V| later {showed|show|shown|showing} :: のちに示した
+O| {that|what|which|it} many communities :: 多くの共同体が…ことを
+V| {have|has|had been|having} managed :: うまく管理してきた
+O| shared resources {for|since|during|while} centuries :: 何世紀も共有資源を
+M| {through|though|thorough|throughout of} trust :: 信頼によって
+M| {and|but|or|so} local rules. :: そして地域の決まりで
+== しかし経済学者オストロムは、多くの共同体が信頼と地域の決まりによって何世紀も共有資源を守ってきたことを示した。
+S| {Her|She|Hers|Herself} work suggests :: 彼女の研究は示唆する
+O| {that|what|which|this} the tragedy :: その悲劇は…ことを
+V| {is|are|has|be} not a law of nature, :: 自然法則ではない
+M| {but|and|or|so} a risk :: しかし危険だと
+X| {that|what|who|whose} can be avoided. :: 避けられる
+== 彼女の研究は、その悲劇が自然の法則ではなく、避けられる危険だと示している。
+?? 0 0 ハーディンが状況を説明したのはいつ？
+?? 4 3 全員が同じように考えると牧草地はどうなる？
+?? 6 1 集団の破滅を招くのは何？
+?? 8 4 ハーディンの解決策は規制ともう一つは何？
+?? 9 6 オストロムは共同体が何によって資源を守ってきたと示した？
+
+@id adv4
+@lv 3
+@level 8
+@title Is Memory a Recording?
+@ja 記憶は録画なのか
+@tag 難関大レベル・論説文
+@gloss memory=記憶, recording=録画, reconstruct=再構築する, retrieve=取り出す, witness=目撃者, suggestive=誘導的な, distort=ゆがめる, confident=確信して, accuracy=正確さ, reliable=信頼できる, testimony=証言
+S| {Most|Much|Almost|The most} people :: たいていの人は
+V| {assume|assumption|assuming|assumed to} :: 思い込んでいる
+O| {that|what|which|this} memory works :: 記憶が働くと
+M| {like|alike|likely|liking} a video camera, :: ビデオカメラのように
+== たいていの人は、記憶がビデオカメラのように働くと思い込んでいる。
+V| {storing|stored|store|to storing} :: 保存しながら
+O| {exact|exactly|exactness|exacting} copies :: 正確な複製を
+X| {of|for|in|to} what we experience. :: 体験したことの
+== 体験したことの正確な複製を保存するかのように。
+M| {In reality|In real|On reality|At reality}, :: 実際には
+S| {each|every|all|both} time we recall an event, :: 出来事を思い出すたび
+S| the brain {reconstructs|reconstruct|reconstruction|reconstructing} it :: 脳はそれを組み立て直す
+M| {from|of|by|with} scattered pieces, :: ばらばらの断片から
+V| {filling|filled|fill|to filling} in the gaps :: 抜けを埋めながら
+M| {with|by|for|of} expectations :: 予想で
+M| {and|but|or|nor} general knowledge. :: そして一般的な知識で
+== 実際には、出来事を思い出すたび、脳はばらばらの断片から記憶を組み立て直し、抜けを予想や一般知識で埋めている。
+S| {This|These|That's|Those} process :: この過程は
+V| {is|are|be|has} :: …だ
+C| {usually|usual|unusually|usualness} efficient, :: たいてい効率的
+M| {but|and|so|or} it comes :: だがそれには伴う
+P| {at|in|on|by} a price. :: 代償が
+== この仕組みはふつう効率的だが、代償もある。
+P| {In|On|At|By} a famous experiment, :: 有名な実験で
+S| {psychologist|psychology|psychological|psychologists} Elizabeth Loftus :: 心理学者ロフタスは
+V| {showed|show|shown|showing} :: 見せた
+I| {participants|participate|participation|participating} :: 参加者に
+O| a film {of|for|in|to} a car accident :: 自動車事故の映像を
+== 有名な実験で、心理学者ロフタスは参加者に自動車事故の映像を見せた。
+M| {and|but|or|so} then {asked|ask|asking|asks} :: そして尋ねた
+O| how fast the cars {were|was|are|be} going :: 車の速さを
+T| {when|which|what|whose} they "smashed" into each other. :: 「激突した」とき
+== そして、車が「激突した」とき、どのくらいの速さだったかを尋ねた。
+S| {Those|These|That|This} who heard the word "smashed" :: 「激突」と聞いた人は
+V| {gave|give|given|giving} :: 答えた
+O| {higher|high|highest|more high} estimates :: より高い推定を
+P| {than|then|that|as} those who heard "hit," :: 「hit」と聞いた人より
+== 「激突」と聞いた人は、「ぶつかった」と聞いた人より速い速度を答えた。
+M| {and|but|or|so} a week later, :: そして1週間後
+S| they {were|was|are|been} :: 彼らは…だった
+C| {more|much|most|many} likely :: より…しそう
+X| {to report|reporting|to reporting|report} seeing broken glass :: 割れたガラスを見たと言い
+X| {that|what|which|who} had never been there. :: 存在しなかった
+== 1週間後には、実際にはなかった割れたガラスを見たと答える人も多かった。
+S| {A single|Single|An single|The single} word, :: たった一語が
+M| {in other words|in another word|in other word|on other words}, :: つまり
+V| {had|has|have|having} altered :: 変えていた
+O| {what|that|which|it} they remembered. :: 彼らが覚えている内容を
+== つまり、たった一語が、彼らの記憶の中身を変えてしまったのだ。
+S| {Such|Such a|So|Such as} findings :: こうした発見は
+V| {have|has|having|had been} :: …を持っている
+O| {serious|seriously|seriousness|series} implications :: 重大な意味を
+M| {for|of|to|on} the legal system, :: 法制度にとって
+X| {where|which|what|that} witness testimony :: 目撃証言が
+V| {is|are|be|has} often treated :: しばしばみなされる
+M| {as|like|for|so} reliable evidence. :: 確かな証拠として
+== こうした発見は、目撃証言がしばしば確かな証拠とされる法制度にとって重い意味を持つ。
+S| {Feeling|Feel|Felt|Feelings} confident about a memory, :: 記憶に自信があることは
+M| it {turns out|turn out|turns in|turned out to}, :: 実は
+V| {is|are|be|does} no guarantee :: 保証にならない
+X| {of|for|to|in} its accuracy. :: その正確さの
+== 記憶に自信があっても、それが正確だという保証には、実はならないのだ。
+?? 0 3 多くの人は記憶が何のように働くと思っている？
+?? 2 2 脳は何から記憶を組み立て直す？
+?? 4 4 ロフタスは参加者に何の映像を見せた？
+?? 7 4 1週間後、実際にはなかった何を見たと答えた？
+?? 10 3 記憶に自信があることは何の保証にならない？
+
+@id adv5
+@lv 3
+@level 8
+@title When a Measure Becomes a Target
+@ja 指標が目標になるとき
+@tag 難関大レベル・論説文
+@gloss measure=指標, target=目標, indicator=指標, incentive=動機づけ, manipulate=操作する, distort=ゆがめる, bonus=賞与, metric=数値の指標, quantify=数量化する, consequence=結果
+S| Organizations {love|loves|loving|loved to} numbers. :: 組織は数字が好きだ
+== 組織は数字が大好きだ。
+S| They {measure|measures|measurement|measuring} sales, :: 売上を測る
+O| {test|tests|testing|tested} scores, :: 試験の点数を
+M| {and|but|or|so} waiting times :: そして待ち時間を
+R| {in order to|in order|so as|in order for} judge :: 判断するために
+O| {how|what|that|which} well they are doing. :: どれほど順調か
+== 売上や試験の点数、待ち時間などを測って、うまくいっているかを判断する。
+M| {Yet|Already|Still yet|Ever} as the economist Charles Goodhart observed, :: だが…と彼が言ったように
+T| {once|one|ones|one's} a measure becomes a target, :: 指標が目標になると
+S| it {ceases|cease|ceasing|ceased to} :: それは…しなくなる
+X| {to be|being|be|to being} a good measure. :: よい指標であること
+== だが経済学者グッドハートが指摘したように、指標が目標になると、それはよい指標ではなくなる。
+S| The reason {is|are|be|being} simple: :: 理由は単純だ
+S| when people {are|is|be|being} rewarded :: 人が報われるとき
+M| {for|to|of|by} hitting a number, :: 数字を達成すると
+S| they {find|finds|found to|finding} ways :: 彼らは方法を見つける
+X| {to hit|hitting|hit|to hitting} it :: それを達成する
+X| {that|what|which|whose} have little to do :: ほとんど関係のない
+P| {with|to|for|of} the original goal. :: 本来の目的とは
+== 理由は単純だ。数字の達成で報われるなら、人は本来の目的とほとんど関係のない方法で達成しようとする。
+P| {Consider|Considering|Considered|Consideration} :: 考えてみよう
+X| a hospital {that|what|who|where} must :: …すべき病院を
+V| {reduce|reduces|reduction|reducing} waiting times :: 待ち時間を減らす
+P| {in|on|at|by} its emergency room. :: 救急外来の
+== 救急外来の待ち時間を減らすよう求められた病院を考えてみよう。
+S| {Rather|Rather than|Other|Instead} than treating patients faster, :: 患者を早く診るのではなく
+S| {some|any|much|every} staff :: 一部の職員は
+V| {simply|simple|simplify|simplest} kept them :: 単に患者をとどめた
+M| {waiting|wait|waited|to wait} in ambulances outside, :: 外の救急車で待たせて
+R| {so that|so|such that|in that} the official clock :: 公式の時計が…ように
+V| {would not|will not|would no|did not} start. :: 動き始めない
+== 患者を早く診る代わりに、公式の計測が始まらないよう、外の救急車で待たせ続けた職員もいた。
+S| The numbers {improved|improve|improving|improvement}; :: 数字はよくなった
+S| the patients {did not|does not|was not|not}. :: 患者はそうではなかった
+== 数字は改善したが、患者の状態はよくならなかった。
+S| {Similar|Similarly|Similarity|Same} distortions :: 同様のゆがみは
+V| {occur|occurs|occurred to|occurrence} :: 起こる
+X| {wherever|whatever|whenever of|however} a complex goal :: 複雑な目的が
+V| {is|are|be|has} reduced :: 落とし込まれるところでは
+P| {to|for|into|at} a single figure: :: 一つの数字に
+== 複雑な目的が一つの数字に落とし込まれるところでは、どこでも同様のゆがみが起こる。
+S| teachers {may|might to|mays|may to} :: 先生は…かもしれない
+V| {teach|teaches|taught to|teaching} to the test, :: 試験対策ばかり教える
+M| {and|but|or|nor} police {may|might to|mays|can to} :: 警察は…かもしれない
+V| {record|records|recording|recorded to} crimes :: 犯罪を記録する
+M| {as|like|for|so} less serious than they were. :: 実際より軽いものとして
+== 先生は試験対策ばかり教え、警察は犯罪を実際より軽く記録するかもしれない。
+S| {None|No one|Nothing|Neither} of this :: これのどれも…ない
+V| {means|mean|meaning|meant} :: 意味する
+O| {that|what|which|this} we should stop measuring. :: 測定をやめるべきだと
+== だからといって、測定をやめるべきだというわけではない。
+S| It {means|mean|meaning|meant} :: それは意味する
+O| {that|what|which|it} numbers should inform judgment, :: 数字は判断を助けるべきで
+M| {not|no|none|nor} replace it. :: 判断の代わりではなく
+== 数字は判断の材料であるべきで、判断の代わりになってはいけないということだ。
+?? 2 1 指標が何になるとよい指標でなくなる？
+?? 4 2 病院は何を減らすよう求められた？
+?? 5 3 一部の職員は患者をどこで待たせた？
+?? 10 1 数字は判断をどうするべきだと言っている？
+
+@id adv6
+@lv 3
+@level 8
+@title The Paradox of Automation
+@ja 自動化のパラドックス
+@tag 難関大レベル・論説文
+@gloss automation=自動化, pilot=操縦士, intervene=介入する, skill=技能, deteriorate=衰える, monitor=監視する, crisis=危機, rarely=めったに〜ない, reliance=依存, vigilance=注意を保つこと
+S| {It|This|That|There} might seem obvious :: 当然に思えるかも
+O| {that|what|which|this} the more reliable a machine becomes, :: 機械が信頼できるほど
+S| the {safer|safe|safest|more safe} we are. :: 私たちは安全だと
+== 機械が信頼できるほど私たちは安全になる、というのは当たり前に思えるかもしれない。
+M| {Yet|Already|Still yet|Ever}, :: しかし
+S| psychologists {have|has|having|had been} identified :: 心理学者は見つけた
+O| {what|that|which|whose} is called :: …と呼ばれるものを
+C| "the {paradox|paradoxes|paradoxical|paradoxically} of automation." :: 「自動化の逆説」
+== しかし心理学者は、「自動化のパラドックス」と呼ばれるものを指摘している。
+S| {Because|Because of|Since of|Due} automated systems :: 自動化されたシステムが
+V| {handle|handles|handling|handled} :: 処理するので
+O| {routine|routinely|routines|route} tasks so well, :: 日常の作業をとてもうまく
+S| human operators {rarely|rare|rarer|rarity} :: 人間はめったに…ない
+V| {get|gets|getting|got to} the chance :: 機会を得る
+X| {to practice|practicing|practice|to practicing} their skills. :: 技能を練習する
+== 自動システムが日常の作業をうまくこなすので、人間が技能を磨く機会はめったにない。
+M| {As a result|As result|In result|At a result}, :: その結果
+S| {those|these|that|this} skills :: そうした技能は
+V| {gradually|gradual|gradualness|graduated} deteriorate. :: 次第に衰える
+== その結果、そうした技能は少しずつ衰えていく。
+M| {Worse|Bad|Worst|Badly}, :: さらに悪いことに
+S| the {moments|moment|momentary|momentum} :: 瞬間は
+X| {when|which|what|whom} the machine does fail :: 機械が実際に故障する
+V| {tend|tends|tending|tended} :: …しがちだ
+X| {to be|being|be|to being} the most difficult ones: :: 最も難しいものである
+== さらに悪いことに、機械が本当に故障するのは、最も難しい場面であることが多い。
+S| {unexpected|unexpectedly|expected|unexpecting} emergencies :: 予想外の緊急事態
+X| {that|what|who|whose} the designers never imagined. :: 設計者が想像しなかった
+== 設計者が想像もしなかった、予想外の緊急事態だ。
+P| {In|On|At|By} such cases, :: そうした場合に
+S| an operator {who|which|whose|whom} has spent years :: 何年も過ごした人が
+V| {simply|simple|simplify|simplest} watching screens :: ただ画面を見て
+V| {is|are|be|has} suddenly expected :: 突然求められる
+X| {to perform|performing|perform|to performing} perfectly :: 完ぺきにこなすことを
+M| {under|below|beneath of|over} extreme pressure. :: 極度の重圧の下で
+== そうした場合、何年もただ画面を見てきた操作者が、突然、極度の重圧の下で完ぺきな対応を求められる。
+S| {Several|Severe|Severally|Seven of} air accidents :: いくつかの航空事故は
+V| {have|has|had been|having} been traced :: さかのぼって調べられた
+P| {to|for|at|of} exactly this problem: :: まさにこの問題に
+== いくつかの航空事故は、まさにこの問題に原因があったとされている。
+S| pilots, {surprised|surprise|surprising|surprisingly} :: 不意を突かれた操縦士が
+P| {by|with|for|of} a sudden failure, :: 突然の故障に
+V| {reacted|react|reaction|reacting} in ways :: 方法で反応した
+X| {that|what|who|whose} made matters worse. :: 事態を悪化させる
+== 突然の故障に不意を突かれた操縦士が、事態を悪化させる対応をしてしまったのだ。
+S| Some experts {therefore|thereby|thereof|therein} :: そのため専門家の中には
+V| {recommend|recommends|recommendation|recommended to} :: 勧める
+O| {that|what|which|this} operators regularly :: 操作者が定期的に
+V| {switch|switches|switched|switching} off the automation :: 自動化を切ることを
+R| {simply|simple|simplify|simplest} to keep their skills alive. :: 技能を保つためだけに
+== そのため、技能を保つためだけに、定期的に自動化を切るよう勧める専門家もいる。
+S| {The more|More|The most|Much more} we rely on machines, :: 機械に頼るほど
+M| {it seems|it seem|it seeming|its seems}, :: どうやら
+S| {the more|more|the most|much more} carefully :: より注意深く
+S| we {must|must to|have|should to} :: 私たちは…ねばならない
+V| {protect|protects|protection|protected} our own abilities. :: 自分の能力を守ら
+== どうやら、機械に頼るほど、私たちは自分の能力をより注意深く守らなければならないようだ。
+?? 1 3 心理学者が指摘したものは何と呼ばれる？
+?? 3 1 その結果、何が衰える？
+?? 6 4 操作者は何の下で完ぺきな対応を求められる？
+?? 9 3 専門家は操作者が定期的に何をするよう勧める？
+
+@id adv7
+@lv 3
+@level 8
+@title The Placebo Problem
+@ja プラセボの難題
+@tag 難関大レベル・論説文
+@gloss placebo=偽薬, symptom=症状, deceive=だます, ethical=倫理的な, expectation=期待, physician=医師, trial=試験, genuine=本物の, deception=ごまかし, conscious=意識して
+S| A placebo {is|are|be|has} :: プラセボとは…だ
+C| {a|an|the|one} treatment :: 治療
+X| {that|what|who|whose} contains :: 含む
+O| {no|none|not|nothing} active ingredient, :: 有効成分を何も
+M| {such as|such|as such|so as} a sugar pill. :: 砂糖の錠剤のような
+== プラセボとは、砂糖の錠剤のように有効成分を含まない治療のことだ。
+M| {Remarkably|Remark|Remarkable|Remarked}, :: 驚くべきことに
+S| patients {who|which|whose|whom} receive one :: それを受けた患者は
+V| {often|ever|always to|seldom of} report :: よく報告する
+O| {genuine|genuinely|genuineness|genuined} improvements :: 本当の改善を
+P| {in|on|at|of} symptoms such as pain. :: 痛みなどの症状に
+== 驚くべきことに、プラセボを受けた患者は、痛みなどの症状が本当に改善したと報告することが多い。
+S| {This|These|That's|Those} effect :: この効果は
+V| {is|are|be|has} thought :: 考えられている
+X| {to arise|arising|to arising|arise} :: 生じると
+M| {from|of|by|with} the patient's expectations :: 患者の期待から
+M| {and|but|or|nor} the ritual of treatment itself. :: そして治療の儀式自体から
+== この効果は、患者の期待と、治療という儀式そのものから生まれると考えられている。
+P| {For|To|Of|By} medical researchers, :: 医学研究者にとって
+S| the placebo effect {is|are|be|has} :: プラセボ効果は
+C| {both|either|neither|all} a tool and a nuisance. :: 道具でも厄介者でもある
+== 医学研究者にとって、プラセボ効果は道具でもあり、やっかいなものでもある。
+R| {To|For|So|In} prove that a new drug works, :: 新薬の効果を証明するには
+S| {they|them|their|theirs} must show :: 彼らは示さねばならない
+O| {that|what|which|this} it performs better :: それがよりよく効くと
+P| {than|then|that|as} a placebo :: プラセボより
+M| {in|on|at|by} carefully controlled trials. :: 厳密に管理された試験で
+== 新薬の効果を証明するには、厳密な試験で、それがプラセボより効くことを示さなければならない。
+M| {Outside|Out|Outer|Outward} the laboratory, :: 研究室の外では
+M| {however|whatever|whoever|whenever}, :: しかし
+S| the effect {raises|rises|raise|rising} :: その効果は生む
+O| a {difficult|difficulty|difficultly|differ} ethical question. :: 難しい倫理の問いを
+== しかし研究室の外では、その効果は難しい倫理の問題を生む。
+S| {Should|Shall|Would to|Must to} doctors {ever|never|every|even} :: 医師は…すべきか
+V| {prescribe|prescription|prescribing|prescribed to} a placebo, :: プラセボを処方する
+M| {knowing|known|knew|to knowing} that it works :: 効くと知りつつ
+M| {only|alone|lonely|once} if the patient :: 患者が…場合に限って
+V| {believes|believe|belief|believing} it is real? :: 本物だと信じる
+== 患者が本物だと信じるときだけ効くと知りながら、医師がプラセボを処方してよいのだろうか。
+S| {Doing so|Do so|Done so|To doing so} :: そうすることは
+V| {would|will|would to|should to} seem to require :: 必要とするように思える
+O| {deception|deceive|deceptive|deceived}, :: ごまかしを
+X| {which|what|that|who} damages the trust :: 信頼を損なう
+X| {on|in|at|by} which medicine depends. :: 医療が頼っている
+== そうするには、医療の土台である信頼を損なうごまかしが必要に思える。
+M| {Interestingly|Interesting|Interest|Interested}, :: 興味深いことに
+S| {recent|recently|recency|recents} studies :: 最近の研究は
+V| {suggest|suggests|suggestion|suggesting} :: 示唆している
+O| {that|what|which|this} placebos may work :: 偽薬が効きうると
+M| {even|ever|evenly|every} when patients :: 患者が…ときでさえ
+V| {are|is|be|being} told :: 告げられている
+O| {exactly|exact|exactness|exacting} what they are taking. :: 何を飲んでいるかを正確に
+== 興味深いことに最近の研究では、患者が何を飲んでいるか正確に知らされていても、プラセボが効く可能性が示されている。
+S| {If|Whether|Unless|Though} this is confirmed, :: これが確かめられれば
+S| the healing power of {belief|believe|believing|believed} :: 信じることの癒やす力は
+V| {may|might to|mays|can to} turn out :: …だとわかるかもしれない
+X| {to be|being|be|to being} :: …である
+C| {less|fewer|little|lesser} mysterious :: それほど神秘的でない
+P| {than|then|that|as} we once thought. :: かつて考えたより
+== これが確かめられれば、信じることの癒やす力は、かつて考えたほど神秘的なものではないとわかるかもしれない。
+?? 0 4 プラセボの例として挙げられているのは何？
+?? 1 4 患者は何の症状が改善したと報告する？
+?? 2 3 効果は何から生まれると考えられている？
+?? 4 4 新薬の効果はどんな試験で示さなければならない？
+?? 7 2 プラセボを処方するには何が必要に思える？

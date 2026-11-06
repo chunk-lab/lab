@@ -88,6 +88,8 @@ for ln in open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'passages
     if ln.startswith('@id'):cur=ln.split(None,1)[1];src[cur]=[]
     elif cur and ln and not ln.startswith('@') and '::' in ln:
         en=re.sub(r'\{([^|}]*)[^}]*\}',r'\1',ln.split('::')[0]).strip();src[cur]+=en.split()
+_ex=os.path.join(os.path.dirname(os.path.abspath(__file__)),'reading_extra.json')
+if os.path.exists(_ex):T.update(json.load(open(_ex,encoding='utf8')))   # make_passages.py が作る新しい長文
 ok=True
 for k,t in T.items():
     mine=[w for l in t['list'] for w in words_of(l[0])]

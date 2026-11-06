@@ -1,0 +1,306 @@
+@id int3
+@lv 2
+@level 6
+@title Notice: Our Office Is Moving
+@ja お知らせ：事務所移転
+@tag 共通テストレベル・お知らせ
+@gloss relocate=移転する, headquarters=本社, spacious=広々とした, commute=通勤, shuttle=送迎バス, inconvenience=不便, cooperation=協力, pack=荷造りする, label=ラベル
+S| We are {pleased|pleasant|pleasure|pleasing} :: うれしく思います
+V| {to announce|announcing|to announcing|announce} :: お知らせすることを
+O| {that|what|which|it} our headquarters :: 本社が…ことを
+V| will {relocate|relocation|relocating|relocates} :: 移転する
+P| {to|at|in|on} the Riverside Building :: リバーサイドビルへ
+T| {on|in|at|by} June 1. :: 6月1日に
+== 本社が6月1日にリバーサイドビルへ移転することをお知らせします。
+S| The new office {is|are|be|been} :: 新しい事務所は
+C| {more|much|most|many} spacious :: もっと広い
+M| {and|but|or|so} has :: そして…がある
+O| a {larger|large|largest|more large} meeting room. :: より大きな会議室が
+== 新しい事務所はもっと広く、より大きな会議室がある。
+M| {However|Therefore|Moreover|Otherwise}, :: しかし
+S| it {is|are|has|be} :: それは…だ
+C| {farther|further|far|farthest} :: もっと遠い
+P| {from|to|of|by} the station. :: 駅から
+== しかし、駅からは遠くなる。
+R| {To|For|So|In} make your commute easier, :: 通勤を楽にするため
+S| the company {will|is|has|would to} :: 会社は…する予定だ
+V| {run|runs|ran|running} :: 運行する
+O| a free shuttle {bus|buses|busy|bused} :: 無料の送迎バスを
+T| {every|each|all|some} 15 minutes. :: 15分ごとに
+== 通勤を楽にするため、会社は15分ごとに無料の送迎バスを出す。
+S| All employees {must|have|should to|must to} :: 全社員は…必要がある
+V| {pack|packs|packing|packed} :: 荷造りする
+O| {their|there|they're|them} belongings :: 自分の持ち物を
+T| {by|until|till|on} May 28. :: 5月28日までに
+== 全社員は5月28日までに持ち物を荷造りしなければならない。
+V| {Please|Pleased|Pleasure|Pleasing} label :: ラベルを貼って
+O| {each|every|all|both} box :: それぞれの箱に
+P| {with|by|for|of} your name :: あなたの名前を
+M| {and|or|but|nor} department. :: そして部署名を
+== それぞれの箱に、名前と部署名のラベルを貼ってください。
+S| The IT team {will|shall to|would to|is} :: IT係が…する
+V| {move|moves|moving|moved} :: 運ぶ
+O| {all|every|each|whole} computers :: すべてのパソコンを
+M| {over|during|while|for} the weekend. :: 週末の間に
+== IT係が週末の間にすべてのパソコンを運ぶ。
+S| We {apologize|apology|apologies|apologizing} :: おわびします
+M| {for|of|to|about to} any inconvenience :: ご不便について
+M| {and|but|or|so} thank you :: そして感謝します
+O| {for|to|of|with} your cooperation. :: ご協力に
+== ご不便をおかけしますが、ご協力に感謝します。
+?? 0 4 本社はどこへ移転する？
+?? 2 3 新しい事務所は何から遠くなる？
+?? 3 4 送迎バスはどのくらいの間隔で出る？
+?? 4 3 荷造りの期限はいつ？
+?? 6 0 パソコンを運ぶのは誰？
+
+@id int4
+@lv 2
+@level 6
+@title Working from Home
+@ja 在宅勤務
+@tag 共通テストレベル・論説文
+@gloss remote=遠隔の, flexible=柔軟な, productivity=生産性, isolated=孤立した, colleague=同僚, boundary=境界, survey=調査, respondent=回答者, balance=つり合い
+T| {Since|For|From|During} 2020, :: 2020年以来
+S| {millions|million|a million|millions of} of people :: 何百万もの人々が
+V| {have|has|had been|having} :: …してきた
+V| worked {from|at|in|on} home. :: 在宅で働いて
+== 2020年以来、何百万人もの人が在宅で働いてきた。
+S| {Many|Much|Most of|A lot} workers :: 多くの働き手は
+V| {enjoy|enjoys|enjoying|enjoyed to} :: 楽しんでいる
+O| {flexible|flexibility|flexibly|flex} hours :: 柔軟な勤務時間を
+M| {and|but|or|so} the lack :: そして…がないこと
+X| {of|for|in|to} a long commute. :: 長い通勤が
+== 多くの人は、柔軟な勤務時間と、長い通勤がないことを楽しんでいる。
+P| {According to|Accord to|According|According with} :: …によると
+X| a {recent|recently|recency|recents} survey, :: 最近の調査
+S| {more than|more then|much than|more that} 60 percent :: 60%以上が
+X| {of|in|for|to} respondents :: 回答者の
+V| {said|say|told|says} :: 言った
+O| {their|there|they|them} productivity :: 自分の生産性が
+V| had {improved|improve|improving|improvement}. :: 上がったと
+== 最近の調査によると、回答者の60%以上が生産性が上がったと答えた。
+M| {However|Because|Although|Despite}, :: しかし
+S| working {alone|lonely|along|alone of} :: 一人で働くことは
+V| can {make|makes|made|making} people :: 人を…させうる
+C| {feel|to feel|feeling|felt} isolated. :: 孤立したと感じ
+== しかし、一人で働くと孤立感を覚えることがある。
+S| {Some|Any|Much|Every} employees :: 一部の社員は
+V| {miss|misses|missing|missed to} :: 恋しく思う
+O| {chatting|to chat|chat|chatted} with colleagues :: 同僚とのおしゃべりを
+P| {in|on|at|by} the office. :: 職場での
+== 職場で同僚とおしゃべりするのを恋しく思う社員もいる。
+S| {Others|Other|Another|The other} :: ほかの人は
+V| {find|finds|found to|finding} :: …と感じる
+O| it {hard|hardly|harder than|hardness} :: …が難しいと
+X| {to stop|stopping|to stopping|stop} working :: 仕事をやめるのが
+T| {at|in|on|by} the end of the day. :: 一日の終わりに
+== 一日の終わりに仕事をやめるのが難しいと感じる人もいる。
+R| {Because|Because of|Since of|Due} there is :: …があるので
+S| no clear {boundary|bound|boundaries|bounded} :: はっきりした境界が
+P| {between|among|through|across} work and home, :: 仕事と家庭の間に
+S| they {often|always|ever|seldom} :: 彼らはよく
+V| {check|checks|checking|checked} emails :: メールを確認する
+T| {late|lately|later|latest} at night. :: 夜遅くに
+== 仕事と家庭の境目がはっきりしないので、夜遅くにメールを確認してしまう。
+M| {As a result|As result|In result|As a resulting}, :: その結果
+S| {many|much|every|each} companies :: 多くの会社が
+V| {now|then|yet|still not} use :: 今は取り入れている
+O| a {hybrid|hybrids|hybridly|hybridity} model. :: 混合型の働き方を
+== その結果、多くの会社は今、混合型の働き方を取り入れている。
+S| Workers {come|comes|coming|came to} :: 働き手は来る
+P| {to|at|in|for} the office :: 会社に
+T| {two or three|two and three|two or third|second or three} days a week :: 週に2〜3日
+M| {and|but|or|so} work from home :: 残りは在宅で働く
+T| {on|in|at|by} the other days. :: ほかの日は
+== 週に2〜3日は出社し、ほかの日は在宅で働くのだ。
+S| This {balance|balanced|balancing|balances} :: このつり合いは
+V| {seems|seem|seeming|is seem} :: …のようだ
+C| {to suit|suiting|suit|to suiting} :: 合っている
+O| {both|either|all|each} employers and staff. :: 雇い主にも社員にも
+== この形は、雇い主にも社員にも合っているようだ。
+?? 1 2 多くの人は何を楽しんでいる？
+?? 2 5 回答者の60%以上は何が上がったと答えた？
+?? 3 3 一人で働くとどう感じることがある？
+?? 7 3 多くの会社は今、何を取り入れている？
+?? 8 2 週に何日出社する？
+
+@id int5
+@lv 2
+@level 6
+@title Food Waste at Supermarkets
+@ja スーパーの食品ロス
+@tag 共通テストレベル・説明文
+@gloss waste=むだ, edible=食べられる, expiration=期限, discount=割引, donate=寄付する, charity=慈善団体, appearance=見た目, ugly=見た目の悪い, reduce=減らす
+S| {Every|Each|All|Any} year, :: 毎年
+S| supermarkets {throw|throws|threw|throwing} away :: スーパーは捨てる
+O| {tons|ton|tones|a ton} of food :: 大量の食べ物を
+X| {that|what|who|whose} is still edible. :: まだ食べられる
+== スーパーは毎年、まだ食べられる大量の食べ物を捨てている。
+S| {Much|Many|A number|Few} of it :: その多くは
+V| {is|are|be|has} thrown away :: 捨てられる
+R| {simply|simple|simplify|simplicity} because :: 単に…だから
+S| it {is|are|has|be} :: それが…である
+C| {close|closed|closing|closely} :: 近い
+P| {to|for|at|of} its expiration date. :: 期限に
+== その多くは、期限が近いというだけで捨てられる。
+S| {Some|Any|Much|Every} stores :: 一部の店は
+V| {now|then|yet|ago} sell :: 今は売っている
+O| {such|so|such a|that} food :: そういう食べ物を
+P| {at|in|on|for} a large discount. :: 大きく値引きして
+== 一部の店では、そうした食品を大幅に値引きして売っている。
+S| {Others|Other|Another|The others'} :: ほかの店は
+V| {donate|donation|donates to|donating} it :: それを寄付する
+P| {to|for|at|with} local charities. :: 地元の慈善団体に
+== 地元の慈善団体に寄付する店もある。
+S| {Another|Other|Others|The another} problem :: もう一つの問題は
+V| {is|are|be|has} :: …だ
+C| {appearance|appear|apparent|appearing}. :: 見た目
+== もう一つの問題は見た目だ。
+S| Customers {often|always|ever|hardly} :: 客はよく
+V| {avoid|avoids|avoiding|avoided to} :: 避ける
+O| {buying|to buy|buy|bought} vegetables :: 野菜を買うのを
+X| {that|what|who|where} look ugly, :: 見た目の悪い
+M| {even though|even if though|even|though even} :: …にもかかわらず
+S| they {taste|tastes|tasted to|tasting} :: それらの味は
+C| {just|only just|justly|just as} as good. :: 同じくらいよい
+== 味は変わらないのに、客は見た目の悪い野菜を避けがちだ。
+R| {To|For|In|So} solve this, :: これを解決するため
+S| a chain {in|on|at|of} France :: フランスのあるチェーンは
+V| {started|start|starts|starting} :: 始めた
+O| an "{ugly|ugliness|ugliest|uglily} food" campaign. :: 「ぶさいく食品」運動を
+== これを解決するため、フランスのあるチェーンは「見た目の悪い食べ物」キャンペーンを始めた。
+S| It {sold|sell|sells|selled} :: それは売った
+O| {such|so|such a|that} products :: そうした商品を
+M| {for|by|at|in} 30 percent less, :: 3割安く
+M| {and|but|or|so} sales were :: そして売り上げは
+C| {better|good|best|well} than expected. :: 予想よりよかった
+== そうした商品を3割安く売ったところ、売り上げは予想を上回った。
+S| {Small|Smaller|Smallest|Smally} changes {like|likes|alike|liking} these :: こうした小さな変化が
+V| {can|cans|can to|could to} :: …できる
+V| {help|helps|helping|helped to} reduce :: 減らすのに役立つ
+O| {the|a|an|any} amount of waste. :: むだの量を
+== こうした小さな工夫が、むだを減らす助けになる。
+?? 1 5 多くは何が近いという理由で捨てられる？
+?? 3 2 一部の店はどこに寄付する？
+?? 4 2 もう一つの問題は何？
+?? 7 3 商品をどのくらい安く売った？
+
+@id int6
+@lv 2
+@level 6
+@title A Hotel Complaint and Reply
+@ja ホテルへの苦情と返信
+@tag 共通テストレベル・メール
+@gloss complaint=苦情, reservation=予約, maintenance=保守点検, refund=返金, voucher=割引券, inconvenience=不便, sincerely=心から, apology=謝罪, stay=滞在
+S| I {stayed|stay|stays|staying} :: 私は泊まった
+P| {at|in|on|to} your hotel :: 貴ホテルに
+T| {from|for|since|during} March 3 to 5. :: 3月3日から5日まで
+== 3月3日から5日まで、貴ホテルに宿泊しました。
+M| {Unfortunately|Fortunate|Unfortunate|Fortunately}, :: 残念ながら
+S| the air {conditioner|condition|conditioned|conditioning} :: エアコンが
+P| {in|on|at|of} my room :: 私の部屋の
+V| {did not|was not|does not|not} work. :: 動かなかった
+== 残念ながら、部屋のエアコンが動きませんでした。
+S| I {called|call|calls|calling} :: 私は電話した
+O| the front desk {twice|two|second|double}, :: フロントに2度
+M| {but|so|and|or} no one :: でも誰も
+V| {came|come|comes|coming} :: 来なかった
+R| {to fix|fixing|to fixing|fix} it. :: それを直しに
+== フロントに2回電話しましたが、誰も直しに来ませんでした。
+S| I {would|will|would to|wish} like :: 私は…したい
+V| {to ask|asking|ask|to asking} :: 求めること
+O| {for|to|of|with} a partial refund. :: 一部の返金を
+== 一部返金をお願いしたいと思います。
+X| Dear Ms. {Lee|Lees|Lee's|a Lee}, :: リー様
+== リー様
+S| Thank you {for|to|of|with} :: …をありがとう
+O| {letting|let|lets|to let} us know :: 知らせてくれて
+M| {about|of|for|with} the problem. :: その問題について
+== 問題をお知らせいただき、ありがとうございます。
+S| We {sincerely|sincere|sincerity|sincerer} :: 私どもは心から
+V| {apologize|apology|apologies|apologizing} :: おわびします
+M| {for|of|about to|to} the inconvenience. :: ご不便について
+== ご不便をおかけしたことを、心からおわびします。
+S| {Our|Ours|Us|We} records show :: 記録によると
+M| {that|what|which|this} the maintenance staff :: 保守係が
+V| {were|was|are|be} :: …だった
+C| {busy|business|busily|busier} :: 忙しかった
+P| {with|for|to|of} another problem. :: 別の問題で
+== 記録によると、保守係は別の問題の対応で手がふさがっていました。
+S| We {have|has|had been|having} :: 私どもは…した
+V| {refunded|refund|refunding|refunds} :: 返金した
+O| {one|first|once|the one} night's charge :: 1泊分の料金を
+M| {and|but|or|so} included :: そして同封した
+O| a {voucher|vouchers|vouch|vouching} :: 割引券を
+X| {for|to|of|at} your next stay. :: 次回の宿泊用の
+== 1泊分の料金を返金し、次回の宿泊に使える割引券を同封しました。
+S| We {hope|hopes|hoping|hoped to} :: 私どもは願う
+O| {to welcome|welcoming|welcome|to welcoming} you :: お迎えすることを
+T| {again|against|once|ago} soon. :: またすぐに
+== またのお越しをお待ちしております。
+?? 1 1 何が動かなかった？
+?? 2 1 何回フロントに電話した？
+?? 3 2 客は何を求めた？
+?? 8 2 ホテルはいくら分を返金した？
+?? 8 4 ホテルは何を同封した？
+
+@id int7
+@lv 2
+@level 6
+@title A Café That Hires Seniors
+@ja 高齢者が働くカフェ
+@tag 共通テストレベル・記事
+@gloss senior=高齢者, retire=退職する, hire=雇う, recipe=作り方, generation=世代, loneliness=孤独, meaningful=意味のある, regular=常連の, purpose=目的
+P| {In|On|At|To} a quiet town in Japan, :: 日本の静かな町に
+V| there {is|are|be|has} :: ある
+S| a café {run|ran|runs|running} by :: …が営むカフェが
+X| people {over|above|more|upon} 70. :: 70歳を超える人々
+== 日本の静かな町に、70歳を超える人たちが営むカフェがある。
+S| The owner, {who|which|whom|whose} :: 店主は、…人で
+V| {retired|retire|retiring|retirement} :: 退職した
+P| {from|of|at|by} a bank, :: 銀行を
+V| {wanted|want|wants|wanting} :: 望んだ
+O| {to create|creating|create|to creating} a place :: 場所を作ることを
+X| {where|which|what|who} seniors could work. :: 高齢者が働ける
+== 店主は銀行を退職した人で、高齢者が働ける場所を作りたいと考えた。
+S| He {hired|hire|hires|hiring} :: 彼は雇った
+O| {eight|eighth|eighty|the eight} local residents, :: 8人の地元住民を
+X| {each|every|all|both} with :: それぞれ…を持つ
+X| {a|an|the|one} special skill. :: 特技を
+== 彼は、それぞれ特技を持つ8人の地元住民を雇った。
+S| {One|Once|A one|The one} woman :: ある女性は
+V| {bakes|bake|baking|baked to} :: 焼く
+O| cakes {using|use|used|uses} :: …を使ってケーキを
+X| her {mother's|mother|mothers|mothers'} recipes. :: 母親の作り方
+== ある女性は、母親の作り方でケーキを焼いている。
+S| {A|An|The|One} former carpenter :: 元大工の人は
+V| {made|make|makes|making} :: 作った
+O| {all|every|each|whole} the tables and chairs. :: すべての机といすを
+== 元大工の人が、すべての机といすを作った。
+S| The café {has|have|is|having} :: そのカフェには…がある
+C| {many|much|a lot|every} regular customers, :: 多くの常連客が
+X| {including|include|included|includes} :: …も含めて
+X| {young|younger|youth|youngly} families. :: 若い家族
+== そのカフェには、若い家族も含めて常連客がたくさんいる。
+S| {Children|Child|Childs|Childrens} :: 子どもたちは
+V| {often|ever|always to|seldom} ask :: よく頼む
+O| the staff {to|for|of|at} teach them :: 店員に教えてと
+X| old {games|game|gaming|gamer}. :: 昔の遊びを
+== 子どもたちはよく、店員に昔の遊びを教えてと頼む。
+P| {According to|Accord|According|Accordingly} the owner, :: 店主によると
+S| working {gives|give|giving|gave} :: 働くことは与える
+I| {seniors|senior|seniority|seniors'} :: 高齢者に
+O| a sense {of|for|in|at} purpose :: 生きがいを
+M| {and|but|or|so} reduces loneliness. :: そして孤独を減らす
+== 店主によると、働くことは高齢者に生きがいを与え、孤独を減らす。
+S| The café {shows|show|showing|showed to} :: そのカフェは示している
+O| {how|what|that how|which} different generations :: 違う世代が…様子を
+V| {can|could to|cans|can to} help :: 助け合える
+O| {each other|each others|one other|every other}. :: お互いに
+== そのカフェは、世代を超えて助け合えることを示している。
+?? 0 3 店で働くのは何歳を超える人？
+?? 1 2 店主は何を退職した？
+?? 3 3 ケーキは誰の作り方？
+?? 4 0 机といすを作ったのは誰？
+?? 7 3 働くことは高齢者に何を与える？

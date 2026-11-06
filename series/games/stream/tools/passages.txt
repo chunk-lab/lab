@@ -261,3 +261,714 @@ may {offer|offers|offering|to offer} more :: より多くをくれるかも
 {than|then|that|as} a new way of speaking; :: 新しい話し方以上のものを
 it {may offer|may offering|may offers|maybe offer} :: それは…をくれるかも
 a new way {of seeing|to seeing|of see|for seen}. :: 新しい見方を
+
+# ==== ここから下は make_passages.py が passages_new/ から作る(手で直さない) ====
+
+@id beg3
+@lv 1
+@title My First Part-Time Job
+@ja はじめてのアルバイト
+@tag 高校受験レベル・体験文
+@gloss customer=客, order=注文, manager=店長, nervous=緊張して, mistake=間違い, patient=辛抱強い, confident=自信のある
+Last {summer|summers|winter|spring}, :: 去年の夏
+I {started|start|starting|starts} :: 私は始めた
+a part-time {job|work|jobs|working} :: アルバイトを
+{at|on|in|to} a small café. :: 小さなカフェで
+On my {first|one|once|firstly} day, :: 初日に
+I {was|were|am|be} :: 私は…だった
+very {nervous|nerve|nervously|nerves}. :: とても緊張して
+I {had to|have to|must to|had} :: 私は…必要があった
+{take|took|taking|takes} orders :: 注文を取る
+{from|for|to|of} many customers. :: 多くの客から
+{Once|One|First|Ones}, :: 一度
+I {brought|bring|bringed|brings} :: 私は持って行った
+the {wrong|wrongs|wrongly|wronged} drink :: 違う飲み物を
+to a {customer|custom|costume|customs}. :: ある客に
+I {said|say|told|speak} :: 私は言った
+"I'm {sorry|sorrow|sorry for|sad}," :: 「すみません」と
+and {quickly|quick|quicker|quickness} :: そしてすぐに
+{made|make|makes|making} a new one. :: 新しいものを作った
+The {customer|customers|custom|customer's} :: その客は
+{smiled|smile|smiling|smiles} :: ほほえんだ
+and {said|says|saying|told}, :: そして言った
+"{Don't|Doesn't|Not|No} worry." :: 「気にしないで」と
+My {manager|manage|management|managing} :: 店長は
+was {patient|patience|patients|patiently} :: 辛抱強かった
+{with|for|to|at} me. :: 私に対して
+She {taught|teach|teached|teaching} me :: 彼女は私に教えた
+{how to|what to|how|to how} make :: 作り方を
+{each|every|all|both} drink :: それぞれの飲み物の
+{step by step|step and step|step to step|steps by steps}. :: 一つずつ
+{After|Before|Since|During} a month, :: 1か月後
+I {became|become|becomes|becoming} :: 私はなった
+more {confident|confidence|confidently|confide}. :: もっと自信が
+{Now|Then|Soon|Ago} :: 今では
+I {enjoy|enjoys|enjoying|enjoyed to} :: 私は楽しんでいる
+{talking|to talking|talk|talked} with customers. :: 客と話すことを
+
+@id beg4
+@lv 1
+@title The New City Library
+@ja 新しい市立図書館
+@tag 高校受験レベル・説明文
+@gloss library=図書館, floor=階, borrow=借りる, quiet=静かな, event=催し, member=会員, free=無料の, card=カード
+A new {library|librarian|libraries|liberty} :: 新しい図書館が
+{opened|open|opening|opens} :: 開いた
+{near|nearly|next|nearby} the station :: 駅の近くに
+{last|lately|later|latest} month. :: 先月
+It {has|have|is|having} :: それにはある
+{three|third|thirty|three of} floors. :: 3つの階が
+{On|In|At|For} the first floor, :: 1階には
+there {are|is|be|have} :: ある
+books {for|to|of|with} children. :: 子ども向けの本が
+The {second|two|twice|seconds} floor :: 2階は
+{is|are|be|has} :: …だ
+a {quiet|quite|quietly|quit} room :: 静かな部屋
+{for|of|to|at} studying. :: 勉強のための
+{On|In|To|At} the top floor, :: 最上階では
+people {can|could to|cans|can to} :: 人々は…できる
+{join|joins|joining|to join} events, :: 催しに参加
+{such as|such|as such|so as} book talks. :: 本の講演会など
+You {can|can to|cans|could to} :: あなたは…できる
+{borrow|lend|borrows|borrowing} :: 借りる
+up to {ten|tenth|tens|the ten} books :: 10冊までの本を
+{at|in|on|for} a time. :: 一度に
+A library {card|cards|carding|cared} :: 図書館カードは
+{is|are|be|has} :: …だ
+{free|freely|freedom|free of}, :: 無料
+and {it|they|its|this one} :: そしてそれは
+{takes|take|taking|took} :: かかる
+{only|alone|lonely|once} five minutes :: たった5分
+{to make|making|to making|make}. :: 作るのに
+My {sister|sisters|sister's|sisterly} and I :: 姉と私は
+{go|goes|going|went to} :: 行く
+{there|their|they're|where} :: そこへ
+{every|each|all|any} Saturday. :: 毎週土曜日
+It {is|has|are|be} :: それは…だ
+{my|mine|me|I} favorite place :: 私の大好きな場所
+{in|on|at|of} our town. :: 私たちの町で
+
+@id beg5
+@lv 1
+@title A Lost Wallet
+@ja なくした財布
+@tag 高校受験レベル・物語文
+@gloss wallet=財布, police=警察, station=駅, kind=親切な, return=返す, relieved=ほっとした, thank=感謝する
+{Yesterday|Tomorrow|Today's|Yesterdays}, :: 昨日
+my father {lost|lose|losed|losing} :: 父はなくした
+{his|him|he|he's} wallet :: 財布を
+{on|in|at|by} the train. :: 電車で
+He {looked|look|looking|looks} :: 彼は探した
+{for|after|at|to} it everywhere, :: それをあらゆる所で
+{but|so|because|or} he :: でも彼は
+{couldn't|can't|didn't can|couldn't to} find it. :: 見つけられなかった
+He {was|were|is|been} :: 彼は…だった
+very {worried|worry|worrying|worries} :: とても心配して
+{because|so|but|though} his ID :: 身分証が…ので
+{was|were|is|be} :: あった
+{in|on|at|into} it. :: その中に
+{In|On|At|By} the evening, :: 夕方
+{someone|anyone|no one|some} :: 誰かが
+{called|call|calls|calling} :: 電話してきた
+{our|us|we|ours} house. :: 私たちの家に
+It {was|is|were|be} :: それは…だった
+a {police|polite|policy|polices} officer :: 警察官
+{at|on|in|to} the station. :: 駅の
+A {kind|kindly|kinds|kindness} student :: 親切な学生が
+{had|has|have|having} found :: 見つけていた
+{the|a|an|this} wallet :: 財布を
+{and|but|or|so} taken it :: そして届けていた
+{to|for|at|of} the police. :: 警察に
+My father {felt|feel|feeling|felts} :: 父は感じた
+{relieved|relief|relieve|relieving}. :: ほっと
+He {wants|want|wanting|wanted to} :: 彼は…したい
+{to thank|thank|thanking|to thanking} :: 感謝すること
+the student {someday|some day's|sometimes|someone}. :: いつかその学生に
+
+@id beg6
+@lv 1
+@title The Weekend Market
+@ja 週末の市場
+@tag 高校受験レベル・説明文
+@gloss market=市場, farmer=農家, vegetable=野菜, fresh=新鮮な, price=値段, cheap=安い, local=地元の, plastic=プラスチック
+{Every|Each|All|Some} Sunday morning, :: 毎週日曜の朝
+a market {is|are|be|has} held :: 市場が開かれる
+{in|on|at|to} the park :: 公園で
+{near|nearly|close|next} my house. :: 私の家の近くの
+Local farmers {sell|sells|selling|sold to} :: 地元の農家が売る
+{fresh|freshly|freshness|fresher} vegetables :: 新鮮な野菜を
+{and|but|or|so} fruit. :: そして果物を
+The prices {are|is|be|has} :: 値段は…だ
+{cheaper|cheap|cheapest|more cheap} :: もっと安い
+{than|then|that|as} at the supermarket. :: スーパーより
+You {can|can to|could to|cans} :: あなたは…できる
+{also|too|either|so} talk :: 話すこともできる
+{with|to|for|of} the farmers :: 農家の人と
+{about|for|on|of} how they grow food. :: 育て方について
+My mother {always|never|often|usually} :: 母はいつも
+{brings|bring|bringing|brought} :: 持って行く
+{her|hers|she|herself} own bag :: 自分のバッグを
+{to|for|so|in} reduce plastic. :: プラスチックを減らすため
+{Last|Late|Latest|Lately} week, :: 先週
+we {bought|buy|buyed|brought} :: 私たちは買った
+{some|any|much|few} strawberries. :: いちごを
+They {were|was|are|be} :: それらは…だった
+{so|such|too much|very much} sweet :: とても甘くて
+{that|than|which|what} I ate :: …ので私は食べた
+{half|halves|a half of|halve} of them :: その半分を
+{on|in|at|by} the way home. :: 帰り道で
+The market {is|are|has|be} :: その市場は
+{good|well|best|better} for people :: 人々にとってよい
+{and|but|or|nor} for nature. :: そして自然にとって
+
+@id beg7
+@lv 1
+@title An Email to a Host Family
+@ja ホストファミリーへのメール
+@tag 高校受験レベル・メール
+@gloss host=ホスト(受け入れる側の), family=家族, arrive=到着する, airport=空港, flight=便, allergy=アレルギー, look forward=楽しみに待つ
+Dear {Mr.|Mrs|Mister.|Mr} and Mrs. Brown, :: ブラウン夫妻へ
+My name {is|are|am|be} :: 私の名前は…です
+{Yuki|Yuki's|Yukis|a Yuki}, :: ユキ
+and I {will|am|was|would to} stay :: 私は滞在します
+{with|to|for|at} you :: あなたたちのところに
+{next|last|near|nearly} month. :: 来月
+My flight {will|is|was|would to} :: 私の便は…でしょう
+{arrive|arrives|arriving|arrival} :: 到着する
+{at|in|on|to} the airport :: 空港に
+{at|in|on|by} 3 p.m. on May 2. :: 5月2日午後3時に
+{Could|Can to|Would to|Shall} you :: …していただけますか
+{pick|picks|picking|picked} me up :: 私を迎えに来る
+{there|their|where|here}? :: そこへ
+{By the way|By a way|In the way|On the way}, :: ところで
+I {have|has|am|having} :: 私は…がある
+an {allergy|allergic|allergies|allergen} :: アレルギーが
+{to|for|of|with} eggs. :: 卵に対して
+I'm {sorry|sorrow|sorried|sad} :: 申し訳ありません
+{for|of|to|about to} the trouble. :: ご面倒をかけて
+I {am|is|are|be} :: 私は…です
+{looking|look|looked|looks} forward :: 楽しみにして
+{to|for|at|of} meeting you. :: お会いするのを
+Best {wishes|wish|wished|wishing}, :: よろしくお願いします
+{Yuki|Yuki's|Yukis|The Yuki} :: ユキ
+
+@id int3
+@lv 2
+@title Notice: Our Office Is Moving
+@ja お知らせ：事務所移転
+@tag 共通テストレベル・お知らせ
+@gloss relocate=移転する, headquarters=本社, spacious=広々とした, commute=通勤, shuttle=送迎バス, inconvenience=不便, cooperation=協力, pack=荷造りする, label=ラベル
+We are {pleased|pleasant|pleasure|pleasing} :: うれしく思います
+{to announce|announcing|to announcing|announce} :: お知らせすることを
+{that|what|which|it} our headquarters :: 本社が…ことを
+will {relocate|relocation|relocating|relocates} :: 移転する
+{to|at|in|on} the Riverside Building :: リバーサイドビルへ
+{on|in|at|by} June 1. :: 6月1日に
+The new office {is|are|be|been} :: 新しい事務所は
+{more|much|most|many} spacious :: もっと広い
+{and|but|or|so} has :: そして…がある
+a {larger|large|largest|more large} meeting room. :: より大きな会議室が
+{However|Therefore|Moreover|Otherwise}, :: しかし
+it {is|are|has|be} :: それは…だ
+{farther|further|far|farthest} :: もっと遠い
+{from|to|of|by} the station. :: 駅から
+{To|For|So|In} make your commute easier, :: 通勤を楽にするため
+the company {will|is|has|would to} :: 会社は…する予定だ
+{run|runs|ran|running} :: 運行する
+a free shuttle {bus|buses|busy|bused} :: 無料の送迎バスを
+{every|each|all|some} 15 minutes. :: 15分ごとに
+All employees {must|have|should to|must to} :: 全社員は…必要がある
+{pack|packs|packing|packed} :: 荷造りする
+{their|there|they're|them} belongings :: 自分の持ち物を
+{by|until|till|on} May 28. :: 5月28日までに
+{Please|Pleased|Pleasure|Pleasing} label :: ラベルを貼って
+{each|every|all|both} box :: それぞれの箱に
+{with|by|for|of} your name :: あなたの名前を
+{and|or|but|nor} department. :: そして部署名を
+The IT team {will|shall to|would to|is} :: IT係が…する
+{move|moves|moving|moved} :: 運ぶ
+{all|every|each|whole} computers :: すべてのパソコンを
+{over|during|while|for} the weekend. :: 週末の間に
+We {apologize|apology|apologies|apologizing} :: おわびします
+{for|of|to|about to} any inconvenience :: ご不便について
+{and|but|or|so} thank you :: そして感謝します
+{for|to|of|with} your cooperation. :: ご協力に
+
+@id int4
+@lv 2
+@title Working from Home
+@ja 在宅勤務
+@tag 共通テストレベル・論説文
+@gloss remote=遠隔の, flexible=柔軟な, productivity=生産性, isolated=孤立した, colleague=同僚, boundary=境界, survey=調査, respondent=回答者, balance=つり合い
+{Since|For|From|During} 2020, :: 2020年以来
+{millions|million|a million|millions of} of people :: 何百万もの人々が
+{have|has|had been|having} :: …してきた
+worked {from|at|in|on} home. :: 在宅で働いて
+{Many|Much|Most of|A lot} workers :: 多くの働き手は
+{enjoy|enjoys|enjoying|enjoyed to} :: 楽しんでいる
+{flexible|flexibility|flexibly|flex} hours :: 柔軟な勤務時間を
+{and|but|or|so} the lack :: そして…がないこと
+{of|for|in|to} a long commute. :: 長い通勤が
+{According to|Accord to|According|According with} :: …によると
+a {recent|recently|recency|recents} survey, :: 最近の調査
+{more than|more then|much than|more that} 60 percent :: 60%以上が
+{of|in|for|to} respondents :: 回答者の
+{said|say|told|says} :: 言った
+{their|there|they|them} productivity :: 自分の生産性が
+had {improved|improve|improving|improvement}. :: 上がったと
+{However|Because|Although|Despite}, :: しかし
+working {alone|lonely|along|alone of} :: 一人で働くことは
+can {make|makes|made|making} people :: 人を…させうる
+{feel|to feel|feeling|felt} isolated. :: 孤立したと感じ
+{Some|Any|Much|Every} employees :: 一部の社員は
+{miss|misses|missing|missed to} :: 恋しく思う
+{chatting|to chat|chat|chatted} with colleagues :: 同僚とのおしゃべりを
+{in|on|at|by} the office. :: 職場での
+{Others|Other|Another|The other} :: ほかの人は
+{find|finds|found to|finding} :: …と感じる
+it {hard|hardly|harder than|hardness} :: …が難しいと
+{to stop|stopping|to stopping|stop} working :: 仕事をやめるのが
+{at|in|on|by} the end of the day. :: 一日の終わりに
+{Because|Because of|Since of|Due} there is :: …があるので
+no clear {boundary|bound|boundaries|bounded} :: はっきりした境界が
+{between|among|through|across} work and home, :: 仕事と家庭の間に
+they {often|always|ever|seldom} :: 彼らはよく
+{check|checks|checking|checked} emails :: メールを確認する
+{late|lately|later|latest} at night. :: 夜遅くに
+{As a result|As result|In result|As a resulting}, :: その結果
+{many|much|every|each} companies :: 多くの会社が
+{now|then|yet|still not} use :: 今は取り入れている
+a {hybrid|hybrids|hybridly|hybridity} model. :: 混合型の働き方を
+Workers {come|comes|coming|came to} :: 働き手は来る
+{to|at|in|for} the office :: 会社に
+{two or three|two and three|two or third|second or three} days a week :: 週に2〜3日
+{and|but|or|so} work from home :: 残りは在宅で働く
+{on|in|at|by} the other days. :: ほかの日は
+This {balance|balanced|balancing|balances} :: このつり合いは
+{seems|seem|seeming|is seem} :: …のようだ
+{to suit|suiting|suit|to suiting} :: 合っている
+{both|either|all|each} employers and staff. :: 雇い主にも社員にも
+
+@id int5
+@lv 2
+@title Food Waste at Supermarkets
+@ja スーパーの食品ロス
+@tag 共通テストレベル・説明文
+@gloss waste=むだ, edible=食べられる, expiration=期限, discount=割引, donate=寄付する, charity=慈善団体, appearance=見た目, ugly=見た目の悪い, reduce=減らす
+{Every|Each|All|Any} year, :: 毎年
+supermarkets {throw|throws|threw|throwing} away :: スーパーは捨てる
+{tons|ton|tones|a ton} of food :: 大量の食べ物を
+{that|what|who|whose} is still edible. :: まだ食べられる
+{Much|Many|A number|Few} of it :: その多くは
+{is|are|be|has} thrown away :: 捨てられる
+{simply|simple|simplify|simplicity} because :: 単に…だから
+it {is|are|has|be} :: それが…である
+{close|closed|closing|closely} :: 近い
+{to|for|at|of} its expiration date. :: 期限に
+{Some|Any|Much|Every} stores :: 一部の店は
+{now|then|yet|ago} sell :: 今は売っている
+{such|so|such a|that} food :: そういう食べ物を
+{at|in|on|for} a large discount. :: 大きく値引きして
+{Others|Other|Another|The others'} :: ほかの店は
+{donate|donation|donates to|donating} it :: それを寄付する
+{to|for|at|with} local charities. :: 地元の慈善団体に
+{Another|Other|Others|The another} problem :: もう一つの問題は
+{is|are|be|has} :: …だ
+{appearance|appear|apparent|appearing}. :: 見た目
+Customers {often|always|ever|hardly} :: 客はよく
+{avoid|avoids|avoiding|avoided to} :: 避ける
+{buying|to buy|buy|bought} vegetables :: 野菜を買うのを
+{that|what|who|where} look ugly, :: 見た目の悪い
+{even though|even if though|even|though even} :: …にもかかわらず
+they {taste|tastes|tasted to|tasting} :: それらの味は
+{just|only just|justly|just as} as good. :: 同じくらいよい
+{To|For|In|So} solve this, :: これを解決するため
+a chain {in|on|at|of} France :: フランスのあるチェーンは
+{started|start|starts|starting} :: 始めた
+an "{ugly|ugliness|ugliest|uglily} food" campaign. :: 「ぶさいく食品」運動を
+It {sold|sell|sells|selled} :: それは売った
+{such|so|such a|that} products :: そうした商品を
+{for|by|at|in} 30 percent less, :: 3割安く
+{and|but|or|so} sales were :: そして売り上げは
+{better|good|best|well} than expected. :: 予想よりよかった
+{Small|Smaller|Smallest|Smally} changes {like|likes|alike|liking} these :: こうした小さな変化が
+{can|cans|can to|could to} :: …できる
+{help|helps|helping|helped to} reduce :: 減らすのに役立つ
+{the|a|an|any} amount of waste. :: むだの量を
+
+@id int6
+@lv 2
+@title A Hotel Complaint and Reply
+@ja ホテルへの苦情と返信
+@tag 共通テストレベル・メール
+@gloss complaint=苦情, reservation=予約, maintenance=保守点検, refund=返金, voucher=割引券, inconvenience=不便, sincerely=心から, apology=謝罪, stay=滞在
+I {stayed|stay|stays|staying} :: 私は泊まった
+{at|in|on|to} your hotel :: 貴ホテルに
+{from|for|since|during} March 3 to 5. :: 3月3日から5日まで
+{Unfortunately|Fortunate|Unfortunate|Fortunately}, :: 残念ながら
+the air {conditioner|condition|conditioned|conditioning} :: エアコンが
+{in|on|at|of} my room :: 私の部屋の
+{did not|was not|does not|not} work. :: 動かなかった
+I {called|call|calls|calling} :: 私は電話した
+the front desk {twice|two|second|double}, :: フロントに2度
+{but|so|and|or} no one :: でも誰も
+{came|come|comes|coming} :: 来なかった
+{to fix|fixing|to fixing|fix} it. :: それを直しに
+I {would|will|would to|wish} like :: 私は…したい
+{to ask|asking|ask|to asking} :: 求めること
+{for|to|of|with} a partial refund. :: 一部の返金を
+Dear Ms. {Lee|Lees|Lee's|a Lee}, :: リー様
+Thank you {for|to|of|with} :: …をありがとう
+{letting|let|lets|to let} us know :: 知らせてくれて
+{about|of|for|with} the problem. :: その問題について
+We {sincerely|sincere|sincerity|sincerer} :: 私どもは心から
+{apologize|apology|apologies|apologizing} :: おわびします
+{for|of|about to|to} the inconvenience. :: ご不便について
+{Our|Ours|Us|We} records show :: 記録によると
+{that|what|which|this} the maintenance staff :: 保守係が
+{were|was|are|be} :: …だった
+{busy|business|busily|busier} :: 忙しかった
+{with|for|to|of} another problem. :: 別の問題で
+We {have|has|had been|having} :: 私どもは…した
+{refunded|refund|refunding|refunds} :: 返金した
+{one|first|once|the one} night's charge :: 1泊分の料金を
+{and|but|or|so} included :: そして同封した
+a {voucher|vouchers|vouch|vouching} :: 割引券を
+{for|to|of|at} your next stay. :: 次回の宿泊用の
+We {hope|hopes|hoping|hoped to} :: 私どもは願う
+{to welcome|welcoming|welcome|to welcoming} you :: お迎えすることを
+{again|against|once|ago} soon. :: またすぐに
+
+@id int7
+@lv 2
+@title A Café That Hires Seniors
+@ja 高齢者が働くカフェ
+@tag 共通テストレベル・記事
+@gloss senior=高齢者, retire=退職する, hire=雇う, recipe=作り方, generation=世代, loneliness=孤独, meaningful=意味のある, regular=常連の, purpose=目的
+{In|On|At|To} a quiet town in Japan, :: 日本の静かな町に
+there {is|are|be|has} :: ある
+a café {run|ran|runs|running} by :: …が営むカフェが
+people {over|above|more|upon} 70. :: 70歳を超える人々
+The owner, {who|which|whom|whose} :: 店主は、…人で
+{retired|retire|retiring|retirement} :: 退職した
+{from|of|at|by} a bank, :: 銀行を
+{wanted|want|wants|wanting} :: 望んだ
+{to create|creating|create|to creating} a place :: 場所を作ることを
+{where|which|what|who} seniors could work. :: 高齢者が働ける
+He {hired|hire|hires|hiring} :: 彼は雇った
+{eight|eighth|eighty|the eight} local residents, :: 8人の地元住民を
+{each|every|all|both} with :: それぞれ…を持つ
+{a|an|the|one} special skill. :: 特技を
+{One|Once|A one|The one} woman :: ある女性は
+{bakes|bake|baking|baked to} :: 焼く
+cakes {using|use|used|uses} :: …を使ってケーキを
+her {mother's|mother|mothers|mothers'} recipes. :: 母親の作り方
+{A|An|The|One} former carpenter :: 元大工の人は
+{made|make|makes|making} :: 作った
+{all|every|each|whole} the tables and chairs. :: すべての机といすを
+The café {has|have|is|having} :: そのカフェには…がある
+{many|much|a lot|every} regular customers, :: 多くの常連客が
+{including|include|included|includes} :: …も含めて
+{young|younger|youth|youngly} families. :: 若い家族
+{Children|Child|Childs|Childrens} :: 子どもたちは
+{often|ever|always to|seldom} ask :: よく頼む
+the staff {to|for|of|at} teach them :: 店員に教えてと
+old {games|game|gaming|gamer}. :: 昔の遊びを
+{According to|Accord|According|Accordingly} the owner, :: 店主によると
+working {gives|give|giving|gave} :: 働くことは与える
+{seniors|senior|seniority|seniors'} :: 高齢者に
+a sense {of|for|in|at} purpose :: 生きがいを
+{and|but|or|so} reduces loneliness. :: そして孤独を減らす
+The café {shows|show|showing|showed to} :: そのカフェは示している
+{how|what|that how|which} different generations :: 違う世代が…様子を
+{can|could to|cans|can to} help :: 助け合える
+{each other|each others|one other|every other}. :: お互いに
+
+@id adv3
+@lv 3
+@title The Tragedy of the Commons
+@ja 共有地の悲劇
+@tag 難関大レベル・論説文
+@gloss commons=共有地, graze=草を食べさせる, individual=個人, rational=合理的な, collective=集団の, deplete=使い果たす, resource=資源, inevitably=必然的に, regulation=規制, incentive=動機づけ, sustain=持続させる, devastating=壊滅的な
+{In|On|At|By} 1968, :: 1968年に
+the {ecologist|ecology|ecologic|ecologists} Garrett Hardin :: 生態学者ハーディンは
+{described|describe|description|describing} :: 説明した
+{a|an|the|one} situation :: ある状況を
+{that|what|whose|where} has since become known :: のちに知られる
+{as|for|like|to} "the tragedy of the commons." :: 「共有地の悲劇」として
+{Imagine|Imagination|Imaginary|Imagining} :: 想像してみよう
+a pasture {open|opened|opening|openly} to all, :: 誰でも使える牧草地を
+{on|in|at|to} which each herder :: そこで各牧夫は
+{is|are|be|being} free :: 自由である
+{to graze|grazing|to grazing|graze} as many cows :: 牛を何頭も放牧する
+{as|than|so|that} he likes. :: 好きなだけ
+{From|For|By|Of} each herder's point of view, :: 各牧夫の立場からは
+adding {one|once|a one|ones} more cow :: 牛をもう1頭増やすことは
+{is|are|be|being} :: …だ
+{perfectly|perfect|perfection|perfected} rational: :: 全く合理的
+he {alone|lonely|along|alike} :: 彼だけが
+{enjoys|enjoy|enjoying|enjoyed} :: 得る
+the {benefit|benefits of|beneficial|benefiting}, :: 利益を
+{while|whilst of|during|meanwhile} the cost :: 一方でその代償は
+{of|for|in|to} the damaged grass :: 傷んだ草の
+{is|are|be|been} shared :: 分け合われる
+{by|with|for|to} everyone. :: 全員で
+{Yet|Still yet|Already|Even yet} if every herder :: しかし全員が
+{reasons|reason|reasoning|reasoned} :: 考えるなら
+{in|on|at|by} the same way, :: 同じように
+the pasture {will|would to|shall to|is} :: 牧草地は…だろう
+{inevitably|inevitable|inevitability|inevitableness} :: 必然的に
+{be|being|been|is} destroyed, :: 破壊される
+{and|but|or|nor} all of them :: そして全員が
+{will|would to|shall|are} suffer. :: 損をする
+{What|That|Which|It} makes the situation tragic :: 状況を悲劇にするのは
+{is|are|be|has} :: …だ
+{that|what|which|it} no one behaves foolishly; :: 誰も愚かでないことだ
+{it is|it has|there is|this has} :: それは…だ
+{precisely|precise|precision|preciser} individual rationality :: まさに個人の合理性
+{that|what|which|who} leads to :: …につながる
+{collective|collection|collect|collectively} ruin. :: 集団の破滅に
+{Similar|Same|Similarly|Similarity} problems :: 同じような問題は
+{can|could to|cans|can to} :: …しうる
+{be|being|been|are} seen :: 見られる
+{in|on|at|by} overfishing, :: 魚の取りすぎに
+{traffic|traffics|trafficking|trafficked} jams, :: 交通渋滞に
+{and|but|or|so} climate change. :: そして気候変動に
+Hardin {argued|argue|argument|arguing} :: ハーディンは主張した
+{that|what|which|this} the only solution :: 唯一の解決策は
+{lay|lie|laid|lain} :: …にあると
+{in|on|at|by} regulation :: 規制に
+{or|nor|but|and} private ownership. :: あるいは私有に
+{However|Therefore|Thus|Hence}, :: しかし
+the {economist|economy|economic|economics} Elinor Ostrom :: 経済学者オストロムは
+later {showed|show|shown|showing} :: のちに示した
+{that|what|which|it} many communities :: 多くの共同体が…ことを
+{have|has|had been|having} managed :: うまく管理してきた
+shared resources {for|since|during|while} centuries :: 何世紀も共有資源を
+{through|though|thorough|throughout of} trust :: 信頼によって
+{and|but|or|so} local rules. :: そして地域の決まりで
+{Her|She|Hers|Herself} work suggests :: 彼女の研究は示唆する
+{that|what|which|this} the tragedy :: その悲劇は…ことを
+{is|are|has|be} not a law of nature, :: 自然法則ではない
+{but|and|or|so} a risk :: しかし危険だと
+{that|what|who|whose} can be avoided. :: 避けられる
+
+@id adv4
+@lv 3
+@title Is Memory a Recording?
+@ja 記憶は録画なのか
+@tag 難関大レベル・論説文
+@gloss memory=記憶, recording=録画, reconstruct=再構築する, retrieve=取り出す, witness=目撃者, suggestive=誘導的な, distort=ゆがめる, confident=確信して, accuracy=正確さ, reliable=信頼できる, testimony=証言
+{Most|Much|Almost|The most} people :: たいていの人は
+{assume|assumption|assuming|assumed to} :: 思い込んでいる
+{that|what|which|this} memory works :: 記憶が働くと
+{like|alike|likely|liking} a video camera, :: ビデオカメラのように
+{storing|stored|store|to storing} :: 保存しながら
+{exact|exactly|exactness|exacting} copies :: 正確な複製を
+{of|for|in|to} what we experience. :: 体験したことの
+{In reality|In real|On reality|At reality}, :: 実際には
+{each|every|all|both} time we recall an event, :: 出来事を思い出すたび
+the brain {reconstructs|reconstruct|reconstruction|reconstructing} it :: 脳はそれを組み立て直す
+{from|of|by|with} scattered pieces, :: ばらばらの断片から
+{filling|filled|fill|to filling} in the gaps :: 抜けを埋めながら
+{with|by|for|of} expectations :: 予想で
+{and|but|or|nor} general knowledge. :: そして一般的な知識で
+{This|These|That's|Those} process :: この過程は
+{is|are|be|has} :: …だ
+{usually|usual|unusually|usualness} efficient, :: たいてい効率的
+{but|and|so|or} it comes :: だがそれには伴う
+{at|in|on|by} a price. :: 代償が
+{In|On|At|By} a famous experiment, :: 有名な実験で
+{psychologist|psychology|psychological|psychologists} Elizabeth Loftus :: 心理学者ロフタスは
+{showed|show|shown|showing} :: 見せた
+{participants|participate|participation|participating} :: 参加者に
+a film {of|for|in|to} a car accident :: 自動車事故の映像を
+{and|but|or|so} then {asked|ask|asking|asks} :: そして尋ねた
+how fast the cars {were|was|are|be} going :: 車の速さを
+{when|which|what|whose} they "smashed" into each other. :: 「激突した」とき
+{Those|These|That|This} who heard the word "smashed" :: 「激突」と聞いた人は
+{gave|give|given|giving} :: 答えた
+{higher|high|highest|more high} estimates :: より高い推定を
+{than|then|that|as} those who heard "hit," :: 「hit」と聞いた人より
+{and|but|or|so} a week later, :: そして1週間後
+they {were|was|are|been} :: 彼らは…だった
+{more|much|most|many} likely :: より…しそう
+{to report|reporting|to reporting|report} seeing broken glass :: 割れたガラスを見たと言い
+{that|what|which|who} had never been there. :: 存在しなかった
+{A single|Single|An single|The single} word, :: たった一語が
+{in other words|in another word|in other word|on other words}, :: つまり
+{had|has|have|having} altered :: 変えていた
+{what|that|which|it} they remembered. :: 彼らが覚えている内容を
+{Such|Such a|So|Such as} findings :: こうした発見は
+{have|has|having|had been} :: …を持っている
+{serious|seriously|seriousness|series} implications :: 重大な意味を
+{for|of|to|on} the legal system, :: 法制度にとって
+{where|which|what|that} witness testimony :: 目撃証言が
+{is|are|be|has} often treated :: しばしばみなされる
+{as|like|for|so} reliable evidence. :: 確かな証拠として
+{Feeling|Feel|Felt|Feelings} confident about a memory, :: 記憶に自信があることは
+it {turns out|turn out|turns in|turned out to}, :: 実は
+{is|are|be|does} no guarantee :: 保証にならない
+{of|for|to|in} its accuracy. :: その正確さの
+
+@id adv5
+@lv 3
+@title When a Measure Becomes a Target
+@ja 指標が目標になるとき
+@tag 難関大レベル・論説文
+@gloss measure=指標, target=目標, indicator=指標, incentive=動機づけ, manipulate=操作する, distort=ゆがめる, bonus=賞与, metric=数値の指標, quantify=数量化する, consequence=結果
+Organizations {love|loves|loving|loved to} numbers. :: 組織は数字が好きだ
+They {measure|measures|measurement|measuring} sales, :: 売上を測る
+{test|tests|testing|tested} scores, :: 試験の点数を
+{and|but|or|so} waiting times :: そして待ち時間を
+{in order to|in order|so as|in order for} judge :: 判断するために
+{how|what|that|which} well they are doing. :: どれほど順調か
+{Yet|Already|Still yet|Ever} as the economist Charles Goodhart observed, :: だが…と彼が言ったように
+{once|one|ones|one's} a measure becomes a target, :: 指標が目標になると
+it {ceases|cease|ceasing|ceased to} :: それは…しなくなる
+{to be|being|be|to being} a good measure. :: よい指標であること
+The reason {is|are|be|being} simple: :: 理由は単純だ
+when people {are|is|be|being} rewarded :: 人が報われるとき
+{for|to|of|by} hitting a number, :: 数字を達成すると
+they {find|finds|found to|finding} ways :: 彼らは方法を見つける
+{to hit|hitting|hit|to hitting} it :: それを達成する
+{that|what|which|whose} have little to do :: ほとんど関係のない
+{with|to|for|of} the original goal. :: 本来の目的とは
+{Consider|Considering|Considered|Consideration} :: 考えてみよう
+a hospital {that|what|who|where} must :: …すべき病院を
+{reduce|reduces|reduction|reducing} waiting times :: 待ち時間を減らす
+{in|on|at|by} its emergency room. :: 救急外来の
+{Rather|Rather than|Other|Instead} than treating patients faster, :: 患者を早く診るのではなく
+{some|any|much|every} staff :: 一部の職員は
+{simply|simple|simplify|simplest} kept them :: 単に患者をとどめた
+{waiting|wait|waited|to wait} in ambulances outside, :: 外の救急車で待たせて
+{so that|so|such that|in that} the official clock :: 公式の時計が…ように
+{would not|will not|would no|did not} start. :: 動き始めない
+The numbers {improved|improve|improving|improvement}; :: 数字はよくなった
+the patients {did not|does not|was not|not}. :: 患者はそうではなかった
+{Similar|Similarly|Similarity|Same} distortions :: 同様のゆがみは
+{occur|occurs|occurred to|occurrence} :: 起こる
+{wherever|whatever|whenever of|however} a complex goal :: 複雑な目的が
+{is|are|be|has} reduced :: 落とし込まれるところでは
+{to|for|into|at} a single figure: :: 一つの数字に
+teachers {may|might to|mays|may to} :: 先生は…かもしれない
+{teach|teaches|taught to|teaching} to the test, :: 試験対策ばかり教える
+{and|but|or|nor} police {may|might to|mays|can to} :: 警察は…かもしれない
+{record|records|recording|recorded to} crimes :: 犯罪を記録する
+{as|like|for|so} less serious than they were. :: 実際より軽いものとして
+{None|No one|Nothing|Neither} of this :: これのどれも…ない
+{means|mean|meaning|meant} :: 意味する
+{that|what|which|this} we should stop measuring. :: 測定をやめるべきだと
+It {means|mean|meaning|meant} :: それは意味する
+{that|what|which|it} numbers should inform judgment, :: 数字は判断を助けるべきで
+{not|no|none|nor} replace it. :: 判断の代わりではなく
+
+@id adv6
+@lv 3
+@title The Paradox of Automation
+@ja 自動化のパラドックス
+@tag 難関大レベル・論説文
+@gloss automation=自動化, pilot=操縦士, intervene=介入する, skill=技能, deteriorate=衰える, monitor=監視する, crisis=危機, rarely=めったに〜ない, reliance=依存, vigilance=注意を保つこと
+{It|This|That|There} might seem obvious :: 当然に思えるかも
+{that|what|which|this} the more reliable a machine becomes, :: 機械が信頼できるほど
+the {safer|safe|safest|more safe} we are. :: 私たちは安全だと
+{Yet|Already|Still yet|Ever}, :: しかし
+psychologists {have|has|having|had been} identified :: 心理学者は見つけた
+{what|that|which|whose} is called :: …と呼ばれるものを
+"the {paradox|paradoxes|paradoxical|paradoxically} of automation." :: 「自動化の逆説」
+{Because|Because of|Since of|Due} automated systems :: 自動化されたシステムが
+{handle|handles|handling|handled} :: 処理するので
+{routine|routinely|routines|route} tasks so well, :: 日常の作業をとてもうまく
+human operators {rarely|rare|rarer|rarity} :: 人間はめったに…ない
+{get|gets|getting|got to} the chance :: 機会を得る
+{to practice|practicing|practice|to practicing} their skills. :: 技能を練習する
+{As a result|As result|In result|At a result}, :: その結果
+{those|these|that|this} skills :: そうした技能は
+{gradually|gradual|gradualness|graduated} deteriorate. :: 次第に衰える
+{Worse|Bad|Worst|Badly}, :: さらに悪いことに
+the {moments|moment|momentary|momentum} :: 瞬間は
+{when|which|what|whom} the machine does fail :: 機械が実際に故障する
+{tend|tends|tending|tended} :: …しがちだ
+{to be|being|be|to being} the most difficult ones: :: 最も難しいものである
+{unexpected|unexpectedly|expected|unexpecting} emergencies :: 予想外の緊急事態
+{that|what|who|whose} the designers never imagined. :: 設計者が想像しなかった
+{In|On|At|By} such cases, :: そうした場合に
+an operator {who|which|whose|whom} has spent years :: 何年も過ごした人が
+{simply|simple|simplify|simplest} watching screens :: ただ画面を見て
+{is|are|be|has} suddenly expected :: 突然求められる
+{to perform|performing|perform|to performing} perfectly :: 完ぺきにこなすことを
+{under|below|beneath of|over} extreme pressure. :: 極度の重圧の下で
+{Several|Severe|Severally|Seven of} air accidents :: いくつかの航空事故は
+{have|has|had been|having} been traced :: さかのぼって調べられた
+{to|for|at|of} exactly this problem: :: まさにこの問題に
+pilots, {surprised|surprise|surprising|surprisingly} :: 不意を突かれた操縦士が
+{by|with|for|of} a sudden failure, :: 突然の故障に
+{reacted|react|reaction|reacting} in ways :: 方法で反応した
+{that|what|who|whose} made matters worse. :: 事態を悪化させる
+Some experts {therefore|thereby|thereof|therein} :: そのため専門家の中には
+{recommend|recommends|recommendation|recommended to} :: 勧める
+{that|what|which|this} operators regularly :: 操作者が定期的に
+{switch|switches|switched|switching} off the automation :: 自動化を切ることを
+{simply|simple|simplify|simplest} to keep their skills alive. :: 技能を保つためだけに
+{The more|More|The most|Much more} we rely on machines, :: 機械に頼るほど
+{it seems|it seem|it seeming|its seems}, :: どうやら
+{the more|more|the most|much more} carefully :: より注意深く
+we {must|must to|have|should to} :: 私たちは…ねばならない
+{protect|protects|protection|protected} our own abilities. :: 自分の能力を守ら
+
+@id adv7
+@lv 3
+@title The Placebo Problem
+@ja プラセボの難題
+@tag 難関大レベル・論説文
+@gloss placebo=偽薬, symptom=症状, deceive=だます, ethical=倫理的な, expectation=期待, physician=医師, trial=試験, genuine=本物の, deception=ごまかし, conscious=意識して
+A placebo {is|are|be|has} :: プラセボとは…だ
+{a|an|the|one} treatment :: 治療
+{that|what|who|whose} contains :: 含む
+{no|none|not|nothing} active ingredient, :: 有効成分を何も
+{such as|such|as such|so as} a sugar pill. :: 砂糖の錠剤のような
+{Remarkably|Remark|Remarkable|Remarked}, :: 驚くべきことに
+patients {who|which|whose|whom} receive one :: それを受けた患者は
+{often|ever|always to|seldom of} report :: よく報告する
+{genuine|genuinely|genuineness|genuined} improvements :: 本当の改善を
+{in|on|at|of} symptoms such as pain. :: 痛みなどの症状に
+{This|These|That's|Those} effect :: この効果は
+{is|are|be|has} thought :: 考えられている
+{to arise|arising|to arising|arise} :: 生じると
+{from|of|by|with} the patient's expectations :: 患者の期待から
+{and|but|or|nor} the ritual of treatment itself. :: そして治療の儀式自体から
+{For|To|Of|By} medical researchers, :: 医学研究者にとって
+the placebo effect {is|are|be|has} :: プラセボ効果は
+{both|either|neither|all} a tool and a nuisance. :: 道具でも厄介者でもある
+{To|For|So|In} prove that a new drug works, :: 新薬の効果を証明するには
+{they|them|their|theirs} must show :: 彼らは示さねばならない
+{that|what|which|this} it performs better :: それがよりよく効くと
+{than|then|that|as} a placebo :: プラセボより
+{in|on|at|by} carefully controlled trials. :: 厳密に管理された試験で
+{Outside|Out|Outer|Outward} the laboratory, :: 研究室の外では
+{however|whatever|whoever|whenever}, :: しかし
+the effect {raises|rises|raise|rising} :: その効果は生む
+a {difficult|difficulty|difficultly|differ} ethical question. :: 難しい倫理の問いを
+{Should|Shall|Would to|Must to} doctors {ever|never|every|even} :: 医師は…すべきか
+{prescribe|prescription|prescribing|prescribed to} a placebo, :: プラセボを処方する
+{knowing|known|knew|to knowing} that it works :: 効くと知りつつ
+{only|alone|lonely|once} if the patient :: 患者が…場合に限って
+{believes|believe|belief|believing} it is real? :: 本物だと信じる
+{Doing so|Do so|Done so|To doing so} :: そうすることは
+{would|will|would to|should to} seem to require :: 必要とするように思える
+{deception|deceive|deceptive|deceived}, :: ごまかしを
+{which|what|that|who} damages the trust :: 信頼を損なう
+{on|in|at|by} which medicine depends. :: 医療が頼っている
+{Interestingly|Interesting|Interest|Interested}, :: 興味深いことに
+{recent|recently|recency|recents} studies :: 最近の研究は
+{suggest|suggests|suggestion|suggesting} :: 示唆している
+{that|what|which|this} placebos may work :: 偽薬が効きうると
+{even|ever|evenly|every} when patients :: 患者が…ときでさえ
+{are|is|be|being} told :: 告げられている
+{exactly|exact|exactness|exacting} what they are taking. :: 何を飲んでいるかを正確に
+{If|Whether|Unless|Though} this is confirmed, :: これが確かめられれば
+the healing power of {belief|believe|believing|believed} :: 信じることの癒やす力は
+{may|might to|mays|can to} turn out :: …だとわかるかもしれない
+{to be|being|be|to being} :: …である
+{less|fewer|little|lesser} mysterious :: それほど神秘的でない
+{than|then|that|as} we once thought. :: かつて考えたより

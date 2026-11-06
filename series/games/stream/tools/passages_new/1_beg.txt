@@ -1,0 +1,255 @@
+@id beg3
+@lv 1
+@level 4
+@title My First Part-Time Job
+@ja はじめてのアルバイト
+@tag 高校受験レベル・体験文
+@gloss customer=客, order=注文, manager=店長, nervous=緊張して, mistake=間違い, patient=辛抱強い, confident=自信のある
+T| Last {summer|summers|winter|spring}, :: 去年の夏
+S| I {started|start|starting|starts} :: 私は始めた
+O| a part-time {job|work|jobs|working} :: アルバイトを
+P| {at|on|in|to} a small café. :: 小さなカフェで
+== 去年の夏、私は小さなカフェでアルバイトを始めた。
+T| On my {first|one|once|firstly} day, :: 初日に
+S| I {was|were|am|be} :: 私は…だった
+C| very {nervous|nerve|nervously|nerves}. :: とても緊張して
+== 初日、私はとても緊張していた。
+S| I {had to|have to|must to|had} :: 私は…必要があった
+V| {take|took|taking|takes} orders :: 注文を取る
+P| {from|for|to|of} many customers. :: 多くの客から
+== 私はたくさんの客から注文を取らなければならなかった。
+T| {Once|One|First|Ones}, :: 一度
+S| I {brought|bring|bringed|brings} :: 私は持って行った
+O| the {wrong|wrongs|wrongly|wronged} drink :: 違う飲み物を
+P| to a {customer|custom|costume|customs}. :: ある客に
+== 一度、私は客に違う飲み物を持って行ってしまった。
+S| I {said|say|told|speak} :: 私は言った
+O| "I'm {sorry|sorrow|sorry for|sad}," :: 「すみません」と
+M| and {quickly|quick|quicker|quickness} :: そしてすぐに
+V| {made|make|makes|making} a new one. :: 新しいものを作った
+== 私は「すみません」と言って、すぐに新しいものを作った。
+S| The {customer|customers|custom|customer's} :: その客は
+V| {smiled|smile|smiling|smiles} :: ほほえんだ
+M| and {said|says|saying|told}, :: そして言った
+O| "{Don't|Doesn't|Not|No} worry." :: 「気にしないで」と
+== その客はほほえんで、「気にしないで」と言った。
+S| My {manager|manage|management|managing} :: 店長は
+V| was {patient|patience|patients|patiently} :: 辛抱強かった
+P| {with|for|to|at} me. :: 私に対して
+== 店長は私に辛抱強く接してくれた。
+S| She {taught|teach|teached|teaching} me :: 彼女は私に教えた
+O| {how to|what to|how|to how} make :: 作り方を
+X| {each|every|all|both} drink :: それぞれの飲み物の
+M| {step by step|step and step|step to step|steps by steps}. :: 一つずつ
+== 彼女は、それぞれの飲み物の作り方を一つずつ教えてくれた。
+T| {After|Before|Since|During} a month, :: 1か月後
+S| I {became|become|becomes|becoming} :: 私はなった
+C| more {confident|confidence|confidently|confide}. :: もっと自信が
+== 1か月たつと、私はもっと自信が持てるようになった。
+T| {Now|Then|Soon|Ago} :: 今では
+S| I {enjoy|enjoys|enjoying|enjoyed to} :: 私は楽しんでいる
+O| {talking|to talking|talk|talked} with customers. :: 客と話すことを
+== 今では、私は客と話すのを楽しんでいる。
+?? 0 3 どこでアルバイトを始めた？
+?? 3 2 一度、客に何を持って行ってしまった？
+?? 5 3 客は何と言った？
+?? 9 2 今は何を楽しんでいる？
+
+@id beg4
+@lv 1
+@level 4
+@title The New City Library
+@ja 新しい市立図書館
+@tag 高校受験レベル・説明文
+@gloss library=図書館, floor=階, borrow=借りる, quiet=静かな, event=催し, member=会員, free=無料の, card=カード
+S| A new {library|librarian|libraries|liberty} :: 新しい図書館が
+V| {opened|open|opening|opens} :: 開いた
+P| {near|nearly|next|nearby} the station :: 駅の近くに
+T| {last|lately|later|latest} month. :: 先月
+== 先月、駅の近くに新しい図書館が開いた。
+S| It {has|have|is|having} :: それにはある
+O| {three|third|thirty|three of} floors. :: 3つの階が
+== その図書館は3階建てだ。
+P| {On|In|At|For} the first floor, :: 1階には
+V| there {are|is|be|have} :: ある
+S| books {for|to|of|with} children. :: 子ども向けの本が
+== 1階には、子ども向けの本がある。
+S| The {second|two|twice|seconds} floor :: 2階は
+V| {is|are|be|has} :: …だ
+C| a {quiet|quite|quietly|quit} room :: 静かな部屋
+P| {for|of|to|at} studying. :: 勉強のための
+== 2階は、勉強のための静かな部屋だ。
+P| {On|In|To|At} the top floor, :: 最上階では
+S| people {can|could to|cans|can to} :: 人々は…できる
+V| {join|joins|joining|to join} events, :: 催しに参加
+M| {such as|such|as such|so as} book talks. :: 本の講演会など
+== 最上階では、本の講演会などの催しに参加できる。
+S| You {can|can to|cans|could to} :: あなたは…できる
+V| {borrow|lend|borrows|borrowing} :: 借りる
+O| up to {ten|tenth|tens|the ten} books :: 10冊までの本を
+M| {at|in|on|for} a time. :: 一度に
+== 一度に10冊まで本を借りられる。
+S| A library {card|cards|carding|cared} :: 図書館カードは
+V| {is|are|be|has} :: …だ
+C| {free|freely|freedom|free of}, :: 無料
+M| and {it|they|its|this one} :: そしてそれは
+V| {takes|take|taking|took} :: かかる
+O| {only|alone|lonely|once} five minutes :: たった5分
+X| {to make|making|to making|make}. :: 作るのに
+== 図書館カードは無料で、作るのにたった5分しかかからない。
+S| My {sister|sisters|sister's|sisterly} and I :: 姉と私は
+V| {go|goes|going|went to} :: 行く
+P| {there|their|they're|where} :: そこへ
+T| {every|each|all|any} Saturday. :: 毎週土曜日
+== 姉と私は毎週土曜日にそこへ行く。
+S| It {is|has|are|be} :: それは…だ
+C| {my|mine|me|I} favorite place :: 私の大好きな場所
+P| {in|on|at|of} our town. :: 私たちの町で
+== そこは町でいちばん好きな場所だ。
+?? 0 2 図書館はどこにできた？
+?? 3 2 2階はどんな部屋？
+?? 5 2 一度に何冊借りられる？
+?? 6 4 カードを作るのにどのくらいかかる？
+
+@id beg5
+@lv 1
+@level 4
+@title A Lost Wallet
+@ja なくした財布
+@tag 高校受験レベル・物語文
+@gloss wallet=財布, police=警察, station=駅, kind=親切な, return=返す, relieved=ほっとした, thank=感謝する
+T| {Yesterday|Tomorrow|Today's|Yesterdays}, :: 昨日
+S| my father {lost|lose|losed|losing} :: 父はなくした
+O| {his|him|he|he's} wallet :: 財布を
+P| {on|in|at|by} the train. :: 電車で
+== 昨日、父は電車で財布をなくした。
+S| He {looked|look|looking|looks} :: 彼は探した
+O| {for|after|at|to} it everywhere, :: それをあらゆる所で
+M| {but|so|because|or} he :: でも彼は
+V| {couldn't|can't|didn't can|couldn't to} find it. :: 見つけられなかった
+== 父はあちこち探したが、見つけられなかった。
+S| He {was|were|is|been} :: 彼は…だった
+C| very {worried|worry|worrying|worries} :: とても心配して
+R| {because|so|but|though} his ID :: 身分証が…ので
+V| {was|were|is|be} :: あった
+P| {in|on|at|into} it. :: その中に
+== 身分証が入っていたので、父はとても心配した。
+T| {In|On|At|By} the evening, :: 夕方
+S| {someone|anyone|no one|some} :: 誰かが
+V| {called|call|calls|calling} :: 電話してきた
+O| {our|us|we|ours} house. :: 私たちの家に
+== 夕方、誰かが家に電話をかけてきた。
+S| It {was|is|were|be} :: それは…だった
+C| a {police|polite|policy|polices} officer :: 警察官
+P| {at|on|in|to} the station. :: 駅の
+== 駅の警察官だった。
+S| A {kind|kindly|kinds|kindness} student :: 親切な学生が
+V| {had|has|have|having} found :: 見つけていた
+O| {the|a|an|this} wallet :: 財布を
+M| {and|but|or|so} taken it :: そして届けていた
+P| {to|for|at|of} the police. :: 警察に
+== 親切な学生が財布を見つけて、警察に届けてくれていた。
+S| My father {felt|feel|feeling|felts} :: 父は感じた
+C| {relieved|relief|relieve|relieving}. :: ほっと
+== 父はほっとした。
+S| He {wants|want|wanting|wanted to} :: 彼は…したい
+V| {to thank|thank|thanking|to thanking} :: 感謝すること
+O| the student {someday|some day's|sometimes|someone}. :: いつかその学生に
+== 父はいつかその学生にお礼を言いたいと思っている。
+?? 0 3 父はどこで財布をなくした？
+?? 4 2 電話してきたのは誰？
+?? 5 0 財布を見つけたのは誰？
+?? 6 1 父はどう感じた？
+
+@id beg6
+@lv 1
+@level 4
+@title The Weekend Market
+@ja 週末の市場
+@tag 高校受験レベル・説明文
+@gloss market=市場, farmer=農家, vegetable=野菜, fresh=新鮮な, price=値段, cheap=安い, local=地元の, plastic=プラスチック
+T| {Every|Each|All|Some} Sunday morning, :: 毎週日曜の朝
+S| a market {is|are|be|has} held :: 市場が開かれる
+P| {in|on|at|to} the park :: 公園で
+P| {near|nearly|close|next} my house. :: 私の家の近くの
+== 毎週日曜の朝、家の近くの公園で市場が開かれる。
+S| Local farmers {sell|sells|selling|sold to} :: 地元の農家が売る
+O| {fresh|freshly|freshness|fresher} vegetables :: 新鮮な野菜を
+M| {and|but|or|so} fruit. :: そして果物を
+== 地元の農家が新鮮な野菜や果物を売っている。
+S| The prices {are|is|be|has} :: 値段は…だ
+C| {cheaper|cheap|cheapest|more cheap} :: もっと安い
+P| {than|then|that|as} at the supermarket. :: スーパーより
+== 値段はスーパーより安い。
+S| You {can|can to|could to|cans} :: あなたは…できる
+V| {also|too|either|so} talk :: 話すこともできる
+P| {with|to|for|of} the farmers :: 農家の人と
+M| {about|for|on|of} how they grow food. :: 育て方について
+== 農家の人と、食べ物の育て方について話すこともできる。
+S| My mother {always|never|often|usually} :: 母はいつも
+V| {brings|bring|bringing|brought} :: 持って行く
+O| {her|hers|she|herself} own bag :: 自分のバッグを
+R| {to|for|so|in} reduce plastic. :: プラスチックを減らすため
+== 母は、プラスチックを減らすため、いつも自分のバッグを持って行く。
+T| {Last|Late|Latest|Lately} week, :: 先週
+S| we {bought|buy|buyed|brought} :: 私たちは買った
+O| {some|any|much|few} strawberries. :: いちごを
+== 先週、私たちはいちごを買った。
+S| They {were|was|are|be} :: それらは…だった
+C| {so|such|too much|very much} sweet :: とても甘くて
+M| {that|than|which|what} I ate :: …ので私は食べた
+O| {half|halves|a half of|halve} of them :: その半分を
+M| {on|in|at|by} the way home. :: 帰り道で
+== とても甘かったので、私は帰り道で半分食べてしまった。
+S| The market {is|are|has|be} :: その市場は
+C| {good|well|best|better} for people :: 人々にとってよい
+M| {and|but|or|nor} for nature. :: そして自然にとって
+== その市場は、人にも自然にもよいものだ。
+?? 0 2 市場はどこで開かれる？
+?? 2 2 値段は何と比べて安い？
+?? 4 3 母が自分のバッグを持って行くのはなぜ？
+?? 5 2 先週何を買った？
+
+@id beg7
+@lv 1
+@level 4
+@title An Email to a Host Family
+@ja ホストファミリーへのメール
+@tag 高校受験レベル・メール
+@gloss host=ホスト(受け入れる側の), family=家族, arrive=到着する, airport=空港, flight=便, allergy=アレルギー, look forward=楽しみに待つ
+S| Dear {Mr.|Mrs|Mister.|Mr} and Mrs. Brown, :: ブラウン夫妻へ
+== ブラウンさんご夫妻へ
+S| My name {is|are|am|be} :: 私の名前は…です
+C| {Yuki|Yuki's|Yukis|a Yuki}, :: ユキ
+M| and I {will|am|was|would to} stay :: 私は滞在します
+P| {with|to|for|at} you :: あなたたちのところに
+T| {next|last|near|nearly} month. :: 来月
+== 私はユキです。来月、お宅に滞在します。
+S| My flight {will|is|was|would to} :: 私の便は…でしょう
+V| {arrive|arrives|arriving|arrival} :: 到着する
+P| {at|in|on|to} the airport :: 空港に
+T| {at|in|on|by} 3 p.m. on May 2. :: 5月2日午後3時に
+== 私の便は5月2日午後3時に空港に着きます。
+S| {Could|Can to|Would to|Shall} you :: …していただけますか
+V| {pick|picks|picking|picked} me up :: 私を迎えに来る
+P| {there|their|where|here}? :: そこへ
+== そこへ迎えに来ていただけますか。
+X| {By the way|By a way|In the way|On the way}, :: ところで
+S| I {have|has|am|having} :: 私は…がある
+O| an {allergy|allergic|allergies|allergen} :: アレルギーが
+P| {to|for|of|with} eggs. :: 卵に対して
+== ところで、私は卵アレルギーがあります。
+S| I'm {sorry|sorrow|sorried|sad} :: 申し訳ありません
+M| {for|of|to|about to} the trouble. :: ご面倒をかけて
+== ご面倒をおかけしてすみません。
+S| I {am|is|are|be} :: 私は…です
+C| {looking|look|looked|looks} forward :: 楽しみにして
+O| {to|for|at|of} meeting you. :: お会いするのを
+== お会いできるのを楽しみにしています。
+M| Best {wishes|wish|wished|wishing}, :: よろしくお願いします
+S| {Yuki|Yuki's|Yukis|The Yuki} :: ユキ
+== よろしくお願いします。ユキ
+?? 1 4 ユキはいつ滞在する？
+?? 2 3 便は何時に着く？
+?? 4 2 ユキは何のアレルギーがある？
+?? 6 2 何を楽しみにしている？
