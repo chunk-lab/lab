@@ -1025,5 +1025,568 @@
 "プラセボを処方するには何が必要に思える？"
 ]
 ]
+},
+"int8": {
+"level": 6,
+"title": "A Library of Things",
+"list": [
+[
+"S:Most people think=たいていの人は思う | O:that libraries=図書館は…と | V:only lend=貸すだけだ | O:books.=本を",
+"たいていの人は、図書館は本を貸すだけだと思っている。"
+],
+[
+"M:However,=しかし | S:a library in Oregon now=オレゴンの図書館は今 | V:lends=貸している | O:tools such as drills and tents.=ドリルやテントなどを",
+"しかし、オレゴンのある図書館は今、ドリルやテントなどの道具を貸している。"
+],
+[
+"S:The idea came=その考えは生まれた | P:from a librarian=ある司書から | M:who noticed=…に気づいた | O:something simple.=簡単なことに",
+"その考えは、簡単なことに気づいたある司書から生まれた。"
+],
+[
+"S:Many families own=多くの家族は持っている | O:expensive tools=高価な道具を | M:but use them=でも使うのは | T:only once a year.=年に1回だけ",
+"多くの家族は高価な道具を持っているが、使うのは年に1回だけだ。"
+],
+[
+"S:Sharing them=それらを共有すると | V:saves=節約できる | O:both money and space.=お金と場所の両方を",
+"それらを共有すれば、お金と場所の両方が節約できる。"
+],
+[
+"S:Anyone who lives in town=町に住む人はだれでも | V:can borrow=借りられる | O:up to five items=5点まで | T:at a time.=一度に",
+"町に住む人はだれでも、一度に5点まで借りられる。"
+],
+[
+"S:You only need=必要なのは…だけ | O:to register=登録することが | P:with your library card.=図書館カードで",
+"図書館カードで登録するだけでよい。"
+],
+[
+"S:There is no fee,=料金はない | M:but tools=しかし道具は | V:must be returned=返さなければならない | T:within a week.=1週間以内に",
+"料金はかからないが、道具は1週間以内に返さなければならない。"
+],
+[
+"S:The program has become=その取り組みはなった | C:so popular=とても人気に | M:that other towns=ほかの町も | V:are copying it.=まねしている",
+"その取り組みはとても人気になり、ほかの町もまねしている。"
+],
+[
+"S:Your town might=あなたの町も…かも | V:be next.=次になる",
+"次はあなたの町かもしれない。"
+]
+],
+"q": [
+[
+1,
+3,
+"この図書館は本のほかに何を貸している？"
+],
+[
+3,
+3,
+"多くの家族は高価な道具をどのくらい使う？"
+],
+[
+5,
+2,
+"一度に何点まで借りられる？"
+],
+[
+7,
+3,
+"道具はいつまでに返す？"
+]
+]
+},
+"int9": {
+"level": 6,
+"title": "Request to Change a Meeting",
+"list": [
+[
+"X:Dear Ms. Lee,=リー様",
+"リー様"
+],
+[
+"S:I am writing=ご連絡します | P:regarding our meeting=打ち合わせについて | T:on Thursday.=木曜日の",
+"木曜日の打ち合わせについてご連絡します。"
+],
+[
+"M:Unfortunately,=あいにく | S:I have to=私は…なければならない | V:attend=出席する | O:a conference in Osaka=大阪での会議に | T:that day.=その日は",
+"あいにく、その日は大阪での会議に出席しなければなりません。"
+],
+[
+"S:Would it be possible=…は可能でしょうか | V:to move=移すことは | O:it=それを | P:to next Monday?=来週の月曜に",
+"来週の月曜日に移すことは可能でしょうか。"
+],
+[
+"S:I am=私は…です | C:available=都合がつく | M:at any time=いつでも | P:after 1 p.m.=午後1時以降なら",
+"午後1時以降ならいつでも大丈夫です。"
+],
+[
+"M:If Monday=もし月曜が | V:does not work,=都合が悪ければ | S:I can also meet=会うこともできる | T:on Tuesday morning.=火曜の午前に",
+"月曜日がだめなら、火曜日の午前でも大丈夫です。"
+],
+[
+"S:I'm sorry=申し訳ありません | P:for the trouble.=ご迷惑をかけて",
+"ご迷惑をおかけして申し訳ありません。"
+],
+[
+"V:Please let=…させてください | O:me know=私に知らせて | M:which day=どちらの日が | V:suits you.=都合がよいか",
+"どちらの日がよいか教えてください。"
+],
+[
+"S:I appreciate=感謝します | O:your understanding.=ご理解に",
+"ご理解に感謝します。"
+],
+[
+"X:Best regards, Ken Sato=敬具 佐藤ケン",
+"敬具 佐藤ケン"
+]
+],
+"q": [
+[
+2,
+3,
+"佐藤さんは何に出席する？"
+],
+[
+3,
+3,
+"打ち合わせを何曜日に移したい？"
+],
+[
+4,
+3,
+"何時以降なら都合がつく？"
+],
+[
+5,
+3,
+"月曜がだめなら、いつ会える？"
+]
+]
+},
+"int10": {
+"level": 6,
+"title": "The Red Umbrella",
+"list": [
+[
+"S:It was pouring=雨が激しく降っていた | T:when Mika=ミカが…とき | V:arrived=着いた | P:at the station.=駅に",
+"ミカが駅に着いたとき、雨が激しく降っていた。"
+],
+[
+"S:She had left=置いてきてしまっていた | O:her umbrella=自分のかさを | P:at home.=家に",
+"彼女はかさを家に置いてきてしまっていた。"
+],
+[
+"P:On the platform,=ホームには | S:an old man was standing=老人が立っていた | M:with two umbrellas.=かさを2本持って",
+"ホームには、かさを2本持った老人が立っていた。"
+],
+[
+"S:He smiled=彼はほほえんだ | M:and held out=そして差し出した | O:the red one.=赤いほうを",
+"彼はほほえんで、赤いほうを差し出した。"
+],
+[
+"V:\"Take it,\"=「使いなさい」 | S:he said.=と彼は言った",
+"「使いなさい」と彼は言った。"
+],
+[
+"S:Mika hesitated,=ミカはためらった | M:but he insisted.=でも彼はゆずらなかった",
+"ミカはためらったが、彼はゆずらなかった。"
+],
+[
+"T:A week later,=1週間後 | S:she saw=彼女は見かけた | O:the same man=同じ男性を | P:at the bakery.=パン屋で",
+"1週間後、彼女はパン屋で同じ男性を見かけた。"
+],
+[
+"S:She gave=彼女は渡した | O:him back his umbrella=彼にかさを返して | M:along with a cake.=ケーキといっしょに",
+"彼女はケーキといっしょに、かさを返した。"
+],
+[
+"S:The man laughed=男性は笑った | M:and said,=そして言った | X:\"It was worth it.\"=「貸してよかった」",
+"男性は笑って「貸してよかったよ」と言った。"
+]
+],
+"q": [
+[
+1,
+2,
+"ミカはかさをどこに置いてきた？"
+],
+[
+2,
+2,
+"老人は何を持っていた？"
+],
+[
+6,
+3,
+"1週間後、どこで男性を見かけた？"
+],
+[
+7,
+2,
+"ミカはかさといっしょに何を渡した？"
+]
+]
+},
+"int11": {
+"level": 6,
+"title": "How Bees Share Directions",
+"list": [
+[
+"T:When a honeybee finds=ミツバチが見つけると | O:flowers with nectar,=みつのある花を | S:it returns=それは戻る | P:to the hive=巣に | M:and dances.=そして踊る",
+"ミツバチはみつのある花を見つけると、巣に戻って踊る。"
+],
+[
+"S:This dance tells=この踊りは伝える | O:other bees=ほかのハチに | M:where the food is.=えさがどこにあるか",
+"この踊りは、えさがどこにあるかをほかのハチに伝える。"
+],
+[
+"S:The bee moves=そのハチは動く | P:in a figure eight=8の字を描いて | M:while shaking=…を振りながら | O:its body.=体を",
+"ハチは体を振りながら、8の字を描いて動く。"
+],
+[
+"S:The angle of the dance=踊りの角度は | V:shows=示す | O:the direction of the food=えさの方向を | P:compared to the sun.=太陽と比べた",
+"踊りの角度は、太陽から見たえさの方向を示す。"
+],
+[
+"M:Meanwhile,=一方 | S:the length of the dance=踊りの長さは | V:shows=示す | O:how far away it is.=どれだけ遠いかを",
+"一方、踊りの長さは、それがどれだけ遠いかを示す。"
+],
+[
+"S:A longer dance means=長い踊りは意味する | M:that the flowers=花が…ことを | V:are=…にある | C:farther away.=もっと遠く",
+"踊りが長いほど、花は遠くにある。"
+],
+[
+"S:Scientists first=科学者が初めて | V:explained=説明した | O:this behavior=この行動を | T:in the 1940s.=1940年代に",
+"科学者がこの行動を初めて説明したのは1940年代だ。"
+],
+[
+"S:It is=それは…だ | C:amazing=驚くべきこと | M:that such small insects=こんな小さな虫が | V:can share=伝え合える | O:such detailed information.=これほど細かい情報を",
+"こんな小さな虫がこれほど細かい情報を伝え合えるのは驚きだ。"
+]
+],
+"q": [
+[
+1,
+2,
+"踊りはほかのハチに何を伝える？"
+],
+[
+2,
+1,
+"ハチはどんな形を描いて動く？"
+],
+[
+4,
+3,
+"踊りの長さは何を示す？"
+],
+[
+6,
+3,
+"この行動が説明されたのはいつ？"
+]
+]
+},
+"int12": {
+"level": 6,
+"title": "Should Students Wear Uniforms?",
+"list": [
+[
+"S:Many schools in Japan require=日本の多くの学校は求める | O:students to wear uniforms.=生徒に制服を着ることを",
+"日本の多くの学校は、生徒に制服の着用を求めている。"
+],
+[
+"M:However,=しかし | S:some people=一部の人は | V:question=疑問に思う | O:this rule.=この決まりを",
+"しかし、この決まりに疑問をもつ人もいる。"
+],
+[
+"S:Supporters say=賛成派は言う | M:that uniforms=制服は…と | V:make=…にする | O:everyone equal.=みんなを平等に",
+"賛成派は、制服はみんなを平等にすると言う。"
+],
+[
+"S:Students do not have to=生徒は…なくてよい | V:worry=悩む | P:about what to wear=何を着るかについて | T:every morning.=毎朝",
+"生徒は、毎朝何を着るか悩まなくてすむ。"
+],
+[
+"M:On the other hand,=一方 | S:critics argue=反対派は主張する | M:that uniforms=制服は…と | V:limit=制限する | O:students' individuality.=生徒の個性を",
+"一方、反対派は、制服が生徒の個性を制限すると主張する。"
+],
+[
+"S:They also point out=彼らはまた指摘する | M:that uniforms=制服は…と | V:are=…だ | C:expensive=高い | M:and uncomfortable.=そして着心地が悪い",
+"彼らはまた、制服は高くて着心地も悪いと指摘する。"
+],
+[
+"S:Some schools have found=…を見つけた学校もある | O:a compromise.=歩み寄りの案を",
+"歩み寄りの案を見つけた学校もある。"
+],
+[
+"S:Students can choose=生徒は選べる | O:either a uniform or=制服か…のどちらかを | O:their own clothes.=自分の服を",
+"生徒は、制服か自分の服かを選べる。"
+],
+[
+"M:This way,=こうすれば | S:everyone can find=だれもが見つけられる | O:what works best.=いちばん合うものを",
+"こうすれば、だれもが自分にいちばん合うものを選べる。"
+]
+],
+"q": [
+[
+2,
+3,
+"賛成派によると、制服はみんなをどうする？"
+],
+[
+4,
+4,
+"反対派によると、制服は何を制限する？"
+],
+[
+6,
+1,
+"一部の学校は何を見つけた？"
+],
+[
+7,
+2,
+"生徒は制服のほかに何を選べる？"
+]
+]
+},
+"int13": {
+"level": 6,
+"title": "Join Our Beach Cleanup",
+"list": [
+[
+"S:The city is looking=市は探している | P:for volunteers=ボランティアを | M:to clean Green Bay Beach=海岸を清掃する | T:this Saturday.=今週の土曜に",
+"市は、今週土曜日にグリーン湾の海岸を清掃するボランティアを募集している。"
+],
+[
+"S:The event will start=行事は始まる | T:at 9 a.m.=午前9時に | M:and end=そして終わる | T:at noon.=正午に",
+"行事は午前9時に始まり、正午に終わる。"
+],
+[
+"T:Last year,=去年 | S:volunteers collected=ボランティアは集めた | O:over 300 kilograms=300キロ以上を | P:of trash.=ごみの",
+"去年、ボランティアは300キロ以上のごみを集めた。"
+],
+[
+"S:Most of it=そのほとんどは | V:was=…だった | C:plastic.=プラスチック",
+"そのほとんどがプラスチックだった。"
+],
+[
+"S:We will provide=用意します | O:gloves and bags,=手袋と袋を | M:but please bring=でも持ってきて | O:your own water.=自分の水を",
+"手袋と袋は用意しますが、飲み水は各自で持ってきてください。"
+],
+[
+"V:Don't forget=忘れないで | O:a hat=帽子と | M:and sunscreen.=日焼け止めを",
+"帽子と日焼け止めを忘れずに。"
+],
+[
+"M:If it rains,=雨の場合は | S:the event will be canceled.=行事は中止になる",
+"雨の場合は中止になります。"
+],
+[
+"R:To join,=参加するには | V:please sign up=申しこんでください | P:on the city website=市のウェブサイトで | T:by Thursday.=木曜までに",
+"参加するには、木曜日までに市のウェブサイトで申しこんでください。"
+]
+],
+"q": [
+[
+1,
+1,
+"行事は何時に始まる？"
+],
+[
+2,
+2,
+"去年、どれだけのごみが集まった？"
+],
+[
+4,
+3,
+"参加者が自分で持ってくるものは？"
+],
+[
+7,
+3,
+"申しこみの期限は？"
+]
+]
+},
+"int14": {
+"level": 6,
+"title": "The Repair Cafe",
+"list": [
+[
+"T:Every month,=毎月 | S:a high school in Chiba holds=千葉の高校が開く | O:a \"repair cafe\" in its gym.=体育館で修理カフェを",
+"千葉のある高校は、毎月体育館で「修理カフェ」を開いている。"
+],
+[
+"S:People bring=人々は持ってくる | O:broken things such as toasters and bikes.=トースターや自転車などを",
+"人々は、トースターや自転車などのこわれた物を持ってくる。"
+],
+[
+"S:Students and retired engineers=生徒と元技術者が | V:fix=直す | O:them for free.=それらを無料で",
+"生徒と引退した技術者が、それらを無料で直す。"
+],
+[
+"S:The idea is=考え方は…だ | C:simple.=単純",
+"考え方は単純だ。"
+],
+[
+"M:Instead of throwing things away,=物を捨てる代わりに | S:we should=私たちは…べきだ | V:try=試す | O:to fix them.=直すことを",
+"物を捨てるのではなく、直してみるべきだ。"
+],
+[
+"T:Last year,=去年 | S:the cafe repaired=そのカフェは直した | O:about 500 items.=約500点を",
+"去年、カフェは約500点を直した。"
+],
+[
+"S:That=それは | V:kept=防いだ | O:a lot of waste=たくさんのごみを | P:out of landfills.=処分場に行くことから",
+"それで、多くのごみが処分場に行かずにすんだ。"
+],
+[
+"S:One student said,=ある生徒は言う | M:\"I used to think=以前は思っていた | O:fixing was hard,=直すのは難しいと | M:but now=でも今は | V:I love it.\"=それが大好き",
+"ある生徒は「直すのは難しいと思っていたけど、今は大好き」と言う。"
+]
+],
+"q": [
+[
+1,
+1,
+"人々はどんな物を持ってくる？"
+],
+[
+2,
+2,
+"修理の料金はいくら？"
+],
+[
+5,
+2,
+"去年、何点を直した？"
+]
+]
+},
+"int15": {
+"level": 6,
+"title": "My First Family Dinner",
+"list": [
+[
+"T:Last Sunday,=先週の日曜 | S:I cooked=私は作った | O:dinner for my family=家族に夕食を | M:for the first time.=初めて",
+"先週の日曜日、初めて家族に夕食を作った。"
+],
+[
+"S:I decided=私は決めた | V:to make curry,=カレーを作ることに | M:because it is=…だから | C:my father's favorite.=父の大好物",
+"父の大好物なので、カレーを作ることにした。"
+],
+[
+"S:I followed=私は従った | O:a recipe on the internet,=ネットのレシピに | M:but it was=でも…だった | C:harder than I expected.=思ったより大変",
+"ネットのレシピを見て作ったが、思ったより大変だった。"
+],
+[
+"S:Chopping the onions=玉ねぎをきざむのは | V:made=…させた | O:me cry.=私を泣かせた",
+"玉ねぎをきざんだら、涙が出た。"
+],
+[
+"T:Then I=それから私は | V:almost burned=こがしそうになった | O:the meat.=肉を",
+"それから、肉をこがしそうになった。"
+],
+[
+"M:Luckily,=運よく | S:my mother helped=母が助けてくれた | O:me just in time.=ぎりぎりで",
+"運よく、母がぎりぎりで助けてくれた。"
+],
+[
+"T:When we ate,=食べたとき | S:my father said=父は言った | O:it was delicious.=おいしいと",
+"食べたとき、父はおいしいと言ってくれた。"
+],
+[
+"S:I felt=私は感じた | C:proud=誇らしい | M:and happy.=そしてうれしい",
+"誇らしくて、うれしかった。"
+],
+[
+"T:Next time,=次は | S:I want=私は…したい | V:to try=挑戦する | O:something new.=何か新しいものに",
+"次は、何か新しい料理に挑戦したい。"
+]
+],
+"q": [
+[
+1,
+3,
+"なぜカレーを選んだ？"
+],
+[
+3,
+2,
+"玉ねぎをきざんだらどうなった？"
+],
+[
+5,
+1,
+"だれが助けてくれた？"
+],
+[
+6,
+2,
+"父は料理について何と言った？"
+]
+]
+},
+"int16": {
+"level": 6,
+"title": "Why Is the Sky Blue?",
+"list": [
+[
+"S:Sunlight looks=日光は見える | C:white,=白く | M:but it is=でも…だ | C:actually a mixture of colors.=実は色の混ざりもの",
+"日光は白く見えるが、実はいろいろな色が混ざっている。"
+],
+[
+"T:When sunlight=日光が…とき | V:enters=入る | O:the atmosphere,=大気に | S:it hits=それはぶつかる | O:tiny particles of air.=空気の小さな粒に",
+"日光が大気に入ると、空気の小さな粒にぶつかる。"
+],
+[
+"S:Blue light has=青い光は持つ | O:a shorter wavelength,=より短い波長を | M:so it scatters=だから散らばる | M:more easily.=もっと簡単に",
+"青い光は波長が短いので、より散らばりやすい。"
+],
+[
+"S:This scattered blue light reaches=散った青い光が届く | O:our eyes from every direction.=あらゆる方向から目に",
+"散らばった青い光が、あらゆる方向から目に届く。"
+],
+[
+"M:That is why=だから | S:the sky looks blue.=空は青く見える",
+"だから空は青く見える。"
+],
+[
+"M:Then why=では、なぜ | V:are sunsets=夕焼けは…のか | C:red?=赤い",
+"では、なぜ夕焼けは赤いのか。"
+],
+[
+"T:In the evening,=夕方には | S:sunlight travels=日光は進む | P:through more air.=より多くの空気の中を",
+"夕方は、日光がより多くの空気の中を通る。"
+],
+[
+"S:Most of the blue light is scattered away,=青い光の大半は散る | M:so red and orange=だから赤やオレンジが | V:remain.=残る",
+"青い光のほとんどが散ってしまい、赤やオレンジが残る。"
+]
+],
+"q": [
+[
+0,
+3,
+"日光は実は何でできている？"
+],
+[
+2,
+1,
+"青い光の波長にはどんな特徴がある？"
+],
+[
+6,
+2,
+"夕方、日光は何の中を通る？"
+],
+[
+7,
+1,
+"夕方に残る光の色は？"
+]
+]
 }
 }
