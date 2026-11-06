@@ -331,14 +331,14 @@
 3	not to mention	〜は言うまでもなく
 3	on account of	〜のために
 3	put an end to	〜を終わらせる
-# --- 以下、TOEIC語表の「候補」の熟語から追加(例文は data/sentences/toeic_idioms.tsv)。600点=1, 700点=2, 800点以上=3 ---
-1	city hall	市役所
-1	down payment	頭金
-1	head office	本社
-1	heat wave	熱波
-1	sign up for	〜に登録する、申し込む
-1	surface mail	船便、普通郵便
-1	time line	予定表、年表
+# --- 以下、TOEIC語表の「候補」の熟語から追加(例文は data/sentences/toeic_idioms.tsv)。600・700点=2(中級), 800点以上=3(上級) ---
+2	city hall	市役所
+2	down payment	頭金
+2	head office	本社
+2	heat wave	熱波
+2	sign up for	〜に登録する、申し込む
+2	surface mail	船便、普通郵便
+2	time line	予定表、年表
 2	a bit of	少しの
 2	a couple of	2、3の
 2	a handful of	ひと握りの、少数の
