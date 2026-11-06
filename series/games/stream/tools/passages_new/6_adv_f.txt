@@ -43,7 +43,7 @@ M| {let alone|let only|leave alone|let along} comprehend them. :: 理解は言�
 M| {Moreover|More|Moreover than|Furthermore of}, :: さらに
 S| the benefits {of|at|than|until} sharing data :: 共有の利益は
 V| {are|is|be|being} immediate and tangible, :: すぐ得られ具体的だ
-M| {whereas|whether|whatever|wherever} the risks :: 一方で危険は
+M| {whereas|whether|whatever|wherefore of} the risks :: 一方で危険は
 V| {remain|remains|remaining|to remain} abstract and delayed. :: 抽象的で後から来る
 == さらに、データを共有する利益はすぐに得られて具体的だが、危険は抽象的で後からやってくる。
 R| {Faced|Facing|Face|To face} with such an asymmetry, :: そんな不均衡を前に
@@ -204,7 +204,7 @@ C| {harder|hardly|hard than|hardest} to detect and challenge. :: 見抜きにく
 == さらに悪いことに、それは中立を装って行われるので、偏りを見抜いて異議を唱えることがいっそう難しくなる。
 S| A {biased|bias|biasing|biases} human judge :: 偏った人間の判事は
 V| can at least {be|being|been|is} questioned, :: 問いただせる
-M| {whereas|whether|wherever|whatever} the logic :: 一方で論理は
+M| {whereas|whether|whatever|wherefore of} the logic :: 一方で論理は
 P| {of|at|than|until} a complex model :: 複雑なモデルの
 V| is often {hidden|hide|hiding|hid} :: よく隠されている
 M| {even|ever|evenly|every} from its designers. :: 設計者からさえ
@@ -561,7 +561,7 @@ V| {acknowledge|acknowledges|acknowledging|acknowledgment} them. :: それを認
 @ja ネットの匿名性
 @tag 難関大レベル・論説文
 @gloss anonymity=匿名性, identity=身元, harass=嫌がらせする, restrain=抑える, whistleblower=内部告発者, corruption=不正, dissident=反体制派, authoritarian=独裁的な, hostile=敵意のある
-S| {Few|Little|A little|Fewer of} features of the internet :: ネットの特徴で少ない
+S| {Few|Much|A little|Fewer of} features of the internet :: ネットの特徴で少ない
 V| {are|is|be|being} :: …だ
 C| {as|such|too|very} controversial :: 同じほど議論を呼ぶ
 M| {as|than|so|that} the ability :: 能力ほど
