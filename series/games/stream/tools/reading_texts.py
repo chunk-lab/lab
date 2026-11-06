@@ -103,5 +103,22 @@ for k,t in T.items():
         for us in l[0].split(' | '):
             if us[1]!=':' or us[0] not in 'SVOICPTMRFX' or '=' not in us:ok=False;print('FMT NG',k,us[:40])
 print('照合', 'OK' if ok else 'NG', {k:len(t['list']) for k,t in T.items()})
+def compact(T):   # 英語は data.js(ゲーム用)と同じなので持たない。チャンクごとの単語の数だけにして、読むときに data.js から組み立てる
+    C={}
+    for k,t in T.items():
+        L=[]
+        for s,ja in t['list']:
+            segs=[]
+            for us in s.split(' | '):
+                rest=us[2:]; i=rest.index('='); en=rest[:i]
+                segs.append(us[:2]+'/'.join(str(len(p.split(' '))) for p in en.split(' / '))+rest[i:])
+            L.append([' | '.join(segs),ja])
+        C[k]=dict(t,list=L)
+    return C
+EXPAND=("(()=>{const C=%s,O={};for(const k in C)Object.defineProperty(O,k,{enumerable:true,configurable:true,get(){"
+ "const p=PASSAGES.find(x=>x.id===k),W=[];p.chunks.forEach(c=>c.tk.forEach(t=>W.push(t[0]+t[1]+t[2])));let i=0;const t=C[k];"
+ "const v=Object.assign({},t,{list:t.list.map(([s,ja])=>[s.split(' | ').map(u=>{const m=u.match(/^(.):([0-9/]+)=/);"
+ "return m[1]+':'+m[2].split('/').map(n=>W.slice(i,i+=+n).join(' ')).join(' / ')+u.slice(m[0].length-1)}).join(' | '),ja])});"
+ "Object.defineProperty(O,k,{value:v,enumerable:true});return v}});return O})()")
 if ok:
-    open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'../data/texts.js'),'w',encoding='utf8').write('/* 長文ゲーム（チャンクストリーム）の文章を、共通の読む画面（core.reader）の文の形式にしたもの。tools/reading_texts.py で生成 */\nconst LS_TEXTS='+json.dumps(T,ensure_ascii=False,separators=(',',':'))+';\n')
+    open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'../data/texts.js'),'w',encoding='utf8').write('/* 長文の「読む画面」用(役割・訳・問題)。tools/reading_texts.py で生成。英語は data.js の PASSAGES から組み立てる(同じ英語を2回持たない)。data.js を先に読み込んでおくこと */\nconst LS_TEXTS='+EXPAND%json.dumps(compact(T),ensure_ascii=False,separators=(',',':'))+';\n')

@@ -120,7 +120,7 @@ V| {showed|show|shown|showing} :: 見せた
 I| {participants|participate|participation|participating} :: 参加者に
 O| a film {of|for|in|to} a car accident :: 自動車事故の映像を
 == 有名な実験で、心理学者ロフタスは参加者に自動車事故の映像を見せた。
-M| {and|but|or|so} then {asked|ask|asking|asks} :: そして尋ねた
+M| and then {asked|ask|asking|asks} :: そして尋ねた
 O| how fast the cars {were|was|are|be} going :: 車の速さを
 T| {when|which|what|whose} they "smashed" into each other. :: 「激突した」とき
 == そして、車が「激突した」とき、どのくらいの速さだったかを尋ねた。
@@ -210,7 +210,7 @@ P| {to|for|into|at} a single figure: :: 一つの数字に
 == 複雑な目的が一つの数字に落とし込まれるところでは、どこでも同様のゆがみが起こる。
 S| teachers {may|might to|mays|may to} :: 先生は…かもしれない
 V| {teach|teaches|taught to|teaching} to the test, :: 試験対策ばかり教える
-M| {and|but|or|nor} police {may|might to|mays|can to} :: 警察は…かもしれない
+M| and police {may|might to|mays|can to} :: 警察は…かもしれない
 V| {record|records|recording|recorded to} crimes :: 犯罪を記録する
 M| {as|like|for|so} less serious than they were. :: 実際より軽いものとして
 == 先生は試験対策ばかり教え、警察は犯罪を実際より軽く記録するかもしれない。
@@ -336,7 +336,7 @@ M| {however|whatever|whoever|whenever}, :: しかし
 S| the effect {raises|rises|raise|rising} :: その効果は生む
 O| a {difficult|difficulty|difficultly|differ} ethical question. :: 難しい倫理の問いを
 == しかし研究室の外では、その効果は難しい倫理の問題を生む。
-S| {Should|Shall|Would to|Must to} doctors {ever|never|every|even} :: 医師は…すべきか
+S| {Should|Shall|Would to|Must to} doctors ever :: 医師は…すべきか
 V| {prescribe|prescription|prescribing|prescribed to} a placebo, :: プラセボを処方する
 M| {knowing|known|knew|to knowing} that it works :: 効くと知りつつ
 M| {only|alone|lonely|once} if the patient :: 患者が…場合に限って

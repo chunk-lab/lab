@@ -24,7 +24,10 @@ export function createLevel(core) {
   const save = () => { st.set('level', L); subs.forEach(f => { try { f(); } catch (e) { } }); };
   // ---- 材料：よく使う順の単語 ----
   let G = null, ready = null;
-  const load = () => ready || (ready = Promise.all(['words.js', 'data.js', 'bank.js', 'wlv.js'].map(f => loadScript(core.base + 'g/stream/' + f))).then(() => true).catch(() => false));
+  const load = () => ready || (ready = Promise.all(['words.js', 'data.js', 'bank.js', 'wlv.js'].map(f => loadScript(core.base + 'g/stream/' + f))).then(() => core.dict && core.dict.ready()).then(() => true).catch(() => false));
+  // 単語バンクの訳が空のもの＝共通の辞書と同じ訳(同じ訳を2回持たないため)。辞書から引く
+  const PM = { n: ['n'], v: ['v'], a: ['adj'], r: ['adv'] };
+  const dictJa = (w, p) => { try { const e = core.dict.lookupAll(w)[0]; if (!e || e.w.toLowerCase() !== String(w).toLowerCase()) return ''; const q = e.pos.find(x => (PM[p] || [p]).includes(x[0])); return q ? q[1] : ''; } catch (e) { return ''; } };
   function list() {
     if (G) return G;
     let W = null, B = ''; try { W = WORDS; } catch (e) { } try { B = BANK_SRC; } catch (e) { }
@@ -32,7 +35,7 @@ export function createLevel(core) {
     const seen = new Set(); G = [];
     const add = (en, pos, ja) => { const k = en + '|' + pos; if (!en || !ja || seen.has(k)) return; seen.add(k); G.push([en, pos, ja]); };
     [1, 2, 3].forEach(l => (W[l] || []).forEach(w => add(w[0], w[1], w[2])));
-    String(B).split('\n').forEach(l => { const c = l.split('\t'); add(c[0], c[1], c[2]); });
+    String(B).split('\n').forEach(l => { const c = l.split('\t'); add(c[0], c[1], c[2] || dictJa(c[0], c[1])); });
     return G;
   }
   // 推定語彙のあたりの単語のレベル(CEFR)から、英検・TOEIC・学校の目安を出す(単語表 data/words のレベル。公式の対応ではない目安)

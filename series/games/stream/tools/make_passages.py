@@ -29,6 +29,7 @@ for f in sorted(glob.glob(H + 'passages_new/*.txt')):
         role, rest = l.split('|', 1)
         en, ja = [x.strip() for x in rest.split('::')]
         m = BR.search(en)
+        if len(BR.findall(en)) != 1: errs.append(f"{cur['id']}: {{}} が1つでない {en}")
         if not m or len(m.group(1).split('|')) != 4: errs.append(f"{cur['id']}: 選択肢が4つでない {en}")
         if len(ja) > 12: errs.append(f"{cur['id']}: 訳が12字超 {ja}")
         if role.strip() not in list('SVOICPTMRFX'): errs.append(f"{cur['id']}: 役割 {role}")

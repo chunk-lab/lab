@@ -282,6 +282,22 @@ for x in bank:            # 同じ語で訳が同じ品詞違い（eleven 形/�
     if (x[1], x[3]) in seen: continue
     seen.add((x[1], x[3])); b2.append(x)
 bank = b2
+# ---- 訳が共通の辞書(core/dict/data.js)と同じなら書かない(読むときに辞書から引く。同じ訳を2回持たない) ----
+_CD = {}
+_cs = open(HERE + '../../../core/dict/data.js', encoding='utf8').read()
+for _l in json.loads('"' + re.search(r'__csDictLoad\("((?:[^"\\]|\\.)*)"', _cs).group(1) + '"').split('\n'):
+    _f = _l.split('\t')
+    if len(_f) < 2 or not _f[0] or not _f[1]: continue
+    _k = _f[0].lower()
+    if _k in _CD: continue   # 辞書の読み込みと同じく、先に出たものを使う
+    _CD[_k] = [(s[:s.find('=')], s[s.find('=') + 1:].replace(',', '、')) for s in _f[1].split(';') if '=' in s]
+_PM = {'n': ['n'], 'v': ['v'], 'a': ['adj'], 'r': ['adv']}
+def _same_as_dict(w, p, ja):
+    lw = w.lower()
+    if not re.fullmatch(r"[a-z0-9]([a-z0-9' -]*[a-z0-9])?", lw) or lw.endswith("'s") or lw not in _CD: return False
+    m = next((j for q, j in _CD[lw] if q in _PM.get(p, [p])), None)
+    return m == ja
+def _jaout(w, p, ja): return '' if _same_as_dict(w, p, ja) else ja
 # ---- 覚える語に絞る(辞書としては data.js に残る)：専門・頻度なし・人名の語、どの単語帳にも載らず頻度が低い語は、バンクから外す ----
 _T = {}
 for _r in csv.DictReader(open(HERE + '../../../data/words/dict_all_words.csv', encoding='utf-8-sig')): _T.setdefault(_r['単語'].lower(), _r)
@@ -298,10 +314,10 @@ _learn = [b for b in bank if _keep(b[1])]   # 練習で覚える語(bank.js は 
 print('覚える語に絞り込み:', len(_learn), '/ 全', len(bank))
 with open(APP + 'learn.js', 'w', encoding='utf8') as fp:
     fp.write('// 練習で覚える語(専門・頻度なし・人名の語、どの単語帳にも載らず頻度が低い語を除く)。build_words2.py が bank.js から作る。1行＝英語<TAB>品詞<TAB>訳[<TAB>2=別の意味]\nconst LEARN_SRC=' +
-             json.dumps('\n'.join(f'{w}\t{p}\t{ja}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in _learn), ensure_ascii=False) + ';\n')
+             json.dumps('\n'.join(f'{w}\t{p}\t{_jaout(w, p, ja)}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in _learn), ensure_ascii=False) + ';\n')
 with open(APP + 'bank.js', 'w', encoding='utf8') as fp:
     fp.write('// 全単語バンク（解放して遊ぶ分）。build/build_words2.py で生成。1行＝英語<TAB>品詞<TAB>訳。よく使う順。BANK_STAGE語で1ステージ\nconst BANK_STAGE=300;\nconst BANK_SRC=' +
-             json.dumps('\n'.join(f'{w}\t{p}\t{ja}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in bank), ensure_ascii=False) + ';\n')
+             json.dumps('\n'.join(f'{w}\t{p}\t{_jaout(w, p, ja)}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in bank), ensure_ascii=False) + ';\n')
 print('free', {l: len(v) for l, v in WORDS.items()}, 'cards', sum(len(v) for v in WORDS.values()), 'usew', len(usew))
 print('bank', len(bank), 'stages', -(-len(bank) // 300), 'pos', C.Counter(b[2] for b in bank))
 print('sample free', WORDS[1][:12]); print('sample bank', [b[1:] for b in bank[:15]], [b[1:] for b in bank[5000:5010]], [b[1:] for b in bank[-8:]])

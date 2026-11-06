@@ -176,7 +176,7 @@ M| {for|by|at|in} 30 percent less, :: 3割安く
 M| {and|but|or|so} sales were :: そして売り上げは
 C| {better|good|best|well} than expected. :: 予想よりよかった
 == そうした商品を3割安く売ったところ、売り上げは予想を上回った。
-S| {Small|Smaller|Smallest|Smally} changes {like|likes|alike|liking} these :: こうした小さな変化が
+S| Small changes {like|likes|alike|liking} these :: こうした小さな変化が
 V| {can|cans|can to|could to} :: …できる
 V| {help|helps|helping|helped to} reduce :: 減らすのに役立つ
 O| {the|a|an|any} amount of waste. :: むだの量を

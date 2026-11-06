@@ -61,6 +61,11 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 .sp-lie{position:absolute;left:10px;right:10px;top:calc(118px + env(safe-area-inset-top,0px));font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 3px #000c,0 0 8px #0008;pointer-events:none;padding-right:56px}
 .sp-mapb{position:absolute;right:10px;top:calc(114px + env(safe-area-inset-top,0px));width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 3px 0 #c9bfd8,0 5px 10px #0003;font-size:20px;line-height:1}
 .sp-mapb small{display:block;font-size:8px}
+.sp-unp{position:absolute;right:10px;top:calc(166px + env(safe-area-inset-top,0px));width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 3px 0 #c9bfd8,0 5px 10px #0003;font-size:18px;line-height:1}
+.sp-unp small{display:block;font-size:8px}
+.sp-unpm{position:absolute;right:62px;top:calc(160px + env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:6px}
+.sp-unpm[hidden]{display:none}
+.sp-unpm button{background:#fff;border-radius:12px;padding:8px 10px;font-size:13px;font-weight:700;box-shadow:0 3px 0 #c9bfd8}
 .sp-map{position:absolute;inset:0;background:#0007;pointer-events:auto;display:flex;align-items:center;justify-content:center;z-index:3}
 .sp-map[hidden]{display:none}
 .sp-map div{background:#17402a;border:3px solid #fff;border-radius:16px;padding:8px;box-shadow:0 6px 24px #0008;text-align:center;color:#fff;font-size:11px;font-weight:800}
@@ -142,11 +147,12 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     hole(0);
   }
   function hole(i) {
-    S.i = i; S.n = 0; const H = S.C.holes[i]; S.hud.querySelector('.sp-expr')?.remove();
+    S.i = i; S.n = 0; S.safe = null; const H = S.C.holes[i]; S.hud.querySelector('.sp-expr')?.remove();
     if (S.flag) scene.remove(S.flag);
     if (S.gMesh) { scene.remove(S.gMesh); S.gMesh = null; } S.gdef = null;
     S.flag = flagMesh(S.kind); S.flag.position.set(H.goal[0], 0, H.goal[1]); scene.add(S.flag);
     if (S.kind === 'golf') { S.gdef = makeGreen(H, rng(S.C.key + ':g' + i)); S.gMesh = greenMesh(S.gdef); }
+    if (S.kind === 'golf') { try { outside(); } catch (e) { } }   // 囲まれた所の地図を先に作っておく(打ったあとに止まらないように)
     S.pos = new THREE.Vector3(H.tee[0], S.kind === 'golf' ? 0.06 : 1.2, H.tee[1]); S.phase = 'aim'; S.club = 0; S.traj = 0; autoClub();
     standAt(S.pos); msg(`ホール ${i + 1}  PAR ${H.par}`); drawHud();
   }
@@ -167,7 +173,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     const h = document.createElement('div'); h.className = 'sp-hud';
     h.innerHTML = `<div class="sp-top"></div><div class="sp-lie"></div><div class="sp-msg"></div><div class="sp-clubs"></div>
       ${kind === 'golf' ? '<div class="sp-pad"><b class="l">◀</b><b class="r">▶</b><i></i></div><div class="sp-hsl"><em>高</em><div class="tr"><s></s><s></s><s></s><s></s><s></s><u></u></div><em>低</em><small></small></div><canvas class="sp-side" width="256" height="128"></canvas>' : '<button class="sp-aim sp-l">◀</button><button class="sp-aim sp-r">▶</button>'}${kind === 'golf' ? '' : '<div class="sp-gauge"><i style="height:0"></i></div>'}
-      <div class="sp-tim" hidden><i></i></div><div class="sp-bend" hidden></div>${kind === 'golf' ? '<div class="sp-spin" hidden><small>タップで回転</small><div class="dsc"><em style="top:3px;left:50%;transform:translateX(-50%)">ころがる</em><em style="bottom:3px;left:50%;transform:translateX(-50%)">もどる</em><em style="left:4px;top:50%;transform:translateY(-50%)">左</em><em style="right:4px;top:50%;transform:translateY(-50%)">右</em><i></i></div></div><div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引く↓ ずらす↔</small>'}</button>${kind === 'golf' ? '<button class="sp-mapb">🗺<small>グリーン</small></button><div class="sp-map" hidden><div><canvas width="360" height="360"></canvas>青=ゆるい傾斜 赤=強い傾斜 / 矢印=ボールが流れる向き / 明るい所が高い<br>(さわると閉じる)</div></div>' : ''}<button class="sp-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
+      <div class="sp-tim" hidden><i></i></div><div class="sp-bend" hidden></div>${kind === 'golf' ? '<div class="sp-spin" hidden><small>タップで回転</small><div class="dsc"><em style="top:3px;left:50%;transform:translateX(-50%)">ころがる</em><em style="bottom:3px;left:50%;transform:translateX(-50%)">もどる</em><em style="left:4px;top:50%;transform:translateY(-50%)">左</em><em style="right:4px;top:50%;transform:translateY(-50%)">右</em><i></i></div></div><div class="sp-swing"><div class="pw"></div><div class="set" hidden></div><div class="mk"></div><span>▼ここで3回目</span></div>' : ''}<button class="sp-shot">${kind === 'golf' ? '⛳<small>タップ×3</small>' : '🥏<small>引く↓ ずらす↔</small>'}</button>${kind === 'golf' ? '<button class="sp-mapb">🗺<small>グリーン</small></button><button class="sp-unp">⛑<small>アンプレ</small></button><div class="sp-unpm" hidden><button data-u="drop">近くから(+1)</button><button data-u="redo">打ち直し(+1)</button><button data-u="no">やめる</button></div><div class="sp-map" hidden><div><canvas width="360" height="360"></canvas>青=ゆるい傾斜 赤=強い傾斜 / 矢印=ボールが流れる向き / 明るい所が高い<br>(さわると閉じる)</div></div>' : ''}<button class="sp-quit">${home ? '🏠 家にもどる' : '✕ やめる'}</button>`;
     root.appendChild(h);
     const shot = h.querySelector('.sp-shot');
     let y0 = 0, x0 = 0;
@@ -181,6 +187,9 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
 
       fire();
     };
+    { const ub = h.querySelector('.sp-unp'), um = h.querySelector('.sp-unpm'); if (ub) {   // アンプレアブル:1打罰で、近くから or 打ち直し
+      ub.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!S || (S.phase !== 'aim' && S.phase !== 'fly')) return; um.hidden = !um.hidden; });
+      um.querySelectorAll('button').forEach(b => b.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); um.hidden = true; if (b.dataset.u !== 'no') unplayable(b.dataset.u); })); } }
     { const mb = h.querySelector('.sp-mapb'), mp = h.querySelector('.sp-map'); if (mb) { mb.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (!S || !S.gdef) return; mp.hidden = false; drawMap(); }); mp.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); mp.hidden = true; }); } }
     { const sp = h.querySelector('.sp-spin'), dsc = h.querySelector('.dsc');   // ボールのどこに当てるか(中心=ふつう / 下=バックスピン / 上=トップスピン / 横=曲がる)
       const setSpin = e => { if (!S || S.phase !== 'aim') return; const r = dsc.getBoundingClientRect(); let x = (e.clientX - (r.left + r.width / 2)) / (r.width / 2), y = -(e.clientY - (r.top + r.height / 2)) / (r.height / 2); const m = Math.hypot(x, y); if (m > 1) { x /= m; y /= m; } if (Math.hypot(x, y) < 0.12) { x = y = 0; } S.spin = { x, y }; };
@@ -220,7 +229,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   // ---- 打つ・投げる ----
   function aimDir() { const y = getYaw() + Math.PI; return [Math.sin(y), Math.cos(y)]; }   // カメラの向き=ねらう向き
   function fire() {
-    camOffset = { x: 0, z: 0 }; const p = Math.max(0.05, S.power); let [dx, dz] = aimDir(); S.n++; S.last = S.pos.clone(); S.phase = 'fly'; S.t = 0; audio?.play?.('wave');
+    camOffset = { x: 0, z: 0 }; const p = Math.max(0.05, S.power); let [dx, dz] = aimDir(); S.n++; S.last = S.pos.clone(); S.safe = S.pos.clone(); S.stk = 0; S.anc = null; S.phase = 'fly'; S.t = 0; audio?.play?.('wave');
     me.ry = Math.atan2(dx, dz);
     if (S.kind === 'golf') {
       const c = CLUBS[S.club], dv = -(S.dev || 0) * (c.loft === 0 ? 0.08 : 0.06 + c.d / 70 * 0.1), cs = Math.cos(dv), sn = Math.sin(dv);   // 左右のずれ(長いクラブほど大きい)
@@ -231,26 +240,76 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     } else { const v = 6 + 18 * p; S.v = new THREE.Vector3(dx * v, [0.6, 2.0, 3.6][S.hgt] + p * 1.2, dz * v); S.pos.y = 1.2; S.curveNow = S.curve; S.lastCurve = S.curve; S.bend = S.bend || 0; }
     drawHud();
   }
-  function hitWalls(p, v, keep) {   // 建物・木などに当たったら はね返る(ゴルフは高さをこえれば のりこえられる)
+  // ゴルフ:建物や噴水の「中」(まわりを囲まれた所)にボールが入らないように。地面の高さで通れるマスを、ティー・カップから塗っていく
+  let OUTB = null;
+  const OG = 0.3, OX0 = -72, OZ0 = -80, OW = Math.ceil(144 / OG), OH = Math.ceil(152 / OG);
+  function outside() {
+    if (!OUTB) {   // ふさがっているマス(町の形は変わらないので1回だけ)
+      OUTB = new Uint8Array(OW * OH); const q = new THREE.Vector3(), cs = city.colliders.filter(c => c.g);
+      for (let j = 0; j < OH; j++) for (let i = 0; i < OW; i++) {
+        const x = OX0 + (i + 0.5) * OG, z = OZ0 + (j + 0.5) * OG; let b = city.solids ? !!city.solids.hit(q.set(x, 0.12, z)) : false;
+        if (!b) for (const c of cs) { if (c.r !== undefined ? Math.hypot(x - c.cx, z - c.cz) < c.r : (x > c.x0 && x < c.x1 && z > c.z0 && z < c.z1)) { b = true; break; } }
+        OUTB[i + j * OW] = b ? 1 : 0;
+      }
+    }
+    if (!S.reach) {   // このコースのティー・カップからつながっているマス
+      const R = new Uint8Array(OW * OH), st = [];
+      const seed = (x, z) => { const i = Math.floor((x - OX0) / OG), j = Math.floor((z - OZ0) / OG); if (i >= 0 && j >= 0 && i < OW && j < OH) { const k = i + j * OW; if (!OUTB[k] && !R[k]) { R[k] = 1; st.push(k); } } };
+      S.C.holes.forEach(H => { seed(H.tee[0], H.tee[1]); seed(H.goal[0], H.goal[1]); });
+      while (st.length) { const k = st.pop(), i = k % OW, j = (k - i) / OW; for (const [di, dj] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const a = i + di, b = j + dj; if (a < 0 || b < 0 || a >= OW || b >= OH) continue; const n = a + b * OW; if (!OUTB[n] && !R[n]) { R[n] = 1; st.push(n); } } }
+      S.reach = R;
+    }
+    return S.reach;
+  }
+  function cellOf(x, z) { const i = Math.floor((x - OX0) / OG), j = Math.floor((z - OZ0) / OG); return (i < 0 || j < 0 || i >= OW || j >= OH) ? -1 : i + j * OW; }
+  function enclosed(p) { const k = cellOf(p.x, p.z); if (k < 0) return false; const R = outside(); return !R[k] && !OUTB[k]; }   // 囲まれた中(ふさがってはいない所)
+  function freeOut(x, z) { const k = cellOf(x, z); return k >= 0 && outside()[k] === 1; }
+  function nearFree(p, maxR, H, noCloser) {   // 近くの、外につながっている地面
+    const d0 = H ? Math.hypot(H.goal[0] - p.x, H.goal[1] - p.z) : 0; let alt = null;
+    for (let r = 0; r <= maxR; r += OG) for (let a = 0; a < 24; a++) {
+      const x = p.x + Math.cos(a / 24 * 6.283) * r, z = p.z + Math.sin(a / 24 * 6.283) * r; if (!freeOut(x, z)) continue;
+      if (!noCloser || Math.hypot(H.goal[0] - x, H.goal[1] - z) >= d0 - 0.01) return [x, z]; if (!alt) alt = [x, z];
+    }
+    return alt;
+  }
+  function rescue() {
+    const p = S.pos, t = nearFree(p, 8) || (S.safe && freeOut(S.safe.x, S.safe.z) ? [S.safe.x, S.safe.z] : null) || (S.last ? [S.last.x, S.last.z] : [p.x, p.z]);
+    p.set(t[0], 0.06, t[1]); S.v.set(0, 0, 0); S.phase = 'aim'; msg('ボールが引っかかったので、近くに出しました'); autoClub(); standAt(p); drawHud();
+  }
+  function unplayable(how) {
+    if (!S || S.kind !== 'golf') return;
+    const H = S.C.holes[S.i], p = S.pos; S.n++; S.v && S.v.set(0, 0, 0);
+    if (how === 'redo' && S.last) p.copy(S.last);
+    else {   // 近くの、外につながっている所(できればカップに近づかない所)に置く
+      const t = nearFree(p, 4.5, H, true); if (t) p.set(t[0], 0.06, t[1]); else if (S.last) p.copy(S.last);
+    }
+    p.y = 0.06; S.phase = 'aim'; msg(how === 'redo' ? 'アンプレアブル:もとの場所から(+1)' : 'アンプレアブル:近くから(+1)'); autoClub(); standAt(p); drawHud();
+  }
+  function hitWalls(p, v, keep) {   // 建物・木などに当たったら はね返る(ゴルフは高さをこえれば のりこえられる)。当たったら true
+    let hitAny = false;
     if (S && S.kind === 'golf' && city.solids) {   // 描かれたベンチ・噴水・街灯などの形どおりに
       const sh = city.solids.hit(p);
       if (sh) {
         let nx = p.x - sh.cx, nz = p.z - sh.cz; const m = Math.hypot(nx, nz) || 1; nx /= m; nz /= m;
-        const pv = S.prevP; if (pv && !city.solids.hit(pv)) p.copy(pv); else { p.x += nx * 0.06; p.z += nz * 0.06; }
+        const pv = S.safe && !city.solids.hit(S.safe) ? S.safe : S.prevP; if (pv && !city.solids.hit(pv)) p.copy(pv); else { p.x += nx * 0.06; p.z += nz * 0.06; }   // 最後に外にいた所へもどす(中にとじこめられない)
         const vn = v.x * nx + v.z * nz; if (vn < 0) { v.x -= (1 + keep) * vn * nx; v.z -= (1 + keep) * vn * nz; }
-        audio?.play?.('close');
+        audio?.play?.('close'); hitAny = true;
       }
     }
-    if (p.y > 9.5) return;
+    if (p.y > 9.5) return hitAny;
     for (const c of city.colliders) {
       if (S && S.kind === 'golf' && (!c.g || p.y > (c.h ?? 9))) continue;   // ゴルフは建物・池だけ。ほかは描かれた形(city.solids)で判定
-      if (c.r !== undefined) { const dx = p.x - c.cx, dz = p.z - c.cz, d = Math.hypot(dx, dz), m = c.r + 0.06; if (d < m && d > 1e-4) { const nx = dx / d, nz = dz / d, vn = v.x * nx + v.z * nz; p.x = c.cx + nx * m; p.z = c.cz + nz * m; if (vn < 0) { v.x -= (1 + keep) * vn * nx; v.z -= (1 + keep) * vn * nz; audio?.play?.('close'); } } }
+      if (c.r !== undefined) { const dx = p.x - c.cx, dz = p.z - c.cz, d = Math.hypot(dx, dz), m = c.r + 0.06; if (d < m && d > 1e-4) { const nx = dx / d, nz = dz / d, vn = v.x * nx + v.z * nz; p.x = c.cx + nx * m; p.z = c.cz + nz * m; hitAny = true; if (vn < 0) { v.x -= (1 + keep) * vn * nx; v.z -= (1 + keep) * vn * nz; audio?.play?.('close'); } } }
       else if (p.x > c.x0 && p.x < c.x1 && p.z > c.z0 && p.z < c.z1) {
         const l = p.x - c.x0, r = c.x1 - p.x, t = p.z - c.z0, b = c.z1 - p.z, m = Math.min(l, r, t, b);
-        if (m === l) { p.x = c.x0; v.x = -Math.abs(v.x) * keep; } else if (m === r) { p.x = c.x1; v.x = Math.abs(v.x) * keep; } else if (m === t) { p.z = c.z0; v.z = -Math.abs(v.z) * keep; } else { p.z = c.z1; v.z = Math.abs(v.z) * keep; }
-        audio?.play?.('close');
+        const sf = S && S.kind === 'golf' && S.safe && !(S.safe.x > c.x0 && S.safe.x < c.x1 && S.safe.z > c.z0 && S.safe.z < c.z1) ? S.safe : null;   // ゴルフ:建物に入ったら、入る前の所へ
+        if (sf) { const sy = p.y; p.copy(sf); p.y = Math.min(sy, sf.y + 0.5); }
+        if (sf) { if (m === l || m === r) v.x = -v.x * keep; else v.z = -v.z * keep; }
+        else if (m === l) { p.x = c.x0; v.x = -Math.abs(v.x) * keep; } else if (m === r) { p.x = c.x1; v.x = Math.abs(v.x) * keep; } else if (m === t) { p.z = c.z0; v.z = -Math.abs(v.z) * keep; } else { p.z = c.z1; v.z = Math.abs(v.z) * keep; }
+        audio?.play?.('close'); hitAny = true;
       }
     }
+    return hitAny;
   }
   // フリスビーが空を飛ぶ1ステップ(本番と、ねらいの線の先読みで同じ計算をつかう)。st={curveNow, bend}
   function frisAir(p, v, st, H, h) {
@@ -392,10 +451,16 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     pts.push(p.clone()); return pts;
   }
   function stepFly(dt) {
-    const H = S.C.holes[S.i], p = S.pos, v = S.v, n = 4, h = dt / n;
+    const H = S.C.holes[S.i], p = S.pos, v = S.v, n = S.kind === 'golf' ? Math.min(40, Math.max(4, Math.ceil(v.length() * dt / 0.08))) : 4, h = dt / n;   // 速いときは細かく刻む(壁をすりぬけない)
+    if (S.kind === 'golf' && !S.safe) S.safe = p.clone();
     for (let k = 0; k < n; k++) {
       if (S.kind === 'golf') {
-        S.prevP = (S.prevP || new THREE.Vector3()).copy(p); golfPhys(p, v, h, H, S.gs, CLUBS[S.club], true); hitWalls(p, v, 0.45);
+        S.prevP = (S.prevP || new THREE.Vector3()).copy(p); golfPhys(p, v, h, H, S.gs, CLUBS[S.club], true); const hw = hitWalls(p, v, 0.45);
+        S.stk = hw ? (S.stk || 0) + 1 : Math.max(0, (S.stk || 0) - 0.25);
+        if (!S.anc || Math.hypot(p.x - S.anc.x, p.z - S.anc.z) > 0.5) { S.anc = { x: p.x, z: p.z }; S.ancT = 0; } else S.ancT += h;   // 2秒たっても その場から動けていない
+        if (S.stk > 90 || S.ancT > 2.5) { S.stk = 0; S.anc = null; rescue(); return; }   // 物の上や すき間に引っかかって動けない → 近くの地面に出す(罰なし)
+        if (p.y < 6 && enclosed(p)) { p.copy(S.safe); v.x *= -0.3; v.z *= -0.3; }   // 囲まれた中には入れない(入る前の所へもどす)
+        else if (!(city.solids && city.solids.hit(p)) && freeOut(p.x, p.z)) S.safe.copy(p);
         const dh = Math.hypot(p.x - H.goal[0], p.z - H.goal[1]), sp = Math.hypot(v.x, v.z);
         if (dh < 0.34 && p.y < 0.2 && sp < 2.8) return holed();   // カップイン(はやすぎるとはずんで外れる)
       } else {
@@ -410,6 +475,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       if (Math.abs(p.x) > 72 || p.z < -80 || p.z > 72) { msg('OB! もとの場所から(+1)'); S.n++; S.pos.copy(S.last); S.phase = 'aim'; autoClub(); standAt(S.pos); drawHud(); return; }
     }
     if (Math.hypot(v.x, v.z) < 0.08 && (S.kind === 'golf' ? p.y <= 0.07 : p.y <= 0.04)) {   // 止まった
+      if (S.kind === 'golf' && enclosed(p) && S.safe) p.copy(S.safe);
       S.phase = 'aim'; if (S.kind === 'frisbee') p.y = 1.2; autoClub(); standAt(p); drawHud();
       if (S.n >= 12) { msg('ギブアップ… つぎのホールへ'); S.strokes.push(S.n + 1); next(); }
     }
