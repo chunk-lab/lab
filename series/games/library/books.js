@@ -11,12 +11,15 @@ export function createBooks(core) {
   const load = () => ready || (ready = Promise.all(['data.js', 'texts.js'].map(f => loadScript(core.base + 'g/stream/' + f))).catch(() => null));
   const passages = () => { try { return typeof PASSAGES !== 'undefined' ? PASSAGES : []; } catch (e) { return []; } };
   const texts = () => { try { return typeof LS_TEXTS !== 'undefined' ? LS_TEXTS : {}; } catch (e) { return {}; } };
+  const nq = () => { try { return typeof LS_NQ !== 'undefined' ? LS_NQ : {}; } catch (e) { return {}; } };
+  // 長文の中身はレベルごとのファイル(lvN.js・txN.js)。読む前に、その本のレベルを読み込む
+  const need = lv => { try { return typeof PASSAGES_NEED === 'function' ? PASSAGES_NEED(loadScript, core.base + 'g/stream/', [lv]) : Promise.resolve(); } catch (e) { return Promise.reject(e); } };
   const words = s => (s.list || []).reduce((a, x) => a + String(Array.isArray(x) ? x[0] : '').replace(/[A-Z]:|=[^|]*|\|/g, ' ').split(/\s+/).filter(w => /[a-zA-Z]/.test(w)).length, 0);
   function all() {
     const out = [];
     for (const p of passages()) {
-      const t = texts()[p.id];
-      out.push({ id: 'st:' + p.id, title: p.title, ja: p.ja || '', lv: p.lv, tag: p.tag || '', src: 'stream', canStream: true, canRead: !!t, pid: p.id, story: () => t ? { title: t.title, list: t.list, level: t.level, questions: t.q || [] } : null });
+      const n = nq()[p.id];
+      out.push({ id: 'st:' + p.id, title: p.title, ja: p.ja || '', lv: p.lv, tag: p.tag || '', src: 'stream', canStream: true, canRead: n != null, nq: n || 0, pid: p.id, story: () => { if (!p.chunks.length) return null; const t = texts()[p.id]; return t ? { title: t.title, list: t.list, level: t.level, questions: t.q || [] } : null; } });
     }
     for (const s of STORIES) out.push({ id: 'cc:' + s.title, title: s.title, ja: '', lv: s.lv, tag: 'お話', src: 'chunkchunk', canStream: false, canRead: true, story: () => builtinStory(s) });
     for (const x of (core.cloud ? core.cloud.listShelf() : [])) out.push({ id: 'sh:' + x.id, sid: x.id, title: x.title, ja: '', lv: x.level || 1, tag: '共有・' + x.author, src: 'shared', canStream: false, canRead: true, shared: true, story: () => x.story });
@@ -26,7 +29,11 @@ export function createBooks(core) {
   const weekly = () => weeklyBooks(core.member.keys.dayKey()).map(byId).filter(Boolean);
   const featured = () => LIBRARY.featured.map(byId).filter(Boolean);
   // 読む・解く（共通の読む画面）。終わったら記録へ。課題図書ならその日の「今日の課題」
-  function read(b, { onClose, view } = {}) {
+  function read(b, o = {}) {
+    if (b.pid && !b.story()) { need(b.lv).then(() => read2(b, o), () => core.ui.toast('読み込めませんでした。通信を確かめて、もう一度開いてください')); return; }
+    read2(b, o);
+  }
+  function read2(b, { onClose, view } = {}) {
     const story = b.story(); if (!story) { core.ui.toast('この本は、まだ読む画面がありません'); return; }
     const t0 = Date.now(); let graded = null, ended = false;
     const fin = () => {
@@ -37,12 +44,12 @@ export function createBooks(core) {
     core.reader.open(story, { backLabel: '← 図書館へ', view: view && (story.questions || []).length ? view : undefined, onClose: () => { fin(); onClose && onClose(); }, onGrade: r => { graded = r; return ''; }, onEnd: () => { ended = true; } });
   }
   // 問題があるか(読む・解くの「解く」)
-  const hasQ = b => { try { return !!((b.story() || {}).questions || []).length; } catch (e) { return false; } };
+  const hasQ = b => { if (b.nq != null) return b.nq > 0; try { return !!((b.story() || {}).questions || []).length; } catch (e) { return false; } };
   // 解き方の説明(はじめて解くときだけ)
   function solveIntro(cb) {
     let seen = false; try { seen = localStorage.getItem('cs:core:solveIntro') === '1'; } catch (e) { }
     if (seen) return cb();
     core.ui.sheet(`<h3>問題の解き方</h3><p class="cs-note">・上に問題が出ます。答えになる部分を、英文の中から「切り取り」ます。<br>・英文を左右にドラッグして、答えの始まりを線に合わせて「［ ここから」。<br>・終わりを線に合わせて「ここまで ］」。<br>・上下にドラッグすると、前後の文に移れます。<br>・全部の問題に答えたら「答え合わせ」。まちがっていても、全部答えればミッションはクリアです。</p><button class="cs-btn cs-go" data-ok>わかった</button>`, (ov, close) => ov.querySelector('[data-ok]').onclick = () => { try { localStorage.setItem('cs:core:solveIntro', '1'); } catch (e) { } close(); cb(); });
   }
-  return { load, all, byId, weekly, featured, read, words, LV, hasQ, solveIntro };
+  return { load, need, all, byId, weekly, featured, read, words, LV, hasQ, solveIntro };
 }

@@ -190,8 +190,28 @@ if too:
     for x in too: print('  ', *x)
     sys.exit(1)
 POOL = {k: sorted(v) for k, v in pools.items()}
+# data.js は目次だけ(題・タグ・語数など)。チャンクと単語は レベルごとの lv1.js〜lv3.js に分けて、使うときに読み込む(最初の読み込みを軽くする)
+J = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
+idx = [{'id': p['id'], 'lv': p['lv'], 'title': p['title'], 'ja': p['ja'], 'tag': p['tag'],
+        'wc': sum(len(c['tk']) for c in p['chunks']), 'nc': len(p['chunks']), 'chunks': [], 'words': []} for p in out]
+HELP = ('// PASSAGES_NEED(loadScript, そのゲームのフォルダ, [レベル]) で、そのレベルのチャンク(lvN.js)と読む画面の文(txN.js)を読み込む\n'
+  'function PASSAGES_FILL(lv,A){const L=PASSAGES.filter(p=>p.lv===lv);A.forEach((a,i)=>{if(L[i]){L[i].chunks=a.chunks;L[i].words=a.words}})}\n'
+  'function PASSAGES_NEED(load,base,lvs){const P=PASSAGES_NEED.p;return Promise.all([...new Set(lvs)].filter(l=>l>=1&&l<=3).map(l=>P[l]||(P[l]=load(base+"lv"+l+".js").then(()=>load(base+"tx"+l+".js")).catch(e=>{delete P[l];throw e}))))}\n'
+  'PASSAGES_NEED.p={};\n'
+  'function PASSAGES_HAS(lv){return !!PASSAGES.find(p=>p.lv===lv&&p.chunks.length)}\n'
+  '// 読む画面の文(LS_TEXTS)。txN.js が LS_ADD で足す。英語は PASSAGES のチャンクから組み立てる(同じ英語を2回持たない)\n'
+  'const LS_TEXTS={};\n'
+  'function LS_ADD(C){for(const k in C)Object.defineProperty(LS_TEXTS,k,{enumerable:true,configurable:true,get(){'
+  'const p=PASSAGES.find(x=>x.id===k),W=[];p.chunks.forEach(c=>c.tk.forEach(t=>W.push(t[0]+t[1]+t[2])));let i=0;const t=C[k];'
+  "const v=Object.assign({},t,{list:t.list.map(([s,ja])=>[s.split(' | ').map(u=>{const m=u.match(/^(.):([0-9/]+)=/);"
+  "return m[1]+':'+m[2].split('/').map(n=>W.slice(i,i+=+n).join(' ')).join(' / ')+u.slice(m[0].length-1)}).join(' | '),ja])});"
+  'Object.defineProperty(LS_TEXTS,k,{value:v,enumerable:true});return v}})}\n')
 open(DATA + 'data.js', 'w', encoding='utf8').write(
     '// 自動生成（build/build.py）。単語の訳は英語脳アプリの辞書（EJDict／WordNet由来 big.js）＋文脈の上書き\n'
-    'const PASSAGES=' + json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';\n'
-    'const POOL=' + json.dumps(POOL, ensure_ascii=False, separators=(',', ':')) + ';\n')
+    'const PASSAGES=' + J(idx) + ';\n'
+    'const POOL=' + J(POOL) + ';\n' + HELP)
+for lv in (1, 2, 3):
+    open(DATA + f'lv{lv}.js', 'w', encoding='utf8').write(
+        f'// 自動生成（build.py）。レベル{lv}の長文のチャンクと単語。data.js を先に読み込むこと\n'
+        f'PASSAGES_FILL({lv},' + J([{'chunks': p['chunks'], 'words': p['words']} for p in out if p['lv'] == lv]) + ');\n')
 print('ok', len(out))

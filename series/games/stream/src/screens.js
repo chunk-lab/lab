@@ -14,17 +14,19 @@ export const reached=(pid,st)=>st===1||!!rec(pid,st-1,"ta");
 
 export function applyFs(){if(SV.set.spd==null)SV.set.spd=.5;if(SV.set.fs==null)SV.set.fs=1.2;ENV.root.style.setProperty("--fs",SV.set.fs||1.2)}
 
+// 長文のチャンクはレベルごとのファイル(data/lvN.js・txN.js)。開く前に読み込む
+export const needLv=lv=>PASSAGES_NEED(ENV.ctx.loadScript,ENV.base,[lv]);
 export function renderHome(){
   $("tabs").innerHTML=[1,2,3].map(l=>`<button class="tab ${SV.lv===l?"on":""}" style="--lc:${LV[l].col}" data-lv="${l}"><b>${LV[l].name}</b><small>${LV[l].sub}</small></button>`).join("");
-  $("tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>{SE.tap();SV.lv=+b.dataset.lv;save();renderHome()});
-  $("plist").innerHTML=PASSAGES.filter(p=>p.lv===SV.lv).map(p=>{const wc=p.chunks.reduce((a,c)=>a+c.tk.length,0);
+  $("tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>{SE.tap();SV.lv=+b.dataset.lv;save();renderHome();needLv(SV.lv).catch(()=>{})});
+  $("plist").innerHTML=PASSAGES.filter(p=>p.lv===SV.lv).map(p=>{const wc=p.wc;
     return `<button class="pcard" style="--lc:${LV[p.lv].col}" data-id="${p.id}"><span class="tg">${esc(p.tag)}</span><span class="t">${esc(p.title)}</span><span class="j">${esc(p.ja)}</span>
-    <span class="meta"><span class="en">${wc} words</span><span>${p.chunks.length}チャンク</span><span class="sp"></span><span class="steps4">${[1,2,3,4].map(s=>`<i class="s${starsOf(p.id,s)}"></i>`).join("")}</span></span></button>`}).join("");
+    <span class="meta"><span class="en">${wc} words</span><span>${p.nc}チャンク</span><span class="sp"></span><span class="steps4">${[1,2,3,4].map(s=>`<i class="s${starsOf(p.id,s)}"></i>`).join("")}</span></span></button>`}).join("");
   const wn=WORDS[SV.lv].length,ws=WSET[SV.lv];
   $("plist").insertAdjacentHTML("afterbegin",`<button class="pcard wcard" style="--lc:${LV[SV.lv].col}" id="btnWords"><span class="tg">単語・熟語・単語集</span><span class="t">${LV[SV.lv].name}の単語 ${wn}語</span><span class="j">${ws}語ずつ・${Math.ceil(wn/ws)}セット　聞いて、意味を選ぶ</span></button>`);
   $("btnWords").onclick=()=>{SE.tap();renderWords();show("sWords")};
   
-  $("plist").querySelectorAll(".pcard[data-id]").forEach(b=>b.onclick=()=>{SE.tap();CUR=P(b.dataset.id);renderDetail();show("sDetail")});
+  $("plist").querySelectorAll(".pcard[data-id]").forEach(b=>b.onclick=async()=>{SE.tap();const p=P(b.dataset.id);if(!p.chunks.length){b.classList.add("ld");try{await needLv(p.lv)}catch(e){b.classList.remove("ld");ENV.core&&ENV.core.ui&&ENV.core.ui.toast("読み込めませんでした。通信を確かめて、もう一度押してください");return}b.classList.remove("ld")}CUR=p;renderDetail();show("sDetail")});
 }
 export function renderDetail(){
   const p=CUR;$("dTag").textContent=`${LV[p.lv].name}・${p.tag.split("・")[1]||""}`;$("dTitle").textContent=p.title;$("dJa").textContent=p.ja;

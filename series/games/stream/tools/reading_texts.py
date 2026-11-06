@@ -120,5 +120,9 @@ EXPAND=("(()=>{const C=%s,O={};for(const k in C)Object.defineProperty(O,k,{enume
  "const v=Object.assign({},t,{list:t.list.map(([s,ja])=>[s.split(' | ').map(u=>{const m=u.match(/^(.):([0-9/]+)=/);"
  "return m[1]+':'+m[2].split('/').map(n=>W.slice(i,i+=+n).join(' ')).join(' / ')+u.slice(m[0].length-1)}).join(' | '),ja])});"
  "Object.defineProperty(O,k,{value:v,enumerable:true});return v}});return O})()")
-if ok:
-    open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'../data/texts.js'),'w',encoding='utf8').write('/* 長文の「読む画面」用(役割・訳・問題)。tools/reading_texts.py で生成。英語は data.js の PASSAGES から組み立てる(同じ英語を2回持たない)。data.js を先に読み込んでおくこと */\nconst LS_TEXTS='+EXPAND%json.dumps(compact(T),ensure_ascii=False,separators=(',',':'))+';\n')
+if ok:   # レベルごとの txN.js(LS_ADD で足す) と、問題の数だけの texts.js(LS_NQ)
+    D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'../data/')
+    C=compact(T); LV={'beg':1,'int':2,'adv':3}
+    for lv in (1,2,3):
+        open(D+'tx%d.js'%lv,'w',encoding='utf8').write('/* 長文の「読む画面」用(役割・訳・問題)。tools/reading_texts.py で生成。英語は lv%d.js のチャンクから組み立てる */\nLS_ADD(%s);\n'%(lv,json.dumps({k:v for k,v in C.items() if LV[k[:3]]==lv},ensure_ascii=False,separators=(',',':'))))
+    open(D+'texts.js','w',encoding='utf8').write('/* 読む画面の文は txN.js(レベルごと)。ここは問題の数だけ(図書館・ミッションの「解く」の有無)。tools/reading_texts.py で生成 */\nconst LS_NQ='+json.dumps({k:len(t.get('q') or []) for k,t in T.items()},separators=(',',':'))+';\n')

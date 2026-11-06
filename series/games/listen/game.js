@@ -11,7 +11,7 @@ export default {
     const core = ctx.core; el.classList.add('ls'); ctx.showBack(true);
     const auto = ctx.opts && ctx.opts.lv;   // ミッション:レベルを決めてすぐ始める
     el.innerHTML = '<div class="ls-wrap"><p class="ls-note">読みこんでいます…</p></div>';
-    try { await loadScript(core.base + 'g/stream/data.js'); } catch (e) { el.innerHTML = '<div class="ls-wrap"><p class="ls-note">このアプリでは使えません</p></div>'; return {}; }
+    try { await loadScript(core.base + 'g/stream/data.js'); await PASSAGES_NEED(loadScript, core.base + 'g/stream/', [1, 2, 3]); } catch (e) { el.innerHTML = '<div class="ls-wrap"><p class="ls-note">このアプリでは使えません</p></div>'; return {}; }
     const PS = (() => { try { return PASSAGES; } catch (e) { return []; } })();
     const all = PS.flatMap(p => p.chunks.map(c => ({ en: (c.tk || []).map(t => t[1]).join(' ').replace(/\s+([,.!?;:])/g, '$1'), ja: c.ja, lv: p.lv }))).filter(c => c.en.split(' ').length >= 2 && c.ja);
     const wrap = el.querySelector('.ls-wrap'); let alive = true, lv = Math.max(1, core.level ? core.level.lv : 1);

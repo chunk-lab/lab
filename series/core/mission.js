@@ -64,7 +64,7 @@ export function createMission(core) {
       out.push({ type: 'ca3', cats: ['chunk', 'game'], time: 'l', need: 3, title: 'チャンク・カードで3試合', how: '相手は自由。3試合を最後までやるとクリア', go: { game: 'cards' }, check: { play: 'cards' } });
     }
     const st2 = unread(b => b.src === 'chunkchunk'); if (st2.length) { const b = pick(st2); out.push({ type: 'rs', cats: ['read'], time: 's', title: `お話「${b.title}」を最後まで読む`, how: '読む画面で最後の文まで進むとクリア', go: { book: b.id }, check: { play: 'cc.read', book: b.id } }); }
-    const rq = unread(b => b.canRead && (b.story() || {}).questions && b.story().questions.length); if (rq.length) { const b = pick(rq); out.push({ type: 'rq', cats: ['read'], time: 'l', title: `「${b.title}」の問題を全部解く`, how: 'リーディングで問題に全部答えて「答え合わせ」するとクリア(まちがっていてもOK)', go: { book: b.id, view: 'solve' }, check: { play: 'cc.read', book: b.id, solved: true } }); }
+    const rq = unread(b => b.canRead && core.books.hasQ(b)); if (rq.length) { const b = pick(rq); out.push({ type: 'rq', cats: ['read'], time: 'l', title: `「${b.title}」の問題を全部解く`, how: 'リーディングで問題に全部答えて「答え合わせ」するとクリア(まちがっていてもOK)', go: { book: b.id, view: 'solve' }, check: { play: 'cc.read', book: b.id, solved: true } }); }
     return out;
   }
   // 並べ方：長くやっていない種類ほど先。同じくらいならランダム

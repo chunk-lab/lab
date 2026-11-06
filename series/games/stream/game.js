@@ -24,9 +24,12 @@ export default {
     el.classList.add('ct-stream');
     el.innerHTML = html.replace(/(src|href)="(img|audio)\//g, (m, at, d) => `${at}="${ctx.base}${d}/`);
     el.querySelectorAll('.logo').forEach(lg => { lg.innerHTML = `<img src="${LOGO.story}" alt="Storyミング！" style="display:block;margin:0 auto;height:min(26vh,150px);width:auto;max-width:90%">`; });
-    loadSave(); if ([1, 1.2, 1.4, 1.6].includes(ctx.opts?.fontSize)) SV.set.fs = ctx.opts.fontSize; init_screens(); init_play(); init_fx();
+    loadSave(); if ([1, 1.2, 1.4, 1.6].includes(ctx.opts?.fontSize)) SV.set.fs = ctx.opts.fontSize;
+    const op = ctx.opts && ctx.opts.passage && P(ctx.opts.passage);   // 長文のチャンクはレベルごとのファイル。いま開くレベル(と指定の本のレベル)を先に読み込む
+    try { await PASSAGES_NEED(ctx.loadScript, ctx.base, [SV.lv || 1, op ? op.lv : 0]); } catch (e) { console.error(e); }
+    init_screens(); init_play(); init_fx();
     ctx.showBack(true);
-    if (ctx.opts && ctx.opts.passage) setTimeout(() => { try { const p = P(ctx.opts.passage); if (p) { setCur(p); renderDetail(); show('sDetail'); if (ctx.opts.run) startRun(1); } } catch (e) { console.error(e); } }, 50);   // 図書館・ミッションから本を指定(run:最初から通しで始める)
+    if (ctx.opts && ctx.opts.passage) setTimeout(() => { try { const p = op; if (p) { setCur(p); renderDetail(); show('sDetail'); if (ctx.opts.run) startRun(1); } } catch (e) { console.error(e); } }, 50);   // 図書館・ミッションから本を指定(run:最初から通しで始める)
     if (ctx.opts && ctx.opts.wordset) setTimeout(() => { try { const w = ctx.opts.wordset; setCur(wordSet(w.lv, w.k, w.kind || 'w')); startRun(1); } catch (e) { console.error(e); } }, 50);   // ミッション:単語セットを指定
     if (ctx.opts && Array.isArray(ctx.opts.words)) setTimeout(() => { try { playList(ctx.opts.title, ctx.opts.words); } catch (e) { console.error(e); } }, 50);   // 勉強ノートから「練習する」
     return {
