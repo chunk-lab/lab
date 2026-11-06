@@ -83,89 +83,80 @@ M| the same {as|than|from|for} good evidence. :: 良い証拠と同じで
 @id adv39
 @lv 3
 @level 8
-@title The Idea That Came Too Early
-@ja 早すぎた大陸移動説
+@title Why Island Animals Change Size
+@ja 島の動物の大きさ
 @tag 難関大レベル・説明文
-@gloss continent=大陸, landmass=陸塊, fossil=化石, extinct=絶滅した, mechanism=仕組み, coincidence=偶然の一致, expedition=探検, crust=地殻, plate tectonics=プレートテクトニクス
-T| In 1912, the German {scientist|science|scientific|scientifically} :: 1912年ドイツの学者
-S| Alfred Wegener {proposed|proposal|propose to|proposing} :: ウェゲナーは提唱した
-O| that the continents {had|has|having|haves} once :: 大陸がかつて
-V| been {joined|join|joins|jointly} :: つながっていたと
-P| in a single {landmass|landmasses|landmassed|landly}. :: 1つの陸塊として
-== 1912年、ドイツの科学者ウェゲナーは、大陸がかつて1つの陸塊につながっていたと提唱した。
-S| His evidence {was|were|being|be} striking: :: 証拠は印象的だった
-S| the {coastlines|coastline of|coastal|coasting} :: 海岸線が
-P| of South America {and|nor|than|either} Africa :: 南米とアフリカの
-V| {fit|fits|fitting|to fit} together :: ぴったり合う
-M| {like|alike|likely|liking} puzzle pieces. :: パズルのように
-== 証拠は目を引くものだった。南米とアフリカの海岸線は、パズルのピースのようにぴったり合うのだ。
-M| {Moreover|Whereas|Although|Despite}, fossils :: さらに化石が
-P| of the same {extinct|extinction|extinctly|extinguish} plants and animals :: 同じ絶滅動植物の
-V| were {discovered|discover|discovering|discovery} :: 発見された
-P| on continents {now|nowly|nowadays of|knowing} separated :: 今は離れた大陸で
-P| by thousands {of|for|in|with} kilometers of ocean. :: 何千キロもの海で
-== さらに、同じ絶滅した動植物の化石が、いまは何千キロもの海で隔てられた大陸から見つかっていた。
-M| {Yet|Despite|In spite|Regardless} most geologists :: だが地質学者の大半は
-V| {rejected|rejection|reject of|rejecting} the idea, :: その説を退けた
-R| {largely|large|largeness|larger} because Wegener :: 主にウェゲナーが
-V| {could|cans|can to|could to} not explain :: 説明できず
-O| {what|that|which of|whom} force could move :: どんな力が動かすか
-O| {entire|entirely|entirety|entireness} continents. :: 大陸全体を
-== だがほとんどの地質学者はこの説を退けた。主な理由は、大陸全体を動かす力をウェゲナーが説明できなかったことだ。
-P| {Without|Withouts|Withouting|Whereas} a plausible mechanism, :: もっともな仕組みなしに
-X| critics {argued|argue to|arguing|argument}, :: と批判者は論じた
-S| the {matching|matchingly|match of|matchful} coastlines :: 一致する海岸線は
-V| might {be|being|been|are} :: …かもしれない
-C| nothing more {than|then|that|as} a coincidence. :: 偶然にすぎない
-== もっともらしい仕組みがない以上、海岸線の一致は偶然にすぎないかもしれない、と批判者は論じた。
-S| Wegener {died|dead|death|dying} :: ウェゲナーは死んだ
-P| on an {expedition|expedite|expeditious|expeditionary} :: 探検中に
-P| in Greenland {in|on|at|for} 1930, :: 1930年グリーンランド
-X| his theory still {largely|large|largest|largeness} :: 説はなお大部分
-X| {dismissed|dismiss|dismissing|dismissal}. :: 退けられたまま
-== ウェゲナーは1930年、グリーンランドでの探検中に亡くなった。その説はまだほとんど相手にされていなかった。
-X| It {was|were|is to|being} not until :: …になって初めて
-T| the 1950s {and|nor|than|or both} 1960s :: 1950〜60年代
-X| {that|what|which|when of} new technology :: 新しい技術が
-V| {allowed|allow|allowing|allowance} scientists :: 科学者に可能にした
-X| {to map|mapping|map|mapped} the ocean floor :: 海底を地図にする
-M| {in|on|at|by} detail. :: 詳しく
-== 1950〜60年代になって初めて、新しい技術によって科学者は海底を詳しく地図にできるようになった。
-S| They {discovered|discover of|discovery|discovering} :: 彼らは発見した
-O| long {underwater|underwaters|underwatered|underwatering} mountain ranges :: 長い海底山脈を
-X| {where|which|what|whom} new crust :: そこで新しい地殻が
-V| is {constantly|constant|constancy|constants} :: 絶えず
-V| being {created|create|creating|creation} :: 作られ
-M| and pushed {outward|outwarding|outwards of|outwardly of}. :: 外へ押し出される
-== 彼らは長い海底山脈を発見した。そこでは新しい地殻が絶えず作られ、外側へ押し出されていた。
-S| This process, {called|calling|calls|call} seafloor spreading, :: 海洋底拡大という過程が
-M| {finally|final|finalize|finality} :: ついに
-V| {supplied|supply of|supplier|supplying} :: 与えた
-O| the {mechanism|mechanic of|mechanical|mechanize} :: 仕組みを
-X| that Wegener {had|has|have|having} lacked. :: ウェゲナーに欠けていた
-== 海洋底拡大と呼ばれるこの過程が、ウェゲナーに欠けていた仕組みをついに与えた。
-T| {By|Until|Since|For} the end of the 1960s, :: 60年代末までに
-S| the theory of plate {tectonics|tectonic|tectonical|tectonically} :: プレート理論は
-V| had {become|became|becoming|becomes} :: なっていた
-C| {widely|wide|width|widen} accepted. :: 広く受け入れられて
-== 1960年代の終わりまでには、プレートテクトニクス理論が広く受け入れられていた。
-S| Some {see|sees|seeing|seen} the story :: この話を見る人もいる
-M| {as|for|like as|to} proof of :: …の証拠として
-O| scientific {stubbornness|stubborn|stubbornly|stubborned}, :: 科学者の頑固さの
-M| {but|nor|than|either} the critics :: しかし批判者は
-V| were not simply {wrong|wrongly|wrongful of|wrongs} :: 誤りではなかった
-X| to {demand|demands|demanded|demanding} a mechanism. :: 仕組みを求めたのは
-== この話を科学者の頑固さの証拠と見る人もいるが、仕組みを求めた批判者が単純に間違っていたわけではない。
-S| Good science, after {all|whole|every|each}, :: 結局よい科学は
-V| {requires|require|requiring|requirement} :: 必要とする
-O| not only patterns {that|what|whom|whose} fit, :: 合う型だけでなく
-O| but also {explanations|explain|explanatory|explained} :: 説明も
-P| of {why|what|which|whom} they exist. :: なぜそれがあるかの
-== 結局のところ、よい科学には一致するパターンだけでなく、それがなぜあるのかの説明も必要なのだ。
-?? 1 1 ウェゲナーの証拠の一つとして、何が挙げられているか
-?? 3 2 地質学者の多くが説を退けた主な理由は何か
-?? 7 2 海底山脈では何が起きていたか
-?? 9 0 プレートテクトニクス理論はいつまでに広く受け入れられたか
+@gloss Mediterranean=地中海の, ancestor=祖先, fraction=ごく一部, predator=捕食者, species=種, dwarfing=小型化, analysis(analyses)=分析, tendency=傾向
+P| On {islands|island|islanded|islanding}, :: 島では
+S| animals {often|oftenly|oft of|oftener of} :: 動物はしばしば
+V| {evolve|evolves|evolving|evolution} :: 進化する
+P| in {surprising|surprisedly|surprise of|surprisingly} directions. :: 意外な方向に
+== 島では、動物がしばしば意外な方向に進化する。
+S| Elephants {that|what|whom|whose} once lived :: かつて住んだ象は
+P| on several {Mediterranean|Mediterranea|Mediterraneanly|Mediterraneans} islands :: 地中海の島々に
+V| {shrank|shrink of|shrunken|shrinking} :: 小さくなった
+P| to a {fraction|fractional|fractionally|fracture of} :: ほんの一部にまで
+P| of their {ancestors'|ancestor|ancestry's of|ancestral of} size. :: 祖先の大きさの
+== かつて地中海のいくつかの島に住んでいた象は、祖先のほんの一部の大きさにまで小さくなった。
+M| {Meanwhile|Meantime of|Whereas|Although}, :: 一方
+S| small creatures {such|so|as|like as} as rats and lizards :: ネズミやトカゲなど
+V| have sometimes {grown|grew|grow|growing} :: 時に…なった
+C| {remarkably|remarkable|remark|remarked} large. :: 驚くほど大きく
+== 一方、ネズミやトカゲのような小さな生き物が、驚くほど大きくなったこともある。
+S| Biologists {call|calls|calling|called of} :: 生物学者は呼ぶ
+O| this {pattern|patterns|patterned|patterning}, :: この傾向を
+X| in {which|what|whom|that} large animals shrink :: 大型が小さくなり
+M| {and|nor|than|either} small ones grow, :: 小型が大きくなる
+C| the "island {rule|rules|ruled|rulely}." :: 「島の法則」と
+== 大型動物が小さくなり小型動物が大きくなるこの傾向を、生物学者は「島の法則」と呼ぶ。
+S| One common {explanation|explain|explanatory|explained} :: よくある説明は
+V| {is|are|be|being} :: …だ
+O| that islands {offer|offers|offering|offered of} :: 島が与えるのは
+O| {limited|limiting of|limit of|limitless of} food, :: 限られた食料で
+X| {which|what|who|whom} favors :: それが有利にする
+O| {smaller|small of|smallest of|smally} bodies in large species. :: 大型種の小さな体を
+== よくある説明は、島では食料が限られており、それが大型種では小さな体を有利にするというものだ。
+P| For small animals, {by|on|at|for} contrast, :: 対照的に小型動物では
+S| the {absence|absent|absently|absenting} of predators :: 捕食者の不在が
+V| may {remove|removes|removal|removing} :: 取り除くかもしれない
+O| the {need|needy|needs of|needful} :: 必要を
+X| {to stay|staying|stay|stayed} small and hidden. :: 小さく隠れている
+== 一方小型動物にとっては、捕食者がいないことで、小さく隠れている必要がなくなるのかもしれない。
+S| The most famous case {may|mays|may to|maybe} be :: 最も有名な例は
+O| a small human {species|specie|specieses|special} :: 小柄な人類の種
+X| {found|finded|finding|find} on the Indonesian island :: インドネシアの島で発見
+P| {of|ofs|off of|for of} Flores :: フローレス島の
+T| {in|on|at|to} 2003. :: 2003年に
+== 最も有名な例は、2003年にインドネシアのフローレス島で見つかった小柄な人類の種かもしれない。
+S| Adults {stood|stand of|standing|stands of} :: 成人の背丈は
+C| only about a meter {tall|tally|tallness|taller of}, :: 約1メートルで
+X| {leading|led|lead|leads} some researchers :: 一部の研究者に
+X| {to suspect|suspecting|suspect|suspected} :: 疑わせた
+O| that island dwarfing {had|has|have|having} affected humans :: 島の小型化が人に及んだと
+M| as {well|good|goodly|wells}. :: …も
+== 大人の背丈は1メートルほどしかなく、島での小型化が人類にも起きたのではないかと考える研究者もいた。
+S| Not all scientists, {however|whatever|whenever|wherever}, :: しかし全員ではない
+V| {accept|accepts|accepting|acceptance} :: 認める
+O| the island {rule|ruled|rulely|rules of} :: 島の法則を
+M| as a {general|generally|generality|generalize} law. :: 一般法則として
+== しかし、島の法則を一般的な法則として認める科学者ばかりではない。
+S| Some large {analyses|analysis|analyze|analytic} :: 大規模な分析の一部は
+V| have {found|finded|finding|finds} :: 見出した
+O| {so|such|very|too} many exceptions :: 非常に多くの例外を
+X| that the pattern {may|mays|may to|maybe} reflect :: 傾向が表すのは
+O| only {certain|certainly|certainty|certains} groups of animals. :: 特定の動物群だけ
+== 大規模な分析の中には例外があまりに多く見つかり、この傾向は一部の動物群にしか当てはまらないかもしれないとするものもある。
+X| {Whether|Weather|Wether|Whethers} a rule or a tendency, :: 法則でも傾向でも
+S| island {evolution|evolve|evolutionary|evolving} :: 島の進化は
+V| {shows|show|showing|shown} :: 示す
+O| how {quickly|quick|quickness|quicken} bodies :: 体がいかに速く
+V| {can|cans|can to|could to} change :: 変わりうるか
+T| when circumstances {do|does|doing|done}. :: 環境が変われば
+== 法則であれ傾向であれ、島の進化は、環境が変われば体がいかに速く変わりうるかを示している。
+?? 1 2 地中海の島に住んでいた象はどうなったか
+?? 4 3 よくある説明では、島の何が限られているとされるか
+?? 5 1 小型動物が大きくなる理由として何が挙げられているか
+?? 9 2 大規模な分析は何を見出したか
 
 @id adv40
 @lv 3
