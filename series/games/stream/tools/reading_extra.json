@@ -13545,69 +13545,69 @@
 },
 "adv84": {
 "level": 8,
-"title": "Money Is Made of Trust",
+"title": "When Railways Set the Clocks",
 "list": [
 [
-"S:Economics textbooks=経済学の教科書は | V:often explain=よく説明する | O:the origin of money=お金の起源を | P:with a simple story=単純な話で | X:about barter.=物々交換についての",
-"経済学の教科書は、お金の起源をよく物々交換についての単純な話で説明する。"
+"T:For most of history,=歴史の大半で | S:each town=各町は | V:kept its own time,=独自の時刻を使った | M:based on the sun's position.=太陽の位置に基づく",
+"歴史の大半において、町はそれぞれ太陽の位置に基づく独自の時刻を使っていた。"
 ],
 [
-"S:A farmer who wants shoes=靴がほしい農民は | V:must find a shoemaker=靴屋を探さねばならない | X:who happens to want grain,=偶然穀物がほしい | M:and money is said=そしてお金は…とされる | V:to have solved=解決した | O:this awkward problem.=この厄介な問題を",
-"靴がほしい農民は、たまたま穀物をほしがる靴屋を探さねばならず、お金はこの厄介な問題を解決したとされる。"
+"S:Noon arrived=正午が来た | M:a few minutes earlier=数分早く | P:in an eastern town=東の町では | X:than in a western one,=西の町より | M:and hardly anyone=そしてほぼ誰も | V:noticed the difference.=差に気づかなかった",
+"東の町では西の町より数分早く正午が来たが、その違いに気づく人はほとんどいなかった。"
 ],
 [
-"S:The trouble is=問題は…ことだ | O:that anthropologists=人類学者が | V:have found=見つけた | O:almost no society=ほぼどの社会も…ない | X:that actually ran on barter.=物々交換で回る",
-"問題は、実際に物々交換で成り立っていた社会を、人類学者がほとんど見つけていないことだ。"
+"S:Slow travel=遅い移動は | V:made such differences=そうした差を…にした | C:irrelevant,=無関係なものに | M:since no one could cross=誰も越えられなかった | O:enough distance=十分な距離を | T:in a day=1日で | R:to feel them.=それを感じるほどの",
+"移動が遅かったため、そうした差は問題にならなかった。1日でそれを感じるほどの距離を移動できる人はいなかったのだ。"
 ],
 [
-"P:In small communities,=小さな共同体では | S:people more often=人々はむしろ | V:relied on credit:=信用に頼った | S:goods were given=品物は渡された | P:with the understanding=…という了解で | X:that they would be repaid=返してもらえる | T:later.=後で",
-"小さな共同体では、人々はむしろ信用に頼っていた。品物は、後で返してもらえるという了解のもとで渡されたのだ。"
+"S:The arrival of the railway,=鉄道の登場は | M:however,=しかし | V:turned=変えた | O:this harmless variety=この無害なばらつきを | P:into a serious problem.=深刻な問題に",
+"しかし鉄道の登場は、この無害なばらつきを深刻な問題に変えた。"
 ],
 [
-"S:Money,=お金は | M:in this account,=この説明では | V:emerged=生まれた | R:not to replace barter=物々交換の代わりでなく | M:but to measure debts=借りを測るために | P:among strangers.=見知らぬ人同士の",
-"この説明によれば、お金は物々交換に代わるためではなく、見知らぬ人同士の貸し借りを測るために生まれた。"
+"S:A train schedule=列車の時刻表は | V:is only useful=初めて役に立つ | F:if everyone agrees=全員が合意して | P:on what time it is.=今何時かについて",
+"列車の時刻表は、全員が今何時かについて合意していて初めて役に立つ。"
 ],
 [
-"S:The earliest known coins,=知られる最古の硬貨は | M:made in Lydia=リディアで作られた | T:more than 2,500 years ago,=2500年以上前に | V:were stamped=刻印された | R:to guarantee=保証するために | O:their value.=その価値を",
-"2500年以上前にリディアで作られた最古の硬貨には、価値を保証するために刻印が押されていた。"
+"P:With dozens of local times=何十もの地方時が | C:in use,=使われていて | S:passengers missed connections=乗客は乗り継ぎを逃し | M:and, more seriously,=さらに深刻なことに | S:trains on the same track=同じ線路の列車は | V:risked colliding.=衝突の危険があった",
+"何十もの地方時が使われていたため、乗客は乗り継ぎに失敗し、さらに深刻なことに、同じ線路を走る列車が衝突する危険もあった。"
 ],
 [
-"S:Yet a coin's value=しかし硬貨の価値は | V:never rested entirely=決して全面的に…ない | P:on its metal;=金属に頼る | S:it depended on=それは…次第だった | O:people's confidence=人々の信頼 | X:that others would accept it.=他人も受け取るという",
-"しかし硬貨の価値が金属だけで決まることはなく、他人も受け取ってくれるという人々の信頼にかかっていた。"
+"T:In 1883,=1883年に | S:railroads in the United States and Canada=米国とカナダの鉄道は | V:adopted=採用した | O:a system of standard time zones,=標準時の時間帯を | M:largely replacing=ほぼ置きかえて | O:local solar time.=地方の太陽時を",
+"1883年、米国とカナダの鉄道は標準時の時間帯を採用し、地方の太陽時をほぼ置きかえた。"
 ],
 [
-"M:When that confidence collapsed,=その信頼が崩れると | M:as it did=実際そうなったように | T:during periods of severe inflation,=激しいインフレ期に | S:even official coins=公の硬貨でさえ | M:and printed notes=そして紙幣も | V:lost their worth.=価値を失った",
-"その信頼が崩れると、激しいインフレの時期に実際そうなったように、公の硬貨や紙幣さえ価値を失った。"
+"T:A year later,=その翌年 | S:an international conference=国際会議は | V:chose Greenwich=グリニッジを選んだ | C:as the starting point=起点として | R:for measuring longitude=経度を測るための | P:around the globe.=地球全体で",
+"その翌年、国際会議は地球全体の経度を測る起点としてグリニッジを選んだ。"
 ],
 [
-"T:Today,=今日 | M:when most money=お金の大半が | V:exists only=…としてのみある | C:as numbers in computers,=コンピュータの数字 | S:this truth=この真実は | V:has become=なった | C:impossible to ignore.=無視できないものに",
-"お金の大半がコンピュータ上の数字としてしか存在しない今日、この真実は無視できないものになった。"
+"S:Not everyone=誰もが…ではない | V:welcomed the change;=変化を歓迎した | S:some critics=一部の批判者は | V:complained=不満を述べた | O:that railway companies=鉄道会社が | V:were dictating=決めつけていると | O:the rhythm of daily life.=暮らしのリズムを",
+"誰もがこの変化を歓迎したわけではなく、鉄道会社が日々の暮らしのリズムを決めていると不満を言う批判者もいた。"
 ],
 [
-"S:Money is not=お金は…ではない | C:a thing so much as=物というよりも | C:a promise,=約束だ | M:and its history=そしてその歴史は | V:is ultimately=結局は…だ | C:a history of trust.=信頼の歴史",
-"お金とは物というより約束であり、その歴史は結局のところ信頼の歴史なのだ。"
+"S:Their protest reveals=その抗議は示す | O:that time,=時間が | X:which seems=…に見える | C:a natural fact,=自然の事実 | V:is partly=一部は…である | C:a social agreement.=社会の取り決め",
+"彼らの抗議は、自然の事実に見える時間が、一部は社会的な取り決めであることを示している。"
 ]
 ],
 "q": [
 [
-2,
+0,
 3,
-"人類学者は、物々交換で成り立つ社会をどれほど見つけたか。"
-],
-[
-3,
-2,
-"小さな共同体の人々は何に頼っていたか。"
+"かつて町の時刻は何に基づいていたか。"
 ],
 [
 5,
-1,
-"最古の硬貨はどこで作られたか。"
+5,
+"地方時が混在していたことで、列車にはどんな危険があったか。"
 ],
 [
 6,
-4,
-"硬貨の価値は何にかかっていたか。"
+0,
+"米国とカナダの鉄道が標準時を採用したのはいつか。"
+],
+[
+7,
+2,
+"国際会議は経度の起点としてどこを選んだか。"
 ]
 ]
 },

@@ -460,84 +460,81 @@ X| {of|for of|by of|with of} their inhabitants. :: 住民の
 @id adv84
 @lv 3
 @level 8
-@title Money Is Made of Trust
-@ja お金は信頼でできている
-@tag 難関大レベル・論説文
-@gloss barter=物々交換, awkward=厄介な, anthropologist=人類学者, credit=信用, debt=借り, guarantee=保証する, confidence=信頼, inflation=インフレ, ultimately=結局は
-S| Economics {textbooks|textbook of|texted|texting} :: 経済学の教科書は
-V| often {explain|explains|explaining|explanation} :: よく説明する
-O| the {origin|original|originate|originally} of money :: お金の起源を
-P| {with|within|without of|by of} a simple story :: 単純な話で
-X| {about|above|around of|aboard} barter. :: 物々交換についての
-== 経済学の教科書は、お金の起源をよく物々交換についての単純な話で説明する。
-S| A farmer {who|which|whose|whom} wants shoes :: 靴がほしい農民は
-V| must {find|finds|finding|found of} a shoemaker :: 靴屋を探さねばならない
-X| {who|which|whose|whom} happens to want grain, :: 偶然穀物がほしい
-M| {and|nor|than|whom} money is said :: そしてお金は…とされる
-V| {to have solved|to solved|having solve|to have solve} :: 解決した
-O| this {awkward|awkwardly|awkwardness|awkwards} problem. :: この厄介な問題を
-== 靴がほしい農民は、たまたま穀物をほしがる靴屋を探さねばならず、お金はこの厄介な問題を解決したとされる。
-S| The trouble {is|are|be|being} :: 問題は…ことだ
-O| {that|what|which|whom} anthropologists :: 人類学者が
-V| {have|has|having|had been} found :: 見つけた
-O| {almost|most|mostly of|almost of} no society :: ほぼどの社会も…ない
-X| {that|what|whom|whose} actually ran on barter. :: 物々交換で回る
-== 問題は、実際に物々交換で成り立っていた社会を、人類学者がほとんど見つけていないことだ。
-P| {In|Into|Onto|Upon of} small communities, :: 小さな共同体では
-S| people more {often|oftenly|oftener of|oft of} :: 人々はむしろ
-V| relied {on|in|at|for} credit: :: 信用に頼った
-S| goods were {given|gave|giving|give} :: 品物は渡された
-P| {with|within|without of|by of} the understanding :: …という了解で
-X| {that|what|which|whom} they would be repaid :: 返してもらえる
-T| {later|lately|latter|late of}. :: 後で
-== 小さな共同体では、人々はむしろ信用に頼っていた。品物は、後で返してもらえるという了解のもとで渡されたのだ。
-S| {Money|Monetary|Monies of|Moneyed}, :: お金は
-M| in this {account|accounts|accounted|accounting of}, :: この説明では
-V| {emerged|emerge of|emerging|emergence} :: 生まれた
-R| not {to replace|replacing|to replacing|replace} barter :: 物々交換の代わりでなく
-M| {but|than|whom|whose} to measure debts :: 借りを測るために
-P| {among|amongst of|between of|along} strangers. :: 見知らぬ人同士の
-== この説明によれば、お金は物々交換に代わるためではなく、見知らぬ人同士の貸し借りを測るために生まれた。
-S| The earliest known {coins|coin of|coined|coining}, :: 知られる最古の硬貨は
-M| {made|making|make|makes} in Lydia :: リディアで作られた
-T| more than 2,500 years {ago|before of|since|after of}, :: 2500年以上前に
-V| were {stamped|stamp|stamping|stamps} :: 刻印された
-R| {to guarantee|guaranteeing of|to guaranteeing|guarantee} :: 保証するために
-O| their {value|valuable|valued|valuing}. :: その価値を
-== 2500年以上前にリディアで作られた最古の硬貨には、価値を保証するために刻印が押されていた。
-S| Yet a coin's {value|valuable|valued|valuing} :: しかし硬貨の価値は
-V| never rested {entirely|entire|entirety|entirest} :: 決して全面的に…ない
-P| {on|in of|at of|by of} its metal; :: 金属に頼る
-S| it {depended|depend|depending|dependence} on :: それは…次第だった
-O| people's {confidence|confident|confide|confidently} :: 人々の信頼
-X| {that|what|which|whom} others would accept it. :: 他人も受け取るという
-== しかし硬貨の価値が金属だけで決まることはなく、他人も受け取ってくれるという人々の信頼にかかっていた。
-M| When that confidence {collapsed|collapse of|collapsing|collapses of}, :: その信頼が崩れると
-M| {as|so|than|such} it did :: 実際そうなったように
-T| {during|while|for of|since of} periods of severe inflation, :: 激しいインフレ期に
-S| {even|ever|evenly|event} official coins :: 公の硬貨でさえ
-M| {and|nor|than|whom} printed notes :: そして紙幣も
-V| lost {their|there|they're|them} worth. :: 価値を失った
-== その信頼が崩れると、激しいインフレの時期に実際そうなったように、公の硬貨や紙幣さえ価値を失った。
-T| {Today|Todays|To day of|Todaily}, :: 今日
-M| {when|what|whom|whose} most money :: お金の大半が
-V| exists {only|alone of|lonely|once of} :: …としてのみある
-C| {as|so|than|such} numbers in computers, :: コンピュータの数字
-S| this {truth|true|truly|trueness} :: この真実は
-V| {has|have|having|had been} become :: なった
-C| {impossible|impossibly|impossibility|unpossible} to ignore. :: 無視できないものに
-== お金の大半がコンピュータ上の数字としてしか存在しない今日、この真実は無視できないものになった。
-S| Money {is|are|be|being} not :: お金は…ではない
-C| a thing {so|such|too|very} much as :: 物というよりも
-C| a {promise|promising|promised|promises}, :: 約束だ
-M| {and|nor|than|whom} its history :: そしてその歴史は
-V| {is|are|be|being} ultimately :: 結局は…だ
-C| a history {of|for of|by of|with of} trust. :: 信頼の歴史
-== お金とは物というより約束であり、その歴史は結局のところ信頼の歴史なのだ。
-?? 2 3 人類学者は、物々交換で成り立つ社会をどれほど見つけたか。
-?? 3 2 小さな共同体の人々は何に頼っていたか。
-?? 5 1 最古の硬貨はどこで作られたか。
-?? 6 4 硬貨の価値は何にかかっていたか。
+@title When Railways Set the Clocks
+@ja 鉄道が時計を合わせた
+@tag 難関大レベル・説明文
+@gloss irrelevant=無関係な, variety=ばらつき, schedule=時刻表, collide=衝突する, adopt=採用する, solar=太陽の, longitude=経度, dictate=押しつける
+T| For most {of|for|in of|by of} history, :: 歴史の大半で
+S| each {town|towns|townly|towned} :: 各町は
+V| {kept|keep of|keeping|keeps of} its own time, :: 独自の時刻を使った
+M| {based|basing|base|bases} on the sun's position. :: 太陽の位置に基づく
+== 歴史の大半において、町はそれぞれ太陽の位置に基づく独自の時刻を使っていた。
+S| Noon {arrived|arrive of|arriving|arrival} :: 正午が来た
+M| a few minutes {earlier|early of|earliest|earlily} :: 数分早く
+P| {in|into|onto|upon of} an eastern town :: 東の町では
+X| {than|then|that|as} in a western one, :: 西の町より
+M| {and|nor|but of|whom} hardly anyone :: そしてほぼ誰も
+V| {noticed|notice of|noticing|notices of} the difference. :: 差に気づかなかった
+== 東の町では西の町より数分早く正午が来たが、その違いに気づく人はほとんどいなかった。
+S| Slow {travel|travels of|traveled|traveling of} :: 遅い移動は
+V| {made|make of|making|makes of} such differences :: そうした差を…にした
+C| {irrelevant|irrelevantly|irrelevance|irrelevancies}, :: 無関係なものに
+M| {since|for of|during|ago} no one could cross :: 誰も越えられなかった
+O| {enough|enoughly|enough of|enoughs} distance :: 十分な距離を
+T| {in|on|at|by of} a day :: 1日で
+R| {to feel|feeling|to feeling|feel} them. :: それを感じるほどの
+== 移動が遅かったため、そうした差は問題にならなかった。1日でそれを感じるほどの距離を移動できる人はいなかったのだ。
+S| The {arrival|arrive|arrived|arriving of} of the railway, :: 鉄道の登場は
+M| {however|whatever|whenever|wherever}, :: しかし
+V| {turned|turn of|turning|turns of} :: 変えた
+O| this {harmless|harmful of|harmlessly|harm} variety :: この無害なばらつきを
+P| {into|onto|upon of|inside of} a serious problem. :: 深刻な問題に
+== しかし鉄道の登場は、この無害なばらつきを深刻な問題に変えた。
+S| A train {schedule|scheduled|scheduling of|schedules of} :: 列車の時刻表は
+V| is only {useful|usefully|usefulness|use of} :: 初めて役に立つ
+F| {if|what|whom|whose} everyone agrees :: 全員が合意して
+P| {on|in of|at of|by of} what time it is. :: 今何時かについて
+== 列車の時刻表は、全員が今何時かについて合意していて初めて役に立つ。
+P| {With|Within|Without of|By of} dozens of local times :: 何十もの地方時が
+C| {in|on|at|by} use, :: 使われていて
+S| passengers {missed|miss of|missing|misses of} connections :: 乗客は乗り継ぎを逃し
+M| {and|nor|than|whom}, more seriously, :: さらに深刻なことに
+S| trains on the same {track|tracked|tracking of|tracks of} :: 同じ線路の列車は
+V| {risked|risk of|risking|risks of} colliding. :: 衝突の危険があった
+== 何十もの地方時が使われていたため、乗客は乗り継ぎに失敗し、さらに深刻なことに、同じ線路を走る列車が衝突する危険もあった。
+T| {In|On|At|By of} 1883, :: 1883年に
+S| railroads in the United States {and|nor|than|whom} Canada :: 米国とカナダの鉄道は
+V| {adopted|adapt of|adopting|adoption} :: 採用した
+O| a system {of|for of|by of|with of} standard time zones, :: 標準時の時間帯を
+M| {largely|large|larger|largeness} replacing :: ほぼ置きかえて
+O| {local|locally|locality|locale of} solar time. :: 地方の太陽時を
+== 1883年、米国とカナダの鉄道は標準時の時間帯を採用し、地方の太陽時をほぼ置きかえた。
+T| A year {later|lately|latter|late of}, :: その翌年
+S| an international {conference|confer|conferred|conferring} :: 国際会議は
+V| {chose|chosen|choose of|choosing} Greenwich :: グリニッジを選んだ
+C| {as|so|than|such} the starting point :: 起点として
+R| {for|since|ago|to of} measuring longitude :: 経度を測るための
+P| {around|round of|aground|arounds} the globe. :: 地球全体で
+== その翌年、国際会議は地球全体の経度を測る起点としてグリニッジを選んだ。
+S| {Not|No|None|Nor} everyone :: 誰もが…ではない
+V| {welcomed|welcome of|welcoming|welcomes of} the change; :: 変化を歓迎した
+S| some {critics|critic of|critical|criticize} :: 一部の批判者は
+V| {complained|complain of|complaining|complaint} :: 不満を述べた
+O| {that|what|which|whom} railway companies :: 鉄道会社が
+V| {were|was|being|be} dictating :: 決めつけていると
+O| the {rhythm|rhyme of|rhythmic|rhythmically} of daily life. :: 暮らしのリズムを
+== 誰もがこの変化を歓迎したわけではなく、鉄道会社が日々の暮らしのリズムを決めていると不満を言う批判者もいた。
+S| Their protest {reveals|reveal|revealing|revelation} :: その抗議は示す
+O| {that|what|which|whom} time, :: 時間が
+X| {which|what|whom|whose} seems :: …に見える
+C| a {natural|nature|naturally|naturalize} fact, :: 自然の事実
+V| {is|are|be|being} partly :: 一部は…である
+C| a {social|society|socially|socialize} agreement. :: 社会の取り決め
+== 彼らの抗議は、自然の事実に見える時間が、一部は社会的な取り決めであることを示している。
+?? 0 3 かつて町の時刻は何に基づいていたか。
+?? 5 5 地方時が混在していたことで、列車にはどんな危険があったか。
+?? 6 0 米国とカナダの鉄道が標準時を採用したのはいつか。
+?? 7 2 国際会議は経度の起点としてどこを選んだか。
 
 @id adv85
 @lv 3
