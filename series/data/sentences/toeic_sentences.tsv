@@ -2054,3 +2054,850 @@ T860-043	860点	She is indispensable to the team.	彼女は、チームに欠か
 T860-044	860点	We take a proactive approach to safety.	当社は、安全に先手を打って取り組んでいます。
 T860-045	860点	The two events happened simultaneously.	2つの出来事は、同時に起きました。
 T860-046	860点	The system is very sophisticated.	そのシステムは、とても高度です。
+T900-001	900点	That idea is absurd.	その考えはばかげています。
+T900-002	900点	The film was widely acclaimed.	その映画は、広く絶賛されました。
+T900-003	900点	Interest accrues every month.	利息は、毎月たまっていきます。
+T900-004	900点	The meeting was adjourned until Monday.	会議は、月曜まで休会になりました。
+T900-005	900点	He allegedly stole the money.	彼は、そのお金を盗んだとされています。
+T900-006	900点	This medicine alleviates pain.	この薬は、痛みを和らげます。
+T900-007	900点	The hotel has many amenities.	そのホテルには、設備がたくさんそろっています。
+T900-008	900点	The lab uses special apparatus.	その研究室は、特別な装置を使っています。
+T900-009	900点	We ordered a light appetizer.	軽い前菜を注文しました。
+T900-010	900点	She has an aptitude for languages.	彼女には、語学の才能があります。
+T900-011	900点	The rule seems arbitrary.	その規則は、勝手に決めたもののようです。
+T900-012	900点	Old records are kept in the archive.	古い記録は、保管庫にあります。
+T900-013	900点	She is an articulate speaker.	彼女は、話し方がはっきりしています。
+T900-014	900点	The museum displays ancient artifacts.	その博物館は、古代の工芸品を展示しています。
+T900-015	900点	He is interested in astronomy.	彼は、天文学に興味があります。
+T900-016	900点	This is authentic Italian food.	これは本場のイタリア料理です。
+T900-017	900点	Teachers have autonomy in class.	先生は、授業で自由に決める権限があります。
+T900-018	900点	He works in the aviation industry.	彼は、航空業界で働いています。
+T900-019	900点	There was an awkward silence.	気まずい沈黙が流れました。
+T900-020	900点	We have a backlog of orders.	注文がたまっています。
+T900-021	900点	Firefighters put out the blaze.	消防士が、火事を消しました。
+T900-022	900点	The scandal was a blot on his career.	その不祥事は、彼の経歴の汚点になりました。
+T900-023	900点	The job requires breadth of knowledge.	その仕事には、幅広い知識が必要です。
+T900-024	900点	The book chronicles the history of the city.	その本は、町の歴史を年代順に記しています。
+T900-025	900点	She does clerical work.	彼女は、事務の仕事をしています。
+T900-026	900点	The shop has a wealthy clientele.	その店には、裕福な客が多いです。
+T900-027	900点	The child clung to his mother.	子どもは、母親にしがみつきました。
+T900-028	900点	This fabric feels coarse.	この布地は、手ざわりが粗いです。
+T900-029	900点	What a coincidence!	なんという偶然でしょう。
+T900-030	900点	He used his house as collateral.	彼は、家を担保にしました。
+T900-031	900点	Pay is commensurate with experience.	給料は、経験に応じて決まります。
+T900-032	900点	Is this software compatible with my computer?	このソフトは、私のパソコンで使えますか。
+T900-033	900点	He made a compelling argument.	彼は、説得力のある主張をしました。
+T900-034	900点	The company will compensate you for the loss.	会社が、損失を補償します。
+T900-035	900点	Problems were compounded by the weather.	天候で、問題がさらに悪化しました。
+T900-036	900点	He conceded defeat.	彼は、負けを認めました。
+T900-037	900点	I can't conceive of a better plan.	これ以上の計画は思いつきません。
+T900-038	900点	The union won several concessions.	組合は、いくつかの譲歩を勝ち取りました。
+T900-039	900点	The quiet room is conducive to study.	静かな部屋は、勉強に向いています。
+T900-040	900点	Thank you for your constructive feedback.	建設的なご意見をありがとうございます。
+T900-041	900点	She is contemplating a career change.	彼女は、転職を考えています。
+T900-042	900点	We have a contingency plan.	緊急時の計画があります。
+T900-043	900点	The committee will convene next week.	委員会は、来週招集されます。
+T900-044	900点	He crouched behind the car.	彼は、車の後ろにしゃがみ込みました。
+T900-045	900点	The festival culminates in a parade.	祭りは、パレードで最高潮を迎えます。
+T900-046	900点	The cumulative effect was huge.	積み重なった効果は、大きなものでした。
+T900-047	900点	We must curtail spending.	支出を切り詰めなければなりません。
+T900-048	900点	The custodian cleans the building.	管理人が、建物を掃除しています。
+T900-049	900点	The suspect is in police custody.	容疑者は、警察に拘束されています。
+T900-050	900点	The scheme was based on deceit.	その計画は、ごまかしに基づいていました。
+T900-051	900点	The decor is modern and simple.	内装は、現代的で簡素です。
+T900-052	900点	The plan was deemed too risky.	その計画は、危険すぎるとみなされました。
+T900-053	900点	The default setting is English.	初期設定は英語です。
+T900-054	900点	We decided to defer payment.	支払いを延期することにしました。
+T900-055	900点	The ad targets a young demographic.	その広告は、若い層をねらっています。
+T900-056	900点	We must not deplete our savings.	貯金を使い果たしてはいけません。
+T900-057	900点	The company will deploy new software.	会社は、新しいソフトを導入します。
+T900-058	900点	The word derives from Latin.	その単語は、ラテン語に由来します。
+T900-059	900点	They desperately needed help.	彼らは、どうしても助けが必要でした。
+T900-060	900点	He manages his diabetes with diet.	彼は、食事で糖尿病を管理しています。
+T900-061	900点	Yogurt aids digestion.	ヨーグルトは、消化を助けます。
+T900-062	900点	Dilute the juice with water.	ジュースを水で薄めてください。
+T900-063	900点	The lights were dim.	明かりは薄暗かったです。
+T900-064	900点	There is a discrepancy in the figures.	数字に食い違いがあります。
+T900-065	900点	He wore a disguise.	彼は変装していました。
+T900-066	900点	We disseminate information online.	オンラインで情報を広めています。
+T900-067	900点	Don't distract the driver.	運転手の気を散らさないでください。
+T900-068	900点	The ship sent a distress signal.	船は、遭難信号を送りました。
+T900-069	900点	The noise caused a disturbance.	騒音が迷惑になりました。
+T900-070	900点	The new drapery brightened the room.	新しいカーテンで、部屋が明るくなりました。
+T900-071	900点	Please stay seated for the duration of the flight.	飛行中は、ずっと座っていてください。
+T900-072	900点	The village has 50 dwellings.	その村には、50の住居があります。
+T900-073	900点	We had lunch at a local eatery.	地元の食堂で昼食をとりました。
+T900-074	900点	The program empowers young women.	その取り組みは、若い女性に力を与えています。
+T900-075	900点	The government enacted a new law.	政府は、新しい法律を制定しました。
+T900-076	900点	The plan encompasses all departments.	その計画は、全部署を含んでいます。
+T900-077	900点	The actor endorsed the product.	その俳優は、その製品を推薦しました。
+T900-078	900点	Law enforcement officers arrived quickly.	警察官が、すぐに到着しました。
+T900-079	900点	The job entails a lot of travel.	その仕事には、出張がたくさん伴います。
+T900-080	900点	Each branch is a separate legal entity.	各支店は、別々の法人です。
+T900-081	900点	I envision a bright future.	明るい未来を思い描いています。
+T900-082	900点	The flu epidemic spread quickly.	インフルエンザの流行は、急速に広がりました。
+T900-083	900点	They erected a tent.	彼らは、テントを張りました。
+T900-084	900点	I need to run some errands.	いくつか用事を済ませなければなりません。
+T900-085	900点	Don't exaggerate the problem.	問題を大げさに言わないでください。
+T900-086	900点	Here is an excerpt from the book.	これは、その本からの抜粋です。
+T900-087	900点	She exerted great effort.	彼女は、大きな努力をしました。
+T900-088	900点	We will expedite your order.	ご注文の処理を急ぎます。
+T900-089	900点	They exploited the workers.	彼らは、労働者を搾取しました。
+T900-090	900点	Many animals face extinction.	多くの動物が、絶滅の危機にあります。
+T900-091	900点	We had a feast to celebrate.	お祝いにごちそうを食べました。
+T900-092	900点	The farmer uses organic fertilizer.	その農家は、有機肥料を使っています。
+T900-093	900点	The competition is fierce.	競争は激しいです。
+T900-094	900点	This is our flagship store.	ここが、当社の旗艦店です。
+T900-095	900点	She has a flair for design.	彼女には、デザインの才能があります。
+T900-096	900点	The company owns a fleet of trucks.	その会社は、トラックを何台も持っています。
+T900-097	900点	Flip the pancake carefully.	パンケーキを、そっとひっくり返してください。
+T900-098	900点	Prices fluctuate daily.	値段は、毎日変動します。
+T900-099	900点	This is their first foray into film.	これは、彼らにとって初めての映画への進出です。
+T900-100	900点	The quick response forestalled a crisis.	すばやい対応で、危機を未然に防げました。
+T900-101	900点	You will forfeit your deposit.	預かり金は、没収されます。
+T900-102	900点	Don't make a fuss.	大騒ぎしないでください。
+T900-103	900点	The charity held a gala dinner.	慈善団体が、祝賀の夕食会を開きました。
+T900-104	900点	The factory makes garments.	その工場は、衣服を作っています。
+T900-105	900点	The city is the gateway to the mountains.	その町は、山への玄関口です。
+T900-106	900点	The store held a giveaway.	その店は、景品の配布をしました。
+T900-107	900点	I caught a glimpse of the star.	そのスターを、ちらっと見かけました。
+T900-108	900点	She is grieving for her father.	彼女は、父親の死を悲しんでいます。
+T900-109	900点	The course offers hands-on training.	その講座では、実地の訓練が受けられます。
+T900-110	900点	We need to harmonize the rules.	規則を調和させる必要があります。
+T900-111	900点	The truck hauled the logs.	トラックが、丸太を運びました。
+T900-112	900点	He is paid an hourly wage.	彼は、時給で支払われています。
+T900-113	900点	Good hygiene prevents illness.	清潔にすることで、病気を防げます。
+T900-114	900点	I enjoyed the trip immensely.	旅行を大いに楽しみました。
+T900-115	900点	Bad weather impeded progress.	悪天候で、進み具合が妨げられました。
+T900-116	900点	It is imperative that we act now.	今すぐ行動することが、絶対に必要です。
+T900-117	900点	Inactive accounts will be closed.	使われていない口座は、解約されます。
+T900-118	900点	The new president was inaugurated.	新しい大統領が、就任しました。
+T900-119	900点	Inclement weather delayed the flight.	悪天候で、便が遅れました。
+T900-120	900点	The price is inclusive of tax.	値段には、税が含まれています。
+T900-121	900点	The incumbent mayor won again.	現職の市長が、また勝ちました。
+T900-122	900点	Please inflate the balloons.	風船をふくらませてください。
+T900-123	900点	The design infringes on our patent.	そのデザインは、当社の特許を侵害しています。
+T900-124	900点	There are inherent risks.	もともとの危険があります。
+T900-125	900点	The company became insolvent.	その会社は、支払い不能になりました。
+T900-126	900点	Trust your instinct.	自分の直感を信じてください。
+T900-127	900点	She was instrumental in the success.	彼女は、成功に大きな役割を果たしました。
+T900-128	900点	The house has good insulation.	その家は、断熱がしっかりしています。
+T900-129	900点	Trust is an intangible asset.	信頼は、目に見えない財産です。
+T900-130	900点	The integration of systems took months.	システムの統合には、数か月かかりました。
+T900-131	900点	He is the interim manager.	彼は、暫定の部長です。
+T900-132	900点	The police had to intervene.	警察が、介入しなければなりませんでした。
+T900-133	900点	Mistakes could jeopardize the deal.	間違いは、取引を危うくしかねません。
+T900-134	900点	The judicial system is fair.	司法制度は公正です。
+T900-135	900点	This case is outside our jurisdiction.	この件は、私たちの管轄外です。
+T900-136	900点	She knelt to pick up the coin.	彼女は、ひざをついてコインを拾いました。
+T900-137	900点	Don't let your insurance lapse.	保険を失効させないでください。
+T900-138	900点	We made some last-minute changes.	直前に、いくつか変更をしました。
+T900-139	900点	She acts as a liaison between teams.	彼女は、チームどうしの連絡係をしています。
+T900-140	900点	It is a lucrative business.	それは、もうかる商売です。
+T900-141	900点	The printer had a malfunction.	プリンターが故障しました。
+T900-142	900点	The new mandate starts in April.	新しい任期は、4月に始まります。
+T900-143	900点	We visited a medieval castle.	中世の城を訪れました。
+T900-144	900点	"Time is money" is a metaphor.	「時は金なり」は、たとえです。
+T900-145	900点	She is a meticulous worker.	彼女は、とても几帳面に働きます。
+T900-146	900点	A small modification was made.	小さな修正が加えられました。
+T900-147	900点	Water molecules are tiny.	水の分子は、とても小さいです。
+T900-148	900点	The project is gaining momentum.	その計画は、勢いを増しています。
+T900-149	900点	The nation mourned the loss.	国じゅうが、その死を悼みました。
+T900-150	900点	There is a nominal fee.	わずかな手数料がかかります。
+T900-151	900点	Plants need nutrients from the soil.	植物は、土から栄養分を必要とします。
+T900-152	900点	The store is closed in observance of the holiday.	祝日のため、店は休みです。
+T900-153	900点	This seat is occupied.	この席は、ふさがっています。
+T900-154	900点	Many people opt to work from home.	多くの人が、在宅勤務を選んでいます。
+T900-155	900点	We need to optimize our website.	サイトを最適化する必要があります。
+T900-156	900点	The optimum time to visit is spring.	訪れるのにいちばんよい時期は、春です。
+T900-157	900点	The benefits outweigh the costs.	利点が、費用を上回ります。
+T900-158	900点	The airline overbooked the flight.	航空会社が、その便の予約を取りすぎました。
+T900-159	900点	The engine needs an overhaul.	エンジンは、分解点検が必要です。
+T900-160	900点	The error was an oversight.	その誤りは、見落としでした。
+T900-161	900点	Safety is paramount.	安全が、何より大切です。
+T900-162	900点	The cows grazed in the pasture.	牛たちは、牧草地で草を食べていました。
+T900-163	900点	These rules pertain to all staff.	これらの規則は、全社員に関わるものです。
+T900-164	900点	Please ask pertinent questions.	関係のある質問をしてください。
+T900-165	900点	The school helps with job placement.	その学校は、就職のあっせんを手伝います。
+T900-166	900点	The plaintiff won the case.	原告が、裁判に勝ちました。
+T900-167	900点	That sounds plausible.	それは、もっともらしく聞こえます。
+T900-168	900点	He made a plea for help.	彼は、助けを求めて訴えました。
+T900-169	900点	They pledged to cut emissions.	彼らは、排出を減らすと誓いました。
+T900-170	900点	Stock prices plummeted.	株価が急落しました。
+T900-171	900点	The temperature plunged overnight.	気温が、一晩で急に下がりました。
+T900-172	900点	She is a medical practitioner.	彼女は、開業医です。
+T900-173	900点	This sets a dangerous precedent.	これは、危険な前例になります。
+T900-174	900点	It is the premier hotel in the city.	それは、町で最高のホテルです。
+T900-175	900点	Math is a prerequisite for this course.	この講座には、数学の履修が必要です。
+T900-176	900点	The judge will preside over the case.	裁判官が、その裁判を担当します。
+T900-177	900点	He is presumably at home.	彼は、たぶん家にいるでしょう。
+T900-178	900点	Justice will prevail.	正義は勝ちます。
+T900-179	900点	The king proclaimed a holiday.	王は、休日を宣言しました。
+T900-180	900点	The book had a profound effect on me.	その本は、私に深い影響を与えました。
+T900-181	900点	The proprietor greeted us.	店主が、私たちを出迎えました。
+T900-182	900点	Read the prospectus before investing.	投資の前に、目論見書を読んでください。
+T900-183	900点	Follow the safety protocol.	安全の手順に従ってください。
+T900-184	900点	Quebec is a province of Canada.	ケベックは、カナダの州です。
+T900-185	900点	His comment provoked anger.	彼の発言は、怒りを引き起こしました。
+T900-186	900点	The hotel is in close proximity to the station.	そのホテルは、駅のすぐ近くにあります。
+T900-187	900点	His methods are questionable.	彼のやり方には、疑問があります。
+T900-188	900点	Thousands joined the rally.	何千人もが、集会に参加しました。
+T900-189	900点	The parts are readily available.	部品は、簡単に手に入ります。
+T900-190	900点	The country is in a recession.	その国は、不景気です。
+T900-191	900点	We need to reconcile the accounts.	勘定を照合する必要があります。
+T900-192	900点	We will rectify the error.	誤りを正します。
+T900-193	900点	You can redeem points for gifts.	ポイントは、景品に交換できます。
+T900-194	900点	Some workers were made redundant.	一部の社員が、解雇されました。
+T900-195	900点	The old regime fell.	古い政権が倒れました。
+T900-196	900点	Let me reiterate the main point.	要点を繰り返します。
+T900-197	900点	Reliability is our top concern.	信頼性が、当社のいちばんの関心事です。
+T900-198	900点	Please replenish the supplies.	備品を補充してください。
+T900-199	900点	He reportedly left the company.	彼は、会社を辞めたと伝えられています。
+T900-200	900点	Use a reputable dealer.	評判のよい販売店を使ってください。
+T900-201	900点	The army retreated.	軍隊は退却しました。
+T900-202	900点	I need to retrieve my files.	ファイルを取り戻す必要があります。
+T900-203	900点	The news was a revelation.	その知らせは、驚くべきものでした。
+T900-204	900点	The system reverted to old settings.	システムは、前の設定に戻りました。
+T900-205	900点	The tests are rigorous.	検査は厳しいです。
+T900-206	900点	Morning tea is a daily ritual.	朝のお茶は、毎日の習慣です。
+T900-207	900点	Auditors scrutinize the accounts.	監査人が、勘定を細かく調べます。
+T900-208	900点	The plan came under scrutiny.	その計画は、厳しく調べられました。
+T900-209	900点	The sheer size of the building amazed us.	その建物の大きさそのものに驚きました。
+T900-210	900点	We received a sizable order.	かなり大きな注文を受けました。
+T900-211	900点	The phone has a sleek design.	その電話は、洗練されたデザインです。
+T900-212	900点	The charity solicits donations.	その慈善団体は、寄付を募っています。
+T900-213	900点	That is pure speculation.	それは、ただの推測です。
+T900-214	900点	Cold storage reduces spoilage.	冷蔵すると、傷みが減ります。
+T900-215	900点	Sprinkle cheese on top.	上にチーズをふりかけてください。
+T900-216	900点	The economy is stagnant.	経済は、停滞しています。
+T900-217	900点	Take the staircase to the second floor.	階段で2階に上がってください。
+T900-218	900点	She steered the car carefully.	彼女は、慎重に車を運転しました。
+T900-219	900点	The teacher gave a stern warning.	先生は、厳しく注意しました。
+T900-220	900点	The contract stipulates the price.	契約で、値段が定められています。
+T900-221	900点	He walked with long strides.	彼は、大またで歩きました。
+T900-222	900点	The rules are stringent.	規則は厳格です。
+T900-223	900点	He is too stubborn to listen.	彼は、頑固すぎて人の話を聞きません。
+T900-224	900点	Buy a sturdy pair of shoes.	丈夫な靴を買ってください。
+T900-225	900点	The magazine has 10,000 subscribers.	その雑誌には、1万人の定期購読者がいます。
+T900-226	900点	The rain subsided by noon.	雨は、昼までにおさまりました。
+T900-227	900点	They live in a quiet suburb.	彼らは、静かな郊外に住んでいます。
+T900-228	900点	He was summoned to court.	彼は、裁判所に呼び出されました。
+T900-229	900点	The food was superb.	料理は、とびきりおいしかったです。
+T900-230	900点	The army surrendered.	軍隊は降伏しました。
+T900-231	900点	The store uses video surveillance.	その店は、防犯カメラで監視しています。
+T900-232	900点	Children are susceptible to colds.	子どもは、かぜをひきやすいです。
+T900-233	900点	My ankle began to swell.	足首がはれてきました。
+T900-234	900点	This jacket is made of synthetic fabric.	この上着は、合成繊維でできています。
+T900-235	900点	We need tangible results.	目に見える結果が必要です。
+T900-236	900点	Exports rose, thereby boosting growth.	輸出が伸び、それによって成長が高まりました。
+T900-237	900点	Some pain is tolerable.	多少の痛みは、我慢できます。
+T900-238	900点	Honesty is a good trait.	正直さは、よい性質です。
+T900-239	900点	The team celebrated its triumph.	チームは、勝利を祝いました。
+T900-240	900点	She is a trustee of the museum.	彼女は、その美術館の理事です。
+T900-241	900点	The doctor removed the tumor.	医師が、腫瘍を取り除きました。
+T900-242	900点	The company made a quick turnaround.	その会社は、すぐに立ち直りました。
+T900-243	900点	Watch the online tutorial.	オンラインの説明動画を見てください。
+T900-244	900点	The vote was unanimous.	投票は満場一致でした。
+T900-245	900点	What is the underlying cause?	根本的な原因は何ですか。
+T900-246	900点	The clinic is understaffed.	その医院は、人手が足りません。
+T900-247	900点	He is undoubtedly the best player.	彼は、間違いなく最高の選手です。
+T900-248	900点	The weather was unfavorable.	天気は、よくありませんでした。
+T900-249	900点	The story unfolds slowly.	物語は、ゆっくりと展開します。
+T900-250	900点	Click here to unsubscribe.	配信停止は、ここをクリックしてください。
+T900-251	900点	Please validate your ticket.	切符を有効にしてください。
+T900-252	900点	We checked the validity of the data.	データの正しさを確かめました。
+T900-253	900点	The jury reached a verdict.	陪審が評決に達しました。
+T900-254	900点	Is the plan viable?	その計画は、実現できますか。
+T900-255	900点	There are shops in the vicinity.	近くに店があります。
+T900-256	900点	He works with great vigor.	彼は、とても精力的に働きます。
+T900-257	900点	They made a vow to help.	彼らは、助けると誓いました。
+T900-258	900点	The elderly are vulnerable to the heat.	高齢者は、暑さに弱いです。
+T900-259	900点	We will waive the fee.	手数料は免除します。
+T900-260	900点	Please sign this waiver.	この権利放棄書に署名してください。
+T900-261	900点	She weaves baskets by hand.	彼女は、手でかごを編みます。
+T900-262	900点	I spent the morning pulling weeds.	午前中は、草むしりをしていました。
+T900-263	900点	We care about employee well-being.	当社は、社員の健康と幸せを大切にしています。
+T900-264	900点	Thank you for your willingness to help.	快くお手伝いいただき、ありがとうございます。
+T900-265	900点	The company withheld the payment.	会社は、支払いを差し止めました。
+T900-266	900点	The building can withstand earthquakes.	その建物は、地震に耐えられます。
+T900-267	900点	Wet leaves cling to your shoes.	ぬれた葉は、靴にくっつきます。
+T900-268	900点	Please kneel down on the mat.	マットの上にひざをついてください。
+T900-269	900点	Professors with tenure cannot be fired easily.	終身在職権のある教授は、簡単には解雇されません。
+T900-270	900点	The car handles rough terrain well.	その車は、でこぼこの土地でもよく走ります。
+T900-271	900点	This bread has a soft texture.	このパンは、ふんわりした食感です。
+T900-272	900点	They may withhold your salary.	給料を差し止められることがあります。
+T900-273	900点	Managers must accept accountability for results.	管理職は、結果に責任を負わなければなりません。
+T900-274	900点	She is an acknowledged expert in the field.	彼女は、その分野で認められた専門家です。
+T900-275	900点	The design has great aesthetic appeal.	そのデザインは、見た目がとても魅力的です。
+T900-276	900点	Please affix a stamp to the envelope.	封筒に切手を貼ってください。
+T900-277	900点	We went to dinner afterwards.	そのあと、夕食に行きました。
+T900-278	900点	He was in agony after the fall.	彼は、転んだあと激しい痛みに苦しみました。
+T900-279	900点	What is the allowable weight for bags?	かばんの重さは、どこまで許されますか。
+T900-280	900点	She worked alongside her father.	彼女は、父親と並んで働きました。
+T900-281	900点	Please read the text aloud.	文章を声に出して読んでください。
+T900-282	900点	Alternatively, you can pay online.	あるいは、オンラインで払うこともできます。
+T900-283	900点	The traffic light turned amber.	信号が黄色に変わりました。
+T900-284	900点	The building has an angular shape.	その建物は、角ばった形をしています。
+T900-285	900点	The company faced an antitrust lawsuit.	その会社は、独占禁止法の訴訟を起こされました。
+T900-286	900点	We saw an ape at the zoo.	動物園で類人猿を見ました。
+T900-287	900点	The city is famous for its architectural beauty.	その町は、建築の美しさで有名です。
+T900-288	900点	Children learn basic arithmetic at school.	子どもたちは、学校で簡単な算数を習います。
+T900-289	900点	The baby fell asleep in her arms.	赤ちゃんは、彼女の腕の中で眠りました。
+T900-290	900点	Sales fell; as a consequence, we cut costs.	売り上げが落ち、その結果、費用を減らしました。
+T900-291	900点	He was arrested for assault.	彼は、暴行の容疑で逮捕されました。
+T900-292	900点	She has great artistic talent.	彼女は、すばらしい芸術の才能を持っています。
+T900-293	900点	The astronaut spent six months in space.	その宇宙飛行士は、宇宙で6か月過ごしました。
+T900-294	900点	The ship crossed the Atlantic.	船は、大西洋を渡りました。
+T900-295	900点	A bird sat atop the roof.	屋根の上に、鳥が止まっていました。
+T900-296	900点	The shop is on Fifth Avenue.	その店は、5番街にあります。
+T900-297	900点	The kids play in the backyard.	子どもたちは、裏庭で遊んでいます。
+T900-298	900点	He went bald in his thirties.	彼は、30代ではげました。
+T900-299	900点	We heard a loud bang.	大きなバンという音が聞こえました。
+T900-300	900点	The king banished him from the country.	王は、彼を国から追放しました。
+T900-301	900点	The bakery makes a fresh batch every hour.	パン屋は、1時間ごとに焼きたてを作ります。
+T900-302	900点	I am willing to help.	喜んでお手伝いします。
+T900-303	900点	The bird held a worm in its beak.	鳥は、くちばしに虫をくわえていました。
+T900-304	900点	The dog rolled over and showed its belly.	犬は、ごろんとおなかを見せました。
+T900-305	900点	Please take all your belongings with you.	持ち物はすべてお持ちください。
+T900-306	900点	The cat hid beneath the bed.	猫は、ベッドの下に隠れました。
+T900-307	900点	We hold biweekly meetings.	2週間に1度、会議を開いています。
+T900-308	900点	Bless you!	お大事に。
+T900-309	900点	She didn't even blink.	彼女は、まばたきひとつしませんでした。
+T900-310	900点	Blow out the candles.	ろうそくを吹き消してください。
+T900-311	900点	He reads to fight boredom.	彼は、退屈しのぎに本を読みます。
+T900-312	900点	A cool breeze came from the sea.	海から、涼しいそよ風が吹いてきました。
+T900-313	900点	The bride wore a white dress.	花嫁は、白いドレスを着ていました。
+T900-314	900点	Flowers brighten the room.	花が部屋を明るくします。
+T900-315	900点	Everyone admired the brilliance of her idea.	皆が、彼女の考えのすばらしさに感心しました。
+T900-316	900点	Fill the cup to the brim.	カップの縁まで注いでください。
+T900-317	900点	A small brook runs behind the house.	家の裏に、小川が流れています。
+T900-318	900点	The winter was brutal.	冬は、とても厳しかったです。
+T900-319	900点	The bull charged at the gate.	雄牛が、門に向かって突進しました。
+T900-320	900点	Check the bulletin board for news.	知らせは、掲示板で確認してください。
+T900-321	900点	He carried a bundle of papers.	彼は、書類の束を運びました。
+T900-322	900点	The bird is in a cage.	鳥は、かごの中にいます。
+T900-323	900点	We hiked down into the canyon.	峡谷へ歩いて下りました。
+T900-324	900点	She wore a long red cape.	彼女は、長い赤いマントを着ていました。
+T900-325	900点	Capitalism depends on free markets.	資本主義は、自由な市場で成り立っています。
+T900-326	900点	Rice is rich in carbohydrates.	米には、炭水化物が多く含まれています。
+T900-327	900点	We must reduce carbon emissions.	炭素の排出を減らさなければなりません。
+T900-328	900点	You may bring one carry-on bag.	機内持ち込みのかばんは、1つまでです。
+T900-329	900点	My son loves cartoons.	息子は、アニメが大好きです。
+T900-330	900点	We visited the old cathedral.	古い大聖堂を訪れました。
+T900-331	900点	Bats live in the cave.	その洞窟には、コウモリがすんでいます。
+T900-332	900点	The dentist found a cavity.	歯医者が、虫歯を見つけました。
+T900-333	900点	The cemetery is on the hill.	墓地は、丘の上にあります。
+T900-334	900点	The mayor wore a ceremonial robe.	市長は、儀式用の衣装を着ていました。
+T900-335	900点	She kissed him on the cheek.	彼女は、彼のほおにキスをしました。
+T900-336	900点	You can pay by cheque.	小切手で払えます。
+T900-337	900点	Chew your food well.	食べ物をよくかんでください。
+T900-338	900点	Cut the meat into chunks.	肉を大きめに切ってください。
+T900-339	900点	The necklace has a gold clasp.	そのネックレスには、金の留め具が付いています。
+T900-340	900点	The children made pots from clay.	子どもたちは、粘土でつぼを作りました。
+T900-341	900点	The house stands on a cliff.	その家は、がけの上に立っています。
+T900-342	900点	The two parties formed a coalition.	2つの政党は、連立を組みました。
+T900-343	900点	His shirt collar was dirty.	彼のシャツのえりは、汚れていました。
+T900-344	900点	Ants live in a colony.	アリは、集団で暮らしています。
+T900-345	900点	The project was a colossal failure.	その計画は、大失敗でした。
+T900-346	900点	The soldiers saw combat.	兵士たちは、戦闘を経験しました。
+T900-347	900点	We saw a comet in the sky.	空に、すい星が見えました。
+T900-348	900点	The movie was comical.	その映画は、こっけいでした。
+T900-349	900点	The painting was commissioned by the city.	その絵は、市の依頼で描かれました。
+T900-350	900点	The police commissioner held a press conference.	警察本部長が、記者会見を開きました。
+T900-351	900点	The country was once communist.	その国は、かつて共産主義でした。
+T900-352	900点	The complexity of the task surprised us.	その仕事の複雑さに驚きました。
+T900-353	900点	There was a complication during surgery.	手術中に、合併症が起きました。
+T900-354	900点	We turn kitchen waste into compost.	台所のごみを、たい肥にしています。
+T900-355	900点	This juice is concentrated.	このジュースは濃縮されています。
+T900-356	900点	They avoided a confrontation.	彼らは、衝突を避けました。
+T900-357	900点	The book tells of the Spanish conquest.	その本は、スペインの征服について語っています。
+T900-358	900点	It was a consequential decision.	それは、重大な結果をもたらす決定でした。
+T900-359	900点	We estimate costs conservatively.	費用は、控えめに見積もっています。
+T900-360	900点	Thank you for your consideration.	ご検討ありがとうございます。
+T900-361	900点	He believes in a conspiracy.	彼は、陰謀があると信じています。
+T900-362	900点	She smiled with contentment.	彼女は、満ち足りた笑顔を見せました。
+T900-363	900点	The new law is controversial.	新しい法律は、賛否が分かれています。
+T900-364	900点	The pipes are made of copper.	管は、銅でできています。
+T900-365	900点	She works as a foreign correspondent.	彼女は、海外特派員として働いています。
+T900-366	900点	Sales rose by a corresponding amount.	売り上げは、それに見合った分だけ伸びました。
+T900-367	900点	This is a cost-effective solution.	これは、費用対効果の高い解決策です。
+T900-368	900点	We value customer satisfaction.	当社は、顧客満足を大切にしています。
+T900-369	900点	The city councilor answered questions.	市議会議員が、質問に答えました。
+T900-370	900点	The army staged a coup.	軍がクーデターを起こしました。
+T900-371	900点	The courtroom was crowded.	法廷は混んでいました。
+T900-372	900点	The baby slept in a cradle.	赤ちゃんは、揺りかごで眠っていました。
+T900-373	900点	A crane lifted the steel beams.	クレーンが、鉄骨を持ち上げました。
+T900-374	900点	We saw a crescent moon.	三日月が見えました。
+T900-375	900点	Water is critically important.	水は、きわめて重要です。
+T900-376	900点	The old man was a crook.	その老人は、悪党でした。
+T900-377	900点	The actor missed his cue.	俳優は、出番の合図を逃しました。
+T900-378	900点	The fox is a cunning animal.	キツネは、ずる賢い動物です。
+T900-379	900点	Put the cutlery in the drawer.	食器類を引き出しに入れてください。
+T900-380	900点	It was a daring rescue.	それは、大胆な救出でした。
+T900-381	900点	She handles day-to-day operations.	彼女は、日々の業務を担当しています。
+T900-382	900点	He defied the rules.	彼は、規則に逆らいました。
+T900-383	900点	She delicately placed the vase on the shelf.	彼女は、そっと花びんを棚に置きました。
+T900-384	900点	The demolition of the old building began.	古い建物の取り壊しが始まりました。
+T900-385	900点	The forest is very dense.	その森は、とても深く茂っています。
+T900-386	900点	The city has a high population density.	その町は、人口密度が高いです。
+T900-387	900点	She studied dentistry.	彼女は、歯学を学びました。
+T900-388	900点	The award went to a deserving student.	賞は、それにふさわしい学生に贈られました。
+T900-389	900点	We noticed a deterioration in quality.	品質の低下に気づきました。
+T900-390	900点	The earthquake was devastating.	その地震は、壊滅的でした。
+T900-391	900点	Dew covered the grass.	露が、草をおおっていました。
+T900-392	900点	They speak a local dialect.	彼らは、その土地の方言を話します。
+T900-393	900点	Do you have any dietary needs?	食事の制限はありますか。
+T900-394	900点	I disagree with you.	私は、あなたに反対です。
+T900-395	900点	Disassemble the table before moving it.	運ぶ前に、テーブルを分解してください。
+T900-396	900点	Scientists discovered a new planet.	科学者たちは、新しい惑星を発見しました。
+T900-397	900点	He left the company in disgrace.	彼は、不名誉のうちに会社を去りました。
+T900-398	900点	Customer dissatisfaction is growing.	客の不満が高まっています。
+T900-399	900点	He is a distinguished professor.	彼は、名高い教授です。
+T900-400	900点	The news was disturbing.	その知らせは、心をかき乱すものでした。
+T900-401	900点	The car slid into a ditch.	車が、溝に滑り込みました。
+T900-402	900点	Diversification reduces risk.	多角化は、危険を減らします。
+T900-403	900点	I felt dizzy after the ride.	乗り物のあと、めまいがしました。
+T900-404	900点	The dullness of the work bored him.	仕事の単調さに、彼は退屈しました。
+T900-405	900点	She dyed her hair red.	彼女は、髪を赤く染めました。
+T900-406	900点	The children waited eagerly.	子どもたちは、わくわくして待っていました。
+T900-407	900点	The earthquake shook the city.	地震が町を揺らしました。
+T900-408	900点	An electron has a negative charge.	電子は、負の電荷を持っています。
+T900-409	900点	She wore an elegant dress.	彼女は、上品なドレスを着ていました。
+T900-410	900点	They embarked on a long journey.	彼らは、長い旅に出ました。
+T900-411	900点	The eagle is the emblem of the country.	ワシは、その国の象徴です。
+T900-412	900点	The emperor ruled for 40 years.	皇帝は、40年間国を治めました。
+T900-413	900点	The show was very entertaining.	その番組は、とてもおもしろかったです。
+T900-414	900点	The crowd cheered enthusiastically.	群衆は、熱狂的に声援を送りました。
+T900-415	900点	We believe in equality for all.	私たちは、すべての人の平等を信じています。
+T900-416	900点	The country lies near the equator.	その国は、赤道の近くにあります。
+T900-417	900点	The two plans are essentially the same.	2つの計画は、基本的に同じです。
+T900-418	900点	The establishment of the school took years.	学校の設立には、何年もかかりました。
+T900-419	900点	She is held in high esteem.	彼女は、高く評価されています。
+T900-420	900点	I am eternally grateful.	いつまでも感謝しています。
+T900-421	900点	The examination lasts two hours.	試験は2時間です。
+T900-422	900点	The examiner checked my answers.	試験官が、私の答えを確認しました。
+T900-423	900点	She is exceptionally talented.	彼女は、並外れた才能を持っています。
+T900-424	900点	The plan is good, but the execution was poor.	計画はよいのですが、実行がまずかったです。
+T900-425	900点	The exterior of the house is white.	その家の外側は白いです。
+T900-426	900点	It was an extraordinary event.	それは、並外れた出来事でした。
+T900-427	900点	He raised an eyebrow.	彼は、まゆを上げました。
+T900-428	900点	The story is an old fable.	その話は、昔の寓話です。
+T900-429	900点	A facilitator led the workshop.	進行役が、研修会を進めました。
+T900-430	900点	The fading light made it hard to see.	薄れていく光で、見えにくくなりました。
+T900-431	900点	It is a family-owned business.	それは、家族経営の会社です。
+T900-432	900点	She dreamed of faraway lands.	彼女は、遠い国を夢見ていました。
+T900-433	900点	Keep your seat belt fastened.	シートベルトを締めたままにしてください。
+T900-434	900点	The pillow is filled with feathers.	その枕には、羽毛が詰まっています。
+T900-435	900点	The federation has 30 members.	その連盟には、30の会員がいます。
+T900-436	900点	The old dog was feeble.	老犬は、弱っていました。
+T900-437	900点	She is a well-known feminist writer.	彼女は、有名な女性解放論者の作家です。
+T900-438	900点	Flatten the dough with a rolling pin.	めん棒で生地を平らにしてください。
+T900-439	900点	Which flavor do you like?	どの味が好きですか。
+T900-440	900点	He flung the door open.	彼は、ドアを勢いよく開けました。
+T900-441	900点	The room has floor-to-ceiling windows.	その部屋には、床から天井までの窓があります。
+T900-442	900点	The airport was closed due to fog.	霧のため、空港は閉鎖されました。
+T900-443	900点	It was folly to ignore the warning.	警告を無視したのは、愚かなことでした。
+T900-444	900点	The forum discussed climate change.	その会議では、気候変動が話し合われました。
+T900-445	900点	My grandmother is getting forgetful.	祖母は、もの忘れが多くなっています。
+T900-446	900点	They found a dinosaur fossil.	恐竜の化石が見つかりました。
+T900-447	900点	He frowned at the noise.	彼は、騒音に顔をしかめました。
+T900-448	900点	The movie was really funny.	その映画は、本当におもしろかったです。
+T900-449	900点	The coat has a fur collar.	そのコートには、毛皮のえりが付いています。
+T900-450	900点	The restaurant serves fusion cuisine.	そのレストランは、各国の料理を組み合わせた料理を出しています。
+T900-451	900点	The photo was fuzzy.	写真はぼやけていました。
+T900-452	900点	The ring has a large gem.	その指輪には、大きな宝石が付いています。
+T900-453	900点	A gleam of light appeared.	一筋の光が見えました。
+T900-454	900点	It was a glorious day.	すばらしい天気の日でした。
+T900-455	900点	The team won glory in the final.	チームは、決勝で栄光をつかみました。
+T900-456	900点	The hotel received glowing reviews.	そのホテルは、絶賛のレビューを受けました。
+T900-457	900点	She has a new grandchild.	彼女に、新しい孫ができました。
+T900-458	900点	Sheep graze on the hills.	羊が、丘で草を食べています。
+T900-459	900点	The news was grim.	その知らせは、厳しいものでした。
+T900-460	900点	He grinned at me.	彼は、私ににやりと笑いかけました。
+T900-461	900点	We grind our own coffee.	コーヒー豆は、自分たちでひいています。
+T900-462	900点	He groaned in pain.	彼は、痛みでうめきました。
+T900-463	900点	The shop sells handcrafted jewelry.	その店は、手作りのアクセサリーを売っています。
+T900-464	900点	The market sells local handicrafts.	その市場は、地元の手工芸品を売っています。
+T900-465	900点	The village is in a hard-to-reach area.	その村は、行きにくい場所にあります。
+T900-466	900点	The spider is harmless.	そのクモは無害です。
+T900-467	900点	The choir sang in harmony.	合唱団は、きれいにハモって歌いました。
+T900-468	900点	The rain hastened our return.	雨で、私たちは帰りを急ぎました。
+T900-469	900点	The horses eat hay.	馬は、干し草を食べます。
+T900-470	900点	There is a heap of clothes on the bed.	ベッドの上に、服が山になっています。
+T900-471	900点	He trimmed the hedge.	彼は、生け垣を刈り込みました。
+T900-472	900点	Add fresh herbs to the soup.	スープに新鮮なハーブを入れてください。
+T900-473	900点	A herd of cows crossed the road.	牛の群れが、道を渡りました。
+T900-474	900点	I hereby declare the meeting open.	ここに、会議の開会を宣言します。
+T900-475	900点	We sell home appliances.	当店は、家電製品を売っています。
+T900-476	900点	Please give me your honest opinion.	正直な意見を聞かせてください。
+T900-477	900点	The sun rose above the horizon.	太陽が、地平線の上に昇りました。
+T900-478	900点	We heard wolves howl.	オオカミの遠ぼえが聞こえました。
+T900-479	900点	Millions suffer from hunger.	何百万人もの人が、飢えに苦しんでいます。
+T900-480	900点	Ideally, we would start today.	理想を言えば、今日始めたいところです。
+T900-481	900点	Don't be an idiot.	ばかなことはしないでください。
+T900-482	900点	This bag is a cheap imitation.	このかばんは、安物のまがいものです。
+T900-483	900点	Don't be so impatient.	そんなにせっかちにならないでください。
+T900-484	900点	More importantly, it is safe.	さらに大事なことに、それは安全です。
+T900-485	900点	It is impossible to finish today.	今日終えるのは無理です。
+T900-486	900点	We do training in house.	研修は社内で行っています。
+T900-487	900点	We prefer in-person meetings.	直接会う打ち合わせのほうがよいです。
+T900-488	900点	The offer is for in-store purchases only.	その特典は、店頭での購入のみです。
+T900-489	900点	The driver was inattentive.	運転手は、不注意でした。
+T900-490	900点	It was indeed a great day.	本当にすばらしい日でした。
+T900-491	900点	She works independently.	彼女は、一人で仕事をしています。
+T900-492	900点	There was an industry-wide strike.	業界全体でストライキがありました。
+T900-493	900点	We met informally for coffee.	気軽にコーヒーを飲みに会いました。
+T900-494	900点	The inmates were moved to another prison.	受刑者は、別の刑務所に移されました。
+T900-495	900点	She found inner peace.	彼女は、心の平穏を見つけました。
+T900-496	900点	This jacket is well insulated.	この上着は、保温性が高いです。
+T900-497	900点	He intentionally left the door open.	彼は、わざとドアを開けたままにしました。
+T900-498	900点	His interpretation was different.	彼の解釈は違っていました。
+T900-499	900点	I was intrigued by the idea.	その考えに、興味をそそられました。
+T900-500	900点	He wrote the introduction to the book.	彼が、その本の序文を書きました。
+T900-501	900点	The investigation is ongoing.	調査は続いています。
+T900-502	900点	Air is invisible.	空気は目に見えません。
+T900-503	900点	Trading in ivory is banned.	象牙の取引は、禁止されています。
+T900-504	900点	There is no justification for violence.	暴力を正当化する理由はありません。
+T900-505	900点	Tie a knot in the rope.	ロープに結び目を作ってください。
+T900-506	900点	The guide was very knowledgeable.	ガイドは、とても物知りでした。
+T900-507	900点	That's a lame excuse.	それは、下手な言い訳です。
+T900-508	900点	Most trash ends up in a landfill.	ほとんどのごみは、埋め立て地に行きます。
+T900-509	900点	We did it for a lark.	ほんの遊びでやりました。
+T900-510	900点	Lastly, I want to thank you all.	最後に、皆さんにお礼を言いたいです。
+T900-511	900点	Keep your dog on a leash.	犬は、リードにつないでおいてください。
+T900-512	900点	The legislator proposed a new bill.	議員が、新しい法案を提出しました。
+T900-513	900点	The state legislature meets in spring.	州議会は、春に開かれます。
+T900-514	900点	The dog licked my hand.	犬が、私の手をなめました。
+T900-515	900点	They became lifelong friends.	2人は、生涯の友になりました。
+T900-516	900点	He left early, and I did likewise.	彼は早く帰り、私も同じようにしました。
+T900-517	900点	The market was lively.	市場は、にぎやかでした。
+T900-518	900点	Smoking damages your lungs.	喫煙は、肺を傷めます。
+T900-519	900点	The board has a magnetic surface.	そのボードは、磁石がくっつきます。
+T900-520	900点	The style became mainstream.	その様式は、主流になりました。
+T900-521	900点	We admired the majesty of the mountains.	山々の雄大さに見とれました。
+T900-522	900点	Whales are mammals.	クジラは、哺乳類です。
+T900-523	900点	The workload is manageable.	仕事の量は、こなせる程度です。
+T900-524	900点	The floor is made of marble.	床は、大理石でできています。
+T900-525	900点	Each guest gets a meal voucher.	客は、それぞれ食事券をもらえます。
+T900-526	900点	She meticulously checked every detail.	彼女は、細かいところまで念入りに確認しました。
+T900-527	900点	We take a break at midday.	正午に休憩をとります。
+T900-528	900点	We are in the midst of a crisis.	私たちは、危機のただ中にいます。
+T900-529	900点	Birds begin their migration in autumn.	鳥は、秋に渡りを始めます。
+T900-530	900点	The kids got into mischief.	子どもたちは、いたずらをしました。
+T900-531	900点	He had the misfortune to lose his job.	彼は、不運にも職を失いました。
+T900-532	900点	She worked as a missionary in Africa.	彼女は、アフリカで宣教師として働きました。
+T900-533	900点	Don't misunderstand me.	誤解しないでください。
+T900-534	900点	He moaned about the weather.	彼は、天気について文句を言いました。
+T900-535	900点	The monarch addressed the nation.	君主が、国民に語りかけました。
+T900-536	900点	Infant mortality has fallen.	乳児の死亡率は下がりました。
+T900-537	900点	Moss grows on the rocks.	岩に、こけが生えています。
+T900-538	900点	The museum has an Egyptian mummy.	その博物館には、エジプトのミイラがあります。
+T900-539	900点	I heard a murmur in the crowd.	群衆の中から、ささやき声が聞こえました。
+T900-540	900点	He muttered something to himself.	彼は、何かぶつぶつ言いました。
+T900-541	900点	His disappearance is a mystery.	彼が消えたのは、なぞです。
+T900-542	900点	It is a myth that bats are blind.	コウモリが目が見えないというのは、作り話です。
+T900-543	900点	It was a nasty cut.	それは、ひどい切り傷でした。
+T900-544	900点	The city has a naval base.	その町には、海軍基地があります。
+T900-545	900点	The test result was negative.	検査の結果は陰性でした。
+T900-546	900点	The nominee gave a speech.	候補者が演説しました。
+T900-547	900点	The ticket is nonrefundable.	その切符は、払い戻しできません。
+T900-548	900点	He is a noted author.	彼は、有名な作家です。
+T900-549	900点	The keys were nowhere to be found.	鍵は、どこにも見つかりませんでした。
+T900-550	900点	On this occasion, we will make an exception.	今回は、特別に例外とします。
+T900-551	900点	The trains are usually on-time.	電車は、ふだん時間どおりです。
+T900-552	900点	From now onward, please be careful.	今後は、気をつけてください。
+T900-553	900点	Many residents are opposed to the plan.	多くの住民が、その計画に反対しています。
+T900-554	900点	I have an oral exam tomorrow.	明日、口頭試験があります。
+T900-555	900点	Every living organism needs water.	すべての生物は、水を必要とします。
+T900-556	900点	It took time to orient myself in the city.	町に慣れるのに時間がかかりました。
+T900-557	900点	We ate at an oriental restaurant.	東洋料理の店で食べました。
+T900-558	900点	He felt like an outsider.	彼は、よそ者のように感じました。
+T900-559	900点	I overslept this morning.	今朝、寝坊しました。
+T900-560	900点	The beach is lined with palm trees.	浜辺には、ヤシの木が並んでいます。
+T900-561	900点	Parental consent is required.	親の同意が必要です。
+T900-562	900点	The parish church is very old.	その教区の教会は、とても古いです。
+T900-563	900点	Parliament passed the law.	議会が、その法律を可決しました。
+T900-564	900点	The pastor gave a sermon.	牧師が、説教をしました。
+T900-565	900点	The peasants worked in the fields.	農民たちは、畑で働きました。
+T900-566	900点	She is a pediatric nurse.	彼女は、小児科の看護師です。
+T900-567	900点	The town is on a peninsula.	その町は、半島にあります。
+T900-568	900点	These flowers are perennial.	これらの花は、多年草です。
+T900-569	900点	A fence surrounds the perimeter.	周りを、さくが囲んでいます。
+T900-570	900点	Many plants perish in the frost.	多くの植物が、霜で枯れます。
+T900-571	900点	Is it permissible to park here?	ここに駐車してもいいですか。
+T900-572	900点	Petrol prices have gone up.	ガソリンの値段が上がりました。
+T900-573	900点	He asked a philosophical question.	彼は、哲学的な質問をしました。
+T900-574	900点	She teaches physics.	彼女は、物理を教えています。
+T900-575	900点	Add a pinch of salt.	塩をひとつまみ入れてください。
+T900-576	900点	The guide explains common pitfalls.	その手引きは、よくある落とし穴を説明しています。
+T900-577	900点	She told him plainly.	彼女は、彼にはっきり言いました。
+T900-578	900点	"Mice" is the plural of "mouse".	「mice」は「mouse」の複数形です。
+T900-579	900点	He poked me in the ribs.	彼は、私のわき腹をつつきました。
+T900-580	900点	The Pope visited Brazil.	ローマ教皇が、ブラジルを訪れました。
+T900-581	900点	He possesses great skill.	彼は、すぐれた技能を持っています。
+T900-582	900点	The machine cuts with great precision.	その機械は、とても正確に切ります。
+T900-583	900点	The lion is a predator.	ライオンは、捕食動物です。
+T900-584	900点	Kyoto is a prefecture in Japan.	京都は、日本の府県のひとつです。
+T900-585	900点	A morning flight is preferable.	朝の便のほうが、望ましいです。
+T900-586	900点	The presidential election is in November.	大統領選挙は、11月です。
+T900-587	900点	A procession moved down the street.	行列が、通りを進みました。
+T900-588	900点	Don't procrastinate.	先延ばしにしないでください。
+T900-589	900点	The alarm prompted us to leave.	警報が鳴ったので、私たちは外に出ました。
+T900-590	900点	Her pronunciation is clear.	彼女の発音は、はっきりしています。
+T900-591	900点	"Time is money" is a famous proverb.	「時は金なり」は、有名なことわざです。
+T900-592	900点	He works for the provincial government.	彼は、州政府で働いています。
+T900-593	900点	It is prudent to save money.	お金を貯めておくのは、賢明です。
+T900-594	900点	She is a child psychologist.	彼女は、児童心理学者です。
+T900-595	900点	The teacher praised the pupil.	先生が、その生徒をほめました。
+T900-596	900点	A string quartet played at the wedding.	結婚式で、弦楽四重奏団が演奏しました。
+T900-597	900点	Rainfall was low this year.	今年は、雨が少なかったです。
+T900-598	900点	Short sentences improve readability.	短い文は、読みやすさを高めます。
+T900-599	900点	The font is very readable.	その字体は、とても読みやすいです。
+T900-600	900点	Set realistic goals.	現実的な目標を立ててください。
+T900-601	900点	That is beyond the realm of possibility.	それは、ありえないことです。
+T900-602	900点	I don't follow your reasoning.	あなたの理屈がわかりません。
+T900-603	900点	She gave me words of reassurance.	彼女は、安心させる言葉をかけてくれました。
+T900-604	900点	The doctor reassured the patient.	医師は、患者を安心させました。
+T900-605	900点	The office needs a reconfiguration.	事務所の配置を変える必要があります。
+T900-606	900点	We will redesign the website.	サイトを作り直します。
+T900-607	900点	Your expenses will be reimbursed.	経費は払い戻されます。
+T900-608	900点	That has no relevance to the topic.	それは、話題と関係がありません。
+T900-609	900点	He remarked that the room was cold.	彼は、部屋が寒いと言いました。
+T900-610	900点	We reminisced about our school days.	学校時代の思い出話をしました。
+T900-611	900点	He repeatedly asked the same question.	彼は、同じ質問を何度もしました。
+T900-612	900点	Women need more representation.	女性の代表を、もっと増やす必要があります。
+T900-613	900点	The old road resurfaced after the flood.	洪水のあと、古い道が再び現れました。
+T900-614	900点	It was a revolutionary idea.	それは、画期的な考えでした。
+T900-615	900点	He broke a rib.	彼は、あばら骨を折りました。
+T900-616	900点	We need to get rid of old files.	古いファイルを処分する必要があります。
+T900-617	900点	We hiked along the ridge.	尾根に沿ってハイキングしました。
+T900-618	900点	There was a rift between the partners.	共同経営者の間に、溝ができました。
+T900-619	900点	The rules are rigidly enforced.	規則は、厳しく守らされています。
+T900-620	900点	The cup has a gold rim.	そのカップには、金の縁が付いています。
+T900-621	900点	Police stopped the riot.	警察が、暴動を鎮めました。
+T900-622	900点	The lion let out a roar.	ライオンが、ほえました。
+T900-623	900点	Tires are made of rubber.	タイヤは、ゴムでできています。
+T900-624	900点	We routinely check the machines.	機械は、決まって点検しています。
+T900-625	900点	He carried a sack of rice.	彼は、米の袋を運びました。
+T900-626	900点	It is a secular school.	そこは、宗教色のない学校です。
+T900-627	900点	The Senate passed the bill.	上院が、その法案を可決しました。
+T900-628	900点	The servant opened the door.	使用人が、ドアを開けました。
+T900-629	900点	The town was severely damaged.	町は、ひどい被害を受けました。
+T900-630	900点	He made a shady deal.	彼は、いかがわしい取引をしました。
+T900-631	900点	Sharpen your pencil.	鉛筆を削ってください。
+T900-632	900点	She polished the shiny car.	彼女は、ぴかぴかの車を磨きました。
+T900-633	900点	Please don't shove.	押さないでください。
+T900-634	900点	I have two siblings.	私には、きょうだいが2人います。
+T900-635	900点	Don't be silly.	ばかなことを言わないでください。
+T900-636	900点	Let the soup simmer.	スープを弱火で煮込んでください。
+T900-637	900点	Use the singular form here.	ここでは、単数形を使ってください。
+T900-638	900点	The hotel is situated by the lake.	そのホテルは、湖のほとりにあります。
+T900-639	900点	The skull protects the brain.	頭がい骨は、脳を守っています。
+T900-640	900点	The country abolished slavery.	その国は、奴隷制を廃止しました。
+T900-641	900点	She rolled up her sleeves.	彼女は、そでをまくりました。
+T900-642	900点	He tried to sneak out.	彼は、こっそり抜け出そうとしました。
+T900-643	900点	Cover your mouth when you sneeze.	くしゃみをするときは、口をおおってください。
+T900-644	900点	The child began to sob.	子どもが、しくしく泣き始めました。
+T900-645	900点	Crime affects all of society.	犯罪は、社会全体に影響します。
+T900-646	900点	Somehow, we finished on time.	どうにか、時間どおりに終えました。
+T900-647	900点	I left my keys somewhere.	鍵をどこかに置き忘れました。
+T900-648	900点	The nation fought for its sovereignty.	その国は、主権を求めて戦いました。
+T900-649	900点	The stars sparkle at night.	夜、星がきらきら輝きます。
+T900-650	900点	The colors of the spectrum are beautiful.	光のスペクトルの色は、美しいです。
+T900-651	900点	Check your spelling.	つづりを確認してください。
+T900-652	900点	Sit up and keep your spine straight.	背筋を伸ばして座ってください。
+T900-653	900点	She is a spiritual person.	彼女は、精神性の豊かな人です。
+T900-654	900点	Do not spit on the street.	道につばを吐かないでください。
+T900-655	900点	He kept working in spite of the pain.	彼は、痛みにもかかわらず働き続けました。
+T900-656	900点	A spokesman read the statement.	広報担当者が、声明を読み上げました。
+T900-657	900点	We spruced up the office.	事務所をこぎれいにしました。
+T900-658	900点	The bomb squad arrived quickly.	爆弾処理班が、すぐに到着しました。
+T900-659	900点	Please stack the chairs.	いすを積み重ねてください。
+T900-660	900点	The noise startled the baby.	物音に、赤ちゃんがびっくりしました。
+T900-661	900点	He was a great statesman.	彼は、偉大な政治家でした。
+T900-662	900点	The statute was changed.	その法令は改正されました。
+T900-663	900点	Employers must meet statutory duties.	雇い主は、法律上の義務を果たさなければなりません。
+T900-664	900点	Watch your step.	足元に気をつけてください。
+T900-665	900点	It was a stimulating discussion.	それは、刺激的な話し合いでした。
+T900-666	900点	Don't talk to strangers.	知らない人と話してはいけません。
+T900-667	900点	He has a white streak in his hair.	彼の髪には、白い筋があります。
+T900-668	900点	She is strikingly beautiful.	彼女は、際立って美しいです。
+T900-669	900点	That was a stupid mistake.	それは、ばかな間違いでした。
+T900-670	900点	Costs rose substantially.	費用が大幅に上がりました。
+T900-671	900点	Check the subtotal before tax.	税抜きの小計を確認してください。
+T900-672	900点	They moved to a suburban town.	彼らは、郊外の町に引っ越しました。
+T900-673	900点	The city opened a suicide prevention center.	市は、自殺予防センターを開きました。
+T900-674	900点	She is well suited for the job.	彼女は、その仕事にぴったりです。
+T900-675	900点	The superintendent visited the school.	教育長が、その学校を訪れました。
+T900-676	900点	Read the supplementary materials.	補足の資料を読んでください。
+T900-677	900点	My family is very supportive.	家族は、とても支えになってくれます。
+T900-678	900点	He was supposedly ill.	彼は、病気だということでした。
+T900-679	900点	It is hard to swallow pills.	錠剤を飲み込むのは難しいです。
+T900-680	900点	The orchestra played a symphony.	オーケストラが、交響曲を演奏しました。
+T900-681	900点	The store sells tableware.	その店は、食器を売っています。
+T900-682	900点	He sings tenor in the choir.	彼は、合唱団でテノールを歌っています。
+T900-683	900点	The island is a British territory.	その島は、イギリスの領土です。
+T900-684	900点	They had a theological debate.	彼らは、神学の議論をしました。
+T900-685	900点	He studied theology.	彼は、神学を学びました。
+T900-686	900点	I hurt my thigh.	太ももを痛めました。
+T900-687	900点	A thorn pricked my finger.	とげが指に刺さりました。
+T900-688	900点	I need a needle and thread.	針と糸が必要です。
+T900-689	900点	We were thrilled with the news.	その知らせに大喜びしました。
+T900-690	900点	The king sat on the throne.	王が王座に座りました。
+T900-691	900点	Here is the project timeline.	これが、計画の予定表です。
+T900-692	900点	We visited the ancient tomb.	古代の墓を訪れました。
+T900-693	900点	I burned my tongue.	舌をやけどしました。
+T900-694	900点	They sell top-of-the-line cameras.	その店は、最高級のカメラを売っています。
+T900-695	900点	He carried a torch in the dark.	彼は、暗闇でたいまつを持っていました。
+T900-696	900点	It is a family tradition.	それは、家の伝統です。
+T900-697	900点	We were stuck in a traffic jam.	渋滞に巻き込まれました。
+T900-698	900点	This ticket is not transferrable.	この切符は、人に譲れません。
+T900-699	900点	The goods were damaged in transit.	商品は、輸送中に傷みました。
+T900-700	900点	Tread carefully on the ice.	氷の上は、気をつけて歩いてください。
+T900-701	900点	The tribe lives in the forest.	その部族は、森に住んでいます。
+T900-702	900点	Please give a truthful answer.	正直に答えてください。
+T900-703	900点	She relaxed in the hot tub.	彼女は、温かい浴槽でくつろぎました。
+T900-704	900点	He works as a math tutor.	彼は、数学の家庭教師をしています。
+T900-705	900点	We walked home in the twilight.	夕暮れの中を歩いて帰りました。
+T900-706	900点	The stars twinkle at night.	夜、星がきらきらまたたきます。
+T900-707	900点	We faced unanticipated costs.	思わぬ費用がかかりました。
+T900-708	900点	The delay was unavoidable.	遅れは避けられませんでした。
+T900-709	900点	The chair is uncomfortable.	そのいすは、座り心地が悪いです。
+T900-710	900点	She is an undergraduate student.	彼女は、学部の学生です。
+T900-711	900点	The side effects are undesirable.	副作用は望ましくありません。
+T900-712	900点	That is unfair.	それは不公平です。
+T900-713	900点	Unforeseen problems delayed us.	思いがけない問題で遅れました。
+T900-714	900点	Don't be unkind to others.	人に意地悪をしないでください。
+T900-715	900点	The smell was unpleasant.	においは不快でした。
+T900-716	900点	Unplug the machine before cleaning.	掃除の前に、機械のプラグを抜いてください。
+T900-717	900点	The storm was unprecedented.	その嵐は、前例のないものでした。
+T900-718	900点	The weather is unpredictable.	天気は予測できません。
+T900-719	900点	The data is still unpublished.	そのデータは、まだ公表されていません。
+T900-720	900点	We tested the usability of the app.	アプリの使いやすさを試しました。
+T900-721	900点	He didn't utter a word.	彼は、ひと言も話しませんでした。
+T900-722	900点	I was utterly exhausted.	すっかり疲れ果てていました。
+T900-723	900点	The tenants vacated the building.	借り主たちは、建物を明け渡しました。
+T900-724	900点	The company is in the vanguard of change.	その会社は、変化の先頭に立っています。
+T900-725	900点	The desert is vast.	砂漠は広大です。
+T900-726	900点	We were amazed by the vastness of the sea.	海の広さに驚きました。
+T900-727	900点	Venus is the second planet from the sun.	金星は、太陽から2番目の惑星です。
+T900-728	900点	She wrote a poem in verse.	彼女は、韻文で詩を書きました。
+T900-729	900点	The victim was taken to the hospital.	被害者は、病院に運ばれました。
+T900-730	900点	Patience is a virtue.	忍耐は美徳です。
+T900-731	900点	Read more to build your vocabulary.	語彙を増やすために、もっと読んでください。
+T900-732	900点	The volcano erupted last year.	その火山は、昨年噴火しました。
+T900-733	900点	She gave a wan smile.	彼女は、弱々しくほほえみました。
+T900-734	900点	I felt the warmth of the sun.	日の暖かさを感じました。
+T900-735	900点	We tested the wearability of the shoes.	靴のはき心地を試しました。
+T900-736	900点	The company makes wearable devices.	その会社は、身につける機器を作っています。
+T900-737	900点	The firm offers wellness programs.	その会社には、健康づくりの取り組みがあります。
+T900-738	900点	She whispered in my ear.	彼女は、私の耳元でささやきました。
+T900-739	900点	The witch in the story was wicked.	物語の魔女は、意地悪でした。
+T900-740	900点	His widow still lives there.	彼の未亡人は、今もそこに住んでいます。
+T900-741	900点	The flowers wilted in the heat.	花は、暑さでしおれました。
+T900-742	900点	My workday ends at six.	私の仕事は、6時に終わります。
+T900-743	900点	He couldn't stop yawning.	彼は、あくびが止まりませんでした。
+T900-744	900点	You should be willing to listen.	人の話に耳を傾ける気持ちを持つべきです。
+T900-745	900点	We run a customer-satisfaction survey every year.	毎年、顧客満足度の調査をしています。
+T900-746	900点	Don't fling your clothes on the floor.	服を床に放り投げないでください。
+T900-747	900点	Try not to oversleep tomorrow.	明日は寝坊しないようにしてください。
+T900-748	900点	Praise helps build self-esteem.	ほめると、自己肯定感が育ちます。
+T990-001	990点	He is in arrears with his rent.	彼は、家賃を滞納しています。
+T990-002	990点	We need to ascertain the facts.	事実を確かめる必要があります。
+T990-003	990点	Staff attrition is a concern.	社員の自然減が心配です。
+T990-004	990点	They tried to circumvent the rules.	彼らは、規則の抜け道を探しました。
+T990-005	990点	The funds will be disbursed next week.	資金は、来週支払われます。
+T990-006	990点	The company will divest its hotel business.	その会社は、ホテル事業を手放します。
+T990-007	990点	The survey elicited many responses.	その調査には、多くの回答が集まりました。
+T990-008	990点	We want an equitable solution.	公平な解決策がほしいです。
+T990-009	990点	The company has a strict hierarchy.	その会社には、厳しい上下関係があります。
+T990-010	990点	It was an inadvertent mistake.	それは、うっかりした間違いでした。
+T990-011	990点	There will be intermittent rain.	ときどき雨が降るでしょう。
+T990-012	990点	We took steps to mitigate the risk.	危険を減らす手を打ちました。
+T990-013	990点	The difference is negligible.	差はわずかです。
+T990-014	990点	The proceeds will go to charity.	収益は、慈善に寄付されます。
+T990-015	990点	We don't have a quorum.	定足数に達していません。
+T990-016	990点	The city may rescind the order.	市は、その命令を取り消すかもしれません。
+T990-017	990点	Children are very resilient.	子どもは、立ち直る力がとても強いです。
+T990-018	990点	The new rules supersede the old ones.	新しい規則は、古い規則に取って代わります。
+T500-183	500点	She works in accounting.	彼女は、経理の仕事をしています。
+T500-184	500点	I have already eaten.	もう食べました。
+T500-185	500点	Although it rained, we had fun.	雨でしたが、楽しかったです。
+T500-186	500点	Please apply online.	オンラインで申し込んでください。
+T500-187	500点	I applied for a new job.	新しい仕事に応募しました。
+T500-188	500点	I have a dentist appointment.	歯医者の予約があります。
+T500-189	500点	She was assigned to the new team.	彼女は、新しいチームに配属されました。
+T500-190	500点	My assistant will call you.	私の助手が、お電話します。
+T500-191	500点	Thank you for attending.	ご出席ありがとうございます。
+T500-192	500点	I baked a cake.	ケーキを焼きました。
+T500-193	500点	Will you be able to come?	来られますか。
+T500-194	500点	Choose a number between 1 and 10.	1から10の間で数を選んでください。
+T500-195	500点	He is a board member of the bank.	彼は、その銀行の役員です。
+T500-196	500点	I'm certain he will come.	彼はきっと来ます。
+T500-197	500点	The community center is open daily.	地域センターは、毎日開いています。
+T500-198	500点	Drinks are complimentary.	飲み物は無料です。
+T500-199	500点	We are conducting a survey.	調査を行っています。
+T500-200	500点	Please confirm your address.	住所を確認してください。
+T500-201	500点	We had a long conversation.	長い会話をしました。
+T500-202	500点	The app is designed for children.	そのアプリは、子ども向けに作られています。
+T500-203	500点	Let's discuss it tomorrow.	明日話し合いましょう。
+T500-204	500点	We discussed the budget.	予算について話し合いました。
+T500-205	500点	We are discussing the plan now.	今、計画について話し合っています。
+T500-206	500点	The station is within walking distance.	駅は、歩いて行ける距離にあります。
+T500-207	500点	The flyers were distributed by hand.	チラシは、手で配られました。
+T500-208	500点	She works in sales and distribution.	彼女は、販売と流通の仕事をしています。
+T500-209	500点	Education is important.	教育は大切です。
+T500-210	500点	Please write a short essay.	短い作文を書いてください。
+T500-211	500点	A dinner followed the meeting.	会議のあとに、夕食会がありました。
+T500-212	500点	However, the price is high.	しかし、値段が高いです。
+T500-213	500点	To err is human.	あやまちは人の常です。
+T500-214	500点	The survey indicated a rise in sales.	調査は、売り上げの伸びを示しました。
+T500-215	500点	New lights were installed.	新しい照明が取り付けられました。
+T500-216	500点	The course is intended for beginners.	その講座は、初心者向けです。
+T500-217	500点	The interviewer asked about my goals.	面接官は、私の目標について尋ねました。
+T500-218	500点	Please use less paper.	紙を使う量を減らしてください。
+T500-219	500点	It is likely to rain.	雨が降りそうです。
+T500-220	500点	Please check your luggage.	荷物を預けてください。
+T500-221	500点	He works in manufacturing.	彼は、製造業で働いています。
+T500-222	500点	What is the meaning of this word?	この単語の意味は何ですか。
+T500-223	500点	He mentioned your name.	彼は、あなたの名前を出しました。
+T500-224	500点	It might snow tonight.	今夜は雪が降るかもしれません。
+T500-225	500点	The flight was delayed owing to fog.	霧のため、便が遅れました。
+T500-226	500点	The painter finished the wall.	ペンキ屋が、壁を塗り終えました。
+T500-227	500点	Read the first paragraph.	最初の段落を読んでください。
+T500-228	500点	He is a proud patriot.	彼は、誇り高い愛国者です。
+T500-229	500点	Pets are not permitted.	ペットは禁止です。
+T500-230	500点	Learn this useful phrase.	この役に立つ言い回しを覚えてください。
+T500-231	500点	Black is my preferred color.	黒が、私の好きな色です。
+T500-232	500点	It will probably rain.	たぶん雨になるでしょう。
+T500-233	500点	This is private property.	ここは私有地です。
+T500-234	500点	I'm proud of you.	あなたを誇りに思います。
+T500-235	500点	She handles purchasing.	彼女は、購買を担当しています。
+T500-236	500点	What is the purpose of your visit?	ご訪問の目的は何ですか。
+T500-237	500点	I recommend this restaurant.	このレストランをおすすめします。
+T500-238	500点	Thank you for your recommendation.	おすすめいただき、ありがとうございます。
+T500-239	500点	This book is highly recommended.	この本は、強くおすすめです。
+T500-240	500点	Best regards, Tom.	よろしくお願いします。トム。
+T500-241	500点	My car was repaired yesterday.	車は昨日修理されました。
+T500-242	500点	We are replacing the old carpet.	古いじゅうたんを取り替えています。
+T500-243	500点	A sales representative will contact you.	営業担当者が、ご連絡します。
+T500-244	500点	This seat is reserved.	この席は予約済みです。
+T500-245	500点	Please send your résumé.	履歴書を送ってください。
+T500-246	500点	We have the same idea.	私たちは、同じ考えです。
+T500-247	500点	She loves science.	彼女は、理科が大好きです。
+T500-248	500点	Fill out this sheet.	この用紙に記入してください。
+T500-249	500点	Yours sincerely, Anna.	敬具、アンナ。
+T500-250	500点	Thank you for submitting your work.	作品を提出していただき、ありがとうございます。
+T500-251	500点	I take the subway to work.	地下鉄で通勤しています。
+T500-252	500点	Read the text carefully.	文章をよく読んでください。
+T500-253	500点	First wash, then dry.	まず洗って、それから乾かしてください。
+T500-254	500点	He came, though he was tired.	彼は、疲れていたのに来ました。
+T500-255	500点	Leave a tip for the waiter.	ウェイターにチップを置いてください。
+T500-256	500点	Choose a topic for your talk.	話の題目を選んでください。
+T500-257	500点	Public transportation is cheap here.	ここは、公共交通機関が安いです。
+T500-258	500点	I understand.	わかりました。
+T500-259	500点	We are going on vacation.	休暇に出かけます。
+T500-260	500点	She has a soft voice.	彼女は、やわらかい声をしています。
+T500-261	500点	We have a weekly meeting.	毎週会議があります。
+T500-262	500点	I don't know whether he will come.	彼が来るかどうか、わかりません。
+T500-263	500点	Please wait while I check.	確認する間、お待ちください。
