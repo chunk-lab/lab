@@ -592,75 +592,79 @@ O| to good {use|using|used|useful}. :: うまく活用
 @id adv16
 @lv 3
 @level 8
-@title Throwing Good Money After Bad
-@ja 埋没費用のわな
+@title The Planes That Did Not Return
+@ja 帰らなかった飛行機
 @tag 難関大レベル・論説文
-@gloss anyway=それでも, irrecoverable=取り戻せない, sunk cost=埋没費用, remaining=残りの, fallacy=誤った考え, invest=投資する, abandon=やめる, admit=認める, write off=諦めて処理する
-V| {Suppose|Supposing of|Supposed|Supposition} :: 仮に…としよう
-O| you have {bought|buyed|buying|buys} :: 買ったと
-O| an expensive concert {ticket|tickets|ticketed|ticketing}, :: 高いコンサート券を
-X| but {on|onto|at of|into} the day :: しかし当日
-S| you {feel|feels|feeling|felt to} ill :: 体調が悪く
-X| and would {rather|other|better|sooner of} stay home. :: 家にいたい
-== 高いコンサートのチケットを買ったのに、当日体調が悪く、家にいたいとしよう。
-S| Many people would {go|goes|going|gone} anyway, :: 多くの人は結局行く
-X| {reasoning|reason|reasoned of|reasons} :: …と考えて
-O| that {otherwise|other|others|otherness} :: そうしないと
-V| the money would be {wasted|waste of|wastes|wastefully}. :: お金がむだになると
-== 多くの人は、行かないとお金がむだになると考えて、結局出かける。
-M| Yet the money {is|are|be|being} :: しかしお金は
-C| already {gone|went|goes|go} :: すでに失われている
-M| {whether|weather|either|neither} they go :: 行こうが
-X| {or|nor|and|but} not. :: 行くまいが
-== しかしお金は、行っても行かなくても、すでに失われている。
-S| Economists {call|calls|calling|called of} :: 経済学者は呼ぶ
-O| such {irrecoverable|irrecoverably|recover|recovery} spending :: 取り戻せない支出を
-C| a sunk {cost|costs|costly|costed}, :: 埋没費用と
-X| and {argue|argues|arguing|argument} :: そして主張する
-O| that it should not {affect|affects|affecting|affection} :: 影響すべきでないと
-O| future {decisions|decides|decisive|decided}. :: 将来の決定に
-== 経済学者はこうした取り戻せない支出を埋没費用と呼び、それを将来の決定に影響させるべきではないと説く。
-S| What {matters|matter|mattering|material} :: 重要なのは
-V| is {only|lonely|once|alone} :: …だけだ
-O| whether the {remaining|remained|remain|remains} options :: 残りの選択肢が
-V| {offer|offers|offering|offered of} :: もたらすか
-O| more benefit {than|then|that|as} cost. :: 費用を上回る利益を
-== 重要なのは、残された選択肢が費用を上回る利益をもたらすかどうかだけだ。
-M| {Nevertheless|Despite|Although|Unless}, :: それでも
-S| the sunk cost {fallacy|fallacious|fallaciously|falsify} :: 埋没費用の誤りは
-V| is {remarkably|remarkable|remark|remarked} common, :: 非常によく見られ
-X| and not {only|lonely|once|alone of} :: しかも…だけでない
-P| among {individuals|individual|individually|individualize}. :: 個人の間
-== それでも埋没費用の誤りは非常によく見られ、しかも個人に限った話ではない。
-S| Governments and {companies|companys|accompany|companion of} :: 政府や企業は
-V| sometimes {continue|continues|continuing|continual} :: 時に続ける
-O| {failing|fail|failed of|fails} projects :: 失敗しかけた事業を
-T| {for|since|during|while} years, :: 何年も
-R| {largely|large|largeness|enlarge} because so much :: 主に多くが…ために
-V| has already been {invested|investing|invest|investment}. :: すでに投じられた
-== 政府や企業は、すでに多くを投じたという理由から、失敗しかけた事業を何年も続けることがある。
-S| Part of the {reason|reasonable|reasonably|reasoned} :: 理由の一部は
-V| is {psychological|psychologically|psychologize|psychologies}: :: 心理的なものだ
-S| {abandoning|abandon|abandoned|abandons} a project :: 事業をやめることは
-V| {feels|feel|feeling|felt of} like :: …のように感じる
-O| {admitting|admit|admitted|admits} a mistake. :: 誤りを認めること
-== 理由の一部は心理的なものだ。事業をやめるのは、誤りを認めることのように感じられるのだ。
-S| Loss aversion also {makes|make|making|made of} :: 損失回避も…させる
-O| the money already {spent|spend|spending|spends} :: すでに使ったお金を
-V| {feel|feels|feeling|to feel} :: 感じさせる
-C| too painful {to write|writing|written|writes} off. :: 諦めるにはつらすぎると
-== 損失回避もまた、すでに使ったお金を、諦めるにはつらすぎるものに感じさせる。
-S| A more useful {question|questions|questioned|questionable} :: より役立つ問いは
-V| is not how {much|many|more|most} :: どれだけ…かではなく
-V| has already been {spent|spend|spending|spends}, :: すでに使ったか
-X| but whether we {would|wood|will to|would to} begin :: 始めるかどうかだ
-O| the {same|seem|sum of|samely} project today, :: 同じ事業を今日
-X| {knowing|know|known|knew} what we now know. :: 今の知識を踏まえて
-== より役立つ問いは、すでにいくら使ったかではなく、今わかっていることを踏まえて同じ事業を今日始めるかどうかだ。
-?? 0 4 コンサート当日、どうなったと仮定している？
-?? 3 2 経済学者は取り戻せない支出を何と呼ぶ？
-?? 6 2 政府や企業は何を何年も続けることがある？
-?? 7 4 事業をやめることは何のように感じられる？
+@gloss bomber=爆撃機, mission=任務, armor=装甲, statistician=統計学者, survivor=生き残り, survivorship bias=生存者バイアス, overrate=過大評価する, concentrate=集中させる
+T| {During|While|Meanwhile|Throughout of} the Second World War, :: 第二次大戦中
+S| military analysts {studied|study of|studying|studies to} :: 軍の分析者は調べた
+O| the {bombers|bombered|bomberly|bombings of} :: 爆撃機を
+X| {that|what|whom|whose} returned from missions :: 任務から帰還した
+X| {covered|covering|cover|covers} in bullet holes. :: 弾痕だらけで
+== 第二次世界大戦中、軍の分析者は、弾痕だらけで任務から帰還した爆撃機を調べた。
+S| The holes were {concentrated|concentrating|concentrate|concentration} :: 弾痕は集中していた
+P| {on|onto of|into|at of} the wings and body, :: 翼と胴体に
+X| so the {obvious|obviously|obviousness|obviate} plan :: だから明白な案は
+V| {was|were|be|being} :: …だった
+C| to add armor {there|their|they're|theirs}. :: そこを補強すること
+== 弾痕は翼と胴体に集中していたので、当然の案はそこに装甲を足すことだった。
+S| The {statistician|statistic|statistical|statistics} Abraham Wald, :: 統計学者ワルドは
+M| {however|whenever|whatever|moreover of}, :: しかし
+V| {pointed|point of|pointing|points to} out :: 指摘した
+O| that the planes {being|been|be|been being} examined :: 調べている機体は
+V| were {only|lonely|once|alone of} the survivors. :: 生還機だけだと
+== しかし統計学者ワルドは、調べている機体は生き残ったものにすぎないと指摘した。
+S| Planes {hit|hits|hitted|to hit} :: 被弾した機は
+P| {in|into of|onto|at of} the engines :: エンジンに
+V| had mostly {failed|fail|failing|failure} to return, :: 大半が戻らなかった
+X| {which|what|whom|who} is precisely why :: まさにそれが理由で
+S| such damage was {rarely|rare|rarity|rarer} seen. :: その損傷は珍しかった
+== エンジンに被弾した機の大半は戻らなかった。だからこそ、そうした損傷はほとんど見られなかったのだ。
+S| The {armor|armored|armoring of|armors of}, :: 装甲は
+M| he {argued|argue of|arguing|argument}, :: 彼の主張では
+V| {belonged|belong to|belonging|belongs of} :: あるべきだった
+X| {where|which|whom|whose} the returning planes :: 帰還機が…場所に
+V| showed {no|not|none|nor} holes at all. :: 穴が全くない
+== 彼の主張では、装甲は帰還機に穴が全くない場所にこそ付けるべきだった。
+S| This {error|err|erroneous|erring}, :: この誤りは
+X| now {known|knowing|knew|know} as survivorship bias, :: 生存者バイアスと呼ばれる
+V| {arises|arise|arising|arouse} :: 生じる
+T| {whenever|whatever|whichever|whomever} we draw conclusions :: 結論を出すたびに
+P| {from|onto|into|at} cases :: 事例から
+X| that {happened|happening|happens|to happen} to survive. :: たまたま生き残った
+== この誤りは今では生存者バイアスと呼ばれ、たまたま生き残った事例から結論を出すたびに生じる。
+S| Business {books|book|booked|booking}, :: ビジネス書は
+M| for {example|examples|exemplary|exemplify}, :: たとえば
+V| often {study|studies|studying|studied of} :: よく調べる
+O| {successful|successfully|succeed|succeeds} companies :: 成功した企業を
+X| and {list|lists|listing|listed of} the habits they share. :: 共通の習慣を挙げる
+== たとえばビジネス書は、成功した企業を調べて、その共通の習慣を挙げることが多い。
+M| {Yet|Despite|Although|Unless} many :: しかし多くの
+S| {failed|fail|failing of|fails} companies :: 倒産企業も
+V| may have {had|has|have|having} :: 持っていたかも
+O| {exactly|exact|exactness|exacting} the same habits. :: まさに同じ習慣を
+== しかし倒産した多くの企業も、まったく同じ習慣を持っていたかもしれない。
+S| They {simply|simple|simplify|simplicity} :: それらは単に
+V| {disappeared|disappear of|disappearing|disappearance} :: 消えてしまった
+T| before {anyone|anywhere|anyhow|any one of} :: 誰かが…前に
+V| {thought|thinked|thinking|thinks of} to study them. :: 調べようと思う
+== それらは、誰かが調べようと思う前に消えてしまっただけなのだ。
+S| The same {bias|biased|biasing|biases of} :: 同じ偏りは
+V| {leads|lead|leading|led of} us :: 私たちを導く
+R| to {overrate|overrating|overrated|overrates} risky paths :: 危険な道を過大評価へ
+T| when we hear {only|lonely|once|alone of} :: …だけ聞くと
+P| {from|for|into|by} those who succeeded. :: 成功者から
+== 同じ偏りのせいで、成功した人の話だけを聞くと、私たちは危険な道を過大評価してしまう。
+T| Before {trusting|trust|trusted|trusts} :: 信じる前に
+O| any lesson {drawn|drew|draws|draw} from winners, :: 勝者からの教訓を
+S| it is {worth|worthy|worthily|worthwhile of} asking: :: 問う価値がある
+V| where {are|is|be|being} the cases :: 事例はどこにあるか
+X| {we|us|our|ours} cannot see? :: 私たちに見えない
+== 勝者から引き出された教訓を信じる前に、問う価値がある。私たちに見えない事例はどこにあるのか、と。
+?? 1 1 弾痕はどこに集中していた？
+?? 2 0 調べた機体は生還機だけだと指摘したのは誰？
+?? 4 4 ワルドは装甲をどこに付けるべきだと主張した？
+?? 6 3 ビジネス書は何を調べることが多い？
 
 @id adv17
 @lv 3

@@ -120,7 +120,7 @@ C| nothing more {than|then|that|as} a coincidence. :: 偶然にすぎない
 == もっともらしい仕組みがない以上、海岸線の一致は偶然にすぎないかもしれない、と批判者は論じた。
 S| Wegener {died|dead|death|dying} :: ウェゲナーは死んだ
 P| on an {expedition|expedite|expeditious|expeditionary} :: 探検中に
-P| in Greenland {in|on|at|for} 1930, :: 1930年グリーンランドで
+P| in Greenland {in|on|at|for} 1930, :: 1930年グリーンランド
 X| his theory still {largely|large|largest|largeness} :: 説はなお大部分
 X| {dismissed|dismiss|dismissing|dismissal}. :: 退けられたまま
 == ウェゲナーは1930年、グリーンランドでの探検中に亡くなった。その説はまだほとんど相手にされていなかった。
@@ -254,7 +254,7 @@ O| which ones {are|is|be|being} taken. :: どれが選ばれるか
 @ja 外来種はすべて悪か
 @tag 難関大レベル・論説文
 @gloss cane toad=オオヒキガエル, invasive=侵略的な, synonymous=同義の, pollinate=受粉させる, native=原産の, prejudice=偏見, prudence=慎重さ, merit=長所・実情
-S| In 1935, cane {toads|toad|toady|toaded} :: 1935年オオヒキガエルが
+S| In 1935, cane {toads|toad|toady|toaded} :: 1935年ヒキガエルが
 V| were {brought|bring|bringing|brung} :: 持ち込まれた
 P| {to|at|on|onto of} Australia :: オーストラリアに
 M| in the {hope|hoping|hopeful|hoped} :: …を期待して
@@ -347,7 +347,7 @@ V| {numbered|number|numbering|numeral} in the billions. :: 数十億を数えた
 == 確認された最後のリョコウバトは1914年に動物園で死に、かつて数十億羽いた種が途絶えた。
 T| Today, advances in {genetic|genetics|genetically|gene of} engineering :: 今日遺伝子工学の進歩が
 V| have {raised|risen|rose|raising} :: もたらした
-O| a once {unthinkable|unthink|unthinkably|unthinkability} possibility: :: かつてない可能性を
+O| a once {unthinkable|unthink|unthinkably|unthinkability} possibility: :: かつて考えられぬ可能性
 X| {bringing|bring|brought|brings} such species back. :: そうした種の復活だ
 == 今日、遺伝子工学の進歩によって、かつては考えられなかった可能性が生まれた。そうした種をよみがえらせることだ。
 M| {Rather|Rath|Instead|Prefer} than cloning :: クローンではなく
@@ -765,7 +765,7 @@ M| {According|Accorded|Accordance|Accordingly} to this view, :: この見方に�
 S| trees {use|uses|using|usage} fungal networks :: 木は菌の網を使い
 X| {to communicate|communicating|communicate|communicated}, :: 交信する
 X| {warning|warned|warn|warns} neighbors :: 隣の木に知らせ
-P| {of|with|at|in} danger :: 危険を
+P| {of|onto|at|toward of} danger :: 危険を
 M| {and|nor|than|either} sharing food :: 養分を分け合う
 P| with their {offspring|offsprings|offspringly|offspringing}. :: 子の木と
 == この見方によれば、木は菌の網を使って交信し、隣の木に危険を知らせ、子どもの木と養分を分け合う。
