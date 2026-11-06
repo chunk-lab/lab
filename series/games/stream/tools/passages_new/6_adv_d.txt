@@ -22,7 +22,7 @@ S| the wolves {reduced|reduce|reducing|reduction} :: オオカミは減らした
 O| the {number|numbers of|numerous|numeral} of elk :: エルクの数を
 M| and, {just|justly|justice|justify} as importantly, :: 同じく重要なことに
 V| {changed|change|changing|changes} :: 変えた
-O| how the {surviving|survival|survive|survivor of} elk behaved. :: 生き残りの行動を
+O| how the {surviving|survivingly|survive|survivor of} elk behaved. :: 生き残りの行動を
 == 通説によれば、オオカミはエルクの数を減らし、同じく重要なことに、生き残ったエルクのふるまいを変えた。
 M| {Afraid|Afraidly|Fearful of|Fright} of being ambushed, :: 待ち伏せを恐れ
 S| elk {supposedly|suppose|supposed|supposing} :: エルクはどうやら
