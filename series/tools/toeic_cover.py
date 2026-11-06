@@ -11,7 +11,7 @@ def forms(w):
     w = w.lower(); f = {w, w + 's', w + 'es', w + 'ed', w + 'd', w + 'ing', w + 'er', w + 'ly'}
     if w.endswith('y'): f |= {w[:-1] + 'ies', w[:-1] + 'ied'}
     if w.endswith('e'): f |= {w[:-1] + 'ing'}
-    if re.search(r'[^aeiou][aeiou][bdgklmnprt]$', w): f |= {w + w[-1] + 'ed', w + w[-1] + 'ing'}
+    if re.search(r'[aeiou][bdgklmnprt]$', w): f |= {w + w[-1] + 'ed', w + w[-1] + 'ing'}
     return f
 def main():
     rows = [r for r in csv.DictReader(open(LIST, encoding='utf-8-sig'))]

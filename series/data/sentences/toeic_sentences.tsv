@@ -9,8 +9,10 @@ T500-007	500点	The manufacturer offers a two-year warranty on all appliances.	�
 T500-008	500点	Please send your application form to the personnel department.	申込書は、人事部に送ってください。
 T500-009	500点	The architect described the renovation plan in detail.	建築家は、改装の計画をくわしく説明しました。
 T500-010	500点	An article about our company appeared in a local magazine.	当社についての記事が、地元の雑誌に載りました。
-T500-011	500点	Our staff will assist you if you need any assistance with the device.	機器で何かお手伝いが必要なら、係の者がお手伝いします。
-T500-012	500点	The association announced that the banquet will take place at a new venue.	協会は、宴会を新しい会場で開くと発表しました。
+T500-011	500点	Our staff will assist you with the device.	係の者が、機器の操作をお手伝いします。
+T500-011b	500点	Please ask us if you need assistance.	手助けが必要なら、お声がけください。
+T500-012	500点	The association announced a new venue.	協会は、新しい会場を発表しました。
+T500-012b	500点	The banquet will start at seven.	宴会は7時に始まります。
 T500-013	500点	Attendance at the safety training is required for all employees.	安全研修への出席は、全社員に義務づけられています。
 T500-014	500点	Thank you for your attention to this important matter.	この大切な件にご配慮いただき、ありがとうございます。
 T500-015	500点	An outside firm will audit our financial records next month.	来月、外部の会社が当社の財務記録を監査します。
@@ -27,20 +29,22 @@ T500-025	500点	The hall has a seating capacity of about 500 people.	そのホ�
 T500-026	500点	In case of an emergency, please use the nearest exit.	緊急の場合は、いちばん近い出口を使ってください。
 T500-027	500点	The company held a celebration to mark its 50th anniversary.	会社は、創立50周年を記念して祝賀会を開きました。
 T500-028	500点	The dental clinic is located next to the post office.	歯科医院は、郵便局のとなりにあります。
-T500-029	500点	The store sells clothing for men, women, and children.	その店は、男性・女性・子ども向けの衣料品を売っています。
+T500-029	500点	The store sells children's clothing.	その店は、子ども服を売っています。
 T500-030	500点	She asked a colleague to cover her shift on Friday.	彼女は同僚に、金曜の勤務を代わってくれるよう頼みました。
 T500-031	500点	The commercial district is busy throughout the day.	商業地区は、一日中にぎわっています。
 T500-032	500点	It is common for prices to rise during the holiday season.	休暇の時期に値段が上がるのは、よくあることです。
 T500-033	500点	Employees will receive compensation for overtime work.	社員は、残業に対して手当を受け取ります。
 T500-034	500点	Competition among local restaurants has increased.	地元のレストランどうしの競争が激しくなりました。
-T500-035	500点	Several guests complained about the noise, and the manager sent a quick response to each complaint.	何人かの客が騒音に不満を言い、支配人はそれぞれの苦情にすぐ返事をしました。
+T500-035	500点	Several guests complained about the noise.	何人かの客が、騒音に不満を言いました。
+T500-035b	500点	The manager responded to each complaint quickly.	支配人は、それぞれの苦情にすぐ対応しました。
 T500-036	500点	We are concerned that the project may not be finished on time.	計画が期限に間に合わないのではないかと心配しています。
 T500-037	500点	You will receive a confirmation email once your payment is processed.	お支払いが処理されると、確認のメールが届きます。
 T500-038	500点	Please consider all the options before making a final decision.	最終的に決める前に、すべての選択肢を検討してください。
 T500-039	500点	Both companies signed the contract last week.	両社は先週、契約に署名しました。
 T500-040	500点	Is Tuesday afternoon convenient for you?	火曜の午後はご都合がよろしいですか。
 T500-041	500点	We ask all residents to cooperate with the building inspection.	居住者の皆さまに、建物の点検へのご協力をお願いします。
-T500-042	500点	Please make sure the information is correct, because incorrect entries will delay processing.	記入に誤りがあると処理が遅れるので、情報が正しいか確認してください。
+T500-042	500点	Please make sure the information is correct.	情報が正しいか、確かめてください。
+T500-042b	500点	Incorrect entries will delay processing.	記入の誤りがあると、処理が遅れます。
 T500-043	500点	The city council approved a new parking area near the park.	市議会は、公園の近くの新しい駐車場を承認しました。
 T500-044	500点	The county plans to build a new public library.	郡は、新しい公立図書館を建てる予定です。
 T500-045	500点	We are looking for a creative designer with experience in web development.	ウェブ開発の経験がある、創造力のあるデザイナーを探しています。
@@ -114,7 +118,8 @@ T500-112	500点	The sales team identified several potential customers.	営業部
 T500-113	500点	The company issued a press release about the new product.	会社は、新製品についての報道発表を出しました。
 T500-114	500点	Please refer to the previous email for details.	くわしくは、前回のメールをご覧ください。
 T500-115	500点	She is a professional photographer with ten years of experience.	彼女は、10年の経験があるプロの写真家です。
-T500-116	500点	He was promoted to sales manager, and his promotion was announced at the meeting.	彼は営業部長に昇進し、その昇進は会議で発表されました。
+T500-116	500点	He was promoted to sales manager.	彼は営業部長に昇進しました。
+T500-116b	500点	His promotion was announced at the meeting.	彼の昇進は、会議で発表されました。
 T500-117	500点	You can purchase tickets online.	チケットはオンラインで購入できます。
 T500-118	500点	Please check the quantity of each item before shipping.	発送の前に、各品物の数量を確認してください。
 T500-119	500点	The service was quite good for the price.	値段のわりに、サービスはかなりよかったです。
@@ -145,7 +150,7 @@ T500-143	500点	I suggest that we meet again next week.	来週もう一度会う
 T500-144	500点	The suggested retail price is 30 dollars.	希望小売価格は30ドルです。
 T500-145	500点	Please summarize the main points of the report.	報告書の要点をまとめてください。
 T500-146	500点	We hired temporary workers for the busy season.	忙しい時期に向けて、臨時の作業員を雇いました。
-T500-147	500点	The road is closed; therefore, we must take another route.	道路が閉鎖されているので、別の道を通らなければなりません。
+T500-147	500点	The road is closed. Therefore, we must turn back.	道路が閉鎖されています。だから引き返すしかありません。
 T500-148	500点	The restaurant serves traditional Japanese food.	そのレストランは、伝統的な日本料理を出しています。
 T500-149	500点	Each unit has two bedrooms and a balcony.	各部屋には、寝室が2つとベランダがあります。
 T500-150	500点	The hotel offers a unique experience for guests.	そのホテルでは、ほかにない体験ができます。
@@ -175,21 +180,23 @@ T500-173	500点	Does this umbrella belong to you?	このかさは、あなたの
 T500-174	500点	Please reserve a table for four.	4人分の席を予約してください。
 T500-175	500点	Please reply to this email by Friday.	金曜までに、このメールに返信してください。
 T500-176	500点	Please sign the document and return it before the deadline.	書類に署名して、締め切りまでに返送してください。
-T600-001	600点	The accountant was absent, so we had to reschedule the budget meeting.	会計士が休みだったので、予算会議の日程を変えなければなりませんでした。
+T600-001	600点	The accountant was absent today.	会計士は、今日休みでした。
+T600-001b	600点	We had to reschedule the budget meeting.	予算会議の日程を変えなければなりませんでした。
 T600-002	600点	Children under twelve must be accompanied by an adult.	12歳未満の子どもは、大人の付き添いが必要です。
 T600-003	600点	The team achieved its sales goal two months early.	チームは、売り上げの目標を2か月早く達成しました。
-T600-004	600点	I thought the exam would be hard, but it was actually quite easy.	試験は難しいと思っていましたが、実際はかなり簡単でした。
+T600-004	600点	The exam was actually quite easy.	試験は、実際にはかなり簡単でした。
 T600-005	600点	The parking lot is adjacent to the main building.	駐車場は、本館のとなりにあります。
 T600-006	600点	Many young people cannot afford to rent an apartment downtown.	多くの若者は、繁華街の部屋を借りる余裕がありません。
 T600-007	600点	Please review the agenda before the board meeting.	役員会の前に、議題に目を通してください。
 T600-008	600点	Both sides finally reached an agreement on the price.	双方は、ついに価格について合意しました。
-T600-009	600点	The government plans to provide aid to farmers affected by the drought, as agriculture is vital to the region.	農業はこの地域に欠かせないので、政府は干ばつの被害を受けた農家を援助する予定です。
+T600-009	600点	Agriculture is vital to this region.	農業は、この地域に欠かせません。
+T600-009b	600点	The government will provide aid to farmers.	政府は、農家に援助を行います。
 T600-010	600点	Our aim is to reduce waste by half within five years.	私たちの目標は、5年以内にごみを半分に減らすことです。
 T600-011	600点	We walked along the river to the stadium.	私たちは、川沿いを歩いて競技場まで行きました。
 T600-012	600点	If the train is delayed, we will need an alternative route.	電車が遅れたら、別の道が必要になります。
 T600-013	600点	The contest is open to both amateur and professional photographers.	そのコンテストには、アマチュアもプロの写真家も参加できます。
 T600-014	600点	We anticipate a sharp increase in demand this summer.	この夏は、需要が大きく増えると見込んでいます。
-T600-015	600点	It was raining, but we went hiking anyway.	雨が降っていましたが、それでもハイキングに行きました。
+T600-015	600点	We went hiking in the rain anyway.	雨でしたが、それでもハイキングに行きました。
 T600-016	600点	The charity made an appeal for donations after the flood.	慈善団体は、洪水のあとに寄付を呼びかけました。
 T600-017	600点	The singer made a surprise appearance at the festival.	その歌手は、祭りに飛び入りで登場しました。
 T600-018	600点	We need a new approach to attract younger customers.	若い客を呼び込むには、新しいやり方が必要です。
@@ -222,12 +229,12 @@ T600-044	600点	Please speak clearly so that everyone can hear you.	皆に聞こ
 T600-045	600点	Climate change is affecting crop production worldwide.	気候変動は、世界中の作物の生産に影響しています。
 T600-046	600点	Please compare the prices before you decide.	決める前に、値段を比べてください。
 T600-047	600点	The instructions were too complex for most users.	その説明は、ほとんどの利用者には複雑すぎました。
-T600-048	600点	After a long discussion, we came to the conclusion that the plan was too expensive.	長い話し合いのあと、その計画は費用がかかりすぎるという結論になりました。
+T600-048	600点	We came to the conclusion that the plan was too expensive.	その計画は費用がかかりすぎる、という結論になりました。
 T600-049	600点	The company will conduct a survey of its customers.	会社は、顧客に調査を行います。
-T600-050	600点	This document is confidential, so please do not share it.	この書類は機密なので、人に見せないでください。
+T600-050	600点	This document is confidential.	この書類は機密です。
 T600-051	600点	Sales have increased for five consecutive months.	売り上げは、5か月連続で伸びています。
 T600-052	600点	Large trucks consume a lot of fuel.	大型トラックは、燃料をたくさん使います。
-T600-053	600点	This box contains glass, so please handle it with care.	この箱にはガラスが入っているので、取り扱いに注意してください。
+T600-053	600点	This box contains glass.	この箱にはガラスが入っています。
 T600-054	600点	Please put the empty containers in the recycling bin.	空の容器は、リサイクルの箱に入れてください。
 T600-055	600点	We will continue to improve our service.	私たちは、サービスをよくし続けます。
 T600-056	600点	Show this coupon at the register to get a discount.	レジでこのクーポンを見せると、割引になります。
@@ -277,7 +284,7 @@ T600-099	600点	Please tell me the exact time of your arrival.	到着の正確�
 T600-100	600点	The doctor examined the patient carefully.	医師は、患者をていねいに診察しました。
 T600-101	600点	You can exchange the item within 30 days.	品物は、30日以内なら交換できます。
 T600-102	600点	Excuse me, could you tell me where the station is?	すみません、駅がどこか教えていただけますか。
-T600-103	600点	Some people say ghosts exist, but I don't believe it.	幽霊がいると言う人もいますが、私は信じません。
+T600-103	600点	Do you think ghosts exist?	幽霊はいると思いますか。
 T600-104	600点	The scientists conducted an experiment to test the new drug.	科学者たちは、新薬を試す実験を行いました。
 T600-105	600点	Thank you for the clear explanation.	わかりやすい説明をありがとうございました。
 T600-106	600点	We spent the afternoon exploring the old town.	私たちは、午後に旧市街を見て回りました。
@@ -329,7 +336,7 @@ T600-151	600点	Artificial intelligence is changing many industries.	人工知�
 T600-152	600点	Dolphins are very intelligent animals.	イルカはとても賢い動物です。
 T600-153	600点	The intensive course lasts two weeks.	その集中講座は、2週間続きます。
 T600-154	600点	The interior of the hotel was beautiful.	そのホテルの内装は美しかったです。
-T600-155	600点	Sorry to interrupt, but you have a phone call.	お話し中すみませんが、お電話です。
+T600-155	600点	Sorry to interrupt you.	お話し中に、すみません。
 T600-156	600点	His research was published in a medical journal.	彼の研究は、医学雑誌に載りました。
 T600-157	600点	Labor costs have risen in recent years.	ここ数年、人件費が上がっています。
 T600-158	600点	He climbed the ladder to fix the roof.	彼は屋根を直すために、はしごを登りました。
@@ -453,7 +460,7 @@ T600-275	600点	Each member was given a different task.	メンバーそれぞれ
 T600-276	600点	The temperature will drop below zero tonight.	今夜は、気温が0度を下回るでしょう。
 T600-277	600点	Please read the terms of the contract carefully.	契約の条件をよく読んでください。
 T600-278	600点	All employees must wear a tie at the ceremony.	式典では、社員全員がネクタイを締めなければなりません。
-T600-279	600点	The apartment is tiny, but it is very clean.	その部屋はとても狭いですが、とてもきれいです。
+T600-279	600点	The apartment is tiny but very clean.	その部屋は狭いですが、とてもきれいです。
 T600-280	600点	Please take a tissue if you need one.	必要なら、ティッシュをお取りください。
 T600-281	600点	It was a tragic accident.	それは悲惨な事故でした。
 T600-282	600点	She was transferred to the Tokyo office.	彼女は、東京支社に転勤になりました。
@@ -496,7 +503,7 @@ T600-318	600点	We should protect the environment for future generations.	未来
 T600-319	600点	For example, you can pay by phone.	たとえば、電話で支払うこともできます。
 T600-320	600点	The food at the hotel was excellent.	ホテルの料理はすばらしかったです。
 T600-321	600点	The company exports cars to Europe.	その会社は、ヨーロッパに車を輸出しています。
-T600-322	600点	If you fail to pay on time, you will be charged a fee.	期日までに支払わないと、手数料がかかります。
+T600-322	600点	A fee is charged if you fail to pay on time.	期日までに払わないと、手数料がかかります。
 T600-323	600点	The sales figures for May are on page 2.	5月の売上の数字は、2ページにあります。
 T600-324	600点	Please fill the tank with gas.	タンクをガソリンで満タンにしてください。
 T600-325	600点	These shoes fit me perfectly.	この靴は、私の足にぴったりです。
@@ -540,9 +547,10 @@ T600-362	600点	This map is very useful for tourists.	この地図は、旅行�
 T600-363	600点	Please wait here for a moment.	ここで少しお待ちください。
 T600-364	600点	The weather is expected to improve tomorrow.	明日は天気がよくなる見込みです。
 T600-365	600点	We spent the whole day at the beach.	私たちは、浜辺で一日じゅう過ごしました。
-T600-366	600点	The museum is closed on Mondays for staff training, and tickets can be booked online.	美術館は職員研修のため月曜休館で、チケットはオンラインで予約できます。
+T600-366	600点	The museum is closed on Mondays.	美術館は、月曜日が休みです。
+T600-366b	600点	You can book tickets online.	チケットはオンラインで予約できます。
 T600-367	600点	Please stick the label on the top of each box.	各箱の上にラベルを貼ってください。
-T700-001	700点	All passengers are now aboard, and the ship will depart shortly.	乗客は全員乗り込み、船はまもなく出発します。
+T700-001	700点	All passengers are now aboard.	乗客は全員、乗り込みました。
 T700-002	700点	The new mayor promised to abolish the unpopular parking fee.	新しい市長は、評判の悪い駐車料金を廃止すると約束しました。
 T700-003	700点	I am absolutely sure that the figures are accurate.	数字が正確なのは、まったく間違いありません。
 T700-004	700点	There is no absolute rule for setting prices.	値段の付け方に、絶対の決まりはありません。
@@ -560,17 +568,20 @@ T700-015	700点	New employees must adapt quickly to the work environment.	新入
 T700-016	700点	The room was small but adequate for our needs.	部屋は狭かったですが、私たちには十分でした。
 T700-017	700点	You can adjust the height of the chair.	いすの高さは調節できます。
 T700-018	700点	A nurse will administer the vaccine.	看護師がワクチンを投与します。
-T700-019	700点	His honesty is admirable, and the staff have great admiration for him.	彼の正直さは立派で、社員は彼をとても尊敬しています。
+T700-019	700点	His honesty is admirable.	彼の正直さは立派です。
+T700-019b	700点	The staff have great admiration for him.	社員は、彼をとても尊敬しています。
 T700-020	700点	I admire her ability to stay calm under pressure.	重圧の中でも落ち着いていられる彼女の能力に感心します。
 T700-021	700点	He admitted that he had made a mistake.	彼は、間違えたことを認めました。
 T700-022	700点	The board voted to adopt the new policy.	役員会は、新しい方針を採用することを決めました。
 T700-023	700点	The hotel is an affiliate of a large international chain.	そのホテルは、大きな国際チェーンの系列です。
 T700-024	700点	The region exports agricultural products such as rice and fruit.	その地域は、米や果物などの農産物を輸出しています。
-T700-025	700点	The company denied the allegations, and the reporters who alleged fraud could not prove it.	会社は申し立てを否定し、不正を主張した記者たちはそれを証明できませんでした。
+T700-025	700点	The company denied the allegations.	会社は、その申し立てを否定しました。
+T700-025b	700点	The reporters alleged that the data was false.	記者たちは、データが偽物だと主張しました。
 T700-026	700点	We need to allocate more money to marketing.	マーケティングにもっとお金を割り当てる必要があります。
 T700-027	700点	Each speaker is allotted ten minutes.	話す人それぞれに、10分が割り当てられています。
 T700-028	700点	The two teams work on alternate days.	2つのチームは、1日おきに働いています。
-T700-029	700点	His ambition is to start his own company, and he has an ambitious plan.	彼の野望は自分の会社を始めることで、意欲的な計画を持っています。
+T700-029	700点	His ambition is to start his own company.	彼の夢は、自分の会社を始めることです。
+T700-029b	700点	She has an ambitious plan for the new store.	彼女は、新しい店について意欲的な計画を持っています。
 T700-030	700点	The committee approved an amendment to the contract.	委員会は、契約の修正を承認しました。
 T700-031	700点	The researchers will analyze the data next week.	研究者たちは、来週データを分析します。
 T700-032	700点	My ancestors came from a small village in Italy.	私の先祖は、イタリアの小さな村から来ました。
@@ -599,7 +610,8 @@ T700-054	700点	An assessment of the damage will take a week.	被害の評価に
 T700-055	700点	Our employees are our greatest asset.	社員は、当社のいちばんの財産です。
 T700-056	700点	The manager will assign each member a different assignment.	部長は、メンバーそれぞれに違う仕事を割り当てます。
 T700-057	700点	She works as a sales associate at a clothing store.	彼女は、衣料品店で販売員として働いています。
-T700-058	700点	I assume the meeting will start on time, but that assumption may be wrong.	会議は時間どおり始まると思いますが、その想定は違うかもしれません。
+T700-058	700点	I assume the meeting will start on time.	会議は、時間どおりに始まると思います。
+T700-058b	700点	That assumption may be wrong.	その想定は、間違っているかもしれません。
 T700-059	700点	I can assure you that your data is safe.	お客様のデータが安全であることを保証します。
 T700-060	700点	The athletic club has a large gym and a pool.	その運動クラブには、大きなジムとプールがあります。
 T700-061	700点	The restaurant has a relaxed atmosphere.	そのレストランは、くつろいだ雰囲気です。
@@ -671,7 +683,8 @@ T700-126	700点	We combined the two reports into one.	2つの報告書を1つに
 T700-127	700点	Salespeople earn a commission on every sale.	販売員は、売るたびに歩合を受け取ります。
 T700-128	700点	Thank you for your commitment to the project.	計画への取り組みに感謝します。
 T700-129	700点	Many people commute to the city by train.	多くの人が、電車で町へ通勤しています。
-T700-130	700点	The prices are comparable to those of other stores, and the comparison is easy to make online.	値段はほかの店とほぼ同じで、比較はオンラインで簡単にできます。
+T700-130	700点	Our prices are comparable to other stores.	当社の値段は、ほかの店とほぼ同じです。
+T700-130b	700点	You can make a price comparison online.	値段の比較は、オンラインでできます。
 T700-131	700点	Small shops find it hard to compete with large chains.	小さな店は、大手チェーンと競争するのが難しいです。
 T700-132	700点	She showed great competence in handling the crisis.	彼女は、危機の対応で高い能力を示しました。
 T700-133	700点	We offer competitive prices.	当社は、他社に負けない値段を提供しています。
@@ -689,7 +702,8 @@ T700-144	700点	It is hard to concentrate in a noisy office.	うるさい事務�
 T700-145	700点	The meeting concluded at five.	会議は5時に終わりました。
 T700-146	700点	The mayor condemned the attack.	市長は、その攻撃を強く非難しました。
 T700-147	700点	The conductor bowed to the audience.	指揮者は、聴衆にお辞儀をしました。
-T700-148	700点	He confessed that he had broken the vase, and his confession surprised everyone.	彼は花びんを割ったと白状し、その告白は皆を驚かせました。
+T700-148	700点	He confessed that he broke the vase.	彼は、花びんを割ったと白状しました。
+T700-148b	700点	His confession surprised everyone.	彼の告白は、皆を驚かせました。
 T700-149	700点	I am confident that we will meet the deadline.	締め切りに間に合うと確信しています。
 T700-150	700点	The conflict between the two departments was resolved.	2つの部署の対立は解決しました。
 T700-151	700点	There was some confusion about the meeting time.	会議の時間について、少し混乱がありました。
@@ -747,3 +761,754 @@ T700-202	700点	Children are full of curiosity.	子どもは好奇心でいっ�
 T700-203	700点	I'm curious about how the machine works.	その機械がどう動くのか気になります。
 T700-204	700点	The local currency is the yen.	現地の通貨は円です。
 T700-205	700点	The company uses cutting-edge technology.	その会社は、最先端の技術を使っています。
+T500-182	500点	Thank you for your quick response.	すぐにお返事をいただき、ありがとうございます。
+T700-212	700点	Don't worry, this dog doesn't bite.	心配しないで、この犬はかみません。
+T700-213	700点	Nobody dared to question the boss.	誰も、上司に意見する勇気がありませんでした。
+T700-214	700点	Workers removed the debris after the storm.	作業員が、嵐のあとのがれきを片付けました。
+T700-215	700点	The company paid off its debt.	会社は、借金を返し終えました。
+T700-216	700点	Prices have doubled over the past decade.	この10年で、値段は倍になりました。
+T700-217	700点	You must declare any goods over 200 dollars.	200ドルを超える品は、申告しなければなりません。
+T700-218	700点	Sales declined in the second quarter.	第2四半期に、売り上げが落ちました。
+T700-219	700点	She dedicated her life to helping others.	彼女は、人を助けることに人生をささげました。
+T700-220	700点	Please return any item with a defect.	欠陥のある品は、返品してください。
+T700-221	700点	We need a definite answer by Friday.	金曜までに、はっきりした答えが必要です。
+T700-222	700点	Please look up the definition of this word.	この単語の定義を調べてください。
+T700-223	700点	We are delighted to welcome you.	皆さまをお迎えでき、うれしく思います。
+T700-224	700点	We had a delightful evening.	楽しい夜を過ごしました。
+T700-225	700点	Democracy depends on free elections.	民主主義は、自由な選挙で成り立っています。
+T700-226	700点	The country held its first democratic election.	その国は、初めての民主的な選挙を行いました。
+T700-227	700点	The salesperson demonstrated the new vacuum cleaner.	販売員が、新しい掃除機を実演しました。
+T700-228	700点	The town is dependent on tourism.	その町は、観光に頼っています。
+T700-229	700点	The trucks return to the depot at night.	トラックは、夜に車庫に戻ります。
+T700-230	700点	Cars suffer rapid depreciation in the first year.	車は、最初の1年で価値が大きく下がります。
+T700-231	700点	Deregulation lowered airline fares.	規制緩和で、航空運賃が下がりました。
+T700-232	700点	Few plants grow in the desert.	砂漠では、植物はほとんど育ちません。
+T700-233	700点	You deserve a break.	あなたは休んでいいですよ。
+T700-234	700点	This area is designated for smoking.	ここは、喫煙場所に指定されています。
+T700-235	700点	Despite the rain, the event was a success.	雨にもかかわらず、催しは成功しました。
+T700-236	700点	She believed it was her destiny to become a doctor.	彼女は、医者になるのが自分の運命だと信じていました。
+T700-237	700点	The storm caused great destruction.	嵐は、大きな破壊をもたらしました。
+T700-238	700点	Please send me a detailed report.	くわしい報告書を送ってください。
+T700-239	700点	Add a small amount of detergent to the water.	水に洗剤を少し入れてください。
+T700-240	700点	Enter the last four digits of your card number.	カード番号の下4けたを入力してください。
+T700-241	700点	Her diligence was rewarded with a promotion.	彼女の勤勉さは、昇進で報われました。
+T700-242	700点	We had breakfast at a small diner.	小さな食堂で朝食をとりました。
+T700-243	700点	Check the staff directory for his number.	彼の番号は、社員名簿で調べてください。
+T700-244	700点	The main disadvantage is the high cost.	主な欠点は、費用が高いことです。
+T700-245	700点	I don't want to disappoint my parents.	両親をがっかりさせたくありません。
+T700-246	700点	The flood was a disaster for the town.	洪水は、その町にとって大災害でした。
+T700-247	700点	This model has been discontinued.	この型は、製造が中止されています。
+T700-248	700点	Please disregard my previous email.	前のメールは無視してください。
+T700-249	700点	The strike caused disruption to train services.	ストライキで、電車の運行が乱れました。
+T700-250	700点	We could hear distant thunder.	遠くの雷の音が聞こえました。
+T700-251	700点	Can you distinguish between the two colors?	2つの色を見分けられますか。
+T700-252	700点	Please do not disturb the other guests.	ほかのお客様の迷惑にならないようにしてください。
+T700-253	700点	Our team has a diverse range of skills.	私たちのチームには、さまざまな技能があります。
+T700-254	700点	The company pays dividends twice a year.	その会社は、年に2回配当を出します。
+T700-255	700点	Domestic flights leave from Terminal 2.	国内線は、第2ターミナルから出ます。
+T700-256	700点	An anonymous donor gave a million dollars.	名前を明かさない寄付者が、100万ドルを寄付しました。
+T700-257	700点	First-year students live in the dormitory.	1年生は寮に住んでいます。
+T700-258	700点	It is doubtful that he will come.	彼が来るかどうかは、疑わしいです。
+T700-259	700点	The only downside is the long commute.	唯一の難点は、通勤が長いことです。
+T700-260	700点	Please send me the first draft by Monday.	月曜までに、最初の下書きを送ってください。
+T700-261	700点	The lecture was long and dull.	その講義は長くて退屈でした。
+T700-262	700点	These boots are durable and waterproof.	このブーツは、丈夫で防水です。
+T700-263	700点	She passed the exam with ease.	彼女は、楽々と試験に合格しました。
+T700-264	700点	The company is making ecological products.	その会社は、環境にやさしい製品を作っています。
+T700-265	700点	Don't put the glass near the edge of the table.	テーブルの端の近くに、コップを置かないでください。
+T700-266	700点	The new edition of the book comes out in May.	その本の新版は、5月に出ます。
+T700-267	700点	The new software works effectively.	新しいソフトは、うまく働いています。
+T700-268	700点	We must improve the efficiency of the factory.	工場の効率を上げなければなりません。
+T700-269	700点	This heater is very efficient.	このヒーターは、とても効率がよいです。
+T700-270	700点	My son goes to elementary school.	息子は小学校に通っています。
+T700-271	700点	Are you eligible for the discount?	割引を受ける資格はありますか。
+T700-272	700点	We want to eliminate paper waste.	紙のむだをなくしたいです。
+T700-273	700点	I was embarrassed by my mistake.	自分の間違いが恥ずかしかったです。
+T700-274	700点	She was emotionally exhausted after the trip.	彼女は、旅行のあと気持ちの面で疲れ切っていました。
+T700-275	700点	The speaker emphasized the need for safety.	話し手は、安全の必要性を強調しました。
+T700-276	700点	The new app enables you to pay by phone.	新しいアプリで、スマホで支払えます。
+T700-277	700点	We encountered a few problems.	いくつか問題にぶつかりました。
+T700-278	700点	We will endeavor to meet your needs.	ご要望に応えるよう努めます。
+T700-279	700点	The line is engaged at the moment.	ただいま、電話が話し中です。
+T700-280	700点	They announced their engagement last month.	2人は先月、婚約を発表しました。
+T700-281	700点	Good lighting can enhance the room.	よい照明は、部屋を引き立てます。
+T700-282	700点	The update includes several enhancements.	その更新には、いくつかの改良が含まれています。
+T700-283	700点	Can you enlarge this photo?	この写真を引き伸ばせますか。
+T700-284	700点	The new mall is enormous.	新しいショッピングモールは巨大です。
+T700-285	700点	You can enroll in the course online.	その講座には、オンラインで申し込めます。
+T700-286	700点	She runs a small enterprise.	彼女は、小さな会社を経営しています。
+T700-287	700点	The clown entertained the children.	ピエロは、子どもたちを楽しませました。
+T700-288	700点	The staff were enthusiastic about the plan.	社員たちは、その計画に乗り気でした。
+T700-289	700点	I entirely agree with you.	あなたにまったく同感です。
+T700-290	700点	The profits were shared equally.	利益は、平等に分けられました。
+T700-291	700点	The kitchen is fully equipped.	台所には、設備がすべてそろっています。
+T700-292	700点	Water is essential for life.	水は、生きるのに欠かせません。
+T700-293	700点	They promised eternal love.	2人は、永遠の愛を誓いました。
+T700-294	700点	We will evaluate each proposal carefully.	各提案を、注意深く評価します。
+T700-295	700点	Your evaluation will be sent next week.	あなたの評価は、来週送られます。
+T700-296	700点	Spread the paint evenly.	ペンキを均一に塗ってください。
+T700-297	700点	Eventually, we found the right house.	結局、ぴったりの家が見つかりました。
+T700-298	700点	It was evident that he was tired.	彼が疲れているのは明らかでした。
+T700-299	700点	The museum explains the evolution of birds.	その博物館は、鳥の進化を説明しています。
+T700-300	700点	That is exactly what I wanted.	それは、まさに私がほしかった物です。
+T700-301	700点	Sales exceeded our expectations.	売り上げは、期待を上回りました。
+T700-302	700点	The shop is open every day except Monday.	店は、月曜日以外毎日開いています。
+T700-303	700点	There are no exceptions to this rule.	この規則に例外はありません。
+T700-304	700点	She is an exceptional student.	彼女は、ずば抜けた学生です。
+T700-305	700点	Members get exclusive offers.	会員は、特別な割引を受けられます。
+T700-306	700点	We joined a day excursion to the island.	島への日帰り旅行に参加しました。
+T700-307	700点	The long walk exhausted us.	長く歩いて、私たちはくたくたになりました。
+T700-308	700点	We tried some exotic fruit.	珍しい果物を食べてみました。
+T700-309	700点	The company announced a major expansion.	会社は、大きな拡大を発表しました。
+T700-310	700点	We need to cut our expenditure.	支出を減らさなければなりません。
+T700-311	700点	Check the expiration date on the milk.	牛乳の賞味期限を確かめてください。
+T700-312	700点	My passport expires next month.	私のパスポートは、来月期限が切れます。
+T700-313	700点	We extended the deadline by a week.	締め切りを1週間延ばしました。
+T700-314	700点	The hotel has extensive gardens.	そのホテルには、広い庭があります。
+T700-315	700点	We hired an external consultant.	外部の相談役を雇いました。
+T700-316	700点	The region has extreme weather.	その地域は、極端な天候です。
+T700-317	700点	She joined the faculty last year.	彼女は昨年、教授陣に加わりました。
+T700-318	700点	The failure of the project was a shock.	計画の失敗は衝撃でした。
+T700-319	700点	The test was fairly easy.	試験は、わりと簡単でした。
+T700-320	700点	I have faith in my team.	私は、自分のチームを信頼しています。
+T700-321	700点	Space has always fascinated me.	宇宙には、いつも心ひかれてきました。
+T700-322	700点	Could you do me a favor?	お願いがあるのですが。
+T700-323	700点	The weather was favorable for the event.	天気は、催しにとって好都合でした。
+T700-324	700点	Is the plan financially feasible?	その計画は、お金の面で実現できますか。
+T700-325	700点	Please don't feed the animals.	動物にえさをやらないでください。
+T700-326	700点	Could you fetch me a glass of water?	水を1杯持ってきてくれますか。
+T700-327	700点	The job offers a lot of flexibility.	その仕事は、融通がよくききます。
+T700-328	700点	We offer flexible working hours.	当社は、勤務時間に融通がききます。
+T700-329	700点	Wood floats on water.	木は水に浮きます。
+T700-330	700点	Traffic is flowing smoothly now.	今は、車がスムーズに流れています。
+T700-331	700点	Please fold the towels.	タオルをたたんでください。
+T700-332	700点	The storm forced us to cancel the trip.	嵐のせいで、旅行を中止せざるをえませんでした。
+T700-333	700点	The forecast says it will rain tomorrow.	予報では、明日は雨だそうです。
+T700-334	700点	No one could foresee the problem.	誰も、その問題を予測できませんでした。
+T700-335	700点	The new store was formally opened today.	新しい店は、今日正式に開店しました。
+T700-336	700点	Scientists are testing a new formula.	科学者たちは、新しい配合を試しています。
+T700-337	700点	The founder of the company is 80 years old.	その会社の創業者は、80歳です。
+T700-338	700点	I bought a new frame for the picture.	絵のための新しい額縁を買いました。
+T700-339	700点	We need a clear framework for the project.	その計画には、はっきりした枠組みが必要です。
+T700-340	700点	The frequency of the buses has increased.	バスの本数が増えました。
+T700-341	700点	The slow internet frustrates me.	ネットが遅くて、いらいらします。
+T700-342	700点	Trust is fundamental to any business.	信頼は、どんな商売にも欠かせない基本です。
+T700-343	700点	Furthermore, the price is very reasonable.	さらに、値段もとても手ごろです。
+T700-344	700点	Eye color is passed down through genes.	目の色は、遺伝子で受け継がれます。
+T700-345	700点	Generally, the trains run on time.	たいてい、電車は時間どおりに走ります。
+T700-346	700点	The solar panels generate electricity.	太陽光パネルは、電気を生み出します。
+T700-347	700点	Einstein was a scientific genius.	アインシュタインは、科学の天才でした。
+T700-348	700点	The dancer's movements were graceful.	ダンサーの動きは優雅でした。
+T700-349	700点	The farmers store grain in the barn.	農家は、穀物を納屋に保管しています。
+T700-350	700点	The patient's condition is grave.	患者の容体は深刻です。
+T700-351	700点	The receptionist greeted us warmly.	受付係が、温かく迎えてくれました。
+T700-352	700点	I stopped at the grocery store on the way home.	帰り道に、食料品店に寄りました。
+T700-353	700点	The jury found him guilty.	陪審は、彼を有罪としました。
+T700-354	700点	We met halfway between our two offices.	2つの事務所の中間で会いました。
+T700-355	700点	Please read the handout before class.	授業の前に、配布資料を読んでください。
+T700-356	700点	Smoking is harmful to your health.	喫煙は、健康に害があります。
+T700-357	700点	The farmers are busy with the harvest.	農家は、収穫で忙しいです。
+T700-358	700点	Don't hesitate to call me.	遠慮なく電話してください。
+T700-359	700点	The trip was the highlight of my year.	その旅行は、今年いちばんの思い出でした。
+T700-360	700点	We thank you for your kind hospitality.	温かいおもてなしに感謝します。
+T700-361	700点	Most households own a car.	ほとんどの家庭が車を持っています。
+T700-362	700点	Water is made of hydrogen and oxygen.	水は、水素と酸素でできています。
+T700-363	700点	It is illegal to park here.	ここに駐車するのは違法です。
+T700-364	700点	The mirror creates the illusion of space.	鏡で、部屋が広く見えます。
+T700-365	700点	Children imitate their parents.	子どもは親をまねます。
+T700-366	700点	Many immigrants work in the city.	多くの移民が、その町で働いています。
+T700-367	700点	We will implement the new system next month.	来月、新しいシステムを導入します。
+T700-368	700点	Her speech impressed everyone.	彼女のスピーチは、皆を感心させました。
+T700-369	700点	The company offers incentives to top sellers.	会社は、成績のよい販売員に奨励金を出しています。
+T700-370	700点	Please report any incidents to security.	何か出来事があれば、警備員に報告してください。
+T700-371	700点	Is this time inconvenient for you?	この時間は、ご都合が悪いですか。
+T700-372	700点	You may incur extra charges.	追加料金がかかることがあります。
+T700-373	700点	The country celebrates its independence in July.	その国は、7月に独立を祝います。
+T700-374	700点	She is an independent woman.	彼女は、自立した女性です。
+T700-375	700点	Sales are a key indicator of success.	売り上げは、成功を示す大切な指標です。
+T700-376	700点	The hotel is clean and inexpensive.	そのホテルは、清潔で安いです。
+T700-377	700点	The infant was sleeping peacefully.	赤ちゃんは、すやすや眠っていました。
+T700-378	700点	What can we infer from this data?	このデータから、何が推測できますか。
+T700-379	700点	This product is inferior to the old one.	この製品は、前の物より劣っています。
+T700-380	700点	Inflation is rising again.	インフレが、また進んでいます。
+T700-381	700点	The meeting was very informal.	その会議は、とても気軽なものでした。
+T700-382	700点	The initial cost is high.	最初にかかる費用が高いです。
+T700-383	700点	The company initiated a new program.	会社は、新しい取り組みを始めました。
+T700-384	700点	She took the initiative to solve the problem.	彼女は、率先して問題を解決しました。
+T700-385	700点	He suffered a minor injury.	彼は軽いけがをしました。
+T700-386	700点	Innovation is the key to growth.	革新が、成長の鍵です。
+T700-387	700点	I'd like to inquire about your prices.	料金についてお尋ねしたいのですが。
+T700-388	700点	Thank you for your inquiry.	お問い合わせありがとうございます。
+T700-389	700点	The book offers useful insights.	その本は、役に立つ洞察を与えてくれます。
+T700-390	700点	She insisted on paying the bill.	彼女は、どうしても自分が払うと言い張りました。
+T700-391	700点	The officials will inspect the factory.	職員が、工場を検査します。
+T700-392	700点	Nature is a great source of inspiration.	自然は、大きなひらめきの源です。
+T700-393	700点	Her story inspired many people.	彼女の話は、多くの人を励ましました。
+T700-394	700点	The pain went away instantly.	痛みは、すぐに消えました。
+T700-395	700点	He works at a research institute.	彼は、研究所で働いています。
+T700-396	700点	The teacher instructed us to sit down.	先生は、私たちに座るよう指示しました。
+T700-397	700点	Please contact your insurer after the accident.	事故のあとは、保険会社に連絡してください。
+T700-398	700点	We need to integrate the two systems.	2つのシステムを統合する必要があります。
+T700-399	700点	The book is for intellectual readers.	その本は、知的な読者向けです。
+T700-400	700点	I intend to finish the report today.	今日、報告書を仕上げるつもりです。
+T700-401	700点	Children learn by interacting with others.	子どもは、人と関わることで学びます。
+T700-402	700点	This is for internal use only.	これは社内用です。
+T700-403	700点	She did an internship at a bank.	彼女は、銀行でインターンシップをしました。
+T700-404	700点	Turn left at the next intersection.	次の交差点を左に曲がってください。
+T700-405	700点	He invested his savings in stocks.	彼は、貯金を株に投資しました。
+T700-406	700点	The police are investigating the case.	警察が、その事件を調べています。
+T700-407	700点	This house is a good investment.	この家は、よい投資です。
+T700-408	700点	The investors were pleased with the results.	投資家は、結果に満足しました。
+T700-409	700点	The job involves a lot of travel.	その仕事は、出張が多いです。
+T700-410	700点	Everyone involved in the project was thanked.	計画に関わった全員に、感謝が伝えられました。
+T700-411	700点	The irony is that he hates flying.	皮肉なことに、彼は飛行機が嫌いです。
+T700-412	700点	Patients with the flu are kept in isolation.	インフルエンザの患者は、隔離されています。
+T700-413	700点	Please itemize your travel expenses.	旅費を、項目ごとに書き出してください。
+T700-414	700点	Your itinerary has been sent by email.	旅程表をメールでお送りしました。
+T700-415	700点	The two firms formed a joint venture.	2つの会社は、合弁事業を立ち上げました。
+T700-416	700点	How can you justify the high price?	その高い値段を、どう正当化できますか。
+T700-417	700点	She is keen to learn new skills.	彼女は、新しい技能を学ぶことに熱心です。
+T700-418	700点	The keynote speech was inspiring.	基調講演は、心を動かすものでした。
+T700-419	700点	The samples were sent to the laboratory.	試料は、研究所に送られました。
+T700-420	700点	The landlord raised the rent.	大家が家賃を上げました。
+T700-421	700点	The landscape here is beautiful.	ここの景色は美しいです。
+T700-422	700点	I left my laptop on the train.	電車にノートパソコンを置き忘れました。
+T700-423	700点	The project was largely successful.	その計画は、おおむね成功しました。
+T700-424	700点	Of the two options, I prefer the latter.	2つの案のうち、後者のほうがいいです。
+T700-425	700点	The customer filed a lawsuit against the store.	客は、その店を相手に訴訟を起こしました。
+T700-426	700点	Don't lean against the door.	ドアにもたれないでください。
+T700-427	700点	The company made a big leap in sales.	会社は、売り上げを大きく伸ばしました。
+T700-428	700点	We had leftovers for lunch.	昼食に残り物を食べました。
+T700-429	700点	The company accepted liability for the accident.	会社は、事故の責任を認めました。
+T700-430	700点	The statue is a symbol of liberty.	その像は、自由の象徴です。
+T700-431	700点	This is a once-in-a-lifetime chance.	これは、一生に一度の機会です。
+T700-432	700点	We visited an old lighthouse on the coast.	海岸の古い灯台を訪れました。
+T700-433	700点	Click the link to download the file.	リンクを押して、ファイルを取り込んでください。
+T700-434	700点	The company had to liquidate its assets.	会社は、資産を処分しなければなりませんでした。
+T700-435	700点	The bank has enough liquidity.	その銀行には、十分な流動資金があります。
+T700-436	700点	She won a literary prize.	彼女は、文学賞を受賞しました。
+T700-437	700点	He studied English literature in college.	彼は大学で英文学を学びました。
+T700-438	700点	We signed a long-term contract.	長期の契約を結びました。
+T700-439	700点	This button is loose.	このボタンは、取れかけています。
+T700-440	700点	Please loosen your seat belt.	シートベルトを緩めてください。
+T700-441	700点	She has many loyal customers.	彼女には、ひいきの客がたくさんいます。
+T700-442	700点	A luncheon will be held for retirees.	退職者のための昼食会が開かれます。
+T700-443	700点	The factory bought new machinery.	工場は、新しい機械を買いました。
+T700-444	700点	The majority of staff work from home.	社員の大半は、在宅で働いています。
+T700-445	700点	The elevator holds a maximum of ten people.	エレベーターには、最大10人まで乗れます。
+T700-446	700点	The ice melted in the sun.	氷が日なたで溶けました。
+T700-447	700点	Please read the memorandum from the director.	部長からの社内文書を読んでください。
+T700-448	700点	The job is mentally demanding.	その仕事は、精神的にきついです。
+T700-449	700点	It was merely a suggestion.	それは、ただの提案でした。
+T700-450	700点	Heat the soup in the microwave.	スープを電子レンジで温めてください。
+T700-451	700点	We must minimize costs.	費用を最小限に抑えなければなりません。
+T700-452	700点	The prime minister will visit Japan.	首相が日本を訪れます。
+T700-453	700点	Only a minority of voters agreed.	賛成した有権者は、少数でした。
+T700-454	700点	Our mission is to help small businesses.	私たちの使命は、小さな会社を助けることです。
+T700-455	700点	He lives in a modest house.	彼は、質素な家に住んでいます。
+T700-456	700点	We monitor the system 24 hours a day.	システムは、24時間監視しています。
+T700-457	700点	The monument was built in 1900.	その記念碑は、1900年に建てられました。
+T700-458	700点	Good managers motivate their staff.	よい上司は、部下のやる気を引き出します。
+T700-459	700点	You can choose multiple answers.	答えは、複数選べます。
+T700-460	700点	The store has 200 branches nationwide.	その店は、全国に200の支店があります。
+T700-461	700点	Expensive does not necessarily mean better.	高いからといって、よいとは限りません。
+T700-462	700点	Don't neglect your health.	健康をおろそかにしないでください。
+T700-463	700点	We negotiated a better price.	交渉して、よりよい値段にしました。
+T700-464	700点	This is a quiet neighborhood.	ここは静かな地域です。
+T700-465	700点	People from neighboring towns came to the festival.	近くの町からも人が祭りに来ました。
+T700-466	700点	The company found a niche in the market.	その会社は、市場のすき間を見つけました。
+T700-467	700点	He nodded in agreement.	彼は、うなずいて賛成しました。
+T700-468	700点	She received a nomination for best actress.	彼女は、主演女優賞の候補に選ばれました。
+T700-469	700点	You will receive a notification by email.	メールでお知らせが届きます。
+T700-470	700点	Her first novel became a bestseller.	彼女の最初の小説は、ベストセラーになりました。
+T700-471	700点	The country has two nuclear power plants.	その国には、原子力発電所が2つあります。
+T700-472	700点	We received numerous complaints.	たくさんの苦情を受けました。
+T700-473	700点	Good nutrition is important for children.	よい栄養は、子どもにとって大切です。
+T700-474	700点	All drivers must obey traffic laws.	運転手は全員、交通法規に従わなければなりません。
+T700-475	700点	Does anyone have an objection?	誰か反対の人はいますか。
+T700-476	700点	Our main objective is to increase sales.	私たちの主な目標は、売り上げを伸ばすことです。
+T700-477	700点	You are under no obligation to buy.	買う義務はありません。
+T700-478	700点	You must obtain a visa before you travel.	旅行の前に、ビザを取らなければなりません。
+T700-479	700点	The answer is obvious.	答えは明らかです。
+T700-480	700点	We have occasional power cuts.	ときどき停電があります。
+T700-481	700点	I occasionally work from home.	私は、ときどき在宅で仕事をします。
+T700-482	700点	Please write your occupation on the form.	用紙に職業を書いてください。
+T700-483	700点	The company occupies three floors.	その会社は、3つの階を使っています。
+T700-484	700点	The accident occurred at noon.	事故は正午に起きました。
+T700-485	700点	It's odd that he didn't call.	彼が電話してこないのは変です。
+T700-486	700点	The ongoing repairs will take a month.	今行っている修理は、1か月かかります。
+T700-487	700点	She defeated her opponent easily.	彼女は、対戦相手に楽に勝ちました。
+T700-488	700点	The plan met strong opposition.	その計画は、強い反対にあいました。
+T700-489	700点	The satellite is in orbit around the earth.	その衛星は、地球の周りを回っています。
+T700-490	700点	The city passed a new ordinance on noise.	市は、騒音に関する新しい条例を可決しました。
+T700-491	700点	We sell only organic vegetables.	当店は、有機野菜だけを売っています。
+T700-492	700点	She is a very organized person.	彼女は、とてもきちんとした人です。
+T700-493	700点	New employees attend an orientation.	新入社員は、説明会に出ます。
+T700-494	700点	The tree was decorated with ornaments.	木には飾りが付けられていました。
+T700-495	700点	Leave now, otherwise you'll miss the bus.	今出ないと、バスに乗り遅れますよ。
+T700-496	700点	There is no outlet near my desk.	机の近くにコンセントがありません。
+T700-497	700点	Please outline your plan briefly.	計画の概要を簡単に説明してください。
+T700-498	700点	Many firms outsource their IT work.	多くの会社が、IT業務を外部に委託しています。
+T700-499	700点	She did an outstanding job.	彼女は、すばらしい仕事をしました。
+T700-500	700点	He overcame many difficulties.	彼は、多くの困難を乗り越えました。
+T700-501	700点	Please put your bag in the overhead bin.	かばんは、頭上の棚に入れてください。
+T700-502	700点	The hotel overlooks the sea.	そのホテルからは、海が見渡せます。
+T700-503	700点	The amount of work overwhelmed him.	仕事の量に、彼は圧倒されました。
+T700-504	700点	The ownership of the company has changed.	その会社の持ち主が変わりました。
+T700-505	700点	You look pale.	顔色が悪いですよ。
+T700-506	700点	I spent the morning doing paperwork.	午前中は、書類仕事をしていました。
+T700-507	700点	Each participant will receive a certificate.	参加者には全員、修了証が渡されます。
+T700-508	700点	I particularly liked the dessert.	特にデザートが気に入りました。
+T700-509	700点	The two companies formed a partnership.	2つの会社は、提携しました。
+T700-510	700点	She has a passion for cooking.	彼女は、料理に情熱を持っています。
+T700-511	700点	The company holds a patent on the design.	その会社は、そのデザインの特許を持っています。
+T700-512	700点	We had dinner on the patio.	テラスで夕食をとりました。
+T700-513	700点	The library thanked its patrons.	図書館は、利用者に感謝を伝えました。
+T700-514	700点	The street is closed to cars but open to pedestrians.	その通りは車は通れませんが、歩行者は通れます。
+T700-515	700点	Students learn a lot from their peers.	学生は、仲間から多くを学びます。
+T700-516	700点	Our perception of the product changed.	その製品に対する私たちの見方が変わりました。
+T700-517	700点	Free lunch is one of the perks of the job.	無料の昼食は、その仕事の特典のひとつです。
+T700-518	700点	She got a permanent position.	彼女は、正社員の職を得ました。
+T700-519	700点	Try to see it from a different perspective.	違う視点から見てみてください。
+T700-520	700点	I persuaded him to join us.	彼を説得して、仲間に入れました。
+T700-521	700点	The pharmacy is open until ten.	薬局は10時まで開いています。
+T700-522	700点	The project is in its final phase.	その計画は、最終段階にあります。
+T700-523	700点	We fished from the pier.	桟橋から釣りをしました。
+T700-524	700点	She wore a plain white shirt.	彼女は、無地の白いシャツを着ていました。
+T700-525	700点	We have plenty of time.	時間はたっぷりあります。
+T700-526	700点	Please plug in the charger.	充電器をコンセントにつないでください。
+T700-527	700点	The plumbing in this building is old.	この建物の配管は古いです。
+T700-528	700点	A recent poll shows strong support.	最近の世論調査では、強い支持が示されています。
+T700-529	700点	I bought a portable speaker.	持ち運べるスピーカーを買いました。
+T700-530	700点	She showed me her portfolio.	彼女は、作品集を見せてくれました。
+T700-531	700点	A portrait of the founder hangs in the hall.	創業者の肖像画が、ホールに掛かっています。
+T700-532	700点	The store is practically empty.	店はほとんど空っぽです。
+T700-533	700点	Time is precious.	時間は貴重です。
+T700-534	700点	The train arrived precisely at noon.	電車は、ちょうど正午に着きました。
+T700-535	700点	Experts predict a rise in prices.	専門家は、値上がりを予測しています。
+T700-536	700点	Do you have a seating preference?	席のご希望はありますか。
+T700-537	700点	She is pregnant with her first child.	彼女は、最初の子を妊娠しています。
+T700-538	700点	We must fight against prejudice.	偏見と戦わなければなりません。
+T700-539	700点	No smoking is allowed on the premises.	敷地内は禁煙です。
+T700-540	700点	Preparation is the key to success.	準備が成功の鍵です。
+T700-541	700点	Your presence is requested at the meeting.	会議へのご出席をお願いします。
+T700-542	700点	The group works for the preservation of old buildings.	その団体は、古い建物の保存に取り組んでいます。
+T700-543	700点	We must preserve our forests.	森を守らなければなりません。
+T700-544	700点	She attended a prestigious university.	彼女は、名門大学に通いました。
+T700-545	700点	He pretended not to hear me.	彼は、聞こえないふりをしました。
+T700-546	700点	Fire prevention is everyone's job.	火災の予防は、皆の務めです。
+T700-547	700点	I have previously worked in sales.	以前、営業の仕事をしていました。
+T700-548	700点	The product is primarily sold online.	その製品は、主にオンラインで売られています。
+T700-549	700点	Our primary goal is safety.	私たちの第一の目標は、安全です。
+T700-550	700点	The hotel is in a prime location.	そのホテルは、一等地にあります。
+T700-551	700点	The principal of the school gave a speech.	校長があいさつをしました。
+T700-552	700点	We follow the principle of fairness.	私たちは、公平の原則に従っています。
+T700-553	700点	Please call prior to your visit.	来る前に電話してください。
+T700-554	700点	Safety is our top priority.	安全が、最優先です。
+T700-555	700点	There is a high probability of rain.	雨の可能性が高いです。
+T700-556	700点	Please proceed to Gate 8.	8番ゲートへお進みください。
+T700-557	700点	She works in the procurement department.	彼女は、調達部で働いています。
+T700-558	700点	The new tools improved productivity.	新しい道具で、生産性が上がりました。
+T700-559	700点	Teaching is a rewarding profession.	教えることは、やりがいのある職業です。
+T700-560	700点	The business is very profitable.	その商売は、とても利益が上がっています。
+T700-561	700点	The city has progressive policies.	その町は、進歩的な政策をとっています。
+T700-562	700点	Smoking is prohibited in the building.	建物内は禁煙です。
+T700-563	700点	He is a prominent lawyer.	彼は、有名な弁護士です。
+T700-564	700点	We sent out promotional emails.	宣伝のメールを送りました。
+T700-565	700点	Please reply promptly.	すぐに返事をしてください。
+T700-566	700点	Make sure the machine is working properly.	機械がきちんと動いているか確認してください。
+T700-567	700点	I propose that we take a break.	休憩をとることを提案します。
+T700-568	700点	The proposed changes were approved.	提案された変更は、承認されました。
+T700-569	700点	We met with prospective clients.	見込み客と会いました。
+T700-570	700点	Workers protested against the pay cuts.	労働者たちは、賃金の引き下げに抗議しました。
+T700-571	700点	Contact your service provider.	サービス会社に連絡してください。
+T700-572	700点	The contract includes a provision for delays.	契約には、遅れについての条項があります。
+T700-573	700点	The publication date is May 1.	発行日は5月1日です。
+T700-574	700点	The publisher accepted her book.	出版社は、彼女の本を採用しました。
+T700-575	700点	The pump stopped working.	ポンプが動かなくなりました。
+T700-576	700点	She lost her purse on the bus.	彼女は、バスで財布をなくしました。
+T700-577	700点	He wants to pursue a career in law.	彼は、法律の仕事に進みたいと思っています。
+T700-578	700点	Do I qualify for a discount?	割引の対象になりますか。
+T700-579	700点	The quarterly report is due next week.	四半期の報告書は、来週が締め切りです。
+T700-580	700点	Please send your query to our support team.	質問は、サポート係に送ってください。
+T700-581	700点	The movie is about a quest for treasure.	その映画は、宝探しの物語です。
+T700-582	700点	Could you give me a price quote?	値段の見積もりをいただけますか。
+T700-583	700点	The law bans racial discrimination.	その法律は、人種差別を禁じています。
+T700-584	700点	Hang your coat on the rack.	コートは、コート掛けに掛けてください。
+T700-585	700点	Prices are rising rapidly.	値段が急速に上がっています。
+T700-586	700点	Don't eat raw chicken.	生の鶏肉を食べないでください。
+T700-587	700点	Please use the rear entrance.	裏口を使ってください。
+T700-588	700点	You can get a rebate on the new TV.	新しいテレビで、払い戻しが受けられます。
+T700-589	700点	The town was rebuilt after the fire.	町は、火事のあと建て直されました。
+T700-590	700点	I can't recall his name.	彼の名前が思い出せません。
+T700-591	700点	The recipient must sign for the package.	受取人は、荷物に署名しなければなりません。
+T700-592	700点	She is recovering from surgery.	彼女は、手術から回復しつつあります。
+T700-593	700点	We are recruiting new staff.	新しい社員を募集しています。
+T700-594	700点	There will be a reduction in prices.	値下げがあります。
+T700-595	700点	The results reflect our hard work.	結果は、私たちの努力を反映しています。
+T700-596	700点	The country accepted many refugees.	その国は、多くの難民を受け入れました。
+T700-597	700点	The old hotel was refurbished.	古いホテルが改装されました。
+T700-598	700点	He regained his confidence.	彼は、自信を取り戻しました。
+T700-599	700点	I'm writing regarding your order.	ご注文の件でご連絡しています。
+T700-600	700点	We will go regardless of the weather.	天気に関係なく行きます。
+T700-601	700点	She is the regional sales manager.	彼女は、地域の営業部長です。
+T700-602	700点	I regret to inform you of the delay.	遅れをお知らせするのは残念です。
+T700-603	700点	Please back up your files regularly.	定期的にファイルを保存しておいてください。
+T700-604	700点	The new regulations take effect today.	新しい規則は、今日から適用されます。
+T700-605	700点	The company will reimburse your travel costs.	会社が旅費を払い戻します。
+T700-606	700点	The test was relatively easy.	試験は、比較的簡単でした。
+T700-607	700点	We need a reliable supplier.	信頼できる業者が必要です。
+T700-608	700点	It was a relief to hear the news.	その知らせを聞いて、ほっとしました。
+T700-609	700点	The company will relocate to Osaka.	会社は大阪に移転します。
+T700-610	700点	The relocation will take place in June.	移転は6月に行われます。
+T700-611	700点	You can rely on me.	私を頼りにしてください。
+T700-612	700点	She made a remarkable recovery.	彼女は、目覚ましい回復を見せました。
+T700-613	700点	This is a reminder about tomorrow's meeting.	明日の会議についてのお知らせです。
+T700-614	700点	The job offers good remuneration.	その仕事は、報酬がよいです。
+T700-615	700点	Please renew your membership.	会員資格を更新してください。
+T700-616	700点	We plan to renovate the kitchen.	台所を改装する予定です。
+T700-617	700点	The chef is renowned for his desserts.	その料理長は、デザートで有名です。
+T700-618	700点	She will represent our company.	彼女が、当社を代表します。
+T700-619	700点	France is a republic.	フランスは共和国です。
+T700-620	700点	The firm has a good reputation.	その会社は、評判がよいです。
+T700-621	700点	A degree is a requirement for this job.	この仕事には、学位が必要です。
+T700-622	700点	The mayor's residence is near the park.	市長の住まいは、公園の近くにあります。
+T700-623	700点	This is a residential area.	ここは住宅地です。
+T700-624	700点	He resigned from his position.	彼は、職を辞任しました。
+T700-625	700点	The board passed a resolution.	役員会は、決議を可決しました。
+T700-626	700点	The old church was restored.	古い教会は修復されました。
+T700-627	700点	Access to this area is restricted.	この区域への立ち入りは制限されています。
+T700-628	700点	The company plans to restructure.	会社は、組織を立て直す予定です。
+T700-629	700点	The retailer opened a new store.	その小売業者は、新しい店を開きました。
+T700-630	700点	We want to retain our best workers.	優秀な社員を引き留めたいです。
+T700-631	700点	Staff retention is a big issue.	社員の定着は、大きな問題です。
+T700-632	700点	The town saw a revival of tourism.	町では、観光が復活しました。
+T700-633	700点	The festival was revived after 50 years.	その祭りは、50年ぶりに復活しました。
+T700-634	700点	The internet started a revolution in communication.	インターネットは、通信に革命を起こしました。
+T700-635	700点	The staff rotate shifts every week.	社員は、毎週交代で勤務します。
+T700-636	700点	The sea was rough today.	今日は、海が荒れていました。
+T700-637	700点	Exercise is part of my daily routine.	運動は、私の毎日の日課です。
+T700-638	700点	It is rude to interrupt.	話をさえぎるのは失礼です。
+T700-639	700点	She grew up in a rural area.	彼女は、いなかで育ちました。
+T700-640	700点	The TV signal comes from a satellite.	テレビの電波は、衛星から来ています。
+T700-641	700点	The results were satisfactory.	結果は満足のいくものでした。
+T700-642	700点	I could scarcely believe it.	ほとんど信じられませんでした。
+T700-643	700点	The government launched a new scheme.	政府は、新しい計画を始めました。
+T700-644	700点	He is a respected scholar.	彼は、尊敬されている学者です。
+T700-645	700点	The teacher scolded the boy.	先生は、その男の子をしかりました。
+T700-646	700点	A sculpture stands in the lobby.	ロビーに彫刻が立っています。
+T700-647	700点	The tech sector is growing fast.	IT分野は、急速に伸びています。
+T700-648	700点	Please keep your valuables secure.	貴重品は、しっかり保管してください。
+T700-649	700点	He seldom eats breakfast.	彼は、めったに朝食を食べません。
+T700-650	700点	That is a sensible idea.	それは、賢明な考えです。
+T700-651	700点	The storm caused severe damage.	嵐は、ひどい被害をもたらしました。
+T700-652	700点	She sews her own clothes.	彼女は、自分の服を縫っています。
+T700-653	700点	Let's sit in the shade.	日陰に座りましょう。
+T700-654	700点	The shareholders approved the merger.	株主は、合併を承認しました。
+T700-655	700点	The train will arrive shortly.	電車は、まもなく到着します。
+T700-656	700点	The fair will showcase new products.	見本市では、新製品が紹介されます。
+T700-657	700点	Please walk on the sidewalk.	歩道を歩いてください。
+T700-658	700点	She sighed with relief.	彼女は、ほっとため息をつきました。
+T700-659	700点	The sink is full of dishes.	流しは、皿でいっぱいです。
+T700-660	700点	There is a slight problem.	ちょっとした問題があります。
+T700-661	700点	The price rose slightly.	値段が少し上がりました。
+T700-662	700点	The so-called experts were wrong.	いわゆる専門家は間違っていました。
+T700-663	700点	He uses social media every day.	彼は、毎日SNSを使っています。
+T700-664	700点	The soil here is rich.	ここの土は、肥えています。
+T700-665	700点	The decision was solely mine.	その決定は、私一人のものでした。
+T700-666	700点	The table is made of solid wood.	そのテーブルは、無垢材でできています。
+T700-667	700点	We found a solution.	解決策が見つかりました。
+T700-668	700点	The company is still solvent.	その会社は、まだ支払い能力があります。
+T700-669	700点	I'm somewhat tired today.	今日は、少し疲れています。
+T700-670	700点	Please sort the papers by date.	書類を、日付順に並べてください。
+T700-671	700点	I bought a souvenir for my family.	家族にお土産を買いました。
+T700-672	700点	The room is bright and spacious.	その部屋は、明るくて広いです。
+T700-673	700点	The shop specializes in Italian food.	その店は、イタリア料理が専門です。
+T700-674	700点	Many species are in danger.	多くの種が、危機にさらされています。
+T700-675	700点	This tool is specifically for children.	この道具は、子ども専用です。
+T700-676	700点	Speculators drove up land prices.	投機家が、土地の値段をつり上げました。
+T700-677	700点	The milk spoiled in the heat.	暑さで、牛乳が腐りました。
+T700-678	700点	A spokesperson answered questions.	広報担当者が、質問に答えました。
+T700-679	700点	The economy needs stability.	経済には、安定が必要です。
+T700-680	700点	There is a coffee stain on my shirt.	シャツにコーヒーのしみがあります。
+T700-681	700点	He has a stake in the company.	彼は、その会社に出資しています。
+T700-682	700点	Don't stare at people.	人をじろじろ見ないでください。
+T700-683	700点	Many animals starved during the winter.	冬の間、多くの動物が飢えました。
+T700-684	700点	We need to order more stationery.	文房具をもっと注文する必要があります。
+T700-685	700点	Check the status of your order online.	注文の状況は、オンラインで確認してください。
+T700-686	700点	The problem stems from poor planning.	その問題は、計画の甘さから生じています。
+T700-687	700点	My neck feels stiff.	首がこっています。
+T700-688	700点	Low interest rates stimulate the economy.	低金利は、経済を刺激します。
+T700-689	700点	We need a new marketing strategy.	新しいマーケティング戦略が必要です。
+T700-690	700点	A small stream runs through the park.	公園に、小川が流れています。
+T700-691	700点	Smoking is strictly prohibited.	喫煙は厳しく禁じられています。
+T700-692	700点	We strive to offer the best service.	最高のサービスを提供するよう努めています。
+T700-693	700点	The building has a steel structure.	その建物は、鉄骨構造です。
+T700-694	700点	The deadline for submission is May 1.	提出の締め切りは5月1日です。
+T700-695	700点	I canceled my magazine subscription.	雑誌の定期購読をやめました。
+T700-696	700点	The firm has a subsidiary in China.	その会社は、中国に子会社があります。
+T700-697	700点	This substance is dangerous.	この物質は危険です。
+T700-698	700点	The company made a substantial profit.	会社は、相当な利益を上げました。
+T700-699	700点	A large sum of money was stolen.	多額のお金が盗まれました。
+T700-700	700点	World leaders met at the summit.	世界の指導者が、首脳会議で会いました。
+T700-701	700点	She supervises a team of five.	彼女は、5人のチームを監督しています。
+T700-702	700点	Children need adult supervision.	子どもには、大人の監督が必要です。
+T700-703	700点	The house is surrounded by trees.	その家は、木々に囲まれています。
+T700-704	700点	The police arrested a suspect.	警察は、容疑者を逮捕しました。
+T700-705	700点	The service was suspended due to snow.	雪のため、運行が中止されました。
+T700-706	700点	We use sustainable materials.	当社は、持続可能な素材を使っています。
+T700-707	700点	You have my deepest sympathy.	心からお悔やみ申し上げます。
+T700-708	700点	Please fasten your seat belt for takeoff.	離陸のため、シートベルトをお締めください。
+T700-709	700点	The takeover was announced today.	買収が今日発表されました。
+T700-710	700点	She is a talented musician.	彼女は、才能ある音楽家です。
+T700-711	700点	The office is temporarily closed.	事務所は、一時的に閉まっています。
+T700-712	700点	The tenant pays rent monthly.	借り主は、毎月家賃を払います。
+T700-713	700点	He has a tendency to be late.	彼は、遅れがちです。
+T700-714	700点	The date is tentative.	日付は仮のものです。
+T700-715	700点	The termination of the contract was unexpected.	契約の打ち切りは、思いがけないものでした。
+T700-716	700点	The weather was terrible.	天気はひどかったです。
+T700-717	700点	The thermometer shows 30 degrees.	温度計は、30度を示しています。
+T700-718	700点	The inspection was very thorough.	点検は、とても徹底していました。
+T700-719	700点	Please read the contract thoroughly.	契約書をよく読んでください。
+T700-720	700点	Please tighten the screws.	ねじを締めてください。
+T700-721	700点	Hold the rope tightly.	ロープをしっかり握ってください。
+T700-722	700点	The house is built of timber.	その家は、木材で建てられています。
+T700-723	700点	We need the right tools for the job.	その仕事に合った道具が必要です。
+T700-724	700点	The logo is a registered trademark.	そのロゴは、登録商標です。
+T700-725	700点	We hiked along a mountain trail.	山道に沿ってハイキングしました。
+T700-726	700点	You can transact business online.	オンラインで取引ができます。
+T700-727	700点	Each transaction is recorded.	取引はすべて記録されます。
+T700-728	700点	The transition to the new system was smooth.	新しいシステムへの移行は、順調でした。
+T700-729	700点	Can you translate this letter?	この手紙を翻訳してくれますか。
+T700-730	700点	The car needs a new transmission.	その車は、変速機の交換が必要です。
+T700-731	700点	The data is transmitted by satellite.	データは、衛星で送られます。
+T700-732	700点	The museum displays ancient treasures.	その博物館は、古代の宝物を展示しています。
+T700-733	700点	He works for the Treasury Department.	彼は財務省で働いています。
+T700-734	700点	Let me treat you to lunch.	昼食をおごらせてください。
+T700-735	700点	We are offering a free trial.	無料のお試しを提供しています。
+T700-736	700点	Troops were sent to the border.	国境に部隊が送られました。
+T700-737	700点	The company has a high staff turnover.	その会社は、社員の入れ替わりが激しいです。
+T700-738	700点	The meeting typically lasts an hour.	会議は、たいてい1時間かかります。
+T700-739	700点	He will undergo surgery next week.	彼は来週、手術を受けます。
+T700-740	700点	Unemployment has fallen this year.	今年は、失業率が下がりました。
+T700-741	700点	We had an unexpected visitor.	思いがけない来客がありました。
+T700-742	700点	The two groups united to win.	2つのグループは、勝つために団結しました。
+T700-743	700点	The team showed great unity.	チームは、強いまとまりを見せました。
+T700-744	700点	Music is a universal language.	音楽は、世界共通の言葉です。
+T700-745	700点	You can upgrade to first class.	ファーストクラスに格上げできます。
+T700-746	700点	More people live in urban areas.	都市部に住む人が増えています。
+T700-747	700点	This is an urgent message.	これは急ぎの連絡です。
+T700-748	700点	Utilities are included in the rent.	光熱費は、家賃に含まれています。
+T700-749	700点	We should utilize our resources better.	資源をもっとうまく使うべきです。
+T700-750	700点	There is a vacancy in the sales team.	営業部に空きがあります。
+T700-751	700点	The house has been vacant for years.	その家は、何年も空き家です。
+T700-752	700点	Please vacate the room by noon.	正午までに部屋を空けてください。
+T700-753	700点	This ticket is valid for one year.	この切符は、1年間有効です。
+T700-754	700点	The weather is a variable we can't control.	天気は、私たちには変えられない要素です。
+T700-755	700点	There is little variation in price.	値段の差はほとんどありません。
+T700-756	700点	Prices vary by season.	値段は季節によって変わります。
+T700-757	700点	The vendor sells fresh fruit.	その売り手は、新鮮な果物を売っています。
+T700-758	700点	The new venture was a success.	新しい事業は成功しました。
+T700-759	700点	Verification takes two days.	確認には2日かかります。
+T700-760	700点	Please verify your email address.	メールアドレスを確認してください。
+T700-761	700点	Download the latest version of the app.	アプリの最新版をダウンロードしてください。
+T700-762	700点	We flew to Paris via London.	ロンドン経由でパリへ飛びました。
+T700-763	700点	We held a virtual meeting.	オンラインで会議をしました。
+T700-764	700点	I have vivid memories of that trip.	その旅行のことは、はっきりと覚えています。
+T700-765	700点	The voyage took three weeks.	船旅は3週間かかりました。
+T700-766	700点	A covered walkway connects the buildings.	屋根付きの通路が、建物をつないでいます。
+T700-767	700点	The storm weakened overnight.	嵐は、夜のうちに弱まりました。
+T700-768	700点	The package weighs two kilograms.	荷物の重さは2キロです。
+T700-769	700点	He likes coffee, whereas she likes tea.	彼はコーヒーが好きですが、彼女は紅茶が好きです。
+T700-770	700点	We buy goods at wholesale prices.	商品を卸値で買っています。
+T700-771	700点	The company has a skilled workforce.	その会社には、腕のいい人材がそろっています。
+T700-772	700点	Safety in the workplace is important.	職場の安全は大切です。
+T700-773	700点	The investment yielded a good profit.	その投資は、よい利益を生みました。
+T700-774	700点	He worked there for his whole lifetime.	彼は、一生そこで働きました。
+T700-775	700点	We can overcome this problem together.	一緒なら、この問題を乗り越えられます。
+T700-776	700点	They plan to rebuild the old bridge.	古い橋を建て直す予定です。
+T700-777	700点	Few people understood the significance of the discovery.	その発見の重要性を理解した人は、少数でした。
+T700-778	700点	There was a significant increase in sales.	売り上げが大きく伸びました。
+T700-779	700点	There is a strong similarity between the two designs.	2つのデザインは、よく似ています。
+T700-780	700点	Simply press the button to start.	ボタンを押すだけで始まります。
+T700-781	700点	She studied at a music academy.	彼女は、音楽学校で学びました。
+T700-782	700点	The new country's accession to the union was approved.	その国の連合への加盟が承認されました。
+T700-783	700点	Finishing the marathon was a great accomplishment.	マラソンを完走したのは、大きな達成でした。
+T700-784	700点	He studied accountancy at college.	彼は、大学で会計学を学びました。
+T700-785	700点	Please sign the addendum to the contract.	契約の追加条項に署名してください。
+T700-786	700点	She works in hospital administration.	彼女は、病院の管理部門で働いています。
+T700-787	700点	I have some administrative work to do.	事務の仕事が少しあります。
+T700-788	700点	Please contact the system administrator.	システム管理者に連絡してください。
+T700-789	700点	The magazine is full of advertisements.	その雑誌は、広告だらけです。
+T700-790	700点	The pilot made an announcement.	機長がアナウンスをしました。
+T700-791	700点	The appraisee should prepare for the review meeting.	評価を受ける人は、面談の準備をしてください。
+T700-792	700点	He finished his apprenticeship as a cook.	彼は、料理人の見習い期間を終えました。
+T700-793	700点	An arbitrator settled the dispute.	仲裁人が、争いを解決しました。
+T700-794	700点	The concert was held at a large arena.	コンサートは、大きな会場で開かれました。
+T700-795	700点	He joined the army at eighteen.	彼は、18歳で軍隊に入りました。
+T700-796	700点	We arranged a meeting for Monday.	月曜日に会議を設定しました。
+T700-797	700点	Please don't drop ash on the floor.	床に灰を落とさないでください。
+T700-798	700点	The village lies beyond the hills.	村は、丘の向こうにあります。
+T700-799	700点	The company is worth two billion dollars.	その会社には、20億ドルの価値があります。
+T700-800	700点	The building was damaged by a bomb.	その建物は、爆弾で壊されました。
+T700-801	700点	The game will be broadcast live.	試合は生中継されます。
+T700-802	700点	May I have your business card?	お名刺をいただけますか。
+T700-803	700点	The firm's market capitalisation rose sharply.	その会社の時価総額は、大きく上がりました。
+T700-804	700点	Good cashflow is vital for a small business.	小さな会社には、よい資金繰りが欠かせません。
+T700-805	700点	The museum has a display about the old cavalry.	博物館には、昔の騎兵隊の展示があります。
+T700-806	700点	Please leave your cell phone number.	携帯電話の番号を残してください。
+T700-807	700点	Read each clause of the contract.	契約の各条項を読んでください。
+T700-808	700点	The clerk helped me find a size.	店員が、サイズを探すのを手伝ってくれました。
+T700-809	700点	Sales are up compared to last year.	昨年と比べて、売り上げが伸びています。
+T700-810	700点	The test checks reading comprehension.	その試験は、読解力を見ます。
+T700-811	700点	We offer a comprehensive health plan.	当社は、包括的な健康保険を用意しています。
+T700-812	700点	Congratulations on your new job!	新しいお仕事、おめでとうございます。
+T700-813	700点	The plan was considered too risky.	その計画は、危険すぎると考えられました。
+T700-814	700点	The consolidation of offices saved money.	事務所の統合で、お金が節約できました。
+T700-815	700点	The content of the website is updated daily.	サイトの内容は、毎日更新されます。
+T700-816	700点	For your convenience, we accept cards.	皆さまの便宜のため、カードがご利用いただけます。
+T700-817	700点	We see a convergence of phone and computer technology.	電話とパソコンの技術が、一つにまとまってきています。
+T700-818	700点	Customer service is our core competency.	顧客サービスが、当社のいちばんの強みです。
+T700-819	700点	We drove through the countryside.	いなかを車で走りました。
+T700-820	700点	The morning air was crisp.	朝の空気は、ひんやりと澄んでいました。
+T700-821	700点	Critics loved the new film.	批評家たちは、新しい映画を絶賛しました。
+T700-822	700点	I paid with my debit card.	デビットカードで払いました。
+T700-823	700点	We bought sandwiches at the delicatessen.	総菜店でサンドイッチを買いました。
+T700-824	700点	The demerger created two new companies.	会社の分割で、新しい会社が2つできました。
+T700-825	700点	Her determination helped her succeed.	彼女の強い意志が、成功につながりました。
+T700-826	700点	Wipe the dirt off your shoes.	靴の汚れをふいてください。
+T700-827	700点	Please draw a map for me.	地図を描いてください。
+T700-828	700点	The pens are in the top drawer.	ペンは、いちばん上の引き出しにあります。
+T700-829	700点	He majored in economics.	彼は、経済学を専攻しました。
+T700-830	700点	You can pay by either cash or card.	現金かカードのどちらでも払えます。
+T700-831	700点	Workers study by emulation of skilled staff.	作業員は、熟練者をまねて学びます。
+T700-832	700点	We were encouraged by the results.	結果に勇気づけられました。
+T700-833	700点	The hotel offers live entertainment.	そのホテルでは、生の演奏などの催しがあります。
+T700-834	700点	Solve the equation for x.	方程式をxについて解いてください。
+T700-835	700点	He invested in equities.	彼は株式に投資しました。
+T700-836	700点	She owns equity in the company.	彼女は、その会社の株を持っています。
+T700-837	700点	Have you ever been to Canada?	カナダに行ったことはありますか。
+T700-838	700点	The company expanded into Asia.	その会社は、アジアに進出しました。
+T700-839	700点	We are expecting a call from the client.	顧客からの電話を待っています。
+T700-840	700点	We need your expertise on this project.	この計画には、あなたの専門知識が必要です。
+T700-841	700点	Your card has expired.	カードの期限が切れています。
+T700-842	700点	Each exhibitor gets a booth.	出展者は、それぞれブースを持てます。
+T700-843	700点	Japan is a major exporter of cars.	日本は、車の主要な輸出国です。
+T700-844	700点	In fact, the trip was cheaper.	実は、その旅行のほうが安かったです。
+T700-845	700点	She enjoys reading fiction.	彼女は、小説を読むのが好きです。
+T700-846	700点	Yours faithfully, John Smith.	敬具、ジョン・スミス。
+T700-847	700点	The candle's flame went out.	ろうそくの火が消えました。
+T700-848	700点	We met by the fountain.	噴水のそばで会いました。
+T700-849	700点	The hotel is known for the friendliness of its staff.	そのホテルは、従業員の親しみやすさで知られています。
+T700-850	700点	We will fulfill your order quickly.	ご注文に、すぐお応えします。
+T700-851	700点	The school held a fund-raising event.	学校は、資金集めの催しを開きました。
+T700-852	700点	She sent me a birthday greeting.	彼女は、誕生日のあいさつを送ってくれました。
+T700-853	700点	Reading is a good habit.	読書はよい習慣です。
+T700-854	700点	This cake tastes like heaven.	このケーキは、天国の味がします。
+T700-855	700点	Please bring photo identification.	写真付きの身分証明書を持ってきてください。
+T700-856	700点	The implementation of the plan starts in May.	計画の実行は、5月に始まります。
+T700-857	700点	The changes were implemented quickly.	変更は、すぐに実行されました。
+T700-858	700点	He implied that he would leave.	彼は、辞めるとほのめかしました。
+T700-859	700点	Your application is incomplete.	あなたの申込書は、不完全です。
+T700-860	700点	The contract includes an indemnity clause.	契約には、損害補償の条項があります。
+T700-861	700点	Please keep me informed.	私に、状況を知らせてください。
+T700-862	700点	Boats are anchored in the inlet.	入り江に、船が停泊しています。
+T700-863	700点	The firm was declared in insolvency.	その会社は、支払い不能だと宣言されました。
+T700-864	700点	The app has a simple interface.	そのアプリは、操作画面が簡単です。
+T700-865	700点	The iris is a purple flower.	アヤメは、紫色の花です。
+T700-866	700点	The kettle is boiling.	やかんのお湯が沸いています。
+T700-867	700点	Each room has a small kitchenette.	各部屋に、小さな簡易台所があります。
+T700-868	700点	The store sells kitchenware.	その店は、台所用品を売っています。
+T700-869	700点	The samples are tested in the lab.	試料は、実験室で検査されます。
+T700-870	700点	We swam in the blue lagoon.	青い潟で泳ぎました。
+T700-871	700点	Please log in with your password.	パスワードでログインしてください。
+T700-872	700点	The castle belonged to a local lord.	その城は、地元の領主のものでした。
+T700-873	700点	What a lovely garden!	なんてすてきな庭でしょう。
+T700-874	700点	He is a famous furniture maker.	彼は、有名な家具職人です。
+T700-875	700点	The aquarium shows marine life.	水族館では、海の生き物が見られます。
+T700-876	700点	They celebrated 50 years of marriage.	2人は、結婚50周年を祝いました。
+T700-877	700点	He went fishing with a mate.	彼は、友だちと釣りに行きました。
+T700-878	700点	The cell membrane is very thin.	細胞膜は、とても薄いです。
+T700-879	700点	Mercury is the planet closest to the sun.	水星は、太陽にいちばん近い惑星です。
+T700-880	700点	The gate is made of metal.	その門は、金属でできています。
+T700-881	700点	She works for a multinational company.	彼女は、多国籍企業で働いています。
+T700-882	700点	The murder shocked the town.	その殺人事件は、町に衝撃を与えました。
+T700-883	700点	Nobody noticed the mistake.	誰も、その間違いに気づきませんでした。
+T700-884	700点	A nurse is on site at all times.	看護師が、いつも現場にいます。
+T700-885	700点	The camera has high-quality optics.	そのカメラは、レンズの性能が高いです。
+T700-886	700点	The mine produces iron ore.	その鉱山は、鉄鉱石を産出します。
+T700-887	700点	New staff need time to orientate themselves.	新しい社員には、慣れる時間が必要です。
+T700-888	700点	The outlaw hid in the mountains.	無法者は、山に隠れました。
+T700-889	700点	I have an overdraft at the bank.	私は、銀行で当座貸越をしています。
+T700-890	700点	The king lived in a palace.	王は宮殿に住んでいました。
+T700-891	700点	Over 100 people participated in the event.	100人以上が、その催しに参加しました。
+T700-892	700点	Thank you for your participation.	ご参加ありがとうございます。
+T700-893	700点	The bakery sells fresh pastry.	そのパン屋は、焼きたての菓子パンを売っています。
+T700-894	700点	She works for a pharmaceutical company.	彼女は、製薬会社で働いています。
+T700-895	700点	The lake was placid in the morning.	朝の湖は、穏やかでした。
+T700-896	700点	There are fish in the pond.	池に魚がいます。
+T700-897	700点	The event was poorly organized.	その催しは、段取りが悪かったです。
+T700-898	700点	We sat on the front porch.	玄関のポーチに座りました。
+T700-899	700点	This could potentially save money.	これで、お金が節約できるかもしれません。
+T700-900	700点	Please pour the tea.	お茶を注いでください。
+T700-901	700点	They said a prayer before dinner.	彼らは、夕食の前にお祈りをしました。
+T700-902	700点	The eagle caught its prey.	ワシは、えものを捕まえました。
+T700-903	700点	He was sent to prison.	彼は刑務所に送られました。
+T700-904	700点	The privatization of the railway was approved.	鉄道の民営化が承認されました。
+T700-905	700点	The computer has a fast processor.	そのパソコンは、処理装置が速いです。
+T700-906	700点	We must improve profitability.	収益性を上げなければなりません。
+T700-907	700点	Paper is made from wood pulp.	紙は、木材パルプから作られます。
+T700-908	700点	Pursuant to the contract, payment is due now.	契約に基づき、今お支払いいただく必要があります。
+T700-909	700点	What qualifications do you have?	どんな資格をお持ちですか。
+T700-910	700点	Please fill out this questionnaire.	このアンケートに記入してください。
+T700-911	700点	He rarely takes a day off.	彼は、めったに休みを取りません。
+T700-912	700点	The rebels attacked the city.	反乱軍が町を攻撃しました。
+T700-913	700点	The accountant checks the receivables.	会計士が、売掛金を確認します。
+T700-914	700点	I reckon it will rain.	雨が降ると思います。
+T700-915	700点	You need a referral from your doctor.	医師の紹介状が必要です。
+T700-916	700点	The regulator fined the bank.	規制当局は、その銀行に罰金を科しました。
+T700-917	700点	Please submit your receipts for reimbursement.	払い戻しのために、領収書を出してください。
+T700-918	700点	We have a good relation with our clients.	私たちは、顧客とよい関係にあります。
+T700-919	700点	The news was reported on TV.	そのニュースは、テレビで報じられました。
+T700-920	700点	Safety is everyone's responsibility.	安全は、皆の責任です。
+T700-921	700点	My grandfather is retired.	祖父は、退職しています。
+T700-922	700点	I am reviewing the report now.	今、報告書を見直しています。
+T700-923	700点	Please throw the rubbish away.	ごみを捨ててください。
+T700-924	700点	Workers put up scaffolding around the building.	作業員が、建物の周りに足場を組みました。
+T700-925	700点	The police arrived at the scene.	警察が現場に着きました。
+T700-926	700点	Please call my secretary.	秘書に電話してください。
+T700-927	700点	The building has an unusual shape.	その建物は、変わった形をしています。
+T700-928	700点	Prices have risen significantly.	値段が大きく上がりました。
+T700-929	700点	The truck skidded on the ice.	トラックが、氷の上で横滑りしました。
+T700-930	700点	Please check the specs before buying.	買う前に、仕様を確認してください。
+T700-931	700点	The product meets all specifications.	その製品は、すべての仕様を満たしています。
+T700-932	700点	Your bank statement arrives monthly.	銀行の明細書は、毎月届きます。
+T700-933	700点	The doctor put stitches in the cut.	医師は、傷口を縫いました。
+T700-934	700点	You are supposed to arrive at nine.	9時に着くことになっています。
+T700-935	700点	The merger created synergy between the two firms.	合併で、2社の相乗効果が生まれました。
+T700-936	700点	The team changed its tactics.	チームは、作戦を変えました。
+T700-937	700点	My grandmother told me a tale.	祖母が、昔話をしてくれました。
+T700-938	700点	This soup tastes great.	このスープは、とてもおいしいです。
+T700-939	700点	We visited an old temple in Kyoto.	京都の古いお寺を訪れました。
+T700-940	700点	The theme of the party is the ocean.	パーティーのテーマは、海です。
+T700-941	700点	Sales rose, and thus profits increased.	売り上げが伸び、その結果、利益も増えました。
+T700-942	700点	He walked toward the door.	彼は、ドアのほうへ歩きました。
+T700-943	700点	All staff are trained in first aid.	社員は全員、応急手当の訓練を受けています。
+T700-944	700点	Online shopping is a growing trend.	ネットでの買い物は、広がりつつある流行です。
+T700-945	700点	The debt reached one trillion yen.	借金は、1兆円に達しました。
+T700-946	700点	Please read the troubleshooting guide.	困ったときの手引きを読んでください。
+T700-947	700点	The train went through a long tunnel.	電車は、長いトンネルを通りました。
+T700-948	700点	The cause is still unclear.	原因は、まだはっきりしません。
+T700-949	700点	Several factors underlie the problem.	その問題の裏には、いくつかの要因があります。
+T700-950	700点	The bank will underwrite the loan.	銀行が、その融資を引き受けます。
+T700-951	700点	The book describes a perfect utopia.	その本は、完全な理想郷を描いています。
+T700-952	700点	The village is in a green valley.	その村は、緑の谷にあります。
+T700-953	700点	The valuation of the house was high.	その家の評価額は高かったです。
+T700-954	700点	We value our customers.	当社は、お客様を大切にしています。
+T700-955	700点	There is a variance in the figures.	数字に食い違いがあります。
+T700-956	700点	Open the vent to let in fresh air.	新鮮な空気を入れるため、換気口を開けてください。
+T700-957	700点	The team celebrated its victory.	チームは、勝利を祝いました。
+T700-958	700点	Weapons are not allowed on the plane.	機内に武器は持ち込めません。
+T700-959	700点	Call me whenever you need help.	助けが必要なときは、いつでも電話してください。
+T700-960	700点	To whom should I send the form?	用紙は、どなたに送ればいいですか。
+T700-961	700点	To our disappointment, the show was canceled.	残念なことに、その公演は中止になりました。
