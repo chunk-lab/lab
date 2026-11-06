@@ -94,7 +94,7 @@ S| it {was|were|been|being} a shifting web :: それは移ろう網だった
 X| {of|for|by of|with of} routes, :: 経路の
 M| {over|above of|upon of|across of} land and sea, :: 陸と海にまたがる
 X| {along|alone|aloud|alike} which goods passed :: そこを品物が通った
-M| {from|for|of|by} hand to hand. :: 人の手から手へ
+M| {from|for|of|off} hand to hand. :: 人の手から手へ
 == 実際には、陸と海にまたがる移り変わる経路の網であり、品物はそこを人の手から手へと渡っていった。
 S| {Few|Much|A few of|Less of} merchants :: ほとんどの商人は
 V| ever {traveled|traveling|travels of|to travel} :: 旅しなかった
@@ -290,7 +290,7 @@ P| {For|To of|By of|With of} the people :: 人々にとって
 X| {who|which|whose|whom} experienced these changes, :: 変化を経験した
 S| the {decline|declined|declining of|declines of} :: 衰退は
 V| was {anything|any|anythings|anyway} but gradual :: 決して緩やかでなく
-M| {or|nor|than|whom} painless. :: 痛みもあった
+M| {or|than|whom|whose} painless. :: 痛みもあった
 == 変化を経験した人々にとって、衰退は決してゆるやかでも痛みのないものでもなかった。
 S| {Both|Either|Neither|Each} views :: 両方の見方が
 V| {contain|contains|containing|container} truth, :: 真実を含む
@@ -411,6 +411,12 @@ O| {heavy|heavily|heaviness|heavier of} goods :: 重い品を
 M| far more {cheaply|cheap of|cheapness|cheapen} :: はるかに安く
 X| {than|then|that|as} donkeys or carts. :: ロバや荷車より
 == 川は幹線道路の役割も果たした。船はロバや荷車よりもはるかに安く重い品を運べたのだ。
+S| Cities {located|locating|locate|location} on rivers :: 川沿いの都市は
+V| could {therefore|there|therefor of|thereby of} trade :: そのため交易できた
+P| {with|within|without of|by of} distant regions :: 遠い地域と
+M| {and|nor|than|whom} draw in resources :: 資源を引き寄せた
+P| {from|for of|since|by of} a wide area. :: 広い範囲から
+== そのため川沿いの都市は遠い地域と交易し、広い範囲から資源を集めることができた。
 S| Yet {abundance|abundant|abound|abundantly} alone :: しかし豊かさだけでは
 V| does not {fully|full|fullness|fuller} explain :: 十分に説明できない
 O| {why|what|which|whom} cities :: なぜ都市が
@@ -448,8 +454,8 @@ X| {of|for of|by of|with of} their inhabitants. :: 住民の
 == 同じ教訓は今日の都市にも当てはまる。都市の盛衰は、地理よりも住民の選択によって決まるのだ。
 ?? 1 4 洪水は周囲の平野に何を積もらせたか。
 ?? 3 5 船は何と比べてはるかに安く品を運べたか。
-?? 5 4 洪水や運河の管理には何が必要だったか。
-?? 7 4 川が人々に与えたものは何か。
+?? 6 4 洪水や運河の管理には何が必要だったか。
+?? 8 4 川が人々に与えたものは何か。
 
 @id adv84
 @lv 3
@@ -556,7 +562,7 @@ S| Sailors {learned|learn of|learning|learns of} :: 船乗りは身につけた
 R| {to time|timing of|to timing|time} their voyages :: 航海の時期を合わせる
 M| so {that|what|which|whom} :: …ように
 S| the wind {would|wills|woulding|would to} carry them :: 風が運んでくれる
-M| east {in|on|at|by} one season :: ある季節に東へ
+M| east {in|on|at|for of} one season :: ある季節に東へ
 M| {and|nor|than|whom} back west in another. :: 別の季節に西へ
 == 船乗りたちは、ある季節には風が東へ、別の季節には西へ運んでくれるよう、航海の時期を合わせることを覚えた。
 S| {Because|Because of|Due|Owing} the winds :: 風は

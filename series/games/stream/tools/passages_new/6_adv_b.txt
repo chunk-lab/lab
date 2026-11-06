@@ -391,7 +391,7 @@ M| {than|then|as|that} they otherwise would. :: 普段より
 S| {Others|Other|Another|The other} argue, :: 他の人は主張する
 M| {however|whoever|wherever|whichever}, :: しかし
 O| {that|what|whose|whom} refusing help :: 助けを拒むことは
-T| {in|on|at|by} a crisis :: 危機の際に
+T| {in|on|onto|by} a crisis :: 危機の際に
 V| {could|coulds|could to|can to} harm :: 害しうる
 O| millions {of|for|by|at} ordinary people. :: 何百万もの一般人を
 == しかし、危機のときに救済を拒めば、何百万もの普通の人々が損害を受けかねないと主張する人もいる。
@@ -489,7 +489,7 @@ M| {while|whilst of|during|meanwhile} preserving :: 守りつつ
 O| {room|rooms of|roomy|roomed} for newcomers. :: 新参者の余地を
 == つまり本当の問いは、新参者の入る余地を残しつつ、つながりの利点をどう保つかだ。
 ?? 0 1 誰も持っていない電話はどうだ？
-?? 2 2 この型は何と呼ばれる？
+?? 2 3 この型は何と呼ばれる？
 ?? 6 3 囲い込みは何を弱めうる？
 ?? 8 3 1つの連絡アプリは何より便利？
 

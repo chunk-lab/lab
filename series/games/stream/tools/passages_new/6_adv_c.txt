@@ -228,7 +228,7 @@ S| Older scientists, {committed|committing|commit|commitment} :: 固執した年
 P| {to|for|at|with} the old framework, :: 古い枠組みに
 V| {often|oftenly|oftener of|ofter} resisted :: しばしば抵抗した
 O| the {new|newly|news|newness} one :: 新しいものに
-M| {long after|long ago|longer than|long since of} :: …ずっと後も
+M| {long after|long ago|long before of|long since of} :: …ずっと後も
 X| the data {had|has|having|have of} turned against them. :: データが不利になった
 == 古い枠組みに固執した年長の科学者は、データが不利になってからも長く、新しい枠組みに抵抗することが多かった。
 S| {Critics|Critic|Critical|Critique of} :: 批判者は
@@ -309,8 +309,8 @@ V| {wanted|want|wanting|wants of} a theory :: 理論を求めた
 X| {explaining|explain|explained of|explanation} why it worked. :: なぜ効くかを
 == 紳士の手が汚れているという示唆に気分を害する者もいれば、なぜ効くのかを説明する理論を求める者もいた。
 X| Lacking {such|so|very|too} a theory, :: そんな理論がなく
-S| he {could|cans|could to|coulding} :: 彼は…できた
-V| {not|no|none|nor} persuade them, :: 説得しない
+S| he {could|cans|could to|coulding} :: 彼は…できなかった
+V| {not|no|none|nor} persuade them, :: 彼らを説得
 M| {and|nor|than|whom} his ideas :: そして彼の考えは
 V| {were|was|be|being} largely ignored. :: ほぼ無視された
 == そうした理論がなかったため彼は人々を説得できず、その考えはほとんど無視された。
