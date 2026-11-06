@@ -136,7 +136,7 @@ O| two {books|book|booking|booked} :: 本を2冊
 M| and {talked|talking|talks|to talk} more :: もっと話した
 P| {with|at|by|from} my family. :: 家族と
 == 本を2冊読み、家族ともっと話した。
-S| My mind {felt|feel|feeling|feels} :: 頭の中が感じられた
+S| My mind {felt|feel|feeling|to feel} :: 頭の中が感じられた
 C| {calmer|calmly|calmness|more calmer} :: より穏やかに
 M| {than|then|that|as} before. :: 以前より
 == 頭の中が以前より穏やかになった。
@@ -278,7 +278,7 @@ T| {in|on|at|by} minutes. :: 数分で
 == SNSでは、ニュースは数分で世界中に広がることがある。
 M| {Unfortunately|Unfortunate|Unfortune|Misfortune}, false stories :: 残念ながら誤報も
 V| {travel|travels|traveling|traveled of} :: 伝わる
-C| just {as|so|such|too} fast, :: 同じくらい速く
+C| just {as|than|such|too} fast, :: 同じくらい速く
 M| {or|nor|than|whom} even faster. :: あるいはもっと速く
 == 残念ながら、誤った話も同じくらい、あるいはそれ以上に速く伝わる。
 S| {One|Once|Ones|Won} reason :: 理由の1つは
@@ -322,7 +322,7 @@ P| {from|to|at|on} spreading. :: 広がるのを
 @ja 無料アプリの見えない代金
 @tag 共通テストレベル・論説文
 @gloss download=ダウンロードする, somehow=何とかして, collect=集める, user=利用者, data=データ, advertiser=広告主, match=合う, personal=個人の
-S| Most of the apps {on|of|at|by} our phones :: スマホのアプリの大半は
+S| Most of the apps {on|onto|at|by} our phones :: スマホのアプリの大半は
 V| {are|is|be|being} :: …だ
 C| {free|freely|freedom|freed} :: 無料
 P| {to|of|at|by} download. :: ダウンロードが
@@ -432,12 +432,12 @@ T| {right|rightly|righter|rights} away. :: すぐに
 == クレジットカードを使えば、すぐにお金を払わなくても物が買える。
 S| {In|On|At|By} fact, the company :: 実はカード会社が
 V| {pays|pay|paying|paid of} :: 払う
-P| {for|to|at|by} you first. :: 先に代わりに
+P| {for|of|at|by} you first. :: 先に代わりに
 == 実は、カード会社が先に代わりに払ってくれているのだ。
 T| {Once|One|Ones|Won} a month, :: 月に1回
 S| you {receive|receives|receiving|receipt} :: あなたは受け取る
 O| a {bill|build|billed|bills} :: 請求書を
-M| {for|to|at|on} everything you bought. :: 買った物すべての
+M| {for|to|at|into} everything you bought. :: 買った物すべての
 == 月に1回、買った物すべての請求書が届く。
 M| {If|What|Which|Whom} you pay :: 払えば
 O| the {whole|hole|wholly|whole of} amount, :: 全額を

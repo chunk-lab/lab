@@ -180,7 +180,7 @@ S| small bumps {sometimes|sometime|some times|someday} :: 小さな粒が時々
 V| {appear|appears|appearing|appearance} :: 現れる
 P| {on|at|of|for} your skin. :: 肌に
 == 寒いと感じると、肌に小さなぶつぶつが現れることがある。
-S| These {are called|call|are call|calling} :: これらは呼ばれる
+S| These {are called|are call|is called|calling} :: これらは呼ばれる
 O| {goosebumps|gooses|goosebumping|goosebumpy} :: goosebumpsと
 P| {in|on|at|by} English. :: 英語で
 == これらは英語で goosebumps と呼ばれる。
@@ -459,7 +459,7 @@ M| {So|Such|Too|Very} I bought :: だから買った
 O| a pair {of|for|at|in} :: 1足の
 O| {comfortable|comfort|comfortably|comforted} shoes. :: 履きやすい靴を
 == そこで、履き心地のいい靴を1足買った。
-T| After {that|this one|those|what}, :: その後
+T| After {that|this one|those one|what}, :: その後
 S| {walking|walk|walked|to walking} :: 歩くことは
 V| {became|become|becoming|becomes to} :: なった
 C| much {easier|easy|easily|ease}. :: ずっと楽に
@@ -483,7 +483,7 @@ O| to keep {walking|walk|walked|to walk}. :: 歩き続ける
 == でもそれ以外の日は、歩き続けるつもりだ。
 ?? 1 1 片道何分かかる？
 ?? 2 2 最初の週はなぜつらかった？
-?? 3 3 何を買った？
+?? 3 2 何を買った？
 ?? 7 2 雨の日はどうしている？
 
 @id int66
