@@ -68,8 +68,8 @@ export const UNLOCKS = {
     { lv: 3, kind: 'ability', id: 'tarot', label: '🃏 かんたんタロットが毎日1回無料', text: 'かんたんタロットが、毎日1回無料になった' }],
   hana: [], sora: [],
 };
-for (const id of Object.keys(PREFS)) {   // デート(大人)・お礼(子ども)は全員 Lv4
-  if (id === 'luna' || id === 'hana') continue;
+for (const id of Object.keys(PREFS)) {   // デート(大人・ルナも)・お礼(子ども)は全員 Lv4(はなちゃんは最初からデートできる)
+  if (id === 'hana') continue;
   (UNLOCKS[id] = UNLOCKS[id] || []).push(KIDS.includes(id) ? { lv: 4, kind: 'gift', id: 'thanks', label: '', text: 'いつものお礼に、プレゼントをもらえる' } : { lv: 4, kind: 'date', id: 'date', label: '☕ カフェでデートする', text: 'カフェでデートできるようになった' });
 }
 // ゲーム → だれと仲良くなると開くか(アミューズメントセンターで使う)。ここにないゲームは最初から遊べる
