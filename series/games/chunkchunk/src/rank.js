@@ -48,6 +48,7 @@ export function timedEnd(){
   settings.bestTimed=settings.bestTimed||{};const lb=settings.bestTimed[t.band]=settings.bestTimed[t.band]||{};
   const localBest=lb[t.sec]||0,isBest=score>localBest;if(isBest){lb[t.sec]=score;saveSettings()}
   const diff=score-localBest;
+  try{ENV.ctx.report("done",{play:"cc.game",title:`チャレンジ ${t.sec}秒`,min:Math.round(t.sec/6)/10,score:Math.min(100,Math.round(score/10)),coins:Math.min(10,Math.round(score/50)),best:score,band:t.band,finished:true})}catch(e){}   // 記録へ（ゲームのごほうびコインは1日の上限つき）
   openSheet(`<h2>${esc(S.title)} おわり！</h2>
     <div class="rkScore"><div class="big">${score} pt</div>${isBest&&score>0?`<div class="rkNew">NEW BEST!</div>`:""}</div>
     <p class="note">${st.sent}文・◎${st.c.excellent} ◯${st.c.great} △${st.c.good} ▽${st.c.cross} ・${st.c.mini} ×${st.c.miss}</p>

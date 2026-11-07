@@ -1,0 +1,523 @@
+@id int37
+@lv 2
+@level 6
+@title My First Night Train
+@ja 初めての夜行列車
+@tag 共通テストレベル・ブログ
+@gloss compartment=個室, bunk=寝台, share=共有する, scenery=景色, narrow=狭い, cozy=居心地のよい, cross=越える, forget=忘れる
+T| {Last|Lastly|Latest|Lasting} summer, :: 去年の夏
+S| I {took|taken|taking|takes} :: 私は乗った
+O| my {first|firstly|one|once} night train :: 初めての夜行列車に
+P| {in|on|at|by} Europe. :: ヨーロッパで
+== 去年の夏、私はヨーロッパで初めて夜行列車に乗った。
+S| I {had|has|having|be} always wanted :: ずっと…したかった
+V| {to sleep|sleep|sleeping|slept} :: 眠ることを
+T| {while|during|among|between} traveling. :: 移動しながら
+== 私はずっと、移動しながら眠ってみたかった。
+S| My ticket {was|were|been|being} :: 私の切符は
+P| {for|since|than|among} a small compartment :: 小さな個室用だった
+P| {with|within|as|than} three bunks. :: 寝台3つの
+== 私の切符は、寝台が3つある小さな個室のものだった。
+S| I {shared|sharing|shares|to share} it :: 私はそこを使った
+P| {with|to|than|at} two students :: 2人の学生と
+P| {from|by|at|than} Canada. :: カナダから来た
+== 私はカナダから来た2人の学生とその部屋を使った。
+S| We {talked|talking|talks|to talk} :: 私たちは話した
+M| and {watched|watch|watching|watches} :: そして眺めた
+O| the {scenery|scenic|scenically|sceneries} :: 景色を
+T| {until|by|during|unless} it got dark. :: 暗くなるまで
+== 私たちは暗くなるまで話をしたり景色を眺めたりした。
+S| The bed {was|were|be|been} narrow, :: ベッドは狭かった
+M| {but|nor|than|whom} it was :: でも…だった
+C| {surprisingly|surprising|surprise|surprised} cozy. :: 意外に快適
+== ベッドは狭かったが、意外にも居心地がよかった。
+S| I {fell|fallen|falling|felt} asleep :: 私は眠りについた
+P| {to|than|of|onto} the sound :: 音を聞きながら
+P| {of|by|for|at} the wheels. :: 車輪の
+== 私は車輪の音を聞きながら眠りについた。
+T| When I {woke|woken|waking|wakes} up, :: 目が覚めたとき
+S| we had {already|yet|ever|ago} :: 私たちはすでに
+V| {crossed|cross|crossing|crosses} :: 越えていた
+P| {into|onto|than|among} Italy. :: イタリアへと
+== 目が覚めたとき、列車はもうイタリアに入っていた。
+S| Flying {is|are|be|being} faster, :: 飛行機の方が速い
+M| {but|nor|than|whom} I will never :: でも決して…ない
+V| {forget|forgot|forgetting|forgotten} :: 忘れない
+O| {that|those|these|them} trip. :: あの旅を
+== 飛行機の方が速いけれど、私はあの旅を決して忘れないだろう。
+?? 0 2 筆者が初めて乗ったものは何？
+?? 2 2 個室には寝台がいくつあった？
+?? 3 2 同じ部屋の学生はどこから来た？
+?? 7 3 目が覚めたとき、列車はどこに入っていた？
+
+@id int38
+@lv 2
+@level 6
+@title Using the City Bike Share
+@ja シェア自転車の使い方
+@tag 共通テストレベル・案内
+@gloss station=ステーション, download=ダウンロードする, account=アカウント, scan=読み取る, unlock=鍵を開ける, charge=料金を取る, damaged=壊れた, report=知らせる, safety=安全
+X| {Welcome|Welcomed|Welcoming|Welcomes} to Green City Bikes, :: シェア自転車へようこそ
+C| the {easiest|easily|ease|easiness} way :: 一番簡単な方法
+R| {to get|getting|get|got} around town. :: 町を回るための
+== 町を移動するいちばん簡単な方法、グリーン・シティ・バイクへようこそ。
+S| There {are|is|be|has} :: …がある
+O| {over|upon|onto|until} 50 bike stations :: 50以上の駐輪所が
+P| {across|cross|crossing|crossed} the city. :: 市内の各地に
+== 市内には50以上の自転車ステーションがある。
+R| To {start|started|starting|starts}, :: 始めるには
+V| {download|downloads|downloaded|downloading} our app :: アプリを入れて
+M| and {create|creates|created|creating} :: そして作ろう
+O| {an|a|much|few} account. :: アカウントを
+== 始めるには、アプリをダウンロードしてアカウントを作ろう。
+M| Then {scan|scans|scanned|scanning} :: 次に読み取ろう
+O| the code {on|onto|into|since} any bike :: 自転車のコードを
+R| {to unlock|unlock|unlocked|unlocking} it. :: 鍵を開けるため
+== それから、自転車のコードを読み取って鍵を開けよう。
+S| The {first|firstly|one|once} 30 minutes :: 最初の30分は
+V| {are|be|being|been} free :: 無料だ
+P| {for|since|than|until} every ride. :: 毎回の乗車で
+== どの乗車も最初の30分は無料だ。
+T| After {that|those|then|thus}, :: その後は
+S| you will {be charged|charge|charging|be charge} :: 料金がかかる
+O| {one|once|first|ones} dollar :: 1ドル
+P| {for|by|to|of} every 15 minutes. :: 15分ごとに
+== その後は、15分ごとに1ドルかかる。
+M| {Always|Ever|Already|Yet} return :: 必ず返そう
+O| your bike {to|than|as|of} a station, :: 自転車を駐輪所に
+X| {not|no|none|nor} on the street. :: 道ではなく
+== 自転車は路上ではなく、必ずステーションに返却しよう。
+M| If a bike {is damaged|damages|is damage|damaging}, :: 自転車が壊れていたら
+V| please {report|reports|reported|reporting} it :: 知らせてください
+P| {through|though|thorough|throw} the app. :: アプリを通して
+== 自転車が壊れていたら、アプリから知らせてほしい。
+S| We also {recommend|recommends|recommended to|recommending} :: またおすすめする
+O| {wearing|wear|wore|worn} a helmet :: ヘルメット着用を
+P| {for|to|at|by} your safety. :: 安全のために
+== 安全のため、ヘルメットの着用もおすすめする。
+?? 1 1 ステーションはいくつ以上ある？
+?? 4 0 何分までが無料？
+?? 5 2 30分を過ぎるといくらかかる？
+?? 7 2 自転車が壊れていたら、何を使って知らせる？
+
+@id int39
+@lv 2
+@level 6
+@title Too Many Tourists
+@ja 観光客が多すぎる
+@tag 共通テストレベル・記事
+@gloss crowded=混雑した, overtourism=観光公害, resident=住民, freely=自由に, rent=家賃, limit=制限する, fee=料金, income=収入, balance=バランス
+S| Travel {has become|has became|have become|becoming} :: 旅行はなった
+C| easier {and|nor|whom|so} cheaper :: より楽で安く
+M| {than|then|that|as} ever. :: かつてないほど
+== 旅行はかつてないほど手軽で安くなった。
+M| As a {result|results|resulted|resulting}, :: その結果
+S| some {popular|popularity|popularly|populate} towns :: 人気の町は
+V| are now {too|to|two|so much} crowded. :: 混みすぎている
+== その結果、人気の町の中には混雑しすぎているところもある。
+S| {This|These|Those|They} problem :: この問題は
+V| is {known|knew|know|knowing} :: 知られている
+P| {as|than|onto|until} "overtourism." :: 観光公害として
+== この問題は「オーバーツーリズム」として知られている。
+P| In {some|much|a|every} places, :: ある場所では
+S| streets are {so|such|too|very} full :: 通りがとても混み
+M| {that|which|what|as} residents :: 住民は
+V| cannot walk {freely|freedom|freed|freeing}. :: 自由に歩けない
+== 通りが人でいっぱいで、住民が自由に歩けない場所もある。
+S| Rents also {rise|raise|rises|rising} :: 家賃も上がる
+T| when homes {are turned|are turn|turning|is turned} :: 家が変えられると
+P| {into|onto|upon|among} hotels :: ホテルに
+P| {for|to|at|than} visitors. :: 旅行者向けの
+== 家が旅行者向けの宿に変えられると、家賃も上がる。
+R| To {solve|solves|solved|solving} this, :: これを解決するため
+S| some cities have {started|start|starting|starts} :: 始めた都市もある
+O| {to limit|limit|limited|limits} visitors. :: 観光客の制限を
+== これを解決するため、観光客の数を制限し始めた都市もある。
+S| Venice, {for|by|in|to} example, :: 例えばベネチアは
+V| now {charges|charge|charging|to charge} :: 今は取っている
+O| {a|an|much|many} fee :: 料金を
+P| {to|of|at|by} some day visitors. :: 一部の日帰り客に
+== 例えばベネチアは今、一部の日帰り客から料金を取っている。
+M| {However|Because|Although|Unless}, :: しかし
+S| tourism also {brings|bring|brought to|bringing} :: 観光はもたらす
+O| jobs {and|nor|whom|than} income :: 仕事と収入を
+P| {to|at|than|into} local people. :: 地元の人々に
+== しかし、観光は地元の人々に仕事と収入ももたらす。
+S| The {challenge|challenging|challenged|challenges} :: 課題は
+V| is {finding|find|finds|to finding} :: 見つけることだ
+O| a {balance|balanced|balancing|balances} :: バランスを
+P| {between|among|beside|besides} visitors and residents. :: 観光客と住民の間の
+== 課題は、観光客と住民のあいだのバランスを見つけることだ。
+?? 3 3 混雑した場所で、住民は何ができなくなる？
+?? 4 1 家賃が上がるのはどんなとき？
+?? 6 0 例として挙げられている町は？
+?? 7 2 観光が地元の人々にもたらすものは？
+
+@id int40
+@lv 2
+@level 6
+@title Asking About an Airport Pickup
+@ja 空港送迎の問い合わせ
+@tag 共通テストレベル・メール
+@gloss reservation=予約, arrive=到着する, pickup=送迎, scheduled=予定された, land=着陸する, suitcase=スーツケース, driver=運転手, delayed=遅れた
+X| {Dear|Dearly|Dear to|Dears} Mr. Brown, :: ブラウン様
+== ブラウン様
+S| My name {is|are|be|am} Yuki Sato, :: 私は佐藤ゆき
+M| {and|nor|than|whom} I have :: そして…がある
+O| {a|an|much|many} reservation :: 予約が
+P| {at|on|to|by} your hotel. :: 貴ホテルに
+== 佐藤ゆきと申します。そちらのホテルに予約をしております。
+S| I will {arrive|arrival|arrived|arriving} :: 到着します
+P| {at|to|on|for} the airport :: 空港に
+T| {on|in|at|since} March 3. :: 3月3日に
+== 3月3日に空港に到着します。
+S| I would {like|liked|likes|liking} :: …したいです
+O| {to use|use|using|used} :: 利用することを
+O| your {pickup|picked|picking|picks} service. :: 送迎サービスを
+== 送迎サービスを利用したいと思っています。
+S| My flight {is|are|be|been} scheduled :: 私の便の予定は
+V| {to land|landing|land|landed} :: 着陸すること
+T| {at|in|on|since} 6:30 p.m. :: 午後6時半に
+== 私の便は午後6時半に着陸する予定です。
+S| I will be {traveling|travel|traveled|travels} :: 私は旅行します
+P| {with|within|onto|than} my mother, :: 母と一緒に
+M| {and|nor|than|whom} we have :: そして持っている
+O| three {large|largely|largeness|enlarge} suitcases. :: 大きな荷物3つを
+== 母と一緒に旅行し、大きなスーツケースが3つあります。
+V| Could you {tell|say|talk|speak} me :: 教えてくれますか
+O| {where|which|what|who} we should meet :: どこで会うべきか
+O| the {driver|drive|driving|drives}? :: 運転手に
+== 運転手とどこで会えばよいか教えていただけますか。
+M| Also, please {let|make|allow|have} me know :: また知らせて
+O| {what|whose|who|whom} to do :: どうすればよいか
+M| if my flight {is delayed|is delay|delaying|be delayed}. :: 便が遅れたら
+== また、便が遅れた場合どうすればよいかもお知らせください。
+S| I {look|looks|looking|to look} forward :: 楽しみにしている
+P| {to hearing|to hear|hearing|hear} :: 聞くことを
+P| {from|of|by|at} you. :: あなたから
+== ご連絡をお待ちしております。
+X| {Best|Better|Well|Bests} regards, Yuki Sato :: 敬具 佐藤ゆき
+== 敬具 佐藤ゆき
+?? 2 2 佐藤さんは何日に到着する？
+?? 4 2 便は何時に着陸する予定？
+?? 5 3 スーツケースはいくつある？
+?? 6 1 佐藤さんは運転手について何を知りたい？
+
+@id int41
+@lv 2
+@level 6
+@title The Wrong Bus
+@ja 乗りまちがえたバス
+@tag 共通テストレベル・物語文
+@gloss wrong=まちがった, castle=城, realize=気づく, nervous=不安な, Portuguese=ポルトガル語, kindly=優しく, stop=停留所, grateful=感謝して
+P| {On|Of|At|By} my first day :: 初日に
+P| {in|on|to|onto} Lisbon, :: リスボンでの
+S| I {got|get|gotten|getting} on :: 私は乗った
+O| the {wrong|wrongly|wrongful|wrongs} bus. :: 違うバスに
+== リスボンでの初日、私は違うバスに乗ってしまった。
+S| I {wanted|wanting|wants|to want} :: 私は…たかった
+O| {to visit|visit|visiting|visited} the old castle, :: 古い城を訪ねること
+M| {but|nor|than|whom} the bus :: でもバスは
+V| was going {the other way|other way|the another way|another the way}. :: 反対に向かっていた
+== 古い城に行きたかったのに、バスは反対方向に進んでいた。
+S| I did not {realize|realized|realizing|realizes} this :: 気づかなかった
+T| {until|by|during|among} I saw :: …を見るまで
+O| the {sea|see|seen|saw}. :: 海を
+== 海が見えるまで、私はそのことに気づかなかった。
+S| I {felt|fell|feeling|felled} :: 私は感じた
+C| {nervous|nervously|nerve|nerves} :: 不安に
+M| {because|because of|due to|in case of} I could not :: …できないので
+V| {speak|speaks|spoke|spoken} Portuguese. :: ポルトガル語を話す
+== ポルトガル語が話せなかったので、私は不安になった。
+S| Then {an|a|any|much} old woman :: すると老婦人が
+P| {next to|next|nearby to|beside to} me :: 私の隣の
+V| {asked|ask|asking|asks}, :: たずねた
+O| "Where {are|is|do|does} you going?" :: どこへ行くの
+== すると、隣にいた年配の女性が「どこへ行くの？」とたずねた。
+S| I {showed|show|shown|showing} her :: 彼女に見せた
+O| {my|mine|me|myself} map, :: 私の地図を
+M| {and|nor|than|whom} she smiled :: 彼女はほほえんだ
+M| {kindly|kind|kindness|kinder}. :: 優しく
+== 私が地図を見せると、彼女は優しくほほえんだ。
+S| She {got|gets|getting|gotten} off :: 彼女は降りた
+P| {with|within|than|onto} me :: 私と一緒に
+P| {at|in|on|for} the next stop. :: 次の停留所で
+== 彼女は私と一緒に次の停留所で降りた。
+T| Then she {walked|walk|walking|walks} me :: 私を連れていった
+P| {to|at|than|of} the right bus :: 正しいバスまで
+M| {and|nor|than|whom} waved goodbye. :: 手を振って別れた
+== それから彼女は正しいバスまで連れていって、手を振って別れた。
+S| I never {learned|learn|learning|learns} :: 知らないままだ
+O| {her|she|hers|herself} name, :: 彼女の名前を
+M| {but|nor|than|whom} I am still :: でも今も
+C| {grateful|gratefully|gratitude|great} to her. :: 彼女に感謝して
+== 彼女の名前は聞けなかったが、今でも彼女に感謝している。
+?? 1 1 筆者はどこへ行きたかった？
+?? 2 2 筆者が乗りまちがいに気づいたのは何を見たとき？
+?? 3 3 筆者が不安になったのはなぜ？
+?? 7 1 女性は筆者をどこへ連れていった？
+
+@id int42
+@lv 2
+@level 6
+@title Why Do We Get Jet Lag?
+@ja 時差ぼけはなぜ起きる？
+@tag 共通テストレベル・説明文
+@gloss sleepy=眠い, flight=飛行, jet lag=時差ぼけ, natural=自然の, cycle=周期, time zone=時間帯, adjust=慣れる, sunlight=日光, reset=調整し直す
+V| Have you {ever|ago|every|evening} felt :: 感じたことは
+C| {sleepy|sleep|sleepily|slept} :: 眠く
+T| {during|while|among|between} the day :: 日中に
+T| {after|later|lately|afterward} a long flight? :: 長い飛行の後
+== 長いフライトの後、昼間に眠くなったことはないだろうか。
+S| This is {known|knew|know|knowing} :: これは知られる
+P| {as|than|onto|until} jet lag, :: 時差ぼけとして
+M| {and|nor|than|whom} it is very :: そしてとても
+C| {common|commonly|commons|commonness}. :: よくある
+== これは時差ぼけと呼ばれ、とてもよくあることだ。
+S| Our bodies {have|has|having|to have} :: 体は持っている
+O| a {natural|nature|naturally|naturalize} clock :: 自然の時計を
+M| {that|what|who|whom} follows :: …に従う
+O| {about|above|abroad|aboard} a 24-hour cycle. :: 約24時間の周期
+== 私たちの体には、約24時間の周期に従う自然の時計がある。
+S| This clock {tells|tell|telling|told to} :: この時計は教える
+O| us {when|what|who|whom} to sleep :: いつ眠るかを
+M| {and|nor|than|whom} when :: そしていつ
+V| {to wake|wake|waking|woke} up. :: 起きるかを
+== この時計は、いつ眠りいつ起きるかを教えてくれる。
+T| When we {fly|flies|flown|flying} :: 飛行機で…と
+P| {across|cross|crossed|crossing} several time zones, :: 時間帯を越えて
+S| the clock {does|do|is|has} not change :: 時計は変わらない
+T| right {away|way|ahead|out}. :: すぐには
+== いくつもの時間帯を越えて飛ぶと、体内時計はすぐには変わらない。
+S| Your body {thinks|think|thinking|thought of} :: 体は思う
+O| it {is|are|be|being} night :: 夜だと
+M| {even when|even|even so|ever when} :: …ときでさえ
+S| the sun is {shining|shine|shined|shone to}. :: 太陽が照っている
+== 太陽が照っていても、体は夜だと思っている。
+S| Most people {need|needs|needing|to need} :: 多くの人は必要だ
+O| {about|above|aboard|abroad} one day :: 約1日
+R| {to adjust|adjust|adjusted|adjusts} :: 慣れるのに
+P| {for|than|at|since} each time zone. :: 時間帯1つごとに
+== たいていの人は、時間帯1つにつき約1日、慣れるのに必要とする。
+S| {Going|Go|Gone|Went} outside :: 外に出ることは
+P| {in|on|at|by} the morning sunlight :: 朝日の中で
+V| can {help|helps|helped|helping} :: 助けになる
+O| your clock {reset|resets|resetting|to resets}. :: 時計が整うのを
+== 朝日を浴びに外に出ると、体内時計を整える助けになる。
+S| {Knowing|Know|Known|Knew} this :: これを知ることは
+V| can {make|makes|made|making} :: …にできる
+O| your next {trip|tripped|tripping|trippy} :: 次の旅を
+C| more {enjoyable|enjoy|enjoyed|enjoying}. :: もっと楽しく
+== これを知っていれば、次の旅をもっと楽しめるだろう。
+?? 2 3 体内時計の周期は約何時間？
+?? 3 1 体内時計は何を教えてくれる？
+?? 6 1 時間帯1つにつき、慣れるのにどのくらいかかる？
+?? 7 1 体内時計を整えるには何がよい？
+
+@id int43
+@lv 2
+@level 6
+@title Notice: Weekend Train Closure
+@ja お知らせ：週末の運休
+@tag 共通テストレベル・お知らせ
+@gloss track=線路, repair=修理, shuttle=シャトル, replace=代わりをする, exit=出口, allow=見込む, extra=余分の, apologize=おわびする, inconvenience=不便
+M| {Due to|Due|Because|Owing} track repairs, :: 線路修理のため
+S| the Blue Line {will be|will|is be|being} closed :: ブルー線は運休
+T| {this|these|those|next to} weekend. :: 今週末
+== 線路修理のため、今週末ブルー線は運休します。
+S| {No|Not|None|Nor} trains :: 列車は…ない
+V| will {run|ran|running|runs} :: 運行し
+P| {between|among|beside|besides} Park Station :: パーク駅と
+M| {and|nor|than|whom} Lake Station. :: レイク駅の間
+== パーク駅とレイク駅の間では、列車は運行しません。
+S| {Free|Freely|Freedom|Freed} shuttle buses :: 無料シャトルバスが
+V| will {replace|replaced|replacing|replaces} :: 代わりをする
+O| {the|a|an|much} trains :: 列車の
+T| {during|while|among|since} this time. :: この期間
+== この期間は、無料のシャトルバスが列車の代わりに運行します。
+S| Buses will {leave|left|leaving|leaves} :: バスは出発する
+T| every 10 {minutes|minute|minuted|minutely} :: 10分ごとに
+P| {from|of|than|since} the station's north exit. :: 駅の北口から
+== バスは駅の北口から10分ごとに出発します。
+V| Please {allow|allows|allowed|allowing} :: 見込んでください
+O| {an|a|much|many} extra 30 minutes :: 余分に30分
+P| {for|to|at|by} your trip. :: 移動のために
+== 移動の時間に30分ほど余裕をもってください。
+S| Bicycles {are|is|be|been} not :: 自転車は…ない
+V| {allowed|allow|allowing|allows} :: 許可されて
+P| {on|of|to|than} the shuttle buses. :: シャトルバスに
+== シャトルバスに自転車は持ち込めません。
+S| {Normal|Normally|Norm|Normality} service :: 通常運行は
+V| will {start|started|starting|starts} again :: 再開する
+T| {on|in|at|since} Monday morning. :: 月曜の朝に
+== 通常運行は月曜の朝に再開します。
+P| For more {information|informations|inform|informative}, :: 詳しくは
+V| please {check|checks|checked|checking} our website :: サイトを見て
+M| {or|nor|than|whom} ask station staff. :: または駅員に
+== 詳しくはウェブサイトをご覧いただくか、駅員におたずねください。
+S| We {apologize|apology|apologetic|apologizes} :: おわびします
+P| {for|to|at|of} any inconvenience :: ご不便について
+M| this {may|mays|may to|maybe} cause. :: これが生む
+== ご不便をおかけしますことをおわびします。
+?? 0 0 運休の理由は何？
+?? 3 1 シャトルバスは何分ごとに出る？
+?? 5 0 シャトルバスに持ち込めないものは？
+?? 6 2 通常運行はいつ再開する？
+
+@id int44
+@lv 2
+@level 6
+@title Should City Centers Be Car-Free?
+@ja 町の中心から車をなくすべき？
+@tag 共通テストレベル・論説文
+@gloss ban=禁止する, opinion=意見, noise=騒音, pedestrian=歩行者, especially=特に, elderly=高齢の, disabled=障害のある, permit=許可証, benefit=役に立つ
+S| Some cities {in|at|on|to} Europe :: ヨーロッパの都市は
+V| have {banned|ban|banning|bans} :: 締め出した
+O| cars {from|of|to|at} their centers. :: 中心部から車を
+== ヨーロッパには、中心部から車を締め出した都市がある。
+V| {Should|Ought|Must to|Does} :: …べきか
+S| other {cities|city|citys|city's} :: ほかの都市も
+V| {follow|follows|followed|following} them? :: それにならう
+== ほかの都市も、それを見習うべきだろうか。
+P| In my {opinion|opinions|opine|opinionated}, :: 私の意見では
+S| the {answer|answers|answered|answering} :: 答えは
+V| {is|are|be|being} yes. :: イエスだ
+== 私の考えでは、答えはイエスだ。
+M| {First|Fast|Fist|Firm}, :: まず
+S| {fewer|fewest|little|lesser} cars :: 車が減ることは
+V| {mean|means|meaning|meant to} :: 意味する
+O| cleaner air {and|nor|than|whom} less noise. :: きれいな空気と静けさ
+== まず、車が減れば空気がきれいになり、騒音も減る。
+M| {Second|Seconds|Secondary|Seconded}, :: 次に
+S| streets {become|becomes|becoming|became to} :: 通りはなる
+C| {safer|safety|safely|saved} for pedestrians, :: 歩行者により安全に
+M| {especially|special|specialty|specialize} children. :: 特に子どもに
+== 次に、通りは歩行者、特に子どもにとって安全になる。
+M| {Finally|Final|Finalize|Finality}, :: 最後に
+S| people {tend|tends|tending|tension} :: 人々は傾向がある
+O| {to spend|spend|spending|spent} more time :: 長く過ごす
+P| {at|on|to|than} local shops. :: 地元の店で
+== 最後に、人々は地元の店で過ごす時間が長くなる傾向がある。
+P| Of {course|coarse|courses|cause}, :: もちろん
+S| some people still {need|needs|needed to|needing} :: 今も必要な人もいる
+O| cars, {such as|such like|as such|so as} :: 車が、例えば
+M| elderly {or|nor|than|whom} disabled people. :: 高齢者や障害者
+== もちろん、高齢者や障害のある人など、今も車が必要な人はいる。
+S| Cities {should|should to|must to|ought} :: 都市は…べきだ
+V| therefore {offer|offers|offered|offering} :: だから用意する
+O| good public {transportation|transported|transporting|transportable} :: よい公共交通を
+M| {and|nor|than|whom} special permits. :: 特別な許可証も
+== だから都市は、よい公共交通と特別な許可証を用意すべきだ。
+P| {With|Within|Than|Onto} careful planning, :: 慎重な計画があれば
+S| a car-free center {can|can to|cans|could to} :: 車のない中心部は
+V| {benefit|benefits|benefited|beneficial} everyone. :: みんなの役に立つ
+== 慎重に計画すれば、車のない中心部はみんなのためになる。
+?? 3 3 車が減ると何がよくなる？
+?? 4 3 特にだれにとって安全になる？
+?? 6 3 今も車が必要な人の例は？
+?? 7 2 都市は何を用意すべきだと筆者は言っている？
+
+@id int45
+@lv 2
+@level 6
+@title Island Ferry Day Tour
+@ja 島めぐりフェリーの旅
+@tag 共通テストレベル・広告
+@gloss escape=逃れる, ferry=フェリー, depart=出発する, pier=桟橋, bay=湾, dolphin=イルカ, lighthouse=灯台, include=含む, book=予約する
+V| {Escape|Escapes|Escaped|Escaping} :: 離れよう
+O| the {busy|busily|business|busier than} city :: にぎやかな町を
+M| {and|nor|than|whom} spend a day :: そして1日過ごそう
+P| {on|onto|to|than} Pine Island! :: パイン島で
+== にぎやかな町を離れて、パイン島で1日を過ごそう！
+S| Our ferry {departs|depart|departing|departure} :: フェリーは出発する
+P| {from|of|than|onto} Harbor Pier :: ハーバー桟橋から
+T| {at|in|on|since} 9:00 :: 9時に
+T| every {morning|mornings|morn|morning's}. :: 毎朝
+== フェリーは毎朝9時にハーバー桟橋から出発します。
+S| The trip {across|cross|crossed|crosses} the bay :: 湾を渡る船旅は
+V| {takes|take|taking|took to} :: かかる
+O| {about|above|aboard|abroad} 40 minutes. :: 約40分
+== 湾を渡る船旅は約40分です。
+P| On the {way|ways|weigh|wave}, :: 途中で
+S| you {may|may to|mays|maybe} see :: 見られるかも
+O| {dolphins|dolphin|a dolphins|dolphin's} :: イルカが
+M| {swimming|swam|swum|swims} next to the boat. :: 船の横を泳ぐ
+== 途中、船の横を泳ぐイルカが見られるかもしれません。
+P| On the {island|islanded|islanding|island's}, :: 島では
+S| a local guide will {show|shows|showed|showing} :: ガイドが案内する
+O| you {an|a|much|any} old lighthouse. :: 古い灯台を
+== 島では、地元のガイドが古い灯台を案内します。
+S| Lunch {at|on|to|than} a seaside restaurant :: 海辺の店での昼食は
+V| is {included|include|including|includes} :: 含まれる
+P| {in|on|at|by} the price. :: 料金に
+== 海辺のレストランでの昼食も料金に含まれています。
+S| The ferry {returns|return|returning|to return} :: フェリーは戻る
+P| {to|at|of|than} the city :: 町へ
+T| {at|in|on|since} 4:30 p.m. :: 午後4時半に
+== フェリーは午後4時半に町へ戻ります。
+S| Tickets {are|is|be|been} $45 :: チケットは45ドル
+P| {for|of|by|at} adults :: 大人は
+M| {and|nor|than|whom} $20 for children :: 子どもは20ドル
+P| {under|underneath|undergo|underground} 12. :: 12歳未満の
+== チケットは大人45ドル、12歳未満の子どもは20ドルです。
+V| {Book|Books|Booked|Booking} online :: ネットで予約して
+T| {by|at|in|among} Friday :: 金曜日までに
+M| {and|nor|than|whom} get 10% off! :: 1割引に
+== 金曜日までにネットで予約すると10％割引！
+?? 1 2 フェリーは何時に出発する？
+?? 2 2 湾を渡るのにどのくらいかかる？
+?? 5 0 料金に含まれているものは？
+?? 8 1 いつまでに予約すると割引になる？
+
+@id int46
+@lv 2
+@level 6
+@title Talking with a Tour Guide
+@ja ツアーガイドに聞く
+@tag 共通テストレベル・インタビュー
+@gloss reporter=記者, mostly=主に, guidebook=ガイドブック, quiet=静かな, advice=助言, comfortable=楽な, temple=寺, avoid=避ける, crowd=人ごみ
+X| Reporter: How long {have|has|having|be} you :: 記者:どのくらい
+V| {worked|work|working|works} :: 働いているか
+P| {as|than|of|by} a tour guide? :: ガイドとして
+== 記者:ツアーガイドとしてどのくらい働いていますか。
+X| Mori: {For|Since|During|While} ten years, :: 森:10年です
+M| {mostly|most|mostly of|utmost} :: 主に
+P| {in|on|to|than} the old parts :: 古い地区で
+P| {of|by|for|at} Kyoto. :: 京都の
+== 森:10年です。主に京都の古い地区で案内しています。
+X| Reporter: What {do|does|is|are} :: 記者:何を
+S| visitors {enjoy|enjoys|enjoyed|enjoying} :: 旅行者は楽しむ
+M| {most|mostest|almost|utmost}? :: 一番
+== 記者:旅行者は何を一番楽しんでいますか。
+X| Mori: Many {of|from|in|at} them :: 森:多くの人が
+V| {love|loves|loving|lover} :: 大好きだ
+O| the {small|smally|smallness|smaller than} streets :: 小さな通りが
+M| {that|what|who|whose} are not in guidebooks. :: 案内書にない
+== 森:多くの人が、ガイドブックにのっていない小さな通りが大好きです。
+S| They {are|is|be|being} quiet, :: そこは静かだ
+M| {and|nor|than|whom} you can see :: そして見られる
+O| {how|what|which|who} people :: 人々がどう
+V| {really|real|reality|realize} live. :: 本当に暮らすか
+== 静かで、人々が本当はどう暮らしているかが見られるんです。
+X| Reporter: Do you {have|has|having|had} :: 記者:ありますか
+O| any {advice|advices|advise|advised} :: 何か助言は
+P| {for|at|than|onto} first-time visitors? :: 初めての人へ
+== 記者:初めて来る人に何かアドバイスはありますか。
+X| Mori: {Wear|Wears|Wearing|Wore} :: 森:はいてください
+O| {comfortable|comfort|comfortably|comforted} shoes, :: 楽な靴を
+M| {because|because of|due to|in spite} you :: …ので
+V| will walk {a lot|lots|a lots|lot}. :: たくさん歩く
+== 森:楽な靴をはいてください。たくさん歩きますから。
+M| Also, {visit|visits|visited|visiting} :: また訪ねよう
+O| {famous|fame|famously|fames} temples :: 有名な寺は
+T| early {in|at|on|by} the morning :: 朝早くに
+R| {to avoid|avoid|avoiding|avoided} the crowds. :: 人ごみを避けて
+== また、人ごみを避けるため、有名なお寺には朝早く行きましょう。
+X| Reporter: {Thank|Thanks|Thanked|Thanking} you :: 記者:ありがとう
+P| {for|to|of|at} your time :: お時間を
+T| {today|todays|to day|today's}. :: 今日は
+== 記者:今日はお時間をいただきありがとうございました。
+?? 1 0 森さんはガイドを何年している？
+?? 3 2 多くの旅行者が大好きなのはどんな通り？
+?? 6 1 森さんは何をはくように勧めている？
+?? 7 2 有名なお寺にはいつ行くとよい？

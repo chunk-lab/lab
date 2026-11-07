@@ -1,0 +1,769 @@
+@id adv78
+@lv 3
+@level 8
+@title The Myth of the Dark Ages
+@ja 「暗黒時代」という神話
+@tag 難関大レベル・論説文
+@gloss dismiss=退ける, imply=ほのめかす, extinguish=消す, monastery=修道院, plough=犂, coin=(語を)作る, classical=古典の, barbaric=野蛮な, flatten=平板にする
+T| {For|Since|Ago|While} centuries, :: 何世紀もの間
+S| the period {that|what|whom|whose} followed :: 後に続いた時代は
+O| the {fall|fell|fallen|falling} of Rome :: ローマの滅亡に
+V| was {dismissed|dismissing|dismiss|dismissal} :: 片づけられた
+C| {as|so|than|such} the "Dark Ages." :: 「暗黒時代」として
+== 何世紀もの間、ローマ滅亡後の時代は「暗黒時代」として片づけられてきた。
+S| The label {implied|implies of|implying|implication} :: その呼び名は示した
+O| {that|what|which|whom} Europe had sunk :: 欧州が沈んだと
+P| {into|onto|over of|among of} ignorance and violence, :: 無知と暴力に
+M| {with|within|without of|by of} learning :: 学問が
+C| all but {extinguished|extinguish|extinguishing|extinction}. :: ほぼ消えた状態で
+== その呼び名は、欧州が無知と暴力に沈み、学問がほぼ消え去ったことをほのめかしていた。
+S| {Yet|Despite|Unless|Whereas of} historians today :: しかし今の歴史家は
+V| {largely|large|larger|largeness} reject :: 大半が退ける
+O| this {picture|pictures|pictured|picturing}, :: この見方を
+M| {pointing|pointed|point|points} to the monasteries :: 修道院を例に挙げ
+X| {that|what|whom|whose} preserved and copied :: 保存し写した
+O| {ancient|anciently|antiquity|ancients} texts. :: 古代の文献を
+== しかし今日の歴史家の多くはこの見方を退け、古代の文献を保存し書き写した修道院を例に挙げる。
+S| They also {note|notes|noting|noted of} :: 彼らはまた指摘する
+O| {that|what|which|whom} trade networks :: 交易網が
+V| never fully {disappeared|disappears|disappearance|disappearing} :: 完全には消えず
+M| {and|than|whom|unless} that new technologies, :: そして新技術が
+X| {such|so|like|very} as the heavy plough, :: 重い犂などの
+V| {transformed|transforms|transformation|transforming} agriculture. :: 農業を変えたと
+== 彼らはまた、交易網は完全には消えず、重い犂などの新技術が農業を一変させたと指摘する。
+M| In {fact|facts|factual|factually}, :: 実のところ
+S| the {term|terms|termed|terming} "Dark Ages" :: 「暗黒時代」の語は
+V| {reveals|reveal|revealing|revelation} more :: より多くを明かす
+P| about those {who|which|whose|whom} coined it :: 作った人々について
+X| {than|then|that|as} about the era itself. :: 時代そのものより
+== 実のところ、「暗黒時代」という言葉は、その時代そのものよりも、それを作った人々について多くを語っている。
+S| Renaissance {scholars|scholarly|scholarship of|scholar}, :: ルネサンスの学者は
+M| {eager|eagerly|eagerness|eagered} to present themselves :: 自らを示したがり
+C| {as|than|like of|so} reviving classical glory, :: 古典の復興者として
+V| {needed|need of|needing|needs of} a dark past :: 暗い過去が必要だった
+M| {against|again|amid of|toward of} which to shine. :: 輝く背景として
+== 古典の栄光を復興する者として自らを示したかったルネサンスの学者たちには、自分たちを輝かせる暗い過去が必要だったのだ。
+M| By {describing|describe|described|description} :: …と描くことで
+O| the {preceding|precede|preceded of|precedence} centuries :: 前の数世紀を
+C| {as|so|than|such} barbaric, :: 野蛮だと
+S| they {could|cans|coulding|can to} portray :: 彼らは描けた
+O| their own {age|aged|ageing of|ages of} :: 自分たちの時代を
+C| {as|so|than|such} a rebirth. :: 再生として
+== 前の数世紀を野蛮だと描くことで、彼らは自分たちの時代を「再生」として描き出せたのだ。
+S| This {is|are|be|being} not to say :: …というわけではない
+O| {that|what|which|whom} the period :: その時代に
+V| was free {of|from of|off|for} hardship; :: 苦難がなかったと
+S| the {collapse|collapsed of|collapsing of|collapses of} of Roman rule :: ローマ支配の崩壊は
+V| {brought|brings of|bringing|brung} real decline :: 現実の衰退を招いた
+P| {in|on|at the|by} many regions. :: 多くの地域で
+== とはいえ、その時代に苦難がなかったわけではない。ローマの支配が崩れ、多くの地域で実際に衰退が起きた。
+S| The {point|pointed|pointing|points}, rather, :: むしろ要点は
+V| {is|are|be|being} :: …だ
+O| {that|what|which|whom} a single label :: 一つの呼び名が
+V| {can|cans|can to|could to} flatten :: 平板にしうること
+O| a {thousand|thousands|thousandth|thousanding} years :: 千年を
+X| {of|for|from of|with of} varied experience. :: 多様な経験の
+== むしろ要点は、たった一つの呼び名が、千年にわたる多様な経験を平板にしてしまいうるということだ。
+M| {Whenever|Whoever|Wherever of|Whomever} we name an era, :: 時代に名をつける時
+S| we are {already|all ready|alreadly|readily of} :: 私たちはすでに
+V| {interpreting|interpret|interpreted|interpretation} it, :: それを解釈している
+M| {and|nor|than|whom} the name :: そしてその名は
+V| can quietly {shape|shapes|shaping|shaped} :: ひそかに形づくる
+O| {how|what|which of|whom} it is remembered. :: 記憶のされ方を
+== 時代に名をつけるとき、私たちはすでにそれを解釈しており、その名は記憶のされ方をひそかに左右しうるのだ。
+?? 0 4 ローマ滅亡後の時代は何と呼ばれてきたか。
+?? 2 3 今日の歴史家は何を例に挙げて従来の見方を退けるか。
+?? 5 3 ルネサンスの学者たちには何が必要だったか。
+?? 7 4 ローマの支配の崩壊は多くの地域に何をもたらしたか。
+
+@id adv79
+@lv 3
+@level 8
+@title The Silk Road Was Never a Road
+@ja シルクロードは道ではなかった
+@tag 難関大レベル・論説文
+@gloss conjure=思い起こさせる, shifting=移り変わる, oasis=オアシス, Mediterranean=地中海, geographer=地理学者, popularize=広める, mislead=誤解させる, counter=反論する
+S| The {phrase|phrases|phrasing of|phrased} "Silk Road" :: 「シルクロード」は
+V| {conjures|conjure|conjuring|conjured of} up :: 思い起こさせる
+O| an {image|imagine|imaginary|imaging} :: イメージを
+X| {of|at|from of|with of} a single highway :: 一本の幹線道路の
+M| {stretching|stretch|stretches|to stretching} from China to Rome. :: 中国からローマへ延びる
+== 「シルクロード」という言葉は、中国からローマまで延びる一本の幹線道路を思い起こさせる。
+M| In {reality|real|realize|realistic}, :: 実際には
+S| it {was|were|been|being} a shifting web :: それは移ろう網だった
+X| {of|for|by of|with of} routes, :: 経路の
+M| {over|above of|upon of|across of} land and sea, :: 陸と海にまたがる
+X| {along|alone|aloud|alike} which goods passed :: そこを品物が通った
+M| {from|for|of|off} hand to hand. :: 人の手から手へ
+== 実際には、陸と海にまたがる移り変わる経路の網であり、品物はそこを人の手から手へと渡っていった。
+S| {Few|Much|A few of|Less of} merchants :: ほとんどの商人は
+V| ever {traveled|traveling|travels of|to travel} :: 旅しなかった
+O| the {entire|entirely|entirety|entireness} distance; :: 全行程を
+M| {instead|instead of|in stead|instance}, :: その代わり
+S| goods {were|was|being|be} exchanged :: 品物は交換された
+P| {at|on of|by of|in of} a series of markets :: 連なる市場で
+M| {and|nor|than|whom} oases. :: そしてオアシスで
+== 全行程を旅した商人はほとんどおらず、品物は連なる市場やオアシスで交換された。
+S| Silk {produced|producing|produce|production} in China :: 中国で作られた絹は
+V| {might|mights|might to|mighted} change owners :: 持ち主が変わりえた
+M| a {dozen|dozens|dozenth|dozened} times :: 十数回も
+M| {before|ago|since of|until of} it reached :: …に届くまでに
+O| the {Mediterranean|Mediterranea|Mediterraneous|Mediterraneans of}. :: 地中海に
+== 中国で作られた絹は、地中海に届くまでに十数回も持ち主を変えることがあった。
+M| {Moreover|More|Most over|Furthermore of}, :: そのうえ
+S| the name {itself|himself|themselves|its own} :: 名前自体が
+V| {is|are|be|being} modern: :: 近代のものだ
+S| it was {popularized|popularize|popularity|popular} :: それは広められた
+P| {by|with of|for of|from of} a German geographer :: ドイツの地理学者に
+T| {in|on|at|by of} the nineteenth century. :: 19世紀に
+== そもそも名前自体が近代のもので、19世紀にドイツの地理学者によって広められた。
+S| Those {who|which|whose|whom} actually carried goods :: 実際に運んだ人々は
+V| would not {have recognized|recognized|have recognize|having recognized} :: 知らなかったろう
+O| the {label|labels of|labeled|labeling}, :: その呼び名を
+M| let {alone|along|alike|aloud} :: ましてや
+V| {thought|think of|thinking|thinks} of themselves :: 自分を考えはしない
+C| {as|so|than|such} part of one system. :: 一つの体系の一部と
+== 実際に品物を運んだ人々はその呼び名を知らなかっただろうし、まして自分を一つの体系の一部とは考えなかっただろう。
+S| Some scholars {therefore|there|therefor of|thereby of} :: そこで一部の学者は
+V| {argue|argues|arguing|argument} :: 主張する
+O| {that|what|which|whom} the term :: その語は
+V| {misleads|mislead|misleading|misled of} :: 誤解を招くと
+M| {more|most|many|much of} than it explains. :: 説明する以上に
+== そのため一部の学者は、この語は説明する以上に誤解を招くと主張する。
+S| Others {counter|counters|countering|countered of} :: 反論する者もいる
+O| that, {imperfect|imperfectly|imperfection|imperfected} :: 不完全では
+X| {as|so|than|such} it is, :: あるものの
+S| the name {usefully|useful|usefulness|use} :: その名はうまく
+V| {captures|capture|capturing|captive} :: とらえていると
+O| {how|what|which|whom} distant cultures :: 遠い文化同士が
+V| {were|was|being|be} connected. :: どうつながったかを
+== 不完全ではあるが、その名は遠く離れた文化がどう結びついていたかをうまく表している、と反論する者もいる。
+M| {Indeed|Indeedly|In deed of|Deed}, :: 実際
+P| {along|alone|aloud|alike} these routes :: これらの経路を
+V| {traveled|travel of|traveling|travels of} not only goods :: 品物だけでなく
+M| {but|than|whom|whose} also religions, :: 宗教も伝わった
+X| {technologies|technology of|technological|technique of}, and diseases. :: 技術や病気も
+== 実際、これらの経路を通じて、品物だけでなく宗教や技術、さらには病気までもが伝わった。
+S| Perhaps the real {lesson|lessen|lessons|lessoning} :: 本当の教訓は
+V| {is|are|be|being} that :: …ということだ
+S| {globalization|globalize|global|globally} is not :: グローバル化は
+C| a modern {invention|invent|inventive|invented} :: 現代の発明でなく
+M| {but|than|whom|whose} a very old habit. :: とても古い習慣だ
+== 本当の教訓はおそらく、グローバル化は現代の発明ではなく、とても古い習慣だということだ。
+?? 2 0 全行程を旅した商人は多かったか。
+?? 3 2 中国の絹は地中海に届くまでに何回ほど持ち主を変えたか。
+?? 4 5 「シルクロード」という名はいつ広められたか。
+?? 8 2 これらの経路を通じて伝わったものは何か。
+
+@id adv80
+@lv 3
+@level 8
+@title Writing Began with Accounting
+@ja 文字は帳簿から始まった
+@tag 難関大レベル・説明文
+@gloss mundane=平凡な, tablet=粘土板, livestock=家畜, obligation=義務, scribe=書記, epic=叙事詩, bureaucracy=官僚的な事務, receipt=受取証, humbling=謙虚にさせる
+S| We {tend|tends|tending|tendency} :: 私たちは…しがちだ
+V| {to associate|associating|to associating|associate} :: 結びつけ
+O| the {birth|born|bore|bear} of writing :: 文字の誕生を
+P| {with|within|by of|for of} poetry, law, :: 詩や法と
+M| {or|nor|than|whom} sacred texts. :: あるいは聖典と
+== 私たちは文字の誕生を、詩や法、あるいは聖典と結びつけがちだ。
+S| Yet the {earliest|earlily|earliness|most early of} known writing, :: だが最古の文字は
+X| {which|what|whom|whose} emerged in Mesopotamia :: メソポタミアで生まれた
+T| some five thousand years {ago|before of|since|after of} :: 約5千年前に
+V| {served|serve of|serving|servant} :: 果たした
+O| a far {more|most|much|many} mundane purpose. :: ずっと平凡な目的を
+== しかし、約5千年前にメソポタミアで生まれた最古の文字は、はるかに平凡な目的のためのものだった。
+S| Most of the oldest {clay|clays|clayey of|claying} tablets :: 最古の粘土板の大半は
+V| {are|is|be|being} records :: 記録である
+X| {of|for of|by of|with of} grain, livestock, :: 穀物や家畜の
+M| {and|nor|than|whom} labor— :: そして労働の
+M| in other {words|word|wording|worded}, :: 言いかえれば
+C| {accounts|account of|accounting of|accountant}. :: 帳簿だ
+== 最古の粘土板の大半は、穀物や家畜、労働の記録、つまり帳簿である。
+M| {As|So|Than|Such} cities grew :: 都市が成長し
+M| {and|nor|than|whom} temples collected goods :: 神殿が物を集めると
+P| {from|for of|by of|since} thousands of people, :: 何千人もの人から
+S| memory {alone|along|alike|aloud} :: 記憶だけでは
+V| could no {longer|long|longest|lengthen} keep track :: もう把握できなかった
+X| {of|for|by|on of} who owed what. :: 誰が何を負うかを
+== 都市が大きくなり、神殿が何千もの人から物を集めるようになると、誰が何を負っているかを記憶だけで把握することはもはやできなくなった。
+S| {Writing|Write|Wrote|Written}, :: 文字は
+M| in this {view|views|viewed|viewing}, :: この見方では
+V| was not {invented|invent|inventing|invention} :: 発明されたのでない
+R| {to express|expressing|to expressing|express} ideas :: 考えを表すために
+M| {but|than|whom|whose} to manage obligations. :: 貸し借りの管理用だ
+== この見方では、文字は考えを表すためではなく、貸し借りを管理するために発明されたのだ。
+M| Only {gradually|gradual|graduate|gradualness} :: 徐々にしか…ない
+V| {did|done|doing|was} scribes begin :: 書記は始めた
+R| {to record|recording of|to recorded|record} names, :: 名前を記録し
+O| {events|eventful|eventual|eventually}, :: 出来事を
+M| {and|nor|than|whom} eventually stories. :: やがて物語も
+== 書記が名前や出来事、そしてやがて物語を記すようになったのは、少しずつのことでしかなかった。
+S| The Epic {of|ofs|off|for of} Gilgamesh, :: ギルガメシュ叙事詩は
+X| one of the {oldest|old|oldly|oldness} surviving works :: 現存最古級の作品で
+V| was {written|wrote|writing|writes} down :: 書きとめられた
+T| centuries {after|afterward|later of|since of} :: 何世紀も後に
+O| the first {tablets|tablet of|tableted|tabling}. :: 最初の粘土板の
+== 現存する最古級の文学作品であるギルガメシュ叙事詩が書きとめられたのは、最初の粘土板から何世紀も後のことだ。
+S| Some critics {object|objects|objection|objecting} :: 反論する批評家もいる
+O| {that|what|which|whom} this account :: この説明は
+V| {underestimates|underestimate|underestimation|underestimating} :: 過小評価していると
+O| the {role|roled|rule of|roles of} of religion and ritual. :: 宗教と儀式の役割を
+== この説明は宗教や儀式の役割を過小評価していると反論する批評家もいる。
+M| Even {so|such|as|than}, :: それでも
+S| the evidence {suggests|suggest|suggestion|suggesting} :: 証拠は示している
+O| {that|what|which|whom} bureaucracy, :: 事務作業が
+M| {not|no|none|nor} inspiration, :: ひらめきではなく
+V| {gave|give|given|giving} writing its start. :: 文字を生んだと
+== それでも証拠は、文字を生んだのはひらめきではなく事務作業だったことを示している。
+S| It is a {humbling|humble|humbly|humbleness} thought: :: 身の引き締まる話だ
+S| the tool {that|what|whom|whose} later carried :: のちに運んだ道具が
+O| the world's great {literature|literal|literate|literally} :: 世界の名作文学を
+V| {began|begun|begin|beginning} :: 始まった
+C| {as|so|than|such} a receipt. :: 受取証として
+== のちに世界の偉大な文学を運ぶことになる道具が受取証として始まったとは、身の引き締まる話だ。
+?? 1 1 最古の文字はどこで生まれたか。
+?? 2 5 最古の粘土板の大半は、言いかえると何か。
+?? 3 4 都市が大きくなると、記憶だけでは何ができなくなったか。
+?? 7 3 批評家は、この説明が何を過小評価していると言うか。
+
+@id adv81
+@lv 3
+@level 8
+@title Did Rome Really Fall?
+@ja ローマは本当に滅びたのか
+@tag 難関大レベル・論説文
+@gloss inhabitant=住民, official=役人, transformation=変容, archaeological=考古学の, province=属州, pottery=陶器, crude=粗雑な, interpretation=解釈
+S| Schoolbooks often {state|states|statement|stating} :: 教科書はよく述べる
+O| {that|what|which|whom} the Roman Empire :: ローマ帝国は
+V| {fell|fallen|felled of|fall} :: 滅びたと
+T| {in|on|at|by of} 476, :: 476年に
+M| {when|which|whom|what} the last western emperor :: 最後の西の皇帝が
+V| was {removed|remove|removal|removing} from power. :: 退位させられた時
+== 教科書はしばしば、最後の西ローマ皇帝が退位させられた476年にローマ帝国が滅びたと書く。
+S| Yet {few|much|a little|less of} people :: しかし…人はわずかで
+M| {living|lived|lives|live} at the time :: 当時生きていた
+V| seem to {have regarded|regarded|regard of|having regarded} :: みなしたようだ
+O| that {year|years|yearly|yearn} :: その年を
+C| {as|so|than|such} a turning point. :: 転換点として
+== しかし当時の人々で、その年を転換点とみなした者はほとんどいなかったようだ。
+S| Daily {life|live|lives of|living of}, :: 日々の暮らしは
+P| {for|from of|by of|with of} most inhabitants of Italy, :: 大半のイタリア住民の
+V| {continued|continue of|continuing|continual} :: 続いた
+M| {much|many|more of|most of} as before, :: 以前とほぼ同じく
+M| {and|nor|than|whom} the new rulers :: そして新しい支配者は
+V| often {kept|keep of|keeping|keeps of} :: しばしば残した
+O| Roman laws {and|nor|than|whom} officials. :: ローマの法と役人を
+== イタリアの大半の住民の暮らしは以前とほぼ変わらず続き、新しい支配者はローマの法や役人をしばしばそのまま用いた。
+M| {Moreover|More|Most over|Furthermore of}, :: さらに
+S| the {eastern|east of|easterly of|easting} half of the empire, :: 帝国の東半分は
+M| {centered|to center|center|centers} on Constantinople, :: 東の都を中心とする
+V| {survived|survive|survival|surviving} :: 存続した
+T| {for|since|ago|during of} nearly a thousand more years. :: さらに千年近く
+== さらに、コンスタンティノープルを中心とする帝国の東半分は、その後千年近くも存続した。
+S| Its {citizens|citizen|citizenship of|citizenly} :: その市民は
+V| {called|call of|calling|calls of} themselves Romans :: ローマ人と自称した
+T| {until|by|during|for} the city :: その都が…まで
+V| {fell|fallen|falls of|felled of} to the Ottomans :: オスマン帝国に落ちる
+T| {in|on|at|by of} 1453. :: 1453年に
+== その市民は、都が1453年にオスマン帝国に陥落するまで、自らをローマ人と呼び続けた。
+M| {Seen|Seeing|See|Saw} in this light, :: この観点から見ると
+S| the "{fall|fell|fallen|falls} of Rome" :: 「ローマの滅亡」は
+V| looks {less|least|lesser|little} like :: …には見えない
+O| a {sudden|suddenly|suddenness|sudden of} collapse :: 突然の崩壊
+X| {than|then|that|as} a slow transformation. :: ゆるやかな変容より
+== この観点から見ると、「ローマの滅亡」は突然の崩壊というより、ゆるやかな変容のように見える。
+S| Some historians, {however|whatever|whenever|wherever}, :: しかし一部の歴史家は
+V| {warn|warns|warning|warned of} against :: …を戒める
+O| {softening|soften|softened|to soften} the picture :: 見方を和らげること
+M| too {much|many|more|most}. :: 過度に
+== しかし一部の歴史家は、その見方を和らげすぎることに警告する。
+S| Archaeological evidence {shows|show|showing|shown} :: 考古学の証拠は示す
+O| {that|what|which|whom} in many western provinces :: 西の多くの属州で
+V| trade {shrank|shrunk of|shrinking|shrinks of}, :: 交易が縮み
+V| buildings {became|become of|becoming|becomes of} smaller, :: 建物は小さくなり
+M| {and|nor|than|whom} even pottery :: さらに陶器さえ
+V| grew {cruder|crudely|crudity|crudest of}. :: 粗くなったと
+== 考古学の証拠によれば、西の多くの属州では交易が縮み、建物は小さくなり、陶器さえ粗雑になった。
+P| {For|To of|By of|With of} the people :: 人々にとって
+X| {who|which|whose|whom} experienced these changes, :: 変化を経験した
+S| the {decline|declined|declining of|declines of} :: 衰退は
+V| was {anything|any|anythings|anyway} but gradual :: 決して緩やかでなく
+M| {or|than|whom|whose} painless. :: 痛みもあった
+== 変化を経験した人々にとって、衰退は決してゆるやかでも痛みのないものでもなかった。
+S| {Both|Either|Neither|Each} views :: 両方の見方が
+V| {contain|contains|containing|container} truth, :: 真実を含む
+M| {and|nor|than|whom} the disagreement reminds us :: その対立は気づかせる
+O| {that|what|which|whom} "fall" and "transformation" :: 「滅亡」も「変容」も
+V| {are|is|be|being} interpretations, :: 解釈であり
+M| {not|no|none|nor} facts :: 事実ではないと
+X| {waiting|waited|waits|wait} to be discovered. :: 発見を待つ
+== どちらの見方にも真実があり、この対立は、「滅亡」も「変容」も発見を待つ事実ではなく解釈なのだと気づかせてくれる。
+?? 0 3 教科書では、ローマ帝国は何年に滅びたとされるか。
+?? 3 4 帝国の東半分はその後どれくらい存続したか。
+?? 4 3 コンスタンティノープルはどこに陥落したか。
+?? 7 5 考古学の証拠によれば、陶器はどうなったか。
+
+@id adv82
+@lv 3
+@level 8
+@title Is History Written by the Victors?
+@ja 歴史は勝者が書くのか
+@tag 難関大レベル・論説文
+@gloss victor=勝者, conqueror=征服者, oversimplify=単純化しすぎる, narrative=物語, slavery=奴隷制, monument=記念碑, peasant=農民, trace=痕跡, archaeology=考古学
+S| "History is written {by|bye|buy|be} the victors" :: 「歴史は勝者が書く」
+V| {is|are|be|being} a saying :: はことわざだ
+X| {repeated|repeating|repeat|repeats} so often :: よく繰り返されて
+X| {that|what|which|whom} it is rarely questioned. :: まず疑われない
+== 「歴史は勝者が書く」は、あまりに繰り返されるため、めったに疑われないことわざだ。
+S| There is clearly {some|any|few|many} truth in it: :: 確かに真理はある
+S| conquerors {have|has|having|had been} often destroyed :: 征服者はよく壊した
+O| the {records|recording of|recorded|record of} :: 記録を
+X| {of|for|by of|with of} those they defeated. :: 負かした者の
+== 確かに一面の真理はある。征服者はしばしば敗者の記録を破壊してきた。
+S| Yet the {saying|say|said|says} :: しかしその言葉は
+V| {oversimplifies|oversimplify|oversimple|oversimplification} :: 単純化しすぎる
+O| {how|what|which|whom} history :: 歴史が
+V| is actually {produced|produce|producing|production}. :: 実際どう作られるか
+== しかしこのことわざは、歴史が実際にどう作られるかを単純化しすぎている。
+S| The {losers|loses|lost of|losing of} :: 敗者も
+V| {frequently|frequent|frequency|frequents} write history too, :: よく歴史を書く
+M| {sometimes|some time of|somewhat of|someday of} :: ときには
+P| {with|within|without of|by of} remarkable success. :: 見事な成功とともに
+== 敗者もしばしば歴史を書き、ときには見事に成功する。
+T| {After|Afterward|Later of|Since of} the American Civil War, :: 南北戦争の後
+S| {defeated|defeating|defeat|defeats} Southerners :: 敗れた南部の人々は
+V| {promoted|promote of|promoting|promotes of} :: 広めた
+O| a "Lost Cause" {narrative|narrate|narrated|narrator of} :: 「失われた大義」を
+X| {that|what|whom|whose} portrayed their cause :: 自らの大義を描く
+C| {as|so|than|such} noble :: 高潔なものとして
+M| rather {than|then|that|as} as a defense of slavery. :: 奴隷制擁護ではなく
+== 南北戦争の後、敗れた南部の人々は、自分たちの大義を奴隷制の擁護ではなく高潔なものとして描く「失われた大義」の物語を広めた。
+S| This {version|verse|versed|versing}, :: この解釈は
+M| {spread|spreads|spreading of|to spreading} through textbooks and monuments, :: 教科書や碑で広まり
+V| {shaped|shape of|shaping|shapes of} public memory :: 人々の記憶を形成した
+T| {for|since|ago|during of} generations. :: 何世代にもわたり
+== 教科書や記念碑を通じて広まったこの解釈は、何世代にもわたって人々の記憶を形づくった。
+M| {Equally|Equal|Equality|Equalize}, :: 同様に
+S| histories {are|is|be|being} shaped :: 歴史は形づくられる
+M| not only {by|bye|buy|be} who wins :: 誰が勝つかだけでなく
+M| {but|than|whom|whose} by who can read, write, :: 誰が読み書きでき
+M| {and|nor|than|whom} preserve documents. :: 文書を残せるかで
+== 同様に、歴史は誰が勝つかだけでなく、誰が読み書きし文書を残せるかによっても形づくられる。
+S| Peasants, women, and the {enslaved|enslave|enslaving of|enslaves} :: 農民・女性・奴隷は
+V| left {few|little|a little|less of} written traces, :: 文字の痕跡が乏しい
+M| not {because|because of|cause of|due} they lost, :: 負けたからでなく
+M| {but|than|whom|whose} because they :: 彼らが…からだ
+V| were {denied|deny|denial|denying} access :: 機会を奪われた
+P| {to|toward of|onto|into of} writing itself. :: 書くこと自体の
+== 農民や女性、奴隷にされた人々が書かれた痕跡をほとんど残さなかったのは、負けたからではなく、書くこと自体から締め出されていたからだ。
+S| Historians {therefore|there|therefor of|thereby of} :: そこで歴史家は
+V| turn {to|for of|on of|in of} other sources, :: 別の資料に頼る
+X| {such|so|like|very} as court records, :: 裁判記録や
+M| songs, {and|nor|than|whom} archaeology, :: 歌、考古学など
+R| {to recover|recovering|to recovering|recover} :: 取り戻すために
+O| these {missing|missed of|miss|misses} voices. :: 失われた声を
+== そのため歴史家は、こうした失われた声を取り戻すために、裁判記録や歌、考古学といった別の資料に目を向ける。
+S| The {question|questions|questioned|questioning}, then, :: では問題は
+V| {is|are|be|being} not simply who won, :: 誰が勝ったかでなく
+M| {but|than|whom|whose} whose voices :: 誰の声が
+V| {survived|survival|survive of|surviving} :: 残ったか
+M| {and|nor|than|whom} whose :: そして誰の声が
+V| were {silenced|silence|silencing|silent of}. :: 消されたかだ
+== では問題は、単に誰が勝ったかではなく、誰の声が残り、誰の声が消されたかなのだ。
+?? 1 1 征服者はしばしば何をしてきたか。
+?? 4 5 「失われた大義」の物語は、南部の大義をどのようなものとして描いたか。
+?? 7 4 農民や女性が書かれた痕跡をほとんど残さなかった理由は何か。
+?? 8 1 歴史家は失われた声を取り戻すために何に目を向けるか。
+
+@id adv83
+@lv 3
+@level 8
+@title Why Cities Grew Along Rivers
+@ja 都市はなぜ川沿いに生まれたか
+@tag 難関大レベル・説明文
+@gloss coincidence=偶然, irrigation=灌漑, deposit=堆積させる, fertile=肥沃な, surplus=余剰, centralized=中央集権の, predate=…より前からある, settlement=集落, fortune=盛衰
+S| It is no {coincidence|coincide|coincident|coincidental} :: 偶然ではない
+O| {that|what|which|whom} many of the earliest cities :: 最初期の都市の多くが
+V| {arose|arisen|arise of|arising} :: 生まれたのは
+P| {along|alone|aloud|alike} great rivers :: 大河のほとりに
+X| {such|so|like|very} as the Nile, :: ナイル川や
+M| the Tigris, {and|nor|than|whom} the Euphrates. :: チグリス・ユーフラテス
+== 最初期の都市の多くがナイル川やチグリス川、ユーフラテス川のような大河のほとりに生まれたのは偶然ではない。
+S| Rivers {supplied|supply of|supplying|supplies of} water :: 川は水を与えた
+R| {for|since|ago|to of} drinking and irrigation, :: 飲み水と灌漑用の
+M| {and|nor|than|whom} their floods :: そして洪水は
+V| {deposited|deposit of|depositing|deposition} :: 積もらせた
+O| {fertile|fertility|fertilize|fertilely} soil :: 肥沃な土を
+P| {on|onto of|upon of|in of} the surrounding plains. :: 周りの平野に
+== 川は飲み水と灌漑の水を与え、洪水は周囲の平野に肥沃な土を積もらせた。
+S| A {surplus|surplusing|surpluses|surplused} of food :: 食料の余剰が
+V| {allowed|allow of|allowing|allows of} some people :: 一部の人に許した
+R| {to stop|stopping|to stopping|stop} farming :: 農業をやめ
+M| {and|nor|than|whom} to specialize :: 専門化することを
+C| {as|so|than|such} craftsmen, priests, or officials. :: 職人や神官、役人に
+== 食料の余剰によって、一部の人々は農業をやめ、職人や神官、役人として専門化できた。
+S| Rivers also {served|serve of|serving|servant} :: 川は…の役も担った
+C| {as|so|than|such} highways: :: 幹線道路として
+S| boats {could|cans|coulding|can to} carry :: 船は運べた
+O| {heavy|heavily|heaviness|heavier of} goods :: 重い品を
+M| far more {cheaply|cheap of|cheapness|cheapen} :: はるかに安く
+X| {than|then|that|as} donkeys or carts. :: ロバや荷車より
+== 川は幹線道路の役割も果たした。船はロバや荷車よりもはるかに安く重い品を運べたのだ。
+S| Cities {located|locating|locate|location} on rivers :: 川沿いの都市は
+V| could {therefore|there|therefor of|thereby of} trade :: そのため交易できた
+P| {with|within|without of|by of} distant regions :: 遠い地域と
+M| {and|nor|than|whom} draw in resources :: 資源を引き寄せた
+P| {from|for of|since|by of} a wide area. :: 広い範囲から
+== そのため川沿いの都市は遠い地域と交易し、広い範囲から資源を集めることができた。
+S| Yet {abundance|abundant|abound|abundantly} alone :: しかし豊かさだけでは
+V| does not {fully|full|fullness|fuller} explain :: 十分に説明できない
+O| {why|what|which|whom} cities :: なぜ都市が
+V| {emerged|emerge of|emerging|emergence}. :: 生まれたのか
+== しかし豊かさだけでは、都市が生まれた理由を十分には説明できない。
+S| Some scholars {argue|argues|arguing|argument} :: 一部の学者は言う
+O| {that|what|which|whom} the need :: 必要性が
+R| {to manage|managing of|to managing|manage} floods and canals :: 洪水と運河を管理する
+V| {required|require of|requiring|requirement} :: 求めた
+O| cooperation on a large {scale|scaled|scaling|scales of}, :: 大規模な協力を
+X| {which|what|whom|whose} in turn :: それが今度は
+V| {encouraged|encourage of|encouraging|encouragement} centralized authority. :: 集権を促したと
+== 洪水や運河を管理する必要から大規模な協力が求められ、それが今度は中央集権的な権力を促したと主張する学者もいる。
+S| Others {point|points|pointing|pointed of} out :: 他の学者は指摘する
+O| {that|what|which|whom} some large settlements :: 一部の大集落は
+V| {predate|predates|predating|predated of} :: …より古く
+O| major irrigation {systems|system of|systematic|systemic}, :: 大規模な灌漑設備
+M| {suggesting|suggested|suggest|suggestion} that :: …を示すと
+S| trade {and|nor|than|whom} religion :: 交易や宗教も
+V| mattered as {much|many|more|most}. :: 同じほど重要だと
+== また、一部の大集落は大規模な灌漑設備より古く、交易や宗教も同じほど重要だったことを示すと指摘する学者もいる。
+S| {What|That|Which|Whom} seems clear :: 明らかに思えるのは
+V| {is|are|be|being} that rivers :: 川が…ということだ
+V| did not {create|created|creation|creating} cities :: 都市を生まなかった
+M| by {themselves|itself|ourselves|them}; :: ひとりでに
+S| they {offered|offer of|offering|offers of} possibilities :: 川は可能性を与えた
+X| {that|what|whom|whose} people had to organize. :: 人が組織すべき
+== 明らかに思えるのは、川がひとりでに都市を生んだのではないということだ。川が与えたのは、人々が組織して生かすべき可能性だった。
+S| The same {lesson|lessen|lessons|lessoning} :: 同じ教訓は
+V| {applies|apply|applying|application} to cities today, :: 今の都市にも当てはまる
+X| {whose|who|whom|which} fortunes depend :: その盛衰は左右される
+M| {less|least|lesser|little} on geography :: 地理よりも
+X| {than|then|that|as} on the choices :: 選択によって
+X| {of|for of|by of|with of} their inhabitants. :: 住民の
+== 同じ教訓は今日の都市にも当てはまる。都市の盛衰は、地理よりも住民の選択によって決まるのだ。
+?? 1 4 洪水は周囲の平野に何を積もらせたか。
+?? 3 5 船は何と比べてはるかに安く品を運べたか。
+?? 6 4 洪水や運河の管理には何が必要だったか。
+?? 8 4 川が人々に与えたものは何か。
+
+@id adv84
+@lv 3
+@level 8
+@title When Railways Set the Clocks
+@ja 鉄道が時計を合わせた
+@tag 難関大レベル・説明文
+@gloss irrelevant=無関係な, variety=ばらつき, schedule=時刻表, collide=衝突する, adopt=採用する, solar=太陽の, longitude=経度, dictate=押しつける
+T| For most {of|for|in of|by of} history, :: 歴史の大半で
+S| each {town|towns|townly|towned} :: 各町は
+V| {kept|keep of|keeping|keeps of} its own time, :: 独自の時刻を使った
+M| {based|basing|base|bases} on the sun's position. :: 太陽の位置に基づく
+== 歴史の大半において、町はそれぞれ太陽の位置に基づく独自の時刻を使っていた。
+S| Noon {arrived|arrive of|arriving|arrival} :: 正午が来た
+M| a few minutes {earlier|early of|earliest|earlily} :: 数分早く
+P| {in|into|onto|upon of} an eastern town :: 東の町では
+X| {than|then|that|as} in a western one, :: 西の町より
+M| {and|nor|but of|whom} hardly anyone :: そしてほぼ誰も
+V| {noticed|notice of|noticing|notices of} the difference. :: 差に気づかなかった
+== 東の町では西の町より数分早く正午が来たが、その違いに気づく人はほとんどいなかった。
+S| Slow {travel|travels of|traveled|traveling of} :: 遅い移動は
+V| {made|make of|making|makes of} such differences :: そうした差を…にした
+C| {irrelevant|irrelevantly|irrelevance|irrelevancies}, :: 無関係なものに
+M| {since|for of|during|ago} no one could cross :: 誰も越えられなかった
+O| {enough|enoughly|enough of|enoughs} distance :: 十分な距離を
+T| {in|on|at|by of} a day :: 1日で
+R| {to feel|feeling|to feeling|feel} them. :: それを感じるほどの
+== 移動が遅かったため、そうした差は問題にならなかった。1日でそれを感じるほどの距離を移動できる人はいなかったのだ。
+S| The {arrival|arrive|arrived|arriving of} of the railway, :: 鉄道の登場は
+M| {however|whatever|whenever|wherever}, :: しかし
+V| {turned|turn of|turning|turns of} :: 変えた
+O| this {harmless|harmful of|harmlessly|harm} variety :: この無害なばらつきを
+P| {into|onto|upon of|inside of} a serious problem. :: 深刻な問題に
+== しかし鉄道の登場は、この無害なばらつきを深刻な問題に変えた。
+S| A train {schedule|scheduled|scheduling of|schedules of} :: 列車の時刻表は
+V| is only {useful|usefully|usefulness|use of} :: 初めて役に立つ
+F| {if|what|whom|whose} everyone agrees :: 全員が合意して
+P| {on|in of|at of|by of} what time it is. :: 今何時かについて
+== 列車の時刻表は、全員が今何時かについて合意していて初めて役に立つ。
+P| {With|Within|Without of|By of} dozens of local times :: 何十もの地方時が
+C| {in|on|at|by} use, :: 使われていて
+S| passengers {missed|miss of|missing|misses of} connections :: 乗客は乗り継ぎを逃し
+M| {and|nor|than|whom}, more seriously, :: さらに深刻なことに
+S| trains on the same {track|tracked|tracking of|tracks of} :: 同じ線路の列車は
+V| {risked|risk of|risking|risks of} colliding. :: 衝突の危険があった
+== 何十もの地方時が使われていたため、乗客は乗り継ぎに失敗し、さらに深刻なことに、同じ線路を走る列車が衝突する危険もあった。
+T| {In|On|At|By of} 1883, :: 1883年に
+S| railroads in the United States {and|nor|than|whom} Canada :: 米国とカナダの鉄道は
+V| {adopted|adapt of|adopting|adoption} :: 採用した
+O| a system {of|for of|by of|with of} standard time zones, :: 標準時の時間帯を
+M| {largely|large|larger|largeness} replacing :: ほぼ置きかえて
+O| {local|locally|locality|locale of} solar time. :: 地方の太陽時を
+== 1883年、米国とカナダの鉄道は標準時の時間帯を採用し、地方の太陽時をほぼ置きかえた。
+T| A year {later|lately|latter|late of}, :: その翌年
+S| an international {conference|confer|conferred|conferring} :: 国際会議は
+V| {chose|chosen|choose of|choosing} Greenwich :: グリニッジを選んだ
+C| {as|so|than|such} the starting point :: 起点として
+R| {for|since|ago|to of} measuring longitude :: 経度を測るための
+P| {around|round of|aground|arounds} the globe. :: 地球全体で
+== その翌年、国際会議は地球全体の経度を測る起点としてグリニッジを選んだ。
+S| {Not|No|None|Nor} everyone :: 誰もが…ではない
+V| {welcomed|welcome of|welcoming|welcomes of} the change; :: 変化を歓迎した
+S| some {critics|critic of|critical|criticize} :: 一部の批判者は
+V| {complained|complain of|complaining|complaint} :: 不満を述べた
+O| {that|what|which|whom} railway companies :: 鉄道会社が
+V| {were|was|being|be} dictating :: 決めつけていると
+O| the {rhythm|rhyme of|rhythmic|rhythmically} of daily life. :: 暮らしのリズムを
+== 誰もがこの変化を歓迎したわけではなく、鉄道会社が日々の暮らしのリズムを決めていると不満を言う批判者もいた。
+S| Their protest {reveals|reveal|revealing|revelation} :: その抗議は示す
+O| {that|what|which|whom} time, :: 時間が
+X| {which|what|whom|whose} seems :: …に見える
+C| a {natural|nature|naturally|naturalize} fact, :: 自然の事実
+V| {is|are|be|being} partly :: 一部は…である
+C| a {social|society|socially|socialize} agreement. :: 社会の取り決め
+== 彼らの抗議は、自然の事実に見える時間が、一部は社会的な取り決めであることを示している。
+?? 0 3 かつて町の時刻は何に基づいていたか。
+?? 5 5 地方時が混在していたことで、列車にはどんな危険があったか。
+?? 6 0 米国とカナダの鉄道が標準時を採用したのはいつか。
+?? 7 2 国際会議は経度の起点としてどこを選んだか。
+
+@id adv85
+@lv 3
+@level 8
+@title Riding the Monsoon
+@ja 季節風に乗る交易
+@tag 難関大レベル・説明文
+@gloss monsoon=季節風, reverse=逆にする, voyage=航海, blend=混ざり合う, absorb=取りこむ, tempting=…したくなる, enslave=奴隷にする, dominate=支配する
+T| Long {before|ago|since|after of} steamships, :: 蒸気船のずっと前
+S| the Indian {Ocean|Oceans|Oceanic|Oceaning} :: インド洋は
+V| {was|were|been|being} one of :: …の一つだった
+C| the {busiest|busy|busier|busily} trading zones :: 最も活発な交易圏
+P| {in|on|at of|by of} the world. :: 世界で
+== 蒸気船が現れるずっと前から、インド洋は世界で最も活発な交易圏の一つだった。
+S| Its {secret|secrete|secretly|secrecy of} :: その秘密は
+V| {lay|laid|lain|lie} in the monsoon, :: 季節風にあった
+X| a {seasonal|season|seasonally|seasoned of} wind :: 季節の風で
+X| {that|what|whom|whose} reverses direction :: 向きを変える
+T| twice {a|an|the of|one of} year. :: 年に2回
+== その秘密は季節風にあった。年に2回向きを変える風である。
+S| Sailors {learned|learn of|learning|learns of} :: 船乗りは身につけた
+R| {to time|timing of|to timing|time} their voyages :: 航海の時期を合わせる
+M| so {that|what|which|whom} :: …ように
+S| the wind {would|wills|woulding|would to} carry them :: 風が運んでくれる
+M| east {in|on|at|for of} one season :: ある季節に東へ
+M| {and|nor|than|whom} back west in another. :: 別の季節に西へ
+== 船乗りたちは、ある季節には風が東へ、別の季節には西へ運んでくれるよう、航海の時期を合わせることを覚えた。
+S| {Because|Because of|Due|Owing} the winds :: 風は
+V| would not {change|changes|changing|changed} :: 変わらないので
+T| {for|since|ago|during of} months, :: 何か月も
+S| merchants often {had|have to|having|has} to wait :: 商人は待つ必要があった
+P| {in|into|onto|upon of} foreign ports :: 外国の港で
+M| {before|ago|since of|until of} returning home. :: 帰国の前に
+== 風は何か月も変わらないため、商人はしばしば帰国前に外国の港で待たねばならなかった。
+S| These long {stays|stay of|stayed|staying of} :: この長い滞在は
+V| {produced|produce of|producing|production} :: 生み出した
+O| something no one {had|has to|having|have of} planned: :: 誰も計画しないもの
+X| {mixed|mixing of|mix of|mixes} communities :: 混成の共同体だ
+X| in {which|what|whom|whose} languages, religions, :: そこで言語や宗教や
+M| {and|nor|than|whom} customs blended. :: 習慣が融け合った
+== この長い滞在は、誰も計画しなかったものを生んだ。言語や宗教、習慣が融け合う混成の共同体である。
+P| On the {coast|coats|coasting|coasts of} of East Africa, :: 東アフリカ沿岸では
+M| for {example|examples|exemplary|exemplify}, :: たとえば
+S| the Swahili {language|languages of|linguist|lingual} :: スワヒリ語は
+V| {absorbed|absorb of|absorbing|absorption} :: 取りこんだ
+O| {many|much|a lot|plenty} words :: 多くの単語を
+P| {from|for of|since|by of} Arabic. :: アラビア語から
+== たとえば東アフリカ沿岸では、スワヒリ語がアラビア語から多くの単語を取りこんだ。
+S| It is {tempting|tempted|tempt|temptation} :: …したくなる
+R| {to see|seeing of|to seeing|see} this trade :: この交易を見なす
+C| {as|so|than|such} a peaceful exchange :: 平和な交換と
+P| {among|amongst of|between of|along} equals. :: 対等な者同士の
+== この交易を、対等な者同士の平和な交換とみなしたくなる。
+S| But the same {routes|route of|routed|routing} :: しかし同じ航路は
+V| also {carried|carry of|carrying|carries of} :: …も運んだ
+O| {enslaved|enslave|enslaving of|enslaves} people, :: 奴隷にされた人々
+M| {and|nor|than|whom} powerful states :: そして強国は
+V| later {fought|fight of|fighting|fights of} :: のちに争った
+R| {to control|controlling of|to controlling|control} them. :: 支配しようと
+== しかし同じ航路は奴隷にされた人々も運び、のちには強国がその支配をめぐって争った。
+M| When Portuguese ships {arrived|arrive of|arriving|arrival} :: ポルトガル船が来た時
+T| {at|on|in of|by of} the end of the fifteenth century, :: 15世紀末に
+S| they {sought|seek of|seeking|sighted} :: 彼らが求めたのは
+R| not {to join|joining of|to joining|join} the network :: 網への参加でなく
+M| {but|than|whom|whose} to dominate it by force. :: 力による支配だ
+== 15世紀末にポルトガル船が到来したとき、彼らが目指したのは交易網に加わることではなく、力で支配することだった。
+S| The monsoon {trade|trades|traded|trading of} :: 季節風交易は
+V| {thus|this|thence of|thusly of} reminds us :: こうして教える
+O| {that|what|which|whom} connection and conflict :: 交流と対立が
+V| {have|has|having|had been} often traveled :: しばしば運ばれてきた
+P| {on|in of|at of|by of} the same winds. :: 同じ風に乗って
+== こうして季節風交易は、交流と対立がしばしば同じ風に乗って運ばれてきたことを教えてくれる。
+?? 1 4 季節風は年に何回向きを変えるか。
+?? 3 1 商人が外国の港で待たねばならなかったのはなぜか。
+?? 5 2 東アフリカ沿岸では、どの言語がアラビア語の単語を取りこんだか。
+?? 8 1 ポルトガル船はいつ到来したか。
+
+@id adv86
+@lv 3
+@level 8
+@title Was Edo a Green City?
+@ja 江戸は理想のエコ都市か
+@tag 難関大レベル・論説文
+@gloss sustainable=持続可能な, fertilizer=肥料, admirably=見事に, caution=戒める, cherish=大切にする, scarce=乏しい, thrift=倹約, timber=木材, incentive=動機, conviction=信念
+S| Edo, the city {that|what|whom|whose} :: 都市江戸は
+X| later {became|become of|becoming|becomes of} Tokyo, :: のちの東京で
+V| is often {praised|praise|praising|praises} :: よく称賛される
+C| {as|so|than|such} a model :: 模範として
+X| {of|for of|by of|with of} sustainable living. :: 持続可能な暮らしの
+== のちに東京となる江戸は、持続可能な暮らしの模範としてよく称賛される。
+T| In the eighteenth {century|centuries|centurion|centennial}, :: 18世紀に
+S| it {was|were|been|being} home :: そこは住まいだった
+P| {to|for of|at|by of} perhaps over a million people, :: おそらく百万人超の
+M| {yet|despite|unless|whereas of} it produced :: それでも出した
+O| {remarkably|remarkable|remark|remarks of} little waste. :: 驚くほど少ないごみ
+== 18世紀の江戸にはおそらく百万人以上が暮らしていたが、ごみは驚くほど少なかった。
+S| Used paper {was|were|been|being} collected :: 古紙は集められ
+M| {and|nor|than|whom} remade, :: 作り直され
+S| broken pots and umbrellas {were|was|being|be} repaired, :: 鍋や傘は直され
+M| {and|nor|than|whom} even human waste :: 人の排泄物さえ
+V| was {sold|sell|sale|selling} to farmers :: 農家に売られた
+C| {as|so|than|such} fertilizer. :: 肥料として
+== 古紙は回収されて作り直され、壊れた鍋や傘は修理され、人の排泄物さえ肥料として農家に売られた。
+P| {To|For of|By of|With of} modern observers :: 現代の観察者には
+M| {worried|worriedly|worry|worries} about climate change, :: 気候変動を憂う
+S| such a {system|systems|systematic|systemize} :: そうした仕組みは
+V| looks {admirably|admire|admiration|admired of} :: 見事に…見える
+C| {ahead|head|ahead to|forward} of its time. :: 時代の先を行って
+== 気候変動を憂う現代の観察者には、こうした仕組みは見事に時代を先取りしているように見える。
+S| Historians, {however|whatever|whenever|wherever}, :: しかし歴史家は
+V| caution {against|again|agains|amid of} :: …を戒める
+O| {reading|read|reads|to read} modern values :: 現代の価値観を読む
+P| {into|onto|upon of|inside of} the past. :: 過去の中に
+== しかし歴史家は、現代の価値観を過去に読み込むことを戒める。
+S| Edo's {residents|reside|residential|residing} :: 江戸の住民は
+V| {recycled|recycle of|recycling|recycles of} :: 再利用した
+M| not because they {cherished|cherish of|cherishing|cherishes of} :: 大切にしたからでなく
+O| the {environment|environ|environmental|environmentally}, :: 環境を
+M| {but|than|whom|whose} because new goods :: 新品が…からだ
+V| {were|was|being|be} expensive :: 高価で
+M| {and|nor|than|whom} materials were scarce. :: 材料が乏しかった
+== 江戸の住民が再利用したのは、環境を大切に思ったからではなく、新品が高く材料が乏しかったからだ。
+M| In other {words|word|wording|worded}, :: 言いかえれば
+S| {necessity|necessary|necessitate|necessarily}, :: 必要が
+M| rather {than|then|that|as} ideology, :: 思想よりも
+V| {drove|driven|drive of|driving} their thrift. :: 倹約を促した
+== 言いかえれば、彼らの倹約を促したのは思想ではなく必要だった。
+M| {Moreover|More|Most over|Furthermore of}, :: さらに
+S| the city's {demand|demanding of|demanded|demands of} :: 都市の需要は
+X| {for|to of|by of|with of} timber and fuel :: 木材と燃料の
+V| {placed|place of|placing|placement} heavy pressure :: 大きな負担をかけた
+P| {on|in of|at of|by of} surrounding forests. :: 周りの森林に
+== さらに、都市の木材や燃料の需要は、周辺の森林に大きな負担をかけた。
+S| {None|No|Nothing of|Neither of} of this means :: これは…を意味しない
+O| {that|what|which|whom} Edo has nothing :: 江戸に何もないと
+R| {to teach|teaching|to teaching|teach} us :: 私たちに教える
+T| {today|todays|to days|todaily}. :: 今日
+== だからといって、江戸が今日の私たちに教えるものが何もないわけではない。
+M| On the {contrary|contrast|contrarily|contraries}, :: それどころか
+S| it {shows|show|showing|shown} :: それは示す
+O| {that|what|which|whom} sustainable habits :: 持続可能な習慣は
+V| {can|cans|can to|could to} arise :: 生まれうる
+P| {from|for of|since|by of} practical incentives :: 実利的な動機から
+M| as {much|many|more|most} as :: …と同じくらい
+P| {from|for of|since|by of} moral conviction. :: 道徳的な信念から
+== それどころか、持続可能な習慣は道徳的な信念と同じくらい、実利的な動機からも生まれうることを示している。
+?? 1 2 18世紀の江戸にはおそらく何人が暮らしていたか。
+?? 2 5 人の排泄物は何として農家に売られたか。
+?? 5 4 江戸の住民が再利用した本当の理由は何か。
+?? 7 4 都市の木材や燃料の需要は何に負担をかけたか。
+
+@id adv87
+@lv 3
+@level 8
+@title The Trap of Hindsight
+@ja 後知恵の落とし穴
+@tag 難関大レベル・論説文
+@gloss distort=ゆがめる, retrospect=回顧, inevitable=必然の, hindsight=後知恵, bias=偏り, foresee=予見する, naive=考えが甘い, deliberate=意識的な, unpredictable=予測できない
+M| {When|What|Whom|Whose} we read history, :: 歴史を読むとき
+S| we {know|knows|knowing|known} :: 私たちは知っている
+O| {how|what|which|whom} the story ends, :: 話の結末を
+M| {and|nor|than|whom} this knowledge :: そしてこの知識は
+V| quietly {distorts|distort|distortion|distorting} :: ひそかにゆがめる
+O| our {judgment|judge of|judging of|judgmental}. :: 私たちの判断を
+== 歴史を読むとき私たちは結末を知っており、その知識がひそかに判断をゆがめる。
+S| {Events|Eventful|Eventual|Eventually} :: 出来事は
+X| {that|what|whom|whose} seemed uncertain :: 不確かに見えた
+P| to those {who|which|whose|whom} lived through them :: 渦中の人には
+V| {appear|appears|appearing|appearance}, :: 見える
+M| in {retrospect|retrospective|retrospects|retrospecting}, :: 振り返ると
+C| almost {inevitable|inevitably|inevitability|inevitableness}. :: ほぼ必然に
+== 渦中の人々には不確かに見えた出来事も、振り返るとほとんど必然だったように見える。
+S| Psychologists {call|calls|calling|called of} this :: 心理学者はこう呼ぶ
+C| {hindsight|hindsights of|hindsighted|hindsighting} bias: :: 後知恵バイアスと
+X| the {tendency|tend|tended|tending of} :: 傾向だ
+R| {to believe|believing|to believing|believe}, :: 思いこむ
+T| {after|afterward|later of|since of} the fact, :: 事が起きた後で
+O| {that|what|which|whom} we "knew it all along." :: 最初から分かったと
+== 心理学者はこれを後知恵バイアスと呼ぶ。事が起きた後で「最初から分かっていた」と思いこむ傾向だ。
+P| {For|To of|By of|With of} historians, :: 歴史家にとって
+S| the danger {is|are|be|being} :: 危険は…ことだ
+O| {that|what|which|whom} it makes :: それが…させる
+O| past {actors|acts|acted|acting} :: 過去の当事者を
+C| {look|to look|looking|looked} foolish :: 愚かに見えるように
+R| for {failing|fail|failed|failure} to foresee :: 予見できなかったと
+O| {what|that|which|whom} now seems obvious. :: 今は明白なことを
+== 歴史家にとっての危険は、今では明白に思えることを予見できなかったとして、過去の当事者を愚かに見せてしまうことだ。
+T| {Before|Ago|Since of|Until of} the First World War, :: 第一次大戦の前
+M| for {instance|instant|instances|instantly}, :: たとえば
+S| many observers {believed|believe of|believing|belief} :: 多くの人が信じた
+O| {that|what|which|whom} economic ties :: 経済的な結びつきが
+P| {between|among of|betwixt of|beside of} European nations :: 欧州諸国の間の
+V| {made|make of|making|makes of} a major war unlikely. :: 大戦を起きにくくすると
+== たとえば第一次世界大戦の前には、欧州諸国の経済的な結びつきが大戦を起こりにくくすると多くの人が信じていた。
+M| {Knowing|Known|Know|Knew} what followed, :: その後を知る私たちは
+S| we {may|mays|may to|maying} find :: …と思うかもしれない
+O| their {optimism|optimist|optimistic|optimize} naive, :: 彼らの楽観を甘いと
+M| {but|than|whom|whose} it was :: だがそれは…だった
+C| a {reasonable|reason|reasonably|reasoning of} reading :: 妥当な読み
+X| {of|for of|by of|with of} the evidence :: 証拠の
+X| {available|availably|availability|avail} to them. :: 彼らが手にできた
+== その後を知る私たちは彼らの楽観を甘いと思うかもしれないが、それは彼らが手にできた証拠の妥当な読みだった。
+S| Good {history|historic|historical|historian of}, :: よい歴史は
+M| {therefore|there|therefor of|thereby of}, :: したがって
+V| {requires|require|requiring|requirement} :: 必要とする
+O| a {deliberate|deliberately|deliberation|deliberated of} effort :: 意識的な努力を
+R| {to forget|forgetting of|to forgetting|forget} the ending :: 結末を忘れ
+M| {and|nor|than|whom} to recover :: 取り戻すための
+O| the {uncertainty|uncertain|uncertainly|uncertainties of} of the moment. :: その時の不確かさを
+== したがって、よい歴史を書くには、結末を忘れてその時点の不確かさを取り戻す、意識的な努力が必要だ。
+M| Only {then|than|thence of|them} :: そうして初めて
+V| {can|cans|can to|could to} we understand :: 理解できる
+O| {why|what|which|whom} people :: なぜ人々が
+V| {made|make of|making|makes of} the choices :: 選択をしたのか
+X| they {did|do of|done|doing}. :: 実際にした
+== そうして初めて、人々がなぜあの選択をしたのかが理解できる。
+S| This {does|do|doing|done} not mean :: これは…ではない
+O| {excusing|excuse of|excused|to excusing} every decision; :: 全決断を許すこと
+S| it {means|mean|meaning|meant of} judging them :: 判断することだ
+P| {by|bye|buy|be} the standards and knowledge :: 基準と知識で
+X| {of|for of|by of|with of} their own time. :: その時代の
+== これはあらゆる決断を許すということではない。その時代の基準と知識で判断するということだ。
+S| The {past|passed|pass|passing}, :: 過去も
+M| after {all|every|whole|each}, :: 結局のところ
+V| {was|were|been|being} once :: かつては…だった
+C| an {unpredictable|unpredictably|unpredicted of|predictable of} present, :: 予測できない現在
+M| just {like|alike|likely|liking} our own. :: 私たちの今と同じく
+== 結局のところ、過去もかつては、私たちの今と同じく予測のつかない現在だったのだ。
+?? 2 1 事後に「最初から分かっていた」と思いこむ傾向を何と呼ぶか。
+?? 4 3 第一次大戦の前、多くの人は何が大戦を起きにくくすると信じていたか。
+?? 6 3 よい歴史を書くには何が必要か。
+?? 8 3 決断は何によって判断すべきか。

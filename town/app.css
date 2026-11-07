@@ -976,7 +976,7 @@ body {
   inset: 0;
   overflow: hidden;
 }
-.tw-map {
+.tw-view .tw-map {
   position: absolute;
   left: 0;
   top: 0;
@@ -1045,7 +1045,7 @@ body {
     animation: none;
   }
 }
-.tw-top {
+body > .tw-top {
   position: fixed;
   z-index: 10;
   top: calc(10px + env(safe-area-inset-top, 0px));
@@ -1055,7 +1055,7 @@ body {
   justify-content: space-between;
   pointer-events: none;
 }
-.tw-top button {
+body > .tw-top button {
   pointer-events: auto;
   border: 2px solid #8a5a32;
   background: #fffaf0;
@@ -1138,8 +1138,24 @@ body {
   font-size: 12px;
   color: #8a7766;
 }
-body.cs-in-game .tw-top {
+body.cs-in-game > .tw-top {
   display: none;
+}
+body > .tw-top .tw-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.tw-coin {
+  pointer-events: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 2px solid #8a5a32;
+  background: #fff3cf;
+  box-shadow: 0 2px 0 #8a5a32;
+  font-weight: 800;
+  font-size: 13px;
+  color: #2b2320;
 }
 
 /* games/cards/src/cards.css */
@@ -10222,4 +10238,126 @@ body.cs-in-game .tour-box {
   .tw-bld.tour-on {
     animation: none;
   }
+}
+
+/* apps/town/mode.css */
+.md-ov {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background:
+    linear-gradient(
+      160deg,
+      #bfe6ff,
+      #ffe3ec);
+  overflow: auto;
+}
+.md-box {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  color: #2b2320;
+}
+.md-box h1 {
+  margin: 0 0 4px;
+  font-size: 30px;
+  letter-spacing: .04em;
+  color: #4a3426;
+  text-shadow: 0 3px 0 #fff;
+}
+.md-q {
+  margin: 0 0 18px;
+  font-weight: 800;
+  color: #6b5a4c;
+}
+.md-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 18px 18px 16px;
+  border-radius: 20px;
+  border: 2px solid #8a5a32;
+  background: #fffaf0;
+  box-shadow: 0 4px 0 #8a5a32;
+  color: #2b2320;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .12s;
+}
+.md-card:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #8a5a32;
+}
+.md-card b {
+  font-size: 20px;
+}
+.md-card span {
+  font-size: 14px;
+  color: #5a4a3c;
+}
+.md-card small {
+  font-size: 12px;
+  color: #9a7f69;
+}
+.md-3d {
+  background:
+    linear-gradient(
+      160deg,
+      #fff4f7,
+      #ffe4ec);
+}
+.md-2d {
+  background:
+    linear-gradient(
+      160deg,
+      #f2fbff,
+      #e2f4ff);
+}
+.md-keep {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5a4a3c;
+  margin-top: 2px;
+}
+.md-keep input {
+  width: 18px;
+  height: 18px;
+}
+.md-note {
+  font-size: 12px;
+  color: #8a7766;
+  margin: 10px 0 0;
+}
+.md-wait {
+  position: fixed;
+  inset: 0;
+  z-index: 115;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffe9ef;
+  color: #6b5a4c;
+  font-weight: 800;
+}
+.md-town3d {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+}
+body.md-3d-on > .tw-view,
+body.md-3d-on > .tw-top {
+  display: none;
+}
+body.cs-in-game .md-town3d {
+  visibility: hidden;
 }

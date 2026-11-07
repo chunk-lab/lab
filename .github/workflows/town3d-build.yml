@@ -1,0 +1,32 @@
+# town3d のビルドだけを行う(公開はしない)。できた index.html は、Actions の実行結果からダウンロードできる
+name: town3d build
+on:
+  push:
+    branches-ignore: [main, town3d-preview, 'preview/**']
+    paths: ['town3d/**', '.github/workflows/town3d-build.yml']
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: town3d
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-audit --no-fund
+      - run: node build.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: town3d-index-html
+          path: town3d/dist/index.html
+      # できた index.html を、ブランチごとの preview/<ブランチ名>(1ファイルだけ)にも置く。ほかの人のブランチや、ほかの人のビルドとは混ざらない
+      - run: |
+          rm -rf /tmp/pv && mkdir /tmp/pv && cp dist/index.html /tmp/pv/index.html && cd /tmp/pv
+          git init -q && git checkout -q -b preview && git add index.html
+          git -c user.name=github-actions -c user.email=actions@users.noreply.github.com commit -q -m "build ${GITHUB_SHA}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" "preview:refs/heads/preview/${{ github.ref_name }}"

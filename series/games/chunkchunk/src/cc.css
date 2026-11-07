@@ -83,6 +83,18 @@
 .ct-cc .strip .w.done{opacity:.6}
 .ct-cc .strip .cutmark{font-size:calc(var(--laneFont,20px)*1.3);margin:0;color:var(--accent);opacity:1;font-weight:700}
 .ct-cc .strip .cutmark.forced{color:var(--bad)}
+/* 切ったチャンク:縁つき・明るく。うまく切れた=役割の色／惜しい=黄・点線／ちがう=赤・点線で暗め */
+.ct-cc .strip .w.cj:not(.gone){opacity:1;color:var(--wc);background:color-mix(in srgb,var(--rc) 22%,transparent);border:0 solid var(--rc);border-top-width:2px;border-bottom-width:2px;padding-top:1px;padding-bottom:1px}
+.ct-cc .strip .w.cj.cs{border-left-width:2px;border-radius:9px 0 0 9px}
+.ct-cc .strip .w.cj.ce{border-right-width:2px;border-radius:0 9px 9px 0}
+.ct-cc .strip .w.cj.cs.ce{border-radius:9px}
+.ct-cc .strip .w.cj.meh,.ct-cc .strip .w.cj.bad{border-style:dashed}
+.ct-cc .strip .w.cj.meh:not(.gone){opacity:.85;background:color-mix(in srgb,var(--rc) 10%,transparent)}
+.ct-cc .strip .w.cj.bad:not(.gone){opacity:.6;background:color-mix(in srgb,var(--rc) 10%,transparent)}
+.ct-cc .rtags{position:absolute;top:8px;display:flex;gap:5px;transform:translateX(-50%);z-index:4;pointer-events:none;white-space:nowrap}
+.ct-cc .rtag{font-weight:800;font-size:14px;color:#0b1524;border-radius:999px;padding:2px 10px;background:var(--rc);box-shadow:0 2px 8px #0007;animation:cc-rpop .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:var(--d)}
+.ct-cc .rtag i{font-style:normal;background:#0b1524;color:var(--rc);border-radius:50%;width:17px;height:17px;display:inline-grid;place-items:center;font-size:11px;margin-right:5px}
+@keyframes cc-rpop{0%{transform:scale(.2) translateY(16px);opacity:0}60%{transform:scale(1.25) translateY(-4px);opacity:1}100%{transform:scale(1);opacity:1}}
 .ct-cc .cutline{position:absolute;top:10px;bottom:10px;width:3px;margin-left:-1.5px;border-radius:2px;background:var(--accent);box-shadow:0 0 10px rgba(255,178,62,.6);z-index:2;pointer-events:none}
 .ct-cc .cutline::before{content:attr(data-lbl);position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:800;color:var(--accent);white-space:nowrap}
 .ct-cc .laneWrap.flash .cutline{animation:cc-lineFlash .3s}
@@ -370,3 +382,7 @@ html[data-theme="cute"] .ct-cc .edView .edNote,html[data-theme="cute"] .ct-cc .e
 .ct-cc .navBtn{width:52px}
 .ct-cc .cutBtn{flex:1 1 0;min-width:0;margin-left:0;padding-left:6px;padding-right:6px}
 .ct-cc .cutBtn small{white-space:normal;line-height:1.25}
+
+/* 無料会員：AIを使う登録は出さない（手打ち・お手軽自動は使える） */
+.ct-cc.cc-free .edCopy,.ct-cc.cc-free #edAI,.ct-cc.cc-free .edRow:has(#shCopyFile),.ct-cc.cc-free .edRow:has(#shCopyChat),.ct-cc.cc-free #shDrop,.ct-cc.cc-free ol.edSteps:has(+ .edRow #shCopyFile),.ct-cc.cc-free h3:has(+ ol.edSteps + .edRow #shCopyFile){display:none!important}
+.ct-cc.cc-free #edStatus::before{content:"AIを使った登録(コピペ方式・AIで分ける・ファイル用の指示文)は有料会員の機能です。 ";display:block;font-weight:800;color:#c0563c;margin-bottom:4px}

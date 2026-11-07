@@ -248,10 +248,33 @@
 .cs-rs .cs-col{display:flex;flex-direction:column;gap:10px;width:100%}
 
 @media (prefers-reduced-motion:reduce){.cs-root *{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-.cs-cutscr .cs-foot{display:flex}
+.cs-cutscr .cs-foot{display:flex;position:relative}
 .cs-cutscr .cs-nav{gap:46px}
 .cs-cutscr .cs-navb{width:52px}
 .cs-map .cs-ch:not(.cs-lock):active{transform:scale(.99)}
 .cs-card img{width:100%;max-height:92px;object-fit:contain;border-radius:12px}
 .cs-cutscr .cs-strip .cs-hintmk{color:#ffd166;font-size:16px;padding:0 3px;text-shadow:0 0 10px #ffd166;animation:cs-hint 1s ease-in-out infinite}
 @keyframes cs-hint{50%{opacity:.35;transform:scale(1.3)}}
+/* 指でなぞって囲む(切る場面) */
+.cs-cutscr .cs-w.cs-pick{background:rgba(255,120,160,.28);border-radius:6px;box-shadow:0 0 0 2px rgba(255,120,160,.5)}
+.cs-dragnote{position:absolute;left:0;right:0;top:-24px;margin:0;text-align:center;font-size:11px;color:var(--muted,#9a7f8c);pointer-events:none}
+/* 切り方の案内:くり抜き＋指マーク */
+.cs-cutscr .cs-spot{position:absolute;z-index:40;pointer-events:none;border-radius:16px;box-shadow:0 0 0 100vmax rgba(8,12,30,.38),0 0 0 3px #ffd36b;transition:all .25s;animation:csSpot 1.1s ease-in-out infinite alternate}
+@keyframes csSpot{to{box-shadow:0 0 0 100vmax rgba(8,12,30,.38),0 0 0 6px #ffd36b}}
+.cs-cutscr .cs-spothand{position:absolute;z-index:41;pointer-events:none;font-size:38px;line-height:1;transform:translateX(-50%);animation:csHand .7s ease-in-out infinite alternate}
+@keyframes csHand{to{transform:translate(-50%,8px)}}
+.cs-cutscr .cs-spotcap{position:absolute;z-index:41;pointer-events:none;left:6%;right:6%;padding:10px 14px;border-radius:14px;background:#fffaf0;color:#4b3e58;font-size:15px;line-height:1.5;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.cs-cutscr .cs-spotcap small{display:block;margin-top:2px;font-size:12px;color:#8a7898}
+.cs-cutscr .cs-laneW{position:relative;z-index:45}
+
+/* 切ったチャンク:縁つき・明るく(うまく切れた=役割の色／惜しい=黄・点線／ちがう=赤・点線で暗め) */
+.cs-cutscr .cs-strip .cs-w.cs-cj:not(.cs-gone){opacity:1;color:var(--wc);background:color-mix(in srgb,var(--rc) 22%,transparent);border:0 solid var(--rc);border-top-width:2px;border-bottom-width:2px;padding-top:1px;padding-bottom:1px}
+.cs-cutscr .cs-strip .cs-w.cs-cj.cs-cst{border-left-width:2px;border-radius:9px 0 0 9px}
+.cs-cutscr .cs-strip .cs-w.cs-cj.cs-cen{border-right-width:2px;border-radius:0 9px 9px 0}
+.cs-cutscr .cs-strip .cs-w.cs-cj.cs-cst.cs-cen{border-radius:9px}
+.cs-cutscr .cs-strip .cs-w.cs-cj.cs-meh,.cs-cutscr .cs-strip .cs-w.cs-cj.cs-bad{border-style:dashed}
+.cs-cutscr .cs-strip .cs-w.cs-cj.cs-meh:not(.cs-gone){opacity:.85;background:color-mix(in srgb,var(--rc) 10%,transparent)}
+.cs-cutscr .cs-strip .cs-w.cs-cj.cs-bad:not(.cs-gone){opacity:.6;background:color-mix(in srgb,var(--rc) 10%,transparent)}
+.cs-cutscr .cs-rtags{position:absolute;top:8px;display:flex;gap:5px;transform:translateX(-50%);z-index:4;pointer-events:none;white-space:nowrap}
+.cs-cutscr .cs-rtag{font-weight:800;font-size:15px;color:#0b1524;border-radius:999px;padding:2px 11px;background:var(--rc);box-shadow:0 2px 8px #0007;animation:cs-rpop .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:var(--d)}
+@keyframes cs-rpop{0%{transform:scale(.2) translateY(16px);opacity:0}60%{transform:scale(1.25) translateY(-4px);opacity:1}100%{transform:scale(1);opacity:1}}

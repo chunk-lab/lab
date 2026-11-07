@@ -1,0 +1,827 @@
+@id adv18
+@lv 3
+@level 8
+@title The Hidden Cost of Every Choice
+@ja 選択の隠れた代償
+@tag 難関大レベル・論説文
+@gloss opportunity cost=機会費用, forgo=見送る, alternative=代案, insist=主張する, fatigue=疲れ, receipt=レシート, overlook=見落とす, estimate=見積もる
+S| {Economists|Economy|Economic|Economize} often :: 経済学者はよく
+V| {insist|insists|insisting|insistence} :: 主張する
+O| {that|what|which|whom} nothing is truly free, :: 何も無料ではないと
+M| {even|ever|every|evenly} when no money :: お金が…ときでも
+V| {changes|change|changing|to change} hands. :: 動かない
+== 経済学者はよく、お金がまったく動かない場合でも、本当に無料のものなどないと主張する。
+S| {This|These|Those|They} is because :: これは…だからだ
+S| every {decision|decide|decisive|decided} we make :: 下す決定はすべて
+V| {requires|require|requiring|required to} us :: 我々に求める
+X| {to give|giving|give|given} up :: 手放すことを
+O| {something|somewhat|somehow|somewhere of} else. :: 別の何かを
+== これは、私たちが下すあらゆる決定が、別の何かを手放すことを求めるからだ。
+S| The value {of|at|by|than} the best alternative :: 最善の代案の価値
+X| {that|what|whose|where} we forgo :: 我々が見送る
+V| {is|are|be|being} called :: …と呼ばれる
+C| the "opportunity {cost|costly|costing|costed}." :: 「機会費用」と
+== 見送った最善の代案の価値は「機会費用」と呼ばれる。
+F| {Suppose|Supposes|Supposed|Supposition} a student :: ある学生が…とする
+V| {spends|spend|spending|spent to} an evening :: 一晩を費やす
+M| {working|work|works|to working} at a café :: カフェで働いて
+P| {for|by|of|to} 5,000 yen. :: 5000円で
+== ある学生が一晩カフェで働いて、5000円を得たとしよう。
+S| The real cost {of|for|by|at} that evening :: その晩の本当の代償は
+V| {includes|include|including|inclusion} :: 含む
+M| not {only|alone|lonely|once} her fatigue :: 疲れだけでなく
+M| {but also|but too|and also of|as also} the exam :: 試験も
+X| {she|her|hers|herself} might have passed :: 合格できたかもしれない
+M| {with|of|for|at} more study. :: もっと勉強すれば
+== その晩の本当の代償には、疲れだけでなく、もっと勉強していれば合格できたかもしれない試験も含まれる。
+R| {Because|Because of|Due|Owing} such costs :: そうした代償は…ので
+V| never {appear|appears|appearing|appearance} :: 決して現れない
+P| {on|at|of|to} a receipt, :: レシートに
+S| {people|person|peoples of|a people} tend :: 人々は…しがちだ
+X| {to overlook|overlooking|overlook|overlooked} them. :: それらを見落とす
+== そうした代償はレシートには決して現れないので、人々はそれを見落としがちだ。
+S| {Firms|Firm|Firmly|Firmness} :: 企業は
+X| {that|what|whose|who's} overlook these costs :: これを見落とす
+V| {may|mays|may to|maybe} :: …かもしれない
+V| {keep|kept|keeping|keeps} running :: 続けてしまう
+O| {projects|project|projected|projecting} :: 事業を
+X| {that|what|whose|whom} earn less :: 稼ぎの少ない
+M| {than|then|that|as} alternatives would. :: 代案よりも
+== これを見落とす企業は、代案ほど稼げない事業を続けてしまうかもしれない。
+S| Critics, {however|how|whoever|wherever}, :: しかし批判者は
+V| {point|points|pointing|pointed to} out :: 指摘する
+O| {that|what|which|whom} the idea :: その考えは…と
+V| {is|are|be|being} easier :: より簡単だ
+X| {to state|stating|stated|state} :: 述べるのは
+M| {than|then|as|that} to apply. :: 当てはめるより
+== しかし批判者は、その考えは実際に当てはめるより、口で言うほうがずっとやさしいと指摘する。
+T| {In|On|At|By} real life, :: 現実には
+S| the {alternatives|alternative|alternate|alternatively} :: 代案は
+V| {are|is|be|being} often :: しばしば…だ
+C| {uncertain|uncertainly|uncertainty|certainly un}, :: 不確かな
+M| {and|nor|than|whom} their value :: その価値は
+V| can only {be|being|been|to be} estimated. :: 見積もれるだけだ
+== 現実には代案は不確かなことが多く、その価値は推測するしかない。
+M| Even {so|such|as|though}, :: それでも
+S| the habit {of|for|to|in} asking :: 問う習慣は
+O| "What am I {giving|give|gave|given} up?" :: 何を手放すのかと
+V| {can|cans|can to|could to} lead :: 導きうる
+P| {to|for|at|on} wiser decisions. :: 賢い決定へ
+== それでも「自分は何を手放しているのか」と問う習慣は、より賢い決定につながりうる。
+M| In this {sense|sensing|sensible|sensed}, :: この意味で
+S| opportunity {cost|costly|costing|costed} :: 機会費用は
+V| {is|are|be|been} less a formula :: 公式というより
+M| {than|then|as|that} a way of thinking. :: 考え方である
+== この意味で、機会費用は公式というより、ひとつの考え方なのだ。
+?? 3 3 学生は一晩でいくら稼いだ？
+?? 5 2 機会費用はどこに現れない？
+?? 8 3 現実の代案はどうであることが多い？
+?? 10 3 機会費用は公式というより何？
+
+@id adv19
+@lv 3
+@level 8
+@title Why Trade Helps Both Sides
+@ja 貿易はなぜ双方の得か
+@tag 難関大レベル・論説文
+@gloss absolute=絶対的な, efficiency=効率, sacrifice=犠牲にする, specialize=特化する, relatively=相対的に, evenly=均等に, import=輸入品, insight=洞察, guarantee=保証する
+T| {In|On|At|By} 1817, :: 1817年に
+S| the {economist|economy|economic|economics} David Ricardo :: 経済学者リカードが
+V| {proposed|propose|proposal|proposing} :: 提唱した
+O| {an|a|the a|one an} idea :: ある考えを
+X| {that|what|whose|who's} still surprises :: 今も驚かせる
+O| many {students|student|studying|studious} today. :: 多くの学生を
+== 1817年、経済学者リカードは、今も多くの学生を驚かせる考えを提唱した。
+M| Even {if|of|so|such} one country :: たとえある国が
+V| {is|are|be|being} better :: より得意でも
+P| {at|on|to|of} producing everything, :: 全ての生産が
+S| {both|either|each|neither of} countries :: 両国とも
+V| can still {benefit|benefits|beneficial|benefited} :: なお利益を得る
+P| {from|of|at|on} trade. :: 貿易から
+== たとえある国があらゆる生産で優れていても、両国とも貿易から利益を得られる。
+S| The key {lies|lays|lying|lain} :: 鍵は…にある
+M| not {in|on|at|to} absolute efficiency :: 絶対的効率でなく
+M| but in {what|it|whose|whom} each country :: 各国が何を
+V| {sacrifices|sacrifice|sacrificing|sacrificed of} :: 犠牲にするか
+R| {to produce|producing|produced|produce} a good. :: 品を作るのに
+== 鍵は絶対的な効率ではなく、ある品を作るのに各国が何を犠牲にするかにある。
+V| {Imagine|Imagination|Imaginary|Imagines} :: 想像してほしい
+O| a {skilled|skill|skillful of|skills} lawyer :: 有能な弁護士を
+X| {who|whom|which|whose} types :: タイプをする
+M| {faster|fast than|fastest|more fast} :: より速く
+P| {than|then|as|that} her assistant. :: 助手よりも
+== 助手よりもタイプが速い、有能な弁護士を想像してほしい。
+S| It would still {make|makes|making|made} sense :: それでも理にかなう
+P| {for|of|to|with} her :: 彼女にとって
+X| {to leave|leaving|leave|left} the typing :: タイプを任すことは
+P| {to|at|on|by} her assistant. :: 助手に
+== それでも、タイプは助手に任せるのが理にかなっている。
+S| Every hour {she|her|hers|herself} spends typing :: タイプに使う1時間は
+V| {is|are|be|being} an hour :: 1時間だ
+M| {taken|took|takes|to taken} away :: 奪われた
+P| {from|of|off|out} legal work, :: 法律業務から
+X| {which|what|who|whom} pays far more. :: ずっと稼げる
+== タイプに使う1時間は、ずっと稼げる法律業務から奪われた1時間なのだ。
+M| {Likewise|Alike|Liken|Likeness}, :: 同様に
+S| countries {that|what|whose|whom} specialize :: 特化する国々は
+P| {in|at|to|by} what they do :: 自分がやれることに
+M| {relatively|relative|relativity|relate} best :: 相対的に最もよく
+V| {can|cans|can to|could to} produce :: 生産できる
+O| more {in|on|at|by} total. :: 全体でより多く
+== 同様に、相対的に最も得意なことに特化した国々は、全体としてより多くを生産できる。
+M| {Nevertheless|Never|Nonetheless of|Notwithstanding of}, :: とはいえ
+S| the {gains|gain|gaining|gainful} :: 利益は
+X| {from|at|on|to} trade :: 貿易による
+V| {are|is|be|being} rarely :: めったに…ない
+V| {shared|share|sharing|shares} evenly. :: 均等に分けられ
+== とはいえ、貿易による利益が均等に分かち合われることはめったにない。
+S| Workers {in|on|at|to} industries :: 産業の労働者は
+X| {that|what|whose|whom} lose out :: 負けてしまう
+P| {to|for|by|with} imports :: 輸入品に
+V| {may|mays|may to|maybe} face :: 直面しうる
+O| job losses {that|what|whose|whom} :: …ような失業に
+C| are hard {to recover|recovering|recovered|recover} from. :: 立ち直りにくい
+== 輸入品に負ける産業の労働者は、立ち直りにくい失業に直面することがある。
+S| {Supporters|Support|Supportive|Supported} of free trade :: 自由貿易の支持者も
+V| {often|oftenly|oft of|often to} admit :: しばしば認める
+O| {that|what|which|whom} some support :: 何らかの支援が
+P| {for|at|on|into} such workers :: そうした労働者への
+V| {is|are|be|been} necessary. :: 必要だと
+== 自由貿易の支持者も、そうした労働者への何らかの支援が必要だとしばしば認めている。
+S| {Ricardo's|Ricardo|Ricardos|Ricardo's of} insight :: リカードの洞察は
+V| {explains|explain|explaining|explanation} :: 説明する
+O| {why|what|whose|whom} trade enriches nations :: 貿易が国を富ます訳を
+M| {without|withouts|within|with not} guaranteeing :: 保証することなく
+O| {that|what|whom|whose} it helps everyone. :: 全員の得になるとは
+== つまりリカードの洞察は、貿易が国々を豊かにする理由を説明するが、それが全員の得になるとまでは保証しない。
+?? 0 0 リカードが考えを提唱したのはいつ？
+?? 3 3 弁護士は助手と比べてタイプがどうだ？
+?? 7 4 貿易の利益はどう分けられることがまれ？
+?? 8 2 労働者の産業は何に負ける？
+
+@id adv20
+@lv 3
+@level 8
+@title Throwing Good Money After Bad
+@ja サンクコストの罠
+@tag 難関大レベル・論説文
+@gloss sunk cost=埋没費用, irrecoverable=回収不能な, relevant=重要な, invest=投資する, reluctance=気が進まないこと, abandon=やめる, confess=告白する, persistence=粘り強さ
+F| {Suppose|Supposes|Supposed|Supposition} :: …としよう
+S| {you|your|yours|yourself} have paid :: あなたが払った
+P| {for|of|on|to} a concert ticket :: コンサート券に
+M| {but|nor|than|whom} wake up :: だが目覚める
+M| {feeling|feel|felt to|feels} ill :: 気分が悪くて
+T| {on|at|to|of} the day. :: 当日に
+== コンサート券を買ったのに、当日、気分が悪くて目が覚めたとしよう。
+S| Many {people|person|peoples of|peopled} :: 多くの人は
+V| {would|wouldn't to|will to|would to} go anyway, :: それでも行くだろう
+M| {reasoning|reason|reasoned to|reasons} :: …と考えて
+O| {that|what|whom|whose} otherwise :: さもないと
+S| the money {would be|would being|would been|would to be} wasted. :: お金が無駄になると
+== 多くの人は、行かなければお金が無駄になると考えて、それでも出かけるだろう。
+M| {Yet|Despite|Though of|Unless} the money :: しかしお金は
+V| {is|are|be|been} gone :: もう戻らない
+M| {whether|weather|whither|either} they go :: 行こうが
+M| {or|nor|and|but} not. :: 行くまいが
+== しかし行っても行かなくても、お金はもう戻ってこない。
+S| {Economists|Economy|Economic|Economical} call :: 経済学者は呼ぶ
+O| such {irrecoverable|irrecoverably|irrecoverableness|recover} spending :: 回収不能な支出を
+C| a "sunk {cost|costly|costing|costed}," :: 埋没費用と
+M| {and|nor|than|whom} argue :: そして主張する
+O| {that|what|whose|whom} it should not :: それが…べきでないと
+V| {influence|influences|influencing|influenced} future choices. :: 今後の選択を左右する
+== 経済学者はこうした回収できない支出を「埋没費用」と呼び、それが今後の選択を左右すべきではないと主張する。
+S| The only {relevant|relevance|relevantly|relevancy} question :: 唯一大事な問いは
+V| {is|are|be|being} :: …だ
+O| {whether|weather|either|whither} the concert :: コンサートが…かどうか
+V| will {give|gives|giving|given} you :: あなたに与える
+O| more {pleasure|pleasant|please|pleasantly} :: より多くの楽しみを
+P| {than|then|as|that} staying home. :: 家にいるより
+== 唯一大事なのは、家にいるよりコンサートのほうが楽しめるかどうかだ。
+S| The same {error|err|erroneous|errant} :: 同じ誤りは
+V| {appears|appear|appearing|appearance} :: 現れる
+P| {on|of|to|into} a far larger scale :: はるかに大きな規模で
+M| {in|into|onto|unto} business and politics. :: 企業や政治に
+== 同じ誤りは、企業や政治の世界では、はるかに大きな規模で現れる。
+S| Projects {that|what|whose|whom} are failing :: 失敗している事業が
+V| are often {continued|continue|continuing to|continuation} :: しばしば続けられる
+R| {simply|simple|simplify|simplicity} because :: 単に…という理由で
+S| so {much|many|more of|lot} :: とても多くが
+V| has already {been|being|be|to be} invested :: すでに投じられた
+P| {in|at|to|of} them. :: それらに
+== 明らかに失敗している事業が、すでに多くを投じたという理由だけで続けられることも多い。
+S| {Psychologists|Psychology|Psychological|Psychologically} suggest :: 心理学者は示唆する
+O| {that|what|whom|whose} this tendency :: この傾向は…と
+V| {stems|stem|stemming|stemmed of} from :: …から生じる
+O| our {reluctance|reluctant|reluctantly|reluct} :: 我々の気の進まなさ
+X| {to admit|admitting|admitted|admit} :: 認めることへの
+O| {that|what|whom|whose} we were wrong. :: 誤っていたと
+== 心理学者によれば、この傾向は自分の誤りを認めたくない気持ちから生じるという。
+S| {Abandoning|Abandon|Abandoned|Abandonment of} a plan :: 計画をやめることは
+V| {feels|feel|feeling|felt to} like :: …のように感じる
+O| {confessing|confess|confessed|confesses} failure, :: 失敗の告白
+M| {whereas|whereabouts|whenever of|wherever of} continuing :: 一方続けることは
+V| {lets|let to|letting|lets to} us hope. :: 希望を持たせる
+== 計画をやめるのは失敗を認めるように感じるが、続けていればまだ希望を持てる。
+M| {On|In|At|By} the other hand, :: 一方で
+S| some {argue|argues|arguing|argument} :: …と言う人もいる
+O| {that|what|whom|whose} persistence :: 粘り強さが
+V| {is|are|be|being} sometimes :: 時には…だ
+C| {exactly|exact|exacting of|exactness} what success demands. :: まさに成功に必要なもの
+== 一方で、粘り強さこそが時に成功に必要なものだと主張する人もいる。
+S| The lesson, {then|than|them|thence of}, :: つまり教訓は
+V| {is|are|be|being} not :: …ではない
+X| {to quit|quitting of|quit|quits} easily, :: 簡単にやめること
+M| but {to judge|judging of|judge|judged} choices :: 選択を判断すること
+P| {by|at|to|onto} their future :: その未来で
+M| {rather|rathe|rather to|more rather} than their past. :: 過去ではなく
+== つまり教訓は、簡単にあきらめることではなく、選択を過去ではなく未来によって判断することだ。
+?? 3 2 回収できない支出を経済学者は何と呼ぶ？
+?? 4 4 家にいるより何が多いかが大事な問い？
+?? 7 3 この傾向は何から生じる？
+?? 10 4 選択は何によって判断すべき？
+
+@id adv21
+@lv 3
+@level 8
+@title The Market for Lemons
+@ja 「レモン市場」の問題
+@tag 難関大レベル・論説文
+@gloss slang=俗語, defect=欠陥, withdraw=撤退する, quality=品質, collapse=崩壊する, warranty=保証, manipulate=操作する, asymmetry=非対称, foundation=土台
+T| {In|On|At|By} 1970, :: 1970年に
+S| the {economist|economy|economic|economics} George Akerlof :: 経済学者アカロフが
+V| {published|publish|publishing|publication} :: 発表した
+O| a paper {on|in|at|by} used cars :: 中古車の論文を
+X| {that|what|whose|whom} changed :: 変えた
+O| {how|what|that|whose} economists see markets. :: 市場の見方を
+== 1970年、経済学者アカロフは、経済学者の市場の見方を変えることになる中古車の論文を発表した。
+S| His {starting|start|started|starts} point :: 彼の出発点は
+V| {was|were|be|being} simple: :: 単純だった
+S| {sellers|seller|selling|sold} :: 売り手は
+V| know far {more|most|much|many} :: はるかに多く知る
+P| {about|above|abroad|about of} their cars :: 自分の車について
+M| {than|then|as|that} buyers do. :: 買い手より
+== 彼の出発点は単純だった。売り手は買い手よりも、自分の車についてはるかに多くを知っている。
+M| {In|On|At|By} American slang, :: 米国の俗語で
+S| a car {with|within|without of|by} hidden defects :: 隠れた欠陥の車は
+V| {is|are|be|been} called :: 呼ばれる
+C| a {"lemon."|"lemons."|"lemony."|"lemoned."} :: 「レモン」と
+== アメリカの俗語では、隠れた欠陥のある車は「レモン」と呼ばれる。
+R| Since buyers {cannot|can't not|cannot to|can not to} :: 買い手は…できないので
+V| {tell|telling|told|tells} good cars :: 良い車を見分け
+P| {from|than|with|to} bad ones, :: 悪い車と
+S| they {are|is|be|being} only willing :: …気しかない
+X| {to pay|paying|paid|pay} an average price. :: 平均的な値を払う
+== 買い手は良い車と悪い車を見分けられないので、平均的な値段しか払おうとしない。
+P| {For|Of|At|By} owners of good cars, :: 良い車の持ち主には
+S| that price {is|are|be|being} too low, :: その値は安すぎる
+M| {so|nor|than|whom} many of them :: そこで多くが
+V| {withdraw|withdraws|withdrawing|withdrawal} :: 撤退する
+P| {from|of|at|to} the market. :: 市場から
+== 良い車の持ち主にはその値段は安すぎるので、その多くが市場から手を引く。
+T| {As|Than|Whom|Whose} they leave, :: 彼らが去るにつれ
+S| the {average|averagely|averaged of|averages} quality :: 平均的な品質は
+X| {of|at|by|to} the cars left :: 残った車の
+V| {declines|decline|declining|declination}, :: 下がる
+M| {and|nor|than|whom} prices :: そして価格は
+V| {fall|falls|falling|fallen} further. :: さらに下がる
+== 彼らが去るにつれて、残った車の平均品質は下がり、価格はさらに下がる。
+M| In the worst {case|cases|casing|cased}, :: 最悪の場合
+S| the market {could|coulds|could to|can to} :: 市場は…しうる
+V| {collapse|collapses|collapsing|collapsed} entirely, :: 完全に崩壊
+M| even {though|through|thorough|thought} :: …にもかかわらず
+S| honest {traders|trader|trading|traded} :: 正直な取引相手が
+V| {exist|exists|existing|existence}. :: 存在する
+== 最悪の場合、正直な取引相手がいるにもかかわらず、市場そのものが崩壊しかねない。
+S| The same {logic|logical|logically|logician} :: 同じ論理は
+V| {applies|apply|applying|application} :: 当てはまる
+P| {to|at|by|of} insurance, :: 保険に
+M| {lending|lend|lent|lends}, :: 融資に
+M| {and|nor|than|whom} even hiring. :: 採用にさえ
+== 同じ論理は、保険や融資、さらには採用にも当てはまる。
+S| Markets {have|has|having|had been} developed :: 市場は生み出した
+O| various {ways|way|wayed|waying} :: さまざまな方法を
+X| {of reducing|to reducing|reduce|of reduce} :: 減らすための
+O| this information {gap|gaps of|gape|gapped}, :: この情報の差を
+M| {such as|such like of|so as|such that} warranties :: 保証のような
+M| {and|nor|than|whom} reviews. :: そして口コミ
+== 市場は、保証や口コミなど、この情報の差を縮めるさまざまな方法を生み出してきた。
+S| Some {economists|economy|economic|economical}, however, :: しかし一部の学者は
+V| {warn|warns|warning|warned of} :: 警告する
+O| {that|what|whom|whose} such tools :: そうした手段も
+V| {can|cans|can to|could to} :: …しうる
+M| {themselves|itself|theirselves|themself} :: それ自体が
+V| {be|being|been|is} manipulated. :: 操作される
+== しかし、そうした手段そのものが操作されうると警告する経済学者もいる。
+S| Fake {reviews|review|reviewing|reviewed}, :: 偽の口コミは
+M| {for|in|at|by} instance, :: たとえば
+V| {could|coulds|could to|can to} recreate :: 再び生みうる
+O| the {very|verily|vary|very of} asymmetry :: まさにその非対称を
+X| they were {meant|mean|meaning|means} to remove. :: 取り除くはずだった
+== たとえば偽の口コミは、取り除くはずだった情報の偏りそのものを再び生み出しかねない。
+S| Trust, in other {words|word|wording|worded}, :: つまり信頼は
+V| {remains|remain|remaining|remained to} :: …であり続ける
+C| an {invisible|invisibly|invisibility|visible un} foundation :: 見えない土台
+P| {of|at|by|on} every market. :: あらゆる市場の
+== つまり信頼は、あらゆる市場の目に見えない土台であり続けるのだ。
+?? 0 0 論文が発表されたのはいつ？
+?? 2 3 欠陥のある車は俗語で何と呼ばれる？
+?? 3 4 買い手はどんな値段しか払おうとしない？
+?? 8 4 市場が生んだ方法の例は？
+?? 11 2 信頼はあらゆる市場の何？
+
+@id adv22
+@lv 3
+@level 8
+@title When Protection Changes Behavior
+@ja モラルハザード
+@tag 難関大レベル・論説文
+@gloss moral hazard=モラルハザード, misfortune=不運, coverage=補償, otherwise=さもなければ, incentive=動機, deductible=免責額, rescue=救済する, tempt=誘惑する
+S| {Insurance|Insure|Insured|Insurer of} :: 保険は
+V| {exists|exist|existing|existence} :: 存在する
+R| {to protect|protecting|protected|protect} people :: 人を守るために
+P| {from|of|by|at} misfortunes :: 不運から
+X| {they|them|their|theirs} cannot control. :: 自分で防げない
+== 保険は、自分では防げない不運から人々を守るためにある。
+M| {Yet|Despite|Unless of|Though of} economists :: だが経済学者は
+V| have long {noticed|notice|noticing|notices} :: 長く気づいてきた
+O| a {curious|curiously|curiosity|curio} side effect: :: 奇妙な副作用に
+T| once people {are|is|be|being} protected, :: 守られると
+S| they {may|mays|may to|maybe} become :: …になるかも
+C| less {careful|carefully|care|carefulness}. :: 不注意に
+== だが経済学者は奇妙な副作用に早くから気づいていた。人は守られると、注意が薄れることがあるのだ。
+S| This {phenomenon|phenomena|phenomenal|phenomenally} :: この現象は
+V| {is|are|be|been} known :: 知られている
+P| {among|between of|amid of|along} economists :: 経済学者の間で
+P| {as|by of|like|to} "moral hazard." :: モラルハザードとして
+== この現象は、経済学者の間で「モラルハザード」として知られている。
+S| A driver {with|within|without of|by} full coverage, :: 全額補償の運転者は
+M| {for|in|at|by} example, :: たとえば
+V| {might|mights|might to|may to} park :: 駐車するかも
+P| {in|on of|at of|to} a risky spot :: 危ない場所に
+X| {she|her|hers|herself} would otherwise avoid. :: 普段なら避ける
+== たとえば全額補償の保険に入った運転者は、普段なら避ける危ない場所に車を停めるかもしれない。
+S| The problem {is|are|be|being} not :: 問題は…でない
+O| {that|what|whose|whom} people are dishonest, :: 人が不正直だと
+M| {but|nor|than|whom} that :: そうではなく
+S| the {incentive|incent|incentivize|incentively} :: 動機が
+X| {to be|being|been|be} careful :: 注意を払う
+V| {has|have|having|had been} weakened. :: 弱まったことだ
+== 問題は人々が不正直なことではなく、注意しようとする動機が弱まってしまうことだ。
+S| {Insurers|Insurer|Insure|Insuring} :: 保険会社は
+V| {respond|responds|responding|response} :: 対応する
+P| {with|within|by of|at} tools :: 手段で
+M| {such as|such like|so as|such that} deductibles, :: 免責額のような
+X| {which|what|whom|whose} make customers :: 客に…させる
+O| {share|to share|sharing|shared} part of the loss. :: 損失の一部を負担
+== 保険会社は、客に損失の一部を負担させる免責額などの手段で対応している。
+S| The {concept|conceive|conceptual|conceptually} :: この概念は
+V| also {appears|appear|appearing|appearance} :: …にも現れる
+P| {in|to|onto|unto} debates :: 議論に
+P| {about|above|abroad|around of} whether governments :: 政府が…かの
+V| should {rescue|rescues|rescuing|rescued} :: 救済すべき
+O| {failing|fail|failed of|fails} banks. :: 破綻しかけた銀行を
+== この概念は、政府が破綻しかけた銀行を救うべきかという議論にも登場する。
+F| If banks {expect|expects|expecting|expectation} :: 銀行が予期すれば
+X| {to be|being|be|been} saved, :: 救われると
+S| they {may|mays|may to|maybe} take :: …をとるかも
+O| {greater|great|greatest|greatly} risks :: より大きなリスクを
+M| {than|then|as|that} they otherwise would. :: 普段より
+== 救済されると見込めば、銀行は普段より大きなリスクをとるかもしれない。
+S| {Others|Other|Another|The other} argue, :: 他の人は主張する
+M| {however|whoever|wherever|whichever}, :: しかし
+O| {that|what|whose|whom} refusing help :: 助けを拒むことは
+T| {in|on|onto|by} a crisis :: 危機の際に
+V| {could|coulds|could to|can to} harm :: 害しうる
+O| millions {of|for|by|at} ordinary people. :: 何百万もの一般人を
+== しかし、危機のときに救済を拒めば、何百万もの普通の人々が損害を受けかねないと主張する人もいる。
+S| Protection {and|nor|than|whom} responsibility, :: 保護と責任は
+M| it {seems|seem|seeming|seemed to}, :: どうやら
+V| {pull|pulls|pulling|pulled to} :: 引っ張り合う
+P| {in|on|by|at} opposite directions. :: 逆の方向に
+== どうやら保護と責任は、逆の方向に引っ張り合うものらしい。
+S| The {challenge|challenging|challenged|challenges of} :: 課題は
+V| {is|are|be|being} to design :: 設計することだ
+O| safety {nets|net|netting of|netted} :: 安全網を
+X| {that|what|whose|whom} catch people :: 人を受け止める
+T| {when|what|whom|whose} they fall :: 落ちたときに
+M| {without|within|withouts|with not} tempting them :: 誘うことなく
+X| {to jump|jumping|jumped|jump}. :: 飛び降りるよう
+== 課題は、落ちた人を受け止めつつ、自ら飛び降りるよう誘うことのない安全網を作ることだ。
+?? 2 3 この現象は何と呼ばれる？
+?? 3 3 補償のある運転者はどこに駐車するかもしれない？
+?? 5 3 保険会社の手段の例は？
+?? 7 3 救済を見込む銀行は何をとるかもしれない？
+
+@id adv23
+@lv 3
+@level 8
+@title Why the Biggest Keep Growing
+@ja ネットワーク効果
+@tag 難関大レベル・論説文
+@gloss network effect=ネットワーク効果, platform=基盤サービス, dominate=支配する, dominant=支配的な, rival=競争相手, innovation=革新, incompatible=互換性のない, permanent=永続的な
+S| A {telephone|telephones|telephonic|telephoning} :: 電話は
+V| {is|are|be|being} useless :: 役に立たない
+F| {if|of|so|than} no one else :: ほかに誰も…ないと
+V| {owns|own|owning|owned to} one. :: 持っていない
+== ほかに誰も持っていなければ、電話は役に立たない。
+S| Its {value|valued|valuable|valuably} :: その価値は
+V| {grows|grow|growing|grown} :: 増す
+P| {with|within|by of|at of} each new user, :: 利用者が増えるごとに
+R| {since|sense|science|sincere} each one :: 各人が…ので
+V| {adds|add|adding|addition} :: 加える
+O| {another|other|others|the another} contact. :: 連絡先を1つ
+== 新しい利用者が1人増えるたびに連絡できる相手が増えるので、その価値は高まる。
+M| {In|On|At|By} economics, :: 経済学では
+S| this {pattern|patterned|patterning|patterns} :: この型は
+V| {is|are|be|being} called :: 呼ばれる
+C| a "network {effect|affect of|effective|effectively}." :: ネットワーク効果と
+== 経済学では、この型は「ネットワーク効果」と呼ばれる。
+S| It {helps|help|helping|helpful} explain :: …説明に役立つ
+O| {why|what|whom|whose} a handful :: なぜ一握りの
+P| {of|for|at|by} platforms :: 基盤企業が
+V| {dominate|dominating|dominance|dominated of} :: 支配するかを
+O| the digital {economy|economic|economical|economize}. :: デジタル経済を
+== それは、なぜ一握りの企業がデジタル経済を支配しているのかを説明する手がかりになる。
+S| People {join|joins|joining|joined to} :: 人々は加わる
+O| the {network|networks of|networked|networking of} :: ネットワークに
+X| {their|they|them|there} friends already use, :: 友人がすでに使う
+M| {which|what|whom|whose} in turn :: それがさらに
+V| {makes|make|making|made of} it :: それを…にする
+C| even more {attractive|attract|attraction|attractively}. :: いっそう魅力的に
+== 人々は友人がすでに使っているネットワークに加わり、それがそのネットワークをさらに魅力的にする。
+T| {Once|Ones|Oneself|Once of} a platform :: いったん基盤が
+V| {becomes|become|becoming|became of} dominant, :: 支配的になると
+S| {users|user|using|used} :: 利用者は
+V| {find|finds|finding|found to} it costly :: 高くつくと感じる
+X| {to switch|switches|switched|switch}, :: 乗り換えるのは
+M| even {to|at|by|of} a better rival. :: よりよい相手でも
+== いったん支配的になると、利用者はたとえよりよい競合相手であっても乗り換えるのが負担になる。
+S| {Critics|Critic|Critical|Critically} warn :: 批判者は警告する
+O| {that|what|whom|whose} such "lock-in" :: そうした囲い込みは
+V| {can|cans|can to|could to} weaken :: 弱めうる
+O| {competition|compete|competitive|competitively} :: 競争を
+M| {and|nor|than|whom} slow innovation. :: 革新を遅らせ
+== 批判者は、そうした「囲い込み」が競争を弱め、革新を遅らせうると警告する。
+S| {Defenders|Defend|Defensive|Defense of} reply :: 擁護者は答える
+O| {that|what|whom|whose} the same effects :: 同じ効果が
+V| {make|makes|making|made of} services :: サービスを…にする
+C| more {useful|usefully|usefulness|use} :: より便利に
+P| {for|at|of|by} everyone. :: 誰にとっても
+== 擁護者は、同じ効果がサービスを誰にとってもより便利にしていると反論する。
+S| A single {messaging|messaged|messager|messagely} app, :: 1つの連絡アプリは
+M| after {all|every|each|whole}, :: 結局のところ
+V| {is|are|be|being} more convenient :: より便利だ
+M| {than|then|as|that} ten incompatible ones. :: 互換性のない10個より
+== 結局のところ、連絡アプリは互換性のないものが10個あるより、1つのほうが便利だ。
+S| History also {suggests|suggest|suggesting|suggestion} :: 歴史も示す
+O| {that|what|whom|whose} dominance :: 支配は…と
+V| {is|are|be|being} not always :: 必ずしも…ない
+C| {permanent|permanently|permanence|permanency of}, :: 永続的では
+M| {as|than|whom|whose} many former giants :: かつての巨人たちが
+V| have {discovered|discover|discovering|discovers}. :: 知ったように
+== 多くのかつての巨大企業が思い知ったように、歴史を見ても支配は永続するとは限らない。
+S| The real question, {then|than|them|thence of}, :: つまり本当の問いは
+V| {is|are|be|being} how :: どう…かだ
+X| {to keep|keeping|kept|keep} the benefits :: 利点を保つか
+P| {of|at|by|on} connection :: つながりの
+M| {while|whilst of|during|meanwhile} preserving :: 守りつつ
+O| {room|rooms of|roomy|roomed} for newcomers. :: 新参者の余地を
+== つまり本当の問いは、新参者の入る余地を残しつつ、つながりの利点をどう保つかだ。
+?? 0 1 誰も持っていない電話はどうだ？
+?? 2 3 この型は何と呼ばれる？
+?? 6 3 囲い込みは何を弱めうる？
+?? 8 3 1つの連絡アプリは何より便利？
+
+@id adv24
+@lv 3
+@level 8
+@title Why Paper Money Works
+@ja お金に価値があるわけ
+@tag 難関大レベル・論説文
+@gloss banknote=紙幣, intrinsic=本来の, barter=物々交換, medium=仲立ち, crucially=決定的に, inflation=インフレ, back=裏づける, collective=集団の
+S| A {banknote|banknotes|banking|banked} :: 紙幣は
+V| {is|are|be|being}, physically, :: 物理的には
+C| little more {than|then|as|that} :: …にすぎない
+O| a {printed|print|prints|printedly} piece of paper. :: 印刷された紙
+== 紙幣は物理的には、印刷された紙切れにすぎない。
+M| {Yet|Despite|Unless|Though of} people :: それでも人は
+V| willingly {exchange|exchanges|exchanging|exchanged to} :: 進んで交換する
+O| hours {of|for|at|by} labor :: 何時間もの労働を
+P| {for|with of|by|to} it. :: それと
+== それでも人々は、何時間もの労働を進んでそれと交換する。
+M| {Why|What|Whom|Whose} does something :: なぜ何かが
+X| {with|within|without of|by} little intrinsic value :: 本来の価値が乏しい
+V| {become|becomes|becoming|became} :: …になるのか
+C| so {precious|preciously|preciousness|price}? :: それほど貴重に
+== 本来ほとんど価値のないものが、なぜこれほど貴重になるのだろうか。
+T| {Before|Ago|Previous|Prior} money, :: お金以前は
+S| people {relied|rely of|reliance|relying} on barter, :: 物々交換に頼った
+X| {which|what|whom|whose} required :: それは…を必要とした
+O| each {trader|traders|trade of|trading} :: 各取引者が
+X| {to want|wants|wanted|want} exactly :: まさに望むこと
+O| {what|that|which|whose} the other offered. :: 相手が出すものを
+== お金以前の人々は物々交換に頼っていたが、それには互いが相手の差し出すものをちょうど欲しがっている必要があった。
+S| Money {solved|solve|solving|solution} :: お金は解決した
+O| this {problem|problematic|problems of|problematically} :: この問題を
+M| {by|with of|for|at} serving :: …として働くことで
+P| {as|like of|for|to} a medium :: 仲立ちとして
+X| {that|what|whom|whose} all would accept. :: 皆が受け入れる
+== お金は、誰もが受け取る仲立ちとして働くことで、この問題を解決した。
+M| {Crucially|Crucial|Crux|Crucialness}, :: 重要なのは
+S| {I|me|my|mine} accept a banknote :: 私が紙幣を受け取る
+M| only {because|because of|due|owing} :: …からにすぎない
+V| I {expect|expects|expecting|expectation} :: 私が期待する
+O| others {to accept|accepts|accepted|accept} it :: 他人も受け取ると
+M| {in|on|at|by} turn. :: 次は
+== 重要なのは、私が紙幣を受け取るのは、次は他人もそれを受け取ってくれると期待するからにすぎないということだ。
+S| Its {value|valued|valuable|valuing}, :: その価値は
+M| in other {words|word|wording|worded}, :: 言いかえれば
+V| {rests|rest|resting|rested of} on :: …に基づく
+O| a {shared|share|sharing of|shares} belief :: 共有された信念
+M| {rather|rathe|rather to|more rather} than :: …ではなく
+P| {on|in of|at|by} the paper itself. :: 紙そのものに
+== 言いかえれば、その価値は紙そのものではなく、共有された信念に基づいている。
+T| When that belief {weakens|weaken|weakening|weakness}, :: その信念が弱まると
+M| {as|so|than|whom} in periods :: …の時期のように
+P| {of|for|at|by} severe inflation, :: 激しいインフレの
+S| people {rush|rushes|rushing|rushed of} :: 人々は急ぐ
+X| {to spend|spending|spent|spend} money :: お金を使おうと
+T| {before|ago|previous|prior} it loses value. :: 価値を失う前に
+== 激しいインフレの時期のようにその信念が弱まると、人々は価値が下がる前にお金を使おうと急ぐ。
+S| Some {argue|argues|arguing|argument} :: …と言う人もいる
+O| {that|what|whom|whose} money backed :: 裏づけのあるお金は
+P| {by|with of|for|at} gold :: 金によって
+V| would {be|being|been|is} more stable. :: より安定する
+== 金の裏づけのあるお金のほうが安定すると主張する人もいる。
+S| {Others|Other|Another|The other} reply :: 他の人は答える
+O| {that|what|whom|whose} gold, too, :: 金もまた
+V| {is|are|be|being} valuable :: 価値がある
+R| {mainly|main|mainland|mainness} because :: 主に…から
+S| people {agree|agrees|agreeing|agreement} :: 人々が認める
+O| {that|what|whom|whose} it is. :: そうだと
+== それに対し、金もまた主に人々がそう認めるから価値があるのだと反論する人もいる。
+M| {Either|Eithers|Each of|Every of} way, :: いずれにせよ
+S| {money|moneys of|monetary|monies of} :: お金は
+V| turns out {to be|being|been|be} :: …だとわかる
+O| {one|ones|one's|once} of humanity's :: 人類の…の1つ
+C| most remarkable collective {agreements|agreement|agreeable|agreeing}. :: 見事な共同の約束
+== いずれにせよ、お金は人類の最も見事な共同の取り決めの1つだといえる。
+?? 0 3 紙幣は物理的には何にすぎない？
+?? 3 1 お金以前の人々は何に頼った？
+?? 6 3 お金の価値は何に基づく？
+?? 8 2 何に裏づけられたお金が安定すると主張される？
+
+@id adv25
+@lv 3
+@level 8
+@title The Price of Specialization
+@ja 分業の光と影
+@tag 難関大レベル・論説文
+@gloss specialization=専門化, underlie=根底にある, dull=鈍い, ignorant=無知な, critique=批判, rotate=交代させる, adaptable=適応力のある, expertise=専門知識, breadth=幅広さ
+P| {In|On|At|By} The Wealth of Nations, :: 『国富論』で
+X| {published|publishing|publish|publishes} in 1776, :: 1776年刊の
+S| Adam Smith {described|describe|describing|description} :: スミスは描いた
+O| a small {factory|factories|factorial|factually} :: 小さな工場を
+X| {that|what|whom|whose} made pins. :: ピンを作る
+== 1776年に刊行された『国富論』で、アダム・スミスはピンを作る小さな工場を描いた。
+S| A {single|singly|singular of|singled} worker :: 1人の職人は
+M| {doing|done|does|to doing} every step :: 全工程を行うと
+V| {could|coulds|could to|can to} make :: 作れる
+O| {fewer|less of|few|fewest} than twenty pins :: 20本もないピン
+T| {a|an|the a|one a} day. :: 1日に
+== 全工程を1人でこなす職人は、1日に20本のピンも作れなかった。
+M| But {when|what|whom|whose} ten workers :: だが10人が
+V| {divided|divide|dividing|division} the tasks :: 作業を分けると
+P| {among|between of|amid of|along} themselves, :: 自分たちの間で
+S| they {produced|produce|producing|product} :: 彼らは生産した
+O| tens {of|for|by|at} thousands :: 何万本もの
+M| {of|for|by|at} pins a day. :: ピンを1日に
+== だが10人で作業を分けると、1日に何万本ものピンを作ることができた。
+S| {Specialization|Specialize|Specialized|Specially} :: 専門化は
+V| {allowed|allow|allowing|allowance} :: 可能にした
+O| each {worker|workers|working|worked} :: 各労働者が
+X| {to develop|developing|developed|develop} skill :: 腕を磨くことを
+M| {and|nor|than|whom} to avoid :: そして避けることを
+O| {wasting|to waste|wasted|wastes} time. :: 時間の無駄を
+== 専門化によって、各労働者は腕を磨き、時間の無駄を省けるようになった。
+S| This {principle|principled|principally|principles} :: この原理は
+V| now {underlies|underlie|underlying|underlain} :: 今は支えている
+O| almost {every|any of|each of|whole} modern economy, :: ほぼ全ての経済を
+P| {from|of|for|at} car plants :: 自動車工場から
+P| {to|at|for|by} hospitals. :: 病院まで
+== この原理は今や、自動車工場から病院まで、ほぼすべての現代経済を支えている。
+S| Smith {himself|hisself|him|his own}, :: スミス自身は
+M| {however|whoever|wherever|whichever}, :: しかし
+V| {was|were|be|being} aware :: 気づいていた
+P| {of|for|at|by} its darker side. :: その暗い面に
+== しかしスミス自身も、その暗い面に気づいていた。
+S| He {warned|warn|warning|warns of} :: 彼は警告した
+O| {that|what|whom|whose} a person :: 人は…と
+X| {who|whom|which|whose} spends a lifetime :: 一生を費やす
+M| {performing|perform|performed|performs} simple tasks :: 単純作業をして
+V| {may|mays|may to|maybe} become :: …になりうる
+C| dull {and|nor|than|whom} ignorant. :: 鈍く無知に
+== 彼は、一生を単純作業に費やす人は鈍く無知になりかねないと警告した。
+S| Later {thinkers|thinker|thinking|thought} :: 後の思想家たちは
+V| {developed|develop|developing|development} :: 発展させた
+O| this {concern|concerned|concerning|concerns of} :: この懸念を
+P| {into|onto|unto|in to} a broader critique :: より広い批判へと
+P| {of|for|at|by} modern work. :: 現代の労働への
+== 後の思想家たちは、この懸念を現代の労働に対する幅広い批判へと発展させた。
+T| {Today|Todays|Today's|To day of}, :: 今日では
+S| some {companies|company|companion|accompany} :: 一部の会社は
+V| {rotate|rotates|rotating|rotation} staff :: 社員を異動させる
+P| {among|between of|amid of|along} roles :: 役割の間で
+R| {to keep|keeping|kept|keep} them :: 彼らを保つため
+C| {engaged|engage|engaging of|engagement} and adaptable. :: 意欲的で柔軟に
+== 今日では、社員の意欲と柔軟性を保つために、役割を入れ替える会社もある。
+M| {Yet|Despite|Unless|Though of} deep expertise :: だが深い専門性は
+V| still {requires|require|requiring|requirement} :: 今も必要とする
+O| years {of|for|by|at} focus :: 何年もの集中を
+P| {on|in of|at|to} a narrow field. :: 狭い分野への
+== だが深い専門性には、今も狭い分野に何年も集中することが欠かせない。
+S| The {challenge|challenging|challenged|challenges of} :: 課題は
+V| {is|are|be|being} to gain :: 得ることだ
+O| the {efficiency|efficient|efficiently|efficience} :: 効率を
+P| {of|for|at|by} specialization :: 専門化の
+M| {without|within|withouts|with not} losing :: 失わずに
+O| the {breadth|broaden|broadly|breadths of} :: 幅広さを
+X| {that|what|whom|whose} gives work meaning. :: 仕事に意味を与える
+== 課題は、仕事に意味を与える幅広さを失わずに、専門化の効率を手に入れることだ。
+?? 0 1 『国富論』は何年に刊行された？
+?? 2 4 10人で作業を分けると1日に何本作れた？
+?? 6 5 単純作業に一生を費やす人はどうなりうる？
+?? 9 2 深い専門性には何年もの何が必要？
+
+@id adv26
+@lv 3
+@level 8
+@title Does the Office Still Matter?
+@ja オフィスは今も必要か
+@tag 難関大レベル・論説文
+@gloss remote=遠隔の, commute=通勤, eliminate=なくす, productive=生産的な, spontaneous=自然発生的な, isolation=孤立, hybrid=混合型の, compromise=折衷案
+T| {For|Since|During of|While} most of the 20th century, :: 20世紀の大半は
+S| {working|work of|worked|works} meant :: 働くとは…だった
+O| {traveling|travel to|traveled|travels} :: 通うことを
+P| {to|at|for|on} a shared workplace :: 共有の職場へ
+T| {at|of|onto|into} fixed hours. :: 決まった時間に
+== 20世紀の大半、働くとは、決まった時間に共有の職場へ通うことだった。
+S| {Advances|Advance|Advancing|Advanced} in technology, :: 技術の進歩は
+M| {however|whoever|wherever|whichever}, :: しかし
+V| have {made|make|making|makes} it possible :: 可能にした
+P| {for|of|to|with} many office workers :: 多くの会社員が
+X| {to work|working|worked|work} :: 働くことを
+P| {from|at of|in of|by} home. :: 家から
+== しかし技術の進歩により、多くの会社員が自宅から働けるようになった。
+S| {Supporters|Support|Supportive|Supporting} point out :: 支持者は指摘する
+O| {that|what|whom|whose} remote work :: 在宅勤務は…と
+V| {eliminates|eliminate|eliminating|elimination} :: なくす
+O| long {commutes|commute of|commuted|commuting of} :: 長い通勤を
+M| {and|nor|than|whom} gives workers :: そして社員に与える
+O| greater control {over|above of|across|upon of} schedules. :: 日程の裁量を
+== 支持者は、在宅勤務によって長い通勤がなくなり、社員が日程を自分で決めやすくなると指摘する。
+S| Some {studies|study|studious|studied} :: いくつかの研究は
+V| have {found|find|founded|finding} :: 見出した
+O| {that|what|whom|whose} home workers :: 在宅の人が
+V| {are|is|be|being} at least :: 少なくとも…だ
+C| as {productive|product|productively|production} :: 同じくらい生産的
+M| {as|than|so|that} office workers. :: 会社勤めと
+== いくつかの研究では、在宅で働く人も会社で働く人と少なくとも同程度に生産的だとわかっている。
+S| {Critics|Critic|Critical|Criticize}, :: 批判者は
+M| {on|in|at|by} the other hand, :: 一方
+V| {worry|worries|worrying|worried of} about :: …を心配する
+O| {what|that|which|whose} is lost :: 失われるものを
+T| {when|what|whom|whose} colleagues :: 同僚が…とき
+V| rarely {meet|meets|meeting|met to} in person. :: めったに会わない
+== 一方で批判者は、同僚が直接会う機会がほとんどないと失われてしまうものを心配する。
+S| {Spontaneous|Spontaneously|Spontaneity|Spontaneousness} talks :: 偶然の会話は
+P| {in|on|at|by} hallways :: 廊下での
+V| often {spark|sparks|sparking|sparked to} :: よく生む
+O| new {ideas|idea|ideal|idealize}. :: 新しい発想を
+== 廊下での偶然の会話は、しばしば新しい発想を生む。
+S| Young {employees|employee|employer of|employment}, :: 若い社員は
+M| {in|on|at|by} particular, :: とりわけ
+V| {learn|learns|learning|learned of} a lot :: 多くを学ぶ
+M| simply {by|with of|for|at} observing :: 見るだけで
+O| {experienced|experience|experiencing|experiences} coworkers. :: 経験豊かな同僚を
+== とりわけ若い社員は、経験豊かな同僚を見ているだけで多くを学ぶ。
+S| Working {alone|lonely|along|alike} :: 一人で働くことは
+V| may also {increase|increases|increasing|increased} :: 強めもしうる
+O| feelings {of|for|at|by} isolation :: 孤立感を
+P| {for|at|onto|by} some people. :: 一部の人には
+== 一人で働くと、人によっては孤立感が強まることもある。
+M| As a {result|resulting|resulted|results of}, :: その結果
+S| many {organizations|organization|organize|organized} :: 多くの組織が
+V| have {settled|settle|settling|settles} on :: …に落ち着いた
+O| a {hybrid|hybrids|hybridize|hybridly} model, :: 混合型に
+M| {combining|combine|combined of|combines} home days :: 在宅日を組み合わせ
+P| {with|within|by of|at} office days. :: 出社日と
+== その結果、多くの組織が、在宅日と出社日を組み合わせた混合型に落ち着いた。
+S| {Whether|Weather|Either|Whither} this compromise :: この折衷案が…か
+V| will {last|lasts|lasting|lasted} :: 続くかどうか
+V| {remains|remain|remaining|remained to} :: …のままだ
+X| {to be|being|been|be} seen. :: 今後わかる
+== この折衷案が続くかどうかは、まだわからない。
+S| {What|That|Which|Whose} seems clear :: 明らかなのは
+V| {is|are|be|been} that :: …ということだ
+S| the office {will|wills|will to|would to} survive :: オフィスは生き残る
+M| only {if|of|than|whom} it offers :: 提供する場合のみ
+O| {something|somewhat|somehow|somewhere of} :: 何かを
+X| {that|what|whom|whose} home cannot. :: 家にはできない
+== 明らかなのは、家では得られないものを提供する場合にのみ、オフィスは生き残るということだ。
+?? 2 3 在宅勤務がなくすものは？
+?? 5 3 廊下での会話は何を生む？
+?? 6 4 若い社員は誰を見て学ぶ？
+?? 8 3 多くの組織はどんな型に落ち着いた？
+
+@id adv27
+@lv 3
+@level 8
+@title Freedom or Insecurity? The Gig Economy
+@ja ギグエコノミーの光と影
+@tag 難関大レベル・論説文
+@gloss gig=単発の仕事, arrange=手配する, flexibility=柔軟性, retiree=退職者, workforce=労働力, contractor=請負人, fluctuate=変動する, entitled=権利がある
+S| A growing {number|numbers|numeral|numerous} :: 増えつつある数の
+P| {of|for|at|by} people :: 人々が
+V| now {earn|earns|earning|earned of} a living :: 生計を立てる
+M| {through|though|thorough|thought} short-term jobs :: 短期の仕事で
+X| {arranged|arranging|arrange|arranges} by apps. :: アプリで手配される
+== スマホのアプリで手配される短期の仕事で生計を立てる人が増えている。
+S| This {arrangement|arrange|arranged|arranging}, :: このしくみは
+M| often {called|call|calling|calls} :: よく呼ばれる
+C| the "gig {economy|economic|economical|economize}," :: ギグエコノミーと
+V| {covers|cover|covering|coverage} everything :: すべてを含む
+P| {from|of|for|at} food delivery :: 料理の配達から
+P| {to|at|for|by} software design. :: ソフト設計まで
+== 「ギグエコノミー」と呼ばれるこのしくみは、料理の配達からソフトウェア設計まで、あらゆる仕事を含む。
+P| {For|Of|At|By} workers, :: 働く側には
+S| its chief {attraction|attract|attractive|attractively} :: 主な魅力は
+V| {is|are|be|being} flexibility: :: 柔軟性だ
+S| they {can|cans|can to|could to} choose :: 選べる
+O| when, where, and how {much|many|more of|most of} :: いつどこでどれだけ
+X| {to work|working|worked|work}. :: 働くかを
+== 働く側にとっての主な魅力は柔軟性で、いつ、どこで、どれだけ働くかを選べる。
+S| Students, parents, {and|nor|than|whom} retirees :: 学生や親や退職者は
+V| can {fit|fits|fitting|fitted to} work :: 仕事を合わせられる
+P| {around|aground|arose|arise} other duties :: 他の用事に
+M| in {ways|way|wayed|waying} :: …ような形で
+X| {that|what|whom|whose} regular jobs :: 普通の仕事では
+V| rarely {allow|allows|allowing|allowance}. :: めったに許さない
+== 学生や子育て中の親、退職者は、普通の仕事ではめったにできない形で、ほかの用事に合わせて働ける。
+S| Companies, {too|to|two|toward}, :: 企業も
+V| {benefit|benefits|beneficial|benefiting} :: 利益を得る
+P| {from|of|at|on} being able :: …できることから
+X| {to expand|expanding|expanded|expand} or shrink :: 増減させる
+O| their {workforce|workforces of|work forced|working force of} :: 労働力を
+M| almost {instantly|instant|instance|instants}. :: ほぼ即座に
+== 企業もまた、労働力をほぼ即座に増やしたり減らしたりできることで得をしている。
+M| {Yet|Despite|Unless|Though of} this flexibility, :: だがこの柔軟性は
+M| critics {note|notes|noting|noted to}, :: 批判者いわく
+V| {comes|come|coming|came of} :: …を伴う
+P| {at|in|on|by} a price. :: 代償を
+== だが批判者が言うように、この柔軟性には代償がある。
+S| Gig {workers|worker|working|worked} :: ギグ労働者は
+V| are usually {classified|classify|classifying|classification} :: ふつう分類される
+P| {as|like of|for|to} contractors :: 請負人として
+M| rather {than|then|as|that} employees. :: 社員ではなく
+== ギグ労働者は通常、社員ではなく個人の請負人として扱われる。
+M| As a {result|resulting|resulted|results of}, :: その結果
+S| they often {lack|lacks|lacking|lacked of} :: 彼らは欠く
+O| sick {pay|paid|paying|pays of}, :: 病気休業手当
+O| {pensions|pension of|pensioned|pensioning}, :: 年金を
+M| {and|nor|than|whom} other benefits :: その他の手当を
+X| {that|what|whom|whose} employees take for granted. :: 社員なら当然の
+== その結果、彼らには病気休業手当や年金など、社員なら当然の手当がないことが多い。
+S| Their {income|incoming|incomes of|in come} :: 彼らの収入は
+V| can also {fluctuate|fluctuates|fluctuating|fluctuation} :: 変動もしうる
+M| {sharply|sharp|sharpen|sharpness} :: 大きく
+T| {from|of|for|at} week to week, :: 週ごとに
+M| {making|make|made|makes} it hard :: 難しくして
+X| {to plan|plans|planned|plan} ahead. :: 先の計画を立てるのを
+== 収入も週ごとに大きく変わることがあり、先の見通しを立てにくい。
+S| Some {governments|government|govern|governor} :: 一部の政府は
+V| have {begun|began|begin|beginning} :: 始めた
+X| {to debate|debating of|debated|debate} :: 議論することを
+O| {whether|weather|either|whither} such workers :: そうした労働者が…か
+V| should be {entitled|entitle|entitling|entitlement} :: 権利を持つべき
+P| {to|for|at|on} basic protections. :: 基本的な保護の
+== そうした労働者に基本的な保護を受ける権利を認めるべきかどうか、議論を始めた政府もある。
+S| {Others|Other|Another|The other} worry :: …と心配する人もいる
+O| {that|what|whom|whose} stricter rules :: 厳しい規則が
+V| {could|coulds|could to|can to} reduce :: 減らしうる
+O| the {very|verily|vary|very of} flexibility :: まさにその柔軟性を
+X| {that|what|whom|whose} drew workers :: 人を引きつけた
+M| in the first {place|placed|placing|places}. :: そもそも
+== 一方で、規則を厳しくすれば、そもそも人々を引きつけた柔軟性そのものが損なわれかねないと心配する人もいる。
+S| {Striking|Strike|Struck|Strikes} the right balance :: 適切な均衡をとることは
+P| {between|among of|betwixt of|beneath} freedom :: 自由と
+M| {and|nor|than|whom} security :: 安定の間で
+V| {may|mays|may to|maybe} be :: …かもしれない
+C| {one|ones|once|one's} of the defining challenges :: 決定的課題の1つ
+P| {of|at|by|onto} modern work. :: 現代の労働の
+== 自由と安定の適切な均衡をとることは、現代の労働を決定づける課題の1つかもしれない。
+?? 0 4 短期の仕事は何で手配される？
+?? 2 2 働く側にとっての主な魅力は？
+?? 6 2 ギグ労働者はふつう何として扱われる？
+?? 8 3 収入はどのくらいの単位で変わる？

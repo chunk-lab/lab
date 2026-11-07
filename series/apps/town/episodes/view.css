@@ -1,0 +1,65 @@
+.ep-root{position:fixed;inset:0;z-index:130;display:flex;flex-direction:column;background:#eae6e0;color:#42364c;font-family:inherit;isolation:isolate}
+.ep-root[hidden]{display:none!important}
+.ep-root *{box-sizing:border-box}
+.ep-head{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;background:#fffcf2f5;z-index:3;border-bottom:1px solid #e3d5c8}
+.ep-head small,.ep-head b{display:block}.ep-head small{font-size:10px;color:#897784;margin-bottom:4px}.ep-head b{font-size:15px}.ep-head nav{display:flex;gap:6px}.ep-head .ep-btn{font-size:12px;min-height:42px;padding:6px 10px;margin:0}
+.ep-stage{position:absolute;inset:65px 0 0;overflow:hidden;background:#e8dfd5}.ep-stage>svg{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.ep-portraits{position:absolute;inset:10px 5% calc(var(--ep-box,220px) + 6px);display:flex;align-items:flex-end;justify-content:center;gap:2%;pointer-events:none}.ep-portraits img{width:48%;max-width:300px;max-height:100%;object-fit:contain;filter:brightness(.87);transform:translateY(0);transition:filter .2s,transform .2s}.ep-portraits img.ep-speaking{filter:none;transform:translateY(0)}
+.ep-webgl{position:absolute;inset:0}.ep-webgl canvas{display:block;width:100%;height:100%}.ep-3d .ep-stage>svg,.ep-3d .ep-portraits{display:none}
+.ep-content{min-height:min(330px,48%);position:relative;z-index:2;width:min(720px,100%);margin:auto auto 0;padding:10px 14px calc(16px + env(safe-area-inset-bottom,0px));max-height:58%;overflow:auto;overscroll-behavior:contain}
+.ep-card,.ep-dialog{background:#fffcf5f7;border:2px solid #fff9ee;border-radius:22px;padding:20px;box-shadow:0 8px 36px #4d3c5b22;backdrop-filter:blur(8px)}
+.ep-card h2{font-size:21px;margin:6px 0 10px}.ep-card p{font-size:15px;line-height:1.8;margin:8px 0 14px}.ep-card>small{color:#887088;letter-spacing:.06em}.ep-card .ep-note{font-size:12px;color:#8c7780}.ep-card>.ep-btn{width:100%}
+.ep-name{display:inline-block;background:#e9dff3;border-radius:9px;padding:5px 15px;font-size:15px}.ep-line{font-size:17px;line-height:1.85;margin:12px 0;white-space:pre-wrap}.ep-expression{background:#edf4f1;border-left:4px solid #8ab8a5;padding:12px 16px;border-radius:8px;margin:12px 0}.ep-expression strong{display:block;font-size:24px;font-family:inherit}.ep-expression>span{display:block;margin-top:4px;font-size:13px}.ep-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.ep-btn{appearance:none;border:1px solid #d8cddd;border-radius:12px;min-height:46px;padding:10px 18px;margin-top:8px;font:inherit;font-weight:700;font-size:14px;color:#66536c;background:#fffdf9;cursor:pointer}.ep-btn:hover{background:#f5edf6}.ep-btn:focus-visible{outline:3px solid #598a9f;outline-offset:3px}.ep-primary{background:#776484;color:#fff;border-color:#776484}.ep-primary:hover{background:#665170}.ep-error{font-size:13px!important;color:#a23b4f!important;background:#ffedf0;padding:10px;border-radius:10px}
+.ep-gamebar{position:fixed;inset:0;z-index:210;pointer-events:none;display:flex;align-items:flex-end;justify-content:flex-end;padding:12px 10px calc(12px + env(safe-area-inset-bottom,0px));gap:8px}.ep-gamebar .ep-btn{pointer-events:auto;box-shadow:0 3px 12px #0003;font-size:12px}
+body.ep-on>.tw-dock,body.ep-on>.tw-top,body.ep-on .cs-band{visibility:hidden}
+/* 通常の記録・ミッション処理は動かすが、物語中に別の案内を重ねない。 */
+body.ep-on:not(.ep-level) .cs-ui>.cs-ov{display:none}
+@media(min-width:760px){.ep-stage{inset:65px 0 0}.ep-portraits{inset:10px 15% calc(var(--ep-box,220px) + 6px)}.ep-content{padding-bottom:24px}.ep-line{font-size:18px}}
+@media(max-height:520px){.ep-head{padding:5px 12px}.ep-head small{display:none}.ep-stage{inset:46px 0 0}.ep-content{max-height:75%;padding:8px 12px}.ep-dialog,.ep-card{padding:12px 16px}.ep-line{font-size:14px;line-height:1.5;margin:7px 0}.ep-expression{display:flex;gap:12px;align-items:center;padding:5px 12px;margin:6px 0}.ep-expression strong{font-size:20px}.ep-expression>span{margin:0}.ep-btn{margin-top:4px;min-height:42px;padding:7px 14px}.ep-card h2{font-size:18px}.ep-card p{font-size:13px;margin:6px 0;line-height:1.5}}
+
+.ep-menu{position:relative;font-size:12px;pointer-events:auto}.ep-menu summary{list-style:none;cursor:pointer;min-height:44px;display:flex;align-items:center;padding:8px 10px;border:1px solid #d8cddd;border-radius:10px;background:#fffcf2;color:#66536c;box-sizing:border-box}.ep-menu summary::-webkit-details-marker{display:none}.ep-menu summary:focus-visible{outline:3px solid #598a9f;outline-offset:2px}.ep-menu-body{position:absolute;right:0;top:calc(100% + 6px);width:240px;max-width:calc(100vw - 20px);padding:12px;background:#fffcf5;border:1px solid #d8cddd;border-radius:12px;box-shadow:0 4px 20px #0003}.ep-menu-body p{font-size:13px;line-height:1.6;margin:0 0 6px}.ep-menu-body .ep-btn{width:100%}.ep-game-tools{position:absolute;top:42%;right:0;pointer-events:auto}.ep-game-tools .ep-menu summary{min-height:34px;padding:4px 8px;border-radius:10px 0 0 10px;opacity:.88;font-size:11px}.ep-gamebar>.ep-primary{pointer-events:auto}
+
+.ep-portraits img.ep-sora{transform:translateY(9px) scaleX(-1)}.ep-portraits img.ep-sora.ep-speaking{transform:translateY(0) scaleX(-1)}
+.ep-aux{color:#7a4ad9;font-weight:800}
+
+.ep-expression strong .ep-aux{display:inline;font-size:inherit;line-height:inherit;margin:0}
+
+/* ---- 見た目の作り直し: やわらかいパステル(町の画面と同じ系統)。会話枠は高さを固定して、目が散らないように ---- */
+.ep-root{--ep-h:clamp(250px,37vh,310px);--ep-pink:#e0457b;--ep-ink:#4a3426;background:linear-gradient(160deg,#cfeaff,#ffe6ef);color:var(--ep-ink)}
+.ep-head{background:rgba(255,255,255,.72);backdrop-filter:blur(10px);border-bottom:0;box-shadow:0 2px 14px #8a5a3220}
+.ep-head small{color:#b07a8f;font-weight:700;letter-spacing:.04em}
+.ep-head b{color:var(--ep-ink);font-size:16px}
+.ep-menu summary{border-color:#f1c9d8;background:#fff;color:#a8486c;border-radius:999px;font-weight:800}
+.ep-stage{background:linear-gradient(#dff1ff,#fff0f5)}
+.ep-stage>svg{opacity:.78;filter:saturate(.8) brightness(1.06)}
+.ep-portraits{inset:8px 4% calc(var(--ep-h) + 22px)}
+.ep-portraits img{filter:brightness(.8) saturate(.85);transition:filter .25s,transform .25s}
+.ep-portraits img.ep-speaking{filter:none;transform:translateY(-6px)}
+.ep-portraits img.ep-sora.ep-speaking{transform:translateY(-6px) scaleX(-1)}
+.ep-content{height:var(--ep-h);min-height:0;max-height:none;overflow:visible;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px));margin:auto auto 0}
+.ep-dialog,.ep-card{position:relative;height:100%;display:flex;flex-direction:column;padding:26px 18px 12px;background:rgba(255,255,255,.97);border:3px solid #fff;border-radius:26px;box-shadow:0 8px 28px #8a5a3226;backdrop-filter:none;overflow:hidden}
+.ep-dialog{overflow:visible}
+.ep-name{position:absolute;top:-15px;left:18px;margin:0;background:var(--ep-pink);color:#fff;border-radius:999px;padding:5px 18px;font-size:15px;font-weight:800;box-shadow:0 3px 8px #e0457b40}
+.ep-line{flex:1 1 auto;min-height:0;overflow-y:auto;margin:0 0 6px;font-size:17px;line-height:1.7;color:var(--ep-ink)}
+.ep-expression{background:#eaf6ff;border-left:5px solid #5aaee0;border-radius:10px;padding:7px 12px;margin:0 0 6px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.ep-expression strong{font-size:19px;color:#2f6f9a}
+.ep-expression>span{margin:0;font-size:13px;color:#5a7488}
+.ep-actions{flex:0 0 auto;gap:8px}
+.ep-actions .ep-btn{margin:0;min-height:42px;padding:8px 16px}
+.ep-btn{border-radius:999px;border-color:#f1c9d8;color:#a8486c;background:#fff}
+.ep-btn:hover{background:#fff1f6}
+.ep-primary{background:var(--ep-pink);border-color:var(--ep-pink);color:#fff;box-shadow:0 3px 0 #b02d5b}
+.ep-primary:hover{background:#cf3a70}
+.ep-card{justify-content:flex-start;overflow-y:auto}
+.ep-card>small{color:#b07a8f;font-weight:800}
+.ep-card h2{font-size:19px;margin:2px 0 6px;color:var(--ep-ink)}
+.ep-card p{font-size:14px;line-height:1.6;margin:4px 0 10px}
+.ep-card>.ep-btn{margin-top:auto}
+@media(max-height:520px){.ep-root{--ep-h:140px}.ep-line{font-size:14px;line-height:1.5}.ep-dialog,.ep-card{padding:20px 14px 8px}}
+/* 立ち絵の大きさをそろえる(そらは縦いっぱいに描かれているので少し小さく)。話している方を大きく、もう一人は暗く */
+.ep-portraits img{transform-origin:50% 100%;scale:1;transition:filter .25s,transform .25s,scale .25s}
+.ep-portraits img.ep-sora{scale:.86}
+.ep-portraits img.ep-speaking{scale:1.06}
+.ep-portraits img.ep-sora.ep-speaking{scale:.93}
+.ep-input{width:100%;box-sizing:border-box;margin:6px 0 10px;padding:10px 14px;font:inherit;font-size:18px;font-weight:700;text-align:center;border:2px solid #e2d6ea;border-radius:999px;background:#fff;color:#42364c}

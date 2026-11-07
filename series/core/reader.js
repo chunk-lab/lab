@@ -3,7 +3,7 @@
    story = { title, level, list:[[英語(チャンクの書き方), 訳], …], questions:[…], mode:'test'?（先生のテスト）, hint, hintCost }
      questions の1つ：{ type:'range', si, a, b, q, alts, partials }（範囲を選ぶ）／{ type:'choice', q, options:[…], correct }（選択肢）
                     ／[文の番号, チャンクの番号, 問題文]（そのチャンクを答えにする書き方）
-   opts = { label（上に出す名前 例：予習）, backLabel, onClose, onGrade(結果), onSubmit(結果)（テスト）, next:{label, fn}（答え合わせのあとのボタン） }
+   opts = { label（上に出す名前 例：予習）, backLabel, view（'read'|'solve' 最初の表示）, onClose, onEnd（最後の文まで来た）, onGrade(結果), onSubmit(結果)（テスト）, next:{label, fn}（答え合わせのあとのボタン） }
    見た目は core/reader.css（.cs-reader の中だけ）。設定（文字の大きさ・表示する文の数など）は共通のセーブ "reader" に保存。 */
 import { parseSentence, wordRole, gradeRange, RN } from './chunk.js';
 import { createStore } from './store.js';
@@ -48,7 +48,7 @@ export function createReader(core) {
       return { alts: [], partials: [], ...q, ans: null };
     });
     const test = story.mode === 'test';
-    const RD = { qi: 0, si: 0, p: 0, start: null, sel: null, hints: 0, hintOn: false, hintQ: new Set(), gpos: [], view: S.view, gramOn: !!S.always, showJa: false, info: null, fullOpen: false, saying: false,
+    const RD = { qi: 0, si: 0, p: 0, start: null, sel: null, hints: 0, hintOn: false, hintQ: new Set(), gpos: [], view: opts.view || S.view, gramOn: !!S.always, showJa: false, info: null, fullOpen: false, saying: false,
       hintPolicy: test ? (story.hint || 'none') : 'grammar', hintCost: test ? (story.hintCost == null ? 20 : +story.hintCost) : 0 };
     const sen = () => sens[RD.si];
     const view = () => test ? 'solve' : (qs.length ? RD.view : 'read');
@@ -192,7 +192,7 @@ export function createReader(core) {
       }
       $('choices').innerHTML = '';
       $('ans').textContent = q.ans ? 'あなたの答え：' + sens[q.ans.si].words.slice(q.ans.a, q.ans.b + 1).join(' ') : '';
-      const help = RD.sel ? 'この範囲でいい？' : startOn ? '答えの終わりを線に合わせて「ここまで ］」' : '答えの始まりを線に合わせて「［ ここから」（レーンを左右にドラッグして動かす）';
+      const help = RD.sel ? 'この範囲でいい？' : startOn ? '答えの終わりを線に合わせて「ここまで ］」' : '答えの始まりを線に合わせて「［ ここから」（レーンを左右にドラッグして動かす）。単語を長押ししてなぞって、囲んでもOK';
       $('help').textContent = (RD.hintQ.has(RD.qi) && q.si != null ? `💡 答えは ${q.si + 1} 文目にあるよ。 ` : '') + help;
       $('btns').innerHTML = RD.sel ? '<button data-a="redo">選びなおし</button><button data-a="ok" class="ok">決定</button>'
         : `${startOn ? '<button data-a="redo">やめる</button>' : ''}<button data-a="cut" class="cutMain">${startOn ? 'ここまで ］' : '［ ここから'}</button>`;
@@ -228,7 +228,7 @@ export function createReader(core) {
     }
     function sentence(d) {
       const si = RD.si + d; if (si < 0 || si >= sens.length) return;
-      stopSay(); RD.si = si; RD.p = 0; RD.fullOpen = false; RD.start = null; if (RD.sel && RD.sel.si !== si) RD.sel = null; render(true);
+      stopSay(); RD.si = si; RD.p = 0; if (si === sens.length - 1 && opts.onEnd && !RD.ended) { RD.ended = true; try { opts.onEnd(); } catch (e) { } } RD.fullOpen = false; RD.start = null; if (RD.sel && RD.sel.si !== si) RD.sel = null; render(true);
       $('lane').animate(reduce ? [{ opacity: .4 }, { opacity: 1 }] : [{ transform: `translateY(${d * 18}px)`, opacity: .3 }, { transform: 'none', opacity: 1 }], { duration: 220, easing: 'ease-out' });
     }
     /* ---- 振り返りの全文読み上げ：1文ずつ順番に（一時停止は、その文の頭から再開） ---- */
@@ -275,7 +275,7 @@ export function createReader(core) {
       const res = qs.map(judge), pts = res.reduce((a, r, i) => a + Math.round((qs[i].pts || 100) * ({ o: 1, t: .4, x: 0 })[r]), 0);
       beep(res.every(r => r === 'o') ? 'excellent' : 'great');
       core.events.report('reader', 'grade', { title: story.title, n: qs.length, o: res.filter(r => r === 'o').length, hints: RD.hints });
-      const extra = opts.onGrade ? opts.onGrade({ res, pts, hints: RD.hints, n: qs.length }) : '';
+      const extra = opts.onGrade ? opts.onGrade({ res, pts, hints: RD.hints, n: qs.length, answered: qs.filter(x => x.ans).length }) : '';
       const MK = { o: ['◯', 'k-excellent'], t: ['△', 'k-good'], x: ['×', 'k-miss'] };
       sheet(`<h2>答え合わせ</h2>
         <div class="big">${Math.max(0, pts)} pt <span style="font-size:14px;color:var(--muted)">◯${res.filter(r => r === 'o').length}／${qs.length}問　ヒント使用${RD.hints}問</span></div>
@@ -312,9 +312,18 @@ export function createReader(core) {
       if (!onBar) { e.preventDefault(); try { gest.setPointerCapture(e.pointerId); } catch (_) { } }
       const w = document.elementsFromPoint(e.clientX, e.clientY).find(x => x.classList && x.classList.contains('w') && root.contains(x));
       d = { onBar, onLane: !onBar, wi: w ? [...$('strip').querySelectorAll('.w')].indexOf(w) : -1, x: e.clientX, y: e.clientY, g0: RD.gpos[RD.p], moved: false, axis: null };
+      // 単語を長押し → そのままなぞると範囲を囲める(「［ここから」「ここまで］」の操作も、そのまま使える)
+      const q0 = qs[RD.qi];
+      if (!onBar && d.wi >= 0 && q0 && q0.type !== 'choice' && view() !== 'read' && !RD.sel) {
+        const me = d; d.hold = setTimeout(() => { if (d !== me || me.moved || me.axis) return; me.hold = null; me.sel = { a: me.wi, b: me.wi }; me.moved = true; dragSel(me); try { navigator.vibrate && navigator.vibrate(15); } catch (_) { } }, 260);
+      }
     });
+    const wordIdx = (x, y) => { const w = document.elementsFromPoint(x, y).find(t => t.classList && t.classList.contains('w') && root.contains(t)); return w ? [...$('strip').querySelectorAll('.w')].indexOf(w) : -1; };
+    const dragSel = o => { RD.sel = { si: RD.si, a: Math.min(o.sel.a, o.sel.b), b: Math.max(o.sel.a, o.sel.b) }; RD.start = null; if (o.sel.a === o.sel.b) beep('mini'); render(true); };
     gest.addEventListener('pointermove', e => {
       if (!d) return; const dx = e.clientX - d.x, dy = e.clientY - d.y;
+      if (d.hold && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) { clearTimeout(d.hold); d.hold = null; }   // 長押しの前に動いたら、ふつうのドラッグ(レーンを動かす)
+      if (d.sel) { const i = wordIdx(e.clientX, e.clientY); if (i >= 0 && i !== d.sel.b) { d.sel.b = i; dragSel(d); } return; }
       if (!d.axis && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) d.axis = Math.abs(dy) >= Math.abs(dx) * 2 ? 'y' : 'x';   // 縦は「はっきり縦」のときだけ
       if (d.axis === 'x' && !d.onBar) { d.moved = true; const target = d.g0 + dx; let best = 0; RD.gpos.forEach((g, i) => { if (Math.abs(g - target) < Math.abs(RD.gpos[best] - target)) best = i; }); move(best, true); }
       if (d.axis === 'y') {
@@ -322,7 +331,7 @@ export function createReader(core) {
         if (!d.done && Math.abs(dy) >= 20) { d.done = true; sentence(dy < 0 ? 1 : -1); $('senNum').animate([{ color: 'var(--accent)', transform: 'scale(1.25)' }, { color: 'var(--muted)', transform: 'none' }], { duration: 500 }); }
       }
     });
-    const end = e => { if (!d) return; if (!d.moved && e.type === 'pointerup' && d.onLane) { if (view() === 'read') infoTap(d.wi); else cut(); } d = null; };
+    const end = e => { if (!d) return; if (d.hold) clearTimeout(d.hold); if (!d.moved && e.type === 'pointerup' && d.onLane) { if (view() === 'read') infoTap(d.wi); else cut(); } d = null; };
     gest.addEventListener('pointerup', end); gest.addEventListener('pointercancel', end);
     $('bar').addEventListener('input', e => move(+e.target.value, true));
     $('say').onclick = say;

@@ -1,0 +1,529 @@
+@id int77
+@lv 2
+@level 6
+@title How Spam Filters Learn
+@ja 迷惑メールフィルターのしくみ
+@tag 共通テストレベル・説明文
+@gloss spam=迷惑メール, unwanted=不要な, filter=フィルター, pattern=パターン, mark=印をつける, spot=見つける, suspicious=怪しい, folder=フォルダ, wise=賢明な
+S| Every day, {millions|million|millionth|a million of} of emails :: 毎日何百万ものメールが
+V| are {sent|send|sending|sends} :: 送られる
+P| {around|along|among|across of} the world. :: 世界中で
+== 毎日、世界中で何百万通ものメールが送られている。
+S| {Many|Much|Every|A little} of them :: その多くは
+V| are {called|calling|call|calls} "spam," :: スパムと呼ばれる
+O| unwanted messages {that|what|whom|whose} :: …する不要なメール
+V| try {to sell|sold|sells|to selling} things. :: 物を売ろうとする
+== その多くは「スパム」と呼ばれる、物を売ろうとする不要なメールだ。
+M| Luckily, {most|almost|mostly|the most} email services :: 幸い大半のサービスは
+V| {use|uses|using|useful} :: 使っている
+O| filters {to catch|to catching|catch|catches} them. :: 捕まえるフィルターを
+== 幸い、多くのメールサービスはそれらを捕まえるためにフィルターを使っている。
+S| These filters {do not|does not|are not|is not} just :: これらは…だけでない
+V| {follow|follows|following|followed} :: 従う
+O| {fixed|fix|fixes|fixedly} rules; :: 決まった規則に
+M| they also {learn|learns|learning|to learn}. :: 学習もする
+== これらのフィルターは決まった規則に従うだけでなく、学習もする。
+M| {When|What|Which|Whom} you mark a message :: メールに印をつけると
+C| {as|so|by|than} spam, :: スパムとして
+S| the filter {studies|study|studying|to study} :: フィルターは調べる
+O| {its|it's|it|itself} words and patterns. :: その語やパターンを
+== スパムとして印をつけると、フィルターはその語やパターンを調べる。
+T| {Over|Above|Upon|Onto} time, :: やがて
+S| it becomes {better|best|more good|goodly} :: 上手になる
+P| {at|to|on|of} spotting :: 見つけるのが
+O| {suspicious|suspicion|suspiciously|suspicions} emails. :: 怪しいメールを
+== やがて、フィルターは怪しいメールを見つけるのが上手になる。
+M| {However|Whatever|Whenever|Wherever}, filters :: しかしフィルターも
+V| {sometimes|sometime|some times|somewhat} make :: 時々してしまう
+O| {mistakes|mistake|mistaken|mistaking}. :: まちがいを
+== しかし、フィルターも時々まちがえる。
+S| An important email {from|by|at|of} your school :: 学校からの大事なメール
+V| might {end up|end on|end at|end of} :: 結局…かもしれない
+P| {in|by|from|of} the spam folder. :: 迷惑フォルダに
+== 学校からの大事なメールが、迷惑フォルダに入ってしまうかもしれない。
+M| {That is why|That why is|What is why|This is what why} :: だから
+S| it is {wise|wisely|wisdom|wiser of} :: 賢明だ
+R| {to check|checked|check|checks} it :: それを確認するのは
+T| {once|one|ones|one's} in a while. :: 時々
+== だから、時々それを確認するのが賢明だ。
+?? 1 3 スパムはどんなことをしようとするメール？
+?? 2 2 メールサービスは何のためにフィルターを使う？
+?? 5 3 フィルターは何を見つけるのが上手になる？
+?? 7 2 学校からの大事なメールはどこに入るかもしれない？
+?? 8 3 迷惑フォルダはどのくらい確認するとよい？
+
+@id int78
+@lv 2
+@level 6
+@title Notice: Our Cafeteria Goes Cashless
+@ja お知らせ：食堂のキャッシュレス化
+@tag 共通テストレベル・お知らせ
+@gloss cafeteria=食堂, cashless=現金を使わない, accept=受け付ける, entrance=入口, balance=残高, staff=職員, graduate=卒業する, return=返す
+T| {Starting|Start|Started|Starts} next month, :: 来月から
+S| the school cafeteria {will|is|has|does} :: 学校の食堂は
+V| {no longer|no long|not longer|any longer} accept :: もう受け付けない
+O| {cash|cashes|cashing|cashed}. :: 現金を
+== 来月から、学校の食堂では現金が使えなくなる。
+S| Students {will|have|are|does} pay :: 生徒は支払う
+P| {with|at|of|into} their student ID cards :: 学生証で
+M| {or|nor|than|whom} a smartphone app. :: またはスマホアプリで
+== 生徒は学生証かスマホのアプリで支払うことになる。
+R| {To|For|In|By} add money, :: お金を入れるには
+V| {use|using|used|uses} :: 使ってください
+O| the machine {near|nearly|nearby of|nearest of} the entrance :: 入口近くの機械を
+M| {or|nor|than|whom} the app. :: またはアプリを
+== お金を入れるには、入口近くの機械かアプリを使ってください。
+S| You {can|must to|should to|have} :: …できる
+V| {check|checks|checking|checked} :: 確認する
+O| your {balance|balanced|balancing|balances of} :: 残高を
+T| {at|on|of|with} any time. :: いつでも
+== 残高はいつでも確認できる。
+T| {During|While|Since|When} the first two weeks, :: 最初の2週間は
+S| staff members {will|are|has|does} :: 職員が
+V| {be|being|been|are} there :: そこにいる
+R| {to help|helped|help to|helps} you. :: 手伝うために
+== 最初の2週間は、職員がそこにいて手伝ってくれる。
+M| {If|What|Which|Whom} you do not have :: …がない場合
+O| a {smartphone|smart|smartly|smartness}, :: スマホが
+V| please {visit|visiting|visited|visits} the office. :: 事務室に来て
+== スマホがない場合は、事務室に来てください。
+S| Any money {left|leave|leaving|leaves} :: 残ったお金は
+P| {on|at|of|to} your card :: カードに
+V| {will|is|has|being} be returned :: 返される
+T| {when|what|which|whom} you graduate. :: 卒業するときに
+== カードに残ったお金は卒業するときに返される。
+S| We {hope|hopes|hoping|hoped to} :: …を願っている
+O| this {makes|make|making|made of} lunch time :: これで昼食時間が
+C| {faster|fast|fastest|more fast} and easier. :: より速く楽に
+== これで昼食の時間がより速く、楽になることを願っている。
+?? 0 3 来月から食堂で何が使えなくなる？
+?? 2 2 お金を入れる機械はどこにある？
+?? 5 2 スマホがない人はどうすればよい？
+?? 6 3 カードに残ったお金はいつ返される？
+
+@id int79
+@lv 2
+@level 6
+@title A Week Without My Smartphone
+@ja スマホなしの1週間
+@tag 共通テストレベル・ブログ
+@gloss experiment=実験, reach for=手を伸ばす, habit=習慣, notice=気づく, bored=退屈した, calm=穏やかな, rule=決まり, be over=終わる
+T| {Last|Late|Lately|Latest} month, :: 先月
+S| I {tried|try|trying|tries} :: 私は試した
+O| a simple {experiment|experimental|experimentally|experimented}: :: 簡単な実験を
+O| no smartphone {for|since|while|until} a week. :: 1週間スマホなし
+== 先月、私は簡単な実験をした。1週間スマホを使わないことだ。
+T| On the {first|one|firstly|once} day, :: 初日は
+S| I {kept|keeping|keeps|to keep} :: 私は何度も
+V| {reaching|reach|reached|to reach} :: 手を伸ばした
+P| {for|of|at|on} my pocket. :: ポケットに
+== 初日、私は何度もポケットに手を伸ばした。
+S| It {had become|had became|has became|becoming} :: それはなっていた
+C| a {habit|habitual|habitually|habits} :: 習慣に
+M| I {did not|was not|had not|am not} even notice. :: 気づきもしない
+== それは、自分でも気づかない習慣になっていた。
+S| I also {felt|feeling|feels|to feel} :: 私はまた感じた
+C| {bored|boring|boredom|bore} :: 退屈に
+T| {while|during|for|since} waiting for the bus. :: バスを待つ間
+== バスを待つ間も退屈に感じた。
+T| {By|Of|To|With} the third day, :: 3日目には
+M| {however|whatever|whenever|wherever}, things :: しかし状況は
+V| {began|begun|beginning|begins} :: …し始めた
+O| to {change|changing|changed|changes}. :: 変わり
+== しかし3日目には、状況が変わり始めた。
+S| I {read|reads|reading|to read} :: 私は読んだ
+O| two {books|book|booking|booked} :: 本を2冊
+M| and {talked|talking|talks|to talk} more :: もっと話した
+P| {with|at|by|from} my family. :: 家族と
+== 本を2冊読み、家族ともっと話した。
+S| My mind {felt|feel|feeling|to feel} :: 頭の中が感じられた
+C| {calmer|calmly|calmness|more calmer} :: より穏やかに
+M| {than|then|that|as} before. :: 以前より
+== 頭の中が以前より穏やかになった。
+M| Now {that|what|which|whose} :: 今では
+S| the week {is|are|be|being} over, :: 1週間が終わり
+S| I {use|uses|using|useful} my phone again. :: またスマホを使う
+== 1週間が終わり、私はまたスマホを使っている。
+M| {But|Nor|Than|Whom} I have :: でも私は
+V| {set|sets|setting|seted} :: 作った
+O| one {rule|rules|ruler|ruling}: :: 1つの決まりを
+X| no phone {at|of|to|into} the dinner table. :: 食卓ではスマホなし
+== でも、1つ決まりを作った。食卓ではスマホを使わないことだ。
+?? 0 3 実験はどのくらいの期間だった？
+?? 3 2 筆者はいつ退屈に感じた？
+?? 5 1 筆者は本を何冊読んだ？
+?? 8 3 筆者はどんな決まりを作った？
+
+@id int80
+@lv 2
+@level 6
+@title How Banks Use Your Money
+@ja 銀行はお金をどう使う？
+@tag 共通テストレベル・説明文
+@gloss safe=金庫, lend=貸す, borrow=借りる, borrower=借り手, loan=ローン, interest=利子, earn=稼ぐ, government=政府, protect=守る
+M| {When|What|Which|Whom} you put money :: お金を入れると
+P| {into|onto|over|upon} a bank, :: 銀行に
+S| it does not just {sit|sits|sitting|sat} :: ただ置かれていない
+P| in a {safe|safety|safely|save}. :: 金庫に
+== 銀行にお金を入れても、それはただ金庫に置かれているわけではない。
+S| The bank {lends|lend|lending|lent of} :: 銀行は貸す
+O| {most|almost|mostly|the most} of it :: その大部分を
+P| {to|of|at|by} other people :: ほかの人に
+M| and {businesses|businessing|busy|busily}. :: そして会社に
+== 銀行はその大部分を、ほかの人や会社に貸す。
+M| {For|At|By|On} example, :: たとえば
+S| a family {might|might to|may to|can to} :: ある家族は…かも
+V| {borrow|borrows|borrowing|borrowed} money :: お金を借りる
+R| {to buy|buying|bought|buys} a house. :: 家を買うために
+== たとえば、ある家族は家を買うためにお金を借りるかもしれない。
+S| Borrowers {must|must to|have|has} :: 借り手は…ねばならない
+V| {pay back|pay off of|paid back|paying back} :: 返す
+O| the loan {with|by|at|for} interest. :: 利子つきでローンを
+== 借り手は利子をつけてローンを返さなければならない。
+S| The bank also {pays|pay|paying|paid of} :: 銀行も払う
+O| you {a little|a few|few|many} interest, :: あなたに少し利子を
+M| {but|nor|than|whom} it is :: でもそれは
+C| {less|fewer|little|least} than :: …より少ない
+O| what borrowers {pay|pays|paying|paid of}. :: 借り手が払う額
+== 銀行はあなたにも少し利子を払うが、それは借り手が払う額より少ない。
+S| The difference {between|among|from|during} the two :: 両者の差が
+V| {is|are|be|being} :: …だ
+C| {how|what|which|whom} the bank earns money. :: 銀行のもうけ方
+== その2つの差が、銀行がお金を稼ぐしくみだ。
+M| {But|Nor|Than|Whom} what happens :: でもどうなる？
+M| {if|which|what|whom} everyone wants :: 全員が求めたら
+O| {their|there|they're|them} money back :: お金の返却を
+T| at the {same|similar|alike|equal} time? :: 同時に
+== でも、全員が同時にお金を返してほしいと言ったらどうなるだろう。
+S| Banks {keep|keeps|keeping|kept of} :: 銀行は持っている
+O| {only|alone|lonely|once} a small part :: ごく一部だけを
+P| {of|for|than|at} their money :: お金の
+P| {as|than|so|such} cash. :: 現金として
+== 銀行は、お金のごく一部しか現金として持っていない。
+M| {This|These|Those|Them} is why :: だから
+S| {governments|government's|governing|governed} :: 政府は
+V| {make|makes|making|made of} rules :: 規則を作る
+R| {to protect|protected|protects|to protecting} savers. :: 預金者を守るため
+== だから、政府は預金者を守るための規則を作っている。
+?? 1 1 銀行は預かったお金のどれくらいを貸す？
+?? 2 3 その家族は何のためにお金を借りる？
+?? 3 2 借り手はローンをどのように返す？
+?? 7 1 銀行は現金をどれくらい持っている？
+
+@id int81
+@lv 2
+@level 6
+@title Making a Strong Password
+@ja 強いパスワードの作り方
+@tag 共通テストレベル・説明文
+@gloss password=パスワード, dangerous=危険な, leak=流出, account=アカウント, guess=推測する, combination=組み合わせ, random=でたらめな, password manager=パスワード管理アプリ
+S| {Many|Much|Every|A little} people :: 多くの人は
+V| {use|uses|using|useful} :: 使っている
+O| the {same|similar|alike|equal} password :: 同じパスワードを
+P| {for|of|than|by} every website. :: すべてのサイトで
+== 多くの人は、すべてのサイトで同じパスワードを使っている。
+S| This {is|are|be|being} :: これは…だ
+C| {dangerous|danger|dangerously|endanger} :: 危険だ
+M| {because|because of|despite|due} one leak :: 1回の流出で
+V| can {open|opens|opening|opened} all your accounts. :: 全アカウントが開く
+== 1回の流出ですべてのアカウントが開いてしまうので、これは危険だ。
+M| Also, {short|shortly|shortage|shorten} passwords :: また短いパスワードは
+V| are {easy|easily|ease|easier of} :: 簡単だ
+R| {to guess|guessing|guessed|guesses}. :: 推測するのが
+== また、短いパスワードは簡単に推測されてしまう。
+S| Computers {can|cans|can to|must to} :: コンピュータは…できる
+V| {try|tries|trying|tried} :: 試す
+O| {millions|million|millionth|a million of} of combinations :: 何百万もの組み合わせを
+T| {in|on|at|by} a second. :: 1秒で
+== コンピュータは1秒で何百万通りもの組み合わせを試せる。
+M| {So|Nor|Than|Whom} how can you :: では、どうすれば
+V| {make|makes|making|made of} :: 作れる
+O| a {strong|strongly|strength|strongest of} one? :: 強いものを
+== では、どうすれば強いパスワードを作れるだろうか。
+S| {One|Once|Ones|Won} good way :: よい方法の1つは
+V| {is|are|be|being} :: …だ
+R| {to join|joins|joined|to joining} :: つなげること
+O| {several|severe|severely|several of} random words. :: いくつかの無関係な語を
+== よい方法の1つは、関係のない語をいくつかつなげることだ。
+M| {For|At|By|On} example, :: たとえば
+S| "blue-river-pencil-cloud" {is|are|be|being} :: この例は
+C| long {but|nor|than|whom} :: 長いが
+C| easy {to remember|remembering|remembered|remembers}. :: 覚えやすい
+== たとえば「blue-river-pencil-cloud」は長いが覚えやすい。
+S| You {should|should to|ought|must to} also :: また…べきだ
+V| {use|uses|using|used of} :: 使う
+O| a {different|difference|differently|differ} password :: 別のパスワードを
+P| {for|than|whom|nor} each account. :: アカウントごとに
+== また、アカウントごとに別のパスワードを使うべきだ。
+S| A password manager {can|cans|can to|must to} :: 管理アプリは…できる
+V| {remember|remembers|remembering|remembered} :: 覚える
+O| them {all|every|each of|whole} :: それらを全部
+P| {for|of|at|by} you. :: あなたの代わりに
+== パスワード管理アプリなら、それらを全部代わりに覚えてくれる。
+?? 0 2 多くの人はすべてのサイトでどんなパスワードを使っている？
+?? 3 2 コンピュータは1秒で何を試せる？
+?? 5 3 強いパスワードを作るよい方法は？
+?? 7 2 アカウントごとに何を使うべき？
+?? 8 0 パスワードを全部覚えてくれるのは何？
+
+@id int82
+@lv 2
+@level 6
+@title Why False News Travels Fast
+@ja 誤ったニュースが速く広まる理由
+@tag 共通テストレベル・記事
+@gloss social media=SNS, spread=広がる, false=誤った, surprising=驚くような, emotion=感情, headline=見出し, source=情報源, trusted=信頼できる, pause=立ち止まること
+P| {On|Of|At|By} social media, :: SNSでは
+S| news {can|cans|can to|could to} :: ニュースは…ありうる
+V| {spread|spreads|spreading|spreaded} :: 広がる
+P| {around|along|about of|across of} the world :: 世界中に
+T| {in|on|at|by} minutes. :: 数分で
+== SNSでは、ニュースは数分で世界中に広がることがある。
+M| {Unfortunately|Unfortunate|Unfortune|Misfortune}, false stories :: 残念ながら誤報も
+V| {travel|travels|traveling|traveled of} :: 伝わる
+C| just {as|than|such|too} fast, :: 同じくらい速く
+M| {or|nor|than|whom} even faster. :: あるいはもっと速く
+== 残念ながら、誤った話も同じくらい、あるいはそれ以上に速く伝わる。
+S| {One|Once|Ones|Won} reason :: 理由の1つは
+V| {is|are|be|being} :: …だ
+C| {that|what|which|whom} false news :: 誤報は…ということ
+V| is often {surprising|surprised|surprise|surprisingly}. :: よく驚きがある
+== その理由の1つは、誤ったニュースはたいてい驚きがあるということだ。
+S| Surprising stories {make|makes|making|made of} :: 驚く話は…させる
+O| people {feel|feeling|to feel|felt} :: 人に感じ
+O| {strong|strongly|strength|stronger of} emotions, :: 強い感情を
+M| {so|nor|than|whom} they share them. :: だから共有する
+== 驚く話は人に強い感情をわかせるので、人はそれを共有する。
+S| Many people {also|too|either|neither} :: 多くの人はまた
+V| {share|shares|sharing|shared of} articles :: 記事を共有する
+M| after {looking|look|looked|looks} only :: …だけ見た後で
+P| {at|of|by|from} the headline. :: 見出しを
+== また、多くの人は見出しだけを見て記事を共有してしまう。
+M| {So|Nor|Than|Whom}, before :: だから…前に
+S| you {share|shares|sharing|shared of} a story, :: 話を共有する
+V| {take|takes|taking|taken} a moment :: 少し時間をとり
+R| {to check|to checking|checked|checks} its source. :: 情報源を確かめよう
+== だから、話を共有する前に、少し時間をとって情報源を確かめよう。
+M| {Is|Are|Does|Do} it from :: それは…からか
+O| a {trusted|trust|trusts|trustful of} news site, :: 信頼できるサイト
+M| {or|nor|than|whom} from a stranger? :: それとも知らない人
+== それは信頼できるニュースサイトからか、それとも知らない人からか。
+S| A short {pause|pauses|paused|pausing} :: 少し立ち止まると
+V| can {stop|stops|stopping|stopped} :: 止められる
+O| {false|falsely|falseness|falsity of} news :: 誤報が
+P| {from|to|at|on} spreading. :: 広がるのを
+== ほんの少し立ち止まるだけで、誤報が広がるのを止められる。
+?? 0 4 SNSではニュースはどのくらいで広がる？
+?? 2 3 誤報が広がる理由の1つは？
+?? 4 3 多くの人は記事の何だけを見て共有する？
+?? 5 3 共有する前に何を確かめるとよい？
+
+@id int83
+@lv 2
+@level 6
+@title The Hidden Price of Free Apps
+@ja 無料アプリの見えない代金
+@tag 共通テストレベル・論説文
+@gloss download=ダウンロードする, somehow=何とかして, collect=集める, user=利用者, data=データ, advertiser=広告主, match=合う, personal=個人の
+S| Most of the apps {on|onto|at|by} our phones :: スマホのアプリの大半は
+V| {are|is|be|being} :: …だ
+C| {free|freely|freedom|freed} :: 無料
+P| {to|of|at|by} download. :: ダウンロードが
+== スマホのアプリの大半は無料でダウンロードできる。
+M| {But|Nor|Than|Whom} companies :: しかし企業は
+V| {need|needs|needing|to need} :: 必要がある
+R| {to make|making|made|makes} money :: お金を稼ぐ
+M| {somehow|somewhat|somewhere of|someone}. :: 何らかの方法で
+== しかし企業は、何らかの方法でお金を稼ぐ必要がある。
+S| {Many|Much|Every|A little} free apps :: 多くの無料アプリは
+V| {collect|collects|collecting|collection} :: 集める
+O| {information|informations|inform|informative} :: 情報を
+P| {about|over|onto|upon} their users. :: 利用者についての
+== 多くの無料アプリは、利用者についての情報を集めている。
+S| {This|These|Those|Them} includes :: これには含まれる
+O| {where|what|which|whom} you go :: 行く場所
+M| and {what|whom|whose|whatever of} you buy. :: そして買う物が
+== これには、あなたが行く場所や買う物が含まれる。
+S| The companies {then|than|thus of|them} :: 企業はその後
+V| {sell|sells|selling|sold of} :: 売る
+O| this data {to|of|at|by} advertisers. :: データを広告主に
+== 企業はその後、このデータを広告主に売る。
+S| Advertisers {use|uses|using|useful} it :: 広告主はそれを使う
+R| {to show|to showing|showed|shows} you ads :: 広告を見せるために
+M| {that|what|whom|whose} match your interests. :: 興味に合う
+== 広告主はそれを使って、あなたの興味に合う広告を見せる。
+M| In other {words|word|wording|worded}, :: 言いかえれば
+S| you {pay|pays|paying|paid of} :: あなたは払っている
+P| {with|of|at|on} your personal information. :: 個人情報で
+== 言いかえれば、あなたは個人情報で支払っているのだ。
+S| This {is|are|be|being} not always :: いつも…ではない
+C| a {bad|badly|badness|worstly} thing. :: 悪いこと
+== それがいつも悪いことだとは限らない。
+M| {However|Whatever|Whenever|Wherever}, before :: しかし…前に
+S| you {download|downloads|downloading|downloaded} an app, :: アプリを入れる
+V| {check|checking|checks|checked} :: 確認しよう
+O| {what|whom|whose|whatever of} it asks for. :: 何を求めているか
+== しかし、アプリを入れる前に、それが何を求めているか確認しよう。
+?? 0 2 多くのアプリはダウンロードにお金がかかる？
+?? 2 2 無料アプリは利用者について何を集める？
+?? 4 2 企業はデータをだれに売る？
+?? 6 2 言いかえると、利用者は何で支払っている？
+
+@id int84
+@lv 2
+@level 6
+@title Fast Internet Comes to a Village
+@ja 山の村に速いネットがやってきた
+@tag 共通テストレベル・記事
+@gloss village=村, cable=ケーブル, connection=接続, chance=機会, clinic=診療所, remotely=遠隔で, local=地元の, join=加わる
+P| {In|On|Of|By} the small village of Kitayama, :: 小さな北山村では
+S| the internet {used to|use to|used|using to} be :: ネットは以前…だった
+C| very {slow|slowly|slowness|slows}. :: とても遅い
+== 小さな北山村では、以前インターネットがとても遅かった。
+S| {Watching|Watch|Watched|Watches} a short video :: 短い動画を見るのに
+V| {took|take|taking|taken} :: かかった
+O| {several|severe|several of|severely} minutes. :: 数分
+== 短い動画を見るのにも数分かかった。
+T| {Last|Late|Lately|Latest} year, :: 昨年
+S| {however|whatever|whenever|wherever}, the village :: しかし村は
+V| {laid|lay|lied|lain} :: 敷いた
+O| {new|newly|news|newness} cables. :: 新しいケーブルを
+== しかし昨年、村は新しいケーブルを敷いた。
+M| {Now|No|Not|Nor} the connection :: 今では接続は
+V| {is|are|be|being} :: …だ
+C| as {fast|faster|fastest|fastly} :: 同じくらい速い
+P| {as|than|so|then} in big cities. :: 大都市と
+== 今では、接続は大都市と同じくらい速い。
+S| The change {has|have|having|is} :: この変化は
+V| {brought|bring|bringing|brings} :: もたらした
+O| {many|much|a little|every} new chances. :: 多くの新しい機会を
+== この変化は多くの新しい機会をもたらした。
+S| The local clinic {can|cans|can to|must to} now :: 診療所は今…できる
+V| {talk|talks|talking|talked} :: 話す
+P| {with|of|into|from} doctors in the city :: 都会の医師と
+P| {by|of|into|at} video call. :: ビデオ通話で
+== 地元の診療所は今、ビデオ通話で都会の医師と話せる。
+S| Some young people {have|has|having|to have} :: 若者の中には
+V| {moved|move|moving|moves} :: 移ってきた
+P| {to|at|of|on} the village :: 村に
+R| {to work|to working|worked|works} remotely. :: リモートで働くため
+== リモートで働くために村へ移ってきた若者もいる。
+S| One of them {runs|run|running|to run} :: そのうち1人は営む
+O| an online shop {selling|sell|to selling|sells} :: …を売るネット店を
+O| {local|locally|locality|locale} vegetables. :: 地元の野菜を
+== そのうちの1人は、地元の野菜を売るネットショップを営んでいる。
+S| The village {hopes|hope|hoping|hoped of} :: 村は願っている
+O| {that|what|which|whom} more people :: もっと多くの人が
+V| {will|is|are|has} join them. :: 加わることを
+== 村は、もっと多くの人が加わってくれることを願っている。
+?? 1 2 以前は短い動画を見るのにどれくらいかかった？
+?? 2 3 昨年、村は何を敷いた？
+?? 5 3 診療所は都会の医師とどうやって話す？
+?? 7 2 ネットショップでは何を売っている？
+
+@id int85
+@lv 2
+@level 6
+@title How Credit Cards Work
+@ja クレジットカードのしくみ
+@tag 共通テストレベル・説明文
+@gloss right away=すぐに, bill=請求書, whole=全部の, amount=金額, interest=利息, unpaid=未払いの, debt=借金, convenient=便利な, keep track of=把握する
+S| A credit card {lets|let|letting|to let} you :: カードがあれば
+V| {buy|buys|buying|to buy} things :: 物を買える
+M| {without|with|within|withdraw} paying :: 払わずに
+T| {right|rightly|righter|rights} away. :: すぐに
+== クレジットカードを使えば、すぐにお金を払わなくても物が買える。
+S| {In|On|At|By} fact, the company :: 実はカード会社が
+V| {pays|pay|paying|paid of} :: 払う
+P| {for|of|at|by} you first. :: 先に代わりに
+== 実は、カード会社が先に代わりに払ってくれているのだ。
+T| {Once|One|Ones|Won} a month, :: 月に1回
+S| you {receive|receives|receiving|receipt} :: あなたは受け取る
+O| a {bill|build|billed|bills} :: 請求書を
+M| {for|to|at|into} everything you bought. :: 買った物すべての
+== 月に1回、買った物すべての請求書が届く。
+M| {If|What|Which|Whom} you pay :: 払えば
+O| the {whole|hole|wholly|whole of} amount, :: 全額を
+S| there {is|are|be|has} no extra cost. :: 追加の費用はない
+== 全額を払えば、追加の費用はかからない。
+M| {But|Nor|Than|Whom} if you pay :: でも払うのが
+O| {only|alone|lonely|once} part of it, :: 一部だけだと
+S| the company {adds|add|adding|addition} :: 会社は加える
+O| {interest|interesting|interested|interests of}. :: 利息を
+== しかし一部だけを払うと、会社は利息を加える。
+S| The {unpaid|unpay|unpaying|unpays} amount :: 未払いの額は
+V| can {grow|grows|growing|grew} :: 増えることがある
+M| {quickly|quickness|quicken|quickly of}. :: すぐに
+== 払っていない金額はすぐに増えることがある。
+S| Some people {end up|end on|end at|end of} :: 結局…人もいる
+P| {with|by|at|for} a large debt :: 大きな借金を抱える
+M| {because|because of|despite|due} they forget :: 忘れたせいで
+O| {how|what|which|whom} much they spent. :: いくら使ったか
+== いくら使ったかを忘れて、大きな借金を抱える人もいる。
+S| Credit cards {are|is|be|being} :: カードは…だ
+C| {convenient|convenience|conveniently|convene} :: 便利だ
+M| {and|nor|than|whom} safe :: そして安全だ
+R| {to carry|carrying|carried|carries}. :: 持ち歩くのに
+== クレジットカードは便利で、持ち歩くにも安全だ。
+M| {Still|Steal|Stall|Stiller}, it is :: それでも…だ
+C| {important|importance|importantly|import} :: 大切だ
+R| {to keep|to keeping|kept|keeps} track :: 把握することが
+P| {of|for|at|by} your spending. :: 自分の支出を
+== それでも、自分の支出を把握しておくことが大切だ。
+?? 1 0 買い物の代金を先に払うのはだれ？
+?? 2 0 請求書はどのくらいの頻度で届く？
+?? 4 3 一部だけ払うと、会社は何を加える？
+?? 6 3 借金を抱える人は何を忘れている？
+
+@id int86
+@lv 2
+@level 6
+@title Why Prices Go Up
+@ja 物価が上がるのはなぜ？
+@tag 共通テストレベル・説明文
+@gloss snack=お菓子, inflation=インフレ, cause=原因, goods=品物, seller=売り手, raise=上げる, fuel=燃料, wage=賃金, economy=経済
+S| Your grandparents {may|may to|must to|has} :: 祖父母は…かも
+V| {remember|remembers|remembering|remembered} :: 覚えている
+O| {when|what|which|whom} a snack :: お菓子が…ころを
+V| cost {only|alone|lonely|once} ten yen. :: 10円だった
+== 祖父母は、お菓子が10円だったころを覚えているかもしれない。
+S| {Today|Todays|Today's|Tomorrow's}, the same snack :: 今は同じお菓子が
+V| {costs|costing|costed|to cost} :: かかる
+O| {much|many|very|more of} more. :: ずっと多く
+== 今では、同じお菓子はずっと高い。
+S| This general rise {in|on|at|by} prices :: 物価の全体的な上昇
+V| {is|are|be|being} called :: …と呼ばれる
+C| "{inflation|inflate|inflated|inflating}." :: 「インフレ」と
+== この物価の全体的な上昇は「インフレ」と呼ばれる。
+S| {One|Once|Ones|Won} cause :: 原因の1つは
+V| {is|are|be|being} :: …だ
+C| {when|what|which|whom} many people :: 多くの人が…とき
+V| want {the same|same|the similar|the alike} goods. :: 同じ品物を欲しがる
+== 原因の1つは、多くの人が同じ品物を欲しがることだ。
+M| {If|Which|What|Whom} there are :: もし…なら
+C| not {enough|enough of|enougher|enoughly} goods, :: 品物が足りない
+S| sellers {can|cans|can to|must to} :: 売り手は…できる
+V| {raise|rise|raising|rises} their prices. :: 値段を上げる
+== 品物が足りなければ、売り手は値段を上げられる。
+S| {Costs|Cost of|Costing|Costed} for companies :: 企業の費用も
+V| can also {go up|go on up|going up|goes up}, :: 上がることがある
+M| {such as|such like|as such|so as} fuel and wages. :: 燃料や賃金など
+== 燃料や賃金など、企業の費用が上がることもある。
+M| {When|What|Which|Whom} this happens, :: そうなると
+S| companies {often|oft|often of|oftenly} :: 企業はよく
+V| {charge|charges|charging|to charge} more. :: 値段を上げる
+== そうなると、企業は値段を上げることが多い。
+S| {A little|A few|Few|Many} inflation :: 少しのインフレは
+V| {is|are|be|being} :: …だ
+C| {normal|normally|norm|normality} :: ふつうのこと
+M| {in|on|at|by} a growing economy. :: 成長する経済では
+== 成長する経済では、少しのインフレはふつうのことだ。
+M| {But|Nor|Than|Whom} if prices :: でも物価が
+V| rise too {fast|fastly|faster of|fasting}, :: 速く上がりすぎると
+S| your money {buys|buy|buying|bought of} :: お金で買える物は
+O| {less|lesser|little of|least of} than before. :: 以前より少ない
+== しかし物価が速く上がりすぎると、お金で買える物が以前より少なくなる。
+?? 0 3 昔、お菓子はいくらだった？
+?? 2 2 物価の全体的な上昇は何と呼ばれる？
+?? 4 3 品物が足りないと、売り手は何ができる？
+?? 5 2 企業の費用の例として何があげられている？

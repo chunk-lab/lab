@@ -1,9 +1,9 @@
 import { set_renderScene, set_render } from './play.js';
 import { DB, SET, save, say, toast } from './common.js';
-import { CJ, FRONTS, FRP, FRT, LEADF, LEX, MD, MN, MODALS, N, P, PL, ST, T, TM, V, agrOf, allowedModals, cap, genClause, needsObj, newClause, nounTags, predS, predV, sentenceComplete, sentenceJa, sentenceParts, sentenceText, setModal } from './engine.js';
-import { ENV, onDoc, onTick } from './env.js';
+import { allowedTenses, CJ, FRONTS, FRP, FRT, LEADF, LEX, MD, MN, MODALS, N, P, PL, ST, T, TM, V, agrOf, allowedModals, cap, genClause, needsObj, newClause, nounTags, predS, predV, sentenceComplete, sentenceJa, sentenceParts, sentenceText, setModal } from './engine.js';
+import { ENV, onDoc, onTick, onWin } from './env.js';
 import { IRRPL, cntForm, objRankRefs } from './objrank.js';
-import { APP, LV, finModal, finSubj, finToggle, go, normalize, objFits, openFinish, passOk, pick, render, renderScene, resetAll, snapshot, stateFitsSubj, verbFitsSubj } from './play.js';
+import { APP, LV, optList, finModal, finSubj, finToggle, go, normalize, objFits, openFinish, passOk, pick, render, renderScene, resetAll, snapshot, stateFitsSubj, verbFitsSubj } from './play.js';
 import { qbPick, qbRes } from './qbar.js';
 import { FRAME_IDS, reelCands, reelFits, reelFix, reelLabel, reelSet } from './reel.js';
 import { FREQADV } from './vocab_a1.js';
@@ -240,7 +240,7 @@ export function sbPanel(){ const m=sbM(); const r=SB.r; if(!r) return null; cons
  if(r==='O'&&predV(m)&&!needsObj(m)&&predV(m).fr==='intr') return {title:T,pos,h:'<div class="slnote">この動きは「つづき」なしで言えます</div>'};
  if(r==='S'){ h+=sbPersonBar('S'); h+='<div class="slbd"><span class="slbdl">このあとは？</span><div class="slvtop">'+sbBdChips()+'</div></div>'; } else if(r==='O'&&sbIsDt()){ const C0=sbCells('O'); const k0=(SB.sub&&(C0.cells.some(c=>c.k===SB.sub)||SB.sub===C0.main))?SB.sub:C0.main; if(k0==='iobj') h+=sbIobjBar(); } else if(r==='O'&&sbRole()==='O'&&predV(m)) h+=sbPersonBar('O'); else if(r==='V') h+=sbVerbTop();
  const C=sbCells(r); const key=(SB.sub&&(C.cells.some(c=>c.k===SB.sub)||SB.sub===C.main))?SB.sub:C.main; SB.key=key;
- if(C.cells.length){ h+='<div class="slinner">'+C.cells.map((c,i)=>(i?'<i class="sla">▸</i>':'')+'<button class="ck slp slin pos-'+(r==='V'?'verb':(r==='L'||r==='T')?'adv':'noun')+(key===c.k?' cur':'')+(c.v?'':' hole')+(c.cl?' '+c.cl:'')+((!c.v&&!SB.earOff[r]&&(c.cl==='main'?!sbSet(r):(sbSet(r)||r==='L'||r==='T')))?' nudge':'')+'" data-b="'+c.k+'"><span class="en">'+sbEsc(c.v||'')+'</span><span class="ja">'+c.t+'</span></button>').join('')+'</div>'; }
+ if(C.cells.length){ h+='<div class="slinner">'+C.cells.map((c,i)=>(i?'<i class="sla">▸</i>':'')+'<button class="ck slp slin pos-'+(r==='V'?'verb':(r==='L'||r==='T')?'adv':'noun')+(key===c.k?' cur':'')+(c.v?'':' hole')+(c.cl?' '+c.cl:'')+((!c.v&&!SB.earOff[r]&&(c.cl==='main'?!sbSet(r):(sbSet(r)||r==='L'||r==='T')))?' nudge':'')+'" data-rc="'+r+'" data-b="'+c.k+'"><span class="en">'+sbEsc(c.v||'')+'</span><span class="ja">'+c.t+'</span></button>').join('')+'</div>'; }
  const F=sbField(r,key); SB.F=F;
  h+='<div class="sled"><div class="slgl'+((F.main&&!sbSet(r)&&r!=='S'&&!(r==='O'&&sbRole()==='O'&&predV(m)))?' nudge':'')+'">'+sbEsc(F.label)+'</div><div class="slrow"><input id="slin" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="'+sbEsc(F.ph)+'"><button id="slrnd" aria-label="ランダム">🎲</button>'+(F.clr?'<button id="slclr2">'+F.clr[0]+'</button>':'')+(key==='verb'?'<button id="slrnd2">🎲動作</button>':'')+'</div><div id="slsug" class="slchips"></div></div>';
  if(key==='adj'){ const np=sbNPd(sbRoleOf(r)); if(np.adj.length) h+='<div class="slcur">'+sbAdjSort(np.adj).map(a=>'<button class="slx" data-x="'+sbEsc(a)+'">'+sbEsc(a)+' ✕</button>').join('')+'</div>'; }
@@ -376,7 +376,17 @@ export function dkSync(){ const cv=document.getElementById('canvas'), app=docume
  let st=document.getElementById('dkstrip'); if(!st){ st=document.createElement('div'); st.id='dkstrip'; st.textContent='＋ 文を変化させてあそぶ'; cv.appendChild(st); st.onclick=e=>{ e.stopPropagation(); const f=APP.reelFA&&APP.reelFA.jaok; if(f) f(); }; st.addEventListener('pointerdown',e=>e.stopPropagation()); }
  const tl=document.getElementById('tline'), bars=pn.querySelector('#dkbars');
  if(open){ pn.hidden=false; const fb=document.querySelector('#scene .finbar'); if(fb) bars.replaceChildren(fb); if(tl&&tl.parentNode!==pn) pn.insertBefore(tl,pn.querySelector('#dkmenu')); }
- else { pn.hidden=true; bars.replaceChildren(); if(tl&&tl.parentNode!==cv) cv.appendChild(tl); } }
+ else { pn.hidden=true; bars.replaceChildren(); if(tl&&tl.parentNode!==cv) cv.appendChild(tl); }
+ dkFit(); }
+// メニューが開いている間は、絵の領域をメニューの上までにする（絵の下側がメニューに隠れないように）。英文が長いときは絵を小さく
+export function dkFit(){ const cv=document.getElementById('canvas'), pn=document.getElementById('dkpanel'), sc=document.getElementById('scene'); if(!cv) return;
+ const open=!!pn&&!pn.hidden&&cv.classList.contains('dkx');
+ if(!open){ if(cv.style.paddingBottom) cv.style.paddingBottom=''; return; }
+ cv.style.paddingBottom='';
+ const ov=Math.ceil(cv.getBoundingClientRect().bottom-pn.getBoundingClientRect().top);
+ cv.style.paddingBottom=ov>0?ov+'px':'';
+ try{ if(sc){ const cd=sc.querySelector('.fincard2'); if(cd) cv.classList.toggle('finsm', cd.getBoundingClientRect().height>sc.clientHeight*0.3 || sc.clientHeight<330); } }catch(e){} }
+onWin('resize',()=>{ try{ dkFit(); }catch(e){} });
 
 
 // ---- 前提タブ：条件／慣用句／口語／どこで／いつ（各🎲）＋ 入力バー（語の途中でも探せる・続きを書ける） ----
@@ -513,7 +523,43 @@ onDoc('keydown',e=>{ if(e.target&&e.target.classList&&e.target.classList.contain
 (function(){ const o=renderScene; set_renderScene(function(){ const r=o.apply(this,arguments); try{ dkSync(); }catch(e){} return r; }); })();
 SB_CATS = [['cond','条件'],['idm','慣用句'],['col','口語'],['plc','どこで'],['tm','いつ']];
 SB_XL = [['me','わたし'],['you','あなた'],['him','彼'],['her','彼女'],['us','わたしたち'],['them','彼ら'],['the weather','天気'],['the news','ニュース'],['the teacher','先生'],['my mom','母'],['the map','地図']];
-(function(){ const o=sbDraw; sbDraw=function(){ o.apply(this,arguments); const el=document.getElementById('slot'); if(!el) return;
+(function(){ const o=sbDraw; sbDraw=function(){ o.apply(this,arguments); if(!APP.diceHook) APP.diceHook=diceHook; const el=document.getElementById('slot'); if(!el) return;
  el.querySelectorAll('.slcb').forEach(b=>b.onclick=()=>{ const k=b.dataset.cat, m=sbM(), f=m.lead&&LEADF(m.lead); if((k==='idm'||k==='col')&&f&&f.need&&m.leadX&&sbLeadCat(f)===k){ sbDo(()=>{ m.leadX=null; m.leadXja=null; }); return; } sbCatRand(k); });
  el.querySelectorAll('.slcx').forEach(b=>b.onclick=()=>{ const k=b.dataset.cx; sbDo(()=>sbCatClr(k)); }); }; })();
 }
+
+
+// ---- 完成後の役割タブ:1回押すとサイコロが出て、もう1回押すとその役割の言葉がランダムに入れかわる(組み立てに戻らず、「完成」も押さない) ----
+// 完成後の役割タブ:1回押すとサイコロが出て、もう1回押すとその役割の言葉がランダムに入れかわる(組み立てに戻らず、「完成」も押さない)。
+// どの役割でも同じ。時制・いつ・どこで・様子などが合わなくなるものは、入れかえ候補(optList)や allowedTenses の中からだけ選ぶ。
+function diceRoll(cat, cl){
+  const prevActive=APP.active; APP.active=(cl==='m'||!cl)?'main':cl;
+  try{
+    const c=APP.active==='main'?APP.S.main:(APP.S.main.subs[APP.active]?APP.S.main.subs[APP.active].c:APP.S.main);
+    if(cat==='subj'){ const cur=c.subj, ids=['p:i','p:you','p:he','p:she','p:we','p:they'].filter(x=>x!==cur); pick('subj',sbRnd(ids)); return true; }
+    if(cat==='pred'||cat==='state'){ sbRandVerb(cat==='state'?'state':'act'); return true; }
+    if(cat==='tense'){ const al=(allowedTenses(c,{kind:APP.active})||[]).filter(t=>t!==c.tense); if(!al.length) return false; pick('tense',sbRnd(al)); return true; }
+    const map={obj:'obj',comp:'obj',modal:'modal',place:'place',time:'time',manner:'manner',with:'with',than:'than',thing:'thing',exist:'thing',conj:'conj',rel:'rel',purpose:'purpose'};
+    const k=map[cat]; if(!k) return false;
+    const O=(optList(k,c)||[]).filter(o=>o&&o.act&&!o.sel&&!o.none&&!/(self|selves)$/i.test(o.en||''));
+    if(!O.length) return false;
+    sbRnd(O).act(); APP.open=null; return true;
+  }finally{ APP.active=prevActive; }
+}
+// 入れかえたあとに「何を？」などの空きができたら、ランダムに埋めて、文が完成するところまで進める
+function diceFill(){
+  for(let i=0;i<5;i++){
+    let done=false; try{ done=sentenceComplete(APP.S); }catch(e){ return; }
+    if(done) return;
+    const h=sentenceParts(APP.S).find(p=>p.hole); if(!h) return;
+    if(!diceRoll(h.cat,h.clause)) return;
+  }
+}
+const diceHook=function(el){
+  const cat=el.dataset.cat, key=el.dataset.key, cl=el.dataset.cl;
+  if(APP.diceKey!==key){ APP.diceKey=key; render(); return true; }
+  APP.diceKey=null; let ok=false;
+  try{ ok=diceRoll(cat,cl); if(ok) diceFill(); }catch(e){ console.error(e); }
+  if(!ok) toast('ここは、ほかの言葉に入れかえられないみたい');
+  APP.finished=true; render(); return true;
+};
