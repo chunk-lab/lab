@@ -1,0 +1,457 @@
+@id beg38
+@lv 1
+@level 4
+@title The Station Near My House
+@ja 家の近くの駅
+@tag 高校受験レベル・説明文
+@gloss station=駅, platform=ホーム, ticket gate=改札, crowded=混んでいる, convenient=便利な, announcement=アナウンス, friendly=親しみやすい
+M| {There is|There are|There be|There am} :: …がある
+O| a small {station|stations|stationed|stationing} :: 小さな駅が
+P| {near|nearly|nearer|nearby of} my house. :: 家の近くに
+== 私の家の近くに小さな駅がある。
+S| It {takes|take|taking|taken} :: …かかる
+O| {only|alone|lonely|ones} five minutes :: たった5分
+R| {to walk|to walking|walked|walks} there. :: 歩いて行くのに
+== そこまで歩いてたった5分しかかからない。
+S| The station {has|have|having|is} :: 駅にはある
+O| two {platforms|platform|plate|plan} :: 2つのホームが
+O| and one ticket {gate|gates|get|gave}. :: 改札が1つ
+== その駅にはホームが2つと改札が1つある。
+T| {In|On|At|Of} the morning, :: 朝は
+S| it is very {crowded|crowd|crowds|crowding} :: とても混んでいる
+P| {with|for|of|to} students and workers. :: 学生や会社員で
+== 朝は学生や会社員でとても混んでいる。
+S| Trains {come|comes|coming|comed} :: 電車が来る
+T| {every|ever|very|even} ten minutes, :: 10分ごとに
+M| {so|than|nor|whom} it is convenient. :: だから便利だ
+== 電車は10分ごとに来るので、便利だ。
+S| A {kind|kindness|kinds|kinded} man :: 親切な男性が
+V| {works|work|working|to work} :: 働いている
+P| {at|of|than|into} the gate. :: 改札で
+== 改札では親切な男性が働いている。
+S| He always {says|say|saying|sayed} :: 彼はいつも言う
+O| "Good {morning|mornings|mourning|morningly}" :: 「おはよう」と
+P| {to|than|of|into} everyone. :: みんなに
+== 彼はいつもみんなに「おはよう」と言う。
+S| You can {hear|hearing|heard|hears} :: 聞くことができる
+O| {announcements|announce|announced|announcing} :: アナウンスを
+P| in English, {too|to|two|tow}. :: 英語でも
+== 英語のアナウンスも聞くことができる。
+S| I {like|likes|liking|liked to} this station :: 私はこの駅が好き
+R| {because|because of|than|whom} it is :: なぜならそれは
+C| small and {friendly|friend|friends|friendship}. :: 小さく親しみやすい
+== 小さくて親しみやすいので、私はこの駅が好きだ。
+?? 1 1 駅まで歩いて何分かかる？
+?? 2 1 駅にホームはいくつある？
+?? 3 2 朝は何で混んでいる？
+?? 4 1 電車は何分ごとに来る？
+
+@id beg39
+@lv 1
+@level 4
+@title A New Bakery Is Opening!
+@ja 新しいパン屋の開店
+@tag 高校受験レベル・お知らせ
+@gloss bakery=パン屋, fresh=焼きたての, bake=焼く, free=無料の, percent=パーセント, off=割り引いて, closed=休みの, try=試す
+S| A new {bakery|bake|baked|baking} :: 新しいパン屋が
+V| will {open|opens|opened|opening} :: 開店する
+P| {on|of|than|into} Green Street :: グリーン通りに
+T| next {Saturday|Saturdays|Sunday's|Saturday's}. :: 今度の土曜日に
+== 今度の土曜日、グリーン通りに新しいパン屋が開店します。
+S| The {name|names|named|naming} :: 名前は
+P| {of|at|than|into} the shop :: その店の
+V| {is|are|be|am} "Sunny Bread." :: 「サニーブレッド」だ
+== 店の名前は「サニーブレッド」です。
+S| We {bake|bakes|baking|baker} :: 私たちは焼く
+O| {fresh|freshly|freshness|freshen} bread :: 焼きたてのパンを
+T| {every|ever|very|even} morning. :: 毎朝
+== 私たちは毎朝、焼きたてのパンを焼きます。
+T| On the {first|one|once|firstly} day, :: 初日には
+S| everyone {can get|can gets|can getting|can got} :: みんなもらえる
+O| a {free|freely|freedom|frees} cookie. :: 無料のクッキーを
+== 初日には、みなさん無料のクッキーがもらえます。
+S| All {bread|breed|bred|bready} :: すべてのパンが
+V| will {be|is|are|being} :: …になる
+C| ten percent {off|of|on|out}. :: 1割引きに
+T| {for|since|ago|than} one week. :: 1週間
+== 1週間、すべてのパンが1割引きになります。
+S| The shop {is|are|be|am} open :: 店は開いている
+T| {from|for|since|form} 7 a.m. :: 午前7時から
+T| {to|too|two|tow} 6 p.m. :: 午後6時まで
+== 店は午前7時から午後6時まで開いています。
+S| It {is|are|be|am} :: 店は…だ
+C| {closed|closes|close to|closely} :: 休み
+T| {on|in|at|of} Mondays. :: 毎週月曜日は
+== 毎週月曜日はお休みです。
+M| Please {come|comes|coming|came} :: どうぞ来て
+V| and {try|tries|trying|tried} :: そして試して
+O| {our|we|us|ours} bread! :: 私たちのパンを
+== ぜひ来て、私たちのパンを食べてみてください！
+S| We {are|is|am|be} :: 私たちは…
+V| {waiting|wait|waits|waited} for :: 待っている
+O| {you|your|yours|you're} :: あなたを
+P| {at|of|than|into} the shop. :: お店で
+== お店でお待ちしています。
+?? 0 2 パン屋はどこに開店する？
+?? 3 2 初日に何がもらえる？
+?? 5 1 店は何時に開く？
+?? 6 2 休みは何曜日？
+
+@id beg40
+@lv 1
+@level 4
+@title A Present for Mom
+@ja 母へのプレゼント
+@tag 高校受験レベル・物語文
+@gloss present=プレゼント, birthday=誕生日, department store=デパート, scarf=スカーフ, expensive=高価な, enough=十分な, clerk=店員, wrap=包む, hug=抱きしめる
+S| My mother's {birthday|birth|birthdays|born} :: 母の誕生日は
+V| {was|were|is being|be} :: …だった
+T| {on|in|at|of} Sunday. :: 日曜日
+== 母の誕生日は日曜日だった。
+S| I {wanted|wanting|wants|to want} :: 私は…したかった
+V| {to buy|buying|bought|buys} :: 買うことを
+O| a {present|presents|presence|presented} :: プレゼントを
+P| {for|of|than|into} her. :: 彼女のために
+== 私は母にプレゼントを買いたかった。
+T| {On|In|At|Of} Saturday, :: 土曜日に
+S| I {went|goes|gone|going} :: 私は行った
+P| {to|at|on|of} a department store :: デパートへ
+P| {with|of|than|into} my sister. :: 姉と一緒に
+== 土曜日、私は姉と一緒にデパートへ行った。
+S| I {found|finds|finded|finding} :: 私は見つけた
+O| a {beautiful|beauty|beautifully|beauties} :: 美しい
+O| blue {scarf|scarves|scare|scarfs}. :: 青いスカーフを
+== 私は美しい青いスカーフを見つけた。
+M| But it {was|were|be|being} :: でもそれは…だった
+C| too {expensive|expense|expensively|expenses} :: 高すぎた
+P| {for|of|than|into} me. :: 私には
+== でも、それは私には高すぎた。
+S| I didn't {have|has|had|having} :: 私は持っていなかった
+O| {enough|enough of|than|very} money :: 十分なお金を
+R| {to buy|buying|bought|buys} it. :: それを買うのに
+== 私にはそれを買うのに十分なお金がなかった。
+S| My sister {said|say|saying|sayed}, :: 姉が言った
+M| "{Let's|Let|Lets|Let us to} :: 「…しよう
+V| {buy|buys|bought|buying} it together." :: 一緒に買おう」
+== 姉は「一緒に買おう」と言った。
+S| We {asked|asks|asking|askes} :: 私たちは頼んだ
+O| the {clerk|clerked|clerking|clerkly} :: 店員に
+R| {to wrap|wrap|wrapping|wrapped} it. :: それを包むように
+== 私たちは店員にそれを包んでくれるように頼んだ。
+T| {On|In|At|Of} Sunday, :: 日曜日に
+S| we {gave|gives|given|giving} :: 私たちは渡した
+O| {it|its|it's|they} :: それを
+P| {to|for|of|than} Mom. :: 母に
+== 日曜日、私たちはそれを母に渡した。
+S| She {smiled|smile|smiling|smiles} :: 母はほほえんだ
+V| and {hugged|hugging|hugger|huged} :: そして抱きしめた
+O| {us|we|our|ours} both. :: 私たち二人を
+== 母はほほえんで、私たち二人を抱きしめてくれた。
+?? 2 2 どこへ行った？
+?? 3 2 何色のスカーフを見つけた？
+?? 4 1 スカーフはどうだった？
+?? 6 2 姉は何と言った？
+
+@id beg41
+@lv 1
+@level 4
+@title At the Post Office
+@ja 郵便局で荷物を送る
+@tag 高校受験レベル・日記
+@gloss post office=郵便局, package=荷物, grandmother=祖母, counter=窓口, weigh=重さを量る, cost=(費用が)かかる, arrive=届く, stamp=切手
+T| {Today|Todays|Yesterday's|Tomorrow} :: 今日
+S| I {went|goes|gone|going} :: 私は行った
+P| {to|at|on|of} the post office. :: 郵便局へ
+== 今日、私は郵便局へ行った。
+S| I {wanted|wanting|wants|to want} :: 私は…したかった
+V| {to send|sending|sent|sends} :: 送ることを
+O| a {package|packages|packaged|packing} :: 荷物を
+P| {to|of|than|into} my grandmother. :: 祖母に
+== 私は祖母に荷物を送りたかった。
+P| {In|Into|Of|Than} the box, :: 箱の中には
+M| there {were|be|being|been} :: …があった
+O| some {cookies|cookie|cooked|cooky} :: クッキーと
+O| and a {letter|letters|later|latter}. :: 手紙が
+== 箱の中には、クッキーと手紙が入っていた。
+S| The woman {at|into|of|than} the counter :: 窓口の女性が
+V| {weighed|weight|weighing|weighs to} :: 量った
+O| the {box|boxed|boxer's|boxly}. :: 箱の重さを
+== 窓口の女性が箱の重さを量った。
+S| It {cost|costing|coast|to cost} :: …かかった
+O| 1,200 {yen|yens|yen's|yean} :: 1200円
+R| {to send|send|sends|sent} it. :: それを送るのに
+== それを送るのに1200円かかった。
+S| She {said|say|saying|sayed}, :: 彼女は言った
+V| "It will {arrive|arrives|arrived|arriving} :: 「届きます
+T| {in|on|at|than} two days." :: 2日後に」
+== 彼女は「2日後に届きます」と言った。
+S| I also {bought|buys|buying|buyed} :: 私は…も買った
+O| some {stamps|stamp|stump|stamped} :: 切手を
+P| {for|of|than|into} my letters. :: 手紙用に
+== 手紙用に切手も買った。
+S| I {hope|hopes|hoping|hoped to} :: 私は願う
+S| {Grandma|Grandmas|Grandma's|Grand} :: 祖母が
+V| {likes|like|liking|liked to} the cookies. :: クッキーを気に入る
+== 祖母がクッキーを気に入ってくれるといいな。
+S| I {will|wills|willing|was} :: 私は…するつもり
+V| {call|calls|called|calling} her :: 彼女に電話する
+T| {on|in|at|of} Monday. :: 月曜日に
+== 月曜日に祖母に電話しよう。
+?? 1 3 誰に荷物を送った？
+?? 2 2 箱には手紙と何が入っていた？
+?? 4 1 送るのにいくらかかった？
+?? 5 2 荷物はいつ届く？
+
+@id beg42
+@lv 1
+@level 4
+@title A Visit to the Fire Station
+@ja 消防署の見学
+@tag 高校受験レベル・日記
+@gloss fire station=消防署, firefighter=消防士, fire engine=消防車, driver's seat=運転席, hose=ホース, heavier=より重い, train=訓練する, careful=注意深い, uniform=制服
+T| {Today|Todays|Tomorrow|Yesterday's}, :: 今日
+S| our class {visited|visiting|visitor|visits to} :: クラスで訪れた
+O| the fire {station|stations|stationed|stationing} :: 消防署を
+P| {in|than|into|onto} our town. :: 町の
+== 今日、クラスで町の消防署を見学した。
+S| A {firefighter|firefight|firefighting|fire fight} :: 消防士が
+V| {showed|shown|showing|showes} us :: 私たちに見せた
+O| a big red fire {engine|engines|engined|engining}. :: 大きな赤い消防車を
+== 消防士が大きな赤い消防車を見せてくれた。
+S| I {sat|sitting|seat|sits} :: 私は座った
+P| {in|of|than|from} the driver's seat :: 運転席に
+T| {for|since|ago|than} a minute. :: 1分間
+== 私は1分間、運転席に座った。
+T| {Then|Than|Them|Then of} :: それから
+S| we {tried|tries|trying|tryed} :: 私たちはやってみた
+V| {to hold|held|holds|to holding} :: 持つことを
+O| a fire {hose|hoses|hosed|hosing}. :: 消防ホースを
+== それから、私たちは消防ホースを持ってみた。
+S| It {was|were|be|being} :: それは…だった
+C| much {heavier|heavy|heaviest|heavily} :: ずっと重かった
+P| {than|then|that|as} I thought. :: 思ったより
+== それは思っていたよりずっと重かった。
+S| The {firefighters|firefighter|firefighting|firefights} :: 消防士たちは
+V| {train|trains|training|trainer} :: 訓練する
+T| {every|ever|very|even} day :: 毎日
+R| {to help|helped|helps|to helping} people. :: 人を助けるために
+== 消防士たちは人々を助けるために毎日訓練している。
+S| One firefighter {said|say|saying|sayed}, :: 一人の消防士が言った
+V| "{Be|Are|Is|Been} careful :: 「気をつけて
+P| {with|than|into|onto} fire." :: 火に」
+== 一人の消防士が「火には気をつけて」と言った。
+S| Their {uniforms|uniform's|uniformly|uniformed} :: 彼らの制服は
+V| {looked|looks|looking|lookes} :: …に見えた
+C| very {cool|coolly|coolness|cools}. :: とてもかっこよく
+== 彼らの制服はとてもかっこよく見えた。
+S| I {want|wants|wanting|wanted to} :: 私は…したい
+V| {to be|be|being|been} :: …になることを
+O| a {firefighter|firefight|fire fighting|firefighters} :: 消防士に
+T| {in|on|at|of} the future. :: 将来
+== 私は将来、消防士になりたい。
+?? 1 2 消防士は何を見せてくれた？
+?? 2 1 どこに座った？
+?? 4 1 ホースはどうだった？
+?? 8 2 将来何になりたい？
+
+@id beg43
+@lv 1
+@level 4
+@title The Smiling Bus Driver
+@ja いつも笑顔の運転手
+@tag 高校受験レベル・物語文
+@gloss driver=運転手, passenger=乗客, rainy=雨の, umbrella=傘, wet=ぬれた, towel=タオル, smile=笑顔, thank=感謝する
+S| Mr. Tanaka {is|are|be|am} :: 田中さんは…だ
+C| a bus {driver|drive|driven|driving} :: バスの運転手
+P| {in|than|into|onto} our town. :: 私たちの町の
+== 田中さんは私たちの町のバスの運転手だ。
+S| He always {smiles|smile|smiling|smiler} :: 彼はいつもほほえむ
+V| and {says|say|saying|sayed} hello :: そしてあいさつする
+P| {to|than|of|into} his passengers. :: 乗客に
+== 彼はいつもほほえんで、乗客にあいさつする。
+T| One {rainy|rain|rains|raining} morning, :: ある雨の朝
+S| an {old|oldest|olds|oldly} woman :: 一人の老婦人が
+V| {got on|getting on|got of|gotten on} the bus. :: バスに乗った
+== ある雨の朝、一人のおばあさんがバスに乗ってきた。
+S| She {had|having|haves|to have} :: 彼女には
+O| {no|not|none|nor} umbrella :: 傘がなかった
+M| and {was|were|be|being} wet. :: ぬれていた
+== 彼女は傘を持っていなくて、ぬれていた。
+S| Mr. Tanaka {gave|given|giving|gived} her :: 田中さんは渡した
+O| a {towel|towels|toweled|towelly} :: タオルを
+P| {from|than|into|onto} his bag. :: 自分のかばんから
+== 田中さんは自分のかばんからタオルを出して、彼女に渡した。
+O| "Please {use|uses|using|used} this," :: 「これを使って」
+S| he {said|say|saying|sayed} :: 彼は言った
+P| {with|than|into|onto} a smile. :: 笑顔で
+== 「これを使ってください」と彼は笑顔で言った。
+S| The {woman|women|womans|woman's} :: その女性は
+V| was very {happy|happily|happiness|happier} :: とても喜んだ
+M| and {thanked|thanking|thankful|thanks to} him. :: お礼を言った
+== その女性はとても喜んで、彼にお礼を言った。
+T| The {next|nest|nexts|necks} day, :: 次の日
+S| she {brought|bringing|brings|bringed} :: 彼女は持ってきた
+O| a box {of|than|into|onto} cookies :: クッキーの箱を
+P| {for|than|into|onto} him. :: 彼のために
+== 次の日、彼女は彼のためにクッキーを一箱持ってきた。
+S| {Everyone|Every|Everyone's|Ever one} :: みんなが
+V| {loves|love|loving|lovely} :: 大好きだ
+O| Mr. {Tanaka's|Tanaka|Tanakas|Tanaka is} bus. :: 田中さんのバスが
+== みんな田中さんのバスが大好きだ。
+?? 3 1 女性には何がなかった？
+?? 4 1 田中さんは何を渡した？
+?? 5 2 田中さんはどんなふうに言った？
+?? 7 2 次の日、女性は何を持ってきた？
+
+@id beg44
+@lv 1
+@level 4
+@title The Flower Shop on Our Street
+@ja 通りの花屋さん
+@tag 高校受験レベル・説明文
+@gloss flower shop=花屋, colorful=色とりどりの, owner=店主, season=季節, tulip=チューリップ, sunflower=ヒマワリ, bouquet=花束, special=特別な
+M| There {is|are|be|am} :: …がある
+O| a small {flower|flowers|flowerly|flowring} shop :: 小さな花屋が
+P| {on|of|than|into} our street. :: 私たちの通りに
+== 私たちの通りに小さな花屋がある。
+S| The shop {is|are|be|am} :: 店は…だ
+C| full {of|than|into|onto} :: …でいっぱい
+O| {colorful|colorfully|colorfulness|colorfuls} flowers. :: 色とりどりの花で
+== 店は色とりどりの花でいっぱいだ。
+S| The {owner|own|owns|owned} :: 店主は
+V| {opens|open|opening|openes} the shop :: 店を開ける
+T| {at|on|in|of} eight :: 8時に
+T| {every|ever|very|even} morning. :: 毎朝
+== 店主は毎朝8時に店を開ける。
+S| She {gives|give|giving|given} water :: 彼女は水をやる
+P| {to|than|into|onto} the flowers :: 花に
+T| {first|ones|firsts|one's}. :: 最初に
+== 彼女はまず花に水をやる。
+S| You {can see|can sees|can saw|can seeing} :: 見ることができる
+O| {different|difference|differently|differ} flowers :: いろいろな花を
+T| {in|than|into|onto} each season. :: 季節ごとに
+== 季節ごとにいろいろな花が見られる。
+T| {In|On|At|Of} spring, :: 春には
+M| there {are|is|be|am} :: …がある
+O| many {tulips|tulip|tulip's|tulipes}. :: たくさんのチューリップが
+== 春にはたくさんのチューリップがある。
+T| {In|On|At|Of} summer, :: 夏には
+S| you {can buy|can buys|can bought|can buying} :: 買うことができる
+O| {sunflowers|sunflower|sunflowering|sunflowerly}. :: ヒマワリを
+== 夏にはヒマワリが買える。
+S| The owner also {makes|make|making|maked} :: 店主は…も作る
+O| {bouquets|bouquet|bouquet's|bouqueted} :: 花束を
+P| {for|than|into|onto} special days. :: 特別な日のために
+== 店主は特別な日のための花束も作る。
+S| {Flowers|Flower|Flower's|Flowering} :: 花は
+V| {make|makes|making|maked} people :: 人を…にする
+C| {happy|happily|happiness|happen}. :: 幸せに
+== 花は人を幸せにする。
+?? 2 2 店は何時に開く？
+?? 3 0 店主は最初に何をする？
+?? 5 2 春には何がある？
+?? 6 2 夏には何が買える？
+
+@id beg45
+@lv 1
+@level 4
+@title Lost in the Mall
+@ja モールで迷子
+@tag 高校受験レベル・物語文
+@gloss shopping mall=ショッピングモール, crowded=混雑した, toy store=おもちゃ屋, scared=怖がって, information desk=案内所, staff member=係の人, announcement=アナウンス, relieved=ほっとした
+T| When I {was|were|am|be} six, :: 6歳のとき
+S| my family {went|goes|gone|going} :: 家族が行った
+P| {to|at|on|of} a big shopping mall. :: 大きなモールへ
+== 6歳のとき、家族で大きなショッピングモールへ行った。
+S| It {was|were|be|being} :: そこは…だった
+C| very {crowded|crowd|crowds|crowding} :: とても混んで
+P| {with|than|into|onto} people. :: 人で
+== そこは人でとても混んでいた。
+S| I {saw|seen|seeing|sees} :: 私は見つけた
+O| a toy {store|stores|stored|storing} :: おもちゃ屋を
+M| and {ran|runs|running|runned} into it. :: 中に走り込んだ
+== 私はおもちゃ屋を見つけて、中に走って入った。
+T| When I {came|comes|coming|comed} out, :: 出てきたとき
+S| my {family|familiar|famous|familys} :: 家族は
+V| {was not|did not|not was|is not to} there. :: そこにいなかった
+== 出てきたとき、家族はそこにいなかった。
+S| I {was|were|be|being} :: 私は…だった
+C| {scared|scare|scares|scaring} :: 怖くて
+M| and {started|start|starts|starting} to cry. :: 泣き出した
+== 私は怖くなって泣き出した。
+S| A {kind|kindness|kinds|kinded} woman :: 親切な女性が
+V| {took|taken|taking|taked} me :: 私を連れて行った
+P| {to|than|of|onto} the information desk. :: 案内所へ
+== 親切な女性が私を案内所に連れて行ってくれた。
+S| A staff {member|members|remember|membered} :: 係の人が
+V| {made|makes|making|maked} :: した
+O| an {announcement|announce|announced|announcing}. :: アナウンスを
+== 係の人がアナウンスをした。
+T| {Soon|Soonly|Son|Sooner of}, :: すぐに
+S| my mother {came|come|comes|coming} :: 母が来た
+V| {running|run|ran|runs} :: 走って
+P| {to|than|of|onto} me. :: 私のところへ
+== すぐに母が私のところへ走ってきた。
+S| I {was|were|be|being} :: 私は…だった
+C| so {relieved|relief|relieve|relieving} :: とてもほっとした
+M| {and|than|nor|whom} hugged her. :: 母に抱きついた
+== 私はとてもほっとして、母に抱きついた。
+T| {Since|For|Ago|During} then, :: それ以来
+S| I always {stay|stays|staying|to stay} :: 私はいつもいる
+P| close {to|than|of|onto} my family. :: 家族のそばに
+== それ以来、私はいつも家族のそばにいる。
+?? 0 0 それは何歳のときのこと？
+?? 2 1 何を見つけて中に入った？
+?? 5 2 女性はどこへ連れて行ってくれた？
+?? 7 1 誰が走ってきた？
+
+@id beg46
+@lv 1
+@level 4
+@title My Bike Trip Around Town
+@ja 自転車で町めぐり
+@tag 高校受験レベル・ブログ
+@gloss ride=乗る(過去形rode), bike=自転車, weather=天気, along=…に沿って, path=小道, temple=寺, hill=丘, view=景色, tired=疲れた
+T| Last {Sunday|Sundays|Sunday's|Sun day}, :: 先週の日曜日
+S| I {rode|ridden|riding|rided} :: 私は乗った
+O| my {bike|biked|bake|bikeing} :: 自転車に
+P| {around|aground|round of|arounded} my town. :: 町じゅうを
+== 先週の日曜日、私は自転車で町をめぐった。
+S| The {weather|whether|weathers|wether} :: 天気は
+V| {was|were|be|being} :: …だった
+C| sunny {and|nor|than|whom} warm. :: 晴れて暖かかった
+== 天気は晴れて暖かかった。
+T| {First|Ones|Firsts|One's}, :: まず
+S| I {rode|ridden|riding|rided} :: 私は走った
+P| {along|alone|long|among} the river. :: 川に沿って
+== まず、私は川沿いを走った。
+M| There {was|were|be|been} :: …があった
+O| a nice {path|paths|pathed|pathing} :: すてきな道が
+P| {for|than|into|onto} bikes. :: 自転車用の
+== 自転車用のすてきな道があった。
+T| {Then|Than|Them|Thin} :: それから
+S| I {visited|visiting|visits|visitor} :: 私は訪れた
+O| an old {temple|temples|templed|tempel} :: 古いお寺を
+P| {on|than|of|onto} a hill. :: 丘の上の
+== それから、丘の上の古いお寺を訪れた。
+S| The {view|views|viewed|viewer's} :: 景色は
+P| {from|than|into|onto} the hill :: 丘からの
+V| was {beautiful|beauty|beautifully|beauties}. :: 美しかった
+== 丘からの景色は美しかった。
+S| I {ate|eaten|eating|eated} lunch :: 昼食を食べた
+P| {at|than|into|onto} a small café :: 小さなカフェで
+P| {near|nearly|nearby of|nears} the station. :: 駅の近くの
+== 駅の近くの小さなカフェで昼食を食べた。
+S| I {was|were|be|being} :: 私は…だった
+C| a little {tired|tire|tires|tiredly}, :: 少し疲れた
+M| {but|than|nor|whom} I had :: でも過ごした
+O| a {great|greatly|greatness|greats} time. :: 最高の時間を
+== 少し疲れたけれど、最高の時間を過ごした。
+T| Next {time|times|timed|timer}, :: 次は
+S| I want {to ride|riding|rode|rides} :: 乗って行きたい
+P| {to|than|of|onto} the sea! :: 海まで
+== 次は海まで自転車で行きたい！
+?? 1 2 天気はどうだった？
+?? 2 2 まずどこを走った？
+?? 4 2 何を訪れた？
+?? 6 1 どこで昼食を食べた？

@@ -14548,5 +14548,6213 @@
 "筆者にとって1日で最も有益なのはどんな時間？"
 ]
 ]
+},
+"beg8": {
+"level": 4,
+"title": "Ken's First Day at School",
+"list": [
+[
+"P:In April,=4月に | S:my little brother Ken=弟のケンは | V:started=始めた | O:elementary school.=小学校を",
+"4月に、弟のケンは小学校に入学した。"
+],
+[
+"S:He wore=彼は身につけた | O:a new blue backpack=新しい青いリュックを | T:that morning.=その朝",
+"その朝、彼は新しい青いリュックを背負った。"
+],
+[
+"P:On the way to school,=学校へ行く途中 | S:he held=彼は握った | O:my hand tightly.=私の手をぎゅっと",
+"学校へ行く途中、彼は私の手をぎゅっと握った。"
+],
+[
+"S:He looked=彼は…に見えた | C:a little nervous=少し緊張して | M:but also=でも同時に | C:excited.=わくわくして",
+"彼は少し緊張していたが、わくわくもしていた。"
+],
+[
+"P:At the school gate,=校門で | S:a kind teacher=優しい先生が | V:said,=言った | O:\"Welcome to our school!\"=「学校へようこそ」と",
+"校門で、優しい先生が「私たちの学校へようこそ！」と言った。"
+],
+[
+"S:Ken waved=ケンは手を振った | O:goodbye to me=私にさよならと | M:and went inside.=そして中へ入った",
+"ケンは私に手を振ってさよならを言い、中へ入っていった。"
+],
+[
+"T:After school,=放課後 | S:he ran=彼は走ってきた | P:to me=私のところへ | M:with a big smile.=大きな笑顔で",
+"放課後、彼は大きな笑顔で私のところへ走ってきた。"
+],
+[
+"X:\"I made=「ぼくは作った | O:a new friend!\"=新しい友だちを」 | S:he said.=と彼は言った",
+"「新しい友だちができたよ！」と彼は言った。"
+],
+[
+"S:I felt=私は感じた | C:very proud=とても誇らしく | P:of him.=彼のことを",
+"私は彼のことをとても誇らしく思った。"
+]
+],
+"q": [
+[
+1,
+1,
+"ケンはどんなリュックを背負っていた？"
+],
+[
+4,
+1,
+"校門でだれが迎えてくれた？"
+],
+[
+6,
+3,
+"放課後、ケンはどんな顔で走ってきた？"
+],
+[
+7,
+1,
+"ケンは学校で何ができた？"
+]
+]
+},
+"beg9": {
+"level": 4,
+"title": "Our New Puppy",
+"list": [
+[
+"T:Last Sunday,=この前の日曜日 | S:a new puppy came=新しい子犬が来た | P:to our house!=私たちの家に",
+"この前の日曜日、新しい子犬が家にやって来た！"
+],
+[
+"S:His name=彼の名前は | V:is Mochi=モチだ | R:because he is=彼は…だから | C:white and soft.=白くて柔らかい",
+"白くて柔らかいので、名前はモチだ。"
+],
+[
+"S:Mochi is=モチは…だ | C:very small and fluffy=小さくふわふわ | P:like a cotton ball.=綿のボールのよう",
+"モチはとても小さくてふわふわで、綿のボールみたいだ。"
+],
+[
+"S:He likes=彼は好きだ | O:playing=遊ぶことが | P:with my socks.=私の靴下で",
+"彼は私の靴下で遊ぶのが好きだ。"
+],
+[
+"T:Sometimes,=ときどき | S:he also chews=彼はかみもする | O:my dad's shoes!=父の靴を",
+"ときどき、彼は父の靴までかんでしまう！"
+],
+[
+"T:At night,=夜に | S:he barks=彼はほえる | M:a little=少し | R:because he is lonely.=さびしいので",
+"夜はさびしいので、彼は少しほえる。"
+],
+[
+"S:So I sleep=だから私は寝る | P:next to his bed=彼のベッドの横で | T:for a while.=しばらく",
+"だから私は、しばらく彼のベッドの横で寝る。"
+],
+[
+"T:Every morning,=毎朝 | S:we walk=私たちは歩く | P:in the park=公園を | M:with a red leash.=赤いリードで",
+"毎朝、私たちは赤いリードをつけて公園を散歩する。"
+],
+[
+"S:I want=私は…たい | O:to train him=彼をしつけ | M:well.=きちんと",
+"私は彼をきちんとしつけたい。"
+]
+],
+"q": [
+[
+1,
+1,
+"子犬の名前は？"
+],
+[
+3,
+2,
+"モチは何で遊ぶのが好き？"
+],
+[
+4,
+2,
+"モチはだれの靴をかむ？"
+],
+[
+7,
+3,
+"散歩のとき何をつける？"
+]
+]
+},
+"beg10": {
+"level": 4,
+"title": "Cleaning My Room",
+"list": [
+[
+"T:Today=今日 | S:my room was=私の部屋は | C:very messy.=とても散らかって",
+"今日、私の部屋はとても散らかっていた。"
+],
+[
+"S:Clothes and comics=服と漫画が | V:were=あった | P:all over the floor.=床じゅうに",
+"服と漫画が床じゅうに散らばっていた。"
+],
+[
+"S:My mother said,=母は言った | O:\"Clean your room=「部屋を片づけて | T:before dinner.\"=夕食の前に」と",
+"母が「夕食の前に部屋を片づけなさい」と言った。"
+],
+[
+"T:First,=まず | S:I picked up=私は拾い上げた | O:all my clothes.=服を全部",
+"まず、私は服を全部拾い上げた。"
+],
+[
+"T:Next,=次に | S:I put them=それらをしまった | P:into the closet.=クローゼットに",
+"次に、私はそれらをクローゼットにしまった。"
+],
+[
+"T:Then=それから | S:I threw away=私は捨てた | O:some old papers.=古い紙を何枚か",
+"それから、古い紙を何枚か捨てた。"
+],
+[
+"T:After that,=そのあと | S:I cleaned=私はきれいにした | O:the floor with=床を…で | O:a vacuum cleaner.=掃除機",
+"そのあと、私は掃除機で床をきれいにした。"
+],
+[
+"S:There was=…があった | O:a lot of dust=たくさんのほこりが | P:under my bed.=ベッドの下に",
+"ベッドの下にほこりがたくさんあった。"
+],
+[
+"T:At six o'clock,=6時に | S:my room was=私の部屋は | C:clean at last.=やっときれいに",
+"6時に、やっと部屋がきれいになった。"
+],
+[
+"S:My mother looked=母は…に見えた | C:happy,=うれしそう | M:and I felt good, too.=私も気分がよかった",
+"母はうれしそうで、私も気分がよかった。"
+]
+],
+"q": [
+[
+2,
+1,
+"母は何をしなさいと言った？"
+],
+[
+4,
+2,
+"服をどこにしまった？"
+],
+[
+7,
+1,
+"ベッドの下に何があった？"
+],
+[
+8,
+0,
+"何時に部屋がきれいになった？"
+]
+]
+},
+"beg11": {
+"level": 4,
+"title": "Grandpa's Birthday Party",
+"list": [
+[
+"S:Last Saturday=この前の土曜日は | V:was=…だった | C:my grandfather's 70th birthday.=祖父の70歳の誕生日",
+"この前の土曜日は、祖父の70歳の誕生日だった。"
+],
+[
+"S:Our whole family gathered=家族全員が集まった | P:at his house=彼の家に | R:for a party.=パーティーのため",
+"パーティーのため、家族全員が祖父の家に集まった。"
+],
+[
+"S:My cousins and I decorated=いとこと私は飾った | O:the room with=部屋を…で | O:colorful balloons.=カラフルな風船",
+"いとこたちと私は、カラフルな風船で部屋を飾った。"
+],
+[
+"S:My mother made=母は作った | O:a big cake=大きなケーキを | P:with many candles.=たくさんのろうそく付き",
+"母は、ろうそくをたくさん立てた大きなケーキを作った。"
+],
+[
+"T:When Grandpa came in,=祖父が入ると | S:we shouted,=私たちは叫んだ | O:\"Happy birthday!\"=「おめでとう！」と",
+"祖父が入ってきたとき、私たちは「お誕生日おめでとう！」と叫んだ。"
+],
+[
+"S:He was=彼は…だった | C:a little surprised=少し驚いて | M:but very happy.=でもとても喜んだ",
+"彼は少し驚いたが、とてもうれしそうだった。"
+],
+[
+"S:I gave him=私は彼にあげた | O:a picture=絵を | P:of our family.=私たち家族の",
+"私は彼に家族の絵をあげた。"
+],
+[
+"S:He said,=彼は言った | O:\"Thank you so much.=「本当にありがとう | X:I'll keep it forever.\"=ずっと大切にする」",
+"彼は「本当にありがとう。ずっと大切にするよ」と言った。"
+],
+[
+"S:It was=それは…だった | C:a wonderful day=すばらしい日 | P:for everyone.=みんなにとって",
+"みんなにとって、すばらしい一日だった。"
+]
+],
+"q": [
+[
+0,
+2,
+"何の誕生日だった？"
+],
+[
+2,
+2,
+"部屋を何で飾った？"
+],
+[
+6,
+1,
+"「私」は祖父に何をあげた？"
+],
+[
+7,
+2,
+"祖父は絵をどうすると言った？"
+]
+]
+},
+"beg12": {
+"level": 4,
+"title": "My Mother, the Nurse",
+"list": [
+[
+"S:My mother works=母は働いている | C:as a nurse=看護師として | P:at a big hospital.=大きな病院で",
+"母は大きな病院で看護師として働いている。"
+],
+[
+"S:Nurses take care of=看護師は世話をする | O:sick people=病気の人々の | P:in hospitals.=病院で",
+"看護師は病院で病気の人の世話をする。"
+],
+[
+"S:They check=彼らは測る | O:patients' temperatures=患者の体温を | M:and give them medicine.=そして薬をあげる",
+"彼らは患者の体温を測ったり、薬をあげたりする。"
+],
+[
+"S:They also listen=彼らはまた聞く | P:to patients=患者の話を | M:carefully.=注意深く",
+"彼らはまた、患者の話を注意深く聞く。"
+],
+[
+"S:My mother sometimes works=母はときどき働く | T:at night=夜に | R:because hospitals never close.=病院は閉まらないので",
+"病院は決して閉まらないので、母はときどき夜に働く。"
+],
+[
+"T:After a night shift,=夜勤のあと | S:she is=彼女は…だ | C:very tired.=とても疲れて",
+"夜勤のあと、母はとても疲れている。"
+],
+[
+"M:But she says,=でも彼女は言う | O:\"I love my job.=「仕事が大好き | X:Patients' smiles make me happy.\"=笑顔で幸せになる」",
+"でも母は「仕事が大好き。患者さんの笑顔で幸せになるの」と言う。"
+],
+[
+"S:I respect=私は尊敬している | O:my mother=母を | M:very much.=とても",
+"私は母をとても尊敬している。"
+],
+[
+"T:Someday,=いつか | S:I want=私は…たい | C:to be a nurse=看護師になり | M:like her.=母のように",
+"いつか、私も母のような看護師になりたい。"
+]
+],
+"q": [
+[
+0,
+2,
+"母はどこで働いている？"
+],
+[
+2,
+2,
+"看護師は患者に何をあげる？"
+],
+[
+4,
+2,
+"母が夜に働くことがあるのはなぜ？"
+],
+[
+6,
+2,
+"何が母を幸せにする？"
+]
+]
+},
+"beg13": {
+"level": 4,
+"title": "Sunday Pancakes",
+"list": [
+[
+"T:This morning,=今朝 | S:I got up=私は起きた | T:at eight.=8時に",
+"今朝、私は8時に起きた。"
+],
+[
+"S:It was=…だった | C:Sunday,=日曜日 | M:so I made=だから私は作った | O:breakfast for my family.=家族の朝食を",
+"日曜日だったので、私は家族の朝食を作った。"
+],
+[
+"S:I decided=私は決めた | O:to make=作ることに | O:pancakes.=パンケーキを",
+"私はパンケーキを作ることにした。"
+],
+[
+"S:I mixed=私は混ぜた | O:flour, eggs, and milk=粉と卵と牛乳を | P:in a big bowl.=大きなボウルで",
+"私は大きなボウルで小麦粉と卵と牛乳を混ぜた。"
+],
+[
+"T:Then=それから | S:I poured it=私はそれを注いだ | P:into a hot pan.=熱いフライパンに",
+"それから、それを熱いフライパンに流し入れた。"
+],
+[
+"S:The first pancake was=最初の1枚は | C:a little burned,=少しこげて | M:but the others were good.=でもほかはよかった",
+"最初の1枚は少しこげたが、ほかはうまく焼けた。"
+],
+[
+"S:My father put=父はかけた | O:honey=はちみつを | P:on his pancakes.=パンケーキに",
+"父はパンケーキにはちみつをかけた。"
+],
+[
+"S:My little sister said=妹は言った | M:with a big smile,=大きな笑顔で | O:\"This is delicious!\"=「おいしい！」と",
+"妹は満面の笑みで「これ、おいしい！」と言った。"
+],
+[
+"T:After breakfast,=朝食のあと | S:everyone helped=みんなが手伝った | O:me wash the dishes.=私の皿洗いを",
+"朝食のあと、みんなが皿洗いを手伝ってくれた。"
+],
+[
+"S:It was=それは…だった | C:a happy Sunday morning=幸せな日曜の朝 | P:for our family.=私たち家族にとって",
+"家族にとって幸せな日曜日の朝だった。"
+]
+],
+"q": [
+[
+0,
+2,
+"「私」は何時に起きた？"
+],
+[
+2,
+2,
+"何を作ることにした？"
+],
+[
+6,
+1,
+"父はパンケーキに何をかけた？"
+],
+[
+8,
+2,
+"朝食のあと、みんなで何をした？"
+]
+]
+},
+"beg14": {
+"level": 4,
+"title": "Our New House",
+"list": [
+[
+"T:Last month,=先月 | S:my family moved=私の家族は引っ越した | P:to a new house.=新しい家に",
+"先月、私の家族は新しい家に引っ越した。"
+],
+[
+"S:The new house was=新しい家は | C:bigger=より大きかった | P:than our old one.=前の家より",
+"新しい家は前の家より大きかった。"
+],
+[
+"S:It had=…があった | O:a small garden=小さな庭が | M:with a tree.=木のある",
+"その家には木のある小さな庭があった。"
+],
+[
+"T:On moving day,=引っ越しの日に | S:a big truck came=大きなトラックが来た | T:early in the morning.=朝早く",
+"引っ越しの日、朝早く大きなトラックが来た。"
+],
+[
+"S:We carried=私たちは運んだ | O:a lot of boxes=たくさんの箱を | P:into the house.=家の中へ",
+"私たちはたくさんの箱を家の中へ運んだ。"
+],
+[
+"S:I was=私は…だった | C:a little sad=少し悲しく | R:because I missed my old friends.=前の友達が恋しくて",
+"前の友だちが恋しくて、私は少し悲しかった。"
+],
+[
+"T:That evening,=その晩 | S:our neighbor=近所の人が | V:came over=やって来た | M:with some cookies.=クッキーを持って",
+"その晩、近所の人がクッキーを持ってやって来た。"
+],
+[
+"S:Her daughter Lisa=彼女の娘のリサは | V:was=…だった | C:about my age.=私と同じくらいの年",
+"彼女の娘のリサは、私と同じくらいの年だった。"
+],
+[
+"S:We became=私たちはなった | C:good friends=仲よしに | M:soon.=すぐに",
+"私たちはすぐに仲よしになった。"
+],
+[
+"T:Now=今では | S:I like=私は好きだ | O:my new town very much.=新しい町がとても",
+"今では、私は新しい町がとても好きだ。"
+]
+],
+"q": [
+[
+2,
+1,
+"新しい家には何があった？"
+],
+[
+5,
+2,
+"「私」が悲しかったのはなぜ？"
+],
+[
+6,
+3,
+"近所の人は何を持ってきた？"
+],
+[
+7,
+0,
+"近所の人の娘の名前は？"
+]
+]
+},
+"beg15": {
+"level": 4,
+"title": "Washing the Car with Dad",
+"list": [
+[
+"T:Today=今日 | S:I washed=私は洗った | O:the car with my father.=父と車を",
+"今日、私は父と車を洗った。"
+],
+[
+"T:Outside,=外は | S:it was=…だった | C:sunny and warm.=晴れて暖かい",
+"外は晴れていて暖かかった。"
+],
+[
+"T:First,=まず | S:we filled=私たちは満たした | O:a bucket with=バケツを…で | O:water and soap.=水と石けん",
+"まず、私たちはバケツに水と石けんを入れた。"
+],
+[
+"S:My father washed=父は洗った | O:the roof,=屋根を | M:and I washed the doors=私はドアを洗った | P:with a sponge.=スポンジで",
+"父は屋根を、私はスポンジでドアを洗った。"
+],
+[
+"S:The tires were=タイヤは…だった | C:very dirty,=とても汚れて | M:so we brushed them hard.=だから強くこすった",
+"タイヤはとても汚れていたので、強くこすった。"
+],
+[
+"T:Then=それから | S:my father used=父は使った | O:a hose=ホースを | R:to wash off the soap.=石けんを流すのに",
+"それから父はホースを使って石けんを洗い流した。"
+],
+[
+"M:Suddenly,=突然 | S:the water hit me=水が私に当たった | M:by mistake.=まちがって",
+"突然、水がまちがって私にかかった。"
+],
+[
+"S:I got=私はなった | C:wet=ぬれた状態に | M:from head to toe.=頭から足まで",
+"私は頭から足までびしょぬれになった。"
+],
+[
+"S:My father and I=父と私は | V:laughed=笑った | M:a lot.=たくさん",
+"父と私はたくさん笑った。"
+],
+[
+"T:In the end,=最後には | S:the car was=車は…だった | C:clean and shiny.=きれいでぴかぴか",
+"最後には、車はきれいでぴかぴかになった。"
+]
+],
+"q": [
+[
+0,
+2,
+"だれと車を洗った？"
+],
+[
+2,
+3,
+"バケツに何を入れた？"
+],
+[
+4,
+1,
+"タイヤはどうだった？"
+],
+[
+9,
+2,
+"最後に車はどうなった？"
+]
+]
+},
+"beg16": {
+"level": 4,
+"title": "A Letter to Aunt Emma",
+"list": [
+[
+"X:Dear Aunt Emma,=エマおばさんへ | X:how are you=お元気ですか | P:in Canada?=カナダで",
+"エマおばさんへ。カナダでお元気ですか？"
+],
+[
+"S:I am=私は…だ | C:fine,=元気だ | M:and my family is, too.=家族も元気だ",
+"私は元気で、家族も元気です。"
+],
+[
+"S:Thank you for=…をありがとう | O:your letter=あなたの手紙 | M:and the photos.=と写真",
+"お手紙と写真をありがとう。"
+],
+[
+"S:The snow in the photos=写真の雪は | V:was=…だった | C:beautiful.=美しかった",
+"写真の雪はとてもきれいでした。"
+],
+[
+"T:Here in Japan,=ここ日本では | S:it is=…だ | C:still warm.=まだ暖かい",
+"ここ日本は、まだ暖かいです。"
+],
+[
+"S:I have=私にはある | O:good news=よい知らせが | P:for you.=あなたへの",
+"あなたによい知らせがあります。"
+],
+[
+"S:My family will visit=家族は訪ねる | O:you in Canada=カナダのあなたを | T:next winter!=今度の冬に",
+"今度の冬、家族でカナダのあなたに会いに行きます！"
+],
+[
+"S:I want=私は…たい | O:to try skating=スケートをしてみ | P:with you.=あなたと",
+"あなたといっしょにスケートをしてみたいです。"
+],
+[
+"S:I can't wait=待ちきれない | R:to see you=あなたに会うのが | M:again.=また",
+"またあなたに会えるのが待ちきれません。"
+],
+[
+"X:Please say=どうか伝えて | O:hello=よろしくと | P:to Uncle Tom.=トムおじさんに",
+"トムおじさんによろしく伝えてください。"
+]
+],
+"q": [
+[
+2,
+1,
+"おばさんは何を送ってくれた？"
+],
+[
+4,
+2,
+"日本の天気はどう？"
+],
+[
+6,
+2,
+"家族はいつカナダへ行く？"
+],
+[
+7,
+1,
+"「私」はおばさんと何をしたい？"
+]
+]
+},
+"beg17": {
+"level": 4,
+"title": "Our Family Calendar",
+"list": [
+[
+"S:There is=…がある | O:a big calendar=大きなカレンダーが | P:in our kitchen.=台所に",
+"台所には大きなカレンダーがある。"
+],
+[
+"S:We write=私たちは書く | O:our plans=予定を | P:on it.=そこに",
+"私たちはそこに予定を書きこむ。"
+],
+[
+"S:Each person=それぞれの人が | V:uses=使う | O:a different color.=ちがう色を",
+"一人ひとりがちがう色を使う。"
+],
+[
+"S:My father's color is=父の色は | C:blue,=青 | M:and my mother's is red.=母のは赤だ",
+"父の色は青で、母の色は赤だ。"
+],
+[
+"S:My sister and I use=姉と私は使う | O:green=緑と | M:and yellow.=黄色を",
+"姉と私は緑と黄色を使う。"
+],
+[
+"M:With these colors,=この色のおかげで | S:we can see=私たちはわかる | O:who is busy=だれが忙しいか | T:quickly.=すぐに",
+"色のおかげで、だれが忙しいかすぐにわかる。"
+],
+[
+"T:Every morning,=毎朝 | S:my mother checks=母は確認する | O:the calendar.=カレンダーを",
+"毎朝、母はカレンダーを確認する。"
+],
+[
+"M:Because of the calendar,=カレンダーのおかげで | S:we don't forget=私たちは忘れない | O:important days.=大切な日を",
+"カレンダーのおかげで、大切な日を忘れない。"
+],
+[
+"S:A family calendar is=家族のカレンダーは | C:very useful=とても役に立つ | P:for busy families.=忙しい家族に",
+"家族のカレンダーは、忙しい家族にとても役に立つ。"
+]
+],
+"q": [
+[
+0,
+2,
+"カレンダーはどこにある？"
+],
+[
+3,
+1,
+"父の色は何色？"
+],
+[
+6,
+1,
+"毎朝カレンダーを確認するのはだれ？"
+],
+[
+7,
+2,
+"カレンダーのおかげで何を忘れない？"
+]
+]
+},
+"beg18": {
+"level": 4,
+"title": "Our School Trip to Nara",
+"list": [
+[
+"T:Today=今日 | S:our class went=私たちのクラスは行った | P:to Nara=奈良へ | R:on a school trip.=修学旅行で",
+"今日、私たちのクラスは修学旅行で奈良へ行った。"
+],
+[
+"T:In the morning,=午前中に | S:we visited=私たちは訪れた | O:a famous temple.=有名な寺を",
+"午前中、私たちは有名な寺を訪れた。"
+],
+[
+"S:There was=…があった | C:a huge statue=巨大な像が | P:of Buddha=仏の | P:inside the temple.=寺の中に",
+"寺の中には巨大な大仏があった。"
+],
+[
+"S:It=それは | V:was bigger=より大きかった | P:than I thought.=思っていたより",
+"それは思っていたより大きかった。"
+],
+[
+"T:After lunch,=昼食の後 | S:we walked=私たちは歩いた | P:around Nara Park.=奈良公園を回って",
+"昼食の後、私たちは奈良公園を歩いて回った。"
+],
+[
+"S:Many deer=たくさんのシカが | V:came=やって来た | P:up to us=私たちのそばに | R:for food.=食べ物を求めて",
+"たくさんのシカが食べ物を求めて私たちのそばに来た。"
+],
+[
+"S:One deer pushed=1頭のシカが押した | O:my bag=私のかばんを | M:with its head.=頭で",
+"1頭のシカが頭で私のかばんを押した。"
+],
+[
+"S:Everyone=みんなが | V:laughed=笑った | P:at the deer.=そのシカを見て",
+"みんながそのシカを見て笑った。"
+],
+[
+"T:In the evening,=夕方に | S:I bought=私は買った | O:souvenirs=おみやげを | P:for my family.=家族に",
+"夕方、私は家族におみやげを買った。"
+],
+[
+"S:It=それは | V:was=…だった | C:a wonderful day.=すばらしい日",
+"すばらしい一日だった。"
+]
+],
+"q": [
+[
+1,
+2,
+"午前中にどこを訪れた？"
+],
+[
+4,
+2,
+"昼食の後、どこを歩いて回った？"
+],
+[
+5,
+3,
+"シカは何を求めて来た？"
+],
+[
+8,
+3,
+"だれにおみやげを買った？"
+]
+]
+},
+"beg19": {
+"level": 4,
+"title": "My Favorite Teacher",
+"list": [
+[
+"S:I'd like=私は…したい | V:to talk=話すこと | P:about my favorite teacher.=好きな先生について",
+"私の大好きな先生についてお話ししたいと思います。"
+],
+[
+"S:Her name=彼女の名前は | V:is Ms. Tanaka,=田中先生です | C:our math teacher.=私たちの数学の先生",
+"彼女の名前は田中先生で、私たちの数学の先生です。"
+],
+[
+"M:At first,=最初は | S:I didn't like=私は好きでなかった | O:math very much.=数学があまり",
+"最初、私は数学があまり好きではありませんでした。"
+],
+[
+"S:She=彼女は | V:explained=説明した | O:everything=すべてを | M:clearly.=わかりやすく",
+"彼女はすべてをわかりやすく説明してくれました。"
+],
+[
+"S:She often=彼女はよく | V:told us=私たちに言った | O:funny jokes=おもしろい冗談を | P:in class.=授業中に",
+"彼女は授業中によくおもしろい冗談を言いました。"
+],
+[
+"M:Thanks to her,=彼女のおかげで | S:math became=数学はなった | C:my favorite subject.=好きな教科に",
+"彼女のおかげで、数学は私の好きな教科になりました。"
+],
+[
+"T:Last year,=去年 | S:I was worried=私は心配していた | P:about my future.=将来について",
+"去年、私は将来のことで悩んでいました。"
+],
+[
+"S:She listened=彼女は聞いた | P:to me=私の話を | M:and gave me=そしてくれた | O:good advice.=よい助言を",
+"彼女は私の話を聞いて、よいアドバイスをくれました。"
+],
+[
+"S:I respect=私は尊敬している | O:her=彼女を | M:very much.=とても",
+"私は彼女をとても尊敬しています。"
+],
+[
+"T:Someday,=いつか | S:I want=私は…したい | V:to be=…になること | C:a teacher like her.=彼女のような先生",
+"いつか、彼女のような先生になりたいです。"
+]
+],
+"q": [
+[
+1,
+2,
+"田中先生は何の先生？"
+],
+[
+3,
+3,
+"先生はどのように説明した？"
+],
+[
+7,
+3,
+"先生は何をくれた？"
+],
+[
+9,
+3,
+"いつか何になりたい？"
+]
+]
+},
+"beg20": {
+"level": 4,
+"title": "The Relay Race",
+"list": [
+[
+"T:Last October,=去年の10月 | S:Kenta's school had=ケンタの学校は行った | O:its sports day.=運動会を",
+"去年の10月、ケンタの学校で運動会があった。"
+],
+[
+"S:Kenta was=ケンタは…だった | C:the last runner=最後の走者 | P:in the relay.=リレーの",
+"ケンタはリレーのアンカーだった。"
+],
+[
+"T:Before the race,=レースの前 | S:he was=彼は…だった | C:very nervous.=とても緊張して",
+"レースの前、彼はとても緊張していた。"
+],
+[
+"T:During the race,=レース中に | S:a boy on his team=チームの男の子が | V:fell down.=転んだ",
+"レース中に、彼のチームの男の子が転んでしまった。"
+],
+[
+"S:Their team was=彼らのチームは | C:far behind=ずっと遅れて | P:the other teams.=ほかのチームより",
+"彼らのチームはほかのチームにずっと遅れていた。"
+],
+[
+"T:Then=そのとき | S:Kenta got=ケンタは受け取った | O:the baton.=バトンを",
+"そのとき、ケンタがバトンを受け取った。"
+],
+[
+"S:He ran=彼は走った | M:as fast=できるだけ速く | X:as he could.=できる限り",
+"彼はできるだけ速く走った。"
+],
+[
+"S:Everyone cheered=みんなが応援した | P:for him=彼を | M:loudly.=大きな声で",
+"みんなが大きな声で彼を応援した。"
+],
+[
+"S:He passed=彼は抜いた | O:two runners=2人の走者を | P:before the finish line.=ゴールの前で",
+"彼はゴールの前で2人の走者を抜いた。"
+],
+[
+"S:His teammates=チームの仲間は | V:were=…だった | C:very proud of him.=彼を誇りに",
+"チームの仲間たちは彼をとても誇りに思った。"
+]
+],
+"q": [
+[
+1,
+1,
+"ケンタはリレーで何番目の走者だった？"
+],
+[
+3,
+2,
+"レース中に男の子はどうなった？"
+],
+[
+8,
+1,
+"ケンタは何人を抜いた？"
+],
+[
+9,
+2,
+"仲間はケンタをどう思った？"
+]
+]
+},
+"beg21": {
+"level": 4,
+"title": "The Class Play",
+"list": [
+[
+"P:At the school festival,=文化祭で | S:Yui's class did=ユイのクラスはした | O:a play.=劇を",
+"文化祭で、ユイのクラスは劇をした。"
+],
+[
+"S:Yui got=ユイはもらった | O:the main role=主役を | P:in the play.=劇で",
+"ユイは劇の主役をもらった。"
+],
+[
+"S:She practiced=彼女は練習した | O:her lines=せりふを | T:every day.=毎日",
+"彼女は毎日せりふを練習した。"
+],
+[
+"T:On the day of the play,=劇の当日 | S:she was=彼女は…だった | C:so nervous=とても緊張して | R:that her hands shook.=手が震えるほど",
+"劇の当日、彼女は手が震えるほど緊張していた。"
+],
+[
+"P:On the stage,=舞台の上で | S:she forgot=彼女は忘れた | O:one line.=せりふを1つ",
+"舞台の上で、彼女はせりふを1つ忘れてしまった。"
+],
+[
+"S:Her friend Mika=友達のミカが | V:whispered=ささやいた | O:the line to her.=彼女にせりふを",
+"友達のミカが彼女にせりふをささやいた。"
+],
+[
+"S:Yui remembered=ユイは思い出した | O:it=それを | M:and continued.=そして続けた",
+"ユイはそれを思い出して、続けた。"
+],
+[
+"P:At the end,=最後に | S:the audience=観客は | V:clapped=拍手した | M:for a long time.=長いあいだ",
+"最後に、観客は長いあいだ拍手をした。"
+],
+[
+"S:Yui said=ユイは言った | P:to Mika,=ミカに | O:\"Thank you for your help.\"=助けてありがとう",
+"ユイはミカに「助けてくれてありがとう」と言った。"
+],
+[
+"S:It was=それは…だった | C:the best day=最高の日 | P:of her school life.=学校生活で",
+"それは彼女の学校生活でいちばんの日だった。"
+]
+],
+"q": [
+[
+1,
+1,
+"ユイは何の役をもらった？"
+],
+[
+4,
+2,
+"舞台でユイは何を忘れた？"
+],
+[
+5,
+0,
+"だれがせりふをささやいた？"
+],
+[
+7,
+2,
+"最後に観客はどうした？"
+]
+]
+},
+"beg22": {
+"level": 4,
+"title": "Lunch Time at Japanese Schools",
+"list": [
+[
+"P:In many Japanese schools,=多くの日本の学校で | S:students eat=生徒は食べる | O:school lunch=給食を | P:in their classroom.=教室で",
+"多くの日本の学校では、生徒は教室で給食を食べる。"
+],
+[
+"S:Students take turns=生徒は交代で | V:serving=配ることを | O:the food.=食べ物を",
+"生徒は交代で食べ物を配る。"
+],
+[
+"S:They wear=彼らは身につける | O:white aprons and caps=白いエプロンと帽子を | R:to keep the food clean.=食べ物を清潔に保つため",
+"彼らは食べ物を清潔に保つため、白いエプロンと帽子を身につける。"
+],
+[
+"S:A nutritionist=栄養士が | V:plans=考える | O:the menu=献立を | R:for each day.=毎日の",
+"栄養士が毎日の献立を考える。"
+],
+[
+"M:Usually,=ふだん | S:the meals are=食事は…だ | C:healthy and balanced.=健康的でバランスよい",
+"ふだん、食事は健康的でバランスがとれている。"
+],
+[
+"S:Everyone=みんなが | V:says \"Itadakimasu\"=「いただきます」と言う | M:together=いっしょに | T:before eating.=食べる前に",
+"みんなで食べる前に「いただきます」と言う。"
+],
+[
+"S:Students try=生徒は…しようとする | V:not to leave=残さないように | O:food on their plates.=皿に食べ物を",
+"生徒は皿に食べ物を残さないようにする。"
+],
+[
+"T:After lunch,=昼食の後 | S:they carry=彼らは運ぶ | O:the dishes=食器を | P:back to the kitchen.=調理室へ戻して",
+"昼食の後、生徒は食器を調理室へ運んで返す。"
+],
+[
+"S:School lunch teaches=給食は教える | O:children=子どもたちに | O:many things.=多くのことを",
+"給食は子どもたちに多くのことを教えてくれる。"
+]
+],
+"q": [
+[
+0,
+3,
+"生徒はどこで給食を食べる？"
+],
+[
+3,
+0,
+"だれが献立を考える？"
+],
+[
+5,
+3,
+"いつ「いただきます」と言う？"
+],
+[
+7,
+3,
+"食器をどこへ運ぶ？"
+]
+]
+},
+"beg23": {
+"level": 4,
+"title": "The Speech Contest",
+"list": [
+[
+"T:Today=今日 | S:I took part=私は参加した | P:in an English speech contest.=英語弁論大会に",
+"今日、私は英語スピーチコンテストに出た。"
+],
+[
+"S:The topic=テーマは | P:of my speech=私のスピーチの | V:was my grandmother.=祖母だった",
+"私のスピーチのテーマは祖母だった。"
+],
+[
+"S:I had practiced=私は練習していた | O:it=それを | T:for a month.=1か月間",
+"私は1か月間それを練習してきた。"
+],
+[
+"S:There were=…がいた | C:ten speakers=10人の発表者が | P:before me.=私の前に",
+"私の前に10人の発表者がいた。"
+],
+[
+"S:My heart=私の心臓は | V:was beating=鳴っていた | M:very fast.=とても速く",
+"心臓がとても速くドキドキしていた。"
+],
+[
+"S:I walked=私は歩いた | P:onto the stage=ステージに | M:and looked=そして見た | P:at the judges.=審査員を",
+"私はステージに上がり、審査員を見た。"
+],
+[
+"T:Then=それから | S:I spoke=私は話した | M:slowly=ゆっくりと | P:in a loud voice.=大きな声で",
+"それから、私は大きな声でゆっくり話した。"
+],
+[
+"T:After the contest,=コンテストの後 | S:a judge came=審査員が来た | P:to me.=私のところへ",
+"コンテストの後、審査員の一人が私のところに来た。"
+],
+[
+"S:She said,=彼女は言った | O:\"Your story=あなたの話は | V:was=…だった | C:beautiful.\"=すてき",
+"彼女は「あなたの話はすてきでした」と言った。"
+],
+[
+"S:I didn't win=私はとれなかった | O:a prize,=賞を | M:but I was happy.=でもうれしかった",
+"賞はとれなかったけれど、私はうれしかった。"
+]
+],
+"q": [
+[
+1,
+2,
+"スピーチのテーマは何だった？"
+],
+[
+2,
+2,
+"どのくらいの期間練習した？"
+],
+[
+3,
+1,
+"私の前に何人の発表者がいた？"
+],
+[
+8,
+3,
+"審査員は話をどう言った？"
+]
+]
+},
+"beg24": {
+"level": 4,
+"title": "A New Friend from Brazil",
+"list": [
+[
+"T:One morning,=ある朝 | S:a new student came=新しい生徒が来た | P:to our class.=私たちのクラスに",
+"ある朝、私たちのクラスに新しい生徒が来た。"
+],
+[
+"S:His name was Lucas,=名前はルーカス | M:and he was=そして彼は | P:from Brazil.=ブラジル出身",
+"彼の名前はルーカスで、ブラジル出身だった。"
+],
+[
+"S:He introduced=彼は紹介した | O:himself=自分を | P:in English.=英語で",
+"彼は英語で自己紹介をした。"
+],
+[
+"S:He could=彼は…できた | V:speak=話す | O:Portuguese.=ポルトガル語を",
+"彼はポルトガル語を話すことができた。"
+],
+[
+"M:At first,=最初は | S:he was=彼は…だった | C:very quiet.=とても静かで",
+"最初、彼はとても静かだった。"
+],
+[
+"T:During lunch break,=昼休みに | S:I asked him,=私は彼にたずねた | O:\"Do you like soccer?\"=サッカーは好き？",
+"昼休みに、私は彼に「サッカーは好き？」とたずねた。"
+],
+[
+"S:His face=彼の顔が | V:lit up=明るくなった | M:right away.=すぐに",
+"彼の顔はすぐにぱっと明るくなった。"
+],
+[
+"S:He said=彼は言った | M:with a big smile,=大きな笑顔で | O:\"Yes! I love it!\"=うん、大好き！",
+"彼は大きな笑顔で「うん、大好きだよ！」と言った。"
+],
+[
+"T:After school,=放課後 | S:we played=私たちはした | O:soccer together.=いっしょにサッカーを",
+"放課後、私たちはいっしょにサッカーをした。"
+],
+[
+"T:Now=今では | S:Lucas is=ルーカスは…だ | C:my best friend.=私の親友",
+"今では、ルーカスは私の親友だ。"
+]
+],
+"q": [
+[
+1,
+2,
+"ルーカスはどこの出身？"
+],
+[
+3,
+2,
+"ルーカスは何語を話せた？"
+],
+[
+5,
+2,
+"昼休みに何をたずねた？"
+],
+[
+8,
+2,
+"放課後に何をした？"
+]
+]
+},
+"beg25": {
+"level": 4,
+"title": "Cleaning Time at School",
+"list": [
+[
+"P:In Japan,=日本では | S:students clean=生徒はそうじする | O:their own school.=自分たちの学校を",
+"日本では、生徒が自分たちの学校をそうじする。"
+],
+[
+"T:Every day,=毎日 | S:they spend=彼らは使う | O:about fifteen minutes=約15分を | M:on cleaning.=そうじに",
+"毎日、生徒はそうじに約15分を使う。"
+],
+[
+"S:Some students sweep=掃く生徒もいる | O:the floor=床を | P:of the classroom.=教室の",
+"教室の床を掃く生徒もいる。"
+],
+[
+"S:Others=ほかの生徒は | V:wipe=ふく | O:the desks=机を | P:and the windows.=と窓を",
+"ほかの生徒は机と窓をふく。"
+],
+[
+"S:Some clean=そうじする者もいる | O:the hallways=廊下を | M:and the bathrooms.=とトイレを",
+"廊下やトイレをそうじする生徒もいる。"
+],
+[
+"S:They work=彼らは働く | P:in small groups=小さなグループで | M:with their teachers.=先生といっしょに",
+"生徒は先生といっしょに小さなグループで働く。"
+],
+[
+"S:Many foreign people=多くの外国人は | V:are surprised=驚く | P:at this.=これに",
+"多くの外国の人はこれに驚く。"
+],
+[
+"P:In some countries,=いくつかの国では | S:workers=作業員が | V:clean=そうじする | O:the schools.=学校を",
+"国によっては、作業員が学校をそうじする。"
+],
+[
+"S:Cleaning=そうじは | V:also teaches=…も教える | O:students responsibility.=生徒に責任を",
+"そうじは生徒に責任も教えてくれる。"
+],
+[
+"S:Students learn=生徒は学ぶ | O:to take care=大切にすることを | P:of things.=物を",
+"生徒は物を大切にすることを学ぶ。"
+]
+],
+"q": [
+[
+1,
+2,
+"毎日何分くらいそうじする？"
+],
+[
+3,
+2,
+"ほかの生徒は何をふく？"
+],
+[
+5,
+2,
+"生徒はだれといっしょに働く？"
+],
+[
+8,
+2,
+"そうじは生徒に何を教える？"
+]
+]
+},
+"beg26": {
+"level": 4,
+"title": "The Chorus Contest",
+"list": [
+[
+"T:In November,=11月に | S:Aoi's school held=アオイの学校は開いた | O:a chorus contest.=合唱コンクールを",
+"11月、アオイの学校で合唱コンクールが開かれた。"
+],
+[
+"S:Aoi was=アオイは…だった | C:the conductor=指揮者 | P:for her class.=クラスの",
+"アオイはクラスの指揮者だった。"
+],
+[
+"S:Some boys=一部の男子は | V:didn't practice=練習しなかった | M:seriously.=まじめに",
+"一部の男子はまじめに練習しなかった。"
+],
+[
+"S:Aoi felt=アオイは感じた | C:sad=悲しく | M:and a little angry.=そして少し腹立たしく",
+"アオイは悲しくて、少し腹が立った。"
+],
+[
+"T:One day,=ある日 | S:she said=彼女は言った | P:to the class,=クラスに | O:\"Let's sing together.\"=いっしょに歌おう",
+"ある日、彼女はクラスに「いっしょに歌おう」と言った。"
+],
+[
+"T:After that,=その後 | S:everyone practiced=みんなが練習した | M:harder=もっと一生懸命 | P:in the music room.=音楽室で",
+"その後、みんなは音楽室でもっと一生懸命練習した。"
+],
+[
+"T:On the day of the contest,=コンクール当日 | S:they sang=彼らは歌った | P:in the gym.=体育館で",
+"コンクール当日、彼らは体育館で歌った。"
+],
+[
+"S:Their voices=彼らの声は | V:were=…だった | C:beautiful.=美しかった",
+"彼らの声は美しかった。"
+],
+[
+"S:They won=彼らはとった | O:second prize=2位を | P:in the contest.=コンクールで",
+"彼らはコンクールで2位をとった。"
+],
+[
+"S:The boys said=男子たちは言った | P:to Aoi,=アオイに | O:\"You were a great conductor!\"=すごい指揮者だった",
+"男子たちはアオイに「君はすばらしい指揮者だったよ！」と言った。"
+]
+],
+"q": [
+[
+1,
+1,
+"アオイはクラスで何をした？"
+],
+[
+2,
+0,
+"だれがまじめに練習しなかった？"
+],
+[
+6,
+2,
+"どこで歌った？"
+],
+[
+8,
+1,
+"コンクールで何位だった？"
+]
+]
+},
+"beg27": {
+"level": 4,
+"title": "My Summer Homework",
+"list": [
+[
+"X:Hi, everyone!=みなさん、こんにちは | S:Summer vacation is=夏休みは…だ | V:almost over.=もうすぐ終わり",
+"みなさん、こんにちは！夏休みももうすぐ終わりです。"
+],
+[
+"S:Have you=あなたは…した？ | V:finished=終えた | O:your homework?=宿題を",
+"みなさんは宿題を終えましたか？"
+],
+[
+"M:Honestly,=正直に言うと | S:I still have=私はまだある | O:a lot of homework.=たくさんの宿題が",
+"正直に言うと、私にはまだたくさん宿題があります。"
+],
+[
+"P:In July,=7月に | S:I played=私は遊んだ | M:every day=毎日 | M:and did nothing else.=ほかは何もしなかった",
+"7月は毎日遊んで、ほかには何もしませんでした。"
+],
+[
+"S:I put off=私は先延ばしにした | O:my homework=宿題を | T:until August.=8月まで",
+"宿題を8月まで先延ばしにしてしまいました。"
+],
+[
+"T:Last week,=先週 | S:I wrote=私は書いた | O:a report=レポートを | P:about insects.=昆虫について",
+"先週、昆虫についてのレポートを書きました。"
+],
+[
+"T:Yesterday,=きのう | S:I finished=私は終えた | O:all the math worksheets.=数学のプリント全部を",
+"きのう、数学のプリントを全部終わらせました。"
+],
+[
+"S:I haven't written=私は書いていない | O:my diary=日記を | T:yet.=まだ",
+"日記はまだ書いていません。"
+],
+[
+"S:I have to=私は…しなければ | V:write=書く | O:about thirty days!=約30日分を",
+"約30日分を書かなければなりません！"
+],
+[
+"T:Next year,=来年は | S:I will make=私は立てる | O:a better plan.=もっとよい計画を",
+"来年は、もっとよい計画を立てます。"
+]
+],
+"q": [
+[
+3,
+1,
+"7月は毎日何をしていた？"
+],
+[
+5,
+3,
+"何についてのレポートを書いた？"
+],
+[
+6,
+2,
+"きのう何を終えた？"
+],
+[
+7,
+1,
+"まだ書いていないものは何？"
+]
+]
+},
+"beg28": {
+"level": 4,
+"title": "Camping with Friends",
+"list": [
+[
+"T:Last weekend,=先週末 | S:I went=私は行った | O:camping=キャンプに | P:with my friends.=友だちと",
+"先週末、私は友だちとキャンプに行った。"
+],
+[
+"S:We put up=私たちは張った | O:a big tent=大きなテントを | P:near a river.=川の近くに",
+"私たちは川の近くに大きなテントを張った。"
+],
+[
+"T:In the evening,=夕方に | S:Ken cooked=ケンは作った | O:curry for us.=私たちにカレーを",
+"夕方、ケンが私たちにカレーを作ってくれた。"
+],
+[
+"S:The curry=カレーは | V:tasted=味がした | C:really good.=とてもよい",
+"カレーはとてもおいしかった。"
+],
+[
+"T:After dinner,=夕食のあと | S:we looked=私たちは見た | P:at the stars.=星を",
+"夕食のあと、私たちは星を見た。"
+],
+[
+"S:There were=…があった | O:so many stars=とても多くの星が | P:in the sky.=空に",
+"空にはとてもたくさんの星があった。"
+],
+[
+"T:At night,=夜は | S:it got=…になった | C:very cold.=とても寒く",
+"夜はとても寒くなった。"
+],
+[
+"S:We talked=私たちは話した | M:until late=遅くまで | P:in the tent.=テントの中で",
+"私たちはテントの中で遅くまで話した。"
+],
+[
+"S:It was=それは…だった | C:a wonderful day=すばらしい日 | P:for me.=私にとって",
+"私にとってすばらしい一日だった。"
+]
+],
+"q": [
+[
+0,
+3,
+"誰とキャンプに行った？"
+],
+[
+1,
+2,
+"テントをどこに張った？"
+],
+[
+2,
+1,
+"誰がカレーを作った？"
+],
+[
+6,
+2,
+"夜はどうなった？"
+]
+]
+},
+"beg29": {
+"level": 4,
+"title": "A Rainy Sunday",
+"list": [
+[
+"T:On Sunday,=日曜日に | S:it rained=雨が降った | M:all day.=一日中",
+"日曜日は一日中雨が降った。"
+],
+[
+"S:Yuki and her brother=ユキと弟は | V:couldn't=…できなかった | V:play outside.=外で遊ぶ",
+"ユキと弟は外で遊べなかった。"
+],
+[
+"O:\"I'm so bored,\"=「すごく退屈」と | V:said=言った | S:her little brother.=弟が",
+"「すごく退屈だよ」と弟は言った。"
+],
+[
+"T:Then=そのとき | S:Yuki had=ユキは持った | O:a good idea.=いい考えを",
+"そのとき、ユキにいい考えが浮かんだ。"
+],
+[
+"S:They made=二人は作った | O:a small house=小さな家を | P:with boxes and blankets.=箱と毛布で",
+"二人は箱と毛布で小さな家を作った。"
+],
+[
+"P:Inside the house,=家の中で | S:they read=二人は読んだ | O:picture books=絵本を | P:with a flashlight.=懐中電灯で",
+"家の中で、二人は懐中電灯で絵本を読んだ。"
+],
+[
+"T:Later,=あとで | S:they played=二人はした | O:a card game=カードゲームを | P:with their mother.=お母さんと",
+"あとで、二人はお母さんとカードゲームをした。"
+],
+[
+"S:Mother won=お母さんは勝った | M:three times,=3回 | M:but Yuki won=でもユキが勝った | O:the last game.=最後の試合に",
+"お母さんが3回勝ったが、最後の試合はユキが勝った。"
+],
+[
+"S:\"Rainy days are=「雨の日は | C:fun too!\"=楽しくもある」と | V:said her brother.=弟は言った",
+"「雨の日も楽しいね！」と弟は言った。"
+]
+],
+"q": [
+[
+0,
+2,
+"雨はどのくらい降った？"
+],
+[
+4,
+2,
+"二人は何で家を作った？"
+],
+[
+5,
+3,
+"何を使って絵本を読んだ？"
+],
+[
+7,
+3,
+"ユキはどの試合に勝った？"
+]
+]
+},
+"beg30": {
+"level": 4,
+"title": "A Surprise for Mika",
+"list": [
+[
+"S:Mika's birthday=ミカの誕生日は | V:was=…だった | T:on Friday.=金曜日",
+"ミカの誕生日は金曜日だった。"
+],
+[
+"S:Her friends=彼女の友だちは | V:decided=決めた | O:to have a party=パーティーを開くと | M:for her.=彼女のために",
+"友だちは彼女のためにパーティーを開くことにした。"
+],
+[
+"S:They kept=彼らはしておいた | O:it a secret=それを秘密に | P:from Mika.=ミカには",
+"彼らはミカにはそれを秘密にしておいた。"
+],
+[
+"P:On Friday evening,=金曜日の夕方 | S:Aya asked Mika=アヤはミカに頼んだ | O:to come to her house.=家に来るように",
+"金曜日の夕方、アヤはミカに家へ来るよう頼んだ。"
+],
+[
+"M:When Mika opened the door,=ドアを開けると | S:everyone shouted=みんなが叫んだ | O:\"Surprise!\"=「サプライズ！」と",
+"ミカがドアを開けると、みんなが「サプライズ！」と叫んだ。"
+],
+[
+"S:Mika was=ミカは…だった | C:very surprised=とても驚いて | M:at first.=最初は",
+"ミカは最初、とても驚いた。"
+],
+[
+"P:On the table,=テーブルの上に | S:there was=…があった | O:a big cake=大きなケーキが | P:with candles.=ろうそくのついた",
+"テーブルの上には、ろうそくのついた大きなケーキがあった。"
+],
+[
+"S:Her friends sang=友だちは歌った | O:a birthday song=誕生日の歌を | P:for her.=彼女のために",
+"友だちは彼女のために誕生日の歌を歌った。"
+],
+[
+"S:Mika blew out=ミカは吹き消した | O:all the candles=ろうそくを全部 | M:at once.=一度に",
+"ミカはろうそくを全部一度に吹き消した。"
+],
+[
+"S:\"This is the best=「これは最高の | O:birthday ever!\"=今までの誕生日」と | V:she said.=彼女は言った",
+"「今までで最高の誕生日！」と彼女は言った。"
+]
+],
+"q": [
+[
+0,
+2,
+"ミカの誕生日は何曜日？"
+],
+[
+3,
+2,
+"アヤはミカに何を頼んだ？"
+],
+[
+6,
+3,
+"ケーキには何がついていた？"
+],
+[
+8,
+2,
+"ろうそくをどのように吹き消した？"
+]
+]
+},
+"beg31": {
+"level": 4,
+"title": "Playing Catch",
+"list": [
+[
+"T:This morning,=今朝 | S:I went=私は行った | P:to the park=公園へ | P:with my father.=父と",
+"今朝、私は父と公園に行った。"
+],
+[
+"S:We played=私たちはした | O:catch=キャッチボールを | P:for an hour.=1時間",
+"私たちは1時間キャッチボールをした。"
+],
+[
+"T:At first,=最初は | S:my father threw=父は投げた | O:the ball very high.=ボールをとても高く",
+"最初、父はボールをとても高く投げた。"
+],
+[
+"S:I couldn't=私は…できなかった | V:catch it=それを捕る | M:well.=うまく",
+"私はうまく捕れなかった。"
+],
+[
+"S:He said,=彼は言った | O:\"Watch the ball=「ボールを見て | M:carefully.\"=よく」と",
+"彼は「ボールをよく見て」と言った。"
+],
+[
+"S:I tried=私はやってみた | M:again=もう一度 | M:and caught the ball!=そしてボールを捕った",
+"もう一度やってみたら、ボールを捕れた！"
+],
+[
+"S:My father was=父は…だった | C:very happy=とてもうれしい | M:too.=…も",
+"父もとてもうれしそうだった。"
+],
+[
+"T:After that,=そのあと | S:we drank=私たちは飲んだ | O:cold juice=冷たいジュースを | P:on a bench.=ベンチで",
+"そのあと、私たちはベンチで冷たいジュースを飲んだ。"
+],
+[
+"S:I want=私は…したい | O:to play again=また遊ぶこと | T:next Sunday.=次の日曜日に",
+"次の日曜日もまたやりたい。"
+]
+],
+"q": [
+[
+0,
+3,
+"誰と公園に行った？"
+],
+[
+1,
+2,
+"どのくらいキャッチボールをした？"
+],
+[
+4,
+1,
+"父は何を見るように言った？"
+],
+[
+7,
+3,
+"どこでジュースを飲んだ？"
+]
+]
+},
+"beg32": {
+"level": 4,
+"title": "My Friend's Rabbit",
+"list": [
+[
+"S:My friend Saki has=友だちのサキは飼う | O:a pet rabbit=ペットのウサギを | M:named Momo.=モモという名の",
+"友だちのサキはモモという名のウサギを飼っている。"
+],
+[
+"T:Yesterday,=きのう | S:I visited=私は訪ねた | O:her house=彼女の家を | R:to see Momo.=モモに会いに",
+"きのう、モモに会いにサキの家へ行った。"
+],
+[
+"S:Momo is=モモは…だ | C:white and very small=白くてとても小さい | M:with long ears.=長い耳の",
+"モモは白くてとても小さく、耳が長い。"
+],
+[
+"S:She likes=彼女は好きだ | O:eating carrots=にんじんを食べるのが | M:very much.=とても",
+"モモはにんじんを食べるのが大好きだ。"
+],
+[
+"S:Saki gave me=サキは私にくれた | O:a piece of carrot=にんじん1切れを | M:for Momo.=モモ用に",
+"サキがモモ用のにんじんを1切れくれた。"
+],
+[
+"S:Momo ate it=モモはそれを食べた | P:from my hand=私の手から | M:quickly.=すばやく",
+"モモは私の手からそれをすばやく食べた。"
+],
+[
+"S:Her fur=彼女の毛は | V:was=…だった | C:soft=やわらかい | M:and warm.=そして温かい",
+"モモの毛はやわらかくて温かかった。"
+],
+[
+"S:Saki told me,=サキは私に言った | O:\"Rabbits=「ウサギは | V:need=必要とする | O:a quiet place.\"=静かな場所を」と",
+"サキは「ウサギには静かな場所が必要なの」と教えてくれた。"
+],
+[
+"S:I want=私は…したい | V:to have a rabbit=ウサギを飼う | T:someday.=いつか",
+"私もいつかウサギを飼いたい。"
+]
+],
+"q": [
+[
+0,
+2,
+"ウサギの名前は？"
+],
+[
+3,
+1,
+"モモは何を食べるのが好き？"
+],
+[
+6,
+2,
+"モモの毛はどんな手ざわりだった？"
+],
+[
+7,
+3,
+"ウサギには何が必要？"
+]
+]
+},
+"beg33": {
+"level": 4,
+"title": "Our Snowman",
+"list": [
+[
+"T:Last night,=昨夜 | S:it snowed=雪が降った | M:a lot.=たくさん",
+"昨夜、雪がたくさん降った。"
+],
+[
+"T:This morning,=今朝 | S:the garden was=庭は…だった | C:all white.=真っ白",
+"今朝、庭は真っ白だった。"
+],
+[
+"S:My sister and I made=妹と私は作った | O:a big snowman=大きな雪だるまを | P:in the garden.=庭で",
+"妹と私は庭で大きな雪だるまを作った。"
+],
+[
+"T:First,=まず | S:we rolled=私たちは転がした | O:two snowballs.=雪玉を2つ",
+"まず、私たちは雪玉を2つ転がした。"
+],
+[
+"S:My sister put=妹はのせた | O:the small one=小さいほうを | P:on the big one.=大きいほうの上に",
+"妹が小さいほうを大きいほうの上にのせた。"
+],
+[
+"S:I used=私は使った | O:two stones=石を2つ | R:for its eyes.=目のために",
+"私は目に石を2つ使った。"
+],
+[
+"S:My sister found=妹は見つけた | O:a carrot=にんじんを | R:for its nose.=鼻用に",
+"妹は鼻にするにんじんを見つけてきた。"
+],
+[
+"S:Our snowman looked=雪だるまは見えた | C:very funny=とてもおもしろく | M:and cute.=そしてかわいく",
+"私たちの雪だるまは、とてもおもしろくてかわいかった。"
+],
+[
+"S:Mom took=お母さんは撮った | O:a picture=写真を | P:of us=私たちの | M:with it.=それといっしょの",
+"お母さんが雪だるまといっしょの私たちの写真を撮ってくれた。"
+]
+],
+"q": [
+[
+2,
+1,
+"二人は何を作った？"
+],
+[
+5,
+1,
+"目には何を使った？"
+],
+[
+6,
+1,
+"鼻には何を使った？"
+],
+[
+8,
+0,
+"誰が写真を撮った？"
+]
+]
+},
+"beg34": {
+"level": 4,
+"title": "A Day at the Zoo",
+"list": [
+[
+"T:Today,=今日 | S:my class went=私のクラスは行った | P:to the zoo.=動物園へ",
+"今日、私のクラスは動物園に行った。"
+],
+[
+"T:First,=最初に | S:we saw=私たちは見た | O:two big elephants.=大きなゾウを2頭",
+"最初に、私たちは大きなゾウを2頭見た。"
+],
+[
+"S:One elephant was=1頭は…していた | V:drinking water=水を飲んで | P:with its long nose.=長い鼻で",
+"1頭が長い鼻で水を飲んでいた。"
+],
+[
+"T:Next,=次に | S:we went=私たちは行った | P:to the monkey area.=サルのエリアへ",
+"次に、私たちはサルのエリアへ行った。"
+],
+[
+"S:The monkeys were=サルたちは…していた | V:jumping=跳びはねて | P:from tree to tree.=木から木へ",
+"サルたちは木から木へ跳びはねていた。"
+],
+[
+"S:My friend Rina laughed=友だちのリナは笑った | M:a lot=たくさん | P:at them.=彼らを見て",
+"友だちのリナはサルたちを見てたくさん笑った。"
+],
+[
+"P:At noon,=正午に | S:we ate lunch=私たちは昼食を食べた | P:near the lion area.=ライオンの所の近くで",
+"正午に、私たちはライオンのエリアの近くで昼食を食べた。"
+],
+[
+"S:The lion was=ライオンは…していた | V:sleeping=眠って | P:under a big tree.=大きな木の下で",
+"ライオンは大きな木の下で眠っていた。"
+],
+[
+"S:I want=私は…したい | V:to go there=そこに行く | M:again.=もう一度",
+"またそこに行きたい。"
+]
+],
+"q": [
+[
+1,
+2,
+"最初に何を見た？"
+],
+[
+2,
+2,
+"ゾウは何を使って水を飲んでいた？"
+],
+[
+6,
+2,
+"どこで昼食を食べた？"
+],
+[
+7,
+2,
+"ライオンはどこで寝ていた？"
+]
+]
+},
+"beg35": {
+"level": 4,
+"title": "The Flying Kite",
+"list": [
+[
+"S:Taro had=タロウは持っていた | O:a new red kite=新しい赤いたこを | M:from his grandfather.=祖父からの",
+"タロウはおじいさんからもらった新しい赤いたこを持っていた。"
+],
+[
+"T:One windy day,=ある風の強い日 | S:he went=彼は行った | P:to the hill=丘へ | R:to fly it.=それをあげに",
+"ある風の強い日、彼はたこをあげに丘へ行った。"
+],
+[
+"S:The kite went=たこは行った | M:up=上へ | M:high=高く | P:in the sky.=空に",
+"たこは空高く上がった。"
+],
+[
+"M:Suddenly,=突然 | S:a strong wind blew=強い風が吹いた | M:and the string broke.=そしてひもが切れた",
+"突然強い風が吹いて、ひもが切れた。"
+],
+[
+"S:The kite flew=たこは飛んだ | M:away=遠くへ | P:over the trees.=木々の上を",
+"たこは木々の上を越えて飛んでいってしまった。"
+],
+[
+"S:Taro ran after it,=タロウは追いかけた | M:but he couldn't=でもできなかった | V:catch it.=それを捕まえる",
+"タロウは追いかけたが、捕まえられなかった。"
+],
+[
+"S:He felt=彼は感じた | C:very sad=とても悲しく | M:and went home.=そして家に帰った",
+"彼はとても悲しくなって、家に帰った。"
+],
+[
+"T:The next day,=次の日 | S:a girl came=女の子が来た | P:to his house.=彼の家に",
+"次の日、女の子が彼の家にやって来た。"
+],
+[
+"S:She was=彼女は…していた | V:holding=持って | O:his red kite!=彼の赤いたこを",
+"彼女は彼の赤いたこを持っていた！"
+],
+[
+"S:Taro was=タロウは…だった | C:very happy=とてもうれしく | M:and thanked her.=彼女に礼を言った",
+"タロウはとても喜んで、彼女にお礼を言った。"
+]
+],
+"q": [
+[
+0,
+2,
+"たこは誰からもらった？"
+],
+[
+1,
+3,
+"何をしに丘へ行った？"
+],
+[
+4,
+2,
+"たこはどこを飛んでいった？"
+],
+[
+7,
+1,
+"次の日、誰が来た？"
+]
+]
+},
+"beg36": {
+"level": 4,
+"title": "Homework First",
+"list": [
+[
+"S:Many students=多くの生徒は | V:like=好きだ | O:playing video games.=テレビゲームをするのが",
+"多くの生徒はテレビゲームをするのが好きだ。"
+],
+[
+"S:I like=私は好きだ | O:them,=それらが | M:too.=…も",
+"私もゲームが好きだ。"
+],
+[
+"M:But I think=でも私は思う | O:homework should come=宿題が来るべきだと | M:first.=最初に",
+"でも、宿題を先にするべきだと思う。"
+],
+[
+"M:If you play games first,=先にゲームをすると | S:you may=…かもしれない | V:forget your homework.=宿題を忘れる",
+"先にゲームをすると、宿題を忘れるかもしれない。"
+],
+[
+"M:Also,=また | S:you will=あなたは…だろう | V:feel=感じる | C:too tired to study.=疲れて勉強できない",
+"また、疲れすぎて勉強できなくなるだろう。"
+],
+[
+"M:When I finish my homework,=宿題を終えると | S:I feel=私は感じる | C:relaxed.=ほっとして",
+"宿題を終えると、私はほっとする。"
+],
+[
+"T:Then=そうすれば | S:I can enjoy=私は楽しめる | O:games more.=ゲームをもっと",
+"そうすれば、もっとゲームを楽しめる。"
+],
+[
+"S:My parents=両親も | V:are=…だ | C:happy, too.=うれしい",
+"両親も喜んでくれる。"
+],
+[
+"M:So I say,=だから私は言う | O:\"Homework first,=「宿題が先 | O:games later!\"=ゲームはあと」と",
+"だから私は言いたい。「宿題が先、ゲームはあとで！」"
+]
+],
+"q": [
+[
+0,
+2,
+"多くの生徒は何をするのが好き？"
+],
+[
+3,
+2,
+"先にゲームをすると何を忘れるかもしれない？"
+],
+[
+5,
+2,
+"宿題を終えるとどう感じる？"
+],
+[
+8,
+1,
+"筆者は何を先にすべきと言っている？"
+]
+]
+},
+"beg37": {
+"level": 4,
+"title": "Summer Fireworks",
+"list": [
+[
+"T:Last Saturday,=先週の土曜日 | S:I went=私は行った | P:to a fireworks festival.=花火大会に",
+"先週の土曜日、私は花火大会に行った。"
+],
+[
+"S:I wore=私は着た | O:a blue yukata=青いゆかたを | M:for the first time.=初めて",
+"私は初めて青いゆかたを着た。"
+],
+[
+"S:There were=…がいた | O:a lot of people=たくさんの人が | P:by the river.=川のそばに",
+"川のそばにはたくさんの人がいた。"
+],
+[
+"S:My family sat=家族は座った | P:on a big mat=大きなシートに | M:and waited.=そして待った",
+"家族は大きなシートに座って待った。"
+],
+[
+"P:At seven,=7時に | S:the first firework=最初の花火が | V:went up.=上がった",
+"7時に、最初の花火が上がった。"
+],
+[
+"S:It was=それは…だった | C:very beautiful=とても美しく | M:and loud.=そして音が大きい",
+"それはとても美しく、音も大きかった。"
+],
+[
+"S:My little sister was=妹は…だった | C:scared=こわがって | P:at first.=最初は",
+"妹は最初こわがっていた。"
+],
+[
+"T:But soon=でもすぐに | S:she started=彼女は始めた | O:to clap her hands.=手をたたくことを",
+"でもすぐに、妹は手をたたき始めた。"
+],
+[
+"S:The fireworks show=花火大会は | V:lasted=続いた | P:for an hour.=1時間",
+"花火大会は1時間続いた。"
+],
+[
+"S:I want=私は…したい | V:to go again=また行く | T:next summer.=来年の夏に",
+"来年の夏もまた行きたい。"
+]
+],
+"q": [
+[
+1,
+1,
+"筆者は何を着た？"
+],
+[
+4,
+0,
+"最初の花火は何時に上がった？"
+],
+[
+6,
+1,
+"妹は最初どんな様子だった？"
+],
+[
+8,
+2,
+"花火大会はどのくらい続いた？"
+]
+]
+},
+"beg38": {
+"level": 4,
+"title": "The Station Near My House",
+"list": [
+[
+"M:There is=…がある | O:a small station=小さな駅が | P:near my house.=家の近くに",
+"私の家の近くに小さな駅がある。"
+],
+[
+"S:It takes=…かかる | O:only five minutes=たった5分 | R:to walk there.=歩いて行くのに",
+"そこまで歩いてたった5分しかかからない。"
+],
+[
+"S:The station has=駅にはある | O:two platforms=2つのホームが | O:and one ticket gate.=改札が1つ",
+"その駅にはホームが2つと改札が1つある。"
+],
+[
+"T:In the morning,=朝は | S:it is very crowded=とても混んでいる | P:with students and workers.=学生や会社員で",
+"朝は学生や会社員でとても混んでいる。"
+],
+[
+"S:Trains come=電車が来る | T:every ten minutes,=10分ごとに | M:so it is convenient.=だから便利だ",
+"電車は10分ごとに来るので、便利だ。"
+],
+[
+"S:A kind man=親切な男性が | V:works=働いている | P:at the gate.=改札で",
+"改札では親切な男性が働いている。"
+],
+[
+"S:He always says=彼はいつも言う | O:\"Good morning\"=「おはよう」と | P:to everyone.=みんなに",
+"彼はいつもみんなに「おはよう」と言う。"
+],
+[
+"S:You can hear=聞くことができる | O:announcements=アナウンスを | P:in English, too.=英語でも",
+"英語のアナウンスも聞くことができる。"
+],
+[
+"S:I like this station=私はこの駅が好き | R:because it is=なぜならそれは | C:small and friendly.=小さく親しみやすい",
+"小さくて親しみやすいので、私はこの駅が好きだ。"
+]
+],
+"q": [
+[
+1,
+1,
+"駅まで歩いて何分かかる？"
+],
+[
+2,
+1,
+"駅にホームはいくつある？"
+],
+[
+3,
+2,
+"朝は何で混んでいる？"
+],
+[
+4,
+1,
+"電車は何分ごとに来る？"
+]
+]
+},
+"beg39": {
+"level": 4,
+"title": "A New Bakery Is Opening!",
+"list": [
+[
+"S:A new bakery=新しいパン屋が | V:will open=開店する | P:on Green Street=グリーン通りに | T:next Saturday.=今度の土曜日に",
+"今度の土曜日、グリーン通りに新しいパン屋が開店します。"
+],
+[
+"S:The name=名前は | P:of the shop=その店の | V:is \"Sunny Bread.\"=「サニーブレッド」だ",
+"店の名前は「サニーブレッド」です。"
+],
+[
+"S:We bake=私たちは焼く | O:fresh bread=焼きたてのパンを | T:every morning.=毎朝",
+"私たちは毎朝、焼きたてのパンを焼きます。"
+],
+[
+"T:On the first day,=初日には | S:everyone can get=みんなもらえる | O:a free cookie.=無料のクッキーを",
+"初日には、みなさん無料のクッキーがもらえます。"
+],
+[
+"S:All bread=すべてのパンが | V:will be=…になる | C:ten percent off.=1割引きに | T:for one week.=1週間",
+"1週間、すべてのパンが1割引きになります。"
+],
+[
+"S:The shop is open=店は開いている | T:from 7 a.m.=午前7時から | T:to 6 p.m.=午後6時まで",
+"店は午前7時から午後6時まで開いています。"
+],
+[
+"S:It is=店は…だ | C:closed=休み | T:on Mondays.=毎週月曜日は",
+"毎週月曜日はお休みです。"
+],
+[
+"M:Please come=どうぞ来て | V:and try=そして試して | O:our bread!=私たちのパンを",
+"ぜひ来て、私たちのパンを食べてみてください！"
+],
+[
+"S:We are=私たちは… | V:waiting for=待っている | O:you=あなたを | P:at the shop.=お店で",
+"お店でお待ちしています。"
+]
+],
+"q": [
+[
+0,
+2,
+"パン屋はどこに開店する？"
+],
+[
+3,
+2,
+"初日に何がもらえる？"
+],
+[
+5,
+1,
+"店は何時に開く？"
+],
+[
+6,
+2,
+"休みは何曜日？"
+]
+]
+},
+"beg40": {
+"level": 4,
+"title": "A Present for Mom",
+"list": [
+[
+"S:My mother's birthday=母の誕生日は | V:was=…だった | T:on Sunday.=日曜日",
+"母の誕生日は日曜日だった。"
+],
+[
+"S:I wanted=私は…したかった | V:to buy=買うことを | O:a present=プレゼントを | P:for her.=彼女のために",
+"私は母にプレゼントを買いたかった。"
+],
+[
+"T:On Saturday,=土曜日に | S:I went=私は行った | P:to a department store=デパートへ | P:with my sister.=姉と一緒に",
+"土曜日、私は姉と一緒にデパートへ行った。"
+],
+[
+"S:I found=私は見つけた | O:a beautiful=美しい | O:blue scarf.=青いスカーフを",
+"私は美しい青いスカーフを見つけた。"
+],
+[
+"M:But it was=でもそれは…だった | C:too expensive=高すぎた | P:for me.=私には",
+"でも、それは私には高すぎた。"
+],
+[
+"S:I didn't have=私は持っていなかった | O:enough money=十分なお金を | R:to buy it.=それを買うのに",
+"私にはそれを買うのに十分なお金がなかった。"
+],
+[
+"S:My sister said,=姉が言った | M:\"Let's=「…しよう | V:buy it together.\"=一緒に買おう」",
+"姉は「一緒に買おう」と言った。"
+],
+[
+"S:We asked=私たちは頼んだ | O:the clerk=店員に | R:to wrap it.=それを包むように",
+"私たちは店員にそれを包んでくれるように頼んだ。"
+],
+[
+"T:On Sunday,=日曜日に | S:we gave=私たちは渡した | O:it=それを | P:to Mom.=母に",
+"日曜日、私たちはそれを母に渡した。"
+],
+[
+"S:She smiled=母はほほえんだ | V:and hugged=そして抱きしめた | O:us both.=私たち二人を",
+"母はほほえんで、私たち二人を抱きしめてくれた。"
+]
+],
+"q": [
+[
+2,
+2,
+"どこへ行った？"
+],
+[
+3,
+2,
+"何色のスカーフを見つけた？"
+],
+[
+4,
+1,
+"スカーフはどうだった？"
+],
+[
+6,
+2,
+"姉は何と言った？"
+]
+]
+},
+"beg41": {
+"level": 4,
+"title": "At the Post Office",
+"list": [
+[
+"T:Today=今日 | S:I went=私は行った | P:to the post office.=郵便局へ",
+"今日、私は郵便局へ行った。"
+],
+[
+"S:I wanted=私は…したかった | V:to send=送ることを | O:a package=荷物を | P:to my grandmother.=祖母に",
+"私は祖母に荷物を送りたかった。"
+],
+[
+"P:In the box,=箱の中には | M:there were=…があった | O:some cookies=クッキーと | O:and a letter.=手紙が",
+"箱の中には、クッキーと手紙が入っていた。"
+],
+[
+"S:The woman at the counter=窓口の女性が | V:weighed=量った | O:the box.=箱の重さを",
+"窓口の女性が箱の重さを量った。"
+],
+[
+"S:It cost=…かかった | O:1,200 yen=1200円 | R:to send it.=それを送るのに",
+"それを送るのに1200円かかった。"
+],
+[
+"S:She said,=彼女は言った | V:\"It will arrive=「届きます | T:in two days.\"=2日後に」",
+"彼女は「2日後に届きます」と言った。"
+],
+[
+"S:I also bought=私は…も買った | O:some stamps=切手を | P:for my letters.=手紙用に",
+"手紙用に切手も買った。"
+],
+[
+"S:I hope=私は願う | S:Grandma=祖母が | V:likes the cookies.=クッキーを気に入る",
+"祖母がクッキーを気に入ってくれるといいな。"
+],
+[
+"S:I will=私は…するつもり | V:call her=彼女に電話する | T:on Monday.=月曜日に",
+"月曜日に祖母に電話しよう。"
+]
+],
+"q": [
+[
+1,
+3,
+"誰に荷物を送った？"
+],
+[
+2,
+2,
+"箱には手紙と何が入っていた？"
+],
+[
+4,
+1,
+"送るのにいくらかかった？"
+],
+[
+5,
+2,
+"荷物はいつ届く？"
+]
+]
+},
+"beg42": {
+"level": 4,
+"title": "A Visit to the Fire Station",
+"list": [
+[
+"T:Today,=今日 | S:our class visited=クラスで訪れた | O:the fire station=消防署を | P:in our town.=町の",
+"今日、クラスで町の消防署を見学した。"
+],
+[
+"S:A firefighter=消防士が | V:showed us=私たちに見せた | O:a big red fire engine.=大きな赤い消防車を",
+"消防士が大きな赤い消防車を見せてくれた。"
+],
+[
+"S:I sat=私は座った | P:in the driver's seat=運転席に | T:for a minute.=1分間",
+"私は1分間、運転席に座った。"
+],
+[
+"T:Then=それから | S:we tried=私たちはやってみた | V:to hold=持つことを | O:a fire hose.=消防ホースを",
+"それから、私たちは消防ホースを持ってみた。"
+],
+[
+"S:It was=それは…だった | C:much heavier=ずっと重かった | P:than I thought.=思ったより",
+"それは思っていたよりずっと重かった。"
+],
+[
+"S:The firefighters=消防士たちは | V:train=訓練する | T:every day=毎日 | R:to help people.=人を助けるために",
+"消防士たちは人々を助けるために毎日訓練している。"
+],
+[
+"S:One firefighter said,=一人の消防士が言った | V:\"Be careful=「気をつけて | P:with fire.\"=火に」",
+"一人の消防士が「火には気をつけて」と言った。"
+],
+[
+"S:Their uniforms=彼らの制服は | V:looked=…に見えた | C:very cool.=とてもかっこよく",
+"彼らの制服はとてもかっこよく見えた。"
+],
+[
+"S:I want=私は…したい | V:to be=…になることを | O:a firefighter=消防士に | T:in the future.=将来",
+"私は将来、消防士になりたい。"
+]
+],
+"q": [
+[
+1,
+2,
+"消防士は何を見せてくれた？"
+],
+[
+2,
+1,
+"どこに座った？"
+],
+[
+4,
+1,
+"ホースはどうだった？"
+],
+[
+8,
+2,
+"将来何になりたい？"
+]
+]
+},
+"beg43": {
+"level": 4,
+"title": "The Smiling Bus Driver",
+"list": [
+[
+"S:Mr. Tanaka is=田中さんは…だ | C:a bus driver=バスの運転手 | P:in our town.=私たちの町の",
+"田中さんは私たちの町のバスの運転手だ。"
+],
+[
+"S:He always smiles=彼はいつもほほえむ | V:and says hello=そしてあいさつする | P:to his passengers.=乗客に",
+"彼はいつもほほえんで、乗客にあいさつする。"
+],
+[
+"T:One rainy morning,=ある雨の朝 | S:an old woman=一人の老婦人が | V:got on the bus.=バスに乗った",
+"ある雨の朝、一人のおばあさんがバスに乗ってきた。"
+],
+[
+"S:She had=彼女には | O:no umbrella=傘がなかった | M:and was wet.=ぬれていた",
+"彼女は傘を持っていなくて、ぬれていた。"
+],
+[
+"S:Mr. Tanaka gave her=田中さんは渡した | O:a towel=タオルを | P:from his bag.=自分のかばんから",
+"田中さんは自分のかばんからタオルを出して、彼女に渡した。"
+],
+[
+"O:\"Please use this,\"=「これを使って」 | S:he said=彼は言った | P:with a smile.=笑顔で",
+"「これを使ってください」と彼は笑顔で言った。"
+],
+[
+"S:The woman=その女性は | V:was very happy=とても喜んだ | M:and thanked him.=お礼を言った",
+"その女性はとても喜んで、彼にお礼を言った。"
+],
+[
+"T:The next day,=次の日 | S:she brought=彼女は持ってきた | O:a box of cookies=クッキーの箱を | P:for him.=彼のために",
+"次の日、彼女は彼のためにクッキーを一箱持ってきた。"
+],
+[
+"S:Everyone=みんなが | V:loves=大好きだ | O:Mr. Tanaka's bus.=田中さんのバスが",
+"みんな田中さんのバスが大好きだ。"
+]
+],
+"q": [
+[
+3,
+1,
+"女性には何がなかった？"
+],
+[
+4,
+1,
+"田中さんは何を渡した？"
+],
+[
+5,
+2,
+"田中さんはどんなふうに言った？"
+],
+[
+7,
+2,
+"次の日、女性は何を持ってきた？"
+]
+]
+},
+"beg44": {
+"level": 4,
+"title": "The Flower Shop on Our Street",
+"list": [
+[
+"M:There is=…がある | O:a small flower shop=小さな花屋が | P:on our street.=私たちの通りに",
+"私たちの通りに小さな花屋がある。"
+],
+[
+"S:The shop is=店は…だ | C:full of=…でいっぱい | O:colorful flowers.=色とりどりの花で",
+"店は色とりどりの花でいっぱいだ。"
+],
+[
+"S:The owner=店主は | V:opens the shop=店を開ける | T:at eight=8時に | T:every morning.=毎朝",
+"店主は毎朝8時に店を開ける。"
+],
+[
+"S:She gives water=彼女は水をやる | P:to the flowers=花に | T:first.=最初に",
+"彼女はまず花に水をやる。"
+],
+[
+"S:You can see=見ることができる | O:different flowers=いろいろな花を | T:in each season.=季節ごとに",
+"季節ごとにいろいろな花が見られる。"
+],
+[
+"T:In spring,=春には | M:there are=…がある | O:many tulips.=たくさんのチューリップが",
+"春にはたくさんのチューリップがある。"
+],
+[
+"T:In summer,=夏には | S:you can buy=買うことができる | O:sunflowers.=ヒマワリを",
+"夏にはヒマワリが買える。"
+],
+[
+"S:The owner also makes=店主は…も作る | O:bouquets=花束を | P:for special days.=特別な日のために",
+"店主は特別な日のための花束も作る。"
+],
+[
+"S:Flowers=花は | V:make people=人を…にする | C:happy.=幸せに",
+"花は人を幸せにする。"
+]
+],
+"q": [
+[
+2,
+2,
+"店は何時に開く？"
+],
+[
+3,
+0,
+"店主は最初に何をする？"
+],
+[
+5,
+2,
+"春には何がある？"
+],
+[
+6,
+2,
+"夏には何が買える？"
+]
+]
+},
+"beg45": {
+"level": 4,
+"title": "Lost in the Mall",
+"list": [
+[
+"T:When I was six,=6歳のとき | S:my family went=家族が行った | P:to a big shopping mall.=大きなモールへ",
+"6歳のとき、家族で大きなショッピングモールへ行った。"
+],
+[
+"S:It was=そこは…だった | C:very crowded=とても混んで | P:with people.=人で",
+"そこは人でとても混んでいた。"
+],
+[
+"S:I saw=私は見つけた | O:a toy store=おもちゃ屋を | M:and ran into it.=中に走り込んだ",
+"私はおもちゃ屋を見つけて、中に走って入った。"
+],
+[
+"T:When I came out,=出てきたとき | S:my family=家族は | V:was not there.=そこにいなかった",
+"出てきたとき、家族はそこにいなかった。"
+],
+[
+"S:I was=私は…だった | C:scared=怖くて | M:and started to cry.=泣き出した",
+"私は怖くなって泣き出した。"
+],
+[
+"S:A kind woman=親切な女性が | V:took me=私を連れて行った | P:to the information desk.=案内所へ",
+"親切な女性が私を案内所に連れて行ってくれた。"
+],
+[
+"S:A staff member=係の人が | V:made=した | O:an announcement.=アナウンスを",
+"係の人がアナウンスをした。"
+],
+[
+"T:Soon,=すぐに | S:my mother came=母が来た | V:running=走って | P:to me.=私のところへ",
+"すぐに母が私のところへ走ってきた。"
+],
+[
+"S:I was=私は…だった | C:so relieved=とてもほっとした | M:and hugged her.=母に抱きついた",
+"私はとてもほっとして、母に抱きついた。"
+],
+[
+"T:Since then,=それ以来 | S:I always stay=私はいつもいる | P:close to my family.=家族のそばに",
+"それ以来、私はいつも家族のそばにいる。"
+]
+],
+"q": [
+[
+0,
+0,
+"それは何歳のときのこと？"
+],
+[
+2,
+1,
+"何を見つけて中に入った？"
+],
+[
+5,
+2,
+"女性はどこへ連れて行ってくれた？"
+],
+[
+7,
+1,
+"誰が走ってきた？"
+]
+]
+},
+"beg46": {
+"level": 4,
+"title": "My Bike Trip Around Town",
+"list": [
+[
+"T:Last Sunday,=先週の日曜日 | S:I rode=私は乗った | O:my bike=自転車に | P:around my town.=町じゅうを",
+"先週の日曜日、私は自転車で町をめぐった。"
+],
+[
+"S:The weather=天気は | V:was=…だった | C:sunny and warm.=晴れて暖かかった",
+"天気は晴れて暖かかった。"
+],
+[
+"T:First,=まず | S:I rode=私は走った | P:along the river.=川に沿って",
+"まず、私は川沿いを走った。"
+],
+[
+"M:There was=…があった | O:a nice path=すてきな道が | P:for bikes.=自転車用の",
+"自転車用のすてきな道があった。"
+],
+[
+"T:Then=それから | S:I visited=私は訪れた | O:an old temple=古いお寺を | P:on a hill.=丘の上の",
+"それから、丘の上の古いお寺を訪れた。"
+],
+[
+"S:The view=景色は | P:from the hill=丘からの | V:was beautiful.=美しかった",
+"丘からの景色は美しかった。"
+],
+[
+"S:I ate lunch=昼食を食べた | P:at a small café=小さなカフェで | P:near the station.=駅の近くの",
+"駅の近くの小さなカフェで昼食を食べた。"
+],
+[
+"S:I was=私は…だった | C:a little tired,=少し疲れた | M:but I had=でも過ごした | O:a great time.=最高の時間を",
+"少し疲れたけれど、最高の時間を過ごした。"
+],
+[
+"T:Next time,=次は | S:I want to ride=乗って行きたい | P:to the sea!=海まで",
+"次は海まで自転車で行きたい！"
+]
+],
+"q": [
+[
+1,
+2,
+"天気はどうだった？"
+],
+[
+2,
+2,
+"まずどこを走った？"
+],
+[
+4,
+2,
+"何を訪れた？"
+],
+[
+6,
+1,
+"どこで昼食を食べた？"
+]
+]
+},
+"beg47": {
+"level": 4,
+"title": "Birds That Cannot Fly",
+"list": [
+[
+"S:Penguins=ペンギンは | V:are birds,=鳥である | M:but they cannot fly.=でも飛べない",
+"ペンギンは鳥だが、飛ぶことができない。"
+],
+[
+"S:Most penguins=ほとんどのペンギンは | V:live=住んでいる | P:in the southern half=南半分に | P:of the world.=世界の",
+"ほとんどのペンギンは、世界の南半分に住んでいる。"
+],
+[
+"S:Their wings=彼らのつばさは | V:look like=…のように見える | C:flippers.=ひれ",
+"ペンギンのつばさは、ひれのような形をしている。"
+],
+[
+"S:They use=彼らは使う | O:their wings=つばさを | R:to swim=泳ぐために | P:in the sea.=海で",
+"彼らはつばさを使って海の中を泳ぐ。"
+],
+[
+"S:Penguins are=ペンギンは…だ | C:very good=とても上手な | X:swimmers.=泳ぎ手",
+"ペンギンはとても泳ぎが上手だ。"
+],
+[
+"S:They catch=彼らはつかまえる | O:fish and krill=魚やオキアミを | P:in the water.=水の中で",
+"彼らは水の中で魚やオキアミをつかまえる。"
+],
+[
+"P:On land,=陸の上では | S:penguins walk=ペンギンは歩く | M:slowly.=ゆっくり",
+"陸の上では、ペンギンはゆっくり歩く。"
+],
+[
+"S:Some penguins=一部のペンギンは | V:slide=すべる | P:on their bellies=おなかで | P:across the ice.=氷の上を",
+"ペンギンの中には、おなかで氷の上をすべるものもいる。"
+],
+[
+"S:They have=彼らは持っている | O:thick feathers=厚い羽を | R:to stay warm.=温かくいるため",
+"彼らは体を温かく保つために、厚い羽を持っている。"
+]
+],
+"q": [
+[
+1,
+2,
+"ほとんどのペンギンはどこに住んでいる？"
+],
+[
+3,
+2,
+"ペンギンはつばさを何のために使う？"
+],
+[
+5,
+1,
+"ペンギンは水の中で何をつかまえる？"
+],
+[
+8,
+1,
+"体を温かく保つために何を持っている？"
+]
+]
+},
+"beg48": {
+"level": 4,
+"title": "Why Do Cats Sleep So Much?",
+"list": [
+[
+"S:Cats=ネコは | V:sleep=眠る | M:a lot=たくさん | T:every day.=毎日",
+"ネコは毎日たくさん眠る。"
+],
+[
+"S:Many cats=多くのネコは | V:often sleep=よく眠る | M:more than twelve hours=12時間以上 | T:a day.=1日に",
+"多くのネコは、1日に12時間以上眠ることがよくある。"
+],
+[
+"M:Why do cats=なぜネコは | V:sleep=眠る | M:so much?=そんなにたくさん",
+"ネコはなぜそんなにたくさん眠るのだろうか。"
+],
+[
+"S:Cats are=ネコは…だ | C:hunters=狩りをする動物 | M:by nature.=生まれつき",
+"ネコは生まれつき狩りをする動物だ。"
+],
+[
+"S:Hunting=狩りは | V:uses=使う | O:a lot of energy.=多くの力を",
+"狩りにはたくさんの力を使う。"
+],
+[
+"M:So cats=だからネコは | V:rest=休む | M:a lot=たくさん | R:to save energy.=力をためるため",
+"だからネコは、力をためるためにたくさん休む。"
+],
+[
+"S:Cats are=ネコは…だ | C:often active=よく活動的 | T:in the early morning=早朝に | M:and evening.=と夕方に",
+"ネコは早朝と夕方によく活動する。"
+],
+[
+"S:They do not=彼らは…ない | V:always sleep=いつも眠る | M:deeply.=深く",
+"ネコはいつも深く眠っているわけではない。"
+],
+[
+"S:They can=彼らは…できる | V:wake up quickly=すぐに起きる | P:at a small sound.=小さな音で",
+"ネコは小さな音でも、すぐに目を覚ますことができる。"
+]
+],
+"q": [
+[
+1,
+2,
+"多くのネコは1日に何時間以上眠る？"
+],
+[
+3,
+1,
+"ネコは生まれつきどんな動物？"
+],
+[
+5,
+3,
+"ネコは何のためにたくさん休む？"
+],
+[
+6,
+2,
+"ネコはいつよく活動する？"
+]
+]
+},
+"beg49": {
+"level": 4,
+"title": "The Four Seasons of Japan",
+"list": [
+[
+"S:Japan=日本には | V:has=ある | O:four seasons.=4つの季節が",
+"日本には4つの季節がある。"
+],
+[
+"P:In spring,=春には | S:cherry blossoms=桜の花が | V:bloom=咲く | P:in many places.=多くの場所で",
+"春には、多くの場所で桜の花が咲く。"
+],
+[
+"S:Summer=夏は | V:is=…だ | C:hot and humid.=暑くてじめじめ",
+"夏は暑くてじめじめしている。"
+],
+[
+"P:In summer,=夏には | S:many people go=多くの人が行く | P:to the sea=海へ | M:or watch fireworks.=または花火を見る",
+"夏には、多くの人が海へ行ったり花火を見たりする。"
+],
+[
+"P:In fall,=秋には | S:the leaves=葉が | V:turn=変わる | C:red and yellow.=赤や黄色に",
+"秋には、葉が赤や黄色に変わる。"
+],
+[
+"S:Fall is also=秋はまた…だ | C:a good season=よい季節 | P:for sports.=スポーツに",
+"秋はスポーツにもよい季節だ。"
+],
+[
+"S:Winter=冬は | V:is=…だ | C:cold=寒い | P:in most areas.=ほとんどの地域で",
+"冬は、ほとんどの地域で寒い。"
+],
+[
+"P:In the north,=北のほうでは | S:it snows=雪が降る | M:a lot.=たくさん",
+"北のほうでは、雪がたくさん降る。"
+],
+[
+"S:Each season=それぞれの季節は | V:has=持っている | O:its own beauty.=独自の美しさを",
+"それぞれの季節に、それぞれの美しさがある。"
+],
+[
+"S:People in Japan=日本の人々は | V:enjoy=楽しむ | O:the changes of the seasons.=季節の移り変わりを",
+"日本の人々は、季節の移り変わりを楽しむ。"
+]
+],
+"q": [
+[
+1,
+1,
+"春には何が咲く？"
+],
+[
+2,
+2,
+"夏はどんな天気？"
+],
+[
+4,
+3,
+"秋には葉が何色に変わる？"
+],
+[
+7,
+0,
+"雪がたくさん降るのはどこ？"
+]
+]
+},
+"beg50": {
+"level": 4,
+"title": "Frogs in the Rice Field",
+"list": [
+[
+"T:Today=今日 | S:I walked=私は歩いた | P:along the rice field=田んぼにそって | P:near my house.=家の近くの",
+"今日、私は家の近くの田んぼにそって歩いた。"
+],
+[
+"S:I heard=私は聞いた | O:a loud sound=大きな音を | P:from the water.=水の中から",
+"水の中から大きな音が聞こえた。"
+],
+[
+"S:It was=それは…だった | C:the voice=声 | P:of a frog.=カエルの",
+"それはカエルの声だった。"
+],
+[
+"S:I looked=私は見た | P:into the water=水の中を | M:carefully.=注意深く",
+"私は水の中を注意深くのぞいた。"
+],
+[
+"S:A small green frog=小さな緑のカエルが | V:was sitting=すわっていた | P:on a leaf.=葉っぱの上に",
+"小さな緑色のカエルが、葉っぱの上にすわっていた。"
+],
+[
+"S:It jumped=それは跳んだ | P:into the water=水の中へ | T:when I moved.=私が動いたとき",
+"私が動いたとき、カエルは水の中へ跳びこんだ。"
+],
+[
+"S:My grandfather told me=祖父は私に言った | O:that frogs=カエルは…と | V:eat insects.=虫を食べる",
+"祖父は、カエルは虫を食べると教えてくれた。"
+],
+[
+"M:So frogs=だからカエルは | V:are=…だ | C:good=よい | P:for rice fields.=田んぼにとって",
+"だからカエルは、田んぼのためになる生き物だ。"
+],
+[
+"T:Tonight=今夜 | S:I can hear=私は聞こえる | O:many frogs=たくさんのカエルが | P:from my room.=自分の部屋から",
+"今夜は、自分の部屋からたくさんのカエルの声が聞こえる。"
+],
+[
+"S:I like=私は好きだ | O:their songs=彼らの歌が | M:very much.=とても",
+"私はカエルたちの歌が大好きだ。"
+]
+],
+"q": [
+[
+2,
+1,
+"聞こえたのは何の声だった？"
+],
+[
+4,
+2,
+"カエルはどこにすわっていた？"
+],
+[
+6,
+2,
+"祖父によると、カエルは何を食べる？"
+],
+[
+8,
+3,
+"今夜はどこからカエルの声が聞こえる？"
+]
+]
+},
+"beg51": {
+"level": 4,
+"title": "The Moon",
+"list": [
+[
+"S:The moon=月は | V:goes around=まわっている | O:the earth.=地球の",
+"月は地球のまわりをまわっている。"
+],
+[
+"S:It takes=かかる | O:about a month=約1か月 | R:to go around.=1周するのに",
+"1周するのに約1か月かかる。"
+],
+[
+"S:The moon does not=月は…ない | V:make=作る | O:its own light.=自分の光を",
+"月は自分で光を出しているわけではない。"
+],
+[
+"S:It shines=月は光る | M:because sunlight=太陽の光が…ので | V:hits it.=当たる",
+"太陽の光が当たるので、月は光って見える。"
+],
+[
+"S:The shape=形は | P:of the moon=月の | V:seems to change=変わるように見える | T:every night.=毎晩",
+"月の形は、毎晩変わるように見える。"
+],
+[
+"S:We call=私たちは呼ぶ | O:a round moon=丸い月を | C:a full moon.=満月と",
+"私たちは丸い月を満月と呼ぶ。"
+],
+[
+"M:There is=…がある | O:almost no air=空気はほとんどない | P:on the moon.=月には",
+"月には空気がほとんどない。"
+],
+[
+"T:In 1969,=1969年に | S:people walked=人が歩いた | P:on the moon=月の上を | M:for the first time.=初めて",
+"1969年、人が初めて月の上を歩いた。"
+],
+[
+"S:Many people still=多くの人が今も | V:love=大好きだ | O:looking at the moon.=月をながめるのが",
+"今でも多くの人が、月をながめるのが大好きだ。"
+]
+],
+"q": [
+[
+0,
+2,
+"月は何のまわりをまわっている？"
+],
+[
+1,
+1,
+"月が1周するのにどのくらいかかる？"
+],
+[
+5,
+2,
+"丸い月を何と呼ぶ？"
+],
+[
+7,
+0,
+"人が初めて月の上を歩いたのはいつ？"
+]
+]
+},
+"beg52": {
+"level": 4,
+"title": "Baby Pandas Are Tiny",
+"list": [
+[
+"S:Giant pandas=ジャイアントパンダは | V:live=住んでいる | P:in China.=中国に",
+"ジャイアントパンダは中国に住んでいる。"
+],
+[
+"S:They eat=彼らは食べる | O:bamboo=竹を | T:for many hours=何時間も | T:every day.=毎日",
+"彼らは毎日何時間も竹を食べる。"
+],
+[
+"S:A baby panda=パンダの赤ちゃんは | V:is=…だ | C:very small=とても小さい | T:when it is born.=生まれたとき",
+"パンダの赤ちゃんは、生まれたときとても小さい。"
+],
+[
+"S:It weighs=重さは | O:only about=たった約 | X:100 grams.=100グラム",
+"重さはたった100グラムくらいだ。"
+],
+[
+"S:Its mother=その母親は | V:is much bigger=ずっと大きい | P:than the baby.=赤ちゃんより",
+"母親は赤ちゃんよりずっと大きい。"
+],
+[
+"T:At first,=最初は | S:the baby is pink=赤ちゃんはピンク色 | M:and has=そして持っている | O:very little hair.=毛がほとんどない",
+"最初、赤ちゃんはピンク色で、毛がほとんどない。"
+],
+[
+"S:Its eyes=その目は | V:are closed=閉じている | T:for several weeks.=数週間",
+"目は数週間閉じたままだ。"
+],
+[
+"S:The mother=母親は | V:holds=抱く | O:the baby gently.=赤ちゃんをやさしく",
+"母親は赤ちゃんをやさしく抱いている。"
+],
+[
+"T:Later,=やがて | S:black and white hair=白黒の毛が | V:grows=生える | P:on its body.=体に",
+"やがて、体に白と黒の毛が生えてくる。"
+],
+[
+"S:The baby=赤ちゃんは | V:grows=なっていく | C:bigger and bigger.=どんどん大きく",
+"赤ちゃんはどんどん大きくなっていく。"
+]
+],
+"q": [
+[
+0,
+2,
+"ジャイアントパンダはどこに住んでいる？"
+],
+[
+3,
+2,
+"生まれたときの赤ちゃんの重さは？"
+],
+[
+5,
+1,
+"最初、赤ちゃんは何色？"
+],
+[
+8,
+1,
+"やがて体に何が生えてくる？"
+]
+]
+},
+"beg53": {
+"level": 4,
+"title": "Rain and Rainbows",
+"list": [
+[
+"T:After the rain,=雨のあと | S:we sometimes see=ときどき見る | O:a rainbow=虹を | P:in the sky.=空に",
+"雨のあと、空に虹が見えることがある。"
+],
+[
+"S:A rainbow appears=虹は現れる | T:when the sun=太陽が…とき | V:shines=照る | P:on raindrops.=雨粒に",
+"太陽の光が雨粒に当たるとき、虹が現れる。"
+],
+[
+"S:Sunlight=太陽の光は | V:looks white,=白く見える | M:but it has=でも持っている | O:many colors.=多くの色を",
+"太陽の光は白く見えるが、たくさんの色をふくんでいる。"
+],
+[
+"S:Raindrops=雨粒は | V:split=分ける | O:the light=光を | P:into colors.=色に",
+"雨粒が光をいろいろな色に分ける。"
+],
+[
+"P:In Japan,=日本では | S:people usually say=ふつう人は言う | O:a rainbow has=虹には…ある | O:seven colors.=7つの色が",
+"日本では、虹には7つの色があるとふつう言われている。"
+],
+[
+"S:Red is=赤は | P:on the outside,=外側に | M:and violet is=そして紫は | P:on the inside.=内側に",
+"虹は、赤が外側に、紫が内側にある。"
+],
+[
+"R:To see a rainbow,=虹を見るには | V:stand=立とう | P:with the sun=太陽を | M:behind you.=背中側にして",
+"虹を見るには、太陽を背にして立とう。"
+],
+[
+"S:Rainbows=虹は | V:often appear=よく現れる | T:in the morning=朝に | M:or late afternoon.=または夕方近くに",
+"虹は、朝や夕方近くによく現れる。"
+],
+[
+"S:A rainbow makes=虹は…にする | O:a rainy day=雨の日を | C:special.=特別に",
+"虹は雨の日を特別なものにしてくれる。"
+]
+],
+"q": [
+[
+1,
+3,
+"虹は、太陽が何を照らすときに現れる？"
+],
+[
+2,
+3,
+"太陽の光は何をふくんでいる？"
+],
+[
+5,
+1,
+"虹の赤はどこにある？"
+],
+[
+6,
+3,
+"虹を見るには、太陽をどこにして立つ？"
+]
+]
+},
+"beg54": {
+"level": 4,
+"title": "A Night Full of Stars",
+"list": [
+[
+"T:Last weekend,=先週末 | S:I went=私は行った | P:to my uncle's house=おじの家へ | P:in the mountains.=山の中の",
+"先週末、私は山の中にあるおじの家へ行った。"
+],
+[
+"T:That night,=その夜 | S:the sky=空は | V:was very clear.=とても澄んでいた",
+"その夜、空はとても澄んでいた。"
+],
+[
+"S:I saw=私は見た | O:so many stars=とてもたくさんの星を | M:for the first time.=初めて",
+"私はあんなにたくさんの星を初めて見た。"
+],
+[
+"P:In my town,=私の町では | S:I can see=私は見られる | O:only a few stars.=少しの星しか",
+"私の町では、星は少ししか見えない。"
+],
+[
+"S:My uncle=おじは | V:showed me=私に見せた | O:the Big Dipper.=北斗七星を",
+"おじは私に北斗七星を教えてくれた。"
+],
+[
+"S:He said,=彼は言った | O:\"The stars are=「星は…だ | C:very far=とても遠い | P:from us.\"=私たちから」",
+"おじは「星は私たちからとても遠いところにあるんだよ」と言った。"
+],
+[
+"T:Suddenly,=突然 | S:a shooting star=流れ星が | V:crossed=横切った | O:the sky.=空を",
+"突然、流れ星が空を横切った。"
+],
+[
+"S:I made=私はした | O:a wish=願いごとを | M:quickly.=急いで",
+"私は急いで願いごとをした。"
+],
+[
+"S:I want to=私は…したい | V:go there=そこへ行く | M:again=また | T:next summer.=来年の夏",
+"来年の夏、またそこへ行きたい。"
+]
+],
+"q": [
+[
+0,
+2,
+"先週末、どこへ行った？"
+],
+[
+1,
+2,
+"その夜、空はどうだった？"
+],
+[
+4,
+2,
+"おじは何を見せてくれた？"
+],
+[
+6,
+1,
+"突然、何が空を横切った？"
+]
+]
+},
+"beg55": {
+"level": 4,
+"title": "Sea Turtles",
+"list": [
+[
+"S:Sea turtles=ウミガメは | V:live=すむ | P:in oceans=海に | P:around the world.=世界中の",
+"ウミガメは世界中の海にすんでいる。"
+],
+[
+"S:They have=彼らは持っている | O:flippers=ひれを | M:instead of legs.=足のかわりに",
+"彼らは足のかわりにひれを持っている。"
+],
+[
+"S:Sea turtles can=ウミガメは…できる | V:swim=泳ぐ | O:very long distances.=とても長い距離を",
+"ウミガメはとても長い距離を泳ぐことができる。"
+],
+[
+"S:They come up=彼らは上がる | P:to the surface=水面に | R:to breathe air.=空気を吸うため",
+"彼らは空気を吸うために水面に上がってくる。"
+],
+[
+"S:Female turtles=メスのカメは | V:come=やって来る | P:to the beach=浜辺に | R:to lay eggs.=卵を産むため",
+"メスのカメは、卵を産むために浜辺にやって来る。"
+],
+[
+"S:They dig=彼らは掘る | O:a hole=穴を | P:in the sand=砂に | T:at night.=夜に",
+"彼らは夜に砂に穴を掘る。"
+],
+[
+"T:After the eggs hatch,=卵がかえると | S:the babies=赤ちゃんたちは | V:go=行く | P:to the sea.=海へ",
+"卵がかえると、赤ちゃんたちは海へ向かう。"
+],
+[
+"S:Plastic bags=ビニール袋は | P:in the sea=海の中の | V:are dangerous=危険だ | P:for them.=彼らにとって",
+"海の中のビニール袋は、ウミガメにとって危険だ。"
+],
+[
+"S:Some turtles=一部のカメは | V:eat them=それらを食べる | M:by mistake.=まちがえて",
+"まちがえてそれを食べてしまうカメもいる。"
+],
+[
+"S:We should=私たちは…べきだ | V:keep=保つ | O:the sea=海を | C:clean.=きれいに",
+"私たちは海をきれいに保つべきだ。"
+]
+],
+"q": [
+[
+1,
+1,
+"ウミガメは足のかわりに何を持っている？"
+],
+[
+3,
+2,
+"ウミガメは何のために水面に上がってくる？"
+],
+[
+4,
+3,
+"メスのカメは何のために浜辺に来る？"
+],
+[
+5,
+3,
+"ウミガメはいつ穴を掘る？"
+]
+]
+},
+"beg56": {
+"level": 4,
+"title": "Breakfast Is Important",
+"list": [
+[
+"S:Many people=多くの人が | V:skip breakfast=朝食を抜く | R:because they are busy.=忙しいので",
+"多くの人は忙しいので朝食を抜く。"
+],
+[
+"S:But breakfast is=しかし朝食は | C:very important=とても大切だ | P:for our health.=健康にとって",
+"しかし、朝食は健康にとってとても大切だ。"
+],
+[
+"T:During the night,=夜のあいだ | S:our body uses=体は使う | O:a lot of energy.=多くのエネルギーを",
+"夜のあいだ、私たちの体は多くのエネルギーを使う。"
+],
+[
+"M:So in the morning,=だから朝は | S:our body=体は | V:needs=必要とする | O:new energy.=新しいエネルギーを",
+"だから、朝の体には新しいエネルギーが必要だ。"
+],
+[
+"S:Breakfast gives=朝食は与える | O:us energy=私たちに活力を | R:to start the day.=1日を始めるための",
+"朝食は、1日を始めるためのエネルギーをくれる。"
+],
+[
+"S:It also helps=それは助けもする | O:our brain=脳が | V:work well.=よく働くのを",
+"朝食は、脳がよく働くのも助けてくれる。"
+],
+[
+"P:Without breakfast,=朝食なしでは | S:it is=それは | C:hard=難しい | R:to focus in class.=授業に集中するのは",
+"朝食を食べないと、授業に集中するのは難しい。"
+],
+[
+"S:A good breakfast=よい朝食は | V:does not have to=…必要はない | C:be big.=量が多い",
+"よい朝食は、量が多くなくてもよい。"
+],
+[
+"S:Rice, eggs, and fruit=ご飯、卵、果物は | V:are=…だ | C:a good choice.=よい選択",
+"ご飯、卵、果物などはよい選択だ。"
+],
+[
+"T:Tomorrow morning,=明日の朝 | V:try=試してみよう | O:eating breakfast.=朝食を食べるのを",
+"明日の朝、朝食を食べてみよう。"
+]
+],
+"q": [
+[
+0,
+2,
+"多くの人はなぜ朝食を抜く？"
+],
+[
+2,
+2,
+"夜のあいだ、体は何を使う？"
+],
+[
+6,
+3,
+"朝食なしでは、何をするのが難しい？"
+],
+[
+8,
+2,
+"ご飯、卵、果物は何だと言っている？"
+]
+]
+},
+"beg57": {
+"level": 4,
+"title": "Brushing Your Teeth",
+"list": [
+[
+"S:Our teeth=私たちの歯は | V:are=…だ | C:very important.=とても大切",
+"私たちの歯はとても大切だ。"
+],
+[
+"S:We use them=私たちは歯を使う | R:to eat food=食べ物を食べるのに | M:and to talk.=そして話すのに",
+"私たちは食べたり話したりするのに歯を使う。"
+],
+[
+"T:After meals,=食事の後 | S:small pieces of food=食べ物のかけらが | V:stay on our teeth.=歯に残る",
+"食事の後、食べ物の小さなかけらが歯に残る。"
+],
+[
+"S:They can=それらは…ありうる | V:cause=引き起こす | O:problems.=問題を",
+"それが歯のトラブルの原因になることがある。"
+],
+[
+"S:So we should=だから…べきだ | V:brush our teeth=歯をみがく | T:twice a day.=1日に2回",
+"だから、歯は1日2回みがくべきだ。"
+],
+[
+"V:Use=使おう | O:a soft toothbrush=やわらかい歯ブラシを | M:and brush gently.=やさしくみがこう",
+"やわらかい歯ブラシを使い、やさしくみがこう。"
+],
+[
+"S:Brushing too hard=強くみがきすぎは | V:is=…だ | C:not good=よくない | P:for your teeth.=歯にとって",
+"強くみがきすぎるのは歯によくない。"
+],
+[
+"S:Also, try=また…ようにしよう | R:not to eat=食べないように | O:too much sugar.=砂糖をとりすぎ",
+"また、砂糖をとりすぎないようにしよう。"
+],
+[
+"S:It is good=…はよいことだ | R:to visit a dentist=歯医者に行くのは | T:regularly.=定期的に",
+"定期的に歯医者に行くのもよいことだ。"
+],
+[
+"S:Healthy teeth=健康な歯は | V:help=助ける | O:you=あなたが | X:enjoy meals.=食事を楽しむのを",
+"健康な歯があれば、食事を楽しめる。"
+]
+],
+"q": [
+[
+1,
+1,
+"歯は何をするのに使う？"
+],
+[
+4,
+2,
+"歯は1日に何回みがくべき？"
+],
+[
+5,
+1,
+"どんな歯ブラシを使うとよい？"
+],
+[
+7,
+2,
+"何をとりすぎないようにする？"
+],
+[
+8,
+1,
+"定期的にどこへ行くとよい？"
+]
+]
+},
+"beg58": {
+"level": 4,
+"title": "Bento Lunch Boxes",
+"list": [
+[
+"P:In Japan,=日本では | S:many students take=多くの生徒が持つ | O:lunch boxes to school.=学校へ弁当を",
+"日本では、多くの生徒が学校に弁当を持って行く。"
+],
+[
+"S:A lunch box=弁当は | V:is called=呼ばれる | C:\"bento\" in Japanese.=日本語で「弁当」と",
+"弁当は日本語で「bento」と呼ばれる。"
+],
+[
+"S:A good bento has=よい弁当にはある | O:many kinds of food.=多くの種類の食べ物が",
+"よい弁当には、いろいろな種類の食べ物が入っている。"
+],
+[
+"P:For example,=たとえば | S:it has=それにはある | O:rice, fish, and vegetables.=ご飯、魚、野菜が",
+"たとえば、ご飯や魚や野菜が入っている。"
+],
+[
+"S:This is=これは | C:good=よい | P:for a healthy body.=健康な体のために",
+"これは健康な体のためによい。"
+],
+[
+"S:Some people make=作る人もいる | O:colorful bento.=色とりどりの弁当を",
+"色とりどりの弁当を作る人もいる。"
+],
+[
+"S:They use=彼らは使う | O:red, yellow, and green food.=赤、黄、緑の食べ物を",
+"赤、黄色、緑の食べ物を使うのだ。"
+],
+[
+"S:A colorful bento looks=色鮮やかな弁当は | C:delicious,=おいしそうに見える | M:too.=…も",
+"色とりどりの弁当は、おいしそうにも見える。"
+],
+[
+"S:You can=あなたは…できる | V:use=使う | O:leftovers from dinner.=夕食の残り物を",
+"夕食の残り物を使うこともできる。"
+],
+[
+"S:Making bento is=弁当作りは | C:easy=簡単だ | M:and fun.=そして楽しい",
+"弁当作りは簡単で楽しい。"
+]
+],
+"q": [
+[
+0,
+2,
+"多くの生徒は学校に何を持って行く？"
+],
+[
+3,
+2,
+"弁当にはたとえば何が入っている？"
+],
+[
+6,
+1,
+"何色の食べ物を使う？"
+],
+[
+8,
+2,
+"夕食の何を使うことができる？"
+]
+]
+},
+"beg59": {
+"level": 4,
+"title": "Fruit and Vitamins",
+"list": [
+[
+"S:Fruit is=果物は | C:sweet and delicious.=甘くておいしい",
+"果物は甘くておいしい。"
+],
+[
+"S:It=それは | V:also has=…も持っている | O:many vitamins.=多くのビタミンを",
+"果物にはビタミンもたくさん含まれている。"
+],
+[
+"S:Vitamins help=ビタミンは助ける | O:our body=体が | V:stay healthy.=健康でいるのを",
+"ビタミンは、体を健康に保つのを助けてくれる。"
+],
+[
+"P:For example,=たとえば | S:oranges have=オレンジにはある | O:a lot of vitamin C.=多くのビタミンCが",
+"たとえば、オレンジにはビタミンCがたくさんある。"
+],
+[
+"S:Kiwis and strawberries=キウイといちごは | V:have it,=それを持っている | M:too.=…も",
+"キウイやいちごにもビタミンCがある。"
+],
+[
+"S:Vitamin C is=ビタミンCは | C:good=よい | P:for your skin.=肌にとって",
+"ビタミンCは肌によい。"
+],
+[
+"S:Fresh fruit=新鮮な果物は | V:also has=…も持っている | O:a lot of water.=多くの水分を",
+"新鮮な果物には水分も多い。"
+],
+[
+"S:It is=それは | C:a good snack=よいおやつ | T:on hot days.=暑い日には",
+"暑い日には、果物はよいおやつになる。"
+],
+[
+"S:But don't eat=でも食べないで | O:too much at once=一度にたくさん | R:because fruit has sugar.=糖分があるから",
+"でも、果物には糖分があるので、一度に食べすぎないようにしよう。"
+],
+[
+"S:Let's=…しよう | V:enjoy fruit=果物を楽しむ | T:every day.=毎日",
+"毎日果物を楽しもう。"
+]
+],
+"q": [
+[
+1,
+2,
+"果物には何がたくさん含まれている？"
+],
+[
+3,
+2,
+"オレンジにはたくさん何がある？"
+],
+[
+5,
+2,
+"ビタミンCは何によい？"
+],
+[
+8,
+2,
+"なぜ一度に食べすぎないほうがいい？"
+]
+]
+},
+"beg60": {
+"level": 4,
+"title": "Jump Rope Every Day",
+"list": [
+[
+"T:Today=今日 | S:I jumped rope=私はなわとびをした | T:for ten minutes.=10分間",
+"今日、私は10分間なわとびをした。"
+],
+[
+"S:I started=私は始めた | O:jumping rope=なわとびを | T:last month.=先月",
+"私は先月なわとびを始めた。"
+],
+[
+"P:At first,=最初は | S:I could only=…しかできなかった | V:jump=跳ぶ | O:fifty times.=50回",
+"最初は、50回しか跳べなかった。"
+],
+[
+"S:I was=私は…だった | C:very tired=とても疲れて | T:after that.=そのあと",
+"そのあと、私はとても疲れた。"
+],
+[
+"T:But now=でも今は | S:I can=私は…できる | V:jump=跳ぶ | O:two hundred times.=200回",
+"でも今は、200回跳べる。"
+],
+[
+"S:My sister=姉は | V:counts=数える | O:for me=私のために | T:every day.=毎日",
+"姉が毎日回数を数えてくれる。"
+],
+[
+"S:She said=姉は言った | O:to me,=私に | X:\"You're getting better!\"=「上手になってる」",
+"姉は私に「上手になってるね」と言った。"
+],
+[
+"S:My goal=私の目標は | V:is=…だ | C:three hundred times.=300回",
+"私の目標は300回だ。"
+],
+[
+"S:I will=私は…つもりだ | V:practice hard=一生懸命練習する | T:again tomorrow.=明日もまた",
+"明日もまた一生懸命練習するつもりだ。"
+]
+],
+"q": [
+[
+0,
+2,
+"今日は何分間なわとびをした？"
+],
+[
+2,
+3,
+"最初は何回跳べた？"
+],
+[
+4,
+3,
+"今は何回跳べる？"
+],
+[
+7,
+2,
+"目標は何回？"
+]
+]
+},
+"beg61": {
+"level": 4,
+"title": "Please Wash Your Hands",
+"list": [
+[
+"S:This is=これは | C:a notice=お知らせです | P:to all students.=全生徒への",
+"これは全生徒へのお知らせです。"
+],
+[
+"S:Many students=多くの生徒が | V:have=かかっている | O:colds this month.=今月かぜに",
+"今月、かぜをひいている生徒がたくさんいます。"
+],
+[
+"M:Please=どうか | V:wash your hands=手を洗って | T:often.=こまめに",
+"こまめに手を洗ってください。"
+],
+[
+"V:Use soap=せっけんを使い | M:and wash=そして洗おう | T:for twenty seconds.=20秒間",
+"せっけんを使って、20秒間洗いましょう。"
+],
+[
+"V:Don't forget=忘れないで | R:to wash=洗うことを | P:between your fingers.=指の間を",
+"指の間も忘れずに洗いましょう。"
+],
+[
+"T:After that,=その後 | V:dry your hands=手をふこう | P:with a clean towel.=きれいなタオルで",
+"その後、きれいなタオルで手をふきましょう。"
+],
+[
+"V:Wash your hands=手を洗おう | T:before lunch=昼食の前に | M:and after P.E.=そして体育の後に",
+"昼食の前と体育の後には手を洗いましょう。"
+],
+[
+"M:When you cough,=せきをするときは | V:cover your mouth=口をおおう | P:with a tissue.=ティッシュで",
+"せきをするときは、ティッシュで口をおおいましょう。"
+],
+[
+"S:This helps=これは役立つ | V:stop=止めるのに | O:colds from spreading.=かぜが広がるのを",
+"これは、かぜが広がるのを防ぐのに役立ちます。"
+],
+[
+"S:Let's=…しましょう | V:stay healthy=元気でいる | M:together!=みんなで",
+"みんなで元気に過ごしましょう！"
+]
+],
+"q": [
+[
+1,
+2,
+"今月、多くの生徒は何にかかっている？"
+],
+[
+3,
+2,
+"何秒間手を洗う？"
+],
+[
+5,
+2,
+"何で手をふく？"
+],
+[
+6,
+2,
+"昼食の前と、何の後に手を洗う？"
+]
+]
+},
+"beg62": {
+"level": 4,
+"title": "Why We Eat Vegetables",
+"list": [
+[
+"S:Some children don't=…ない子どももいる | V:like vegetables=野菜を好き | M:very much.=あまり",
+"野菜があまり好きではない子どももいる。"
+],
+[
+"S:But vegetables are=でも野菜は | C:important=大切だ | P:for our body.=体にとって",
+"でも、野菜は体にとって大切だ。"
+],
+[
+"S:They have=それらにはある | O:many vitamins=多くのビタミンが | M:and fiber.=そして食物繊維が",
+"野菜にはビタミンや食物繊維がたくさんある。"
+],
+[
+"S:Fiber is=食物繊維は | C:good for=…によい | X:your stomach.=おなか",
+"食物繊維はおなかによい。"
+],
+[
+"S:Carrots=にんじんは | V:are=…だ | C:good for your eyes.=目によい",
+"にんじんは目によい。"
+],
+[
+"S:Spinach=ほうれん草は | V:gives us=私たちにくれる | O:iron.=鉄分を",
+"ほうれん草からは鉄分がとれる。"
+],
+[
+"S:You can=あなたは…できる | V:eat vegetables=野菜を食べる | P:in many ways.=いろいろな方法で",
+"野菜はいろいろな方法で食べられる。"
+],
+[
+"V:Try=試してみよう | O:a salad=サラダを | M:or soup.=またはスープを",
+"サラダやスープを試してみよう。"
+],
+[
+"S:Cooked vegetables=加熱した野菜は | V:are=…だ | C:easy to eat.=食べやすい",
+"加熱した野菜は食べやすい。"
+],
+[
+"S:Let's=…しよう | V:eat vegetables=野菜を食べる | T:every day.=毎日",
+"毎日野菜を食べよう。"
+]
+],
+"q": [
+[
+2,
+1,
+"野菜にはたくさん何がある？"
+],
+[
+3,
+2,
+"食物繊維は何によい？"
+],
+[
+4,
+2,
+"にんじんは何によい？"
+],
+[
+5,
+2,
+"ほうれん草からは何がとれる？"
+],
+[
+7,
+1,
+"何を試してみようと言っている？"
+]
+]
+},
+"beg63": {
+"level": 4,
+"title": "The Day I Caught a Cold",
+"list": [
+[
+"T:This morning,=今朝 | S:I had=私は…があった | O:a fever.=熱が",
+"今朝、私は熱があった。"
+],
+[
+"S:I=私は | V:also had=…もあった | O:a headache.=頭痛が",
+"頭も痛かった。"
+],
+[
+"S:My mother said,=母は言った | O:\"Stay home today.\"=「今日は家にいて」",
+"母は「今日は家にいなさい」と言った。"
+],
+[
+"S:So I didn't go=だから行かなかった | P:to school=学校へ | T:today.=今日は",
+"だから、今日は学校に行かなかった。"
+],
+[
+"S:I took=私は飲んだ | O:some medicine=薬を | M:and slept=そして寝た | T:all afternoon.=午後ずっと",
+"薬を飲んで、午後はずっと寝ていた。"
+],
+[
+"S:My friend Ken=友だちのケンが | V:called me=電話をくれた | T:in the evening.=夕方に",
+"夕方、友だちのケンが電話をくれた。"
+],
+[
+"S:He said=彼は言った | P:to me,=私に | O:\"Get well soon!\"=「早く元気になって」",
+"ケンは私に「早く元気になってね」と言った。"
+],
+[
+"S:I was=私は…だった | C:very happy=とてもうれしい | R:to hear that.=それを聞いて",
+"それを聞いて、とてもうれしかった。"
+],
+[
+"T:Tonight=今夜 | S:my fever=熱は | V:is a little lower.=少し下がった",
+"今夜は、熱が少し下がった。"
+],
+[
+"S:I hope=私は…といいな | O:I can go to school=学校に行ける | T:tomorrow.=明日",
+"明日は学校に行けるといいな。"
+]
+],
+"q": [
+[
+0,
+2,
+"今朝、何があった？"
+],
+[
+2,
+1,
+"母は何と言った？"
+],
+[
+4,
+1,
+"何を飲んだ？"
+],
+[
+6,
+2,
+"ケンは何と言った？"
+],
+[
+8,
+2,
+"今夜、熱はどうなった？"
+]
+]
+},
+"beg64": {
+"level": 4,
+"title": "My Favorite Fruit: Apples",
+"list": [
+[
+"T:Today=今日は | S:I will talk=私は話します | P:about my favorite fruit.=好きな果物について",
+"今日は、私の大好きな果物について話します。"
+],
+[
+"S:My favorite fruit=私の好きな果物は | V:is=…だ | C:the apple.=りんご",
+"私の大好きな果物はりんごです。"
+],
+[
+"S:Apples are=りんごは | C:sweet and crunchy.=甘くてシャキシャキ",
+"りんごは甘くてシャキシャキしています。"
+],
+[
+"S:I like=私は好きだ | R:to eat them=それを食べるのが | T:for breakfast.=朝食に",
+"私は朝食にりんごを食べるのが好きです。"
+],
+[
+"S:My grandmother=祖母は | V:lives=住んでいる | P:in Aomori.=青森に",
+"祖母は青森に住んでいます。"
+],
+[
+"S:Aomori is=青森は | C:famous=有名だ | P:for its apples.=りんごで",
+"青森はりんごで有名です。"
+],
+[
+"T:Every autumn,=毎年秋に | S:she sends=祖母は送ってくれる | O:us a big box=私たちに大きな箱を | P:of apples.=りんごの",
+"毎年秋、祖母は大きな箱いっぱいのりんごを送ってくれます。"
+],
+[
+"S:My mother makes=母は作る | O:apple pie with them.=それでアップルパイを",
+"母はそのりんごでアップルパイを作ります。"
+],
+[
+"S:It is=それは | M:really=本当に | C:delicious!=おいしい",
+"それは本当においしいです！"
+],
+[
+"S:Thank you=ありがとう | M:very much=とても | P:for listening.=聞いてくれて",
+"聞いてくれて、ありがとうございました。"
+]
+],
+"q": [
+[
+1,
+2,
+"好きな果物は何？"
+],
+[
+3,
+2,
+"いつりんごを食べるのが好き？"
+],
+[
+4,
+2,
+"祖母はどこに住んでいる？"
+],
+[
+6,
+2,
+"祖母は毎年秋に何を送ってくれる？"
+],
+[
+7,
+1,
+"母はりんごで何を作る？"
+]
+]
+},
+"beg65": {
+"level": 4,
+"title": "A Winter Trip to Hokkaido",
+"list": [
+[
+"S:My family and I=家族と私は | V:arrived=着いた | P:in Sapporo, Hokkaido,=北海道の札幌に | T:today.=今日",
+"今日、家族と私は北海道の札幌に着いた。"
+],
+[
+"S:It was=それは…だった | C:very cold=とても寒い | M:outside.=外は",
+"外はとても寒かった。"
+],
+[
+"S:Hokkaido is=北海道は | C:the largest prefecture=いちばん大きな県 | P:in Japan.=日本で",
+"北海道は日本でいちばん大きな都道府県だ。"
+],
+[
+"T:Every winter,=毎年冬に | S:Sapporo has=札幌にはある | O:a big snow festival.=大きな雪まつりが",
+"毎年冬、札幌では大きな雪まつりが開かれる。"
+],
+[
+"S:We saw=私たちは見た | O:many statues=たくさんの像を | X:made of snow and ice.=雪と氷でできた",
+"私たちは雪と氷でできた像をたくさん見た。"
+],
+[
+"S:Some of them=その中のいくつかは | V:were=…だった | C:as big as houses.=家ほど大きい",
+"その中には家ほど大きいものもあった。"
+],
+[
+"T:For dinner,=夕食に | S:we ate=私たちは食べた | O:hot miso ramen.=熱いみそラーメンを",
+"夕食に、私たちは熱いみそラーメンを食べた。"
+],
+[
+"S:It was=それは…だった | C:delicious,=とてもおいしい | M:and my body got warm.=そして体が温まった",
+"とてもおいしくて、体が温まった。"
+],
+[
+"T:Tomorrow,=明日 | V:we will visit=私たちは訪れる | O:a small town=小さな町を | P:near the sea.=海の近くの",
+"明日は、海の近くの小さな町を訪れる予定だ。"
+],
+[
+"S:I can't=私は…できない | V:wait=待つ | P:for tomorrow!=明日を",
+"明日が待ちきれない！"
+]
+],
+"q": [
+[
+0,
+2,
+"家族はどこに着いた？"
+],
+[
+3,
+2,
+"札幌では毎年冬に何がある？"
+],
+[
+4,
+2,
+"像は何でできていた？"
+],
+[
+6,
+2,
+"夕食に何を食べた？"
+]
+]
+},
+"beg66": {
+"level": 4,
+"title": "Christmas in Summer",
+"list": [
+[
+"P:In Australia,=オーストラリアでは | S:Christmas comes=クリスマスは来る | P:in summer.=夏に",
+"オーストラリアでは、クリスマスは夏にやって来る。"
+],
+[
+"S:The seasons are=季節は…だ | C:opposite=逆 | P:to those in Japan.=日本の季節と",
+"季節が日本とは逆なのだ。"
+],
+[
+"S:December is=12月は | C:a hot month=暑い月だ | M:there.=そこでは",
+"12月は、そこでは暑い月だ。"
+],
+[
+"T:On Christmas Day,=クリスマスの日に | S:many families go=多くの家族が行く | P:to the beach.=ビーチへ",
+"クリスマスの日、多くの家族がビーチに行く。"
+],
+[
+"S:They swim=彼らは泳ぐ | P:in the sea=海で | M:and enjoy the sun.=そして日差しを楽しむ",
+"彼らは海で泳ぎ、日差しを楽しむ。"
+],
+[
+"S:Some people have=…する人もいる | O:a barbecue=バーベキューを | P:with their friends.=友達と",
+"友達とバーベキューをする人もいる。"
+],
+[
+"S:Seafood is=シーフードは | C:also popular=…も人気だ | P:at Christmas.=クリスマスに",
+"クリスマスにはシーフードも人気がある。"
+],
+[
+"P:In pictures,=絵の中では | S:Santa sometimes=サンタは時々 | V:wears shorts.=短パンをはく",
+"絵の中では、サンタが短パンをはいていることもある。"
+],
+[
+"S:Christmas there is=そこのクリスマスは | C:very different=とても違う | P:from Christmas in Japan.=日本のクリスマスと",
+"そこのクリスマスは、日本のクリスマスとはまったく違う。"
+],
+[
+"V:Would you like=…したいですか | O:to try it=それを体験 | T:someday?=いつか",
+"いつか体験してみたいと思いませんか。"
+]
+],
+"q": [
+[
+0,
+2,
+"オーストラリアではクリスマスはどの季節に来る？"
+],
+[
+3,
+2,
+"クリスマスの日、多くの家族はどこへ行く？"
+],
+[
+5,
+2,
+"バーベキューはだれとする？"
+],
+[
+7,
+2,
+"絵の中のサンタは何をはいていることがある？"
+]
+]
+},
+"beg67": {
+"level": 4,
+"title": "Halloween in America",
+"list": [
+[
+"S:Halloween is=ハロウィーンは | C:a popular event=人気の行事だ | P:in America=アメリカで | T:on October 31.=10月31日の",
+"ハロウィーンは、アメリカで人気のある10月31日の行事だ。"
+],
+[
+"T:On that night,=その夜 | S:children wear=子どもたちは着る | O:costumes.=仮装の衣装を",
+"その夜、子どもたちは仮装をする。"
+],
+[
+"S:Some become=…になる子もいる | C:witches, ghosts,=魔女やおばけ | X:or superheroes.=またはヒーローに",
+"魔女やおばけ、ヒーローになる子もいる。"
+],
+[
+"S:They visit=彼らは訪ねる | O:houses=家々を | P:in their neighborhood.=近所の",
+"彼らは近所の家々を回る。"
+],
+[
+"T:At each door,=各家の玄関で | S:they say,=彼らは言う | O:\"Trick or treat!\"=「お菓子をちょうだい」",
+"各家の玄関で、彼らは「トリック・オア・トリート！」と言う。"
+],
+[
+"T:Then=すると | S:people give them=人々は彼らにあげる | O:candy or chocolate.=お菓子やチョコを",
+"すると人々は、子どもたちにキャンディーやチョコレートをあげる。"
+],
+[
+"S:Many families also=多くの家族はまた | V:make=作る | O:lanterns=ランタンを | P:from pumpkins.=かぼちゃから",
+"多くの家族は、かぼちゃでランタンも作る。"
+],
+[
+"S:They cut=彼らは彫る | O:a scary face=こわい顔を | P:into the pumpkin.=かぼちゃに",
+"かぼちゃにこわい顔を彫る。"
+],
+[
+"S:Then they put=そして入れる | O:a light=明かりを | P:inside it.=その中に",
+"そして、その中に明かりを入れる。"
+],
+[
+"S:Halloween is=ハロウィーンは | C:exciting=わくわくする | P:for children.=子どもたちにとって",
+"ハロウィーンは、子どもたちにとってわくわくする行事だ。"
+]
+],
+"q": [
+[
+0,
+3,
+"ハロウィーンは何月何日？"
+],
+[
+1,
+2,
+"子どもたちはその夜何を着る？"
+],
+[
+5,
+2,
+"人々は子どもたちに何をあげる？"
+],
+[
+6,
+3,
+"ランタンは何から作る？"
+]
+]
+},
+"beg68": {
+"level": 4,
+"title": "Greetings Around the World",
+"list": [
+[
+"S:People greet=人々はあいさつする | O:each other=お互いに | P:in different ways.=さまざまな方法で",
+"人々はさまざまな方法であいさつをし合う。"
+],
+[
+"P:In Japan,=日本では | S:people often bow=人々はよくおじぎする | P:to each other.=お互いに",
+"日本では、人々はよくおじぎをし合う。"
+],
+[
+"P:In America,=アメリカでは | S:people usually=人々はふつう | V:shake hands.=握手をする",
+"アメリカでは、人々はふつう握手をする。"
+],
+[
+"P:In France,=フランスでは | S:friends sometimes=友達どうしは時々 | V:kiss on the cheek.=ほおにキスする",
+"フランスでは、友達どうしがほおにキスをすることがある。"
+],
+[
+"P:In Thailand,=タイでは | S:people put=人々は合わせる | O:their hands together.=両手を",
+"タイでは、人々は両手を合わせる。"
+],
+[
+"T:Then=それから | S:they bow=彼らはおじぎする | M:a little.=少し",
+"そして、少しおじぎをする。"
+],
+[
+"P:In New Zealand,=ニュージーランドでは | S:Maori people sometimes=マオリの人は時々 | V:press noses=鼻を押し合う | M:together.=くっつけて",
+"ニュージーランドでは、マオリの人々が鼻をくっつけ合うことがある。"
+],
+[
+"S:Each country=それぞれの国に | V:has=ある | O:its own greeting.=独自のあいさつが",
+"それぞれの国に、独自のあいさつがある。"
+],
+[
+"M:When you travel,=旅行するときは | V:try to use=使ってみよう | O:the local greeting.=現地のあいさつを",
+"旅行するときは、現地のあいさつを使ってみよう。"
+],
+[
+"S:People will=人々は…だろう | V:smile=ほほえむ | P:at you.=あなたに",
+"人々はきっと、あなたにほほえんでくれるだろう。"
+]
+],
+"q": [
+[
+1,
+1,
+"日本の人々はよく何をする？"
+],
+[
+2,
+2,
+"アメリカの人々はふつう何をする？"
+],
+[
+4,
+2,
+"タイの人々は手をどうする？"
+],
+[
+6,
+2,
+"マオリの人々は何を押し合う？"
+]
+]
+},
+"beg69": {
+"level": 4,
+"title": "A Letter from India",
+"list": [
+[
+"V:Thank you=ありがとう | P:for your letter=手紙を | X:from Japan.=日本からの",
+"日本からの手紙をありがとう。"
+],
+[
+"S:I live=私は住んでいる | P:in Mumbai,=ムンバイに | X:a big city in India.=インドの大都市",
+"私はインドの大都市ムンバイに住んでいます。"
+],
+[
+"S:India is=インドは | C:a very large country=とても大きな国 | M:with many languages.=多くの言語がある",
+"インドはたくさんの言語がある、とても大きな国です。"
+],
+[
+"P:At school,=学校では | S:I study=私は勉強する | O:English and Hindi.=英語とヒンディー語を",
+"学校では、英語とヒンディー語を勉強しています。"
+],
+[
+"P:Like many Indians,=多くのインド人と同じく | S:I love=私は大好き | O:cricket very much.=クリケットがとても",
+"多くのインド人と同じように、私はクリケットが大好きです。"
+],
+[
+"T:In autumn,=秋に | S:we celebrate=私たちは祝う | O:Diwali, the festival of lights.=光の祭りディワリを",
+"秋には、光の祭りであるディワリを祝います。"
+],
+[
+"S:We light=私たちはともす | O:many small lamps=たくさんのランプを | P:around our house.=家のまわりに",
+"家のまわりに、たくさんの小さなランプをともします。"
+],
+[
+"S:We also=私たちはまた | V:eat=食べる | O:lots of sweets.=たくさんのお菓子を",
+"お菓子もたくさん食べます。"
+],
+[
+"O:What festivals do=どんな祭りが | S:you have=あなたたちにある | P:in Japan?=日本では",
+"日本にはどんなお祭りがありますか。"
+],
+[
+"V:Please write=書いてください | P:to me=私に | T:soon.=すぐに",
+"すぐにお返事をください。"
+]
+],
+"q": [
+[
+1,
+1,
+"書き手はどこに住んでいる？"
+],
+[
+3,
+2,
+"学校で何を勉強している？"
+],
+[
+4,
+2,
+"書き手が大好きなスポーツは？"
+],
+[
+5,
+2,
+"秋に何を祝う？"
+]
+]
+},
+"beg70": {
+"level": 4,
+"title": "My Days in London",
+"list": [
+[
+"S:I am=私はいる | P:in London=ロンドンに | T:this week.=今週は",
+"今週、私はロンドンにいます。"
+],
+[
+"T:Today=今日 | S:I rode=私は乗った | O:a red bus with two floors.=2階建ての赤いバスに",
+"今日、私は2階建ての赤いバスに乗りました。"
+],
+[
+"P:From the bus,=バスから | S:I saw=私は見た | O:Big Ben, the famous clock tower.=有名な時計塔ビッグベンを",
+"バスから、有名な時計塔のビッグ・ベンが見えました。"
+],
+[
+"T:Then=それから | S:I went=私は行った | P:to the British Museum.=大英博物館へ",
+"それから大英博物館へ行きました。"
+],
+[
+"S:You can=あなたは…できる | V:enter it=そこに入る | P:for free!=無料で",
+"そこには無料で入れるんです！"
+],
+[
+"S:I saw=私は見た | O:many old things=たくさんの古い物を | P:from all over the world.=世界中からの",
+"世界中の古いものをたくさん見ました。"
+],
+[
+"T:For lunch,=お昼に | S:I had=私は食べた | O:fish and chips.=フィッシュ&チップスを",
+"お昼には、フィッシュ・アンド・チップスを食べました。"
+],
+[
+"S:It is=それは…だ | C:a famous food=有名な食べ物 | P:in Britain.=イギリスで",
+"それはイギリスで有名な食べ物です。"
+],
+[
+"T:In the evening,=夕方に | S:I rode=私は乗った | O:a big wheel=大きな観覧車に | P:by the river.=川のそばの",
+"夕方には、川のそばの大きな観覧車に乗りました。"
+],
+[
+"S:The view=景色は | P:from the top=てっぺんからの | C:was beautiful!=とてもきれいだった",
+"てっぺんからの景色はとてもきれいでした！"
+]
+],
+"q": [
+[
+1,
+2,
+"今日、何に乗った？"
+],
+[
+3,
+2,
+"それからどこへ行った？"
+],
+[
+4,
+2,
+"大英博物館にはどうやって入れる？"
+],
+[
+6,
+2,
+"お昼に何を食べた？"
+]
+]
+},
+"beg71": {
+"level": 4,
+"title": "The Spring Festival in China",
+"list": [
+[
+"S:The Spring Festival=春節は | V:is=…だ | C:the Chinese New Year.=中国の正月",
+"春節とは、中国の正月のことだ。"
+],
+[
+"S:Its date=その日付は | V:changes=変わる | T:every year.=毎年",
+"その日付は毎年変わる。"
+],
+[
+"S:It is=それは…ある | M:usually=たいてい | P:in January or February.=1月か2月に",
+"それはたいてい1月か2月にある。"
+],
+[
+"S:Many people go=多くの人が行く | M:back=戻って | P:to their hometowns.=故郷へ",
+"多くの人が故郷へ帰る。"
+],
+[
+"S:Families eat=家族は食べる | O:dinner together=いっしょに夕食を | T:on New Year's Eve.=大みそかに",
+"家族は大みそかにいっしょに夕食を食べる。"
+],
+[
+"P:In northern China,=中国の北部では | S:people often=人々はよく | V:eat dumplings.=ギョーザを食べる",
+"中国の北部では、人々はよくギョーザを食べる。"
+],
+[
+"S:Children get=子どもたちはもらう | O:red envelopes=赤い封筒を | M:with money inside.=お金の入った",
+"子どもたちは、お金の入った赤い封筒をもらう。"
+],
+[
+"S:Red is=赤は | C:a lucky color=縁起のいい色だ | P:in China.=中国では",
+"中国では、赤は縁起のいい色だ。"
+],
+[
+"S:People also=人々はまた | V:enjoy=楽しむ | O:fireworks and lion dances.=花火や獅子舞を",
+"人々は花火や獅子舞も楽しむ。"
+],
+[
+"S:It is=それは…だ | C:the biggest holiday=いちばん大きな祝日 | P:of the year.=1年で",
+"それは1年でいちばん大きな祝日だ。"
+]
+],
+"q": [
+[
+1,
+1,
+"春節の日付は毎年どうなる？"
+],
+[
+2,
+2,
+"春節はたいてい何月にある？"
+],
+[
+4,
+2,
+"家族はいつ、いっしょに夕食を食べる？"
+],
+[
+5,
+2,
+"中国の北部では、よく何を食べる？"
+],
+[
+6,
+1,
+"子どもたちは何をもらう？"
+]
+]
+},
+"beg72": {
+"level": 4,
+"title": "My First Flight",
+"list": [
+[
+"T:Today=今日 | S:I took=私は乗った | O:a plane=飛行機に | P:for the first time.=はじめて",
+"今日、私ははじめて飛行機に乗った。"
+],
+[
+"S:I flew=私は飛んだ | P:from Tokyo=東京から | P:to Okinawa.=沖縄まで",
+"東京から沖縄まで飛んだ。"
+],
+[
+"P:At the airport,=空港で | S:I was=私は…だった | C:a little nervous.=少し緊張して",
+"空港で、私は少し緊張していた。"
+],
+[
+"S:My bag=私のかばんは | V:went=通った | P:through a machine.=機械の中を",
+"私のかばんは機械の中を通った。"
+],
+[
+"T:Then=それから | S:we got=私たちは乗りこんだ | P:on the plane.=飛行機に",
+"それから私たちは飛行機に乗りこんだ。"
+],
+[
+"S:My seat=私の席は | V:was=…だった | C:next to the window.=窓のとなり",
+"私の席は窓のとなりだった。"
+],
+[
+"M:When the plane took off,=離陸したとき | S:I felt=私は感じた | C:a little scared.=少しこわい",
+"飛行機が離陸したとき、少しこわかった。"
+],
+[
+"M:But soon=でもすぐに | S:I saw=私は見た | O:the beautiful sea=美しい海を | P:below us.=下に",
+"でもすぐに、下に美しい海が見えた。"
+],
+[
+"S:A flight attendant gave=乗務員がくれた | O:me a cup=私に1杯の | P:of juice.=ジュースを",
+"客室乗務員がジュースを1杯くれた。"
+],
+[
+"S:I want=私は…したい | O:to fly=飛ぶことを | T:again soon!=またすぐに",
+"またすぐに飛行機に乗りたい！"
+]
+],
+"q": [
+[
+1,
+2,
+"どこまで飛んだ？"
+],
+[
+2,
+2,
+"空港でどんな気持ちだった？"
+],
+[
+5,
+2,
+"席はどこだった？"
+],
+[
+8,
+2,
+"客室乗務員は何をくれた？"
+]
+]
+},
+"beg73": {
+"level": 4,
+"title": "Summer Vacation in Hawaii",
+"list": [
+[
+"T:This summer,=この夏 | S:my family went=家族で行った | P:to Hawaii.=ハワイへ",
+"この夏、家族でハワイに行きました。"
+],
+[
+"S:Hawaii is=ハワイは | C:one of the 50 states=50州の一つ | P:of the U.S.=アメリカの",
+"ハワイはアメリカの50州の一つです。"
+],
+[
+"S:People there say=そこの人々は言う | O:\"Aloha\" to each other=お互いに「アロハ」と | M:when they meet.=会ったとき",
+"そこの人々は、会うとお互いに「アロハ」と言います。"
+],
+[
+"S:We stayed=私たちは泊まった | P:at a hotel=ホテルに | P:near Waikiki Beach.=ワイキキビーチ近くの",
+"私たちはワイキキビーチの近くのホテルに泊まりました。"
+],
+[
+"T:Every morning,=毎朝 | S:I swam=私は泳いだ | P:in the sea.=海で",
+"毎朝、海で泳ぎました。"
+],
+[
+"S:The water was=水は…だった | C:clear=透き通って | M:and warm.=そして温かい",
+"水は透き通っていて、温かかったです。"
+],
+[
+"T:One day,=ある日 | V:we climbed=私たちは登った | O:an old volcano=古い火山に | X:called Diamond Head.=ダイヤモンドヘッドという",
+"ある日、ダイヤモンドヘッドという古い火山に登りました。"
+],
+[
+"S:The view from the top=頂上からの景色は | V:was=…だった | C:amazing!=すばらしい",
+"頂上からの景色はすばらしかったです！"
+],
+[
+"T:In the evening,=夕方に | S:we watched=私たちは見た | O:a hula dance show.=フラダンスのショーを",
+"夕方には、フラダンスのショーを見ました。"
+],
+[
+"S:I want=私は…したい | V:to go back=戻ることを | T:there someday!=いつかそこへ",
+"いつかまたそこへ行きたいです！"
+]
+],
+"q": [
+[
+1,
+1,
+"ハワイは何の一つ？"
+],
+[
+3,
+2,
+"ホテルはどこの近く？"
+],
+[
+6,
+3,
+"ある日、何という火山に登った？"
+],
+[
+8,
+2,
+"夕方に何を見た？"
+]
+]
+},
+"beg74": {
+"level": 4,
+"title": "The Old Bicycle",
+"list": [
+[
+"T:One day,=ある日 | S:Ken found=ケンは見つけた | O:an old bicycle=古い自転車を | P:in his grandfather's garage.=祖父の車庫で",
+"ある日、ケンは祖父の車庫で古い自転車を見つけた。"
+],
+[
+"S:It was=それは…だった | C:very rusty=とてもさびて | M:and dirty.=そして汚れて",
+"それはとてもさびていて、汚れていた。"
+],
+[
+"S:The tires were=タイヤは…だった | C:flat,=パンクして | M:and the chain was broken.=チェーンは壊れて",
+"タイヤはパンクしていて、チェーンは壊れていた。"
+],
+[
+"S:Ken asked=ケンはたずねた | O:his grandfather,=祖父に | O:\"Can I repair it?\"=「直してもいい？」",
+"ケンは祖父に「これを直してもいい？」とたずねた。"
+],
+[
+"S:His grandfather smiled=祖父はほほえんだ | M:and said,=そして言った | O:\"Of course.\"=「もちろん」と",
+"祖父はほほえんで、「もちろん」と言った。"
+],
+[
+"T:Every weekend,=毎週末 | S:they worked=二人は作業した | P:on the bicycle=自転車に | M:together.=いっしょに",
+"毎週末、二人はいっしょに自転車の作業をした。"
+],
+[
+"S:They cleaned=二人はきれいにした | O:the whole bicycle=自転車全体を | M:and fixed the chain.=チェーンを直した",
+"二人は自転車全体をきれいにし、チェーンを直した。"
+],
+[
+"T:After two months,=2か月後 | S:the bicycle looked=自転車は見えた | C:shiny and new.=ぴかぴかで新しく",
+"2か月後、自転車はぴかぴかで新品のように見えた。"
+],
+[
+"S:Ken rode it=ケンはそれに乗った | P:to school=学校へ | T:the next day.=次の日",
+"ケンは次の日、それに乗って学校へ行った。"
+],
+[
+"S:He was=彼は…だった | C:very proud=とても誇らしく | P:of the old bicycle.=古い自転車が",
+"彼はその古い自転車がとても誇らしかった。"
+]
+],
+"q": [
+[
+0,
+3,
+"ケンはどこで自転車を見つけた？"
+],
+[
+2,
+1,
+"タイヤはどうなっていた？"
+],
+[
+7,
+0,
+"自転車がぴかぴかになったのはいつ？"
+],
+[
+8,
+1,
+"ケンは自転車に乗ってどこへ行った？"
+]
+]
+},
+"beg75": {
+"level": 4,
+"title": "The Kind Shopkeeper",
+"list": [
+[
+"T:One rainy evening,=ある雨の夕方 | S:Yuki stopped=ユキは立ち寄った | P:at a small shop.=小さな店に",
+"ある雨の夕方、ユキは小さな店に立ち寄った。"
+],
+[
+"S:She wanted=彼女は…したかった | V:to buy=買うこと | O:a notebook.=ノートを",
+"彼女はノートを買いたかった。"
+],
+[
+"M:But at the register,=しかしレジで | S:she found=彼女は気づいた | O:her wallet was missing.=財布がないことに",
+"しかしレジで、彼女は財布がないことに気づいた。"
+],
+[
+"S:She felt=彼女は感じた | C:very embarrassed.=とても恥ずかしく",
+"彼女はとても恥ずかしかった。"
+],
+[
+"S:The old shopkeeper=年配の店主は | V:smiled=ほほえんだ | M:and said,=そして言った | O:\"Pay me next time.\"=「次に払って」と",
+"年配の店主はほほえんで、「次に来たときに払ってね」と言った。"
+],
+[
+"S:He also lent=彼は貸してもくれた | O:her an umbrella=傘を | R:because the rain was heavy.=雨が強かったので",
+"雨が強かったので、彼は傘も貸してくれた。"
+],
+[
+"T:The next morning,=次の朝 | S:Yuki went back=ユキは戻った | P:to the shop.=その店に",
+"次の朝、ユキはその店に戻った。"
+],
+[
+"S:She paid=彼女は払った | O:for the notebook=ノートの代金を | M:and returned the umbrella.=傘を返した",
+"彼女はノートの代金を払い、傘を返した。"
+],
+[
+"S:She also gave him=彼にもあげた | O:some cookies=クッキーを | V:she made.=自分で作った",
+"彼女は自分で作ったクッキーも彼にあげた。"
+],
+[
+"T:Since then,=それ以来 | S:she has visited=彼女は通っている | O:the shop every week.=毎週その店に",
+"それ以来、彼女は毎週その店に通っている。"
+]
+],
+"q": [
+[
+2,
+2,
+"レジで何に気づいた？"
+],
+[
+4,
+3,
+"店主は何と言った？"
+],
+[
+5,
+2,
+"店主はなぜ傘を貸した？"
+],
+[
+8,
+1,
+"ユキは店主に何をあげた？"
+]
+]
+},
+"beg76": {
+"level": 4,
+"title": "The Boy Who Was Always Late",
+"list": [
+[
+"S:Taro was=タロウは…だった | M:always late=いつも遅れて | P:for school.=学校に",
+"タロウはいつも学校に遅刻していた。"
+],
+[
+"S:He went=彼は行った | P:to bed=ベッドに | T:very late at night.=夜とても遅く",
+"彼は夜とても遅くに寝ていた。"
+],
+[
+"T:Every morning,=毎朝 | S:his alarm clock rang,=目覚ましが鳴った | M:but he did not wake up.=でも起きなかった",
+"毎朝目覚まし時計が鳴ったが、彼は起きなかった。"
+],
+[
+"S:His teacher often=先生はよく | V:scolded him=彼をしかった | P:for being late.=遅刻のことで",
+"先生はよく遅刻のことで彼をしかった。"
+],
+[
+"T:One day,=ある日 | S:his little sister said,=妹が言った | O:\"Let's go to bed early.\"=「早く寝よう」と",
+"ある日、妹が「早く寝ようよ」と言った。"
+],
+[
+"S:Taro decided=タロウは決めた | V:to go to bed=寝ることに | T:at nine.=9時に",
+"タロウは9時に寝ることに決めた。"
+],
+[
+"T:The next morning,=次の朝 | S:he woke up=彼は起きた | T:before his alarm.=目覚ましより前に",
+"次の朝、彼は目覚まし時計が鳴る前に起きた。"
+],
+[
+"S:He arrived=彼は着いた | P:at school=学校に | M:on time.=時間通りに",
+"彼は時間通りに学校に着いた。"
+],
+[
+"S:His teacher was=先生は…だった | C:very surprised.=とても驚いて",
+"先生はとても驚いた。"
+],
+[
+"T:Now=今では | S:Taro is=タロウは | M:never late.=一度も遅れない",
+"今では、タロウは一度も遅刻しない。"
+]
+],
+"q": [
+[
+1,
+2,
+"タロウはいつ寝ていた？"
+],
+[
+5,
+2,
+"タロウは何時に寝ることにした？"
+],
+[
+6,
+2,
+"次の朝、彼はいつ起きた？"
+],
+[
+9,
+2,
+"今のタロウはどうなった？"
+]
+]
+},
+"beg77": {
+"level": 4,
+"title": "A Gift from Grandmother",
+"list": [
+[
+"T:Last winter,=去年の冬 | S:Mika got=ミカは受け取った | O:a package=小包を | P:from her grandmother.=祖母から",
+"去年の冬、ミカは祖母から小包を受け取った。"
+],
+[
+"P:Inside it,=その中に | V:there was=…があった | O:a red scarf.=赤いマフラーが",
+"その中には赤いマフラーが入っていた。"
+],
+[
+"S:Her grandmother had=祖母は…していた | V:knitted it=それを編んで | P:by hand.=手で",
+"祖母はそれを手で編んでいた。"
+],
+[
+"V:There was=…があった | M:also=…も | O:a short letter.=短い手紙が",
+"短い手紙も入っていた。"
+],
+[
+"S:It said,=それにはあった | O:\"Stay warm,=「暖かくしてね | M:my dear Mika.\"=かわいいミカ」と",
+"手紙には「暖かくしてね、かわいいミカ」と書いてあった。"
+],
+[
+"S:Mika wore=ミカは身につけた | O:the scarf every day=毎日マフラーを | M:on her way to school.=通学の途中に",
+"ミカは毎日、学校へ行くときにそのマフラーを巻いた。"
+],
+[
+"S:Her friends often=友達はよく | V:said,=言った | O:\"What a nice scarf!\"=「すてきなマフラー！」",
+"友達はよく「なんてすてきなマフラー！」と言った。"
+],
+[
+"S:Mika was=ミカは…だった | C:very happy=とてもうれしく | R:to hear that.=それを聞いて",
+"それを聞いて、ミカはとてもうれしかった。"
+],
+[
+"T:That night,=その夜 | S:she wrote=彼女は書いた | O:a thank-you letter=お礼の手紙を | P:to her grandmother.=祖母に",
+"その夜、彼女は祖母にお礼の手紙を書いた。"
+],
+[
+"S:The scarf is=そのマフラーは | M:still=今でも | C:her treasure.=彼女の宝物だ",
+"そのマフラーは今でも彼女の宝物だ。"
+]
+],
+"q": [
+[
+0,
+3,
+"小包はだれから届いた？"
+],
+[
+1,
+2,
+"小包には何が入っていた？"
+],
+[
+2,
+2,
+"祖母はどうやってマフラーを作った？"
+],
+[
+8,
+2,
+"その夜、ミカは何を書いた？"
+]
+]
+},
+"beg78": {
+"level": 4,
+"title": "The Girl and the Stray Cat",
+"list": [
+[
+"T:On her way home,=帰り道に | S:Aya saw=アヤは見た | O:a small stray cat.=小さな野良ネコを",
+"帰り道、アヤは小さな野良ネコを見かけた。"
+],
+[
+"S:It was=それは…だった | C:very thin=とてもやせて | M:and hungry.=そして空腹で",
+"そのネコはとてもやせていて、おなかをすかせていた。"
+],
+[
+"S:Aya gave it=アヤはあげた | O:some bread=パンを | P:from her lunch box.=弁当箱から",
+"アヤはお弁当箱からパンをあげた。"
+],
+[
+"S:The cat ate it=ネコはそれを食べた | M:quickly=すばやく | M:and followed her.=彼女について来た",
+"ネコはそれをすばやく食べて、彼女について来た。"
+],
+[
+"P:At home,=家で | S:Aya asked=アヤはたずねた | O:her mother,=母に | O:\"Can we keep it?\"=「飼ってもいい？」",
+"家で、アヤは母に「飼ってもいい？」とたずねた。"
+],
+[
+"S:Her mother thought=母は考えた | O:about it=それについて | M:for a while.=しばらく",
+"母はしばらくそのことを考えた。"
+],
+[
+"T:Then=それから | S:she said,=彼女は言った | O:\"You must take care of it.\"=「ちゃんと世話してね」",
+"それから母は「ちゃんと世話をしなさいね」と言った。"
+],
+[
+"S:Aya named=アヤは名づけた | O:the cat Momo=ネコをモモと | T:that night.=その夜",
+"その夜、アヤはそのネコをモモと名づけた。"
+],
+[
+"T:Now=今では | S:Momo is=モモは | C:a member of the family.=家族の一員だ",
+"今では、モモは家族の一員だ。"
+]
+],
+"q": [
+[
+0,
+2,
+"アヤは帰り道に何を見かけた？"
+],
+[
+2,
+1,
+"アヤはネコに何をあげた？"
+],
+[
+7,
+1,
+"ネコに何という名前をつけた？"
+],
+[
+8,
+2,
+"今、モモは何になっている？"
+]
+]
+},
+"beg79": {
+"level": 4,
+"title": "The Broken Vase",
+"list": [
+[
+"S:Sho was=ショウは…いた | V:playing with a ball=ボールで遊んで | P:in the living room.=居間で",
+"ショウは居間でボールで遊んでいた。"
+],
+[
+"M:Suddenly,=突然 | S:the ball hit=ボールが当たった | O:his mother's vase.=母の花びんに",
+"突然、ボールが母の花びんに当たった。"
+],
+[
+"S:It fell=それは落ちた | M:and broke=そして割れた | P:into pieces.=こなごなに",
+"それは落ちて、こなごなに割れた。"
+],
+[
+"T:At first,=最初は | S:Sho was=ショウは…だった | C:very scared.=とてもこわく",
+"最初、ショウはとてもこわかった。"
+],
+[
+"S:He wanted=彼は…したかった | V:to hide=隠すこと | O:the pieces.=かけらを",
+"彼はかけらを隠したかった。"
+],
+[
+"M:But=でも | S:he remembered=彼は思い出した | O:his father's words:=父の言葉を",
+"でも彼は父の言葉を思い出した。"
+],
+[
+"M:\"Always=「いつも | V:tell=話しなさい | O:the truth.\"=本当のことを」",
+"「いつも本当のことを話しなさい。」"
+],
+[
+"T:When his mother came home,=母が帰ってきたとき | S:Sho said,=ショウは言った | O:\"I'm sorry. I broke it.\"=「ごめん、割った」",
+"母が帰ってきたとき、ショウは「ごめんなさい。ぼくが割ったんだ」と言った。"
+],
+[
+"S:His mother was=母は…だった | C:not angry=怒っていなかった | M:at all.=少しも",
+"母は少しも怒っていなかった。"
+],
+[
+"S:She said,=彼女は言った | O:\"Thank you for=「ありがとう | C:being honest.\"=正直でいてくれて」",
+"母は「正直に言ってくれてありがとう」と言った。"
+]
+],
+"q": [
+[
+0,
+2,
+"ショウはどこで遊んでいた？"
+],
+[
+1,
+2,
+"ボールは何に当たった？"
+],
+[
+4,
+2,
+"ショウは最初、何を隠したかった？"
+],
+[
+8,
+1,
+"母は怒っていた？"
+]
+]
+},
+"beg80": {
+"level": 4,
+"title": "A Snowy Morning",
+"list": [
+[
+"T:One winter morning,=ある冬の朝 | S:Nana opened=ナナは開けた | O:the curtains.=カーテンを",
+"ある冬の朝、ナナはカーテンを開けた。"
+],
+[
+"S:The town was=町は…だった | C:covered=おおわれて | P:with snow.=雪で",
+"町は雪でおおわれていた。"
+],
+[
+"S:Nana ran=ナナは走った | M:outside=外へ | P:with her brother.=弟と",
+"ナナは弟といっしょに外へ走り出た。"
+],
+[
+"S:They made=二人は作った | O:a big snowman=大きな雪だるまを | P:in the yard.=庭に",
+"二人は庭に大きな雪だるまを作った。"
+],
+[
+"S:Her brother used=弟は使った | O:a carrot=にんじんを | P:as its nose.=鼻として",
+"弟は雪だるまの鼻ににんじんを使った。"
+],
+[
+"S:Nana's hands got=ナナの手はなった | C:very cold=とても冷たく | R:because she had no gloves.=手袋がなくて",
+"手袋がなかったので、ナナの手はとても冷たくなった。"
+],
+[
+"S:Their mother called,=母が呼んだ | O:\"Come inside!=「中に入って！ | O:I made hot chocolate.\"=ココアを作ったよ」",
+"母が「中に入りなさい！ココアを作ったよ」と呼んだ。"
+],
+[
+"S:They drank it=二人はそれを飲んだ | P:by the window=窓のそばで | M:and watched the snow.=雪をながめた",
+"二人は窓のそばでそれを飲みながら、雪をながめた。"
+],
+[
+"S:It was=それは…だった | C:a wonderful morning=すばらしい朝 | P:for Nana.=ナナにとって",
+"それはナナにとってすばらしい朝だった。"
+]
+],
+"q": [
+[
+1,
+2,
+"町は何でおおわれていた？"
+],
+[
+3,
+1,
+"二人は何を作った？"
+],
+[
+4,
+1,
+"弟は鼻に何を使った？"
+],
+[
+5,
+2,
+"ナナの手はなぜ冷たくなった？"
+]
+]
+},
+"beg81": {
+"level": 4,
+"title": "The Lucky Coin",
+"list": [
+[
+"S:Ryo had=リョウは持っていた | O:an old coin=古いコインを | P:from his grandfather.=祖父からもらった",
+"リョウは祖父からもらった古いコインを持っていた。"
+],
+[
+"S:He always=彼はいつも | V:kept it=それを入れていた | P:in his pocket.=ポケットに",
+"彼はいつもそれをポケットに入れていた。"
+],
+[
+"S:He believed=彼は信じていた | O:it brought him=それがもたらすと | O:good luck.=幸運を",
+"彼は、それが幸運をもたらしてくれると信じていた。"
+],
+[
+"T:The day before a big test,=大事なテストの前日 | S:Ryo lost=リョウはなくした | O:the coin.=コインを",
+"大事なテストの前日、リョウはそのコインをなくしてしまった。"
+],
+[
+"S:He searched=彼は探した | P:for it=それを | T:all evening,=夜の間ずっと | M:but could not find it.=でも見つからなかった",
+"彼は夜の間ずっと探したが、見つけられなかった。"
+],
+[
+"S:Ryo was=リョウは…だった | C:very worried=とても心配して | P:about the test.=テストのことが",
+"リョウはテストのことがとても心配だった。"
+],
+[
+"T:That night,=その夜 | S:he studied=彼は勉強した | M:harder than usual.=いつもより熱心に",
+"その夜、彼はいつもより一生懸命勉強した。"
+],
+[
+"T:The next day,=次の日 | S:he did=彼は…した | M:well on the test.=テストでよく",
+"次の日、彼はテストでよい点を取った。"
+],
+[
+"T:After school,=放課後 | S:he found=彼は見つけた | O:the coin under his bed.=ベッドの下で",
+"放課後、彼はベッドの下でコインを見つけた。"
+],
+[
+"S:Ryo smiled=リョウはほほえんだ | M:and thought,=そして思った | O:\"I didn't need it.\"=「必要なかった」",
+"リョウはほほえんで、「コインはいらなかったんだ」と思った。"
+]
+],
+"q": [
+[
+1,
+2,
+"リョウはコインをどこに入れていた？"
+],
+[
+3,
+0,
+"コインをなくしたのはいつ？"
+],
+[
+6,
+2,
+"その夜、彼はどのように勉強した？"
+],
+[
+8,
+2,
+"コインはどこで見つかった？"
+]
+]
+},
+"beg82": {
+"level": 4,
+"title": "The Paper Airplane",
+"list": [
+[
+"S:Sota liked=ソウタは好きだった | O:making paper airplanes=紙飛行機作りが | M:very much.=とても",
+"ソウタは紙飛行機を作るのがとても好きだった。"
+],
+[
+"T:One day,=ある日 | S:his teacher told=先生が話した | O:the class=クラスに | P:about a contest.=大会について",
+"ある日、先生がクラスに大会の話をした。"
+],
+[
+"S:It was=それは…だった | C:a paper airplane contest=紙飛行機の大会 | P:for children.=子どもたちの",
+"それは子どもたちのための紙飛行機の大会だった。"
+],
+[
+"S:Sota practiced=ソウタは練習した | T:every day=毎日 | P:in the park.=公園で",
+"ソウタは毎日公園で練習した。"
+],
+[
+"S:He folded=彼は折った | O:many airplanes=たくさんの飛行機を | M:with different wings.=ちがうつばさで",
+"彼はつばさの形がちがう飛行機をたくさん折った。"
+],
+[
+"M:But=でも | S:they did not fly=飛ばなかった | M:very far.=あまり遠くへ",
+"でも、それらはあまり遠くへは飛ばなかった。"
+],
+[
+"S:His grandfather said,=祖父は言った | O:\"Make=「…にしなさい | O:the wings wider.\"=つばさを広く」",
+"祖父は「つばさをもっと広くしなさい」と言った。"
+],
+[
+"S:Sota tried it,=ソウタは試した | M:and the airplane flew=飛行機は飛んだ | M:very far.=とても遠くへ",
+"ソウタが試すと、飛行機はとても遠くまで飛んだ。"
+],
+[
+"P:At the contest,=大会で | S:he won=彼は取った | O:first prize.=1等賞を",
+"大会で、彼は1等賞を取った。"
+],
+[
+"S:He thanked=彼は感謝した | O:his grandfather=祖父に | M:with a big smile.=満面の笑顔で",
+"彼は満面の笑みで祖父にお礼を言った。"
+]
+],
+"q": [
+[
+2,
+2,
+"それはだれのための大会だった？"
+],
+[
+3,
+2,
+"ソウタはどこで練習した？"
+],
+[
+6,
+2,
+"祖父は何とアドバイスした？"
+],
+[
+8,
+2,
+"大会で彼は何を取った？"
+]
+]
+},
+"beg83": {
+"level": 4,
+"title": "Come to My Birthday Party!",
+"list": [
+[
+"S:Hi Mika, I want=ミカ、私は…したい | V:to invite you=あなたを招待する | P:to my birthday party.=私の誕生日会に",
+"ミカ、あなたを私の誕生日パーティーに招待したいです。"
+],
+[
+"S:The party is=パーティーは…です | T:on Saturday,=土曜日に | T:from two to four.=2時から4時まで",
+"パーティーは土曜日の2時から4時までです。"
+],
+[
+"S:It will be=それは…になる | P:at my house=私の家で | P:near the station.=駅の近くの",
+"会場は駅の近くの私の家です。"
+],
+[
+"S:My mother=私の母は | V:will make=作る予定だ | O:a big chocolate cake.=大きなチョコケーキを",
+"母が大きなチョコレートケーキを作ってくれます。"
+],
+[
+"S:We will play=私たちはする | O:some fun games=楽しいゲームを | M:and sing songs.=そして歌を歌う",
+"みんなで楽しいゲームをしたり、歌を歌ったりします。"
+],
+[
+"S:You don't have to=あなたは…必要はない | V:bring=持ってくる | O:anything.=何も",
+"何も持ってこなくて大丈夫です。"
+],
+[
+"V:Please come=来てください | P:with your little brother,=弟さんと一緒に | M:too.=も",
+"弟さんも一緒に来てください。"
+],
+[
+"S:Can you=あなたは…できる | V:come=来る | P:to the party?=パーティーに",
+"パーティーに来られますか。"
+],
+[
+"V:Please let me know=知らせてね | T:by Thursday=木曜日までに | R:if you can come.=来られるかどうか",
+"来られるかどうか、木曜日までに知らせてね。"
+]
+],
+"q": [
+[
+1,
+2,
+"パーティーは何時から何時まで？"
+],
+[
+2,
+1,
+"パーティーはどこで開かれる？"
+],
+[
+3,
+2,
+"母は何を作る？"
+],
+[
+8,
+1,
+"いつまでに返事をすればいい？"
+]
+]
+},
+"beg84": {
+"level": 4,
+"title": "Rules for the City Pool",
+"list": [
+[
+"S:The city pool=市民プールは | V:is open=開いている | T:in July and August.=7月と8月に",
+"市民プールは7月と8月に開いています。"
+],
+[
+"S:It opens=それは開く | T:at nine=9時に | T:in the morning=午前 | M:and closes at five.=そして5時に閉まる",
+"午前9時に開き、5時に閉まります。"
+],
+[
+"V:Please take=浴びてください | O:a shower=シャワーを | T:before you swim.=泳ぐ前に",
+"泳ぐ前にシャワーを浴びてください。"
+],
+[
+"S:You must=…しなければならない | V:wear=身につける | O:a swimming cap.=水泳帽を",
+"水泳帽をかぶらなければなりません。"
+],
+[
+"V:Don't run=走らないで | P:around the pool=プールのまわりを | R:because=…なので | C:the floor is wet.=床がぬれている",
+"床がぬれているので、プールのまわりを走らないでください。"
+],
+[
+"S:Children under ten=10歳未満の子は | V:must come=来なければならない | P:with an adult.=大人と一緒に",
+"10歳未満の子どもは、大人と一緒に来なければなりません。"
+],
+[
+"V:Please listen=聞いてください | P:to the lifeguards=監視員の言うことを | T:at all times.=いつも",
+"いつも監視員の言うことを聞いてください。"
+],
+[
+"S:You can=…できる | V:eat lunch=昼食を食べる | P:in the rest area.=休けい所で",
+"休けい所で昼食を食べることができます。"
+],
+[
+"V:Let's enjoy=楽しもう | O:the pool together=みんなでプールを | M:safely.=安全に",
+"みんなで安全にプールを楽しみましょう。"
+]
+],
+"q": [
+[
+0,
+2,
+"プールが開いているのはいつ？"
+],
+[
+1,
+1,
+"プールは何時に開く？"
+],
+[
+3,
+2,
+"プールで何をかぶらなければならない？"
+],
+[
+5,
+0,
+"大人と一緒に来なければならないのはだれ？"
+],
+[
+7,
+2,
+"どこで昼食を食べられる？"
+]
+]
+},
+"beg85": {
+"level": 4,
+"title": "Thank You for the Present",
+"list": [
+[
+"S:Dear Grandma, thank you=おばあちゃん、ありがとう | P:for the present=プレゼントを | M:you sent me.=送ってくれた",
+"おばあちゃん、送ってくれたプレゼントをありがとう。"
+],
+[
+"S:It arrived=それは届いた | T:on my birthday,=誕生日に | M:and I was so happy.=とてもうれしかった",
+"誕生日にそれが届いて、とてもうれしかったです。"
+],
+[
+"S:The blue scarf=青いマフラーは | V:is=…だ | C:very warm.=とても暖かい",
+"青いマフラーはとても暖かいです。"
+],
+[
+"S:Blue is=青は…だ | C:my favorite color,=いちばん好きな色 | M:so I love it.=だから大好き",
+"青は私のいちばん好きな色なので、とても気に入っています。"
+],
+[
+"S:I wear it=それを身につける | T:every day=毎日 | P:to school.=学校へ",
+"毎日それを着けて学校に行きます。"
+],
+[
+"S:My friends said=友達は言った | O:it looks=それは…に見える | C:very nice.=とてもすてき",
+"友達は、それがとてもすてきだと言いました。"
+],
+[
+"S:Did you=あなたは…したの | V:make it=それを作る | P:by yourself?=自分で",
+"それはおばあちゃんが自分で作ったのですか。"
+],
+[
+"S:I want=私は…したい | V:to visit you=あなたを訪ねる | T:during winter vacation.=冬休みに",
+"冬休みにおばあちゃんに会いに行きたいです。"
+],
+[
+"V:Please take care=気をつけてね | P:of yourself=自分自身に | M:and stay healthy.=元気でいてね",
+"体に気をつけて、元気でいてね。"
+]
+],
+"q": [
+[
+1,
+1,
+"プレゼントはいつ届いた？"
+],
+[
+2,
+0,
+"プレゼントは何だった？"
+],
+[
+3,
+1,
+"青は書き手にとってどんな色？"
+],
+[
+5,
+2,
+"友達はマフラーについて何と言った？"
+],
+[
+7,
+2,
+"いつおばあちゃんを訪ねたい？"
+]
+]
+},
+"beg86": {
+"level": 4,
+"title": "The Library Will Be Closed",
+"list": [
+[
+"S:The city library=市立図書館は | V:will be closed=閉館する | T:from March 3=3月3日から | T:to March 7.=3月7日まで",
+"市立図書館は3月3日から3月7日まで休館します。"
+],
+[
+"S:We need=私たちは…必要だ | V:to repair=修理する | O:the roof.=屋根を",
+"屋根を修理する必要があるためです。"
+],
+[
+"S:You can't=あなたは…できない | V:borrow books=本を借りる | T:during this time.=この期間",
+"この期間は本を借りることができません。"
+],
+[
+"M:If you have=もし…があれば | O:books to return,=返す本が | V:please use=使ってください | O:the box by the door.=入口横の箱を",
+"返す本があれば、入口の横の箱を使ってください。"
+],
+[
+"S:You can=…できる | V:use it=それを使う | T:even at night=夜でも | T:and on weekends.=週末も",
+"箱は夜や週末でも使うことができます。"
+],
+[
+"S:The library will open=図書館は開く | M:again=再び | T:on March 8.=3月8日に",
+"図書館は3月8日に再び開きます。"
+],
+[
+"S:We are=私たちは…です | C:very sorry=本当にすまない | P:for the trouble.=迷惑について",
+"ご迷惑をおかけして申し訳ありません。"
+],
+[
+"T:For more information,=詳しくは | V:please call us=電話してください | M:or visit our website.=またはサイトを見て",
+"詳しくは、お電話いただくかウェブサイトをご覧ください。"
+]
+],
+"q": [
+[
+0,
+2,
+"図書館はいつから閉まる？"
+],
+[
+1,
+2,
+"何を修理する？"
+],
+[
+3,
+3,
+"本を返すときは何を使う？"
+],
+[
+5,
+2,
+"図書館はいつ再び開く？"
+]
+]
+},
+"beg87": {
+"level": 4,
+"title": "Join the English Club!",
+"list": [
+[
+"S:Do you like=好きですか | O:speaking English=英語を話すのが | P:with friends?=友達と",
+"友達と英語で話すのは好きですか。"
+],
+[
+"M:Then,=それなら | V:join=入ろう | O:our English club!=私たちの英語部に",
+"それなら、私たちの英語クラブに入りましょう！"
+],
+[
+"S:We meet=私たちは集まる | T:on Tuesdays=毎週火曜日に | M:and Fridays=と金曜日 | T:after school.=放課後",
+"毎週火曜日と金曜日の放課後に集まります。"
+],
+[
+"P:In the club,=クラブでは | S:we play=私たちはする | O:English games=英語のゲームを | M:and watch movies.=そして映画を見る",
+"クラブでは、英語のゲームをしたり映画を見たりします。"
+],
+[
+"S:We also practice=練習もする | P:for the speech contest=スピーチ大会のために | T:in October.=10月の",
+"10月のスピーチ大会に向けた練習もします。"
+],
+[
+"S:Our teacher, Ms. Green,=グリーン先生は | V:comes=出身だ | P:from Canada.=カナダの",
+"顧問のグリーン先生はカナダ出身です。"
+],
+[
+"S:She is=彼女は…だ | C:very kind=とても親切 | M:and funny.=そして面白い",
+"先生はとても親切で面白いです。"
+],
+[
+"S:Beginners=初心者は | V:are welcome,=歓迎される | R:so don't worry.=だから心配しないで",
+"初心者も歓迎なので、心配いりません。"
+],
+[
+"M:If you are interested,=興味があれば | V:please come=来てください | P:to Room 3=3号室に | T:this Tuesday.=今度の火曜日に",
+"興味がある人は、今度の火曜日に3号室に来てください。"
+]
+],
+"q": [
+[
+2,
+1,
+"クラブは何曜日に集まる？"
+],
+[
+3,
+2,
+"クラブではどんなゲームをする？"
+],
+[
+4,
+1,
+"何に向けて練習する？"
+],
+[
+5,
+2,
+"グリーン先生はどこの出身？"
+],
+[
+8,
+2,
+"興味がある人はどこへ行けばいい？"
+]
+]
+},
+"beg88": {
+"level": 4,
+"title": "Can You Help Me?",
+"list": [
+[
+"S:Hi Taku, I need=タク、私は必要だ | O:your help=あなたの助けが | P:with my homework.=宿題のことで",
+"タク、宿題のことで手伝ってほしいんだ。"
+],
+[
+"S:I was=私は…だった | C:absent from school=学校を休んで | T:yesterday.=昨日",
+"昨日、私は学校を休んだ。"
+],
+[
+"S:So I don't=だから私は…ない | V:understand=理解する | O:the math homework.=数学の宿題を",
+"だから、数学の宿題がわからないんだ。"
+],
+[
+"S:There are=…がある | O:five problems=5つの問題 | P:on page 32.=32ページに",
+"32ページに問題が5つある。"
+],
+[
+"S:I can do=私はできる | O:the first two,=最初の2問は | M:but not the others.=でも残りはだめ",
+"最初の2問はできるけど、残りはできない。"
+],
+[
+"S:Could you explain=説明してくれる？ | O:them to me=私にそれらを | T:tomorrow?=明日",
+"明日、それを説明してくれないかな。"
+],
+[
+"S:We can meet=私たちは会える | P:at the library=図書館で | T:after school.=放課後",
+"放課後、図書館で会えるよ。"
+],
+[
+"S:I will bring=持っていく | O:some snacks=おやつを | P:for you.=あなたのために",
+"あなたのためにおやつを持っていくね。"
+],
+[
+"V:Please write=書いてね | M:back=返事を | T:soon.=すぐに",
+"すぐに返事をちょうだい。"
+]
+],
+"q": [
+[
+1,
+2,
+"いつ学校を休んだ？"
+],
+[
+2,
+2,
+"何がわからない？"
+],
+[
+3,
+2,
+"問題は何ページにある？"
+],
+[
+6,
+1,
+"どこで会える？"
+],
+[
+7,
+1,
+"何を持っていく？"
+]
+]
+},
+"beg89": {
+"level": 4,
+"title": "School Trip to the Zoo",
+"list": [
+[
+"S:All first-year students=1年生は全員 | V:will go=行く | P:to the zoo=動物園へ | T:on May 15.=5月15日に",
+"1年生は全員、5月15日に動物園へ行きます。"
+],
+[
+"V:Please come=来てください | P:to the school gate=校門に | T:by 8:30.=8時半までに",
+"8時半までに校門に来てください。"
+],
+[
+"S:We will go=私たちは行く | P:by bus=バスで | M:and come back at three.=そして3時に戻る",
+"バスで行き、3時に戻ってきます。"
+],
+[
+"V:Please bring=持ってきてください | O:your lunch=昼食を | M:and something to drink.=と飲み物を",
+"お弁当と飲み物を持ってきてください。"
+],
+[
+"V:Please wear=はいてください | O:comfortable shoes=楽な靴を | R:because=…ので | C:we will walk a lot.=たくさん歩く",
+"たくさん歩くので、歩きやすい靴をはいてください。"
+],
+[
+"M:If it rains,=もし雨なら | S:the trip will be=遠足は…になる | T:on May 17.=5月17日に",
+"雨の場合、遠足は5月17日になります。"
+],
+[
+"V:Please check=確認してください | O:our website=学校のサイトを | T:at six that morning.=当日の朝6時に",
+"当日の朝6時に、学校のウェブサイトを確認してください。"
+],
+[
+"V:Don't forget=忘れないで | O:your hat=帽子を | M:and a towel.=とタオルを",
+"帽子とタオルを忘れないでください。"
+],
+[
+"V:Let's have=過ごそう | O:a great day=すばらしい一日を | P:at the zoo!=動物園で",
+"動物園ですばらしい一日を過ごしましょう！"
+]
+],
+"q": [
+[
+0,
+3,
+"遠足はいつ？"
+],
+[
+1,
+2,
+"何時までに校門に来る？"
+],
+[
+2,
+1,
+"何で動物園へ行く？"
+],
+[
+4,
+1,
+"どんな靴をはけばいい？"
+],
+[
+5,
+2,
+"雨の場合、遠足はいつになる？"
+]
+]
+},
+"beg90": {
+"level": 4,
+"title": "I'm Sick Today",
+"list": [
+[
+"M:Good morning, Saki.=おはよう、サキ | S:I feel=私は感じる | C:sick=具合が悪い | T:today.=今日は",
+"おはよう、サキ。今日は体調が悪いんだ。"
+],
+[
+"S:I have=私はある | O:a fever=熱が | M:and a headache.=と頭痛が",
+"熱があって、頭も痛いんだ。"
+],
+[
+"S:So I can't go=だから行けない | P:to school=学校に | T:today.=今日は",
+"だから、今日は学校に行けないの。"
+],
+[
+"S:My mother will take me=母が連れていく | P:to the doctor=医者に | T:this morning.=今朝",
+"今朝、母が病院に連れていってくれる。"
+],
+[
+"S:Could you tell=伝えてくれる？ | O:our teacher=先生に | P:about it?=そのことを",
+"先生にそのことを伝えてくれる？"
+],
+[
+"M:Also, please show me=それと見せて | O:your notebook=あなたのノートを | T:later.=あとで",
+"それと、あとでノートを見せてね。"
+],
+[
+"S:I want=私は…したい | V:to know=知る | O:about today's lessons.=今日の授業について",
+"今日の授業のことを知りたいから。"
+],
+[
+"S:I will rest=休むつもり | P:at home=家で | T:all day.=一日中",
+"今日は一日中、家で休むね。"
+],
+[
+"S:I hope=私は願う | O:to see you=あなたに会えるのを | T:tomorrow.=明日",
+"明日会えるといいな。"
+]
+],
+"q": [
+[
+1,
+2,
+"熱のほかにどんな症状がある？"
+],
+[
+3,
+0,
+"だれが病院に連れていってくれる？"
+],
+[
+4,
+1,
+"だれに伝えてほしい？"
+],
+[
+5,
+1,
+"あとで何を見せてほしい？"
+],
+[
+7,
+1,
+"今日はどこで休む？"
+]
+]
+},
+"beg91": {
+"level": 4,
+"title": "Piano Lessons for Children",
+"list": [
+[
+"S:Do you want=…したいですか | V:to play=弾く | O:the piano?=ピアノを",
+"ピアノを弾いてみたいですか。"
+],
+[
+"V:Come=来てください | P:to Sakura Music School=さくら音楽教室に | M:near the station!=駅の近くの",
+"駅の近くのさくら音楽教室に来てください！"
+],
+[
+"S:We have lessons=レッスンがある | P:for children=子ども向けの | T:from five=5歳から | T:to twelve years old.=12歳まで",
+"5歳から12歳の子ども向けのレッスンがあります。"
+],
+[
+"S:Each lesson is=各レッスンは | C:thirty minutes long=30分 | M:with one teacher.=先生1人と",
+"各レッスンは30分で、先生と1対1です。"
+],
+[
+"S:You don't=あなたは…ない | V:need=必要とする | O:any experience.=経験は",
+"経験は必要ありません。"
+],
+[
+"S:Our teachers=先生たちは | V:are=…だ | C:kind and friendly.=親切で気さく",
+"先生たちは親切で気さくです。"
+],
+[
+"S:The first lesson is=最初のレッスンは | C:free=無料 | P:for new students.=新しい生徒は",
+"新しい生徒は、最初のレッスンが無料です。"
+],
+[
+"S:The fee=料金は | V:is 5,000 yen=5000円です | T:a month.=1か月",
+"料金は1か月5000円です。"
+],
+[
+"V:Please call us=電話してください | P:for a trial lesson=体験レッスンは | T:today!=今日",
+"体験レッスンのお申し込みは、今日お電話ください！"
+]
+],
+"q": [
+[
+1,
+2,
+"教室はどこにある？"
+],
+[
+2,
+2,
+"何歳からレッスンを受けられる？"
+],
+[
+3,
+1,
+"1回のレッスンは何分？"
+],
+[
+6,
+1,
+"最初のレッスンの料金は？"
+],
+[
+7,
+1,
+"料金は1か月いくら？"
+]
+]
+},
+"beg92": {
+"level": 4,
+"title": "My Dream for the Future",
+"list": [
+[
+"S:My dream=私の夢は | V:is=…だ | C:to become a vet.=獣医になること",
+"私の夢は獣医になることです。"
+],
+[
+"S:A vet is=獣医は…だ | C:a doctor=医者 | P:for animals.=動物のための",
+"獣医は動物のためのお医者さんです。"
+],
+[
+"T:When I was seven,=7歳のとき | S:my dog=私の犬が | V:got sick.=病気になった",
+"7歳のとき、私の犬が病気になりました。"
+],
+[
+"S:We took him=私たちは彼を連れて | P:to an animal hospital.=動物病院へ",
+"私たちは彼を動物病院に連れて行きました。"
+],
+[
+"S:The vet was=獣医さんは…だった | C:very kind=とても親切 | P:to us.=私たちに",
+"獣医さんは私たちにとても親切でした。"
+],
+[
+"S:She=彼女は | V:saved=救った | O:my dog's life.=犬の命を",
+"彼女は私の犬の命を救ってくれました。"
+],
+[
+"T:Since then,=それ以来 | S:I have wanted=私はずっと思ってきた | O:to be a vet.=獣医になりたいと",
+"それ以来、私はずっと獣医になりたいと思っています。"
+],
+[
+"S:I study=私は勉強する | O:science hard=理科を一生懸命 | T:every day.=毎日",
+"私は毎日一生懸命理科を勉強しています。"
+],
+[
+"S:I will=私は…だろう | V:keep trying=努力し続ける | R:to make my dream come true.=夢をかなえるために",
+"夢をかなえるために、私は努力し続けます。"
+]
+],
+"q": [
+[
+0,
+2,
+"夢は何？"
+],
+[
+2,
+2,
+"7歳のとき、犬はどうなった？"
+],
+[
+5,
+2,
+"獣医さんは何を救った？"
+],
+[
+7,
+1,
+"毎日何を勉強している？"
+]
+]
+},
+"beg93": {
+"level": 4,
+"title": "Practicing the Guitar",
+"list": [
+[
+"T:Last month,=先月 | S:I bought=私は買った | O:a used guitar.=中古のギターを",
+"先月、私は中古のギターを買いました。"
+],
+[
+"S:It was=それは…だった | C:not expensive,=高くなかった | M:but=でも | V:it sounds nice.=いい音がする",
+"それは高くありませんでしたが、いい音がします。"
+],
+[
+"S:I practice=私は練習する | O:for thirty minutes=30分間 | T:every night.=毎晩",
+"私は毎晩30分練習しています。"
+],
+[
+"P:At first,=最初は | S:my fingers hurt=指が痛かった | M:a lot.=とても",
+"最初は指がとても痛かったです。"
+],
+[
+"S:Playing chords=コードを弾くことは | V:was=…だった | C:very difficult.=とても難しい",
+"コードを弾くのはとても難しかったです。"
+],
+[
+"M:But=でも | S:I=私は | V:didn't give up.=あきらめなかった",
+"でも、私はあきらめませんでした。"
+],
+[
+"T:Now,=今は | S:I can play=私は弾ける | O:three songs.=3曲を",
+"今では3曲弾けます。"
+],
+[
+"S:My favorite=一番好きなのは | V:is=…だ | C:\"Happy Birthday.\"=「ハッピーバースデー」",
+"一番好きな曲は「ハッピーバースデー」です。"
+],
+[
+"T:Next week,=来週 | S:I will play it=私はそれを弾く | P:for my sister's birthday.=妹の誕生日に",
+"来週、妹の誕生日にそれを弾くつもりです。"
+],
+[
+"S:I hope=私は願う | O:she will=彼女が…と | V:like it!=気に入る",
+"妹が気に入ってくれるといいな！"
+]
+],
+"q": [
+[
+0,
+2,
+"何を買った？"
+],
+[
+2,
+1,
+"毎晩どのくらい練習している？"
+],
+[
+6,
+2,
+"今は何曲弾ける？"
+],
+[
+8,
+2,
+"いつそれを弾くつもり？"
+]
+]
+},
+"beg94": {
+"level": 4,
+"title": "Manga Is Good for Students",
+"list": [
+[
+"S:Some people=一部の人は | V:say=言う | O:that manga is bad.=マンガは悪いと",
+"マンガは悪いものだと言う人もいます。"
+],
+[
+"S:However, I=しかし私は | V:think=思う | O:it is good=それは良いと | P:for students.=学生にとって",
+"しかし、私はマンガは学生にとって良いものだと思います。"
+],
+[
+"S:I=私には | V:have=ある | O:two reasons.=2つの理由が",
+"理由は2つあります。"
+],
+[
+"M:First,=まず | S:manga can teach us=マンガは教えられる | O:about history.=歴史について",
+"まず、マンガは私たちに歴史について教えてくれます。"
+],
+[
+"S:I learned a lot=私は多くを学んだ | P:from a manga=あるマンガから | P:about old Japan.=昔の日本についての",
+"私は昔の日本についてのマンガから多くを学びました。"
+],
+[
+"M:Second,=次に | S:manga makes=マンガは…にする | O:reading fun.=読書を楽しく",
+"次に、マンガは読書を楽しくしてくれます。"
+],
+[
+"S:My little brother=私の弟は | V:didn't like=好きでなかった | O:books.=本が",
+"弟は本が好きではありませんでした。"
+],
+[
+"S:Now he=今では彼は | V:reads=読む | O:manga every day.=毎日マンガを",
+"今では彼は毎日マンガを読んでいます。"
+],
+[
+"M:So,=だから | S:I believe=私は信じる | O:manga is good=マンガは良いと | P:for young people.=若い人にとって",
+"だから、私はマンガは若い人にとって良いものだと信じています。"
+]
+],
+"q": [
+[
+2,
+2,
+"理由はいくつある？"
+],
+[
+3,
+2,
+"マンガは何について教えてくれる？"
+],
+[
+4,
+2,
+"どんなマンガから多くを学んだ？"
+],
+[
+7,
+2,
+"弟は今、何を毎日読んでいる？"
+]
+]
+},
+"beg95": {
+"level": 4,
+"title": "I Love Taking Pictures",
+"list": [
+[
+"S:I love=私は大好きだ | O:taking pictures=写真をとることが | P:with my phone.=スマホで",
+"私はスマホで写真をとるのが大好きです。"
+],
+[
+"S:I take=私はとる | O:pictures of=…の写真を | O:flowers, cats, and the sky.=花やねこや空",
+"私は花やねこや空の写真をとります。"
+],
+[
+"T:Last Sunday,=この前の日曜 | S:I went=私は行った | P:to the park=公園へ | P:with my camera.=カメラを持って",
+"この前の日曜日、私はカメラを持って公園へ行きました。"
+],
+[
+"S:The leaves=葉は | V:were=…だった | C:red and yellow.=赤と黄色",
+"葉は赤と黄色でした。"
+],
+[
+"S:I took=私はとった | O:more than=…以上 | O:fifty pictures.=50枚の写真を",
+"私は50枚以上の写真をとりました。"
+],
+[
+"S:My best picture=一番いい写真は | V:shows=…を写している | O:a small bird.=小さな鳥を",
+"一番いい写真には小さな鳥が写っています。"
+],
+[
+"S:It=それは | V:was sitting=とまっていた | P:on a branch.=枝の上に",
+"その鳥は枝にとまっていました。"
+],
+[
+"S:I posted it=私はそれを投稿した | P:on my blog=ブログに | T:yesterday.=きのう",
+"私はきのうそれをブログに投稿しました。"
+],
+[
+"S:Many people=多くの人が | V:liked it=それを気に入った | M:very much.=とても",
+"多くの人がそれをとても気に入ってくれました。"
+],
+[
+"S:I want=私は…たい | V:to take=とること | O:more pictures=もっと写真を | T:next year.=来年は",
+"来年はもっと写真をとりたいです。"
+]
+],
+"q": [
+[
+1,
+2,
+"何の写真をとる？"
+],
+[
+2,
+2,
+"日曜日にどこへ行った？"
+],
+[
+4,
+2,
+"何枚以上の写真をとった？"
+],
+[
+5,
+2,
+"一番いい写真には何が写っている？"
+]
+]
+},
+"beg96": {
+"level": 4,
+"title": "Robots in Our Lives",
+"list": [
+[
+"S:Today, robots=今日ロボットは | V:help=助ける | O:us in many ways.=多くの方法で私たちを",
+"今日、ロボットは多くの方法で私たちを助けています。"
+],
+[
+"S:Some robots=いくつかのロボットは | V:clean=そうじする | O:floors=床を | P:in homes.=家の中で",
+"家の床をそうじするロボットもあります。"
+],
+[
+"S:They=それらは | V:move=動く | M:by themselves.=自分で",
+"それらは自分で動きます。"
+],
+[
+"S:Other robots=ほかのロボットは | V:work=働く | P:in factories.=工場で",
+"ほかのロボットは工場で働いています。"
+],
+[
+"S:They can make=それらは作れる | O:cars and computers=車やコンピュータを | M:very quickly.=とても速く",
+"それらは車やコンピュータをとても速く作ることができます。"
+],
+[
+"P:In some restaurants,=一部のレストランで | S:robots carry=ロボットが運ぶ | O:food=料理を | P:to the tables.=テーブルへ",
+"一部のレストランでは、ロボットが料理をテーブルへ運びます。"
+],
+[
+"S:Robots are=ロボットは…だ | C:useful,=役に立つ | M:but=しかし | V:they cannot do everything.=何でもはできない",
+"ロボットは役に立ちますが、何でもできるわけではありません。"
+],
+[
+"S:People=人間は | V:still need=まだ必要がある | O:to control them.=それらを操作する",
+"人間はまだロボットを操作する必要があります。"
+],
+[
+"P:In the future,=将来 | S:robots will help us=ロボットは助けるだろう | M:even more.=もっと",
+"将来、ロボットはもっと私たちを助けてくれるでしょう。"
+]
+],
+"q": [
+[
+1,
+2,
+"家でロボットは何をそうじする？"
+],
+[
+3,
+2,
+"ほかのロボットはどこで働いている？"
+],
+[
+5,
+2,
+"レストランでロボットは何を運ぶ？"
+],
+[
+7,
+2,
+"人間はまだ何をする必要がある？"
+]
+]
+},
+"beg97": {
+"level": 4,
+"title": "My Hobby Is Drawing",
+"list": [
+[
+"S:My hobby=私の趣味は | V:is=…だ | C:drawing pictures.=絵をかくこと",
+"私の趣味は絵をかくことです。"
+],
+[
+"S:I started=私は始めた | O:drawing=かくことを | T:when I was five.=5歳のときに",
+"私は5歳のときに絵をかき始めました。"
+],
+[
+"S:My mother=母が | V:gave me=私にくれた | O:a box of crayons.=クレヨンの箱を",
+"母が私にクレヨンを1箱くれました。"
+],
+[
+"S:I drew=私はかいた | O:pictures=絵を | P:of my family=家族の | T:every day.=毎日",
+"私は毎日家族の絵をかきました。"
+],
+[
+"T:Now,=今は | S:I draw=私はかく | O:mostly animals.=主に動物を",
+"今は主に動物をかいています。"
+],
+[
+"S:Drawing=かくことは | V:makes me=私を…にする | C:calm.=落ち着いた気持ち",
+"絵をかくと気持ちが落ち着きます。"
+],
+[
+"T:Last year,=去年 | S:my picture won=私の絵がとった | O:a prize=賞を | P:in a contest.=コンテストで",
+"去年、私の絵がコンテストで賞をとりました。"
+],
+[
+"S:I was=私は…だった | C:very happy=とてもうれしい | P:about it.=そのことが",
+"私はそれがとてもうれしかったです。"
+],
+[
+"T:In the future,=将来 | S:I want=私は…たい | O:to make picture books=絵本を作ること | P:for children.=子どものための",
+"将来、私は子どものための絵本を作りたいです。"
+]
+],
+"q": [
+[
+1,
+2,
+"何歳のときに絵をかき始めた？"
+],
+[
+2,
+2,
+"母は何をくれた？"
+],
+[
+4,
+2,
+"今は主に何をかいている？"
+],
+[
+8,
+2,
+"将来何を作りたい？"
+]
+]
+},
+"beg98": {
+"level": 4,
+"title": "My Stamp Collection",
+"list": [
+[
+"S:I collect=私は集めている | O:stamps=切手を | P:from many countries.=多くの国の",
+"私はいろいろな国の切手を集めています。"
+],
+[
+"S:My grandfather=祖父が | V:gave me=私にくれた | O:his old album=古いアルバムを | T:three years ago.=3年前に",
+"3年前、祖父が古い切手アルバムをくれました。"
+],
+[
+"S:It had=それには…あった | O:about two hundred stamps.=約200枚の切手が",
+"その中には約200枚の切手が入っていました。"
+],
+[
+"S:That album=そのアルバムが | V:started=始めた | O:my hobby.=私の趣味を",
+"そのアルバムが私の趣味の始まりでした。"
+],
+[
+"T:Now=今 | S:I have=私は持っている | O:more than five hundred.=500枚以上",
+"今では500枚以上持っています。"
+],
+[
+"S:My favorite=一番好きなのは | V:is=…だ | C:a stamp from Kenya.=ケニアの切手",
+"一番のお気に入りはケニアの切手です。"
+],
+[
+"S:It has=それには…ある | O:a beautiful picture=美しい絵が | P:of a giraffe.=キリンの",
+"それにはキリンの美しい絵がかいてあります。"
+],
+[
+"S:Each stamp=それぞれの切手は | V:tells=教えてくれる | O:me about its country.=その国について私に",
+"一枚一枚の切手が、その国について教えてくれます。"
+],
+[
+"S:I want=私は…たい | V:to visit=訪れること | O:those countries=それらの国々を | T:someday.=いつか",
+"いつかそれらの国々を訪れたいです。"
+]
+],
+"q": [
+[
+1,
+3,
+"祖父はいつアルバムをくれた？"
+],
+[
+2,
+1,
+"アルバムには約何枚の切手があった？"
+],
+[
+5,
+2,
+"一番好きなのはどこの国の切手？"
+],
+[
+6,
+2,
+"その切手には何の絵がある？"
+]
+]
+},
+"beg99": {
+"level": 4,
+"title": "Shogi with Grandpa",
+"list": [
+[
+"T:Today,=きょう | S:I visited=私は訪ねた | O:my grandfather.=祖父を",
+"きょう、私は祖父を訪ねた。"
+],
+[
+"S:We played=私たちはした | O:shogi together=いっしょに将棋を | P:after lunch.=昼食のあと",
+"昼食のあと、私たちはいっしょに将棋をした。"
+],
+[
+"S:Shogi is=将棋は…だ | C:a Japanese board game=日本のボードゲーム | P:like chess.=チェスのような",
+"将棋はチェスのような日本のボードゲームだ。"
+],
+[
+"S:My grandfather is=祖父は…だ | C:very good=とても上手 | P:at it.=それが",
+"祖父は将棋がとても上手だ。"
+],
+[
+"S:I lost=私は負けた | O:the first game=最初の試合に | M:quickly.=すぐに",
+"私は1局目にすぐ負けてしまった。"
+],
+[
+"S:He taught me=彼は私に教えた | O:how to=…のしかたを | V:move the pieces.=駒を動かす",
+"祖父は駒の動かし方を教えてくれた。"
+],
+[
+"P:In the second game,=2局目で | S:I did=私はした | O:my best.=全力を",
+"2局目では、私は全力を出した。"
+],
+[
+"M:But=でも | S:I=私は | V:lost again.=また負けた",
+"でも、また負けてしまった。"
+],
+[
+"S:Grandpa said,=おじいちゃんは言った | O:\"You are=「君は…だ | C:getting better!\"=上手になっている」",
+"おじいちゃんは「上手になってきたね」と言った。"
+],
+[
+"S:I will=私は…つもりだ | V:practice more=もっと練習する | R:to beat him.=彼に勝つために",
+"祖父に勝つために、もっと練習するつもりだ。"
+]
+],
+"q": [
+[
+1,
+2,
+"いつ将棋をした？"
+],
+[
+2,
+2,
+"将棋は何に似ている？"
+],
+[
+5,
+2,
+"祖父は何のしかたを教えてくれた？"
+],
+[
+8,
+2,
+"おじいちゃんは何と言った？"
+]
+]
+},
+"beg100": {
+"level": 4,
+"title": "Why I Study English",
+"list": [
+[
+"S:Today I=きょう私は | V:will talk=話す | P:about=…について | O:why I study English.=なぜ英語を学ぶか",
+"きょうは、私がなぜ英語を勉強するのかについて話します。"
+],
+[
+"S:I=私には | V:have=ある | O:three reasons.=3つの理由が",
+"理由は3つあります。"
+],
+[
+"M:First,=1つ目に | S:I want=私は…たい | V:to make friends=友だちを作ること | P:from other countries.=ほかの国の",
+"1つ目に、私はほかの国の友だちを作りたいです。"
+],
+[
+"M:Second,=2つ目に | S:English is=英語は…だ | C:useful=役に立つ | P:for many jobs.=多くの仕事に",
+"2つ目に、英語は多くの仕事で役に立ちます。"
+],
+[
+"M:Third,=3つ目に | S:I love=私は大好きだ | O:watching movies=映画を見ることが | P:in English.=英語の",
+"3つ目に、私は英語の映画を見るのが大好きです。"
+],
+[
+"S:I want=私は…たい | V:to understand them=それらを理解する | M:without subtitles.=字幕なしで",
+"私は字幕なしでそれらを理解したいです。"
+],
+[
+"S:Learning English=英語を学ぶことは | V:is not=…ではない | C:easy.=簡単",
+"英語を学ぶのは簡単ではありません。"
+],
+[
+"M:But=でも | S:I study=私は勉強する | O:new words=新しい単語を | T:every day.=毎日",
+"でも、私は毎日新しい単語を勉強しています。"
+],
+[
+"S:English is=英語は…だ | C:a key=かぎ | P:to a bigger world.=もっと広い世界への",
+"英語はもっと広い世界へのかぎです。"
+]
+],
+"q": [
+[
+1,
+2,
+"理由はいくつある？"
+],
+[
+2,
+3,
+"どこの国の友だちを作りたい？"
+],
+[
+4,
+3,
+"何語の映画を見るのが好き？"
+],
+[
+7,
+2,
+"毎日何を勉強している？"
+]
+]
 }
 }

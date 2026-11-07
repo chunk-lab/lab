@@ -1,0 +1,485 @@
+@id beg47
+@lv 1
+@level 4
+@title Birds That Cannot Fly
+@ja 飛べない鳥ペンギン
+@tag 高校受験レベル・説明文
+@gloss penguin=ペンギン, southern=南の, half=半分, wing=つばさ, flipper=ひれ, swimmer=泳ぐもの, krill=オキアミ, slide=すべる, feather=羽
+S| {Penguins|Penguin|A penguins|Penguin's} :: ペンギンは
+V| {are|is|be|am} birds, :: 鳥である
+M| but they {cannot|not can|don't can|cannot to} fly. :: でも飛べない
+== ペンギンは鳥だが、飛ぶことができない。
+S| {Most|Much|Almost|Mostly} penguins :: ほとんどのペンギンは
+V| {live|lives|living|to live} :: 住んでいる
+P| {in|into|of|for} the southern half :: 南半分に
+P| {of|for|by|with} the world. :: 世界の
+== ほとんどのペンギンは、世界の南半分に住んでいる。
+S| Their {wings|wing|wingses|winged} :: 彼らのつばさは
+V| {look|looks|looking|to look} like :: …のように見える
+C| {flippers|flipper|flip|flipping}. :: ひれ
+== ペンギンのつばさは、ひれのような形をしている。
+S| They {use|uses|using|used to} :: 彼らは使う
+O| {their|they|them|there} wings :: つばさを
+R| {to swim|swims|swim|to swimming} :: 泳ぐために
+P| {in|of|with|than} the sea. :: 海で
+== 彼らはつばさを使って海の中を泳ぐ。
+S| Penguins {are|is|be|being} :: ペンギンは…だ
+C| very {good|well|goodly|better} :: とても上手な
+X| {swimmers|swimmer|swim|swimming}. :: 泳ぎ手
+== ペンギンはとても泳ぎが上手だ。
+S| They {catch|catches|catching|caught to} :: 彼らはつかまえる
+O| fish {and|but|so|nor} krill :: 魚やオキアミを
+P| {in|of|to|than} the water. :: 水の中で
+== 彼らは水の中で魚やオキアミをつかまえる。
+P| {On|In|At|Of} land, :: 陸の上では
+S| penguins {walk|walks|walking|to walk} :: ペンギンは歩く
+M| {slowly|slowness|slows|slowed}. :: ゆっくり
+== 陸の上では、ペンギンはゆっくり歩く。
+S| {Some|Much|Every|A} penguins :: 一部のペンギンは
+V| {slide|slides|sliding|slid to} :: すべる
+P| {on|in|at|for} their bellies :: おなかで
+P| {across|cross|crosses|acrossed} the ice. :: 氷の上を
+== ペンギンの中には、おなかで氷の上をすべるものもいる。
+S| They {have|has|having|haves} :: 彼らは持っている
+O| thick {feathers|feather|feathered|fathers} :: 厚い羽を
+R| {to stay|stays|stay|to staying} warm. :: 温かくいるため
+== 彼らは体を温かく保つために、厚い羽を持っている。
+?? 1 2 ほとんどのペンギンはどこに住んでいる？
+?? 3 2 ペンギンはつばさを何のために使う？
+?? 5 1 ペンギンは水の中で何をつかまえる？
+?? 8 1 体を温かく保つために何を持っている？
+
+@id beg48
+@lv 1
+@level 4
+@title Why Do Cats Sleep So Much?
+@ja ネコはなぜよく寝るのか
+@tag 高校受験レベル・説明文
+@gloss hunter=狩りをする動物, by nature=生まれつき, hunting=狩り, energy=力・エネルギー, save=たくわえる, active=活動的な, deeply=深く, sound=音
+S| {Cats|Cat|A cats|Cat's} :: ネコは
+V| {sleep|sleeps|sleeping|slept to} :: 眠る
+M| a {lot|lots|many|much} :: たくさん
+T| {every|everyone|each of|always} day. :: 毎日
+== ネコは毎日たくさん眠る。
+S| {Many|Much|A lot|Lot} cats :: 多くのネコは
+V| often {sleep|sleeps|sleeping|slept to} :: よく眠る
+M| more {than|then|that|as} twelve hours :: 12時間以上
+T| {a|an|the|per a} day. :: 1日に
+== 多くのネコは、1日に12時間以上眠ることがよくある。
+M| {Why|What|Who|Which} do cats :: なぜネコは
+V| {sleep|sleeps|slept|sleeping} :: 眠る
+M| so {much|many|more|lot}? :: そんなにたくさん
+== ネコはなぜそんなにたくさん眠るのだろうか。
+S| Cats {are|is|be|was} :: ネコは…だ
+C| {hunters|hunter|hunts|hunt} :: 狩りをする動物
+M| {by|in|on|at} nature. :: 生まれつき
+== ネコは生まれつき狩りをする動物だ。
+S| {Hunting|Hunt|Hunts|Hunted} :: 狩りは
+V| {uses|use|using|useful} :: 使う
+O| a lot of {energy|energetic|energize|energetically}. :: 多くの力を
+== 狩りにはたくさんの力を使う。
+M| {So|Than|Nor|Neither} cats :: だからネコは
+V| {rest|rests|resting|rested to} :: 休む
+M| a {lot|lots|much|many} :: たくさん
+R| {to save|saves|save|to saving} energy. :: 力をためるため
+== だからネコは、力をためるためにたくさん休む。
+S| Cats {are|is|be|being} :: ネコは…だ
+C| often {active|action|act|actively} :: よく活動的
+T| {in|on|of|to} the early morning :: 早朝に
+M| {and|but|so|nor} evening. :: と夕方に
+== ネコは早朝と夕方によく活動する。
+S| They {do not|does not|are not|not} :: 彼らは…ない
+V| always {sleep|sleeps|sleeping|slept} :: いつも眠る
+M| {deeply|depth|deepen|deeps}. :: 深く
+== ネコはいつも深く眠っているわけではない。
+S| They {can|cans|could to|can to} :: 彼らは…できる
+V| {wake|wakes|waking|woke} up quickly :: すぐに起きる
+P| {at|in|of|on} a small sound. :: 小さな音で
+== ネコは小さな音でも、すぐに目を覚ますことができる。
+?? 1 2 多くのネコは1日に何時間以上眠る？
+?? 3 1 ネコは生まれつきどんな動物？
+?? 5 3 ネコは何のためにたくさん休む？
+?? 6 2 ネコはいつよく活動する？
+
+@id beg49
+@lv 1
+@level 4
+@title The Four Seasons of Japan
+@ja 日本の四季
+@tag 高校受験レベル・説明文
+@gloss season=季節, cherry blossom=桜の花, bloom=咲く, humid=湿気の多い, fireworks=花火, leaves=葉(leafの複数形), area=地域, beauty=美しさ
+S| {Japan|Japanese|Japans|Japan's} :: 日本には
+V| {has|have|having|is} :: ある
+O| four {seasons|season|seasonal|seasoning}. :: 4つの季節が
+== 日本には4つの季節がある。
+P| {In|On|Of|To} spring, :: 春には
+S| cherry {blossoms|blossom|blossoming|blossomed} :: 桜の花が
+V| {bloom|blooms|blooming|bloomed to} :: 咲く
+P| {in|on|to|of} many places. :: 多くの場所で
+== 春には、多くの場所で桜の花が咲く。
+S| {Summer|Summers|Summery|Summered} :: 夏は
+V| {is|are|be|were} :: …だ
+C| hot {and|so|nor|than} humid. :: 暑くてじめじめ
+== 夏は暑くてじめじめしている。
+P| {In|On|At|Of} summer, :: 夏には
+S| many people {go|goes|going|went to} :: 多くの人が行く
+P| {to|at|on|of} the sea :: 海へ
+M| {or|nor|than|but} watch fireworks. :: または花火を見る
+== 夏には、多くの人が海へ行ったり花火を見たりする。
+P| {In|On|At|To} fall, :: 秋には
+S| the {leaves|leafs|leave|leaf} :: 葉が
+V| {turn|turns|turning|to turn} :: 変わる
+C| red {and|nor|than|but} yellow. :: 赤や黄色に
+== 秋には、葉が赤や黄色に変わる。
+S| Fall {is|are|be|am} also :: 秋はまた…だ
+C| a good {season|seasons|seasonal|seasoned} :: よい季節
+P| {for|to|from|at} sports. :: スポーツに
+== 秋はスポーツにもよい季節だ。
+S| {Winter|Winters|Wintry|Winter's} :: 冬は
+V| {is|are|be|been} :: …だ
+C| {cold|colds|coldly|coldness} :: 寒い
+P| {in|on|of|to} most areas. :: ほとんどの地域で
+== 冬は、ほとんどの地域で寒い。
+P| {In|On|At|Of} the north, :: 北のほうでは
+S| it {snows|snow|snowy|snowing} :: 雪が降る
+M| a {lot|lots|much|many}. :: たくさん
+== 北のほうでは、雪がたくさん降る。
+S| {Each|All|Both|Many} season :: それぞれの季節は
+V| {has|have|having|haves} :: 持っている
+O| its own {beauty|beautiful|beautifully|beautify}. :: 独自の美しさを
+== それぞれの季節に、それぞれの美しさがある。
+S| People {in|on|at|to} Japan :: 日本の人々は
+V| {enjoy|enjoys|enjoying|enjoyed to} :: 楽しむ
+O| the changes {of|for|at|than} the seasons. :: 季節の移り変わりを
+== 日本の人々は、季節の移り変わりを楽しむ。
+?? 1 1 春には何が咲く？
+?? 2 2 夏はどんな天気？
+?? 4 3 秋には葉が何色に変わる？
+?? 7 0 雪がたくさん降るのはどこ？
+
+@id beg50
+@lv 1
+@level 4
+@title Frogs in the Rice Field
+@ja 田んぼのカエル
+@tag 高校受験レベル・日記
+@gloss rice field=田んぼ, along=…にそって, loud=大きな(音が), voice=声, carefully=注意深く, leaf=葉, insect=虫, grandfather=祖父
+T| {Today|Todays|Yesterday's|To day} :: 今日
+S| I {walked|walking|walks|walken} :: 私は歩いた
+P| {along|alone|long|among} the rice field :: 田んぼにそって
+P| {near|nearly|nears|nearer of} my house. :: 家の近くの
+== 今日、私は家の近くの田んぼにそって歩いた。
+S| I {heard|hearing|heared|hears} :: 私は聞いた
+O| a {loud|loudly|loudness|louds} sound :: 大きな音を
+P| {from|for|than|into} the water. :: 水の中から
+== 水の中から大きな音が聞こえた。
+S| It {was|were|is be|be} :: それは…だった
+C| the {voice|voicing|voiced|vocal} :: 声
+P| {of|off|on|than} a frog. :: カエルの
+== それはカエルの声だった。
+S| I {looked|looking|looks|to look} :: 私は見た
+P| {into|than|of|since} the water :: 水の中を
+M| {carefully|careful|care|careless}. :: 注意深く
+== 私は水の中を注意深くのぞいた。
+S| A small green {frog|frogs|frogged|frog's} :: 小さな緑のカエルが
+V| was {sitting|sit|sat|sits} :: すわっていた
+P| {on|in|at|to} a leaf. :: 葉っぱの上に
+== 小さな緑色のカエルが、葉っぱの上にすわっていた。
+S| It {jumped|jump|jumping|jumps} :: それは跳んだ
+P| {into|than|of|since} the water :: 水の中へ
+T| {when|what|who|whom} I moved. :: 私が動いたとき
+== 私が動いたとき、カエルは水の中へ跳びこんだ。
+S| My grandfather {told|tell|said|talked} me :: 祖父は私に言った
+O| {that|what|who|which} frogs :: カエルは…と
+V| {eat|eats|eating|ate to} insects. :: 虫を食べる
+== 祖父は、カエルは虫を食べると教えてくれた。
+M| {So|Than|Nor|Neither} frogs :: だからカエルは
+V| {are|is|be|being} :: …だ
+C| {good|well|goodly|goods} :: よい
+P| {for|from|than|of} rice fields. :: 田んぼにとって
+== だからカエルは、田んぼのためになる生き物だ。
+T| {Tonight|Toning|Tonights|To night} :: 今夜
+S| I {can|cans|can to|could to} hear :: 私は聞こえる
+O| many {frogs|frog|frogged|froggy} :: たくさんのカエルが
+P| {from|for|than|of} my room. :: 自分の部屋から
+== 今夜は、自分の部屋からたくさんのカエルの声が聞こえる。
+S| I {like|likes|liking|liked to} :: 私は好きだ
+O| {their|there|they|them} songs :: 彼らの歌が
+M| very {much|many|more|lot}. :: とても
+== 私はカエルたちの歌が大好きだ。
+?? 2 1 聞こえたのは何の声だった？
+?? 4 2 カエルはどこにすわっていた？
+?? 6 2 祖父によると、カエルは何を食べる？
+?? 8 3 今夜はどこからカエルの声が聞こえる？
+
+@id beg51
+@lv 1
+@level 4
+@title The Moon
+@ja 月
+@tag 高校受験レベル・説明文
+@gloss moon=月, earth=地球, own=自分自身の, shine=光る, sunlight=太陽の光, shape=形, full moon=満月, air=空気
+S| The {moon|moons|moony|moon's} :: 月は
+V| {goes|go|going|gone} around :: まわっている
+O| the {earth|earths|earthy|earthly}. :: 地球の
+== 月は地球のまわりをまわっている。
+S| It {takes|take|taking|took to} :: かかる
+O| about a {month|months|monthly|mouth} :: 約1か月
+R| {to go|go|goes|to going} around. :: 1周するのに
+== 1周するのに約1か月かかる。
+S| The moon {does not|do not|is not|not} :: 月は…ない
+V| {make|makes|making|made} :: 作る
+O| its {own|owns|owner|owned} light. :: 自分の光を
+== 月は自分で光を出しているわけではない。
+S| It {shines|shine|shining|shined to} :: 月は光る
+M| {because|because of|why|than} sunlight :: 太陽の光が…ので
+V| {hits|hitting|hitted|to hit} it. :: 当たる
+== 太陽の光が当たるので、月は光って見える。
+S| The {shape|shapes|shaped|shaping} :: 形は
+P| {of|off|for|from} the moon :: 月の
+V| {seems|seem|seeming|seem to} to change :: 変わるように見える
+T| {every|everyone|each of|ever} night. :: 毎晩
+== 月の形は、毎晩変わるように見える。
+S| We {call|calls|calling|called to} :: 私たちは呼ぶ
+O| a {round|around|rounds|roundly} moon :: 丸い月を
+C| a {full|fully|fill|fullness} moon. :: 満月と
+== 私たちは丸い月を満月と呼ぶ。
+M| There {is|are|be|am} :: …がある
+O| almost {no|not|none|nothing} air :: 空気はほとんどない
+P| {on|in|at|to} the moon. :: 月には
+== 月には空気がほとんどない。
+T| {In|On|At|Of} 1969, :: 1969年に
+S| people {walked|walk|walking|walks} :: 人が歩いた
+P| {on|in|at|for} the moon :: 月の上を
+M| for the first {time|times|timer|timing}. :: 初めて
+== 1969年、人が初めて月の上を歩いた。
+S| Many people {still|stil|steel|stilled} :: 多くの人が今も
+V| {love|loves|loving|to love} :: 大好きだ
+O| {looking|look|looks|looked} at the moon. :: 月をながめるのが
+== 今でも多くの人が、月をながめるのが大好きだ。
+?? 0 2 月は何のまわりをまわっている？
+?? 1 1 月が1周するのにどのくらいかかる？
+?? 5 2 丸い月を何と呼ぶ？
+?? 7 0 人が初めて月の上を歩いたのはいつ？
+
+@id beg52
+@lv 1
+@level 4
+@title Baby Pandas Are Tiny
+@ja パンダの赤ちゃんは小さい
+@tag 高校受験レベル・説明文
+@gloss giant panda=ジャイアントパンダ, bamboo=竹, be born=生まれる, weigh=重さが…ある, gram=グラム, at first=最初は, closed=閉じた, gently=やさしく, grow=生える・育つ
+S| Giant {pandas|panda|pandas'|a pandas} :: ジャイアントパンダは
+V| {live|lives|living|to live} :: 住んでいる
+P| {in|on|at|to} China. :: 中国に
+== ジャイアントパンダは中国に住んでいる。
+S| They {eat|eats|eating|ate to} :: 彼らは食べる
+O| {bamboo|a bamboo|bambooing|bambooed} :: 竹を
+T| {for|in|during of|since} many hours :: 何時間も
+T| {every|everyone|each of|ever} day. :: 毎日
+== 彼らは毎日何時間も竹を食べる。
+S| A baby {panda|pandas|pandaed|pandas'} :: パンダの赤ちゃんは
+V| {is|are|be|am} :: …だ
+C| very {small|smaller|smallest|smally} :: とても小さい
+T| {when|what|who|which} it is born. :: 生まれたとき
+== パンダの赤ちゃんは、生まれたときとても小さい。
+S| It {weighs|weigh|weight|weighing} :: 重さは
+O| only {about|above|abort|aboard} :: たった約
+X| 100 {grams|gram|gramed|grammar}. :: 100グラム
+== 重さはたった100グラムくらいだ。
+S| Its {mother|mothers|motherly|mother's} :: その母親は
+V| is much {bigger|big|biggest|more big} :: ずっと大きい
+P| {than|then|that|as} the baby. :: 赤ちゃんより
+== 母親は赤ちゃんよりずっと大きい。
+T| {At first|At firstly|In first|At the first}, :: 最初は
+S| the baby {is|are|be|am} pink :: 赤ちゃんはピンク色
+M| {and|nor|than|but} has :: そして持っている
+O| very {little|few|less|lot} hair. :: 毛がほとんどない
+== 最初、赤ちゃんはピンク色で、毛がほとんどない。
+S| Its {eyes|eye|eyed|eyes'} :: その目は
+V| {are|is|be|being} closed :: 閉じている
+T| {for|since|ago|of} several weeks. :: 数週間
+== 目は数週間閉じたままだ。
+S| The {mother|mothers|motherly|mothered} :: 母親は
+V| {holds|hold|holding|held to} :: 抱く
+O| the baby {gently|gentle|gentleness|gentlemen}. :: 赤ちゃんをやさしく
+== 母親は赤ちゃんをやさしく抱いている。
+T| {Later|Latest|Late of|Laters}, :: やがて
+S| black and white {hair|hairs|hairy|haired} :: 白黒の毛が
+V| {grows|grow|growing|grew to} :: 生える
+P| {on|of|than|at} its body. :: 体に
+== やがて、体に白と黒の毛が生えてくる。
+S| The {baby|babies|babys|baby's} :: 赤ちゃんは
+V| {grows|grow|growing|grew to} :: なっていく
+C| bigger {and|nor|than|but} bigger. :: どんどん大きく
+== 赤ちゃんはどんどん大きくなっていく。
+?? 0 2 ジャイアントパンダはどこに住んでいる？
+?? 3 2 生まれたときの赤ちゃんの重さは？
+?? 5 1 最初、赤ちゃんは何色？
+?? 8 1 やがて体に何が生えてくる？
+
+@id beg53
+@lv 1
+@level 4
+@title Rain and Rainbows
+@ja 雨と虹
+@tag 高校受験レベル・説明文
+@gloss rainbow=虹, appear=現れる, raindrop=雨粒, sunlight=太陽の光, split=分ける, violet=紫, outside=外側, inside=内側, behind=…の後ろに
+T| {After|Afterward|Later|Since of} the rain, :: 雨のあと
+S| we {sometimes|sometime|some times|sometimes of} see :: ときどき見る
+O| a {rainbow|rainbows|rain bow|raining bow} :: 虹を
+P| {in|on|at|of} the sky. :: 空に
+== 雨のあと、空に虹が見えることがある。
+S| A rainbow {appears|appear|appearing|appearance} :: 虹は現れる
+T| {when|what|who|which} the sun :: 太陽が…とき
+V| {shines|shine|shining|shinning} :: 照る
+P| {on|than|of|whom} raindrops. :: 雨粒に
+== 太陽の光が雨粒に当たるとき、虹が現れる。
+S| {Sunlight|Sunlights|Sunny|Sunshiny} :: 太陽の光は
+V| {looks|look|looking|seeing} white, :: 白く見える
+M| {but|nor|than|whom} it has :: でも持っている
+O| many {colors|color|colorful|colored}. :: 多くの色を
+== 太陽の光は白く見えるが、たくさんの色をふくんでいる。
+S| {Raindrops|Raindrop|Raining|Rainy} :: 雨粒は
+V| {split|splits|splitting|splited} :: 分ける
+O| the {light|lightly|lighten|alight} :: 光を
+P| {into|onto|than|since} colors. :: 色に
+== 雨粒が光をいろいろな色に分ける。
+P| {In|On|At|To} Japan, :: 日本では
+S| people {usually|usual|usually of|unusual} say :: ふつう人は言う
+O| a rainbow {has|have|having|haves} :: 虹には…ある
+O| seven {colors|color|colorful|colored}. :: 7つの色が
+== 日本では、虹には7つの色があるとふつう言われている。
+S| Red {is|are|be|am} :: 赤は
+P| {on|to|of|than} the outside, :: 外側に
+M| {and|nor|than|whom} violet is :: そして紫は
+P| {on|to|of|than} the inside. :: 内側に
+== 虹は、赤が外側に、紫が内側にある。
+R| {To see|See|Sees|To seeing} a rainbow, :: 虹を見るには
+V| {stand|stands|standing|stood to} :: 立とう
+P| {with|for|of|than} the sun :: 太陽を
+M| {behind|between|behold|beside of} you. :: 背中側にして
+== 虹を見るには、太陽を背にして立とう。
+S| {Rainbows|Rainbow|Rainbowed|Rainy} :: 虹は
+V| often {appear|appears|appearing|appearance} :: よく現れる
+T| {in|on|to|of} the morning :: 朝に
+M| {or|nor|than|but} late afternoon. :: または夕方近くに
+== 虹は、朝や夕方近くによく現れる。
+S| A rainbow {makes|make|making|made to} :: 虹は…にする
+O| a {rainy|rains|rained|rainily} day :: 雨の日を
+C| {special|specially|specialty|especially}. :: 特別に
+== 虹は雨の日を特別なものにしてくれる。
+?? 1 3 虹は、太陽が何を照らすときに現れる？
+?? 2 3 太陽の光は何をふくんでいる？
+?? 5 1 虹の赤はどこにある？
+?? 6 3 虹を見るには、太陽をどこにして立つ？
+
+@id beg54
+@lv 1
+@level 4
+@title A Night Full of Stars
+@ja 星を見た夜
+@tag 高校受験レベル・日記
+@gloss uncle=おじ, mountain=山, clear=澄んだ, the Big Dipper=北斗七星, far=遠い, suddenly=突然, shooting star=流れ星, cross=横切る, wish=願いごと
+T| {Last|Latest|Lastly|Lasts} weekend, :: 先週末
+S| I {went|go|gone|goes} :: 私は行った
+P| {to|at|in|for} my uncle's house :: おじの家へ
+P| {in|to|of|than} the mountains. :: 山の中の
+== 先週末、私は山の中にあるおじの家へ行った。
+T| {That|Than|Those|Then} night, :: その夜
+S| the {sky|skies|sky's|skys} :: 空は
+V| was very {clear|clearly|clearness|clears}. :: とても澄んでいた
+== その夜、空はとても澄んでいた。
+S| I {saw|see|seen|seeing} :: 私は見た
+O| so {many|much|lot|more} stars :: とてもたくさんの星を
+M| for the first {time|times|timer|timing}. :: 初めて
+== 私はあんなにたくさんの星を初めて見た。
+P| {In|On|At|Of} my town, :: 私の町では
+S| I {can|cans|can to|could to} see :: 私は見られる
+O| only a {few|little|lot|less} stars. :: 少しの星しか
+== 私の町では、星は少ししか見えない。
+S| My {uncle|uncle's|ankle|uncled} :: おじは
+V| {showed|show|shown|showing} me :: 私に見せた
+O| the Big {Dipper|Dip|Dipping|Dipped}. :: 北斗七星を
+== おじは私に北斗七星を教えてくれた。
+S| He {said|say|told|talked}, :: 彼は言った
+O| "The stars {are|is|be|am} :: 「星は…だ
+C| very {far|for|fur|fair} :: とても遠い
+P| {from|for|of|to} us." :: 私たちから」
+== おじは「星は私たちからとても遠いところにあるんだよ」と言った。
+T| {Suddenly|Sudden|Suddenness|Suddener}, :: 突然
+S| a shooting {star|stars|starry|stared} :: 流れ星が
+V| {crossed|cross|crossing|across} :: 横切った
+O| the {sky|sky's|skys|skied}. :: 空を
+== 突然、流れ星が空を横切った。
+S| I {made|maked|making|makes} :: 私はした
+O| a {wish|wishes|wished|wishing} :: 願いごとを
+M| {quickly|quicken|quickness|quicker of}. :: 急いで
+== 私は急いで願いごとをした。
+S| I {want to|want|wants to|wanting} :: 私は…したい
+V| {go|goes|went|going} there :: そこへ行く
+M| {again|against|agains|gain} :: また
+T| next {summer|summers|summery|sum}. :: 来年の夏
+== 来年の夏、またそこへ行きたい。
+?? 0 2 先週末、どこへ行った？
+?? 1 2 その夜、空はどうだった？
+?? 4 2 おじは何を見せてくれた？
+?? 6 1 突然、何が空を横切った？
+
+@id beg55
+@lv 1
+@level 4
+@title Sea Turtles
+@ja ウミガメ
+@tag 高校受験レベル・説明文
+@gloss sea turtle=ウミガメ, flipper=ひれ, instead of=…のかわりに, distance=距離, surface=水面, breathe=呼吸する, female=メスの, lay=(卵を)産む, hatch=(卵が)かえる, by mistake=まちがえて
+S| Sea {turtles|turtle|turtled|turtle's} :: ウミガメは
+V| {live|lives|living|to live} :: すむ
+P| {in|on|at|to} oceans :: 海に
+P| {around|round of|arounds|aground} the world. :: 世界中の
+== ウミガメは世界中の海にすんでいる。
+S| They {have|has|having|haves} :: 彼らは持っている
+O| {flippers|flipper|flipped|flipping} :: ひれを
+M| {instead of|instead|in stead|instead for} legs. :: 足のかわりに
+== 彼らは足のかわりにひれを持っている。
+S| Sea turtles {can|cans|can to|could to} :: ウミガメは…できる
+V| {swim|swims|swimming|swam} :: 泳ぐ
+O| very long {distances|distant|distance of|distantly}. :: とても長い距離を
+== ウミガメはとても長い距離を泳ぐことができる。
+S| They {come|comes|coming|came to} up :: 彼らは上がる
+P| {to|of|than|since} the surface :: 水面に
+R| {to breathe|breath|breathes|to breathing} air. :: 空気を吸うため
+== 彼らは空気を吸うために水面に上がってくる。
+S| Female {turtles|turtle|turtled|turtle's} :: メスのカメは
+V| {come|comes|coming|came to} :: やって来る
+P| {to|at|in|for} the beach :: 浜辺に
+R| {to lay|lays|to lie|to laying} eggs. :: 卵を産むため
+== メスのカメは、卵を産むために浜辺にやって来る。
+S| They {dig|digs|digging|dug to} :: 彼らは掘る
+O| a {hole|whole|holes|holy} :: 穴を
+P| {in|to|of|than} the sand :: 砂に
+T| {at|in|on|of} night. :: 夜に
+== 彼らは夜に砂に穴を掘る。
+T| {After|Afterward|Later|Since of} the eggs hatch, :: 卵がかえると
+S| the {babies|baby|babys|baby's} :: 赤ちゃんたちは
+V| {go|goes|going|gone} :: 行く
+P| {to|at|of|than} the sea. :: 海へ
+== 卵がかえると、赤ちゃんたちは海へ向かう。
+S| Plastic {bags|bag|bagged|baggy} :: ビニール袋は
+P| {in|to|than|since} the sea :: 海の中の
+V| {are|is|be|being} dangerous :: 危険だ
+P| {for|from|than|of} them. :: 彼らにとって
+== 海の中のビニール袋は、ウミガメにとって危険だ。
+S| {Some|Much|Every|A} turtles :: 一部のカメは
+V| {eat|eats|eating|ate to} them :: それらを食べる
+M| {by|on|in|at} mistake. :: まちがえて
+== まちがえてそれを食べてしまうカメもいる。
+S| We {should|shoulds|should to|shoulder} :: 私たちは…べきだ
+V| {keep|keeps|kept|keeping} :: 保つ
+O| the {sea|sees|seen|seeing} :: 海を
+C| {clean|cleanly|cleaning|cleaner of}. :: きれいに
+== 私たちは海をきれいに保つべきだ。
+?? 1 1 ウミガメは足のかわりに何を持っている？
+?? 3 2 ウミガメは何のために水面に上がってくる？
+?? 4 3 メスのカメは何のために浜辺に来る？
+?? 5 3 ウミガメはいつ穴を掘る？
