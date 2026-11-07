@@ -51,6 +51,19 @@
 .ct-stream .list{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));align-content:start;grid-auto-rows:max-content;gap:12px;padding:12px 2px 8px}
 .ct-stream .pcard{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden;flex-shrink:0;min-height:max-content}
 .ct-stream .pcard:active{transform:scale(.985)}
+.ct-stream .pcard .bd{position:absolute;right:12px;top:10px;font-size:11px;font-weight:800;color:var(--lc);z-index:1}
+.ct-stream .pcard.dn{border-color:var(--lc)}
+.ct-stream .pcard.lk{opacity:.5;filter:saturate(.55)}
+.ct-stream .sech{grid-column:1/-1;font-size:13px;font-weight:800;padding:8px 2px 0;color:var(--muted)}
+.ct-stream .nextb{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;text-align:left;padding:12px 16px;border-radius:16px;border:2px solid var(--lc);background:var(--surface);color:inherit;font-size:13px;font-weight:700}
+.ct-stream .nextb b{font-family:var(--en);font-size:16px}
+.ct-stream .nextb small{color:var(--muted);font-size:12px;font-weight:600;flex-basis:100%}
+.ct-stream .lchips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px}
+.ct-stream .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--muted)}
+.ct-stream .chip.on{background:var(--lc);border-color:var(--lc);color:#fff}
+.ct-stream .sec{grid-column:1/-1;display:flex;align-items:center;gap:8px;text-align:left;padding:10px 4px 6px;border:0;border-bottom:2px solid var(--lc);background:none;color:inherit;font-weight:800;font-size:15px}
+.ct-stream .sec small{flex:1;color:var(--muted);font-weight:600;font-size:12px}
+.ct-stream .sec i{font-style:normal;opacity:.6}
 .ct-stream .pcard.ld{opacity:.55;pointer-events:none}
 .ct-stream .pcard .tg{font-size:11px;color:var(--lc);font-weight:700}
 .ct-stream .pcard .t{font-family:var(--en);font-weight:700;font-size:18px;line-height:1.25}

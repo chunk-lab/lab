@@ -1,6 +1,8 @@
 # 長文データ（passages.txt）＋ 英語脳アプリの辞書（big.js）→ data/data.js
 import re, json, sys, random
 import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from themes import theme, LEVEL_THEMES
 B = os.path.dirname(os.path.abspath(__file__)) + '/'   # tools/
 DATA = B + '../data/'
 src = open(B + 'big.js', encoding='utf8').read()
@@ -193,7 +195,9 @@ POOL = {k: sorted(v) for k, v in pools.items()}
 # data.js は目次だけ(題・タグ・語数など)。チャンクと単語は レベルごとの lv1.js〜lv3.js に分けて、使うときに読み込む(最初の読み込みを軽くする)
 J = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
 idx = [{'id': p['id'], 'lv': p['lv'], 'title': p['title'], 'ja': p['ja'], 'tag': p['tag'],
-        'wc': sum(len(c['tk']) for c in p['chunks']), 'nc': len(p['chunks']), 'chunks': [], 'words': []} for p in out]
+        'wc': sum(len(c['tk']) for c in p['chunks']), 'nc': len(p['chunks']), 'th': theme(p['id']) or 'ほか', 'chunks': [], 'words': []} for p in out]
+for x in idx:
+    if x['th'] == 'ほか': print('テーマ未設定(tools/themes.py に足してください):', x['id'])
 HELP = ('// PASSAGES_NEED(loadScript, そのゲームのフォルダ, [レベル]) で、そのレベルのチャンク(lvN.js)と読む画面の文(txN.js)を読み込む\n'
   'function PASSAGES_FILL(lv,A){const L=PASSAGES.filter(p=>p.lv===lv);A.forEach((a,i)=>{if(L[i]){L[i].chunks=a.chunks;L[i].words=a.words}})}\n'
   'function PASSAGES_NEED(load,base,lvs){const P=PASSAGES_NEED.p;return Promise.all([...new Set(lvs)].filter(l=>l>=1&&l<=3).map(l=>P[l]||(P[l]=load(base+"lv"+l+".js").then(()=>load(base+"tx"+l+".js")).catch(e=>{delete P[l];throw e}))))}\n'
@@ -209,7 +213,8 @@ HELP = ('// PASSAGES_NEED(loadScript, そのゲームのフォルダ, [レベル
 open(DATA + 'data.js', 'w', encoding='utf8').write(
     '// 自動生成（build/build.py）。単語の訳は英語脳アプリの辞書（EJDict／WordNet由来 big.js）＋文脈の上書き\n'
     'const PASSAGES=' + J(idx) + ';\n'
-    'const POOL=' + J(POOL) + ';\n' + HELP)
+    'const POOL=' + J(POOL) + ';\n'
+    'const THEMES=' + J(LEVEL_THEMES) + ';\n' + HELP)
 for lv in (1, 2, 3):
     open(DATA + f'lv{lv}.js', 'w', encoding='utf8').write(
         f'// 自動生成（build.py）。レベル{lv}の長文のチャンクと単語。data.js を先に読み込むこと\n'

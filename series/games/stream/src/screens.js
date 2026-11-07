@@ -16,17 +16,45 @@ export function applyFs(){if(SV.set.spd==null)SV.set.spd=.5;if(SV.set.fs==null)S
 
 // 長文のチャンクはレベルごとのファイル(data/lvN.js・txN.js)。開く前に読み込む
 export const needLv=lv=>PASSAGES_NEED(ENV.ctx.loadScript,ENV.base,[lv]);
+// 一覧の見やすさ:種類で絞る・済みの印・テーマごとに畳む・「次の1本」・課題図書とおすすめを上に。鍵(薄く+🔒)の見た目は isLocked() で決める
+const KIND_G={物語文:"物語・日記",体験文:"物語・日記",日記:"物語・日記",ブログ:"物語・日記",随筆:"物語・日記",スピーチ:"物語・日記",
+  説明文:"説明・意見",論説文:"説明・意見",意見文:"説明・意見",記事:"説明・意見",インタビュー:"説明・意見",投書:"説明・意見",
+  メール:"メール・手紙",手紙:"メール・手紙",メッセージ:"メール・手紙",お知らせ:"お知らせ・広告",案内:"お知らせ・広告",広告:"お知らせ・広告",ポスター:"お知らせ・広告"};
+const KINDS=["物語・日記","説明・意見","メール・手紙","お知らせ・広告"];
+const kindOf=p=>KIND_G[(p.tag.split("・")[1]||"").trim()]||"その他";
+const cleared=p=>starsOf(p.id,4)>0;
+const TESTLOCK=/[?&]lock=test/.test(location.search);   // ?lock=test で、鍵の見た目を試せる(解放のしくみができるまでの確認用)
+function pinnedIds(){const s=[];try{const B=ENV.core&&ENV.core.books;if(B){[...(B.weekly?B.weekly():[]),...(B.featured?B.featured():[])].forEach(b=>{if(b&&b.pid&&!s.includes(b.pid))s.push(b.pid)})}}catch(e){}return s}
+function isLocked(p,pins,k){try{const u=ENV.core&&ENV.core.unlock;if(u&&u.isOpen)return !pins.includes(p.id)&&!u.isOpen("st:"+p.id)}catch(e){}return TESTLOCK&&!pins.includes(p.id)&&!cleared(p)&&k>=4}
+function cardHTML(p,lk){return `<button class="pcard${lk?" lk":""}${cleared(p)?" dn":""}" style="--lc:${LV[p.lv].col}" data-id="${p.id}">${lk?'<span class="bd">🔒</span>':cleared(p)?'<span class="bd">✓済</span>':""}<span class="tg">${esc(p.tag)}</span><span class="t">${esc(p.title)}</span><span class="j">${esc(p.ja)}</span>
+    <span class="meta"><span class="en">${p.wc} words</span><span>${p.nc}チャンク</span><span class="sp"></span><span class="steps4">${[1,2,3,4].map(s=>`<i class="s${starsOf(p.id,s)}"></i>`).join("")}</span></span></button>`}
+async function openCard(b,p){SE.tap();if(!p.chunks.length){b.classList.add("ld");try{await needLv(p.lv)}catch(e){b.classList.remove("ld");ENV.core&&ENV.core.ui&&ENV.core.ui.toast("読み込めませんでした。通信を確かめて、もう一度押してください");return}b.classList.remove("ld")}CUR=p;renderDetail();show("sDetail")}
 export function renderHome(){
   $("tabs").innerHTML=[1,2,3].map(l=>`<button class="tab ${SV.lv===l?"on":""}" style="--lc:${LV[l].col}" data-lv="${l}"><b>${LV[l].name}</b><small>${LV[l].sub}</small></button>`).join("");
   $("tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>{SE.tap();SV.lv=+b.dataset.lv;save();renderHome();needLv(SV.lv).catch(()=>{})});
-  $("plist").innerHTML=PASSAGES.filter(p=>p.lv===SV.lv).map(p=>{const wc=p.wc;
-    return `<button class="pcard" style="--lc:${LV[p.lv].col}" data-id="${p.id}"><span class="tg">${esc(p.tag)}</span><span class="t">${esc(p.title)}</span><span class="j">${esc(p.ja)}</span>
-    <span class="meta"><span class="en">${wc} words</span><span>${p.nc}チャンク</span><span class="sp"></span><span class="steps4">${[1,2,3,4].map(s=>`<i class="s${starsOf(p.id,s)}"></i>`).join("")}</span></span></button>`}).join("");
-  const wn=WORDS[SV.lv].length,ws=WSET[SV.lv];
-  $("plist").insertAdjacentHTML("afterbegin",`<button class="pcard wcard" style="--lc:${LV[SV.lv].col}" id="btnWords"><span class="tg">単語・熟語・単語集</span><span class="t">${LV[SV.lv].name}の単語 ${wn}語</span><span class="j">${ws}語ずつ・${Math.ceil(wn/ws)}セット　聞いて、意味を選ぶ</span></button>`);
+  const lv=SV.lv,col=LV[lv].col,pins=pinnedIds(),fold=SV.fold||(SV.fold={});
+  const T=(typeof THEMES!=="undefined"&&THEMES[lv])||[];
+  const all=PASSAGES.filter(p=>p.lv===lv).map((p,i)=>({p,i})).sort((a,b)=>(T.indexOf(a.p.th)+1||99)-(T.indexOf(b.p.th)+1||99)||a.i-b.i).map(x=>x.p);   // テーマの順→作った順
+  const lk=new Map();all.forEach((p,k)=>lk.set(p.id,isLocked(p,pins,k)));
+  const kinds=KINDS.filter(k=>all.some(p=>kindOf(p)===k)),kf=kinds.includes(SV.lf)?SV.lf:"",nc=!!SV.nc,filtering=!!kf||nc;
+  const shown=all.filter(p=>(!kf||kindOf(p)===kf)&&(!nc||!cleared(p)));
+  const next=all.find(p=>!cleared(p)&&!lk.get(p.id));
+  let h=`<button class="pcard wcard" style="--lc:${col}" id="btnWords"><span class="tg">単語・熟語・単語集</span><span class="t">${LV[lv].name}の単語 ${WORDS[lv].length}語</span><span class="j">${WSET[lv]}語ずつ・${Math.ceil(WORDS[lv].length/WSET[lv])}セット　聞いて、意味を選ぶ</span></button>`;
+  const pin=pins.map(P).filter(Boolean);
+  if(pin.length)h+=`<div class="sech">★ 今日の課題図書・おすすめ</div>`+pin.map(p=>cardHTML(p,false)).join("");
+  if(next)h+=`<button class="nextb" style="--lc:${col}" data-id="${next.id}">▶ 次の1本　<b>${esc(next.title)}</b><small>${esc(next.ja)}</small></button>`;
+  h+=`<div class="lchips" style="--lc:${col}"><button class="chip${!kf&&!nc?" on":""}" data-f="">すべて ${all.length}</button>${kinds.map(k=>`<button class="chip${kf===k?" on":""}" data-f="${k}">${k}</button>`).join("")}<button class="chip${nc?" on":""}" data-nc="1">未クリアだけ</button></div>`;
+  let firstOpen=!filtering;
+  (T.concat(["ほか"])).forEach(th=>{const L=shown.filter(p=>p.th===th);if(!L.length)return;const key=lv+":"+th,d=L.filter(cleared).length;
+    let open=filtering?true:fold[key]!=null?!fold[key]:(firstOpen&&L.some(p=>!cleared(p)));if(open&&!filtering&&fold[key]==null)firstOpen=false;
+    h+=`<button class="sec" data-k="${esc(key)}" data-o="${open?1:0}" style="--lc:${col}"><span>${esc(th)}</span><small>${L.length}本${d?`・済${d}`:""}</small><i>${open?"▾":"▸"}</i></button>`;
+    if(open)h+=L.map(p=>cardHTML(p,lk.get(p.id))).join("")});
+  if(!shown.length)h+=`<div class="sech">この条件の長文はありません</div>`;
+  $("plist").innerHTML=h;
   $("btnWords").onclick=()=>{SE.tap();renderWords();show("sWords")};
-  
-  $("plist").querySelectorAll(".pcard[data-id]").forEach(b=>b.onclick=async()=>{SE.tap();const p=P(b.dataset.id);if(!p.chunks.length){b.classList.add("ld");try{await needLv(p.lv)}catch(e){b.classList.remove("ld");ENV.core&&ENV.core.ui&&ENV.core.ui.toast("読み込めませんでした。通信を確かめて、もう一度押してください");return}b.classList.remove("ld")}CUR=p;renderDetail();show("sDetail")});
+  $("plist").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{SE.tap();if(b.dataset.nc)SV.nc=!SV.nc;else SV.lf=b.dataset.f;save();renderHome()});
+  $("plist").querySelectorAll(".sec").forEach(b=>b.onclick=()=>{SE.tap();fold[b.dataset.k]=b.dataset.o==="1";save();renderHome()});
+  $("plist").querySelectorAll("[data-id]").forEach(b=>b.onclick=()=>{const p=P(b.dataset.id);if(b.classList.contains("lk")){SE.tap();ENV.core&&ENV.core.ui&&ENV.core.ui.toast("まだ解放していません");return}openCard(b,p)});
 }
 export function renderDetail(){
   const p=CUR;$("dTag").textContent=`${LV[p.lv].name}・${p.tag.split("・")[1]||""}`;$("dTitle").textContent=p.title;$("dJa").textContent=p.ja;
