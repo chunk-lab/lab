@@ -21,7 +21,7 @@ body.cs-in-game .md-town3d{visibility:hidden}
 .hm-ov{position:fixed;inset:0;z-index:30;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(90px + env(safe-area-inset-bottom,0px));background:linear-gradient(160deg,#bfe6ff,#ffe3ec);color:#2b2320}
 .hm-ov[hidden]{display:none}
 .hm-box{max-width:460px;margin:0 auto}
-.hm-logo{display:block;margin:0 auto 4px;width:min(66vw,280px);height:auto}
+.hm-logo{display:block;margin:0 auto 14px;width:min(66vw,280px);height:auto}
 .hm-box h1{margin:0 0 10px;font-size:26px;color:#4a3426;text-align:center;text-shadow:0 3px 0 #fff}
 .hm-box h2{margin:18px 0 8px;font-size:15px;color:#6b5a4c}
 .hm-cont{display:flex;flex-direction:column;gap:2px;width:100%;padding:16px;border-radius:20px;border:2px solid #8a5a32;background:#fff7d6;box-shadow:0 4px 0 #8a5a32;text-align:left;font:inherit;color:#2b2320}

@@ -83,7 +83,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       exprPool: () => { const t = exprToday(); if (t) return t; genExpr(); try { if (!core.dict.loaded) { core.dict.ready().catch(() => { }); return null; } return core.dict.phrases(); } catch (e) { return null; } },   // 毎日の表現のもと(AIがあればAIが作った今日の5つ・なければ辞書の熟語)
       medals: () => core.record.medals(),   // 勉強を続けたメダル(家の壁にかざれる)
       studyInfo: () => PLAYS.filter(p => p.mood !== 'game' && p.go && p.go.to !== '3d' && p.go.to !== 'test').map(p => ({ id: p.id, n: p.n, days: core.record.daysSince(p.id) })),   // しばらくしていない勉強(そら君が勧める)   // あなたの家に「勉強部屋」ボタンを出す
-      switchLabel: '勉強部屋にもどる',
+      switchLabel: 'タイトルにもどる',
       onSwitchMode: () => go('home'),
       openExternal(id) {
         const r = ROUTE[id]; if (!r) return false;   // ショップ・家・掲示板などは3Dの町の中で開く

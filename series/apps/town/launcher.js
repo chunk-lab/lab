@@ -114,7 +114,7 @@ export function createLauncher(core, { openApp, to2D, openStudy }) {
     ov = document.createElement('div'); ov.className = 'lc-ov';
     ov.innerHTML = `<div class="lc-sh" role="dialog"><div class="lc-hd"><span>🎮 どこへ行く？</span><button class="lc-x" aria-label="とじる">✕</button></div>
       <div class="lc-body">${body}</div>
-      <div class="lc-ft"><button data-2d>2Dの画面へ（勉強部屋）</button></div></div>`;
+      <div class="lc-ft"><button data-2d>タイトルへもどる</button></div></div>`;
     document.body.appendChild(ov);
     ov.onclick = e => {
       if (e.target === ov || e.target.closest('.lc-x')) return close();
