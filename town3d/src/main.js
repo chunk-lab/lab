@@ -1418,8 +1418,11 @@ export function mount(container, opt = {}) {
     pause() { held = true; input.clear(); audio.suspend(); },
     resume() { held = false; timer.update(); input.clear(); audio.resume(); hud.setCoins(wallet.get(), gemsNow()); },
     unmount() {
-      fw.dispose(); seasons.dispose(); clearBanner();
-      cancelAnimationFrame(raf); ro.disconnect(); offs.forEach(f => f()); appHost.close(); input.dispose(); hud.dispose(); net?.disconnect(); audio.dispose(); bus.clear();
+      // どれかの後始末でエラーが出ても、ほかの後始末(特に音を止める)が必ず動くように、1つずつ守る
+      const t = f => { try { f(); } catch (e) { console.error(e); } };
+      t(() => audio.dispose());   // 音は、まっさきに止める
+      t(() => fw.dispose()); t(() => seasons.dispose()); t(() => clearBanner());
+      t(() => cancelAnimationFrame(raf)); t(() => ro.disconnect()); t(() => offs.forEach(f => f())); t(() => appHost.close()); t(() => input.dispose()); t(() => hud.dispose()); t(() => net?.disconnect()); t(() => bus.clear());
       scene.traverse(o => { o.geometry?.dispose(); });
       renderer.dispose(); renderer.forceContextLoss?.(); root.remove();
       if (--styleRefs === 0) document.querySelector('style[data-town]')?.remove();

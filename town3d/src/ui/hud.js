@@ -279,7 +279,7 @@ export function createHud(root, bus) {
       el.querySelector('.tw-start').onclick = () => { if (intro && !inp.value.trim()) { inp.focus(); return; } el.remove(); onStart({ look: sel, name: (inp.value.trim() || LOOKS[sel].name).slice(0, 8) }); };
       root.appendChild(el);
     },
-    dispose() { offLang(); this.closeDialog(); this.closePanel(); toastEl?.remove(); [top, labels, action, emotes].forEach(e => e.remove()); },
+    dispose() { this.closeDialog(); this.closePanel(); toastEl?.remove(); [top, labels, action, emotes].forEach(e => e.remove()); },
   };
 }
 const hex = n => n.toString(16).padStart(6, '0');
