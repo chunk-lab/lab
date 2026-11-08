@@ -49,25 +49,32 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
     for (let k = 0; k <= 12; k++) { const a = Math.PI * (0.86 - k * 0.72 / 12) , r = k === 6 ? 0.13 : 0.17; ginkgoS.lineTo(Math.cos(a) * r, -0.05 + Math.sin(a) * r); }
     ginkgoS.lineTo(0.012, -0.05); ginkgoS.lineTo(0, -0.17);
     const mapleS = new THREE.Shape(); for (let k = 0; k < 10; k++) { const a = Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? 0.07 : 0.17; const x = Math.cos(a) * r, y = Math.sin(a) * r; k ? mapleS.lineTo(x, y) : mapleS.moveTo(x, y); } mapleS.closePath();
-    const sets = [[new THREE.ShapeGeometry(ginkgoS), [0xf2c94c, 0xf5d65e, 0xe9b23a, 0xffe08a]], [new THREE.ShapeGeometry(mapleS), [0xe8603a, 0xd9433a, 0xf0803c, 0xc9382e]]].map(([geo, cols]) => {
+    // 春:桜の花びら(小さな楕円の板。2色の組を、秋の葉と同じしくみで落とす)
+    const petalS = new THREE.Shape(); petalS.absellipse(0, 0, 0.14, 0.085, 0, Math.PI * 2, false, 0);
+    const mk = ([geo, cols]) => {
       const m = new THREE.InstancedMesh(geo, new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }), N / 2);   // 色をはっきり(夜は暗くする)
       m.frustumCulled = false; m.visible = false; const c = new THREE.Color();
       for (let i = 0; i < N / 2; i++) { c.setHex(cols[i % cols.length]); m.setColorAt(i, c); }
       scene.add(m); return m;
-    });
+    };
+    const autumnSets = [[new THREE.ShapeGeometry(ginkgoS), [0xf2c94c, 0xf5d65e, 0xe9b23a, 0xffe08a]], [new THREE.ShapeGeometry(mapleS), [0xe8603a, 0xd9433a, 0xf0803c, 0xc9382e]]].map(mk);
+    const springSets = [[new THREE.ShapeGeometry(petalS), [0xffc6d9, 0xffd6e4, 0xf9b8cc, 0xffe0ea]], [new THREE.ShapeGeometry(petalS), [0xfff0f5, 0xffcfdd, 0xf7aec4, 0xffdbe6]]].map(mk);
+    let sets = autumnSets;
     const st = Array.from({ length: N }, () => ({ t: 0, wait: Math.random() * 6, x: 0, y: -9, z: 0, p: Math.random() * 6, ry: Math.random() * 6, ground: 0 }));
-    const dummy = new THREE.Object3D(); let on = false, near = [], nearT = 0;
+    const dummy = new THREE.Object3D(); let on = false, near = [], nearT = 0, autumnOn = false, petalOn = false, mode = null;
+    const sync = () => { const m = autumnOn ? 'autumn' : petalOn ? 'spring' : null; if (m === mode) return; mode = m; on = !!m; autumnSets.forEach(x => { x.visible = m === 'autumn'; }); springSets.forEach(x => { x.visible = m === 'spring'; }); if (m) sets = m === 'autumn' ? autumnSets : springSets; near = []; nearT = 0; st.forEach(l => { l.wait = Math.random() * 4; l.y = -9; l.ground = 0; }); };
     function spawn(l, cam) {
       if (!near.length) { l.y = -9; l.wait = 1; return; }
       const tr = near[Math.floor(Math.random() * near.length)], a = Math.random() * 6.28, r = (1.0 + Math.random() * 0.6) * tr.s;   // 葉のかたまりのふちから
       Object.assign(l, { x: tr.x + Math.cos(a) * r, z: tr.z + Math.sin(a) * r, y: (2.0 + Math.random() * 1.4) * tr.s, t: 0, ground: 0, p: Math.random() * 6, ry: Math.random() * 6, v: 0.45 + Math.random() * 0.35 });
     }
     return {
-      on(v) { on = v; sets.forEach(m => { m.visible = v; }); },
+      on(v) { autumnOn = !!v; sync(); },   // 秋:イチョウ・モミジ
+      petal(v) { petalOn = !!v; sync(); },   // 春:桜の花びら(桜の木からだけ)
       update(dt, cam, night = 0) {
         if (!on) return;
         const k0 = 1 - 0.6 * night; sets.forEach(m => m.material.color.setScalar(k0));
-        if ((nearT -= dt) <= 0) { nearT = 1; near = trees.filter(t => Math.hypot(t.x - cam.x, t.z - cam.z) < 38); }
+        if ((nearT -= dt) <= 0) { nearT = 1; near = trees.filter(t => (mode !== 'spring' || t.pink) && Math.hypot(t.x - cam.x, t.z - cam.z) < 38); }
         for (let i = 0; i < N; i++) {
           const l = st[i];
           if (l.wait > 0) { l.wait -= dt; if (l.wait <= 0) spawn(l, cam); }
@@ -84,7 +91,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
         }
         sets.forEach(m => { m.instanceMatrix.needsUpdate = true; });
       },
-      dispose() { sets.forEach(m => scene.remove(m)); },
+      dispose() { autumnSets.concat(springSets).forEach(m => scene.remove(m)); },
     };
   })();
 
@@ -197,6 +204,7 @@ export function createSeasons(scene, { eachFoliage, eachTex = () => {}, trees = 
           if (a > 2.7) m.born = -9; }
       }
     },
+    petals(on) { leaves.petal(on); },   // 桜の花びら(桜の木からだけ落ちる)
     dispose() { leaves.dispose(); scene.remove(pts); geo.dispose(); mat.dispose(); for (const m of men) scene.remove(m.g); },
   };
   return api;

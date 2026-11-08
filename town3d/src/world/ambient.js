@@ -101,7 +101,7 @@ export function buildAmbient(scene, city, { quality = 'mid', blossom = false } =
   for (let i = 0; i < NP; i++) { pp[i * 3] = (R() - .5) * 60; pp[i * 3 + 1] = R() * 12; pp[i * 3 + 2] = (R() - .5) * 60; pv.push({ s: 0.35 + R() * 0.5, p: R() * 6, w: 0.5 + R() }); }
   const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pp, 3));
   const pm = new THREE.PointsMaterial({ color: 0xffc6d9, size: 0.3, map: petalTex, transparent: true, opacity: 0.85, depthWrite: false, alphaTest: 0.05 });
-  const petals = new THREE.Points(pg, pm); petals.frustumCulled = false; petals.visible = blossom; scene.add(petals);
+  const petals = new THREE.Points(pg, pm); petals.frustumCulled = false; petals.visible = false; scene.add(petals);   // 空中の花びらは出さない(桜の花びらは、桜の木からだけ落ちる:seasons.js)
 
   // ---- ほたる(夜の公園)と ちょうちょ(昼の公園) ----
   const glowTex = dotTex(g => { const gr = g.createRadialGradient(16, 16, 0, 16, 16, 16); gr.addColorStop(0, 'rgba(255,255,200,1)'); gr.addColorStop(1, 'rgba(255,255,200,0)'); g.fillStyle = gr; g.fillRect(0, 0, 32, 32); });
@@ -156,7 +156,7 @@ export function buildAmbient(scene, city, { quality = 'mid', blossom = false } =
 
   const tmp = new THREE.Vector3();
   return {
-    setBlossom(on) { petals.visible = on; petalMeshes.forEach(m => { m.visible = on; }); },
+    setBlossom(on) { petalMeshes.forEach(m => { m.visible = on; }); },
     feed(pos, ry) {
       if (food.t > 0) return false;
       food.spots.length = 0;

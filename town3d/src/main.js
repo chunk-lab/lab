@@ -102,7 +102,7 @@ export function mount(container, opt = {}) {
   setAreaName((x, z) => city.areaName(x, z)); loadHuntFile();   // 調べる:場所の名前・運営の宝探し(apps/hunt.json)
   const ambient = buildAmbient(scene, city, { quality: settings.quality, blossom });
   let blossomOn = blossom, testDate = new Date();
-  const setBlossom = on => { blossomOn = on; city.setBlossom(on); ambient.setBlossom(on); };
+  const setBlossom = on => { blossomOn = on; city.setBlossom(on); ambient.setBlossom(on); seasons.petals(on); };
   const seasons = createSeasons(scene, { eachFoliage, eachTex, trees: city.trees, groundMats: city.groundMats, colliders: city.colliders, storage });
   const curSeason = () => settings.season && settings.season !== 'auto' ? settings.season : seasonOf();
   const applySeason = () => { const s = curSeason(); seasons.set(s); setBlossom(opt.blossom ?? s === 'spring'); };

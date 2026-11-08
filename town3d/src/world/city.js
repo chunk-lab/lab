@@ -325,9 +325,9 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     });
   }
   function tree(x, z, kind = 'green', s = 1) {
-    trees.push({ x, z, s });
-    colliders.push({ cx: x, cz: z, r: 0.35 * s, h: 4 });
-    const pinkTree = kind === 'pink';   // 桜は春だけ(ピンクと緑の葉を両方つくり、季節で切りかえる)
+    const pinkTree = kind === 'pink';
+    trees.push({ x, z, s, pink: pinkTree });   // pink=桜の木(春の花びらは、この木からだけ落ちる)
+    colliders.push({ cx: x, cz: z, r: 0.35 * s, h: 4 });   // 桜は春だけ(ピンクと緑の葉を両方つくり、季節で切りかえる)
     const leaf = foliageMat(pinkTree ? C.leafPink : kind === 'deep' ? 0x8cc89a : r() < 0.5 ? C.leaf : C.leaf2, pinkTree ? 'blossom' : '');
     const leafAlt = pinkTree ? foliageMat(0x8cc89a, 'nonblossom') : null;
     const tm = mat(C.trunk);
