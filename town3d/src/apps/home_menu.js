@@ -1,6 +1,6 @@
 // あなたの家の下のメニュー：アイコンが横一列にならんだ、ループするスライダー。
 // 真ん中の1つが「いまえらんでいるもの」。スライドすると上の部屋でその家具が光る。
-// 真ん中のアイコン・部屋の家具をタップすると、その画面が開く(横のアイコンをタップすると、真ん中に寄るだけ)。
+// アイコン・部屋の家具をタップすると、その画面が開く(横のアイコンは、真ん中に寄せながら開く)。
 //
 // ここに1行足せば、メニューが増える。need が false のあいだは出さない(まだ持っていない家具など)。
 //   k: しるし / ic: アイコン / n: 名前 / sub: ひとこと / fur: 部屋で光らせる家具のid(先にあるものほど優先) / act: 開く画面
@@ -61,7 +61,7 @@ export function createHomeMenu(el, { items, onPick, onOpen, startKey }) {
   tr.onpointerdown = e => { cancelAnimationFrame(anim); drag = { x: e.clientX, p: pos, t: performance.now(), v: 0, lx: e.clientX, lt: performance.now(), moved: false, id: e.pointerId }; tr.setPointerCapture(e.pointerId); e.stopPropagation(); };
   tr.onpointermove = e => {
     if (!drag || e.pointerId !== drag.id) return; const dx = e.clientX - drag.x;
-    if (Math.abs(dx) > 6) drag.moved = true;
+    if (Math.abs(dx) > 12) drag.moved = true;
     const now = performance.now(); if (now > drag.lt) { drag.v = (e.clientX - drag.lx) / (now - drag.lt); drag.lx = e.clientX; drag.lt = now; }
     if (drag.moved) { pos = drag.p - dx / GAP; paint(); }
   };
@@ -69,7 +69,9 @@ export function createHomeMenu(el, { items, onPick, onOpen, startKey }) {
     if (!drag || e.pointerId !== drag.id) return; const d = drag; drag = null;
     if (!d.moved) {   // タップ:真ん中なら開く、横なら真ん中へ寄せる
       const r = tr.getBoundingClientRect(), k = Math.round((e.clientX - (r.left + r.width / 2)) / GAP);   // 指をつかまえているので、位置からどれを押したか決める
-      if (Math.abs(k) > 3) { settle(); return; } if (k === 0) { settle(); onOpen(list[cur]); } else go(Math.round(pos) + k);
+      if (Math.abs(k) > 3) { settle(); return; }
+      const idx = mod(Math.round(pos) + k, list.length); if (k === 0) settle(); else go(Math.round(pos) + k);
+      onOpen(list[idx]);   // どのアイコンも、押したらすぐ開く(押したものが真ん中に来る)
       return;
     }
     go(Math.round(pos - d.v * 4.2));   // はじいた勢いで少し先まで進む

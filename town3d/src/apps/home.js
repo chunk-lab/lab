@@ -135,7 +135,7 @@ export const homeApp = {
 
     let dirty = true, raf = 0, walk = false, last = performance.now();
     // mode:'view' ながめる(下のメニューでえらんで開く。家具は動かない) / 'edit' もようがえ(いままでの配置の操作)
-    let mode = 'view', menu = null, fx = null, glowT = 0, glowUid = null;
+    let pinLast = 0, mode = 'view', menu = null, fx = null, glowT = 0, glowUid = null;
     const draw = () => { dirty = true; };
     const loop = () => {
       raf = requestAnimationFrame(loop);
@@ -145,7 +145,7 @@ export const homeApp = {
         const t = Math.min(1, (now - fx.t0) / 420), e = 1 - Math.pow(1 - t, 3);
         panX = fx.a.x + (fx.b.x - fx.a.x) * e; panZ = fx.a.z + (fx.b.z - fx.a.z) * e; zoom = fx.a.zoom + (fx.b.zoom - fx.a.zoom) * e; resize(); if (t >= 1) fx = null;
       }
-      if (pin.visible) { const ph = (now - glowT) / 1000; arrow.position.y = pinTop + Math.abs(Math.sin(ph * 3)) * 0.22; ring.material.opacity = 0.55 + 0.35 * Math.cos(ph * 4); glow.material.opacity = 0.7 + 0.3 * Math.cos(ph * 4); if (ph < 8) dirty = true; }   // 目じるしは、ふわふわ動く(ながめているときだけ)
+      if (pin.visible) { const ph = (now - glowT) / 1000; if (ph < 5 && now - pinLast > 33) { pinLast = now; arrow.position.y = pinTop + Math.abs(Math.sin(ph * 3)) * 0.22; ring.material.opacity = 0.55 + 0.35 * Math.cos(ph * 4); glow.material.opacity = 0.7 + 0.3 * Math.cos(ph * 4); dirty = true; } else if (ph >= 5 && ph < 5.1) { arrow.position.y = pinTop + 0.1; ring.material.opacity = 0.8; glow.material.opacity = 1; dirty = true; } }   // 目じるしは、ふわふわ動く(ながめているときだけ)
       if (dirty) { dirty = false; renderer.render(scene, cam); }
     };
 
@@ -185,9 +185,10 @@ export const homeApp = {
     let zoom = 1, panX = 0, panZ = 0, baseDist = 15, camYaw = Math.PI / 4, camPitch = 0.56;   // 見る向き(ドラッグ・↺↻で変えられる)
     const ZMIN = 0.45, ZMAX = 3.2;
     const setZoom = z => { zoom = Math.max(ZMIN, Math.min(ZMAX, z)); resize(); };
+    let sizeW = 0, sizeH = 0;
     function resize() {
       const w = cv.clientWidth || 300, h = cv.clientHeight || 300, r = cur(), big = Math.max(r.cols, r.rows);
-      renderer.setSize(w, h, false); cam.aspect = w / h;
+      if (w !== sizeW || h !== sizeH) { sizeW = w; sizeH = h; renderer.setSize(w, h, false); } cam.aspect = w / h;
       if (walk) { cam.fov = 55; cam.updateProjectionMatrix(); return; }
       cam.fov = 38;   // 歩いているときのカメラは毎フレーム決める
       baseDist = Math.max(15, 6.4 / (cam.aspect * 0.344)) * Math.max(1, big / 8 * 0.97);
