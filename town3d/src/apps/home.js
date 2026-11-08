@@ -644,7 +644,7 @@ export const homeApp = {
       wInput = createInput(cv, { onAction: () => {} });
       wUI = document.createElement('div');
       const wb = 'position:absolute;z-index:4;border:0;border-radius:999px;font:inherit;font-weight:800;box-shadow:0 2px 8px #0003;cursor:pointer';
-      wUI.innerHTML = `<button data-w="back" style="${wb};left:10px;top:10px;padding:9px 14px;background:#fffaf2;color:${ink}">← もどる</button>
+      wUI.innerHTML = `<button data-w="back" style="${wb};left:10px;top:10px;padding:9px 14px;background:#fffaf2;color:${ink}">✏️ へんしゅうにもどる</button>
         <button data-w="shot" aria-label="写真をとる" style="${wb};right:12px;bottom:12px;width:58px;height:58px;font-size:26px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1)">📷</button>
         <button data-w="album" style="${wb};right:12px;bottom:80px;padding:8px 12px;font-size:13px;background:#fffaf2;color:${ink}">🖼 アルバム</button>
         <button data-w="act" style="${wb};left:50%;transform:translateX(-50%);bottom:18px;padding:12px 22px;font-size:16px;background:linear-gradient(160deg,#ffe08a,#ffc93c);color:${ink};display:none">座る</button>
