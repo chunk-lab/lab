@@ -1,0 +1,300 @@
+reflect | v | Still water can reflect the blue sky. | 静かな水面は青い空を反射します。
+reflect | v | Does this mirror reflect the sunlight? | この鏡は日光を反射しますか。
+reflect | v | The lake reflected the mountains beautifully. | 湖は山々を美しく映していました。
+refuse | v | I cannot refuse her kind offer. | 私は彼女の親切な申し出を断れません。
+refuse | v | Why did he refuse the invitation? | 彼はなぜ招待を断ったのですか。
+refuse | v | She refused to eat another piece. | 彼女はもう一切れ食べるのを断りました。
+release | v | Please release the bird into the sky. | 鳥を空へ放してあげてください。
+release | v | When will they release the new song? | 彼らはいつ新しい曲を発売しますか。
+release | v | The children released the fish into the river. | 子供たちは魚を川に放しました。
+rely | v | You can rely on your friends. | 友達を頼りにできます。
+rely | v | Does she rely on her brother? | 彼女は兄を頼りにしていますか。
+rely | v | We relied on our teacher for help. | 私たちは先生の助けを頼りにしました。
+remove | v | Please remove your shoes at the door. | 入り口で靴を脱いでください。
+remove | v | Can you remove this mark from the wall? | 壁のこの印を消せますか。
+remove | v | She removed the books from the table. | 彼女はテーブルから本を取り除きました。
+replace | v | We need to replace this old chair. | この古い椅子を取り替える必要があります。
+replace | v | Can you replace the empty bottle? | 空の瓶を取り替えてくれますか。
+replace | v | My father replaced the kitchen light yesterday. | 父は昨日台所の電灯を取り替えました。
+represent | v | These colors represent the four seasons. | これらの色は四季を表しています。
+represent | v | Does this picture represent your family? | この絵はあなたの家族を表していますか。
+represent | v | The star represented hope in her drawing. | その星は彼女の絵で希望を表していました。
+respond | v | Please respond to my question today. | 今日私の質問に答えてください。
+respond | v | Did the teacher respond to your email? | 先生はあなたのメールに返事をしましたか。
+respond | v | He responded with a friendly smile. | 彼は親しげな笑顔で応えました。
+reveal | v | The picture will reveal the answer. | その絵が答えを明らかにします。
+reveal | v | Will you reveal your birthday plans? | 誕生日の計画を教えてくれますか。
+reveal | v | She revealed the secret gift yesterday. | 彼女は昨日秘密の贈り物を明らかにしました。
+search | v | We can search for books online. | 私たちはインターネットで本を探せます。
+search | v | Did you search your bag carefully? | かばんの中を注意深く探しましたか。
+search | v | They searched the park for their dog. | 彼らは犬を探して公園を捜しました。
+select | v | Please select one picture for the wall. | 壁に飾る絵を一枚選んでください。
+select | v | Can you select your favorite song? | 好きな歌を選べますか。
+select | v | Our teacher selected three students yesterday. | 先生は昨日生徒を三人選びました。
+sign | n | That sign says the park is closed. | あの標識には公園が閉まっていると書いてあります。
+sign | n | Can you read the sign over there? | 向こうの標識を読めますか。
+sign | n | We saw signs along the road. | 私たちは道路沿いに標識を見ました。
+supply | v | This farm can supply fresh vegetables. | この農場は新鮮な野菜を供給できます。
+supply | v | Does the shop supply paper to schools? | その店は学校に紙を供給していますか。
+supply | v | They supplied water for the runners. | 彼らは走者たちに水を提供しました。
+worth | a | This book is worth reading twice. | この本は二度読む価値があります。
+worth | a | Is that old bike worth fifty dollars? | あの古い自転車には50ドルの価値がありますか。
+worth | a | The trip was worth the long walk. | その旅行は長く歩くだけの価値がありました。
+minute | n | Please wait here for one minute. | ここで一分待ってください。
+minute | n | Can you give me another minute? | もう一分時間をもらえますか。
+minute | n | The train leaves in five minutes. | 電車は五分後に出発します。
+voice | n | Her voice sounds beautiful in this song. | この歌では彼女の声が美しく聞こえます。
+voice | n | Can you hear my voice clearly? | 私の声がはっきり聞こえますか。
+voice | n | The children used quiet voices inside. | 子供たちは室内で小さな声で話しました。
+heart | n | My heart beats fast when I run. | 走ると私の心臓は速く鼓動します。
+heart | n | Can you feel your heart beating? | 自分の心臓が動くのを感じられますか。
+heart | n | Her heart was beating very quickly. | 彼女の心臓はとても速く鼓動していました。
+mind | n | My mind is full of new ideas. | 私の心は新しい考えでいっぱいです。
+mind | n | What is on your mind today? | 今日は何を考えているのですか。
+mind | n | His mind was on tomorrow's game. | 彼の心は明日の試合のことでいっぱいでした。
+hair | n | Her hair is long and black. | 彼女の髪は長くて黒いです。
+hair | n | Did you wash your hair today? | 今日は髪を洗いましたか。
+hair | n | My brother has very short hair. | 弟の髪はとても短いです。
+nose | n | The little dog has a black nose. | その小さな犬の鼻は黒いです。
+nose | n | Can you touch your nose with one finger? | 指一本で鼻に触れられますか。
+nose | n | She put her nose near the flowers. | 彼女は花に鼻を近づけました。
+mouth | n | Please close your mouth while eating. | 食べているときは口を閉じてください。
+mouth | n | Can you open your mouth wider? | もっと大きく口を開けられますか。
+mouth | n | The baby put food in his mouth. | 赤ちゃんは食べ物を口に入れました。
+ear | n | My left ear feels a little cold. | 左耳が少し冷たく感じます。
+ear | n | Does your dog have long ears? | あなたの犬は耳が長いですか。
+ear | n | She covered her ears with her hands. | 彼女は両手で耳を覆いました。
+tooth | n | My little brother has a new tooth. | 弟に新しい歯が生えました。
+tooth | n | Did you brush every tooth carefully? | 歯を一本一本丁寧に磨きましたか。
+tooth | n | The baby has two small teeth. | 赤ちゃんには小さな歯が二本あります。
+arm | n | Please raise your right arm slowly. | 右腕をゆっくり上げてください。
+arm | n | Can you move your left arm? | 左腕を動かせますか。
+arm | n | She held the baby in her arms. | 彼女は赤ちゃんを腕に抱きました。
+leg | n | My right leg feels tired today. | 今日は右脚が疲れています。
+leg | n | Can you stand on one leg? | 片脚で立てますか。
+leg | n | His legs were tired after the walk. | 散歩の後、彼の脚は疲れていました。
+finger | n | Please point with your index finger. | 人差し指で指してください。
+finger | n | Can you count on your fingers? | 指を使って数えられますか。
+finger | n | She touched the glass with one finger. | 彼女は指一本でガラスに触れました。
+neck | n | This scarf keeps my neck warm. | このマフラーは首を暖かく保ちます。
+neck | n | Does your neck feel better today? | 今日は首の調子がよいですか。
+neck | n | He put a towel around his neck. | 彼は首にタオルを巻きました。
+shoulder | n | My bag is on my left shoulder. | かばんを左肩に掛けています。
+shoulder | n | Can you move your shoulder slowly? | 肩をゆっくり動かせますか。
+shoulder | n | She carried the child on her shoulders. | 彼女は子供を肩車しました。
+skin | n | My skin feels dry in winter. | 冬は肌が乾燥します。
+skin | n | Does your skin feel soft now? | 今は肌が柔らかく感じますか。
+skin | n | The sun made his skin warm. | 日差しで彼の肌が暖かくなりました。
+blood | n | Blood moves through our bodies every day. | 血液は毎日私たちの体の中を流れています。
+blood | n | Can you see the blood on his finger? | 彼の指についている血が見えますか。
+blood | n | A little blood came from my finger. | 私の指から少し血が出ました。
+bone | n | A dog found a bone in the garden. | 犬が庭で骨を見つけました。
+bone | n | Does this fish have many bones? | この魚には骨がたくさんありますか。
+bone | n | Our bodies have many different bones. | 私たちの体にはさまざまな骨があります。
+brain | n | Your brain helps you learn new things. | 脳は新しいことを学ぶのを助けます。
+brain | n | Does the brain need time to rest? | 脳にも休む時間が必要ですか。
+brain | n | Our brains work while we sleep. | 私たちの脳は眠っている間も働きます。
+stomach | n | My stomach feels full after dinner. | 夕食の後でおなかがいっぱいです。
+stomach | n | Does your stomach hurt this morning? | 今朝は胃が痛みますか。
+stomach | n | His stomach made a funny noise. | 彼のおなかが面白い音を立てました。
+knee | n | Please bend your left knee slowly. | 左ひざをゆっくり曲げてください。
+knee | n | Can you touch your right knee? | 右ひざに触れられますか。
+knee | n | She sat with her knees together. | 彼女はひざをそろえて座りました。
+nature | n | We enjoy nature during our summer trips. | 私たちは夏の旅行で自然を楽しみます。
+nature | n | Do you like spending time in nature? | 自然の中で過ごすのは好きですか。
+nature | n | The children learned about nature outside. | 子供たちは屋外で自然について学びました。
+earth | n | The earth moves around the sun. | 地球は太陽の周りを回ります。
+earth | n | Can you see the earth from space? | 宇宙から地球が見えますか。
+earth | n | We should keep the earth clean. | 私たちは地球をきれいに保つべきです。
+land | n | We could see land from the boat. | 私たちは船から陸が見えました。
+land | n | Is that land across the water? | 水の向こうに見えるのは陸ですか。
+land | n | The birds flew back toward land. | 鳥たちは陸の方へ飛んで戻りました。
+ground | n | Please put your bag on the ground. | かばんを地面に置いてください。
+ground | n | Is the ground wet after the rain? | 雨の後で地面はぬれていますか。
+ground | n | The children sat together on the ground. | 子供たちは地面に一緒に座りました。
+field | n | We played soccer in the field. | 私たちは野原でサッカーをしました。
+field | n | Is that field full of flowers? | あの野原は花でいっぱいですか。
+field | n | The farmer worked in his fields. | 農家の人は畑で働きました。
+hill | n | There is a small hill behind school. | 学校の後ろに小さな丘があります。
+hill | n | Can we climb that hill tomorrow? | 明日あの丘に登れますか。
+hill | n | The children ran down the hills. | 子供たちは丘を走って下りました。
+rock | n | A large rock stands beside the river. | 川のそばに大きな岩があります。
+rock | n | Can you climb onto that rock? | あの岩の上に登れますか。
+rock | n | We saw big rocks along the beach. | 私たちは浜辺沿いに大きな岩を見ました。
+stone | n | She found a smooth stone near the lake. | 彼女は湖の近くで滑らかな石を見つけました。
+stone | n | Can you move this heavy stone? | この重い石を動かせますか。
+stone | n | The children collected small stones by the river. | 子供たちは川辺で小石を集めました。
+sand | n | The sand feels warm under my feet. | 足の下の砂が暖かく感じます。
+sand | n | Is there sand inside your shoes? | 靴の中に砂が入っていますか。
+sand | n | We built a castle in the sand. | 私たちは砂でお城を作りました。
+beach | n | We walked along the beach at sunset. | 私たちは夕暮れに浜辺を歩きました。
+beach | n | Is the beach busy in summer? | その浜辺は夏に混みますか。
+beach | n | The children played on two different beaches. | 子供たちは二つの浜辺で遊びました。
+wave | n | A big wave came toward our boat. | 大きな波が私たちの船に近づいてきました。
+wave | n | Can you hear the waves from here? | ここから波の音が聞こえますか。
+wave | n | Small waves moved across the lake. | 小さな波が湖面を渡っていきました。
+ocean | n | The ocean looks blue from this hill. | この丘から見る海洋は青く見えます。
+ocean | n | Have you ever seen the ocean? | 海を見たことがありますか。
+ocean | n | Many kinds of fish live in oceans. | 多くの種類の魚が海洋に生息しています。
+fire | n | The fire kept us warm outside. | その火のおかげで屋外でも暖かく過ごせました。
+fire | n | Can you see the fire from here? | ここから火が見えますか。
+fire | n | We sat near the fire together. | 私たちは一緒に火のそばに座りました。
+ice | n | Please put some ice in my water. | 私の水に氷を少し入れてください。
+ice | n | Does this drink need more ice? | この飲み物にはもっと氷が必要ですか。
+ice | n | The ice melted in the sun. | 氷は日なたで溶けました。
+cloud | n | A white cloud covered the sun. | 白い雲が太陽を隠しました。
+cloud | n | Can you see that round cloud? | あの丸い雲が見えますか。
+cloud | n | Dark clouds filled the sky yesterday. | 昨日は暗い雲が空を覆いました。
+energy | n | I have plenty of energy this morning. | 今朝は元気がたくさんあります。
+energy | n | Does breakfast give you more energy? | 朝食を食べると元気が出ますか。
+energy | n | The children used their energy playing outside. | 子供たちは外で遊んで元気いっぱいに動き回りました。
+environment | n | A clean environment is good for everyone. | きれいな環境はみんなにとってよいものです。
+environment | n | Can we protect our local environment? | 私たちは地域の環境を守れますか。
+environment | n | The school created a better learning environment. | 学校はよりよい学習環境を作りました。
+space | n | There is enough space for another chair. | もう一脚椅子を置く空間があります。
+space | n | Can you make space on the table? | テーブルの上に場所を空けられますか。
+space | n | The children need more space to play. | 子供たちには遊ぶためのもっと広い空間が必要です。
+universe | n | The universe has many stars and planets. | 宇宙には多くの星や惑星があります。
+universe | n | Do you want to study the universe? | 宇宙を研究したいですか。
+universe | n | We learned about the universe at school. | 私たちは学校で宇宙について学びました。
+planet | n | Earth is the planet where we live. | 地球は私たちが暮らす惑星です。
+planet | n | Can you see that planet tonight? | 今夜あの惑星が見えますか。
+planet | n | Some planets have many moons. | いくつかの惑星には月がたくさんあります。
+culture | n | Food is an important part of culture. | 食べ物は文化の大切な一部です。
+culture | n | Do you enjoy learning about other cultures? | ほかの文化について学ぶのは好きですか。
+culture | n | We studied local culture during our trip. | 私たちは旅行中に地域の文化を学びました。
+society | n | Everyone has a place in society. | 誰もが社会の中に居場所を持っています。
+society | n | How can we help our society? | 私たちは社会のために何ができますか。
+society | n | Our teacher talked about modern society. | 先生は現代社会について話しました。
+peace | n | We all want peace in our lives. | 私たちは皆、生活の中に平和を望みます。
+peace | n | Can music bring people a feeling of peace? | 音楽は人々に安らぎをもたらせますか。
+peace | n | The quiet garden gave her peace. | 静かな庭は彼女に安らぎを与えました。
+freedom | n | Children need freedom to play and learn. | 子供には遊び学ぶ自由が必要です。
+freedom | n | Do you enjoy the freedom of summer vacation? | 夏休みの自由を楽しんでいますか。
+freedom | n | She had the freedom to choose her classes. | 彼女には授業を選ぶ自由がありました。
+future | n | I want to be a teacher in the future. | 私は将来先生になりたいです。
+future | n | What will you do in the future? | 将来何をするつもりですか。
+future | n | The children talked about their futures. | 子供たちは自分たちの将来について話しました。
+experience | n | Working here was a good experience. | ここで働いたことはよい経験でした。
+experience | n | Do you have experience with children? | 子供と接した経験はありますか。
+experience | n | We shared our travel experiences after school. | 私たちは放課後に旅行の経験を話し合いました。
+knowledge | n | Reading books gives us new knowledge. | 本を読むと新しい知識が得られます。
+knowledge | n | Can you use your knowledge here? | ここで自分の知識を生かせますか。
+knowledge | n | Her knowledge of animals surprised us. | 彼女の動物についての知識には驚きました。
+skill | n | Cooking is a useful skill to learn. | 料理は身につけると役立つ技能です。
+skill | n | What skill do you want to learn? | どんな技能を身につけたいですか。
+skill | n | She improved her English skills at school. | 彼女は学校で英語の技能を伸ばしました。
+ability | n | She has the ability to sing beautifully. | 彼女には美しく歌う能力があります。
+ability | n | Can practice improve your reading ability? | 練習で読解力を高められますか。
+ability | n | His ability to swim surprised everyone. | 彼の泳ぐ能力はみんなを驚かせました。
+chance | n | This is your chance to try again. | これはもう一度挑戦する機会です。
+chance | n | Do we have a chance to win? | 私たちには勝つ可能性がありますか。
+chance | n | She got another chance to sing. | 彼女はもう一度歌う機会を得ました。
+choice | n | You have a choice between two colors. | 二つの色から選ぶことができます。
+choice | n | Was that a difficult choice for you? | それはあなたにとって難しい選択でしたか。
+choice | n | The children made their own choices. | 子供たちは自分で選択しました。
+decision | n | Making this decision took a long time. | この決定には長い時間がかかりました。
+decision | n | Have you made your decision yet? | もう決心しましたか。
+decision | n | Our teacher explained her decision clearly. | 先生は自分の決定をはっきり説明しました。
+difference | n | There is a difference between these pictures. | これらの絵には違いがあります。
+difference | n | Can you see the difference now? | 今は違いが分かりますか。
+difference | n | We found three differences in the pictures. | 私たちは絵の中に三つの違いを見つけました。
+effect | n | Music has a good effect on my mood. | 音楽は私の気分によい影響を与えます。
+effect | n | Does sleep have an effect on learning? | 睡眠は学習に影響しますか。
+effect | n | The new rule had a positive effect. | 新しい規則にはよい効果がありました。
+event | n | Our school has a special event tomorrow. | 私たちの学校では明日特別な行事があります。
+event | n | Did you enjoy the sports event? | スポーツ行事は楽しかったですか。
+event | n | Many families came to the weekend events. | 多くの家族が週末の行事に来ました。
+situation | n | This situation is new for everyone. | この状況はみんなにとって初めてです。
+situation | n | Can you explain the situation to me? | 状況を私に説明してくれますか。
+situation | n | We talked about several different situations. | 私たちはいくつかの異なる状況について話しました。
+condition | n | The bike is in good condition. | その自転車はよい状態です。
+condition | n | Is your old computer in good condition? | 古いコンピューターはよい状態ですか。
+condition | n | The books were in excellent condition. | 本はとてもよい状態でした。
+purpose | n | The purpose of this game is learning. | このゲームの目的は学ぶことです。
+purpose | n | What is the purpose of this meeting? | この会議の目的は何ですか。
+purpose | n | She explained the purpose of our trip. | 彼女は旅行の目的を説明しました。
+goal | n | My goal is to read more books. | 私の目標はもっと本を読むことです。
+goal | n | Did your team score a goal? | あなたのチームはゴールを決めましたか。
+goal | n | We reached our goals this year. | 私たちは今年目標を達成しました。
+success | n | Hard work helped bring us success. | 一生懸命な努力が私たちの成功につながりました。
+success | n | Was the school festival a success? | 学校祭は成功しましたか。
+success | n | She enjoyed her success in the game. | 彼女は試合での成功を喜びました。
+trouble | n | I had trouble finding the station. | 私は駅を見つけるのに苦労しました。
+trouble | n | Are you having trouble with your homework? | 宿題で困っていますか。
+trouble | n | The old computer gave us trouble. | 古いコンピューターのせいで私たちは困りました。
+danger | n | The sign warns us about danger. | その標識は危険を知らせています。
+danger | n | Is there any danger on this road? | この道路に危険はありますか。
+danger | n | The children stayed away from danger. | 子供たちは危険から離れていました。
+accident | n | A small accident happened in the kitchen. | 台所で小さな事故が起こりました。
+accident | n | Did you hear about the accident? | その事故について聞きましたか。
+accident | n | We learned how to prevent accidents. | 私たちは事故の防ぎ方を学びました。
+action | n | We need action to keep our park clean. | 公園をきれいに保つためには行動が必要です。
+action | n | What action should we take now? | 今どんな行動を取るべきですか。
+action | n | Her actions helped the whole class. | 彼女の行動はクラス全体の役に立ちました。
+activity | n | Reading is my favorite afternoon activity. | 読書は午後の一番好きな活動です。
+activity | n | What activity did you choose today? | 今日はどんな活動を選びましたか。
+activity | n | Our school offers many fun activities. | 私たちの学校には楽しい活動がたくさんあります。
+attention | n | Please pay attention to the teacher. | 先生の話に注意を向けてください。
+attention | n | Can you give me your attention? | 私の話に注意を向けてくれますか。
+attention | n | The children listened with great attention. | 子供たちはとても注意深く聞いていました。
+care | n | This little plant needs special care. | この小さな植物には特別な世話が必要です。
+care | n | Can you take care of my cat? | 私の猫の世話をしてくれますか。
+care | n | She showed great care with the baby. | 彼女は赤ちゃんをとても注意深く世話しました。
+control | n | The driver has control of the bus. | 運転手はバスを制御しています。
+control | n | Who has control of the music? | 音楽を操作するのは誰ですか。
+control | n | He lost control of his bike. | 彼は自転車を制御できなくなりました。
+detail | n | Please check every detail before leaving. | 出かける前に細部まで確認してください。
+detail | n | Can you explain that detail again? | その細かい点をもう一度説明してくれますか。
+detail | n | She noticed small details in the picture. | 彼女は絵の細かな部分に気づきました。
+direction | n | Which direction should we walk now? | 今はどの方向へ歩くべきですか。
+direction | n | Is the station in this direction? | 駅はこの方向にありますか。
+direction | n | The birds flew in different directions. | 鳥たちはさまざまな方向へ飛んでいきました。
+distance | n | The distance between the schools is short. | 二つの学校の間の距離は短いです。
+distance | n | Can you walk that distance today? | 今日はその距離を歩けますか。
+distance | n | We measured the distance to the park. | 私たちは公園までの距離を測りました。
+fear | n | Her fear of dogs is getting smaller. | 彼女の犬への恐れは少しずつ減っています。
+fear | n | Do you have a fear of heights? | 高い所への恐れはありますか。
+fear | n | He felt fear before the big test. | 彼は大きな試験の前に恐れを感じました。
+feeling | n | I have a good feeling about today. | 今日はよいことがありそうな気がします。
+feeling | n | Can you describe that feeling to me? | その気持ちを私に説明できますか。
+feeling | n | We shared our feelings after the movie. | 私たちは映画の後に気持ちを話し合いました。
+fun | n | We had fun at the park yesterday. | 私たちは昨日公園で楽しく過ごしました。
+fun | n | Was the school trip fun for you? | 修学旅行は楽しかったですか。
+fun | n | The children had plenty of fun outside. | 子供たちは外でたっぷり楽しみました。
+habit | n | Reading before bed is a good habit. | 寝る前の読書はよい習慣です。
+habit | n | Do you have a morning habit? | 朝の習慣はありますか。
+habit | n | She changed some of her old habits. | 彼女はいくつかの古い習慣を変えました。
+image | n | This image shows a beautiful mountain. | この画像には美しい山が写っています。
+image | n | Can you see the image clearly? | その画像がはっきり見えますか。
+image | n | The computer showed several different images. | コンピューターはいくつかの異なる画像を表示しました。
+matter | n | Water is a form of matter. | 水は物質の一つの形です。
+matter | n | Is air also a kind of matter? | 空気も物質の一種ですか。
+matter | n | We studied matter in science class. | 私たちは理科の授業で物質を学びました。
+memory | n | That song brings back a happy memory. | その歌を聞くと楽しい記憶がよみがえります。
+memory | n | Do you have a favorite childhood memory? | 子供の頃の好きな思い出はありますか。
+memory | n | We shared memories of our school days. | 私たちは学校時代の思い出を語り合いました。
+method | n | This method makes learning English easier. | この方法は英語学習をより簡単にします。
+method | n | Can you explain your method to us? | あなたの方法を私たちに説明できますか。
+method | n | The teacher showed us two different methods. | 先生は私たちに二つの異なる方法を示しました。
+mood | n | Music can change my mood quickly. | 音楽は私の気分をすぐに変えられます。
+mood | n | Are you in a good mood today? | 今日は機嫌がよいですか。
+mood | n | The sunny weather improved her mood. | 晴れた天気で彼女の気分がよくなりました。
+opinion | n | I want to hear your opinion. | あなたの意見を聞きたいです。
+opinion | n | Can you give us your opinion? | 私たちに意見を聞かせてくれますか。
+opinion | n | The students shared different opinions in class. | 生徒たちは授業でさまざまな意見を交わしました。
+pain | n | I feel a little pain in my knee. | ひざに少し痛みを感じます。
+pain | n | Does the pain get better with rest? | 休むと痛みはよくなりますか。
+pain | n | The pain went away after lunch. | 昼食の後には痛みがなくなりました。
+plenty | n | We have plenty of time before dinner. | 夕食まで時間はたっぷりあります。
+plenty | n | Is there plenty of food for everyone? | みんなに十分な食べ物はありますか。
+plenty | n | The garden had plenty of flowers. | 庭には花がたくさんありました。
+price | n | The price of this bag is low. | このかばんの値段は安いです。
+price | n | Can you check the price for me? | 値段を確認してくれますか。
+price | n | The prices went up last month. | 先月値段が上がりました。
+quality | n | The quality of this shirt is good. | このシャツの品質はよいです。
+quality | n | Is the quality worth the price? | その品質は値段に見合っていますか。
+quality | n | These shoes are of high quality. | これらの靴は品質が高いです。
+rule | n | Our school has a new rule. | 私たちの学校には新しい規則があります。
+rule | n | Do you understand this game rule? | このゲームの規則は分かりますか。
+rule | n | The children followed all the rules. | 子供たちはすべての規則を守りました。
