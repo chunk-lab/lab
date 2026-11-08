@@ -13,28 +13,26 @@ export function createHome(core, { st, go3D, openStudy, has, openEpisode, episod
   function draw(msg) {
     const study = PLAYS.filter(p => p.mood !== 'game' && p.go.to !== '3d' && usable(p));
     const fun = PLAYS.filter(p => (p.mood === 'game') && usable(p));
-    const c = cont(), cp = c && c.kind === 'play' ? PLAYS.find(p => p.id === c.id) : null;
+    const c = cont(), cp = c && c.kind === 'play' ? PLAYS.find(p => p.id === c.id) : null, main = c ? (c.kind === 'play' ? cp : { n: c.label || '勉強ノート' }) : study[0];
     const row = p => `<button class="hm-row" data-p="${p.id}"><span>${WANT_ICON[p.want] || '・'}</span><b>${esc(p.n)}</b></button>`;
     el.innerHTML = `<div class="hm-box"><img class="hm-logo" src="${LOGO.town}" alt="かまってチャンクTOWN">
       ${openEpisode ? `<button class="hm-row" data-episode><span>📖</span><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}<small style="display:block;font-weight:400;margin-top:3px">はな・そら「ちょっと、外に出たい」</small></b></button>` : ''}
       ${msg ? `<div class="hm-err">${esc(msg.text)}<button class="hm-retry" data-retry>もう一度</button></div>` : ''}
-      ${c ? `<button class="hm-cont" data-cont><small>つづきから</small><b>${c.kind === '3d' ? '🏙 街であそぶ' : esc(c.label || '')}</b></button>` : ''}
-      <button class="hm-3d" data-3d><b>🏙 街であそぶ（3D）</b><span>歩いて、住人と話したり、お店に入ったり</span><small>少し重め・Wi-Fiがおすすめ</small></button>
-      <h2>📚 勉強する</h2>
+      ${main ? `<button class="hm-cont" data-main><small>${c ? 'つづきから' : 'はじめる'}</small><b>${c && c.kind === '3d' ? '🏙 街であそぶ' : esc(main.n)}</b></button>` : ''}
+      <button class="hm-3d" data-3d><b>🏙 街であそぶ（3D）</b><small>少し重め・Wi-Fiがおすすめ</small></button>
       <button class="hm-row hm-note" data-note><span>📒</span><b>勉強ノート・記録・設定</b></button>
-      ${study.map(row).join('')}
-      <h2>🎮 ゲームであそぶ</h2>
-      ${fun.map(row).join('')}
+      <details class="hm-more"><summary>ほかの練習・ゲーム</summary>
+      <h2>📚 勉強する</h2>${study.map(row).join('')}
+      <h2>🎮 ゲームであそぶ</h2>${fun.map(row).join('')}</details>
       </div>`;
     el.onclick = e => {
       const b = e.target.closest('button'); if (!b) return;
       if ('episode' in b.dataset) openEpisode();
       else if (b.dataset.p) start(PLAYS.find(p => p.id === b.dataset.p));
-      else if ('cont' in b.dataset) { if (c.kind === '3d') { go3D(); } else if (cp) start(cp); }
+      else if ('main' in b.dataset) { if (c && c.kind === '3d') go3D(); else if (c && c.kind === 'study') openStudy(); else if (cp) start(cp); else if (main) start(main); }
       else if ('note' in b.dataset) { remember({ kind: 'study', label: '勉強ノート' }); openStudy(); }
       else if ('3d' in b.dataset || 'retry' in b.dataset) go3D();
     };
-    if (c && c.kind === 'study') { const b = el.querySelector('[data-cont]'); if (b) b.onclick = () => openStudy(); }
   }
   return {
     show(msg) {

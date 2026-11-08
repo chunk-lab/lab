@@ -34,3 +34,4 @@ body.cs-in-game .md-town3d{visibility:hidden}
 .hm-err{margin:0 0 12px;padding:12px;border-radius:12px;background:#fff0f0;border:2px solid #e59;font-size:13px;font-weight:700;color:#7a2b3c}
 .hm-retry{display:block;margin-top:8px;padding:8px 16px;border-radius:10px;border:0;background:#e0457b;color:#fff;font:inherit;font-weight:800}
 body.md-home-on>.tw-view,body.md-home-on>.tw-top{display:none}
+.hm-more{margin-top:12px}.hm-more summary{cursor:pointer;text-align:center;padding:10px;color:#7a5a44;font-weight:700;list-style:none}.hm-more summary::-webkit-details-marker{display:none}
