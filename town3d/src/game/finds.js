@@ -39,8 +39,9 @@ function dailySpots(n = 12) {
     const nd = GRAPH.nodes[id]; let a = 0, r = 0, ok = false;
     for (let t = 0; t < 8 && !ok; t++) { a = hash(d * 13 + i + t * 101) * 6.283; r = 1 + hash(d * 17 + i + t * 53) * 1.8; ok = !validFn || validFn(nd.x + Math.cos(a) * r, nd.z + Math.sin(a) * r); }   // 池・噴水・建物の中なら、角度と距離を変えて取り直す
     if (!ok) { used.delete(id); continue; }
-    const kind = out.length % 2 ? 'phrase' : 'word';   // 単語と熟語だけ(長文の切り取りや格言は出さない)
-    const pool = kind === 'word' ? FIND_WORDS : FIND_IDIOMS; let c = pool[Math.floor(hash(d * 7 + i * 3 + 5) * pool.length)];
+    const kind = out.length % 2 ? 'phrase' : 'word';   // 単語・熟語・句動詞・慣用句・よく言うセリフ(長文や、ただのチャンクは出さない)
+    const sayings = out.length % 6 === 3;   // 熟語・句動詞のほかに、よく言うセリフ・慣用句(PHRASES)も混ぜる
+    const pool = kind === 'word' ? FIND_WORDS : sayings ? PHRASES.filter(x => x[0].split(/\s+/).length <= 8) : FIND_IDIOMS; let c = pool[Math.floor(hash(d * 7 + i * 3 + 5) * pool.length)];
     for (let k = 1; out.some(o => o.c[0] === c[0]) && k < 30; k++) c = pool[Math.floor(hash(d * 7 + i * 3 + 5 + k * 977) * pool.length)];
     out.push({ key: `d:${dayKey()}:${out.length}`, x: nd.x + Math.cos(a) * r, z: nd.z + Math.sin(a) * r, kind, c, node: id });
   }
