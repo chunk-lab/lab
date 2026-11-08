@@ -7,7 +7,7 @@ in the presence of | ph | Does he feel nervous in the presence of his teachers? 
 no sooner A than B | ph | No sooner had I sat down than the phone rang. | 私が座るやいなや、電話が鳴りました。
 no sooner A than B | ph | No sooner had we arrived than the concert began. | 私たちが到着するとすぐにコンサートが始まりました。
 no sooner A than B | ph | No sooner had she sat down than the telephone rang. | 彼女が座るとすぐに電話が鳴りました。
-not to mention | ph | The hotel has a pool, not to mention a beautiful garden. | そのホテルにはプールがあり、美しい庭も言うまでもなくあります。
+not to mention | ph | The hotel has a pool, not to mention a beautiful garden. | そのホテルにはプールがあり、そのうえ美しい庭まであります。
 not to mention | ph | She speaks French and German, not to mention English. | 彼女はフランス語とドイツ語を話し、英語は言うまでもありません。
 not to mention | ph | The trip was expensive, not to mention rather tiring. | その旅行は高額で、かなり疲れるものでもありました。
 on account of | ph | The school trip was postponed on account of heavy rain. | 大雨のため修学旅行は延期されました。
@@ -25,7 +25,7 @@ approve of | ph | She did not approve of the way he handled the complaint. | 彼
 attend to | ph | Please attend to the customers waiting near the entrance. | 入口付近で待っているお客様に対応してください。
 attend to | ph | The manager attended to several urgent requests this morning. | 責任者は今朝いくつかの急ぎの依頼に対応しました。
 attend to | ph | Who will attend to the guests while I prepare lunch? | 私が昼食を準備する間、誰がお客様に対応しますか。
-back up | ph | Remember to back up your files before updating the computer. | コンピューターを更新する前にファイルを保存しておいてください。
+back up | ph | Remember to back up your files before updating the computer. | コンピューターを更新する前に、ファイルのバックアップを取るのを忘れないでください。
 back up | ph | Did you back up your photos onto another drive? | 写真を別のドライブにバックアップしましたか。
 back up | ph | She backs up her important work every Friday afternoon. | 彼女は毎週金曜日の午後に重要な仕事のデータを保存しています。
 benefit from | ph | Many students benefit from discussing difficult questions with classmates. | 多くの生徒は難しい問題をクラスメートと話し合うことで恩恵を受けます。
@@ -36,7 +36,7 @@ bring in | ph | Will the festival bring in more visitors this year? | 今年の�
 bring in | ph | The new product brought in additional income for the shop. | 新商品はその店に追加の収入をもたらしました。
 call in | ph | We may need to call in an expert for advice. | 助言を求めるため専門家を呼ぶ必要があるかもしれません。
 call in | ph | The manager called in a technician to repair the printer. | 責任者は印刷機の修理のため技術者を呼びました。
-call in | ph | Did you call in to check whether the office was open? | 事務所が開いているか確認するため電話を入れましたか。
+call in | ph | Did you call in to check whether the office was open? | 事務所が開いているか確認するために電話をかけましたか。
 clear up | ph | The weather should clear up before the outdoor concert begins. | 屋外コンサートが始まる前に天気は晴れるはずです。
 clear up | ph | Could you help clear up this misunderstanding between our teams? | 私たちのチーム間の誤解を解くのを手伝ってくれますか。
 clear up | ph | The sky cleared up just as we left the hotel. | ホテルを出たちょうどそのとき空が晴れました。
@@ -99,7 +99,7 @@ page through | ph | She paged through the old cookbook while planning dinner. | 
 page through | ph | Did you page through the album before choosing a picture? | 写真を選ぶ前にアルバムをぱらぱらめくりましたか。
 per capita | ph | The report compares annual water use per capita across towns. | その報告書は町ごとの年間一人当たりの水使用量を比較しています。
 per capita | ph | Does this city have more parks per capita than ours? | この都市は私たちの町より一人当たりの公園が多いですか。
-per capita | ph | Average income per capita rose slightly in the survey. | 調査では一人当たりの平均所得がわずかに上がりました。
+per capita | ph | Income per capita rose slightly according to the recent survey. | 最近の調査によると、一人当たりの所得はわずかに増加しました。
 persist in | ph | Why does he persist in ignoring the teacher's advice? | 彼はなぜ先生の助言を無視し続けるのですか。
 persist in | ph | She persisted in practicing the piano despite slow progress. | 彼女は上達が遅くてもピアノの練習を続けました。
 persist in | ph | We should persist in improving our service for customers. | 私たちは顧客向けのサービスを改善し続けるべきです。
@@ -142,7 +142,7 @@ shut down | ph | The website was shut down temporarily for regular maintenance. 
 stem from | ph | Many misunderstandings stem from a lack of clear communication. | 多くの誤解は明確な意思疎通の不足から生じます。
 stem from | ph | Did the problem stem from an error in the schedule? | その問題は予定表の誤りから生じたのですか。
 stem from | ph | Her confidence stems from years of practice and experience. | 彼女の自信は長年の練習と経験から生まれています。
-succeed to | ph | His daughter will succeed to the family business next year. | 彼の娘は来年家業を継ぎます。
+succeed to | ph | Her assistant will succeed to the position of department manager. | 彼女の助手が部門長の職を引き継ぐ予定です。
 succeed to | ph | Who succeeded to the position after the manager retired? | 責任者が退職した後、その職を継いだのは誰ですか。
 succeed to | ph | She hopes to succeed to her father's role someday. | 彼女はいつか父親の役割を引き継ぎたいと思っています。
 sum up | ph | Could you sum up the main points of your presentation? | 発表の要点をまとめてもらえますか。
@@ -160,7 +160,7 @@ above all | ph | What matters above all when choosing a new job? | 新しい仕�
 adhere to | ph | All staff members must adhere to the company's safety guidelines. | 全職員は会社の安全指針に従わなければなりません。
 adhere to | ph | Did the team adhere to its original research plan? | チームは当初の調査計画を守り抜きましたか。
 adhere to | ph | She always adheres to her principles when making decisions. | 彼女は決断をするときいつも自分の信念を貫きます。
-admit doing | ph | He admitted making a mistake. | 彼は間違いをしたことを認めました。
+admit doing | ph | I admit doing the task too quickly yesterday afternoon. | 昨日の午後、その作業を急ぎすぎたことは認めます。
 admit doing | ph | He admitted making a mistake in the final report. | 彼は最終報告書で間違いをしたことを認めました。
 admit doing | ph | Would you admit forgetting to send the party invitation? | パーティーの招待状を送るのを忘れたことを認めますか。
 after all | ph | We decided to visit the museum after all yesterday. | 私たちは結局昨日博物館を訪れることにしました。
@@ -204,7 +204,7 @@ at no time | ph | At no time should you share your password with strangers. | �
 at no time | ph | At no time was the museum closed during the festival. | 祭りの間、博物館が閉まることは一度もありませんでした。
 at risk | ph | The old trees may be at risk during construction. | 工事中に古い木々が危険にさらされるかもしれません。
 at risk | ph | Are small local shops at risk of closing permanently? | 地元の小さな店は永久閉店の危険にさらされていますか。
-at risk | ph | Without regular maintenance, the equipment could be at risk. | 定期的な整備がなければ設備が危険にさらされるおそれがあります。
+at risk | ph | Without regular maintenance, the equipment could be at risk of failure. | 定期的に整備しなければ、その設備は故障するおそれがあります。
 at this rate | ph | At this rate, we will finish the project before Friday. | この調子なら金曜日までに企画を終えられます。
 at this rate | ph | Will we miss the last train at this rate? | この調子では終電に乗り遅れるでしょうか。
 at this rate | ph | At this rate, the garden will be full of flowers soon. | この調子なら庭はまもなく花でいっぱいになります。
@@ -241,7 +241,7 @@ be sited in | ph | Why was the school sited in such a quiet neighborhood? | そ�
 be stuck in | ph | Nobody wants to be stuck in traffic before an important meeting. | 重要な会議の前に渋滞で動けなくなりたい人はいません。
 be stuck in | ph | We were stuck in a crowded elevator for several minutes. | 私たちは混んだエレベーターの中で数分間動けませんでした。
 be stuck in | ph | Are you still stuck in that long line outside the museum? | まだ博物館の外の長い列から動けないのですか。
-be worthy of | ph | Her excellent work should be worthy of special recognition. | 彼女の優れた仕事は特別な評価に値するはずです。
+be worthy of | ph | Her excellent work will surely be worthy of special recognition. | 彼女の優れた仕事は、きっと特別な評価に値するでしょう。
 be worthy of | ph | Is this historic old building worthy of careful preservation? | この歴史ある古い建物は大切に保存する価値がありますか。
 be worthy of | ph | The proposal was worthy of serious consideration by the committee. | その提案は委員会による真剣な検討に値するものでした。
 bear to do | ph | I cannot bear to do the same boring task every day. | 毎日同じ退屈な作業をするのには耐えられません。
@@ -262,7 +262,7 @@ bring out | ph | The company brought out several new products last spring. | そ
 buy out | ph | A larger company offered to buy out the family business. | 大きな会社がその家族経営の事業を買収すると申し出ました。
 buy out | ph | Did the investors buy out the small local company? | 投資家たちは地元の小さな会社を買収しましたか。
 buy out | ph | She hopes to buy out her partner's share someday. | 彼女はいつか共同経営者の持ち分を買い取りたいと考えています。
-by far | ph | This is by far the most comfortable chair in the room. | これは部屋の中ではるかに一番座り心地のよい椅子です。
+by far | ph | This is by far the most comfortable chair in the room. | これは部屋の中で群を抜いて座り心地のよい椅子です。
 by far | ph | Which subject is by far the hardest for you? | あなたにとってどの科目がずば抜けて難しいですか。
 by far | ph | Her latest painting was by far her best work. | 彼女の最新の絵はこれまでで群を抜いて最高の作品でした。
 carry over | ph | We can carry over unused vacation days into next year. | 未使用の休暇を来年に持ち越すことができます。
