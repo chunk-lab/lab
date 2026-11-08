@@ -79,6 +79,17 @@ export function createDrill(core) {
     if (it.t === 'c') return classify(x);
     quiz(x, it);
   }
+  // 例文：入力画面を開かず、その場に出す(内蔵の長文・お話・ノートの短文から探す)。なければ、英ラボなどで作る入口を出す
+  async function eg(x, host) {
+    host.innerHTML = '<p class="cs-sub">例文をさがしています…</p>';
+    let L = []; try { L = await core.useit.find(x.en); } catch (e) { }
+    if (!host.isConnected) return;
+    host.innerHTML = L.length ? `<ul class="cs-nb" style="text-align:left">${L.slice(0, 4).map((e2, i) => `<li><b>${esc(e2.en)}</b><span>${esc(e2.ja)}</span><small>${esc(e2.from)}</small><div class="cs-nb-a"><button data-s="${i}">🔊</button><button data-m="${i}">聞いてまねる</button></div></li>`).join('')}</ul>`
+      : '<p class="cs-sub">内蔵の文には見つかりませんでした。</p><button class="cs-btn" data-mk>英ラボなどで例文を作る</button>';
+    host.querySelectorAll('[data-s]').forEach(b => b.onclick = () => core.speech.speak(L[+b.dataset.s].en));
+    host.querySelectorAll('[data-m]').forEach(b => b.onclick = () => core.useit.mimic(L[+b.dataset.m].en, b));
+    const mk = host.querySelector('[data-mk]'); if (mk) mk.onclick = () => core.useit.open(x);
+  }
   function classify(x) {   // 英語だけ見せて、自分で分ける(答えの日本語は、分けたあとに見せる)
     const m = sub(`<section class="cs-panel dr-card"><small>この言葉は、どう？</small><h2>${esc(x.en)}</h2><div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button></div>
       <div class="dr-ch"><button data-c="unk">わからない</button><button data-c="cant">意味はわかるけど、自分では使えない</button><button data-c="off">もう知っている・押しまちがい(出さない)</button></div></section>`);
@@ -87,9 +98,9 @@ export function createDrill(core) {
       const c = b.dataset.c; if (c === 'off') { nb.sr(x.id, { s: 'off', at: Date.now() }); core.ui.toast('外しました(一覧から戻せます)'); return step(); }
       nb.sr(x.id, { s: c, box: 0, n: 0, w: 0, ok: 0, last: 0, due: Date.now() + 0.7 * DAY });   // 見せたばかりなので、すぐには出さない(あしたまた出る)
       const mm = sub(`<section class="cs-panel dr-card"><small>${c === 'unk' ? 'この意味です' : '言えるように、声に出してみよう'}</small><h2>${esc(x.en)}</h2><p style="font-size:20px">${esc(x.ja)}</p>
-        <div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button><button class="cs-btn" data-eg>例文を見る</button></div><button class="cs-btn cs-go cs-big" data-next>つぎへ</button></section>`);
+        <div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button><button class="cs-btn" data-eg>例文を見る</button></div><div data-egl></div><button class="cs-btn cs-go cs-big" data-next>つぎへ</button></section>`);
       core.speech.speak(x.en);
-      mm.querySelector('[data-say]').onclick = () => core.speech.speak(x.en); mm.querySelector('[data-eg]').onclick = () => core.useit.open(x); mm.querySelector('[data-next]').onclick = step;
+      mm.querySelector('[data-say]').onclick = () => core.speech.speak(x.en); mm.querySelector('[data-eg]').onclick = () => eg(x, mm.querySelector('[data-egl]')); mm.querySelector('[data-next]').onclick = step;
     });
   }
   function quiz(x, it) {
@@ -107,10 +118,10 @@ export function createDrill(core) {
       if (ok || toEn) try { core.speech.speak(x.en); } catch (e) { }
       const fb = m.querySelector('[data-fb]');
       fb.innerHTML = `<p style="font-size:17px"><b>${ok ? '⭕ せいかい' : '✖ ざんねん'}</b><br>${esc(x.en)} = ${esc(x.ja)}</p>
-        <div class="dr-row"><button class="cs-btn" data-say2>🔊</button><button class="cs-btn" data-eg>例文を見る</button><button class="cs-btn" data-off>外す</button></div>
+        <div class="dr-row"><button class="cs-btn" data-say2>🔊</button><button class="cs-btn" data-eg>例文を見る</button><button class="cs-btn" data-off>外す</button></div><div data-egl></div>
         <button class="cs-btn cs-go cs-big" data-next>つぎへ</button>`;
       fb.querySelector('[data-say2]').onclick = () => core.speech.speak(x.en);
-      fb.querySelector('[data-eg]').onclick = () => core.useit.open(x);
+      fb.querySelector('[data-eg]').onclick = () => eg(x, fb.querySelector('[data-egl]'));
       fb.querySelector('[data-off]').onclick = () => { nb.sr(x.id, { s: 'off', at: Date.now() }); core.ui.toast('外しました(一覧から戻せます)'); step(); };
       fb.querySelector('[data-next]').onclick = step; fb.querySelector('[data-next]').focus && fb.querySelector('[data-next]').focus();
     };
