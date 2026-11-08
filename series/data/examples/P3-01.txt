@@ -10,7 +10,7 @@ at the expense of | ph | They expanded the shop at the expense of the garden. | 
 at the mercy of | ph | Small boats are at the mercy of strong winds. | 小さな船は強風のなすがままです。
 at the mercy of | ph | Without a plan, we were at the mercy of events. | 計画がなく私たちは状況に振り回されました。
 at the mercy of | ph | Are local farmers at the mercy of changing weather? | 地元の農家は変わりやすい天候に左右されますか。
-be bound to | ph | The phrase be bound to expresses a very strong expectation. | be bound toという表現は非常に強い予想を表します。
+be bound to | ph | He is bound to win the prize. | 彼はきっと賞をとります。
 be bound to | ph | With regular practice, your English is bound to improve. | 定期的に練習すれば英語はきっと上達します。
 be bound to | ph | This interesting book is bound to attract young readers. | この面白い本はきっと若い読者を引きつけます。
 be entitled to | ph | Every member should be entitled to use the sports facilities. | 会員全員にスポーツ施設を利用する権利があるはずです。
@@ -265,7 +265,7 @@ stand by | ph | Her friends stood by her when she changed careers. | 彼女が�
 take pains | ph | We always take pains to make our instructions clear. | 私たちは説明を分かりやすくするためにいつも骨を折っています。
 take pains | ph | She took great pains to prepare a welcoming classroom. | 彼女は居心地のよい教室を準備するために大変苦労しました。
 take pains | ph | Did the guide take pains to answer every visitor's question? | 案内役は来館者の質問一つ一つに答えるために骨を折りましたか。
-tell A from B | ph | The expression tell A from B means recognizing a difference. | tell A from Bという表現は違いを見分けるという意味です。
+tell A from B | ph | Can you tell a fake from a real one? | 本物とにせ物を見分けられますか。
 tell A from B | ph | Can you tell real flowers from artificial ones at a distance? | 遠くから本物の花と造花を見分けられますか。
 tell A from B | ph | He cannot tell his twin cousins from each other. | 彼は双子のいとこを見分けられません。
 think better of | ph | I was going to complain, but I decided to think better of it. | 文句を言うつもりでしたが考え直すことにしました。
@@ -295,6 +295,6 @@ be absorbed in | ph | Are you so absorbed in your work that you forget lunch? | 
 be on the point of | ph | We seemed to be on the point of reaching an agreement. | 私たちはまさに合意に達しようとしているようでした。
 be on the point of | ph | She was on the point of leaving when the phone rang. | 彼女は電話が鳴ったときまさに出かけようとしていました。
 be on the point of | ph | Are they on the point of announcing the final results? | 彼らはまさに最終結果を発表しようとしているのですか。
-cannot help doing | ph | The phrase cannot help doing expresses an action you cannot resist. | cannot help doingという表現はどうしてもしてしまう行動を表します。
+cannot help doing | ph | I cannot help laughing at his jokes. | 私は彼の冗談に笑わずにいられません。
 cannot help doing | ph | I cannot help smiling whenever I see that funny picture. | その面白い写真を見るとどうしても笑顔になります。
 cannot help doing | ph | She could not help laughing at her brother's silly joke. | 彼女は弟のおかしな冗談に笑わずにはいられませんでした。

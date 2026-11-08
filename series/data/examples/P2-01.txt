@@ -133,7 +133,7 @@ look down on | ph | Why did she look down on his simple job? | 彼女はなぜ�
 make sense | ph | Your explanation does not make sense to me. | あなたの説明は私には意味が通りません。
 make sense | ph | Does this sentence make sense in English? | この文は英語として意味が通りますか。
 make sense | ph | The story finally made sense after the last chapter. | 最後の章を読んでようやく物語の意味が分かりました。
-make up one's mind | ph | The phrase make up one's mind means to decide. | make up one's mindという表現は決心するという意味です。
+make up one's mind | ph | I can't make up my mind about the menu. | 私はメニューがなかなか決められません。
 make up one's mind | ph | I finally made up my mind to join. | 私はついに参加する決心をしました。
 make up one's mind | ph | Have you made up your mind about the trip? | 旅行についてもう決心しましたか。
 make use of | ph | We should make use of the school library. | 私たちは学校の図書館を活用するべきです。
@@ -241,7 +241,7 @@ be satisfied with | ph | She was satisfied with her score on the test. | 彼女�
 by chance | ph | I met my old teacher by chance yesterday. | 昨日偶然昔の先生に会いました。
 by chance | ph | Did you find this book by chance? | この本を偶然見つけたのですか。
 by chance | ph | We discovered a small cafe by chance. | 私たちは偶然小さな喫茶店を見つけました。
-by oneself | ph | The expression by oneself means without another person's help. | by oneselfという表現は他人の助けなしにという意味です。
+by oneself | ph | He cooked dinner by himself. | 彼は一人で夕食を作りました。
 by oneself | ph | I made this cake all by myself. | 私はこのケーキを一人で作りました。
 by oneself | ph | Can your little brother travel by himself? | あなたの弟は一人で旅行できますか。
 come across | ph | I sometimes come across interesting books at this shop. | 私はこの店で時々面白い本に偶然出会います。
@@ -253,7 +253,7 @@ come from | ph | He comes from a small village near the sea. | 彼は海の近�
 contribute to | ph | Our club wants to contribute to the local community. | 私たちのクラブは地域社会に貢献したいと思っています。
 contribute to | ph | Can this activity contribute to a cleaner environment? | この活動はよりきれいな環境に貢献できますか。
 contribute to | ph | Many volunteers contributed to the success of the festival. | 多くのボランティアが祭りの成功に貢献しました。
-devote A to B | ph | The phrase devote A to B means giving time or effort. | devote A to Bという表現は時間や努力をささげるという意味です。
+devote A to B | ph | She devoted her life to helping children. | 彼女は子どもたちを助けることに人生をささげました。
 devote A to B | ph | She devotes her weekends to helping at the library. | 彼女は週末を図書館での手伝いにささげています。
 devote A to B | ph | He devoted his life to teaching young children. | 彼は人生を幼い子供たちの教育にささげました。
 do without | ph | We can do without a television during our camping trip. | キャンプ旅行中はテレビなしで済ませられます。
@@ -295,6 +295,6 @@ in the end | ph | What did you decide to do in the end? | 結局何をするこ�
 in case | ph | Take an umbrella in case it rains later. | 後で雨が降る場合に備えて傘を持っていってください。
 in case | ph | I saved his number in case I needed help. | 助けが必要な場合に備えて彼の番号を保存しました。
 in case | ph | Should we bring extra water in case it gets hot? | 暑くなる場合に備えて水を余分に持っていくべきですか。
-keep A from B | ph | The pattern keep A from B means preventing something. | keep A from Bという形は何かを防ぐという意味です。
+keep A from B | ph | Heavy rain kept us from going out. | 大雨のせいで、私たちは外出できませんでした。
 keep A from B | ph | The rain kept us from playing outside. | 雨のせいで私たちは外で遊べませんでした。
 keep A from B | ph | How can we keep birds from eating these seeds? | 鳥がこの種を食べないようにするにはどうすればよいですか。

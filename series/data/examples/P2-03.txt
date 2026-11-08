@@ -40,7 +40,7 @@ in the past | ph | In the past, my grandfather worked at a small bakery. | 以�
 in writing | ph | Please give us your answer in writing by Friday. | 金曜日までに回答を書面で提出してください。
 in writing | ph | Did the company confirm the agreement in writing? | 会社はその合意を書面で確認しましたか。
 in writing | ph | All changes to the plan must be made in writing. | 計画の変更はすべて書面で行わなければなりません。
-intend to do | ph | The phrase intend to do expresses a future plan. | intend to doという表現は将来の予定を表します。
+intend to do | ph | I intend to visit Kyoto next month. | 私は来月京都を訪れるつもりです。
 intend to do | ph | I intend to study abroad after finishing school. | 私は学校を卒業したら留学するつもりです。
 intend to do | ph | Does your brother intend to join the tennis club? | 弟はテニスクラブに入るつもりですか。
 later on | ph | We can discuss the details later on today. | 詳しいことは今日あとで話し合えます。
@@ -67,7 +67,7 @@ look over | ph | Please look over the schedule for any mistakes. | 間違いが�
 make out | ph | I cannot make out the words on that distant sign. | 遠くのあの看板の文字を読み取れません。
 make out | ph | Could you make out what the speaker was saying? | 話し手が何を言っているか聞き取れましたか。
 make out | ph | She could barely make out the mountains through the clouds. | 彼女は雲の向こうの山々をかろうじて見分けられました。
-manage to do | ph | The phrase manage to do means succeeding despite difficulty. | manage to doという表現は難しさを乗り越えて成功する意味です。
+manage to do | ph | She managed to finish the report on time. | 彼女はなんとか期限内に報告書を終えました。
 manage to do | ph | We managed to finish the work before sunset. | 私たちはなんとか日没前に仕事を終えました。
 manage to do | ph | Did you manage to find the missing library book? | なくした図書館の本をなんとか見つけられましたか。
 object to | ph | Some neighbors object to the plan for a larger road. | 近所の人の中には道路を広げる計画に反対する人もいます。
@@ -130,7 +130,7 @@ plenty of | ph | Do you have plenty of time before your train leaves? | 電車�
 point at | ph | It is rude to point at people in public. | 人前で人を指さすのは失礼です。
 point at | ph | The child pointed at a bird outside the window. | 子供は窓の外の鳥を指さしました。
 point at | ph | Can you point at the correct answer on the board? | 黒板の正しい答えを指さしてもらえますか。
-prefer to do | ph | The phrase prefer to do describes what someone likes better. | prefer to doという表現は何をより好むかを表します。
+prefer to do | ph | I prefer to stay home on rainy days. | 私は雨の日は家にいるほうが好きです。
 prefer to do | ph | I prefer to walk rather than take a taxi. | 私はタクシーに乗るより歩くほうが好きです。
 prefer to do | ph | Would she prefer to eat dinner a little earlier? | 彼女はもう少し早く夕食を食べるほうがよいですか。
 prepare for | ph | We need to prepare for the school festival. | 私たちは学校祭に備える必要があります。

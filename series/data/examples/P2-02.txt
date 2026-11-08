@@ -16,13 +16,13 @@ on purpose | ph | I did not ignore your message on purpose. | 私はわざとあ
 once in a while | ph | We eat at that restaurant once in a while. | 私たちは時々そのレストランで食事をします。
 once in a while | ph | Once in a while, my father cooks dinner. | 時々父が夕食を作ります。
 once in a while | ph | Do you still visit your old school once in a while? | 今でも時々以前の学校を訪れますか。
-prefer A to B | ph | The pattern prefer A to B shows which you like more. | prefer A to Bという形はどちらをより好むかを表します。
+prefer A to B | ph | I prefer tea to coffee. | 私はコーヒーより紅茶が好きです。
 prefer A to B | ph | I prefer tea to coffee in the morning. | 私は朝はコーヒーより紅茶を好みます。
 prefer A to B | ph | Does your brother prefer trains to buses for travel? | あなたの弟は旅行ではバスより電車を好みますか。
-prevent A from B | ph | The pattern prevent A from B means stopping an action. | prevent A from Bという形はある行動を妨げる意味です。
+prevent A from B | ph | The fence prevents dogs from entering the garden. | そのさくのおかげで、犬が庭に入りません。
 prevent A from B | ph | The rain prevented us from playing outside yesterday. | 昨日は雨のため私たちは外で遊べませんでした。
 prevent A from B | ph | Can this cover prevent dust from entering the box? | この覆いはほこりが箱に入るのを防げますか。
-regard A as B | ph | We use regard A as B to express an opinion. | regard A as Bは何かをどうみなすか表すときに使います。
+regard A as B | ph | Many people regard him as a hero. | 多くの人が彼を英雄だとみなしています。
 regard A as B | ph | Many students regard her as a great teacher. | 多くの生徒は彼女をすばらしい先生とみなしています。
 regard A as B | ph | Do you regard this experience as a useful lesson? | この経験を役立つ教訓だと考えていますか。
 so that | ph | I spoke slowly so that everyone could understand me. | みんなが理解できるように私はゆっくり話しました。
@@ -73,7 +73,7 @@ ask for | ph | Can we ask for more time to finish? | 終わらせるためにも
 be in danger | ph | These old trees may be in danger during strong winds. | 強風の際にはこれらの古い木が危険な状態になるかもしれません。
 be in danger | ph | The small garden is in danger of disappearing. | その小さな庭はなくなる危険にさらされています。
 be in danger | ph | Are the flowers in danger because of the cold? | 寒さのため花は危険な状態にありますか。
-not A but B | ph | The pattern not A but B shows a clear choice. | not A but Bという形は明確な選択を示します。
+not A but B | ph | She is not a singer but a dancer. | 彼女は歌手ではなく、ダンサーです。
 not A but B | ph | I want not coffee but tea this morning. | 今朝はコーヒーではなく紅茶が欲しいです。
 not A but B | ph | The problem is not the price but the size. | 問題は値段ではなく大きさです。
 city hall | ph | You can get the form at city hall. | その用紙は市役所でもらえます。
@@ -118,16 +118,16 @@ a series of | ph | A series of concerts will begin next month. | 一連のコン
 across from | ph | The bakery is across from the train station. | パン屋は駅の向かいにあります。
 across from | ph | Who lives across from your new apartment? | あなたの新しいアパートの向かいには誰が住んでいますか。
 across from | ph | We waited at the cafe across from the park. | 私たちは公園の向かいの喫茶店で待ちました。
-afford to do | ph | The phrase afford to do is about having enough money. | afford to doという表現はお金に余裕があることに関係します。
+afford to do | ph | We can't afford to buy a new car. | 私たちは新しい車を買う余裕がありません。
 afford to do | ph | We cannot afford to buy a new car now. | 私たちは今新しい車を買う余裕がありません。
 afford to do | ph | Can she afford to travel abroad this summer? | 彼女にはこの夏海外旅行をする余裕がありますか。
-agree to do | ph | The phrase agree to do means accepting a plan. | agree to doという表現は計画を受け入れるという意味です。
+agree to do | ph | He agreed to help us on Sunday. | 彼は日曜日に私たちを手伝うことに同意しました。
 agree to do | ph | She agreed to help us with the event. | 彼女は行事を手伝うことに同意しました。
 agree to do | ph | Did they agree to meet again next week? | 彼らは来週また会うことに同意しましたか。
 ahead of | ph | We arrived ahead of the other group. | 私たちはほかのグループより先に到着しました。
 ahead of | ph | The team finished its work ahead of schedule. | チームは予定より早く仕事を終えました。
 ahead of | ph | Is your brother standing ahead of you in line? | 弟は列であなたより前に立っていますか。
-aim to do | ph | The phrase aim to do describes a goal. | aim to doという表現は目標を表します。
+aim to do | ph | We aim to finish the project by May. | 私たちは5月までにそのプロジェクトを終えることを目指しています。
 aim to do | ph | Our team aims to finish the project by Friday. | 私たちのチームは金曜日までに企画を終えることを目指しています。
 aim to do | ph | Do you aim to become a teacher someday? | いつか先生になることを目指していますか。
 all but | ph | The room was all but empty after lunch. | 昼食後その部屋はほとんど空でした。
@@ -181,7 +181,7 @@ at large | ph | People at large seem interested in the new plan. | 一般の人�
 at work | ph | My mother is at work until six today. | 母は今日は六時まで仕事中です。
 at work | ph | Can I call you while you are at work? | 仕事中に電話してもよいですか。
 at work | ph | He met his closest friend at work last year. | 彼は去年職場で親友に出会いました。
-avoid doing | ph | The phrase avoid doing means trying not to act. | avoid doingという表現はある行動をしないようにする意味です。
+avoid doing | ph | You should avoid eating too much sugar. | 砂糖をとりすぎないようにしたほうがいいですよ。
 avoid doing | ph | We avoided driving during the busy holiday weekend. | 私たちは混雑する連休中の運転を避けました。
 avoid doing | ph | How can I avoid making the same mistake again? | 同じ間違いを繰り返さないためにはどうすればよいですか。
 be bound for | ph | This train will be bound for the airport. | この電車は空港行きになります。
@@ -238,10 +238,10 @@ compared to | ph | Compared to winter, summer days are much longer. | 冬と比�
 contrary to | ph | Contrary to our expectations, the test was easy. | 予想に反してテストは簡単でした。
 contrary to | ph | The weather was sunny, contrary to the forecast. | 予報に反して天気は晴れでした。
 contrary to | ph | Contrary to what I thought, she enjoyed the trip. | 私の予想に反して彼女は旅行を楽しみました。
-decide to do | ph | The phrase decide to do means making a choice. | decide to doという表現は何かをする決心をする意味です。
+decide to do | ph | I decided to learn the piano. | 私はピアノを習うことに決めました。
 decide to do | ph | We decided to visit the museum on Saturday. | 私たちは土曜日に博物館を訪れることに決めました。
 decide to do | ph | Did your sister decide to join the team? | お姉さんはチームに入ることに決めましたか。
-deny doing | ph | The phrase deny doing means saying an action never happened. | deny doingという表現はある行動をしたことを否定する意味です。
+deny doing | ph | He denied breaking the window. | 彼は窓を割ったことを否定しました。
 deny doing | ph | He denied taking the book without permission. | 彼は許可なく本を持ち出したことを否定しました。
 deny doing | ph | Did she deny making that change to the schedule? | 彼女は予定を変更したことを否定しましたか。
 do business | ph | Our family hopes to do business with local farms. | 私たちの家族は地元の農場と取引したいと思っています。
@@ -256,7 +256,7 @@ enroll in | ph | She enrolled in a language course last month. | 彼女は先月
 even though | ph | We went outside even though it was cold. | 寒かったのに私たちは外に出ました。
 even though | ph | Even though he was tired, he finished his homework. | 彼は疲れていたのに宿題を終えました。
 even though | ph | She smiled even though the result was disappointing. | 結果は残念だったのに彼女は笑顔でした。
-fail to do | ph | The phrase fail to do means not succeeding at something. | fail to doという表現は何かを達成できない意味です。
+fail to do | ph | He failed to catch the last train. | 彼は最終電車に乗りそこないました。
 fail to do | ph | He failed to arrive before the meeting began. | 彼は会議が始まる前に到着できませんでした。
 fail to do | ph | Did the team fail to reach its goal? | チームは目標を達成できませんでしたか。
 for nothing | ph | The shop repaired my bicycle for nothing. | その店は無料で私の自転車を修理しました。
@@ -286,7 +286,7 @@ go over | ph | Our teacher went over the main points again. | 先生は要点を
 hand out | ph | Please hand out these papers to the class. | これらの紙をクラスのみんなに配ってください。
 hand out | ph | She handed out maps before the walking tour. | 彼女は散策ツアーの前に地図を配りました。
 hand out | ph | Who will hand out the tickets at the entrance? | 入口でチケットを配るのは誰ですか。
-happen to do | ph | The phrase happen to do means doing something by chance. | happen to doという表現は偶然何かをするという意味です。
+happen to do | ph | I happened to see her at the station. | 私はたまたま駅で彼女を見かけました。
 happen to do | ph | I happened to meet my teacher at the station. | 私は駅でたまたま先生に会いました。
 happen to do | ph | Do you happen to know her phone number? | たまたま彼女の電話番号をご存じですか。
 How come | ph | How come you are home so early today? | 今日はどうしてこんなに早く家にいるのですか。

@@ -166,7 +166,7 @@ these days | ph | My brother reads many books these days. | 弟は最近たく�
 think of | ph | I often think of my old friends. | 私はよく昔の友達のことを考えます。
 think of | ph | What do you think of this idea? | この考えをどう思いますか。
 think of | ph | She thought of a good answer. | 彼女はよい答えを思いつきました。
-too A to B | ph | The rule too A to B shows a limit. | too A to Bという形は限界を表します。
+too A to B | ph | This box is too heavy to carry alone. | この箱は重すぎて一人では運べません。
 too A to B | ph | This box is too heavy to carry. | この箱は重すぎて運べません。
 too A to B | ph | He was too tired to study. | 彼は疲れすぎて勉強できませんでした。
 try on | ph | Can I try on this red shirt? | この赤いシャツを試着してもよいですか。
@@ -187,7 +187,7 @@ wake up | ph | She woke up when the birds sang. | 彼女は鳥の声で目が覚
 worry about | ph | Do not worry about tomorrow's English test. | 明日の英語のテストを心配しないでください。
 worry about | ph | My mother worries about the weather. | 母は天気を心配しています。
 worry about | ph | Are you worried about your homework? | 宿題のことを心配していますか。
-so A that B | ph | The pattern so A that B shows a result. | so A that Bという形は結果を表します。
+so A that B | ph | The movie was so long that I fell asleep. | その映画はとても長かったので、私は眠ってしまいました。
 so A that B | ph | The soup was so hot that I waited. | スープはとても熱かったので私は待ちました。
 so A that B | ph | She was so happy that she cried. | 彼女はとても嬉しかったので泣きました。
 a long time ago | ph | A long time ago, people wrote many letters. | ずっと昔、人々はたくさん手紙を書きました。
@@ -232,7 +232,7 @@ by bus | ph | We traveled to the town by bus. | 私たちはバスでその町�
 come true | ph | I hope your dream will come true. | あなたの夢が実現することを願っています。
 come true | ph | Her wish finally came true yesterday. | 彼女の願いは昨日ついに実現しました。
 come true | ph | Do you think this dream can come true? | この夢は実現すると思いますか。
-do one's best | ph | The words do one's best mean try hard. | do one's bestという言葉は一生懸命頑張るという意味です。
+do one's best | ph | I will do my best in tomorrow's game. | 私は明日の試合でベストをつくします。
 do one's best | ph | I will do my best tomorrow. | 私は明日全力を尽くします。
 do one's best | ph | She did her best in the race. | 彼女は競走で全力を尽くしました。
 each of | ph | Each of these books has a picture. | これらの本にはそれぞれ絵があります。

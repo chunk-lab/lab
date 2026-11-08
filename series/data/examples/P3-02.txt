@@ -4,7 +4,7 @@ for good | ph | She decided to give up that bad habit for good. | 彼女はそ�
 in the presence of | ph | Please remain polite in the presence of our special guests. | 特別なお客様の前では礼儀正しくしてください。
 in the presence of | ph | The agreement was signed in the presence of several witnesses. | その合意書は数人の立会人の面前で署名されました。
 in the presence of | ph | Does he feel nervous in the presence of his teachers? | 彼は先生たちの前にいると緊張しますか。
-no sooner A than B | ph | The pattern no sooner A than B describes two immediate events. | no sooner A than Bという構文は立て続けに起こる二つの出来事を表します。
+no sooner A than B | ph | No sooner had I sat down than the phone rang. | 私が座るやいなや、電話が鳴りました。
 no sooner A than B | ph | No sooner had we arrived than the concert began. | 私たちが到着するとすぐにコンサートが始まりました。
 no sooner A than B | ph | No sooner had she sat down than the telephone rang. | 彼女が座るとすぐに電話が鳴りました。
 not to mention | ph | The hotel has a pool, not to mention a beautiful garden. | そのホテルにはプールがあり、美しい庭も言うまでもなくあります。
@@ -160,7 +160,7 @@ above all | ph | What matters above all when choosing a new job? | 新しい仕�
 adhere to | ph | All staff members must adhere to the company's safety guidelines. | 全職員は会社の安全指針に従わなければなりません。
 adhere to | ph | Did the team adhere to its original research plan? | チームは当初の調査計画を守り抜きましたか。
 adhere to | ph | She always adheres to her principles when making decisions. | 彼女は決断をするときいつも自分の信念を貫きます。
-admit doing | ph | The phrase admit doing means acknowledging that you did something. | admit doingという表現は何かをしたと認める意味です。
+admit doing | ph | He admitted making a mistake. | 彼は間違いをしたことを認めました。
 admit doing | ph | He admitted making a mistake in the final report. | 彼は最終報告書で間違いをしたことを認めました。
 admit doing | ph | Would you admit forgetting to send the party invitation? | パーティーの招待状を送るのを忘れたことを認めますか。
 after all | ph | We decided to visit the museum after all yesterday. | 私たちは結局昨日博物館を訪れることにしました。
