@@ -115,10 +115,11 @@ export function createReview(core) {
             <p class="cs-note">右へチョン=覚えてる / 左へチョン=まだ / タップでめくる</p>
             <div class="rv-card" id="rv-c"><div class="f"><b>${esc(w.en)}</b>${w.pos ? `<small>${esc(w.pos)}</small>` : ''}<span class="b" hidden>${esc(w.ja || '(意味の記録なし)')}${w.multi > 1 ? `<em>ほかの意味もあるよ(＋${w.multi - 1})</em>` : ''}</span></div></div>
             <div class="rv-two"><button class="cs-btn rv-no" id="rv-x">← まだ</button><button class="cs-btn rv-ok" id="rv-o">覚えてる →</button></div>
+            <div class="rv-two"><button class="cs-btn" id="rv-c2">意味はわかるけど、言えない</button></div>
             ${idx > (stepCards.pre || 0) ? '<button class="cs-btn" id="rv-b">↩ ひとつ もどる</button>' : '<button class="cs-btn" id="rv-qt">すぐ単語力テストをする</button>'}`, () => {
             const c = box.querySelector('#rv-c'), back = c.querySelector('.b'); let x0 = null, dx = 0, moved = false, flipped = false, done = false;
             core.speech.speak(w.en);
-            const answer = known => { if (done) return; done = true; res.push({ en: w.en, known, item: w }); c.style.transition = 'transform .12s,opacity .12s'; c.style.transform = `translateX(${known ? 140 : -140}%) rotate(${known ? 14 : -14}deg)`; c.style.opacity = 0; setTimeout(() => { idx++; card(); }, 110); };
+            const answer = (known, cant) => { if (done) return; done = true; res.push({ en: w.en, known, cant: !!cant, item: w }); c.style.transition = 'transform .12s,opacity .12s'; c.style.transform = `translateX(${known ? 140 : -140}%) rotate(${known ? 14 : -14}deg)`; c.style.opacity = 0; setTimeout(() => { idx++; card(); }, 110); };
             // ちょっと動かした・さっとはじいただけで、すぐ反応する(半分までドラッグしなくてよい)。途中でブラウザに取られても止まらない
             const FLICK = 14, FAST = 0.45;   // 14px動かす or はやさ(px/ms)
             let t0 = 0;
@@ -136,7 +137,7 @@ export function createReview(core) {
               if (!moved) { flipped = !flipped; back.hidden = !flipped; c.classList.toggle('flip', flipped); if (flipped) core.speech.speak(w.en); }
             };
             c.onpointercancel = reset; c.onlostpointercapture = () => { if (x0 != null) reset(); };
-            box.querySelector('#rv-x').onclick = () => answer(false); box.querySelector('#rv-o').onclick = () => answer(true);
+            box.querySelector('#rv-x').onclick = () => answer(false); box.querySelector('#rv-o').onclick = () => answer(true); box.querySelector('#rv-c2').onclick = () => answer(false, true);
             const qt = box.querySelector('#rv-qt'); if (qt) qt.onclick = () => { close(); const rest = items.filter(w => !w._k); test(rest.length ? rest : items); };   // 1枚目は「もどる」がないので、かわりに(2回目いご、ぜんぶ選ばなくてよい)
             const bb = box.querySelector('#rv-b'); if (bb) bb.onclick = () => { res.pop(); idx--; card(); };   // まちがえたら もどれる
           });
@@ -167,7 +168,13 @@ export function createReview(core) {
         const keep = res.slice(); stepCards.resume = keep; stepCards();
       }
       // 「覚えてる」「まだ」の結果を登録して、コインを渡す
+      // 「まだ」「言えない」の言葉は、勉強ノートのドリルにも入れる(わからない／使えない。あした出る)
+      function toNote(res) {
+        const now = Date.now();
+        res.forEach(r => { try { const w = r.item || {}; if (r.known || !w.ja || w.kind === 'sentence') return; const it = core.notebook.add({ en: r.en, ja: w.ja, pos: w.pos, src: 'review' }, true); if (it && !it.sr) core.notebook.sr(it.id, { s: r.cant ? 'cant' : 'unk', box: 0, n: 0, w: 0, ok: 0, last: 0, due: now + 0.7 * 864e5 }); } catch (e) { } });
+      }
       function commit(res) {
+        toNote(res);
         dl.finishReview(day, res);
         return mode === 'today' ? give('review') : (!o.noPt ? give('prev') : 0);
       }

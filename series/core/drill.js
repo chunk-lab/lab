@@ -31,7 +31,7 @@ const CSS = `.dr-card{text-align:center;padding:18px 10px}.dr-card small{color:#
 .dr-n{display:flex;gap:6px;justify-content:center;margin:6px 0}.dr-n b{font-size:20px}`;
 export function createDrill(core) {
   const nb = core.notebook;
-  let t0 = Date.now(), ov = null, view = 'home', offs = [], Q = [], stat = { ok: 0, ng: 0 }, opt = {}, lkind = 'word';
+  let hist = [], curIt = null, curMut = false, t0 = Date.now(), ov = null, view = 'home', offs = [], Q = [], stat = { ok: 0, ng: 0 }, opt = {}, lkind = 'word';
   const find = id => nb.list().find(x => x.id === id);
   const pool = () => nb.list().filter(drillable);
   const counts = () => {
@@ -70,12 +70,29 @@ export function createDrill(core) {
   // ---- ドリル本体 ----
   function start() {
     const c = counts(); Q = [...c.due.sort((a, b) => a.sr.due - b.sr.due).slice(0, 12).map(x => ({ id: x.id, t: 'q' })), ...c.fresh.slice(0, 5).map(x => ({ id: x.id, t: 'c' }))];
-    stat = { ok: 0, ng: 0 }; t0 = Date.now(); view = 'quiz'; draw(); step();
+    stat = { ok: 0, ng: 0 }; hist = []; t0 = Date.now(); view = 'quiz'; draw(); step();
   }
-  const sub = h => { ov.querySelector('main').innerHTML = h; return ov.querySelector('main'); };
+  const sub = h => { const mm = ov.querySelector('main'); mm.innerHTML = h; const bk = mm.querySelector('[data-back]'); if (bk) bk.onclick = back; return mm; };
+  const bk = () => hist.length ? '<button class="cs-btn" data-back>← ひとつもどる</button>' : '';
+  // 変えるまえの記録をとっておく(戻るで元にもどす)
+  const mut = (x, it) => { hist.push({ id: x.id, it, sr: x.sr ? JSON.parse(JSON.stringify(x.sr)) : null, ok: stat.ok, ng: stat.ng }); curMut = true; };
+  function back() {
+    const h = hist.pop(); if (!h) return; nb.srSet(h.id, h.sr); stat.ok = h.ok; stat.ng = h.ng;
+    if (!h.it.rq) Q = Q.filter(q => !(q.id === h.id && q.rq));   // やり直し用に足した分は、取り消す
+    if (!curMut && curIt) Q.unshift(curIt); Q.unshift(h.it); step();
+  }
+  // 品詞：答えのときに出す(ノートにあればそれ、なければ辞書から。日本語の意味に合う品詞を選ぶ)
+  async function fillPos(x, host) {
+    const el = host.querySelector('[data-pos]'); if (!el) return;
+    if (/\s/.test(x.en)) { el.textContent = x.kind === 'phrase' ? '(熟語・表現)' : ''; return; }
+    let t = x.pos || '';
+    if (!t) { try { await core.dict.ready(); const e = core.dict.lookup(x.en); if (e) { const P = core.dict.POSN || {}, js = String(x.ja).split(/[、,，]/)[0], hp = e.pos.find(p => p[1] && (p[1].includes(js) || String(x.ja).includes(p[1].split('、')[0]))), pick = hp ? [hp] : e.pos; t = [...new Set(pick.map(p => P[p[0]] || p[0]))].join('・'); } } catch (e2) { } }
+    if (el.isConnected) el.textContent = t ? `(${t})` : '';
+  }
   function step() {
     if (!ov) return; if (!Q.length) return done();
     const it = Q.shift(), x = find(it.id); if (!x || (x.sr && x.sr.s === 'off')) return step();
+    curIt = it; curMut = false;
     if (it.t === 'c') return classify(x);
     quiz(x, it);
   }
@@ -92,13 +109,14 @@ export function createDrill(core) {
   }
   function classify(x) {   // 英語だけ見せて、自分で分ける(答えの日本語は、分けたあとに見せる)
     const m = sub(`<section class="cs-panel dr-card"><small>この言葉は、どう？</small><h2>${esc(x.en)}</h2><div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button></div>
-      <div class="dr-ch"><button data-c="unk">わからない</button><button data-c="cant">意味はわかるけど、自分では使えない</button><button data-c="off">もう知っている・押しまちがい(出さない)</button></div></section>`);
+      <div class="dr-ch"><button data-c="unk">わからない</button><button data-c="cant">意味はわかるけど、自分では使えない</button><button data-c="off">もう知っている・押しまちがい(出さない)</button></div>${bk()}</section>`);
     m.querySelector('[data-say]').onclick = () => core.speech.speak(x.en);
     m.querySelectorAll('[data-c]').forEach(b => b.onclick = () => {
-      const c = b.dataset.c; if (c === 'off') { nb.sr(x.id, { s: 'off', at: Date.now() }); core.ui.toast('外しました(一覧から戻せます)'); return step(); }
+      const c = b.dataset.c; mut(x, curIt); if (c === 'off') { nb.sr(x.id, { s: 'off', at: Date.now() }); core.ui.toast('外しました(一覧から戻せます)'); return step(); }
       nb.sr(x.id, { s: c, box: 0, n: 0, w: 0, ok: 0, last: 0, due: Date.now() + 0.7 * DAY });   // 見せたばかりなので、すぐには出さない(あしたまた出る)
-      const mm = sub(`<section class="cs-panel dr-card"><small>${c === 'unk' ? 'この意味です' : '言えるように、声に出してみよう'}</small><h2>${esc(x.en)}</h2><p style="font-size:20px">${esc(x.ja)}</p>
-        <div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button><button class="cs-btn" data-eg>例文を見る</button></div><div data-egl></div><button class="cs-btn cs-go cs-big" data-next>つぎへ</button></section>`);
+      const mm = sub(`<section class="cs-panel dr-card"><small>${c === 'unk' ? 'この意味です' : '言えるように、声に出してみよう'}</small><h2>${esc(x.en)}</h2><p style="font-size:20px">${esc(x.ja)} <small data-pos style="color:#789"></small></p>
+        <div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button><button class="cs-btn" data-eg>例文を見る</button></div><div data-egl></div><div class="dr-row"><button class="cs-btn" data-back>← もどる</button><button class="cs-btn cs-go cs-big" data-next>つぎへ</button></div></section>`);
+      fillPos(x, mm);
       core.speech.speak(x.en);
       mm.querySelector('[data-say]').onclick = () => core.speech.speak(x.en); mm.querySelector('[data-eg]').onclick = () => eg(x, mm.querySelector('[data-egl]')); mm.querySelector('[data-next]').onclick = step;
     });
@@ -111,15 +129,16 @@ export function createDrill(core) {
     const m = sub(`<section class="cs-panel dr-card"><small>${toEn ? '英語で言うと？' : 'この意味は？'}${it.rq ? '(もう一度)' : ''}</small><h2>${esc(toEn ? x.ja : x.en)}</h2>
       ${toEn ? '' : '<div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button></div>'}
       ${self ? `<div class="dr-ch"><button data-show>答えを見る</button></div>` : `<div class="dr-ch">${opts.map((o, i) => `<button data-o="${i}">${esc(o)}</button>`).join('')}</div>`}
-      <div data-fb></div></section>`);
+      <div data-fb></div>${bk()}</section>`);
     if (m.querySelector('[data-say]')) m.querySelector('[data-say]').onclick = () => core.speech.speak(x.en);
     const finish = ok => {
-      nb.sr(x.id, advance(x.sr, ok)); stat[ok ? 'ok' : 'ng']++; if (!ok && !it.rq) Q.push({ id: x.id, t: 'q', rq: 1 });
+      mut(x, it); nb.sr(x.id, advance(x.sr, ok)); stat[ok ? 'ok' : 'ng']++; if (!ok && !it.rq) Q.push({ id: x.id, t: 'q', rq: 1 });
       if (ok || toEn) try { core.speech.speak(x.en); } catch (e) { }
       const fb = m.querySelector('[data-fb]');
-      fb.innerHTML = `<p style="font-size:17px"><b>${ok ? '⭕ せいかい' : '✖ ざんねん'}</b><br>${esc(x.en)} = ${esc(x.ja)}</p>
+      fb.innerHTML = `<p style="font-size:17px"><b>${ok ? '⭕ せいかい' : '✖ ざんねん'}</b><br>${esc(x.en)} <small data-pos style="color:#789"></small> = ${esc(x.ja)}</p>
         <div class="dr-row"><button class="cs-btn" data-say2>🔊</button><button class="cs-btn" data-eg>例文を見る</button><button class="cs-btn" data-off>外す</button></div><div data-egl></div>
-        <button class="cs-btn cs-go cs-big" data-next>つぎへ</button>`;
+        <div class="dr-row"><button class="cs-btn" data-back>← もどる</button><button class="cs-btn cs-go cs-big" data-next>つぎへ</button></div>`;
+      fillPos(x, fb); fb.querySelector('[data-back]').onclick = back; m.querySelectorAll('.dr-card > [data-back]').forEach(z => z.remove());
       fb.querySelector('[data-say2]').onclick = () => core.speech.speak(x.en);
       fb.querySelector('[data-eg]').onclick = () => eg(x, fb.querySelector('[data-egl]'));
       fb.querySelector('[data-off]').onclick = () => { nb.sr(x.id, { s: 'off', at: Date.now() }); core.ui.toast('外しました(一覧から戻せます)'); step(); };

@@ -30,7 +30,7 @@ export function createNotebook() {
         (it.marks || []).forEach(m => { if (!cur.marks.includes(m)) cur.marks.push(m); });
         cur.n = (cur.n || 1) + 1; cur.at = Date.now();
       } else {
-        cur = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), kind, en, ja: String(it.ja || '').trim(), src: it.src || '', note: it.note || '', marks: (it.marks || []).slice(), n: 1, at: Date.now() };
+        cur = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), kind, en, pos: it.pos || '', ja: String(it.ja || '').trim(), src: it.src || '', note: it.note || '', marks: (it.marks || []).slice(), n: 1, at: Date.now() };
         list.unshift(cur); if (list.length > MAX) list.length = MAX;
       }
       if (!quiet) save(); return cur;
@@ -41,6 +41,7 @@ export function createNotebook() {
     mark(id, m, on) { const x = list.find(y => y.id === id); if (!x) return; const has = x.marks.includes(m); if (on == null) on = !has; if (on && !has) x.marks.push(m); if (!on && has) x.marks = x.marks.filter(y => y !== m); save(); },
     // ドリルの記録(復習の状態)。sr = {s:'unk'わからない|'cant'わかるけど使えない|'off'外す, box, due, n, w, ok, last}
     sr(id, patch) { const x = list.find(y => y.id === id); if (!x) return; x.sr = Object.assign({}, x.sr || {}, patch); save(); return x.sr; },
+    srSet(id, v) { const x = list.find(y => y.id === id); if (!x) return; if (v) x.sr = v; else delete x.sr; save(); },   // 戻るとき、記録をそっくり元にもどす
     srClear(id) { const x = list.find(y => y.id === id); if (!x) return; delete x.sr; save(); },
     edit(id, patch) { const x = list.find(y => y.id === id); if (!x) return; ['en', 'ja', 'note', 'kind'].forEach(k => { if (patch[k] != null) x[k] = String(patch[k]).trim(); }); save(); },
     remove(id) { list = list.filter(x => x.id !== id); save(); },

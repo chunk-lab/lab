@@ -3,21 +3,28 @@
    2. 自分で文を作る：自分のAIキーで「自然な文か」を判定（無料）。英ラボでも作れる
    3. AIで例文3つと短いお話を作る：有料会員は月の回数、超えたら(無料会員は最初から)ダイヤ */
 import { ECON } from './economy.js';
+import { loadScript } from './host.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 // 読む画面の形式「S:My grandmother=私の祖母は | V:lives=…」から英語だけを取り出す
 export const plainEn = s => String(s || '').replace(/^@\w /, '').split(' | ').map(u => u.replace(/^[A-Z]:/, '').replace(/=.*$/, '').replace(/#.*$/, '')).join(' ').replace(/\s+/g, ' ').trim();
 const wait = ms => new Promise(r => setTimeout(r, ms));
 export function createUseit(core) {
   // 文をさがす：本(ストリームの長文・お話・共有の棚)と勉強ノートの短文から
+  let sentP = null;   // TOEIC例文(core/dict/sent.js)は、さがすときに1回だけ読み込む
+  const sentReady = () => sentP || (sentP = loadScript(core.base + 'core/dict/sent.js').catch(() => { sentP = null; }));
   async function find(en) {
-    const w = String(en).trim().toLowerCase(), re = w.includes(' ') ? null : new RegExp('\\b' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(s|es|ed|d|ing)?\\b', 'i');
-    const hit = t => re ? re.test(t) : t.toLowerCase().includes(w);
+        const w = String(en).trim().toLowerCase(), esc2 = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), ws = w.split(/\s+/), stem = ws[0].replace(/e$/, ''),
+      re = ws.length > 1 ? new RegExp('\\b' + esc2(stem) + '(e|es|ed|d|ing|s)?\\s+' + ws.slice(1).map(esc2).join('\\s+') + '\\b', 'i') : new RegExp('\\b' + esc2(w) + '(s|es|ed|d|ing)?\\b', 'i');
+    const hit = t => re.test(t);
     const out = [], seen = new Set(), push = (e, j, from) => { const k = e.toLowerCase(); if (!seen.has(k) && hit(e)) { seen.add(k); out.push({ en: e, ja: j || '', from }); } };
     if (core.books) {
       await core.books.load();
+      if (core.books.need) await Promise.all([1, 2, 3].map(l => Promise.resolve(core.books.need(l)).catch(() => { })));   // 3レベルとも読み込んでから探す
       for (const b of core.books.all()) { let s = null; try { s = b.story(); } catch (e) { } (s && s.list || []).forEach(x => push(plainEn(x[0]), x[1], b.title)); }
     }
     core.notebook.list({ kind: 'short' }).forEach(x => push(x.en, x.ja, '勉強ノート'));
+    try { await sentReady(); (window.__csSent || '').split('\n').forEach(l => { const t = l.indexOf('\t'); if (t > 0) push(l.slice(0, t), l.slice(t + 1), 'TOEIC例文'); }); } catch (e) { }
+    out.sort((a, b) => Math.abs(a.en.length - 60) - Math.abs(b.en.length - 60));   // 長すぎず短すぎない文を先に
     return out.slice(0, 8);
   }
   // 文をチャンク(意味のまとまり)に分ける：カンマのあと／前置詞・接続詞の前で区切り、1語だけのかたまりは隣にくっつける
