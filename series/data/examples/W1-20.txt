@@ -1,0 +1,276 @@
+immature | a | That was an immature thing to say. | それは未熟な発言でした。
+immature | a | His behavior seems immature for his age. | 彼の振る舞いは年齢の割に未熟に見えます。
+immature | a | Do not be immature about losing a game. | 試合に負けたことで子供っぽい態度を取らないでください。
+cracker | n | I ate a cracker with cheese. | 私はチーズと一緒にクラッカーを食べました。
+cracker | n | Would you like some crackers with your soup? | スープと一緒にクラッカーはいかがですか。
+cracker | n | These crackers taste good with butter. | このクラッカーはバターとよく合います。
+flexible | a | This plastic ruler is very flexible. | このプラスチックの定規はとても曲げやすいです。
+flexible | a | Are your working hours flexible now? | 今は勤務時間を柔軟に変えられますか。
+flexible | a | She has a flexible plan for tomorrow. | 彼女は明日の予定を柔軟に考えています。
+canteen | n | We ate lunch in the school canteen. | 私たちは学校の食堂で昼食を食べました。
+canteen | n | Is your canteen full of water? | あなたの水筒には水がいっぱい入っていますか。
+canteen | n | The workers meet in the canteen at noon. | 作業員たちは正午に食堂で会います。
+conclude | v | We can conclude that the answer is correct. | 答えは正しいと結論づけることができます。
+conclude | v | Did the meeting conclude before lunch? | 会議は昼食前に終わりましたか。
+conclude | v | The teacher concluded the lesson with a song. | 先生は歌で授業を締めくくりました。
+default | n | Blue is the default color on this screen. | この画面では青が初期設定の色です。
+default | n | Can you change the default setting? | 初期設定を変更できますか。
+default | n | The computer returned to its defaults. | コンピューターは初期設定に戻りました。
+hybrid | n | This car is a hybrid. | この車はハイブリッド車です。
+hybrid | n | Is that new bus a hybrid? | あの新しいバスはハイブリッド車ですか。
+hybrid | n | Many hybrids use both gas and electricity. | 多くのハイブリッド車はガソリンと電気の両方を使います。
+tolerance | n | Good friends show tolerance for different ideas. | よい友達は異なる考えに寛容さを示します。
+tolerance | n | Does he have any tolerance for noise? | 彼には騒音に対する耐性がありますか。
+tolerance | n | Our teacher asks for tolerance in class. | 先生は授業中に寛容な態度を求めます。
+poll | n | Our class held a poll about lunch. | 私たちのクラスは昼食について投票を行いました。
+poll | n | What did the school poll show? | 学校の調査は何を示しましたか。
+poll | n | The students answered two short polls. | 生徒たちは二つの短い調査に回答しました。
+freight | n | The train carries freight across the country. | その列車は国内で貨物を運んでいます。
+freight | n | Does this ship carry freight too? | この船も貨物を運びますか。
+freight | n | The workers loaded freight onto the truck. | 作業員たちはトラックに貨物を積みました。
+uneasy | a | I felt uneasy before the big test. | 私は大きな試験の前に不安を感じました。
+uneasy | a | Does the strange sound make you uneasy? | その変な音で不安になりますか。
+uneasy | a | She seemed uneasy in the new classroom. | 彼女は新しい教室で不安そうでした。
+cone | n | The ice cream came in a cone. | アイスクリームはコーンに入っていました。
+cone | n | Can you draw a cone on paper? | 紙に円すいを描けますか。
+cone | n | The road workers placed orange cones outside. | 道路作業員たちは外にオレンジ色のコーンを置きました。
+insert | v | Please insert your card into the machine. | カードを機械に差し込んでください。
+insert | v | Can you insert another picture here? | ここに別の写真を挿入できますか。
+insert | v | He inserted the key into the lock. | 彼は鍵を鍵穴に差し込みました。
+domain | n | Music is not really my domain. | 音楽はあまり私の専門分野ではありません。
+domain | n | Is science your main domain of study? | 科学があなたの主な研究分野ですか。
+domain | n | The two subjects belong to different domains. | その二つの科目は異なる分野に属します。
+wrestle | v | The children like to wrestle on the grass. | 子供たちは芝生の上で組み合うのが好きです。
+wrestle | v | Do you wrestle with your brother for fun? | 遊びで兄弟と組み合って闘いますか。
+wrestle | v | The two friends wrestled during sports practice. | 二人の友達はスポーツの練習中に組み合いました。
+skunk | n | A skunk walked across our garden. | スカンクが私たちの庭を横切りました。
+skunk | n | Have you ever seen a skunk? | スカンクを見たことがありますか。
+skunk | n | The skunks stayed near the trees. | スカンクたちは木の近くにいました。
+texture | n | I love the soft texture of this bread. | 私はこのパンの柔らかい食感が大好きです。
+texture | n | Does this cloth have a rough texture? | この布はざらざらした手触りですか。
+texture | n | The two cakes have different textures. | その二つのケーキは食感が違います。
+jog | v | I jog around the park every morning. | 私は毎朝公園の周りをジョギングします。
+jog | v | Do you jog with your friends? | 友達と一緒にジョギングしますか。
+jog | v | My father jogged along the river yesterday. | 父は昨日川沿いをジョギングしました。
+thump | v | Please do not thump the table. | テーブルをドンとたたかないでください。
+thump | v | Did someone thump on the door? | 誰かがドアをドンドンたたきましたか。
+thump | v | The child thumped the drum with both hands. | 子供は両手で太鼓をドンドンたたきました。
+melancholy | n | A little melancholy filled the quiet room. | 静かな部屋には少し憂うつな雰囲気が漂っていました。
+melancholy | n | Does this old song bring you melancholy? | この古い歌を聞くと憂うつになりますか。
+melancholy | n | She felt melancholy on the last day of summer. | 彼女は夏の最後の日に憂うつを感じました。
+cooperative | a | Our classmates were very cooperative today. | 今日クラスメートたちはとても協力的でした。
+cooperative | a | Is your new team cooperative? | 新しいチームは協力的ですか。
+cooperative | a | The children stayed cooperative during the game. | 子供たちは試合中ずっと協力的でした。
+mathematical | a | This game uses simple mathematical ideas. | このゲームは簡単な数学の考え方を使います。
+mathematical | a | Can you solve this mathematical problem? | この数学の問題を解けますか。
+mathematical | a | The teacher showed us several mathematical patterns. | 先生は私たちにいくつかの数学的な規則を示しました。
+rim | n | There is a mark on the cup's rim. | カップのふちに印があります。
+rim | n | Can you clean the rim of this glass? | このグラスのふちをきれいにできますか。
+rim | n | The bicycle has two shiny wheel rims. | その自転車には光る車輪のリムが二つあります。
+animation | n | My sister made a short animation. | 妹は短いアニメーションを作りました。
+animation | n | Did you enjoy the animation yesterday? | 昨日のアニメーションは楽しかったですか。
+animation | n | The students watched animations in art class. | 生徒たちは美術の授業でアニメーションを見ました。
+mash | v | Please mash the potatoes with a fork. | フォークでジャガイモをつぶしてください。
+mash | v | Can you mash this banana for the baby? | 赤ちゃんのためにこのバナナをつぶせますか。
+mash | v | She mashed the beans into a soft paste. | 彼女は豆をつぶして柔らかいペーストにしました。
+tenderness | n | Her voice was full of tenderness. | 彼女の声には優しさがあふれていました。
+tenderness | n | Can you feel the tenderness in this song? | この歌から優しさを感じられますか。
+tenderness | n | He showed great tenderness toward the little dog. | 彼は小さな犬に深い優しさを示しました。
+limitation | n | Time is our biggest limitation today. | 今日は時間が私たちの最大の制限です。
+limitation | n | Is there a limitation on the number of guests? | 客の人数に制限はありますか。
+limitation | n | This plan has some clear limitations. | この計画には明らかな限界がいくつかあります。
+sensitivity | n | Her sensitivity to noise makes sleep difficult. | 彼女は音に敏感なので眠りにくいです。
+sensitivity | n | Does this camera have good light sensitivity? | このカメラは光に対する感度がよいですか。
+sensitivity | n | The teacher showed sensitivity to our feelings. | 先生は私たちの気持ちに配慮を示しました。
+hive | n | The bees returned to their hive. | ミツバチたちは自分たちの巣に戻りました。
+hive | n | Can you see the hive in that tree? | あの木にミツバチの巣が見えますか。
+hive | n | The farmer keeps several hives behind the house. | 農家の人は家の裏にいくつかの巣箱を置いています。
+disregard | v | Please do not disregard the safety rules. | 安全規則を無視しないでください。
+disregard | v | Did he disregard your advice again? | 彼はまたあなたの助言を無視しましたか。
+disregard | v | She disregarded the sign and entered the room. | 彼女は表示を無視して部屋に入りました。
+shuffle | v | Please shuffle the cards before we play. | 遊ぶ前にカードをよく混ぜてください。
+shuffle | v | Can you shuffle these cards for me? | 私のためにこのカードを混ぜてくれますか。
+shuffle | v | The children shuffled slowly across the floor. | 子供たちは床をすり足でゆっくり歩きました。
+output | n | The machine has a high output. | その機械は生産量が多いです。
+output | n | Can you check the computer's output? | コンピューターの出力を確認できますか。
+output | n | The factory increased its daily output. | 工場は一日の生産量を増やしました。
+crumb | n | A small crumb fell onto my shirt. | 小さなパンくずが私のシャツに落ちました。
+crumb | n | Is that a bread crumb on the floor? | 床にあるのはパンくずですか。
+crumb | n | The birds ate crumbs from the table. | 鳥たちはテーブルのパンくずを食べました。
+correspondence | n | Our correspondence began with a short letter. | 私たちの文通は短い手紙から始まりました。
+correspondence | n | Do you keep your old correspondence? | 昔の手紙のやり取りを保管していますか。
+correspondence | n | Their correspondence continued for many years. | 彼らの文通は何年も続きました。
+overlook | v | Do not overlook the last question. | 最後の質問を見落とさないでください。
+overlook | v | Does your room overlook the sea? | あなたの部屋から海を見渡せますか。
+overlook | v | I overlooked a small mistake in the report. | 私は報告書の小さな間違いを見落としました。
+beginning | n | The beginning of this book is funny. | この本の始まりは面白いです。
+beginning | n | Did you miss the beginning of the film? | 映画の冒頭を見逃しましたか。
+beginning | n | We liked the beginnings of both stories. | 私たちは二つの物語の冒頭が気に入りました。
+whine | v | Please do not whine about the homework. | 宿題について泣き言を言わないでください。
+whine | v | Does your dog whine when you leave? | あなたが出かけると犬はクンクン鳴きますか。
+whine | v | The child whined about the long wait. | 子供は長い待ち時間について泣き言を言いました。
+strand | n | A strand of hair fell across her face. | 一本の髪が彼女の顔にかかりました。
+strand | n | Can you see that loose strand of thread? | あのほつれた一本の糸が見えますか。
+strand | n | She found several strands of hair on her coat. | 彼女はコートに数本の髪の毛を見つけました。
+rebound | v | The ball will rebound off the wall. | ボールは壁に当たって跳ね返ります。
+rebound | v | Did the ball rebound into the garden? | ボールは跳ね返って庭に入りましたか。
+rebound | v | The tennis ball rebounded high into the air. | テニスボールは高く跳ね返りました。
+restoration | n | The restoration of the old house took years. | その古い家の修復には何年もかかりました。
+restoration | n | Is the bridge restoration finished now? | 橋の修復はもう終わりましたか。
+restoration | n | The town paid for the park's restoration. | 町は公園の修復費用を負担しました。
+fringe | n | Her scarf has a long fringe. | 彼女のマフラーには長いふさが付いています。
+fringe | n | Does your jacket have a fringe? | あなたの上着にはふさが付いていますか。
+fringe | n | The rug has fringes at both ends. | そのラグには両端にふさが付いています。
+rigid | a | This box has a rigid plastic frame. | この箱には硬いプラスチックの枠があります。
+rigid | a | Is the wooden chair too rigid? | その木のいすは硬すぎますか。
+rigid | a | The rules are rigid at this school. | この学校の規則は厳格で融通が利きません。
+hover | v | The bird can hover above the water. | その鳥は水面の上で空中にとどまれます。
+hover | v | Can that small plane hover in place? | あの小さな飛行機はその場で空中にとどまれますか。
+hover | v | A bee hovered near the yellow flower. | 一匹のハチが黄色い花の近くで空中にとどまっていました。
+knit | v | I want to knit a warm scarf. | 私は暖かいマフラーを編みたいです。
+knit | v | Can your grandmother knit a sweater? | おばあさんはセーターを編めますか。
+knit | v | She knitted socks for her family. | 彼女は家族のために靴下を編みました。
+literal | a | This is the literal meaning of the word. | これがその単語の文字どおりの意味です。
+literal | a | Is that a literal translation? | それは逐語的な翻訳ですか。
+literal | a | He took her words in a literal way. | 彼は彼女の言葉を文字どおりに受け取りました。
+chestnut | n | I found a chestnut under the tree. | 私は木の下で栗を一つ見つけました。
+chestnut | n | Would you like a roasted chestnut? | 焼き栗を一ついかがですか。
+chestnut | n | We bought fresh chestnuts at the market. | 私たちは市場で新鮮な栗を買いました。
+frail | a | The frail old man walked slowly. | その弱々しいお年寄りはゆっくり歩きました。
+frail | a | Does this small plant look frail? | この小さな植物は弱々しく見えますか。
+frail | a | The little bird seemed frail but happy. | その小鳥は弱々しく見えましたが元気そうでした。
+succession | n | We had three sunny days in succession. | 私たちは三日連続で晴天に恵まれました。
+succession | n | Did she win twice in succession? | 彼女は二回連続で勝ちましたか。
+succession | n | A succession of visitors arrived after lunch. | 昼食後に訪問客が次々と来ました。
+coil | n | A coil of rope lay on the floor. | 巻かれたロープが床に置かれていました。
+coil | n | Can you carry this coil of wire? | この巻いた針金を運べますか。
+coil | n | The worker placed two coils beside the door. | 作業員は巻いたものを二つドアのそばに置きました。
+trio | n | The trio played music at our school. | その三人組は私たちの学校で演奏しました。
+trio | n | Is your sister part of the trio? | あなたのお姉さんはその三人組の一員ですか。
+trio | n | Two trios performed at the concert. | コンサートでは二組の三重奏団が演奏しました。
+craze | n | This game became a craze at school. | このゲームは学校で大流行しました。
+craze | n | Is the dance craze still popular? | そのダンスの大流行はまだ続いていますか。
+craze | n | The new craze lasted only one summer. | その新しい大流行は一夏しか続きませんでした。
+setting | n | The story has a beautiful mountain setting. | その物語の舞台は美しい山です。
+setting | n | Can you change the temperature setting? | 温度の設定を変更できますか。
+setting | n | The film uses several different settings. | その映画はいくつかの異なる舞台を使っています。
+endorsement | n | The singer gave the product her endorsement. | その歌手はその商品を推薦しました。
+endorsement | n | Did the plan receive your endorsement? | その計画はあなたの支持を得ましたか。
+endorsement | n | The club welcomed endorsements from local teachers. | クラブは地元の先生たちからの推薦を歓迎しました。
+wholesale | n | The company buys fruit at wholesale prices. | その会社は果物を卸売価格で買います。
+wholesale | n | Does your business work in wholesale? | あなたの会社は卸売業をしていますか。
+wholesale | n | They moved from retail into wholesale. | 彼らは小売業から卸売業に移りました。
+commute | v | I commute to work by train. | 私は電車で通勤します。
+commute | v | Do you commute to school every day? | 毎日学校に通っていますか。
+commute | v | My sister commuted by bus last year. | 姉は去年バスで通勤していました。
+gloss | n | This paint gives the door a nice gloss. | この塗料はドアにきれいなつやを出します。
+gloss | n | Does the table have a natural gloss? | そのテーブルには自然なつやがありますか。
+gloss | n | The new shoes have a beautiful gloss. | 新しい靴には美しいつやがあります。
+nurture | v | Good teachers nurture a love of reading. | よい先生は読書を愛する気持ちを育てます。
+nurture | v | Can we nurture these plants indoors? | これらの植物を室内で育てられますか。
+nurture | v | Her parents nurtured her interest in music. | 両親は彼女の音楽への関心を育てました。
+throb | v | My feet throb after a long walk. | 長く歩いた後は足がずきずきします。
+throb | v | Does your head still throb today? | 今日はまだ頭がずきずきしますか。
+throb | v | His finger throbbed after he hit it. | 指をぶつけた後で彼の指はずきずきしました。
+stout | a | The table stands on stout wooden legs. | そのテーブルは頑丈な木の脚で支えられています。
+stout | a | Is this rope stout enough for the job? | このロープはその作業に十分な強さがありますか。
+stout | a | They built a stout fence around the garden. | 彼らは庭の周りに頑丈な柵を作りました。
+remainder | n | We saved the remainder of the cake. | 私たちはケーキの残りを取っておきました。
+remainder | n | Can you finish the remainder tomorrow? | 残りを明日終わらせられますか。
+remainder | n | The remainder of the class went outside. | クラスの残りの生徒たちは外に出ました。
+nibble | v | The rabbit likes to nibble fresh carrots. | そのウサギは新鮮なニンジンを少しずつかじるのが好きです。
+nibble | v | Did you nibble on those cookies? | そのクッキーを少しずつかじりましたか。
+nibble | v | The mouse nibbled a piece of cheese. | ネズミはチーズを少しずつかじりました。
+wring | v | Please wring the water out of this cloth. | この布の水を絞ってください。
+wring | v | Can you wring out the wet towel? | ぬれたタオルを絞れますか。
+wring | v | She wrung the cloth before cleaning the table. | 彼女はテーブルを拭く前に布を絞りました。
+format | n | Please use this format for your report. | 報告書にはこの形式を使ってください。
+format | n | Can you change the file format? | ファイル形式を変更できますか。
+format | n | The teacher showed us two writing formats. | 先生は二つの文章の書式を見せてくれました。
+snug | a | This little room feels warm and snug. | この小さな部屋は暖かく居心地がよいです。
+snug | a | Is the blanket snug around your feet? | 毛布は足を心地よく包んでいますか。
+snug | a | The cat slept in a snug corner. | 猫は居心地のよい隅で眠りました。
+conserve | v | We should conserve water during the summer. | 私たちは夏の間水を節約するべきです。
+conserve | v | Can these changes conserve more energy? | こうした変更でさらにエネルギーを節約できますか。
+conserve | v | The town conserved its old trees. | 町は古い木々を保護しました。
+stripe | n | There is a blue stripe on my shirt. | 私のシャツには青いしまが一本あります。
+stripe | n | Does that cat have a white stripe? | あの猫には白いしまがありますか。
+stripe | n | The bag has three red stripes. | そのかばんには赤いしまが三本あります。
+climber | n | The climber reached the top before noon. | その登山者は正午前に頂上に着きました。
+climber | n | Is your brother an experienced climber? | あなたの兄弟は経験豊富な登山者ですか。
+climber | n | The climbers rested near the mountain path. | 登山者たちは山道の近くで休みました。
+uneven | a | Be careful on this uneven road. | このでこぼこの道では気をつけてください。
+uneven | a | Is the ground uneven near the river? | 川の近くの地面はでこぼこしていますか。
+uneven | a | The cake has an uneven top. | そのケーキの上面は平らではありません。
+savor | v | Take your time and savor the soup. | ゆっくり時間をかけてスープを味わってください。
+savor | v | Can you savor the flavor of this tea? | このお茶の風味をじっくり味わえますか。
+savor | v | She savored every bite of her cake. | 彼女はケーキを一口ずつ味わいました。
+radish | n | I put a radish in the salad. | 私はサラダにラディッシュを入れました。
+radish | n | Would you like some fresh radish? | 新鮮なラディッシュはいかがですか。
+radish | n | My father grows radishes in his garden. | 父は庭でラディッシュを育てています。
+stub | n | Please keep your ticket stub until you leave. | 帰るまでチケットの半券を保管してください。
+stub | n | Did you lose the ticket stub? | チケットの半券をなくしましたか。
+stub | n | She found two old stubs in her bag. | 彼女はかばんの中で古い半券を二枚見つけました。
+bore | v | Long speeches sometimes bore the students. | 長い話は時々生徒たちを退屈させます。
+bore | v | Does this book bore you? | この本はあなたを退屈させますか。
+bore | v | The slow film bored my little brother. | その展開の遅い映画は弟を退屈させました。
+tier | n | The cake has a beautiful top tier. | そのケーキには美しい最上段があります。
+tier | n | Is the second tier made of chocolate? | 二段目はチョコレートでできていますか。
+tier | n | The shelves have three different tiers. | その棚には三つの段があります。
+subscribe | v | I want to subscribe to this magazine. | 私はこの雑誌を定期購読したいです。
+subscribe | v | Do you subscribe to a newspaper? | 新聞を定期購読していますか。
+subscribe | v | My aunt subscribed to a cooking magazine. | おばは料理雑誌を定期購読しました。
+whisk | v | Please whisk the eggs in this bowl. | このボウルで卵を泡立ててください。
+whisk | v | Can you whisk the cream for me? | 私のためにクリームを泡立ててくれますか。
+whisk | v | He whisked the eggs until they were light. | 彼は卵がふんわりするまで泡立てました。
+bent | a | This spoon is slightly bent at the end. | このスプーンは先が少し曲がっています。
+bent | a | Is that metal bar bent? | あの金属の棒は曲がっていますか。
+bent | a | The old bike has a bent wheel. | その古い自転車には曲がった車輪があります。
+broken | a | The broken clock is on the shelf. | 壊れた時計は棚の上にあります。
+broken | a | Is your phone still broken? | あなたの電話はまだ壊れていますか。
+broken | a | She replaced the broken cup yesterday. | 彼女は昨日壊れたカップを取り替えました。
+married | a | My older sister is married now. | 姉は今結婚しています。
+married | a | Are your parents happily married? | ご両親は幸せな結婚生活を送っていますか。
+married | a | They have been married for ten years. | 彼らは結婚して十年になります。
+stair | n | Be careful on the last stair. | 最後の階段の一段に気をつけてください。
+stair | n | Is that stair higher than the others? | その段はほかの段より高いですか。
+stair | n | The child sat on the bottom stair. | 子供は階段の一番下の段に座りました。
+best | a | This is the best cake in town. | これは町で一番おいしいケーキです。
+best | a | Which is your best subject at school? | 学校で一番得意な科目は何ですか。
+best | a | She wore her best dress to the party. | 彼女はパーティーに一番よいドレスを着ていきました。
+overcast | a | The sky is overcast this morning. | 今朝は空が曇っています。
+overcast | a | Will it stay overcast all day? | 一日中曇ったままですか。
+overcast | a | We walked outside under an overcast sky. | 私たちは曇り空の下を歩きました。
+fillet | n | I ordered a fish fillet for lunch. | 私は昼食に魚の切り身を注文しました。
+fillet | n | Would you like a grilled fillet? | 焼いた切り身はいかがですか。
+fillet | n | The cook cut two fillets from the fish. | 料理人は魚から切り身を二つ切り出しました。
+frozen | a | We bought some frozen vegetables yesterday. | 私たちは昨日冷凍野菜を買いました。
+frozen | a | Is the lake still frozen? | 湖はまだ凍っていますか。
+frozen | a | The shop sells frozen fruit all year. | その店は一年中冷凍果物を売っています。
+worst | a | That was the worst meal of our trip. | それは旅行中で最悪の食事でした。
+worst | a | Was yesterday your worst day this week? | 昨日は今週で一番悪い日でしたか。
+worst | a | He made his worst mistake in the final question. | 彼は最後の問題で最も大きな間違いをしました。
+stopper | n | Put the stopper back in the bottle. | 瓶に栓を戻してください。
+stopper | n | Can you find the rubber stopper? | ゴムの栓を見つけられますか。
+stopper | n | The sink has a small plastic stopper. | その流しには小さなプラスチックの栓があります。
+throwaway | a | We should use fewer throwaway cups. | 私たちは使い捨てのカップを減らすべきです。
+throwaway | a | Is this a throwaway paper plate? | これは使い捨ての紙皿ですか。
+throwaway | a | The cafe stopped using throwaway forks. | そのカフェは使い捨てのフォークを使うのをやめました。
+superlative | n | The superlative of good is best. | goodの最上級はbestです。
+superlative | n | Can you find the superlative in this sentence? | この文の最上級を見つけられますか。
+superlative | n | The students practiced superlatives in English class. | 生徒たちは英語の授業で最上級を練習しました。
+freshness | n | The freshness of these apples is wonderful. | このリンゴの新鮮さはすばらしいです。
+freshness | n | How can we keep the bread's freshness? | どうすればパンの新鮮さを保てますか。
+freshness | n | The shop checks the freshness of its fish. | その店は魚の新鮮さを確認しています。
+rerun | n | I watched a rerun of my favorite show. | 私は好きな番組の再放送を見ました。
+rerun | n | Is this program a rerun? | この番組は再放送ですか。
+rerun | n | The channel showed two reruns last night. | そのチャンネルは昨夜二本の再放送を流しました。
+hardness | n | The hardness of this wood makes cutting difficult. | この木の硬さのため切るのが難しいです。
+hardness | n | Can you feel the hardness of the stone? | その石の硬さがわかりますか。
+hardness | n | The workers tested the hardness of the metal. | 作業員たちは金属の硬さを調べました。
+keynote | n | The keynote focused on learning through play. | 基調講演は遊びを通じた学びを中心に扱いました。
+keynote | n | Did you enjoy the opening keynote? | 最初の基調講演はよかったですか。
+keynote | n | The teacher gave a keynote at the meeting. | 先生は会議で基調講演を行いました。
+indirect | a | She gave me an indirect answer. | 彼女は私に間接的な答えをしました。
+indirect | a | Is there an indirect way to reach him? | 彼に連絡する間接的な方法はありますか。
+indirect | a | The message made an indirect reference to our plan. | そのメッセージは私たちの計画に間接的に触れていました。
