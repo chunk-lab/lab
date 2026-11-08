@@ -386,3 +386,36 @@ html[data-theme="cute"] .ct-cc .edView .edNote,html[data-theme="cute"] .ct-cc .e
 /* 無料会員：AIを使う登録は出さない（手打ち・お手軽自動は使える） */
 .ct-cc.cc-free .edCopy,.ct-cc.cc-free #edAI,.ct-cc.cc-free .edRow:has(#shCopyFile),.ct-cc.cc-free .edRow:has(#shCopyChat),.ct-cc.cc-free #shDrop,.ct-cc.cc-free ol.edSteps:has(+ .edRow #shCopyFile),.ct-cc.cc-free h3:has(+ ol.edSteps + .edRow #shCopyFile){display:none!important}
 .ct-cc.cc-free #edStatus::before{content:"AIを使った登録(コピペ方式・AIで分ける・ファイル用の指示文)は有料会員の機能です。 ";display:block;font-weight:800;color:#c0563c;margin-bottom:4px}
+/* ===== ホーム(一枚絵のタイトル)：絵は assets/img/title/ ===== */
+.ct-cc .titleScr[data-face="arcade"]{background:linear-gradient(180deg,#f6f9ff 0%,#fdf4fb 100%);color:#4a3d63}
+.ct-cc .hm{position:relative;max-width:520px;min-height:100vh;min-height:100dvh;padding:calc(10px + env(safe-area-inset-top)) 14px calc(96px + env(safe-area-inset-bottom));gap:10px}
+.ct-cc .hm img{display:block;width:100%;height:auto;-webkit-user-drag:none;user-select:none;pointer-events:none}
+.ct-cc .hm button{border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ct-cc .hmTop{display:grid;grid-template-columns:32% 1fr 9%;grid-template-rows:auto auto;gap:6px 8px;align-items:center}
+.ct-cc .hmLogo{grid-row:1/3;width:100%;height:auto;max-height:84px;object-fit:contain;object-position:left center}
+.ct-cc .hmPill{position:relative}
+.ct-cc .hmPill button{position:absolute;top:0;bottom:0;width:50%}
+.ct-cc .hmPill button:first-of-type{left:0}.ct-cc .hmPill button:last-of-type{right:0}
+.ct-cc .hmGear{grid-column:3;grid-row:1}
+.ct-cc .hmStats{grid-column:2/4;grid-row:2;display:grid;grid-template-columns:1fr 1.2fr 1.1fr;gap:6px}
+.ct-cc .hmSt{position:relative}
+.ct-cc .hmSt b{position:absolute;left:34%;right:26%;top:50%;transform:translateY(-50%);text-align:right;font-family:var(--disp);font-size:clamp(12px,3.6vw,17px);color:#5a447c;line-height:1}
+.ct-cc .hmSt:first-child b{left:30%;right:8%}
+.ct-cc .hmHero{border-radius:26px;overflow:hidden;box-shadow:0 6px 18px rgba(120,100,160,.18);aspect-ratio:1/0.82;background:#cfe8fb}
+.ct-cc .hmHero img{height:100%;object-fit:cover;object-position:35% 60%}
+.ct-cc .hmTiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.ct-cc .hmWide{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ct-cc .hm .hmTiles button,.ct-cc .hm .hmWide button{transition:transform .12s,filter .12s;filter:drop-shadow(0 4px 6px rgba(120,100,160,.2))}
+.ct-cc .hm .hmTiles button:active,.ct-cc .hm .hmWide button:active{transform:scale(.96);filter:brightness(.95)}
+.ct-cc .hmHint{margin:0;text-align:center;font-size:11px;color:#8b7da5}
+.ct-cc .hmNav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(8px + env(safe-area-inset-bottom));width:min(calc(100% - 20px),500px);z-index:5;filter:drop-shadow(0 6px 12px rgba(120,100,160,.22))}
+.ct-cc .hmNav button{position:absolute;top:0;bottom:0;width:25%}
+.ct-cc .hmNav button:nth-of-type(1){left:0}.ct-cc .hmNav button:nth-of-type(2){left:25%}.ct-cc .hmNav button:nth-of-type(3){left:50%}.ct-cc .hmNav button:nth-of-type(4){left:75%}
+.ct-cc .hmNav button:active{background:rgba(255,160,200,.18);border-radius:24px}
+.ct-cc .hmPick{position:fixed;inset:0;z-index:80;background:rgba(60,40,90,.38);display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:16px 16px calc(18px + env(safe-area-inset-bottom));align-items:center}
+.ct-cc .hmPick[hidden]{display:none}
+.ct-cc .hmSheet{width:100%;max-width:460px;background:#fff;border-radius:24px;padding:16px 16px 14px;box-shadow:0 10px 30px rgba(60,40,90,.3);display:none}
+.ct-cc .hmSheet.on{display:block}
+.ct-cc .hmSheet h3{margin:0 0 2px;font-size:19px;color:#4a3d63}.ct-cc .hmSheet p{margin:0 0 6px;font-size:13px;color:#7c6e95}
+.ct-cc .hmClose{background:#fff!important;width:100%;max-width:460px}
+.ct-cc .titleScr[data-face="arcade"] .ccTabs{display:none}

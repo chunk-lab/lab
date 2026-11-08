@@ -43,21 +43,38 @@
   <p class="note" id="startNote"></p>
   <button class="primary" id="startBtn" style="width:100%">タップしてスタート</button></div></div>
 <div id="title" class="titleScr" data-face="arcade" hidden>
-  <!-- ゲームセンター：遊んで鍛える -->
-  <div class="faceGame">
-    <div class="gLogo"><span class="p">チャンク</span><span class="b">チャンク</span></div>
-    <div class="gMenu">
-      <div class="tCard"><div class="tName">さらさらチャンク</div><div class="tDesc">自動で流れてくるよ！</div>
-        <div class="tPlay"><button data-play="auto-one">ランダム</button><button data-play="auto-cont" class="b">おはなし</button></div></div>
-      <div class="tCard"><div class="tName">よーいどんチャンク</div><div class="tDesc">自分で送って、はやく切ろう！</div>
-        <div class="tPlay"><button data-play="manual-one">ランダム</button><button data-play="manual-cont" class="b">おはなし</button></div></div>
-      <div class="tCard"><div class="tName">チャレンジ</div><div class="tDesc">30秒・1分で、何点とれるか！（全レベル・自分で送る）</div>
-        <div class="tPlay"><button data-timed="30">30秒</button><button data-timed="60" class="b">1分</button></div>
-        <button class="tSet" data-rank style="margin-top:6px">ランキングを見る</button></div>
-      <p class="tDesc" id="lvHint" style="text-align:center;margin:2px 0 0"></p>
-      <button class="tSet" data-open-set>設定</button>
-      <button class="tSet" data-howto="arcade">❓ 遊び方</button>
+  <!-- ホーム(ゲームセンター)：一枚絵のタイトル。部品の絵は assets/img/title/ -->
+  <div class="faceGame hm">
+    <div class="hmTop">
+      <img class="hmLogo" id="hmLogo" alt="今スラ！">
+      <div class="hmPill"><img data-hm-img="pill" alt=""><button data-hm-go="home" aria-label="ゲーム"></button><button data-hm-go="study" aria-label="勉強"></button></div>
+      <button class="hmGear" data-open-set aria-label="設定"><img data-hm-img="gear" alt=""></button>
+      <div class="hmStats">
+        <div class="hmSt"><img data-hm-img="lv" alt=""><b id="hmLv">1</b></div>
+        <div class="hmSt"><img data-hm-img="coin" alt=""><b id="hmCoin">0</b></div>
+        <div class="hmSt"><img data-hm-img="gem" alt=""><b id="hmGem">0</b></div>
+      </div>
     </div>
+    <div class="hmHero"><img data-hm-img="hero" alt=""></div>
+    <div class="hmTiles">
+      <button data-hm-open="sara" aria-label="さらさらチャンク"><img data-hm-img="sara" alt=""></button>
+      <button data-hm-open="yoi" aria-label="よーい、どんチャンク"><img data-hm-img="yoi" alt=""></button>
+      <button data-hm-open="chal" aria-label="チャレンジ"><img data-hm-img="chal" alt=""></button>
+    </div>
+    <div class="hmWide">
+      <button data-hm-go="lesson" aria-label="レッスン"><img data-hm-img="lesson" alt=""></button>
+      <button data-open-set aria-label="マイページ(設定)"><img data-hm-img="mypage" alt=""></button>
+    </div>
+    <p class="hmHint" id="lvHint"></p>
+    <nav class="hmNav"><img data-hm-img="nav" alt=""><button data-hm-go="home" aria-label="ホーム"></button><button data-hm-go="study" aria-label="コンテンツ"></button><button data-hm-go="shop" aria-label="ショップ"></button><button data-hm-go="rank" aria-label="ランキング"></button></nav>
+    <!-- タイルをおしたときに出る、あそび方の選択 -->
+    <div class="hmPick" hidden>
+      <div class="hmSheet" data-for="sara"><h3>さらさらチャンク</h3><p>自動で流れてくるよ！</p><div class="tPlay"><button data-play="auto-one">ランダム</button><button data-play="auto-cont" class="b">おはなし</button></div></div>
+      <div class="hmSheet" data-for="yoi"><h3>よーい、どんチャンク</h3><p>自分で送って、はやく切ろう！</p><div class="tPlay"><button data-play="manual-one">ランダム</button><button data-play="manual-cont" class="b">おはなし</button></div></div>
+      <div class="hmSheet" data-for="chal"><h3>チャレンジ</h3><p>30秒・1分で、何点とれるか！（全レベル・自分で送る）</p><div class="tPlay"><button data-timed="30">30秒</button><button data-timed="60" class="b">1分</button></div><button class="tSet" data-rank>ランキングを見る</button></div>
+      <button class="tSet hmClose" data-hm-close>とじる</button>
+    </div>
+    <button class="tSet" data-howto="arcade">❓ 遊び方</button>
   </div>
   <!-- 学校：チャンク練習（自分で送って切る・役割も答える） -->
   <div class="faceLesson faceStudy">
@@ -68,6 +85,7 @@
       <button data-study="random"><b>Random Practice</b><small>内蔵の例文と短文から、ランダムに練習</small><i>→</i></button>
       <button data-open-set><b>Settings</b><small>速さ・文字の大きさ・音</small><i>→</i></button>
       <button data-howto="lesson"><b>How to Play</b><small>遊び方</small><i>→</i></button>
+      <button data-hm-go="home"><b>← Home</b><small>ホームにもどる</small><i></i></button>
     </div>
     <div class="sMenu lessonSub" hidden>
       <button data-study="story"><b>読む・聞く</b><small>Chunk Story：お話とゲームで、チャンクの読み方を学ぶ</small><i>→</i></button>
@@ -83,6 +101,7 @@
       <button data-study="texts"><b>My Texts</b><small>長文・短文の登録、問題の作成、共有</small><i>→</i></button>
       <button data-open-set><b>Settings</b><small>速さ・文字の大きさ・音</small><i>→</i></button>
       <button data-howto="library"><b>How to Play</b><small>遊び方</small><i>→</i></button>
+      <button data-hm-go="home"><b>← Home</b><small>ホームにもどる</small><i></i></button>
     </div>
   </div>
 </div>
