@@ -22,15 +22,15 @@ be aware of | ph | She was not aware of the problem until yesterday. | 彼女は
 be based on | ph | The movie will be based on a popular book. | その映画は人気の本に基づいて作られます。
 be based on | ph | Our report is based on information from the school. | 私たちの報告書は学校の情報に基づいています。
 be based on | ph | Was this story based on a real experience? | この物語は実際の経験に基づいていましたか。
-be likely to | ph | We may be likely to see rain this afternoon. | 今日の午後は雨が降りそうです。
+be likely to | ph | We are likely to see some rain this afternoon. | 今日の午後は雨が降りそうです。
 be likely to | ph | She is likely to win the singing contest. | 彼女は歌の大会で優勝しそうです。
 be likely to | ph | Are we likely to finish the project today? | 私たちは今日その企画を終えられそうですか。
 be responsible for | ph | I will be responsible for preparing the meeting room. | 私は会議室の準備を担当します。
 be responsible for | ph | Who is responsible for cleaning the school garden? | 学校の庭の掃除は誰が担当していますか。
 be responsible for | ph | The manager was responsible for the event schedule. | 責任者は行事の日程を担当していました。
-be supposed to | ph | You should be supposed to arrive before the meeting starts. | 会議が始まる前に到着することになっているはずです。
+be supposed to | ph | You are supposed to arrive before the meeting starts. | 会議が始まる前に到着することになっています。
 be supposed to | ph | Are you supposed to wear a uniform at school? | 学校では制服を着ることになっていますか。
-be supposed to | ph | The train was supposed to arrive ten minutes ago. | 電車は十分前に到着する予定でした。
+be supposed to | ph | The train was supposed to arrive ten minutes ago. | 電車は10分前に到着する予定でした。
 be used to | ph | You will soon be used to the new school. | あなたはすぐに新しい学校に慣れるでしょう。
 be used to | ph | My father is used to getting up early. | 父は早起きすることに慣れています。
 be used to | ph | Are you used to living in a big city? | 大きな都市での生活に慣れていますか。
@@ -115,7 +115,7 @@ in charge of | ph | He was in charge of preparing the food. | 彼は食事の準
 in terms of | ph | In terms of price, this bicycle is a good choice. | 価格の点ではこの自転車はよい選択です。
 in terms of | ph | Which plan is better in terms of time? | 時間の点ではどちらの計画がよいですか。
 in terms of | ph | In terms of size, these two rooms are similar. | 広さの点ではこの二つの部屋は似ています。
-keep up with | ph | I read daily to keep up with the class. | 授業に遅れずについていくために毎日読みます。
+keep up with | ph | I study every day to keep up with the class. | 授業についていくために毎日勉強しています。
 keep up with | ph | Can you keep up with the other students? | ほかの生徒たちについていけますか。
 keep up with | ph | He walks quickly, so I cannot keep up with him. | 彼は速く歩くので私はついていけません。
 lead to | ph | Regular practice can lead to better results in sports. | 定期的な練習はスポーツでよりよい結果につながります。
@@ -133,7 +133,7 @@ look down on | ph | Why did she look down on his simple job? | 彼女はなぜ�
 make sense | ph | Your explanation does not make sense to me. | あなたの説明は私には意味が通りません。
 make sense | ph | Does this sentence make sense in English? | この文は英語として意味が通りますか。
 make sense | ph | The story finally made sense after the last chapter. | 最後の章を読んでようやく物語の意味が分かりました。
-make up one's mind | ph | I can't make up my mind about the menu. | 私はメニューがなかなか決められません。
+make up one's mind | ph | I cannot make up my mind about the menu. | メニューをなかなか決められません。
 make up one's mind | ph | I finally made up my mind to join. | 私はついに参加する決心をしました。
 make up one's mind | ph | Have you made up your mind about the trip? | 旅行についてもう決心しましたか。
 make use of | ph | We should make use of the school library. | 私たちは学校の図書館を活用するべきです。
@@ -181,7 +181,7 @@ run out of | ph | The shop ran out of fresh bread by noon. | その店は正午�
 set up | ph | They plan to set up a new reading club. | 彼らは新しい読書クラブを設立する予定です。
 set up | ph | Can you set up the chairs before the meeting? | 会議の前に椅子を並べて準備できますか。
 set up | ph | She set up a small shop near the station. | 彼女は駅の近くに小さな店を開きました。
-show up | ph | Please show up ten minutes before the lesson. | 授業の十分前に来てください。
+show up | ph | Please show up ten minutes before the lesson. | 授業の10分前に来てください。
 show up | ph | Why did he show up so late yesterday? | 彼は昨日なぜそんなに遅く現れたのですか。
 show up | ph | Only five students showed up for the practice. | 練習に来た生徒は五人だけでした。
 stand for | ph | What does this letter stand for in the chart? | この図でこの文字は何を表していますか。
@@ -199,7 +199,7 @@ take advantage of | ph | She took advantage of her holiday to visit family. | �
 turn down | ph | I had to turn down the job offer. | 私はその仕事の申し出を断らなければなりませんでした。
 turn down | ph | Why did she turn down your invitation? | 彼女はなぜあなたの招待を断ったのですか。
 turn down | ph | He turned down the chance to join the team. | 彼はチームに参加する機会を断りました。
-turn out | ph | The plan may turn out to be successful. | その計画はうまくいくと分かるかもしれません。
+turn out | ph | The plan may turn out to be successful. | その計画は最終的に成功するかもしれません。
 turn out | ph | It turned out that the shop was closed. | その店は閉まっていたことが分かりました。
 turn out | ph | Did the test turn out to be easier than expected? | テストは予想より簡単だったと分かりましたか。
 at all | ph | I do not understand this question at all. | 私はこの問題がまったく分かりません。
@@ -241,13 +241,13 @@ be satisfied with | ph | She was satisfied with her score on the test. | 彼女�
 by chance | ph | I met my old teacher by chance yesterday. | 昨日偶然昔の先生に会いました。
 by chance | ph | Did you find this book by chance? | この本を偶然見つけたのですか。
 by chance | ph | We discovered a small cafe by chance. | 私たちは偶然小さな喫茶店を見つけました。
-by oneself | ph | He cooked dinner by himself. | 彼は一人で夕食を作りました。
+by oneself | ph | He cooked dinner by himself without any help. | 彼は誰の助けも借りずに一人で夕食を作りました。
 by oneself | ph | I made this cake all by myself. | 私はこのケーキを一人で作りました。
 by oneself | ph | Can your little brother travel by himself? | あなたの弟は一人で旅行できますか。
 come across | ph | I sometimes come across interesting books at this shop. | 私はこの店で時々面白い本に偶然出会います。
 come across | ph | Did you come across my old school photo? | 私の昔の学校の写真を偶然見つけましたか。
 come across | ph | She came across a friendly dog during her walk. | 彼女は散歩中に人懐こい犬に偶然出会いました。
-come from | ph | My new classmates come from several different towns. | 新しいクラスメートはそれぞれ違う町の出身です。
+come from | ph | My new classmates come from several different towns. | 新しいクラスメートたちはいくつかの異なる町の出身です。
 come from | ph | Where does your English teacher come from? | あなたの英語の先生はどこの出身ですか。
 come from | ph | He comes from a small village near the sea. | 彼は海の近くの小さな村の出身です。
 contribute to | ph | Our club wants to contribute to the local community. | 私たちのクラブは地域社会に貢献したいと思っています。
@@ -268,7 +268,7 @@ every other day | ph | We water these plants every other day in spring. | 春に
 for a while | ph | Please sit here and rest for a while. | ここに座ってしばらく休んでください。
 for a while | ph | We talked for a while after the meeting. | 私たちは会議の後しばらく話しました。
 for a while | ph | Can you wait for a while until she returns? | 彼女が戻るまでしばらく待てますか。
-for instance | ph | Many fruits, for instance apples, contain useful vitamins. | 例えばリンゴなど多くの果物には役立つビタミンが含まれます。
+for instance | ph | Many fruits, such as apples, contain useful vitamins. | リンゴなど、多くの果物には体に必要なビタミンが含まれています。
 for instance | ph | You could try another sport, for instance, swimming. | 例えば水泳など別のスポーツを試してもよいでしょう。
 for instance | ph | Some students, for instance Ken, prefer studying in the morning. | 例えばケンなど朝の勉強を好む生徒もいます。
 get over | ph | You can get over your fear with practice. | 練習すれば恐怖心を乗り越えられます。
