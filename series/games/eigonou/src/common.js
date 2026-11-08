@@ -63,10 +63,10 @@ export function refreshLex(){ buildLex(activeSets()); }
 const clsOf=it=>it.cls||(/\s/.test((it.en+(it.tail?' '+it.tail:'')).trim())?'phrase':'word');
 function setBody(s){
  const itH=it=>`<span class="it pos-${kindPos(it.kind)}">${ico(it.e,'ic sm')} ${esc(it.en+(it.tail?' '+it.tail:''))} <small>${esc(it.ja)}</small><button data-try="${s.id}|${it.id}" aria-label="使ってみる" style="color:#2a8">▶</button><button data-del="${s.id}|${it.id}" aria-label="削除">×</button></span>`;
- const W=s.items.filter(i=>clsOf(i)==='word'), P=s.items.filter(i=>clsOf(i)==='phrase'), T=s.sentences||[];
+ const nw=s.items.slice().reverse(), W=nw.filter(i=>clsOf(i)==='word'), P=nw.filter(i=>clsOf(i)==='phrase'), T=(s.sentences||[]).map((t,i)=>({t,i})).reverse();   // 新しく入れたものを上に
  const sec=(t,h)=>`<div class="note" style="margin:8px 0 2px">${t}</div><div class="items">${h}</div>`;
  if(!W.length&&!P.length&&!T.length) return '<div class="items"><p class="note">まだありません。「ことば登録」から追加できます。</p></div>';
- return (W.length?sec('単語 '+W.length,W.map(itH).join('')):'')+(P.length?sec('熟語・慣用句 '+P.length,P.map(itH).join('')):'')+(T.length?sec('文章 '+T.length,T.map((t,i)=>`<span class="it"><small style="margin-right:4px">📝</small>${esc(t.en)} <small>${esc(t.ja||'')}</small><button data-trys="${s.id}|${i}" aria-label="使ってみる" style="color:#2a8">▶</button></span>`).join('')):'');
+ return (W.length?sec('単語 '+W.length,W.map(itH).join('')):'')+(P.length?sec('熟語・慣用句 '+P.length,P.map(itH).join('')):'')+(T.length?sec('文章 '+T.length,T.map(({t,i})=>`<span class="it"><small style="margin-right:4px">📝</small>${esc(t.en)} <small>${esc(t.ja||'')}</small><button data-trys="${s.id}|${i}" aria-label="使ってみる" style="color:#2a8">▶</button></span>`).join('')):'');
 }
 // 画面を描き直すと、スクロールが一番上に戻ってしまう(連続で選びにくい)。描き直しの前後で位置を保つ
 function keepScroll(el, put){

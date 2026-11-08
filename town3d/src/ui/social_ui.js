@@ -119,7 +119,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
       else { hud.dialog({ name: '🔍 みつけた!', role: t, text: txt, choices: [] }); hud.closeOnOutside(); }   // 枠の外をタップして閉じられる
     };
     if (s.kind === 'word') { addNote({ kind: 'word', text: c[0], meaning: c[1], npc: '調べる' }); n('単語', `「${c[0]}」= ${c[1]}(ことばノートに入れたよ)`); }
-    else if (s.kind === 'phrase') { addNote({ kind: 'phrase', text: c[0], meaning: c[1], npc: '調べる' }); n('表現', `「${c[0]}」= ${c[1]}(ことばノートに入れたよ)`); }
+    else if (s.kind === 'phrase') { addNote({ kind: 'phrase', text: c[0], meaning: c[1], npc: '調べる' }); n('熟語', `「${c[0]}」= ${c[1]}(ことばノートに入れたよ)`); }
     else if (s.kind === 'proverb') { addNote({ kind: 'phrase', text: c[0], meaning: c[1] + '(' + c[2] + ')', npc: '格言' }); n('格言', `「${c[0]}」— ${c[2]}\n${c[1]}`); }
     else if (s.kind === 'passage') { addNote({ kind: 'sentence', text: c[0], meaning: c[1], npc: '調べる' }); n('ちいさな物語', `${c[0]}\n(ことばノートに入れたよ)`); }
     else if (s.kind === 'treasure') { social.addInfo('たからもの', `${c[0]}${c[1]}:${c[2]}`, 'tre:' + c[1]); n('町のたからもの', `${c[0]} ${c[1]} … ${c[2]}(${finds.treasures().length} / ${TREASURES.length})`); }

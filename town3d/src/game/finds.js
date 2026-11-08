@@ -10,6 +10,7 @@ const hash = n => { let x = (n * 2654435761) >>> 0; x ^= x >>> 15; x = Math.imul
 const dayNum = () => { const d = new Date(Date.now() - 4 * 36e5); return d.getFullYear() * 400 + d.getMonth() * 32 + d.getDate(); };
 
 // ---- 中身 ----
+import { FIND_WORDS, FIND_IDIOMS } from './find_pool.js';
 export const WORDS = [['serendipity', '思いがけない幸運'], ['cozy', '居心地のいい'], ['whisper', 'ささやく'], ['glimpse', 'ちらっと見ること'], ['treasure', '宝物'], ['curious', '好奇心の強い'], ['breeze', 'そよ風'], ['sparkle', 'きらめく'], ['wander', 'ぶらぶら歩く'], ['hidden', '隠れた'], ['lantern', 'ちょうちん・ランタン'], ['puddle', '水たまり'], ['footprint', '足あと'], ['shortcut', '近道'], ['souvenir', 'おみやげ'], ['ancient', '大昔の'], ['delight', '大喜び'], ['mysterious', 'なぞめいた'], ['shelter', '雨やどりの場所'], ['nostalgic', 'なつかしい']];
 export const PHRASES = [['Keep your eyes peeled.', 'よく目をこらしてね'], ['It\'s on the tip of my tongue.', 'のどまで出かかってる'], ['Long time no see!', 'ひさしぶり!'], ['Take your time.', 'ゆっくりでいいよ'], ['What a small world!', '世間はせまいね!'], ['I\'m all ears.', 'しっかり聞いてるよ'], ['That rings a bell.', 'それ、聞き覚えがある'], ['Fingers crossed!', 'うまくいきますように!'], ['Better safe than sorry.', '用心するに越したことはない'], ['You made my day!', 'あなたのおかげで最高の日になった!'], ['Speak of the devil.', 'うわさをすれば'], ['Count me in!', 'わたしも入れて!']];
 export const PROVERBS = [['Little by little, one travels far.', '少しずつでも、遠くまで行ける', 'ことわざ(スペイン)'], ['Every cloud has a silver lining.', 'どんな雲にも銀のふちどりがある(悪いことにも良い面がある)', 'ことわざ'], ['Where there\'s a will, there\'s a way.', '意志あるところに道は開ける', 'ことわざ'], ['Practice makes perfect.', '練習で完璧になる', 'ことわざ'], ['Actions speak louder than words.', '行動はことばより雄弁だ', 'ことわざ'], ['The early bird catches the worm.', '早起きの鳥は虫をつかまえる', 'ことわざ'], ['Rome wasn\'t built in a day.', 'ローマは1日にしてならず', 'ことわざ'], ['Knowledge is power.', '知は力なり', 'フランシス・ベーコン'], ['Two heads are better than one.', '三人寄れば文殊の知恵(ふたりの頭はひとりにまさる)', 'ことわざ'], ['A journey of a thousand miles begins with a single step.', '千里の道も一歩から', '老子'], ['When in Rome, do as the Romans do.', '郷に入っては郷に従え', 'ことわざ'], ['Don\'t judge a book by its cover.', '見かけで判断するな', 'ことわざ']];
@@ -38,8 +39,9 @@ function dailySpots(n = 12) {
     const nd = GRAPH.nodes[id]; let a = 0, r = 0, ok = false;
     for (let t = 0; t < 8 && !ok; t++) { a = hash(d * 13 + i + t * 101) * 6.283; r = 1 + hash(d * 17 + i + t * 53) * 1.8; ok = !validFn || validFn(nd.x + Math.cos(a) * r, nd.z + Math.sin(a) * r); }   // 池・噴水・建物の中なら、角度と距離を変えて取り直す
     if (!ok) { used.delete(id); continue; }
-    const kind = ['word', 'word', 'phrase', 'phrase', 'proverb', 'passage'][out.length % 6];
-    const pool = { word: WORDS, phrase: PHRASES, proverb: PROVERBS, passage: PASSAGES }[kind], c = pool[Math.floor(hash(d * 7 + i * 3 + 5) * pool.length)];
+    const kind = out.length % 2 ? 'phrase' : 'word';   // 単語と熟語だけ(長文の切り取りや格言は出さない)
+    const pool = kind === 'word' ? FIND_WORDS : FIND_IDIOMS; let c = pool[Math.floor(hash(d * 7 + i * 3 + 5) * pool.length)];
+    for (let k = 1; out.some(o => o.c[0] === c[0]) && k < 30; k++) c = pool[Math.floor(hash(d * 7 + i * 3 + 5 + k * 977) * pool.length)];
     out.push({ key: `d:${dayKey()}:${out.length}`, x: nd.x + Math.cos(a) * r, z: nd.z + Math.sin(a) * r, kind, c, node: id });
   }
   return out;
