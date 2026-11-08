@@ -133,7 +133,7 @@ on the road | ph | She calls her family regularly when she is on the road. | 彼
 on the whole | ph | On the whole, the new teaching method has worked well. | 全体として新しい指導法はうまく機能しています。
 on the whole | ph | Would you say the festival was successful on the whole? | 祭りは全体として成功だったと言えますか。
 on the whole | ph | The hotel was clean and comfortable on the whole. | ホテルは全体として清潔で快適でした。
-originate in | ph | Many popular customs originate in the traditions of local communities. | 多くの一般的な習慣は地域の伝統に由来します。
+originate in | ph | Many popular local customs originate in small rural communities. | 地域で親しまれている多くの習慣は、小さな農村地域で生まれます。
 originate in | ph | Did this style of cooking originate in your hometown? | この料理法はあなたの故郷で生まれましたか。
 originate in | ph | The idea originated in a conversation between two teachers. | その考えは二人の先生の会話から生まれました。
 out of place | ph | His formal suit looked out of place at the beach party. | 彼の礼服は海辺のパーティーでは場違いでした。
@@ -168,14 +168,14 @@ regret doing | ph | She regrets leaving the school music club before graduation.
 regret doing | ph | Do you regret spending so much money on that coat? | そのコートに多額のお金を使ったことを後悔していますか。
 regret to do | ph | I regret to do this, but I must cancel our meeting. | 残念ですが会議を取り消さなければなりません。
 regret to do | ph | We regret to inform you that the workshop is full. | 残念ながら講習会は定員に達したことをお知らせします。
-regret to do | ph | The manager regretted to announce that the event was postponed. | 責任者は残念ながら行事の延期を発表しました。
+regret to do | ph | The manager regrets to announce that the event is postponed. | 責任者は残念ながら行事の延期をお知らせします。
 reside in | ph | Many artists choose to reside in this peaceful neighborhood. | 多くの芸術家がこの静かな地域に住むことを選びます。
 reside in | ph | Does your grandmother still reside in the same small town? | おばあさんは今も同じ小さな町に住んでいますか。
 reside in | ph | The writer resided in a quiet village for several years. | 作家は数年間静かな村に住んでいました。
 revert to | ph | We may revert to the original schedule if necessary. | 必要なら当初の予定に戻すかもしれません。
 revert to | ph | Why did the school revert to its previous teaching method? | 学校はなぜ以前の指導法に戻しましたか。
 revert to | ph | After testing new designs, the team reverted to the simplest one. | 新しいデザインを試した後チームは最も簡単なものに戻しました。
-serve to do | ph | These signs serve to do more than provide directions. | これらの標識は道案内以上の役割を果たします。
+serve to do | ph | These lessons serve to do more than teach basic grammar. | これらの授業は基本的な文法を教える以上の役割を果たします。
 serve to do | ph | The new rules serve to protect everyone's personal information. | 新しい規則は個人情報を守るのに役立ちます。
 serve to do | ph | Can this exercise serve to improve your listening skills? | この練習は聞き取り能力を高めるのに役立ちますか。
 set forth | ph | The document will set forth the conditions of our agreement. | その文書には合意の条件が明記されます。
