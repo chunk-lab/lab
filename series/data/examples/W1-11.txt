@@ -1,0 +1,300 @@
+secret | n | Keep this secret until her birthday. | 彼女の誕生日までこの秘密を守ってください。
+secret | n | Can you keep a secret from your brother? | 弟に秘密を守れますか。
+secret | n | She told me two little secrets. | 彼女は私に小さな秘密を二つ教えてくれました。
+sound | n | I heard a strange sound outside. | 外で変わった音が聞こえました。
+sound | n | What is that sound near the window? | 窓の近くのあの音は何ですか。
+sound | n | The forest was full of bird sounds. | 森は鳥の鳴き声でいっぱいでした。
+speech | n | Her speech was short and easy to understand. | 彼女の演説は短く分かりやすかったです。
+speech | n | Did you enjoy the teacher's speech? | 先生の演説はよかったですか。
+speech | n | He gave a speech about his school. | 彼は自分の学校について演説しました。
+spirit | n | Her kind spirit makes everyone happy. | 彼女の優しい精神はみんなを幸せにします。
+spirit | n | Can we keep our team spirit strong? | チームの団結する精神を強く保てますか。
+spirit | n | They showed a spirit of helping others. | 彼らは人を助ける精神を示しました。
+step | n | Take one step toward the door. | ドアの方へ一歩進んでください。
+step | n | Can you take another step forward? | もう一歩前へ進めますか。
+step | n | She walked up the steps slowly. | 彼女は階段をゆっくり上りました。
+style | n | I like the style of this dress. | 私はこのドレスの様式が好きです。
+style | n | Is this style popular at your school? | このスタイルは学校で人気がありますか。
+style | n | The two artists have different styles. | 二人の芸術家は異なる作風を持っています。
+technology | n | New technology makes our work easier. | 新しい技術は仕事を楽にします。
+technology | n | Do you use technology in class? | 授業で技術を使いますか。
+technology | n | Our grandparents learned about modern technology. | 祖父母は現代の技術について学びました。
+theory | n | Our teacher explained a simple theory today. | 先生は今日簡単な理論を説明しました。
+theory | n | Can you explain that theory again? | その理論をもう一度説明できますか。
+theory | n | The students discussed two different theories. | 生徒たちは二つの異なる理論について話し合いました。
+thought | n | I had a happy thought this morning. | 今朝楽しい考えが浮かびました。
+thought | n | Can you share that thought with us? | その考えを私たちに話してくれますか。
+thought | n | Her thoughts were about the coming trip. | 彼女は今度の旅行のことを考えていました。
+truth | n | Please tell me the truth now. | 今、本当のことを教えてください。
+truth | n | Does everyone know the truth yet? | もうみんな真実を知っていますか。
+truth | n | He finally learned the truth yesterday. | 彼は昨日ついに真実を知りました。
+value | n | This old book has special value. | この古い本には特別な価値があります。
+value | n | What is the value of this painting? | この絵にはどんな価値がありますか。
+value | n | She understands the value of friendship. | 彼女は友情の価値を理解しています。
+wealth | n | Health is more important than wealth. | 健康は富より大切です。
+wealth | n | Can wealth make everyone truly happy? | 富は誰をも本当に幸せにできますか。
+wealth | n | He shared his wealth with his family. | 彼は自分の富を家族と分かち合いました。
+character | n | Her kind character makes her popular. | 彼女の優しい性格は人気の理由です。
+character | n | Does his character change in the story? | 物語の中で彼の性格は変わりますか。
+character | n | Their characters are very different from each other. | 二人の性格は互いにとても違います。
+century | n | A century is one hundred years. | 一世紀は百年です。
+century | n | Did people use computers last century? | 前の世紀には人々はコンピューターを使っていましたか。
+century | n | This town has changed over the centuries. | この町は何世紀もの間に変化してきました。
+date | n | Please write the date on your paper. | 紙に日付を書いてください。
+date | n | What is the date of the test? | テストの日付はいつですか。
+date | n | We checked the dates on the calendar. | 私たちはカレンダーの日付を確認しました。
+weekend | n | I will visit my aunt this weekend. | 今週末はおばを訪ねます。
+weekend | n | Did you enjoy your weekend at home? | 家で過ごした週末は楽しかったですか。
+weekend | n | We often play tennis on weekends. | 私たちは週末によくテニスをします。
+calendar | n | My calendar is next to the clock. | 私のカレンダーは時計の隣にあります。
+calendar | n | Can you find Friday on this calendar? | このカレンダーで金曜日を見つけられますか。
+calendar | n | She bought two calendars for next year. | 彼女は来年用のカレンダーを二つ買いました。
+noon | n | We usually eat lunch at noon. | 私たちはふつう正午に昼食を食べます。
+noon | n | Does the shop open at noon? | その店は正午に開きますか。
+noon | n | The sun was high at noon. | 正午には太陽が高く昇っていました。
+evening | n | My family watches television every evening. | 私の家族は毎晩テレビを見ます。
+evening | n | Are you free this evening after dinner? | 今晩夕食後は空いていますか。
+evening | n | We enjoyed the cool summer evenings. | 私たちは涼しい夏の夕方を楽しみました。
+afternoon | n | I have a music lesson this afternoon. | 今日の午後は音楽の授業があります。
+afternoon | n | Can we meet tomorrow afternoon at school? | 明日の午後学校で会えますか。
+afternoon | n | She spent the afternoon reading outside. | 彼女は午後を屋外で読書して過ごしました。
+midnight | n | The clock showed midnight when we arrived. | 私たちが着いたとき時計は真夜中を示していました。
+midnight | n | Were you awake at midnight yesterday? | 昨日の真夜中は起きていましたか。
+midnight | n | The train arrived just before midnight. | 列車は真夜中の直前に到着しました。
+center | n | The table stands in the center. | テーブルは中央にあります。
+center | n | Is the station near the town center? | 駅は町の中心の近くですか。
+center | n | The children stood in the center of the room. | 子供たちは部屋の中央に立ちました。
+corner | n | There is a cafe on the corner. | 角にカフェがあります。
+corner | n | Can you see the shop around that corner? | あの角を曲がった先の店が見えますか。
+corner | n | She sat quietly in the corner. | 彼女は隅に静かに座っていました。
+middle | n | My desk is in the middle. | 私の机は真ん中にあります。
+middle | n | Who is sitting in the middle? | 真ん中に座っているのは誰ですか。
+middle | n | We stopped in the middle of the road. | 私たちは道路の真ん中で止まりました。
+top | n | Put the red box on top. | 赤い箱を一番上に置いてください。
+top | n | Can you reach the top of the shelf? | 棚の一番上に手が届きますか。
+top | n | They climbed to the top of the hill. | 彼らは丘の頂上まで登りました。
+bottom | n | The key is at the bottom. | かぎは底にあります。
+bottom | n | Is there water at the bottom? | 底に水はありますか。
+bottom | n | We found shells at the bottom of the bag. | 私たちはかばんの底で貝殻を見つけました。
+front | n | Please wait in front of the station. | 駅の前で待ってください。
+front | n | Is there a garden at the front? | 正面に庭はありますか。
+front | n | He stood at the front of the class. | 彼は教室の前に立ちました。
+edge | n | Keep your cup away from the edge. | カップを端から離してください。
+edge | n | Can you see the edge of the lake? | 湖の縁が見えますか。
+edge | n | She sat near the edge of the bed. | 彼女はベッドの端の近くに座りました。
+surface | n | The surface of the lake looks smooth. | 湖の表面は滑らかに見えます。
+surface | n | Is the surface of this table clean? | このテーブルの表面はきれいですか。
+surface | n | Small leaves floated on the water's surface. | 小さな葉が水面に浮かんでいました。
+north | n | Our grandparents live in the north. | 祖父母は北の地方に住んでいます。
+north | n | Is the mountain to the north? | その山は北にありますか。
+north | n | The birds flew north in spring. | 鳥たちは春に北へ飛んでいきました。
+south | n | The train is going toward the south. | その列車は南へ向かっています。
+south | n | Do you live in the south? | あなたは南の地方に住んでいますか。
+south | n | They traveled south during the winter. | 彼らは冬の間に南へ旅行しました。
+east | n | The sun rises in the east. | 太陽は東から昇ります。
+east | n | Is the school east of the park? | 学校は公園の東にありますか。
+east | n | We drove east along the river. | 私たちは川沿いを東へ車で走りました。
+west | n | The sun sets in the west. | 太陽は西に沈みます。
+west | n | Does this road go toward the west? | この道路は西へ向かっていますか。
+west | n | Our friends moved west last year. | 友達は去年西へ引っ越しました。
+address | n | Please write your address on this card. | このカードに住所を書いてください。
+address | n | Do you know the school's address? | 学校の住所を知っていますか。
+address | n | He checked the address before leaving home. | 彼は家を出る前に住所を確認しました。
+size | n | What size shoes do you wear? | 靴のサイズはいくつですか。
+size | n | Is this shirt the right size? | このシャツはちょうどよい大きさですか。
+size | n | The boxes are different in size. | 箱は大きさが違います。
+shape | n | This cake has a heart shape. | このケーキはハートの形をしています。
+shape | n | What shape is the new table? | 新しいテーブルはどんな形ですか。
+shape | n | The children drew many different shapes. | 子供たちはいろいろな形を描きました。
+weight | n | The weight of this bag surprised me. | このかばんの重さには驚きました。
+weight | n | Do you know the weight of this box? | この箱の重さを知っていますか。
+weight | n | He checked his weight this morning. | 彼は今朝自分の体重を測りました。
+height | n | The height of that tree is amazing. | あの木の高さは驚くほどです。
+height | n | Can you measure the height of this wall? | この壁の高さを測れますか。
+height | n | We compared the heights of two buildings. | 私たちは二つの建物の高さを比べました。
+length | n | The length of this table is two meters. | このテーブルの長さは二メートルです。
+length | n | Can you check the length of this rope? | このロープの長さを確認できますか。
+length | n | The teacher measured the lengths of our pencils. | 先生は私たちの鉛筆の長さを測りました。
+temperature | n | The temperature is high this afternoon. | 今日の午後は気温が高いです。
+temperature | n | Can you check the temperature outside? | 外の気温を確認できますか。
+temperature | n | The water's temperature dropped during the night. | 夜の間に水温が下がりました。
+amount | n | Please use a small amount of salt. | 塩は少量使ってください。
+amount | n | Is this amount of rice enough? | この量のご飯で足りますか。
+amount | n | We reduced the amount of sugar. | 私たちは砂糖の量を減らしました。
+total | n | The total is twenty dollars today. | 今日の合計は二十ドルです。
+total | n | Can you tell me the total price? | 合計金額を教えてくれますか。
+total | n | Our totals were different after counting. | 数えた後の私たちの合計は違っていました。
+piece | n | Would you like a piece of cake? | ケーキを一切れいかがですか。
+piece | n | Can I have another piece of bread? | パンをもう一切れもらえますか。
+piece | n | She put the pieces in a box. | 彼女はそのかけらを箱に入れました。
+pair | n | I bought a pair of shoes. | 私は靴を一足買いました。
+pair | n | Do you need another pair of socks? | 靴下をもう一足必要ですか。
+pair | n | We found two pairs of gloves. | 私たちは手袋を二組見つけました。
+list | n | Please make a list of things to buy. | 買う物の一覧表を作ってください。
+list | n | Is my name on the list? | 私の名前は一覧表にありますか。
+list | n | She checked two lists before shopping. | 彼女は買い物前に二つの一覧表を確認しました。
+page | n | Open your book to page ten. | 本の十ページを開いてください。
+page | n | Can you read this page aloud? | このページを声に出して読めますか。
+page | n | He turned the pages very slowly. | 彼はページをとてもゆっくりめくりました。
+note | n | Please leave a note on my desk. | 私の机にメモを残してください。
+note | n | Did you read the note from Mom? | 母からのメモを読みましたか。
+note | n | She wrote notes during the lesson. | 彼女は授業中にメモを取りました。
+sentence | n | Write one sentence about your family. | 家族について一文書いてください。
+sentence | n | Can you read this English sentence? | この英文を読めますか。
+sentence | n | The students wrote five short sentences. | 生徒たちは短い文を五つ書きました。
+paragraph | n | Please read the first paragraph again. | 最初の段落をもう一度読んでください。
+paragraph | n | Can you write a short paragraph? | 短い段落を書けますか。
+paragraph | n | Her story has four small paragraphs. | 彼女の物語には短い段落が四つあります。
+grammar | n | English grammar can be difficult sometimes. | 英語の文法は時々難しいことがあります。
+grammar | n | Do you study grammar every day? | 毎日文法を勉強しますか。
+grammar | n | We practiced grammar in class yesterday. | 私たちは昨日授業で文法を練習しました。
+meaning | n | What is the meaning of this word? | この単語の意味は何ですか。
+meaning | n | Can you explain its meaning in English? | その意味を英語で説明できますか。
+meaning | n | Some words have more than one meaning. | 単語によっては複数の意味があります。
+chapter | n | We read one chapter every week. | 私たちは毎週一章ずつ読みます。
+chapter | n | Did you finish the last chapter? | 最後の章を読み終えましたか。
+chapter | n | The book has twelve short chapters. | その本には短い章が十二あります。
+text | n | Please read the text before answering. | 答える前に本文を読んでください。
+text | n | Can you understand this English text? | この英文を理解できますか。
+text | n | The students studied two short texts. | 生徒たちは短い文章を二つ学びました。
+poem | n | She wrote a poem about spring. | 彼女は春についての詩を書きました。
+poem | n | Can you read this poem aloud? | この詩を声に出して読めますか。
+poem | n | We learned three poems at school. | 私たちは学校で三つの詩を学びました。
+novel | n | My sister is reading a long novel. | 姉は長い小説を読んでいます。
+novel | n | Have you finished that new novel? | あの新しい小説を読み終えましたか。
+novel | n | He bought two novels at the shop. | 彼は店で小説を二冊買いました。
+article | n | I read an interesting article yesterday. | 私は昨日面白い記事を読みました。
+article | n | Did you see the article about animals? | 動物についての記事を見ましたか。
+article | n | She writes short articles for our school paper. | 彼女は学校新聞に短い記事を書いています。
+title | n | The title of this book is funny. | この本の題名は面白いです。
+title | n | Can you remember the movie's title? | その映画の題名を覚えていますか。
+title | n | We chose titles for our stories. | 私たちは物語の題名を選びました。
+author | n | The author visited our school yesterday. | その著者は昨日私たちの学校を訪れました。
+author | n | Do you know the author of this book? | この本の著者を知っていますか。
+author | n | Several authors spoke at the library. | 何人かの著者が図書館で話しました。
+writer | n | My uncle wants to become a writer. | おじは作家になりたがっています。
+writer | n | Is your favorite writer still working? | 好きな作家は今も活動していますか。
+writer | n | Two writers visited our English class. | 二人の作家が英語の授業を訪れました。
+reader | n | Every reader can enjoy this story. | どの読者もこの物語を楽しめます。
+reader | n | Are you a fast reader? | あなたは読むのが速い読者ですか。
+reader | n | The magazine has many young readers. | その雑誌には若い読者がたくさんいます。
+scientist | n | My aunt works as a scientist. | おばは科学者として働いています。
+scientist | n | Can a scientist study the weather? | 科学者は天気を研究できますか。
+scientist | n | The scientists studied the plants carefully. | 科学者たちは植物を注意深く調べました。
+engineer | n | Her father is an engineer at a factory. | 彼女の父は工場の技師です。
+engineer | n | Does your brother want to become an engineer? | お兄さんは技師になりたいのですか。
+engineer | n | The engineers made a new machine. | 技師たちは新しい機械を作りました。
+lawyer | n | My neighbor works as a lawyer. | 隣人は弁護士として働いています。
+lawyer | n | Does your aunt know a good lawyer? | おばさんはよい弁護士を知っていますか。
+lawyer | n | The lawyers explained the rules clearly. | 弁護士たちは規則を分かりやすく説明しました。
+manager | n | Our manager is friendly to everyone. | 私たちのマネージャーは誰にでも親切です。
+manager | n | Is your sister the shop manager? | お姉さんは店長ですか。
+manager | n | The managers met before the store opened. | 管理者たちは店が開く前に集まりました。
+soldier | n | The soldier helped people carry water. | その兵士は人々が水を運ぶのを手伝いました。
+soldier | n | Can a soldier also be a musician? | 兵士は音楽家でもあり得ますか。
+soldier | n | The soldiers cleaned the town park. | 兵士たちは町の公園を掃除しました。
+pilot | n | The pilot welcomed everyone onto the plane. | パイロットは乗客全員を飛行機に迎えました。
+pilot | n | Does your friend want to become a pilot? | 友達はパイロットになりたいのですか。
+pilot | n | The pilots checked the weather before leaving. | パイロットたちは出発前に天気を確認しました。
+chef | n | The chef made soup for everyone. | 料理長はみんなにスープを作りました。
+chef | n | Can the chef make a vegetable dish? | 料理長は野菜料理を作れますか。
+chef | n | Two chefs worked together in the kitchen. | 二人の料理長が台所で一緒に働きました。
+dentist | n | My dentist checks my teeth every year. | 歯医者は毎年私の歯を調べます。
+dentist | n | Did you visit the dentist yesterday? | 昨日歯医者に行きましたか。
+dentist | n | The dentists taught children about brushing. | 歯医者たちは子供たちに歯磨きについて教えました。
+president | n | The company president visited our school. | その会社の社長が私たちの学校を訪れました。
+president | n | Is your uncle the company president? | おじさんはその会社の社長ですか。
+president | n | The presidents of both clubs met yesterday. | 両クラブの会長は昨日会いました。
+leader | n | Our team needs a good leader. | 私たちのチームにはよい指導者が必要です。
+leader | n | Who is the leader of your group? | あなたのグループのリーダーは誰ですか。
+leader | n | The leaders listened to everyone's ideas. | リーダーたちはみんなの考えを聞きました。
+customer | n | A customer asked about the blue shirt. | 客が青いシャツについて尋ねました。
+customer | n | Can you help the next customer? | 次のお客さんを手伝ってくれますか。
+customer | n | The shop had many customers today. | その店には今日たくさんの客が来ました。
+guest | n | We have a special guest for dinner. | 夕食に特別なお客さんが来ます。
+guest | n | Is your guest staying tonight? | お客さんは今夜泊まりますか。
+guest | n | The hotel welcomed its guests warmly. | ホテルは宿泊客を温かく迎えました。
+owner | n | The owner of this cafe is friendly. | このカフェの店主は親切です。
+owner | n | Do you know the dog's owner? | その犬の飼い主を知っていますか。
+owner | n | The shop owners met this morning. | 店主たちは今朝集まりました。
+partner | n | My partner helped me finish the project. | パートナーが活動を終えるのを手伝ってくれました。
+partner | n | Can you work with a different partner? | 別の相手と一緒に作業できますか。
+partner | n | The partners shared their ideas after lunch. | パートナーたちは昼食後に考えを共有しました。
+stranger | n | A stranger asked me for directions. | 見知らぬ人が私に道を尋ねました。
+stranger | n | Did the stranger find the station? | その見知らぬ人は駅を見つけましたか。
+stranger | n | We helped two strangers read the map. | 私たちは見知らぬ二人が地図を読むのを手伝いました。
+visitor | n | A visitor came to our classroom today. | 今日教室に訪問者が来ました。
+visitor | n | Is that visitor from another school? | あの訪問者は別の学校から来たのですか。
+visitor | n | The museum welcomed many visitors yesterday. | 博物館は昨日多くの来館者を迎えました。
+audience | n | The audience enjoyed her beautiful song. | 聴衆は彼女の美しい歌を楽しみました。
+audience | n | Did the audience understand your speech? | 聴衆はあなたの演説を理解しましたか。
+audience | n | Everyone in the audience started smiling. | 聴衆の全員がほほえみ始めました。
+crowd | n | A large crowd waited outside the station. | 大勢の群衆が駅の外で待っていました。
+crowd | n | Can you see the crowd near the stage? | 舞台の近くの群衆が見えますか。
+crowd | n | The crowds enjoyed the town festival. | 群衆は町の祭りを楽しみました。
+population | n | The population of this town is growing. | この町の人口は増えています。
+population | n | Do you know the population of our city? | 私たちの市の人口を知っていますか。
+population | n | The island's population grew last year. | その島の人口は去年増えました。
+citizen | n | Every citizen can help keep streets clean. | すべての市民は通りをきれいに保つ手助けができます。
+citizen | n | Is your grandfather a citizen of this country? | おじいさんはこの国の国民ですか。
+citizen | n | The citizens worked together to plant trees. | 市民たちは協力して木を植えました。
+adult | n | An adult should help the young children. | 大人は小さな子供たちを助けるべきです。
+adult | n | Are you an adult now? | あなたはもう大人ですか。
+adult | n | The adults watched the children play. | 大人たちは子供たちが遊ぶのを見守りました。
+teenager | n | My brother became a teenager this year. | 弟は今年十代になりました。
+teenager | n | Is that teenager on your soccer team? | あの十代の若者はあなたのサッカーチームにいますか。
+teenager | n | Many teenagers enjoy listening to music. | 多くの十代の若者は音楽を聴くのが好きです。
+couple | n | A young couple walked through the park. | 若いカップルが公園を歩いていました。
+couple | n | Can you wait a couple of minutes? | 二、三分待ってくれますか。
+couple | n | Two couples came to dinner together. | 二組のカップルが一緒に夕食に来ました。
+role | n | Everyone has a role in this game. | このゲームでは全員に役割があります。
+role | n | What is your role in the team? | チームでのあなたの役割は何ですか。
+role | n | The students played different roles in class. | 生徒たちは授業で異なる役割を演じました。
+figure | n | Write the figure in this box. | この箱に数字を書いてください。
+figure | n | Can you read that figure clearly? | あの数字をはっきり読めますか。
+figure | n | She checked the figures on the page. | 彼女はページの数字を確認しました。
+industry | n | The food industry employs many people. | 食品産業は多くの人を雇っています。
+industry | n | Does your father work in the car industry? | お父さんは自動車産業で働いていますか。
+industry | n | Our town has several different industries. | 私たちの町にはいくつかの異なる産業があります。
+economy | n | A strong economy helps many families. | 強い経済は多くの家族を助けます。
+economy | n | Is the local economy doing well? | 地域の経済はうまくいっていますか。
+economy | n | We learned about the economy at school. | 私たちは学校で経済について学びました。
+law | n | This law helps keep our rivers clean. | この法律は川をきれいに保つのに役立ちます。
+law | n | Do you understand the new law? | 新しい法律を理解していますか。
+law | n | Different countries have different laws. | 国によって異なる法律があります。
+crime | n | The story is about a small crime. | その物語は小さな犯罪についてです。
+crime | n | Can you explain what a crime is? | 犯罪とは何か説明できますか。
+crime | n | The class discussed ways to prevent crime. | クラスでは犯罪を防ぐ方法について話し合いました。
+army | n | My grandfather once worked in the army. | 祖父はかつて陸軍で働いていました。
+army | n | Does the army help after big storms? | 陸軍は大きな嵐の後に支援しますか。
+army | n | The army helped build a new bridge. | 陸軍は新しい橋の建設を手伝いました。
+security | n | The hotel has good security at night. | そのホテルは夜間の警備がしっかりしています。
+security | n | Is airport security very busy today? | 今日は空港の警備がとても忙しいですか。
+security | n | The school improved security at the entrance. | 学校は入り口の警備を強化しました。
+risk | n | There is a risk of rain tomorrow. | 明日は雨が降る危険があります。
+risk | n | Is there any risk in trying this? | これを試すことに何か危険はありますか。
+risk | n | We discussed the risks before the trip. | 私たちは旅行前に危険について話し合いました。
+budget | n | Our class has a small budget. | 私たちのクラスには少ない予算があります。
+budget | n | Can we stay within our budget? | 予算内に収められますか。
+budget | n | She made a budget for her vacation. | 彼女は休暇の予算を立てました。
+tax | n | The price includes a small tax. | その値段には少額の税金が含まれます。
+tax | n | Do we need to pay tax here? | ここでは税金を払う必要がありますか。
+tax | n | Some taxes help pay for schools. | 税金の一部は学校の費用に使われます。
+income | n | Her income comes from teaching English. | 彼女の収入は英語を教える仕事から得ています。
+income | n | Is your income enough for rent? | 収入は家賃を払うのに十分ですか。
+income | n | His income increased after changing jobs. | 彼の収入は転職後に増えました。
+profit | n | The shop made a small profit. | その店は少し利益を上げました。
+profit | n | Did your business make a profit? | あなたの事業は利益を上げましたか。
+profit | n | They used the profits to buy new chairs. | 彼らは利益を新しい椅子の購入に使いました。
+product | n | This product is made from milk. | この製品は牛乳から作られています。
+product | n | Can you explain how this product works? | この製品の使い方を説明できますか。
+product | n | The store sells many useful products. | その店は役立つ製品をたくさん売っています。
+model | n | My brother built a model of a ship. | 弟は船の模型を作りました。
+model | n | Can you make a model of this house? | この家の模型を作れますか。
+model | n | The students showed their models to everyone. | 生徒たちはみんなに模型を見せました。
+data | n | The data shows how many students came. | そのデータは何人の生徒が来たかを示しています。
+data | n | Can you check the data again? | そのデータをもう一度確認できますか。
+data | n | We used the data to make a chart. | 私たちはデータを使ってグラフを作りました。
+evidence | n | We need evidence to support that idea. | その考えを裏付ける証拠が必要です。
+evidence | n | Can you show me the evidence? | 証拠を見せてくれますか。
+evidence | n | The picture gave us useful evidence. | その写真は役立つ証拠になりました。
