@@ -268,7 +268,7 @@ every other day | ph | We water these plants every other day in spring. | 春に
 for a while | ph | Please sit here and rest for a while. | ここに座ってしばらく休んでください。
 for a while | ph | We talked for a while after the meeting. | 私たちは会議の後しばらく話しました。
 for a while | ph | Can you wait for a while until she returns? | 彼女が戻るまでしばらく待てますか。
-for instance | ph | Many fruits, such as apples, contain useful vitamins. | リンゴなど、多くの果物には体に必要なビタミンが含まれています。
+for instance | ph | Many fruits, for instance apples, contain useful vitamins. | リンゴなど、多くの果物には体に必要なビタミンが含まれています。
 for instance | ph | You could try another sport, for instance, swimming. | 例えば水泳など別のスポーツを試してもよいでしょう。
 for instance | ph | Some students, for instance Ken, prefer studying in the morning. | 例えばケンなど朝の勉強を好む生徒もいます。
 get over | ph | You can get over your fear with practice. | 練習すれば恐怖心を乗り越えられます。
