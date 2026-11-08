@@ -54,7 +54,7 @@ in bulk | ph | Is it cheaper to order these supplies in bulk? | これらの備�
 in bulk | ph | The school purchased notebooks in bulk for all students. | 学校は全生徒のためノートを大量購入しました。
 in demand | ph | Experienced language teachers are often in demand at private schools. | 経験豊かな語学教師は私立学校で需要があります。
 in demand | ph | Are handmade products still in demand among younger customers? | 手作り商品は今も若い顧客に需要がありますか。
-in demand | ph | Her design skills became increasingly in demand after graduation. | 彼女のデザイン技術は卒業後ますます求められました。
+in demand | ph | Her design skills were in greater demand after graduation. | 卒業後、彼女のデザイン技術に対する需要はさらに高まりました。
 in force | ph | The new safety rules will be in force from Monday. | 新しい安全規則は月曜日から有効になります。
 in force | ph | Is the parking restriction still in force near the station? | 駅の近くの駐車制限はまだ有効ですか。
 in force | ph | The agreement remained in force throughout the following year. | その合意は翌年を通して効力を持ち続けました。
@@ -175,7 +175,7 @@ reside in | ph | The writer resided in a quiet village for several years. | 作�
 revert to | ph | We may revert to the original schedule if necessary. | 必要なら当初の予定に戻すかもしれません。
 revert to | ph | Why did the school revert to its previous teaching method? | 学校はなぜ以前の指導法に戻しましたか。
 revert to | ph | After testing new designs, the team reverted to the simplest one. | 新しいデザインを試した後チームは最も簡単なものに戻しました。
-serve to do | ph | These lessons serve to do more than teach basic grammar. | これらの授業は基本的な文法を教える以上の役割を果たします。
+serve to do | ph | These lessons serve to do more than teach basic grammar. | これらの授業は、基本的な文法を教えるだけでなく、それ以上の役割も果たします。
 serve to do | ph | The new rules serve to protect everyone's personal information. | 新しい規則は個人情報を守るのに役立ちます。
 serve to do | ph | Can this exercise serve to improve your listening skills? | この練習は聞き取り能力を高めるのに役立ちますか。
 set forth | ph | The document will set forth the conditions of our agreement. | その文書には合意の条件が明記されます。
