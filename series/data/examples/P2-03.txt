@@ -11,7 +11,7 @@ in detail | ph | The teacher explained the new project in detail. | 先生は新
 in detail | ph | Can you describe the problem in detail for me? | その問題を私に詳しく説明してもらえますか。
 in detail | ph | We discussed our travel plans in detail last night. | 昨夜、私たちは旅行の計画について詳しく話し合いました。
 in effect | ph | The new school rules are now in effect. | 新しい校則は現在有効です。
-in effect | ph | The change is, in effect, a complete new start. | その変更は実際には完全な再出発です。
+in effect | ph | The change is, in effect, a completely new start. | その変更は、事実上まったく新しい出発です。
 in effect | ph | Will the new prices be in effect next month? | 新しい価格は来月から有効になりますか。
 in honor of | ph | We held a small party in honor of our teacher. | 私たちは先生をたたえて小さなパーティーを開きました。
 in honor of | ph | A concert was held in honor of the retiring musician. | 引退する音楽家をたたえてコンサートが開かれました。
@@ -114,9 +114,9 @@ other than | ph | Do you have any plans other than studying tonight? | 今夜は
 other than | ph | We found nothing other than a few old photographs. | 古い写真が数枚ある以外には何も見つかりませんでした。
 out of stock | ph | The blue shoes are currently out of stock. | 青い靴は現在在庫切れです。
 out of stock | ph | Is this popular book still out of stock? | この人気の本はまだ在庫切れですか。
-out of stock | ph | The shop was out of stock of fresh bread by noon. | その店では正午までに焼きたてのパンが売り切れました。
+out of stock | ph | Fresh bread was out of stock by noon. | 正午までに焼きたてのパンは売り切れていました。
 out of town | ph | My parents are out of town this weekend. | 両親は今週末町を離れています。
-out of town | ph | Will your manager be out of town next Monday? | 上司は次の月曜日に出張で不在ですか。
+out of town | ph | Will your manager be out of town next Monday? | 上司は次の月曜日、町を離れて不在ですか。
 out of town | ph | She went out of town to visit her cousins. | 彼女はいとこを訪ねるため町を離れました。
 pass out | ph | The teacher will pass out the worksheets after lunch. | 先生は昼食後にプリントを配ります。
 pass out | ph | Please pass out these maps to the visitors. | 訪問者にこれらの地図を配ってください。
@@ -136,7 +136,7 @@ prefer to do | ph | Would she prefer to eat dinner a little earlier? | 彼女は
 prepare for | ph | We need to prepare for the school festival. | 私たちは学校祭に備える必要があります。
 prepare for | ph | How did you prepare for your English interview? | 英語の面接に向けてどのように準備しましたか。
 prepare for | ph | The town is preparing for the summer holiday season. | 町は夏の休暇シーズンに向けて準備しています。
-prior to | ph | Please arrive ten minutes prior to the meeting. | 会議の十分前に到着してください。
+prior to | ph | Please arrive ten minutes prior to the meeting. | 会議の10分前に到着してください。
 prior to | ph | Did you receive the instructions prior to the trip? | 旅行の前に説明を受け取りましたか。
 prior to | ph | All guests must register prior to entering the building. | 来客は建物に入る前に全員登録しなければなりません。
 pull over | ph | Please pull over when you find a safe place. | 安全な場所を見つけたら車を道端に寄せてください。
@@ -151,7 +151,7 @@ put in | ph | Could you put in another shelf above the desk? | 机の上にも�
 quite a few | ph | Quite a few students stayed after the concert. | コンサートの後にかなり多くの生徒が残りました。
 quite a few | ph | We saw quite a few birds near the lake. | 私たちは湖の近くでかなり多くの鳥を見ました。
 quite a few | ph | Did quite a few people attend the morning class? | 朝の講座にはかなり多くの人が参加しましたか。
-reach for | ph | She stood up to reach for the top shelf. | 彼女は一番上の棚に手を伸ばすため立ち上がりました。
+reach for | ph | She stood up to reach for a book on the top shelf. | 彼女は一番上の棚にある本に手を伸ばそうと立ち上がりました。
 reach for | ph | He reached for his glasses beside the bed. | 彼はベッドの横にある眼鏡に手を伸ばしました。
 reach for | ph | Can you reach for that book without standing up? | 立ち上がらずにその本に手を伸ばせますか。
 real estate | ph | My aunt works in real estate in this town. | おばはこの町で不動産業に携わっています。
@@ -166,7 +166,7 @@ reply to | ph | Why did he not reply to your message yesterday? | 彼はなぜ�
 right away | ph | Please call me right away when you arrive. | 到着したらすぐに電話してください。
 right away | ph | Did she answer your question right away? | 彼女はあなたの質問にすぐ答えましたか。
 right away | ph | The children started cleaning their room right away. | 子供たちはすぐに部屋の掃除を始めました。
-search for | ph | We spent the morning trying to search for information online. | 私たちは午前中オンラインで情報を探そうとして過ごしました。
+search for | ph | We spent the morning searching for information online. | 私たちは午前中ずっとインターネットで情報を探していました。
 search for | ph | The students searched for examples in their textbooks. | 生徒たちは教科書の中で例を探しました。
 search for | ph | Are you still searching for a place to live? | まだ住む場所を探していますか。
 sell off | ph | The shop plans to sell off its old furniture. | その店は古い家具を売り払う予定です。
@@ -200,7 +200,7 @@ subscribe to | ph | I want to subscribe to a monthly science magazine. | 私は�
 subscribe to | ph | Does your father subscribe to the local newspaper? | お父さんは地元の新聞を定期購読していますか。
 subscribe to | ph | She subscribed to a cooking magazine last spring. | 彼女は去年の春、料理雑誌の定期購読を始めました。
 succeed in | ph | We hope to succeed in finishing the project on time. | 私たちは予定どおりに企画を完成させたいと思っています。
-succeed in | ph | Did she succeed in passing the entrance exam? | 彼女は入学試験に合格することに成功しましたか。
+succeed in | ph | Did she succeed in passing the entrance exam? | 彼女は入学試験に無事合格できましたか。
 succeed in | ph | The team succeeded in reaching its goal this year. | チームは今年目標を達成することに成功しました。
 take a nap | ph | I sometimes take a nap after lunch on Sundays. | 私は日曜日には時々昼食後に昼寝をします。
 take a nap | ph | Did your little brother take a nap today? | 弟は今日昼寝をしましたか。
