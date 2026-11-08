@@ -1,0 +1,300 @@
+record | n | Keep a record of your reading time. | 読書時間の記録をつけてください。
+record | n | Can I see your school records? | 学校の記録を見てもいいですか。
+record | n | She broke the school running record. | 彼女は学校の走る競技の記録を破りました。
+material | n | We need more material for this bag. | このかばんにはもっと材料が必要です。
+material | n | Is this material easy to wash? | この材料は洗いやすいですか。
+material | n | They used different materials to make toys. | 彼らはおもちゃ作りにさまざまな材料を使いました。
+resource | n | Water is an important natural resource. | 水は大切な天然資源です。
+resource | n | Can we save this resource for later? | この資源を後のために節約できますか。
+resource | n | Our town uses its resources carefully. | 私たちの町は資源を大切に使っています。
+machine | n | This machine makes fresh bread every morning. | この機械は毎朝焼きたてのパンを作ります。
+machine | n | Does that machine wash the dishes? | あの機械は皿を洗いますか。
+machine | n | The workers checked all the machines. | 作業員たちはすべての機械を点検しました。
+engine | n | The engine starts when I turn this key. | この鍵を回すとエンジンがかかります。
+engine | n | Is the car engine making noise? | 車のエンジンから音がしていますか。
+engine | n | The train has two powerful engines. | その列車には強力なエンジンが二つあります。
+tool | n | A hammer is a useful tool. | ハンマーは便利な道具です。
+tool | n | Can you bring me that tool? | あの道具を持ってきてくれますか。
+tool | n | Dad keeps his tools in a box. | 父は道具を箱に入れています。
+software | n | This software helps me learn English. | このソフトウェアは英語学習に役立ちます。
+software | n | Is the new software easy to use? | 新しいソフトウェアは使いやすいですか。
+software | n | Our teacher showed us some useful software. | 先生はいくつかの便利なソフトウェアを見せてくれました。
+site | n | This site is perfect for our picnic. | この場所はピクニックにぴったりです。
+site | n | Did you find the building site? | 建設現場は見つかりましたか。
+site | n | We visited several sites near the river. | 私たちは川の近くのいくつかの場所を訪れました。
+website | n | Our school has a new website. | 私たちの学校には新しいウェブサイトがあります。
+website | n | Can you open this website now? | 今このウェブサイトを開けますか。
+website | n | She found useful pictures on several websites. | 彼女はいくつかのウェブサイトで役立つ写真を見つけました。
+screen | n | Look at the screen over there. | あちらの画面を見てください。
+screen | n | Is your computer screen too bright? | パソコンの画面は明るすぎますか。
+screen | n | The children watched the big screen. | 子供たちは大きなスクリーンを見ていました。
+video | n | I made a short video yesterday. | 昨日短い動画を作りました。
+video | n | Can you show me that video? | その動画を見せてくれますか。
+video | n | We watched three videos about animals. | 私たちは動物についての動画を三本見ました。
+radio | n | My grandfather listens to the radio daily. | 祖父は毎日ラジオを聞きます。
+radio | n | Is the radio on in the kitchen? | 台所でラジオがついていますか。
+radio | n | She turned off the radio before dinner. | 彼女は夕食前にラジオを消しました。
+channel | n | This channel shows interesting nature programs. | このチャンネルは面白い自然番組を放送します。
+channel | n | Which channel has the cooking show? | 料理番組はどのチャンネルですか。
+channel | n | We changed channels after the news. | 私たちはニュースの後でチャンネルを変えました。
+media | n | Social media helps friends stay in touch. | ソーシャルメディアは友達同士の連絡に役立ちます。
+media | n | Do you use media in class? | 授業でメディアを使いますか。
+media | n | The media shared news about the festival. | メディアは祭りについてのニュースを伝えました。
+advertisement | n | I saw an advertisement for a new bicycle. | 新しい自転車の広告を見ました。
+advertisement | n | Did you read that advertisement yesterday? | 昨日あの広告を読みましたか。
+advertisement | n | The shop put advertisements in the newspaper. | 店は新聞に広告を載せました。
+brand | n | This brand makes comfortable walking shoes. | このブランドは歩きやすい靴を作っています。
+brand | n | Do you know this clothing brand? | この服のブランドを知っていますか。
+brand | n | She compared two brands of tea. | 彼女は二つの銘柄のお茶を比べました。
+factory | n | My uncle works at a car factory. | おじは自動車工場で働いています。
+factory | n | Does this factory make wooden chairs? | この工場は木の椅子を作っていますか。
+factory | n | Several factories stand near the river. | 川の近くには工場がいくつかあります。
+farm | n | We visited a small farm last Sunday. | 先週の日曜日に小さな農場を訪れました。
+farm | n | Does your grandfather live on a farm? | おじいさんは農場に住んでいますか。
+farm | n | The farms here grow many vegetables. | ここの農場では多くの野菜を育てています。
+department | n | My sister works in the sales department. | 姉は販売部門で働いています。
+department | n | Which department does your father work in? | お父さんはどの部門で働いていますか。
+department | n | The store has several different departments. | その店にはいくつかの異なる部門があります。
+institution | n | The library is an important public institution. | 図書館は大切な公共施設です。
+institution | n | Is this institution open on Sundays? | この施設は日曜日に開いていますか。
+institution | n | Many institutions help people learn new skills. | 多くの機関が人々の新しい技能の習得を支えています。
+club | n | I joined the tennis club yesterday. | 私は昨日テニスクラブに入りました。
+club | n | Does your school have a music club? | あなたの学校には音楽クラブがありますか。
+club | n | Several clubs meet after school today. | 今日はいくつかのクラブが放課後に集まります。
+committee | n | Our committee meets every Friday afternoon. | 私たちの委員会は毎週金曜の午後に集まります。
+committee | n | Who is on the school committee? | 学校の委員会には誰がいますか。
+committee | n | The committees shared their plans yesterday. | 委員会は昨日それぞれの計画を共有しました。
+university | n | My brother studies science at university. | 兄は大学で科学を学んでいます。
+university | n | Is there a university near your home? | 家の近くに大学はありますか。
+university | n | Many universities have large libraries. | 多くの大学には大きな図書館があります。
+college | n | She wants to study music at college. | 彼女は大学で音楽を学びたがっています。
+college | n | Does your cousin go to college? | いとこは大学に通っていますか。
+college | n | Some colleges offer evening classes. | 大学によっては夜間の授業があります。
+graduate | v | I hope to graduate from school next year. | 来年学校を卒業したいです。
+graduate | v | Did your sister graduate last spring? | お姉さんは去年の春に卒業しましたか。
+graduate | v | They graduated from college together. | 彼らは一緒に大学を卒業しました。
+degree | n | The water became warm to some degree. | 水はある程度温かくなりました。
+degree | n | Does the answer change to any degree? | 答えは少しでも変わりますか。
+degree | n | We all agreed to a certain degree. | 私たちはある程度みんな同意しました。
+grade | n | My brother is in the fifth grade. | 弟は五年生です。
+grade | n | What grade are you in now? | 今何年生ですか。
+grade | n | The younger students are in lower grades. | 年下の生徒たちは下の学年にいます。
+score | n | Our team got a high score today. | 私たちのチームは今日高得点を取りました。
+score | n | What was your score on the test? | テストの得点は何点でしたか。
+score | n | The two teams had different scores. | 二つのチームの得点は違いました。
+prize | n | She won a prize for her picture. | 彼女は絵で賞を取りました。
+prize | n | Did your brother get a prize? | 弟さんは賞をもらいましたか。
+prize | n | The children received prizes after the game. | 子供たちは試合の後で賞をもらいました。
+award | n | He received an award for his writing. | 彼は作文で賞を受けました。
+award | n | Is this award for the best singer? | この賞は最高の歌手に贈られますか。
+award | n | The school gave awards to five students. | 学校は五人の生徒に賞を贈りました。
+competition | n | Our school held a singing competition. | 学校で歌の競争が行われました。
+competition | n | Can I enter the swimming competition? | 水泳の競争に参加できますか。
+competition | n | Many students joined the art competitions. | 多くの生徒が美術の競争に参加しました。
+race | n | The race starts at nine tomorrow. | 競走は明日の九時に始まります。
+race | n | Did your sister win the race? | お姉さんは競走に勝ちましたか。
+race | n | We watched two exciting running races. | 私たちは二つのわくわくする競走を見ました。
+match | n | Our soccer match starts after lunch. | 私たちのサッカーの試合は昼食後に始まります。
+match | n | Did you enjoy the tennis match? | テニスの試合は楽しかったですか。
+match | n | They played three matches last weekend. | 彼らは先週末に三試合しました。
+champion | n | Our school has a new tennis champion. | 学校に新しいテニスの優勝者が誕生しました。
+champion | n | Is your brother the swimming champion? | お兄さんは水泳の優勝者ですか。
+champion | n | The champions smiled for a picture. | 優勝者たちは写真のために笑顔を見せました。
+fan | n | My father is a big baseball fan. | 父は大の野球ファンです。
+fan | n | Can you turn on the fan? | 扇風機をつけてくれますか。
+fan | n | The singer thanked all her fans. | 歌手はすべてのファンに感謝しました。
+pool | n | The children are swimming in the pool. | 子供たちはプールで泳いでいます。
+pool | n | Is the school pool open today? | 学校のプールは今日開いていますか。
+pool | n | Small pools formed after the rain. | 雨の後に小さな水たまりができました。
+theater | n | We watched a play at the theater. | 私たちは劇場で劇を見ました。
+theater | n | Is the theater near the station? | 劇場は駅の近くですか。
+theater | n | The town has two old theaters. | その町には古い劇場が二つあります。
+stage | n | The singer walked onto the stage. | 歌手は舞台に歩いて出ました。
+stage | n | Can you see the stage from here? | ここから舞台が見えますか。
+stage | n | The children stood together on the stage. | 子供たちは舞台の上に一緒に立ちました。
+hero | n | The boy called his father a hero. | 少年は父を英雄と呼びました。
+hero | n | Who is the hero of this story? | この物語の英雄は誰ですか。
+hero | n | The children drew pictures of their heroes. | 子供たちは自分たちの英雄の絵を描きました。
+band | n | My sister plays guitar in a band. | 姉はバンドでギターを弾いています。
+band | n | Does your band practice every Friday? | あなたのバンドは毎週金曜日に練習しますか。
+band | n | Two bands played at the festival. | 二つのバンドが祭りで演奏しました。
+noise | n | Please stop making that loud noise. | その大きな騒音を出すのをやめてください。
+noise | n | Can you hear a noise outside? | 外で物音が聞こえますか。
+noise | n | The children heard strange noises upstairs. | 子供たちは二階で変わった物音を聞きました。
+silence | n | We sat together in complete silence. | 私たちは一緒にまったくの沈黙の中で座りました。
+silence | n | Why was there silence after the question? | 質問の後になぜ沈黙がありましたか。
+silence | n | The room fell into silence again. | 部屋は再び静まり返りました。
+smell | n | I love the smell of fresh bread. | 私は焼きたてのパンのにおいが大好きです。
+smell | n | What is that sweet smell outside? | 外のあの甘いにおいは何ですか。
+smell | n | The flowers filled the room with lovely smells. | 花が部屋をよい香りで満たしました。
+scene | n | My favorite scene is near the end. | 私のお気に入りの場面は終わり近くにあります。
+scene | n | Did you enjoy the first scene? | 最初の場面は楽しめましたか。
+scene | n | The movie has many beautiful scenes. | その映画には美しい場面がたくさんあります。
+sight | n | The mountains were a beautiful sight. | 山々は美しい光景でした。
+sight | n | Is that a common sight here? | それはここではよく見る光景ですか。
+sight | n | We enjoyed the sights around town. | 私たちは町の周りの景色を楽しみました。
+shadow | n | The tree made a long shadow. | 木は長い影を作りました。
+shadow | n | Can you see your shadow on the wall? | 壁に自分の影が見えますか。
+shadow | n | Their shadows moved across the ground. | 彼らの影は地面を横切って動きました。
+dust | n | There is dust on the old desk. | 古い机の上にほこりがあります。
+dust | n | Can you clean the dust off this shelf? | この棚のほこりを取ってくれますか。
+dust | n | She wiped the dust from the window. | 彼女は窓のほこりを拭き取りました。
+smoke | n | The smoke rose from the cooking fire. | 料理の火から煙が上がりました。
+smoke | n | Can you see smoke above that house? | あの家の上に煙が見えますか。
+smoke | n | The wind carried the smoke away. | 風が煙を運び去りました。
+gas | n | The stove uses gas to cook food. | そのコンロは料理にガスを使います。
+gas | n | Is there enough gas in the car? | 車に十分なガソリンがありますか。
+gas | n | Some gases have no color at all. | 気体の中にはまったく色のないものもあります。
+oil | n | Please add a little oil to the pan. | フライパンに少し油を入れてください。
+oil | n | Does this soup have oil in it? | このスープには油が入っていますか。
+oil | n | She bought two bottles of cooking oil. | 彼女は料理用の油を二本買いました。
+gold | n | This ring is made of gold. | この指輪は金でできています。
+gold | n | Is that necklace made of real gold? | あのネックレスは本物の金でできていますか。
+gold | n | People use gold to make beautiful rings. | 人々は金を使って美しい指輪を作ります。
+silver | n | My grandmother has a beautiful silver ring. | 祖母は美しい銀の指輪を持っています。
+silver | n | Is this spoon made of silver? | このスプーンは銀でできていますか。
+silver | n | The shop sells cups made of silver. | その店は銀製のカップを売っています。
+metal | n | This chair is made of metal. | この椅子は金属でできています。
+metal | n | Can you tell what metal this is? | これが何の金属か分かりますか。
+metal | n | Some metals are very light and strong. | 金属の中にはとても軽くて強いものもあります。
+wood | n | Dad made this table from wood. | 父はこのテーブルを木材で作りました。
+wood | n | Is this box made of wood? | この箱は木材でできていますか。
+wood | n | We used dry wood to build the shelf. | 私たちは乾いた木材で棚を作りました。
+plastic | n | This bottle is made of plastic. | このボトルはプラスチックでできています。
+plastic | n | Can we use less plastic at home? | 家で使うプラスチックを減らせますか。
+plastic | n | The children collected plastic for the project. | 子供たちは活動のためにプラスチックを集めました。
+cotton | n | My shirt is made of soft cotton. | 私のシャツは柔らかい綿でできています。
+cotton | n | Is this towel made from cotton? | このタオルは綿でできていますか。
+cotton | n | We bought some cotton for sewing. | 私たちは裁縫用に綿を買いました。
+cloth | n | Please clean the table with this cloth. | この布でテーブルを拭いてください。
+cloth | n | Is that cloth soft enough for babies? | その布は赤ちゃんに十分柔らかいですか。
+cloth | n | She washed several cloths after dinner. | 彼女は夕食後に布を何枚か洗いました。
+wool | n | This sweater is made from wool. | このセーターは羊毛でできています。
+wool | n | Does this hat contain real wool? | この帽子には本物の羊毛が使われていますか。
+wool | n | My aunt uses wool to make scarves. | おばは羊毛を使ってマフラーを作ります。
+object | n | There is a small object under the chair. | 椅子の下に小さな物があります。
+object | n | Can you name this round object? | この丸い物の名前が分かりますか。
+object | n | The children found several interesting objects. | 子供たちは面白い物をいくつか見つけました。
+item | n | The first item on the list is milk. | 一覧表の最初の項目は牛乳です。
+item | n | Can you check the last item? | 最後の項目を確認できますか。
+item | n | She added three items to her list. | 彼女は一覧表に三つの項目を加えました。
+stuff | n | What is this soft stuff inside the pillow? | 枕の中のこの柔らかい材料は何ですか。
+stuff | n | Can we use this stuff to make toys? | この材料でおもちゃを作れますか。
+stuff | n | The children made shapes from the soft stuff. | 子供たちはその柔らかい材料で形を作りました。
+package | n | A package arrived for my mother today. | 今日母に小包が届きました。
+package | n | Can you open this package carefully? | この小包を注意して開けられますか。
+package | n | We sent two packages to our cousins. | 私たちはいとこに小包を二つ送りました。
+mail | n | The mail comes every morning here. | ここでは毎朝郵便が届きます。
+mail | n | Did you get any mail today? | 今日は郵便が何か届きましたか。
+mail | n | She checked the mail after lunch. | 彼女は昼食後に郵便を確認しました。
+post | n | The post arrived late this morning. | 今朝は郵便が遅れて届きました。
+post | n | Can you see the wooden post outside? | 外の木の柱が見えますか。
+post | n | His latest posts are about cooking. | 彼の最近の投稿は料理についてです。
+stamp | n | Put a stamp on this envelope. | この封筒に切手を貼ってください。
+stamp | n | Do you have another stamp for me? | もう一枚切手を持っていますか。
+stamp | n | She collected stamps from many countries. | 彼女は多くの国の切手を集めました。
+envelope | n | Please put the letter in this envelope. | 手紙をこの封筒に入れてください。
+envelope | n | Is that envelope for your grandmother? | その封筒はおばあさん宛てですか。
+envelope | n | He bought some envelopes at the store. | 彼は店で封筒を何枚か買いました。
+umbrella | n | Take an umbrella because it may rain. | 雨が降るかもしれないので傘を持っていってください。
+umbrella | n | Did you leave your umbrella at school? | 傘を学校に忘れましたか。
+umbrella | n | The children opened their umbrellas outside. | 子供たちは外で傘を開きました。
+purse | n | My mother keeps her keys in her purse. | 母は財布に鍵を入れています。
+purse | n | Did you find your purse yesterday? | 昨日財布を見つけましたか。
+purse | n | She bought two small purses for gifts. | 彼女は贈り物用に小さな財布を二つ買いました。
+towel | n | Please bring a clean towel to the bathroom. | きれいなタオルを浴室に持ってきてください。
+towel | n | Is this towel dry enough now? | このタオルはもう十分乾いていますか。
+towel | n | We put fresh towels by the pool. | 私たちはプールのそばに新しいタオルを置きました。
+soap | n | Wash your hands with soap before dinner. | 夕食前に石けんで手を洗ってください。
+soap | n | Is there any soap by the sink? | 流しのそばに石けんはありますか。
+soap | n | She bought some soap at the shop. | 彼女は店で石けんを買いました。
+brush | n | I need a brush for my hair. | 髪用のブラシが必要です。
+brush | n | Can you find my blue brush? | 私の青いブラシを見つけられますか。
+brush | n | He cleaned the brushes after painting. | 彼は絵を描いた後にブラシを洗いました。
+bath | n | I like a warm bath before bed. | 私は寝る前の温かいお風呂が好きです。
+bath | n | Did the baby enjoy the bath? | 赤ちゃんはお風呂を楽しみましたか。
+bath | n | The children took baths after playing outside. | 子供たちは外で遊んだ後にお風呂に入りました。
+shower | n | I take a shower every morning. | 私は毎朝シャワーを浴びます。
+shower | n | Can you hear the shower running? | シャワーの水が流れる音が聞こえますか。
+shower | n | We had a short shower this afternoon. | 今日の午後は短いにわか雨がありました。
+lamp | n | The lamp beside my bed is bright. | ベッドの横のランプは明るいです。
+lamp | n | Can you turn on that lamp? | あのランプをつけてくれますか。
+lamp | n | She bought two lamps for her room. | 彼女は部屋用にランプを二つ買いました。
+oven | n | The cake is baking in the oven. | ケーキはオーブンで焼けています。
+oven | n | Is the oven hot enough now? | オーブンはもう十分熱いですか。
+oven | n | Dad cleaned the oven after dinner. | 父は夕食後にオーブンを掃除しました。
+stove | n | The soup is cooking on the stove. | スープはコンロで煮えています。
+stove | n | Did you turn off the stove? | コンロの火を消しましたか。
+stove | n | Our kitchen has a new stove. | 私たちの台所には新しいコンロがあります。
+knife | n | Please use a knife to cut the bread. | パンを切るのにナイフを使ってください。
+knife | n | Is this knife clean and dry? | このナイフはきれいで乾いていますか。
+knife | n | The cook washed all the knives. | 料理人はすべてのナイフを洗いました。
+fork | n | I need a fork for this salad. | このサラダを食べるのにフォークが必要です。
+fork | n | Can you bring another fork please? | もう一本フォークを持ってきてくれますか。
+fork | n | The forks are beside the plates. | フォークは皿の横にあります。
+spoon | n | Please eat your soup with a spoon. | スプーンでスープを食べてください。
+spoon | n | Is that your spoon on the table? | テーブルのあのスプーンはあなたのですか。
+spoon | n | She put clean spoons in the drawer. | 彼女はきれいなスプーンを引き出しに入れました。
+bowl | n | This bowl is full of rice. | このボウルはご飯でいっぱいです。
+bowl | n | Can you pass me that bowl? | あのボウルを渡してくれますか。
+bowl | n | We washed the bowls after breakfast. | 私たちは朝食後にボウルを洗いました。
+dish | n | My favorite dish is vegetable soup. | 私の好きな料理は野菜スープです。
+dish | n | Can you put this dish away? | この皿を片づけてくれますか。
+dish | n | The restaurant serves many tasty dishes. | そのレストランはおいしい料理をたくさん出します。
+pot | n | The soup is in the big pot. | スープは大きな鍋に入っています。
+pot | n | Can you wash this pot after dinner? | 夕食後にこの鍋を洗ってくれますか。
+pot | n | She bought two pots for the kitchen. | 彼女は台所用に鍋を二つ買いました。
+pan | n | Heat some oil in the pan. | フライパンで油を少し温めてください。
+pan | n | Is this pan big enough for eggs? | このフライパンは卵を焼くのに十分大きいですか。
+pan | n | He washed the pans after cooking. | 彼は料理の後にフライパンを洗いました。
+roof | n | The roof of our house is red. | 私たちの家の屋根は赤いです。
+roof | n | Can you see the roof from here? | ここから屋根が見えますか。
+roof | n | Snow covered the roofs last winter. | 去年の冬は雪が屋根を覆いました。
+gate | n | Please wait for me by the gate. | 門のそばで私を待ってください。
+gate | n | Is the school gate open now? | 学校の門は今開いていますか。
+gate | n | They painted the garden gates green. | 彼らは庭の門を緑色に塗りました。
+fence | n | A white fence stands around our garden. | 白い柵が庭を囲んでいます。
+fence | n | Can you see the fence over there? | あそこにある柵が見えますか。
+fence | n | Dad fixed the fences last Sunday. | 父は先週の日曜日に柵を直しました。
+yard | n | The children are playing in the yard. | 子供たちは庭で遊んでいます。
+yard | n | Is there a tree in your yard? | あなたの庭には木がありますか。
+yard | n | Our neighbors have small front yards. | 隣人たちの家には小さな前庭があります。
+hall | n | We met our teacher in the hall. | 私たちは廊下で先生に会いました。
+hall | n | Is the music hall open today? | 音楽ホールは今日開いていますか。
+hall | n | The students walked quietly through the halls. | 生徒たちは廊下を静かに歩きました。
+castle | n | The old castle stands on a hill. | 古い城が丘の上に立っています。
+castle | n | Can we visit the castle tomorrow? | 明日その城を訪れることはできますか。
+castle | n | The children drew pictures of castles. | 子供たちは城の絵を描きました。
+temple | n | The old temple stands near the river. | 古い寺院が川の近くに建っています。
+temple | n | Can we see the temple from here? | ここからその寺院が見えますか。
+temple | n | We visited several temples during our trip. | 私たちは旅行中にいくつかの寺院を訪れました。
+tower | n | A tall tower stands near the station. | 駅の近くに高い塔があります。
+tower | n | Can you see the tower from here? | ここからその塔が見えますか。
+tower | n | The town has two old towers. | その町には古い塔が二つあります。
+bridge | n | We walked across the bridge together. | 私たちは一緒に橋を渡りました。
+bridge | n | Is that bridge safe to cross? | あの橋は安全に渡れますか。
+bridge | n | The river has several small bridges. | その川には小さな橋がいくつかあります。
+port | n | The ship arrived at the port early. | 船は早く港に着きました。
+port | n | Is the port far from here? | 港はここから遠いですか。
+port | n | Many boats leave the port every morning. | 毎朝たくさんの船が港を出ます。
+harbor | n | Small boats rest in the harbor. | 小さな船が港に停泊しています。
+harbor | n | Can you see the harbor from here? | ここから港が見えますか。
+harbor | n | The fishermen returned to the harbor. | 漁師たちは港に戻りました。
+coast | n | We drove along the coast yesterday. | 私たちは昨日海岸沿いを車で走りました。
+coast | n | Is the coast far from your town? | 海岸はあなたの町から遠いですか。
+coast | n | Small villages stand along the coast. | 海岸沿いには小さな村があります。
+valley | n | A small river runs through the valley. | 小さな川が谷を流れています。
+valley | n | Can you see the valley below? | 下にある谷が見えますか。
+valley | n | The green valleys looked beautiful in spring. | 春には緑の谷々が美しく見えました。
+cow | n | A brown cow is eating grass. | 茶色い牛が草を食べています。
+cow | n | Can you see that cow near the tree? | 木の近くのあの牛が見えますか。
+cow | n | The farmer has five cows on his farm. | 農家の人は農場で牛を五頭飼っています。
+pig | n | The little pig is sleeping outside. | 小さな豚が外で眠っています。
+pig | n | Does that pig like eating apples? | あの豚はリンゴを食べるのが好きですか。
+pig | n | Three pigs walked across the farm. | 三頭の豚が農場を歩いて横切りました。
+sheep | n | A sheep is standing near the fence. | 一頭の羊が柵の近くに立っています。
+sheep | n | Can you see the sheep on the hill? | 丘の上の羊が見えますか。
+sheep | n | The farmer keeps sheep in that field. | 農家の人はあの畑で羊を飼っています。
+chicken | n | A chicken is walking around the farm. | 一羽のニワトリが農場を歩き回っています。
+chicken | n | Would you like some chicken for lunch? | 昼食に鶏肉はいかがですか。
+chicken | n | The chickens are eating near the barn. | ニワトリたちは納屋の近くで餌を食べています。
