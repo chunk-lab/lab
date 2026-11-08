@@ -1,6 +1,6 @@
 /* 共通の設定：音量・読み上げ。全部のゲームが同じ設定を使う。変わったら知らせる（onChange）。 */
 import { createStore } from './store.js';
-const DEFAULTS = { bgm: 1, sfx: 0.8, voice: true, rate: 1 };
+const DEFAULTS = { bgm: 0.5, sfx: 0.8, voice: true, rate: 1 };
 /* theme：'cute'（かわいい）／'chic'（シック）。アプリごとの標準は series.config.mjs の theme（街＝かわいい、単体＝シック）。選んだものは覚える */
 export function createSettings(defaultTheme) {
   const st = createStore('core');
