@@ -29,6 +29,10 @@ export function say(t){   /* 読み上げは共通の部品。声・速さ・ON/
  let tt=t.replace(/[,]$/,'').trim(); if(/^I[.!?]?$/.test(tt)) tt='eye';
  try{ ENV.core.speech.speak(tt, { rate: 0.9 }); }catch(e){ ttsNotice(); }
 }
+export function sayJa(t){   /* 問題の日本語を読む(日本語の声がない端末では鳴らない) */
+ if(!t||SET().speak==='off') return;
+ try{ ENV.core.speech.speak(String(t).replace(/[〜~]/g,''), { lang:'ja' }); }catch(e){}
+}
 
 
 

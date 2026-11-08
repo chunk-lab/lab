@@ -1,4 +1,5 @@
-import { DB, save, say } from './common.js';
+import { DB, save, say, sayJa } from './common.js';
+import { wqRender } from './wquiz.js';
 import { drRender, drStart, prModeSeg } from './drill.js';
 import { LEX, N, P, PARTICLE, PVBASE, newClause, sentenceJa, sentenceText } from './engine.js';
 import { esc, init } from './play.js';
@@ -41,6 +42,7 @@ export function genExample(p){
 }
 export function prNew(){
  if(PR.mode==='rep'||PR.mode==='quiz'){ drStart(); return; }
+ if(PR.mode==='word'){ wqRender(); return; }
  const it=prPick(); PR.cur=it; PR.done=false; PR.tries=0; PR.msg=null; PR.picked=[];
  if(!it){ renderPrac(); return; }
  if(PR.mode==='pv'){
@@ -61,6 +63,7 @@ export function prNew(){
   PR.blank = PR.ex && re.test(PR.ex)? PR.ex.replace(re,'＿＿＿') : null;
  }
  renderPrac();
+ sayJa(it.ja);   // 問題の日本語を、最初の1回は自動で読む
 }
 export function shuffleP(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 export function prAnswerPV(p){
@@ -79,6 +82,7 @@ export function prTapTile(t){
 }
 export function renderPrac(){
  if(PR.mode==='rep'||PR.mode==='quiz'){ drRender(); return; }
+ if(PR.mode==='word'){ wqRender(); return; }
  const el=document.getElementById('prac'); if(!el) return; const st=pracStore(); const it=PR.cur;
  const pool=prPool(); const rec=st[PR.mode]; const learned=pool.filter(p=>rec[p.w]&&rec[p.w].streak>=2).length; const weak=pool.filter(p=>rec[p.w]&&rec[p.w].miss>rec[p.w].ok).length;
  let h=`<h2>れんしゅう</h2>${prModeSeg()}

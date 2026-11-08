@@ -1570,3 +1570,24 @@
 .ct-eigo .ck[data-r="P"],.ct-eigo .ck[data-rc="P"]{--c:var(--rP)}
 .ct-eigo .ck[data-r="T"],.ct-eigo .ck[data-rc="T"]{--c:var(--rT)}
 .ct-eigo .ck[data-r="M"],.ct-eigo .ck[data-rc="M"]{--c:var(--rM)}
+/* れんしゅう：単語テスト */
+.ct-eigo .wq h3{margin:10px 0 8px}
+.ct-eigo .wq-row{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin:8px 0}
+.ct-eigo .wq-row>span{font-size:12px;font-weight:700;color:var(--muted)}
+.ct-eigo .wq-row .seg{flex-wrap:wrap}
+.ct-eigo .wq-sub{background:var(--panel);color:var(--ink);border:1.5px solid var(--line)}
+.ct-eigo .wq-sub:disabled{opacity:.45}
+.ct-eigo .wq-top{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--muted)}
+.ct-eigo .wq-top small{flex:1;text-align:left}
+.ct-eigo .wq-q{font-size:30px;font-weight:800;margin:18px 0 8px;word-break:break-word}
+.ct-eigo .wq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.ct-eigo .wq-o{padding:14px 6px;min-height:56px;border-radius:14px;border:2px solid var(--line);background:var(--chrome);font-size:15px;font-weight:700;word-break:break-word}
+.ct-eigo .wq-o.en{font-size:17px}
+.ct-eigo .wq-o.ok{border-color:var(--adv);background:color-mix(in srgb,var(--adv) 15%,var(--panel))}
+.ct-eigo .wq-o.ng{border-color:var(--verb);background:color-mix(in srgb,var(--verb) 12%,var(--panel))}
+.ct-eigo .wq-score{font-size:40px;font-weight:800;text-align:center;margin:6px 0 10px}
+.ct-eigo .wq-acts{display:flex;gap:6px;margin:6px 0}
+.ct-eigo .wq-list{display:flex;flex-direction:column;gap:6px;margin:6px 0}
+.ct-eigo .wq-it{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;border:1.5px solid var(--line);background:var(--chrome)}
+.ct-eigo .wq-it input{width:20px;height:20px;flex:none}
+.ct-eigo .wq-it span{flex:1;font-size:13px;color:var(--muted)}
