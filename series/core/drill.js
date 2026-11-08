@@ -4,6 +4,7 @@
    わからない＝英語を見て意味を選ぶ／使えない＝日本語を見て英語を選ぶ。わからないで続けて正解したら、使えない(言える形)へ進む。
    ノートの一覧・登録・書き出しは、この画面の「言葉の一覧」から。 */
 import { KINDS } from './notebook.js';
+import { loadScript } from './host.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const DAY = 864e5;
 const IV = { unk: [1, 2, 4, 7, 14, 30, 60], cant: [2, 4, 8, 16, 30, 60] };   // 正解が続くたびに広げる間隔(日)
@@ -54,7 +55,7 @@ export function createDrill(core) {
     if (!ov) return; const m = ov.querySelector('main'), top = keep ? m.scrollTop : 0;
     ov.querySelector('.dr-back').hidden = view === 'home';
     if (view === 'quiz') { m.scrollTop = 0; return; }
-    m.innerHTML = view === 'home' ? home() : list();
+    m.innerHTML = view === 'home' ? home() : view === 'more' ? more() : list();
     bind(m); m.scrollTop = top;
   }
   function home() {
@@ -65,7 +66,26 @@ export function createDrill(core) {
       ${c.noJa ? `<p class="cs-note">日本語がない言葉が ${c.noJa}個あります(ドリルには出ません)。一覧から日本語を入れてね。</p>` : ''}</section>
       <div class="cs-io"><button class="cs-btn" data-list>言葉の一覧・登録(${nb.count()})</button></div>
       <div class="cs-io"><button class="cs-btn" data-free>✨ 使ってみる(英語を打ち込む)</button></div>
-      ${typeof core.drill.provider === 'function' ? '<div class="cs-io"><button class="cs-btn" data-more>もっとやる(種類とレベルをえらぶ)</button></div>' : ''}`;
+      <div class="cs-io"><button class="cs-btn" data-more>もっとやる(種類とレベルをえらぶ)</button></div>`;
+  }
+  // ---- もっとやる:アプリの単語・熟語リストから、まだノートにない言葉を数個足してドリルへ ----
+  let mk = 'word', mlv = '1';
+  function more() {
+    const b = (on, a, t) => `<button class="cs-btn${on ? ' cs-go' : ''}" ${a}>${t}</button>`;
+    return `<section class="cs-panel"><p class="cs-sub">どれをやる？</p>
+      <div class="cs-io">${b(mk === 'word', 'data-mk="word"', '単語')}${b(mk === 'phrase', 'data-mk="phrase"', '熟語・表現')}</div>
+      <div class="cs-io">${['1', '2', '3'].map(l => b(mlv === l, 'data-ml="' + l + '"', ['', '初級', '中級', '上級'][+l])).join('')}</div>
+      <button class="cs-btn cs-go cs-big" data-morego>5個ふやして、はじめる</button></section>`;
+  }
+  async function moreGo(btn) {
+    btn.disabled = true; btn.textContent = '集めています…';
+    try { await loadScript(core.base + 'g/stream/words.js'); } catch (e) { }
+    const src = mk === 'word' ? (typeof WORDS !== 'undefined' ? WORDS : null) : (typeof IDIOMS !== 'undefined' ? IDIOMS : null), arr = (src && src[mlv]) || [];
+    const have = new Set(nb.list().map(x => x.en.toLowerCase())), pool = arr.filter(r => r[0] && r[2] && !have.has(String(r[0]).toLowerCase()));
+    if (!pool.length) { btn.disabled = false; btn.textContent = '5個ふやして、はじめる'; return core.ui.toast(arr.length ? 'この組はぜんぶ入っています' : '一覧を読めませんでした'); }
+    const pick = pool.sort(() => Math.random() - 0.5).slice(0, 5);
+    nb.addMany(pick.map(r => ({ en: r[0], ja: r[2], kind: mk, src: 'list' })));
+    view = 'home'; start();
   }
   // ---- ドリル本体 ----
   function start() {
@@ -184,7 +204,10 @@ export function createDrill(core) {
     if (q('[data-start]')) q('[data-start]').onclick = start;
     if (q('[data-list]')) q('[data-list]').onclick = () => { view = 'list'; draw(); };
     if (q('[data-free]')) q('[data-free]').onclick = () => core.useit.open({});
-    if (q('[data-more]')) q('[data-more]').onclick = () => core.drill.provider(core, { addToNote: items => nb.addMany(items), refresh: () => draw() });
+    if (q('[data-more]')) q('[data-more]').onclick = () => { view = 'more'; draw(); };
+    m.querySelectorAll('[data-mk]').forEach(b => b.onclick = () => { mk = b.dataset.mk; draw(); });
+    m.querySelectorAll('[data-ml]').forEach(b => b.onclick = () => { mlv = b.dataset.ml; draw(); });
+    if (q('[data-morego]')) q('[data-morego]').onclick = e => moreGo(e.currentTarget);
     m.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { lkind = b.dataset.kind; draw(); });
     if (q('[data-exp]')) q('[data-exp]').onclick = async () => {
       const txt = nb.exportText(), d = new Date(), name = `chunk-note-${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}.json`;
