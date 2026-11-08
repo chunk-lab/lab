@@ -2,6 +2,7 @@ import { ENV, bgmOn, setInterval, setTimeout, sfxOn } from './base.js';
 import { PAUSED } from './play.js';
 /* ================= 音 ================= */
 export let AC=null,SEG,BGG,VOG;
+const BGV=2;   // 共通のBGM音量(はじめは0.5)にかけて小さくなっていた分を、今スラの音楽だけ元の大きさにもどす(2倍)
 export function ac(){
   if(!AC){try{const cs=ENV.core.sound;AC=cs.ctx();   // 共通の音：効果音・ボイスは「効果音」、BGMは「BGM」の音量で鳴る
     SEG=AC.createGain();SEG.gain.value=.9;SEG.connect(cs.sfxBus);BGG=AC.createGain();BGG.gain.value=.55;BGG.connect(cs.bgmBus);VOG=AC.createGain();VOG.gain.value=.5;VOG.connect(cs.sfxBus);loadVoices()}catch(e){AC=null}}
@@ -29,7 +30,7 @@ export function voice(n){if(!AC||!sfxOn()||!VO[n])return;const s=AC.createBuffer
 export const BGM={on:false,bpm:120,t0:0,step:0,next:0,timer:0,style:"game",bar:0};
 export const PROG=[[0,4,7],[7,11,14],[9,12,16],[5,9,12]];
 export const mtof=m=>440*Math.pow(2,(m-69)/12);
-export function bgmStart(bpm,style,at){if(!ac())return;bgmStop();BGM.on=true;BGM.bpm=bpm;BGM.style=style;BGM.t0=at||AC.currentTime+.05;BGM.next=BGM.t0;BGM.step=0;BGG.gain.cancelScheduledValues(AC.currentTime);BGG.gain.setValueAtTime(bgmOn()?(style==="menu"?.35:.5):0,AC.currentTime);BGM.timer=setInterval(bgmTick,25);bgmTick()}
+export function bgmStart(bpm,style,at){if(!ac())return;bgmStop();BGM.on=true;BGM.bpm=bpm;BGM.style=style;BGM.t0=at||AC.currentTime+.05;BGM.next=BGM.t0;BGM.step=0;BGG.gain.cancelScheduledValues(AC.currentTime);BGG.gain.setValueAtTime(bgmOn()?(style==="menu"?.35:.5)*BGV:0,AC.currentTime);BGM.timer=setInterval(bgmTick,25);bgmTick()}
 export function bgmStop(){BGM.on=false;clearInterval(BGM.timer)}
 export function bgmTick(){if(!BGM.on||!AC)return;const sd=60/BGM.bpm/4;while(BGM.next<AC.currentTime+.15){bgmStep(BGM.step,BGM.next);BGM.next+=sd;BGM.step++}}
 export function bgmStep(s,t){
@@ -46,7 +47,7 @@ export function bgmStep(s,t){
   const arp=[0,1,2,1][st%4];tone(mtof(72+ch[arp]+(st>=8&&bar%2?12:0)),.11,"square",.022,t,0,BGG);
   if(st===0)ch.forEach(n=>tone(mtof(60+n),1.6,"sawtooth",.012,t,0,BGG));
 }
-export function bgmDuck(on){if(!AC||!BGM.on||!bgmOn())return;BGG.gain.setTargetAtTime(on?.22:(BGM.style==="menu"?.35:.5),AC.currentTime,.08)}
+export function bgmDuck(on){if(!AC||!BGM.on||!bgmOn())return;BGG.gain.setTargetAtTime((on?.22:(BGM.style==="menu"?.35:.5))*BGV,AC.currentTime,.08)}
 
 /* ---- 読み上げ（スマホ版ではネイティブTTS／音声ファイルに差し替え予定） ---- */
 export const TTS={id:0,pend:null,busy:false,kind:"",wd:0};   // 声・速さ・ON/OFF は共通の読み上げ（core.speech）
