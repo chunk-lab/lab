@@ -4,7 +4,6 @@
    わからない＝英語を見て意味を選ぶ／使えない＝日本語を見て英語を選ぶ。わからないで続けて正解したら、使えない(言える形)へ進む。
    ノートの一覧・登録・書き出しは、この画面の「言葉の一覧」から。 */
 import { KINDS } from './notebook.js';
-import { ECON } from './economy.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const DAY = 864e5;
 const IV = { unk: [1, 2, 4, 7, 14, 30, 60], cant: [2, 4, 8, 16, 30, 60] };   // 正解が続くたびに広げる間隔(日)
@@ -108,19 +107,17 @@ export function createDrill(core) {
       host.querySelectorAll('[data-m]').forEach(b => b.onclick = () => core.useit.mimic(L2[+b.dataset.m].en, b));
     };
     if (L.length) return list(L);
-    const M = core.member, ai = core.ai, price = M.isPaid() && M.aiLeft() > 0 ? `今月あと${M.aiLeft()}回` : `ダイヤ ${ECON.ai.gems}`;
-    host.innerHTML = `<p class="cs-sub">内蔵の文には見つかりませんでした。</p>${ai && ai.ready ? `<button class="cs-btn cs-go" data-ai>✨ AIで例文を作る(${price})</button>` : '<p class="cs-note">設定でAIのキーを入れると、AIで例文を作れます。</p>'}`;
+    const ai = core.ai;   // 自分のAIキーで動く(こちらに費用はかからないので、回数もダイヤも使わない)。1つの言葉につき1回だけ作り、ノートに残す
+    host.innerHTML = `<p class="cs-sub">内蔵の文には見つかりませんでした。</p>${ai && ai.ready ? '<button class="cs-btn cs-go" data-ai>✨ AIで例文を作る</button>' : '<p class="cs-note">設定でAIのキーを入れると、AIで例文を作れます。</p>'}`;
     const b = host.querySelector('[data-ai]'); if (!b) return;
     b.onclick = async () => {
-      const byGems = !(M.isPaid() && M.aiLeft() > 0);
-      if (!M.useAI(byGems ? 'gems' : '')) return core.ui.toast(M.isPaid() ? `今月の回数がなく、ダイヤも足りません(ダイヤ ${ECON.ai.gems})` : `ダイヤが足りません(ダイヤ ${ECON.ai.gems})`);
       b.disabled = true; b.textContent = '作っています…';
       try {
         const r = await ai.examples(x.en, core.level ? core.level.name() : ''), ex = (r.examples || []).filter(t => t && t.en).map(t => ({ en: t.en, ja: t.ja || '', from: 'AI' }));
         if (!ex.length) throw new Error('例文ができませんでした');
         nb.addMany(ex.map(t => ({ en: t.en, ja: t.ja, kind: 'short', src: 'ai' })));   // 次からは、ノートの短文として見つかる
         if (host.isConnected) list(ex);
-      } catch (e) { if (byGems) M.addGems(ECON.ai.gems, 'refund'); if (host.isConnected) { b.disabled = false; b.textContent = `✨ AIで例文を作る(${price})`; } core.ui.toast(String(e && e.message || e).slice(0, 60) + '(使った分は戻しました)'); }
+      } catch (e) { if (host.isConnected) { b.disabled = false; b.textContent = '✨ AIで例文を作る'; } core.ui.toast(String(e && e.message || e).slice(0, 60)); }
     };
   }
   function classify(x) {   // 英語だけ見せて、自分で分ける(答えの日本語は、分けたあとに見せる)
