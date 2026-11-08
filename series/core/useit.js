@@ -10,13 +10,16 @@ export const plainEn = s => String(s || '').replace(/^@\w /, '').split(' | ').ma
 const wait = ms => new Promise(r => setTimeout(r, ms));
 export function createUseit(core) {
   // 文をさがす：本(ストリームの長文・お話・共有の棚)と勉強ノートの短文から
+  let exP = null;   // 事前に作った例文集(core/dict/ex.js)。見出し語が同じものを先に出す
+  const exReady = () => exP || (exP = loadScript(core.base + 'core/dict/ex.js').catch(() => { exP = null; }));
   let sentP = null;   // TOEIC例文(core/dict/sent.js)は、さがすときに1回だけ読み込む
   const sentReady = () => sentP || (sentP = loadScript(core.base + 'core/dict/sent.js').catch(() => { sentP = null; }));
   async function find(en) {
         const w = String(en).trim().toLowerCase(), esc2 = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), ws = w.split(/\s+/), stem = ws[0].replace(/e$/, ''),
       re = ws.length > 1 ? new RegExp('\\b' + esc2(stem) + '(e|es|ed|d|ing|s)?\\s+' + ws.slice(1).map(esc2).join('\\s+') + '\\b', 'i') : new RegExp('\\b' + esc2(w) + '(s|es|ed|d|ing)?\\b', 'i');
     const hit = t => re.test(t);
-    const out = [], seen = new Set(), push = (e, j, from) => { const k = e.toLowerCase(); if (!seen.has(k) && hit(e)) { seen.add(k); out.push({ en: e, ja: j || '', from }); } };
+    const out = [], first = [], seen = new Set(), push = (e, j, from) => { const k = e.toLowerCase(); if (!seen.has(k) && hit(e)) { seen.add(k); out.push({ en: e, ja: j || '', from }); } };
+    try { await exReady(); (window.__csEx || '').split('\n').forEach(l => { const a = l.split('\t'); if (a.length === 4 && a[0].toLowerCase() === w) { const k = a[2].toLowerCase(); if (!seen.has(k)) { seen.add(k); first.push({ en: a[2], ja: a[3], from: '例文集' }); } } }); } catch (e) { }
     if (core.books) {
       await core.books.load();
       if (core.books.need) await Promise.all([1, 2, 3].map(l => Promise.resolve(core.books.need(l)).catch(() => { })));   // 3レベルとも読み込んでから探す
@@ -25,7 +28,7 @@ export function createUseit(core) {
     core.notebook.list({ kind: 'short' }).forEach(x => push(x.en, x.ja, '勉強ノート'));
     try { await sentReady(); (window.__csSent || '').split('\n').forEach(l => { const t = l.indexOf('\t'); if (t > 0) push(l.slice(0, t), l.slice(t + 1), 'TOEIC例文'); }); } catch (e) { }
     out.sort((a, b) => Math.abs(a.en.length - 60) - Math.abs(b.en.length - 60));   // 長すぎず短すぎない文を先に
-    return out.slice(0, 8);
+    return first.concat(out).slice(0, 8);
   }
   // 文をチャンク(意味のまとまり)に分ける：カンマのあと／前置詞・接続詞の前で区切り、1語だけのかたまりは隣にくっつける
   const BRK = /^(to|in|on|at|with|for|from|of|about|by|into|over|under|after|before|because|when|while|if|that|which|who|and|but|or|so|than|as|until|since|during|through|around|near)$/i;
