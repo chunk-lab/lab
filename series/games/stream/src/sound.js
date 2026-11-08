@@ -48,7 +48,7 @@ export function bgmStep(s,t){
   const arp=[0,1,2,1][st%4];tone(mtof(72+ch[arp]+(st>=8&&bar%2?12:0)),.11,"square",.022,t,0,BGG);
   if(st===0)ch.forEach(n=>tone(mtof(60+n),1.6,"sawtooth",.012,t,0,BGG));
 }
-export function bgmDuck(on){if(!AC||!BGM.on||!bgmOn())return;BGG.gain.setTargetAtTime(BGLV(BGM.style)*(on?.44:1),AC.currentTime,.08)}
+export function bgmDuck(on){if(!AC||!BGM.on||!bgmOn())return;BGG.gain.setTargetAtTime(BGLV(BGM.style),AC.currentTime,.08)}
 
 /* ---- 読み上げ（スマホ版ではネイティブTTS／音声ファイルに差し替え予定） ---- */
 export const TTS={id:0,pend:null,busy:false,kind:"",wd:0};   // 声・速さ・ON/OFF は共通の読み上げ（core.speech）
