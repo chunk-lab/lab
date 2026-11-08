@@ -1,9 +1,9 @@
-/* レベル診断・実力テスト・総合の点数。
+/* レベル診断・単語力テスト・総合の点数。
    - 単語は「よく使う順」の約3万語(ストミンの単語 約4,900＋単語バンク 約27,000)を10段に分け、
      正解なら上の段・まちがい/わからないなら下の段から出す（20問）。結果は推定語彙(語数)で出す
    - 当てずっぽう対策：「わからない」ボタン。答えるのに20秒以上かかった問題は「保留」にして結果に入れない(調べるのを防ぐ)
    - まちがいの選択肢は、同じ品詞で近い難しさの語から選ぶ
-   - レベル診断は最初に1回。実力テストは、前のテストのあとミッションを10個クリアすると受けられる(さらに 無料は週1・有料は1日1)
+   - レベル診断は最初に1回。単語力テストは、前のテストのあとミッションを10個クリアすると受けられる(さらに 無料は週1・有料は1日1)
      ミッションや課題には入れない
    - 総合の点数は「どのアプリの何を解放したか」(ストミンの星・レッスン・読み終えた本・レベルの上がり) */
 import { createStore } from './store.js';
@@ -117,19 +117,19 @@ export function createLevel(core) {
       core.ui.sheet(`<h3>推定語彙 約${v.toLocaleString()}語</h3><p class="cs-note">${vocabNote(v)}${cefrNote(v)}。アプリのレベルは「${LV_NAME[lv]}」から始まります(選べるのは ${L.allowed.map(x => LV_NAME[x]).join('・')})。${hold ? `<br>20秒以上かかった ${hold} 問は、結果に入れていません。` : ''}<br>まちがえた単語は勉強ノートに入りました。</p>`);
     }));
   }
-  // 実力テスト：ミッションを NEED 個クリアするごとに受けられる
+  // 単語力テスト：ミッションを NEED 個クリアするごとに受けられる
   const progress = () => Math.max(0, (core.mission ? core.mission.cleared() : 0) - (L.lastCleared || 0));
   const canTest = () => !!L.lv && progress() >= NEED && core.member.canTest();
   async function test() {
     if (!L.lv) return placement();
-    if (progress() < NEED) return core.ui.sheet(`<h3>実力テスト</h3><p class="cs-note">ミッションをあと ${NEED - progress()} 個クリアすると受けられます。</p>`);
+    if (progress() < NEED) return core.ui.sheet(`<h3>単語力テスト</h3><p class="cs-note">ミッションをあと ${NEED - progress()} 個クリアすると受けられます。</p>`);
     const M = core.member;
-    if (!M.canTest()) return core.ui.sheet(`<h3>実力テスト</h3><p class="cs-note">次に受けられるのは${M.nextTest()}です(${M.isPaid() ? '有料会員は1日1回' : '無料会員は週1回'})。ダイヤ ${core.econ.test.extraGems} でもう1回受けられます(持っている:${M.gems()})。</p><button class="cs-btn" data-buy>ダイヤで受ける</button>`, (ov, close) =>
+    if (!M.canTest()) return core.ui.sheet(`<h3>単語力テスト</h3><p class="cs-note">次に受けられるのは${M.nextTest()}です(${M.isPaid() ? '有料会員は1日1回' : '無料会員は週1回'})。ダイヤ ${core.econ.test.extraGems} でもう1回受けられます(持っている:${M.gems()})。</p><button class="cs-btn" data-buy>ダイヤで受ける</button>`, (ov, close) =>
       ov.querySelector('[data-buy]').onclick = () => { close(); if (M.buyTest()) test(); else core.ui.toast('ダイヤが足りません'); });
-    if (!(await load()) || !list()) return core.ui.toast('このアプリでは、実力テストがまだ使えません');
-    intro('実力テスト', QN + 6, () => {
+    if (!(await load()) || !list()) return core.ui.toast('このアプリでは、単語力テストがまだ使えません');
+    intro('単語力テスト', QN + 6, () => {
       M.useTest();
-      run('実力テスト', Math.max(1, bandOf(L.vocab || 1500)), chunkQs(L.lv, 6), (res, hold) => {
+      run('単語力テスト', Math.max(1, bandOf(L.vocab || 1500)), chunkQs(L.lv, 6), (res, hold) => {
         const v = estimate(res), before = L.vocab || 0, nl = lvOfVocab(v), cr = res.filter(x => x.kind === 'chunk'), cacc = cr.length ? cr.filter(x => x.ok).length / cr.length : 1;
         L.tests++; L.vocab = v; L.lastCleared = core.mission ? core.mission.cleared() : 0; L.weak = cacc < .7 ? 'read' : 'word';
         let msg = '';

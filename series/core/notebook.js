@@ -39,6 +39,9 @@ export function createNotebook() {
     list({ kind, mark } = {}) { return list.filter(x => (!kind || x.kind === kind) && (!mark || x.marks.includes(mark))); },
     count(kind) { return kind ? list.filter(x => x.kind === kind).length : list.length; },
     mark(id, m, on) { const x = list.find(y => y.id === id); if (!x) return; const has = x.marks.includes(m); if (on == null) on = !has; if (on && !has) x.marks.push(m); if (!on && has) x.marks = x.marks.filter(y => y !== m); save(); },
+    // ドリルの記録(復習の状態)。sr = {s:'unk'わからない|'cant'わかるけど使えない|'off'外す, box, due, n, w, ok, last}
+    sr(id, patch) { const x = list.find(y => y.id === id); if (!x) return; x.sr = Object.assign({}, x.sr || {}, patch); save(); return x.sr; },
+    srClear(id) { const x = list.find(y => y.id === id); if (!x) return; delete x.sr; save(); },
     edit(id, patch) { const x = list.find(y => y.id === id); if (!x) return; ['en', 'ja', 'note', 'kind'].forEach(k => { if (patch[k] != null) x[k] = String(patch[k]).trim(); }); save(); },
     remove(id) { list = list.filter(x => x.id !== id); save(); },
     // 書き出し・読み込み(機種変更など。サーバーは使わない)

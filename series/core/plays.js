@@ -13,7 +13,8 @@ export const TIMES = [{ k: 5, n: '5分' }, { k: 15, n: '15分' }, { k: 30, n: '�
 export const PLAYS = [
   { id: 'stream.word', n: '単語練習(ストミン)', want: 'word', mood: 'both', time: [5, 15], place: 'school', go: { game: 'stream' } },
   { id: 'note.practice', n: 'まちがえた言葉のやり直し', want: 'word', mood: 'study', time: [5, 15, 30], place: 'home', go: { to: 'note' } },
-  { id: 'test', n: '実力テスト', want: 'word', mood: 'study', time: [5, 15], place: 'school', go: { to: 'test' } },
+  { id: 'test', n: '単語力テスト', want: 'word', mood: 'study', time: [5, 15], place: 'school', go: { to: 'test' } },
+  { id: 'role.test', n: '役割さがし(主役・どうしてる？をえらぶ)', want: 'make', mood: 'study', time: [5, 15], place: 'school', go: { to: 'role' } },
   { id: 'eigo.prac', n: '熟語・句動詞のれんしゅう(英ラボ)', want: 'word', mood: 'study', time: [15, 30], place: 'school', go: { game: 'eigonou' } },
   { id: 'lib.weekly', n: '課題図書を読む', want: 'read', mood: 'study', time: [15, 30], place: 'library', go: { game: 'library', opts: { tab: 'weekly' } } },
   { id: 'stream.read', n: '長文をストミンで読む', want: 'read', mood: 'both', time: [5, 15], place: 'library', go: { game: 'library', opts: { tab: 'level' } } },

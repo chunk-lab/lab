@@ -8,11 +8,12 @@ export function createToday(core) {
   const st = createStore('core');
   const pref = () => Object.assign({ want: 'read', time: 15, mood: 'any' }, st.get('todayPref') || {});
   let hasGame = () => true;
-  const usable = p => p.go.to === '3d' ? !!core.to3D : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level && hasGame('stream') : !!core.openGame && hasGame(p.go.game);
+  const usable = p => p.go.to === '3d' ? !!core.to3D : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level && hasGame('stream') : p.go.to === 'role' ? !!core.roletest && !!core.books : !!core.openGame && hasGame(p.go.game);
   function go(p) {
     if (!p) return;
     if (p.go.to === '3d') core.to3D();
     else if (p.go.to === 'test') core.level.test();
+    else if (p.go.to === 'role') core.roletest.open();
     else if (p.go.to === 'note') core.study.open({ play: core.openGame, has: hasGame, tab: 'note', kind: p.go.kind || 'word', mark: p.go.kind ? '' : 'miss' });
     else core.openGame(p.go.game, p.go.opts || {});
   }

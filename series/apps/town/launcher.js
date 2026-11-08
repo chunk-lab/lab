@@ -13,8 +13,9 @@ const SECS = [
       { t: 'よーいどん', i: '🏁', kind: 'game', game: 'chunkchunk', opts: { face: 'arcade', play: 'manual-one' } },
       { t: 'チャレンジ', i: '⏱', kind: 'play', id: 'cc.game' }] },
     { h: '確かめる・読む', items: [
-      { t: '実力テスト', i: '📝', kind: 'play', id: 'test' },
-      { t: 'リーディング', i: '📖', kind: 'play', id: 'cc.read' }] },
+      { t: '単語力テスト', i: '📝', kind: 'play', id: 'test' },
+      { t: 'リーディング', i: '📖', kind: 'play', id: 'cc.read' },
+      { t: '役割さがし', i: '🔎', kind: 'play', id: 'role.test' }] },
   ] },
   { k: 'eigo', icon: '📚', title: '図書館', sub: '英ラボ・課題図書 ― 作る・読む', color: '#0f9ea0', warp: 'library', groups: [
     { h: '英文組み立てラボ', items: [

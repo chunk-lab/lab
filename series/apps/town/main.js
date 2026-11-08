@@ -52,7 +52,7 @@ function enter(k) {
   const p = PLACES[k];
   if (p.profile) { openStudy(); return; }
   if (p.shop) { shop(); return; }
-  const plays = PLAYS.filter(x => x.place === k && (x.go.to === 'test' || x.go.to === 'note' || (x.go.game && GAMES[x.go.game])));
+  const plays = PLAYS.filter(x => x.place === k && (x.go.to === 'test' || x.go.to === 'role' || x.go.to === 'note' || (x.go.game && GAMES[x.go.game])));
   const groups = WANTS.map(w => [w, plays.filter(x => x.want === w.k)]).filter(g => g[1].length);
   const items = [...plays.map(x => ({ t: x.n, play: x })), ...p.extra.filter(x => GAMES[x.game])];
   core.ui.sheet(`<header class="tw-head"><img src="img/${p.img}.webp" alt=""><div><h3>${esc(p.n)}</h3><p>${esc(p.sub)}</p></div></header>` +

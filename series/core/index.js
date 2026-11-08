@@ -18,6 +18,8 @@ import { createEigoInbox } from './eigo.js';
 import { createRecord } from './record.js';
 import { createDayLog } from './daylog.js';
 import { createStudy } from './study.js';
+import { createDrill } from './drill.js';
+import { createRoleTest } from './roletest.js';
 import { importOld } from './import.js';
 import { createMember } from './member.js';
 import { createCloud } from './cloud.js';
@@ -54,6 +56,8 @@ export function createCore(config) {
   core.learn = createLearn(core.events);   // 単語ごとの学習の記録(ストミン・英語の釣り堀など共通)
   core.ui = createUI(core);
   core.study = createStudy(core);     // 勉強部屋（自宅・アバターから開く）
+  core.roletest = createRoleTest(core);   // 役割さがし(主語・動詞などをタップで選ぶテスト)
+  core.drill = createDrill(core);     // 勉強ノート（ドリルだけの画面。覚えた言葉を日をあけて何度も出す）
   core.econ = ECON;                   // お金と会員の数字（economy.js）
   core.ai = createAI();               // 自分のAIキー（3Dの町と同じキー）
   core.level = createLevel(core);     // レベル判定・実力テスト・総合の点数

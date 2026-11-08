@@ -2,28 +2,27 @@
    タブ：今日（目標・続けた日数・つづきから）／記録（7日分・したいこと別）／勉強ノート／プロフィール
    開くとき open({ play(gameId, opts) }) でゲームを開く手段を渡す（単体版で使えない遊びのボタンは出さない） */
 import { WANTS, playOf } from './plays.js';
-import { KINDS, MARKS } from './notebook.js';
 import { createStore } from './store.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const SRC = { stream: 'ストミン', chunkchunk: '今スラ！', eigonou: '英ラボ', cards: 'カード', town3d: '3Dの町', note: '手打ち' };
 export function createStudy(core) {
-  let ov = null, tab = 'today', kind = 'word', mark = '', opt = {}, nsec = 'words';
+  let ov = null, tab = 'today', opt = {};
   const tst = createStore('core');   // 3Dの町が置いていく「町のひみつ」(占い・調べる・住人から聞いたこと・たからもの)
   const rec = core.record, nb = core.notebook;
   const canPlay = g => typeof opt.play === 'function' && (!opt.has || opt.has(g));
   const close = () => { if (!ov) return; ov.remove(); ov = null; offs.forEach(f => f()); offs = []; };
   let offs = [];
   function open(o = {}) {
+    if (o.tab === 'note' && o.sec !== 'secret' && core.drill) return core.drill.open(o);   // 勉強ノートは、ドリルだけの別画面
     opt = o; if (ov) close();
-    if (o.tab) tab = o.tab; if (o.sec) nsec = o.sec; if (o.kind) kind = o.kind; if (o.mark != null) mark = o.mark;
+    if (o.tab) tab = o.tab === 'note' ? 'log' : o.tab;
     ov = document.createElement('div'); ov.className = 'cs-ov cs-study-ov';
     ov.innerHTML = `<div class="cs-study" role="dialog" aria-label="勉強部屋"><header><b>勉強部屋</b><button class="cs-x" aria-label="とじる">✕</button></header>
-      <nav class="cs-tabs">${[['today', '今日'], ['log', '記録'], ['note', '勉強ノート'], ['me', 'プロフィール']].map(([k, n]) => `<button data-t="${k}">${n}</button>`).join('')}</nav><main></main></div>`;
+      <nav class="cs-tabs">${[['today', '今日'], ['log', '記録'], ['me', 'プロフィール']].map(([k, n]) => `<button data-t="${k}">${n}</button>`).join('')}</nav><main></main></div>`;
     core.ui.root.appendChild(ov); core.ui.scrollHint && core.ui.scrollHint(ov.querySelector('main'));
     ov.querySelector('.cs-x').onclick = close;
     ov.addEventListener('click', e => { if (e.target === ov) close(); });
     ov.querySelectorAll('.cs-tabs button').forEach(b => b.onclick = () => { tab = b.dataset.t; draw(); });
-    offs.push(nb.onChange(() => tab === 'note' && draw(true)), rec.onChange(() => tab !== 'note' && draw()), core.member.onChange(() => tab !== 'note' && draw()), core.level.onChange(() => tab === 'today' && draw()));
+    offs.push(rec.onChange(() => draw()), core.member.onChange(() => draw()), core.level.onChange(() => tab === 'today' && draw()));
     draw();
   }
   const go = (g, o) => { close(); opt.play(g, o); };
@@ -31,7 +30,7 @@ export function createStudy(core) {
     if (!ov) return;
     ov.querySelectorAll('.cs-tabs button').forEach(b => b.classList.toggle('on', b.dataset.t === tab));
     const m = ov.querySelector('main'), top = keep ? m.scrollTop : 0;
-    m.innerHTML = tab === 'today' ? today() : tab === 'log' ? log() : tab === 'note' ? note() : me();
+    m.innerHTML = tab === 'today' ? today() : tab === 'log' ? log() : me();
     bind(m); m.scrollTop = top;
   }
   function today() {
@@ -43,6 +42,7 @@ export function createStudy(core) {
         <p class="cs-sub">続けた日数 <b>${rec.streak()}</b>日 ・ コイン <b>${core.wallet.get()}</b></p></section>
       ${(() => { const m = core.mission.current(); return m && m.date === core.member.keys.dayKey() ? `<section class="cs-panel"><h4>${m.done ? 'クリアしたミッション' : 'いまのミッション'}</h4><div class="cs-mis"><b>${esc(m.title)}</b><small>${m.done ? 'クリア!' : esc(m.how)}</small></div></section>` : ''; })()}
       <button class="cs-btn cs-go cs-big" data-today>今日なにする?</button>
+      <button class="cs-btn cs-big" data-drill>📒 勉強ノート(ドリル)</button>
       ${lvCard()}
       ${last && canPlay(last.game) ? `<button class="cs-btn cs-resume" data-resume>つづきから:${esc(last.label || (playOf(last.play) || {}).n || '')}</button>` : ''}
       <section class="cs-panel"><h4>今日やったこと</h4>${plays ? `<ul class="cs-stat">${plays}</ul>` : '<p class="cs-sub">まだありません。終わった遊びがここに入ります。</p>'}</section>`;
@@ -53,7 +53,7 @@ export function createStudy(core) {
     return `<section class="cs-panel"><div class="cs-goal"><span>${L.lv ? 'レベル ' + L.name() : 'レベル まだ'} ・ ${sc.rank}</span><b>${sc.total}点</b></div>
       <div class="cs-bar"><i style="width:${pct}%"></i></div><p class="cs-sub">${nx ? `${nx.name}まで あと${nx.need}点` : '最高ランク'} ・ ${sc.parts.map(p => `${p.n} ${p.v}`).join(' ・ ')}</p>
       ${L.lv ? `<p class="cs-sub">推定語彙 約${(L.vocab() || 0).toLocaleString()}語</p>` : ''}
-      <div class="cs-adm-row">${!L.lv ? '<button class="cs-btn cs-go" data-place>レベル診断(約20問)</button>' : L.testLeft() > 0 ? `<span class="cs-sub">実力テストまで ミッションあと${L.testLeft()}個</span>` : '<button class="cs-btn cs-go" data-test>実力テストを受ける</button>'}</div></section>`;
+      <div class="cs-adm-row">${!L.lv ? '<button class="cs-btn cs-go" data-place>レベル診断(約20問)</button>' : L.testLeft() > 0 ? `<span class="cs-sub">単語力テストまで ミッションあと${L.testLeft()}個</span>` : '<button class="cs-btn cs-go" data-test>単語力テストを受ける</button>'}</div></section>`;
   }
   function log() {
     const ds = rec.days(7), max = Math.max(10, ...ds.map(d => rec.sumMin(d)));
@@ -62,7 +62,8 @@ export function createStudy(core) {
     const words = ds.reduce((a, d) => a + (d.words || 0), 0);
     return `<section class="cs-panel"><h4>この7日間(分)</h4><div class="cs-week">${cols}</div>
         <div class="cs-key">${WANTS.map(w => `<span><i class="w-${w.k}"></i>${w.n} ${Math.round(wk[w.k])}分</span>`).join('')}</div></section>
-      <section class="cs-panel"><ul class="cs-stat"><li><span>読んだ語数(7日)</span><b>${words}語</b></li><li><span>勉強ノートの言葉</span><b>${nb.count()}個</b></li><li><span>まちがえた言葉</span><b>${nb.list({ mark: 'miss' }).length}個</b></li></ul></section>`;
+      <section class="cs-panel"><ul class="cs-stat"><li><span>読んだ語数(7日)</span><b>${words}語</b></li><li><span>勉強ノートの言葉</span><b>${nb.count()}個</b></li><li><span>まちがえた言葉</span><b>${nb.list({ mark: 'miss' }).length}個</b></li></ul></section>
+      <section class="cs-panel"><h4>🔮 町のひみつ</h4></section>${secret()}`;
   }
   function secret() {   // 町のひみつ:占い・調べる・住人から聞いたこと(3Dの町が記録したもの)
     const d = tst.get('townInfo'), L = d && d.info ? d.info.slice().reverse() : [], cats = [...new Set(L.map(x => x.cat))], T = d && d.tre;
@@ -70,22 +71,6 @@ export function createStudy(core) {
     return (T && T.length ? `<section class="cs-panel"><h4>たからもの ${T.filter(x => x.g).length} / ${T.length}</h4><p>${T.map(x => x.g ? esc(x.i) : '❔').join(' ')}</p></section>` : '')
       + (L.length ? cats.map(c => `<section class="cs-panel"><h4>${esc(c)}</h4>${L.filter(x => x.cat === c).map(x => `<p class="cs-sub" style="margin:4px 0">${esc(x.text)}</p>`).join('')}</section>`).join('')
         : '<p class="cs-sub">占いの館で聞いたこと、住人のプレゼントの好み、町で調べて見つけたものが、ここに記録されます。</p>');
-  }
-  function note() {
-    const sec = `<nav class="cs-chips cs-sec"><button data-sec="words" class="${nsec === 'words' ? 'on' : ''}">言葉 ${nb.count()}</button><button data-sec="secret" class="${nsec === 'secret' ? 'on' : ''}">🔮 町のひみつ</button></nav>`;
-    if (nsec === 'secret') return sec + secret();
-    const items = nb.list({ kind, mark }), withJa = items.filter(x => x.ja);
-    const practice = (kind === 'word' || kind === 'phrase') && canPlay('stream') && withJa.length >= 4;
-    return sec + `<nav class="cs-chips">${KINDS.map(k => `<button data-kind="${k.k}" class="${k.k === kind ? 'on' : ''}">${k.n} ${nb.count(k.k)}</button>`).join('')}</nav>
-      <nav class="cs-chips cs-marks"><button data-mark="" class="${!mark ? 'on' : ''}">ぜんぶ</button>${MARKS.map(x => `<button data-mark="${x.k}" class="${x.k === mark ? 'on' : ''}">${x.n}</button>`).join('')}</nav>
-      ${practice ? `<div class="cs-practice"><b>ストミンで練習</b>${withJa.length > 20 ? `<button class="cs-btn cs-go" data-practice="r">ランダム20個</button>` : ''}${Array.from({ length: Math.min(30, Math.ceil(withJa.length / 20)) }, (_, k) => `<button class="cs-btn${withJa.length <= 20 ? ' cs-go' : ''}" data-practice="${k}">${k * 20 + 1}〜${Math.min(withJa.length, k * 20 + 20)}</button>`).join('')}</div>` : ''}
-      <form class="cs-add" data-add><input name="en" placeholder="英語" autocomplete="off" autocapitalize="off" spellcheck="false" required><input name="ja" placeholder="日本語" autocomplete="off"><button class="cs-btn">登録</button></form>
-      <div class="cs-io"><button class="cs-btn" data-exp>📤 書き出す</button><button class="cs-btn" data-imp>📥 読み込む</button><small>ノートはこの端末の中だけに保存。機種変更のときは書き出したファイルを新しい端末で読み込んでね</small></div>
-      <div class="cs-io"><button class="cs-btn cs-go" data-free>✨ 使ってみる(英語を打ち込む)</button></div>
-      ${items.length ? `<div class="cs-io"><button class="cs-btn" data-egall>🧠 この一覧(${Math.min(items.length, 50)}件)をまとめて英ラボへ</button></div>` : ''}
-      ${items.length ? `<ul class="cs-nb">${items.slice(0, 300).map(x => `<li data-id="${x.id}"><div class="cs-nb-t"><b>${esc(x.en)}</b><span>${esc(x.ja)}</span><small>${esc(SRC[x.src] || x.src)}</small></div>
-          <div class="cs-nb-a"><button data-say aria-label="読み上げ">🔊</button><button data-eg class="cs-use" aria-label="英ラボへ送る">🧠英ラボへ</button><button data-use class="cs-use">使ってみる</button>${MARKS.map(k => `<button data-m="${k.k}" class="${x.marks.includes(k.k) ? 'on' : ''}">${k.n}</button>`).join('')}<button data-del class="cs-del" aria-label="消す">🗑</button></div></li>`).join('')}</ul>`
-        : '<p class="cs-sub">まだありません。ゲームでまちがえた言葉や、各アプリで登録した言葉がここに集まります。上の欄から手打ちでも登録できます。</p>'}`;
   }
   function me() {
     const p = core.profile;
@@ -99,56 +84,13 @@ export function createStudy(core) {
     const q = s => m.querySelector(s);
     if (q('[data-goal]')) q('[data-goal]').onchange = e => rec.setGoal(e.target.value);
     if (q('[data-today]')) q('[data-today]').onclick = () => { close(); core.today.open({ has: opt.has }); };
+    if (q('[data-drill]')) q('[data-drill]').onclick = () => { close(); core.drill.open({}); };
     if (q('[data-test]')) q('[data-test]').onclick = () => core.level.test();
     if (q('[data-place]')) q('[data-place]').onclick = () => core.level.placement();
     if (q('[data-resume]')) q('[data-resume]').onclick = () => { const l = rec.last(); go(l.game, l.opts); };
     if (q('[data-name]')) q('[data-name]').onchange = e => core.profile.setName(e.target.value);
     if (q('[data-settings]')) q('[data-settings]').onclick = () => core.ui.settings();
     if (q('[data-cm]')) q('[data-cm]').onclick = () => { const g = core.member.earn('cm'); core.ui.toast(g ? `コイン +${g}(CMはアプリにしたときに本物を入れます)` : '今日はもう見られません'); draw(); };
-    m.querySelectorAll('[data-sec]').forEach(b => b.onclick = () => { nsec = b.dataset.sec; draw(); });
-    m.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { kind = b.dataset.kind; draw(); });
-    m.querySelectorAll('[data-mark]').forEach(b => b.onclick = () => { mark = b.dataset.mark; draw(); });
-    m.querySelectorAll('[data-practice]').forEach(b => b.onclick = () => {
-      const all = nb.list({ kind, mark }).filter(x => x.ja), p = b.dataset.practice;
-      const pick = p === 'r' ? all.slice().sort(() => Math.random() - 0.5).slice(0, 20) : all.slice(+p * 20, +p * 20 + 20);
-      go('stream', { words: pick.map(x => [x.en, x.ja]), title: '勉強ノート:' + (KINDS.find(k => k.k === kind).n) + (mark ? '(' + MARKS.find(k => k.k === mark).n + ')' : '') + (p === 'r' ? ' ランダム' : ` ${+p * 20 + 1}〜`) });
-    });
-    if (q('[data-exp]')) q('[data-exp]').onclick = async () => {
-      const txt = nb.exportText(), d = new Date(), name = `chunk-note-${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}.json`;
-      try { const f = new File([txt], name, { type: 'application/json' }); if (navigator.canShare && navigator.canShare({ files: [f] })) { await navigator.share({ files: [f], title: '勉強ノート' }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
-      try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], { type: 'application/json' })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000); core.ui.toast('書き出しました'); }
-      catch (e) { try { await navigator.clipboard.writeText(txt); core.ui.toast('コピーしました(メモなどに貼って保存してね)'); } catch (e2) { core.ui.toast('書き出せませんでした'); } }
-    };
-    if (q('[data-imp]')) q('[data-imp]').onclick = () => {
-      const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json,text/plain';
-      inp.onchange = async () => { const f = inp.files && inp.files[0]; if (!f) return; const n = nb.importText(await f.text()); core.ui.toast(n < 0 ? 'ノートのファイルではないみたい' : `${n}個 ふえました`); };
-      inp.click();
-    };
-    if (q('[data-add]')) q('[data-add]').onsubmit = e => {
-      e.preventDefault(); const f = e.target, en = f.en.value.trim(), ja = f.ja.value.trim();
-      if (!/[a-zA-Z]/.test(en)) { core.ui.toast('英語を入れてください'); return; }
-      const it = nb.add({ en, ja, kind: kind === 'quote' ? 'quote' : undefined, src: 'note', marks: mark ? [mark] : [] });
-      if (it && it.kind !== kind) { kind = it.kind; draw(); }
-      core.ui.toast('登録しました');
-    };
-    const toEigo = (list, play) => {
-      try {
-        if (!core.openGame) throw new Error('この画面では英ラボを開けません');
-        core.eigo.send(list.map(x => ({ en: x.en, ja: x.ja || '', kind: x.kind === 'short' || x.kind === 'quote' ? 'sentence' : '', play: !!play })));
-        core.ui.toast('🧠 英ラボへ送りました。開きます…');
-        setTimeout(() => { try { core.study.close(); setTimeout(() => core.openGame('eigonou'), 120); } catch (e) { console.error(e); core.ui.toast('英ラボを開けませんでした'); } }, 250);
-      } catch (e) { console.error(e); core.ui.toast('送れませんでした:' + String(e && e.message || e).slice(0, 60)); }
-    };
-    const fr = m.querySelector('[data-free]'); if (fr) fr.onclick = () => core.useit.open({});
-    const egAll = m.querySelector('[data-egall]'); if (egAll) egAll.onclick = () => toEigo(nb.list({ kind, mark }).slice(0, 50), false);
-    m.querySelectorAll('.cs-nb li').forEach(li => {
-      const id = li.dataset.id, x = nb.list().find(y => y.id === id);
-      li.querySelector('[data-say]').onclick = () => core.speech.speak(x.en);
-      li.querySelector('[data-use]').onclick = () => core.useit.open(x);
-      li.querySelector('[data-eg]').onclick = () => toEigo([x], true);
-      li.querySelectorAll('[data-m]').forEach(b => b.onclick = () => nb.mark(id, b.dataset.m));
-      li.querySelector('[data-del]').onclick = () => nb.remove(id);
-    });
   }
   return { open, close, get isOpen() { return !!ov; } };
 }

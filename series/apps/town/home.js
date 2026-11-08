@@ -6,7 +6,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
 export function createHome(core, { st, go3D, openStudy, has, openEpisode, episodeLabel }) {
   let el = null;
-  const usable = p => p.go.to === '3d' ? true : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level : !!core.openGame && has(p.go.game);
+  const usable = p => p.go.to === '3d' ? true : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level : p.go.to === 'role' ? !!core.roletest && !!core.books : !!core.openGame && has(p.go.game);
   const cont = () => st.get('cont') || null;
   const remember = (c) => st.set('cont', Object.assign({ at: Date.now() }, c));
   const start = p => { remember({ kind: 'play', id: p.id, label: p.n }); if (p.go.to === '3d') go3D(); else core.today.go(p); };
