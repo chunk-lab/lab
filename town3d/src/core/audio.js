@@ -82,6 +82,18 @@ export function createAudio() {
     }
     if (rainN) { rainN.g.gain.value = 0.16 * v * vol.sfx; if (v <= 0.01) { rainN.src.stop(); rainN = null; } }
   }
+  // 街歩きの曲(圧縮して音量の波をそろえた mp3)。AudioContext の中で鳴らすので、suspend/resume でいっしょに止まる
+  const BGM_URL = (() => { try { const sc = document.currentScript && document.currentScript.src; return sc ? new URL('bgm/town.mp3', sc).href : 'bgm/town.mp3'; } catch (e) { return 'bgm/town.mp3'; } })();
+  let bgmBuf = null, bgmSrc = null, bgmG = null, bgmWant = false, bgmLoading = false;
+  function bgm(on) {
+    bgmWant = !!on; const a = ctx(); if (!a) return;
+    if (!on) { if (bgmSrc) { try { bgmSrc.stop(); } catch (e) { } bgmSrc = null; } return; }
+    if (bgmSrc) return;
+    const go = () => { if (!bgmWant || bgmSrc || !bgmBuf) return; const src = a.createBufferSource(); src.buffer = bgmBuf; src.loop = true; bgmG = a.createGain(); bgmG.gain.value = 0.9 * vol.bgm; src.connect(bgmG).connect(master); src.start(); bgmSrc = src; };
+    if (bgmBuf) return go();
+    if (bgmLoading) return; bgmLoading = true;
+    fetch(BGM_URL).then(r => r.arrayBuffer()).then(b => a.decodeAudioData(b)).then(buf => { bgmBuf = buf; bgmLoading = false; go(); }).catch(() => { bgmLoading = false; });
+  }
   const SFX = {
     tap: () => tone(880, 0.08, { type: 'triangle', gain: 0.15 }),
     blip: () => tone(620 + Math.random() * 120, 0.04, { type: 'square', gain: 0.03 }),
@@ -104,10 +116,12 @@ export function createAudio() {
     pickTune,
     ambience,
     rain,
+    bgm,
+    state: () => ({ bgm: !!bgmSrc, amb: !!amb, rain: !!rainN }),
     get: () => ({ ...vol }),
-    set(v) { Object.assign(vol, v); if (amb) amb.g.gain.value = 0.035 * vol.bgm; },
+    set(v) { Object.assign(vol, v); if (amb) amb.g.gain.value = 0.035 * vol.bgm; if (bgmG) bgmG.gain.value = 0.9 * vol.bgm; },
     suspend() { ac?.suspend(); },
     resume() { if (ac && ac.state === 'suspended') ac.resume(); },
-    dispose() { ambience(false); ac?.close(); ac = null; },
+    dispose() { ambience(false); bgm(false); rain(0); ac?.close(); ac = null; },
   };
 }

@@ -34,6 +34,7 @@ for (const id of apps) {
     fs.copyFileSync(path.join(t3, 'dist', 'town.js'), path.join(out, 'g', 'town3d', 'town.js'));
     fs.copyFileSync(path.join(t3, 'dist', 'three.js'), path.join(out, 'g', 'town3d', 'three.js'));   // 3D描画の部品(めったに変わらないので別ファイル)
     fs.cpSync(path.join(t3, 'dist', 'tarot'), path.join(out, 'g', 'town3d', 'tarot'), { recursive: true });   // タロットの絵
+    fs.cpSync(path.join(t3, 'dist', 'bgm'), path.join(out, 'g', 'town3d', 'bgm'), { recursive: true });   // 街歩きの曲
   }
   for (const g of app.games) for (const f of GAMES[g]) {
     if (Array.isArray(f)) { copy(f[0], path.join(out, f[1])); continue; }

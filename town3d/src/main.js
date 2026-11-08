@@ -793,7 +793,8 @@ export function mount(container, opt = {}) {
   // 勉強を続けたメダル:もらったら持ち物に入れて知らせる(家の壁にかざれる)
   const medalCheck = () => { try { const nw = furn.grantMedals(opt.medals?.()); if (nw.length) opt.onEvent?.('app:event', { name: 'bonus', data: { kind: 'medal', n: nw.length } }); if (nw.length && started) hud.toast(`🏅 ${nw.map(i => i.name).join('・')}をもらった! 家の壁にかざれるよ`); } catch (e) { } };
   { const mi = setInterval(medalCheck, 15000); offs.push(() => clearInterval(mi)); setTimeout(medalCheck, 3000); }
-  offs.push(bus.on('app:close', () => { input.enabled = true; audio.play('close'); hud.setCoins(wallet.get(), gemsNow()); }));
+  offs.push(bus.on('app:open', () => soundSync()));
+  offs.push(bus.on('app:close', () => { setTimeout(soundSync, 0); input.enabled = true; audio.play('close'); hud.setCoins(wallet.get(), gemsNow()); }));
   if (opt.wallet?.onChange) offs.push(opt.wallet.onChange(w => bus.emit('wallet', w)));
   const PAYN = [['fortune', '占いの館'], ['tarot', 'タロット'], ['cafe', 'カフェ'], ['gamebox', 'ゲーム'], ['furniture', '家具'], ['voucher', '商品券'], ['fishing', '釣りのお店'], ['photo', '写真'], ['luna', '占い']];
   offs.push(bus.on('wallet', w => {
@@ -1015,12 +1016,19 @@ export function mount(container, opt = {}) {
     started = false;
     hud.title({ look: settings.look, name: settings.name || (opt.playerName && opt.playerName()) || '', intro }, startAs);
   }
+  // 外の音(水音・ざわめき・曲)は、街を歩いているときだけ。アプリ(家・ショップなど)を開いたら止める
+  let wasWalk = null;
+  function soundSync() {
+    const w = !!started && !appHost.current;
+    if (w === wasWalk) return; wasWalk = w;
+    audio.ambience(w); audio.bgm(w); if (!w) audio.rain(0);
+  }
   // 町へ出かける(最初の画面のボタン・組み込み先からの quickStart の両方)
   function startAs({ look, name }) {
       settings.look = look; settings.name = name; save();
       setLook(look); me.ch.root.position.set(me.x, 0, me.z);
       hud.untag(me.id); hud.tag(me.id, name, true);
-      audio.unlock(); audio.play('open'); audio.ambience(true);
+      audio.unlock(); audio.play('open'); started = true; soundSync();
       if (!netStarted && net) { net.connect({ id: me.id, name, look }); netStarted = true; }
       started = true;
       if (settings.birth && !settings.birthLock) { settings.birthLock = 1; save(); }
@@ -1286,7 +1294,7 @@ export function mount(container, opt = {}) {
     env.camera = camera; env.update(dt, me.ch.root.position);
     seasons.update(dt, camera.position, env.night || 0); seasons.holdAt(me.x, me.z, me.ry);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
-    if (env.weather || evt?.wx || (env.rainLevel || 0) > 0.01) audio.rain(env.rainLevel || 0);
+    if (env.weather || evt?.wx || (env.rainLevel || 0) > 0.01) audio.rain(evt?.wx && !appHost.current ? env.rainLevel || 0 : 0);   // 雨の音は、にわか雨(虹の出るイベント)のときだけ
     if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
     if (evt) { if (evt.wx ? !env.weather : evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
     sparkles.update(dt, me);
@@ -1406,6 +1414,7 @@ export function mount(container, opt = {}) {
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,
     // 組み込み先がゲームを開いている間は止める(描画も音も)
+    audioState: () => audio.state(),
     pause() { held = true; input.clear(); audio.suspend(); },
     resume() { held = false; timer.update(); input.clear(); audio.resume(); hud.setCoins(wallet.get(), gemsNow()); },
     unmount() {
