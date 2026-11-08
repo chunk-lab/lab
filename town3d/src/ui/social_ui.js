@@ -65,7 +65,6 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
         if (Math.random() < p) {
           weather.call(k); setRain(); audio.play('open');
           say({ rain: '…天の神さま、雨をおめぐみください〜! ……ほら、くもってきましたよ。', sun: '…おひさまさん、出てきてくださ〜い! ……ほら、光がさしてきましたよ。', cloud: '…ふわふわの雲さん、おいでください〜! ……ほら、くもってきましたよ。' }[k] + `(次の予報の時間まで${WX_INFO[k].name})`);
-          social.addInfo('天気', `ゆずちゃんの「おねがい」で${WX_INFO[k].name}(${new Date().getHours()}時ごろ〜次の予報まで)`);
         } else if (k === 'rain' && cur === 'sun') {
           weather.call('cloud'); setRain(); audio.play('tap');
           say('あれれ…? くもっただけでした…。ごめんなさい、雨にはなりませんでした〜。(くもりになった)');
@@ -84,11 +83,11 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
     if (u.id === 'bigfish') {
       social.markUsed(key); const rare = FISH.filter(f => f.kind === 'fish' && f.r >= 4), f = pick(rare);
       const tm = { day: '昼', night: '夜', morning: '朝', evening: '夕方', any: 'いつでも' }[f.time] || 'いつでも';
-      const t = `きょうは「${f.name}」が近くまで来てるかもな。${tm}に${f.rain ? '、雨の日に' : ''}ねらってみな。`; social.addInfo('大物', `${f.name}:${tm}${f.rain ? '・雨' : ''}(潮見さん)`); say(t); return;
+      const t = `きょうは「${f.name}」が近くまで来てるかもな。${tm}に${f.rain ? '、雨の日に' : ''}ねらってみな。`; social.setTip('bigfish', `${f.name}:${tm}${f.rain ? '・雨の日' : ''}`); say(t); return;
     }
     if (u.id === 'book') { social.markUsed(key); const p = pick(PASSAGES); addNote({ kind: 'sentence', text: p[0], meaning: p[1], npc: 'しおりさん' }); say(`この一節が好きなんです。「${p[0].slice(0, 60)}…」 ノートに書いておきましたね。`); return; }
     if (u.id === 'lesson') { social.markUsed(key); const p = pick(PHRASES); addNote({ kind: 'phrase', text: p[0], meaning: p[1], npc: 'こはる先生' }); say(`きょうの表現は「${p[0]}」。意味は「${p[1]}」です。ノートに入れておきましたよ。`); return; }
-    if (u.id === 'hint') { social.markUsed(key); const a = finds.hint(areaName); if (a) social.addInfo('かくれもの', `${new Date().getMonth() + 1}/${new Date().getDate()}:${a}のあたり(哲学者)`); say(a ? `…「${a}」のあたりで、なにかが光っていた気がします。探してごらんなさい。` : 'きょうは、もう何も隠れていないようです。'); return; }
+    if (u.id === 'hint') { social.markUsed(key); const a = finds.hint(areaName); say(a ? `…「${a}」のあたりで、なにかが光っていた気がします。探してごらんなさい。` : 'きょうは、もう何も隠れていないようです。'); return; }
   }
 
   // ---- 話しかけたときのメニューに足すもの ----
@@ -96,6 +95,8 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
     const id = r.def.id; if (!PREFS[id]) return [];
     const out = [{ label: '🎁 プレゼントする', fn: () => gift(r) }];
     if ((ai && ai.ready) || memory.of(id).auto.length || memory.of(id).keep.length) out.push({ label: '🗒 覚えていること', fn: () => memoryPanel(r) });
+    out.push({ label: '💝 好みメモ', fn: () => prefPanel(r) });
+    if (id === 'gon') out.push({ label: '🎒 たからもの', fn: () => treasurePanel() });
     for (const u of social.unlocksOf(id)) {
       if (u.kind === 'ability' && u.label && !['secret', 'discount'].includes(u.id)) out.push({ label: u.label, fn: () => ability(r, u) });
       if (u.kind === 'date' && !(r.def.menu || []).some(m => m.act === 'date')) out.push({ label: u.label, fn: () => startDate(r) });
@@ -192,6 +193,18 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
       });
     };
     draw();
+  }
+  // 好みメモ：占いやプレゼントでわかったその人の好みを、本人に話しかけたときに見られる
+  function prefPanel(r) {
+    const id = r.def.id, K = social.knownPrefs(), rows = Object.keys(K).filter(k => k.startsWith(id + ':')).map(k => ({ item: ITEMS[k.slice(id.length + 1)], r: K[k] })).filter(x => x.item);
+    const grp = [['love', '大好物'], ['like', '好き'], ['no', 'にがて'], ['normal', 'ふつう']].map(([k, n]) => { const L = rows.filter(x => x.r === k); return L.length ? `<p style="margin:6px 0"><b>${n}</b>　${L.map(x => esc(x.item.icon + x.item.name)).join('　')}</p>` : ''; }).join('');
+    const p = hud.panel(`<h2>💝 ${esc(r.def.name)}の好み</h2>${grp || '<p class="tw-note">まだ分かっていません。占いの館で聞くか、プレゼントをあげると、ここに書き込まれます。</p>'}<div class="tw-actions"><button class="tw-btn" data-x>とじる</button></div>`);
+    p.addEventListener('click', e => { if (e.target.closest('[data-x]')) hud.closePanel(); });
+  }
+  function treasurePanel() {
+    const have = finds.treasures(), p = hud.panel(`<h2>🎒 町のたからもの ${have.length} / ${TREASURES.length}</h2><p style="line-height:1.9">${TREASURES.map(t => have.includes(t[1]) ? `${esc(t[0])} ${esc(t[1])}` : '❔').join('　')}</p>
+      ${have.length ? `<div style="max-height:30vh;overflow:auto">${TREASURES.filter(t => have.includes(t[1])).map(t => `<p class="tw-note" style="margin:3px 0">${esc(t[0] + ' ' + t[1])}:${esc(t[2])}</p>`).join('')}</div>` : ''}<div class="tw-actions"><button class="tw-btn" data-x>とじる</button></div>`);
+    p.addEventListener('click', e => { if (e.target.closest('[data-x]')) hud.closePanel(); });
   }
   return { onTalk, choices, menuOk, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel };
 }

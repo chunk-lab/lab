@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { createBus, createStorage, createWallet, angleLerp, clamp } from './core/core.js';
 import { weather } from './game/weather.js';
 import { social, PREFS, memory, DATE_FIRST } from './game/social.js';
-import { finds, setAreaName, loadHuntFile, TREASURES } from './game/finds.js';
+import { finds, setAreaName, setSpotValid, loadHuntFile, TREASURES } from './game/finds.js';
 import { createSocialUI } from './ui/social_ui.js';
 import { createAppHost } from './core/apps.js';
 import { createLocalNet, createWsNet } from './core/net.js';
@@ -98,6 +98,7 @@ export function mount(container, opt = {}) {
   const _d = new Date(), _md = (_d.getMonth() + 1) * 100 + _d.getDate();
   const blossom = opt.blossom ?? (_md >= 325 && _md <= 420);   // 桜は春(3/25〜4/20)だけ
   const city = buildCity(scene, { quality: settings.quality, blossom });
+  setSpotValid((x, z) => { const c = collide(x, z, 1.0); return Math.hypot(c[0] - x, c[1] - z) < 0.01; });   // ひろいものは、池・噴水・建物・柵の中や、近づけない所に置かない
   setAreaName((x, z) => city.areaName(x, z)); loadHuntFile();   // 調べる:場所の名前・運営の宝探し(apps/hunt.json)
   const ambient = buildAmbient(scene, city, { quality: settings.quality, blossom });
   let blossomOn = blossom, testDate = new Date();

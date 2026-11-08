@@ -35,17 +35,24 @@ function dailySpots(n = 12) {
   const out = [], used = new Set(), d = dayNum();
   for (let i = 0; out.length < n && i < 60; i++) {
     const id = nodeIds[Math.floor(hash(d * 31 + i * 7 + 1) * nodeIds.length)]; if (used.has(id)) continue; used.add(id);
-    const nd = GRAPH.nodes[id], a = hash(d * 13 + i) * 6.283, r = 1 + hash(d * 17 + i) * 1.8;
+    const nd = GRAPH.nodes[id]; let a = 0, r = 0, ok = false;
+    for (let t = 0; t < 8 && !ok; t++) { a = hash(d * 13 + i + t * 101) * 6.283; r = 1 + hash(d * 17 + i + t * 53) * 1.8; ok = !validFn || validFn(nd.x + Math.cos(a) * r, nd.z + Math.sin(a) * r); }   // 池・噴水・建物の中なら、角度と距離を変えて取り直す
+    if (!ok) { used.delete(id); continue; }
     const kind = ['word', 'word', 'phrase', 'phrase', 'proverb', 'passage'][out.length % 6];
     const pool = { word: WORDS, phrase: PHRASES, proverb: PROVERBS, passage: PASSAGES }[kind], c = pool[Math.floor(hash(d * 7 + i * 3 + 5) * pool.length)];
     out.push({ key: `d:${dayKey()}:${out.length}`, x: nd.x + Math.cos(a) * r, z: nd.z + Math.sin(a) * r, kind, c, node: id });
   }
   return out;
 }
-const fixedSpots = () => FIXED.map(([id, dx, dz], i) => { const nd = GRAPH.nodes[id]; return nd ? { key: 'f:' + i, x: nd.x + dx, z: nd.z + dz, kind: 'treasure', c: TREASURES[i % TREASURES.length], node: id } : null; }).filter(Boolean);
+const fixedSpots = () => FIXED.map(([id, dx, dz], i) => {
+  const nd = GRAPH.nodes[id]; if (!nd) return null; let x = nd.x + dx, z = nd.z + dz;
+  if (validFn && !validFn(x, z)) { let f = false; for (let t = 1; t < 16 && !f; t++) { const a = t * 2.4, r = 0.8 + t * 0.25, X = nd.x + Math.cos(a) * r, Z = nd.z + Math.sin(a) * r; if (validFn(X, Z)) { x = X; z = Z; f = true; } } if (!f) return null; }
+  return { key: 'f:' + i, x, z, kind: 'treasure', c: TREASURES[i % TREASURES.length], node: id };
+}).filter(Boolean);
 
 // ---- 宝探し大会(運営が決める) ----
 //   形: { id, x, z, day:'2026-10-30'(空ならいつでも), title, text, ja, coins }
+let validFn = null; export const setSpotValid = fn => { validFn = fn; };   // 歩いて行ける場所か(池・噴水・建物・柵の中をはずす)。main.js が当たり判定を渡す
 let huntFile = HUNTS.slice(), areaFn = (x, z) => `(${Math.round(x)}, ${Math.round(z)})のあたり`;
 export const setAreaName = fn => { areaFn = fn; };
 export function loadHuntFile(url = 'apps/hunt.json') { try { fetch(url, { cache: 'no-store' }).then(r => r.ok ? r.json() : []).then(j => { const L = Array.isArray(j) ? j : j && Array.isArray(j.items) ? j.items : []; const ids = new Set(huntFile.map(h => h.id)); huntFile = huntFile.concat(L.filter(h => h && !ids.has(h.id))); }).catch(() => { }); } catch (e) { } }   // 置いてあれば足す(なくてもいい)

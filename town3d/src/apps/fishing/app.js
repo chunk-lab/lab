@@ -227,7 +227,7 @@ export const fishingApp = {
             <div class="mwal"><span>🪙 <b data-bind="coins">${ctx.wallet.get().toLocaleString('ja-JP')}</b></span>${ctx.gems ? `<span>💎 <b data-bind="gems">${ctx.gems.get().toLocaleString('ja-JP')}</b></span>` : ''}</div>
           </div>
         </div>
-        <div class="say3"><img class="sp" src="${portrait('suna') || ''}" alt="潮見さん"><div class="say">潮見さん「${esc(pickSay())}」</div></div>
+        <div class="say3"><img class="sp" src="${portrait('suna') || ''}" alt="潮見さん"><div class="say">潮見さん「${esc(pickSay())}」${social.tip('bigfish') ? `<br><small>🎣 きょうの大物:${esc(social.tip('bigfish'))}</small>` : ''}</div></div>
         <div class="mgrid">
           <button class="ib" data-m="en" aria-label="英語の釣り堀"><img src="${ART.b_en}" alt=""></button>
           <button class="ib" data-m="free" aria-label="のんびり釣る"><img src="${ART.b_free}" alt=""></button>

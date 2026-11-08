@@ -2,11 +2,9 @@
    タブ：今日（目標・続けた日数・つづきから）／記録（7日分・したいこと別）／勉強ノート／プロフィール
    開くとき open({ play(gameId, opts) }) でゲームを開く手段を渡す（単体版で使えない遊びのボタンは出さない） */
 import { WANTS, playOf } from './plays.js';
-import { createStore } from './store.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 export function createStudy(core) {
   let ov = null, tab = 'today', opt = {};
-  const tst = createStore('core');   // 3Dの町が置いていく「町のひみつ」(占い・調べる・住人から聞いたこと・たからもの)
   const rec = core.record, nb = core.notebook;
   const canPlay = g => typeof opt.play === 'function' && (!opt.has || opt.has(g));
   const close = () => { if (!ov) return; ov.remove(); ov = null; offs.forEach(f => f()); offs = []; };
@@ -62,15 +60,7 @@ export function createStudy(core) {
     const words = ds.reduce((a, d) => a + (d.words || 0), 0);
     return `<section class="cs-panel"><h4>この7日間(分)</h4><div class="cs-week">${cols}</div>
         <div class="cs-key">${WANTS.map(w => `<span><i class="w-${w.k}"></i>${w.n} ${Math.round(wk[w.k])}分</span>`).join('')}</div></section>
-      <section class="cs-panel"><ul class="cs-stat"><li><span>読んだ語数(7日)</span><b>${words}語</b></li><li><span>勉強ノートの言葉</span><b>${nb.count()}個</b></li><li><span>まちがえた言葉</span><b>${nb.list({ mark: 'miss' }).length}個</b></li></ul></section>
-      <section class="cs-panel"><h4>🔮 町のひみつ</h4></section>${secret()}`;
-  }
-  function secret() {   // 町のひみつ:占い・調べる・住人から聞いたこと(3Dの町が記録したもの)
-    const d = tst.get('townInfo'), L = d && d.info ? d.info.slice().reverse() : [], cats = [...new Set(L.map(x => x.cat))], T = d && d.tre;
-    if (!d) return '<p class="cs-sub">まだ何もありません。3Dの町で、占いの館で聞いたこと・住人のプレゼントの好み・町で調べて見つけたものが、ここに記録されます。</p>';
-    return (T && T.length ? `<section class="cs-panel"><h4>たからもの ${T.filter(x => x.g).length} / ${T.length}</h4><p>${T.map(x => x.g ? esc(x.i) : '❔').join(' ')}</p></section>` : '')
-      + (L.length ? cats.map(c => `<section class="cs-panel"><h4>${esc(c)}</h4>${L.filter(x => x.cat === c).map(x => `<p class="cs-sub" style="margin:4px 0">${esc(x.text)}</p>`).join('')}</section>`).join('')
-        : '<p class="cs-sub">占いの館で聞いたこと、住人のプレゼントの好み、町で調べて見つけたものが、ここに記録されます。</p>');
+      <section class="cs-panel"><ul class="cs-stat"><li><span>読んだ語数(7日)</span><b>${words}語</b></li><li><span>勉強ノートの言葉</span><b>${nb.count()}個</b></li><li><span>まちがえた言葉</span><b>${nb.list({ mark: 'miss' }).length}個</b></li></ul></section>`;
   }
   function me() {
     const p = core.profile;

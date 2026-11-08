@@ -135,6 +135,9 @@ export const social = {
   // 1回きりのもの(お礼など)
   once(key) { const O = get('once', {}); if (O[key]) return false; O[key] = 1; st.set('once', O); return true; },
   seenEpisode(id, lv) { return this.once('ep:' + id + ':' + lv); },
+  // その日だけの情報(釣りの大物など)。聞いたあと、その場所(釣りの画面)で見られるように置いておく
+  setTip(k, text) { const T = get('tip', {}); T[k] = { day: dayKey(), text }; st.set('tip', T); },
+  tip(k) { const x = get('tip', {})[k]; return x && x.day === dayKey() ? x.text : ''; },
   // ---- 好みを知っているか(占い・プレゼントでわかる) ----
   knownPrefs() { return get('kp', {}); },
   learnPref(id, item, r) {
