@@ -79,13 +79,17 @@ export function createDrill(core) {
     if (it.t === 'c') return classify(x);
     quiz(x, it);
   }
-  function classify(x) {
-    const m = sub(`<section class="cs-panel dr-card"><small>この言葉は、どう？</small><h2>${esc(x.en)}</h2><p>${esc(x.ja)}</p><div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button></div>
+  function classify(x) {   // 英語だけ見せて、自分で分ける(答えの日本語は、分けたあとに見せる)
+    const m = sub(`<section class="cs-panel dr-card"><small>この言葉は、どう？</small><h2>${esc(x.en)}</h2><div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button></div>
       <div class="dr-ch"><button data-c="unk">わからない</button><button data-c="cant">意味はわかるけど、自分では使えない</button><button data-c="off">もう知っている・押しまちがい(出さない)</button></div></section>`);
     m.querySelector('[data-say]').onclick = () => core.speech.speak(x.en);
     m.querySelectorAll('[data-c]').forEach(b => b.onclick = () => {
       const c = b.dataset.c; if (c === 'off') { nb.sr(x.id, { s: 'off', at: Date.now() }); core.ui.toast('外しました(一覧から戻せます)'); return step(); }
-      nb.sr(x.id, { s: c, box: 0, n: 0, w: 0, ok: 0, last: 0, due: Date.now() }); Q.unshift({ id: x.id, t: 'q' }); step();
+      nb.sr(x.id, { s: c, box: 0, n: 0, w: 0, ok: 0, last: 0, due: Date.now() + 0.7 * DAY });   // 見せたばかりなので、すぐには出さない(あしたまた出る)
+      const mm = sub(`<section class="cs-panel dr-card"><small>${c === 'unk' ? 'この意味です' : '言えるように、声に出してみよう'}</small><h2>${esc(x.en)}</h2><p style="font-size:20px">${esc(x.ja)}</p>
+        <div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button><button class="cs-btn" data-eg>例文を見る</button></div><button class="cs-btn cs-go cs-big" data-next>つぎへ</button></section>`);
+      core.speech.speak(x.en);
+      mm.querySelector('[data-say]').onclick = () => core.speech.speak(x.en); mm.querySelector('[data-eg]').onclick = () => core.useit.open(x); mm.querySelector('[data-next]').onclick = step;
     });
   }
   function quiz(x, it) {
