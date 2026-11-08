@@ -4,6 +4,7 @@
    わからない＝英語を見て意味を選ぶ／使えない＝日本語を見て英語を選ぶ。わからないで続けて正解したら、使えない(言える形)へ進む。
    ノートの一覧・登録・書き出しは、この画面の「言葉の一覧」から。 */
 import { KINDS } from './notebook.js';
+import { ECON } from './economy.js';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const DAY = 864e5;
 const IV = { unk: [1, 2, 4, 7, 14, 30, 60], cant: [2, 4, 8, 16, 30, 60] };   // 正解が続くたびに広げる間隔(日)
@@ -96,20 +97,30 @@ export function createDrill(core) {
     if (it.t === 'c') return classify(x);
     quiz(x, it);
   }
-  // 例文：入力画面を開かず、その場に出す(内蔵の長文・お話・ノートの短文から探す)。なければ、英ラボなどで作る入口を出す
+  // 例文：入力画面を開かず、その場に出す(内蔵の長文・お話・TOEIC例文・ノートの短文から探す)。なければ、AI(自分のキー)で作る入口を出す
   async function eg(x, host) {
     host.innerHTML = '<p class="cs-sub">例文をさがしています…</p>';
     let L = []; try { L = await core.useit.find(x.en); } catch (e) { }
     if (!host.isConnected) return;
-    host.innerHTML = L.length ? `<ul class="cs-nb" style="text-align:left">${L.slice(0, 4).map((e2, i) => `<li><b>${esc(e2.en)}</b><span>${esc(e2.ja)}</span><small>${esc(e2.from)}</small><div class="cs-nb-a"><button data-s="${i}">🔊</button><button data-m="${i}">聞いてまねる</button></div></li>`).join('')}</ul>`
-      : '<p class="cs-sub">内蔵の文には見つかりませんでした。</p><button class="cs-btn cs-go" data-mk>🧠 英ラボで例文を作って、すぐ遊ぶ</button>';
-    host.querySelectorAll('[data-s]').forEach(b => b.onclick = () => core.speech.speak(L[+b.dataset.s].en));
-    host.querySelectorAll('[data-m]').forEach(b => b.onclick = () => core.useit.mimic(L[+b.dataset.m].en, b));
-    const mk = host.querySelector('[data-mk]'); if (mk) mk.onclick = () => {   // 入力画面は挟まず、そのまま英ラボへ送って開く(開いたら、完成した文を「つくる」に出す)
-      if (!core.openGame) return core.ui.toast('この画面では英ラボを開けません');
-      try { core.eigo.send([{ en: x.en, ja: x.ja || '', kind: '', play: true }]); } catch (e) { return core.ui.toast('送れませんでした'); }
-      core.ui.toast('🧠 英ラボへ送りました。開きます…');
-      setTimeout(() => { close(); setTimeout(() => { try { core.openGame('eigonou'); } catch (e) { core.ui.toast('英ラボを開けませんでした'); } }, 120); }, 250);
+    const list = L2 => {
+      host.innerHTML = `<ul class="cs-nb" style="text-align:left">${L2.slice(0, 4).map((e2, i) => `<li><b>${esc(e2.en)}</b><span>${esc(e2.ja)}</span><small>${esc(e2.from)}</small><div class="cs-nb-a"><button data-s="${i}">🔊</button><button data-m="${i}">聞いてまねる</button></div></li>`).join('')}</ul>`;
+      host.querySelectorAll('[data-s]').forEach(b => b.onclick = () => core.speech.speak(L2[+b.dataset.s].en));
+      host.querySelectorAll('[data-m]').forEach(b => b.onclick = () => core.useit.mimic(L2[+b.dataset.m].en, b));
+    };
+    if (L.length) return list(L);
+    const M = core.member, ai = core.ai, price = M.isPaid() && M.aiLeft() > 0 ? `今月あと${M.aiLeft()}回` : `ダイヤ ${ECON.ai.gems}`;
+    host.innerHTML = `<p class="cs-sub">内蔵の文には見つかりませんでした。</p>${ai && ai.ready ? `<button class="cs-btn cs-go" data-ai>✨ AIで例文を作る(${price})</button>` : '<p class="cs-note">設定でAIのキーを入れると、AIで例文を作れます。</p>'}`;
+    const b = host.querySelector('[data-ai]'); if (!b) return;
+    b.onclick = async () => {
+      const byGems = !(M.isPaid() && M.aiLeft() > 0);
+      if (!M.useAI(byGems ? 'gems' : '')) return core.ui.toast(M.isPaid() ? `今月の回数がなく、ダイヤも足りません(ダイヤ ${ECON.ai.gems})` : `ダイヤが足りません(ダイヤ ${ECON.ai.gems})`);
+      b.disabled = true; b.textContent = '作っています…';
+      try {
+        const r = await ai.examples(x.en, core.level ? core.level.name() : ''), ex = (r.examples || []).filter(t => t && t.en).map(t => ({ en: t.en, ja: t.ja || '', from: 'AI' }));
+        if (!ex.length) throw new Error('例文ができませんでした');
+        nb.addMany(ex.map(t => ({ en: t.en, ja: t.ja, kind: 'short', src: 'ai' })));   // 次からは、ノートの短文として見つかる
+        if (host.isConnected) list(ex);
+      } catch (e) { if (byGems) M.addGems(ECON.ai.gems, 'refund'); if (host.isConnected) { b.disabled = false; b.textContent = `✨ AIで例文を作る(${price})`; } core.ui.toast(String(e && e.message || e).slice(0, 60) + '(使った分は戻しました)'); }
     };
   }
   function classify(x) {   // 英語だけ見せて、自分で分ける(答えの日本語は、分けたあとに見せる)

@@ -76,7 +76,7 @@ function keepScroll(el, put){
 }
 export function renderSets(){
  const mine=DB.sets.map(s=>`<div class="setc"><div class="sethd"><label class="tgl"><input type="checkbox" data-on="${s.id}" ${s.on?'checked':''}><span><b>${esc(s.name)}</b></span></label><span class="cnt">${s.items.length}語${s.sentences&&s.sentences.length?' / '+s.sentences.length+'文':''}</span></div>
-  ${setBody(s)}
+  ${s.auto?`<p class="note">勉強ノートなどから自動で届いた言葉です。${INBOX_MAX}個をこえると、古いものから消えます。<button class="chip" data-keepall="${s.id}">📌 全部マイセットに移す</button></p>`:''}${setBody(s)}
   <div class="rowb"><button class="chip" data-pub="${s.id}">${s.published?'公開中（試作）':'公開する'}</button><button class="chip" data-ren="${s.id}">名前を変える</button><button class="chip" data-exp="${s.id}">📤 ${tx('pack.export')}</button></div></div>`).join('');
  const com=COMMUNITY.map(c=>{ const r=DB.ratings[c.id]||{}; const sc=c.score; return `<div class="setc"><div class="sethd"><b>${esc(c.name)}</b><span class="cnt">by ${esc(c.by)}・${c.uses+(DB.community[c.id]?1:0)}人が使用</span></div><p class="note">${esc(c.desc)}</p>
   <div class="items">${c.items.map(it=>`<span class="it pos-${kindPos(it.kind)}">${ico(it.e,'ic sm')} ${esc(it.en)} <small>${esc(it.ja)}</small></span>`).join('')}</div>
@@ -84,10 +84,12 @@ export function renderSets(){
   <div class="rowb"><button class="chip ${DB.community[c.id]?'on':''}" data-add="${c.id}">${DB.community[c.id]?'✓ ゲームに入っています':'＋ ゲームに追加'}</button></div></div>`; }).join('');
  keepScroll($('#sets'),()=>{ $('#sets').innerHTML=`<h2>ことばセット</h2><p class="note">オンにしたセットの言葉が「つくる」「みつける」の候補にそのまま出てきます。</p>
  <section><h3>公式</h3><div class="setc"><div class="sethd"><b>きほんセット</b><span class="cnt">${OFFICIAL.people.length+OFFICIAL.things.length+OFFICIAL.verbs.length+OFFICIAL.states.length+OFFICIAL.places.length+OFFICIAL.times.length+OFFICIAL.manners.length}語・いつもオン</span></div></div></section>
- <section><h3>自分のセット</h3>${mine}<div class="rowb wrap"><button class="chip" id="newset">＋ 新しいセット</button><button class="chip" id="impPack">📥 ${tx('pack.import')}</button></div><p class="note">パックは「英語の中身」と「言語ごとの意味」に分かれた共有用のファイルです。ほかの人のパックを読みこんだり、自分のセットを渡したりできます。</p><details><summary class="note">翻訳・開発用</summary><button class="chip" id="basePack">📤 ${tx('pack.base')}</button></details></section>
+ <section><h3>自分のセット</h3>${mine}<div class="rowb wrap"><button class="chip" id="newset">＋ 新しいセット</button><button class="chip" id="dedupe">🧹 重複をまとめる</button><button class="chip" id="impPack">📥 ${tx('pack.import')}</button></div><p class="note">パックは「英語の中身」と「言語ごとの意味」に分かれた共有用のファイルです。ほかの人のパックを読みこんだり、自分のセットを渡したりできます。</p><details><summary class="note">翻訳・開発用</summary><button class="chip" id="basePack">📤 ${tx('pack.base')}</button></details></section>
  <section><h3>みんなのセット <span class="note">（試作：サンプル表示）</span></h3><div class="pts">🪙 あなたのポイント <b>${DB.points}</b><span class="note">公開したセットが評価されるとたまります</span></div>${com}</section>
  ${DB.log.length?`<section><h3>作った文</h3>${DB.log.slice(0,12).map(l=>`<button class="logl" data-say="${esc(l.en)}"><span class="en">${esc(l.en)}</span><small>${esc(l.ja)}</small></button>`).join('')}</section>`:''}`; });
  const R=$('#sets');
+ { const dd=$('#dedupe'); if(dd) dd.onclick=()=>{ const n=dedupeSets(); toast(n?`重複を ${n}個 まとめました`:'重複はありませんでした'); renderSets(); }; }
+ R.querySelectorAll('[data-keepall]').forEach(b=>b.onclick=()=>{ const n=keepAll(); toast(n?`${n}個を マイセットに移しました`:'移すものがありません'); renderSets(); });
  R.querySelectorAll('[data-on]').forEach(b=>b.onchange=()=>{ DB.sets.find(s=>s.id===b.dataset.on).on=b.checked; save(); refreshLex(); });
  R.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const [sid,iid]=b.dataset.del.split('|'); const s=DB.sets.find(x=>x.id===sid); s.items=s.items.filter(i=>i.id!==iid); save(); refreshLex(); renderSets(); });
  R.querySelectorAll('[data-try]').forEach(b=>b.onclick=async()=>{ const [sid,iid]=b.dataset.try.split('|'); const st=DB.sets.find(x=>x.id===sid), it=st&&st.items.find(i=>i.id===iid); if(!it) return; b.textContent='…'; try{ const p=await runTry({en:(it.en+(it.tail?' '+it.tail:'')).trim(), ja:it.ja, cls:clsOf(it), kind:it.kind}); if(p){ loadPlay(p); return; } }catch(e){ toast(String(e&&e.message||e)); } b.textContent='▶'; });
@@ -189,7 +191,7 @@ export function renderReg(){
   <label class="note">例文（あれば。AIが文の中の位置から判断します）<input id="rEx" value="${esc(r.ex)}" placeholder="例：I usually hang out with my friends on Sundays." autocomplete="off"></label><div class="aibox" id="rAi"></div></section>`;
   if(kind==='sentence'){ const sp=splitSentence(r.en); r.sentence=sp; h+=`<section><h3>文をまとまりに分けました</h3><p class="note">それぞれの日本語を入れると、ほかの文でも使えるようになります（空のままなら文だけ保存）。</p><div class="spl">${sp.map((c,i)=>`<div class="spr"><span class="ck pos-${kindPos(c.kind)}"><span class="en">${esc(c.kind==='verbs'&&!c.known?c.lemma:c.en)}</span></span><select data-sk="${i}">${KINDS.filter(k=>k[0]!=='sentence').map(([k,l])=>`<option value="${k}" ${c.kind===k?'selected':''}>${l}</option>`).join('')}</select><input data-sj="${i}" placeholder="日本語" value="${esc(c.ja||'')}"></div>`).join('')}</div></section>`; }
   else if(kind){ const x=Object.assign(autoExtra(kind,r.en,r.ja), r.extra); r.x=x; h+=extraForm(kind,x); h+=previewBox(kind,x); }
-  h+=`<section><div class="rowb"><span class="note">保存先</span><select id="rSet">${DB.sets.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div><button class="wide" id="rSave">この言葉を登録してゲームで使う</button><button class="wide" id="rTry" style="margin-top:8px;background:linear-gradient(160deg,#cfe9ff,#b9d9ff)">✨ 使ってみる(AIが文を考えて「つくる」へ)</button></section>`;
+  h+=`<section><div class="rowb"><span class="note">保存先</span><select id="rSet">${DB.sets.filter(s=>!s.auto).map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div><button class="wide" id="rSave">この言葉を登録してゲームで使う</button><button class="wide" id="rTry" style="margin-top:8px;background:linear-gradient(160deg,#cfe9ff,#b9d9ff)">✨ 使ってみる(AIが文を考えて「つくる」へ)</button></section>`;
  }
  keepScroll($('#reg'),()=>{ $('#reg').innerHTML=h; });
  inboxBanner();
@@ -254,6 +256,15 @@ export function previewBox(kind,x){
  tmp.pop(); buildLex(activeSets());
  return `<section><h3>ゲームではこう使われます</h3><div class="pv">${ex.map(s=>`<button class="pvl" data-pv="${esc(s.en)}"><span class="en">${esc(s.en)}</span><small>${esc(s.ja)}</small></button>`).join('')}</div><p class="note">おかしいときは、上の選択を変えてみてください。</p></section>`;
 }
+/* ---- 重複・自動で届いた言葉の置き場 ---- */
+export const fullOf=o=>(String(o.en||'')+(o.tail?' '+o.tail:'')).trim().toLowerCase();
+export const dupOf=it=>{ const k=it.kind+'|'+fullOf(it); for(const s of DB.sets){ if(s.packId) continue; const f=(s.items||[]).find(x=>x.kind+'|'+fullOf(x)===k); if(f) return f; } return null; };   // 同じ種類・同じ英語がもう入っているか
+export const INBOX_MAX=60;
+/* 勉強ノートなどから自動で届いた言葉は、マイセットとは別の「届いたことば」に入れる(INBOX_MAX をこえたら古いものから消える) */
+export function inboxSet(){ let s=DB.sets.find(x=>x.auto); if(!s){ s={id:'inbox',name:'届いたことば',on:true,auto:true,items:[],sentences:[]}; DB.sets.push(s); } return s; }
+export function capInbox(){ const s=DB.sets.find(x=>x.auto); if(!s) return; if(s.items.length>INBOX_MAX) s.items.splice(0,s.items.length-INBOX_MAX); if((s.sentences||[]).length>INBOX_MAX) s.sentences.splice(0,s.sentences.length-INBOX_MAX); }
+export function dedupeSets(){ const seen=new Set(); let n=0; DB.sets.forEach(s=>{ if(s.packId) return; s.items=(s.items||[]).filter(it=>{ const k=it.kind+'|'+fullOf(it); if(seen.has(k)){ n++; return false; } seen.add(k); return true; }); }); if(n){ save(); refreshLex(); } return n; }
+export function keepAll(){ const s=DB.sets.find(x=>x.auto); if(!s) return 0; const my=DB.sets.find(x=>x.on&&!x.packId&&!x.auto)||DB.sets.find(x=>!x.packId&&!x.auto); if(!my) return 0; let n=0; s.items.forEach(it=>{ const k=it.kind+'|'+fullOf(it); if(!my.items.some(x=>x.kind+'|'+fullOf(x)===k)){ my.items.push(it); n++; } }); s.items=[]; save(); refreshLex(); return n; }
 /* 登録した言葉・文は、全アプリ共通の勉強ノートにも入れる */
 function noteWord(en,ja,kind){ try{ ENV.ctx && ENV.ctx.report('word',{ en:String(en).trim(), ja:String(ja||'').trim(), kind }); }catch(e){} }
 export function saveReg(){
@@ -266,7 +277,10 @@ export function saveReg(){
   save(); refreshLex(); toast(`文を保存しました${n?`（言葉を${n}個追加）`:''}`);
  } else {
   if(!r.ja.trim()){ toast('日本語も入れてください'); return; }
-  { const itm=kind==='leads'? buildItem('leads',r.en,r.ja,r.e) : makeItem(kind); itm.cls=r.cls||(/\s/.test(r.en.trim())?'phrase':'word'); set.items.push(itm); } save(); noteWord(r.en,r.ja); refreshLex(); toast(`「${r.en.trim()}」を${set.name}に登録しました`);
+  { const itm=kind==='leads'? buildItem('leads',r.en,r.ja,r.e) : makeItem(kind); itm.cls=r.cls||(/\s/.test(r.en.trim())?'phrase':'word'); const dup=dupOf(itm);
+   if(dup){ toast(`「${r.en.trim()}」はもう入っています`); }
+   else { const to=INBOX.cur?inboxSet():set; to.items.push(itm); capInbox(); save(); refreshLex(); toast(`「${r.en.trim()}」を${to.name}に登録しました`); }
+   noteWord(r.en,r.ja); }
  }
  Object.assign(REG,{en:'',ja:'',e:'',ex:'',kind:null,auto:null,extra:{},sentence:null,x:null,cls:null});
  if(INBOX.cur){ INBOX.done++; inboxNext(); return; }

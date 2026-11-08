@@ -1,5 +1,5 @@
 import { ENV } from './env.js';
-import { DB, REG, autoExtra, judge, makeItem, refreshLex, save, splitSentence, toast } from './common.js';
+import { DB, REG, autoExtra, judge, makeItem, refreshLex, save, splitSentence, toast, inboxSet, capInbox } from './common.js';
 import { LEX } from './engine.js';
 import { PACK_KINDS } from './pack.js';
 import { aiPrompt, mySet, parseAi } from './addword.js';
@@ -22,14 +22,14 @@ function addItem(kind, en, ja, x) {   // REG を一時的に借りて、ふだ�
     if (have(kind, it.en, it.tail)) return true;   // もう入っている(二重には入れない。「入っている」扱いで、文の用意には進む)
     // 元からゲームに入っている言葉は、二重に入れない(「入っている」扱い)
     { const key = (it.en + ' ' + (it.tail || '')).trim().toLowerCase(); if ((LEX[kind] || []).some(x => !x.custom && (x.en + ' ' + (x.tail || '') + ' ' + (x.prep || '')).trim().replace(/\s+/g, ' ').toLowerCase() === key.replace(/\s+/g, ' '))) return true; }
-    mySet().items.push(it); return true;
+    inboxSet().items.push(it); capInbox(); return true;   // 自動で届いた言葉は、「届いたことば」に入れる
   } finally { Object.assign(REG, bak); }
 }
 // 文の登録:文そのものを保存し、AIがあれば「まとまり」に分けて、まとまりごとの種類・意味・活用まで決めて、ぜんぶ自動で言葉として登録する
 //   (人が1つずつ意味を入れる必要はない。ふだんの「ことば登録」と同じ形のことばになる)
 async function addSentence(q) {
-  const set = mySet(); set.sentences = set.sentences || [];
-  if (!set.sentences.some(s => s.en.toLowerCase() === q.en.toLowerCase())) set.sentences.push({ en: q.en, ja: q.ja || '' });
+  const set = inboxSet(); set.sentences = set.sentences || [];
+  if (!set.sentences.some(s => s.en.toLowerCase() === q.en.toLowerCase())) { set.sentences.push({ en: q.en, ja: q.ja || '' }); capInbox(); }
   let n = 0; const ai = ENV.core && ENV.core.ai;
   if (ai && ai.ready) {
     try {

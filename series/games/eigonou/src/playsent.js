@@ -1,6 +1,6 @@
 import { ENV } from './env.js';
 import { LEX, newClause, sentenceJa, sentenceText } from './engine.js';
-import { DB, REG, autoExtra, judge, makeItem, refreshLex, save, toast } from './common.js';
+import { DB, REG, autoExtra, judge, makeItem, refreshLex, save, toast, dupOf } from './common.js';
 import { aiPrompt, mySet, parseAi } from './addword.js';
 import { PACK_KINDS } from './pack.js';
 import { APP, SAMPLE, esc, go, normalize } from './play.js';
@@ -29,6 +29,7 @@ function ensure(kind, full, ja, x, cls) {
     REG.en = full; REG.ja = ja || ''; REG.e = ''; REG.x = Object.assign({}, autoExtra(kind, full, ja || ''), x || {});
     const it = makeItem(kind); if (!it || !it.en) return null;
     it.cls = cls || (/\s/.test(full.trim()) ? 'phrase' : 'word');
+    const dd = dupOf(it); if (dd) { refreshLex(); return dd.id; }   // もう入っている(届いたことばなど)。二重には入れない
     mySet().items.push(it); save(); refreshLex(); return it.id;
   } finally { Object.assign(REG, bak); }
 }
