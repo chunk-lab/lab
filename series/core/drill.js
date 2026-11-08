@@ -102,10 +102,15 @@ export function createDrill(core) {
     let L = []; try { L = await core.useit.find(x.en); } catch (e) { }
     if (!host.isConnected) return;
     host.innerHTML = L.length ? `<ul class="cs-nb" style="text-align:left">${L.slice(0, 4).map((e2, i) => `<li><b>${esc(e2.en)}</b><span>${esc(e2.ja)}</span><small>${esc(e2.from)}</small><div class="cs-nb-a"><button data-s="${i}">🔊</button><button data-m="${i}">聞いてまねる</button></div></li>`).join('')}</ul>`
-      : '<p class="cs-sub">内蔵の文には見つかりませんでした。</p><button class="cs-btn" data-mk>英ラボなどで例文を作る</button>';
+      : '<p class="cs-sub">内蔵の文には見つかりませんでした。</p><button class="cs-btn cs-go" data-mk>🧠 英ラボで例文を作って、すぐ遊ぶ</button>';
     host.querySelectorAll('[data-s]').forEach(b => b.onclick = () => core.speech.speak(L[+b.dataset.s].en));
     host.querySelectorAll('[data-m]').forEach(b => b.onclick = () => core.useit.mimic(L[+b.dataset.m].en, b));
-    const mk = host.querySelector('[data-mk]'); if (mk) mk.onclick = () => core.useit.open(x);
+    const mk = host.querySelector('[data-mk]'); if (mk) mk.onclick = () => {   // 入力画面は挟まず、そのまま英ラボへ送って開く(開いたら、完成した文を「つくる」に出す)
+      if (!core.openGame) return core.ui.toast('この画面では英ラボを開けません');
+      try { core.eigo.send([{ en: x.en, ja: x.ja || '', kind: '', play: true }]); } catch (e) { return core.ui.toast('送れませんでした'); }
+      core.ui.toast('🧠 英ラボへ送りました。開きます…');
+      setTimeout(() => { close(); setTimeout(() => { try { core.openGame('eigonou'); } catch (e) { core.ui.toast('英ラボを開けませんでした'); } }, 120); }, 250);
+    };
   }
   function classify(x) {   // 英語だけ見せて、自分で分ける(答えの日本語は、分けたあとに見せる)
     const m = sub(`<section class="cs-panel dr-card"><small>この言葉は、どう？</small><h2>${esc(x.en)}</h2><div class="dr-row"><button class="cs-btn" data-say>🔊 きく</button></div>
