@@ -1,4 +1,6 @@
 // 効果音と環境音(Web Audio だけで作る。音声ファイルなし)
+// この町のファイル(town.js)を読み込んだ場所。曲(bgm/town.mp3)は、その横に置く。読み込み中にしか分からないので、ここ(いちばん外側)で控えておく
+const SCRIPT_SRC = (() => { try { return (document.currentScript && document.currentScript.src) || ''; } catch (e) { return ''; } })();
 export function createAudio() {
   let ac = null, master = null, amb = null;
   const vol = { bgm: 0.5, sfx: 0.7, voice: true };
@@ -83,7 +85,7 @@ export function createAudio() {
     if (rainN) { rainN.g.gain.value = 0.16 * v * vol.sfx; if (v <= 0.01) { rainN.src.stop(); rainN = null; } }
   }
   // 街歩きの曲(圧縮して音量の波をそろえた mp3)。AudioContext の中で鳴らすので、suspend/resume でいっしょに止まる
-  const BGM_URL = (() => { try { const sc = document.currentScript && document.currentScript.src; return sc ? new URL('bgm/town.mp3', sc).href : 'bgm/town.mp3'; } catch (e) { return 'bgm/town.mp3'; } })();
+  const BGM_URL = SCRIPT_SRC ? new URL('bgm/town.mp3', SCRIPT_SRC).href : 'bgm/town.mp3';
   let bgmBuf = null, bgmSrc = null, bgmG = null, bgmWant = false, bgmLoading = false;
   function bgm(on) {
     bgmWant = !!on; const a = ctx(); if (!a) return;
