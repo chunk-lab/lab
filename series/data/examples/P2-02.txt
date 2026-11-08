@@ -16,7 +16,7 @@ on purpose | ph | I did not ignore your message on purpose. | 私はわざとあ
 once in a while | ph | We eat at that restaurant once in a while. | 私たちは時々そのレストランで食事をします。
 once in a while | ph | Once in a while, my father cooks dinner. | 時々父が夕食を作ります。
 once in a while | ph | Do you still visit your old school once in a while? | 今でも時々以前の学校を訪れますか。
-prefer A to B | ph | I prefer tea to coffee. | 私はコーヒーより紅茶が好きです。
+prefer A to B | ph | I prefer tea to coffee when I eat breakfast. | 朝食のときはコーヒーより紅茶のほうが好きです。
 prefer A to B | ph | I prefer tea to coffee in the morning. | 私は朝はコーヒーより紅茶を好みます。
 prefer A to B | ph | Does your brother prefer trains to buses for travel? | あなたの弟は旅行ではバスより電車を好みますか。
 prevent A from B | ph | The fence prevents dogs from entering the garden. | そのさくのおかげで、犬が庭に入りません。
@@ -74,7 +74,7 @@ be in danger | ph | These old trees may be in danger during strong winds. | 強�
 be in danger | ph | The small garden is in danger of disappearing. | その小さな庭はなくなる危険にさらされています。
 be in danger | ph | Are the flowers in danger because of the cold? | 寒さのため花は危険な状態にありますか。
 not A but B | ph | She is not a singer but a dancer. | 彼女は歌手ではなく、ダンサーです。
-not A but B | ph | I want not coffee but tea this morning. | 今朝はコーヒーではなく紅茶が欲しいです。
+not A but B | ph | This morning, I want tea, not coffee, with breakfast. | 今朝は朝食にコーヒーではなく紅茶が欲しいです。
 not A but B | ph | The problem is not the price but the size. | 問題は値段ではなく大きさです。
 city hall | ph | You can get the form at city hall. | その用紙は市役所でもらえます。
 city hall | ph | My father works at city hall every weekday. | 父は平日は毎日市役所で働いています。
@@ -118,7 +118,7 @@ a series of | ph | A series of concerts will begin next month. | 一連のコン
 across from | ph | The bakery is across from the train station. | パン屋は駅の向かいにあります。
 across from | ph | Who lives across from your new apartment? | あなたの新しいアパートの向かいには誰が住んでいますか。
 across from | ph | We waited at the cafe across from the park. | 私たちは公園の向かいの喫茶店で待ちました。
-afford to do | ph | We can't afford to buy a new car. | 私たちは新しい車を買う余裕がありません。
+afford to do | ph | We cannot afford to buy a new car this year. | 今年は新しい車を買う余裕がありません。
 afford to do | ph | We cannot afford to buy a new car now. | 私たちは今新しい車を買う余裕がありません。
 afford to do | ph | Can she afford to travel abroad this summer? | 彼女にはこの夏海外旅行をする余裕がありますか。
 agree to do | ph | He agreed to help us on Sunday. | 彼は日曜日に私たちを手伝うことに同意しました。
@@ -170,7 +170,7 @@ at best | ph | We can finish only half the work at best. | よくても仕事の
 at best | ph | The journey will take three hours at best. | その旅は早くても三時間かかります。
 at best | ph | At best, we may get ten visitors today. | 今日の訪問者は多くても十人ほどでしょう。
 at ease | ph | She felt at ease with her new classmates. | 彼女は新しいクラスメートといてくつろいでいました。
-at ease | ph | Please make yourself at ease in our home. | どうぞ私たちの家でくつろいでください。
+at ease | ph | Please feel at ease and make yourself comfortable here. | どうぞここでは気兼ねなく、ゆっくりおくつろぎください。
 at ease | ph | Did you feel at ease during the interview? | 面接中は落ち着いていられましたか。
 at hand | ph | Keep your notebook at hand during the lesson. | 授業中はノートを手元に置いてください。
 at hand | ph | The final exam is close at hand now. | 期末試験はもう間近です。
@@ -190,7 +190,7 @@ be bound for | ph | Are these passengers bound for the same station? | これら
 be eager for | ph | The children seem to be eager for their holiday. | 子供たちは休暇を心待ちにしているようです。
 be eager for | ph | She is eager for a chance to perform. | 彼女は発表する機会を切望しています。
 be eager for | ph | Are you eager for news about the results? | 結果についての知らせを心待ちにしていますか。
-be equal to | ph | Ten plus five will be equal to fifteen. | 十足す五は十五に等しくなります。
+be equal to | ph | Ten plus five is equal to fifteen. | 10足す5は15です。
 be equal to | ph | The two amounts are equal to each other. | 二つの金額は互いに等しいです。
 be equal to | ph | Is this task equal to your current ability? | この仕事は今のあなたの能力でこなせる程度ですか。
 be fit for | ph | These shoes may be fit for mountain walking. | これらの靴は山歩きに適しているかもしれません。
@@ -215,7 +215,7 @@ by hand | ph | My grandmother makes these bags by hand. | 祖母はこれらの�
 by hand | ph | Did you write all these invitations by hand? | これらの招待状をすべて手書きしたのですか。
 by hand | ph | The students painted the signs by hand. | 生徒たちは看板を手で描きました。
 by heart | ph | I know this short poem by heart. | 私はこの短い詩を暗記しています。
-by heart | ph | Can you recite the song by heart? | その歌を暗記して歌えますか。
+by heart | ph | Can you sing the whole song by heart? | その歌を全部、歌詞を見ずに歌えますか。
 by heart | ph | She learned all the lines by heart. | 彼女はすべてのせりふを暗記しました。
 by mistake | ph | I took your umbrella by mistake yesterday. | 昨日間違ってあなたの傘を持っていきました。
 by mistake | ph | Did he send the message by mistake? | 彼は間違ってメッセージを送ったのですか。
@@ -238,10 +238,10 @@ compared to | ph | Compared to winter, summer days are much longer. | 冬と比�
 contrary to | ph | Contrary to our expectations, the test was easy. | 予想に反してテストは簡単でした。
 contrary to | ph | The weather was sunny, contrary to the forecast. | 予報に反して天気は晴れでした。
 contrary to | ph | Contrary to what I thought, she enjoyed the trip. | 私の予想に反して彼女は旅行を楽しみました。
-decide to do | ph | I decided to learn the piano. | 私はピアノを習うことに決めました。
+decide to do | ph | I decided to learn the piano this summer. | この夏、ピアノを習うことに決めました。
 decide to do | ph | We decided to visit the museum on Saturday. | 私たちは土曜日に博物館を訪れることに決めました。
 decide to do | ph | Did your sister decide to join the team? | お姉さんはチームに入ることに決めましたか。
-deny doing | ph | He denied breaking the window. | 彼は窓を割ったことを否定しました。
+deny doing | ph | He denied breaking the classroom window yesterday. | 彼は昨日教室の窓を割ったことを否定しました。
 deny doing | ph | He denied taking the book without permission. | 彼は許可なく本を持ち出したことを否定しました。
 deny doing | ph | Did she deny making that change to the schedule? | 彼女は予定を変更したことを否定しましたか。
 do business | ph | Our family hopes to do business with local farms. | 私たちの家族は地元の農場と取引したいと思っています。
@@ -282,7 +282,7 @@ go off | ph | Did the fire alarm go off during practice? | 練習中に火災報
 go off | ph | The alarm went off while I was sleeping. | 私が寝ている間に目覚ましが鳴りました。
 go over | ph | Let us go over the answers before lunch. | 昼食前に答えを見直しましょう。
 go over | ph | Did you go over your notes for the test? | テストに向けてノートを見直しましたか。
-go over | ph | Our teacher went over the main points again. | 先生は要点をもう一度見直しました。
+go over | ph | Our teacher went over the main points again. | 先生は要点をもう一度確認しました。
 hand out | ph | Please hand out these papers to the class. | これらの紙をクラスのみんなに配ってください。
 hand out | ph | She handed out maps before the walking tour. | 彼女は散策ツアーの前に地図を配りました。
 hand out | ph | Who will hand out the tickets at the entrance? | 入口でチケットを配るのは誰ですか。
