@@ -51,7 +51,7 @@ be interested in | ph | She is interested in learning French. | 彼女はフラ�
 be interested in | ph | Are your friends interested in art? | あなたの友達は美術に興味がありますか。
 be late for | ph | I do not want to be late for school. | 学校に遅れたくありません。
 be late for | ph | He was late for the meeting. | 彼は会議に遅れました。
-be late for | ph | Will we be late for the train? | 私たちは電車に遅れますか。
+be late for | ph | Will we be late for the train? | 電車に乗り遅れてしまいますか。
 be proud of | ph | You can be proud of your work. | 自分の仕事を誇りに思ってよいです。
 be proud of | ph | My parents are proud of me. | 両親は私を誇りに思っています。
 be proud of | ph | She was proud of her team. | 彼女は自分のチームを誇りに思いました。
@@ -61,7 +61,7 @@ be ready for | ph | The children were ready for lunch. | 子供たちは昼食�
 because of | ph | We stayed inside because of the rain. | 雨のために私たちは屋内にいました。
 because of | ph | The game stopped because of strong wind. | 強風のために試合が止まりました。
 because of | ph | She smiled because of your kind words. | あなたの優しい言葉のおかげで彼女は笑顔になりました。
-both A and B | ph | In this game, I choose both A and B. | このゲームではAとBの両方を選びます。
+both A and B | ph | I want both the red pen and the blue one. | 赤いペンも青いペンも両方欲しいです。
 both A and B | ph | Both my parents and I love music. | 両親も私も音楽が大好きです。
 both A and B | ph | She likes both tea and coffee. | 彼女は紅茶もコーヒーも好きです。
 by the way | ph | By the way, where is your brother? | ところで、あなたのお兄さんはどこですか。
@@ -73,16 +73,16 @@ come back | ph | She came back from school early. | 彼女は学校から早く�
 each other | ph | We help each other with our homework. | 私たちはお互いの宿題を手伝います。
 each other | ph | The two friends smiled at each other. | 二人の友達はお互いにほほえみました。
 each other | ph | Do your brothers talk to each other? | あなたの兄弟はお互いに話しますか。
-for example | ph | I like sports, for example, tennis and swimming. | 私はスポーツが好きで、例えばテニスや水泳です。
+for example | ph | I enjoy sports, for example, tennis and swimming. | 私はテニスや水泳などのスポーツが好きです。
 for example | ph | Some animals, for example, cats, sleep a lot. | 例えば猫など、一部の動物はよく眠ります。
-for example | ph | Can you give me one example? | 一つ例を挙げてもらえますか。
+for example | ph | Can you give me an example, for example, from school? | 例えば学校での出来事など、例を挙げてもらえますか。
 for the first time | ph | I made dinner for the first time. | 私は初めて夕食を作りました。
 for the first time | ph | She visited the sea for the first time. | 彼女は初めて海を訪れました。
 for the first time | ph | Are you meeting him for the first time? | 彼に会うのは初めてですか。
 get up | ph | I get up at seven every morning. | 私は毎朝七時に起きます。
 get up | ph | What time does your sister get up? | あなたの妹は何時に起きますか。
 get up | ph | He got up early to study. | 彼は勉強するために早起きしました。
-get to | ph | How can we get to the station? | 駅にはどうやって着けますか。
+get to | ph | How can we get to the station? | 駅にはどうやって行けばよいですか。
 get to | ph | I got to school before eight. | 私は八時前に学校に着きました。
 get to | ph | Did they get to the hotel safely? | 彼らは無事にホテルに着きましたか。
 get on | ph | Please get on the bus here. | ここでバスに乗ってください。
@@ -103,7 +103,7 @@ go to bed | ph | What time did your brother go to bed? | あなたの弟は何�
 have to | ph | We have to clean our classroom today. | 私たちは今日教室を掃除しなければなりません。
 have to | ph | Do you have to leave now? | あなたはもう出発しなければなりませんか。
 have to | ph | She had to finish her homework. | 彼女は宿題を終えなければなりませんでした。
-help A with B | ph | I can help A with B today. | 今日はAのBを手伝えます。
+help A with B | ph | I can help my sister with her homework. | 妹の宿題を手伝えます。
 help A with B | ph | Please help me with this bag. | このかばんを運ぶのを手伝ってください。
 help A with B | ph | He helped his sister with homework. | 彼は妹の宿題を手伝いました。
 in front of | ph | A big tree stands in front of our house. | 私たちの家の前に大きな木が立っています。
@@ -133,7 +133,7 @@ more and more | ph | More and more children enjoy this game. | ますます多�
 next to | ph | My desk is next to the window. | 私の机は窓の隣にあります。
 next to | ph | Please sit next to your sister. | 妹の隣に座ってください。
 next to | ph | Is the library next to the bank? | 図書館は銀行の隣にありますか。
-not only A but also B | ph | I chose not only A but also B. | 私はAだけでなくBも選びました。
+not only A but also B | ph | I like not only music but also art. | 私は音楽だけでなく美術も好きです。
 not only A but also B | ph | She speaks not only English but also French. | 彼女は英語だけでなくフランス語も話します。
 not only A but also B | ph | He likes not only music but also art. | 彼は音楽だけでなく美術も好きです。
 of course | ph | Of course, you can use my pencil. | もちろん、私の鉛筆を使ってよいです。
@@ -187,7 +187,7 @@ wake up | ph | She woke up when the birds sang. | 彼女は鳥の声で目が覚
 worry about | ph | Do not worry about tomorrow's English test. | 明日の英語のテストを心配しないでください。
 worry about | ph | My mother worries about the weather. | 母は天気を心配しています。
 worry about | ph | Are you worried about your homework? | 宿題のことを心配していますか。
-so A that B | ph | The movie was so long that I fell asleep. | その映画はとても長かったので、私は眠ってしまいました。
+so A that B | ph | The movie was so long that I fell asleep. | その映画はとても長かったので、眠ってしまいました。
 so A that B | ph | The soup was so hot that I waited. | スープはとても熱かったので私は待ちました。
 so A that B | ph | She was so happy that she cried. | 彼女はとても嬉しかったので泣きました。
 a long time ago | ph | A long time ago, people wrote many letters. | ずっと昔、人々はたくさん手紙を書きました。
@@ -223,7 +223,7 @@ be made of | ph | Is this bag made of paper? | このかばんは紙でできて
 belong to | ph | These books belong to my older sister. | これらの本は姉のものです。
 belong to | ph | Does this pencil belong to you? | この鉛筆はあなたのものですか。
 belong to | ph | He belongs to our school team. | 彼は私たちの学校のチームに所属しています。
-between A and B | ph | Choose the road between A and B. | AとBの間の道を選んでください。
+between A and B | ph | Choose the road between the bank and the library. | 銀行と図書館の間にある道を選んでください。
 between A and B | ph | The bank is between the two shops. | 銀行は二つの店の間にあります。
 between A and B | ph | She sat between her mother and father. | 彼女は母親と父親の間に座りました。
 by bus | ph | I go to school by bus every day. | 私は毎日バスで学校へ行きます。
@@ -232,7 +232,7 @@ by bus | ph | We traveled to the town by bus. | 私たちはバスでその町�
 come true | ph | I hope your dream will come true. | あなたの夢が実現することを願っています。
 come true | ph | Her wish finally came true yesterday. | 彼女の願いは昨日ついに実現しました。
 come true | ph | Do you think this dream can come true? | この夢は実現すると思いますか。
-do one's best | ph | I will do my best in tomorrow's game. | 私は明日の試合でベストをつくします。
+do one's best | ph | I will do my best in tomorrow's game. | 明日の試合で全力を尽くします。
 do one's best | ph | I will do my best tomorrow. | 私は明日全力を尽くします。
 do one's best | ph | She did her best in the race. | 彼女は競走で全力を尽くしました。
 each of | ph | Each of these books has a picture. | これらの本にはそれぞれ絵があります。
@@ -267,7 +267,7 @@ keep in touch | ph | We keep in touch by email. | 私たちはメールで連絡
 keep in touch | ph | Do you keep in touch with Tom? | トムと連絡を取り合っていますか。
 laugh at | ph | Please do not laugh at my drawing. | 私の絵を笑わないでください。
 laugh at | ph | The children laughed at his funny hat. | 子供たちは彼のおかしな帽子を見て笑いました。
-laugh at | ph | Why did you laugh at that joke? | なぜその冗談を笑ったのですか。
+laugh at | ph | Why did you laugh at that joke? | なぜその冗談を聞いて笑ったのですか。
 listen to | ph | I listen to music after dinner. | 私は夕食後に音楽を聴きます。
 listen to | ph | Please listen to your teacher carefully. | 先生の話をよく聞いてください。
 listen to | ph | Did you listen to the radio yesterday? | 昨日ラジオを聴きましたか。
