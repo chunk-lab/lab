@@ -10,7 +10,7 @@ at the expense of | ph | They expanded the shop at the expense of the garden. | 
 at the mercy of | ph | Small boats are at the mercy of strong winds. | 小さな船は強風のなすがままです。
 at the mercy of | ph | Without a plan, we were at the mercy of events. | 計画がなく私たちは状況に振り回されました。
 at the mercy of | ph | Are local farmers at the mercy of changing weather? | 地元の農家は変わりやすい天候に左右されますか。
-be bound to | ph | He is bound to win the prize. | 彼はきっと賞をとります。
+be bound to | ph | With enough practice, you are bound to improve your speaking skills. | 十分に練習すれば、話す力はきっと上達します。
 be bound to | ph | With regular practice, your English is bound to improve. | 定期的に練習すれば英語はきっと上達します。
 be bound to | ph | This interesting book is bound to attract young readers. | この面白い本はきっと若い読者を引きつけます。
 be entitled to | ph | Every member should be entitled to use the sports facilities. | 会員全員にスポーツ施設を利用する権利があるはずです。
@@ -25,7 +25,7 @@ be liable to | ph | Is this plant liable to dry out in summer? | この植物は
 be subject to | ph | Outdoor events may be subject to changes in bad weather. | 屋外行事は悪天候で変更される場合があります。
 be subject to | ph | Ticket prices are subject to change without any prior notice. | チケットの価格は事前の予告なく変更される場合があります。
 be subject to | ph | Are these goods subject to additional charges when delivered? | これらの商品には配達時に追加料金がかかりますか。
-be accustomed to | ph | It takes time to be accustomed to a new school schedule. | 新しい学校の時間割に慣れるには時間がかかります。
+be accustomed to | ph | It takes time to become accustomed to a new school schedule. | 新しい学校の時間割に慣れるには時間がかかります。
 be accustomed to | ph | She is accustomed to working with people from different countries. | 彼女はさまざまな国の人と働くことに慣れています。
 be accustomed to | ph | Are you already accustomed to getting up before sunrise? | 日の出前に起きることにはもう慣れていますか。
 be committed to | ph | Our teachers seem to be committed to helping every student. | 先生方は生徒一人一人を助けることに専念しているようです。
@@ -39,7 +39,7 @@ bring about | ph | What brought about the sudden increase in library visitors? |
 bring about | ph | The new service brought about changes in local travel. | 新しいサービスは地域の移動に変化をもたらしました。
 by no means | ph | This task is by no means as simple as it looks. | この作業は見た目ほど決して簡単ではありません。
 by no means | ph | Our first attempt was by no means a complete failure. | 最初の試みは決して完全な失敗ではありませんでした。
-by no means | ph | The final decision is by no means certain yet. | 最終決定はまだ決して確実ではありません。
+by no means | ph | The final decision is by no means certain at this stage. | この段階では最終決定は決して確実ではありません。
 call for | ph | This kind of work will call for patience and planning. | この種の仕事には忍耐と計画が必要です。
 call for | ph | The recipe calls for two cups of fresh milk. | そのレシピでは新鮮な牛乳を二カップ使います。
 call for | ph | Does the situation call for another meeting with staff? | その状況では職員とのもう一度の会議が必要ですか。
@@ -84,7 +84,7 @@ in the long run | ph | Buying good shoes may save money in the long run. | 良�
 in the long run | ph | Will this decision benefit the team in the long run? | この決定は長期的にチームのためになりますか。
 in vain | ph | We searched for the missing notebook, but all in vain. | 私たちはなくしたノートを探しましたが無駄でした。
 in vain | ph | She waited in vain for a reply to her message. | 彼女はメッセージの返事を待ちましたが無駄でした。
-in vain | ph | Did they try in vain to repair the old clock? | 彼らは古い時計を直そうとして無駄に終わりましたか。
+in vain | ph | Did they try in vain to repair the old clock? | 彼らは古い時計を直そうとしましたが、結局無駄に終わったのですか。
 in the wake of | ph | Several changes followed in the wake of the school's expansion. | 学校の拡張の後でいくつかの変化が起こりました。
 in the wake of | ph | In the wake of the festival, local shops became busier. | 祭りの後で地元の店はさらに忙しくなりました。
 in the wake of | ph | New classes were introduced in the wake of student requests. | 生徒の要望を受けて新しい授業が導入されました。
@@ -103,7 +103,7 @@ live up to | ph | Did the concert live up to what you expected? | そのコン�
 make do with | ph | We had to make do with a smaller meeting room. | 私たちはもっと小さな会議室で間に合わせる必要がありました。
 make do with | ph | Can you make do with these tools until tomorrow? | 明日までこれらの道具で間に合わせられますか。
 make do with | ph | She made do with the ingredients already in her kitchen. | 彼女は台所にある材料だけで間に合わせました。
-make up for | ph | I will work harder to make up for lost time. | 遅れた時間を取り戻すためにもっと頑張ります。
+make up for | ph | I will work harder to make up for lost time. | 遅れを取り戻すために、もっと頑張ります。
 make up for | ph | The hotel offered breakfast to make up for the inconvenience. | ホテルは不便を埋め合わせるため朝食を提供しました。
 make up for | ph | Can a good ending make up for a slow beginning? | 良い結末は退屈な始まりを埋め合わせられますか。
 needless to say | ph | Needless to say, we should check our work before submitting it. | 言うまでもなく提出前に自分の仕事を確認すべきです。
@@ -113,7 +113,7 @@ on behalf of | ph | I would like to thank you on behalf of our class. | クラ�
 on behalf of | ph | She accepted the award on behalf of the whole team. | 彼女はチーム全体を代表して賞を受け取りました。
 on behalf of | ph | Who will speak on behalf of the students at the meeting? | 会議で生徒を代表して話すのは誰ですか。
 on the verge of | ph | Our team is on the verge of completing the project. | 私たちのチームは今にも企画を完成させそうです。
-on the verge of | ph | The old building was on the verge of closing permanently. | その古い建物はまさに永久閉鎖されそうな状態でした。
+on the verge of | ph | The old community center was on the verge of closing permanently. | その古い地域センターは、まさに永久閉鎖されそうな状態でした。
 on the verge of | ph | Are the flowers on the verge of opening this morning? | 今朝その花は今にも咲きそうですか。
 owing to | ph | The outdoor concert was delayed owing to heavy rain. | 大雨のため屋外コンサートは延期されました。
 owing to | ph | Owing to the holiday, the library will close early. | 祝日のため図書館は早く閉まります。
@@ -180,7 +180,7 @@ bear in mind | ph | Did you bear in mind the needs of younger students? | 年下
 bear in mind | ph | We must bear in mind that everyone learns at different speeds. | 人によって学ぶ速さが違うことを覚えておく必要があります。
 break out | ph | A lively discussion may break out during the group activity. | グループ活動中に活発な議論が突然始まるかもしれません。
 break out | ph | Laughter broke out when the teacher told a funny story. | 先生が面白い話をすると突然笑いが起こりました。
-break out | ph | Did a debate break out after the new plan was announced? | 新しい計画の発表後に議論が勃発しましたか。
+break out | ph | Did a lively debate break out after the new plan was announced? | 新しい計画の発表後、活発な議論が突然始まりましたか。
 by and large | ph | By and large, the students enjoyed their first week at school. | 概して生徒たちは学校での最初の一週間を楽しみました。
 by and large | ph | The new system works well, by and large, despite small problems. | 新しい仕組みは小さな問題はあるものの概してうまく機能しています。
 by and large | ph | Are customers satisfied with the service by and large? | 顧客は概してそのサービスに満足していますか。
@@ -256,7 +256,7 @@ shed light on | ph | Her explanation shed light on several confusing parts of th
 side with | ph | I will not automatically side with either group in this discussion. | 私はこの議論でどちらのグループにも自動的に味方しません。
 side with | ph | Why did the teacher side with the students on this issue? | 先生はなぜこの問題で生徒たちの味方をしたのですか。
 side with | ph | Most members sided with the manager after hearing her explanation. | 説明を聞いた後ほとんどの会員は責任者を支持しました。
-speak ill of | ph | It is unkind to speak ill of people behind their backs. | 陰で人の悪口を言うのは親切ではありません。
+speak ill of | ph | It is unkind to speak ill of people behind their backs. | 人の陰口を言うのはよくありません。
 speak ill of | ph | She never speaks ill of any of her former coworkers. | 彼女は以前の同僚の誰の悪口も決して言いません。
 speak ill of | ph | Why would anyone speak ill of such a helpful neighbor? | あれほど親切な近所の人の悪口をなぜ言うのでしょうか。
 stand by | ph | I promise to stand by you during this difficult project. | この難しい企画の間あなたを支えると約束します。
@@ -265,7 +265,7 @@ stand by | ph | Her friends stood by her when she changed careers. | 彼女が�
 take pains | ph | We always take pains to make our instructions clear. | 私たちは説明を分かりやすくするためにいつも骨を折っています。
 take pains | ph | She took great pains to prepare a welcoming classroom. | 彼女は居心地のよい教室を準備するために大変苦労しました。
 take pains | ph | Did the guide take pains to answer every visitor's question? | 案内役は来館者の質問一つ一つに答えるために骨を折りましたか。
-tell A from B | ph | Can you tell a fake from a real one? | 本物とにせ物を見分けられますか。
+tell A from B | ph | Can you tell a real flower from an artificial one? | 本物の花と造花を見分けられますか。
 tell A from B | ph | Can you tell real flowers from artificial ones at a distance? | 遠くから本物の花と造花を見分けられますか。
 tell A from B | ph | He cannot tell his twin cousins from each other. | 彼は双子のいとこを見分けられません。
 think better of | ph | I was going to complain, but I decided to think better of it. | 文句を言うつもりでしたが考え直すことにしました。
@@ -295,6 +295,6 @@ be absorbed in | ph | Are you so absorbed in your work that you forget lunch? | 
 be on the point of | ph | We seemed to be on the point of reaching an agreement. | 私たちはまさに合意に達しようとしているようでした。
 be on the point of | ph | She was on the point of leaving when the phone rang. | 彼女は電話が鳴ったときまさに出かけようとしていました。
 be on the point of | ph | Are they on the point of announcing the final results? | 彼らはまさに最終結果を発表しようとしているのですか。
-cannot help doing | ph | I cannot help laughing at his jokes. | 私は彼の冗談に笑わずにいられません。
+cannot help doing | ph | I cannot help laughing whenever my brother tells his funny stories. | 弟が面白い話をするたびに、笑わずにはいられません。
 cannot help doing | ph | I cannot help smiling whenever I see that funny picture. | その面白い写真を見るとどうしても笑顔になります。
 cannot help doing | ph | She could not help laughing at her brother's silly joke. | 彼女は弟のおかしな冗談に笑わずにはいられませんでした。
