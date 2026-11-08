@@ -15,31 +15,42 @@ const btn = (bg = 'linear-gradient(160deg,#ffd0dc,#ffb3c1)', fg = '#fff') => `bo
 function makeModel(id) { const g = new THREE.Group(); ITEM[id].build(g); return g; }
 
 // ショップ用の小さな絵を、1つの描画器でまとめて作る
-const thumbs = new Map();
+const thumbs = new Map(), thumbSubs = new Set();
+let thumbRun = null;
+// 少しずつ(3個ずつ)作って、できたものから表示する。一度に作ると、ショップを開くまで何秒も画面が固まっていた
 function makeThumbs() {
-  if (thumbs.size) return;
-  let r;
-  try {
-    r = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
-    r.setSize(132, 132, false);
-    const sc = new THREE.Scene();
-    sc.add(new THREE.AmbientLight(0xffffff, 2.1));
-    const dl = new THREE.DirectionalLight(0xffffff, 1.4); dl.position.set(3, 6, 4); sc.add(dl);
-    const cam = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-    for (const it of ITEMS) {
-      const m = makeModel(it.id); sc.add(m);
-      const bb = new THREE.Box3().setFromObject(m), c = bb.getCenter(new THREE.Vector3()), s = bb.getSize(new THREE.Vector3());
-      const dist = Math.max(s.x, s.y * 1.3, s.z) * 2.6 + 1.5;
-      cam.position.set(c.x + dist * 0.62, c.y + dist * 0.5, c.z + dist * 0.62); cam.lookAt(c);
-      r.render(sc, cam); thumbs.set(it.id, r.domElement.toDataURL('image/png'));
-      sc.remove(m);
-    }
-  } catch (e) { /* 描画できない環境では絵なしで表示する */ } finally { r?.dispose(); r?.forceContextLoss?.(); }
+  if (thumbRun) return thumbRun;
+  return (thumbRun = new Promise(done => {
+    let r, sc, cam, i = 0; const list = ITEMS.filter(it => !thumbs.has(it.id));
+    const fin = () => { try { r && r.dispose(); } catch (e) { } done(); };   // forceContextLoss は重いので使わない
+    try {
+      r = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true }); r.setSize(132, 132, false);
+      sc = new THREE.Scene(); sc.add(new THREE.AmbientLight(0xffffff, 2.1));
+      const dl = new THREE.DirectionalLight(0xffffff, 1.4); dl.position.set(3, 6, 4); sc.add(dl);
+      cam = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
+    } catch (e) { fin(); return; }
+    const step = () => {
+      try {
+        for (let n = 0; n < 3 && i < list.length; n++, i++) {
+          const it = list[i], m = makeModel(it.id); sc.add(m);
+          const bb = new THREE.Box3().setFromObject(m), c = bb.getCenter(new THREE.Vector3()), sz = bb.getSize(new THREE.Vector3());
+          const dist = Math.max(sz.x, sz.y * 1.3, sz.z) * 2.6 + 1.5;
+          cam.position.set(c.x + dist * 0.62, c.y + dist * 0.5, c.z + dist * 0.62); cam.lookAt(c);
+          r.render(sc, cam); const u = r.domElement.toDataURL('image/png'); thumbs.set(it.id, u); sc.remove(m);
+          thumbSubs.forEach(f => { try { f(it.id, u); } catch (e) { } });
+        }
+      } catch (e) { i = list.length; }   // 描画できない環境では、絵なしで表示する
+      if (i < list.length) setTimeout(step, 16); else fin();
+    };
+    setTimeout(step, 0);
+  }));
 }
 
 export const shopApp = {
   mount(el, ctx) {
-    makeThumbs();
+    setTimeout(makeThumbs, 80);   // 先に画面を出してから、絵を少しずつ作る
+    const onThumb = (id, u) => box.querySelectorAll(`img[data-th="${id}"]`).forEach(im => { im.src = u; });
+    thumbSubs.add(onThumb);
     const box = document.createElement('div');
     box.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;font-family:inherit;color:${ink}`;
     el.appendChild(box);
@@ -60,7 +71,7 @@ export const shopApp = {
       const cart = furn.cart(), total = furn.total(cart), n = Object.values(cart).reduce((a, b) => a + b, 0), coins = ctx.wallet.get();
       if (view === 'cart') {
         const rows = Object.entries(cart).map(([id, q]) => `<div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:8px 10px;margin-bottom:8px;box-shadow:0 2px 8px #0001">
-          ${thumbs.get(id) ? `<img src="${thumbs.get(id)}" width="48" height="48" alt="">` : ''}
+          <img data-th="${id}" ${thumbs.get(id) ? `src="${thumbs.get(id)}"` : ''} width="48" height="48" alt="">
           <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:14px">${ITEM[id].name}</div><div style="font-size:12px;color:#8d7f9e">🪙 ${ITEM[id].price} × ${q} = <b style="color:${ink}">${ITEM[id].price * q}</b></div><div style="font-size:12px;color:#8d7f9e">いま ${furn.owned(id)}こ → 買うと ${furn.owned(id) + q}こ</div></div>${stepper(id)}</div>`).join('');
         const short = total - coins;
         box.innerHTML = head('カゴ', msg || 'ここで数を変えて、さいごに まとめて払うよ。')
@@ -76,7 +87,7 @@ export const shopApp = {
         <div class="sc" style="flex:1;overflow:auto;padding:4px 16px 12px"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">${ITEMS.filter(it => !it.noshop && (cat === 'すべて' || it.cat === cat)).map(it => {
           const own = furn.owned(it.id);
           return `<div style="background:#fff;border-radius:18px;padding:10px;box-shadow:0 2px 10px #0001;text-align:center">
-            <div style="height:74px;display:flex;align-items:center;justify-content:center">${thumbs.get(it.id) ? `<img src="${thumbs.get(it.id)}" width="74" height="74" alt="">` : ''}</div>
+            <div style="height:74px;display:flex;align-items:center;justify-content:center"><img data-th="${it.id}" ${thumbs.get(it.id) ? `src="${thumbs.get(it.id)}"` : ''} width="74" height="74" alt=""></div>
             <div style="font-weight:800;font-size:14px">${it.name}</div>
             <div style="font-size:12px;color:#8d7f9e;margin:2px 0 6px">🪙 ${it.price}　もっている: ${own}</div>${own >= MAX_OWN ? '<div style="font-size:12px;color:#8d7f9e;height:34px;line-height:34px">これ以上は もてないよ</div>' : stepper(it.id)}</div>`;
         }).join('')}</div></div>
@@ -103,10 +114,11 @@ export const shopApp = {
       }
     };
     draw();
-    return { unmount() { box.remove(); } };
+    return { unmount() { thumbSubs.delete(onThumb); box.remove(); } };
   },
 };
 
+let homeR = null;
 export const homeApp = {
   mount(el, ctx) {
     const root = document.createElement('div');
@@ -123,7 +135,7 @@ export const homeApp = {
     const car = root.querySelector('.car'), cv = root.querySelector('.cv'), tip = root.querySelector('.tip'), ctl = root.querySelector('.ctl'), inv = root.querySelector('.inv'), planEl = root.querySelector('.plan'), sheet = root.querySelector('.sheet');
 
     // 部屋の3D(必要なときだけ描き直す)
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = homeR || (homeR = new THREE.WebGLRenderer({ antialias: true, alpha: true }));   // 描画器は使いまわす(閉じるたびに捨てると、閉じるのに何秒もかかった)
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     cv.appendChild(renderer.domElement);
     renderer.domElement.className = 'tw-canvas'; renderer.domElement.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
@@ -244,8 +256,10 @@ export const homeApp = {
       const c = new THREE.Box3().setFromObject(m).getCenter(new THREE.Vector3()), r = cur();
       fly(c.x - r.cols / 2, c.z - r.rows / 2, 1.4); setGlow(p.uid);
     }
+    let opening = 0;
     function run(it) {   // えらんだものの画面を開く
       if (!it) return;
+      if (it.act !== 'deco' && it.act !== 'walk') { if (Date.now() - opening < 1500) return; opening = Date.now(); menu && menu.busy('ひらいています…'); }
       if (it.act === 'deco') { mode = 'edit'; setGlow(null); fly(0, 0, 1); ui(); return; }
       if (it.act === 'walk') { setGlow(null); enterWalk(); return; }
       if (it.act === 'study') { ctx.emit('study'); return; }
@@ -680,6 +694,7 @@ export const homeApp = {
     menu = createHomeMenu(car, { items: () => HOME_MENU.filter(m => !m.need || m.need(ctx, furn)), startKey: ctx.storage.get('menuK'), onOpen: run,
       onPick: it => { try { ctx.storage.set('menuK', it.k); } catch (e) { } focusItem(it); } });
     ui(); loop();
+    setTimeout(() => { if (!walk) makeThumbs(); }, 2500);   // ショップをすぐ開けるように、ひまなときに先にショップの絵を作っておく
     if (ctx.params && (ctx.params.walk || guest)) enterWalk();   // お客さんがいるときは、はじめから歩く(部屋の中で一緒に)
     if (gch) setTimeout(() => guestSay(GL('enter')), 400);
     function guestSayLate() { const b = document.createElement('div'); b.textContent = `${guest.name}「今日はもう遅いから、帰るね。また遊ぼ!」`; b.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);max-width:80%;background:#fffaf2;color:#5a4a6b;border-radius:16px;padding:8px 14px;font-size:14px;font-weight:700;box-shadow:0 2px 8px #0003;z-index:30'; root.appendChild(b); setTimeout(() => b.remove(), 3500); }   // アルバムから「部屋にもどる」で、歩いていたところへ
@@ -689,7 +704,7 @@ export const homeApp = {
       unmount() {
         cancelAnimationFrame(raf); ro.disconnect(); offW && offW(); if (walk) exitWalk();
         clearMeshes(); dispose(shell); outline.geometry.dispose();
-        renderer.dispose(); renderer.forceContextLoss?.(); root.remove();
+        renderer.domElement.remove(); root.remove();
       },
     };
   },

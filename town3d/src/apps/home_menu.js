@@ -1,6 +1,6 @@
 // あなたの家の下のメニュー：アイコンが横一列にならんだ、ループするスライダー。
 // 真ん中の1つが「いまえらんでいるもの」。スライドすると上の部屋でその家具が光る。
-// アイコン・部屋の家具をタップすると、その画面が開く(横のアイコンは、真ん中に寄せながら開く)。
+// 真ん中のアイコン・部屋の家具をタップすると、その画面が開く(横のアイコンをタップすると、真ん中に寄るだけ)。
 //
 // ここに1行足せば、メニューが増える。need が false のあいだは出さない(まだ持っていない家具など)。
 //   k: しるし / ic: アイコン / n: 名前 / sub: ひとこと / fur: 部屋で光らせる家具のid(先にあるものほど優先) / act: 開く画面
@@ -70,8 +70,7 @@ export function createHomeMenu(el, { items, onPick, onOpen, startKey }) {
     if (!d.moved) {   // タップ:真ん中なら開く、横なら真ん中へ寄せる
       const r = tr.getBoundingClientRect(), k = Math.round((e.clientX - (r.left + r.width / 2)) / GAP);   // 指をつかまえているので、位置からどれを押したか決める
       if (Math.abs(k) > 3) { settle(); return; }
-      const idx = mod(Math.round(pos) + k, list.length); if (k === 0) settle(); else go(Math.round(pos) + k);
-      onOpen(list[idx]);   // どのアイコンも、押したらすぐ開く(押したものが真ん中に来る)
+      if (k === 0) { settle(); onOpen(list[cur]); } else go(Math.round(pos) + k);   // 開くのは真ん中の1つだけ。横は、真ん中に寄せるだけ
       return;
     }
     go(Math.round(pos - d.v * 4.2));   // はじいた勢いで少し先まで進む
@@ -87,6 +86,7 @@ export function createHomeMenu(el, { items, onPick, onOpen, startKey }) {
     // 部屋の家具をタップしたとき:その項目を真ん中にする
     select(k) { const i = list.findIndex(m => m.k === k); if (i < 0) return; const n = list.length, base = Math.round(pos); let to = base + (mod(i - base, n) > n / 2 ? mod(i - base, n) - n : mod(i - base, n)); go(to); },
     current: () => list[cur],
+    busy(t) { lb.querySelector('small').textContent = t; setTimeout(() => { if (list[cur]) lb.querySelector('small').textContent = list[cur].sub || ''; }, 1500); },
     itemFor: id => list.find(m => (m.fur || []).includes(id)),
   };
 }
