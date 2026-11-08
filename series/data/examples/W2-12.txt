@@ -1,0 +1,300 @@
+veil | n | The bride wore a white veil over her hair. | 花嫁は髪の上に白いベールを着けていました。
+veil | n | Did she lift her veil before the photograph? | 彼女は写真を撮る前にベールを上げましたか。
+veil | n | The shop sells beautiful veils for special occasions. | その店では特別な行事用の美しいベールを売っています。
+rail | n | Hold the rail while walking down these stairs. | この階段を下りるときは手すりにつかまってください。
+rail | n | Is the metal rail strong enough to support us? | その金属製の手すりは私たちを支えるのに十分丈夫ですか。
+rail | n | The workers checked the rails along the railway track. | 作業員たちは線路のレールを点検しました。
+transform | v | Fresh paint can transform the look of this room. | 新しいペンキでこの部屋の見た目を変えられます。
+transform | v | Could we transform this empty space into a reading area? | この空いた場所を読書スペースに変えられますか。
+transform | v | The new lights transformed the garden after sunset. | 新しい照明が日没後の庭の雰囲気を変えました。
+crop | n | Rice is an important crop for many farmers. | 米は多くの農家にとって重要な作物です。
+crop | n | Which crop grows best in this kind of soil? | この種類の土ではどの作物が最もよく育ちますか。
+crop | n | The farmers planted different crops in their fields. | 農家の人たちは畑にさまざまな作物を植えました。
+sloppy | a | His sloppy handwriting made the note difficult to read. | 彼の雑な字のせいでメモが読みにくくなりました。
+sloppy | a | Why did you submit such sloppy work today? | 今日はなぜそんなに雑な仕事を提出したのですか。
+sloppy | a | The teacher asked us to correct our sloppy mistakes. | 先生は私たちに不注意な間違いを直すよう求めました。
+separation | n | The separation of paper and plastic makes recycling easier. | 紙とプラスチックの分別はリサイクルを簡単にします。
+separation | n | Does this machine allow the separation of different materials? | この機械は異なる材料を分離できますか。
+separation | n | The children found the long separation from home difficult. | 子供たちは長い間家を離れることをつらく感じました。
+carrier | n | The mail carrier delivers letters to our street daily. | 郵便配達員は毎日私たちの通りに手紙を届けます。
+carrier | n | Is this carrier large enough for your cat? | この運搬用ケースはあなたの猫に十分な大きさですか。
+carrier | n | Several carriers brought the packages into the building. | 何人かの運搬人が荷物を建物の中へ運びました。
+summon | v | The manager will summon the staff for a short meeting. | 責任者は短い会議のために職員を呼び集めます。
+summon | v | Did the teacher summon you to her office? | 先生はあなたを職員室に呼び出しましたか。
+summon | v | The coach summoned the players before the final practice. | コーチは最後の練習前に選手たちを呼び集めました。
+caller | n | The caller asked to speak with the shop manager. | 電話をかけてきた人は店長と話したいと言いました。
+caller | n | Did the caller leave a name and number? | 電話をかけてきた人は名前と番号を残しましたか。
+caller | n | Our office receives calls from many different callers. | 私たちの事務所にはさまざまな人から電話が来ます。
+cunning | a | The cunning fox found a way into the garden. | ずる賢いキツネは庭に入る方法を見つけました。
+cunning | a | Was that a cunning trick to win the game? | それは試合に勝つためのずる賢い策略でしたか。
+cunning | a | The story describes a cunning character who fools everyone. | その物語にはみんなをだますずる賢い人物が登場します。
+immune | a | Some people are immune to this common illness. | 一部の人はこの一般的な病気に免疫があります。
+immune | a | Are these plants immune to the usual garden pests? | これらの植物は一般的な庭の害虫に耐性がありますか。
+immune | a | The children became immune after receiving the recommended vaccine. | 子供たちは推奨されたワクチンを受けた後に免疫を得ました。
+elbow | n | Keep your elbow close to your body while throwing. | 投げるときはひじを体の近くに保ってください。
+elbow | n | Did you rest your elbow on the table? | テーブルにひじをつきましたか。
+elbow | n | The dancer raised both elbows during the performance. | 踊り手は演技中に両ひじを上げました。
+terrace | n | We ate breakfast on the sunny terrace yesterday. | 昨日は日当たりのよいテラスで朝食を食べました。
+terrace | n | Does your apartment have a terrace with a view? | あなたのアパートには景色のよいテラスがありますか。
+terrace | n | The restaurant placed several tables on its outdoor terrace. | レストランは屋外のテラスにいくつかのテーブルを置きました。
+alter | v | We need to alter the schedule before Friday. | 金曜日までに予定を変更する必要があります。
+alter | v | Can the tailor alter these trousers to fit me? | 仕立て屋はこのズボンを私に合うよう直せますか。
+alter | v | The new rules altered how the students used the library. | 新しい規則で生徒たちの図書館の使い方が変わりました。
+transportation | n | Public transportation makes travel around the city easier. | 公共交通機関のおかげで市内の移動が楽になります。
+transportation | n | Is transportation included in the price of this tour? | このツアーの料金には移動手段が含まれていますか。
+transportation | n | The company arranged transportation for all the visitors. | 会社は訪問者全員のために移動手段を手配しました。
+interference | n | The coach asked parents to avoid interference during practice. | コーチは練習中に保護者が干渉しないよう求めました。
+interference | n | Does this equipment cause interference with the radio? | この機器はラジオに干渉を起こしますか。
+interference | n | Outside interference made it difficult to finish our project. | 外部からの干渉で私たちの計画を終えるのが難しくなりました。
+fracture | v | A strong fall can fracture a bone in your arm. | 強く転ぶと腕の骨を骨折することがあります。
+fracture | v | Did the doctor say you fractured your wrist? | 医師は手首を骨折したと言いましたか。
+fracture | v | The thin glass fractured when it hit the floor. | 薄いガラスは床に当たって割れました。
+mold | n | The baker poured the mixture into a round mold. | パン職人は生地を丸い型に流し込みました。
+mold | n | Is there mold growing on this old bread? | この古いパンにカビが生えていますか。
+mold | n | The children used small molds to make chocolate shapes. | 子供たちは小さな型でチョコレートの形を作りました。
+relate | v | Can you relate this picture to the story? | この絵を物語と関係づけられますか。
+relate | v | How does your question relate to today's lesson? | あなたの質問は今日の授業とどう関係していますか。
+relate | v | The teacher related the new ideas to everyday examples. | 先生は新しい考えを日常の例と関連づけました。
+fundamental | a | Good communication is fundamental to successful teamwork. | よい意思疎通はチームで成功するための基本です。
+fundamental | a | Do you understand the fundamental rules of this game? | このゲームの基本的なルールを理解していますか。
+fundamental | a | The course teaches fundamental skills for writing clear sentences. | その講座では明確な文章を書くための基本的な技能を教えます。
+utter | v | He was too surprised to utter a single word. | 彼は驚きすぎて一言も口に出せませんでした。
+utter | v | Did she utter anything during the long meeting? | 彼女は長い会議の間に何か口に出しましたか。
+utter | v | The child uttered a quiet thank you before leaving. | 子供は帰る前に小さな声でお礼を言いました。
+discharge | v | The pipe can discharge water into the garden. | その管は庭に水を放出できます。
+discharge | v | When will the hospital discharge your grandfather? | 病院はいつおじいさんを退院させますか。
+discharge | v | The machine discharged warm air through a small opening. | その機械は小さな開口部から暖かい空気を放出しました。
+substitute | v | You can substitute honey for sugar in this recipe. | このレシピでは砂糖の代わりに蜂蜜を使えます。
+substitute | v | Could we substitute water for milk in this mixture? | この材料では牛乳の代わりに水を使えますか。
+substitute | v | The cook substituted fresh fruit for the usual dessert. | 料理人はいつものデザートの代わりに新鮮な果物を出しました。
+splash | v | Please do not splash water on the kitchen floor. | 台所の床に水をはねかけないでください。
+splash | v | Did the children splash each other at the pool? | 子供たちはプールで互いに水をかけ合いましたか。
+splash | v | The passing car splashed muddy water onto my shoes. | 通り過ぎた車が私の靴に泥水をはねかけました。
+token | n | She gave me a flower as a token of thanks. | 彼女は感謝のしるしとして花をくれました。
+token | n | Is this small gift a token of your friendship? | この小さな贈り物はあなたの友情のしるしですか。
+token | n | The teacher offered tokens of appreciation to the helpers. | 先生は手伝ってくれた人たちに感謝のしるしを渡しました。
+extension | n | The school requested an extension of the project deadline. | 学校は計画の締め切りの延長を求めました。
+extension | n | Can you call my extension after lunch today? | 今日の昼食後に私の内線に電話してくれますか。
+extension | n | The new extension provides more space for the library. | 新しい増築部分で図書館のスペースが広がりました。
+claw | n | The cat caught the toy with one claw. | 猫は一本のかぎづめでおもちゃをつかみました。
+claw | n | Does this bird have a sharp claw on each foot? | この鳥の足にはそれぞれ鋭いかぎづめがありますか。
+claw | n | The kitten used its claws to climb the tree. | 子猫はかぎづめを使って木に登りました。
+elaborate | a | They prepared an elaborate dinner for their guests. | 彼らは客のために手の込んだ夕食を用意しました。
+elaborate | a | Is this elaborate design difficult to make by hand? | この手の込んだデザインを手作業で作るのは難しいですか。
+elaborate | a | The children built an elaborate model of their town. | 子供たちは町の精巧な模型を作りました。
+loosen | v | Please loosen the lid before giving me the jar. | 瓶を渡す前にふたを緩めてください。
+loosen | v | Can you loosen this tight knot without cutting it? | この固い結び目を切らずに緩められますか。
+loosen | v | He loosened his tie after the long meeting. | 彼は長い会議の後にネクタイを緩めました。
+involvement | n | Her involvement in the school festival made everyone happy. | 彼女が学校祭に参加したことでみんなが喜びました。
+involvement | n | Does the project require involvement from local families? | その計画には地元の家族の参加が必要ですか。
+involvement | n | The club welcomes greater involvement from younger members. | クラブは若い会員のさらなる参加を歓迎しています。
+mechanism | n | The clock has a simple mechanism inside its case. | その時計にはケースの中に簡単な仕組みがあります。
+mechanism | n | Can you explain how this locking mechanism works? | この施錠の仕組みがどう動くか説明できますか。
+mechanism | n | The students examined the mechanism of a small toy. | 生徒たちは小さなおもちゃの仕組みを調べました。
+slack | n | There is too much slack in this rope. | このロープには緩みがありすぎます。
+slack | n | Can you take up the slack in the line? | そのひもの緩みを取ってくれますか。
+slack | n | The worker removed the slack before tying the rope. | 作業員はロープを結ぶ前に緩みを取りました。
+mild | a | We enjoyed mild weather during our spring holiday. | 春休みには穏やかな天気を楽しみました。
+mild | a | Is this sauce mild enough for young children? | このソースは小さな子供にも十分に辛さが控えめですか。
+mild | a | The winter was unusually mild in our town. | 私たちの町では冬の寒さが例年になく穏やかでした。
+distort | v | A curved mirror can distort the shape of your face. | 曲がった鏡は顔の形をゆがめることがあります。
+distort | v | Does this camera lens distort the picture near the edges? | このカメラのレンズは画像の端をゆがめますか。
+distort | v | The loud speaker distorted the singer's voice during practice. | 大きなスピーカーが練習中に歌手の声をゆがめました。
+lump | n | A lump of sugar fell into my tea. | 砂糖のかたまりが紅茶の中に落ちました。
+lump | n | Can you break this lump of clay into pieces? | この粘土のかたまりをいくつかに分けられますか。
+lump | n | The cook removed the lumps from the cake mixture. | 料理人はケーキの生地からかたまりを取り除きました。
+dwarf | n | The story features a dwarf living near the mountains. | その物語には山の近くに住む小人が登場します。
+dwarf | n | Did the dwarf help the children find their way? | その小人は子供たちが道を見つけるのを助けましたか。
+dwarf | n | The garden has several dwarf trees beside the path. | 庭には小道のそばに小型の木が何本かあります。
+partial | a | We received only a partial answer to our question. | 私たちは質問に対する部分的な答えしか受け取りませんでした。
+partial | a | Is this a partial list of the available courses? | これは受講できる講座の一部の一覧ですか。
+partial | a | The workers completed a partial repair before sunset. | 作業員たちは日没前に部分的な修理を終えました。
+relieve | v | A short walk can relieve stress after work. | 短い散歩は仕事後のストレスを和らげることがあります。
+relieve | v | Does this warm drink relieve your sore throat? | この温かい飲み物は喉の痛みを和らげますか。
+relieve | v | Her kind words relieved my worries about the interview. | 彼女の優しい言葉が面接への不安を和らげました。
+conservative | a | My grandfather has conservative views about changing old traditions. | 祖父は古い伝統を変えることに保守的な考えを持っています。
+conservative | a | Is that a conservative estimate of the total cost? | それは総費用の控えめな見積もりですか。
+conservative | a | The company took a conservative approach to spending money. | 会社は支出について慎重で保守的な方針を取りました。
+forge | v | The two schools hope to forge a strong partnership. | 二つの学校は強い協力関係を築きたいと考えています。
+forge | v | Can the workers forge this metal into a tool? | 作業員たちはこの金属を鍛えて道具にできますか。
+forge | v | The artists forged a lasting friendship during the project. | 芸術家たちはその計画を通じて長く続く友情を築きました。
+slavery | n | The museum has an exhibition about the history of slavery. | その博物館には奴隷制度の歴史に関する展示があります。
+slavery | n | Did your class discuss slavery in the history lesson? | あなたのクラスは歴史の授業で奴隷制度について話し合いましたか。
+slavery | n | The book explains how slavery affected many families. | その本は奴隷制度が多くの家族に与えた影響を説明しています。
+cement | n | The workers mixed cement with water at the building site. | 作業員たちは建設現場でセメントを水と混ぜました。
+cement | n | How long does this cement need to become hard? | このセメントが固まるにはどのくらい時間がかかりますか。
+cement | n | The builder ordered more cement for the garden wall. | 建築業者は庭の壁のためにセメントを追加注文しました。
+inventory | n | The shop checks its inventory at the end of each month. | その店は毎月末に在庫を確認します。
+inventory | n | Did you update the inventory before ordering new supplies? | 新しい備品を注文する前に在庫一覧を更新しましたか。
+inventory | n | The manager found several missing items during the inventory. | 責任者は棚卸し中にいくつかの不足品を見つけました。
+imaginary | a | The child drew a map of an imaginary island. | 子供は想像上の島の地図を描きました。
+imaginary | a | Is that an imaginary animal from your favorite story? | それはお気に入りの物語に出てくる想像上の動物ですか。
+imaginary | a | The children invented imaginary friends for their classroom game. | 子供たちは教室の遊びのために想像上の友達を作りました。
+portion | n | I saved a small portion of cake for you. | あなたのためにケーキを少し取っておきました。
+portion | n | Would you like a larger portion of rice? | ご飯をもう少し多く盛りましょうか。
+portion | n | The cook divided the meal into equal portions. | 料理人は食事を同じ量ずつに分けました。
+slit | n | There is a narrow slit in the wooden box. | 木の箱には細い切れ目があります。
+slit | n | Can you see light through that small slit? | その小さな切れ目から光が見えますか。
+slit | n | The designer added two slits to the paper cover. | 設計者は紙のカバーに二つの切れ目を入れました。
+humour | n | Her gentle humour makes every family dinner enjoyable. | 彼女の穏やかなユーモアは家族の夕食を楽しくします。
+humour | n | Do you enjoy the humour in this television show? | このテレビ番組のユーモアを楽しんでいますか。
+humour | n | The teacher used humour to make the lesson interesting. | 先生は授業を面白くするためにユーモアを使いました。
+gag | v | The strong smell can make some people gag. | 強いにおいで吐き気を催す人もいます。
+gag | v | Did the bitter taste make you gag? | その苦い味で吐き気を催しましたか。
+gag | v | He gagged when he tasted the unpleasant drink. | 彼はそのまずい飲み物を口にして吐き気を催しました。
+verse | n | The teacher asked us to memorize one verse of the poem. | 先生は詩の一節を暗記するよう私たちに求めました。
+verse | n | Can you read the next verse aloud for everyone? | 次の詩の一節をみんなに聞こえるよう読めますか。
+verse | n | The song has three verses and a short chorus. | その歌には三つの節と短いサビがあります。
+impulse | n | I bought the colorful notebook on impulse yesterday. | 昨日私は衝動的に色鮮やかなノートを買いました。
+impulse | n | Did you feel an impulse to laugh at that moment? | その瞬間に笑いたい衝動を感じましたか。
+impulse | n | She resisted the impulse to check her phone again. | 彼女はまた携帯電話を確認したい衝動を抑えました。
+sew | v | My grandmother taught me to sew a simple bag. | 祖母は私に簡単な袋の縫い方を教えてくれました。
+sew | v | Can you sew this button onto my shirt? | このボタンを私のシャツに縫い付けられますか。
+sew | v | The students sewed colorful patterns onto their cloth bags. | 生徒たちは布の袋に色鮮やかな模様を縫い付けました。
+rag | n | Use an old rag to clean the bicycle chain. | 自転車のチェーンを掃除するには古いぼろきれを使ってください。
+rag | n | Can you find a clean rag in the cupboard? | 戸棚の中からきれいなぼろきれを探してくれますか。
+rag | n | The workers wiped the windows with soft rags. | 作業員たちは柔らかいぼろきれで窓を拭きました。
+disrespect | n | Talking during her speech showed disrespect to the speaker. | 彼女のスピーチ中に話すのは話し手への失礼に当たりました。
+disrespect | n | Was his rude answer a sign of disrespect? | 彼の失礼な返事は敬意の欠如を示していましたか。
+disrespect | n | The teacher reminded us that disrespect hurts other people. | 先生は失礼な態度が他人を傷つけると注意しました。
+confuse | v | Similar street names can confuse visitors to the town. | 似た通りの名前は町を訪れる人を混乱させることがあります。
+confuse | v | Did the new instructions confuse you at first? | 新しい説明で最初は混乱しましたか。
+confuse | v | The different answers confused the students during the lesson. | 異なる答えが授業中に生徒たちを混乱させました。
+wage | n | The company pays a fair wage to each worker. | その会社は各作業員に公正な賃金を払います。
+wage | n | Is the hourly wage higher for evening work? | 夕方の仕事は時給が高くなりますか。
+wage | n | The workers discussed their wages with the manager. | 作業員たちは責任者と賃金について話し合いました。
+scooter | n | My brother rides his scooter to the station. | 兄はスクーターに乗って駅へ行きます。
+scooter | n | Can you park your scooter beside the bicycle stand? | スクーターを自転車置き場のそばに止められますか。
+scooter | n | Several scooters were parked outside the small shop. | 小さな店の外にスクーターが何台か止まっていました。
+numerous | a | Numerous students joined the club after the school festival. | 学校祭の後、非常に多くの生徒がクラブに入りました。
+numerous | a | Did you find numerous examples in the textbook? | 教科書の中に非常に多くの例を見つけましたか。
+numerous | a | The garden attracts numerous birds during the spring. | その庭には春になると非常に多くの鳥が集まります。
+flock | n | A flock of birds flew over the lake. | 鳥の群れが湖の上を飛んでいきました。
+flock | n | Can you see the flock of sheep on the hill? | 丘の上の羊の群れが見えますか。
+flock | n | Several flocks moved across the open fields together. | いくつかの群れが広い野原を一緒に移動しました。
+kettle | n | The kettle is boiling water for our afternoon tea. | やかんで午後のお茶用のお湯を沸かしています。
+kettle | n | Could you fill the kettle before breakfast tomorrow? | 明日の朝食前にやかんに水を入れてくれますか。
+kettle | n | The shop sells electric kettles in different sizes. | その店ではさまざまな大きさの電気やかんを売っています。
+radius | n | The circle has a radius of five centimeters. | その円の半径は五センチメートルです。
+radius | n | Can you measure the radius of this round table? | この丸いテーブルの半径を測れますか。
+radius | n | The students drew circles with different radii in class. | 生徒たちは授業で半径の異なる円を描きました。
+stitch | n | One stitch came loose on the sleeve of my shirt. | シャツの袖の縫い目が一か所ほつれました。
+stitch | n | Can you make a small stitch to repair this bag? | この袋を直すために一針縫ってくれますか。
+stitch | n | She checked every stitch before finishing the dress. | 彼女はドレスを仕上げる前に縫い目を一つずつ確認しました。
+compass | n | A compass helps hikers find the right direction. | 羅針盤は登山者が正しい方向を見つけるのに役立ちます。
+compass | n | Do you know how to read this compass? | この羅針盤の読み方を知っていますか。
+compass | n | The students carried compasses during their outdoor lesson. | 生徒たちは屋外授業で羅針盤を持っていました。
+thrust | v | Do not thrust your hands into the moving machine. | 動いている機械に手を突っ込まないでください。
+thrust | v | Did he thrust the heavy box toward you? | 彼は重い箱をあなたの方へ突き出しましたか。
+thrust | v | The child thrust a drawing into his mother's hands. | 子供は絵を母親の手にぐいっと押しつけました。
+distribution | n | The distribution of free books began after lunch. | 無料の本の配布は昼食後に始まりました。
+distribution | n | Who is responsible for the distribution of these supplies? | これらの備品の配分は誰が担当していますか。
+distribution | n | The company improved its distribution of food to local shops. | 会社は地元の店への食品配送を改善しました。
+preparation | n | Good preparation helps students feel confident before exams. | 十分な準備は生徒が試験前に自信を持つ助けになります。
+preparation | n | Have you finished your preparation for tomorrow's meeting? | 明日の会議の準備は終わりましたか。
+preparation | n | The family made preparations for their summer trip. | その家族は夏の旅行の準備をしました。
+denial | n | His denial of the mistake surprised the whole team. | 彼が間違いを否定したのでチーム全員が驚きました。
+denial | n | Was her denial clear during the discussion? | 話し合いで彼女の否定の意思は明確でしたか。
+denial | n | The manager's repeated denials did not answer our questions. | 責任者が何度も否定しても私たちの質問への答えにはなりませんでした。
+canvas | n | The artist painted a bright landscape on a large canvas. | 画家は大きなキャンバスに明るい風景を描きました。
+canvas | n | Can you carry this canvas into the classroom? | このキャンバスを教室に運んでくれますか。
+canvas | n | The shop sells small canvases for beginner painters. | その店では初心者の画家向けに小さなキャンバスを売っています。
+broom | n | She used a broom to sweep the kitchen floor. | 彼女はほうきで台所の床を掃きました。
+broom | n | Where did you put the broom after cleaning? | 掃除の後ほうきをどこに置きましたか。
+broom | n | The workers kept their brooms beside the back door. | 作業員たちは裏口のそばにほうきを置いていました。
+curve | n | The road makes a sharp curve near the bridge. | 道路は橋の近くで急な曲線を描いています。
+curve | n | Can you draw a smooth curve across the page? | 紙の上に滑らかな曲線を描けますか。
+curve | n | The river follows several gentle curves through the valley. | 川は谷を通っていくつもの緩やかな曲線を描いています。
+appreciation | n | We sent a letter of appreciation to our teacher. | 私たちは先生に感謝の手紙を送りました。
+appreciation | n | Did she express appreciation for your kind help? | 彼女はあなたの親切な手助けに感謝を示しましたか。
+appreciation | n | The art class increased my appreciation of modern paintings. | 美術の授業で現代絵画への理解が深まりました。
+discretion | n | The teacher used her discretion when choosing the activities. | 先生は活動を選ぶ際に自分の裁量で判断しました。
+discretion | n | Can we leave the final decision to your discretion? | 最終的な判断をあなたの裁量に任せてもいいですか。
+discretion | n | Please use discretion when sharing personal information online. | 個人情報をインターネットで共有するときは慎重に判断してください。
+machinery | n | The factory uses modern machinery to make wooden furniture. | その工場は木製家具を作るために現代的な機械を使っています。
+machinery | n | Is the machinery checked before the workers arrive? | 作業員が来る前に機械は点検されますか。
+machinery | n | The company bought new machinery to save time. | 会社は時間を節約するために新しい機械を購入しました。
+intervention | n | The teacher's intervention helped the students settle their disagreement. | 先生の介入で生徒たちは意見の違いを解決できました。
+intervention | n | Was your intervention necessary during the team discussion? | チームの話し合いであなたの介入は必要でしたか。
+intervention | n | Early intervention prevented the small problem from growing. | 早い段階での介入が小さな問題の拡大を防ぎました。
+accounting | n | She studied accounting before joining the family business. | 彼女は家業に加わる前に会計を学びました。
+accounting | n | Does your college offer an evening accounting course? | あなたの大学には夜間の会計講座がありますか。
+accounting | n | The office uses a computer system for accounting. | その事務所は会計にコンピューターの仕組みを使っています。
+beacon | n | The bright beacon guided boats toward the harbor. | 明るい標識灯が船を港へ導きました。
+beacon | n | Can you see the beacon from this beach? | この浜辺から標識灯が見えますか。
+beacon | n | Several beacons mark the safe route through the water. | いくつかの標識灯が水上の安全な航路を示しています。
+lighten | v | Opening the curtains will lighten this dark room. | カーテンを開ければこの暗い部屋が明るくなります。
+lighten | v | Could you lighten my bag by carrying these books? | この本を持って私のかばんを軽くしてくれますか。
+lighten | v | Her cheerful story lightened the mood at dinner. | 彼女の明るい話で夕食の雰囲気が和らぎました。
+cautious | a | Be cautious when crossing this busy street at night. | 夜にこの交通量の多い通りを渡るときは用心してください。
+cautious | a | Are you cautious about sharing your address online? | インターネットで住所を共有することに慎重ですか。
+cautious | a | The driver remained cautious on the narrow mountain road. | 運転手は狭い山道で用心深く運転しました。
+comparison | n | A comparison of the two plans shows clear differences. | 二つの計画を比較すると明確な違いが分かります。
+comparison | n | Can you make a comparison between these two prices? | この二つの価格を比較できますか。
+comparison | n | The students wrote comparisons of their favorite books. | 生徒たちはお気に入りの本を比較する文章を書きました。
+admission | n | Admission to the museum is free on Sundays. | 日曜日は博物館への入場が無料です。
+admission | n | How much is the admission fee for adults? | 大人の入場料はいくらですか。
+admission | n | She received admission to the college last week. | 彼女は先週その大学への入学許可を受けました。
+vent | n | Warm air comes through the vent near the ceiling. | 天井近くの通気口から暖かい空気が出てきます。
+vent | n | Is this vent blocked by the large cupboard? | この通気口は大きな戸棚でふさがれていますか。
+vent | n | The worker cleaned the vents in every classroom. | 作業員はすべての教室の通気口を掃除しました。
+limb | n | The tree lost a large limb during the storm. | その木は嵐で大きな枝を一本失いました。
+limb | n | Can this animal move each limb separately? | この動物は手足をそれぞれ別々に動かせますか。
+limb | n | The exercise helps strengthen the muscles in your limbs. | その運動は手足の筋肉を強くするのに役立ちます。
+pupil | n | Each pupil received a new notebook on Monday. | 月曜日に生徒一人一人が新しいノートを受け取りました。
+pupil | n | Did the teacher speak to every pupil individually? | 先生は生徒一人一人と個別に話しましたか。
+pupil | n | The pupils worked together to clean their classroom. | 生徒たちは協力して教室を掃除しました。
+tempt | v | The smell of fresh bread can tempt anyone. | 焼きたてのパンの香りは誰でも食べたくさせます。
+tempt | v | Did the colorful cakes tempt you to buy one? | 色鮮やかなケーキを見て一つ買いたくなりましたか。
+tempt | v | The sunny weather tempted us to eat outside. | 晴れた天気に誘われて私たちは外で食事をしました。
+decline | v | I must decline the invitation because I am busy. | 忙しいのでその招待をお断りしなければなりません。
+decline | v | Did the number of visitors decline last month? | 先月は訪問者の数が減りましたか。
+decline | v | She politely declined the offer of another dessert. | 彼女はデザートのおかわりを丁寧に断りました。
+yield | v | These apple trees yield plenty of fruit each autumn. | これらのリンゴの木は毎秋たくさんの実をつけます。
+yield | v | Will the new method yield better results this year? | 新しい方法は今年よりよい結果を生み出しますか。
+yield | v | The driver yielded to people crossing the road. | 運転手は道路を渡る人たちに道を譲りました。
+reinforcement | n | The old bridge needs reinforcement before heavy vehicles use it. | 古い橋は重い車が通る前に補強が必要です。
+reinforcement | n | Will the wall require reinforcement to support the roof? | その壁は屋根を支えるために補強が必要ですか。
+reinforcement | n | The teacher used praise as reinforcement for good behavior. | 先生はよい行動を強化するために褒め言葉を使いました。
+manipulate | v | The worker learned to manipulate the machine with care. | 作業員は機械を慎重に操作する方法を学びました。
+manipulate | v | Can you manipulate these small parts with your fingers? | これらの小さな部品を指で巧みに扱えますか。
+manipulate | v | The artist manipulated the clay into different shapes. | 芸術家は粘土を巧みに扱ってさまざまな形にしました。
+tickle | v | Soft feathers can tickle the skin on your arm. | 柔らかい羽は腕の皮膚をくすぐることがあります。
+tickle | v | Did the little kitten tickle your feet yesterday? | 昨日その小さな子猫があなたの足をくすぐりましたか。
+tickle | v | The child laughed when her father tickled her. | 父親にくすぐられて子供は笑いました。
+cuff | n | The cuff of my shirt has a small button. | 私のシャツの袖口には小さなボタンがあります。
+cuff | n | Can you fix the loose cuff on this jacket? | この上着の緩んだ袖口を直してくれますか。
+cuff | n | The tailor added buttons to both cuffs of the coat. | 仕立て屋はコートの両方の袖口にボタンを付けました。
+judgement | n | Good judgement is important when making difficult choices. | 難しい選択をするときには適切な判断力が大切です。
+judgement | n | Do you trust your own judgement in this situation? | この状況で自分の判断を信じていますか。
+judgement | n | The teacher praised her careful judgement during the project. | 先生は計画中の彼女の慎重な判断を褒めました。
+slot | n | Put the coin into the narrow slot on the machine. | 硬貨を機械の細長い差し込み口に入れてください。
+slot | n | Can you see the slot along the wooden board? | 木の板に沿った細長い溝が見えますか。
+slot | n | The workers cut several slots into the metal frame. | 作業員たちは金属の枠に細長い溝をいくつか作りました。
+torment | n | Waiting for the results was a torment for him. | 結果を待つことは彼にとって苦痛でした。
+torment | n | Did the long period of uncertainty cause you torment? | 長い間先が分からないことはあなたに苦痛を与えましたか。
+torment | n | The character finally found peace after years of torment. | その登場人物は長年の苦痛の後についに安らぎを得ました。
+extract | v | The scientist tried to extract color from the flowers. | 科学者は花から色を取り出そうとしました。
+extract | v | Can you extract the juice from these fresh oranges? | これらの新鮮なオレンジから果汁を絞り出せますか。
+extract | v | The worker extracted a broken nail from the wood. | 作業員は木から折れたくぎを引き抜きました。
+unity | n | The school festival brought a feeling of unity to everyone. | 学校祭はみんなに一体感をもたらしました。
+unity | n | Can music create unity among people from different backgrounds? | 音楽は異なる背景の人々の間に一体感を生み出せますか。
+unity | n | The team showed great unity during the difficult project. | チームは難しい計画の間に強い団結を示しました。
+allowance | n | My parents give me a small allowance every week. | 両親は毎週私に少しおこづかいをくれます。
+allowance | n | How much allowance do you save each month? | 毎月おこづかいをどのくらい貯金していますか。
+allowance | n | The company provides a travel allowance for its workers. | 会社は従業員に交通手当を支給しています。
+idle | a | The machines remained idle during the long holiday. | 長い休暇の間、機械は使われずに止まっていました。
+idle | a | Why is that bus sitting idle outside the station? | なぜあのバスは駅の外で何もせず停車しているのですか。
+idle | a | The workers were idle while waiting for new materials. | 作業員たちは新しい材料を待つ間、仕事をしていませんでした。
+calculation | n | My calculation shows that we have enough money. | 私の計算では私たちには十分なお金があります。
+calculation | n | Can you check this calculation before I submit it? | 提出する前にこの計算を確認してくれますか。
+calculation | n | The students used calculators for their difficult calculations. | 生徒たちは難しい計算に電卓を使いました。
+vocal | a | The singer needs a short vocal exercise before performing. | 歌手は公演前に短い発声練習が必要です。
+vocal | a | Are you vocal about your opinions during meetings? | 会議中に自分の意見をはっきり述べますか。
+vocal | a | Several parents were vocal in their support for the plan. | 何人かの保護者はその計画への支持を声高に表明しました。
+isolation | n | The small village lived in isolation during the winter. | その小さな村は冬の間孤立した状態にありました。
+isolation | n | Did the long isolation make the traveler feel lonely? | 長い孤立状態でその旅行者は寂しくなりましたか。
+isolation | n | The new road ended the village's isolation from nearby towns. | 新しい道路によって村は近隣の町からの孤立を脱しました。
+loft | n | We keep old books in the loft above our bedroom. | 私たちは寝室の上の屋根裏に古い本を保管しています。
+loft | n | Can you find the holiday decorations in the loft? | 屋根裏で休日の飾りを見つけられますか。
+loft | n | The family turned their loft into a small study. | その家族は屋根裏を小さな勉強部屋に変えました。
