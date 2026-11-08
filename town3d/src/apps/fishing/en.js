@@ -263,7 +263,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     const fish = { uid: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), id: sp.id, size, g: 0, day: '', n: 0, at: Date.now() };
     if (!tankRoom()) { if (!boxRoom()) return false; const b = spec.box(); b.push(fish); spec.saveBox(b); return 'box'; }   // 水槽がいっぱいなら図鑑の枠へ
     const t = spec.tank(); t.push(fish); spec.saveTank(t);
-    if (!spec.hasTank()) { spec.gotTank(); furn.give('tank'); return 'first'; }
+    if (!spec.hasTank()) { spec.gotTank(); if (!furn.owned('tank')) { furn.give('tank'); return 'first'; } }
     return true;
   }
 

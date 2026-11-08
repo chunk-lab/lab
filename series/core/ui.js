@@ -35,7 +35,7 @@ export function createUI(core) {
       <label class="cs-row cs-col"><span>AIのキー${core.ai.ready ? '(入っています)' : ''}</span><input id="cs-aik" type="password" autocomplete="off" placeholder="${core.ai.ready ? '変えるときだけ入れる' : 'キーを貼る(3Dの町と同じキー)'}"></label>
       <p class="cs-note">キーはこの端末にだけ保存します。住人との会話・「自然な文か」の判定・例文づくりに使います。</p>` : ''}
       ${core.admin && core.admin.on() ? '<button class="cs-btn" id="cs-admin">運営</button>' : ''}
-      <p class="cs-note" style="text-align:center;opacity:.6">版 ${(window.__APP__ && window.__APP__.build) || '-'}</p>`, (ov, close) => {
+      <p class="cs-note" style="text-align:center;opacity:.6">版 ${(() => { const b = window.__APP__ && window.__APP__.build, t = b ? parseInt(b, 36) : NaN; if (!isFinite(t)) return '-'; const d = new Date(t + 9 * 36e5).toISOString(); return d.slice(5, 10) + ' ' + d.slice(11, 16); })()}</p>`, (ov, close) => {
       ['bgm', 'sfx', 'rate'].forEach(k => ov.querySelector('#cs-' + k).oninput = e => s.set(k, +e.target.value));
       ov.querySelector('#cs-theme').onchange = e => s.set('theme', e.target.value);
       ov.querySelector('#cs-voice').onchange = e => s.set('voice', e.target.checked);

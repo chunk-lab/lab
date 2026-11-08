@@ -4,6 +4,8 @@ import { PLAYS } from '../../core/plays.js';
 import { LOGO } from '../../core/logos.js';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
+// 版:組み立てた日時(日本時間)。テスト版が最新かどうか、見分けるための印
+const verText = () => { const b = window.__APP__ && window.__APP__.build, t = b ? parseInt(b, 36) : NaN; if (!isFinite(t)) return 'ver dev'; const d = new Date(t + 9 * 36e5).toISOString(); return 'ver ' + d.slice(5, 10) + ' ' + d.slice(11, 16); };
 export function createHome(core, { st, go3D, openStudy, has, openEpisode, episodeLabel }) {
   let el = null;
   const usable = p => p.go.to === '3d' ? true : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level : p.go.to === 'role' ? !!core.roletest && !!core.books : !!core.openGame && has(p.go.game);
@@ -24,6 +26,7 @@ export function createHome(core, { st, go3D, openStudy, has, openEpisode, episod
       <details class="hm-more"><summary>ほかの練習・ゲーム</summary>
       <h2>📚 勉強する</h2>${study.map(row).join('')}
       <h2>🎮 ゲームであそぶ</h2>${fun.map(row).join('')}</details>
+      <p class="hm-ver">${esc(verText())}</p>
       </div>`;
     el.onclick = e => {
       const b = e.target.closest('button'); if (!b) return;

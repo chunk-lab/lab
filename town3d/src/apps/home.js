@@ -119,6 +119,7 @@ export const homeApp = {
       <div class="car"></div>
       <div class="sheet" style="position:absolute;inset:0;background:#0006;display:none;align-items:flex-end;justify-content:center"></div>`;
     el.appendChild(root);
+    const verEl = document.createElement('div'); verEl.textContent = 'ver ' + (typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'); verEl.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);top:4px;font:700 10px/1 monospace;color:#8d7f9e;pointer-events:none;z-index:5;opacity:.85'; root.appendChild(verEl);
     const car = root.querySelector('.car'), cv = root.querySelector('.cv'), tip = root.querySelector('.tip'), ctl = root.querySelector('.ctl'), inv = root.querySelector('.inv'), planEl = root.querySelector('.plan'), sheet = root.querySelector('.sheet');
 
     // 部屋の3D(必要なときだけ描き直す)
