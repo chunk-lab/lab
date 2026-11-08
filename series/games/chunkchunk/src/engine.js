@@ -748,7 +748,7 @@ export function settingRows(){return `
     <div class="row"><label for="optRlab">切ったときの役割の出し方</label>${opt("optRlab",settings.rlab||"q",[["q","S だれが！／V どうしてる！"],["p","主役！／どうしてる！／お相手！"],["g","主語／動詞／目的語"],["off","出さない"]])}</div>
     <div class="row"><label for="optVoice">声・読み上げ</label>${opt("optVoice",(settings.sound==="both"||settings.sound==="voice")?"on":"off",[["on","オン"],["off","オフ"]])}</div>
     <div class="row"><label for="optSe">効果音</label>${opt("optSe",(settings.sound==="both"||settings.sound==="sfx")?"on":"off",[["on","オン"],["off","オフ"]])}</div>
-    <div class="row"><label for="optBgm">BGM</label>${opt("optBgm",settings.bgm||"low",[["low","小さめ"],["mid","ふつう"],["off","なし"]])}</div>
+    <div class="row"><label for="optBgm">BGM</label>${opt("optBgm",settings.bgm||"mid",[["low","小さめ"],["mid","ふつう"],["off","なし"]])}</div>
     <div class="row"><label for="optMute">音をぜんぶ消す（左はしの 🎵 と同じ）</label>${opt("optMute",settings.mute?"on":"off",[["off","消さない"],["on","消す"]])}</div>
     <div class="row"><label for="optGram">チュートリアルの文法用語（カードに小さく併記）</label>${opt("optGram",settings.gram===false?"off":"on",[["on","出す"],["off","出さない"]])}</div>
     <div class="row"><label for="optMyRank">自分のランク</label>${opt("optMyRank",String(settings.myLevel||0),[["0","未登録"],...LV.slice(1).map((_,i)=>[String(i+1),lvLabel(i+1)])])}</div>
