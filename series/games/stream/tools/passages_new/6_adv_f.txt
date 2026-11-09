@@ -263,7 +263,7 @@ O| certain {links|linked|linking|link to}. :: 特定のリンクを
 S| This principle, now {known|knowing|knew|know} :: いま知られるこの原則は
 X| {as|to|like|with} the right to be forgotten, :: 忘れられる権利として
 V| {applies|apply|applying|application} :: 適用される
-P| {to|at|by|than} information :: 情報に
+O| {to|at|by|than} information :: 情報に
 X| {that|what|whom|whose} is inaccurate, outdated :: 不正確で古い
 M| {or|nor|but|so} no longer relevant. :: もはや無関係な
 == 現在「忘れられる権利」と呼ばれるこの原則は、不正確な情報、古い情報、もはや無関係な情報に適用される。
@@ -530,9 +530,9 @@ O| such {clean|cleanly|cleanness|cleaned of} choices. :: そんな明確な選�
 == 別の批判者は、実際の事故がそれほどはっきりした選択を迫ることはめったにないとして、こうした想定を非現実的だと退ける。
 M| {In|On|At|By} their view, :: 彼らの考えでは
 S| engineers should {focus|focuses|focusing|focused} :: 技術者は集中すべき
-P| {on|in|at|to} preventing accidents altogether :: 事故自体の防止に
+O| {on|in|at|to} preventing accidents altogether :: 事故自体の防止に
 M| rather {than|then|as|that} on ranking :: 順位づけではなく
-O| the value {of|for|at|in} lives. :: 命の価値の
+M| the value {of|for|at|in} lives. :: 命の価値の
 == 彼らの考えでは、技術者は命の価値に順位をつけることより、事故そのものを防ぐことに力を注ぐべきだという。
 R| {Since|Despite|During|Because of} autonomous cars could, :: 自動運転車は…ので
 M| {statistically|statistic|statistical|statistics}, :: 統計上
@@ -595,7 +595,7 @@ S| Whistleblowers {exposing|exposed|expose|exposure} corruption, :: 不正を暴
 S| victims of abuse {seeking|sought|seek|seeks} support, :: 支援を求める被害者
 S| and {dissidents|dissident|dissidence|dissenting} under authoritarian regimes :: 独裁下の反体制派は
 V| all {depend|depends|depending|dependent} :: みな頼っている
-P| {on|in|at|to} hiding their identities. :: 身元を隠すことに
+O| {on|in|at|to} hiding their identities. :: 身元を隠すことに
 == 不正を暴く内部告発者、支援を求める虐待の被害者、そして独裁体制下の反体制派は、みな身元を隠すことに頼っている。
 M| {For|At|By|Than} them, :: 彼らにとって
 S| {revealing|reveal|revealed|revelation} who they are :: 身元を明かすことは
@@ -715,7 +715,7 @@ V| {holds|hold|holding|holder} :: …とする
 O| that technology is {neither|either|nor|not} good :: 技術は善でも
 M| {nor|than|but|and} bad; :: 悪でもない
 S| everything {depends|depend|depending|dependence} :: すべては…次第だ
-P| {on|in|at|to} how people use it. :: 人の使い方
+O| {on|in|at|to} how people use it. :: 人の使い方
 == 技術それ自体は善でも悪でもなく、すべては人の使い方次第だ、とよく言われる。
 S| A knife can {be|being|been|is} used :: ナイフは使える
 R| to prepare a meal {or|nor|than|whom} to harm someone, :: 料理にも人を傷つけるにも

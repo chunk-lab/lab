@@ -80,7 +80,7 @@ V| must {come|comes|coming|came} :: 来なければならない
 P| {with|than|of|whose} an adult. :: 大人と一緒に
 == 10歳未満の子どもは、大人と一緒に来なければなりません。
 V| Please {listen|listens|listening|listened} :: 聞いてください
-P| {to|of|on|than} the lifeguards :: 監視員の言うことを
+O| {to|of|on|than} the lifeguards :: 監視員の言うことを
 T| {at|on|in|of} all times. :: いつも
 == いつも監視員の言うことを聞いてください。
 S| You {can|cans|can to|could to} :: …できる

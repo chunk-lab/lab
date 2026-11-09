@@ -147,7 +147,7 @@ O| {breakfast|breakfasts|breakfasted|breakfasting}. :: 朝食を
 M| But {when|what|which|whom} the race started, :: でも始まると
 S| people {along|alone|alike|aloud} the road :: 沿道の人々が
 V| {cheered|cheer|cheering|cheerful} :: 応援してくれた
-P| {for|by|of|than} us. :: 私たちを
+O| {for|by|of|than} us. :: 私たちを
 == でもレースが始まると、沿道の人たちが応援してくれた。
 S| Their voices {gave|give|giving|given} me :: その声は私にくれた
 O| {energy|energetic|energize|energetically}, :: 元気を

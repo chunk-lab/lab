@@ -294,7 +294,7 @@ P| {for|by|than|of} the students. :: 生徒にとって
 == 生徒たちにとって、それを読むのはとても時間がかかった。
 T| {Later|Latter|Latest|Laterly}, :: 後に
 S| Braille {learned|learn|learning|learns} :: ブライユは知った
-P| {about|above|around of|abouts} a code of dots :: 点の暗号について
+O| {about|above|around of|abouts} a code of dots :: 点の暗号について
 M| {made|making|makes|make} for soldiers. :: 兵士向けに作られた
 == 後に、ブライユは兵士向けに作られた点の暗号について知った。
 S| He {made|make|making|makes} :: 彼は…した

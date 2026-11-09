@@ -222,7 +222,7 @@ O| patients' {temperatures|temperature's|tempered|temperate} :: 患者の体温�
 M| {and|nor|than|whom} give them medicine. :: そして薬をあげる
 == 彼らは患者の体温を測ったり、薬をあげたりする。
 S| They {also|alsoly|ago|else} listen :: 彼らはまた聞く
-P| {to|at|of|than} patients :: 患者の話を
+O| {to|at|of|than} patients :: 患者の話を
 M| {carefully|careful|care|careless}. :: 注意深く
 == 彼らはまた、患者の話を注意深く聞く。
 S| My mother {sometimes|sometime's|somes|sometimed} works :: 母はときどき働く

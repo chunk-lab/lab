@@ -178,7 +178,7 @@ C| the {voice|voicing|voiced|vocal} :: 声
 P| {of|off|on|than} a frog. :: カエルの
 == それはカエルの声だった。
 S| I {looked|looking|looks|to look} :: 私は見た
-P| {into|than|of|since} the water :: 水の中を
+O| {into|than|of|since} the water :: 水の中を
 M| {carefully|careful|care|careless}. :: 注意深く
 == 私は水の中を注意深くのぞいた。
 S| A small green {frog|frogs|frogged|frog's} :: 小さな緑のカエルが

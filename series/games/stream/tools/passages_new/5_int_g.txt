@@ -116,7 +116,7 @@ O| no smartphone {for|since|while|until} a week. :: 1週間スマホなし
 T| On the {first|one|firstly|once} day, :: 初日は
 S| I {kept|keeping|keeps|to keep} :: 私は何度も
 V| {reaching|reach|reached|to reach} :: 手を伸ばした
-P| {for|of|at|on} my pocket. :: ポケットに
+O| {for|of|at|on} my pocket. :: ポケットに
 == 初日、私は何度もポケットに手を伸ばした。
 S| It {had become|had became|has became|becoming} :: それはなっていた
 C| a {habit|habitual|habitually|habits} :: 習慣に
@@ -400,7 +400,7 @@ O| {many|much|a little|every} new chances. :: 多くの新しい機会を
 == この変化は多くの新しい機会をもたらした。
 S| The local clinic {can|cans|can to|must to} now :: 診療所は今…できる
 V| {talk|talks|talking|talked} :: 話す
-P| {with|of|into|from} doctors in the city :: 都会の医師と
+O| {with|of|into|from} doctors in the city :: 都会の医師と
 P| {by|of|into|at} video call. :: ビデオ通話で
 == 地元の診療所は今、ビデオ通話で都会の医師と話せる。
 S| Some young people {have|has|having|to have} :: 若者の中には
@@ -435,7 +435,7 @@ T| {right|rightly|righter|rights} away. :: すぐに
 == クレジットカードを使えば、すぐにお金を払わなくても物が買える。
 S| {In|On|At|By} fact, the company :: 実はカード会社が
 V| {pays|pay|paying|paid of} :: 払う
-P| {for|of|at|by} you first. :: 先に代わりに
+O| {for|of|at|by} you first. :: 先に代わりに
 == 実は、カード会社が先に代わりに払ってくれているのだ。
 T| {Once|One|Ones|Won} a month, :: 月に1回
 S| you {receive|receives|receiving|receipt} :: あなたは受け取る

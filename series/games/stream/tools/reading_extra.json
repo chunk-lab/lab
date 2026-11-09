@@ -208,7 +208,7 @@
 "値段はスーパーより安い。"
 ],
 [
-"S:You can=あなたは…できる | V:also talk=話すこともできる | P:with the farmers=農家の人と | M:about how they grow food.=育て方について",
+"S:You can=あなたは…できる | V:also talk=話すこともできる | O:with the farmers=農家の人と | M:about how they grow food.=育て方について",
 "農家の人と、食べ物の育て方について話すこともできる。"
 ],
 [
@@ -344,7 +344,7 @@
 "IT係が週末の間にすべてのパソコンを運ぶ。"
 ],
 [
-"S:We apologize=おわびします | M:for any inconvenience=ご不便について | M:and thank you=そして感謝します | O:for your cooperation.=ご協力に",
+"S:We apologize=おわびします | O:for any inconvenience=ご不便について | M:and thank you=そして感謝します | O:for your cooperation.=ご協力に",
 "ご不便をおかけしますが、ご協力に感謝します。"
 ]
 ],
@@ -542,7 +542,7 @@
 "問題をお知らせいただき、ありがとうございます。"
 ],
 [
-"S:We sincerely=私どもは心から | V:apologize=おわびします | M:for the inconvenience.=ご不便について",
+"S:We sincerely=私どもは心から | V:apologize=おわびします | O:for the inconvenience.=ご不便について",
 "ご不便をおかけしたことを、心からおわびします。"
 ],
 [
@@ -1303,7 +1303,7 @@
 "賛成派は、制服はみんなを平等にすると言う。"
 ],
 [
-"S:Students do not have to=生徒は…なくてよい | V:worry=悩む | P:about what to wear=何を着るかについて | T:every morning.=毎朝",
+"S:Students do not have to=生徒は…なくてよい | V:worry=悩む | O:about what to wear=何を着るかについて | T:every morning.=毎朝",
 "生徒は、毎朝何を着るか悩まなくてすむ。"
 ],
 [
@@ -1355,7 +1355,7 @@
 "title": "Join Our Beach Cleanup",
 "list": [
 [
-"S:The city is looking=市は探している | P:for volunteers=ボランティアを | M:to clean Green Bay Beach=海岸を清掃する | T:this Saturday.=今週の土曜に",
+"S:The city is looking=市は探している | O:for volunteers=ボランティアを | M:to clean Green Bay Beach=海岸を清掃する | T:this Saturday.=今週の土曜に",
 "市は、今週土曜日にグリーン湾の海岸を清掃するボランティアを募集している。"
 ],
 [
@@ -1790,7 +1790,7 @@
 "みなさん、こんにちは！私はミカで、学校の吹奏楽部でトランペットを吹いています。"
 ],
 [
-"T:Today=今日は | S:I want to write=書きたい | P:about our summer contest.=夏のコンクールについて",
+"T:Today=今日は | S:I want to write=書きたい | O:about our summer contest.=夏のコンクールについて",
 "今日は夏のコンクールについて書きたいと思います。"
 ],
 [
@@ -1806,7 +1806,7 @@
 "コンクール当日、舞台に出る前は手が震えていました。"
 ],
 [
-"M:But once we started playing,=でも演奏を始めると | S:I forgot=忘れた | P:about my nerves.=緊張のことを",
+"M:But once we started playing,=でも演奏を始めると | S:I forgot=忘れた | O:about my nerves.=緊張のことを",
 "でも演奏を始めると、緊張のことは忘れてしまいました。"
 ],
 [
@@ -1818,7 +1818,7 @@
 "最初は少しがっかりしましたが、先生は私たちを誇りに思うと言ってくれました。"
 ],
 [
-"T:Next year,=来年は | S:we will aim=目指します | P:for gold!=金賞を",
+"T:Next year,=来年は | S:we will aim=目指します | O:for gold!=金賞を",
 "来年は金賞を目指します！"
 ]
 ],
@@ -1910,7 +1910,7 @@
 "title": "Interview with a Soccer Captain",
 "list": [
 [
-"T:This month,=今月は | S:we talked=私たちは話した | P:to Ren,=レンに | M:the captain of the soccer club.=サッカー部のキャプテン",
+"T:This month,=今月は | S:we talked=私たちは話した | O:to Ren,=レンに | M:the captain of the soccer club.=サッカー部のキャプテン",
 "今月は、サッカー部キャプテンのレンに話を聞きました。"
 ],
 [
@@ -2251,7 +2251,7 @@
 "お荷物は10月9日ではなく、10月12日に届きます。"
 ],
 [
-"S:We sincerely=私たちは心から | V:apologize=おわびします | P:for the inconvenience.=ご不便について",
+"S:We sincerely=私たちは心から | V:apologize=おわびします | O:for the inconvenience.=ご不便について",
 "ご不便をおかけしたことを心からおわびします。"
 ],
 [
@@ -2295,7 +2295,7 @@
 "title": "New Rules for the Office Kitchen",
 "list": [
 [
-"S:Recently, many staff members=最近多くの職員が | V:have complained=不満を言っている | P:about the kitchen.=給湯室について",
+"S:Recently, many staff members=最近多くの職員が | V:have complained=不満を言っている | O:about the kitchen.=給湯室について",
 "最近、多くの職員が給湯室について不満を言っています。"
 ],
 [
@@ -2623,7 +2623,7 @@
 "また、私が着いたときに家にいない人が多いんです。"
 ],
 [
-"S:Q: How do you=Q：どのように | V:deal=対処する | P:with that?=それに",
+"S:Q: How do you=Q：どのように | V:deal=対処する | O:with that?=それに",
 "Q：それにはどう対処していますか。"
 ],
 [
@@ -2667,7 +2667,7 @@
 "title": "Applying for a Sales Job",
 "list": [
 [
-"S:I am writing to apply=応募するため書く | P:for the sales assistant position=販売員の職に | M:advertised on your website.=ウェブに出ていた",
+"S:I am writing to apply=応募するため書く | O:for the sales assistant position=販売員の職に | M:advertised on your website.=ウェブに出ていた",
 "御社のウェブサイトに掲載された販売員の職に応募したく、メールいたしました。"
 ],
 [
@@ -2683,7 +2683,7 @@
 "英語と韓国語も話せるので、御店のお役に立てるかもしれません。"
 ],
 [
-"S:I enjoy working=働くのが好き | P:with people=人と | M:and am good=そして得意だ | P:at teamwork.=チームワークが",
+"S:I enjoy working=働くのが好き | O:with people=人と | M:and am good=そして得意だ | P:at teamwork.=チームワークが",
 "私は人と働くのが好きで、チームワークも得意です。"
 ],
 [
@@ -3071,7 +3071,7 @@
 "また、便が遅れた場合どうすればよいかもお知らせください。"
 ],
 [
-"S:I look forward=楽しみにしている | P:to hearing=聞くことを | P:from you.=あなたから",
+"S:I look forward=楽しみにしている | O:to hearing=聞くことを | P:from you.=あなたから",
 "ご連絡をお待ちしております。"
 ],
 [
@@ -3267,7 +3267,7 @@
 "詳しくはウェブサイトをご覧いただくか、駅員におたずねください。"
 ],
 [
-"S:We apologize=おわびします | P:for any inconvenience=ご不便について | M:this may cause.=これが生む",
+"S:We apologize=おわびします | O:for any inconvenience=ご不便について | M:this may cause.=これが生む",
 "ご不便をおかけしますことをおわびします。"
 ]
 ],
@@ -4299,7 +4299,7 @@
 "レース当日は緊張しすぎて、朝食が食べられなかった。"
 ],
 [
-"M:But when the race started,=でも始まると | S:people along the road=沿道の人々が | V:cheered=応援してくれた | P:for us.=私たちを",
+"M:But when the race started,=でも始まると | S:people along the road=沿道の人々が | V:cheered=応援してくれた | O:for us.=私たちを",
 "でもレースが始まると、沿道の人たちが応援してくれた。"
 ],
 [
@@ -5291,7 +5291,7 @@
 "イギリスでは、多くの人が午後にミルクティーを好む。"
 ],
 [
-"T:Next time you drink tea,=次にお茶を飲むとき | V:think=考えてみよう | P:about the people=人々のことを | M:who share this habit.=この習慣を共にする",
+"T:Next time you drink tea,=次にお茶を飲むとき | V:think=考えてみよう | O:about the people=人々のことを | M:who share this habit.=この習慣を共にする",
 "次にお茶を飲むときは、この習慣を共にする人々のことを考えてみよう。"
 ]
 ],
@@ -5396,7 +5396,7 @@
 "ルーカスへ、来月あなたを迎えるのを楽しみにしています。"
 ],
 [
-"T:Before you come,=来る前に | S:I want to tell you=伝えたい | P:about a Japanese home custom.=日本の家の習慣を",
+"T:Before you come,=来る前に | S:I want to tell you=伝えたい | O:about a Japanese home custom.=日本の家の習慣を",
 "来る前に、日本の家の習慣について伝えたいと思います。"
 ],
 [
@@ -5589,7 +5589,7 @@
 "先月、私は簡単な実験をした。1週間スマホを使わないことだ。"
 ],
 [
-"T:On the first day,=初日は | S:I kept=私は何度も | V:reaching=手を伸ばした | P:for my pocket.=ポケットに",
+"T:On the first day,=初日は | S:I kept=私は何度も | V:reaching=手を伸ばした | O:for my pocket.=ポケットに",
 "初日、私は何度もポケットに手を伸ばした。"
 ],
 [
@@ -5926,7 +5926,7 @@
 "この変化は多くの新しい機会をもたらした。"
 ],
 [
-"S:The local clinic can now=診療所は今…できる | V:talk=話す | P:with doctors in the city=都会の医師と | P:by video call.=ビデオ通話で",
+"S:The local clinic can now=診療所は今…できる | V:talk=話す | O:with doctors in the city=都会の医師と | P:by video call.=ビデオ通話で",
 "地元の診療所は今、ビデオ通話で都会の医師と話せる。"
 ],
 [
@@ -5974,7 +5974,7 @@
 "クレジットカードを使えば、すぐにお金を払わなくても物が買える。"
 ],
 [
-"S:In fact, the company=実はカード会社が | V:pays=払う | P:for you first.=先に代わりに",
+"S:In fact, the company=実はカード会社が | V:pays=払う | O:for you first.=先に代わりに",
 "実は、カード会社が先に代わりに払ってくれているのだ。"
 ],
 [
@@ -6110,7 +6110,7 @@
 "けがをする子どもが減ったので、ほっとしている親もいる。"
 ],
 [
-"S:Parks must=公園は…ならない | V:also pay=払うことも | P:for repairs=修理代を | M:and safety checks.=と安全点検の",
+"S:Parks must=公園は…ならない | V:also pay=払うことも | O:for repairs=修理代を | M:and safety checks.=と安全点検の",
 "公園は修理や安全点検の費用も払わなければならない。"
 ],
 [
@@ -6166,7 +6166,7 @@
 "title": "Volunteers Wanted: Story Time",
 "list": [
 [
-"S:Green Hill Library is looking=図書館は探している | P:for volunteers=ボランティアを | M:who can read=読める人を | P:to young children.=幼い子どもに",
+"S:Green Hill Library is looking=図書館は探している | O:for volunteers=ボランティアを | M:who can read=読める人を | P:to young children.=幼い子どもに",
 "グリーンヒル図書館では、幼い子どもに読み聞かせができるボランティアを探しています。"
 ],
 [
@@ -6202,7 +6202,7 @@
 "一緒に読むことは、子どもが一生本を読む人に育つ助けになります。"
 ],
 [
-"S:We look forward=楽しみにしています | P:to meeting you=お会いするのを | T:soon.=もうすぐ",
+"S:We look forward=楽しみにしています | O:to meeting you=お会いするのを | T:soon.=もうすぐ",
 "もうすぐお会いできるのを楽しみにしています。"
 ]
 ],
@@ -6234,7 +6234,7 @@
 "title": "Bicycles on Our Sidewalks",
 "list": [
 [
-"S:I am writing=私は書いています | P:about bicycles=自転車について | P:on the sidewalks=歩道の | P:in our town.=私たちの町の",
+"S:I am writing=私は書いています | O:about bicycles=自転車について | P:on the sidewalks=歩道の | P:in our town.=私たちの町の",
 "私たちの町の歩道を走る自転車について書いています。"
 ],
 [
@@ -7164,7 +7164,7 @@
 "屋根裏を掃除していたとき、メイは古いカメラを見つけた。"
 ],
 [
-"S:It belonged=それは…のものだった | P:to her grandfather,=祖父の | M:and there was still film=まだフィルムが | P:inside.=中に",
+"S:It belonged=それは…のものだった | O:to her grandfather,=祖父の | M:and there was still film=まだフィルムが | P:inside.=中に",
 "それは祖父のもので、中にはまだフィルムが入っていた。"
 ],
 [
@@ -7768,7 +7768,7 @@
 "生徒たちにとって、それを読むのはとても時間がかかった。"
 ],
 [
-"T:Later,=後に | S:Braille learned=ブライユは知った | P:about a code of dots=点の暗号について | M:made for soldiers.=兵士向けに作られた",
+"T:Later,=後に | S:Braille learned=ブライユは知った | O:about a code of dots=点の暗号について | M:made for soldiers.=兵士向けに作られた",
 "後に、ブライユは兵士向けに作られた点の暗号について知った。"
 ],
 [
@@ -8808,7 +8808,7 @@
 "現実には代案は不確かなことが多く、その価値は推測するしかない。"
 ],
 [
-"M:Even so,=それでも | S:the habit of asking=問う習慣は | O:\"What am I giving up?\"=何を手放すのかと | V:can lead=導きうる | P:to wiser decisions.=賢い決定へ",
+"M:Even so,=それでも | S:the habit of asking=問う習慣は | O:\"What am I giving up?\"=何を手放すのかと | V:can lead=導きうる | O:to wiser decisions.=賢い決定へ",
 "それでも「自分は何を手放しているのか」と問う習慣は、より賢い決定につながりうる。"
 ],
 [
@@ -8848,7 +8848,7 @@
 "1817年、経済学者リカードは、今も多くの学生を驚かせる考えを提唱した。"
 ],
 [
-"M:Even if one country=たとえある国が | V:is better=より得意でも | P:at producing everything,=全ての生産が | S:both countries=両国とも | V:can still benefit=なお利益を得る | P:from trade.=貿易から",
+"M:Even if one country=たとえある国が | V:is better=より得意でも | P:at producing everything,=全ての生産が | S:both countries=両国とも | V:can still benefit=なお利益を得る | O:from trade.=貿易から",
 "たとえある国があらゆる生産で優れていても、両国とも貿易から利益を得られる。"
 ],
 [
@@ -8868,7 +8868,7 @@
 "タイプに使う1時間は、ずっと稼げる法律業務から奪われた1時間なのだ。"
 ],
 [
-"M:Likewise,=同様に | S:countries that specialize=特化する国々は | P:in what they do=自分がやれることに | M:relatively best=相対的に最もよく | V:can produce=生産できる | O:more in total.=全体でより多く",
+"M:Likewise,=同様に | S:countries that specialize=特化する国々は | O:in what they do=自分がやれることに | M:relatively best=相対的に最もよく | V:can produce=生産できる | O:more in total.=全体でより多く",
 "同様に、相対的に最も得意なことに特化した国々は、全体としてより多くを生産できる。"
 ],
 [
@@ -8916,7 +8916,7 @@
 "title": "Throwing Good Money After Bad",
 "list": [
 [
-"F:Suppose=…としよう | S:you have paid=あなたが払った | P:for a concert ticket=コンサート券に | M:but wake up=だが目覚める | M:feeling ill=気分が悪くて | T:on the day.=当日に",
+"F:Suppose=…としよう | S:you have paid=あなたが払った | O:for a concert ticket=コンサート券に | M:but wake up=だが目覚める | M:feeling ill=気分が悪くて | T:on the day.=当日に",
 "コンサート券を買ったのに、当日、気分が悪くて目が覚めたとしよう。"
 ],
 [
@@ -8940,7 +8940,7 @@
 "同じ誤りは、企業や政治の世界では、はるかに大きな規模で現れる。"
 ],
 [
-"S:Projects that are failing=失敗している事業が | V:are often continued=しばしば続けられる | R:simply because=単に…という理由で | S:so much=とても多くが | V:has already been invested=すでに投じられた | P:in them.=それらに",
+"S:Projects that are failing=失敗している事業が | V:are often continued=しばしば続けられる | R:simply because=単に…という理由で | S:so much=とても多くが | V:has already been invested=すでに投じられた | O:in them.=それらに",
 "明らかに失敗している事業が、すでに多くを投じたという理由だけで続けられることも多い。"
 ],
 [
@@ -8992,7 +8992,7 @@
 "1970年、経済学者アカロフは、経済学者の市場の見方を変えることになる中古車の論文を発表した。"
 ],
 [
-"S:His starting point=彼の出発点は | V:was simple:=単純だった | S:sellers=売り手は | V:know far more=はるかに多く知る | P:about their cars=自分の車について | M:than buyers do.=買い手より",
+"S:His starting point=彼の出発点は | V:was simple:=単純だった | S:sellers=売り手は | V:know far more=はるかに多く知る | O:about their cars=自分の車について | M:than buyers do.=買い手より",
 "彼の出発点は単純だった。売り手は買い手よりも、自分の車についてはるかに多くを知っている。"
 ],
 [
@@ -9004,7 +9004,7 @@
 "買い手は良い車と悪い車を見分けられないので、平均的な値段しか払おうとしない。"
 ],
 [
-"P:For owners of good cars,=良い車の持ち主には | S:that price is too low,=その値は安すぎる | M:so many of them=そこで多くが | V:withdraw=撤退する | P:from the market.=市場から",
+"P:For owners of good cars,=良い車の持ち主には | S:that price is too low,=その値は安すぎる | M:so many of them=そこで多くが | V:withdraw=撤退する | O:from the market.=市場から",
 "良い車の持ち主にはその値段は安すぎるので、その多くが市場から手を引く。"
 ],
 [
@@ -9016,7 +9016,7 @@
 "最悪の場合、正直な取引相手がいるにもかかわらず、市場そのものが崩壊しかねない。"
 ],
 [
-"S:The same logic=同じ論理は | V:applies=当てはまる | P:to insurance,=保険に | M:lending,=融資に | M:and even hiring.=採用にさえ",
+"S:The same logic=同じ論理は | V:applies=当てはまる | O:to insurance,=保険に | M:lending,=融資に | M:and even hiring.=採用にさえ",
 "同じ論理は、保険や融資、さらには採用にも当てはまる。"
 ],
 [
@@ -9445,7 +9445,7 @@
 "学生や子育て中の親、退職者は、普通の仕事ではめったにできない形で、ほかの用事に合わせて働ける。"
 ],
 [
-"S:Companies, too,=企業も | V:benefit=利益を得る | P:from being able=…できることから | X:to expand or shrink=増減させる | O:their workforce=労働力を | M:almost instantly.=ほぼ即座に",
+"S:Companies, too,=企業も | V:benefit=利益を得る | O:from being able=…できることから | X:to expand or shrink=増減させる | O:their workforce=労働力を | M:almost instantly.=ほぼ即座に",
 "企業もまた、労働力をほぼ即座に増やしたり減らしたりできることで得をしている。"
 ],
 [
@@ -9838,7 +9838,7 @@
 "それでも、誰もそれに頼らずに生きることはできない。"
 ],
 [
-"S:Science itself=科学自体が | V:depends=依存している | P:on the expectation=期待に | O:that nature's laws=自然法則が…と | V:will not suddenly change.=急に変わらない",
+"S:Science itself=科学自体が | V:depends=依存している | O:on the expectation=期待に | O:that nature's laws=自然法則が…と | V:will not suddenly change.=急に変わらない",
 "科学そのものが、自然の法則が突然変わりはしないという期待に依存しているのだ。"
 ],
 [
@@ -10055,7 +10055,7 @@
 "当然のように、彼はヴァルカンと名付けた別の隠れた惑星が太陽の近くを回っていると唱えた。"
 ],
 [
-"M:For decades,=何十年も | S:observers searched=観測者は探した | P:for it,=それを | M:and a few=そして数人は | V:even claimed=主張さえした | R:to have seen it.=見たと",
+"M:For decades,=何十年も | S:observers searched=観測者は探した | O:for it,=それを | M:and a few=そして数人は | V:even claimed=主張さえした | R:to have seen it.=見たと",
 "何十年も観測者たちはそれを探し、見たと主張する者まで現れた。"
 ],
 [
@@ -10584,7 +10584,7 @@
 "絶滅が取り返しのつかないものに見えなくなれば、なぜ誰かがそれを防ぐためにお金を払うのか、と彼らは問う。"
 ],
 [
-"S:Both sides agree=双方が一致する | P:on one point:=一つの点で | S:no laboratory can replace=研究所は代われない | O:the forests and wetlands=森や湿地に | X:that species need=種が必要とする | X:to survive.=生き延びるのに",
+"S:Both sides agree=双方が一致する | O:on one point:=一つの点で | S:no laboratory can replace=研究所は代われない | O:the forests and wetlands=森や湿地に | X:that species need=種が必要とする | X:to survive.=生き延びるのに",
 "双方が一致する点が一つある。種が生き延びるのに必要な森や湿地を、研究所が代わりに作ることはできないということだ。"
 ]
 ],
@@ -10616,7 +10616,7 @@
 "title": "The Other Carbon Problem",
 "list": [
 [
-"T:When we think about carbon dioxide,=CO2を考えるとき | S:we usually=我々はたいてい | V:think=思い浮かべる | P:of rising temperatures.=気温の上昇を",
+"T:When we think about carbon dioxide,=CO2を考えるとき | S:we usually=我々はたいてい | V:think=思い浮かべる | O:of rising temperatures.=気温の上昇を",
 "二酸化炭素と聞くと、ふつうは気温の上昇を思い浮かべる。"
 ],
 [
@@ -11132,7 +11132,7 @@
 "最初からつらく感じる滞在者もいれば、危機を全く経験しない人もいる。"
 ],
 [
-"S:Adjustment, it turns out,=適応はどうやら | V:depends=左右される | P:on factors=要因に | X:such as language ability=語学力など | M:and social support.=そして社会的支援",
+"S:Adjustment, it turns out,=適応はどうやら | V:depends=左右される | O:on factors=要因に | X:such as language ability=語学力など | M:and social support.=そして社会的支援",
 "どうやら適応は、語学力や周囲の支えといった要因に左右されるようだ。"
 ],
 [
@@ -11388,7 +11388,7 @@
 "title": "Is There a Critical Period?",
 "list": [
 [
-"S:Young children acquire=幼児は習得する | O:their first language seemingly effortlessly,=母語を一見楽々と | M:whereas adults=一方大人は | V:struggle=苦労する | P:with a second one.=第二言語に",
+"S:Young children acquire=幼児は習得する | O:their first language seemingly effortlessly,=母語を一見楽々と | M:whereas adults=一方大人は | V:struggle=苦労する | O:with a second one.=第二言語に",
 "幼い子どもは一見楽々と母語を身につけるが、大人は第二言語に苦労する。"
 ],
 [
@@ -11472,7 +11472,7 @@
 "機械は、自分が訳しているものを理解しているのだろうか。"
 ],
 [
-"S:Modern systems learn=現代の機械は学ぶ | P:from enormous collections=膨大な集積から | X:of translated texts,=翻訳済み文書の | V:detecting=見いだしながら | O:statistical patterns between languages.=言語間の統計的規則を",
+"S:Modern systems learn=現代の機械は学ぶ | O:from enormous collections=膨大な集積から | X:of translated texts,=翻訳済み文書の | V:detecting=見いだしながら | O:statistical patterns between languages.=言語間の統計的規則を",
 "現代のシステムは膨大な翻訳済み文書から学び、言語間の統計的なパターンを見いだしている。"
 ],
 [
@@ -11907,7 +11907,7 @@
 "これを懸念したEUの最高裁判所は2014年、個人が検索エンジンに特定のリンクの削除を求められるとの判決を下した。"
 ],
 [
-"S:This principle, now known=いま知られるこの原則は | X:as the right to be forgotten,=忘れられる権利として | V:applies=適用される | P:to information=情報に | X:that is inaccurate, outdated=不正確で古い | M:or no longer relevant.=もはや無関係な",
+"S:This principle, now known=いま知られるこの原則は | X:as the right to be forgotten,=忘れられる権利として | V:applies=適用される | O:to information=情報に | X:that is inaccurate, outdated=不正確で古い | M:or no longer relevant.=もはや無関係な",
 "現在「忘れられる権利」と呼ばれるこの原則は、不正確な情報、古い情報、もはや無関係な情報に適用される。"
 ],
 [
@@ -12150,7 +12150,7 @@
 "別の批判者は、実際の事故がそれほどはっきりした選択を迫ることはめったにないとして、こうした想定を非現実的だと退ける。"
 ],
 [
-"M:In their view,=彼らの考えでは | S:engineers should focus=技術者は集中すべき | P:on preventing accidents altogether=事故自体の防止に | M:rather than on ranking=順位づけではなく | O:the value of lives.=命の価値の",
+"M:In their view,=彼らの考えでは | S:engineers should focus=技術者は集中すべき | O:on preventing accidents altogether=事故自体の防止に | M:rather than on ranking=順位づけではなく | M:the value of lives.=命の価値の",
 "彼らの考えでは、技術者は命の価値に順位をつけることより、事故そのものを防ぐことに力を注ぐべきだという。"
 ],
 [
@@ -12215,7 +12215,7 @@
 "しかし匿名性の擁護者は、そのような規則はまさに最も保護を必要とする人々を黙らせてしまうと警告する。"
 ],
 [
-"S:Whistleblowers exposing corruption,=不正を暴く告発者 | S:victims of abuse seeking support,=支援を求める被害者 | S:and dissidents under authoritarian regimes=独裁下の反体制派は | V:all depend=みな頼っている | P:on hiding their identities.=身元を隠すことに",
+"S:Whistleblowers exposing corruption,=不正を暴く告発者 | S:victims of abuse seeking support,=支援を求める被害者 | S:and dissidents under authoritarian regimes=独裁下の反体制派は | V:all depend=みな頼っている | O:on hiding their identities.=身元を隠すことに",
 "不正を暴く内部告発者、支援を求める虐待の被害者、そして独裁体制下の反体制派は、みな身元を隠すことに頼っている。"
 ],
 [
@@ -12341,7 +12341,7 @@
 "title": "Is Technology Neutral?",
 "list": [
 [
-"S:A common saying=よくある言い方は | V:holds=…とする | O:that technology is neither good=技術は善でも | M:nor bad;=悪でもない | S:everything depends=すべては…次第だ | P:on how people use it.=人の使い方",
+"S:A common saying=よくある言い方は | V:holds=…とする | O:that technology is neither good=技術は善でも | M:nor bad;=悪でもない | S:everything depends=すべては…次第だ | O:on how people use it.=人の使い方",
 "技術それ自体は善でも悪でもなく、すべては人の使い方次第だ、とよく言われる。"
 ],
 [
@@ -12426,7 +12426,7 @@
 "鎖の大半が断たれれば、感染は新たにうつる相手がいなくなるだけだ。"
 ],
 [
-"S:The proportion=割合は | P:of the population that must be immune=免疫が必要な人口の | V:depends=…による | P:on how contagious=どれほど伝染性が | X:the disease is.=病気が…か",
+"S:The proportion=割合は | P:of the population that must be immune=免疫が必要な人口の | V:depends=…による | O:on how contagious=どれほど伝染性が | X:the disease is.=病気が…か",
 "免疫を持つべき人口の割合は、その病気の伝染力の強さによって決まる。"
 ],
 [
@@ -12811,7 +12811,7 @@
 "土や動物、私たち自身の体にいるこれらの「旧友」は、免疫系が無害な物質を受け入れるよう学ぶのを助けているのかもしれない。"
 ],
 [
-"P:Without such training,=その訓練がないと | S:the immune system may=免疫系は…かも | V:overreact=過剰反応する | P:to pollen or food,=花粉や食物に | X:producing allergic symptoms.=アレルギー症状を生む",
+"P:Without such training,=その訓練がないと | S:the immune system may=免疫系は…かも | V:overreact=過剰反応する | O:to pollen or food,=花粉や食物に | X:producing allergic symptoms.=アレルギー症状を生む",
 "そうした訓練がないと、免疫系は花粉や食べ物に過剰反応し、アレルギー症状を起こすのかもしれない。"
 ],
 [
@@ -13040,7 +13040,7 @@
 "生物学者はこれを「ヘテロ接合体優位」と呼ぶ。保因者が得る利益が、2つ持つ人が払う代償とつり合うのだ。"
 ],
 [
-"S:The case illustrates=この例は示す | O:a broader lesson:=より広い教訓を | S:whether a gene is \"good\" or \"bad\"=遺伝子の善し悪しは | V:depends=…次第だ | P:on the environment=環境に | X:in which its carriers live.=持ち主が暮らす",
+"S:The case illustrates=この例は示す | O:a broader lesson:=より広い教訓を | S:whether a gene is \"good\" or \"bad\"=遺伝子の善し悪しは | V:depends=…次第だ | O:on the environment=環境に | X:in which its carriers live.=持ち主が暮らす",
 "この例はより広い教訓を示している。遺伝子が「良い」か「悪い」かは、その持ち主が暮らす環境しだいなのだ。"
 ]
 ],
@@ -13100,7 +13100,7 @@
 "施策に従う人の大半はもともと発症しなかったはずなので、個人としての見返りを感じられない。"
 ],
 [
-"S:Individual doctors,=個々の医師は | M:by contrast,=対照的に | V:naturally focus=当然注目する | P:on the high-risk patients=高リスクの患者に | X:sitting in front of them.=目の前にいる",
+"S:Individual doctors,=個々の医師は | M:by contrast,=対照的に | V:naturally focus=当然注目する | O:on the high-risk patients=高リスクの患者に | X:sitting in front of them.=目の前にいる",
 "これに対して個々の医師は、当然ながら目の前にいる高リスクの患者に注目する。"
 ],
 [
@@ -13156,7 +13156,7 @@
 "彼らはまた、交易網は完全には消えず、重い犂などの新技術が農業を一変させたと指摘する。"
 ],
 [
-"M:In fact,=実のところ | S:the term \"Dark Ages\"=「暗黒時代」の語は | V:reveals more=より多くを明かす | P:about those who coined it=作った人々について | X:than about the era itself.=時代そのものより",
+"M:In fact,=実のところ | S:the term \"Dark Ages\"=「暗黒時代」の語は | V:reveals more=より多くを明かす | O:about those who coined it=作った人々について | X:than about the era itself.=時代そのものより",
 "実のところ、「暗黒時代」という言葉は、その時代そのものよりも、それを作った人々について多くを語っている。"
 ],
 [
@@ -13929,7 +13929,7 @@
 "どちらの答えも完全には納得できず、だからこそこの難問は何世紀も生き残ってきた。"
 ],
 [
-"S:It also applies=それは当てはまる | P:to us,=私たちにも | M:since many of the cells=多くの細胞が…ので | P:in our bodies=体の | V:are replaced over a lifetime.=生涯で入れ替わる",
+"S:It also applies=それは当てはまる | O:to us,=私たちにも | M:since many of the cells=多くの細胞が…ので | P:in our bodies=体の | V:are replaced over a lifetime.=生涯で入れ替わる",
 "この難問は私たちにも当てはまる。体の細胞の多くは、一生のうちに入れ替わるからだ。"
 ],
 [
@@ -14440,7 +14440,7 @@
 "この技法は、出来事についての語りはすべて、ある特定の視点から語られているのだということを思い出させる。"
 ],
 [
-"P:In real life, too,=現実でも | S:we rely=私たちは頼る | P:on narrators—=語り手に | X:witnesses, journalists, and our own memories—=証人や記者、記憶に | X:none of whom is perfectly reliable.=誰も完全に信頼できぬ",
+"P:In real life, too,=現実でも | S:we rely=私たちは頼る | O:on narrators—=語り手に | X:witnesses, journalists, and our own memories—=証人や記者、記憶に | X:none of whom is perfectly reliable.=誰も完全に信頼できぬ",
 "現実の生活でも、私たちは証人や記者、自分自身の記憶といった語り手に頼っているが、どれ一つとして完全に信頼できるものはない。"
 ],
 [
@@ -14513,7 +14513,7 @@
 "まるで、もう集中を強いられなくなった心が、自分で物事を結びつけ始めるかのようだ。"
 ],
 [
-"S:Many writers and thinkers=多くの作家や思想家が | T:throughout history=歴史を通じて | V:have relied=頼ってきた | P:on walking=散歩に | M:in just this way.=まさにこのように",
+"S:Many writers and thinkers=多くの作家や思想家が | T:throughout history=歴史を通じて | V:have relied=頼ってきた | O:on walking=散歩に | M:in just this way.=まさにこのように",
 "歴史を通じて、多くの作家や思想家がまさにこのような形で散歩を頼りにしてきた。"
 ],
 [
@@ -14826,7 +14826,7 @@
 "彼らは患者の体温を測ったり、薬をあげたりする。"
 ],
 [
-"S:They also listen=彼らはまた聞く | P:to patients=患者の話を | M:carefully.=注意深く",
+"S:They also listen=彼らはまた聞く | O:to patients=患者の話を | M:carefully.=注意深く",
 "彼らはまた、患者の話を注意深く聞く。"
 ],
 [
@@ -15242,7 +15242,7 @@
 "1頭のシカが頭で私のかばんを押した。"
 ],
 [
-"S:Everyone=みんなが | V:laughed=笑った | P:at the deer.=そのシカを見て",
+"S:Everyone=みんなが | V:laughed=笑った | O:at the deer.=そのシカを見て",
 "みんながそのシカを見て笑った。"
 ],
 [
@@ -15282,7 +15282,7 @@
 "title": "My Favorite Teacher",
 "list": [
 [
-"S:I'd like=私は…したい | V:to talk=話すこと | P:about my favorite teacher.=好きな先生について",
+"S:I'd like=私は…したい | V:to talk=話すこと | O:about my favorite teacher.=好きな先生について",
 "私の大好きな先生についてお話ししたいと思います。"
 ],
 [
@@ -15306,11 +15306,11 @@
 "彼女のおかげで、数学は私の好きな教科になりました。"
 ],
 [
-"T:Last year,=去年 | S:I was worried=私は心配していた | P:about my future.=将来について",
+"T:Last year,=去年 | S:I was worried=私は心配していた | O:about my future.=将来について",
 "去年、私は将来のことで悩んでいました。"
 ],
 [
-"S:She listened=彼女は聞いた | P:to me=私の話を | M:and gave me=そしてくれた | O:good advice.=よい助言を",
+"S:She listened=彼女は聞いた | O:to me=私の話を | M:and gave me=そしてくれた | O:good advice.=よい助言を",
 "彼女は私の話を聞いて、よいアドバイスをくれました。"
 ],
 [
@@ -15378,7 +15378,7 @@
 "彼はできるだけ速く走った。"
 ],
 [
-"S:Everyone cheered=みんなが応援した | P:for him=彼を | M:loudly.=大きな声で",
+"S:Everyone cheered=みんなが応援した | O:for him=彼を | M:loudly.=大きな声で",
 "みんなが大きな声で彼を応援した。"
 ],
 [
@@ -15906,7 +15906,7 @@
 "カレーはとてもおいしかった。"
 ],
 [
-"T:After dinner,=夕食のあと | S:we looked=私たちは見た | P:at the stars.=星を",
+"T:After dinner,=夕食のあと | S:we looked=私たちは見た | O:at the stars.=星を",
 "夕食のあと、私たちは星を見た。"
 ],
 [
@@ -16870,7 +16870,7 @@
 "田中さんは私たちの町のバスの運転手だ。"
 ],
 [
-"S:He always smiles=彼はいつもほほえむ | V:and says hello=そしてあいさつする | P:to his passengers.=乗客に",
+"S:He always smiles=彼はいつもほほえむ | V:and says hello=そしてあいさつする | O:to his passengers.=乗客に",
 "彼はいつもほほえんで、乗客にあいさつする。"
 ],
 [
@@ -17334,7 +17334,7 @@
 "それはカエルの声だった。"
 ],
 [
-"S:I looked=私は見た | P:into the water=水の中を | M:carefully.=注意深く",
+"S:I looked=私は見た | O:into the water=水の中を | M:carefully.=注意深く",
 "私は水の中を注意深くのぞいた。"
 ],
 [
@@ -18273,7 +18273,7 @@
 "title": "My Favorite Fruit: Apples",
 "list": [
 [
-"T:Today=今日は | S:I will talk=私は話します | P:about my favorite fruit.=好きな果物について",
+"T:Today=今日は | S:I will talk=私は話します | O:about my favorite fruit.=好きな果物について",
 "今日は、私の大好きな果物について話します。"
 ],
 [
@@ -18382,7 +18382,7 @@
 "明日は、海の近くの小さな町を訪れる予定だ。"
 ],
 [
-"S:I can't=私は…できない | V:wait=待つ | P:for tomorrow!=明日を",
+"S:I can't=私は…できない | V:wait=待つ | O:for tomorrow!=明日を",
 "明日が待ちきれない！"
 ]
 ],
@@ -18554,7 +18554,7 @@
 "人々はさまざまな方法であいさつをし合う。"
 ],
 [
-"P:In Japan,=日本では | S:people often bow=人々はよくおじぎする | P:to each other.=お互いに",
+"P:In Japan,=日本では | S:people often bow=人々はよくおじぎする | O:to each other.=お互いに",
 "日本では、人々はよくおじぎをし合う。"
 ],
 [
@@ -18586,7 +18586,7 @@
 "旅行するときは、現地のあいさつを使ってみよう。"
 ],
 [
-"S:People will=人々は…だろう | V:smile=ほほえむ | P:at you.=あなたに",
+"S:People will=人々は…だろう | V:smile=ほほえむ | O:at you.=あなたに",
 "人々はきっと、あなたにほほえんでくれるだろう。"
 ]
 ],
@@ -18654,7 +18654,7 @@
 "日本にはどんなお祭りがありますか。"
 ],
 [
-"V:Please write=書いてください | P:to me=私に | T:soon.=すぐに",
+"V:Please write=書いてください | O:to me=私に | T:soon.=すぐに",
 "すぐにお返事をください。"
 ]
 ],
@@ -18983,7 +18983,7 @@
 "祖父はほほえんで、「もちろん」と言った。"
 ],
 [
-"T:Every weekend,=毎週末 | S:they worked=二人は作業した | P:on the bicycle=自転車に | M:together.=いっしょに",
+"T:Every weekend,=毎週末 | S:they worked=二人は作業した | O:on the bicycle=自転車に | M:together.=いっしょに",
 "毎週末、二人はいっしょに自転車の作業をした。"
 ],
 [
@@ -19447,7 +19447,7 @@
 "大事なテストの前日、リョウはそのコインをなくしてしまった。"
 ],
 [
-"S:He searched=彼は探した | P:for it=それを | T:all evening,=夜の間ずっと | M:but could not find it.=でも見つからなかった",
+"S:He searched=彼は探した | O:for it=それを | T:all evening,=夜の間ずっと | M:but could not find it.=でも見つからなかった",
 "彼は夜の間ずっと探したが、見つけられなかった。"
 ],
 [
@@ -19655,7 +19655,7 @@
 "10歳未満の子どもは、大人と一緒に来なければなりません。"
 ],
 [
-"V:Please listen=聞いてください | P:to the lifeguards=監視員の言うことを | T:at all times.=いつも",
+"V:Please listen=聞いてください | O:to the lifeguards=監視員の言うことを | T:at all times.=いつも",
 "いつも監視員の言うことを聞いてください。"
 ],
 [

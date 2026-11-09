@@ -388,7 +388,7 @@ S| why {should|shoulds|should to|ought} anyone pay :: なぜ費用を払うの�
 X| {to prevent|preventing|prevent|prevented} it? :: それを防ぐために
 == 絶滅が取り返しのつかないものに見えなくなれば、なぜ誰かがそれを防ぐためにお金を払うのか、と彼らは問う。
 S| Both sides {agree|agrees|agreeing|agreement} :: 双方が一致する
-P| {on|at|by|of} one point: :: 一つの点で
+O| {on|at|by|of} one point: :: 一つの点で
 S| no laboratory {can|cans|can to|could to} replace :: 研究所は代われない
 O| the forests {and|nor|than|either} wetlands :: 森や湿地に
 X| {that|what|whose|whom} species need :: 種が必要とする
@@ -409,7 +409,7 @@ X| {to survive|surviving|survive|survived}. :: 生き延びるのに
 T| When we think {about|above|aboard|abroad} carbon dioxide, :: CO2を考えるとき
 S| we {usually|usual|usage|usually of} :: 我々はたいてい
 V| {think|thinks|thinking|thought of} :: 思い浮かべる
-P| of {rising|rose|rises|rised} temperatures. :: 気温の上昇を
+O| of {rising|rose|rises|rised} temperatures. :: 気温の上昇を
 == 二酸化炭素と聞くと、ふつうは気温の上昇を思い浮かべる。
 M| {Yet|Despite|In spite|Regardless} a large share :: だがかなりの部分は
 P| of the carbon dioxide {we|us|our|ours} emit :: 我々の出すCO2の

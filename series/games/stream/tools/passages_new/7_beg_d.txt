@@ -267,7 +267,7 @@ P| {in|than|into|onto} our town. :: 私たちの町の
 == 田中さんは私たちの町のバスの運転手だ。
 S| He always {smiles|smile|smiling|smiler} :: 彼はいつもほほえむ
 V| and {says|say|saying|sayed} hello :: そしてあいさつする
-P| {to|than|of|into} his passengers. :: 乗客に
+O| {to|than|of|into} his passengers. :: 乗客に
 == 彼はいつもほほえんで、乗客にあいさつする。
 T| One {rainy|rain|rains|raining} morning, :: ある雨の朝
 S| an {old|oldest|olds|oldly} woman :: 一人の老婦人が

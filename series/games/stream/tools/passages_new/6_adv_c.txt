@@ -402,7 +402,7 @@ P| {without|with out|within of|without of} relying on it. :: それに頼らず�
 == それでも、誰もそれに頼らずに生きることはできない。
 S| Science {itself|herself|themselves|ourself} :: 科学自体が
 V| {depends|depend|depending|dependence} :: 依存している
-P| {on|in|at|for} the expectation :: 期待に
+O| {on|in|at|for} the expectation :: 期待に
 O| {that|what|whom|whose} nature's laws :: 自然法則が…と
 V| {will|wills|will to|willing} not suddenly change. :: 急に変わらない
 == 科学そのものが、自然の法則が突然変わりはしないという期待に依存しているのだ。
@@ -641,7 +641,7 @@ X| {orbiting|orbited of|orbit|orbits} close to the Sun. :: 太陽の近くを回
 == 当然のように、彼はヴァルカンと名付けた別の隠れた惑星が太陽の近くを回っていると唱えた。
 M| {For|Since|During|While} decades, :: 何十年も
 S| observers {searched|search|searching|searches of} :: 観測者は探した
-P| {for|of|at|onto} it, :: それを
+O| {for|of|at|onto} it, :: それを
 M| {and|nor|than|whom} a few :: そして数人は
 V| {even|ever|evenly|evening} claimed :: 主張さえした
 R| {to have|to having|having to|have to} seen it. :: 見たと

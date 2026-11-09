@@ -28,7 +28,7 @@ O| "{Of course|Of courses|Off course|On course}." :: 「もちろん」と
 == 祖父はほほえんで、「もちろん」と言った。
 T| {Every|Every of|Everyone|Ever} weekend, :: 毎週末
 S| they {worked|working|works|to work} :: 二人は作業した
-P| {on|of|than|onto of} the bicycle :: 自転車に
+O| {on|of|than|onto of} the bicycle :: 自転車に
 M| {together|togethers|to gather|together with}. :: いっしょに
 == 毎週末、二人はいっしょに自転車の作業をした。
 S| They {cleaned|cleaning|cleans|to clean} :: 二人はきれいにした
@@ -382,7 +382,7 @@ S| Ryo {lost|lose|losed|losing} :: リョウはなくした
 O| the {coin|coined|coining|coin's}. :: コインを
 == 大事なテストの前日、リョウはそのコインをなくしてしまった。
 S| He {searched|search|searching|serched} :: 彼は探した
-P| {for|to|at|of} it :: それを
+O| {for|to|at|of} it :: それを
 T| {all|every of|each of|any of} evening, :: 夜の間ずっと
 M| {but|than|nor|whom} could not find it. :: でも見つからなかった
 == 彼は夜の間ずっと探したが、見つけられなかった。

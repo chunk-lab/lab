@@ -34,7 +34,7 @@ V| {transformed|transforms|transformation|transforming} agriculture. :: 農業�
 M| In {fact|facts|factual|factually}, :: 実のところ
 S| the {term|terms|termed|terming} "Dark Ages" :: 「暗黒時代」の語は
 V| {reveals|reveal|revealing|revelation} more :: より多くを明かす
-P| about those {who|which|whose|whom} coined it :: 作った人々について
+O| about those {who|which|whose|whom} coined it :: 作った人々について
 X| {than|then|that|as} about the era itself. :: 時代そのものより
 == 実のところ、「暗黒時代」という言葉は、その時代そのものよりも、それを作った人々について多くを語っている。
 S| Renaissance {scholars|scholarly|scholarship of|scholar}, :: ルネサンスの学者は

@@ -193,7 +193,7 @@ O| {what|whose|who|whom} to do :: どうすればよいか
 M| if my flight {is delayed|is delay|delaying|be delayed}. :: 便が遅れたら
 == また、便が遅れた場合どうすればよいかもお知らせください。
 S| I {look|looks|looking|to look} forward :: 楽しみにしている
-P| {to hearing|to hear|hearing|hear} :: 聞くことを
+O| {to hearing|to hear|hearing|hear} :: 聞くことを
 P| {from|of|by|at} you. :: あなたから
 == ご連絡をお待ちしております。
 X| {Best|Better|Well|Bests} regards, Yuki Sato :: 敬具 佐藤ゆき
@@ -356,7 +356,7 @@ V| please {check|checks|checked|checking} our website :: サイトを見て
 M| {or|nor|than|whom} ask station staff. :: または駅員に
 == 詳しくはウェブサイトをご覧いただくか、駅員におたずねください。
 S| We {apologize|apology|apologetic|apologizes} :: おわびします
-P| {for|to|at|of} any inconvenience :: ご不便について
+O| {for|to|at|of} any inconvenience :: ご不便について
 M| this {may|mays|may to|maybe} cause. :: これが生む
 == ご不便をおかけしますことをおわびします。
 ?? 0 0 運休の理由は何？

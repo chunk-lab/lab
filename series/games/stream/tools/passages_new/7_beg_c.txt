@@ -24,7 +24,7 @@ C| really {good|well|goodness|best}. :: とてもよい
 == カレーはとてもおいしかった。
 T| {After|Afterward|Among|Into} dinner, :: 夕食のあと
 S| we {looked|looking|looks|to look} :: 私たちは見た
-P| {at|of|off|than} the stars. :: 星を
+O| {at|of|off|than} the stars. :: 星を
 == 夕食のあと、私たちは星を見た。
 S| There {were|was|is|be} :: …があった
 O| {so many|so much|such many|so lot} stars :: とても多くの星が

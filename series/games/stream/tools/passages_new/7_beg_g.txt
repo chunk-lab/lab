@@ -45,7 +45,7 @@ P| {near|nearly|nears|nearing} the sea. :: 海の近くの
 == 明日は、海の近くの小さな町を訪れる予定だ。
 S| I {can't|doesn't|isn't|not} :: 私は…できない
 V| {wait|waiting|waited|to wait} :: 待つ
-P| {for|to|at|with} tomorrow! :: 明日を
+O| {for|to|at|with} tomorrow! :: 明日を
 == 明日が待ちきれない！
 ?? 0 2 家族はどこに着いた？
 ?? 3 2 札幌では毎年冬に何がある？
@@ -171,7 +171,7 @@ P| {in|on|at|to} different ways. :: さまざまな方法で
 == 人々はさまざまな方法であいさつをし合う。
 P| {In|On|At|To} Japan, :: 日本では
 S| people often {bow|bows|bowing|bowed} :: 人々はよくおじぎする
-P| {to|of|than|on} each other. :: お互いに
+O| {to|of|than|on} each other. :: お互いに
 == 日本では、人々はよくおじぎをし合う。
 P| {In|On|At|Of} America, :: アメリカでは
 S| people {usually|usual|usualness|unusual} :: 人々はふつう
@@ -204,7 +204,7 @@ O| the {local|locally|location|locate} greeting. :: 現地のあいさつを
 == 旅行するときは、現地のあいさつを使ってみよう。
 S| People {will|is|does|has} :: 人々は…だろう
 V| {smile|smiles|smiling|smiled} :: ほほえむ
-P| {at|of|than|by} you. :: あなたに
+O| {at|of|than|by} you. :: あなたに
 == 人々はきっと、あなたにほほえんでくれるだろう。
 ?? 1 1 日本の人々はよく何をする？
 ?? 2 2 アメリカの人々はふつう何をする？
@@ -255,7 +255,7 @@ S| you {have|has|having|had} :: あなたたちにある
 P| {in|on|at|to} Japan? :: 日本では
 == 日本にはどんなお祭りがありますか。
 V| Please {write|writes|writing|wrote} :: 書いてください
-P| {to|at|of|than} me :: 私に
+O| {to|at|of|than} me :: 私に
 T| {soon|soonly|sooner than|son}. :: すぐに
 == すぐにお返事をください。
 ?? 1 1 書き手はどこに住んでいる？

@@ -180,7 +180,7 @@ O| {any|some of|none|no any} crisis at all. :: 危機を全く
 == 最初からつらく感じる滞在者もいれば、危機を全く経験しない人もいる。
 S| {Adjustment|Adjust|Adjusted|Adjusting of}, it turns out, :: 適応はどうやら
 V| {depends|depend|depending|dependent} :: 左右される
-P| {on|in|at|to} factors :: 要因に
+O| {on|in|at|to} factors :: 要因に
 X| such as language {ability|able|ably|enable} :: 語学力など
 M| {and|so|nor|than} social support. :: そして社会的支援
 == どうやら適応は、語学力や周囲の支えといった要因に左右されるようだ。
@@ -427,7 +427,7 @@ S| Young children {acquire|acquires|acquiring|acquisition} :: 幼児は習得す
 O| their first language {seemingly|seeming|seem|seemed} effortlessly, :: 母語を一見楽々と
 M| {whereas|where as|whereby of|whereof} adults :: 一方大人は
 V| {struggle|struggles|struggling|struggled to} :: 苦労する
-P| {with|within|without of|withal} a second one. :: 第二言語に
+O| {with|within|without of|withal} a second one. :: 第二言語に
 == 幼い子どもは一見楽々と母語を身につけるが、大人は第二言語に苦労する。
 S| {This|These|Those|They} contrast :: この対比は
 V| {led|lead|leading|leads to} :: 導いた
@@ -513,7 +513,7 @@ V| {understand|understands|understanding|understood} :: 理解している
 O| {what|that|which|whom} it translates? :: 自分が訳すものを
 == 機械は、自分が訳しているものを理解しているのだろうか。
 S| Modern systems {learn|learns|learning|learned to} :: 現代の機械は学ぶ
-P| {from|form|for from|of from} enormous collections :: 膨大な集積から
+O| {from|form|for from|of from} enormous collections :: 膨大な集積から
 X| of {translated|translating|translate|translates} texts, :: 翻訳済み文書の
 V| {detecting|detect|detected|detects} :: 見いだしながら
 O| statistical patterns {between|betweens|of between|among of} languages. :: 言語間の統計的規則を

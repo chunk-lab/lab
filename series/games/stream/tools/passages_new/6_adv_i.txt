@@ -139,7 +139,7 @@ X| {why|what|whom|whose} the puzzle has survived :: 難問が残った理由
 T| {for|since|during|while} centuries. :: 何世紀も
 == どちらの答えも完全には納得できず、だからこそこの難問は何世紀も生き残ってきた。
 S| It also {applies|apply|applying|application} :: それは当てはまる
-P| {to|for|on|with} us, :: 私たちにも
+O| {to|for|on|with} us, :: 私たちにも
 M| {since|for since|during|until of} many of the cells :: 多くの細胞が…ので
 P| {in|onto|into|to} our bodies :: 体の
 V| {are|is|be|being} replaced over a lifetime. :: 生涯で入れ替わる
@@ -667,7 +667,7 @@ P| {from|of|by|at} a particular point of view. :: ある視点から
 == この技法は、出来事についての語りはすべて、ある特定の視点から語られているのだということを思い出させる。
 P| {In|On|At|By} real life, too, :: 現実でも
 S| we {rely|relies|relying|reliance} :: 私たちは頼る
-P| {on|in|at|to} narrators— :: 語り手に
+O| {on|in|at|to} narrators— :: 語り手に
 X| witnesses, journalists, {and|nor|than|but of} our own memories— :: 証人や記者、記憶に
 X| none of {whom|who|whose|whomever} is perfectly reliable. :: 誰も完全に信頼できぬ
 == 現実の生活でも、私たちは証人や記者、自分自身の記憶といった語り手に頼っているが、どれ一つとして完全に信頼できるものはない。
@@ -740,7 +740,7 @@ X| {to make|making of|make|to making} connections on its own. :: 自ら結びつ
 S| Many {writers|writes|written|writing} and thinkers :: 多くの作家や思想家が
 T| {throughout|through of|thorough|though} history :: 歴史を通じて
 V| have {relied|rely|relying|reliance} :: 頼ってきた
-P| {on|in|at|for} walking :: 散歩に
+O| {on|in|at|for} walking :: 散歩に
 M| {in|on|at|by} just this way. :: まさにこのように
 == 歴史を通じて、多くの作家や思想家がまさにこのような形で散歩を頼りにしてきた。
 M| {Perhaps|Perhap|Perhaps of|Maybe of} :: おそらく

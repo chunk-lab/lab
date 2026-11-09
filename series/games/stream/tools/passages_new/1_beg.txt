@@ -183,7 +183,7 @@ P| {than|then|that|as} at the supermarket. :: スーパーより
 == 値段はスーパーより安い。
 S| You {can|can to|could to|cans} :: あなたは…できる
 V| {also|too|either|so} talk :: 話すこともできる
-P| {with|to|for|of} the farmers :: 農家の人と
+O| {with|to|for|of} the farmers :: 農家の人と
 M| {about|for|on|of} how they grow food. :: 育て方について
 == 農家の人と、食べ物の育て方について話すこともできる。
 S| My mother {always|never|often|usually} :: 母はいつも

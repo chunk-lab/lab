@@ -168,7 +168,7 @@ P| {in|on|to|into} our school brass band. :: 学校の吹奏楽部で
 == みなさん、こんにちは！私はミカで、学校の吹奏楽部でトランペットを吹いています。
 T| {Today|Todays|To days|Tomorrow's} :: 今日は
 S| I want {to write|writing|write|wrote} :: 書きたい
-P| {about|above|around|across} our summer contest. :: 夏のコンクールについて
+O| {about|above|around|across} our summer contest. :: 夏のコンクールについて
 == 今日は夏のコンクールについて書きたいと思います。
 S| We {practiced|practicing|practices|to practice} :: 私たちは練習した
 T| {for|since|during|while} three hours :: 3時間
@@ -186,7 +186,7 @@ T| {before|ago|front|during} we went on stage. :: 舞台に出る前
 == コンクール当日、舞台に出る前は手が震えていました。
 M| But {once|one|ones|one's} we started playing, :: でも演奏を始めると
 S| I {forgot|forget|forgotten|forgetting} :: 忘れた
-P| {about|above|around|among} my nerves. :: 緊張のことを
+O| {about|above|around|among} my nerves. :: 緊張のことを
 == でも演奏を始めると、緊張のことは忘れてしまいました。
 S| We {won|win|wins|winning} :: 私たちは取った
 O| a silver {prize|price|prized|prizes}, :: 銀賞を
@@ -199,7 +199,7 @@ O| she was proud {of|for|to|with} us. :: 私たちを誇りに思うと
 == 最初は少しがっかりしましたが、先生は私たちを誇りに思うと言ってくれました。
 T| Next {year|years|yearly|year's}, :: 来年は
 S| we {will aim|will aims|aiming|will aimed} :: 目指します
-P| {for|to|by|of} gold! :: 金賞を
+O| {for|to|by|of} gold! :: 金賞を
 == 来年は金賞を目指します！
 ?? 0 2 ミカは何の楽器を吹いている？
 ?? 2 1 毎日何時間練習した？
@@ -265,7 +265,7 @@ P| {on|by|to|of} your exams. :: 試験で
 @gloss captain=キャプテン, older brother=兄, hardest=いちばん大変な, disagree=意見が違う, balance=両立させる, member=部員, afraid=恐れて, mistake=間違い
 T| This {month|months|monthly|month's}, :: 今月は
 S| we {talked|talking|talks|to talk} :: 私たちは話した
-P| {to|at|by|onto} Ren, :: レンに
+O| {to|at|by|onto} Ren, :: レンに
 M| the captain {of|onto|into|than} the soccer club. :: サッカー部のキャプテン
 == 今月は、サッカー部キャプテンのレンに話を聞きました。
 S| Q: When {did|does|done|doing} you :: Q: いつあなたは

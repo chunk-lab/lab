@@ -27,7 +27,7 @@ P| {of|for|from|with} new people to reach. :: 届く新しい人が
 S| The {proportion|proportional|proportionate|proportionally} :: 割合は
 P| of the population {that|what|whose|where} must be immune :: 免疫が必要な人口の
 V| {depends|depend|depending|dependent} :: …による
-P| {on|in|at|for} how contagious :: どれほど伝染性が
+O| {on|in|at|for} how contagious :: どれほど伝染性が
 X| the disease {is|are|be|being}. :: 病気が…か
 == 免疫を持つべき人口の割合は、その病気の伝染力の強さによって決まる。
 P| {For|To|At|Of} a highly infectious disease :: 感染力の強い病気では
@@ -497,7 +497,7 @@ O| {harmless|harm|harmful of|harmlessly} substances. :: 無害な物質を
 P| {Without|Withouts|Without of|Not with of} such training, :: その訓練がないと
 S| the immune system {may|may to|maybe|mays} :: 免疫系は…かも
 V| {overreact|overreacts|overreacting|overreaction} :: 過剰反応する
-P| {to|for|at|with of} pollen or food, :: 花粉や食物に
+O| {to|for|at|with of} pollen or food, :: 花粉や食物に
 X| {producing|produced|produce|to producing} allergic symptoms. :: アレルギー症状を生む
 == そうした訓練がないと、免疫系は花粉や食べ物に過剰反応し、アレルギー症状を起こすのかもしれない。
 M| {Importantly|Important|Importance|Import}, :: 重要なことに
@@ -770,7 +770,7 @@ S| The case {illustrates|illustrate|illustration|illustrating} :: この例は�
 O| a broader {lesson|lessen|lessons of|lessoned}: :: より広い教訓を
 S| {whether|weather|whither of|if of} a gene is "good" or "bad" :: 遺伝子の善し悪しは
 V| {depends|depend|depending|dependent} :: …次第だ
-P| {on|in|at|for} the environment :: 環境に
+O| {on|in|at|for} the environment :: 環境に
 X| {in which|which|in what|where of} its carriers live. :: 持ち主が暮らす
 == この例はより広い教訓を示している。遺伝子が「良い」か「悪い」かは、その持ち主が暮らす環境しだいなのだ。
 ?? 2 4 ヘモグロビンは赤血球の中で何をする？
@@ -840,7 +840,7 @@ O| no personal {reward|rewarding|rewarded|rewards of}. :: 個人的な見返り�
 S| Individual {doctors|doctor|doctoral|doctoring}, :: 個々の医師は
 M| {by|on|at|to} contrast, :: 対照的に
 V| naturally {focus|focuses|focusing|focused of} :: 当然注目する
-P| {on|in|at|to} the high-risk patients :: 高リスクの患者に
+O| {on|in|at|to} the high-risk patients :: 高リスクの患者に
 X| {sitting|sat|sit|sits} in front of them. :: 目の前にいる
 == これに対して個々の医師は、当然ながら目の前にいる高リスクの患者に注目する。
 S| Both approaches {are|is|be|being} needed, :: 両方の方法が必要だ

@@ -38,7 +38,7 @@ M| {with|of|at|than} its head. :: 頭で
 == 1頭のシカが頭で私のかばんを押した。
 S| {Everyone|Every|Everyones|Each} :: みんなが
 V| {laughed|laugh|laughing|laughted} :: 笑った
-P| {at|on|in|to} the deer. :: そのシカを見て
+O| {at|on|in|to} the deer. :: そのシカを見て
 == みんながそのシカを見て笑った。
 T| {In|On|At|For} the evening, :: 夕方に
 S| I {bought|buy|buyed|buys} :: 私は買った
@@ -63,7 +63,7 @@ C| a {wonderful|wonder|wonderfully|wonders} day. :: すばらしい日
 @gloss favorite=大好きな, subject=教科, explain=説明する, clearly=わかりやすく, joke=冗談, worried=心配して, future=将来, advice=助言, respect=尊敬する
 S| {I'd|I'm|I'll|I've} like :: 私は…したい
 V| {to talk|talk|talking|to talking} :: 話すこと
-P| {about|abouts|above|around} my favorite teacher. :: 好きな先生について
+O| {about|abouts|above|around} my favorite teacher. :: 好きな先生について
 == 私の大好きな先生についてお話ししたいと思います。
 S| Her {name|names|named|naming} :: 彼女の名前は
 V| {is|are|be|am} Ms. Tanaka, :: 田中先生です
@@ -89,10 +89,10 @@ C| my {favorite|favor|favorably|favors} subject. :: 好きな教科に
 == 彼女のおかげで、数学は私の好きな教科になりました。
 T| {Last|Next|Later|Ago} year, :: 去年
 S| I {was|were|am|be} worried :: 私は心配していた
-P| {about|above|abouts|of} my future. :: 将来について
+O| {about|above|abouts|of} my future. :: 将来について
 == 去年、私は将来のことで悩んでいました。
 S| She {listened|listen|listening|listend} :: 彼女は聞いた
-P| {to|for|at|with} me :: 私の話を
+O| {to|for|at|with} me :: 私の話を
 M| and {gave|give|given|giving} me :: そしてくれた
 O| good {advice|advices|advise|adviced}. :: よい助言を
 == 彼女は私の話を聞いて、よいアドバイスをくれました。
@@ -146,7 +146,7 @@ M| as {fast|faster|fastly|fastest} :: できるだけ速く
 X| as he {could|can|cans|could to}. :: できる限り
 == 彼はできるだけ速く走った。
 S| Everyone {cheered|cheer|cheering|cheerd} :: みんなが応援した
-P| {for|to|at|of} him :: 彼を
+O| {for|to|at|of} him :: 彼を
 M| {loudly|loudness|loudy|aloudly}. :: 大きな声で
 == みんなが大きな声で彼を応援した。
 S| He {passed|past|pass|passing} :: 彼は抜いた

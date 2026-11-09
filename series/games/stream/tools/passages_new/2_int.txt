@@ -44,7 +44,7 @@ O| {all|every|each|whole} computers :: すべてのパソコンを
 M| {over|during|while|for} the weekend. :: 週末の間に
 == IT係が週末の間にすべてのパソコンを運ぶ。
 S| We {apologize|apology|apologies|apologizing} :: おわびします
-M| {for|of|to|about to} any inconvenience :: ご不便について
+O| {for|of|to|about to} any inconvenience :: ご不便について
 M| {and|but|or|so} thank you :: そして感謝します
 O| {for|to|of|with} your cooperation. :: ご協力に
 == ご不便をおかけしますが、ご協力に感謝します。
@@ -220,7 +220,7 @@ M| {about|of|for|with} the problem. :: その問題について
 == 問題をお知らせいただき、ありがとうございます。
 S| We {sincerely|sincere|sincerity|sincerer} :: 私どもは心から
 V| {apologize|apology|apologies|apologizing} :: おわびします
-M| {for|of|about to|to} the inconvenience. :: ご不便について
+O| {for|of|about to|to} the inconvenience. :: ご不便について
 == ご不便をおかけしたことを、心からおわびします。
 S| {Our|Ours|Us|We} records show :: 記録によると
 M| {that|what|which|this} the maintenance staff :: 保守係が

@@ -231,7 +231,7 @@ O| {everyone|every one's|everybody's|all one} equal. :: みんなを平等に
 == 賛成派は、制服はみんなを平等にすると言う。
 S| Students {do not have to|does not have to|do not have|not have to} :: 生徒は…なくてよい
 V| {worry|worries|worrying|worried} :: 悩む
-P| {about|of to|for to|on to} what to wear :: 何を着るかについて
+O| {about|of to|for to|on to} what to wear :: 何を着るかについて
 T| {every|everyone|each of|all of} morning. :: 毎朝
 == 生徒は、毎朝何を着るか悩まなくてすむ。
 M| {On the other hand|On other hand|In other hand|At the other hand}, :: 一方
@@ -270,7 +270,7 @@ O| {what|which|that|who} works best. :: いちばん合うものを
 @tag 共通テストレベル・お知らせ
 @gloss volunteer=ボランティア, collect=集める, trash=ごみ, provide=用意する, gloves=手袋, sunscreen=日焼け止め, cancel=中止する, sign up=申しこむ
 S| The city {is looking|is look|looking|are looking} :: 市は探している
-P| {for|to|of|with} volunteers :: ボランティアを
+O| {for|to|of|with} volunteers :: ボランティアを
 M| {to clean|cleaning|clean|cleaned} Green Bay Beach :: 海岸を清掃する
 T| {this|these|those|them} Saturday. :: 今週の土曜に
 == 市は、今週土曜日にグリーン湾の海岸を清掃するボランティアを募集している。

@@ -66,7 +66,7 @@ M| Even {so|such|as|though}, :: それでも
 S| the habit {of|for|to|in} asking :: 問う習慣は
 O| "What am I {giving|give|gave|given} up?" :: 何を手放すのかと
 V| {can|cans|can to|could to} lead :: 導きうる
-P| {to|for|at|on} wiser decisions. :: 賢い決定へ
+O| {to|for|at|on} wiser decisions. :: 賢い決定へ
 == それでも「自分は何を手放しているのか」と問う習慣は、より賢い決定につながりうる。
 M| In this {sense|sensing|sensible|sensed}, :: この意味で
 S| opportunity {cost|costly|costing|costed} :: 機会費用は
@@ -97,7 +97,7 @@ V| {is|are|be|being} better :: より得意でも
 P| {at|on|to|of} producing everything, :: 全ての生産が
 S| {both|either|each|neither of} countries :: 両国とも
 V| can still {benefit|benefits|beneficial|benefited} :: なお利益を得る
-P| {from|of|at|on} trade. :: 貿易から
+O| {from|of|at|on} trade. :: 貿易から
 == たとえある国があらゆる生産で優れていても、両国とも貿易から利益を得られる。
 S| The key {lies|lays|lying|lain} :: 鍵は…にある
 M| not {in|on|at|to} absolute efficiency :: 絶対的効率でなく
@@ -124,7 +124,7 @@ X| {which|what|who|whom} pays far more. :: ずっと稼げる
 == タイプに使う1時間は、ずっと稼げる法律業務から奪われた1時間なのだ。
 M| {Likewise|Alike|Liken|Likeness}, :: 同様に
 S| countries {that|what|whose|whom} specialize :: 特化する国々は
-P| {in|at|to|by} what they do :: 自分がやれることに
+O| {in|at|to|by} what they do :: 自分がやれることに
 M| {relatively|relative|relativity|relate} best :: 相対的に最もよく
 V| {can|cans|can to|could to} produce :: 生産できる
 O| more {in|on|at|by} total. :: 全体でより多く
@@ -168,7 +168,7 @@ O| {that|what|whom|whose} it helps everyone. :: 全員の得になるとは
 @gloss sunk cost=埋没費用, irrecoverable=回収不能な, relevant=重要な, invest=投資する, reluctance=気が進まないこと, abandon=やめる, confess=告白する, persistence=粘り強さ
 F| {Suppose|Supposes|Supposed|Supposition} :: …としよう
 S| {you|your|yours|yourself} have paid :: あなたが払った
-P| {for|of|on|to} a concert ticket :: コンサート券に
+O| {for|of|on|to} a concert ticket :: コンサート券に
 M| {but|nor|than|whom} wake up :: だが目覚める
 M| {feeling|feel|felt to|feels} ill :: 気分が悪くて
 T| {on|at|to|of} the day. :: 当日に
@@ -208,7 +208,7 @@ V| are often {continued|continue|continuing to|continuation} :: しばしば続�
 R| {simply|simple|simplify|simplicity} because :: 単に…という理由で
 S| so {much|many|more of|lot} :: とても多くが
 V| has already {been|being|be|to be} invested :: すでに投じられた
-P| {in|at|to|of} them. :: それらに
+O| {in|at|to|of} them. :: それらに
 == 明らかに失敗している事業が、すでに多くを投じたという理由だけで続けられることも多い。
 S| {Psychologists|Psychology|Psychological|Psychologically} suggest :: 心理学者は示唆する
 O| {that|what|whom|whose} this tendency :: この傾向は…と
@@ -259,7 +259,7 @@ S| His {starting|start|started|starts} point :: 彼の出発点は
 V| {was|were|be|being} simple: :: 単純だった
 S| {sellers|seller|selling|sold} :: 売り手は
 V| know far {more|most|much|many} :: はるかに多く知る
-P| {about|above|abroad|about of} their cars :: 自分の車について
+O| {about|above|abroad|about of} their cars :: 自分の車について
 M| {than|then|as|that} buyers do. :: 買い手より
 == 彼の出発点は単純だった。売り手は買い手よりも、自分の車についてはるかに多くを知っている。
 M| {In|On|At|By} American slang, :: 米国の俗語で
@@ -277,7 +277,7 @@ P| {For|Of|At|By} owners of good cars, :: 良い車の持ち主には
 S| that price {is|are|be|being} too low, :: その値は安すぎる
 M| {so|nor|than|whom} many of them :: そこで多くが
 V| {withdraw|withdraws|withdrawing|withdrawal} :: 撤退する
-P| {from|of|at|to} the market. :: 市場から
+O| {from|of|at|to} the market. :: 市場から
 == 良い車の持ち主にはその値段は安すぎるので、その多くが市場から手を引く。
 T| {As|Than|Whom|Whose} they leave, :: 彼らが去るにつれ
 S| the {average|averagely|averaged of|averages} quality :: 平均的な品質は
@@ -295,7 +295,7 @@ V| {exist|exists|existing|existence}. :: 存在する
 == 最悪の場合、正直な取引相手がいるにもかかわらず、市場そのものが崩壊しかねない。
 S| The same {logic|logical|logically|logician} :: 同じ論理は
 V| {applies|apply|applying|application} :: 当てはまる
-P| {to|at|by|of} insurance, :: 保険に
+O| {to|at|by|of} insurance, :: 保険に
 M| {lending|lend|lent|lends}, :: 融資に
 M| {and|nor|than|whom} even hiring. :: 採用にさえ
 == 同じ論理は、保険や融資、さらには採用にも当てはまる。
@@ -771,7 +771,7 @@ V| rarely {allow|allows|allowing|allowance}. :: めったに許さない
 == 学生や子育て中の親、退職者は、普通の仕事ではめったにできない形で、ほかの用事に合わせて働ける。
 S| Companies, {too|to|two|toward}, :: 企業も
 V| {benefit|benefits|beneficial|benefiting} :: 利益を得る
-P| {from|of|at|on} being able :: …できることから
+O| {from|of|at|on} being able :: …できることから
 X| {to expand|expanding|expanded|expand} or shrink :: 増減させる
 O| their {workforce|workforces of|work forced|working force of} :: 労働力を
 M| almost {instantly|instant|instance|instants}. :: ほぼ即座に

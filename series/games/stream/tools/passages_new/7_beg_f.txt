@@ -425,7 +425,7 @@ T| {tomorrow|tomorrows|ago|ever}. :: 明日
 @gloss favorite=大好きな, sweet=甘い, crunchy=シャキシャキした, grandmother=祖母, famous=有名な, autumn=秋, send=送る, pie=パイ, delicious=おいしい
 T| {Today|Todays|Ago|Ever} :: 今日は
 S| I {will|wills|will to|am} talk :: 私は話します
-P| {about|above|abroad|abort} my favorite fruit. :: 好きな果物について
+O| {about|above|abroad|abort} my favorite fruit. :: 好きな果物について
 == 今日は、私の大好きな果物について話します。
 S| My {favorite|favorites|favor|favorably} fruit :: 私の好きな果物は
 V| {is|are|be|am} :: …だ

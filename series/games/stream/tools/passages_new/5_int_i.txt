@@ -307,7 +307,7 @@ S| Mei {found|find|founded|finding} :: メイは見つけた
 O| an {old|olds|oldly|age} camera. :: 古いカメラを
 == 屋根裏を掃除していたとき、メイは古いカメラを見つけた。
 S| {It|Its|It's|Itself} belonged :: それは…のものだった
-P| {to|for|at|with} her grandfather, :: 祖父の
+O| {to|for|at|with} her grandfather, :: 祖父の
 M| {and|nor|than|whom} there was still film :: まだフィルムが
 P| {inside|insider|inner|inward}. :: 中に
 == それは祖父のもので、中にはまだフィルムが入っていた。

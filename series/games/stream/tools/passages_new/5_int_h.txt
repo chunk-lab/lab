@@ -20,7 +20,7 @@ V| {get|gets|getting|to get} hurt. :: けがをする
 == けがをする子どもが減ったので、ほっとしている親もいる。
 S| Parks {must|musts|must to|has} :: 公園は…ならない
 V| {also|either|neither|else} pay :: 払うことも
-P| {for|than|whom|nor} repairs :: 修理代を
+O| {for|than|whom|nor} repairs :: 修理代を
 M| {and|nor|than|whom} safety checks. :: と安全点検の
 == 公園は修理や安全点検の費用も払わなければならない。
 M| {On the other hand|On other hand|In the other hand|At the other hand}, :: 一方で
@@ -63,7 +63,7 @@ C| {both|either|neither|each} safe and exciting. :: 安全でわくわくする
 @tag 共通テストレベル・お知らせ
 @gloss volunteer=ボランティア, experience=経験, training=研修, session=回, interested=興味がある, application=申し込み, deadline=締め切り, lifelong=一生の
 S| Green Hill Library {is looking|is look|looking|are looking} :: 図書館は探している
-P| {for|of|than|whom} volunteers :: ボランティアを
+O| {for|of|than|whom} volunteers :: ボランティアを
 M| {who|which|whose|what} can read :: 読める人を
 P| {to|than|whom|nor} young children. :: 幼い子どもに
 == グリーンヒル図書館では、幼い子どもに読み聞かせができるボランティアを探しています。
@@ -104,7 +104,7 @@ O| children {grow|grows|growing|grown} :: 子どもが育つ
 P| {into|onto|than|whom} lifelong readers. :: 一生本を読む人に
 == 一緒に読むことは、子どもが一生本を読む人に育つ助けになります。
 S| We {look|looks|looking|to look} forward :: 楽しみにしています
-P| {to meeting|to meet|meeting|for meet} you :: お会いするのを
+O| {to meeting|to meet|meeting|for meet} you :: お会いするのを
 T| {soon|ago|yet|since}. :: もうすぐ
 == もうすぐお会いできるのを楽しみにしています。
 ?? 1 1 お話会はいつ開かれる？
@@ -120,7 +120,7 @@ T| {soon|ago|yet|since}. :: もうすぐ
 @tag 共通テストレベル・投書
 @gloss sidewalk=歩道, rider=乗る人, ring=鳴らす, cyclist=自転車に乗る人, narrow=狭い, suggest=提案する, council=議会, bike lane=自転車レーン
 S| I {am writing|am write|writing|have writing} :: 私は書いています
-P| {about|than|whom|nor} bicycles :: 自転車について
+O| {about|than|whom|nor} bicycles :: 自転車について
 P| {on|than|whose|nor} the sidewalks :: 歩道の
 P| {in|than|whom|nor} our town. :: 私たちの町の
 == 私たちの町の歩道を走る自転車について書いています。

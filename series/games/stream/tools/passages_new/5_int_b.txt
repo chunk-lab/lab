@@ -23,7 +23,7 @@ M| {instead of|instead|in place|rather} October 9. :: 9日ではなく
 == お荷物は10月9日ではなく、10月12日に届きます。
 S| We {sincerely|sincere|sincerity|sincerer} :: 私たちは心から
 V| {apologize|apology|apologetic|apologizing} :: おわびします
-P| {for|to|at|on} the inconvenience. :: ご不便について
+O| {for|to|at|on} the inconvenience. :: ご不便について
 == ご不便をおかけしたことを心からおわびします。
 R| To thank you {for|to|of|at} waiting, :: お待ちいただいたお礼に
 S| we {have added|has added|have add|adding} :: 加えました
@@ -53,7 +53,7 @@ M| {if|what|whose|than} you have questions. :: 質問があれば
 @gloss staff=職員, complain=不満を言う, fridge=冷蔵庫, sink=流し, label=ラベル, dishwasher=食器洗い機, empty=空にする, throw away=捨てる
 S| Recently, {many|much|lots|a lot} staff members :: 最近多くの職員が
 V| {have complained|has complained|have complain|complaining} :: 不満を言っている
-P| {about|for|on|at} the kitchen. :: 給湯室について
+O| {about|for|on|at} the kitchen. :: 給湯室について
 == 最近、多くの職員が給湯室について不満を言っています。
 S| The fridge is often {full of|full with|fill of|full by} old food, :: 冷蔵庫は古い食品で一杯
 M| {and|nor|than|whom} the sink :: そして流しは
@@ -317,7 +317,7 @@ T| {when|what|which|whom} I arrive. :: 私が着いたとき
 == また、私が着いたときに家にいない人が多いんです。
 S| Q: {How|What|Who|Which} do you :: Q：どのように
 V| {deal|deals|dealing|dealt} :: 対処する
-P| {with|to|on|by} that? :: それに
+O| {with|to|on|by} that? :: それに
 == Q：それにはどう対処していますか。
 S| Ken: Our app {lets|letting|to let|lettings} :: ケン：アプリでは
 O| people {choose|chooses|to choose|choosing} :: 人が選べる
@@ -344,7 +344,7 @@ V| I feel {happy|happily|happiness|happier than}. :: うれしく感じる
 @tag 共通テストレベル・メール
 @gloss apply=応募する, position=職, advertise=広告を出す, clothing=衣料品, useful=役に立つ, resume=履歴書, attach=添付する, available=都合がつく
 S| I am writing {to apply|applying|to applying|apply} :: 応募するため書く
-P| {for|to|at|on} the sales assistant position :: 販売員の職に
+O| {for|to|at|on} the sales assistant position :: 販売員の職に
 M| {advertised|advertising|advertise|advertisement} on your website. :: ウェブに出ていた
 == 御社のウェブサイトに掲載された販売員の職に応募したく、メールいたしました。
 S| I {have worked|have work|has worked|have working} :: 私は働いてきた
@@ -362,7 +362,7 @@ M| {which|what|who|whom} could be useful :: 役立つかもしれない
 P| {for|of|on|by} your store. :: 御店で
 == 英語と韓国語も話せるので、御店のお役に立てるかもしれません。
 S| I enjoy {working|to work|work|worked} :: 働くのが好き
-P| {with|to|at|by} people :: 人と
+O| {with|to|at|by} people :: 人と
 M| {and|nor|than|whom} am good :: そして得意だ
 P| {at|on|to|of} teamwork. :: チームワークが
 == 私は人と働くのが好きで、チームワークも得意です。

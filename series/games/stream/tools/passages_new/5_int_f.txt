@@ -415,7 +415,7 @@ T| {in|on|at|by} the afternoon. :: 午後に
 == イギリスでは、多くの人が午後にミルクティーを好む。
 T| Next time you {drink|drinks|drinking|drunk} tea, :: 次にお茶を飲むとき
 V| {think|thinks|thinking|thought} :: 考えてみよう
-P| {about|above|along|across} the people :: 人々のことを
+O| {about|above|along|across} the people :: 人々のことを
 M| {who|which|whose|whom} share this habit. :: この習慣を共にする
 == 次にお茶を飲むときは、この習慣を共にする人々のことを考えてみよう。
 ?? 2 2 チャイには何が入っている？
@@ -487,7 +487,7 @@ T| {next|last|the next of|nextly} month. :: 来月
 == ルーカスへ、来月あなたを迎えるのを楽しみにしています。
 T| {Before|Ago|Among|Above} you come, :: 来る前に
 S| I want {to tell|telling|told|tells} you :: 伝えたい
-P| {about|above|along|across} a Japanese home custom. :: 日本の家の習慣を
+O| {about|above|along|across} a Japanese home custom. :: 日本の家の習慣を
 == 来る前に、日本の家の習慣について伝えたいと思います。
 S| In Japan, we {take off|take of|took of|taking off} :: 日本では脱ぐ
 O| our {shoes|shoed|shoeing|shoe's} :: 靴を
