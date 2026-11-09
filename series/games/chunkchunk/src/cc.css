@@ -419,3 +419,7 @@ html[data-theme="cute"] .ct-cc .edView .edNote,html[data-theme="cute"] .ct-cc .e
 .ct-cc .hmSheet h3{margin:0 0 2px;font-size:19px;color:#4a3d63}.ct-cc .hmSheet p{margin:0 0 6px;font-size:13px;color:#7c6e95}
 .ct-cc .hmClose{background:#fff!important;width:100%;max-width:460px}
 .ct-cc .titleScr[data-face="arcade"] .ccTabs{display:none}
+/* ホームでは、ミュートボタンをロゴからずらす／街の「🏠街へ」ボタンと下のナビが重ならないよう持ち上げる */
+body:has(#title[data-face="arcade"]:not([hidden])) .ct-cc .ccBgmMute{top:calc(126px + env(safe-area-inset-top));left:24px}
+body:has(.cs-back) .ct-cc .hmNav{bottom:calc(52px + env(safe-area-inset-bottom))}
+body:has(.cs-back) .ct-cc .hm{padding-bottom:calc(140px + env(safe-area-inset-bottom))}

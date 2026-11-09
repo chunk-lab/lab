@@ -36,3 +36,7 @@ body.cs-in-game .md-town3d{visibility:hidden}
 body.md-home-on>.tw-view,body.md-home-on>.tw-top{display:none}
 .hm-more{margin-top:12px}.hm-more summary{cursor:pointer;text-align:center;padding:10px;color:#7a5a44;font-weight:700;list-style:none}.hm-more summary::-webkit-details-marker{display:none}
 .hm-ver{text-align:center;font:700 11px/1 monospace;color:#8d7f9e;margin:14px 0 6px;opacity:.85}
+.hm-apps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 10px}
+.hm-app{display:flex;align-items:center;justify-content:center;aspect-ratio:1.6;padding:10px;border-radius:18px;border:2px solid #8a5a32;background:linear-gradient(160deg,#fffdf6,#fff1d6);box-shadow:0 4px 0 #8a5a32;font:inherit}
+.hm-app img{display:block;width:100%;max-height:100%;object-fit:contain;pointer-events:none}
+.hm-app:active{transform:translateY(2px);box-shadow:0 2px 0 #8a5a32}

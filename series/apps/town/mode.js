@@ -48,7 +48,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       else { stop3D(); document.body.classList.remove('md-3d-on'); home.hide(); }
     },
   });
-  const home = createHome(core, { st, go3D: () => go('3d'), openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
+  const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
 
   async function go(m) {
     if (m !== '3d') { stop3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 勉強部屋(ホーム)へ
