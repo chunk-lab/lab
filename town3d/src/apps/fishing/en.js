@@ -104,10 +104,10 @@ const CSS = `
 .fz .ens .cell.got{background:linear-gradient(160deg,#fffbe6,#fff)}.fz .ens .cell.crk{background:linear-gradient(160deg,#ffe8e8,#fff)}
 .fz .ens .cell .dot{position:absolute;right:6px;top:6px;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px #fff}
 .fz .ens .row{background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001;display:flex;gap:10px;align-items:center}
-.fz .ens .row .fx{flex:1;min-width:0}.fz .ens .row .gb{height:7px;border-radius:4px;background:#eee4f2;overflow:hidden;margin:4px 0}.fz .ens .row .gb i{display:block;height:100%;background:linear-gradient(90deg,#7fd3ff,#7fcf9f)}
+.fz .ens .row{flex-wrap:wrap}.fz .ens .row .fx{flex:1 1 140px;min-width:140px}.fz .ens .row .gb{height:7px;border-radius:4px;background:#eee4f2;overflow:hidden;margin:4px 0}.fz .ens .row .gb i{display:block;height:100%;background:linear-gradient(90deg,#7fd3ff,#7fcf9f)}
 .fz .ens .tankv{position:relative;height:200px;border-radius:18px;overflow:hidden;box-shadow:0 4px 14px #0002;margin-bottom:10px;touch-action:pan-y;user-select:none}.fz .ens .tankv::after{content:'';position:absolute;inset:0;border-radius:18px;box-shadow:inset 0 0 0 6px #2b2b30;pointer-events:none;z-index:2}.fz .ens .tankv .tz{position:absolute;inset:0;transform-origin:0 0;background:linear-gradient(#bfe9ff,#5fb3e0 70%,#e8d9b0 70%,#e8d9b0)}.fz .ens .tankv .zh{position:absolute;right:12px;bottom:10px;z-index:3;font-size:11px;color:#fff;background:rgba(0,0,0,.4);border-radius:9px;padding:2px 7px;pointer-events:none}
 .fz .ens .tankv canvas{position:absolute;inset:0;width:100%;height:100%}
-.fz .ens .sbtn{border:0;border-radius:999px;padding:9px 14px;font:inherit;font-weight:900;font-size:13px;background:#fff;color:#5a4a6b;box-shadow:0 2px 6px #0002}
+.fz .ens .sbtn{white-space:nowrap;flex:none;border:0;border-radius:999px;padding:9px 14px;font:inherit;font-weight:900;font-size:13px;background:#fff;color:#5a4a6b;box-shadow:0 2px 6px #0002}
 .fz .ens .sbtn.pri{background:linear-gradient(160deg,#ffd36b,#ffb35c)}.fz .ens .sbtn:disabled{opacity:.45}
 .fz .enprog{position:absolute;right:10px;top:46px;z-index:3;background:rgba(255,255,255,.9);border-radius:999px;padding:5px 12px;font-weight:900;font-size:12px;box-shadow:0 2px 8px #0002;pointer-events:none;white-space:nowrap}
 `;
