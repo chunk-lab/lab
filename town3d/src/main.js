@@ -214,7 +214,7 @@ export function mount(container, opt = {}) {
     const fx = Math.sin(b0.ry), fz = Math.cos(b0.ry), back = (me.x - b0.x) * fx + (me.z - b0.z) * fz < 0;
     const b = { x: b0.x, z: b0.z, ry: back ? b0.ry + Math.PI : b0.ry };
     const c = Math.cos(b.ry), s = Math.sin(b.ry), dx = me.x - b.x, dz = me.z - b.z;
-    const hana = residents.list.find(x => x.def.companion && x.follow && !x.pin);
+    const hana = residents.list.find(x => isComp(x) && x.follow && !x.pin);
     let lx = Math.max(-0.55, Math.min(0.55, dx * c - dz * s)); const lz = -0.02;
     if (hana) lx = -0.36;   // はなちゃんと2人で:はなちゃんは左どなり
     me.x = b.x + lx * c + lz * s; me.z = b.z - lx * s + lz * c; me.ry = b.ry; me.speed = 0;
@@ -265,11 +265,12 @@ export function mount(container, opt = {}) {
     if (r.def.angler && seasons.season !== 'summer') text = 'のんびり釣りは夏だけのお楽しみでねえ。英語の釣り堀なら、いつでも池においで。';
     const lunaOut = r.def.id === 'luna' && r.ch.root.visible && !appHost.current;   // ルナが外にいる=お出かけ中(館の道具がないので占いはできない)
     if (lunaOut) text = ['たまには外の空気を吸わないとね。星も、昼は休んでいるのよ。', 'あら、こんなところで会うなんて。…これも星の導きかしら。', '夕方には館にもどるわ。占いはそれからね。'][Math.floor(Math.random() * 3)];
-    if (r.def.companion && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
+    if (isComp(r) && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
     soc.onTalk(r);
     const choices = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m) && !(lunaOut && m.app === 'fortune')).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、潮見さんとの会話にもどる
     if (r.def.id === 'sora' && r.follow) choices.unshift({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); } });
     choices.push(...soc.choices(r));
+    if (!r.def.companion && isComp(r)) choices.push({ label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
     if (r.def.id !== 'sora') choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
     hud.dialog({ name: r.def.name, role: PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role, text, choices });
     bus.emit('talk', { npc: r.def.id });
@@ -449,7 +450,9 @@ export function mount(container, opt = {}) {
     });
   }
   // ---- いっしょに出かける住人(はなちゃん・そら君):自由なおしゃべり(決まりごとを足さない)、手をつないで歩く、デート、家に招く ----
-  const compOf = () => residents.list.find(x => x.def.companion && x.follow);
+  // いっしょに歩く・家に呼べる人:はな・そら、と、デートできるようになった人(好感度でデートが開いた住人)
+  const isComp = r => !!(r.def.companion || social.has(r.def.id, 'date'));
+  const compOf = () => residents.list.find(x => isComp(x) && x.follow);
   const say1 = (r, arr, sec = 3) => hud.say('npc:' + r.def.id, Array.isArray(arr) ? arr[Math.floor(Math.random() * arr.length)] : arr, sec);
   function freeChat(r, first, situation, low) {
     const hist = []; ai.warm();
@@ -483,10 +486,11 @@ export function mount(container, opt = {}) {
     });
   }
   // 一緒にいる住人を、家やゲーム機に「お客さん」として渡す
+  const DEFAULT_HOME_LINES = { enter: ['おじゃまします。いい部屋ですね', 'へぇ、ここがあなたの家?'], goro: ['ごろごろ…いい気持ち', 'ふぁ〜、落ちつくなあ'], talk: ['なにを話そうか', 'いい部屋だね'], sit: ['となり、すわるね'], lie: ['ならんで、ごろん'], talkLie: ['こうしてると、話しやすいね'] };
   function hanaGuest() {
     const r = compOf(); if (!r) return null;
     return {
-      id: r.def.id, name: r.def.name, look: r.def.look, icon: r.def.icon, lines: r.def.homeLines,
+      id: r.def.id, name: r.def.name, look: r.def.look, icon: r.def.icon, lines: r.def.homeLines || DEFAULT_HOME_LINES,
       late: () => env.hour >= 21 || env.hour < 5,
       leave: () => { r.follow = false; r.hold = false; },
       chat: (situation, first) => { if (!ai.ready) { openAiSetup({ hud, ai, onDone: () => freeChat(r, first, situation, true) }); return; } freeChat(r, first, situation, true); },
@@ -494,7 +498,7 @@ export function mount(container, opt = {}) {
   }
   const FOLLOW_LINES = { hana: ['いいよ! どこ行く? ついてくね。', 'うん、またね! 楽しかった〜。'], sora: ['いいよ、どこ行く? 付き合うよ。', 'おう、またね! 楽しかったよ。'] };
   function hanaFollow(r, on, quiet) {
-    if (on) for (const o of residents.list) if (o !== r && o.def.companion && o.follow) { o.follow = false; o.hold = false; o.ch.holdTo = null; }   // 一緒に歩けるのは1人だけ
+    if (on) for (const o of residents.list) if (o !== r && isComp(o) && o.follow) { o.follow = false; o.hold = false; o.ch.holdTo = null; }   // 一緒に歩けるのは1人だけ
     r.follow = on; r.hintT = 25 + Math.random() * 20; r.lastArea = null; r.hold = false; r.reT = 0; r.ev = null; r.lag = r.lagT = 0; r.blockT = 0; r.ch.holdTo = null; me.ch.holdTo = null; guide = null;
     if (!quiet) hud.dialog({ name: r.def.name, role: r.def.role, text: (FOLLOW_LINES[r.def.id] || FOLLOW_LINES.hana)[on ? 0 : 1] });
   }
@@ -646,7 +650,7 @@ export function mount(container, opt = {}) {
     r.pin = { x: pB.x, z: pB.z, y: -0.04, ry: Math.atan2(rx, rz), pose: 'sit' };
     const F = { x: T.x + nx * 2.4, z: T.z + nz * 2.4 }; cam.x = F.x; cam.z = F.z; cam.yaw = Math.atan2(nx, nz); cam.pitch = 0.42; cam.dist = 5.5;
     date = { r, stools, focus: F, wasFollow: r.follow, cam0: { pitch: cam.pitch, dist: cam.dist } }; residents.avoid = { x: T.x, z: T.z, r: 3.2 };
-    for (const o of residents.list) if (o !== r && !o.hidden && !(o.def.companion && o.follow) && Math.hypot(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z) < 2.4) { const a = Math.atan2(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z); o.ch.root.position.x = T.x + Math.sin(a) * 3.3; o.ch.root.position.z = T.z + Math.cos(a) * 3.3; }
+    for (const o of residents.list) if (o !== r && !o.hidden && !(isComp(o) && o.follow) && Math.hypot(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z) < 2.4) { const a = Math.atan2(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z); o.ch.root.position.x = T.x + Math.sin(a) * 3.3; o.ch.root.position.z = T.z + Math.cos(a) * 3.3; }
     const H = env.hour, so = r.def.id === 'sora';
     const first = so ? (H < 11 ? '朝のカフェっていいよな。何たのむ?' : H < 17 ? 'ここのケーキ、うまいんだよ。何にする?' : '夜のカフェって、なんか落ちつくよな') : (H < 11 ? 'モーニング、いい感じだね。何たのむ?' : H < 17 ? 'ここ、前から来てみたかったんだ〜。何にする?' : '夜のカフェって、ちょっと大人な感じしない?');
     freeChat(r, DATE_FIRST[r.def.id] || first, `いま「${settings.name || 'あなた'}」と、町のカフェのテラス席で向かい合ってすわり、デートしている。`, true);
@@ -693,7 +697,7 @@ export function mount(container, opt = {}) {
       if (!b.go && b.t > 8) { b.go = true; ['heart', 'kamuro', 'star', 'botan'].forEach(t => fw.launch(t)); }   // 大きな花火を4つ
       else if (b.go && (b.t2 += dt) > 2.8) { bdayShot = null; birthdayPhoto(b.S); bdayRelease = 45; }
     }
-    if (bdayRelease > 0 && (bdayRelease -= dt) <= 0) { residents.avoid = null; for (const r of residents.list) if (r.def.companion && r.pin && !r.pin.bench) r.pin = null; }
+    if (bdayRelease > 0 && (bdayRelease -= dt) <= 0) { residents.avoid = null; for (const r of residents.list) if (isComp(r) && r.pin && !r.pin.bench) r.pin = null; }
     if (!started || appHost.current || !isBday()) return;
     const s = bst(), nm = settings.name || 'あなた';
     if (!bdayHello) { bdayHello = true; hud.toast(`🎂 ${nm}さん、お誕生日おめでとう!`); }
@@ -745,7 +749,7 @@ export function mount(container, opt = {}) {
       const w = renderer.domElement.width, h = renderer.domElement.height, c = new THREE.PerspectiveCamera(62, w / h, 0.1, 600);
       me.x = S.x; me.z = S.z; me.ry = 0; me.ch.root.position.set(S.x, 0, S.z); me.ch.root.rotation.y = 0; me.ch.root.visible = true;
       c.position.set(S.x, 1.25, S.z + 4.3); c.lookAt(S.x, 9, S.z - 40);
-      const hid = residents.list.filter(r => !r.def.companion && r.ch.root.visible && Math.hypot(r.ch.root.position.x - S.x, r.ch.root.position.z - (S.z + 3)) < 7);   // 写真の前にいる住人は、うつさない
+      const hid = residents.list.filter(r => !isComp(r) && r.ch.root.visible && Math.hypot(r.ch.root.position.x - S.x, r.ch.root.position.z - (S.z + 3)) < 7);   // 写真の前にいる住人は、うつさない
       hid.forEach(r => { r.ch.root.visible = false; });
       renderer.render(scene, c);
       hid.forEach(r => { r.ch.root.visible = true; });
