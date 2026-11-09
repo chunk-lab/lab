@@ -5,7 +5,7 @@ import { LOGO } from '../../core/logos.js';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
 // 版:組み立てた日時(日本時間)。テスト版が最新かどうか、見分けるための印
-const verText = () => { const b = window.__APP__ && window.__APP__.build, t = b ? parseInt(b, 36) : NaN; if (!isFinite(t)) return 'ver dev'; const d = new Date(t + 9 * 36e5).toISOString(); return 'ver ' + d.slice(5, 10) + ' ' + d.slice(11, 16); };
+export const verText = () => { const b = window.__APP__ && window.__APP__.build, t = b ? parseInt(b, 36) : NaN; if (!isFinite(t)) return 'ver dev'; const d = new Date(t + 9 * 36e5).toISOString(); return 'ver ' + d.slice(5, 10) + ' ' + d.slice(11, 16); };
 export function createHome(core, { st, go3D, openFish, openStudy, has, openEpisode, episodeLabel }) {
   let el = null;
   const usable = p => p.go.to === '3d' ? true : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level : p.go.to === 'role' ? !!core.roletest && !!core.books : !!core.openGame && has(p.go.game);
@@ -25,7 +25,7 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
       <button class="hm-pic hm-go" data-3d aria-label="街へ行く"></button>
       <div class="hm-apps">${APPS.map(a => `<button class="hm-pic hm-app hm-app-${a[0]}" data-app="${a[0]}" aria-label="${a[2]}"></button>`).join('')}</div>
       <button class="hm-pic hm-st" data-note aria-label="勉強する"></button>
-      <p class="hm-ver">${esc(verText())}</p>
+      ${core.admin && core.admin.on() ? `<p class="hm-ver">${esc(verText())}</p>` : ''}
       </div>`;
     el.onclick = e => {
       const b = e.target.closest('button'); if (!b) return;

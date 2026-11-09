@@ -6,7 +6,7 @@ import { createStore } from '../../core/store.js';
 import { ECON } from '../../core/economy.js';
 import { PLAYS, playOf } from '../../core/plays.js';
 import { catOfApp } from '../../core/daylog.js';
-import { createHome } from './home.js';
+import { createHome, verText } from './home.js';
 import { createEpisodes } from './episodes/view.js';
 import { createLauncher } from './launcher.js';
 import './mode.css';
@@ -58,7 +58,11 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     const fail = (why) => { wait.remove(); try { stop3D(); } catch (e) { } if (box) { box.remove(); box = null; } town = null; document.body.classList.remove('md-3d-on'); console.error(why); home.show({ text: '3Dの町を開けませんでした（' + (why && why.message ? String(why.message).slice(0, 80) : '読みこみに失敗') + '）。通信のよいところで、もう一度ためしてください。' }); };
     try { await loadScript(core.base + 'g/town3d/three.js'); await loadScript(core.base + 'g/town3d/town.js'); }
     catch (e) { fail(e); return; }
-    try { await mount3D(wait); } catch (e) { fail(e); }
+    try { await mount3D(wait); } catch (e) { fail(e); return; }
+    // 2回目からは、キャラ選択の画面を出さずに、そのまま町へ(はじめての人だけ、名前を決める画面)
+    try { if (town && core.profile.name && town.quickStart) town.quickStart(); } catch (e) { console.error(e); }
+    // 管理者だけ、町に入って10秒ほど版(ビルド日時)を出す
+    try { if (core.admin && core.admin.on()) { const v = document.createElement('div'); v.className = 'md-ver'; v.textContent = verText(); document.body.appendChild(v); setTimeout(() => v.remove(), 10000); } } catch (e) { }
   }
   async function mount3D(wait) {
     wait.remove(); core.daylog.act('base', { cat: 'relax', label: '街を歩く' });

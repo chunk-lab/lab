@@ -68,9 +68,9 @@ export function createUseit(core) {
     const sent = (s, i) => `<li><b>${esc(s.en)}</b><span>${esc(s.ja)}</span><small>${esc(s.from || '')}</small><div class="cs-nb-a"><button data-say="${i}">🔊</button><button data-mim="${i}">聞いてまねる</button><button data-add="${i}">ノートに入れる</button></div></li>`;
     let found = [];
     core.ui.sheet(`<h3>✨ 使ってみる</h3>
-      <div class="cs-adm"><input class="cs-ta" data-en placeholder="英語(単語・熟語・チャンク・文 なんでも)" value="${esc(x.en)}" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:100%;box-sizing:border-box;margin-bottom:6px"><input class="cs-ta" data-ja placeholder="日本語(空でもOK)" value="${esc(x.ja)}" autocomplete="off" style="width:100%;box-sizing:border-box">
-        ${core.openGame ? '<button class="cs-btn cs-go" data-eigo style="width:100%;margin-top:8px;font-size:16px">🧠 英ラボで文にして、すぐ遊ぶ</button><p class="cs-note">AIがふさわしい文を作って、英ラボにセットします。気に入った文は英ラボの「💾 記憶」で残せます。</p>' : ''}</div>
+      <div class="cs-adm"><input class="cs-ta" data-en placeholder="英語(単語・熟語・チャンク・文 なんでも)" value="${esc(x.en)}" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:100%;box-sizing:border-box;margin-bottom:6px"><input class="cs-ta" data-ja placeholder="日本語(空でもOK)" value="${esc(x.ja)}" autocomplete="off" style="width:100%;box-sizing:border-box"></div>
       <section class="cs-adm"><h4>1. 文の中で見てみる</h4><ul class="cs-nb" data-found><li class="cs-note">さがしています…</li></ul></section>
+      ${core.openGame ? '<button class="cs-btn cs-go" data-eigo style="width:100%;margin-top:8px;font-size:16px">🧠 英ラボで文にして、すぐ遊ぶ</button><p class="cs-note">AIがふさわしい文を作って、英ラボにセットします。気に入った文は英ラボの「💾 記憶」で残せます。</p>' : ''}
       <section class="cs-adm"><h4>2. 自分で文を作る</h4>
         <textarea class="cs-ta" data-mine rows="2" placeholder="「${esc(x.en)}」を使って英文を書いてみよう" autocapitalize="off" spellcheck="false"></textarea>
         <div class="cs-adm-row">${ai.ready ? '<button class="cs-btn" data-check>自然な文か判定(AI)</button>' : ''}<button class="cs-btn" data-keep>ノートに入れる</button></div>

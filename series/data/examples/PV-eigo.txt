@@ -1,0 +1,574 @@
+break down | ph | My car broke down on the way to work. | 仕事に行く途中で、車が故障しました。
+bring back | ph | This song brings back so many happy memories. | この歌を聞くと、楽しい思い出がたくさんよみがえります。
+call back | ph | I'm busy now, but I'll call you back in ten minutes. | 今は忙しいので、10分後にかけ直します。
+call off | ph | They called off the picnic because of the rain. | 雨のため、ピクニックは中止になりました。
+calm down | ph | Take a deep breath and calm down. | 深呼吸をして、落ち着いてください。
+catch up with | ph | I ran as fast as I could to catch up with my friends. | 友だちに追いつくため、できるだけ速く走りました。
+check out | ph | You should check out the new cafe near the station. | 駅の近くの新しいカフェを、ぜひ見てみてください。
+clean up | ph | Please clean up your room before dinner. | 夕食の前に、自分の部屋を片づけてください。
+come over | ph | Why don't you come over to my house this weekend? | 今週末、うちに遊びに来ませんか？
+drop off | ph | I'll drop you off at the station on my way to work. | 仕事に行く途中で、駅まで送っていきますよ。
+eat out | ph | We eat out every Friday night. | 私たちは毎週金曜の夜に外食します。
+figure out | ph | I can't figure out how to use this machine. | この機械の使い方がわかりません。
+fill out | ph | Please fill out this form and give it to the staff. | この用紙に記入して、スタッフに渡してください。
+get along with | ph | I get along with all my classmates. | 私はクラスメート全員と仲よくしています。
+get back to | ph | I'll get back to you by tomorrow morning. | 明日の朝までにお返事します。
+get in | ph | The train gets in at six o'clock. | 電車は6時に到着します。
+get out of | ph | She got out of the car and waved at us. | 彼女は車から降りて、私たちに手を振りました。
+get over | ph | It took him a week to get over his cold. | 彼が風邪から回復するのに1週間かかりました。
+get together | ph | Let's get together for lunch next week. | 来週、お昼に会いましょう。
+go over | ph | Let's go over the plan one more time. | もう一度、計画を確認しましょう。
+hang out | ph | I like to hang out with my friends after school. | 放課後に友だちと過ごすのが好きです。
+hang up | ph | She hung up before I could say goodbye. | さよならを言う前に、彼女は電話を切りました。
+head out | ph | We should head out early to avoid the traffic. | 渋滞を避けるため、早めに出発したほうがいいです。
+hold on | ph | Hold on a second. I'll check my schedule. | ちょっと待ってください。予定を確認します。
+hurry up | ph | Hurry up, or we'll miss the bus! | 急いで。じゃないとバスに乗り遅れるよ！
+keep up with | ph | It's hard to keep up with all the news these days. | 最近は、ニュースをすべて追いかけるのが大変です。
+look around | ph | Can I just look around the store for a while? | 少しのあいだ、お店の中を見て回ってもいいですか？
+look out | ph | Look out! There's a car coming. | 気をつけて！車が来ているよ。
+look out for | ph | Please look out for pickpockets in the crowd. | 人混みでは、スリに注意してください。
+look up | ph | If you don't know the word, look it up in a dictionary. | その単語を知らなければ、辞書で調べてください。
+open up | ph | The new bakery opens up next Monday. | 新しいパン屋さんは、来週の月曜に開店します。
+put away | ph | Put your toys away before you go to bed. | 寝る前に、おもちゃをしまいなさい。
+put back | ph | Please put the book back on the shelf when you're done. | 読み終わったら、本を棚に戻してください。
+put on | ph | It's cold outside, so put on your coat. | 外は寒いので、コートを着なさい。
+put up with | ph | I can't put up with this noise any longer. | この騒音には、もう我慢できません。
+reach out | ph | Feel free to reach out if you have any questions. | 質問があれば、遠慮なく連絡してください。
+run out of | ph | We ran out of milk, so I went to the store. | 牛乳がなくなったので、お店に行きました。
+show up | ph | He didn't show up at the meeting. | 彼は会議に姿を見せませんでした。
+sign up | ph | I signed up for a cooking class last week. | 先週、料理教室に申し込みました。
+sit down | ph | Please sit down and make yourself comfortable. | どうぞ座って、楽にしてください。
+slow down | ph | You're driving too fast. Slow down! | スピードを出しすぎです。速度を落としてください！
+stand up | ph | Everyone stood up when the teacher came in. | 先生が入ってくると、みんな立ち上がりました。
+take back | ph | I'm going to take this shirt back to the store. | このシャツを、お店に返品しに行きます。
+take out | ph | She took out her phone and checked the time. | 彼女は携帯電話を取り出して、時間を確認しました。
+throw away | ph | Don't throw away that box. I might need it. | その箱は捨てないで。使うかもしれないから。
+turn around | ph | He turned around when I called his name. | 名前を呼ぶと、彼は振り向きました。
+turn off | ph | Don't forget to turn off the lights when you leave. | 出かけるときは、電気を消すのを忘れないでね。
+wake up | ph | I wake up at six every morning. | 私は毎朝6時に目を覚まします。
+write down | ph | Let me write down your phone number. | あなたの電話番号を書き留めさせてください。
+back out | ph | He backed out of the trip at the last minute. | 彼は直前になって、旅行から手を引きました。
+check in | ph | We checked in at the hotel at three o'clock. | 私たちは3時にホテルにチェックインしました。
+come along | ph | Do you want to come along with us to the movie? | 映画に一緒に来ませんか？
+come around | ph | My uncle comes around every Sunday to see us. | おじは毎週日曜日、私たちに会いにやって来ます。
+come down with | ph | I think I'm coming down with a cold. | 風邪をひきかけている気がします。
+cut off | ph | Don't cut me off while I'm talking. | 私が話している途中で、さえぎらないでください。
+drop by | ph | Feel free to drop by anytime. | いつでも気軽に立ち寄ってください。
+fall apart | ph | The old chair fell apart when I sat on it. | 古いいすは、私が座るとばらばらになりました。
+freak out | ph | Don't freak out. It's only a small mistake. | 取り乱さないで。ちょっとしたミスだから。
+get through | ph | We got through the hard times together. | 私たちはつらい時期を、一緒に乗り切りました。
+hold back | ph | She tried to hold back her tears. | 彼女は涙をこらえようとしました。
+mess up | ph | I messed up my first interview. | 最初の面接で、失敗してしまいました。
+move in | ph | My new neighbors moved in last week. | 新しいお隣さんは、先週引っ越してきました。
+move out | ph | He moved out of his parents' house at twenty. | 彼は20歳のとき、実家を出て引っ越しました。
+pass out | ph | It was so hot that he almost passed out. | あまりに暑くて、彼は気を失いそうになりました。
+pay back | ph | I'll pay you back next week. | 来週、お金を返します。
+pick out | ph | She picked out a nice gift for her mother. | 彼女はお母さんのために、すてきなプレゼントを選びました。
+pull over | ph | The police officer told him to pull over. | 警察官は彼に、車を路肩に止めるよう言いました。
+put down | ph | Put down your pencils, please. | 鉛筆を置いてください。
+put off | ph | Don't put off your homework until tomorrow. | 宿題を明日まで延ばさないで。
+put out | ph | The firefighters put out the fire quickly. | 消防士たちはすぐに火を消しました。
+run into | ph | I ran into my old teacher at the supermarket. | スーパーで、昔の先生にばったり会いました。
+shut down | ph | The store shut down last year. | そのお店は、去年閉店しました。
+sit back | ph | Just sit back and enjoy the show. | ただくつろいで、ショーを楽しんでください。
+stand out | ph | Her red dress really stood out at the party. | 彼女の赤いドレスは、パーティーでとても目立っていました。
+start out | ph | We started out early in the morning. | 私たちは朝早く出発しました。
+step back | ph | Please step back from the edge of the platform. | ホームの端から、一歩下がってください。
+throw out | ph | I threw out all my old magazines. | 古い雑誌を、すべて捨てました。
+turn in | ph | Please turn in your report by Friday. | 金曜日までに、レポートを提出してください。
+fall down | ph | Be careful not to fall down on the ice. | 氷の上で転ばないように気をつけてね。
+grow up | ph | I want to be a doctor when I grow up. | 大きくなったら、お医者さんになりたいです。
+get up | ph | I get up at seven on weekdays. | 平日は7時に起きます。
+go out | ph | Let's go out for a walk after dinner. | 夕食のあと、散歩に出かけましょう。
+come in | ph | Please come in and have a seat. | どうぞ入って、お座りください。
+take away | ph | The waiter will take away your plate when you finish. | 食べ終わると、店員がお皿を下げてくれます。
+lie down | ph | I'm tired, so I'm going to lie down for a while. | 疲れたので、少し横になります。
+cheer up | ph | Cheer up! Things will get better soon. | 元気を出して！すぐによくなるよ。
+speak up | ph | Could you speak up a little? I can't hear you. | 少し大きな声で話してもらえますか？聞こえません。
+watch out | ph | Watch out for the step! | 段差に気をつけて！
+walk in | ph | A stranger walked in without knocking. | 知らない人がノックもせずに入ってきました。
+walk out | ph | She walked out of the room without a word. | 彼女は何も言わずに部屋から出ていきました。
+walk away | ph | You can't just walk away from your problems. | 問題から、ただ立ち去ることはできません。
+walk around | ph | We walked around the old town all afternoon. | 私たちは午後ずっと、旧市街を歩き回りました。
+look into | ph | The company will look into the problem. | 会社はその問題を調べる予定です。
+give back | ph | Please give back the pen when you're done. | 使い終わったら、そのペンを返してください。
+give away | ph | They give away free samples at the entrance. | 入り口では、無料のサンプルを配っています。
+give in | ph | I finally gave in and bought the toy for my son. | とうとう折れて、息子におもちゃを買ってあげました。
+run away | ph | The cat ran away when the dog came. | 犬が来ると、猫は逃げていきました。
+run after | ph | He ran after the bus, but he missed it. | 彼はバスを追いかけましたが、乗り遅れました。
+get by | ph | We can get by on a small income. | 私たちは少ない収入でも、なんとかやっていけます。
+get along | ph | My sister and I get along very well. | 姉と私はとても仲がいいです。
+get lost | ph | I got lost in the big station. | 大きな駅で、道に迷いました。
+get ready | ph | Get ready for school, or you'll be late. | 学校の準備をしないと、遅刻するよ。
+get married | ph | They got married in the spring. | 彼らは春に結婚しました。
+get better | ph | I hope you get better soon. | 早くよくなるといいですね。
+get rid of | ph | I want to get rid of these old clothes. | この古い服を処分したいです。
+go up | ph | Prices keep going up every year. | 物価は毎年上がり続けています。
+go down | ph | The temperature will go down tonight. | 今夜は気温が下がるでしょう。
+go by | ph | Time goes by so fast when you're having fun. | 楽しいと、時間がとても早く過ぎます。
+go shopping | ph | We go shopping together every Sunday. | 私たちは毎週日曜日、一緒に買い物に行きます。
+come up | ph | The topic came up during lunch. | 昼食のとき、その話題が出ました。
+come true | ph | I hope your dream comes true. | あなたの夢が実現するといいですね。
+take in | ph | She took in the cold air and felt better. | 彼女は冷たい空気を吸い込んで、気分がよくなりました。
+take apart | ph | He likes to take apart old radios. | 彼は古いラジオを分解するのが好きです。
+take turns | ph | The children take turns on the swing. | 子どもたちは交代でブランコに乗ります。
+put in | ph | Put in two spoons of sugar. | 砂糖をスプーン2杯入れてください。
+turn over | ph | Turn over the paper and begin the test. | 用紙を裏返して、テストを始めてください。
+look back | ph | When I look back, those were happy days. | 振り返ると、あのころは幸せな日々でした。
+look through | ph | I looked through the report before the meeting. | 会議の前に、報告書に目を通しました。
+look over | ph | Can you look over my essay? | 私の作文をざっと見てもらえますか？
+look up to | ph | I look up to my older brother. | 私は兄を尊敬しています。
+look down on | ph | You shouldn't look down on other people. | 他人を見下してはいけません。
+give out | ph | The teacher gave out the test papers. | 先生はテスト用紙を配りました。
+run around | ph | The kids are running around in the garden. | 子どもたちは庭を走り回っています。
+bring in | ph | Please bring in the laundry before it rains. | 雨が降る前に、洗濯物を取り込んでください。
+bring out | ph | A good teacher can bring out the best in students. | よい先生は、生徒の最もよいところを引き出せます。
+break in | ph | A thief broke in through the window. | 泥棒が窓から押し入りました。
+break out | ph | A fire broke out in the kitchen. | 台所で火事が起こりました。
+hang around | ph | Some boys were hanging around the station. | 何人かの男の子が、駅のあたりをぶらぶらしていました。
+show off | ph | He likes to show off his new watch. | 彼は新しい腕時計を見せびらかすのが好きです。
+show around | ph | I'll show you around the school. | 学校を案内しますね。
+make it | ph | I made it to the airport just in time. | ぎりぎり空港に間に合いました。
+make fun of | ph | Don't make fun of her accent. | 彼女のなまりをからかってはいけません。
+catch on | ph | It took me a while to catch on to the rules. | ルールがわかるまで、少し時間がかかりました。
+clean out | ph | We cleaned out the garage last weekend. | 先週末、ガレージの中を片づけました。
+dress up | ph | She likes to dress up for parties. | 彼女はパーティーのために、おしゃれをするのが好きです。
+fill up | ph | Let's fill up the tank before we leave. | 出発する前に、ガソリンを満タンにしましょう。
+blow up | ph | He likes to blow up balloons for the party. | 彼はパーティーのために、風船をふくらませるのが好きです。
+blow out | ph | Make a wish and blow out the candles. | 願いごとをして、ろうそくを吹き消してね。
+count on | ph | You can count on me. | 私に任せてください。
+hand in | ph | Please hand in your homework by Monday. | 月曜日までに、宿題を提出してください。
+hand out | ph | She handed out the notes to everyone. | 彼女は全員にノートを配りました。
+hear from | ph | I haven't heard from him for a month. | 1か月、彼から連絡がありません。
+kick off | ph | The festival kicks off at noon. | お祭りは正午に始まります。
+line up | ph | Please line up behind the yellow line. | 黄色い線の後ろに並んでください。
+log in | ph | You need a password to log in. | ログインするにはパスワードが必要です。
+log out | ph | Don't forget to log out when you finish. | 終わったら、ログアウトするのを忘れないでね。
+mix up | ph | I always mix up their names. | 私はいつも、彼らの名前をごちゃまぜにしてしまいます。
+pack up | ph | We packed up and left the campsite. | 私たちは荷づくりをして、キャンプ場をあとにしました。
+pick on | ph | Don't pick on your little brother. | 弟をいじめてはいけません。
+plug in | ph | Plug in the charger and wait a little. | 充電器をコンセントにさして、少し待ってください。
+pop up | ph | An ad popped up on my screen. | 画面に広告がひょっこり出てきました。
+sell out | ph | The tickets will sell out in an hour. | チケットは1時間で売り切れるでしょう。
+settle down | ph | The children finally settled down and started reading. | 子どもたちはやっと落ち着いて、本を読みはじめました。
+sleep in | ph | I like to sleep in on Sundays. | 日曜日は朝寝坊するのが好きです。
+sleep over | ph | You can sleep over at my house tonight. | 今夜はうちに泊まっていいよ。
+stay up | ph | I stayed up late to finish my homework. | 宿題を終えるために、夜ふかししました。
+stay in | ph | It's raining, so let's stay in today. | 雨なので、今日は家にいましょう。
+stay out | ph | Don't stay out too late. | あまり遅くまで外にいないでね。
+stick to | ph | It's important to stick to your plan. | 計画を守ることが大切です。
+stick around | ph | Can you stick around until the meeting ends? | 会議が終わるまで、ここにいてもらえますか？
+think over | ph | Let me think it over before I decide. | 決める前に、よく考えさせてください。
+try on | ph | Can I try on this jacket? | このジャケットを試着してもいいですか？
+try out | ph | I want to try out the new game. | 新しいゲームを試してみたいです。
+tidy up | ph | Let's tidy up the room before the guests arrive. | お客さんが来る前に、部屋を片づけましょう。
+warm up | ph | Warm up before you start running. | 走りはじめる前に、準備運動をしてください。
+cool down | ph | Let the soup cool down a little. | スープを少し冷ましてください。
+fit in | ph | It's not easy to fit in at a new school. | 新しい学校になじむのは簡単ではありません。
+fall asleep | ph | I fell asleep on the train. | 電車の中で眠りこんでしまいました。
+fall behind | ph | Don't fall behind in your studies. | 勉強で遅れをとらないようにね。
+fall for | ph | He fell for her at first sight. | 彼は一目で彼女を好きになりました。
+keep going | ph | It's hard, but keep going! | 大変だけど、がんばり続けて！
+let down | ph | I don't want to let you down. | あなたをがっかりさせたくありません。
+let in | ph | Can you let the dog in? | 犬を中に入れてくれる？
+pass away | ph | His grandfather passed away last year. | 彼のおじいさんは、去年亡くなりました。
+pay for | ph | I'll pay for the coffee. | コーヒー代は私が払います。
+sit up | ph | She sat up in bed and looked at the clock. | 彼女はベッドの上で起き上がって、時計を見ました。
+stand by | ph | Please stand by until we call your name. | 名前を呼ぶまで、待機していてください。
+take after | ph | She takes after her mother. | 彼女はお母さんに似ています。
+talk over | ph | Let's talk it over after dinner. | 夕食のあとで話し合いましょう。
+throw up | ph | He felt sick and threw up. | 彼は気分が悪くなって、吐いてしまいました。
+wash up | ph | Wash up before you eat. | 食べる前に、手を洗いなさい。
+write back | ph | I'll write back to her tonight. | 今夜、彼女に返事を書きます。
+drop out | ph | He dropped out of college in his second year. | 彼は大学2年のときに、途中でやめました。
+eat up | ph | Eat up, and then we can go. | 全部食べてね。そうしたら出かけられるよ。
+sign in | ph | Please sign in at the front desk. | 受付でサインインしてください。
+call up | ph | I'll call you up tonight. | 今夜、電話します。
+kick out | ph | The owner kicked out the noisy customers. | 店主は騒がしい客を追い出しました。
+jump in | ph | Sorry to jump in, but I have a question. | 話に割りこんですみませんが、質問があります。
+save up | ph | I'm saving up for a new bike. | 新しい自転車のために、貯金しています。
+switch off | ph | Please switch off your phone during the movie. | 映画のあいだは、携帯電話の電源を切ってください。
+wrap up | ph | Let's wrap up the meeting. | 会議をまとめましょう。
+brush up on | ph | I need to brush up on my English before the trip. | 旅行の前に、英語を磨き直す必要があります。
+knock down | ph | The strong wind knocked down the old fence. | 強い風で、古いフェンスがたおれました。
+wear out | ph | These shoes wear out quickly. | この靴はすぐにすり切れます。
+believe in | ph | I believe in you. | 私はあなたを信じています。
+think of | ph | I can't think of a good name for the dog. | その犬のいい名前が思いつきません。
+dream of | ph | She dreams of living in Paris. | 彼女はパリに住むことを夢見ています。
+dream about | ph | I dreamed about my school last night. | 昨夜、学校の夢を見ました。
+ask for | ph | You can ask for help anytime. | いつでも助けをたのんでいいですよ。
+hope for | ph | We hope for good weather tomorrow. | 明日はよい天気になるよう願っています。
+wish for | ph | Make a wish. What do you wish for? | 願いごとをして。何を願うの？
+pray for | ph | They pray for peace every day. | 彼らは毎日、平和を祈っています。
+long for | ph | He longs for a quiet life in the country. | 彼は田舎の静かな暮らしにあこがれています。
+learn about | ph | We learn about history in this class. | この授業では、歴史について学びます。
+hear of | ph | I have never heard of that singer. | その歌手のことは、聞いたことがありません。
+hear about | ph | Did you hear about the new store? | 新しいお店のこと、聞いた？
+think about | ph | I'm thinking about changing my job. | 仕事を変えることを考えています。
+focus on | ph | Please focus on the test. | テストに集中してください。
+rely on | ph | You can rely on your friends. | 友だちを頼ってもいいんだよ。
+lead to | ph | Hard work leads to success. | 努力は成功につながります。
+look like | ph | You look like your father. | あなたはお父さんに似ています。
+take a break | ph | Let's take a break for ten minutes. | 10分間、休憩しましょう。
+take a walk | ph | I take a walk every morning. | 私は毎朝、散歩をします。
+take a shower | ph | I usually take a shower before bed. | 私はたいてい、寝る前にシャワーを浴びます。
+look forward to | ph | I look forward to seeing you again. | またお会いできるのを楽しみにしています。
+have fun | ph | Have fun at the party! | パーティーを楽しんでね！
+have lunch | ph | We usually have lunch at noon. | 私たちはたいてい、正午に昼ごはんを食べます。
+make a mistake | ph | Everyone can make a mistake. | だれでもまちがえることはあります。
+make friends | ph | It's easy to make friends at this school. | この学校では、友だちを作るのは簡単です。
+do my best | ph | I always do my best in every game. | 私はどの試合でも、いつもがんばります。
+catch a cold | ph | You'll catch a cold if you go out like that. | そんな格好で出かけると、風邪をひくよ。
+make up my mind | ph | I can't make up my mind yet. | まだ決心がつきません。
+take advantage of | ph | You should take advantage of this chance. | このチャンスを利用するべきです。
+keep in touch | ph | Let's keep in touch after graduation. | 卒業後も連絡を取り合いましょう。
+have a good time | ph | We had a good time at the beach. | 私たちは海辺で楽しく過ごしました。
+pay attention to | ph | Please pay attention to the teacher. | 先生の話に注意を払ってください。
+back up | ph | I always back up my important files to an external hard drive. | 私はいつも重要なファイルを外部ハードドライブにバックアップしています。
+break up | ph | They decided to break up after five years of dating. | 彼らは5年間の交際の後、別れることを決めました。
+bring up | ph | I want to bring up an important topic during the meeting. | 会議中に重要な話題を取り上げたいと思います。
+catch up | ph | I need to catch up on my work. | 仕事で遅れを取り戻す必要があります。
+come across | ph | I came across my old friend at the grocery store. | 食料品店で昔の友達に会った。
+come back | ph | I will come back home tomorrow. | 明日、私は家に帰ってくる。
+come on | ph | Come on, we're going to be late! | 急いで、遅れるよ！
+come out | ph | I can't wait for the new movie to come out. | 新しい映画が出るのが待ちきれません。
+come up with | ph | I need to come up with a new idea for the project. | プロジェクトのために新しいアイデアを思いつかなければなりません。
+deal with | ph | I have to deal with a difficult customer today. | 今日は気難しい客を相手にしなければならない。
+end up | ph | I didn't plan on going to the party, but I ended up going anyway. | パーティーに行く予定はなかったけど、最終的には行くことになった。
+feel like | ph | I feel like going for a walk. | 散歩に行きたいような気がする。
+fill in | ph | I will fill in for you while you're on vacation. | あなたが休暇中は私が代理を務めます。
+find out | ph | I need to find out the truth. | 私は真実を見つけ出さなければならない。
+follow up | ph | I will follow up with the customer to address their concerns. | 顧客の懸念事項に対処するために引き続きフォローアップします。
+get away | ph | I need to get away from the city and relax in nature. | 都会から離れて自然でリラックスしたい。
+get away with | ph | He always manages to [[get away with]] his bad behavior. | 彼はいつも悪い行動をしても罰を受けずに逃げ切る。
+get back | ph | I need to get back to work. | 仕事に戻らなければならない。
+get into | ph | I don't want to get into any trouble. | 私は何かトラブルに巻き込まれたくない。
+get off | ph | I need to get off the bus at the next stop. | 次の停留所でバスを降りる必要があります。
+get out | ph | I need to get out of the house and get some fresh air. | 家を出て新鮮な空気を吸いたい。
+give up | ph | I will never give up on my dreams. | 私は自分の夢を決して諦めません。
+go ahead | ph | You can go ahead and start without me. | 私抜きでも遠慮なく進めてください。
+go away | ph | I want you to go away. | 向こうへ行ってほしい。
+go back | ph | I need to go back to my hometown. | 私は故郷に戻る必要があります。
+go for | ph | I want to go for a walk in the park. | 私は公園で散歩に行きたいです。
+go into | ph | I go into the room. | 私は部屋に入る。
+go on | ph | Unexpected events can go on at any time. | 予期せぬ出来事はいつでも起こりうる。
+go through | ph | [[The likes of]] you and I will never understand what she's [[going through|go through]]. | あなたや私のような者には、彼女が経験したことは決して理解できないでしょう。
+hang on | ph | Hang on, I'll be right back. | ちょっと待って、すぐ戻ります。
+head to | ph | I'm going to head to the store. | 私は店に向かう予定です。
+keep on | ph | I will keep on practicing until I get it right. | うまくできるまで練習を続けるつもりだ。
+keep up | ph | I need to keep up with the latest technology trends. | 最新の技術トレンドに遅れずについていかなければならない。
+look for | ph | I need to look for my keys. | 私は鍵を探さなければなりません。
+look forward to | ph | I look forward to our vacation next month. | 来月の休暇を楽しみに待っています。
+make out | ph | I couldn’t [[make out]] what my grandpa was saying. | おじいちゃんが何を言っているのか聞き取れなかった。
+make up | ph | They had a big argument yesterday, but they made up this morning. | 彼らは昨日大喧嘩したけれど、今朝仲直りした。
+move on | ph | It's time to move on and start something new. | 新しいことを始める時が来た。
+pick up | ph | I will pick up the package from the post office. | 私は郵便局から荷物を取りに行きます。
+run out | ph | I need to go to the store because I've run out of milk. | 牛乳がなくなったので、お店に行かなければなりません。
+set up | ph | I need to set up the new computer. | 新しいコンピュータを設置する必要があります。
+shut up | ph | Hey, could you please shut up for a moment? | ちょっと、しゃべるのやめてくれる？
+take off | ph | I need to [[take off]] my shoes before entering the house. | 家に入る前に靴を脱がなければなりません。
+turn down | ph | I had to turn down the job offer because it didn't align with my career goals. | 私は仕事のオファーを断らなければならなかった、なぜならそれは私のキャリアの目標と一致しなかったからです。
+turn into | ph | I will turn into a butterfly. | 私は蝶に変わります。
+turn on | ph | Please turn on the lights. | 電気をつけてください。
+turn out | ph | It turns out that he is a talented musician. | 彼は才能あるミュージシャンだとわかる。
+work on | ph | I need to work on this project. | このプロジェクトに取り組まなければならない。
+work out | ph | I need to work out the math problem. | 私はその数学の問題を理解する必要があります。
+act on | ph | It is important to act on your principles. | 自分の原則に従って行動することは重要です。
+call for | ph | I call for your assistance. | あなたの助けを求めます。
+call on | ph | I will call on my friend tomorrow. | 明日、私は友達を訪問します。
+care for | ph | I care for my younger sister. | 私は妹の面倒を見ています。
+carry on | ph | I will carry on with my studies despite the challenges. | 私は困難にもかかわらず、勉強を続けます。
+carry out | ph | They carry out experiments in the laboratory. | 彼らは研究室で実験を行います。
+come about | ph | Unexpected changes in plans can come about through unforeseen circumstances. | 予期せぬ事態によって、計画の予定変更が起こることがあります。
+come to | ph | I hope he will come to his senses soon. | 彼がすぐに意識を取り戻すことを願っています。
+come up to | ph | I saw a deer come up to the edge of the forest. | 私は鹿が森の端まで達するのを見た。
+get on | ph | I need to get on with my work. | 仕事を続ける必要があります。
+go off | ph | I need to go off to the grocery store. | 私は食料品店に行かなければなりません。
+hand over | ph | Please hand over the documents to the receptionist. | 受付の人に書類を手渡してください。
+hold up | ph | Can you hold up the sign for everyone to see? | 皆が見るために、その看板を掲げてもらえますか？
+lay out | ph | Let me lay out the plan for you. | あなたに計画を明確に説明させてください。
+point out | ph | I would like to point out a mistake in your report. | あなたのレポートに誤りを指摘したいと思います。
+provide for | ph | It is important to provide for unexpected difficulties. | 予想されない困難に備えることが重要です。
+put together | ph | I need to put together a presentation for tomorrow's meeting. | 明日の会議のためにプレゼンテーションをまとめる必要があります。
+put up | ph | I need to put up some shelves in my room. | 私は部屋に棚を取り付ける必要があります。
+set off | ph | I will set off for the airport tomorrow morning. | 明日の朝、私は空港に出発します。
+sort out | ph | I need to sort out my closet. | 私はクローゼットを整理する必要があります。
+stand for | ph | NASA stands for National Aeronautics and Space Administration. | NASAはNational Aeronautics and Space Administrationを表します。
+take on | ph | She will take on the role of project manager. | 彼女はプロジェクトマネージャーの役割を担当します。
+take over | ph | She will take over the family business when her father retires. | 彼女は父親が引退した時に家族の事業を引き継ぐ予定です。
+take up | ph | I don't want to take up too much of your time. | あまりあなたの時間を取らせたくありません。
+turn back | ph | I realized I forgot my wallet at home, so I had to turn back and get it. | 財布を家に忘れたことに気づいて、引き返して取りに戻らなければなりませんでした。
+turn up | ph | I couldn't turn up my keys anywhere. | どこにも鍵が見つからなかった。
+account for | ph | The expenses for advertising account for a large portion of our budget. | 広告費は予算の大部分を占めています。
+allow for | ph | We should allow for unexpected situations. | 予期せぬ事態を見越しておくべきです。
+bring about | ph | The new technology will bring about significant changes in our daily lives. | 新しい技術は私たちの日常生活に大きな変化をもたらすでしょう。
+get on with | ph | I need to [[get on with]] my project and finish it by the end of the week. | 私はプロジェクトをうまくこなして、週末までに終わらせる必要があります。
+go round | ph | I like to go round the city on my bike. | 私は自転車で街を回るのが好きです。
+look after | ph | I will look after my little sister while my parents are away. | 両親が留守の間、私は妹の世話をします。
+look to | ph | I look to the future with hope. | 私は希望を持って将来を見つめます。
+put forward | ph | He put forward a new idea during the meeting. | 彼は会議中に新しいアイデアを提案しました。
+set out | ph | They set out on their journey early in the morning. | 彼らは早朝に旅立った。
+switch on | ph | He switched on the light. | 彼はライトをつけた。
+as long as | ph | As long as you work hard, you can achieve your goals. | 一生懸命努力すれば目標を達成できます。
+out there | ph | There are countless opportunities out there in the world. | 世の中では無数の機会があります。
+or two | ph | I can choose one or two desserts. | デザートは一つか二つ選べます。
+can tell | ph | I can tell you're upset. | 君が悲しんでいるのがわかる。
+used to | ph | I used to play soccer every weekend. | 私は以前は毎週末サッカーをよくした。
+a bit of | ph | I need a bit of help with this problem. | この問題に少しの助けが必要です。
+even though | ph | Even though it was raining, we still went for a walk. | 雨が降っていたけれども、私たちは散歩に行きました。
+supposed to | ph | I am supposed to go to the meeting tomorrow. | 明日はミーティングに行くことになっている。
+something about | ph | I need to do something about this problem. | この問題を解決するために何かしなければならない。
+but then again | ph | I was planning to go to the party, [[but then again]], I'm not really [[in the mood]]. | パーティーに行く予定というものの、あまり気分じゃない。
+by the way | ph | By the way, have you seen the new movie? | ところで、新しい映画を見ましたか？
+better off | ph | I am better off without him. | 彼がいない方が私はうまくいっている。
+that much | ph | I didn't realize that much time had passed. | 私はそれだけの時間が経過したことに気づかなかった。
+next to | ph | The bookstore is next to the coffee shop. | 本屋はカフェの隣にあります。
+point of view | ph | From my point of view, the movie was amazing. | 私の見地からすると、その映画は素晴らしかった。
+might as well | ph | I might as well leave today. | 今日出発したほうがいいかもしれません。
+at all | ph | I don't like spicy food at all. | 私は辛い食べ物が少しも好きではありません。
+no one | ph | No one knows the answer. | だれもその答えを知りません。
+going to | ph | I am going to the store. | 私は店に行くつもりです。
+right now | ph | I am busy right now. | ちょうど今、忙しいです。
+no wonder | ph | No wonder he failed the exam, he didn't study at all. | 彼が試験に落ちたのも驚くに値しない、全く勉強しなかったからだ。
+you see | ph | You see, I told you so! | ほら、そう言ったでしょ！
+have got to | ph | I have got to finish this report by tomorrow. | 私は明日までにこのレポートを終わらせなければならない。
+as well | ph | I enjoy playing basketball as well. | 私はバスケットボールをするのも楽しんでいます。
+a few | ph | I have a few books on my shelf. | 私の本棚にはいくつかの本があります。
+at least | ph | I need at least three hours of sleep to function properly. | 正常に機能するためには、少なくとも3時間の睡眠が必要です。
+in the end | ph | In the end, everything will be okay. | 結局、すべてうまくいく。
+a couple of | ph | I saw a couple of birds in the park. | 公園で鳥のカップルを見ました。
+look like | ph | You look like a movie star. | あなたは映画スターのように見えます。
+as soon as | ph | I will let you know as soon as I receive the package. | 荷物を受け取ったらすぐにお知らせします。
+these days | ph | These days, people rely more on technology than ever before. | このごろは、人々は以前よりも技術に頼ることが多い。
+afford to | ph | I can afford to buy a new car. | 新しい車を買う余裕があります。
+as if | ph | She danced as if she were floating on air. | 彼女はまるで空中を浮遊しているかのように踊った。
+sort of | ph | I'm sort of tired today. | 今日は多少疲れている。
+have got | ph | I have got a new car. | 新しい車を手に入れた。
+each other | ph | We care about each other. | お互いに気をかけあっている。
+too much | ph | There is too much food on the table. | テーブルの上には食べ物が過剰です。
+on the way | ph | I saw a beautiful sunset on the way to the beach. | ビーチに行く途中で美しい夕日を見ました。
+so far | ph | I have studied hard so far. | 今まで一生懸命勉強してきました。
+at the moment | ph | I am busy at the moment. | 私は目下忙しいです。
+over there | ph | Please wait over there. | そちらでお待ちください。
+at first | ph | At first, I was nervous about starting a new job. | 初めのうちは新しい仕事を始めることに緊張していました。
+in time | ph | I need to finish my work in time for the meeting. | ミーティングに間に合うように仕事を終わらせる必要があります。
+or so | ph | I have been waiting for about an hour or so. | 私は1時間くらい待っています。
+in the way | ph | He parked his car in the way. | 彼は車を道をふさいで駐車した。
+that's it | ph | And that's it. | それで以上です。
+oh no | ph | Oh no, I forgot my wallet at home. | ああ、しまった。家に財布を忘れてきてしまった。
+by now | ph | By now, he should have arrived at the airport. | 今ごろ彼は空港に到着しているはずです。
+think so | ph | I think so. | そう思います。
+would say | ph | I [[would say]] that it's going to rain tomorrow. | 私の考えでは、明日は雨が降ると思います。
+in the first place | ph | [[In the first place]], I need to finish my homework. | まず第一に、宿題を終わらせる必要があります。
+all the way | ph | I walked all the way to the top of the mountain. | 私は山の頂上までずっと歩きました。
+at this point | ph | At this point, we don't have enough information to make a decision. | 現時点では、十分な情報がないため、決定することができません。
+some kind of | ph | He is some kind of genius. | 彼は大した天才だ。
+no idea | ph | I have no idea what you're talking about. | 何を話しているのか全然わからない。
+ever since | ph | I have been studying English ever since I moved to the United States. | 私はアメリカに引っ越してからずっと英語の勉強をしています。
+some more | ph | I need some more time to finish the project. | プロジェクトを終わらせるためにもう少し時間が必要です。
+all sorts of | ph | I enjoy trying all sorts of new foods. | 私はあらゆる種類の新しい食べ物を試すのが好きです。
+no good | ph | This cake is no good. | このケーキはだめです。
+next door | ph | They are next door neighbors. | 彼らはお隣同士です。
+first of all | ph | First of all, let me introduce myself. | まず第一に、自己紹介させてください。
+at a time | ph | I can only do one task [[at a time]]. | 私は一度に一つのタスクしかできません。
+as usual | ph | I woke up early and started my day as usual. | 早起きして、いつもどおりに一日を始めました。
+long ago | ph | Long ago, there was a beautiful princess who lived in a castle. | ずっと昔、美しい王女が城に住んでいました。
+let alone | ph | I can't even afford a car, let alone a house. | 家はおろか、車も買えない。
+in the meantime | ph | In the meantime, I will finish my work. | その間にも、私は仕事を終わらせます。
+things like that | ph | I don't like things like that. | 私はそのようなことが好きではありません。
+bother to | ph | I didn't bother to call him back. | わざわざ彼に電話をかける必要はなかった。
+take care of | ph | I take care of my younger sister. | 私は妹の世話をします。
+never mind | ph | Never mind, it's not a big deal. | 気にしないで、大したことじゃないよ。
+what if | ph | What if I quit my job and traveled the world? | もし私が仕事を辞めて世界中を旅したらどうなるだろうか？
+how about | ph | How about going to the movies tonight? | 今夜映画に行くのはいかがですか？
+to go | ph | I want to go to a restaurant for takeout. | レストランに行って持ち帰りをしたいです。
+there is | ph | There is a cat on the table. | テーブルの上に猫がいます。
+instead of | ph | I decided to walk instead of taking the bus. | バスに乗る代わりに歩くことに決めました。
+make sure | ph | Make sure to double-check your work before submitting it. | 提出する前に、仕事を二重に確かめるようにしてください。
+heard of | ph | Have you ever heard of the new restaurant in town? | 最近の町の新しいレストランを聞いたことがありますか？
+oh well | ph | Oh well, I guess there's nothing we can do about it now. | まあ、今さら何もできないということですね。
+meant to | ph | She was [[meant to]] be a doctor, but she decided to pursue a career in art instead. | 彼女は医者になる予定だったが、代わりに芸術の分野でのキャリアを追求することに決めた。
+happen to | ph | I [[happen to]] know him. | 私はたまたま彼を知っています。
+or anything | ph | You can talk to me about your problems or anything else. | あなたは自分の問題や他の何でも私に話すことができます。
+most likely | ph | He will most likely win the competition. | 彼はおそらく競技に勝つでしょう。
+the whole thing | ph | I ate the whole thing. | 私は全部食べました。
+as far as | ph | As far as I know, she is not coming to the party. | 私の知る限りでは、彼女はパーティーに来ない。
+last night | ph | I watched a movie last night. | 昨夜、私は映画を見ました。
+I mean | ph | I mean, that's not what I said. | いや、それは私が言ったことではありません。
+all the time | ph | I think about you all the time. | 私はずっとあなたのことを考えています。
+lots of | ph | There are lots of books on the shelf. | 本棚にはたくさんの本があります。
+make up one’s mind | ph | I need to make up my mind about which college to attend. | どの大学に行くかを決める必要があります。
+such a | ph | I have never seen such a beautiful sunset before. | 私は今までにそのような美しい夕日を見たことがありません。
+all over | ph | The news spread all over the city. | そのニュースは街全体に広まった。
+in touch | ph | I try to stay in touch with my friends even when we're far apart. | 私は友達と連絡を取り合おうと努力しています、遠く離れていても。
+in case | ph | In case it rains, I will bring an umbrella. | 万一雨が降った場合、私は傘を持って行きます。
+had better | ph | You had better study for the exam. | 試験の勉強をした方がいいです。
+no matter | ph | No matter what happens, I will always be there for you. | 何が起ころうとも、私はいつもあなたのそばにいます。
+make sense | ph | Does my English [[make sense]]? | 私の英語は伝わりますか？
+take for granted | ph | We often take for granted the love and support of our family. | 私たちはよく家族の愛とサポートを当たり前と思っています。
+get to | ph | I can't wait to get to the beach this weekend. | 今週末にビーチに行くのが待ちきれません。
+be used to | ph | I am used to working long hours. | 私は長時間働くことに慣れています。
+or whatever | ph | You can choose any color you like, or whatever. | 好きな色を選んでもいいし、何でもいい。
+something like that | ph | I don't want to hear something like that. | そのようなことは聞きたくない。
+have to | ph | I have to go now. | 今すぐ行かないといけない。
+of course | ph | Of course, I will help you with your project. | もちろん、私はあなたのプロジェクトを手伝います。
+a lot | ph | I have a lot of books. | 私はたくさんの本を持っています。
+so that | ph | I study hard so that I can pass the exam. | 試験に合格できるように一生懸命勉強します。
+a little | ph | I need a little more time to finish the project. | プロジェクトを終わらせるためにもう少し時間が必要です。
+in fact | ph | In fact, I have never been to Japan. | じつは、私は日本に行ったことがありません。
+think about | ph | I like to think about different possibilities. | 私はさまざまな可能性について考えるのが好きです。
+at the time | ph | At the time, I was living in a small apartment. | その当時、私は小さなアパートに住んでいました。
+all right | ph | It's all right to be late sometimes. | 時々遅れてもかまわない。
+in front of | ph | I stood in front of the building. | 私は建物の前に立っていました。
+to do with | ph | I have a lot to do with the project. | 私はそのプロジェクトと関係がたくさんあります。
+go out | ph | I want to go out and enjoy the sunshine. | 私は外に出て日光を楽しみたいです。
+about to | ph | The sun was [[about to]] rise. | 太陽がまさに昇ろうとしていた。
+get up | ph | I usually get up at 7 am. | 私は通常、朝7時に起きます。
+it takes | ph | It takes time to learn a new language. | 新しい言語を学ぶのに時間がかかります。
+by the time | ph | We will have finished dinner by the time he comes back. | 彼が戻ってくる頃には夕食を終えているだろう
+kind of | ph | What kind of music do you like? | どんな音楽が好きですか？
+what about | ph | What about going to the movies tonight? | 今夜映画に行くのはどうですか？
+in other words | ph | In other words, he is saying that we should start over. | 言い換えれば、彼は私たちが最初からやり直すべきだと言っている。
+not even | ph | I can't believe he [[didn't even|not even]] apologize. | 彼が謝罪さえしなかったことが信じられない。
+at the same time | ph | I can walk and chew gum at the same time. | 私は同時に歩きながらガムを噛むことができます。
+or something | ph | Do you want coffee or something? | コーヒーか何か欲しいですか？
+too many | ph | There are too many books on the shelf. | 本棚には本が多過ぎます。
+in charge | ph | He is in charge of managing the project. | 彼はプロジェクトの管理を担当しています。
+believe in | ph | I believe in the power of love. | 私は愛の力を信じています。
+take advantage | ph | I always try to take advantage of every opportunity that comes my way. | 私は常にやってくるすべての機会を利用しようとします。
+just about | ph | I've eaten just about everything on the menu. | 私はメニューのほぼすべてを食べました。
+good at | ph | She is good at playing the piano. | 彼女はピアノが得意です。
+to me | ph | To me, honesty is the most important quality in a person. | 私にとって、誠実さは人にとって最も重要な資質です。
+when it comes to | ph | When it comes to cooking, she is the best. | 料理のこととなると、彼女は最高だ。
+would you like | ph | Would you like some tea? | お茶はいかがですか？
+the other day | ph | I ran into my old friend the other day. | 先日、昔の友達に偶然会った。
+common sense | ph | Using turn signals while driving is common sense. | 運転中にウィンカーを使うのは常識です。
+up and down | ph | She looked up and down the street before crossing. | 彼女は道路を横断する前に上下に見回した。
+out of | ph | He ran out of the house. | 彼は家から外へ走り出した。
+something like | ph | He is something like a genius. | 彼は天才のようなものだ。
+a single | ph | There is only a single apple left. | たった1つのリンゴが残っています。
+that sort of thing | ph | I don't like horror movies or anything like that. | 私はホラー映画などが好きではありません。
+I'm afraid | ph | I'm afraid I won't be able to make it to the party tonight. | せっかくですが、今夜のパーティーには参加できないと思います。
+at best | ph | At best he'll get 1,000 votes. | 彼の取れるのはよくて千票でしょう。
+in order to | ph | In order to succeed, you must work hard. | 成功するためには、一生懸命働かなければなりません。
+no doubt | ph | There is no doubt that she is the best candidate for the job. | 彼女がその仕事に最適な候補者であることには疑いがありません。
+by far | ph | This is by far the best movie I've ever seen. | これは今まで見た中で一番良い映画です。
+way out | ph | I couldn't find a way out of the maze. | 私は迷路からの脱出方法を見つけることができませんでした。
+lead to | ph | This road will lead to the beach. | この道はビーチに通じます。
+on the market | ph | The new product is now on the market. | 新製品が売りに出ています。
+and all that | ph | Refugees will suffer lack of food, water, medicine and all that. | 避難民は食料や水、薬などその他いろいろ不足を被るものだ。
+other than | ph | She enjoys playing basketball, other than soccer. | 彼女はサッカー以外にバスケットボールを楽しんでいます。
+to death | ph | He loved her to death. | 彼は彼女を死ぬほど愛していた。
+take place | ph | The event will take place next week. | イベントは来週に起こります。
+along with | ph | She brought her sister along with her to the party. | 彼女はパーティーに妹を連れてきました。
+once more | ph | Let's try it once more. | もう1度やってみましょう。
+a long way | ph | A little language goes a long way. | ちょっと言葉を知っていればずいぶん役にたつよ。
+bear in mind | ph | When making decisions, it is important to bear in mind the consequences. | 意思決定をする際には、結果を心に留めることが重要です。
+worth of | ph | This painting is worth of a million dollars. | この絵は100万ドルの価値がある。
+not only | ph | His music collection includes [[not only rock and jazz, but also|not only]] [[a lot of]] pop. | 彼の音楽コレクションには、ロックやジャズだけでなく、多くのポップスも含まれています。
+in terms of | ph | In terms of customer satisfaction, our company is ranked number one. | 顧客満足の観点から、当社は第一位にランクされています。
+for instance | ph | For instance, I enjoy outdoor activities such as hiking and camping. | たとえば、私はハイキングやキャンプなどのアウトドア活動が好きです。
+apart from | ph | Apart from the weather, it was a good picnic. | 天気は別として、それは楽しいピクニックだった。
+as though | ph | She smiled as though she had won the lottery. | 彼女はまるで宝くじに当たったかのように微笑んだ。
+the case | ph | That is not the case in Japan. | 日本はそうではない。
+and so on | ph | I enjoy various outdoor activities such as hiking, camping, and so on. | 私はハイキングやキャンプなど、さまざまなアウトドア活動を楽しんでいます。
+in favour | ph | I am in favour of the new policy. | 私は新しい政策に賛成です。
+as for | ph | [[As for]] the meeting, we will discuss the agenda tomorrow. | 会議については、明日アジェンダを話し合います。
+in place | ph | [[There we go]], the final piece of the puzzle is now [[in place]]. | よし、これでパズルの最後のピースが揃いましたね。
+full-time | ph | When are you going to hire me full-time? | いつから私を常勤にしてくれますか？
+in a way | ph | In a way, he is right. | ある意味では、彼は正しい。
+one another | ph | They help [[one another]] in times of need. | 彼らはお互いに必要な時に助け合います。
+part time | ph | I work part time at a local cafe. | 私は地元のカフェでパートタイムで働いています。
+bound to | ph | I am bound to finish this project by tomorrow. | 私は明日までにこのプロジェクトを終わらせる義務があります。
+at times | ph | I like to go for a walk at times. | ときどき散歩に行くのが好きです。
+if only | ph | If only I had studied harder, I would have passed the exam. | もしもっと一生懸命勉強していれば、試験に合格していたのに。
+for some time | ph | I haven't seen him for some time. | しばらくの間彼に会っていません。
+in return | ph | I helped him move, and in return, he helped me paint my house. | 私は彼が引っ越しを手伝ったので、お返しに彼は私の家を塗る手伝いをしてくれました。
+from time to time | ph | I like to go hiking from time to time. | 私はときどきハイキングに行くのが好きです。
+for long | ph | I haven't seen him for long. | 私は長い間彼に会っていません。
+on the one hand | ph | On the one hand, I want to go on vacation, but on the other hand, I have a lot of work to do. | 一方では、私は休暇に行きたいですが、他方では、たくさんの仕事があります。
+on the road | ph | I saw a car accident on the road. | 私は路上で車の事故を見ました。
+even so | ph | Even so, I will always support you. | それでも私はいつもあなたを応援します。
+except that | ph | I like all fruits, except that I don't like bananas. | 私はすべての果物が好きですが、バナナは好きではありません。
+long before | ph | Long before I was born, my grandparents had already retired. | 私が生まれるずっと前に、祖父母は既に退職していました。
+up to date | ph | I always make sure to keep my knowledge up to date. | 私は常に最新の知識を持つようにしています。
+quite a lot | ph | I have quite a lot of books in my collection. | 私のコレクションにはかなり多くの本があります。
+for life | ph | I will love you for life. | 私は死ぬまであなたを愛します。
+as good as | ph | He is as good as gold. | 彼はとても良い人だ
+the sight of | ph | The sight of a beautiful sunset took my breath away. | 美しい夕日の光景に息をのむほど感動した。
+touch of | ph | There was just a touch of salt in the soup. | スープにはほんの少しの塩味がありました。
+a handful of | ph | I only need a handful of nuts for the recipe. | このレシピには一握りのナッツだけが必要です。
+third party | ph | The third party was not involved in the accident. | 第三者は事故に関与していませんでした。
+tend to | ph | People tend to procrastinate when they have a lot of work to do. | 人々は仕事がたくさんあると、先延ばしにしがちです。
+consist of | ph | The team consists of five members. | チームは5人のメンバーから成り立っています。
+shake one’s head | ph | She shook her head to indicate that she didn't agree with the proposal. | 彼女は提案に同意しないことを示すために首を横に振った。
+rid of | ph | I finally got rid of that old car. | やっとあの古い車を手放した。
+in advance | ph | Please let us know in advance if you are unable to attend the meeting. | 会議に出席できない場合は、事前にお知らせください。
+in spite of | ph | In spite of the rain, we decided to go for a walk. | 雨にもかかわらず、私たちは散歩に行くことに決めました。
+on board | ph | Please keep your belongings with you on board. | 乗車中はお荷物をお手元にお持ちください。
+for sale | ph | I have a car for sale. | 私は売り物の車を持っています。
+come to terms with | ph | It took me a long time to [[come to terms with]] the fact that I couldn't change the past. | 過去を変えることはできないという事実を受け入れるのに長い時間がかかりました。
+at work | ph | I am busy at work today. | 今日は仕事で忙しいです。
+as well as | ph | She is fluent in English as well as French. | 彼女はフランス語だけではなく、英語も流暢です。
+nothing but | ph | I want nothing but happiness. | 私は幸せ以外何も望んでいません。
+at one time | ph | I used to live in New York at one time. | かつては私はニューヨークに住んでいました。
+ought to | ph | You ought to apologize for your behavior. | あなたは自分の行動について謝るべきです。
+old fashioned | ph | She prefers to wear old fashioned clothes. | 彼女は時代遅れの服を着ることを好む。
+day to day | ph | I have to deal with day to day tasks at work. | 私は仕事で日々のタスクに対処しなければなりません。
+a great deal | ph | They get a great deal of snow in Hokkaido. | 北海道では雪がたくさん降る。
+in common | ph | They have a lot in common with each other. | 彼らはお互いに多くの共通点を持っています。
+for the sake of | ph | I decided to take a pay cut for the sake of my team's success. | 私はチームの成功のために給料を減らすことを決めました。
+care to | ph | I don't care to go to the party. | パーティーに行く気はない。
+up to | ph | It's [[up to]] you. | それはあなた次第です。
+entitled to | ph | She is entitled to a refund for the faulty product. | 彼女は不良品の返金を受ける権利がある。
+in mind | ph | Keep your goals in mind when making decisions. | 意思決定をする際には目標を考慮してください。
+for the moment | ph | For the moment, let's focus on finishing this task. | 今のところは、このタスクを終わらせることに集中しましょう。
+such as | ph | I like to wear casual clothes, such as jeans and t-shirts. | 私はジーンズやTシャツなどのカジュアルな服を着るのが好きです。
+in particular | ph | I enjoy all types of music, but I am particularly fond of classical music. | 私はあらゆる種類の音楽を楽しんでいますが、特にクラシック音楽が好きです。
+rather than | ph | I prefer tea rather than coffee. | コーヒーではなく紅茶が好きです。
+be likely to | ph | She is likely to win the competition. | 彼女は競技に勝つ可能性が高いです。
+based on | ph | The decision was based on the results of the study. | その決定は研究の結果に基づいていました。
+no longer | ph | I no longer have a car. | もはや私は車を持っていません。
+as a result | ph | He studied hard, and as a result, he passed the exam. | 彼は一生懸命勉強した。その結果、試験に合格した。
+manage to | ph | I manage to finish my work on time. | 私はなんとか時間通りに仕事を終えることができました。
+due to | ph | The flight was delayed due to bad weather. | 飛行機の出発が悪天候のため遅れました。
+long term | ph | Investing in stocks is a good strategy for long-term financial growth. | 株式投資は長期的な財務成長のための良い戦略です。
+that is | ph | That is, total exhaustion. Body and soul completely knackered. | つまり疲労困憊、心も体もクタクタです。
+on the other hand | ph | On the other hand, she enjoys playing video games with me. | 一方、彼女は私と一緒にビデオゲームをするのを楽しんでいます。
+on one's own | ph | She completed the project on her own. | 彼女は自力でプロジェクトを完成させました。
+after all | ph | After all, he decided to quit his job. | 結局、彼は仕事を辞めることに決めた。
+at last | ph | At last, we have reached our destination. | ついに、私たちは目的地に到達しました。
+choose to | ph | I choose to stay home and relax instead of going out. | 私は外出する代わりに家にいてリラックスすることを選びます。
+focus on | ph | I like to focus on one task at a time. | 私は一度に一つのタスクに焦点を合わせるのが好きです。
+at once | ph | I will do it at once. | 私はすぐにそれをします。
+rely on | ph | I rely on my friends for support. | 私は友達に支えてもらっています。
+appeal to | ph | The lawyer made an emotional appeal to the jury. | 弁護士は陪審員に感情的な訴えをした。
+no more than | ph | There are no more than ten people in the room. | 部屋にはたった10人しかいません。
+short term | ph | I am planning a short term trip to Europe. | 私はヨーロッパへの短期間の旅行を計画しています。
+they say | ph | They say he's a millionaire. | 彼は百万長者らしいと言われている。
+whether or not | ph | I don't know whether or not she will come to the party. | 彼女がパーティーに来るかどうかわかりません。
+take part in | ph | I will take part in the meeting tomorrow. | 明日、私は会議に参加します。
+more or less | ph | I have more or less finished my work. | 私はいくらか仕事を終えました。
+more and more | ph | She is becoming more and more confident in her abilities. | 彼女は自分の能力にだんだん自信を持ってきている。
+put it | ph | Put it there, not here. | ここではなくあそこに置きなさい。
+thanks to | ph | Thanks to my friends, I had a great birthday party. | 友人たちのおかげで、私は素晴らしい誕生日パーティーを過ごすことができた。
+in need | ph | I am in need of some financial assistance. | 私はいくらかの経済的援助が必要です。
+short of | ph | I have everything I need, [[short of]] money. | お金以外は必要なものは全て持っています。
+could hardly | ph | She could hardly speak Japanese. | 彼女はほとんど日本語が話せなかった。
+in the same way | ph | She approached the problem in the same way as her colleague. | 彼女は同僚と同様に問題に取り組んだ。
+run by | ph | The company is run by a group of experienced executives. | その会社は経験豊富な幹部グループによって経営されています。
+key to | ph | Communication is the key to understanding. | コミュニケーションは理解へつながる鍵です。
+if so | ph | If so, please let me know. | もしそうなら、教えてください。
+add to | ph | I need to add more money to my savings account. | 貯金口座にもっとお金を増やさなければなりません。
+at risk | ph | Children living in poverty are at risk of not receiving proper education. | 貧困状態に暮らす子供たちは適切な教育を受ける危険にさらされています。
+to the point | ph | Let's get straight to the point. | 単刀直入に言おう。
+over time | ph | [[Over time]], the once vibrant city has become a ghost town. | かつては活気にあふれていた街も、時が経つにつれてゴーストタウンと化してしまった。
+for good | ph | He stayed in the same job [[for good]]. | 彼は同じ仕事にいつまでもとどまった。
+on average | ph | On average, people spend 2 hours a day on social media. | 平均して、人々は1日に2時間をソーシャルメディアに費やしています。
+to blame | ph | He is to blame for the accident. | 彼はその事故の責めを負うべきである。
+a case of | ph | This is a case of mistaken identity. | これは間違った身元の例です。
+in which case | ph | [[In which case]], please let me know. | その場合は、教えてください。
+no sign of | ph | There is no sign of rain. | 雨の兆候がない。
+just as | ph | Just as the sun rises in the east, so does hope rise in our hearts. | 太陽が東から昇るように、希望も私たちの心に湧き上がる。
+well being | ph | Taking care of your physical and mental health is important for your overall well-being. | 身体と心の健康に気を使うことは、総合的な幸福感にとって重要です。
+once again | ph | Let's try once again. | もう1度やってみましょう。

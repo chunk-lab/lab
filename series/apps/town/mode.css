@@ -74,3 +74,4 @@ body.md-home-on .tw-chat{width:min(15vw,66px);height:min(15vw,66px);padding:0;bo
 .am-it{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 8px;padding:12px 14px;border-radius:16px;border:2px solid #e2c9a0;background:#fff;font:inherit;color:#2b2320;text-align:left}
 .am-it span{font-size:22px}.am-it b{font-size:15px;flex:1}.am-it i{font-style:normal;font-size:11px;color:#9a6a2a;font-weight:700}
 .am-lock{opacity:.55}.am-close{width:100%;margin-top:6px;padding:12px;border-radius:16px;border:2px solid #c9b8a6;background:#fff;font:inherit;font-weight:700}
+.md-ver{position:fixed;left:8px;bottom:calc(6px + env(safe-area-inset-bottom,0px));z-index:70;font:600 11px monospace;color:#fff;background:rgba(0,0,0,.45);padding:2px 8px;border-radius:8px;pointer-events:none}
