@@ -322,7 +322,7 @@ export function createEngine({ seed = 1, cond = { hour: 12, season: 'summer', ra
     rodDone() { const h = S.hooked; if (!h || !h.sr) return; h.hold = false; h.mode = 'rest'; h.phase = 'sort'; },
     setback(v) { const h = S.hooked; if (!h || !h.sr) return; h.L = Math.min(h.sortL0, h.L + v); h.tgt = Math.min(h.sortL0, (h.tgt == null ? h.L : h.tgt) + v); },
     sortEnd() { const h = S.hooked; if (h && h.sr) { h.tgt = 0.035; h.sortEnded = true; } },
-    netResult(ok, shrink) { if (S.ph !== 'fight' || !S.hooked || !S.netWait) return; S.netWait = false; S.hooked.netOk = true; if (ok && shrink) { S.hooked.size *= 0.75; S.hooked.u *= 0.8; } if (ok) land(); else lose('net'); },
+    netResult(ok, shrink) { if (S.ph !== 'fight' || !S.hooked || !S.netWait) return; S.netWait = false; S.hooked.netOk = true; if (ok && shrink) { S.hooked.size = Math.round(S.hooked.size * 0.75 * 10) / 10; S.hooked.u *= 0.8; } if (ok) land(); else lose('net'); },
     bonusHere(k = 1.9) { if (S.lure) S.bonus = { x: S.lure.x, d: S.lure.d, k, t: 16 }; },
     update(dt) {
       S.t += dt;

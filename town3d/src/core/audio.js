@@ -85,6 +85,15 @@ export function createAudio() {
     if (rainN) { rainN.g.gain.value = 0.16 * v * vol.sfx; if (v <= 0.01) { rainN.src.stop(); rainN = null; } }
   }
   // 街歩きの曲(圧縮して音量の波をそろえた mp3)。AudioContext の中で鳴らすので、suspend/resume でいっしょに止まる
+  // ピアノ・オカリナ(ハーモニカ)の演奏のあいだは、街の曲をいったん消して、終わったら戻す
+  let duckEnd = 0, duckTimer = 0;
+  function duck(sec) {
+    const a = ac; if (!a || !bgmG) return;
+    duckEnd = Math.max(duckEnd, a.currentTime + sec);
+    try { bgmG.gain.cancelScheduledValues(a.currentTime); bgmG.gain.setTargetAtTime(0, a.currentTime, 0.08); } catch (e) { }
+    clearTimeout(duckTimer);
+    duckTimer = setTimeout(() => { try { if (bgmG && ac) bgmG.gain.setTargetAtTime(0.9 * vol.bgm, ac.currentTime, 0.4); } catch (e) { } }, Math.max(0, (duckEnd - a.currentTime) * 1000) + 200);
+  }
   const BGM_URL = SCRIPT_SRC ? new URL('bgm/town.mp3', SCRIPT_SRC).href : 'bgm/town.mp3';
   let bgmBuf = null, bgmSrc = null, bgmG = null, bgmWant = false, bgmLoading = false;
   function bgm(on) {
@@ -114,7 +123,7 @@ export function createAudio() {
   };
   return {
     unlock() { ctx(); },
-    play(name, arg) { try { return SFX[name]?.(arg); } catch (e) {} },
+    play(name, arg) { try { if (name === 'piano' && arg) duck((arg[2] || 0) + (arg[1] || 0.5) + 0.8); const r = SFX[name]?.(arg); if (name === 'harmonica' && r && r.sec) duck(r.sec + 0.6); return r; } catch (e) {} },
     pickTune,
     ambience,
     rain,
