@@ -180,14 +180,30 @@ export function openTry(pre) {
   const draw = () => {
     const en0 = el.querySelector('[data-en]'), ja0 = el.querySelector('[data-ja]'), enV = en0 ? en0.value : (pre && pre.en) || '', jaV = ja0 ? ja0.value : (pre && pre.ja) || '';
     el.innerHTML = `<div style="background:#fff;border-radius:18px;padding:16px;max-width:380px;width:100%;color:#3b3552;font-weight:700"><div style="font-size:16px;font-weight:900;text-align:center">✨ 使ってみる</div>
-      <div style="font-size:12px;color:#8d7f9e;margin:6px 0 8px;text-align:center">単語・熟語・チャンク・文を入れると、AIが ふさわしい文を考えて「つくる」に入れます</div>
+      <div style="font-size:12px;color:#8d7f9e;margin:6px 0 8px;text-align:center">単語・熟語・チャンク・文を入れると、内蔵の例文が先に出ます。気に入る文がなければ、下のボタンでAIが新しい文を考えます</div>
       <input data-en value="${esc(enV)}" placeholder="英語(例:hang out / at the station / apple)" autocomplete="off" autocapitalize="off" style="width:100%;box-sizing:border-box;border:2px solid #e3dcf3;border-radius:12px;padding:10px;font:inherit;margin-bottom:6px">
       <input data-ja value="${esc(jaV)}" placeholder="日本語の意味(なくてもOK)" autocomplete="off" style="width:100%;box-sizing:border-box;border:2px solid #e3dcf3;border-radius:12px;padding:10px;font:inherit;margin-bottom:8px">
       <div style="display:flex;gap:4px;margin-bottom:10px">${seg('', 'おまかせ')}${seg('word', '単語')}${seg('phrase', '熟語・慣用句')}${seg('sentence', '文章')}</div>
-      <button data-go style="width:100%;border:0;border-radius:999px;padding:12px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;font:inherit;font-size:15px">✨ 文を作って「つくる」へ</button>
+      <div data-exs style="margin:0 0 10px;max-height:34vh;overflow-y:auto"></div>
+      <button data-go style="width:100%;border:0;border-radius:999px;padding:12px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1);color:#fff;font:inherit;font-size:15px">🤖 AIで新しい文を作って「つくる」へ</button>
       <div data-msg style="min-height:18px;font-size:12px;color:#8d7f9e;text-align:center;margin-top:6px"></div>
       <button data-x style="width:100%;border:0;background:none;font:inherit;font-size:12px;color:#8d7f9e;padding:6px">とじる</button></div>`;
     el.querySelectorAll('[data-c]').forEach(b => b.onclick = () => { cls = b.dataset.c; draw(); });
+    // 内蔵の例文(句動詞・熟語・単語の例文集、本の文)を先に出す。選ぶと、その文を「つくる」の枠に分けて遊べる
+    const box = el.querySelector('[data-exs]'), enI = el.querySelector('[data-en]'); let tm = 0;
+    const exSearch = async () => {
+      const w = enI.value.trim(), find = ENV.core && ENV.core.useit && ENV.core.useit.find; if (!box) return;
+      if (!/[a-z]/i.test(w) || !find) { box.innerHTML = ''; return; }
+      let L = []; try { L = (await find(w)).slice(0, 6); } catch (e) { }
+      if (enI.value.trim() !== w) return;   // 入力が変わっていたら捨てる
+      box.innerHTML = L.length ? `<div style="font-size:12px;color:#8d7f9e;margin:0 0 4px">📖 内蔵の例文(タップで、この文で遊ぶ)</div>` + L.map((x, i) => `<button data-ex="${i}" style="display:block;width:100%;text-align:left;border:2px solid #e3dcf3;background:#faf8ff;border-radius:12px;padding:8px 10px;margin:0 0 5px;font:inherit;color:#3b3552"><span style="font-size:14px">${esc(x.en)}</span><br><span style="font-size:11px;color:#8d7f9e;font-weight:600">${esc(x.ja || '')}</span></button>`).join('') : `<div style="font-size:12px;color:#8d7f9e">内蔵の例文は見つかりませんでした。下のボタンでAIが新しい文を作ります。</div>`;
+      box.querySelectorAll('[data-ex]').forEach(b => b.onclick = async () => {
+        const x = L[+b.dataset.ex], msg = el.querySelector('[data-msg]'); b.disabled = true;
+        try { const p = await runTry({ en: x.en, ja: x.ja, cls: 'sentence' }, t => { msg.textContent = t; }); if (p) { el.remove(); loadPlay(p); return; } } catch (e) { console.error(e); msg.textContent = String(e && e.message || e).slice(0, 80); }
+        b.disabled = false;
+      });
+    };
+    if (enI) { enI.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(exSearch, 350); }); exSearch(); }
     el.querySelector('[data-x]').onclick = () => el.remove();
     el.querySelector('[data-go]').onclick = async () => {
       const msg = el.querySelector('[data-msg]'), btn = el.querySelector('[data-go]'); btn.disabled = true;
