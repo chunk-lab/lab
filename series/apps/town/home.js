@@ -25,9 +25,6 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
       <button class="hm-pic hm-go" data-3d aria-label="街へ行く"></button>
       <div class="hm-apps">${APPS.map(a => `<button class="hm-pic hm-app hm-app-${a[0]}" data-app="${a[0]}" aria-label="${a[2]}"></button>`).join('')}</div>
       <button class="hm-pic hm-st" data-note aria-label="勉強する"></button>
-      <details class="hm-more"><summary>ほかの練習・ゲーム</summary>
-      <h2>📚 勉強する</h2>${study.map(row).join('')}
-      <h2>🎮 ゲームであそぶ</h2>${fun.map(row).join('')}</details>
       <p class="hm-ver">${esc(verText())}</p>
       </div>`;
     el.onclick = e => {
