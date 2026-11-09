@@ -75,7 +75,7 @@ export function createHomeMenu(el, { items, onPick, onOpen, startKey }) {
     }
     go(Math.round(pos - d.v * 4.2));   // はじいた勢いで少し先まで進む
   };
-  tr.onpointerup = up; tr.onpointercancel = up;
+  tr.onpointerup = up; tr.onpointercancel = e => { if (!drag || e.pointerId !== drag.id) return; drag = null; settle(); };   // 途中で取り消されたとき(スクロールなど)は、開かない
   el.querySelector('.l').onclick = () => go(Math.round(pos) - 1);
   el.querySelector('.r').onclick = () => go(Math.round(pos) + 1);
   el.onpointerdown = e => e.stopPropagation();

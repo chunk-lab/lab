@@ -260,7 +260,12 @@ export const homeApp = {
     function run(it) {   // えらんだものの画面を開く
       if (!it) return;
       if (it.act !== 'deco' && it.act !== 'walk') { if (Date.now() - opening < 1500) return; opening = Date.now(); menu && menu.busy('ひらいています…'); }
-      if (it.act === 'deco') { mode = 'edit'; setGlow(null); fly(0, 0, 1); ui(); return; }
+      if (it.act === 'deco') {
+        mode = 'edit'; setGlow(null); fly(0, 0, 1); ui();
+        // 指を離した直後の「クリック」が、同じ場所に出た「もようがえを終える」などに当たって、すぐ閉じてしまうのを防ぐ
+        const sh = [tip, ctl, inv, hz]; sh.forEach(e => { e.style.pointerEvents = 'none'; }); setTimeout(() => sh.forEach(e => { e.style.pointerEvents = ''; }), 600);
+        return;
+      }
       if (it.act === 'walk') { setGlow(null); enterWalk(); return; }
       if (it.act === 'study') { ctx.emit('study'); return; }
       if (it.act === 'shop') { ctx.open('shop', { from: 'home' }); return; }
