@@ -25,9 +25,9 @@ export function createRoleTest(core) {
   const both = g => { const x = GROUPS.find(y => y.g === g); return disp === 'easy' ? `<b>${esc(x.easy)}</b><small>${esc(x.gram)}</small>` : `<b>${esc(x.gram)}</b><small>${esc(x.easy)}</small>`; };
   async function load() {
     if (pool) return pool; const B = core.books; if (!B) return (pool = []);
-    try { await B.load(); const lv = (core.level && core.level.lv) || 1; if (B.need) await B.need(Math.min(3, Math.max(1, lv > 3 ? lv - 3 : lv))).catch(() => { }); } catch (e) { }
+    try { await B.load(); const lv = (core.level && core.level.lv) || 1; if (B.need) await B.need(1).catch(() => { }); } catch (e) { }
     const out = [];
-    for (const b of B.all()) { let s = null; try { s = b.story(); } catch (e) { } ((s && s.list) || []).forEach(x => { const ch = parseSentence(x[0]); if (ch.length >= 3 && ch.length <= 6 && ch.every(c => c.en.split(/\s+/).length <= 7)) out.push({ ch, ja: x[1] || '', from: b.title }); }); }
+    for (const b of B.all()) { if (b.lv !== 1) continue; /* 初級の文だけ(中級・上級は区切りや役割が人によって割れるため出さない) */ let s = null; try { s = b.story(); } catch (e) { } ((s && s.list) || []).forEach(x => { const ch = parseSentence(x[0]); if (ch.length >= 3 && ch.length <= 6 && ch.every(c => c.en.split(/\s+/).length <= 7)) out.push({ ch, ja: x[1] || '', from: b.title }); }); }
     return (pool = out);
   }
   function close() { if (ov) { ov.remove(); ov = null; } }
