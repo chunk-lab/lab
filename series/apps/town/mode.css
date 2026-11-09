@@ -40,3 +40,29 @@ body.md-home-on>.tw-view,body.md-home-on>.tw-top{display:none}
 .hm-app{display:flex;align-items:center;justify-content:center;aspect-ratio:1.6;padding:10px;border-radius:18px;border:2px solid #8a5a32;background:linear-gradient(160deg,#fffdf6,#fff1d6);box-shadow:0 4px 0 #8a5a32;font:inherit}
 .hm-app img{display:block;width:100%;max-height:100%;object-fit:contain;pointer-events:none}
 .hm-app:active{transform:translateY(2px);box-shadow:0 2px 0 #8a5a32}
+
+/* ===== 新タイトル：材料画像(img/t_*.webp)を組み合わせる ===== */
+.hm-ov{background:url(img/t_top.webp) center top/min(100%,560px) auto no-repeat,url(img/t_bot.webp) center bottom/min(100%,560px) auto no-repeat,#fefefe;padding-top:calc(6px + env(safe-area-inset-top,0px));padding-bottom:calc(130px + env(safe-area-inset-bottom,0px))}
+.hm-box{display:flex;flex-direction:column;gap:12px}
+.hm-head{height:calc(min(100vw,460px)*.36);display:flex;align-items:center;justify-content:center}
+.hm-logo{width:74%;max-height:100%;object-fit:contain;margin:0;filter:drop-shadow(0 3px 4px rgba(60,40,20,.25))}
+.hm-pic{display:block;position:relative;width:100%;margin:0;padding:0;border:0;background-color:transparent;background-position:center;background-size:100% 100%;background-repeat:no-repeat;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s,filter .12s;filter:drop-shadow(0 3px 5px rgba(80,90,140,.18));box-shadow:none}
+.hm-pic:active{transform:scale(.975);filter:brightness(.96)}
+.hm-ep{background-image:url(img/t_ep.webp);aspect-ratio:810/172}
+.hm-cont2{background-image:url(img/t_cont.webp);aspect-ratio:814/202}
+.hm-go{background-image:url(img/t_go.webp);aspect-ratio:810/188}
+.hm-st{background-image:url(img/t_study.webp);aspect-ratio:810/138}
+.hm-t{position:absolute;display:flex;flex-direction:column;justify-content:center;gap:2px;text-align:left;color:#3a2a20}
+.hm-t b{font-size:clamp(17px,5.6vw,24px);font-weight:800;line-height:1.2}
+.hm-t small{font-size:clamp(11px,3.4vw,14px);color:#5b4a3c;font-weight:600}
+.hm-ep .hm-t{left:25%;right:14%;top:0;bottom:0}
+.hm-cont2 .hm-t{left:22%;right:14%;top:30%;bottom:0}
+.hm-apps{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;margin:0}
+.hm-app{aspect-ratio:404/234;border:0;background-color:transparent;padding:0;box-shadow:none;border-radius:0}
+.hm-app-chunkchunk{background-image:url(img/t_cc.webp)}.hm-app-stream{background-image:url(img/t_st.webp)}.hm-app-eigonou{background-image:url(img/t_eigo.webp)}.hm-app-fish{background-image:url(img/t_fish.webp)}
+.hm-note{margin-top:4px}
+body.md-home-on .tw-dock{gap:10px;align-items:center}
+body.md-home-on .tw-today{width:min(54vw,240px);aspect-ratio:460/162;padding:0;border:0;background:url(img/t_today.webp) center/100% 100% no-repeat;color:transparent;font-size:0;box-shadow:none;filter:drop-shadow(0 4px 6px rgba(120,80,20,.25))}
+body.md-home-on .tw-chat{width:min(15vw,66px);height:min(15vw,66px);padding:0;border:0;background:url(img/t_chat.webp) center/100% 100% no-repeat;color:transparent;font-size:0;box-shadow:none;filter:drop-shadow(0 4px 6px rgba(120,80,20,.25))}
+.hm-ep .hm-t{right:9%}.hm-t small{white-space:nowrap;font-size:clamp(10px,3.1vw,13px)}.hm-t b{font-size:clamp(16px,5vw,22px)}
+.hm-more summary{font-size:13px;color:#8b7a6a;text-align:center;padding:6px;list-style:none;cursor:pointer}

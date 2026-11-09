@@ -18,13 +18,13 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
     const c = cont(), cp = c && c.kind === 'play' ? PLAYS.find(p => p.id === c.id) : null, main = c ? (c.kind === 'play' ? cp : { n: c.label || '勉強ノート' }) : null;
     const APPS = [['chunkchunk', 'cc', '今スラ！'], ['stream', 'story', 'Storyミング！'], ['eigonou', 'eigo', '英文組み立てラボ'], ['fish', 'fish', 'イングフィッシュ']].filter(a => a[0] === 'fish' || has(a[0]));
     const row = p => `<button class="hm-row" data-p="${p.id}"><span>${WANT_ICON[p.want] || '・'}</span><b>${esc(p.n)}</b></button>`;
-    el.innerHTML = `<div class="hm-box"><img class="hm-logo" src="${LOGO.town}" alt="かまってチャンクTOWN">
-      ${openEpisode ? `<button class="hm-row" data-episode><span>📖</span><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}<small style="display:block;font-weight:400;margin-top:3px">はな・そら「ちょっと、外に出たい」</small></b></button>` : ''}
+    el.innerHTML = `<div class="hm-box"><div class="hm-head"><img class="hm-logo" src="${LOGO.town}" alt="かまってチャンクTOWN"></div>
+      ${openEpisode ? `<button class="hm-pic hm-ep" data-episode><span class="hm-t"><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}</b><small>はな・そら「ちょっと、外に出たい」</small></span></button>` : ''}
       ${msg ? `<div class="hm-err">${esc(msg.text)}<button class="hm-retry" data-retry>もう一度</button></div>` : ''}
-      <button class="hm-cont" data-main><small>${c ? 'つづきから' : 'はじめる'}</small><b>${c ? (c.kind === '3d' ? '🏙 街であそぶ' : esc(main ? main.n : '')) : '名前と誕生日をきめて、スタート'}</b></button>
-      <button class="hm-3d" data-3d><b>🏙 街へ行く</b><small>少し重め・Wi-Fiがおすすめ</small></button>
-      <div class="hm-apps">${APPS.map(a => `<button class="hm-app" data-app="${a[0]}" aria-label="${a[2]}"><img src="${LOGO[a[1]]}" alt="${a[2]}"></button>`).join('')}</div>
-      <button class="hm-row hm-note" data-note><span>📒</span><b>勉強ノート・記録・設定</b></button>
+      ${c ? `<button class="hm-pic hm-cont2" data-main><span class="hm-t"><b>${c.kind === '3d' ? '街であそぶ' : esc(main ? main.n : '')}</b></span></button>` : ''}
+      <button class="hm-pic hm-go" data-3d aria-label="街へ行く"></button>
+      <div class="hm-apps">${APPS.map(a => `<button class="hm-pic hm-app hm-app-${a[0]}" data-app="${a[0]}" aria-label="${a[2]}"></button>`).join('')}</div>
+      <button class="hm-pic hm-st" data-note aria-label="勉強する"></button>
       <details class="hm-more"><summary>ほかの練習・ゲーム</summary>
       <h2>📚 勉強する</h2>${study.map(row).join('')}
       <h2>🎮 ゲームであそぶ</h2>${fun.map(row).join('')}</details>
