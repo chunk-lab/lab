@@ -102,7 +102,33 @@ core.to3D = () => mode.to3D();
 // 今日なにする?（2Dでも3Dでも、画面の下のまん中）と、おしゃべり（住人がいる3Dの町へ）
 document.body.insertAdjacentHTML('beforeend', '<div class="tw-dock"><button class="tw-today" id="twToday">今日なにする?</button><button class="tw-chat" id="twChat" aria-label="住人とおしゃべり">💬</button></div>');
 $('twToday').onclick = () => core.today.open({ has: g => !!GAMES[g] });
-$('twChat').onclick = () => { if (mode.is3D) core.ui.toast('住人に近づいて、話しかけてみよう'); else { core.ui.toast('3Dの町で、住人に話しかけてみよう'); mode.to3D(); } };
+$('twChat').setAttribute('aria-label', 'アミューズメント'); $('twChat').textContent = '🎮';
+// アミューズメント：チャンクボックスのゲーム＋街の外遊び(旬のものは無料、季節外は有料会員のとくてん)
+const SEASON_OF = { golf: 3, frisbee: 9, snow3d: 12 };   // はじまりの月
+const inSeason = k => { const m = new Date().getMonth() + 1; return k === 'golf' ? m >= 3 && m <= 5 : k === 'frisbee' ? m >= 9 && m <= 11 : (m === 12 || m <= 2); };
+function openAmuse() {
+  document.querySelectorAll('.am-ov').forEach(e => e.remove());
+  const paid = core.member && core.member.isPaid && core.member.isPaid();
+  const box = [['cards', '🃏', 'チャンク・カード'], ['listen', '🎧', 'ランダムチャンク(聞き取り)']].filter(x => GAMES[x[0]]);
+  const out = [['golf', '⛳', 'ミニゴルフ'], ['frisbee', '🥏', 'フリスビー'], ['snow3d', '⛄', '雪合戦']];
+  const el = document.createElement('div'); el.className = 'am-ov';
+  el.innerHTML = `<div class="am-sheet"><h2>🎮 アミューズメント</h2>
+    <h3>チャンクボックス</h3>${box.map(x => `<button class="am-it" data-g="${x[0]}"><span>${x[1]}</span><b>${x[2]}</b></button>`).join('')}
+    <h3>外遊び <small>(季節のものは無料・季節外は有料会員)</small></h3>${out.map(x => { const ok = paid || inSeason(x[0]); return `<button class="am-it${ok ? '' : ' am-lock'}" data-o="${x[0]}"><span>${x[1]}</span><b>${x[2]}</b><i>${inSeason(x[0]) ? 'いまが旬' : paid ? '' : '🔒 有料会員'}</i></button>`; }).join('')}
+    <button class="am-close" data-x>とじる</button></div>`;
+  el.onclick = async e => {
+    if (e.target === el || e.target.closest('[data-x]')) { el.remove(); return; }
+    const g = e.target.closest('[data-g]'), o = e.target.closest('[data-o]');
+    if (g) { el.remove(); core.openGame(g.dataset.g); }
+    else if (o) {
+      const k = o.dataset.o; if (!(paid || inSeason(k))) { core.ui.toast('季節外の外遊びは、有料会員の特典です'); return; }
+      if (!core.profile.name) { core.ui.toast('はじめに「街へ行く」で、名前を決めよう'); return; }
+      el.remove(); await mode.to3D(); const t = window.town3d; if (t) { if (t.quickStart) t.quickStart(); t.launchOutdoor(k); }
+    }
+  };
+  document.body.appendChild(el);
+}
+$('twChat').onclick = () => { if (mode.is3D) core.ui.toast('住人に近づいて、話しかけてみよう'); else openAmuse(); };
 mode.start();
 
 // 街を歩いているとき(キャラが動いている場面)だけ出る「使ってみる」ボタン(英語を打ち込む→AIが文を作る→英語脳で遊ぶ)。

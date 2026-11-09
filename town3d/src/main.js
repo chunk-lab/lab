@@ -808,10 +808,8 @@ export function mount(container, opt = {}) {
   let backHome = false;   // 家のゲーム機から始めたら、終わったら家にもどる
   const goHome = () => { if (!backHome) return false; backHome = false; setTimeout(() => openApp('home', {}), 400); return true; };
   // ゲーム機から「町の中で遊ぶ」もの
-  offs.push(bus.on('app:event', e => {
-    if (e?.name !== 'launch') return;
-    const what = e.data?.what; backHome = e.data?.from === 'home';
-    setTimeout(() => {
+  // 町の中の外遊びを始める(ゲーム機・タイトルの「アミューズメント」から)
+  const launchOutdoor = what => {
       if (what === 'snow3d') {   // 町のランダムな場所で
         const ids = Object.keys(city.graph.nodes).filter(id => !/^pd|^p\d/.test(id)), n = city.graph.nodes[ids[Math.floor(Math.random() * ids.length)]];
         me.x = n.x; me.z = n.z; me.ry = Math.random() * Math.PI * 2; cam.x = me.x; cam.z = me.z;
@@ -819,7 +817,11 @@ export function mount(container, opt = {}) {
         opp.ch.root.position.set(me.x + Math.sin(me.ry) * 8, 0, me.z + Math.cos(me.ry) * 8);
         battle.start(opp, 2, backHome);
       } else if (what === 'golf' || what === 'frisbee') sport?.start(what, { any: true, home: backHome });
-    }, 350);
+  };
+  offs.push(bus.on('app:event', e => {
+    if (e?.name !== 'launch') return;
+    const what = e.data?.what; backHome = e.data?.from === 'home';
+    setTimeout(() => launchOutdoor(what), 350);
   }));
   offs.push(bus.on('ui:snow', ph => {
     if (!started || seasons.season !== 'winter') return; audio.unlock();
@@ -1401,6 +1403,7 @@ export function mount(container, opt = {}) {
     cameraMode: () => camMode,
     season: s => { if (s) { settings.season = s; save(); applySeason(); } return curSeason(); },
     showArrival: () => showTitle(true),
+    launchOutdoor: what => { backHome = false; setTimeout(() => launchOutdoor(what), 350); },   // タイトルのアミューズメントから
     quickStart: () => { if (started) return; document.querySelectorAll('.tw-title').forEach(e => e.remove()); startAs({ look: settings.look, name: settings.name || LOOKS[settings.look].name }); },
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
