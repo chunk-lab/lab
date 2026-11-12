@@ -8,6 +8,7 @@ export const GLB_MODELS = {
   baron: { url: 'models/baron.glb', rotY: 0 },
   koharu: { url: 'models/koharu.glb', rotY: 0 },
   yuzu: { url: 'models/yuzu.glb', rotY: Math.PI / 2 },
+  shiori: { url: 'models/shiori.glb', rotY: 0 },
   luna: { url: 'models/luna.glb', rotY: 0 },
   philosopher: { url: 'models/philosopher.glb', rotY: 0 },
   shiomi: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
