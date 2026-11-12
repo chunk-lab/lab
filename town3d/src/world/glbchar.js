@@ -27,12 +27,21 @@ const cache = new Map();
 // 版の印(組み立てのときに作る models/versions.json)。読めなくても、印なしで読みに行く
 let verP = null;
 const versions = () => verP || (verP = fetch(urlOf('models/versions.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({})));
+// モデルは、版(?v=)つきの名前でブラウザの保存場所(Cache API)に取っておく。2回目からはネットに取りに行かない。版が変わったときだけ入れ替える
+const STORE = 'town-glb-v1';
+async function fetchGlb(url) {
+  let c = null;
+  try { c = await caches.open(STORE); const hit = await c.match(url); if (hit) return await hit.arrayBuffer(); } catch (e) { c = null; }
+  const r = await fetch(url); if (!r.ok) throw new Error('glb ' + r.status);
+  if (c) { try { await c.put(url, r.clone()); const key = new URL(url, location.href).pathname; for (const k of await c.keys()) { const u = new URL(k.url); if (u.pathname === key && k.url !== new URL(url, location.href).href) await c.delete(k); } } catch (e) { } }
+  return await r.arrayBuffer();
+}
 // 読みこみは2つずつ順番に(全員いっぺんに読むとスマホが重くなる)。プレイヤーを先に
 const queue = []; let running = 0;
 const pump = () => { while (running < 2 && queue.length) { const j = queue.shift(); running++; j.run().finally(() => { running--; pump(); }); } };
 const load = (url, first) => {
   if (!cache.has(url)) cache.set(url, new Promise((ok, ng) => {
-    const job = { run: () => versions().then(v => { const f = url.split('/').pop(); return loader.loadAsync(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }).then(g => { toonify(g.scene); ok(g); }, ng) };
+    const job = { run: () => versions().then(v => { const f = url.split('/').pop(); return fetchGlb(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); ok(g); }, ng) };
     first ? queue.unshift(job) : queue.push(job); pump();
   }));
   return cache.get(url);
