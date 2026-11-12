@@ -69,7 +69,8 @@ export function useGlb(ch, id, { height } = {}) {
     ch.root.children.slice().forEach(o => { o.visible = false; });   // コード製の体は隠す
     ch.root.add(wrap);
     // 点検用: いまの足元の高さ(地面=0 からのずれ)を測れるようにしておく
-    (window.__glbFeet = window.__glbFeet || {})[id] = () => { ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
+    // (高さを切りかえる途中ではなく、いまの動きで落ちついたときの高さで測る)
+    (window.__glbFeet = window.__glbFeet || {})[id] = () => { const y = holder.position.y, ty = footOf.get(cur); if (ty !== undefined) holder.position.y = ty; ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); holder.position.y = y; return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
     let cur = null, lock = 0;
     const play = (name, fade = 0.25) => {
       const a = act[name]; if (!a || cur === a) return;
