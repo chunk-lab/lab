@@ -1082,7 +1082,7 @@ export function mount(container, opt = {}) {
   let camMode = 'follow';
   // 視点: 'far'=引いて見る(ふだん) / 'fp'=自分視点。🎥を押すと切りかえ。
   // 住人をタップ=そっちを向いて自分視点(動きだしたら引いた視点にもどる)、話している間=自分視点で相手を正面に(終わったら もどる)
-  let view = settings.view === 'fp' ? 'fp' : 'far', lookAtR = null, fpPitch = 0, approach = null, lastTap = null;
+  let talkF_on = false, view = settings.view === 'fp' ? 'fp' : 'far', lookAtR = null, fpPitch = 0, approach = null, lastTap = null;
   const fpOn = () => camMode === 'follow' && !battle.active && !sport.active && !seat && (view === 'fp' || !!lookAtR || (!!talkingTo && hud.busy));
   const eyeH = () => (me.ch.glb ? me.ch.height * 0.86 : 1.5);
   const panOff = { x: 0, z: 0 };   // 2本指でずらしたカメラ位置
@@ -1263,6 +1263,17 @@ export function mount(container, opt = {}) {
     camera.fov = w / h < 0.75 ? 62 : 55; camera.updateProjectionMatrix();
   }
   const ro = new ResizeObserver(resize); ro.observe(root); resize(); applyQuality();
+  // スマホでキーボードが出たとき、画面(root)をキーボードの上に収める(セリフの欄が上に押し出されて見えなくなるのを防ぐ)
+  const vv = window.visualViewport;
+  if (vv) {
+    const fitVV = () => {
+      const kb = window.innerHeight - vv.height > 120, st = root.style;
+      if (kb) { st.position = 'fixed'; st.inset = 'auto'; st.left = vv.offsetLeft + 'px'; st.top = vv.offsetTop + 'px'; st.width = vv.width + 'px'; st.height = vv.height + 'px'; }
+      else { st.position = ''; st.inset = ''; st.left = ''; st.top = ''; st.width = ''; st.height = ''; }
+    };
+    vv.addEventListener('resize', fitVV); vv.addEventListener('scroll', fitVV);
+    offs.push(() => { vv.removeEventListener('resize', fitVV); vv.removeEventListener('scroll', fitVV); });
+  }
 
   let fpsAcc = 0;
   function frame() {
@@ -1350,7 +1361,25 @@ export function mount(container, opt = {}) {
       dist = Math.max(1.4, dist - 0.5);
     }
     const tgt = lookAtR || (talkingTo && hud.busy ? talkingTo : null);
-    if (fpOn() && !battle.active) {   // 自分視点:目の高さから。相手がいれば、相手の顔の方へゆっくり向く
+    const talkF = talkingTo && hud.busy && camMode === 'follow' && !battle.active && !sport.active && !seat && talkingTo.ch.root.visible;
+    if (talkF) {   // 会話中: 画面の「会話パネルより上」に、相手の顔と全身が必ず収まるように、カメラを置く(視点の設定に関わらず)
+      const r = talkingTo, tp = r.ch.root.position, H = r.ch.glb ? r.ch.height : 1.6;
+      const W = root.clientWidth || 1, Hh = root.clientHeight || 1, rr = root.getBoundingClientRect();
+      const pe = root.querySelector('.tw-dialog, .tw-card'); let top = 0.97;
+      if (pe) { const pr = pe.getBoundingClientRect(); if (pr.height > 0) top = Math.min(0.97, Math.max(0.3, (pr.top - rr.top) / Hh)); }
+      const hudTop = 0.2, regionH = Math.max(0.2, top - hudTop - 0.03), yc = hudTop + 0.015 + regionH / 2;   // 相手を置く帯(画面の割合)
+      const tanH = Math.tan(camera.fov * Math.PI / 360);
+      const D = Math.max(2.4, (H * 1.12) / (regionH * 2 * tanH));   // 帯の高さに、背がちょうど収まる距離
+      let dx = me.x - tp.x, dz = me.z - tp.z; const dl = Math.hypot(dx, dz) || 1; dx /= dl; dz /= dl;
+      const cx = tp.x + dx * D, cz = tp.z + dz * D, cy = H * 0.55;
+      camera.position.set(cx, cy, cz); camera.lookAt(tp.x, cy, tp.z);
+      const shift = (0.5 - yc) * Hh;   // 相手が帯の真ん中に来るよう、絵ごと上にずらす
+      camera.setViewOffset(W, Hh, 0, shift, W, Hh);
+      me.ch.root.visible = false; talkF_on = true;
+      cam.yaw = angleLerp(cam.yaw, Math.atan2(dx, dz), Math.min(1, dt * 6));
+    } else if (talkF_on) { camera.clearViewOffset(); talkF_on = false; }
+    { const sp = document.getElementById('glb-size'); if (sp) sp.style.display = hud.busy ? 'none' : ''; }
+    if (talkF) { /* 上で決めた */ } else if (fpOn() && !battle.active) {   // 自分視点:目の高さから。相手がいれば、相手の顔の方へゆっくり向く
       if (tgt) {
         const dx = tgt.ch.root.position.x - me.x, dz = tgt.ch.root.position.z - me.z, d = Math.max(0.5, Math.hypot(dx, dz));
         cam.yaw = angleLerp(cam.yaw, Math.atan2(-dx, -dz), Math.min(1, dt * 5));
@@ -1494,6 +1523,7 @@ export function mount(container, opt = {}) {
     benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用
     npcAct: (id, act) => { const r = residents.list.find(x => x.def.id === id); if (!r) return false; const p = r.ch.root.position; me.x = p.x + 1.2; me.z = p.z; if (act) doAct(r, { act }); else talkTo(r); return true; },   // テスト用
     snowBattle: id => battle.start(residents.list.find(r => r.def.id === id) || residents.list[0], 2),   // テスト用
+    talk: id => { const r = residents.list.find(x => x.def.id === id); if (r) talkTo(r); },   // 点検用
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,
     // 組み込み先がゲームを開いている間は止める(描画も音も)
