@@ -36,24 +36,34 @@ export function useGlb(ch, id, { height = 1.3 } = {}) {
     // 同じモデルを複数体出してもいいように、骨ごと複製する
     const model = cloneSkinned(gltf.scene);
     const holder = new THREE.Group(); holder.rotation.y = spec.rotY; holder.add(model);
-    const box = new THREE.Box3().setFromObject(holder), size = box.getSize(new THREE.Vector3());
-    const k = height / size.y; holder.scale.setScalar(k);
-    box.setFromObject(holder); const c = box.getCenter(new THREE.Vector3());
-    holder.position.set(-c.x, -box.min.y, -c.z);
-    const wrap = new THREE.Group(); wrap.add(holder);
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
-    ch.root.children.slice().forEach(o => { o.visible = false; });   // コード製の体は隠す
-    ch.root.add(wrap);
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
+    // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
+    // 待機の動きを何コマか見て、いちばん低い足元・いちばん高い頭で測る(動きの途中で沈まないように)
+    const idleBox = () => {
+      if (!act.idle) return posedBox(holder);
+      act.idle.play(); const dur = act.idle.getClip().duration, all = new THREE.Box3();
+      for (let i = 0; i <= 8; i++) { act.idle.time = dur * i / 8; mixer.update(0); all.union(posedBox(holder)); }
+      act.idle.time = 0; mixer.update(0); return all;
+    };
+    const box = idleBox(), size = box.getSize(new THREE.Vector3());
+    const k = height / size.y; holder.scale.setScalar(k);
+    const b2 = idleBox(), c = b2.getCenter(new THREE.Vector3());
+    holder.position.set(-c.x, -b2.min.y, -c.z);
+    const wrap = new THREE.Group(); wrap.add(holder);
+    ch.root.children.slice().forEach(o => { o.visible = false; });   // コード製の体は隠す
+    ch.root.add(wrap);
+    // 点検用: いまの足元の高さ(地面=0 からのずれ)を測れるようにしておく
+    (window.__glbFeet = window.__glbFeet || {})[id] = () => { ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
     let cur = null, lock = 0;
     const play = (name, fade = 0.25) => {
       const a = act[name]; if (!a || cur === a) return;
       a.reset().fadeIn(fade).play(); if (cur) cur.fadeOut(fade); cur = a;
     };
-    play('idle', 0);
+    cur = act.idle || null; if (!cur) play('idle', 0);
     ch.height = height; ch.glb = true;
     const base = ch.update;
     ch.update = (dt, speed) => {
@@ -67,6 +77,20 @@ export function useGlb(ch, id, { height = 1.3 } = {}) {
     void base;
   }).catch(e => console.warn('GLB読み込み失敗(コード製キャラのまま):', spec.url, e));
   return ch;
+}
+
+// 骨を動かしたあとの形の箱(base を基準の座標で)。base を省くと holder の親の座標
+function posedBox(holder, base) {
+  holder.updateMatrixWorld(true);
+  const inv = base ? new THREE.Matrix4().copy(base.matrixWorld).invert() : (holder.parent ? new THREE.Matrix4().copy(holder.parent.matrixWorld).invert() : new THREE.Matrix4());
+  const box = new THREE.Box3(), b = new THREE.Box3();
+  holder.traverse(o => {
+    if (!o.isMesh) return;
+    if (o.isSkinnedMesh) { o.skeleton.update(); o.computeBoundingBox(); b.copy(o.boundingBox); }
+    else { if (!o.geometry.boundingBox) o.geometry.computeBoundingBox(); b.copy(o.geometry.boundingBox); }
+    box.union(b.applyMatrix4(o.matrixWorld).applyMatrix4(inv));
+  });
+  return box;
 }
 
 // SkeletonUtils.clone と同じ働き(three/examples の SkeletonUtils を使う)
