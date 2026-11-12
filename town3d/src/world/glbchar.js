@@ -60,13 +60,16 @@ export const glbChars = new Set();
 const Q = (() => { try { return new URLSearchParams(location.search); } catch (e) { return new URLSearchParams(); } })();
 const num = k => parseFloat(Q.get(k)) || 0;
 export const SIZE_NOW = { npc: num('npcsize') || (num('npcsizes') > 1 ? num('npcsizes') : 0), player: num('playersize') };
-const SIZE_PANEL = Q.get('sizetest') === '1' || !!SIZE_NOW.npc || !!SIZE_NOW.player || Q.get('npcsizes') === '1';
+const SIZE_PANEL = true;   // 大きさのつまみは、URLに何も付けなくても いつも出す
 function sizePanel() {
   if (!SIZE_PANEL || document.getElementById('glb-size')) return;
   const el = document.createElement('div'); el.id = 'glb-size';
-  el.style.cssText = 'position:fixed;left:50%;top:64px;transform:translateX(-50%);z-index:99999;background:rgba(255,255,255,.92);border-radius:14px;padding:8px 12px;font:14px sans-serif;color:#433;box-shadow:0 2px 8px rgba(0,0,0,.2);width:min(86vw,340px)';
+  el.style.cssText = 'position:fixed;left:50%;top:60px;transform:translateX(-50%);z-index:99999;background:rgba(255,255,255,.92);border-radius:14px;padding:8px 12px;font:14px sans-serif;color:#433;box-shadow:0 2px 8px rgba(0,0,0,.2);width:min(86vw,340px)';
   const row = (label, key, def) => `<label style="display:flex;align-items:center;gap:8px;margin:2px 0">${label}<input type="range" min="0.8" max="3" step="0.05" value="${SIZE_NOW[key] || def}" data-k="${key}" style="flex:1"><b data-v="${key}" style="width:3em;text-align:right">${(SIZE_NOW[key] || def).toFixed(2)}</b></label>`;
-  el.innerHTML = row('住人', 'npc', 1.3) + row('自分', 'player', 1.6) + '<div style="font-size:12px;opacity:.7">つまみを動かすと、その場で全員の背が変わります</div>';
+  el.innerHTML = row('住人', 'npc', 1.3) + row('自分', 'player', 1.6) + '';
+  const typing = t => !!t && /^(INPUT|TEXTAREA)$/.test(t.tagName) && !/^(range|checkbox|radio|button)$/.test(t.type || '');
+  document.addEventListener('focusin', e => { if (typing(e.target)) el.style.display = 'none'; });   // 文字を入力している間だけ隠す
+  document.addEventListener('focusout', () => { el.style.display = ''; });
   el.addEventListener('input', e => {
     const k = e.target.dataset.k; if (!k) return; const v = +e.target.value; SIZE_NOW[k] = v;
     el.querySelector(`[data-v=${k}]`).textContent = v.toFixed(2);

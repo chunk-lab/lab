@@ -1267,7 +1267,7 @@ export function mount(container, opt = {}) {
   const vv = window.visualViewport;
   if (vv) {
     const fitVV = () => {
-      const kb = window.innerHeight - vv.height > 120, st = root.style;
+      const kb = window.innerHeight - vv.height > 120, st = root.style; root.classList.toggle('tw-kb', kb); root.querySelectorAll('.tw-log').forEach(l => { l.scrollTop = l.scrollHeight; });
       if (kb) { st.position = 'fixed'; st.inset = 'auto'; st.left = vv.offsetLeft + 'px'; st.top = vv.offsetTop + 'px'; st.width = vv.width + 'px'; st.height = vv.height + 'px'; }
       else { st.position = ''; st.inset = ''; st.left = ''; st.top = ''; st.width = ''; st.height = ''; }
     };
@@ -1378,7 +1378,6 @@ export function mount(container, opt = {}) {
       me.ch.root.visible = false; talkF_on = true;
       cam.yaw = angleLerp(cam.yaw, Math.atan2(dx, dz), Math.min(1, dt * 6));
     } else if (talkF_on) { camera.clearViewOffset(); talkF_on = false; }
-    { const sp = document.getElementById('glb-size'); if (sp) sp.style.display = hud.busy ? 'none' : ''; }
     if (talkF) { /* 上で決めた */ } else if (fpOn() && !battle.active) {   // 自分視点:目の高さから。相手がいれば、相手の顔の方へゆっくり向く
       if (tgt) {
         const dx = tgt.ch.root.position.x - me.x, dz = tgt.ch.root.position.z - me.z, d = Math.max(0.5, Math.hypot(dx, dz));

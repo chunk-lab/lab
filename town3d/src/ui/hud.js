@@ -120,6 +120,7 @@ export const CSS = `
 .tw-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px}.tw-actions .tw-btn{padding:9px 16px;font-size:14px;box-shadow:none;border:2px solid #eadff3}.tw-actions .main{background:var(--tw-mint);border-color:var(--tw-mint)}
 .tw-card h2 small{font-size:12px;color:var(--tw-sub);margin-left:8px;font-weight:700}
 .og-body{max-height:min(62vh,440px);overflow-y:auto;overscroll-behavior:contain}.og-t{font-weight:800;font-size:17px;margin:8px 0}.og-sub{font-size:13px;color:var(--tw-sub);font-weight:700;margin:4px 0}.og-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.og-ans{background:#fff;border-radius:14px;padding:8px 12px;margin:6px 0;font-size:15px;line-height:1.5}.og-ans b{display:block;font-size:12px;color:var(--tw-sub);font-weight:700}.og-sc{font-weight:800;color:var(--tw-pink)}
+.tw-panel.tw-chat{padding-top:128px}.tw-chat .tw-card{display:flex;flex-direction:column;overflow:hidden;max-height:min(100%,560px)}.tw-chat .tw-log{height:auto;flex:1 1 auto;min-height:96px;overscroll-behavior:contain}.tw-chat .tw-chatrow,.tw-chat .tw-actions,.tw-chat .tw-tools,.tw-chat .tw-enrow,.tw-chat h2{flex:none}.tw-kb .tw-chat h2,.tw-kb .tw-chat .tw-enrow{display:none}.tw-kb .tw-chat .tw-card{padding:12px 14px}
 .tw-log{height:min(46vh,340px);overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
 .tw-msg{max-width:84%;padding:8px 12px;border-radius:16px;font-size:15px;line-height:1.5;background:#fff;align-self:flex-start;user-select:text;-webkit-user-select:text}
 .tw-msg.me{align-self:flex-end;background:var(--tw-pink);color:#fff}.tw-msg.wait{opacity:.6}.tw-msg.err{background:#fff3e0;color:#9a6a3a}
@@ -156,12 +157,14 @@ export function createHud(root, bus) {
     sb.addEventListener('pointerup', up); sb.addEventListener('pointercancel', up); sb.addEventListener('contextmenu', e => e.preventDefault()); }
   emotes.onclick = e => { const b = e.target.closest('[data-e]'); if (b) bus.emit('ui:emote', b.dataset.e); };
   corner.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
-  {   // 🎥: 押す=視点の切りかえ(引いて見る ⇔ 自分視点)、長押し=カメラの設定
-    const cb = corner.querySelector('.tw-cambtn'); let lt = null, long = false;
-    cb.addEventListener('pointerdown', () => { long = false; clearTimeout(lt); lt = setTimeout(() => { long = true; bus.emit('ui:camlong'); }, 550); });
-    const stop = () => clearTimeout(lt); cb.addEventListener('pointerup', stop); cb.addEventListener('pointercancel', stop); cb.addEventListener('pointerleave', stop);
+  {   // 🎥: 押す=視点の切りかえ(引いて見る ⇔ 自分視点)、ダブルタップ=カメラの設定
+    const cb = corner.querySelector('.tw-cambtn'); let last = 0;
     cb.addEventListener('contextmenu', e => e.preventDefault());
-    cb.onclick = () => { if (long) { long = false; return; } bus.emit('ui:cam'); };
+    cb.onclick = e => {
+      const t = e.timeStamp;
+      if (last && t - last < 380) { last = 0; bus.emit('ui:cam'); bus.emit('ui:camlong'); return; }   // 2回目: 1回目の切りかえをもどして、設定を開く
+      last = t; bus.emit('ui:cam');
+    };
   }
   corner.querySelector('.tw-homebtn').onclick = () => bus.emit('ui:home');
   corner.querySelector('.tw-appsbtn').onclick = () => bus.emit('ui:apps');
