@@ -12,6 +12,7 @@ export const GLB_MODELS = {
   maru: { url: 'models/maru.glb', rotY: 0 },
   mii: { url: 'models/mii.glb', rotY: 0 },
   gon: { url: 'models/gon.glb', rotY: 0 },
+  choco: { url: 'models/choco.glb', rotY: 0 },
   luna: { url: 'models/luna.glb', rotY: 0 },
   tetsu: { url: 'models/philosopher.glb', rotY: 0 },
   suna: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
