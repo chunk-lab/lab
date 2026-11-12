@@ -53,6 +53,15 @@ export function useGlb(ch, id, { height = 1.3 } = {}) {
     const k = height / size.y; holder.scale.setScalar(k);
     const b2 = idleBox(), c = b2.getCenter(new THREE.Vector3());
     holder.position.set(-c.x, -b2.min.y, -c.z);
+    // 動きごとの足元(歩くと腰が下がる、など)。動きを切りかえたら、その動きの足元に合わせて高さをなめらかに直す
+    const footOf = new Map();
+    for (const a of Object.values(act)) {
+      const prev = holder.position.y; holder.position.y = 0;
+      mixer.stopAllAction(); a.reset().play(); const dur = a.getClip().duration; let m = Infinity;
+      for (let i = 0; i <= 12; i++) { a.time = dur * i / 12; mixer.update(0); m = Math.min(m, posedBox(holder).min.y); }
+      a.stop(); holder.position.y = prev; footOf.set(a, -m);
+    }
+    mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
     const wrap = new THREE.Group(); wrap.add(holder);
     ch.root.children.slice().forEach(o => { o.visible = false; });   // コード製の体は隠す
     ch.root.add(wrap);
@@ -71,6 +80,7 @@ export function useGlb(ch, id, { height = 1.3 } = {}) {
       else play(speed > 0.05 ? 'walk' : 'idle');
       if (cur === act.walk) act.walk.timeScale = Math.max(0.6, Math.min(1.6, speed / 2.2));
       mixer.update(dt);
+      const ty = footOf.get(cur); if (ty !== undefined) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
     };
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };
