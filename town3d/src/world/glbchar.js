@@ -11,6 +11,7 @@ export const GLB_MODELS = {
   shiori: { url: 'models/shiori.glb', rotY: 0 },
   maru: { url: 'models/maru.glb', rotY: 0 },
   mii: { url: 'models/mii.glb', rotY: 0 },
+  gon: { url: 'models/gon.glb', rotY: 0 },
   luna: { url: 'models/luna.glb', rotY: 0 },
   philosopher: { url: 'models/philosopher.glb', rotY: 0 },
   shiomi: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
