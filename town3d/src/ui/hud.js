@@ -156,7 +156,13 @@ export function createHud(root, bus) {
     sb.addEventListener('pointerup', up); sb.addEventListener('pointercancel', up); sb.addEventListener('contextmenu', e => e.preventDefault()); }
   emotes.onclick = e => { const b = e.target.closest('[data-e]'); if (b) bus.emit('ui:emote', b.dataset.e); };
   corner.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
-  corner.querySelector('.tw-cambtn').onclick = () => bus.emit('ui:cam');
+  {   // 🎥: 押す=視点の切りかえ(引いて見る ⇔ 自分視点)、長押し=カメラの設定
+    const cb = corner.querySelector('.tw-cambtn'); let lt = null, long = false;
+    cb.addEventListener('pointerdown', () => { long = false; clearTimeout(lt); lt = setTimeout(() => { long = true; bus.emit('ui:camlong'); }, 550); });
+    const stop = () => clearTimeout(lt); cb.addEventListener('pointerup', stop); cb.addEventListener('pointercancel', stop); cb.addEventListener('pointerleave', stop);
+    cb.addEventListener('contextmenu', e => e.preventDefault());
+    cb.onclick = () => { if (long) { long = false; return; } bus.emit('ui:cam'); };
+  }
   corner.querySelector('.tw-homebtn').onclick = () => bus.emit('ui:home');
   corner.querySelector('.tw-appsbtn').onclick = () => bus.emit('ui:apps');
   corner.querySelector('.tw-photo').onclick = () => bus.emit('ui:photo');

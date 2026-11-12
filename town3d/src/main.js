@@ -877,6 +877,31 @@ export function mount(container, opt = {}) {
       if (r === 'far') hud.toast('そこは遠すぎるよ'); else if (r) { audio.play('wave'); me.ch.wave?.(); }
     };
     window.addEventListener('pointerup', onUp); offs.push(() => window.removeEventListener('pointerup', onUp)); }
+  { let t0 = null; const cv = renderer.domElement;   // 住人をタップ=そっちを向く(自分視点)、ダブルタップ=駆けよって話しかける
+    root.addEventListener('pointerdown', e => { t0 = e.target === cv || e.target === root || e.target.classList?.contains('tw-canvas') ? { x: e.clientX, y: e.clientY, t: e.timeStamp } : null; }, true);
+    const pick = (cx, cy) => {
+      const rc = cv.getBoundingClientRect(); let best = null, bd = Infinity; const v = new THREE.Vector3();
+      for (const r of residents.list) {
+        if (!r.ch.root.visible || r.def.mascot) continue;
+        const H = r.ch.glb ? r.ch.height : 1.6, p = r.ch.root.position;
+        v.set(p.x, H * 0.55, p.z).project(camera); if (v.z > 1) continue;
+        const sx = rc.left + (v.x + 1) / 2 * rc.width, sy = rc.top + (1 - v.y) / 2 * rc.height;
+        v.set(p.x, H, p.z).project(camera); const top = rc.top + (1 - v.y) / 2 * rc.height, half = Math.max(28, Math.abs(sy - top) * 1.1);
+        const d = Math.hypot(cx - sx, (cy - sy) * 0.6); if (d < half && d < bd) { bd = d; best = r; }
+      }
+      return best;
+    };
+    const up = e => {
+      const s0 = t0; t0 = null;
+      if (!s0 || !started || hud.busy || appHost.current || battle.active || sport.active || seat || camMode !== 'follow' || snow.holding || seasons.carrying()) return;
+      if (Math.hypot(e.clientX - s0.x, e.clientY - s0.y) > 12 || e.timeStamp - s0.t > (window.__tapMs || 450)) return;   // 指を置いた時刻・はなした時刻で比べる(重いときも正しく)
+      const r = pick(e.clientX, e.clientY), now = e.timeStamp;
+      // 2回目のタップ:1回目で向きが変わり始めて相手が画面上で少し動くので、外れても1回目の相手へ
+      if (lastTap && (!r || lastTap.r === r) && now - lastTap.t < (window.__tapMs || 380)) { const R = lastTap.r; lastTap = null; approach = { r: R, stuck: 0 }; lookAtR = R; return; }
+      if (!r) return;
+      lastTap = { r, t: now }; lookAtR = r; approach = null;
+    };
+    window.addEventListener('pointerup', up); offs.push(() => window.removeEventListener('pointerup', up)); }
   offs.push(bus.on('ui:emote', k => {
     if (!started) return;
     audio.unlock();
@@ -1050,11 +1075,16 @@ export function mount(container, opt = {}) {
   bus.on('*', (n, d) => { if (n.startsWith('app:') || n === 'talk' || n === 'wallet') opt.onEvent?.(n, d); });
 
   // ---- カメラ ----
-  const CAM_DEF = { pitch: 0.5, dist: 9 };   // ふだんの見え方(引いた位置のうしろから)
+  const CAM_DEF = { pitch: 0.6, dist: 16 };   // ふだんの見え方(かなり引いた位置のうしろから)。🎥の長押しで距離を変えられる
   const camOk = settings.camView && settings.camView.pitch >= 0.1 && settings.camView.dist >= 3;   // 近すぎ・低すぎの保存値は使わない
   const cam = { yaw: Math.PI, pitch: camOk ? settings.camView.pitch : CAM_DEF.pitch, dist: camOk ? settings.camView.dist : CAM_DEF.dist, x: me.x, z: me.z };
   // ---- カメラ:ふだん=自分についていく(follow) / 動かす(free:カメラだけ自由に) / 固定(fixed:そこに置いて、自分は歩ける) ----
   let camMode = 'follow';
+  // 視点: 'far'=引いて見る(ふだん) / 'fp'=自分視点。🎥を押すと切りかえ。
+  // 住人をタップ=そっちを向いて自分視点(動きだしたら引いた視点にもどる)、話している間=自分視点で相手を正面に(終わったら もどる)
+  let view = settings.view === 'fp' ? 'fp' : 'far', lookAtR = null, fpPitch = 0, approach = null, lastTap = null;
+  const fpOn = () => camMode === 'follow' && !battle.active && !sport.active && !seat && (view === 'fp' || !!lookAtR || (!!talkingTo && hud.busy));
+  const eyeH = () => (me.ch.glb ? me.ch.height * 0.86 : 1.5);
   const panOff = { x: 0, z: 0 };   // 2本指でずらしたカメラ位置
   {   // 2本指ドラッグ:真上から見た地図をずらす感覚で、見ている向き基準の前後左右にカメラ位置をずらす(ゴルフ中に使っていたものと同じ)
     let t1 = null, t2 = null;
@@ -1090,7 +1120,19 @@ export function mount(container, opt = {}) {
     camBarDraw();
   }
   const camBar = hud.camBar;
+  let camSetOpen = false;   // 🎥の長押しで出す設定(カメラだけ動かす・引く距離)
+  offs.push(bus.on('ui:camlong', () => { if (!started || appHost.current || hud.busy || camMode !== 'follow') return; camSetOpen = !camSetOpen; camBarDraw(); audio.play('tap'); }));
   function camBarDraw() {
+    if (camMode === 'follow' && camSetOpen) {
+      camBar.hidden = false;
+      camBar.innerHTML = `<div>🎥 カメラの設定(🎥を押すと、引いて見る ⇔ 自分視点)</div>
+        <div class="r" style="align-items:center"><span>引く距離</span><input type="range" class="fd" min="4" max="40" step="0.5" value="${cam.dist.toFixed(1)}"><b class="fdv">${cam.dist.toFixed(1)}</b></div>
+        <div class="r"><button class="tw-btn" data-c="free">🎥 カメラだけ動かす</button><button class="tw-btn on" data-c="close">とじる</button></div>`;
+      const fd = camBar.querySelector('.fd');
+      fd.oninput = () => { cam.dist = +fd.value; camBar.querySelector('.fdv').textContent = cam.dist.toFixed(1); if (view === 'fp') { view = 'far'; settings.view = view; } settings.camView = { pitch: +cam.pitch.toFixed(3), dist: +cam.dist.toFixed(2) }; save(); };
+      ['pointerdown', 'touchstart'].forEach(t => fd.addEventListener(t, e => e.stopPropagation(), { passive: true }));
+      return;
+    }
     if (camMode === 'follow') { camBar.hidden = true; camBar.innerHTML = ''; return; }
     camBar.hidden = false;
     const free = camMode === 'free';
@@ -1103,7 +1145,8 @@ export function mount(container, opt = {}) {
     const b = e.target.closest('button'); if (!b) return; audio.play('tap');
     if (b.dataset.p) camPreset(b.dataset.p);
     else if (b.dataset.c === 'fix') { camMode = 'fixed'; cam.yaw = fcam.yaw; me.ch.root.visible = true; camBarDraw(); hud.toast('カメラをここに固定したよ。📷で撮れるよ'); }
-    else if (b.dataset.c === 'free') { camFromView(); camMode = 'free'; camBarDraw(); }
+    else if (b.dataset.c === 'free') { camSetOpen = false; camFromView(); camMode = 'free'; camBarDraw(); }
+    else if (b.dataset.c === 'close') { camSetOpen = false; camBarDraw(); }
     else if (b.dataset.c === 'back') {   // 合わせたカメラの位置のまま もどる(次からもその見え方。カメラ設定の「リセット」で戻せる)
       const dx = fcam.x - me.x, dz = fcam.z - me.z, dy = fcam.y - 1.3, L = Math.hypot(dx, dy, dz) || 1;
       cam.yaw = Math.atan2(dx, dz); cam.pitch = clamp(Math.asin(clamp(dy / L, -1, 1)), 0.1, 1.5); cam.dist = clamp(L, 3, 40);   // 合わせた見え方をそのまま(丸めない) cam.x = me.x; cam.z = me.z;
@@ -1182,8 +1225,12 @@ export function mount(container, opt = {}) {
   offs.push(bus.on('ui:home', () => {   // 🏠 自宅にもどる(カメラは、カメラボタンを2回押せばもとにもどる)
     if (!started || appHost.current || hud.busy || battle.active || sport.active) return; openApp('home', {});
   }));
-  offs.push(bus.on('ui:cam', () => {
+  offs.push(bus.on('ui:cam', () => {   // 🎥を押す:引いて見る ⇔ 自分視点(自由カメラ・固定中なら、ふつうの視点にもどす)
     if (!started || appHost.current || hud.busy) return;
+    if (camMode === 'follow' && !battle.active && !sport.active) {
+      if (lookAtR) { lookAtR = null; view = 'far'; } else view = view === 'fp' ? 'far' : 'fp';
+      settings.view = view; save(); if (view === 'fp') fpPitch = 0; me.ch.root.visible = view !== 'fp'; camSetOpen = false; camBarDraw(); input.clear(); return;
+    }
     if (camMode === 'follow') { camFromView(); camMode = 'free'; } else { cam.pitch = CAM_DEF.pitch; cam.dist = CAM_DEF.dist; cam.yaw = me.ry + Math.PI; cam.x = me.x; cam.z = me.z; camMode = 'follow'; me.ch.root.visible = true; }   // 2回押し=ふだんの見え方(引いた位置のうしろから)にもどる
     camBarDraw(); input.clear();
   }));
@@ -1231,9 +1278,11 @@ export function mount(container, opt = {}) {
     if (camMode === 'follow') {
       if (battle.active) { cam.yaw -= inp.camDX * 0.006; cam.pitch = battle.view === 'fp' ? 0.0 : 0.3; cam.dist = battle.view === 'fp' ? 0.2 : 7; me.ch.root.visible = battle.view !== 'fp'; }   // 雪合戦:高さ・距離は固定(ほぼ真うしろ・ほんの少し上)。左右は自由。「👁」で一人称にもできる
       else {
-      cam.yaw -= inp.camDX * 0.006; cam.pitch = clamp(cam.pitch + inp.camDY * 0.004, -1.5, 1.5);
-      cam.dist = clamp(cam.dist + inp.zoom * 0.6, 1.6, 14);   // もっと近くまで寄れる(寄りすぎたら自分は消える)
-      me.ch.root.visible = cam.dist > 1.9; }
+      cam.yaw -= inp.camDX * 0.006;
+      if (fpOn()) { fpPitch = clamp(fpPitch - inp.camDY * 0.004, -1.1, 1.1); me.ch.root.visible = false; }   // 自分視点:自分は消す(上下ドラッグで見上げる・見下ろす)
+      else { cam.pitch = clamp(cam.pitch + inp.camDY * 0.004, -1.5, 1.5);
+      cam.dist = clamp(cam.dist + inp.zoom * 0.6, 1.6, 40);   // ピンチで寄る・引く(寄りすぎたら自分は消える)
+      me.ch.root.visible = cam.dist > 1.9; } }
     } else if (camMode === 'free') {   // カメラだけ動かす(自分はその場)
       fcam.yaw -= inp.camDX * 0.006; fcam.pitch = clamp(fcam.pitch + inp.camDY * 0.004, -1.5, 1.5);
       const sp = (inp.run ? 24 : 8) * dt, c = Math.cos(fcam.yaw), s = Math.sin(fcam.yaw), cp = Math.cos(fcam.pitch);
@@ -1249,7 +1298,19 @@ export function mount(container, opt = {}) {
     if (snow.making || bld || battle.making || battle.rolling || sport.active || dodgeT > 0) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
-    const guided = guideStep(dt, mag);   // 住人に連れて行ってもらっている間は、自動で歩く
+    if (lookAtR && mag > 0.05) lookAtR = null;   // タップで向いたあと、自分で動きだしたら引いた視点にもどる
+    if (approach && (mag > 0.3 || hud.busy || !approach.r.ch.root.visible)) approach = null;
+    if (approach) {   // ダブルタップした住人のところへ駆けよって、着いたら話しかける
+      const r = approach.r, dx = r.ch.root.position.x - me.x, dz = r.ch.root.position.z - me.z, d = Math.hypot(dx, dz);
+      if (d < 1.9) { approach = null; lookAtR = null; me.speed = 0; talkTo(r); }
+      else {
+        me.ry = angleLerp(me.ry, Math.atan2(dx, dz), Math.min(1, dt * 10)); me.speed += (9 - me.speed) * Math.min(1, dt * 6);
+        const px = me.x, pz = me.z; [me.x, me.z] = collide(me.x + Math.sin(me.ry) * me.speed * dt, me.z + Math.cos(me.ry) * me.speed * dt);
+        approach.stuck = Math.hypot(me.x - px, me.z - pz) < me.speed * dt * 0.3 ? approach.stuck + dt : 0;
+        if (approach.stuck > 1.2) { approach = null; lookAtR = null; if (d < 4) talkTo(r); else hud.toast('うまく近づけなかったよ'); }
+      }
+    }
+    const guided = guideStep(dt, mag) || !!approach;   // 住人に連れて行ってもらっている間は、自動で歩く
     const target = mag > 0.05 ? (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) * pullBoost : 0;
     if (!guided) me.speed += (target - me.speed) * Math.min(1, dt * 10);
     if (mag > 0.05 && !guided) {
@@ -1288,7 +1349,19 @@ export function mount(container, opt = {}) {
       if (!city.colliders.some(c => c.x0 !== undefined && px > c.x0 - 1.4 && px < c.x1 + 1.4 && pz > c.z0 - 1.4 && pz < c.z1 + 1.4 && !(look.x > c.x0 - 1.4 && look.x < c.x1 + 1.4 && look.z > c.z0 - 1.4 && look.z < c.z1 + 1.4))) break;
       dist = Math.max(1.4, dist - 0.5);
     }
-    if (battle.active && battle.view === 'fp') {   // 一人称:自分の目の高さから、向いている方を見る(yaw はカメラ=見ている向き)
+    const tgt = lookAtR || (talkingTo && hud.busy ? talkingTo : null);
+    if (fpOn() && !battle.active) {   // 自分視点:目の高さから。相手がいれば、相手の顔の方へゆっくり向く
+      if (tgt) {
+        const dx = tgt.ch.root.position.x - me.x, dz = tgt.ch.root.position.z - me.z, d = Math.max(0.5, Math.hypot(dx, dz));
+        cam.yaw = angleLerp(cam.yaw, Math.atan2(-dx, -dz), Math.min(1, dt * 5));
+        const face = (tgt.ch.glb ? tgt.ch.height : 1.6) * 0.8;
+        fpPitch += (Math.atan2(face - eyeH(), d) - fpPitch) * Math.min(1, dt * 5);
+        if (mag < 0.05) me.ry = angleLerp(me.ry, Math.atan2(dx, dz), Math.min(1, dt * 8));
+      } else if (mag < 0.05) me.ry = angleLerp(me.ry, cam.yaw + Math.PI, Math.min(1, dt * 6));
+      const e = eyeH(), cp = Math.cos(fpPitch);
+      camera.position.set(me.x, e, me.z); camera.lookAt(me.x - Math.sin(cam.yaw) * cp, e + Math.sin(fpPitch), me.z - Math.cos(cam.yaw) * cp);
+      me.ch.root.visible = false;
+    } else if (battle.active && battle.view === 'fp') {   // 一人称:自分の目の高さから、向いている方を見る(yaw はカメラ=見ている向き)
       camera.position.set(me.x, 1.55, me.z); camera.lookAt(me.x - Math.sin(cam.yaw), 1.45, me.z - Math.cos(cam.yaw));
     } else {
     camera.position.copy(look).addScaledVector(off, dist);

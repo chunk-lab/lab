@@ -109,7 +109,7 @@ export function useGlb(ch, id, { height } = {}) {
     for (const a of Object.values(act)) {
       const prev = holder.position.y; holder.position.y = 0;
       mixer.stopAllAction(); a.reset().play(); const dur = a.getClip().duration; let m = Infinity;
-      for (let i = 0; i <= 12; i++) { a.time = dur * i / 12; mixer.update(0); m = Math.min(m, posedBox(holder).min.y); }
+      for (let i = 0; i <= 40; i++) { a.time = dur * i / 40; mixer.update(0); m = Math.min(m, posedBox(holder).min.y); }
       a.stop(); holder.position.y = prev; footOf.set(a, -m);
     }
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
@@ -121,20 +121,22 @@ export function useGlb(ch, id, { height } = {}) {
     // (高さを切りかえる途中ではなく、いまの動きで落ちついたときの高さで測る)
     (window.__glbFeet = window.__glbFeet || {})[id] = () => { const y = holder.position.y, ty = footOf.get(cur); if (ty !== undefined) holder.position.y = ty; ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); holder.position.y = y; return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
     let cur = null, lock = 0;
+    let prev = null, fadeT = 0;   // 切りかえ中は、前の動きと今の動きの、高いほうの足元に合わせる(まざった姿勢で沈まない)
     const play = (name, fade = 0.25) => {
       const a = act[name]; if (!a || cur === a) return;
-      a.reset().fadeIn(fade).play(); if (cur) cur.fadeOut(fade); cur = a;
+      a.reset().fadeIn(fade).play(); if (cur) cur.fadeOut(fade); prev = cur; fadeT = fade; cur = a;
     };
     cur = act.idle || null; if (!cur) play('idle', 0);
     ch.height = height; ch.glb = true;
     const base = ch.update;
     ch.update = (dt, speed) => {
       if (lock > 0) lock -= dt;
-      else play(speed > 3.6 && act.run ? 'run' : speed > 0.05 ? 'walk' : 'idle');
+      else play(act.run && (cur === act.run ? speed > 3.0 : speed > 4.2) ? 'run' : speed > 0.05 ? 'walk' : 'idle');   // 歩き⇔走りは少し幅をもたせる(行ったり来たりしない)
       if (cur === act.run) act.run.timeScale = Math.max(0.7, Math.min(1.4, speed / 5));
       if (cur === act.walk) act.walk.timeScale = Math.max(0.6, Math.min(1.6, speed / 2.2));
       mixer.update(dt);
-      const ty = footOf.get(cur); if (ty !== undefined) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
+      if (fadeT > 0) fadeT -= dt;
+      const ty = Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
     };
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };
