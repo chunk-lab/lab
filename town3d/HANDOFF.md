@@ -5,10 +5,18 @@
 最終的には2D版の町と1つの入口にまとめる予定。このフォルダは3D版で、リポジトリ `chunk-lab/lab` の `town3d/` に置く。
 先に `README.md` を全部読むこと(構成の表・アプリ契約・公開手順・方針が書いてある)。
 
-## 公開の仕組み
-- 町の画面は `town3d/index.html`(ビルド済みの1ファイル)。GitHub Pages が `https://chunk-lab.github.io/lab/town3d/` で配信。
-- ソースを直したら `npm i && node build.mjs` → できた `dist/index.html` を `town3d/index.html` に上書きコピー。**これを忘れると公開の町は変わらない**。
-- 同時接続サーバーは `server/relay.js`(未公開)。Render 無料で動かす予定。`render.yaml` はリポジトリ直下に置く必要があり、`rootDir` は `town3d/server` に書き換える。
+## 公開の仕組み(2026-11-12 から。ここだけ守れば「上げたのに出ない」は起きない)
+- **確認用の公開は全部 `chunk-lab/lab-preview` が自動でやる。** 10分ごとに lab のブランチを見て、変わったブランチを組み立て → 本物のブラウザで点検 → 点検OKのものだけ公開する。手で何かする必要はない(急ぐときは lab-preview の Actions → preview → Run workflow)。
+  - polish: https://chunk-lab.github.io/lab-preview/town/(統合アプリ)・/town3d/(3Dの町だけ)・/apps/<id>/(単体アプリ)
+  - ほかのブランチ: https://chunk-lab.github.io/lab-preview/b/<ブランチ名>/town/ など(`/` は `-` に)
+  - 一覧: https://chunk-lab.github.io/lab-preview/ (いつ・どの commit・点検OKか。NG なら理由も)
+  - 点検(lab-preview の `tools/smoke.mjs`):画面のエラー・読みこみ失敗・住人の3Dモデルが全部読めたか。NG のブランチは前のOKの版のまま。
+- 画面左上の版の表示(例 `ver 11-12 20:53 b5336 ブランチ名`)で、いま見ているのがどの版かを必ず確かめる。polish のときはブランチ名を出さない。
+- **素材は `town3d/assets/<種類>/` に置くだけ。** 組み立て(`node build.mjs`)が assets の中のフォルダを全部 `dist/` に置き、統合アプリ(`series/build.mjs`)は 3Dの町の `dist/` をまるごと取りこむ。素材の種類を増やしても、組み立ての設定はどこも直さない。
+- 3Dモデル(`assets/models/*.glb`)には組み立てのときに版の印(`models/versions.json`)が付き、読むときに `?v=` が付く。差し替えても古いモデルがスマホに残らない。
+- 素材を読むときは、`town.js` を読みこんだ場所からの相対で読む(`src/world/glbchar.js` の `urlOf`、tarot・bgm も同じ)。統合アプリでは `g/town3d/` の下になるので、ページからの相対パスで書くと統合アプリで出なくなる。
+- `dist/` と `node_modules/` はコミットしない(.gitignore 済み)。`town3d/index.html`(lab の Pages 用)は `node build.mjs` が毎回自動で上書きする。
+- 同時接続サーバーは `server/relay.js`(未公開)。Render 無料で動かす予定。`render.yaml` はリポジトリ直下に置く必要があり、`rootDir` は `town3d/server` に書き換えて使う。
 
 ## 守ること
 - 変更は `town3d/` の中だけ。2D側のファイルは触らない。
@@ -39,4 +47,4 @@
 **作業中・作業のあと**
 4. 自分のブランチの記録を `town3d/branch-log/<ブランチ名>.md`(`/` は `-` に)に書く。ブランチ名・土台にしたブランチと commit・最終更新の日付と時刻(日本時間)・入っている内容・状態。push のたびに更新する。書くのは自分のファイルだけ(ほかの人の記録は直さない。合流で衝突しない)。
 5. ほかの人のブランチや `main` を書き換えない。`--force` で push しない。`main` へ直接上げない。
-6. 確認用ビルドは、GitHub Actions が `preview/<ブランチ名>` ブランチに `index.html` として置く(ブランチごとに別なので、混ざらない)。
+6. 確認用の公開は lab-preview が自動でやる(上の「公開の仕組み」)。lab の `preview/…`・`series-preview/…` ブランチは古いやり方なので使わない。

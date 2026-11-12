@@ -31,11 +31,8 @@ for (const id of apps) {
     const t3 = path.join(ROOT, '..', 'town3d');
     execFileSync('node', ['build.mjs'], { cwd: t3, stdio: 'inherit', env: { ...process.env, SPLIT_THREE: '1' } });
     fs.mkdirSync(path.join(out, 'g', 'town3d'), { recursive: true });
-    fs.copyFileSync(path.join(t3, 'dist', 'town.js'), path.join(out, 'g', 'town3d', 'town.js'));
-    fs.copyFileSync(path.join(t3, 'dist', 'three.js'), path.join(out, 'g', 'town3d', 'three.js'));   // 3D描画の部品(めったに変わらないので別ファイル)
-    fs.cpSync(path.join(t3, 'dist', 'tarot'), path.join(out, 'g', 'town3d', 'tarot'), { recursive: true });   // タロットの絵
-    fs.cpSync(path.join(t3, 'dist', 'bgm'), path.join(out, 'g', 'town3d', 'bgm'), { recursive: true });   // 街歩きの曲
-  if (fs.existsSync(path.join(t3, 'dist', 'models'))) fs.cpSync(path.join(t3, 'dist', 'models'), path.join(out, 'g', 'town3d', 'models'), { recursive: true });   // 住人の3Dモデル
+    // 3Dの町の dist/ をまるごと置く(index.html だけは単体用なので除く)。素材を増やしてもここは直さない
+    for (const d of fs.readdirSync(path.join(t3, 'dist'))) if (d !== 'index.html') fs.cpSync(path.join(t3, 'dist', d), path.join(out, 'g', 'town3d', d), { recursive: true });
   }
   for (const g of app.games) for (const f of GAMES[g]) {
     if (Array.isArray(f)) { copy(f[0], path.join(out, f[1])); continue; }

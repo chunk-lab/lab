@@ -1,10 +1,8 @@
 # 統合アプリ(series の街アプリ)の確認用ビルド。公開はしない。
 # できた一式は series-preview/<ブランチ名> ブランチに置く(ブランチごとに別なので、ほかの人のものと混ざらない)
 name: series town build
+# 自動で動くのはやめた(確認用の公開は chunk-lab/lab-preview が全部やる)。手で動かすときだけ使う
 on:
-  push:
-    branches-ignore: [main, town3d-preview, 'preview/**', 'series-preview/**']
-    paths: ['series/**', 'town3d/**', '.github/workflows/series-build.yml']
   workflow_dispatch:
 jobs:
   build:

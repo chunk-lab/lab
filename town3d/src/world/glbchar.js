@@ -22,7 +22,13 @@ const SCRIPT_SRC = (() => { try { return (document.currentScript && document.cur
 const urlOf = u => { try { return SCRIPT_SRC ? new URL(u, SCRIPT_SRC).href : u; } catch (e) { return u; } };
 const loader = new GLTFLoader();
 const cache = new Map();
-const load = url => { if (!cache.has(url)) cache.set(url, loader.loadAsync(urlOf(url))); return cache.get(url); };
+// 版の印(組み立てのときに作る models/versions.json)。読めなくても、印なしで読みに行く
+let verP = null;
+const versions = () => verP || (verP = fetch(urlOf('models/versions.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({})));
+const load = url => {
+  if (!cache.has(url)) cache.set(url, versions().then(v => { const f = url.split('/').pop(); return loader.loadAsync(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }));
+  return cache.get(url);
+};
 
 export function useGlb(ch, id, { height = 1.3 } = {}) {
   const spec = GLB_MODELS[id]; if (!spec) return ch;
