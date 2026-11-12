@@ -1,0 +1,20 @@
+# lab にプッシュしたときだけ、確認用の公開(chunk-lab/lab-preview の preview)を呼ぶ。定期的には動かさない。
+# 呼ぶには、lab の Settings → Secrets → Actions に PREVIEW_TOKEN(lab-preview の Actions を動かせる鍵)が要る。
+# 鍵がないときは何もしない(エラーにもしない)。
+name: preview trigger
+on:
+  push:
+    branches-ignore: ['preview/**', 'series-preview/**', 'archive/**', town3d-preview]
+    paths: ['town3d/**', 'series/**']
+jobs:
+  call:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          T: ${{ secrets.PREVIEW_TOKEN }}
+        run: |
+          if [ -z "$T" ]; then echo "PREVIEW_TOKEN がないので呼ばない"; exit 0; fi
+          curl -fsS -X POST -H "Authorization: Bearer $T" -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/chunk-lab/lab-preview/actions/workflows/preview.yml/dispatches \
+            -d '{"ref":"main","inputs":{"branch":""}}'
+          echo "lab-preview を呼びました(変わったブランチを組み立てます)"

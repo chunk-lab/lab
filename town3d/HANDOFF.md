@@ -6,7 +6,7 @@
 先に `README.md` を全部読むこと(構成の表・アプリ契約・公開手順・方針が書いてある)。
 
 ## 公開の仕組み(2026-11-12 から。ここだけ守れば「上げたのに出ない」は起きない)
-- **確認用の公開は全部 `chunk-lab/lab-preview` が自動でやる。** 10分ごとに lab のブランチを見て、変わったブランチを組み立て → 本物のブラウザで点検 → 点検OKのものだけ公開する。手で何かする必要はない(急ぐときは lab-preview の Actions → preview → Run workflow)。
+- **確認用の公開は全部 `chunk-lab/lab-preview` が自動でやる。** lab にプッシュしたときだけ(`.github/workflows/preview-trigger.yml` が呼ぶ)、変わったブランチを組み立て → 本物のブラウザで点検 → 点検OKのものだけ公開する。定期的には動かさない。呼ばれなかったときは lab-preview の Actions → preview → Run workflow。
   - polish: https://chunk-lab.github.io/lab-preview/town/(統合アプリ)・/town3d/(3Dの町だけ)・/apps/<id>/(単体アプリ)
   - ほかのブランチ: https://chunk-lab.github.io/lab-preview/b/<ブランチ名>/town/ など(`/` は `-` に)
   - 一覧: https://chunk-lab.github.io/lab-preview/ (いつ・どの commit・点検OKか。NG なら理由も)
