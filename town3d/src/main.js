@@ -1365,7 +1365,7 @@ export function mount(container, opt = {}) {
     };
     put(me.id, me.ch.root, 1.95, false);
     for (const [id, q] of peers) put(id, q.ch.root, 1.95, true);
-    for (const r of residents.list) put('npc:' + r.def.id, r.ch.root, r.def.mascot ? 1.25 : 1.95, focus?.ref === r || Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) < 6);
+    for (const r of residents.list) put('npc:' + r.def.id, r.ch.root, r.def.mascot ? 1.25 : (r.ch.glb ? r.ch.height + 0.35 : 1.95), focus?.ref === r || Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) < 6);
     hud.placeTags(tagPos);
 
     hud.setArea(city.areaName(me.x, me.z));

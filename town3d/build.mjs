@@ -21,5 +21,6 @@ fs.writeFileSync('dist/index.html', html);
 fs.cpSync('apps', 'dist/apps', { recursive: true });
 fs.cpSync('sdk', 'dist/sdk', { recursive: true });
 fs.cpSync('assets/tarot', 'dist/tarot', { recursive: true });
+if (fs.existsSync('assets/models')) fs.cpSync('assets/models', 'dist/models', { recursive: true });   // 住人の3Dモデル
 fs.cpSync('assets/bgm', 'dist/bgm', { recursive: true });   // 街歩きの曲   // タロットの絵(開いたときに読む)
 console.log('dist/index.html', (html.length / 1024).toFixed(0) + 'KB');
