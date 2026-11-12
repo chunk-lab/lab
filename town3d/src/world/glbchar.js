@@ -17,9 +17,12 @@ export const GLB_MODELS = {
   tetsu: { url: 'models/philosopher.glb', rotY: 0 },
   suna: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
 };
+// モデルの場所: town.js を読み込んだ場所の横の models/(1つのHTMLで動かすときは、ページの横の models/)。tarot・bgm と同じやり方
+const SCRIPT_SRC = (() => { try { return (document.currentScript && document.currentScript.src) || ''; } catch (e) { return ''; } })();
+const urlOf = u => { try { return SCRIPT_SRC ? new URL(u, SCRIPT_SRC).href : u; } catch (e) { return u; } };
 const loader = new GLTFLoader();
 const cache = new Map();
-const load = url => { if (!cache.has(url)) cache.set(url, loader.loadAsync(url)); return cache.get(url); };
+const load = url => { if (!cache.has(url)) cache.set(url, loader.loadAsync(urlOf(url))); return cache.get(url); };
 
 export function useGlb(ch, id, { height = 1.3 } = {}) {
   const spec = GLB_MODELS[id]; if (!spec) return ch;
