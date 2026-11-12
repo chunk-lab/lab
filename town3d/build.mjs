@@ -10,4 +10,5 @@ const html = fs.readFileSync('src/shell.html', 'utf8').replace('/*APP*/', () => 
 fs.writeFileSync('dist/index.html', html);
 fs.cpSync('apps', 'dist/apps', { recursive: true });
 fs.cpSync('sdk', 'dist/sdk', { recursive: true });
+if (fs.existsSync('models')) fs.cpSync('models', 'dist/models', { recursive: true });
 console.log('dist/index.html', (html.length / 1024).toFixed(0) + 'KB');
