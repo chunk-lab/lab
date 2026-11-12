@@ -8,3 +8,4 @@
 - 追加(2026-11-12 夜): 公開の仕組みを1本にした。素材は assets/ に置くだけで dist に全部入る(build.mjs)、統合アプリは town3d/dist をまるごと取りこむ(series/build.mjs)、モデルに版の印(versions.json と ?v=)、画面の版表示にブランチ名、town3d/index.html は build が自動で上書き。dist/・node_modules(他のAIの/tmp向けリンク)をGitの管理から外した。lab の series-build・town3d-build は手動だけに。確認用の公開と点検は lab-preview(10分ごと自動・点検OKだけ公開)。HANDOFF.md の「公開の仕組み」を書き換えた
 - 追加: 確認用の公開は、プッシュしたときだけ呼ぶ(preview-trigger.yml と PREVIEW_TOKEN)。定期実行はしない
 - 状態: polish に合流(早送り)
+- 追加: プレイヤー(れん・みお)も3Dモデルに(assets/models/player_*.glb)。大きさの試し: ?npcsizes=1(住人ごとにちがう背・名前に数字)、?npcsize=1.7(住人全員)、?playersize=1.8(プレイヤー)。ふだんは住人1.3・プレイヤー1.6

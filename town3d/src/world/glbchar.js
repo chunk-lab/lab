@@ -13,6 +13,8 @@ export const GLB_MODELS = {
   mii: { url: 'models/mii.glb', rotY: 0 },
   gon: { url: 'models/gon.glb', rotY: 0 },
   choco: { url: 'models/choco.glb', rotY: 0 },
+  'player:ren': { url: 'models/player_ren.glb', rotY: 0 },   // プレイヤー(男の子)
+  'player:mio': { url: 'models/player_mio.glb', rotY: 0 },   // プレイヤー(女の子)
   luna: { url: 'models/luna.glb', rotY: 0 },
   tetsu: { url: 'models/philosopher.glb', rotY: 0 },
   suna: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
@@ -30,7 +32,8 @@ const load = url => {
   return cache.get(url);
 };
 
-export function useGlb(ch, id, { height = 1.3 } = {}) {
+export function useGlb(ch, id, { height } = {}) {
+  if (!height) height = 1.3;   // 住人のふだんの背(プレイヤーは約1.65)
   const spec = GLB_MODELS[id]; if (!spec) return ch;
   load(spec.url).then(gltf => {
     // 同じモデルを複数体出してもいいように、骨ごと複製する
@@ -39,7 +42,7 @@ export function useGlb(ch, id, { height = 1.3 } = {}) {
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
-    const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
+    const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
     // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
     // 待機の動きを何コマか見て、いちばん低い足元・いちばん高い頭で測る(動きの途中で沈まないように)
@@ -77,7 +80,8 @@ export function useGlb(ch, id, { height = 1.3 } = {}) {
     const base = ch.update;
     ch.update = (dt, speed) => {
       if (lock > 0) lock -= dt;
-      else play(speed > 0.05 ? 'walk' : 'idle');
+      else play(speed > 3.6 && act.run ? 'run' : speed > 0.05 ? 'walk' : 'idle');
+      if (cur === act.run) act.run.timeScale = Math.max(0.7, Math.min(1.4, speed / 5));
       if (cur === act.walk) act.walk.timeScale = Math.max(0.6, Math.min(1.6, speed / 2.2));
       mixer.update(dt);
       const ty = footOf.get(cur); if (ty !== undefined) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);

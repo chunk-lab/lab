@@ -20,6 +20,9 @@ import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
 import { buildAmbient } from './world/ambient.js';
 import { rollPose, rollReset, makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/character.js';
+import { useGlb } from './world/glbchar.js';
+// プレイヤーの背(3Dモデル)。確認用: URL に ?playersize=1.8 で変えられる
+const PLAYER_H = (() => { try { return parseFloat(new URLSearchParams(location.search).get('playersize')) || 1.6; } catch (e) { return 1.6; } })();
 import { setBuildingOutline, eachFoliage, eachTex } from './world/kit.js';
 import { createSeasons, SEASONS, seasonOf } from './world/seasons.js';
 import { createSnowballs } from './world/snowballs.js';
@@ -166,7 +169,7 @@ export function mount(container, opt = {}) {
   const last = storage.get('pos'); if (last) { me.x = last[0]; me.z = last[1]; }
   function setLook(id) {
     if (me.ch) scene.remove(me.ch.root);
-    me.ch = makeCharacter(LOOKS[id] || LOOKS.mio);
+    me.ch = useGlb(makeCharacter(LOOKS[id] || LOOKS.mio), 'player:' + (LOOKS[id] ? id : 'mio'), { height: PLAYER_H });
     scene.add(me.ch.root);
   }
   // 自分のキャラは れん(男の子)・みお(女の子)の2人だけ。はな・そらは住人になったので、前に選んでいた人は近いほうへ
@@ -191,7 +194,7 @@ export function mount(container, opt = {}) {
   if (net) {
     net.on('join', p => {
       if (peers.has(p.id)) return;
-      const ch = makeCharacter(typeof p.look === 'string' ? LOOKS[p.look] || LOOKS.ren : p.look || LOOKS.ren);
+      const ch = useGlb(makeCharacter(typeof p.look === 'string' ? LOOKS[p.look] || LOOKS.ren : p.look || LOOKS.ren), 'player:' + (p.look === 'mio' ? 'mio' : 'ren'), { height: PLAYER_H });
       ch.root.position.set(p.x ?? 0, 0, p.z ?? 0); scene.add(ch.root);
       peers.set(p.id, { ch, tx: p.x ?? 0, tz: p.z ?? 0, ry: 0, mv: 0, name: p.name });
       hud.tag(p.id, p.name || 'だれか');

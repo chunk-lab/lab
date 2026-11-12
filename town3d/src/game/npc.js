@@ -1,6 +1,6 @@
 // 町の住人。時刻ごとの予定(schedule)に合わせて道すじを歩き、話しかけると会話する
 import { makeCharacter, makeChunkkun, LOOKS } from '../world/character.js';
-import { useGlb } from '../world/glbchar.js';
+import { useGlb, GLB_MODELS } from '../world/glbchar.js';
 import { PLACES } from '../world/town_data.js';
 import { angleLerp } from '../core/core.js';
 
@@ -159,10 +159,20 @@ function nearestNode(graph, x, z) {
   return best;
 }
 
+// 大きさの試し(確認用): URL に ?npcsize=1.7 で住人を全員その背に、?npcsizes=1 で住人ごとにちがう背にして名前に数字を出す
+const SIZE_TEST = (() => { try { const q = new URLSearchParams(location.search); return { one: parseFloat(q.get('npcsize')) || 0, many: q.get('npcsizes') === '1' }; } catch (e) { return { one: 0, many: false }; } })();
+const SIZE_STEPS = [1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3];
+let sizeI = 0;
+function residentHeight(d) {
+  if (SIZE_TEST.one) return SIZE_TEST.one;
+  if (SIZE_TEST.many && GLB_MODELS[d.id]) { const h = SIZE_STEPS[sizeI++ % SIZE_STEPS.length]; d.name = `${d.name} ${h}`; return h; }
+  return undefined;   // ふだんの大きさ(glbchar.js の height)
+}
+
 export function createResidents(scene, graph, getHour, collide = null) {
   let outing = new Set();   // きょう お出かけの日の住人
   const list = RESIDENTS.map((d, i) => {
-    const ch = d.mascot ? makeChunkkun() : useGlb(makeCharacter(d.look), d.id);
+    const ch = d.mascot ? makeChunkkun() : useGlb(makeCharacter(d.look), d.id, { height: residentHeight(d) });
     const goal = goalOf(d, getHour());
     const start = graph.nodes[PLACES[goal.place]];
     const sa = i * 2.4 + 0.7; ch.root.position.set(start.x + Math.cos(sa) * (1.5 + (i % 3) * 0.8), 0, start.z + Math.sin(sa) * (1.5 + (i % 3) * 0.8));
