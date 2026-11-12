@@ -9,3 +9,4 @@
 - 追加: 確認用の公開は、プッシュしたときだけ呼ぶ(preview-trigger.yml と PREVIEW_TOKEN)。定期実行はしない
 - 状態: polish に合流(早送り)
 - 追加: プレイヤー(れん・みお)も3Dモデルに(assets/models/player_*.glb)。大きさの試し: ?npcsizes=1(住人ごとにちがう背・名前に数字)、?npcsize=1.7(住人全員)、?playersize=1.8(プレイヤー)。ふだんは住人1.3・プレイヤー1.6
+- 追加: 3Dモデルを町用に軽く(tools/slim_glb.py、テクスチャ1024px)、2つずつ順に読む(プレイヤー先)、読みこみ中は旧キャラを出さない、明るさ(GLB_LOOK.glow)、?sizetest=1 で背のつまみ

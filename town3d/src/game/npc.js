@@ -160,7 +160,7 @@ function nearestNode(graph, x, z) {
 }
 
 // 大きさの試し(確認用): URL に ?npcsize=1.7 で住人を全員その背に、?npcsizes=1 で住人ごとにちがう背にして名前に数字を出す
-const SIZE_TEST = (() => { try { const q = new URLSearchParams(location.search); return { one: parseFloat(q.get('npcsize')) || 0, many: q.get('npcsizes') === '1' }; } catch (e) { return { one: 0, many: false }; } })();
+const SIZE_TEST = (() => { try { const q = new URLSearchParams(location.search); const a = parseFloat(q.get('npcsize')) || 0, b = parseFloat(q.get('npcsizes')) || 0; return { one: a || (b > 1 ? b : 0), many: b === 1 }; } catch (e) { return { one: 0, many: false }; } })();
 const SIZE_STEPS = [1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3];
 let sizeI = 0;
 function residentHeight(d) {

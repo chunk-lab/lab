@@ -27,15 +27,63 @@ const cache = new Map();
 // 版の印(組み立てのときに作る models/versions.json)。読めなくても、印なしで読みに行く
 let verP = null;
 const versions = () => verP || (verP = fetch(urlOf('models/versions.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({})));
-const load = url => {
-  if (!cache.has(url)) cache.set(url, versions().then(v => { const f = url.split('/').pop(); return loader.loadAsync(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }));
+// 読みこみは2つずつ順番に(全員いっぺんに読むとスマホが重くなる)。プレイヤーを先に
+const queue = []; let running = 0;
+const pump = () => { while (running < 2 && queue.length) { const j = queue.shift(); running++; j.run().finally(() => { running--; pump(); }); } };
+const load = (url, first) => {
+  if (!cache.has(url)) cache.set(url, new Promise((ok, ng) => {
+    const job = { run: () => versions().then(v => { const f = url.split('/').pop(); return loader.loadAsync(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }).then(g => { toonify(g.scene); ok(g); }, ng) };
+    first ? queue.unshift(job) : queue.push(job); pump();
+  }));
   return cache.get(url);
 };
+// 町の明るさに合わせる: Tripo のモデルは絵に陰影が入っているので、町のキャラと同じアニメ調の陰影にして、絵の色を少し自分で光らせる(暗く沈まない)
+const ramp = new THREE.DataTexture(new Uint8Array([150, 150, 150, 255, 205, 205, 205, 255, 245, 245, 245, 255, 255, 255, 255, 255]), 4, 1, THREE.RGBAFormat);
+ramp.minFilter = ramp.magFilter = THREE.NearestFilter; ramp.needsUpdate = true;
+export const GLB_LOOK = { glow: 0.45 };   // 絵の自分の光り(0〜1)。上げると明るく、平たくなる
+function toonify(root) {
+  const made = new Map();
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    const conv = m => {
+      if (made.has(m)) return made.get(m);
+      const t = new THREE.MeshToonMaterial({ map: m.map || null, color: m.map ? 0xffffff : (m.color || new THREE.Color(0xffffff)), gradientMap: ramp, transparent: m.transparent, alphaTest: m.alphaTest, side: m.side,
+        emissive: 0xffffff, emissiveMap: m.map || null, emissiveIntensity: GLB_LOOK.glow });
+      made.set(m, t); return t;
+    };
+    o.material = Array.isArray(o.material) ? o.material.map(conv) : conv(o.material);
+  });
+}
+// 大きさの試し(?sizetest=1 の画面のつまみ)が、出ている全員の大きさを変えられるように
+export const glbChars = new Set();
+// 確認用: URL に ?sizetest=1 を付けると、画面の上に「住人」「自分」の背のつまみが出る(動かすとその場で全員が変わる)
+const Q = (() => { try { return new URLSearchParams(location.search); } catch (e) { return new URLSearchParams(); } })();
+const num = k => parseFloat(Q.get(k)) || 0;
+export const SIZE_NOW = { npc: num('npcsize') || (num('npcsizes') > 1 ? num('npcsizes') : 0), player: num('playersize') };
+const SIZE_PANEL = Q.get('sizetest') === '1' || !!SIZE_NOW.npc || !!SIZE_NOW.player || Q.get('npcsizes') === '1';
+function sizePanel() {
+  if (!SIZE_PANEL || document.getElementById('glb-size')) return;
+  const el = document.createElement('div'); el.id = 'glb-size';
+  el.style.cssText = 'position:fixed;left:50%;top:64px;transform:translateX(-50%);z-index:99999;background:rgba(255,255,255,.92);border-radius:14px;padding:8px 12px;font:14px sans-serif;color:#433;box-shadow:0 2px 8px rgba(0,0,0,.2);width:min(86vw,340px)';
+  const row = (label, key, def) => `<label style="display:flex;align-items:center;gap:8px;margin:2px 0">${label}<input type="range" min="0.8" max="3" step="0.05" value="${SIZE_NOW[key] || def}" data-k="${key}" style="flex:1"><b data-v="${key}" style="width:3em;text-align:right">${(SIZE_NOW[key] || def).toFixed(2)}</b></label>`;
+  el.innerHTML = row('住人', 'npc', 1.3) + row('自分', 'player', 1.6) + '<div style="font-size:12px;opacity:.7">つまみを動かすと、その場で全員の背が変わります</div>';
+  el.addEventListener('input', e => {
+    const k = e.target.dataset.k; if (!k) return; const v = +e.target.value; SIZE_NOW[k] = v;
+    el.querySelector(`[data-v=${k}]`).textContent = v.toFixed(2);
+    for (const g of glbChars) if (g.player === (k === 'player')) g.ch.setHeight(v);
+  });
+  ['pointerdown', 'touchstart', 'mousedown', 'wheel', 'keydown'].forEach(t => el.addEventListener(t, e => e.stopPropagation()));
+  document.body.appendChild(el);
+}
 
 export function useGlb(ch, id, { height } = {}) {
   if (!height) height = 1.3;   // 住人のふだんの背(プレイヤーは約1.65)
   const spec = GLB_MODELS[id]; if (!spec) return ch;
-  load(spec.url).then(gltf => {
+  // 読みこみ中は前のコード製の体を出さない(出てから入れかわると見苦しい)。失敗したときだけ戻す
+  const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
+  const player = id.startsWith('player:');
+  if (SIZE_PANEL) { if (player ? SIZE_NOW.player : SIZE_NOW.npc) height = player ? SIZE_NOW.player : SIZE_NOW.npc; try { sizePanel(); } catch (e) { } }
+  load(spec.url, player).then(gltf => {
     // 同じモデルを複数体出してもいいように、骨ごと複製する
     const model = cloneSkinned(gltf.scene);
     const holder = new THREE.Group(); holder.rotation.y = spec.rotY; holder.add(model);
@@ -53,7 +101,7 @@ export function useGlb(ch, id, { height } = {}) {
       act.idle.time = 0; mixer.update(0); return all;
     };
     const box = idleBox(), size = box.getSize(new THREE.Vector3());
-    const k = height / size.y; holder.scale.setScalar(k);
+    const k = 1 / size.y; holder.scale.setScalar(k);   // ここでは背を1にそろえ、背の高さは外側(wrap)の大きさで決める
     const b2 = idleBox(), c = b2.getCenter(new THREE.Vector3());
     holder.position.set(-c.x, -b2.min.y, -c.z);
     // 動きごとの足元(歩くと腰が下がる、など)。動きを切りかえたら、その動きの足元に合わせて高さをなめらかに直す
@@ -65,9 +113,10 @@ export function useGlb(ch, id, { height } = {}) {
       a.stop(); holder.position.y = prev; footOf.set(a, -m);
     }
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
-    const wrap = new THREE.Group(); wrap.add(holder);
-    ch.root.children.slice().forEach(o => { o.visible = false; });   // コード製の体は隠す
+    const wrap = new THREE.Group(); wrap.add(holder); wrap.scale.setScalar(height);
     ch.root.add(wrap);
+    ch.setHeight = h => { wrap.scale.setScalar(h); ch.height = h; };
+    glbChars.add({ id, player, ch });
     // 点検用: いまの足元の高さ(地面=0 からのずれ)を測れるようにしておく
     // (高さを切りかえる途中ではなく、いまの動きで落ちついたときの高さで測る)
     (window.__glbFeet = window.__glbFeet || {})[id] = () => { const y = holder.position.y, ty = footOf.get(cur); if (ty !== undefined) holder.position.y = ty; ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); holder.position.y = y; return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
@@ -90,7 +139,7 @@ export function useGlb(ch, id, { height } = {}) {
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };
     void base;
-  }).catch(e => console.warn('GLB読み込み失敗(コード製キャラのまま):', spec.url, e));
+  }).catch(e => { old.forEach(o => { o.visible = true; }); console.warn('GLB読み込み失敗(コード製キャラのまま):', spec.url, e); });
   return ch;
 }
 
