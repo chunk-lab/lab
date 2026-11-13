@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 export const GLB_MODELS = {
   baron: { url: 'models/baron.glb', rotY: 0, sex: 'm' },
   koharu: { url: 'models/koharu.glb', rotY: 0 },
-  yuzu: { url: 'models/yuzu.glb', rotY: Math.PI / 2 },
+  yuzu: { url: 'models/yuzu.glb', rotY: 0, animFrom: 'hana' },
   shiori: { url: 'models/shiori.glb', rotY: 0 },
   maru: { url: 'models/maru.glb', rotY: 0 },
   mii: { url: 'models/mii.glb', rotY: 0 },
@@ -127,13 +127,13 @@ export function useGlb(ch, id, { height } = {}) {
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
     const wrap = new THREE.Group(); wrap.add(holder); wrap.scale.setScalar(height);
     // 座った動きの腰の高さ(背に対する割合)。座面に合わせるときの基準
-    let sitHipN = 0; const sitHipOf = () => { act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const y = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).y / height; act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); } return y; };
+    let sitHipN = 0; const sitHipOf = () => { mixer.stopAllAction(); act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const y = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).y / height; act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); } return y; };
     // 座ったときの、お尻の下の高さ(sitContN)と、腰の前後左右のずれ(sitDX,sitDZ)を、体ごとに測る(体つきがちがっても、座面にぴったり乗せるため)
     let sitContN = 0, sitDX = 0, sitDZ = 0;
     if (act.sit) {
       sitHipN = sitHipOf();
       try {
-        act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); const px = holder.position.x, pz = holder.position.z; holder.position.y = 0; wrap.updateMatrixWorld(true);
+        mixer.stopAllAction(); act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); const px = holder.position.x, pz = holder.position.z; holder.position.y = 0; wrap.updateMatrixWorld(true);
         const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'), hp = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).divideScalar(height);
         // お尻の下 = ももの中心線の高さ − ももの太さ(スカートなどの布も含めた太さ)
         const Wp = n => new THREE.Vector3().setFromMatrixPosition((model.getObjectByName('mixamorig' + n) || model.getObjectByName('mixamorig:' + n)).matrixWorld).divideScalar(height);
@@ -202,9 +202,9 @@ export function useGlb(ch, id, { height } = {}) {
       if (fadeT > 0) fadeT -= dt;
       let ty = -drop +  Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (sitK) ty = (ch.seatH != null ? ch.seatH : 0.45) / ch.height - sitContN;   // お尻の下を、座面に合わせる
       if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
-      { const tx = sitK ? -sitDX : baseX, tz = sitK ? -sitDZ + 0.03 : baseZ, kk = Math.min(1, dt * 8); holder.position.x += (tx - holder.position.x) * kk; holder.position.z += (tz - holder.position.z) * kk; }   // 座るときは、腰が座面の真上に来るように
+      { const tx = sitK ? -sitDX : baseX, tz = sitK ? -sitDZ : baseZ, kk = Math.min(1, dt * 8); holder.position.x += (tx - holder.position.x) * kk; holder.position.z += (tz - holder.position.z) * kk; }   // 座るときは、腰が座面の真上に来るように
     };
-    (window.__hipsW = window.__hipsW || {})[id] = () => { ch.root.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const w = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld), r = new THREE.Vector3().setFromMatrixPosition(ch.root.matrixWorld); return [+(w.x - r.x).toFixed(3), +(w.y - r.y).toFixed(3), +(w.z - r.z).toFixed(3), +holder.position.x.toFixed(3), +holder.position.z.toFixed(3), +(-sitDX).toFixed(3)]; };
+    (window.__hipsL = window.__hipsL || []).push({ id, f: () => { ch.root.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const w = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld), r = new THREE.Vector3().setFromMatrixPosition(ch.root.matrixWorld); return [+(w.x - r.x).toFixed(3), +(w.y - r.y).toFixed(3), +(w.z - r.z).toFixed(3), +holder.position.x.toFixed(3), +holder.position.z.toFixed(3), +(-sitDX).toFixed(3), String(ch.pose), +baseX.toFixed(3)]; } });
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };
     void base;

@@ -1449,7 +1449,7 @@ export function mount(container, opt = {}) {
     if (camMode === 'free') { camera.position.set(fcam.x, fcam.y, fcam.z); const cp = Math.cos(fcam.pitch); camera.lookAt(fcam.x - Math.sin(fcam.yaw) * cp, fcam.y - Math.sin(fcam.pitch), fcam.z - Math.cos(fcam.yaw) * cp); }
     if (camMode === 'follow') {
     const look = v3.set(cam.x, 1.3, cam.z);
-    const op = Math.max(cam.pitch, 0.1);   // 下向きは、そのまま見上げる(カメラは地面にもぐらせない)
+    const op = cam.pitch;   // 低い位置まで下げられる(地面だけ下で止める)
     const off = new THREE.Vector3(Math.sin(cam.yaw) * Math.cos(op), Math.sin(op), Math.cos(cam.yaw) * Math.cos(op));
     let dist = cam.dist;
     ray.set(look, off); ray.far = dist;
@@ -1494,8 +1494,8 @@ export function mount(container, opt = {}) {
       camera.position.set(me.x, 1.55, me.z); camera.lookAt(me.x - Math.sin(cam.yaw), 1.45, me.z - Math.cos(cam.yaw));
     } else {
     camera.position.copy(look).addScaledVector(off, dist);
+    if (camera.position.y < 0.2) camera.position.y = 0.2;   // 地面より下には行かない
     camera.lookAt(look);
-    if (cam.pitch < 0.1) camera.rotateX(0.1 - cam.pitch);   // 真上まで見上げられる
     }
     }
 
