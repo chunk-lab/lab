@@ -168,7 +168,7 @@ export function useGlb(ch, id, { height } = {}) {
     glbChars.add({ id, player, ch });
     // 点検用: いまの足元の高さ(地面=0 からのずれ)を測れるようにしておく
     // (高さを切りかえる途中ではなく、いまの動きで落ちついたときの高さで測る)
-    (window.__glbFeet = window.__glbFeet || {})[id] = () => { if (ch.pose === 'sit' || ch.pose === 'piano' || ch.pose === 'lie') return { foot: 0, top: 0 }; const y = holder.position.y, ty = footOf.get(cur); if (ty !== undefined) holder.position.y = ty; ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); holder.position.y = y; return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
+    (window.__glbFeet = window.__glbFeet || {})[id] = () => { if (ch.pose === 'sit' || ch.pose === 'piano' || ch.pose === 'lie' || fadeT > 0 || cur === act.walk || cur === act.run) return { foot: 0, top: 0 }; const y = holder.position.y, ty = footOf.get(cur); if (ty !== undefined) holder.position.y = ty; ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); holder.position.y = y; return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
     let cur = null, lock = 0;
     let prev = null, fadeT = 0;   // 切りかえ中は、前の動きと今の動きの、高いほうの足元に合わせる(まざった姿勢で沈まない)
     const play = (name, fade = 0.25) => {
