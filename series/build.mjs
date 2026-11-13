@@ -46,7 +46,7 @@ for (const id of apps) {
   const cfg = JSON.stringify({ build: BUILD, hashes: hashes, appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel, theme: app.theme, opts: app.opts || undefined }).replace(/</g, '\\u003c');
   const head = `<title>${app.title}</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="app.css?v=${BUILD}">`;
   const body = `<script>window.__APP__=${cfg}</script>\n<script src="app.js?v=${BUILD}"></script>`;
-  fs.writeFileSync(path.join(out, 'index.html'), `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n${head}\n</head><body>\n${body}\n</body></html>\n`);
+  fs.writeFileSync(path.join(out, 'index.html'), `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">\n${head}\n</head><body>\n${body}\n</body></html>\n`);
   fs.writeFileSync(path.join(out, 'artifact.html'), `${head}\n${body}\n`);
   const size = (d) => fs.readdirSync(d, { withFileTypes: true }).reduce((a, e) => a + (e.isDirectory() ? size(path.join(d, e.name)) : fs.statSync(path.join(d, e.name)).size), 0);
   console.log(`dist/${id}  ${(size(out) / 1048576).toFixed(1)}MB`);

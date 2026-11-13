@@ -71,7 +71,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     })();
     return preload;
   }
-  startPreload();
+  setTimeout(() => { startPreload(); }, 700);   // 起動直後の描画をじゃましないよう、最初の表示のあとすぐ開始
   async function go(m) {
     if (m !== '3d') { stop3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 勉強部屋(ホーム)へ
     if (town) { home.hide(); return; }

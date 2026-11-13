@@ -69,27 +69,15 @@ function toonify(root) {
 }
 // 大きさの試し(?sizetest=1 の画面のつまみ)が、出ている全員の大きさを変えられるように
 export const glbChars = new Set();
-// 確認用: URL に ?sizetest=1 を付けると、画面の上に「住人」「自分」の背のつまみが出る(動かすとその場で全員が変わる)
+// 大きさ: 住人は2.0・自分は1.7が標準。変えたいときは「せってい」のつまみで(この端末に残る)。URLの ?npcsize= ?playersize= は確認用
 const Q = (() => { try { return new URLSearchParams(location.search); } catch (e) { return new URLSearchParams(); } })();
 const num = k => parseFloat(Q.get(k)) || 0;
-export const SIZE_NOW = { npc: num('npcsize') || (num('npcsizes') > 1 ? num('npcsizes') : 0), player: num('playersize') };
-const SIZE_PANEL = true;   // 大きさのつまみは、URLに何も付けなくても いつも出す
-function sizePanel() {
-  if (!SIZE_PANEL || document.getElementById('glb-size')) return;
-  const el = document.createElement('div'); el.id = 'glb-size';
-  el.style.cssText = 'position:fixed;left:50%;top:60px;transform:translateX(-50%);z-index:99999;background:rgba(255,255,255,.92);border-radius:14px;padding:8px 12px;font:14px sans-serif;color:#433;box-shadow:0 2px 8px rgba(0,0,0,.2);width:min(86vw,340px)';
-  const row = (label, key, def) => `<label style="display:flex;align-items:center;gap:8px;margin:2px 0">${label}<input type="range" min="0.8" max="3" step="0.05" value="${SIZE_NOW[key] || def}" data-k="${key}" style="flex:1"><b data-v="${key}" style="width:3em;text-align:right">${(SIZE_NOW[key] || def).toFixed(2)}</b></label>`;
-  el.innerHTML = row('住人', 'npc', 1.3) + row('自分', 'player', 1.6) + '';
-  const typing = t => !!t && /^(INPUT|TEXTAREA)$/.test(t.tagName) && !/^(range|checkbox|radio|button)$/.test(t.type || '');
-  document.addEventListener('focusin', e => { if (typing(e.target)) el.style.display = 'none'; });   // 文字を入力している間だけ隠す
-  document.addEventListener('focusout', () => { el.style.display = ''; });
-  el.addEventListener('input', e => {
-    const k = e.target.dataset.k; if (!k) return; const v = +e.target.value; SIZE_NOW[k] = v;
-    el.querySelector(`[data-v=${k}]`).textContent = v.toFixed(2);
-    for (const g of glbChars) if (g.player === (k === 'player')) g.ch.setHeight(v);
-  });
-  ['pointerdown', 'touchstart', 'mousedown', 'wheel', 'keydown'].forEach(t => el.addEventListener(t, e => e.stopPropagation()));
-  document.body.appendChild(el);
+const SZ_KEY = 'hoshimiya:size';
+const savedSz = (() => { try { return JSON.parse(localStorage.getItem(SZ_KEY)) || {}; } catch (e) { return {}; } })();
+export const SIZE_NOW = { npc: num('npcsize') || savedSz.npc || 2.0, player: num('playersize') || savedSz.player || 1.7 };
+export function setGlbSize(k, v) {   // 「せってい」のつまみから。出ている全員の背が、その場で変わる
+  SIZE_NOW[k] = v; try { localStorage.setItem(SZ_KEY, JSON.stringify({ npc: SIZE_NOW.npc, player: SIZE_NOW.player })); } catch (e) { }
+  for (const g of glbChars) if (g.player === (k === 'player')) g.ch.setHeight(v);
 }
 
 export function useGlb(ch, id, { height } = {}) {
@@ -98,7 +86,7 @@ export function useGlb(ch, id, { height } = {}) {
   // 読みこみ中は前のコード製の体を出さない(出てから入れかわると見苦しい)。失敗したときだけ戻す
   const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
   const player = id.startsWith('player:');
-  if (SIZE_PANEL) { if (player ? SIZE_NOW.player : SIZE_NOW.npc) height = player ? SIZE_NOW.player : SIZE_NOW.npc; try { sizePanel(); } catch (e) { } }
+  height = player ? SIZE_NOW.player : (height !== 1.3 ? height : SIZE_NOW.npc);   // 確認用の住人ごとの背(?npcsizes=1)だけは、そちらを優先
   load(spec.url, player).then(gltf => {
     // 同じモデルを複数体出してもいいように、骨ごと複製する
     const model = cloneSkinned(gltf.scene);

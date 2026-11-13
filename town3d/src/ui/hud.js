@@ -260,7 +260,7 @@ export function createHud(root, bus) {
       panel.onclick = e => {
         if (e.target === panel) {   // 外をタップ=とじる。ただし会話(sticky)と、入力の途中のときは閉じない
           if (opt.sticky) return;
-          if ([...panel.querySelectorAll('textarea,input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=button])')].some(i => String(i.value || '').trim())) { try { this.toast('入力があるので「とじる」ボタンで閉じてね'); } catch (e2) { } return; }
+          if (!opt.outside && [...panel.querySelectorAll('textarea,input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=button])')].some(i => String(i.value || '').trim())) { try { this.toast('入力があるので「とじる」ボタンで閉じてね'); } catch (e2) { } return; }
           return this.closePanel();
         }
         onClick?.(e, panel);

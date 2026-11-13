@@ -20,7 +20,7 @@ import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
 import { buildAmbient } from './world/ambient.js';
 import { rollPose, rollReset, makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/character.js';
-import { useGlb, glbStat, glbPreload, glbWarm, setGlbConc } from './world/glbchar.js';
+import { useGlb, glbStat, glbPreload, glbWarm, setGlbConc, setGlbSize, SIZE_NOW } from './world/glbchar.js';
 // プレイヤーの背(3Dモデル)。確認用: URL に ?playersize=1.8 で変えられる
 const PLAYER_H = (() => { try { return parseFloat(new URLSearchParams(location.search).get('playersize')) || 1.6; } catch (e) { return 1.6; } })();
 import { setBuildingOutline, eachFoliage, eachTex } from './world/kit.js';
@@ -1026,6 +1026,8 @@ export function mount(container, opt = {}) {
     const pn = hud.panel(`<h2>せってい</h2>
       <div class="tw-row">住人との会話${seg('en', [[1, '英語'], [0, '日本語']])}</div>
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
+      <div class="tw-row">住人の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="npc" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.npc}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.npc.toFixed(2)}</b></span></div>
+      <div class="tw-row">自分の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="player" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.player}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.player.toFixed(2)}</b></span></div>
       <div class="tw-row">低負荷モード${seg('lite', [[0, 'オフ'], [1, 'オン']])}</div>
       <div class="tw-note">オンにすると、解像度・影・光のにじみ・ふちどり・噴水・月をかるくして、30fpsにします(流れ星は残ります)。</div>
       <div class="tw-row">時間の進み${seg('timeSpeed', [[0, '止める'], [1, 'ふつう'], [4, 'はやい']])}</div>
@@ -1072,7 +1074,8 @@ export function mount(container, opt = {}) {
         if (b.dataset.act === 'season') { const ks = Object.keys(SEASONS), n = ks[(ks.indexOf(settings.season || 'auto') + 1) % ks.length]; settings.season = n; save(); b.textContent = SEASONS[n] + (n === 'auto' ? '(' + SEASONS[seasonOf()] + ')' : ''); applySeason(); }
         if (b.dataset.act === 'birth') { hud.closePanel(); setTimeout(openBirthSetup, 30); }
         if (b.dataset.act === 'admin') { hud.closePanel(); setTimeout(() => opt.openAdmin(), 30); }
-      });
+      }, { outside: true });
+    pn.querySelectorAll('.tw-sz').forEach(el => el.addEventListener('input', () => { const v = +el.value; setGlbSize(el.dataset.k, v); el.parentNode.querySelector('.tw-szv').textContent = v.toFixed(2); }));
     const hr = pn.querySelector('.tw-t-hour'), hv = pn.querySelector('.tw-t-hv'), dt = pn.querySelector('.tw-t-date');
     const fmt = v => `${String(Math.floor(v)).padStart(2, '0')}:${String(Math.round((v % 1) * 60)).padStart(2, '0')}`;
     hv.textContent = fmt(env.hour);
@@ -1111,7 +1114,8 @@ export function mount(container, opt = {}) {
   bus.on('*', (n, d) => { if (n.startsWith('app:') || n === 'talk' || n === 'wallet') opt.onEvent?.(n, d); });
 
   // ---- カメラ ----
-  const CAM_DEF = { pitch: 0.6, dist: 16 };   // ふだんの見え方(かなり引いた位置のうしろから)。🎥の長押しで距離を変えられる
+  const CAM_DEF = { pitch: 0.85, dist: 34 };   // ふだんの見え方(斜め上から、かなり引いて町を見わたす)。🎥のダブルタップで距離を変えられる
+  if (settings.camVer !== 2) { delete settings.camView; settings.camVer = 2; save(); }   // 新しい標準の見え方にそろえる(前に保存した距離はリセット)
   const camOk = settings.camView && settings.camView.pitch >= 0.1 && settings.camView.dist >= 3;   // 近すぎ・低すぎの保存値は使わない
   const cam = { yaw: Math.PI, pitch: camOk ? settings.camView.pitch : CAM_DEF.pitch, dist: camOk ? settings.camView.dist : CAM_DEF.dist, x: me.x, z: me.z };
   // ---- カメラ:ふだん=自分についていく(follow) / 動かす(free:カメラだけ自由に) / 固定(fixed:そこに置いて、自分は歩ける) ----
@@ -1162,7 +1166,7 @@ export function mount(container, opt = {}) {
     if (camMode === 'follow' && camSetOpen) {
       camBar.hidden = false;
       camBar.innerHTML = `<div>🎥 カメラの設定(🎥を押すと、引いて見る ⇔ 自分視点)</div>
-        <div class="r" style="align-items:center"><span>引く距離</span><input type="range" class="fd" min="4" max="40" step="0.5" value="${cam.dist.toFixed(1)}"><b class="fdv">${cam.dist.toFixed(1)}</b></div>
+        <div class="r" style="align-items:center"><span>引く距離</span><input type="range" class="fd" min="4" max="50" step="0.5" value="${cam.dist.toFixed(1)}"><b class="fdv">${cam.dist.toFixed(1)}</b></div>
         <div class="r"><button class="tw-btn" data-c="free">🎥 カメラだけ動かす</button><button class="tw-btn on" data-c="close">とじる</button></div>`;
       const fd = camBar.querySelector('.fd');
       fd.oninput = () => { cam.dist = +fd.value; camBar.querySelector('.fdv').textContent = cam.dist.toFixed(1); if (view === 'fp') { view = 'far'; settings.view = view; } settings.camView = { pitch: +cam.pitch.toFixed(3), dist: +cam.dist.toFixed(2) }; save(); };
@@ -1299,16 +1303,11 @@ export function mount(container, opt = {}) {
     camera.fov = w / h < 0.75 ? 62 : 55; camera.updateProjectionMatrix();
   }
   const ro = new ResizeObserver(resize); ro.observe(root); resize(); applyQuality();
-  // スマホでキーボードが出たとき、画面(root)をキーボードの上に収める(セリフの欄が上に押し出されて見えなくなるのを防ぐ)
-  const vv = window.visualViewport;
-  if (vv) {
-    const fitVV = () => {
-      const kb = window.innerHeight - vv.height > 120, st = root.style; root.classList.toggle('tw-kb', kb); root.querySelectorAll('.tw-log').forEach(l => { l.scrollTop = l.scrollHeight; });
-      if (kb) { st.position = 'fixed'; st.inset = 'auto'; st.left = vv.offsetLeft + 'px'; st.top = vv.offsetTop + 'px'; st.width = vv.width + 'px'; st.height = vv.height + 'px'; }
-      else { st.position = ''; st.inset = ''; st.left = ''; st.top = ''; st.width = ''; st.height = ''; }
-    };
-    vv.addEventListener('resize', fitVV);
-    offs.push(() => { vv.removeEventListener('resize', fitVV); });
+  // キーボードが出ている間は、おしゃべりの枠をコンパクトにして、直前のセリフが見えるようにする(画面そのものは動かさない。ページ側で interactive-widget=resizes-content を指定)
+  {
+    const typing = t => !!t && /^(INPUT|TEXTAREA)$/.test(t.tagName) && !/^(range|checkbox|radio|button)$/.test(t.type || '');
+    const f = () => { setTimeout(() => { root.classList.toggle('tw-kb', typing(document.activeElement)); root.querySelectorAll('.tw-log').forEach(l => { l.scrollTop = l.scrollHeight; }); }, 50); };
+    root.addEventListener('focusin', f); root.addEventListener('focusout', f);
   }
 
   let fpsAcc = 0;
