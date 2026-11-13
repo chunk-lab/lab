@@ -105,7 +105,7 @@ export function useGlb(ch, id, { height } = {}) {
     const idleBox = () => {
       if (!act.idle) return posedBox(holder);
       act.idle.play(); const dur = act.idle.getClip().duration, all = new THREE.Box3();
-      for (let i = 0; i <= 8; i++) { act.idle.time = dur * i / 8; mixer.update(0); all.union(posedBox(holder)); }
+      for (let i = 0; i <= 4; i++) { act.idle.time = dur * i / 4; mixer.update(0); all.union(posedBox(holder)); }
       act.idle.time = 0; mixer.update(0); return all;
     };
     const box = idleBox(), size = box.getSize(new THREE.Vector3());
@@ -117,7 +117,7 @@ export function useGlb(ch, id, { height } = {}) {
     for (const a of Object.values(act)) {
       const prev = holder.position.y; holder.position.y = 0;
       mixer.stopAllAction(); a.reset().play(); const dur = a.getClip().duration; let m = Infinity;
-      for (let i = 0; i <= 40; i++) { a.time = dur * i / 40; mixer.update(0); m = Math.min(m, posedBox(holder).min.y); }
+      for (let i = 0; i <= 14; i++) { a.time = dur * i / 14; mixer.update(0); m = Math.min(m, posedBox(holder).min.y); }
       a.stop(); holder.position.y = prev; footOf.set(a, -m);
     }
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
@@ -157,7 +157,8 @@ export function useGlb(ch, id, { height } = {}) {
       if (poseK > 0 && poseName) {
         const k = poseK;
         if (poseName === 'kneel') { bend(bn.lu, -1.2, 0, 0, k); bend(bn.ll, 1.25, 0, 0, k); bend(bn.ru, 0.2, 0, 0, k); bend(bn.rl, 1.9, 0, 0, k); drop = 0.19 * ch.height / 1.7 * k; }   // ひざが地面につく高さまで
-        else { bend(bn.lu, -1.5, 0, 0.06, k); bend(bn.ru, -1.5, 0, -0.06, k); bend(bn.ll, 1.5, 0, 0, k); bend(bn.rl, 1.5, 0, 0, k); drop = (0.035 * ch.height - (ch.sitUp || 0)) * k;   // この体は腰がもともと低い(背の0.27倍)ので、いすの高さまで少しだけ下げる
+        else { bend(bn.lu, -1.5, 0, 0.06, k); bend(bn.ru, -1.5, 0, -0.06, k); bend(bn.ll, 1.5, 0, 0, k); bend(bn.rl, 1.5, 0, 0, k); const sc = ch.height / 1.7, u = ch.seatH != null ? (ch.seatH - 0.387 * sc) / 1.8 : 0; drop = (0.035 * ch.height - u) * k;   // seatH=座面の高さ(m): 腰が座面の少し上にくるように下げる量を決める(測定: 腰=0.452×背/1.7+1.8×u)
+   // この体は腰がもともと低い(背の0.27倍)ので、いすの高さまで少しだけ下げる
           if (poseName === 'piano') { bend(bn.la, -1.0, 0, 0, k); bend(bn.ra, -1.0, 0, 0, k); bend(bn.lf, -0.5, 0, 0, k); bend(bn.rf, -0.5, 0, 0, k); } }
         ch.root.updateMatrixWorld(true);
       }

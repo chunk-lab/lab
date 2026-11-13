@@ -213,7 +213,6 @@ export function mount(container, opt = {}) {
 
   // ---- ベンチにすわる ----
   let seat = null;
-  const BENCH_UP = 0.086;   // ベンチは座面が高い(0.54)ので、いすより腰を上げる
   function sitOnBench(b0) {
     // 背もたれがないので、立っている側を向いてすわる(前からでも後ろからでも)
     const fx = Math.sin(b0.ry), fz = Math.cos(b0.ry), back = (me.x - b0.x) * fx + (me.z - b0.z) * fz < 0;
@@ -223,15 +222,15 @@ export function mount(container, opt = {}) {
     let lx = Math.max(-0.55, Math.min(0.55, dx * c - dz * s)); const lz = -0.02;
     if (hana) lx = -0.36;   // はなちゃんと2人で:はなちゃんは左どなり
     me.x = b.x + lx * c + lz * s; me.z = b.z - lx * s + lz * c; me.ry = b.ry; me.speed = 0;
-    seat = { b }; me.ch.pose = 'sit'; me.ch.sitUp = BENCH_UP * (me.ch.height || PLAYER_H) / 1.7; input.clear();
+    seat = { b }; me.ch.pose = 'sit'; me.ch.seatH = 0.54; input.clear();
     if (hana) {
-      const hx = 0.36; hana.pin = { x: b.x + hx * c + lz * s, z: b.z - hx * s + lz * c, y: -0.04, ry: b.ry, pose: 'sit', bench: true }; hana.ch.sitUp = BENCH_UP * (hana.ch.height || 1.7) / 1.7;
+      const hx = 0.36; hana.pin = { x: b.x + hx * c + lz * s, z: b.z - hx * s + lz * c, y: 0, ry: b.ry, pose: 'sit', bench: true }; hana.ch.seatH = 0.54;
       seat.hana = hana; say1(hana, hana.def.id === 'sora' ? ['ふぅ、ちょっと休もうか', 'ここ、いい場所だよな'] : ['ふぅ〜、ちょっと休けい!', 'ここ、すわり心地いいね', 'となり、いい?'], 3);
     }
   }
   const benchSit = () => `いま「${settings.name || 'あなた'}」と、${city.areaName(me.x, me.z)}のベンチにならんですわって、手をつないでいる。`;
   function standFromSeat() {
-    if (!seat) return; const b = seat.b, h = seat.hana; seat = null; me.ch.pose = null; me.ch.sitUp = 0; if (h) h.ch.sitUp = 0;
+    if (!seat) return; const b = seat.b, h = seat.hana; seat = null; me.ch.pose = null; me.ch.seatH = null; if (h) h.ch.seatH = null;
     [me.x, me.z] = collide(b.x + Math.sin(b.ry) * 1.1, b.z + Math.cos(b.ry) * 1.1);
     if (h && h.pin && h.pin.bench) { h.pin = null; h.ch.pose = null; h.ch.root.position.set(me.x + Math.cos(me.ry) * 0.62, 0, me.z - Math.sin(me.ry) * 0.62); h.hold = false; h.reT = 0.5; }
   }
@@ -686,8 +685,8 @@ export function mount(container, opt = {}) {
     const pA = { x: T.x + rx * 0.85, z: T.z + rz * 0.85 }, pB = { x: T.x - rx * 0.85, z: T.z - rz * 0.85 };
     const stools = [pA, pB].map(q => { const m = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.2, 0.44, 14), new THREE.MeshLambertMaterial({ color: 0xc9a28c })); m.position.set(q.x, 0.22, q.z); m.castShadow = true; scene.add(m); return m; });
     standFromSeat();
-    me.x = pA.x; me.z = pA.z; me.ry = Math.atan2(-rx, -rz); me.speed = 0; seat = { b: { x: pA.x, z: pA.z, ry: me.ry }, date: true }; me.ch.pose = 'sit'; me.ch.holdTo = null;
-    r.pin = { x: pB.x, z: pB.z, y: -0.04, ry: Math.atan2(rx, rz), pose: 'sit' };
+    me.x = pA.x; me.z = pA.z; me.ry = Math.atan2(-rx, -rz); me.speed = 0; seat = { b: { x: pA.x, z: pA.z, ry: me.ry }, date: true }; me.ch.pose = 'sit'; me.ch.seatH = 0.44; me.ch.holdTo = null;
+    r.pin = { x: pB.x, z: pB.z, y: 0, ry: Math.atan2(rx, rz), pose: 'sit' }; r.ch.seatH = 0.44;
     const F = { x: T.x + nx * 2.4, z: T.z + nz * 2.4 }; cam.x = F.x; cam.z = F.z; cam.yaw = Math.atan2(nx, nz); cam.pitch = 0.42; cam.dist = 5.5;
     date = { r, stools, focus: F, wasFollow: r.follow, cam0: { pitch: cam.pitch, dist: cam.dist } }; residents.avoid = { x: T.x, z: T.z, r: 3.2 };
     for (const o of residents.list) if (o !== r && !o.hidden && !(isComp(o) && o.follow) && Math.hypot(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z) < 2.4) { const a = Math.atan2(o.ch.root.position.x - T.x, o.ch.root.position.z - T.z); o.ch.root.position.x = T.x + Math.sin(a) * 3.3; o.ch.root.position.z = T.z + Math.cos(a) * 3.3; }
@@ -709,7 +708,7 @@ export function mount(container, opt = {}) {
   let pianoGame = null;
   function sitAtPiano() {
     standFromSeat(); const s = city.piano.seat;
-    me.x = s.x; me.z = s.z; me.ry = s.ry; me.speed = 0; seat = { b: { x: s.x, z: s.z, ry: 0 }, piano: true }; me.ch.pose = 'piano'; me.ch.holdTo = null; input.clear();
+    me.x = s.x; me.z = s.z; me.ry = s.ry; me.speed = 0; seat = { b: { x: s.x, z: s.z, ry: 0 }, piano: true }; me.ch.pose = 'piano'; me.ch.seatH = 0.5; me.ch.holdTo = null; input.clear();
     cam.yaw = 1.2; cam.pitch = 0.32; cam.dist = Math.min(cam.dist, 6);   // ななめ横から(うしろの木にかくれないように)
   }
   function pianoMenu() {
@@ -1590,7 +1589,7 @@ export function mount(container, opt = {}) {
   on(root, 'pointerdown', () => audio.unlock(), { once: true });
 
   // ---- 読み込み画面: キャラを全部読み込んで、画面に出せる準備まで終えてから町を見せる(入ってから読み込んでカクつかないように) ----
-  let loadFin; const loadP = new Promise(r => { loadFin = r; });
+  let loadFin, loadPct = 0; const loadP = new Promise(r => { loadFin = r; });
   {
     const lo = document.createElement('div'); lo.className = 'tw-loading';
     lo.innerHTML = '<div class="lt">町のじゅんびをしています…</div><div class="lb"><i></i></div><div class="lp">0%</div><button class="tw-btn" hidden>このまま入る</button>';
@@ -1598,12 +1597,12 @@ export function mount(container, opt = {}) {
     const bar = lo.querySelector('i'), pct = lo.querySelector('.lp'), skip = lo.querySelector('button'), t0 = performance.now();
     let fin = false, warming = false, shown = 0;
     setGlbConc(4); glbPreload(['self:ren', 'self:mio', 'sora', 'hana', 'player:ren', 'player:mio']);
-    const finish = () => { if (fin) return; fin = true; setGlbConc(2); lo.remove(); loadFin(); };
+    const finish = () => { if (fin) return; fin = true; loadPct = 1; setGlbConc(2); lo.remove(); loadFin(); };
     skip.onclick = finish;
     const tick = async () => {
       if (fin) return;
       const s = glbStat(), p = s.total ? s.done / s.total : 0;
-      shown = Math.max(shown, warming ? 0.97 : p * 0.9); bar.style.width = (shown * 100).toFixed(0) + '%'; pct.textContent = Math.round(shown * 100) + '%';
+      shown = Math.max(shown, warming ? 0.97 : p * 0.9); bar.style.width = (shown * 100).toFixed(0) + '%'; pct.textContent = Math.round(shown * 100) + '%'; loadPct = Math.min(0.99, shown);
       if (s.total && s.done >= s.total && !warming) { warming = true; try { await glbWarm(renderer, camera); } catch (e) { } bar.style.width = '100%'; pct.textContent = '100%'; setTimeout(finish, 150); return; }
       const el = performance.now() - t0; if (!s.total && el > 2500) { finish(); return; }
       if (el > 20000) skip.hidden = false;
@@ -1652,6 +1651,7 @@ export function mount(container, opt = {}) {
     debugPose: (pose, d) => { me.ch.pose = pose; if (d) { cam.dist = d; cam.pitch = 0.15; cam.yaw = me.ry + Math.PI / 2; } },   // 点検用
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
+    progress: () => loadPct,   // 読み込みの進み具合(0〜1)
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,

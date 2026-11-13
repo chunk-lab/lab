@@ -59,17 +59,19 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = p => { const n = Math.min(100, Math.round(p * 100)) + '%'; fill.style.width = n; txt.textContent = 'Loading… ' + n; };
     preload = (async () => {
       try {
-        set(0.03); await loadScript(core.base + 'g/town3d/three.js'); set(0.15); await loadScript(core.base + 'g/town3d/town.js'); set(0.3);
+        set(0.01); await loadScript(core.base + 'g/town3d/three.js'); set(0.04); await loadScript(core.base + 'g/town3d/town.js'); set(0.08);
         const root = new URL(core.base + 'g/town3d/models/', location.href).href;
         const ver = await fetch(root + 'versions.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
         const files = Object.keys(ver).filter(f => /\.glb$/.test(f)), cache = 'caches' in window ? await caches.open('town-glb-v1') : null;
+        // 進み具合は「実際の時間のかかり方」に合わせる: ダウンロードが要るときだけ多めに割り当て、町の組み立てと準備(いちばん長い)を後ろに広くとる
+        const miss = cache ? (await Promise.all(files.map(async f => !(await cache.match(root + f + '?v=' + ver[f]))))).filter(Boolean).length : files.length;
+        const wFiles = files.length ? 0.35 * miss / files.length : 0, p0 = 0.08, p1 = p0 + wFiles + 0.02;
         let done = 0;
-        const one = async f => { const url = root + f + '?v=' + ver[f]; try { if (cache && !(await cache.match(url))) { const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(0.3 + 0.4 * done / files.length); };
+        const one = async f => { try { const url = root + f + '?v=' + ver[f]; if (cache && !(await cache.match(url))) { const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(p0 + (p1 - p0) * done / files.length); };
         const q = files.slice(); await Promise.all([0, 1, 2].map(async () => { while (q.length) await one(q.shift()); }));
-        // 町そのものも、ここで組み立てて準備まで終える(画面はLoadingの下)。おわったら止めて隠す。あとは出入りしても読み込みなし
-        set(0.72); let p = 0.72; const tk = setInterval(() => { p += (0.97 - p) * 0.06; set(p); }, 300);
-        try { await mount3D(); await Promise.race([town.ready, new Promise(r => setTimeout(r, 90000))]); suspend3D(); } catch (e) { console.error(e); try { stop3D(); } catch (e2) { } }
-        clearInterval(tk); set(1);
+        set(p1); let tk = null;
+        try { const m = mount3D(); tk = setInterval(() => { try { set(p1 + (0.99 - p1) * Math.min(1, (town && town.progress ? town.progress() : 0))); } catch (e) { } }, 250); await m; await Promise.race([town.ready, new Promise(r => setTimeout(r, 90000))]); suspend3D(); } catch (e) { console.error(e); try { stop3D(); } catch (e2) { } }
+        if (tk) clearInterval(tk); set(1);
       } catch (e) { console.error(e); }
       bar.remove();
     })();

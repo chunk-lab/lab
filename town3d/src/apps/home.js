@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { confirmPay } from '../ui/pay.js';
 import { makeCharacter, LOOKS } from '../world/character.js';
 import { useGlb } from '../world/glbchar.js';
+import { openCharView } from './charview.js';
 import { createInput } from '../game/input.js';
 import { snapCanvas, shotCard, flash } from '../game/photos.js';
 import { fmtN, clamp } from '../core/core.js';
@@ -260,7 +261,7 @@ export const homeApp = {
     let opening = 0;
     function run(it) {   // えらんだものの画面を開く
       if (!it) return;
-      if (it.act !== 'deco' && it.act !== 'walk') { if (Date.now() - opening < 1500) return; opening = Date.now(); menu && menu.busy('ひらいています…'); }
+      if (it.act !== 'deco' && it.act !== 'walk' && it.act !== 'chars') { if (Date.now() - opening < 1500) return; opening = Date.now(); menu && menu.busy('ひらいています…'); }
       if (it.act === 'deco') {
         mode = 'edit'; setGlow(null); fly(0, 0, 1); ui();
         // 指を離した直後の「クリック」が、同じ場所に出た「もようがえを終える」などに当たって、すぐ閉じてしまうのを防ぐ
@@ -268,6 +269,7 @@ export const homeApp = {
         return;
       }
       if (it.act === 'walk') { setGlow(null); enterWalk(); return; }
+      if (it.act === 'chars') { setGlow(null); openCharView(root, ctx); return; }
       if (it.act === 'study') { ctx.emit('study'); return; }
       if (it.act === 'shop') { ctx.open('shop', { from: 'home' }); return; }
       if (it.act === 'gbox') { ctx.open('gamebox', { from: 'home' }); return; }
@@ -567,17 +569,17 @@ export const homeApp = {
         }
         sp = Math.hypot(gx - ox, gz - oz) / Math.max(dt, 1e-3);
       }
-      gch.pose = gPose ? gPose.pose : null;
+      gch.pose = gPose ? gPose.pose : null; gch.seatH = gPose ? gPose.seatH : null;
       gch.root.position.set(gx, gPose ? gPose.y : 0, gz); gch.root.rotation.y = gry;
       if ((gHold && !wPose) || (gPose && wPose)) { holdP.set((wx + gx) / 2, gPose ? gPose.y + (gPose.pose === 'lie' ? 0.12 : 0.55) : 0.66, (wz + gz) / 2); gch.holdTo = holdP; gch.holdArm = 0; wme.holdTo = holdP; wme.holdArm = 1; }
       else { gch.holdTo = null; wme.holdTo = null; }
       gch.update(dt, sp < 0.08 ? 0 : sp);
     }
     // となりにすわる/ねる(自分の左)
-    function guestPose(pose, y) {
+    function guestPose(pose, y, seatH) {
       if (!gch) return;
       const sn = Math.sin(wry), cs = Math.cos(wry);
-      gPose = { x: wx + cs * 0.6, z: wz - sn * 0.6, ry: wry, y, pose };
+      gPose = { x: wx + cs * 0.6, z: wz - sn * 0.6, ry: wry, y, pose, seatH };
     }
     function floorLie() {   // 家具がなくても、床にゴロゴロ
       const sn = Math.sin(wry), cs = Math.cos(wry);
@@ -636,16 +638,16 @@ export const homeApp = {
       const pair = gch && (it.lie || it.w / 2 - 0.5 >= 0.3);   // お客さんと2人:自分は右、お客さんは左
       if (it.sit) { const lim = Math.max(0, it.w / 2 - 0.5); lx = pair ? -0.3 : clamp(lx, -lim, lim); lz = -0.02; } else { lx = pair ? -0.3 : 0; lz = 0.8; }
       wx = cx + lx * cs + lz * sn; wz = cz - lx * sn + lz * cs; wry = yaw;
-      wy = (Y[p.uid] || 0) + (it.sit ? it.sit - 0.58 : it.lie + 0.14);
+      wy = (Y[p.uid] || 0) + (it.sit ? 0 : it.lie + 0.14); wme.seatH = it.sit ? it.sit : null;
       wPose = { p, lx, stand: it.sit ? [lx, it.d / 2 + 0.6] : [it.w / 2 + 0.55, 0.3], yaw, cx, cz };
       wme.pose = it.sit ? 'sit' : 'lie'; wspeed = 0; if (it.lie) { wyaw = wry; wpitch = 0.95; wdist = 3.0; }
-      if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy); guestSay(GL(it.sit ? 'sit' : 'lie')); }
+      if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy, it.sit); guestSay(GL(it.sit ? 'sit' : 'lie')); }
     }
     function standUp() {
       if (!wPose) return;
       const { stand, yaw, cx, cz } = wPose, sn = Math.sin(yaw), cs = Math.cos(yaw);
       [wx, wz] = walkTo(cx + stand[0] * cs + stand[1] * sn, cz - stand[0] * sn + stand[1] * cs);
-      wPose = null; wme.pose = null; wy = 0;
+      wPose = null; wme.pose = null; wme.seatH = null; wy = 0;
       if (gPose) { gPose = null; gHold = false; gK = 0; gx = wx + Math.cos(wry) * 0.62; gz = wz - Math.sin(wry) * 0.62; [gx, gz] = walkTo(gx, gz); }
     }
     function enterWalk() {

@@ -12,6 +12,7 @@ export const HOME_MENU = [
   { k: 'tank', ic: '🐠', n: '水槽', sub: '釣った魚を育てる', fur: ['tank'], need: (c, f) => f.owned('tank') > 0, act: 'tank' },
   { k: 'album', ic: '🖼', n: 'アルバム', sub: '撮った写真', fur: ['frame'], act: 'album' },
   { k: 'walk', ic: '🚶', n: '部屋を歩く', sub: '中に入って、座ったり写真をとったり', fur: [], act: 'walk' },
+  { k: 'chars', ic: '👤', n: 'キャラを見る', sub: '自分や住人を回して眺める(着替えはここへ)', fur: [], act: 'chars' },
   { k: 'deco', ic: '🛋', n: 'もようがえ', sub: '家具を置く・動かす・部屋を広げる', fur: ['sofa', 'armchair', 'floorlamp', 'lamp'], act: 'deco' },
   { k: 'out', ic: '🚪', n: '町へ出かける', sub: '', fur: ['door'], act: 'out' },
 ];
