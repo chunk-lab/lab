@@ -68,7 +68,7 @@ export function openCharView(host, ctx = {}, onClose) {
   el.onpointermove = e => {
     const p = ptr.get(e.pointerId); if (!p) return;
     const dx = e.clientX - p.x, dy = e.clientY - p.y; p.x = e.clientX; p.y = e.clientY;
-    if (ptr.size === 1) { yaw -= dx * 0.012; pitch = Math.max(-1.45, Math.min(1.45, pitch + dy * 0.006));   // 真下〜真上までまわせる }
+    if (ptr.size === 1) { yaw -= dx * 0.012; pitch = Math.max(-1.45, Math.min(1.45, pitch + dy * 0.006)); }
     else if (ptr.size === 2) { const [a, b] = [...ptr.values()], d = Math.hypot(a.x - b.x, a.y - b.y); if (pd > 0) zoom = Math.max(0.5, Math.min(2.6, zoom * d / pd)); pd = d; }
   };
   el.onpointerup = el.onpointercancel = e => { ptr.delete(e.pointerId); pd = 0; };
