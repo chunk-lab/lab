@@ -15,6 +15,8 @@ export const GLB_MODELS = {
   choco: { url: 'models/choco.glb', rotY: 0 },
   'player:ren': { url: 'models/player_ren.glb', rotY: 0 },   // プレイヤー(男の子)
   'player:mio': { url: 'models/player_mio.glb', rotY: 0 },   // プレイヤー(女の子)
+  // 「player:」は ほかのプレイヤー(かんたんな体)。自分が操る体は「self:」で別にしてある(動きのデータが入っていない体は animFrom の体の動きを借りる)
+  'self:ren': { url: 'models/self_ren.glb', rotY: 0, animFrom: 'sora' },
   luna: { url: 'models/luna.glb', rotY: 0 },
   tetsu: { url: 'models/philosopher.glb', rotY: 0 },
   suna: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
@@ -85,9 +87,10 @@ export function useGlb(ch, id, { height } = {}) {
   const spec = GLB_MODELS[id]; if (!spec) return ch;
   // 読みこみ中は前のコード製の体を出さない(出てから入れかわると見苦しい)。失敗したときだけ戻す
   const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
-  const player = id.startsWith('player:');
+  const player = id.startsWith('player:') || id.startsWith('self:');
   height = player ? SIZE_NOW.player : (height !== 1.3 ? height : SIZE_NOW.npc);   // 確認用の住人ごとの背(?npcsizes=1)だけは、そちらを優先
-  load(spec.url, player).then(gltf => {
+  Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null]).then(([gltf0, src]) => {
+    const gltf = src && !(gltf0.animations && gltf0.animations.length) ? { scene: gltf0.scene, animations: src.animations } : gltf0;
     // 同じモデルを複数体出してもいいように、骨ごと複製する
     const model = cloneSkinned(gltf.scene);
     const holder = new THREE.Group(); holder.rotation.y = spec.rotY; holder.add(model);
