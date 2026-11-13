@@ -361,7 +361,7 @@ export function mount(container, opt = {}) {
         { label: '🧠 使ってみる', fn: () => opt.onEvent?.('app:event', { name: 'eigo', data: { open: true, items: list.map((x, i) => ({ en: x.en, ja: x.ja, kind: x.sen ? 'sentence' : '', play: i === 0 })) } }) },
         { label: 'あとで', fn: () => { } }] });
     }, startDate: r => startDate(r), invite: r => doAct(r, { act: 'invite' }), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
-  if (social.admin()) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🔍 宝を隠す'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(168px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; soc.adminHunt(); }; root.appendChild(b); }
+  // 「宝を隠す」は、せってい →「運営」タブの中
   const townSnap = () => { const got = finds.treasures(); return { info: social.info(), tre: TREASURES.map(t => ({ i: t[0], n: t[1], g: got.includes(t[1]) })), at: Date.now() }; };   // 勉強ノートの「町のひみつ」に渡す
   function openNoteBook() {
     if (!started || appHost.current || hud.busy) return;
@@ -1047,6 +1047,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">テスト:時刻<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-t-hour" type="range" min="0" max="24" step="0.25" value="${env.hour.toFixed(2)}" style="flex:1"><b class="tw-t-hv" style="min-width:3.2em;text-align:right"></b></span></div>
       <div class="tw-row">テスト:日付<span style="display:flex;gap:6px;align-items:center"><input class="tw-t-date" type="date" value="${testDate.getFullYear()}-${String(testDate.getMonth() + 1).padStart(2, '0')}-${String(testDate.getDate()).padStart(2, '0')}" style="font:inherit;padding:4px 6px;border-radius:10px;border:2px solid #eadff3"><button class="tw-btn" data-act="today" style="padding:6px 10px">きょう</button></span></div>
       ${opt.openAdmin ? `<div class="tw-row">桜${'<div class="tw-seg"><button class="tw-btn' + (blossomOn ? ' on' : '') + '" data-bl="1">あり</button><button class="tw-btn' + (!blossomOn ? ' on' : '') + '" data-bl="0">なし</button></div>'}</div>` : ''}
+      <div class="tw-row">宝さがし大会<button class="tw-btn" data-act="hunt" style="padding:6px 14px">🛠🔍 宝を隠す</button></div>
       <div class="tw-row">流れ星<button class="tw-btn" data-act="meteor" style="padding:6px 14px">いま流す</button></div>
       <div class="tw-row">英語のヒント(すれ違い)${seg('tips', [[0, 'なし'], [1, 'あり']])}</div>
       ${opt.openAdmin ? `<div class="tw-row">きせつ(桜・紅葉・雪)<button class="tw-btn" data-act="season" style="padding:6px 14px">${SEASONS[settings.season || 'auto']}</button></div>` : ''}
@@ -1084,8 +1085,21 @@ export function mount(container, opt = {}) {
         if (b.dataset.act === 'ai') openAiSetup({ hud, ai });
         if (b.dataset.act === 'season') { const ks = Object.keys(SEASONS), n = ks[(ks.indexOf(settings.season || 'auto') + 1) % ks.length]; settings.season = n; save(); b.textContent = SEASONS[n] + (n === 'auto' ? '(' + SEASONS[seasonOf()] + ')' : ''); applySeason(); }
         if (b.dataset.act === 'birth') { hud.closePanel(); setTimeout(openBirthSetup, 30); }
+        if (b.dataset.act === 'hunt') { hud.closePanel(); setTimeout(() => soc.adminHunt(), 30); return; }
         if (b.dataset.act === 'admin') { hud.closePanel(); setTimeout(() => opt.openAdmin(), 30); }
       }, { outside: true });
+    {   // 一般 / 運営 のタブ。運営の項目は、運営のときだけ「運営」タブに出る(一般の人には、タブも項目も出ない)
+      const ADM = ['住人の大きさ', '自分の大きさ', '時間の進み', '時刻', 'テスト:', '桜', '流れ星', 'きせつ', '運営(', '宝さがし大会'], isAdm = !!opt.openAdmin || social.admin();
+      const rows = [...pn.querySelectorAll('.tw-row')]; rows.forEach(r => { const t = (r.firstChild && r.firstChild.nodeType === 3 ? r.firstChild.textContent : '').trim(); if (ADM.some(a => t.startsWith(a))) r.dataset.tab = 'adm'; });
+      const show = tab => rows.forEach(r => { if (r.querySelector('[data-act="close"]')) return; r.style.display = (r.dataset.tab === 'adm') === (tab === 'adm') ? '' : 'none'; }), note = pn.querySelector('.tw-note');
+      show('gen');
+      if (isAdm) {
+        const bar = document.createElement('div'); bar.className = 'tw-seg'; bar.style.cssText = 'display:flex;gap:6px;margin:0 0 8px';
+        bar.innerHTML = '<button class="tw-btn on" data-tab="gen" style="flex:1">一般</button><button class="tw-btn" data-tab="adm" style="flex:1">🛠 運営</button>';
+        pn.querySelector('h2').after(bar);
+        bar.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; e.stopPropagation(); bar.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); show(b.dataset.tab); if (note) note.style.display = b.dataset.tab === 'gen' ? '' : 'none'; });
+      }
+    }
     pn.querySelectorAll('.tw-sz').forEach(el => el.addEventListener('input', () => { const v = +el.value; setGlbSize(el.dataset.k, v); el.parentNode.querySelector('.tw-szv').textContent = v.toFixed(2); }));
     const hr = pn.querySelector('.tw-t-hour'), hv = pn.querySelector('.tw-t-hv'), dt = pn.querySelector('.tw-t-date');
     const fmt = v => `${String(Math.floor(v)).padStart(2, '0')}:${String(Math.round((v % 1) * 60)).padStart(2, '0')}`;
