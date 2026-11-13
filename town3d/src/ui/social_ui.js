@@ -93,15 +93,54 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
   // ---- 話しかけたときのメニューに足すもの ----
   function choices(r) {
     const id = r.def.id; if (!PREFS[id]) return [];
-    const out = [{ label: '🎁 プレゼントする', fn: () => gift(r) }];
-    if ((ai && ai.ready) || memory.of(id).auto.length || memory.of(id).keep.length) out.push({ label: '🗒 覚えていること', fn: () => memoryPanel(r) });
-    out.push({ label: '💝 好みメモ', fn: () => prefPanel(r) });
-    if (id === 'gon') out.push({ label: '🎒 たからもの', fn: () => treasurePanel() });
+    const out = [{ k: 'play', label: '🎁 プレゼントする', fn: () => gift(r) }];
+    if ((ai && ai.ready) || memory.of(id).auto.length || memory.of(id).keep.length) out.push({ k: 'play', label: '🗒 覚えていること', fn: () => memoryPanel(r) });
+    if (id === 'gon') { out.push({ k: 'play', label: '🎒 ひろいものをたのむ', fn: () => gonAsk(r) }); out.push({ k: 'play', label: '🎒 たからもの', fn: () => treasurePanel() }); }
     for (const u of social.unlocksOf(id)) {
-      if (u.kind === 'ability' && u.label && !['secret', 'discount'].includes(u.id)) out.push({ label: u.label, fn: () => ability(r, u) });
-      if (u.kind === 'date' && !(r.def.menu || []).some(m => m.act === 'date')) out.push({ label: u.label, fn: () => startDate(r) });
+      if (u.kind === 'ability' && u.label && !['secret', 'discount', 'pickup'].includes(u.id)) out.push({ k: ['lesson', 'book', 'hint'].includes(u.id) ? 'study' : 'play', label: u.label, fn: () => ability(r, u) });
+      if (u.kind === 'date' && !(r.def.menu || []).some(m => m.act === 'date')) out.push({ k: 'play', label: u.label, fn: () => startDate(r) });
     }
     return out;
+  }
+  // ---- ゴンのひろいもの: 何もしなくても1日1つ。たのむともう1つ。仲良しほど多く ----
+  function gonGive(n) {
+    const got = [];
+    for (let i = 0; i < n; i++) {
+      const have = finds.treasures(), left = TREASURES.filter(t => !have.includes(t[1]));
+      if (left.length) { const t = pick(left); finds.addTreasure(t[1]); social.addInfo('たからもの', `${t[0]}${t[1]}:${t[2]}(ゴンがひろった)`); got.push(`${t[0]} ${t[1]}`); }
+      else { const g = wallet.give(30, 'gon'); got.push(`🪙${g}`); }
+    }
+    return got;
+  }
+  function gonDaily() {   // 町に入ったとき・ゴンに話しかけたときに、きょうの分がまだなら、ひとつ(仲良しなら2つ)ひろってきてくれる
+    if (!PREFS.gon || social.usedToday('gon:auto')) return '';
+    social.markUsed('gon:auto'); const n = social.level('gon') >= 4 ? 2 : 1, got = gonGive(n);
+    return `そうそう、きょうも拾っといたぜ。${got.join('と')}。たからものの棚に入れといたからな。`;
+  }
+  function gonAsk(r) {
+    const key = 'gon:ask', L = social.level('gon');
+    if (social.usedToday(key)) { hud.dialog({ name: name(r), role: heart('gon'), text: 'きょうはもう探してきたろ? また明日な!', choices: [] }); return; }
+    social.markUsed(key); const got = gonGive(L >= 3 ? 2 : 1);
+    hud.dialog({ name: name(r), role: heart('gon'), text: `しょうがねえな、ちょっくら行ってくらあ。……ほらよ、${got.join('と')}! 大事にしな!`, choices: [] }); hud.closeOnOutside();
+  }
+  // ---- 話しかけたときの、ひと言の足しもの(好みのにおわせ・お願い・ミイのプレゼント話) ----
+  const itemName = k => ITEMS[k] ? ITEMS[k].icon + ITEMS[k].name : k;
+  function hintLine(r) {
+    const id = r.def.id, P = PREFS[id]; if (!P) return '';
+    const K = social.knownPrefs(), known = it => !!K[id + ':' + it], others = Object.keys(PREFS).filter(o => o !== id && o !== 'sora' && o !== 'hana');
+    if (id === 'mii' && Math.random() < 0.7) {
+      const o = pick(others), it = pick(PREFS[o].love);
+      return pick([`この前、${NPC_NAME[o] || o}さんも${itemName(it)}を買ってくれたのよ。おすすめよ!`, `${itemName(it)}、${NPC_NAME[o] || o}さんにも人気なの。プレゼントにどう?`, `プレゼントに迷ったら、${itemName(pick(P.love))}はどう? 評判いいのよ。`]);
+    }
+    if (social.level(id) <= 1 && Math.random() < 0.4) {
+      if (Math.random() < 0.5) return `…${itemName(pick(P.love))}が食べたいなぁ…。`;
+      const o = pick(others); return `${NPC_NAME[o] || o}さんは、${itemName(pick(PREFS[o].love))}が好きらしいよ。`;
+    }
+    if (Math.random() < 0.12) {
+      const un = [...P.love, ...P.no].filter(it => !known(it));
+      if (un.length) { const it = pick(un); return P.love.includes(it) ? pick([`${itemName(it)}の話をしてると、ついうれしくなっちゃうんだ。`, `さいきん、${itemName(it)}のことばかり考えてるんだ。`]) : pick([`${itemName(it)}は、ちょっと苦手かなあ…。`, `${itemName(it)}だけは、遠慮しとくよ。`]); }
+    }
+    return '';
   }
   // カードのメニュー(ミイ・男爵・ゴン)は、男爵と仲良くなってから
   const menuOk = m => m.app !== 'chunkcards' || social.gameOpen('cards');
@@ -206,5 +245,5 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
       ${have.length ? `<div style="max-height:30vh;overflow:auto">${TREASURES.filter(t => have.includes(t[1])).map(t => `<p class="tw-note" style="margin:3px 0">${esc(t[0] + ' ' + t[1])}:${esc(t[2])}</p>`).join('')}</div>` : ''}<div class="tw-actions"><button class="tw-btn" data-x>とじる</button></div>`);
     p.addEventListener('click', e => { if (e.target.closest('[data-x]')) hud.closePanel(); });
   }
-  return { onTalk, choices, menuOk, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel };
+  return { onTalk, choices, menuOk, hintLine, gonDaily, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel };
 }

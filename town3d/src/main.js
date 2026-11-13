@@ -270,12 +270,38 @@ export function mount(container, opt = {}) {
     if (lunaOut) text = ['たまには外の空気を吸わないとね。星も、昼は休んでいるのよ。', 'あら、こんなところで会うなんて。…これも星の導きかしら。', '夕方には館にもどるわ。占いはそれからね。'][Math.floor(Math.random() * 3)];
     if (isComp(r) && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
     soc.onTalk(r);
-    const choices = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m) && !(lunaOut && m.app === 'fortune')).map(m => ({ label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); } } }));   // 釣りから出たら、潮見さんとの会話にもどる
-    if (r.def.id === 'sora' && r.follow) choices.unshift({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); } });
-    choices.push(...soc.choices(r));
-    if (!r.def.companion && isComp(r)) choices.push({ label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
-    if (r.def.id !== 'sora') choices.push({ label: ai.ready ? 'おしゃべりする' : 'AIでおしゃべり(設定)', fn: () => { r.talking = true; talkingTo = r; if (ai.ready) startChat(r, text); else openAiSetup({ hud, ai, onDone: () => startChat(r, text) }); } });   // キー設定の画面を出している間も、住人はその場にいる
-    hud.dialog({ name: r.def.name, role: PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role, text, choices });
+    // ---- 話しかけたときのメニュー: ひと言(自動)のあとに「勉強」と「遊び」だけ。くわしい項目は、おして出た2段目に ----
+    const kindOf = m => (['school', 'library'].includes(m.app) || ['consult', 'soranote', 'quote'].includes(m.act)) ? 'study' : 'play';
+    const DESC = { school: '英語の練習ができるよ', library: '長い英文が読めるよ', shop: 'おみやげが買えるよ', omikuji: '運だめしができるよ', fortune: '星で占ってくれるよ', fishing: 'のんびり釣りができるよ', chunkcards: 'カードで勝負できるよ', ogiri: '大喜利で勝負できるよ', quote: '格言を聞けるよ', consult: '英語の相談にのるよ', follow: '一緒に歩けるよ', date: 'カフェでデートできるよ', harmonica: 'オカリナを吹いてもらえるよ' };
+    const usedM = storage.get('menuUsed') || {}, markM = k => { if (k && !usedM[k]) { usedM[k] = 1; storage.set('menuUsed', usedM); } };
+    const backToTalk = () => { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); };   // 釣りから出たら、会話にもどる
+    const items = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m) && !(lunaOut && m.app === 'fortune')).map(m => ({ k: kindOf(m), key: m.app || m.act, label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') backToTalk(); } }));
+    if (r.def.id === 'suna') items.push({ k: 'study', key: 'fishing-en', label: '🎣 英語の釣り堀', fn: () => { openApp('fishing', { tab: 'en' }); backToTalk(); } });
+    items.push(...soc.choices(r));
+    if (!r.def.companion && isComp(r)) items.push({ k: 'play', key: 'follow', label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { k: 'play', key: 'invite', label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
+    const chat = en => () => { r.talking = true; talkingTo = r; if (r.def.id === 'sora') { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); return; } if (ai.ready) startChat(r, text, undefined, en); else openAiSetup({ hud, ai, onDone: () => startChat(r, text, undefined, en) }); };
+    if (r.def.id !== 'sora' || r.follow) { const lb = ai.ready ? '' : '(AIの設定)'; items.push({ k: 'study', key: 'chat-en', label: '💬 英語でおしゃべり' + lb, fn: chat(true) }, { k: 'play', key: 'chat', label: '💬 おしゃべり' + lb, fn: chat(false) }); }
+    for (const it of items) { const f = it.fn, key = it.key || it.label; it.fn = () => { markM(key); f(); }; it.ukey = key; }
+    // ひと言に足すもの: ゴンのひろいもの・好みのにおわせ・ミイのプレゼント話。なければ、まだ使っていない項目の説明を、たまに
+    if (r.def.id === 'gon') { const g = soc.gonDaily(); if (g) text += '\n' + g; }
+    const hint = lunaOut || (isComp(r) && r.follow) ? '' : soc.hintLine(r);
+    if (hint) text += '\n' + hint;
+    else if (Math.random() < 0.15) { const un = items.filter(it => DESC[it.key] && !usedM[it.ukey]); if (un.length) { const it = un[Math.floor(Math.random() * un.length)]; text += `\n「${it.label}」って、まだ試してないよね? ${DESC[it.key]}。`; } }
+    // ランダムなおすすめ: だれが言うかに関係なく、町のどの遊び・勉強でも、本当にランダムに(4回に1回ほど)
+    const SUGG = [
+      { say: 'カードで勝負してみない?', ok: () => soc.menuOk({ app: 'chunkcards' }), fn: () => openApp('chunkcards', { cpu: 'baron' }) },
+      { say: '学校で英語の練習、一緒にしない?', fn: () => openApp('school') }, { say: '図書館で、長い英文を読んでみない?', fn: () => openApp('library') },
+      { say: 'お店をのぞいてみない? おみやげが買えるよ。', fn: () => openApp('shop') }, { say: 'おみくじ、ひいてみない?', fn: () => openApp('omikuji') },
+      { say: '占ってもらうのはどう?', ok: () => !lunaOut, fn: () => openApp('fortune') }, { say: '池で、のんびり釣りしてみない?', fn: () => { openApp('fishing'); backToTalk(); } },
+      { say: '英語の釣り堀、行ってみない?', fn: () => { openApp('fishing', { tab: 'en' }); backToTalk(); } },
+      { say: 'AIとおしゃべりもできるって知ってる? 設定してみない?', ok: () => !ai.ready, w: 3, fn: () => openAiSetup({ hud, ai, onDone: () => { } }) },
+    ].filter(x => !x.ok || x.ok());
+    const sg = !hint && Math.random() < 0.25 && SUGG.length ? (() => { const bag = SUGG.flatMap(x => Array(x.w || 1).fill(x)); return bag[Math.floor(Math.random() * bag.length)]; })() : null;
+    if (sg) text += '\n' + sg.say;
+    const role = PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role;
+    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg ? [{ label: 'やってみる!', fn: sg.fn }] : []), { label: '📖 勉強', fn: () => shelf('study') }, { label: '🎮 遊び', fn: () => shelf('play') }] }); };
+    const shelf = kind => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', choices: [...items.filter(it => it.k === kind), { label: '← もどる', fn: top }] }); };
+    top();
     bus.emit('talk', { npc: r.def.id });
   }
   // ---- ことばノート(英語の単語・フレーズ・文を集める。この端末の中だけに保存) ----
@@ -411,11 +437,11 @@ export function mount(container, opt = {}) {
     choices.push({ label: 'もうひとつ聞く', fn: () => showQuote(r) });
     hud.dialog({ name: r.def.name, role: r.def.role, text: en ? `"${q.en}"(${q.ja}) ― ${q.who}。${q.note}` : `「${q.ja}」― ${q.who}。${q.note}`, choices });
   }
-  function startChat(r, first, situation) {
+  function startChat(r, first, situation, forceEn) {
     if (r.def.free) return freeChat(r, first, situation);
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
-    const enS = () => !!(settings.en && settings.enShort);   // ふだんの短いおしゃべりは、設定で英語にできる(みじかい返事だと不自然になりやすいので、はじめは日本語)
+    const enS = () => !!(forceEn || (settings.en && settings.enShort));   // ふだんの短いおしゃべりは、設定で英語にできる(みじかい返事だと不自然になりやすいので、はじめは日本語)
     openChat({
       hud, bus, name: r.def.name, role: r.def.role, first, onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
       getEn: () => ({ on: enS(), level: settings.enLevel }),
@@ -1066,6 +1092,7 @@ export function mount(container, opt = {}) {
       if (!netStarted && net) { net.connect({ id: me.id, name, look }); netStarted = true; }
       started = true;
       if (settings.birth && !settings.birthLock) { settings.birthLock = 1; save(); }
+      setTimeout(() => { if (soc.gonDaily()) hud.toast('🎒 ゴンが、きょうの拾いものをしてくれたよ'); }, 5000);   // ゴン: 何もしなくても1日1つ
       if (!settings.birth) setTimeout(() => { if (!hud.busy && !appHost.current) openBirthSetup(true); }, 1800);   // はじめに誕生日をとうろく
       else setTimeout(() => birthdayAfter(), 2500);
       bus.emit('start', { name, look });

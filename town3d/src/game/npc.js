@@ -31,7 +31,7 @@ export const RESIDENTS = [
     id: 'mii', tips: ["「I'll have a coffee, please.」は、カフェで注文するときの定番ですよ〜", "「Could I have…?」は「Can I have…?」より、少していねいなんです", "「Take your time.」は『ゆっくりでいいよ』。わたし、よく言われます", "「Sounds good!」は、軽く『いいね』って返すのにぴったり", "「Cheers!」は乾杯だけじゃなく、『ありがとう』の意味でも使うんですって"], yomi: 'みい', persona: 'ゆったりしたお姉さん。やさしくて少しのんびり。カフェとカードが好きで、考えるのに時間をかける。', name: 'ミイ', role: 'カフェの常連', look: { skin: 0xffe6d6, hair: 0xf3c2a4, style: 'bob', top: 0xfff4e0, bottom: 0xffb3c1, shoes: 0xffffff, acc: 'ribbon', accColor: 0xa8e6cf },
     schedule: [[7, 'plaza'], [10, 'cafe'], [15, 'park'], [18, 'cafe'], [22, 'home', 'in']],
     lines: { morning: ['おはよう。朝の広場って、空気がおいしいよね。'], day: ['カフェでカードしてるの。よかったら一局どう?', 'ゆっくり考えるのが好きなんだ。'], evening: ['夕方の公園、ちょっとさみしくて好き。'], night: ['そろそろ帰らなきゃ。'] },
-    menu: [{ label: 'カードで勝負する', app: 'chunkcards', params: { cpu: 'mii' } }],
+    menu: [],
   },
   {
     id: 'baron', tips: ["ふはは、「Splendid!」は『素晴らしい!』。わが輩の口ぐせである!", "「I'm afraid…」で始めれば、悪い知らせも偉そうに言えるぞ", "「Indeed.」は『まったくだ』。重々しく言うのがコツだ!", "「Well done!」は『よくやった』。わが輩が言うと偉そうに聞こえるな", "「By the way」は『ところで』。話をそらすのはハッタリの基本だ"], yomi: 'はったりだんしゃく', persona: '大げさで自信家。「わが輩」と名乗り、ハッタリが多いが憎めない。ゲームセンターの記録の話が好き。', name: 'ハッタリ男爵', role: 'ゲームセンターの主', look: { skin: 0xf6d2bb, hair: 0xdcdcdc, style: 'short', top: 0xb79cd9, bottom: 0x4f4766, shoes: 0x2e2a3d, acc: 'tophat', accColor: 0x3f3a52 },
@@ -43,7 +43,7 @@ export const RESIDENTS = [
     id: 'gon', tips: ["「Look what I found!」で『見ろよ、拾ったぞ!』って言えるぜ", "「It's a bit rusty.」は『ちょっとさびてる』。拾い物の説明に使えるな", "「Where did you get that?」で『それ、どこで手に入れた?』", "「Finders keepers!」は『拾った者の勝ち』。子どもがよく言うぜ", "「No worries.」は『気にすんな』。おれの口ぐせだ"], yomi: 'ひろいやごん', persona: '拾い物好きの気さくな兄ちゃん。くだけた口調。落とし物や変な単語を見つけた話をする。', name: 'ひろい屋ゴン', role: '何でも拾う人', look: { skin: 0xeec3a6, hair: 0x6b4a3a, style: 'spiky', top: 0xfdeeb0, bottom: 0x8fcfae, shoes: 0xc9a28c, acc: 'cap', accColor: 0xffc8a2 },
     schedule: [[6, 'park'], [9, 'park2'], [13, 'south'], [17, 'shrine'], [21, 'park']],
     lines: { morning: ['朝いちばんは落とし物が多いんだ。'], day: ['きのう、すごい単語を拾ったよ。', '捨てられた札にも、いい文が眠ってる。'], evening: ['神社の裏、いい物が落ちてるんだよね。'], night: ['夜の公園は静かでいいね。'] },
-    menu: [{ label: 'カードで勝負する', app: 'chunkcards', params: { cpu: 'gon' } }],
+    menu: [],
   },
   {
     id: 'koharu', tips: ["「How are you?」には「I'm good, thanks.」と返すのが自然ですよ", "「I'm sorry?」と語尾を上げると、『もう一度お願いします』の意味になります", "まちがえても大丈夫。「Let's try again.」と言えば、前向きに聞こえます", "「Could you say that again?」も、聞き返しの定番です", "「I see.」は『なるほど』。相づちに便利ですよ"], yomi: 'こはるせんせい', persona: 'ていねいで励まし上手な先生。です・ます調。まちがえても大丈夫と伝える。英語の勉強が好き。', name: 'こはる先生', role: '学校の先生', look: { skin: 0xffe1cf, hair: 0x5a3e36, style: 'long', top: 0x93b5e1, bottom: 0xfff4e0, shoes: 0x8a5a44, acc: 'glasses', accColor: 0xb08b72 },
