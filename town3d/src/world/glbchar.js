@@ -118,6 +118,12 @@ export function useGlb(ch, id, { height } = {}) {
     }
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
     const wrap = new THREE.Group(); wrap.add(holder); wrap.scale.setScalar(height);
+    // すわる・ひざをつく・ピアノ: 骨を直接まげる(3Dの体には、この動きのデータがないので)。まげた分だけ腰を下げて、いすの高さに合わせる
+    const Bn = n => (model.getObjectByName('mixamorig' + n) || model.getObjectByName('mixamorig:' + n)), bn = { lu: Bn('LeftUpLeg'), ll: Bn('LeftLeg'), ru: Bn('RightUpLeg'), rl: Bn('RightLeg'), la: Bn('LeftArm'), ra: Bn('RightArm'), lf: Bn('LeftForeArm'), rf: Bn('RightForeArm') };
+    const dq = new THREE.Quaternion(), eu = new THREE.Euler(); let poseK = 0, poseName = null;
+    const rest = new Map(Object.values(bn).filter(Boolean).map(b => [b, b.quaternion.clone()]));   // 動かす前の向き(毎回ここからまげるので、ずれがたまらない)
+    const bend = (b, x, y, z, k) => { if (!b) return; eu.set(x * k, y * k, z * k); dq.setFromEuler(eu); b.quaternion.copy(rest.get(b)).multiply(dq); };
+    (window.__glbBones = window.__glbBones || {})[id] = bn; (window.__glbChar = window.__glbChar || {})[id] = ch;   // 点検用
     ch.root.add(wrap);
     ch.setHeight = h => { wrap.scale.setScalar(h); ch.height = h; };
     glbChars.add({ id, player, ch });
@@ -141,8 +147,18 @@ export function useGlb(ch, id, { height } = {}) {
       mixer.update(dt);
       // 家の中などの「寝転ぶ」: あおむけに倒す(3Dの体には寝る動きがないので、向きだけ変える)
       const lie = ch.pose === 'lie'; if (lie !== !!ch._lie) { ch._lie = lie; wrap.rotation.x = lie ? -Math.PI / 2 : 0; wrap.position.set(0, lie ? 0.12 : 0, lie ? ch.height / 2 : 0); }
+      const want = ch.pose === 'sit' || ch.pose === 'piano' || ch.pose === 'kneel' ? ch.pose : null;
+      if (want) poseName = want; poseK += ((want ? 1 : 0) - poseK) * Math.min(1, dt * 9); if (poseK < 0.01 && !want) { poseK = 0; poseName = null; }
+      let drop = 0;
+      if (poseK > 0 && poseName) {
+        const k = poseK;
+        if (poseName === 'kneel') { bend(bn.lu, -1.2, 0, 0, k); bend(bn.ll, 1.25, 0, 0, k); bend(bn.ru, 0.2, 0, 0, k); bend(bn.rl, 1.9, 0, 0, k); drop = 0.19 * ch.height / 1.7 * k; }   // ひざが地面につく高さまで
+        else { bend(bn.lu, -1.5, 0, 0.06, k); bend(bn.ru, -1.5, 0, -0.06, k); bend(bn.ll, 1.5, 0, 0, k); bend(bn.rl, 1.5, 0, 0, k); drop = 0.035 * ch.height * k;   // この体は腰がもともと低い(背の0.27倍)ので、いすの高さまで少しだけ下げる
+          if (poseName === 'piano') { bend(bn.la, -1.0, 0, 0, k); bend(bn.ra, -1.0, 0, 0, k); bend(bn.lf, -0.5, 0, 0, k); bend(bn.rf, -0.5, 0, 0, k); } }
+        ch.root.updateMatrixWorld(true);
+      }
       if (fadeT > 0) fadeT -= dt;
-      const ty = Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
+      const ty = -drop +  Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
     };
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };

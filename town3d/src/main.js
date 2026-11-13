@@ -195,7 +195,7 @@ export function mount(container, opt = {}) {
   if (net) {
     net.on('join', p => {
       if (peers.has(p.id)) return;
-      const ch = useGlb(makeCharacter(typeof p.look === 'string' ? LOOKS[p.look] || LOOKS.ren : p.look || LOOKS.ren), 'player:' + (p.look === 'mio' ? 'mio' : 'ren'), { height: PLAYER_H });
+      const ch = makeCharacter(typeof p.look === 'string' ? LOOKS[p.look] || LOOKS.ren : p.look || LOOKS.ren);   // ほかのプレイヤーは、かんたんな体(自分の体とは別。自分は3D)
       ch.root.position.set(p.x ?? 0, 0, p.z ?? 0); scene.add(ch.root);
       peers.set(p.id, { ch, tx: p.x ?? 0, tz: p.z ?? 0, ry: 0, mv: 0, name: p.name });
       hud.tag(p.id, p.name || 'だれか');
@@ -301,10 +301,11 @@ export function mount(container, opt = {}) {
     const lessPlayed = list => { const u = storage.get('menuUsed') || {}, m = Math.min(...list.map(x => u[x.key] || 0)); const c = list.filter(x => (u[x.key] || 0) === m); return c[Math.floor(Math.random() * c.length)]; };
     const forMii = r.def.id === 'mii' && !hint && Math.random() < 0.6 ? lessPlayed(SUGG.filter(x => !x.study && x.key)) : null;   // ミイ: あまりやっていないゲームを勧める
     const forKoharu = r.def.id === 'koharu' && !hint && Math.random() < 0.7 ? lessPlayed(SUGG.filter(x => x.study)) : null;   // こはる先生: まだやっていない勉強を勧める
-    const sg = forMii ? { ...forMii, say: 'そういえば、あまりやってないよね? ' + forMii.say } : forKoharu ? { ...forKoharu, say: 'まだあまりやってない勉強があるわね。' + forKoharu.say } : !hint && Math.random() < 0.25 && SUGG.length ? (() => { const bag = SUGG.flatMap(x => Array(x.w || 1).fill(x)); return bag[Math.floor(Math.random() * bag.length)]; })() : null;
-    if (sg) text += '\n' + sg.say;
+    let sg = forMii ? { ...forMii, say: 'そういえば、あまりやってないよね? ' + forMii.say } : forKoharu ? { ...forKoharu, say: 'まだあまりやってない勉強があるわね。' + forKoharu.say } : !hint && Math.random() < 0.25 && SUGG.length ? (() => { const bag = SUGG.flatMap(x => Array(x.w || 1).fill(x)); return bag[Math.floor(Math.random() * bag.length)]; })() : null;
+    if (r.visitSg) { sg = r.visitSg; r.visitSg = null; text = sg.say; }   // 自分から話しかけに来たときは、その用件をひと言に
+    if (sg && sg.say !== text) text += '\n' + sg.say;
     const role = PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role;
-    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg ? [{ label: 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }, ...items.filter(it => it.k === 'bond' && /デート|家においで|お家/.test(it.label)).map(it => ({ label: it.label, fn: it.fn }))] }); };   // デート・家に誘うは、仲良くなったら最初の画面にも出す
+    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg && sg.fn ? [{ label: 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }, ...items.filter(it => it.k === 'bond' && /デート|家においで|お家/.test(it.label)).map(it => ({ label: it.label, fn: it.fn }))] }); };   // デート・家に誘うは、仲良くなったら最初の画面にも出す
     const shelf = kind => {
       r.talking = true; talkingTo = r;
       const b = kind === 'bond' ? soc.bondTalk(r) : { text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', extra: [] };
@@ -729,6 +730,33 @@ export function mount(container, opt = {}) {
   let bdayCool = 0, bdayHello = false;
   const B_LINES = ['お誕生日おめでとう!', 'Happy birthday! おめでとう!', '今日、誕生日なんだって? おめでとう!', 'おめでとう! すてきな一年になりますように'];
   let bdayShot = null, bdayRelease = 0;
+  // ---- 住人のほうから話しかけに来る(ごくたまに): 仲良しがそばにいるとき/勉強をしばらくしていないとき/まだやっていないことがあるとき ----
+  let visitCk = 60 + Math.random() * 60, visitCool = 0, visiting = null;
+  function visitUpdate(dt) {
+    if (visiting) {
+      const r = visiting;
+      if (!r.visit) { visiting = null; return; }
+      if (hud.busy || appHost.current || seat || battle.active || sport.active || camMode !== 'follow') { r.visit = null; visiting = null; return; }
+      if (r.visit.arrived) { visiting = null; r.visit = null; lookAtR = null; talkTo(r); }
+      return;
+    }
+    visitCool -= dt; visitCk -= dt; if (visitCk > 0 || visitCool > 0) return;
+    visitCk = 20 + Math.random() * 20;
+    if (!started || hud.busy || appHost.current || seat || battle.active || sport.active || camMode !== 'follow' || guide || snow.holding || env.hour < 7 || env.hour >= 21 || Math.random() > 0.3) return;
+    const near = residents.list.filter(r => r.ch.root.visible && !r.hidden && !r.pin && !r.follow && !r.talking && !r.summonT && !r.def.mascot && !r.def.free && PREFS[r.def.id]).map(r => ({ r, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) })).filter(o => o.d > 5 && o.d < 20);
+    if (!near.length) return;
+    const who = o => o.r.def.id, pickR = a => a[Math.floor(Math.random() * a.length)];
+    let o = null, sg = null; const nm = settings.name || 'あなた';
+    const neg = studyNeglected();
+    if (neg.length && Math.random() < 0.6) { const t = neg[0]; o = near.find(x => ['koharu', 'sora', 'shiori'].includes(who(x))) || pickR(near); sg = { say: `${nm}、さいきん「${t.n}」、やってないよね? いっしょにやってみない?`, fn: () => opt.onEvent?.('app:event', { name: 'play', data: { id: t.id } }) }; }
+    if (!sg && Math.random() < 0.5) {   // まだやっていないこと
+      const used = storage.get('menuUsed') || {}, TRY = [['school', '学校で英語の練習'], ['library', '図書館で長い英文を読むこと'], ['omikuji', 'おみくじ'], ['fortune', '占い'], ['fishing', '釣り'], ['shop', 'お店めぐり']].filter(t => !used[t[0]] && !(t[0] === 'fortune' && residents.list.find(x => x.def.id === 'luna' && !x.ch.root.visible)));
+      if (TRY.length) { const t = pickR(TRY); o = pickR(near); sg = { say: `${t[1]}、まだ一回もしてないよね? 行ってみない?`, fn: () => openApp(t[0]) }; }
+    }
+    if (!sg) { const fr = near.filter(x => social.level(who(x)) >= 3); if (fr.length && Math.random() < 0.6) { o = pickR(fr); sg = { say: pickR([`あっ、${nm}! ちょうどよかった、ちょっといい?`, `${nm}〜! ひさしぶり、元気だった?`, `見つけた! ちょっとおしゃべりしよう?`]) }; } }
+    if (!o || !sg) return;
+    o.r.visit = { t: 0 }; o.r.visitSg = { ...sg, label: 'やってみる!' }; visiting = o.r; visitCool = 240 + Math.random() * 240;   // つぎの訪問まで、4〜8分あける
+  }
   function birthdayUpdate(dt) {
     if (bdayShot) {
       const b = bdayShot; b.t += dt;
@@ -1473,7 +1501,7 @@ export function mount(container, opt = {}) {
 
     if (talkingTo && !hud.busy) { talkingTo.talking = false; talkingTo = null; }   // 会話が終わっているのに止まったままの住人を放す
     for (const r of residents.list) if (r.talking && r !== talkingTo) r.talking = false;
-    tipUpdate(dt); hanaUpdate(dt); birthdayUpdate(dt);
+    tipUpdate(dt); hanaUpdate(dt); birthdayUpdate(dt); visitUpdate(dt);
     env.camera = camera; env.update(dt, me.ch.root.position);
     seasons.update(dt, camera.position, env.night || 0); seasons.holdAt(me.x, me.z, me.ry);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
@@ -1620,6 +1648,9 @@ export function mount(container, opt = {}) {
     snowBattle: id => battle.start(residents.list.find(r => r.def.id === id) || residents.list[0], 2),   // テスト用
     talk: id => { const r = residents.list.find(x => x.def.id === id); if (r) talkTo(r); },   // 点検用
     hideNpc: id => { const r = residents.list.find(x => x.def.id === id); if (r) { r.hidden = true; r.ch.root.visible = false; } },   // 点検用: 休み中の状態を作る
+    debugPose: (pose, d) => { me.ch.pose = pose; if (d) { cam.dist = d; cam.pitch = 0.15; cam.yaw = me.ry + Math.PI / 2; } },   // 点検用
+    debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
+    debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,

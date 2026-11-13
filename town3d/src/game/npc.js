@@ -204,6 +204,13 @@ export function createResidents(scene, graph, getHour, collide = null) {
           const P = r.ch.root.position; P.set(r.pin.x, r.pin.y || 0, r.pin.z); r.ch.root.rotation.y = r.pin.ry;
           if (!r.ch.root.visible) { r.ch.root.visible = true; r.hidden = false; } r.ch.pose = r.pin.pose || null; r.speed = 0; r.vx = r.vz = 0; r.ch.update(dt, 0); continue;
         }
+        if (r.visit) {   // 自分から話しかけに来る: 走ってそばまで来て、目の前で止まる(話しかけは main 側)
+          const P = r.ch.root.position, dx = player.x - P.x, dz = player.z - P.z, d = Math.hypot(dx, dz) || 1;
+          r.visit.t += dt; r.hidden = false; r.ch.root.visible = true; r.path = []; r.idle = null;
+          if (r.visit.t > 14 || r.talking === false && r.visit.cancel) { r.visit = null; r.speed = 0; }
+          else if (d > 1.9) { const st = Math.min(d - 1.8, 4.8 * dt); P.x += dx / d * st; P.z += dz / d * st; r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(dx, dz), Math.min(1, dt * 10)); r.speed = 4.8; r.ch.pose = null; r.ch.update(dt, 4.8); continue; }
+          else { r.visit.arrived = true; r.speed = 0; r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(dx, dz), Math.min(1, dt * 10)); r.ch.update(dt, 0); continue; }
+        }
         if (r.summonT > 0) {   // 呼び出されて、目の前に来ている。話しおわって しばらくしたら、歩いて予定の場所へもどる
           if (!r.talking) r.summonT -= dt;
           const P = r.ch.root.position; r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(player.x - P.x, player.z - P.z), Math.min(1, dt * 8));
