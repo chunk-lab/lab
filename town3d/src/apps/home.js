@@ -586,8 +586,8 @@ export const homeApp = {
       if (gch) { [wx, wz] = walkTo(wx - cs * 0.3, wz + sn * 0.3); }
       // 頭はうしろへのびるので、2人とも頭までへやの中に入るように、ずらす
       for (let k = 0; k < 3; k++) for (const [ox, oz] of [[0, 0], [-Math.sin(wry) * 1.3, -Math.cos(wry) * 1.3], ...(gch ? [[cs * 0.6, -sn * 0.6], [cs * 0.6 - Math.sin(wry) * 1.3, -sn * 0.6 - Math.cos(wry) * 1.3]] : [])]) { const [ax, az] = walkTo(wx + ox, wz + oz); wx += ax - (wx + ox); wz += az - (wz + oz); }
-      wy = 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wspeed = 0; wyaw = wry; wpitch = 0.95; wdist = 3.0;
-      guestPose('lie', 0.14);
+      wy = wme.hasLay ? 0.02 : 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wspeed = 0; wyaw = wry; wpitch = 0.95; wdist = 3.0;
+      guestPose('lie', wme.hasLay ? 0.02 : 0.14);
       if (gch) guestSay(GL('goro'));
     }
     function guestTalk() {
@@ -638,7 +638,7 @@ export const homeApp = {
       const pair = gch && (it.lie || it.w / 2 - 0.5 >= 0.3);   // お客さんと2人:自分は右、お客さんは左
       if (it.sit) { const lim = Math.max(0, it.w / 2 - 0.5); lx = pair ? -0.3 : clamp(lx, -lim, lim); lz = -0.02; } else { lx = pair ? -0.3 : 0; lz = 0.8; }
       wx = cx + lx * cs + lz * sn; wz = cz - lx * sn + lz * cs; wry = yaw;
-      wy = (Y[p.uid] || 0) + (it.sit ? 0 : it.lie + 0.14); wme.seatH = it.sit ? it.sit : null;
+      wy = (Y[p.uid] || 0) + (it.sit ? 0 : it.lie + (wme.hasLay ? 0.03 : 0.14)); wme.seatH = it.sit ? it.sit : null;
       wPose = { p, lx, stand: it.sit ? [lx, it.d / 2 + 0.6] : [it.w / 2 + 0.55, 0.3], yaw, cx, cz };
       wme.pose = it.sit ? 'sit' : 'lie'; wspeed = 0; if (it.lie) { wyaw = wry; wpitch = 0.95; wdist = 3.0; }
       if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy, it.sit); guestSay(GL(it.sit ? 'sit' : 'lie')); }

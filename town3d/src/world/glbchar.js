@@ -1,27 +1,28 @@
 // Mixamoリグ入りのGLB(ちびキャラ)を、makeCharacter と同じ使い方(root/height/update/wave)で動かす。
 // 読み込み中・失敗時は、元のコード製キャラのまま動く(落ちない)。
+import { makeSeatClips } from './seatanim.js';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 // 住人id → モデル。rotY は「モデルの正面を +z に向ける」補正(ゆず・潮見さんは -x 向きで出てくる)
 export const GLB_MODELS = {
-  baron: { url: 'models/baron.glb', rotY: 0 },
+  baron: { url: 'models/baron.glb', rotY: 0, sex: 'm' },
   koharu: { url: 'models/koharu.glb', rotY: 0 },
   yuzu: { url: 'models/yuzu.glb', rotY: Math.PI / 2 },
   shiori: { url: 'models/shiori.glb', rotY: 0 },
   maru: { url: 'models/maru.glb', rotY: 0 },
   mii: { url: 'models/mii.glb', rotY: 0 },
-  gon: { url: 'models/gon.glb', rotY: 0 },
-  choco: { url: 'models/choco.glb', rotY: 0 },
-  'player:ren': { url: 'models/player_ren.glb', rotY: 0 },   // プレイヤー(男の子)
+  gon: { url: 'models/gon.glb', rotY: 0, sex: 'm' },
+  choco: { url: 'models/choco.glb', rotY: 0, sex: 'm' },
+  'player:ren': { url: 'models/player_ren.glb', rotY: 0, sex: 'm' },   // プレイヤー(男の子)
   'player:mio': { url: 'models/player_mio.glb', rotY: 0 },   // プレイヤー(女の子)
   // 「player:」は ほかのプレイヤー(かんたんな体)。自分が操る体は「self:」で別にしてある(動きのデータが入っていない体は animFrom の体の動きを借りる)
-  'self:ren': { url: 'models/self_ren.glb', rotY: 0, animFrom: 'sora' },
+  'self:ren': { url: 'models/self_ren.glb', rotY: 0, animFrom: 'sora', sex: 'm' },
   'self:mio': { url: 'models/self_mio.glb', rotY: 0, animFrom: 'hana' },
   luna: { url: 'models/luna.glb', rotY: 0 },
-  tetsu: { url: 'models/philosopher.glb', rotY: 0 },
+  tetsu: { url: 'models/philosopher.glb', rotY: 0, sex: 'm' },
   suna: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
-  sora: { url: 'models/sora.glb', rotY: 0 },
+  sora: { url: 'models/sora.glb', rotY: 0, sex: 'm' },
   hana: { url: 'models/hana.glb', rotY: 0 },
 };
 // モデルの場所: town.js を読み込んだ場所の横の models/(1つのHTMLで動かすときは、ページの横の models/)。tarot・bgm と同じやり方
@@ -83,6 +84,7 @@ export function setGlbSize(k, v) {   // 「せってい」のつまみから。�
   for (const g of glbChars) if (g.player === (k === 'player')) g.ch.setHeight(v);
 }
 
+const SIT_HIP = 0.1;   // 腰の骨から座面までの高さ(m)の見当(実機で合わせる)
 export function useGlb(ch, id, { height } = {}) {
   if (!height) height = 1.3;   // 住人のふだんの背(プレイヤーは約1.65)
   const spec = GLB_MODELS[id]; if (!spec) return ch;
@@ -99,6 +101,8 @@ export function useGlb(ch, id, { height } = {}) {
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
+    // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
+    const SC = makeSeatClips(model, spec.sex); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } }
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
     // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
     // 待機の動きを何コマか見て、いちばん低い足元・いちばん高い頭で測る(動きの途中で沈まないように)
@@ -122,6 +126,9 @@ export function useGlb(ch, id, { height } = {}) {
     }
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
     const wrap = new THREE.Group(); wrap.add(holder); wrap.scale.setScalar(height);
+    // 座った動きの腰の高さ(背に対する割合)。座面に合わせるときの基準
+    let sitHipN = 0; const sitHipOf = () => { act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const y = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).y / height; act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); } return y; };
+    if (act.sit) sitHipN = sitHipOf();
     // すわる・ひざをつく・ピアノ: 骨を直接まげる(3Dの体には、この動きのデータがないので)。まげた分だけ腰を下げて、いすの高さに合わせる
     const Bn = n => (model.getObjectByName('mixamorig' + n) || model.getObjectByName('mixamorig:' + n)), bn = { lu: Bn('LeftUpLeg'), ll: Bn('LeftLeg'), ru: Bn('RightUpLeg'), rl: Bn('RightLeg'), la: Bn('LeftArm'), ra: Bn('RightArm'), lf: Bn('LeftForeArm'), rf: Bn('RightForeArm') };
     const dq = new THREE.Quaternion(), eu = new THREE.Euler(); let poseK = 0, poseName = null;
@@ -141,29 +148,33 @@ export function useGlb(ch, id, { height } = {}) {
       a.reset().fadeIn(fade).play(); if (cur) cur.fadeOut(fade); prev = cur; fadeT = fade; cur = a;
     };
     cur = act.idle || null; if (!cur) play('idle', 0);
-    ch.height = height; ch.glb = true;
+    ch.height = height; ch.glb = true; ch.hasLay = !!act.lay;
     const base = ch.update;
     ch.update = (dt, speed) => {
-      if (lock > 0) lock -= dt;
+      const sitK = !!act.sit && (ch.pose === 'sit' || ch.pose === 'piano'), layK = !!act.lay && ch.pose === 'lie';
+      if (sitK) play('sit', 0.4); else if (layK) play('lay', 0.4);
+      else if (lock > 0) lock -= dt;
       else play(act.run && (cur === act.run ? speed > 3.0 : speed > 4.2) ? 'run' : speed > 0.05 ? 'walk' : 'idle');   // 歩き⇔走りは少し幅をもたせる(行ったり来たりしない)
       if (cur === act.run) act.run.timeScale = Math.max(0.7, Math.min(1.4, speed / 5));
       if (cur === act.walk) act.walk.timeScale = Math.max(0.6, Math.min(1.6, speed / 2.2));
       mixer.update(dt);
+      if (act.lay) wrap.rotation.y = layK ? Math.PI / 2 : 0;   // ねる動きは体が横(x)向きなので、キャラの前後(z)に沿うように回す(頭が後ろ側)
       // 家の中などの「寝転ぶ」: あおむけに倒す(3Dの体には寝る動きがないので、向きだけ変える)
-      const lie = ch.pose === 'lie'; if (lie !== !!ch._lie) { ch._lie = lie; wrap.rotation.x = lie ? -Math.PI / 2 : 0; wrap.position.set(0, lie ? 0.12 : 0, lie ? ch.height / 2 : 0); }
-      const want = ch.pose === 'sit' || ch.pose === 'piano' || ch.pose === 'kneel' ? ch.pose : null;
+      const lie = ch.pose === 'lie' && !act.lay; if (lie !== !!ch._lie) { ch._lie = lie; wrap.rotation.x = lie ? -Math.PI / 2 : 0; wrap.position.set(0, lie ? 0.12 : 0, lie ? ch.height / 2 : 0); }
+      const want = (ch.pose === 'sit' && !act.sit) || ch.pose === 'piano' || ch.pose === 'kneel' ? ch.pose : null;
       if (want) poseName = want; poseK += ((want ? 1 : 0) - poseK) * Math.min(1, dt * 9); if (poseK < 0.01 && !want) { poseK = 0; poseName = null; }
       let drop = 0;
       if (poseK > 0 && poseName) {
         const k = poseK;
         if (poseName === 'kneel') { bend(bn.lu, -1.2, 0, 0, k); bend(bn.ll, 1.25, 0, 0, k); bend(bn.ru, 0.2, 0, 0, k); bend(bn.rl, 1.9, 0, 0, k); drop = 0.19 * ch.height / 1.7 * k; }   // ひざが地面につく高さまで
-        else { bend(bn.lu, -1.5, 0, 0.06, k); bend(bn.ru, -1.5, 0, -0.06, k); bend(bn.ll, 1.5, 0, 0, k); bend(bn.rl, 1.5, 0, 0, k); const sc = ch.height / 1.7, u = ch.seatH != null ? (ch.seatH - 0.387 * sc) / 1.8 : 0; drop = (0.035 * ch.height - u) * k;   // seatH=座面の高さ(m): 腰が座面の少し上にくるように下げる量を決める(測定: 腰=0.452×背/1.7+1.8×u)
+        else { if (!act.sit) { bend(bn.lu, -1.5, 0, 0.06, k); bend(bn.ru, -1.5, 0, -0.06, k); bend(bn.ll, 1.5, 0, 0, k); bend(bn.rl, 1.5, 0, 0, k); const sc = ch.height / 1.7, u = ch.seatH != null ? (ch.seatH - 0.387 * sc) / 1.8 : 0; drop = (0.035 * ch.height - u) * k; }   // seatH=座面の高さ(m): 腰が座面の少し上にくるように下げる量を決める(測定: 腰=0.452×背/1.7+1.8×u)
    // この体は腰がもともと低い(背の0.27倍)ので、いすの高さまで少しだけ下げる
           if (poseName === 'piano') { bend(bn.la, -1.0, 0, 0, k); bend(bn.ra, -1.0, 0, 0, k); bend(bn.lf, -0.5, 0, 0, k); bend(bn.rf, -0.5, 0, 0, k); } }
         ch.root.updateMatrixWorld(true);
       }
       if (fadeT > 0) fadeT -= dt;
-      const ty = -drop +  Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
+      let ty = -drop +  Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (sitK) ty = ((ch.seatH != null ? ch.seatH : 0.45) + SIT_HIP) / ch.height - sitHipN;   // 座った動きの腰を、座面の少し上に
+      if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
     };
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };
