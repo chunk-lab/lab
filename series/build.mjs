@@ -13,6 +13,7 @@ const copy = (src, dest) => {
 };
 const BUILD = Date.now().toString(36);   // 組み立てのたびに変わる印。ブラウザが古いファイルを使い続けないよう、読み込むファイル名の後ろにつける
 const want = process.argv.slice(2), apps = want.length ? want : Object.keys(APPS);
+execFileSync('node', [path.join(ROOT, 'tools_check_names.mjs')], { stdio: 'inherit' });   // 町と外側で名前がかぶっていたら、ここで止める
 for (const p of PREBUILD) execFileSync('python3', [path.join(ROOT, p)], { stdio: 'inherit' });
 for (const id of apps) {
   const app = APPS[id]; if (!app) { console.error('アプリがありません: ' + id); process.exit(1); }
