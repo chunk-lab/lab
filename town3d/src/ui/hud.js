@@ -157,13 +157,16 @@ export function createHud(root, bus) {
     sb.addEventListener('pointerup', up); sb.addEventListener('pointercancel', up); sb.addEventListener('contextmenu', e => e.preventDefault()); }
   emotes.onclick = e => { const b = e.target.closest('[data-e]'); if (b) bus.emit('ui:emote', b.dataset.e); };
   corner.querySelector('.tw-menu').onclick = () => bus.emit('ui:menu');
-  {   // 🎥: 押す=視点の切りかえ(引いて見る ⇔ 自分視点)、ダブルタップ=カメラの設定
-    const cb = corner.querySelector('.tw-cambtn'); let last = 0;
+  {   // 🎥: 押す=視点の切りかえ(引いて見る ⇔ 自分視点)、ダブルタップまたは長押し=カメラの設定
+    const cb = corner.querySelector('.tw-cambtn'); let last = 0, lt = null, long = false;
     cb.addEventListener('contextmenu', e => e.preventDefault());
-    cb.onclick = e => {
-      const t = e.timeStamp;
-      if (last && t - last < 380) { last = 0; bus.emit('ui:cam'); bus.emit('ui:camlong'); return; }   // 2回目: 1回目の切りかえをもどして、設定を開く
-      last = t; bus.emit('ui:cam');
+    let dbl = false;
+    cb.addEventListener('pointerdown', e => { long = false; dbl = !!last && e.timeStamp - last < 700; last = e.timeStamp; clearTimeout(lt); lt = setTimeout(() => { long = true; last = 0; bus.emit('ui:camlong'); }, 600); });   // 押した時刻で判定(画面が重くて、クリックが遅れても大丈夫)
+    const stop = () => clearTimeout(lt); cb.addEventListener('pointerup', stop); cb.addEventListener('pointercancel', stop); cb.addEventListener('pointerleave', stop);
+    cb.onclick = () => {
+      if (long) { long = false; return; }
+      if (dbl) { dbl = false; last = 0; bus.emit('ui:cam'); bus.emit('ui:camlong'); return; }   // 2回目: 1回目の切りかえをもどして、設定を開く
+      bus.emit('ui:cam');
     };
   }
   corner.querySelector('.tw-homebtn').onclick = () => bus.emit('ui:home');
