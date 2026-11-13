@@ -84,7 +84,7 @@ export function setGlbSize(k, v) {   // 「せってい」のつまみから。�
   for (const g of glbChars) if (g.player === (k === 'player')) g.ch.setHeight(v);
 }
 
-const SIT_HIP = 0.1;   // 腰の骨から座面までの高さ(m)の見当(実機で合わせる)
+const SIT_HIP = 0.17;   // 腰の骨から座面までの高さ(m)の見当(実機で合わせる)
 export function useGlb(ch, id, { height } = {}) {
   if (!height) height = 1.3;   // 住人のふだんの背(プレイヤーは約1.65)
   const spec = GLB_MODELS[id]; if (!spec) return ch;
