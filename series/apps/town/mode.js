@@ -54,7 +54,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   let preload = null;
   function startPreload() {
     if (preload) return preload;
-    const bar = document.createElement('div'); bar.className = 'md-preload'; bar.innerHTML = '<span>3Dの町をじゅんびしています…</span><div><i></i></div>';
+    const bar = document.createElement('div'); bar.className = 'md-preload'; bar.innerHTML = '<span>Loading…</span><div><i></i></div>';
     document.body.appendChild(bar);
     const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = (p, t) => { fill.style.width = Math.round(p * 100) + '%'; if (t) txt.textContent = t; };
     preload = (async () => {
@@ -64,17 +64,23 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         const ver = await fetch(root + 'versions.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
         const files = Object.keys(ver).filter(f => /\.glb$/.test(f)), cache = 'caches' in window ? await caches.open('town-glb-v1') : null;
         let done = 0;
-        const one = async f => { const url = root + f + '?v=' + ver[f]; try { if (cache && !(await cache.match(url))) { const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(0.3 + 0.7 * done / files.length, `3Dの町をじゅんびしています… ${done} / ${files.length}`); };
+        const one = async f => { const url = root + f + '?v=' + ver[f]; try { if (cache && !(await cache.match(url))) { const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(0.3 + 0.4 * done / files.length, `Loading… ${done} / ${files.length}`); };
         const q = files.slice(); await Promise.all([0, 1, 2].map(async () => { while (q.length) await one(q.shift()); }));
+        // 町そのものも、ここで組み立てて準備まで終える(画面はLoadingの下)。おわったら止めて隠す。あとは出入りしても読み込みなし
+        set(0.72); let p = 0.72; const tk = setInterval(() => { p += (0.97 - p) * 0.06; set(p); }, 300);
+        try { await mount3D(); await Promise.race([town.ready, new Promise(r => setTimeout(r, 90000))]); suspend3D(); } catch (e) { console.error(e); try { stop3D(); } catch (e2) { } }
+        clearInterval(tk); set(1);
       } catch (e) { console.error(e); }
       bar.remove();
     })();
     return preload;
   }
-  setTimeout(() => { startPreload(); }, 700);   // 起動直後の描画をじゃましないよう、最初の表示のあとすぐ開始
+  startPreload();   // 立ち上げた瞬間から、Loadingのバーを出して全部読む(おわるまでタイトルは見えない)
   async function go(m) {
     if (m !== '3d') { suspend3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 町は捨てずに、止めて隠すだけ(次に入るときは読み込みなしですぐ入れる)   // 勉強部屋(ホーム)へ
-    if (town) { home.hide(); document.body.classList.add('md-3d-on'); if (box) box.style.display = ''; try { town.resume(); } catch (e) { } core.daylog.act('base', { cat: 'relax', label: '街を歩く' }); return; }
+    if (preload) await preload;
+    const enter = () => { home.remember({ kind: '3d' }); core.daylog.act('base', { cat: 'relax', label: '街を歩く' }); try { if (core.profile.name && town.quickStart) town.quickStart(); } catch (e) { console.error(e); } };
+    if (town) { home.hide(); document.body.classList.add('md-3d-on'); if (box) box.style.display = ''; try { town.resume(); } catch (e) { } enter(); return; }
     home.hide(); document.body.classList.add('md-3d-on');
     const wait = document.createElement('div'); wait.className = 'md-wait'; wait.textContent = '町を読みこんでいます…'; document.body.appendChild(wait);
     const fail = (why) => { wait.remove(); try { stop3D(); } catch (e) { } if (box) { box.remove(); box = null; } town = null; document.body.classList.remove('md-3d-on'); console.error(why); home.show({ text: '3Dの町を開けませんでした（' + (why && why.message ? String(why.message).slice(0, 80) : '読みこみに失敗') + '）。通信のよいところで、もう一度ためしてください。' }); };
@@ -87,13 +93,13 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     try { if (core.admin && core.admin.on()) { const v = document.createElement('div'); v.className = 'md-ver'; v.textContent = verText(); document.body.appendChild(v); setTimeout(() => v.remove(), 10000); } } catch (e) { }
   }
   async function mount3D(wait) {
-    wait.remove(); core.daylog.act('base', { cat: 'relax', label: '街を歩く' });
+    if (wait) { wait.remove(); core.daylog.act('base', { cat: 'relax', label: '街を歩く' }); }
     let entered = false;   // 前回のふりかえり・単語テストは、キャラをえらんで町に入ってから(タイトル画面のあいだは出さない)
     // テスト用: ?coins=10000 で3Dの町のコインを増やして始められる（この端末の保存だけが変わる）
     const qc = new URLSearchParams(location.search).get('coins');
     if (/^\d{1,6}$/.test(qc || '')) core.wallet.set(+qc, 'test');
     box = document.createElement('div'); box.className = 'md-town3d'; document.body.appendChild(box);
-    home.remember({ kind: '3d' });
+    if (wait) home.remember({ kind: '3d' });
     town = window.town3d = window.Hoshimiya.mount(box, {
       playerName: () => core.profile.name,   // 物語ではじめに入れた名前を、3Dのはじめの画面に入れておく
       wallet: core.wallet,   // コインは2Dと共通

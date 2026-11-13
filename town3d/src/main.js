@@ -52,6 +52,7 @@ export function mount(container, opt = {}) {
   const PERIOD = { morning: '朝', day: '昼', evening: '夕方', night: '夜' };
   const audio = createAudio(); audio.set({ bgm: settings.bgm, sfx: settings.sfx });
   const offs = [];
+  if (!opt.openAdmin) { SIZE_NOW.npc = 2.0; SIZE_NOW.player = 1.7; }   // 大きさを変えられるのは運営だけ(一般は 住人2.0・自分1.7 で固定)
   const on = (t, e, f, o) => { t.addEventListener(e, f, o); offs.push(() => t.removeEventListener(e, f, o)); };
 
   // ---- DOM ----
@@ -1036,8 +1037,8 @@ export function mount(container, opt = {}) {
     const pn = hud.panel(`<h2>せってい</h2>
       <div class="tw-row">住人との会話${seg('en', [[1, '英語'], [0, '日本語']])}</div>
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
-      <div class="tw-row">住人の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="npc" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.npc}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.npc.toFixed(2)}</b></span></div>
-      <div class="tw-row">自分の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="player" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.player}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.player.toFixed(2)}</b></span></div>
+      ${opt.openAdmin ? `<div class="tw-row">住人の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="npc" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.npc}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.npc.toFixed(2)}</b></span></div>` : ''}
+      ${opt.openAdmin ? `<div class="tw-row">自分の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="player" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.player}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.player.toFixed(2)}</b></span></div>` : ''}
       <div class="tw-row">低負荷モード${seg('lite', [[0, 'オフ'], [1, 'オン']])}</div>
       <div class="tw-note">オンにすると、解像度・影・光のにじみ・ふちどり・噴水・月をかるくして、30fpsにします(流れ星は残ります)。</div>
       <div class="tw-row">時間の進み${seg('timeSpeed', [[0, '止める'], [1, 'ふつう'], [4, 'はやい']])}</div>
@@ -1045,10 +1046,10 @@ export function mount(container, opt = {}) {
       <div class="tw-row">時刻<div class="tw-seg"><button class="tw-btn" data-hour="8">朝</button><button class="tw-btn" data-hour="13">昼</button><button class="tw-btn" data-hour="18">夕</button><button class="tw-btn" data-hour="21">夜</button></div></div>
       <div class="tw-row">テスト:時刻<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-t-hour" type="range" min="0" max="24" step="0.25" value="${env.hour.toFixed(2)}" style="flex:1"><b class="tw-t-hv" style="min-width:3.2em;text-align:right"></b></span></div>
       <div class="tw-row">テスト:日付<span style="display:flex;gap:6px;align-items:center"><input class="tw-t-date" type="date" value="${testDate.getFullYear()}-${String(testDate.getMonth() + 1).padStart(2, '0')}-${String(testDate.getDate()).padStart(2, '0')}" style="font:inherit;padding:4px 6px;border-radius:10px;border:2px solid #eadff3"><button class="tw-btn" data-act="today" style="padding:6px 10px">きょう</button></span></div>
-      <div class="tw-row">桜${'<div class="tw-seg"><button class="tw-btn' + (blossomOn ? ' on' : '') + '" data-bl="1">あり</button><button class="tw-btn' + (!blossomOn ? ' on' : '') + '" data-bl="0">なし</button></div>'}</div>
+      ${opt.openAdmin ? `<div class="tw-row">桜${'<div class="tw-seg"><button class="tw-btn' + (blossomOn ? ' on' : '') + '" data-bl="1">あり</button><button class="tw-btn' + (!blossomOn ? ' on' : '') + '" data-bl="0">なし</button></div>'}</div>` : ''}
       <div class="tw-row">流れ星<button class="tw-btn" data-act="meteor" style="padding:6px 14px">いま流す</button></div>
       <div class="tw-row">英語のヒント(すれ違い)${seg('tips', [[0, 'なし'], [1, 'あり']])}</div>
-      <div class="tw-row">きせつ(桜・紅葉・雪)<button class="tw-btn" data-act="season" style="padding:6px 14px">${SEASONS[settings.season || 'auto']}</button></div>
+      ${opt.openAdmin ? `<div class="tw-row">きせつ(桜・紅葉・雪)<button class="tw-btn" data-act="season" style="padding:6px 14px">${SEASONS[settings.season || 'auto']}</button></div>` : ''}
       <div class="tw-row">誕生日(花火でお祝い)<button class="tw-btn" data-act="birth" style="padding:6px 14px">${settings.birth ? settings.birth.replace(/-/g, '/') : 'とうろく'}</button></div>
       ${opt.openAdmin ? '<div class="tw-row">運営(花火・日食・月食の予約)<button class="tw-btn" data-act="admin" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
@@ -1597,6 +1598,7 @@ export function mount(container, opt = {}) {
     npcAct: (id, act) => { const r = residents.list.find(x => x.def.id === id); if (!r) return false; const p = r.ch.root.position; me.x = p.x + 1.2; me.z = p.z; if (act) doAct(r, { act }); else talkTo(r); return true; },   // テスト用
     snowBattle: id => battle.start(residents.list.find(r => r.def.id === id) || residents.list[0], 2),   // テスト用
     talk: id => { const r = residents.list.find(x => x.def.id === id); if (r) talkTo(r); },   // 点検用
+    ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,
     // 組み込み先がゲームを開いている間は止める(描画も音も)
