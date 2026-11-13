@@ -52,7 +52,7 @@ export function mount(container, opt = {}) {
   const PERIOD = { morning: '朝', day: '昼', evening: '夕方', night: '夜' };
   const audio = createAudio(); audio.set({ bgm: settings.bgm, sfx: settings.sfx });
   const offs = [];
-  if (!opt.openAdmin) { SIZE_NOW.npc = 2.0; SIZE_NOW.player = 1.7; }   // 大きさを変えられるのは運営だけ(一般は 住人2.0・自分1.7 で固定)
+  if (!opt.openAdmin) { SIZE_NOW.npc = 2.0; SIZE_NOW.player = 1.7; SIZE_NOW.mascot = 1.0; }   // 大きさを変えられるのは運営だけ(一般は 住人2.0・自分1.7 で固定)
   const on = (t, e, f, o) => { t.addEventListener(e, f, o); offs.push(() => t.removeEventListener(e, f, o)); };
 
   // ---- DOM ----
@@ -1074,6 +1074,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
       ${opt.openAdmin ? `<div class="tw-row">住人の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="npc" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.npc}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.npc.toFixed(2)}</b></span></div>` : ''}
       ${opt.openAdmin ? `<div class="tw-row">自分の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="player" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.player}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.player.toFixed(2)}</b></span></div>` : ''}
+      ${opt.openAdmin ? `<div class="tw-row">チャンクくんの大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="mascot" type="range" min="0.5" max="2.5" step="0.05" value="${SIZE_NOW.mascot}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.mascot.toFixed(2)}</b></span></div>` : ''}
       <div class="tw-row">低負荷モード${seg('lite', [[0, 'オフ'], [1, 'オン']])}</div>
       <div class="tw-note">オンにすると、解像度・影・光のにじみ・ふちどり・噴水・月をかるくして、30fpsにします(流れ星は残ります)。</div>
       <div class="tw-row">時間の進み${seg('timeSpeed', [[0, '止める'], [1, 'ふつう'], [4, 'はやい']])}</div>

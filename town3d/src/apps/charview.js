@@ -1,8 +1,8 @@
 // キャラを眺める画面(自宅から開く)。自分・住人・ほかのプレイヤーのキャラを1体ずつ回して見る。
 // いずれ「着替え」もここに足す(服の選択を、下のならびに追加する)。
 import * as THREE from 'three';
-import { makeCharacter, LOOKS } from '../world/character.js';
-import { useGlb, GLB_MODELS } from '../world/glbchar.js';
+import { makeCharacter, makeChunkkun, LOOKS } from '../world/character.js';
+import { useGlb, GLB_MODELS, useChunkkunGlb } from '../world/glbchar.js';
 import { RESIDENTS } from '../game/npc.js';
 
 const ink = '#5a4a6b';
@@ -14,6 +14,7 @@ function roster(player) {
   const list = [{ key: 'me', name: '自分', glb: myLook === 'ren' ? 'self:ren' : 'self:mio', look: LOOKS[myLook] }];
   list.push({ key: 'pm', name: '他の人(女)', glb: 'player:mio', look: LOOKS.mio }, { key: 'pr', name: '他の人(男)', glb: 'player:ren', look: LOOKS.ren });
   for (const r of RESIDENTS) if (GLB_MODELS[r.id]) list.push({ key: r.id, name: r.name || r.id, glb: r.id, look: r.look });
+  const mk = RESIDENTS.find(r => r.mascot); if (mk) list.push({ key: 'chunkkun', name: mk.name || 'チャンクくん', mascot: true });
   return list;
 }
 
@@ -44,7 +45,7 @@ export function openCharView(host, ctx = {}, onClose) {
     cur = c;
     if (ch) { scene.remove(ch.root); ch = null; }
     framed = false;
-    ch = useGlb(makeCharacter(c.look), c.glb);
+    ch = c.mascot ? useChunkkunGlb(makeChunkkun()) : useGlb(makeCharacter(c.look), c.glb);
     ch.root.position.set(0, 0, 0); scene.add(ch.root); setMotion('idle');
     nm.textContent = c.name;
     [...ls.children].forEach(b => { b.style.cssText = chip(b.dataset.k === c.key); });
@@ -80,7 +81,7 @@ export function openCharView(host, ctx = {}, onClose) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     const w = cv.clientWidth, hh = cv.clientHeight; if (w && hh && (w !== sw || hh !== sh)) { sw = w; sh = hh; renderer.setSize(w, hh, false); cam.aspect = w / hh; cam.updateProjectionMatrix(); }
     if (ch) {
-      if (ch.glb && !framed) { framed = true; h = ch.height || 1.5; }
+      if (!framed && (ch.glb || cur.mascot)) { framed = true; h = cur.mascot ? 1.0 : (ch.height || 1.5); }
       if (waveT > 0) { waveT -= dt; if (waveT <= 0 && motion === 'wave') setMotion('idle'); }
       ch.update(dt, motion === 'walk' ? 1.6 : 0);
     }

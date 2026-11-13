@@ -9,11 +9,11 @@ export const GLB_MODELS = {
   baron: { url: 'models/baron.glb', rotY: 0, sex: 'm' },
   koharu: { url: 'models/koharu.glb', rotY: 0 },
   yuzu: { url: 'models/yuzu.glb', rotY: 0, animFrom: 'hana' },
-  shiori: { url: 'models/shiori.glb', rotY: 0 },
-  maru: { url: 'models/maru.glb', rotY: 0 },
-  mii: { url: 'models/mii.glb', rotY: 0 },
-  gon: { url: 'models/gon.glb', rotY: 0, sex: 'm' },
-  choco: { url: 'models/choco.glb', rotY: 0, sex: 'm' },
+  shiori: { url: 'models/shiori.glb', rotY: 0, animFrom: 'hana' },
+  maru: { url: 'models/maru.glb', rotY: 0, animFrom: 'hana' },
+  mii: { url: 'models/mii.glb', rotY: 0, animFrom: 'hana' },
+  gon: { url: 'models/gon.glb', rotY: 0, sex: 'm', animFrom: 'sora' },
+  choco: { url: 'models/choco.glb', rotY: 0, sex: 'm', animFrom: 'sora' },
   'player:ren': { url: 'models/player_ren.glb', rotY: 0, sex: 'm' },   // プレイヤー(男の子)
   'player:mio': { url: 'models/player_mio.glb', rotY: 0 },   // プレイヤー(女の子)
   // 「player:」は ほかのプレイヤー(かんたんな体)。自分が操る体は「self:」で別にしてある(動きのデータが入っていない体は animFrom の体の動きを借りる)
@@ -78,9 +78,10 @@ const Q = (() => { try { return new URLSearchParams(location.search); } catch (e
 const num = k => parseFloat(Q.get(k)) || 0;
 const SZ_KEY = 'hoshimiya:size';
 const savedSz = (() => { try { return JSON.parse(localStorage.getItem(SZ_KEY)) || {}; } catch (e) { return {}; } })();
-export const SIZE_NOW = { npc: num('npcsize') || savedSz.npc || 2.0, player: num('playersize') || savedSz.player || 1.7 };
+export const SIZE_NOW = { npc: num('npcsize') || savedSz.npc || 2.0, player: num('playersize') || savedSz.player || 1.7, mascot: savedSz.mascot || 1.0 };
 export function setGlbSize(k, v) {   // 「せってい」のつまみから。出ている全員の背が、その場で変わる
-  SIZE_NOW[k] = v; try { localStorage.setItem(SZ_KEY, JSON.stringify({ npc: SIZE_NOW.npc, player: SIZE_NOW.player })); } catch (e) { }
+  SIZE_NOW[k] = v; try { localStorage.setItem(SZ_KEY, JSON.stringify({ npc: SIZE_NOW.npc, player: SIZE_NOW.player, mascot: SIZE_NOW.mascot })); } catch (e) { }
+  if (k === 'mascot') { for (const m of mascotModels) m.scale.setScalar(1.25 * v); return; }
   for (const g of glbChars) if (g.player === (k === 'player')) g.ch.setHeight(v);
 }
 
@@ -233,12 +234,13 @@ import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js
 
 // 町のマスコット「チャンクくん」:動きの入った雲のGLB。移動中は Cloud_Crawl、止まっているときは Cloud_Idle をループ再生する
 // (体のゆがみ・6本の足の動きもそのまま再生。人間用の動きの自動適用はしない。位置と向きは、ゲーム側が root で動かす)
+const mascotModels = [];
 export function useChunkkunGlb(ch) {
   const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
   load('models/chunkkun.glb', false).then(gltf => {
     const model = cloneSkinned(gltf.scene); toonify(model);
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
-    model.scale.setScalar(1.25);   // 足元は y=0、顔は +z(ゲームの前向き)
+    model.scale.setScalar(1.25 * SIZE_NOW.mascot); mascotModels.push(model);   // 足元は y=0、顔は +z(ゲームの前向き)
     ch.root.add(model);
     const mixer = new THREE.AnimationMixer(model);
     const act = {}; for (const [k, n] of [['idle', 'Cloud_Idle'], ['crawl', 'Cloud_Crawl']]) { const c = THREE.AnimationClip.findByName(gltf.animations, n); if (c) act[k] = mixer.clipAction(c).setLoop(THREE.LoopRepeat, Infinity); }
