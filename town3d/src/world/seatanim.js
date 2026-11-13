@@ -9,9 +9,10 @@ const q4 = a => new THREE.Quaternion(a[0], a[1], a[2], a[3]);
 const norm = n => n.replace(':', '');
 
 // model: 体の根(骨を含む)。この体の「はじめの姿勢」で補正する。戻り値: { sit, lay, ok }
-export function makeSeatClips(model, sex) {
+export function makeSeatClips(model, sex, rotY = 0) {
   model.updateMatrixWorld(true);
-  const inv = new THREE.Matrix4().copy(model.matrixWorld).invert(), m = new THREE.Matrix4(), qa = new THREE.Quaternion();
+  // 正面を+zに向ける回転(rotY)を含めた向きで測る(ゆず・潮見さんのように、体が横向きに出てくる体でも、動きが前向きになる)
+  const inv = new THREE.Matrix4().copy(model.matrixWorld).invert().premultiply(new THREE.Matrix4().makeRotationY(rotY)), m = new THREE.Matrix4(), qa = new THREE.Quaternion();
   const T = {};
   model.traverse(b => {
     if (!b.isBone) return;
