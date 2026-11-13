@@ -67,6 +67,13 @@ export function createDayLog(core) {
     },
     words(k = dayKey()) { return Object.values((S.days[k] || { words: {} }).words); },
     wordCount: (k = dayKey()) => Object.keys((S.days[k] || { words: {} }).words).length,
+    // 直近(n日ぶん)で、まちがえた・なやんだ・まだ覚えていない言葉(立ち上げのLoading中のおさらい用)。文は入れない
+    missed(n = 14) {
+      const out = new Map(), ok = w => w && w.en && w.ja && w.kind !== 'sentence';
+      Object.keys(S.days).sort().slice(-n).forEach(k => Object.values(S.days[k].words || {}).forEach(w => { if (ok(w) && (w.miss || w.slow)) out.set(w.en.toLowerCase(), { ...w, day: k }); }));
+      S.queue.forEach(w => { if (!ok(w)) return; const key = w.en.toLowerCase(), o = out.get(key); out.set(key, { ...(o || w), day: (o && o.day) || w.added || '', unk: w.unk || 0 }); });
+      return [...out.values()];
+    },
     // ---- ふりかえり(復習) ----
     // 前回までに残っているもの:覚えていないキュー+ふりかえりをしなかった日の単語。新しい順
     pending() {

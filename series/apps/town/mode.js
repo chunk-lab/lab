@@ -51,12 +51,55 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
 
   // ---- アプリを立ち上げたらすぐ、3Dの町のプログラムとキャラのモデルを読みこんでおく(バーを出す)。「街へ行く」を押すころには済んでいる ----
+  // ---- Loading中のおさらい: 直近でまちがえた言葉を、むずかしい順に「英語 → 日本語」で出し、英語→日本語を2回ずつ読み上げる ----
+  // ブラウザは、画面を一度タップするまで音を出せない。タップ前は文字だけ送り、タップされたらその言葉から読み上げる
+  function loadingDrill(bar) {
+    let list = []; try { list = core.daylog.missed(14); } catch (e) { }
+    if (!list.length) return () => { };
+    const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const jaShort = t => String(t).split(/[、,;;／\/]/).map(x => x.trim()).filter(Boolean).slice(0, 2).join('、');
+    const jaSay = t => String(t).split(/[、,;;／\/]/)[0].replace(/[((][^))]*[))]/g, '').trim();
+    const box = document.createElement('section'); box.className = 'md-drill';
+    box.innerHTML = '<small>まちがえた言葉のおさらい(英語 → 日本語)</small><p><b></b><i>→</i><span></span></p><em></em><u>画面をタップすると、読み上げます</u>';
+    bar.insertBefore(box, bar.firstChild);
+    const eEn = box.querySelector('b'), eJa = box.querySelector('span'), eN = box.querySelector('em'), eTip = box.querySelector('u');
+    const voiceOn = () => { try { return !!core.settings.get('voice'); } catch (e) { return false; } };
+    if (!voiceOn()) eTip.remove();
+    let WL = null, alive = true, i = 0, run = 0, timer = null;
+    const lvOf = en => { if (!WL) return 3; const ws = String(en).toLowerCase().split(/[^a-z']+/).filter(Boolean); let m = 0; for (const w of ws) m = Math.max(m, WL[w] || 0); return m || (ws.length > 1 ? 3 : 6); };   // 表にない言葉は、むずかしい扱い
+    const sortList = () => { list.sort((a, b) => lvOf(b.en) - lvOf(a.en) || (b.unk || 0) - (a.unk || 0) || String(b.day || '').localeCompare(String(a.day || ''))); list = list.slice(0, 40); };
+    // 1つ読む。声が出せない・すぐ終わったときも、読める長さだけは待つ
+    const say = (text, lang, minMs) => new Promise(res => {
+      const t0 = Date.now(); let done = false;
+      const fin = () => { if (done) return; done = true; clearTimeout(timer); const rest = minMs - (Date.now() - t0); rest > 0 ? (timer = setTimeout(res, rest)) : res(); };
+      timer = setTimeout(fin, 6000);
+      try { core.speech.speak(text, { lang, onend: fin }); } catch (e) { fin(); }
+    });
+    async function loop(my) {
+      while (alive && my === run) {
+        const w = list[i % list.length];
+        eEn.textContent = w.en; eJa.textContent = jaShort(w.ja); eN.textContent = `${(i % list.length) + 1} / ${list.length}`;
+        for (let k = 0; k < 2 && alive && my === run; k++) {
+          eEn.classList.add('on'); await say(w.en, 'en', 900); eEn.classList.remove('on'); if (!alive || my !== run) return;
+          eJa.classList.add('on'); await say(jaSay(w.ja), 'ja', 800); eJa.classList.remove('on');
+        }
+        if (!alive || my !== run) return;
+        await new Promise(r => { timer = setTimeout(r, 350); }); i++;
+      }
+    }
+    const tap = () => { if (!alive) return; eTip.remove(); clearTimeout(timer); loop(++run); };   // タップ: 音が出せるようになるので、いまの言葉を最初から読み直す
+    bar.addEventListener('pointerdown', tap);
+    // むずかしさの表(単語のレベル)を読んでから、むずかしい順にならべて始める。読めなければ、そのままの順で
+    loadScript(core.base + 'g/stream/wlv.js').then(() => { try { WL = {}; WLV_SRC.split(',').forEach(x => { const j = x.lastIndexOf(':'); WL[x.slice(0, j)] = +x.slice(j + 1); }); } catch (e) { WL = null; } }, () => { }).then(() => { if (!alive) return; sortList(); loop(++run); });
+    return () => { alive = false; run++; clearTimeout(timer); bar.removeEventListener('pointerdown', tap); try { core.speech.stop(); } catch (e) { } };
+  }
   let preload = null;
   function startPreload() {
     if (preload) return preload;
     const bar = document.createElement('div'); bar.className = 'md-preload'; bar.innerHTML = '<span>Loading…</span><div><i></i></div>';
     document.body.appendChild(bar);
     const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = p => { const n = Math.min(100, Math.round(p * 100)) + '%'; fill.style.width = n; txt.textContent = 'Loading… ' + n; };
+    const stopDrill = loadingDrill(bar);   // 待っている間、直近でまちがえた言葉を「英語 → 日本語」で出して読み上げる
     preload = (async () => {
       try {
         set(0.01); await loadScript(core.base + 'g/town3d/three.js'); set(0.04); await loadScript(core.base + 'g/town3d/town.js'); set(0.08);
@@ -73,7 +116,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         try { const m = mount3D(); tk = setInterval(() => { try { set(p1 + (0.99 - p1) * Math.min(1, (town && town.progress ? town.progress() : 0))); } catch (e) { } }, 250); await m; await Promise.race([town.ready, new Promise(r => setTimeout(r, 90000))]); suspend3D(); } catch (e) { console.error(e); try { stop3D(); } catch (e2) { } }
         if (tk) clearInterval(tk); set(1);
       } catch (e) { console.error(e); }
-      bar.remove();
+      stopDrill(); bar.remove();
     })();
     return preload;
   }

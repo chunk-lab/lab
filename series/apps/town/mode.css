@@ -81,3 +81,12 @@ body.md-home-on .tw-chat{width:min(15vw,66px);height:min(15vw,66px);padding:0;bo
 /* 立ち上げ時のLoading: 画面ぜんぶをおおう(おわるまでタイトルも町も見せない) */
 .md-preload{left:0;top:0;bottom:0;transform:none;width:100%;z-index:9999;border-radius:0;background:#ffe9ef;box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:18px;pointer-events:auto;padding:0}
 .md-preload div{width:min(70%,280px);height:10px;margin-top:14px;background:#fff}
+
+/* Loading中のおさらい(直近でまちがえた言葉を「英語 → 日本語」で) */
+.md-drill{width:min(88%,360px);margin-bottom:26px;padding:16px 14px 12px;border-radius:18px;background:#fff;box-shadow:0 3px 14px rgba(90,74,107,.18);color:#5a4a6b;text-align:center;font-family:inherit}
+.md-drill small{display:block;font-size:11px;font-weight:700;color:#a394b5}
+.md-drill p{margin:10px 0 6px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;justify-content:center;line-height:1.35}
+.md-drill b{font-size:26px;font-weight:800;transition:color .15s}.md-drill p i{font-style:normal;font-size:16px;color:#c9bcd8;width:auto;height:auto;background:none;display:inline}
+.md-drill span{font-size:19px;font-weight:700;transition:color .15s}.md-drill .on{color:#e8668a}
+.md-drill em{display:block;font-style:normal;font-size:11px;color:#b8abc8}
+.md-drill u{display:block;margin-top:8px;text-decoration:none;font-size:12px;font-weight:700;color:#8f7bd0}
