@@ -234,7 +234,7 @@ import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js
 
 // 町のマスコット「チャンクくん」:動きの入った雲のGLB。移動中は Cloud_Crawl、止まっているときは Cloud_Idle をループ再生する
 // (体のゆがみ・6本の足の動きもそのまま再生。人間用の動きの自動適用はしない。位置と向きは、ゲーム側が root で動かす)
-const mascotModels = [];
+const mascotModels = [], MORPH_GAIN = 2.5;
 export function useChunkkunGlb(ch) {
   const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
   load('models/chunkkun.glb', false).then(gltf => {
@@ -248,7 +248,13 @@ export function useChunkkunGlb(ch) {
     let cur = null;
     const go = a => { if (!a || a === cur) return; a.reset().play(); if (cur) a.crossFadeFrom(cur, 0.25, false); cur = a; };
     go(act.idle || act.crawl);
-    ch.update = (dt, speed) => { go(speed > 0.05 ? (act.crawl || act.idle) : (act.idle || act.crawl)); mixer.update(dt); };
+    const morphs = []; model.traverse(o => { if (o.isMesh && o.morphTargetInfluences && o.morphTargetInfluences.length) morphs.push(o); });
+    let wt = 0;
+    ch.update = (dt, speed) => {
+      const mv = speed > 0.05; go(mv ? (act.crawl || act.idle) : (act.idle || act.crawl)); mixer.update(dt);
+      wt += dt * (mv ? 3.2 : 1.9);   // ふくらみを大きく(動きの値を増幅)+待機中もずっとふわふわ(ゆっくりした波を重ねる)
+      for (const m of morphs) { const a = m.morphTargetInfluences; for (let i = 0; i < a.length; i++) a[i] = a[i] * MORPH_GAIN + (Math.sin(wt - i * 1.7) * 0.5 + 0.5) * (mv ? 0.5 : 0.4); }
+    };
   }).catch(() => { old.forEach(o => { o.visible = true; }); });
   return ch;
 }
