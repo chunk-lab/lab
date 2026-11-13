@@ -1,6 +1,6 @@
 // 町の住人。時刻ごとの予定(schedule)に合わせて道すじを歩き、話しかけると会話する
 import { makeCharacter, makeChunkkun, LOOKS } from '../world/character.js';
-import { useGlb, GLB_MODELS } from '../world/glbchar.js';
+import { useGlb, GLB_MODELS, useChunkkunGlb } from '../world/glbchar.js';
 import { PLACES } from '../world/town_data.js';
 import { angleLerp } from '../core/core.js';
 
@@ -172,7 +172,7 @@ function residentHeight(d) {
 export function createResidents(scene, graph, getHour, collide = null) {
   let outing = new Set();   // きょう お出かけの日の住人
   const list = RESIDENTS.map((d, i) => {
-    const ch = d.mascot ? makeChunkkun() : useGlb(makeCharacter(d.look), d.id, { height: residentHeight(d) });
+    const ch = d.mascot ? useChunkkunGlb(makeChunkkun()) : useGlb(makeCharacter(d.look), d.id, { height: residentHeight(d) });
     const goal = goalOf(d, getHour());
     const start = graph.nodes[PLACES[goal.place]];
     const sa = i * 2.4 + 0.7; ch.root.position.set(start.x + Math.cos(sa) * (1.5 + (i % 3) * 0.8), 0, start.z + Math.sin(sa) * (1.5 + (i % 3) * 0.8));

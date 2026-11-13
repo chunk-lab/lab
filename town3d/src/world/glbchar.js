@@ -230,6 +230,26 @@ function posedBox(holder, base) {
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js';
 
 // 読み込み画面用: プレイヤー2人ぶんなど、まだ頼まれていないモデルも先に読み込んでおく
+
+// 町のマスコット「チャンクくん」:動きの入った雲のGLB。移動中は Cloud_Crawl、止まっているときは Cloud_Idle をループ再生する
+// (体のゆがみ・6本の足の動きもそのまま再生。人間用の動きの自動適用はしない。位置と向きは、ゲーム側が root で動かす)
+export function useChunkkunGlb(ch) {
+  const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
+  load('models/chunkkun.glb', false).then(gltf => {
+    const model = cloneSkinned(gltf.scene); toonify(model);
+    model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
+    model.scale.setScalar(1.25);   // 足元は y=0、顔は +z(ゲームの前向き)
+    ch.root.add(model);
+    const mixer = new THREE.AnimationMixer(model);
+    const act = {}; for (const [k, n] of [['idle', 'Cloud_Idle'], ['crawl', 'Cloud_Crawl']]) { const c = THREE.AnimationClip.findByName(gltf.animations, n); if (c) act[k] = mixer.clipAction(c).setLoop(THREE.LoopRepeat, Infinity); }
+    if (!act.idle && !act.crawl) { old.forEach(o => { o.visible = true; }); ch.root.remove(model); return; }
+    let cur = null;
+    const go = a => { if (!a || a === cur) return; a.reset().play(); if (cur) a.crossFadeFrom(cur, 0.25, false); cur = a; };
+    go(act.idle || act.crawl);
+    ch.update = (dt, speed) => { go(speed > 0.05 ? (act.crawl || act.idle) : (act.idle || act.crawl)); mixer.update(dt); };
+  }).catch(() => { old.forEach(o => { o.visible = true; }); });
+  return ch;
+}
 export function glbPreload(ids) { for (const id of ids) { const m = GLB_MODELS[id]; if (m) load(m.url, false).catch(() => { }); } }
 // 画面に出す準備(絵をGPUに送る・光り方を作る)を、1体ずつ間をあけて済ませる。町に入ってからのカクつきをなくす
 export async function glbWarm(renderer, camera) {
