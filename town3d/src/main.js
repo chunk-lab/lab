@@ -170,7 +170,7 @@ export function mount(container, opt = {}) {
   const last = storage.get('pos'); if (last) { me.x = last[0]; me.z = last[1]; }
   function setLook(id) {
     if (me.ch) scene.remove(me.ch.root);
-    me.ch = useGlb(makeCharacter(LOOKS[id] || LOOKS.mio), (id === 'ren' ? 'self:ren' : 'player:' + (LOOKS[id] ? id : 'mio')), { height: PLAYER_H });
+    me.ch = useGlb(makeCharacter(LOOKS[id] || LOOKS.mio), (id === 'ren' ? 'self:ren' : id === 'mio' ? 'self:mio' : 'player:' + (LOOKS[id] ? id : 'mio')), { height: PLAYER_H });
     scene.add(me.ch.root);
   }
   // 自分のキャラは れん(男の子)・みお(女の子)の2人だけ。はな・そらは住人になったので、前に選んでいた人は近いほうへ
@@ -1596,7 +1596,7 @@ export function mount(container, opt = {}) {
     root.appendChild(lo);
     const bar = lo.querySelector('i'), pct = lo.querySelector('.lp'), skip = lo.querySelector('button'), t0 = performance.now();
     let fin = false, warming = false, shown = 0;
-    setGlbConc(4); glbPreload(['self:ren', 'sora', 'player:ren', 'player:mio']);
+    setGlbConc(4); glbPreload(['self:ren', 'self:mio', 'sora', 'hana', 'player:ren', 'player:mio']);
     const finish = () => { if (fin) return; fin = true; setGlbConc(2); lo.remove(); loadFin(); };
     skip.onclick = finish;
     const tick = async () => {

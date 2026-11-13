@@ -17,6 +17,7 @@ export const GLB_MODELS = {
   'player:mio': { url: 'models/player_mio.glb', rotY: 0 },   // プレイヤー(女の子)
   // 「player:」は ほかのプレイヤー(かんたんな体)。自分が操る体は「self:」で別にしてある(動きのデータが入っていない体は animFrom の体の動きを借りる)
   'self:ren': { url: 'models/self_ren.glb', rotY: 0, animFrom: 'sora' },
+  'self:mio': { url: 'models/self_mio.glb', rotY: 0, animFrom: 'hana' },
   luna: { url: 'models/luna.glb', rotY: 0 },
   tetsu: { url: 'models/philosopher.glb', rotY: 0 },
   suna: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
