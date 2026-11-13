@@ -50,13 +50,35 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   });
   const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
 
+  // ---- アプリを立ち上げたらすぐ、3Dの町のプログラムとキャラのモデルを読みこんでおく(バーを出す)。「街へ行く」を押すころには済んでいる ----
+  let preload = null;
+  function startPreload() {
+    if (preload) return preload;
+    const bar = document.createElement('div'); bar.className = 'md-preload'; bar.innerHTML = '<span>3Dの町をじゅんびしています…</span><div><i></i></div>';
+    document.body.appendChild(bar);
+    const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = (p, t) => { fill.style.width = Math.round(p * 100) + '%'; if (t) txt.textContent = t; };
+    preload = (async () => {
+      try {
+        set(0.03); await loadScript(core.base + 'g/town3d/three.js'); set(0.15); await loadScript(core.base + 'g/town3d/town.js'); set(0.3);
+        const root = new URL(core.base + 'g/town3d/models/', location.href).href;
+        const ver = await fetch(root + 'versions.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+        const files = Object.keys(ver).filter(f => /\.glb$/.test(f)), cache = 'caches' in window ? await caches.open('town-glb-v1') : null;
+        let done = 0;
+        const one = async f => { const url = root + f + '?v=' + ver[f]; try { if (cache && !(await cache.match(url))) { const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(0.3 + 0.7 * done / files.length, `3Dの町をじゅんびしています… ${done} / ${files.length}`); };
+        const q = files.slice(); await Promise.all([0, 1, 2].map(async () => { while (q.length) await one(q.shift()); }));
+      } catch (e) { console.error(e); }
+      bar.remove();
+    })();
+    return preload;
+  }
+  startPreload();
   async function go(m) {
     if (m !== '3d') { stop3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 勉強部屋(ホーム)へ
     if (town) { home.hide(); return; }
     home.hide(); document.body.classList.add('md-3d-on');
     const wait = document.createElement('div'); wait.className = 'md-wait'; wait.textContent = '町を読みこんでいます…'; document.body.appendChild(wait);
     const fail = (why) => { wait.remove(); try { stop3D(); } catch (e) { } if (box) { box.remove(); box = null; } town = null; document.body.classList.remove('md-3d-on'); console.error(why); home.show({ text: '3Dの町を開けませんでした（' + (why && why.message ? String(why.message).slice(0, 80) : '読みこみに失敗') + '）。通信のよいところで、もう一度ためしてください。' }); };
-    try { await loadScript(core.base + 'g/town3d/three.js'); await loadScript(core.base + 'g/town3d/town.js'); }
+    try { await loadScript(core.base + 'g/town3d/three.js'); await loadScript(core.base + 'g/town3d/town.js'); await startPreload(); }
     catch (e) { fail(e); return; }
     try { await mount3D(wait); } catch (e) { fail(e); return; }
     // 2回目からは、キャラ選択の画面を出さずに、そのまま町へ(はじめての人だけ、名前を決める画面)

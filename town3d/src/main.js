@@ -1307,8 +1307,8 @@ export function mount(container, opt = {}) {
       if (kb) { st.position = 'fixed'; st.inset = 'auto'; st.left = vv.offsetLeft + 'px'; st.top = vv.offsetTop + 'px'; st.width = vv.width + 'px'; st.height = vv.height + 'px'; }
       else { st.position = ''; st.inset = ''; st.left = ''; st.top = ''; st.width = ''; st.height = ''; }
     };
-    vv.addEventListener('resize', fitVV); vv.addEventListener('scroll', fitVV);
-    offs.push(() => { vv.removeEventListener('resize', fitVV); vv.removeEventListener('scroll', fitVV); });
+    vv.addEventListener('resize', fitVV);
+    offs.push(() => { vv.removeEventListener('resize', fitVV); });
   }
 
   let fpsAcc = 0;

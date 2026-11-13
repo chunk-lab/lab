@@ -154,8 +154,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
       return pick([`この前、${NPC_NAME[o] || o}さんも${itemName(it)}を買ってくれたのよ。おすすめよ!`, `${itemName(it)}、${NPC_NAME[o] || o}さんにも人気なの。プレゼントにどう?`, `プレゼントに迷ったら、${itemName(pick(P.love))}はどう? 評判いいのよ。`]);
     }
     if (social.level(id) <= 1 && Math.random() < 0.4) {
-      if (Math.random() < 0.5) return `…${itemName(pick(P.love))}が食べたいなぁ…。`;
-      const o = pick(others); return `${NPC_NAME[o] || o}さんは、${itemName(pick(PREFS[o].love))}が好きらしいよ。`;
+      return pick([`…${itemName(pick(P.love))}が食べたいなぁ…。`, `…なにか、あまいもの、ないかなぁ…。`]);   // 他の人の好みのうわさは、ミイだけがする
     }
     if (Math.random() < 0.12) {
       const un = [...P.love, ...P.no].filter(it => !known(it));

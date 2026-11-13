@@ -18,6 +18,8 @@ export const GLB_MODELS = {
   luna: { url: 'models/luna.glb', rotY: 0 },
   tetsu: { url: 'models/philosopher.glb', rotY: 0 },
   suna: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
+  sora: { url: 'models/sora.glb', rotY: 0 },
+  hana: { url: 'models/hana.glb', rotY: 0 },
 };
 // モデルの場所: town.js を読み込んだ場所の横の models/(1つのHTMLで動かすときは、ページの横の models/)。tarot・bgm と同じやり方
 const SCRIPT_SRC = (() => { try { return (document.currentScript && document.currentScript.src) || ''; } catch (e) { return ''; } })();
