@@ -56,7 +56,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     if (preload) return preload;
     const bar = document.createElement('div'); bar.className = 'md-preload'; bar.innerHTML = '<span>Loading…</span><div><i></i></div>';
     document.body.appendChild(bar);
-    const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = (p, t) => { fill.style.width = Math.round(p * 100) + '%'; if (t) txt.textContent = t; };
+    const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = p => { const n = Math.min(100, Math.round(p * 100)) + '%'; fill.style.width = n; txt.textContent = 'Loading… ' + n; };
     preload = (async () => {
       try {
         set(0.03); await loadScript(core.base + 'g/town3d/three.js'); set(0.15); await loadScript(core.base + 'g/town3d/town.js'); set(0.3);
@@ -64,7 +64,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         const ver = await fetch(root + 'versions.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
         const files = Object.keys(ver).filter(f => /\.glb$/.test(f)), cache = 'caches' in window ? await caches.open('town-glb-v1') : null;
         let done = 0;
-        const one = async f => { const url = root + f + '?v=' + ver[f]; try { if (cache && !(await cache.match(url))) { const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(0.3 + 0.4 * done / files.length, `Loading… ${done} / ${files.length}`); };
+        const one = async f => { const url = root + f + '?v=' + ver[f]; try { if (cache && !(await cache.match(url))) { const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(0.3 + 0.4 * done / files.length); };
         const q = files.slice(); await Promise.all([0, 1, 2].map(async () => { while (q.length) await one(q.shift()); }));
         // 町そのものも、ここで組み立てて準備まで終える(画面はLoadingの下)。おわったら止めて隠す。あとは出入りしても読み込みなし
         set(0.72); let p = 0.72; const tk = setInterval(() => { p += (0.97 - p) * 0.06; set(p); }, 300);

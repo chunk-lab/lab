@@ -1602,8 +1602,8 @@ export function mount(container, opt = {}) {
     const tick = async () => {
       if (fin) return;
       const s = glbStat(), p = s.total ? s.done / s.total : 0;
-      shown = Math.max(shown, warming ? 0.97 : p * 0.9); bar.style.width = (shown * 100).toFixed(0) + '%'; pct.textContent = s.total ? `${s.done} / ${s.total}` : '';
-      if (s.total && s.done >= s.total && !warming) { warming = true; try { await glbWarm(renderer, camera); } catch (e) { } bar.style.width = '100%'; setTimeout(finish, 150); return; }
+      shown = Math.max(shown, warming ? 0.97 : p * 0.9); bar.style.width = (shown * 100).toFixed(0) + '%'; pct.textContent = Math.round(shown * 100) + '%';
+      if (s.total && s.done >= s.total && !warming) { warming = true; try { await glbWarm(renderer, camera); } catch (e) { } bar.style.width = '100%'; pct.textContent = '100%'; setTimeout(finish, 150); return; }
       const el = performance.now() - t0; if (!s.total && el > 2500) { finish(); return; }
       if (el > 20000) skip.hidden = false;
       setTimeout(tick, 120);
