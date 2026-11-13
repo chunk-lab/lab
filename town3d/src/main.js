@@ -933,7 +933,17 @@ export function mount(container, opt = {}) {
       const r = pick(e.clientX, e.clientY), now = e.timeStamp;
       // 2回目のタップ:1回目で向きが変わり始めて相手が画面上で少し動くので、外れても1回目の相手へ
       if (lastTap && (!r || lastTap.r === r) && now - lastTap.t < (window.__tapMs || 380)) { const R = lastTap.r; lastTap = null; approach = { r: R, stuck: 0 }; lookAtR = R; return; }
-      if (!r) return;
+      if (!r) {   // 自分をタップ:引き → 寄り → 一人称
+        const H = me.ch.glb ? me.ch.height : 1.6, rc = cv.getBoundingClientRect(), v = new THREE.Vector3(me.x, H * 0.55, me.z).project(camera);
+        const sx = rc.left + (v.x + 1) / 2 * rc.width, sy = rc.top + (1 - v.y) / 2 * rc.height; v.set(me.x, H, me.z).project(camera);
+        const top = rc.top + (1 - v.y) / 2 * rc.height, half = Math.max(34, Math.abs(sy - top) * 1.2);
+        if (v.z < 1 && Math.hypot(e.clientX - sx, (e.clientY - sy) * 0.6) < half) {
+          lastAct = performance.now();
+          if (view === 'far') { view = 'near'; camGoal = { dist: 7, pitch: 0.5 }; }
+          else if (view === 'near') { view = 'fp'; fpPitch = 0; camGoal = null; me.ch.root.visible = false; }
+        }
+        return;
+      }
       lastTap = { r, t: now }; lookAtR = r; approach = null;
     };
     window.addEventListener('pointerup', up); offs.push(() => window.removeEventListener('pointerup', up)); }
@@ -1114,7 +1124,7 @@ export function mount(container, opt = {}) {
   bus.on('*', (n, d) => { if (n.startsWith('app:') || n === 'talk' || n === 'wallet') opt.onEvent?.(n, d); });
 
   // ---- カメラ ----
-  const CAM_DEF = { pitch: 0.85, dist: 34 };   // ふだんの見え方(斜め上から、かなり引いて町を見わたす)。🎥のダブルタップで距離を変えられる
+  const CAM_DEF = { pitch: 0.85, dist: 36 };   // ふだんの見え方(斜め上から、かなり引いて町を見わたす)。🎥のダブルタップで距離を変えられる
   if (settings.camVer !== 2) { delete settings.camView; settings.camVer = 2; save(); }   // 新しい標準の見え方にそろえる(前に保存した距離はリセット)
   const camOk = settings.camView && settings.camView.pitch >= 0.1 && settings.camView.dist >= 3;   // 近すぎ・低すぎの保存値は使わない
   const cam = { yaw: Math.PI, pitch: camOk ? settings.camView.pitch : CAM_DEF.pitch, dist: camOk ? settings.camView.dist : CAM_DEF.dist, x: me.x, z: me.z };
@@ -1122,9 +1132,10 @@ export function mount(container, opt = {}) {
   let camMode = 'follow';
   // 視点: 'far'=引いて見る(ふだん) / 'fp'=自分視点。🎥を押すと切りかえ。
   // 住人をタップ=そっちを向いて自分視点(動きだしたら引いた視点にもどる)、話している間=自分視点で相手を正面に(終わったら もどる)
-  let talkF_on = false, view = settings.view === 'fp' ? 'fp' : 'far', lookAtR = null, fpPitch = 0, approach = null, lastTap = null;
+  let talkF_on = false, view = 'far', camGoal = null, lastAct = performance.now(), lookAtR = null, fpPitch = 0, approach = null, lastTap = null;
   const fpOn = () => camMode === 'follow' && !battle.active && !sport.active && !seat && (view === 'fp' || !!lookAtR || (!!talkingTo && hud.busy));
   const eyeH = () => (me.ch.glb ? me.ch.height * 0.86 : 1.5);
+  on(root, 'pointerdown', () => { lastAct = performance.now(); });
   const panOff = { x: 0, z: 0 };   // 2本指でずらしたカメラ位置
   {   // 2本指ドラッグ:真上から見た地図をずらす感覚で、見ている向き基準の前後左右にカメラ位置をずらす(ゴルフ中に使っていたものと同じ)
     let t1 = null, t2 = null;
@@ -1135,9 +1146,9 @@ export function mount(container, opt = {}) {
       const dx = (e.touches[0].clientX - t1.x + e.touches[1].clientX - t2.x) / 2, dy = (e.touches[0].clientY - t1.y + e.touches[1].clientY - t2.y) / 2;
       t1 = { x: e.touches[0].clientX, y: e.touches[0].clientY }; t2 = { x: e.touches[1].clientX, y: e.touches[1].clientY };
       if (!tg(e)) return;
-      const y = cam.yaw, fx = -Math.sin(y), fz = -Math.cos(y), rx = Math.cos(y), rz = -Math.sin(y), k = 0.04;   // 見ている向き(前)と右。指についてくる=カメラは逆へ
+      lastAct = performance.now(); const y = cam.yaw, fx = -Math.sin(y), fz = -Math.cos(y), rx = Math.cos(y), rz = -Math.sin(y), k = 0.015 + cam.dist * 0.004;   // 見ている向き(前)と右。指についてくる=カメラは逆へ
       panOff.x += rx * -dx * k + fx * dy * k; panOff.z += rz * -dx * k + fz * dy * k;
-      const m = Math.hypot(panOff.x, panOff.z); if (m > 60) { panOff.x *= 60 / m; panOff.z *= 60 / m; }
+      const m = Math.hypot(panOff.x, panOff.z); if (m > 140) { panOff.x *= 140 / m; panOff.z *= 140 / m; }
     }, { passive: true });
     root.addEventListener('touchend', e => { if (e.touches.length < 2) { t1 = null; t2 = null; } }, { passive: true });
   }
@@ -1324,10 +1335,15 @@ export function mount(container, opt = {}) {
     if (camMode === 'follow') {
       if (battle.active) { cam.yaw -= inp.camDX * 0.006; cam.pitch = battle.view === 'fp' ? 0.0 : 0.3; cam.dist = battle.view === 'fp' ? 0.2 : 7; me.ch.root.visible = battle.view !== 'fp'; }   // 雪合戦:高さ・距離は固定(ほぼ真うしろ・ほんの少し上)。左右は自由。「👁」で一人称にもできる
       else {
-      cam.yaw -= inp.camDX * 0.006;
-      if (fpOn()) { fpPitch = clamp(fpPitch - inp.camDY * 0.004, -1.1, 1.1); me.ch.root.visible = false; }   // 自分視点:自分は消す(上下ドラッグで見上げる・見下ろす)
-      else { cam.pitch = clamp(cam.pitch + inp.camDY * 0.004, -1.5, 1.5);
-      cam.dist = clamp(cam.dist + inp.zoom * 0.6, 1.6, 40);   // ピンチで寄る・引く(寄りすぎたら自分は消える)
+      if (inp.camDX || inp.camDY || inp.zoom) { lastAct = performance.now(); camGoal = null; }
+      if (hud.busy || talkingTo || lookAtR) lastAct = performance.now();
+      if (view !== 'far' && !lookAtR && performance.now() - lastAct > 10000) { view = 'far'; camGoal = { dist: CAM_DEF.dist, pitch: CAM_DEF.pitch }; panOff.x = panOff.z = 0; me.ch.root.visible = true; }   // 10秒なにもしなければ、引きにもどる
+      if (camGoal && !fpOn()) { const k = Math.min(1, dt * 3.5); cam.dist += (camGoal.dist - cam.dist) * k; cam.pitch += (camGoal.pitch - cam.pitch) * k; if (Math.abs(camGoal.dist - cam.dist) < 0.1) camGoal = null; }
+      if (view === 'fp' && inp.zoom > 0.3) { view = 'near'; cam.dist = 3; cam.pitch = 0.4; me.ch.root.visible = true; }   // 一人称でひろげる=寄りにもどる
+      cam.yaw -= inp.camDX * 0.01;
+      if (fpOn()) { fpPitch = clamp(fpPitch - inp.camDY * 0.007, -1.1, 1.1); me.ch.root.visible = false; }   // 自分視点:自分は消す(上下ドラッグで見上げる・見下ろす)
+      else { cam.pitch = clamp(cam.pitch + inp.camDY * 0.007, -1.5, 1.5);
+      cam.dist = clamp(cam.dist + inp.zoom * (1.2 + cam.dist * 0.12), 1.6, 60);   // ピンチで寄る・引く(寄りすぎたら自分は消える)
       me.ch.root.visible = cam.dist > 1.9; } }
     } else if (camMode === 'free') {   // カメラだけ動かす(自分はその場)
       fcam.yaw -= inp.camDX * 0.006; fcam.pitch = clamp(fcam.pitch + inp.camDY * 0.004, -1.5, 1.5);
@@ -1523,6 +1539,7 @@ export function mount(container, opt = {}) {
   on(root, 'pointerdown', () => audio.unlock(), { once: true });
 
   // ---- 読み込み画面: キャラを全部読み込んで、画面に出せる準備まで終えてから町を見せる(入ってから読み込んでカクつかないように) ----
+  let loadFin; const loadP = new Promise(r => { loadFin = r; });
   {
     const lo = document.createElement('div'); lo.className = 'tw-loading';
     lo.innerHTML = '<div class="lt">町のじゅんびをしています…</div><div class="lb"><i></i></div><div class="lp">0%</div><button class="tw-btn" hidden>このまま入る</button>';
@@ -1530,7 +1547,7 @@ export function mount(container, opt = {}) {
     const bar = lo.querySelector('i'), pct = lo.querySelector('.lp'), skip = lo.querySelector('button'), t0 = performance.now();
     let fin = false, warming = false, shown = 0;
     setGlbConc(4); glbPreload(['player:ren', 'player:mio']);
-    const finish = () => { if (fin) return; fin = true; setGlbConc(2); lo.remove(); };
+    const finish = () => { if (fin) return; fin = true; setGlbConc(2); lo.remove(); loadFin(); };
     skip.onclick = finish;
     const tick = async () => {
       if (fin) return;
@@ -1546,7 +1563,7 @@ export function mount(container, opt = {}) {
 
   frame();
   if (opt.skipTitle) { settings.name ||= LOOKS[settings.look].name; started = true; hud.tag(me.id, settings.name, true); net?.connect({ id: me.id, name: settings.name, look: settings.look }); netStarted = true; }
-  else showTitle();
+  else loadP.then(() => { if (!started) showTitle(); });   // 読み込みがおわってから、タイトルを出す
   opt.onEvent?.('ready', { version: VERSION });
 
   return {
