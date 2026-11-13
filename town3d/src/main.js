@@ -1394,7 +1394,7 @@ export function mount(container, opt = {}) {
       if (fpOn()) { fpPitch = clamp(fpPitch - inp.camDY * 0.007, -1.1, 1.1); me.ch.root.visible = false; }   // 自分視点:自分は消す(上下ドラッグで見上げる・見下ろす)
       else { cam.pitch = clamp(cam.pitch + inp.camDY * 0.007, -1.5, 1.5);
       cam.dist = clamp(cam.dist + inp.zoom * (1.2 + cam.dist * 0.12), 1.6, 60);   // ピンチで寄る・引く(寄りすぎたら自分は消える)
-      me.ch.root.visible = cam.dist > 1.9; } }
+      me.ch.root.visible = true; } }   // 寄っても自分は消さない(低い位置から接写で見上げる写真を撮れるように)
     } else if (camMode === 'free') {   // カメラだけ動かす(自分はその場)
       fcam.yaw -= inp.camDX * 0.006; fcam.pitch = clamp(fcam.pitch + inp.camDY * 0.004, -1.5, 1.5);
       const sp = (inp.run ? 24 : 8) * dt, c = Math.cos(fcam.yaw), s = Math.sin(fcam.yaw), cp = Math.cos(fcam.pitch);

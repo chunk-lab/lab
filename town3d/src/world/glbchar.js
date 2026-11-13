@@ -152,7 +152,7 @@ export function useGlb(ch, id, { height } = {}) {
         ds.sort((p, q) => p - q);
         const rad = ds.length > 20 ? ds[Math.floor(ds.length * 0.5)] : 0.04;
         sitContN = (J.y + K.y) / 2 - rad; sitDX = hp.x - px; sitDZ = hp.z - pz; const ys = ds;
-        (window.__seatDbg = window.__seatDbg || {})[id] = { hip: +sitHipN.toFixed(3), cont: +sitContN.toFixed(3), dz: +sitDZ.toFixed(3), dx: +sitDX.toFixed(3), n: ys.length };
+        (window.__seatDbg = window.__seatDbg || {})[id] = { lat: (() => { const a = Wp('LeftUpLeg').sub(Wp('RightUpLeg')); return [+a.x.toFixed(3), +a.z.toFixed(3)]; })(), hip: +sitHipN.toFixed(3), cont: +sitContN.toFixed(3), dz: +sitDZ.toFixed(3), dx: +sitDX.toFixed(3), n: ys.length };
         act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
       } catch (e) { sitContN = sitHipN - 0.1; }
     }
@@ -204,6 +204,7 @@ export function useGlb(ch, id, { height } = {}) {
       if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
       { const tx = sitK ? -sitDX : baseX, tz = sitK ? -sitDZ + 0.03 : baseZ, kk = Math.min(1, dt * 8); holder.position.x += (tx - holder.position.x) * kk; holder.position.z += (tz - holder.position.z) * kk; }   // 座るときは、腰が座面の真上に来るように
     };
+    (window.__hipsW = window.__hipsW || {})[id] = () => { ch.root.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const w = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld), r = new THREE.Vector3().setFromMatrixPosition(ch.root.matrixWorld); return [+(w.x - r.x).toFixed(3), +(w.y - r.y).toFixed(3), +(w.z - r.z).toFixed(3), +holder.position.x.toFixed(3), +holder.position.z.toFixed(3), +(-sitDX).toFixed(3)]; };
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };
     void base;
