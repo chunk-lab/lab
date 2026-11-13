@@ -23,7 +23,7 @@ export function openCharView(host, ctx = {}, onClose) {
   root.style.cssText = `position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;font-family:inherit;color:${ink};background:linear-gradient(#fdf0f3,#e4efff);touch-action:none`;
   root.innerHTML = `<div style="display:flex;align-items:center;gap:8px;padding:10px 12px 4px"><button data-x="back" style="${chip(false)}">← もどる</button><b class="nm" style="flex:1;text-align:center;font-size:15px"></b><button data-x="spin" style="${chip(true)}">🔄 まわる</button></div>
     <div class="cv" style="flex:1;position:relative;min-height:0"></div>
-    <div style="text-align:center;font-size:11px;color:#8d7f9e;padding:2px">ドラッグでまわす・ピンチで大きさ</div>
+    <div style="text-align:center;font-size:11px;color:#8d7f9e;padding:2px">ドラッグでまわす(上下は真上・真下まで)・ピンチで大きさ</div>
     <div class="mo" style="display:flex;gap:8px;justify-content:center;padding:4px 10px"></div>
     <div class="ls" style="display:flex;gap:8px;overflow-x:auto;padding:6px 12px calc(14px + env(safe-area-inset-bottom,0px))"></div>`;
   host.appendChild(root);
@@ -68,7 +68,7 @@ export function openCharView(host, ctx = {}, onClose) {
   el.onpointermove = e => {
     const p = ptr.get(e.pointerId); if (!p) return;
     const dx = e.clientX - p.x, dy = e.clientY - p.y; p.x = e.clientX; p.y = e.clientY;
-    if (ptr.size === 1) { yaw -= dx * 0.012; pitch = Math.max(-0.35, Math.min(0.9, pitch + dy * 0.006)); }
+    if (ptr.size === 1) { yaw -= dx * 0.012; pitch = Math.max(-1.45, Math.min(1.45, pitch + dy * 0.006));   // 真下〜真上までまわせる }
     else if (ptr.size === 2) { const [a, b] = [...ptr.values()], d = Math.hypot(a.x - b.x, a.y - b.y); if (pd > 0) zoom = Math.max(0.5, Math.min(2.6, zoom * d / pd)); pd = d; }
   };
   el.onpointerup = el.onpointercancel = e => { ptr.delete(e.pointerId); pd = 0; };
@@ -87,7 +87,7 @@ export function openCharView(host, ctx = {}, onClose) {
     if (spin) yaw += dt * 0.6;
     const R = h * 3.0 / zoom, ty = h * (motion === 'sit' ? 0.5 : motion === 'lie' ? 0.2 : 0.52);
     cam.position.set(Math.sin(yaw) * Math.cos(pitch) * R, ty + Math.sin(pitch) * R, Math.cos(yaw) * Math.cos(pitch) * R); cam.lookAt(0, ty, 0);
-    floor.scale.setScalar(h / 1.5);
+    floor.scale.setScalar(h / 1.5); floor.visible = pitch > -0.02;   // 下から見るときは、ゆかの円を消す
     renderer.render(scene, cam);
   }
   requestAnimationFrame(frame);
