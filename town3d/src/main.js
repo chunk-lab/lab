@@ -20,7 +20,7 @@ import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
 import { buildAmbient } from './world/ambient.js';
 import { rollPose, rollReset, makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/character.js';
-import { useGlb } from './world/glbchar.js';
+import { useGlb, glbStat, glbPreload, glbWarm, setGlbConc } from './world/glbchar.js';
 // プレイヤーの背(3Dモデル)。確認用: URL に ?playersize=1.8 で変えられる
 const PLAYER_H = (() => { try { return parseFloat(new URLSearchParams(location.search).get('playersize')) || 1.6; } catch (e) { return 1.6; } })();
 import { setBuildingOutline, eachFoliage, eachTex } from './world/kit.js';
@@ -261,6 +261,7 @@ export function mount(container, opt = {}) {
   function nearNpcs() {
     return residents.list.filter(r => r.ch.root.visible).map(r => ({ r, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) })).filter(o => o.d < 2.8).sort((a, b) => a.d - b.d).map(o => o.r);
   }
+  const bumpUse = k => { const u = storage.get('menuUsed') || {}; u[k] = (u[k] || 0) + 1; storage.set('menuUsed', u); };   // 項目を使った回数(あまりやらない遊びを勧めるのに使う)
   function talkTo(r) {
     input.clear(); r.talking = true; talkingTo = r;
     audio.play('talk');
@@ -271,16 +272,16 @@ export function mount(container, opt = {}) {
     if (isComp(r) && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
     soc.onTalk(r);
     // ---- 話しかけたときのメニュー: ひと言(自動)のあとに「勉強」と「遊び」だけ。くわしい項目は、おして出た2段目に ----
-    const kindOf = m => (['school', 'library'].includes(m.app) || ['consult', 'soranote', 'quote'].includes(m.act)) ? 'study' : 'play';
+    const kindOf = m => (['school', 'library'].includes(m.app) || ['consult', 'soranote', 'quote'].includes(m.act)) ? 'study' : ['follow', 'date', 'invite'].includes(m.act) ? 'bond' : 'play';
     const DESC = { school: '英語の練習ができるよ', library: '長い英文が読めるよ', shop: 'おみやげが買えるよ', omikuji: '運だめしができるよ', fortune: '星で占ってくれるよ', fishing: 'のんびり釣りができるよ', chunkcards: 'カードで勝負できるよ', ogiri: '大喜利で勝負できるよ', quote: '格言を聞けるよ', consult: '英語の相談にのるよ', follow: '一緒に歩けるよ', date: 'カフェでデートできるよ', harmonica: 'オカリナを吹いてもらえるよ' };
-    const usedM = storage.get('menuUsed') || {}, markM = k => { if (k && !usedM[k]) { usedM[k] = 1; storage.set('menuUsed', usedM); } };
+    const usedM = storage.get('menuUsed') || {}, APPK = ['school', 'library', 'shop', 'omikuji', 'fortune', 'fishing', 'chunkcards', 'fishing-en'], markM = k => { if (k && !APPK.includes(k)) bumpUse(k); };   // アプリは openApp の中で数える(二重に数えない)
     const backToTalk = () => { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); };   // 釣りから出たら、会話にもどる
     const items = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m) && !(lunaOut && m.app === 'fortune')).map(m => ({ k: kindOf(m), key: m.app || m.act, label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') backToTalk(); } }));
     if (r.def.id === 'suna') items.push({ k: 'study', key: 'fishing-en', label: '🎣 英語の釣り堀', fn: () => { openApp('fishing', { tab: 'en' }); backToTalk(); } });
     items.push(...soc.choices(r));
-    if (!r.def.companion && isComp(r)) items.push({ k: 'play', key: 'follow', label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { k: 'play', key: 'invite', label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
+    if (!r.def.companion && isComp(r)) items.push({ k: 'bond', key: 'follow', label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { k: 'bond', key: 'invite', label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
     const chat = en => () => { r.talking = true; talkingTo = r; if (r.def.id === 'sora') { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); return; } if (ai.ready) startChat(r, text, undefined, en); else openAiSetup({ hud, ai, onDone: () => startChat(r, text, undefined, en) }); };
-    if (r.def.id !== 'sora' || r.follow) { const lb = ai.ready ? '' : '(AIの設定)'; items.push({ k: 'study', key: 'chat-en', label: '💬 英語でおしゃべり' + lb, fn: chat(true) }, { k: 'play', key: 'chat', label: '💬 おしゃべり' + lb, fn: chat(false) }); }
+    if (r.def.id !== 'sora' || r.follow) { const lb = ai.ready ? '' : '(AIの設定)'; items.push({ k: 'study', key: 'chat-en', label: '💬 英語でおしゃべり' + lb, fn: chat(true) }, { k: 'bond', key: 'chat', label: '💬 おしゃべり' + lb, fn: chat(false) }); }
     for (const it of items) { const f = it.fn, key = it.key || it.label; it.fn = () => { markM(key); f(); }; it.ukey = key; }
     // ひと言に足すもの: ゴンのひろいもの・好みのにおわせ・ミイのプレゼント話。なければ、まだ使っていない項目の説明を、たまに
     if (r.def.id === 'gon') { const g = soc.gonDaily(); if (g) text += '\n' + g; }
@@ -289,18 +290,25 @@ export function mount(container, opt = {}) {
     else if (Math.random() < 0.15) { const un = items.filter(it => DESC[it.key] && !usedM[it.ukey]); if (un.length) { const it = un[Math.floor(Math.random() * un.length)]; text += `\n「${it.label}」って、まだ試してないよね? ${DESC[it.key]}。`; } }
     // ランダムなおすすめ: だれが言うかに関係なく、町のどの遊び・勉強でも、本当にランダムに(4回に1回ほど)
     const SUGG = [
-      { say: 'カードで勝負してみない?', ok: () => soc.menuOk({ app: 'chunkcards' }), fn: () => openApp('chunkcards', { cpu: 'baron' }) },
-      { say: '学校で英語の練習、一緒にしない?', fn: () => openApp('school') }, { say: '図書館で、長い英文を読んでみない?', fn: () => openApp('library') },
-      { say: 'お店をのぞいてみない? おみやげが買えるよ。', fn: () => openApp('shop') }, { say: 'おみくじ、ひいてみない?', fn: () => openApp('omikuji') },
-      { say: '占ってもらうのはどう?', ok: () => !lunaOut, fn: () => openApp('fortune') }, { say: '池で、のんびり釣りしてみない?', fn: () => { openApp('fishing'); backToTalk(); } },
-      { say: '英語の釣り堀、行ってみない?', fn: () => { openApp('fishing', { tab: 'en' }); backToTalk(); } },
+      { key: 'chunkcards', say: 'カードで勝負してみない?', ok: () => soc.menuOk({ app: 'chunkcards' }), fn: () => openApp('chunkcards', { cpu: 'baron' }) },
+      { key: 'school', study: 1, say: '学校で英語の練習、一緒にしない?', fn: () => openApp('school') }, { key: 'library', study: 1, say: '図書館で、長い英文を読んでみない?', fn: () => openApp('library') },
+      { key: 'shop', say: 'お店をのぞいてみない? おみやげが買えるよ。', fn: () => openApp('shop') }, { key: 'omikuji', say: 'おみくじ、ひいてみない?', fn: () => openApp('omikuji') },
+      { key: 'fortune', say: '占ってもらうのはどう?', ok: () => !lunaOut, fn: () => openApp('fortune') }, { key: 'fishing', say: '池で、のんびり釣りしてみない?', fn: () => { openApp('fishing'); backToTalk(); } },
+      { key: 'fishing-en', study: 1, say: '英語の釣り堀、行ってみない?', fn: () => { openApp('fishing', { tab: 'en' }); backToTalk(); } },
       { say: 'AIとおしゃべりもできるって知ってる? 設定してみない?', ok: () => !ai.ready, w: 3, fn: () => openAiSetup({ hud, ai, onDone: () => { } }) },
     ].filter(x => !x.ok || x.ok());
-    const sg = !hint && Math.random() < 0.25 && SUGG.length ? (() => { const bag = SUGG.flatMap(x => Array(x.w || 1).fill(x)); return bag[Math.floor(Math.random() * bag.length)]; })() : null;
+    const lessPlayed = list => { const u = storage.get('menuUsed') || {}, m = Math.min(...list.map(x => u[x.key] || 0)); const c = list.filter(x => (u[x.key] || 0) === m); return c[Math.floor(Math.random() * c.length)]; };
+    const forMii = r.def.id === 'mii' && !hint && Math.random() < 0.6 ? lessPlayed(SUGG.filter(x => !x.study && x.key)) : null;   // ミイ: あまりやっていないゲームを勧める
+    const forKoharu = r.def.id === 'koharu' && !hint && Math.random() < 0.7 ? lessPlayed(SUGG.filter(x => x.study)) : null;   // こはる先生: まだやっていない勉強を勧める
+    const sg = forMii ? { ...forMii, say: 'そういえば、あまりやってないよね? ' + forMii.say } : forKoharu ? { ...forKoharu, say: 'まだあまりやってない勉強があるわね。' + forKoharu.say } : !hint && Math.random() < 0.25 && SUGG.length ? (() => { const bag = SUGG.flatMap(x => Array(x.w || 1).fill(x)); return bag[Math.floor(Math.random() * bag.length)]; })() : null;
     if (sg) text += '\n' + sg.say;
     const role = PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role;
-    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg ? [{ label: 'やってみる!', fn: sg.fn }] : []), { label: '📖 勉強', fn: () => shelf('study') }, { label: '🎮 遊び', fn: () => shelf('play') }] }); };
-    const shelf = kind => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', choices: [...items.filter(it => it.k === kind), { label: '← もどる', fn: top }] }); };
+    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg ? [{ label: 'やってみる!', fn: sg.fn }] : []), { label: '📖 勉強', fn: () => shelf('study') }, { label: '🎮 遊び', fn: () => shelf('play') }, { label: '💗 仲良くなる', fn: () => shelf('bond') }] }); };
+    const shelf = kind => {
+      r.talking = true; talkingTo = r;
+      const b = kind === 'bond' ? soc.bondTalk(r) : { text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', extra: [] };
+      hud.dialog({ name: r.def.name, role, text: b.text, choices: [...b.extra, ...items.filter(it => it.k === kind), { label: '← もどる', fn: top }] });
+    };
     top();
     bus.emit('talk', { npc: r.def.id });
   }
@@ -351,7 +359,7 @@ export function mount(container, opt = {}) {
       hud.dialog({ name: '🎉 ぜんぶ見つけた!', role: 'きょうのかくしもの', text: `きょうのかくしもの ${list.length}こ、ぜんぶ見つけたね! 見つけた言葉を、英ラボで文にして使ってみる?`, choices: [
         { label: '🧠 使ってみる', fn: () => opt.onEvent?.('app:event', { name: 'eigo', data: { open: true, items: list.map((x, i) => ({ en: x.en, ja: x.ja, kind: x.sen ? 'sentence' : '', play: i === 0 })) } }) },
         { label: 'あとで', fn: () => { } }] });
-    }, startDate: r => startDate(r), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
+    }, startDate: r => startDate(r), invite: r => doAct(r, { act: 'invite' }), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
   if (social.admin()) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🔍 宝を隠す'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(168px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; soc.adminHunt(); }; root.appendChild(b); }
   const townSnap = () => { const got = finds.treasures(); return { info: social.info(), tre: TREASURES.map(t => ({ i: t[0], n: t[1], g: got.includes(t[1]) })), at: Date.now() }; };   // 勉強ノートの「町のひみつ」に渡す
   function openNoteBook() {
@@ -813,6 +821,7 @@ export function mount(container, opt = {}) {
     hud.toast(k === 'night' ? '🎂 誕生日の夜のテスト:花火と写真' : '🎂 誕生日のテスト:住人に会いに行ってみてね');
   }
   function openApp(id, params) {
+    bumpUse(id === 'fishing' && params && params.tab === 'en' ? 'fishing-en' : id);
     if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox', 'amuse'].includes(id)) markPlay(id);
     // 組み込み先(チャンクタウン)が開くアプリ(ゲームなど)は、そちらに任せる
     if (opt.openExternal?.(id, params)) { input.clear(); return; }
@@ -1513,6 +1522,28 @@ export function mount(container, opt = {}) {
   const vis = () => { if (document.hidden) { paused = true; audio.suspend(); } else { paused = false; timer.update(); if (!held) audio.resume(); } };
   on(document, 'visibilitychange', vis);
   on(root, 'pointerdown', () => audio.unlock(), { once: true });
+
+  // ---- 読み込み画面: キャラを全部読み込んで、画面に出せる準備まで終えてから町を見せる(入ってから読み込んでカクつかないように) ----
+  {
+    const lo = document.createElement('div'); lo.className = 'tw-loading';
+    lo.innerHTML = '<div class="lt">町のじゅんびをしています…</div><div class="lb"><i></i></div><div class="lp">0%</div><button class="tw-btn" hidden>このまま入る</button>';
+    root.appendChild(lo);
+    const bar = lo.querySelector('i'), pct = lo.querySelector('.lp'), skip = lo.querySelector('button'), t0 = performance.now();
+    let fin = false, warming = false, shown = 0;
+    setGlbConc(4); glbPreload(['player:ren', 'player:mio']);
+    const finish = () => { if (fin) return; fin = true; setGlbConc(2); lo.remove(); };
+    skip.onclick = finish;
+    const tick = async () => {
+      if (fin) return;
+      const s = glbStat(), p = s.total ? s.done / s.total : 0;
+      shown = Math.max(shown, warming ? 0.97 : p * 0.9); bar.style.width = (shown * 100).toFixed(0) + '%'; pct.textContent = s.total ? `${s.done} / ${s.total}` : '';
+      if (s.total && s.done >= s.total && !warming) { warming = true; try { await glbWarm(renderer, camera); } catch (e) { } bar.style.width = '100%'; setTimeout(finish, 150); return; }
+      const el = performance.now() - t0; if (!s.total && el > 2500) { finish(); return; }
+      if (el > 20000) skip.hidden = false;
+      setTimeout(tick, 120);
+    };
+    tick();
+  }
 
   frame();
   if (opt.skipTitle) { settings.name ||= LOOKS[settings.look].name; started = true; hud.tag(me.id, settings.name, true); net?.connect({ id: me.id, name: settings.name, look: settings.look }); netStarted = true; }

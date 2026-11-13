@@ -37,11 +37,13 @@ async function fetchGlb(url) {
   return await r.arrayBuffer();
 }
 // 読みこみは2つずつ順番に(全員いっぺんに読むとスマホが重くなる)。プレイヤーを先に
-const queue = []; let running = 0;
-const pump = () => { while (running < 2 && queue.length) { const j = queue.shift(); running++; j.run().finally(() => { running--; pump(); }); } };
+const queue = []; let running = 0, CONC = 2; const stat = { total: 0, done: 0 }; const readyScenes = [];
+export const glbStat = () => ({ ...stat });
+export const setGlbConc = n => { CONC = n; pump(); };
+const pump = () => { while (running < CONC && queue.length) { const j = queue.shift(); running++; j.run().finally(() => { running--; pump(); }); } };
 const load = (url, first) => {
   if (!cache.has(url)) cache.set(url, new Promise((ok, ng) => {
-    const job = { run: () => versions().then(v => { const f = url.split('/').pop(); return fetchGlb(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); ok(g); }, ng) };
+    stat.total++; const job = { run: () => versions().then(v => { const f = url.split('/').pop(); return fetchGlb(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); readyScenes.push(g.scene); stat.done++; ok(g); }, e => { stat.done++; ng(e); }) };
     first ? queue.unshift(job) : queue.push(job); pump();
   }));
   return cache.get(url);
@@ -173,3 +175,14 @@ function posedBox(holder, base) {
 
 // SkeletonUtils.clone と同じ働き(three/examples の SkeletonUtils を使う)
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js';
+
+// 読み込み画面用: プレイヤー2人ぶんなど、まだ頼まれていないモデルも先に読み込んでおく
+export function glbPreload(ids) { for (const id of ids) { const m = GLB_MODELS[id]; if (m) load(m.url, false).catch(() => { }); } }
+// 画面に出す準備(絵をGPUに送る・光り方を作る)を、1体ずつ間をあけて済ませる。町に入ってからのカクつきをなくす
+export async function glbWarm(renderer, camera) {
+  for (const sc of readyScenes) {
+    sc.traverse(o => { if (!o.isMesh) return; const ms = Array.isArray(o.material) ? o.material : [o.material]; for (const m of ms) for (const k of ['map', 'emissiveMap']) if (m && m[k]) { try { renderer.initTexture(m[k]); } catch (e) { } } });
+    try { renderer.compile(sc, camera); } catch (e) { }
+    await new Promise(r => requestAnimationFrame(() => r()));
+  }
+}

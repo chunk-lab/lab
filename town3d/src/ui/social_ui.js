@@ -13,7 +13,7 @@ const REACT = {
   no: ['あ…ありがとう。…じつは、ちょっとにがてなんだ。', 'う、うん…。気持ちだけ、もらっておくね。'],
 };
 
-export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startDate, setRain, areaName, getMe, canAct, ai = null, player = () => 'あなた' }) {
+export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startDate, invite, setRain, areaName, getMe, canAct, ai = null, player = () => 'あなた' }) {
   if (!document.getElementById('tw-soc-css')) { const st = document.createElement('style'); st.id = 'tw-soc-css'; st.textContent = '.tw-in{border:1px solid #d9cfe8;border-radius:10px;padding:8px 10px;font:inherit;font-size:14px;background:#fff;color:#5a4a6b;box-sizing:border-box;min-width:0}'; document.head.appendChild(st); }
   const name = r => (r && r.def && r.def.name) || '';
   const heart = id => { const l = social.level(id); return `♥ ${LV_NAME[l]}`; };
@@ -36,6 +36,27 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
   // ---- 話しかけたとき(その日はじめてなら、少しだけ仲良くなる) ----
   function onTalk(r) { if (!PREFS[r.def.id]) return; const res = social.talked(r.def.id); if (res && res.up) setTimeout(() => levelUp(r, res.before, res.after), 50); }
 
+  // プレゼントを渡す。仲良し(デートが開く段階)で、好きなものなら「いっしょに食べよう」のイベントになる
+  const canDate = r => (social.unlocksOf(r.def.id) || []).some(u => u.kind === 'date') || (r.def.menu || []).some(m => m.act === 'date');
+  function giveItem(r, k) {
+    const id = r.def.id, res = social.give(id, k); if (!res) return;
+    audio.play(res.r === 'no' ? 'tap' : 'coin');
+    const d = PTS[res.r], ev = !res.up && (res.r === 'love' || res.r === 'like') && canDate(r);
+    hud.dialog({ name: name(r), role: `${heart(id)} ${d > 0 ? '+' + d : d}`, text: pick(REACT[res.r]) + (ev ? '\nねえ、これ、いっしょに食べない?' : ''), choices: ev ? [{ label: '🏠 お家で食べる', fn: () => invite(r) }, { label: '☕ カフェに行く', fn: () => startDate(r) }] : [] });
+    if (res.up) setTimeout(() => levelUp(r, res.before, res.after), 1600);
+  }
+  // 「仲良くなる」を開いたときの、住人の最初のひと言と、すぐ使えるボタン
+  function bondTalk(r) {
+    const id = r.def.id, P = PREFS[id]; if (!P) return { text: 'なあに?', extra: [] };
+    const L = social.level(id), bag = social.bag(), mine = Object.keys(bag).filter(k => ITEMS[k] && !social.isItemLocked(k) && (P.love.includes(k) || P.like.includes(k))), extra = [];
+    let text;
+    if (L <= 1) {
+      if (mine.length && social.canGive(id)) { const k = pick(mine); text = pick([`あ、それ、${itemName(k)}だよね。どこで買ったの?`, `${itemName(k)}、おいしいよね。ちょっと、うらやましいな。`]); extra.push({ label: `🎁 ${itemName(k)}をあげる`, fn: () => giveItem(r, k) }); }
+      else text = pick([`${itemName(pick(P.love))}の話なら、いくらでもできちゃうんだ。`, `${itemName(pick(P.like))}も、わりと好きなんだよね。`, '好きなものの話、してもいい?']);
+    } else if (L >= 4) text = pick(['きょうは、ゆっくり話せるね。', 'いっしょにいると、落ちつくな。']);
+    else text = pick(['なにか話す? それとも、おみやげ?', 'きょうは、なにしようか。']);
+    return { text, extra };
+  }
   // ---- プレゼント ----
   function gift(r, back) {
     const id = r.def.id, bag = social.bag(), ks = Object.keys(bag);
@@ -44,11 +65,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
     const K = social.knownPrefs();
     hud.dialog({ name: '🎁 なにをあげる?', role: `${NPC_NAME[id] || name(r)} ・ ${heart(id)}`, text: 'おみやげをえらんでね(1人に1日1回)', choices: ks.map(k => ({ label: `${social.isItemLocked(k) ? '🔒 ' : ''}${ITEMS[k].icon} ${ITEMS[k].name}${bag[k] > 1 ? ' ×' + bag[k] : ''}${K[id + ':' + k] === 'love' ? ' 💗' : K[id + ':' + k] === 'no' ? ' 💦' : ''}`, fn: () => {
       if (social.isItemLocked(k)) { hud.toast('🔒 ロック中だよ(カフェのバッグでロックをはずせるよ)'); return gift(r, back); }
-      const res = social.give(id, k); if (!res) return;
-      audio.play(res.r === 'no' ? 'tap' : 'coin');
-      const d = PTS[res.r];
-      hud.dialog({ name: name(r), role: `${heart(id)} ${d > 0 ? '+' + d : d}`, text: pick(REACT[res.r]), choices: [] });
-      if (res.up) setTimeout(() => levelUp(r, res.before, res.after), 1600);
+      giveItem(r, k);
     } })) });
   }
 
@@ -93,12 +110,12 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
   // ---- 話しかけたときのメニューに足すもの ----
   function choices(r) {
     const id = r.def.id; if (!PREFS[id]) return [];
-    const out = [{ k: 'play', label: '🎁 プレゼントする', fn: () => gift(r) }];
-    if ((ai && ai.ready) || memory.of(id).auto.length || memory.of(id).keep.length) out.push({ k: 'play', label: '🗒 覚えていること', fn: () => memoryPanel(r) });
+    const out = [{ k: 'bond', label: '🎁 プレゼントする', fn: () => gift(r) }];
+    if ((ai && ai.ready) || memory.of(id).auto.length || memory.of(id).keep.length) out.push({ k: 'bond', label: '🗒 覚えていること', fn: () => memoryPanel(r) });
     if (id === 'gon') { out.push({ k: 'play', label: '🎒 ひろいものをたのむ', fn: () => gonAsk(r) }); out.push({ k: 'play', label: '🎒 たからもの', fn: () => treasurePanel() }); }
     for (const u of social.unlocksOf(id)) {
       if (u.kind === 'ability' && u.label && !['secret', 'discount', 'pickup'].includes(u.id)) out.push({ k: ['lesson', 'book', 'hint'].includes(u.id) ? 'study' : 'play', label: u.label, fn: () => ability(r, u) });
-      if (u.kind === 'date' && !(r.def.menu || []).some(m => m.act === 'date')) out.push({ k: 'play', label: u.label, fn: () => startDate(r) });
+      if (u.kind === 'date' && !(r.def.menu || []).some(m => m.act === 'date')) out.push({ k: 'bond', label: u.label, fn: () => startDate(r) });
     }
     return out;
   }
@@ -128,6 +145,10 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
   function hintLine(r) {
     const id = r.def.id, P = PREFS[id]; if (!P) return '';
     const K = social.knownPrefs(), known = it => !!K[id + ':' + it], others = Object.keys(PREFS).filter(o => o !== id && o !== 'sora' && o !== 'hana');
+    if (id === 'mii' && Math.random() < 0.4) {   // ミイは、まだ仲良くない人の好みを教えてくれる
+      const far = others.filter(o => social.level(o) <= 1 && PREFS[o].love.some(it => !K[o + ':' + it]));
+      if (far.length) { const o = pick(far), it = pick(PREFS[o].love.filter(x => !K[o + ':' + x])); social.learnPref(o, it, 'love'); return `${NPC_NAME[o] || o}さんって、${itemName(it)}が大好物なんだって。まだあまり話してないなら、教えといてあげる。(好みを書きとめたよ)`; }
+    }
     if (id === 'mii' && Math.random() < 0.7) {
       const o = pick(others), it = pick(PREFS[o].love);
       return pick([`この前、${NPC_NAME[o] || o}さんも${itemName(it)}を買ってくれたのよ。おすすめよ!`, `${itemName(it)}、${NPC_NAME[o] || o}さんにも人気なの。プレゼントにどう?`, `プレゼントに迷ったら、${itemName(pick(P.love))}はどう? 評判いいのよ。`]);
@@ -245,5 +266,5 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
       ${have.length ? `<div style="max-height:30vh;overflow:auto">${TREASURES.filter(t => have.includes(t[1])).map(t => `<p class="tw-note" style="margin:3px 0">${esc(t[0] + ' ' + t[1])}:${esc(t[2])}</p>`).join('')}</div>` : ''}<div class="tw-actions"><button class="tw-btn" data-x>とじる</button></div>`);
     p.addEventListener('click', e => { if (e.target.closest('[data-x]')) hud.closePanel(); });
   }
-  return { onTalk, choices, menuOk, hintLine, gonDaily, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel };
+  return { onTalk, choices, menuOk, hintLine, gonDaily, bondTalk, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel };
 }
