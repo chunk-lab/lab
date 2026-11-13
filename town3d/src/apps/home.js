@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import { confirmPay } from '../ui/pay.js';
 import { makeCharacter, LOOKS } from '../world/character.js';
+import { useGlb } from '../world/glbchar.js';
 import { createInput } from '../game/input.js';
 import { snapCanvas, shotCard, flash } from '../game/photos.js';
 import { fmtN, clamp } from '../core/core.js';
@@ -653,12 +654,12 @@ export const homeApp = {
       walk = true; buildShell(); outline.visible = false;
       calcBlockers();
       editEls.forEach(e => { e._d = e.style.display; e.style.display = 'none'; });
-      wme = makeCharacter(typeof ctx.player?.look === 'string' ? LOOKS[ctx.player.look] || LOOKS.mio : LOOKS.mio); scene.add(wme.root);
+      wme = useGlb(makeCharacter(typeof ctx.player?.look === 'string' ? LOOKS[ctx.player.look] || LOOKS.mio : LOOKS.mio), 'player:' + (ctx.player?.look === 'ren' ? 'ren' : 'mio')); scene.add(wme.root);   // 町と同じ3Dの姿で
       // はじめは、かべぎわのあいた場所
       wPose = null; wLast = ''; wx = rm.cols / 2; wz = rm.rows - 1; [wx, wz] = walkTo(wx, wz); wry = Math.PI; wyaw = 0.2; wpitch = 0.3; wdist = 4.2; wspeed = 0;
       if (guest && !gch) {
         if (guest.late && guest.late()) { setTimeout(() => { guestSayLate(); }, 300); guest.leave?.(); }
-        else { gch = makeCharacter(guest.look); scene.add(gch.root); gx = wx - 0.9; gz = wz; gry = wry; gPose = null; gHold = false; }
+        else { gch = useGlb(makeCharacter(guest.look), guest.id); scene.add(gch.root); gx = wx - 0.9; gz = wz; gry = wry; gPose = null; gHold = false; }
       }
       wInput = createInput(cv, { onAction: () => {} });
       wUI = document.createElement('div');
@@ -689,8 +690,8 @@ export const homeApp = {
     function exitWalk() {
       if (!walk) return;
       walk = false; wInput && wInput.dispose(); wInput = null; wUI && wUI.remove(); wUI = null;
-      if (wme) { scene.remove(wme.root); dispose(wme.root); wme = null; }
-      if (gch) { scene.remove(gch.root); dispose(gch.root); gch = null; gPose = null; } gBub = null;
+      if (wme) { scene.remove(wme.root); if (!wme.glb) dispose(wme.root); wme = null; }   // 3Dの姿は町と共有しているので、すてない
+      if (gch) { scene.remove(gch.root); if (!gch.glb) dispose(gch.root); gch = null; gPose = null; } gBub = null;
       editEls.forEach(e => { e.style.display = e._d || ''; });
       buildShell(); resize(); relayout(); ui();
     }

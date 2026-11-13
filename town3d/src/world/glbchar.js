@@ -139,6 +139,8 @@ export function useGlb(ch, id, { height } = {}) {
       if (cur === act.run) act.run.timeScale = Math.max(0.7, Math.min(1.4, speed / 5));
       if (cur === act.walk) act.walk.timeScale = Math.max(0.6, Math.min(1.6, speed / 2.2));
       mixer.update(dt);
+      // 家の中などの「寝転ぶ」: あおむけに倒す(3Dの体には寝る動きがないので、向きだけ変える)
+      const lie = ch.pose === 'lie'; if (lie !== !!ch._lie) { ch._lie = lie; wrap.rotation.x = lie ? -Math.PI / 2 : 0; wrap.position.set(0, lie ? 0.12 : 0, lie ? ch.height / 2 : 0); }
       if (fadeT > 0) fadeT -= dt;
       const ty = Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
     };

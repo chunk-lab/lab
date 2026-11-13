@@ -190,6 +190,11 @@ export function createResidents(scene, graph, getHour, collide = null) {
 
   const api = {
     list, avoid: null,
+    summon(id, x, z, sec = 75) {   // 休み中の住人を、目の前に呼び出す(歩いてこない。その場にあらわれる)
+      const r = list.find(q => q.def.id === id); if (!r) return null;
+      r.ch.root.position.set(x, 0, z); r.hidden = false; r.ch.root.visible = true; r.path = []; r.idle = null; r.pin = null; r.summonT = sec; r.vx = r.vz = 0;
+      return r;
+    },
     get outing() { return outing; }, set outing(v) { outing = v || new Set(); },
     update(dt, h, player) {
       const anyTalking = list.some(q => q.talking);
@@ -199,7 +204,28 @@ export function createResidents(scene, graph, getHour, collide = null) {
           const P = r.ch.root.position; P.set(r.pin.x, r.pin.y || 0, r.pin.z); r.ch.root.rotation.y = r.pin.ry;
           if (!r.ch.root.visible) { r.ch.root.visible = true; r.hidden = false; } r.ch.pose = r.pin.pose || null; r.speed = 0; r.vx = r.vz = 0; r.ch.update(dt, 0); continue;
         }
-        const g = goalOf(r.def, h);
+        if (r.summonT > 0) {   // 呼び出されて、目の前に来ている。話しおわって しばらくしたら、歩いて予定の場所へもどる
+          if (!r.talking) r.summonT -= dt;
+          const P = r.ch.root.position; r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(player.x - P.x, player.z - P.z), Math.min(1, dt * 8));
+          r.speed = 0; r.vx = r.vz = 0; r.ch.pose = null; r.ch.update(dt, 0);
+          if (r.summonT <= 0) { r.goal = goalOf(r.def, h); r.strollEnd = 0; r.path = findPath(graph, nearestNode(graph, P.x, P.z), PLACES[r.goal.place]); r.idle = null; }
+          continue;
+        }
+        let g = goalOf(r.def, h);
+        // 予定では建物の中にいる時間も、ごくたまに、しばらく町へ出歩く(夜中は出ない)
+        if (g.inside && !r.def.outing && !r.def.mascot && !r.follow) {
+          if (r.strollEnd > 0) { r.strollEnd -= dt; g = { place: r.strollPlace, inside: false }; }
+          else {
+            r.strollCk = (r.strollCk ?? 30 + Math.random() * 90) - dt;
+            if (r.strollCk <= 0) {
+              r.strollCk = 60 + Math.random() * 60;
+              if (h >= 7 && h < 21.5 && Math.random() < 0.12) {
+                const outs = [...new Set(list.flatMap(q => q.def.schedule).filter(s => s[2] !== 'in' && s[1] !== g.place && PLACES[s[1]] !== undefined).map(s => s[1]))];
+                if (outs.length) { r.strollPlace = outs[(Math.random() * outs.length) | 0]; r.strollEnd = 90 + Math.random() * 90; }
+              }
+            }
+          }
+        } else r.strollEnd = 0;
         if (r.follow) { r.goal = g; r.path = []; r.idle = null; if (r.hidden) { r.hidden = false; r.ch.root.visible = true; } }   // 一緒に歩いている間は、予定どおりに動かない
         if (r.follow && r.hold && !r.talking) {   // 手をつないで、プレイヤーの左にならんで歩く(lag:前後のずれ。マイナス=おくれる)
           const P = r.ch.root.position, ry = player.ry || 0, tx = player.x + Math.cos(ry) * 0.62 + Math.sin(ry) * (r.lag || 0), tz = player.z - Math.sin(ry) * 0.62 + Math.cos(ry) * (r.lag || 0);

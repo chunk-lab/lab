@@ -1014,7 +1014,14 @@ export function mount(container, opt = {}) {
   function openFind() {
     if (!started || appHost.current || hud.busy) return;
     input.clear(); audio.unlock(); audio.play('tap');
-    openFinder({ hud, city, areaName: city.areaName, getMe: () => me, getEntities: entities, onJump: jumpTo, getHints: () => finds.hinted() });
+    openFinder({ hud, city, areaName: city.areaName, getMe: () => me, getEntities: entities, onJump: jumpTo,
+      onCall: e => {   // 休み中の人: 「呼び出しますか?」→ すぐ目の前にあらわれる
+        const r = residents.list.find(x => 'npc:' + x.def.id === e.id); if (!r) return;
+        hud.dialog({ name: r.def.name, role: '休み中', text: `${r.def.name}を、ここに呼び出しますか?`, choices: [{ label: '呼び出す', fn: () => {
+          const [x, z] = collide(me.x + Math.sin(me.ry) * 1.9, me.z + Math.cos(me.ry) * 1.9);
+          residents.summon(r.def.id, x, z); audio.play('wave'); lookAtR = null; setTimeout(() => { try { r.ch.wave?.(); } catch (e2) { } }, 400);
+        } }, { label: 'やめる', fn: () => { } }] });
+      }, getHints: () => finds.hinted() });
   }
   offs.push(bus.on('ui:find', openFind));
   on(window, 'keydown', e => { if (e.code === 'KeyM' && !e.repeat && !e.target.closest?.('input,textarea')) { if (hud.busy) { hud.closePanel(); return; } openFind(); } });
@@ -1612,6 +1619,7 @@ export function mount(container, opt = {}) {
     npcAct: (id, act) => { const r = residents.list.find(x => x.def.id === id); if (!r) return false; const p = r.ch.root.position; me.x = p.x + 1.2; me.z = p.z; if (act) doAct(r, { act }); else talkTo(r); return true; },   // テスト用
     snowBattle: id => battle.start(residents.list.find(r => r.def.id === id) || residents.list[0], 2),   // テスト用
     talk: id => { const r = residents.list.find(x => x.def.id === id); if (r) talkTo(r); },   // 点検用
+    hideNpc: id => { const r = residents.list.find(x => x.def.id === id); if (r) { r.hidden = true; r.ch.root.visible = false; } },   // 点検用: 休み中の状態を作る
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
     action: doAction,

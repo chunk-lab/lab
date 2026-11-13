@@ -9,7 +9,7 @@ const kana = e => (e.yomi || e.name).replace(/[ァ-ヶ]/g, c => String.fromCharC
 const PYOMI = { school: 'まちのがっこう', library: 'としょかん', gamecenter: 'げーむせんたー', shop: 'しょっぷ', cafe: 'かふぇ', home: 'あなたのいえ', plaza: 'ほしひろば', park: 'こもれびこうえん', shrine: 'ほしみやじんじゃ', bus: 'ばすてい' };
 const hex = n => '#' + n.toString(16).padStart(6, '0');
 
-export function openFinder({ hud, city, getMe, getEntities, areaName, onJump, getHints = () => [] }) {
+export function openFinder({ onCall = null, hud, city, getMe, getEntities, areaName, onJump, getHints = () => [] }) {
   const places = [
     ...city.interact.filter(i => i.kind === 'door').map(d => ({ id: 'pl:' + d.id, kind: 'place', name: d.name, role: '建物', yomi: PYOMI[d.id], x: d.x, z: d.z, fx: d.fx, fz: d.fz, face: 0 })),
     { id: 'pl:plaza', yomi: PYOMI.plaza, kind: 'place', name: 'ほし広場(噴水)', role: '広場', x: 0, z: 11, face: 0 },
@@ -104,7 +104,7 @@ export function openFinder({ hud, city, getMe, getEntities, areaName, onJump, ge
   function render(noScroll) {
     const me = getMe();
     const rows = all().map(e => ({ ...e, area: e.kind === 'place' ? e.role : e.inside || areaName(e.x, e.z), dist: Math.hypot(e.x - me.x, e.z - me.z) })).filter(matches).sort(sort === 'kana' ? (a, b) => COL.compare(kana(a), kana(b)) : (a, b) => a.dist - b.dist);
-    list.innerHTML = rows.length ? rows.map(e => `<div class="tw-frow${e.id === sel ? ' sel' : ''}" role="listitem" data-id="${esc(e.id)}"><i class="tw-fdot ${e.kind}"></i><span class="tw-fname"><b>${esc(e.name)}</b><small>${esc(e.role || '')} ・ ${e.away ? 'おやすみ中' : esc(e.area)} ・ ${e.away ? '—' : Math.round(e.dist) + 'm'}</small></span><button class="tw-btn" data-go="${esc(e.id)}"${e.away ? ' disabled' : ''}>とぶ</button></div>`).join('') : '<p class="tw-note">見つかりませんでした。</p>';
+    list.innerHTML = rows.length ? rows.map(e => `<div class="tw-frow${e.id === sel ? ' sel' : ''}" role="listitem" data-id="${esc(e.id)}"><i class="tw-fdot ${e.kind}"></i><span class="tw-fname"><b>${esc(e.name)}</b><small>${esc(e.role || '')} ・ ${e.away ? 'おやすみ中' : esc(e.area)} ・ ${e.away ? '—' : Math.round(e.dist) + 'm'}</small></span>${e.away ? `<button class="tw-btn" data-call="${esc(e.id)}" style="opacity:.75">休み中</button>` : `<button class="tw-btn" data-go="${esc(e.id)}">とぶ</button>`}</div>`).join('') : '<p class="tw-note">見つかりませんでした。</p>';
     if (!noScroll) list.querySelector('.sel')?.scrollIntoView({ block: 'nearest' });   // マップをタップしたときは動かさない(ダブルタップがずれるため)
   }
 
@@ -117,6 +117,7 @@ export function openFinder({ hud, city, getMe, getEntities, areaName, onJump, ge
 
   p.addEventListener('click', ev => {
     const b = ev.target.closest('button');
+    if (b?.dataset.call) { const e = getEntities().find(x => x.id === b.dataset.call); if (e && onCall) { hud.closePanel(); clearInterval(timer); onCall(e); } return; }
     if (b?.dataset.go) return jump(b.dataset.go);
     if (b?.dataset.t) { tab = b.dataset.t; sel = null; p.querySelectorAll('.tw-ftabs:not(.tw-sort) .tw-btn').forEach(x => x.classList.toggle('on', x === b)); return render(); }
     if (b?.dataset.s) { sort = b.dataset.s; p.querySelectorAll('.tw-sort .tw-btn').forEach(x => x.classList.toggle('on', x === b)); return render(); }
