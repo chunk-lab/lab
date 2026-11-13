@@ -157,7 +157,7 @@ export function useGlb(ch, id, { height } = {}) {
       if (poseK > 0 && poseName) {
         const k = poseK;
         if (poseName === 'kneel') { bend(bn.lu, -1.2, 0, 0, k); bend(bn.ll, 1.25, 0, 0, k); bend(bn.ru, 0.2, 0, 0, k); bend(bn.rl, 1.9, 0, 0, k); drop = 0.19 * ch.height / 1.7 * k; }   // ひざが地面につく高さまで
-        else { bend(bn.lu, -1.5, 0, 0.06, k); bend(bn.ru, -1.5, 0, -0.06, k); bend(bn.ll, 1.5, 0, 0, k); bend(bn.rl, 1.5, 0, 0, k); drop = 0.035 * ch.height * k;   // この体は腰がもともと低い(背の0.27倍)ので、いすの高さまで少しだけ下げる
+        else { bend(bn.lu, -1.5, 0, 0.06, k); bend(bn.ru, -1.5, 0, -0.06, k); bend(bn.ll, 1.5, 0, 0, k); bend(bn.rl, 1.5, 0, 0, k); drop = (0.035 * ch.height - (ch.sitUp || 0)) * k;   // この体は腰がもともと低い(背の0.27倍)ので、いすの高さまで少しだけ下げる
           if (poseName === 'piano') { bend(bn.la, -1.0, 0, 0, k); bend(bn.ra, -1.0, 0, 0, k); bend(bn.lf, -0.5, 0, 0, k); bend(bn.rf, -0.5, 0, 0, k); } }
         ch.root.updateMatrixWorld(true);
       }

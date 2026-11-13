@@ -213,6 +213,7 @@ export function mount(container, opt = {}) {
 
   // ---- ベンチにすわる ----
   let seat = null;
+  const BENCH_UP = 0.086;   // ベンチは座面が高い(0.54)ので、いすより腰を上げる
   function sitOnBench(b0) {
     // 背もたれがないので、立っている側を向いてすわる(前からでも後ろからでも)
     const fx = Math.sin(b0.ry), fz = Math.cos(b0.ry), back = (me.x - b0.x) * fx + (me.z - b0.z) * fz < 0;
@@ -222,15 +223,15 @@ export function mount(container, opt = {}) {
     let lx = Math.max(-0.55, Math.min(0.55, dx * c - dz * s)); const lz = -0.02;
     if (hana) lx = -0.36;   // はなちゃんと2人で:はなちゃんは左どなり
     me.x = b.x + lx * c + lz * s; me.z = b.z - lx * s + lz * c; me.ry = b.ry; me.speed = 0;
-    seat = { b }; me.ch.pose = 'sit'; input.clear();
+    seat = { b }; me.ch.pose = 'sit'; me.ch.sitUp = BENCH_UP * (me.ch.height || PLAYER_H) / 1.7; input.clear();
     if (hana) {
-      const hx = 0.36; hana.pin = { x: b.x + hx * c + lz * s, z: b.z - hx * s + lz * c, y: -0.04, ry: b.ry, pose: 'sit', bench: true };
+      const hx = 0.36; hana.pin = { x: b.x + hx * c + lz * s, z: b.z - hx * s + lz * c, y: -0.04, ry: b.ry, pose: 'sit', bench: true }; hana.ch.sitUp = BENCH_UP * (hana.ch.height || 1.7) / 1.7;
       seat.hana = hana; say1(hana, hana.def.id === 'sora' ? ['ふぅ、ちょっと休もうか', 'ここ、いい場所だよな'] : ['ふぅ〜、ちょっと休けい!', 'ここ、すわり心地いいね', 'となり、いい?'], 3);
     }
   }
   const benchSit = () => `いま「${settings.name || 'あなた'}」と、${city.areaName(me.x, me.z)}のベンチにならんですわって、手をつないでいる。`;
   function standFromSeat() {
-    if (!seat) return; const b = seat.b, h = seat.hana; seat = null; me.ch.pose = null;
+    if (!seat) return; const b = seat.b, h = seat.hana; seat = null; me.ch.pose = null; me.ch.sitUp = 0; if (h) h.ch.sitUp = 0;
     [me.x, me.z] = collide(b.x + Math.sin(b.ry) * 1.1, b.z + Math.cos(b.ry) * 1.1);
     if (h && h.pin && h.pin.bench) { h.pin = null; h.ch.pose = null; h.ch.root.position.set(me.x + Math.cos(me.ry) * 0.62, 0, me.z - Math.sin(me.ry) * 0.62); h.hold = false; h.reT = 0.5; }
   }
