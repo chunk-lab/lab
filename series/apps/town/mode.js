@@ -73,8 +73,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   }
   setTimeout(() => { startPreload(); }, 700);   // 起動直後の描画をじゃましないよう、最初の表示のあとすぐ開始
   async function go(m) {
-    if (m !== '3d') { stop3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 勉強部屋(ホーム)へ
-    if (town) { home.hide(); return; }
+    if (m !== '3d') { suspend3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 町は捨てずに、止めて隠すだけ(次に入るときは読み込みなしですぐ入れる)   // 勉強部屋(ホーム)へ
+    if (town) { home.hide(); document.body.classList.add('md-3d-on'); if (box) box.style.display = ''; try { town.resume(); } catch (e) { } core.daylog.act('base', { cat: 'relax', label: '街を歩く' }); return; }
     home.hide(); document.body.classList.add('md-3d-on');
     const wait = document.createElement('div'); wait.className = 'md-wait'; wait.textContent = '町を読みこんでいます…'; document.body.appendChild(wait);
     const fail = (why) => { wait.remove(); try { stop3D(); } catch (e) { } if (box) { box.remove(); box = null; } town = null; document.body.classList.remove('md-3d-on'); console.error(why); home.show({ text: '3Dの町を開けませんでした（' + (why && why.message ? String(why.message).slice(0, 80) : '読みこみに失敗') + '）。通信のよいところで、もう一度ためしてください。' }); };
@@ -135,6 +135,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       },
     });
   }
+  function suspend3D() { document.body.classList.remove('md-app-open', 'tw-talking'); core.daylog.act('base', null); if (!town) return; try { town.pause(); } catch (e) { } if (box) box.style.display = 'none'; }
   function stop3D() { document.body.classList.remove('md-app-open', 'tw-talking'); core.daylog.act('base', null); if (!town) return; try { town.unmount(); } catch (e) { console.error(e); } box.remove(); town = null; box = null; }
 
   // ゲームを開いている間は3Dの町を止め、閉じたら再開する
