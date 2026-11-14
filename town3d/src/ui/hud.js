@@ -137,7 +137,7 @@ export const CSS = `
 export function createHud(root, bus) {
   const h = s => { const t = document.createElement('template'); t.innerHTML = s.trim(); return t.content.firstChild; };
   const top = h(`<div class="tw-top"><span class="tw-chip tw-area" hidden>ほし広場</span><span class="tw-chip tw-clock">10:00</span><span class="tw-sp"></span><span class="tw-chip tw-coins">🪙 0</span><button class="tw-btn tw-find" aria-label="町をさがす">探す</button><button class="tw-btn tw-lang" aria-label="ノートをひらく">📒</button></div>`);
-  const corner = h(`<div class="tw-corner"><button class="tw-btn tw-icon tw-appsbtn" aria-label="ぜんぶの入口">🎮</button><button class="tw-btn tw-icon tw-homebtn" aria-label="自宅にもどる">🏠</button><button class="tw-btn tw-icon tw-cambtn" aria-label="カメラ" hidden style="display:none">🎥</button><button class="tw-btn tw-icon tw-photo" aria-label="写真をとる">📷</button><button class="tw-btn tw-icon tw-daily" aria-label="今日はここまで">🌙</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
+  const corner = h(`<div class="tw-corner"><button class="tw-btn tw-icon tw-appsbtn" aria-label="ぜんぶの入口">🎮</button><button class="tw-btn tw-icon tw-homebtn" aria-label="自宅にもどる">🏠</button><button class="tw-btn tw-icon tw-cambtn" aria-label="カメラ" hidden style="display:none">🎥</button><button class="tw-btn tw-icon tw-photo" aria-label="写真をとる">📷</button><button class="tw-btn tw-icon tw-aloud" aria-label="単語の読み上げ" style="display:none">📖</button><button class="tw-btn tw-icon tw-daily" aria-label="今日はここまで">🌙</button><button class="tw-btn tw-icon tw-menu" aria-label="せってい">⚙</button></div>`);
   const labels = h('<div class="tw-labels"></div>');
   const action = h('<button class="tw-btn tw-action" hidden></button>');
   const emotes = h('<div class="tw-emotes"><button class="tw-btn" data-e="wave">👋 手をふる</button><button class="tw-btn" data-e="say">💬 ひとこと</button><button class="tw-btn" data-e="feed" hidden>🌾 えさをまく</button></div>');
@@ -174,6 +174,7 @@ export function createHud(root, bus) {
   corner.querySelector('.tw-appsbtn').onclick = () => bus.emit('ui:apps');
   corner.querySelector('.tw-photo').onclick = () => bus.emit('ui:photo');
   corner.querySelector('.tw-daily').onclick = () => bus.emit('ui:daily');
+  corner.querySelector('.tw-aloud').onclick = () => bus.emit('ui:aloud');
   top.querySelector('.tw-find').onclick = () => bus.emit('ui:find');
   const langB = top.querySelector('.tw-lang');
   langB.onclick = () => bus.emit('ui:notes');   // 右上のノート(勉強ノートへ)

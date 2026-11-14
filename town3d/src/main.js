@@ -1163,6 +1163,8 @@ export function mount(container, opt = {}) {
     flash(root); audio.unlock(); audio.play('tap');
     shotCard(root, src, { gems: opt.gems, cfg: opt.photo, openAlbum: () => openApp('album') });
   }));
+  if (opt.aloudToggle) { const ab = document.querySelector('.tw-aloud'); if (ab) ab.style.display = ''; }   // 📖 ワンタップで、設定どおりの読み上げを始める/とめる(統合アプリのときだけ)
+  offs.push(bus.on('ui:aloud', () => { if (started) opt.aloudToggle?.(); }));
   offs.push(bus.on('ui:daily', () => { if (started) opt.onEvent?.('app:event', { name: 'daily' }); }));   // 今日はここまで(どこからでも)
   offs.push(bus.on('ui:menu', () => {
     if (!started) return;
