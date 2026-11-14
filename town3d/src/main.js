@@ -1184,6 +1184,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">流れ星<button class="tw-btn" data-act="meteor" style="padding:6px 14px">いま流す</button></div>
       <div class="tw-row">英語のヒント(すれ違い)${seg('tips', [[0, 'なし'], [1, 'あり']])}</div>
       ${opt.openAdmin ? `<div class="tw-row">きせつ(桜・紅葉・雪)<button class="tw-btn" data-act="season" style="padding:6px 14px">${SEASONS[settings.season || 'auto']}</button></div>` : ''}
+      ${opt.openAloud ? '<div class="tw-row">単語の読み上げ<button class="tw-btn" data-act="aloud" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">誕生日(花火でお祝い)<button class="tw-btn" data-act="birth" style="padding:6px 14px">${settings.birth ? settings.birth.replace(/-/g, '/') : 'とうろく'}</button></div>
       ${opt.openAdmin ? '<div class="tw-row">運営(花火・日食・月食の予約)<button class="tw-btn" data-act="admin" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
@@ -1218,6 +1219,7 @@ export function mount(container, opt = {}) {
         if (b.dataset.act === 'ai') openAiSetup({ hud, ai });
         if (b.dataset.act === 'season') { const ks = Object.keys(SEASONS), n = ks[(ks.indexOf(settings.season || 'auto') + 1) % ks.length]; settings.season = n; save(); b.textContent = SEASONS[n] + (n === 'auto' ? '(' + SEASONS[seasonOf()] + ')' : ''); applySeason(); }
         if (b.dataset.act === 'birth') { hud.closePanel(); setTimeout(openBirthSetup, 30); }
+        if (b.dataset.act === 'aloud') { hud.closePanel(); setTimeout(() => opt.openAloud(), 30); }
         if (b.dataset.act === 'hunt') { hud.closePanel(); setTimeout(() => soc.adminHunt(), 30); return; }
         if (b.dataset.act === 'admin') { hud.closePanel(); setTimeout(() => opt.openAdmin(), 30); }
       }, { outside: true });
