@@ -38,6 +38,9 @@ export function createAloud(core) {
         (await core.level.wordsOf(bs, C.newN, ex)).forEach(add);
       } catch (e) { }
     }
+    // 自動で集めた言葉は、自分のレベルより下(やさしすぎる)のものを外す(「新しい単語」で自分が帯を選んだぶんは、そのまま)
+    try { await core.level.load(); const easy = core.level.tooEasy; for (const [k, w] of m) if (w.src !== 'new' && easy(w.en)) m.delete(k); } catch (e) { }
+    if (o.noNew && !m.size) { try { (await core.level.fillWords(30, new Set())).forEach(add); } catch (e) { } }   // 全部やさしいときも、ローディングが消えないように、いまのレベルの言葉で
     return [...m.values()].slice(0, MAXN);
   }
 

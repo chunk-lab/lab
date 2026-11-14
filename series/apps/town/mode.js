@@ -128,7 +128,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
       quizSet: async () => {   // エンカウント英語クイズ用: まちがえた言葉+その人のレベル帯の言葉(選択肢にも使う)
         const out = [], seen = new Set(), add = (w, from) => { if (!w || !w.en || !w.ja || w.kind === 'sentence' || /\s/.test(w.en)) return; const k = w.en.toLowerCase(); if (seen.has(k)) return; seen.add(k); out.push({ en: w.en, ja: w.ja, from }); };
-        try { core.daylog.missed(14).forEach(w => add(w, 'missed')); } catch (e) { }
+        try { await core.level.load(); core.daylog.missed(14).filter(w => !core.level.tooEasy(w.en)).forEach(w => add(w, 'missed')); } catch (e) { }
         try { (await core.level.fillWords(16, seen)).forEach(w => add(w, 'level')); } catch (e) { }
         return out;
       },

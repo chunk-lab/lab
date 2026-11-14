@@ -52,6 +52,10 @@ export function createLevel(core) {
     } catch (e) { return ''; }
   }
   const bandOf = i => Math.max(0, EDGES.findIndex(e => e > i) - 1);
+  // 自分のレベルより下(やさしすぎる)の単語か。単語表にない言葉・テスト前(推定語彙なし)は、判断できないので false
+  let RK = null;
+  const rankOf = en => { const g = list(); if (!g) return -1; if (!RK) { RK = new Map(); g.forEach((w, i) => { const k = String(w[0]).toLowerCase(); if (!RK.has(k)) RK.set(k, i); }); } const r = RK.get(String(en || '').toLowerCase().trim()); return r == null ? -1 : r; };
+  const tooEasy = en => { if (!L.vocab) return false; const r = rankOf(en); return r >= 0 && r < EDGES[bandOf(L.vocab)]; };
   function wordQ(band, used) {
     const g = list(), lo = EDGES[band], hi = Math.min(EDGES[band + 1], g.length); if (hi - lo < 10) return null;
     for (let t = 0; t < 40; t++) {
@@ -167,6 +171,7 @@ export function createLevel(core) {
       for (const w of pool) { if (out.length >= n) break; const k = String(w[0]).toLowerCase(); if (used.has(k) || w[0].includes(' ') || !w[2]) continue; used.add(k); out.push({ en: w[0], pos: w[1], ja: w[2], kind: 'word', src: 'new' }); }
       return out;
     },
+    tooEasy,   // ランダムに出す問題では、これが true の単語は出さない(本人が自分で選んだときだけ例外)
     canTest, testLeft: () => Math.max(0, NEED - progress()),
     placement, test, score, load,
     onChange(f) { subs.add(f); return () => subs.delete(f); },

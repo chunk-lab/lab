@@ -208,6 +208,7 @@ export function createReview(core) {
     // 「覚えてる」にした言葉は出さない。数がたりなければ、その人のレベル帯の単語でうめる
     const fixed = Array.isArray(only) && only.length ? only.filter(w => w && w.en && w.ja).filter((w, i, a) => a.findIndex(x => x.en.toLowerCase() === w.en.toLowerCase()) === i) : null;
     let pool = fixed ? fixed.slice() : dl.pool(), extra = [];
+    if (!fixed) { try { await core.level.load(); pool = pool.filter(w => !core.level.tooEasy(w.en)); } catch (e) { } }   // ランダムに出すテストは、やさしすぎる言葉をのぞく(自分で選んだカードのときは、そのまま)
     if (fixed) {   // 選択肢のまぎれ用(問題には出さない)
       try { const ex = new Set(pool.map(w => w.en.toLowerCase())); extra = dl.pool().filter(w => !ex.has(w.en.toLowerCase())); if (pool.length + extra.length < 6) extra = extra.concat(await core.level.fillWords(6, new Set([...ex, ...extra.map(w => w.en.toLowerCase())]))); } catch (e) { }
     } else if (pool.length < TEST_N) { try { const ex = new Set([...dl.knownKeys(), ...pool.map(w => w.en.toLowerCase())]); pool = pool.concat(await core.level.fillWords(TEST_N - pool.length + 3, ex)); } catch (e) { } }
