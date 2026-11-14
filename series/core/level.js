@@ -157,16 +157,6 @@ export function createLevel(core) {
       for (let t = 0; t < n * 30 && out.length < n && hi > lo; t++) { const w = g[lo + Math.floor(Math.random() * (hi - lo))]; const k = String(w[0]).toLowerCase(); if (used.has(k) || w[0].includes(' ')) continue; used.add(k); out.push({ en: w[0], pos: w[1], ja: w[2] }); }
       return out;
     },
-    // 読み上げ用:「新しい単語」をレベル帯(0〜9)から n こ。exclude(英語の小文字)は出さない
-    bands: () => EDGES.slice(0, -1).map((e, i) => ({ i, note: BAND_NOTE[i], from: e, to: EDGES[i + 1] })),
-    async wordsOf(bs, n = 20, exclude = new Set()) {
-      if (!(await load())) return []; const g = list(); if (!g || !bs || !bs.length) return [];
-      const pool = []; bs.forEach(b => { const lo = EDGES[b], hi = Math.min(EDGES[b + 1], g.length); for (let i = lo; i < hi; i++) pool.push(g[i]); });
-      for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
-      const out = [], used = new Set(exclude);
-      for (const w of pool) { if (out.length >= n) break; const k = String(w[0]).toLowerCase(); if (used.has(k) || w[0].includes(' ') || !w[2]) continue; used.add(k); out.push({ en: w[0], pos: w[1], ja: w[2], kind: 'word', src: 'new' }); }
-      return out;
-    },
     canTest, testLeft: () => Math.max(0, NEED - progress()),
     placement, test, score, load,
     onChange(f) { subs.add(f); return () => subs.delete(f); },
