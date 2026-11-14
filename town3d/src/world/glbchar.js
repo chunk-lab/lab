@@ -7,7 +7,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 // 住人id → モデル。rotY は「モデルの正面を +z に向ける」補正(ゆず・潮見さんは -x 向きで出てくる)
 export const GLB_MODELS = {
   baron: { url: 'models/baron.glb', rotY: 0, sex: 'm' },
-  koharu: { url: 'models/koharu.glb', rotY: 0 },
+  koharu: { url: 'models/koharu.glb', rotY: 0, animFrom: 'hana' },
   yuzu: { url: 'models/yuzu.glb', rotY: 0, animFrom: 'hana' },
   shiori: { url: 'models/shiori.glb', rotY: 0, animFrom: 'hana' },
   maru: { url: 'models/maru.glb', rotY: 0, animFrom: 'hana' },
