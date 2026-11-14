@@ -8,7 +8,7 @@ import { createStore } from './store.js';
 import { isChunk } from './daylog.js';
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const DEF = { v: 2, src: ['missed', 'pending'], bands: [], newN: 20, dir: 'en-ja', reps: 1, gap: 1, order: 'random', after: 'cards' };
+const DEF = { src: ['missed', 'pending'], bands: [], newN: 20, dir: 'ja-en', reps: 1, gap: 1, order: 'random', after: 'cards' };
 const MAXN = 150;
 const cut = t => String(t || '').split(/[、,;;／\/]/).map(x => x.trim()).filter(Boolean);
 export const jaShort = t => cut(t).slice(0, 2).join('、');
@@ -17,7 +17,6 @@ const shuf = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floo
 
 export function createAloud(core) {
   const st = createStore('core'), C = Object.assign({}, DEF, st.get('aloud') || {});
-  if (C.v !== 2) { C.v = 2; C.dir = 'en-ja'; }   // 初期値は「英語が先・日本語があと」(前の版で保存された向きはここでそろえる)
   const save = () => st.set('aloud', C);
   let cur = null;   // いま出ている帯(ひとつだけ)
 
@@ -84,7 +83,7 @@ export function createAloud(core) {
   // 1語ぶんの表示(先に読むほうを出し、あとから読むほうは「？」から答えを出す)
   function pair(x, info) {
     const t = l => (l === 'en' ? x.en : jaShort(x.ja)), second = info.first === 'en' ? 'ja' : 'en';
-    return { a: t(info.first), b: t(second), onA: info.phase === 'first', onB: info.phase === 'second' };
+    return { a: t(info.first), b: info.phase === 'second' ? t(second) : '？', onA: info.phase === 'first', onB: info.phase === 'second' };
   }
 
   // ---- 帯 ----
@@ -110,7 +109,6 @@ export function createAloud(core) {
     eA.textContent = '…'; if (o.list) start(o.list); else collect({ noNew: o.noNew }).then(start);
     return stopFn;
   }
-  const start = () => band(null, { onEnd: (fin, played) => { if (played && played.length) core.review.open({ words: played, after: C.after }); } });   // 設定どおりに、すぐ読む(一覧なし)
   const play = list => band(null, { list, onEnd: (fin, played) => { if (played && played.length) core.review.open({ words: played, after: C.after }); } });
 
   // ---- 設定 → 一覧 の画面 ----
@@ -131,11 +129,10 @@ export function createAloud(core) {
           <div class="al-row"><span>間の秒数</span>${seg('gap', [[1, '1秒'], [2, '2秒'], [3, '3秒'], [5, '5秒']])}</div>
           <div class="al-row"><span>順番</span>${seg('order', [['random', 'ランダム'], ['seq', '順番']])}</div>
           <div class="al-row"><span>読んだあと</span>${seg('after', [['cards', 'フラッシュカード'], ['list', '一覧']])}</div>
-          <div class="rv-two"><button class="cs-btn" id="al-next">一覧を見る</button><button class="cs-btn rv-ok" id="al-now">▶ このまま読み上げる</button></div>`, () => {
+          <button class="cs-btn rv-ok" id="al-next">一覧を見る</button>`, () => {
           box.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { const k = b.dataset.s; C.src = C.src.includes(k) ? C.src.filter(x => x !== k) : [...C.src, k]; save(); settingsScreen(); });
           box.querySelectorAll('[data-b]').forEach(b => b.onclick = () => { const k = +b.dataset.b; C.bands = C.bands.includes(k) ? C.bands.filter(x => x !== k) : [...C.bands, k]; save(); settingsScreen(); });
           box.querySelectorAll('[data-k]').forEach(b => b.onclick = () => { C[b.dataset.k] = num(b.dataset.v); save(); settingsScreen(); });
-          box.querySelector('#al-now').onclick = () => { if (!C.src.length) { core.ui.toast('読む言葉を1つ以上えらんでね'); return; } close(); start(); };
           box.querySelector('#al-next').onclick = () => { if (!C.src.length) { core.ui.toast('読む言葉を1つ以上えらんでね'); return; } listScreen(); };
         });
       }
@@ -162,5 +159,5 @@ export function createAloud(core) {
     });
   }
 
-  return { open, band, run, collect, play, pair, start, toggle() { if (cur) cur(); else start(); }, stop: () => { if (cur) cur(); }, cfg: () => ({ ...C }), get playing() { return !!cur; } };
+  return { open, band, run, collect, play, pair, stop: () => { if (cur) cur(); }, cfg: () => ({ ...C }), get playing() { return !!cur; } };
 }
