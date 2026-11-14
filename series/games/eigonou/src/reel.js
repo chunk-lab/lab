@@ -89,7 +89,7 @@ export function reelChunksHtml(parts, FA){
   const pop=on&&APP.reelPop===key?`<i class="rpop">${REEL_NAME[kind]}</i>`:'';
   const hand=APP.hand&&['bar','word'].includes(APP.finStage)&&!APP.reelKey&&kind&&key===reelHandKey(parts)?'<i class="rhand">👆</i>':'';
   const hit=!!(HM&&HM.has(i));
-  return `<span class="fc2 pos-${p.pos} ${hit?'hlc':''} ${kind?'rk':''} ${on?'ron':''} ${pulse&&kind?'rpulse':''} ${APP.reelFlash===key?'rflash':''} ${isNegChunk(p)?'negc':''}" ${kind&&FA?`data-fa="ck${i}"`:''} style="--d:${i*.25}s">${pop}${hand}<b>${esc(en)}</b></span>`; }
+  return `<span class="fc2 pos-${p.pos} ${hit?'hlc':''} ${kind?'rk':''} ${on?'ron':''} ${pulse&&kind?'rpulse':''} ${APP.reelFlash===key?'rflash':''} ${isNegChunk(p)?'negc':''}" data-cat="${p.cat||''}" ${kind&&FA?`data-fa="ck${i}"`:''} style="--d:${i*.25}s">${pop}${hand}<b>${esc(en)}</b></span>`; }
 }
 export let reelPopT;
 // カードの中の帯：選んだまとまりの候補だけ

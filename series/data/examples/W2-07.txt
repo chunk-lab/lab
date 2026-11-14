@@ -1,0 +1,300 @@
+pipe | n | Water flows through this pipe into our kitchen. | 水はこの管を通って台所に流れ込みます。
+pipe | n | Can you see the pipe behind the washing machine? | 洗濯機の後ろの管が見えますか。
+pipe | n | The worker replaced two old pipes under the sink. | 作業員は流し台の下の古い管を二本交換しました。
+favourite | n | This blue sweater is my favourite for winter. | この青いセーターは冬の私のお気に入りです。
+favourite | n | Which of these songs is your favourite? | これらの曲の中でどれがお気に入りですか。
+favourite | n | The chocolate cake has always been her favourite. | チョコレートケーキはずっと彼女のお気に入りです。
+loyal | a | Our dog is loyal to everyone in the family. | うちの犬は家族みんなに忠実です。
+loyal | a | Is he still loyal to his old friends? | 彼は今も昔の友達に忠実ですか。
+loyal | a | She remained loyal to her team through difficult times. | 彼女は困難な時期もチームに忠実でした。
+atmosphere | n | The atmosphere around Earth contains the air we breathe. | 地球を囲む大気には私たちが吸う空気が含まれます。
+atmosphere | n | Does the atmosphere protect Earth from some harmful sunlight? | 大気は有害な日光の一部から地球を守りますか。
+atmosphere | n | Scientists study changes in the atmosphere throughout the year. | 科学者たちは年間を通じて大気の変化を調べます。
+pit | n | Be careful because there is a deep pit ahead. | 前方に深い穴があるので気をつけてください。
+pit | n | Did you remove the pit from that peach? | その桃の種を取り除きましたか。
+pit | n | The children dug small pits in the sand. | 子供たちは砂に小さなくぼみを掘りました。
+sample | n | The shop gave me a free sample of tea. | 店はお茶の無料の試供品をくれました。
+sample | n | May I try a sample before buying this cream? | このクリームを買う前に試供品を試せますか。
+sample | n | The teacher showed us samples of different kinds of paper. | 先生はさまざまな種類の紙の見本を見せてくれました。
+strip | v | We need to strip the old paint from this chair. | この椅子から古い塗料をはがす必要があります。
+strip | v | Did you strip the leaves from those branches? | その枝から葉を取り除きましたか。
+strip | v | The workers stripped the wallpaper from the bedroom walls. | 作業員は寝室の壁紙をはがしました。
+judgment | n | Her judgment helped us choose the best plan. | 彼女の判断のおかげで最善の計画を選べました。
+judgment | n | Do you trust his judgment about this problem? | この問題について彼の判断を信頼しますか。
+judgment | n | The teacher asked us not to make quick judgments. | 先生は早まった判断をしないよう求めました。
+existence | n | The existence of this small village surprised the travelers. | この小さな村の存在は旅行者たちを驚かせました。
+existence | n | Did you know about the existence of that island? | その島の存在を知っていましたか。
+existence | n | The museum explains the existence of many different sea animals. | 博物館はさまざまな海の動物の存在について説明しています。
+belly | n | The little dog rolled over and showed its belly. | 小さな犬は転がってお腹を見せました。
+belly | n | Does your belly feel full after that large meal? | たくさん食べてお腹はいっぱいですか。
+belly | n | The baby laughed when her father touched her belly. | 赤ちゃんは父親がお腹に触れると笑いました。
+ward | n | The nurse showed us around the children's ward. | 看護師は子供用の病棟を案内してくれました。
+ward | n | Is your aunt working in this hospital ward? | 叔母さんはこの病棟で働いていますか。
+ward | n | The hospital opened a new ward with larger windows. | 病院は窓の大きな新しい病棟を開きました。
+chairman | n | The chairman opened the meeting with a short speech. | 議長は短い挨拶で会議を始めました。
+chairman | n | Did the chairman ask everyone to share their ideas? | 議長は全員に意見を出すよう求めましたか。
+chairman | n | The committee chose a new chairman last month. | 委員会は先月新しい議長を選びました。
+colour | n | The colour of this flower changes in the sunlight. | この花の色は日光の中で変わります。
+colour | n | Which colour would look best on this wall? | この壁にはどの色が一番似合いますか。
+colour | n | The children used bright colours in their drawings. | 子供たちは絵に明るい色を使いました。
+relief | n | I felt great relief when I found my lost keys. | なくした鍵を見つけてとても安心しました。
+relief | n | Was it a relief to finish the difficult test? | 難しい試験を終えてほっとしましたか。
+relief | n | The cool wind brought relief from the summer heat. | 涼しい風が夏の暑さを和らげてくれました。
+circus | n | The circus came to our town last weekend. | 先週末サーカスが私たちの町に来ました。
+circus | n | Have you ever watched a circus with your family? | 家族とサーカスを見たことがありますか。
+circus | n | The children enjoyed the music and lights at the circus. | 子供たちはサーカスの音楽と照明を楽しみました。
+mud | n | There was thick mud on the path after the rain. | 雨の後で小道には厚い泥がありました。
+mud | n | Did your shoes get covered in mud yesterday? | 昨日靴が泥だらけになりましたか。
+mud | n | The children washed the mud off their boots outside. | 子供たちは外で長靴の泥を洗い落としました。
+capture | v | I want to capture the sunset in a photograph. | 夕焼けを写真に収めたいです。
+capture | v | Can this camera capture birds flying across the sky? | このカメラで空を飛ぶ鳥を捉えられますか。
+capture | v | The photographer captured a beautiful moment at the festival. | 写真家は祭りの美しい瞬間を捉えました。
+occasion | n | This special occasion calls for a family dinner. | この特別な機会には家族での夕食がふさわしいです。
+occasion | n | What do you usually wear on a formal occasion? | 改まった場では普段何を着ますか。
+occasion | n | We have met on several occasions at the library. | 私たちは図書館で何度か会ったことがあります。
+pulse | n | The nurse checked my pulse after the exercise. | 看護師は運動後に私の脈拍を測りました。
+pulse | n | Can you feel your pulse at your wrist? | 手首で自分の脈を感じられますか。
+pulse | n | His pulse became faster after running up the stairs. | 階段を駆け上がった後で彼の脈拍は速くなりました。
+signature | n | Please put your signature at the bottom of this form. | この用紙の下部に署名してください。
+signature | n | Does this letter need your signature before Friday? | この手紙には金曜日までに署名が必要ですか。
+signature | n | The office checked all the signatures on the documents. | 事務所は書類の署名をすべて確認しました。
+resist | v | I cannot resist eating fresh bread from the oven. | 焼きたてのパンを食べずにはいられません。
+resist | v | Could you resist buying that beautiful blue jacket? | あの美しい青い上着を買わずにいられますか。
+resist | v | The children resisted the urge to open their presents early. | 子供たちは早く贈り物を開けたい気持ちを抑えました。
+pitch | n | The player threw a perfect pitch during practice. | 選手は練習中に完璧な投球をしました。
+pitch | n | Can you hear the difference in pitch between these notes? | これらの音の高さの違いがわかりますか。
+pitch | n | Her business pitch impressed everyone at the meeting. | 彼女の事業の売り込みは会議の全員に好印象を与えました。
+hammer | n | My father used a hammer to fix the shelf. | 父は棚を直すために金づちを使いました。
+hammer | n | Could you pass me the hammer beside the box? | 箱の横の金づちを渡してくれますか。
+hammer | n | The workers kept their hammers in a wooden case. | 作業員は金づちを木の箱にしまっていました。
+charm | n | The old town has a special charm in winter. | その古い町には冬ならではの魅力があります。
+charm | n | What is the charm of living near the sea? | 海の近くに住む魅力は何ですか。
+charm | n | Her warm smile added charm to the small restaurant. | 彼女の温かい笑顔が小さなレストランの魅力を増しました。
+extreme | a | The extreme heat made our afternoon walk difficult. | 極度の暑さで午後の散歩が大変でした。
+extreme | a | Is this mountain known for its extreme weather? | この山は極端な天候で知られていますか。
+extreme | a | We avoided going outside during the extreme cold. | 極度の寒さの間は外出を控えました。
+rocket | n | The children watched a rocket rise into the sky. | 子供たちはロケットが空へ上がるのを見ました。
+rocket | n | How does a rocket travel beyond the atmosphere? | ロケットはどうやって大気圏の外へ進みますか。
+rocket | n | The museum displayed models of several early rockets. | 博物館には初期のロケットの模型がいくつか展示されていました。
+absolute | a | The teacher asked for absolute silence during the test. | 先生は試験中に完全な静けさを求めました。
+absolute | a | Do you have absolute confidence in your answer? | 自分の答えに絶対の自信がありますか。
+absolute | a | There is no absolute guarantee that our plan will work. | 私たちの計画が成功するという絶対的な保証はありません。
+commercial | a | The new building is in the commercial part of town. | 新しい建物は町の商業地区にあります。
+commercial | a | Does this area have many commercial buildings? | この地域には商業用の建物が多いですか。
+commercial | a | The company uses these trucks for commercial deliveries. | その会社は商業用の配達にこれらのトラックを使います。
+engagement | n | Their engagement made both families very happy. | 二人の婚約は両家をとても喜ばせました。
+engagement | n | Did she announce her engagement at the family dinner? | 彼女は家族の夕食で婚約を発表しましたか。
+engagement | n | The teacher encouraged greater student engagement during the lesson. | 先生は授業中に生徒がもっと積極的に参加するよう促しました。
+furniture | n | We bought new furniture for our living room. | 居間のために新しい家具を買いました。
+furniture | n | Can you help me move this heavy furniture? | この重い家具を動かすのを手伝ってくれますか。
+furniture | n | The hotel has simple wooden furniture in every room. | ホテルの各部屋には質素な木製家具があります。
+shark | n | A shark swam slowly past the boat. | 一匹のサメが船のそばをゆっくり泳ぎました。
+shark | n | Have you ever seen a shark at an aquarium? | 水族館でサメを見たことがありますか。
+shark | n | Some sharks live in warm seas around the world. | 世界各地の暖かい海に住むサメもいます。
+transport | n | Public transport is convenient in this busy city. | このにぎやかな都市では公共交通機関が便利です。
+transport | n | Is transport included in the price of the trip? | 旅行代金に交通費は含まれていますか。
+transport | n | The company arranged transport for the large musical instruments. | 会社は大きな楽器の輸送を手配しました。
+sneak | v | The cat likes to sneak into the kitchen at night. | 猫は夜こっそり台所に入るのが好きです。
+sneak | v | Did your brother sneak outside before breakfast? | 弟さんは朝食前にこっそり外へ出ましたか。
+sneak | v | She sneaked into the room to prepare a surprise. | 彼女は驚かせる準備のためこっそり部屋に入りました。
+destruction | n | The storm caused the destruction of several old trees. | 嵐で古い木が何本か倒壊しました。
+destruction | n | Can we prevent the destruction of this beautiful forest? | この美しい森の破壊を防げますか。
+destruction | n | The museum explains how to reduce environmental destruction. | 博物館は環境破壊を減らす方法を説明しています。
+punish | v | Teachers should not punish students for asking questions. | 先生は質問した生徒を罰するべきではありません。
+punish | v | Did your parents punish you for coming home late? | 帰宅が遅くて両親に罰を与えられましたか。
+punish | v | The coach punished the team with extra practice. | コーチは罰としてチームに追加練習をさせました。
+shell | n | I found a beautiful shell on the beach. | 浜辺できれいな貝がらを見つけました。
+shell | n | Can you hear the sea when holding that shell? | その貝がらを持つと海の音が聞こえますか。
+shell | n | The children collected shells along the sandy shore. | 子供たちは砂浜の岸辺で貝がらを集めました。
+chamber | n | The old castle has a small chamber upstairs. | 古い城の二階には小さな部屋があります。
+chamber | n | Did the guide show you the secret chamber? | 案内人は秘密の部屋を見せてくれましたか。
+chamber | n | The museum displayed paintings inside several stone chambers. | 博物館はいくつかの石造りの部屋に絵を展示しました。
+loyalty | n | Her loyalty to the team impressed the new coach. | チームへの彼女の忠誠心は新しいコーチを感心させました。
+loyalty | n | How do you show loyalty to your friends? | 友達への忠誠心をどのように示しますか。
+loyalty | n | The dog showed great loyalty to its owner. | その犬は飼い主に強い忠誠心を示しました。
+liver | n | The liver helps our bodies process the food we eat. | 肝臓は食べた物を体内で処理するのを助けます。
+liver | n | Do you know where the liver is in your body? | 肝臓が体のどこにあるか知っていますか。
+liver | n | Our science teacher explained the work of the liver. | 理科の先生は肝臓の働きを説明しました。
+jazz | n | My grandfather enjoys listening to jazz on Sunday mornings. | 祖父は日曜の朝にジャズを聴くのが好きです。
+jazz | n | Have you heard live jazz at this small cafe? | この小さなカフェで生演奏のジャズを聴いたことがありますか。
+jazz | n | The students played jazz together at the music festival. | 生徒たちは音楽祭で一緒にジャズを演奏しました。
+obey | v | Please obey the rules when using the swimming pool. | プールを利用するときは規則に従ってください。
+obey | v | Does your dog obey simple commands at home? | あなたの犬は家で簡単な指示に従いますか。
+obey | v | The children obeyed their teacher during the school trip. | 子供たちは遠足中に先生の指示に従いました。
+remote | a | My grandparents live in a remote mountain village. | 祖父母は遠く離れた山村に住んでいます。
+remote | a | Is that remote island easy to reach by boat? | その遠い島には船で簡単に行けますか。
+remote | a | The photographer traveled to remote areas to photograph birds. | 写真家は鳥を撮るため遠隔地を訪れました。
+supper | n | We usually have supper together around seven o'clock. | 私たちは普段七時ごろ一緒に夕食を食べます。
+supper | n | What are you making for supper tonight? | 今夜の夕食には何を作っていますか。
+supper | n | Grandmother invited us over for a simple supper. | 祖母は簡単な夕食に私たちを招いてくれました。
+highway | n | The highway connects our town with the nearby city. | 幹線道路は私たちの町と近くの都市を結びます。
+highway | n | Is there a rest area along this highway? | この幹線道路沿いに休憩所はありますか。
+highway | n | We followed the highway through fields and small villages. | 私たちは野原や小さな村を通る幹線道路を進みました。
+blade | n | The blade of this kitchen knife is very sharp. | この包丁の刃はとても鋭いです。
+blade | n | Did you clean the blade after cutting the vegetables? | 野菜を切った後に刃を洗いましたか。
+blade | n | The gardener replaced the old blades on his tools. | 庭師は道具の古い刃を交換しました。
+widow | n | The widow lives next door with her two cats. | その未亡人は隣で二匹の猫と暮らしています。
+widow | n | Does the widow still teach music at the school? | その未亡人は今も学校で音楽を教えていますか。
+widow | n | Several neighbors helped the widow care for her garden. | 近所の人たちはその未亡人の庭の手入れを手伝いました。
+liberty | n | Everyone should have the liberty to express their ideas. | 誰もが自分の考えを表現する自由を持つべきです。
+liberty | n | Does this rule limit our liberty to choose? | この規則は私たちの選択の自由を制限しますか。
+liberty | n | The students discussed liberty and responsibility in class. | 生徒たちは授業で自由と責任について話し合いました。
+moral | a | The story teaches children an important moral lesson. | その物語は子供たちに大切な道徳的教訓を伝えます。
+moral | a | Is it a moral choice to tell the truth? | 本当のことを話すのは道徳的な選択ですか。
+moral | a | She faced a moral question about keeping her promise. | 彼女は約束を守ることについて道徳的な問題に直面しました。
+intention | n | My intention is to help everyone enjoy the event. | 私の意図はみんなが行事を楽しめるよう助けることです。
+intention | n | What was your intention when you sent that message? | そのメッセージを送った意図は何でしたか。
+intention | n | He had no intention of changing his travel plans. | 彼には旅行計画を変更する意図がありませんでした。
+serial | a | The magazine publishes a serial story every month. | その雑誌は毎月連載物語を掲載しています。
+serial | a | Have you read the new serial novel online? | 新しい連載小説をオンラインで読みましたか。
+serial | a | The newspaper printed serial articles about local history. | 新聞は地元の歴史について連載記事を掲載しました。
+divine | a | The hotel served a divine chocolate cake after dinner. | ホテルは夕食後にすばらしくおいしいチョコレートケーキを出しました。
+divine | a | Was the dessert as divine as everyone said? | デザートはみんなが言うほどすばらしかったですか。
+divine | a | The flowers gave off a divine smell in spring. | 春には花々がうっとりするような香りを放ちました。
+goat | n | A white goat stood beside the wooden fence. | 白いヤギが木の柵のそばに立っていました。
+goat | n | Can we feed the goat some fresh grass? | そのヤギに新鮮な草をあげてもいいですか。
+goat | n | The farmer keeps several goats on the hillside. | 農家は丘の斜面で数頭のヤギを飼っています。
+objection | n | She raised an objection to the new school rule. | 彼女は新しい校則に反対意見を述べました。
+objection | n | Do you have any objection to changing the meeting time? | 会議の時間を変更することに異議はありますか。
+objection | n | The manager listened carefully to everyone's objections. | 責任者はみんなの反対意見に注意深く耳を傾けました。
+resistance | n | The new plan met resistance from some team members. | 新しい計画は一部のチーム員から抵抗を受けました。
+resistance | n | Was there much resistance to the proposed change? | 提案された変更には多くの抵抗がありましたか。
+resistance | n | The teacher explained how air resistance slows falling objects. | 先生は空気抵抗が落下物を減速させる仕組みを説明しました。
+stab | v | Use a fork to stab the potato gently. | フォークでジャガイモをそっと刺してください。
+stab | v | Did you stab the cake with a wooden stick? | 木の棒でケーキを刺しましたか。
+stab | v | She stabbed the soft clay with a pencil. | 彼女は柔らかい粘土を鉛筆で突き刺しました。
+development | n | The development of this park took several years. | この公園の開発には数年かかりました。
+development | n | How does sleep help the development of young children? | 睡眠は幼い子供の発達にどう役立ちますか。
+development | n | The town has seen rapid development in recent years. | その町は近年急速に発展しています。
+prick | v | Be careful not to prick your finger with that needle. | その針で指をちくりと刺さないよう注意してください。
+prick | v | Did the rose thorn prick your hand yesterday? | 昨日バラのとげが手に刺さりましたか。
+prick | v | She pricked small holes in the paper with a pin. | 彼女はピンで紙に小さな穴を開けました。
+propose | v | I would like to propose a new plan for lunch. | 昼食について新しい計画を提案したいです。
+propose | v | Did the students propose holding a school concert? | 生徒たちは学校でコンサートを開くことを提案しましたか。
+propose | v | The manager proposed moving the meeting to Friday. | 責任者は会議を金曜日に移すことを提案しました。
+elder | n | The village elder shared stories with the children. | 村の長老は子供たちに物語を話しました。
+elder | n | Did the elder teach you that old song? | その年長者はあなたに昔の歌を教えましたか。
+elder | n | The community elders met to discuss the festival. | 地域の年長者たちは祭りについて話し合うため集まりました。
+beard | n | My uncle has a short gray beard. | 叔父には短い灰色のあごひげがあります。
+beard | n | Did your father grow a beard last winter? | お父さんは昨冬あごひげを伸ばしましたか。
+beard | n | The actor wore a long beard in the play. | 俳優は劇で長いあごひげをつけていました。
+disturb | v | Please do not disturb the students during their test. | 試験中の生徒たちの邪魔をしないでください。
+disturb | v | Did the loud music disturb your sleep last night? | 昨夜大きな音楽が睡眠の邪魔をしましたか。
+disturb | v | The visitors avoided disturbing the birds near the lake. | 訪問者たちは湖の近くの鳥を邪魔しないようにしました。
+possession | n | The house came into her possession last summer. | その家は昨夏彼女の所有になりました。
+possession | n | Is this painting still in your family's possession? | この絵は今もご家族が所有していますか。
+possession | n | The museum has several old maps in its possession. | 博物館はいくつかの古い地図を所有しています。
+shore | n | We walked along the shore after breakfast. | 朝食後に岸辺を歩きました。
+shore | n | Can you see the boats near the shore? | 岸の近くの船が見えますか。
+shore | n | Small waves washed over the sandy shore. | 小さな波が砂の岸辺に打ち寄せました。
+insult | n | His rude comment felt like an insult to everyone. | 彼の失礼な発言はみんなへの侮辱に感じられました。
+insult | n | Was that remark meant as an insult? | その発言は侮辱するつもりだったのですか。
+insult | n | She ignored the insult and continued speaking calmly. | 彼女は侮辱を無視して落ち着いて話し続けました。
+heal | v | A little time can help heal hurt feelings. | 少し時間がたてば傷ついた気持ちも癒やされます。
+heal | v | Did the small cut heal completely by Friday? | 小さな切り傷は金曜日までに完全に治りましたか。
+heal | v | The warm words helped her heart heal slowly. | 温かい言葉が彼女の心を少しずつ癒やしました。
+commission | n | The agent receives a commission for each house sold. | 仲介人は家を一軒売るごとに手数料を受け取ります。
+commission | n | Does the price include the sales commission? | その価格には販売手数料が含まれていますか。
+commission | n | The committee paid a commission to the local agent. | 委員会は地元の仲介人に手数料を支払いました。
+branch | n | A small bird landed on the highest branch. | 小鳥が一番高い枝に止まりました。
+branch | n | Can you reach the branch above your head? | 頭の上の枝に手が届きますか。
+branch | n | The wind moved the branches outside my window. | 風が窓の外の枝を揺らしました。
+muscle | n | This exercise helps strengthen the muscle in your leg. | この運動は脚の筋肉を強くするのに役立ちます。
+muscle | n | Can you feel that muscle working when you walk? | 歩くときその筋肉が働くのを感じますか。
+muscle | n | The coach explained why our muscles need rest. | コーチは筋肉に休息が必要な理由を説明しました。
+tense | n | We learned the past tense in English class today. | 今日英語の授業で過去時制を学びました。
+tense | n | Which tense should we use in this sentence? | この文ではどの時制を使うべきですか。
+tense | n | The teacher compared several tenses on the board. | 先生は黒板でいくつかの時制を比較しました。
+assignment | n | Our English assignment is due next Monday morning. | 英語の課題の提出期限は来週月曜の朝です。
+assignment | n | Have you finished the science assignment for tomorrow? | 明日の理科の課題は終わりましたか。
+assignment | n | The teacher gave us three different writing assignments. | 先生は三つの異なる作文課題を出しました。
+expose | v | Do not expose the plants to strong afternoon sunlight. | 植物を午後の強い日差しにさらさないでください。
+expose | v | Did you expose the film to too much light? | フィルムを光に当てすぎましたか。
+expose | v | The workers exposed the old bricks beneath the paint. | 作業員は塗料の下の古いれんがを露出させました。
+stroke | n | One stroke of the brush covered the small mark. | 筆の一筆で小さな印が隠れました。
+stroke | n | Can you paint the line with one smooth stroke? | 一回の滑らかな筆運びで線を描けますか。
+stroke | n | The swimmer used long strokes to cross the pool. | 泳ぐ人は大きな一かきでプールを進みました。
+motor | n | The motor makes this small fan turn quietly. | モーターがこの小さな扇風機を静かに回します。
+motor | n | Does the motor need electricity to work? | そのモーターが動くには電気が必要ですか。
+motor | n | The mechanic checked the motors in both machines. | 整備士は両方の機械のモーターを点検しました。
+tube | n | Water passes through this narrow tube into the bottle. | 水はこの細い管を通って瓶に入ります。
+tube | n | Can you connect the tube to the small pump? | その管を小さなポンプにつなげられますか。
+tube | n | The scientist used glass tubes during the experiment. | 科学者は実験中にガラスの管を使いました。
+superior | a | This new camera is superior to my old one. | この新しいカメラは古いものより優れています。
+superior | a | Is this material superior in quality to that one? | この素材はあちらより品質が優れていますか。
+superior | a | Her latest work was clearly superior to her earlier paintings. | 彼女の最新作は以前の絵より明らかに優れていました。
+expression | n | Her happy expression made everyone in the room smile. | 彼女のうれしそうな表情で部屋のみんなが笑顔になりました。
+expression | n | What does this English expression mean in Japanese? | この英語表現は日本語でどういう意味ですか。
+expression | n | The actor changed his facial expressions during the scene. | 俳優はその場面で顔の表情を変えました。
+throne | n | The king sat on a golden throne in the castle. | 王は城の金色の玉座に座っていました。
+throne | n | Did you see the old throne at the museum? | 博物館で古い玉座を見ましたか。
+throne | n | The painting shows two thrones beside a large window. | その絵には大きな窓のそばに二つの玉座が描かれています。
+shortly | r | The train will arrive shortly at the next station. | 電車はまもなく次の駅に到着します。
+shortly | r | Will the meeting begin shortly after lunch? | 会議は昼食後まもなく始まりますか。
+shortly | r | The manager returned shortly before the shop closed. | 責任者は店が閉まる少し前に戻りました。
+chin | n | The baby rested her chin on the table. | 赤ちゃんはテーブルにあごを載せました。
+chin | n | Did you get some paint on your chin? | あごに少し絵の具がつきましたか。
+chin | n | He touched his chin while thinking about the question. | 彼は質問について考えながらあごに触れました。
+appearance | n | The new curtains changed the appearance of the room. | 新しいカーテンで部屋の外見が変わりました。
+appearance | n | Did her appearance surprise you at the party? | パーティーでの彼女の登場に驚きましたか。
+appearance | n | The actor made a brief appearance in the final scene. | その俳優は最後の場面に少しだけ出演しました。
+payment | n | The payment for the hotel room is due tomorrow. | ホテルの部屋代の支払期限は明日です。
+payment | n | Can I make the payment by credit card? | クレジットカードで支払いができますか。
+payment | n | The shop accepts payments through its website. | その店はウェブサイトでの支払いを受け付けています。
+squeeze | v | Please squeeze the lemon over the fresh fish. | 新鮮な魚の上にレモンを絞ってください。
+squeeze | v | Can you squeeze all these clothes into one bag? | これらの服を全部一つのかばんに押し込めますか。
+squeeze | v | She squeezed the wet towel before hanging it outside. | 彼女はぬれたタオルを絞ってから外に干しました。
+admire | v | I really admire my grandmother for her kindness. | 祖母の優しさを心から尊敬しています。
+admire | v | Do you admire the way your teacher explains things? | 先生の説明の仕方を称賛していますか。
+admire | v | The visitors admired the beautiful paintings in the museum. | 訪問者たちは博物館の美しい絵画を称賛しました。
+madness | n | The sudden rush for tickets seemed like complete madness. | 突然のチケット争奪はまったくの狂気に思えました。
+madness | n | Was it madness to travel without checking the weather? | 天気を確認せずに旅行するのは無謀でしたか。
+madness | n | He called the plan madness because it ignored every warning. | 彼はすべての警告を無視した計画を狂気の沙汰と呼びました。
+injury | n | A small injury kept him from playing football today. | 軽いけがで彼は今日サッカーができませんでした。
+injury | n | Did your knee injury get better over the weekend? | 膝のけがは週末に良くなりましたか。
+injury | n | The coach taught us how to avoid sports injuries. | コーチはスポーツでのけがを防ぐ方法を教えました。
+manner | n | She answered the question in a calm manner. | 彼女は落ち着いた態度で質問に答えました。
+manner | n | Is that the proper manner to greet a guest? | それは客を迎える適切な作法ですか。
+manner | n | His friendly manner helped the new students feel welcome. | 彼の親しみやすい態度で新入生は歓迎されていると感じました。
+mount | v | We plan to mount the hill before the sun sets. | 日が沈む前に丘を登る予定です。
+mount | v | Can you mount this picture on the wall? | この絵を壁に取り付けられますか。
+mount | v | The costs mounted as the project continued. | 計画が進むにつれて費用が増えました。
+battery | n | The battery in my camera needs to be replaced. | カメラの電池を交換する必要があります。
+battery | n | Does this small clock use a single battery? | この小さな時計は電池一本で動きますか。
+battery | n | We bought extra batteries for our camping trip. | キャンプ旅行用に予備の電池を買いました。
+brick | n | The garden wall is made of red brick. | 庭の壁は赤いれんがでできています。
+brick | n | Can you carry this brick to the other side? | このれんがを向こう側へ運べますか。
+brick | n | The workers used bricks to build the new path. | 作業員は新しい小道を作るためれんがを使いました。
+abandon | v | We decided to abandon our plan because of rain. | 雨のため私たちは計画を捨てることにしました。
+abandon | v | Did they abandon the old house near the river? | 彼らは川の近くの古い家を捨てましたか。
+abandon | v | She abandoned the first design and started again. | 彼女は最初のデザインを捨ててやり直しました。
+rub | v | Please rub your hands together to keep them warm. | 手をこすり合わせて温めてください。
+rub | v | Did you rub the mark off the table? | テーブルの汚れをこすって落としましたか。
+rub | v | He rubbed the wet window with a dry cloth. | 彼は乾いた布でぬれた窓をこすりました。
+soil | n | This soil is good for growing tomatoes and flowers. | この土はトマトや花を育てるのに適しています。
+soil | n | Does the soil need more water this afternoon? | この土には今日の午後もっと水が必要ですか。
+soil | n | The gardener added fresh soil around the young tree. | 庭師は若木の周りに新しい土を足しました。
+complaint | n | The hotel received a complaint about the noisy room. | ホテルは騒がしい部屋について苦情を受けました。
+complaint | n | Did you make a complaint to the manager? | 責任者に苦情を伝えましたか。
+complaint | n | The shop answered customer complaints quickly and politely. | その店は客の苦情に素早く丁寧に対応しました。
+bucket | n | Please fill this bucket with clean water. | このバケツにきれいな水を入れてください。
+bucket | n | Can you carry the bucket into the garden? | バケツを庭へ運んでくれますか。
+bucket | n | The children used small buckets to build sandcastles. | 子供たちは小さなバケツで砂の城を作りました。
+description | n | The website has a clear description of each room. | ウェブサイトには各部屋のわかりやすい説明があります。
+description | n | Does this description match the bag you found? | この説明はあなたが見つけたかばんと一致しますか。
+description | n | The guide gave detailed descriptions of the old buildings. | 案内人は古い建物について詳しく描写しました。
+hip | n | She placed her hand on her left hip. | 彼女は左の腰に手を置きました。
+hip | n | Does your hip move freely during this exercise? | この運動中に腰は自由に動きますか。
+hip | n | The dancer moved her hips gently with the music. | 踊り手は音楽に合わせて腰を優しく動かしました。
+foundation | n | A strong foundation keeps this wooden house steady. | 丈夫な基礎がこの木造の家を安定させています。
+foundation | n | Is the foundation of the new building finished? | 新しい建物の基礎は完成しましたか。
+foundation | n | The school received help from a local educational foundation. | 学校は地元の教育財団から支援を受けました。
+polish | n | The table has a beautiful polish after cleaning. | 掃除の後テーブルには美しい光沢があります。
+polish | n | Does this polish make the wooden floor shine? | このつや出し剤で木の床は光りますか。
+polish | n | The old shoes had a fine polish after careful cleaning. | 古い靴は丁寧に磨かれて見事な光沢がありました。
+ton | n | The truck can carry one ton of sand. | そのトラックは砂を一トン運べます。
+ton | n | Does this machine weigh more than a ton? | この機械の重さは一トンを超えますか。
+ton | n | The company moved several tons of soil yesterday. | 会社は昨日数トンの土を運びました。
+eagle | n | An eagle flew high above the quiet valley. | 一羽のワシが静かな谷の上空を高く飛びました。
+eagle | n | Have you ever seen an eagle in the wild? | 野生のワシを見たことがありますか。
+eagle | n | The photographer watched two eagles from a distant hill. | 写真家は遠い丘から二羽のワシを観察しました。

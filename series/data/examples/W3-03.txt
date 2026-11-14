@@ -1,0 +1,300 @@
+puncture | v | Be careful not to puncture the bicycle tire with that sharp tool. | その鋭い道具で自転車のタイヤに穴を開けないよう気をつけてください。
+puncture | v | Did a small nail puncture your tire on the way home? | 帰宅途中に小さなくぎがタイヤに穴を開けましたか。
+puncture | v | The technician punctured the plastic sheet to let air escape. | 技術者は空気を抜くためにプラスチックのシートに穴を開けました。
+baton | n | The conductor raised her baton before the orchestra began playing. | 指揮者はオーケストラが演奏を始める前に指揮棒を上げました。
+baton | n | Why did the conductor put down his baton during rehearsal? | 指揮者はなぜリハーサル中に指揮棒を置いたのですか。
+baton | n | Several students practiced following the movement of the conductor's baton. | 何人かの生徒が指揮者の指揮棒の動きを追う練習をしました。
+crest | n | We reached the crest of the hill just before sunset. | 私たちは日没の直前に丘の頂上に着きました。
+crest | n | Can you see the white crest of that approaching wave? | 近づいてくる波の白い波頭が見えますか。
+crest | n | The school's crest was printed on every student's jacket. | 学校の紋章はすべての生徒の上着に印刷されていました。
+bleach | n | Keep the bottle of bleach away from young children. | 漂白剤の瓶は小さな子供の手の届かない場所に置いてください。
+bleach | n | Should we use bleach on this delicate white shirt? | この繊細な白いシャツに漂白剤を使うべきですか。
+bleach | n | She read the instructions carefully before using the bleach. | 彼女は漂白剤を使う前に説明書を注意深く読みました。
+obstruction | n | A fallen branch created an obstruction on the walking path. | 落ちた枝が散歩道の通行の妨げになっていました。
+obstruction | n | Is there an obstruction preventing people from entering the building? | 人々が建物に入るのを妨げる障害物がありますか。
+obstruction | n | Workers removed several obstructions from the narrow water channel. | 作業員たちは狭い水路からいくつかの障害物を取り除きました。
+cushion | n | She placed a soft cushion on the wooden chair. | 彼女は木の椅子に柔らかなクッションを置きました。
+cushion | n | Could you bring another cushion for our elderly guest? | 年配のお客様のためにもう一つクッションを持ってきてもらえますか。
+cushion | n | The colorful cushions made the living room feel more comfortable. | 色鮮やかなクッションのおかげで居間がより快適に感じられました。
+cramp | n | I developed a leg cramp after swimming for an hour. | 私は一時間泳いだ後に脚がけいれんしました。
+cramp | n | Did the cramp disappear after you rested for a while? | 少し休んだ後にけいれんは治まりましたか。
+cramp | n | Gentle stretching may help prevent cramps during long walks. | 軽いストレッチは長時間歩くときのけいれん予防に役立つことがあります。
+orientation | n | The university held an orientation for new students on Monday. | 大学は月曜日に新入生向けのオリエンテーションを開きました。
+orientation | n | Will the orientation explain how to use the library? | オリエンテーションでは図書館の使い方を説明してくれますか。
+orientation | n | Several employees attended the orientation before starting their new jobs. | 何人かの従業員が新しい仕事を始める前にオリエンテーションに参加しました。
+flop | v | After the long hike, I wanted to flop onto the sofa. | 長いハイキングの後、私はソファにばったり倒れ込みたくなりました。
+flop | v | Did the new comedy show flop despite its famous actors? | その新しいコメディー番組は有名な俳優が出ていたのに失敗しましたか。
+flop | v | The tired dog flopped down beside its owner's feet. | 疲れた犬は飼い主の足元にばったりと横になりました。
+gauge | v | We need to gauge customer interest before launching the product. | 製品を発売する前に顧客の関心を見積もる必要があります。
+gauge | v | Can you gauge the distance between these two buildings? | この二つの建物の間の距離を見積もれますか。
+gauge | v | The teacher gauged the students' understanding through a short quiz. | 先生は短い小テストで生徒たちの理解度を測りました。
+abstract | v | Scientists can abstract useful information from large collections of data. | 科学者は大量のデータから役立つ情報を抽出できます。
+abstract | v | How did the researchers abstract the main ideas from those interviews? | 研究者たちはそれらの面接からどのように主な考えを抽出しましたか。
+abstract | v | She abstracted the key points from several reports for the meeting. | 彼女は会議のために複数の報告書から要点を抽出しました。
+fatigue | n | Long hours of work can lead to serious fatigue. | 長時間の仕事は深刻な疲労につながることがあります。
+fatigue | n | Does regular rest help reduce fatigue after physical activity? | 定期的な休息は運動後の疲労を減らす助けになりますか。
+fatigue | n | The hikers noticed signs of fatigue near the end of their journey. | ハイカーたちは旅の終わり近くに疲労の兆候を感じました。
+indifferent | a | He seemed indifferent to the results of the school competition. | 彼は学校の競技会の結果に無関心なようでした。
+indifferent | a | Why are some customers indifferent to the new design? | なぜ一部の顧客は新しいデザインに関心がないのですか。
+indifferent | a | She was not indifferent to her friend's concerns about the project. | 彼女は友人の計画への懸念に無関心ではありませんでした。
+scramble | v | The children began to scramble up the rocky hillside. | 子供たちは岩の多い丘の斜面をよじ登り始めました。
+scramble | v | Did everyone scramble to find a seat before the show? | 公演の前に皆が席を取ろうと慌てましたか。
+scramble | v | Several visitors scrambled over the rocks to reach the viewpoint. | 何人かの訪問者が展望地点に着くため岩をよじ登りました。
+wedge | n | Place a wooden wedge beneath the door to keep it open. | ドアを開けておくために下に木のくさびを置いてください。
+wedge | n | Could this small wedge stop the table from moving? | この小さなくさびでテーブルが動くのを止められますか。
+wedge | n | The carpenter used several wedges to hold the frame steady. | 大工は枠を安定させるためにいくつかのくさびを使いました。
+lark | n | A lark was singing above the fields early this morning. | 今朝早く、ヒバリが畑の上でさえずっていました。
+lark | n | Have you ever heard a lark singing in spring? | 春にヒバリがさえずるのを聞いたことがありますか。
+lark | n | Two larks flew over the grass while we watched quietly. | 私たちが静かに見守る中、二羽のヒバリが草地の上を飛びました。
+invalid | n | The novel describes an invalid who spends his days reading. | その小説は読書をして日々を過ごす病弱な人を描いています。
+invalid | n | Did the invalid enjoy visits from friends in the story? | 物語の中の病弱な人は友人たちの訪問を楽しんでいましたか。
+invalid | n | The old story portrays several invalids resting in a quiet home. | その古い物語は静かな家で休む病弱な人々を描いています。
+accommodate | v | The small hotel can accommodate twenty guests during the festival. | その小さなホテルは祭りの間に二十人の宿泊客を泊められます。
+accommodate | v | Can this guesthouse accommodate our entire group for three nights? | この宿は私たちのグループ全員を三泊させられますか。
+accommodate | v | The family accommodated two visiting students in their spare room. | その家族は空き部屋に訪問中の学生二人を泊めました。
+posture | n | Good posture can make long hours at a desk more comfortable. | よい姿勢は机に長時間向かうときの負担を軽くできます。
+posture | n | Does your teacher remind you to maintain proper posture? | 先生は正しい姿勢を保つよう注意してくれますか。
+posture | n | She adjusted her posture before beginning the piano performance. | 彼女はピアノの演奏を始める前に姿勢を整えました。
+thrash | v | Strong winds can thrash the branches against the window. | 強い風で枝が窓を激しく打つことがあります。
+thrash | v | Did the heavy rain thrash the roof throughout the night? | 激しい雨は一晩中屋根を強く打ちましたか。
+thrash | v | The waves thrashed against the rocks during the storm. | 嵐の間、波が岩に激しく打ちつけました。
+stump | n | The children sat on a tree stump beside the trail. | 子供たちは小道のそばの切り株に座りました。
+stump | n | Can you count the rings on this old stump? | この古い切り株の年輪を数えられますか。
+stump | n | Several stumps remained after the garden was cleared for planting. | 植え付けのため庭を片づけた後、いくつかの切り株が残りました。
+distinguish | v | Young children learn to distinguish different colors through simple games. | 幼い子供は簡単な遊びを通じて異なる色を区別できるようになります。
+distinguish | v | Can you distinguish these two birds by their songs? | 鳴き声でこの二種類の鳥を区別できますか。
+distinguish | v | The guide distinguished the original painting from the later copy. | 案内人は原画と後に作られた複製画を区別しました。
+curl | v | She likes to curl her hair before special occasions. | 彼女は特別な行事の前に髪をカールさせるのが好きです。
+curl | v | Does your hair curl naturally when the weather is humid? | 湿気の多い天気では髪が自然にカールしますか。
+curl | v | The cat curled its tail around its body while resting. | 猫は休みながら尻尾を体の周りに丸めました。
+esteem | n | The teacher earned the esteem of students through her kindness. | その先生は親切さによって生徒たちの尊敬を得ました。
+esteem | n | Does the musician enjoy high esteem among younger performers? | その音楽家は若い演奏者たちから高い尊敬を集めていますか。
+esteem | n | Her dedication to the community won her widespread esteem. | 地域への献身によって彼女は広く尊敬を集めました。
+dissolve | v | Stir the sugar gently to dissolve it in warm water. | 砂糖を温かい水に溶かすため優しくかき混ぜてください。
+dissolve | v | Will this fine powder dissolve completely in cold water? | この細かい粉は冷たい水に完全に溶けますか。
+dissolve | v | The salt dissolved quickly when she added it to the soup. | 彼女がスープに加えると塩はすぐに溶けました。
+arouse | v | The unusual exhibition may arouse interest in local history. | その珍しい展示は地域の歴史への関心を呼び起こすかもしれません。
+arouse | v | Did the announcement arouse curiosity among the new students? | その発表は新入生たちの好奇心を呼び起こしましたか。
+arouse | v | The photographs aroused happy memories of our family holiday. | その写真は家族旅行の楽しい思い出を呼び起こしました。
+tally | n | The final tally showed that our team received the most votes. | 最終集計では私たちのチームが最多の票を得たと示されました。
+tally | n | Can you check the tally before we announce the results? | 結果を発表する前に集計を確認してもらえますか。
+tally | n | The volunteers compared their tallies at the end of the event. | ボランティアたちは行事の終わりにそれぞれの集計を照合しました。
+charcoal | n | The artist used charcoal to draw the mountains in black. | 芸術家は山を黒く描くために木炭を使いました。
+charcoal | n | Is this charcoal suitable for drawing on thick paper? | この木炭は厚い紙に絵を描くのに適していますか。
+charcoal | n | They cooked vegetables over charcoal during the outdoor gathering. | 彼らは屋外の集まりで炭火を使って野菜を焼きました。
+peril | n | The old story describes a journey filled with unexpected peril. | その古い物語は予期せぬ危険に満ちた旅を描いています。
+peril | n | Did the explorers recognize the peril of crossing the frozen lake? | 探検家たちは凍った湖を渡る危険を認識していましたか。
+peril | n | The guide warned visitors about the perils of mountain weather. | 案内人は山の天候がもたらす危険について訪問者に注意しました。
+weaken | v | Too much rain can weaken the soil around old trees. | 雨が多すぎると古い木の周りの土が弱くなることがあります。
+weaken | v | Will the long delay weaken public interest in the project? | 長い遅れはその計画への人々の関心を弱めますか。
+weaken | v | The repeated changes weakened the team's confidence in the schedule. | 度重なる変更は予定に対するチームの信頼を弱めました。
+axis | n | The earth turns around an imaginary axis through its poles. | 地球は両極を通る想像上の軸を中心に回転します。
+axis | n | Can you identify the central axis of this model? | この模型の中心軸がどこか分かりますか。
+axis | n | The wheels rotate around their axes when the machine operates. | 機械が動くと車輪はそれぞれの軸を中心に回転します。
+trillion | n | A trillion is equal to one thousand billion in English. | 英語の一兆は十億の千倍に相当します。
+trillion | n | Can you imagine counting all the way to a trillion? | 一兆までずっと数えることを想像できますか。
+trillion | n | The report used trillions to describe extremely large amounts of money. | その報告書は非常に大きな金額を表すために兆の単位を使いました。
+sublime | a | The travelers admired the sublime beauty of the mountain landscape. | 旅行者たちは山の風景の崇高な美しさに感動しました。
+sublime | a | Have you ever experienced such sublime music in a concert hall? | コンサートホールでこれほど崇高な音楽を体験したことがありますか。
+sublime | a | The painter captured a sublime sense of peace in her work. | その画家は作品の中に崇高な静けさを表現しました。
+mantle | n | The actor wore a long mantle over his costume. | 俳優は衣装の上に長いマントを羽織っていました。
+mantle | n | Did the old painting show a queen wearing a mantle? | その古い絵にはマントを着た女王が描かれていましたか。
+mantle | n | Several colorful mantles hung in the theater's costume room. | 劇場の衣装室には色鮮やかなマントが何着か掛かっていました。
+restraint | n | The coach praised the players for showing restraint during disagreements. | コーチは意見が食い違う場面で自制した選手たちを褒めました。
+restraint | n | Can you show restraint when someone challenges your opinion? | 誰かに意見を否定されたとき自制できますか。
+restraint | n | Her calm response demonstrated remarkable restraint even under pressure. | 彼女の落ち着いた返答はプレッシャーの中でも見事な自制を示しました。
+handicap | n | The golfer played with a handicap based on previous scores. | そのゴルファーは過去の成績に基づくハンディキャップでプレーしました。
+handicap | n | Does this tournament use a handicap to balance players' abilities? | この大会では選手の実力差を調整するためハンディキャップを使いますか。
+handicap | n | A lack of experience was a handicap during the competition. | 経験不足はその競技会で不利な条件となりました。
+fret | v | Try not to fret about small mistakes during your presentation. | 発表中の小さな間違いを気にしていらいらしないようにしてください。
+fret | v | Does your brother fret whenever his plans suddenly change? | お兄さんは予定が急に変わるといつもいらいらしますか。
+fret | v | She fretted over the details instead of enjoying the celebration. | 彼女はお祝いを楽しまず細かいことを気にしていました。
+pouch | n | He keeps his spare keys in a small leather pouch. | 彼は予備の鍵を小さな革の袋に入れています。
+pouch | n | Can you put these coins inside the blue pouch? | この硬貨を青い小袋に入れてもらえますか。
+pouch | n | The children decorated their cloth pouches with colorful patterns. | 子供たちは布の小袋を色鮮やかな模様で飾りました。
+precedent | n | The earlier decision established a precedent for similar school events. | 以前の決定は同様の学校行事の先例となりました。
+precedent | n | Is there a precedent for changing the schedule so suddenly? | 予定をこれほど突然変更した先例はありますか。
+precedent | n | The committee followed a precedent set by the previous organizers. | 委員会は以前の主催者が作った先例に従いました。
+frontal | a | The building has a large frontal entrance facing the garden. | その建物には庭に面した大きな正面入口があります。
+frontal | a | Does this photograph show the frontal view of the statue? | この写真には像の正面からの姿が写っていますか。
+frontal | a | The designer added frontal lighting to make the display clearer. | デザイナーは展示を見やすくするため正面からの照明を追加しました。
+conversion | n | The conversion of the old factory into apartments took years. | 古い工場を集合住宅に転換するには何年もかかりました。
+conversion | n | Will the conversion to digital records save office space? | 記録をデジタル化することで事務所の場所を節約できますか。
+conversion | n | The building's conversion into a museum attracted many visitors. | その建物を博物館に転用したことで多くの訪問者が集まりました。
+hoop | n | The child rolled a large hoop across the playground. | その子は遊び場で大きな輪を転がしました。
+hoop | n | Can you throw the ball through that basketball hoop? | あのバスケットボールの輪にボールを通して投げられますか。
+hoop | n | Several colorful hoops were arranged on the gym floor. | 体育館の床に色鮮やかな輪がいくつか並べられていました。
+inquire | v | Please inquire at the front desk about available rooms. | 空いている部屋についてはフロントでお尋ねください。
+inquire | v | Did you inquire about the price before booking the tour? | ツアーを予約する前に料金を尋ねましたか。
+inquire | v | She inquired whether the museum offered discounts for students. | 彼女は博物館に学生割引があるかどうか尋ねました。
+preference | n | My preference is for quiet restaurants with outdoor seating. | 私は屋外席のある静かなレストランを好みます。
+preference | n | Do you have a preference for tea or coffee? | 紅茶とコーヒーではどちらが好みですか。
+preference | n | The survey revealed strong preferences for flexible working hours. | 調査では柔軟な勤務時間を強く好む傾向が明らかになりました。
+backbone | n | The backbone supports the body and protects important nerves. | 背骨は体を支え大切な神経を守っています。
+backbone | n | Can you see the backbone in this animal skeleton? | この動物の骨格で背骨がどこか分かりますか。
+backbone | n | The doctor explained how the bones of the backbone fit together. | 医師は背骨の骨がどのようにつながっているか説明しました。
+rotate | v | The wheels rotate smoothly when the machine is working properly. | 機械が正常に動いていると車輪は滑らかに回転します。
+rotate | v | Does the earth rotate around its own axis every day? | 地球は毎日自分の軸を中心に回転していますか。
+rotate | v | The display slowly rotated to show every side of the model. | 展示台は模型のすべての面を見せるためゆっくり回転しました。
+disperse | v | The organizers asked the crowd to disperse after the concert. | 主催者はコンサートの後に群衆に散るよう求めました。
+disperse | v | Will the wind disperse the clouds before our picnic? | ピクニックの前に風が雲を散らしてくれますか。
+disperse | v | The students dispersed in different directions when classes ended. | 授業が終わると生徒たちはそれぞれの方向へ散っていきました。
+suffocate | v | A sealed plastic bag can suffocate a small animal. | 密閉されたビニール袋は小動物を窒息させる危険があります。
+suffocate | v | Could thick smoke suffocate someone in a poorly ventilated room? | 換気の悪い部屋では濃い煙が人を窒息させる可能性がありますか。
+suffocate | v | The story describes how the lack of air suffocated the plants' roots. | その物語は空気不足が植物の根を窒息させた様子を描いています。
+devise | v | Our team needs to devise a better plan for recycling paper. | 私たちのチームは紙を再利用するよりよい計画を考案する必要があります。
+devise | v | Can you devise a simple game for younger children? | 幼い子供向けの簡単な遊びを考案できますか。
+devise | v | The engineers devised a clever solution to the storage problem. | 技術者たちは収納の問題に対する巧妙な解決策を考案しました。
+customary | a | It is customary to remove your shoes before entering this house. | この家に入る前に靴を脱ぐのが習慣です。
+customary | a | Is it customary to bring a gift when visiting relatives? | 親戚を訪ねるときに贈り物を持参するのが習慣ですか。
+customary | a | The family gathered for their customary meal on Sunday evening. | その家族は日曜日の夕方にいつもの食事のために集まりました。
+reproduce | v | The museum plans to reproduce the old map for visitors. | 博物館は訪問者向けに古い地図を再現する予定です。
+reproduce | v | Can you reproduce the same sound using this instrument? | この楽器で同じ音を再現できますか。
+reproduce | v | The artist reproduced the original pattern with remarkable accuracy. | 芸術家は元の模様を驚くほど正確に再現しました。
+feeble | a | The old radio produced a feeble sound through its speaker. | 古いラジオのスピーカーから弱々しい音が出ました。
+feeble | a | Why is the light from this small lamp so feeble? | この小さなランプの光はなぜこんなに弱々しいのですか。
+feeble | a | His feeble attempt to open the heavy door failed. | 重いドアを開けようとする彼の弱々しい試みは失敗しました。
+completion | n | The completion of the new library is expected next spring. | 新しい図書館の完成は来春の予定です。
+completion | n | Will you celebrate the completion of your first painting? | 初めての絵が完成したらお祝いしますか。
+completion | n | The workers announced the completion of the bridge ahead of schedule. | 作業員たちは橋が予定より早く完成したと発表しました。
+tack | v | Please tack the notice onto the board near the entrance. | 入口近くの掲示板にお知らせを画びょうで留めてください。
+tack | v | Can you tack this photograph beside the other pictures? | この写真をほかの写真の横に画びょうで留められますか。
+tack | v | The teacher tacked several colorful drawings to the classroom wall. | 先生は色鮮やかな絵を何枚か教室の壁に画びょうで留めました。
+barricade | n | A temporary barricade blocked the road during the street festival. | 街の祭りの間は仮設のバリケードが道路をふさいでいました。
+barricade | n | Did the workers remove the barricade after the repairs? | 作業員たちは修理の後にバリケードを撤去しましたか。
+barricade | n | Several barricades kept visitors away from the construction area. | いくつかのバリケードが訪問者を工事区域に近づけないようにしていました。
+samba | n | The dancers performed a lively samba at the cultural festival. | 踊り手たちは文化祭で陽気なサンバを披露しました。
+samba | n | Have you ever learned to dance the samba with friends? | 友達とサンバを踊る練習をしたことがありますか。
+samba | n | The band played several sambas while the audience clapped along. | 観客が手拍子をする中、バンドはいくつかのサンバを演奏しました。
+accommodation | n | The travel package includes accommodation near the main railway station. | その旅行商品には主要駅の近くの宿泊施設が含まれています。
+accommodation | n | Have you arranged accommodation for the entire school group? | 学校のグループ全員の宿泊先を手配しましたか。
+accommodation | n | Finding affordable accommodation was difficult during the busy holiday season. | 混雑する休暇の時期には手頃な宿泊先を見つけるのが難しかったです。
+heavyweight | n | The boxer competed as a heavyweight in the national tournament. | そのボクサーは全国大会で重量級の選手として出場しました。
+heavyweight | n | Does this competition have a separate heavyweight category for adults? | この大会には大人向けの独立した重量級部門がありますか。
+heavyweight | n | Several heavyweights trained together before the important sporting event. | 何人かの重量級選手が重要な競技会の前に一緒に練習しました。
+administer | v | The principal will administer the new school program next year. | 校長は来年新しい学校プログラムを管理します。
+administer | v | Who will administer the funds for the community project? | 地域の計画の資金は誰が管理しますか。
+administer | v | The committee administered the scholarship program for several years. | 委員会は数年間奨学金制度を運営しました。
+duet | n | The two singers performed a beautiful duet at the concert. | 二人の歌手はコンサートで美しい二重唱を披露しました。
+duet | n | Would you like to sing a duet with your sister? | 妹さんと二重唱を歌ってみたいですか。
+duet | n | Several duets were included in the school's music program. | 学校の音楽プログラムにはいくつかの二重唱が含まれていました。
+submission | n | The deadline for submission of the report is Friday afternoon. | 報告書の提出期限は金曜日の午後です。
+submission | n | Did you receive confirmation of your submission by email? | 提出したことの確認をメールで受け取りましたか。
+submission | n | Late submissions will not be accepted for this competition. | この競技会では期限を過ぎた提出物は受け付けられません。
+plow | v | Farmers plow the fields before planting crops in spring. | 農家の人々は春に作物を植える前に畑をすきで耕します。
+plow | v | Did your grandfather plow this field with a horse? | おじいさんは馬を使ってこの畑をすきで耕しましたか。
+plow | v | The farmer plowed the soil carefully before planting vegetables. | 農家の人は野菜を植える前に土を丁寧にすきで耕しました。
+tumble | v | Be careful not to tumble down the steep grassy slope. | 草の生えた急な坂を転げ落ちないように気をつけてください。
+tumble | v | Did the books tumble from the shelf during cleaning? | 掃除中に本が棚から落ちましたか。
+tumble | v | The children tumbled onto the soft grass while playing. | 子供たちは遊んでいる間に柔らかな草の上に転がりました。
+recession | n | The recession caused many shops to reduce their opening hours. | 景気後退によって多くの店が営業時間を短縮しました。
+recession | n | How did the recession affect businesses in your town? | 景気後退はあなたの町の企業にどう影響しましたか。
+recession | n | Families saved more money during the long economic recession. | 長い景気後退の間、家庭はより多くのお金を貯蓄しました。
+skid | v | Cars may skid on wet roads when drivers turn sharply. | 運転手が急に曲がると濡れた道路で車が横滑りすることがあります。
+skid | v | Did the bicycle skid on the slippery path yesterday? | 昨日その自転車は滑りやすい小道で横滑りしましたか。
+skid | v | The empty cart skidded sideways across the smooth floor. | 空の台車が滑らかな床の上を横向きに滑りました。
+complicate | v | Changing the schedule now could complicate our travel arrangements. | 今予定を変更すると旅行の手配が複雑になるかもしれません。
+complicate | v | Will these extra rules complicate the entire application process? | これらの追加規則は申請手続き全体を複雑にしますか。
+complicate | v | Unexpected weather changes complicated the planning of the outdoor event. | 予想外の天候の変化が屋外行事の計画を複雑にしました。
+soar | v | Large birds sometimes soar high above the mountain valleys. | 大きな鳥は時々山あいの谷の上空高く飛びます。
+soar | v | Have you watched an eagle soar without moving its wings? | ワシが翼を動かさずに空高く飛ぶのを見たことがありますか。
+soar | v | The birds soared above the cliffs in the warm afternoon air. | 鳥たちは暖かな午後の空気の中で崖の上空を舞い上がりました。
+overrun | v | Without regular care, weeds can overrun the vegetable garden. | 定期的に手入れしないと雑草が菜園にはびこることがあります。
+overrun | v | Did wild plants overrun the path behind the house? | 野生の植物が家の裏の小道にはびこりましたか。
+overrun | v | The abandoned field was overrun with tall grass and weeds. | 放置された畑には背の高い草や雑草がはびこっていました。
+snowball | n | The child made a large snowball with both hands. | その子は両手で大きな雪の玉を作りました。
+snowball | n | Can you roll that snowball across the snowy garden? | その雪の玉を雪の積もった庭で転がせますか。
+snowball | n | Several large snowballs were stacked beside the unfinished snowman. | 作りかけの雪だるまのそばに大きな雪の玉がいくつか積まれていました。
+commend | v | The teacher decided to commend the students for their teamwork. | 先生は生徒たちのチームワークを褒めることにしました。
+commend | v | Did the manager commend your careful work on the project? | 責任者はその計画でのあなたの丁寧な仕事を褒めましたか。
+commend | v | The visitors commended the staff for their friendly service. | 訪問者たちは職員の親切な対応を褒めました。
+singular | a | In English, the word child is a singular noun. | 英語ではchildという単語は単数名詞です。
+singular | a | Does this singular form change when you add another item? | もう一つ加えるとこの単数形は変わりますか。
+singular | a | The artist showed singular talent in combining music and painting. | その芸術家は音楽と絵画を組み合わせる並外れた才能を示しました。
+adolescent | a | The school offers special programs for adolescent students during summer. | その学校は夏に思春期の生徒向けの特別なプログラムを提供しています。
+adolescent | a | Do adolescent children need more independence as they grow older? | 思春期の子供は成長するにつれてより多くの自主性を必要としますか。
+adolescent | a | The counselor understands the many challenges of adolescent development. | 相談員は思春期の発達に伴う多くの課題を理解しています。
+termination | n | The termination of the service was announced several weeks ago. | そのサービスの終了は数週間前に発表されました。
+termination | n | Will the termination of this agreement affect our project? | この契約の終了は私たちの計画に影響しますか。
+termination | n | Customers received notice of the termination before the final date. | 顧客は最終日より前に終了の通知を受け取りました。
+stimulate | v | Interesting questions can stimulate discussion among students in class. | 興味深い質問は授業中に生徒たちの議論を活発にすることがあります。
+stimulate | v | Does reading good fiction stimulate your imagination and creativity? | よい小説を読むと想像力や創造力が刺激されますか。
+stimulate | v | The new playground stimulated greater interest in outdoor activities. | 新しい遊び場は屋外活動への関心をさらに高めました。
+twitch | v | My eyelid sometimes begins to twitch when I am tired. | 疲れているときにまぶたがぴくぴく動き始めることがあります。
+twitch | v | Did the rabbit's ears twitch when it heard the sound? | そのウサギは音を聞いたとき耳をぴくんと動かしましたか。
+twitch | v | The sleeping dog's paws twitched as it dreamed quietly. | 眠っている犬は静かに夢を見ながら足をぴくぴく動かしました。
+blockade | n | The road blockade prevented delivery trucks from reaching the market. | 道路の封鎖によって配達トラックは市場に到着できませんでした。
+blockade | n | When will the blockade of the bridge finally end? | 橋の封鎖はいつようやく終わるのですか。
+blockade | n | The temporary blockade caused long delays for local businesses. | 一時的な封鎖は地元の企業に長い遅れをもたらしました。
+spur | n | The rider wore a small spur on each riding boot. | 乗り手は乗馬用の靴のそれぞれに小さな拍車を付けていました。
+spur | n | Does this traditional riding costume include a metal spur? | この伝統的な乗馬衣装には金属の拍車が含まれていますか。
+spur | n | The museum displayed old spurs beside several leather saddles. | 博物館には革の鞍のそばに古い拍車が展示されていました。
+bearing | n | Her previous experience has a direct bearing on this decision. | 彼女の以前の経験はこの決定に直接関係しています。
+bearing | n | Does the weather have any bearing on our travel plans? | 天気は私たちの旅行計画に何か関係がありますか。
+bearing | n | The guide checked our bearings before leading us through the forest. | 案内人は森を案内する前に私たちの進む方向を確認しました。
+outright | r | The committee rejected the proposal outright after a long discussion. | 委員会は長い議論の後、その提案をきっぱりと拒否しました。
+outright | r | Did she refuse the invitation outright without explaining her reasons? | 彼女は理由を説明せず招待をきっぱりと断りましたか。
+outright | r | The manager denied outright that the store would close. | 責任者は店が閉まるという話を完全に否定しました。
+sharpen | v | Use this tool to sharpen the pencils before class. | 授業前にこの道具で鉛筆を削って先を鋭くしてください。
+sharpen | v | Can regular practice sharpen your ability to notice small differences? | 定期的な練習は小さな違いに気づく能力を高めますか。
+sharpen | v | The chef sharpened the kitchen knives before preparing dinner. | 料理人は夕食を準備する前に包丁を研ぎました。
+undertake | v | Our class will undertake a research project about local wildlife. | 私たちのクラスは地域の野生動物についての研究計画に着手します。
+undertake | v | Would you undertake such a difficult task without additional help? | 追加の助けなしでそんな難しい仕事に着手しますか。
+undertake | v | The company undertook major repairs to the old building. | その会社は古い建物の大規模な修理に着手しました。
+synchronize | v | The musicians must synchronize their movements during the group performance. | 音楽家たちは集団演奏中に動きを同時に合わせなければなりません。
+synchronize | v | Can we synchronize the clocks in all the classrooms? | すべての教室の時計を同じ時刻に合わせられますか。
+synchronize | v | The dancers synchronized their steps perfectly with the music. | 踊り手たちは音楽に合わせて足の動きを完全にそろえました。
+juggle | v | The performer can juggle five colorful balls at once. | その出演者は五つの色鮮やかなボールを同時にジャグリングできます。
+juggle | v | Have you ever tried to juggle while standing on one foot? | 片足で立ちながらジャグリングしようとしたことがありますか。
+juggle | v | She juggled three oranges to entertain the children at home. | 彼女は家で子供たちを楽しませるためにオレンジ三つでジャグリングしました。
+reconstruct | v | The museum hopes to reconstruct an ancient house using traditional methods. | 博物館は伝統的な方法で古代の家を再建したいと考えています。
+reconstruct | v | Can historians reconstruct the original design from these drawings? | 歴史家はこれらの図面から元の設計を再現できますか。
+reconstruct | v | The workers reconstructed the old bridge using its original materials. | 作業員たちは元の材料を使って古い橋を再建しました。
+lag | v | Older computers sometimes lag behind newer models in performance. | 古いコンピューターは性能で新しい機種に遅れることがあります。
+lag | v | Does your internet connection lag during important online meetings? | 重要なオンライン会議中にインターネット接続が遅くなることがありますか。
+lag | v | Our team lagged behind the others during the early stages. | 私たちのチームは序盤でほかのチームに遅れを取りました。
+unify | v | The new project aims to unify several local volunteer groups. | 新しい計画は複数の地元ボランティア団体を一つにまとめることを目指しています。
+unify | v | Can this shared goal unify people from different backgrounds? | この共通の目標は異なる背景の人々を一つにできますか。
+unify | v | The coach unified the players around a clear team strategy. | コーチは明確なチーム戦略のもとで選手たちを一つにまとめました。
+specialize | v | Some restaurants specialize in dishes made from local vegetables. | 地元の野菜を使った料理を専門にするレストランもあります。
+specialize | v | Does your sister specialize in teaching young children English? | お姉さんは幼い子供に英語を教えることを専門にしていますか。
+specialize | v | The company specializes in repairing beautiful traditional wooden furniture. | その会社は美しい伝統的な木製家具の修理を専門にしています。
+mould | v | The children used wet clay to mould small animal figures. | 子供たちは湿った粘土を使って小さな動物の形を作りました。
+mould | v | Can you mould this soft material into a round bowl? | この柔らかい材料を丸い器の形にできますか。
+mould | v | The artist moulded the clay carefully with both hands. | 芸術家は両手で粘土を丁寧に成形しました。
+cipher | n | The children created a simple cipher to exchange secret messages. | 子供たちは秘密のメッセージを交換するため簡単な暗号を作りました。
+cipher | n | Can you solve this cipher using the clues provided? | 与えられた手がかりを使ってこの暗号を解けますか。
+cipher | n | The old letter contained several ciphers that puzzled researchers. | その古い手紙には研究者たちを悩ませる暗号がいくつか含まれていました。
+glare | n | The glare from the afternoon sun made reading difficult. | 午後の日差しのまぶしい光で読書が難しくなりました。
+glare | n | Can you reduce the glare on this computer screen? | このコンピューター画面のまぶしい反射光を減らせますか。
+glare | n | The teacher gave him a stern glare for interrupting repeatedly. | 先生は何度も話を遮った彼を厳しくにらみました。
+reproduction | n | The exhibition explains reproduction in plants through simple diagrams. | その展示は簡単な図を使って植物の繁殖を説明しています。
+reproduction | n | Does this textbook describe the reproduction of different animal species? | この教科書はさまざまな動物種の繁殖について説明していますか。
+reproduction | n | Researchers studied how temperature affects reproduction in certain plants. | 研究者たちは温度が特定の植物の繁殖にどう影響するか調べました。
+cultivate | v | Local farmers cultivate rice in the fields near the river. | 地元の農家は川の近くの田んぼで稲を栽培しています。
+cultivate | v | Can you cultivate vegetables in soil that contains many stones? | 石が多い土で野菜を栽培できますか。
+cultivate | v | The family cultivated the land before planting their first crops. | その家族は最初の作物を植える前に土地を耕しました。
+overturn | v | Strong winds can overturn outdoor tables that are not secured. | 強い風は固定されていない屋外のテーブルをひっくり返すことがあります。
+overturn | v | Did the playful dog overturn the empty water bowl? | 遊んでいた犬が空の水入れをひっくり返しましたか。
+overturn | v | The sudden movement overturned several boxes in the delivery truck. | 突然の動きで配達トラックの中の箱がいくつかひっくり返りました。
+jackal | n | A jackal appeared briefly in the wildlife documentary yesterday. | 昨日の野生動物のドキュメンタリーにジャッカルが少し登場しました。
+jackal | n | Have you ever seen a jackal in a nature film? | 自然を扱った映画でジャッカルを見たことがありますか。
+jackal | n | Several jackals searched for food across the dry grassland. | 何匹かのジャッカルが乾いた草原で食べ物を探していました。
+distortion | n | The old speaker caused noticeable distortion in the recorded music. | 古いスピーカーによって録音された音楽に目立つゆがみが生じました。
+distortion | n | Can you hear any distortion when the volume increases? | 音量を上げると音のゆがみが聞こえますか。
+distortion | n | The unusual camera lens produced distortions near the picture's edges. | その珍しいカメラレンズは写真の端の近くにゆがみを生じさせました。
+plump | a | A plump little bird rested on the garden fence. | ふっくらした小鳥が庭の柵で休んでいました。
+plump | a | Does this recipe produce soft and plump steamed buns? | このレシピでは柔らかくふっくらした蒸しパンができますか。
+plump | a | The farmer displayed several plump tomatoes at the local market. | 農家の人は地元の市場にふっくらしたトマトをいくつか並べました。
+staple | n | Rice is a staple in the diets of many families. | 米は多くの家庭の食生活で主食となっています。
+staple | n | Is bread a common staple food in your household? | あなたの家庭ではパンが一般的な主食ですか。
+staple | n | Warm clothing is a winter staple in colder regions. | 寒い地域では暖かい衣服が冬の必需品です。
+articulate | v | She can articulate her ideas clearly during group discussions. | 彼女はグループでの議論中に自分の考えをはっきり述べられます。
+articulate | v | Can you articulate the main reason for your decision? | その決定の主な理由を明確に説明できますか。
+articulate | v | The student articulated his concerns calmly during the meeting. | その生徒は会議中に自分の懸念を落ち着いて明確に述べました。
+width | n | The width of this table makes it suitable for large meetings. | このテーブルは幅が広いため大人数の会議に適しています。
+width | n | Can you measure the width of the window accurately? | 窓の幅を正確に測れますか。
+width | n | The workers checked the road's width before planning the repairs. | 作業員たちは修理を計画する前に道路の幅を確認しました。
+sanction | n | The school introduced a sanction for repeated violations of its rules. | 学校は規則違反を繰り返した場合の制裁を導入しました。
+sanction | n | Did the committee give its official sanction to the proposal? | 委員会はその提案に正式な許可を与えましたか。
+sanction | n | The organizers faced sanctions after repeatedly ignoring safety requirements. | 主催者たちは安全上の要件を繰り返し無視したため制裁を受けました。

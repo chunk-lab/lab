@@ -1,0 +1,300 @@
+astonish | v | The magician's simple trick will astonish the children. | 手品師の簡単な技は子供たちを驚かせるでしょう。
+astonish | v | Did her excellent test results astonish the teacher? | 彼女の素晴らしい試験結果は先生を驚かせましたか。
+astonish | v | The beautiful view astonished us when we reached the top. | 頂上に着いたとき美しい景色に私たちは驚きました。
+glide | v | Watch the birds glide smoothly across the lake. | 鳥たちが湖の上を滑るように進むのを見てください。
+glide | v | Can this small boat glide through the water quietly? | この小さな船は静かに水の中を滑るように進めますか。
+glide | v | The skater glided across the ice with ease. | スケート選手は氷の上を軽やかに滑りました。
+desolate | a | The old village looked desolate after everyone moved away. | 全員が引っ越した後で古い村は荒れ果てて見えました。
+desolate | a | Why does this once beautiful garden look so desolate? | かつて美しかったこの庭はなぜこんなに荒れ果てて見えるのですか。
+desolate | a | They found a desolate house at the end of the road. | 彼らは道の突き当たりに荒れ果てた家を見つけました。
+orient | v | Use this map to orient yourself in the city. | この地図を使って街の中で自分の位置を把握してください。
+orient | v | Can you orient the desk toward the window? | 机を窓の方に向けられますか。
+orient | v | The guide oriented visitors before their walk through the park. | 案内人は公園を歩く前に訪問者に方向を教えました。
+neutralize | v | This special cleaner can neutralize unpleasant smells in the kitchen. | この特別な洗剤は台所の嫌なにおいを消せます。
+neutralize | v | Can we neutralize the acid with a suitable substance? | 適切な物質でその酸を中和できますか。
+neutralize | v | The new system neutralized the unwanted noise in the room. | 新しい装置は部屋の不要な騒音を打ち消しました。
+taboo | a | Talking about money is taboo in some families. | 家族によってはお金の話をすることが禁じられています。
+taboo | a | Is that subject still taboo in your community? | その話題はあなたの地域では今も禁じられていますか。
+taboo | a | Certain topics were taboo at their family dinners. | 彼らの家族の夕食では特定の話題が禁じられていました。
+sprinkle | v | Please sprinkle a little sugar over the fresh fruit. | 新鮮な果物に砂糖を少しふりかけてください。
+sprinkle | v | Did you sprinkle salt on the potatoes already? | もうジャガイモに塩をふりかけましたか。
+sprinkle | v | The children sprinkled seeds across the garden soil. | 子供たちは庭の土に種をまきました。
+detached | a | The judge remained detached while listening to both sides. | 審査員は双方の話を聞きながら客観的な態度を保ちました。
+detached | a | Can you give a detached opinion about this problem? | この問題について客観的な意見を述べられますか。
+detached | a | She seemed detached from the conversation around her. | 彼女は周囲の会話に無関心なようでした。
+induce | v | A warm bath may induce a feeling of relaxation. | 温かいお風呂はくつろいだ気分を引き起こすことがあります。
+induce | v | Can this music induce sleep after a busy day? | この音楽は忙しい一日の後に眠気を誘いますか。
+induce | v | The strange smell induced a feeling of discomfort. | その奇妙なにおいは不快感を引き起こしました。
+variation | n | There is some variation in the size of these apples. | これらのリンゴには大きさの違いが少しあります。
+variation | n | Did you notice the variation between the two designs? | 二つのデザインの違いに気づきましたか。
+variation | n | The teacher showed us several variations of the same pattern. | 先生は同じ模様のいくつかの変形を見せてくれました。
+detachment | n | Her detachment helped her judge the situation fairly. | 彼女の冷静さのおかげで状況を公平に判断できました。
+detachment | n | Does emotional detachment make this decision easier? | 感情を切り離して考えるとこの決定は楽になりますか。
+detachment | n | The detachment of the old sign took several minutes. | 古い看板の取り外しには数分かかりました。
+devastation | n | The storm left widespread devastation across the empty fields. | 嵐は人のいない畑一帯に大きな被害を残しました。
+devastation | n | Could you see the devastation after the powerful storm? | 激しい嵐の後の壊滅的な被害が見えましたか。
+devastation | n | The documentary showed the devastation caused by the flood. | その記録映画は洪水による壊滅的な被害を示しました。
+territorial | a | Some birds become territorial during the spring season. | 春になると縄張りを守ろうとする鳥がいます。
+territorial | a | Is your cat territorial around other neighborhood cats? | あなたの猫は近所のほかの猫に対して縄張り意識が強いですか。
+territorial | a | The two animals displayed territorial behavior near the river. | その二匹の動物は川の近くで縄張りを守る行動を見せました。
+clog | v | Too much paper can clog the office printer. | 紙が多すぎると事務所のプリンターが詰まることがあります。
+clog | v | Will these leaves clog the drain after heavy rain? | 大雨の後でこれらの葉が排水口を詰まらせますか。
+clog | v | Food waste clogged the kitchen sink last night. | 昨夜は食べ物のごみが台所の流しを詰まらせました。
+emission | n | The factory reduced its emission of harmful gases. | 工場は有害なガスの排出を減らしました。
+emission | n | Can this new engine lower carbon emissions significantly? | この新しいエンジンは炭素の排出量を大幅に減らせますか。
+emission | n | The report compared emissions from different kinds of vehicles. | 報告書はさまざまな種類の車両の排出量を比較しました。
+realization | n | The realization that I was late made me hurry. | 遅刻していると気づいて私は急ぎました。
+realization | n | Did the realization of your dream bring happiness? | 夢の実現は幸せをもたらしましたか。
+realization | n | Her sudden realization changed how she understood the story. | 彼女は突然の気づきで物語の理解が変わりました。
+tolerant | a | Our teacher is tolerant of small mistakes during practice. | 私たちの先生は練習中の小さな間違いに寛容です。
+tolerant | a | Are these plants tolerant of cold winter weather? | これらの植物は冬の寒さに耐性がありますか。
+tolerant | a | He became more tolerant of different opinions with age. | 彼は年齢とともに異なる意見により寛容になりました。
+plough | n | The farmer used a plough to prepare the field. | 農家の人は畑を耕すためにすきを使いました。
+plough | n | Is that old plough still useful on this farm? | あの古いすきはこの農場でまだ役に立ちますか。
+plough | n | Several ploughs stood beside the barn after work. | 仕事の後で納屋のそばに何台かのすきが置かれていました。
+flutter | v | The colorful flags flutter gently in the warm breeze. | 色鮮やかな旗が暖かいそよ風に優しくはためきます。
+flutter | v | Did you see the butterfly flutter above the flowers? | チョウが花の上でひらひら舞うのを見ましたか。
+flutter | v | The curtains fluttered when she opened the bedroom window. | 彼女が寝室の窓を開けるとカーテンがはためきました。
+deduction | n | Her deduction was based on the facts we collected. | 彼女の推論は私たちが集めた事実に基づいていました。
+deduction | n | Does this deduction follow from the information given? | この推論は示された情報から導けますか。
+deduction | n | The worker noticed a deduction from his monthly pay. | その労働者は毎月の給料からの差し引きに気づきました。
+fluff | n | A little fluff was stuck to my black jacket. | 黒い上着に少し綿毛が付いていました。
+fluff | n | Can you remove the fluff from this sweater? | このセーターから綿毛を取り除いてくれますか。
+fluff | n | The pillow released small pieces of fluff when shaken. | 枕を振ると小さな綿毛が出てきました。
+disapprove | v | My parents disapprove of spending too much on games. | 両親はゲームにお金を使いすぎることに反対しています。
+disapprove | v | Do you disapprove of the new school rules? | 新しい校則に反対していますか。
+disapprove | v | The coach disapproved of the team's careless behavior. | コーチはチームの不注意な行動をよく思いませんでした。
+elastic | a | This elastic band can stretch around the box. | この伸縮性のある輪ゴムは箱の周りに伸ばせます。
+elastic | a | Is the material elastic enough for sports clothes? | その素材は運動着に十分な伸縮性がありますか。
+elastic | a | She chose elastic fabric for her new trousers. | 彼女は新しいズボンに伸縮性のある布を選びました。
+linear | a | The chart shows a linear increase in temperature. | そのグラフは気温の直線的な上昇を示しています。
+linear | a | Is there a linear relationship between these two values? | この二つの値には直線的な関係がありますか。
+linear | a | The students drew linear patterns across their paper. | 生徒たちは紙に直線的な模様を描きました。
+unlawful | a | Parking here without permission is considered unlawful. | ここに許可なく駐車することは違法とみなされます。
+unlawful | a | Is it unlawful to enter this area after closing? | 閉館後にこの区域へ入るのは違法ですか。
+unlawful | a | The company stopped its unlawful use of private information. | 会社は個人情報の違法な利用をやめました。
+replay | v | Can you replay the video from the beginning? | 動画を最初からもう一度再生できますか。
+replay | v | Did the teacher replay the recording for everyone? | 先生は全員のために録音を再生しましたか。
+replay | v | We replayed the final scene to understand the ending. | 結末を理解するために最後の場面を再生しました。
+fleece | n | The sheep has a thick fleece during winter. | その羊は冬には厚い羊毛に覆われています。
+fleece | n | Is this warm jacket made from soft fleece? | この暖かい上着は柔らかいフリースで作られていますか。
+fleece | n | The farmer collected fleeces from the sheep in spring. | 農家の人は春に羊たちから羊毛を集めました。
+variable | a | The weather is highly variable in the mountains. | 山では天気が非常に変わりやすいです。
+variable | a | Are the working hours variable at your new job? | 新しい仕事では勤務時間が変動しますか。
+variable | a | The students noticed variable results in their experiments. | 生徒たちは実験結果にばらつきがあることに気づきました。
+ensemble | n | Our school ensemble practices music every Thursday afternoon. | 私たちの学校の合奏団は毎週木曜の午後に練習します。
+ensemble | n | Did the ensemble perform at the summer festival? | その合奏団は夏祭りで演奏しましたか。
+ensemble | n | The young musicians formed an ensemble last year. | 若い音楽家たちは昨年合奏団を結成しました。
+quartet | n | A string quartet played music at the small concert. | 弦楽四重奏団が小さなコンサートで演奏しました。
+quartet | n | Did the quartet practice together before the performance? | その四重奏団は公演前に一緒に練習しましたか。
+quartet | n | The four friends formed a quartet for the festival. | 四人の友人は祭りのために四重奏団を結成しました。
+perch | n | The little bird rested on a wooden perch. | 小鳥は木製の止まり木で休んでいました。
+perch | n | Does your pet bird need a wider perch? | 飼っている鳥にはもっと幅の広い止まり木が必要ですか。
+perch | n | The cage contains several perches at different heights. | その鳥かごには高さの異なる止まり木がいくつかあります。
+supplement | n | This booklet is a useful supplement to the textbook. | この小冊子は教科書の役立つ補足資料です。
+supplement | n | Does the course include a supplement for extra practice? | その講座には追加練習用の補足教材が含まれていますか。
+supplement | n | The teacher gave us supplements to support our reading. | 先生は読解を助ける補足資料を配りました。
+generic | a | The store sells generic products at lower prices. | その店は一般的な製品をより安く売っています。
+generic | a | Is this a generic name for that type of plant? | これはその種類の植物の総称ですか。
+generic | a | The instructions were too generic to answer my question. | 説明は一般的すぎて私の疑問に答えられませんでした。
+heighten | v | Bright colors can heighten the excitement of a festival. | 明るい色は祭りの興奮を高めることがあります。
+heighten | v | Will the new lights heighten the beauty of the garden? | 新しい照明は庭の美しさを高めますか。
+heighten | v | The music heightened our interest in the final scene. | 音楽は最後の場面への私たちの関心を高めました。
+erupt | v | Scientists watch the volcano because it may erupt again. | 科学者たちは火山が再び噴火するかもしれないので監視しています。
+erupt | v | When did the volcano last erupt in this area? | この地域の火山が最後に噴火したのはいつですか。
+erupt | v | The volcano erupted while the area was empty. | その地域に人がいないときに火山が噴火しました。
+grumble | v | Some students grumble about having too much homework. | 宿題が多すぎると不平を言う生徒もいます。
+grumble | v | Did your brother grumble when you changed the plan? | 計画を変えたとき弟は文句を言いましたか。
+grumble | v | The passengers grumbled about the long wait for the bus. | 乗客たちはバスの長い待ち時間に不平を言いました。
+insure | v | We decided to insure our house before moving in. | 私たちは引っ越す前に家に保険をかけることにしました。
+insure | v | Should I insure my bicycle against damage or loss? | 自転車に破損や紛失に備える保険をかけるべきですか。
+insure | v | The family insured their car before the trip. | 家族は旅行前に車に保険をかけました。
+elevation | n | The village lies at a high elevation above the sea. | その村は海抜の高い場所にあります。
+elevation | n | Does the elevation make the air cooler here? | 標高が高いのでここは空気が涼しいですか。
+elevation | n | The hikers checked the elevation before choosing their route. | ハイカーたちは道を選ぶ前に標高を確認しました。
+manifestation | n | Her smile was a clear manifestation of happiness. | 彼女の笑顔は幸せのはっきりした表れでした。
+manifestation | n | Was his silence a manifestation of disappointment? | 彼の沈黙は失望の表れでしたか。
+manifestation | n | The colorful decorations were a manifestation of local pride. | 色鮮やかな飾りは地元の誇りの表れでした。
+quench | v | Cold water can quench your thirst after exercise. | 冷たい水は運動後の喉の渇きを癒やします。
+quench | v | Will this drink quench your thirst on a hot day? | この飲み物は暑い日の喉の渇きを癒やしますか。
+quench | v | The firefighters quenched the small fire in the empty field. | 消防士たちは人のいない畑の小さな火を消しました。
+derivative | n | This word is a derivative of an older word. | この単語はより古い単語から派生したものです。
+derivative | n | Can you find the derivative of this simple function? | この簡単な関数の導関数を求められますか。
+derivative | n | The students studied derivatives during their mathematics lesson. | 生徒たちは数学の授業で導関数を学びました。
+repetition | n | Repetition helps me remember new English words. | 繰り返しは新しい英単語を覚える助けになります。
+repetition | n | Does constant repetition make this exercise feel boring? | 絶え間ない繰り返しでこの練習は退屈に感じますか。
+repetition | n | The song uses repetition to create a pleasant rhythm. | その歌は繰り返しを使って心地よいリズムを作っています。
+skim | v | Please skim the article before answering the questions. | 質問に答える前に記事をざっと読んでください。
+skim | v | Did you skim the report during your break? | 休憩中に報告書をざっと読みましたか。
+skim | v | She skimmed the cream from the top of the milk. | 彼女は牛乳の表面からクリームをすくい取りました。
+resonance | n | The hall has a beautiful resonance during concerts. | そのホールはコンサートのときに美しい響きがあります。
+resonance | n | Can you hear the resonance of the large bell? | 大きな鐘の響きが聞こえますか。
+resonance | n | The wooden room added warmth and resonance to the music. | 木造の部屋は音楽に温かさと響きを加えました。
+lament | v | Many fans lament the closing of their favorite cafe. | 多くのファンがお気に入りのカフェの閉店を嘆いています。
+lament | v | Did the students lament the end of their holiday? | 生徒たちは休暇の終わりを嘆きましたか。
+lament | v | She lamented losing her favorite book on the train. | 彼女は電車でお気に入りの本をなくしたことを嘆きました。
+scorch | v | Strong sunlight can scorch the leaves of young plants. | 強い日差しは若い植物の葉を焦がすことがあります。
+scorch | v | Did you scorch the bread while making breakfast? | 朝食を作るときパンを焦がしましたか。
+scorch | v | The hot iron scorched a small part of the cloth. | 熱いアイロンが布の一部を焦がしました。
+sophistication | n | The design shows surprising sophistication for such a small machine. | その設計はこれほど小さな機械とは思えない高度さを示しています。
+sophistication | n | Does the new system offer greater sophistication than before? | 新しいシステムは以前より高度になっていますか。
+sophistication | n | The restaurant impressed visitors with its quiet sophistication. | そのレストランは落ち着いた洗練さで訪問者に好印象を与えました。
+saw | v | We need to saw this board into two pieces. | この板をのこぎりで二つに切る必要があります。
+saw | v | Did your father saw the wood for the shelf? | お父さんは棚用の木材をのこぎりで切りましたか。
+saw | v | The workers sawed the old branch into smaller pieces. | 作業員たちは古い枝をのこぎりで小さく切りました。
+pinnacle | n | Winning the prize was the pinnacle of her career. | その賞を取ることは彼女の仕事人生の頂点でした。
+pinnacle | n | Was that concert the pinnacle of the band's success? | あのコンサートはその楽団の成功の頂点でしたか。
+pinnacle | n | The climbers finally reached the mountain's highest pinnacle. | 登山者たちはついに山の最も高い頂に到達しました。
+manoeuvre | n | The driver performed a careful manoeuvre in the narrow street. | 運転手は狭い通りで慎重に車を操作しました。
+manoeuvre | n | Was that difficult manoeuvre part of your driving lesson? | その難しい操作は運転教習の一部でしたか。
+manoeuvre | n | The pilot practiced several manoeuvres before the public show. | 操縦士は公開の実演前にいくつかの操作を練習しました。
+constituent | n | Water is an important constituent of many drinks. | 水は多くの飲み物の重要な構成要素です。
+constituent | n | Is sugar a constituent of this sweet sauce? | 砂糖はこの甘いソースの構成要素ですか。
+constituent | n | The teacher explained the main constituents of the mixture. | 先生は混合物の主な構成要素を説明しました。
+inclination | n | She has a strong inclination toward creative work. | 彼女には創造的な仕事を好む強い傾向があります。
+inclination | n | Do you have any inclination to join the club? | そのクラブに入る気持ちは少しでもありますか。
+inclination | n | The roof has a slight inclination toward the garden. | 屋根は庭の方へ少し傾いています。
+partition | n | A wooden partition separates the kitchen from the living room. | 木製の仕切りが台所と居間を分けています。
+partition | n | Can we move the partition closer to the window? | 仕切りを窓の近くへ動かせますか。
+partition | n | The workers installed partitions between the office desks. | 作業員たちは事務机の間に仕切りを設置しました。
+rectify | v | We must rectify the mistake before printing the report. | 報告書を印刷する前に間違いを正さなければなりません。
+rectify | v | Can you rectify the wrong address on this form? | この用紙の間違った住所を訂正できますか。
+rectify | v | The company quickly rectified the problem with its website. | 会社はウェブサイトの問題をすぐに修正しました。
+gleam | v | The windows gleam in the bright morning sunlight. | 窓は明るい朝日を受けてきらりと光ります。
+gleam | v | Did you see the silver ring gleam under the light? | 明かりの下で銀の指輪が光るのを見ましたか。
+gleam | v | Her eyes gleamed when she heard the good news. | よい知らせを聞いたとき彼女の目が輝きました。
+regenerate | v | Some plants can regenerate after their leaves are removed. | 植物の中には葉を取られても再生できるものがあります。
+regenerate | v | Can this forest regenerate naturally over many years? | この森は長い年月をかけて自然に再生できますか。
+regenerate | v | The damaged grass regenerated after several weeks of rain. | 傷んだ芝生は数週間の雨の後に再生しました。
+furnish | v | We plan to furnish the apartment with simple furniture. | 私たちはアパートに簡素な家具を備える予定です。
+furnish | v | Can the hotel furnish extra chairs for our meeting? | ホテルは会議用に追加の椅子を提供できますか。
+furnish | v | The owner furnished the room with a bed and desk. | 所有者は部屋にベッドと机を備えました。
+adhere | v | These labels adhere well to clean glass surfaces. | これらのラベルはきれいなガラス面によくくっつきます。
+adhere | v | Will the paint adhere to this smooth wall? | 塗料はこの滑らかな壁にくっつきますか。
+adhere | v | The students adhered to the rules during the experiment. | 生徒たちは実験中に規則を守りました。
+omit | v | Please do not omit your address from the form. | 用紙に住所を書くのを省かないでください。
+omit | v | Did you omit the final paragraph by mistake? | 最後の段落を間違って省きましたか。
+omit | v | The editor omitted several details from the short article. | 編集者は短い記事からいくつかの詳細を省きました。
+accustom | v | We should accustom the puppy to different sounds gradually. | 私たちは子犬をさまざまな音に少しずつ慣れさせるべきです。
+accustom | v | Can you accustom yourself to getting up earlier? | もっと早く起きることに慣れられますか。
+accustom | v | The teacher accustomed students to speaking English every day. | 先生は生徒たちを毎日英語を話すことに慣れさせました。
+civilize | v | The story describes an attempt to civilize a distant island. | その物語は遠い島を文明化しようとする試みを描いています。
+civilize | v | Can education alone civilize a society in this story? | この物語では教育だけで社会を文明化できますか。
+civilize | v | The novel questions who has the right to civilize others. | その小説は誰が他者を文明化する権利を持つのか問いかけます。
+classify | v | We classify these books by subject and reading level. | 私たちはこれらの本を分野と読書レベルで分類します。
+classify | v | Can you classify the flowers according to their colors? | 花を色に従って分類できますか。
+classify | v | The scientists classified the animals into several groups. | 科学者たちは動物をいくつかのグループに分類しました。
+lessen | v | Taking short breaks can lessen your tiredness while studying. | 短い休憩を取ると勉強中の疲れを減らせます。
+lessen | v | Will these curtains lessen the noise from outside? | このカーテンは外からの騒音を減らしますか。
+lessen | v | The new schedule lessened the pressure on our team. | 新しい予定は私たちのチームへの負担を軽くしました。
+educator | n | My aunt works as an educator at a local school. | 私のおばは地元の学校で教育者として働いています。
+educator | n | What qualities make someone a good educator? | どんな資質が人をよい教育者にしますか。
+educator | n | Several educators shared ideas at the weekend meeting. | 何人かの教育者が週末の会議で考えを共有しました。
+gradual | a | The gradual change in weather made the mornings warmer. | 天気が徐々に変わって朝が暖かくなりました。
+gradual | a | Did you notice the gradual improvement in her English? | 彼女の英語が徐々に上達したことに気づきましたか。
+gradual | a | The road has a gradual rise toward the village. | その道は村に向かって緩やかに上っています。
+better | a | This new chair is better for my back. | この新しい椅子は私の背中にとってよりよいです。
+better | a | Is there a better way to remember these words? | これらの単語を覚えるもっとよい方法はありますか。
+better | a | Her second painting was better than the first one. | 彼女の二枚目の絵は最初の絵よりよかったです。
+classification | n | The classification of plants helps students understand their differences. | 植物の分類は生徒が違いを理解する助けになります。
+classification | n | Is this classification based on size or color? | この分類は大きさと色のどちらに基づいていますか。
+classification | n | The library changed its classification system last year. | 図書館は昨年分類の仕組みを変えました。
+convenience | n | The convenience of online shopping saves us time. | オンラインショッピングの便利さは私たちの時間を節約します。
+convenience | n | Does this location offer enough convenience for your family? | この場所はご家族にとって十分便利ですか。
+convenience | n | She chose the hotel for its comfort and convenience. | 彼女は快適さと便利さからそのホテルを選びました。
+dependence | n | His dependence on his phone worried his parents. | 彼の携帯電話への依存を両親は心配しました。
+dependence | n | Can we reduce our dependence on plastic bags? | 私たちはビニール袋への依存を減らせますか。
+dependence | n | The village's dependence on tourism grew over time. | その村の観光への依存は時間とともに強まりました。
+loop | n | Make a small loop with the end of the rope. | ロープの端で小さな輪を作ってください。
+loop | n | Can you pull the string through this loop? | この輪にひもを通して引けますか。
+loop | n | The children drew several loops on the paper. | 子供たちは紙にいくつかの輪を描きました。
+ruffle | v | The strong wind can ruffle your hair quickly. | 強い風はすぐに髪を乱すことがあります。
+ruffle | v | Did the puppy ruffle the blanket on your bed? | 子犬がベッドの毛布をくしゃくしゃにしましたか。
+ruffle | v | She ruffled the papers while searching for her notes. | 彼女はメモを探しながら書類をくしゃくしゃにしました。
+offset | v | The discount should offset the extra delivery cost. | 割引で追加の配送料を相殺できるはずです。
+offset | v | Can higher sales offset the cost of repairs? | 売上の増加で修理費を相殺できますか。
+offset | v | The savings offset the increase in electricity prices. | 節約した分が電気料金の値上がりを相殺しました。
+radiate | v | These lamps radiate warmth throughout the small room. | これらのランプは小さな部屋全体に暖かさを放ちます。
+radiate | v | Does the sun radiate heat in every direction? | 太陽はあらゆる方向に熱を放射しますか。
+radiate | v | Her face radiated happiness when she received the letter. | 手紙を受け取ったとき彼女の顔は喜びに輝きました。
+inactive | a | The old club has been inactive since last winter. | その古いクラブは昨年の冬から活動していません。
+inactive | a | Is your account inactive because you rarely use it? | めったに使わないのでアカウントは休止状態ですか。
+inactive | a | Several members remained inactive during the summer break. | 何人かの会員は夏休み中活動していませんでした。
+softness | n | I love the softness of this warm blanket. | 私はこの暖かい毛布の柔らかさが大好きです。
+softness | n | Does washing improve the softness of these towels? | 洗うとこれらのタオルの柔らかさは増しますか。
+softness | n | The baby enjoyed the softness of the new pillow. | 赤ちゃんは新しい枕の柔らかさを気に入っていました。
+incompatible | a | These two computer programs are incompatible with each other. | この二つのコンピュータープログラムは互いに互換性がありません。
+incompatible | a | Are these plans incompatible with our current schedule? | これらの計画は今の予定と両立しませんか。
+incompatible | a | Their different working hours proved incompatible with daily meetings. | 異なる勤務時間のため毎日の会議は実施できませんでした。
+inversion | n | The teacher explained inversion in English question sentences. | 先生は英語の疑問文における倒置を説明しました。
+inversion | n | Does this sentence require inversion after that word? | この文ではその語の後に倒置が必要ですか。
+inversion | n | The students practiced inversion by changing ordinary sentences. | 生徒たちは普通の文を変えて倒置を練習しました。
+standing | n | She has a high standing among local artists. | 彼女は地元の芸術家の間で高い地位にあります。
+standing | n | Does the school have good standing in the community? | その学校は地域で高い評価を得ていますか。
+standing | n | His standing in the club improved after the event. | 行事の後でクラブ内での彼の地位は上がりました。
+plume | n | A white plume rose from the distant mountain. | 遠くの山から白い煙の柱が上がりました。
+plume | n | Can you see the plume above that factory? | あの工場の上の煙の柱が見えますか。
+plume | n | The bird displayed bright plumes during the spring. | その鳥は春に鮮やかな羽根を見せました。
+transpose | v | Please transpose these two lines in your report. | 報告書のこの二行を入れ替えてください。
+transpose | v | Can you transpose the names in these columns? | これらの列の名前を入れ替えられますか。
+transpose | v | The musician transposed the song into a lower key. | 音楽家はその曲をより低い調に移調しました。
+interchange | n | The interchange of ideas made our meeting more useful. | 意見の交換で会議はより有意義になりました。
+interchange | n | Was there an interchange of students between the schools? | 学校間で生徒の交換はありましたか。
+interchange | n | The two groups enjoyed a friendly interchange of views. | 二つのグループは友好的に意見を交換しました。
+surcharge | n | The hotel charges a surcharge for late checkout. | そのホテルは遅いチェックアウトに追加料金を請求します。
+surcharge | n | Is there a surcharge for delivery on weekends? | 週末の配達には追加料金がかかりますか。
+surcharge | n | The airline added surcharges for extra bags. | 航空会社は追加の荷物に割増料金を加えました。
+incline | v | I incline toward the simpler plan for our trip. | 私は旅行にはより簡単な計画を選びたい気持ちです。
+incline | v | Does the road incline sharply near the bridge? | 橋の近くで道路は急に傾いていますか。
+incline | v | Her experience inclined her to accept the offer. | 彼女は経験からその申し出を受ける気持ちになりました。
+propagate | v | Gardeners often propagate roses from pieces of healthy stems. | 庭師はよく健康な茎の一部からバラを増やします。
+propagate | v | Can we propagate this plant using its seeds? | この植物は種を使って増やせますか。
+propagate | v | The club propagated its ideas through a monthly newsletter. | クラブは毎月の会報を通じて考えを広めました。
+derivation | n | The dictionary explains the derivation of this English word. | 辞書はこの英単語の由来を説明しています。
+derivation | n | Do you know the derivation of your family name? | 自分の名字の由来を知っていますか。
+derivation | n | The teacher showed the derivation of the mathematics formula. | 先生は数学の公式の導出を示しました。
+node | n | Each node connects to another part of the network. | それぞれのノードはネットワークの別の部分につながっています。
+node | n | Can you identify the central node in this diagram? | この図の中心のノードを見つけられますか。
+node | n | The students marked several nodes on their network drawing. | 生徒たちはネットワークの図にいくつかの節点を記しました。
+browse | v | I like to browse the shelves at the bookstore. | 私は書店の棚を見て回るのが好きです。
+browse | v | Can we browse the online catalog before visiting? | 訪問前にオンラインの目録を閲覧できますか。
+browse | v | She browsed several shops while waiting for her friend. | 彼女は友人を待つ間にいくつかの店を見て回りました。
+replication | n | The replication of this experiment produced similar results. | この実験の再現では似た結果が得られました。
+replication | n | Is accurate replication possible with these simple tools? | これらの簡単な道具で正確な複製は可能ですか。
+replication | n | The students attempted replication of the original model. | 生徒たちは元の模型の複製を試みました。
+header | n | Put the date in the header of your document. | 文書のヘッダーに日付を入れてください。
+header | n | Does the header appear on every printed page? | 印刷したすべてのページにヘッダーが表示されますか。
+header | n | She changed the headers to make the report clearer. | 彼女は報告書を分かりやすくするためヘッダーを変更しました。
+leading | a | She is a leading expert in early education. | 彼女は幼児教育の第一人者です。
+leading | a | Is that company a leading maker of bicycles? | その会社は自転車の主要メーカーですか。
+leading | a | The leading runner reached the finish line first. | 先頭の走者が最初にゴールに到着しました。
+slant | n | The roof has a gentle slant toward the garden. | 屋根は庭の方へ緩やかに傾いています。
+slant | n | Can you see the slant of these letters? | これらの文字の傾きが分かりますか。
+slant | n | The article presented a different slant on the problem. | その記事は問題について異なる観点を示しました。
+immobilize | v | The repair workers must immobilize the machine before checking it. | 修理作業員は点検前に機械を動かないようにしなければなりません。
+immobilize | v | Can this support immobilize the loose table leg? | この支えでぐらつくテーブルの脚を固定できますか。
+immobilize | v | The mechanic immobilized the wheel before replacing its parts. | 整備士は部品を交換する前に車輪を固定しました。
+refine | v | We need to refine our plan before the meeting. | 会議の前に計画をさらに洗練させる必要があります。
+refine | v | Can you refine this design without changing its shape? | 形を変えずにこのデザインを洗練させられますか。
+refine | v | The company refined its methods over several years. | 会社は数年かけて方法を改良しました。
+flicker | v | The candle flames flicker in the gentle breeze. | ろうそくの炎が穏やかな風の中でちらつきます。
+flicker | v | Did the lights flicker during the evening storm? | 夕方の嵐の間に照明がちらつきましたか。
+flicker | v | A small light flickered behind the bedroom curtain. | 寝室のカーテンの向こうで小さな光がちらつきました。
+closeness | n | Their closeness grew during the long summer holiday. | 長い夏休みの間に彼らの親密さが増しました。
+closeness | n | Does the closeness of the station make travel easier? | 駅が近いことで移動が楽になりますか。
+closeness | n | The sisters showed their closeness by helping each other. | 姉妹は互いに助け合うことで親密さを示しました。
+deflate | v | You should deflate the ball before packing it. | 荷造りする前にボールの空気を抜くべきです。
+deflate | v | Can you deflate this air bed after breakfast? | 朝食後にこの空気ベッドの空気を抜けますか。
+deflate | v | The balloon slowly deflated during the afternoon. | 風船は午後の間にゆっくりしぼみました。
+condensation | n | Condensation formed on the window during the cold morning. | 寒い朝に窓に結露ができました。
+condensation | n | Does condensation appear inside your bathroom after a shower? | シャワーの後に浴室の内側に結露ができますか。
+condensation | n | The teacher explained condensation using a glass of cold water. | 先生は冷たい水の入ったコップを使って凝縮を説明しました。
+recoil | v | Some people recoil when they touch something unexpectedly cold. | 思いがけず冷たい物に触れると後ずさりする人もいます。
+recoil | v | Did the child recoil from the sudden loud noise? | 子供は突然の大きな音に驚いて後ずさりしましたか。
+recoil | v | She recoiled when the cold water touched her feet. | 冷たい水が足に触れたとき彼女は思わず後ずさりしました。
+capitalize | v | We should capitalize on the good weather this weekend. | 今週末はよい天気をうまく活用するべきです。
+capitalize | v | Can the shop capitalize on the growing interest in cycling? | その店は自転車への関心の高まりを活用できますか。
+capitalize | v | The team capitalized on its strong start to win. | チームは好調な出だしを生かして勝ちました。
+variant | n | This flower is a rare variant of a common plant. | この花は一般的な植物の珍しい変種です。
+variant | n | Is this variant easier to grow in cold weather? | この変種は寒い天気でも育てやすいですか。
+variant | n | The teacher showed several variants of the same word. | 先生は同じ単語のいくつかの異形を示しました。

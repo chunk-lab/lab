@@ -1,0 +1,477 @@
+@id beg65
+@lv 1
+@level 4
+@title A Winter Trip to Hokkaido
+@ja 北海道旅行
+@tag 高校受験レベル・日記
+@gloss arrive=到着する, prefecture=都道府県, festival=祭り, statue=像, ice=氷, delicious=とてもおいしい, warm=温かい
+S| My family {and|with|nor|than} I :: 家族と私は
+V| {arrived|arriving|arrival|to arrive} :: 着いた
+P| {in|to|on|of} Sapporo, Hokkaido, :: 北海道の札幌に
+T| {today|todays|to day|day's}. :: 今日
+== 今日、家族と私は北海道の札幌に着いた。
+S| It {was|were|be|being} :: それは…だった
+C| {very|much|many|lots} cold :: とても寒い
+M| {outside|outsides|out of|outed}. :: 外は
+== 外はとても寒かった。
+S| Hokkaido {is|are|be|being} :: 北海道は
+C| the {largest|largely|most large|larges} prefecture :: いちばん大きな県
+P| {in|on|at|to} Japan. :: 日本で
+== 北海道は日本でいちばん大きな都道府県だ。
+T| {Every|Every of|Many|Both} winter, :: 毎年冬に
+S| Sapporo {has|have|having|is} :: 札幌にはある
+O| a big snow {festival|festivals|festive|festivally}. :: 大きな雪まつりが
+== 毎年冬、札幌では大きな雪まつりが開かれる。
+S| We {saw|seen|seeing|sees} :: 私たちは見た
+O| many {statues|statue|status|state} :: たくさんの像を
+X| {made|making|make|makes} of snow and ice. :: 雪と氷でできた
+== 私たちは雪と氷でできた像をたくさん見た。
+S| Some {of|in|for|with} them :: その中のいくつかは
+V| {were|was|is|be} :: …だった
+C| {as|than|more|very} big as houses. :: 家ほど大きい
+== その中には家ほど大きいものもあった。
+T| {For|By|On|Of} dinner, :: 夕食に
+S| we {ate|eaten|eating|eats} :: 私たちは食べた
+O| {hot|hotly|heat|hotter than} miso ramen. :: 熱いみそラーメンを
+== 夕食に、私たちは熱いみそラーメンを食べた。
+S| It {was|were|are|be} :: それは…だった
+C| {delicious|deliciously|delicacy|deliciousness}, :: とてもおいしい
+M| and my body {got|gotten|getting|get to} warm. :: そして体が温まった
+== とてもおいしくて、体が温まった。
+T| {Tomorrow|Yesterday|Tomorrows|Last day}, :: 明日
+V| we will {visit|visiting|visited|visits} :: 私たちは訪れる
+O| a small {town|towns|townly|towned} :: 小さな町を
+P| {near|nearly|nears|nearing} the sea. :: 海の近くの
+== 明日は、海の近くの小さな町を訪れる予定だ。
+S| I {can't|doesn't|isn't|not} :: 私は…できない
+V| {wait|waiting|waited|to wait} :: 待つ
+O| {for|to|at|with} tomorrow! :: 明日を
+== 明日が待ちきれない！
+?? 0 2 家族はどこに着いた？
+?? 3 2 札幌では毎年冬に何がある？
+?? 4 2 像は何でできていた？
+?? 6 2 夕食に何を食べた？
+
+@id beg66
+@lv 1
+@level 4
+@title Christmas in Summer
+@ja オーストラリアの夏のクリスマス
+@tag 高校受験レベル・説明文
+@gloss season=季節, opposite=逆の, beach=ビーチ, barbecue=バーベキュー, seafood=シーフード, popular=人気のある, shorts=短パン, different=違った
+P| {In|On|At|By} Australia, :: オーストラリアでは
+S| Christmas {comes|come|coming|to come} :: クリスマスは来る
+P| {in|on|at|to} summer. :: 夏に
+== オーストラリアでは、クリスマスは夏にやって来る。
+S| The seasons {are|is|be|being} :: 季節は…だ
+C| {opposite|opposites|oppose|opposing} :: 逆
+P| {to|at|on|by} those in Japan. :: 日本の季節と
+== 季節が日本とは逆なのだ。
+S| December {is|are|be|being} :: 12月は
+C| a {hot|hotly|heat|hottest} month :: 暑い月だ
+M| {there|their|they're|those}. :: そこでは
+== 12月は、そこでは暑い月だ。
+T| {On|In|At|By} Christmas Day, :: クリスマスの日に
+S| many families {go|goes|going|gone} :: 多くの家族が行く
+P| {to|at|in|for} the beach. :: ビーチへ
+== クリスマスの日、多くの家族がビーチに行く。
+S| They {swim|swims|swimming|swum} :: 彼らは泳ぐ
+P| {in|of|from|than} the sea :: 海で
+M| and {enjoy|enjoys|enjoying|enjoyed to} the sun. :: そして日差しを楽しむ
+== 彼らは海で泳ぎ、日差しを楽しむ。
+S| Some people {have|has|having|to have} :: …する人もいる
+O| a {barbecue|barbecues|barbecuing|barbecued} :: バーベキューを
+P| {with|of|on|than} their friends. :: 友達と
+== 友達とバーベキューをする人もいる。
+S| Seafood {is|are|be|being} :: シーフードは
+C| {also|either|neither|nor} popular :: …も人気だ
+P| {at|of|to|from} Christmas. :: クリスマスに
+== クリスマスにはシーフードも人気がある。
+P| {In|On|At|To} pictures, :: 絵の中では
+S| Santa {sometimes|sometime|some times|any times} :: サンタは時々
+V| {wears|wear|wearing|worn} shorts. :: 短パンをはく
+== 絵の中では、サンタが短パンをはいていることもある。
+S| Christmas there {is|are|be|been} :: そこのクリスマスは
+C| very {different|difference|differently|differ} :: とても違う
+P| {from|of|for|on} Christmas in Japan. :: 日本のクリスマスと
+== そこのクリスマスは、日本のクリスマスとはまったく違う。
+V| Would you {like|likes|liking|liked} :: …したいですか
+O| {to try|try|tried|tries} it :: それを体験
+T| {someday|somedays|one days|someone}? :: いつか
+== いつか体験してみたいと思いませんか。
+?? 0 2 オーストラリアではクリスマスはどの季節に来る？
+?? 3 2 クリスマスの日、多くの家族はどこへ行く？
+?? 5 2 バーベキューはだれとする？
+?? 7 2 絵の中のサンタは何をはいていることがある？
+
+@id beg67
+@lv 1
+@level 4
+@title Halloween in America
+@ja アメリカのハロウィーン
+@tag 高校受験レベル・説明文
+@gloss costume=仮装の衣装, witch=魔女, ghost=おばけ, neighborhood=近所, candy=キャンディー, lantern=ランタン, pumpkin=かぼちゃ, scary=こわい
+S| Halloween {is|are|be|being} :: ハロウィーンは
+C| a {popular|popularly|popularity|populate} event :: 人気の行事だ
+P| {in|on|at|to} America :: アメリカで
+T| {on|in|at|of} October 31. :: 10月31日の
+== ハロウィーンは、アメリカで人気のある10月31日の行事だ。
+T| {On|In|To|Of} that night, :: その夜
+S| children {wear|wears|wearing|worn} :: 子どもたちは着る
+O| {costumes|costume's|customs|costumer}. :: 仮装の衣装を
+== その夜、子どもたちは仮装をする。
+S| Some {become|becomes|becoming|became to} :: …になる子もいる
+C| witches, {ghosts|ghost|ghostly|ghosted}, :: 魔女やおばけ
+X| {or|nor|than|so} superheroes. :: またはヒーローに
+== 魔女やおばけ、ヒーローになる子もいる。
+S| They {visit|visits|visiting|visitor} :: 彼らは訪ねる
+O| {houses|house|housing|housed} :: 家々を
+P| {in|on|at|to} their neighborhood. :: 近所の
+== 彼らは近所の家々を回る。
+T| {At|In|On|To} each door, :: 各家の玄関で
+S| they {say|says|saying|said to}, :: 彼らは言う
+O| "Trick {or|nor|than|of} treat!" :: 「お菓子をちょうだい」
+== 各家の玄関で、彼らは「トリック・オア・トリート！」と言う。
+T| {Then|Than|There|They} :: すると
+S| people {give|gives|giving|given} them :: 人々は彼らにあげる
+O| candy {or|nor|than|but} chocolate. :: お菓子やチョコを
+== すると人々は、子どもたちにキャンディーやチョコレートをあげる。
+S| Many families {also|either|neither|nor} :: 多くの家族はまた
+V| {make|makes|making|maked} :: 作る
+O| {lanterns|lantern|lanterned|lanterning} :: ランタンを
+P| {from|at|on|than} pumpkins. :: かぼちゃから
+== 多くの家族は、かぼちゃでランタンも作る。
+S| They {cut|cuts|cutting|cutted} :: 彼らは彫る
+O| a {scary|scare|scarily|scares} face :: こわい顔を
+P| {into|than|at|of} the pumpkin. :: かぼちゃに
+== かぼちゃにこわい顔を彫る。
+S| Then they {put|puts|putting|putted} :: そして入れる
+O| a {light|lights|lighten|lightly} :: 明かりを
+P| {inside|insides|insider|inner} it. :: その中に
+== そして、その中に明かりを入れる。
+S| Halloween {is|are|be|being} :: ハロウィーンは
+C| {exciting|excited|excite|excitement} :: わくわくする
+P| {for|of|on|at} children. :: 子どもたちにとって
+== ハロウィーンは、子どもたちにとってわくわくする行事だ。
+?? 0 3 ハロウィーンは何月何日？
+?? 1 2 子どもたちはその夜何を着る？
+?? 5 2 人々は子どもたちに何をあげる？
+?? 6 3 ランタンは何から作る？
+
+@id beg68
+@lv 1
+@level 4
+@title Greetings Around the World
+@ja 世界のあいさつ
+@tag 高校受験レベル・説明文
+@gloss greet=あいさつする, way=方法, bow=おじぎをする, shake hands=握手する, cheek=ほお, press=押しつける, own=独自の, local=現地の
+S| People {greet|greets|greeting|greeter} :: 人々はあいさつする
+O| {each|every|both|all} other :: お互いに
+P| {in|on|at|to} different ways. :: さまざまな方法で
+== 人々はさまざまな方法であいさつをし合う。
+P| {In|On|At|To} Japan, :: 日本では
+S| people often {bow|bows|bowing|bowed} :: 人々はよくおじぎする
+O| {to|of|than|on} each other. :: お互いに
+== 日本では、人々はよくおじぎをし合う。
+P| {In|On|At|Of} America, :: アメリカでは
+S| people {usually|usual|usualness|unusual} :: 人々はふつう
+V| {shake|shakes|shaking|shaken} hands. :: 握手をする
+== アメリカでは、人々はふつう握手をする。
+P| {In|On|At|To} France, :: フランスでは
+S| friends {sometimes|sometime|some time|someday} :: 友達どうしは時々
+V| kiss {on|in|at|to} the cheek. :: ほおにキスする
+== フランスでは、友達どうしがほおにキスをすることがある。
+P| {In|On|At|To} Thailand, :: タイでは
+S| people {put|puts|putting|putted} :: 人々は合わせる
+O| their hands {together|togethers|gather|altogether}. :: 両手を
+== タイでは、人々は両手を合わせる。
+T| {Then|Than|There|Them} :: それから
+S| they {bow|bows|bowing|to bow} :: 彼らはおじぎする
+M| {a little|a few|few|many}. :: 少し
+== そして、少しおじぎをする。
+P| {In|On|At|To} New Zealand, :: ニュージーランドでは
+S| Maori people {sometimes|sometime|some times|someday} :: マオリの人は時々
+V| {press|presses|pressing|to press} noses :: 鼻を押し合う
+M| {together|togethers|gather|altogether}. :: くっつけて
+== ニュージーランドでは、マオリの人々が鼻をくっつけ合うことがある。
+S| Each {country|countries|countrys|country's} :: それぞれの国に
+V| {has|have|having|haves} :: ある
+O| its {own|owns|owner|owned} greeting. :: 独自のあいさつが
+== それぞれの国に、独自のあいさつがある。
+M| When you {travel|travels|traveling|to travel}, :: 旅行するときは
+V| {try|tries|trying|tried} to use :: 使ってみよう
+O| the {local|locally|location|locate} greeting. :: 現地のあいさつを
+== 旅行するときは、現地のあいさつを使ってみよう。
+S| People {will|is|does|has} :: 人々は…だろう
+V| {smile|smiles|smiling|smiled} :: ほほえむ
+O| {at|of|than|by} you. :: あなたに
+== 人々はきっと、あなたにほほえんでくれるだろう。
+?? 1 1 日本の人々はよく何をする？
+?? 2 2 アメリカの人々はふつう何をする？
+?? 4 2 タイの人々は手をどうする？
+?? 6 2 マオリの人々は何を押し合う？
+
+@id beg69
+@lv 1
+@level 4
+@title A Letter from India
+@ja インドの文通相手
+@tag 高校受験レベル・手紙
+@gloss letter=手紙, language=言語, Hindi=ヒンディー語, cricket=クリケット, celebrate=祝う, festival=祭り, lamp=ランプ, sweets=お菓子
+V| Thank {you|your|yours|yourself} :: ありがとう
+P| {for|to|at|of} your letter :: 手紙を
+X| {from|than|at|on} Japan. :: 日本からの
+== 日本からの手紙をありがとう。
+S| I {live|lives|living|life} :: 私は住んでいる
+P| {in|on|at|to} Mumbai, :: ムンバイに
+X| a big city {in|on|at|to} India. :: インドの大都市
+== 私はインドの大都市ムンバイに住んでいます。
+S| India {is|are|be|am} :: インドは
+C| a very {large|largely|larges|larger} country :: とても大きな国
+M| {with|by|than|on} many languages. :: 多くの言語がある
+== インドはたくさんの言語がある、とても大きな国です。
+P| {At|On|To|Of} school, :: 学校では
+S| I {study|studies|studying|student} :: 私は勉強する
+O| English {and|nor|than|but} Hindi. :: 英語とヒンディー語を
+== 学校では、英語とヒンディー語を勉強しています。
+P| {Like|Likes|Liked|Likely} many Indians, :: 多くのインド人と同じく
+S| I {love|loves|loving|lovely} :: 私は大好き
+O| cricket {very|many|lots|more} much. :: クリケットがとても
+== 多くのインド人と同じように、私はクリケットが大好きです。
+T| {In|On|At|To} autumn, :: 秋に
+S| we {celebrate|celebrates|celebrating|celebration} :: 私たちは祝う
+O| Diwali, the festival {of|than|at|on} lights. :: 光の祭りディワリを
+== 秋には、光の祭りであるディワリを祝います。
+S| We {light|lights|lighting|lit to} :: 私たちはともす
+O| {many|much|a lot|lots} small lamps :: たくさんのランプを
+P| {around|arounds|round of|aroundly} our house. :: 家のまわりに
+== 家のまわりに、たくさんの小さなランプをともします。
+S| We {also|either|neither|nor} :: 私たちはまた
+V| {eat|eats|eating|eaten} :: 食べる
+O| {lots|lot|much|many} of sweets. :: たくさんのお菓子を
+== お菓子もたくさん食べます。
+O| What festivals {do|does|are|is} :: どんな祭りが
+S| you {have|has|having|had} :: あなたたちにある
+P| {in|on|at|to} Japan? :: 日本では
+== 日本にはどんなお祭りがありますか。
+V| Please {write|writes|writing|wrote} :: 書いてください
+O| {to|at|of|than} me :: 私に
+T| {soon|soonly|sooner than|son}. :: すぐに
+== すぐにお返事をください。
+?? 1 1 書き手はどこに住んでいる？
+?? 3 2 学校で何を勉強している？
+?? 4 2 書き手が大好きなスポーツは？
+?? 5 2 秋に何を祝う？
+
+@id beg70
+@lv 1
+@level 4
+@title My Days in London
+@ja ロンドン観光
+@tag 高校受験レベル・ブログ
+@gloss floor=階, famous=有名な, clock tower=時計塔, museum=博物館, enter=入る, free=無料で, wheel=観覧車, view=景色
+S| I {am|is|are|be} :: 私はいる
+P| {in|on|at|to} London :: ロンドンに
+T| {this|these|those|this's} week. :: 今週は
+== 今週、私はロンドンにいます。
+T| {Today|Todays|To day|Days} :: 今日
+S| I {rode|rides|ridden|rided} :: 私は乗った
+O| a red bus {with|than|at|from} two floors. :: 2階建ての赤いバスに
+== 今日、私は2階建ての赤いバスに乗りました。
+P| {From|For|Of|Since} the bus, :: バスから
+S| I {saw|seen|seeing|sees} :: 私は見た
+O| Big Ben, the {famous|fame|famously|famousness} clock tower. :: 有名な時計塔ビッグベンを
+== バスから、有名な時計塔のビッグ・ベンが見えました。
+T| {Then|Than|There|Them} :: それから
+S| I {went|gone|goes|going} :: 私は行った
+P| {to|at|in|for} the British Museum. :: 大英博物館へ
+== それから大英博物館へ行きました。
+S| You {can|cans|canning|cannot to} :: あなたは…できる
+V| {enter|enters|entering|entered} it :: そこに入る
+P| {for|by|at|of} free! :: 無料で
+== そこには無料で入れるんです！
+S| I {saw|seen|seeing|sees} :: 私は見た
+O| many {old|oldly|olds|elder} things :: たくさんの古い物を
+P| {from|for|of|at} all over the world. :: 世界中からの
+== 世界中の古いものをたくさん見ました。
+T| {For|By|On|Of} lunch, :: お昼に
+S| I {had|has|having|haved} :: 私は食べた
+O| fish {and|nor|than|but} chips. :: フィッシュ&チップスを
+== お昼には、フィッシュ・アンド・チップスを食べました。
+S| It {is|are|be|am} :: それは…だ
+C| a {famous|fame|famously|famousness} food :: 有名な食べ物
+P| {in|on|at|to} Britain. :: イギリスで
+== それはイギリスで有名な食べ物です。
+T| {In|On|To|Of} the evening, :: 夕方に
+S| I {rode|rides|ridden|riding} :: 私は乗った
+O| a big {wheel|wheels|wheeled|wheeling} :: 大きな観覧車に
+P| {by|than|of|from} the river. :: 川のそばの
+== 夕方には、川のそばの大きな観覧車に乗りました。
+S| The {view|views|viewing|viewed} :: 景色は
+P| {from|than|until|nor} the top :: てっぺんからの
+C| was {beautiful|beauty|beautifully|beautify}! :: とてもきれいだった
+== てっぺんからの景色はとてもきれいでした！
+?? 1 2 今日、何に乗った？
+?? 3 2 それからどこへ行った？
+?? 4 2 大英博物館にはどうやって入れる？
+?? 6 2 お昼に何を食べた？
+
+@id beg71
+@lv 1
+@level 4
+@title The Spring Festival in China
+@ja 中国の春節
+@tag 高校受験レベル・説明文
+@gloss festival=祭り, date=日付, hometown=故郷, New Year's Eve=大みそか, dumpling=ギョーザ, envelope=封筒, lucky=縁起のいい, fireworks=花火, lion dance=獅子舞
+S| The Spring {Festival|Festivals|Festive|Festively} :: 春節は
+V| {is|are|be|been} :: …だ
+C| the Chinese New {Year|Years|Yearly|Year's}. :: 中国の正月
+== 春節とは、中国の正月のことだ。
+S| {Its|It's|It|Itself} date :: その日付は
+V| {changes|change|changing|to change} :: 変わる
+T| {every|each of|both|many} year. :: 毎年
+== その日付は毎年変わる。
+S| It {is|are|be|been} :: それは…ある
+M| {usually|usuals|usualness|usualy} :: たいてい
+P| {in|on|at|to} January or February. :: 1月か2月に
+== それはたいてい1月か2月にある。
+S| Many people {go|goes|going|gone} :: 多くの人が行く
+M| {back|backs|backed|backing} :: 戻って
+P| {to|at|of|on} their hometowns. :: 故郷へ
+== 多くの人が故郷へ帰る。
+S| Families {eat|eats|eating|eaten} :: 家族は食べる
+O| dinner {together|togethers|gather|altogether} :: いっしょに夕食を
+T| {on|in|at|to} New Year's Eve. :: 大みそかに
+== 家族は大みそかにいっしょに夕食を食べる。
+P| {In|On|At|To} northern China, :: 中国の北部では
+S| people {often|oftens|oftenly|of ten} :: 人々はよく
+V| {eat|eats|eating|eaten} dumplings. :: ギョーザを食べる
+== 中国の北部では、人々はよくギョーザを食べる。
+S| Children {get|gets|getting|got to} :: 子どもたちはもらう
+O| red {envelopes|envelope|envelop|enveloped} :: 赤い封筒を
+M| {with|for|of|at} money inside. :: お金の入った
+== 子どもたちは、お金の入った赤い封筒をもらう。
+S| Red {is|are|be|being} :: 赤は
+C| a {lucky|luck|luckily|lucks} color :: 縁起のいい色だ
+P| {in|on|at|to} China. :: 中国では
+== 中国では、赤は縁起のいい色だ。
+S| People {also|either|neither|nor} :: 人々はまた
+V| {enjoy|enjoys|enjoying|enjoyed to} :: 楽しむ
+O| fireworks {and|nor|than|but} lion dances. :: 花火や獅子舞を
+== 人々は花火や獅子舞も楽しむ。
+S| It {is|are|be|been} :: それは…だ
+C| the {biggest|big|bigger|most big} holiday :: いちばん大きな祝日
+P| {of|than|at|on} the year. :: 1年で
+== それは1年でいちばん大きな祝日だ。
+?? 1 1 春節の日付は毎年どうなる？
+?? 2 2 春節はたいてい何月にある？
+?? 4 2 家族はいつ、いっしょに夕食を食べる？
+?? 5 2 中国の北部では、よく何を食べる？
+?? 6 1 子どもたちは何をもらう？
+
+@id beg72
+@lv 1
+@level 4
+@title My First Flight
+@ja はじめての飛行機
+@tag 高校受験レベル・日記
+@gloss plane=飛行機, fly=飛ぶ, airport=空港, nervous=緊張して, machine=機械, seat=座席, take off=離陸する, flight attendant=客室乗務員
+T| {Today|Todays|To day|Days} :: 今日
+S| I {took|taken|taking|takes} :: 私は乗った
+O| a {plane|planes|planed|plane's} :: 飛行機に
+P| {for|of|at|on} the first time. :: はじめて
+== 今日、私ははじめて飛行機に乗った。
+S| I {flew|flied|flown|flying} :: 私は飛んだ
+P| {from|for|of|at} Tokyo :: 東京から
+P| {to|at|on|of} Okinawa. :: 沖縄まで
+== 東京から沖縄まで飛んだ。
+P| {At|On|To|Of} the airport, :: 空港で
+S| I {was|were|be|being} :: 私は…だった
+C| a {little|few|many|much} nervous. :: 少し緊張して
+== 空港で、私は少し緊張していた。
+S| My {bag|bagged|baggy|bag's} :: 私のかばんは
+V| {went|gone|going|wented} :: 通った
+P| {through|though|thorough|throw} a machine. :: 機械の中を
+== 私のかばんは機械の中を通った。
+T| {Then|Than|There|Them} :: それから
+S| we {got|gotten|getting|gots} :: 私たちは乗りこんだ
+P| {on|at|of|from} the plane. :: 飛行機に
+== それから私たちは飛行機に乗りこんだ。
+S| My {seat|seats|sit|sat} :: 私の席は
+V| {was|were|be|been} :: …だった
+C| {next|nearly|besides|nest} to the window. :: 窓のとなり
+== 私の席は窓のとなりだった。
+M| When the plane {took off|take off|taken off|taking off}, :: 離陸したとき
+S| I {felt|feeled|feels|feeling} :: 私は感じた
+C| a little {scared|scare|scares|scarily}. :: 少しこわい
+== 飛行機が離陸したとき、少しこわかった。
+M| But {soon|soonly|son|sooner than} :: でもすぐに
+S| I {saw|seen|seeing|sees} :: 私は見た
+O| the {beautiful|beauty|beautifully|beautify} sea :: 美しい海を
+P| {below|belows|bellow|blow} us. :: 下に
+== でもすぐに、下に美しい海が見えた。
+S| A flight attendant {gave|given|giving|gived} :: 乗務員がくれた
+O| me {a|an|many|much} cup :: 私に1杯の
+P| {of|at|on|than} juice. :: ジュースを
+== 客室乗務員がジュースを1杯くれた。
+S| I {want|wants|wanting|wanted to} :: 私は…したい
+O| {to fly|fly|flying|flew} :: 飛ぶことを
+T| again {soon|soonly|son|sooner than}! :: またすぐに
+== またすぐに飛行機に乗りたい！
+?? 1 2 どこまで飛んだ？
+?? 2 2 空港でどんな気持ちだった？
+?? 5 2 席はどこだった？
+?? 8 2 客室乗務員は何をくれた？
+
+@id beg73
+@lv 1
+@level 4
+@title Summer Vacation in Hawaii
+@ja ハワイの夏休み
+@tag 高校受験レベル・ブログ
+@gloss state=州, stay=泊まる, clear=透き通った, climb=登る, volcano=火山, view=景色, amazing=すばらしい, hula=フラダンス
+T| {This|These|Those|This's} summer, :: この夏
+S| my family {went|gone|going|wented} :: 家族で行った
+P| {to|at|in|for} Hawaii. :: ハワイへ
+== この夏、家族でハワイに行きました。
+S| Hawaii {is|are|be|being} :: ハワイは
+C| {one|ones|once|first} of the 50 states :: 50州の一つ
+P| {of|than|at|on} the U.S. :: アメリカの
+== ハワイはアメリカの50州の一つです。
+S| People there {say|says|saying|sayed} :: そこの人々は言う
+O| "Aloha" {to|at|of|than} each other :: お互いに「アロハ」と
+M| {when|what|which|whose} they meet. :: 会ったとき
+== そこの人々は、会うとお互いに「アロハ」と言います。
+S| We {stayed|staying|stays|stied} :: 私たちは泊まった
+P| {at|on|to|of} a hotel :: ホテルに
+P| {near|nearly|nears|nearing} Waikiki Beach. :: ワイキキビーチ近くの
+== 私たちはワイキキビーチの近くのホテルに泊まりました。
+T| {Every|Every of|Both|Many} morning, :: 毎朝
+S| I {swam|swum|swimmed|swims} :: 私は泳いだ
+P| {in|on|of|than} the sea. :: 海で
+== 毎朝、海で泳ぎました。
+S| The water {was|were|be|being} :: 水は…だった
+C| {clear|clearly|clearness|clears} :: 透き通って
+M| {and|nor|than|of} warm. :: そして温かい
+== 水は透き通っていて、温かかったです。
+T| {One|Once|First|Ones} day, :: ある日
+V| we {climbed|climbing|climbs|clumb} :: 私たちは登った
+O| an old {volcano|volcanoes|volcanic|volcanos} :: 古い火山に
+X| {called|call|calling|calls} Diamond Head. :: ダイヤモンドヘッドという
+== ある日、ダイヤモンドヘッドという古い火山に登りました。
+S| The view {from|than|until|nor} the top :: 頂上からの景色は
+V| {was|were|be|being} :: …だった
+C| {amazing|amazed|amaze|amazement}! :: すばらしい
+== 頂上からの景色はすばらしかったです！
+T| {In|On|To|Of} the evening, :: 夕方に
+S| we {watched|watching|watches|watchs} :: 私たちは見た
+O| a hula {dance|dances|danced|dancer's} show. :: フラダンスのショーを
+== 夕方には、フラダンスのショーを見ました。
+S| I {want|wants|wanting|wanted to} :: 私は…したい
+V| {to go|go|going|went} back :: 戻ることを
+T| there {someday|somedays|one days|someone}! :: いつかそこへ
+== いつかまたそこへ行きたいです！
+?? 1 1 ハワイは何の一つ？
+?? 3 2 ホテルはどこの近く？
+?? 6 3 ある日、何という火山に登った？
+?? 8 2 夕方に何を見た？

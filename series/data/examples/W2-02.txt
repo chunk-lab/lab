@@ -1,0 +1,300 @@
+carrot | n | Please add one carrot to the vegetable soup. | 野菜スープにニンジンを一本加えてください。
+carrot | n | Do you like carrots with your dinner? | 夕食にニンジンを食べるのは好きですか。
+carrot | n | My father grows fresh carrots in our garden. | 父は庭で新鮮なニンジンを育てています。
+onion | n | Cut an onion into small pieces for dinner. | 夕食用にタマネギを小さく切ってください。
+onion | n | Does this soup contain any onions at all? | このスープにはタマネギが入っていますか。
+onion | n | She cooked the onions until they became soft. | 彼女はタマネギが柔らかくなるまで炒めました。
+beef | n | We had beef and vegetables for lunch today. | 今日の昼食には牛肉と野菜を食べました。
+beef | n | Would you like some beef with your rice? | ご飯と一緒に牛肉はいかがですか。
+beef | n | My mother cooked the beef slowly with potatoes. | 母は牛肉をジャガイモと一緒にゆっくり煮込みました。
+pork | n | This restaurant serves pork with fresh vegetables. | このレストランでは豚肉に新鮮な野菜を添えて出します。
+pork | n | Do you prefer pork or chicken for dinner? | 夕食には豚肉と鶏肉のどちらが好きですか。
+pork | n | My brother made a delicious pork dish yesterday. | 兄は昨日おいしい豚肉料理を作りました。
+noodle | n | A long noodle fell from my chopsticks. | 長い麺が私の箸から落ちました。
+noodle | n | How often do you eat noodles for lunch? | 昼食にどのくらいの頻度で麺を食べますか。
+noodle | n | She added some vegetables to her hot noodles. | 彼女は温かい麺に野菜を少し加えました。
+pizza | n | We ordered a large pizza for our family. | 私たちは家族用に大きなピザを注文しました。
+pizza | n | Would you like some cheese on your pizza? | ピザにチーズをのせたいですか。
+pizza | n | The children made their own pizzas at home. | 子供たちは家で自分たちのピザを作りました。
+hamburger | n | I ate a hamburger after the football game. | 私はサッカーの試合後にハンバーガーを食べました。
+hamburger | n | Does your hamburger come with a small salad? | そのハンバーガーには小さなサラダが付きますか。
+hamburger | n | We made hamburgers together in the kitchen. | 私たちは台所で一緒にハンバーガーを作りました。
+cookie | n | My grandmother gave me a chocolate cookie. | 祖母は私にチョコレートクッキーを一枚くれました。
+cookie | n | Can I have another cookie with my tea? | お茶と一緒にクッキーをもう一枚食べてもいいですか。
+cookie | n | The children baked cookies for their school festival. | 子供たちは学校祭のためにクッキーを焼きました。
+candy | n | She gave her friend a piece of candy. | 彼女は友達にキャンディーを一つあげました。
+candy | n | Do you want some candy after lunch today? | 今日の昼食後にキャンディーを食べたいですか。
+candy | n | We bought colorful candies at the little shop. | 私たちは小さな店で色とりどりのキャンディーを買いました。
+snack | n | I usually have a small snack after school. | 私は普段放課後に軽いおやつを食べます。
+snack | n | What is your favorite snack during a movie? | 映画を見るときのお気に入りのおやつは何ですか。
+snack | n | My sister prepared healthy snacks for our trip. | 姉は旅行用に健康的なおやつを用意しました。
+dessert | n | We had fresh fruit for dessert tonight. | 今夜はデザートに新鮮な果物を食べました。
+dessert | n | Would you like to see the dessert menu? | デザートのメニューをご覧になりますか。
+dessert | n | The restaurant offers several desserts made with milk. | そのレストランでは牛乳を使ったデザートを何種類か出しています。
+recipe | n | This recipe uses only five simple ingredients. | このレシピでは簡単な材料を五つだけ使います。
+recipe | n | Where did you find that wonderful cake recipe? | そのすばらしいケーキのレシピはどこで見つけましたか。
+recipe | n | My aunt shared her favorite recipes with us. | 叔母はお気に入りのレシピを私たちに教えてくれました。
+menu | n | Please look at the menu before ordering lunch. | 昼食を注文する前にメニューを見てください。
+menu | n | Does the menu include any vegetarian dishes? | メニューには野菜中心の料理がありますか。
+menu | n | The waiter brought us two menus and some water. | 給仕の人がメニュー二冊と水を持ってきました。
+cash | n | I paid for the flowers in cash. | 私は花の代金を現金で支払いました。
+cash | n | Do you have enough cash for the tickets? | 切符を買うのに十分な現金がありますか。
+cash | n | This small shop only accepts cash today. | この小さな店は今日は現金しか受け付けません。
+yen | n | This notebook costs five hundred yen at school. | このノートは学校で五百円します。
+yen | n | How many yen do we need for lunch? | 昼食には何円必要ですか。
+yen | n | She saved a thousand yen from her allowance. | 彼女はお小遣いから千円を貯金しました。
+shopping | n | My mother enjoys shopping at the weekend market. | 母は週末の市場での買い物を楽しんでいます。
+shopping | n | Are you going shopping with your friends tomorrow? | 明日は友達と買い物に行きますか。
+shopping | n | We finished our shopping before the rain started. | 雨が降り始める前に買い物を終えました。
+clerk | n | The store clerk helped me find my size. | 店員は私に合うサイズを探してくれました。
+clerk | n | Did the clerk explain how the machine works? | 店員は機械の使い方を説明してくれましたか。
+clerk | n | Two clerks were working at the front desk. | 二人の事務員が受付で働いていました。
+cashier | n | The cashier gave me my change and receipt. | レジ係はお釣りとレシートを渡してくれました。
+cashier | n | Can you ask the cashier about this price? | この値段についてレジ係に尋ねてくれますか。
+cashier | n | Several cashiers were helping customers during the sale. | セール中は数人のレジ係が客に対応していました。
+headache | n | I have a slight headache after studying all morning. | 午前中ずっと勉強して軽い頭痛がします。
+headache | n | Does your headache get better after some rest? | 少し休むと頭痛はよくなりますか。
+headache | n | She stayed home because her headache was getting worse. | 彼女は頭痛がひどくなっていたので家にいました。
+illness | n | He missed a few classes because of illness. | 彼は病気のために数回授業を休みました。
+illness | n | Can regular exercise help prevent some illnesses? | 定期的な運動は一部の病気の予防に役立ちますか。
+illness | n | The school teaches children about common winter illnesses. | 学校では冬によくある病気について子供たちに教えます。
+wedding | n | My cousin invited us to her wedding next spring. | いとこは来春の結婚式に私たちを招待しました。
+wedding | n | What should I wear to the wedding? | 結婚式には何を着ていけばよいですか。
+wedding | n | The guests took many pictures after the wedding. | 招待客は結婚式の後にたくさん写真を撮りました。
+relationship | n | A good relationship needs trust and honest communication. | よい関係には信頼と率直な意思疎通が必要です。
+relationship | n | How can we build a better relationship with neighbors? | 近所の人とどうすればよりよい関係を築けますか。
+relationship | n | Their working relationship improved after the meeting. | 会議の後で二人の仕事上の関係は改善しました。
+hug | n | My mother gave me a warm hug yesterday. | 母は昨日私を温かく抱きしめてくれました。
+hug | n | Would you like a hug before you leave? | 出かける前に抱きしめてもらいたいですか。
+hug | n | The children gave their grandmother big hugs. | 子供たちは祖母をぎゅっと抱きしめました。
+sadness | n | She felt sadness when her friend moved away. | 友達が引っ越したとき彼女は悲しみを感じました。
+sadness | n | Can music help people deal with sadness? | 音楽は人が悲しみに向き合う助けになりますか。
+sadness | n | His sadness slowly disappeared during the family trip. | 家族旅行の間に彼の悲しみは少しずつ消えました。
+happiness | n | True happiness often comes from simple everyday moments. | 本当の幸せは日常のささやかな瞬間から生まれることがよくあります。
+happiness | n | What brings you the most happiness in life? | 人生で何が一番あなたに幸せをもたらしますか。
+happiness | n | Her face showed happiness when she saw everyone. | みんなを見たとき彼女の顔には喜びが表れていました。
+honesty | n | Honesty is important when working with other people. | ほかの人と働くとき正直さは大切です。
+honesty | n | Do you value honesty in your close friends? | 親しい友達の正直さを大切にしていますか。
+honesty | n | The teacher praised the student for his honesty. | 先生はその生徒の正直さを褒めました。
+fortune | n | It was good fortune that we found seats. | 席が見つかったのは幸運でした。
+fortune | n | Did she make a fortune from her books? | 彼女は本で大金を稼ぎましたか。
+fortune | n | My grandfather always wished us good fortune. | 祖父はいつも私たちの幸運を願ってくれました。
+passport | n | Please keep your passport in a safe place. | パスポートは安全な場所に保管してください。
+passport | n | Have you checked the date on your passport? | パスポートの日付を確認しましたか。
+passport | n | The travelers showed their passports at the airport. | 旅行者たちは空港でパスポートを見せました。
+suitcase | n | My suitcase is too heavy to carry alone. | 私のスーツケースは重すぎて一人では運べません。
+suitcase | n | Did you pack your suitcase for tomorrow's trip? | 明日の旅行のためにスーツケースに荷物を詰めましたか。
+suitcase | n | We put our suitcases beside the hotel desk. | 私たちはホテルの受付の横にスーツケースを置きました。
+sidewalk | n | Please stay on the sidewalk near this road. | この道路の近くでは歩道を歩いてください。
+sidewalk | n | Is the sidewalk wide enough for two people? | 歩道は二人が並んで歩ける幅がありますか。
+sidewalk | n | The children walked along the sidewalk after school. | 子供たちは放課後に歩道を歩きました。
+truck | n | A delivery truck stopped outside our house. | 配達のトラックが家の外に止まりました。
+truck | n | Can that large truck fit through this street? | あの大きなトラックはこの通りを通れますか。
+truck | n | The workers loaded boxes onto two small trucks. | 作業員たちは二台の小型トラックに箱を積みました。
+subway | n | I take the subway to work every morning. | 私は毎朝地下鉄で仕事に行きます。
+subway | n | Which subway line goes to the museum? | 博物館へはどの地下鉄路線で行けますか。
+subway | n | The subways were crowded during the morning rush. | 朝の混雑時は地下鉄が混んでいました。
+arrival | n | Our arrival at the hotel was later than planned. | 私たちのホテルへの到着は予定より遅くなりました。
+arrival | n | What is the expected arrival time of your train? | 列車の到着予定時刻は何時ですか。
+arrival | n | The family prepared dinner before the guests' arrival. | 家族は客が到着する前に夕食を用意しました。
+departure | n | The departure of our train was delayed today. | 今日私たちの列車の出発は遅れました。
+departure | n | What time is the next flight's departure? | 次の便の出発時刻は何時ですか。
+departure | n | Please check your ticket before departure tomorrow morning. | 明日の朝出発する前に切符を確認してください。
+hello | ij | Hello, it is nice to meet you today. | こんにちは、今日はお会いできてうれしいです。
+hello | ij | Hello, can you hear me on the phone? | もしもし、電話で私の声が聞こえますか。
+hello | ij | She smiled and said hello to her neighbors. | 彼女は笑顔で近所の人にこんにちはと言いました。
+hi | ij | Hi, are you coming to the park today? | やあ、今日は公園に来ますか。
+hi | ij | Hi, I have something interesting to show you. | やあ、面白いものを見せたいです。
+hi | ij | My friend waved and called out, Hi, everyone! | 友達は手を振って、みんな、やあ、と声をかけました。
+goodbye | ij | Goodbye, I hope you enjoy your holiday. | さようなら、休暇を楽しんでください。
+goodbye | ij | Goodbye, and thank you for helping us today. | さようなら、今日は手伝ってくれてありがとうございます。
+goodbye | ij | She waved and said goodbye before boarding the train. | 彼女は列車に乗る前に手を振ってさようならと言いました。
+bye | ij | Bye, I will see you at school tomorrow. | じゃあね、明日学校で会いましょう。
+bye | ij | Bye, and have a wonderful weekend with your family. | じゃあね、家族とすてきな週末を過ごしてください。
+bye | ij | He smiled and said bye to his classmates. | 彼は笑ってクラスメートにじゃあねと言いました。
+please | r | Could you please close the window before leaving? | 出かける前に窓を閉めていただけますか。
+please | r | Please take a seat while I get your tea. | お茶を持ってくる間どうぞお座りください。
+please | r | Would you please show me where the station is? | 駅がどこにあるか教えていただけますか。
+oh | ij | Oh, I did not know you liked painting! | ああ、あなたが絵を描くのが好きだとは知りませんでした。
+oh | ij | Oh, is that your new bicycle outside? | おお、外にあるのはあなたの新しい自転車ですか。
+oh | ij | She said, Oh, now I understand the question! | 彼女は、ああ、今質問がわかりました、と言いました。
+wow | ij | Wow, your garden looks beautiful in the sunshine! | わあ、日差しの中のあなたの庭はきれいですね。
+wow | ij | Wow, did you make this cake yourself? | わあ、このケーキを自分で作ったのですか。
+wow | ij | The children shouted, Wow, look at those stars! | 子供たちは、わあ、あの星を見て、と叫びました。
+excuse | v | Please excuse me for arriving a little late. | 少し遅れて来たことをお許しください。
+excuse | v | Will you excuse my mistake this time? | 今回の私の間違いを許してくれますか。
+excuse | v | The teacher excused her absence from the lesson. | 先生は彼女の授業の欠席を認めました。
+pardon | ij | Pardon, could you say that a little more slowly? | すみません、もう少しゆっくり言っていただけますか。
+pardon | ij | Pardon, what did you say about the meeting? | すみません、会議について何とおっしゃいましたか。
+pardon | ij | He asked, Pardon, did you mean next Friday? | 彼は、すみません、来週の金曜日という意味ですか、と尋ねました。
+welcome | a | You are always welcome to visit our home. | あなたはいつでも私たちの家に歓迎されます。
+welcome | a | Are children welcome at this evening event? | この夜の行事では子供も歓迎されますか。
+welcome | a | New ideas are welcome during our team meetings. | チームの会議では新しい意見が歓迎されます。
+welcome | ij | Welcome to our school, and please come inside. | 私たちの学校へようこそ、どうぞ中にお入りください。
+welcome | ij | Welcome, everyone, to our small music festival! | 皆さん、私たちの小さな音楽祭へようこそ。
+welcome | ij | The teacher smiled and said, Welcome to class! | 先生は笑顔で、授業へようこそ、と言いました。
+congratulation | n | A warm congratulation from my teacher made me smile. | 先生からの温かいお祝いの言葉で私は笑顔になりました。
+congratulation | n | She sent a message of congratulation to her friend. | 彼女は友達にお祝いのメッセージを送りました。
+congratulation | n | The winner received many messages of congratulation. | 優勝者は多くのお祝いのメッセージを受け取りました。
+whose | pn | Whose is this blue umbrella by the door? | ドアのそばのこの青い傘は誰のものですか。
+whose | pn | I found a notebook, but whose is it? | ノートを見つけましたが誰のものですか。
+whose | pn | These shoes look familiar, but whose are they? | この靴には見覚えがありますが誰のものですか。
+whom | pn | Whom did you invite to the school concert? | 学校のコンサートに誰を招待しましたか。
+whom | pn | To whom should I send this letter? | この手紙は誰に送ればよいですか。
+whom | pn | The teacher asked whom we wanted to interview. | 先生は誰にインタビューしたいか尋ねました。
+whatever | pn | You can choose whatever you want for lunch. | 昼食には好きなものを何でも選べます。
+whatever | pn | Whatever you decide will be fine with me. | あなたが何を決めても私は構いません。
+whatever | pn | She eats whatever her grandmother cooks for dinner. | 彼女は祖母が夕食に作るものを何でも食べます。
+whenever | cj | Call me whenever you need help with homework. | 宿題で助けが必要なときはいつでも電話してください。
+whenever | cj | Whenever it rains, we play games inside. | 雨が降るときはいつでも私たちは室内で遊びます。
+whenever | cj | My grandfather smiles whenever he sees his grandchildren. | 祖父は孫を見るといつも笑顔になります。
+wherever | cj | Wherever you go, please remember to take water. | どこへ行くときも水を持っていくのを忘れないでください。
+wherever | cj | She takes her camera wherever she travels. | 彼女は旅行する先々にカメラを持っていきます。
+wherever | cj | Wherever we stay, we try the local food. | どこに泊まっても私たちは地元の食べ物を試します。
+therefore | r | It was raining; therefore, we stayed at home. | 雨が降っていたので、それゆえ私たちは家にいました。
+therefore | r | The road is closed; therefore, we must turn back. | 道路が閉鎖されているので、引き返さなければなりません。
+therefore | r | He practiced daily; therefore, his English improved quickly. | 彼は毎日練習したので、英語がすぐに上達しました。
+otherwise | r | Take your umbrella; otherwise, you may get wet. | 傘を持っていってください。さもないとぬれるかもしれません。
+otherwise | r | We must leave now; otherwise, we will be late. | 今出発しなければなりません。さもないと遅れます。
+otherwise | r | She was busy, but otherwise the day went well. | 彼女は忙しかったですが、それ以外は順調な一日でした。
+meanwhile | r | I cooked dinner; meanwhile, my sister set the table. | 私が夕食を作る間に妹は食卓を整えました。
+meanwhile | r | The children played outside; meanwhile, we cleaned the kitchen. | 子供たちが外で遊ぶ間に私たちは台所を掃除しました。
+meanwhile | r | He waited for the bus; meanwhile, he read a book. | 彼はバスを待つ間に本を読みました。
+moreover | r | The room is bright; moreover, it is very quiet. | その部屋は明るく、そのうえとても静かです。
+moreover | r | The hotel is cheap; moreover, breakfast is included. | そのホテルは安く、さらに朝食も付いています。
+moreover | r | She speaks English well; moreover, she teaches it. | 彼女は英語を上手に話し、そのうえ教えてもいます。
+thus | r | He followed the instructions and thus finished early. | 彼は指示に従い、その結果早く終えました。
+thus | r | We saved money and thus could travel together. | 私たちはお金を貯め、その結果一緒に旅行できました。
+thus | r | The team worked together, thus solving the problem. | チームは協力して働き、このように問題を解決しました。
+besides | pp | Besides English, she studies French at school. | 英語のほかに彼女は学校でフランス語を学んでいます。
+besides | pp | What do you enjoy besides playing the piano? | ピアノを弾くことのほかに何を楽しんでいますか。
+besides | pp | Besides my brother, three friends joined the trip. | 弟のほかに友達三人が旅行に参加しました。
+besides | r | I am tired; besides, it is getting late. | 私は疲れていますし、そのうえ遅い時間になっています。
+besides | r | The food was delicious; besides, the service was excellent. | 料理はおいしく、そのうえサービスもすばらしかったです。
+besides | r | We have enough chairs; besides, some guests may leave. | 椅子は十分ありますし、そのうえ帰る客もいるかもしれません。
+throughout | pp | It rained throughout the night without stopping. | 夜の間じゅう雨が降り続きました。
+throughout | pp | Did you stay awake throughout the long movie? | 長い映画の間じゅう起きていましたか。
+throughout | pp | The children laughed throughout the entire performance. | 子供たちは公演の間じゅう笑っていました。
+till | pp | The library stays open till eight tonight. | 図書館は今夜八時まで開いています。
+till | pp | Can you wait here till my father arrives? | 父が到着するまでここで待ってくれますか。
+till | pp | We talked in the kitchen till midnight. | 私たちは真夜中まで台所で話しました。
+via | pp | We traveled to the coast via the mountains. | 私たちは山を経由して海岸へ行きました。
+via | pp | Can you send the document via email today? | 今日その書類をメール経由で送れますか。
+via | pp | The train goes to the airport via downtown. | その列車は中心街を経由して空港へ行きます。
+underneath | pp | The cat was sleeping underneath the wooden table. | 猫は木のテーブルの真下で眠っていました。
+underneath | pp | Did you look underneath the bed for your shoes? | 靴を探してベッドの真下を見ましたか。
+underneath | pp | A small box was hidden underneath the chair. | 小さな箱が椅子の真下に隠されていました。
+opposite | pp | Our school is opposite the town library. | 私たちの学校は町の図書館の向かいにあります。
+opposite | pp | Is the bakery opposite the train station? | パン屋は駅の向かいにありますか。
+opposite | pp | She sat opposite her brother during dinner. | 彼女は夕食のとき兄弟の向かいに座りました。
+plus | pp | Five plus three makes eight in total. | 五に三を加えると全部で八になります。
+plus | pp | What is ten plus seven in this exercise? | この問題で十に七を足すといくつですか。
+plus | pp | The price is twenty dollars plus tax. | 値段は二十ドルに税金を加えた額です。
+minus | pp | Ten minus four equals six in this problem. | この問題では十から四を引くと六です。
+minus | pp | What is nine minus two, can you tell me? | 九から二を引くといくつか教えてくれますか。
+minus | pp | The total is fifty dollars minus the discount. | 合計は五十ドルから割引額を引いた金額です。
+used | a | I am used to getting up early now. | 私は今では早起きに慣れています。
+used | a | Are you used to speaking English in class? | 授業で英語を話すことに慣れていますか。
+used | a | She soon became used to her new school. | 彼女はすぐに新しい学校に慣れました。
+unable | a | I was unable to attend the meeting yesterday. | 私は昨日会議に出席できませんでした。
+unable | a | Why are you unable to open this file? | なぜこのファイルを開けないのですか。
+unable | a | The students were unable to finish before lunch. | 生徒たちは昼食前に終えることができませんでした。
+alright | a | Everything is alright now, so please relax. | もうすべて大丈夫ですから安心してください。
+alright | a | Are you alright after that long walk? | 長く歩いた後ですが大丈夫ですか。
+alright | a | The teacher said my answer was alright. | 先生は私の答えで大丈夫だと言いました。
+anymore | r | I do not take that bus anymore. | 私はもうそのバスには乗りません。
+anymore | r | Do you not play football anymore these days? | 最近はもうサッカーをしないのですか。
+anymore | r | She does not work at that shop anymore. | 彼女はもうその店では働いていません。
+apart | r | The two houses stand far apart from each other. | 二軒の家は互いに遠く離れています。
+apart | r | Why are the chairs placed so far apart? | なぜ椅子はそんなに離して置かれているのですか。
+apart | r | We live miles apart but talk every week. | 私たちは何マイルも離れて暮らしていますが毎週話します。
+somehow | r | We somehow found our way back to the hotel. | 私たちはどうにかホテルに戻る道を見つけました。
+somehow | r | Can we somehow finish this work before dinner? | どうにか夕食前にこの仕事を終えられますか。
+somehow | r | She somehow remembered every name in the class. | 彼女はどうにかクラス全員の名前を覚えていました。
+someday | r | I hope to visit that beautiful island someday. | 私はいつかあの美しい島を訪れたいです。
+someday | r | Would you like to open a cafe someday? | いつかカフェを開きたいですか。
+someday | r | My little brother wants to become a teacher someday. | 弟はいつか先生になりたいと思っています。
+sometime | r | Let us have lunch together sometime next week. | 来週のいつか一緒に昼食を食べましょう。
+sometime | r | Can you visit us sometime during the holidays? | 休暇中のいつか私たちを訪ねられますか。
+sometime | r | She plans to call her grandmother sometime tomorrow. | 彼女は明日のどこかで祖母に電話する予定です。
+everyday | a | Walking is an important part of my everyday life. | 歩くことは私の日常生活の大切な一部です。
+everyday | a | Do you wear these shoes for everyday activities? | この靴を毎日の活動で履いていますか。
+everyday | a | Small everyday habits can make a big difference. | 日々の小さな習慣が大きな違いを生むことがあります。
+fairly | r | The test was fairly easy for most students. | その試験はほとんどの生徒にとってかなり簡単でした。
+fairly | r | Is the weather fairly warm in your town? | あなたの町の天気はかなり暖かいですか。
+fairly | r | My sister speaks English fairly well now. | 妹は今では英語をかなり上手に話します。
+fully | r | Please fully charge your phone before the trip. | 旅行前に携帯電話を完全に充電してください。
+fully | r | Do you fully understand the rules of this game? | このゲームのルールを完全に理解していますか。
+fully | r | The hotel was fully booked for the weekend. | そのホテルは週末の予約がすべて埋まっていました。
+greatly | r | Your advice greatly helped me prepare for the exam. | あなたの助言は試験準備に大いに役立ちました。
+greatly | r | Has your English improved greatly since last year? | 去年から英語は大いに上達しましたか。
+greatly | r | The new park greatly improved our neighborhood. | 新しい公園で私たちの地域は大いによくなりました。
+highly | r | This restaurant is highly recommended by local families. | このレストランは地元の家族から非常に高く評価されています。
+highly | r | Is this book highly popular among young readers? | この本は若い読者の間で非常に人気がありますか。
+highly | r | The teacher was highly pleased with our progress. | 先生は私たちの進歩を非常に喜んでいました。
+largely | r | The event was largely organized by local students. | その行事は大部分が地元の生徒によって企画されました。
+largely | r | Was the trip largely paid for by your school? | 旅行費用の大部分は学校が負担しましたか。
+largely | r | Our success was largely due to careful planning. | 私たちの成功は大部分が入念な計画のおかげでした。
+mainly | r | This shop mainly sells clothes for young children. | この店は主に小さな子供向けの服を売っています。
+mainly | r | Do you mainly study English in the evening? | あなたは主に夕方に英語を勉強しますか。
+mainly | r | The town depends mainly on visitors during summer. | その町は夏の間主に観光客に頼っています。
+mostly | r | The audience was mostly made up of students. | 観客はほとんどが生徒でした。
+mostly | r | Do you eat mostly vegetables during the week? | 平日は主に野菜を食べていますか。
+mostly | r | The weather was mostly sunny during our holiday. | 休暇中の天気はたいてい晴れでした。
+naturally | r | She naturally speaks softly when reading to children. | 彼女は子供に読み聞かせるとき自然に優しく話します。
+naturally | r | Do these flowers grow naturally in this area? | この花はこの地域に自然に生えていますか。
+naturally | r | Naturally, everyone was excited about the school trip. | 当然ながら全員が修学旅行を楽しみにしていました。
+normally | r | I normally leave home at eight every morning. | 私は普段毎朝八時に家を出ます。
+normally | r | Does your father normally cook dinner on Fridays? | お父さんは普段金曜日に夕食を作りますか。
+normally | r | The library normally closes early on Sundays. | 図書館は普段日曜日には早く閉まります。
+partly | r | The room was partly painted when we arrived. | 到着したとき部屋は部分的に塗られていました。
+partly | r | Is the road partly closed for repairs today? | 今日は修理のため道路が一部閉鎖されていますか。
+partly | r | Her success was partly due to regular practice. | 彼女の成功は一部には定期的な練習のおかげでした。
+possibly | r | Could you possibly help me carry these boxes? | これらの箱を運ぶのを手伝っていただけませんか。
+possibly | r | Could it possibly rain during our picnic tomorrow? | 明日のピクニック中にひょっとしたら雨が降りますか。
+possibly | r | We could possibly finish the project by Friday. | 私たちはひょっとしたら金曜日までに計画を終えられます。
+properly | r | Please wash your hands properly before cooking dinner. | 夕食を作る前に手をきちんと洗ってください。
+properly | r | Does this old camera still work properly? | この古いカメラはまだ正常に動きますか。
+properly | r | The students learned how to use the tools properly. | 生徒たちは道具の適切な使い方を学びました。
+seriously | r | She takes her music lessons seriously every week. | 彼女は毎週音楽の授業に真剣に取り組んでいます。
+seriously | r | Do you seriously want to become a writer? | 本気で作家になりたいのですか。
+seriously | r | The team seriously discussed ways to improve the event. | チームは行事を改善する方法を真剣に話し合いました。
+slightly | r | The soup tastes slightly different from yesterday's soup. | このスープは昨日のものと味がわずかに違います。
+slightly | r | Could you move the chair slightly to the left? | 椅子を少し左に動かしてくれますか。
+slightly | r | Her new coat is slightly longer than mine. | 彼女の新しいコートは私のものより少し長いです。
+totally | r | I totally agree with your idea for the festival. | 祭りについてのあなたの案にまったく賛成です。
+totally | r | Are you totally sure about the meeting time? | 会議の時間について完全に確信していますか。
+totally | r | The room looked totally different after we painted it. | 塗装した後で部屋はまったく違って見えました。
+truly | r | I truly enjoyed spending the afternoon with you. | あなたと午後を過ごせて本当に楽しかったです。
+truly | r | Do you truly believe this plan will work? | この計画がうまくいくと本当に信じていますか。
+truly | r | Her family was truly proud of her progress. | 家族は彼女の進歩を本当に誇りに思っていました。
+unfortunately | r | Unfortunately, the museum is closed on Mondays. | 残念ながら博物館は月曜日に閉まっています。
+unfortunately | r | Unfortunately, we missed the last bus home. | 残念ながら帰宅する最終バスに乗り遅れました。
+unfortunately | r | The picnic was unfortunately canceled because of rain. | ピクニックは残念ながら雨で中止になりました。
+luckily | r | Luckily, we found our tickets before leaving home. | 幸運にも家を出る前に切符が見つかりました。
+luckily | r | Luckily, the rain stopped before the concert began. | 幸いコンサートが始まる前に雨がやみました。
+luckily | r | My friend luckily had an extra umbrella for me. | 幸運にも友達が私のために予備の傘を持っていました。
+directly | r | Please send your questions directly to the teacher. | 質問は先生に直接送ってください。
+directly | r | Can we travel directly from here to the airport? | ここから空港まで直接行けますか。
+directly | r | She spoke directly to the manager about her idea. | 彼女は自分の案について責任者に直接話しました。
+immediately | r | Please call me immediately when you arrive home. | 家に着いたらすぐに電話してください。
+immediately | r | Did the teacher immediately understand your question? | 先生はあなたの質問をすぐに理解しましたか。
+immediately | r | The children immediately started cleaning after the party. | 子供たちはパーティーの後すぐに掃除を始めました。
+eventually | r | We eventually found the restaurant near the station. | 私たちは結局駅の近くのレストランを見つけました。
+eventually | r | Did your brother eventually learn to ride a bicycle? | 兄弟は結局自転車に乗れるようになりましたか。
+eventually | r | After several tries, she eventually solved the puzzle. | 何度か試した後で彼女はついにパズルを解きました。
+gradually | r | The weather gradually became warmer during the week. | その週の間に天気はだんだん暖かくなりました。
+gradually | r | Is your English gradually getting easier to understand? | あなたの英語はだんだん理解しやすくなっていますか。
+gradually | r | The children gradually learned to work together. | 子供たちはだんだん協力して働くことを学びました。
+completely | r | I completely forgot about our meeting this afternoon. | 今日の午後の会議をすっかり忘れていました。
+completely | r | Have you completely finished reading that long book? | あの長い本を完全に読み終えましたか。
+completely | r | The kitchen looked completely different after the changes. | 改装後の台所はまったく違って見えました。
+entirely | r | This small house is made entirely of wood. | この小さな家は完全に木でできています。
+entirely | r | Are you entirely happy with the new schedule? | 新しい予定に完全に満足していますか。
+entirely | r | The plan was not entirely clear to everyone. | その計画は全員にとって完全には明確ではありませんでした。
+extremely | r | The water was extremely cold early this morning. | 今朝早くの水は極めて冷たかったです。
+extremely | r | Is the mountain road extremely busy during summer? | 夏の間その山道は非常に混みますか。
+extremely | r | Her teacher was extremely pleased with the results. | 先生はその結果を非常に喜んでいました。
+frequently | r | My grandmother frequently visits the library near her house. | 祖母は家の近くの図書館をしばしば訪れます。
+frequently | r | Do you frequently practice speaking English with friends? | 友達と頻繁に英語を話す練習をしますか。
+frequently | r | The bus stops frequently along this busy street. | バスはこのにぎやかな通りで頻繁に停車します。

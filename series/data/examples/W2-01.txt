@@ -1,0 +1,300 @@
+like | pp | This town feels just like my hometown. | この町はまるで故郷のように感じられます。
+like | pp | Have you ever seen a bird like that? | あのような鳥を見たことがありますか。
+like | pp | Her bag looks like a little flower. | 彼女のかばんは小さな花のように見えます。
+course | n | I joined an English course last week. | 私は先週英語講座に参加しました。
+course | n | Which course will you take next year? | 来年どの講座を受けますか。
+course | n | The river changed its course after the rain. | 雨の後で川の流れが変わりました。
+case | n | In this case, please ask your teacher. | この場合は先生に尋ねてください。
+case | n | What would you do in this case? | この場合あなたならどうしますか。
+case | n | The doctor has seen many similar cases before. | その医師は似た事例を以前にも数多く見ています。
+kind | n | What kind of music do you like? | どんな種類の音楽が好きですか。
+kind | n | This shop sells many kinds of bread. | この店では多くの種類のパンを売っています。
+kind | n | I have never tried this kind of tea. | この種類のお茶は飲んだことがありません。
+system | n | Our school has a new library system. | 学校には新しい図書館の仕組みがあります。
+system | n | How does the ticket system work here? | ここの切符の仕組みはどうなっていますか。
+system | n | The workers checked the heating system yesterday. | 作業員は昨日暖房設備を点検しました。
+issue | n | We should discuss this issue after lunch. | 昼食後にこの問題について話し合うべきです。
+issue | n | Is there an issue with your computer? | あなたのコンピューターに問題がありますか。
+issue | n | The team solved several issues during the meeting. | チームは会議中にいくつかの問題を解決しました。
+develop | v | Children develop new skills through regular practice. | 子供たちは定期的な練習で新しい能力を発達させます。
+develop | v | How can we develop better study habits? | どうすればよりよい勉強習慣を身につけられますか。
+develop | v | Her interest in science developed last summer. | 彼女の科学への関心は去年の夏に育ちました。
+enough | r | Please speak slowly enough for everyone to understand. | 全員が理解できるよう十分ゆっくり話してください。
+enough | r | Are you old enough to join us? | あなたは私たちに参加できる年齢ですか。
+enough | r | The water was not warm enough for swimming. | 水は泳ぐには十分暖かくありませんでした。
+process | n | Learning a language is a long process. | 言語を学ぶことは長い過程です。
+process | n | Can you explain the process of making bread? | パン作りの手順を説明してくれますか。
+process | n | The workers followed the same process every morning. | 作業員は毎朝同じ手順に従いました。
+serve | v | We serve breakfast from seven every morning. | 私たちは毎朝七時から朝食を出しています。
+serve | v | Does this restaurant serve lunch on Sundays? | このレストランは日曜日に昼食を出していますか。
+serve | v | The waiter served our soup with fresh bread. | 給仕の人はスープに焼きたてパンを添えて出しました。
+blue | a | She wore a blue dress to the party. | 彼女はパーティーに青いドレスを着ていきました。
+blue | a | Why is the sky so blue today? | 今日はなぜ空がこんなに青いのですか。
+blue | a | He felt blue after leaving his old school. | 彼は以前の学校を離れて憂うつでした。
+social | a | Our school plans a social event for parents. | 学校は保護者向けの交流行事を計画しています。
+social | a | Does she enjoy social activities with classmates? | 彼女はクラスメートとの交流活動を楽しんでいますか。
+social | a | The class discussed social problems in their town. | クラスは町の社会問題について話し合いました。
+likely | a | It is likely to rain this afternoon. | 今日の午後は雨が降りそうです。
+likely | a | Is your brother likely to arrive before dinner? | あなたの兄弟は夕食前に到着しそうですか。
+likely | a | The team is likely to finish tomorrow. | チームは明日終えそうです。
+perfect | a | This sunny day is perfect for a picnic. | この晴れた日はピクニックにぴったりです。
+perfect | a | Did you find the perfect birthday gift? | 誕生日にぴったりの贈り物は見つかりましたか。
+perfect | a | Her answer was perfect from beginning to end. | 彼女の答えは最初から最後まで完璧でした。
+round | pp | We walked round the lake before breakfast. | 私たちは朝食前に湖の周りを歩きました。
+round | pp | Can you see the flowers round that tree? | あの木の周りの花が見えますか。
+round | pp | The children sat round the table and talked. | 子供たちはテーブルを囲んで座って話しました。
+modern | a | This modern kitchen has plenty of natural light. | この現代的な台所には自然光がたっぷり入ります。
+modern | a | Do you prefer modern art or old paintings? | 現代美術と昔の絵画のどちらが好きですか。
+modern | a | Many modern homes have large open rooms. | 現代の家には広い部屋がよくあります。
+ancient | a | We visited an ancient building during our trip. | 旅行中に古代の建物を訪れました。
+ancient | a | Have you ever studied ancient history at school? | 学校で古代史を学んだことがありますか。
+ancient | a | The museum has many objects from ancient times. | 博物館には古代の品物がたくさんあります。
+international | a | Our town held an international food festival yesterday. | 私たちの町では昨日国際的な食の祭りが開かれました。
+international | a | Would you join an international student group? | 国際的な学生グループに参加しますか。
+international | a | She works with international visitors at the airport. | 彼女は空港で海外からの訪問客に対応しています。
+various | a | The shop sells various kinds of fresh fruit. | 店ではさまざまな種類の新鮮な果物を売っています。
+various | a | Did you try various activities during your holiday? | 休暇中にさまざまな活動を試しましたか。
+various | a | Students shared various ideas for the school festival. | 生徒たちは学校祭についてさまざまな案を出しました。
+positive | a | She has a positive attitude toward learning English. | 彼女は英語学習に前向きな姿勢を持っています。
+positive | a | Can you find something positive about this change? | この変化のよい面を見つけられますか。
+positive | a | His positive words helped the team relax. | 彼の前向きな言葉でチームは安心しました。
+negative | a | Please avoid negative comments about other students. | ほかの生徒について否定的な発言をしないでください。
+negative | a | Why did he give such a negative answer? | 彼はなぜそんなに否定的な返事をしたのですか。
+negative | a | Her negative attitude made the meeting difficult. | 彼女の否定的な態度で会議は難しくなりました。
+brave | a | It was brave of her to speak first. | 最初に話した彼女は勇敢でした。
+brave | a | Would you be brave enough to try? | 挑戦する勇気がありますか。
+brave | a | The brave child asked for help when needed. | 勇敢な子供は必要なときに助けを求めました。
+past | pp | Walk past the bank and turn left. | 銀行を通り過ぎて左に曲がってください。
+past | pp | Did you drive past the station this morning? | 今朝駅を通り過ぎて車で行きましたか。
+past | pp | A small dog ran past our garden gate. | 小さな犬が庭の門の前を走り過ぎました。
+except | r | Everyone came to the party except my brother. | 弟を除いて全員がパーティーに来ました。
+except | r | The library is open every day except Sunday. | 図書館は日曜日を除いて毎日開いています。
+except | r | We enjoyed the trip except for the rain. | 雨を除けば旅行を楽しみました。
+none | pn | None of the students knew the correct answer. | 生徒の誰も正しい答えを知りませんでした。
+none | pn | I wanted cookies, but none were left. | クッキーが欲しかったのですが一つも残っていませんでした。
+none | pn | We checked three shops, but none had the book. | 三軒の店を調べましたがどこにも本はありませんでした。
+subject | n | Science is my favorite subject at school. | 科学は学校で一番好きな科目です。
+subject | n | What is the main subject of your presentation? | 発表の主なテーマは何ですか。
+subject | n | The teacher asked us to choose different subjects. | 先生は異なる題材を選ぶように言いました。
+feed | v | Please feed the fish before leaving home. | 家を出る前に魚に餌をやってください。
+feed | v | How often do you feed your rabbit? | ウサギにはどのくらいの頻度で餌をやりますか。
+feed | v | My grandfather fed the birds in his garden. | 祖父は庭で鳥に餌をやりました。
+bend | v | Do not bend the pages of this book. | この本のページを折り曲げないでください。
+bend | v | Can you bend this wire into a circle? | この針金を曲げて輪にできますか。
+bend | v | The young tree bent in the strong wind. | 若い木は強い風で曲がりました。
+grind | v | We grind fresh coffee beans every morning. | 私たちは毎朝新鮮なコーヒー豆をひきます。
+grind | v | Can you grind these nuts into small pieces? | このナッツを細かくすりつぶせますか。
+grind | v | My father ground the coffee beans by hand. | 父は手でコーヒー豆をひきました。
+strike | v | The clock will strike twelve in one minute. | 時計はあと一分で十二時を打ちます。
+strike | v | Did an interesting idea strike you during class? | 授業中に面白い考えが浮かびましたか。
+strike | v | A sudden thought struck me on the train. | 電車の中で突然考えが浮かびました。
+realize | v | I did not realize how late it was. | こんなに遅い時間だと気づきませんでした。
+realize | v | When did you realize the door was open? | ドアが開いているといつ気づきましたか。
+realize | v | She realized her dream of becoming a teacher. | 彼女は先生になる夢を実現しました。
+recognize | v | Can you recognize your friend in this photograph? | 写真の中の友達が誰かわかりますか。
+recognize | v | Did the teacher recognize your voice on the phone? | 先生は電話であなたの声だとわかりましたか。
+recognize | v | He recognized the song after hearing three notes. | 彼は三つの音を聞いて曲がわかりました。
+mention | v | Please mention the meeting time in your message. | メッセージに会議の時間を記してください。
+mention | v | Did she mention the restaurant near school? | 彼女は学校の近くのレストランについて話しましたか。
+mention | v | My friend mentioned your name during our conversation. | 友達が会話の中であなたの名前を出しました。
+improve | v | Daily practice can improve your English speaking skills. | 毎日の練習は英語を話す力を向上させます。
+improve | v | How can we improve the food at school? | 学校の食事をどうすれば改善できますか。
+improve | v | His piano playing improved greatly over the summer. | 彼のピアノ演奏は夏の間に大きく上達しました。
+perform | v | Our class will perform a short play tomorrow. | クラスは明日短い劇を上演します。
+perform | v | Can you perform this song on the piano? | この曲をピアノで演奏できますか。
+perform | v | The dancers performed beautifully at the school festival. | ダンサーたちは学校祭で美しく踊りました。
+taste | v | Please taste the soup before adding more salt. | 塩を足す前にスープを味見してください。
+taste | v | Does this tea taste sweet without any sugar? | このお茶は砂糖なしでも甘い味がしますか。
+taste | v | We tasted several kinds of cheese at the market. | 市場で何種類かのチーズを味見しました。
+trust | v | I trust my sister to keep this secret. | 私は姉が秘密を守ると信頼しています。
+trust | v | Can you trust him to finish the work? | 彼が仕事を終えると信頼できますか。
+trust | v | The children trusted their teacher from the beginning. | 子供たちは最初から先生を信頼していました。
+waste | v | Please do not waste water while washing dishes. | 皿を洗うときに水を無駄にしないでください。
+waste | v | Did we waste too much time looking for parking? | 駐車場探しに時間を無駄にしすぎましたか。
+waste | v | She never wastes food from the school lunch. | 彼女は学校給食を決して無駄にしません。
+accept | v | I am happy to accept your kind invitation. | ご親切なお誘いを喜んでお受けします。
+accept | v | Will the shop accept this old ticket? | 店はこの古い券を受け付けますか。
+accept | v | The teacher accepted our idea for the trip. | 先生は旅行についての私たちの案を受け入れました。
+admit | v | I must admit that I made a mistake. | 私は間違いをしたと認めなければなりません。
+admit | v | Did he admit that he forgot the meeting? | 彼は会議を忘れたと認めましたか。
+admit | v | The museum admits children for free on Sundays. | 博物館は日曜日に子供を無料で入場させます。
+appear | v | Bright stars appear when the sky gets dark. | 空が暗くなると明るい星が現れます。
+appear | v | Did the rainbow appear after the rain stopped? | 雨がやんだ後に虹が現れましたか。
+appear | v | She appeared tired after the long train ride. | 長い列車の旅の後で彼女は疲れて見えました。
+design | v | We want to design a new school garden. | 私たちは新しい学校の庭を設計したいです。
+design | v | Can you design a poster for our event? | 行事のポスターをデザインできますか。
+design | v | My uncle designed this small wooden table. | 叔父がこの小さな木のテーブルを設計しました。
+measure | v | Please measure the length of this wooden table. | この木のテーブルの長さを測ってください。
+measure | v | Can you measure the room before buying furniture? | 家具を買う前に部屋を測れますか。
+measure | v | The students measured the water temperature every morning. | 生徒たちは毎朝水温を測りました。
+operate | v | Can you operate this machine without any help? | 助けなしでこの機械を操作できますか。
+operate | v | Does the new washing machine operate quietly? | 新しい洗濯機は静かに動きますか。
+operate | v | The worker operated the lift from a small room. | 作業員は小さな部屋から昇降機を操作しました。
+press | v | Please press the green button to open the door. | ドアを開けるには緑のボタンを押してください。
+press | v | Did you press the wrong key again? | また間違ったキーを押しましたか。
+press | v | She pressed the flowers between two heavy books. | 彼女は二冊の重い本の間に花を挟んで押しました。
+settle | v | We should settle this problem before the weekend. | 週末までにこの問題を解決するべきです。
+settle | v | Did the children settle down after lunch? | 子供たちは昼食後に落ち着きましたか。
+settle | v | The two friends settled their disagreement by talking. | 二人は話し合って意見の違いを解決しました。
+tend | v | I tend to read before going to sleep. | 私は寝る前に本を読むことが多いです。
+tend | v | Do you tend to get hungry after swimming? | 泳いだ後はお腹がすきやすいですか。
+tend | v | My brother tends to forget his umbrella at school. | 弟は学校に傘を忘れがちです。
+youth | n | She spent her youth in a small town. | 彼女は小さな町で青春時代を過ごしました。
+youth | n | What sports did you enjoy in your youth? | 若いころはどんなスポーツを楽しみましたか。
+youth | n | The town opened a new center for local youth. | 町は地元の若者のために新しい施設を開きました。
+officer | n | A police officer helped us find the station. | 警察官が駅への道を教えてくれました。
+officer | n | Did the officer give you directions to the park? | 警察官は公園への道を教えてくれましたか。
+officer | n | Two officers stood near the busy crossing. | 二人の警察官が交通量の多い横断歩道の近くに立っていました。
+host | n | Our host welcomed us with tea and cake. | 主催者はお茶とケーキで迎えてくれました。
+host | n | Who will be the host of tomorrow's party? | 明日のパーティーの主催者は誰ですか。
+host | n | The hosts prepared a special dinner for everyone. | 主催者たちは全員のために特別な夕食を用意しました。
+court | n | The children played tennis on the outdoor court. | 子供たちは屋外コートでテニスをしました。
+court | n | Is the basketball court open after school today? | 今日の放課後コートは使えますか。
+court | n | The town built two new courts near the park. | 町は公園の近くに新しいコートを二面作りました。
+military | a | The museum has a display of military uniforms. | 博物館には軍の制服の展示があります。
+military | a | Did your grandfather work at a military school? | 祖父は軍の学校で働いていましたか。
+military | a | The guide explained the history of military music. | 案内人は軍楽の歴史を説明しました。
+project | n | Our class started a project about local plants. | クラスは地元の植物についての計画を始めました。
+project | n | When will your science project be ready? | 科学の課題はいつ完成しますか。
+project | n | The students worked together on several school projects. | 生徒たちはいくつかの学校の計画に協力して取り組みました。
+source | n | The river has its source in the mountains. | 川の源は山の中にあります。
+source | n | Can you tell me the source of this information? | この情報の出典を教えてくれますか。
+source | n | Books are useful sources of information for students. | 本は生徒にとって役立つ情報源です。
+network | n | Our school has a network of local libraries. | 学校には地域の図書館とのネットワークがあります。
+network | n | Does this computer connect to the school network? | このコンピューターは学校のネットワークにつながっていますか。
+network | n | The company built a network of small shops. | 会社は小さな店のネットワークを作りました。
+organization | n | She joined an organization that helps local children. | 彼女は地元の子供を支援する団体に入りました。
+organization | n | What does your volunteer organization do every weekend? | あなたのボランティア団体は毎週末何をしていますか。
+organization | n | Several organizations helped plan the town festival. | いくつかの団体が町の祭りの計画を手伝いました。
+association | n | My father belongs to a local sports association. | 父は地元のスポーツ協会に所属しています。
+association | n | Does the association hold meetings every month? | 協会は毎月会議を開いていますか。
+association | n | The two ideas have a close association. | 二つの考えには密接な関連があります。
+kindergarten | n | My little sister started kindergarten this spring. | 妹はこの春幼稚園に通い始めました。
+kindergarten | n | Does your son enjoy going to kindergarten every day? | 息子さんは毎日幼稚園に行くのを楽しんでいますか。
+kindergarten | n | The kindergarten children planted flowers near their classroom. | 幼稚園の子供たちは教室の近くに花を植えました。
+exam | n | I have an English exam next Monday morning. | 来週月曜日の朝に英語の試験があります。
+exam | n | Did you study enough for the math exam? | 数学の試験に向けて十分に勉強しましたか。
+exam | n | The students finished their exams before the holiday. | 生徒たちは休暇前に試験を終えました。
+contest | n | Our school held a singing contest last week. | 学校では先週歌のコンテストがありました。
+contest | n | Would you like to enter the cooking contest? | 料理コンテストに参加してみたいですか。
+contest | n | Three students won prizes in the art contest. | 三人の生徒が美術コンテストで賞を取りました。
+stadium | n | The stadium was full of happy football fans. | 競技場は喜んでいるサッカーファンでいっぱいでした。
+stadium | n | How far is the new stadium from here? | 新しい競技場はここからどのくらい遠いですか。
+stadium | n | We watched a baseball game at the stadium. | 競技場で野球の試合を見ました。
+gym | n | Our school gym is open after classes. | 学校の体育館は授業後に開いています。
+gym | n | Do you go to the gym every weekend? | 毎週末ジムに行きますか。
+gym | n | The children practiced basketball in the new gym. | 子供たちは新しい体育館でバスケットボールを練習しました。
+concert | n | We enjoyed a wonderful concert at the school. | 学校ですばらしいコンサートを楽しみました。
+concert | n | Are you going to the concert on Saturday? | 土曜日のコンサートに行く予定ですか。
+concert | n | The band gave three concerts during the summer. | バンドは夏の間に三回コンサートを開きました。
+drama | n | Our class watched a short drama in English. | クラスは英語の短い劇を見ました。
+drama | n | Did you enjoy the new television drama? | 新しいテレビドラマは面白かったですか。
+drama | n | She studies drama at a school near home. | 彼女は家の近くの学校で演劇を学んでいます。
+comedy | n | My family watched a funny comedy last night. | 家族は昨夜面白い喜劇を見ました。
+comedy | n | Would you prefer a comedy or a love story? | 喜劇と恋愛物語のどちらがよいですか。
+comedy | n | The school performed two comedies during the festival. | 学校は祭りの間に二つの喜劇を上演しました。
+cartoon | n | My brother drew a cartoon about our dog. | 弟は私たちの犬についての漫画を描きました。
+cartoon | n | Do you read the cartoon in the newspaper? | 新聞に載っている漫画を読みますか。
+cartoon | n | The children laughed at the funny cartoons. | 子供たちは面白い漫画を見て笑いました。
+comic | n | I bought a comic at the bookstore yesterday. | 昨日書店で漫画を一冊買いました。
+comic | n | Have you read this comic about a little cat? | 小さな猫についての漫画を読みましたか。
+comic | n | My sister keeps her comics on a shelf. | 姉は漫画を棚に並べています。
+guitar | n | My brother plays the guitar after dinner. | 弟は夕食後にギターを弾きます。
+guitar | n | Can you teach me a song on the guitar? | ギターで一曲弾く方法を教えてくれますか。
+guitar | n | She bought a small guitar for her daughter. | 彼女は娘のために小さなギターを買いました。
+piano | n | There is a piano in our living room. | 居間にはピアノがあります。
+piano | n | How long have you played the piano? | どのくらいの間ピアノを弾いていますか。
+piano | n | The children practiced their songs on the piano. | 子供たちはピアノで曲を練習しました。
+violin | n | My cousin practices the violin every evening. | いとこは毎晩バイオリンを練習しています。
+violin | n | Did you bring your violin to music class? | 音楽の授業にバイオリンを持ってきましたか。
+violin | n | The students played their violins at the concert. | 生徒たちはコンサートでバイオリンを弾きました。
+drum | n | The boy played a drum in the parade. | 男の子はパレードでドラムをたたきました。
+drum | n | Can you hear the drum from outside? | 外からドラムの音が聞こえますか。
+drum | n | Our music room has several different drums. | 音楽室にはいくつかの異なるドラムがあります。
+instrument | n | Which musical instrument would you like to learn? | どの楽器を習ってみたいですか。
+instrument | n | The teacher showed us a new measuring instrument. | 先生は新しい測定器を見せてくれました。
+instrument | n | These instruments are used in the school band. | これらの楽器は学校の楽団で使われています。
+leather | n | This bag is made of soft brown leather. | このかばんは柔らかい茶色の革でできています。
+leather | n | Do you know how to clean leather shoes? | 革靴の手入れの仕方を知っていますか。
+leather | n | My grandfather has an old leather chair. | 祖父は古い革張りのいすを持っています。
+goods | n | This store sells goods made by local people. | この店では地元の人が作った商品を売っています。
+goods | n | Where can we find the household goods section? | 日用品売り場はどこにありますか。
+goods | n | The shop delivered our goods this morning. | 店は今朝私たちの商品を届けました。
+wallet | n | I left my wallet on the kitchen table. | 財布を台所のテーブルに置き忘れました。
+wallet | n | Is this brown wallet yours or your brother's? | この茶色の財布はあなたのものですか、それとも兄弟のものですか。
+wallet | n | She keeps a family photograph in her wallet. | 彼女は財布に家族の写真を入れています。
+glasses | n | I need my glasses to read small letters. | 小さな文字を読むには眼鏡が必要です。
+glasses | n | Did you leave your glasses in the car? | 眼鏡を車の中に置き忘れましたか。
+glasses | n | My father bought new glasses last weekend. | 父は先週末に新しい眼鏡を買いました。
+mirror | n | There is a large mirror beside the door. | ドアの横に大きな鏡があります。
+mirror | n | Can you see the window in that mirror? | あの鏡に窓が映っているのが見えますか。
+mirror | n | She checked her hair in the bathroom mirror. | 彼女は浴室の鏡で髪を確認しました。
+sofa | n | Our dog sleeps on the sofa every afternoon. | 犬は毎午後ソファーで眠ります。
+sofa | n | Would you like to sit on the sofa? | ソファーに座りませんか。
+sofa | n | The family bought a comfortable sofa for their home. | 家族は座り心地のよいソファーを買いました。
+refrigerator | n | Please put the milk back in the refrigerator. | 牛乳を冷蔵庫に戻してください。
+refrigerator | n | Is there any fresh fruit in the refrigerator? | 冷蔵庫に新鮮な果物はありますか。
+refrigerator | n | We cleaned our refrigerator before going shopping. | 買い物に行く前に冷蔵庫を掃除しました。
+elevator | n | Take the elevator to the fifth floor. | エレベーターで五階まで行ってください。
+elevator | n | Is the elevator working properly this morning? | 今朝エレベーターは正常に動いていますか。
+elevator | n | The children waited quietly beside the elevator. | 子供たちはエレベーターのそばで静かに待ちました。
+apartment | n | My friend lives in a small apartment downtown. | 友達は町の中心部の小さなアパートに住んでいます。
+apartment | n | Does your apartment have a large kitchen? | あなたのアパートには広い台所がありますか。
+apartment | n | They moved into their new apartment last month. | 彼らは先月新しいアパートに引っ越しました。
+shrine | n | We visited a small shrine near the mountain. | 山の近くの小さな神社を訪れました。
+shrine | n | Is there an old shrine in your town? | あなたの町には古い神社がありますか。
+shrine | n | The guide explained the history of the shrine. | 案内人は神社の歴史を説明しました。
+tunnel | n | The train went through a long mountain tunnel. | 列車は長い山のトンネルを通りました。
+tunnel | n | How many tunnels are there on this road? | この道路にはトンネルがいくつありますか。
+tunnel | n | We saw daylight at the end of the tunnel. | トンネルの出口に日の光が見えました。
+desert | n | The desert becomes very cold after sunset. | 砂漠は日が沈むととても寒くなります。
+desert | n | Have you ever traveled across a desert? | 砂漠を横断して旅をしたことがありますか。
+desert | n | Some plants can grow in dry deserts. | 乾燥した砂漠でも育つ植物があります。
+pond | n | A small pond lies behind our school. | 学校の裏には小さな池があります。
+pond | n | Can you see the fish in that pond? | あの池の魚が見えますか。
+pond | n | The children watched frogs beside the garden pond. | 子供たちは庭の池のそばでカエルを観察しました。
+jungle | n | Many kinds of animals live in the jungle. | ジャングルには多くの種類の動物が暮らしています。
+jungle | n | Would you like to explore a jungle someday? | いつかジャングルを探検してみたいですか。
+jungle | n | The explorers walked carefully through the thick jungle. | 探検家たちは深いジャングルを注意深く歩きました。
+zoo | n | We saw three elephants at the zoo yesterday. | 昨日動物園で三頭のゾウを見ました。
+zoo | n | Does your town have a zoo for families? | あなたの町には家族で行ける動物園がありますか。
+zoo | n | The zoo opens early during the summer holidays. | 動物園は夏休みの間早く開園します。
+aquarium | n | Our family visited the aquarium on Sunday. | 家族は日曜日に水族館を訪れました。
+aquarium | n | Can you see dolphins at this aquarium? | この水族館ではイルカを見ることができますか。
+aquarium | n | The aquarium has a large tank for tropical fish. | 水族館には熱帯魚用の大きな水槽があります。
+supermarket | n | I bought fresh vegetables at the supermarket. | スーパーで新鮮な野菜を買いました。
+supermarket | n | Is the supermarket open until nine tonight? | スーパーは今夜九時まで開いていますか。
+supermarket | n | My mother visits several supermarkets to compare prices. | 母は値段を比べるためにいくつかのスーパーを回ります。
+bookstore | n | There is a small bookstore near the station. | 駅の近くに小さな書店があります。
+bookstore | n | Did you find the dictionary at the bookstore? | 書店で辞書を見つけましたか。
+bookstore | n | The new bookstore sells books in several languages. | 新しい書店はいくつかの言語の本を売っています。
+bakery | n | This bakery makes fresh bread every morning. | このパン屋は毎朝焼きたてのパンを作ります。
+bakery | n | Which bakery sells your favorite chocolate cake? | 好きなチョコレートケーキはどのパン屋で売っていますか。
+bakery | n | We stopped at a bakery on our way home. | 帰り道にパン屋に立ち寄りました。
+lion | n | The lion rested under a large tree. | ライオンは大きな木の下で休んでいました。
+lion | n | Have you ever seen a lion at the zoo? | 動物園でライオンを見たことがありますか。
+lion | n | The children watched two lions from a safe distance. | 子供たちは安全な距離から二頭のライオンを見ました。
+tiger | n | A tiger has dark stripes on its body. | トラの体には黒っぽいしまがあります。
+tiger | n | Can you find the tiger in this picture? | 絵の中のトラを見つけられますか。
+tiger | n | The zoo has a large area for its tigers. | 動物園にはトラのための広い場所があります。
+frog | n | A green frog jumped into the pond. | 緑色のカエルが池に飛び込みました。
+frog | n | Did you hear a frog near the river? | 川の近くでカエルの鳴き声を聞きましたか。
+frog | n | Several frogs sat quietly on the wet rocks. | 数匹のカエルがぬれた岩の上に静かに座っていました。
+whale | n | We saw a whale swimming near the boat. | 船の近くを泳ぐクジラを見ました。
+whale | n | Have you ever watched a whale from the shore? | 岸からクジラを見たことがありますか。
+whale | n | Some whales travel long distances through the ocean. | クジラの中には海を長距離移動するものもいます。
+dolphin | n | A dolphin jumped out of the water. | 一頭のイルカが水面から跳び上がりました。
+dolphin | n | Can you see the dolphin beside the boat? | 船のそばにいるイルカが見えますか。
+dolphin | n | The children learned about dolphins at the aquarium. | 子供たちは水族館でイルカについて学びました。
+grape | n | I picked a sweet grape from the bowl. | ボウルから甘いブドウを一粒取りました。
+grape | n | Would you like a grape with your lunch? | 昼食にブドウを一粒いかがですか。
+grape | n | These grapes taste fresh and sweet today. | このブドウは今日は新鮮で甘い味がします。
+strawberry | n | She put a strawberry on the cake. | 彼女はケーキにイチゴを一粒のせました。
+strawberry | n | Can you find a ripe strawberry in the garden? | 庭で熟したイチゴを見つけられますか。
+strawberry | n | We bought fresh strawberries at the farm. | 農場で新鮮なイチゴを買いました。
+melon | n | My grandmother cut a melon into small pieces. | 祖母はメロンを小さく切り分けました。
+melon | n | Would you like some cold melon after dinner? | 夕食後に冷たいメロンはいかがですか。
+melon | n | The farmer grows several kinds of melons. | 農家は何種類かのメロンを育てています。
+tomato | n | Please add a fresh tomato to the salad. | サラダに新鮮なトマトを一つ加えてください。
+tomato | n | Do you want a tomato in your sandwich? | サンドイッチにトマトを入れますか。
+tomato | n | My mother grows red tomatoes behind our house. | 母は家の裏で赤いトマトを育てています。

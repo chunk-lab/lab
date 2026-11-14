@@ -1,0 +1,469 @@
+@id beg56
+@lv 1
+@level 4
+@title Breakfast Is Important
+@ja 朝ごはんは大切
+@tag 高校受験レベル・説明文
+@gloss skip=抜く, breakfast=朝食, health=健康, energy=エネルギー, brain=脳, focus=集中する, choice=選択
+S| Many {people|person|peopled|peopling} :: 多くの人が
+V| {skip|skips|skipping|to skip} breakfast :: 朝食を抜く
+R| {because|because of|why|since of} they are busy. :: 忙しいので
+== 多くの人は忙しいので朝食を抜く。
+S| But breakfast {is|are|be|being} :: しかし朝食は
+C| very {important|importance|importantly|import} :: とても大切だ
+P| {for|of|by|at} our health. :: 健康にとって
+== しかし、朝食は健康にとってとても大切だ。
+T| {During|While|Among|Between} the night, :: 夜のあいだ
+S| our body {uses|use|using|useful} :: 体は使う
+O| a lot {of|for|with|in} energy. :: 多くのエネルギーを
+== 夜のあいだ、私たちの体は多くのエネルギーを使う。
+M| So {in|on|at|for} the morning, :: だから朝は
+S| our {body|bodies|bodily|bodys} :: 体は
+V| {needs|need|needing|to need} :: 必要とする
+O| {new|news|newly|newness} energy. :: 新しいエネルギーを
+== だから、朝の体には新しいエネルギーが必要だ。
+S| Breakfast {gives|give|giving|given} :: 朝食は与える
+O| {us|we|our|ours} energy :: 私たちに活力を
+R| {to|for|in|by} start the day. :: 1日を始めるための
+== 朝食は、1日を始めるためのエネルギーをくれる。
+S| It also {helps|help|helping|helpful} :: それは助けもする
+O| {our|we|us|ours} brain :: 脳が
+V| {work|works|worked|working} well. :: よく働くのを
+== 朝食は、脳がよく働くのも助けてくれる。
+P| {Without|Within|Withdraw|Withhold} breakfast, :: 朝食なしでは
+S| {it|its|they|them} is :: それは
+C| {hard|hardly|hardness|hards} :: 難しい
+R| {to|for|at|in} focus in class. :: 授業に集中するのは
+== 朝食を食べないと、授業に集中するのは難しい。
+S| A good {breakfast|breakfasts|breakfasted|breakfasting} :: よい朝食は
+V| does not {have|has|having|had} to :: …必要はない
+C| be {big|bigly|bigness|bigs}. :: 量が多い
+== よい朝食は、量が多くなくてもよい。
+S| Rice, eggs, {and|but|nor|so} fruit :: ご飯、卵、果物は
+V| {are|is|be|am} :: …だ
+C| a good {choice|choose|chose|chosen}. :: よい選択
+== ご飯、卵、果物などはよい選択だ。
+T| {Tomorrow|Yesterday|Last|Ago} morning, :: 明日の朝
+V| {try|tries|trying|tried} :: 試してみよう
+O| {eating|eat|ate|eaten} breakfast. :: 朝食を食べるのを
+== 明日の朝、朝食を食べてみよう。
+?? 0 2 多くの人はなぜ朝食を抜く？
+?? 2 2 夜のあいだ、体は何を使う？
+?? 6 3 朝食なしでは、何をするのが難しい？
+?? 8 2 ご飯、卵、果物は何だと言っている？
+
+@id beg57
+@lv 1
+@level 4
+@title Brushing Your Teeth
+@ja 歯みがき
+@tag 高校受験レベル・説明文
+@gloss teeth=歯(複数), piece=かけら, cause=引き起こす, twice=2回, toothbrush=歯ブラシ, gently=やさしく, sugar=砂糖, dentist=歯医者, regularly=定期的に
+S| Our {teeth|tooth|teeths|tooths} :: 私たちの歯は
+V| {are|is|be|was} :: …だ
+C| very {important|importance|importantly|import}. :: とても大切
+== 私たちの歯はとても大切だ。
+S| We {use|uses|using|useful} them :: 私たちは歯を使う
+R| {to|for|at|by} eat food :: 食べ物を食べるのに
+M| {and|nor|than|because} to talk. :: そして話すのに
+== 私たちは食べたり話したりするのに歯を使う。
+T| {After|Among|Across|Along} meals, :: 食事の後
+S| small {pieces|piece|peace|pieced} of food :: 食べ物のかけらが
+V| {stay|stays|staying|to stay} on our teeth. :: 歯に残る
+== 食事の後、食べ物の小さなかけらが歯に残る。
+S| They {can|cans|can to|could to} :: それらは…ありうる
+V| {cause|causes|causing|caused} :: 引き起こす
+O| {problems|problem|probrem|problematic}. :: 問題を
+== それが歯のトラブルの原因になることがある。
+S| So we {should|shoulds|should to|shall to} :: だから…べきだ
+V| {brush|brushes|brushing|brushed} our teeth :: 歯をみがく
+T| {twice|two|second|double} a day. :: 1日に2回
+== だから、歯は1日2回みがくべきだ。
+V| {Use|Uses|Using|Used} :: 使おう
+O| a {soft|softly|soften|softness} toothbrush :: やわらかい歯ブラシを
+M| and brush {gently|gentle|gentleness|gentler}. :: やさしくみがこう
+== やわらかい歯ブラシを使い、やさしくみがこう。
+S| {Brushing|Brush|Brushed|Brushes} too hard :: 強くみがきすぎは
+V| {is|are|be|being} :: …だ
+C| {not|no|none|nor} good :: よくない
+P| {for|of|at|by} your teeth. :: 歯にとって
+== 強くみがきすぎるのは歯によくない。
+S| Also, {try|tries|trying|tried} :: また…ようにしよう
+R| {not|no|don't|nor} to eat :: 食べないように
+O| too {much|many|more|most} sugar. :: 砂糖をとりすぎ
+== また、砂糖をとりすぎないようにしよう。
+S| It is {good|goods|goodness|goodly} :: …はよいことだ
+R| {to|for|at|in} visit a dentist :: 歯医者に行くのは
+T| {regularly|regular|regulars|regulate}. :: 定期的に
+== 定期的に歯医者に行くのもよいことだ。
+S| Healthy {teeth|tooth|teethes|tooths} :: 健康な歯は
+V| {help|helps|helping|helpful} :: 助ける
+O| {you|your|yours|you're} :: あなたが
+X| {enjoy|enjoys|enjoyed|enjoying} meals. :: 食事を楽しむのを
+== 健康な歯があれば、食事を楽しめる。
+?? 1 1 歯は何をするのに使う？
+?? 4 2 歯は1日に何回みがくべき？
+?? 5 1 どんな歯ブラシを使うとよい？
+?? 7 2 何をとりすぎないようにする？
+?? 8 1 定期的にどこへ行くとよい？
+
+@id beg58
+@lv 1
+@level 4
+@title Bento Lunch Boxes
+@ja お弁当
+@tag 高校受験レベル・説明文
+@gloss lunch box=弁当(箱), kind=種類, example=例, vegetable=野菜, healthy=健康な, colorful=色とりどりの, delicious=おいしい, leftover=残り物
+P| {In|On|At|For} Japan, :: 日本では
+S| many students {take|takes|taking|taken} :: 多くの生徒が持つ
+O| lunch boxes {to|at|on|by} school. :: 学校へ弁当を
+== 日本では、多くの生徒が学校に弁当を持って行く。
+S| A lunch {box|boxes|boxing|boxed} :: 弁当は
+V| is {called|call|calling|calls} :: 呼ばれる
+C| "bento" {in|on|at|by} Japanese. :: 日本語で「弁当」と
+== 弁当は日本語で「bento」と呼ばれる。
+S| A good bento {has|have|having|haves} :: よい弁当にはある
+O| {many|much|a|one} kinds of food. :: 多くの種類の食べ物が
+== よい弁当には、いろいろな種類の食べ物が入っている。
+P| {For|From|Of|With} example, :: たとえば
+S| it {has|have|having|haves} :: それにはある
+O| rice, fish, {and|but|nor|so} vegetables. :: ご飯、魚、野菜が
+== たとえば、ご飯や魚や野菜が入っている。
+S| This {is|are|be|were} :: これは
+C| {good|goodness|goods|gooder} :: よい
+P| for a {healthy|health|healthily|healthiness} body. :: 健康な体のために
+== これは健康な体のためによい。
+S| Some people {make|makes|making|maked} :: 作る人もいる
+O| {colorful|color|colorfully|colorfulness} bento. :: 色とりどりの弁当を
+== 色とりどりの弁当を作る人もいる。
+S| They {use|uses|using|useful} :: 彼らは使う
+O| red, yellow, {and|but|nor|so} green food. :: 赤、黄、緑の食べ物を
+== 赤、黄色、緑の食べ物を使うのだ。
+S| A colorful bento {looks|look|looking|seeing} :: 色鮮やかな弁当は
+C| {delicious|deliciously|delicacy|deliciousness}, :: おいしそうに見える
+M| {too|either|neither|very}. :: …も
+== 色とりどりの弁当は、おいしそうにも見える。
+S| You {can|cans|can to|cans to} :: あなたは…できる
+V| {use|uses|using|used} :: 使う
+O| {leftovers|leftover|left over|leaving} from dinner. :: 夕食の残り物を
+== 夕食の残り物を使うこともできる。
+S| Making bento {is|are|be|being} :: 弁当作りは
+C| {easy|easily|ease|easiness} :: 簡単だ
+M| {and|nor|than|so} fun. :: そして楽しい
+== 弁当作りは簡単で楽しい。
+?? 0 2 多くの生徒は学校に何を持って行く？
+?? 3 2 弁当にはたとえば何が入っている？
+?? 6 1 何色の食べ物を使う？
+?? 8 2 夕食の何を使うことができる？
+
+@id beg59
+@lv 1
+@level 4
+@title Fruit and Vitamins
+@ja 果物とビタミン
+@tag 高校受験レベル・説明文
+@gloss vitamin=ビタミン, healthy=健康な, orange=オレンジ, kiwi=キウイ, strawberry=いちご, skin=肌, fresh=新鮮な, snack=おやつ, sugar=糖分
+S| Fruit {is|are|be|were} :: 果物は
+C| sweet {and|nor|than|so} delicious. :: 甘くておいしい
+== 果物は甘くておいしい。
+S| {It|They|Its|Them} :: それは
+V| also {has|have|having|haves} :: …も持っている
+O| many {vitamins|vitamin|vital|vitally}. :: 多くのビタミンを
+== 果物にはビタミンもたくさん含まれている。
+S| Vitamins {help|helps|helping|helpful} :: ビタミンは助ける
+O| {our|we|us|ours} body :: 体が
+V| {stay|stays|stayed|staying} healthy. :: 健康でいるのを
+== ビタミンは、体を健康に保つのを助けてくれる。
+P| {For|From|Of|With} example, :: たとえば
+S| oranges {have|has|having|haves} :: オレンジにはある
+O| a lot {of|for|with|in} vitamin C. :: 多くのビタミンCが
+== たとえば、オレンジにはビタミンCがたくさんある。
+S| Kiwis {and|but|nor|so} strawberries :: キウイといちごは
+V| {have|has|having|haves} it, :: それを持っている
+M| {too|either|neither|very}. :: …も
+== キウイやいちごにもビタミンCがある。
+S| Vitamin C {is|are|be|am} :: ビタミンCは
+C| {good|goods|goodness|gooder} :: よい
+P| {for|of|at|by} your skin. :: 肌にとって
+== ビタミンCは肌によい。
+S| Fresh {fruit|fruity|fruitful|fruited} :: 新鮮な果物は
+V| also {has|have|having|haves} :: …も持っている
+O| a lot {of|for|with|in} water. :: 多くの水分を
+== 新鮮な果物には水分も多い。
+S| {It|Its|They|Them} is :: それは
+C| a {good|goods|goodness|well} snack :: よいおやつ
+T| {on|at|by|to} hot days. :: 暑い日には
+== 暑い日には、果物はよいおやつになる。
+S| But {don't|doesn't|not|no} eat :: でも食べないで
+O| too much {at|in|by|on} once :: 一度にたくさん
+R| {because|because of|why|due} fruit has sugar. :: 糖分があるから
+== でも、果物には糖分があるので、一度に食べすぎないようにしよう。
+S| {Let's|Lets|Let|Let us to} :: …しよう
+V| {enjoy|enjoys|enjoying|enjoyed} fruit :: 果物を楽しむ
+T| {every|everything|everyone|ever} day. :: 毎日
+== 毎日果物を楽しもう。
+?? 1 2 果物には何がたくさん含まれている？
+?? 3 2 オレンジにはたくさん何がある？
+?? 5 2 ビタミンCは何によい？
+?? 8 2 なぜ一度に食べすぎないほうがいい？
+
+@id beg60
+@lv 1
+@level 4
+@title Jump Rope Every Day
+@ja 毎日なわとび
+@tag 高校受験レベル・日記
+@gloss jump rope=なわとびをする, minute=分, at first=最初は, tired=疲れた, hundred=百, count=数える, goal=目標, practice=練習する
+T| {Today|Todays|Ago|Ever} :: 今日
+S| {I|Me|My|Mine} jumped rope :: 私はなわとびをした
+T| for ten {minutes|minute|minuted|minutely}. :: 10分間
+== 今日、私は10分間なわとびをした。
+S| I {started|start|starts|starting} :: 私は始めた
+O| {jumping|jumped|jumps|to jumping} rope :: なわとびを
+T| {last|lastly|least|lasts} month. :: 先月
+== 私は先月なわとびを始めた。
+P| {At|In|On|For} first, :: 最初は
+S| I {could|cans|coulds|could to} only :: …しかできなかった
+V| {jump|jumps|jumped|jumping} :: 跳ぶ
+O| fifty {times|time|timely|timed}. :: 50回
+== 最初は、50回しか跳べなかった。
+S| I {was|were|am|be} :: 私は…だった
+C| very {tired|tire|tires|tiredly} :: とても疲れて
+T| {after|among|while|between} that. :: そのあと
+== そのあと、私はとても疲れた。
+T| But {now|ago|nows|know} :: でも今は
+S| I {can|cans|can to|could to} :: 私は…できる
+V| {jump|jumps|jumped|jumping} :: 跳ぶ
+O| two {hundred|hundreds|hundredth|hundreded} times. :: 200回
+== でも今は、200回跳べる。
+S| My {sister|sisters|sister's|sisterly} :: 姉は
+V| {counts|count|counting|countes} :: 数える
+O| {for|of|to|at} me :: 私のために
+T| {every|everything|everyone|ever} day. :: 毎日
+== 姉が毎日回数を数えてくれる。
+S| She {said|saying|say|sayed} :: 姉は言った
+O| {to|for|at|with} me, :: 私に
+X| "{You're|Your|You|Yours} getting better!" :: 「上手になってる」
+== 姉は私に「上手になってるね」と言った。
+S| {My|I|Me|Mine} goal :: 私の目標は
+V| {is|are|be|am} :: …だ
+C| {three|third|threes|thirds} hundred times. :: 300回
+== 私の目標は300回だ。
+S| I {will|wills|will to|am} :: 私は…つもりだ
+V| {practice|practices|practicing|practiced} hard :: 一生懸命練習する
+T| {again|agains|against|gain} tomorrow. :: 明日もまた
+== 明日もまた一生懸命練習するつもりだ。
+?? 0 2 今日は何分間なわとびをした？
+?? 2 3 最初は何回跳べた？
+?? 4 3 今は何回跳べる？
+?? 7 2 目標は何回？
+
+@id beg61
+@lv 1
+@level 4
+@title Please Wash Your Hands
+@ja 手洗いのお知らせ
+@tag 高校受験レベル・お知らせ
+@gloss notice=お知らせ, cold=かぜ, often=よく, soap=せっけん, second=秒, finger=指, towel=タオル, cough=せきをする, spread=広がる
+S| {This|These|Those|They} is :: これは
+C| a {notice|notes|noticed|noticing} :: お知らせです
+P| {to|at|in|by} all students. :: 全生徒への
+== これは全生徒へのお知らせです。
+S| Many {students|student|studying|studented} :: 多くの生徒が
+V| {have|has|having|haves} :: かかっている
+O| colds {this|these|those|they} month. :: 今月かぜに
+== 今月、かぜをひいている生徒がたくさんいます。
+M| {Please|Pleases|Pleased|Pleasing} :: どうか
+V| {wash|washes|washing|washed} your hands :: 手を洗って
+T| {often|oftenly|offer|soften}. :: こまめに
+== こまめに手を洗ってください。
+V| {Use|Uses|Using|Used} soap :: せっけんを使い
+M| {and|nor|than|so} wash :: そして洗おう
+T| {for|at|in|by} twenty seconds. :: 20秒間
+== せっけんを使って、20秒間洗いましょう。
+V| {Don't|Doesn't|Not|No} forget :: 忘れないで
+R| {to|for|at|by} wash :: 洗うことを
+P| between your {fingers|finger|fingered|fingering}. :: 指の間を
+== 指の間も忘れずに洗いましょう。
+T| {After|Among|Across|Along} that, :: その後
+V| {dry|dries|drying|dried} your hands :: 手をふこう
+P| {with|at|of|into} a clean towel. :: きれいなタオルで
+== その後、きれいなタオルで手をふきましょう。
+V| Wash {your|you|yours|yourself} hands :: 手を洗おう
+T| {before|among|across|along} lunch :: 昼食の前に
+M| {and|nor|than|so} after P.E. :: そして体育の後に
+== 昼食の前と体育の後には手を洗いましょう。
+M| {When|What|Where|Who} you cough, :: せきをするときは
+V| {cover|covers|covering|covered} your mouth :: 口をおおう
+P| {with|at|of|into} a tissue. :: ティッシュで
+== せきをするときは、ティッシュで口をおおいましょう。
+S| This {helps|help|helping|helpful} :: これは役立つ
+V| {stop|stops|stopped|stopping} :: 止めるのに
+O| colds {from|for|of|at} spreading. :: かぜが広がるのを
+== これは、かぜが広がるのを防ぐのに役立ちます。
+S| {Let's|Lets|Let|Let us to} :: …しましょう
+V| {stay|stays|stayed|staying} healthy :: 元気でいる
+M| {together|togethers|gather|gathered}! :: みんなで
+== みんなで元気に過ごしましょう！
+?? 1 2 今月、多くの生徒は何にかかっている？
+?? 3 2 何秒間手を洗う？
+?? 5 2 何で手をふく？
+?? 6 2 昼食の前と、何の後に手を洗う？
+
+@id beg62
+@lv 1
+@level 4
+@title Why We Eat Vegetables
+@ja 野菜を食べるわけ
+@tag 高校受験レベル・説明文
+@gloss vegetable=野菜, important=大切な, vitamin=ビタミン, fiber=食物繊維, stomach=おなか, carrot=にんじん, spinach=ほうれん草, iron=鉄分, cooked=加熱した
+S| Some children {don't|doesn't|not|isn't} :: …ない子どももいる
+V| {like|likes|liking|liked} vegetables :: 野菜を好き
+M| very {much|many|more|most}. :: あまり
+== 野菜があまり好きではない子どももいる。
+S| But vegetables {are|is|be|am} :: でも野菜は
+C| {important|importance|importantly|import} :: 大切だ
+P| {for|of|by|at} our body. :: 体にとって
+== でも、野菜は体にとって大切だ。
+S| {They|It|Them|Their} have :: それらにはある
+O| many {vitamins|vitamin|vital|vitally} :: 多くのビタミンが
+M| {and|nor|than|so} fiber. :: そして食物繊維が
+== 野菜にはビタミンや食物繊維がたくさんある。
+S| Fiber {is|are|be|am} :: 食物繊維は
+C| good {for|of|by|at} :: …によい
+X| {your|you|yours|yourself} stomach. :: おなか
+== 食物繊維はおなかによい。
+S| {Carrots|Carrot|Carroted|Carroting} :: にんじんは
+V| {are|is|be|am} :: …だ
+C| good {for|of|by|at} your eyes. :: 目によい
+== にんじんは目によい。
+S| {Spinach|Spinaches|Spinachy|Spinached} :: ほうれん草は
+V| {gives|give|giving|given} us :: 私たちにくれる
+O| {iron|ironed|ironing|ironly}. :: 鉄分を
+== ほうれん草からは鉄分がとれる。
+S| You {can|cans|can to|cans to} :: あなたは…できる
+V| {eat|eats|ate|eating} vegetables :: 野菜を食べる
+P| {in|on|at|by} many ways. :: いろいろな方法で
+== 野菜はいろいろな方法で食べられる。
+V| {Try|Tries|Trying|Tried} :: 試してみよう
+O| a {salad|salads|salty|salading} :: サラダを
+M| {or|nor|than|so} soup. :: またはスープを
+== サラダやスープを試してみよう。
+S| {Cooked|Cook|Cooks|Cookes} vegetables :: 加熱した野菜は
+V| {are|is|be|am} :: …だ
+C| {easy|easily|ease|easiness} to eat. :: 食べやすい
+== 加熱した野菜は食べやすい。
+S| {Let's|Lets|Let|Let us to} :: …しよう
+V| {eat|eats|ate|eating} vegetables :: 野菜を食べる
+T| {every|everything|everyone|ever} day. :: 毎日
+== 毎日野菜を食べよう。
+?? 2 1 野菜にはたくさん何がある？
+?? 3 2 食物繊維は何によい？
+?? 4 2 にんじんは何によい？
+?? 5 2 ほうれん草からは何がとれる？
+?? 7 1 何を試してみようと言っている？
+
+@id beg63
+@lv 1
+@level 4
+@title The Day I Caught a Cold
+@ja かぜをひいた日
+@tag 高校受験レベル・日記
+@gloss fever=熱, headache=頭痛, stay home=家にいる, medicine=薬, afternoon=午後, evening=夕方, get well=元気になる, hope=望む
+T| {This|These|Those|Thus} morning, :: 今朝
+S| I {had|has|having|haved} :: 私は…があった
+O| a {fever|fevers|feverish|fevered}. :: 熱が
+== 今朝、私は熱があった。
+S| {I|Me|My|Mine} :: 私は
+V| also {had|has|having|haved} :: …もあった
+O| a {headache|headaches|heading|headed}. :: 頭痛が
+== 頭も痛かった。
+S| My mother {said|say|sayed|saying}, :: 母は言った
+O| "{Stay|Stays|Staying|Stayed} home today." :: 「今日は家にいて」
+== 母は「今日は家にいなさい」と言った。
+S| So I {didn't|doesn't|not|wasn't} go :: だから行かなかった
+P| {to|at|in|for} school :: 学校へ
+T| {today|todays|ago|ever}. :: 今日は
+== だから、今日は学校に行かなかった。
+S| I {took|take|taked|takes} :: 私は飲んだ
+O| some {medicine|medical|medicate|medicinal} :: 薬を
+M| {and|nor|than|so} slept :: そして寝た
+T| {all|whole|alls|wholly} afternoon. :: 午後ずっと
+== 薬を飲んで、午後はずっと寝ていた。
+S| My {friend|friends|friendship|friended} Ken :: 友だちのケンが
+V| {called|call|calling|callen} me :: 電話をくれた
+T| {in|on|at|to} the evening. :: 夕方に
+== 夕方、友だちのケンが電話をくれた。
+S| He {said|say|sayed|saying} :: 彼は言った
+P| {to|for|at|with} me, :: 私に
+O| "{Get|Gets|Got|Getting} well soon!" :: 「早く元気になって」
+== ケンは私に「早く元気になってね」と言った。
+S| I {was|were|be|being} :: 私は…だった
+C| very {happy|happily|happiness|happier} :: とてもうれしい
+R| {to|for|at|by} hear that. :: それを聞いて
+== それを聞いて、とてもうれしかった。
+T| {Tonight|Tonights|Ago|Ever} :: 今夜
+S| my {fever|fevers|feverish|fevered} :: 熱は
+V| is a little {lower|lowly|lowest|lowing}. :: 少し下がった
+== 今夜は、熱が少し下がった。
+S| I {hope|hopes|hoping|hoped to} :: 私は…といいな
+O| I can go {to|at|in|for} school :: 学校に行ける
+T| {tomorrow|tomorrows|ago|ever}. :: 明日
+== 明日は学校に行けるといいな。
+?? 0 2 今朝、何があった？
+?? 2 1 母は何と言った？
+?? 4 1 何を飲んだ？
+?? 6 2 ケンは何と言った？
+?? 8 2 今夜、熱はどうなった？
+
+@id beg64
+@lv 1
+@level 4
+@title My Favorite Fruit: Apples
+@ja 好きな果物・りんご
+@tag 高校受験レベル・スピーチ
+@gloss favorite=大好きな, sweet=甘い, crunchy=シャキシャキした, grandmother=祖母, famous=有名な, autumn=秋, send=送る, pie=パイ, delicious=おいしい
+T| {Today|Todays|Ago|Ever} :: 今日は
+S| I {will|wills|will to|am} talk :: 私は話します
+O| {about|above|abroad|abort} my favorite fruit. :: 好きな果物について
+== 今日は、私の大好きな果物について話します。
+S| My {favorite|favorites|favor|favorably} fruit :: 私の好きな果物は
+V| {is|are|be|am} :: …だ
+C| the {apple|appled|appling|apply}. :: りんご
+== 私の大好きな果物はりんごです。
+S| Apples {are|is|be|am} :: りんごは
+C| sweet {and|nor|than|so} crunchy. :: 甘くてシャキシャキ
+== りんごは甘くてシャキシャキしています。
+S| I {like|likes|liking|likeness} :: 私は好きだ
+R| {to|for|at|by} eat them :: それを食べるのが
+T| {for|by|of|to} breakfast. :: 朝食に
+== 私は朝食にりんごを食べるのが好きです。
+S| My {grandmother|grand|grandly|grandness} :: 祖母は
+V| {lives|live|living|lifes} :: 住んでいる
+P| {in|on|to|of} Aomori. :: 青森に
+== 祖母は青森に住んでいます。
+S| Aomori {is|are|be|am} :: 青森は
+C| {famous|fame|famously|famousness} :: 有名だ
+P| {for|of|by|at} its apples. :: りんごで
+== 青森はりんごで有名です。
+T| {Every|Everything|Everyone|Ever} autumn, :: 毎年秋に
+S| she {sends|send|sending|sended} :: 祖母は送ってくれる
+O| us a big {box|boxes|boxing|boxed} :: 私たちに大きな箱を
+P| of {apples|apple|appled|apply}. :: りんごの
+== 毎年秋、祖母は大きな箱いっぱいのりんごを送ってくれます。
+S| My mother {makes|make|making|maked} :: 母は作る
+O| apple pie {with|by|at|to} them. :: それでアップルパイを
+== 母はそのりんごでアップルパイを作ります。
+S| {It|Its|They|Them} is :: それは
+M| {really|reality|realize|realistic} :: 本当に
+C| {delicious|deliciously|delicacy|deliciousness}! :: おいしい
+== それは本当においしいです！
+S| {Thank|Thanks|Thanking|Thanked} you :: ありがとう
+M| very {much|many|more|most} :: とても
+P| {for|of|to|at} listening. :: 聞いてくれて
+== 聞いてくれて、ありがとうございました。
+?? 1 2 好きな果物は何？
+?? 3 2 いつりんごを食べるのが好き？
+?? 4 2 祖母はどこに住んでいる？
+?? 6 2 祖母は毎年秋に何を送ってくれる？
+?? 7 1 母はりんごで何を作る？

@@ -4,8 +4,11 @@
    セーブ・読み上げは共通の部品。読み込み時に付けていた document の受け口やタイマーは、開いている間だけ動く（src/env.js）。 */
 import html from './src/view.html';
 import { runCoach } from '../../core/coach.js';
+import { mountEpisodeFrame } from './episode-frame.js';
+import { prefetchEigo } from './prefetch.js';
+import { LOGO } from '../../core/logos.js';
 const HOW = [
-  { w: 'g', f: 'joy', t: '英語脳アプリは、絵を見ながら英文を組み立てる、英語のシミュレータだよ。' },
+  { w: 'g', f: 'joy', t: '英文組み立てラボは、絵を見ながら英文を組み立てる、英語のシミュレータだよ。' },
   { w: 'b', t: '下のメニューの「つくる」で、文を作ってみよう。' },
   { w: 'g', t: '「れんしゅう」で練習して、「ことば登録」「セット」で、使うことばを増やせるよ。' },
   { w: 'b', f: 'idea', t: '音や読み上げは、「設定」で変えられるよ。' }];
@@ -14,15 +17,18 @@ let SAVED = null, SAVED_CLS = '';   // 閉じたときの画面をそのまま�
 const link = (href, key) => new Promise(res => { if (document.querySelector(`link[data-ct="${key}"]`)) return res(); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; l.dataset.ct = key; l.onload = l.onerror = () => res(); document.head.appendChild(l); });
 
 export default {
-  id: 'eigonou', name: '英語脳アプリ', right: 'game:eigonou',
+  id: 'eigonou', name: '英文組み立てラボ', right: 'game:eigonou',
+  prefetch(core) { prefetchEigo(core.base + 'g/eigonou/'); },   // 町で遊んでいる間に先読み
   async mount(el, ctx) {
+    if (ctx.opts.episodePractice === 'want-to') return mountEpisodeFrame(el, ctx);
     el.classList.add('ct-eigo');
     el.innerHTML = '<div class="eg-loading" style="display:grid;place-items:center;height:100%;font-weight:700;color:#6b7191">読み込み中…</div>';
     link(FONT, 'eigo-font');
     await Promise.all([link(ctx.base + 'eigo.css', 'eigo'), ctx.loadScript(ctx.base + 'eigo.js')]);
     if (SAVED) { el.innerHTML = ''; el.appendChild(SAVED); el.className = SAVED_CLS; SAVED = null; }
     else el.innerHTML = html;
-    window.__EIGONOU.start(el, ctx);
+    await window.__EIGONOU.start(el, ctx);
+    el.querySelectorAll('.top h1').forEach(h1 => { h1.innerHTML = `<img src="${LOGO.eigo}" alt="英文組み立てラボ" style="display:block;height:44px;width:auto">`; });   // 初期化は少しずつ進める（途中で画面が固まらないように）
     // 「街へ」は下のメニューと重なるので、共通のボタンは出さずに上の帯に小さく置く（街の中で開いたときだけ）
     ctx.showBack(false);
     const app = window.__APP__ || {};

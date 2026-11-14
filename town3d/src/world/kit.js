@@ -34,7 +34,8 @@ export function glowMat(kind, color, emissive = color, x = null) {
 }
 
 const geos = new Map();
-export function geo(key, make) { if (!geos.has(key)) geos.set(key, make()); return geos.get(key); }
+export const geoKeys = new Map();
+export function geo(key, make) { if (!geos.has(key)) { const g = make(); geoKeys.set(g, key); geos.set(key, g); } return geos.get(key); }
 export const box = (w, h, d) => geo(`b${w},${h},${d}`, () => new THREE.BoxGeometry(w, h, d));
 export const rbox = (w, h, d, r = 0.2) => geo(`rb${w},${h},${d},${r}`, () => new RoundedBoxGeometry(w, h, d, 2, Math.min(r, w / 2, h / 2, d / 2)));
 export const cyl = (rt, rb, h, s = 14) => geo(`c${rt},${rb},${h},${s}`, () => new THREE.CylinderGeometry(rt, rb, h, s));
@@ -45,13 +46,13 @@ export const setBuildingOutline = on => { buildingOutline.visible = on; };
 buildingOutline.onBeforeCompile = sh => { sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', 'vec3 transformed = position + normalize(normal) * 0.045;'); };
 // 動かない物は材質ごとに1つのメッシュへ合体させ、描画回数を減らす
 export class Batcher {
-  constructor() { this.items = new Map(); this.tmp = new THREE.Object3D(); }
+  constructor() { this.items = new Map(); this.tmp = new THREE.Object3D(); this.parts = []; }
   add(geometry, material, x, y, z, ry = 0, sx = 1, sy = 1, sz = 1, parent = null, rx = 0, rz = 0) {
     const o = this.tmp;
     o.position.set(x, y, z); o.rotation.set(rx, ry, rz); o.scale.set(sx, sy, sz); o.updateMatrix();
     const m = parent ? parent.clone().multiply(o.matrix) : o.matrix.clone();
     if (!this.items.has(material)) this.items.set(material, []);
-    this.items.get(material).push([geometry, m]);
+    this.items.get(material).push([geometry, m]); this.parts.push([geometry, m, material]);
   }
   build(scene, { shadow = true } = {}) {
     const out = [];
@@ -185,6 +186,8 @@ export const wallMat = c => texMat(c, texWall, 1 / 2.4, 'wall');
 export const roofMat = c => texMat(c, texRoof, 1 / 1.6, 'roof');
 export const paveMat = c => texMat(c, texPave, 1 / 2.4, 'pave');
 
+export function eachTex(prefix, fn) { for (const [k, m] of mats) if (k.startsWith('tex|' + prefix)) fn(m); }
+export function eachFoliage(fn) { for (const m of mats.values()) if (m.userData && m.userData.vc === 'foliage') fn(m); }
 export function foliageMat(color, season = '') {   // 木の葉(上ほど明るく、下ほど暗い陰影を焼きこむ専用の材質)。season は桜の切りかえ用
   const k = 'foliage|' + color + season;
   if (!mats.has(k)) { const m = new THREE.MeshToonMaterial({ color, gradientMap: rampSoft(), vertexColors: true }); m.userData.vc = 'foliage'; if (season) m.userData.season = season; mats.set(k, m); }

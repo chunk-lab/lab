@@ -62,5 +62,8 @@ export function createDict(base) {
     }
     return best;
   }
-  return { ready, lookup, lookupAll, phraseAt, POSN, get loaded() { return state === 2; }, get loading() { return state === 1; }, get size() { return D.size; } };
+  // 熟語・句動詞のぜんぶ [{en, ja}]（日替わりの表現などに使う)。長すぎる・変なものは除く
+  const PART = new Set('up out off in on over down away back through along around into with for about after ahead apart across by to from at of aside forward together'.split(' ')), VERB = new Set('be get take make put go come give keep let look run turn set bring call carry cut fall hold pull pick break hang hit play pass see tell say think find feel leave lose pay show stand stay work try use want need ask help start stop end move open close change check cover draw drive drop fill follow grow lay lie live mean meet miss pick point push reach read ride ring rule save send settle sit speak spend split step stick strike sweep throw touch walk wash watch wear win'.split(' '));
+  const phrases = () => { const o = []; PH.forEach(a => a.forEach(([ws, m]) => { const en = ws.join(' '); if (ws.length >= 2 && ws.length <= 4 && /^[a-z' -]+$/i.test(en) && m.length <= 18 && (PART.has(ws[ws.length - 1]) || VERB.has(ws[0]) && ws.length >= 3 || VERB.has(ws[0]) && PART.has(ws[1]))) o.push({ en, ja: m.replace(/[;,]/g, '、') }); })); return o; };
+  return { ready, phrases, lookup, lookupAll, phraseAt, POSN, get loaded() { return state === 2; }, get loading() { return state === 1; }, get size() { return D.size; } };
 }

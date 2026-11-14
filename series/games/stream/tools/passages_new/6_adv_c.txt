@@ -1,0 +1,858 @@
+@id adv28
+@lv 3
+@level 8
+@title What Makes a Theory Scientific?
+@ja 科学的な理論とは
+@tag 難関大レベル・論説文
+@gloss genuine=本物の, criterion=基準, refute=反証する, observation=観察, flexible=柔軟な, forbid=禁じる, prediction=予測, eclipse=日食, credibility=信頼性
+M| {How|What|Which|Whose} do we tell :: どう見分けるのか
+O| a {genuine|genuinely|genuineness|genius} science :: 本物の科学を
+P| {from|than|with|at} a theory :: 理論から
+X| {that|what|whom|whose} merely sounds scientific? :: 科学っぽいだけの
+== 本物の科学と、科学らしく聞こえるだけの理論は、どう見分ければよいのだろうか。
+S| The {philosopher|philosophy|philosophical|philosophize} Karl Popper :: 哲学者ポパーは
+V| {proposed|proposal|propose|proposing} :: 示した
+O| {a|an|much|few} bold answer: :: 大胆な答えを
+X| a theory {is|are|be|being} scientific :: 理論が科学的なのは
+M| only {if|whether of|despite|unless of} it can be :: …できる場合だけ
+C| {proven|proving|prove|proof} false. :: 誤りと示される
+== 哲学者カール・ポパーは大胆な答えを示した。理論が科学的なのは、それが誤りだと証明されうる場合に限る、というのだ。
+S| {This|These|Those|They} may sound strange, :: これは奇妙に思える
+M| {since|for of|despite|during} we usually :: ふつう私たちは
+V| {think|thinks|thought of|thinking} of science :: 科学を考えるから
+P| {as|into|at|over} a way of proving :: 証明する方法と
+O| {that|whom|them|than} ideas are true. :: 考えが正しいと
+== 私たちはふつう科学を考えの正しさを証明する方法と考えるので、これは奇妙に聞こえるかもしれない。
+M| {However|Despite|Although|Unless}, :: しかし
+S| Popper {pointed|point|pointing|points of} out :: ポパーは指摘した
+O| {that|what|this|it} no number of observations :: どれほどの観察も
+V| {can|cans|can to|is} :: …できない
+V| {prove|proves|proved of|proving} :: 証明する
+O| {a|an|any of|much} general law. :: 一般法則を
+== しかしポパーは、どれだけ観察を重ねても一般法則を証明することはできないと指摘した。
+S| {Seeing|Seen|Saw|Sees} a thousand white swans :: 白鳥を千羽見ても
+V| {does|do|is|has} not prove :: 証明しない
+O| {that|what|whom|whose} all swans are white, :: 全てが白いと
+M| {but|nor|than|whom} a single black swan :: だが黒い1羽で
+V| {is|are|be|been} enough :: 十分だ
+R| {to refute|refuting|refute|refuted} it. :: 反証するのに
+== 白い白鳥を千羽見ても「白鳥はすべて白い」ことは証明できないが、黒い白鳥が1羽いれば反証できる。
+M| {Historically|Historic|History|Historical}, :: 歴史的に
+S| {Europeans|European|Europeanly|Europeaness} :: ヨーロッパ人は
+V| {had|has|having|have to} long assumed :: 長く思い込んでいた
+O| {that|what|whose|whom} all swans were white :: 白鳥は全て白いと
+T| {until|during|despite|among} they reached Australia. :: 豪州に着くまで
+== 歴史的に見ても、ヨーロッパ人はオーストラリアに到達するまで、白鳥はすべて白いと思い込んでいた。
+S| {What|That|Which|Whom} Popper objected to :: ポパーが反対したのは
+V| {were|been|be|being} theories :: 理論だった
+X| {so|such|too|very} flexible :: 非常に柔軟で
+X| {that|what|than|as} they could explain :: 説明できてしまう
+O| {any|some of|many of|every of} outcome at all. :: どんな結果でも
+== ポパーが問題視したのは、どんな結果でも説明できてしまうほど柔軟な理論だった。
+S| {Such|So|Very|Much} a theory :: そのような理論は
+V| {may|mays|may to|maying} seem :: 見えるかもしれない
+C| {powerful|power|powerfully|powered by}, :: 強力に
+M| {but|nor|than|whom} because it forbids nothing, :: だが何も禁じないので
+S| it {tells|tell|telling|told of} us :: 私たちに教える
+O| {nothing|none of|nobody|nowhere} about the world. :: 世界について何も
+== そうした理論は強力に見えるが、何も禁じないので、世界について何も教えてくれない。
+M| {By|For|At|Of} contrast, :: 対照的に
+S| Einstein's theory of {relativity|relative|relatively|relativize} :: 相対性理論は
+V| {made|make|making|maked} :: 行った
+O| {a|an|one of|many} risky prediction :: 危険な予測を
+P| {about|above|along|across} the bending of starlight, :: 星の光の曲がりの
+X| {which|whom|what|who} could have failed. :: 外れえた
+== 対照的に、アインシュタインの相対性理論は、星の光の曲がりについて、外れる可能性のある予測をした。
+M| {When|Whom|Whose|What} observations matched it :: 観測が一致した時
+T| {during|while|among|between} a solar eclipse in 1919, :: 1919年の日食中
+S| the theory {gained|gain|gaining|gains of} :: 理論は得た
+O| {credibility|credible|credibly|credit to}, :: 信頼性を
+M| {though|through|thorough|throughout} never final proof. :: 最終証明ではないが
+== 1919年の日食で観測が予測と一致したとき、理論は信頼を得たが、最終的な証明を得たわけではなかった。
+P| {For|Of|Into|Upon} Popper, :: ポパーにとって
+S| science {advances|advance|advancing|advanced of} :: 科学は進む
+M| not by {proving|prove|proved|proof of} ideas right :: 正しさの証明でなく
+M| {but|than|whom|as} by surviving :: 生き残ることで
+O| {serious|seriously|seriousness|series} attempts :: 本気の試みを
+R| {to refute|refuting|refute|refuted} them. :: 反証しようとする
+== ポパーにとって科学は、考えの正しさを証明することではなく、反証しようとする本気の試みに耐え抜くことで進歩するのだ。
+?? 1 5 ポパーによると、科学的な理論は何だと示されうるべき？
+?? 4 3 「白鳥はすべて白い」を反証するには何がいれば十分？
+?? 5 4 ヨーロッパ人はどこに着くまで白鳥はすべて白いと思っていた？
+?? 9 1 相対性理論の予測が日食で確かめられたのは何年？
+
+@id adv29
+@lv 3
+@level 8
+@title The Replication Crisis
+@ja 再現性の危機
+@tag 難関大レベル・論説文
+@gloss replicate=再現する, ideal=理想, fraud=不正, striking=目を引く, statistically=統計的に, significant=有意な, flexibility=柔軟性, reform=改革, unreliable=当てにならない
+S| {One|A one|Once|Ones} of the core ideals :: 中心的理想の一つは
+P| {of|at|onto|than} science :: 科学の
+V| {is|are|be|being} :: …だ
+C| {that|what|which|whom} a result should hold :: 結果は成り立つべき
+M| {no matter|whatever|however|wherever} who repeats the study. :: 誰が再現しても
+== 科学の中心的な理想の一つは、誰が研究を繰り返しても結果が成り立つべきだということだ。
+M| {Yet|Even|Still yet|Ever}, in 2015, :: しかし2015年
+S| a large team of {researchers|research|researching|researched} :: 大勢の研究者が
+V| {reported|report|reporting|reports of} :: 報告した
+O| {that|what|whom|whose} fewer than half :: 半分未満しか
+P| {of|for|by|from} 100 published psychology studies :: 心理学研究100件中
+V| {could|cans|could to|coulding} be replicated. :: 再現できた
+== しかし2015年、大規模な研究チームが、発表済みの心理学研究100件のうち再現できたのは半分に満たないと報告した。
+S| {This|These|Those|They} finding :: この発見は
+V| {sent|send|sending|sends of} :: 走らせた
+O| {shock|shocks of|shocked|shocking of} waves :: 衝撃を
+P| {through|though|thorough|throughout of} the scientific community :: 科学界に
+M| {and|nor|than|whom} gave rise :: そして生んだ
+P| {to|for|of|at} the phrase "replication crisis." :: 「再現性の危機」を
+== この発見は科学界に衝撃を与え、「再現性の危機」という言葉を生んだ。
+M| {Importantly|Important|Importance|Imports}, :: 重要なことに
+S| the {main|mainly|mains|maintain} cause :: 主な原因は
+V| {was|were|being|be} :: …だった
+C| {rarely|rare|rareness|rarer} outright fraud :: 不正はまれで
+M| {but|nor|than|whom} ordinary habits :: ありふれた習慣
+X| {built|build|building|builds} into research. :: 研究に組み込まれた
+== 重要なのは、主な原因が露骨な不正であることはまれで、研究に根づいたありふれた習慣だったという点だ。
+S| {Journals|Journal's|Journalism|Journaled} :: 学術誌は
+V| {tend|tends|tending|tended to} :: …しがちだ
+R| {to publish|publishing|publish|published} :: 掲載する
+O| {striking|strike|stroke|strikingly} positive results, :: 目を引く肯定的結果を
+M| {while|during|despite|among} studies :: 一方で研究は
+X| {that|what|whose|whom} find nothing :: 何も見つけない
+V| {are|is|be|being} quietly filed away. :: 黙ってしまわれる
+== 学術誌は目を引く肯定的な結果を掲載しがちで、何も見つからなかった研究は黙ってしまい込まれる。
+S| {This|These|Those|Them} pressure :: この圧力は
+V| {encourages|encourage|encouraging|encouragement} :: 促す
+O| researchers {to try|trying|try|tried} :: 研究者が試すよう
+O| {many|much|a much|every} ways of analyzing data :: 多くの分析法を
+T| {until|despite|among|during} something appears :: 何か現れるまで
+C| statistically {significant|signify|significance|significantly}. :: 統計的に有意に
+== この圧力のせいで研究者は、何かが統計的に有意に見えるまで、データをさまざまな方法で分析してしまう。
+S| {Such|So|Very|Too} flexibility :: こうした柔軟性は
+V| {makes|make|making|made of} :: …にする
+O| {it|its|it's|itself} surprisingly easy :: 驚くほど簡単に
+R| {to find|finding|find|found} :: 見つけることを
+O| patterns {that|what|whom|whose} are mere chance. :: 偶然にすぎない型を
+== こうした柔軟性があると、単なる偶然にすぎないパターンを見つけるのが驚くほど簡単になる。
+M| {In|On|At|By} response, :: これに応じて
+S| many {fields|field|fielding|fielded} :: 多くの分野が
+V| {have|has|having|had been} adopted :: 採用してきた
+O| {reforms|reform of|reformed|reforming of} :: 改革を
+P| {such as|so as|such that|as such} pre-registration, :: 事前登録などの
+X| {in which|which in|of whom|in what} researchers publish their plans :: 計画を公表する
+T| {before|ago|since of|later} collecting data. :: データ収集前に
+== これを受けて多くの分野が、データ収集前に研究計画を公表する「事前登録」などの改革を取り入れてきた。
+S| {Some|Any|Every|Much} critics :: 一部の批評家は
+V| {argue|argues|arguing|argument} :: 主張する
+O| {that|what|whom|whose} the crisis shows :: 危機が示すと
+O| science {to be|be|been|to being} unreliable. :: 科学が当てにならぬと
+== 一部の批評家は、この危機は科学が信頼できないことを示していると主張する。
+M| {Yet|Even|Ever|Rather than} it was scientists themselves :: だが科学者自身だった
+X| {who|whom|whose|which of} uncovered the problem, :: 問題を暴いたのは
+M| {using|used|uses|use of} the very method :: まさにその方法で
+X| {that|what|whose|whom} had seemed to fail. :: 失敗したかに見えた
+== だが問題を暴いたのは科学者自身であり、それも失敗したかに見えたまさにその手法を使ってだった。
+S| A crisis {of|at|on to|onto} replication, :: 再現の危機は
+M| {in other words|in other word|in another words|on other words}, :: 言い換えれば
+V| {may|mays|may to|maying} :: …かもしれない
+V| {be|being|been|is} :: …である
+C| {evidence|evident|evidently|evidence of} :: 証拠
+P| {of|by|at|onto} science correcting itself. :: 科学の自己修正の
+== 言い換えれば、再現性の危機は、科学が自らを正している証拠なのかもしれない。
+?? 1 0 研究チームが報告したのは何年？
+?? 1 3 再現できたのは100件のうちどれくらい？
+?? 4 3 学術誌はどんな結果を掲載しがち？
+?? 7 6 事前登録では研究計画をいつ公表する？
+
+@id adv30
+@lv 3
+@level 8
+@title How Science Changes Its Mind
+@ja 科学はどう考えを変えるか
+@tag 難関大レベル・論説文
+@gloss accumulation=蓄積, influential=影響力のある, framework=枠組み, paradigm=パラダイム, anomaly=変則的な事例, rival=対抗する, transition=転換, committed=固執した, irrational=非合理な
+S| {Most|Mostly|Almost|The most of} people :: 多くの人は
+V| {imagine|imagines|imagination|imaginary} :: 想像する
+O| scientific progress {as|for|like to|to} :: 科学の進歩を
+O| a {steady|steadily|steadiness|steadies} accumulation :: 着実な蓄積として
+P| {of|for|by|in} facts. :: 事実の
+== たいていの人は、科学の進歩を事実の着実な蓄積として思い描く。
+P| {In|On|Of|Into} 1962, :: 1962年に
+S| the {historian|history|historic|historical} of science Thomas Kuhn :: 科学史家クーンは
+V| {challenged|challenge|challenging|challenges of} :: 異を唱えた
+O| {this|these|those|them} picture :: この見方に
+P| {in|on|at|to} a highly influential book. :: 影響力ある本で
+== 1962年、科学史家トマス・クーンは、非常に影響力のある本でこの見方に異を唱えた。
+P| {According|Accordingly|Accord|According as} to Kuhn, :: クーンによれば
+S| {most|almost|mostly|the most of} research :: 大半の研究は
+V| {takes|take|taking|took of} place :: 行われる
+P| {within|without of|inside of to|along of} a shared framework, :: 共有の枠組み内で
+X| {or|nor|than|whom} "paradigm," :: つまりパラダイム
+X| {that|what|whose|whom} defines which questions matter. :: 重要な問いを決める
+== クーンによれば、大半の研究は共有された枠組み、つまり「パラダイム」の中で行われ、それがどの問いが重要かを決める。
+P| {During|While|Among|Whilst of} these periods of "normal science," :: 通常科学の時期は
+S| researchers {solve|solves|solving|solution} :: 研究者は解く
+O| puzzles {rather than|rather then|other than to|rather as} :: パズルを…ではなく
+V| {question|questions of|questioned|to questions} :: 疑うこと
+O| the paradigm {itself|herself|themselves|oneself}. :: パラダイム自体を
+== 「通常科学」の時期、研究者はパラダイムそのものを疑うのではなく、パズルを解く。
+M| {Over|Above|Upon|Onto} time, :: やがて
+M| {however|whatever|whoever|whichever}, :: しかし
+S| {anomalies|anomaly|anomalous|anomalously} :: 変則的な事例が
+V| {accumulate|accumulates|accumulating|accumulation}— :: 蓄積する
+O| results {that|what|whom|whose} the paradigm :: パラダイムが…結果
+V| {cannot|can't to|not can|cannot to} explain. :: 説明できない
+== しかしやがて、パラダイムでは説明できない結果、つまり変則的な事例が積み重なる。
+M| {When|Whom|What|Whose} they become :: それが…になると
+C| {impossible|impossibly|impossibility|possible of} to ignore, :: 無視できない
+S| the field {enters|enter|entering|entrance} :: 分野は入る
+O| {a|an|much|many} crisis, :: 危機に
+X| {and|nor|than|whom} a rival paradigm :: そして対抗する型が
+V| {may|mays|may to|mayed} emerge. :: 現れうる
+== それが無視できなくなると、その分野は危機に陥り、対抗するパラダイムが現れることがある。
+S| The shift {from|than|at|onto} Earth-centered astronomy :: 天動説から
+P| {to|for|at|by} a Sun-centered model :: 地動説への転換は
+V| {is|are|be|being} :: …だ
+C| {a|an|much|few} classic example. :: 典型例
+== 地球中心の天文学から太陽中心のモデルへの転換は、その典型例だ。
+S| Kuhn {called|calls of|calling|call to} :: クーンは呼んだ
+O| {such|so|very|too} transitions :: そうした転換を
+C| "paradigm {shifts|shift of|shifting of|shifted}," :: パラダイム転換と
+M| {and|nor|than|whom} he insisted :: そして彼は主張した
+O| {that|what|whom|whose} they are not decided :: それは決まらないと
+P| by evidence {alone|lonely|along|alike}. :: 証拠だけでは
+== クーンはそうした転換を「パラダイム転換」と呼び、それは証拠だけで決まるものではないと主張した。
+S| Older scientists, {committed|committing|commit|commitment} :: 固執した年長者は
+P| {to|for|at|with} the old framework, :: 古い枠組みに
+V| {often|oftenly|oftener of|ofter} resisted :: しばしば抵抗した
+O| the {new|newly|news|newness} one :: 新しいものに
+M| {long after|long ago|long before of|long since of} :: …ずっと後も
+X| the data {had|has|having|have of} turned against them. :: データが不利になった
+== 古い枠組みに固執した年長の科学者は、データが不利になってからも長く、新しい枠組みに抵抗することが多かった。
+S| {Critics|Critic|Critical|Critique of} :: 批判者は
+V| {accused|accuse|accusing|accusation} :: 非難した
+O| Kuhn {of|for|with|about} making science :: 科学を…にしたと
+C| {sound|sounding|sounded|soundly} irrational, :: 非合理に聞こえる
+M| {but|nor|than|whom} his work reminds us :: だが彼は思い出させる
+O| {that|what|whom|whose} science is a human activity. :: 科学は人間の営みと
+== 批判者はクーンが科学を非合理なものに見せたと非難したが、彼の仕事は科学が人間の営みであることを思い出させてくれる。
+S| Recognizing {this|whose|whom|thus} :: これを認めることは
+V| {does|do|is|has} not weaken :: 弱めない
+O| {science|scientific|scientist|scientifically}; :: 科学を
+S| {it|its|it's|itself} :: それは
+V| {helps|help|helping|helped of} us :: 私たちを助ける
+V| {understand|understanding of|understood|understands} :: 理解するのを
+O| {how|what|whom|whose} it actually works. :: 実際の働き方を
+== このことを認めても科学が弱まるわけではない。むしろ科学が実際にどう働くのかを理解する助けになるのだ。
+?? 1 0 クーンが本を出したのは何年？
+?? 2 4 共有された枠組みは何と呼ばれる？
+?? 4 2 やがて何が積み重なる？
+?? 6 1 典型例として挙げられたのは、地球中心の天文学から何への転換？
+
+@id adv31
+@lv 3
+@level 8
+@title The Doctor Who Washed His Hands
+@ja 手を洗った医師
+@tag 難関大レベル・論説文
+@gloss disturbing=不穏な, maternity=産科の, midwife=助産師, autopsy=解剖, chlorine=塩素, solution=溶液, offend=気分を害する, insight=洞察, germ=細菌
+P| {In|On|At|By of} the 1840s, :: 1840年代に
+S| a young {doctor|doctoral|doctored|doctorally} :: 若い医師が
+P| {in|on|at of|onto} Vienna :: ウィーンの
+V| {noticed|notice|noticing|notices of} :: 気づいた
+O| {a|an|much|few} disturbing pattern. :: 不穏な傾向に
+== 1840年代、ウィーンの若い医師がある不穏な傾向に気づいた。
+S| His hospital {had|has|having|have of} :: 彼の病院には
+O| two maternity {clinics|clinic|clinical|clinician}, :: 二つの産科病棟が
+M| {and|nor|than|whom} far more mothers :: はるかに多くの母親が
+V| {died|dead|death|dying of} :: 亡くなった
+P| {of|at|onto|over} fever :: 熱病で
+P| in the {one|ones|once|one's} run by doctors. :: 医師が担う方で
+== 彼の病院には産科病棟が二つあり、医師が担当する病棟のほうで、熱病で亡くなる母親がはるかに多かった。
+S| The other clinic, {staffed|staffing|staff|staffs} :: もう一方の病棟は
+P| {by|for|at|onto} midwives, :: 助産師が担当し
+V| {had|has|having|had been} :: …だった
+O| a much {lower|low|lowly|lowest} death rate. :: ずっと低い死亡率
+== 助産師が担当するもう一方の病棟は、死亡率がずっと低かった。
+P| {After|Before of|Despite|Unless} ruling out :: …を除外した後
+O| {one|ones|once|one's} explanation after another, :: 次々に説明を
+S| he {realized|realize|realizing|realization} :: 彼は気づいた
+O| {that|what|whom|whose} doctors often came :: 医師がよく来ると
+P| {directly|direct|direction|directed} from autopsies. :: 解剖から直接
+== 説明を一つずつ除外した末、彼は医師たちが解剖室から直接やって来ることが多いと気づいた。
+S| {Something|Somewhat|Somehow|Someone of} on their hands, :: 手についた何かが
+M| he {reasoned|reason|reasoning|reasons of}, :: と彼は推論した
+V| {must|musts|must to|musted} be :: …に違いない
+V| {carrying|carry|carried|carries} disease :: 病気を運んで
+P| {to|for|at|by} the mothers. :: 母親たちへ
+== 手についた何かが母親たちに病気を運んでいるに違いない、と彼は推論した。
+P| {In|On|At|Since} 1847, :: 1847年に
+S| he {required|require|requiring|requirement} :: 彼は義務づけた
+O| staff {to wash|washing|wash|washed} :: 職員が洗うことを
+O| their hands {in|on|at|onto} a chlorine solution, :: 塩素液で手を
+M| {and|nor|than|whom} the death rate :: すると死亡率は
+V| {fell|fall|fallen|felled} sharply. :: 急落した
+== 1847年、彼は職員に塩素液で手を洗うよう義務づけ、すると死亡率は急激に下がった。
+M| {Remarkably|Remarkable|Remark|Remarking}, :: 驚くべきことに
+S| {few|little|a little|much} of his colleagues :: 同僚でごく少数しか
+V| {accepted|accept|accepting|acceptance} :: 受け入れなかった
+O| {his|he|him|himself} conclusion. :: 彼の結論を
+== 驚くべきことに、彼の結論を受け入れた同僚はほとんどいなかった。
+S| {Some|Any|Every|Much} were offended :: 気分を害した者も
+P| {by|with of|at to|onto} the suggestion :: その示唆に
+O| {that|what|whom|whose} gentlemen's hands :: 紳士の手が
+V| {could|cans|could to|coulding} be unclean, :: 不潔でありうる
+M| {while|during|despite|among} others :: 一方で他の者は
+V| {wanted|want|wanting|wants of} a theory :: 理論を求めた
+X| {explaining|explain|explained of|explanation} why it worked. :: なぜ効くかを
+== 紳士の手が汚れているという示唆に気分を害する者もいれば、なぜ効くのかを説明する理論を求める者もいた。
+X| Lacking {such|so|very|too} a theory, :: そんな理論がなく
+S| he {could|cans|could to|coulding} :: 彼は…できなかった
+V| {not|no|none|nor} persuade them, :: 彼らを説得
+M| {and|nor|than|whom} his ideas :: そして彼の考えは
+V| {were|was|be|being} largely ignored. :: ほぼ無視された
+== そうした理論がなかったため彼は人々を説得できず、その考えはほとんど無視された。
+T| {Only|Once|Ones|Lonely} decades later, :: 数十年後になって
+M| {when|whom|whose|what} germ theory :: 細菌説が…時
+V| {was|were|being|be} established, :: 確立された
+V| {did|do|does|done} his insight :: 彼の洞察は
+V| {receive|received|receiving|receives} :: 受けた
+O| {the|an|much of|few} recognition :: 評価を
+X| {it|its|it's|itself} deserved. :: それにふさわしい
+== 数十年後、細菌説が確立されて初めて、彼の洞察はふさわしい評価を受けた。
+S| {His|He|Him|Himself} story :: 彼の話は
+V| {shows|show|showing|shown} :: 示す
+O| {that|what|whom|whose} being right :: 正しいことは
+V| {is|are|be|been} :: …だ
+C| {not|no|none|nor} always enough; :: 常に十分ではない
+== 彼の話は、正しいだけでは必ずしも十分ではないことを示している。
+S| a discovery {must|musts|must to|musted} also :: 発見はさらに
+V| {fit|fits|fitting|fitted to} :: 収まるべきだ
+P| {into|onto of|upon to|unto of} a framework :: 枠組みに
+X| {that|what|whom|whose} others can accept. :: 他人が受け入れられる
+== 発見は、他の人々が受け入れられる枠組みにも収まらなければならないのだ。
+?? 0 0 医師が不穏な傾向に気づいたのはいつ？
+?? 2 1 死亡率が低い病棟は誰が担当していた？
+?? 3 4 医師たちはどこから直接やって来ていた？
+?? 5 3 職員は何で手を洗った？
+?? 9 1 何が確立されて、彼の洞察は評価された？
+
+@id adv32
+@lv 3
+@level 8
+@title Russell's Chicken
+@ja ラッセルのニワトリ
+@tag 難関大レベル・論説文
+@gloss wring=ひねる, grim=陰惨な, illustrate=例示する, induction=帰納, particular=個々の, justify=正当化する, resemble=似る, circular=循環した, probable=確からしい
+T| {Every|Each of|All every|Every of} morning, :: 毎朝
+S| a farmer {feeds|feed|feeding|fed of} :: 農夫はえさをやる
+O| {a|an|much|few} chicken, :: ニワトリに
+M| {and|nor|than|whom} the chicken :: そしてニワトリは
+V| {comes|come|coming|came of} to expect :: 予期するようになる
+O| breakfast {with|for of|at to|by of} confidence. :: 自信をもって朝食を
+== 毎朝、農夫がニワトリにえさをやるので、ニワトリは自信をもって朝食を期待するようになる。
+T| {Then|Than|Thence of|Thus of} one day, :: そしてある日
+S| the farmer {comes|come|coming|came of} :: 農夫は来る
+M| not {to feed|feeding|feed|fed} it :: えさやりでなく
+M| {but|nor|than|whom} to wring its neck. :: 首をひねりに
+== そしてある日、農夫はえさをやるためではなく、首をひねるためにやって来る。
+S| {This|These|Those|They} grim tale, :: この陰惨な話は
+V| {told|telling|tell|tells of} :: 語られた
+P| {by|with|for|at} the philosopher Bertrand Russell, :: 哲学者ラッセルに
+V| {illustrates|illustrate|illustrating|illustration} :: 例示する
+O| {what|that|whom|whose} is known as :: …として知られる事
+O| the problem {of|at|onto|than} induction. :: 帰納の問題
+== 哲学者バートランド・ラッセルが語ったこの陰惨な話は、「帰納の問題」として知られるものを示している。
+S| Induction {is|are|be|been} :: 帰納とは…だ
+C| {the|a one|an|much} process :: 過程
+P| {of|at|onto|than} drawing general conclusions :: 一般的結論を導く
+P| {from|than|onto|with of} particular observations. :: 個々の観察から
+== 帰納とは、個々の観察から一般的な結論を導く過程である。
+M| {As|So|Such|Than} the Scottish philosopher David Hume :: 哲学者ヒュームが
+V| {noticed|notice|noticing|notices of} :: 気づいたように
+T| {in|on|at|by of} the 18th century, :: 18世紀に
+S| {such|so|very|too} reasoning :: そうした推論は
+V| {cannot|can't to|not can|cannot to} be :: …できない
+C| {justified|justify|justifying|justification} by logic alone. :: 論理だけで正当化
+== 18世紀にスコットランドの哲学者デイヴィッド・ヒュームが気づいたように、そうした推論は論理だけでは正当化できない。
+S| We {assume|assumes|assuming|assumption} :: 私たちは前提とする
+O| {that|what|whom|whose} the future :: 未来が…と
+V| {will|wills|will to|willing} resemble :: 似るだろう
+O| the {past|passed|pasting|paste}. :: 過去に
+== 私たちは、未来は過去に似ると前提している。
+M| {Yet|Even|Ever|Already of} the only evidence :: だが唯一の根拠は
+P| {for|at|onto|than} this assumption :: この前提の
+V| {is|are|be|been} :: …だ
+C| {that|what|whom|whose} it has worked before, :: 以前うまくいった事
+M| {which|what|whom|whose} is :: それは…だ
+C| {exactly|exact|exactness|exacting} the point in question. :: まさに問題の点
+== だがこの前提の唯一の根拠は、それが以前うまくいったということであり、それこそがまさに問われている点なのだ。
+P| {In|On|At|By} other words, :: 言い換えれば
+S| {justifying|justify|justified of|justification of} induction :: 帰納の正当化は
+P| {by|with of|at to|onto} induction :: 帰納による
+V| {is|are|be|been} :: …だ
+C| {circular|circle|circularly|circulate}. :: 循環している
+== 言い換えれば、帰納を帰納で正当化するのは循環論法なのだ。
+M| {Even so|Even if|Even though|Even as}, :: それでも
+S| no one {can|cans|can to|cannot to} :: 誰も…できない
+V| {live|lives|living|lived} :: 生きる
+P| {without|with out|within of|without of} relying on it. :: それに頼らずに
+== それでも、誰もそれに頼らずに生きることはできない。
+S| Science {itself|herself|themselves|ourself} :: 科学自体が
+V| {depends|depend|depending|dependence} :: 依存している
+O| {on|in|at|for} the expectation :: 期待に
+O| {that|what|whom|whose} nature's laws :: 自然法則が…と
+V| {will|wills|will to|willing} not suddenly change. :: 急に変わらない
+== 科学そのものが、自然の法則が突然変わりはしないという期待に依存しているのだ。
+S| {Many|Much|A much|Every} philosophers :: 多くの哲学者は
+V| {conclude|concludes|concluding|conclusion} :: 結論づける
+O| {that|what|whom|whose} we should treat :: 扱うべきだと
+O| scientific knowledge {as|for|like to|to} :: 科学的知識を
+C| {probable|probably|probability|probe} :: 確からしいと
+M| {rather than|rather then|other than to|rather as} certain. :: 確実ではなく
+== 多くの哲学者は、科学的知識を確実なものではなく、確からしいものとして扱うべきだと結論づけている。
+X| {Unlike|Dislike|Unlikely|Alike} the chicken, :: ニワトリと違い
+S| we {can|cans|can to|cannot to} at least :: 私たちは少なくとも
+V| {remember|remembers|remembering|remembered} :: 覚えておける
+O| {that|what|whom|whose} tomorrow may differ :: 明日は違いうると
+P| {from|than|onto|with of} today. :: 今日と
+== ニワトリと違って、私たちは少なくとも、明日が今日と違うかもしれないことを覚えておける。
+?? 1 3 農夫は最後に何をしにやって来る？
+?? 2 2 この話を語ったのは誰？
+?? 4 2 ヒュームがこのことに気づいたのはいつ？
+?? 7 4 帰納を帰納で正当化するのはどういうこと？
+?? 10 4 科学的知識をどのようなものとして扱うべき？
+
+@id adv33
+@lv 3
+@level 8
+@title The Razor of Simplicity
+@ja 単純さのカミソリ
+@tag 難関大レベル・論説文
+@gloss friar=修道士, assumption=前提, unnecessary=不要な, complication=複雑さ, draft=すきま風, guarantee=保証する, obligation=義務, simplicity=単純さ, adjust=調整する
+M| {When|Whom|What|Whose} two explanations :: 二つの説明が
+V| {fit|fits|fitting|fitted of} :: 合う
+O| the {same|similar of|alike|sameness} facts, :: 同じ事実に
+X| {which|whom|what of|whose of} should we prefer? :: どちらを選ぶべきか
+== 二つの説明が同じ事実に合うとき、どちらを選ぶべきだろうか。
+S| {A|An|Much|Few} principle :: ある原則が
+X| {named|naming|name|names of} after William of Ockham, :: オッカムにちなむ
+X| {a|an|much|few} 14th-century English friar, :: 14世紀英国の修道士
+V| {offers|offer|offering|offered of} :: 与える
+O| {an|a|much|many} answer. :: 答えを
+== 14世紀イングランドの修道士オッカムのウィリアムにちなんだ原則が、一つの答えを示してくれる。
+M| {All|Every|Each|Much} else being equal, :: 他の条件が同じなら
+V| {choose|chooses|choosing|chosen} :: 選べ
+O| the explanation {that|what|whom|whose} requires :: 必要とする説明を
+O| the {fewest|fewer of|least of|fewly} assumptions. :: 最も少ない前提を
+== 他の条件が同じなら、必要な前提が最も少ない説明を選べ、というものだ。
+M| {Known|Knowing|Know|Knew} as Occam's razor, :: オッカムの剃刀と呼ばれ
+S| {it|its|it's|itself} :: それは
+V| {shaves|shave|shaving|shaved of} away :: 削ぎ落とす
+O| {unnecessary|unnecessarily|necessity|unnecessity} complications. :: 不要な複雑さを
+== 「オッカムの剃刀」として知られるこの原則は、不要な複雑さを削ぎ落とす。
+V| {Suppose|Supposes|Supposing of|Supposition} :: …としよう
+S| you {hear|hears|hearing|heard of} :: 聞く
+O| {a|an|much|few} door slam :: ドアが閉まる音を
+P| {in|on|at of|onto} an empty house. :: 空き家で
+== 空き家でドアがバタンと閉まる音を聞いたとしよう。
+S| {It|Its|It's|Itself} :: それは
+V| {could|cans|could to|coulding} be :: …かもしれない
+C| {a|an|much|few} ghost, :: 幽霊
+M| {but|nor|than|whom} a draft of wind :: だがすきま風なら
+V| {explains|explain|explaining|explanation} :: 説明する
+O| the noise {without|with out|within of|without of} :: …なしで音を
+X| {inventing|invent|invented|invention of} anything new. :: 新しい物を持ち出す
+== 幽霊かもしれないが、すきま風なら何も新しいものを持ち出さずに音を説明できる。
+M| {Importantly|Important|Importance|Imports}, :: 重要なのは
+S| the razor {is|are|be|been} :: 剃刀は…だ
+C| {a|an|much|few} rule of thumb, :: 経験則
+M| {not|no|none|nor} a law :: 法則ではない
+X| {that|what|whom|whose} guarantees truth. :: 真理を保証する
+== 重要なのは、この剃刀は経験則であって、真理を保証する法則ではないということだ。
+S| Nature {has|have|having|had of} :: 自然には
+O| {no|not|none|nor} obligation :: 義務はない
+R| {to be|being|be|been} simple, :: 単純である
+M| {and|nor|than|whom} history :: そして歴史には
+V| {offers|offer|offering|offered of} :: ある
+O| {many|much|a much|every} cases :: 多くの例が
+X| {in which|which in|of whom|in what} the complex answer won. :: 複雑な答えが勝った
+== 自然には単純である義務はなく、歴史には複雑な答えのほうが正しかった例が数多くある。
+S| Modern physics, {for|of|at|by} example, :: 例えば現代物理学は
+V| {describes|describe|describing|description} :: 描く
+O| {a|an|much|few} world :: 世界を
+X| {far|very|much of|too of} stranger :: はるかに奇妙な
+P| {than|then|that|as} common sense suggests. :: 常識が示すより
+== たとえば現代物理学は、常識が示すよりはるかに奇妙な世界を描いている。
+M| {Why|What|Whom|Whose}, then, :: ではなぜ
+V| {do|does|is|are} scientists :: 科学者は
+V| {still|stilly|stiller|stillness} value :: なお重んじるのか
+O| {simplicity|simple|simply|simplify}? :: 単純さを
+== では、なぜ科学者はいまだに単純さを重んじるのだろうか。
+S| {One|Once|Ones|A one} reason :: 一つの理由は
+V| {is|are|be|been} :: …だ
+C| {that|what|whom|whose} simpler theories :: 単純な理論は
+V| {are|is|be|being} :: …だ
+C| {easier|easy|easily|ease} to test :: 検証しやすい
+M| {and|nor|than|whom} harder to adjust :: 調整しにくい
+X| {whenever|whatever|whoever|whichever} they fail. :: 失敗するたびに
+== 一つの理由は、単純な理論のほうが検証しやすく、失敗したときに都合よく手直ししにくいことだ。
+S| {Simplicity|Simple|Simply|Simplify}, :: 単純さは
+M| {in short|on short|at short|by short}, :: 要するに
+V| {is|are|be|been} :: …だ
+C| {less|fewer|lesser of|little of} a proof of truth :: 真理の証明でなく
+P| {than|then|that|as} a guide :: 指針
+X| for {where|what|whom|whose} to look first. :: まずどこを探すかの
+== 要するに単純さは、真理の証明というより、まずどこを探すべきかの指針なのだ。
+?? 1 2 オッカムのウィリアムは何世紀の人？
+?? 2 3 原則によると、前提がどんな説明を選ぶべき？
+?? 4 3 ドアの音が聞こえたのはどこ？
+?? 10 4 単純な理論は何がしやすい？
+
+@id adv34
+@lv 3
+@level 8
+@title The Horse That Could Count
+@ja 計算する馬
+@tag 難関大レベル・論説文
+@gloss arithmetic=算数, hoof=ひづめ, convinced=確信した, psychologist=心理学者, unconscious=無意識の, cue=合図, expectation=期待, participant=参加者, subtle=微妙な
+P| {In|On|At|By of} the early 1900s, :: 1900年代初め
+S| {a|an|much|few} horse in Berlin :: ベルリンの馬が
+V| {became|become|becoming|becomes of} :: なった
+C| {famous|fame|famously|famed of} :: 有名に
+P| {for|of|at|onto} solving arithmetic problems. :: 算数を解くことで
+== 1900年代初め、ベルリンのある馬が算数の問題を解くことで有名になった。
+M| Known {as|for|like to|to} Clever Hans, :: 賢いハンスと呼ばれ
+S| the horse {would|wills|would to|woulding} :: 馬は…したものだ
+V| {tap|taps|tapped|tapping} its hoof :: ひづめを鳴らす
+O| the {correct|correctly|correction|corrected} number :: 正しい回数
+P| {of|for|at|onto} times. :: だけ
+== 「賢いハンス」と呼ばれたその馬は、正しい回数だけひづめを鳴らした。
+S| {Many|Much|A much|Every} observers, :: 多くの観察者は
+X| {including|include|included of|inclusion} experts, :: 専門家を含め
+V| {were|was|be|being} convinced :: 確信した
+O| {that|what|whom|whose} the horse truly understood :: 馬が理解していると
+O| {numbers|number of|numbered|numbering}. :: 数を
+== 専門家を含む多くの観察者が、馬は本当に数を理解していると確信した。
+P| {In|On|At|By of} 1907, :: 1907年に
+M| {however|whatever|whoever|whichever}, :: しかし
+S| the {psychologist|psychology|psychological|psychologically} Oskar Pfungst :: 心理学者プフングストは
+V| {discovered|discover|discovery|discovering} :: 発見した
+O| {something|somewhat|somehow|sometime} surprising. :: 驚くべきことを
+== しかし1907年、心理学者オスカー・プフングストが驚くべきことを発見した。
+S| Hans {answered|answer|answering|answers of} correctly :: ハンスは正答した
+M| only {when|whom|whose|what} the questioner :: 質問者が…時だけ
+V| {knew|know|known|knowing} the answer :: 答えを知っている
+M| {and|nor|than|whom} stood :: そして立っている
+P| {within|without of|inside of to|along of} his sight. :: 見える所に
+== ハンスが正しく答えられたのは、質問者が答えを知っていて、しかも馬から見える位置にいるときだけだった。
+S| The horse, {it|its|it's|itself} turned out, :: 実は馬は
+V| {was|were|being|be} reading :: 読み取っていた
+O| tiny, {unconscious|unconsciously|unconsciousness|consciously of} movements, :: 無意識の小さな動きを
+X| {such as|so as|such that|as such} a slight lift :: わずかに上げる等
+P| {of|for|at|onto} the head :: 頭を
+T| {when|whom|whose|what} the right count was reached. :: 正しい数に達すると
+== 実は馬は、正しい数に達したとき頭をわずかに上げるといった、人間の無意識の小さな動きを読み取っていたのだ。
+S| {Nobody|Nobodies|No body of|None of} :: 誰も…ない
+V| {was|were|being|be} cheating; :: いかさまをしていた
+S| the questioners {themselves|itself|himself|theirselves} :: 質問者自身が
+V| {had|has|having|have of} no idea :: 全く知らなかった
+O| {that|what|whom|whose} they were giving signals. :: 合図を送っていると
+== 誰もいかさまをしていたわけではない。質問者たち自身、合図を送っているとは夢にも思っていなかった。
+S| {This|These|Those|Them} case :: この事例は
+V| {revealed|reveal|revealing|revelation} :: 明らかにした
+O| {how|what|whom|whose} easily :: いかに簡単に
+S| an experimenter's {expectations|expect|expected|expecting} :: 実験者の期待が
+V| {can|cans|can to|cannot to} shape :: 左右しうるか
+O| {the|a one|an|much} results. :: 結果を
+== この事例は、実験者の期待がいかに簡単に結果を左右しうるかを明らかにした。
+T| {Today|Todays|Today's|To days}, :: 今日では
+S| {careful|carefully|carefulness|careless of} studies :: 慎重な研究は
+V| {are|is|be|being} often :: しばしば…される
+V| {designed|design|designing|designer} :: 設計される
+R| {so that|so as|in order|so for} neither participants :: 参加者も…ないよう
+M| {nor|than|whom|but} researchers :: 研究者も
+V| {know|knows|knowing|known} who receives what. :: 誰が何か知る
+== 今日、慎重な研究の多くは、参加者も研究者も誰が何を受けているかわからないよう設計されている。
+S| {Such|So|Very|Too} "double-blind" designs :: こうした二重盲検は
+V| {protect|protects|protecting|protection} :: 守る
+O| {results|resulting|resultant of|result of} :: 結果を
+P| {from|than|onto|with of} the subtle cues :: 微妙な合図から
+X| {that|what|whom|whose} fooled so many :: 多くの人をだました
+P| {in|onto|than|whom} Hans's day. :: ハンスの時代に
+== こうした「二重盲検」の設計は、ハンスの時代に多くの人をだました微妙な合図から結果を守っている。
+S| The {lesson|lessen|lessons of|lesson's} :: 教訓は
+V| {is|are|be|been} :: …だ
+C| {that|what|whom|whose} even honest observers :: 正直な観察者でさえ
+V| {see|sees|seeing|seen} :: 見る
+O| {what|that|whom|whose} they expect to see. :: 見ると予期するものを
+== 教訓は、正直な観察者でさえ、見ると予期しているものを見てしまうということだ。
+?? 0 0 馬が有名になったのはいつ？
+?? 1 2 ハンスは何を鳴らして答えた？
+?? 3 2 謎を解いた心理学者は誰？
+?? 5 2 馬は人間の何を読み取っていた？
+
+@id adv35
+@lv 3
+@level 8
+@title The Planet That Never Was
+@ja 存在しなかった惑星
+@tag 難関大レベル・論説文
+@gloss drift=ずれる, abandon=捨てる, unseen=見えない, stunning=見事な, triumph=勝利, orbit=回る・軌道, relativity=相対性理論, discard=捨てる, anomaly=変則的な事例
+P| {In|On|At|By of} the 19th century, :: 19世紀に
+S| {astronomers|astronomy|astronomic|astronomical} :: 天文学者は
+V| {noticed|notice|noticing|notices of} :: 気づいた
+O| {that|what|whom|whose} Uranus :: 天王星が…と
+V| {was|were|being|be} drifting :: ずれている
+P| {from|than|onto|with of} its predicted path. :: 予測された軌道から
+== 19世紀、天文学者たちは天王星が予測された軌道からずれていることに気づいた。
+M| {Rather|Rather of|Other|Rathered} than abandon :: 捨てる代わりに
+O| Newton's {theory|theorize|theoretical|theoretically} of gravity, :: ニュートンの重力理論を
+S| the French {mathematician|mathematics|mathematical|mathematically} Le Verrier :: 仏の数学者ルヴェリエ
+V| {proposed|propose|proposing|proposal} :: 唱えた
+O| {that|what|whom|whose} an unseen planet :: 見えない惑星が
+V| {was|were|being|be} pulling on it. :: それを引いていると
+== フランスの数学者ルヴェリエは、ニュートンの重力理論を捨てる代わりに、見えない惑星が天王星を引っ張っていると考えた。
+M| {Using|Used|Uses|Use of} only mathematics, :: 数学だけを使って
+S| he {calculated|calculate|calculation|calculating} :: 彼は計算した
+O| {where|what|whom|whose} the planet should be, :: 惑星の位置を
+M| {and|nor|than|whom} in 1846 :: そして1846年に
+S| Neptune {was|were|being|be} found :: 海王星が見つかった
+P| {close|closely|closure|closing} to that spot. :: その地点の近くで
+== 彼は数学だけを使って惑星があるべき位置を計算し、1846年、その地点の近くで海王星が発見された。
+S| {It|Its|It's|Itself} :: それは
+V| {was|were|being|be} :: …だった
+C| {a|an|much|few} stunning triumph :: 見事な勝利
+P| {for|than|onto|whom} the theory. :: 理論にとって
+== それは理論にとって見事な勝利だった。
+S| Le Verrier then {turned|turn|turning|turns of} :: 彼は次に向かった
+P| {to|for|at|onto} another puzzle: :: 別の謎へ
+S| Mercury's orbit, {which|whom|what|whose} :: 水星の軌道で
+V| also {failed|fail|failing|failure} :: やはり…しなかった
+R| {to match|matching|match|matched} predictions. :: 予測と一致
+== ルヴェリエは次に別の謎に取り組んだ。水星の軌道も予測と一致しなかったのだ。
+M| {Naturally|Natural|Nature|Naturalize}, :: 当然
+S| he {suggested|suggest|suggestion|suggesting} :: 彼は唱えた
+O| {another|other|others|the another} hidden planet, :: 別の隠れた惑星を
+X| {named|naming|name|names of} Vulcan, :: ヴァルカンという
+X| {orbiting|orbited of|orbit|orbits} close to the Sun. :: 太陽の近くを回る
+== 当然のように、彼はヴァルカンと名付けた別の隠れた惑星が太陽の近くを回っていると唱えた。
+M| {For|Since|During|While} decades, :: 何十年も
+S| observers {searched|search|searching|searches of} :: 観測者は探した
+O| {for|of|at|onto} it, :: それを
+M| {and|nor|than|whom} a few :: そして数人は
+V| {even|ever|evenly|evening} claimed :: 主張さえした
+R| {to have|to having|having to|have to} seen it. :: 見たと
+== 何十年も観測者たちはそれを探し、見たと主張する者まで現れた。
+M| {Yet|Even|Ever|Already of} :: だが
+S| no such {planet|planetary|plane of|planetly} :: そんな惑星は
+V| {ever|every|evenly|everly} :: 一度も
+V| {existed|exist|existing|existence}. :: 存在しなかった
+== だが、そのような惑星は一度も存在しなかった。
+S| {It|Its|It's|Itself} was :: …だった
+C| Einstein's general {relativity|relative|relatively|relativize}, :: 一般相対性理論
+X| {published|publishing|publish|publishes} in 1915, :: 1915年発表の
+X| {that|what|whom|whose} finally explained :: ついに説明した
+O| Mercury's {strange|strangely|strangeness|stranger of} motion. :: 水星の奇妙な動き
+== 1915年に発表されたアインシュタインの一般相対性理論こそが、ついに水星の奇妙な動きを説明したのだ。
+S| The {same|similar of|alike|sameness} strategy, :: 同じ戦略が
+M| {in other words|in other word|in another words|on other words}, :: つまり
+V| {succeeded|succeed|success|successful} once :: 一度は成功し
+M| {and|nor|than|whom} failed :: そして失敗した
+T| {the|a one|an|much} second time. :: 二度目に
+== つまり同じ戦略が、一度は成功し、二度目は失敗したのである。
+S| {This|These|Those|Them} pair of cases :: この二例は
+V| {shows|showing|shown|show of} :: 示す
+O| {why|what|whom|whose} scientists :: なぜ科学者が
+V| {cannot|can't to|not can|cannot to} simply :: 単に…できないか
+V| {discard|discards|discarding|discarded} a theory :: 理論を捨てる
+X| {whenever|whatever|whoever|whichever} an anomaly appears. :: 変則が現れるたび
+== この二つの事例は、変則が現れるたびに科学者が理論を簡単に捨てられない理由を示している。
+S| {Sometimes|Sometime|Some times of|Somehow of} the fault :: 時に誤りは
+V| {lies|lays|lie|lain} :: …にある
+P| {in|onto|than|whom} missing facts, :: 欠けた事実に
+M| {and|nor|than|whom} sometimes :: そして時には
+P| {in|onto|than|whose} the theory itself. :: 理論そのものに
+== 誤りが欠けた事実にあることもあれば、理論そのものにあることもあるのだ。
+?? 0 3 予測された軌道からずれていたのは何という惑星？
+?? 2 3 海王星が見つかったのは何年？
+?? 5 3 太陽の近くを回るとされた惑星は何と名付けられた？
+?? 8 2 一般相対性理論が発表されたのは何年？
+
+@id adv36
+@lv 3
+@level 8
+@title Right Too Soon
+@ja 早すぎた正解
+@tag 難関大レベル・論説文
+@gloss meteorologist=気象学者, landmass=陸塊, fossil=化石, outsider=部外者, expedition=遠征, crust=地殻, ridge=海嶺, mechanism=しくみ, skeptic=懐疑派
+M| {Glancing|Glanced|Glance|Glances} at a world map, :: 世界地図を見ると
+S| {anyone|anything|anywhere|any one of} :: 誰でも
+V| {might|mights|might to|mighted} notice :: 気づくかもしれない
+O| {that|what|whom|whose} South America and Africa :: 南米とアフリカが
+V| {seem|seems|seeming|seemed of} :: …ように見える
+R| {to fit|fitting|fit|fitted} together. :: ぴったり合う
+== 世界地図を見れば、南米とアフリカがぴったり合いそうだと誰でも気づくかもしれない。
+P| {In|On|At|By of} 1912, :: 1912年に
+S| the German {meteorologist|meteorology|meteoric|meteorological} Alfred Wegener :: 気象学者ヴェーゲナーは
+V| {took|take|taking|taken} :: 受け止めた
+O| {this|these|those|them} observation :: この観察を
+M| {seriously|serious|seriousness|series}. :: 真剣に
+== 1912年、ドイツの気象学者アルフレート・ヴェーゲナーはこの観察を真剣に受け止めた。
+S| He {argued|argue|argument|arguing} :: 彼は主張した
+O| {that|what|whom|whose} the continents :: 大陸は…と
+V| {had|has|having|have of} once :: かつて
+V| {formed|form|forming|forms of} :: 形作っていた
+O| {a|an|much|few} single landmass :: 一つの陸塊を
+M| {and|nor|than|whom} had slowly drifted apart. :: ゆっくり離れた
+== 彼は、大陸はかつて一つの陸塊を形作っており、ゆっくりと離れていったのだと主張した。
+S| His {evidence|evident|evidently|evidential} :: 彼の証拠は
+V| {was|were|being|be} :: …だった
+C| {impressive|impress|impression|impressively}, :: 見事
+X| {including|include|included of|inclusion} matching fossils :: 一致する化石を含む
+M| {and|nor|than|whom} rock layers :: そして岩石層
+P| {on|than|onto|whom} both sides :: 両岸の
+P| {of|at|onto|than} the Atlantic. :: 大西洋の
+== 彼の証拠は見事なもので、大西洋の両岸で一致する化石や岩石層も含まれていた。
+M| {Nevertheless|Nonetheless of|Neverless|Nevertheless of}, :: それでも
+S| {most|almost|mostly|the most of} geologists :: 大半の地質学者は
+V| {rejected|reject|rejection|rejecting} :: 退けた
+O| {his|he|him|himself} idea, :: 彼の考えを
+M| {partly|part|parting|parted} because :: 一部は…ため
+S| he {was|were|being|be} :: 彼は…だった
+C| {an|a|much|few} outsider to their field. :: 分野の部外者
+== それでも、大半の地質学者は彼の考えを退けた。一つには彼が地質学の部外者だったからだ。
+S| A more {serious|seriously|seriousness|series} problem :: より深刻な問題は
+V| {was|were|being|be} :: …だった
+C| {that|what|whom|whose} he could not explain :: 説明できないこと
+X| {what|whom|whom of|than} force :: どんな力が
+V| {could|cans|could to|coulding} move :: 動かしうるか
+O| {entire|entirely|entirety|entires} continents. :: 大陸全体を
+== もっと深刻な問題は、どんな力が大陸全体を動かしうるのかを彼が説明できなかったことだ。
+S| Wegener {died|dead|death|dying of} :: 彼は亡くなった
+P| {on|of|than|whom} an expedition :: 遠征中に
+P| {to|for of|at of|than} Greenland :: グリーンランドへの
+T| {in|onto|than|whom} 1930, :: 1930年に
+M| {long|longer of|length|lengthy} before :: ずっと前に
+X| his {theory|theorize|theoretical|theoretically} was accepted. :: 理論が認められる
+== ヴェーゲナーは1930年、グリーンランドへの遠征中に亡くなった。彼の理論が認められるずっと前のことだった。
+T| {In|On|At|Onto} the 1950s and 1960s, :: 1950〜60年代に
+S| studies {of|than|onto|whom} the ocean floor :: 海底の研究が
+V| {revealed|reveal|revealing|revelation} :: 明らかにした
+O| {that|what|whom|whose} new crust :: 新しい地殻が
+V| {is|are|be|being} constantly created :: 絶えずつくられる
+P| {along|alone|along of|long} mid-ocean ridges. :: 海嶺に沿って
+== 1950〜60年代、海底の研究によって、中央海嶺に沿って新しい地殻が絶えず生まれていることが明らかになった。
+S| {This|These|Those|Them} discovery :: この発見は
+V| {supplied|supply|supplying|supplies of} :: 与えた
+O| the {missing|missed|miss|misses} mechanism, :: 欠けていたしくみを
+M| {and|nor|than|whom} continental drift :: そして大陸移動説は
+V| {was|were|being|be} reborn :: 生まれ変わった
+P| {as|for|like to|to} plate tectonics. :: プレート理論として
+== この発見が欠けていたしくみを補い、大陸移動説はプレートテクトニクスとして生まれ変わった。
+S| Wegener's {story|storey of|stories of|storied} :: 彼の話は
+V| {is|are|be|been} often told :: よく語られる
+P| {as|for|like to|to} a tale :: 物語として
+P| {of|than|onto|whom} a lonely genius :: 孤独な天才の
+X| {ignored|ignoring|ignore|ignores} :: 無視された
+P| {by|with of|at to|onto} narrow minds. :: 偏狭な人々に
+== ヴェーゲナーの話は、偏狭な人々に無視された孤独な天才の物語としてよく語られる。
+M| {Yet|Even|Ever|Already of} the skeptics :: だが懐疑派も
+V| {were|was|be|being} :: …だった
+C| {not|no|none|nor} simply foolish; :: 単に愚かではない
+S| {demanding|demand|demanded of|demands of} a mechanism :: しくみを求めるのは
+V| {is|are|be|been} :: …だ
+C| exactly {what|that|whom|whose} good science requires. :: 良い科学が要る事
+== だが懐疑派も単に愚かだったわけではない。しくみを求めることこそ、良い科学が求めることなのだ。
+S| {Being|Be|Been|To being} right too soon, :: 早すぎる正解は
+M| {it|its|it's|itself} seems, :: どうやら
+V| {can|cans|can to|cannot to} look :: …に見えうる
+C| {much|many|more of|very of} like being wrong. :: 間違いとよく似て
+== 早すぎる正解は、どうやら間違いとよく似て見えることがあるらしい。
+?? 1 0 ヴェーゲナーがこの観察を真剣に受け止めたのは何年？
+?? 3 3 証拠には何が一致することが含まれていた？
+?? 5 5 ヴェーゲナーは、力が何を動かすのか説明できなかった？
+?? 6 2 ヴェーゲナーはどこへの遠征中に亡くなった？
+?? 8 5 大陸移動説は何として生まれ変わった？
+
+@id adv37
+@lv 3
+@level 8
+@title Faster Than Light?
+@ja 光より速い？
+@tag 難関大レベル・論説文
+@gloss startling=驚くべき, particle=粒子, neutrino=ニュートリノ, overturn=覆す, cornerstone=礎, scrutiny=精査, fiber-optic=光ファイバーの, flaw=欠陥, willingness=いとわない姿勢
+T| {In|On|At|By of} 2011, :: 2011年に
+S| physicists {working|worked of|works|work of} in Italy :: イタリアの物理学者が
+V| {announced|announce|announcement|announcing} :: 発表した
+O| {a|an|much|few} startling result: :: 驚くべき結果を
+== 2011年、イタリアで研究する物理学者たちが驚くべき結果を発表した。
+S| {tiny|tinily|tininess|tinier of} particles called neutrinos :: ニュートリノという粒子が
+V| {seemed|seem|seeming|seems of} :: …ように見えた
+R| {to have|to having|having to|have to} traveled :: 移動した
+P| from {a|an|much|few} laboratory near Geneva :: ジュネーブ近郊から
+M| {faster|fast of|fastest of|more fast} than light. :: 光より速く
+== ニュートリノという微小な粒子が、ジュネーブ近郊の研究所から光より速く移動したように見えたのだ。
+M| {If|Whether of|Whom|Than} true, :: もし本当なら
+S| the finding {would|wills|would to|woulding} :: その発見は…だろう
+V| {have|has|having|had of} overturned :: 覆した
+O| {a|an|much|few} cornerstone :: 礎を
+P| {of|than|onto|whom} modern physics. :: 現代物理学の
+== もし本当なら、その発見は現代物理学の礎を覆すものだった。
+M| {Remarkably|Remarkable|Remark|Remarking}, :: 注目すべきことに
+S| the researchers {themselves|itself|himself|theirselves} :: 研究者自身は
+V| {did|do|does|done} not :: …しなかった
+V| {claim|claims|claimed|claiming} :: 主張する
+O| {a|an|much|few} revolution. :: 革命を
+== 注目すべきことに、研究者たち自身は革命だとは主張しなかった。
+M| {Instead|Instead of|Insteadly|Stead}, :: その代わりに
+S| they {asked|ask|asking|asks of} :: 彼らは求めた
+O| {other|another|others|the other of} scientists :: ほかの科学者に
+R| {to help|helping|help|helped} :: 手伝うよう
+V| {find|finding of|found of|finds} :: 見つけるのを
+O| {any|some of|every of|much of} error :: 誤りを
+X| {they|them|their|theirs} might have made. :: 犯したかもしれない
+== 代わりに彼らは、自分たちが犯したかもしれない誤りを見つける手助けを、ほかの科学者に求めた。
+M| {After|Before of|Despite|Unless} months of scrutiny, :: 数か月の精査の後
+S| {the|a one|an|much} cause :: 原因は
+V| {was|were|being|be} traced :: 突き止められた
+P| {to|for of|at of|than} a loose fiber-optic cable :: 緩んだ光ファイバーに
+P| {in|onto|than|whom} the timing system. :: 計時系の
+== 数か月にわたる精査の末、原因は計時システムの緩んだ光ファイバーケーブルにあると突き止められた。
+M| {Once|Ones|Once of|Onced} it was fixed, :: それが直されると
+S| the neutrinos {traveled|travel|traveling|travels of} :: ニュートリノは進んだ
+M| {no|none|nor|any of} faster than light, :: 光より速くなく
+M| {just|justly|justice|justify} as relativity :: 相対論が…通り
+V| {predicts|predict|predicting|prediction}. :: 予言する
+== それが直されると、ニュートリノは相対性理論の予言どおり、光より速くはなかった。
+S| {Some|Any|Every|Much} commentators :: 一部の論評者は
+V| {mocked|mock|mocking|mocks of} :: あざ笑った
+O| the team {for|of|at|onto} the mistake, :: 誤りでチームを
+M| {but|nor|than|whom} this misses the point. :: だが的外れだ
+== チームの誤りをあざ笑う論評家もいたが、それは的外れだ。
+S| {What|That|Which|Whom} the episode shows :: この件が示すのは
+V| {is|are|be|been} :: …だ
+C| science {working|worked of|works of|work of} :: 科学が機能する姿
+M| {exactly|exact|exactness|exacting} as it should: :: まさにあるべき形で
+== この出来事が示しているのは、科学がまさにあるべき形で機能している姿だ。
+S| {extraordinary|extraordinarily|extraordinariness|extra ordinary} claims :: 並外れた主張は
+V| {were|was|be|being} :: …された
+V| {checked|check|checking|checks of}, :: 確認された
+M| {flaws|flaw|flawed|flawless} were found, :: 欠陥が見つかった
+M| {and|nor|than|whom} nobody's reputation :: そして誰の評判も
+V| {mattered|matter|mattering|matters of} :: 重んじられた
+P| {more|most|many|much of} than the evidence. :: 証拠より
+== 並外れた主張は検証され、欠陥は見つかり、誰の評判も証拠より重んじられることはなかった。
+P| {In|On|At|By} a sense, :: ある意味で
+S| the {willingness|willing|willingly|will of} :: いとわない姿勢は
+R| {to be|being|be|been} proven wrong :: 誤りと示される
+V| {is|are|be|being} :: …だ
+C| {not|no|none|nor} a weakness of science :: 科学の弱さでなく
+M| {but|nor|than|whom} its greatest strength. :: 最大の強みだ
+== ある意味で、誤りだと示されることをいとわない姿勢は、科学の弱点ではなく最大の強みなのだ。
+?? 0 0 驚くべき結果が発表されたのは何年？
+?? 1 0 光より速く見えた粒子は何？
+?? 4 2 研究者たちは誰に助けを求めた？
+?? 5 3 原因は何にあった？

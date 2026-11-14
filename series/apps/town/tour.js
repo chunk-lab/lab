@@ -7,7 +7,7 @@ const face = (w, f) => `${CH}${w === 'g' ? 'girl' : 'boy'}/${f || 'normal'}.webp
 const NAME = { g: '女の子', b: '男の子' };
 const COURSES = [
   { id: 'intro', n: '街のしょうかい', steps: [
-    { w: 'g', f: 'joy', t: 'ようこそ、チャンクタウンへ！' },
+    { w: 'g', f: 'joy', t: 'ようこそ、かまってチャンクTOWNへ！' },
     { w: 'b', t: '建物をタップすると、中に入れるよ。' },
     { w: 'g', t: '学校では、チャンクの練習ができるよ。', at: 'school' },
     { w: 'b', t: '図書館では、英語の文章を読めるよ。', at: 'library' },

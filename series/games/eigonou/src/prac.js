@@ -1,4 +1,6 @@
-import { DB, save, say } from './common.js';
+import { DB, save, say, sayJa } from './common.js';
+import { wqRender } from './wquiz.js';
+import { PV_EX } from './pv_ex.js';
 import { drRender, drStart, prModeSeg } from './drill.js';
 import { LEX, N, P, PARTICLE, PVBASE, newClause, sentenceJa, sentenceText } from './engine.js';
 import { esc, init } from './play.js';
@@ -8,12 +10,12 @@ export let PR;
 export function pracStore(){ DB.prac=DB.prac||{pv:{},id:{},min:3}; DB.prac.pv=DB.prac.pv||{}; DB.prac.id=DB.prac.id||{}; return DB.prac; }
 export function pvList(){
  const seen=new Set(); const out=[];
- PRAC_PV.forEach(p=>{ if(seen.has(p.w)) return; seen.add(p.w); const gv=LEX.verbs.find(v=>v.pv && v.en===p.b && ([v.tail,v.prep].filter(Boolean).join(' ').replace('{poss}','my'))===p.p); out.push(Object.assign({},p,{ja:(gv&&gv.ja&&!gv.jaAdj?gv.ja:p.ja),mean:gv&&gv.mean,gid:gv&&gv.id})); });
- LEX.verbs.filter(v=>v.pv && v.pv.p!=='idiom' && !v.hidden).forEach(v=>{ const p=[v.tail,v.prep].filter(Boolean).join(' '); const w=v.en+' '+p; if(!p || seen.has(w) || p.includes('{poss}')) return; seen.add(w); out.push({w,b:v.en,p,ja:v.ja,ex:'',exja:'',s:v.star||2,mean:v.mean,gid:v.id}); });
+ PRAC_PV.forEach(p=>{ if(seen.has(p.w)) return; seen.add(p.w); if(!p.ex && PV_EX[p.w]) p=Object.assign({},p,{ex:PV_EX[p.w][0],exja:PV_EX[p.w][1]}); const gv=LEX.verbs.find(v=>v.pv && v.en===p.b && ([v.tail,v.prep].filter(Boolean).join(' ').replace('{poss}','my'))===p.p); out.push(Object.assign({},p,{ja:(gv&&gv.ja&&!gv.jaAdj?gv.ja:p.ja),mean:gv&&gv.mean,gid:gv&&gv.id})); });
+ LEX.verbs.filter(v=>v.pv && v.pv.p!=='idiom' && !v.hidden).forEach(v=>{ const p=[v.tail,v.prep].filter(Boolean).join(' '); const w=v.en+' '+p; if(!p || seen.has(w) || p.includes('{poss}')) return; seen.add(w); const pe=PV_EX[w]; out.push({w,b:v.en,p,ja:v.ja,ex:pe?pe[0]:'',exja:pe?pe[1]:'',s:v.star||2,mean:v.mean,gid:v.id}); });
  return out;
 }
 export function idList(){ const out=PRAC_ID.slice(); const seen=new Set(out.map(i=>i.w.toLowerCase()));
- LEX.verbs.filter(v=>v.pv && v.pv.p==='idiom' && !v.hidden).forEach(v=>{ const w=(v.en+' '+[v.tail,v.prep].filter(Boolean).join(' ')).replace('{poss}','my'); if(seen.has(w.toLowerCase())) return; seen.add(w.toLowerCase()); out.push({w,ja:v.ja,ex:'',exja:'',s:v.star||3,gid:v.id}); });
+ LEX.verbs.filter(v=>v.pv && v.pv.p==='idiom' && !v.hidden).forEach(v=>{ const w=(v.en+' '+[v.tail,v.prep].filter(Boolean).join(' ')).replace('{poss}','my'); if(seen.has(w.toLowerCase())) return; seen.add(w.toLowerCase()); const pe=PV_EX[w]; out.push({w,ja:v.ja,ex:pe?pe[0]:'',exja:pe?pe[1]:'',s:v.star||3,gid:v.id}); });
  return out; }
 export function prPool(){ const min=pracStore().min||3; return (PR.mode==='pv'?pvList():idList()).filter(p=>p.s>=min); }
 export function prPick(){
@@ -41,6 +43,7 @@ export function genExample(p){
 }
 export function prNew(){
  if(PR.mode==='rep'||PR.mode==='quiz'){ drStart(); return; }
+ if(PR.mode==='word'){ wqRender(); return; }
  const it=prPick(); PR.cur=it; PR.done=false; PR.tries=0; PR.msg=null; PR.picked=[];
  if(!it){ renderPrac(); return; }
  if(PR.mode==='pv'){
@@ -61,6 +64,7 @@ export function prNew(){
   PR.blank = PR.ex && re.test(PR.ex)? PR.ex.replace(re,'＿＿＿') : null;
  }
  renderPrac();
+ sayJa(it.ja);   // 問題の日本語を、最初の1回は自動で読む
 }
 export function shuffleP(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 export function prAnswerPV(p){
@@ -79,6 +83,7 @@ export function prTapTile(t){
 }
 export function renderPrac(){
  if(PR.mode==='rep'||PR.mode==='quiz'){ drRender(); return; }
+ if(PR.mode==='word'){ wqRender(); return; }
  const el=document.getElementById('prac'); if(!el) return; const st=pracStore(); const it=PR.cur;
  const pool=prPool(); const rec=st[PR.mode]; const learned=pool.filter(p=>rec[p.w]&&rec[p.w].streak>=2).length; const weak=pool.filter(p=>rec[p.w]&&rec[p.w].miss>rec[p.w].ok).length;
  let h=`<h2>れんしゅう</h2>${prModeSeg()}

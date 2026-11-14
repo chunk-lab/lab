@@ -1,0 +1,465 @@
+@id beg74
+@lv 1
+@level 4
+@title The Old Bicycle
+@ja 古い自転車
+@tag 高校受験レベル・物語文
+@gloss garage=車庫, rusty=さびた, dirty=汚れた, flat=パンクした, chain=チェーン, repair=修理する, shiny=ぴかぴかの, proud=誇りに思う
+T| One {day|days|daily|dairy}, :: ある日
+S| Ken {found|find|finding|founded} :: ケンは見つけた
+O| an old {bicycle|bicycles|bike's|bicycling} :: 古い自転車を
+P| {in|into|of|than} his grandfather's garage. :: 祖父の車庫で
+== ある日、ケンは祖父の車庫で古い自転車を見つけた。
+S| It {was|were|are|be} :: それは…だった
+C| very {rusty|rust|rusts|rustily} :: とてもさびて
+M| {and|nor|than|with} dirty. :: そして汚れて
+== それはとてもさびていて、汚れていた。
+S| The tires {were|was|is|be} :: タイヤは…だった
+C| {flat|flatly|flats|flatten}, :: パンクして
+M| and the chain {was|were|are|been} broken. :: チェーンは壊れて
+== タイヤはパンクしていて、チェーンは壊れていた。
+S| Ken {asked|ask|asks|asking} :: ケンはたずねた
+O| his {grandfather|grand father|grandfather's|grandfatherly}, :: 祖父に
+O| "Can I {repair|repairs|repaired|repairing} it?" :: 「直してもいい？」
+== ケンは祖父に「これを直してもいい？」とたずねた。
+S| His grandfather {smiled|smile|smiling|smileed} :: 祖父はほほえんだ
+M| and {said|say|saying|sayed}, :: そして言った
+O| "{Of course|Of courses|Off course|On course}." :: 「もちろん」と
+== 祖父はほほえんで、「もちろん」と言った。
+T| {Every|Every of|Everyone|Ever} weekend, :: 毎週末
+S| they {worked|working|works|to work} :: 二人は作業した
+O| {on|of|than|onto of} the bicycle :: 自転車に
+M| {together|togethers|to gather|together with}. :: いっしょに
+== 毎週末、二人はいっしょに自転車の作業をした。
+S| They {cleaned|cleaning|cleans|to clean} :: 二人はきれいにした
+O| the {whole|hole|wholly|holes} bicycle :: 自転車全体を
+M| and {fixed|fixing|fixes|to fixed} the chain. :: チェーンを直した
+== 二人は自転車全体をきれいにし、チェーンを直した。
+T| {After|Ago|Since|While} two months, :: 2か月後
+S| the bicycle {looked|look|looking|to look} :: 自転車は見えた
+C| {shiny|shine|shinily|shines} and new. :: ぴかぴかで新しく
+== 2か月後、自転車はぴかぴかで新品のように見えた。
+S| Ken {rode|ride|rided|ridden} it :: ケンはそれに乗った
+P| {to|at|of|than} school :: 学校へ
+T| the next {day|days|daily|dairy}. :: 次の日
+== ケンは次の日、それに乗って学校へ行った。
+S| He {was|were|be|being} :: 彼は…だった
+C| very {proud|pride|proudly|prouder} :: とても誇らしく
+P| {of|for|at|to} the old bicycle. :: 古い自転車が
+== 彼はその古い自転車がとても誇らしかった。
+?? 0 3 ケンはどこで自転車を見つけた？
+?? 2 1 タイヤはどうなっていた？
+?? 7 0 自転車がぴかぴかになったのはいつ？
+?? 8 1 ケンは自転車に乗ってどこへ行った？
+
+@id beg75
+@lv 1
+@level 4
+@title The Kind Shopkeeper
+@ja 親切な店主
+@tag 高校受験レベル・物語文
+@gloss shopkeeper=店主, register=レジ, wallet=財布, missing=見当たらない, embarrassed=恥ずかしい, lend=貸す, heavy=激しい, return=返す
+T| One rainy {evening|evenings|even|evenly}, :: ある雨の夕方
+S| Yuki {stopped|stoped|stopping|stoping} :: ユキは立ち寄った
+P| {at|of|than|among} a small shop. :: 小さな店に
+== ある雨の夕方、ユキは小さな店に立ち寄った。
+S| She {wanted|wanting|want|wanted of} :: 彼女は…したかった
+V| to {buy|buys|bought|buying} :: 買うこと
+O| a {notebook|notebooks|note books|notebook's}. :: ノートを
+== 彼女はノートを買いたかった。
+M| {But|Than|Whom|Whose} at the register, :: しかしレジで
+S| she {found|find|founded|finded} :: 彼女は気づいた
+O| her wallet {was|were|be|been} missing. :: 財布がないことに
+== しかしレジで、彼女は財布がないことに気づいた。
+S| She {felt|feel|feeled|feeling} :: 彼女は感じた
+C| very {embarrassed|embarrass|embarrassment|embarrassedly}. :: とても恥ずかしく
+== 彼女はとても恥ずかしかった。
+S| The old {shopkeeper|shop keeping|shopkeep|shopkeeped} :: 年配の店主は
+V| {smiled|smile|smiling|smileed} :: ほほえんだ
+M| and {said|say|saying|sayed}, :: そして言った
+O| "{Pay|Pays|Paid|Paying} me next time." :: 「次に払って」と
+== 年配の店主はほほえんで、「次に来たときに払ってね」と言った。
+S| He also {lent|lend|lended|lending} :: 彼は貸してもくれた
+O| her {an|a|much|few} umbrella :: 傘を
+R| {because|because of|although of|due} the rain was heavy. :: 雨が強かったので
+== 雨が強かったので、彼は傘も貸してくれた。
+T| The next {morning|mornings|morning's|mourning}, :: 次の朝
+S| Yuki {went|go|goed|gone} back :: ユキは戻った
+P| {to|at|for|in} the shop. :: その店に
+== 次の朝、ユキはその店に戻った。
+S| She {paid|payed|pay|paying} :: 彼女は払った
+O| {for|to|at|than} the notebook :: ノートの代金を
+M| and {returned|return|returning|returns} the umbrella. :: 傘を返した
+== 彼女はノートの代金を払い、傘を返した。
+S| She also {gave|give|gived|given} him :: 彼にもあげた
+O| some {cookies|cookie's|cookys|cookied} :: クッキーを
+V| she {made|make|maked|making}. :: 自分で作った
+== 彼女は自分で作ったクッキーも彼にあげた。
+T| {Since|For|Ago|During} then, :: それ以来
+S| she {has visited|have visited|has visit|visited has} :: 彼女は通っている
+O| the shop {every|ever|everything|everyone} week. :: 毎週その店に
+== それ以来、彼女は毎週その店に通っている。
+?? 2 2 レジで何に気づいた？
+?? 4 3 店主は何と言った？
+?? 5 2 店主はなぜ傘を貸した？
+?? 8 1 ユキは店主に何をあげた？
+
+@id beg76
+@lv 1
+@level 4
+@title The Boy Who Was Always Late
+@ja いつも遅刻する男の子
+@tag 高校受験レベル・物語文
+@gloss always=いつも, late=遅れて, alarm clock=目覚まし時計, scold=しかる, decide=決める, early=早く, on time=時間通りに, surprised=驚いた
+S| Taro {was|were|be|being} :: タロウは…だった
+M| {always|alway|allways|all way} late :: いつも遅れて
+P| {for|of|than|until} school. :: 学校に
+== タロウはいつも学校に遅刻していた。
+S| He {went|go|goed|gone} :: 彼は行った
+P| {to|at|in|on} bed :: ベッドに
+T| very late {at|in|on|of} night. :: 夜とても遅く
+== 彼は夜とても遅くに寝ていた。
+T| {Every|Ever|Everything|Everyone} morning, :: 毎朝
+S| his alarm clock {rang|ring|ringed|rung}, :: 目覚ましが鳴った
+M| {but|than|nor|whom} he did not wake up. :: でも起きなかった
+== 毎朝目覚まし時計が鳴ったが、彼は起きなかった。
+S| His teacher {often|ofen|oftenly|offen} :: 先生はよく
+V| {scolded|scold|scolding|scolt} him :: 彼をしかった
+P| {for|to|at|of} being late. :: 遅刻のことで
+== 先生はよく遅刻のことで彼をしかった。
+T| One {day|days|daily|dairy}, :: ある日
+S| his little sister {said|say|saying|sayed}, :: 妹が言った
+O| "{Let's|Let|Lets|Let us to} go to bed early." :: 「早く寝よう」と
+== ある日、妹が「早く寝ようよ」と言った。
+S| Taro {decided|decide|deciding|decision} :: タロウは決めた
+V| to {go|goes|went|going} to bed :: 寝ることに
+T| {at|on|in|of} nine. :: 9時に
+== タロウは9時に寝ることに決めた。
+T| The next {morning|mornings|morning's|mourning}, :: 次の朝
+S| he {woke|wake|woken|waking} up :: 彼は起きた
+T| {before|ago|than|while} his alarm. :: 目覚ましより前に
+== 次の朝、彼は目覚まし時計が鳴る前に起きた。
+S| He {arrived|arrive|arriving|arrivaled} :: 彼は着いた
+P| {at|on|to|in} school :: 学校に
+M| {on time|at time|by time|on timing}. :: 時間通りに
+== 彼は時間通りに学校に着いた。
+S| His teacher {was|were|be|been} :: 先生は…だった
+C| very {surprised|surprise|surprises|surprisingly}. :: とても驚いて
+== 先生はとても驚いた。
+T| {Now|Ago|Since|Before} :: 今では
+S| Taro {is|are|be|am} :: タロウは
+M| {never|ever|none|nothing} late. :: 一度も遅れない
+== 今では、タロウは一度も遅刻しない。
+?? 1 2 タロウはいつ寝ていた？
+?? 5 2 タロウは何時に寝ることにした？
+?? 6 2 次の朝、彼はいつ起きた？
+?? 9 2 今のタロウはどうなった？
+
+@id beg77
+@lv 1
+@level 4
+@title A Gift from Grandmother
+@ja 祖母からの贈り物
+@tag 高校受験レベル・物語文
+@gloss package=小包, inside=中に, scarf=マフラー, knit=編む, by hand=手で, dear=かわいい, wore=身につけた, treasure=宝物
+T| Last {winter|winters|wintery|winter's}, :: 去年の冬
+S| Mika {got|get|getted|gotten} :: ミカは受け取った
+O| a {package|packages|packed|pack ages} :: 小包を
+P| {from|than|at|into} her grandmother. :: 祖母から
+== 去年の冬、ミカは祖母から小包を受け取った。
+P| {Inside|Insides|Inner|In sided} it, :: その中に
+V| there {was|were|be|being} :: …があった
+O| a {red|reds|redly|reding} scarf. :: 赤いマフラーが
+== その中には赤いマフラーが入っていた。
+S| Her grandmother {had|have|having|haved} :: 祖母は…していた
+V| {knitted|knits|knitting|to knit} it :: それを編んで
+P| {by|with|for|of} hand. :: 手で
+== 祖母はそれを手で編んでいた。
+V| There {was|were|be|been} :: …があった
+M| {also|alway|either|too} :: …も
+O| a short {letter|letters|latter|lettering}. :: 短い手紙が
+== 短い手紙も入っていた。
+S| It {said|say|saying|sayed}, :: それにはあった
+O| "{Stay|Stays|Stayed|Staying} warm, :: 「暖かくしてね
+M| my {dear|dears|dearly|deer} Mika." :: かわいいミカ」と
+== 手紙には「暖かくしてね、かわいいミカ」と書いてあった。
+S| Mika {wore|wear|weared|worn} :: ミカは身につけた
+O| the scarf {every|ever|everything|everyone} day :: 毎日マフラーを
+M| {on|at|by|of} her way to school. :: 通学の途中に
+== ミカは毎日、学校へ行くときにそのマフラーを巻いた。
+S| Her friends {often|ofen|oftenly|offen} :: 友達はよく
+V| {said|saying|says|sayed}, :: 言った
+O| "{What|How|Which|Who} a nice scarf!" :: 「すてきなマフラー！」
+== 友達はよく「なんてすてきなマフラー！」と言った。
+S| Mika {was|were|be|been} :: ミカは…だった
+C| very {happy|happily|happiness|happier} :: とてもうれしく
+R| {to|for|at|of} hear that. :: それを聞いて
+== それを聞いて、ミカはとてもうれしかった。
+T| That {night|nights|knight|nightly}, :: その夜
+S| she {wrote|write|writed|written} :: 彼女は書いた
+O| a thank-you {letter|letters|latter|lettering} :: お礼の手紙を
+P| {to|at|of|than} her grandmother. :: 祖母に
+== その夜、彼女は祖母にお礼の手紙を書いた。
+S| The scarf {is|are|be|were} :: そのマフラーは
+M| {still|steel|stil|stilly} :: 今でも
+C| her {treasure|treasures|treasured|treasury}. :: 彼女の宝物だ
+== そのマフラーは今でも彼女の宝物だ。
+?? 0 3 小包はだれから届いた？
+?? 1 2 小包には何が入っていた？
+?? 2 2 祖母はどうやってマフラーを作った？
+?? 8 2 その夜、ミカは何を書いた？
+
+@id beg78
+@lv 1
+@level 4
+@title The Girl and the Stray Cat
+@ja 女の子と野良ネコ
+@tag 高校受験レベル・物語文
+@gloss stray=野良の, thin=やせた, hungry=空腹の, lunch box=弁当箱, follow=ついて来る, keep=飼う, take care of=世話をする, member=一員
+T| On her way {home|house|homes|to home}, :: 帰り道に
+S| Aya {saw|see|seen|sawed} :: アヤは見た
+O| a small {stray|strays|stray's|astray} cat. :: 小さな野良ネコを
+== 帰り道、アヤは小さな野良ネコを見かけた。
+S| It {was|were|be|been} :: それは…だった
+C| very {thin|thinly|thins|thing} :: とてもやせて
+M| {and|nor|than|with} hungry. :: そして空腹で
+== そのネコはとてもやせていて、おなかをすかせていた。
+S| Aya {gave|give|gived|given} it :: アヤはあげた
+O| some {bread|breads|bred|bready} :: パンを
+P| {from|than|whom|at} her lunch box. :: 弁当箱から
+== アヤはお弁当箱からパンをあげた。
+S| The cat {ate|eat|eated|eaten} it :: ネコはそれを食べた
+M| {quickly|quickness|quicken|quicks} :: すばやく
+M| and {followed|follow|follows|following} her. :: 彼女について来た
+== ネコはそれをすばやく食べて、彼女について来た。
+P| {At|On|In|By} home, :: 家で
+S| Aya {asked|ask|asking|askd} :: アヤはたずねた
+O| her {mother|mother's|motherly|mothering}, :: 母に
+O| "Can we {keep|keeps|kept|keeping} it?" :: 「飼ってもいい？」
+== 家で、アヤは母に「飼ってもいい？」とたずねた。
+S| Her mother {thought|think|thinked|thinking} :: 母は考えた
+O| {about|above|abroad|around} it :: それについて
+M| for a {while|whale|white|whole}. :: しばらく
+== 母はしばらくそのことを考えた。
+T| {Then|Than|Them|Theme} :: それから
+S| she {said|say|saying|sayed}, :: 彼女は言った
+O| "You {must|musts|must to|mustn't to} take care of it." :: 「ちゃんと世話してね」
+== それから母は「ちゃんと世話をしなさいね」と言った。
+S| Aya {named|name|naming|nameed} :: アヤは名づけた
+O| the {cat|cat's|catty|cating} Momo :: ネコをモモと
+T| {that|those|these|thats} night. :: その夜
+== その夜、アヤはそのネコをモモと名づけた。
+T| {Now|Ago|Since|Before} :: 今では
+S| Momo {is|are|be|am} :: モモは
+C| a member {of|for|at|to} the family. :: 家族の一員だ
+== 今では、モモは家族の一員だ。
+?? 0 2 アヤは帰り道に何を見かけた？
+?? 2 1 アヤはネコに何をあげた？
+?? 7 1 ネコに何という名前をつけた？
+?? 8 2 今、モモは何になっている？
+
+@id beg79
+@lv 1
+@level 4
+@title The Broken Vase
+@ja 割れた花びん
+@tag 高校受験レベル・物語文
+@gloss living room=居間, suddenly=突然, vase=花びん, pieces=かけら, scared=こわい, hide=隠す, truth=本当のこと, honest=正直な
+S| Sho {was|were|be|been} :: ショウは…いた
+V| {playing|play|plays|playful} with a ball :: ボールで遊んで
+P| {in|on|at|of} the living room. :: 居間で
+== ショウは居間でボールで遊んでいた。
+M| {Suddenly|Sudden|Suddenness|Suddener}, :: 突然
+S| the ball {hit|hitted|hitting|to hit} :: ボールが当たった
+O| his mother's {vase|vast|vased|vasing}. :: 母の花びんに
+== 突然、ボールが母の花びんに当たった。
+S| It {fell|fall|falled|fallen} :: それは落ちた
+M| {and|nor|than|with} broke :: そして割れた
+P| {into|in to|onto|until} pieces. :: こなごなに
+== それは落ちて、こなごなに割れた。
+T| {At|In|On|By} first, :: 最初は
+S| Sho {was|were|be|been} :: ショウは…だった
+C| very {scared|scare|scares|scaredly}. :: とてもこわく
+== 最初、ショウはとてもこわかった。
+S| He {wanted|want|wanting|wanteds} :: 彼は…したかった
+V| to {hide|hides|hid|hiding} :: 隠すこと
+O| the {pieces|peaces|pieced|piecing}. :: かけらを
+== 彼はかけらを隠したかった。
+M| {But|Than|Nor|Whom} :: でも
+S| he {remembered|remember|remembering|rememberd} :: 彼は思い出した
+O| his father's {words|world|wordy|wordly}: :: 父の言葉を
+== でも彼は父の言葉を思い出した。
+M| "{Always|Alway|Allways|All way} :: 「いつも
+V| {tell|tells|told|telling} :: 話しなさい
+O| the {truth|true|truly|truth's}." :: 本当のことを」
+== 「いつも本当のことを話しなさい。」
+T| When his mother {came|come|coming|comed} home, :: 母が帰ってきたとき
+S| Sho {said|say|saying|sayed}, :: ショウは言った
+O| "I'm sorry. I {broke|breaked|broken|breaking} it." :: 「ごめん、割った」
+== 母が帰ってきたとき、ショウは「ごめんなさい。ぼくが割ったんだ」と言った。
+S| His mother {was|were|be|been} :: 母は…だった
+C| {not|no|none|nothing} angry :: 怒っていなかった
+M| at {all|every|any|each}. :: 少しも
+== 母は少しも怒っていなかった。
+S| She {said|say|saying|sayed}, :: 彼女は言った
+O| "Thank you {for|to|at|of} :: 「ありがとう
+C| being {honest|honesty|honestly|honester}." :: 正直でいてくれて」
+== 母は「正直に言ってくれてありがとう」と言った。
+?? 0 2 ショウはどこで遊んでいた？
+?? 1 2 ボールは何に当たった？
+?? 4 2 ショウは最初、何を隠したかった？
+?? 8 1 母は怒っていた？
+
+@id beg80
+@lv 1
+@level 4
+@title A Snowy Morning
+@ja 雪の朝
+@tag 高校受験レベル・物語文
+@gloss curtain=カーテン, covered=おおわれた, snowman=雪だるま, yard=庭, carrot=にんじん, gloves=手袋, hot chocolate=ココア, wonderful=すばらしい
+T| One winter {morning|mornings|morning's|mourning}, :: ある冬の朝
+S| Nana {opened|open|opening|opend} :: ナナは開けた
+O| the {curtains|curtain's|certain|curtained}. :: カーテンを
+== ある冬の朝、ナナはカーテンを開けた。
+S| The town {was|were|be|been} :: 町は…だった
+C| {covered|cover|covers|covering} :: おおわれて
+P| {with|of|at|to} snow. :: 雪で
+== 町は雪でおおわれていた。
+S| Nana {ran|run|runned|running} :: ナナは走った
+M| {outside|outsides|out side|outer} :: 外へ
+P| {with|of|than|at} her brother. :: 弟と
+== ナナは弟といっしょに外へ走り出た。
+S| They {made|maked|making|makes} :: 二人は作った
+O| a big {snowman|snowmen|snow man's|snowmans} :: 大きな雪だるまを
+P| {in|of|than|from} the yard. :: 庭に
+== 二人は庭に大きな雪だるまを作った。
+S| Her brother {used|use|using|usen} :: 弟は使った
+O| a {carrot|carrots|carrot's|carry} :: にんじんを
+P| {as|than|whom|until} its nose. :: 鼻として
+== 弟は雪だるまの鼻ににんじんを使った。
+S| Nana's hands {got|gets|getting|gotted} :: ナナの手はなった
+C| very {cold|colds|coldly|coldness} :: とても冷たく
+R| {because|because of|although of|due} she had no gloves. :: 手袋がなくて
+== 手袋がなかったので、ナナの手はとても冷たくなった。
+S| Their mother {called|call|calling|calld}, :: 母が呼んだ
+O| "{Come|Comes|Came|Coming} inside! :: 「中に入って！
+O| I {made|makes|maked|making} hot chocolate." :: ココアを作ったよ」
+== 母が「中に入りなさい！ココアを作ったよ」と呼んだ。
+S| They {drank|drink|drinked|drunk} it :: 二人はそれを飲んだ
+P| {by|of|than|until} the window :: 窓のそばで
+M| {and|nor|than|with} watched the snow. :: 雪をながめた
+== 二人は窓のそばでそれを飲みながら、雪をながめた。
+S| It {was|were|be|been} :: それは…だった
+C| a {wonderful|wonder|wonderfully|wonders} morning :: すばらしい朝
+P| {for|of|than|until} Nana. :: ナナにとって
+== それはナナにとってすばらしい朝だった。
+?? 1 2 町は何でおおわれていた？
+?? 3 1 二人は何を作った？
+?? 4 1 弟は鼻に何を使った？
+?? 5 2 ナナの手はなぜ冷たくなった？
+
+@id beg81
+@lv 1
+@level 4
+@title The Lucky Coin
+@ja 幸運のコイン
+@tag 高校受験レベル・物語文
+@gloss coin=コイン, pocket=ポケット, believe=信じる, luck=運, lose=なくす, search=探す, worried=心配して, usual=いつもの
+S| Ryo {had|have|having|haved} :: リョウは持っていた
+O| an old {coin|coins|coined|coining} :: 古いコインを
+P| {from|than|at|into} his grandfather. :: 祖父からもらった
+== リョウは祖父からもらった古いコインを持っていた。
+S| He {always|alway|allways|all way} :: 彼はいつも
+V| {kept|keeped|keeping|keept} it :: それを入れていた
+P| {in|on|at|of} his pocket. :: ポケットに
+== 彼はいつもそれをポケットに入れていた。
+S| He {believed|believe|believing|believd} :: 彼は信じていた
+O| it {brought|bringed|bring|brang} him :: それがもたらすと
+O| good {luck|lucky|luckily|lucks}. :: 幸運を
+== 彼は、それが幸運をもたらしてくれると信じていた。
+T| The day {before|ago|since|while} a big test, :: 大事なテストの前日
+S| Ryo {lost|lose|losed|losing} :: リョウはなくした
+O| the {coin|coined|coining|coin's}. :: コインを
+== 大事なテストの前日、リョウはそのコインをなくしてしまった。
+S| He {searched|search|searching|serched} :: 彼は探した
+O| {for|to|at|of} it :: それを
+T| {all|every of|each of|any of} evening, :: 夜の間ずっと
+M| {but|than|nor|whom} could not find it. :: でも見つからなかった
+== 彼は夜の間ずっと探したが、見つけられなかった。
+S| Ryo {was|were|be|been} :: リョウは…だった
+C| very {worried|worry|worries|worriedly} :: とても心配して
+P| {about|above|abroad|across} the test. :: テストのことが
+== リョウはテストのことがとても心配だった。
+T| {That|Those|These|Thats} night, :: その夜
+S| he {studied|study|studys|studyed} :: 彼は勉強した
+M| {harder|hard|hardly|hardest} than usual. :: いつもより熱心に
+== その夜、彼はいつもより一生懸命勉強した。
+T| The next {day|days|daily|dairy}, :: 次の日
+S| he {did|do|done|doing} :: 彼は…した
+M| well {on|of|than|until} the test. :: テストでよく
+== 次の日、彼はテストでよい点を取った。
+T| After {school|schools|scholar|schooled}, :: 放課後
+S| he {found|find|founded|finded} :: 彼は見つけた
+O| the coin {under|ander|undo|until} his bed. :: ベッドの下で
+== 放課後、彼はベッドの下でコインを見つけた。
+S| Ryo {smiled|smile|smiling|smileed} :: リョウはほほえんだ
+M| {and|nor|than|with} thought, :: そして思った
+O| "I {didn't|doesn't|wasn't|not} need it." :: 「必要なかった」
+== リョウはほほえんで、「コインはいらなかったんだ」と思った。
+?? 1 2 リョウはコインをどこに入れていた？
+?? 3 0 コインをなくしたのはいつ？
+?? 6 2 その夜、彼はどのように勉強した？
+?? 8 2 コインはどこで見つかった？
+
+@id beg82
+@lv 1
+@level 4
+@title The Paper Airplane
+@ja 紙飛行機
+@tag 高校受験レベル・物語文
+@gloss paper airplane=紙飛行機, contest=大会, practice=練習する, fold=折る, wing=つばさ, advice=アドバイス, wide=広い, prize=賞
+S| Sota {liked|like|liking|likeed} :: ソウタは好きだった
+O| {making|make|made|makes} paper airplanes :: 紙飛行機作りが
+M| very {much|many|more|most}. :: とても
+== ソウタは紙飛行機を作るのがとても好きだった。
+T| One {day|days|daily|dairy}, :: ある日
+S| his teacher {told|tell|telled|telling} :: 先生が話した
+O| the {class|classy|classed|classing} :: クラスに
+P| {about|above|abroad|across} a contest. :: 大会について
+== ある日、先生がクラスに大会の話をした。
+S| It {was|were|be|been} :: それは…だった
+C| a paper airplane {contest|contests|contested|contesting} :: 紙飛行機の大会
+P| {for|than|until|whom} children. :: 子どもたちの
+== それは子どもたちのための紙飛行機の大会だった。
+S| Sota {practiced|practice|practicing|practise} :: ソウタは練習した
+T| {every|ever|everyone|everything} day :: 毎日
+P| {in|of|than|until} the park. :: 公園で
+== ソウタは毎日公園で練習した。
+S| He {folded|fold|folding|foldd} :: 彼は折った
+O| {many|much|lot|any} airplanes :: たくさんの飛行機を
+M| {with|than|until|whom} different wings. :: ちがうつばさで
+== 彼はつばさの形がちがう飛行機をたくさん折った。
+M| {But|Than|Nor|Whom} :: でも
+S| they {did not|does not|not|was not} fly :: 飛ばなかった
+M| very {far|for|fur|farther}. :: あまり遠くへ
+== でも、それらはあまり遠くへは飛ばなかった。
+S| His grandfather {said|say|saying|sayed}, :: 祖父は言った
+O| "{Make|Makes|Made|Making} :: 「…にしなさい
+O| the wings {wider|widely|widest|widen}." :: つばさを広く」
+== 祖父は「つばさをもっと広くしなさい」と言った。
+S| Sota {tried|try|tryed|trying} it, :: ソウタは試した
+M| and the airplane {flew|fly|flied|flown} :: 飛行機は飛んだ
+M| very {far|for|fur|farther}. :: とても遠くへ
+== ソウタが試すと、飛行機はとても遠くまで飛んだ。
+P| {At|Of|Than|Until} the contest, :: 大会で
+S| he {won|win|winned|winning} :: 彼は取った
+O| {first|firstly|once|fast} prize. :: 1等賞を
+== 大会で、彼は1等賞を取った。
+S| He {thanked|thank|thanking|thankd} :: 彼は感謝した
+O| his {grandfather|grand father|grandfather's|grandfatherly} :: 祖父に
+M| with a big {smile|smiles|smiling|smiled}. :: 満面の笑顔で
+== 彼は満面の笑みで祖父にお礼を言った。
+?? 2 2 それはだれのための大会だった？
+?? 3 2 ソウタはどこで練習した？
+?? 6 2 祖父は何とアドバイスした？
+?? 8 2 大会で彼は何を取った？

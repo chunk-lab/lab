@@ -1,0 +1,756 @@
+@id adv88
+@lv 3
+@level 8
+@title The Myth of Learning Styles
+@ja 学習スタイルという神話
+@tag 難関大レベル・論説文
+@gloss preferred=好みの, auditory=聴覚の, kinesthetic=体感の, intuitively=直感的に, individuality=個性, evidence=証拠, supposed=…とされる, label=ラベルを貼る, variety=多様さ
+S| {Many|Much|A lot|Every} teachers :: 多くの教師は
+V| {believe|believes|belief|believing} :: 信じている
+O| {that|what|which|whom} students learn best :: 生徒が最もよく学ぶと
+M| {when|what|whom|whose} lessons match :: 授業が合うときに
+O| their {preferred|prefer|prefers|preferring} "learning style," :: 好みの学習型に
+X| {whether|either|neither|both} visual, auditory, or kinesthetic. :: 視覚か聴覚か体感か
+== 多くの教師は、視覚型・聴覚型・体感型といった好みの「学習スタイル」に授業を合わせると、生徒が最もよく学ぶと信じている。
+S| The {idea|ideas|idealize|ideally} :: その考えは
+V| {is|are|be|being} :: …だ
+C| {intuitively|intuitive|intuition|intuit} appealing, :: 直感的に魅力的
+M| {for|because of|despite|owing} it seems :: というのも…らしい
+V| {to respect|to respecting|respects|respectful} :: 尊重する
+O| the {individuality|individually|individualize|individualistic} of each learner. :: 学習者の個性を
+== この考えは直感的に魅力的だ。学習者一人ひとりの個性を尊重しているように思えるからだ。
+M| {Yet|Already|Despite|Unless of} when researchers :: しかし研究者が
+V| {have put|have putted|has put|have putting} :: …にかけたとき
+O| the theory {to|on|in|for} the test, :: 理論を検証に
+S| they {have found|have find|has found|have finding} :: 彼らは見つけた
+O| {little|few|a few|less of} evidence :: ほぼない証拠を
+R| {to support|supporting of|for support|to supporting} it. :: それを支持する
+== しかし研究者たちがこの理論を実際に検証してみると、それを裏づける証拠はほとんど見つからなかった。
+P| {In|On|At|Of} carefully designed experiments, :: 綿密な実験で
+S| students {taught|teaching|teach|teaches} :: 教わった生徒は
+P| {in|on|at|to} their supposed style :: 自分の型とされる形で
+V| {performed|performing|performance|performer} :: 成績を出した
+C| {no|none|nor|neither} better :: 少しも良くない
+P| than those {taught|teaches|teach|to taught} in other ways. :: 他の形の生徒より
+== 綿密に設計された実験では、自分に合うとされる型で教わった生徒も、別の方法で教わった生徒より成績が良いわけではなかった。
+S| {What|That|Which|It} matters more, :: より重要なのは
+M| it {turns|turn|turning|turns to} out, :: 実は
+V| {is|are|be|being} :: …だ
+C| {whether|either|neither|weather} the method suits :: 方法が合うかどうか
+O| the content {being|been|be|is} taught. :: 教える内容に
+== 実は、より重要なのは、その方法が教える内容に合っているかどうかだ。
+S| A map {is|are|be|being} :: 地図は
+V| best {understood|understand|understanding|understands} visually, :: 目で見てよくわかる
+M| {and|nor|than|whom} a poem :: そして詩は
+V| is best {appreciated|appreciate|appreciation|appreciating} aloud, :: 声に出して味わう
+M| {regardless of|regardless to|regard of|regarded of} who the learner is. :: 学習者が誰であれ
+== 地図は目で見るのが、詩は声に出して読むのがいちばんで、それは学習者が誰であっても変わらない。
+S| {Critics|Critical|Criticize|Critically} of the myth :: 神話の批判者は
+V| also {point|points|pointing|to point} out :: また指摘する
+O| {a|an|few|much} hidden danger. :: 隠れた危険を
+== この神話を批判する人々は、隠れた危険も指摘している。
+S| {Labeling|Label|Labeled|Labels} a child :: 子どもに名づけると
+P| {as|for|like|to} a "visual learner" :: 「視覚型」と
+V| may {lead|leads|leading|led} them :: 彼らを導きうる
+X| {to avoid|avoiding|avoid|to avoiding} tasks :: 課題を避けるよう
+X| {that|what|whose|whom} require listening or reading, :: 聞く・読む必要のある
+M| {thus limiting|thus limit|thus limited|thus limitation} their growth. :: その結果成長を狭める
+== 子どもに「視覚型」というラベルを貼ると、聞くことや読むことが必要な課題を避けるようになり、成長を狭めかねない。
+S| Good teaching, {then|than|thence|them}, :: つまり良い教育は
+V| {lies|lays|lie|lying} :: …にある
+M| not {in|on|at|to} sorting students into types :: 型に分けることでなく
+M| {but|and|or|so} in offering everyone :: 全員に与えることに
+O| a {variety|various|vary|variously} of ways to learn. :: 多様な学び方を
+== つまり良い教育とは、生徒を型に分けることではなく、全員に多様な学び方を提供することにあるのだ。
+S| The appeal {of|for|in|to} the myth :: 神話の魅力は
+V| {is|are|be|being} :: …だ
+C| a {reminder|remind|reminding|reminded} :: 思い出させるもの
+X| {that|what|which|whose} an idea can feel true :: 考えは本当らしく思える
+M| {without|within|unless|despite of} being true. :: 本当でなくても
+== この神話の魅力は、考えというものは真実でなくても真実らしく感じられるのだと気づかせてくれる。
+?? 0 4 教師たちは授業を何に合わせるとよいと信じている？
+?? 2 4 研究者はどれくらいの証拠を見つけた？
+?? 4 4 より重要なのは、方法が何に合っているかどうか？
+?? 7 4 「視覚型」とされた子はどんな課題を避けうる？
+?? 8 4 良い教育は全員に何を与えることにある？
+
+@id adv89
+@lv 3
+@level 8
+@title The Ship of Theseus
+@ja テセウスの船
+@tag 難関大レベル・論説文
+@gloss plank=板, rot=腐る, hull=船体, claim=主張, identity=同一性, continuity=連続性, favor=支持する, courtesy=礼遇
+S| An {ancient|ancestor|antique of|anciently} Greek puzzle :: 古代ギリシャの難問は
+V| {asks|ask|asking|asked to} us :: 私たちに求める
+X| {to imagine|imagining|imagine|to imagining} a wooden ship :: 木の船を想像するよう
+X| {whose|who|whom|which} planks are replaced, :: その板が替えられる
+M| one {by|for|in|of} one, :: 一枚ずつ
+M| {as|unless of|during|while of} they rot. :: 腐るにつれて
+== 古代ギリシャの難問では、板が腐るたびに一枚ずつ取り替えられていく木造の船を想像してみよと言う。
+M| {Eventually|Eventual|Event|Eventuality}, :: やがて
+S| not {a single|single|a singly|an single} original plank :: 元の板は1枚も
+V| {remains|remain|remaining|remainder} :: 残らない
+P| {in|into|onto|to} the hull. :: 船体に
+== やがて、船体には元の板が一枚も残っていない状態になる。
+V| {Is|Are|Does|Do} it still :: それはまだ…か
+C| the {same|sameness|samely|alike} ship, :: 同じ船
+M| {or|nor|than|whom} has it become :: それとも…なったか
+C| a new {one|ones|once|it}? :: 新しい船に
+== それはまだ同じ船なのか、それとも新しい船になったのか。
+M| To make matters {worse|worst|badly|worsen}, :: さらに厄介なことに
+V| {suppose|supposing that of|supposed|supposes} :: 仮に…としよう
+S| someone {collected|collect|collecting|collection} the old planks :: 誰かが古い板を集め
+M| {and|nor|than|but of} rebuilt :: 組み立て直した
+O| the original ship {from|at|toward|across} them. :: それで元の船を
+== さらに厄介なことに、誰かが古い板を集めて、それで元の船を組み立て直したとしよう。
+T| {Now|Nowadays of|Know|Not} :: 今や
+S| there {are|is|be|being} two ships, :: 船が2隻ある
+M| {each|every|either|whose} with :: それぞれが持つ
+O| an {equally|equal|equality|equalize} strong claim :: 同等に強い主張を
+X| {to be|being|be|to being} the ship of Theseus. :: テセウスの船だという
+== 今や船は2隻あり、どちらも等しく自分こそテセウスの船だと主張できる。
+S| {Philosophers|Philosophy|Philosophical|Philosophize} :: 哲学者たちは
+V| have long {used|use|using|uses} this puzzle :: この難問を長く用いた
+R| {to explore|explore|explores|to exploring} :: 探るために
+O| {what|that|which|whose} makes an object :: 何が物を…させるか
+X| {remain|remains|remaining|to remained} itself :: 同じであり続け
+T| {over|at|onto|upon} time. :: 時を経て
+== 哲学者たちは長い間、この難問を使って、物が時を経ても同じであり続けるのは何によるのかを探ってきた。
+S| One {answer|answers|answering|answered} :: 1つの答えは
+V| {holds|hold|holding|held to} :: 主張する
+O| {that|what|which|whom} identity depends :: 同一性は…によると
+P| {on|in|at|for} the material, :: 素材に
+M| {so|so that of|such|as so} the rebuilt ship :: だから再建された船が
+V| {is|are|be|being} the true original. :: 本物の元の船だ
+== ある答えは、同一性は素材によって決まるので、組み立て直された船こそ本物の元の船だとする。
+S| {Another|Other|Others|The another} insists :: 別の答えは主張する
+O| {that|what|which|whose} what counts :: 大事なのは
+V| {is|are|be|being} :: …だと
+C| {continuity|continue|continuous|continually} of form and function, :: 形と働きの連続性
+X| {which|what|who|whom} favors the ship :: それは船を支持する
+X| {that|what|whose|whom} never stopped sailing. :: 航海をやめなかった
+== 別の答えは、大切なのは形と働きの連続性であり、それなら一度も航海をやめなかった船の方が本物だと主張する。
+S| {Neither|Both|None|Nor} answer :: どちらの答えも
+V| {is|are|be|being} entirely :: 完全には
+C| {satisfying|satisfy|satisfaction|satisfied of}, :: 満足できない
+M| {and|nor|than|whom} that is precisely :: それこそがまさに
+X| {why|what|whom|whose} the puzzle has survived :: 難問が残った理由
+T| {for|since|during|while} centuries. :: 何世紀も
+== どちらの答えも完全には納得できず、だからこそこの難問は何世紀も生き残ってきた。
+S| It also {applies|apply|applying|application} :: それは当てはまる
+O| {to|for|on|with} us, :: 私たちにも
+M| {since|for since|during|until of} many of the cells :: 多くの細胞が…ので
+P| {in|onto|into|to} our bodies :: 体の
+V| {are|is|be|being} replaced over a lifetime. :: 生涯で入れ替わる
+== この難問は私たちにも当てはまる。体の細胞の多くは、一生のうちに入れ替わるからだ。
+M| {If|Unless of|Whether of|Despite} we remain ourselves :: 私たちが自分のままなら
+M| {despite|despite of|in spite|although} such change, :: そうした変化を経ても
+S| the ship {may|mays|may to|maybe} :: 船も…かもしれない
+V| {deserve|deserves|deserving|to deserve} :: 値する
+O| the {same|sameness|samely|alike} courtesy. :: 同じ扱いに
+== 変化を経ても私たちが自分自身であり続けるのなら、船にも同じ扱いがふさわしいのかもしれない。
+?? 0 5 板はどんなときに取り替えられる？
+?? 3 2 誰かが集めたのは何？
+?? 6 3 ある答えでは、同一性は何によって決まる？
+?? 7 3 別の答えで大事なのは何？
+?? 9 2 体の何が一生のうちに入れ替わる？
+
+@id adv90
+@lv 3
+@level 8
+@title Why We Value the Original
+@ja なぜ本物に価値があるのか
+@tag 難関大レベル・論説文
+@gloss forgery=贋作, identical=同一の, cynical=皮肉な, snobbery=見栄, appreciation=鑑賞, trace=痕跡, brushstroke=筆づかい, imitation=模倣, cheated=だまされた
+V| {Imagine|Imagination|Imaginative|Imagining} :: 想像してほしい
+O| a {forgery|forgeries|forging of|forger of} :: 贋作を
+M| so {skillful|skill|skillfully|skills} :: とても巧みで
+X| {that|what|which|as} even experts cannot tell it apart :: 専門家も見分けられない
+P| {from|of|with|to} the original painting. :: 元の絵と
+== 専門家でさえ本物の絵と見分けられないほど巧みな贋作を想像してほしい。
+M| {If|Unless of|Whether of|Despite} the two images :: 2枚の絵が
+V| {are|is|be|being} identical, :: 同一なら
+M| {why|what|whom|whose} should the original :: なぜ本物は
+V| {be|being|been|is} worth millions :: 数百万の価値があり
+M| {while|whilst of|during|meanwhile} the copy :: 一方で複製は
+V| is {worth|worthy|worthless of|worths} almost nothing? :: ほぼ無価値なのか
+== 2枚の絵が同じなら、なぜ本物には何百万もの価値があり、複製にはほとんど価値がないのだろうか。
+S| One {cynical|cynic|cynically|cynicism} answer :: ある皮肉な答えは
+V| {is|are|be|has} :: …だ
+O| {that|what|which|whose} we pay :: 私たちが払うのは
+P| {for|at|of|toward} the name, :: 名前に対してで
+M| {not|no|none|nor} for the art. :: 芸術にではない
+== ある皮肉な答えは、私たちは芸術ではなく名前にお金を払っているのだというものだ。
+P| {According|Accordingly|Accord|Accordance} to this view, :: この見方では
+S| the art {market|markets|marketing of|marketed} :: 美術市場は
+V| is {driven|drove|drive|drives} :: 動かされている
+P| {by|with|for|of} snobbery and investment :: 見栄と投資に
+M| {rather|rather of|instead|more rather} than by genuine appreciation. :: 純粋な鑑賞よりも
+== この見方では、美術市場を動かしているのは純粋な鑑賞よりも、見栄や投資だということになる。
+M| {Yet|Already|Despite|Unless} :: しかし
+S| there {may|mays|may to|might to} be :: …があるかもしれない
+O| a {deeper|deeply|depth|deepen} reason :: より深い理由が
+P| {for|by|on|at} our attachment :: 愛着の
+P| {to|for|with|at} originals. :: 本物への
+== しかし、本物への愛着にはもっと深い理由があるのかもしれない。
+M| {When|What|Whom|Whose} we stand :: 私たちが立つとき
+P| {before|ago|since|front} a painting, :: 絵の前に
+S| we are not {merely|mere|meres|merest} :: 単に…のではない
+V| {looking|look|looked|looks} at colors on a surface; :: 表面の色を見ている
+S| we {are|is|be|being} encountering :: 私たちは出会っている
+O| the {trace|traced|traceable|traceless} of a human act. :: 人の行為の痕跡に
+== 絵の前に立つとき、私たちは表面の色を見ているだけではない。人間の行為の痕跡に出会っているのだ。
+S| Each {brushstroke|brushstrokes|brushstroking|brushes} :: 一筆一筆が
+V| {records|record|recording|to record} :: 記録している
+O| a decision {made|making|make|makes} :: 下された決断を
+P| {by|with|of|at} a particular person :: ある特定の人に
+T| {at|on|for|onto} a particular moment in history. :: 歴史のある瞬間に
+== 一筆一筆が、歴史のある瞬間に、ある特定の人物が下した決断を記録しているのだ。
+S| A {forgery|forges|forged|forging of}, :: 贋作は
+M| {however|whatever|whenever|wherever} perfect, :: どんなに完璧でも
+V| {records|record|recording|to record} :: 記録する
+O| a {different|differ|difference|differently} act: :: 別の行為を
+X| {that|those|this|it} of imitation. :: 模倣という行為を
+== 贋作は、どれほど完璧でも別の行為、つまり模倣という行為を記録しているにすぎない。
+S| This {explains|explain|explaining|explanation} :: これで説明がつく
+O| {why|what|whom|whose} we feel cheated :: だまされたと感じる訳
+M| {when|what|whom|whose} a celebrated work :: 名作が…とき
+V| turns {out|off|up|in} :: …だと判明する
+C| {to be|being|be|been} fake, :: 偽物だと
+M| even {though|through|thorough|tough} nothing about its appearance has changed. :: 見た目は不変なのに
+== これで、名作が偽物だと判明したとき、見た目は何も変わっていないのに、私たちがだまされたと感じる理由がわかる。
+S| {What|That|Which|It} we value in the original, :: 本物に見る価値は
+M| {then|than|them|thence}, :: つまり
+V| {is|are|be|being} not only beauty :: 美しさだけでなく
+M| {but|and|or|so} a genuine connection :: 本物のつながりだ
+P| {to|at|by|onto} another mind. :: 他者の心との
+== つまり私たちが本物に見いだす価値とは、美しさだけでなく、他者の心との本物のつながりなのだ。
+?? 0 3 専門家でさえできないことは何？
+?? 2 3 皮肉な答えでは、私たちは何にお金を払っている？
+?? 3 3 この見方では、美術市場を動かしているのは何？
+?? 5 5 絵の前で私たちが出会っているのは何？
+?? 7 4 贋作が記録しているのはどんな行為？
+
+@id adv91
+@lv 3
+@level 8
+@title The Death of the Author
+@ja 作者の死
+@tag 難関大レベル・論説文
+@gloss critic=批評家, declare=宣言する, intention=意図, govern=支配する, weave=織る, liberate=解放する, valid=妥当な, interpretation=解釈, authority=権威
+P| {In|On|At|By} a famous 1967 essay, :: 1967年の論文で
+S| the French {critic|critical|criticism|criticize} Roland Barthes :: 批評家バルトは
+V| {declared|declare|declaring|declaration} :: 宣言した
+O| "the death {of|for|to|by} the author." :: 「作者の死」を
+== 1967年の有名な論文で、フランスの批評家ロラン・バルトは「作者の死」を宣言した。
+S| He did not {mean|meant|meaning|means} :: 彼の意味ではない
+O| {that|what|which|whose} writers had literally died, :: 作家が本当に死んだと
+M| {but|and|or|so} that their intentions :: そうでなく意図が
+V| should no longer {govern|governs|governing|governed} :: もう支配すべきでない
+O| {how|whose|whom|which of} we read. :: 読み方を
+== それは作家が文字どおり死んだという意味ではなく、作家の意図がもはや私たちの読み方を支配すべきではないという意味だった。
+M| {Traditionally|Tradition|Traditional|Traditions}, :: 従来
+S| critics had {tried|try|trying|tries} :: 批評家は試みてきた
+X| {to discover|discovering of|discover|to discovering} :: 見つけようと
+O| {what|that|which|whose} an author "really meant," :: 作者の真意を
+M| {treating|treated|treat|treatment} the text :: 作品を扱いつつ
+P| {as|for|to|by} a puzzle with a single correct solution. :: 正解が1つの謎として
+== 従来、批評家は作者が「本当に意味したこと」を見つけ出そうとし、作品を正解が一つしかない謎のように扱ってきた。
+S| Barthes {argued|argue|argument|arguing} instead :: バルトは逆に論じた
+O| {that|what|which|whose} a text is woven :: 作品は織られている
+P| {from|to|at|toward} countless earlier texts :: 無数の先行作品から
+M| {and|nor|than|but of} only comes alive :: 命を得るのは…だけ
+P| {in|on|at|to} the mind of the reader. :: 読者の心の中で
+== バルトはそうではなく、作品は無数の先行する作品から織り上げられ、読者の心の中でだけ命を得るのだと論じた。
+S| "The birth {of|for|to|from} the reader," :: 「読者の誕生は」
+M| he {wrote|write|written|writing}, :: と彼は書いた
+V| "must {be|being|been|is} :: …でなければならない
+P| {at|on|in|by} the cost :: 代償として
+P| {of|for|to|from} the death of the Author." :: 作者の死という
+== 「読者の誕生は、作者の死によってあがなわれなければならない」と彼は書いた。
+S| This idea {liberated|liberate|liberation|liberating} readers, :: この考えは読者を解放
+M| {encouraging|encouraged|encourage|encouragement} them :: 彼らを促して
+X| {to find|finding|find|to finding} meanings :: 意味を見つけるよう
+X| the author may never {have imagined|imagined|imagine to|has imagined}. :: 作者も思わなかった
+== この考えは読者を解放し、作者が想像もしなかったような意味を見いだすよう促した。
+S| {Critics|Critical|Criticize|Critically}, :: 批判する人は
+M| {however|whatever|whenever|wherever}, :: しかし
+V| {warn|warns|warning|warned of} :: 警告する
+O| that if every reading {is|are|be|being} :: どの読みも…なら
+C| equally {valid|validity|validate|validly}, :: 等しく正しい
+S| {interpretation|interpret|interpretive|interpreted} :: 解釈は
+V| risks {becoming|to become|become|became} mere self-expression. :: 自己表現になりかねない
+== しかし批判する人々は、どの読みも等しく正しいのなら、解釈は単なる自己表現になりかねないと警告する。
+S| A poem {about|above|abroad|aboard} grief :: 悲しみの詩は
+V| cannot {reasonably|reasonable|reason|reasoned} :: 無理なく…できない
+V| {be|being|been|to be} read :: 読まれる
+P| {as|to|at|of} a celebration, :: 祝福として
+M| {whatever|whoever|whosever|whichever of} the reader happens to feel. :: 読者が何を感じても
+== 悲しみを詠んだ詩を祝福の詩として読むのは、読者がどう感じようと無理がある。
+S| {Most|Almost|Mostly|The most of} critics today :: 今の批評家の多くは
+V| {take|takes|taking|taken} :: とる
+O| a {middle|midst|medium of|amid} path, :: 中間の道を
+M| {treating|treated|treat|treatment} the text itself, :: 作品そのものを
+M| {rather|rather of|instead|more rather} than either author or reader, :: 作者や読者でなく
+P| {as|for|to|by} the final authority. :: 最終的な権威として
+== 今日の批評家の多くは中間の立場をとり、作者でも読者でもなく、作品そのものを最終的なよりどころとしている。
+S| The author {may|mays|may to|maybe} be dead, :: 作者は死んでも
+M| {but|and of|nor|than} the words on the page :: ページの言葉は
+V| still {set|sets|setting|to set} limits :: 今も限界を定める
+P| {on|in|at|by} what they can mean. :: 意味しうるものに
+== 作者は死んだのかもしれないが、ページの上の言葉は、それが意味しうるものに今も限界を設けている。
+?? 0 0 バルトが「作者の死」を宣言した論文は何年のもの？
+?? 2 3 従来の批評家は何を見つけようとした？
+?? 3 4 バルトによれば、作品はどこで命を得る？
+?? 6 6 批判する人々によれば、解釈は何になりかねない？
+?? 8 3 中間の立場で最終的なよりどころとされるのは何？
+
+@id adv92
+@lv 3
+@level 8
+@title In Praise of Boredom
+@ja 退屈のすすめ
+@tag 難関大レベル・随筆
+@gloss entertain=楽しませる, unbearably=耐えがたいほど, absorb=奪う, instantly=即座に, signal=知らせる, idle=暇な, productive=生産的な, wander=さまよう, stimulation=刺激
+M| {As|For|By|Of} a child, :: 子どもの頃
+S| I {spent|spending|spends|spended} :: 私は過ごした
+O| long summer {afternoons|afternoon|noons of|evening} :: 夏の長い午後を
+P| {with|within|without of|by} nothing to do :: することもなく
+M| {and|nor|than|but of} no one :: 誰も…ないまま
+X| {to entertain|entertain|entertains|to entertaining} me. :: 相手をしてくれる
+== 子どもの頃、私は夏の長い午後を、することもなく、相手をしてくれる人もいないまま過ごした。
+T| {At|In|On|By} the time, :: 当時は
+S| those {hours|hour|houred|hourly} :: その時間は
+V| {felt|feeling|feels|felted} :: 感じられた
+C| {unbearably|unbearable|unbear|bearing} slow. :: 耐えがたく遅く
+== 当時、その時間は耐えがたいほど遅く感じられた。
+M| {Looking|Looked|Look|Looks} back, :: 振り返ると
+M| {however|whatever|whenever|wherever}, :: しかし
+S| I {realize|realizes|realizing|realization} :: 私は気づく
+O| they were {among|between|amid of|along} :: それらは…の一つだと
+C| the most {creative|creation|create|creatively} of my life. :: 人生で最も創造的
+== しかし振り返ってみると、それは人生で最も創造的な時間の一つだったと気づく。
+M| {With|Within|Without|By} no screen :: 画面がないので
+X| {to absorb|absorb|absorbs|to absorbing} my attention, :: 注意を奪う
+S| I {invented|inventing|invention|inventive} games, :: 遊びを考え出し
+V| {wrote|written|writes|writing} stories, :: 物語を書き
+M| {and|nor|than|but of} stared at clouds :: 雲を眺めた
+M| {until|by|during|despite} they turned into animals. :: 動物に見えるまで
+== 気を奪う画面などなかったので、私は遊びを考え出し、物語を書き、雲が動物に見えてくるまで眺めていた。
+T| {Today|Todays|Nowaday|Yesterday's}, :: 今日では
+S| boredom {is|are|be|being} treated :: 退屈は扱われる
+P| {as|to|at|by} a problem :: 問題として
+X| {to be solved|to be solving|being solve|to solved} instantly, :: すぐ解決すべき
+M| usually {by|with|for|at} reaching for a phone. :: たいていスマホで
+== 今日、退屈はすぐに解決すべき問題とされ、たいていはスマホに手を伸ばすことで片づけられる。
+M| {Yet|Already|Despite|Unless} psychologists :: しかし心理学者は
+V| {suggest|suggests|suggesting|suggestion} :: 示唆する
+O| {that|what|which|whose} boredom serves a purpose: :: 退屈には役割があると
+S| it {signals|signal|signaling|significant} :: それは知らせる
+O| {that|what|whose|whom} our current activity :: 今の活動が…と
+V| is not {satisfying|satisfied|satisfy|satisfaction} us. :: 満たしていない
+== しかし心理学者によれば、退屈には役割がある。今している活動に満足していないと知らせてくれるのだ。
+M| {By|For|With|At} escaping it too quickly, :: すぐ逃れることで
+S| we {may|mays|may to|maybe} :: 私たちは…かも
+V| {miss|misses|missing|missed} the chance :: 機会を逃す
+X| {to ask|asking|ask|to asking} :: 問う
+O| {what|that|which|whose} we truly want to do. :: 本当にしたいことを
+== 退屈からすぐ逃げてしまうと、自分が本当は何をしたいのかを問う機会を逃すかもしれない。
+S| I am not {claiming|claim|claimed|claims} :: 私は主張していない
+O| {that|what|which|whose} boredom is always pleasant :: 退屈は常に快いと
+M| {or|nor|than|but of} that every idle hour :: また暇な時間が皆
+V| {is|are|be|being} :: …だと
+C| {productive|production|produce|productively}. :: 生産的
+== 退屈がいつも快いとか、暇な時間がすべて実りあるものだとか言うつもりはない。
+M| {But|And of|Nor|Than} a mind :: だが心は
+X| {that|what|whose|whom} is never left alone :: 放っておかれない
+P| {with|within|onto|toward} itself :: 自分自身と
+V| may {gradually|gradual|graduate|gradualness} lose :: 次第に失うかも
+O| the ability {to wander|wandering|wander|to wandering}. :: さまよう力を
+== だが、自分自身と二人きりにされることのない心は、さまよう力をしだいに失ってしまうかもしれない。
+M| {Perhaps|Perhap|Perhaps of|Maybe of} :: おそらく
+S| the greatest gift {we|us|our|ours} can give our children :: 子への最高の贈り物は
+V| {is|are|be|being} not :: …ではない
+C| more {stimulation|stimulate|stimulates|stimulus of}, :: さらなる刺激
+M| {but|and|or|so} a little more boredom. :: もう少しの退屈だ
+== 私たちが子どもに贈れる最高の贈り物は、さらなる刺激ではなく、もう少しの退屈なのかもしれない。
+?? 3 2 子どもの頃の筆者は何を考え出した？
+?? 4 4 今日、退屈はたいてい何で片づけられる？
+?? 5 5 退屈は今の活動について何を知らせる？
+?? 8 4 放っておかれない心は何を失うかもしれない？
+?? 9 4 筆者が子どもに贈るべきだと考えるものは？
+
+@id adv93
+@lv 3
+@level 8
+@title The Value of Difficult Learning
+@ja 難しさが学びを深める
+@tag 難関大レベル・説明文
+@gloss assume=思い込む, familiarity=なじみ, misleading=誤解を招く, retain=保持する, desirable=望ましい, reconstruct=再構築する, spacing=間隔をあけること, manageable=こなせる
+S| {Most|Almost|Mostly|The most of} students :: 多くの学生は
+V| {assume|assumes|assuming|assumption} :: 思い込んでいる
+O| {that|what|which|whose} if studying feels easy, :: 勉強が楽なら
+S| they {must|musts|must to|might to} be :: 彼らは…にちがいない
+V| {learning|learn|learns|learnt to} well. :: よく学んでいる
+== 多くの学生は、勉強が楽に感じられるなら、よく学べているにちがいないと思い込んでいる。
+S| {Rereading|Reread|Rereads|Rereaded} a textbook, :: 教科書の読み直しは
+M| for {instance|instant|instants|instancing}, :: たとえば
+V| {produces|produce|producing|product} :: 生む
+O| a {comforting|comfort|comfortably|comforts} sense :: 心地よい感覚を
+P| {of|for|to|by} familiarity. :: なじみの
+== たとえば教科書を読み直すと、「知っている」という心地よい感覚が生まれる。
+M| {However|Whatever|Whenever|Wherever}, :: しかし
+S| research {on|at|to|onto} memory :: 記憶の研究は
+V| {suggests|suggest|suggesting|suggestion} :: 示唆する
+O| {that|what|which|whose} this feeling is often :: この感覚はしばしば
+C| {misleading|mislead|misleads|mislead to}. :: 当てにならない
+== しかし記憶の研究によれば、この感覚はしばしば当てにならない。
+S| Material {that|what|whose|whom} is processed :: 処理された内容は
+P| {with|within|without of|by} little effort :: ほぼ努力なしに
+V| tends {to be forgotten|to forget|forgetting|to forgotten} quickly, :: すぐ忘れられがち
+M| {while|whilst of|during|meanwhile} material :: 一方で内容は
+X| that {requires|require|requiring|required to} struggle :: 苦労を要する
+V| is {retained|retain|retaining|retains} far longer. :: ずっと長く残る
+== ほとんど努力せずに処理した内容はすぐに忘れられがちだが、苦労を要した内容ははるかに長く記憶に残る。
+S| {Researchers|Research|Researching|Researched} :: 研究者たちは
+V| {call|calls|calling|to call} :: 呼ぶ
+O| {such|so|such a|so a} obstacles :: そうした障害を
+C| "{desirable|desire|desired of|desirably} difficulties." :: 「望ましい困難」と
+== 研究者たちはこうした障害を「望ましい困難」と呼んでいる。
+S| Testing yourself {instead|instead to|rather|in stead} of rereading, :: 読み直さず自分を試すと
+M| for {example|examples|exemplary|exam}, :: たとえば
+V| {forces|force|forcing|forced to} the brain :: 脳に強いる
+X| {to reconstruct|reconstructing|reconstruct|to reconstructing} knowledge, :: 知識の再構築を
+X| {which|what|who|whom} strengthens the memory. :: それが記憶を強める
+== たとえば読み直す代わりに自分でテストをすると、脳は知識を組み立て直さねばならず、それが記憶を強める。
+M| {Likewise|Like|Liken|Alike of}, :: 同様に
+S| {spacing|spaced|space|spaces} out study sessions :: 学習の間隔をあけると
+V| {allows|allow|allowing|allowance} :: 許す
+O| some forgetting {to occur|occurring|occur|to occurring}, :: 少し忘れることを
+M| {so that|such that of|so as|in order} each review :: 復習のたびに
+V| {requires|require|requiring|required to} real effort. :: 本当の努力が要る
+== 同様に、学習の間隔をあけると多少の忘却が起こるため、復習のたびに本当の努力が必要になる。
+S| The difficulty {itself|himself|themselves|its self} :: 困難そのものが
+V| {is|are|be|being} :: …だ
+C| {what|that|which|whose} makes :: …させるもの
+O| the learning {last|lasts|lasted|to last}. :: 学びを長続き
+== 学びを長続きさせるのは、困難そのものなのだ。
+S| Not {every|both|many|few} difficulty :: どの困難も…ない
+V| {is|are|be|being} desirable, :: 望ましいわけでは
+M| of {course|coarse|courses|cause}; :: もちろん
+S| a lecture {in|on|at|by} a language :: …言語での講義は
+X| the students do not {understand|understood|understanding|understands} :: 学生が理解できない
+V| {teaches|teach|teaching|taught to} them nothing. :: 何も教えない
+== もちろん、すべての困難が望ましいわけではない。学生が理解できない言語での講義からは何も学べない。
+S| The key {is|are|be|being} :: 鍵は
+C| {to make|making of|make|to making} learning hard :: 学びを難しくすること
+P| {in|on|at|to} the right way, :: 正しい形で
+M| {challenging|challenge|challenged|challenges} enough :: 十分に難しく
+X| {to demand|demanding|demand|to demanding} effort :: 努力を要するほど
+M| {yet|already|still yet|even yet} manageable enough to succeed. :: だが成功できるほど
+== 鍵となるのは、努力を要するほど難しく、それでいて成功できる程度にはこなせるという、正しい形で学びを難しくすることだ。
+?? 1 3 教科書を読み直すと、どんな感覚が生まれる？
+?? 3 1 すぐ忘れられがちなのは、どのように処理した内容？
+?? 4 3 研究者はこうした障害を何と呼ぶ？
+?? 5 3 自分でテストをすると、脳は何をしなければならない？
+?? 8 5 学生が理解できない言語の講義は何を教える？
+
+@id adv94
+@lv 3
+@level 8
+@title Plato's Cave
+@ja 洞窟の比喩
+@tag 難関大レベル・論説文
+@gloss prisoner=囚人, chain=鎖でつなぐ, cast=投げかける, blind=目をくらませる, adjust=慣れる, mock=あざける, allegory=寓話, obvious=自明の
+P| {In|On|At|By} the Republic, :: 『国家』の中で
+S| Plato {asks|ask|asking|asked to} us :: プラトンは求める
+X| {to picture|picturing|picture|to picturing} prisoners :: 囚人を思い描くよう
+X| {who|whom|whose|which of} have spent their entire lives :: 一生を過ごしてきた
+M| {chained|chain|chaining|chains} inside a cave. :: 洞窟につながれて
+== プラトンは『国家』の中で、一生を洞窟の中で鎖につながれて過ごしてきた囚人たちを思い描くよう求めている。
+S| They can see {only|alone|lonely|one} the wall :: 壁しか見えない
+P| in front {of|for|to|from} them, :: 目の前の
+P| {on|in|at|to} which shadows are cast :: そこに影が映る
+P| {by|with|for|of} objects :: 物によって
+X| {passing|pass|passes|to passing} before a fire :: 火の前を通る
+P| {behind|beside of|between|behalf} them. :: 背後の
+== 彼らには目の前の壁しか見えず、その壁には、背後の火の前を通る物の影が映し出されている。
+M| {Having|Have|Had|Has} never seen anything else, :: 他を見たことがなく
+S| the prisoners {naturally|natural|nature|naturalize} :: 囚人は当然
+V| {take|takes|taking|taken} these shadows :: 影を…とみなす
+C| {to be|being|be|been} reality itself. :: 現実そのものと
+== ほかのものを何も見たことがないので、囚人たちは当然、その影こそが現実そのものだと思い込む。
+T| {Now|Know|Not|Nowadays of} :: では
+V| {suppose|supposed|supposes|supposition} :: 仮に…としよう
+S| one prisoner {is|are|be|being} freed :: 1人が解放され
+M| {and|nor|than|but of} dragged up :: 引き上げられる
+P| {into|onto of|toward of|within} the sunlight. :: 日の光の中へ
+== では、一人の囚人が解放され、日の光の中へと引きずり出されたとしよう。
+T| {At|In|On|By} first, :: 最初は
+S| the {brightness|bright|brightly|brighten} :: その明るさが
+V| would {blind|blinds|blinding|blinded} him, :: 彼の目をくらませ
+M| {and|nor|than|but of} he would long :: 彼は切望する
+X| {to return|returning|return|to returning} :: 戻ることを
+P| {to|for|at|in} the familiar darkness. :: なじみの暗闇に
+== はじめは明るさに目がくらみ、彼は慣れ親しんだ暗闇に戻りたいと思うだろう。
+M| Only {gradually|gradual|graduate|gradualness} :: 少しずつしか
+V| would his eyes {adjust|adjusts|adjusting|adjusted}, :: 目は慣れない
+M| {until|by|since|during} at last :: ついに…まで
+S| he {could|cans|could to|can to} :: 彼は…できた
+V| see the sun {itself|himself|themselves|its self}. :: 太陽そのものを見る
+== 目は少しずつしか慣れず、やがてついに太陽そのものを見られるようになる。
+M| {Should|Shall|Would|Will} he go back :: もし彼が戻ったら
+X| {to tell|telling|tell|to telling} the others, :: 仲間に伝えに
+S| they would {mock|mocks|mocking|mocked} him :: 彼らはあざ笑い
+M| {and|nor|than|but of} even resist :: さらに拒みさえする
+X| {being set|to be set|be set|been set} free. :: 自由にされることを
+== もし彼が仲間に伝えようと戻っても、彼らは彼をあざ笑い、自由にされることにさえ抵抗するだろう。
+S| The {allegory|allegoric|allegorize|allegorically} :: この比喩は
+V| is usually {read|reads|reading|to read} :: ふつう読まれる
+P| {as|to|at|of} a picture of education, :: 教育の姿として
+X| {which|what|who|whom} Plato saw :: プラトンはそれを見た
+M| not {as|for|like|to} filling an empty mind :: 空の心を満たすでなく
+M| {but|and|or|so} as turning it toward the light. :: 光へ向けることと
+== この比喩はふつう教育を描いたものとして読まれる。プラトンは教育を、空っぽの心を満たすことではなく、心を光の方へ向けることと考えた。
+S| {It|They|Its|Them} also :: それはまた
+V| {raises|rises|arises|rise} :: 投げかける
+O| an {uncomfortable|discomfort|uncomfortably|comfort of} question :: 居心地の悪い問いを
+P| {about|above|abroad|aboard} our own lives. :: 私たちの人生について
+== この比喩は、私たち自身の生き方についても居心地の悪い問いを投げかける。
+M| {How|What|Whom|Whose} can we be sure :: どう確信できるか
+O| {that|whose|whom|those} what we accept :: 受け入れているものが
+P| {as|for|like|to} obvious :: 当然のこととして
+V| {is|are|be|being} not merely :: 単なる…でないと
+C| a {shadow|shadowy|shade of|shadowed} on the wall? :: 壁の影
+== 私たちが当然だと受け入れているものが、壁に映った影にすぎないものではないと、どうして確信できるだろうか。
+?? 1 0 囚人たちに見えるのは何だけ？
+?? 2 3 囚人たちは影を何だとみなす？
+?? 4 1 最初に彼の目をくらませるのは何？
+?? 6 2 仲間たちは戻った彼をどうする？
+?? 7 5 プラトンは教育を何だと考えた？
+
+@id adv95
+@lv 3
+@level 8
+@title The Pleasure of Tragedy
+@ja 悲劇を楽しむ逆説
+@tag 難関大レベル・論説文
+@gloss weep=泣く, grief=悲嘆, paradox=逆説, purge=浄化, pity=哀れみ, well-crafted=よくできた, contemplate=じっくり見つめる, empathy=共感, sorrow=悲しみ
+M| {Why|What|Whom|Whose} do people :: なぜ人は
+M| {willingly|willing|will|willingness} :: 進んで
+V| {watch|watches|watching|watched} stories :: 物語を見るのか
+X| {that|what|whose|whom} make them weep? :: 自分を泣かせる
+== なぜ人は、自分を泣かせる物語を進んで見るのだろうか。
+P| {In|On|At|By} ordinary life :: 日常では
+S| we {avoid|avoids|avoiding|avoidance} grief :: 悲しみを避ける
+P| {at|on|in|by} almost any cost, :: 何としても
+M| {yet|already|still yet|even yet} we buy tickets :: なのに券を買い
+P| {to|at|onto|upon} tragedies :: 悲劇の
+M| {and|nor|than|but of} recommend sad novels to our friends. :: 悲しい小説を勧める
+== 日常生活では何としても悲しみを避けるのに、私たちは悲劇の入場券を買い、友人に悲しい小説を勧める。
+S| {Philosophers|Philosophy|Philosophical|Philosophize} :: 哲学者たちは
+V| have {called|call|calling|calls} :: 呼んできた
+O| {this|these|those|them} :: これを
+C| the {paradox|paradoxical|paradoxically|paradoxes} of tragedy. :: 悲劇の逆説と
+== 哲学者たちはこれを「悲劇の逆説」と呼んできた。
+S| Aristotle {offered|offer|offering|offers to} :: アリストテレスは示した
+O| one of the {earliest|earliness|earlily|early of} explanations, :: 最古の説明の1つを
+M| {suggesting|suggested|suggest|suggestion} :: …と述べて
+O| {that|what|which|whose} tragedy produces :: 悲劇は生むと
+O| a "catharsis," a {purging|purged|purges|purgeful} of pity and fear. :: 哀れみと恐れの浄化を
+== アリストテレスは最も古い説明の一つを示し、悲劇は「カタルシス」、つまり哀れみと恐れの浄化をもたらすと述べた。
+M| By {experiencing|experienced|experience|experiences} painful emotions :: つらい感情を味わい
+P| {in|on|at|by} a safe setting, :: 安全な場で
+S| audiences {may|mays|may to|maybe} :: 観客は…かも
+V| {leave|leaves|leaving|left} the theater :: 劇場を出る
+M| {feeling|felt|feel|feels} lighter :: 心が軽くなって
+P| {than|then|that|as} when they arrived. :: 来た時より
+== 安全な場でつらい感情を味わうことで、観客は来たときより軽い気持ちで劇場を後にするのかもしれない。
+S| Other {thinkers|thinking|think|thinks} :: 他の思想家は
+V| {argue|argues|arguing|argument} :: 論じる
+O| {that|what|which|whose} the pleasure comes :: 喜びは…から来ると
+M| not {from|of|by|for} the sadness itself :: 悲しみ自体でなく
+M| {but|and|or|so} from the beauty :: 美しさからだと
+X| {with|of|for|at} which it is expressed. :: それが表現される
+== 別の思想家たちは、その喜びは悲しみそのものからではなく、悲しみが表現される美しさから生まれると論じる。
+S| A well-{crafted|craft|crafting|crafts} tragedy :: よくできた悲劇は
+V| {transforms|transform|transforming|transformation} :: 変える
+O| {chaotic|chaos|chaotically|chaoses} suffering :: 混沌とした苦しみを
+P| {into|onto|toward|within} a meaningful form :: 意味ある形に
+X| {that|what|whose|whom} we can contemplate. :: じっくり見つめられる
+== よくできた悲劇は、混沌とした苦しみを、じっくりと見つめることのできる意味ある形に変える。
+S| Still {others|other|another|the other of} :: さらに別の人は
+V| point {to|for|on|with} empathy: :: 共感を挙げる
+M| {by|for|with|at} sharing a character's pain, :: 人物の痛みを分かち合い
+S| we {feel|feels|feeling|felt to} :: 私たちは感じる
+C| more {deeply|deep|depth|deepen} connected :: より深くつながると
+P| {to|for|at|onto} other people. :: 他者と
+== また別の人々は共感を挙げる。登場人物の痛みを分かち合うことで、他者とより深くつながっていると感じるのだ。
+M| {Perhaps|Perhap|Perhaps of|Maybe of} :: おそらく
+S| no single theory {captures|capture|capturing|captured to} :: どの理論も捉えない
+O| the {whole|hole|wholly|wholeness} truth, :: 真実の全体を
+M| {for|because of|despite|owing} tragedy works :: 悲劇は働くから
+P| {on|to|onto|of} us :: 私たちに
+M| in many ways {at|on|in|by} once. :: 一度に多くの形で
+== おそらく一つの理論だけでは真実の全体を捉えられない。悲劇は一度にさまざまな形で私たちに働きかけるからだ。
+S| {What|That|Which|It} is clear :: 明らかなのは
+V| {is|are|be|being} :: …だ
+O| {that|what|which|whose} we seek out sorrow in art :: 芸術に悲しみを求める
+M| {precisely|precise|precision|preciser} because :: まさに…だから
+X| it helps us {understand|understood|understanding|understands} :: 理解する助けになる
+O| sorrow {in|on|at|to} life. :: 人生の悲しみを
+== 明らかなのは、私たちが芸術に悲しみを求めるのは、まさにそれが人生の悲しみを理解する助けになるからだということだ。
+?? 2 3 哲学者たちはこれを何と呼んできた？
+?? 3 4 アリストテレスのいうカタルシスとは何の浄化？
+?? 5 4 別の思想家によれば、喜びは何から生まれる？
+?? 7 1 さらに別の人々が挙げるのは何？
+?? 9 5 芸術の悲しみは何を理解する助けになる？
+
+@id adv96
+@lv 3
+@level 8
+@title The Unreliable Narrator
+@ja 信頼できない語り手
+@tag 難関大レベル・論説文
+@gloss narrator=語り手, deliberately=わざと, account=話, witness=目撃する, quarrel=けんか, weigh=比べて考える, evidence=証拠, reliable=信頼できる, practical=実用的な
+S| Readers {usually|usual|usage|use} :: 読者はふつう
+V| {trust|trusts|trusting|trusted to} :: 信用する
+O| the person {telling|tell|tells|to telling} a story, :: 物語の語り手を
+M| {assuming|assumed|assume|assumption} :: …と考えて
+O| {that|what|which|whose} events happened :: 出来事が起きたと
+M| {as|like|for|to} described. :: 書かれたとおりに
+== 読者はふつう物語の語り手を信用し、出来事は書かれたとおりに起きたのだと考える。
+S| Some {writers|writes|writing|written}, :: 作家の中には
+M| {however|whatever|whenever|wherever}, :: しかし
+V| {deliberately|deliberate|deliberation|deliberated} create :: わざと生み出す
+O| narrators {whose|who|whom|which} accounts :: 話が…語り手を
+V| cannot be {fully|full|fill|fullness} believed. :: 完全には信じられない
+== しかし作家の中には、話をそのまま信じることのできない語り手をわざと作り出す人もいる。
+S| Such narrators {may|mays|may to|maybe} be :: そうした語り手は
+C| {lying|lain|lied to|lay}, :: うそをついている
+C| {mistaken|mistake|mistook|mistaking}, :: 思い違いをしている
+M| {or|nor|than|but of} simply too young :: 単に幼すぎて
+X| {to understand|understanding|understand|to understanding} :: 理解できない
+O| {what|that|which|whose} they are witnessing. :: 目撃しているものを
+== そうした語り手は、うそをついていたり、思い違いをしていたり、あるいは単に幼すぎて目の前のことが理解できなかったりする。
+S| The {pleasure|pleasant|pleasantly|please} for the reader :: 読者の楽しみは
+V| {lies|lays|lie|lying} :: …にある
+P| {in|on|at|to} noticing the gap :: ずれに気づくことに
+P| {between|among|amid|beside} what the narrator says :: 語り手の言葉と
+M| {and|or|nor|but} what actually happened. :: 実際の出来事の
+== 読者の楽しみは、語り手の話と実際に起きたこととのずれに気づくことにある。
+S| A child {narrator|narrate|narrative of|narration of} :: 子どもの語り手は
+V| might {describe|describes|describing|described} :: 描くかもしれない
+O| his parents' {quarrel|quarrels of|quarreling of|quarrelsome} :: 両親のけんかを
+P| {as|for|to|by} a game, :: 遊びとして
+M| {while|whilst of|during|meanwhile} the reader senses :: 一方読者は感じる
+O| a family {falling|falls|fell|to falling} apart. :: 家族の崩壊を
+== 子どもの語り手は両親のけんかを遊びとして描くかもしれないが、読者は家族が崩れていくのを感じ取る。
+P| {In|On|At|By} this way, :: このように
+S| the story {communicates|communicate|communicating|communication} :: 物語は伝える
+O| {more|most|much|many} :: より多くを
+M| {than|then|that|as} its narrator understands. :: 語り手の理解より
+== このようにして、物語は語り手自身が理解している以上のことを伝える。
+S| {Unreliable|Unrely|Unreliably|Reliance} narration :: 信頼できない語りは
+V| also {makes|make|making|made of} :: …にもする
+O| readers more {active|activity|actively|activate}, :: 読者をより能動的に
+M| {since|for since|during|until of} they must constantly weigh :: 絶えず比べねばならず
+O| each statement {against|again|agenda|among} :: 各発言を…と
+O| other evidence {in|into|onto|to} the text. :: 作中の他の証拠
+== 信頼できない語りは読者をより能動的にもする。読者は発言の一つ一つを作中の他の手がかりと絶えず照らし合わせなければならないからだ。
+S| This {technique|technical|technically|technic of} :: この技法は
+V| {reminds|remind|reminding|remainder} us :: 思い出させる
+O| {that|what|which|whose} every account of events :: 出来事の語りはみな
+V| {is told|is telling|tells|told} :: 語られる
+P| {from|of|by|at} a particular point of view. :: ある視点から
+== この技法は、出来事についての語りはすべて、ある特定の視点から語られているのだということを思い出させる。
+P| {In|On|At|By} real life, too, :: 現実でも
+S| we {rely|relies|relying|reliance} :: 私たちは頼る
+O| {on|in|at|to} narrators— :: 語り手に
+X| witnesses, journalists, {and|nor|than|but of} our own memories— :: 証人や記者、記憶に
+X| none of {whom|who|whose|whomever} is perfectly reliable. :: 誰も完全に信頼できぬ
+== 現実の生活でも、私たちは証人や記者、自分自身の記憶といった語り手に頼っているが、どれ一つとして完全に信頼できるものはない。
+S| {Learning|Learned|Learn|Learns} to read unreliable narrators :: 語り手を見抜く練習は
+V| may {therefore|therefor of|wherefore|thereby} be :: したがって…だろう
+C| one of the most {practical|practice|practically|practicality} skills :: 最も実用的な技能の1つ
+X| {that|what|whose|whom} literature can teach. :: 文学が教えうる
+== したがって、信頼できない語り手を読み解く力を身につけることは、文学が教えてくれる最も実用的な技能の一つなのかもしれない。
+?? 0 2 読者はふつう誰を信用する？
+?? 3 2 読者の楽しみは何に気づくことにある？
+?? 4 3 子どもの語り手は両親のけんかを何として描く？
+?? 7 4 出来事の語りはすべて何から語られている？
+?? 8 3 現実で私たちが頼る語り手の例は？
+
+@id adv97
+@lv 3
+@level 8
+@title Walking Without a Destination
+@ja 目的地のない散歩
+@tag 難関大レベル・随筆
+@gloss destination=目的地, puzzled=戸惑った, obsessed=とらわれた, efficiency=効率, absence=不在, pavement=舗道, flicker=ちらつく, resolve=解決する, concentrate=集中する
+T| {Every|Each of|All|Both} evening after work, :: 毎晩仕事の後
+S| I {take|takes|taking|taken} :: 私は…する
+O| a {walk|walks|walking of|walked} :: 散歩を
+P| {with|within|without of|by} no particular destination in mind. :: 目的地を決めずに
+== 毎晩、仕事のあと、私は特に目的地を決めずに散歩に出る。
+S| Friends {sometimes|sometime|some times of|somewhat} ask :: 友人は時々尋ねる
+O| {where|what|whom|whose} I am going, :: どこへ行くのかと
+M| {and|nor|than|but of} they seem :: そして…ようだ
+C| {puzzled|puzzle|puzzling of|puzzles} :: 戸惑っている
+M| {when|what|whom|whose} I answer :: 私が答えると
+O| {that|whose|whom|those} I do not know. :: わからないと
+== 友人にどこへ行くのかと時々聞かれるが、わからないと答えると戸惑ったような顔をされる。
+P| {In|On|At|By} a culture :: …な文化では
+M| {obsessed|obsess|obsessing|obsession} with efficiency, :: 効率にとらわれた
+S| an activity {without|within|with of|unless} a goal :: 目的のない活動は
+V| can {look|looks|looking|looked} :: 見えうる
+P| {like|alike|likely|as like} a waste of time. :: 時間の無駄のように
+== 効率にとらわれた文化では、目的のない活動は時間の無駄に見えかねない。
+M| {Yet|Already|Despite|Unless} it is :: しかし…なのは
+C| {precisely|precise|precision|preciser} the absence :: まさに不在
+P| {of|for|to|from} a goal :: 目的の
+X| {that|what|whose|whom} makes these walks :: 散歩を…にする
+C| {valuable|value|valuably|valuation} to me. :: 私にとって貴重に
+== しかし、この散歩を私にとって貴重なものにしているのは、まさに目的がないことなのだ。
+M| {Freed|Freeing|Freedom|Frees} from the need :: 必要から解放され
+X| {to arrive|arriving|arrive|to arriving} anywhere, :: どこかに着く
+S| I {notice|notices|noticing|noticed of} :: 私は気づく
+O| things I would {normally|normal|norm|normality} ignore. :: 普段見過ごすものに
+== どこかに着く必要から解放されると、私はふだんなら見過ごすものに気づく。
+S| The smell of rain {on|at|for|of} warm pavement, :: 温かな舗道の雨の匂い
+S| a cat {watching|watch|watches|to watching} from a wall, :: 塀から見る猫
+S| streetlights {flickering|flicker|flickers|flickered} on one by one— :: 一つずつ灯る街灯
+S| {these|this|it|that of} :: これらが
+V| {become|becomes|becoming|became of} :: …になる
+C| small events {worth|worthy|worths|worthless of} remembering. :: 覚える価値ある出来事
+== 温かい舗道に落ちる雨の匂い、塀の上からこちらを見る猫、一つずつ灯っていく街灯——そうしたものが覚えておく価値のある小さな出来事になる。
+M| {Moreover|More|Moreover of|Most over}, :: さらに
+S| problems {that|what|whose|whom} seemed hopeless :: 絶望的に思えた問題が
+P| at my {desk|desks of|desking|desked} :: 机の前では
+V| often {resolve|resolves|resolving|resolution} themselves :: よくひとりでに解ける
+M| somewhere {along|alone|among|alike} the way. :: 道の途中で
+== さらに、机の前では絶望的に思えた問題が、歩いている途中でしばしばひとりでに解けていく。
+S| It is {as if|as though of|even if|if as} :: まるで…ようだ
+S| the {mind|minds|mindful|mindset of}, :: 心が
+M| no longer {forced|forcing|force|forces} to concentrate, :: 集中を強いられず
+V| {begins|begin|beginning|began of} :: 始める
+X| {to make|making of|make|to making} connections on its own. :: 自ら結びつけを
+== まるで、もう集中を強いられなくなった心が、自分で物事を結びつけ始めるかのようだ。
+S| Many {writers|writes|written|writing} and thinkers :: 多くの作家や思想家が
+T| {throughout|through of|thorough|though} history :: 歴史を通じて
+V| have {relied|rely|relying|reliance} :: 頼ってきた
+O| {on|in|at|for} walking :: 散歩に
+M| {in|on|at|by} just this way. :: まさにこのように
+== 歴史を通じて、多くの作家や思想家がまさにこのような形で散歩を頼りにしてきた。
+M| {Perhaps|Perhap|Perhaps of|Maybe of} :: おそらく
+S| the most {useful|use|usefully|usage} hour of my day :: 1日で最も有益な時間は
+V| {is|are|be|being} :: …だ
+C| the {one|ones|once|it} I spend :: 私が過ごす時間
+M| {going|gone|go|went} nowhere at all. :: どこにも行かずに
+== 1日でいちばん役に立つ時間は、どこにも向かわずに過ごすあの時間なのかもしれない。
+?? 1 1 友人は時々筆者に何を尋ねる？
+?? 2 1 何にとらわれた文化では、目的のない活動が無駄に見える？
+?? 5 1 塀の上から筆者を見ているのは何？
+?? 6 1 机の前では、問題はどう思えた？
+?? 9 4 筆者にとって1日で最も有益なのはどんな時間？

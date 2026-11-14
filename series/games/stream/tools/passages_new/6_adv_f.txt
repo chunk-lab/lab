@@ -1,0 +1,782 @@
+@id adv58
+@lv 3
+@level 8
+@title The Privacy Paradox
+@ja プライバシーの逆説
+@tag 難関大レベル・論説文
+@gloss paradox=逆説, routinely=日常的に, hypocrisy=偽善, profound=深刻な, imbalance=不均衡, tangible=具体的な, asymmetry=不均衡, regulator=規制当局, consent=同意
+M| {In|On|At|By} surveys, :: 調査では
+S| {most|almost|much|the most of} people :: ほとんどの人は
+V| {claim|claims|claiming|to claim} :: 主張する
+O| {that|what|which|whom} they care deeply :: 深く気にかけると
+P| {about|at|of|on} their privacy. :: プライバシーを
+== 調査では、ほとんどの人が自分のプライバシーを深く気にかけていると答える。
+M| {Yet|Already|Despite|Whereas} the same people :: しかし同じ人々が
+M| {routinely|routine|routines|routinize} :: 日常的に
+V| {hand|hands|handing|to hand} over personal data :: 個人情報を渡す
+P| {in|on|for|by} exchange for :: …と引き換えに
+O| {minor|minority|minorly|minors} conveniences, :: 小さな便利さと
+X| {such as|such like|as such|so as} a discount or a free app. :: 割引や無料アプリなど
+== しかし同じ人々が、割引や無料アプリといった小さな便利さと引き換えに、個人情報を日常的に差し出している。
+S| {Researchers|Research|Researching|Researched} :: 研究者は
+V| {call|calls|calling|is called} :: 呼ぶ
+O| this gap {between|than|amid|whom} attitude and behavior :: 態度と行動のずれを
+C| {the privacy paradox|privacy paradoxes|a privacy paradoxical|the privately paradox}. :: プライバシーの逆説と
+== 研究者は、この態度と行動のずれを「プライバシーの逆説」と呼ぶ。
+S| Some {critics|critical|criticize|critique} :: 一部の批評家は
+V| {conclude|concludes|concluding|conclusion} :: 結論づける
+O| {that|what|which|whose} people do not really value privacy :: 本当は重視しないと
+X| {as much as|as many as|so much than|as more as} they say. :: 口で言うほど
+== 人々は口で言うほどプライバシーを重んじていない、と結論づける批評家もいる。
+S| {Others|Other|Another|The other}, however, :: しかし他の人は
+V| {argue|argues|arguing|argument} :: 主張する
+O| that the paradox {reflects|reflect|reflecting|reflective} :: 逆説が表すのは
+M| {not|no|none|nor} hypocrisy :: 偽善ではなく
+M| {but|and|or|so} a profound imbalance of information. :: 深刻な情報の不均衡だと
+== しかし、この逆説は偽善ではなく、深刻な情報の不均衡を表しているのだと主張する人もいる。
+S| Privacy {policies|policy|policing|polices} :: プライバシー規約は
+V| {are|is|being|be} often :: しばしば…だ
+C| {so|such|too|very} long and technical :: とても長く専門的で
+X| {that|as|which|than} few users ever read them, :: 読む人はまずいない
+M| {let alone|let only|leave alone|let along} comprehend them. :: 理解は言うまでもなく
+== プライバシーポリシーはたいてい長く専門的なため、理解するどころか読む人さえほとんどいない。
+M| {Moreover|More|Moreover than|Furthermore of}, :: さらに
+S| the benefits {of|at|than|until} sharing data :: 共有の利益は
+V| {are|is|be|being} immediate and tangible, :: すぐ得られ具体的だ
+M| {whereas|whether|whatever|wherefore of} the risks :: 一方で危険は
+V| {remain|remains|remaining|to remain} abstract and delayed. :: 抽象的で後から来る
+== さらに、データを共有する利益はすぐに得られて具体的だが、危険は抽象的で後からやってくる。
+R| {Faced|Facing|Face|To face} with such an asymmetry, :: そんな不均衡を前に
+S| {even|ever|evenly|every} a careful person :: 慎重な人でさえ
+V| may {reasonably|reasonable|reason|reasoning} decide :: 無理もなく判断する
+O| {that|what|whose|whom} resistance is pointless. :: 抵抗は無駄だと
+== そうした不均衡に直面すれば、慎重な人でさえ、抵抗しても無駄だと判断するのは無理もない。
+M| {From|At|Of|Over} this perspective, :: この見方では
+S| the paradox {is|are|be|being} :: 逆説は…だ
+C| {less|fewer|lesser|least} a failure of individuals :: 個人の失敗より
+M| {than|then|as|that} a failure of the system :: 仕組みの失敗
+X| {in which|in that|which in|in whom} they make choices. :: 人が選択をする
+== この見方に立てば、逆説は個人の失敗というより、人々が選択を行う仕組みそのものの失敗である。
+M| {Accordingly|Accordance|Accord|According}, :: それゆえ
+S| some {regulators|regulates|regulation|regulatory} :: 一部の規制当局は
+V| have {shifted|shift|shifting|shifts} :: 移してきた
+O| the {burden|burdens of|burdened|burdensome} of protection :: 保護の責任を
+P| {from|for|off|since} users :: 利用者から
+P| {to|at|than|whom} the companies :: 企業へと
+X| {that|what|whom|whose} collect their data. :: データを集める
+== そのため規制当局の中には、保護の責任を利用者から、データを集める企業へと移したところもある。
+S| {Whether|Weather|Either|Whatever} such rules will work :: 規則が機能するか
+V| {remains|remain|remaining|to remain} to be seen, :: まだわからない
+M| {but|nor|than|whom} they at least acknowledge :: だが少なくとも認める
+O| {that|what|whose|whom} consent alone :: 同意だけでは
+V| cannot {guarantee|guaranteed|guaranteeing|guarantees} privacy. :: 守れないことを
+== そうした規則が機能するかはまだわからないが、少なくとも同意だけではプライバシーを守れないことは認めている。
+?? 1 4 人々は何と引き換えに個人情報を渡している？
+?? 4 4 逆説が表しているのは、偽善ではなく何？
+?? 6 4 データ共有の危険はどんなもの？
+?? 9 5 規制当局は保護の責任をどこへ移した？
+?? 10 4 同意だけでは何ができない？
+
+@id adv59
+@lv 3
+@level 8
+@title Do Filter Bubbles Really Exist?
+@ja フィルターバブルは本当か
+@tag 難関大レベル・論説文
+@gloss personalize=個人に合わせる, homogeneous=同質の, empirical=実証的な, acquaintance=知り合い, exposure=触れること, polarization=分極化, hostile=敵対的な, metaphor=比喩
+T| {Over|Since|Until|By} the past two decades, :: この20年で
+S| many {observers|observe|observation|observant} :: 多くの観察者が
+V| have {warned|warn|warning|warns} :: 警告してきた
+O| that {personalized|personalize|personalization|personally} news feeds :: 個人向けの記事が
+V| {trap|traps|trapping|to trap} us :: 私たちを閉じ込めると
+P| {in|on|at|over} so-called filter bubbles. :: いわゆるバブルの中に
+== この20年で、個人向けに調整されたニュースが私たちを「フィルターバブル」に閉じ込めると、多くの人が警告してきた。
+M| {According|Accord|Accordingly|Accordance} to this view, :: この見方では
+S| {algorithms|algorithm|algorithmic|algorithmically} :: アルゴリズムは
+V| {show|shows|showing|shown} each user :: 各利用者に見せる
+O| only {what|that|which|whose} they already agree with, :: 賛成するものだけを
+X| {gradually|gradual|graduate|gradualness} eliminating :: 次第に排除して
+O| {opposing|oppose|opposes|opposedly} opinions. :: 反対の意見を
+== この見方では、アルゴリズムは各利用者に、すでに賛同している内容だけを見せ、反対意見を次第に排除していく。
+S| The {result|results|resulting|resultant}, :: その結果は
+M| critics {fear|fears|fearing|to fear}, :: 批判者が恐れるに
+V| {is|are|be|being} :: …だ
+C| a society {divided|division|divide|divides} :: 分断された社会
+P| {into|onto|upon|unto} homogeneous groups :: 同質の集団に
+X| {that|what|whose|whom} can no longer understand one another. :: もう理解し合えない
+== 批判者が恐れるその結果とは、もはや互いを理解できない同質の集団に分断された社会である。
+S| The {idea|ideas|idealize|ideally} :: その考えは
+V| {is|are|be|being} intuitively appealing, :: 直観的に魅力的だ
+M| {yet|already|still yet|despite} empirical studies :: だが実証研究は
+V| have {produced|produce|producing|production} :: 生んできた
+O| {surprisingly|surprisedly|surprise|surprises} mixed results. :: 意外にまちまちな結果を
+== この考えは直観的に納得できるが、実証研究の結果は意外にもまちまちだ。
+S| Several {studies|study|studied|studying} :: いくつかの研究は
+V| have {found|find|founded|finding} :: 明らかにした
+O| that people {who|whom|which|whose} rely on social media :: SNSに頼る人々が
+V| actually {encounter|encounters|encountering|to encounter} :: 実は出会うと
+O| a {wider|widely|width|widen} range of views :: より幅広い意見に
+M| {than|then|as|that} those who do not. :: 頼らない人より
+== SNSに頼る人のほうが、そうでない人より実は幅広い意見に触れていることを示した研究もいくつかある。
+S| This {is|are|be|being} partly :: これは一部には
+R| {because|because of|due|since of} online networks :: ネットのつながりが
+V| {include|includes|including|inclusion} :: 含むからだ
+O| casual {acquaintances|acquaint|acquainted|acquaintance with}, :: ゆるい知り合いを
+X| {whose|who|whom|which} opinions often differ :: その意見はよく違う
+P| {from|at|than|of} our own. :: 自分のものと
+== これは一つには、ネット上のつながりには気軽な知り合いが含まれ、その人たちの意見が自分とはしばしば異なるためだ。
+M| {Moreover|Moreover of|More than|Most over}, :: さらに
+S| {exposure|expose|exposed|exposes} to opposing views :: 反対意見に触れても
+V| does not {necessarily|necessary|necessity|necessitate} :: 必ずしも…ない
+V| {make|makes|making|made} people :: 人を…にする
+C| more {open-minded|open-mind|openly minded|opening-minded}. :: より寛容に
+== さらに、反対意見に触れても、人が必ずしも寛容になるとは限らない。
+M| {In|On|At|By} some experiments, :: 一部の実験では
+S| participants {who|whom|which|whose} were shown :: 見せられた参加者は
+O| posts {from|since|than|until} the other side :: 反対側の投稿を
+V| {became|becoming|becomes|been} :: …になった
+C| even more {firmly|firm|firmness|firmer} attached :: さらに固く執着して
+P| {to|for|with|on} their original beliefs. :: 元の信念に
+== ある実験では、反対側の投稿を見せられた参加者が、もとの信念にいっそう固執するようになった。
+M| {If|Even|Despite|Unless of} polarization is growing, then, :: 分極化が進むなら
+S| the {cause|causal|causing|caused} :: その原因は
+V| may {lie|lay|lying|lies} :: あるのかもしれない
+M| {less|fewer|least|lesser} in isolation :: 孤立よりも
+M| {than|then|as|that} in the hostile way :: 敵対的な仕方に
+X| {we|us|our|ours} meet our opponents. :: 相手と出会う
+== だとすれば、分極化が進んでいるとしても、その原因は孤立よりも、対立する相手との敵対的な出会い方にあるのかもしれない。
+S| None {of|from|for|in} this :: そのどれも…ない
+V| {means|mean|meaning|to mean} :: 意味する
+O| that algorithms {are|is|be|being} harmless; :: 無害だとは
+M| {rather|other|than|instead of}, it suggests :: むしろ示唆する
+O| that the real problem is {more|most|much|many} complex :: 問題はより複雑だと
+M| than a simple {metaphor|metaphorical|metaphorically|metaphors} implies. :: 単純な比喩より
+== だからといってアルゴリズムが無害だというわけではない。むしろ、本当の問題は単純な比喩が示すよりも複雑だということだ。
+?? 1 3 アルゴリズムは各利用者に何だけを見せるとされる？
+?? 4 4 SNSに頼る人は、頼らない人より何に触れている？
+?? 5 3 ネット上のつながりには誰が含まれている？
+?? 7 4 実験の参加者は元の信念に対してどうなった？
+?? 8 4 分極化の原因は、孤立よりも何にあるかもしれない？
+
+@id adv60
+@lv 3
+@level 8
+@title Can an Algorithm Be Fair?
+@ja アルゴリズムは公平か
+@tag 難関大レベル・論説文
+@gloss sentence=刑期, sway=左右する, prejudice=偏見, objective=客観的な, neutrality=中立, audit=検査する, transparent=透明な, accountable=責任を負う
+M| {Increasingly|Increasing|Increase|Increased}, :: ますます
+S| decisions {about|at|than|until} loans, jobs :: 融資や仕事の判断
+M| and even prison {sentences|sentence to|sentenced|sentencely} :: さらには刑期さえ
+V| {are|is|be|being} made :: なされる
+P| {with|at|on|until} the help of algorithms. :: アルゴリズムの助けで
+== 融資や就職、さらには刑期に関する判断までもが、ますますアルゴリズムの助けを借りて行われている。
+S| {Supporters|Support|Supportive|Supported} :: 支持者は
+V| {argue|argues|arguing|argument} :: 主張する
+O| that machines, {unlike|dislike|unlikely|unliked} human judges, :: 機械は判事と違い
+V| are not {swayed|sway|swaying|sways} :: 左右されないと
+P| {by|with|for|from} mood, fatigue :: 気分や疲れに
+M| {or|than|but|so} personal prejudice. :: 個人的偏見に
+== 支持者は、機械は人間の裁判官と違って、気分や疲労、個人的偏見に左右されないと主張する。
+M| {In|On|At|By} this sense, :: この意味で
+M| they {claim|claims|claiming|to claim}, :: 彼らによれば
+S| an {algorithm|algorithms|algorithmic|algorithmically} :: アルゴリズムは
+V| {is|are|be|being} more objective :: より客観的だ
+M| {than|then|as|that} any person could be. :: どんな人間よりも
+== この意味でアルゴリズムは、どんな人間よりも客観的でありうると彼らは言う。
+S| {Critics|Critical|Criticize|Critic} :: 批判者は
+V| {respond|responds|response|responding} :: 反論する
+O| that an algorithm is only {as|such|too|very} fair :: 同程度にしか公平でない
+M| {as|than|so|that} the data :: データと
+X| {on which|on that|which on|on whom} it is trained. :: 学習に使われる
+== 批判者は、アルゴリズムは学習に使われるデータと同じ程度にしか公平になれないと反論する。
+M| If past hiring decisions {favored|favoring|favorite|favorably} :: 過去の採用が優遇したら
+O| {certain|certainly|certainty|certains} groups, :: 特定の集団を
+S| a system {that|what|whom|whose} learns from them :: それに学ぶ仕組みは
+V| will {reproduce|reproduces|reproducing|reproduced} :: 再現するだろう
+O| the {same|sameness|alike|likewise} pattern. :: 同じ傾向を
+== 過去の採用判断が特定の集団を優遇していたなら、そこから学ぶ仕組みも同じ傾向を再現するだろう。
+M| {Worse|Worst|Bad|Badly} still, :: さらに悪いことに
+S| it will {do|does|doing|done} so :: そうするだろう
+P| {under|among|onto|than} an appearance of neutrality, :: 中立の装いの下で
+X| {which|what|who|that} makes the bias :: それが偏りを
+C| {harder|hardly|hard than|hardest} to detect and challenge. :: 見抜きにくくする
+== さらに悪いことに、それは中立を装って行われるので、偏りを見抜いて異議を唱えることがいっそう難しくなる。
+S| A {biased|bias|biasing|biases} human judge :: 偏った人間の判事は
+V| can at least {be|being|been|is} questioned, :: 問いただせる
+M| {whereas|whether|whatever|wherefore of} the logic :: 一方で論理は
+P| {of|at|than|until} a complex model :: 複雑なモデルの
+V| is often {hidden|hide|hiding|hid} :: よく隠されている
+M| {even|ever|evenly|every} from its designers. :: 設計者からさえ
+== 偏った人間の裁判官なら少なくとも問いただせるが、複雑なモデルの論理は設計者にさえ見えないことが多い。
+S| Defenders {of|at|onto|than} algorithms :: アルゴリズムの擁護者は
+V| do not {deny|denies|denial|denying} these problems, :: 問題を否定しない
+M| {but|nor|than|whom} they point out :: しかし指摘する
+O| that the {alternative|alternatively|alternating|alter} :: 代わりの選択肢も
+C| is {hardly|hard|hardness|harden} perfect. :: 完璧には程遠いと
+== アルゴリズムの擁護者もこうした問題を否定はしないが、代わりの選択肢も完璧とはほど遠いと指摘する。
+S| Human decisions {are|is|be|being} also shaped :: 人の判断も左右される
+P| {by|at|of|until} bias, :: 偏見によって
+M| and {unlike|dislike|unlikely|unliking} code, :: そしてコードと違い
+S| they cannot {be|being|been|are} systematically :: 体系的には…できない
+V| {audited|audit|auditing|audits} and corrected. :: 検査・修正される
+== 人間の判断も偏見に左右されるうえ、コードと違って体系的に検査し修正することができない。
+S| The real question, {therefore|there|whereas|thereby of}, :: だから本当の問題は
+V| may not {be|being|been|is} :: …ではないかもしれない
+C| {whether|weather|either|whatever} to use algorithms, :: 使うかどうか
+M| {but|than|so|whom} how to make them :: どう…にするか
+C| {transparent|transparency|transparently|transparence} and accountable. :: 透明で責任あるものに
+== したがって本当の問題は、アルゴリズムを使うかどうかではなく、どうすれば透明で責任の所在がはっきりしたものにできるかなのかもしれない。
+?? 1 5 支持者によれば、機械は気分や疲れのほか何に左右されない？
+?? 3 3 アルゴリズムは何と同じ程度にしか公平になれない？
+?? 5 2 偏りが見抜きにくくなるのは、何を装って行われるから？
+?? 6 5 複雑なモデルの論理は、誰からさえ隠されている？
+?? 9 4 本当の問題は、アルゴリズムをどんなものにするか？
+
+@id adv61
+@lv 3
+@level 8
+@title The Right to Be Forgotten
+@ja 忘れられる権利
+@tag 難関大レベル・論説文
+@gloss fade=薄れる, outdated=時代遅れの, dignity=尊厳, offense=罪, abuse=悪用する, misconduct=不正行為, censorship=検閲, merit=事情・価値, deliberately=意図的に
+M| {In|On|At|By} the past, :: 昔は
+S| {embarrassing|embarrassed|embarrass|embarrassment} information :: 恥ずかしい情報は
+P| {about|at|until|whom} ordinary people :: 一般の人の
+V| tended {to fade|fading|fade|to fading} :: 薄れがちだった
+P| {from|off|since|out} public memory :: 人々の記憶から
+T| {over|along|under|onto} time. :: 時がたつと
+== かつては、一般の人に関する恥ずかしい情報も、時がたつにつれて人々の記憶から薄れていった。
+M| {On|In|At|By} the internet, however, :: しかしネットでは
+S| a {single|singly|singular of|singled} search :: 1回の検索が
+V| can {bring|brings|bringing|brought} up :: 呼び出しうる
+O| an old {mistake|mistaken|mistakes|mistook} :: 昔の過ちを
+T| decades {after|later|since|ago} it occurred. :: 起きて数十年後に
+== しかしネット上では、一度の検索で、何十年も前の過ちが呼び出されてしまう。
+R| {Concerned|Concerning|Concern|Concerns} about this, :: これを懸念し
+S| the {European|Europe|Europeans|Europeanly} Union's highest court :: EUの最高裁判所は
+V| {ruled|rule|ruling|rules} in 2014 :: 2014年に判決した
+O| {that|what|which|whose} individuals may ask :: 個人が頼めると
+O| search engines {to remove|removing|remove|to removing} :: 検索エンジンに消すよう
+O| certain {links|linked|linking|link to}. :: 特定のリンクを
+== これを懸念したEUの最高裁判所は2014年、個人が検索エンジンに特定のリンクの削除を求められるとの判決を下した。
+S| This principle, now {known|knowing|knew|know} :: いま知られるこの原則は
+X| {as|to|like|with} the right to be forgotten, :: 忘れられる権利として
+V| {applies|apply|applying|application} :: 適用される
+O| {to|at|by|than} information :: 情報に
+X| {that|what|whom|whose} is inaccurate, outdated :: 不正確で古い
+M| {or|nor|but|so} no longer relevant. :: もはや無関係な
+== 現在「忘れられる権利」と呼ばれるこの原則は、不正確な情報、古い情報、もはや無関係な情報に適用される。
+S| Its {supporters|supporter|supportive|supportively} :: その支持者は
+V| {see|sees|seeing|seen} it :: それを見なす
+X| {as|for|like|to} a matter of dignity: :: 尊厳の問題と
+S| people should {be|being|been|are} allowed :: 人は許されるべき
+X| to change {and|than|nor|whom} move on. :: 変わり前へ進むことを
+== 支持者はそれを尊厳の問題と考える。人は変わり、前に進むことを許されるべきだというのだ。
+S| A person {who|whom|which|whose} committed :: 犯した人は
+O| a minor {offense|offend|offensive|offender} :: 軽い罪を
+T| {as|for|like|to} a teenager, :: 十代のときに
+M| they {argue|argues|arguing|argument}, :: と彼らは言う
+V| should not {be|being|been|is} defined :: 決めつけられるべきでない
+P| by it {forever|forevers|forward|forth}. :: それで永遠に
+== 十代で軽い罪を犯した人が、それによって一生決めつけられるべきではない、と彼らは主張する。
+S| Critics, {on|in|at|by} the other hand, :: 一方で批判者は
+V| {worry|worries|worrying|worrisome} :: 心配する
+O| that the right can {easily|easy|ease|easiness} :: 権利が容易に
+V| be {abused|abuse|abusing|abusive} :: 悪用されうると
+P| {by|at|than|of} the powerful :: 権力者によって
+R| to {hide|hiding|hid|hidden} their past. :: 過去を隠すために
+== 一方批判者は、この権利が権力者によって過去を隠すために悪用されやすいことを懸念している。
+S| A politician's scandal {or|nor|than|whom} :: 政治家の醜聞や
+S| a company's {misconduct|misconducted|misconducting|misconducts of}, :: 企業の不正は
+M| they {note|notes|noting|notion}, :: と彼らは言う
+V| may {be|being|been|is} :: …かもしれない
+C| {precisely|precise|precision|preciser} the kind of information :: まさにその種の情報
+X| the public {needs|needing|to need|needful}. :: 市民が必要とする
+== 政治家のスキャンダルや企業の不正こそ、まさに市民が必要とする情報かもしれないと彼らは指摘する。
+M| {Moreover|Moreover of|Most over|More than}, :: さらに
+S| they {fear|fears|fearing|fearful} :: 彼らは恐れる
+O| that {allowing|allow|allowed|allows} private companies :: 私企業に許すことが
+R| to decide {what|that|which of|whose} disappears :: 何を消すか決めるのを
+V| {amounts|amount|amounting|to amount} to :: …に等しいと
+O| a quiet form {of|for|at|in} censorship. :: 静かな検閲に
+== さらに、何を消すかを私企業に決めさせることは、静かな形の検閲にほかならないと彼らは恐れる。
+S| Courts have {therefore|there|whereas|thereby of} tried :: そこで裁判所は試みた
+R| to balance individual {privacy|private|privately|privatize} :: 個人の私生活を比べる
+P| {against|toward|onto|between} the public interest, :: 公益と
+X| {judging|judged|judge|to judging} each case :: 各事例を判断して
+M| on its {own|owns|owned|owning} merits. :: 個別の事情で
+== そのため裁判所は個人のプライバシーと公共の利益をはかりにかけ、一件ずつ個別に判断しようとしてきた。
+M| {Perhaps|Perhap|Probable|Perhaps of} the deeper lesson :: おそらく深い教訓は
+V| {is|are|be|being} that, in the digital age, :: デジタル時代には
+S| {forgetting|forget|forgot|forgotten} :: 忘れることは
+V| no longer {happens|happen|happening|to happen} naturally; :: もう自然に起きない
+S| it must {be|being|been|is} deliberately designed. :: 意図して設計すべきだ
+== おそらく、より深い教訓は、デジタル時代には忘却はもはや自然には起こらず、意図して設計されなければならないということだ。
+?? 2 1 2014年に判決を下したのはどこの最高裁判所？
+?? 3 5 この権利は不正確な情報・古い情報のほか、どんな情報に適用される？
+?? 4 2 支持者はこの権利を何の問題と考えている？
+?? 6 4 批判者によると、この権利は誰に悪用されうる？
+?? 10 3 デジタル時代に、忘却は自然に起こる？
+
+@id adv62
+@lv 3
+@level 8
+@title The "Nothing to Hide" Argument
+@ja 「隠すことはない」論
+@tag 難関大レベル・論説文
+@gloss surveillance=監視, innocent=潔白な, wrongdoer=悪人, conceal=隠す, chilling effect=萎縮効果, conformity=同調, misinterpret=誤解する, illegitimate=不当な, safeguard=歯止め
+T| {When|Whom|Whose|Where of} governments expand surveillance, :: 政府が監視を広げると
+S| a {familiar|family|familiarly|familiarity} defense :: おなじみの弁明が
+V| is often {heard|hear|hearing|heared}: :: よく聞かれる
+M| {if|even|despite|lest} you have nothing to hide, :: 隠すことがなければ
+S| you have nothing {to fear|fearing|to fearing|fear of}. :: 恐れることはない
+== 政府が監視を拡大するとき、「隠すことがなければ恐れることもない」というおなじみの弁明がよく聞かれる。
+S| The argument {is|are|be|being} appealing :: その議論は魅力的だ
+R| {because|because of|due to|owing} most of us believe :: 多くが信じるからだ
+O| {that|what|which|whom} we are innocent :: 自分は潔白だと
+M| and {that|what|which|whom} surveillance targets :: そして監視が狙うのは
+O| {only|alone|lonely|solely of} wrongdoers. :: 悪人だけだと
+== この議論に説得力があるのは、私たちの多くが自分は潔白で、監視の対象は悪人だけだと信じているからだ。
+S| Its supporters {add|adds|adding|addition} :: 支持者は付け加える
+O| that some loss {of|at|by|than} privacy :: 多少の喪失は
+V| {is|are|be|being} a reasonable price :: 妥当な代償だと
+R| to pay {for|to|at|with} protection :: 守られるために払う
+P| {against|toward|onto|between} crime and terrorism. :: 犯罪やテロから
+== 支持者は、犯罪やテロから守られるためなら、ある程度のプライバシーの喪失は払う価値のある代償だと付け加える。
+M| {Yet|Already|Despite|Whereas} the argument :: しかしこの議論は
+V| {rests|rest|resting|to rest} on :: …に基づいている
+O| a {narrow|narrowly|narrowness|narrowed of} view of privacy, :: 狭い見方に
+M| {as if|as to|so if|if as} its only purpose :: 唯一の目的が…かのように
+V| {were|was being|been|be} to conceal wrongdoing. :: 悪事を隠すことだ
+== しかしこの議論は、プライバシーの目的が悪事を隠すことだけであるかのような狭い見方に立っている。
+M| {In|On|At|By} reality, :: 実際には
+V| people {close|closes|closing|closure} the bathroom door :: 人は浴室の扉を閉め
+V| or {keep|keeps|keeping|to keep} a diary :: 日記をつける
+R| not {because|because of|due|owing} they are guilty, :: 罪があるからでなく
+R| {but|nor|than|so} because some parts of life :: 生活の一部が
+C| are {simply|simple|simplify|simplicity} personal. :: 単に私的だからだ
+== 実際、人が浴室の扉を閉めたり日記をつけたりするのは、後ろめたいからではなく、生活には単に個人的な部分があるからだ。
+M| {Moreover|Moreover of|More over|Most over}, :: さらに
+S| {knowing|know|knew|known} that one is being watched :: 見られていると知ると
+V| tends {to change|changing|change|to changing} :: 変えがちだ
+O| {behavior|behave|behaving of|behavioral} :: 行動を
+M| {even|ever|evenly|every} among those :: …の間でさえ
+X| {who|whom|which|whose} have done nothing wrong. :: 何も悪くない人
+== さらに、監視されていると知ることは、何も悪いことをしていない人の間でさえ行動を変えがちだ。
+S| People {become|becomes|becoming|been} :: 人は…になる
+C| more {cautious|caution|cautiously|cautioned} :: より慎重に
+P| {about|for|at|to} what they search for and say, :: 検索や発言に
+X| a {phenomenon|phenomena|phenomenal|phenomenally} :: という現象で
+X| {known|knowing|knew|know} as the chilling effect. :: 萎縮効果と呼ばれる
+== 人は検索や発言に慎重になる。これは「萎縮効果」として知られる現象である。
+T| {Over|Along|Under|Beyond} time, :: やがて
+S| such {self-censorship|self-censor|self-censored|self-censors} :: そんな自己検閲は
+V| may {encourage|encourages|encouraging|encouraged} :: 促しうる
+O| {conformity|conform|conforms|conformed} :: 同調を
+M| and {weaken|weakens|weakening|weakly} the open debate :: 開かれた議論を弱める
+X| {on which|on that|which on|on whom} democracy depends. :: 民主主義が頼る
+== やがてそうした自己検閲は同調を促し、民主主義のよりどころである開かれた議論を弱めかねない。
+S| There {is|are|be|being} also the risk :: 危険もある
+X| {that|what|which|whose} innocent data :: 無害なデータが
+V| may {be|being|been|is} misinterpreted, :: 誤解されうる
+V| leaked {or|nor|than|whom} used :: 流出・転用され
+P| {for|to|at|by} purposes :: 目的のために
+X| no one {originally|original|origin|originate} intended. :: 誰も意図しなかった
+== また、無害なデータが誤って解釈されたり、流出したり、誰も意図しなかった目的に使われたりする危険もある。
+S| None of this {means|mean|meaning|to mean} :: だからといって…ない
+O| that all surveillance {is|are|be|being} illegitimate; :: 監視がすべて不当とは
+S| certain {investigations|investigate|investigative|investigated} :: ある種の捜査は
+V| clearly {require|requires|requiring|requirement} it. :: 明らかに必要とする
+== だからといって、あらゆる監視が不当だということではない。明らかに監視を必要とする捜査もある。
+S| The real question {is|are|be|being} not :: 本当の問いは…でない
+C| {whether|weather|either|whatever} we have something to hide, :: 隠し事があるかどうか
+M| {but|than|so|whom} who watches the watchers :: 監視者を誰が見張るか
+M| and {under|among|onto|than} what safeguards. :: どんな歯止めの下で
+== 本当の問題は、隠し事があるかどうかではなく、監視する者を誰が、どのような歯止めのもとで見張るのかということだ。
+?? 2 4 支持者は、プライバシーの喪失を何から守られるための代償だと言う？
+?? 4 5 人が浴室の扉を閉めるのは、生活の一部がどうだから？
+?? 6 4 監視によって人が慎重になる現象は何と呼ばれる？
+?? 7 5 開かれた議論をよりどころにしているのは何？
+?? 10 2 本当の問いは、誰が誰を見張るかということ？
+
+@id adv63
+@lv 3
+@level 8
+@title The Attention Economy
+@ja 関心を売る経済
+@tag 難関大レベル・論説文
+@gloss enormous=莫大な, advertiser=広告主, notification=通知, engagement=関与, exploit=つけこむ, compulsive=やめられない, undermine=むしばむ, manipulation=操作, hinge on=…次第である
+S| Many {of|from|for|in} the most popular apps :: 人気アプリの多くは
+V| {cost|costs|costing|costed} nothing :: 少しもかからない
+R| to {download|downloads|downloaded|downloading}, :: ダウンロードに
+M| {yet|already|despite|unless of} their companies :: だが企業は
+V| {earn|earns|earning|earnings} enormous profits. :: 莫大な利益を得る
+== 最も人気のあるアプリの多くは無料でダウンロードできるが、その企業は莫大な利益を上げている。
+S| The {explanation|explain|explanatory|explained} :: その理由は
+V| {lies|lays|lying|lain} :: …にある
+P| {in|on|at|to} a business model :: ある事業モデルに
+X| {in which|in that|which in|in whom} users' attention, :: そこでは人の関心が
+M| rather {than|then|as|that} their money, :: お金ではなく
+V| is the product being {sold|sell|sale|selling}. :: 売られる商品だ
+== その理由は、利用者のお金ではなく関心そのものが商品として売られるビジネスモデルにある。
+S| {Advertisers|Advertise|Advertising|Advertisement} :: 広告主は
+V| pay for {access|accessible|accessing|accessed} to our eyes, :: 目に触れる機会に払う
+M| so the {longer|long|longest|lengthen} we stay :: だから長くいるほど
+P| {on|onto|of|than} a platform, :: サービス上に
+M| the {more|most|much|many} the company earns. :: 企業はもうかる
+== 広告主は私たちの目に触れる機会にお金を払うので、私たちがプラットフォームに長くとどまるほど企業はもうかる。
+M| As a {result|resultant|resulting|results}, :: その結果
+S| engineers {design|designs|designing|to design} :: 技術者は設計する
+O| features {such as|such like|as such|so as} endless scrolling :: 無限スクロールなど
+M| and {constant|constantly|constancy|constants} notifications :: 絶え間ない通知の
+R| to {maximize|maximum|maximal|maximizing} engagement. :: 関与を最大にするため
+== その結果、技術者は関与を最大化するために、終わりのないスクロールや絶え間ない通知といった機能を設計する。
+S| Critics {argue|argues|arguing|argument} :: 批判者は言う
+O| that these techniques {exploit|exploits|exploiting|exploitation} :: 手法がつけこむと
+O| {weaknesses|weaken|weakly|weakens} in human psychology, :: 人の心理の弱さに
+X| {encouraging|encourage|encouraged|encouragement} compulsive use :: やめられない利用を促し
+X| {that|what|whose|whom} users themselves often regret. :: 本人もよく悔やむ
+== 批判者は、こうした手法が人間の心理的な弱さにつけこみ、利用者自身がしばしば後悔するような、やめられない使い方を促していると主張する。
+M| {In|On|At|By} their view, :: 彼らの考えでは
+S| a system {built|building|build|builds} :: 作られた仕組みは
+R| to {capture|captures|captured|capturing} attention :: 関心をつかむために
+V| inevitably {undermines|undermine|undermining|underminer} :: 必ずむしばむ
+O| our {ability|able|ably|enable} :: 能力を
+R| to decide {how|what|which|whom} we spend our time. :: 時間の使い方を決める
+== 彼らに言わせれば、関心をつかむために作られた仕組みは、時間の使い方を自分で決める力を必然的にむしばむ。
+S| Defenders {of|at|onto|than} the industry :: 業界の擁護者は
+V| {reply|replies|replying|replier} :: 答える
+O| that no one {is|are|be|being} forced :: 誰も強制されないと
+R| {to use|using|use|to using} these services, :: サービスの利用を
+M| and that adults {are|is|be|being} capable :: 大人は…できると
+P| {of|for|at|in} making their own choices. :: 自分で選ぶことが
+== 業界の擁護者は、誰もこうしたサービスの利用を強制されてはいないし、大人は自分で選択できると反論する。
+S| They also {point|points|pointing|to point} out :: 彼らは指摘もする
+O| that free services {have|has|having|had to} given :: 無料サービスが与えたと
+I| {billions|billion|billionth|a billions} of people :: 何十億人に
+O| access {to|for|at|of} information :: 情報への接触を
+M| and {communication|communicate|communicative|communicated}. :: そして通信を
+== また彼らは、無料のサービスが何十億もの人々に情報と通信の手段をもたらしたと指摘する。
+S| Both {sides|side|sided|siding} :: 双方とも
+V| have {a point|point|a points|points of}, :: 一理ある
+M| but the debate {may|mays|might to|may to} hinge :: だが論点は…次第だ
+P| {on|in|at|to} whether a choice :: 選択が…かどうか
+X| {made|making|make|makes} under deliberate manipulation :: 意図的な操作下での
+V| {is|are|be|being} truly free. :: 本当に自由か
+== どちらの言い分にも一理あるが、論争の核心は、意図的な操作のもとでなされた選択が本当に自由なのかという点にあるのかもしれない。
+M| {If|Even|Despite|Lest} it is not, :: そうでないなら
+S| {then|than|thus of|there} "free" apps :: 「無料」アプリは
+V| may be {costing|cost|costed|costs} us :: 私たちに払わせている
+O| something {more|most|much|many} valuable :: より貴重なものを
+M| {than|then|as|that} money. :: お金より
+== もしそうでないなら、「無料」のアプリは、お金より貴重な何かを私たちに払わせているのかもしれない。
+?? 1 3 このビジネスモデルで売られている商品は何？
+?? 3 2 技術者が設計する機能の例は何？
+?? 6 5 業界の擁護者は、大人には何ができると言う？
+?? 7 4 無料サービスは何十億人に情報のほか何をもたらした？
+?? 9 3 「無料」アプリが払わせているかもしれないのは、何より貴重なもの？
+
+@id adv64
+@lv 3
+@level 8
+@title Moral Machines
+@ja 自動運転車の倫理
+@tag 難関大レベル・論説文
+@gloss philosophical=哲学的な, pedestrian=歩行者, swerve=急によける, utilitarian=功利主義者, sacrifice=犠牲にする, dismiss=退ける, statistically=統計上, dilemma=板挟み, embody=体現する
+T| {As|Since of|While of|Whom} self-driving cars move closer :: 自動運転車が近づくと
+P| {to|for|at|by} reality, :: 現実に
+S| an old {philosophical|philosophy|philosopher|philosophically} puzzle :: 古い哲学の難問が
+V| has {acquired|acquire|acquiring|acquires} :: 得た
+O| {unexpected|unexpectedly|unexpecting|unexpectedness} practical importance. :: 思わぬ実際の重要性を
+== 自動運転車の実現が近づくにつれ、古い哲学の難問が思いがけず実際的な重要性を帯びるようになった。
+V| {Suppose|Supposed|Supposing of|Supposition} :: …としよう
+S| a car's brakes {fail|fails|failing|failure} :: ブレーキが壊れ
+M| and it must {choose|chooses|choosing|choice} :: 車が選ぶ必要がある
+P| {between|among|than|amid} hitting five pedestrians :: 5人をはねるか
+M| {and|than|but|nor} swerving into a single person. :: よけて1人に当たるか
+== ブレーキが故障し、5人の歩行者をはねるか、よけて1人にぶつかるかを車が選ばなければならないとしよう。
+S| A human driver {would|wills|would to|willing} react :: 人間なら反応する
+P| {in|on|at|by} a split second, :: 一瞬のうちに
+M| but a {machine's|machines'|machinize|machinely} response :: だが機械の反応は
+V| must be {programmed|program|programming|programs} :: 設定されねばならない
+M| in {advance|advanced|advancing|advances} :: 前もって
+P| {by|at|than|until} someone. :: 誰かによって
+== 人間の運転手なら一瞬で反応するだろうが、機械の反応は前もって誰かが設定しておかなければならない。
+S| {Utilitarians|Utility|Utilitarianly|Utilize} :: 功利主義者は
+V| {argue|argues|arguing|argument} :: 主張する
+O| that the car should {minimize|minimal|minimum|minimizing} total harm, :: 被害を最小にすべきと
+X| {sacrificing|sacrifice|sacrificed|sacrifices} one life :: 1人を犠牲にして
+R| to {save|saving|saved|saves} five. :: 5人を救うため
+== 功利主義者は、車は全体の被害を最小にすべきであり、5人を救うために1人を犠牲にすべきだと主張する。
+M| {Yet|Already|Despite|Even of} surveys suggest :: だが調査によれば
+O| that {while|during|meanwhile|whilst of} people approve :: 人々は認めつつも
+P| {of|at|to|on} such cars in principle, :: 原則その車を
+S| few {would|wills|would to|willing} want :: ほとんど望まない
+R| to ride {in|at|of|than} one themselves. :: 自分で乗ることを
+== しかし調査によれば、人々は原則としてそうした車を支持しながらも、自分で乗りたいと思う人はほとんどいない。
+M| After {all|whole|every|entire}, :: 結局のところ
+S| a car {that|what|whom|whose} might sacrifice :: 犠牲にしうる車は
+O| its {own|owns|owned|owning} passenger :: 自分の乗客を
+V| {is|are|be|being} hardly :: とても…でない
+C| an {attractive|attract|attraction|attractively} product. :: 魅力的な商品
+== 結局のところ、自分の乗客を犠牲にするかもしれない車は、魅力的な商品とはとても言えない。
+S| Other {critics|critic|critical|criticize} :: 別の批判者は
+V| {dismiss|dismisses|dismissing|dismissal} such scenarios :: その想定を退ける
+X| {as|for|like|to} unrealistic, :: 非現実的として
+X| {noting|noted|note|notes} that real accidents :: 実際の事故は…と述べ
+M| {rarely|rare|rarity|rarer} present :: めったに示さない
+O| such {clean|cleanly|cleanness|cleaned of} choices. :: そんな明確な選択を
+== 別の批判者は、実際の事故がそれほどはっきりした選択を迫ることはめったにないとして、こうした想定を非現実的だと退ける。
+M| {In|On|At|By} their view, :: 彼らの考えでは
+S| engineers should {focus|focuses|focusing|focused} :: 技術者は集中すべき
+O| {on|in|at|to} preventing accidents altogether :: 事故自体の防止に
+M| rather {than|then|as|that} on ranking :: 順位づけではなく
+M| the value {of|for|at|in} lives. :: 命の価値の
+== 彼らの考えでは、技術者は命の価値に順位をつけることより、事故そのものを防ぐことに力を注ぐべきだという。
+R| {Since|Despite|During|Because of} autonomous cars could, :: 自動運転車は…ので
+M| {statistically|statistic|statistical|statistics}, :: 統計上
+V| prevent many deaths {caused|causing|cause|causes} :: 多くの死を防げる
+P| {by|with|from|for} human error, :: 人為的ミスによる
+S| {delaying|delay|delayed|delays} them :: 導入を遅らせると
+P| over rare {dilemmas|dilemma|dilemmatic|dilemmaed} :: まれな板挟みのせいで
+V| might itself {cost|costs|costing|costed} lives. :: 命を奪いかねない
+== 自動運転車は統計的に人為的ミスによる多くの死を防げる可能性があるので、まれな板挟みを理由に導入を遅らせれば、それ自体が命を奪うことになりかねない。
+M| {Ultimately|Ultimate|Ultimatum|Ultimacy}, :: 結局
+S| the dilemma {reminds|remind|reminding|reminder} us :: 難問は思い出させる
+O| that every technology {embodies|embody|embodying|embodiment} values, :: 技術は価値観を持つと
+M| {whether|weather|either|whatever} or not its designers :: 設計者が…かを問わず
+V| {acknowledge|acknowledges|acknowledging|acknowledgment} them. :: それを認める
+== 結局この難問は、設計者が認めるかどうかにかかわらず、あらゆる技術が価値観を体現していることを思い出させてくれる。
+?? 1 4 車が選ぶのは、5人をはねるか、それとも何？
+?? 3 4 功利主義者は、1人を犠牲にして何人を救うべきだと言う？
+?? 4 4 人々は原則として支持しても、何をしたがらない？
+?? 7 2 別の批判者は、技術者が何に力を注ぐべきだと言う？
+?? 8 2 自動運転車は統計上、何を防げる可能性がある？
+
+@id adv65
+@lv 3
+@level 8
+@title Speaking Without a Name
+@ja ネットの匿名性
+@tag 難関大レベル・論説文
+@gloss anonymity=匿名性, identity=身元, harass=嫌がらせする, restrain=抑える, whistleblower=内部告発者, corruption=不正, dissident=反体制派, authoritarian=独裁的な, hostile=敵意のある
+S| {Few|Much|A little|Fewer of} features of the internet :: ネットの特徴で少ない
+V| {are|is|be|being} :: …だ
+C| {as|such|too|very} controversial :: 同じほど議論を呼ぶ
+M| {as|than|so|that} the ability :: 能力ほど
+R| to speak without {revealing|reveal|revealed|revelation} one's identity. :: 身元を明かさず話す
+== 身元を明かさずに発言できることほど、議論を呼ぶネットの特徴はそう多くない。
+S| {Critics|Critical|Critic|Criticize} point out :: 批判者は指摘する
+O| that {anonymity|anonymous|anonymously|anonymize} :: 匿名性が
+V| {allows|allow|allowing|allowance} people :: 人に許すと
+R| {to harass|harassing|harass|to harassing} others :: 他人への嫌がらせを
+M| without {facing|face|faced|faces} any consequences. :: 何の報いもなく
+== 批判者は、匿名性のせいで人が何の報いも受けずに他人に嫌がらせできてしまうと指摘する。
+T| {When|Whom|Whose|Where of} no one knows :: 誰も知らないとき
+O| {who|whom|whose|which} you are, :: あなたが誰かを
+S| the social pressures {that|what|whom|whose} normally restrain cruelty :: 残酷さを抑える圧力が
+V| {seem|seems|seeming|to seem} :: …ようだ
+C| {to disappear|disappearing|disappear|to disappearing}. :: 消える
+== 誰にも正体を知られないとき、ふだんなら残酷さを抑えている社会的な圧力が消えてしまうようだ。
+M| {For|By|With|At} this reason, :: この理由で
+S| some {have|has|having|had to} proposed :: 一部は提案してきた
+X| {requiring|require|required|requirement} users :: 利用者に求めることを
+R| {to register|registering|register|registered} :: 登録するよう
+P| {with|by|for|at} their real names. :: 実名で
+== このため、利用者に実名での登録を義務づけるべきだと提案する人もいる。
+S| Defenders {of|at|onto|than} anonymity, however, :: しかし匿名の擁護者は
+V| {warn|warns|warning|warnful} :: 警告する
+O| that such a rule {would|wills|would to|willing} silence :: 規則が黙らせると
+O| {precisely|precise|precision|preciser} those :: まさに…人々を
+X| {who|whom|which|whose} most need protection. :: 最も保護が必要な
+== しかし匿名性の擁護者は、そのような規則はまさに最も保護を必要とする人々を黙らせてしまうと警告する。
+S| Whistleblowers {exposing|exposed|expose|exposure} corruption, :: 不正を暴く告発者
+S| victims of abuse {seeking|sought|seek|seeks} support, :: 支援を求める被害者
+S| and {dissidents|dissident|dissidence|dissenting} under authoritarian regimes :: 独裁下の反体制派は
+V| all {depend|depends|depending|dependent} :: みな頼っている
+O| {on|in|at|to} hiding their identities. :: 身元を隠すことに
+== 不正を暴く内部告発者、支援を求める虐待の被害者、そして独裁体制下の反体制派は、みな身元を隠すことに頼っている。
+M| {For|At|By|Than} them, :: 彼らにとって
+S| {revealing|reveal|revealed|revelation} who they are :: 身元を明かすことは
+V| could {mean|means|meaning|meant} :: …を意味しうる
+O| {losing|lose|lost|to losing} their jobs, :: 仕事を失うこと
+M| their safety {or|nor|than|whom} even their freedom. :: 安全や自由さえ
+== 彼らにとって身元を明かすことは、仕事や安全、さらには自由を失うことにもなりかねない。
+M| {Interestingly|Interesting|Interested|Interest}, :: 興味深いことに
+S| research {suggests|suggest|suggesting|suggestive} :: 研究は示す
+O| that real-name {policies|polices|policing of|politic} :: 実名制が
+V| may not {reduce|reduces|reducing|reduction} abuse :: 中傷を減らさないと
+M| as {much|many|more|most} as expected. :: 期待ほどには
+== 興味深いことに、実名制は期待されたほど中傷を減らさないかもしれないことを研究は示している。
+S| Many people, it {turns|turn|turning|to turn} out, :: 実は多くの人は
+V| {are|is|be|being} :: …だ
+C| {perfectly|perfect|perfection|perfected} willing :: 平気で…する
+R| to post {hostile|hostility|hostilely|hostiles} comments :: 敵意ある投稿を
+P| {under|among|onto|than} their own names. :: 自分の名前で
+== 実は、多くの人は自分の実名で平気で敵意あるコメントを書き込むのだ。
+M| {Perhaps|Probable|Perhap|Possibly of}, then, :: だとすれば
+S| the solution {lies|lays|lying|lain} :: 解決策は…にある
+M| not {in|on|at|to} abolishing anonymity :: 匿名の廃止でなく
+M| {but|and|or|so} in designing communities :: 共同体を作ることに
+X| {where|which|what|whom} cruelty is not rewarded. :: 残酷さが報われない
+== だとすれば解決策は、匿名性をなくすことではなく、残酷さが報われない共同体をつくることにあるのかもしれない。
+?? 1 3 批判者によると、匿名性のせいで人は他人に何ができてしまう？
+?? 3 4 一部の人は、利用者にどう登録させることを提案している？
+?? 5 0 内部告発者は何を暴く？
+?? 7 3 実名制は期待されたほど何を減らさない？
+?? 9 3 解決策は匿名性の廃止ではなく何にある？
+
+@id adv66
+@lv 3
+@level 8
+@title Who Should Police Online Speech?
+@ja ネットの言論はだれが管理する
+@tag 難関大レベル・論説文
+@gloss crisis=危機, misleading=誤解を招く, handful=ひと握り, backfire=逆効果になる, distrust=不信, outright=全面的な, intermediate=中間の, falsehood=虚偽, arbiter=判定者
+T| {During|While|Meanwhile|Whilst} public health crises :: 公衆衛生の危機や
+M| and {elections|elect|elected|electoral}, :: 選挙のときに
+S| false {information|informations|inform|informative} :: 偽の情報は
+V| can {spread|spreads|spreading|spreaded} faster :: より速く広がりうる
+M| {than|then|as|that} anyone can correct it. :: 誰かが直すより
+== 公衆衛生の危機や選挙の際には、偽情報が誰かに訂正されるよりも速く広まりうる。
+S| Many {therefore|there|whereas|thereby of} :: そのため多くは
+V| {believe|believes|believing|belief} :: 信じる
+O| that social media companies {have|has|having|had to} a duty :: SNS企業に義務があると
+R| to {remove|removing|removed|removal} :: 取り除く
+O| {misleading|misled|mislead|misleads} posts. :: 誤解を招く投稿を
+== そのため多くの人は、SNS企業には誤解を招く投稿を削除する義務があると考えている。
+M| After {all|whole|every|entire}, :: 結局のところ
+S| a lie {that|what|whom|whose} reaches millions :: 何百万人に届く嘘は
+V| can {cause|causes|causing|caused} real harm, :: 実害を生みうる
+P| {from|since|for|off} dangerous medical choices :: 危険な医療の選択から
+P| {to|at|than|till of} violence. :: 暴力まで
+== 結局のところ、何百万人に届く嘘は、危険な医療上の選択から暴力に至るまで、現実の害をもたらしうる。
+S| Others {are|is|be|being} deeply uneasy :: 強い不安を抱く人も
+P| {about|for|at|to} allowing :: 許すことに
+O| a {handful|handfuls|hand full|handy} of private firms :: ひと握りの私企業に
+R| to decide {what|that|which|whose} counts :: 何がみなされるか決める
+X| {as|to|like|by} truth. :: 真実として
+== 一方で、何が真実かの判断をひと握りの私企業に委ねることに強い不安を抱く人もいる。
+S| Scientific {understanding|understand|understood|understands} :: 科学的理解は
+V| {changes|change|changing|to change} over time, :: 時とともに変わる
+M| and claims once {dismissed|dismiss|dismissing|dismisses} :: かつて退けられた主張が
+X| {as|for|like|to} misinformation :: 誤情報として
+V| have {occasionally|occasional|occasion|occasions} turned out :: 時に判明した
+C| {to be|being|be|to being} correct. :: 正しかったと
+== 科学的な理解は時とともに変わるもので、かつて誤情報として退けられた主張が正しかったと判明したこともある。
+S| {Removing|Remove|Removed|Removes} content :: 投稿の削除は
+V| may also {backfire|backfires|backfiring|backfired}, :: 逆効果にもなりうる
+X| {lending|lend|lent|lends} it :: それに与えて
+O| the appeal {of|for|at|in} forbidden knowledge :: 禁断の知識の魅力を
+M| and {deepening|depth|deep|deeply} distrust :: 不信を深めて
+P| {of|at|on|than} institutions. :: 公的機関への
+== 削除は逆効果になることもあり、その投稿に禁じられた知識の魅力を与え、公的機関への不信を深めてしまう。
+P| {Between|Among|Than|Amid} outright removal :: 全面削除と
+M| {and|or|nor|but} doing nothing, however, :: 放置との間には
+V| {lies|lie|lays|lying} :: ある
+S| a {range|ranges|ranging|ranged} :: さまざまな
+P| {of|for|at|in} intermediate options. :: 中間の選択肢が
+== しかし、全面的な削除と何もしないことの間には、さまざまな中間の選択肢がある。
+S| Platforms can {attach|attaches|attaching|attached} :: 事業者はつけられる
+O| warning {labels|label|labeled|labelly}, :: 警告表示を
+V| {reduce|reduces|reducing|reduced} the visibility :: 目立たなくする
+P| {of|for|at|in} doubtful posts, :: 疑わしい投稿を
+M| {or|nor|than|whom} link to reliable sources. :: 確かな情報源に導く
+== プラットフォームは警告表示をつけたり、疑わしい投稿を目立たなくしたり、信頼できる情報源へのリンクを示したりできる。
+S| Such {measures|measure|measuring|measured} :: そうした対策は
+V| {aim|aims|aiming|to aim} :: 目指す
+R| to slow the {spread|spreads|spreading of|spreaded} of falsehoods :: 嘘の拡散を遅らせる
+M| without {making|make|made|to make} companies :: 企業を…にせずに
+C| the final {arbiters|arbitrate|arbitrary|arbitrarily} of truth. :: 真実の最終判定者
+== こうした措置は、企業を真実の最終的な判定者にすることなく、虚偽の拡散を遅らせることを狙っている。
+S| No approach {is|are|be|being} perfect, :: 完璧な方法はない
+M| {but|nor|than|whom} the debate forces us :: だが議論は迫る
+R| {to ask|asking|ask|to asking} :: 問うよう
+O| {how|what|which|whom} a free society should respond :: 自由な社会がどう応じるか
+P| {to|for|at|on} lies :: 嘘に
+M| without {becoming|become|became|becomes} less free. :: 自由を損なわずに
+== 完璧な方法はないが、この議論は、自由な社会が自由を失わずに嘘にどう対処すべきかを問うよう私たちに迫る。
+?? 1 4 多くの人は、SNS企業に何を削除する義務があると考える？
+?? 3 2 不安を抱く人は、真実の判断を誰に委ねることを心配している？
+?? 4 3 正しかったと判明した主張は、かつて何として退けられていた？
+?? 7 1 プラットフォームは投稿に何をつけられる？
+?? 8 4 こうした対策は、企業を何にしないことを目指している？
+
+@id adv67
+@lv 3
+@level 8
+@title Is Technology Neutral?
+@ja 技術は中立か
+@tag 難関大レベル・論説文
+@gloss neutral=中立の, firmly=しっかりと, merely=単に, discourage=妨げる, regardless of=…に関係なく, outrage=怒り, embed=埋め込む, helpless=無力な, all-powerful=万能の
+S| A common {saying|say|said|sayings} :: よくある言い方は
+V| {holds|hold|holding|holder} :: …とする
+O| that technology is {neither|either|nor|not} good :: 技術は善でも
+M| {nor|than|but|and} bad; :: 悪でもない
+S| everything {depends|depend|depending|dependence} :: すべては…次第だ
+O| {on|in|at|to} how people use it. :: 人の使い方
+== 技術それ自体は善でも悪でもなく、すべては人の使い方次第だ、とよく言われる。
+S| A knife can {be|being|been|is} used :: ナイフは使える
+R| to prepare a meal {or|nor|than|whom} to harm someone, :: 料理にも人を傷つけるにも
+M| {yet|already|despite|during} nobody blames :: だが誰も責めない
+O| the knife {itself|himself|itselves|its self of}. :: ナイフそのものを
+== ナイフは料理にも人を傷つけることにも使えるが、ナイフそのものを責める人はいない。
+S| This view {is|are|be|being} attractive :: この見方は魅力的だ
+R| {because|because of|due to|owing} it places :: 置くからだ
+O| moral {responsibility|responsible|responsibly|responsibilities of} :: 道徳的責任を
+M| {firmly|firm|firmness|firmer} :: しっかりと
+P| {on|of|than|until} human choices. :: 人間の選択に
+== この見方が魅力的なのは、道徳的責任をしっかりと人間の選択に置くからだ。
+S| Some {philosophers|philosophy|philosophic|philosophize}, however, :: しかし一部の哲学者は
+V| {argue|argues|arguing|argument} :: 主張する
+O| that technologies are never {merely|merest|mereness|meres} tools, :: 単なる道具ではないと
+R| {because|because of|due|owing} their design makes :: 設計が…するからだ
+O| certain actions {easier|easily|ease|easiest} :: ある行為を容易に
+M| and others {harder|hardly|hard than|hardness}. :: 別の行為を困難に
+== しかし、技術は決して単なる道具ではないと主張する哲学者もいる。その設計がある行動をしやすくし、別の行動をしにくくするからだ。
+S| A city {built|building|build|builds} around highways, :: 高速道路中心の街は
+M| for {example|examples|exemplary|exemplify}, :: たとえば
+V| {encourages|encourage|encouraging|encouragement} driving :: 車の利用を促し
+M| and {discourages|discourage|discouraging|discouragement} walking, :: 歩くことを妨げる
+M| {regardless|regard|regarding|regardful} of :: …に関係なく
+O| what individual residents {prefer|prefers|preferring|preference}. :: 住民の好み
+== たとえば、高速道路を中心に作られた街は、個々の住民の好みとは関係なく、車の利用を促し、歩くことを妨げる。
+M| {Similarly|Similar|Similarity|Same}, :: 同様に
+S| a social network {that|what|whom|whose} rewards outrage :: 怒りに報いるSNSは
+P| {with|at|than|until} visibility :: 目立たせることで
+V| {shapes|shape|shaping|shapely} :: 形作る
+O| how its users {communicate|communicates|communication|communicating}, :: 人の伝え合い方を
+M| {whatever|whenever|whichever of|however of} their intentions. :: 意図はどうあれ
+== 同様に、怒りの投稿を目立たせて報いるSNSは、利用者の意図がどうであれ、彼らのやりとりの仕方を形作ってしまう。
+M| {In|On|At|By} this sense, :: この意味で
+S| values are {embedded|embed|embedding|embeds} :: 価値観は埋め込まれる
+P| {in|on|at|to} technology :: 技術の中に
+T| long {before|ago|after of|since of} any individual decides :: 個人が決めるずっと前
+O| {how|what|which|whom} to use it. :: 使い方を
+== この意味で、価値観は、個人が技術の使い方を決めるずっと前から、技術の中に埋め込まれている。
+M| {Yet|Already|Despite|During} this argument :: しかしこの議論は
+V| can be {pushed|push|pushing|pushes} :: 押し進められうる
+M| too {far|further of|farther of|faraway}, :: 行き過ぎるまで
+M| {as though|as through|as thorough|as tough} people were helpless :: 人が無力かのように
+P| {before|ahead|front|previous} the machines :: 機械を前にして
+X| {they|them|their|theirs} create. :: 自ら作る
+== しかし、この議論は行き過ぎることもある。まるで人間が自ら作った機械を前にして無力であるかのように。
+S| History {shows|show|showing|shown} :: 歴史は示す
+O| that societies have {repeatedly|repeated|repeat|repetition} redesigned, :: 社会は何度も作り直し
+V| {regulated|regulate|regulation|regulating} :: 規制し
+M| and even {rejected|reject|rejecting|rejection} technologies :: 技術を拒みさえした
+T| when their effects {proved|proves|proving|proof} unacceptable. :: 影響が許せないとき
+== 歴史を見れば、社会は技術の影響が受け入れがたいとわかったとき、何度もそれを作り直し、規制し、時には拒絶さえしてきた。
+S| The most reasonable {position|positive|posit|positional}, perhaps, :: 最も妥当な立場は
+V| {is|are|be|being} :: …だ
+O| that technology is {neither|either|nor|not} neutral :: 技術は中立でも
+M| {nor|than|but of|and} all-powerful, :: 万能でもなく
+M| but something {we|us|our|ours} shape :: 私たちが形作るもの
+M| {even as|even if as|as even|ever as} it shapes us. :: 形作られる一方で
+== おそらく最も妥当なのは、技術は中立でも万能でもなく、私たちを形作る一方で、私たちによって形作られもするものだという立場だろう。
+?? 0 5 よく言われる言い方では、すべては何次第だとされる？
+?? 1 0 例として挙げられている道具は何？
+?? 4 0 車の利用を促し歩くことを妨げるのは、どんな街？
+?? 6 2 価値観はどこに埋め込まれている？
+?? 8 0 社会が技術を作り直してきたことを示すのは何？

@@ -1,0 +1,300 @@
+bird | n | A little bird sings outside my window. | 小さな鳥が窓の外で歌っています。
+bird | n | Can you see that blue bird? | あの青い鳥が見えますか。
+bird | n | Many birds come here in spring. | 春にはたくさんの鳥がここに来ます。
+fish | n | I saw a fish in the river. | 川で一匹の魚を見ました。
+fish | n | Do these fish live in this lake? | この魚たちはこの湖に住んでいますか。
+fish | n | My father cooks fish for dinner. | 父は夕食に魚を料理します。
+horse | n | That brown horse runs very fast. | あの茶色い馬はとても速く走ります。
+horse | n | Have you ever ridden a horse? | 馬に乗ったことがありますか。
+horse | n | The horses are eating grass outside. | 馬たちは外で草を食べています。
+animal | n | A rabbit is my favorite animal. | ウサギは私の一番好きな動物です。
+animal | n | What animal is sleeping under that tree? | あの木の下で眠っている動物は何ですか。
+animal | n | We learned about animals at school today. | 今日学校で動物について学びました。
+tree | n | There is a tall tree near our house. | 家の近くに高い木があります。
+tree | n | Can we sit under that tree? | あの木の下に座れますか。
+tree | n | The trees look beautiful in autumn. | 秋には木々が美しく見えます。
+flower | n | This yellow flower smells very nice. | この黄色い花はとてもよい香りがします。
+flower | n | Did your mother buy those flowers? | お母さんがあの花を買ったのですか。
+flower | n | She put fresh flowers on the table. | 彼女はテーブルに新鮮な花を飾りました。
+plant | n | This plant needs water every day. | この植物には毎日水が必要です。
+plant | n | Do you have any plants in your room? | 部屋に植物はありますか。
+plant | n | My sister keeps small plants by her window. | 姉は窓辺で小さな植物を育てています。
+garden | n | My grandmother has a small garden. | 祖母には小さな庭があります。
+garden | n | What do you grow in your garden? | 庭では何を育てていますか。
+garden | n | The children played in the school garden. | 子供たちは学校の庭で遊びました。
+park | n | We play soccer in the park. | 私たちは公園でサッカーをします。
+park | n | Is there a park near your school? | 学校の近くに公園はありますか。
+park | n | Many families visited the parks on Sunday. | 日曜日には多くの家族が公園を訪れました。
+river | n | A long river runs through our town. | 長い川が私たちの町を流れています。
+river | n | Can you swim in this river? | この川で泳げますか。
+river | n | We walked beside the river after lunch. | 昼食後に川沿いを歩きました。
+sea | n | The sea looks blue this morning. | 今朝は海が青く見えます。
+sea | n | Have you ever swum in the sea? | 海で泳いだことがありますか。
+sea | n | Our hotel was close to the sea. | 私たちのホテルは海の近くにありました。
+mountain | n | That mountain is covered with snow. | あの山は雪に覆われています。
+mountain | n | Do you want to climb this mountain? | この山に登りたいですか。
+mountain | n | We could see mountains from the train. | 電車から山々が見えました。
+lake | n | There is a beautiful lake near here. | この近くには美しい湖があります。
+lake | n | Can we walk around the lake? | 湖の周りを歩けますか。
+lake | n | The children watched birds on the lake. | 子供たちは湖にいる鳥を見ていました。
+island | n | My uncle lives on a small island. | 叔父は小さな島に住んでいます。
+island | n | How can we get to that island? | あの島へはどうやって行けますか。
+island | n | We visited two islands last summer. | 去年の夏、私たちは二つの島を訪れました。
+forest | n | A quiet forest is behind our village. | 村の裏には静かな森があります。
+forest | n | Do many animals live in this forest? | この森にはたくさんの動物が住んでいますか。
+forest | n | We walked through the forest together. | 私たちは一緒に森の中を歩きました。
+sky | n | The sky is clear and blue today. | 今日は空が晴れて青いです。
+sky | n | Can you see the moon in the sky? | 空に月が見えますか。
+sky | n | The evening sky turned pink and orange. | 夕方の空はピンク色とオレンジ色になりました。
+sun | n | The sun is warm this afternoon. | 今日の午後は太陽が暖かいです。
+sun | n | Does the sun rise early in summer? | 夏は太陽が早く昇りますか。
+sun | n | We sat outside in the morning sun. | 私たちは朝日を浴びながら外に座りました。
+moon | n | The moon looks big tonight. | 今夜は月が大きく見えます。
+moon | n | Can you see the moon from here? | ここから月が見えますか。
+moon | n | The children drew pictures of the moon. | 子供たちは月の絵を描きました。
+star | n | I can see a bright star tonight. | 今夜は明るい星が一つ見えます。
+star | n | How many stars can you see? | 星はいくつ見えますか。
+star | n | We watched the stars from our garden. | 私たちは庭から星を眺めました。
+rain | n | The rain stopped before breakfast today. | 今日は朝食前に雨がやみました。
+rain | n | Do you like walking in light rain? | 小雨の中を歩くのは好きですか。
+rain | n | Heavy rain kept us inside yesterday. | 昨日は強い雨で外に出られませんでした。
+snow | n | The snow is very deep here. | ここでは雪がとても深く積もっています。
+snow | n | Did you play in the snow yesterday? | 昨日は雪の中で遊びましたか。
+snow | n | We watched the snow from our window. | 私たちは窓から雪を眺めました。
+wind | n | The wind feels cold this morning. | 今朝は風が冷たく感じます。
+wind | n | Can you hear the wind outside? | 外の風の音が聞こえますか。
+wind | n | A strong wind moved the trees. | 強い風で木々が揺れました。
+weather | n | The weather is nice for a walk. | 散歩にちょうどよい天気です。
+weather | n | How was the weather last weekend? | 先週末の天気はどうでしたか。
+weather | n | We talked about the weather at breakfast. | 私たちは朝食のときに天気の話をしました。
+season | n | Spring is my favorite season. | 春は私の一番好きな季節です。
+season | n | Which season do you like best? | どの季節が一番好きですか。
+season | n | The seasons change throughout the year. | 一年を通して季節は移り変わります。
+spring | n | We see many flowers in spring. | 春にはたくさんの花が見られます。
+spring | n | Do you start school in spring? | あなたは春に学校が始まりますか。
+spring | n | My family often travels during spring. | 私の家族は春によく旅行します。
+summer | n | I like swimming in the summer. | 私は夏に泳ぐのが好きです。
+summer | n | Where will you go this summer? | 今年の夏はどこへ行きますか。
+summer | n | The children enjoyed their long summer holiday. | 子供たちは長い夏休みを楽しみました。
+autumn | n | The leaves turn red in autumn. | 秋には葉が赤くなります。
+autumn | n | Do you enjoy walking in autumn? | 秋に散歩するのは好きですか。
+autumn | n | We picked apples last autumn. | 私たちは去年の秋にリンゴを収穫しました。
+winter | n | My hands get cold in winter. | 冬には手が冷たくなります。
+winter | n | Does it snow here every winter? | ここでは毎年冬に雪が降りますか。
+winter | n | Our family stayed home during winter. | 私たち家族は冬の間家で過ごしました。
+street | n | Our school is on this street. | 私たちの学校はこの通りにあります。
+street | n | Is there a bakery across the street? | 通りの向こう側にパン屋はありますか。
+street | n | Many people walked along the busy street. | 大勢の人がにぎやかな通りを歩いていました。
+road | n | This road goes to the station. | この道は駅へ続いています。
+road | n | Can we cross the road here? | ここで道路を渡れますか。
+road | n | The roads were wet after the rain. | 雨の後、道路はぬれていました。
+station | n | I will meet you at the station. | 駅であなたに会います。
+station | n | How far is the station from here? | ここから駅までどのくらい遠いですか。
+station | n | We visited three stations before lunch. | 昼食前に三つの駅を訪れました。
+train | n | My train leaves at eight tomorrow. | 私の電車は明日8時に出発します。
+train | n | Did you take the train to school? | 学校へは電車で行きましたか。
+train | n | The trains were full this morning. | 今朝は電車が満員でした。
+bus | n | I take the bus every morning. | 私は毎朝バスに乗ります。
+bus | n | Where does this bus stop next? | このバスは次にどこに停まりますか。
+bus | n | Two buses arrived at the same time. | 二台のバスが同時に到着しました。
+bike | n | My new bike is bright red. | 私の新しい自転車は鮮やかな赤色です。
+bike | n | Can your sister ride a bike? | あなたの妹は自転車に乗れますか。
+bike | n | We left our bikes outside the shop. | 私たちは店の外に自転車を置きました。
+plane | n | Draw a line on this plane. | この平面に線を一本引いてください。
+plane | n | Is this a flat plane? | これは平らな平面ですか。
+plane | n | Two lines meet on the same plane. | 二本の線は同じ平面上で交わります。
+ship | n | A large ship is leaving the port. | 大きな船が港を出ようとしています。
+ship | n | Can you see that ship from here? | ここからあの船が見えますか。
+ship | n | The ships moved slowly across the sea. | 船は海をゆっくり進みました。
+boat | n | We crossed the lake by boat. | 私たちはボートで湖を渡りました。
+boat | n | Is that your father's small boat? | あれはお父さんの小さなボートですか。
+boat | n | Many boats were near the island. | 島の近くにはたくさんのボートがありました。
+airport | n | Our bus goes to the airport. | 私たちのバスは空港へ行きます。
+airport | n | Is the airport far from your hotel? | 空港はホテルから遠いですか。
+airport | n | We arrived at the airport very early. | 私たちは空港にとても早く着きました。
+hospital | n | The hospital is beside the library. | 病院は図書館の隣にあります。
+hospital | n | Does your aunt work at that hospital? | おばさんはあの病院で働いていますか。
+hospital | n | This town has two small hospitals. | この町には小さな病院が二つあります。
+library | n | I borrowed a book from the library. | 私は図書館で本を借りました。
+library | n | Can we study at the library today? | 今日は図書館で勉強できますか。
+library | n | The libraries close early on Sundays. | 図書館は日曜日には早く閉まります。
+museum | n | We visited a history museum yesterday. | 昨日、歴史博物館を訪れました。
+museum | n | Is the museum open on Monday? | 博物館は月曜日に開いていますか。
+museum | n | My brother loves visiting science museums. | 弟は科学博物館を訪れるのが大好きです。
+shop | n | My mother works in a small shop. | 母は小さな店で働いています。
+shop | n | What time does this shop open? | この店は何時に開きますか。
+shop | n | There are many shops near the station. | 駅の近くには店がたくさんあります。
+store | n | That store sells clothes for children. | あの店は子供服を売っています。
+store | n | Is the new store open today? | 新しい店は今日開いていますか。
+store | n | We looked around several stores after lunch. | 昼食後、私たちは何軒かの店を見て回りました。
+restaurant | n | This restaurant makes delicious soup. | このレストランはおいしいスープを作ります。
+restaurant | n | Shall we eat at that restaurant? | あのレストランで食事をしませんか。
+restaurant | n | The restaurants near our hotel were busy. | ホテルの近くのレストランは混んでいました。
+cafe | n | I met my friend at a cafe. | 私はカフェで友達に会いました。
+cafe | n | Does this cafe serve hot tea? | このカフェでは温かいお茶を出していますか。
+cafe | n | We found two quiet cafes downtown. | 私たちは町の中心部で静かなカフェを二軒見つけました。
+hotel | n | Our hotel has a beautiful garden. | 私たちのホテルには美しい庭があります。
+hotel | n | Is your hotel close to the beach? | あなたのホテルは浜辺の近くですか。
+hotel | n | The hotels were full last weekend. | 先週末、ホテルは満室でした。
+bank | n | The bank closes at three today. | その銀行は今日3時に閉まります。
+bank | n | Can we sit on the river bank? | 川岸に座れますか。
+bank | n | There are two banks near my office. | 私の職場の近くには銀行が二つあります。
+church | n | An old church stands near the park. | 公園の近くに古い教会が建っています。
+church | n | Can you see the church from here? | ここから教会が見えますか。
+church | n | The town has several beautiful old churches. | その町には美しい古い教会がいくつかあります。
+building | n | That tall building is our new school. | あの高い建物は私たちの新しい学校です。
+building | n | How many floors does this building have? | この建物は何階建てですか。
+building | n | Many buildings have large windows here. | ここの多くの建物には大きな窓があります。
+town | n | My grandmother lives in a quiet town. | 祖母は静かな町に住んでいます。
+town | n | Is your town near the sea? | あなたの町は海の近くですか。
+town | n | We visited three small towns last summer. | 去年の夏、小さな町を三つ訪れました。
+village | n | This village has a small school. | この村には小さな学校があります。
+village | n | Do many families live in that village? | あの村には多くの家族が住んでいますか。
+village | n | The villages are far from the city. | その村々は都市から遠く離れています。
+kitchen | n | My father is cooking in the kitchen. | 父は台所で料理をしています。
+kitchen | n | Can you help me clean the kitchen? | 台所の掃除を手伝ってくれますか。
+kitchen | n | The kitchens in these houses are small. | これらの家の台所は小さいです。
+bedroom | n | My bedroom has two big windows. | 私の寝室には大きな窓が二つあります。
+bedroom | n | Is your sister in her bedroom? | 妹さんは自分の寝室にいますか。
+bedroom | n | We painted the bedrooms light blue. | 私たちは寝室を薄い青色に塗りました。
+bathroom | n | The bathroom is next to my bedroom. | 浴室は私の寝室の隣にあります。
+bathroom | n | May I use your bathroom, please? | トイレをお借りしてもよいですか。
+bathroom | n | The bathrooms are on the second floor. | トイレは2階にあります。
+window | n | Please open the window for some air. | 空気を入れるために窓を開けてください。
+window | n | Is that bird outside your window? | あの鳥はあなたの窓の外にいますか。
+window | n | We cleaned all the windows yesterday. | 私たちは昨日すべての窓を掃除しました。
+wall | n | There is a clock on the wall. | 壁に時計が掛かっています。
+wall | n | Can you paint this wall white? | この壁を白く塗れますか。
+wall | n | The walls of our classroom are yellow. | 私たちの教室の壁は黄色です。
+floor | n | Please put your bag on the floor. | かばんを床に置いてください。
+floor | n | Is the floor clean now? | 床はもうきれいですか。
+floor | n | We washed the kitchen floor this morning. | 私たちは今朝台所の床を洗いました。
+chair | n | This chair is very comfortable. | この椅子はとても座り心地がよいです。
+chair | n | Can you bring me another chair? | もう一脚椅子を持ってきてくれますか。
+chair | n | The children moved their chairs into a circle. | 子供たちは椅子を丸く並べました。
+bed | n | My cat sleeps on my bed. | 私の猫は私のベッドで眠ります。
+bed | n | What time do you go to bed? | あなたは何時に寝ますか。
+bed | n | The hotel room has two beds. | ホテルの部屋にはベッドが二つあります。
+desk | n | My school desk is near the window. | 私の学校の机は窓の近くにあります。
+desk | n | Is your notebook on the desk? | ノートは机の上にありますか。
+desk | n | We moved the desks after class. | 私たちは授業後に机を動かしました。
+box | n | There is a gift in this box. | この箱の中には贈り物があります。
+box | n | Can you open that big box? | あの大きな箱を開けられますか。
+box | n | She put the toys into three boxes. | 彼女はおもちゃを三つの箱に入れました。
+bag | n | I carry my lunch in this bag. | 私はこの袋に昼食を入れて持ち歩きます。
+bag | n | Did you leave your bag on the bus? | バスにかばんを忘れましたか。
+bag | n | These bags are made of paper. | これらの袋は紙でできています。
+key | n | I cannot find my house key. | 家の鍵が見つかりません。
+key | n | Is this the key to your room? | これはあなたの部屋の鍵ですか。
+key | n | She keeps her keys in a small bag. | 彼女は鍵を小さなかばんに入れています。
+phone | n | My phone is on the kitchen table. | 私の電話は台所のテーブルの上にあります。
+phone | n | Can I use your phone for a minute? | 少し電話を使わせてもらえますか。
+phone | n | The phones rang at the same time. | 電話が同時に鳴りました。
+computer | n | I use a computer at school. | 私は学校でコンピューターを使います。
+computer | n | Does your computer work well now? | あなたのコンピューターは今、正常に動きますか。
+computer | n | Our classroom has five new computers. | 私たちの教室には新しいコンピューターが五台あります。
+picture | n | My sister drew a picture of our dog. | 妹は私たちの犬の絵を描きました。
+picture | n | Can you show me that picture? | あの絵を見せてくれますか。
+picture | n | The children put their pictures on the wall. | 子供たちは自分たちの絵を壁に貼りました。
+photo | n | This photo shows my whole family. | この写真には家族全員が写っています。
+photo | n | May I take a photo here? | ここで写真を撮ってもよいですか。
+photo | n | We looked at old photos together. | 私たちは一緒に古い写真を見ました。
+camera | n | My father bought a new camera. | 父は新しいカメラを買いました。
+camera | n | Can I use your camera tomorrow? | 明日あなたのカメラを使えますか。
+camera | n | The cameras are in that small box. | カメラはあの小さな箱の中にあります。
+clock | n | The clock says it is nine. | 時計は9時を指しています。
+clock | n | Is that clock five minutes fast? | あの時計は5分進んでいますか。
+clock | n | We have two clocks in our kitchen. | 台所には時計が二つあります。
+cup | n | Would you like a cup of tea? | お茶を一杯いかがですか。
+cup | n | Is this your blue cup? | この青いカップはあなたのものですか。
+cup | n | She washed the cups after breakfast. | 彼女は朝食後にカップを洗いました。
+glass | n | This window is made of glass. | この窓はガラスでできています。
+glass | n | Can you see through the glass? | ガラス越しに向こうが見えますか。
+glass | n | The glass broke when it fell. | ガラスは落ちたときに割れました。
+plate | n | Please put the bread on this plate. | この皿にパンを置いてください。
+plate | n | Is that your plate on the table? | テーブルの上のあれはあなたの皿ですか。
+plate | n | We washed all the plates after dinner. | 夕食後、私たちは皿を全部洗いました。
+bottle | n | I always carry a bottle of water. | 私はいつも水の入ったボトルを持ち歩きます。
+bottle | n | Is that bottle full of milk? | あの瓶には牛乳がいっぱい入っていますか。
+bottle | n | The empty bottles are under the table. | 空の瓶はテーブルの下にあります。
+pen | n | Please write your name with this pen. | このペンで名前を書いてください。
+pen | n | Did you borrow my blue pen? | 私の青いペンを借りましたか。
+pen | n | She keeps her pens in a box. | 彼女はペンを箱に入れています。
+pencil | n | I need a pencil for this test. | このテストには鉛筆が必要です。
+pencil | n | Can you lend me your pencil? | 鉛筆を貸してくれますか。
+pencil | n | The students put their pencils away. | 生徒たちは鉛筆を片づけました。
+letter | n | I wrote a letter to my grandmother. | 私は祖母に手紙を書きました。
+letter | n | What letter comes after B? | Bの次に来る文字は何ですか。
+letter | n | She received three letters this morning. | 彼女は今朝手紙を三通受け取りました。
+card | n | My friend sent me a birthday card. | 友達が誕生日カードを送ってくれました。
+card | n | Can you write your name on this card? | このカードに名前を書いてくれますか。
+card | n | We made colorful cards for our teacher. | 私たちは先生のために色とりどりのカードを作りました。
+map | n | This map shows the whole city. | この地図には街全体が載っています。
+map | n | Can you find our hotel on the map? | 地図で私たちのホテルを見つけられますか。
+map | n | The students drew maps of their town. | 生徒たちは自分たちの町の地図を描きました。
+ticket | n | I bought a train ticket yesterday. | 私は昨日電車の切符を買いました。
+ticket | n | Where can I get a bus ticket? | バスの切符はどこで買えますか。
+ticket | n | She put the tickets in her bag. | 彼女は切符をかばんに入れました。
+gift | n | This gift is for my little sister. | この贈り物は妹へのものです。
+gift | n | Did you like your birthday gift? | 誕生日の贈り物は気に入りましたか。
+gift | n | We gave small gifts to our friends. | 私たちは友達に小さな贈り物を渡しました。
+present | n | I have a present for you. | あなたへの贈り物があります。
+present | n | Did your father like his present? | お父さんは贈り物を気に入りましたか。
+present | n | We should enjoy the present together. | 私たちは一緒に今を楽しむべきです。
+toy | n | This wooden toy belongs to my brother. | この木のおもちゃは弟のものです。
+toy | n | Can you put your toy away? | おもちゃを片づけてくれますか。
+toy | n | The children shared their toys at school. | 子供たちは学校でおもちゃを分け合いました。
+ball | n | Please throw the ball to me. | 私にボールを投げてください。
+ball | n | Is that your new soccer ball? | あれはあなたの新しいサッカーボールですか。
+ball | n | The children kicked balls across the field. | 子供たちは広場でボールを蹴りました。
+clothes | n | My clothes are still wet today. | 私の服は今日もまだぬれています。
+clothes | n | Where do you keep your winter clothes? | 冬服はどこにしまっていますか。
+clothes | n | She bought some new clothes for school. | 彼女は学校用の新しい服を買いました。
+shirt | n | I wear a white shirt to school. | 私は学校へ白いシャツを着て行きます。
+shirt | n | Is this blue shirt yours? | この青いシャツはあなたのものですか。
+shirt | n | My father washed his shirts yesterday. | 父は昨日シャツを洗いました。
+shoe | n | I found one shoe under my bed. | ベッドの下で靴を片方見つけました。
+shoe | n | Does this shoe fit your foot? | この靴は足に合いますか。
+shoe | n | Please leave your shoes by the door. | 靴はドアのそばに置いてください。
+hat | n | My grandfather wears a brown hat. | 祖父は茶色い帽子をかぶっています。
+hat | n | Did you forget your hat again? | また帽子を忘れたのですか。
+hat | n | The children made hats from paper. | 子供たちは紙で帽子を作りました。
+coat | n | I need a warm coat for winter. | 冬には暖かいコートが必要です。
+coat | n | Is that black coat your father's? | あの黒いコートはお父さんのものですか。
+coat | n | We hung our coats by the door. | 私たちはドアのそばにコートを掛けました。
+dress | n | She wore a beautiful dress yesterday. | 彼女は昨日美しいドレスを着ていました。
+dress | n | Do you like this green dress? | この緑のドレスは好きですか。
+dress | n | The shop sells dresses for children. | その店は子供用のドレスを売っています。
+breakfast | n | I eat breakfast at seven every day. | 私は毎日7時に朝食を食べます。
+breakfast | n | What did you have for breakfast? | 朝食には何を食べましたか。
+breakfast | n | My brother made breakfast for everyone. | 弟はみんなのために朝食を作りました。
+lunch | n | We have lunch at school today. | 私たちは今日学校で昼食を食べます。
+lunch | n | Can you join us for lunch? | 一緒に昼食を食べませんか。
+lunch | n | She brought her lunch from home. | 彼女は家から昼食を持ってきました。
+dinner | n | My father cooks dinner on Sundays. | 父は日曜日に夕食を作ります。
+dinner | n | What time shall we have dinner? | 何時に夕食を食べましょうか。
+dinner | n | We enjoyed a nice dinner together. | 私たちは一緒においしい夕食を楽しみました。
+meal | n | This meal looks very good today. | 今日のこの食事はとてもおいしそうです。
+meal | n | Did you enjoy your meal? | 食事は楽しめましたか。
+meal | n | My mother cooks healthy meals every day. | 母は毎日健康的な食事を作ります。
+bread | n | I eat bread with milk every morning. | 私は毎朝パンを牛乳と一緒に食べます。
+bread | n | Would you like some more bread? | パンをもう少しいかがですか。
+bread | n | My sister made fresh bread yesterday. | 姉は昨日焼きたてのパンを作りました。
+rice | n | We eat rice with fish for dinner. | 私たちは夕食に魚とご飯を食べます。
+rice | n | Do you want more rice today? | 今日はご飯をもっと食べたいですか。
+rice | n | My grandmother cooks rice every morning. | 祖母は毎朝ご飯を炊きます。
+meat | n | This soup has meat and vegetables. | このスープには肉と野菜が入っています。
+meat | n | Do you like meat with rice? | 肉とご飯の組み合わせは好きですか。
+meat | n | My father bought fresh meat for dinner. | 父は夕食用に新鮮な肉を買いました。
+egg | n | I had an egg for breakfast. | 私は朝食に卵を一つ食べました。
+egg | n | Can you cook an egg for me? | 私のために卵を一つ料理してくれますか。
+egg | n | She put two eggs into the bowl. | 彼女はボウルに卵を二つ入れました。
+milk | n | My little brother drinks milk every morning. | 弟は毎朝牛乳を飲みます。
+milk | n | Is there any milk in the fridge? | 冷蔵庫に牛乳はありますか。
+milk | n | We bought some fresh milk yesterday. | 私たちは昨日新鮮な牛乳を買いました。
+tea | n | My grandmother drinks tea after lunch. | 祖母は昼食後にお茶を飲みます。
+tea | n | Would you like some hot tea? | 温かいお茶はいかがですか。
+tea | n | We made tea for our guests. | 私たちはお客さんのためにお茶を入れました。
+coffee | n | My father drinks coffee every morning. | 父は毎朝コーヒーを飲みます。
+coffee | n | Do you take milk in your coffee? | コーヒーに牛乳を入れますか。
+coffee | n | She bought two cups of coffee. | 彼女はコーヒーを二杯買いました。

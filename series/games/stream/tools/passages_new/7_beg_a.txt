@@ -1,0 +1,514 @@
+@id beg8
+@lv 1
+@level 4
+@title Ken's First Day at School
+@ja 弟の小学校の初日
+@tag 高校受験レベル・物語文
+@gloss elementary=初等の, backpack=リュック, tightly=しっかりと, nervous=緊張して, excited=わくわくした, gate=門, wave=手を振る, proud=誇らしい
+P| {In|On|At|Of} April, :: 4月に
+S| my little {brother|brothers|bother|brother's} Ken :: 弟のケンは
+V| {started|startted|starting|starten} :: 始めた
+O| elementary {school|schooled|scool|schoolly}. :: 小学校を
+== 4月に、弟のケンは小学校に入学した。
+S| He {wore|worn|wearing|weared} :: 彼は身につけた
+O| a {new|news|newly|newer than} blue backpack :: 新しい青いリュックを
+T| {that|those|these|them} morning. :: その朝
+== その朝、彼は新しい青いリュックを背負った。
+P| {On|Of|Off|Onto} the way to school, :: 学校へ行く途中
+S| he {held|hold|helds|holded} :: 彼は握った
+O| my hand {tightly|tighten|tightness|tighted}. :: 私の手をぎゅっと
+== 学校へ行く途中、彼は私の手をぎゅっと握った。
+S| He {looked|lookt|looking|lookes} :: 彼は…に見えた
+C| a little {nervous|nervously|nerve|nerves} :: 少し緊張して
+M| {but|nor|than|whom} also :: でも同時に
+C| {excited|excite|excitement|excitedly}. :: わくわくして
+== 彼は少し緊張していたが、わくわくもしていた。
+P| {At|Of|Than|Into} the school gate, :: 校門で
+S| a kind {teacher|teach|teaching|taught} :: 優しい先生が
+V| {said|sayed|saying|to say}, :: 言った
+O| "{Welcome|Welcomes|Welcoming|Welcomed} to our school!" :: 「学校へようこそ」と
+== 校門で、優しい先生が「私たちの学校へようこそ！」と言った。
+S| Ken {waved|waving|wavd|to wave} :: ケンは手を振った
+O| {goodbye|goodly|goods|good by} to me :: 私にさよならと
+M| and {went|gone|goed|going} inside. :: そして中へ入った
+== ケンは私に手を振ってさよならを言い、中へ入っていった。
+T| {After|Than|Afterly|Of} school, :: 放課後
+S| he {ran|run|runned|running} :: 彼は走ってきた
+P| {to|of|than|whom} me :: 私のところへ
+M| with a big {smile|smiles|smiled|smiling}. :: 大きな笑顔で
+== 放課後、彼は大きな笑顔で私のところへ走ってきた。
+X| "I {made|maked|making|maden} :: 「ぼくは作った
+O| a new {friend|friends|friendly|friended}!" :: 新しい友だちを」
+S| he {said|sayed|saying|to say}. :: と彼は言った
+== 「新しい友だちができたよ！」と彼は言った。
+S| I {felt|feeled|feeling|felted} :: 私は感じた
+C| very {proud|pride|proudly|prouder} :: とても誇らしく
+P| {of|on|to|at} him. :: 彼のことを
+== 私は彼のことをとても誇らしく思った。
+?? 1 1 ケンはどんなリュックを背負っていた？
+?? 4 1 校門でだれが迎えてくれた？
+?? 6 3 放課後、ケンはどんな顔で走ってきた？
+?? 7 1 ケンは学校で何ができた？
+
+@id beg9
+@lv 1
+@level 4
+@title Our New Puppy
+@ja 新しい子犬が来た
+@tag 高校受験レベル・ブログ
+@gloss puppy=子犬, soft=柔らかい, fluffy=ふわふわの, cotton=綿, sock=靴下, chew=かむ, bark=ほえる, lonely=さびしい, leash=リード
+T| {Last|Lasts|Lastly|Least} Sunday, :: この前の日曜日
+S| a new puppy {came|come|comed|coming} :: 新しい子犬が来た
+P| {to|of|than|whom} our house! :: 私たちの家に
+== この前の日曜日、新しい子犬が家にやって来た！
+S| His {name|names|named|naming} :: 彼の名前は
+V| {is|are|be|am} Mochi :: モチだ
+R| {because|nor|than|whom} he is :: 彼は…だから
+C| white and {soft|softly|soften|softness}. :: 白くて柔らかい
+== 白くて柔らかいので、名前はモチだ。
+S| Mochi {is|are|be|were} :: モチは…だ
+C| very small and {fluffy|fluff|fluffily|fluffs} :: 小さくふわふわ
+P| {like|likes|liked|liking} a cotton ball. :: 綿のボールのよう
+== モチはとても小さくてふわふわで、綿のボールみたいだ。
+S| He {likes|like|liking|likes to} :: 彼は好きだ
+O| {playing|to playing|plays|played} :: 遊ぶことが
+P| {with|of|than|whom} my socks. :: 私の靴下で
+== 彼は私の靴下で遊ぶのが好きだ。
+T| {Sometimes|Sometime's|Some|Sometimed}, :: ときどき
+S| he also {chews|chew|chewing|chewes} :: 彼はかみもする
+O| my dad's {shoes|shoe's|shoeses|shooes}! :: 父の靴を
+== ときどき、彼は父の靴までかんでしまう！
+T| {At|In|Of|Than} night, :: 夜に
+S| he {barks|bark|barking|barken} :: 彼はほえる
+M| a {little|few|many|much} :: 少し
+R| {because|nor|than|whom} he is lonely. :: さびしいので
+== 夜はさびしいので、彼は少しほえる。
+S| So I {sleep|sleeps|sleeping|slept to} :: だから私は寝る
+P| {next to|next|next of|nexted} his bed :: 彼のベッドの横で
+T| for a {while|whiles|whilst|wile}. :: しばらく
+== だから私は、しばらく彼のベッドの横で寝る。
+T| {Every|Everyone|Everything|Ever} morning, :: 毎朝
+S| we {walk|walks|walking|walken} :: 私たちは歩く
+P| {in|of|than|whom} the park :: 公園を
+M| {with|of|than|whom} a red leash. :: 赤いリードで
+== 毎朝、私たちは赤いリードをつけて公園を散歩する。
+S| I {want|wants|wanting|to want} :: 私は…たい
+O| to {train|trains|trained|training} him :: 彼をしつけ
+M| {well|goodly|weller|wells}. :: きちんと
+== 私は彼をきちんとしつけたい。
+?? 1 1 子犬の名前は？
+?? 3 2 モチは何で遊ぶのが好き？
+?? 4 2 モチはだれの靴をかむ？
+?? 7 3 散歩のとき何をつける？
+
+@id beg10
+@lv 1
+@level 4
+@title Cleaning My Room
+@ja 部屋のそうじ
+@tag 高校受験レベル・日記
+@gloss messy=散らかった, comic=漫画, floor=床, closet=クローゼット, throw away=捨てる, vacuum cleaner=掃除機, dust=ほこり, at last=やっと
+T| {Today|Todays|Today's|Todayly} :: 今日
+S| my room {was|were|be|been} :: 私の部屋は
+C| very {messy|mess|messily|messes}. :: とても散らかって
+== 今日、私の部屋はとても散らかっていた。
+S| Clothes and {comics|comical|comically|comicly} :: 服と漫画が
+V| {were|was|be|is} :: あった
+P| {all over|all of|alls over|all off} the floor. :: 床じゅうに
+== 服と漫画が床じゅうに散らばっていた。
+S| My mother {said|sayed|saying|says to}, :: 母は言った
+O| "{Clean|Cleans|Cleaning|Cleaned} your room :: 「部屋を片づけて
+T| {before|than|befor|since} dinner." :: 夕食の前に」と
+== 母が「夕食の前に部屋を片づけなさい」と言った。
+T| {First|Fist|Firsts|Fastly}, :: まず
+S| I {picked|picken|picking|pickt} up :: 私は拾い上げた
+O| {all|every|each|much} my clothes. :: 服を全部
+== まず、私は服を全部拾い上げた。
+T| {Next|Nextly|Nexted|Neck}, :: 次に
+S| I {put|puts|putted|putting} them :: それらをしまった
+P| {into|of|than|whom} the closet. :: クローゼットに
+== 次に、私はそれらをクローゼットにしまった。
+T| {Then|Than|There|Them} :: それから
+S| I {threw|throwed|thrown|throwing} away :: 私は捨てた
+O| some old {papers|paper's|papered|papery}. :: 古い紙を何枚か
+== それから、古い紙を何枚か捨てた。
+T| {After|Than|Afterly|Of} that, :: そのあと
+S| I {cleaned|cleant|cleaning|cleanly} :: 私はきれいにした
+O| the floor {with|of|than|whom} :: 床を…で
+O| a {vacuum cleaner|vacuum clean|vacuums cleaner|vacuum cleaning}. :: 掃除機
+== そのあと、私は掃除機で床をきれいにした。
+S| There {was|were|be|been} :: …があった
+O| a lot of {dust|dusty|dusts|dusted} :: たくさんのほこりが
+P| {under|undo|until|unless} my bed. :: ベッドの下に
+== ベッドの下にほこりがたくさんあった。
+T| {At|In|On|Of} six o'clock, :: 6時に
+S| my room {was|were|be|being} :: 私の部屋は
+C| clean {at last|at lastly|on last|at lasts}. :: やっときれいに
+== 6時に、やっと部屋がきれいになった。
+S| My mother {looked|lookt|looking|looken} :: 母は…に見えた
+C| {happy|happily|happiness|happier than}, :: うれしそう
+M| and I {felt|feeled|feeling|felted} good, too. :: 私も気分がよかった
+== 母はうれしそうで、私も気分がよかった。
+?? 2 1 母は何をしなさいと言った？
+?? 4 2 服をどこにしまった？
+?? 7 1 ベッドの下に何があった？
+?? 8 0 何時に部屋がきれいになった？
+
+@id beg11
+@lv 1
+@level 4
+@title Grandpa's Birthday Party
+@ja 祖父の誕生日パーティー
+@tag 高校受験レベル・物語文
+@gloss grandfather=祖父, whole=全部の, gather=集まる, cousin=いとこ, decorate=飾る, balloon=風船, candle=ろうそく, surprised=驚いた, forever=ずっと
+S| Last {Saturday|Saturdays|Saturday's|Sunday's} :: この前の土曜日は
+V| {was|were|be|been} :: …だった
+C| my {grandfather's|grandfather|grandfathers|grandfathered} 70th birthday. :: 祖父の70歳の誕生日
+== この前の土曜日は、祖父の70歳の誕生日だった。
+S| Our whole family {gathered|gatherd|gathering|gathern} :: 家族全員が集まった
+P| {at|of|than|whom} his house :: 彼の家に
+R| {for|of|than|whom} a party. :: パーティーのため
+== パーティーのため、家族全員が祖父の家に集まった。
+S| My cousins and I {decorated|decorates|decorating|decorateed} :: いとこと私は飾った
+O| the room {with|of|than|whom} :: 部屋を…で
+O| colorful {balloons|balloon|ballooned|ballooning}. :: カラフルな風船
+== いとこたちと私は、カラフルな風船で部屋を飾った。
+S| My mother {made|maked|making|maden} :: 母は作った
+O| a big {cake|cakes|caked|caking} :: 大きなケーキを
+P| {with|of|than|whom} many candles. :: たくさんのろうそく付き
+== 母は、ろうそくをたくさん立てた大きなケーキを作った。
+T| {When|What|Which|Whom} Grandpa came in, :: 祖父が入ると
+S| we {shouted|shouts|shouting|shoutted}, :: 私たちは叫んだ
+O| "Happy {birthday|birthdayed|birthdaying|birthly}!" :: 「おめでとう！」と
+== 祖父が入ってきたとき、私たちは「お誕生日おめでとう！」と叫んだ。
+S| He {was|were|be|being} :: 彼は…だった
+C| a little {surprised|surprise|surprises|surprisedly} :: 少し驚いて
+M| {but|nor|than|whom} very happy. :: でもとても喜んだ
+== 彼は少し驚いたが、とてもうれしそうだった。
+S| I {gave|gived|given|giving} him :: 私は彼にあげた
+O| a {picture|pictured|picturing|pictures} :: 絵を
+P| {of|than|whom|onto} our family. :: 私たち家族の
+== 私は彼に家族の絵をあげた。
+S| He {said|sayed|saying|to say}, :: 彼は言った
+O| "{Thank|Thanks|Thanking|Thanked} you so much. :: 「本当にありがとう
+X| I'll {keep|keeps|kept|keeping} it forever." :: ずっと大切にする」
+== 彼は「本当にありがとう。ずっと大切にするよ」と言った。
+S| It {was|were|be|been} :: それは…だった
+C| a {wonderful|wonder|wonderfully|wonders} day :: すばらしい日
+P| {for|of|than|whom} everyone. :: みんなにとって
+== みんなにとって、すばらしい一日だった。
+?? 0 2 何の誕生日だった？
+?? 2 2 部屋を何で飾った？
+?? 6 1 「私」は祖父に何をあげた？
+?? 7 2 祖父は絵をどうすると言った？
+
+@id beg12
+@lv 1
+@level 4
+@title My Mother, the Nurse
+@ja 看護師の母の仕事
+@tag 高校受験レベル・説明文
+@gloss nurse=看護師, hospital=病院, take care of=世話をする, patient=患者, temperature=体温, medicine=薬, carefully=注意深く, shift=勤務, respect=尊敬する
+S| My mother {works|work|working|worker} :: 母は働いている
+C| {as|of|than|whom} a nurse :: 看護師として
+P| {at|of|than|whom} a big hospital. :: 大きな病院で
+== 母は大きな病院で看護師として働いている。
+S| Nurses {take care of|take care|take of care|takes care of} :: 看護師は世話をする
+O| {sick|sickness|sicken|sicks} people :: 病気の人々の
+P| {in|of|than|whom} hospitals. :: 病院で
+== 看護師は病院で病気の人の世話をする。
+S| They {check|checks|checking|checken} :: 彼らは測る
+O| patients' {temperatures|temperature's|tempered|temperate} :: 患者の体温を
+M| {and|nor|than|whom} give them medicine. :: そして薬をあげる
+== 彼らは患者の体温を測ったり、薬をあげたりする。
+S| They {also|alsoly|ago|else} listen :: 彼らはまた聞く
+O| {to|at|of|than} patients :: 患者の話を
+M| {carefully|careful|care|careless}. :: 注意深く
+== 彼らはまた、患者の話を注意深く聞く。
+S| My mother {sometimes|sometime's|somes|sometimed} works :: 母はときどき働く
+T| {at|in|on|of} night :: 夜に
+R| {because|nor|than|whom} hospitals never close. :: 病院は閉まらないので
+== 病院は決して閉まらないので、母はときどき夜に働く。
+T| {After|Than|Afterly|Of} a night shift, :: 夜勤のあと
+S| she {is|are|be|am} :: 彼女は…だ
+C| very {tired|tire|tires|tiredly}. :: とても疲れて
+== 夜勤のあと、母はとても疲れている。
+M| {But|Nor|Than|Whom} she says, :: でも彼女は言う
+O| "I {love|loves|loving|loved to} my job. :: 「仕事が大好き
+X| Patients' smiles {make|makes|making|maked} me happy." :: 笑顔で幸せになる」
+== でも母は「仕事が大好き。患者さんの笑顔で幸せになるの」と言う。
+S| I {respect|respects|respecting|respected to} :: 私は尊敬している
+O| my {mother|mothers|mother's|motherly} :: 母を
+M| {very much|very many|much very|very more}. :: とても
+== 私は母をとても尊敬している。
+T| {Someday|Somebody|Something|Someone}, :: いつか
+S| I {want|wants|wanting|to want} :: 私は…たい
+C| to {be|is|am|being} a nurse :: 看護師になり
+M| {like|likes|liked|liking} her. :: 母のように
+== いつか、私も母のような看護師になりたい。
+?? 0 2 母はどこで働いている？
+?? 2 2 看護師は患者に何をあげる？
+?? 4 2 母が夜に働くことがあるのはなぜ？
+?? 6 2 何が母を幸せにする？
+
+@id beg13
+@lv 1
+@level 4
+@title Sunday Pancakes
+@ja 日曜日の朝ごはん
+@tag 高校受験レベル・日記
+@gloss decide=決める, pancake=パンケーキ, flour=小麦粉, mix=混ぜる, bowl=ボウル, pour=注ぐ, burned=こげた, honey=はちみつ, delicious=おいしい
+T| {This|These|Those|Them} morning, :: 今朝
+S| I {got up|gets up|getting up|gotten up} :: 私は起きた
+T| {at|in|on|of} eight. :: 8時に
+== 今朝、私は8時に起きた。
+S| It {was|were|be|been} :: …だった
+C| {Sunday|Sundays|Sunday's|Sundayly}, :: 日曜日
+M| {so|nor|than|whom} I made :: だから私は作った
+O| {breakfast|breakfasted|breakfasting|breakfastly} for my family. :: 家族の朝食を
+== 日曜日だったので、私は家族の朝食を作った。
+S| I {decided|decides|deciding|decision} :: 私は決めた
+O| to {make|makes|made|making} :: 作ることに
+O| {pancakes|pancaked|pancaking|pancakely}. :: パンケーキを
+== 私はパンケーキを作ることにした。
+S| I {mixed|mixes|mixing|mixen} :: 私は混ぜた
+O| {flour|flower|floor|flouring}, eggs, and milk :: 粉と卵と牛乳を
+P| {in|of|than|whom} a big bowl. :: 大きなボウルで
+== 私は大きなボウルで小麦粉と卵と牛乳を混ぜた。
+T| {Then|Than|There|Them} :: それから
+S| I {poured|pours|pouring|pourd} it :: 私はそれを注いだ
+P| {into|of|than|whom} a hot pan. :: 熱いフライパンに
+== それから、それを熱いフライパンに流し入れた。
+S| The first pancake {was|were|be|been} :: 最初の1枚は
+C| a little {burned|burn|burns|burnly}, :: 少しこげて
+M| {but|nor|than|whom} the others were good. :: でもほかはよかった
+== 最初の1枚は少しこげたが、ほかはうまく焼けた。
+S| My father {put|putted|putting|puten} :: 父はかけた
+O| {honey|hony|honeys|honeyed} :: はちみつを
+P| {on|of|than|whom} his pancakes. :: パンケーキに
+== 父はパンケーキにはちみつをかけた。
+S| My little sister {said|sayed|saying|says to} :: 妹は言った
+M| {with|of|than|whom} a big smile, :: 大きな笑顔で
+O| "This is {delicious|deliciously|delicacy|deliciousness}!" :: 「おいしい！」と
+== 妹は満面の笑みで「これ、おいしい！」と言った。
+T| {After|Than|Afterly|Of} breakfast, :: 朝食のあと
+S| everyone {helped|help|helping|helpes} :: みんなが手伝った
+O| me {wash|washes|washed to|washing} the dishes. :: 私の皿洗いを
+== 朝食のあと、みんなが皿洗いを手伝ってくれた。
+S| It {was|were|be|been} :: それは…だった
+C| a {happy|happily|happiness|happen} Sunday morning :: 幸せな日曜の朝
+P| {for|of|than|whom} our family. :: 私たち家族にとって
+== 家族にとって幸せな日曜日の朝だった。
+?? 0 2 「私」は何時に起きた？
+?? 2 2 何を作ることにした？
+?? 6 1 父はパンケーキに何をかけた？
+?? 8 2 朝食のあと、みんなで何をした？
+
+@id beg14
+@lv 1
+@level 4
+@title Our New House
+@ja 新しい家への引っ越し
+@tag 高校受験レベル・物語文
+@gloss move=引っ越す, garden=庭, truck=トラック, carry=運ぶ, box=箱, miss=恋しく思う, neighbor=近所の人, age=年齢
+T| {Last|Lasts|Lastly|Least} month, :: 先月
+S| my family {moved|moves|moving|moven} :: 私の家族は引っ越した
+P| {to|of|than|whom} a new house. :: 新しい家に
+== 先月、私の家族は新しい家に引っ越した。
+S| The new house {was|were|be|been} :: 新しい家は
+C| {bigger|big|biggest|more big} :: より大きかった
+P| {than|then|that|as} our old one. :: 前の家より
+== 新しい家は前の家より大きかった。
+S| It {had|have|having|haved} :: …があった
+O| a small {garden|gardens|gardened|gardening} :: 小さな庭が
+M| {with|of|than|whom} a tree. :: 木のある
+== その家には木のある小さな庭があった。
+T| {On|In|At|Of} moving day, :: 引っ越しの日に
+S| a big truck {came|come|comed|coming} :: 大きなトラックが来た
+T| {early|earlily|earlies|earling} in the morning. :: 朝早く
+== 引っ越しの日、朝早く大きなトラックが来た。
+S| We {carried|carryed|carrying|carries} :: 私たちは運んだ
+O| a lot of {boxes|box|boxs|boxing} :: たくさんの箱を
+P| {into|of|than|whom} the house. :: 家の中へ
+== 私たちはたくさんの箱を家の中へ運んだ。
+S| I {was|were|be|being} :: 私は…だった
+C| a little {sad|sadly|sadness|sadden} :: 少し悲しく
+R| {because|nor|than|whom} I missed my old friends. :: 前の友達が恋しくて
+== 前の友だちが恋しくて、私は少し悲しかった。
+T| {That|Those|These|Them} evening, :: その晩
+S| our {neighbor|neighborly|neighbored|neighbour's} :: 近所の人が
+V| {came|come|comed|coming} over :: やって来た
+M| {with|of|than|whom} some cookies. :: クッキーを持って
+== その晩、近所の人がクッキーを持ってやって来た。
+S| Her {daughter|daughters|daughterly|daughter's} Lisa :: 彼女の娘のリサは
+V| {was|were|be|been} :: …だった
+C| {about|abort|abut|abouts} my age. :: 私と同じくらいの年
+== 彼女の娘のリサは、私と同じくらいの年だった。
+S| We {became|becomes|becoming|becamed} :: 私たちはなった
+C| good {friends|friend|friendly|friendship} :: 仲よしに
+M| {soon|soonly|sooner than|soons}. :: すぐに
+== 私たちはすぐに仲よしになった。
+T| {Now|Nowly|Know|New} :: 今では
+S| I {like|likes|liking|liked to} :: 私は好きだ
+O| my new town {very much|very many|much very|very more}. :: 新しい町がとても
+== 今では、私は新しい町がとても好きだ。
+?? 2 1 新しい家には何があった？
+?? 5 2 「私」が悲しかったのはなぜ？
+?? 6 3 近所の人は何を持ってきた？
+?? 7 0 近所の人の娘の名前は？
+
+@id beg15
+@lv 1
+@level 4
+@title Washing the Car with Dad
+@ja 父と洗車をした日
+@tag 高校受験レベル・日記
+@gloss bucket=バケツ, soap=石けん, roof=屋根, sponge=スポンジ, tire=タイヤ, hose=ホース, by mistake=まちがって, wet=ぬれた, shiny=ぴかぴかの
+T| {Today|Todays|Today's|Todayly} :: 今日
+S| I {washed|washt|washing|washen} :: 私は洗った
+O| the car {with|of|than|whom} my father. :: 父と車を
+== 今日、私は父と車を洗った。
+T| {Outside|Outsides|Out|Outer}, :: 外は
+S| it {was|were|be|been} :: …だった
+C| sunny and {warm|warmly|warmth|warms}. :: 晴れて暖かい
+== 外は晴れていて暖かかった。
+T| {First|Fist|Firsts|Fastly}, :: まず
+S| we {filled|fills|filling|filld} :: 私たちは満たした
+O| a bucket {with|than|whom|onto} :: バケツを…で
+O| water and {soap|soup|soaps|soapy}. :: 水と石けん
+== まず、私たちはバケツに水と石けんを入れた。
+S| My father {washed|washt|washing|washen} :: 父は洗った
+O| the {roof|roofed|roofing|rooves}, :: 屋根を
+M| {and|nor|than|whom} I washed the doors :: 私はドアを洗った
+P| {with|of|than|whom} a sponge. :: スポンジで
+== 父は屋根を、私はスポンジでドアを洗った。
+S| The tires {were|was|be|is} :: タイヤは…だった
+C| very {dirty|dirt|dirtily|dirts}, :: とても汚れて
+M| {so|nor|than|whom} we brushed them hard. :: だから強くこすった
+== タイヤはとても汚れていたので、強くこすった。
+T| {Then|Than|There|Them} :: それから
+S| my father {used|use|using|uses to} :: 父は使った
+O| a {hose|hoses|hosing|hosed} :: ホースを
+R| to {wash|washes|washed|washing} off the soap. :: 石けんを流すのに
+== それから父はホースを使って石けんを洗い流した。
+M| {Suddenly|Sudden|Suddenness|Suddenlied}, :: 突然
+S| the water {hit|hitting|hitted|hitten} me :: 水が私に当たった
+M| {by|of|than|whom} mistake. :: まちがって
+== 突然、水がまちがって私にかかった。
+S| I {got|gotten|getting|gots} :: 私はなった
+C| {wet|wetly|wetness|wets} :: ぬれた状態に
+M| {from|of|than|whom} head to toe. :: 頭から足まで
+== 私は頭から足までびしょぬれになった。
+S| My father {and|nor|than|whom} I :: 父と私は
+V| {laughed|laughs|laughing|laught} :: 笑った
+M| {a lot|a lots|lots a|a many}. :: たくさん
+== 父と私はたくさん笑った。
+T| {In|On|Of|Than} the end, :: 最後には
+S| the car {was|were|be|been} :: 車は…だった
+C| clean and {shiny|shine|shinily|shines}. :: きれいでぴかぴか
+== 最後には、車はきれいでぴかぴかになった。
+?? 0 2 だれと車を洗った？
+?? 2 3 バケツに何を入れた？
+?? 4 1 タイヤはどうだった？
+?? 9 2 最後に車はどうなった？
+
+@id beg16
+@lv 1
+@level 4
+@title A Letter to Aunt Emma
+@ja カナダのおばへの手紙
+@tag 高校受験レベル・手紙
+@gloss dear=親愛なる, aunt=おば, photo=写真, snow=雪, still=まだ, news=知らせ, visit=訪ねる, skating=スケート, uncle=おじ
+X| {Dear|Dearly|Deer|Dears} Aunt Emma, :: エマおばさんへ
+X| how {are|is|be|am} you :: お元気ですか
+P| {in|of|than|whom} Canada? :: カナダで
+== エマおばさんへ。カナダでお元気ですか？
+S| I {am|is|are|be} :: 私は…だ
+C| {fine|fines|finely|fined}, :: 元気だ
+M| {and|nor|than|whom} my family is, too. :: 家族も元気だ
+== 私は元気で、家族も元気です。
+S| Thank you {for|of|to|than} :: …をありがとう
+O| your {letter|lettered|letterly|lettery} :: あなたの手紙
+M| {and|nor|than|whom} the photos. :: と写真
+== お手紙と写真をありがとう。
+S| The {snow|snowy|snowed|snowly} in the photos :: 写真の雪は
+V| {was|were|be|been} :: …だった
+C| {beautiful|beauty|beautifully|beautify}. :: 美しかった
+== 写真の雪はとてもきれいでした。
+T| {Here|Hear|Hare|Her} in Japan, :: ここ日本では
+S| it {is|are|be|am} :: …だ
+C| still {warm|warmly|warmth|warms}. :: まだ暖かい
+== ここ日本は、まだ暖かいです。
+S| I {have|has|having|haves} :: 私にはある
+O| {good|well|better than|goodly} news :: よい知らせが
+P| {for|than|whom|onto} you. :: あなたへの
+== あなたによい知らせがあります。
+S| My family {will|wills|willing|would to} visit :: 家族は訪ねる
+O| you {in|of|than|whom} Canada :: カナダのあなたを
+T| {next|nextly|nexts|neck} winter! :: 今度の冬に
+== 今度の冬、家族でカナダのあなたに会いに行きます！
+S| I {want|wants|wanting|to want} :: 私は…たい
+O| to {try|tries|tried|trying} skating :: スケートをしてみ
+P| {with|of|than|whom} you. :: あなたと
+== あなたといっしょにスケートをしてみたいです。
+S| I {can't|cannot to|don't can|can't to} wait :: 待ちきれない
+R| {to|of|than|for} see you :: あなたに会うのが
+M| {again|agains|against|gain}. :: また
+== またあなたに会えるのが待ちきれません。
+X| {Please|Pleased|Pleasing|Pleasure} say :: どうか伝えて
+O| {hello|hellos|helloed|hellow} :: よろしくと
+P| {to|of|than|whom} Uncle Tom. :: トムおじさんに
+== トムおじさんによろしく伝えてください。
+?? 2 1 おばさんは何を送ってくれた？
+?? 4 2 日本の天気はどう？
+?? 6 2 家族はいつカナダへ行く？
+?? 7 1 「私」はおばさんと何をしたい？
+
+@id beg17
+@lv 1
+@level 4
+@title Our Family Calendar
+@ja 家族のカレンダー
+@tag 高校受験レベル・説明文
+@gloss calendar=カレンダー, kitchen=台所, plan=予定, person=人, different=ちがう, busy=忙しい, check=確認する, forget=忘れる, useful=役に立つ
+S| {There|Their|They|Then} is :: …がある
+O| a big {calendar|calendars|calendared|calendaring} :: 大きなカレンダーが
+P| {in|of|than|whom} our kitchen. :: 台所に
+== 台所には大きなカレンダーがある。
+S| We {write|writes|writing|wrote to} :: 私たちは書く
+O| our {plans|plan's|planned|plannes} :: 予定を
+P| {on|of|than|whom} it. :: そこに
+== 私たちはそこに予定を書きこむ。
+S| {Each|All|Both|Many} person :: それぞれの人が
+V| {uses|use|using|useful} :: 使う
+O| a different {color|colors|colorful|colored}. :: ちがう色を
+== 一人ひとりがちがう色を使う。
+S| My father's color {is|are|be|am} :: 父の色は
+C| {blue|blues|bluely|blued}, :: 青
+M| {and|nor|than|whom} my mother's is red. :: 母のは赤だ
+== 父の色は青で、母の色は赤だ。
+S| My sister and I {use|uses|using|useful} :: 姉と私は使う
+O| {green|greens|greenly|greener} :: 緑と
+M| {and|nor|than|whom} yellow. :: 黄色を
+== 姉と私は緑と黄色を使う。
+M| {With|Of|Than|Whom} these colors, :: この色のおかげで
+S| we {can|cans|could to|can to} see :: 私たちはわかる
+O| {who|whom|whose|what's} is busy :: だれが忙しいか
+T| {quickly|quickness|quicken|quickful}. :: すぐに
+== 色のおかげで、だれが忙しいかすぐにわかる。
+T| {Every|Everyone|Everything|Ever} morning, :: 毎朝
+S| my mother {checks|check|checking|checken} :: 母は確認する
+O| the {calendar|calendared|calendaring|calendarly}. :: カレンダーを
+== 毎朝、母はカレンダーを確認する。
+M| {Because|Nor|Than|Whom} of the calendar, :: カレンダーのおかげで
+S| we {don't|doesn't|aren't|not} forget :: 私たちは忘れない
+O| {important|importance|importantly|importants} days. :: 大切な日を
+== カレンダーのおかげで、大切な日を忘れない。
+S| A family calendar {is|are|be|am} :: 家族のカレンダーは
+C| very {useful|use|usefully|usefulness} :: とても役に立つ
+P| {for|of|than|whom} busy families. :: 忙しい家族に
+== 家族のカレンダーは、忙しい家族にとても役に立つ。
+?? 0 2 カレンダーはどこにある？
+?? 3 1 父の色は何色？
+?? 6 1 毎朝カレンダーを確認するのはだれ？
+?? 7 2 カレンダーのおかげで何を忘れない？

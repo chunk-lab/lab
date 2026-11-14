@@ -400,7 +400,7 @@ export function renderBar(){
   texts[p.key]=p.hole?'':en;
   if(ck!==actKey){ if(foldKey!==ck) flush(); foldKey=ck; if(en) fold.push(en); return; }
   flush(); foldKey=null;
-  const cls=['ck','pos-'+p.pos]; if(p.hole) cls.push('hole'); if(isNegChunk(p)) cls.push('negc'); if(p.subject) cls.push('subject');
+  const cls=['ck','pos-'+p.pos]; if(p.hole) cls.push('hole'); if(APP.finished&&APP.diceKey===p.key) cls.push('dice'); if(isNegChunk(p)) cls.push('negc'); if(p.subject) cls.push('subject');
   if(!p.hole && prevTexts[p.key]!==en) cls.push('pop');
   html+=`<button class="${cls.join(' ')}" data-key="${p.key}" data-cat="${p.cat}" data-cl="${ck}">${p.hole?'':`<span class="en">${esc(en)}</span>`}<span class="ja">${esc(p.ja||'')}</span></button>`;
  });
@@ -417,7 +417,7 @@ export function renderBar(){
    const hp=$('#htPre'); if(hp) hp.onclick=()=>{ APP.active='main'; APP.open = APP.open==='pre'?null:'pre'; APP.finished=false; render(); }; }
  bar.querySelectorAll('[data-key]').forEach(el=>{ const r0=rects[el.dataset.key]; if(!r0) return; const r1=el.getBoundingClientRect(); const dx=r0.left-r1.left, dy=r0.top-r1.top; if(Math.abs(dx)>2||Math.abs(dy)>2){ el.classList.remove('pop'); } });
  { const last=bar.querySelector('.ck:not(.hole):last-of-type')||bar.lastElementChild; const target=bar.querySelector('.ck.hole')||last; if(target) requestAnimationFrame(()=>{ bar.scrollLeft = Math.max(0, target.offsetLeft - bar.clientWidth*0.55); }); }
- bar.querySelectorAll('.ck').forEach(el=>el.onclick=()=>{ const t=el.querySelector('.en'); if(t) say(t.textContent); chunkTap(el.dataset.cl, el.dataset.cat); });
+ bar.querySelectorAll('.ck').forEach(el=>el.onclick=()=>{ if(APP.finished&&APP.diceHook&&APP.diceHook(el)) return; const t=el.querySelector('.en'); if(t) say(t.textContent); chunkTap(el.dataset.cl, el.dataset.cat); });
  bar.querySelectorAll('.fold').forEach(el=>el.onclick=()=>setActive(el.dataset.act==='m'?'main':el.dataset.act));
  const fin=$('#finish'); fin.disabled=!complete; fin.classList.toggle('ready',complete && !APP.finished);
  $('#barnote').textContent = parts.futNote? 'when / if の中では「これから」の話も現在形で言います' : '';
@@ -1247,7 +1247,13 @@ export function renderTrModal(){
 // ---------- 🔍 search by typing, and register a missing word on the spot ----------
 export function openSearch(){ const st=stageOf(); APP.search={q:'',ctx:{st,open:APP.open,lsub:APP.lsub,beKind:APP.beKind,side:APP.side,subjTab:APP.subjTab,active:APP.active}}; renderSearchBar(); renderScene(); setTimeout(()=>{ const i=document.getElementById('srchIn'); if(i) i.focus(); },50); }
 export function closeSearch(){ APP.search=null; const el=document.getElementById('srch'); if(el) el.remove(); renderScene(); }
-export function renderSearchBar(){ let el=document.getElementById('srch'); if(!APP.search){ if(el) el.remove(); return; } if(!el){ el=document.createElement('div'); el.id='srch'; el.innerHTML=`<span>🔍</span><input id="srchIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="英語か日本語で（例：te / 先生）"><button id="srchX">×</button>`; $('#canvas').appendChild(el); el.querySelector('#srchIn').addEventListener('input',e=>{ APP.search.q=e.target.value; renderScene(); }); el.querySelector('#srchX').onclick=closeSearch; } }
+export function renderSearchBar(){ let el=document.getElementById('srch'); if(!APP.search){ if(el) el.remove(); return; } if(!el){ el=document.createElement('div'); el.id='srch'; el.innerHTML=`<span>🔍</span><input id="srchIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="英語か日本語で（例：te / 先生）"><button id="srchEx" title="例文">📖</button><button id="srchX">×</button>`; $('#canvas').appendChild(el); el.querySelector('#srchIn').addEventListener('input',e=>{ APP.search.q=e.target.value; renderScene(); });
+  el.querySelector('#srchEx').onclick=()=>{ /* 例文：打った言葉(日本語なら一番上の候補)で、例文を探す・作る画面を開く */
+   const q=(APP.search&&APP.search.q||'').trim(); const core=ENV.ctx&&ENV.ctx.core; if(!q){ toast('言葉を打ってから📖を押してね'); return; }
+   let en=q, ja=''; const top=(()=>{ try{ return searchResults()[0]; }catch(e){ return null; } })();
+   if(!/[a-zA-Z]/.test(q)){ if(!top){ toast('その言葉が見つかりませんでした'); return; } en=String(top.en||'').replace(/^(a|an|the) /,''); ja=top.ja||q; }
+   else if(top && String(top.en||'').toLowerCase().replace(/^(a|an|the) /,'')===q.toLowerCase()) ja=top.ja||'';
+   if(core&&core.useit) core.useit.open({ en, ja }); else toast('この画面では使えません'); }; el.querySelector('#srchX').onclick=closeSearch; } }
 export function searchPool(){
  const x=APP.search.ctx, c=AC(), L=[];
  const add=(k)=>optList0(k,c).forEach(o=>L.push(o));
@@ -1355,7 +1361,7 @@ export function renderCanvasSentence(){
  const done=sentenceComplete(APP.S);
  if(!parts.length||!done){ el.classList.remove('show'); el.innerHTML=''; return; }
  const spot = null; const spotKey = spot==='intens'?'state':'verb';
- const words=parts.map((q,i)=>{ let t=q.en; if(i===0) t=cap(t); const g = spot && q.clause==='m' && String(q.key).split('.').pop()===spotKey ? `<span class="plusg" data-spot="${spot}">＋<i class="plusarr">⬆<b>ここに足せる</b></i></span>` : ''; return `${g}<span class="pos-${q.pos} ${isNegChunk(q)?'negc':''}">${esc(t)}</span>${q.comma?'<span class="p">,</span>':''}`; }).join(' ');
+ const words=parts.map((q,i)=>{ let t=q.en; if(i===0) t=cap(t); const g = spot && q.clause==='m' && String(q.key).split('.').pop()===spotKey ? `<span class="plusg" data-spot="${spot}">＋<i class="plusarr">⬆<b>ここに足せる</b></i></span>` : ''; return `${g}<span class="pos-${q.pos} ${isNegChunk(q)?'negc':''}" data-cat="${q.cat||''}">${esc(t)}</span>${q.comma?'<span class="p">,</span>':''}`; }).join(' ');
  parts.punct=raw.punct;
  let ja=''; try{ ja = jaFull().replace(/\s+/g,' ').replace(/ ([、。？！])/g,'$1'); }catch(e){ ja=''; }
  const src=trSource();
@@ -1489,7 +1495,11 @@ export function initTimeline(){
 }
 // ---------- nav ----------
 export function go(v){ APP.view = v==='make'?'play':v; if(v==='prac'){ if(!PR.cur) prNew(); else renderPrac(); } if(v==='sets') renderSets(); if(v==='settings') renderSettings(); if(v==='reg') renderReg(); render(); }
-export function setLevel(l){ if(String(LV())===String(l)) return; SET().slv=String(l); if(typeof save==='function') save(); APP.level=String(l); resetAll(); }
+export function setLevel(l){ if(String(LV())===String(l)) return; SET().slv=String(l); if(typeof save==='function') save(); APP.level=String(l);
+ // レベルを切り替えても、いまの文はそのまま残す(レベルで使える時制・助動詞が変わるだけ)
+ const m0=APP.S&&APP.S.main, keep=m0&&(m0.pred||m0.subj)?JSON.stringify({S:APP.S,fin:APP.finished,act:APP.active}):null;
+ resetAll();
+ if(keep){ try{ const k=JSON.parse(keep); APP.S=k.S; APP.active=k.act||'main'; APP.finished=!!k.fin; normalize(); render(); }catch(e){ console.error(e); } } }
 export function init(){
  I18N.lang=(DB.settings.ui && I18N.tables[DB.settings.ui])?DB.settings.ui:'ja'; applyI18n();
  document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));

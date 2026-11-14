@@ -1,0 +1,300 @@
+hide | v | Please hide the gift under your bed. | 贈り物をベッドの下に隠してください。
+hide | v | Where does your cat hide at night? | あなたの猫は夜どこに隠れますか。
+hide | v | She hid the key in her bag. | 彼女はかぎをかばんに隠しました。
+shut | v | Please shut the window before dinner. | 夕食前に窓を閉めてください。
+shut | v | Did you shut the door behind you? | 後ろのドアを閉めましたか。
+shut | v | He shut his book and smiled. | 彼は本を閉じてほほえみました。
+ride | v | I can ride a bike to school. | 私は自転車で学校へ行けます。
+ride | v | Do you ride the bus every day? | 毎日バスに乗りますか。
+ride | v | We rode horses on the farm. | 私たちは農場で馬に乗りました。
+hang | v | Please hang your coat by the door. | コートをドアのそばに掛けてください。
+hang | v | Can we hang this picture here? | この絵をここに掛けてもよいですか。
+hang | v | She hung her hat on the wall. | 彼女は帽子を壁に掛けました。
+dig | v | We dig small holes for the flowers. | 私たちは花のために小さな穴を掘ります。
+dig | v | Can your dog dig in the garden? | あなたの犬は庭で穴を掘りますか。
+dig | v | My father dug a hole yesterday. | 父は昨日穴を掘りました。
+bite | v | Does your little dog bite people? | あなたの小さな犬は人をかみますか。
+bite | v | Take a bite of this sweet apple. | この甘いリンゴを一口かじってください。
+bite | v | The baby bit into a banana. | 赤ちゃんはバナナにかじりつきました。
+blow | v | The wind can blow very hard here. | ここでは風がとても強く吹くことがあります。
+blow | v | Can you blow out these candles? | このろうそくの火を吹き消せますか。
+blow | v | A cool wind blew through the window. | 涼しい風が窓から吹き込みました。
+burn | v | Dry wood can burn very quickly. | 乾いた木はとても速く燃えることがあります。
+burn | v | Does this wood burn well outside? | この木は外でよく燃えますか。
+burn | v | The fire burned all evening. | 火は夕方ずっと燃えていました。
+freeze | v | Water can freeze on very cold nights. | とても寒い夜には水が凍ることがあります。
+freeze | v | Does this lake freeze in winter? | この湖は冬に凍りますか。
+freeze | v | The water froze in the bottle. | 瓶の中の水が凍りました。
+steal | v | Do not steal things from other people. | ほかの人の物を盗んではいけません。
+steal | v | Why did the boy steal that pen? | その男の子はなぜそのペンを盗んだのですか。
+steal | v | Someone stole my bike last week. | 先週誰かが私の自転車を盗みました。
+shoot | v | Can you shoot the ball into the basket? | ボールをバスケットにシュートできますか。
+shoot | v | She shoots well from that spot. | 彼女はあの場所から上手にシュートします。
+shoot | v | He shot the basketball into the basket. | 彼はバスケットボールをゴールにシュートしました。
+seek | v | We seek a quiet place to study. | 私たちは勉強する静かな場所を探し求めています。
+seek | v | Why does she seek help from friends? | 彼女はなぜ友達に助けを求めるのですか。
+seek | v | They sought a better way to learn. | 彼らはよりよい学び方を探し求めました。
+beat | v | Please beat the eggs with a fork. | フォークで卵をかき混ぜてください。
+beat | v | Can you beat the drum slowly? | 太鼓をゆっくりたたけますか。
+beat | v | He beat the drum during the song. | 彼は歌の間に太鼓をたたきました。
+bet | v | I bet you will like this cake. | きっとこのケーキが気に入ると思います。
+bet | v | Would you bet on that horse? | あの馬に賭けますか。
+bet | v | He bet a dollar on the game. | 彼はその試合に1ドル賭けました。
+bind | v | Please bind these papers with string. | これらの紙をひもでしばってください。
+bind | v | Can you bind the flowers together? | 花をまとめてしばれますか。
+bind | v | She bound the books with a ribbon. | 彼女は本をリボンでしばりました。
+bleed | v | My finger may bleed a little. | 私の指から少し血が出るかもしれません。
+bleed | v | Does your finger still bleed now? | 指からはまだ血が出ていますか。
+bleed | v | His knee bled a little yesterday. | 昨日彼のひざから少し血が出ました。
+breed | v | Some farmers breed horses on their farms. | 農家の中には農場で馬を育てる人もいます。
+breed | v | Does your uncle breed small dogs? | あなたのおじは小さな犬を繁殖させていますか。
+breed | v | They bred rabbits on their farm. | 彼らは農場でウサギを育てました。
+flee | v | The birds flee when they hear noise. | 鳥たちは音を聞くと逃げます。
+flee | v | Why do the rabbits flee from people? | なぜウサギは人から逃げるのですか。
+flee | v | The deer fled into the forest. | シカは森の中へ逃げました。
+forgive | v | Please forgive me for being late. | 遅れたことを許してください。
+forgive | v | Can you forgive your brother now? | 今は弟を許せますか。
+forgive | v | She forgave her friend for the mistake. | 彼女は友達の間違いを許しました。
+kneel | v | Please kneel beside the little dog. | 小さな犬のそばにひざまずいてください。
+kneel | v | Can you kneel on this soft mat? | この柔らかいマットの上にひざまずけますか。
+kneel | v | He knelt down to tie his shoe. | 彼は靴ひもを結ぶためにひざまずきました。
+lay | v | Please lay the book on the desk. | 本を机の上に置いてください。
+lay | v | Can you lay the baby on the bed? | 赤ちゃんをベッドに寝かせてもらえますか。
+lay | v | She laid the flowers on the table. | 彼女は花をテーブルの上に置きました。
+mistake | n | I made a mistake in my homework. | 私は宿題で間違いをしました。
+mistake | n | Can you find the mistake here? | ここの間違いを見つけられますか。
+mistake | n | We all make mistakes sometimes. | 私たちは誰でも時々間違いをします。
+quit | v | I want to quit this game now. | 私はもうこのゲームをやめたいです。
+quit | v | Did your brother quit the soccer team? | 弟さんはサッカーチームをやめましたか。
+quit | v | She quit her job last month. | 彼女は先月仕事を辞めました。
+rise | v | Watch the sun rise over the hills. | 丘の向こうから太陽が昇るのを見てください。
+rise | v | Does the sun rise early in summer? | 夏は太陽が早く昇りますか。
+rise | v | The water rose after the rain. | 雨の後に水位が上がりました。
+ring | v | The school bell will ring soon. | 学校のベルがもうすぐ鳴ります。
+ring | v | Does your phone ring during class? | 授業中に電話が鳴りますか。
+ring | v | The doorbell rang while I was cooking. | 料理中に玄関のベルが鳴りました。
+shine | v | The stars shine brightly at night. | 夜には星が明るく輝きます。
+shine | v | Does the sun shine through your window? | 窓から日が差し込みますか。
+shine | v | Her shoes shone in the sunlight. | 彼女の靴は日光の中で光っていました。
+sink | v | A heavy stone will sink in water. | 重い石は水に沈みます。
+sink | v | Does this toy sink or float? | このおもちゃは沈みますか、それとも浮きますか。
+sink | v | The small boat sank in the pond. | 小さなボートは池に沈みました。
+spread | v | Please spread the map on the table. | 地図をテーブルの上に広げてください。
+spread | v | Can you spread this blanket on the floor? | この毛布を床に広げられますか。
+spread | v | She spread butter on her bread. | 彼女はパンにバターを塗り広げました。
+stick | v | Please stick this picture on the wall. | この絵を壁に貼り付けてください。
+stick | v | Can you stick the note here? | このメモをここに貼れますか。
+stick | v | He stuck a photo in his notebook. | 彼はノートに写真を貼りました。
+swing | v | The branches swing in the strong wind. | 枝は強い風の中で揺れます。
+swing | v | Can you swing your arms slowly? | 腕をゆっくり振れますか。
+swing | v | The little girl swung on the swing. | 小さな女の子はブランコで揺れていました。
+tear | v | Please do not tear this paper. | この紙を破らないでください。
+tear | v | Can you tear the paper in half? | 紙を半分に破れますか。
+tear | v | He tore the old letter carefully. | 彼は古い手紙を注意して破りました。
+wake | v | I usually wake at six every morning. | 私はふつう毎朝6時に目を覚まします。
+wake | v | What time do you wake on Sundays? | 日曜日は何時に目を覚ましますか。
+wake | v | The baby woke when the dog barked. | 犬がほえると赤ちゃんは目を覚ましました。
+weep | v | Some people weep during sad movies. | 悲しい映画の間に泣く人もいます。
+weep | v | Why does she weep at that story? | 彼女はなぜその物語で泣くのですか。
+weep | v | He wept when he heard the news. | 彼はその知らせを聞いて涙を流しました。
+wish | v | I wish you a happy birthday. | お誕生日おめでとうございます。
+wish | v | Do you wish to join us? | 私たちに加わりたいですか。
+wish | v | She wished for a new bike. | 彼女は新しい自転車が欲しいと願いました。
+worry | v | Please do not worry about the test. | テストのことを心配しないでください。
+worry | v | Does your mother worry about you? | お母さんはあなたを心配しますか。
+worry | v | He worried about the weather yesterday. | 彼は昨日天気を心配していました。
+wonder | v | I wonder where my keys are. | かぎがどこにあるのかと思います。
+wonder | v | Do you ever wonder about the stars? | 星について不思議に思うことはありますか。
+wonder | v | She wondered why the shop was closed. | 彼女はなぜ店が閉まっているのか不思議に思いました。
+guess | v | Can you guess my favorite color? | 私の好きな色を当てられますか。
+guess | v | Did you guess the right answer? | 正しい答えを推測できましたか。
+guess | v | We guessed how many apples were inside. | 私たちは中のリンゴの数を推測しました。
+imagine | v | Can you imagine living near the sea? | 海の近くで暮らすことを想像できますか。
+imagine | v | Does she imagine stories before bed? | 彼女は寝る前に物語を想像しますか。
+imagine | v | I imagined a house in the forest. | 私は森の中の家を想像しました。
+notice | v | Did you notice the new picture here? | ここの新しい絵に気づきましたか。
+notice | v | Can you notice any difference between them? | 二つの間の違いに気づきますか。
+notice | v | She noticed a bird outside the window. | 彼女は窓の外の鳥に気づきました。
+consider | v | Please consider my idea before deciding. | 決める前に私の考えをよく考えてください。
+consider | v | Will you consider joining our team? | 私たちのチームに入ることを考えてくれますか。
+consider | v | We considered several places for lunch. | 私たちは昼食の場所をいくつか検討しました。
+describe | v | Can you describe your new classroom? | 新しい教室の様子を説明できますか。
+describe | v | How would you describe this cake? | このケーキをどのように説明しますか。
+describe | v | He described the town to his friends. | 彼は友達にその町の様子を説明しました。
+discuss | v | We should discuss our plans after school. | 放課後に計画について話し合いましょう。
+discuss | v | Can we discuss the trip tomorrow? | 明日旅行について話し合えますか。
+discuss | v | The students discussed their favorite books. | 生徒たちは好きな本について話し合いました。
+repeat | v | Please repeat the word after me. | 私の後にその単語を繰り返してください。
+repeat | v | Can you repeat the question slowly? | 質問をゆっくり繰り返してくれますか。
+repeat | v | She repeated the song three times. | 彼女はその歌を3回繰り返しました。
+reply | v | Please reply to my email today. | 今日私のメールに返事をしてください。
+reply | v | Did your teacher reply to you? | 先生はあなたに返事をくれましたか。
+reply | v | He replied with a short message. | 彼は短いメッセージで返事をしました。
+prepare | v | We need to prepare dinner soon. | 私たちはもうすぐ夕食を準備する必要があります。
+prepare | v | Did you prepare for the English test? | 英語のテストの準備をしましたか。
+prepare | v | My father prepared breakfast for everyone. | 父はみんなの朝食を準備しました。
+protect | v | Trees protect us from the hot sun. | 木々は暑い日差しから私たちを守ります。
+protect | v | Can this coat protect you from rain? | このコートは雨からあなたを守れますか。
+protect | v | The mother bird protected her babies. | 母鳥はひなを守りました。
+prevent | v | Warm clothes help prevent us from getting cold. | 暖かい服は体が冷えるのを防ぎます。
+prevent | v | Can we prevent water from entering here? | ここに水が入るのを防げますか。
+prevent | v | The cover prevented rain from getting inside. | カバーは雨が中に入るのを防ぎました。
+produce | v | These trees produce many apples every year. | これらの木は毎年たくさんのリンゴを実らせます。
+produce | v | Does this farm produce fresh milk? | この農場は新鮮な牛乳を生産していますか。
+produce | v | The garden produced many tomatoes last summer. | その庭では去年の夏にトマトがたくさん採れました。
+reduce | v | We should reduce the amount of sugar. | 私たちは砂糖の量を減らすべきです。
+reduce | v | Can you reduce the music volume? | 音楽の音量を下げられますか。
+reduce | v | She reduced her time on the computer. | 彼女はコンピューターを使う時間を減らしました。
+compare | v | Please compare these two pictures carefully. | この二枚の絵を注意深く比べてください。
+compare | v | Can you compare their sizes for me? | 二つの大きさを比べてくれますか。
+compare | v | We compared our answers after the test. | 私たちはテストの後に答えを比べました。
+contain | v | This box can contain many small toys. | この箱には小さなおもちゃをたくさん入れられます。
+contain | v | Does this soup contain any milk? | このスープには牛乳が入っていますか。
+contain | v | The bag contained three books and a pen. | そのかばんには本3冊とペン1本が入っていました。
+depend | v | Children often depend on their parents. | 子供はよく親に頼ります。
+depend | v | Can we depend on the weather tomorrow? | 明日の天気は当てにできますか。
+depend | v | She depended on her sister for help. | 彼女は助けを求めて姉に頼りました。
+destroy | v | Strong winds can destroy small houses. | 強い風は小さな家を壊すことがあります。
+destroy | v | Can heavy rain destroy this road? | 大雨はこの道路を壊すことがありますか。
+destroy | v | The storm destroyed some trees in the park. | 嵐で公園の木が何本か倒れました。
+discover | v | We hope to discover new places together. | 私たちは一緒に新しい場所を発見したいです。
+discover | v | Did you discover a nice little cafe? | すてきな小さなカフェを見つけましたか。
+discover | v | The children discovered a bird in the tree. | 子供たちは木の中に鳥を見つけました。
+enter | v | Please enter the room through this door. | このドアから部屋に入ってください。
+enter | v | Can we enter the museum now? | 今博物館に入れますか。
+enter | v | She entered the classroom before the bell. | 彼女はベルが鳴る前に教室に入りました。
+exist | v | Do animals like this still exist? | このような動物は今も存在しますか。
+exist | v | Does that old building still exist? | あの古い建物は今もありますか。
+exist | v | These kinds of flowers exist in many places. | この種類の花はいろいろな場所に存在します。
+fail | v | I sometimes fail to wake up early. | 私は時々早起きに失敗します。
+fail | v | Did he fail the driving test? | 彼は運転試験に落ちましたか。
+fail | v | We failed to finish before lunch. | 私たちは昼食前に終えることができませんでした。
+hate | v | I hate getting up on cold mornings. | 私は寒い朝に起きるのが大嫌いです。
+hate | v | Does your brother hate eating carrots? | 弟さんはニンジンを食べるのが嫌いですか。
+hate | v | She hated the noise outside her room. | 彼女は部屋の外の騒音が嫌いでした。
+hurt | v | Please do not hurt the little animals. | 小さな動物を傷つけないでください。
+hurt | v | Does your left foot still hurt? | 左足はまだ痛みますか。
+hurt | v | My legs hurt after the long walk. | 長く歩いた後で脚が痛みました。
+introduce | v | Let me introduce my friend to you. | 私の友達をあなたに紹介させてください。
+introduce | v | Can you introduce your sister to us? | 妹さんを私たちに紹介してくれますか。
+introduce | v | The teacher introduced a new student today. | 先生は今日新しい生徒を紹介しました。
+marry | v | I hope to marry my best friend someday. | いつか一番親しい人と結婚したいです。
+marry | v | Does she want to marry him? | 彼女は彼と結婚したいのですか。
+marry | v | My uncle married his college friend. | 叔父は大学時代の友人と結婚しました。
+miss | v | Do not miss the last train tonight. | 今夜の最終電車に乗り遅れないでください。
+miss | v | Did you miss the bus again? | またバスに乗り遅れましたか。
+miss | v | He missed the first part of the movie. | 彼は映画の最初の部分を見逃しました。
+paint | v | We will paint the wall blue tomorrow. | 私たちは明日壁を青く塗ります。
+paint | v | Can you paint a picture of our dog? | 私たちの犬の絵を描けますか。
+paint | v | She painted the chair white yesterday. | 彼女は昨日椅子を白く塗りました。
+prefer | v | I prefer tea to coffee in the morning. | 私は朝はコーヒーよりお茶が好きです。
+prefer | v | Do you prefer summer or winter? | 夏と冬ではどちらが好きですか。
+prefer | v | My sister preferred the smaller room. | 妹は小さい方の部屋を好みました。
+promise | v | I promise to call you tomorrow. | 明日電話すると約束します。
+promise | v | Can you promise to arrive on time? | 時間どおりに着くと約束できますか。
+promise | v | He promised to help with dinner. | 彼は夕食の準備を手伝うと約束しました。
+publish | v | They will publish our school newspaper tomorrow. | 彼らは明日学校新聞を発行します。
+publish | v | Does your school publish a magazine? | あなたの学校は雑誌を発行していますか。
+publish | v | She published a book about her garden. | 彼女は自分の庭についての本を出版しました。
+relax | v | I like to relax after dinner. | 私は夕食後にくつろぐのが好きです。
+relax | v | Can you relax with this music? | この音楽を聞いてくつろげますか。
+relax | v | We relaxed by the lake yesterday. | 私たちは昨日湖のそばでくつろぎました。
+rest | v | Please rest after your long walk. | 長く歩いた後は休んでください。
+rest | v | Can we rest under that tree? | あの木の下で休めますか。
+rest | v | My grandfather rested before lunch. | 祖父は昼食前に休みました。
+share | v | Please share your cake with your sister. | 妹とケーキを分け合ってください。
+share | v | Can we share this large table? | この大きなテーブルを一緒に使えますか。
+share | v | They shared a sandwich at lunch. | 彼らは昼食にサンドイッチを分け合いました。
+solve | v | Can you solve this math problem? | この数学の問題を解けますか。
+solve | v | How did your brother solve it? | 弟さんはどうやってそれを解きましたか。
+solve | v | We solved the problem together yesterday. | 私たちは昨日一緒にその問題を解きました。
+succeed | v | You can succeed if you keep practicing. | 練習を続ければ成功できます。
+succeed | v | Did your team succeed in winning? | あなたのチームは勝つことができましたか。
+succeed | v | She succeeded in making a beautiful cake. | 彼女は美しいケーキを作ることに成功しました。
+suffer | v | Some plants suffer in very hot weather. | とても暑い天気では弱ってしまう植物もあります。
+suffer | v | Do you suffer from the summer heat? | 夏の暑さに苦しんでいますか。
+suffer | v | The flowers suffered without enough water. | 花は水が足りずに弱っていました。
+surprise | v | We want to surprise our mother today. | 私たちは今日母を驚かせたいです。
+surprise | v | Will the gift surprise your brother? | その贈り物は弟さんを驚かせますか。
+surprise | v | Her friends surprised her with a cake. | 友達はケーキで彼女を驚かせました。
+survive | v | These plants can survive without much water. | これらの植物は少ない水でも生き残れます。
+survive | v | Can the fish survive in cold water? | その魚は冷たい水でも生き延びられますか。
+survive | v | The old tree survived the strong wind. | その古い木は強風に耐えて生き残りました。
+treat | v | Please treat the new student kindly. | 新しい生徒に親切に接してください。
+treat | v | Does your brother treat animals well? | 弟さんは動物を大切に扱いますか。
+treat | v | They treated us like old friends. | 彼らは私たちを昔からの友達のように扱いました。
+type | n | What type of music do you like? | どんな種類の音楽が好きですか。
+type | n | Is this a different type of tea? | これは違う種類のお茶ですか。
+type | n | We saw several types of birds there. | 私たちはそこで何種類かの鳥を見ました。
+vote | v | We will vote for our class leader. | 私たちはクラスの代表を投票で選びます。
+vote | v | Can everyone vote for their favorite song? | みんなで好きな歌に投票できますか。
+vote | v | The students voted for the blue design. | 生徒たちは青いデザインに投票しました。
+achieve | v | We can achieve our goal together. | 私たちは一緒に目標を達成できます。
+achieve | v | Did you achieve your goal this year? | 今年は目標を達成しましたか。
+achieve | v | She achieved her dream of becoming a teacher. | 彼女は先生になるという夢をかなえました。
+act | v | Please act quickly when the bell rings. | ベルが鳴ったらすぐに行動してください。
+act | v | How would you act in this situation? | この状況ならどう行動しますか。
+act | v | He acted kindly toward the new student. | 彼は新しい生徒に親切に接しました。
+affect | v | The weather can affect our travel plans. | 天気は旅行の計画に影響することがあります。
+affect | v | Does music affect how you feel? | 音楽はあなたの気分に影響しますか。
+affect | v | The rain affected our soccer game. | 雨は私たちのサッカーの試合に影響しました。
+apply | v | Please apply this rule to every question. | この規則をすべての問題に適用してください。
+apply | v | Can we apply the same rule here? | ここでも同じ規則を適用できますか。
+apply | v | Our teacher applied the rule to everyone. | 先生はその規則を全員に適用しました。
+argue | v | We sometimes argue about which movie to watch. | 私たちはどの映画を見るか時々議論します。
+argue | v | Do your friends argue about soccer? | 友達はサッカーについて議論しますか。
+argue | v | The children argued about the game rules. | 子供たちはゲームのルールについて言い争いました。
+attack | v | Some birds attack when they feel afraid. | 鳥の中には怖がると攻撃するものもいます。
+attack | v | Does that dog ever attack people? | あの犬は人を襲うことがありますか。
+attack | v | The cat attacked the moving toy. | 猫は動くおもちゃに飛びかかりました。
+avoid | v | Please avoid the wet floor today. | 今日はぬれた床を避けてください。
+avoid | v | Can we avoid the busy street? | 混んでいる通りを避けられますか。
+avoid | v | She avoided eating too much sugar. | 彼女は砂糖を取りすぎないようにしました。
+base | v | We should base our plan on facts. | 私たちは事実に基づいて計画を立てるべきです。
+base | v | Can you base your answer on this picture? | この絵に基づいて答えられますか。
+base | v | They based the story on their trip. | 彼らは旅行をもとに物語を作りました。
+cover | v | Please cover the food with a plate. | 食べ物を皿で覆ってください。
+cover | v | Can this blanket cover the whole bed? | この毛布でベッド全体を覆えますか。
+cover | v | The newspaper covered our school festival. | 新聞は私たちの学校祭を取り上げました。
+determine | v | We must determine the date for our trip. | 旅行の日付を決めなければなりません。
+determine | v | Can you determine the answer from this map? | この地図から答えを判断できますか。
+determine | v | The teacher determined the order of the games. | 先生は試合の順番を決めました。
+encourage | v | We should encourage our friends to try. | 友達が挑戦できるよう励ますべきです。
+encourage | v | Does your teacher encourage you to read? | 先生は読書を勧めてくれますか。
+encourage | v | Her family encouraged her to keep singing. | 家族は彼女が歌い続けるよう励ましました。
+establish | v | They hope to establish a new school. | 彼らは新しい学校を設立したいと考えています。
+establish | v | Can we establish a small reading club? | 小さな読書クラブを設立できますか。
+establish | v | Our town established a new library. | 私たちの町は新しい図書館を設立しました。
+express | v | You can express your feelings in words. | 気持ちを言葉で表現できます。
+express | v | How do you express thanks in English? | 英語ではどう感謝を表しますか。
+express | v | She expressed her ideas through pictures. | 彼女は絵を通して考えを表現しました。
+focus | v | Please focus on your homework now. | 今は宿題に集中してください。
+focus | v | Can you focus with music playing? | 音楽が流れていても集中できますか。
+focus | v | We focused on reading during class. | 私たちは授業中に読書に集中しました。
+form | n | This cloud has a strange form. | この雲は不思議な形をしています。
+form | n | What form does this cake have? | このケーキはどんな形をしていますか。
+form | n | The artist used many different forms. | その芸術家はいろいろな形を使いました。
+gain | v | You can gain confidence through practice. | 練習を通して自信を得られます。
+gain | v | Did you gain anything from the lesson? | その授業から何か得られましたか。
+gain | v | She gained new friends at school. | 彼女は学校で新しい友達を得ました。
+identify | v | Can you identify this bird from the picture? | この写真からこの鳥を見分けられますか。
+identify | v | Did you identify the correct answer? | 正しい答えを特定できましたか。
+identify | v | The teacher identified the missing word. | 先生は抜けている単語を特定しました。
+indicate | v | Please indicate your answer with a circle. | 答えを丸で示してください。
+indicate | v | Does this sign indicate the way? | この標識は道を示していますか。
+indicate | v | The arrow indicated the correct door. | 矢印は正しいドアを指し示していました。
+involve | v | This game will involve everyone in class. | このゲームにはクラス全員が参加することになります。
+involve | v | Does your job involve meeting people? | あなたの仕事には人と会うことが伴いますか。
+involve | v | The project involved working with other students. | その活動にはほかの生徒との共同作業が伴いました。
+maintain | v | We must maintain a clean classroom. | 私たちは教室を清潔に保たなければなりません。
+maintain | v | Can you maintain this speed all day? | 一日中この速さを保てますか。
+maintain | v | She maintained her garden very well. | 彼女は庭をとてもよい状態に保ちました。
+manage | v | I help manage our school library. | 私は学校の図書館の管理を手伝っています。
+manage | v | Does your father manage this shop? | お父さんはこの店を管理していますか。
+manage | v | She managed the team last year. | 彼女は去年そのチームを管理しました。
+obtain | v | You can obtain a ticket at the station. | 駅で切符を手に入れられます。
+obtain | v | How can we obtain more information? | どうすればもっと情報を得られますか。
+obtain | v | He obtained permission from his teacher. | 彼は先生から許可を得ました。
+occur | v | Small mistakes can occur during practice. | 練習中には小さな間違いが起こることがあります。
+occur | v | Does this problem occur every day? | この問題は毎日起こりますか。
+occur | v | The change occurred during the summer. | その変化は夏の間に起こりました。

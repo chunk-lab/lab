@@ -1,0 +1,501 @@
+@id int97
+@lv 2
+@level 6
+@title The Wrong Cake
+@ja 名前ちがいのケーキ
+@tag 共通テストレベル・物語文
+@gloss order=注文する, baker=菓子職人, retirement=退職, nervously=おそるおそる, burst out laughing=どっと笑い出す, retire=退職する, apologize=謝る, receive=受け取る
+S| Kenji {ordered|order|ordering|orders} :: ケンジは注文した
+O| a cake {for|to|at|of} his mother's birthday. :: 母の誕生日ケーキを
+== ケンジは母の誕生日のためにケーキを注文した。
+S| He {asked|ask|asking|asks} the baker :: 彼は職人に頼んだ
+O| {to write|writing|write|wrote} "Happy Birthday, Mom" :: 「誕生日おめでとう」と
+P| {on|of|at|to} top. :: 上に書くよう
+== 彼は職人に、上に「お誕生日おめでとう、お母さん」と書いてほしいと頼んだ。
+M| {When|What|Which|Whom} he opened the box :: 箱を開けたとき
+T| at home {that|those|these|them} evening, :: その晩、家で
+S| he {couldn't|can't|doesn't|won't} believe his eyes. :: 彼は目を疑った
+== その晩、家で箱を開けたとき、彼は自分の目を疑った。
+S| The cake {said|says|saying|say} :: ケーキにはあった
+O| "Happy {Retirement|Retire|Retired|Retiring}, Tom" :: 「退職おめでとうトム」と
+M| {in|on|at|by} blue letters. :: 青い文字で
+== ケーキには青い文字で「退職おめでとう、トム」と書かれていた。
+S| There {was|were|be|being} no time :: 時間はなかった
+R| {to go|going|go|went} back to the shop. :: 店に戻る
+== 店に戻る時間はなかった。
+M| {So|Than|Nor|Whom} Kenji :: そこでケンジは
+V| {nervously|nervous|nerve|nervousness} carried :: おそるおそる運んだ
+O| the cake {to|at|for|on} the table. :: ケーキを食卓へ
+== そこでケンジは、おそるおそるケーキを食卓に運んだ。
+S| His mother {read|reads|reading|readed} it :: 母はそれを読んだ
+M| and {burst|bursted|bursting|bursts} :: そして…し出した
+C| {out|off|up|over} laughing. :: どっと笑い
+== 母はそれを読んで、どっと笑い出した。
+S| "I've {always|ever|yet|every} wanted :: ずっと…したかった
+O| {to retire|retiring|retire|retired}," :: 仕事をやめたいと
+V| she {said|told|talked|spoke}. :: 彼女は言った
+== 「ずっと仕事をやめたいと思っていたのよ」と彼女は言った。
+T| {The next day|The next days|Next the day|The day next}, :: 翌日
+S| the baker {called|calls|calling|call} :: 職人が電話してきた
+R| {to apologize|apologizing|apologize|apologized}. :: 謝るために
+== 翌日、菓子職人が謝るために電話してきた。
+S| A man {named|naming|names|name} Tom :: トムという男性が
+V| had {received|receive|receiving|receives} :: 受け取っていた
+O| a birthday cake {instead|instead of|in place|rather}. :: 代わりに誕生日ケーキを
+== トムという男性が、代わりに誕生日ケーキを受け取っていたのだ。
+?? 0 1 ケンジは何のためにケーキを注文した？
+?? 3 1 ケーキには何と書かれていた？
+?? 7 1 母はずっと何をしたかったと言った？
+?? 8 2 翌日、職人は何のために電話してきた？
+
+@id int98
+@lv 2
+@level 6
+@title The Parrot Next Door
+@ja となりのオウム
+@tag 共通テストレベル・物語文
+@gloss pick up=(電話に)出る, broken=壊れた, balcony=ベランダ, parrot=オウム, copy=まねる, ringtone=着信音, neighbor=隣人, perfectly=完璧に
+T| {For|Since|Until|While} a week, :: 1週間ずっと
+S| Lucy {kept|keep|keeping|keeps} hearing :: ルーシーは聞き続けた
+O| her phone {ring|rang|rung|to ring}. :: 電話が鳴るのを
+== 1週間ずっと、ルーシーには自分の電話が鳴る音が聞こえていた。
+M| {But|Nor|Than|Whom} every time :: でも毎回
+S| she {picked|pick|picking|picks} it up, :: 彼女が出ると
+S| {nobody|nowhere|no one's|none of} was there. :: だれもいなかった
+== でも出てみるたびに、だれもいなかった。
+S| She {thought|think|thinking|thinks} :: 彼女は思った
+O| {her|she|hers|herself} phone :: 自分の電話が
+V| {was broken|was break|broke was|broken was}. :: 壊れていると
+== 彼女は電話が壊れているのだと思った。
+T| {One|Once|Ones|Any} afternoon, :: ある日の午後
+S| she {heard|hear|hearing|hears} the sound :: 彼女はその音を聞いた
+P| {through|thorough|though|throw} the open window. :: 開いた窓から
+== ある日の午後、彼女は開いた窓からその音を聞いた。
+S| It {was coming|was come|coming|is came} :: それは聞こえていた
+P| {from|for|off|by} the balcony next door. :: 隣のベランダから
+== それは隣のベランダから聞こえていた。
+S| There {sat|sit|seat|sitting} :: そこにいたのは
+C| a {green|greenly|greens|greenery} parrot :: 緑のオウム
+M| {copying|copied|copy|copies} her ringtone! :: 着信音をまねる
+== そこには、彼女の着信音をまねている緑のオウムがいた！
+S| Her neighbor {laughed|laugh|laughing|laughs} :: 隣人は笑った
+M| and {said|told|talked|spoke}, :: そして言った
+O| "He {learns|learn|learning|to learn} sounds fast." :: 音をすぐ覚えるの
+== 隣人は笑って「この子は音をすぐ覚えるのよ」と言った。
+S| Lucy {decided|decide|decision|deciding} :: ルーシーは決めた
+O| {to change|changing|change|changed} her ringtone :: 着信音を変えると
+P| {to|on|at|of} a song. :: 曲に
+== ルーシーは着信音を曲に変えることにした。
+T| {Two|Second|Twice|Double} days later, :: 2日後
+S| the parrot {was singing|was sing|singing was|sang was} :: オウムは歌っていた
+O| {it|its|it's|itself} perfectly. :: それを完璧に
+== 2日後、オウムはその曲を完璧に歌っていた。
+?? 2 2 ルーシーは何が原因だと思った？
+?? 4 1 音はどこから聞こえていた？
+?? 5 2 オウムは何をしていた？
+?? 7 2 ルーシーは着信音を何に変えた？
+
+@id int99
+@lv 2
+@level 6
+@title A Seat on the Bus
+@ja バスの席
+@tag 共通テストレベル・物語文
+@gloss crowded=混んだ, elderly=年配の, offer=差し出す, get off=降りる, auditorium=講堂, guest speaker=講演者, stage=舞台, recognize=だれだかわかる
+S| The bus {was|were|be|being} :: バスは…だった
+C| {crowded|crowd|crowding|crowds} :: 混んで
+T| {that|those|these|them} rainy morning. :: その雨の朝
+== その雨の朝、バスは混んでいた。
+S| Aya {noticed|notice|noticing|notices} :: アヤは気づいた
+O| an {elderly|elders|eldest|elderness} man :: 年配の男性に
+M| {standing|stood|stand|stands} near the door. :: ドアの近くに立つ
+== アヤはドアの近くに立っている年配の男性に気づいた。
+S| She {stood|stand|standing|stands} up :: 彼女は立ち上がった
+M| and {offered|offer|offering|offers} him :: そして彼に差し出した
+O| {her|she|hers|herself} seat. :: 自分の席を
+== 彼女は立ち上がって、彼に席をゆずった。
+X| "{Thank|Thanks|Thanking|Thanked} you, young lady," :: ありがとうお嬢さん
+S| he {said|told|talked|spoke} :: と彼は言った
+M| {with|by|at|on} a warm smile. :: 温かい笑顔で
+== 「ありがとう、お嬢さん」と彼は温かくほほえんで言った。
+S| Aya {got|get|gotten|getting} off :: アヤは降りた
+P| {at|in|on|to} the next stop :: 次の停留所で
+M| and {forgot|forget|forgotten|forgetting} about him. :: 彼のことを忘れた
+== アヤは次の停留所で降り、彼のことは忘れてしまった。
+T| {That|Those|These|Them} afternoon, :: その日の午後
+S| her school {held|hold|holding|holds} :: 学校は開いた
+O| a {special|specially|specialty|special's} talk :: 特別な講演会を
+P| {in|into|to|for} the auditorium. :: 講堂で
+== その日の午後、学校は講堂で特別な講演会を開いた。
+M| {When|What|Which|Whom} the guest speaker :: 講演者が…とき
+V| {walked|walk|walking|walks} onto the stage, :: 舞台に上がった
+S| Aya {recognized|recognize|recognizing|recognizes} him. :: アヤは彼に気づいた
+== 講演者が舞台に上がったとき、アヤはそれがだれかわかった。
+S| It {was|were|is|be} :: それは…だった
+C| the man {from|for|off|of} the bus! :: バスの男性
+== それはバスの男性だった！
+S| He {began|begun|begin|beginning} his talk :: 彼は話を始めた
+M| {by|with|at|on} saying, :: …と言って
+O| "A student {gave|give|given|giving} me her seat today." :: 今日生徒が席をくれた
+== 彼は「今日、ある生徒が私に席をゆずってくれました」と言って話を始めた。
+T| {At|In|On|By} that moment, :: その瞬間
+S| Aya's face {turned|turn|turning|turns} :: アヤの顔はなった
+C| {bright|brightly|brightness|brighten} red. :: 真っ赤に
+== その瞬間、アヤの顔は真っ赤になった。
+?? 1 1 アヤはだれに気づいた？
+?? 5 3 午後、講演会はどこで開かれた？
+?? 7 1 講演者はだれだった？
+?? 8 2 講演者は話の最初に何と言った？
+
+@id int100
+@lv 2
+@level 6
+@title A Note on the Doorstep
+@ja 玄関先のメモ
+@tag 共通テストレベル・物語文
+@gloss deliver=配達する, package=荷物, for a living=生計のために, freezing=凍えるほど, thermos=水筒, doorstep=玄関先, sign=署名する, envelope=封筒
+S| Mr. Ito {delivered|deliver|delivering|delivery} :: 伊藤さんは配達した
+O| packages {for|to|at|on} a living. :: 仕事として荷物を
+== 伊藤さんは荷物の配達を仕事にしていた。
+T| {One|Once|Ones|Any} snowy day, :: ある雪の日
+S| it {was|were|is|be} :: …だった
+C| {freezing|freeze|froze|freezes} cold. :: 凍えるほど寒く
+== ある雪の日、凍えるほど寒かった。
+S| He {had|has|have|having} :: 彼には…あった
+O| {more than|more then|most than|much than} fifty packages :: 50個以上の荷物が
+R| {to deliver|delivering|deliver|delivered}. :: 配達すべき
+== 彼には配達すべき荷物が50個以上あった。
+P| {At|In|On|To} one house, :: ある家で
+S| he {found|find|founded|finding} :: 彼は見つけた
+O| a thermos {and|nor|than|whom} a note :: 水筒とメモを
+P| {on|in|to|for} the doorstep. :: 玄関先に
+== ある家で、彼は玄関先に水筒とメモを見つけた。
+S| The note {said|says|saying|say}, :: メモにはあった
+O| "Hot cocoa {for|to|at|of} you. :: あなたにココアを
+M| {Stay|Stays|Staying|Stayed} warm!" :: 暖かくしてね
+== メモには「温かいココアをどうぞ。暖かくしてね！」と書かれていた。
+S| It {was signed|was sign|signed was|is signing} :: 署名があった
+P| {at|of|to|for} the bottom :: 下のほうに
+P| {by|at|on|of} "Kota, age 8." :: 「コウタ8歳」と
+== メモの下には「コウタ、8歳」と署名があった。
+S| The warm drink {made|make|making|makes} :: 温かい飲み物は…した
+O| {him|he|his|himself} :: 彼を
+C| {feel|felt|feeling|to feel} much better. :: ずっと元気に
+== 温かい飲み物のおかげで、彼はずっと元気になった。
+T| {The next|Next the|The nearest|Then next} week, :: 翌週
+S| he {left|leave|leaving|leaves} :: 彼は置いていった
+O| a {small|smally|smallness|smalls} envelope :: 小さな封筒を
+P| {at|in|of|to} Kota's door. :: コウタの家の戸口に
+== 翌週、彼はコウタの家の戸口に小さな封筒を置いていった。
+S| {Inside|Inner|Insider|Inward} was :: 中にあったのは
+C| a toy {truck|trucks|trucked|trucking} :: おもちゃのトラック
+M| {and|nor|than|whom} a thank-you card. :: とお礼のカード
+== 中には、おもちゃのトラックとお礼のカードが入っていた。
+?? 2 1 伊藤さんには配達する荷物がいくつ以上あった？
+?? 3 2 玄関先には何があった？
+?? 5 2 メモに署名したのはだれ？
+?? 8 1 封筒の中には何が入っていた？
+
+@id int101
+@lv 2
+@level 6
+@title Where Did the Socks Go?
+@ja 消えたくつした
+@tag 共通テストレベル・物語文
+@gloss disappear=消える, go missing=なくなる, blame=…のせいにする, washing machine=洗濯機, stairs=階段, pile=山, puppy=子犬, collection=コレクション, lid=ふた
+P| {In|On|At|To} the Mori family, :: 森家では
+S| socks {started|start|starting|starts} :: くつしたが始めた
+O| {disappearing|disappear|disappeared|disappears}. :: 消えることを
+== 森家では、くつしたが消え始めた。
+T| {Every|Ever|Very|Everything} week, :: 毎週
+S| one {or|nor|than|whom} two socks :: 1、2足のくつしたが
+V| {went|go|gone|going} missing. :: なくなった
+== 毎週、くつしたが1、2足なくなった。
+S| Dad {blamed|blame|blaming|blames} :: 父は…のせいにした
+O| {the|an|those|these} washing machine, :: 洗濯機の
+M| {and|nor|than|whom} Mom blamed the kids. :: 母は子どものせいに
+== 父は洗濯機のせいにし、母は子どもたちのせいにした。
+S| The kids {said|told|talked|spoke} :: 子どもたちは言った
+M| {angrily|angry|anger|angered}, :: 怒って
+O| "We didn't {take|took|taken|taking} them!" :: 取ってないよ
+== 子どもたちは「ぼくたち取ってないよ！」と怒って言った。
+T| {One|Once|Ones|Any} Sunday, :: ある日曜日
+S| Mom {heard|hear|hearing|hears} :: 母は聞いた
+O| a {strange|strangely|strangeness|strangers} noise :: 変な音を
+P| {under|unless|until|undo} the stairs. :: 階段の下で
+== ある日曜日、母は階段の下で変な音を聞いた。
+S| She {looked|look|looking|looks} :: 彼女はのぞいた
+P| {inside|inner|insider|inward} the dog's bed :: 犬のベッドの中を
+M| and {found|find|founded|finding} :: そして見つけた
+O| {a pile|a piles|an pile|a pilot} of socks. :: くつしたの山を
+== 彼女が犬のベッドの中をのぞくと、くつしたの山が見つかった。
+S| Their puppy, Choco, {had been|has been|had be|have be} :: 子犬のチョコが
+V| {hiding|hide|hid|hidden} them :: それらを隠していた
+T| {for|since|during|while} weeks. :: 何週間も
+== 子犬のチョコが、何週間もそれらを隠していたのだ。
+S| Choco {looked|look|looking|looks} :: チョコは見えた
+C| {proud|pride|proudly|prides} :: 得意げに
+M| {of|with|at|for} his collection. :: 自分の収集品を
+== チョコは自分のコレクションが自慢そうだった。
+T| {Now|Know|Snow|No} :: 今では
+S| the family {keeps|keep|keeping|to keep} :: 家族はしまっている
+O| {their|there|they're|them} socks :: くつしたを
+P| in a box {with|by|at|of} a lid. :: ふた付きの箱に
+== 今では家族は、くつしたをふた付きの箱にしまっている。
+?? 2 1 父は何のせいにした？
+?? 4 3 母はどこで変な音を聞いた？
+?? 5 3 犬のベッドの中には何があった？
+?? 6 0 くつしたを隠していたのはだれ？
+
+@id int102
+@lv 2
+@level 6
+@title A Happy Mistake
+@ja うれしい乗りすごし
+@tag 共通テストレベル・物語文
+@gloss exhausted=疲れ切った, doze off=うとうとする, empty=からの, announcement=アナウンス, reach=着く, seaside=海辺の, sunset=夕日, in months=ここ数か月で
+P| {After|Among|Since|Until} a long week, :: 長い1週間の後
+S| Ryo {was|were|be|being} :: リョウは…だった
+C| {exhausted|exhaustedly|exhaust|exhaustion}. :: 疲れ切って
+== 長い1週間の後、リョウは疲れ切っていた。
+S| He {got|get|gotten|getting} on :: 彼は乗った
+O| the train {home|house|homes|housed} :: 帰りの電車に
+M| and soon {dozed|doze|dozing|dozes} off. :: すぐうとうとした
+== 彼は帰りの電車に乗り、すぐにうとうとした。
+M| {When|What|Which|Whom} he woke up, :: 目が覚めると
+S| the train {was|were|be|been} :: 電車は…だった
+C| {almost|most|the most|almighty} empty. :: ほとんど空っぽ
+== 目が覚めると、電車はほとんど空っぽだった。
+S| The announcement {said|says|saying|say} :: アナウンスが告げた
+O| {they|them|their|there} had reached :: 着いたと
+O| the {last|lastly|least|lasting} stop. :: 終点に
+== アナウンスは、終点に着いたと告げた。
+S| Ryo {stepped|step|stepping|steps} out :: リョウは降りた
+M| {and|nor|than|whom} smelled :: そしてかいだ
+O| the {sea|see|seed|seas} air. :: 潮の香りを
+== リョウが電車を降りると、潮の香りがした。
+S| He {was|were|is|be} :: 彼はいた
+P| {in|into|on|to} a small seaside town :: 小さな海辺の町に
+M| {far|for|fur|fair} from home. :: 家から遠い
+== 彼は家から遠く離れた、小さな海辺の町にいた。
+S| The next train {back|backs|backed|backing} :: 帰りの次の電車は
+V| {wasn't|weren't|isn't|aren't} leaving :: 出なかった
+T| {for|since|by|until} two hours. :: 2時間
+== 帰りの次の電車は、2時間後まで出なかった。
+M| {So|Than|Nor|Whom} he walked :: そこで彼は歩いた
+P| {along|alone|long|belong} the beach :: 浜辺にそって
+M| and {watched|watch|watching|watches} the sunset. :: 夕日をながめた
+== そこで彼は浜辺を歩き、夕日をながめた。
+S| It {was|were|is|be} :: それは…だった
+C| the {best|better|good|well} evening :: 最高の夜
+P| {he'd had|he's had|he'd have|he has had} in months. :: ここ数か月で
+== それは、ここ数か月でいちばんすてきな夜だった。
+?? 2 2 目が覚めたとき、電車はどうなっていた？
+?? 5 1 リョウはどこにいた？
+?? 6 2 次の電車は何時間出なかった？
+?? 7 1 リョウはどこを歩いた？
+
+@id int103
+@lv 2
+@level 6
+@title Grandpa's Old Camera
+@ja 祖父の古いカメラ
+@tag 共通テストレベル・物語文
+@gloss attic=屋根裏, belong to=…のものである, film=フィルム, develop=現像する, faded=色あせた, blurry=ぼやけた, festival=祭り, shy=はずかしがりの, ask out=デートに誘う
+T| {While|During|For|Whom} cleaning the attic, :: 屋根裏の掃除中に
+S| Mei {found|find|founded|finding} :: メイは見つけた
+O| an {old|olds|oldly|age} camera. :: 古いカメラを
+== 屋根裏を掃除していたとき、メイは古いカメラを見つけた。
+S| {It|Its|It's|Itself} belonged :: それは…のものだった
+O| {to|for|at|with} her grandfather, :: 祖父の
+M| {and|nor|than|whom} there was still film :: まだフィルムが
+P| {inside|insider|inner|inward}. :: 中に
+== それは祖父のもので、中にはまだフィルムが入っていた。
+S| Mei {took|take|taken|taking} it :: メイは持っていった
+P| {to|at|on|by} a photo shop :: 写真店に
+R| {to have|having|have|had} it developed. :: 現像してもらいに
+== メイはそれを写真店に持っていき、現像してもらった。
+S| Most {of|in|at|on} the pictures :: 写真のほとんどは
+V| {were|was|be|being} :: …だった
+C| {faded|fade|fadedly|fades} and blurry. :: 色あせてぼやけて
+== 写真のほとんどは色あせていて、ぼやけていた。
+M| {But|Nor|Than|Whom} one photo :: しかし1枚の写真は
+V| {showed|show|shown|showing} :: 写していた
+O| a young woman {laughing|laughed|laugh|laughs} :: 笑う若い女性を
+P| {at|on|to|of} a summer festival. :: 夏祭りで
+== しかし1枚の写真には、夏祭りで笑う若い女性が写っていた。
+S| Mei {showed|show|shown|showing} it :: メイはそれを見せた
+P| {to|for|at|with} her grandfather :: 祖父に
+T| {right|rightly|righter|rights} away. :: すぐに
+== メイはすぐにそれを祖父に見せた。
+S| He {smiled|smile|smiling|smiles} :: 彼はほほえんだ
+M| and {said|told|talked|spoke}, :: そして言った
+O| "That's your grandmother {at|in|on|by} nineteen." :: 19歳の祖母だよ
+== 彼はほほえんで「それは19歳のときのおばあちゃんだよ」と言った。
+S| "I {was|were|am|be} too shy :: はずかしすぎて
+R| {to talk|talking|talk|talked} to her, :: 話しかけられず
+M| {so|than|nor|whom} I took pictures :: だから写真を撮った
+X| {instead|instead of|in place|rather}." :: 代わりに
+== 「はずかしくて話しかけられなかったから、代わりに写真を撮ったんだ」
+T| A month {later|latter|late|lately}, :: 1か月後
+S| he {finally|final|finale|finality} :: 彼はついに
+V| {asked|ask|asking|asks} her out. :: 彼女をデートに誘った
+== 1か月後、彼はついに彼女をデートに誘った。
+?? 1 1 カメラはだれのものだった？
+?? 4 3 写真の女性はどこで笑っていた？
+?? 6 2 写真の女性はだれだった？
+?? 7 0 祖父はなぜ彼女に話しかけなかった？
+
+@id int104
+@lv 2
+@level 6
+@title A Cat with Two Names
+@ja 二つの名前をもつネコ
+@tag 共通テストレベル・物語文
+@gloss missing=行方不明の, put up=はる, poster=ポスター, asleep=眠って, feed=えさをやる, no wonder=どうりで, chubby=ぽっちゃりした, home=家
+S| Ben's cat, Pepper, {had been|has been|had be|have be} :: ベンのネコのペッパーは
+V| {missing|miss|mist|misses} :: いなくなっていた
+T| {for|since|during|while} three days. :: 3日間
+== ベンのネコのペッパーが、3日間いなくなっていた。
+S| He {put up|put on|put in|put off} posters :: 彼はポスターをはった
+M| {with|by|at|of} Pepper's photo :: ペッパーの写真つきの
+P| {all|every|whole|each} around town. :: 町じゅうに
+== 彼はペッパーの写真つきのポスターを町じゅうにはった。
+T| {That|Those|These|Them} evening, :: その晩
+S| an {old|olds|oldly|age} woman :: 老婦人が
+M| {from|for|of|off} the next street :: となりの通りの
+V| {called|call|calling|calls} him. :: 彼に電話してきた
+== その晩、となりの通りに住む老婦人が彼に電話してきた。
+O| "Your cat {is|are|be|being} :: あなたのネコは
+P| {at|on|to|of} my house," :: うちにいるわ
+S| she {said|told|talked|spoke}. :: と彼女は言った
+== 「あなたのネコはうちにいるわ」と彼女は言った。
+S| Ben {ran|run|runs|running} :: ベンは走っていった
+P| {over|overly|above|onto} there :: そこへ
+M| {and|nor|than|whom} found Pepper :: ペッパーを見つけた
+P| {asleep|sleep|sleeps|slept} on a sofa. :: ソファで眠って
+== ベンはそこへ走っていき、ソファで眠っているペッパーを見つけた。
+X| "Oh, {that's|that|those|there} :: あら、その子は
+C| {Tiger|Tigers|Tigerly|Tigered}!" :: タイガーよ
+S| the woman {said|told|talked|spoke}. :: と女性は言った
+== 「あら、その子はタイガーよ！」と女性は言った。
+S| She {had been|has been|had be|have be} :: 彼女は…いた
+V| {feeding|feed|fed|feeds} him :: えさをあげて
+T| {every|ever|very|everything} afternoon :: 毎日午後に
+P| {for|since|during|while} a year. :: 1年間
+== 彼女は1年間、毎日午後にそのネコにえさをあげていたのだ。
+M| {No|Not|None|Nor} wonder :: どうりで
+S| Pepper {was|were|be|been} :: ペッパーは…だった
+C| so {chubby|chub|chubbily|chubbiness}! :: とても太って
+== どうりでペッパーはとても太っていたわけだ！
+T| {Now|Know|Snow|No} :: 今では
+S| the cat {has|have|having|haves} :: そのネコは持つ
+O| two homes {and|nor|than|whom} two names. :: 二つの家と名前を
+== 今ではそのネコには、二つの家と二つの名前がある。
+?? 0 2 ペッパーは何日いなくなっていた？
+?? 4 3 ペッパーはどこで眠っていた？
+?? 5 1 女性はネコを何と呼んでいた？
+?? 6 3 女性はどのくらいの間えさをあげていた？
+
+@id int105
+@lv 2
+@level 6
+@title The Salty Cookies
+@ja しょっぱいクッキー
+@tag 共通テストレベル・物語文
+@gloss enter=参加する, contest=コンテスト, nervous=緊張した, mix up=取りちがえる, judge=審査員, taste=味見する, chew=かむ, unique=独特な, recipe=レシピ
+S| Sora {entered|enter|entrance|entering} :: ソラは参加した
+O| a {baking|baked|bake|bakes} contest :: お菓子作りの大会に
+P| {at|on|to|by} her school festival. :: 学園祭の
+== ソラは学園祭のお菓子作りコンテストに参加した。
+S| She {decided|decide|deciding|decision} :: 彼女は決めた
+O| {to make|making|make|made} :: 作ることに
+O| {her|she|hers|herself} grandmother's cookies. :: 祖母のクッキーを
+== 彼女はおばあちゃんのクッキーを作ることにした。
+M| {Because|Because of|Due|Despite} she was nervous, :: 緊張していたので
+S| she {mixed|mix|mixing|mixes} up :: 彼女は取りちがえた
+O| the sugar {and|nor|than|whom} the salt. :: 砂糖と塩を
+== 緊張していたので、彼女は砂糖と塩を取りちがえてしまった。
+S| She {didn't|doesn't|don't|wasn't} notice :: 気づかなかった
+T| {until|by|since|during} the judges :: 審査員が…まで
+V| {tasted|taste|tasting|tastes} them. :: それを味見する
+== 審査員が味見するまで、彼女は気づかなかった。
+S| {One|Once|Ones|Won} judge :: ある審査員が
+V| {stopped|stop|stoped|stopping} chewing :: かむのをやめた
+M| and {looked|look|looking|looks} :: そして見えた
+C| {surprised|surprisedly|surprise|surprisingly}. :: 驚いた様子に
+== ある審査員はかむのをやめ、驚いた顔をした。
+S| Sora {wanted|want|wants|wanting} :: ソラは思った
+R| {to hide|hiding|hide|hid} :: 隠れたいと
+P| {under|unless|until|upon} the table. :: テーブルの下に
+== ソラはテーブルの下に隠れたかった。
+T| {Then|Than|Thin|Them} :: すると
+S| the judge {smiled|smile|smiling|smiles} :: 審査員はほほえんだ
+M| and {said|told|talked|spoke}, :: そして言った
+O| "Salty and sweet. {How|What|Which|Who} unique!" :: なんて独特なの
+== すると審査員はほほえんで「しょっぱくて甘い。なんて独特なの！」と言った。
+S| Her cookies {won|win|winning|wins} :: 彼女のクッキーは取った
+O| {second|two|twice|double} prize :: 2等を
+P| {in|on|to|into} the contest. :: コンテストで
+== 彼女のクッキーはコンテストで2等をとった。
+T| {Now|Know|Snow|No} :: 今では
+S| her grandmother {uses|use|using|to use} :: 祖母が使っている
+O| {Sora's|Soras|Sora|Soras'} new recipe! :: ソラの新レシピを
+== 今ではおばあちゃんが、ソラの新しいレシピを使っている！
+?? 2 2 ソラは何と何を取りちがえた？
+?? 3 1 ソラはいつまでまちがいに気づかなかった？
+?? 7 1 ソラのクッキーは何等だった？
+?? 8 2 今、おばあちゃんは何を使っている？
+
+@id int106
+@lv 2
+@level 6
+@title A Note in a Library Book
+@ja 図書館の本のメモ
+@tag 共通テストレベル・物語文
+@gloss borrow=借りる, space=宇宙, folded=折りたたまれた, fall out=落ちる, pencil=鉛筆, someday=いつか, sign=署名する, add=付け加える
+S| Hana {borrowed|borrow|borrowing|borrows} :: ハナは借りた
+O| an old book {about|above|around|among} space :: 宇宙の古い本を
+P| {from|for|off|of} the school library. :: 学校の図書館から
+== ハナは学校の図書館から、宇宙についての古い本を借りた。
+M| {When|What|Which|Whom} she opened it, :: 開くと
+S| a {folded|fold|foldly|folds} note :: 折りたたんだメモが
+V| {fell|fall|fallen|felled} out. :: 落ちてきた
+== 本を開くと、折りたたまれたメモが落ちてきた。
+S| It {was written|was write|written was|was wrote} :: それは書かれていた
+P| {in|on|at|to} pencil :: 鉛筆で
+T| {thirty|thirtieth|third|thirties} years ago. :: 30年前に
+== それは30年前に鉛筆で書かれたものだった。
+X| "{Someday|Somewhat|Someone|Somebody's} :: いつか
+S| I {will|was|did|am} go to space," :: 宇宙に行く
+M| it {said|told|talked|spoke}. :: と書いてあった
+== 「いつか宇宙に行く」と書いてあった。
+S| The note {was signed|was sign|signed was|is signing} :: 署名があった
+P| {by|of|to|for} "K. Mori" :: 「K・モリ」と
+M| {in|on|at|to} small letters. :: 小さな字で
+== メモには小さな字で「K・モリ」と署名があった。
+S| {Her|She|Hers|Herself} father, Kenji Mori, :: 彼女の父、森ケンジも
+V| {had gone|has gone|had go|have gone} :: 通っていた
+P| {to|at|for|by} the same school. :: 同じ学校に
+== ハナの父、森ケンジも同じ学校に通っていた。
+T| {That|Those|These|Them} night, :: その夜
+S| she {showed|show|shown|showing} :: 彼女は見せた
+O| him {the|an|those|these} note. :: 父にそのメモを
+== その夜、彼女は父にそのメモを見せた。
+S| He {laughed|laugh|laughing|laughs} :: 彼は笑った
+M| and {said|told|talked|spoke}, :: そして言った
+O| "I {forgot|forgotten|forgetting|forgets} all about it!" :: すっかり忘れてた
+== 彼は笑って「すっかり忘れていたよ！」と言った。
+S| He {never|ever|either|neither} went to space, :: 宇宙には行かなかった
+M| {but|nor|than|whom} he became :: でも彼はなった
+C| a {science|sciences|scientist|scientifically} teacher. :: 理科の先生に
+== 彼は宇宙には行かなかったが、理科の先生になった。
+X| "{And|Nor|Than|Whom} I still :: それに今も
+V| {look|looks|looking|to look} at :: …を見ている
+O| the stars {every|ever|very|everything} night," :: 毎晩星を
+S| he {added|add|adding|adds}. :: と彼は付け加えた
+== 「それに今でも毎晩星を見ているよ」と彼は付け加えた。
+?? 0 1 ハナは何についての本を借りた？
+?? 2 2 メモはいつ書かれた？
+?? 3 1 メモには何をすると書いてあった？
+?? 8 2 父は何になった？

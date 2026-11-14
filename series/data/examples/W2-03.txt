@@ -1,0 +1,300 @@
+generally | r | People generally eat dinner with their families at home. | 人々は一般に家で家族と夕食を食べます。
+generally | r | Is the weather generally warm here in spring? | ここでは春の天気は一般に暖かいですか。
+generally | r | Our teacher generally gives us homework on Fridays. | 先生は普段金曜日に宿題を出します。
+apparently | r | Apparently, the library will close early this evening. | どうやら図書館は今晩早く閉まるようです。
+apparently | r | Is your brother apparently planning another trip abroad? | どうやらお兄さんはまた海外旅行を計画しているのですか。
+apparently | r | The bus is apparently running late because of rain. | どうやら雨のためバスが遅れているようです。
+obviously | r | She obviously enjoys playing the piano for her friends. | 彼女が友達のためにピアノを弾くのを楽しんでいるのは明らかです。
+obviously | r | Why is he obviously so happy about the news? | 彼がその知らせをとても喜んでいるのは明らかですが、なぜですか。
+obviously | r | The answer was obviously wrong after we checked it. | 確認するとその答えが間違っているのは明らかでした。
+particularly | r | I particularly enjoy reading books about animals and nature. | 私は特に動物や自然についての本を読むのが好きです。
+particularly | r | Which part of the concert did you particularly like? | コンサートのどの部分が特に気に入りましたか。
+particularly | r | This park is particularly beautiful during the spring. | この公園は春には特に美しいです。
+rarely | r | My grandfather rarely watches television during the day. | 祖父は昼間めったにテレビを見ません。
+rarely | r | Do you rarely eat breakfast before going to school? | 学校へ行く前に朝食を食べることはめったにないのですか。
+rarely | r | She rarely misses her weekly swimming lesson. | 彼女は毎週の水泳教室をめったに休みません。
+seldom | r | We seldom see snow in our town during winter. | 私たちの町では冬に雪を見ることはめったにありません。
+seldom | r | Does your sister seldom travel by train? | お姉さんは電車で旅行することがめったにないのですか。
+seldom | r | He seldom buys lunch because he brings food. | 彼は食べ物を持参するので昼食をめったに買いません。
+regularly | r | I regularly clean my room every Saturday morning. | 私は毎週土曜日の朝に定期的に部屋を掃除します。
+regularly | r | Do you regularly practice English with your classmates? | クラスメートと定期的に英語を練習していますか。
+regularly | r | The workers regularly check the machines for problems. | 作業員は定期的に機械に問題がないか確認します。
+originally | r | This building was originally a small family home. | この建物はもともと小さな家族の家でした。
+originally | r | Was this song originally written for a movie? | この歌はもともと映画のために書かれたのですか。
+originally | r | My mother originally wanted to become a teacher. | 母はもともと先生になりたいと思っていました。
+similarly | r | My brother enjoys swimming; similarly, I love being in water. | 兄は水泳を楽しみ、同様に私も水に入るのが大好きです。
+similarly | r | She studied hard; similarly, her friends prepared carefully. | 彼女は一生懸命勉強し、友達も同様に入念に準備しました。
+similarly | r | The first room is bright; similarly, the second gets plenty of light. | 最初の部屋は明るく、同様に二番目の部屋にも十分な光が入ります。
+strongly | r | I strongly believe that regular practice improves our English. | 定期的な練習が英語を上達させると私は強く信じています。
+strongly | r | Do you strongly agree with the new school rule? | 新しい校則に強く賛成していますか。
+strongly | r | The wind blew strongly throughout the afternoon. | 午後の間ずっと風が強く吹いていました。
+widely | r | This book is widely read by young students. | この本は若い生徒たちに広く読まれています。
+widely | r | Is that kind of music widely known here? | その種類の音楽はここで広く知られていますか。
+widely | r | The news spread widely through the town yesterday. | その知らせは昨日町中に広く伝わりました。
+kindly | r | The woman kindly showed us the way to school. | その女性は親切に学校への道を教えてくれました。
+kindly | r | Could you kindly explain this question once more? | この問題をもう一度親切に説明していただけますか。
+kindly | r | Our neighbors kindly helped carry the heavy boxes. | 近所の人たちは親切に重い箱を運んでくれました。
+nicely | r | Your new blue jacket goes nicely with those shoes. | 新しい青い上着はその靴によく合っています。
+nicely | r | Did the children play nicely together this afternoon? | 子供たちは今日の午後仲よく遊びましたか。
+nicely | r | The flowers were arranged nicely on the table. | 花はテーブルの上にきれいに飾られていました。
+safely | r | Please drive safely when the roads are wet. | 道路がぬれているときは安全に運転してください。
+safely | r | Did everyone arrive safely at the mountain hotel? | 全員が山のホテルに無事到着しましたか。
+safely | r | The children crossed the busy street safely together. | 子供たちは一緒に交通量の多い通りを安全に渡りました。
+freely | r | Students can freely choose books from these shelves. | 生徒はこれらの棚から自由に本を選べます。
+freely | r | Can visitors freely take pictures inside this museum? | 来館者はこの博物館の中で自由に写真を撮れますか。
+freely | r | The birds flew freely across the open sky. | 鳥たちは広い空を自由に飛びました。
+deeply | r | I was deeply moved by her beautiful singing. | 私は彼女の美しい歌声に深く感動しました。
+deeply | r | Why did that story affect you so deeply? | なぜその物語はあなたの心にそれほど深く響いたのですか。
+deeply | r | He breathed deeply before speaking to the class. | 彼はクラスに話す前に深く息を吸いました。
+closely | r | Please look closely at the picture before answering. | 答える前にその絵をよく見てください。
+closely | r | Did you closely examine the map before leaving? | 出発前に地図を綿密に調べましたか。
+closely | r | The teacher watched closely as the students worked. | 先生は生徒たちが作業する様子を注意深く見守りました。
+brightly | r | The sun shone brightly through our kitchen window. | 太陽が台所の窓から明るく照っていました。
+brightly | r | Why are the lights shining so brightly tonight? | 今夜はなぜ照明がこんなに明るく光っているのですか。
+brightly | r | Her colorful dress stood out brightly against the wall. | 彼女の色鮮やかな服は壁を背景に明るく目立っていました。
+politely | r | Please speak politely to the guests at dinner. | 夕食の席ではお客様に丁寧に話してください。
+politely | r | Did he politely ask for another glass of water? | 彼は水をもう一杯丁寧にお願いしましたか。
+politely | r | The children politely thanked their teacher after class. | 子供たちは授業後に先生に丁寧にお礼を言いました。
+correctly | r | Can you correctly spell every word on this list? | このリストの単語をすべて正しくつづれますか。
+correctly | r | She answered the difficult question correctly in class. | 彼女は授業で難しい質問に正しく答えました。
+correctly | r | Please check that you have written your address correctly. | 住所を正しく書いたか確認してください。
+anxious | a | My sister felt anxious before her first piano concert. | 妹は初めてのピアノコンサートの前に不安を感じました。
+anxious | a | Are you anxious about starting at your new school? | 新しい学校に通い始めることが心配ですか。
+anxious | a | He looked anxious while waiting for the exam results. | 彼は試験結果を待つ間心配そうに見えました。
+aware | a | Are you aware of the changes to our schedule? | 私たちの予定の変更に気づいていますか。
+aware | a | She was not aware that the shop had closed. | 彼女は店が閉まったことに気づいていませんでした。
+aware | a | The students became aware of the problem during class. | 生徒たちは授業中にその問題に気づきました。
+responsible | a | I am responsible for keeping our classroom clean. | 私は教室をきれいに保つ責任があります。
+responsible | a | Who is responsible for organizing the school trip? | 修学旅行の準備を担当する責任があるのは誰ですか。
+responsible | a | My older brother is a very responsible person. | 兄はとても責任感のある人です。
+fair | a | The teacher made a fair decision about the contest. | 先生はコンテストについて公平な判断をしました。
+fair | a | Do you think these rules are fair to everyone? | この規則は全員に公平だと思いますか。
+fair | a | Our coach always gives every player a fair chance. | コーチはいつも全選手に公平な機会を与えます。
+cute | a | That cute little puppy is sleeping beside its mother. | あのかわいい子犬は母犬のそばで眠っています。
+cute | a | Where did you buy such a cute bag? | そんなにかわいいバッグをどこで買いましたか。
+cute | a | My sister draws cute animals in her notebook. | 妹はノートにかわいい動物を描きます。
+handsome | a | The handsome actor smiled at the excited audience. | そのハンサムな俳優は興奮した観客にほほ笑みました。
+handsome | a | Does your brother look handsome in his new suit? | お兄さんは新しいスーツを着るとハンサムに見えますか。
+handsome | a | Her grandfather was a handsome young man. | 彼女の祖父はハンサムな若者でした。
+amazing | a | We saw an amazing rainbow after the rain stopped. | 雨がやんだ後に私たちは驚くほど美しい虹を見ました。
+amazing | a | Is it not amazing how quickly children learn? | 子供が学ぶ速さは驚くほどではありませんか。
+amazing | a | The students did an amazing job on their project. | 生徒たちは計画で驚くほどすばらしい仕事をしました。
+horrible | a | The food had a horrible smell after several days. | その食べ物は数日後にひどく嫌なにおいがしました。
+horrible | a | Was the weather horrible during your camping trip? | キャンプ旅行中の天気はひどかったですか。
+horrible | a | We heard a horrible noise from the old machine. | 古い機械から恐ろしい音が聞こえました。
+creative | a | My friend has a creative idea for our school festival. | 友達には学校祭のための創造的な案があります。
+creative | a | Can you think of a creative way to decorate? | 飾りつけの創造的な方法を思いつけますか。
+creative | a | The children made creative pictures using colored paper. | 子供たちは色紙を使って独創的な絵を作りました。
+lazy | a | I feel lazy on quiet Sunday afternoons sometimes. | 私は静かな日曜日の午後に時々だらけた気分になります。
+lazy | a | Are you too lazy to clean your room today? | 今日は部屋を掃除するのが面倒なくらい怠けていますか。
+lazy | a | My cat gets lazy when the weather is hot. | 私の猫は暑いと怠けがちになります。
+fat | a | The fat cat sleeps on our sofa all afternoon. | その太った猫は午後ずっとソファで眠っています。
+fat | a | Is that rabbit getting fat from eating too much? | あのウサギは食べ過ぎで太ってきていますか。
+fat | a | A fat little bird sat on the garden wall. | 丸々と太った小鳥が庭の塀に止まっていました。
+spicy | a | This spicy soup is too hot for my little brother. | この辛いスープは弟には辛すぎます。
+spicy | a | Would you like your noodles to be less spicy? | 麺をもう少し辛くなくしたいですか。
+spicy | a | My father enjoys spicy food during cold weather. | 父は寒い季節に辛い食べ物を楽しみます。
+raw | a | Please wash the raw vegetables before making the salad. | サラダを作る前に生野菜を洗ってください。
+raw | a | Do you prefer raw carrots or cooked ones? | ニンジンは生と加熱したもののどちらが好きですか。
+raw | a | The chef kept the raw fish cold until dinner. | 料理人は夕食まで生魚を冷たく保ちました。
+brown | a | She bought a brown coat for the coming winter. | 彼女は来る冬のために茶色のコートを買いました。
+brown | a | Are those brown shoes comfortable for long walks? | その茶色の靴は長く歩いても快適ですか。
+brown | a | The leaves turned brown as autumn arrived. | 秋が来ると葉は茶色になりました。
+gray | a | A gray cat was sitting outside the bookstore. | 灰色の猫が書店の外に座っていました。
+gray | a | Do you like the gray walls in this room? | この部屋の灰色の壁は好きですか。
+gray | a | The sky turned gray before the rain began. | 雨が降り始める前に空が灰色になりました。
+pink | a | My grandmother grows beautiful pink flowers in her garden. | 祖母は庭で美しいピンク色の花を育てています。
+pink | a | Would a pink shirt look good with these pants? | ピンクのシャツはこのズボンに合いますか。
+pink | a | The clouds became pink as the sun went down. | 日が沈むにつれて雲はピンク色になりました。
+purple | a | She wore a purple dress to the school party. | 彼女は学校のパーティーに紫色のドレスを着ました。
+purple | a | Have you seen the purple flowers near the gate? | 門の近くの紫色の花を見ましたか。
+purple | a | My brother painted his bicycle a bright purple. | 弟は自転車を鮮やかな紫色に塗りました。
+golden | a | The golden leaves looked beautiful in the afternoon sun. | 午後の日差しの中で金色の葉が美しく見えました。
+golden | a | Is that golden ring a gift from your grandmother? | その金色の指輪はおばあさんからの贈り物ですか。
+golden | a | We watched the sky turn golden at sunset. | 私たちは日没時に空が金色になるのを見ました。
+noisy | a | The classroom became noisy during the lunch break. | 昼休みに教室はうるさくなりました。
+noisy | a | Is the street outside your apartment always noisy? | アパートの外の通りはいつもうるさいですか。
+noisy | a | My neighbors had a noisy party last night. | 近所の人たちは昨夜にぎやかなパーティーを開きました。
+crowded | a | The train was crowded on our way home. | 帰宅途中の電車は混雑していました。
+crowded | a | Does this beach get crowded during summer holidays? | この浜辺は夏休みの間混雑しますか。
+crowded | a | We avoided the crowded streets near the station. | 私たちは駅の近くの混雑した通りを避けました。
+sunny | a | It was a sunny morning when we left home. | 家を出たときは晴れた朝でした。
+sunny | a | Will tomorrow be sunny enough for our picnic? | 明日はピクニックができるほど晴れますか。
+sunny | a | The children played outside on a sunny afternoon. | 子供たちは晴れた午後に外で遊びました。
+cloudy | a | The sky was cloudy when the game began. | 試合が始まったとき空は曇っていました。
+cloudy | a | Is it usually cloudy here during the winter? | ここでは冬の間は普段曇っていますか。
+cloudy | a | We took a walk despite the cloudy weather. | 曇り空にもかかわらず私たちは散歩しました。
+rainy | a | I like reading books on quiet rainy days. | 私は静かな雨の日に本を読むのが好きです。
+rainy | a | What do you usually do on rainy weekends? | 雨の週末には普段何をしますか。
+rainy | a | The rainy weather kept us inside all afternoon. | 雨の天気のため私たちは午後ずっと屋内にいました。
+snowy | a | We enjoyed a snowy morning in the mountains. | 私たちは山で雪の朝を楽しみました。
+snowy | a | Is your hometown very snowy in the winter? | あなたの故郷は冬に雪が多いですか。
+snowy | a | The children made a snowman on a snowy afternoon. | 子供たちは雪の午後に雪だるまを作りました。
+windy | a | It was too windy to play outside today. | 今日は風が強すぎて外で遊べませんでした。
+windy | a | Does this town get windy during the spring? | この町は春に風が強くなりますか。
+windy | a | We stayed indoors on that cold windy evening. | その寒く風の強い夕方は室内にいました。
+foggy | a | The road looked different on that foggy morning. | 霧の朝には道路がいつもと違って見えました。
+foggy | a | Is it often foggy near the lake here? | ここの湖の近くはよく霧が出ますか。
+foggy | a | Our driver went slowly through the foggy streets. | 運転手は霧のかかった通りをゆっくり進みました。
+weekly | a | Our weekly English lesson takes place every Thursday. | 毎週の英語の授業は木曜日にあります。
+weekly | a | Did you finish the weekly report for your manager? | 上司に出す毎週の報告書を終えましたか。
+weekly | a | The library holds weekly reading events for children. | 図書館は子供向けの読書行事を毎週開いています。
+monthly | a | We have a monthly meeting on the first Monday. | 私たちは毎月最初の月曜日に会議を開きます。
+monthly | a | Have you paid the monthly fee for the gym? | ジムの月額料金を支払いましたか。
+monthly | a | Our teacher gives us a monthly reading test. | 先生は毎月読書のテストを出します。
+annual | a | The town holds an annual music festival in summer. | その町では夏に毎年音楽祭が開かれます。
+annual | a | Are you joining the annual school sports event? | 毎年の学校の運動行事に参加しますか。
+annual | a | Our company has its annual meeting next week. | 会社の年次会議は来週あります。
+previous | a | I met this teacher at my previous school. | 私は前の学校でこの先生に会いました。
+previous | a | Did you enjoy the previous chapter of the book? | その本の前の章は楽しめましたか。
+previous | a | Her previous job was at a small restaurant. | 彼女の前の仕事は小さなレストランでの仕事でした。
+former | a | My former teacher still sends me holiday cards. | 以前の先生は今でも私に季節のカードを送ってくれます。
+former | a | Is your former classmate working at this hotel? | 以前のクラスメートはこのホテルで働いていますか。
+former | a | The former owner of this shop lives nearby. | この店の前の持ち主は近くに住んでいます。
+latest | a | Have you read the latest news about our school? | 私たちの学校についての最新の知らせを読みましたか。
+latest | a | She showed us her latest painting yesterday afternoon. | 彼女は昨日の午後最新の絵を見せてくれました。
+latest | a | The library has the latest books about space. | 図書館には宇宙についての最新の本があります。
+entire | a | We spent the entire afternoon cleaning the house. | 私たちは午後の間ずっと家を掃除して過ごしました。
+entire | a | Did you read the entire book in one day? | 一日で本を全部読みましたか。
+entire | a | The entire class worked together on the project. | クラス全員がその計画に協力して取り組みました。
+extra | a | Please bring an extra jacket for the mountain trip. | 山への旅行には予備の上着を持ってきてください。
+extra | a | Do we have any extra chairs for our guests? | お客様用の余分な椅子はありますか。
+extra | a | The teacher gave us extra time to finish. | 先生は終わらせるために追加の時間をくれました。
+additional | a | We need additional information before planning the trip. | 旅行を計画する前に追加の情報が必要です。
+additional | a | Can you bring two additional chairs into this room? | この部屋に椅子をさらに二脚持ってきてくれますか。
+additional | a | The school offered additional classes before the exam. | 学校は試験前に追加の授業を開きました。
+average | a | The average student spends several hours studying each week. | 平均的な生徒は毎週数時間を勉強に使います。
+average | a | Is the average temperature higher here in summer? | ここの平均気温は夏に高くなりますか。
+average | a | Our average test score improved this year. | 今年は私たちの平均テスト点数が上がりました。
+enormous | a | An enormous tree stands in the middle of the park. | 公園の真ん中に巨大な木が立っています。
+enormous | a | Have you ever seen such an enormous building? | こんなに巨大な建物を見たことがありますか。
+enormous | a | The children were amazed by the enormous cake. | 子供たちはその巨大なケーキに驚きました。
+chief | a | Our chief concern is keeping the children safe. | 私たちの主な心配事は子供たちの安全を守ることです。
+chief | a | What is the chief reason for changing the schedule? | 予定を変更する主な理由は何ですか。
+chief | a | The chief purpose of this meeting is planning. | この会議の主な目的は計画を立てることです。
+elementary | a | This book teaches elementary English through short stories. | この本は短い物語を通して初歩の英語を教えます。
+elementary | a | Are these elementary exercises suitable for young children? | これらの初歩的な練習問題は幼い子供に適していますか。
+elementary | a | We learned elementary math before studying harder problems. | 私たちは難しい問題を学ぶ前に初歩の数学を学びました。
+complex | a | This machine has a complex system of small parts. | この機械には小さな部品からなる複雑な仕組みがあります。
+complex | a | Why is this math problem so complex? | なぜこの数学の問題はこんなに複雑なのですか。
+complex | a | The teacher explained the complex idea using pictures. | 先生は複雑な考えを絵を使って説明しました。
+complicated | a | The instructions were too complicated for young children. | その説明は幼い子供には複雑すぎました。
+complicated | a | Is this recipe complicated to follow at home? | このレシピは家で作るには複雑ですか。
+complicated | a | She found a simple answer to the complicated question. | 彼女はその複雑な質問への簡単な答えを見つけました。
+obvious | a | It was obvious that everyone enjoyed the concert. | 全員がコンサートを楽しんだことは明らかでした。
+obvious | a | Is the answer obvious from this picture alone? | この絵だけで答えは明らかですか。
+obvious | a | His excitement was obvious when he opened the letter. | 手紙を開いたとき彼が興奮しているのは明らかでした。
+exact | a | Please tell me the exact time of our meeting. | 会議の正確な時刻を教えてください。
+exact | a | Do you know the exact size of this room? | この部屋の正確な大きさを知っていますか。
+exact | a | She remembered the exact words her teacher used. | 彼女は先生が使った言葉を正確に覚えていました。
+correct | a | Choose the correct answer from these four choices. | この四つの選択肢から正しい答えを選んでください。
+correct | a | Is this the correct way to use the machine? | これは機械の正しい使い方ですか。
+correct | a | The teacher showed us the correct spelling. | 先生は正しいつづりを教えてくれました。
+accurate | a | We need accurate information about the train schedule. | 列車の時刻表について正確な情報が必要です。
+accurate | a | Is your watch accurate enough for the exam? | あなたの時計は試験に使えるほど正確ですか。
+accurate | a | The students made accurate drawings of the plants. | 生徒たちは植物の正確な絵を描きました。
+proper | a | Please wear proper shoes when walking in the mountains. | 山を歩くときは適切な靴を履いてください。
+proper | a | Do you know the proper way to wash this shirt? | このシャツの適切な洗い方を知っていますか。
+proper | a | The children learned proper table manners at school. | 子供たちは学校で適切な食事の作法を学びました。
+suitable | a | This movie is suitable for children of all ages. | この映画はあらゆる年齢の子供に適しています。
+suitable | a | Are these shoes suitable for a long walk? | この靴は長い散歩に適していますか。
+suitable | a | We found a suitable place for our picnic. | 私たちはピクニックに適した場所を見つけました。
+typical | a | This is a typical breakfast in my family. | これは私の家族の典型的な朝食です。
+typical | a | What does a typical school day look like here? | ここでの典型的な学校の一日はどんな様子ですか。
+typical | a | The weather was typical for this time of year. | 天気はこの時期としては典型的でした。
+unique | a | Each student has a unique way of learning. | 生徒一人一人には独自の学び方があります。
+unique | a | What makes this little town so unique? | この小さな町をそれほど独特にしているものは何ですか。
+unique | a | The artist created a unique design for the library. | その芸術家は図書館のために独特のデザインを作りました。
+rare | a | It is rare to see snow here in spring. | ここで春に雪を見ることはまれです。
+rare | a | Have you ever found a rare flower in nature? | 自然の中で珍しい花を見つけたことがありますか。
+rare | a | The museum has a rare collection of old books. | 博物館には珍しい古い本のコレクションがあります。
+unusual | a | She wore an unusual hat to the party. | 彼女はパーティーに変わった帽子をかぶってきました。
+unusual | a | Is it unusual to have snow in April here? | ここで四月に雪が降るのは珍しいですか。
+unusual | a | We heard an unusual sound from the garden. | 私たちは庭から普段と違う音を聞きました。
+formal | a | Please wear formal clothes to the school ceremony. | 学校の式典には正式な服装で来てください。
+formal | a | Is a formal invitation necessary for this event? | この行事には正式な招待状が必要ですか。
+formal | a | He wrote a formal letter to the manager. | 彼は責任者に正式な手紙を書きました。
+official | a | The school made an official announcement this morning. | 学校は今朝公式な発表をしました。
+official | a | Have you checked the official schedule for tomorrow? | 明日の公式な予定表を確認しましたか。
+official | a | The official results will be available next week. | 公式な結果は来週わかります。
+technical | a | The teacher explained the technical details in simple words. | 先生は技術的な詳細を簡単な言葉で説明しました。
+technical | a | Do you need technical help with your computer? | パソコンについて技術的な助けが必要ですか。
+technical | a | The students learned some technical skills in class. | 生徒たちは授業でいくつかの技術的な技能を学びました。
+scientific | a | Our teacher showed us a simple scientific experiment. | 先生は簡単な科学実験を見せてくれました。
+scientific | a | Is there a scientific reason for this change? | この変化には科学的な理由がありますか。
+scientific | a | The children enjoyed reading scientific books about animals. | 子供たちは動物についての科学の本を楽しみました。
+cultural | a | The town holds cultural events every autumn. | その町では毎年秋に文化行事が開かれます。
+cultural | a | Did you learn about cultural differences during your trip? | 旅行中に文化の違いについて学びましたか。
+cultural | a | Our school offers many cultural activities for students. | 私たちの学校は生徒に多くの文化活動を提供しています。
+environmental | a | The students started an environmental project at school. | 生徒たちは学校で環境に関する計画を始めました。
+environmental | a | Are you interested in environmental problems in your town? | 自分の町の環境問題に関心がありますか。
+environmental | a | The company works to reduce its environmental impact. | その会社は環境への影響を減らすために取り組んでいます。
+financial | a | My parents gave me financial advice before college. | 両親は大学に入る前に金銭面の助言をくれました。
+financial | a | Does the school offer financial help to students? | その学校は生徒に経済的な支援を提供していますか。
+financial | a | She made a financial plan for her new business. | 彼女は新しい事業のために資金計画を立てました。
+industrial | a | The town has a large industrial area near the river. | その町には川の近くに大きな工業地帯があります。
+industrial | a | Is this machine used for industrial purposes? | この機械は産業用に使われていますか。
+industrial | a | Many industrial buildings stand outside the city. | 市の郊外には多くの工業用建物が建っています。
+digital | a | I keep my family pictures in a digital album. | 私は家族の写真をデジタルアルバムに保存しています。
+digital | a | Do you prefer digital books or paper books? | デジタルの本と紙の本のどちらが好きですか。
+digital | a | The school introduced new digital tools for learning. | 学校は学習用の新しいデジタル機器を導入しました。
+global | a | Climate change is a global problem for everyone. | 気候変動はすべての人に関わる世界的な問題です。
+global | a | Can music become popular on a global level? | 音楽は世界的な規模で人気になることがありますか。
+global | a | The company has built a global network of stores. | その会社は世界的な店舗網を築きました。
+rural | a | My grandparents live in a quiet rural village. | 祖父母は静かな田舎の村に住んでいます。
+rural | a | Do you prefer rural life to city life? | 都会の生活より田舎の生活が好きですか。
+rural | a | The school is in a beautiful rural area. | その学校は美しい田舎の地域にあります。
+urban | a | Many urban parks provide space for children to play. | 多くの都市公園は子供が遊ぶ場所を提供しています。
+urban | a | Is urban life more convenient than country life? | 都市生活は田舎の生活より便利ですか。
+urban | a | The city is working to improve urban transport. | その市は都市交通の改善に取り組んでいます。
+royal | a | The royal family visited the town during the festival. | 王室の一家は祭りの間にその町を訪れました。
+royal | a | Have you ever seen a royal palace? | 王宮を見たことがありますか。
+royal | a | The museum displays clothes from the royal family. | 博物館は王室の衣服を展示しています。
+emotional | a | She gave an emotional speech at the school ceremony. | 彼女は学校の式典で感情のこもったスピーチをしました。
+emotional | a | Why did that movie make you so emotional? | なぜその映画でそんなに感情が動いたのですか。
+emotional | a | The family shared an emotional moment after the concert. | 家族はコンサートの後に感動的なひとときを過ごしました。
+visual | a | The teacher used visual examples to explain the idea. | 先生は考えを説明するために視覚的な例を使いました。
+visual | a | Do visual pictures help you remember new words? | 視覚的な絵は新しい単語を覚える助けになりますか。
+visual | a | This book has clear visual guides for beginners. | この本には初心者向けのわかりやすい視覚的な案内があります。
+historical | a | We visited a historical building during our school trip. | 私たちは修学旅行中に歴史的な建物を訪れました。
+historical | a | Are you interested in historical stories about this town? | この町についての歴史的な物語に関心がありますか。
+historical | a | The museum shows historical pictures of everyday life. | 博物館は昔の日常生活を伝える歴史的な写真を展示しています。
+native | a | English is not my native language, but I enjoy learning. | 英語は私の母語ではありませんが学ぶのが楽しいです。
+native | a | Are these flowers native to this mountain area? | この花はこの山の地域に自生していますか。
+native | a | She speaks her native language with her grandparents. | 彼女は祖父母と母語で話します。
+male | a | The male teacher helped us prepare for the concert. | 男性の先生はコンサートの準備を手伝ってくれました。
+male | a | Are there any male students in this dance class? | このダンス教室には男子生徒がいますか。
+male | a | The male bird has brighter feathers than the female. | その雄鳥は雌鳥より羽の色が鮮やかです。
+pregnant | a | My sister is pregnant and expecting a baby in spring. | 姉は妊娠していて春に赤ちゃんが生まれる予定です。
+pregnant | a | Is your friend pregnant with her first child? | あなたの友達は第一子を妊娠していますか。
+pregnant | a | The pregnant woman chose a comfortable seat on the train. | 妊娠中の女性は電車で座り心地のよい席を選びました。
+asleep | a | The baby was asleep when we arrived home. | 私たちが家に着いたとき赤ちゃんは眠っていました。
+asleep | a | Is your little brother already asleep upstairs? | 弟はもう二階で眠っていますか。
+asleep | a | My cat fell asleep beside the warm window. | 私の猫は暖かい窓辺で眠りにつきました。
+familiar | a | This song sounds familiar, but I cannot remember its name. | この歌には聞き覚えがありますが名前を思い出せません。
+familiar | a | Are you familiar with the rules of this game? | このゲームの規則をよく知っていますか。
+familiar | a | The town looked familiar after our last visit. | 前回訪れた後だったので町には見覚えがありました。
+mad | a | My mother was mad because I forgot our plans. | 母は私が予定を忘れたので怒っていました。
+mad | a | Are you still mad at me about yesterday? | 昨日のことでまだ私に怒っていますか。
+mad | a | He got mad when his brother borrowed his bike. | 弟が自転車を借りたとき彼は怒りました。
+confident | a | I feel confident about tomorrow's English speaking test. | 私は明日の英語のスピーキングテストに自信があります。
+confident | a | Are you confident that your plan will work? | あなたの計画がうまくいく自信はありますか。
+confident | a | She became more confident after practicing every day. | 彼女は毎日練習してさらに自信がつきました。
+satisfied | a | We were satisfied with the food at the restaurant. | 私たちはそのレストランの料理に満足しました。
+satisfied | a | Are you satisfied with your progress this month? | 今月の自分の進歩に満足していますか。
+satisfied | a | The teacher seemed satisfied with our group project. | 先生は私たちのグループ課題に満足しているようでした。
+disappointed | a | I was disappointed when the concert was canceled. | コンサートが中止になって私はがっかりしました。
+disappointed | a | Were you disappointed with your exam results? | 試験結果にがっかりしましたか。
+disappointed | a | She looked disappointed because her friend could not come. | 友達が来られなかったので彼女はがっかりしているようでした。
+embarrassed | a | I felt embarrassed when I forgot my teacher's name. | 先生の名前を忘れて私は恥ずかしく感じました。
+embarrassed | a | Do you get embarrassed when speaking in public? | 人前で話すとき恥ずかしくなりますか。
+embarrassed | a | He looked embarrassed after making a small mistake. | 小さな間違いをして彼は恥ずかしそうでした。
+frightened | a | The little dog looked frightened during the thunderstorm. | 小さな犬は雷雨の間おびえているようでした。
+frightened | a | Are you frightened of walking alone in the dark? | 暗い中を一人で歩くのが怖いですか。
+frightened | a | The children were frightened by the loud noise. | 子供たちは大きな音におびえました。
+scared | a | My little sister was scared of the dark room. | 妹は暗い部屋を怖がっていました。
+scared | a | Are you scared of speaking in front of people? | 人前で話すことが怖いですか。
+scared | a | The cat looked scared when the dog barked. | 犬がほえたとき猫は怖がっているようでした。
+shocked | a | We were shocked by the sudden change in plans. | 私たちは予定の突然の変更に衝撃を受けました。
+shocked | a | Were you shocked when you heard the surprising news? | 驚くような知らせを聞いて衝撃を受けましたか。
+shocked | a | She looked shocked at the unexpected exam result. | 彼女は予想外の試験結果に衝撃を受けた様子でした。

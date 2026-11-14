@@ -1,0 +1,300 @@
+glove | n | I lost one glove on the train. | 電車で手袋を片方なくしました。
+glove | n | Is this red glove yours? | この赤い手袋はあなたのですか。
+glove | n | She wore warm gloves in the snow. | 彼女は雪の中で暖かい手袋をしました。
+belt | n | My father bought a new belt yesterday. | 父は昨日新しいベルトを買いました。
+belt | n | Does this belt fit you well? | このベルトはあなたに合いますか。
+belt | n | He put his belt on before work. | 彼は仕事の前にベルトを締めました。
+cap | n | A blue cap is on the chair. | 青い帽子が椅子の上にあります。
+cap | n | Did you bring your cap today? | 今日は帽子を持ってきましたか。
+cap | n | The players wore matching caps outside. | 選手たちは外でおそろいの帽子をかぶりました。
+tent | n | We slept in a tent last night. | 私たちは昨夜テントで寝ました。
+tent | n | Can you put up this tent alone? | このテントを一人で張れますか。
+tent | n | Several tents stood beside the lake. | 湖のそばにいくつかのテントが立っていました。
+wheel | n | This bicycle has a broken wheel. | この自転車は車輪が一つ壊れています。
+wheel | n | Can you turn the wheel slowly? | 車輪をゆっくり回せますか。
+wheel | n | The little cart has four wheels. | その小さな台車には車輪が四つあります。
+wire | n | This wire connects the two machines. | この針金は二つの機械をつないでいます。
+wire | n | Can you bend this thin wire? | この細い針金を曲げられますか。
+wire | n | He used wires to hold the flowers. | 彼は花を固定するために針金を使いました。
+tape | n | Please put some tape on this box. | この箱にテープを貼ってください。
+tape | n | Do we have any clear tape? | 透明なテープはありますか。
+tape | n | She used tape to fix the paper. | 彼女は紙を直すためにテープを使いました。
+string | n | Tie the package with a piece of string. | 小包をひもで結んでください。
+string | n | Is this string long enough for you? | このひもは十分な長さですか。
+string | n | The children hung pictures with strings. | 子供たちはひもで絵をつるしました。
+thread | n | I need some blue thread for this shirt. | このシャツには青い糸が必要です。
+thread | n | Can you see the white thread here? | ここにある白い糸が見えますか。
+thread | n | She bought several colors of thread. | 彼女は何色かの糸を買いました。
+needle | n | Be careful with that small needle. | その小さな針には気をつけてください。
+needle | n | Can you find my sewing needle? | 私の縫い針を見つけられますか。
+needle | n | She put the needles in a box. | 彼女は針を箱に入れました。
+scissors | n | These scissors are too big for me. | このはさみは私には大きすぎます。
+scissors | n | Can I use your scissors today? | 今日あなたのはさみを使ってもいいですか。
+scissors | n | The teacher put the scissors away. | 先生ははさみを片づけました。
+uniform | n | Our school has a blue uniform. | 私たちの学校には青い制服があります。
+uniform | n | Do you wear a uniform at work? | 仕事で制服を着ますか。
+uniform | n | The students washed their uniforms yesterday. | 生徒たちは昨日制服を洗いました。
+sir | n | Excuse me, sir, is this your bag? | すみません、こちらのかばんはあなたのですか。
+sir | n | Thank you very much, sir, for your help. | お手伝いいただき、どうもありがとうございます。
+sir | n | Would you like some tea, sir? | お茶はいかがですか。
+god | n | The story tells of a god of the sea. | その物語は海の神について語っています。
+god | n | Does this book describe an old god? | この本には古い神のことが書かれていますか。
+god | n | The children read stories about Greek gods. | 子供たちはギリシャの神々の物語を読みました。
+dear | a | My dear friend sent me a letter. | 親愛なる友達が手紙を送ってくれました。
+dear | a | Is this a gift for someone dear to you? | これはあなたの大切な人への贈り物ですか。
+dear | a | She wrote to her dear grandmother. | 彼女は大切な祖母に手紙を書きました。
+gun | n | The toy gun is made of wood. | そのおもちゃの銃は木でできています。
+gun | n | Is that gun only a toy? | あの銃はただのおもちゃですか。
+gun | n | The museum has pictures of old guns. | 博物館には古い銃の写真があります。
+sort | n | What sort of music do you like? | どんな種類の音楽が好きですか。
+sort | n | Is this sort of bread sweet? | この種類のパンは甘いですか。
+sort | n | The shop sells many sorts of tea. | その店はいろいろな種類のお茶を売っています。
+jack | n | We need a jack to lift the car. | 車を持ち上げるにはジャッキが必要です。
+jack | n | Is the jack in the car? | ジャッキは車の中にありますか。
+jack | n | The driver checked both jacks carefully. | 運転手は二つのジャッキを注意深く確認しました。
+sex | n | Please write your sex on this form. | この用紙に性別を記入してください。
+sex | n | Does this form ask for your sex? | この用紙には性別を記入する欄がありますか。
+sex | n | The study included people of both sexes. | その調査には両方の性別の人が参加しました。
+fault | n | One fault of this bag is its size. | このかばんの欠点の一つは大きさです。
+fault | n | Can you find a fault in my plan? | 私の計画に欠点を見つけられますか。
+fault | n | The old machine has several faults. | その古い機械にはいくつか欠点があります。
+frank | a | Please be frank about your feelings. | 自分の気持ちを率直に話してください。
+frank | a | Was your teacher frank with you? | 先生はあなたに率直に話しましたか。
+frank | a | She gave us a frank answer. | 彼女は私たちに率直な答えをくれました。
+swear | v | I swear to tell you the truth. | 私はあなたに真実を話すと誓います。
+swear | v | Did you swear to keep the secret? | 秘密を守ると誓いましたか。
+swear | v | He swore to do his best. | 彼は最善を尽くすと誓いました。
+fool | n | Do not call your friend a fool. | 友達をばか者と呼ばないでください。
+fool | n | Does he think I am a fool? | 彼は私をばか者だと思っていますか。
+fool | n | She felt like a fool after the mistake. | 彼女は間違えた後、自分をばかだと感じました。
+bar | n | A metal bar holds the gate open. | 金属の棒が門を開いたまま支えています。
+bar | n | Can you lift this heavy bar? | この重い棒を持ち上げられますか。
+bar | n | The workers carried several long bars. | 作業員たちは長い棒を何本か運びました。
+prison | n | The old prison is now a museum. | その古い刑務所は今は博物館です。
+prison | n | Can visitors enter the former prison? | 見学者は昔の刑務所に入れますか。
+prison | n | We saw pictures of old prisons. | 私たちは昔の刑務所の写真を見ました。
+soul | n | The song touched my soul deeply. | その歌は私の魂に深く響きました。
+soul | n | Can music speak to your soul? | 音楽はあなたの魂に語りかけますか。
+soul | n | She put her soul into her singing. | 彼女は歌に魂を込めました。
+agent | n | Our travel agent found a nice hotel. | 旅行代理人がよいホテルを見つけてくれました。
+agent | n | Did the agent book your flight? | 代理人はあなたの飛行機を予約しましたか。
+agent | n | The agents helped us plan our trip. | 代理人たちは旅行の計画を手伝ってくれました。
+respect | n | I have great respect for my teacher. | 私は先生をとても尊敬しています。
+respect | n | Do you show respect to older people? | 年上の人に敬意を示していますか。
+respect | n | She earned everyone's respect through her work. | 彼女は仕事を通じてみんなの尊敬を得ました。
+cell | n | A plant has more than one cell. | 植物は一つ以上の細胞を持っています。
+cell | n | Can you see this cell under the microscope? | 顕微鏡でこの細胞が見えますか。
+cell | n | The students learned about animal cells. | 生徒たちは動物の細胞について学びました。
+judge | v | Do not judge people by their clothes. | 服装で人を判断しないでください。
+judge | v | Can you judge the size from here? | ここから大きさを判断できますか。
+judge | v | She judged the cakes by their taste. | 彼女はケーキを味で評価しました。
+prove | v | Can you prove that your answer is correct? | 自分の答えが正しいと証明できますか。
+prove | v | Did the test prove your idea? | その実験はあなたの考えを証明しましたか。
+prove | v | She proved that the machine worked well. | 彼女は機械がよく動くことを証明しました。
+pleasure | n | Reading books is a great pleasure for me. | 読書は私にとって大きな楽しみです。
+pleasure | n | Is cooking a pleasure for you? | 料理はあなたにとって楽しみですか。
+pleasure | n | The trip gave us much pleasure. | その旅行は私たちに大きな楽しみを与えました。
+impossible | a | It is impossible to finish this today. | これを今日終えるのは不可能です。
+impossible | a | Is it impossible to change the date? | 日付を変更することは不可能ですか。
+impossible | a | The puzzle looked impossible at first. | そのパズルは最初は不可能に見えました。
+sake | n | We stayed home for the baby's sake. | 私たちは赤ちゃんのために家にいました。
+sake | n | Can you try again for my sake? | 私のためにもう一度試してくれますか。
+sake | n | She saved money for her family's sake. | 彼女は家族のためにお金を貯めました。
+evil | n | The story shows good winning over evil. | その物語では善が悪に勝ちます。
+evil | n | Does this story show the power of evil? | この物語は悪の力を描いていますか。
+evil | n | The children learned about good and evil. | 子供たちは善と悪について学びました。
+joke | n | My brother told a funny joke yesterday. | 弟は昨日面白い冗談を言いました。
+joke | n | Did you understand the teacher's joke? | 先生の冗談が分かりましたか。
+joke | n | Her jokes always make us laugh. | 彼女の冗談はいつも私たちを笑わせます。
+appreciate | v | I really appreciate your help today. | 今日の助けに本当に感謝しています。
+appreciate | v | Do you appreciate the beauty of this garden? | この庭の美しさが分かりますか。
+appreciate | v | She appreciated his kind words very much. | 彼女は彼の親切な言葉にとても感謝しました。
+wine | n | This restaurant serves wine with dinner. | このレストランは夕食にワインを出します。
+wine | n | Is that wine from this region? | そのワインはこの地域のものですか。
+wine | n | The shop has a section for wines. | その店にはワイン売り場があります。
+laughter | n | We heard laughter from the next room. | 私たちは隣の部屋から笑い声を聞きました。
+laughter | n | Did you hear the children's laughter? | 子供たちの笑い声が聞こえましたか。
+laughter | n | Her story filled the room with laughter. | 彼女の話で部屋は笑い声に包まれました。
+board | n | We put a wooden board on the table. | 私たちは木の板をテーブルに置きました。
+board | n | Can you carry this heavy board? | この重い板を運べますか。
+board | n | He painted three boards for the shelf. | 彼は棚用の板を三枚塗りました。
+rid | v | We must rid the garden of these weeds. | 私たちは庭からこの雑草を取り除かなければなりません。
+rid | v | Can you get rid of these old papers? | この古い紙を処分できますか。
+rid | v | She got rid of the bad smell. | 彼女は嫌なにおいを取り除きました。
+mate | n | My school mate lives near the station. | 学校の仲間は駅の近くに住んでいます。
+mate | n | Is your team mate coming today? | チームの仲間は今日来ますか。
+mate | n | The two birds stayed close to their mates. | 二羽の鳥はそれぞれのつがいの相手のそばにいました。
+bother | v | Please do not bother your sister now. | 今は妹さんの邪魔をしないでください。
+bother | v | Does this noise bother you at night? | この騒音は夜にあなたを悩ませますか。
+bother | v | The heat bothered us during the trip. | 旅行中は暑さに悩まされました。
+heaven | n | The story describes a beautiful place called heaven. | その物語は天国という美しい場所を描いています。
+heaven | n | Does the poem mention heaven at all? | その詩には天国が出てきますか。
+heaven | n | She painted a picture of heaven. | 彼女は天国の絵を描きました。
+spot | n | This is a good spot for a picnic. | ここはピクニックに適した場所です。
+spot | n | Can you see that dark spot? | あの黒い斑点が見えますか。
+spot | n | The park has many quiet spots. | その公園には静かな場所がたくさんあります。
+innocent | a | The child gave me an innocent smile. | その子は私に無邪気な笑顔を見せました。
+innocent | a | Was his question completely innocent? | 彼の質問はまったく悪気のないものでしたか。
+innocent | a | The children looked innocent and happy. | 子供たちは無邪気で幸せそうでした。
+enemy | n | The story's hero helped his old enemy. | 物語の主人公は昔の敵を助けました。
+enemy | n | Can an enemy become a friend? | 敵が友達になることはありますか。
+enemy | n | The two enemies finally became friends. | 二人の敵はついに友達になりました。
+battle | n | The book describes a battle from long ago. | その本は昔の戦闘について書いています。
+battle | n | Did the battle happen near this castle? | その戦闘はこの城の近くで起こりましたか。
+battle | n | The museum has paintings of old battles. | 博物館には昔の戦闘を描いた絵があります。
+duty | n | It is my duty to help new students. | 新入生を助けることは私の義務です。
+duty | n | Is cleaning the room your duty today? | 今日部屋を掃除するのはあなたの役目ですか。
+duty | n | The workers finished their duties before lunch. | 従業員たちは昼食前にそれぞれの仕事を終えました。
+bell | n | The school bell rings at eight. | 学校の鐘は八時に鳴ります。
+bell | n | Did you hear the bell outside? | 外の鐘が聞こえましたか。
+bell | n | Small bells hung above the door. | 小さな鐘がドアの上につるされていました。
+witness | n | A witness described the lost dog. | 目撃者は迷子の犬の様子を説明しました。
+witness | n | Did the witness see the whole event? | 目撃者は出来事のすべてを見ましたか。
+witness | n | Two witnesses helped us find the owner. | 二人の目撃者が持ち主探しを手伝ってくれました。
+cross | v | Please cross the street at the lights. | 信号のあるところで道を渡ってください。
+cross | v | Did you cross the bridge yesterday? | 昨日その橋を渡りましたか。
+cross | v | The children crossed the road together. | 子供たちは一緒に道路を渡りました。
+throat | n | My throat feels dry this morning. | 今朝はのどが乾いています。
+throat | n | Does your throat feel better now? | のどの調子はもうよくなりましたか。
+throat | n | She drank warm water for her throat. | 彼女はのどのために温かい水を飲みました。
+track | n | We walked around the school track. | 私たちは学校の走路を歩きました。
+track | n | Is this track for running or walking? | この走路は走るためですか、歩くためですか。
+track | n | The album has twelve music tracks. | そのアルバムには十二曲入っています。
+complete | a | This is a complete list of the students. | これは生徒全員の完全な名簿です。
+complete | a | Is your homework complete now? | 宿題はもう全部終わっていますか。
+complete | a | She gave us a complete answer. | 彼女は私たちに完全な答えをくれました。
+weapon | n | The museum shows an old wooden weapon. | 博物館には古い木製の武器が展示されています。
+weapon | n | Is that weapon from a history book? | その武器は歴史の本に出てくるものですか。
+weapon | n | The story mentions weapons from long ago. | その物語には昔の武器が登場します。
+ray | n | A ray of sunlight entered the room. | 一筋の日光が部屋に差し込みました。
+ray | n | Can you see that ray of light? | あの一筋の光が見えますか。
+ray | n | The sun's rays warmed the garden. | 太陽の光線が庭を暖めました。
+pop | v | Watch these small bubbles pop in the water. | 水の中で小さな泡がはじけるのを見てください。
+pop | v | Did the balloon pop just now? | 風船はたった今はじけましたか。
+pop | v | She popped a grape into her mouth. | 彼女はブドウを一粒口に入れました。
+bomb | n | The history museum has a picture of a bomb. | 歴史博物館には爆弾の写真があります。
+bomb | n | Is that bomb shown in the old film? | その爆弾は昔の映画に出てきますか。
+bomb | n | The book explains how old bombs were made. | その本は昔の爆弾の作り方を説明しています。
+van | n | A white van stopped outside our house. | 白いバンが家の外に止まりました。
+van | n | Can this van carry all our bags? | このバンは私たちの荷物を全部運べますか。
+van | n | The shop uses two vans for deliveries. | その店は配達に二台のバンを使います。
+camp | n | Our summer camp starts next Monday. | 私たちの夏のキャンプは次の月曜日に始まります。
+camp | n | Did you enjoy the school camp? | 学校のキャンプは楽しかったですか。
+camp | n | The children stayed at camp for three days. | 子供たちは三日間キャンプに滞在しました。
+shame | n | It is a shame that you cannot come. | あなたが来られないのは残念です。
+shame | n | Is it a shame to make mistakes? | 間違えることは恥ずかしいことですか。
+shame | n | She felt shame about her rude words. | 彼女は失礼な言葉を恥じました。
+hop | v | Watch the rabbit hop across the grass. | ウサギが草の上を跳ねるのを見てください。
+hop | v | Can you hop on one foot? | 片足でぴょんぴょん跳べますか。
+hop | v | The little bird hopped along the path. | 小鳥は小道をぴょんぴょん進みました。
+beauty | n | The beauty of this lake is wonderful. | この湖の美しさはすばらしいです。
+beauty | n | Can you see the beauty of these flowers? | これらの花の美しさが分かりますか。
+beauty | n | We enjoyed the natural beauty of the mountains. | 私たちは山々の自然の美しさを楽しみました。
+deserve | v | You deserve a rest after working hard. | 一生懸命働いたのですから休む価値があります。
+deserve | v | Does she deserve this special award? | 彼女はこの特別な賞に値しますか。
+deserve | v | The players deserved their good results. | 選手たちはそのよい結果にふさわしい努力をしました。
+grace | n | She danced with great grace on stage. | 彼女は舞台でとても優雅に踊りました。
+grace | n | Did you notice the grace of her movements? | 彼女の動きの優雅さに気づきましたか。
+grace | n | The dancer moved with beauty and grace. | 踊り手は美しく優雅に動きました。
+sweetheart | n | Her sweetheart gave her some flowers. | 彼女の恋人は彼女に花を贈りました。
+sweetheart | n | Is your sweetheart coming to dinner? | あなたの恋人は夕食に来ますか。
+sweetheart | n | The two sweethearts walked through the park. | 二人の恋人は公園を歩きました。
+justice | n | The story teaches children about justice. | その物語は子供たちに正義を教えます。
+justice | n | Do you believe in justice for everyone? | すべての人のための正義を信じますか。
+justice | n | She wanted justice for her friend. | 彼女は友達のために正義を求めました。
+devil | n | The story has a funny little devil. | その物語にはおかしな小悪魔が登場します。
+devil | n | Is the devil in this picture smiling? | この絵の悪魔は笑っていますか。
+devil | n | The children drew devils for the play. | 子供たちは劇のために悪魔の絵を描きました。
+ghost | n | A friendly ghost lives in this story. | この物語には親切な幽霊が住んでいます。
+ghost | n | Do you believe in ghosts at all? | 幽霊の存在を少しでも信じていますか。
+ghost | n | The children dressed as ghosts for the play. | 子供たちは劇で幽霊の格好をしました。
+conversation | n | We had a long conversation after dinner. | 私たちは夕食後に長く会話しました。
+conversation | n | Did you enjoy the conversation with her? | 彼女との会話は楽しかったですか。
+conversation | n | The students practiced short English conversations. | 生徒たちは短い英会話を練習しました。
+advice | n | My teacher gave me some useful advice. | 先生は私に役立つ忠告をくれました。
+advice | n | Can I ask you for advice? | あなたに助言を求めてもいいですか。
+advice | n | She followed her mother's advice yesterday. | 彼女は昨日母の忠告に従いました。
+trial | n | The book describes a famous trial. | その本には有名な裁判が描かれています。
+trial | n | Did the trial last many days? | その裁判は何日も続きましたか。
+trial | n | The students learned about trials in history. | 生徒たちは歴史で裁判について学びました。
+super | a | We had a super time at the beach. | 私たちは浜辺ですばらしい時間を過ごしました。
+super | a | Was the concert super last night? | 昨夜のコンサートはすばらしかったですか。
+super | a | She made a super cake for everyone. | 彼女はみんなにすばらしいケーキを作りました。
+breath | n | Take a deep breath before you speak. | 話す前に深く息を吸ってください。
+breath | n | Can you hold your breath for ten seconds? | 十秒間息を止められますか。
+breath | n | He took several slow breaths after running. | 彼は走った後ゆっくり何度か呼吸しました。
+crew | n | The ship has a friendly crew. | その船には親切な乗組員がいます。
+crew | n | Did the crew welcome you aboard? | 乗組員はあなたを船に迎えましたか。
+crew | n | The flight crews helped the passengers. | 航空機の乗組員たちは乗客を助けました。
+strength | n | Regular exercise can build your strength. | 規則正しい運動は体力をつける助けになります。
+strength | n | Do you have enough strength to lift this? | これを持ち上げる力がありますか。
+strength | n | Her strength improved after months of practice. | 何か月もの練習で彼女の力は増しました。
+monster | n | The story has a friendly green monster. | その物語には親切な緑色の怪物が登場します。
+monster | n | Is that monster from your favorite book? | あの怪物はあなたの好きな本に出てきますか。
+monster | n | The children drew funny monsters together. | 子供たちは一緒におかしな怪物を描きました。
+loud | a | The music is too loud for me. | その音楽は私には大きすぎます。
+loud | a | Is the television loud in your room? | あなたの部屋ではテレビの音が大きいですか。
+loud | a | A loud bell rang outside the school. | 学校の外で大きな鐘が鳴りました。
+scream | v | Please do not scream inside the library. | 図書館の中では叫ばないでください。
+scream | v | Did the children scream with joy? | 子供たちは喜びで叫びましたか。
+scream | v | She screamed when the balloon popped. | 風船がはじけたとき彼女は叫びました。
+trick | n | My uncle showed us a funny trick. | おじは私たちに面白い手品を見せました。
+trick | n | Can you teach me that card trick? | そのトランプの手品を教えてくれますか。
+trick | n | The children learned several simple tricks. | 子供たちはいくつかの簡単な手品を覚えました。
+credit | n | She deserves credit for her hard work. | 彼女の努力は評価されるべきです。
+credit | n | Can I get credit for this idea? | この考えを私の功績として認めてもらえますか。
+credit | n | The teacher gave him credit for trying. | 先生は挑戦したことを彼の功績として認めました。
+pretend | v | Let us pretend we are on a ship. | 船に乗っているふりをしましょう。
+pretend | v | Did you pretend to be a teacher? | 先生のふりをしましたか。
+pretend | v | The children pretended to be forest animals. | 子供たちは森の動物のふりをしました。
+heat | n | The heat made us stay inside. | 暑さのため私たちは屋内にいました。
+heat | n | Can you feel the heat from the sun? | 太陽の熱を感じますか。
+heat | n | The room was warm from the heat. | その部屋は熱で暖かくなっていました。
+brilliant | a | That is a brilliant idea for our project. | それは私たちの計画にすばらしい考えです。
+brilliant | a | Was her answer really that brilliant? | 彼女の答えは本当にそれほどすばらしかったですか。
+brilliant | a | The young student gave a brilliant speech. | その若い生徒はすばらしい演説をしました。
+opening | n | The opening of the new shop is tomorrow. | 新しい店の開店は明日です。
+opening | n | Can you see an opening in the wall? | 壁にすき間が見えますか。
+opening | n | The show began with a beautiful opening. | そのショーは美しい幕開けで始まりました。
+property | n | This bicycle is my personal property. | この自転車は私個人の財産です。
+property | n | Is this land your family's property? | この土地はご家族の財産ですか。
+property | n | The school keeps its property safe. | 学校は所有物を安全に管理しています。
+gang | n | A gang of friends played in the park. | 友達の一団が公園で遊んでいました。
+gang | n | Is that gang from your school? | あの一団はあなたの学校の人たちですか。
+gang | n | The gang met again after class. | その仲間たちは授業後にまた集まりました。
+staff | n | The hotel staff were very helpful. | ホテルの職員はとても親切でした。
+staff | n | Did the staff answer your question? | 職員はあなたの質問に答えましたか。
+staff | n | Our school has many friendly staff members. | 私たちの学校には親切な職員が大勢います。
+fate | n | They left the choice to fate. | 彼らは選択を運命に任せました。
+fate | n | Do you believe in fate at all? | あなたは運命を信じますか。
+fate | n | She wondered about her future fate. | 彼女は自分の将来の運命について考えました。
+split | v | Let us split the cake into four pieces. | ケーキを四つに分けましょう。
+split | v | Can you split this bill with me? | この代金を私と割り勘にできますか。
+split | v | The class split into three groups. | クラスは三つのグループに分かれました。
+alarm | n | My alarm rings at six every morning. | 私の目覚ましは毎朝六時に鳴ります。
+alarm | n | Did you hear the alarm today? | 今日は警報が聞こえましたか。
+alarm | n | The school tested its alarms yesterday. | 学校は昨日警報装置を点検しました。
+screw | n | This screw holds the chair together. | このねじは椅子を固定しています。
+screw | n | Can you turn this screw slowly? | このねじをゆっくり回せますか。
+screw | n | He put the screws in a box. | 彼はねじを箱に入れました。
+path | n | A narrow path leads to the lake. | 細い小道が湖まで続いています。
+path | n | Can we walk along this path? | この小道を歩いてもいいですか。
+path | n | The park has several beautiful paths. | その公園には美しい小道がいくつかあります。
+harm | n | Too much sun can cause harm to plants. | 日光が強すぎると植物に害を与えることがあります。
+harm | n | Does this soap do any harm? | この石けんは何か害がありますか。
+harm | n | The new rules caused no harm. | 新しい規則は何の害も与えませんでした。
+remind | v | Please remind me about the meeting tomorrow. | 明日の会議のことを思い出させてください。
+remind | v | Did your mother remind you to call? | お母さんは電話するように言ってくれましたか。
+remind | v | The photo reminded her of her hometown. | その写真は彼女に故郷を思い出させました。
+naked | a | The little tree stood naked in winter. | その小さな木は冬に葉がなく裸でした。
+naked | a | Is that a naked tree without leaves? | あれは葉のない裸の木ですか。
+naked | a | The children saw naked branches in the snow. | 子供たちは雪の中でむき出しの枝を見ました。
+safety | n | Your safety is important to us. | あなたの安全は私たちにとって大切です。
+safety | n | Did you check the safety of this bridge? | この橋の安全を確認しましたか。
+safety | n | The teacher explained the safety rules. | 先生は安全規則を説明しました。
+chest | n | He held the book against his chest. | 彼は本を胸に抱えました。
+chest | n | Is that wooden chest very old? | あの木製の大きな箱はとても古いですか。
+chest | n | She kept her blankets in a chest. | 彼女は毛布を大きな箱にしまいました。
+sudden | a | A sudden rain stopped our picnic. | 突然の雨でピクニックが中止になりました。
+sudden | a | Was the sudden change a surprise? | その突然の変化は驚きでしたか。
+sudden | a | We heard a sudden noise outside. | 私たちは外で突然物音を聞きました。

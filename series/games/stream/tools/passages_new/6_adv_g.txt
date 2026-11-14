@@ -1,0 +1,863 @@
+@id adv68
+@lv 3
+@level 8
+@title The Logic of Herd Immunity
+@ja 集団免疫の論理
+@tag 難関大レベル・論説文
+@gloss immune=免疫のある, contagious=伝染性の, pathogen=病原体, susceptible=感染しやすい, threshold=閾値, vaccinate=予防接種する, complacency=油断, transmission=感染の伝わり
+M| {When|What|Which|Whom} enough people in a community :: 地域の十分な人が
+V| {are|is|be|being} immune :: 免疫を持つと
+P| {to|for|with|against of} a contagious disease, :: 伝染病に対して
+S| even those {who|whom|which|whose} are not protected :: 守られていない人も
+V| are less {likely|like|likely to be|likeness} :: …しにくい
+X| {to be infected|to being infected|be infected|infected being}. :: 感染することが
+== 地域で十分な数の人が伝染病への免疫を持つと、守られていない人でさえ感染しにくくなる。
+S| This phenomenon, {known|knowing|knew|know} as herd immunity, :: 集団免疫という現象は
+V| {arises|arise|arising|arose to} :: 生じる
+R| {because|because of|due|owing} a pathogen needs :: 病原体が必要だから
+O| a chain {of|off|at|than} susceptible hosts :: 感染しうる宿主の連鎖が
+R| in order {to spread|spreading|to spreading|spread}. :: 広がるために
+== 集団免疫と呼ばれるこの現象が起きるのは、病原体が広がるには感染しうる宿主の連鎖が必要だからだ。
+M| {If|Despite|In case of|Even} most links in the chain :: 鎖の大半が
+V| {are|is|being|be} broken, :: 断たれれば
+S| {the infection|the infect|the infectious|the infected to} simply :: 感染はただ
+V| {runs|run|running|ran to} out :: 尽きる
+P| {of|for|from|with} new people to reach. :: 届く新しい人が
+== 鎖の大半が断たれれば、感染は新たにうつる相手がいなくなるだけだ。
+S| The {proportion|proportional|proportionate|proportionally} :: 割合は
+P| of the population {that|what|whose|where} must be immune :: 免疫が必要な人口の
+V| {depends|depend|depending|dependent} :: …による
+O| {on|in|at|for} how contagious :: どれほど伝染性が
+X| the disease {is|are|be|being}. :: 病気が…か
+== 免疫を持つべき人口の割合は、その病気の伝染力の強さによって決まる。
+P| {For|To|At|Of} a highly infectious disease :: 感染力の強い病気では
+M| {such as|such like|so as|as such} measles, :: はしかのような
+S| the {threshold|thresh|threshing|thresholds} :: 閾値は
+V| is {far|very|much more|quite} higher :: はるかに高い
+M| {than|then|that|as} for one :: 病気よりも
+X| {that|what|who|whom} spreads less easily. :: 広がりにくい
+== はしかのような感染力の強い病気では、広がりにくい病気よりも閾値がずっと高い。
+S| Herd immunity {matters|matter|mattering|material} :: 集団免疫が重要だ
+M| {most|almost|utmost|mostly of} :: 最も
+P| {for|at|by|on} people :: 人々にとって
+X| {who|whom|which|whose} cannot be vaccinated, :: 接種できない
+M| {such as|such|so as|as like} newborns :: 新生児や
+M| {or|nor|than|so} patients :: 患者など
+X| {whose|who|whom|which} immune systems are weakened. :: 免疫が弱った
+== 集団免疫が最も重要なのは、新生児や免疫の弱った患者など、予防接種を受けられない人々にとってだ。
+M| {In|On|At|By} this sense, :: この意味で
+S| the decision {to be vaccinated|to vaccinated|of be vaccinated|being vaccinate} :: 接種する決断は
+V| {is|are|be|being} not :: …ではない
+C| {purely|pure|purity|purify} private; :: 純粋に私的
+S| it {also|either|neither|as well} :: それはまた
+V| {affects|affect|affecting|affection} :: 影響する
+O| the safety {of|at|on|than} others. :: 他人の安全に
+== この意味で、予防接種を受けるという決断は純粋に個人的なものではなく、他人の安全にも関わる。
+M| {Paradoxically|Paradox|Paradoxical|Paradoxes}, :: 逆説的に
+S| the {very|much|every|so} success :: まさにその成功が
+P| {of|for|at|to} vaccination :: 予防接種の
+V| can {breed|bred|breeding|breeds} :: 生みうる
+O| {complacency|complacent|complacently|complacence of}. :: 油断を
+== 逆説的だが、予防接種の成功そのものが油断を生むことがある。
+M| {When|What|Which|Whom} a disease :: 病気が…と
+V| has {become|became|becoming|becomes} rare, :: まれになる
+S| people {may|may to|mays|maybe} :: 人々は…かも
+V| {underestimate|underestimates|underestimating|underestimated} :: 過小評価する
+O| {its|it's|it|their of} danger :: その危険を
+M| {and|nor|than|so that} decide :: そして判断する
+O| {that|what|which|whom} vaccination is unnecessary. :: 接種は不要だと
+== 病気がまれになると、人々はその危険を軽く見て、予防接種は不要だと判断するかもしれない。
+M| {If|Despite|In case of|Even} enough people :: 十分な人が
+V| {make|makes|making|made to} that choice, :: その選択をすれば
+S| the chain {of|off|at|than} transmission :: 感染の連鎖が
+V| can {be restored|be restore|restored|been restored}, :: 復活しうる
+M| {and|nor|than|but also} the disease :: そして病気が
+V| may {return|returns|returning|returned}. :: 戻るかもしれない
+== 十分な数の人がその選択をすれば、感染の連鎖は復活し、病気が再び流行しかねない。
+S| Herd immunity, {then|than|them|thence of}, :: つまり集団免疫は
+V| {is|are|be|being} :: …だ
+C| a shared {achievement|achieve|achieving|achievable} :: 共有の成果
+X| {that|what|whom|whose} must be maintained :: 維持されるべき
+P| {by|on|at|than} each new generation. :: 新しい世代ごとに
+== つまり集団免疫とは、世代ごとに維持し続けなければならない共有の成果なのだ。
+?? 1 3 病原体が広がるには何が必要？
+?? 4 3 はしかのような病気の閾値はどうだ？
+?? 5 3 集団免疫が特に重要なのはどんな人？
+?? 7 4 予防接種の成功が生みうるものは何？
+
+@id adv69
+@lv 3
+@level 8
+@title The Evolution of Antibiotic Resistance
+@ja 薬剤耐性の進化
+@tag 難関大レベル・論説文
+@gloss erode=むしばむ, mutation=突然変異, strain=菌株, foresee=予見する, microbe=微生物, aggravate=悪化させる, livestock=家畜, pipeline=供給の流れ
+S| {Antibiotics|Antibiotic|Antibiotically|Antibiotic's} :: 抗生物質は
+V| are often {described|describing|description|describe} :: よく言われる
+P| {as|so|than|such} miracle drugs, :: 奇跡の薬と
+M| {yet|despite|although of|however of} their power :: だがその力は
+V| is being steadily {eroded|eroding|erode|erosion} :: 着実に削られている
+P| {by|with|from|at} the very bacteria :: まさにその細菌に
+X| {they were designed to kill|they designed to kill|they were designing killing|were they designed kill}. :: 殺すはずだった
+== 抗生物質は奇跡の薬と言われることが多いが、その力は、退治するはずの細菌そのものによって着実に弱められている。
+S| The reason {lies|lays|lying|lie} :: 理由はある
+M| {not|no|none|nor} in any failure :: 欠陥にではなく
+P| {of|for|at|by} the drugs themselves :: 薬そのものの
+M| {but|and|or|so} in natural selection. :: 自然選択に
+== その理由は、薬そのものの欠陥ではなく、自然選択にある。
+P| {Among|Between|Along|Amid of} the billions of bacteria :: 何十億の細菌の中に
+P| {in|on|at|to} an infection, :: 感染中の
+S| a {few|little|less|fewer of} :: 少数が
+V| may {happen|happened|happening|happens} to carry :: たまたま持つ
+O| {mutations|mutate|mutational|mutated} :: 突然変異を
+X| {that|what|whom|whose} allow them to survive the drug. :: 薬に耐えさせる
+== 感染した体内の何十億もの細菌の中には、たまたま薬に耐えられる突然変異を持つものがわずかにいるかもしれない。
+M| {When|What|Which|Whom} the drug kills :: 薬が殺すと
+O| their {competitors|competes|competitive|competing}, :: 競争相手を
+S| these {resistant|resistance|resist|resistantly} survivors :: 耐性のある生存者は
+V| are left {free|freely|freedom|freed of} :: 自由に残される
+X| {to multiply|multiplying|to multiplying|multiply}. :: 増殖できる
+== 薬が競争相手を殺すと、耐性を持った生き残りは自由に増殖できるようになる。
+M| {Over|During of|Along|Through of} time, :: 時がたつにつれ
+S| the population {of|for|at|in} bacteria :: 細菌の集団は
+V| comes {to be dominated|to dominate|dominating|be dominated} :: 支配されるようになる
+P| {by|with|from|at} strains :: 菌株に
+X| {that|what|whose|where} the drug can no longer touch. :: 薬が効かない
+== やがて細菌の集団は、薬がもはや効かない菌株に占められるようになる。
+S| The {scientist|science|scientific|scientifically} Alexander Fleming, :: 科学者フレミングは
+X| {who|whom|which|whose} discovered penicillin :: ペニシリンを発見した
+T| {in|on|at|for} 1928, :: 1928年に
+V| {foresaw|foresee|foreseen|foreseeing} :: 予見していた
+O| this {danger|dangerous|endanger|dangerously}. :: この危険を
+== 1928年にペニシリンを発見した科学者フレミングは、この危険を予見していた。
+P| {In|Of|To|Than} his Nobel lecture of 1945, :: 1945年の講演で
+S| he {warned|warning|warn|warns of} :: 彼は警告した
+O| {that|what|which|whom} using too little :: 少なすぎる量の使用が
+P| {of|for|at|to} the drug :: その薬の
+V| could {produce|produced|producing|product} :: 生みうると
+O| {resistant|resistance|resists|resisted to} microbes. :: 耐性菌を
+== 1945年のノーベル賞講演で、彼は薬の量が少なすぎると耐性を持つ微生物が生まれうると警告した。
+T| {Today|Todays|Today's|To day of}, :: 今日では
+S| the problem {is aggravated|aggravates|is aggravating|aggravated} :: 問題は悪化している
+P| {by|with|from|at} the overuse :: 過剰使用によって
+P| {of|for|at|on} antibiotics, :: 抗生物質の
+M| {both|either|neither|each} in human medicine :: 人の医療でも
+M| {and|or|nor|but} in livestock farming. :: 畜産でも
+== 今日、この問題は、人間の医療と畜産の両方における抗生物質の使いすぎによって深刻化している。
+S| {Every|Each of|All|Many} unnecessary dose :: 不要な投与ごとに
+V| {gives|give|giving|given} :: 与える
+O| {resistant|resistance|resisting to|resistantly} strains :: 耐性菌に
+O| {another|other|others|the other of} opportunity :: また機会を
+X| {to gain|gaining|to gaining|gain} ground. :: 勢力を広げる
+== 不要な投与があるたびに、耐性菌は勢力を広げる機会をまた一つ得る。
+M| {Meanwhile|Mean|Meantime of|While}, :: 一方で
+S| {developing|develop|developed|develops} new antibiotics :: 新薬の開発は
+V| has {proved|proving|prove|proofed} :: …とわかった
+C| {slow|slowly|slowness|slows} and costly, :: 遅く高くつく
+M| {so|nor|than|unless of} the supply :: そのため供給は
+P| {of|at|than|on} replacements :: 代わりの薬の
+V| {is|are|be|being} limited. :: 限られている
+== 一方で新しい抗生物質の開発は遅くて費用がかかるため、代わりとなる薬の供給は限られている。
+S| {Resistance|Resist|Resistant|Resists} :: 耐性は
+V| cannot {be eliminated|eliminated|eliminate|being eliminated}, :: 根絶できない
+M| {but|nor|than|or else of} its spread :: だがその拡大は
+V| can be {slowed|slow|slowing|slowly} :: 遅らせられる
+M| {if|unless of|whether of|despite} antibiotics :: 抗生物質が
+V| are {treated|treating|treat|treatment} :: 扱われれば
+P| {as|so|than|such} a precious shared resource. :: 貴重な共有資源として
+== 耐性をなくすことはできないが、抗生物質を貴重な共有資源として扱えば、その広がりを遅らせることはできる。
+?? 1 3 耐性が生まれる理由は何にある？
+?? 3 4 薬が競争相手を殺すと耐性菌はどうなる？
+?? 6 2 フレミングは何が耐性菌を生むと警告した？
+?? 7 5 人の医療のほかに抗生物質が使いすぎられている分野は？
+
+@id adv70
+@lv 3
+@level 8
+@title The Brain That Rewires Itself
+@ja 変化する脳
+@tag 難関大レベル・説明文
+@gloss assume=想定する, overturn=覆す, maze=迷路, hippocampus=海馬, spatial=空間の, correlation=相関, trainee=訓練生, demanding=厳しい
+P| {For|During of|Since|Among} much of the twentieth century, :: 20世紀の大半は
+S| it {was|were|has|being} widely assumed :: 広く考えられた
+O| {that|what|which|whom} the adult brain :: 大人の脳は
+V| {was|were|be|being} :: …だと
+C| {essentially|essential|essence|essentialize} fixed. :: 基本的に固定
+== 20世紀の大半を通じて、大人の脳は基本的に変わらないと広く考えられていた。
+M| {Once|Ones|Twice|At once} development :: いったん発達が
+V| {was|were|being|been} complete, :: 終われば
+S| neurons {could|could to|coulds|can to} :: 神経細胞は…しうる
+V| be {lost|lose|losing|loss} :: 失われ
+M| {but|than|nor|so} not reorganized :: 再編はされない
+P| {in|on|at|by} any meaningful way. :: 意味ある形では
+== 発達が終われば、神経細胞は失われることはあっても意味のある形で再編されることはないとされた。
+S| This view {has been overturned|has overturned|overturned|has been overturning} :: この見方は覆された
+P| {by|with|for|at} a large body :: 大量の
+P| {of|for|at|in} evidence :: 証拠によって
+X| {showing|shown|shows|to showing} :: 示す
+O| {that|what|which|whom} experience :: 経験が…と
+V| physically {reshapes|reshape|reshaping|reshaped of} the brain. :: 脳を作り変える
+== この見方は、経験が脳を物理的に作り変えることを示す数多くの証拠によって覆された。
+S| One {well-known|well-knowing|well-knew|well-know} study :: ある有名な研究が
+V| {examined|examination|examine|examining} :: 調べた
+O| London taxi {drivers|driving|drives|driven}, :: タクシー運転手を
+X| {who|whom|which|whose} must memorize :: 覚えねばならない
+O| the city's {maze|amaze|mazy|amazed} of streets :: 迷路のような道を
+R| {to obtain|obtaining|for obtain|to obtaining} a license. :: 免許を取るために
+== ある有名な研究は、免許を取るために迷路のような市内の道を覚えなければならないロンドンのタクシー運転手を調べた。
+S| Brain scans {revealed|reveal of|revelation|revealing} :: 脳画像が示した
+O| {that|what|which|whom} a region :: ある部位が
+P| {of|for|at|on} their hippocampus, :: 海馬の
+X| a structure {involved|involving|involves|involve} in spatial memory, :: 空間記憶に関わる
+V| {was|were|be|being} larger :: 大きかった
+M| {than|then|as|that} in comparable people. :: 比較対象の人より
+== 脳画像により、空間記憶に関わる海馬の一部が、比較対象の人々よりも大きいことがわかった。
+M| {Moreover|Furthermore of|More|Mores}, :: さらに
+X| the {longer|long|longest|more long} a driver :: 運転手が長く
+V| had {worked|work|working|works}, :: 働いたほど
+X| {the larger|larger|the large|the largest} this region :: この部位は大きい
+V| tended {to be|being|to being|be}. :: 傾向にあった
+== しかも、運転手として働いた期間が長いほど、この部位は大きい傾向があった。
+M| {Of|On|In|At} course, :: もちろん
+S| such {a|an|the|one} correlation alone :: その相関だけでは
+V| could not {prove|proof|proving|proved} :: 証明できない
+O| {that|what|which|whom} the work :: その仕事が…と
+V| {caused|cause|causing|causation} the change. :: 変化を起こした
+== もちろん、そうした相関だけでは、その仕事が変化をもたらしたとは証明できない。
+M| {Perhaps|Perhap|Maybe of|Probable} :: もしかすると
+S| people {with|of whom|whose|which} a larger hippocampus :: 海馬が大きい人が
+V| were simply more {likely|like|likeness|likely of} :: 単に…しやすかった
+X| {to become|becoming|to becoming|become} taxi drivers :: 運転手になり
+M| {in|on|at|for} the first place. :: そもそも
+== もしかすると、そもそも海馬の大きい人のほうがタクシー運転手になりやすかっただけかもしれない。
+R| {To address|Addressed|For address|To addressing} this possibility, :: これを確かめるため
+S| a later study {followed|follow|following|follows of} :: 後の研究は追跡した
+O| {trainees|trainee|trains|trainers of} :: 訓練生を
+P| {over|above|upon|beyond of} several years, :: 数年にわたって
+X| {scanning|scanned|to scanning|scans} their brains :: 脳を調べながら
+T| before {and|nor|than|or else} after training. :: 訓練の前後に
+== この可能性を確かめるため、後の研究は訓練生を数年にわたって追跡し、訓練の前後で脳を調べた。
+S| Only those {who|whom|which|whose} passed :: 合格した人だけが
+O| the {demanding|demand|demanded|demands} exam :: 難しい試験に
+V| {showed|show|shown|showing} growth :: 成長を示した
+P| {in|on|at|to} the region, :: その部位に
+M| strongly {suggesting|suggested|suggest|suggestion} :: 強く示唆する
+O| {that|what|which|whom} learning itself had changed their brains. :: 学習が脳を変えたと
+== 難しい試験に合格した人だけにその部位の成長が見られたことは、学習そのものが脳を変えたことを強く示している。
+S| The brain, it {turns|turn|turning|turned to} out, :: 脳はどうやら
+V| {is|are|be|being} :: …だ
+C| {less|fewer|lesser|least} a finished machine :: 完成した機械でなく
+M| {than|then|as|that} a work :: むしろ作品
+X| {in|on|at|of} progress. :: 制作途中の
+== どうやら脳は、完成した機械というより、作られている途中の作品なのだ。
+?? 3 4 運転手が免許を取るために覚えるものは？
+?? 4 3 大きかった海馬の部位は何に関わる？
+?? 5 1 運転手の何が長いほど部位は大きかった？
+?? 9 0 部位の成長が見られたのは誰？
+
+@id adv71
+@lv 3
+@level 8
+@title Mapping a Deadly Disease
+@ja 地図で病気を追う
+@tag 難関大レベル・説明文
+@gloss outbreak=大流行, miasma=瘴気, filth=汚物, contaminated=汚染された, cluster=集中する, brewery=醸造所, skeptic=懐疑的な人, epidemiology=疫学
+T| {In|On|At|Of} 1854, :: 1854年に
+S| a terrible {outbreak|outbreaking|outbroke|break out} :: ひどい流行が
+P| {of|for|at|by} cholera :: コレラの
+V| {struck|strike|stroke|striking} :: 襲った
+O| the Soho district {of|for|at|on} London, :: ソーホー地区を
+X| {killing|killed|to killing|kills} hundreds of people :: 何百人も死なせ
+T| {within|inside to|among|during of} a few weeks. :: 数週間で
+== 1854年、ロンドンのソーホー地区をひどいコレラの流行が襲い、数週間で何百人もの命を奪った。
+T| {At|In|On|By} the time, :: 当時
+S| most {experts|expertise|expert's|expertly} :: 大半の専門家は
+V| {believed|belief|believe in|believing} :: 信じていた
+O| {that|what|which|whom} diseases like cholera :: コレラなどの病気は
+V| were {spread|spreaded|spreading|spreads} :: 広まると
+P| {by|for|at|of} "miasma," or bad air :: 瘴気つまり悪い空気で
+X| {rising|raising|rises|to rising} from filth. :: 汚物から立ちのぼる
+== 当時、専門家の多くは、コレラのような病気は「瘴気」、つまり汚物から立ちのぼる悪い空気で広がると信じていた。
+S| The {physician|physics|physicist's|physical} John Snow, :: 医師スノーは
+M| {however|whatever|whenever|howsoever}, :: しかし
+V| {suspected|suspect of|suspicion|suspicious} :: 疑っていた
+O| {that|what|which|whom} the disease :: その病気は…と
+V| was {carried|carry|carrying|carries} :: 運ばれる
+P| {in|at|to|with of} contaminated water. :: 汚染された水で
+== しかし医師ジョン・スノーは、この病気は汚染された水によって運ばれるのではないかと疑っていた。
+R| {To test|Testing of|For test|To testing} his idea, :: 考えを確かめるため
+S| he {marked|mark|marking|marks of} each death :: 彼は死者を記した
+P| {on|in of|at|to} a street map, :: 街路地図に
+M| {and|nor|than|so that} noticed :: そして気づいた
+O| {that|what|which|whom} the cases clustered :: 患者が集まっていると
+P| {around|aroundly|surround|arounds} a single pump :: 1台のポンプの周りに
+P| {on|in of|at of|to} Broad Street. :: ブロード街の
+== 考えを確かめるため、彼は死者を一人ずつ街路地図に記し、患者がブロード街の1台の井戸ポンプの周りに集中していることに気づいた。
+M| Equally {telling|told|tell|tells} :: 同じく示唆的なのは
+V| {were|was|be|being} :: …だった
+S| the {exceptions|exceptional|except|exceptionally} :: 例外だった
+X| {that|what|whom|whose} fit his theory. :: 理論に合う
+== 同じく示唆的だったのは、彼の理論に合う例外だった。
+S| Workers {at|in of|on of|to} a nearby brewery, :: 近くの醸造所の職人は
+X| {who|whom|which|whose} drank beer :: ビールを飲んでいた
+M| {rather than|rather|other than of|instead} water :: 水ではなく
+P| {from|of from|by|at of} the pump, :: ポンプの
+V| largely {escaped|escape|escaping|escapes of} :: ほぼ免れた
+O| the {disease|diseased|disease's|diseasing}. :: その病気を
+== ポンプの水ではなくビールを飲んでいた近くの醸造所の職人たちは、ほとんど病気にかからなかった。
+S| Snow {persuaded|persuade|persuasion|persuasive} :: スノーは説得した
+O| local {officials|official's|officiate|officially} :: 地元の役人を
+X| {to remove|removing|remove|to removing} the handle :: 取っ手を外すよう
+P| {of|for|at|by} the pump, :: ポンプの
+M| {and|nor|than|whom} the outbreak :: そして流行は
+V| soon {came|come|coming|become} to an end. :: やがて終わった
+== スノーは地元の役人を説得してポンプの取っ手を外させ、流行はまもなく収まった。
+S| {Skeptics|Skeptic|Skeptical|Skepticism of} :: 懐疑派は
+V| have {pointed|point|pointing|points} out :: 指摘してきた
+O| {that|what|which|whom} the epidemic :: 流行は…と
+V| was already {declining|decline|declined of|declination} :: すでに下火だった
+T| {by|for|on|since of} then, :: その頃までに
+M| {so|nor|than|unless of} removing the handle :: だから撤去は
+V| may not {have been|has been|have being|had been} decisive. :: 決め手でなかったかも
+== 懐疑的な人々は、流行はその頃にはすでに下火になっていたので、取っ手の撤去は決定的ではなかったかもしれないと指摘してきた。
+M| {Yet|Already|Still yet|Even yet} the importance :: しかし重要性は
+P| {of|for|at|to} Snow's work :: スノーの業績の
+V| {lies|lays|lie|lying} less :: …よりもある
+P| {in|on|at|to} that single act :: その一つの行為
+M| {than|then|as|that} in his method. :: 方法の中に
+== しかし、スノーの業績の重要性は、その一つの行為よりも彼の方法にある。
+P| {By|With|For|At} collecting data :: データを集めて
+P| {on|in|at|to} where people fell ill :: 発病した場所の
+M| {and|nor|than|but also} searching :: そして探して
+P| {for|to|at|with} a common source, :: 共通の原因を
+S| he {helped|help|helping|helps of} lay :: 彼は築く助けとなった
+O| the {foundations|foundational|found|founding of} :: 基礎を
+P| {of|at|by|on} modern epidemiology. :: 近代疫学の
+== 人々が病気になった場所のデータを集め、共通の原因を探すことで、彼は近代疫学の基礎を築く手助けをした。
+S| The lesson {remains|remain|remaining|remainder} :: その教訓は今も
+C| {relevant|relevance|relevantly|relevancy of}: :: 意義がある
+S| careful {observation|observe|observant|observantly} :: 注意深い観察は
+V| can {reveal|revealed|revealing|revelation} causes :: 原因を明かせる
+T| {long before|long ago|long since of|longer before} :: ずっと前に
+X| their mechanisms {are understood|understand|are understanding|understood}. :: しくみが解明される
+== その教訓は今も有効だ。注意深い観察は、しくみが解明されるずっと前に原因を明らかにしうるのだ。
+?? 1 5 当時の専門家は病気が何で広がると考えた？
+?? 3 5 患者は何の周りに集中していた？
+?? 5 1 醸造所の職人たちは何を飲んでいた？
+?? 6 2 スノーは役人に何をさせた？
+?? 7 3 懐疑派によると、その頃流行はどうなっていた？
+
+@id adv72
+@lv 3
+@level 8
+@title Why We Feel Pain
+@ja 痛みはなぜあるのか
+@tag 難関大レベル・論説文
+@gloss protective=保護の, accumulate=蓄積する, malfunction=故障, tissue=組織, phantom limb=幻肢, amputate=切断する, chronic=慢性の, persist=続く
+S| {Pain|Painful|Pained|Painfully} :: 痛みは
+V| is usually {regarded|regard|regarding|regards} :: ふつう見なされる
+P| {as|so|than|such} an enemy :: 敵として
+X| {to be eliminated|to eliminated|being eliminate|to be eliminating}, :: 取り除くべき
+M| {yet|despite|although of|however of} it serves :: だがそれは果たす
+O| a {vital|vitally|vitality|vitals} protective function. :: 重要な保護の役割を
+== 痛みはふつう取り除くべき敵とみなされるが、体を守るという重要な役割を果たしている。
+S| This {becomes|become|becoming|became of} clear :: これは明らかになる
+P| {in|on|at|to} people :: 人々を見ると
+X| {born|borne of|bear|bearing} with a rare condition :: まれな体質で生まれた
+X| {that|what|whom|whose} leaves them :: 彼らを…にする
+C| {unable|disable|inability|unably} to feel pain. :: 痛みを感じない状態
+== このことは、痛みを感じられないまれな体質を持って生まれた人々を見るとよくわかる。
+M| Far {from|of|to|by} being fortunate, :: 幸運どころか
+S| such people {often|oftenly|oft of|often of} :: そうした人はよく
+V| {suffer|suffers|suffering|sufferance} :: 負う
+O| {serious|seriously|seriousness|series} injuries :: 重いけがを
+M| {without|within|with out|out of} noticing them. :: 気づかないまま
+== そうした人々は幸運などではなく、気づかないうちに重いけがを負ってしまうことが多い。
+S| A broken bone {or|nor|than|whom} a burned hand :: 骨折ややけどが
+V| {goes|go|going|gone} unnoticed, :: 気づかれない
+M| {and|nor|than|whom} repeated damage :: そして繰り返す損傷が
+V| can {accumulate|accumulates|accumulated|accumulation} :: 蓄積しうる
+P| {over|above|upon of|beyond of} the years. :: 年月とともに
+== 骨折ややけどにも気づかず、繰り返される損傷が年月とともに積み重なっていく。
+S| Pain, {in|on|at|by} other words, :: つまり痛みは
+V| {is|are|be|being} :: …だ
+C| {less|fewer|lesser|least} a malfunction :: 故障というより
+M| {than|then|as|that} an alarm :: 警報だ
+X| {that|what|whom|whose} urges us :: 私たちに促す
+X| {to protect|protecting|protect|to protecting} the body. :: 体を守るよう
+== つまり痛みは、故障というより、体を守るよう私たちを促す警報なのだ。
+M| {Yet|Already|Still yet|Even yet} pain :: しかし痛みは
+V| is not {a|an|the of|one of} simple measure :: 単純な尺度ではない
+P| {of|for|at|by} tissue damage; :: 組織の損傷の
+S| it {is|are|has|be} constructed :: それは作られる
+P| {by|with|for|at} the brain. :: 脳によって
+== しかし痛みは組織の損傷を測る単純な目盛りではなく、脳によって作り出されるものだ。
+S| The same {injury|injure|injured|injurious} :: 同じけがでも
+V| can {hurt|hurts|hurting|hurted} :: 痛みうる
+M| more {or|nor|than|whom} less :: 強くも弱くも
+M| {depending|depend|depends|dependent of} on attention, :: 注意によって
+O| {emotion|emotional|emotionally|emote}, and expectation. :: 感情や予期によって
+== 同じけがでも、注意や感情、予期によって痛みが強くも弱くもなる。
+S| Striking {evidence|evident|evidently|evidences} :: 驚くべき証拠は
+V| {comes|come|coming|came of} :: 得られる
+P| {from|of from|at|to} phantom limb pain, :: 幻肢痛から
+X| {in which|which|in what|where of} people feel pain :: 人が痛みを感じる
+P| {in|on of|at of|to} an arm or leg :: 腕や脚に
+X| {that|what|whom|whose} has been amputated. :: 切断された
+== 驚くべき証拠は幻肢痛から得られる。切断された腕や脚に痛みを感じる現象だ。
+R| {Since|Due|Because of|Owing} the limb :: その手足は…ので
+V| no longer {exists|exist|existing|existence}, :: もう存在しない
+S| the pain {must|must to|musts|mustn} :: その痛みは…はずだ
+V| be {produced|producing|produce|product} :: 生み出される
+P| {by|with|for|at} the brain and nervous system themselves. :: 脳と神経系自体に
+== 手足はもう存在しないのだから、その痛みは脳と神経系そのものが生み出しているはずだ。
+S| This {understanding|understand|understood|understandably} :: この理解は
+V| {matters|matter|mattering|material} :: 重要だ
+P| {for|at|by|on} patients :: 患者にとって
+P| {with|of whom|whose|which} chronic pain, :: 慢性の痛みの
+X| {which|what|whom|who} can persist :: 続きうる
+T| long {after|ago|later|since of} an injury has healed. :: 傷が治った後も
+== この理解は慢性痛を抱える患者にとって重要だ。慢性痛は、けがが治ったずっと後まで続くことがある。
+S| Their suffering {is|are|be|being} real, :: 苦しみは本物だ
+M| even {when|what|which|whom} no damage :: 損傷がない時も
+V| can be {found|foundation|find|finding}, :: 見つかる
+R| {because|because of|due|owing} pain lives :: 痛みは存在するから
+M| {as|so|such|than} much in the brain :: 脳にも同じだけ
+M| {as|than|so|that} in the body. :: 体と
+== 損傷が見つからなくても彼らの苦しみは本物だ。痛みは体と同じくらい脳の中にも存在するからである。
+?? 2 3 痛みを感じない人はどんなけがを負いやすい？
+?? 4 3 痛みは故障というより何だと言える？
+?? 7 4 幻肢痛ではどこに痛みを感じる？
+?? 9 5 慢性痛はいつまで続くことがある？
+
+@id adv73
+@lv 3
+@level 8
+@title The Hygiene Hypothesis
+@ja 衛生仮説
+@tag 難関大レベル・論説文
+@gloss asthma=ぜんそく, epidemiologist=疫学者, sibling=きょうだい, exposure=さらされること, hygiene=衛生, hypothesis=仮説, microbe=微生物, tolerate=許容する
+M| {Over|Above|Upon of|Across of} recent decades, :: ここ数十年で
+S| allergic {diseases|disease of|diseased|diseasing} :: アレルギー疾患は
+M| {such as|such like|so as|as such} hay fever and asthma :: 花粉症やぜんそく等
+V| have {become|became|becoming|becomes} :: なってきた
+C| more {common|commonly|commons|commonness} :: より多く
+P| {in|on|at|to} many industrialized countries. :: 多くの工業国で
+== ここ数十年、花粉症やぜんそくなどのアレルギー疾患は、多くの先進工業国で増えてきた。
+R| {Since|Due|Because of|Owing} genes :: 遺伝子は…ので
+V| cannot {change|changes|changing|changed} :: 変わりえない
+M| that {quickly|quick|quickness|quicken}, :: それほど速く
+S| the cause {must|must to|musts|mustn} :: 原因は…はずだ
+V| {lie|lay|lies|lying} :: ある
+M| at {least|less|little|lesser} partly :: 少なくとも一部は
+P| {in|on|at|to} the environment. :: 環境に
+== 遺伝子はそれほど速く変わらないので、原因の少なくとも一部は環境にあるはずだ。
+T| {In|On|At|Of} 1989, :: 1989年に
+S| the {epidemiologist|epidemiology|epidemiological|epidemic} David Strachan :: 疫学者ストラッチャンは
+V| {noticed|notice of|notion|noticing} :: 気づいた
+O| {that|what|which|whom} children :: 子どもたちが…と
+P| {with|of whom|whose|which} many older siblings :: 年上の兄姉が多い
+V| were less {likely|like|likeness|likely of} :: …しにくかった
+X| {to suffer|suffering|to suffering|suffer} from hay fever. :: 花粉症になり
+== 1989年、疫学者デイヴィッド・ストラッチャンは、年上のきょうだいが多い子どもほど花粉症になりにくいことに気づいた。
+S| He {proposed|proposal|propose of|proposing} :: 彼は提唱した
+O| {that|what|which|whom} early exposure :: 早期の接触が…と
+P| {to|for|with|at} infections, :: 感染症への
+X| {passed|passing|pass|passes} on by older brothers and sisters, :: 兄や姉からうつった
+V| might {help|helped|helping|helps} train :: 鍛える助けになる
+O| the {developing|develops|develop|developmental of} immune system. :: 発達中の免疫系を
+== 彼は、兄や姉からうつされる感染症に幼いうちに触れることが、発達中の免疫系を鍛えるのに役立つのではないかと提唱した。
+S| This idea, {which|what|whom|whose} came to be called :: …と呼ばれた考えは
+O| the {hygiene|hygienically|hygienist's of|hygienes} hypothesis, :: 衛生仮説
+V| {suggested|suggestion|suggest of|suggesting} :: 示唆した
+O| {that|what|which|whom} modern life :: 現代生活が…と
+V| might {be|being|been|is} :: …かもしれない
+C| too clean {for|to|at|of} our own good. :: 清潔すぎて害になる
+== 「衛生仮説」と呼ばれるようになったこの考えは、現代生活は清潔すぎてかえって害になるのかもしれないと示唆した。
+M| {However|Whatever|Whenever|Howsoever}, :: しかし
+S| the {name|named|naming|names of} :: その名前は
+V| {has|have|having|be} proved :: …とわかった
+C| somewhat {misleading|mislead|misleads|misleadingly} :: やや誤解を招く
+P| {in|on|at|to} one important respect. :: ある重要な点で
+== しかし、この名前はある重要な点で誤解を招くものだった。
+S| Later research {suggests|suggest|suggestion|suggesting} :: 後の研究は示す
+O| {that|which|whom|whose} what matters :: 大事なのは…と
+V| is not {dirt|dirty|dirtily|dirtier} itself :: 汚れ自体でなく
+M| {but|and|or|so} contact :: 接触だと
+P| {with|to|at|by} the diverse microbes :: 多様な微生物との
+X| {that|what|whose|where} humans evolved alongside. :: 人類と共に進化した
+== 後の研究によれば、大事なのは汚れそのものではなく、人類と共に進化してきた多様な微生物との接触だという。
+S| These "old {friends|friendly|friendship of|friend}," :: これら「旧友」は
+X| {found|founded|finding|find} in soil, animals, and our bodies, :: 土や動物や体にいる
+V| may {help|helped|helping|helps} :: 助けるかもしれない
+O| the {immune|immunity|immunize|immunely} system :: 免疫系が
+X| {learn|learns|learned|learning of} to tolerate :: 許容を学ぶのを
+O| {harmless|harm|harmful of|harmlessly} substances. :: 無害な物質を
+== 土や動物、私たち自身の体にいるこれらの「旧友」は、免疫系が無害な物質を受け入れるよう学ぶのを助けているのかもしれない。
+P| {Without|Withouts|Without of|Not with of} such training, :: その訓練がないと
+S| the immune system {may|may to|maybe|mays} :: 免疫系は…かも
+V| {overreact|overreacts|overreacting|overreaction} :: 過剰反応する
+O| {to|for|at|with of} pollen or food, :: 花粉や食物に
+X| {producing|produced|produce|to producing} allergic symptoms. :: アレルギー症状を生む
+== そうした訓練がないと、免疫系は花粉や食べ物に過剰反応し、アレルギー症状を起こすのかもしれない。
+M| {Importantly|Important|Importance|Import}, :: 重要なことに
+S| this {does|do|doing|did to} not mean :: これは意味しない
+O| {that|what|which|whom} basic hygiene, :: 基本的な衛生が…と
+M| {such as|such like|so as|as such} handwashing, :: 手洗いなどの
+V| {is|are|be|being} harmful, :: 有害だと
+R| {since|due|because of|owing} it prevents serious infections. :: 重い感染症を防ぐので
+== ただし重要なことに、これは手洗いのような基本的な衛生が有害だという意味ではない。衛生は重い感染症を防いでいるからだ。
+S| The challenge {is|are|be|being} :: 課題は
+C| {to understand|understanding of|understand|to understanding} :: 理解することだ
+O| {which|whom|whose|what of} microbial exposures :: どの微生物接触が
+V| {are|is|be|being} beneficial, :: 有益なのか
+M| {rather than|rather|other than of|instead} simply :: 単に…でなく
+X| {to reject|rejecting of|reject to|to rejecting} cleanliness. :: 清潔を否定する
+== 課題は、単に清潔さを否定することではなく、どの微生物との接触が有益なのかを理解することだ。
+?? 2 4 花粉症になりにくかったのはどんな子ども？
+?? 3 3 早期の感染症は誰からうつされる？
+?? 6 4 後の研究によれば、大事なのは何との接触？
+?? 8 2 訓練がないと免疫系はどうなるかもしれない？
+
+@id adv74
+@lv 3
+@level 8
+@title Two Minds in One Skull?
+@ja 分離脳の謎
+@tag 難関大レベル・説明文
+@gloss hemisphere=半球, bundle=束, epilepsy=てんかん, seizure=発作, visual field=視野, initiate=始める, plausible=もっともらしい, unsettling=不安にさせる
+S| The two {hemispheres|hemisphere|hemispheric|hemisphered} :: 2つの半球は
+P| {of|for|at|by} the human brain :: 人間の脳の
+V| are {connected|connecting|connect|connection} :: つながっている
+P| {by|with of|at|for} a thick bundle :: 太い束によって
+P| {of|for|at|in} nerve fibers :: 神経線維の
+X| {called|calling|call|calls} the corpus callosum. :: 脳梁と呼ばれる
+== 人間の脳の左右の半球は、脳梁と呼ばれる神経線維の太い束でつながっている。
+T| {In|On|At|Of} the mid-twentieth century, :: 20世紀半ばに
+S| surgeons {began|begun|begin of|beginning} :: 外科医は始めた
+O| {cutting|cut of|cuts|to cutting} this structure :: これを切ることを
+P| {in|by|at of|to} some patients :: 一部の患者で
+P| {with|of whom|whose|which} severe epilepsy, :: 重いてんかんの
+R| {to stop|stopping|stop|to stopping} seizures from spreading. :: 発作の拡大を防ぐため
+== 20世紀半ば、外科医は発作が広がるのを防ぐため、重いてんかんの一部の患者でこの構造を切断し始めた。
+M| {Remarkably|Remark|Remarkable|Remarks}, :: 驚いたことに
+S| the patients {seemed|seem of|seeming|seems of} :: 患者たちは見えた
+C| largely {normal|normally|normality|normalize} :: ほぼ普通に
+P| {in|on|at|to} everyday life, :: 日常生活では
+M| {yet|despite|although of|however of} careful experiments :: だが入念な実験は
+V| {revealed|reveal of|revelation|revealing} something extraordinary. :: 驚くべきことを示した
+== 驚いたことに、患者たちは日常生活ではほとんど普通に見えたが、入念な実験は驚くべき事実を明らかにした。
+R| {Because|Because of|Due|Owing} each hemisphere :: 各半球は…ので
+V| mainly {receives|receive|receiving|reception} information :: 主に情報を受ける
+P| {from|of from|to|at of} the opposite side :: 反対側から
+P| {of|for|at|on} the visual field, :: 視野の
+S| researchers {could|could to|cans|can to} :: 研究者は…できた
+V| {show|shown|showing|shows} an image :: 画像を見せる
+P| {to|at|on|by} just one half of the brain. :: 脳の片側だけに
+== 各半球は主に視野の反対側から情報を受け取るため、研究者は脳の片側だけに画像を見せることができた。
+M| {When|What|Which|Whom} a picture :: 絵が…とき
+V| was {presented|presenting|present of|presence} :: 示された
+P| only {to|for|at|on} the right hemisphere, :: 右半球だけに
+S| the patient {typically|typical|type|typify} :: 患者はたいてい
+V| could not {name|named|naming|names} it. :: その名を言えない
+== 絵が右半球にだけ示されると、患者はたいていその名前を言えなかった。
+S| This {is|are|being|be} because, :: これは…からだ
+P| {in|on|at|to} most people, :: 大多数の人で
+S| {language|languages of|lingual|linguistic} :: 言語は
+V| {depends|depend|depending|dependent} mainly :: 主に依存する
+P| {on|in|at|for} the left hemisphere. :: 左半球に
+== これは、大多数の人では言語が主に左半球に依存しているからだ。
+M| {Yet|Already|Still yet|Even yet} the same patient :: だが同じ患者が
+V| could {pick|picked|picking|picks} out :: 選び出せた
+O| the {correct|correction|correctly|corrects} object :: 正しい物を
+P| {with|by of|at|on} the left hand, :: 左手で
+X| {which|whom|who|whose} is controlled :: 制御される
+P| {by|with|for|at} the right hemisphere. :: 右半球に
+== しかし同じ患者が、右半球が制御する左手でなら正しい物を選び出せた。
+M| {In|On|At|By} a sense, :: ある意味で
+S| one side {of|for|at|in} the brain :: 脳の片側は
+V| {knew|known|knowing|knows of} something :: 何かを知っていた
+X| {that|what|whose|where} the other side :: もう一方が
+V| could not {put|putting|puts|putted} into words. :: 言葉にできない
+== ある意味で、脳の片側は、もう一方が言葉にできないことを知っていたのだ。
+M| Even more {striking|stricken|strike|struck} :: さらに驚くべきは
+V| {was|were|be|being} :: …だった
+S| the {behavior|behave|behavioral|behaviorally} :: ふるまい
+P| {of|for|at|by} the left hemisphere :: 左半球の
+M| {when|what|which|whom} asked to explain actions :: 行動の説明を求められ
+X| it had not {initiated|initiate|initiating|initiation}. :: 自ら起こしていない
+== さらに驚くべきは、自分が起こしたのではない行動の説明を求められたときの左半球のふるまいだった。
+M| {Rather than|Rather|Other than of|Instead} admitting ignorance, :: 無知を認めず
+S| it would {promptly|prompt|promptness|prompted} :: それはすぐに
+V| {invent|invented|inventing|invention} :: 作り出した
+O| a {plausible|plausibly|plausibility|plausibles} story, :: もっともらしい話を
+M| apparently {without|within|with out|out of} realizing :: 気づかぬまま
+O| {that|what|which|whom} it was guessing. :: 推測していると
+== 左半球は無知を認める代わりにすぐさまもっともらしい話を作り、しかも自分が推測しているとは気づいていないようだった。
+S| Such {findings|founding|finds of|finding}, :: こうした発見は
+X| {for|by|with|of} which Roger Sperry shared the Nobel Prize in 1981, :: スペリーが81年受賞した
+V| {raise|rise|raises|arise} :: 投げかける
+O| {unsettling|unsettled|unsettle|unsettlement} questions :: 不安な問いを
+P| {about|of about|on of|around of} how unified :: どれほど統一か
+X| the conscious self really {is|are|be|being}. :: 意識ある自己が
+== ロジャー・スペリーが1981年にノーベル賞を共同受賞したこうした発見は、意識をもつ自己が本当にどれほど一つにまとまっているのかという、落ち着かない問いを投げかける。
+?? 1 5 脳梁を切る手術は何のために行われた？
+?? 4 4 右半球だけに絵を見せると患者はどうだった？
+?? 5 4 大多数の人で言語は主にどちらの半球に依存する？
+?? 6 3 患者はどちらの手でなら正しい物を選べた？
+?? 9 3 左半球は推測しているとき何を作り出した？
+
+@id adv75
+@lv 3
+@level 8
+@title The Strange Case of Phineas Gage
+@ja ゲージの事故と脳
+@tag 難関大レベル・説明文
+@gloss foreman=現場監督, explosive=爆薬, skull=頭蓋骨, cheekbone=ほお骨, impatient=短気な, exaggeration=誇張, portray=描く, stagecoach=駅馬車, discipline=規律
+T| {In|On|At|Of} 1848, :: 1848年に
+S| a railroad construction {foreman|foremen|forming|forehand} :: 鉄道工事の監督
+X| {named|naming|name|names} Phineas Gage :: ゲージという
+V| {suffered|suffer of|suffering|sufferance} :: 負った
+O| one of the most famous {injuries|injury|injure|injured} :: 最も有名なけがを
+P| {in|on|at|to} the history of medicine. :: 医学史上で
+== 1848年、フィニアス・ゲージという鉄道工事の現場監督が、医学史上最も有名なけがの一つを負った。
+M| {While|During|Meanwhile|Whilst of} he was packing explosives :: 爆薬を詰めている時
+P| {into|onto of|at of|in to} a hole, :: 穴に
+S| an {accidental|accident|accidentally|accidents} blast :: 事故の爆発が
+V| {drove|drive|driven|driving} :: 押し込んだ
+O| an {iron|irony|ironic|irons} rod :: 鉄の棒を
+P| {through|though|thorough|throughout of} his skull. :: 頭蓋骨を貫いて
+== 穴に爆薬を詰めていたとき、事故で起きた爆発により鉄の棒が彼の頭蓋骨を貫いた。
+S| The rod {entered|enter|entrance|entering} :: 棒は入り
+P| {below|beneath of|under of|belows} his left cheekbone :: 左ほお骨の下から
+M| {and|nor|than|whom} exited :: そして抜けた
+P| {through|though|thorough|throughout of} the top of his head, :: 頭頂から
+X| {damaging|damaged|damage|to damaging} :: 傷つけた
+O| the {frontal|front of|fronts|frontally} part of his brain. :: 脳の前の部分を
+== 棒は左のほお骨の下から入って頭頂から抜け、脳の前部を傷つけた。
+M| {Astonishingly|Astonishing|Astonish|Astonishment}, :: 驚くべきことに
+S| Gage {survived|survive|survival|surviving} :: ゲージは生き延びた
+M| {and|nor|than|whom} was able :: そして…できた
+X| {to speak|speaking|speak|to speaking} :: 話すことが
+T| {within|inside to|among|during of} minutes of the accident. :: 事故から数分で
+== 驚くべきことに、ゲージは生き延び、事故から数分のうちに話すことができた。
+P| {According|Accordingly|Accord|According of} to his physician, :: 主治医によると
+M| {however|whatever|whenever|howsoever}, :: しかし
+S| his {personality|personal|personally|personalize} :: 彼の人格は
+V| changed so {dramatically|dramatic|drama|dramatize} :: とても大きく変わり
+O| {that|what|which|as} his friends said :: 友人は言った
+X| he was "no {longer|long|longest|length} Gage." :: もうゲージでない
+== しかし主治医によれば、彼の人格はあまりに大きく変わったため、友人たちは彼を「もはやゲージではない」と言った。
+M| {Once|Ones|Twice|At once} responsible and well-liked, :: かつては頼れる人気者
+S| he was {said|say|saying|says} :: 彼は…と言われた
+X| {to have become|to have became|to becoming|having become} :: …になったと
+C| {impatient|impatience|impatiently|patiently of}, rude, :: 短気で無礼に
+M| {and|nor|than|but also} unable :: そして…できない
+X| {to stick|sticking|stick|to sticking} to his plans. :: 計画を守り
+== かつては責任感があり好かれていた彼が、短気で無礼になり、計画を守れなくなったと言われた。
+S| His case {seemed|seem of|seeming|seems of} :: 彼の例は…ようだった
+X| {to show|showing|show|to showing} :: 示す
+O| {that|what|which|whom} particular regions :: 特定の部位が…と
+P| {of|for|at|to} the brain :: 脳の
+V| {support|supports|supporting|supported of} :: 支える
+O| particular {aspects|aspect|aspecting|aspected} of personality and self-control. :: 人格や自制の側面を
+== 彼の例は、脳の特定の部位が人格や自制心の特定の側面を支えていることを示すように思われた。
+M| {Over|Above|Upon of|Across of} the following century, :: その後の1世紀で
+M| {however|whatever|whenever|howsoever}, :: しかし
+S| his story {was retold|retold|was retelling|retells} :: 話は語り直された
+P| {with|by of|for|at} increasing exaggeration. :: ますます誇張されて
+== しかしその後の1世紀の間に、彼の話はどんどん誇張されて語り直された。
+S| Some {versions|version|versioning|versed} :: いくつかの話は
+V| {portrayed|portray of|portrait|portraying} him :: 彼を描いた
+P| {as|so|than|such} a violent drunk, :: 乱暴な酒飲みとして
+X| a claim {for|to|at|by} which :: その主張には
+V| there {is|are|be|being} little reliable evidence. :: 確かな証拠がほぼない
+== ある話では彼は乱暴な酒飲みとして描かれたが、その主張には信頼できる証拠がほとんどない。
+M| {In|On|At|By} fact, :: 実際
+S| historians {have|has|having|had been} since found :: 歴史家はその後知った
+O| {that|what|which|whom} Gage later worked for years :: 彼が何年も働いたと
+P| {as|so|than|such} a stagecoach driver :: 駅馬車の御者として
+P| {in|on|at|to} Chile, :: チリで
+X| a job {requiring|requires|require|to requiring} considerable skill and discipline. :: 技術と規律が要る仕事
+== 実際、歴史家たちはその後、ゲージが後年チリで何年も駅馬車の御者として働いていたことを突き止めた。それは相当な技術と自制を要する仕事だった。
+S| This {suggests|suggest|suggestion|suggesting} :: これは示唆する
+O| {that|what|which|whom} he may have recovered :: 彼は回復したかもと
+M| far {more|many|most|much} :: はるかに多く
+M| {than|then|as|that} the legend allows, :: 伝説が認めるより
+R| perhaps {because|because of|due|owing} the injured brain :: 傷ついた脳が…ため
+V| can partly {reorganize|reorganizes|reorganized|reorganization} itself. :: 自らを再編できる
+== これは、彼が伝説で語られるよりはるかに回復していたかもしれないことを示している。おそらく、傷ついた脳が部分的に自らを再編できるからだろう。
+?? 1 5 鉄の棒は何を貫いた？
+?? 4 5 友人たちは彼のことを何と言った？
+?? 8 2 ある話では彼はどのように描かれた？
+?? 9 3 ゲージは後年チリで何として働いた？
+
+@id adv76
+@lv 3
+@level 8
+@title A Gene That Both Harms and Protects
+@ja 害にも守りにもなる遺伝子
+@tag 難関大レベル・説明文
+@gloss mutation=突然変異, hemoglobin=ヘモグロビン, inherit=受け継ぐ, rigid=硬い, trait=形質, parasitic=寄生性の, carrier=保因者, heterozygote=ヘテロ接合体
+S| Natural selection {is|are|be|being} :: 自然選択は
+V| often {imagined|imagine|imaging|imagination} :: よく思い描かれる
+P| {as|so|than|such} a process :: 過程として
+X| {that|what|whom|whose} steadily removes :: 着実に取り除く
+O| {harmful|harm|harmfully|harmed of} genes :: 有害な遺伝子を
+P| {from|of from|out|to of} a population. :: 集団から
+== 自然選択は、有害な遺伝子を集団から着実に取り除いていく過程だと思われがちだ。
+M| {Yet|Already|Still yet|Even yet} some genes :: しかし一部の遺伝子は
+X| {that|what|whom|whose} cause serious disease :: 重い病気を起こす
+V| {remain|remains|remaining|remainder} :: のままだ
+C| surprisingly {common|commonly|commons|commonness}, :: 意外に多い
+M| {and|nor|than|whom} sickle cell disease :: そして鎌状赤血球症が
+V| {offers|offer|offering|offered of} a striking example :: 顕著な例を示す
+P| {of|at|by|on} why. :: その理由の
+== しかし重い病気を起こす遺伝子の中には、意外なほどありふれたままのものがあり、鎌状赤血球症はその理由をよく示す例だ。
+S| The disease {is caused|causes|is causing|caused} :: その病気は起こる
+P| {by|with|from|at} a mutation :: 突然変異によって
+P| {in|on|at|to} the gene for hemoglobin, :: ヘモグロビン遺伝子の
+O| the {protein|proteins of|proteinic|protean} :: タンパク質で
+X| {that|what|whom|whose} carries oxygen :: 酸素を運ぶ
+P| {in|on|at|to} red blood cells. :: 赤血球の中で
+== この病気は、赤血球の中で酸素を運ぶタンパク質であるヘモグロビンの遺伝子の突然変異によって起こる。
+S| A person {who|whom|which|whose} inherits :: 受け継いだ人は
+O| two {copies|copy|copied|copying} :: 2つの写しを
+P| {of|for|at|by} the mutated gene, :: 変異した遺伝子の
+M| one {from|of from|at|to of} each parent, :: 両親から一つずつ
+V| {develops|develop|developing|development} the disease. :: 病気を発症する
+== 変異した遺伝子を両親から一つずつ、計2つ受け継いだ人はこの病気を発症する。
+S| Their red blood cells {can|can to|cans|could to} :: その赤血球は…しうる
+V| {become|became|becoming|becomes} :: なる
+C| {rigid|rigidly|rigidity|rigids} and sickle-shaped, :: 硬い鎌形に
+X| {blocking|blocked|block|to blocking} small blood vessels :: 細い血管をふさぎ
+M| {and|nor|than|whom} causing pain and organ damage. :: 痛みや臓器障害を招く
+== その赤血球は硬い鎌のような形になることがあり、細い血管をふさいで痛みや臓器の障害を引き起こす。
+S| A person {with|of whom|whose|which} only one copy, :: 一つだけ持つ人は
+M| {by|on|at|to} contrast, :: 対照的に
+V| {is|are|be|being} usually healthy :: たいてい健康で
+M| {and|nor|than|whom} is said :: …と言われる
+X| {to carry|carrying|carry|to carrying} the sickle cell trait. :: 鎌状赤血球形質を持つ
+== 一方、写しを一つしか持たない人はたいてい健康で、鎌状赤血球形質の保因者と呼ばれる。
+M| {Crucially|Crucial|Crux|Crucialness}, :: 決定的なことに
+S| such {carriers|carry|carried|carrying} :: そうした保因者は
+V| are partly {protected|protecting|protect|protection} :: 一部守られる
+P| {against|again|agains|against of} severe malaria, :: 重いマラリアから
+O| a {parasitic|parasite|parasitically|parasites} disease :: 寄生虫による病気
+X| {spread|spreading|spreads|to spread of} by mosquitoes. :: 蚊が広める
+== 決定的なのは、そうした保因者が、蚊が媒介する寄生虫病である重症マラリアからある程度守られていることだ。
+P| {In|On|At|To} regions :: 地域では
+X| {where|which|what|whom} malaria has long been widespread, :: マラリアが長く多い
+S| carrying one copy {therefore|there|therefor of|wherefore of} :: 一つ持つことは
+V| {increased|increase of|increasing|increasingly} :: 高めた
+O| the {chance|chancy|chanced|chances of} :: 可能性を
+P| {of|at|to|by} surviving childhood. :: 幼年期を生き抜く
+== それゆえ、マラリアが昔から広まっている地域では、写しを一つ持つことで幼少期を生き延びる可能性が高まった。
+M| {As|So|For|Than} a result, :: その結果
+S| the gene {was|were|being|be} passed on :: 遺伝子は受け継がれた
+M| more {often|oftenly|oftener of|oft} :: より頻繁に
+M| {than|then|as|that} its harmful effects alone :: 害だけから…より
+V| would {predict|predicted|predicting|prediction}. :: 予測される
+== その結果、この遺伝子は、その有害な影響だけから予想されるよりも頻繁に受け継がれた。
+S| Biologists {call|calls|calling|called of} :: 生物学者は呼ぶ
+O| this {pattern|patterned|patterning|patterns} :: この型を
+C| a heterozygote {advantage|advantageous|advantaged|advance of}: :: ヘテロ接合体優位と
+S| the {benefit|beneficial|benefited|beneficially} to carriers :: 保因者への利益が
+V| {balances|balance of|balancing|balanced of} :: つり合う
+O| the cost {to|for of|at|of to} those with two copies. :: 2つ持つ人の代償と
+== 生物学者はこれを「ヘテロ接合体優位」と呼ぶ。保因者が得る利益が、2つ持つ人が払う代償とつり合うのだ。
+S| The case {illustrates|illustrate|illustration|illustrating} :: この例は示す
+O| a broader {lesson|lessen|lessons of|lessoned}: :: より広い教訓を
+S| {whether|weather|whither of|if of} a gene is "good" or "bad" :: 遺伝子の善し悪しは
+V| {depends|depend|depending|dependent} :: …次第だ
+O| {on|in|at|for} the environment :: 環境に
+X| {in which|which|in what|where of} its carriers live. :: 持ち主が暮らす
+== この例はより広い教訓を示している。遺伝子が「良い」か「悪い」かは、その持ち主が暮らす環境しだいなのだ。
+?? 2 4 ヘモグロビンは赤血球の中で何をする？
+?? 3 3 変異した遺伝子の写しはどこから受け継ぐ？
+?? 6 3 保因者はどんな病気からある程度守られている？
+?? 10 4 遺伝子の善し悪しは何しだい？
+
+@id adv77
+@lv 3
+@level 8
+@title The Prevention Paradox
+@ja 予防のパラドックス
+@tag 難関大レベル・論説文
+@gloss epidemiologist=疫学者, paradox=逆説, moderate=中程度の, arithmetic=算数, concentrate=集中させる, processed=加工された, bulk=大部分, insight=洞察
+S| Public health {measures|measure|measuring|measurable} :: 公衆衛生の施策は
+V| {face|faces|facing|faced of} :: 直面する
+O| a {curious|curiously|curiosity|cure} obstacle :: 奇妙な障害に
+X| {that|what|whose|where} the British epidemiologist Geoffrey Rose :: 英の疫学者ローズが
+V| {called|calling|call of|calls of} :: 呼んだ
+O| the {prevention|prevent|preventive of|preventable} paradox. :: 予防の逆説と
+== 公衆衛生の施策は、英国の疫学者ジェフリー・ローズが「予防のパラドックス」と呼んだ奇妙な障害に直面している。
+S| Rose {observed|observe of|observation|observing} :: ローズは指摘した
+O| {that|what|which|whom} most cases :: 大半の症例は…と
+P| {of|for|at|by} a common disease :: よくある病気の
+V| often {arise|arises|arising|arose of} not :: 生じるのではなく
+P| {among|between|along|amid of} the few at high risk, :: 少数の高リスク者から
+M| {but|and|or|so} among the many :: 多くの人から
+X| {at|in|on|to} moderate risk. :: 中程度のリスクの
+== ローズは、よくある病気の症例の大半は、少数の高リスクの人々ではなく、中程度のリスクを抱える大勢の人々から生じることが多いと指摘した。
+S| The reason {is|are|be|being} :: 理由は…だ
+C| simple {arithmetic|arithmetical|arithmetically|arithmetics}: :: 単純な算数
+S| a small risk {spread|spreads|to spreads|spreaded} :: 広がった小リスクは
+P| {across|cross|acrossing|crossly} a large population :: 大きな集団に
+V| {produces|produce|producing|production} more cases :: 多くの症例を生む
+M| {than|then|as|that} a large risk :: 大きなリスクより
+X| {concentrated|concentrating|concentrate|concentration} in a few. :: 少数に集中した
+== 理由は単純な算数だ。大きな集団に薄く広がった小さなリスクは、少数に集中した大きなリスクよりも多くの症例を生むのである。
+S| It {follows|follow|following|followed of} :: そこから導かれる
+O| {that|what|which|whom} the most effective strategy :: 最も効果的な策は
+V| {is|are|be|being} often :: しばしば…だ
+X| {to shift|shifting of|shift|to shifting} :: 動かすことだ
+O| the risk {of|at|by|on} the whole population :: 集団全体のリスクを
+M| slightly {downward|down of|downwardly of|downs}. :: わずかに下へ
+== したがって、最も効果的な戦略は、多くの場合、集団全体のリスクをわずかに引き下げることになる。
+S| {Reducing|Reduce|Reduced|Reduces} the amount :: 量を減らすことは
+P| {of|for|at|by} salt :: 塩分の
+P| {in|on|at|to} processed foods, :: 加工食品の
+M| {for|by|in|as} instance, :: たとえば
+V| can {lower|lowered|lowering|low} blood pressure :: 血圧を下げうる
+P| {across|cross|acrossing|crossly} an entire society. :: 社会全体で
+== たとえば加工食品に含まれる塩分の量を減らせば、社会全体の血圧を下げることができる。
+M| {Yet|Already|Still yet|Even yet} here :: だがここに
+V| {lies|lays|lie|lying} the paradox: :: 逆説がある
+S| a measure {that|what|whom|whose} brings large benefits :: 大きな益を生む策は
+P| {to|for of|at|by of} the community :: 社会全体に
+V| {offers|offer|offering|offered of} little :: ほとんど与えない
+P| {to|at|by|than} each individual :: 各個人には
+X| {who|whom|which|whose} takes part. :: 参加する
+== だがここに逆説がある。社会全体に大きな利益をもたらす施策も、参加する一人ひとりにはほとんど何ももたらさないのだ。
+S| Most people {who|whom|which|whose} follow the measure :: 施策に従う大半は
+V| would never {have developed|developed|have develop|has developed} :: 発症しなかったろう
+O| the {disease|diseased|disease's|diseasing} :: 病気を
+M| {anyway|anyways of|any way of|anyhow of}, :: どのみち
+M| {so|nor|than|unless of} they see :: だから彼らは見ない
+O| no personal {reward|rewarding|rewarded|rewards of}. :: 個人的な見返りを
+== 施策に従う人の大半はもともと発症しなかったはずなので、個人としての見返りを感じられない。
+S| Individual {doctors|doctor|doctoral|doctoring}, :: 個々の医師は
+M| {by|on|at|to} contrast, :: 対照的に
+V| naturally {focus|focuses|focusing|focused of} :: 当然注目する
+O| {on|in|at|to} the high-risk patients :: 高リスクの患者に
+X| {sitting|sat|sit|sits} in front of them. :: 目の前にいる
+== これに対して個々の医師は、当然ながら目の前にいる高リスクの患者に注目する。
+S| Both approaches {are|is|be|being} needed, :: 両方の方法が必要だ
+S| Rose {argued|argue|argument|arguing}, :: ローズは主張した
+R| {since|due|because of|owing} treating only those :: …人だけの治療は
+P| {at|in|on|to} high risk :: 高リスクの
+V| {leaves|leave|leaving|left of} :: 残してしまう
+O| the {bulk|bulky|bulkily|bulks} of cases untouched. :: 症例の大半を手つかずに
+== ローズは、高リスクの人だけを治療しても症例の大部分は手つかずのまま残るので、両方の方法が必要だと主張した。
+S| His {insight|insightful|insights of|insighted} :: 彼の洞察は
+V| also {explains|explain|explaining|explanation} :: 説明もする
+O| {why|whom|whose|which of} effective prevention :: なぜ効果的な予防が
+V| {is|are|be|being} often invisible: :: 見えないのか
+S| its {successes|succeeds|successful|successive} :: その成功は
+V| are illnesses {that|what|whom|whose} never happened. :: 起きなかった病気だ
+== 彼の洞察は、効果的な予防がしばしば目に見えない理由も説明する。その成功とは、起こらなかった病気なのだ。
+?? 1 6 症例の大半はどんなリスクの大勢から生じる？
+?? 4 2 例では、どこに含まれる塩分を減らすとされている？
+?? 7 3 個々の医師が注目するのは誰？
+?? 9 5 効果的な予防の成功とは何？
