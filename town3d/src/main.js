@@ -281,6 +281,7 @@ export function mount(container, opt = {}) {
     if (r.def.id === 'suna') items.push({ k: 'study', key: 'fishing-en', label: '🎣 英語の釣り堀', fn: () => { openApp('fishing', { tab: 'en' }); backToTalk(); } });
     items.push(...soc.choices(r));
     if (!r.def.companion && isComp(r)) items.push({ k: 'bond', key: 'follow', label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { k: 'bond', key: 'invite', label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
+    { const other = residents.list.find(o => o !== r && isComp(o) && o.follow); if (other && !r.follow) for (let i = items.length - 1; i >= 0; i--) if (items[i].key === 'follow' || items[i].key === 'invite') items.splice(i, 1); }   // ほかの人と手をつないで歩いている間は、2人目とは つなげない(先に バイバイしてから)
     const chat = en => () => { r.talking = true; talkingTo = r; if (r.def.id === 'sora') { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); return; } if (ai.ready) startChat(r, text, undefined, en); else openAiSetup({ hud, ai, onDone: () => startChat(r, text, undefined, en) }); };
     if (r.def.id !== 'sora' || r.follow) { const lb = ai.ready ? '' : '(AIの設定)'; items.push({ k: 'study', key: 'chat-en', label: '💬 英語でおしゃべり' + lb, fn: chat(true) }, { k: 'bond', key: 'chat', label: '💬 おしゃべり' + lb, fn: chat(false) }); }
     for (const it of items) { const f = it.fn, key = it.key || it.label; it.fn = () => { markM(key); f(); }; it.ukey = key; }
@@ -305,7 +306,7 @@ export function mount(container, opt = {}) {
     if (r.visitSg) { sg = r.visitSg; r.visitSg = null; text = sg.say; }   // 自分から話しかけに来たときは、その用件をひと言に
     if (sg && sg.say !== text) text += '\n' + sg.say;
     const role = PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role;
-    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg && sg.fn ? [{ label: 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }, ...items.filter(it => it.k === 'bond' && /デート|家においで|お家/.test(it.label)).map(it => ({ label: it.label, fn: it.fn }))] }); };   // デート・家に誘うは、仲良くなったら最初の画面にも出す
+    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg && sg.fn ? [{ label: 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }, ...items.filter(it => it.k === 'bond' && (/デート|家においで|お家/.test(it.label) || (r.follow && it.key === 'follow'))).map(it => ({ label: it.label, fn: it.fn }))] }); };   // デート・家に誘うは、仲良くなったら最初の画面にも出す
     const shelf = kind => {
       r.talking = true; talkingTo = r;
       const b = kind === 'bond' ? soc.bondTalk(r) : { text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', extra: [] };
@@ -428,9 +429,9 @@ export function mount(container, opt = {}) {
   // メニューの「act」:大喜利・格言・オカリナ(アプリを開かない、住人ならではのあそび)
   function doAct(r, m) {
     if (m.act === 'consult' || m.act === 'soranote') { r.talking = true; talkingTo = r; input.clear(); soraNote(r); return; }
-    if (m.act === 'follow') { hanaFollow(r, !r.follow); return; }
+    if (m.act === 'follow') { if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, !r.follow); return; }
     if (m.act === 'date') { startDate(r); return; }
-    if (m.act === 'invite') { if (env.hour >= 21 || env.hour < 5) { hud.dialog({ name: r.def.name, role: r.def.role, text: '今日はもう遅いから、また今度ね!' }); return; } r.follow = true; r.hold = false; r.reT = 0; hud.dialog({ name: r.def.name, role: r.def.role, text: 'え、いいの? 行く行く!' }); setTimeout(() => { hud.closeDialog?.(); openApp('home', {}); }, 900); return; }
+    if (m.act === 'invite') { if (env.hour >= 21 || env.hour < 5) { hud.dialog({ name: r.def.name, role: r.def.role, text: '今日はもう遅いから、また今度ね!' }); return; } if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, true, true); r.hold = false; hud.dialog({ name: r.def.name, role: r.def.role, text: 'え、いいの? 行く行く!' }); setTimeout(() => { hud.closeDialog?.(); openApp('home', {}); }, 900); return; }
     if (m.act === 'ogiri') {
       r.talking = true; talkingTo = r; input.clear();   // 大喜利をしている間は、その場にいる
       const go = () => openOgiri({ hud, ai, bus, def: r.def, getEn: () => ({ on: !!settings.en, level: settings.enLevel }), setEn: v => { settings.en = v.on ? 1 : 0; save(); bus.emit('lang', { on: !!settings.en }); } });

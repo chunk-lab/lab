@@ -670,7 +670,7 @@ export const homeApp = {
         <button data-w="shot" aria-label="写真をとる" style="${wb};right:12px;bottom:12px;width:58px;height:58px;font-size:26px;background:linear-gradient(160deg,#ffd0dc,#ffb3c1)">📷</button>
         <button data-w="album" style="${wb};right:12px;bottom:80px;padding:8px 12px;font-size:13px;background:#fffaf2;color:${ink}">🖼 アルバム</button>
         <button data-w="act" style="${wb};left:50%;transform:translateX(-50%);bottom:18px;padding:12px 22px;font-size:16px;background:linear-gradient(160deg,#ffe08a,#ffc93c);color:${ink};display:none">座る</button>
-        ${gch ? `<button data-w="talk" style="${wb};left:10px;bottom:18px;padding:11px 16px;font-size:14px;background:#fffaf2;color:${ink}">💬 ${guest.name}と話す</button>` : ''}<button data-w="goro" style="${wb};right:12px;bottom:148px;padding:8px 12px;font-size:13px;background:#fffaf2;color:${ink}">🛌 ゴロゴロ</button>
+        ${gch ? `<button data-w="talk" style="${wb};left:10px;bottom:18px;padding:11px 16px;font-size:14px;background:#fffaf2;color:${ink}">💬 ${guest.name}と話す</button><button data-w="bye" style="${wb};left:10px;bottom:72px;padding:8px 14px;font-size:13px;background:#fffaf2;color:${ink}">👋 バイバイ</button>` : ''}<button data-w="goro" style="${wb};right:12px;bottom:148px;padding:8px 12px;font-size:13px;background:#fffaf2;color:${ink}">🛌 ゴロゴロ</button>
         <div data-w="hint" style="position:absolute;left:0;right:0;top:56px;text-align:center;font-size:12px;color:#fff;text-shadow:0 1px 3px #0008;pointer-events:none">下を なぞって歩く／上を なぞって見まわす／ピンチで近づく(パソコンは WASD・ドラッグ・ホイール)</div>`;
       cv.appendChild(wUI); setTimeout(() => wUI && wUI.querySelector('[data-w="hint"]')?.remove(), 6000);
       wUI.onpointerdown = e => e.stopPropagation();
@@ -680,6 +680,7 @@ export const homeApp = {
         else if (w === 'album') ctx.open('album', { from: 'home', walk: true });
         else if (w === 'act') { if (wPose) standUp(); else { const n = seatNear(); if (n) takePose(n); else if (doorNear()) goThroughDoor(); } }
         else if (w === 'talk') guestTalk();
+        else if (w === 'bye') guestBye();
         else if (w === 'goro') { if (wPose) standUp(); floorLie(); }
         else if (w === 'shot') {   // 見えたまま撮る(ボタンなどは写らない)
           const was = wme.root.visible; renderer.render(scene, cam);
@@ -705,6 +706,11 @@ export const homeApp = {
     setTimeout(() => { if (!walk) makeThumbs(); }, 2500);   // ショップをすぐ開けるように、ひまなときに先にショップの絵を作っておく
     if (ctx.params && (ctx.params.walk || guest)) enterWalk();   // お客さんがいるときは、はじめから歩く(部屋の中で一緒に)
     if (gch) setTimeout(() => guestSay(GL('enter')), 400);
+    function guestBye() {   // お客さんに帰ってもらう(町では、一緒に歩くのもおわり)
+      if (!gch) return; const nm = guest.name;
+      guestSay(guest.lines && guest.lines.bye ? GL('bye') : 'またね! 楽しかった〜'); try { guest.leave && guest.leave(); } catch (e) { }
+      setTimeout(() => { if (!gch) return; scene.remove(gch.root); if (!gch.glb) dispose(gch.root); gch = null; gPose = null; gHold = false; gBub = null; wme.holdTo = null; wUI && wUI.querySelectorAll('[data-w="talk"],[data-w="bye"]').forEach(e => e.remove()); }, 1100);
+    }
     function guestSayLate() { const b = document.createElement('div'); b.textContent = `${guest.name}「今日はもう遅いから、帰るね。また遊ぼ!」`; b.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);max-width:80%;background:#fffaf2;color:#5a4a6b;border-radius:16px;padding:8px 14px;font-size:14px;font-weight:700;box-shadow:0 2px 8px #0003;z-index:30'; root.appendChild(b); setTimeout(() => b.remove(), 3500); }   // アルバムから「部屋にもどる」で、歩いていたところへ
     const offW = ctx.wallet.onChange ? ctx.wallet.onChange(() => planUI()) : null;
     ctx.setTitle?.('あなたの家');
