@@ -96,6 +96,26 @@ export function createAudio() {
   }
   const BGM_URL = SCRIPT_SRC ? new URL('bgm/town.mp3', SCRIPT_SRC).href : 'bgm/town.mp3';
   let bgmBuf = null, bgmSrc = null, bgmG = null, bgmWant = false, bgmLoading = false;
+  // エンカウント(英語クイズ)の曲: 街の曲をしずめて、こちらをくり返し鳴らす。終わったら街の曲にもどす
+  const BATTLE_URL = SCRIPT_SRC ? new URL('bgm/battle.mp3', SCRIPT_SRC).href : 'bgm/battle.mp3';
+  let btBuf = null, btLoading = false, btSrc = null, btG = null, btWant = false;
+  function battleLoad() {
+    const a = ctx(); if (!a || btBuf || btLoading) return; btLoading = true;
+    fetch(BATTLE_URL).then(r => r.arrayBuffer()).then(b => a.decodeAudioData(b)).then(buf => { btBuf = buf; btLoading = false; if (btWant) battle(true); }).catch(() => { btLoading = false; });
+  }
+  function battle(on) {
+    btWant = !!on; const a = ctx(); if (!a) return;
+    if (on) {
+      if (bgmG) { try { bgmG.gain.cancelScheduledValues(a.currentTime); bgmG.gain.setTargetAtTime(0, a.currentTime, 0.15); } catch (e) { } }
+      if (btSrc) return; if (!btBuf) return battleLoad();
+      const src = a.createBufferSource(); src.buffer = btBuf; src.loop = true; btG = a.createGain(); btG.gain.value = 0; src.connect(btG).connect(master); src.start();
+      btG.gain.setTargetAtTime(0.9 * vol.bgm, a.currentTime, 0.1); btSrc = src;
+    } else {
+      if (btSrc) { const s0 = btSrc, g0 = btG; btSrc = null; btG = null; try { g0.gain.setTargetAtTime(0, a.currentTime, 0.2); } catch (e) { } setTimeout(() => { try { s0.stop(); } catch (e) { } }, 900); }
+      if (bgmG) { try { bgmG.gain.cancelScheduledValues(a.currentTime); bgmG.gain.setTargetAtTime(0.9 * vol.bgm, a.currentTime, 0.5); } catch (e) { } }
+    }
+  }
+
   function bgm(on) {
     bgmWant = !!on; const a = ctx(); if (!a) return;
     if (!on) { if (bgmSrc) { try { bgmSrc.stop(); } catch (e) { } bgmSrc = null; } return; }
@@ -127,12 +147,12 @@ export function createAudio() {
     pickTune,
     ambience,
     rain,
-    bgm,
-    state: () => ({ bgm: !!bgmSrc, amb: !!amb, rain: !!rainN }),
+    bgm, battle, battleLoad,
+    state: () => ({ battle: !!btSrc, bgm: !!bgmSrc, amb: !!amb, rain: !!rainN }),
     get: () => ({ ...vol }),
-    set(v) { Object.assign(vol, v); if (amb) amb.g.gain.value = 0.035 * vol.bgm; if (bgmG) bgmG.gain.value = 0.9 * vol.bgm; },
+    set(v) { Object.assign(vol, v); if (amb) amb.g.gain.value = 0.035 * vol.bgm; if (bgmG && !btSrc) bgmG.gain.value = 0.9 * vol.bgm; if (btG) btG.gain.value = 0.9 * vol.bgm; },
     suspend() { ac?.suspend(); },
     resume() { if (ac && ac.state === 'suspended') ac.resume(); },
-    dispose() { ambience(false); bgm(false); rain(0); ac?.close(); ac = null; },
+    dispose() { ambience(false); bgm(false); battle(false); rain(0); ac?.close(); ac = null; },
   };
 }

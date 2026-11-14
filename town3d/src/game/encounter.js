@@ -9,8 +9,11 @@ const cut = t => String(t || '').split(/[、,;;／\/]/).map(x => x.trim()).filte
 const ja1 = t => (cut(t)[0] || '').replace(/[((][^))]*[))]/g, '').trim();
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
-export function createEncounter(env) {   // env: { hud, opt, hold(r), logWord(en,ja), say(r) }
-  let cache = [], loading = false;
+export function createEncounter(env) {   // env: { hud, opt, hold(r), logWord(en,ja), music(on), bus }
+  let cache = [], loading = false, live = false, offT = 0;
+  // 曲: エンカウントが始まったら鳴らし、クイズのあいだはくり返し、会話が閉じて(つぎの画面が出なければ)終わったら街の曲にもどす
+  const keep = () => { clearTimeout(offT); if (!live) { live = true; try { env.music(true); } catch (e) { } } };
+  try { env.bus.on('ui:dialogClosed', () => { if (!live) return; clearTimeout(offT); offT = setTimeout(() => { live = false; try { env.music(false); } catch (e) { } }, 600); }); } catch (e) { }
   const refill = async () => {
     if (loading || !env.opt.quizSet) return; loading = true;
     try { const s = await env.opt.quizSet(); if (Array.isArray(s)) cache = s.filter(w => w && w.en && ja1(w.ja)); } catch (e) { }
@@ -29,10 +32,10 @@ export function createEncounter(env) {   // env: { hud, opt, hold(r), logWord(en
     if (res.up) env.hud.toast(`💗 ${r.def.name}と、${['しりあい', 'なかよし', 'ともだち', 'しんゆう', 'だいすき'][res.after]}になった!`);
     return res;
   };
-  const end = (r, text, choices) => { env.hold(r); env.hud.dialog({ name: r.def.name, role: r.def.role, text, choices: choices || [{ label: 'またね', fn: () => { } }] }); };
+  const end = (r, text, choices) => { keep(); env.hold(r); env.hud.dialog({ name: r.def.name, role: r.def.role, text, choices: choices || [{ label: 'またね', fn: () => { } }] }); };
   function quiz(r) {
     const q = makeQ(); if (!q) return end(r, 'あれ、問題を忘れちゃった。また今度ね!');
-    env.hold(r);
+    keep(); env.hold(r);
     env.hud.dialog({
       name: r.def.name, role: r.def.role, text: `「${q.w.en}」って、どういう意味?`,
       choices: q.opts.map(o => ({
@@ -48,7 +51,7 @@ export function createEncounter(env) {   // env: { hud, opt, hold(r), logWord(en
     ready: () => cache.length >= 4,
     warm: refill,
     ask(r) {   // 近づいてきて、聞く(受ける/ことわる)
-      env.hold(r);
+      keep(); env.hold(r);
       env.hud.dialog({
         name: r.def.name, role: r.def.role, text: ['ちょっと待って! 英語クイズ、出していい?', 'あっ、いたいた! 1問だけ、クイズ出していい?', 'ねえねえ、英語の問題、解いてみない?'][Math.floor(Math.random() * 3)],
         choices: [{ label: '⚔ 受ける!', fn: () => quiz(r) }, { label: 'ことわる', fn: () => { const x = heart(r, ENC.lose); end(r, 'そっか…。また今度ね。', [{ label: 'ごめんね', fn: () => { } }]); } }]

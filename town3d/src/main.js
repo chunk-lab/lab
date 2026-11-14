@@ -621,7 +621,7 @@ export function mount(container, opt = {}) {
   // ---- チャンクくんに乗る: 自分は前むき。手をつないでいる相手がいれば、後ろに背中合わせで乗る。乗っている間、チャンクくんは大きくなる(1人=2 / 2人=3) ----
   let ride = null, rideUIel = null, rideLift = 0;
   const chunkOf = () => residents.list.find(x => x.def.mascot);
-  const enc = createEncounter({ hud, opt, hold: r => { r.talking = true; talkingTo = r; }, logWord: (en, ja, k, src) => logWord(en, ja, k, src) });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
+  const enc = createEncounter({ hud, opt, bus, music: on => audio.battle(on), hold: r => { r.talking = true; talkingTo = r; }, logWord: (en, ja, k, src) => logWord(en, ja, k, src) });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
   let encCool = 45 + Math.random() * 45; enc.warm();
   const rideRay = new THREE.Raycaster(), rideDown = new THREE.Vector3(0, -1, 0), rideV = new THREE.Vector3();
   const cloudTop = (root, x, z, fb) => { try { rideRay.set(rideV.set(x, 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
@@ -838,7 +838,7 @@ export function mount(container, opt = {}) {
     if (encCool <= 0 && !ride && started && !hud.busy && !appHost.current && !seat && !battle.active && !sport.active && camMode === 'follow' && !guide && !snow.holding && env.hour >= 7 && env.hour < 21 && enc.ready()) {   // エンカウント: 近くの住人が走ってきて、英語クイズを聞いてくる
       encCool = ENC.cool[0] + Math.random() * (ENC.cool[1] - ENC.cool[0]);
       const nr = residents.list.filter(r => r.ch.root.visible && !r.hidden && !r.pin && !r.follow && !r.talking && !r.summonT && !r.def.mascot && !r.def.free && PREFS[r.def.id]).map(r => ({ r, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) })).filter(o => o.d > 4 && o.d < 22);
-      if (nr.length) { const o = nr[Math.floor(Math.random() * nr.length)]; o.r.visit = { t: 0 }; o.r.visitSg = { enc: true, say: '' }; visiting = o.r; visitCool = Math.max(visitCool, 60); enc.warm(); return; }
+      if (nr.length) { const o = nr[Math.floor(Math.random() * nr.length)]; o.r.visit = { t: 0 }; o.r.visitSg = { enc: true, say: '' }; visiting = o.r; visitCool = Math.max(visitCool, 60); enc.warm(); try { audio.battleLoad(); } catch (e) { } return; }
     }
     visitCool -= dt; visitCk -= dt; if (visitCk > 0 || visitCool > 0) return;
     visitCk = 20 + Math.random() * 20;
