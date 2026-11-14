@@ -26,8 +26,11 @@ export function createAloud(core) {
     const dl = core.daylog, m = new Map();
     const ok = w => w && w.en && w.ja && w.kind !== 'sentence';   // ローディングが消えないよう、まえと同じ範囲(熟語もふくむ)
     const add = w => { if (ok(w)) { const k = w.en.toLowerCase(); if (!m.has(k)) m.set(k, { en: w.en, ja: w.ja, pos: w.pos, kind: w.kind || 'word', multi: w.multi, miss: !!w.miss, src: w.src }); } };
-    try { if (C.src.includes('missed')) dl.missed(14).forEach(add); } catch (e) { }
-    try { if (C.src.includes('pending')) dl.pending().forEach(add); } catch (e) { }
+    // ローディング・乗り物は「新しい単語」を読みこめないので、のぞく。それで空になるときは まちがえた+まだ覚えてない言葉で(設定が「新しい単語だけ」でも消えない)
+    let src = C.src; if (o.noNew && !src.some(k => k !== 'new')) src = ['missed', 'pending'];
+    try { if (src.includes('missed')) dl.missed(14).forEach(add); } catch (e) { }
+    try { if (src.includes('pending')) dl.pending().forEach(add); } catch (e) { }
+    if (o.noNew && !m.size) { try { dl.pool().forEach(add); } catch (e) { } }   // それでも空なら、これまで出会った言葉(覚えたもの以外)
     if (C.src.includes('new') && !o.noNew && core.level && core.level.wordsOf) {
       try {
         let bs = C.bands.slice(); if (!bs.length) { const v = core.level.vocab() || 1500, B = core.level.bands(); bs = [Math.max(0, B.findIndex(b => b.to > v))]; }
