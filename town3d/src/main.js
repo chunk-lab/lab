@@ -34,6 +34,7 @@ import { createHud, CSS } from './ui/hud.js';
 import { APPS } from './apps/registry.js';
 import { openFinder } from './ui/finder.js';
 import { openNotes } from './ui/notes.js';
+import { createEncounter, ENC } from './game/encounter.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
 import { createFireworks, FW_TYPES, FW_SHOWS, FW_CENTER } from './world/fireworks.js';
@@ -620,6 +621,8 @@ export function mount(container, opt = {}) {
   // ---- チャンクくんに乗る: 自分は前むき。手をつないでいる相手がいれば、後ろに背中合わせで乗る。乗っている間、チャンクくんは大きくなる(1人=2 / 2人=3) ----
   let ride = null, rideUIel = null, rideLift = 0;
   const chunkOf = () => residents.list.find(x => x.def.mascot);
+  const enc = createEncounter({ hud, opt, hold: r => { r.talking = true; talkingTo = r; }, logWord: (en, ja, k, src) => logWord(en, ja, k, src) });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
+  let encCool = 45 + Math.random() * 45; enc.warm();
   const rideRay = new THREE.Raycaster(), rideDown = new THREE.Vector3(0, -1, 0), rideV = new THREE.Vector3();
   const cloudTop = (root, x, z, fb) => { try { rideRay.set(rideV.set(x, 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
   function rideDrillOn() { ride.stop = rideDrill(rideUIel.querySelector('[data-r=drill]')); if (ride.paused && ride.stop && ride.stop.pause) ride.stop.pause(true); }
@@ -828,8 +831,14 @@ export function mount(container, opt = {}) {
       const r = visiting;
       if (!r.visit) { visiting = null; return; }
       if (hud.busy || appHost.current || seat || battle.active || sport.active || camMode !== 'follow') { r.visit = null; visiting = null; return; }
-      if (r.visit.arrived) { visiting = null; r.visit = null; lookAtR = null; talkTo(r); }
+      if (r.visit.arrived) { visiting = null; r.visit = null; lookAtR = null; if (r.visitSg && r.visitSg.enc) { r.visitSg = null; input.clear(); audio.play('talk'); enc.ask(r); } else talkTo(r); }
       return;
+    }
+    encCool -= dt;
+    if (encCool <= 0 && !ride && started && !hud.busy && !appHost.current && !seat && !battle.active && !sport.active && camMode === 'follow' && !guide && !snow.holding && env.hour >= 7 && env.hour < 21 && enc.ready()) {   // エンカウント: 近くの住人が走ってきて、英語クイズを聞いてくる
+      encCool = ENC.cool[0] + Math.random() * (ENC.cool[1] - ENC.cool[0]);
+      const nr = residents.list.filter(r => r.ch.root.visible && !r.hidden && !r.pin && !r.follow && !r.talking && !r.summonT && !r.def.mascot && !r.def.free && PREFS[r.def.id]).map(r => ({ r, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) })).filter(o => o.d > 4 && o.d < 22);
+      if (nr.length) { const o = nr[Math.floor(Math.random() * nr.length)]; o.r.visit = { t: 0 }; o.r.visitSg = { enc: true, say: '' }; visiting = o.r; visitCool = Math.max(visitCool, 60); enc.warm(); return; }
     }
     visitCool -= dt; visitCk -= dt; if (visitCk > 0 || visitCool > 0) return;
     visitCk = 20 + Math.random() * 20;
@@ -1773,6 +1782,7 @@ export function mount(container, opt = {}) {
     talk: id => { const r = residents.list.find(x => x.def.id === id); if (r) talkTo(r); },   // 点検用
     hideNpc: id => { const r = residents.list.find(x => x.def.id === id); if (r) { r.hidden = true; r.ch.root.visible = false; } },   // 点検用: 休み中の状態を作る
     debugPose: (pose, d) => { me.ch.pose = pose; if (d) { cam.dist = d; cam.pitch = 0.15; cam.yaw = me.ry + Math.PI / 2; } },   // 点検用
+    debugEnc: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return 'no'; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { enc: true, say: '' }; visiting = r; return enc.ready() ? 'ready' : 'notready'; },   // 点検用
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
     progress: () => loadPct,   // 読み込みの進み具合(0〜1)

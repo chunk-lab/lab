@@ -126,6 +126,12 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
+      quizSet: async () => {   // エンカウント英語クイズ用: まちがえた言葉+その人のレベル帯の言葉(選択肢にも使う)
+        const out = [], seen = new Set(), add = (w, from) => { if (!w || !w.en || !w.ja || w.kind === 'sentence' || /\s/.test(w.en)) return; const k = w.en.toLowerCase(); if (seen.has(k)) return; seen.add(k); out.push({ en: w.en, ja: w.ja, from }); };
+        try { core.daylog.missed(14).forEach(w => add(w, 'missed')); } catch (e) { }
+        try { (await core.level.fillWords(16, seen)).forEach(w => add(w, 'level')); } catch (e) { }
+        return out;
+      },
       reviewWords: () => { const m = new Map(); try { [...core.daylog.missed(14), ...core.daylog.pending()].forEach(w => { if (w && w.en && w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), { en: w.en, ja: w.ja }); }); } catch (e) { } return [...m.values()]; },   // まちがえた言葉+まだ復習していない言葉(チャンクくんに乗っている間のおさらい)
       speak: (t, o) => core.speech.speak(t, o), speakStop: () => core.speech.stop(),
       aloudBand: el => core.aloud.band(el, { loop: true }),   // チャンクくんに乗っている間も、設定どおりに読む
