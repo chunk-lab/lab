@@ -971,9 +971,19 @@ export function mount(container, opt = {}) {
           lastAct = performance.now();
           if (view === 'far') { view = 'near'; camGoal = { dist: 7, pitch: 0.5 }; }
           else if (view === 'near') { view = 'fp'; fpPitch = 0; camGoal = null; me.ch.root.visible = false; }
+          return;
         }
+        // 地面を2回タップ=そこへ走っていく(途中でスティックを動かす・住人をタップする、などをしたら中止)
+        { const ndc = new THREE.Vector2(((e.clientX - rc.left) / rc.width) * 2 - 1, -((e.clientY - rc.top) / rc.height) * 2 + 1); ray.setFromCamera(ndc, camera);
+          const hit = ray.ray.intersectPlane(groundPl, new THREE.Vector3());
+          if (!hit || Math.hypot(hit.x - camera.position.x, hit.z - camera.position.z) > 90) { lastGround = null; return; }
+          if (lastGround && now - lastGround.t < (window.__tapMs || 380) && Math.hypot(e.clientX - lastGround.sx, e.clientY - lastGround.sy) < 48) {
+            lastGround = null; approach = null; lookAtR = null; lastAct = performance.now(); goTo = { x: clamp(hit.x, -240, 240), z: clamp(hit.z, -240, 240), stuck: 0 }; return;
+          }
+          lastGround = { t: now, sx: e.clientX, sy: e.clientY }; }
         return;
       }
+      goTo = null; lastGround = null;
       lastTap = { r, t: now }; lookAtR = r; approach = null;
     };
     window.addEventListener('pointerup', up); offs.push(() => window.removeEventListener('pointerup', up)); }
@@ -1184,7 +1194,7 @@ export function mount(container, opt = {}) {
   let camMode = 'follow';
   // 視点: 'far'=引いて見る(ふだん) / 'fp'=自分視点。🎥を押すと切りかえ。
   // 住人をタップ=そっちを向いて自分視点(動きだしたら引いた視点にもどる)、話している間=自分視点で相手を正面に(終わったら もどる)
-  let talkF_on = false, view = 'far', camGoal = null, lastAct = performance.now(), lookAtR = null, fpPitch = 0, approach = null, lastTap = null;
+  let talkF_on = false, view = 'far', camGoal = null, lastAct = performance.now(), lookAtR = null, fpPitch = 0, approach = null, lastTap = null, goTo = null, lastGround = null;
   const fpOn = () => camMode === 'follow' && !battle.active && !sport.active && !seat && (view === 'fp' || !!lookAtR || (!!talkingTo && hud.busy));
   const eyeH = () => (me.ch.glb ? me.ch.height * 0.86 : 1.5);
   on(root, 'pointerdown', () => { lastAct = performance.now(); });
@@ -1413,6 +1423,17 @@ export function mount(container, opt = {}) {
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
     if (lookAtR && mag > 0.05) lookAtR = null;   // タップで向いたあと、自分で動きだしたら引いた視点にもどる
+    if (goTo && (mag > 0.3 || appHost.current || talkingTo || seat || battle.active || sport.active || camMode !== 'follow' || approach || dodgeT > 0 || snow.making || seasons.building())) goTo = null;   // スティックを動かすなど、ほかの操作をしたら、そちらを優先
+    if (goTo) {   // 地面を2回タップした場所へ走っていく。着いたら止まる(カメラやメニューを動かしても、その間に着く)
+      const dx = goTo.x - me.x, dz = goTo.z - me.z, d = Math.hypot(dx, dz);
+      if (d < 0.5) { goTo = null; me.speed = 0; }
+      else {
+        me.ry = angleLerp(me.ry, Math.atan2(dx, dz), Math.min(1, dt * 10)); me.speed += (Math.min(9, 3 + d * 3) - me.speed) * Math.min(1, dt * 6);
+        const px = me.x, pz = me.z, st = Math.min(me.speed * dt, d); [me.x, me.z] = collide(me.x + Math.sin(me.ry) * st, me.z + Math.cos(me.ry) * st);
+        goTo.stuck = Math.hypot(me.x - px, me.z - pz) < st * 0.3 ? goTo.stuck + dt : 0;
+        if (goTo.stuck > 0.8) { goTo = null; me.speed = 0; }   // 壁などでこれ以上すすめない
+      }
+    }
     if (approach && (mag > 0.3 || hud.busy || !approach.r.ch.root.visible)) approach = null;
     if (approach) {   // ダブルタップした住人のところへ駆けよって、着いたら話しかける
       const r = approach.r, dx = r.ch.root.position.x - me.x, dz = r.ch.root.position.z - me.z, d = Math.hypot(dx, dz);
@@ -1424,7 +1445,7 @@ export function mount(container, opt = {}) {
         if (approach.stuck > 1.2) { approach = null; lookAtR = null; if (d < 4) talkTo(r); else hud.toast('うまく近づけなかったよ'); }
       }
     }
-    const guided = guideStep(dt, mag) || !!approach;   // 住人に連れて行ってもらっている間は、自動で歩く
+    const guided = guideStep(dt, mag) || !!approach || !!goTo;   // 住人に連れて行ってもらっている間は、自動で歩く
     const target = mag > 0.05 ? (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) * pullBoost : 0;
     if (!guided) me.speed += (target - me.speed) * Math.min(1, dt * 10);
     if (mag > 0.05 && !guided) {
