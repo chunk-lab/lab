@@ -622,6 +622,7 @@ export function mount(container, opt = {}) {
   const chunkOf = () => residents.list.find(x => x.def.mascot);
   const rideRay = new THREE.Raycaster(), rideDown = new THREE.Vector3(0, -1, 0), rideV = new THREE.Vector3();
   const cloudTop = (root, x, z, fb) => { try { rideRay.set(rideV.set(x, 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
+  function rideDrillOn() { ride.stop = rideDrill(rideUIel.querySelector('[data-r=drill]')); if (ride.paused && ride.stop && ride.stop.pause) ride.stop.pause(true); }
   function rideDrill(box) {   // 単語の読み上げの設定どおりに(なければ、まちがえた言葉などをランダムに「英語 → 日本語」で2回ずつ)読み上げる
     if (opt.aloudBand) return opt.aloudBand(box);
     let list = []; try { list = (opt.reviewWords && opt.reviewWords()) || []; } catch (e) { }
@@ -672,11 +673,13 @@ export function mount(container, opt = {}) {
     if (pax) { pax.ride = true; pax.hold = false; pax.ch.holdTo = null; pax.ch.pose = 'ride'; pax.ch.rideKind = 'back'; pax.path = []; pax.talking = false; }
     if (view !== 'far') { view = 'far'; me.ch.root.visible = true; } camGoal = { dist: pax ? 13 : 10, pitch: 0.42 };   // 乗っている姿が見える近さに
     rideUIel = document.createElement('div'); rideUIel.style.cssText = 'position:absolute;left:12px;right:12px;top:calc(56px + var(--tw-top, 0px));display:flex;gap:8px;align-items:flex-start;justify-content:space-between;pointer-events:none;z-index:6';
-    rideUIel.innerHTML = '<div data-r="drill" style="flex:1;min-width:0;display:flex"></div><span style="flex:none;display:flex;flex-direction:column;gap:6px;align-items:flex-end"><button class="tw-btn" data-r="off" style="padding:8px 14px;font-size:13px">⬇ 降りる</button>' + (plan === 'tour' ? '<button class="tw-btn" data-r="talk" style="padding:8px 14px;font-size:13px">💬 話す</button>' : '') + '</span>';
+    rideUIel.innerHTML = '<div data-r="drill" style="flex:1;min-width:0;display:flex"></div><span style="flex:none;display:flex;flex-direction:column;gap:6px;align-items:flex-end"><button class="tw-btn" data-r="off" style="padding:8px 14px;font-size:13px">⬇ 降りる</button>' + (listen && opt.openAloud ? '<button class="tw-btn" data-r="rp" style="padding:8px 14px;font-size:13px">⏸ 読み上げ</button><button class="tw-btn" data-r="rs" style="padding:8px 14px;font-size:13px">⚙ 読み上げ設定</button>' : '') + (plan === 'tour' ? '<button class="tw-btn" data-r="talk" style="padding:8px 14px;font-size:13px">💬 話す</button>' : '') + '</span>';
     root.appendChild(rideUIel); rideUIel.querySelector('[data-r=off]').onclick = e => { e.stopPropagation(); rideEnd(); };
     rideUIel.querySelector('[data-r=off]').onpointerdown = e => e.stopPropagation();
     { const tb = rideUIel.querySelector('[data-r=talk]'); if (tb) { tb.onclick = e => { e.stopPropagation(); rideTalk(); }; tb.onpointerdown = e => e.stopPropagation(); } }
-    if (listen) ride.stop = rideDrill(rideUIel.querySelector('[data-r=drill]'));
+    { const pb = rideUIel.querySelector('[data-r=rp]'); if (pb) { pb.onclick = e => { e.stopPropagation(); ride.paused = !ride.paused; if (ride.stop && ride.stop.pause) ride.stop.pause(ride.paused); pb.textContent = ride.paused ? '▶ 読み上げ' : '⏸ 読み上げ'; }; pb.onpointerdown = e => e.stopPropagation(); }   // 読み上げの一時停止/つづき
+      const sb = rideUIel.querySelector('[data-r=rs]'); if (sb) { sb.onclick = e => { e.stopPropagation(); if (ride.stop) { ride.stop(); ride.stop = null; } ride.settings = true; opt.openAloud(); setTimeout(() => { const iv = setInterval(() => { if (!document.querySelector('.cs-ov')) { clearInterval(iv); if (ride) ride.settings = false; } }, 400); }, 700); }; sb.onpointerdown = e => e.stopPropagation(); } }   // 設定を開く(閉じたら、新しい設定で読み直す)
+    if (listen) rideDrillOn();
     say1(r, ['ふわ〜、しっかりつかまっててね', 'ふわっ、出発〜'], 2.5);
   }
   function rideEnd() {
@@ -692,7 +695,7 @@ export function mount(container, opt = {}) {
   function rideStep(dt) {   // 毎コマ: チャンクくんと後ろの人を、自分に合わせて動かす(自分の位置=チャンクくんのまん中より少し前)
     if (!ride) return; const { r, pax } = ride;
     if (appHost.current || battle.active || sport.active || seat || !r.ch.root.visible && !sportHid) { rideEnd(); return; }
-    if (ride.listen && rideUIel) { if (hud.busy && ride.stop) { ride.stop(); ride.stop = null; } else if (!hud.busy && !ride.stop) ride.stop = rideDrill(rideUIel.querySelector('[data-r=drill]')); }   // 会話などの間は、読み上げを止める
+    if (ride.listen && rideUIel) { if (hud.busy && ride.stop) { ride.stop(); ride.stop = null; } else if (!hud.busy && !ride.stop && !ride.settings) rideDrillOn(); }   // 会話などの間は、読み上げを止める
     const sk = r.ch.scaleNow || 1, fx = Math.sin(me.ry), fz = Math.cos(me.ry), off = (pax ? 0.17 : 0.03) * sk, back = 0.2 * sk;
     const cx = me.x - fx * off, cz = me.z - fz * off;
     r.ch.root.position.set(cx, 0, cz); r.ch.root.rotation.y = me.ry; r.rideSpeed = me.speed; r.speed = me.speed; r.hidden = false;
@@ -1691,7 +1694,7 @@ export function mount(container, opt = {}) {
     };
     put(me.id, me.ch.root, 1.95, false);
     for (const [id, q] of peers) put(id, q.ch.root, 1.95, true);
-    for (const r of residents.list) put('npc:' + r.def.id, r.ch.root, r.def.mascot ? 1.25 * (r.ch.scaleNow || 1) + (r.ride ? 0.9 : 0) : (r.ch.glb ? r.ch.height + 0.35 : 1.95), focus?.ref === r || Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) < 6);
+    for (const r of residents.list) put('npc:' + r.def.id, r.ch.root, r.def.mascot ? 1.25 * (r.ch.scaleNow || 1) + (r.ride ? 0.9 : 0) : (r.ch.glb ? r.ch.height + 0.35 : 1.95), !(r.ride || r.follow || r.pin) && (focus?.ref === r || Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) < 6));   // 乗っている・手をつないでいる・カフェ/家で一緒のときは、絵が見えるように名前を出さない
     hud.placeTags(tagPos);
 
     hud.setArea(city.areaName(me.x, me.z));

@@ -8,7 +8,7 @@ import { createStore } from './store.js';
 import { isChunk } from './daylog.js';
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const DEF = { src: ['missed', 'pending'], bands: [], newN: 20, dir: 'ja-en', reps: 1, gap: 1, order: 'random', after: 'cards' };
+const DEF = { v: 2, src: ['missed', 'pending'], bands: [], newN: 20, dir: 'en-ja', reps: 1, gap: 1, order: 'random', after: 'cards' };
 const MAXN = 150;
 const cut = t => String(t || '').split(/[、,;;／\/]/).map(x => x.trim()).filter(Boolean);
 export const jaShort = t => cut(t).slice(0, 2).join('、');
@@ -17,6 +17,7 @@ const shuf = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floo
 
 export function createAloud(core) {
   const st = createStore('core'), C = Object.assign({}, DEF, st.get('aloud') || {});
+  if (C.v !== 2) { C.v = 2; C.dir = 'en-ja'; }   // 初期値は「英語が先・日本語があと」
   const save = () => st.set('aloud', C);
   let cur = null;   // いま出ている帯(ひとつだけ)
 
@@ -83,7 +84,7 @@ export function createAloud(core) {
   // 1語ぶんの表示(先に読むほうを出し、あとから読むほうは「？」から答えを出す)
   function pair(x, info) {
     const t = l => (l === 'en' ? x.en : jaShort(x.ja)), second = info.first === 'en' ? 'ja' : 'en';
-    return { a: t(info.first), b: info.phase === 'second' ? t(second) : '？', onA: info.phase === 'first', onB: info.phase === 'second' };
+    return { a: t(info.first), b: t(second), onA: info.phase === 'first', onB: info.phase === 'second' };
   }
 
   // ---- 帯 ----
@@ -97,12 +98,14 @@ export function createAloud(core) {
     let h = null, dead = false, stopFn;
     const end = (fin, played) => { if (dead) return; dead = true; if (h) h.stop(); el.remove(); if (cur === stopFn) cur = null; o.onEnd && o.onEnd(fin, played); };
     stopFn = () => { if (dead) return; dead = true; if (h) h.stop(); el.remove(); if (cur === stopFn) cur = null; };
+    let paused = false; stopFn.pause = on => { paused = !!on; if (h) h.pause(paused); };   // 外から一時停止(乗り物の ⏸ ボタン)
     if (!host) cur = stopFn;
     const ui = { show(x, info) { const p = pair(x, info); eA.textContent = p.a; eB.textContent = p.b; eA.classList.toggle('on', p.onA); eB.classList.toggle('on', p.onB); eN.textContent = `${info.i + 1} / ${info.n}`; } };
     const start = list => {
       if (dead) return;
       if (!list.length) { eA.textContent = '読む言葉がありません'; eB.textContent = ''; el.querySelector('i').remove(); setTimeout(() => end(false, []), 1800); return; }
       h = run(list, { loop: !!o.loop, ui, onEnd: (fin, all) => { eA.textContent = 'おわり!'; eB.textContent = ''; setTimeout(() => end(true, all), 500); } });
+      if (paused) h.pause(true);
       const ctl = el.querySelector('.al-ctl');
       if (ctl) ctl.onclick = e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.a === 'p') { h.pause(!h.paused); b.textContent = h.paused ? '▶' : '⏸'; } else { const pl = h.played(); end(false, pl); } };
     };
