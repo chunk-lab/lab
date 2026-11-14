@@ -51,45 +51,21 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
 
   // ---- アプリを立ち上げたらすぐ、3Dの町のプログラムとキャラのモデルを読みこんでおく(バーを出す)。「街へ行く」を押すころには済んでいる ----
-  // ---- Loading中のおさらい: 直近でまちがえた言葉を、ランダムな順に「英語 → 日本語」で出し、英語→日本語を2回ずつ読み上げる ----
+  // ---- Loading中のおさらい: 設定した言葉(単語の読み上げの設定)を、設定した向き・回数・秒数で読む(新しい単語は、まだ読みこんでいないので除く) ----
   // ブラウザは、画面を一度タップするまで音を出せない。タップ前は文字だけ送り、タップされたらその言葉から読み上げる
   function loadingDrill(bar) {
-    let list = []; try { list = core.daylog.missed(14); } catch (e) { }
-    if (!list.length) return () => { };
-    const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    const jaShort = t => String(t).split(/[、,;;／\/]/).map(x => x.trim()).filter(Boolean).slice(0, 2).join('、');
-    const jaSay = t => String(t).split(/[、,;;／\/]/)[0].replace(/[((][^))]*[))]/g, '').trim();
     const box = document.createElement('section'); box.className = 'md-drill';
-    box.innerHTML = '<small>まちがえた言葉のおさらい(英語 → 日本語)</small><p><b></b><i>→</i><span></span></p><em></em><u>画面をタップすると、読み上げます</u>';
+    box.innerHTML = '<small>単語の読み上げ(設定で変えられます)</small><p><b></b><i>→</i><span></span></p><em></em><u>画面をタップすると、読み上げます</u>';
     bar.insertBefore(box, bar.firstChild);
-    const eEn = box.querySelector('b'), eJa = box.querySelector('span'), eN = box.querySelector('em'), eTip = box.querySelector('u');
+    const eA = box.querySelector('b'), eB = box.querySelector('span'), eN = box.querySelector('em'), eTip = box.querySelector('u');
     const voiceOn = () => { try { return !!core.settings.get('voice'); } catch (e) { return false; } };
     if (!voiceOn()) eTip.remove();
-    let alive = true, i = 0, run = 0, timer = null;
-    const sortList = () => { for (let a = list.length - 1; a > 0; a--) { const b = Math.floor(Math.random() * (a + 1)); [list[a], list[b]] = [list[b], list[a]]; } list = list.slice(0, 40); };   // ランダムな順で
-    // 1つ読む。声が出せない・すぐ終わったときも、読める長さだけは待つ
-    const say = (text, lang, minMs) => new Promise(res => {
-      const t0 = Date.now(); let done = false;
-      const fin = () => { if (done) return; done = true; clearTimeout(timer); const rest = minMs - (Date.now() - t0); rest > 0 ? (timer = setTimeout(res, rest)) : res(); };
-      timer = setTimeout(fin, 6000);
-      try { core.speech.speak(text, { lang, onend: fin }); } catch (e) { fin(); }
-    });
-    async function loop(my) {
-      while (alive && my === run) {
-        const w = list[i % list.length];
-        eEn.textContent = w.en; eJa.textContent = jaShort(w.ja); eN.textContent = `${(i % list.length) + 1} / ${list.length}`;
-        for (let k = 0; k < 2 && alive && my === run; k++) {
-          eEn.classList.add('on'); await say(w.en, 'en', 900); eEn.classList.remove('on'); if (!alive || my !== run) return;
-          eJa.classList.add('on'); await say(jaSay(w.ja), 'ja', 800); eJa.classList.remove('on');
-        }
-        if (!alive || my !== run) return;
-        await new Promise(r => { timer = setTimeout(r, 350); }); i++;
-      }
-    }
-    const tap = () => { if (!alive) return; eTip.remove(); clearTimeout(timer); loop(++run); };   // タップ: 音が出せるようになるので、いまの言葉を最初から読み直す
+    let alive = true, h = null;
+    const ui = { show(x, info) { const p = core.aloud.pair(x, info); eA.textContent = p.a; eB.textContent = p.b; eA.classList.toggle('on', p.onA); eB.classList.toggle('on', p.onB); eN.textContent = `${info.i + 1} / ${info.n}`; } };
+    core.aloud.collect({ noNew: true }).then(list => { if (!alive) return; if (!list.length) { box.remove(); return; } h = core.aloud.run(list.slice(0, 40), { loop: true, ui }); }).catch(() => { box.remove(); });
+    const tap = () => { if (!alive) return; eTip.remove(); if (h) h.restart(); };   // タップ: 音が出せるようになるので、いまの言葉を最初から読み直す
     bar.addEventListener('pointerdown', tap);
-    sortList(); loop(++run);
-    return () => { alive = false; run++; clearTimeout(timer); bar.removeEventListener('pointerdown', tap); try { core.speech.stop(); } catch (e) { } };
+    return () => { alive = false; if (h) h.stop(); bar.removeEventListener('pointerdown', tap); try { core.speech.stop(); } catch (e) { } };
   }
   let preload = null;
   function startPreload() {
@@ -152,6 +128,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
       reviewWords: () => { const m = new Map(); try { [...core.daylog.missed(14), ...core.daylog.pending()].forEach(w => { if (w && w.en && w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), { en: w.en, ja: w.ja }); }); } catch (e) { } return [...m.values()]; },   // まちがえた言葉+まだ復習していない言葉(チャンクくんに乗っている間のおさらい)
       speak: (t, o) => core.speech.speak(t, o), speakStop: () => core.speech.stop(),
+      aloudBand: el => core.aloud.band(el, { loop: true }),   // チャンクくんに乗っている間も、設定どおりに読む
+      openAloud: () => core.aloud.open(),   // 町のせっていから「単語の読み上げ」を開く
       learn: core.learn,   // 単語ごとの学習の記録(英語の釣り堀とストミンで共通)
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)

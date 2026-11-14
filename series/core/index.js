@@ -30,6 +30,7 @@ import { createUseit } from './useit.js';
 import { createLevel } from './level.js';
 import { createAdmin } from './admin.js';
 import { createReview } from './review.js';
+import { createAloud } from './aloud.js';
 import { createLearn } from './learn.js';
 import { createMission } from './mission.js';
 import './reader.css';
@@ -64,6 +65,7 @@ export function createCore(config) {
   core.useit = createUseit(core);     // この言葉を使ってみる
   core.mission = createMission(core); // 今日なにする?(1つに決めて「これでいい?」→ その中身だけで判定)
   core.review = createReview(core);   // 1日のふりかえり(今日はここまで)・前回のふりかえり
+  core.aloud = createAloud(core);   // 単語の読み上げ(設定→一覧→帯→フラッシュカード)
   core.today = createToday(core);     // 結果の帯
   core.admin = createAdmin(core);     // 運営画面（?admin=1）
   core.to3D = null;                   // 3Dの町があるアプリ(街)が入れる
