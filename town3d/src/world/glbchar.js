@@ -78,10 +78,10 @@ const Q = (() => { try { return new URLSearchParams(location.search); } catch (e
 const num = k => parseFloat(Q.get(k)) || 0;
 const SZ_KEY = 'hoshimiya:size';
 const savedSz = (() => { try { return JSON.parse(localStorage.getItem(SZ_KEY)) || {}; } catch (e) { return {}; } })();
-export const SIZE_NOW = { npc: num('npcsize') || savedSz.npc || 2.0, player: num('playersize') || savedSz.player || 1.7, mascot: savedSz.mascot || 1.0 };
+export const SIZE_NOW = { npc: num('npcsize') || savedSz.npc || 2.0, player: num('playersize') || savedSz.player || 1.7, mascot: 1.0 };
 export function setGlbSize(k, v) {   // 「せってい」のつまみから。出ている全員の背が、その場で変わる
   SIZE_NOW[k] = v; try { localStorage.setItem(SZ_KEY, JSON.stringify({ npc: SIZE_NOW.npc, player: SIZE_NOW.player, mascot: SIZE_NOW.mascot })); } catch (e) { }
-  if (k === 'mascot') { for (const m of mascotModels) m.scale.setScalar(1.25 * v); return; }
+  if (k === 'mascot') return;   // チャンクくんは、ふだん1の大きさで固定
   for (const g of glbChars) if (g.player === (k === 'player')) g.ch.setHeight(v);
 }
 
@@ -103,7 +103,8 @@ export function useGlb(ch, id, { height } = {}) {
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
-    const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
+    const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
+    if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
     // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
     // 待機の動きを何コマか見て、いちばん低い足元・いちばん高い頭で測る(動きの途中で沈まないように)
@@ -130,7 +131,7 @@ export function useGlb(ch, id, { height } = {}) {
     // 座った動きの腰の高さ(背に対する割合)。座面に合わせるときの基準
     let sitHipN = 0; const sitHipOf = () => { mixer.stopAllAction(); act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const y = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).y / height; act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); } return y; };
     // 座ったときの、お尻の下の高さ(sitContN)と、腰の前後左右のずれ(sitDX,sitDZ)を、体ごとに測る(体つきがちがっても、座面にぴったり乗せるため)
-    let sitContN = 0, sitDX = 0, sitDZ = 0;
+    let sitContN = 0, sitDX = 0, sitDZ = 0, sitRad = 0.05;
     if (act.sit) {
       sitHipN = sitHipOf();
       try {
@@ -152,11 +153,21 @@ export function useGlb(ch, id, { height } = {}) {
         });
         ds.sort((p, q) => p - q);
         const rad = ds.length > 20 ? ds[Math.floor(ds.length * 0.5)] : 0.04;
+        sitRad = rad;
         sitContN = (J.y + K.y) / 2 - rad; sitDX = hp.x - px; sitDZ = hp.z - pz; const ys = ds;
         (window.__seatDbg = window.__seatDbg || {})[id] = { lat: (() => { const a = Wp('LeftUpLeg').sub(Wp('RightUpLeg')); return [+a.x.toFixed(3), +a.z.toFixed(3)]; })(), hip: +sitHipN.toFixed(3), cont: +sitContN.toFixed(3), dz: +sitDZ.toFixed(3), dx: +sitDX.toFixed(3), n: ys.length };
         act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
       } catch (e) { sitContN = sitHipN - 0.1; }
     }
+    // チャンクくんに乗る姿勢: お尻の下の高さと、腰の前後左右のずれを測る(乗る面に、お尻をぴったり合わせるため)
+    const rideM = {};
+    for (const k2 of ['rideF', 'rideB']) if (act[k2]) try {
+      const a = act[k2], y0 = holder.position.y, px = holder.position.x, pz = holder.position.z;
+      mixer.stopAllAction(); a.reset().play(); a.time = 0; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true);
+      const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'), hp = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).divideScalar(height);
+      rideM[k2] = { cont: hp.y - sitRad * 1.25, dx: hp.x - px, dz: hp.z - pz };
+      a.stop(); mixer.stopAllAction(); holder.position.y = y0; if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
+    } catch (e) { }
     // すわる・ひざをつく・ピアノ: 骨を直接まげる(3Dの体には、この動きのデータがないので)。まげた分だけ腰を下げて、いすの高さに合わせる
     const Bn = n => (model.getObjectByName('mixamorig' + n) || model.getObjectByName('mixamorig:' + n)), bn = { lu: Bn('LeftUpLeg'), ll: Bn('LeftLeg'), ru: Bn('RightUpLeg'), rl: Bn('RightLeg'), la: Bn('LeftArm'), ra: Bn('RightArm'), lf: Bn('LeftForeArm'), rf: Bn('RightForeArm') };
     const dq = new THREE.Quaternion(), eu = new THREE.Euler(); let poseK = 0, poseName = null;
@@ -168,7 +179,7 @@ export function useGlb(ch, id, { height } = {}) {
     glbChars.add({ id, player, ch });
     // 点検用: いまの足元の高さ(地面=0 からのずれ)を測れるようにしておく
     // (高さを切りかえる途中ではなく、いまの動きで落ちついたときの高さで測る)
-    (window.__glbFeet = window.__glbFeet || {})[id] = () => { if (ch.pose === 'sit' || ch.pose === 'piano' || ch.pose === 'lie' || fadeT > 0 || cur === act.walk || cur === act.run) return { foot: 0, top: 0 }; const y = holder.position.y, ty = footOf.get(cur); if (ty !== undefined) holder.position.y = ty; ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); holder.position.y = y; return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
+    (window.__glbFeet = window.__glbFeet || {})[id] = () => { if (ch.pose === 'sit' || ch.pose === 'piano' || ch.pose === 'lie' || ch.pose === 'ride' || fadeT > 0 || cur === act.walk || cur === act.run) return { foot: 0, top: 0 }; const y = holder.position.y, ty = footOf.get(cur); if (ty !== undefined) holder.position.y = ty; ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); holder.position.y = y; return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
     let cur = null, lock = 0;
     let prev = null, fadeT = 0;   // 切りかえ中は、前の動きと今の動きの、高いほうの足元に合わせる(まざった姿勢で沈まない)
     const play = (name, fade = 0.25) => {
@@ -180,7 +191,8 @@ export function useGlb(ch, id, { height } = {}) {
     const base = ch.update;
     ch.update = (dt, speed) => {
       const sitK = !!act.sit && (ch.pose === 'sit' || ch.pose === 'piano'), layK = !!(act.lay || act.sleep) && ch.pose === 'lie', goro = layK && ch.lieKind === 'goro' && !!act.lay, lieClip = goro ? 'lay' : act.sleep ? 'sleep' : 'lay';   // ゴロゴロ=lay(男:横向き寝 女:足パタパタ) ねる=sleep(あおむけ)
-      if (sitK) play('sit', 0.4); else if (layK) play(lieClip, 0.4);
+      const rideN = ch.pose === 'ride' ? (ch.rideKind === 'back' ? 'rideB' : 'rideF') : null, rideK = !!(rideN && act[rideN] && rideM[rideN]);
+      if (rideK) play(rideN, 0.35); else if (sitK) play('sit', 0.4); else if (layK) play(lieClip, 0.4);
       else if (lock > 0) lock -= dt;
       else play(act.run && (cur === act.run ? speed > 3.0 : speed > 4.2) ? 'run' : speed > 0.05 ? 'walk' : 'idle');   // 歩き⇔走りは少し幅をもたせる(行ったり来たりしない)
       if (cur === act.run) act.run.timeScale = Math.max(0.7, Math.min(1.4, speed / 5));
@@ -202,8 +214,9 @@ export function useGlb(ch, id, { height } = {}) {
       }
       if (fadeT > 0) fadeT -= dt;
       let ty = -drop +  Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (sitK) ty = (ch.seatH != null ? ch.seatH : 0.45) / ch.height - sitContN;   // お尻の下を、座面に合わせる
+      if (rideK) ty = (ch.rideY || 0) / ch.height - rideM[rideN].cont;
       if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * Math.min(1, dt * 8);
-      { const tx = sitK ? -sitDX : baseX, tz = sitK ? -sitDZ : baseZ, kk = Math.min(1, dt * 8); holder.position.x += (tx - holder.position.x) * kk; holder.position.z += (tz - holder.position.z) * kk; }   // 座るときは、腰が座面の真上に来るように
+      { const tx = rideK ? -rideM[rideN].dx : sitK ? -sitDX : baseX, tz = rideK ? -rideM[rideN].dz : sitK ? -sitDZ : baseZ, kk = Math.min(1, dt * 8); holder.position.x += (tx - holder.position.x) * kk; holder.position.z += (tz - holder.position.z) * kk; }   // 座るときは、腰が座面の真上に来るように
     };
     (window.__hipsL = window.__hipsL || []).push({ id, f: () => { ch.root.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const w = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld), r = new THREE.Vector3().setFromMatrixPosition(ch.root.matrixWorld); return [+(w.x - r.x).toFixed(3), +(w.y - r.y).toFixed(3), +(w.z - r.z).toFixed(3), +holder.position.x.toFixed(3), +holder.position.z.toFixed(3), +(-sitDX).toFixed(3), String(ch.pose), +baseX.toFixed(3)]; } });
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
@@ -250,7 +263,10 @@ export function useChunkkunGlb(ch) {
     go(act.idle || act.crawl);
     const morphs = []; model.traverse(o => { if (o.isMesh && o.morphTargetInfluences && o.morphTargetInfluences.length) morphs.push(o); });
     let wt = 0;
+    let sk = 1;
     ch.update = (dt, speed) => {
+      sk += ((ch.rideScale || 1) - sk) * Math.min(1, dt * 3); model.scale.setScalar(1.25 * sk);   // 乗っている間は大きくなる(1人=2 / 2人=3)。ゆっくり変わる
+      ch.scaleNow = sk;
       const mv = speed > 0.05; go(mv ? (act.crawl || act.idle) : (act.idle || act.crawl)); mixer.update(dt);
       wt += dt * (mv ? 3.2 : 1.9);   // ふくらみを大きく(動きの値を増幅)+待機中もずっとふわふわ(ゆっくりした波を重ねる)
       for (const m of morphs) { const a = m.morphTargetInfluences; for (let i = 0; i < a.length; i++) a[i] = a[i] * MORPH_GAIN + (Math.sin(wt - i * 1.7) * 0.5 + 0.5) * (mv ? 0.5 : 0.4); }

@@ -282,6 +282,7 @@ export function mount(container, opt = {}) {
     items.push(...soc.choices(r));
     if (!r.def.companion && isComp(r)) items.push({ k: 'bond', key: 'follow', label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { k: 'bond', key: 'invite', label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
     { const other = residents.list.find(o => o !== r && isComp(o) && o.follow); if (other && !r.follow) for (let i = items.length - 1; i >= 0; i--) if (items[i].key === 'follow' || items[i].key === 'invite') items.splice(i, 1); }   // ほかの人と手をつないで歩いている間は、2人目とは つなげない(先に バイバイしてから)
+    if (r.def.mascot) items.push({ k: 'play', key: 'ride', label: ride ? '⬇ 降りる' : '☁️ 乗る', fn: () => { try { hud.closeDialog && hud.closeDialog(); } catch (e) { } r.talking = false; talkingTo = null; ride ? rideEnd() : rideStart('free'); } });
     const chat = en => () => { r.talking = true; talkingTo = r; if (r.def.id === 'sora') { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); return; } if (ai.ready) startChat(r, text, undefined, en); else openAiSetup({ hud, ai, onDone: () => startChat(r, text, undefined, en) }); };
     if (r.def.id !== 'sora' || r.follow) { const lb = ai.ready ? '' : '(AIの設定)'; items.push({ k: 'study', key: 'chat-en', label: '💬 英語でおしゃべり' + lb, fn: chat(true) }, { k: 'bond', key: 'chat', label: '💬 おしゃべり' + lb, fn: chat(false) }); }
     for (const it of items) { const f = it.fn, key = it.key || it.label; it.fn = () => { markM(key); f(); }; it.ukey = key; }
@@ -303,10 +304,11 @@ export function mount(container, opt = {}) {
     const forMii = r.def.id === 'mii' && !hint && Math.random() < 0.6 ? lessPlayed(SUGG.filter(x => !x.study && x.key)) : null;   // ミイ: あまりやっていないゲームを勧める
     const forKoharu = r.def.id === 'koharu' && !hint && Math.random() < 0.7 ? lessPlayed(SUGG.filter(x => x.study)) : null;   // こはる先生: まだやっていない勉強を勧める
     let sg = forMii ? { ...forMii, say: 'そういえば、あまりやってないよね? ' + forMii.say } : forKoharu ? { ...forKoharu, say: 'まだあまりやってない勉強があるわね。' + forKoharu.say } : !hint && Math.random() < 0.25 && SUGG.length ? (() => { const bag = SUGG.flatMap(x => Array(x.w || 1).fill(x)); return bag[Math.floor(Math.random() * bag.length)]; })() : null;
+    if (r.def.mascot && !ride && Math.random() < 0.45) sg = { say: 'ふわ… ぼくに、乗る?', label: '乗る!', fn: () => { r.talking = false; talkingTo = null; rideStart('free'); } };   // チャンクくんのほうから、たまに聞いてくる
     if (r.visitSg) { sg = r.visitSg; r.visitSg = null; text = sg.say; }   // 自分から話しかけに来たときは、その用件をひと言に
     if (sg && sg.say !== text) text += '\n' + sg.say;
     const role = PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role;
-    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg && sg.fn ? [{ label: 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }, ...items.filter(it => it.k === 'bond' && (/デート|家においで|お家/.test(it.label) || (r.follow && it.key === 'follow'))).map(it => ({ label: it.label, fn: it.fn }))] }); };   // デート・家に誘うは、仲良くなったら最初の画面にも出す
+    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg && sg.fn ? [{ label: sg.label || 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }, ...items.filter(it => it.key === 'ride' && !(sg && sg.label)).map(it => ({ label: it.label, fn: it.fn })), ...items.filter(it => it.k === 'bond' && (/デート|家においで|お家/.test(it.label) || (r.follow && it.key === 'follow'))).map(it => ({ label: it.label, fn: it.fn }))] }); };   // デート・家に誘うは、仲良くなったら最初の画面にも出す
     const shelf = kind => {
       r.talking = true; talkingTo = r;
       const b = kind === 'bond' ? soc.bondTalk(r) : { text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', extra: [] };
@@ -615,6 +617,67 @@ export function mount(container, opt = {}) {
     hana: [['広場', 'ここ、待ち合わせによく使うんだ〜'], ['カフェ', 'いいにおい…何か飲みたくなっちゃう'], ['公園', 'ここのベンチ、すわると落ちつくよね'], ['神社', 'しーん…ってしてて好きなんだ'], ['図書館', 'しずかにしなきゃね(小声)'], ['学校', 'なつかしい感じするね'], ['ゲームセンター', 'ちょっと遊んでいかない?'], ['ショップ', 'かわいいの売ってるかな?'], ['池', 'アヒルいるかな〜'], ['家', 'ここがあなたの家? いいなぁ']],
     sora: [['広場', '噴水の音、落ちつくよな'], ['カフェ', 'ここのケーキ、うまいんだよ'], ['公園', 'ベンチでぼーっとするの、好きなんだ'], ['神社', 'おみくじ、大吉出たことある?'], ['図書館', 'ここ、よく来るんだ'], ['学校', '懐かしいなぁ'], ['ゲームセンター', '一回だけ遊んでいく?'], ['池', '潮見さん、今日も釣ってるかな']],
   };
+  // ---- チャンクくんに乗る: 自分は前むき。手をつないでいる相手がいれば、後ろに背中合わせで乗る。乗っている間、チャンクくんは大きくなる(1人=2 / 2人=3) ----
+  let ride = null, rideUIel = null, rideLift = 0;
+  const chunkOf = () => residents.list.find(x => x.def.mascot);
+  const rideRay = new THREE.Raycaster(), rideDown = new THREE.Vector3(0, -1, 0), rideV = new THREE.Vector3();
+  const cloudTop = (root, x, z, fb) => { try { rideRay.set(rideV.set(x, 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
+  function rideDrill(box) {   // まちがえた言葉・まだ復習していない言葉を、ランダムに「英語 → 日本語」で出して、2回ずつ読み上げる
+    let list = []; try { list = (opt.reviewWords && opt.reviewWords()) || []; } catch (e) { }
+    if (!list.length) return () => { };
+    for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[list[i], list[j]] = [list[j], list[i]]; }
+    const cut = t => String(t).split(/[、,;;／\/]/).map(x => x.trim()).filter(Boolean);
+    const el = document.createElement('div'); el.style.cssText = 'pointer-events:none;background:rgba(255,250,242,.92);border-radius:14px;padding:6px 12px;box-shadow:0 2px 8px #0002;color:#5a4a6b;font-weight:800;max-width:100%;line-height:1.3';
+    el.innerHTML = '<b style="font-size:17px"></b><span style="font-size:12px;color:#c9bcd8"> → </span><span style="font-size:14px"></span>'; box.appendChild(el);
+    const eEn = el.children[0], eJa = el.children[2]; let alive = true, i = 0, timer = null;
+    const say = (text, lang, minMs) => new Promise(res => { const t0 = Date.now(); let done = false; const fin = () => { if (done) return; done = true; clearTimeout(timer); const rest = minMs - (Date.now() - t0); rest > 0 ? (timer = setTimeout(res, rest)) : res(); }; timer = setTimeout(fin, 6000); try { opt.speak ? opt.speak(text, { lang, onend: fin }) : fin(); } catch (e) { fin(); } });
+    (async () => {
+      while (alive) {
+        const w = list[i % list.length]; eEn.textContent = w.en; eJa.textContent = cut(w.ja).slice(0, 2).join('、');
+        for (let k = 0; k < 2 && alive; k++) { eEn.style.color = '#e8668a'; await say(w.en, 'en', 900); eEn.style.color = ''; if (!alive) return; eJa.style.color = '#e8668a'; await say((cut(w.ja)[0] || '').replace(/[((][^))]*[))]/g, ''), 'ja', 800); eJa.style.color = ''; }
+        if (!alive) return; await new Promise(r => { timer = setTimeout(r, 500); }); i++;
+      }
+    })();
+    return () => { alive = false; clearTimeout(timer); try { opt.speakStop && opt.speakStop(); } catch (e) { } el.remove(); };
+  }
+  function rideStart(plan = 'free') {
+    const r = chunkOf(); if (!r || ride || seat || battle.active || sport.active) return;
+    const pax = residents.list.find(o => o !== r && isComp(o) && o.follow && !o.hidden && !o.pin) || null;
+    try { hud.closeDialog && hud.closeDialog(); } catch (e) { } r.talking = false; if (talkingTo === r) talkingTo = null; approach = null; goTo = null; lookAtR = null; guide = null;
+    ride = { r, pax, plan, n: pax ? 3 : 2, stop: null };
+    r.ride = true; r.ch.rideScale = ride.n; r.path = []; r.idle = null; r.hidden = false; r.ch.root.visible = true;
+    me.x = r.ch.root.position.x; me.z = r.ch.root.position.z; me.ry = r.ch.root.rotation.y; me.speed = 0;
+    me.ch.pose = 'ride'; me.ch.rideKind = 'front'; me.ch.holdTo = null;
+    if (pax) { pax.ride = true; pax.hold = false; pax.ch.holdTo = null; pax.ch.pose = 'ride'; pax.ch.rideKind = 'back'; pax.path = []; pax.talking = false; }
+    if (view !== 'far') { view = 'far'; me.ch.root.visible = true; } camGoal = { dist: Math.max(cam.dist, pax ? 13 : 10), pitch: Math.max(cam.pitch, 0.35) };
+    rideUIel = document.createElement('div'); rideUIel.style.cssText = 'position:absolute;left:12px;right:12px;top:calc(56px + var(--tw-top, 0px));display:flex;gap:8px;align-items:flex-start;justify-content:space-between;pointer-events:none;z-index:6';
+    rideUIel.innerHTML = '<div data-r="drill" style="flex:1;min-width:0;display:flex"></div><button class="tw-btn" data-r="off" style="flex:none;padding:8px 14px;font-size:13px">⬇ 降りる</button>';
+    root.appendChild(rideUIel); rideUIel.querySelector('[data-r=off]').onclick = e => { e.stopPropagation(); rideEnd(); };
+    rideUIel.querySelector('[data-r=off]').onpointerdown = e => e.stopPropagation();
+    if (plan === 'free') ride.stop = rideDrill(rideUIel.querySelector('[data-r=drill]'));
+    say1(r, ['ふわ〜、しっかりつかまっててね', 'ふわっ、出発〜'], 2.5);
+  }
+  function rideEnd() {
+    if (!ride) return; const { r, pax } = ride; if (ride.stop) ride.stop(); ride = null; rideLift = 0;
+    if (rideUIel) { rideUIel.remove(); rideUIel = null; }
+    r.ride = false; r.ch.rideScale = 1; r.rideSpeed = 0; r.wait = 3;
+    me.ch.pose = null; me.ch.rideY = 0; me.speed = 0;
+    const sx = Math.cos(me.ry), sz = -Math.sin(me.ry), cx = r.ch.root.position.x, cz = r.ch.root.position.z;
+    [me.x, me.z] = collide(cx + sx * 1.3, cz + sz * 1.3);   // チャンクくんの横に降りる
+    if (pax) { pax.ride = false; pax.ch.pose = null; pax.ch.rideY = 0; const c = collide(cx - sx * 1.3, cz - sz * 1.3, 0.3); pax.ch.root.position.set(c[0], 0, c[1]); pax.reT = 0; }
+    camGoal = { dist: CAM_DEF.dist, pitch: CAM_DEF.pitch };
+  }
+  function rideStep(dt) {   // 毎コマ: チャンクくんと後ろの人を、自分に合わせて動かす(自分の位置=チャンクくんのまん中より少し前)
+    if (!ride) return; const { r, pax } = ride;
+    if (appHost.current || battle.active || sport.active || seat || !r.ch.root.visible && !sportHid) { rideEnd(); return; }
+    const sk = r.ch.scaleNow || 1, fx = Math.sin(me.ry), fz = Math.cos(me.ry), off = (pax ? 0.17 : 0.03) * sk, back = 0.2 * sk;
+    const cx = me.x - fx * off, cz = me.z - fz * off;
+    r.ch.root.position.set(cx, 0, cz); r.ch.root.rotation.y = me.ry; r.rideSpeed = me.speed; r.speed = me.speed; r.hidden = false;
+    r.ch.root.updateMatrixWorld(true);
+    const fb = 0.7 * sk, top = cloudTop(r.ch.root, me.x, me.z, fb);
+    me.ch.rideY = top - 0.02 * sk; rideLift += (me.ch.rideY - rideLift) * Math.min(1, dt * 4);
+    if (pax) { const bx = cx - fx * back, bz = cz - fz * back; pax.ch.root.position.set(bx, 0, bz); pax.ch.root.rotation.y = me.ry + Math.PI; pax.ch.rideY = cloudTop(r.ch.root, bx, bz, fb) - 0.05 * sk; pax.hidden = false; pax.ch.root.visible = true; }
+  }
   // 手をつなぐ:プレイヤーの左にならぶ。ときどき少しおくれたり、前へ引っぱったりする(手ははなさない)
   const holdM = new THREE.Vector3();
   let pullBoost = 1;
@@ -655,6 +718,7 @@ export function mount(container, opt = {}) {
   function hanaUpdate(dt) {
     const r = compOf();
     if (!r) { if (me.ch.holdTo) me.ch.holdTo = null; pullBoost = 1; guide = null; return; }
+    if (r.ride) { pullBoost = 1; return; }   // チャンクくんに乗っている間
     hanaHold(r, dt);
     if (r.pin || hud.busy || appHost.current || !started || r.talking || guide) return;
     const area = city.areaName(me.x, me.z), PL = PLACE_LINES[r.def.id] || PLACE_LINES.hana;
@@ -995,7 +1059,7 @@ export function mount(container, opt = {}) {
       me.ch.wave(); audio.play('wave'); net?.emote('wave');
       // 目の前の1人だけが、手をふりかえす
       const fx = Math.sin(me.ry), fz = Math.cos(me.ry);
-      const cand = residents.list.filter(r => r.ch.root.visible).map(r => { const dx = r.ch.root.position.x - me.x, dz = r.ch.root.position.z - me.z, d = Math.hypot(dx, dz); return { r, d, front: d > 0 ? (dx * fx + dz * fz) / d : 1 }; }).filter(o => o.d < 4.2 && o.front > 0.3).sort((a, b) => a.d - b.d)[0];
+      const cand = residents.list.filter(r => r.ch.root.visible && !r.ride).map(r => { const dx = r.ch.root.position.x - me.x, dz = r.ch.root.position.z - me.z, d = Math.hypot(dx, dz); return { r, d, front: d > 0 ? (dx * fx + dz * fz) / d : 1 }; }).filter(o => o.d < 4.2 && o.front > 0.3).sort((a, b) => a.d - b.d)[0];
       if (cand) {
         const R = cand.r, L = { baron: 'ふはは、わが輩に手をふるとは!', gon: 'おっ、よう!', koharu: 'こんにちは。', maru: 'まいど!', yuzu: 'こんにちは、です', shiori: '……こんにちは', mii: 'あ、こんにちは〜', chunkkun: 'ふわふわ〜' }[R.def.id] || 'やあ!';
         setTimeout(() => { R.ch.wave(); hud.say('npc:' + R.def.id, L, 3); }, 450 + Math.random() * 250);
@@ -1085,7 +1149,6 @@ export function mount(container, opt = {}) {
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
       ${opt.openAdmin ? `<div class="tw-row">住人の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="npc" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.npc}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.npc.toFixed(2)}</b></span></div>` : ''}
       ${opt.openAdmin ? `<div class="tw-row">自分の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="player" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.player}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.player.toFixed(2)}</b></span></div>` : ''}
-      ${opt.openAdmin ? `<div class="tw-row">チャンクくんの大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="mascot" type="range" min="0.5" max="2.5" step="0.05" value="${SIZE_NOW.mascot}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.mascot.toFixed(2)}</b></span></div>` : ''}
       <div class="tw-row">低負荷モード${seg('lite', [[0, 'オフ'], [1, 'オン']])}</div>
       <div class="tw-note">オンにすると、解像度・影・光のにじみ・ふちどり・噴水・月をかるくして、30fpsにします(流れ星は残ります)。</div>
       <div class="tw-row">時間の進み${seg('timeSpeed', [[0, '止める'], [1, 'ふつう'], [4, 'はやい']])}</div>
@@ -1423,7 +1486,7 @@ export function mount(container, opt = {}) {
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
     if (lookAtR && mag > 0.05) lookAtR = null;   // タップで向いたあと、自分で動きだしたら引いた視点にもどる
-    if (goTo && (mag > 0.3 || appHost.current || talkingTo || seat || battle.active || sport.active || camMode !== 'follow' || approach || dodgeT > 0 || snow.making || seasons.building())) goTo = null;   // スティックを動かすなど、ほかの操作をしたら、そちらを優先
+    if (goTo && (ride || mag > 0.3 || appHost.current || talkingTo || seat || battle.active || sport.active || camMode !== 'follow' || approach || dodgeT > 0 || snow.making || seasons.building())) goTo = null;   // スティックを動かすなど、ほかの操作をしたら、そちらを優先
     if (goTo) {   // 地面を2回タップした場所へ走っていく。着いたら止まる(カメラやメニューを動かしても、その間に着く)
       const dx = goTo.x - me.x, dz = goTo.z - me.z, d = Math.hypot(dx, dz);
       if (d < 0.5) { goTo = null; me.speed = 0; }
@@ -1446,18 +1509,21 @@ export function mount(container, opt = {}) {
       }
     }
     const guided = guideStep(dt, mag) || !!approach || !!goTo;   // 住人に連れて行ってもらっている間は、自動で歩く
-    const target = mag > 0.05 ? (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) * pullBoost : 0;
+    const rideT = Math.max(0, Math.min(1, (mag - 0.55) / 0.45));   // 乗っている間: 軽くたおす=歩く速さ、思いきりたおす=走りの2倍
+    const target = mag > 0.05 ? (ride ? 6.8 * Math.max(mag, 0.4) + (24 - 6.8) * rideT * rideT : (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) * pullBoost) : 0;
     if (!guided) me.speed += (target - me.speed) * Math.min(1, dt * 10);
     if (mag > 0.05 && !guided) {
       const s = Math.sin(cam.yaw), c = Math.cos(cam.yaw);
       const wx = (mx * c + my * s) / mag, wz = (-mx * s + my * c) / mag; lastMove = { x: wx, z: wz };
       me.ry = angleLerp(me.ry, Math.atan2(wx, wz), Math.min(1, dt * 12));
-      [me.x, me.z] = collide(me.x + wx * me.speed * dt * (seasons.carrying() ? 0.6 : 1), me.z + wz * me.speed * dt * (seasons.carrying() ? 0.6 : 1));   // 雪だるまを持っていると、ゆっくり
+      if (ride) { const n = Math.max(1, Math.ceil(me.speed * dt / 0.25)), rad = 0.3 * (ride.r.ch.scaleNow || 1); for (let i = 0; i < n; i++) [me.x, me.z] = collide(me.x + wx * me.speed * dt / n, me.z + wz * me.speed * dt / n, rad); }   // 速いので、こまかく進めて壁をすりぬけないように
+      else [me.x, me.z] = collide(me.x + wx * me.speed * dt * (seasons.carrying() ? 0.6 : 1), me.z + wz * me.speed * dt * (seasons.carrying() ? 0.6 : 1));   // 雪だるまを持っていると、ゆっくり
     }
     lastMoveDir = lastMove;
     if (dodgeCd > 0) dodgeCd -= dt;
     if (dodgeT > 0) { dodgeT -= dt; me.ry = Math.atan2(ddx, ddz); me.speed = 8; [me.x, me.z] = collide(me.x + ddx * 8.5 * dt, me.z + ddz * 8.5 * dt); }
     me.ch.root.position.set(me.x, seat ? -0.04 : 0, me.z); me.ch.root.rotation.y = me.ry;
+    rideStep(dt);
     if (!seat && !battle.active) { if (snow.making || bld) me.ch.pose = 'kneel'; else if (me.ch.pose === 'kneel') me.ch.pose = null; }
     me.ch.update(dt, me.speed);
     { const rg = me.ch.rig;   // よけている間はくるっと回る / 雪だるまを持っている間は両手を上げる
@@ -1471,7 +1537,7 @@ export function mount(container, opt = {}) {
     cam.x += (ft.x - cam.x) * Math.min(1, dt * 8); cam.z += (ft.z - cam.z) * Math.min(1, dt * 8);
     if (camMode === 'free') { camera.position.set(fcam.x, fcam.y, fcam.z); const cp = Math.cos(fcam.pitch); camera.lookAt(fcam.x - Math.sin(fcam.yaw) * cp, fcam.y - Math.sin(fcam.pitch), fcam.z - Math.cos(fcam.yaw) * cp); }
     if (camMode === 'follow') {
-    const look = v3.set(cam.x, 1.3, cam.z);
+    const look = v3.set(cam.x, 1.3 + rideLift, cam.z);
     const op = cam.pitch;   // 低い位置まで下げられる(地面だけ下で止める)
     const off = new THREE.Vector3(Math.sin(cam.yaw) * Math.cos(op), Math.sin(op), Math.cos(cam.yaw) * Math.cos(op));
     let dist = cam.dist;
@@ -1571,7 +1637,7 @@ export function mount(container, opt = {}) {
         const score = d - ((dx * fx + dz * fz) / (d || 1)) * 0.6;
         if (score < best) { best = score; focus = o; }
       };
-      for (const r of residents.list) if (r.ch.root.visible) consider({ kind: 'npc', ref: r, label: `${r.def.name}と話す` }, r.ch.root.position.x, r.ch.root.position.z, 2.3);
+      for (const r of residents.list) if (r.ch.root.visible && !r.ride) consider({ kind: 'npc', ref: r, label: `${r.def.name}と話す` }, r.ch.root.position.x, r.ch.root.position.z, 2.3);
       for (const it of city.interact) if (!it.season || it.season === seasons.season) consider(it, it.x, it.z, it.r);
       { const fs = soc.nearFind(me.x, me.z); if (fs) consider({ kind: 'find', ref: fs, label: '🔍 調べる' }, fs.x, fs.z, 1.6); }
     }
@@ -1593,7 +1659,7 @@ export function mount(container, opt = {}) {
     };
     put(me.id, me.ch.root, 1.95, false);
     for (const [id, q] of peers) put(id, q.ch.root, 1.95, true);
-    for (const r of residents.list) put('npc:' + r.def.id, r.ch.root, r.def.mascot ? 1.25 : (r.ch.glb ? r.ch.height + 0.35 : 1.95), focus?.ref === r || Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) < 6);
+    for (const r of residents.list) put('npc:' + r.def.id, r.ch.root, r.def.mascot ? 1.25 * (r.ch.scaleNow || 1) + (r.ride ? 0.9 : 0) : (r.ch.glb ? r.ch.height + 0.35 : 1.95), focus?.ref === r || Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) < 6);
     hud.placeTags(tagPos);
 
     hud.setArea(city.areaName(me.x, me.z));

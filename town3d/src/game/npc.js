@@ -200,6 +200,7 @@ export function createResidents(scene, graph, getHour, collide = null) {
       const anyTalking = list.some(q => q.talking);
       for (const r of list) {
         if (r.battle) continue;   // 雪合戦の最中は、雪合戦の方で動かす
+        if (r.ride) { r.vx = r.vz = 0; r.ch.update(dt, r.def.mascot ? (r.rideSpeed || 0) : 0); continue; }   // チャンクくんに乗っている間(チャンクくん本人と、後ろに乗った人)は、main が動かす
         if (r.pin) {   // デートなどで、決まった場所に座っている
           const P = r.ch.root.position; P.set(r.pin.x, r.pin.y || 0, r.pin.z); r.ch.root.rotation.y = r.pin.ry;
           if (!r.ch.root.visible) { r.ch.root.visible = true; r.hidden = false; } r.ch.pose = r.pin.pose || null; r.speed = 0; r.vx = r.vz = 0; r.ch.update(dt, 0); continue;

@@ -51,7 +51,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
 
   // ---- アプリを立ち上げたらすぐ、3Dの町のプログラムとキャラのモデルを読みこんでおく(バーを出す)。「街へ行く」を押すころには済んでいる ----
-  // ---- Loading中のおさらい: 直近でまちがえた言葉を、むずかしい順に「英語 → 日本語」で出し、英語→日本語を2回ずつ読み上げる ----
+  // ---- Loading中のおさらい: 直近でまちがえた言葉を、ランダムな順に「英語 → 日本語」で出し、英語→日本語を2回ずつ読み上げる ----
   // ブラウザは、画面を一度タップするまで音を出せない。タップ前は文字だけ送り、タップされたらその言葉から読み上げる
   function loadingDrill(bar) {
     let list = []; try { list = core.daylog.missed(14); } catch (e) { }
@@ -65,9 +65,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     const eEn = box.querySelector('b'), eJa = box.querySelector('span'), eN = box.querySelector('em'), eTip = box.querySelector('u');
     const voiceOn = () => { try { return !!core.settings.get('voice'); } catch (e) { return false; } };
     if (!voiceOn()) eTip.remove();
-    let WL = null, alive = true, i = 0, run = 0, timer = null;
-    const lvOf = en => { if (!WL) return 3; const ws = String(en).toLowerCase().split(/[^a-z']+/).filter(Boolean); let m = 0; for (const w of ws) m = Math.max(m, WL[w] || 0); return m || (ws.length > 1 ? 3 : 6); };   // 表にない言葉は、むずかしい扱い
-    const sortList = () => { list.sort((a, b) => lvOf(b.en) - lvOf(a.en) || (b.unk || 0) - (a.unk || 0) || String(b.day || '').localeCompare(String(a.day || ''))); list = list.slice(0, 40); };
+    let alive = true, i = 0, run = 0, timer = null;
+    const sortList = () => { for (let a = list.length - 1; a > 0; a--) { const b = Math.floor(Math.random() * (a + 1)); [list[a], list[b]] = [list[b], list[a]]; } list = list.slice(0, 40); };   // ランダムな順で
     // 1つ読む。声が出せない・すぐ終わったときも、読める長さだけは待つ
     const say = (text, lang, minMs) => new Promise(res => {
       const t0 = Date.now(); let done = false;
@@ -89,8 +88,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     }
     const tap = () => { if (!alive) return; eTip.remove(); clearTimeout(timer); loop(++run); };   // タップ: 音が出せるようになるので、いまの言葉を最初から読み直す
     bar.addEventListener('pointerdown', tap);
-    // むずかしさの表(単語のレベル)を読んでから、むずかしい順にならべて始める。読めなければ、そのままの順で
-    loadScript(core.base + 'g/stream/wlv.js').then(() => { try { WL = {}; WLV_SRC.split(',').forEach(x => { const j = x.lastIndexOf(':'); WL[x.slice(0, j)] = +x.slice(j + 1); }); } catch (e) { WL = null; } }, () => { }).then(() => { if (!alive) return; sortList(); loop(++run); });
+    sortList(); loop(++run);
     return () => { alive = false; run++; clearTimeout(timer); bar.removeEventListener('pointerdown', tap); try { core.speech.stop(); } catch (e) { } };
   }
   let preload = null;
@@ -152,6 +150,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
+      reviewWords: () => { const m = new Map(); try { [...core.daylog.missed(14), ...core.daylog.pending()].forEach(w => { if (w && w.en && w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), { en: w.en, ja: w.ja }); }); } catch (e) { } return [...m.values()]; },   // まちがえた言葉+まだ復習していない言葉(チャンクくんに乗っている間のおさらい)
+      speak: (t, o) => core.speech.speak(t, o), speakStop: () => core.speech.stop(),
       learn: core.learn,   // 単語ごとの学習の記録(英語の釣り堀とストミンで共通)
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)

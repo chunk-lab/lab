@@ -24,10 +24,11 @@ export function makeSeatClips(model, sex, rotY = 0) {
   const k = hipsW.y / SRC_HIPS_Y, parentInv = new THREE.Matrix4().multiplyMatrices(inv, hips.b.parent.matrixWorld).invert();
   const build = (name, key) => {
     const c = DATA.clips[key]; if (!c) return null;
+    const REST = c.rest || DATA.rest, kk = c.rest ? hipsW.y / c.rest.mixamorigHips.y : k;   // 動きごとに元の骨格がちがうもの(小さい骨格のFBX)は、その骨格のはじめの姿勢で補正する
     const tracks = [];
     for (const [n, tr] of Object.entries(c.tr)) {
       const t = T[n]; if (!t) continue;
-      const s = DATA.rest[n], Ps = q4(s.p), Ss = q4(s.s).invert();
+      const s = REST[n]; if (!s) continue; const Ps = q4(s.p), Ss = q4(s.s).invert();
       if (tr.quaternion) {
         const out = [], PtI = t.P.clone().invert();
         for (let i = 0; i < tr.quaternion.t.length; i++) {
@@ -39,7 +40,7 @@ export function makeSeatClips(model, sex, rotY = 0) {
       if (n === 'mixamorigHips' && tr.position) {
         const out = [], v = tr.position.v, p0 = s.pos, vv = new THREE.Vector3();
         for (let i = 0; i < tr.position.t.length; i++) {
-          vv.set(hipsW.x + (v[i * 3] - p0[0]) * k, hipsW.y + (v[i * 3 + 1] - p0[1]) * k, hipsW.z + (v[i * 3 + 2] - p0[2]) * k).applyMatrix4(parentInv); out.push(vv.x, vv.y, vv.z);
+          vv.set(hipsW.x + (v[i * 3] - p0[0]) * kk, hipsW.y + (v[i * 3 + 1] - p0[1]) * kk, hipsW.z + (v[i * 3 + 2] - p0[2]) * kk).applyMatrix4(parentInv); out.push(vv.x, vv.y, vv.z);
         }
         tracks.push(new THREE.VectorKeyframeTrack(t.b.name + '.position', tr.position.t, out));
       }
@@ -47,5 +48,5 @@ export function makeSeatClips(model, sex, rotY = 0) {
     return new THREE.AnimationClip(name, c.d, tracks);
   };
   // lay=ゴロゴロ(男の子: 横向き寝のポーズ / 女の子: 足パタパタ) sleep=ねる(男女とも、あおむけ)
-  return { ok: true, sit: build('Sit', sex === 'm' ? 'sitM' : 'sitW'), lay: build('Lay', sex === 'm' ? 'lay' : 'flutter'), sleep: build('Sleep', 'sleep'), layLoop: sex !== 'm' };
+  return { ok: true, sit: build('Sit', sex === 'm' ? 'sitM' : 'sitW'), lay: build('Lay', sex === 'm' ? 'lay' : 'flutter'), sleep: build('Sleep', 'sleep'), rideF: build('RideF', 'rideF'), rideB: build('RideB', 'rideB'), layLoop: sex !== 'm' };
 }
