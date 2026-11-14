@@ -103,7 +103,7 @@ export function useGlb(ch, id, { height } = {}) {
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
-    const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } }
+    const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
     // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
     // 待機の動きを何コマか見て、いちばん低い足元・いちばん高い頭で測る(動きの途中で沈まないように)
@@ -176,19 +176,19 @@ export function useGlb(ch, id, { height } = {}) {
       a.reset().fadeIn(fade).play(); if (cur) cur.fadeOut(fade); prev = cur; fadeT = fade; cur = a;
     };
     cur = act.idle || null; if (!cur) play('idle', 0);
-    ch.height = height; ch.glb = true; ch.hasLay = !!act.lay;
+    ch.height = height; ch.glb = true; ch.hasLay = !!(act.lay || act.sleep);
     const base = ch.update;
     ch.update = (dt, speed) => {
-      const sitK = !!act.sit && (ch.pose === 'sit' || ch.pose === 'piano'), layK = !!act.lay && ch.pose === 'lie';
-      if (sitK) play('sit', 0.4); else if (layK) play('lay', 0.4);
+      const sitK = !!act.sit && (ch.pose === 'sit' || ch.pose === 'piano'), layK = !!(act.lay || act.sleep) && ch.pose === 'lie', goro = layK && ch.lieKind === 'goro' && !!act.lay, lieClip = goro ? 'lay' : act.sleep ? 'sleep' : 'lay';   // ゴロゴロ=lay(男:横向き寝 女:足パタパタ) ねる=sleep(あおむけ)
+      if (sitK) play('sit', 0.4); else if (layK) play(lieClip, 0.4);
       else if (lock > 0) lock -= dt;
       else play(act.run && (cur === act.run ? speed > 3.0 : speed > 4.2) ? 'run' : speed > 0.05 ? 'walk' : 'idle');   // 歩き⇔走りは少し幅をもたせる(行ったり来たりしない)
       if (cur === act.run) act.run.timeScale = Math.max(0.7, Math.min(1.4, speed / 5));
       if (cur === act.walk) act.walk.timeScale = Math.max(0.6, Math.min(1.6, speed / 2.2));
       mixer.update(dt);
-      if (act.lay) wrap.rotation.y = layK ? Math.PI / 2 : 0;   // ねる動きは体が横(x)向きなので、キャラの前後(z)に沿うように回す(頭が後ろ側)
+      if (act.lay || act.sleep) wrap.rotation.y = layK ? (lieClip === 'lay' ? Math.PI / 2 : 0) : 0;   // ねる動きは体が横(x)向きなので、キャラの前後(z)に沿うように回す(頭が後ろ側)
       // 家の中などの「寝転ぶ」: あおむけに倒す(3Dの体には寝る動きがないので、向きだけ変える)
-      const lie = ch.pose === 'lie' && !act.lay; if (lie !== !!ch._lie) { ch._lie = lie; wrap.rotation.x = lie ? -Math.PI / 2 : 0; wrap.position.set(0, lie ? 0.12 : 0, lie ? ch.height / 2 : 0); }
+      const lie = ch.pose === 'lie' && !act.lay && !act.sleep; if (lie !== !!ch._lie) { ch._lie = lie; wrap.rotation.x = lie ? -Math.PI / 2 : 0; wrap.position.set(0, lie ? 0.12 : 0, lie ? ch.height / 2 : 0); }
       const want = (ch.pose === 'sit' && !act.sit) || ch.pose === 'piano' || ch.pose === 'kneel' ? ch.pose : null;
       if (want) poseName = want; poseK += ((want ? 1 : 0) - poseK) * Math.min(1, dt * 9); if (poseK < 0.01 && !want) { poseK = 0; poseName = null; }
       let drop = 0;

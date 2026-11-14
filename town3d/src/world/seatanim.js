@@ -46,5 +46,6 @@ export function makeSeatClips(model, sex, rotY = 0) {
     }
     return new THREE.AnimationClip(name, c.d, tracks);
   };
-  return { ok: true, sit: build('Sit', sex === 'm' ? 'sitM' : 'sitW'), lay: build('Lay', 'lay') };
+  // lay=ゴロゴロ(男の子: 横向き寝のポーズ / 女の子: 足パタパタ) sleep=ねる(男女とも、あおむけ)
+  return { ok: true, sit: build('Sit', sex === 'm' ? 'sitM' : 'sitW'), lay: build('Lay', sex === 'm' ? 'lay' : 'flutter'), sleep: build('Sleep', 'sleep'), layLoop: sex !== 'm' };
 }

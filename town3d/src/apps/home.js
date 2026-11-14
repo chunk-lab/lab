@@ -569,25 +569,25 @@ export const homeApp = {
         }
         sp = Math.hypot(gx - ox, gz - oz) / Math.max(dt, 1e-3);
       }
-      gch.pose = gPose ? gPose.pose : null; gch.seatH = gPose ? gPose.seatH : null;
+      gch.pose = gPose ? gPose.pose : null; gch.seatH = gPose ? gPose.seatH : null; gch.lieKind = gPose ? gPose.kind : null;
       gch.root.position.set(gx, gPose ? gPose.y : 0, gz); gch.root.rotation.y = gry;
       if ((gHold && !wPose) || (gPose && wPose)) { holdP.set((wx + gx) / 2, gPose ? gPose.y + (gPose.pose === 'lie' ? 0.12 : 0.55) : 0.66, (wz + gz) / 2); gch.holdTo = holdP; gch.holdArm = 0; wme.holdTo = holdP; wme.holdArm = 1; }
       else { gch.holdTo = null; wme.holdTo = null; }
       gch.update(dt, sp < 0.08 ? 0 : sp);
     }
     // となりにすわる/ねる(自分の左)
-    function guestPose(pose, y, seatH) {
+    function guestPose(pose, y, seatH, kind) {
       if (!gch) return;
       const sn = Math.sin(wry), cs = Math.cos(wry);
-      gPose = { x: wx + cs * 0.6, z: wz - sn * 0.6, ry: wry, y, pose, seatH };
+      gPose = { x: wx + cs * 0.6, z: wz - sn * 0.6, ry: wry, y, pose, seatH, kind };
     }
     function floorLie() {   // 家具がなくても、床にゴロゴロ
       const sn = Math.sin(wry), cs = Math.cos(wry);
       if (gch) { [wx, wz] = walkTo(wx - cs * 0.3, wz + sn * 0.3); }
       // 頭はうしろへのびるので、2人とも頭までへやの中に入るように、ずらす
       for (let k = 0; k < 3; k++) for (const [ox, oz] of [[0, 0], [-Math.sin(wry) * 1.3, -Math.cos(wry) * 1.3], ...(gch ? [[cs * 0.6, -sn * 0.6], [cs * 0.6 - Math.sin(wry) * 1.3, -sn * 0.6 - Math.cos(wry) * 1.3]] : [])]) { const [ax, az] = walkTo(wx + ox, wz + oz); wx += ax - (wx + ox); wz += az - (wz + oz); }
-      wy = wme.hasLay ? 0.02 : 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wspeed = 0; wyaw = wry; wpitch = 0.95; wdist = 3.0;
-      guestPose('lie', wme.hasLay ? 0.02 : 0.14);
+      wy = wme.hasLay ? 0.02 : 0.14; wPose = { p: null, floor: true, stand: [0, 0.6], yaw: wry, cx: wx, cz: wz }; wme.pose = 'lie'; wme.lieKind = 'goro'; wspeed = 0; wyaw = wry; wpitch = 0.95; wdist = 3.0;
+      guestPose('lie', wme.hasLay ? 0.02 : 0.14, undefined, 'goro');
       if (gch) guestSay(GL('goro'));
     }
     function guestTalk() {
@@ -640,8 +640,8 @@ export const homeApp = {
       wx = cx + lx * cs + lz * sn; wz = cz - lx * sn + lz * cs; wry = yaw;
       wy = (Y[p.uid] || 0) + (it.sit ? 0 : it.lie + (wme.hasLay ? 0.03 : 0.14)); wme.seatH = it.sit ? it.sit : null;
       wPose = { p, lx, stand: it.sit ? [lx, it.d / 2 + 0.6] : [it.w / 2 + 0.55, 0.3], yaw, cx, cz };
-      wme.pose = it.sit ? 'sit' : 'lie'; wspeed = 0; if (it.lie) { wyaw = wry; wpitch = 0.95; wdist = 3.0; }
-      if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy, it.sit); guestSay(GL(it.sit ? 'sit' : 'lie')); }
+      wme.pose = it.sit ? 'sit' : 'lie'; wme.lieKind = 'sleep'; wspeed = 0; if (it.lie) { wyaw = wry; wpitch = 0.95; wdist = 3.0; }
+      if (pair) { guestPose(it.sit ? 'sit' : 'lie', wy, it.sit, 'sleep'); guestSay(GL(it.sit ? 'sit' : 'lie')); }
     }
     function standUp() {
       if (!wPose) return;

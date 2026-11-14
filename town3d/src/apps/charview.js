@@ -52,11 +52,11 @@ export function openCharView(host, ctx = {}, onClose) {
   }
   function setMotion(m) {
     motion = m; if (!ch) return;
-    ch.pose = m === 'sit' ? 'sit' : m === 'lie' ? 'lie' : null; ch.seatH = m === 'sit' ? 0.45 : null; stool.visible = m === 'sit';
+    ch.pose = m === 'sit' ? 'sit' : (m === 'lie' || m === 'goro') ? 'lie' : null; ch.lieKind = m === 'goro' ? 'goro' : 'sleep'; ch.seatH = m === 'sit' ? 0.45 : null; stool.visible = m === 'sit';
     if (m === 'wave' && ch.wave) { ch.wave(); waveT = 3.2; }
     [...mo.children].forEach(b => { b.style.cssText = chip(b.dataset.m === m); });
   }
-  mo.innerHTML = [['idle', 'たつ'], ['walk', 'あるく'], ['wave', '手をふる'], ['sit', 'すわる'], ['lie', 'ねる']].map(([m, t]) => `<button data-m="${m}" style="${chip(false)}">${t}</button>`).join('');
+  mo.innerHTML = [['idle', 'たつ'], ['walk', 'あるく'], ['wave', '手をふる'], ['sit', 'すわる'], ['lie', 'ねる'], ['goro', 'ゴロゴロ']].map(([m, t]) => `<button data-m="${m}" style="${chip(false)}">${t}</button>`).join('');
   ls.innerHTML = list.map(c => `<button data-k="${c.key}" style="${chip(false)}">${c.name}</button>`).join('');
   mo.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (m) setMotion(m); };
   ls.onclick = e => { const k = e.target.closest('[data-k]')?.dataset.k; const c = list.find(x => x.key === k); if (c) show(c); };
@@ -86,7 +86,7 @@ export function openCharView(host, ctx = {}, onClose) {
       ch.update(dt, motion === 'walk' ? 1.6 : 0);
     }
     if (spin) yaw += dt * 0.6;
-    const R = h * 3.0 / zoom, ty = h * (motion === 'sit' ? 0.5 : motion === 'lie' ? 0.2 : 0.52);
+    const R = h * 3.0 / zoom, ty = h * (motion === 'sit' ? 0.5 : (motion === 'lie' || motion === 'goro') ? 0.2 : 0.52);
     cam.position.set(Math.sin(yaw) * Math.cos(pitch) * R, ty + Math.sin(pitch) * R, Math.cos(yaw) * Math.cos(pitch) * R); cam.lookAt(0, ty, 0);
     floor.scale.setScalar(h / 1.5); floor.visible = pitch > -0.02;   // 下から見るときは、ゆかの円を消す
     renderer.render(scene, cam);
