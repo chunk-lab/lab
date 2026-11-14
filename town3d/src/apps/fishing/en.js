@@ -670,7 +670,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         <div class="grid">${ks.map(k => { const ds = kinds[k], d0 = ds[0], it = decorOf(d0), n = ds.filter(d => placedUid.has(d.uid)).length; return `<div class="cell got"><span class="ic">${it.icon}</span><b>${esc(it.name)}<span class="rr rr${d0.rar}">${RAR[d0.rar]}</span></b><small>置いた ${n} / ${ds.length}</small><div class="aqcb"><button class="sbtn pri" data-dadd="${k}" ${n >= ds.length ? 'disabled' : ''}>置く</button><button class="sbtn" data-dupk="${k}">➕</button></div></div>`; }).join('')}</div>`;
     }
     function tabMix() {
-      const tabs = `<div class="tabs">${[['d', '🪸 飾りを作る']].map(([k, n]) => `<button data-mm="${k}" class="${k === mixMode ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+      const tabs = `<div class="tabs">${[['d', '🪸 飾りを作る'], ['f', '🐟 魚を強くする']].map(([k, n]) => `<button data-mm="${k}" class="${k === mixMode ? 'on' : ''}">${n}</button>`).join('')}</div>`;
       const slotIc = id => { if (mixMode === 'd') { const s = SET[id]; return s ? `<span class="ic">${ICON[s.look.shape]}</span><small>${esc(s.look.name)}</small>` : ''; } const f = spec.tank().find(x => x.uid === id); return f ? `${fishImg(f.id, 56, false, f.rk || 0)}<small>${esc(fname(f))}</small>` : ''; };
       let result = '？', list = '', note = '';
       if (mixMode === 'd') {
