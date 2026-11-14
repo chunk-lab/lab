@@ -24,7 +24,7 @@ export function createAloud(core) {
   // ---- 読む言葉を集める ----
   async function collect(o = {}) {
     const dl = core.daylog, m = new Map();
-    const ok = w => w && w.en && w.ja && w.kind !== 'sentence' && !isChunk(w) && !/\s/.test(String(w.en).trim());
+    const ok = w => w && w.en && w.ja && w.kind !== 'sentence';   // まえと同じ範囲(熟語もふくむ)
     const add = w => { if (ok(w)) { const k = w.en.toLowerCase(); if (!m.has(k)) m.set(k, { en: w.en, ja: w.ja, pos: w.pos, kind: w.kind || 'word', multi: w.multi, miss: !!w.miss, src: w.src }); } };
     try { if (C.src.includes('missed')) dl.missed(14).forEach(add); } catch (e) { }
     try { if (C.src.includes('pending')) dl.pending().forEach(add); } catch (e) { }

@@ -129,8 +129,6 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       reviewWords: () => { const m = new Map(); try { [...core.daylog.missed(14), ...core.daylog.pending()].forEach(w => { if (w && w.en && w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), { en: w.en, ja: w.ja }); }); } catch (e) { } return [...m.values()]; },   // まちがえた言葉+まだ復習していない言葉(チャンクくんに乗っている間のおさらい)
       speak: (t, o) => core.speech.speak(t, o), speakStop: () => core.speech.stop(),
       aloudBand: el => core.aloud.band(el, { loop: true }),   // チャンクくんに乗っている間も、設定どおりに読む
-      openAloud: () => core.aloud.open(),
-      aloudToggle: () => core.aloud.toggle(),   // 町の📖ボタン: すぐ読み始める/とめる   // 町のせっていから「単語の読み上げ」を開く
       learn: core.learn,   // 単語ごとの学習の記録(英語の釣り堀とストミンで共通)
       openAdmin: core.admin && core.admin.on() ? () => core.admin.open() : null,   // 運営画面(?admin=1 のとき)
       photo: ECON.photo,   // 写真の枠(はじめ1枚・ダイヤで5枚まで)   // 自宅の広げ方の値段(core/economy.js)
