@@ -622,7 +622,8 @@ export function mount(container, opt = {}) {
   const chunkOf = () => residents.list.find(x => x.def.mascot);
   const rideRay = new THREE.Raycaster(), rideDown = new THREE.Vector3(0, -1, 0), rideV = new THREE.Vector3();
   const cloudTop = (root, x, z, fb) => { try { rideRay.set(rideV.set(x, 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
-  function rideDrill(box) {   // まちがえた言葉・まだ復習していない言葉を、ランダムに「英語 → 日本語」で出して、2回ずつ読み上げる
+  function rideDrill(box) {   // 単語の読み上げの設定どおりに(なければ、まちがえた言葉などをランダムに「英語 → 日本語」で2回ずつ)読み上げる
+    if (opt.aloudBand) return opt.aloudBand(box);
     let list = []; try { list = (opt.reviewWords && opt.reviewWords()) || []; } catch (e) { }
     if (!list.length) return () => { };
     for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[list[i], list[j]] = [list[j], list[i]]; }
@@ -1183,6 +1184,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">流れ星<button class="tw-btn" data-act="meteor" style="padding:6px 14px">いま流す</button></div>
       <div class="tw-row">英語のヒント(すれ違い)${seg('tips', [[0, 'なし'], [1, 'あり']])}</div>
       ${opt.openAdmin ? `<div class="tw-row">きせつ(桜・紅葉・雪)<button class="tw-btn" data-act="season" style="padding:6px 14px">${SEASONS[settings.season || 'auto']}</button></div>` : ''}
+      ${opt.openAloud ? '<div class="tw-row">単語の読み上げ<button class="tw-btn" data-act="aloud" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">誕生日(花火でお祝い)<button class="tw-btn" data-act="birth" style="padding:6px 14px">${settings.birth ? settings.birth.replace(/-/g, '/') : 'とうろく'}</button></div>
       ${opt.openAdmin ? '<div class="tw-row">運営(花火・日食・月食の予約)<button class="tw-btn" data-act="admin" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
@@ -1217,6 +1219,7 @@ export function mount(container, opt = {}) {
         if (b.dataset.act === 'ai') openAiSetup({ hud, ai });
         if (b.dataset.act === 'season') { const ks = Object.keys(SEASONS), n = ks[(ks.indexOf(settings.season || 'auto') + 1) % ks.length]; settings.season = n; save(); b.textContent = SEASONS[n] + (n === 'auto' ? '(' + SEASONS[seasonOf()] + ')' : ''); applySeason(); }
         if (b.dataset.act === 'birth') { hud.closePanel(); setTimeout(openBirthSetup, 30); }
+        if (b.dataset.act === 'aloud') { hud.closePanel(); setTimeout(() => opt.openAloud(), 30); }
         if (b.dataset.act === 'hunt') { hud.closePanel(); setTimeout(() => soc.adminHunt(), 30); return; }
         if (b.dataset.act === 'admin') { hud.closePanel(); setTimeout(() => opt.openAdmin(), 30); }
       }, { outside: true });

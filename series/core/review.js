@@ -33,17 +33,18 @@ export function createReview(core) {
 
   // ---- 画面 ----
   function open(o = {}) {
-    const mode = o.mode === 'prev' ? 'prev' : 'today', day = mode === 'prev' ? (o.day || dl.prevDay()) : dl.dayKey();
+    const free = Array.isArray(o.words);   // 読み上げのあと:渡された言葉だけを、フラッシュカード(か一覧)で振り分ける。時間のグラフ・コインはなし
+    const mode = free ? 'free' : o.mode === 'prev' ? 'prev' : 'today', day = mode === 'prev' ? (o.day || dl.prevDay()) : dl.dayKey();
     if (!day) { core.ui.toast('まだ記録がありません'); return; }
     const title = mode === 'prev' ? `${dayJa(day)}のふりかえり` : '今日のふりかえり';
-    let items = dl.words(day).map(w => ({ ...w }));
-    const sents = items.filter(w => w.kind === 'sentence'); items = items.filter(w => w.kind !== 'sentence' && !isChunk(w));   // 並べ替えの文は、ふだんは出さない(一覧の「文章」タブでだけ)
-    const forced = dl.forced();
+    let items = (free ? o.words : dl.words(day)).map(w => ({ ...w }));
+    const sents = free ? [] : items.filter(w => w.kind === 'sentence'); items = items.filter(w => w.kind !== 'sentence' && !isChunk(w));   // 並べ替えの文は、ふだんは出さない(一覧の「文章」タブでだけ)
+    const forced = free ? false : dl.forced();
     if (forced || mode === 'prev') {   // たまった/3日たった:足りない分は、いままで覚えていなかったものでうめる
       const have = new Set(items.map(w => w.en.toLowerCase())), rest = dl.pending().filter(w => !have.has(w.en.toLowerCase())).sort((a, b) => (b.unk || 0) - (a.unk || 0));
       if (forced) rest.slice(0, Math.max(0, FORCE_N - items.length)).forEach(w => items.push({ ...w, old: true }));
     }
-    items.sort((a, b) => (b.miss ? 1 : 0) + (b.multi > 1 ? .5 : 0) - ((a.miss ? 1 : 0) + (a.multi > 1 ? .5 : 0)));
+    if (!free) items.sort((a, b) => (b.miss ? 1 : 0) + (b.multi > 1 ? .5 : 0) - ((a.miss ? 1 : 0) + (a.multi > 1 ? .5 : 0)));
     let stopAudio = () => { };
     core.ui.sheet('<div class="rv"></div>', (ov, close) => {
       const box = ov.querySelector('.rv'), closeBtn = ov.querySelector('.cs-close');
@@ -69,12 +70,12 @@ export function createReview(core) {
       // ② 一覧+音声
       function stepList() {
         let tab = 'w';
-        const row = (w, i, chk) => `<li data-i="${i}">${chk ? `<label class="rv-k" title="覚えてる(カードを飛ばす)"><input type="checkbox" data-k="${i}" ${w._k ? 'checked' : ''}></label>` : ''}<b>${esc(w.en)}</b>${w.multi > 1 ? `<em>＋${w.multi - 1}</em>` : ''}${w.miss ? '<u>まちがえた</u>' : ''}${w.old ? '<u>前から</u>' : ''}<small>${esc(w.ja)}</small></li>`;
+        const row = (w, i, chk) => `<li data-i="${i}"><b>${esc(w.en)}</b>${w.multi > 1 ? `<em>＋${w.multi - 1}</em>` : ''}${w.miss ? '<u>まちがえた</u>' : ''}${w.old ? '<u>前から</u>' : ''}${chk ? `<span class="rv-k2" data-k="${i}"><button class="g${w._k ? ' on' : ''}" data-v="1">覚えてる</button><button class="r${w._k ? '' : ' on'}" data-v="0">まだ</button></span>` : ''}<small>${esc(w.ja)}</small></li>`;
         const draw = () => {
           const cur = tab === 'w' ? items : sents;
           go(`<h3>出会った${tab === 'w' ? '言葉' : '文章'}(${cur.length})</h3>
             ${sents.length ? `<nav class="cs-chips"><button data-t="w" class="${tab === 'w' ? 'on' : ''}">言葉 ${items.length}</button><button data-t="s" class="${tab === 's' ? 'on' : ''}">文章 ${sents.length}</button></nav>` : ''}
-            <p class="cs-note">音声が順番に流れます。「＋」は、ほかの意味もある言葉。${tab === 'w' ? '<br>左の□にチェックを入れた言葉は「覚えてる」。チェックしていない言葉でテストします。' : ''}</p>
+            <p class="cs-note">音声が順番に流れます。「＋」は、ほかの意味もある言葉。${tab === 'w' ? '<br>右の「覚えてる(緑)/まだ(赤)」で振り分け。「まだ」の言葉でテストします。' : ''}</p>
             <ul class="rv-list${tab === 'w' ? ' rv-chk2' : ''}">${cur.map((w, i) => row(w, i, tab === 'w')).join('')}</ul>
             <div class="rv-two"><button class="cs-btn" id="rv-p">▶ 音声</button><button class="cs-btn" id="rv-n">${items.length ? 'フラッシュカードで見直す' : 'おわる'}</button></div>
             ${tab === 'w' && items.length ? '<button class="cs-btn rv-ok" id="rv-reg">これで登録して、単語テストへ</button>' : ''}`, () => {
@@ -82,7 +83,7 @@ export function createReview(core) {
             const stop = () => { on = false; core.speech.stop(); pb.textContent = '▶ 音声'; lis.forEach(l => l.classList.remove('now')); };
             stopAudio = stop;
             box.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { stop(); tab = b.dataset.t; draw(); });
-            box.querySelectorAll('input[data-k]').forEach(c => { c.onchange = () => { items[+c.dataset.k]._k = c.checked; }; });   // 読み上げ中でもチェックできる
+            box.querySelectorAll('.rv-k2 button').forEach(b => { b.onclick = () => { const sp = b.parentNode, on = b.dataset.v === '1'; items[+sp.dataset.k]._k = on; sp.querySelector('.g').classList.toggle('on', on); sp.querySelector('.r').classList.toggle('on', !on); }; });   // 読み上げ中でも振り分けできる(どちらか一方だけ)
             const next = () => { if (!on) return; if (i >= cur.length) return stop(); const w = cur[i]; lis.forEach(l => l.classList.remove('now')); lis[i].classList.add('now'); lis[i].scrollIntoView({ block: 'nearest' }); i++; core.speech.speak(w.en, { onend: () => setTimeout(next, 450) }); };
             pb.onclick = () => { if (on) return stop(); on = true; i = 0; pb.textContent = '■ とめる'; next(); };
             const rg = box.querySelector('#rv-reg');
@@ -149,7 +150,7 @@ export function createReview(core) {
         go(`<h3>さいごに かくにん</h3><p class="cs-note">チェックが入っている言葉は「覚えてる」。まちがいは、ここで直せます。</p>
           <div class="rv-two"><button class="cs-btn" id="rv-all">ぜんぶ 覚えてる</button><button class="cs-btn" id="rv-none">ぜんぶ まだ</button></div>
           <ul class="rv-list rv-chk">${res.map((r, i) => `<li><label><input type="checkbox" data-i="${i}" ${r.known ? 'checked' : ''}><span class="t"><b>${esc(r.en)}</b><small>${esc(r.item.ja || '')}</small></span></label></li>`).join('')}</ul>
-          <div class="rv-two"><button class="cs-btn" id="rv-bk">↩ カードにもどる</button><button class="cs-btn rv-ok" id="rv-d">これで決定</button></div>`, () => {
+          <div class="rv-two">${free && o.after === 'list' ? '' : '<button class="cs-btn" id="rv-bk">↩ カードにもどる</button>'}<button class="cs-btn rv-ok" id="rv-d">これで決定</button></div>`, () => {
           const cbs = [...box.querySelectorAll('input[type=checkbox]')];
           // なぞるだけで、まとめて入れる・外せる(チェックの所から指をすべらせる)
           let paint = null, swallow = false; const lst = box.querySelector('.rv-chk');
@@ -160,7 +161,7 @@ export function createReview(core) {
           lst.onclick = e => { if (swallow && e.target.type === 'checkbox') e.preventDefault(); swallow = false; };   // なぞり側で入れ替え済み
           box.querySelector('#rv-all').onclick = () => cbs.forEach(c => { c.checked = true; });
           box.querySelector('#rv-none').onclick = () => cbs.forEach(c => { c.checked = false; });
-          box.querySelector('#rv-bk').onclick = () => { res.pop(); stepCardsFrom(res); };
+          const bk = box.querySelector('#rv-bk'); if (bk) bk.onclick = () => { res.pop(); stepCardsFrom(res); };
           box.querySelector('#rv-d').onclick = () => { cbs.forEach(c => { res[+c.dataset.i].known = c.checked; }); finish(res); };
         });
       }
@@ -174,6 +175,7 @@ export function createReview(core) {
         res.forEach(r => { try { const w = r.item || {}; if (r.known || !w.ja || w.kind === 'sentence') return; const it = core.notebook.add({ en: r.en, ja: w.ja, pos: w.pos, src: 'review' }, true); if (it && !it.sr) core.notebook.sr(it.id, { s: r.cant ? 'cant' : 'unk', box: 0, n: 0, w: 0, ok: 0, last: 0, due: now + 0.7 * 864e5 }); } catch (e) { } });
       }
       function commit(res) {
+        if (free) { toNote(res); dl.applyKnown(res); return 0; }
         toNote(res);
         dl.finishReview(day, res);
         return mode === 'today' ? give('review') : (!o.noPt ? give('prev') : 0);
@@ -185,11 +187,12 @@ export function createReview(core) {
         let g = 0, msg = '';
         if (res.length || !items.length) g = commit(res);
         go(`<h3>おつかれさま!</h3>${res.length ? `<p>覚えてる ${res.length - ng.length} ・ まだ ${ng.length}</p>${ng.length ? '<p class="cs-note">「まだ」の言葉は、あとで またでてくるよ。</p>' : ''}` : ''}
-          ${g ? `<p class="rv-pt">+${g} コイン</p>` : '<p class="cs-note">このふりかえりのコインは、もらえなかったよ(受け取り済み、または忘れた日)。</p>'}
+          ${g ? `<p class="rv-pt">+${g} コイン</p>` : free ? '' : '<p class="cs-note">このふりかえりのコインは、もらえなかったよ(受け取り済み、または忘れた日)。</p>'}
           ${mode === 'today' ? `<p class="cs-note">${statusLine()}</p>` : ''}<button class="cs-btn" id="rv-e">${mode === 'today' ? '今日はここまで!' : 'つづける'}</button>${items.length ? '<button class="cs-btn" id="rv-t">単語テストもやる</button>' : ''}`, () => { box.querySelector('#rv-e').onclick = () => close(); const tb = box.querySelector('#rv-t'); if (tb) tb.onclick = () => { close(); test(ng.length ? ng.map(r => r.item) : items); }; });
       }
       // 今日のふりかえりは、まちがって押しても勝手に終わらないよう、先に「ここまでにする?」と聞く
-      if (mode === 'today' && !o.noConfirm) go(`<h3>今日はここまでにする?</h3><p class="cs-note">この日のふりかえり(時間・言葉・カード)をして、今日を終わります。</p><p class="cs-note">${statusLine()}</p>
+      if (free) { if (!items.length) close(); else if (o.after === 'list') stepCheck(items.map(w => ({ en: w.en, known: false, item: w }))); else stepCards(); }
+      else if (mode === 'today' && !o.noConfirm) go(`<h3>今日はここまでにする?</h3><p class="cs-note">この日のふりかえり(時間・言葉・カード)をして、今日を終わります。</p><p class="cs-note">${statusLine()}</p>
         <button class="cs-btn" id="rv-y">ここまでにして、ふりかえる</button><button class="cs-btn" id="rv-no">まだ あそぶ</button>`, () => { box.querySelector('#rv-y').onclick = stepTime; box.querySelector('#rv-no').onclick = close; });
       else stepTime();
     });

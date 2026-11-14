@@ -89,6 +89,13 @@ export function createDayLog(core) {
     },
     forced() { const q = api.pending(); if (!q.length) return false; if (q.length >= FORCE_N) return true; const old = q.reduce((m, w) => Math.min(m, dayNum(w.added || w.day || dayKey())), 1e9); return dayNum(dayKey()) - old >= FORCE_DAYS; },
     // 復習の結果をしまう:known=覚えている → キューから外す / 覚えていない → キューに残す
+    // 読み上げ・フラッシュカードの結果だけをしまう(日のふりかえり扱いにしない)
+    applyKnown(results, k = dayKey()) {
+      const q = new Map(S.queue.map(w => [w.en.toLowerCase(), w]));
+      S.known = S.known || {};
+      for (const r of results) { const key = r.en.toLowerCase(); if (r.known) { q.delete(key); S.known[key] = 1; } else { delete S.known[key]; const o = q.get(key) || { ...r.item, added: k, unk: 0 }; o.unk = (o.unk || 0) + 1; delete o.known; q.set(key, o); } }
+      S.queue = [...q.values()].slice(-300); save();
+    },
     finishReview(k, results) {
       const d = dayOf(k); const q = new Map(S.queue.map(w => [w.en.toLowerCase(), w]));
       S.known = S.known || {};
