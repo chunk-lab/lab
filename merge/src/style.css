@@ -42,3 +42,14 @@ body{background-color:#aed0da}.mg-app{background:linear-gradient(155deg,#fff3d9,
 .mg-cell.mg-launching::after{content:'✦';position:absolute;z-index:5;top:-24px;left:28%;font-size:28px;color:#fff9b9;text-shadow:0 0 10px #f7a54d;pointer-events:none;animation:mgLaunchBurst .7s ease-out both}
 @keyframes mgMachineKick{0%{transform:translateY(0) scale(1)}20%{transform:translateY(7px) scale(1.18,.72)}48%{transform:translateY(-11px) scale(.86,1.22)}74%{transform:translateY(3px) scale(1.06,.94)}100%{transform:none}}
 @keyframes mgLaunchBurst{0%{opacity:0;transform:translateY(14px) scale(.3)}30%{opacity:1;transform:translateY(-8px) scale(1.4)}100%{opacity:0;transform:translateY(-38px) scale(.6)}}
+.mg-cycle{position:fixed;inset:0;z-index:80;background:#173e5070;pointer-events:auto;animation:mgCycleFade .45s ease-out both}
+.mg-cycle-banner{position:absolute;top:max(8%,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(88vw,420px);padding:12px 18px;text-align:center;background:#fff5ce;border:3px solid #e8b65f;border-radius:22px;box-shadow:0 8px 28px #16374b77;color:#355766;display:grid;gap:5px;font-weight:900;white-space:nowrap}
+.mg-cycle-banner strong{font-size:clamp(18px,5vw,25px)}.mg-cycle-banner span{font-size:13px}
+.mg-cycle-chunk{position:absolute;top:26%;left:calc(50% - min(42vw,175px));width:120px;height:140px;display:grid;justify-items:center;align-content:center;filter:drop-shadow(0 10px 8px #13394a80);animation:mgChunkArrive .7s cubic-bezier(.18,1.4,.3,1) both}
+.mg-cycle-face{width:120px;height:120px;object-fit:contain}.mg-cycle-chunk span{background:#fff5d7;color:#236b81;border:2px solid #83bdd0;border-radius:14px;padding:3px 8px;font-size:13px;font-weight:900;white-space:nowrap}
+.mg-cycle-toss .mg-cycle-chunk{animation:mgChunkToss .66s ease-in-out infinite alternate}
+.mg-cycle-leaving{animation:mgCycleFadeOut .8s ease-in forwards}.mg-cycle-leaving .mg-cycle-chunk{animation:mgChunkExit .8s ease-in forwards}.mg-cycle-leaving .mg-cycle-banner{animation:mgCycleFadeOut .4s ease-in forwards}
+@keyframes mgCycleFade{from{background:#173e5000}to{background:#173e5070}}@keyframes mgCycleFadeOut{to{opacity:0}}
+@keyframes mgChunkArrive{from{opacity:0;transform:translateX(-120vw) rotate(-20deg)}70%{transform:translateX(15px) rotate(8deg)}to{opacity:1;transform:none}}
+@keyframes mgChunkToss{from{transform:translateY(0) rotate(-8deg)}to{transform:translateY(-18px) rotate(12deg)}}
+@keyframes mgChunkExit{to{opacity:0;transform:translateX(120vw) rotate(18deg)}}
