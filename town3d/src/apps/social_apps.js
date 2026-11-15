@@ -37,7 +37,7 @@ export const cafeApp = {
     const box = frame(el, 'cafe');
     const MAXQ = 20, qty = {}; let last = '';   // qty:{おみやげid: 買う数}。last:さっき買ったものの結果(画面に残す)
     const fmt = n => Number(n).toLocaleString('ja-JP');
-    const menuNow = () => CAFE_MENU.filter(k => !ITEMS[k].secret || social.has(ITEMS[k].secret, 'secret'));
+    const menuNow = () => [...CAFE_MENU.filter(k => !ITEMS[k].secret || social.has(ITEMS[k].secret, 'secret')), ...['wine', 'alamode', 'cafeset'].filter(k => social.made(ITEMS[k].merge))];   // マージゲームで作れた品は、カフェのメニューにならぶ
     const totals = () => { let n = 0, sum = 0; for (const k in qty) if (qty[k] > 0 && ITEMS[k]) { n += qty[k]; sum += qty[k] * ITEMS[k].price; } return { n, sum }; };
     const stepBtn = (k, d, label, on) => `<button data-q="${k}" data-d="${d}" ${on ? '' : 'disabled'} style="width:34px;height:34px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:18px;color:#fff;background:${on ? 'linear-gradient(160deg,#ffb35c,#ff9a3c)' : '#d9d2e3'}">${label}</button>`;
     const draw = () => {

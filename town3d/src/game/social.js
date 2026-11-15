@@ -20,6 +20,9 @@ export const ITEMS = {
   cupcake: { icon: '🧁', name: 'カップケーキ', en: 'cupcake', price: 40 },
   donut: { icon: '🍩', name: 'ドーナツ', en: 'donut', price: 30 },
   dango: { icon: '🍡', name: 'おだんご', en: 'dango', price: 30 },
+  wine: { icon: '🍷', name: 'ワイン', en: 'wine', price: 150, merge: 'cafeB8' },
+  alamode: { icon: '🍧', name: 'プリンアラモード', en: 'pudding a la mode', price: 200, merge: 'cafeA9' },
+  cafeset: { icon: '🫖', name: '豪華なカフェセット', en: 'deluxe cafe set', price: 300, merge: 'cafeB9' },
   berry: { icon: '🍓', name: 'いちごタルト(ひみつメニュー)', en: 'strawberry tart', price: 120, secret: 'mii' },
 };
 export const CAFE_MENU = ['coffee', 'matcha', 'cocoa', 'juice', 'cake', 'choco', 'pudding', 'parfait', 'cookie', 'croissant', 'sandwich', 'cupcake', 'donut', 'dango', 'berry'];
@@ -110,10 +113,15 @@ export const social = {
   give(id, item) {
     if (!this.canGive(id) || !this.useItem(item)) return null;
     const G = get('gave', {}); G[id] = dayKey(); st.set('gave', G);
-    const r = this.reaction(id, item), res = this.addAff(id, PTS[r]);
+    const r = this.reaction(id, item), res = this.addAff(id, 0);   // プレゼントでは好感度は上がらない(上げるには、マージゲームで ほしい品を作ってわたす)
     this.learnPref(id, item, r);
     return { r, ...res };
   },
+  // ---- マージゲーム ----
+  mergeNote(id, name, icon, lv) { const M = get('mg', {}), x = M[id] = M[id] || { n: 0, last: [] }; x.n++; x.last.push({ name, icon, lv, at: Date.now() }); x.last = x.last.slice(-8); st.set('mg', M); },
+  mergeOf(id) { return get('mg', {})[id] || { n: 0, last: [] }; },
+  made(k) { return !!get('made', {})[k]; },
+  markMade(k) { const M = get('made', {}); if (M[k]) return false; M[k] = 1; st.set('made', M); return true; },
   // ---- 持っているおみやげ ----
   bag() { return get('bag', {}); },
   addItem(k, n = 1) { const B = this.bag(); B[k] = (B[k] || 0) + n; st.set('bag', B); },

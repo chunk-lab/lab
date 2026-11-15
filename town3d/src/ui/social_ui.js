@@ -1,5 +1,6 @@
 // 住人とのやりとり(プレゼント・頼みごと・お話)・町の「調べる」・宝探しの運営ツール。main.js から使う
-import { social, ITEMS, PREFS, NPC_NAME, EPISODES, LV_NAME, LV, PTS, memory, MEM } from '../game/social.js';
+import { social, ITEMS, PREFS, NPC_NAME, EPISODES, LV_NAME, LV, PTS, memory, MEM, UNLOCKS } from '../game/social.js';
+const UNLOCKS_OF = id => UNLOCKS[id];
 import { finds, WORDS, PHRASES, PROVERBS, PASSAGES, TREASURES, dayKey } from '../game/finds.js';
 import { weather, WX_INFO } from '../game/weather.js';
 import { FISH } from '../apps/fishing/data.js';
@@ -42,7 +43,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
     const id = r.def.id, res = social.give(id, k); if (!res) return;
     audio.play(res.r === 'no' ? 'tap' : 'coin');
     const d = PTS[res.r], ev = !res.up && (res.r === 'love' || res.r === 'like') && canDate(r);
-    hud.dialog({ name: name(r), role: `${heart(id)} ${d > 0 ? '+' + d : d}`, text: pick(REACT[res.r]) + (ev ? '\nねえ、これ、いっしょに食べない?' : ''), choices: ev ? [{ label: '🏠 お家で食べる', fn: () => invite(r) }, { label: '☕ カフェに行く', fn: () => startDate(r) }] : [] });
+    hud.dialog({ name: name(r), role: `${heart(id)}`, text: pick(REACT[res.r]) + (ev ? '\nねえ、これ、いっしょに食べない?' : ''), choices: ev ? [{ label: '🏠 お家で食べる', fn: () => invite(r) }, { label: '☕ カフェに行く', fn: () => startDate(r) }] : [] });
     if (res.up) setTimeout(() => levelUp(r, res.before, res.after), 1600);
   }
   // 「仲良くなる」を開いたときの、住人の最初のひと言と、すぐ使えるボタン
@@ -110,7 +111,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
   // ---- 話しかけたときのメニューに足すもの ----
   function choices(r) {
     const id = r.def.id; if (!PREFS[id]) return [];
-    const out = [{ k: 'bond', label: '🎁 プレゼントする', fn: () => gift(r) }];
+    const out = [{ k: 'bond', label: '📋 ステータス', fn: () => statusPanel(r) }, { k: 'bond', label: '🎁 プレゼントする', fn: () => gift(r) }];
     if ((ai && ai.ready) || memory.of(id).auto.length || memory.of(id).keep.length) out.push({ k: 'bond', label: '🗒 覚えていること', fn: () => memoryPanel(r) });
     if (id === 'gon') { out.push({ k: 'play', label: '🎒 ひろいものをたのむ', fn: () => gonAsk(r) }); out.push({ k: 'play', label: '🎒 たからもの', fn: () => treasurePanel() }); }
     for (const u of social.unlocksOf(id)) {
@@ -118,6 +119,22 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
       if (u.kind === 'date' && !(r.def.menu || []).some(m => m.act === 'date')) out.push({ k: 'bond', label: u.label, fn: () => startDate(r) });
     }
     return out;
+  }
+  // ---- ステータス: 好感度・説明・覚えていること・好み・マージで わたした品 ----
+  function statusPanel(r) {
+    const id = r.def.id, L = social.level(id), a = social.aff(id), nx = social.next(id), mg = social.mergeOf(id), K = social.knownPrefs(), mem = memory.of(id);
+    const likes = Object.keys(K).filter(k => k.startsWith(id + ':')).map(k => { const it = ITEMS[k.slice(id.length + 1)]; return it ? `${it.icon}${it.name}…${{ love: '大好物', like: '好き', no: 'にがて', normal: 'ふつう' }[K[k]]}` : null; }).filter(Boolean);
+    const un = social.unlocksOf(id).filter(u => u.label), nextU = (UNLOCKS_OF(id) || []).find(u => u.label && social.level(id) < u.lv);
+    const big = mem.auto.filter(x => x.imp).slice(-2).map(x => x.t).concat(mem.keep.slice(-1).map(x => x.t || x));
+    const L1 = [`♥ ${LV_NAME[L]}(Lv${L})  好感度 ${a}` + (nx ? ` ・ つぎまで あと${nx}` : ' ・ いちばん なかよし!'),
+      `📖 ${String(r.def.persona || r.def.role).split('。')[0]}。`,
+      mg.n ? `🧩 マージで わたした品: ${mg.n}こ(${mg.last.slice(-3).map(x => x.icon + x.name).join(' ')})` : '🧩 マージゲームで ほしい品を作って わたすと、好感度が上がるよ',
+      likes.length ? `🍰 好み: ${likes.join(' / ')}` : '🍰 好みは まだ わからない(プレゼントで わかるよ)',
+      big.length ? `🗒 覚えていること: ${big.join(' / ')}` : '',
+      un.length ? `🗝 できること: ${un.map(u => u.label).join(' / ')}` : '',
+      nextU ? `🔒 Lv${nextU.lv}で: ${nextU.label}` : '',
+      '👗 着替え・🖼 思い出アルバム: じゅんびちゅう'].filter(Boolean);
+    hud.dialog({ name: name(r), role: heart(id), text: L1.join('\n'), choices: [{ label: 'もどる', fn: () => hud.closeDialog && hud.closeDialog() }] });
   }
   // ---- ゴンのひろいもの: 何もしなくても1日1つ。たのむともう1つ。仲良しほど多く ----
   function gonGive(n) {

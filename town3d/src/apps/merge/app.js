@@ -2,11 +2,12 @@
 // 盤面 7×9。同じ品を重ねると次のLv。生成機をタップで品が出る(⚡1)。住人のほしい品をわたすと好感度。13人にわたすとチャンクくんのごほうび。
 import { social, NPC_NAME, LV, LV_NAME } from '../../game/social.js';
 import { portrait } from '../../ui/portraits.js';
-import { CFG, LINES, GENS, RECIPES, NPCS, QUIZ_FB, IMG } from './data.js';
+import { CFG, LINES, GENS, RECIPES, NPCS, QUIZ_FB, IMG, GOALS } from './data.js';
 
 const CSS = `
 .mg{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#ffd2c0,#e2c4ff 55%,#b9d6ff);color:#4a3a5e;font-weight:800;user-select:none;-webkit-user-select:none;touch-action:none}
 .mg *{box-sizing:border-box}
+.mg-goal{position:absolute;left:6px;right:6px;top:40px;height:18px;line-height:18px;font-size:12px;font-weight:700;color:#7a3b00;background:#fff3c4;border-radius:9px;padding:0 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;z-index:2}.mg-goal b{color:#e8366a}
 .mg-top{position:absolute;left:0;right:0;top:0;height:40px;display:flex;align-items:center;gap:5px;padding:0 6px;font-size:13px}
 .mg-pill{background:#fff;border-radius:999px;padding:5px 9px;box-shadow:0 2px 0 #b79ad3;white-space:nowrap;display:flex;align-items:center;gap:3px}
 .mg-pill small{font-size:10px;color:#8a76a6}
@@ -115,7 +116,7 @@ export function createMergeApp(env = {}) {
       const sfx = (k, a) => { try { env.sfx && env.sfx(k, a); } catch (e) { } };
       const root = document.createElement('div'); root.className = 'mg';
       root.innerHTML = `<div class="mg-top"><div class="mg-pill mg-en">⚡<b>0</b><small></small></div><button class="mg-qb">✏️ 英語で回復</button><span style="flex:1"></span><div class="mg-pill mg-cy">👥 <b>0</b>/13</div><div class="mg-pill">🪙<b data-bind="coins">${Math.floor(ctx.wallet.get()).toLocaleString('ja-JP')}</b></div></div>
-<div class="mg-strip"></div><div class="mg-board"></div><div class="mg-info"><span></span></div>
+<div class="mg-goal"></div><div class="mg-strip"></div><div class="mg-board"></div><div class="mg-info"><span></span></div>
 <div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-book"><b>📖</b>ずかん</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
 <div class="mg-fx"></div>`;
       host.appendChild(root);
@@ -152,8 +153,9 @@ export function createMergeApp(env = {}) {
         return out;
       }
       function fillAct(cycle) { while (S.act.length < CFG.vis && S.queue.length) { const id = S.queue.shift(); if (S.act.some(a => a.id === id)) continue; S.act.push({ id, w: newWants(cycle) }); } }
+      if (S.goal == null) S.goal = 0; if (!S.gp) S.gp = {};
       if (!S.act.length && S.queue.length) fillAct();
-      const defOf = o => o.t === 'it' ? { name: LINES[o.ln].items[o.lv - 1][0], icon: LINES[o.ln].items[o.lv - 1][1], color: LINES[o.ln].color, key: o.ln + o.lv }
+      const defOf = o => o.t === 'it' ? { name: LINES[o.ln].items[o.lv - 1][0], icon: LINES[o.ln].items[o.lv - 1][1], color: LINES[o.ln].color, key: o.ln + o.lv, en: LINES[o.ln].items[o.lv - 1][2] || '' }
         : o.t === 'gen' ? { name: GENS[o.g].name, icon: GENS[o.g].icon, color: GENS[o.g].color, key: 'gen_' + o.g }
           : { name: GENS[o.g].name + 'のパーツ', icon: '⚙️', color: '#dfe8f1', key: 'part_' + o.g };
       const art = (d, cls = 'mg-e') => IMG[d.key] ? `<img src="${IMG[d.key]}" alt="">` : `<b class="${cls}">${d.icon}</b>`;
@@ -176,7 +178,7 @@ export function createMergeApp(env = {}) {
       const els = new Map();
       function layout() {
         const W = root.clientWidth, H = root.clientHeight; if (!W || !H) return;
-        const TOP = 40, INFO = 24, BOT = 56, MINS = 132;
+        const TOP = 60, INFO = 24, BOT = 56, MINS = 132;
         CS = Math.floor(Math.min((W - 8) / CFG.cols, (H - TOP - INFO - BOT - MINS - 10) / CFG.rows));
         const bw = CS * CFG.cols + 8, bh = CS * CFG.rows + 8;
         SH = Math.max(MINS, Math.min(210, H - TOP - bh - INFO - BOT - 4));
@@ -309,8 +311,17 @@ export function createMergeApp(env = {}) {
         el.classList.add('fly');
         el.animate([{ transform: `translate(${fx}px,${fy}px) scale(.3)` }, { transform: `translate(${(fx + p.x) / 2}px,${Math.min(fy, p.y) - CS * 0.7}px) scale(1.15)`, offset: .55 }, { transform: `translate(${p.x}px,${p.y}px) scale(1)` }], { duration: 300, easing: 'ease-out' }).onfinish = () => { el.classList.remove('fly'); pop(el, 1.2); };
       }
+      // ---- お題: 作ったものが目標に入っていたら進む。達成でコイン→つぎのお題 ----
+      function goalOn(key) {
+        const G = GOALS[S.goal % GOALS.length]; if (!G.keys.includes(key) || S.gp[key]) return; S.gp[key] = 1; const n = Object.keys(S.gp).length;
+        if (n >= G.n) { const got = ctx.wallet.give(G.coin, 'merge:goal'); S.goal++; S.gp = {}; setTimeout(() => { banner(`🎉 お題クリア! <small>🪙+${got}</small>`); sfx('fanfare'); goalDraw(); }, 900); } else goalDraw();
+        save();
+      }
+      function goalDraw() { const G = GOALS[S.goal % GOALS.length], n = Object.keys(S.gp).length; $('.mg-goal').innerHTML = `📌 今日のお題 ${(S.goal % GOALS.length) + 1}/${GOALS.length}: ${esc(G.t)} <b>${n}/${G.n}</b> ・🪙${G.coin}`; }
       function see(o) {
-        const d = defOf(o); if (o.t !== 'it' || S.seen[d.key]) return; S.seen[d.key] = 1;
+        const d0 = defOf(o); if (o.t === 'it') { try { social.markMade(d0.key); } catch (e) { } goalOn(d0.key); }
+        const d = d0; if (o.t !== 'it' || S.seen[d.key]) return; S.seen[d.key] = 1;
+        if (['cafeB8', 'cafeA9', 'cafeB9'].includes(d.key)) setTimeout(() => toast('カフェの新メニューになったよ!(町のカフェで買える)'), 1600);
         if (o.lv >= 3) { const c = CFG.newCoin(o.lv), got = ctx.wallet.give(c, 'merge:new'); banner(`✨ NEW! ${d.icon} ${esc(d.name)} <small>🪙+${got}</small>`); sfx('new'); }
       }
 
@@ -365,7 +376,7 @@ export function createMergeApp(env = {}) {
         card.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
         setTimeout(() => fly(art(d), from, rel(slot), 440, () => {
           const to = rel(slot); burst(to.x, to.y, 12, ['#ff6f91', '#ffc400', '#fff']);
-          const n = CFG.affOf(w.lv); let up = null; try { up = social.addAff(id, n); } catch (e) { }
+          const n = CFG.affOf(w.lv); let up = null; try { up = social.addAff(id, n); social.mergeNote(id, d.name, d.icon, w.lv); } catch (e) { } try { env.speak && d.en && env.speak(d.en); } catch (e) { }
           const got = ctx.wallet.give(CFG.coinOf(w.lv), 'merge:give'); sfx('heart'); S.gave++;
           ftext(to.x, to.y - 10, `💗 好感度 +${n}`, '#e8366a', true);
           ['💗', '💕', '💗'].forEach((h, i) => setTimeout(() => ftext(to.x + (i - 1) * 22, to.y + 14, h), 120 + i * 120));
@@ -395,7 +406,8 @@ export function createMergeApp(env = {}) {
         if (ready.length) { ready.forEach((x, n) => setTimeout(() => { const o = findW(x.w); if (o) deliver(id, x.i, o); }, n * 350)); return; }
         const w = a.w.find(x => !x.got); if (!w) return; sfx('tap');
         const d = defOf({ t: 'it', ln: w.ln, lv: w.lv }), gk = Object.keys(GENS).find(g => GENS[g].lines.includes(w.ln));
-        toast(`${NPC_NAME[id] || id}は「${d.name}」(Lv${w.lv})がほしい → ${GENS[gk].icon}${GENS[gk].name}${genOpen(gk) ? '' : '(ロック中)'}`);
+        try { env.speak && d.en && env.speak("I'd love a " + d.en + '!'); } catch (e) { }
+        toast(`${NPC_NAME[id] || id}「I'd love ${d.en}!」(${d.name} Lv${w.lv}) → ${GENS[gk].icon}${GENS[gk].name}${genOpen(gk) ? '' : '(ロック中)'}`);
         S.cells.forEach(x => { if (x && x.t === 'gen' && x.g === gk) { const e = els.get(x.u); e.classList.remove('wig'); void e.offsetWidth; e.classList.add('wig'); } });
       }
 
@@ -551,7 +563,7 @@ export function createMergeApp(env = {}) {
       const onRz = () => layout(); window.addEventListener('resize', onRz);
 
       // ---- はじめ ----
-      layout(); S.cells.forEach(o => o && mk(o)); S.store.forEach((o, i) => { if (o) { if (i >= S.slots) { S.store[i] = null; S.inbox.push({ t: o.t, ln: o.ln, g: o.g, lv: o.lv }); } else mk(o); } });
+      layout(); goalDraw(); S.cells.forEach(o => o && mk(o)); S.store.forEach((o, i) => { if (o) { if (i >= S.slots) { S.store[i] = null; S.inbox.push({ t: o.t, ln: o.ln, g: o.g, lv: o.lv }); } else mk(o); } });
       if (S.first) S.cells.forEach(o => { if (o && o.t === 'gen' && genOpen(o.g)) els.get(o.u).classList.add('first'); });
       sig = ''; enTick(); refresh(); checkRecov();
       requestAnimationFrame(() => { if (alive) layout(); });
