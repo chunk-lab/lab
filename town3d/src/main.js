@@ -34,6 +34,7 @@ import { createHud, CSS } from './ui/hud.js';
 import { APPS } from './apps/registry.js';
 import { openFinder } from './ui/finder.js';
 import { openNotes } from './ui/notes.js';
+import { createMergeApp } from './apps/merge/app.js';
 import { createEncounter, ENC } from './game/encounter.js';
 import { createStage } from './game/encounter3d.js';
 import { createSparkles } from './world/sparkle.js';
@@ -184,6 +185,7 @@ export function mount(container, opt = {}) {
   const gemsNow = () => (opt.gems ? opt.gems.get() : null);   // ダイヤ(組み込み先があるときだけ表示)
   const appHost = createAppHost({ route: (id, p) => openApp(id, p), paramsFor: (id, p) => id === 'fortune' ? { ...(p || {}), ...fortuneParams() } : id === 'home' ? (medalCheck(), { ...(p || {}), guest: hanaGuest() }) : id === 'gamebox' || id === 'amuse' ? { ...(p || {}), season: curSeason(), guest: hanaGuest() } : id === 'fishing' ? { ...(p || {}), hour: env.hour, season: curSeason(), rain: !!(env.weather && env.weather.rain > 0.2) } : p, root, bus, storage, wallet, getPlayer: () => ({ id: me.id, name: settings.name, look: settings.look }), getAudio: () => audio.get(), getNotes: () => notes.map(n => ({ ...n })), features: opt.features || [], gems: opt.gems || null, house: opt.house || null, photo: opt.photo || null, member: { paid: () => !!(opt.member?.paid?.()) || isBirthMonth(), birthday: () => isBirthMonth() }, dictUrl: opt.dictUrl || null, learn: opt.learn || null });
   APPS.forEach(a => appHost.register(a));
+  appHost.register({ id: 'merge', title: 'チャンクマージ', type: 'module', module: createMergeApp({ sfx: (k, a) => audio.play('mg', [k, a]), quiz: n => (opt.battleQs ? opt.battleQs(n) : null), record: (q, ok) => opt.battleRecord && opt.battleRecord(q, ok), speak: t => opt.speak && opt.speak(t, {}), speakStop: () => opt.speakStop && opt.speakStop() }) });   // マージゲーム(2Dで完結)
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   { // 運営用:町から直接「英語の釣り堀」を開くボタン(?admin=1 で出る)
     let adm = false; try { const q = new URLSearchParams(location.search).get('admin'); if (q === '1') localStorage.setItem('cs:core:admin', 'true'); else if (q === '0') localStorage.removeItem('cs:core:admin'); adm = JSON.parse(localStorage.getItem('cs:core:admin')) === true; } catch (e) { }
@@ -560,6 +562,7 @@ export function mount(container, opt = {}) {
     { k: 'chunkcards', n: 'カード', where: () => spotOf('chunkcards'), go: () => openApp('chunkcards', {}), ask: 'カフェでカード勝負、最近してないよね。行ってみる?' },
     { k: 'omikuji', n: 'おみくじ', where: () => spotOf('omikuji'), go: () => openApp('omikuji', {}), ask: '神社のおみくじ、最近ひいてないでしょ? 行こうよ' },
     { k: 'amuse', n: 'アミューズメントセンター', where: () => spotOf('amuse'), go: () => openApp('amuse', {}), ask: 'アミューズメントセンター、久しぶりに行かない?' },
+    { k: 'merge', n: 'チャンクマージ', where: () => ({ x: me.x, z: me.z }), go: () => openApp('merge', {}), ask: 'チャンクマージ、やってみない? みんなのほしい物を作ってあげようよ' },
     { k: 'gamebox', n: 'チャンクボックス', where: () => spotOf('home'), go: () => openApp('gamebox', { from: 'home' }), ask: 'ねえ、家のテレビでゲームしようよ! 最近やってないでしょ' },
   ];
   function neglected() {
@@ -986,7 +989,7 @@ export function mount(container, opt = {}) {
   }
   function openApp(id, params) {
     bumpUse(id === 'fishing' && params && params.tab === 'en' ? 'fishing-en' : id);
-    if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox', 'amuse'].includes(id)) markPlay(id);
+    if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox', 'amuse', 'merge'].includes(id)) markPlay(id);
     // 組み込み先(チャンクタウン)が開くアプリ(ゲームなど)は、そちらに任せる
     if (opt.openExternal?.(id, params)) { input.clear(); return; }
     if (!appHost.has(id)) { hud.toast('まだ準備中みたい'); return; }
@@ -1844,7 +1847,7 @@ export function mount(container, opt = {}) {
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
     snowState: () => { const B = battle.state; return B && { phase: B.phase, men: B.men.map(m => { const v = new THREE.Vector3(m.x, 0.6, m.z).project(camera); return [m.x, m.z, m.hp, m.g.scale.x, !!m.g.parent, m.g.visible, +v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(3), m.g.children.length, m.g.children[0].visible]; }), me: [me.x, me.z, me.ry], F: B.F.map(f => [f.name, f.x, f.z, f.hp]) }; },
-    rideTest: () => { rideStart('free', false); return !!ride; }, rideFloat: () => bus.emit('ui:dodge'), rideOff: () => rideOff(), rideDown: () => bus.emit('ui:down'), rideSt: () => ride ? { alt: +(ride.alt||0).toFixed(1), t: ride.altT, dive: !!ride.dive, bn: !!ride.bn, y: +me.ch.rideY.toFixed(1) } : null, sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
+    rideTest: () => { rideStart('free', false); return !!ride; }, rideFloat: () => bus.emit('ui:dodge'), rideOff: () => rideOff(), rideDown: () => bus.emit('ui:down'), rideSt: () => ride ? { alt: +(ride.alt||0).toFixed(1), t: ride.altT, dive: !!ride.dive, bn: !!ride.bn, y: +me.ch.rideY.toFixed(1) } : null, openApp: (id, p) => openApp(id, p || {}), sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
     npc: id => residents.list.find(x => x.def.id === id),   // テスト用
     finds: () => finds.spots().map(s => ({ key: s.key, x: s.x, z: s.z, kind: s.kind })),   // テスト用
     benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用

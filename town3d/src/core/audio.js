@@ -138,6 +138,27 @@ export function createAudio() {
     whistle: () => tone(500, 0.8, { type: 'sine', gain: 0.05, slide: 3.2 }),
     boom: sc => { const s = Math.max(0.3, Math.min(1.4, +sc || 1)); tone(95 / s, 0.7, { type: 'triangle', gain: 0.32 * Math.min(1, s), slide: 0.3 }); tone(55 / s, 1.0, { type: 'sine', gain: 0.3 * Math.min(1, s), slide: 0.5 }); tone(1800, 0.25, { type: 'square', gain: 0.02, slide: 0.4, delay: 0.1 }); },
     bigboom: () => { tone(70, 1.4, { type: 'triangle', gain: 0.42, slide: 0.25 }); tone(42, 2.2, { type: 'sine', gain: 0.45, slide: 0.5 }); tone(120, 0.9, { type: 'sawtooth', gain: 0.1, slide: 0.3, delay: 0.05 }); tone(1500, 0.5, { type: 'square', gain: 0.03, slide: 0.4, delay: 0.1 }); },
+    // マージゲームの効果音 [種類, 数(Lvやコンボ)]
+    mg: ([k, a = 1]) => {
+      const up = Math.pow(1.122, Math.min(12, a - 1));
+      if (k === 'tap') tone(700, 0.05, { type: 'triangle', gain: 0.08 });
+      else if (k === 'land') tone(300, 0.07, { type: 'sine', gain: 0.12, slide: 0.7 });
+      else if (k === 'pop') { tone(420, 0.09, { type: 'sine', gain: 0.16, slide: 2.1 }); tone(900, 0.06, { type: 'triangle', gain: 0.06, delay: 0.06 }); }
+      else if (k === 'merge') { tone(523 * up, 0.1, { type: 'triangle', gain: 0.16 }); tone(784 * up, 0.16, { type: 'triangle', gain: 0.16, delay: 0.07 }); tone(1568 * up, 0.12, { type: 'sine', gain: 0.05, delay: 0.12 }); }
+      else if (k === 'unlock') { tone(180, 0.12, { type: 'square', gain: 0.06, slide: 0.5 }); tone(660, 0.1, { type: 'triangle', gain: 0.15, delay: 0.08 }); tone(990, 0.2, { type: 'triangle', gain: 0.15, delay: 0.16 }); }
+      else if (k === 'gen') [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.16, { type: 'triangle', gain: 0.16, delay: i * 0.08 }));
+      else if (k === 'new') [784, 988, 1175, 1568].forEach((f, i) => tone(f, 0.14, { type: 'sine', gain: 0.12, delay: i * 0.06 }));
+      else if (k === 'combo') tone(660 * Math.pow(1.06, Math.min(12, a)), 0.12, { type: 'square', gain: 0.05 });
+      else if (k === 'sell') { tone(1320, 0.06, { type: 'square', gain: 0.05 }); tone(1760, 0.16, { type: 'square', gain: 0.05, delay: 0.06 }); }
+      else if (k === 'give') tone(440, 0.25, { type: 'sine', gain: 0.12, slide: 2 });
+      else if (k === 'heart') { tone(880, 0.12, { type: 'sine', gain: 0.14 }); tone(1109, 0.12, { type: 'sine', gain: 0.14, delay: 0.1 }); tone(1319, 0.26, { type: 'sine', gain: 0.14, delay: 0.2 }); }
+      else if (k === 'coin') { tone(1320, 0.08, { type: 'square', gain: 0.05 }); tone(1760, 0.18, { type: 'square', gain: 0.05, delay: 0.07 }); }
+      else if (k === 'bad') tone(170, 0.16, { type: 'square', gain: 0.05, slide: 0.7 });
+      else if (k === 'quizok') { tone(880, 0.08, { type: 'triangle', gain: 0.15 }); tone(1320, 0.16, { type: 'triangle', gain: 0.15, delay: 0.07 }); }
+      else if (k === 'quizng') { tone(300, 0.14, { type: 'triangle', gain: 0.12 }); tone(220, 0.22, { type: 'triangle', gain: 0.12, delay: 0.1 }); }
+      else if (k === 'fanfare') [523, 523, 523, 659, 784, 659, 784, 1047].forEach((f, i) => tone(f, i === 7 ? 0.6 : 0.14, { type: 'triangle', gain: 0.18, delay: [0, 0.12, 0.24, 0.36, 0.52, 0.68, 0.8, 0.96][i] }));
+      else if (k === 'fanfare2') [784, 988, 1175, 1568, 2093].forEach((f, i) => tone(f, i === 4 ? 0.5 : 0.12, { type: 'triangle', gain: 0.16, delay: i * 0.09 }));
+    },
     piano: ([f, dur, delay, v]) => piano(f, dur, delay, v),
     harmonica: kind => { const T = TUNES[kind] || TUNES.noon; let t = 0; for (const [f, b] of T.notes) { const d = b * T.beat; if (f) reed(f, d * 0.96, t); t += d; } return { sec: t, name: T.name }; },
   };

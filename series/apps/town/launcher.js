@@ -40,6 +40,7 @@ const SECS = [
   ] },
   { k: 'amuse', icon: '🎮', title: 'アミューズメント', sub: '息抜き・カード対戦', color: '#c2417a', warp: 'amuse', groups: [
     { h: '遊ぶ', items: [
+      { t: 'チャンクマージ', i: '🧩', kind: 'app', app: 'merge', params: {} },
       { t: 'アミューズメントセンター', i: '🎮', kind: 'app', app: 'amuse', params: {} },
       { t: 'チャンク・カード', i: '🃏', kind: 'play', id: 'cards' }] },
   ] },
