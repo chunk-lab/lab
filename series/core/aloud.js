@@ -48,7 +48,7 @@ export function createAloud(core) {
   // ui.show(word, { i, n, first, phase }) first='ja'|'en'(先に読むほう) phase='first'|'second'
   function run(list0, o = {}) {
     const c = Object.assign({}, C, o.cfg || {}), list = c.order === 'random' ? shuf(list0.slice()) : list0.slice();
-    let alive = true, token = 0, paused = false, timer = null, i = 0; const F = o.fast ? 0.2 : 1;   // fast: ローディング用。読み込み中は処理がおそいので、間をつめて「出してすぐ読む」
+    let alive = true, token = 0, paused = false, timer = null, i = 0; const F = o.fast ? 0.1 : 1;   // fast: ローディング用。読み込み中は処理がおそいので、間をつめて「出してすぐ読む」
     const wait = ms => new Promise(r => { timer = setTimeout(r, ms); });
     const voiceOn = () => { try { return !!core.settings.get('voice'); } catch (e) { return true; } };
     const blocked = () => paused || document.body.classList.contains('tw-talking') || document.body.classList.contains('md-app-open');

@@ -126,10 +126,11 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
-      battleQs: async (n = 10) => {   // エンカウント戦闘用の4択(単語テストと同じ作り方)。その人のレベル帯の単語+まちがえた言葉。例文があれば ex に付ける
-        const pool = [], seen = new Set(), add = (w, from) => { if (!w || !w.en || !w.ja || w.kind === 'sentence' || /\s/.test(w.en)) return; const k = w.en.toLowerCase(); if (seen.has(k)) return; seen.add(k); pool.push({ en: w.en, ja: w.ja, pos: w.pos, from }); };
+      studySec: () => { try { return core.daylog.totalSummary().by.study || 0; } catch (e) { return 0; } },   // マージゲーム: ほかの勉強の合計秒数(生成機のロック解除)
+      battleQs: async (n = 10, exclude = null) => {   // エンカウント戦闘用の4択(単語テストと同じ作り方)。その人のレベル帯の単語+まちがえた言葉。例文があれば ex に付ける
+        const pool = [], seen = new Set(exclude ? [...exclude] : []), add = (w, from) => { if (!w || !w.en || !w.ja || w.kind === 'sentence' || /\s/.test(w.en)) return; const k = w.en.toLowerCase(); if (seen.has(k)) return; seen.add(k); pool.push({ en: w.en, ja: w.ja, pos: w.pos, from }); };
         try { await core.level.load(); core.daylog.missed(14).filter(w => !core.level.tooEasy(w.en)).slice(0, 4).forEach(w => add(w, 'missed')); } catch (e) { }
-        try { (await core.level.fillWords(30, seen)).forEach(w => add(w, 'level')); } catch (e) { }
+        try { (await core.level.fillWords(Math.max(30, n * 3), seen)).forEach(w => add(w, 'level')); } catch (e) { }
         const qs = core.review.makeQs(pool.slice(0, Math.max(n, 12)).concat([]), n, pool);
         for (const q of qs) { try { q.ex = await core.useit.example(q.w.en); } catch (e) { q.ex = null; } }
         return qs;
