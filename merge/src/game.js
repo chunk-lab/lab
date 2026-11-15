@@ -73,7 +73,11 @@ function makeGame(data,e) {
    if(from===to)return {};
    const a=s.board[from],b=s.board[to];if(!a||a.locked)return {error:'locked'};
    if(!b){s.board[to]=a;s.board[from]=null;return {at:to,event:'moved'};}
-   if(a.code!==b.code)return {error:b.locked?'locked':'mismatch'};
+   if(a.code!==b.code){
+     if(b.locked)return {error:'locked'};
+     s.board[to]=a;s.board[from]=b;
+     return {at:to,other:from,event:'swapped'};
+   }
    const o=parse(a.code);
    if(o.rank===maxRank(o)&&o.kind!=='p')return {error:'maxRank'};
    const next=o.kind==='p'&&o.rank===e.partRanks?encode('g',o.family,1):encode(o.kind,o.family,o.rank+1);
