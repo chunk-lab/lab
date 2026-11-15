@@ -118,7 +118,7 @@ function render(){
    '<section class="mg-harbor"><div class="mg-heading"><h2 class="mg-chapter"></h2><div class="mg-turn">'+button('‹','prev','mg-arrow','aria-label="'+T.prevResident+'"')+'<span class="mg-visitors"></span>'+button('›','next','mg-arrow','aria-label="'+T.nextResident+'"')+'</div></div><div class="mg-orders"></div></section>'+
    '<section class="mg-work"><div class="mg-heading"><h2>'+T.workshop+'</h2><span class="mg-meta"></span></div><div class="mg-board" role="group" aria-label="'+T.board+'"></div></section>'+
    '<section class="mg-panel"></section><nav class="mg-nav">'+['bag','book','study','hint'].map(k=>button(svg(k)+T[k],k,'mg-navbtn')).join('')+'</nav>';
- drawTop();drawOrders();app.querySelector('.mg-meta').textContent=T.progress+' '+s.gifts+' '+T.times;
+ drawTop();drawOrders();app.querySelector('.mg-meta').textContent=s.turn+T.turnLabel+' '+s.visited.length+'/13';
  app.querySelector('.mg-board').innerHTML=s.board.map(cell).join('');panel();
 }
 function animate(indices,cls){for(const i of indices){const b=app.querySelector('[data-cell="'+i+'"]');if(b){b.classList.remove(cls);void b.offsetWidth;b.classList.add(cls);}}}
