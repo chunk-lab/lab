@@ -1,10 +1,10 @@
 [
   {
-    "prompt": "「小麦粉」は英語で？",
+    "prompt": "「コーヒー」は英語で？",
     "options": [
-      "flour",
-      "flower",
-      "floor"
+      "coffee",
+      "cookie",
+      "cocoa"
     ],
     "answer": 0
   },
