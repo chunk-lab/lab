@@ -16,16 +16,16 @@ const CSS = `
 .mg-qb.full{filter:grayscale(.7);opacity:.7}
 .mg-strip{position:absolute;left:0;right:0;top:40px;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;padding:3px 6px;touch-action:pan-x;scrollbar-width:none;align-items:stretch}
 .mg-strip::-webkit-scrollbar{display:none}
-.mg-npc{flex:none;width:var(--cw,108px);background:#fff;border-radius:18px;box-shadow:0 3px 0 #a98cc9,0 0 0 2px #cdb6e6;position:relative;display:flex;flex-direction:column;align-items:center;padding:5px 4px 5px;gap:2px;overflow:visible}
+.mg-npc{flex:none;width:var(--cw,108px);height:calc(100% - 4px);margin-top:2px;background:#fff;border-radius:18px;box-shadow:0 3px 0 #a98cc9,0 0 0 2px #cdb6e6;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 4px;gap:2px;overflow:visible}
 .mg-npc img,.mg-npc .mg-np{width:var(--pz,64px);height:var(--pz,64px);border-radius:50%;object-fit:cover;object-position:top;background:#efe3fb;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 0 3px #e8d9f7}
 .mg-nm{font-size:11px;line-height:1.1;text-align:center;white-space:nowrap}
 .mg-hr{display:flex;align-items:center;gap:3px;font-size:9px;color:#d6457a;width:90%}
 .mg-hr i{flex:1;height:7px;border-radius:5px;background:#f3dbe6;overflow:hidden;display:block}
 .mg-hr i b{display:block;height:100%;background:linear-gradient(90deg,#ff9fb5,#ff5e8a);border-radius:5px;transition:width .6s}
-.mg-ws{display:flex;gap:5px;margin-top:2px}
-.mg-w{position:relative;width:var(--ws,44px);height:var(--ws,44px);border-radius:13px;background:var(--c,#f3ecfa);border:2px solid #7d62a0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--ws,44px)*.55);font-weight:400}
+.mg-ws{display:flex;gap:6px;margin-top:1px}
+.mg-w{position:relative;width:var(--ws,36px);height:var(--ws,36px);border-radius:13px;background:var(--c,#f3ecfa);border:2px solid #7d62a0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--ws,36px)*.58);font-weight:400}
 .mg-w img{width:80%;height:80%;object-fit:contain}
-.mg-w i{position:absolute;right:-4px;bottom:-5px;font-style:normal;font-size:10px;line-height:14px;min-width:15px;text-align:center;background:#4a3a5e;color:#fff;border-radius:8px;padding:0 3px;font-weight:800}
+.mg-w i{position:absolute;right:-4px;bottom:-5px;font-style:normal;font-size:9px;line-height:12px;min-width:13px;text-align:center;background:#4a3a5e;color:#fff;border-radius:8px;padding:0 3px;font-weight:800}
 .mg-w.rdy{border-color:#ff5e8a;box-shadow:0 0 0 3px #ffc2d3;animation:mgBob .6s infinite alternate}
 .mg-w.got{opacity:.55;filter:grayscale(.5)}
 .mg-w.got::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;color:#1f9d55;font-weight:900;text-shadow:0 0 3px #fff,0 0 3px #fff}
@@ -149,7 +149,7 @@ export function createMergeApp(env = {}) {
         shuf(pool.slice()).slice(0, CFG.wants).forEach(ln => { const L = LINES[ln], top = Math.min(7, (L.mergeMax || L.items.length) - 1); out.push({ ln, lv: Math.max(2, Math.min(top, CFG.orderLv(cycle) - 1 + rnd(3))), got: false }); });
         return out;
       }
-      function fillAct(cycle) { while (S.act.length < CFG.vis && S.queue.length) S.act.push({ id: S.queue.shift(), w: newWants(cycle) }); }
+      function fillAct(cycle) { while (S.act.length < CFG.vis && S.queue.length) { const id = S.queue.shift(); if (S.act.some(a => a.id === id)) continue; S.act.push({ id, w: newWants(cycle) }); } }
       if (!S.act.length && S.queue.length) fillAct();
       const defOf = o => o.t === 'it' ? { name: LINES[o.ln].items[o.lv - 1][0], icon: LINES[o.ln].items[o.lv - 1][1], color: LINES[o.ln].color, key: o.ln + o.lv }
         : o.t === 'gen' ? { name: GENS[o.g].name, icon: GENS[o.g].icon, color: GENS[o.g].color, key: 'gen_' + o.g }
@@ -174,13 +174,13 @@ export function createMergeApp(env = {}) {
       const els = new Map();
       function layout() {
         const W = root.clientWidth, H = root.clientHeight; if (!W || !H) return;
-        const TOP = 40, INFO = 28, BOT = 56, MINS = 118;
+        const TOP = 40, INFO = 24, BOT = 56, MINS = 132;
         CS = Math.floor(Math.min((W - 8) / CFG.cols, (H - TOP - INFO - BOT - MINS - 10) / CFG.rows));
         const bw = CS * CFG.cols + 8, bh = CS * CFG.rows + 8;
         SH = Math.max(MINS, Math.min(210, H - TOP - bh - INFO - BOT - 4));
         BX = Math.round((W - bw) / 2) + 4; BY = TOP + SH + 4 + 4;
         elStrip.style.height = SH + 'px';
-        const cw = Math.max(96, Math.min(130, Math.round(W / 3.2))), pz = Math.max(40, Math.min(92, SH - 96)), ws = Math.max(36, Math.min(52, Math.round((cw - 18) / 2)));
+        const ws = SH >= 170 ? 38 : 34, cw = Math.max(92, Math.min(120, Math.round(W / 3.4))), pz = Math.max(38, Math.min(92, SH - ws - 62));
         elStrip.style.setProperty('--cw', cw + 'px'); elStrip.style.setProperty('--pz', pz + 'px'); elStrip.style.setProperty('--ws', ws + 'px');
         elBoard.style.cssText = `left:${BX - 4}px;top:${BY - 4}px;width:${bw}px;height:${bh}px`;
         if (!elBoard.children.length) for (let i = 0; i < N; i++) { const c = document.createElement('div'); c.className = 'mg-cell' + ((i + Math.floor(i / CFG.cols) * (CFG.cols % 2 ? 0 : 1)) % 2 ? ' d' : ''); elBoard.appendChild(c); }
@@ -317,7 +317,7 @@ export function createMergeApp(env = {}) {
       const findW = w => S.cells.find(o => o && !o.lk && o.t === 'it' && o.ln === w.ln && o.lv === w.lv);
       const scoreOf = a => a.w.filter(w => !w.got && findW(w)).length * 10 + a.w.filter(w => w.got).length * 6;
       const sorted = () => S.act.map((a, i) => ({ a, i, sc: scoreOf(a) })).sort((x, y) => y.sc - x.sc || x.i - y.i).map(x => x.a);
-      let sig = '';
+      let sig = '', leavingN = 0;
       function gaugeOf(id) { const a = social.aff(id), l = social.level(id), lo = LV[l], hi = LV[l + 1]; return { name: LV_NAME[l] || '', pct: hi == null ? 100 : Math.max(4, Math.round((a - lo) / (hi - lo) * 100)), l }; }
       function cardHtml(a) {
         const id = a.id, pic = portrait(id), g = gaugeOf(id);
@@ -335,7 +335,7 @@ export function createMergeApp(env = {}) {
       }
       function refresh() {
         const sg = sorted().map(a => a.id + ':' + a.w.map(w => (w.got ? 2 : findW(w) ? 1 : 0)).join('')).join('|');
-        if (sg !== sig) { const flip = !!sig; sig = sg; drawStrip(flip); }
+        if (sg !== sig && !leavingN) { const flip = !!sig; sig = sg; drawStrip(flip); }
         elInb.querySelector('em')?.remove(); if (S.inbox.length) { const e = document.createElement('em'); e.textContent = S.inbox.length; elInb.appendChild(e); }
         info();
       }
@@ -361,12 +361,13 @@ export function createMergeApp(env = {}) {
       }
       function leave(id) {   // 2つそろった人は、よろこんで帰り、あたらしい人が来る
         const c = elStrip.querySelector(`[data-npc="${id}"]`), ai = S.act.findIndex(x => x.id === id); if (ai < 0) return;
+        leavingN++;
         const done = () => {
-          const ix = S.act.findIndex(x => x.id === id); if (ix < 0) return; S.act.splice(ix, 1); S.served++; fillAct(); sig = ''; save();
+          leavingN = Math.max(0, leavingN - 1); const ix = S.act.findIndex(x => x.id === id); if (ix < 0) return; S.act.splice(ix, 1); S.served++; fillAct(); sig = ''; save();
           $('.mg-cy b').textContent = S.served; refresh();
           if (!S.act.length && !S.queue.length) setTimeout(finale, 700);
         };
-        if (c) { const r = rel(c); burst(r.x, r.y, 14, ['#ffc400', '#ff6f91', '#fff', '#3ecf86']); sfx('coin'); c.animate([{ transform: 'translateY(0) scale(1)', opacity: 1 }, { transform: 'translateY(-14px) scale(1.12)', opacity: 1, offset: .35 }, { transform: 'translateY(-40px) scale(.5)', opacity: 0 }], { duration: 520, easing: 'ease-in', fill: 'forwards' }).onfinish = done; } else done();
+        if (c) { const r = rel(c); burst(r.x, r.y, 14, ['#ffc400', '#ff6f91', '#fff', '#3ecf86']); sfx('coin'); c.animate([{ transform: 'translateY(0) scale(1)', opacity: 1 }, { transform: 'translateY(-14px) scale(1.12)', opacity: 1, offset: .35 }, { transform: 'translateY(-40px) scale(.5)', opacity: 0 }], { duration: 520, easing: 'ease-in', fill: 'forwards' }); setTimeout(done, 540); } else done();
       }
       function npcTap(id, k) {
         const a = S.act.find(x => x.id === id); if (!a) return;
@@ -477,7 +478,7 @@ export function createMergeApp(env = {}) {
           if (sel.t === 'gen') sp.textContent = sel.gl ? `🔒 ${d.name} ・ ほかの勉強をあと${leftMin(sel.g)}分で使えるよ` : `${d.icon} ${d.name} Lv${sel.lv} ・ タップで品が出る(⚡1)。同じLvを重ねると強くなる`;
           else if (sel.lk) sp.textContent = `🔒 ${d.name} Lv${sel.lv} ・ 同じものを重ねると ひらく`;
           else { const L = sel.t === 'it' ? LINES[sel.ln] : null, nx = L && L.items[sel.lv] ? ` → つぎ: ${S.seen[sel.ln + (sel.lv + 1)] ? L.items[sel.lv][0] : '？'}` : ''; sp.textContent = `${d.icon} ${d.name} Lv${sel.lv}${nx}`; const b = document.createElement('button'); b.textContent = `売る 🪙${priceOf(sel)}`; b.onclick = () => { const o = sel; if (o && byU(o.u)) sell(o); }; elInfo.appendChild(b); }
-        } else sp.textContent = S.first ? '👆 光っている「生成機」をタップ! 品物が出るよ' : S.gave < 1 ? '同じ品を重ねてLvアップ → 住人のほしい品(2つ)を作って わたそう' : `${S.cycle + 1}しゅう目 ・ 13人ぜんいんに わたすと、チャンクくんが素材を運んでくるよ`;
+        } else sp.textContent = '';
       }
 
       // ---- 操作(ドラッグ・タップ) ----
