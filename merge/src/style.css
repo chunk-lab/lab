@@ -25,18 +25,14 @@ body{background-color:#aed0da}.mg-app{background:linear-gradient(155deg,#fff3d9,
 @keyframes mgExit{to{opacity:0;transform:translateX(-45px) scale(.8)}}
 @keyframes mgEnter{from{opacity:0;transform:translateX(50px) scale(.75)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.mg-cell.mg-created,.mg-cell.mg-combined,.mg-order.mg-departing,.mg-order.mg-arriving{animation:none}.mg-cell.mg-created::before,.mg-cell.mg-combined::before,.mg-cell.mg-combined::after{display:none}}
-.mg-leap{position:fixed;z-index:90;pointer-events:none;display:grid;place-items:center;filter:drop-shadow(0 6px 5px #55482e70);animation:mgLeap .48s cubic-bezier(.25,.65,.34,1.12) both}
+.mg-leap{position:fixed;z-index:90;pointer-events:none;display:grid;place-items:center;filter:drop-shadow(0 9px 7px #283b4270);transform-origin:center;will-change:left,top,transform}
 .mg-leap .mg-icon{width:100%;height:100%}.mg-cell.mg-awaiting>.mg-icon{opacity:0}
-@keyframes mgLeap{0%{opacity:0;transform:translate(0,0) scale(.25)}12%{opacity:1;transform:translate(calc(var(--mg-dx)*.12),-30px) scale(.55)}48%{opacity:1;transform:translate(calc(var(--mg-dx)*.5),calc(var(--mg-dy)*.5 - 62px)) scale(.98)}78%{opacity:1;transform:translate(calc(var(--mg-dx)*.84),calc(var(--mg-dy)*.84 - 20px)) scale(1.06)}100%{opacity:0;transform:translate(var(--mg-dx),var(--mg-dy)) scale(.8)}}
-@media(prefers-reduced-motion:reduce){.mg-leap{animation:none;display:none}.mg-cell.mg-awaiting>.mg-icon{opacity:1}}
 .mg-scatter-mascot{position:absolute;z-index:60;left:0;top:16px;width:110px;height:105px;pointer-events:none;display:grid;place-items:center;filter:drop-shadow(0 4px 3px #2b69757a);animation:mgMascot 1.6s ease-in-out both}
 .mg-scatter-face{height:75px;width:80px;object-fit:contain}.mg-scatter-mascot span{font-weight:900;font-size:10px;color:#fff;background:#286f80;border:2px solid #fff4d3;border-radius:18px;padding:2px 5px;white-space:nowrap}
 @keyframes mgMascot{0%{transform:translate(-130px,-25px) rotate(-12deg);opacity:0}17%{opacity:1}30%{transform:translate(55px,-8px) rotate(8deg)}65%{transform:translate(190px,6px) rotate(-7deg);opacity:1}100%{transform:translate(440px,-30px) rotate(12deg);opacity:0}}
 @media(prefers-reduced-motion:reduce){.mg-scatter-mascot{animation:none;display:none}}
-/* Generated pieces travel above the worktop before their destination becomes visible. */
-.mg-leap{animation:none!important;will-change:transform;filter:drop-shadow(0 9px 7px #283b4270);transform-origin:50% 80%}
+/* The flight path is updated per frame in app.js. */
 .mg-cell.mg-awaiting>.mg-icon,.mg-cell.mg-awaiting>.mg-rank,.mg-cell.mg-awaiting>.mg-family-mark{visibility:hidden}
 .mg-produces{position:absolute;right:1px;bottom:1px;display:flex;width:35px;height:19px;z-index:2;background:#fff5d4;border:1px solid #9d805d;border-radius:9px;box-shadow:0 1px 2px #58412a80;pointer-events:none}
 .mg-produces .mg-icon{width:50%;height:100%}.mg-produces .mg-art{filter:none}.mg-family-mark{position:absolute;left:3px;bottom:4px;width:8px;height:8px;border:1px solid #fff8dc;border-radius:50%;box-shadow:0 1px 2px #5e6d6d9c;pointer-events:none}
 .mg-cell.mg-drop-swap{background:#e8dff6!important;box-shadow:inset 0 0 0 3px #8366ad!important}
-@media(prefers-reduced-motion:reduce){.mg-cell.mg-awaiting>.mg-icon,.mg-cell.mg-awaiting>.mg-rank,.mg-cell.mg-awaiting>.mg-family-mark{visibility:visible}}
