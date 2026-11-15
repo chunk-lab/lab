@@ -7,6 +7,7 @@ const rect=(x,y,w,h,r,c)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'
 const shine=path('M14 19q2-5 8-6','none');
 const crate=(a,b)=>path('m6 23 29-9 23 8-28 12z',b)+path('m6 23 24 10v23L8 47z',a)+path('m30 33 28-11-2 25-26 10z',b)+path('m10 35 16 6m9-2 17-6','none');
 const art={
+cafe:rect(6,10,52,45,8,'#e4a569')+rect(10,14,44,36,6,'#fff2d1')+rect(13,5,38,10,3,'#6f9f96')+path('m19 10h26','none')+rect(14,29,36,18,3,'#ad7955')+path('M17 25h17l-2 12q-7 5-13 0z','#f9f2dd')+path('M34 27q9-3 6 5-1 4-7 4','none')+path('M41 39q3-9 7-3l3 6z','#e5b773')+circ(22,20,3,'#d8776a')+circ(41,20,3,'#d8776a'),
 oven:rect(6,15,52,40,7,'#d46653')+rect(8,10,48,38,7,'#ffab85')+rect(13,23,38,21,5,'#536577')+rect(17,26,30,14,3,'#364c60')+path('M20 36q1-8 7-4 4-6 9-2 6-3 8 6z','#efb96c')+circ(17,17,2,'#fff0c9')+circ(26,17,2,'#fff0c9')+path('M39 17h9','none')+rect(15,51,6,5,2,'#8d6955')+rect(43,51,6,5,2,'#8d6955'),
 drinks:rect(11,9,40,15,5,'#82c4bc')+path('M14 24h8v24h28v7H10l2-8z','#4d9b97')+rect(27,22,15,5,2,'#8f8c7e')+path('M33 27v6','none')+rect(25,34,18,14,5,'#fff0cd')+path('M43 36q11-2 5 7l-5 1','none')+circ(43,16,3,'#fff4d4')+path('M17 15h13','none'),
 tools:crate('#d48749','#e5ad64')+path('m12 25 8-17 5 2-6 18z','#91adb0')+path('M17 8q4-7 11-3l-5 3 3 4-4 4z','#acc6c6')+path('m33 27 3-20 5 1-2 18z','#bd7945')+path('m32 5 15 2-1 7-15-3z','#69959d'),
@@ -72,4 +73,19 @@ const set=[
 ];
 set[9][1]=O(34,35,18,16,violet)+O(34,35,13,11,cream)+G(ribbon(rose),'translate(0 1) scale(.53)');
 window.MGArt={machine:original.machine,item:(line,rank)=>original.item(line,rank)||shape(set[line][rank-1]),part:(f,r)=>shape(G([O(30,31,15,15,gold)+O(30,31,7,7,coffee)+P('m30 30 10-9'),R(19,13,23,18,4,mint)+P('m26 31 0 18h11V31z',gold),R(15,19,34,25,4,gold)+R(22,23,20,10,2,cream),P('M8 36q-4-19 11-17 4-15 15-6 13-11 15 5 13-3 10 13L36 51l-12-1z',rose)+P('m19 23 10 23m5-29-2 27m14-22-10 22'),set[8][0],P('m14 32 18-18 17 14-19 21z',gold)+O(32,30,4,4,cream)][f],r===1?'translate(2 2) scale(.91)':'translate(0 0)')+(r>1?spark(50,12):''))};
+})();
+/* Preserve illustrated menu and wardrobe pieces, with separate fallback art for v2 items. */
+(()=>{
+const legacy=window.MGArt;
+const refs=[
+ [[1,3],[0,3],[1,4],[0,4],[0,5],[0,6],[0,7],[0,8],null],
+ [[2,3],[3,3],[2,4],[2,5],[1,5],[1,6],null,null,null],
+ [[4,1],null,[4,3],[4,4],[4,6],[4,5],[4,7],[4,8]],
+ [[5,1],[5,2],[5,5],null,null,[5,7],[5,8],null],
+ [null,null,null,null,null,null,null,null],
+ [null,null,null,null,null,null,null,null],
+ [[8,3],[8,4],[8,4],null,[8,5],[8,5],null,null],
+ [[9,1],[9,2],[8,4],null,[8,5],[8,6],[8,7],[8,8]]
+];
+window.MGArt={...legacy,item:(line,rank)=>{const ref=refs[line]?.[rank-1];return ref?legacy.item(...ref):'';}};
 })();
