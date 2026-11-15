@@ -10,7 +10,7 @@ function makeGame(data,e) {
  const capacity=s=>Math.min(e.maxStorage,e.initialStorage+level(s)-1);
  const tile=code=>({code,locked:false,used:0,rest:0});
  function initial(){
-   const s={version:1,board:Array(cap).fill(null),bag:[],energy:e.energyMax,energyAt:Date.now(),english:{day:'',count:0},xp:0,gifts:0,orders:[],known:{},residentCursor:0,serial:0,sound:true};
+   const s={version:1,board:Array(cap).fill(null),bag:[],energy:e.energyMax,energyAt:Date.now(),english:{day:'',count:0},xp:0,gifts:0,orders:[],known:{},residentCursor:0,serial:0,sound:true,turn:1,visited:[]};
    for(const [idx,code] of Object.entries(e.starterTiles)) {s.board[idx]=tile(code);s.board[idx].locked=e.locked.includes(+idx);}
    completeOrders(s); discover(s); return s;
  }
@@ -21,6 +21,7 @@ function makeGame(data,e) {
  }
  function completeOrders(s,departed){
    s.away ||= {};
+   s.turn ||= 1;s.visited ||= [];
    if(typeof s.sound!=='boolean')s.sound=true;
    if(!Number.isSafeInteger(s.residentCursor))s.residentCursor=0;
    // Preserve the two original tokens, the board, inventories and affection of older saves.
@@ -33,14 +34,14 @@ function makeGame(data,e) {
    // Keep existing seats in place. A visitor who just left waits for another turn.
    for(let step=0;s.orders.length<seats&&step<roster.length;step++){
      const index=(s.residentCursor+step)%roster.length,id=roster[index];
-     if(id===departed||s.orders.some(q=>q.id===id))continue;
+     if(id===departed||s.visited.includes(id)||s.orders.some(q=>q.id===id))continue;
      s.orders.push(s.away[id]||{id,wants:starter(id),gifts:0});delete s.away[id];
      s.residentCursor=(index+1)%roster.length;step=-1;
    }
-   s.focus=s.orders.some(q=>q.id===s.focus)?s.focus:s.orders[0].id;
+   s.focus=s.orders.some(q=>q.id===s.focus)?s.focus:s.orders[0]?.id;
  }
  function invite(s,slot,id){
-   if(!s.orders[slot]||!npcs.some(n=>n.id===id)||s.orders.some(q=>q.id===id))return {error:'missing'};
+   if(!s.orders[slot]||!npcs.some(n=>n.id===id)||s.orders.some(q=>q.id===id)||s.visited.includes(id))return {error:'missing'};
    const prior=s.orders[slot];s.away[prior.id]=prior;
    s.orders[slot]=s.away[id]||{id,wants:starter(id),gifts:0};
    delete s.away[id];s.focus=id;return {event:'invite'};
@@ -66,7 +67,7 @@ function makeGame(data,e) {
    s.board[space]=tile(encode('i',line,rank));
    if(s.energy===e.energyMax)s.energyAt=now;s.energy-=e.energyCost;
    if(++t.used>=e.machineUses[o.rank-1])t.rest=now+e.restSeconds[o.rank-1]*1000;
-   return {at:space,event:'generated'};
+   return {at:space,from:idx,event:'generated'};
  }
  function move(s,from,to){
    if(from===to)return {};
@@ -117,16 +118,28 @@ function makeGame(data,e) {
    const totalRank=delivered.reduce((sum,c)=>sum+parse(c).rank,0);
    const gain=e.affectionBase+totalRank-2,old=order.id;
    s.xp+=e.xpPerGiftRank*totalRank;s.gifts++;order.gifts++;s.focus=old;
-   let part=null;
-   if(Math.random()<e.partChance){
-     part=tile(encode('p',Math.floor(parse(delivered[0]).family/2),1));
-     const space=emptyNear(s,vacated);if(space>=0)s.board[space]=part;else s.bag.push(part);
-   }
+   // Every visitor leaves a tangible part. Store it if the board is full.
+   const part=tile(encode('p',Math.floor(parse(delivered[0]).family/2),1));
+   const space=emptyNear(s,vacated);if(space>=0)s.board[space]=part;else s.bag.push(part);
    order.wants=nextPair(s,order,(aff[old]||0)+gain);
-   s.away[old]=order;s.orders.splice(j,1);
+   s.away[old]=order;s.orders.splice(j,1);s.visited.push(old);
+   const newTurn=s.visited.length===npcs.length;
+   if(newTurn){s.turn++;s.visited=[];}
    const seats=s.orders.length;completeOrders(s,old);
-   s.focus=s.orders[j]?.id||s.orders[0].id;
-   return {event:'gift',gain,old,delivered,newArrival:s.orders.length>seats?s.orders.at(-1).id:null,part:part?.code,effect:{type:'affection',id:old,n:gain}};
+   s.focus=s.orders[j]?.id||s.orders[0]?.id;
+   const drops=[];
+   if(newTurn){
+     // Bias the free starter materials toward the new visitors' requested lines.
+     const wanted=s.orders.flatMap(q=>q.wants.map(code=>parse(code).family));
+     for(let n=0;n<e.turnDropCount&&wanted.length;n++){
+       const family=wanted[Math.floor(Math.random()*wanted.length)];
+       const machine=s.board.findIndex(t=>t?.code==='g'+Math.floor(family/2)+'.1');
+       const at=emptyNear(s,machine<0?Math.floor(Math.random()*cap):machine);
+       if(at<0)break;
+       s.board[at]=tile(encode('i',family,1));drops.push({at,from:machine<0?at:machine});
+     }
+   }
+   return {event:'gift',gain,old,delivered,newTurn,turn:s.turn,drops,newArrival:s.orders.length>seats?s.orders.at(-1).id:null,part:part.code,effect:{type:'affection',id:old,n:gain}};
  }
  return {initial,checklist,invite,completeOrders,level,capacity,discover,tick,generate,move,gift,available,emptyNear,maxRank,parse};
 }
