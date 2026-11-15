@@ -33,3 +33,10 @@ body{background-color:#aed0da}.mg-app{background:linear-gradient(155deg,#fff3d9,
 .mg-scatter-face{height:75px;width:80px;object-fit:contain}.mg-scatter-mascot span{font-weight:900;font-size:10px;color:#fff;background:#286f80;border:2px solid #fff4d3;border-radius:18px;padding:2px 5px;white-space:nowrap}
 @keyframes mgMascot{0%{transform:translate(-130px,-25px) rotate(-12deg);opacity:0}17%{opacity:1}30%{transform:translate(55px,-8px) rotate(8deg)}65%{transform:translate(190px,6px) rotate(-7deg);opacity:1}100%{transform:translate(440px,-30px) rotate(12deg);opacity:0}}
 @media(prefers-reduced-motion:reduce){.mg-scatter-mascot{animation:none;display:none}}
+/* Generated pieces travel above the worktop before their destination becomes visible. */
+.mg-leap{animation:none!important;will-change:transform;filter:drop-shadow(0 9px 7px #283b4270);transform-origin:50% 80%}
+.mg-cell.mg-awaiting>.mg-icon,.mg-cell.mg-awaiting>.mg-rank,.mg-cell.mg-awaiting>.mg-family-mark{visibility:hidden}
+.mg-produces{position:absolute;right:1px;bottom:1px;display:flex;width:35px;height:19px;z-index:2;background:#fff5d4;border:1px solid #9d805d;border-radius:9px;box-shadow:0 1px 2px #58412a80;pointer-events:none}
+.mg-produces .mg-icon{width:50%;height:100%}.mg-produces .mg-art{filter:none}.mg-family-mark{position:absolute;left:3px;bottom:4px;width:8px;height:8px;border:1px solid #fff8dc;border-radius:50%;box-shadow:0 1px 2px #5e6d6d9c;pointer-events:none}
+.mg-cell.mg-drop-swap{background:#e8dff6!important;box-shadow:inset 0 0 0 3px #8366ad!important}
+@media(prefers-reduced-motion:reduce){.mg-cell.mg-awaiting>.mg-icon,.mg-cell.mg-awaiting>.mg-rank,.mg-cell.mg-awaiting>.mg-family-mark{visibility:visible}}
