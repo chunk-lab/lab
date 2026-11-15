@@ -1756,7 +1756,19 @@ export function mount(container, opt = {}) {
   }
 
   // バックグラウンドでは止める
-  const vis = () => { if (document.hidden) { paused = true; audio.suspend(); } else { paused = false; timer.update(); if (!held) audio.resume(); } };
+  // 地面・壁が真っ黒になるとき(長く裏にいたあと・GPUが絵を手放したとき)の直し:絵(テクスチャ)をGPUへ送り直す
+  const reviveTex = () => {
+    try {
+      const seen = new Set(), up = t => { if (t && t.isTexture && !seen.has(t)) { seen.add(t); t.needsUpdate = true; } };
+      scene.traverse(o => { const ms = o.material ? (Array.isArray(o.material) ? o.material : [o.material]) : []; ms.forEach(m => { for (const k in m) { const v = m[k]; if (v && v.isTexture) up(v); } m.needsUpdate = true; }); });
+      up(scene.background);
+    } catch (e) { }
+  };
+  const cv = renderer.domElement;
+  on(cv, 'webglcontextlost', e => { e.preventDefault(); });
+  on(cv, 'webglcontextrestored', () => { reviveTex(); });
+  bus.on('app:close', reviveTex);
+  const vis = () => { if (document.hidden) { paused = true; audio.suspend(); } else { paused = false; timer.update(); reviveTex(); if (!held) audio.resume(); } };
   on(document, 'visibilitychange', vis);
   on(root, 'pointerdown', () => audio.unlock(), { once: true });
 
