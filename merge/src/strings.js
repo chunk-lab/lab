@@ -14,3 +14,13 @@ Object.assign(window.MGStrings,{
  dropGuide:'同じ絵・同じ数字の品物を重ねる', cookGuide:'生成機をタップして素材を出す', visitorGuide:'交代しても、途中の注文と好感度は残るよ。',
  stock:'所持', showRecipe:'進化の順番', takePart:'部品を入手', focusTip:'追いかける注文を選ぶと、チャンク君が足りない品物の作り方を案内するよ。'
 });
+Object.assign(window.MGStrings,{
+ first:'クッキーをもう一つのクッキーへドラッグして、カップケーキを作ろう。',
+ nextBake:'カップケーキ同士を重ねると、ドーナツになるよ。',
+ deliverFirst:'ドーナツとコーヒーがそろったよ。はなに届けよう。',
+ getFlour:'カフェをタップしてメニューを作ろう。',
+ helpText:'店や生成機をタップして品物を出し、同じ品物を2つドラッグで重ねよう。欲しい2品がそろった町人をタップすると、そのまま渡せるよ。',
+ cycleComplete:'13人全員に渡せた！',cycleReward:'チャンク君からのプレゼント：',
+ scatterHello:'みんな、ありがとう！',specialPending:'特別合成・準備中',
+ specialGuide:'Lv.9は特別合成品。必要な材料と個数は仕様決定後に追加します。'
+});
