@@ -58,9 +58,9 @@ async function action(fn){
    if(r.close&&sheet.open)sheet.close();
    render();
    if(r.event==='generated')leap(r.from,r.at,s.board[r.at].code,0);
-   else if(r.at!=null)animate([r.at],r.event==='merged'||r.event==='unlocked'?'mg-combined':'mg-pop');
+   else if(r.at!=null)animate(r.other!=null?[r.at,r.other]:[r.at],r.event==='merged'||r.event==='unlocked'?'mg-combined':'mg-pop');
    if(r.newTurn){scatterMascot();r.drops.forEach((drop,i)=>leap(drop.from,drop.at,s.board[drop.at].code,i*95,true));chime('scatter');}
-   if(r.event==='gift'){app.querySelector('.mg-orders').scrollLeft=0;const arriving=app.querySelector('.mg-order:last-child');arriving?.classList.add('mg-arriving');}
+   if(r.event==='gift'){const at=s.orders.findIndex(q=>q.id===r.newArrival);app.querySelector('[data-act="order:'+at+'"]')?.classList.add('mg-arriving');}
    if(r.message)toast(r.message+(game.level(s)>before?'　'+T.levelUp:''));
  }catch(err){console.error(err);fail(err.message===T.resolve?T.resolve:T.error);}finally{busy=false;}
 }
@@ -76,14 +76,22 @@ function meter(id){
  return '<span class="mg-meter" aria-label="'+T.aff+' '+value+'"><span>♥ '+value+'/'+goal+'</span><span class="mg-meter-track"><i style="width:'+(value/goal*100)+'%"></i></span></span>';
 }
 function drawOrders(){
- const list=app.querySelector('.mg-orders'),scroll=list.scrollLeft;
- list.innerHTML=s.orders.map((q,i)=>{
-   const n=resident(q.id),flags=game.checklist(s,q),ready=flags.every(Boolean);
+ const list=app.querySelector('.mg-orders');
+ const closeness=code=>{const want=game.parse(code),held=[...s.board,...s.bag].filter(t=>t&&!t.locked&&t.code[0]==='i').map(t=>game.parse(t.code)).filter(t=>t.family===want.family);
+   return held.length?Math.max(0,want.rank-Math.max(...held.map(t=>t.rank))):want.rank+4;};
+ const ranked=s.orders.map((q,i)=>({q,i,flags:game.checklist(s,q)})).sort((a,b)=>{
+   const readyA=a.flags.filter(Boolean).length,readyB=b.flags.filter(Boolean).length;
+   if(readyA!==readyB)return readyB-readyA;
+   const distance=x=>x.q.wants.reduce((n,code,k)=>n+(x.flags[k]?0:closeness(code)),0);
+   return distance(a)-distance(b)||a.i-b.i;
+ });
+ list.innerHTML=ranked.map(({q,i,flags})=>{
+   const n=resident(q.id),ready=flags.every(Boolean);
    const bubbles=q.wants.map((code,k)=>'<span class="mg-mini-item '+(flags[k]?'mg-in-stock':'')+'">'+icon(code)+'<b>'+ (flags[k]?'✓':game.parse(code).rank)+'</b></span>').join('');
    const label=q.wants.map(code=>info(code).name).join('・');
    return button('<span class="mg-ticket">'+bubbles+'</span>'+portrait(q.id,'mg-face')+'<strong>'+esc(n.name)+'</strong>'+meter(q.id)+(ready?'<span class="mg-ready-tag">'+T.gift+'</span>':''),'order:'+i,'mg-order'+(ready?' mg-ready':'')+(s.focus===q.id?' mg-following':''),'aria-label="'+esc(n.name+'　'+label+'　'+(ready?T.gift:T.wish))+'"');
  }).join('');
- list.scrollLeft=scroll;
+ list.scrollLeft=0;
  const stage=e.chapterGifts.reduce((n,threshold,i)=>s.gifts>=threshold?i:n,0);
  app.querySelector('.mg-chapter').textContent=e.workshopNames[stage];
  app.querySelector('.mg-visitors').textContent=s.orders.length+' / '+e.activeLimit;
@@ -101,8 +109,12 @@ function firstHint(){
 }
 function cell(t,i){
  let html='',label=T.empty,cls='mg-cell';if(t){const o=game.parse(t.code);cls+=' mg-occupied'+(t.locked?' mg-locked':'');label=info(t.code).name+' '+T.lv+o.rank+(t.locked?' '+T.lockedTag:'');
- html=icon(t.code)+'<span class="mg-rank">'+o.rank+'</span>';const mark=t.locked?'▧':o.kind==='g'?(t.rest>Date.now()?'◷':'ϟ'):o.kind==='p'?'✚':'';
- if(mark)html+='<span class="mg-mark">'+mark+'</span>';}
+ html=icon(t.code)+'<span class="mg-rank">'+o.rank+'</span>';
+ if(o.kind==='g')html+='<span class="mg-produces" aria-hidden="true">'+icon('i'+(o.family*2)+'.1')+icon('i'+(o.family*2+1)+'.1')+'</span>';
+ else if(o.kind==='i')html+='<span class="mg-family-mark" style="background:'+esc(data.machines[data.lines[o.family].machine].color)+'"></span>';
+ const mark=t.locked?'▧':o.kind==='g'?(t.rest>Date.now()?'◷':'ϟ'):o.kind==='p'?'✚':'';
+ if(mark)html+='<span class="mg-mark">'+mark+'</span>';
+ if(o.kind==='g')label+='　'+T.produces+' '+data.lines[o.family*2].name+'・'+data.lines[o.family*2+1].name;}
  return '<button class="'+cls+(choice===i?' mg-picked':'')+'" data-cell="'+i+'" aria-label="'+esc(label)+'">'+html+'</button>';
 }
 function panel(){
@@ -110,6 +122,8 @@ function panel(){
  if(!t&&reaction&&reaction.until>Date.now()){el.innerHTML=portrait(reaction.id,'mg-avatar')+'<div class="mg-blurb"><strong>'+esc(resident(reaction.id).name)+'</strong>'+esc(reaction.text)+'</div>';return;}
  if(!t){el.innerHTML=portrait('chunkkun','mg-avatar')+'<div class="mg-blurb"><strong>'+T.hint+'</strong>'+firstHint()+'</div>'+button('？','help','mg-small','aria-label="'+T.how+'"');return;}
  const o=game.parse(t.code);let hint=t.locked?T.lockedInfo:o.kind==='g'?(t.rest>Date.now()?T.release+Math.ceil((t.rest-Date.now())/1000)+T.sec:T.use+' '+(e.machineUses[o.rank-1]-(t.rest?0:t.used))):o.kind==='p'?T.partTip:T.itemTip;
+ if(o.kind==='g')hint=T.produces+' '+data.lines[o.family*2].name+'／'+data.lines[o.family*2+1].name+'。'+hint;
+ if(o.kind==='i')hint=data.machines[data.lines[o.family].machine].name+'から。'+hint;
  el.innerHTML='<div class="mg-avatar">'+icon(t.code)+'</div><div class="mg-blurb"><strong>'+esc(info(t.code).name)+' · '+T.lv+o.rank+'</strong><small>'+hint+'</small></div><div class="mg-actions">'+(!t.locked&&o.kind!=='g'?button(T.bag,'stow','mg-small'):'')+(!t.locked&&o.kind==='i'?button(T.sell,'sell','mg-small'):'')+'</div>';
 }
 function render(){
@@ -133,9 +147,18 @@ function leap(from,to,code,delay=0,chunk=false){
  const a=source.getBoundingClientRect(),b=target.getBoundingClientRect(),size=Math.min(b.width,b.height);
  const sprite=document.createElement('span');sprite.className='mg-leap';sprite.innerHTML=icon(code);
  sprite.style.left=(a.left+a.width/2-size/2)+'px';sprite.style.top=(a.top+a.height/2-size/2)+'px';sprite.style.width=size+'px';sprite.style.height=size+'px';
- sprite.style.setProperty('--mg-dx',(b.left+b.width/2-a.left-a.width/2)+'px');sprite.style.setProperty('--mg-dy',(b.top+b.height/2-a.top-a.height/2)+'px');sprite.style.animationDelay=delay+'ms';
+ const dx=b.left+b.width/2-a.left-a.width/2,dy=b.top+b.height/2-a.top-a.height/2;
  target.classList.add('mg-awaiting');document.body.append(sprite);
- setTimeout(()=>{sprite.remove();target.classList.remove('mg-awaiting');animate([to],'mg-created');},delay+490);
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){sprite.remove();target.classList.remove('mg-awaiting');return;}
+ // Pixel coordinates avoid invalid CSS calculations that made the item appear instantly.
+ const flight=sprite.animate([
+   {offset:0,opacity:1,transform:'translate(0px,0px) scale(.55)'},
+   {offset:.2,opacity:1,transform:'translate('+dx*.16+'px,'+(dy*.16-48)+'px) scale(1)'},
+   {offset:.5,opacity:1,transform:'translate('+dx*.5+'px,'+(dy*.5-105)+'px) scale(1.24)'},
+   {offset:.8,opacity:1,transform:'translate('+dx*.84+'px,'+(dy*.84-48)+'px) scale(1.12)'},
+   {offset:1,opacity:1,transform:'translate('+dx+'px,'+dy+'px) scale(.88)'}
+ ],{duration:700,delay,easing:'linear',fill:'both'});
+ flight.finished.then(()=>{sprite.remove();if(target.isConnected){target.classList.remove('mg-awaiting');animate([to],'mg-created');}}).catch(()=>sprite.remove());
 }
 function useCell(i){
  if(busy||halted)return;
@@ -228,7 +251,7 @@ function dispatch(act){
  case 'give':{
    if(departing)return;
    departing=true;sheet.close();
-   const card=app.querySelectorAll('.mg-order')[i];card?.classList.add('mg-departing');
+   const card=app.querySelector('[data-act="order:'+i+'"]');card?.classList.add('mg-departing');
    setTimeout(()=>{departing=false;action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:r.newTurn?'チャンク君「'+r.turn+T.turnStart+'」':resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+'　'+T.partWon};});},280);
    break;
  }
@@ -257,13 +280,13 @@ function dropKind(from,to){
  const a=s.board[from],b=s.board[to];
  if(from===to)return '';
  if(!b)return 'empty';
- if(a.code!==b.code)return 'invalid';
+ if(a.code!==b.code)return b.locked?'invalid':'swap';
  const o=game.parse(a.code);
  if(o.kind!=='p'&&o.rank>=game.maxRank(o))return 'invalid';
  return b.locked?'unlock':'match';
 }
 function clearTarget(g){
- if(g.target)g.target.classList.remove('mg-drop-empty','mg-drop-invalid','mg-drop-match','mg-drop-unlock');
+ if(g.target)g.target.classList.remove('mg-drop-empty','mg-drop-invalid','mg-drop-match','mg-drop-unlock','mg-drop-swap');
  g.target=null;
 }
 function showDrag(g,x,y){
@@ -278,7 +301,7 @@ function showDrag(g,x,y){
  g.ghost.style.left=x+'px';g.ghost.style.top=y+'px';
  const b=targetAt(x,y),kind=b?dropKind(g.from,+b.dataset.cell):'';
  if(b!==g.target){clearTarget(g);g.target=b;if(kind)b.classList.add('mg-drop-'+kind);}
- g.ghost.lastElementChild.textContent=({empty:T.dragEmpty,unlock:T.dragLocked,match:T.dragMatch,invalid:T.dragInvalid})[kind]||'';
+ g.ghost.lastElementChild.textContent=({empty:T.dragEmpty,unlock:T.dragLocked,match:T.dragMatch,swap:T.dragSwap,invalid:T.dragInvalid})[kind]||'';
 }
 function endGesture(ev,cancel){
  const g=gesture;if(!g||ev.pointerId!==g.id)return;
