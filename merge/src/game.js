@@ -12,8 +12,34 @@ function makeGame(data,e) {
  function initial(){
    const s={version:1,board:Array(cap).fill(null),bag:[],energy:e.energyMax,energyAt:Date.now(),english:{day:'',count:0},xp:0,gifts:0,orders:[],known:{},residentCursor:0,serial:0};
    for(const [idx,code] of Object.entries(e.starterTiles)) {s.board[idx]=tile(code);s.board[idx].locked=e.locked.includes(+idx);}
-   s.orders=e.starterResidents.map((id,j)=>({id,want:encode('i',...e.starterRequests[j]),gifts:0}));
-   discover(s); return s;
+   completeOrders(s); discover(s); return s;
+ }
+ function starter(id){
+   const index=e.starterResidents.indexOf(id);
+   const pairs=e.starterRequests[index<0?npcs.findIndex(n=>n.id===id)%e.starterRequests.length:index];
+   return pairs.map(([family,rank])=>encode('i',family,rank));
+ }
+ function completeOrders(s){
+   s.away ||= {};
+   // Preserve the two original tokens, the board, inventories and affection of older saves.
+   for(const q of [...s.orders,...Object.values(s.away)]){
+     if(!Array.isArray(q.wants)){const pair=starter(q.id);q.wants=[q.want||pair[0],pair.find(c=>c!==q.want)||'i1.1'];delete q.want;}
+   }
+   const seats=Math.min(e.activeLimit,e.counterUnlocks.filter(n=>s.gifts>=n).length);
+   for(const q of s.orders.splice(seats))s.away[q.id]=q;
+   for(const id of [...e.starterResidents,...npcs.map(n=>n.id)]){
+     if(s.orders.length>=seats)break;
+     if(!s.orders.some(q=>q.id===id)){
+       s.orders.push(s.away[id]||{id,wants:starter(id),gifts:0});delete s.away[id];
+     }
+   }
+   s.focus=s.orders.some(q=>q.id===s.focus)?s.focus:s.orders[0].id;
+ }
+ function invite(s,slot,id){
+   if(!s.orders[slot]||!npcs.some(n=>n.id===id)||s.orders.some(q=>q.id===id))return {error:'missing'};
+   const prior=s.orders[slot];s.away[prior.id]=prior;
+   s.orders[slot]=s.away[id]||{id,wants:starter(id),gifts:0};
+   delete s.away[id];s.focus=id;return {event:'invite'};
  }
  function discover(s){for(const t of [...s.board,...s.bag]) if(t && !t.locked && t.code[0]==='i') s.known[t.code]=true;}
  function tick(s, now, answers,day){
@@ -50,27 +76,52 @@ function makeGame(data,e) {
    return {at:to,event:b.locked?'unlocked':'merged'};
  }
  const available=(s,code)=>s.board.some(t=>t&&!t.locked&&t.code===code)||s.bag.some(t=>t.code===code);
+ function checklist(s,order){
+   const counts=new Map();
+   for(const t of [...s.board,...s.bag])if(t&&!t.locked)counts.set(t.code,(counts.get(t.code)||0)+1);
+   return order.wants.map(code=>{
+     const count=counts.get(code)||0;
+     if(count)counts.set(code,count-1);
+     return count>0;
+   });
+ }
+ function nextPair(s,order,affection){
+   const slot=s.orders.indexOf(order);
+   const cap=Math.min(e.counterRankCaps[slot],e.maxRequestRank,e.requestBaseRank+
+     Math.floor(level(s)/e.levelsPerRequestRank)+Math.floor(affection/e.affectionPerRequestRank));
+   const stock=[...s.board,...s.bag].filter(t=>t&&!t.locked&&t.code[0]==='i').map(t=>parse(t.code));
+   const stocked=[...new Set(stock.filter(t=>t.rank<=cap).map(t=>t.family))];
+   const pick=values=>values[Math.floor(Math.random()*values.length)];
+   const line=stocked.length&&Math.random()<e.stockedLineChance?pick(stocked):Math.floor(Math.random()*data.lines.length);
+   const side=Math.random()<e.relatedSideChance?(line^1):(line+1+Math.floor(Math.random()*(data.lines.length-1)))%data.lines.length;
+   const rank=limit=>1+Math.floor(Math.random()*limit);
+   const main=encode('i',line,rank(cap)),small=encode('i',side,rank(Math.min(cap,e.sideRankCap)));
+   if(order.wants.includes(main)&&order.wants.includes(small)){
+     const alternate=[...data.lines.keys()].find(f=>f!==side&&f!==line);
+     return [encode('i',alternate,cap),small];
+   }
+   return [main,small];
+ }
  function gift(s,j,aff){
-   const order=s.orders[j],want=order.want;
-   let space=s.board.findIndex(t=>t&&!t.locked&&t.code===want);
-   if(space>=0)s.board[space]=null;else{const i=s.bag.findIndex(t=>t.code===want);if(i<0)return {error:'missing'};s.bag.splice(i,1);}
-   const o=parse(want),gain=e.affectionBase+o.rank-1,old=order.id;
-   s.xp+=e.xpPerGiftRank*o.rank;s.gifts++;order.gifts++;
+   const order=s.orders[j];
+   if(!order||!checklist(s,order).every(Boolean))return {error:'missingPair'};
+   const delivered=order.wants.slice();let vacated=0;
+   for(const code of delivered){
+     const at=s.board.findIndex(t=>t&&!t.locked&&t.code===code);
+     if(at>=0){s.board[at]=null;vacated=at;}else s.bag.splice(s.bag.findIndex(t=>t.code===code),1);
+   }
+   const totalRank=delivered.reduce((sum,c)=>sum+parse(c).rank,0);
+   const gain=e.affectionBase+totalRank-2,old=order.id;
+   s.xp+=e.xpPerGiftRank*totalRank;s.gifts++;order.gifts++;s.focus=old;
    let part=null;
    if(Math.random()<e.partChance){
-     part=tile(encode('p',Math.floor(o.family/2),1));space=emptyNear(s,Math.max(0,space));
-     if(space>=0)s.board[space]=part;else s.bag.push(part);
+     part=tile(encode('p',Math.floor(parse(delivered[0]).family/2),1));
+     const space=emptyNear(s,vacated);if(space>=0)s.board[space]=part;else s.bag.push(part);
    }
-   if(order.gifts>=e.rotationEvery){
-     for(let i=0;i<npcs.length;i++){const next=npcs[s.residentCursor++%npcs.length].id;if(!s.orders.some(q=>q.id===next)){order.id=next;break;}}
-     order.gifts=0;
-   }
-   const max=Math.min(e.maxRequestRank,e.requestBaseRank+Math.floor(level(s)/e.levelsPerRequestRank)+Math.floor((aff[order.id]||0)/e.affectionPerRequestRank));
-   const line=Math.floor(Math.random()*data.lines.length);
-   order.want=encode('i',line,Math.min(max,1+Math.floor(Math.random()*max)));
-   return {event:'gift',gain,old,part:part?.code,effect:{type:'affection',id:old,n:gain}};
+   order.wants=nextPair(s,order,(aff[old]||0)+gain);const seats=s.orders.length;completeOrders(s);
+   return {event:'gift',gain,old,delivered,newArrival:s.orders.length>seats?s.orders.at(-1).id:null,part:part?.code,effect:{type:'affection',id:old,n:gain}};
  }
- return {initial,level,capacity,discover,tick,generate,move,gift,available,emptyNear,maxRank,parse};
+ return {initial,checklist,invite,completeOrders,level,capacity,discover,tick,generate,move,gift,available,emptyNear,maxRank,parse};
 }
 window.MGGame=makeGame;
 })();

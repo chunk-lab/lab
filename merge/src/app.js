@@ -28,8 +28,8 @@ function portrait(id,cls){const n=resident(id);return '<img draggable="false" cl
 function info(code){const o=game.parse(code);if(o.kind==='i') return data.lines[o.family].items[o.rank-1];const m=data.machines[o.family];return {name:o.kind==='p'?m.part:m.name};}
 function icon(code){const {kind,family,rank}=game.parse(code),m=data.machines[family];let html;
  if(kind==='g')html=art.machine(m.art);
- else if(kind==='p')html='<span class="mg-emoji">'+['⚙️','🔩','🔧','🐚','🧵','🔑'][family]+'</span>';
- else html=art.item(family,rank)||'<span class="mg-emoji">'+esc(info(code).icon)+'</span>';
+ else if(kind==='p')html=art.part(family,rank);
+ else html=art.item(family,rank);
  return '<span class="mg-icon" aria-hidden="true">'+html+'</span>';
 }
 function number(v){if(!Number.isSafeInteger(v)||v<0)throw Error(T.error);return v;}
@@ -66,8 +66,35 @@ function drawTop(){
  app.querySelector('.mg-level').innerHTML='<span>'+T.lv+lvl+'</span><span class="mg-xp"><i style="width:'+p/e.xpPerLevel*100+'%"></i></span><span>'+p+'/'+e.xpPerLevel+'</span>';
  app.querySelector('.mg-wallet').innerHTML=button('<span class="mg-zap">ϟ</span>'+s.energy,'study','mg-pill','aria-label="'+T.energy+' '+s.energy+'"')+button('<span class="mg-coin">★</span>'+coins,'stats','mg-pill','aria-label="'+T.coin+' '+coins+'"');
 }
+function meter(id){
+ const value=aff[id]||0,step=e.affectionMeterStep;
+ const goal=Math.max(step,Math.ceil(value/step)*step);
+ // Increase the scale only after the previous interval has filled.
+ return '<span class="mg-meter" aria-label="'+T.aff+' '+value+'"><span>♥ '+value+'/'+goal+'</span><span class="mg-meter-track"><i style="width:'+(value/goal*100)+'%"></i></span></span>';
+}
 function drawOrders(){
- app.querySelector('.mg-orders').innerHTML=s.orders.map((q,i)=>{const n=resident(q.id),ready=game.available(s,q.want);return button(portrait(q.id,'mg-face')+'<span class="mg-bubble">'+icon(q.want)+'</span><strong>'+esc(n.name)+(ready?' · '+T.gift:'')+'</strong>','order:'+i,'mg-order'+(ready?' mg-ready':''),'aria-label="'+esc(n.name+'　'+info(q.want).name+'　'+(ready?T.gift:T.wish))+'"');}).join('');
+ const list=app.querySelector('.mg-orders'),scroll=list.scrollLeft;
+ list.innerHTML=s.orders.map((q,i)=>{
+   const n=resident(q.id),flags=game.checklist(s,q),ready=flags.every(Boolean);
+   const bubbles=q.wants.map((code,k)=>'<span class="mg-mini-item '+(flags[k]?'mg-in-stock':'')+'">'+icon(code)+'<b>'+ (flags[k]?'✓':game.parse(code).rank)+'</b></span>').join('');
+   const label=q.wants.map(code=>info(code).name).join('・');
+   return button('<span class="mg-ticket">'+bubbles+'</span>'+portrait(q.id,'mg-face')+'<strong>'+esc(n.name)+'</strong>'+meter(q.id)+(ready?'<span class="mg-ready-tag">'+T.gift+'</span>':''),'order:'+i,'mg-order'+(ready?' mg-ready':'')+(s.focus===q.id?' mg-following':''),'aria-label="'+esc(n.name+'　'+label+'　'+(ready?T.gift:T.wish))+'"');
+ }).join('');
+ list.scrollLeft=scroll;
+ const stage=e.chapterGifts.reduce((n,threshold,i)=>s.gifts>=threshold?i:n,0);
+ app.querySelector('.mg-chapter').textContent=e.workshopNames[stage];
+ app.querySelector('.mg-visitors').textContent=s.orders.length+' / '+e.activeLimit;
+}
+function focusOrder(){return s.orders.find(q=>q.id===s.focus)||s.orders[0];}
+function firstHint(){
+ const q=focusOrder(),ready=game.checklist(s,q);
+ if(ready.every(Boolean))return resident(q.id).name+'　'+T.readyPair;
+ if(s.gifts===0&&q.id==='hana'&&q.wants[0]==='i0.3'){
+   if(s.board.filter(t=>t&&!t.locked&&t.code==='i0.1').length>=2)return T.first;
+   if(s.board.filter(t=>t&&!t.locked&&t.code==='i0.2').length>=2)return T.nextBake;
+ }
+ const next=q.wants[ready.indexOf(false)];
+ return resident(q.id).name+'　'+T.needed+' '+info(next).name+'。';
 }
 function cell(t,i){
  let html='',label=T.empty,cls='mg-cell';if(t){const o=game.parse(t.code);cls+=' mg-occupied'+(t.locked?' mg-locked':'');label=info(t.code).name+' '+T.lv+o.rank+(t.locked?' '+T.lockedTag:'');
@@ -78,31 +105,46 @@ function cell(t,i){
 function panel(){
  const el=app.querySelector('.mg-panel'),t=choice!==null&&s.board[choice];
  if(!t&&reaction&&reaction.until>Date.now()){el.innerHTML=portrait(reaction.id,'mg-avatar')+'<div class="mg-blurb"><strong>'+esc(resident(reaction.id).name)+'</strong>'+esc(reaction.text)+'</div>';return;}
- if(!t){el.innerHTML=portrait('chunkkun','mg-avatar')+'<div class="mg-blurb"><strong>'+T.hint+'</strong>'+(s.gifts?T.guide:T.first)+'</div>'+button('？','help','mg-small','aria-label="'+T.how+'"');return;}
+ if(!t){el.innerHTML=portrait('chunkkun','mg-avatar')+'<div class="mg-blurb"><strong>'+T.hint+'</strong>'+firstHint()+'</div>'+button('？','help','mg-small','aria-label="'+T.how+'"');return;}
  const o=game.parse(t.code);let hint=t.locked?T.lockedInfo:o.kind==='g'?(t.rest>Date.now()?T.release+Math.ceil((t.rest-Date.now())/1000)+T.sec:T.use+' '+(e.machineUses[o.rank-1]-(t.rest?0:t.used))):o.kind==='p'?T.partTip:T.itemTip;
  el.innerHTML='<div class="mg-avatar">'+icon(t.code)+'</div><div class="mg-blurb"><strong>'+esc(info(t.code).name)+' · '+T.lv+o.rank+'</strong><small>'+hint+'</small></div><div class="mg-actions">'+(!t.locked&&o.kind!=='g'?button(T.bag,'stow','mg-small'):'')+(!t.locked&&o.kind==='i'?button(T.sell,'sell','mg-small'):'')+'</div>';
 }
 function render(){
- if(!app.querySelector('.mg-board'))app.innerHTML='<header class="mg-top"><div class="mg-logo"><span class="mg-medal" aria-hidden="true">⚓</span><div><h1>'+T.title+'</h1><div class="mg-level"></div></div></div><div class="mg-wallet"></div></header><section class="mg-harbor"><div class="mg-heading"><h2>'+T.requests+'</h2></div><div class="mg-orders"></div></section><section class="mg-work"><div class="mg-heading"><h2>⚓ '+T.workshop+'</h2><span class="mg-meta"></span></div><div class="mg-board" role="group" aria-label="'+T.board+'"></div></section><section class="mg-panel"></section><nav class="mg-nav">'+['bag','book','study','hint'].map(k=>button(svg(k)+T[k],k,'mg-navbtn')).join('')+'</nav>';
+ if(!app.querySelector('.mg-board')) app.innerHTML=
+   '<header class="mg-top"><div class="mg-logo"><span class="mg-medal" aria-hidden="true">⚓</span><div><h1>'+T.title+'</h1><div class="mg-level"></div></div></div><div class="mg-wallet"></div></header>'+
+   '<section class="mg-harbor"><div class="mg-heading"><h2 class="mg-chapter"></h2><div class="mg-turn">'+button('‹','prev','mg-arrow','aria-label="'+T.prevResident+'"')+'<span class="mg-visitors"></span>'+button('›','next','mg-arrow','aria-label="'+T.nextResident+'"')+'</div></div><div class="mg-orders"></div></section>'+
+   '<section class="mg-work"><div class="mg-heading"><h2>'+T.workshop+'</h2><span class="mg-meta"></span></div><div class="mg-board" role="group" aria-label="'+T.board+'"></div></section>'+
+   '<section class="mg-panel"></section><nav class="mg-nav">'+['bag','book','study','hint'].map(k=>button(svg(k)+T[k],k,'mg-navbtn')).join('')+'</nav>';
  drawTop();drawOrders();app.querySelector('.mg-meta').textContent=T.progress+' '+s.gifts+' '+T.times;
  app.querySelector('.mg-board').innerHTML=s.board.map(cell).join('');panel();
 }
 function animate(indices,cls){for(const i of indices){const b=app.querySelector('[data-cell="'+i+'"]');if(b){b.classList.remove(cls);void b.offsetWidth;b.classList.add(cls);}}}
 function useCell(i){
  if(busy||halted)return;
- const t=s.board[i],a=choice!==null&&s.board[choice];
- if(a&&!a.locked&&choice!==i&&(!t||t.code===a.code)){move(choice,i);return;}
+ const t=s.board[i];
  choice=t?i:null;
  if(t&&!t.locked&&t.code[0]==='g'){
    action(()=>{const r=game.generate(s,i,Date.now());if(r.error){render();return r;}return {...r,message:T.generated+' · '+info(s.board[r.at].code).name};});return;
  }
  render();if(t?.locked)toast(T.locked);
 }
-function move(from,to){action(()=>{const r=game.move(s,from,to);return r.error?r:{...r,select:to,message:T[r.event]};});}
+function move(from,to){action(()=>{const r=game.move(s,from,to);return r.error?r:{...r,select:to,message:T[r.event]+' · '+info(s.board[to].code).name};});}
 function orderPage(i){
- const q=s.orders[i],n=resident(q.id),o=game.parse(q.want),line=data.lines[o.family],ready=game.available(s,q.want);
- const chain=line.items.slice(0,o.rank).map((item,j)=>icon('i'+o.family+'.'+(j+1))).join(' › ');
- dialog(n.name,'<div class="mg-row">'+portrait(q.id,'mg-portrait')+'<div><span class="mg-chip">♥ '+T.aff+' '+aff[q.id]+'</span><h3>'+esc(info(q.want).name)+'</h3><small>'+T.lv+o.rank+' · '+esc(line.name)+'</small></div></div><p>'+T.from+' · '+esc(data.machines[line.machine].name)+'</p><div class="mg-lines">'+chain+'</div>'+button(ready?T.gift+'　♥ +'+(e.affectionBase+o.rank-1):T.details,ready?'give:'+i:'line:'+o.family,'mg-btn mg-primary'),'order');
+ const q=s.orders[i],flags=game.checklist(s,q),ready=flags.every(Boolean),n=resident(q.id);
+ const items=q.wants.map((code,k)=>{
+   const o=game.parse(code),line=data.lines[o.family];
+   return button('<span class="mg-dish">'+icon(code)+'</span><span><b>'+esc(info(code).name)+'</b><small>'+esc(data.machines[line.machine].name)+' · '+T.lv+o.rank+'</small></span><em>'+ (flags[k]?'✓':T.showRecipe+' ›')+'</em>','line:'+o.family,'mg-recipe-row');
+ }).join('');
+ const gain=e.affectionBase+q.wants.reduce((sum,c)=>sum+game.parse(c).rank-1,0);
+ dialog(n.name,'<div class="mg-row">'+portrait(q.id,'mg-portrait')+'<div><b>'+T.orderTitle+'　'+flags.filter(Boolean).length+'/2</b>'+meter(q.id)+'</div></div><div class="mg-recipe-list">'+items+'</div><p>'+button(ready?T.readyPair+'　♥ +'+gain:T.follow,ready?'give:'+i:'follow:'+i,'mg-btn mg-primary')+'</p>'+button(T.visitors,'visitors:'+i,'mg-btn'),'order');
+}
+function visitorPage(slot,page=0){
+ const waiting=data.residents.filter(n=>n.id!=='chunkkun'&&!s.orders.some(q=>q.id===n.id));
+ const pages=Math.ceil(waiting.length/e.activeLimit);
+ const shown=waiting.slice(page*e.activeLimit,(page+1)*e.activeLimit);
+ const paging=pages>1?button((page+1)+'/'+pages+'　›','guestPage:'+slot+':'+((page+1)%pages),'mg-small'):'';
+ const list=shown.map(n=>button(portrait(n.id,'mg-guest-face')+esc(n.name),'invite:'+slot+':'+n.id,'mg-guest')).join('');
+ dialog(T.visitors,'<p>'+T.visitorGuide+'</p><div class="mg-guest-grid">'+list+'</div>'+paging,'visitors');
 }
 function bagPage(){
  const tiles=s.bag.map((t,i)=>button(icon(t.code)+'<small>'+esc(info(t.code).name)+'<br>'+T.lv+game.parse(t.code).rank+'</small>','take:'+i,'mg-tile')).join('');
@@ -114,9 +156,18 @@ function bookPage(){
 }
 function linePage(f){const l=data.lines[f];dialog(l.name,'<div class="mg-row">'+art.machine(data.machines[l.machine].art)+'<b>'+esc(data.machines[l.machine].name)+'</b></div><div class="mg-grid">'+l.items.map((it,i)=>{const c='i'+f+'.'+(i+1),known=s.known[c];return '<div class="mg-tile '+(known?'':'mg-faded')+'">'+icon(c)+'<small>'+T.lv+(i+1)+'<br>'+esc(it.name)+'<br>'+(known?T.made:T.undiscovered)+'</small></div>';}).join('')+'</div><p>'+T.madePair+'</p>'+button(T.back,'book','mg-btn mg-primary'),'line');}
 function hint(){
- const ready=s.orders.findIndex(q=>game.available(s,q.want));if(ready>=0){orderPage(ready);return;}
- for(let i=0;i<s.board.length;i++){const a=s.board[i];if(!a||a.locked)continue;const o=game.parse(a.code);if(o.rank>=game.maxRank(o)&&o.kind!=='p')continue;const j=s.board.findIndex((b,k)=>k!==i&&b?.code===a.code);if(j>=0){animate([i,j],'mg-hinted');toast(T.mergeHint);return;}}
- const m=data.lines[game.parse(s.orders[0].want).family].machine,ids=s.board.map((t,i)=>t?.code.startsWith('g'+m+'.')?i:-1).filter(i=>i>=0);animate(ids,'mg-hinted');toast(s.board.every(Boolean)?T.noHint:T.makeHint);
+ const q=focusOrder(),flags=game.checklist(s,q);
+ if(flags.every(Boolean)){orderPage(s.orders.indexOf(q));return;}
+ const need=q.wants[flags.indexOf(false)],o=game.parse(need);
+ for(let rank=o.rank-1;rank>=1;rank--){
+   const c='i'+o.family+'.'+rank;
+   const i=s.board.findIndex(t=>t&&!t.locked&&t.code===c);
+   const j=s.board.findIndex((t,k)=>k!==i&&t?.code===c);
+   if(i>=0&&j>=0){animate([i,j],'mg-hinted');toast(info(c).name+'　'+T.mergeHint);return;}
+ }
+ const m=data.lines[o.family].machine;
+ const machines=s.board.map((t,i)=>t?.code.startsWith('g'+m+'.')?i:-1).filter(i=>i>=0);
+ animate(machines,'mg-hinted');toast(s.board.every(Boolean)?T.noHint:data.machines[m].name+'　'+T.makeHint);
 }
 function stats(){dialog(T.workshop,'<div class="mg-row">'+portrait('chunkkun','mg-portrait')+'<div><h3>'+T.level+' '+game.level(s)+'</h3><p>'+T.toLevel+' '+(e.xpPerLevel-s.xp%e.xpPerLevel)+' XP</p></div></div><p>'+T.giftCount+'　'+s.gifts+'　 ·　'+T.coin+'　'+coins+'</p><div class="mg-list">'+data.residents.filter(n=>n.id!=='chunkkun').map(n=>'<div class="mg-heading"><span>'+esc(n.name)+'</span><b>♥ '+aff[n.id]+'</b></div>').join('')+'</div>','stats');}
 async function syncEnergy(){
@@ -147,8 +198,16 @@ async function answer(i){
 function dispatch(act){
  const [k,idx]=act.split(':'),i=Number(idx);if(k==='reload'){location.reload();return;}if(busy||halted)return;
  switch(k){
+ case 'prev':case 'next':{
+   const list=app.querySelector('.mg-orders');
+   list.scrollBy({left:(k==='next'?1:-1)*list.clientWidth,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});break;
+ }
  case 'order':orderPage(i);break;
- case 'give':action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+(r.part?'　'+T.partWon:'')};});break;
+ case 'follow':action(()=>{s.focus=s.orders[i].id;choice=null;setTimeout(hint,160);return {close:true};});break;
+ case 'visitors':visitorPage(i);break;
+ case 'guestPage':visitorPage(i,Number(act.split(':')[2]));break;
+ case 'invite':action(()=>({...game.invite(s,i,act.split(':')[2]),select:null,close:true}));break;
+ case 'give':action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+(r.newArrival?'　'+resident(r.newArrival).name+T.newVisitor:r.part?'　'+T.partWon:'')};});break;
  case 'hint':hint();break;case 'book':bookPage();break;case 'line':linePage(i);break;case 'bag':bagPage();break;case 'stats':stats();break;case 'study':study();break;case 'answer':answer(i);break;
  case 'stow':action(()=>{const t=s.board[choice];if(!t||t.locked||t.code[0]==='g')return {error:'bagMachine'};if(s.bag.length>=game.capacity(s))return {error:'bagFull'};s.bag.push(t);s.board[choice]=null;return {select:null,message:T.stored};});break;
  case 'take':action(()=>{const idx=game.emptyNear(s,0);if(idx<0)return {error:'full'};s.board[idx]=s.bag.splice(i,1)[0];return {select:idx,at:idx,close:true,message:T.taken};});break;
@@ -159,18 +218,70 @@ function dispatch(act){
  case 'close':sheet.close();break;
  }
 }
-document.addEventListener('click',ev=>{const cmd=ev.target.closest('[data-act]');if(cmd){dispatch(cmd.dataset.act);return;}const cell=ev.target.closest('[data-cell]');if(cell&&!suppressClick)useCell(+cell.dataset.cell);});
-let suppressClick=false;
-const at=(x,y)=>document.elementFromPoint(x,y)?.closest('[data-cell]');
-app.addEventListener('pointerdown',ev=>{const b=ev.target.closest('[data-cell]');if(!b||busy||halted||!ev.isPrimary||ev.button!==0)return;const from=+b.dataset.cell,t=s.board[from];if(!t||t.locked)return;gesture={id:ev.pointerId,from,x:ev.clientX,y:ev.clientY,source:b,ghost:null};b.setPointerCapture(ev.pointerId);});
-app.addEventListener('pointermove',ev=>{const g=gesture;if(!g||ev.pointerId!==g.id)return;
- if(!g.ghost&&Math.hypot(ev.clientX-g.x,ev.clientY-g.y)>6){g.ghost=document.createElement('div');g.ghost.className='mg-ghost';g.ghost.innerHTML=icon(s.board[g.from].code);document.body.append(g.ghost);g.source.classList.add('mg-dragfrom');}
- if(g.ghost){g.ghost.style.left=ev.clientX+'px';g.ghost.style.top=ev.clientY+'px';app.querySelector('.mg-over')?.classList.remove('mg-over');at(ev.clientX,ev.clientY)?.classList.add('mg-over');}
+// Board taps only inspect the tile or activate a generator. Only a completed drag can move it.
+document.addEventListener('click',ev=>{
+ const command=ev.target.closest('[data-act]');
+ if(command){dispatch(command.dataset.act);return;}
+ const cell=ev.target.closest('[data-cell]');
+ if(cell&&ev.detail===0&&!ev.pointerType)useCell(+cell.dataset.cell); // keyboard activation
 });
-function endDrag(ev,cancel=false){const g=gesture;if(!g||g.id!==ev.pointerId)return;gesture=null;app.querySelector('.mg-over')?.classList.remove('mg-over');g.source.classList.remove('mg-dragfrom');
- if(g.ghost){g.ghost.remove();suppressClick=true;setTimeout(()=>suppressClick=false,100);const b=at(ev.clientX,ev.clientY);if(!cancel&&b&&+b.dataset.cell!==g.from)move(g.from,+b.dataset.cell);}
+function targetAt(x,y){
+ const cell=document.elementFromPoint(x,y)?.closest('[data-cell]');
+ return cell&&app.contains(cell)?cell:null;
 }
-app.addEventListener('pointerup',ev=>endDrag(ev));app.addEventListener('pointercancel',ev=>endDrag(ev,true));
+function dropKind(from,to){
+ const a=s.board[from],b=s.board[to];
+ if(from===to)return '';
+ if(!b)return 'empty';
+ if(a.code!==b.code)return 'invalid';
+ const o=game.parse(a.code);
+ if(o.kind!=='p'&&o.rank>=game.maxRank(o))return 'invalid';
+ return b.locked?'unlock':'match';
+}
+function clearTarget(g){
+ if(g.target)g.target.classList.remove('mg-drop-empty','mg-drop-invalid','mg-drop-match','mg-drop-unlock');
+ g.target=null;
+}
+function showDrag(g,x,y){
+ if(!g.ghost){
+   g.ghost=document.createElement('div');
+   g.ghost.className='mg-ghost';
+   g.ghost.innerHTML=icon(s.board[g.from].code)+'<span class="mg-drop-label"></span>';
+   g.ghost.setAttribute('aria-hidden','true');
+   document.body.append(g.ghost);
+   g.source.classList.add('mg-dragfrom');
+ }
+ g.ghost.style.left=x+'px';g.ghost.style.top=y+'px';
+ const b=targetAt(x,y),kind=b?dropKind(g.from,+b.dataset.cell):'';
+ if(b!==g.target){clearTarget(g);g.target=b;if(kind)b.classList.add('mg-drop-'+kind);}
+ g.ghost.lastElementChild.textContent=({empty:T.dragEmpty,unlock:T.dragLocked,match:T.dragMatch,invalid:T.dragInvalid})[kind]||'';
+}
+function endGesture(ev,cancel){
+ const g=gesture;if(!g||ev.pointerId!==g.id)return;
+ const traveled=Math.hypot(ev.clientX-g.x,ev.clientY-g.y);
+ const dragged=Boolean(g.ghost)||traveled>=6;
+ const target=cancel?null:targetAt(ev.clientX,ev.clientY);
+ gesture=null;clearTarget(g);g.ghost?.remove();g.source.classList.remove('mg-dragfrom');
+ if(g.source.hasPointerCapture(g.id))g.source.releasePointerCapture(g.id);
+ if(cancel||!target)return;
+ const to=+target.dataset.cell;
+ if(dragged){if(!g.locked&&to!==g.from)move(g.from,to);}
+ else if(to===g.from)useCell(to);
+}
+app.addEventListener('pointerdown',ev=>{
+ const cell=ev.target.closest('[data-cell]');
+ if(!cell||busy||halted||gesture||!ev.isPrimary||ev.button!==0)return;
+ const from=+cell.dataset.cell;
+ gesture={id:ev.pointerId,from,x:ev.clientX,y:ev.clientY,source:cell,locked:!s.board[from]||s.board[from].locked,target:null,ghost:null};
+ cell.setPointerCapture(ev.pointerId);
+});
+app.addEventListener('pointermove',ev=>{
+ const g=gesture;if(!g||ev.pointerId!==g.id||g.locked)return;
+ if(g.ghost||Math.hypot(ev.clientX-g.x,ev.clientY-g.y)>=6)showDrag(g,ev.clientX,ev.clientY);
+});
+app.addEventListener('pointerup',ev=>endGesture(ev,false));
+app.addEventListener('pointercancel',ev=>endGesture(ev,true));
+app.addEventListener('lostpointercapture',ev=>endGesture(ev,true));
 async function boot(){
  try{
  const names=mock?['items','economy','questions']:['items','economy'];let config={};
@@ -179,7 +290,7 @@ async function boot(){
  data=config.items;e=config.economy;questions=mock?config.questions:[];game=MGGame(data,e);
  const raw=localStorage.getItem(key);s=raw===null?game.initial():JSON.parse(raw);
  if(s.version!==1||s.board?.length!==e.height*e.width||!Array.isArray(s.orders)||!Array.isArray(s.bag))throw Error(T.broken);
- await settle();await refreshWallet();await syncEnergy();save();render();
+ game.completeOrders(s);await settle();await refreshWallet();await syncEnergy();save();render();
  const poll=async()=>{if(busy||halted||gesture||document.hidden)return;busy=true;try{await syncEnergy();drawTop();panel();}catch(err){fail(T.error);}finally{busy=false;}};
  timer=setInterval(poll,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll();});
  }catch(err){console.error(err);fail(err.message===T.resolve?T.resolve:err.message===T.broken?T.broken:T.error);}
