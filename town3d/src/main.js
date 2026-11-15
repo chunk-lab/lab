@@ -310,7 +310,7 @@ export function mount(container, opt = {}) {
     if (r.visitSg) { sg = r.visitSg; r.visitSg = null; text = sg.say; }   // 自分から話しかけに来たときは、その用件をひと言に
     if (sg && sg.say !== text) text += '\n' + sg.say;
     const role = PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role;
-    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg && sg.fn ? [{ label: sg.label || 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }, ...items.filter(it => it.key === 'ride' && !(sg && sg.label)).map(it => ({ label: it.label, fn: it.fn })), ...items.filter(it => it.k === 'bond' && (/デート|家においで|お家/.test(it.label) || (r.follow && it.key === 'follow'))).map(it => ({ label: it.label, fn: it.fn }))] }); };   // デート・家に誘うは、仲良くなったら最初の画面にも出す
+    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg && sg.fn ? [{ label: sg.label || 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }] }); };   // 最初の画面は「勉強・遊び・仲良くなる」だけ。デート・家に誘う・手をつなぐ・乗る などは、それぞれの2段目に
     const shelf = kind => {
       r.talking = true; talkingTo = r;
       const b = kind === 'bond' ? soc.bondTalk(r) : { text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', extra: [] };
