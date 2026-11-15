@@ -42,7 +42,7 @@ export const CSS = `
 .tw-emotes .tw-btn[hidden]{display:none}
 .tw-snowb{position:absolute;right:66px;bottom:calc(60px + var(--tw-bot));width:92px;height:92px;border-radius:50%;padding:0;font-size:13px;line-height:1.25;font-weight:900;white-space:pre-line;background:radial-gradient(circle at 35% 30%,#fff,#d6ecff);box-shadow:0 5px 0 #8fb6dc,0 8px 16px #0004;touch-action:none;user-select:none;-webkit-user-select:none}
 .tw-manb,.tw-dodge{position:absolute;width:66px;height:66px;border-radius:50%;padding:0;font-size:12px;line-height:1.2;font-weight:900;white-space:pre-line;background:#fff;box-shadow:0 4px 0 #c9bfd8,0 6px 12px #0003;touch-action:none;user-select:none;-webkit-user-select:none}
-.tw-manb{right:170px;bottom:calc(60px + var(--tw-bot))}.tw-dodge{right:80px;bottom:calc(166px + var(--tw-bot))}.tw-manb[hidden],.tw-dodge[hidden]{display:none}.tw-down{bottom:calc(244px + var(--tw-bot))}.tw-down[hidden]{display:none}.tw-manb[disabled]{opacity:.5}
+.tw-manb{right:170px;bottom:calc(60px + var(--tw-bot))}.tw-dodge{right:80px;bottom:calc(166px + var(--tw-bot))}.tw-manb[hidden],.tw-dodge[hidden]{display:none}.tw-dodge.tw-up{bottom:calc(244px + var(--tw-bot))}.tw-down[hidden]{display:none}.tw-manb[disabled]{opacity:.5}
 .tw-snowb[hidden]{display:none}
 .tw-grade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(176,168,255,.20),rgba(255,214,190,.12) 70%,rgba(255,190,200,.16));mix-blend-mode:soft-light}
 .tw-vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(70,40,110,.22) 100%)}
@@ -185,7 +185,7 @@ export function createHud(root, bus) {
     setArea(t) { if (area.textContent !== t) area.textContent = t; },
     setLite(on) { grade.style.display = vig.style.display = on ? 'none' : ''; },
     setSnow(on, label, man, manOff) { const b = snowB; if (b.hidden === on) b.hidden = !on; if (label && b.textContent !== label) b.textContent = label; if (manB.hidden === on) manB.hidden = !on; if (man && manB.textContent !== man) manB.textContent = man; manB.disabled = !!manOff; },
-    setDodge(on, label) { if (dodgeB.hidden === on) dodgeB.hidden = !on; if (label && dodgeB.textContent !== label) dodgeB.textContent = label; },
+    setDodge(on, label) { if (dodgeB.hidden === on) dodgeB.hidden = !on; if (label && dodgeB.textContent !== label) dodgeB.textContent = label; dodgeB.classList.toggle('tw-up', !!label && label.includes('うく')); },
     setDown(on) { if (downB.hidden === on) downB.hidden = !on; },
     setFeed(on) { const b = emotes.querySelector('[data-e="feed"]'); if (b && b.hidden === on) b.hidden = !on; },
     setClock(hh, wx) { const H = Math.floor(hh), m = Math.floor((hh % 1) * 60); const ic = wx === 'rain' ? '☔' : wx === 'cloud' ? '☁️' : hh < 5 || hh >= 19 ? '🌙' : hh < 7 ? '🌅' : hh < 17 ? '☀️' : '🌇'; clock.textContent = `${ic} ${String(H).padStart(2, '0')}:${String(m).padStart(2, '0')}`; },
