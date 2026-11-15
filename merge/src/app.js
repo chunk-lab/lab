@@ -11,11 +11,11 @@ let data,e,questions,game,s,aff={},coins=0,reaction=null,audioContext=null,busy=
 const button=(label,act,cls='mg-btn',extra='')=>'<button class="'+cls+'" data-act="'+act+'" '+extra+'>'+label+'</button>';
 function fail(message){halted=true;clearInterval(timer);if(sheet.open)sheet.close();app.innerHTML='<section class="mg-content"><h2>'+T.workshop+'</h2><p role="alert">'+esc(message)+'</p>'+button(T.reload,'reload')+'</section>';}
 function chime(event){
- if(!s.sound || !['merged','unlocked','gift','generated','correct'].includes(event))return;
+ if(!s.sound || !['merged','unlocked','gift','generated','correct','scatter'].includes(event))return;
  try{
    const C=window.AudioContext||window.webkitAudioContext;if(!C)return;
    audioContext ||= new C();audioContext.resume().catch(()=>{});
-   const notes=event==='generated'?[380,620,840]:event==='gift'?[523,659,784]:[440,660,880,1175];
+   const notes=event==='generated'?[380,620,840]:event==='scatter'?[490,620,740,930]:event==='gift'?[523,659,784]:[440,660,880,1175];
    notes.forEach((hz,i)=>{const start=audioContext.currentTime+i*(event==='generated'?.043:.065),osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type=event==='generated'?'triangle':'sine';osc.frequency.setValueAtTime(hz,start);osc.frequency.exponentialRampToValueAtTime(hz*1.18,start+.11);gain.gain.setValueAtTime(.001,start);gain.gain.exponentialRampToValueAtTime(.065,start+.016);gain.gain.exponentialRampToValueAtTime(.001,start+.24);osc.connect(gain);gain.connect(audioContext.destination);osc.start(start);osc.stop(start+.25);});
  }catch{/* Audio is optional on silent or restricted devices. */}
 }
@@ -53,11 +53,13 @@ async function action(fn){
    if(r.effect){s.pending={...r.effect,before:await balance(r.effect)};save();await settle();}
    else save();
    if(r.select!==undefined)choice=r.select;
-   reaction=r.event==='gift'?{id:r.old,until:Date.now()+5500,text:T.gifted+' ♥ +'+r.gain+(r.part?'　'+info(r.part).name+' ×1':'')}:null;
+   reaction=r.newTurn?{id:'chunkkun',until:Date.now()+7000,text:s.turn+T.turnStart+'　'+r.drops.length+T.scatterCount}:r.event==='gift'?{id:r.old,until:Date.now()+5500,text:T.gifted+' ♥ +'+r.gain+'　'+info(r.part).name+' ×1'}:null;
    chime(r.event);
    if(r.close&&sheet.open)sheet.close();
    render();
-   if(r.at!=null)animate([r.at],r.event==='generated'?'mg-created':r.event==='merged'||r.event==='unlocked'?'mg-combined':'mg-pop');
+   if(r.event==='generated')leap(r.from,r.at,s.board[r.at].code,0);
+   else if(r.at!=null)animate([r.at],r.event==='merged'||r.event==='unlocked'?'mg-combined':'mg-pop');
+   if(r.newTurn){scatterMascot();r.drops.forEach((drop,i)=>leap(drop.from,drop.at,s.board[drop.at].code,i*95,true));chime('scatter');}
    if(r.event==='gift'){app.querySelector('.mg-orders').scrollLeft=0;const arriving=app.querySelector('.mg-order:last-child');arriving?.classList.add('mg-arriving');}
    if(r.message)toast(r.message+(game.level(s)>before?'　'+T.levelUp:''));
  }catch(err){console.error(err);fail(err.message===T.resolve?T.resolve:T.error);}finally{busy=false;}
@@ -120,6 +122,21 @@ function render(){
  app.querySelector('.mg-board').innerHTML=s.board.map(cell).join('');panel();
 }
 function animate(indices,cls){for(const i of indices){const b=app.querySelector('[data-cell="'+i+'"]');if(b){b.classList.remove(cls);void b.offsetWidth;b.classList.add(cls);}}}
+function scatterMascot(){
+ const field=app.querySelector('.mg-harbor');if(!field)return;
+ const mascot=document.createElement('div');mascot.className='mg-scatter-mascot';mascot.innerHTML=portrait('chunkkun','mg-scatter-face')+'<span>'+T.scatterHello+'</span>';
+ field.append(mascot);setTimeout(()=>mascot.remove(),1650);
+}
+function leap(from,to,code,delay=0,chunk=false){
+ const source=chunk?app.querySelector('.mg-navbtn:last-child'):app.querySelector('[data-cell="'+from+'"]');
+ const target=app.querySelector('[data-cell="'+to+'"]');if(!source||!target)return;
+ const a=source.getBoundingClientRect(),b=target.getBoundingClientRect(),size=Math.min(b.width,b.height);
+ const sprite=document.createElement('span');sprite.className='mg-leap';sprite.innerHTML=icon(code);
+ sprite.style.left=(a.left+a.width/2-size/2)+'px';sprite.style.top=(a.top+a.height/2-size/2)+'px';sprite.style.width=size+'px';sprite.style.height=size+'px';
+ sprite.style.setProperty('--mg-dx',(b.left+b.width/2-a.left-a.width/2)+'px');sprite.style.setProperty('--mg-dy',(b.top+b.height/2-a.top-a.height/2)+'px');sprite.style.animationDelay=delay+'ms';
+ target.classList.add('mg-awaiting');document.body.append(sprite);
+ setTimeout(()=>{sprite.remove();target.classList.remove('mg-awaiting');animate([to],'mg-created');},delay+490);
+}
 function useCell(i){
  if(busy||halted)return;
  const t=s.board[i];
@@ -140,7 +157,7 @@ function orderPage(i){
  dialog(n.name,'<div class="mg-row">'+portrait(q.id,'mg-portrait')+'<div><b>'+T.orderTitle+'　'+flags.filter(Boolean).length+'/2</b>'+meter(q.id)+'</div></div><div class="mg-recipe-list">'+items+'</div><p>'+button(ready?T.readyPair+'　♥ +'+gain:T.follow,ready?'give:'+i:'follow:'+i,'mg-btn mg-primary')+'</p>'+button(T.visitors,'visitors:'+i,'mg-btn'),'order');
 }
 function visitorPage(slot,page=0){
- const waiting=data.residents.filter(n=>n.id!=='chunkkun'&&!s.orders.some(q=>q.id===n.id));
+ const waiting=data.residents.filter(n=>n.id!=='chunkkun'&&!s.visited.includes(n.id)&&!s.orders.some(q=>q.id===n.id));
  const pages=Math.ceil(waiting.length/e.activeLimit);
  const shown=waiting.slice(page*e.activeLimit,(page+1)*e.activeLimit);
  const paging=pages>1?button((page+1)+'/'+pages+'　›','guestPage:'+slot+':'+((page+1)%pages),'mg-small'):'';
@@ -212,7 +229,7 @@ function dispatch(act){
    if(departing)return;
    departing=true;sheet.close();
    const card=app.querySelectorAll('.mg-order')[i];card?.classList.add('mg-departing');
-   setTimeout(()=>{departing=false;action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+(r.newArrival?'　'+resident(r.newArrival).name+T.newVisitor:r.part?'　'+T.partWon:'')};});},280);
+   setTimeout(()=>{departing=false;action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:r.newTurn?'チャンク君「'+r.turn+T.turnStart+'」':resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+'　'+T.partWon};});},280);
    break;
  }
  case 'hint':hint();break;case 'book':bookPage();break;case 'line':linePage(i);break;case 'bag':bagPage();break;case 'stats':stats();break;case 'study':study();break;case 'answer':answer(i);break;
