@@ -235,7 +235,7 @@ export function createMergeApp(env = {}) {
           o.querySelector('.mg-card').innerHTML = `<h3>${gd.icon} ${gd.name}は ひとやすみ中</h3><p style="font-size:13px;margin:4px 0 10px">あと ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} で もどるよ。<br>ほかの勉強をすると、<b style="color:#e8366a">すぐ再開</b>できる!</p>`
             + (x ? `<div style="background:#fff;border-radius:16px;padding:12px;box-shadow:inset 0 0 0 2px #cdb6e6;margin-bottom:10px"><div style="font-size:11px;color:#8a76a6">📚 おすすめ</div><div style="font-size:19px;margin:4px 0">${esc(x.n)}</div><div style="font-size:11px;color:#8a76a6">${x.days == null || x.days > 900 ? 'まだ やったことがないよ' : x.days === 0 ? 'きょうも やったよ' : `${x.days}日ぶり`}</div></div><button data-go style="background:linear-gradient(160deg,#ff9fb5,#ff6f91)!important;color:#fff!important;font-size:15px;padding:10px 24px!important;box-shadow:0 3px 0 #c2335b!important">これをやる!</button> ${L.length > 1 ? '<button data-other>ほかのにする</button>' : ''} <button data-x>まつ</button>` : '<p style="font-size:12px">いまは おすすめできる勉強が ないみたい。ちょっと まってね。</p><button data-x>まつ</button>');
           o.querySelector('[data-other]')?.addEventListener('click', () => { i++; sfx('tap'); draw(); });
-          o.querySelector('[data-go]')?.addEventListener('click', e => { e.stopPropagation(); sfx('give'); S.recov = { id: x.id, n: x.n, base: studySec() }; save(); o.remove(); try { ctx.close(); } catch (er) { } setTimeout(() => { try { env.studyGo && env.studyGo(x.id); } catch (er) { } }, 250); });
+          o.querySelector('[data-go]')?.addEventListener('click', e => { e.stopPropagation(); sfx('give'); S.recov = { id: x.id, n: x.n, base: studySec(), pl: (env.studyPlays ? env.studyPlays(x.id) : 0), t: Date.now() }; save(); o.remove(); try { ctx.close(); } catch (er) { } setTimeout(() => { try { env.studyGo && env.studyGo(x.id); } catch (er) { } }, 250); });
         };
         draw();
       }
@@ -246,8 +246,9 @@ export function createMergeApp(env = {}) {
       }
       function checkRecov() {
         if (!S.recov) return; const rest = S.cells.some(o => o && o.t === 'gen' && o.cd); if (!rest) { S.recov = null; return; }
-        let done = false; try { const it = (env.studyList ? env.studyList() : []).find(x => x.id === S.recov.id); done = !!(it && it.days === 0); } catch (e) { }
-        if (!done && studySec() - S.recov.base >= 90) done = true;
+        let done = false; try { if (env.studyPlays && env.studyPlays(S.recov.id) > (S.recov.pl || 0)) done = true; } catch (e) { }   // 終わりまでやった
+        if (!done && studySec() - S.recov.base >= 60) done = true;   // 勉強の時間が1分たまった
+        if (!done && S.recov.t && Date.now() - S.recov.t >= 120000) done = true;   // 離れて2分以上たった(途中でやめても解放)
         if (done) releaseAll(`「${S.recov.n}」ありがとう!`);
       }
 

@@ -45,6 +45,7 @@ export function createRecord(events, notebook) {
       if (ch) save(); return Object.keys(R.medals).map(Number);
     },
     daysSince(id) { const ks = Object.keys(R.days).filter(k => (R.days[k].plays || {})[id]).sort(); if (!ks.length) return 999; return Math.floor((new Date(day()) - new Date(ks[ks.length - 1])) / 864e5); },   // その遊びを最後にした日から何日
+    playsOf(id) { return Object.values(R.days).reduce((n, d) => n + ((d.plays || {})[id] || 0), 0); },   // その遊びの合計回数
     clearLast() { R.last = null; save(); },
     goal: () => R.goal,
     setGoal(min) { R.goal.min = Math.max(5, Math.min(120, Math.round(+min) || 15)); save(); },

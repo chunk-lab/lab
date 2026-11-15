@@ -126,6 +126,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
+      studyPlays: id => { try { return core.record.playsOf(id); } catch (e) { return 0; } },
       studySec: () => { try { return core.daylog.totalSummary().by.study || 0; } catch (e) { return 0; } },   // マージゲーム: ほかの勉強の合計秒数(生成機のロック解除)
       battleQs: async (n = 10, exclude = null) => {   // エンカウント戦闘用の4択(単語テストと同じ作り方)。その人のレベル帯の単語+まちがえた言葉。例文があれば ex に付ける
         const pool = [], seen = new Set(exclude ? [...exclude] : []), add = (w, from) => { if (!w || !w.en || !w.ja || w.kind === 'sentence' || /\s/.test(w.en)) return; const k = w.en.toLowerCase(); if (seen.has(k)) return; seen.add(k); pool.push({ en: w.en, ja: w.ja, pos: w.pos, from }); };
