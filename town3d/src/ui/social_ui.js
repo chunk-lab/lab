@@ -133,6 +133,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
       big.length ? `🗒 覚えていること: ${big.join(' / ')}` : '',
       un.length ? `🗝 できること: ${un.map(u => u.label).join(' / ')}` : '',
       nextU ? `🔒 Lv${nextU.lv}で: ${nextU.label}` : '',
+      social.credit(id) ? `🎁 とっておきの品: ${social.credit(id)}こ(デートなど特別なことに使えるよ)` : '🎁 マージで高めの品(Lv5〜)を渡すと、デートなど特別なことができるよ',
       '👗 着替え・🖼 思い出アルバム: じゅんびちゅう'].filter(Boolean);
     hud.dialog({ name: name(r), role: heart(id), text: L1.join('\n'), choices: [{ label: 'もどる', fn: () => hud.closeDialog && hud.closeDialog() }] });
   }

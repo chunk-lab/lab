@@ -2,7 +2,7 @@
 // 盤面 7×9。同じ品を重ねると次のLv。生成機をタップで品が出る(⚡1)。住人のほしい品をわたすと好感度。13人にわたすとチャンクくんのごほうび。
 import { social, NPC_NAME, LV, LV_NAME } from '../../game/social.js';
 import { portrait } from '../../ui/portraits.js';
-import { CFG, LINES, GENS, RECIPES, NPCS, QUIZ_FB, IMG, GOALS } from './data.js';
+import { CFG, LINES, GENS, RECIPES, NPCS, QUIZ_FB, IMG, GOALS, TEND, PATTERNS, LVR } from './data.js';
 
 const CSS = `
 .mg{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#ffd2c0,#e2c4ff 55%,#b9d6ff);color:#4a3a5e;font-weight:800;user-select:none;-webkit-user-select:none;touch-action:none}
@@ -117,7 +117,7 @@ export function createMergeApp(env = {}) {
       const root = document.createElement('div'); root.className = 'mg';
       root.innerHTML = `<div class="mg-top"><div class="mg-pill mg-en">⚡<b>0</b><small></small></div><button class="mg-qb">✏️ 英語で回復</button><span style="flex:1"></span><div class="mg-pill mg-cy">👥 <b>0</b>/13</div><div class="mg-pill">🪙<b data-bind="coins">${Math.floor(ctx.wallet.get()).toLocaleString('ja-JP')}</b></div></div>
 <div class="mg-goal"></div><div class="mg-strip"></div><div class="mg-board"></div><div class="mg-info"><span></span></div>
-<div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-book"><b>📖</b>ずかん</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
+<div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
 <div class="mg-fx"></div>`;
       host.appendChild(root);
       const $ = q => root.querySelector(q);
@@ -147,12 +147,26 @@ export function createMergeApp(env = {}) {
         return s;
       }
       // 住人がほしがる品(2つ)。使える生成機のラインから出す
-      function newWants(cycle = S.cycle) {
-        const pool = Object.keys(LINES).filter(ln => Object.keys(GENS).some(g => genOpen(g) && GENS[g].lines.includes(ln))), out = [];
-        shuf(pool.slice()).slice(0, CFG.wants).forEach(ln => { const L = LINES[ln], top = Math.min(7, (L.mergeMax || L.items.length) - 1); out.push({ ln, lv: Math.max(2, Math.min(top, CFG.orderLv(cycle) - 1 + rnd(3))), got: false }); });
+      function newWants(cycle = S.cycle, id) {
+        const pool = Object.keys(LINES).filter(ln => Object.keys(GENS).some(g => genOpen(g) && GENS[g].lines.includes(ln))), T = TEND[id] || { fav: [], lv: 0 };
+        if (!S.rw) S.rw = [];
+        const tot = PATTERNS.reduce((a, p) => a + p[2], 0); let q = Math.random() * tot, pat = PATTERNS[0]; for (const p of PATTERNS) { if ((q -= p[2]) < 0) { pat = p; break; } }
+        const mine = S.act.flatMap(a => a.w), out = [];
+        [pat[0], pat[1]].sort(() => Math.random() - 0.5).forEach(kind => {
+          let best = null;
+          for (let t = 0; t < 10 && !best; t++) {
+            const cand = pool.filter(ln => !out.some(x => x.ln === ln)), fav = cand.filter(ln => T.fav.includes(ln)), ln = (fav.length && Math.random() < 0.65 ? fav : cand)[rnd((fav.length && Math.random() < 0.65 ? fav : cand).length)] || cand[0] || pool[0];
+            const L = LINES[ln], top = Math.min(7, (L.mergeMax || L.items.length) - 1), rg = LVR[kind];
+            let lv = rg[rnd(rg.length)] + (T.lv > 0 && kind !== 'e' ? 0 : 0); lv = Math.max(2, Math.min(top, lv + (T.lv < 0 && lv > 4 && Math.random() < 0.5 ? -1 : 0) + (T.lv > 0 && lv < 7 && Math.random() < 0.4 ? 1 : 0) + (cycle >= 3 && kind === 'h' && lv < top ? 1 : 0)));
+            const key = ln + lv, dup = mine.some(x => x.ln === ln && x.lv === lv) || S.rw.includes(key) || mine.filter(x => x.ln === ln).length >= 3;
+            if (!dup || t === 9) best = { ln, lv, got: false };
+          }
+          out.push(best);
+        });
+        out.forEach(w => { S.rw.push(w.ln + w.lv); }); if (S.rw.length > 30) S.rw.splice(0, S.rw.length - 30);
         return out;
       }
-      function fillAct(cycle) { while (S.act.length < CFG.vis && S.queue.length) { const id = S.queue.shift(); if (S.act.some(a => a.id === id)) continue; S.act.push({ id, w: newWants(cycle) }); } }
+      function fillAct(cycle) { while (S.act.length < CFG.vis && S.queue.length) { const id = S.queue.shift(); if (S.act.some(a => a.id === id)) continue; S.act.push({ id, w: newWants(cycle, id) }); } }
       if (S.goal == null) S.goal = 0; if (!S.gp) S.gp = {};
       if (!S.act.length && S.queue.length) fillAct();
       const defOf = o => o.t === 'it' ? { name: LINES[o.ln].items[o.lv - 1][0], icon: LINES[o.ln].items[o.lv - 1][1], color: LINES[o.ln].color, key: o.ln + o.lv, en: LINES[o.ln].items[o.lv - 1][2] || '' }
@@ -315,7 +329,7 @@ export function createMergeApp(env = {}) {
       // ---- お題: 作ったものが目標に入っていたら進む。達成でコイン→つぎのお題 ----
       function goalOn(key) {
         const G = GOALS[S.goal % GOALS.length]; if (!G.keys.includes(key) || S.gp[key]) return; S.gp[key] = 1; const n = Object.keys(S.gp).length;
-        if (n >= G.n) { const got = ctx.wallet.give(G.coin, 'merge:goal'); S.goal++; S.gp = {}; setTimeout(() => { banner(`🎉 お題クリア! <small>🪙+${got}</small>`); sfx('fanfare'); goalDraw(); }, 900); } else goalDraw();
+        if (n >= G.n) { const dk = new Date().toDateString(); if (!S.gd || S.gd.d !== dk) S.gd = { d: dk, n: 0 }; const got = S.gd.n < 3 ? ctx.wallet.give(Math.max(1, Math.round(G.coin / 10)), 'merge:goal') : 0; S.gd.n++; S.goal++; S.gp = {}; setTimeout(() => { banner('🎉 お題クリア!' + (got ? ` <small>🪙+${got}</small>` : '')); sfx('fanfare'); goalDraw(); }, 900); } else goalDraw();
         save();
       }
       function goalDraw() { const G = GOALS[S.goal % GOALS.length], n = Object.keys(S.gp).length; $('.mg-goal').innerHTML = `📌 今日のお題 ${(S.goal % GOALS.length) + 1}/${GOALS.length}: ${esc(G.t)} <b>${n}/${G.n}</b> ・🪙${G.coin}`; }
@@ -323,7 +337,7 @@ export function createMergeApp(env = {}) {
         const d0 = defOf(o); if (o.t === 'it') { try { social.markMade(d0.key); } catch (e) { } goalOn(d0.key); }
         const d = d0; if (o.t !== 'it' || S.seen[d.key]) return; S.seen[d.key] = 1;
         if (['cafeB8', 'cafeA9', 'cafeB9'].includes(d.key)) setTimeout(() => toast('カフェの新メニューになったよ!(町のカフェで買える)'), 1600);
-        if (o.lv >= 3) { const c = CFG.newCoin(o.lv), got = ctx.wallet.give(c, 'merge:new'); banner(`✨ NEW! ${d.icon} ${esc(d.name)} <small>🪙+${got}</small>`); sfx('new'); }
+        if (o.lv >= 3) { banner(`✨ NEW! ${d.icon} ${esc(d.name)}`); sfx('new'); }
       }
 
       // ---- マージ ----
@@ -378,13 +392,13 @@ export function createMergeApp(env = {}) {
         setTimeout(() => fly(art(d), from, rel(slot), 440, () => {
           const to = rel(slot); burst(to.x, to.y, 12, ['#ff6f91', '#ffc400', '#fff']);
           const n = CFG.affOf(w.lv); let up = null; try { up = social.addAff(id, n); social.mergeNote(id, d.name, d.icon, w.lv); } catch (e) { } try { env.speak && d.en && env.speak(d.en); } catch (e) { }
-          const got = ctx.wallet.give(CFG.coinOf(w.lv), 'merge:give'); sfx('heart'); S.gave++;
+          sfx('heart'); try { if (w.lv >= 5) social.addCredit(id, 1); } catch (e) { } S.gave++;
           ftext(to.x, to.y - 10, `💗 好感度 +${n}`, '#e8366a', true);
           ['💗', '💕', '💗'].forEach((h, i) => setTimeout(() => ftext(to.x + (i - 1) * 22, to.y + 14, h), 120 + i * 120));
           const gf = card.querySelector('.mg-hr b'); if (gf) { const g = gaugeOf(id); gf.style.width = g.pct + '%'; }
           card.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.1)' }, { transform: 'scale(1)' }], { duration: 320 });
           slot.classList.remove('rdy'); slot.classList.add('got');
-          banner(`${esc(NPC_NAME[id] || id)}「ありがとう!」 <small>💗+${n} 🪙+${got}</small>` + (up && up.up ? ` <small>✨なかよし度アップ!</small>` : ''));
+          banner(`${esc(NPC_NAME[id] || id)}「ありがとう!」 <small>💗+${n}</small>${w.lv >= 5 ? ' <small>🎁とっておき+1</small>' : ''}` + (up && up.up ? ` <small>✨なかよし度アップ!</small>` : ''));
           if (Math.random() < CFG.partChance) { const gk = Object.keys(GENS); S.inbox.push({ t: 'part', g: gk[rnd(gk.length)], lv: 1 }); setTimeout(() => { fly('⚙️', to, rel(elInb), 520, () => pop2(elInb)); toast('生成機のパーツをもらった!(🎁とどいた から出せるよ)'); refresh(); }, 500); }
           save();
           if (a.w.every(x => x.got)) { if (!a.leaving) { a.leaving = true; setTimeout(() => leave(id), 650); } } else { sig = ''; refresh(); }
@@ -408,6 +422,7 @@ export function createMergeApp(env = {}) {
         const w = a.w.find(x => !x.got); if (!w) return; sfx('tap');
         const d = defOf({ t: 'it', ln: w.ln, lv: w.lv }), gk = Object.keys(GENS).find(g => GENS[g].lines.includes(w.ln));
         try { env.speak && d.en && env.speak("I'd love a " + d.en + '!'); } catch (e) { }
+        if (1) { evoPop(w.ln, w.lv, true); S.cells.forEach(x => { if (x && x.t === 'gen' && x.g === gk) { const e = els.get(x.u); e.classList.remove('wig'); void e.offsetWidth; e.classList.add('wig'); } }); return; }
         toast(`${NPC_NAME[id] || id}「I'd love ${d.en}!」(${d.name} Lv${w.lv}) → ${GENS[gk].icon}${GENS[gk].name}${genOpen(gk) ? '' : '(ロック中)'}`);
         S.cells.forEach(x => { if (x && x.t === 'gen' && x.g === gk) { const e = els.get(x.u); e.classList.remove('wig'); void e.offsetWidth; e.classList.add('wig'); } });
       }
@@ -421,11 +436,11 @@ export function createMergeApp(env = {}) {
         S.cycle++; S.served = 0; S.queue = shuf(NPCS.slice()); S.act = []; fillAct(S.cycle); sig = '';
         const wants = S.act.flatMap(a => a.w).sort((x, y) => y.lv - x.lv), gifts = [];
         for (let i = 0; i < CFG.giftN; i++) { const w = wants[i % Math.max(1, wants.length)]; if (!w) break; gifts.push({ t: 'it', ln: w.ln, lv: Math.max(CFG.giftMin, Math.min(CFG.giftMax, w.lv - 1 - (i >= wants.length ? 1 : 0))) }); }
-        ctx.wallet.give(coin, 'merge:cycle'); save();
+        save();
         const f = document.createElement('div'); f.className = 'mg-fin'; root.appendChild(f);
         const ck = document.createElement('div'); ck.className = 'mg-ck'; ck.innerHTML = pic ? `<img src="${pic}" alt="">` : '<b style="font-size:70px;font-weight:400">☁️</b>'; root.appendChild(ck);
-        banner(`🎉 13人ぜんいんに わたせた! <small>🪙+${coin}</small>`); sfx('fanfare');
-        const y0 = BY + CS * 2.2, amp = CS * 1.5, x0 = -130, x1 = W + 40, T = 6200;
+        banner('🎉 13人ぜんいんに わたせた!'); sfx('fanfare');
+        const y0 = BY + CS * 2.2, amp = CS * 1.5, x0 = -130, x1 = W + 40, T = 3100;
         const path = t => ({ x: x0 + (x1 - x0) * t, y: y0 + Math.sin(t * Math.PI * 3.2) * amp + Math.sin(t * 9) * 8 });
         const t0 = performance.now(); let gi = 0, drop = 0.14;
         const frame = now => {
@@ -444,7 +459,7 @@ export function createMergeApp(env = {}) {
       function sparkle(x, y) { for (let i = 0; i < 5; i++) { const p = document.createElement('div'); p.className = 'mg-p'; p.style.cssText = 'width:6px;height:6px;background:#ffd36b'; elFx.appendChild(p); p.animate([{ transform: `translate(${x}px,${y}px)`, opacity: 1 }, { transform: `translate(${x + rnd(60) - 30}px,${y + 20 + rnd(40)}px)`, opacity: 0 }], { duration: 600 }).onfinish = () => p.remove(); } }
 
       // ---- 売る・保管・とどいた・ずかん ----
-      const priceOf = o => o.t === 'it' ? CFG.sell[o.lv - 1] || 1 : CFG.partSell * o.lv;
+      const priceOf = o => o.t === 'it' ? Math.max(1, Math.round((CFG.sell[o.lv - 1] || 1) / 5)) : Math.max(1, Math.round(CFG.partSell * o.lv / 5));
       function sell(o) {
         if (o.t === 'gen' || o.lk) { sfx('bad'); toast(o.lk ? 'ロック中は売れないよ' : '生成機は売れないよ'); moveEl(o); return; }
         const c = rel(els.get(o.u)), got = ctx.wallet.give(priceOf(o), 'merge:sell'); take(o); rm(o); sel = null;
@@ -459,10 +474,16 @@ export function createMergeApp(env = {}) {
         const to = nearestEmpty(Math.floor(N / 2)); if (to < 0) { sfx('bad'); toast('盤面がいっぱい!'); return; }
         const it = S.inbox.shift(), o = { u: ++S.n, ...it, b: null, s: null }; dropIn(o, to, rel(elInb)); sfx('pop'); save(); refresh();
       };
-      $('.mg-book').onclick = () => {
-        sfx('tap'); const all = Object.values(LINES).reduce((a, L) => a + L.items.length, 0), n = Object.keys(S.seen).length;
-        overlay(`<h3>📖 ずかん <small>${n} / ${all}</small></h3>` + Object.keys(GENS).map(g => `<div class="mg-bkh">${GENS[g].icon} ${GENS[g].name}</div>` + GENS[g].lines.map(ln => `<div class="mg-bk">${LINES[ln].items.map((it, i) => S.seen[ln + (i + 1)] ? `<div class="on" style="--c:${LINES[ln].color}" title="${esc(it[0])}">${IMG[ln + (i + 1)] ? `<img src="${IMG[ln + (i + 1)]}" style="width:80%">` : it[1]}</div>` : '<div>?</div>').join('')}${LINES[ln].items.length < 9 ? '<span></span>' : ''}</div>`).join('')).join('') + `<p style="font-size:11px;color:#8a76a6;margin:4px 0 10px">Lv9 は とくべつな組み合わせで作れるよ</p><button data-x>とじる</button>`);
-      };
+            // ---- 進化のみちポップアップ: 生成機・Lv1→最大・いまの段階・あといくつ必要か ----
+      function evoPop(ln, lv, want) {
+        const L = LINES[ln], gk = Object.keys(GENS).find(g => GENS[g].lines.includes(ln)), G = GENS[gk], mx = L.mergeMax || L.items.length;
+        const cnt = Array.from({ length: mx + 1 }, (_, i) => S.cells.filter(o => o && o.t === 'it' && o.ln === ln && o.lv === i && !o.lk).length);
+        let have = 0; for (let i = 1; i <= lv; i++) have += cnt[i] * Math.pow(2, i - 1); const need = Math.pow(2, lv - 1), lack = Math.max(0, need - have);
+        const row = L.items.slice(0, mx).map((it, i) => { const n = i + 1, on = n === lv, c = cnt[n] || 0; return `<div style="display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:10px;${on ? 'background:#ffe48a;font-weight:800' : ''}"><span style="width:34px;font-size:12px">Lv${n}</span><span style="font-size:22px">${true ? it[1] : '❔'}</span><span style="flex:1;font-size:12px">${true ? esc(it[0]) + (it[2] ? ' <small style="color:#888">' + esc(it[2]) + '</small>' : '') : '？'}</span><span style="font-size:12px;color:${c ? '#1f9d63' : '#bbb'}">${c ? 'いま ' + c + 'こ' : '−'}</span></div>`; }).join('<div style="text-align:center;font-size:10px;color:#b79ad3;line-height:8px">▼ 同じものを2つ</div>');
+        const head = want ? `${esc(L.items[lv - 1][1])} <b>${esc(L.items[lv - 1][0])}</b> (Lv${lv}) がほしいんだって` : `${esc(L.items[lv - 1][1])} <b>${esc(L.items[lv - 1][0])}</b> Lv${lv}`;
+        const st = lv >= mx ? 'いちばん上のレベルだよ!' : want ? (cnt[lv] ? '✨ もう持ってる! 渡せるよ' : lack === 0 ? '材料はそろってる! あとは かさねるだけ' : `Lv1に直すと、あと <b>${lack}こ</b> ぶん たりないよ`) : `つぎ → Lv${lv + 1}(同じものをもう1つ かさねる)`;
+        sfx('tap'); overlay(`<h3>${head}</h3><div style="font-size:12px;margin-bottom:6px">${G.icon} <b>${esc(G.name)}</b> から出てくるよ${genOpen(gk) ? '' : '(いまロック中)'} ・ ${st}</div>${row}<div style="text-align:center;margin-top:8px"><button>とじる</button></div>`);
+      }
       function overlay(html) { const o = document.createElement('div'); o.className = 'mg-ovl'; o.innerHTML = `<div class="mg-card">${html}</div>`; root.appendChild(o); o.addEventListener('click', e => { if (e.target === o || e.target.closest('[data-x]')) { sfx('tap'); o.remove(); o.onclose && o.onclose(); } }); return o; }
 
       // ---- 英語4択で回復(同じ問題がつづかないよう、さいきんの問題は外す) ----
@@ -532,7 +553,7 @@ export function createMergeApp(env = {}) {
       }
       function up(e) {
         if (!drag || e.pointerId !== drag.id) return; const d = drag, o = d.o; drag = null; marks(false); d.el.classList.remove('drag');
-        if (!d.moved) { if (e.type === 'pointercancel') return; if (o.t === 'gen' && o.b != null) { sel = o; spawn(o); info(); } else { sel = sel === o ? null : o; sfx('tap'); pop(d.el, 1.12); info(); } return; }
+        if (!d.moved) { if (e.type === 'pointercancel') return; if (o.t === 'gen' && o.b != null) { sel = o; spawn(o); info(); } else { sel = sel === o ? null : o; sfx('tap'); pop(d.el, 1.12); info(); if (sel && o.t === 'it') evoPop(o.ln, o.lv, false); } return; }
         if (e.type === 'pointercancel') { moveEl(o); return; }
         const R = root.getBoundingClientRect(), x = e.clientX - R.left, y = e.clientY - R.top, cx = Math.floor((x - BX) / CS), cy = Math.floor((y - BY) / CS);
         const from = o.b != null ? { b: o.b } : { s: o.s };

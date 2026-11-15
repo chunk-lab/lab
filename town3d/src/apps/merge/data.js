@@ -56,3 +56,14 @@ export const GOALS = [
   { t: 'プリンアラモード(Lv9)で、スペシャルな一皿を作ろう', keys: ['cafeA9'], n: 1, coin: 250 },
   { t: 'ウェディングドレスと王冠を作って、町いちばんの結婚式を!', keys: ['sewB8', 'seaB8'], n: 2, coin: 400 },
 ];
+
+// 住人ごとの、よく頼む系統(fav)と、頼む段階のかたより(lv: -1ひくめ / 0ふつう / 1たかめ)
+export const TEND = {
+  sora: { fav: ['cafeA', 'toolB'], lv: 0 }, hana: { fav: ['cafeA', 'sewB'], lv: 0 }, mii: { fav: ['cafeB', 'cafeA'], lv: 0 },
+  baron: { fav: ['cafeB', 'toolA'], lv: 1 }, gon: { fav: ['toolA', 'toolB'], lv: -1 }, koharu: { fav: ['cafeB', 'sewA'], lv: 0 },
+  shiori: { fav: ['toolB', 'sewB'], lv: 0 }, maru: { fav: ['seaA', 'toolA'], lv: 0 }, yuzu: { fav: ['sewB', 'seaB'], lv: 0 },
+  choco: { fav: ['cafeA', 'sewA'], lv: -1 }, tetsu: { fav: ['toolA', 'seaB'], lv: 1 }, suna: { fav: ['seaA', 'seaB'], lv: 0 }, luna: { fav: ['seaB', 'sewB'], lv: 1 },
+};
+// 2つの注文の組み合わせ(やさしい=e / ふつう=m / むずかしい=h)
+export const PATTERNS = [['e', 'h', 40], ['m', 'm', 18], ['e', 'e', 14], ['h', 'h', 10], ['m', 'h', 18]];
+export const LVR = { e: [2, 3, 4], m: [4, 5], h: [6, 7] };

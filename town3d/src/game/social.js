@@ -120,6 +120,9 @@ export const social = {
   // ---- マージゲーム ----
   mergeNote(id, name, icon, lv) { const M = get('mg', {}), x = M[id] = M[id] || { n: 0, last: [] }; x.n++; x.last.push({ name, icon, lv, at: Date.now() }); x.last = x.last.slice(-8); st.set('mg', M); },
   mergeOf(id) { return get('mg', {})[id] || { n: 0, last: [] }; },
+  credit(id) { return get('mgc', {})[id] || 0; },   // マージで渡した「とっておきの品」(Lv5以上)。デートなど特別なことに使う
+  addCredit(id, n = 1) { const M = get('mgc', {}); M[id] = (M[id] || 0) + n; st.set('mgc', M); },
+  useCredit(id) { const M = get('mgc', {}); if (!M[id]) return false; M[id]--; st.set('mgc', M); return true; },
   made(k) { return !!get('made', {})[k]; },
   markMade(k) { const M = get('made', {}); if (M[k]) return false; M[k] = 1; st.set('made', M); return true; },
   // ---- 持っているおみやげ ----

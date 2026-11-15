@@ -369,7 +369,7 @@ export function mount(container, opt = {}) {
       hud.dialog({ name: '🎉 ぜんぶ見つけた!', role: 'きょうのかくしもの', text: `きょうのかくしもの ${list.length}こ、ぜんぶ見つけたね! 見つけた言葉を、英ラボで文にして使ってみる?`, choices: [
         { label: '🧠 使ってみる', fn: () => opt.onEvent?.('app:event', { name: 'eigo', data: { open: true, items: list.map((x, i) => ({ en: x.en, ja: x.ja, kind: x.sen ? 'sentence' : '', play: i === 0 })) } }) },
         { label: 'あとで', fn: () => { } }] });
-    }, startDate: r => startDate(r), invite: r => doAct(r, { act: 'invite' }), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
+    }, startDate: r => special(r, () => startDate(r)), invite: r => doAct(r, { act: 'invite' }), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
   // 「宝を隠す」は、せってい →「運営」タブの中
   const townSnap = () => { const got = finds.treasures(); return { info: social.info(), tre: TREASURES.map(t => ({ i: t[0], n: t[1], g: got.includes(t[1]) })), at: Date.now() }; };   // 勉強ノートの「町のひみつ」に渡す
   function openNoteBook() {
@@ -434,7 +434,15 @@ export function mount(container, opt = {}) {
     });
   }
   // メニューの「act」:大喜利・格言・オカリナ(アプリを開かない、住人ならではのあそび)
+  // デート・家に誘うなどの特別なことは、マージで渡した「とっておきの品」が1つ要る(ダイヤでも可)
+  const SPECIAL_GEMS = 3;   // 仮: ダイヤの値段は、あとでまとめて決める
+  function special(r, go) {
+    const id = r.def.id; if (!PREFS[id] || social.admin() || social.useCredit(id)) { go(); return; }
+    const gm = opt.gems; r.talking = true; talkingTo = r;
+    hud.dialog({ name: r.def.name, role: r.def.role, text: 'それは特別なことだから、とっておきの品がほしいな。マージゲームで、ほしがってる高めの品を渡してくれたら…!', choices: [{ label: '🧩 マージゲームへ', fn: () => { r.talking = false; openApp('merge'); } }, ...(gm ? [{ label: `💎${SPECIAL_GEMS}で今回だけ`, fn: () => { if (gm.get() >= SPECIAL_GEMS && gm.spend(SPECIAL_GEMS)) { hud.setCoins(wallet.get(), gemsNow()); go(); } else { hud.toast('ダイヤが足りないよ'); r.talking = false; } } }] : []), { label: 'やめる', fn: () => { r.talking = false; } }] });
+  }
   function doAct(r, m) {
+    if ((m.act === 'date' || m.act === 'invite') && !m._ok) { special(r, () => doAct(r, { ...m, _ok: 1 })); return; }
     if (m.act === 'consult' || m.act === 'soranote') { r.talking = true; talkingTo = r; input.clear(); soraNote(r); return; }
     if (m.act === 'follow') { if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, !r.follow); return; }
     if (m.act === 'date') { startDate(r); return; }
