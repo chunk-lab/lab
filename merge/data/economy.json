@@ -3,6 +3,7 @@
   "height": 9,
   "energyMax": 45,
   "energyCost": 1,
+  "turnDropCount": 10,
   "recoverySeconds": 90,
   "perAnswer": 5,
   "partChance": 0.6,
