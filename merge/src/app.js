@@ -146,19 +146,26 @@ function leap(from,to,code,delay=0,chunk=false){
  const target=app.querySelector('[data-cell="'+to+'"]');if(!source||!target)return;
  const a=source.getBoundingClientRect(),b=target.getBoundingClientRect(),size=Math.min(b.width,b.height);
  const sprite=document.createElement('span');sprite.className='mg-leap';sprite.innerHTML=icon(code);
- sprite.style.left=(a.left+a.width/2-size/2)+'px';sprite.style.top=(a.top+a.height/2-size/2)+'px';sprite.style.width=size+'px';sprite.style.height=size+'px';
- const dx=b.left+b.width/2-a.left-a.width/2,dy=b.top+b.height/2-a.top-a.height/2;
+ const x0=a.left+a.width/2,y0=a.top+a.height/2,x1=b.left+b.width/2,y1=b.top+b.height/2;
+ sprite.style.width=size+'px';sprite.style.height=size+'px';
  target.classList.add('mg-awaiting');document.body.append(sprite);
- if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){sprite.remove();target.classList.remove('mg-awaiting');return;}
- // Pixel coordinates avoid invalid CSS calculations that made the item appear instantly.
- const flight=sprite.animate([
-   {offset:0,opacity:1,transform:'translate(0px,0px) scale(.55)'},
-   {offset:.2,opacity:1,transform:'translate('+dx*.16+'px,'+(dy*.16-48)+'px) scale(1)'},
-   {offset:.5,opacity:1,transform:'translate('+dx*.5+'px,'+(dy*.5-105)+'px) scale(1.24)'},
-   {offset:.8,opacity:1,transform:'translate('+dx*.84+'px,'+(dy*.84-48)+'px) scale(1.12)'},
-   {offset:1,opacity:1,transform:'translate('+dx+'px,'+dy+'px) scale(.88)'}
- ],{duration:700,delay,easing:'linear',fill:'both'});
- flight.finished.then(()=>{sprite.remove();if(target.isConnected){target.classList.remove('mg-awaiting');animate([to],'mg-created');}}).catch(()=>sprite.remove());
+ // Move the actual sprite each frame along a quadratic arc. CSS animations cannot mask the path.
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const duration=reduced?380:850,high=reduced?100:Math.max(190,Math.abs(x1-x0)*.35+150);
+ const controlX=x0+(x1-x0)*.38,controlY=Math.min(y0,y1)-high;
+ let start=null;
+ const finish=()=>{sprite.remove();if(target.isConnected){target.classList.remove('mg-awaiting');animate([to],'mg-created');}};
+ function frame(now){
+   if(!sprite.isConnected){target.classList.remove('mg-awaiting');return;}
+   if(start===null)start=now+delay;
+   const t=Math.max(0,Math.min(1,(now-start)/duration)),u=1-t;
+   const x=u*u*x0+2*u*t*controlX+t*t*x1,y=u*u*y0+2*u*t*controlY+t*t*y1;
+   const scale=t<.35?.48+t*2.65:1.4075-(t-.35)*.55;
+   sprite.style.left=x+'px';sprite.style.top=y+'px';sprite.style.transform='translate(-50%,-50%) scale('+scale+')';
+   sprite.style.opacity=t<.08?String(.35+t*8):'1';
+   if(t<1)requestAnimationFrame(frame);else finish();
+ }
+ requestAnimationFrame(frame);
 }
 function useCell(i){
  if(busy||halted)return;
@@ -243,7 +250,7 @@ function dispatch(act){
    const list=app.querySelector('.mg-orders');
    list.scrollBy({left:(k==='next'?1:-1)*list.clientWidth,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});break;
  }
- case 'order':orderPage(i);break;
+ case 'order':if(game.checklist(s,s.orders[i]).every(Boolean))dispatch('give:'+i);else orderPage(i);break;
  case 'follow':action(()=>{s.focus=s.orders[i].id;choice=null;setTimeout(hint,160);return {close:true};});break;
  case 'visitors':visitorPage(i);break;
  case 'guestPage':visitorPage(i,Number(act.split(':')[2]));break;
