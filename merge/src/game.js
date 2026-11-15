@@ -10,7 +10,7 @@ function makeGame(data,e) {
  const capacity=s=>Math.min(e.maxStorage,e.initialStorage+level(s)-1);
  const tile=code=>({code,locked:false,used:0,rest:0});
  function initial(){
-   const s={version:1,board:Array(cap).fill(null),bag:[],energy:e.energyMax,energyAt:Date.now(),english:{day:'',count:0},xp:0,gifts:0,orders:[],known:{},residentCursor:0,serial:0};
+   const s={version:1,board:Array(cap).fill(null),bag:[],energy:e.energyMax,energyAt:Date.now(),english:{day:'',count:0},xp:0,gifts:0,orders:[],known:{},residentCursor:0,serial:0,sound:true};
    for(const [idx,code] of Object.entries(e.starterTiles)) {s.board[idx]=tile(code);s.board[idx].locked=e.locked.includes(+idx);}
    completeOrders(s); discover(s); return s;
  }
@@ -19,19 +19,23 @@ function makeGame(data,e) {
    const pairs=e.starterRequests[index<0?npcs.findIndex(n=>n.id===id)%e.starterRequests.length:index];
    return pairs.map(([family,rank])=>encode('i',family,rank));
  }
- function completeOrders(s){
+ function completeOrders(s,departed){
    s.away ||= {};
+   if(typeof s.sound!=='boolean')s.sound=true;
+   if(!Number.isSafeInteger(s.residentCursor))s.residentCursor=0;
    // Preserve the two original tokens, the board, inventories and affection of older saves.
    for(const q of [...s.orders,...Object.values(s.away)]){
      if(!Array.isArray(q.wants)){const pair=starter(q.id);q.wants=[q.want||pair[0],pair.find(c=>c!==q.want)||'i1.1'];delete q.want;}
    }
    const seats=Math.min(e.activeLimit,e.counterUnlocks.filter(n=>s.gifts>=n).length);
    for(const q of s.orders.splice(seats))s.away[q.id]=q;
-   for(const id of [...e.starterResidents,...npcs.map(n=>n.id)]){
-     if(s.orders.length>=seats)break;
-     if(!s.orders.some(q=>q.id===id)){
-       s.orders.push(s.away[id]||{id,wants:starter(id),gifts:0});delete s.away[id];
-     }
+   const roster=[...new Set([...e.starterResidents,...npcs.map(n=>n.id)])];
+   // Keep existing seats in place. A visitor who just left waits for another turn.
+   for(let step=0;s.orders.length<seats&&step<roster.length;step++){
+     const index=(s.residentCursor+step)%roster.length,id=roster[index];
+     if(id===departed||s.orders.some(q=>q.id===id))continue;
+     s.orders.push(s.away[id]||{id,wants:starter(id),gifts:0});delete s.away[id];
+     s.residentCursor=(index+1)%roster.length;step=-1;
    }
    s.focus=s.orders.some(q=>q.id===s.focus)?s.focus:s.orders[0].id;
  }
@@ -118,7 +122,10 @@ function makeGame(data,e) {
      part=tile(encode('p',Math.floor(parse(delivered[0]).family/2),1));
      const space=emptyNear(s,vacated);if(space>=0)s.board[space]=part;else s.bag.push(part);
    }
-   order.wants=nextPair(s,order,(aff[old]||0)+gain);const seats=s.orders.length;completeOrders(s);
+   order.wants=nextPair(s,order,(aff[old]||0)+gain);
+   s.away[old]=order;s.orders.splice(j,1);
+   const seats=s.orders.length;completeOrders(s,old);
+   s.focus=s.orders[j]?.id||s.orders[0].id;
    return {event:'gift',gain,old,delivered,newArrival:s.orders.length>seats?s.orders.at(-1).id:null,part:part?.code,effect:{type:'affection',id:old,n:gain}};
  }
  return {initial,checklist,invite,completeOrders,level,capacity,discover,tick,generate,move,gift,available,emptyNear,maxRank,parse};
