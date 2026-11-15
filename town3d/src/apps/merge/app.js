@@ -157,7 +157,7 @@ export function createMergeApp(env = {}) {
       const art = (d, cls = 'mg-e') => IMG[d.key] ? `<img src="${IMG[d.key]}" alt="">` : `<b class="${cls}">${d.icon}</b>`;
       const is = (o, p) => o.t === 'it' && o.ln === p[0] && o.lv === p[1];
       function mergeOf(a, b) {
-        if (!a || !b || a === b || a.lk || b.lk || a.t !== b.t) return null;
+        if (!a || !b || a === b || a.lk || a.t !== b.t) return null;   // ロック品(b)には、同じものを重ねられる(ひらく)
         if (a.t === 'gen' && (a.gl || b.gl)) return null;
         if (a.t === 'it') {
           if (a.ln === b.ln && a.lv === b.lv) { const L = LINES[a.ln]; return a.lv < (L.mergeMax || L.items.length) ? { t: 'it', ln: a.ln, lv: a.lv + 1 } : null; }
