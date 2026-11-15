@@ -7,7 +7,7 @@ const day=()=>new Date().toLocaleDateString('sv-SE');
 const key='cs:merge:'+(mock?'practice:':'live:')+'v1';
 const navPaths={bag:'M3 9h18v12H3z M2 5h20v4H2z M9 13h6',book:'M12 6Q7 2 2 5v15q5-3 10 0 5-3 10 0V5q-5-3-10 1zm0 0v14',study:'m2 9 10-5 10 5-10 5z M6 12v5q6 4 12 0v-5m3-2v7',hint:'M4 5h16v12H9l-5 4z M8 10h1m3 0h1m3 0h1'};
 const svg=k=>'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+navPaths[k]+'"/></svg>';
-let data,e,questions,game,s,aff={},coins=0,reaction=null,audioContext=null,busy=false,halted=false,choice=null,gesture=null,toastTimer,modal='',quiz=null,timer;
+let data,e,questions,game,s,aff={},coins=0,reaction=null,audioContext=null,busy=false,departing=false,halted=false,choice=null,gesture=null,toastTimer,modal='',quiz=null,timer;
 const button=(label,act,cls='mg-btn',extra='')=>'<button class="'+cls+'" data-act="'+act+'" '+extra+'>'+label+'</button>';
 function fail(message){halted=true;clearInterval(timer);if(sheet.open)sheet.close();app.innerHTML='<section class="mg-content"><h2>'+T.workshop+'</h2><p role="alert">'+esc(message)+'</p>'+button(T.reload,'reload')+'</section>';}
 function chime(event){
@@ -15,8 +15,8 @@ function chime(event){
  try{
    const C=window.AudioContext||window.webkitAudioContext;if(!C)return;
    audioContext ||= new C();audioContext.resume().catch(()=>{});
-   const notes=event==='generated'?[540]:event==='gift'?[523,659,784]:[587,784];
-   notes.forEach((hz,i)=>{const start=audioContext.currentTime+i*.075,osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.value=hz;gain.gain.setValueAtTime(.001,start);gain.gain.exponentialRampToValueAtTime(.055,start+.012);gain.gain.exponentialRampToValueAtTime(.001,start+.16);osc.connect(gain);gain.connect(audioContext.destination);osc.start(start);osc.stop(start+.18);});
+   const notes=event==='generated'?[380,620,840]:event==='gift'?[523,659,784]:[440,660,880,1175];
+   notes.forEach((hz,i)=>{const start=audioContext.currentTime+i*(event==='generated'?.043:.065),osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type=event==='generated'?'triangle':'sine';osc.frequency.setValueAtTime(hz,start);osc.frequency.exponentialRampToValueAtTime(hz*1.18,start+.11);gain.gain.setValueAtTime(.001,start);gain.gain.exponentialRampToValueAtTime(.065,start+.016);gain.gain.exponentialRampToValueAtTime(.001,start+.24);osc.connect(gain);gain.connect(audioContext.destination);osc.start(start);osc.stop(start+.25);});
  }catch{/* Audio is optional on silent or restricted devices. */}
 }
 function toast(message){const el=document.querySelector('.mg-toast');el.textContent=message;el.classList.add('mg-show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('mg-show'),2100);}
@@ -46,7 +46,7 @@ async function settle(){
  delete s.pending;save();await refreshWallet();
 }
 async function action(fn){
- if(busy||halted)return;busy=true;
+ if(busy||departing||halted)return;busy=true;
  try{const before=game.level(s);const r=await fn()||{};
    if(r.error){toast(T[r.error]);return;}
    game.discover(s);s.serial++;
@@ -57,7 +57,8 @@ async function action(fn){
    chime(r.event);
    if(r.close&&sheet.open)sheet.close();
    render();
-   if(r.at!=null)animate([r.at],'mg-pop');
+   if(r.at!=null)animate([r.at],r.event==='generated'?'mg-created':r.event==='merged'||r.event==='unlocked'?'mg-combined':'mg-pop');
+   if(r.event==='gift'){app.querySelector('.mg-orders').scrollLeft=0;const arriving=app.querySelector('.mg-order:last-child');arriving?.classList.add('mg-arriving');}
    if(r.message)toast(r.message+(game.level(s)>before?'　'+T.levelUp:''));
  }catch(err){console.error(err);fail(err.message===T.resolve?T.resolve:T.error);}finally{busy=false;}
 }
@@ -207,7 +208,13 @@ function dispatch(act){
  case 'visitors':visitorPage(i);break;
  case 'guestPage':visitorPage(i,Number(act.split(':')[2]));break;
  case 'invite':action(()=>({...game.invite(s,i,act.split(':')[2]),select:null,close:true}));break;
- case 'give':action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+(r.newArrival?'　'+resident(r.newArrival).name+T.newVisitor:r.part?'　'+T.partWon:'')};});break;
+ case 'give':{
+   if(departing)return;
+   departing=true;sheet.close();
+   const card=app.querySelectorAll('.mg-order')[i];card?.classList.add('mg-departing');
+   setTimeout(()=>{departing=false;action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+(r.newArrival?'　'+resident(r.newArrival).name+T.newVisitor:r.part?'　'+T.partWon:'')};});},280);
+   break;
+ }
  case 'hint':hint();break;case 'book':bookPage();break;case 'line':linePage(i);break;case 'bag':bagPage();break;case 'stats':stats();break;case 'study':study();break;case 'answer':answer(i);break;
  case 'stow':action(()=>{const t=s.board[choice];if(!t||t.locked||t.code[0]==='g')return {error:'bagMachine'};if(s.bag.length>=game.capacity(s))return {error:'bagFull'};s.bag.push(t);s.board[choice]=null;return {select:null,message:T.stored};});break;
  case 'take':action(()=>{const idx=game.emptyNear(s,0);if(idx<0)return {error:'full'};s.board[idx]=s.bag.splice(i,1)[0];return {select:idx,at:idx,close:true,message:T.taken};});break;
