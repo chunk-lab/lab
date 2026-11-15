@@ -46,8 +46,10 @@ const CSS = `
 .mg-it.sel .mg-in{box-shadow:0 0 0 3px #1e90ff,0 3px 0 3px rgba(30,100,200,.5)}
 .mg-it.can .mg-in{animation:mgGlow .5s infinite alternate}
 .mg-it.wig .mg-in{animation:mgWig .5s 2}
-.mg-it.lk .mg-in{filter:grayscale(.85) brightness(.82);background:#9c8fb0;box-shadow:inset 0 0 0 2px #6e6086}
-.mg-it.lk .mg-in::after{content:'🔒';position:absolute;left:-2px;top:-3px;font-size:12px}
+.mg-it.lk .mg-in{background-image:linear-gradient(rgba(255,255,255,.38),rgba(255,255,255,.38));background-color:var(--c);box-shadow:0 0 0 2px #5a4a7a,inset 0 0 0 3px rgba(255,255,255,.7);filter:saturate(.7)}
+.mg-it.lk .mg-in::before{content:'';position:absolute;inset:2px;border-radius:9px;border:2px dashed #5a4a7a;pointer-events:none}
+.mg-it.lk .mg-in::after{content:'🔒';position:absolute;left:-5px;top:-7px;font-size:15px;filter:drop-shadow(0 1px 0 #fff) drop-shadow(0 0 2px #fff)}
+.mg-it.lk .mg-e{opacity:.9}
 .mg-gen .mg-in{inset:1px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff 0,var(--c) 58%,var(--d) 100%);box-shadow:0 0 0 3px #fff,0 0 0 6px var(--d),0 5px 0 6px rgba(40,20,60,.5),0 0 14px 6px var(--c);}
 .mg-gen .mg-e{filter:drop-shadow(0 2px 0 rgba(0,0,0,.3));transform:translateY(-3px)}
 .mg-gen .mg-lv{left:50%;right:auto;bottom:-7px;transform:translateX(-50%);background:var(--d);font-size:10px;padding:0 7px;white-space:nowrap;border:2px solid #fff;line-height:13px}
@@ -123,7 +125,7 @@ export function createMergeApp(env = {}) {
       // ---- 状態 ----
       let S = null;
       const studySec = () => { try { return env.studySec ? env.studySec() : 0; } catch (e) { return 0; } };
-      const genOpen = g => !!(S && S.unl[g]);
+      const genOpen = () => true;   // 生成機は ぜんぶ使える(使いすぎると ひとやすみ → ほかの勉強で すぐ再開)
       const gain = () => Math.max(0, studySec() - (S ? S.base : 0));
       const shuf = a => a.sort(() => Math.random() - 0.5);
       try { S = ctx.storage.get('s'); } catch (e) { }
@@ -218,16 +220,33 @@ export function createMergeApp(env = {}) {
         if (o.gl) { el.querySelector('.mg-ch').textContent = `📚あと${leftMin(o.g)}分`; return; }
         if (o.cd && now >= o.cd) { o.cd = 0; o.ch = CFG.genCharge(o.lv); pop(el); }
         const left = o.cd ? Math.ceil((o.cd - now) / 1000) : 0;
-        el.classList.toggle('cd', !!o.cd); el.querySelector('.mg-ch').textContent = o.cd ? `⏳${left}` : `⚡${o.ch}回`;
+        el.classList.toggle('cd', !!o.cd); el.querySelector('.mg-ch').textContent = o.cd ? `⏳${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}` : `⚡${o.ch}回`;
       }
       const center = o => { const p = posOf(o); return { x: p.x + CS / 2, y: p.y + CS / 2 }; };
-      function checkUnlock(first) {
-        Object.keys(CFG.genUnlock).forEach(g => {
-          if (!S.unl[g] && gain() >= CFG.genUnlock[g]) {
-            S.unl[g] = 1; save();
-            S.cells.forEach(o => { if (o && o.t === 'gen' && o.g === g) { genUI(o); const c = center(o); setTimeout(() => { burst(c.x, c.y, 18, ['#ffd36b', '#fff', GENS[g].color]); sfx('unlock'); toast(`${GENS[g].icon} ${GENS[g].name}が 使えるようになった! (ほかの勉強ありがとう)`); pop(els.get(o.u), 1.4); }, first ? 900 : 0); } });
-          }
-        });
+      // ---- ひとやすみ中の生成機: 待つか、ほかの勉強で すぐ再開 ----
+      const studyList = () => { try { const L = env.studyList ? env.studyList() : []; return L.slice().sort((x, y) => (y.days == null || y.days > 900 ? 999 : y.days) - (x.days == null || x.days > 900 ? 999 : x.days) || Math.random() - 0.5).filter(x => x.days !== 0).concat(L.filter(x => x.days === 0)); } catch (e) { return []; } };
+      function restDialog(g) {
+        const L = studyList(); let i = 0; const gd = GENS[g.g];
+        const o = overlay('');
+        const draw = () => {
+          const left = g.cd ? Math.max(0, Math.ceil((g.cd - Date.now()) / 1000)) : 0, x = L[i % Math.max(1, L.length)];
+          o.querySelector('.mg-card').innerHTML = `<h3>${gd.icon} ${gd.name}は ひとやすみ中</h3><p style="font-size:13px;margin:4px 0 10px">あと ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} で もどるよ。<br>ほかの勉強をすると、<b style="color:#e8366a">すぐ再開</b>できる!</p>`
+            + (x ? `<div style="background:#fff;border-radius:16px;padding:12px;box-shadow:inset 0 0 0 2px #cdb6e6;margin-bottom:10px"><div style="font-size:11px;color:#8a76a6">📚 おすすめ</div><div style="font-size:19px;margin:4px 0">${esc(x.n)}</div><div style="font-size:11px;color:#8a76a6">${x.days == null || x.days > 900 ? 'まだ やったことがないよ' : x.days === 0 ? 'きょうも やったよ' : `${x.days}日ぶり`}</div></div><button data-go style="background:linear-gradient(160deg,#ff9fb5,#ff6f91)!important;color:#fff!important;font-size:15px;padding:10px 24px!important;box-shadow:0 3px 0 #c2335b!important">これをやる!</button> ${L.length > 1 ? '<button data-other>ほかのにする</button>' : ''} <button data-x>まつ</button>` : '<p style="font-size:12px">いまは おすすめできる勉強が ないみたい。ちょっと まってね。</p><button data-x>まつ</button>');
+          o.querySelector('[data-other]')?.addEventListener('click', () => { i++; sfx('tap'); draw(); });
+          o.querySelector('[data-go]')?.addEventListener('click', e => { e.stopPropagation(); sfx('give'); S.recov = { id: x.id, n: x.n, base: studySec() }; save(); o.remove(); try { ctx.close(); } catch (er) { } setTimeout(() => { try { env.studyGo && env.studyGo(x.id); } catch (er) { } }, 250); });
+        };
+        draw();
+      }
+      function releaseAll(why) {
+        const rest = S.cells.filter(o => o && o.t === 'gen' && o.cd); S.recov = null; if (!rest.length) return; save();
+        rest.forEach(o => { o.cd = 0; o.ch = CFG.genCharge(o.lv); genUI(o); const c = center(o); setTimeout(() => { burst(c.x, c.y, 16, ['#ffc400', '#fff', GENS[o.g].color]); sfx('unlock'); pop(els.get(o.u), 1.4); }, 700); });
+        setTimeout(() => toast(`✨ ${why || '勉強ありがとう!'} 生成機が すぐ使えるよ`), 700);
+      }
+      function checkRecov() {
+        if (!S.recov) return; const rest = S.cells.some(o => o && o.t === 'gen' && o.cd); if (!rest) { S.recov = null; return; }
+        let done = false; try { const it = (env.studyList ? env.studyList() : []).find(x => x.id === S.recov.id); done = !!(it && it.days === 0); } catch (e) { }
+        if (!done && studySec() - S.recov.base >= 90) done = true;
+        if (done) releaseAll(`「${S.recov.n}」ありがとう!`);
       }
 
       // ---- 演出 ----
@@ -276,7 +295,7 @@ export function createMergeApp(env = {}) {
       function spawn(g) {
         const el = els.get(g.u); idle = 0;
         if (g.gl) { shake(el); sfx('bad'); const m = leftMin(g.g); toast(`${GENS[g.g].icon}${GENS[g.g].name}は ロック中。ほかの勉強(カード・学校・図書館・英語のおしゃべり…)をあと${m}分すると使えるよ`); return; }
-        if (g.cd) { shake(el); sfx('bad'); toast(`${GENS[g.g].name}は ひとやすみ中(あと${Math.ceil((g.cd - Date.now()) / 1000)}秒)`); return; }
+        if (g.cd) { shake(el); sfx('bad'); restDialog(g); return; }
         if (S.en <= 0) { shake(el); sfx('bad'); toast('⚡エネルギーがないよ。英語で回復しよう!'); pop2(elQb); return; }
         const to = nearestEmpty(g.b); if (to < 0) { shake(el); sfx('bad'); toast('盤面がいっぱい! 重ねるか、売るか、保管しよう'); return; }
         S.en--; g.ch--; if (g.ch <= 0) g.cd = Date.now() + CFG.genRecharge * 1000; S.first = false; root.querySelectorAll('.first').forEach(e => e.classList.remove('first'));
@@ -528,13 +547,13 @@ export function createMergeApp(env = {}) {
         const free = S.cells.filter(o => o && !o.lk);
         for (const a of free) for (const b of S.cells) if (b && a !== b && mergeOf(a, b)) { [a, b].forEach(o => { const e = els.get(o.u); if (e) { e.classList.remove('wig'); void e.offsetWidth; e.classList.add('wig'); } }); return; }
       }
-      const tick = setInterval(() => { if (!alive) return; enTick(); S.cells.forEach(o => { if (o && o.t === 'gen') genUI(o); }); if (!drag && !finBusy && !root.querySelector('.mg-ovl') && ++idle % 7 === 0) hint(); }, 1000);
+      const tick = setInterval(() => { if (!alive) return; enTick(); checkRecov(); S.cells.forEach(o => { if (o && o.t === 'gen') genUI(o); }); if (!drag && !finBusy && !root.querySelector('.mg-ovl') && ++idle % 7 === 0) hint(); }, 1000);
       const onRz = () => layout(); window.addEventListener('resize', onRz);
 
       // ---- はじめ ----
       layout(); S.cells.forEach(o => o && mk(o)); S.store.forEach((o, i) => { if (o) { if (i >= S.slots) { S.store[i] = null; S.inbox.push({ t: o.t, ln: o.ln, g: o.g, lv: o.lv }); } else mk(o); } });
       if (S.first) S.cells.forEach(o => { if (o && o.t === 'gen' && genOpen(o.g)) els.get(o.u).classList.add('first'); });
-      sig = ''; enTick(); refresh(); checkUnlock(true);
+      sig = ''; enTick(); refresh(); checkRecov();
       requestAnimationFrame(() => { if (alive) layout(); });
       try { ctx.setTitle('チャンクマージ'); } catch (e) { }
 
