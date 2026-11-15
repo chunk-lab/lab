@@ -204,6 +204,19 @@ export function createReview(core) {
   const TEST_N = 10, TEST_DAYS = 3, SLOW = 10;
   const testDue = () => { if (dl.pool().length + dl.knownKeys().length < 8) return false; const l = dl.lastTest(); return !l || (Date.parse(dl.dayKey()) - Date.parse(l)) / 864e5 >= TEST_DAYS; };
   // only = ふりかえりのフラッシュカードで出てきた単語。渡されたら、問題はその単語だけにする(まぎらわしい選択肢だけ、ほかの単語から借りる)
+  // ---- 4択の問題づくりと記録(単語テストと、町のエンカウント戦闘で共通) ----
+  // pool=出題する単語 / dist=選択肢のまぎれ用(poolをふくむ) / n=問題数。1問={ w, ans, ch:[4つ] }
+  const firstJa = w => String(w.ja).split(/[、,・]/)[0].trim();
+  function makeQs(pool, n, dist) {
+    dist = dist || pool;
+    return pool.slice().sort(() => Math.random() - 0.5).slice(0, n).map(w => {
+      const bad = dist.filter(x => x.en !== w.en && firstJa(x) !== firstJa(w)).sort(() => Math.random() - 0.5).slice(0, 3).map(firstJa);
+      return { w, ans: firstJa(w), ch: [firstJa(w), ...bad].sort(() => Math.random() - 0.5) };
+    }).filter(q => q.ch.length >= 4);
+  }
+  function record(Q, ok, slow, src) {
+    try { dl.addWord({ en: Q.w.en, ja: Q.ans, pos: Q.w.pos, src: src || 'test', miss: !ok, slow: !!slow }); core.learn && core.learn.hit(Q.w.en, ok, { ja: Q.ans }); } catch (e) { }
+  }
   async function test(only) {
     // 「覚えてる」にした言葉は出さない。数がたりなければ、その人のレベル帯の単語でうめる
     const fixed = Array.isArray(only) && only.length ? only.filter(w => w && w.en && w.ja).filter((w, i, a) => a.findIndex(x => x.en.toLowerCase() === w.en.toLowerCase()) === i) : null;
@@ -213,12 +226,7 @@ export function createReview(core) {
       try { const ex = new Set(pool.map(w => w.en.toLowerCase())); extra = dl.pool().filter(w => !ex.has(w.en.toLowerCase())); if (pool.length + extra.length < 6) extra = extra.concat(await core.level.fillWords(6, new Set([...ex, ...extra.map(w => w.en.toLowerCase())]))); } catch (e) { }
     } else if (pool.length < TEST_N) { try { const ex = new Set([...dl.knownKeys(), ...pool.map(w => w.en.toLowerCase())]); pool = pool.concat(await core.level.fillWords(TEST_N - pool.length + 3, ex)); } catch (e) { } }
     if (pool.length < (fixed ? 1 : 4)) { core.ui.toast('テストできる言葉が、まだ少ないよ'); return; }
-    const dist = pool.concat(extra);
-    const first = w => String(w.ja).split(/[、,・]/)[0].trim();
-    const qs = pool.slice().sort(() => Math.random() - 0.5).slice(0, TEST_N).map(w => {
-      const bad = dist.filter(x => x.en !== w.en && first(x) !== first(w)).sort(() => Math.random() - 0.5).slice(0, 3).map(first);
-      return { w, ans: first(w), ch: [first(w), ...bad].sort(() => Math.random() - 0.5) };
-    });
+    const qs = makeQs(pool, TEST_N, pool.concat(extra));
     core.ui.sheet('<div class="rv"></div>', (ov, close) => {
       const box = ov.querySelector('.rv'); let i = 0; const res = []; let t0 = 0;
       dl.act('sub', { cat: 'study', label: '単語テスト' });   // テスト中は「勉強」の時間に入れる(とじたら元にもどす)
@@ -231,7 +239,7 @@ export function createReview(core) {
         box.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
           const ok = Q.ch[+b.dataset.k] === Q.ans, slow = (Date.now() - t0) / 1000 > SLOW;
           res.push({ ok, slow, w: Q.w });
-          try { dl.addWord({ en: Q.w.en, ja: Q.ans, pos: Q.w.pos, src: 'test', miss: !ok, slow }); core.learn && core.learn.hit(Q.w.en, ok, { ja: Q.ans }); } catch (e) { }   // その日に触れた単語・共通の学習記録に入れる
+          record(Q, ok, slow, 'test');   // その日に触れた単語・共通の学習記録に入れる
           b.style.background = ok ? '#bff0cf' : '#ffc9c9';
           box.querySelectorAll('[data-k]').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.style.background = '#bff0cf'; });
           setTimeout(() => { i++; q(); }, ok ? 450 : 1100);
@@ -277,5 +285,5 @@ export function createReview(core) {
     return e;
   }
   const mark = k => { if (dl.flagged(k)) return 0; const g = give(k); core.ui.toast(`${OTHERS.find(o => o[0] === k)?.[1] || ''}${g ? ' +' + g + 'コイン' : ''}`); return g; };
-  return { open, status, entrance, enter, mark, test, testDue };
+  return { open, status, entrance, enter, mark, test, testDue, makeQs, record };
 }

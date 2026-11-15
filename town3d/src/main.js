@@ -621,7 +621,7 @@ export function mount(container, opt = {}) {
   // ---- チャンクくんに乗る: 自分は前むき。手をつないでいる相手がいれば、後ろに背中合わせで乗る。乗っている間、チャンクくんは大きくなる(1人=2 / 2人=3) ----
   let ride = null, rideUIel = null, rideLift = 0;
   const chunkOf = () => residents.list.find(x => x.def.mascot);
-  const enc = createEncounter({ hud, opt, bus, music: on => audio.battle(on), hold: r => { r.talking = true; talkingTo = r; }, logWord: (en, ja, k, src) => logWord(en, ja, k, src) });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
+  const enc = createEncounter({ hud, opt, name: () => settings.name, music: on => audio.battle(on), hold: r => { r.talking = true; talkingTo = r; }, release: r => { r.talking = false; if (talkingTo === r) talkingTo = null; } });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
   let encCool = 45 + Math.random() * 45; enc.warm();
   const rideRay = new THREE.Raycaster(), rideDown = new THREE.Vector3(0, -1, 0), rideV = new THREE.Vector3();
   const cloudTop = (root, x, z, fb) => { try { rideRay.set(rideV.set(x, 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
@@ -1488,7 +1488,7 @@ export function mount(container, opt = {}) {
     raf = requestAnimationFrame(frame);
     timer.update(); let dt = Math.min(0.05, timer.getDelta());
     if (settings.lite) { fpsAcc += dt; if (fpsAcc < 0.031) return; dt = Math.min(0.1, fpsAcc); fpsAcc = 0; }   // 低負荷モードは30fps
-    if (paused || held || appHost.current) return; // アプリ中は町を止めて電池を節約
+    if (paused || held || appHost.current || enc.active) return; // アプリ中・エンカウント戦闘中は町を止めて電池を節約
     const t = timer.getElapsed();
     const inp = input.read();
 

@@ -129,5 +129,11 @@ export function createUseit(core) {
       };
     });
   }
-  return { open, find, mimic };
+  // 見出し語の例文を1つ(例文集 core/dict/ex.js から)。なければ null。ex.js に例文を足せば、そのまま戦闘などで使われる
+  async function example(en) {
+    const w = String(en || '').trim().toLowerCase(), hits = [];
+    try { await exReady(); (window.__csEx || '').split('\n').forEach(l => { const a = l.split('\t'); if (a.length === 4 && a[0].toLowerCase() === w && a[2]) hits.push({ en: a[2], ja: a[3] }); }); } catch (e) { }
+    return hits.length ? hits[Math.floor(Math.random() * hits.length)] : null;
+  }
+  return { open, find, mimic, example };
 }
