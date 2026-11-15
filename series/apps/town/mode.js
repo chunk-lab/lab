@@ -62,7 +62,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     if (!voiceOn()) eTip.remove();
     let alive = true, h = null;
     const ui = { show(x, info) { const p = core.aloud.pair(x, info); eA.textContent = p.a; eB.textContent = p.b; eA.classList.toggle('on', p.onA); eB.classList.toggle('on', p.onB); eN.textContent = `${info.i + 1} / ${info.n}`; } };
-    core.aloud.collect({ noNew: true }).then(list => { if (!alive) return; if (!list.length) { box.remove(); return; } h = core.aloud.run(list.slice(0, 40), { loop: true, ui }); }).catch(() => { box.remove(); });
+    core.aloud.collect({ noNew: true }).then(list => { if (!alive) return; if (!list.length) { box.remove(); return; } h = core.aloud.run(list.slice(0, 40), { loop: true, ui, fast: true }); }).catch(() => { box.remove(); });
     const tap = () => { if (!alive) return; eTip.remove(); if (h) h.restart(); };   // タップ: 音が出せるようになるので、いまの言葉を最初から読み直す
     bar.addEventListener('pointerdown', tap);
     return () => { alive = false; if (h) h.stop(); bar.removeEventListener('pointerdown', tap); try { core.speech.stop(); } catch (e) { } };

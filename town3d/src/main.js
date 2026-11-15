@@ -688,14 +688,15 @@ export function mount(container, opt = {}) {
     if (listen) rideDrillOn();
     say1(r, ['ふわ〜、しっかりつかまっててね', 'ふわっ、出発〜'], 2.5);
   }
-  function rideEnd() {
-    if (!ride) return; const { r, pax } = ride; if (ride.stop) ride.stop(); ride = null; rideLift = 0;
+  function rideEnd(inPlace) {   // inPlace: うかんでいた所から真下に降りたとき(乗っていた人はそのまま。雲とうしろの人を横へ)
+    if (!ride) return; const { r, pax } = ride; me.ch.rideSnap = false; if (pax) pax.ch.rideSnap = false; if (ride.stop) ride.stop(); ride = null; rideLift = 0;
     if (rideUIel) { rideUIel.remove(); rideUIel = null; }
     r.ride = false; r.ch.rideScale = 1; r.rideSpeed = 0; r.wait = 3; r.ch.root.position.y = 0;
     me.ch.pose = null; me.ch.rideY = 0; me.speed = 0;
     const sx = Math.cos(me.ry), sz = -Math.sin(me.ry), cx = r.ch.root.position.x, cz = r.ch.root.position.z;
-    [me.x, me.z] = collide(cx + sx * 1.3, cz + sz * 1.3);   // チャンクくんの横に降りる
-    if (pax) { pax.ride = false; pax.ch.pose = null; pax.ch.rideY = 0; const c = collide(cx - sx * 1.3, cz - sz * 1.3, 0.3); pax.ch.root.position.set(c[0], 0, c[1]); pax.reT = 0; }
+    if (inPlace) { const c = collide(me.x + Math.sin(me.ry) * 2.2, me.z + Math.cos(me.ry) * 2.2, 0.8); r.ch.root.position.set(c[0], 0, c[1]); }
+    else [me.x, me.z] = collide(cx + sx * 1.3, cz + sz * 1.3);   // チャンクくんの横に降りる
+    if (pax) { pax.ride = false; pax.ch.pose = null; pax.ch.rideY = 0; const c = inPlace ? collide(me.x - sx * 1.3, me.z - sz * 1.3, 0.3) : collide(cx - sx * 1.3, cz - sz * 1.3, 0.3); pax.ch.root.position.set(c[0], 0, c[1]); pax.reT = 0; }
     camGoal = { dist: CAM_DEF.dist, pitch: CAM_DEF.pitch };
   }
   function rideOff() {   // 「降りる」: 浮いているときは、真下まで一気に(建物の上なら近くの空き地へずらして)
@@ -710,9 +711,9 @@ export function mount(container, opt = {}) {
     if (ride.dive) {   // シューッと降下(だんだん速く)
       ride.dv += 75 * dt; ride.alt = Math.max(0, (ride.alt || 0) - ride.dv * dt); me.speed = 0;
       if (ride.land) { const k = Math.min(1, dt * 3); me.x += (ride.land[0] - me.x) * k; me.z += (ride.land[1] - me.z) * k; }
-      if (ride.alt <= 0) { audio.play('open'); rideEnd(); return; }
+      if (ride.alt <= 0) { audio.play('open'); rideEnd(true); return; }
     } else ride.alt = (ride.alt || 0) + ((ride.altT || 0) - (ride.alt || 0)) * Math.min(1, dt * 1.6);   // ふわっと上がる
-    const alt = ride.alt || 0;
+    const alt = ride.alt || 0; me.ch.rideSnap = alt > 0.05; if (pax) pax.ch.rideSnap = alt > 0.05;
     if (appHost.current || battle.active || sport.active || seat || !r.ch.root.visible && !sportHid) { rideEnd(); return; }
     if (ride.listen && rideUIel) { if (hud.busy && ride.stop) { ride.stop(); ride.stop = null; } else if (!hud.busy && !ride.stop && !ride.settings) rideDrillOn(); }   // 会話などの間は、読み上げを止める
     const sk = r.ch.scaleNow || 1, fx = Math.sin(me.ry), fz = Math.cos(me.ry), off = (pax ? 0.17 : 0.03) * sk, back = 0.2 * sk;
@@ -721,7 +722,7 @@ export function mount(container, opt = {}) {
     r.ch.root.updateMatrixWorld(true);
     const fb = 0.7 * sk + alt, top = cloudTop(r.ch.root, me.x, me.z, fb, alt);
     me.ch.rideY = top - 0.02 * sk; rideLift += (me.ch.rideY - rideLift) * Math.min(1, dt * 4);
-    if (pax) { const bx = cx - fx * back, bz = cz - fz * back; pax.ch.root.position.set(bx, alt, bz); pax.ch.root.rotation.y = me.ry + Math.PI; pax.ch.rideY = cloudTop(r.ch.root, bx, bz, fb, alt) - 0.05 * sk; pax.hidden = false; pax.ch.root.visible = true; }
+    if (pax) { const bx = cx - fx * back, bz = cz - fz * back; pax.ch.root.position.set(bx, 0, bz); pax.ch.root.rotation.y = me.ry + Math.PI; pax.ch.rideY = cloudTop(r.ch.root, bx, bz, fb, alt) - 0.05 * sk; pax.hidden = false; pax.ch.root.visible = true; }
   }
   // 手をつなぐ:プレイヤーの左にならぶ。ときどき少しおくれたり、前へ引っぱったりする(手ははなさない)
   const holdM = new THREE.Vector3();

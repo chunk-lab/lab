@@ -48,14 +48,14 @@ export function createAloud(core) {
   // ui.show(word, { i, n, first, phase }) first='ja'|'en'(先に読むほう) phase='first'|'second'
   function run(list0, o = {}) {
     const c = Object.assign({}, C, o.cfg || {}), list = c.order === 'random' ? shuf(list0.slice()) : list0.slice();
-    let alive = true, token = 0, paused = false, timer = null, i = 0;
+    let alive = true, token = 0, paused = false, timer = null, i = 0; const F = o.fast ? 0.2 : 1;   // fast: ローディング用。読み込み中は処理がおそいので、間をつめて「出してすぐ読む」
     const wait = ms => new Promise(r => { timer = setTimeout(r, ms); });
     const voiceOn = () => { try { return !!core.settings.get('voice'); } catch (e) { return true; } };
     const blocked = () => paused || document.body.classList.contains('tw-talking') || document.body.classList.contains('md-app-open');
     const say = (text, lang, minMs) => new Promise(res => {
-      if (!voiceOn()) { wait(Math.max(minMs, 1200)).then(res); return; }
+      if (!voiceOn()) { wait(Math.max(minMs, 1200 * F)).then(res); return; }
       const t0 = Date.now(); let done = false;
-      const fin = () => { if (done) return; done = true; clearTimeout(timer); const rest = minMs - (Date.now() - t0); rest > 0 ? (timer = setTimeout(res, rest)) : res(); };
+      const fin = () => { if (done) return; done = true; clearTimeout(timer); const rest = minMs * F - (Date.now() - t0); rest > 0 ? (timer = setTimeout(res, rest)) : res(); };
       timer = setTimeout(fin, 7000);
       try { core.speech.speak(text, { lang, onend: fin }); } catch (e) { fin(); }
     });
@@ -70,10 +70,10 @@ export function createAloud(core) {
         for (let k = 0; k < c.reps && live(); k++) {
           o.ui && o.ui.show(x, { ...info, phase: 'first' });
           await say(text(x, first), first, 900); if (!live()) return;
-          await wait(Math.max(0, c.gap) * 1000); if (!live()) return;
+          await wait(Math.max(0, c.gap) * 1000 * F); if (!live()) return;
           o.ui && o.ui.show(x, { ...info, phase: 'second' });
           await say(text(x, second), second, 800); if (!live()) return;
-          await wait(450);
+          await wait(450 * F);
         }
         i++;
       }
