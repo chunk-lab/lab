@@ -285,7 +285,7 @@ export function mount(container, opt = {}) {
     items.push(...soc.choices(r));
     if (!r.def.companion && isComp(r)) items.push({ k: 'bond', key: 'follow', label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { k: 'bond', key: 'invite', label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
     { const other = residents.list.find(o => o !== r && isComp(o) && o.follow); if (other && !r.follow) for (let i = items.length - 1; i >= 0; i--) if (items[i].key === 'follow' || items[i].key === 'invite') items.splice(i, 1); }   // ほかの人と手をつないで歩いている間は、2人目とは つなげない(先に バイバイしてから)
-    if (r.def.mascot) items.push({ k: 'play', key: 'ride', label: ride ? '⬇ 降りる' : '☁️ 乗る', fn: () => { try { hud.closeDialog && hud.closeDialog(); } catch (e) { } r.talking = false; talkingTo = null; ride ? rideEnd() : rideAsk(r); } });
+    if (r.def.mascot) items.push({ k: 'play', key: 'ride', label: ride ? '⬇ 降りる' : '☁️ 乗る', fn: () => { try { hud.closeDialog && hud.closeDialog(); } catch (e) { } r.talking = false; talkingTo = null; ride ? rideOff() : rideAsk(r); } });
     const chat = en => () => { r.talking = true; talkingTo = r; if (r.def.id === 'sora') { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); return; } if (ai.ready) startChat(r, text, undefined, en); else openAiSetup({ hud, ai, onDone: () => startChat(r, text, undefined, en) }); };
     if (r.def.id !== 'sora' || r.follow) { const lb = ai.ready ? '' : '(AIの設定)'; items.push({ k: 'study', key: 'chat-en', label: '💬 英語でおしゃべり' + lb, fn: chat(true) }, { k: 'bond', key: 'chat', label: '💬 おしゃべり' + lb, fn: chat(false) }); }
     for (const it of items) { const f = it.fn, key = it.key || it.label; it.fn = () => { markM(key); f(); }; it.ukey = key; }
@@ -627,7 +627,7 @@ export function mount(container, opt = {}) {
   const enc = createEncounter({ hud, opt, stage: encStage, name: () => settings.name, music: on => audio.battle(on), hold: r => { r.talking = true; talkingTo = r; }, release: r => { r.talking = false; if (talkingTo === r) talkingTo = null; } });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
   enc.warm();
   const rideRay = new THREE.Raycaster(), rideDown = new THREE.Vector3(0, -1, 0), rideV = new THREE.Vector3();
-  const cloudTop = (root, x, z, fb) => { try { rideRay.set(rideV.set(x, 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
+  const cloudTop = (root, x, z, fb, y0 = 0) => { try { rideRay.set(rideV.set(x, y0 + 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
   function rideDrillOn() { ride.stop = rideDrill(rideUIel.querySelector('[data-r=drill]')); if (ride.paused && ride.stop && ride.stop.pause) ride.stop.pause(true); }
   function rideDrill(box) {   // 単語の読み上げの設定どおりに(なければ、まちがえた言葉などをランダムに「英語 → 日本語」で2回ずつ)読み上げる
     if (opt.aloudBand) return opt.aloudBand(box);
@@ -680,7 +680,7 @@ export function mount(container, opt = {}) {
     if (view !== 'far') { view = 'far'; me.ch.root.visible = true; } camGoal = { dist: pax ? 13 : 10, pitch: 0.42 };   // 乗っている姿が見える近さに
     rideUIel = document.createElement('div'); rideUIel.style.cssText = 'position:absolute;left:12px;right:12px;top:calc(56px + var(--tw-top, 0px));display:flex;gap:8px;align-items:flex-start;justify-content:space-between;pointer-events:none;z-index:6';
     rideUIel.innerHTML = '<div data-r="drill" style="flex:1;min-width:0;display:flex"></div><span style="flex:none;display:flex;flex-direction:column;gap:6px;align-items:flex-end"><button class="tw-btn" data-r="off" style="padding:8px 14px;font-size:13px">⬇ 降りる</button>' + (listen && opt.openAloud ? '<button class="tw-btn" data-r="rp" style="padding:8px 14px;font-size:13px">⏸ 読み上げ</button><button class="tw-btn" data-r="rs" style="padding:8px 14px;font-size:13px">⚙ 読み上げ設定</button>' : '') + (plan === 'tour' ? '<button class="tw-btn" data-r="talk" style="padding:8px 14px;font-size:13px">💬 話す</button>' : '') + '</span>';
-    root.appendChild(rideUIel); rideUIel.querySelector('[data-r=off]').onclick = e => { e.stopPropagation(); rideEnd(); };
+    root.appendChild(rideUIel); rideUIel.querySelector('[data-r=off]').onclick = e => { e.stopPropagation(); rideOff(); };
     rideUIel.querySelector('[data-r=off]').onpointerdown = e => e.stopPropagation();
     { const tb = rideUIel.querySelector('[data-r=talk]'); if (tb) { tb.onclick = e => { e.stopPropagation(); rideTalk(); }; tb.onpointerdown = e => e.stopPropagation(); } }
     { const pb = rideUIel.querySelector('[data-r=rp]'); if (pb) { pb.onclick = e => { e.stopPropagation(); ride.paused = !ride.paused; if (ride.stop && ride.stop.pause) ride.stop.pause(ride.paused); pb.textContent = ride.paused ? '▶ 読み上げ' : '⏸ 読み上げ'; }; pb.onpointerdown = e => e.stopPropagation(); }   // 読み上げの一時停止/つづき
@@ -691,24 +691,37 @@ export function mount(container, opt = {}) {
   function rideEnd() {
     if (!ride) return; const { r, pax } = ride; if (ride.stop) ride.stop(); ride = null; rideLift = 0;
     if (rideUIel) { rideUIel.remove(); rideUIel = null; }
-    r.ride = false; r.ch.rideScale = 1; r.rideSpeed = 0; r.wait = 3;
+    r.ride = false; r.ch.rideScale = 1; r.rideSpeed = 0; r.wait = 3; r.ch.root.position.y = 0;
     me.ch.pose = null; me.ch.rideY = 0; me.speed = 0;
     const sx = Math.cos(me.ry), sz = -Math.sin(me.ry), cx = r.ch.root.position.x, cz = r.ch.root.position.z;
     [me.x, me.z] = collide(cx + sx * 1.3, cz + sz * 1.3);   // チャンクくんの横に降りる
     if (pax) { pax.ride = false; pax.ch.pose = null; pax.ch.rideY = 0; const c = collide(cx - sx * 1.3, cz - sz * 1.3, 0.3); pax.ch.root.position.set(c[0], 0, c[1]); pax.reT = 0; }
     camGoal = { dist: CAM_DEF.dist, pitch: CAM_DEF.pitch };
   }
+  function rideOff() {   // 「降りる」: 浮いているときは、真下まで一気に(建物の上なら近くの空き地へずらして)
+    if (!ride) return; if (ride.dive) return;
+    if ((ride.alt || 0) < 1.5) { rideEnd(); return; }
+    const sk = ride.r.ch.scaleNow || 1, c = collide(me.x, me.z, 1.4 * sk);
+    ride.land = Math.hypot(c[0] - me.x, c[1] - me.z) > 0.3 ? c : null; if (ride.land) hud.toast('ここには降りられないので、近くに降ります');
+    ride.dive = true; ride.dv = 0; ride.altT = 0; audio.play('wave');
+  }
   function rideStep(dt) {   // 毎コマ: チャンクくんと後ろの人を、自分に合わせて動かす(自分の位置=チャンクくんのまん中より少し前)
     if (!ride) return; const { r, pax } = ride;
+    if (ride.dive) {   // シューッと降下(だんだん速く)
+      ride.dv += 75 * dt; ride.alt = Math.max(0, (ride.alt || 0) - ride.dv * dt); me.speed = 0;
+      if (ride.land) { const k = Math.min(1, dt * 3); me.x += (ride.land[0] - me.x) * k; me.z += (ride.land[1] - me.z) * k; }
+      if (ride.alt <= 0) { audio.play('open'); rideEnd(); return; }
+    } else ride.alt = (ride.alt || 0) + ((ride.altT || 0) - (ride.alt || 0)) * Math.min(1, dt * 1.6);   // ふわっと上がる
+    const alt = ride.alt || 0;
     if (appHost.current || battle.active || sport.active || seat || !r.ch.root.visible && !sportHid) { rideEnd(); return; }
     if (ride.listen && rideUIel) { if (hud.busy && ride.stop) { ride.stop(); ride.stop = null; } else if (!hud.busy && !ride.stop && !ride.settings) rideDrillOn(); }   // 会話などの間は、読み上げを止める
     const sk = r.ch.scaleNow || 1, fx = Math.sin(me.ry), fz = Math.cos(me.ry), off = (pax ? 0.17 : 0.03) * sk, back = 0.2 * sk;
     const cx = me.x - fx * off, cz = me.z - fz * off;
-    r.ch.root.position.set(cx, 0, cz); r.ch.root.rotation.y = me.ry; r.rideSpeed = me.speed; r.speed = me.speed; r.hidden = false;
+    r.ch.root.position.set(cx, alt, cz); r.ch.root.rotation.y = me.ry; r.rideSpeed = me.speed; r.speed = me.speed; r.hidden = false;
     r.ch.root.updateMatrixWorld(true);
-    const fb = 0.7 * sk, top = cloudTop(r.ch.root, me.x, me.z, fb);
+    const fb = 0.7 * sk + alt, top = cloudTop(r.ch.root, me.x, me.z, fb, alt);
     me.ch.rideY = top - 0.02 * sk; rideLift += (me.ch.rideY - rideLift) * Math.min(1, dt * 4);
-    if (pax) { const bx = cx - fx * back, bz = cz - fz * back; pax.ch.root.position.set(bx, 0, bz); pax.ch.root.rotation.y = me.ry + Math.PI; pax.ch.rideY = cloudTop(r.ch.root, bx, bz, fb) - 0.05 * sk; pax.hidden = false; pax.ch.root.visible = true; }
+    if (pax) { const bx = cx - fx * back, bz = cz - fz * back; pax.ch.root.position.set(bx, alt, bz); pax.ch.root.rotation.y = me.ry + Math.PI; pax.ch.rideY = cloudTop(r.ch.root, bx, bz, fb, alt) - 0.05 * sk; pax.hidden = false; pax.ch.root.visible = true; }
   }
   // 手をつなぐ:プレイヤーの左にならぶ。ときどき少しおくれたり、前へ引っぱったりする(手ははなさない)
   const holdM = new THREE.Vector3();
@@ -1039,6 +1052,7 @@ export function mount(container, opt = {}) {
   }
   let dodgeT = 0, dodgeCd = 0, ddx = 0, ddz = 0, dodgeRot = false;
   offs.push(bus.on('ui:dodge', () => {
+    if (ride) { if (!ride.dive && !hud.busy) { ride.altT = Math.min(40, (ride.altT || 0) + 3); audio.play('wave'); } return; }   // 乗っている間は「うく」
     if (!started || hud.busy || appHost.current || battle.active || sport.active || seat || seasons.carrying() || snow.making || dodgeT > 0 || dodgeCd > 0) return;
     const m = lastMoveDir || { x: Math.sin(me.ry), z: Math.cos(me.ry) }; ddx = m.x; ddz = m.z; dodgeT = 0.55; dodgeCd = 1.4; audio.play('wave');
   }));
@@ -1582,7 +1596,8 @@ export function mount(container, opt = {}) {
       const s = Math.sin(cam.yaw), c = Math.cos(cam.yaw);
       const wx = (mx * c + my * s) / mag, wz = (-mx * s + my * c) / mag; lastMove = { x: wx, z: wz };
       me.ry = angleLerp(me.ry, Math.atan2(wx, wz), Math.min(1, dt * 12));
-      if (ride) { const n = Math.max(1, Math.ceil(me.speed * dt / 0.25)), rad = 0.3 * (ride.r.ch.scaleNow || 1); for (let i = 0; i < n; i++) [me.x, me.z] = collide(me.x + wx * me.speed * dt / n, me.z + wz * me.speed * dt / n, rad); }   // 速いので、こまかく進めて壁をすりぬけないように
+      if (ride && (ride.alt || 0) > 8 && !ride.dive) { me.x = clamp(me.x + wx * me.speed * dt, -70, 70); me.z = clamp(me.z + wz * me.speed * dt, -78, 70); }   // 高く浮いている間は、建物の上をこえて飛べる
+      else if (ride) { const n = Math.max(1, Math.ceil(me.speed * dt / 0.25)), rad = 0.3 * (ride.r.ch.scaleNow || 1); for (let i = 0; i < n; i++) [me.x, me.z] = collide(me.x + wx * me.speed * dt / n, me.z + wz * me.speed * dt / n, rad); }   // 速いので、こまかく進めて壁をすりぬけないように
       else [me.x, me.z] = collide(me.x + wx * me.speed * dt * (seasons.carrying() ? 0.6 : 1), me.z + wz * me.speed * dt * (seasons.carrying() ? 0.6 : 1));   // 雪だるまを持っていると、ゆっくり
     }
     lastMoveDir = lastMove;
@@ -1687,7 +1702,7 @@ export function mount(container, opt = {}) {
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
     { const sn = seasons.carrying() ? null : seasons.nearest(me.x, me.z, 2.4);
       hud.setSnow(started && seasons.season === 'winter' && !battle.active && !sport.active, snow.making ? '❄️\nころころ' : snow.holding ? '❄️\n投げてね' : seasons.carrying() ? '❄️\n雪玉' : '❄️\n雪玉', seasons.carrying() ? '🙌\n雪だるま' : sn ? '🙌\n雪だるま' : '⛄\n雪だるま', snow.making || snow.holding);
-      hud.setDodge(started && !battle.active && !sport.active); }
+      hud.setDodge(started && !battle.active && !sport.active && !(ride && ride.dive), ride ? '☁️\nうく' : '💨\nよける'); }
     snow.update(dt);
     battle.update(dt, lastMove);
     sport.update(dt);
@@ -1824,7 +1839,7 @@ export function mount(container, opt = {}) {
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
     snowState: () => { const B = battle.state; return B && { phase: B.phase, men: B.men.map(m => { const v = new THREE.Vector3(m.x, 0.6, m.z).project(camera); return [m.x, m.z, m.hp, m.g.scale.x, !!m.g.parent, m.g.visible, +v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(3), m.g.children.length, m.g.children[0].visible]; }), me: [me.x, me.z, me.ry], F: B.F.map(f => [f.name, f.x, f.z, f.hp]) }; },
-    sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
+    rideTest: () => { rideStart('free', false); return !!ride; }, rideFloat: () => bus.emit('ui:dodge'), rideOff: () => rideOff(), rideSt: () => ride ? { alt: +(ride.alt||0).toFixed(1), t: ride.altT, dive: !!ride.dive, y: +me.ch.rideY.toFixed(1) } : null, sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
     npc: id => residents.list.find(x => x.def.id === id),   // テスト用
     finds: () => finds.spots().map(s => ({ key: s.key, x: s.x, z: s.z, kind: s.kind })),   // テスト用
     benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用

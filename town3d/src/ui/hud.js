@@ -185,7 +185,7 @@ export function createHud(root, bus) {
     setArea(t) { if (area.textContent !== t) area.textContent = t; },
     setLite(on) { grade.style.display = vig.style.display = on ? 'none' : ''; },
     setSnow(on, label, man, manOff) { const b = snowB; if (b.hidden === on) b.hidden = !on; if (label && b.textContent !== label) b.textContent = label; if (manB.hidden === on) manB.hidden = !on; if (man && manB.textContent !== man) manB.textContent = man; manB.disabled = !!manOff; },
-    setDodge(on) { if (dodgeB.hidden === on) dodgeB.hidden = !on; },
+    setDodge(on, label) { if (dodgeB.hidden === on) dodgeB.hidden = !on; if (label && dodgeB.textContent !== label) dodgeB.textContent = label; },
     setFeed(on) { const b = emotes.querySelector('[data-e="feed"]'); if (b && b.hidden === on) b.hidden = !on; },
     setClock(hh, wx) { const H = Math.floor(hh), m = Math.floor((hh % 1) * 60); const ic = wx === 'rain' ? '☔' : wx === 'cloud' ? '☁️' : hh < 5 || hh >= 19 ? '🌙' : hh < 7 ? '🌅' : hh < 17 ? '☀️' : '🌇'; clock.textContent = `${ic} ${String(H).padStart(2, '0')}:${String(m).padStart(2, '0')}`; },
     setCoins(n, g) { coins.textContent = '🪙 ' + fmtN(n) + (g == null ? '' : ' 💎 ' + fmtN(g)); },
