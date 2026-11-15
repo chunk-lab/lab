@@ -148,21 +148,29 @@ function leap(from,to,code,delay=0,chunk=false){
  const sprite=document.createElement('span');sprite.className='mg-leap';sprite.innerHTML=icon(code);
  const x0=a.left+a.width/2,y0=a.top+a.height/2,x1=b.left+b.width/2,y1=b.top+b.height/2;
  sprite.style.width=size+'px';sprite.style.height=size+'px';
+ if(!chunk){source.classList.remove('mg-launching');void source.offsetWidth;source.classList.add('mg-launching');}
  target.classList.add('mg-awaiting');document.body.append(sprite);
- // Move the actual sprite each frame along a quadratic arc. CSS animations cannot mask the path.
+ const trails=Array.from({length:3},()=>{const dot=document.createElement('span');dot.className='mg-flight-trail';document.body.append(dot);return dot;});
+ // Show the takeoff, high arc and landing as one continuous flight above the board.
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const duration=reduced?380:850,high=reduced?100:Math.max(190,Math.abs(x1-x0)*.35+150);
- const controlX=x0+(x1-x0)*.38,controlY=Math.min(y0,y1)-high;
+ const duration=reduced?650:1150;
+ const controlX=x0+(x1-x0)*.42,controlY=Math.min(y0,y1)-(reduced?180:280);
  let start=null;
- const finish=()=>{sprite.remove();if(target.isConnected){target.classList.remove('mg-awaiting');animate([to],'mg-created');}};
+ const finish=()=>{sprite.remove();trails.forEach(dot=>dot.remove());source.classList.remove('mg-launching');if(target.isConnected){target.classList.remove('mg-awaiting');animate([to],'mg-created');}};
+ function position(t){
+   if(t<.13){const p=t/.13;return {x:x0,y:y0-20*p*p};}
+   const p=(t-.13)/.87,u=1-p;
+   return {x:u*u*x0+2*u*p*controlX+p*p*x1,y:u*u*(y0-20)+2*u*p*controlY+p*p*y1};
+ }
  function frame(now){
-   if(!sprite.isConnected){target.classList.remove('mg-awaiting');return;}
+   if(!sprite.isConnected){trails.forEach(dot=>dot.remove());source.classList.remove('mg-launching');target.classList.remove('mg-awaiting');return;}
    if(start===null)start=now+delay;
-   const t=Math.max(0,Math.min(1,(now-start)/duration)),u=1-t;
-   const x=u*u*x0+2*u*t*controlX+t*t*x1,y=u*u*y0+2*u*t*controlY+t*t*y1;
-   const scale=t<.35?.48+t*2.65:1.4075-(t-.35)*.55;
-   sprite.style.left=x+'px';sprite.style.top=y+'px';sprite.style.transform='translate(-50%,-50%) scale('+scale+')';
-   sprite.style.opacity=t<.08?String(.35+t*8):'1';
+   const t=Math.max(0,Math.min(1,(now-start)/duration));
+   const {x,y}=position(t),scale=t<.13?.28+t/.13*.7:t<.52?.98+(t-.13)/.39*.82:1.8-(t-.52)/.48*.9;
+   const angle=t<.13?-16:t<.6?-16+18*(t-.13)/.47:2+13*(t-.6)/.4;
+   sprite.style.left=x+'px';sprite.style.top=y+'px';sprite.style.transform='translate(-50%,-50%) rotate('+angle+'deg) scale('+scale+')';
+   sprite.style.opacity=t<.035?String(.3+t*20):'1';
+   trails.forEach((dot,i)=>{const q=position(Math.max(0,t-(i+1)*.055));dot.style.left=q.x+'px';dot.style.top=q.y+'px';dot.style.opacity=t>.16&&t<.93?String(.85-i*.24):'0';dot.style.transform='translate(-50%,-50%) scale('+(1-i*.22)+')';});
    if(t<1)requestAnimationFrame(frame);else finish();
  }
  requestAnimationFrame(frame);
