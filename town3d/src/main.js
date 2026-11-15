@@ -700,7 +700,7 @@ export function mount(container, opt = {}) {
     camGoal = { dist: CAM_DEF.dist, pitch: CAM_DEF.pitch };
   }
   function rideOff() {   // 「降りる」: 浮いているときは、真下まで一気に(建物の上なら近くの空き地へずらして)
-    if (!ride) return; if (ride.dive) return;
+    if (!ride) return; if (ride.dive || ride.bn) return;
     if ((ride.alt || 0) < 1.5) { rideEnd(); return; }
     const sk = ride.r.ch.scaleNow || 1, c = collide(me.x, me.z, 1.4 * sk);
     ride.land = Math.hypot(c[0] - me.x, c[1] - me.z) > 0.3 ? c : null; if (ride.land) hud.toast('ここには降りられないので、近くに降ります');
@@ -711,8 +711,11 @@ export function mount(container, opt = {}) {
     if (ride.dive) {   // シューッと降下(だんだん速く)
       ride.dv += 75 * dt; ride.alt = Math.max(0, (ride.alt || 0) - ride.dv * dt); me.speed = 0;
       if (ride.land) { const k = Math.min(1, dt * 3); me.x += (ride.land[0] - me.x) * k; me.z += (ride.land[1] - me.z) * k; }
-      if (ride.alt <= 0) { audio.play('open'); rideEnd(true); return; }
-    } else ride.alt = (ride.alt || 0) + ((ride.altT || 0) - (ride.alt || 0)) * Math.min(1, dt * 1.6);   // ふわっと上がる
+      if (ride.alt <= 0) { audio.play('open'); ride.dive = false; ride.land = null; ride.altT = 0; ride.bn = { v: Math.min(17, ride.dv * 0.34) }; ride.dv = 0; }   // 着地: やわらかいものの上のように大きくはずむ(そのまま乗っている。もう一度「降りる」で降りる)
+    } else if (ride.bn) {   // はずみ: だんだん小さく
+      const B = ride.bn; B.v -= 30 * dt; ride.alt += B.v * dt; me.speed = 0;
+      if (ride.alt <= 0) { ride.alt = 0; B.v = -B.v * 0.6; if (B.v < 3) ride.bn = null; }
+    } else { ride.alt = (ride.alt || 0) + ((ride.altT || 0) - (ride.alt || 0)) * Math.min(1, dt * 1.6); if ((ride.altT || 0) === 0 && ride.alt < 0.03) ride.alt = 0; }   // ふわっと上がる/さがる
     const alt = ride.alt || 0; me.ch.rideSnap = alt > 0.05; if (pax) pax.ch.rideSnap = alt > 0.05;
     if (appHost.current || battle.active || sport.active || seat || !r.ch.root.visible && !sportHid) { rideEnd(); return; }
     if (ride.listen && rideUIel) { if (hud.busy && ride.stop) { ride.stop(); ride.stop = null; } else if (!hud.busy && !ride.stop && !ride.settings) rideDrillOn(); }   // 会話などの間は、読み上げを止める
@@ -1052,8 +1055,9 @@ export function mount(container, opt = {}) {
     return null;
   }
   let dodgeT = 0, dodgeCd = 0, ddx = 0, ddz = 0, dodgeRot = false;
+  offs.push(bus.on('ui:down', () => { if (ride && !ride.dive && !ride.bn && !hud.busy && (ride.altT || 0) > 0) { ride.altT = Math.max(0, ride.altT - 3); audio.play('wave'); } }));   // さがる(3mずつ)
   offs.push(bus.on('ui:dodge', () => {
-    if (ride) { if (!ride.dive && !hud.busy) { ride.altT = Math.min(40, (ride.altT || 0) + 3); audio.play('wave'); } return; }   // 乗っている間は「うく」
+    if (ride) { if (!ride.dive && !ride.bn && !hud.busy) { ride.altT = Math.min(40, (ride.altT || 0) + 3); audio.play('wave'); } return; }   // 乗っている間は「うく」
     if (!started || hud.busy || appHost.current || battle.active || sport.active || seat || seasons.carrying() || snow.making || dodgeT > 0 || dodgeCd > 0) return;
     const m = lastMoveDir || { x: Math.sin(me.ry), z: Math.cos(me.ry) }; ddx = m.x; ddz = m.z; dodgeT = 0.55; dodgeCd = 1.4; audio.play('wave');
   }));
@@ -1703,7 +1707,7 @@ export function mount(container, opt = {}) {
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
     { const sn = seasons.carrying() ? null : seasons.nearest(me.x, me.z, 2.4);
       hud.setSnow(started && seasons.season === 'winter' && !battle.active && !sport.active, snow.making ? '❄️\nころころ' : snow.holding ? '❄️\n投げてね' : seasons.carrying() ? '❄️\n雪玉' : '❄️\n雪玉', seasons.carrying() ? '🙌\n雪だるま' : sn ? '🙌\n雪だるま' : '⛄\n雪だるま', snow.making || snow.holding);
-      hud.setDodge(started && !battle.active && !sport.active && !(ride && ride.dive), ride ? '☁️\nうく' : '💨\nよける'); }
+      hud.setDown(started && !!ride && !ride.dive && !ride.bn && (ride.altT || 0) > 0); hud.setDodge(started && !battle.active && !sport.active && !(ride && (ride.dive || ride.bn)), ride ? '☁️\nうく' : '💨\nよける'); }
     snow.update(dt);
     battle.update(dt, lastMove);
     sport.update(dt);
@@ -1840,7 +1844,7 @@ export function mount(container, opt = {}) {
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
     snowState: () => { const B = battle.state; return B && { phase: B.phase, men: B.men.map(m => { const v = new THREE.Vector3(m.x, 0.6, m.z).project(camera); return [m.x, m.z, m.hp, m.g.scale.x, !!m.g.parent, m.g.visible, +v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(3), m.g.children.length, m.g.children[0].visible]; }), me: [me.x, me.z, me.ry], F: B.F.map(f => [f.name, f.x, f.z, f.hp]) }; },
-    rideTest: () => { rideStart('free', false); return !!ride; }, rideFloat: () => bus.emit('ui:dodge'), rideOff: () => rideOff(), rideSt: () => ride ? { alt: +(ride.alt||0).toFixed(1), t: ride.altT, dive: !!ride.dive, y: +me.ch.rideY.toFixed(1) } : null, sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
+    rideTest: () => { rideStart('free', false); return !!ride; }, rideFloat: () => bus.emit('ui:dodge'), rideOff: () => rideOff(), rideDown: () => bus.emit('ui:down'), rideSt: () => ride ? { alt: +(ride.alt||0).toFixed(1), t: ride.altT, dive: !!ride.dive, bn: !!ride.bn, y: +me.ch.rideY.toFixed(1) } : null, sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
     npc: id => residents.list.find(x => x.def.id === id),   // テスト用
     finds: () => finds.spots().map(s => ({ key: s.key, x: s.x, z: s.z, kind: s.kind })),   // テスト用
     benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用
