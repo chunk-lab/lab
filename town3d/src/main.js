@@ -145,6 +145,7 @@ export function mount(container, opt = {}) {
   });  sport = createSport({
     scene, camera, root, me, city, collide: (x, z, r) => collide(x, z, r), audio, wallet, toast: t => hud.toast(t),
     getYaw: () => cam.yaw, setYaw: y => { cam.yaw = y; },
+    resetView: () => { cam.pitch = CAM_DEF.pitch; cam.dist = CAM_DEF.dist; panOff.x = panOff.z = 0; cam.x = me.x; cam.z = me.z; if (camMode === 'free') camMode = 'follow'; },   // ゴルフ・フリスビーを打つ前に、視点をもとにもどす
     exprPool: () => opt.exprPool?.() || null,
     onGive(x, kind) {   // 1ホールごとにもらった表現:その場で勉強ノートと今日のふりかえりに入れる
       opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src: '今日の表現' } });
@@ -1333,6 +1334,7 @@ export function mount(container, opt = {}) {
     root.addEventListener('touchend', e => { if (e.touches.length < 2) { t1 = null; t2 = null; } }, { passive: true });
   }
   const fcam = { x: 0, y: 1.6, z: 0, yaw: 0, pitch: 0 };
+  let scW = 0; const scP = new THREE.Vector3(), scL = new THREE.Vector3(), scN = new THREE.Vector3(), scNL = new THREE.Vector3();   // ゴルフ・フリスビー用の特別なカメラ(切りかえの途中経過)
   const heightToV = y => Math.sqrt(Math.max(0, (y - 0.15) / 80)), vToHeight = v => 0.15 + v * v * 80;
   function camFromView() {   // いまの見え方から、動かすカメラの出発点を作る
     const d = new THREE.Vector3(); camera.getWorldDirection(d);
@@ -1541,6 +1543,7 @@ export function mount(container, opt = {}) {
     if (snow.making || bld || battle.making || battle.rolling || sport.active || dodgeT > 0) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
     if (seat) { if (Math.hypot(mx, my) > 0.35) standFromSeat(); mx = my = 0; }
     const mag = Math.min(1, Math.hypot(mx, my)); let lastMove = null;
+    if (lookAtR && (lookAtR.follow || lookAtR.hold)) lookAtR = null;   // 手をつないで(いっしょに)歩いている相手は、自動で追いかけて見ない(相手が自分についてくるので、カメラが回りつづけてしまう)
     if (lookAtR && mag > 0.05) lookAtR = null;   // タップで向いたあと、自分で動きだしたら引いた視点にもどる
     if (goTo && (ride || mag > 0.3 || appHost.current || talkingTo || seat || battle.active || sport.active || camMode !== 'follow' || approach || dodgeT > 0 || snow.making || seasons.building())) goTo = null;   // スティックを動かすなど、ほかの操作をしたら、そちらを優先
     if (goTo) {   // 地面を2回タップした場所へ走っていく。着いたら止まる(カメラやメニューを動かしても、その間に着く)
@@ -1651,6 +1654,23 @@ export function mount(container, opt = {}) {
     }
     }
 
+    // ゴルフ・フリスビーの飛んでいる間の特別なカメラ(グリーンのアップ / ボールとゴールが見える視点)。切りかわりはなめらかに
+    { const hint = camMode === 'follow' && sport.active ? sport.camHint() : null, w0 = scW;
+      scW += ((hint ? 1 : 0) - scW) * Math.min(1, dt * (hint ? 3.2 : 4)); if (scW < 0.004 && !hint) scW = 0;
+      if (hint) {
+        const dx = hint.gx - hint.x, dz = hint.gz - hint.z, d = Math.max(0.01, Math.hypot(dx, dz)); let px, py, pz, lx, ly, lz;
+        if (hint.mode === 'green') {   // ボールのうしろ・低めから、グリーンとカップの方を見る
+          let ux = dx / d, uz = dz / d; if (d < 0.6) { const vs = Math.hypot(hint.vx, hint.vz); if (vs > 0.2) { ux = hint.vx / vs; uz = hint.vz / vs; } }
+          px = hint.x - ux * 3.6; py = 1.9; pz = hint.z - uz * 3.6; const ahead = Math.min(d * 0.5, 3.5); lx = hint.x + ux * ahead; ly = 0.15; lz = hint.z + uz * ahead;
+        } else {   // ボールとゴールの真ん中を、よこから(2つとも入る距離で)見る
+          const mx = (hint.x + hint.gx) / 2, mz = (hint.z + hint.gz) / 2, sx = dz / d, sz = -dx / d, dd = Math.max(4, d), back = dd * 0.9 + 4.5;
+          px = mx + sx * back; py = 2.4 + dd * 0.2; pz = mz + sz * back; lx = mx; ly = 1.3; lz = mz;
+        }
+        if (w0 === 0) { scP.copy(camera.position); scL.set(cam.x, 1.3, cam.z); }   // 切りかえはじめは、いまの見え方から
+        const k = Math.min(1, dt * 4.5); scP.x += (px - scP.x) * k; scP.y += (py - scP.y) * k; scP.z += (pz - scP.z) * k; scL.x += (lx - scL.x) * k; scL.y += (ly - scL.y) * k; scL.z += (lz - scL.z) * k;
+      }
+      if (scW > 0) { const e = scW * scW * (3 - 2 * scW); scN.copy(camera.position); scNL.set(cam.x, 1.3, cam.z); camera.position.lerpVectors(scN, scP, e); scNL.lerp(scL, e); camera.lookAt(scNL); }
+    }
     if (talkingTo && !hud.busy) { talkingTo.talking = false; talkingTo = null; }   // 会話が終わっているのに止まったままの住人を放す
     for (const r of residents.list) if (r.talking && r !== talkingTo) r.talking = false;
     tipUpdate(dt); hanaUpdate(dt); birthdayUpdate(dt); visitUpdate(dt);
@@ -1792,7 +1812,7 @@ export function mount(container, opt = {}) {
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
     snowState: () => { const B = battle.state; return B && { phase: B.phase, men: B.men.map(m => { const v = new THREE.Vector3(m.x, 0.6, m.z).project(camera); return [m.x, m.z, m.hp, m.g.scale.x, !!m.g.parent, m.g.visible, +v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(3), m.g.children.length, m.g.children[0].visible]; }), me: [me.x, me.z, me.ry], F: B.F.map(f => [f.name, f.x, f.z, f.hp]) }; },
-    sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(),   // テスト用
+    sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
     npc: id => residents.list.find(x => x.def.id === id),   // テスト用
     finds: () => finds.spots().map(s => ({ key: s.key, x: s.x, z: s.z, kind: s.kind })),   // テスト用
     benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用

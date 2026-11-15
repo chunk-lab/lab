@@ -18,7 +18,7 @@ const CLUBS = [   // ゴルフのクラブ:飛ぶ距離(m)・打ち出し角
 const HGTS = [['低め', 0], ['ふつう', 1], ['高め', 2]];   // フリスビーの高さ
 function rng(seed) { let s = 0; for (const c of seed) s = (s * 31 + c.charCodeAt(0)) >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
 
-export function createSport({ scene, camera, root, me, city, collide, audio, wallet, getYaw, setYaw, onEnd, onExpr, onGive, exprPool, toast }) {
+export function createSport({ scene, camera, root, me, city, collide, audio, wallet, getYaw, setYaw, resetView, onEnd, onExpr, onGive, exprPool, toast }) {
   const mat = c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.6 });
   let S = null;
   const css = document.createElement('style');
@@ -160,6 +160,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     camOffset = { x: 0, z: 0 };
     const H = S.C.holes[S.i], a = Math.atan2(H.goal[0] - p.x, H.goal[1] - p.z);
     me.x = p.x - Math.sin(a) * 0.7 + Math.cos(a) * 0.3; me.z = p.z - Math.cos(a) * 0.7 - Math.sin(a) * 0.3; me.ry = a; setYaw(a + Math.PI);
+    S.camG = S.camF = false; try { resetView && resetView(); } catch (e) { }   // 打つ前は毎回、自分視点・ゴールに向かった上からの視点にもどす(めりこんで置き直されたときなどの、おかしな視点も直る)
   }
   function end(quit) {
     const total = S.strokes.reduce((a, b) => a + b, 0), par = S.C.holes.slice(0, S.strokes.length).reduce((a, h) => a + h.par, 0), kind = S.kind;
@@ -229,7 +230,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
   // ---- 打つ・投げる ----
   function aimDir() { const y = getYaw() + Math.PI; return [Math.sin(y), Math.cos(y)]; }   // カメラの向き=ねらう向き
   function fire() {
-    camOffset = { x: 0, z: 0 }; const p = Math.max(0.05, S.power); let [dx, dz] = aimDir(); S.n++; S.last = S.pos.clone(); S.safe = S.pos.clone(); S.stk = 0; S.anc = null; S.phase = 'fly'; S.t = 0; audio?.play?.('wave');
+    camOffset = { x: 0, z: 0 }; S.camG = S.camF = false; const p = Math.max(0.05, S.power); let [dx, dz] = aimDir(); S.n++; S.last = S.pos.clone(); S.safe = S.pos.clone(); S.stk = 0; S.anc = null; S.phase = 'fly'; S.t = 0; audio?.play?.('wave');
     me.ry = Math.atan2(dx, dz);
     if (S.kind === 'golf') {
       const c = CLUBS[S.club], dv = -(S.dev || 0) * (c.loft === 0 ? 0.08 : 0.06 + c.d / 70 * 0.1), cs = Math.cos(dv), sn = Math.sin(dv);   // 左右のずれ(長いクラブほど大きい)
@@ -614,5 +615,23 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     camOffset.x += (mx * c + my * s) * k; camOffset.z += (-mx * s + my * c) * k;
     const m = Math.hypot(camOffset.x, camOffset.z); if (m > 40) { camOffset.x *= 40 / m; camOffset.z *= 40 / m; }
   }
-  return { get active() { return !!S; }, get busy() { return !!S; }, start, update, focus, pan, quit: () => S && end(true), cheatHole: () => { if (S && S.phase !== 'done') { S.n = S.n || 3; holed(); } } };   // cheatHole＝テスト用
+  // 飛んでいる間のカメラ: ゴルフ=落ちる直前/グリーンに乗ったらグリーンのアップ、フリスビー=ゴールまで15mでボールとゴールが見える視点。ふだん(と、止まったあと)は null=引きの視点
+  function camHint() {
+    if (!S || S.phase !== 'fly') return null;
+    const H = S.C.holes[S.i], p = S.pos, v = S.v, gx = H.goal[0], gz = H.goal[1], d = Math.hypot(gx - p.x, gz - p.z);
+    if (S.kind === 'golf') {
+      if (!S.camG) {
+        const gd = S.gdef, R = gd ? gd.R0 * 1.5 + 2.5 : 14;   // グリーンのまわり
+        let tg = 0; if (p.y > 0.08) { const disc = v.y * v.y + 2 * G * (p.y - 0.06); tg = (v.y + Math.sqrt(Math.max(0, disc))) / G; }   // 落ちるまでの秒数
+        const lx = p.x + v.x * tg, lz = p.z + v.z * tg, dl = Math.hypot(gx - lx, gz - lz);
+        if ((p.y <= 0.3 || (v.y < 0 && tg < 0.45)) && dl < R) S.camG = true;   // 落ちる直前、またはもう地面にいて、グリーンのそば
+      }
+      if (S.camG) return { mode: 'green', x: p.x, y: p.y, z: p.z, gx, gz, vx: v.x, vz: v.z };
+    } else {
+      if (d < 15) S.camF = true;
+      if (S.camF) return { mode: 'fris', x: p.x, y: p.y, z: p.z, gx, gz };
+    }
+    return null;
+  }
+  return { get active() { return !!S; }, get busy() { return !!S; }, start, update, focus, camHint, pan, quit: () => S && end(true), debugShot: (pw, force) => { if (S && S.phase === 'aim') { S.power = pw; fire(); if (force) S[S.kind === 'golf' ? 'camG' : 'camF'] = true; return true; } return false; }, cheatHole: () => { if (S && S.phase !== 'done') { S.n = S.n || 3; holed(); } } };   // cheatHole＝テスト用
 }
