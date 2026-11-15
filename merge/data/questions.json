@@ -1,0 +1,56 @@
+[
+  {
+    "prompt": "「小麦粉」は英語で？",
+    "options": [
+      "flour",
+      "flower",
+      "floor"
+    ],
+    "answer": 0
+  },
+  {
+    "prompt": "「このケーキがほしいです」に合う文は？",
+    "options": [
+      "I make this cake.",
+      "I want this cake.",
+      "I have a cake."
+    ],
+    "answer": 1
+  },
+  {
+    "prompt": "「椅子」はどれ？",
+    "options": [
+      "shelf",
+      "table",
+      "chair"
+    ],
+    "answer": 2
+  },
+  {
+    "prompt": "「ありがとう」と言われたときの返事は？",
+    "options": [
+      "You’re welcome.",
+      "Good morning.",
+      "Here I am."
+    ],
+    "answer": 0
+  },
+  {
+    "prompt": "「もうひとつ」はどれ？",
+    "options": [
+      "next door",
+      "one more",
+      "too late"
+    ],
+    "answer": 1
+  },
+  {
+    "prompt": "「いちごをふたつ」はどれ？",
+    "options": [
+      "a strawberry",
+      "three berries",
+      "two strawberries"
+    ],
+    "answer": 2
+  }
+]
