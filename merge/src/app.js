@@ -4,10 +4,10 @@ const T=window.MGStrings, art=window.MGArt, bridge=window.MergeBridge, mock=Bool
 const app=document.querySelector('#mg-app'), sheet=document.querySelector('#mg-sheet'), content=sheet.querySelector('.mg-content');
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const day=()=>new Date().toLocaleDateString('sv-SE');
-const key='cs:merge:'+(mock?'practice:':'live:')+'v1';
+const key='cs:merge:'+(mock?'practice:':'live:')+'v2',legacyKey=key.replace(/v2$/,'v1');
 const navPaths={bag:'M3 9h18v12H3z M2 5h20v4H2z M9 13h6',book:'M12 6Q7 2 2 5v15q5-3 10 0 5-3 10 0V5q-5-3-10 1zm0 0v14',study:'m2 9 10-5 10 5-10 5z M6 12v5q6 4 12 0v-5m3-2v7',hint:'M4 5h16v12H9l-5 4z M8 10h1m3 0h1m3 0h1'};
 const svg=k=>'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+navPaths[k]+'"/></svg>';
-let data,e,questions,game,s,aff={},coins=0,reaction=null,audioContext=null,busy=false,departing=false,halted=false,choice=null,gesture=null,toastTimer,modal='',quiz=null,timer;
+let data,e,questions,game,s,aff={},coins=0,reaction=null,audioContext=null,busy=false,departing=false,celebrating=false,halted=false,choice=null,gesture=null,toastTimer,modal='',quiz=null,timer;
 const button=(label,act,cls='mg-btn',extra='')=>'<button class="'+cls+'" data-act="'+act+'" '+extra+'>'+label+'</button>';
 function fail(message){halted=true;clearInterval(timer);if(sheet.open)sheet.close();app.innerHTML='<section class="mg-content"><h2>'+T.workshop+'</h2><p role="alert">'+esc(message)+'</p>'+button(T.reload,'reload')+'</section>';}
 function chime(event){
@@ -29,7 +29,7 @@ function info(code){const o=game.parse(code);if(o.kind==='i') return data.lines[
 function icon(code){const {kind,family,rank}=game.parse(code),m=data.machines[family];let html;
  if(kind==='g')html=art.machine(m.art);
  else if(kind==='p')html=art.part(family,rank);
- else html=art.item(family,rank);
+ else html=art.item(family,rank)||'<span class="mg-emoji">'+esc(data.lines[family].items[rank-1].icon)+'</span>';
  return '<span class="mg-icon" aria-hidden="true">'+html+'</span>';
 }
 function number(v){if(!Number.isSafeInteger(v)||v<0)throw Error(T.error);return v;}
@@ -46,20 +46,20 @@ async function settle(){
  delete s.pending;save();await refreshWallet();
 }
 async function action(fn){
- if(busy||departing||halted)return;busy=true;
+ if(busy||departing||celebrating||halted)return;busy=true;
  try{const before=game.level(s);const r=await fn()||{};
    if(r.error){toast(T[r.error]);return;}
    game.discover(s);s.serial++;
    if(r.effect){s.pending={...r.effect,before:await balance(r.effect)};save();await settle();}
    else save();
    if(r.select!==undefined)choice=r.select;
-   reaction=r.newTurn?{id:'chunkkun',until:Date.now()+7000,text:s.turn+T.turnStart+'　'+r.drops.length+T.scatterCount}:r.event==='gift'?{id:r.old,until:Date.now()+5500,text:T.gifted+' ♥ +'+r.gain+'　'+info(r.part).name+' ×1'}:null;
+   reaction=r.newTurn?{id:'chunkkun',until:Date.now()+7000,text:s.turn+T.turnStart+'　'+r.drops.length+T.scatterCount}:r.event==='gift'?{id:r.old,until:Date.now()+5500,text:T.gifted+' ♥ +'+r.gain+(r.part?'　'+info(r.part).name+' ×1':'')}:null;
    chime(r.event);
    if(r.close&&sheet.open)sheet.close();
    render();
    if(r.event==='generated')leap(r.from,r.at,s.board[r.at].code,0);
    else if(r.at!=null)animate(r.other!=null?[r.at,r.other]:[r.at],r.event==='merged'||r.event==='unlocked'?'mg-combined':'mg-pop');
-   if(r.newTurn){scatterMascot();r.drops.forEach((drop,i)=>leap(drop.from,drop.at,s.board[drop.at].code,i*95,true));chime('scatter');}
+   if(r.newTurn){cycleCelebration(r.drops,r.part);chime('scatter');}
    if(r.event==='gift'){const at=s.orders.findIndex(q=>q.id===r.newArrival);app.querySelector('[data-act="order:'+at+'"]')?.classList.add('mg-arriving');}
    if(r.message)toast(r.message+(game.level(s)>before?'　'+T.levelUp:''));
  }catch(err){console.error(err);fail(err.message===T.resolve?T.resolve:T.error);}finally{busy=false;}
@@ -136,13 +136,19 @@ function render(){
  app.querySelector('.mg-board').innerHTML=s.board.map(cell).join('');panel();
 }
 function animate(indices,cls){for(const i of indices){const b=app.querySelector('[data-cell="'+i+'"]');if(b){b.classList.remove(cls);void b.offsetWidth;b.classList.add(cls);}}}
-function scatterMascot(){
- const field=app.querySelector('.mg-harbor');if(!field)return;
- const mascot=document.createElement('div');mascot.className='mg-scatter-mascot';mascot.innerHTML=portrait('chunkkun','mg-scatter-face')+'<span>'+T.scatterHello+'</span>';
- field.append(mascot);setTimeout(()=>mascot.remove(),1650);
+function cycleCelebration(drops,part){
+ celebrating=true;
+ for(const drop of drops)app.querySelector('[data-cell="'+drop.at+'"]')?.classList.add('mg-awaiting');
+ const scene=document.createElement('div');scene.className='mg-cycle';
+ scene.innerHTML='<div class="mg-cycle-banner"><strong>'+T.cycleComplete+'</strong><span>'+T.cycleReward+' '+drops.length+T.scatterCount+(part?' · '+T.partWon:'')+'</span></div><div class="mg-cycle-chunk">'+portrait('chunkkun','mg-cycle-face')+'<span>'+T.scatterHello+'</span></div>';
+ document.body.append(scene);
+ setTimeout(()=>scene.classList.add('mg-cycle-toss'),650);
+ setTimeout(()=>{drops.forEach((drop,i)=>leap(drop.from,drop.at,s.board[drop.at].code,i*105,true));chime('scatter');},750);
+ setTimeout(()=>scene.classList.add('mg-cycle-leaving'),1850+drops.length*105);
+ setTimeout(()=>{scene.remove();celebrating=false;},2650+drops.length*105);
 }
 function leap(from,to,code,delay=0,chunk=false){
- const source=chunk?app.querySelector('.mg-navbtn:last-child'):app.querySelector('[data-cell="'+from+'"]');
+ const source=chunk?document.querySelector('.mg-cycle-chunk'):app.querySelector('[data-cell="'+from+'"]');
  const target=app.querySelector('[data-cell="'+to+'"]');if(!source||!target)return;
  const a=source.getBoundingClientRect(),b=target.getBoundingClientRect(),size=Math.min(b.width,b.height);
  const sprite=document.createElement('span');sprite.className='mg-leap';sprite.innerHTML=icon(code);
@@ -176,7 +182,7 @@ function leap(from,to,code,delay=0,chunk=false){
  requestAnimationFrame(frame);
 }
 function useCell(i){
- if(busy||halted)return;
+ if(busy||celebrating||halted)return;
  const t=s.board[i];
  choice=t?i:null;
  if(t&&!t.locked&&t.code[0]==='g'){
@@ -207,10 +213,10 @@ function bagPage(){
  dialog(T.bag+'　'+s.bag.length+'/'+game.capacity(s),'<p>'+(s.bag.length?T.bagHelp:T.bagEmpty)+'</p><div class="mg-grid">'+tiles+'</div>','bag');
 }
 function bookPage(){
- const count=Object.keys(s.known).length,total=data.lines.reduce((n,l)=>n+l.items.length,0);
- dialog(T.book,'<p>'+T.bookSub+'　<b>'+count+' / '+total+'</b> '+(count===total?T.completed:'')+'</p><div class="mg-list">'+data.lines.map((l,f)=>button(art.machine(data.machines[l.machine].art)+'<b>'+esc(l.name)+'</b><small>'+l.items.filter((_,i)=>s.known['i'+f+'.'+(i+1)]).length+'/'+l.items.length+' ›</small>','line:'+f,'mg-btn mg-bookrow')).join('')+'</div>','book');
+ const count=Object.keys(s.known).length,total=data.lines.reduce((n,l)=>n+(l.mergeMaxRank||l.items.length),0);
+ dialog(T.book,'<p>'+T.bookSub+'　<b>'+count+' / '+total+'</b> '+(count===total?T.completed:'')+'</p><div class="mg-list">'+data.lines.map((l,f)=>button(art.machine(data.machines[l.machine].art)+'<b>'+esc(l.name)+'</b><small>'+l.items.filter((_,i)=>i<(l.mergeMaxRank||l.items.length)&&s.known['i'+f+'.'+(i+1)]).length+'/'+(l.mergeMaxRank||l.items.length)+' ›</small>','line:'+f,'mg-btn mg-bookrow')).join('')+'</div>','book');
 }
-function linePage(f){const l=data.lines[f];dialog(l.name,'<div class="mg-row">'+art.machine(data.machines[l.machine].art)+'<b>'+esc(data.machines[l.machine].name)+'</b></div><div class="mg-grid">'+l.items.map((it,i)=>{const c='i'+f+'.'+(i+1),known=s.known[c];return '<div class="mg-tile '+(known?'':'mg-faded')+'">'+icon(c)+'<small>'+T.lv+(i+1)+'<br>'+esc(it.name)+'<br>'+(known?T.made:T.undiscovered)+'</small></div>';}).join('')+'</div><p>'+T.madePair+'</p>'+button(T.back,'book','mg-btn mg-primary'),'line');}
+function linePage(f){const l=data.lines[f];dialog(l.name,'<div class="mg-row">'+art.machine(data.machines[l.machine].art)+'<b>'+esc(data.machines[l.machine].name)+'</b></div><div class="mg-grid">'+l.items.map((it,i)=>{const c='i'+f+'.'+(i+1),known=s.known[c];return '<div class="mg-tile '+(known?'':'mg-faded')+'">'+icon(c)+'<small>'+T.lv+(i+1)+'<br>'+esc(it.name)+'<br>'+(it.special?T.specialPending:known?T.made:T.undiscovered)+'</small></div>';}).join('')+'</div><p>'+T.madePair+(l.items.some(it=>it.special)?' '+T.specialGuide:'')+'</p>'+button(T.back,'book','mg-btn mg-primary'),'line');}
 function hint(){
  const q=focusOrder(),flags=game.checklist(s,q);
  if(flags.every(Boolean)){orderPage(s.orders.indexOf(q));return;}
@@ -252,7 +258,7 @@ async function answer(i){
  }catch(err){fail(T.error);}finally{busy=false;}
 }
 function dispatch(act){
- const [k,idx]=act.split(':'),i=Number(idx);if(k==='reload'){location.reload();return;}if(busy||halted)return;
+ const [k,idx]=act.split(':'),i=Number(idx);if(k==='reload'){location.reload();return;}if(busy||celebrating||halted)return;
  switch(k){
  case 'prev':case 'next':{
    const list=app.querySelector('.mg-orders');
@@ -267,7 +273,7 @@ function dispatch(act){
    if(departing)return;
    departing=true;sheet.close();
    const card=app.querySelector('[data-act="order:'+i+'"]');card?.classList.add('mg-departing');
-   setTimeout(()=>{departing=false;action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:r.newTurn?'チャンク君「'+r.turn+T.turnStart+'」':resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+'　'+T.partWon};});},280);
+   setTimeout(()=>{departing=false;action(()=>{const r=game.gift(s,i,aff);return r.error?r:{...r,select:null,close:true,message:r.newTurn?null:resident(r.old).name+'「'+T.gifted+'」 ♥ +'+r.gain+(r.part?'　'+T.partWon:'')};});},280);
    break;
  }
  case 'hint':hint();break;case 'book':bookPage();break;case 'line':linePage(i);break;case 'bag':bagPage();break;case 'stats':stats();break;case 'study':study();break;case 'answer':answer(i);break;
@@ -350,8 +356,9 @@ async function boot(){
  if(location.protocol==='file:') config=JSON.parse(document.getElementById('mg-offline').textContent);
  else await Promise.all(names.map(async k=>{const res=await fetch('data/'+k+'.json');if(!res.ok)throw Error();config[k]=await res.json();}));
  data=config.items;e=config.economy;questions=mock?config.questions:[];game=MGGame(data,e);
- const raw=localStorage.getItem(key);s=raw===null?game.initial():JSON.parse(raw);
- if(s.version!==1||s.board?.length!==e.height*e.width||!Array.isArray(s.orders)||!Array.isArray(s.bag))throw Error(T.broken);
+ const raw=localStorage.getItem(key),legacy=raw===null?localStorage.getItem(legacyKey):null;
+ s=raw!==null?JSON.parse(raw):legacy!==null?game.migrate(JSON.parse(legacy)):game.initial();
+ if(s.version!==2||s.board?.length!==e.height*e.width||!Array.isArray(s.orders)||!Array.isArray(s.bag))throw Error(T.broken);
  game.completeOrders(s);await settle();await refreshWallet();await syncEnergy();save();render();
  const poll=async()=>{if(busy||halted||gesture||document.hidden)return;busy=true;try{await syncEnergy();drawTop();panel();}catch(err){fail(T.error);}finally{busy=false;}};
  timer=setInterval(poll,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll();});
