@@ -36,3 +36,9 @@ body{background-color:#aed0da}.mg-app{background:linear-gradient(155deg,#fff3d9,
 .mg-produces{position:absolute;right:1px;bottom:1px;display:flex;width:35px;height:19px;z-index:2;background:#fff5d4;border:1px solid #9d805d;border-radius:9px;box-shadow:0 1px 2px #58412a80;pointer-events:none}
 .mg-produces .mg-icon{width:50%;height:100%}.mg-produces .mg-art{filter:none}.mg-family-mark{position:absolute;left:3px;bottom:4px;width:8px;height:8px;border:1px solid #fff8dc;border-radius:50%;box-shadow:0 1px 2px #5e6d6d9c;pointer-events:none}
 .mg-cell.mg-drop-swap{background:#e8dff6!important;box-shadow:inset 0 0 0 3px #8366ad!important}
+.mg-flight-trail{position:fixed;z-index:89;pointer-events:none;width:13px;height:13px;border-radius:50%;background:#fff4a4;box-shadow:0 0 0 3px #f9b76398,0 0 14px 7px #fff5ab;will-change:left,top,transform,opacity}
+.mg-cell.mg-launching{z-index:4;box-shadow:inset 0 0 0 3px #f8dd75,0 0 16px 7px #ffe188!important}
+.mg-cell.mg-launching>.mg-icon{animation:mgMachineKick .62s ease-out both}
+.mg-cell.mg-launching::after{content:'✦';position:absolute;z-index:5;top:-24px;left:28%;font-size:28px;color:#fff9b9;text-shadow:0 0 10px #f7a54d;pointer-events:none;animation:mgLaunchBurst .7s ease-out both}
+@keyframes mgMachineKick{0%{transform:translateY(0) scale(1)}20%{transform:translateY(7px) scale(1.18,.72)}48%{transform:translateY(-11px) scale(.86,1.22)}74%{transform:translateY(3px) scale(1.06,.94)}100%{transform:none}}
+@keyframes mgLaunchBurst{0%{opacity:0;transform:translateY(14px) scale(.3)}30%{opacity:1;transform:translateY(-8px) scale(1.4)}100%{opacity:0;transform:translateY(-38px) scale(.6)}}
