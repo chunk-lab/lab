@@ -45,3 +45,5 @@ body.md-3d-on .tw-chat{display:none}
 body.md-3d-on .tw-today{padding:8px 12px;font-size:13px;writing-mode:vertical-rl;letter-spacing:2px;border-radius:16px}
 body.md-3d-on .tw-today{text-orientation:upright}
 body.tw-talking>.tw-dock{display:none}
+/* エンカウント戦闘中(body.eb-on)は、上のコイン・設定・下の「今日なにする?」をかくす */
+body.eb-on>.tw-top,body.eb-on .tw-dock{display:none!important}

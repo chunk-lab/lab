@@ -35,6 +35,7 @@ import { APPS } from './apps/registry.js';
 import { openFinder } from './ui/finder.js';
 import { openNotes } from './ui/notes.js';
 import { createEncounter, ENC } from './game/encounter.js';
+import { createStage } from './game/encounter3d.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
 import { createFireworks, FW_TYPES, FW_SHOWS, FW_CENTER } from './world/fireworks.js';
@@ -46,7 +47,7 @@ const VERSION = '0.1.0';
 export function mount(container, opt = {}) {
   const bus = createBus();
   const storage = opt.storage || createStorage(opt.storagePrefix || 'town:');
-  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, replyLen: 'normal', adult: 0, birth: '', en: 1, enShort: 0, enLevel: 'easy', tips: 1, look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
+  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, replyLen: 'normal', adult: 0, birth: '', en: 1, enShort: 0, enLevel: 'easy', tips: 1, enc: 'mid', look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
   const save = () => storage.set('settings', settings);
   const wallet = opt.wallet || createWallet(storage, bus);   // 組み込み先から共通の財布を渡せる(2Dと3Dで同じコイン)
   const ai = createAI(storage);
@@ -621,8 +622,9 @@ export function mount(container, opt = {}) {
   // ---- チャンクくんに乗る: 自分は前むき。手をつないでいる相手がいれば、後ろに背中合わせで乗る。乗っている間、チャンクくんは大きくなる(1人=2 / 2人=3) ----
   let ride = null, rideUIel = null, rideLift = 0;
   const chunkOf = () => residents.list.find(x => x.def.mascot);
-  const enc = createEncounter({ hud, opt, name: () => settings.name, music: on => audio.battle(on), hold: r => { r.talking = true; talkingTo = r; }, release: r => { r.talking = false; if (talkingTo === r) talkingTo = null; } });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
-  let encCool = 45 + Math.random() * 45; enc.warm();
+  const encStage = createStage(renderer, scene);
+  const enc = createEncounter({ hud, opt, stage: encStage, name: () => settings.name, music: on => audio.battle(on), hold: r => { r.talking = true; talkingTo = r; }, release: r => { r.talking = false; if (talkingTo === r) talkingTo = null; } });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
+  enc.warm();
   const rideRay = new THREE.Raycaster(), rideDown = new THREE.Vector3(0, -1, 0), rideV = new THREE.Vector3();
   const cloudTop = (root, x, z, fb) => { try { rideRay.set(rideV.set(x, 30, z), rideDown); rideRay.far = 40; const h = rideRay.intersectObject(root, true).find(q => q.object.visible); return h ? h.point.y : fb; } catch (e) { return fb; } };   // 雲の上の面の高さ(ふくらみに合わせて動く)
   function rideDrillOn() { ride.stop = rideDrill(rideUIel.querySelector('[data-r=drill]')); if (ride.paused && ride.stop && ride.stop.pause) ride.stop.pause(true); }
@@ -826,7 +828,24 @@ export function mount(container, opt = {}) {
   let bdayShot = null, bdayRelease = 0;
   // ---- 住人のほうから話しかけに来る(ごくたまに): 仲良しがそばにいるとき/勉強をしばらくしていないとき/まだやっていないことがあるとき ----
   let visitCk = 60 + Math.random() * 60, visitCool = 0, visiting = null;
+  // ---- エンカウントのゲージ: 歩いた分だけたまる(じっとしていても少しずつ)。場所が変わると、一気に近づく ----
+  const ENC_MULT = { off: 0, low: 0.5, mid: 1, high: 2 };   // 設定(なし/すくなめ/ふつう/おおめ)ごとの、たまる速さ
+  let encG = 0.2 + Math.random() * 0.3, encPX = null, encPZ = 0, encArea = '', encAreaT = 0, encHour = env.hour, encDay = '';
+  const encBoost = () => { encG = Math.max(encG, 0.93); };   // 場所・日時が変わった: すぐに話しかけに来る(7〜20秒ほど)
+  bus.on('app:close', encBoost);   // 家・カフェ・お店・ゲームなどから出たとき
+  function encTick(dt) {
+    const m = ENC_MULT[settings.enc || 'mid'] ?? 1;
+    if (encPX == null) { encPX = me.x; encPZ = me.z; }
+    const d = Math.hypot(me.x - encPX, me.z - encPZ); encPX = me.x; encPZ = me.z;
+    if (d > 8) encBoost(); else encG += (d / 840 + dt / 320) * m;   // 一瞬で遠くへ動いた(ワープ)も、場所が変わったこと
+    if (m === 0) { encG = Math.min(encG, 0.5); return; }
+    if ((encAreaT -= dt) <= 0) { encAreaT = 0.5; const a = city.areaName(me.x, me.z); if (a && encArea && a !== encArea) encBoost(); if (a) encArea = a; }
+    let dh = Math.abs(env.hour - encHour); if (dh > 12) dh = 24 - dh; if (dh > 0.4) encBoost(); encHour = env.hour;   // 時間を変えた
+    const dy = testDate.toDateString(); if (encDay && dy !== encDay) encBoost(); encDay = dy;   // 日付を変えた
+    if (m > 0 && encG < 1) encG = Math.min(encG, 1);
+  }
   function visitUpdate(dt) {
+    encTick(dt);
     if (visiting) {
       const r = visiting;
       if (!r.visit) { visiting = null; return; }
@@ -834,11 +853,9 @@ export function mount(container, opt = {}) {
       if (r.visit.arrived) { visiting = null; r.visit = null; lookAtR = null; if (r.visitSg && r.visitSg.enc) { r.visitSg = null; input.clear(); audio.play('talk'); enc.ask(r); } else talkTo(r); }
       return;
     }
-    encCool -= dt;
-    if (encCool <= 0 && !ride && started && !hud.busy && !appHost.current && !seat && !battle.active && !sport.active && camMode === 'follow' && !guide && !snow.holding && env.hour >= 7 && env.hour < 21 && enc.ready()) {   // エンカウント: 近くの住人が走ってきて、英語クイズを聞いてくる
-      encCool = ENC.cool[0] + Math.random() * (ENC.cool[1] - ENC.cool[0]);
+    if (encG >= 1 && !ride && started && !hud.busy && !appHost.current && !seat && !battle.active && !sport.active && camMode === 'follow' && !guide && !snow.holding && env.hour >= 7 && env.hour < 21 && enc.ready()) {   // エンカウント: 近くの住人が走ってきて、英語クイズで勝負を挑んでくる
       const nr = residents.list.filter(r => r.ch.root.visible && !r.hidden && !r.pin && !r.follow && !r.talking && !r.summonT && !r.def.mascot && !r.def.free && PREFS[r.def.id]).map(r => ({ r, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) })).filter(o => o.d > 4 && o.d < 22);
-      if (nr.length) { const o = nr[Math.floor(Math.random() * nr.length)]; o.r.visit = { t: 0 }; o.r.visitSg = { enc: true, say: '' }; visiting = o.r; visitCool = Math.max(visitCool, 60); enc.warm(); try { audio.battleLoad(); } catch (e) { } return; }
+      if (nr.length) { const o = nr[Math.floor(Math.random() * nr.length)]; encG = 0; o.r.visit = { t: 0 }; o.r.visitSg = { enc: true, say: '' }; visiting = o.r; visitCool = Math.max(visitCool, 60); enc.warm(); try { audio.battleLoad(); } catch (e) { } return; }
     }
     visitCool -= dt; visitCk -= dt; if (visitCk > 0 || visitCool > 0) return;
     visitCk = 20 + Math.random() * 20;
@@ -1195,6 +1212,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row">宝さがし大会<button class="tw-btn" data-act="hunt" style="padding:6px 14px">🛠🔍 宝を隠す</button></div>
       <div class="tw-row">流れ星<button class="tw-btn" data-act="meteor" style="padding:6px 14px">いま流す</button></div>
       <div class="tw-row">英語のヒント(すれ違い)${seg('tips', [[0, 'なし'], [1, 'あり']])}</div>
+      <div class="tw-row">エンカウント(英語クイズの勝負)${seg('enc', [['off', 'なし'], ['low', 'すくなめ'], ['mid', 'ふつう'], ['high', 'おおめ']])}</div>
       ${opt.openAdmin ? `<div class="tw-row">きせつ(桜・紅葉・雪)<button class="tw-btn" data-act="season" style="padding:6px 14px">${SEASONS[settings.season || 'auto']}</button></div>` : ''}
       ${opt.openAloud ? '<div class="tw-row">単語の読み上げ<button class="tw-btn" data-act="aloud" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">誕生日(花火でお祝い)<button class="tw-btn" data-act="birth" style="padding:6px 14px">${settings.birth ? settings.birth.replace(/-/g, '/') : 'とうろく'}</button></div>
@@ -1488,7 +1506,8 @@ export function mount(container, opt = {}) {
     raf = requestAnimationFrame(frame);
     timer.update(); let dt = Math.min(0.05, timer.getDelta());
     if (settings.lite) { fpsAcc += dt; if (fpsAcc < 0.031) return; dt = Math.min(0.1, fpsAcc); fpsAcc = 0; }   // 低負荷モードは30fps
-    if (paused || held || appHost.current || enc.active) return; // アプリ中・エンカウント戦闘中は町を止めて電池を節約
+    if (enc.active) { encStage.frame(dt); return; }   // エンカウント戦闘中は、町を止めて、相手1人だけ描く
+    if (paused || held || appHost.current) return; // アプリ中は町を止めて電池を節約
     const t = timer.getElapsed();
     const inp = input.read();
 
@@ -1782,6 +1801,7 @@ export function mount(container, opt = {}) {
     talk: id => { const r = residents.list.find(x => x.def.id === id); if (r) talkTo(r); },   // 点検用
     hideNpc: id => { const r = residents.list.find(x => x.def.id === id); if (r) { r.hidden = true; r.ch.root.visible = false; } },   // 点検用: 休み中の状態を作る
     debugPose: (pose, d) => { me.ch.pose = pose; if (d) { cam.dist = d; cam.pitch = 0.15; cam.yaw = me.ry + Math.PI / 2; } },   // 点検用
+    debugEncG: () => +encG.toFixed(3), debugEncBoost: () => encBoost(),   // 点検用
     debugEnc: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return 'no'; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { enc: true, say: '' }; visiting = r; return enc.ready() ? 'ready' : 'notready'; },   // 点検用
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },

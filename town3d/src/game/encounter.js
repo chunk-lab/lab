@@ -21,6 +21,8 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 const CSS = `
 .eb{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:linear-gradient(#1b1340,#2b1d63 55%,#150e33);color:#fff;font-family:inherit;padding:max(10px,env(safe-area-inset-top)) 12px max(10px,env(safe-area-inset-bottom));box-sizing:border-box;user-select:none;touch-action:manipulation}
 .eb *{box-sizing:border-box}
+.eb.eb3{background:transparent}
+body.eb-on .tw-root>*:not(.tw-toast):not(.tw-canvas){visibility:hidden}/* 戦闘中は、町の画面のボタンや名前をかくす(外側の画面ぶんは series/apps/town/town.css) */
 .eb-top{flex:1 1 0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
 .eb-pic{max-height:100%;max-width:70%;object-fit:contain;filter:drop-shadow(0 6px 14px #0008)}
 .eb-pic.hit{animation:ebshake .4s}
@@ -46,7 +48,7 @@ const CSS = `
 @keyframes ebflash{0%,100%{background-color:transparent}30%{background-color:#f003}}`;
 let cssOn = false;
 
-export function createEncounter(env) {   // env: { hud, opt, name(自分の名前), hold(r), release(r), music(on) }
+export function createEncounter(env) {   // env: { hud, opt, name(自分の名前), hold(r), release(r), music(on), stage(3Dの舞台) }
   let cache = [], loading = false, active = false;
   const refill = async () => {
     if (loading || !env.opt.battleQs) return; loading = true;
@@ -71,8 +73,11 @@ export function createEncounter(env) {   // env: { hud, opt, name(自分の名�
       <div class="eb-en"><b>${esc(r.def.name)}</b><div class="eb-bar"><i id="eb-eh"></i></div></div>
       <div class="eb-msg" id="eb-msg"></div><div class="eb-ch" id="eb-ch"></div>
       <div class="eb-me"><b>${esc(me)}</b><div class="eb-bar"><i id="eb-mh"></i></div><span id="eb-mt"></span></div>`;
-    document.body.appendChild(ov); document.body.classList.add('tw-talking'); active = true;
+    document.body.appendChild(ov); document.body.classList.add('tw-talking', 'eb-on'); active = true;
     try { env.hud.closeDialog(); } catch (e) { }
+    const d3 = !!(env.stage && env.stage.begin(r));   // 相手だけ3Dで(だめなら顔絵)
+    if (d3) { ov.classList.add('eb3'); const im = ov.querySelector('.eb-pic'); if (im) im.remove(); }
+    const act = k => { if (d3) try { env.stage.act(k); } catch (e) { } };
     env.music(true);   // 曲は、戦闘が始まってから
     const $ = s => ov.querySelector(s), msgEl = $('#eb-msg'); let chEl = $('#eb-ch'); const picEl = ov.querySelector('.eb-pic'), dmgEl = $('.eb-dmg');
     let E = ENC.enemyHp, P = ENC.myHp, typeT = 0, alive = true;
@@ -92,12 +97,13 @@ export function createEncounter(env) {   // env: { hud, opt, name(自分の名�
     });
     const close = () => {
       alive = false; clearInterval(typeT); try { env.opt.speakStop && env.opt.speakStop(); } catch (e) { }
-      ov.remove(); document.body.classList.remove('tw-talking'); active = false; env.music(false); env.release(r);
+      ov.remove(); document.body.classList.remove('tw-talking', 'eb-on'); if (d3) try { env.stage.end(); } catch (e) { } active = false; env.music(false); env.release(r);
     };
     const finish = async (win, nOk) => {
       let line;
       if (win) { const g = ENC.win + (nOk >= qs.length && P >= ENC.myHp ? ENC.perfect : 0); heart(r, g); line = `${r.def.name}は ${me}の えいごに かんしんした!\n💗 なかよしど +${g}`; }
       else line = `${me}は やられてしまった…\nでも ぜんぶ きろくに のこったよ。またちょうせんしてね!`;
+      act(win ? 'bow' : 'cheer');
       chEl.innerHTML = ''; await say(`${win ? '🎉 しょうり!' : '💦 まけてしまった…'}\n${line}\n<small>せいかい ${nOk} / ${qs.length}</small>`);
       if (!alive) return; const b = document.createElement('div'); b.className = 'eb-end'; b.innerHTML = '<button>もどる</button>'; chEl.replaceWith(b); b.firstChild.onclick = close;
     };
@@ -106,6 +112,7 @@ export function createEncounter(env) {   // env: { hud, opt, name(自分の名�
     let nOk = 0;
     for (let i = 0; i < qs.length && alive; i++) {
       const Q = qs[i];
+      act('throw');   // 問題を出すたびに、相手が「なげる」ような動き
       await say(`Q${i + 1}/${qs.length}\n「${Q.w.en}」の いみは?`, true);
       try { env.opt.speak && env.opt.speak(Q.w.en); } catch (e) { }
       const k = await new Promise(res => {
@@ -118,11 +125,11 @@ export function createEncounter(env) {   // env: { hud, opt, name(自分の名�
       if (ok) {   // 例文を呪文のように唱えて、ダメージ
         nOk++; const t = Q.ex ? Q.ex.en : Q.w.en;
         const sp = speak(t, Math.min(4500, Math.max(1700, t.length * 55)));
-        E -= ENC.hit; pop(`-${ENC.hit}`, true); draw();
+        E -= ENC.hit; pop(`-${ENC.hit}`, true); draw(); act('hit');
         await say(`✨ ${me}は じゅもんを となえた!\n「${t}」\n<small>${Q.ex && Q.ex.ja ? Q.ex.ja : `${Q.w.en} = ${Q.ans}`}</small>`);
         await sp;
       } else {
-        P -= ENC.hurt; ov.classList.remove('flash'); void ov.offsetWidth; ov.classList.add('flash'); draw();
+        P -= ENC.hurt; act('strike'); ov.classList.remove('flash'); void ov.offsetWidth; ov.classList.add('flash'); draw();
         await say(`ざんねん! ${r.def.name}の こうげき!\n${me}は ${ENC.hurt}の ダメージを うけた\n<small>「${Q.w.en}」= ${Q.ans}</small>`);
         await wait(1300);
       }
