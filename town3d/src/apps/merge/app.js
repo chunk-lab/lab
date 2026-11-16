@@ -63,8 +63,9 @@ const CSS = `
 .mg-gen.gl::after{content:'🔒';position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);font-size:20px;pointer-events:none}
 .mg-part .mg-in{background:#dfe8f1;box-shadow:0 0 0 2px #5d7690,0 3px 0 2px rgba(60,80,110,.45);border-radius:6px}
 .mg-part .mg-e2{position:absolute;left:1px;top:-1px;font-size:11px;font-weight:400}
-.mg-info{position:absolute;left:6px;right:6px;height:28px;display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;overflow:hidden}
+.mg-info{position:absolute;left:6px;right:6px;top:40px;height:20px;z-index:4;background:#fff3c4;border-radius:10px;padding:0 6px;color:#5a2d00;font-weight:700;display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;overflow:hidden}
 .mg-info span{flex:1;overflow:hidden;text-overflow:ellipsis}
+.mg-info button{padding:1px 10px!important;font-size:11px}
 .mg-info button,.mg-ovl button{border:0;font:inherit;border-radius:999px;padding:5px 12px;background:#fff;color:#4a3a5e;box-shadow:0 2px 0 #b79ad3}
 .mg-bot{position:absolute;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;gap:5px;padding:0 6px}
 .mg-slots{flex:1;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;touch-action:pan-x;height:52px;align-items:center}
@@ -192,18 +193,17 @@ export function createMergeApp(env = {}) {
       const els = new Map();
       function layout() {
         const W = root.clientWidth, H = root.clientHeight; if (!W || !H) return;
-        const TOP = 60, INFO = 24, BOT = 56, MINS = 132;
+        const TOP = 60, INFO = 0, BOT = 56, MINS = 132;   // 説明は上のお題の行に重ねる(盤面を最大に)
         CS = Math.floor(Math.min((W - 8) / CFG.cols, (H - TOP - INFO - BOT - MINS - 10) / CFG.rows));
         const bw = CS * CFG.cols + 8, bh = CS * CFG.rows + 8;
         SH = Math.max(MINS, Math.min(210, H - TOP - bh - INFO - BOT - 4));
         BX = Math.round((W - bw) / 2) + 4; BY = TOP + SH + 4 + 4;
         elStrip.style.height = SH + 'px';
-        const ws = SH >= 170 ? 38 : 34, cw = Math.max(92, Math.min(120, Math.round(W / 3.4))), pz = Math.max(38, Math.min(92, SH - ws - 62));
+        const ws = SH >= 170 ? 38 : 34, cw = Math.max(92, Math.min(120, Math.round(W / 3.4))), pz = Math.max(34, Math.min(92, SH - ws - 62));
         elStrip.style.setProperty('--cw', cw + 'px'); elStrip.style.setProperty('--pz', pz + 'px'); elStrip.style.setProperty('--ws', ws + 'px');
         elBoard.style.cssText = `left:${BX - 4}px;top:${BY - 4}px;width:${bw}px;height:${bh}px`;
         if (!elBoard.children.length) for (let i = 0; i < N; i++) { const c = document.createElement('div'); c.className = 'mg-cell' + ((i + Math.floor(i / CFG.cols) * (CFG.cols % 2 ? 0 : 1)) % 2 ? ' d' : ''); elBoard.appendChild(c); }
         [...elBoard.children].forEach((c, i) => { c.style.cssText = `left:${4 + (i % CFG.cols) * CS + 1}px;top:${4 + Math.floor(i / CFG.cols) * CS + 1}px;width:${CS - 2}px;height:${CS - 2}px`; });
-        elInfo.style.top = (BY + bh - 4) + 'px';
         drawSlots(); els.forEach((el, u) => { const o = byU(u); if (o) { size(el); moveEl(o, false); } });
       }
       const byU = u => S.cells.find(o => o && o.u === u) || S.store.find(o => o && o.u === u);
@@ -550,6 +550,7 @@ export function createMergeApp(env = {}) {
           else if (sel.lk) sp.textContent = `🔒 ${d.name} Lv${sel.lv} ・ 同じものを重ねると ひらく`;
           else { const L = sel.t === 'it' ? LINES[sel.ln] : null, nx = L && L.items[sel.lv] ? ` → つぎ: ${S.seen[sel.ln + (sel.lv + 1)] ? L.items[sel.lv][0] : '？'}` : ''; sp.textContent = `${d.icon} ${d.name} Lv${sel.lv}${nx}`; const b = document.createElement('button'); b.textContent = `売る 🪙${priceOf(sel)}`; b.onclick = () => { const o = sel; if (o && byU(o.u)) sell(o); }; elInfo.appendChild(b); }
         } else sp.textContent = '';
+        elInfo.style.display = sp.textContent ? 'flex' : 'none';
       }
 
       // ---- 操作(ドラッグ・タップ) ----
