@@ -63,6 +63,7 @@ const CSS = `
 .mg-gen.gl::after{content:'🔒';position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);font-size:20px;pointer-events:none}
 .mg-part .mg-in{background:#dfe8f1;box-shadow:0 0 0 2px #5d7690,0 3px 0 2px rgba(60,80,110,.45);border-radius:6px}
 .mg-part .mg-e2{position:absolute;left:1px;top:-1px;font-size:11px;font-weight:400}
+.mg-tool .mg-in{outline:3px solid #ffb300;outline-offset:-3px;background:#fff6c9;border-radius:14px}
 .mg-it.hint .mg-in{animation:mgHint .55s ease-in-out infinite alternate}
 @keyframes mgHint{from{transform:scale(1);filter:brightness(1)}to{transform:scale(1.18);filter:brightness(1.35) drop-shadow(0 0 8px #fff3a0)}}
 .mg-info{position:absolute;left:6px;right:6px;top:40px;height:20px;z-index:4;background:#fff3c4;border-radius:10px;padding:0 6px;color:#5a2d00;font-weight:700;display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;overflow:hidden}
@@ -174,13 +175,15 @@ export function createMergeApp(env = {}) {
       function fillAct(cycle) { while (S.act.length < CFG.vis && S.queue.length) { const id = S.queue.shift(); if (S.act.some(a => a.id === id)) continue; S.act.push({ id, w: newWants(cycle, id) }); } }
       if (S.goal == null) S.goal = 0; if (!S.gp) S.gp = {};
       if (!S.act.length && S.queue.length) fillAct();
+      const TOOLS = { cut: { icon: '✂️', name: 'ハサミ', tip: '品にドラッグ → Lvを1つ下げて2つに分ける(空きマスが1つ必要)' }, up: { icon: '⬆️', name: 'アップグレード', tip: '品にドラッグ → Lvが1つ上がる(Lv5まで)' }, swap: { icon: '🔄', name: 'しゅるい変換', tip: '品にドラッグ → Lvは1つ下がるけど、ほしがられてる別のラインの品に変わる' } };
       const defOf = o => o.t === 'it' ? { name: LINES[o.ln].items[o.lv - 1][0], icon: LINES[o.ln].items[o.lv - 1][1], color: LINES[o.ln].color, key: o.ln + o.lv, en: LINES[o.ln].items[o.lv - 1][2] || '' }
+        : o.t === 'tool' ? { name: TOOLS[o.k].name, icon: TOOLS[o.k].icon, color: '#fff0b3', key: 'tool_' + o.k }
         : o.t === 'gen' ? { name: GENS[o.g].name, icon: GENS[o.g].icon, color: GENS[o.g].color, key: 'gen_' + o.g }
           : { name: GENS[o.g].name + 'のパーツ', icon: '⚙️', color: '#dfe8f1', key: 'part_' + o.g };
       const art = (d, cls = 'mg-e') => IMG[d.key] ? `<img src="${IMG[d.key]}" alt="">` : `<b class="${cls}">${d.icon}</b>`;
       const is = (o, p) => o.t === 'it' && o.ln === p[0] && o.lv === p[1];
       function mergeOf(a, b) {
-        if (!a || !b || a === b || a.lk || a.t !== b.t) return null;   // ロック品(b)には、同じものを重ねられる(ひらく)
+        if (!a || !b || a === b || a.lk || a.t !== b.t || a.t === 'tool') return null;   // ロック品(b)には、同じものを重ねられる(ひらく)
         if (a.t === 'gen' && (a.gl || b.gl)) return null;
         if (a.t === 'it') {
           if (a.ln === b.ln && a.lv === b.lv) { const L = LINES[a.ln]; return a.lv < (L.mergeMax || L.items.length) ? { t: 'it', ln: a.ln, lv: a.lv + 1 } : null; }
@@ -224,9 +227,9 @@ export function createMergeApp(env = {}) {
       function moveEl(o, anim = true) { const el = els.get(o.u); if (!el) return; const p = posOf(o); if (!anim) { el.style.transition = 'none'; tf(el, p.x, p.y); void el.offsetWidth; el.style.transition = ''; } else tf(el, p.x, p.y); }
       function mk(o) {
         const d = defOf(o), el = document.createElement('div');
-        el.className = 'mg-it' + (o.t === 'gen' ? ' mg-gen' : o.t === 'part' ? ' mg-part' : '') + (o.lk ? ' lk' : ''); el.dataset.u = o.u;
+        el.className = 'mg-it' + (o.t === 'gen' ? ' mg-gen' : o.t === 'part' ? ' mg-part' : o.t === 'tool' ? ' mg-tool' : '') + (o.lk ? ' lk' : ''); el.dataset.u = o.u;
         const gd = o.t === 'gen' ? GENS[o.g] : null;
-        el.innerHTML = `<div class="mg-in" style="--c:${d.color};${gd ? `--d:${gd.dark}` : ''}">${art(d)}${o.t === 'part' ? `<b class="mg-e2">${GENS[o.g].icon}</b>` : ''}<i class="mg-lv">${o.t === 'gen' ? 'Lv ' : ''}${o.lv}</i>${o.t === 'gen' ? '<u class="mg-ch"></u>' : ''}</div>`;
+        el.innerHTML = `<div class="mg-in" style="--c:${d.color};${gd ? `--d:${gd.dark}` : ''}">${art(d)}${o.t === 'part' ? `<b class="mg-e2">${GENS[o.g].icon}</b>` : ''}<i class="mg-lv">${o.t === 'tool' ? '' : (o.t === 'gen' ? 'Lv ' : '') + o.lv}</i>${o.t === 'gen' ? '<u class="mg-ch"></u>' : ''}</div>`;
         if (gd) el.style.setProperty('--d', gd.dark);
         size(el); root.insertBefore(el, elFx); els.set(o.u, el); moveEl(o, false); if (o.t === 'gen') genUI(o); return el;
       }
@@ -333,7 +336,7 @@ export function createMergeApp(env = {}) {
       // ---- お題: 作ったものが目標に入っていたら進む。達成でコイン→つぎのお題 ----
       function goalOn(key) {
         const G = GOALS[S.goal % GOALS.length]; if (!G.keys.includes(key) || S.gp[key]) return; S.gp[key] = 1; const n = Object.keys(S.gp).length;
-        if (n >= G.n) { const dk = new Date().toDateString(); if (!S.gd || S.gd.d !== dk) S.gd = { d: dk, n: 0 }; const got = S.gd.n < 3 ? ctx.wallet.give(Math.max(1, Math.round(G.coin / 10)), 'merge:goal') : 0; S.gd.n++; S.goal++; S.gp = {}; setTimeout(() => { banner('🎉 お題クリア!' + (got ? ` <small>🪙+${got}</small>` : '')); sfx('fanfare'); goalDraw(); }, 900); } else goalDraw();
+        if (n >= G.n) { const dk = new Date().toDateString(); if (!S.gd || S.gd.d !== dk) S.gd = { d: dk, n: 0 }; const got = S.gd.n < 3 ? ctx.wallet.give(Math.max(1, Math.round(G.coin / 10)), 'merge:goal') : 0; S.gd.n++; S.goal++; S.gp = {}; setTimeout(() => giveTool('up'), 1600); setTimeout(() => { banner('🎉 お題クリア!' + (got ? ` <small>🪙+${got}</small>` : '')); sfx('fanfare'); goalDraw(); }, 900); } else goalDraw();
         save();
       }
       function goalDraw() { const G = GOALS[S.goal % GOALS.length], n = Object.keys(S.gp).length; $('.mg-goal').innerHTML = `📌 今日のお題 ${(S.goal % GOALS.length) + 1}/${GOALS.length}: ${esc(G.t)} <b>${n}/${G.n}</b> ・🪙${G.coin}`; }
@@ -346,6 +349,27 @@ export function createMergeApp(env = {}) {
 
       // ---- マージ ----
       let combo = 0, comboT = 0;
+      // ---- 道具: ハサミ(Lv-1で2つ)・アップグレード(Lv+1)・しゅるい変換(Lv-1で、ほしがられてる別ライン) ----
+      const topOf = ln => (LINES[ln].mergeMax || LINES[ln].items.length);
+      function toolOk(o, t) { if (!t || t.t !== 'it' || t.b == null) return false; if (o.k === 'cut') return t.lv >= 2 && nearestEmpty(t.b) >= 0; if (o.k === 'up') return t.lv <= 4 && t.lv < topOf(t.ln); return t.lv >= 2 && swapLines(t).length > 0; }
+      function swapLines(t) {
+        const open = Object.keys(LINES).filter(ln => ln !== t.ln && Object.keys(GENS).some(g => genOpen(g) && GENS[g].lines.includes(ln)));
+        const want = S.act.flatMap(a => a.w).filter(w => !w.got).map(w => w.ln).filter(ln => open.includes(ln));
+        return want.length ? want : open;
+      }
+      function reform(t, ln, lv) { const idx = t.b, c = center(t); take(t); rm(t); const o = { u: ++S.n, t: 'it', ln, lv, b: null, s: null }; S.cells[idx] = o; o.b = idx; const el = mk(o); el.querySelector('.mg-in').animate([{ transform: 'scale(.3)' }, { transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 360, easing: 'ease-out' }); burst(c.x, c.y, 10, ['#ffc400', '#fff', '#8fd3ff']); see(o); return o; }
+      function useTool(o, t) {
+        if (!toolOk(o, t)) return false; const c = center(t);
+        if (o.k === 'cut') { const to = nearestEmpty(t.b), ln = t.ln, lv = t.lv - 1; reform(t, ln, lv); dropIn({ u: ++S.n, t: 'it', ln, lv, b: null, s: null }, to, c); }
+        else if (o.k === 'up') reform(t, t.ln, t.lv + 1);
+        else { const L = swapLines(t); reform(t, L[rnd(L.length)], t.lv - 1); }
+        take(o); rm(o); sel = null; sfx('merge'); ftext(c.x, c.y - CS * 0.3, TOOLS[o.k].icon, '#e87a00'); save(); refresh(); return true;
+      }
+      function giveTool(k, from) {
+        const to = nearestEmpty(Math.floor(N / 2)), f = from || { x: root.clientWidth / 2, y: root.clientHeight / 2 };
+        if (to >= 0) { dropIn({ u: ++S.n, t: 'tool', k, b: null, s: null }, to, f); sfx('pop'); } else S.inbox.push({ t: 'tool', k });
+        toast(`${TOOLS[k].icon} ${TOOLS[k].name}をもらった!` + (to < 0 ? '(🎁とどいた)' : '')); save(); refresh();
+      }
       function doMerge(a, b, res) {
         const idx = b.b, wasLk = b.lk, ea = els.get(a.u), eb = els.get(b.u), c = center(b);
         take(a); take(b); els.delete(a.u); els.delete(b.u);
@@ -423,7 +447,7 @@ export function createMergeApp(env = {}) {
         const o = { t: 'it', ln, lv }, d = defOf(o), from = card ? rel(card) : { x: root.clientWidth / 2, y: BY }, to = nearestEmpty(Math.floor(N / 2));
         setTimeout(() => {
           if (to >= 0) dropIn({ u: ++S.n, ...o, b: null, s: null }, to, from); else { S.inbox.push(o); refresh(); }
-          sfx('pop'); banner(`${esc(NPC_NAME[a.id] || a.id)}の お返し: ${d.icon} ${esc(d.name)} Lv${lv}${jack ? ' ✨とっておき!' : ''}` + (to < 0 ? ' <small>(🎁とどいたへ)</small>' : '')); save();
+          sfx('pop'); banner(`${esc(NPC_NAME[a.id] || a.id)}の お返し: ${d.icon} ${esc(d.name)} Lv${lv}${jack ? ' ✨とっておき!' : ''}` + (to < 0 ? ' <small>(🎁とどいたへ)</small>' : '')); if (jack) setTimeout(() => giveTool('up'), 900); else if (Math.random() < 0.1) setTimeout(() => giveTool('swap'), 900); save();
         }, 560);
       }
       function leave(id) {   // 2つそろった人は、よろこんで帰り、あたらしい人が来る
@@ -458,6 +482,7 @@ export function createMergeApp(env = {}) {
         S.cycle++; S.served = 0; S.queue = shuf(NPCS.slice()); S.act = []; fillAct(S.cycle); sig = '';
         const wants = S.act.flatMap(a => a.w).sort((x, y) => y.lv - x.lv), gifts = [];
         for (let i = 0; i < CFG.giftN; i++) { const w = wants[i % Math.max(1, wants.length)]; if (!w) break; gifts.push({ t: 'it', ln: w.ln, lv: Math.max(CFG.giftMin, Math.min(CFG.giftMax, w.lv - 1 - (i >= wants.length ? 1 : 0))) }); }
+        gifts.push({ t: 'tool', k: 'swap' });
         save();
         const f = document.createElement('div'); f.className = 'mg-fin'; root.appendChild(f);
         const ck = document.createElement('div'); ck.className = 'mg-ck'; ck.innerHTML = pic ? `<img src="${pic}" alt="">` : '<b style="font-size:70px;font-weight:400">☁️</b>'; root.appendChild(ck);
@@ -483,7 +508,7 @@ export function createMergeApp(env = {}) {
       // ---- 売る・保管・とどいた・ずかん ----
       const priceOf = o => o.t === 'it' ? Math.max(1, Math.round((CFG.sell[o.lv - 1] || 1) / 5)) : Math.max(1, Math.round(CFG.partSell * o.lv / 5));
       function sell(o) {
-        if (o.t === 'gen' || o.lk) { sfx('bad'); toast(o.lk ? 'ロック中は売れないよ' : '生成機は売れないよ'); moveEl(o); return; }
+        if (o.t === 'gen' || o.t === 'tool' || o.lk) { sfx('bad'); toast(o.lk ? 'ロック中は売れないよ' : o.t === 'tool' ? '道具は売れないよ' : '生成機は売れないよ'); moveEl(o); return; }
         const c = rel(els.get(o.u)), got = ctx.wallet.give(priceOf(o), 'merge:sell'); take(o); rm(o); sel = null;
         fly('🪙', c, rel(root.querySelector('[data-bind="coins"]')), 520); ftext(rel(elSell).x, rel(elSell).y - 30, `🪙+${got}`, '#d68600'); sfx('sell'); save(); refresh();
       }
@@ -536,7 +561,7 @@ export function createMergeApp(env = {}) {
           ch.querySelectorAll('button').forEach(b => b.onclick = () => {
             const ok = Q.ch[+b.dataset.k] === Q.ans; ch.querySelectorAll('button').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.classList.add('ok'); else if (x === b) x.classList.add('ng'); });
             try { !Q.fb && env.record && env.record(Q, ok); } catch (e) { }
-            if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; sfx('quizok'); gg.textContent = `⚡+${got}` + (streak >= 3 ? ` ・ 🔥${streak}連続!` : ''); sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
+            if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; if (streak > 0 && streak % 5 === 0) giveTool('cut'); sfx('quizok'); gg.textContent = `⚡+${got}` + (streak >= 3 ? ` ・ 🔥${streak}連続!` : ''); sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
             save(); setTimeout(() => { if (open) ask(); }, ok ? 700 : 1400);
           });
         };
@@ -546,11 +571,12 @@ export function createMergeApp(env = {}) {
       // ---- 情報の行 ----
       let sel = null;
       function info() {
-        els.forEach((e, u) => { e.classList.toggle('sel', !!sel && sel.u === u); const t = byU(u); e.classList.toggle('hint', !!(sel && t && t !== sel && (t.b != null) && mergeOf(sel, t))); });
+        els.forEach((e, u) => { e.classList.toggle('sel', !!sel && sel.u === u); const t = byU(u); e.classList.toggle('hint', !!(sel && t && t !== sel && (t.b != null) && (sel.t === 'tool' ? toolOk(sel, t) : mergeOf(sel, t)))); });
         const sp = elInfo.querySelector('span'); elInfo.querySelector('button')?.remove();
         if (sel && byU(sel.u)) {
           const d = defOf(sel);
-          if (sel.t === 'gen') sp.textContent = sel.gl ? `🔒 ${d.name} ・ ほかの勉強をあと${leftMin(sel.g)}分で使えるよ` : `${d.icon} ${d.name} Lv${sel.lv} ・ タップで品が出る(⚡1)。同じLvを重ねると強くなる`;
+          if (sel.t === 'tool') sp.textContent = `${TOOLS[sel.k].icon} ${TOOLS[sel.k].name} ・ ${TOOLS[sel.k].tip}`;
+          else if (sel.t === 'gen') sp.textContent = sel.gl ? `🔒 ${d.name} ・ ほかの勉強をあと${leftMin(sel.g)}分で使えるよ` : `${d.icon} ${d.name} Lv${sel.lv} ・ タップで品が出る(⚡1)。同じLvを重ねると強くなる`;
           else if (sel.lk) sp.textContent = `🔒 ${d.name} Lv${sel.lv} ・ 同じものを重ねると ひらく`;
           else { const L = sel.t === 'it' ? LINES[sel.ln] : null, nx = L && L.items[sel.lv] ? ` → つぎ: ${S.seen[sel.ln + (sel.lv + 1)] ? L.items[sel.lv][0] : '？'}` : ''; sp.textContent = `${d.icon} ${d.name} Lv${sel.lv}${nx}`; const b = document.createElement('button'); b.textContent = `売る 🪙${priceOf(sel)}`; b.onclick = () => { const o = sel; if (o && byU(o.u)) sell(o); }; elInfo.appendChild(b); }
         } else sp.textContent = '';
@@ -585,6 +611,7 @@ export function createMergeApp(env = {}) {
           const i = cy * CFG.cols + cx, t = S.cells[i];
           if (!t) { put(o, { b: i }); sfx('land'); }
           else if (t === o) moveEl(o);
+          else if (o.t === 'tool') { if (!useTool(o, t)) { moveEl(o); shake(els.get(t.u)); sfx('bad'); toast('そこには使えないよ'); } return; }
           else { const res = mergeOf(o, t); if (res) { doMerge(o, t, res); return; } if (t.lk || t.gl || (from.s != null && t.t === 'gen')) { moveEl(o); shake(els.get(t.u)); sfx('bad'); } else { take(o); put(t, from); put(o, { b: i }); sfx('land'); } }
         } else {
           d.el.style.pointerEvents = 'none'; const hit = document.elementFromPoint(e.clientX, e.clientY); d.el.style.pointerEvents = '';
