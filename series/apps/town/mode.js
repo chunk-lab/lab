@@ -130,6 +130,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       tooEasy: en => { try { if (!lvLoaded) { lvLoaded = true; core.level.load().catch(() => { }); } return core.level.tooEasy(en); } catch (e) { return false; } },
       studyPlays: id => { try { return core.record.playsOf(id); } catch (e) { return 0; } },
       studySec: () => { try { return core.daylog.totalSummary().by.study || 0; } catch (e) { return 0; } },   // マージゲーム: ほかの勉強の合計秒数(生成機のロック解除)
+      lvStep: d => { try { return d ? core.level.step(d) : core.level.bandNote(); } catch (e) { return ''; } },   // 単語の範囲を ±1段(0なら今の範囲だけ返す)
+      openTest: () => core.level.test(),   // 語彙数テスト(いつでも)
       battleQs: async (n = 10, exclude = null) => {   // エンカウント戦闘用の4択(単語テストと同じ作り方)。その人のレベル帯の単語+まちがえた言葉。例文があれば ex に付ける
         const pool = [], seen = new Set(exclude ? [...exclude] : []), add = (w, from) => { if (!w || !w.en || !w.ja || w.kind === 'sentence' || /\s/.test(w.en)) return; const k = w.en.toLowerCase(); if (seen.has(k)) return; seen.add(k); pool.push({ en: w.en, ja: w.ja, pos: w.pos, from }); };
         try { await core.level.load(); core.daylog.missed(14).filter(w => !core.level.tooEasy(w.en)).slice(0, 4).forEach(w => add(w, 'missed')); } catch (e) { }

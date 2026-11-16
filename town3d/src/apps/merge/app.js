@@ -51,6 +51,7 @@ const CSS = `
 .mg-in img{width:78%;height:78%;object-fit:contain;pointer-events:none}
 .mg-e{font-weight:400;line-height:1;pointer-events:none}
 .mg-lv{position:absolute;right:-1px;bottom:-2px;font-style:normal;font-size:10px;line-height:14px;min-width:15px;text-align:center;background:#4a3a5e;color:#fff;border-radius:8px;padding:0 3px;pointer-events:none;font-weight:800}
+.mg-it.in-slot .mg-in{transform:scale(.74)}
 .mg-it.drag .mg-in{transform:scale(1.18);box-shadow:0 0 0 2px rgba(60,35,85,.7),0 12px 14px rgba(40,20,60,.4)}
 .mg-it.sel .mg-in{box-shadow:0 0 0 3px #1e90ff,0 3px 0 3px rgba(30,100,200,.5)}
 .mg-it.can .mg-in{animation:mgGlow .5s infinite alternate}
@@ -93,6 +94,8 @@ const CSS = `
 .mg-ban{position:absolute;left:50%;top:60px;transform:translateX(-50%);background:#fff;border-radius:999px;padding:7px 16px;font-size:13px;box-shadow:0 4px 14px rgba(60,30,90,.3);white-space:nowrap;pointer-events:none;border:2px solid #cdb6e6}
 .mg-combo{position:absolute;right:10px;top:60px;font-size:22px;color:#ff8a1e;text-shadow:0 2px 0 #fff,0 0 6px #fff,0 0 6px #fff;pointer-events:none}
 .mg-toast{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);background:rgba(60,40,85,.94);color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:45;max-width:94%;overflow:hidden;text-overflow:ellipsis}
+.mg-home{flex:none;width:34px;height:32px;border:0;border-radius:11px;background:#fff;box-shadow:0 2px 0 #b79ad3;font-size:17px;padding:0}
+.mg-qt{display:flex;gap:6px;justify-content:center;align-items:center;margin:4px 0;font-size:11px}.mg-qt button{white-space:nowrap;border:0;border-radius:999px;padding:5px 10px;background:#efe3ff;color:#5b3f86;font-weight:800;font-size:11px}.mg-qr{font-size:10px;color:#6a548a}
 .mg-ovl{position:absolute;inset:0;background:rgba(50,30,75,.6);z-index:50;display:flex;align-items:center;justify-content:center;animation:mgFade .2s;touch-action:auto}
 .mg-card{width:min(92%,360px);max-height:88%;overflow:auto;background:#fffaf5;border-radius:22px;padding:16px;box-shadow:0 12px 30px rgba(40,25,60,.4);animation:mgPop .28s cubic-bezier(.3,1.5,.5,1);text-align:center}
 .mg-card h3{margin:0 0 8px;font-size:16px}
@@ -127,9 +130,9 @@ export function createMergeApp(env = {}) {
       if (!document.getElementById('mg-css')) { const st = document.createElement('style'); st.id = 'mg-css'; st.textContent = CSS; document.head.appendChild(st); }
       const sfx = (k, a) => { try { env.sfx && env.sfx(k, a); } catch (e) { } };
       const root = document.createElement('div'); root.className = 'mg';
-      root.innerHTML = `<div class="mg-top"><div class="mg-pill mg-en">⚡<b>0</b><small></small></div><button class="mg-qb">✏️ 英語で回復</button><span style="flex:1"></span><div class="mg-pill mg-cy">👥 <b>0</b>/13</div><div class="mg-pill">🪙<b data-bind="coins">${Math.floor(ctx.wallet.get()).toLocaleString('ja-JP')}</b></div></div>
+      root.innerHTML = `<div class="mg-top"><div class="mg-pill mg-en">⚡<b>0</b><small></small></div><button class="mg-qb">✏️ 英語で回復</button><span style="flex:1"></span><span class="mg-cy" hidden><b>0</b></span><div class="mg-pill">🪙<b data-bind="coins">${Math.floor(ctx.wallet.get()).toLocaleString('ja-JP')}</b></div><button class="mg-home" aria-label="町にもどる">🏠</button></div>
 <div class="mg-goal"></div><div class="mg-strip"></div><div class="mg-board"></div><div class="mg-info"><span></span></div>
-<div class="mg-bot"><button class="mg-rb mg-home" aria-label="町にもどる"><b>🏠</b></button><div class="mg-slots"></div><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
+<div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
 <div class="mg-fx"></div>`;
       host.appendChild(root);
       const $ = q => root.querySelector(q);
@@ -237,7 +240,7 @@ export function createMergeApp(env = {}) {
       function readSlots() { const R = root.getBoundingClientRect(); slotPos = [...elSlots.querySelectorAll('[data-slot]')].map(d => { const r = d.getBoundingClientRect(); return { x: r.left - R.left + (r.width - CS) / 2, y: r.top - R.top + (r.height - CS) / 2 }; }); }
       const posOf = o => o.b != null ? { x: BX + (o.b % CFG.cols) * CS, y: BY + Math.floor(o.b / CFG.cols) * CS } : (slotPos[o.s] || { x: 0, y: -200 });
       const tf = (el, x, y) => { el.style.transform = `translate(${x}px,${y}px)`; };
-      function moveEl(o, anim = true) { const el = els.get(o.u); if (!el) return; const p = posOf(o); if (!anim) { el.style.transition = 'none'; tf(el, p.x, p.y); void el.offsetWidth; el.style.transition = ''; } else tf(el, p.x, p.y); }
+      function moveEl(o, anim = true) { const el = els.get(o.u); if (!el) return; el.classList.toggle('in-slot', o.b == null && o.s != null); const p = posOf(o); if (!anim) { el.style.transition = 'none'; tf(el, p.x, p.y); void el.offsetWidth; el.style.transition = ''; } else tf(el, p.x, p.y); }
       function mk(o) {
         const d = defOf(o), el = document.createElement('div');
         el.className = 'mg-it' + (IMG[d.key] ? ' img' : '') + (o.t === 'gen' ? ' mg-gen' : o.t === 'part' ? ' mg-part' : o.t === 'tool' ? ' mg-tool' : '') + (o.lk ? ' lk' : ''); el.dataset.u = o.u;
@@ -567,24 +570,31 @@ export function createMergeApp(env = {}) {
         return q;
       }
       elQb.onclick = () => {
-        sfx('tap'); if (S.en >= CFG.enMax) { toast('⚡は いっぱい! 生成機で つかってから また来てね'); return; }
+        sfx('tap');
         let got = 0, open = true, streak = 0;
-        const o = overlay(`<h3>✏️ 英語で ⚡回復 <small class="mg-qg"></small></h3><div class="mg-qw">…</div><div class="mg-qs"></div><div class="mg-qc"></div><button data-x>もどる</button>`);
+        const o = overlay(`<h3>✏️ 英語で ⚡回復 <small class="mg-qg"></small></h3><div class="mg-qt"><button data-d="-1">⬇ やさしく</button><span class="mg-qr"></span><button data-d="1">⬆ むずかしく</button></div><div class="mg-qt"><button data-dir></button><button data-test>📝 語彙数テスト</button></div><div class="mg-qw">…</div><div class="mg-qs"></div><div class="mg-qc"></div><button data-x>もどる</button>`);
         o.onclose = () => { open = false; try { env.speakStop && env.speakStop(); } catch (e) { } };
-        const w = o.querySelector('.mg-qw'), sub = o.querySelector('.mg-qs'), ch = o.querySelector('.mg-qc'), gg = o.querySelector('.mg-qg');
+        const w = o.querySelector('.mg-qw'), sub = o.querySelector('.mg-qs'), ch = o.querySelector('.mg-qc'), gg = o.querySelector('.mg-qg'), rg = o.querySelector('.mg-qr'), bd = o.querySelector('[data-dir]');
+        const showCtl = () => { try { rg.textContent = (env.lvStep && env.lvStep(0)) || ''; } catch (e) { } bd.textContent = S.dir === 'je' ? '日→英' : '英→日'; };
+        let tk = 0;   // 切り替えたら、前の問題の結果は捨てる
+        o.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { sfx('tap'); try { env.lvStep && env.lvStep(+b.dataset.d); } catch (e) { } qPool = []; showCtl(); tk++; ask(); });
+        bd.onclick = () => { sfx('tap'); S.dir = S.dir === 'je' ? 'ej' : 'je'; save(); showCtl(); tk++; ask(); };
+        o.querySelector('[data-test]').onclick = () => { try { env.openTest && env.openTest(); } catch (e) { } };
         const ask = async () => {
-          if (S.en >= CFG.enMax) { w.textContent = '⚡ まんたん!'; sub.textContent = '生成機で使ってから、また来てね'; ch.innerHTML = ''; return; }
-          const Q = await nextQ(); if (!open || !o.isConnected || !Q) return;
-          w.textContent = Q.w.en; sub.textContent = 'いみは どれ?'; try { env.speak && env.speak(Q.w.en); } catch (e) { }
+          const my = ++tk, Q0 = await nextQ(); if (my !== tk || !open || !o.isConnected || !Q0) return;
+          let Q = Q0; const je = S.dir === 'je';
+          if (je) { const en = [...new Set([...qPool.map(x => x.w.en), ...QUIZ_FB.map(x => x[0])].filter(x => x && x !== Q0.w.en))]; Q = { w: { en: Q0.ans }, ans: Q0.w.en, ch: shuf([Q0.w.en, ...shuf(en).slice(0, 3)]), ex: Q0.ex, fb: Q0.fb }; }
+          w.textContent = Q.w.en; sub.textContent = je ? 'えいごは どれ?' : 'いみは どれ?'; if (!je) { try { env.speak && env.speak(Q.w.en); } catch (e) { } }
           ch.innerHTML = Q.ch.map((c, i) => `<button data-k="${i}">${esc(c)}</button>`).join('');
           ch.querySelectorAll('button').forEach(b => b.onclick = () => {
             const ok = Q.ch[+b.dataset.k] === Q.ans; ch.querySelectorAll('button').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.classList.add('ok'); else if (x === b) x.classList.add('ng'); });
-            try { !Q.fb && env.record && env.record(Q, ok); } catch (e) { }
+            try { !Q.fb && env.record && env.record(Q0, ok); } catch (e) { }
+            if (je) { try { env.speak && env.speak(Q0.w.en); } catch (e) { } }
             if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; sfx('quizok'); gg.textContent = `⚡+${got}` + (streak >= 3 ? ` ・ 🔥${streak}連続!` : ''); sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
             save(); setTimeout(() => { if (open) ask(); }, ok ? 700 : 1400);
           });
         };
-        ask();
+        showCtl(); ask();
       };
 
       // ---- 情報の行 ----

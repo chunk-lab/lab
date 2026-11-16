@@ -20,7 +20,7 @@ export const vocabNote = n => BAND_NOTE[Math.max(0, EDGES.findIndex(e => e > n) 
 export const lvOfVocab = n => n < 2000 ? 1 : n < 4500 ? 2 : 3;
 export function createLevel(core) {
   const st = createStore('core'), subs = new Set();
-  const L = Object.assign({ lv: 0, max: 0, allowed: [], vocab: 0, passed: [], weak: '', tests: 0, lastCleared: 0 }, st.get('level') || {});
+  const L = Object.assign({ lv: 0, max: 0, allowed: [], vocab: 0, passed: [], weak: '', tests: 0, lastCleared: 0, adj: 0 }, st.get('level') || {});
   const save = () => { st.set('level', L); subs.forEach(f => { try { f(); } catch (e) { } }); };
   // ---- 材料：よく使う順の単語 ----
   let G = null, ready = null;
@@ -55,7 +55,8 @@ export function createLevel(core) {
   // 自分のレベルより下(やさしすぎる)の単語か。単語表にない言葉・テスト前(推定語彙なし)は、判断できないので false
   let RK = null;
   const rankOf = en => { const g = list(); if (!g) return -1; if (!RK) { RK = new Map(); g.forEach((w, i) => { const k = String(w[0]).toLowerCase(); if (!RK.has(k)) RK.set(k, i); }); } const r = RK.get(String(en || '').toLowerCase().trim()); return r == null ? -1 : r; };
-  const tooEasy = en => { if (!L.vocab) return false; const r = rankOf(en); return r >= 0 && r < EDGES[bandOf(L.vocab)]; };
+  const effBand = () => Math.max(0, Math.min(EDGES.length - 2, bandOf(L.vocab || 1500) + (L.adj || 0)));   // 「やさしく/むずかしく」の調整つきの段
+  const tooEasy = en => { if (!L.vocab) return false; const r = rankOf(en); return r >= 0 && r < EDGES[effBand()]; };
   function wordQ(band, used) {
     const g = list(), lo = EDGES[band], hi = Math.min(EDGES[band + 1], g.length); if (hi - lo < 10) return null;
     for (let t = 0; t < 40; t++) {
@@ -123,10 +124,9 @@ export function createLevel(core) {
   }
   // 単語力テスト：ミッションを NEED 個クリアするごとに受けられる
   const progress = () => Math.max(0, (core.mission ? core.mission.cleared() : 0) - (L.lastCleared || 0));
-  const canTest = () => !!L.lv && progress() >= NEED && core.member.canTest();
+  const canTest = () => !!L.lv && core.member.canTest();   // ミッションの条件はなし(いつでも。回数の制限だけ)
   async function test() {
     if (!L.lv) return placement();
-    if (progress() < NEED) return core.ui.sheet(`<h3>単語力テスト</h3><p class="cs-note">ミッションをあと ${NEED - progress()} 個クリアすると受けられます。</p>`);
     const M = core.member;
     if (!M.canTest()) return core.ui.sheet(`<h3>単語力テスト</h3><p class="cs-note">次に受けられるのは${M.nextTest()}です(${M.isPaid() ? '有料会員は1日1回' : '無料会員は週1回'})。ダイヤ ${core.econ.test.extraGems} でもう1回受けられます(持っている:${M.gems()})。</p><button class="cs-btn" data-buy>ダイヤで受ける</button>`, (ov, close) =>
       ov.querySelector('[data-buy]').onclick = () => { close(); if (M.buyTest()) test(); else core.ui.toast('ダイヤが足りません'); });
@@ -153,11 +153,12 @@ export function createLevel(core) {
     return { total, parts, rank: RANKS[ri][1], next: RANKS[ri + 1] ? { name: RANKS[ri + 1][1], need: RANKS[ri + 1][0] - total, at: RANKS[ri + 1][0], from: RANKS[ri][0] } : null };
   }
   return {
+    step(d) { L.adj = Math.max(-4, Math.min(4, (L.adj || 0) + d)); save(); return this.bandNote(); }, bandNote() { const b = effBand(); return `${EDGES[b].toLocaleString()}〜${EDGES[b + 1].toLocaleString()}語` + ((L.adj || 0) ? (L.adj > 0 ? ' (↑むずかしめ)' : ' (↓やさしめ)') : ''); },
     get lv() { return L.lv; }, allowed: () => L.allowed.slice(), name: () => LV_NAME[L.lv] || '', weak: () => L.weak, vocab: () => L.vocab,
     // 単語テストの穴うめ:その人のレベル帯(推定語彙のまわり)の単語を n こ。exclude(英語の小文字)は出さない
     async fillWords(n, exclude = new Set()) {
       if (!(await load())) return []; const g = list(); if (!g) return [];
-      const band = bandOf(L.vocab || 1500), lo = EDGES[band], hi = Math.min(EDGES[band + 1], g.length), out = [], used = new Set(exclude);
+      const band = effBand(), lo = EDGES[band], hi = Math.min(EDGES[band + 1], g.length), out = [], used = new Set(exclude);
       for (let t = 0; t < n * 30 && out.length < n && hi > lo; t++) { const w = g[lo + Math.floor(Math.random() * (hi - lo))]; const k = String(w[0]).toLowerCase(); if (used.has(k) || w[0].includes(' ')) continue; used.add(k); out.push({ en: w[0], pos: w[1], ja: w[2] }); }
       return out;
     },
