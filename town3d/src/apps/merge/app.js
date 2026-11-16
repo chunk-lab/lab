@@ -21,6 +21,7 @@ const CSS = `
 .mg-pc{display:flex;flex-direction:column;align-items:center;gap:1px;width:calc(var(--pz,60px) + 4px);flex:none}
 .mg-npc img,.mg-npc .mg-np{width:var(--pz,64px);height:var(--pz,64px);border-radius:50%;object-fit:cover;object-position:top;background:#efe3fb;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 0 3px #e8d9f7}
 .mg-nm{font-size:11px;line-height:1.1;text-align:center;white-space:nowrap}
+.mg-strip.tiny .mg-nm,.mg-strip.tiny .mg-hr{display:none}
 .mg-hr{display:flex;align-items:center;gap:2px;font-size:8px;color:#d6457a;width:100%}
 .mg-hr i{flex:1;height:7px;border-radius:5px;background:#f3dbe6;overflow:hidden;display:block}
 .mg-hr i b{display:block;height:100%;background:linear-gradient(90deg,#ff9fb5,#ff5e8a);border-radius:5px;transition:width .6s}
@@ -42,13 +43,11 @@ const CSS = `
 .mg-it.fly{transition:none;z-index:25;pointer-events:none}
 .mg-gen{z-index:3}
 .mg-in{position:absolute;inset:2px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--c,#fff);box-shadow:0 0 0 2px rgba(60,35,85,.7),0 3px 0 2px rgba(60,35,85,.45),inset 0 3px 0 rgba(255,255,255,.65),inset 0 -4px 0 rgba(60,35,85,.12)}
-.mg-it.img .mg-in{inset:-3px;background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 2px 1px rgba(40,20,60,.4))}
-.mg-it.img.sel .mg-in{outline:3px solid #1e90ff;outline-offset:1px;border-radius:14px}
-.mg-it.img.lk .mg-in{outline:2px dashed #5a4a7a;outline-offset:2px;border-radius:12px;filter:saturate(.75) drop-shadow(0 2px 1px rgba(40,20,60,.4))}
+.mg-it.img .mg-in{inset:1px}
 .mg-gen.img .mg-in{inset:-3px;background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 2px 2px rgba(0,0,0,.4))}
 .mg-gen.img.sel .mg-in{border-radius:22%;box-shadow:0 0 0 3px #1e90ff}
 .mg-gen.img .mg-in img{width:100%;height:100%}
-.mg-it.img .mg-in img{width:100%;height:100%}
+.mg-it.img .mg-in img{width:94%;height:94%}
 .mg-in img{width:78%;height:78%;object-fit:contain;pointer-events:none}
 .mg-e{font-weight:400;line-height:1;pointer-events:none}
 .mg-lv{position:absolute;right:-1px;bottom:-2px;font-style:normal;font-size:10px;line-height:14px;min-width:15px;text-align:center;background:#4a3a5e;color:#fff;border-radius:8px;padding:0 3px;pointer-events:none;font-weight:800}
@@ -212,11 +211,13 @@ export function createMergeApp(env = {}) {
         const W = root.clientWidth, H = root.clientHeight; if (!W || !H) return;
         const SAFE = safeTop(); root.style.setProperty('--sf', SAFE + 'px');
         const TOP = SAFE + 54, BOT = 56;   // 上のバー+お題の行 / 下のボタン列
-        const SP0 = 38, rowsH = CFG.rows;
-        let CSw = Math.floor((W - 4) / CFG.cols), CSh = Math.floor((H - TOP - BOT - 56 - SP0 - 12) / rowsH); CS = Math.min(CSw, CSh);
+        const SP0 = 38, rowsH = CFG.rows, MINSH = 60;   // 盤面がいちばん大事: 横いっぱいを先に決め、縦がたりなければ住人カードを小さくする。それでもたりないときだけ盤面を小さくする
+        let cw = W >= 520 ? 230 : Math.floor((W - 18) / 2);
+        CS = Math.floor((W - 4) / CFG.cols);
         const bw = CS * CFG.cols + 4, bh = CS * rowsH + 4, spare = H - TOP - bh - BOT - 6;
-        let cw = W >= 520 ? 230 : Math.floor((W - 18) / 2); const pz = Math.min(64, Math.round(cw * 0.33)), ws = Math.max(30, Math.min(56, Math.floor((cw - pz - 24) / 2)));
-        SH = Math.min(spare, pz + SP0); const off = Math.max(0, Math.floor((spare - SH) / 2));
+        SH = Math.max(MINSH, Math.min(spare, 64 + SP0)); const off = Math.max(0, Math.floor((spare - SH) / 2));
+        const tiny = SH < 96; elStrip.classList.toggle('tiny', tiny);   // 縦がせまい画面: 名前とハートを消して、絵だけにする
+        const pz = tiny ? Math.max(30, Math.min(60, SH - 12)) : Math.max(44, Math.min(64, Math.round(cw * 0.33), SH - SP0)), ws = Math.max(28, Math.min(56, Math.floor((cw - pz - 24) / 2), tiny ? SH - 14 : 56));
         BX = Math.round((W - bw) / 2) + 2; BY = TOP + off + SH + 6;
         elStrip.style.height = SH + 'px'; elStrip.style.top = (TOP + off) + 'px';
         elStrip.style.setProperty('--cw', cw + 'px'); elStrip.style.setProperty('--pz', pz + 'px'); elStrip.style.setProperty('--ws', ws + 'px');
