@@ -302,6 +302,7 @@ export function mount(container, opt = {}) {
     const SUGG = [
       { key: 'chunkcards', say: 'カードで勝負してみない?', ok: () => soc.menuOk({ app: 'chunkcards' }), fn: () => openApp('chunkcards', { cpu: 'baron' }) },
       { key: 'school', study: 1, say: '学校で英語の練習、一緒にしない?', fn: () => openApp('school') }, { key: 'library', study: 1, say: '図書館で、長い英文を読んでみない?', fn: () => openApp('library') },
+      { key: 'merge', say: 'ほしいものがあるんだ。マージゲームで作って、渡してくれない?', fn: () => openApp('merge') },
       { key: 'shop', say: 'お店をのぞいてみない? おみやげが買えるよ。', fn: () => openApp('shop') }, { key: 'omikuji', say: 'おみくじ、ひいてみない?', fn: () => openApp('omikuji') },
       { key: 'fortune', say: '占ってもらうのはどう?', ok: () => !lunaOut, fn: () => openApp('fortune') }, { key: 'fishing', say: '池で、のんびり釣りしてみない?', fn: () => { openApp('fishing'); backToTalk(); } },
       { key: 'fishing-en', study: 1, say: '英語の釣り堀、行ってみない?', fn: () => { openApp('fishing', { tab: 'en' }); backToTalk(); } },
@@ -364,7 +365,7 @@ export function mount(container, opt = {}) {
   const sparkles = createSparkles(scene, finds);
   social.onInfo = finds.onChange = () => opt.onEvent?.('app:event', { name: 'snap', data: townSnap() });   // 勉強ノートの「町のひみつ」を、ふえるたびに最新にする
   setTimeout(() => social.onInfo(), 3000);
-  const soc = createSocialUI({ hud, wallet, audio, addNote,
+  const soc = createSocialUI({ openMerge: () => openApp('merge'), hud, wallet, audio, addNote,
     onAllFound: () => {   // きょうのかくしもの、ぜんぶ見つけた! → 見つけた言葉を英ラボで使ってみるか聞く(断れる)
       const list = finds.dailyFound().filter(s => ['word', 'phrase', 'proverb', 'passage'].includes(s.kind)).map(s => ({ en: s.c[0], ja: s.c[1], sen: s.kind === 'passage' || s.kind === 'proverb' || /[.!?]$/.test(s.c[0]) }));
       if (!list.length) return;

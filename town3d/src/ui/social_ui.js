@@ -14,7 +14,7 @@ const REACT = {
   no: ['あ…ありがとう。…じつは、ちょっとにがてなんだ。', 'う、うん…。気持ちだけ、もらっておくね。'],
 };
 
-export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startDate, invite, setRain, areaName, getMe, canAct, ai = null, player = () => 'あなた' }) {
+export function createSocialUI({ openMerge, hud, wallet, audio, addNote, onAllFound, startDate, invite, setRain, areaName, getMe, canAct, ai = null, player = () => 'あなた' }) {
   if (!document.getElementById('tw-soc-css')) { const st = document.createElement('style'); st.id = 'tw-soc-css'; st.textContent = '.tw-in{border:1px solid #d9cfe8;border-radius:10px;padding:8px 10px;font:inherit;font-size:14px;background:#fff;color:#5a4a6b;box-sizing:border-box;min-width:0}'; document.head.appendChild(st); }
   const name = r => (r && r.def && r.def.name) || '';
   const heart = id => { const l = social.level(id); return `♥ ${LV_NAME[l]}`; };
@@ -111,7 +111,7 @@ export function createSocialUI({ hud, wallet, audio, addNote, onAllFound, startD
   // ---- 話しかけたときのメニューに足すもの ----
   function choices(r) {
     const id = r.def.id; if (!PREFS[id]) return [];
-    const out = [{ k: 'bond', label: '📋 ステータス', fn: () => statusPanel(r) }, { k: 'bond', label: '🎁 プレゼントする', fn: () => gift(r) }];
+    const out = [{ k: 'bond', label: '📋 ステータス', fn: () => statusPanel(r) }, { k: 'bond', label: '🧩 マージで作って渡す', fn: () => { try { hud.closeDialog && hud.closeDialog(); } catch (e) { } r.talking = false; openMerge && openMerge(); } }, { k: 'bond', label: '🎁 プレゼントする', fn: () => gift(r) }];
     if ((ai && ai.ready) || memory.of(id).auto.length || memory.of(id).keep.length) out.push({ k: 'bond', label: '🗒 覚えていること', fn: () => memoryPanel(r) });
     if (id === 'gon') { out.push({ k: 'play', label: '🎒 ひろいものをたのむ', fn: () => gonAsk(r) }); out.push({ k: 'play', label: '🎒 たからもの', fn: () => treasurePanel() }); }
     for (const u of social.unlocksOf(id)) {

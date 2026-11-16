@@ -63,6 +63,8 @@ const CSS = `
 .mg-gen.gl::after{content:'🔒';position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);font-size:20px;pointer-events:none}
 .mg-part .mg-in{background:#dfe8f1;box-shadow:0 0 0 2px #5d7690,0 3px 0 2px rgba(60,80,110,.45);border-radius:6px}
 .mg-part .mg-e2{position:absolute;left:1px;top:-1px;font-size:11px;font-weight:400}
+.mg-it.hint .mg-in{animation:mgHint .55s ease-in-out infinite alternate}
+@keyframes mgHint{from{transform:scale(1);filter:brightness(1)}to{transform:scale(1.18);filter:brightness(1.35) drop-shadow(0 0 8px #fff3a0)}}
 .mg-info{position:absolute;left:6px;right:6px;top:40px;height:20px;z-index:4;background:#fff3c4;border-radius:10px;padding:0 6px;color:#5a2d00;font-weight:700;display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;overflow:hidden}
 .mg-info span{flex:1;overflow:hidden;text-overflow:ellipsis}
 .mg-info button{padding:1px 10px!important;font-size:11px}
@@ -156,7 +158,9 @@ export function createMergeApp(env = {}) {
         [pat[0], pat[1]].sort(() => Math.random() - 0.5).forEach(kind => {
           let best = null;
           for (let t = 0; t < 10 && !best; t++) {
-            const cand = pool.filter(ln => !out.some(x => x.ln === ln)), fav = cand.filter(ln => T.fav.includes(ln)), ln = (fav.length && Math.random() < 0.65 ? fav : cand)[rnd((fav.length && Math.random() < 0.65 ? fav : cand).length)] || cand[0] || pool[0];
+            const cand = pool.filter(ln => !out.some(x => x.ln === ln)), cnt = ln => mine.filter(x => x.ln === ln).length + out.filter(x => x.ln === ln).length;
+            const wt = ln => (T.fav.includes(ln) ? 2.2 : 1) / (1 + cnt(ln) * 1.5);   // 好みの系統は出やすい。でも、いま場に多いラインは出にくい
+            let tot2 = cand.reduce((a, ln) => a + wt(ln), 0), q2 = Math.random() * tot2, ln = cand[0] || pool[0]; for (const c of cand) { if ((q2 -= wt(c)) < 0) { ln = c; break; } }
             const L = LINES[ln], top = Math.min(7, (L.mergeMax || L.items.length) - 1), rg = LVR[kind];
             let lv = rg[rnd(rg.length)] + (T.lv > 0 && kind !== 'e' ? 0 : 0); lv = Math.max(kind === 'x' ? 1 : 2, Math.min(top, lv + (kind !== 'x' && T.lv < 0 && lv > 4 && Math.random() < 0.5 ? -1 : 0) + (kind !== 'x' && T.lv > 0 && lv < 7 && Math.random() < 0.4 ? 1 : 0) + (cycle >= 3 && kind === 'h' && lv < top ? 1 : 0)));
             const key = ln + lv, dup = mine.some(x => x.ln === ln && x.lv === lv) || S.rw.includes(key) || mine.filter(x => x.ln === ln).length >= 3;
@@ -542,7 +546,7 @@ export function createMergeApp(env = {}) {
       // ---- 情報の行 ----
       let sel = null;
       function info() {
-        els.forEach((e, u) => e.classList.toggle('sel', !!sel && sel.u === u));
+        els.forEach((e, u) => { e.classList.toggle('sel', !!sel && sel.u === u); const t = byU(u); e.classList.toggle('hint', !!(sel && t && t !== sel && (t.b != null) && mergeOf(sel, t))); });
         const sp = elInfo.querySelector('span'); elInfo.querySelector('button')?.remove();
         if (sel && byU(sel.u)) {
           const d = defOf(sel);
@@ -562,17 +566,18 @@ export function createMergeApp(env = {}) {
         const o = byU(+el.dataset.u); if (!o) return; e.preventDefault(); idle = 0;
         const R = root.getBoundingClientRect(), p = posOf(o);
         drag = { o, el, id: e.pointerId, x0: e.clientX, y0: e.clientY, ox: e.clientX - R.left - p.x, oy: e.clientY - R.top - p.y, moved: false };
+        if (o.t === 'it') drag.lp = setTimeout(() => { if (drag && drag.o === o && !drag.moved) { drag.long = 1; sfx('tap'); evoPop(o.ln, o.lv, false); } }, 480);   // 長押し: 進化のみち
         try { el.setPointerCapture(e.pointerId); } catch (er) { }
       }
       function move(e) {
         if (!drag || e.pointerId !== drag.id) return; const d = drag;
-        if (!d.moved) { if (Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 8 || d.o.lk || d.o.gl) return; d.moved = true; d.el.classList.add('drag'); sfx('tap'); marks(true); }
+        if (!d.moved) { if (Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 8 || d.o.lk || d.o.gl) return; clearTimeout(d.lp); d.moved = true; d.el.classList.add('drag'); sfx('tap'); marks(true); }
         const R = root.getBoundingClientRect(); tf(d.el, e.clientX - R.left - d.ox, e.clientY - R.top - d.oy - 6);
         const r = elSell.getBoundingClientRect(); elSell.classList.toggle('hot', e.clientX > r.left && e.clientX < r.right && e.clientY > r.top - 10);
       }
       function up(e) {
-        if (!drag || e.pointerId !== drag.id) return; const d = drag, o = d.o; drag = null; marks(false); d.el.classList.remove('drag');
-        if (!d.moved) { if (e.type === 'pointercancel') return; if (o.t === 'gen' && o.b != null) { sel = o; spawn(o); info(); } else { sel = sel === o ? null : o; sfx('tap'); pop(d.el, 1.12); info(); if (sel && o.t === 'it') evoPop(o.ln, o.lv, false); } return; }
+        if (!drag || e.pointerId !== drag.id) return; const d = drag, o = d.o; clearTimeout(d.lp); drag = null; marks(false); d.el.classList.remove('drag');
+        if (!d.moved) { if (e.type === 'pointercancel' || d.long) return; if (o.t === 'gen' && o.b != null) { sel = o; spawn(o); info(); } else { sel = sel === o ? null : o; sfx('tap'); pop(d.el, 1.12); info(); } return; }
         if (e.type === 'pointercancel') { moveEl(o); return; }
         const R = root.getBoundingClientRect(), x = e.clientX - R.left, y = e.clientY - R.top, cx = Math.floor((x - BX) / CS), cy = Math.floor((y - BY) / CS);
         const from = o.b != null ? { b: o.b } : { s: o.s };
