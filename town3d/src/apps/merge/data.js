@@ -1,6 +1,7 @@
 // マージゲームの設定表。数値・品物・レシピはここだけ直せばよい(試遊で調整する仮の値)。
 // 絵はあとで差し替える: IMG に { 'cafeA1': 'merge/cafeA1.png' } のように足すと、絵文字の代わりにその画像を出す。
-export const IMG = {};
+import { IMG_DATA } from './img.js';
+export const IMG = IMG_DATA;
 export const CFG = {
   cols: 7, rows: 9,
   enMax: 100, enStart: 100, regenSec: 90,      // エネルギー: 上限・はじめ・自然回復(1回復の秒数)
