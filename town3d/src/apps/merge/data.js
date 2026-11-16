@@ -65,5 +65,5 @@ export const TEND = {
   choco: { fav: ['cafeA', 'sewA'], lv: -1 }, tetsu: { fav: ['toolA', 'seaB'], lv: 1 }, suna: { fav: ['seaA', 'seaB'], lv: 0 }, luna: { fav: ['seaB', 'sewB'], lv: 1 },
 };
 // 2つの注文の組み合わせ(やさしい=e / ふつう=m / むずかしい=h)
-export const PATTERNS = [['e', 'h', 40], ['m', 'm', 18], ['e', 'e', 14], ['h', 'h', 10], ['m', 'h', 18]];
-export const LVR = { e: [2, 3, 4], m: [4, 5], h: [6, 7] };
+export const PATTERNS = [['e', 'h', 20], ['m', 'm', 16], ['e', 'e', 12], ['x', 'm', 16], ['x', 'e', 10], ['h', 'h', 4], ['m', 'h', 14], ['x', 'h', 8]];
+export const LVR = { x: [1, 2], e: [2, 3, 4], m: [4, 5], h: [6, 7] };

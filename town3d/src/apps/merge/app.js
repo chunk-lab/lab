@@ -157,7 +157,7 @@ export function createMergeApp(env = {}) {
           for (let t = 0; t < 10 && !best; t++) {
             const cand = pool.filter(ln => !out.some(x => x.ln === ln)), fav = cand.filter(ln => T.fav.includes(ln)), ln = (fav.length && Math.random() < 0.65 ? fav : cand)[rnd((fav.length && Math.random() < 0.65 ? fav : cand).length)] || cand[0] || pool[0];
             const L = LINES[ln], top = Math.min(7, (L.mergeMax || L.items.length) - 1), rg = LVR[kind];
-            let lv = rg[rnd(rg.length)] + (T.lv > 0 && kind !== 'e' ? 0 : 0); lv = Math.max(2, Math.min(top, lv + (T.lv < 0 && lv > 4 && Math.random() < 0.5 ? -1 : 0) + (T.lv > 0 && lv < 7 && Math.random() < 0.4 ? 1 : 0) + (cycle >= 3 && kind === 'h' && lv < top ? 1 : 0)));
+            let lv = rg[rnd(rg.length)] + (T.lv > 0 && kind !== 'e' ? 0 : 0); lv = Math.max(kind === 'x' ? 1 : 2, Math.min(top, lv + (kind !== 'x' && T.lv < 0 && lv > 4 && Math.random() < 0.5 ? -1 : 0) + (kind !== 'x' && T.lv > 0 && lv < 7 && Math.random() < 0.4 ? 1 : 0) + (cycle >= 3 && kind === 'h' && lv < top ? 1 : 0)));
             const key = ln + lv, dup = mine.some(x => x.ln === ln && x.lv === lv) || S.rw.includes(key) || mine.filter(x => x.ln === ln).length >= 3;
             if (!dup || t === 9) best = { ln, lv, got: false };
           }
@@ -404,11 +404,29 @@ export function createMergeApp(env = {}) {
           if (a.w.every(x => x.got)) { if (!a.leaving) { a.leaving = true; setTimeout(() => leave(id), 650); } } else { sig = ''; refresh(); }
         }), 60);
       }
+      // お返し: 帰る人が、渡した品とは ちがうラインの品を1つだけくれる(レベルは渡した2つの低いほう以上。ときどき、いま必要な最高Lvの1つ下)
+      function thanksGift(a, card) {
+        const lows = a.w.map(w => w.lv), lo = Math.min(...lows), hi = Math.max(...lows), used = a.w.map(w => w.ln);
+        const open = Object.keys(LINES).filter(ln => !used.includes(ln) && Object.keys(GENS).some(g => genOpen(g) && GENS[g].lines.includes(ln)));
+        const others = S.act.flatMap(x => x.w).filter(w => !w.got).sort((x, y) => y.lv - x.lv);
+        let ln, lv, jack = false;
+        if (others.length && Math.random() < 0.07) { const t = others[0]; ln = t.ln; lv = Math.max(2, t.lv - 1); jack = true; }
+        else {
+          const want = others.map(w => w.ln).filter(l => !used.includes(l)); ln = (want.length && Math.random() < 0.5 ? want : open)[rnd((want.length && Math.random() < 0.5 ? want : open).length)] || open[rnd(open.length)] || Object.keys(LINES)[0];
+          lv = lo + rnd(hi - lo + 1);
+        }
+        const L = LINES[ln]; lv = Math.max(1, Math.min(lv, (L.mergeMax || L.items.length) - 1));
+        const o = { t: 'it', ln, lv }, d = defOf(o), from = card ? rel(card) : { x: root.clientWidth / 2, y: BY }, to = nearestEmpty(Math.floor(N / 2));
+        setTimeout(() => {
+          if (to >= 0) dropIn({ u: ++S.n, ...o, b: null, s: null }, to, from); else { S.inbox.push(o); refresh(); }
+          sfx('pop'); banner(`${esc(NPC_NAME[a.id] || a.id)}の お返し: ${d.icon} ${esc(d.name)} Lv${lv}${jack ? ' ✨とっておき!' : ''}` + (to < 0 ? ' <small>(🎁とどいたへ)</small>' : '')); save();
+        }, 560);
+      }
       function leave(id) {   // 2つそろった人は、よろこんで帰り、あたらしい人が来る
         const c = elStrip.querySelector(`[data-npc="${id}"]`), ai = S.act.findIndex(x => x.id === id); if (ai < 0) return;
         leavingN++;
         const done = () => {
-          leavingN = Math.max(0, leavingN - 1); const ix = S.act.findIndex(x => x.id === id); if (ix < 0) return; S.act.splice(ix, 1); S.served++; fillAct(); sig = ''; save();
+          leavingN = Math.max(0, leavingN - 1); const ix = S.act.findIndex(x => x.id === id); if (ix < 0) return; const gone = S.act[ix]; S.act.splice(ix, 1); try { thanksGift(gone, c); } catch (e) { } S.served++; fillAct(); sig = ''; save();
           $('.mg-cy b').textContent = S.served; refresh();
           if (!S.act.length && !S.queue.length) setTimeout(finale, 700);
         };
@@ -502,7 +520,7 @@ export function createMergeApp(env = {}) {
       }
       elQb.onclick = () => {
         sfx('tap'); if (S.en >= CFG.enMax) { toast('⚡は いっぱい! 生成機で つかってから また来てね'); return; }
-        let got = 0, open = true;
+        let got = 0, open = true, streak = 0;
         const o = overlay(`<h3>✏️ 英語で ⚡回復 <small class="mg-qg"></small></h3><div class="mg-qw">…</div><div class="mg-qs"></div><div class="mg-qc"></div><button data-x>もどる</button>`);
         o.onclose = () => { open = false; try { env.speakStop && env.speakStop(); } catch (e) { } };
         const w = o.querySelector('.mg-qw'), sub = o.querySelector('.mg-qs'), ch = o.querySelector('.mg-qc'), gg = o.querySelector('.mg-qg');
@@ -514,7 +532,7 @@ export function createMergeApp(env = {}) {
           ch.querySelectorAll('button').forEach(b => b.onclick = () => {
             const ok = Q.ch[+b.dataset.k] === Q.ans; ch.querySelectorAll('button').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.classList.add('ok'); else if (x === b) x.classList.add('ng'); });
             try { !Q.fb && env.record && env.record(Q, ok); } catch (e) { }
-            if (ok) { const g = addEn(CFG.quizGain, rel(b)); got += g; sfx('quizok'); gg.textContent = `⚡+${got}`; sub.textContent = Q.ex ? Q.ex.en : 'せいかい!'; } else { sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
+            if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; sfx('quizok'); gg.textContent = `⚡+${got}` + (streak >= 3 ? ` ・ 🔥${streak}連続!` : ''); sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
             save(); setTimeout(() => { if (open) ask(); }, ok ? 700 : 1400);
           });
         };
