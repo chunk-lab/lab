@@ -25,7 +25,7 @@ const CSS = `
 .mg-hr i b{display:block;height:100%;background:linear-gradient(90deg,#ff9fb5,#ff5e8a);border-radius:5px;transition:width .6s}
 .mg-ws{display:flex;gap:6px;margin-top:1px}
 .mg-w{position:relative;width:var(--ws,36px);height:var(--ws,36px);border-radius:13px;background:var(--c,#f3ecfa);border:2px solid #7d62a0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--ws,36px)*.58);font-weight:400}
-.mg-w img{width:80%;height:80%;object-fit:contain}
+.mg-w img{width:94%;height:94%;object-fit:contain}
 .mg-w i{position:absolute;right:-4px;bottom:-5px;font-style:normal;font-size:9px;line-height:12px;min-width:13px;text-align:center;background:#4a3a5e;color:#fff;border-radius:8px;padding:0 3px;font-weight:800}
 .mg-w.rdy{border-color:#ff5e8a;box-shadow:0 0 0 3px #ffc2d3;animation:mgBob .6s infinite alternate}
 .mg-w.got{opacity:.55;filter:grayscale(.5)}
@@ -40,6 +40,11 @@ const CSS = `
 .mg-it.drag{transition:none;z-index:30}
 .mg-it.fly{transition:none;z-index:25;pointer-events:none}
 .mg-in{position:absolute;inset:2px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--c,#fff);box-shadow:0 0 0 2px rgba(60,35,85,.7),0 3px 0 2px rgba(60,35,85,.45),inset 0 3px 0 rgba(255,255,255,.65),inset 0 -4px 0 rgba(60,35,85,.12)}
+.mg-it.img .mg-in{inset:1px}
+.mg-gen.img .mg-in{inset:-3px;background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 2px 2px rgba(0,0,0,.4))}
+.mg-gen.img.sel .mg-in{border-radius:22%;box-shadow:0 0 0 3px #1e90ff}
+.mg-gen.img .mg-in img{width:100%;height:100%}
+.mg-it.img .mg-in img{width:94%;height:94%}
 .mg-in img{width:78%;height:78%;object-fit:contain;pointer-events:none}
 .mg-e{font-weight:400;line-height:1;pointer-events:none}
 .mg-lv{position:absolute;right:-1px;bottom:-2px;font-style:normal;font-size:10px;line-height:14px;min-width:15px;text-align:center;background:#4a3a5e;color:#fff;border-radius:8px;padding:0 3px;pointer-events:none;font-weight:800}
@@ -53,9 +58,8 @@ const CSS = `
 .mg-it.lk .mg-e{opacity:.9}
 .mg-gen .mg-in{inset:1px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff 0,var(--c) 58%,var(--d) 100%);box-shadow:0 0 0 3px #fff,0 0 0 6px var(--d),0 5px 0 6px rgba(40,20,60,.5),0 0 14px 6px var(--c);}
 .mg-gen .mg-e{filter:drop-shadow(0 2px 0 rgba(0,0,0,.3));transform:translateY(-3px)}
-.mg-gen .mg-lv{left:50%;right:auto;bottom:-7px;transform:translateX(-50%);background:var(--d);font-size:10px;padding:0 7px;white-space:nowrap;border:2px solid #fff;line-height:13px}
-.mg-gen::before{content:'生成機';position:absolute;left:50%;top:-6px;transform:translateX(-50%);background:var(--d);color:#fff;font-size:9px;line-height:12px;padding:0 6px;border-radius:7px;z-index:3;border:1.5px solid #fff;white-space:nowrap;pointer-events:none}
-.mg-ch{position:absolute;right:-2px;top:6px;font-size:9px;background:#fff;border-radius:7px;padding:0 4px;line-height:13px;color:#4a3a5e;pointer-events:none;text-decoration:none;box-shadow:0 1px 0 #0003}
+.mg-gen::before{display:none}
+.mg-ch{position:absolute;left:-2px;top:-3px;z-index:3;font-size:9px;background:#fff;border-radius:7px;padding:0 4px;line-height:13px;color:#4a3a5e;pointer-events:none;text-decoration:none;box-shadow:0 1px 0 #0003}
 .mg-gen.cd .mg-in{filter:grayscale(.55)}
 .mg-gen.first .mg-in{animation:mgPulse .7s infinite}
 .mg-gen.gl .mg-in{filter:grayscale(1) brightness(.75);animation:none}
@@ -227,7 +231,7 @@ export function createMergeApp(env = {}) {
       function moveEl(o, anim = true) { const el = els.get(o.u); if (!el) return; const p = posOf(o); if (!anim) { el.style.transition = 'none'; tf(el, p.x, p.y); void el.offsetWidth; el.style.transition = ''; } else tf(el, p.x, p.y); }
       function mk(o) {
         const d = defOf(o), el = document.createElement('div');
-        el.className = 'mg-it' + (o.t === 'gen' ? ' mg-gen' : o.t === 'part' ? ' mg-part' : o.t === 'tool' ? ' mg-tool' : '') + (o.lk ? ' lk' : ''); el.dataset.u = o.u;
+        el.className = 'mg-it' + (IMG[d.key] ? ' img' : '') + (o.t === 'gen' ? ' mg-gen' : o.t === 'part' ? ' mg-part' : o.t === 'tool' ? ' mg-tool' : '') + (o.lk ? ' lk' : ''); el.dataset.u = o.u;
         const gd = o.t === 'gen' ? GENS[o.g] : null;
         el.innerHTML = `<div class="mg-in" style="--c:${d.color};${gd ? `--d:${gd.dark}` : ''}">${art(d)}${o.t === 'part' ? `<b class="mg-e2">${GENS[o.g].icon}</b>` : ''}<i class="mg-lv">${o.t === 'tool' ? '' : (o.t === 'gen' ? 'Lv ' : '') + o.lv}</i>${o.t === 'gen' ? '<u class="mg-ch"></u>' : ''}</div>`;
         if (gd) el.style.setProperty('--d', gd.dark);
