@@ -451,7 +451,7 @@ export function createMergeApp(env = {}) {
         const o = { t: 'it', ln, lv }, d = defOf(o), from = card ? rel(card) : { x: root.clientWidth / 2, y: BY }, to = nearestEmpty(Math.floor(N / 2));
         setTimeout(() => {
           if (to >= 0) dropIn({ u: ++S.n, ...o, b: null, s: null }, to, from); else { S.inbox.push(o); refresh(); }
-          sfx('pop'); banner(`${esc(NPC_NAME[a.id] || a.id)}の お返し: ${d.icon} ${esc(d.name)} Lv${lv}${jack ? ' ✨とっておき!' : ''}` + (to < 0 ? ' <small>(🎁とどいたへ)</small>' : '')); if (jack) setTimeout(() => giveTool('up'), 900); else if (Math.random() < 0.1) setTimeout(() => giveTool('swap'), 900); save();
+          sfx('pop'); banner(`${esc(NPC_NAME[a.id] || a.id)}の お返し: ${d.icon} ${esc(d.name)} Lv${lv}${jack ? ' ✨とっておき!' : ''}` + (to < 0 ? ' <small>(🎁とどいたへ)</small>' : '')); if (jack) setTimeout(() => giveTool('up'), 900); else if (Math.random() < 0.03) setTimeout(() => giveTool(Math.random() < 0.5 ? 'cut' : 'swap'), 900); save();
         }, 560);
       }
       function leave(id) {   // 2つそろった人は、よろこんで帰り、あたらしい人が来る
@@ -486,7 +486,7 @@ export function createMergeApp(env = {}) {
         S.cycle++; S.served = 0; S.queue = shuf(NPCS.slice()); S.act = []; fillAct(S.cycle); sig = '';
         const wants = S.act.flatMap(a => a.w).sort((x, y) => y.lv - x.lv), gifts = [];
         for (let i = 0; i < CFG.giftN; i++) { const w = wants[i % Math.max(1, wants.length)]; if (!w) break; gifts.push({ t: 'it', ln: w.ln, lv: Math.max(CFG.giftMin, Math.min(CFG.giftMax, w.lv - 1 - (i >= wants.length ? 1 : 0))) }); }
-        gifts.push({ t: 'tool', k: 'swap' });
+        if (Math.random() < 0.4) gifts.push({ t: 'tool', k: Math.random() < 0.5 ? 'cut' : 'swap' });
         save();
         const f = document.createElement('div'); f.className = 'mg-fin'; root.appendChild(f);
         const ck = document.createElement('div'); ck.className = 'mg-ck'; ck.innerHTML = pic ? `<img src="${pic}" alt="">` : '<b style="font-size:70px;font-weight:400">☁️</b>'; root.appendChild(ck);
@@ -565,7 +565,7 @@ export function createMergeApp(env = {}) {
           ch.querySelectorAll('button').forEach(b => b.onclick = () => {
             const ok = Q.ch[+b.dataset.k] === Q.ans; ch.querySelectorAll('button').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.classList.add('ok'); else if (x === b) x.classList.add('ng'); });
             try { !Q.fb && env.record && env.record(Q, ok); } catch (e) { }
-            if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; if (streak > 0 && streak % 5 === 0) giveTool('cut'); sfx('quizok'); gg.textContent = `⚡+${got}` + (streak >= 3 ? ` ・ 🔥${streak}連続!` : ''); sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
+            if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; sfx('quizok'); gg.textContent = `⚡+${got}` + (streak >= 3 ? ` ・ 🔥${streak}連続!` : ''); sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
             save(); setTimeout(() => { if (open) ask(); }, ok ? 700 : 1400);
           });
         };
