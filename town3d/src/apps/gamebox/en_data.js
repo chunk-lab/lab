@@ -57,10 +57,20 @@ export function sentences() {
   return SENT;
 }
 // lv(1〜3)と、チャンクの数(n。0=なんでも)で選ぶ
+// ---- 出題の記憶(ゲームをまたいで、さいきん出した問題を出しにくくする。端末の中だけ) ----
+const SEEN_KEY = 'town:gb:seen:';
+export function seenSet(k) { try { return new Set(JSON.parse(localStorage.getItem(SEEN_KEY + k) || '[]')); } catch (e) { return new Set(); } }
+export function seenAdd(k, v, cap = 300) { try { const a = JSON.parse(localStorage.getItem(SEEN_KEY + k) || '[]').filter(x => x !== v); a.push(v); localStorage.setItem(SEEN_KEY + k, JSON.stringify(a.slice(-cap))); } catch (e) { } }
+let EASY = null;   // 本人の語彙レベルに対して、やさしすぎる単語か(町から渡される)
+export const setEasy = f => { EASY = typeof f === 'function' ? f : null; };
+export const isEasy = w => { try { return !!(EASY && EASY(w)); } catch (e) { return false; } };
 export function pickSentence(lv = 2, n = 0, avoid = []) {
-  const all = sentences(), c = all.filter(s => s.lv <= lv && s.lv >= Math.max(1, lv - 1) && (!n || s.chunks.length === n) && !avoid.includes(s));
-  const l = c.length ? c : all.filter(s => !avoid.includes(s));
-  return l[Math.floor(Math.random() * l.length)];
+  const all = sentences(), seen = seenSet('s'), ok = s => !avoid.includes(s) && !seen.has(s.en);
+  let c = all.filter(s => s.lv <= lv && s.lv >= Math.max(1, lv - 1) && (!n || s.chunks.length === n) && ok(s));
+  if (!c.length) c = all.filter(s => s.lv <= lv && s.lv >= Math.max(1, lv - 1) && (!n || s.chunks.length === n) && !avoid.includes(s));
+  const l = c.length ? c : all.filter(s => !avoid.includes(s)), s = l[Math.floor(Math.random() * l.length)];
+  if (s) seenAdd('s', s.en, 400);
+  return s;
 }
 export const words = s => s.en.replace(/[.,!?]/g, '').split(/\s+/);
 

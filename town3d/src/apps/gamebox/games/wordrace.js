@@ -4,6 +4,7 @@
 //   流れて消えたり、時間切れはなし。正解すると次の単語になり、ランナーが1つ進む。先にゴールした方の勝ち
 import { surface, pointers, loop, txt, wrapTxt, banner, rr, btn, hit, clamp, COL, INK, shuffle, halves, speakCb } from '../kit.js';
 import { SW } from '../stream_words.js';
+import { seenSet, seenAdd, isEasy } from '../en_data.js';
 
 const POSJ = { n: '名', v: '動', a: '形', r: '副', ph: '熟', pp: '前', cj: '接', pn: '代', ij: '間' };
 const LANE_COL = ['#ff7aa2', '#5aa8f0'], LANE_BG = ['rgba(255,122,162,0.13)', 'rgba(90,168,240,0.15)'];
@@ -20,11 +21,13 @@ export default {
     const O = host.opts, N = O.trial ? 10 : O.to || 30, LIST = SW[String(O.lv || 1)] || SW['1'], PAD = 12;   // PAD=スマホの下のバーにかからないための余白
     const say = O.say !== 0, CPU_T = [0, 3.9, 3.0, 2.3], CPU_OK = [0, 0.62, 0.72, 0.84];
     let over = false, count = 2.4, t = 0, started = false;
-    const seq = shuffle(LIST.slice());
+    // さいきん出した単語と、やさしすぎる単語は、出しにくくする(足りなくなったら戻す)
+    const seenW = seenSet('w'); let base = LIST.filter(w => !seenW.has(w[0]) && !isEasy(w[0])); if (base.length < 60) base = LIST.filter(w => !seenW.has(w[0])); if (base.length < 40) base = LIST.slice();
+    const seq = shuffle(base);
     const P = [0, 1].map(s => ({ s, dist: 0, flash: 0, k: s * 7, lanes: [0, 1].map(i => ({ i, now: null, next: null, slots: null, lock: 0, prev: new Set(), cpuT: 0, anim: 0 })) }));
     const parts = t => String(t).split(/[、,・]/).map(x => x.trim()).filter(Boolean);   // 意味はいくつか「、」でつながっている。4択には最初の意味だけ出す
     const MN = O.mean === undefined ? 1 : +O.mean, shown = w => { const ps = parts(w[2]); return MN > 0 ? ps.slice(0, MN).join('、') || w[2] : ps.join('、') || w[2]; };   // 意味の出し方:1つ/2つ/ぜんぶ
-    const nextWord = me => { const w = seq[me.k % seq.length], ps = parts(w[2]); me.k++; return { en: w[0], pos: w[1], ans: shown(w), all: w[2], multi: ps.length, dead: 0 }; };
+    const nextWord = me => { const w = seq[me.k % seq.length], ps = parts(w[2]); me.k++; seenAdd('w', w[0], 400); return { en: w[0], pos: w[1], ans: shown(w), all: w[2], multi: ps.length, dead: 0 }; };
     P.forEach(me => me.lanes.forEach(L => { L.now = nextWord(me); L.next = nextWord(me); }));
     function distract(f, ex, old) {
       const out = [], bad = x => ex.has(x) || old.has(x) || out.includes(x);

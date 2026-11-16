@@ -48,6 +48,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       else { stop3D(); document.body.classList.remove('md-3d-on'); home.hide(); }
     },
   });
+  let lvLoaded = false;
   const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
 
   // ---- アプリを立ち上げたらすぐ、3Dの町のプログラムとキャラのモデルを読みこんでおく(バーを出す)。「街へ行く」を押すころには済んでいる ----
@@ -126,6 +127,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
+      tooEasy: en => { try { if (!lvLoaded) { lvLoaded = true; core.level.load().catch(() => { }); } return core.level.tooEasy(en); } catch (e) { return false; } },
       studyPlays: id => { try { return core.record.playsOf(id); } catch (e) { return 0; } },
       studySec: () => { try { return core.daylog.totalSummary().by.study || 0; } catch (e) { return 0; } },   // マージゲーム: ほかの勉強の合計秒数(生成機のロック解除)
       battleQs: async (n = 10, exclude = null) => {   // エンカウント戦闘用の4択(単語テストと同じ作り方)。その人のレベル帯の単語+まちがえた言葉。例文があれば ex に付ける
