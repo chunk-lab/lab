@@ -39,6 +39,7 @@ const CSS = `
 .mg-it{position:absolute;left:0;top:0;transition:transform .16s cubic-bezier(.3,1.3,.5,1);will-change:transform;z-index:2;touch-action:none}
 .mg-it.drag{transition:none;z-index:30}
 .mg-it.fly{transition:none;z-index:25;pointer-events:none}
+.mg-gen{z-index:3}
 .mg-in{position:absolute;inset:2px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--c,#fff);box-shadow:0 0 0 2px rgba(60,35,85,.7),0 3px 0 2px rgba(60,35,85,.45),inset 0 3px 0 rgba(255,255,255,.65),inset 0 -4px 0 rgba(60,35,85,.12)}
 .mg-it.img .mg-in{inset:1px}
 .mg-gen.img .mg-in{inset:-3px;background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 2px 2px rgba(0,0,0,.4))}
