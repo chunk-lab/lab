@@ -42,11 +42,13 @@ const CSS = `
 .mg-it.fly{transition:none;z-index:25;pointer-events:none}
 .mg-gen{z-index:3}
 .mg-in{position:absolute;inset:2px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--c,#fff);box-shadow:0 0 0 2px rgba(60,35,85,.7),0 3px 0 2px rgba(60,35,85,.45),inset 0 3px 0 rgba(255,255,255,.65),inset 0 -4px 0 rgba(60,35,85,.12)}
-.mg-it.img .mg-in{inset:1px}
+.mg-it.img .mg-in{inset:-3px;background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 2px 1px rgba(40,20,60,.4))}
+.mg-it.img.sel .mg-in{outline:3px solid #1e90ff;outline-offset:1px;border-radius:14px}
+.mg-it.img.lk .mg-in{outline:2px dashed #5a4a7a;outline-offset:2px;border-radius:12px;filter:saturate(.75) drop-shadow(0 2px 1px rgba(40,20,60,.4))}
 .mg-gen.img .mg-in{inset:-3px;background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 0 4px var(--c)) drop-shadow(0 2px 2px rgba(0,0,0,.4))}
 .mg-gen.img.sel .mg-in{border-radius:22%;box-shadow:0 0 0 3px #1e90ff}
 .mg-gen.img .mg-in img{width:100%;height:100%}
-.mg-it.img .mg-in img{width:94%;height:94%}
+.mg-it.img .mg-in img{width:100%;height:100%}
 .mg-in img{width:78%;height:78%;object-fit:contain;pointer-events:none}
 .mg-e{font-weight:400;line-height:1;pointer-events:none}
 .mg-lv{position:absolute;right:-1px;bottom:-2px;font-style:normal;font-size:10px;line-height:14px;min-width:15px;text-align:center;background:#4a3a5e;color:#fff;border-radius:8px;padding:0 3px;pointer-events:none;font-weight:800}
@@ -211,16 +213,16 @@ export function createMergeApp(env = {}) {
         const SAFE = safeTop(); root.style.setProperty('--sf', SAFE + 'px');
         const TOP = SAFE + 54, BOT = 56;   // 上のバー+お題の行 / 下のボタン列
         const SP0 = 38, rowsH = CFG.rows;
-        let CSw = Math.floor((W - 8) / CFG.cols), CSh = Math.floor((H - TOP - BOT - 56 - SP0 - 12) / rowsH); CS = Math.min(CSw, CSh);
-        const bw = CS * CFG.cols + 8, bh = CS * rowsH + 8, spare = H - TOP - bh - BOT - 6;
-        const pz = Math.max(54, Math.min(84, spare - SP0)); let ws = Math.min(74, Math.round(pz * 0.9)), cw = pz + 2 * ws + 24; if (cw > W - 18) { cw = W - 18; ws = Math.max(30, Math.floor((cw - pz - 24) / 2)); }
+        let CSw = Math.floor((W - 4) / CFG.cols), CSh = Math.floor((H - TOP - BOT - 56 - SP0 - 12) / rowsH); CS = Math.min(CSw, CSh);
+        const bw = CS * CFG.cols + 4, bh = CS * rowsH + 4, spare = H - TOP - bh - BOT - 6;
+        let cw = W >= 520 ? 230 : Math.floor((W - 18) / 2); const pz = Math.min(64, Math.round(cw * 0.33)), ws = Math.max(30, Math.min(56, Math.floor((cw - pz - 24) / 2)));
         SH = Math.min(spare, pz + SP0); const off = Math.max(0, Math.floor((spare - SH) / 2));
-        BX = Math.round((W - bw) / 2) + 4; BY = TOP + off + SH + 8;
+        BX = Math.round((W - bw) / 2) + 2; BY = TOP + off + SH + 6;
         elStrip.style.height = SH + 'px'; elStrip.style.top = (TOP + off) + 'px';
         elStrip.style.setProperty('--cw', cw + 'px'); elStrip.style.setProperty('--pz', pz + 'px'); elStrip.style.setProperty('--ws', ws + 'px');
-        elBoard.style.cssText = `left:${BX - 4}px;top:${BY - 4}px;width:${bw}px;height:${bh}px`;
+        elBoard.style.cssText = `left:${BX - 2}px;top:${BY - 2}px;width:${bw}px;height:${bh}px`;
         if (!elBoard.children.length) for (let i = 0; i < N; i++) { const c = document.createElement('div'); c.className = 'mg-cell' + ((i + Math.floor(i / CFG.cols) * (CFG.cols % 2 ? 0 : 1)) % 2 ? ' d' : ''); elBoard.appendChild(c); }
-        [...elBoard.children].forEach((c, i) => { c.style.cssText = `left:${4 + (i % CFG.cols) * CS + 1}px;top:${4 + Math.floor(i / CFG.cols) * CS + 1}px;width:${CS - 2}px;height:${CS - 2}px`; });
+        [...elBoard.children].forEach((c, i) => { c.style.cssText = `left:${2 + (i % CFG.cols) * CS + 1}px;top:${2 + Math.floor(i / CFG.cols) * CS + 1}px;width:${CS - 2}px;height:${CS - 2}px`; });
         drawSlots(); els.forEach((el, u) => { const o = byU(u); if (o) { size(el); moveEl(o, false); } });
       }
       const byU = u => S.cells.find(o => o && o.u === u) || S.store.find(o => o && o.u === u);
