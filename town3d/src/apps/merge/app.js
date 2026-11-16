@@ -7,23 +7,24 @@ import { CFG, LINES, GENS, RECIPES, NPCS, QUIZ_FB, IMG, GOALS, TEND, PATTERNS, L
 const CSS = `
 .mg{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#ffd2c0,#e2c4ff 55%,#b9d6ff);color:#4a3a5e;font-weight:800;user-select:none;-webkit-user-select:none;touch-action:none}
 .mg *{box-sizing:border-box}
-.mg-goal{position:absolute;left:6px;right:6px;top:40px;height:18px;line-height:18px;font-size:12px;font-weight:700;color:#7a3b00;background:#fff3c4;border-radius:9px;padding:0 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;z-index:2}.mg-goal b{color:#e8366a}
-.mg-top{position:absolute;left:0;right:0;top:0;height:40px;display:flex;align-items:center;gap:5px;padding:0 6px;font-size:13px}
+.mg-goal{position:absolute;left:6px;right:6px;top:calc(var(--sf,0px) + 36px);height:16px;line-height:16px;font-size:12px;font-weight:700;color:#7a3b00;background:#fff3c4;border-radius:9px;padding:0 8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;z-index:2}.mg-goal b{color:#e8366a}
+.mg-top{position:absolute;left:0;right:0;top:var(--sf,0px);height:36px;display:flex;align-items:center;gap:5px;padding:0 6px;font-size:13px}
 .mg-pill{background:#fff;border-radius:999px;padding:5px 9px;box-shadow:0 2px 0 #b79ad3;white-space:nowrap;display:flex;align-items:center;gap:3px}
 .mg-pill small{font-size:10px;color:#8a76a6}
 .mg-en b{min-width:24px;text-align:right;display:inline-block}
 .mg-qb{border:0;font:inherit;font-size:12px;color:#fff;background:linear-gradient(160deg,#5fb8ff,#3a86e0);border-radius:999px;padding:6px 10px;box-shadow:0 2px 0 #2a63aa}
 .mg-qb.need{animation:mgPulse .8s infinite}
 .mg-qb.full{filter:grayscale(.7);opacity:.7}
-.mg-strip{position:absolute;left:0;right:0;top:40px;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;padding:3px 6px;touch-action:pan-x;scrollbar-width:none;align-items:stretch}
+.mg-strip{position:absolute;left:0;right:0;top:54px;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;padding:3px 6px;touch-action:pan-x;scrollbar-width:none;align-items:stretch}
 .mg-strip::-webkit-scrollbar{display:none}
-.mg-npc{flex:none;width:var(--cw,108px);height:calc(100% - 4px);margin-top:2px;background:#fff;border-radius:18px;box-shadow:0 3px 0 #a98cc9,0 0 0 2px #cdb6e6;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 4px;gap:2px;overflow:visible}
+.mg-npc{flex:none;width:var(--cw,108px);height:calc(100% - 4px);margin-top:2px;background:#fff;border-radius:18px;box-shadow:0 3px 0 #a98cc9,0 0 0 2px #cdb6e6;position:relative;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;padding:3px 6px;gap:6px;overflow:visible}
+.mg-pc{display:flex;flex-direction:column;align-items:center;gap:1px;width:calc(var(--pz,60px) + 4px);flex:none}
 .mg-npc img,.mg-npc .mg-np{width:var(--pz,64px);height:var(--pz,64px);border-radius:50%;object-fit:cover;object-position:top;background:#efe3fb;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 0 3px #e8d9f7}
 .mg-nm{font-size:11px;line-height:1.1;text-align:center;white-space:nowrap}
-.mg-hr{display:flex;align-items:center;gap:3px;font-size:9px;color:#d6457a;width:90%}
+.mg-hr{display:flex;align-items:center;gap:2px;font-size:8px;color:#d6457a;width:100%}
 .mg-hr i{flex:1;height:7px;border-radius:5px;background:#f3dbe6;overflow:hidden;display:block}
 .mg-hr i b{display:block;height:100%;background:linear-gradient(90deg,#ff9fb5,#ff5e8a);border-radius:5px;transition:width .6s}
-.mg-ws{display:flex;gap:6px;margin-top:1px}
+.mg-ws{display:flex;gap:5px;flex:1;justify-content:center}
 .mg-w{position:relative;width:var(--ws,36px);height:var(--ws,36px);border-radius:13px;background:var(--c,#f3ecfa);border:2px solid #7d62a0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--ws,36px)*.58);font-weight:400}
 .mg-w img{width:94%;height:94%;object-fit:contain}
 .mg-w i{position:absolute;right:-4px;bottom:-5px;font-style:normal;font-size:9px;line-height:12px;min-width:13px;text-align:center;background:#4a3a5e;color:#fff;border-radius:8px;padding:0 3px;font-weight:800}
@@ -72,7 +73,7 @@ const CSS = `
 .mg-tool .mg-in{outline:3px solid #ffb300;outline-offset:-3px;background:#fff6c9;border-radius:14px}
 .mg-it.hint .mg-in{animation:mgHint .55s ease-in-out infinite alternate}
 @keyframes mgHint{from{transform:scale(1);filter:brightness(1)}to{transform:scale(1.18);filter:brightness(1.35) drop-shadow(0 0 8px #fff3a0)}}
-.mg-info{position:absolute;left:6px;right:6px;top:40px;height:20px;z-index:4;background:#fff3c4;border-radius:10px;padding:0 6px;color:#5a2d00;font-weight:700;display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;overflow:hidden}
+.mg-info{position:absolute;left:6px;right:6px;top:calc(var(--sf,0px) + 34px);height:20px;z-index:4;background:#fff3c4;border-radius:10px;padding:0 6px;color:#5a2d00;font-weight:700;display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;overflow:hidden}
 .mg-info span{flex:1;overflow:hidden;text-overflow:ellipsis}
 .mg-info button{padding:1px 10px!important;font-size:11px}
 .mg-info button,.mg-ovl button{border:0;font:inherit;border-radius:999px;padding:5px 12px;background:#fff;color:#4a3a5e;box-shadow:0 2px 0 #b79ad3}
@@ -127,7 +128,7 @@ export function createMergeApp(env = {}) {
       const root = document.createElement('div'); root.className = 'mg';
       root.innerHTML = `<div class="mg-top"><div class="mg-pill mg-en">⚡<b>0</b><small></small></div><button class="mg-qb">✏️ 英語で回復</button><span style="flex:1"></span><div class="mg-pill mg-cy">👥 <b>0</b>/13</div><div class="mg-pill">🪙<b data-bind="coins">${Math.floor(ctx.wallet.get()).toLocaleString('ja-JP')}</b></div></div>
 <div class="mg-goal"></div><div class="mg-strip"></div><div class="mg-board"></div><div class="mg-info"><span></span></div>
-<div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
+<div class="mg-bot"><button class="mg-rb mg-home" aria-label="町にもどる"><b>🏠</b></button><div class="mg-slots"></div><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
 <div class="mg-fx"></div>`;
       host.appendChild(root);
       const $ = q => root.querySelector(q);
@@ -204,15 +205,18 @@ export function createMergeApp(env = {}) {
       // ---- 配置(画面いっぱいに) ----
       let CS = 48, BX = 0, BY = 0, SH = 130, slotPos = [], alive = true;
       const els = new Map();
+      function safeTop() { try { const t = document.createElement('div'); t.style.cssText = 'position:absolute;left:0;top:0;width:1px;height:var(--tw-top,0px);visibility:hidden'; root.appendChild(t); const h = t.offsetHeight; t.remove(); return h || 0; } catch (e) { return 0; } }
       function layout() {
         const W = root.clientWidth, H = root.clientHeight; if (!W || !H) return;
-        const TOP = 60, INFO = 0, BOT = 56, MINS = 132;   // 説明は上のお題の行に重ねる(盤面を最大に)
-        CS = Math.floor(Math.min((W - 8) / CFG.cols, (H - TOP - INFO - BOT - MINS - 10) / CFG.rows));
-        const bw = CS * CFG.cols + 8, bh = CS * CFG.rows + 8;
-        SH = Math.max(MINS, Math.min(210, H - TOP - bh - INFO - BOT - 4));
-        BX = Math.round((W - bw) / 2) + 4; BY = TOP + SH + 4 + 4;
-        elStrip.style.height = SH + 'px';
-        const ws = SH >= 170 ? 38 : 34, cw = Math.max(92, Math.min(120, Math.round(W / 3.4))), pz = Math.max(34, Math.min(92, SH - ws - 62));
+        const SAFE = safeTop(); root.style.setProperty('--sf', SAFE + 'px');
+        const TOP = SAFE + 54, BOT = 56;   // 上のバー+お題の行 / 下のボタン列
+        const SP0 = 38, rowsH = CFG.rows;
+        let CSw = Math.floor((W - 8) / CFG.cols), CSh = Math.floor((H - TOP - BOT - 56 - SP0 - 12) / rowsH); CS = Math.min(CSw, CSh);
+        const bw = CS * CFG.cols + 8, bh = CS * rowsH + 8, spare = H - TOP - bh - BOT - 6;
+        const pz = Math.max(54, Math.min(84, spare - SP0)); let ws = Math.min(74, Math.round(pz * 0.9)), cw = pz + 2 * ws + 24; if (cw > W - 18) { cw = W - 18; ws = Math.max(30, Math.floor((cw - pz - 24) / 2)); }
+        SH = Math.min(spare, pz + SP0); const off = Math.max(0, Math.floor((spare - SH) / 2));
+        BX = Math.round((W - bw) / 2) + 4; BY = TOP + off + SH + 8;
+        elStrip.style.height = SH + 'px'; elStrip.style.top = (TOP + off) + 'px';
         elStrip.style.setProperty('--cw', cw + 'px'); elStrip.style.setProperty('--pz', pz + 'px'); elStrip.style.setProperty('--ws', ws + 'px');
         elBoard.style.cssText = `left:${BX - 4}px;top:${BY - 4}px;width:${bw}px;height:${bh}px`;
         if (!elBoard.children.length) for (let i = 0; i < N; i++) { const c = document.createElement('div'); c.className = 'mg-cell' + ((i + Math.floor(i / CFG.cols) * (CFG.cols % 2 ? 0 : 1)) % 2 ? ' d' : ''); elBoard.appendChild(c); }
@@ -235,7 +239,7 @@ export function createMergeApp(env = {}) {
         const d = defOf(o), el = document.createElement('div');
         el.className = 'mg-it' + (IMG[d.key] ? ' img' : '') + (o.t === 'gen' ? ' mg-gen' : o.t === 'part' ? ' mg-part' : o.t === 'tool' ? ' mg-tool' : '') + (o.lk ? ' lk' : ''); el.dataset.u = o.u;
         const gd = o.t === 'gen' ? GENS[o.g] : null;
-        el.innerHTML = `<div class="mg-in" style="--c:${d.color};${gd ? `--d:${gd.dark}` : ''}">${art(d)}${o.t === 'part' ? `<b class="mg-e2">${GENS[o.g].icon}</b>` : ''}<i class="mg-lv">${o.t === 'tool' ? (o.n > 1 ? '×' + o.n : '') : (o.t === 'gen' ? 'Lv ' : '') + o.lv}</i>${o.t === 'gen' ? '<u class="mg-ch"></u>' : ''}</div>`;
+        el.innerHTML = `<div class="mg-in" style="--c:${d.color};${gd ? `--d:${gd.dark}` : ''}">${art(d)}${o.t === 'part' ? `<b class="mg-e2">${GENS[o.g].icon}</b>` : ''}<i class="mg-lv">${o.t === 'tool' ? (o.n > 1 ? '×' + o.n : '') : o.t === 'gen' ? 'Lv ' + o.lv : o.t === 'part' ? o.lv : ''}</i>${o.t === 'gen' ? '<u class="mg-ch"></u>' : ''}</div>`;
         if (gd) el.style.setProperty('--d', gd.dark);
         size(el); root.insertBefore(el, elFx); els.set(o.u, el); moveEl(o, false); if (o.t === 'gen') genUI(o); return el;
       }
@@ -405,7 +409,7 @@ export function createMergeApp(env = {}) {
       function gaugeOf(id) { const a = social.aff(id), l = social.level(id), lo = LV[l], hi = LV[l + 1]; return { name: LV_NAME[l] || '', pct: hi == null ? 100 : Math.max(4, Math.round((a - lo) / (hi - lo) * 100)), l }; }
       function cardHtml(a) {
         const id = a.id, pic = portrait(id), g = gaugeOf(id);
-        return `<div class="mg-npc" data-npc="${id}"><div style="position:relative">${pic ? `<img src="${pic}" alt="">` : `<div class="mg-np">${esc((NPC_NAME[id] || id).slice(0, 2))}</div>`}</div><div class="mg-nm">${esc(NPC_NAME[id] || id)}</div><div class="mg-hr">💗<i><b style="width:${g.pct}%"></b></i></div><div class="mg-ws">${a.w.map((w, k) => { const d = defOf({ t: 'it', ln: w.ln, lv: w.lv }); return `<div class="mg-w" data-w="${k}" style="--c:${d.color}">${art(d, 'mg-we')}<i>${w.lv}</i></div>`; }).join('')}</div></div>`;
+        return `<div class="mg-npc" data-npc="${id}"><div class="mg-pc">${pic ? `<img src="${pic}" alt="">` : `<div class="mg-np">${esc((NPC_NAME[id] || id).slice(0, 2))}</div>`}<div class="mg-nm">${esc(NPC_NAME[id] || id)}</div><div class="mg-hr">💗<i><b style="width:${g.pct}%"></b></i></div></div><div class="mg-ws">${a.w.map((w, k) => { const d = defOf({ t: 'it', ln: w.ln, lv: w.lv }); return `<div class="mg-w" data-w="${k}" style="--c:${d.color}">${art(d, 'mg-we')}</div>`; }).join('')}</div></div>`;
       }
       function drawStrip(flip) {
         const old = {}; if (flip) elStrip.querySelectorAll('[data-npc]').forEach(c => { old[c.dataset.npc] = c.getBoundingClientRect().left; });
@@ -527,6 +531,7 @@ export function createMergeApp(env = {}) {
         const p = CFG.slotPrice(S.slots); if (ctx.wallet.get() < p) { sfx('bad'); toast(`コインが足りないよ(🪙${p})`); return; }
         if (!ctx.wallet.spend(p, 'merge:slot')) return; S.slots++; sfx('unlock'); drawSlots(); save(); toast('保管枠が ふえた!');
       }
+      $('.mg-home').onclick = () => { sfx('tap'); try { ctx.close(); } catch (e) { } };
       elInb.onclick = () => {
         if (!S.inbox.length) { sfx('tap'); toast('とどいた物は ないよ(住人にわたすと、ときどきパーツがとどく)'); return; }
         const to = nearestEmpty(Math.floor(N / 2)); if (to < 0) { sfx('bad'); toast('盤面がいっぱい!'); return; }

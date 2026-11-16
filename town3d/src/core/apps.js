@@ -63,6 +63,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
     frame.className = 'tw-app';
     frame.innerHTML = `<header class="tw-app-head"><span class="tw-app-title"></span><button class="tw-app-close" aria-label="町にもどる">町にもどる</button></header><div class="tw-app-body"></div>`;
     frame.querySelector('.tw-app-title').textContent = def.title;
+    if (def.bare) frame.querySelector('.tw-app-head').style.display = 'none';   // 上のバーを出さないアプリ(マージ: 町に戻るボタンは下に置く)
     const back = params && params.from === 'home' && id !== 'home' && registry.get('home');   // 家から開いたものは「家にもどる」
     if (back) { const b = frame.querySelector('.tw-app-close'); b.textContent = '🏠 家にもどる'; b.setAttribute('aria-label', '家にもどる'); }
     const rb = params && params.back && params.back.id && registry.get(params.back.id) ? params.back : null;   // 来た施設(アミューズメントセンターなど)にもどる
