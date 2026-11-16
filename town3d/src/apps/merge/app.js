@@ -616,12 +616,17 @@ export function createMergeApp(env = {}) {
       }
       function move(e) {
         if (!drag || e.pointerId !== drag.id) return; const d = drag;
-        if (!d.moved) { if (Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 8 || d.o.lk || d.o.gl) return; clearTimeout(d.lp); d.moved = true; d.el.classList.add('drag'); sfx('tap'); marks(true); }
+        if (d.sc) { elSlots.scrollLeft -= e.clientX - d.lx; d.lx = e.clientX; return; }   // 下の欄を横スクロール中
+        if (!d.moved && d.o.s != null) {   // 下の欄の品: 上に6px→ドラッグ / 横に12px(上6px未満)→横スクロール
+          if (d.y0 - e.clientY >= 6) { if (d.o.lk || d.o.gl) return; }
+          else { if (Math.abs(e.clientX - d.x0) >= 12) { clearTimeout(d.lp); d.sc = 1; d.lx = d.x0; elSlots.scrollLeft -= e.clientX - d.lx; d.lx = e.clientX; } return; }
+        } else if (!d.moved) { if (Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 8 || d.o.lk || d.o.gl) return; }
+        if (!d.moved) { clearTimeout(d.lp); d.moved = true; d.el.classList.add('drag'); sfx('tap'); marks(true); }
         const R = root.getBoundingClientRect(); tf(d.el, e.clientX - R.left - d.ox, e.clientY - R.top - d.oy - 6);
         const r = elSell.getBoundingClientRect(); elSell.classList.toggle('hot', e.clientX > r.left && e.clientX < r.right && e.clientY > r.top - 10);
       }
       function up(e) {
-        if (!drag || e.pointerId !== drag.id) return; const d = drag, o = d.o; clearTimeout(d.lp); drag = null; marks(false); d.el.classList.remove('drag');
+        if (!drag || e.pointerId !== drag.id) return; const d = drag, o = d.o; clearTimeout(d.lp); drag = null; marks(false); d.el.classList.remove('drag'); if (d.sc) return;
         if (!d.moved) { if (e.type === 'pointercancel' || d.long) return; if (o.t === 'gen' && o.b != null) { sel = o; spawn(o); info(); } else { sel = sel === o ? null : o; sfx('tap'); pop(d.el, 1.12); info(); } return; }
         if (e.type === 'pointercancel') { moveEl(o); return; }
         const R = root.getBoundingClientRect(), x = e.clientX - R.left, y = e.clientY - R.top, cx = Math.floor((x - BX) / CS), cy = Math.floor((y - BY) / CS);
