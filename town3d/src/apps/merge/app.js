@@ -606,7 +606,8 @@ export function createMergeApp(env = {}) {
           ask();
         }
       }
-      function overlay(html) { const o = document.createElement('div'); o.className = 'mg-ovl'; o.innerHTML = `<div class="mg-card">${html}</div>`; root.appendChild(o); o.addEventListener('click', e => { if (e.target === o || e.target.closest('[data-x]')) { sfx('tap'); o.remove(); o.onclose && o.onclose(); } }); return o; }
+      function overlay(html) { const o = document.createElement('div'); o.className = 'mg-ovl'; o.innerHTML = `<div class="mg-card">${html}</div>`; root.appendChild(o); const t0 = Date.now(); o.addEventListener('click', e => { if (Date.now() - t0 < 450) return;   // 指を離した瞬間のクリックで、すぐ閉じないように
+          if (e.target === o || e.target.closest('[data-x]')) { sfx('tap'); o.remove(); o.onclose && o.onclose(); } }); return o; }
 
       // ---- 英語4択で回復(同じ問題がつづかないよう、さいきんの問題は外す) ----
       let qPool = [];
