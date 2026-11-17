@@ -11,7 +11,7 @@ const copy = (src, dest) => {
   if (fs.statSync(s).isDirectory()) { fs.mkdirSync(d, { recursive: true }); for (const f of fs.readdirSync(s)) { if (f === 'game.js') continue; copy(path.join(src, f), path.join(d, f)); } }
   else { fs.mkdirSync(path.dirname(d), { recursive: true }); fs.copyFileSync(s, d); }
 };
-const REV = (() => { try { return String(process.env.GITHUB_SHA || execFileSync('git', ['rev-parse', '--short=7', 'HEAD'], { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()).slice(0, 7); } catch (e) { return ''; } })();   // 版の番号(コミットの番号)。画面に出す
+const REV = (() => { try { return String(process.env.LAB_REV || execFileSync('git', ['rev-parse', '--short=7', 'HEAD'], { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()).slice(0, 7); } catch (e) { return ''; } })();   // 版の番号(コミットの番号)。画面に出す
 const BUILD = Date.now().toString(36);   // 組み立てのたびに変わる印。ブラウザが古いファイルを使い続けないよう、読み込むファイル名の後ろにつける
 const want = process.argv.slice(2), apps = want.length ? want : Object.keys(APPS);
 execFileSync('node', [path.join(ROOT, 'tools_check_names.mjs')], { stdio: 'inherit' });   // 町と外側で名前がかぶっていたら、ここで止める
