@@ -56,7 +56,8 @@ export default {
     resize(); const ro = new ResizeObserver(resize); ro.observe(box);
     // ---- 3Dのキャラ(左=あなた / 右=あいて)。投げる→ふりきった姿勢で止まる→ピンに当たったら おろす ----
     const cs = new THREE.Scene(); cs.add(new THREE.HemisphereLight(0xffffff, 0x9988bb, 2.1)); { const d = new THREE.DirectionalLight(0xffffff, 1.5); d.position.set(1.5, 3, 4); cs.add(d); }
-    const CH_H = 1.35, CX = [0, 6], CROT = [0.75, -0.75], tmpV = new THREE.Vector3();
+    const CH_H = 1.35, CX = [0, 6], CROT = [0.75, -0.75], TROT = [Math.PI - 0.45, Math.PI + 0.45], tmpV = new THREE.Vector3();   // CROT=待っている向き / TROT=投げる向き(ピンのほう。うしろ斜めから見える)
+    const yaw = [CROT[0], CROT[1]];
     const chs = [0, 1].map(s => { const pl = host.players[s], id = pl.glb || (pl.cpu && GLB_MODELS[pl.cpu.id] ? pl.cpu.id : null); if (!id || !GLB_MODELS[id]) return null; try { const c = useGlb(makeCharacter(LOOKS.ren), id, { height: CH_H }); c.root.position.set(CX[s], 0, 0); c.root.rotation.y = CROT[s]; cs.add(c.root); return c; } catch (e) { return null; } });
     const cams = [0, 1].map(s => { const c = new THREE.PerspectiveCamera(30, 0.75, 0.1, 40); c.position.set(CX[s], 0.8, 4.6); c.lookAt(CX[s], 0.7, 0); return c; });
     const handBall = new THREE.Mesh(new THREE.SphereGeometry(0.1, 20, 14), new THREE.MeshStandardMaterial({ color: 0xff7aa2, roughness: 0.2, metalness: 0.15 })); handBall.visible = false; cs.add(handBall);
@@ -203,7 +204,7 @@ export default {
       const fz = B ? Math.min(B.z - 2.6, HEAD - 5.2) : bz - 2.2;
       cam.position.set((B ? B.x * 0.25 : sx * 0.6) + (Math.random() - 0.5) * shake * 0.25, (B ? 1.0 + Math.min(1, B.z / HEAD) * 0.6 : 1.55) + (Math.random() - 0.5) * shake * 0.2, fz); cam.lookAt(B ? B.x * 0.2 : 0, 0.1, fz + 9);
       renderer.autoClear = true; renderer.setScissorTest(false); renderer.setViewport(0, 0, VW, VH); renderer.render(scene, cam);
-      chs.forEach((c, s) => { if (!c) return; if (c.setHeight && Math.abs((c.height || 0) - CH_H) > 1e-3) c.setHeight(CH_H); const on = turn === s && !over; c.root.scale.setScalar(on ? 1 : 0.88); c.update(dt, on && phase === 'run' ? 1.2 + (run ? run.power : 0.5) * 1.6 : 0); });
+      chs.forEach((c, s) => { if (!c) return; if (c.setHeight && Math.abs((c.height || 0) - CH_H) > 1e-3) c.setHeight(CH_H); const on = turn === s && !over; { const want = (on && (phase === 'run' || phase === 'throw' || (thr && thr.s === s))) || (thr && thr.s === s) ? TROT[s] : CROT[s]; let df = want - yaw[s]; df -= Math.round(df / (Math.PI * 2)) * Math.PI * 2; yaw[s] += df * Math.min(1, dt * 7); c.root.rotation.y = yaw[s]; } c.root.scale.setScalar(on ? 1 : 0.88); c.update(dt, on && phase === 'run' ? 1.2 + (run ? run.power : 0.5) * 1.6 : 0); });
       cs.updateMatrixWorld(true); handBall.visible = false;
       { const ac = chs[turn]; if (ac && !over && (phase === 'aim' || phase === 'run' || (phase === 'throw' && thr && !thr.fired))) { const hb = ac.hand && ac.hand(); if (hb) { hb.getWorldPosition(tmpV); handBall.position.copy(tmpV); handBall.position.y -= 0.05; handBall.material.color.setHex(turn ? 0x5aa8f0 : 0xff7aa2); handBall.visible = true; } } }
       renderer.autoClear = false; renderer.setScissorTest(true);
