@@ -11,6 +11,7 @@ const copy = (src, dest) => {
   if (fs.statSync(s).isDirectory()) { fs.mkdirSync(d, { recursive: true }); for (const f of fs.readdirSync(s)) { if (f === 'game.js') continue; copy(path.join(src, f), path.join(d, f)); } }
   else { fs.mkdirSync(path.dirname(d), { recursive: true }); fs.copyFileSync(s, d); }
 };
+const REV = (() => { try { return String(process.env.GITHUB_SHA || execFileSync('git', ['rev-parse', '--short=7', 'HEAD'], { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()).slice(0, 7); } catch (e) { return ''; } })();   // 版の番号(コミットの番号)。画面に出す
 const BUILD = Date.now().toString(36);   // 組み立てのたびに変わる印。ブラウザが古いファイルを使い続けないよう、読み込むファイル名の後ろにつける
 const want = process.argv.slice(2), apps = want.length ? want : Object.keys(APPS);
 execFileSync('node', [path.join(ROOT, 'tools_check_names.mjs')], { stdio: 'inherit' });   // 町と外側で名前がかぶっていたら、ここで止める
@@ -44,7 +45,7 @@ for (const id of apps) {
   const hashes = {}; const walk = (d, rel) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const r = rel ? rel + '/' + e.name : e.name; if (e.isDirectory()) walk(path.join(d, e.name), r); else if (/\.(js|css)$/.test(e.name)) hashes[r] = createHash('sha1').update(fs.readFileSync(path.join(d, e.name))).digest('hex').slice(0, 8); } };
   if (fs.existsSync(path.join(out, 'g'))) walk(path.join(out, 'g'), 'g');
   walk(path.join(out, 'core', 'dict'), 'core/dict');
-  const cfg = JSON.stringify({ build: BUILD, hashes: hashes, appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel, theme: app.theme, opts: app.opts || undefined }).replace(/</g, '\\u003c');
+  const cfg = JSON.stringify({ build: BUILD, rev: REV, hashes: hashes, appId: id, title: app.title, games: app.games, grants: app.grants, backButton: !!app.backButton, backLabel: app.backLabel, theme: app.theme, opts: app.opts || undefined }).replace(/</g, '\\u003c');
   const head = `<title>${app.title}</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="stylesheet" href="app.css?v=${BUILD}">`;
   const body = `<script>window.__APP__=${cfg}</script>\n<script src="app.js?v=${BUILD}"></script>`;
   fs.writeFileSync(path.join(out, 'index.html'), `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">\n${head}\n</head><body>\n${body}\n</body></html>\n`);

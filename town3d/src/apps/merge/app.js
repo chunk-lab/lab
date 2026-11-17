@@ -96,6 +96,7 @@ const CSS = `
 .mg-toast{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);background:rgba(60,40,85,.94);color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:45;max-width:94%;overflow:hidden;text-overflow:ellipsis}
 .mg-home{flex:none;width:34px;height:32px;border:0;border-radius:11px;background:#fff;box-shadow:0 2px 0 #b79ad3;font-size:17px;padding:0}
 .mg-shw{font-size:13px;margin:2px 0 6px}.mg-sht{font-size:12px;text-align:left;margin:8px 2px 4px;color:#6a548a}.mg-shg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.mg-shi{flex:none;width:76px;border:0!important;border-radius:14px!important;background:#fff!important;box-shadow:inset 0 0 0 2px #cdb6e6!important;padding:6px 2px!important;display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;color:#4a3a5e!important}.mg-shi:disabled{opacity:.45}.mg-sha{width:46px;height:46px;display:flex;align-items:center;justify-content:center}.mg-sha img{width:100%;height:100%;object-fit:contain}.mg-sha .mg-e{font-size:30px}.mg-shi small{font-size:9px;line-height:1.2;min-height:22px}.mg-shi em{font-style:normal;font-size:12px;color:#e0457b}
+.mg-ver{position:absolute;right:6px;bottom:1px;font:600 8px/1 system-ui,sans-serif;font-style:normal;color:rgba(70,45,100,.55);z-index:6;pointer-events:none}
 .mg-qt{display:flex;gap:6px;justify-content:center;align-items:center;margin:4px 0;font-size:11px}.mg-qt button{white-space:nowrap;border:0;border-radius:999px;padding:5px 10px;background:#efe3ff;color:#5b3f86;font-weight:800;font-size:11px}.mg-qg.full{display:block;color:#e0457b;font-weight:800;font-size:12px;margin-top:2px}.mg-qr{font-size:10px;color:#6a548a}
 .mg-ovl{position:absolute;inset:0;background:rgba(50,30,75,.6);z-index:50;display:flex;align-items:center;justify-content:center;animation:mgFade .2s;touch-action:auto}
 .mg-card{width:min(92%,360px);max-height:88%;overflow:auto;background:#fffaf5;border-radius:22px;padding:16px;box-shadow:0 12px 30px rgba(40,25,60,.4);animation:mgPop .28s cubic-bezier(.3,1.5,.5,1);text-align:center}
@@ -133,7 +134,7 @@ export function createMergeApp(env = {}) {
       const root = document.createElement('div'); root.className = 'mg';
       root.innerHTML = `<div class="mg-top"><div class="mg-pill mg-en">⚡<b>0</b><small></small></div><button class="mg-qb">✏️ 英語で回復</button><span style="flex:1"></span><span class="mg-cy" hidden><b>0</b></span><div class="mg-pill">🪙<b data-bind="coins">${Math.floor(ctx.wallet.get()).toLocaleString('ja-JP')}</b></div><button class="mg-home" aria-label="町にもどる">🏠</button></div>
 <div class="mg-goal"></div><div class="mg-strip"></div><div class="mg-board"></div><div class="mg-info"><span></span></div>
-<div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-shop"><b>🛒</b>ショップ</button><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
+<i class="mg-ver"></i><div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-shop"><b>🛒</b>ショップ</button><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
 <div class="mg-fx"></div>`;
       host.appendChild(root);
       const $ = q => root.querySelector(q);
@@ -584,6 +585,7 @@ export function createMergeApp(env = {}) {
         const p = CFG.slotPrice(S.slots); if (ctx.wallet.get() < p) { sfx('bad'); toast(`コインが足りないよ(🪙${p})`); return; }
         if (!ctx.wallet.spend(p, 'merge:slot')) return; S.slots++; sfx('unlock'); drawSlots(); save(); toast('保管枠が ふえた!');
       }
+      try { const w = window.__APP__ || {}; $('.mg-ver').textContent = w.rev ? '版 ' + w.rev : ''; } catch (e) { }
       $('.mg-shop').onclick = () => { sfx('tap'); shop(); };
       $('.mg-home').onclick = () => { sfx('tap'); try { ctx.close(); } catch (e) { } };
       elInb.onclick = () => {

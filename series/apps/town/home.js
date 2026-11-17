@@ -5,7 +5,7 @@ import { LOGO } from '../../core/logos.js';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
 // 版:組み立てた日時(日本時間)。テスト版が最新かどうか、見分けるための印
-export const verText = () => { const b = window.__APP__ && window.__APP__.build, t = b ? parseInt(b, 36) : NaN; if (!isFinite(t)) return 'ver dev'; const d = new Date(t + 9 * 36e5).toISOString(); return 'ver ' + d.slice(5, 10) + ' ' + d.slice(11, 16); };
+export const verText = () => { const b = window.__APP__ && window.__APP__.build, t = b ? parseInt(b, 36) : NaN; if (!isFinite(t)) return 'ver dev'; const d = new Date(t + 9 * 36e5).toISOString(); return 'ver ' + d.slice(5, 10) + ' ' + d.slice(11, 16) + (window.__APP__.rev ? ' ・ ' + window.__APP__.rev : ''); };
 export function createHome(core, { st, go3D, openFish, openStudy, has, openEpisode, episodeLabel }) {
   let el = null;
   const usable = p => p.go.to === '3d' ? true : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level : p.go.to === 'role' ? !!core.roletest && !!core.books : !!core.openGame && has(p.go.game);
