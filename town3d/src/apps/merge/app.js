@@ -576,7 +576,7 @@ export function createMergeApp(env = {}) {
         o.onclose = () => { open = false; try { env.speakStop && env.speakStop(); } catch (e) { } };
         const w = o.querySelector('.mg-qw'), sub = o.querySelector('.mg-qs'), ch = o.querySelector('.mg-qc'), gg = o.querySelector('.mg-qg'), rg = o.querySelector('.mg-qr'), bd = o.querySelector('[data-dir]');
         let fullSaid = false;
-        const fullTag = () => (S.en >= CFG.enMax ? '⚡まんたん! いまは れんしゅう' : '');
+        const fullTag = () => '';
         const setGg = () => { gg.textContent = (got ? `⚡+${got} ` : '') + fullTag(); gg.classList.toggle('full', S.en >= CFG.enMax); if (S.en >= CFG.enMax && !fullSaid) { fullSaid = true; if (got) { toast('⚡ まんたん! ここからは れんしゅうだよ'); sfx('quizok'); } } };
         const showCtl = () => { try { rg.textContent = (env.lvStep && env.lvStep(0)) || ''; } catch (e) { } bd.textContent = S.dir === 'je' ? '日→英' : '英→日'; };
         let tk = 0;   // 切り替えたら、前の問題の結果は捨てる
@@ -584,7 +584,8 @@ export function createMergeApp(env = {}) {
         bd.onclick = () => { sfx('tap'); S.dir = S.dir === 'je' ? 'ej' : 'je'; save(); showCtl(); tk++; ask(); };
         o.querySelector('[data-test]').onclick = () => { try { env.openTest && env.openTest(); } catch (e) { } };
         const ask = async () => {
-          setGg(); const my = ++tk, Q0 = await nextQ(); if (my !== tk || !open || !o.isConnected || !Q0) return;
+          setGg(); if (S.en >= CFG.enMax) { tk++; w.textContent = '⚡ まんたん!'; sub.textContent = '生成機で使ってから、また来てね'; ch.innerHTML = ''; return; }
+          const my = ++tk, Q0 = await nextQ(); if (my !== tk || !open || !o.isConnected || !Q0) return;
           let Q = Q0; const je = S.dir === 'je';
           if (je) { const en = [...new Set([...qPool.map(x => x.w.en), ...QUIZ_FB.map(x => x[0])].filter(x => x && x !== Q0.w.en))]; Q = { w: { en: Q0.ans }, ans: Q0.w.en, ch: shuf([Q0.w.en, ...shuf(en).slice(0, 3)]), ex: Q0.ex, fb: Q0.fb }; }
           w.textContent = Q.w.en; sub.textContent = je ? 'えいごは どれ?' : 'いみは どれ?'; if (!je) { try { env.speak && env.speak(Q.w.en); } catch (e) { } }
