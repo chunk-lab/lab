@@ -1,5 +1,6 @@
 import { Kit as K } from './play.js';
 import { CORE } from './sound.js';
+import { FACE } from './faces.js';
 /* ===== チャンク・カード:CPU対戦(ポーカー型) =====
    ・2人で山札と「場」を共有。手札8枚。交換を3回ずつ(捨てたカードは表向きで場へ)。
    ・1回目の交換のあとと、最後に「賭け」。最後に文を見せ合って、点が高いほうがポットを取る。 */
@@ -106,6 +107,7 @@ import { CORE } from './sound.js';
   }
 
   // ---------------- 対戦の進行 ----------------
+  var fh = function (o, px) { return FACE[o.id] ? '<img src="' + FACE[o.id] + '" alt="" style="height:' + px + 'px;width:auto;vertical-align:middle;border-radius:8px">' : o.face; };   // 顔絵(なければ絵文字)
   var OPPS = [
     { id: 'mii', name: 'ミイ', face: '🐱', lv: 0, style: 'careful', tag: 'やさしい', desc: '慎重派。いい文ができたときしか賭けない。賭けてきたら本物かも。' },
     { id: 'baron', name: 'ハッタリ男爵', face: '🎩', lv: 1, style: 'bluff', tag: 'ふつう', desc: '弱い手でも平気で賭けてくる。わざと強いカードを捨てることも。' },
@@ -132,7 +134,7 @@ import { CORE } from './sound.js';
     K.root().appendChild(o);
     OPPS.forEach(function (op) {
       var r = rec[op.id] || { w: 0, l: 0 };
-      var e = el('div', 'oppc', '<div class="face">' + op.face + '</div><div><b>' + op.name + '</b> <span class="lvtag l' + op.lv + '">' + op.tag + '</span><p>' + op.desc + '</p><small>戦績 ' + r.w + '勝 ' + r.l + '敗</small></div>');
+      var e = el('div', 'oppc', '<div class="face">' + fh(op, 46) + '</div><div><b>' + op.name + '</b> <span class="lvtag l' + op.lv + '">' + op.tag + '</span><p>' + op.desc + '</p><small>戦績 ' + r.w + '勝 ' + r.l + '敗</small></div>');
       e.onclick = function () { SFX.put(); o.remove(); start(op); }; $('#ops', o).appendChild(e);
     });
     $('#cx', o).onclick = function () { o.remove(); };
@@ -141,7 +143,7 @@ import { CORE } from './sound.js';
     var op = V.opp;
     var s = K.screen(
       '<div class="vtop"><div class="vh">ハンド <b id="vhn"></b>/' + HANDS + '</div><div class="pot">🪙 <b id="vpot">0</b><small>ポット</small></div><div class="vmed"><span>あなた<b id="vme"></b></span><span>' + op.face + '<b id="vcpu"></b></span></div><button class="vq" id="vq">✕</button></div>' +
-      '<div class="opp"><div class="face">' + op.face + '</div><div class="oinfo"><div class="oname">' + op.name + '<small>捨て札pt <b id="opt">0</b></small></div><div class="backs" id="obk"></div></div><div class="bubble" id="obb"></div></div>' +
+      '<div class="opp"><div class="face">' + fh(op, 40) + '</div><div class="oinfo"><div class="oname">' + op.name + '<small>捨て札pt <b id="opt">0</b></small></div><div class="backs" id="obk"></div></div><div class="bubble" id="obb"></div></div>' +
       '<div class="rule" id="vrule"></div><div class="vturn" id="vturn"></div>' +
       '<div class="board"><div class="row" id="row"></div>' +
       '<div class="pv"><div class="sent" id="sent"></div><div class="jt" id="jt"></div><div class="yk" id="yk"></div><div class="cm"><span class="chips" id="ch">0</span><span class="x">×</span><span class="mult" id="ml">0</span><span class="eq" id="eq"></span></div><div class="msg" id="msg"></div><div class="hp" id="hp"></div></div><button class="hintb" id="hb">💡 ヒント</button></div>' +
@@ -339,7 +341,7 @@ import { CORE } from './sound.js';
     if (my && ev.f.colloc === 'good' && K.addCombo(ev.f.pair)) K.flash('📖 名コンビ図鑑に登録!「' + ev.f.pair + '」');
     var o = el('div', 'modal', '<div class="box sd"><h2>勝負!</h2>' +
       '<div class="side me"><div class="who">あなた' + (my ? '<button class="spk" id="spm">🔊</button>' : '') + '</div><div class="tx">' + (my ? ev.text : '(文になっていない → 0点)') + '</div>' + (my ? '<div class="yk2">' + my.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (my ? my.chips : 0) + '</b>×<b class="mult">' + (my ? my.mult : 0) + '</b>= <b class="tot" id="mt">0</b></div>' + bl(mb) + (mulNote() ? '<div class="bon">' + mulNote().replace('<br>', '') + '</div>' : '') + '</div>' +
-      '<div class="side cp"><div class="who">' + V.opp.face + ' ' + V.opp.name + (cb ? '<button class="spk" id="spc">🔊 聞く</button>' : '') + '</div><div id="crow"></div><div class="tx">' + (cb ? cb.ev.text : '(文が作れなかった)') + '</div>' + (cs ? '<div class="yk2">' + cs.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (cs ? cs.chips : 0) + '</b>×<b class="mult">' + (cs ? cs.mult : 0) + '</b>= <b class="tot" id="ct">0</b></div>' + bl(cbn) + '</div>' +
+      '<div class="side cp"><div class="who">' + fh(V.opp, 24) + ' ' + V.opp.name + (cb ? '<button class="spk" id="spc">🔊 聞く</button>' : '') + '</div><div id="crow"></div><div class="tx">' + (cb ? cb.ev.text : '(文が作れなかった)') + '</div>' + (cs ? '<div class="yk2">' + cs.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (cs ? cs.chips : 0) + '</b>×<b class="mult">' + (cs ? cs.mult : 0) + '</b>= <b class="tot" id="ct">0</b></div>' + bl(cbn) + '</div>' +
       '<div class="qrev2">🔒 シークレットは「<b>' + Q.label + '</b>」(' + K.TIER_JA[Q.tier] + ' +' + K.Q_PCT[Q.tier] + '%)</div><p class="res" id="rs"></p><button class="btn go" id="nx" style="visibility:hidden">つぎのハンドへ</button></div>');
     K.root().appendChild(o); if (cb) $('#crow', o).appendChild(miniRow(cb.row, cb.ev));
     var rv = my ? K.reviewItems(ME.row, ev) : null; if (my) K.recordHist(V.hist = V.hist || [], ME.row, ev, mt);
@@ -361,7 +363,7 @@ import { CORE } from './sound.js';
     var rec = K.store.get('vs') || {}, r = rec[V.opp.id] || { w: 0, l: 0 }; if (won) r.w++; else if (!draw) r.l++; rec[V.opp.id] = r; K.store.set('vs', rec);
     G_.vs = null; if (won) SFX.win(); else SFX.lose();
     try { if (!quit && CORE && CORE.report) CORE.report('done', { play: 'cards', opp: V.opp.id, won: won, title: V.opp.name + 'との対戦', min: Math.round((Date.now() - V.t0) / 6e3) / 10, score: won ? 100 : draw ? 50 : 20, finished: true }); } catch (e) { }   // 記録へ(勝つとゲームのごほうびコイン)
-    var s = K.screen('<div class="end"><h1>' + (won ? '🏆 勝ち!' : draw ? '引き分け' : '負け…') + '</h1><div class="st">' + V.opp.face + ' ' + V.opp.name + ' との対戦</div>' +
+    var s = K.screen('<div class="end"><h1>' + (won ? '🏆 勝ち!' : draw ? '引き分け' : '負け…') + '</h1><div class="st">' + fh(V.opp, 30) + ' ' + V.opp.name + ' との対戦</div>' +
       '<div class="tot">あなた 🪙' + V.med.me + ' ・ ' + V.opp.name + ' 🪙' + V.med.cpu + '</div><div class="st">ハンド ' + V.stats.win + '勝 ' + V.stats.lose + '敗 ・ 通算 ' + r.w + '勝 ' + r.l + '敗</div>' +
       ((V.hist || []).length ? '<button class="btn ghost" id="hs">📚 今回の文をふりかえる(' + V.hist.length + ')</button>' : '') + '<button class="btn go" id="re">もう一回</button><button class="btn vs" id="ot">相手をかえる</button><button class="btn ghost" id="tt">タイトルへ</button></div>');
     if ($('#hs', s)) { var hl = V.hist; $('#hs', s).onclick = function () { K.histModal(hl); }; }

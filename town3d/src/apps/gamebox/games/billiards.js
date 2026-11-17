@@ -1,11 +1,11 @@
 // 本格3Dビリヤード(9ボール / 8ボール)。物理は ./billiards/phys.js、見た目は view.js、ルールは rules.js、CPUは ai.js
 //   ねらう:台をさわった方へ(手球視点では左右ドラッグ)/ 下の帯=微調整 / 右のキューを下へ引いて はなす=突く(引くほど強い)
 //   回転:左下の手球をタップ → 当てる点をえらぶ(上=押し・下=引き・左右=ひねり)/ 📷=視点の切りかえ
+import { ico, loop } from '../kit.js';
 import * as P from './billiards/phys.js';
 import { createView, CLOTHS } from './billiards/view.js';
 import { judge, legalFirst, lowest, cleared, grp, GNAME } from './billiards/rules.js';
 import { plan } from './billiards/ai.js';
-import { loop } from '../kit.js';
 
 const CSS = `.bd{position:absolute;inset:0;pointer-events:none;font-family:inherit;user-select:none;-webkit-user-select:none;color:#f3ead8}
 .bd *{box-sizing:border-box}
@@ -100,7 +100,7 @@ export default {
         if (KIND === 9) { const lo = lowest(balls); info = i === cur && lo ? `ねらう球 ${bicon(lo)}` : ''; }
         else if (G) { const ns = G === 'solid' ? [1, 2, 3, 4, 5, 6, 7] : [9, 10, 11, 12, 13, 14, 15]; icons = ns.map(n => bicon(n, !balls.find(b => b.n === n && b.on))).join(''); info = GNAME[G]; if (cleared(balls, G)) info += ' → 8番へ'; }
         else info = breakShot ? (i === cur ? 'ブレイク' : '') : 'まだ組は決まっていない';
-        el.innerHTML = `<b>${pl[i].icon || ''} ${pl[i].name}</b><span class="w">${TO > 1 ? `${wins[i]}/${TO}勝 ` : ''}</span><span>${info}</span><div class="bl">${icons}</div>`;
+        el.innerHTML = `<b>${ico(pl[i], '1.3em')} ${pl[i].name}</b><span class="w">${TO > 1 ? `${wins[i]}/${TO}勝 ` : ''}</span><span>${info}</span><div class="bl">${icons}</div>`;
         el.classList.toggle('on', i === cur);
       });
       margins();

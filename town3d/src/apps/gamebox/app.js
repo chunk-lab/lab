@@ -3,7 +3,8 @@
 //   (あそびゲームは、アミューズメントセンター(mode:'amuse')に移した。センター全体が1日パス制(コインでも買える)。旬の外遊びだけ無料)
 //   相手:町の住人(CPU)か、1台のスマホを上下で向かい合わせて2人
 import { confirmPay } from '../../ui/pay.js';
-import { CPUS, cpuById, createSfx, INK, unlockSpeech } from './kit.js';
+import { CPUS, cpuById, createSfx, INK, unlockSpeech, ico, myArt } from './kit.js';
+import { portrait } from '../../ui/portraits.js';
 import chunksort from './games/chunksort.js';
 import wordrace from './games/wordrace.js';
 import bowling from './games/bowling.js';
@@ -218,7 +219,7 @@ export const gameboxApp = {
       const s = sheet('');
       const draw = () => {
         s.querySelector('.panel').innerHTML = `<h2>${G.icon} ${G.title}</h2><p class="note">${G.rule}</p>
-          <div class="lbl">あいて</div><div class="seg">${cpuList.map(c => `<button class="tab ${opp === c.id ? 'on' : ''}" data-o="${c.id}">${c.icon} ${c.name}${'★'.repeat(c.lv)}</button>`).join('')}
+          <div class="lbl">あいて</div><div class="seg">${cpuList.map(c => `<button class="tab ${opp === c.id ? 'on' : ''}" data-o="${c.id}">${ico(c, '1.2em')} ${c.name}${'★'.repeat(c.lv)}</button>`).join('')}
             ${G.no2p ? '' : `<button class="tab ${opp === '2p' ? 'on' : ''}" data-o="2p">👥 2人で(${G.pass ? '交代で手わたし' : '1台を向かい合って'})</button>`}</div>
           ${(G.options || []).filter(o => !o.only || o.only(opts, opp)).map(o => `<div class="lbl">${o.label}</div><div class="seg">${o.choices.map(([v, l]) => `<button class="tab ${opts[o.key] === v ? 'on' : ''}" data-k="${o.key}" data-v="${v}">${l}</button>`).join('')}</div>`).join('')}
           <div class="row"><button class="btn sub" data-x>もどる</button><button class="btn" data-go>${gateLabel(G)}</button></div>`;
@@ -279,15 +280,16 @@ export const gameboxApp = {
     // ================= 試合 =================
     function play(G, opp, opts) {
       clear(); ctx.setTitle(G.title); G._t0 = Date.now(); act(G);
-      const two = opp === '2p', cpu = two ? null : typeof opp === 'object' ? { id: 'npc', icon: '🙂', say: ['勝負だ!', 'やられた〜', 'へへっ'], lv: 2, ...opp } : cpuOf(opp);   // opp は CPU の id か、町の住人 {name, lv}
-      const me = { name: ctx.player?.name || 'あなた', icon: '🙂' };
-      const players = [{ name: two ? 'プレイヤー1' : me.name, cpu: null, icon: '🙂' }, two ? { name: 'プレイヤー2', cpu: null, icon: '😎' } : { name: cpu.name, cpu, icon: cpu.icon }];
+      const two = opp === '2p', cpu = two ? null : typeof opp === 'object' ? { id: 'npc', icon: '🙂', say: ['勝負だ!', 'やられた〜', 'へへっ'], lv: 2, ...opp } : cpuOf(opp); if (cpu && !cpu.art) cpu.art = portrait(cpu.id) || null;   // opp は CPU の id か、町の住人 {name, lv}
+      const me = { name: ctx.player?.name || 'あなた', icon: '🙂', art: myArt(ctx.player?.look) };
+      const lk = ctx.player?.look === 'ren' ? 'ren' : 'mio';
+      const players = [{ name: two ? 'プレイヤー1' : me.name, cpu: null, icon: '🙂', art: me.art, glb: 'self:' + lk }, two ? { name: 'プレイヤー2', cpu: null, icon: '😎', glb: 'self:' + (lk === 'ren' ? 'mio' : 'ren') } : { name: cpu.name, cpu, icon: cpu.icon, art: cpu.art }];
       const stage = document.createElement('div'); stage.className = 'stage'; root.appendChild(stage);
       const inner = document.createElement('div'); inner.className = 'in'; stage.appendChild(inner);   // スマホの下のバーにかからないように
       const quit = document.createElement('button'); quit.className = 'quit'; quit.textContent = '✕'; root.appendChild(quit);
       quit.onclick = () => { const s = sheet(`<h2>やめる?</h2><div class="row"><button class="btn sub" data-n>つづける</button><button class="btn" data-y>やめる</button></div>`); s.querySelector('[data-n]').onclick = () => s.remove(); s.querySelector('[data-y]').onclick = () => { s.remove(); home(); }; };
       const vs = document.createElement('div'); vs.className = 'vs';
-      vs.innerHTML = `<div class="n ${two ? 'flipped' : ''}">${players[1].icon} ${players[1].name}</div><div class="x">VS</div><div class="n">${players[0].icon} ${players[0].name}</div>`;
+      vs.innerHTML = `<div class="n ${two ? 'flipped' : ''}">${ico(players[1], '1.6em')} ${players[1].name}</div><div class="x">VS</div><div class="n">${ico(players[0], '1.6em')} ${players[0].name}</div>`;
       root.appendChild(vs); setTimeout(() => vs.remove(), 1700); sfx.play('whoosh');
       let done = false; const seen = new Map();
       const host = {
@@ -310,7 +312,7 @@ export const gameboxApp = {
         ${res.score ? `<div style="font-size:22px;font-weight:900;margin:6px 0">${players[0].name} ${res.score[0]} - ${res.score[1]} ${players[1].name}</div>` : ''}
         ${res.text ? `<p class="note">${res.text}</p>` : ''}
         ${seen.length ? `<div class="wl"><b>まちがえた言葉・ほかの意味もある言葉</b>${seen.map((w, i) => `<div class="wr"><span><b>${w.en}</b>${w.multi > 1 ? ` <em>＋${w.multi - 1}</em>` : ''}${w.miss ? ' <u>まちがえた</u>' : ''}<br><small>${w.ja || ''}</small></span><button class="btn sub" data-save="${i}">＋ノート</button></div>`).join('')}<p class="note">ぜんぶ「今日のふりかえり」にも入っています</p></div>` : ''}
-        ${cpu ? `<p style="background:#fff;border-radius:14px;padding:8px;box-shadow:0 2px 8px #0001">${cpu.icon} ${cpu.name}「${line}」</p>` : ''}
+        ${cpu ? `<p style="background:#fff;border-radius:14px;padding:8px;box-shadow:0 2px 8px #0001">${ico(cpu, '1.8em')} ${cpu.name}「${line}」</p>` : ''}
         ${opts.trial ? '<p class="note">お試しはここまで。ソフトを借りると、ちゃんとした試合ができるよ。</p>' : ''}
         <div class="row"><button class="btn sub" data-m>えらびなおす</button>${opts.trial ? '<button class="btn gold" data-rent>' + (AMUSE ? '1日パスを買う' : 'ソフトを借りる') + '</button>' : '<button class="btn" data-a>もう一回</button>'}</div></div>`;
       root.appendChild(box);

@@ -1,6 +1,7 @@
 // Mixamoリグ入りのGLB(ちびキャラ)を、makeCharacter と同じ使い方(root/height/update/wave)で動かす。
 // 読み込み中・失敗時は、元のコード製キャラのまま動く(落ちない)。
 import { makeSeatClips } from './seatanim.js';
+import { BOWL, BOWL_HIPS } from './bowl_clip.js';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
@@ -86,6 +87,23 @@ export function setGlbSize(k, v) {   // 「せってい」のつまみから。�
 }
 
 const SIT_HIP = 0.17;   // 腰の骨から座面までの高さ(m)の見当(実機で合わせる)
+// 外から持ってきた動き(FBX)を、この体に合わせる。腰だけ向きがちがうので直し、腰の高さは体の大きさに合わせ、前後左右の移動は消す(その場で動く)
+const EXTRA = { bowl: { clip: null, json: BOWL, hipsY: BOWL_HIPS } };
+function fitClip(model, ex) {
+  const hb = model.getObjectByName('mixamorigHips'); if (!hb || !hb.parent) return null;
+  if (!ex.clip) ex.clip = THREE.AnimationClip.parse(ex.json);
+  model.updateMatrixWorld(true);
+  const inv = new THREE.Matrix4().copy(model.matrixWorld).invert();
+  const pM = new THREE.Matrix4().multiplyMatrices(inv, hb.parent.matrixWorld), pInv = pM.clone().invert();
+  const pq = new THREE.Quaternion().setFromRotationMatrix(pM), pqInv = pq.clone().invert();
+  const hW = new THREE.Vector3().setFromMatrixPosition(new THREE.Matrix4().multiplyMatrices(inv, hb.matrixWorld)), k = hW.y / ex.hipsY;
+  const q = new THREE.Quaternion(), v = new THREE.Vector3(), tracks = ex.clip.tracks.map(t => {
+    if (t.name === 'mixamorigHips.quaternion') { const a = Float32Array.from(t.values); for (let i = 0; i < a.length; i += 4) { q.set(a[i], a[i + 1], a[i + 2], a[i + 3]).premultiply(pqInv); a[i] = q.x; a[i + 1] = q.y; a[i + 2] = q.z; a[i + 3] = q.w; } return new THREE.QuaternionKeyframeTrack(t.name, t.times, a); }
+    if (t.name === 'mixamorigHips.position') { const a = Float32Array.from(t.values); for (let i = 0; i < a.length; i += 3) { v.set(hW.x, a[i + 1] * k, hW.z).applyMatrix4(pInv); a[i] = v.x; a[i + 1] = v.y; a[i + 2] = v.z; } return new THREE.VectorKeyframeTrack(t.name, t.times, a); }
+    return t.clone();
+  });
+  return new THREE.AnimationClip('bowl', ex.clip.duration, tracks);
+}
 export function useGlb(ch, id, { height } = {}) {
   if (!height) height = 1.3;   // 住人のふだんの背(プレイヤーは約1.65)
   const spec = GLB_MODELS[id]; if (!spec) return ch;
@@ -105,6 +123,7 @@ export function useGlb(ch, id, { height } = {}) {
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
     const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
     if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
+    try { for (const [n, ex] of Object.entries(EXTRA)) { const c = fitClip(model, ex); if (c) { act[n] = mixer.clipAction(c); act[n].setLoop(THREE.LoopOnce, 1); act[n].clampWhenFinished = true; } } } catch (e) { }   // 投球の動き(ボウリング)
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
     // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
     // 待機の動きを何コマか見て、いちばん低い足元・いちばん高い頭で測る(動きの途中で沈まないように)
@@ -176,7 +195,7 @@ export function useGlb(ch, id, { height } = {}) {
     (window.__glbBones = window.__glbBones || {})[id] = bn; (window.__glbChar = window.__glbChar || {})[id] = ch;   // 点検用
     ch.root.add(wrap);
     ch.setHeight = h => { wrap.scale.setScalar(h); ch.height = h; };
-    glbChars.add({ id, player, ch });
+    const entry = { id, player, ch }; glbChars.add(entry); ch.glbOff = () => glbChars.delete(entry);
     // 点検用: いまの足元の高さ(地面=0 からのずれ)を測れるようにしておく
     // (高さを切りかえる途中ではなく、いまの動きで落ちついたときの高さで測る)
     (window.__glbFeet = window.__glbFeet || {})[id] = () => { if (ch.pose === 'sit' || ch.pose === 'piano' || ch.pose === 'lie' || ch.pose === 'ride' || fadeT > 0 || cur === act.walk || cur === act.run) return { foot: 0, top: 0 }; const y = holder.position.y, ty = footOf.get(cur); if (ty !== undefined) holder.position.y = ty; ch.root.updateMatrixWorld(true); const b = posedBox(holder, ch.root); holder.position.y = y; return { foot: +b.min.y.toFixed(3), top: +b.max.y.toFixed(3) }; };;
@@ -221,6 +240,10 @@ export function useGlb(ch, id, { height } = {}) {
     (window.__hipsL = window.__hipsL || []).push({ id, f: () => { ch.root.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const w = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld), r = new THREE.Vector3().setFromMatrixPosition(ch.root.matrixWorld); return [+(w.x - r.x).toFixed(3), +(w.y - r.y).toFixed(3), +(w.z - r.z).toFixed(3), +holder.position.x.toFixed(3), +holder.position.z.toFixed(3), +(-sitDX).toFixed(3), String(ch.pose), +baseX.toFixed(3)]; } });
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };
+    // ボウリング: hold=投球の動きを from 秒めから流して、さいごの姿勢で止める / free=止めた姿勢から、ゆっくり元にもどる
+    ch.hand = () => model.getObjectByName('mixamorigRightHand');
+    ch.hold = (name, from = 0, fade = 0.15) => { const a = act[name]; if (!a) return false; if (cur === a) { cur = null; } play(name, fade); a.time = from; a.paused = false; lock = 1e9; return true; };
+    ch.free = (fade = 0.5) => { lock = 0; if (act.idle) { cur === act.idle ? 0 : play('idle', fade); } };
     void base;
   }).catch(e => { old.forEach(o => { o.visible = true; }); console.warn('GLB読み込み失敗(コード製キャラのまま):', spec.url, e); });
   return ch;

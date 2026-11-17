@@ -1,6 +1,7 @@
 // ゲーム機の共通部品:キャンバス・2人(上下)の入力・文字・ボタン・効果音・CPUの相手
 // 画面は縦。下=プレイヤー1(手前)、上=プレイヤー2(向かい側。2人で遊ぶときは上下さかさまに表示)
 
+import { portrait } from '../../ui/portraits.js';
 export const INK = '#5a4a6b';
 export const COL = { p1: '#ff7aa2', p2: '#5aa8f0', p1d: '#d4517c', p2d: '#3b7fc4', gold: '#ffd36b', mint: '#8fe0b0', bg: '#fff8ef' };
 
@@ -12,6 +13,10 @@ export const CPUS = [
   { id: 'baron', name: 'ハッタリ男爵', lv: 2, icon: '🎩', say: ['Splendid!', 'Impossible!', 'Ha ha ha!'] },
   { id: 'gon', name: 'ゴン', lv: 3, icon: '🦊', say: ['Bring it on!', 'No way!', 'Too easy!'] },
 ];
+for (const [id, k] of [['chunk', 'chunkkun'], ['mii', 'mii'], ['suna', 'suna'], ['baron', 'baron'], ['gon', 'gon']]) { const c = CPUS.find(x => x.id === id); if (c) c.art = portrait(k); }   // 絵文字のかわりに、今の顔絵
+// 顔のHTML(絵があれば顔絵、なければ絵文字)
+export const ico = (p, h = '1.35em') => (p && p.art ? `<img src="${p.art}" alt="" style="height:${h};width:auto;vertical-align:-.3em;border-radius:6px">` : (p && p.icon) || '');
+export const myArt = look => portrait(look === 'ren' ? 'self_ren' : 'self_mio');
 export const cpuById = id => CPUS.find(c => c.id === id) || CPUS[0];
 
 // キャンバス(画面の大きさに合わせる)
