@@ -575,10 +575,14 @@ export function createMergeApp(env = {}) {
       function sparkle(x, y) { for (let i = 0; i < 5; i++) { const p = document.createElement('div'); p.className = 'mg-p'; p.style.cssText = 'width:6px;height:6px;background:#ffd36b'; elFx.appendChild(p); p.animate([{ transform: `translate(${x}px,${y}px)`, opacity: 1 }, { transform: `translate(${x + rnd(60) - 30}px,${y + 20 + rnd(40)}px)`, opacity: 0 }], { duration: 600 }).onfinish = () => p.remove(); } }
 
       // ---- 売る・保管・とどいた・ずかん ----
-      const priceOf = o => o.t === 'it' ? Math.max(1, Math.round((CFG.sell[o.lv - 1] || 1) / 5)) : Math.max(1, Math.round(CFG.partSell * o.lv / 5));
+      const TOOLP = { cut: 2, up: 5, swap: 5, sup: 10 };
+      const priceOf = o => o.t === 'tool' ? (TOOLP[o.k] || 2) : o.t === 'it' ? Math.max(1, Math.round((CFG.sell[o.lv - 1] || 1) / 5)) : Math.max(1, Math.round(CFG.partSell * o.lv / 5));
       function sell(o) {
-        if (o.t === 'gen' || o.t === 'tool' || o.lk) { sfx('bad'); toast(o.lk ? 'ロック中は売れないよ' : o.t === 'tool' ? '道具は売れないよ' : '生成機は売れないよ'); moveEl(o); return; }
-        const c = rel(els.get(o.u)), got = ctx.wallet.give(priceOf(o), 'merge:sell'); take(o); rm(o); sel = null;
+        if (o.t === 'gen' || o.lk) { sfx('bad'); toast(o.lk ? 'ロック中は売れないよ' : '生成機は売れないよ'); moveEl(o); return; }
+        if (o.t === 'tool' && o.k === 'sup' && !o.ok) { moveEl(o); const bx = overlay(`<h3>🌟 特別な星を 売る?</h3><p style="font-size:13px;margin:6px 0 10px">💎で買った大事な星だよ。🪙${priceOf(o)}で 売っていい?</p><button data-yes style="background:#ff7f9f!important;color:#fff!important">売る</button> <button data-x>やめる</button>`); bx.querySelector('[data-yes]').onclick = e => { e.stopPropagation(); bx.remove(); if (byU(o.u)) { o.ok = 1; sell(o); } }; return; }
+        const c = rel(els.get(o.u)), got = ctx.wallet.give(priceOf(o), 'merge:sell');
+        if (o.t === 'tool' && (o.n || 1) > 1) { o.n--; tooLabel(o); moveEl(o); sel = null; fly('🪙', c, rel(root.querySelector('[data-bind="coins"]')), 520); ftext(rel(elSell).x, rel(elSell).y - 30, `🪙+${got}`, '#d68600'); sfx('sell'); save(); refresh(); return; }
+        take(o); rm(o); sel = null;
         fly('🪙', c, rel(root.querySelector('[data-bind="coins"]')), 520); ftext(rel(elSell).x, rel(elSell).y - 30, `🪙+${got}`, '#d68600'); sfx('sell'); save(); refresh();
       }
       function buySlot() {
@@ -664,7 +668,7 @@ export function createMergeApp(env = {}) {
         const sp = elInfo.querySelector('span'); elInfo.querySelector('button')?.remove();
         if (sel && byU(sel.u)) {
           const d = defOf(sel);
-          if (sel.t === 'tool') sp.textContent = `${TOOLS[sel.k].icon} ${TOOLS[sel.k].name} ・ ${TOOLS[sel.k].tip}`;
+          if (sel.t === 'tool') { sp.textContent = `${TOOLS[sel.k].icon} ${TOOLS[sel.k].name} ・ ${TOOLS[sel.k].tip}`; const b = document.createElement('button'); b.textContent = `売る 🪙${priceOf(sel)}`; b.onclick = () => { const o = sel; if (o && byU(o.u)) sell(o); }; elInfo.appendChild(b); }
           else if (sel.t === 'gen') sp.textContent = sel.gl ? `🔒 ${d.name} ・ ほかの勉強をあと${leftMin(sel.g)}分で使えるよ` : `${d.icon} ${d.name} Lv${sel.lv} ・ タップで品が出る(⚡1)。同じLvを重ねると強くなる`;
           else if (sel.lk) sp.textContent = `🔒 ${d.name} Lv${sel.lv} ・ 同じものを重ねると ひらく`;
           else { const L = sel.t === 'it' ? LINES[sel.ln] : null, nx = L && L.items[sel.lv] ? ` → つぎ: ${S.seen[sel.ln + (sel.lv + 1)] ? L.items[sel.lv][0] : '？'}` : ''; sp.textContent = `${d.icon} ${d.name} Lv${sel.lv}${nx}`; const b = document.createElement('button'); b.textContent = `売る 🪙${priceOf(sel)}`; b.onclick = () => { const o = sel; if (o && byU(o.u)) sell(o); }; elInfo.appendChild(b); }
