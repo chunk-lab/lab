@@ -592,14 +592,19 @@ export function createMergeApp(env = {}) {
         const it = S.inbox.shift(), o = { u: ++S.n, ...it, b: null, s: null }; dropIn(o, to, rel(elInb)); sfx('pop'); save(); refresh();
       };
             // ---- 進化のみちポップアップ: 生成機・Lv1→最大・いまの段階・あといくつ必要か ----
-      function evoPop(ln, lv, want) {
+      function evoPop(ln, lv, want, so) {
         const L = LINES[ln], gk = Object.keys(GENS).find(g => GENS[g].lines.includes(ln)), G = GENS[gk], mx = L.mergeMax || L.items.length;
         const cnt = Array.from({ length: mx + 1 }, (_, i) => S.cells.filter(o => o && o.t === 'it' && o.ln === ln && o.lv === i && !o.lk).length);
         let have = 0; for (let i = 1; i <= lv; i++) have += cnt[i] * Math.pow(2, i - 1); const need = Math.pow(2, lv - 1), lack = Math.max(0, need - have);
-        const row = L.items.slice(0, mx).map((it, i) => { const n = i + 1, on = n === lv, c = cnt[n] || 0; return `<div style="display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:10px;${on ? 'background:#ffe48a;font-weight:800' : ''}"><span style="width:34px;font-size:12px">Lv${n}</span><span style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:22px">${IMG[ln + n] ? `<img src="${IMG[ln + n]}" style="width:30px;height:30px;object-fit:contain" alt="">` : it[1]}</span><span style="flex:1;font-size:12px">${true ? esc(it[0]) + (it[2] ? ' <small style="color:#888">' + esc(it[2]) + '</small>' : '') : '？'}</span><span style="font-size:12px;color:${c ? '#1f9d63' : '#bbb'}">${c ? 'いま ' + c + 'こ' : '−'}</span></div>`; }).join('<div style="text-align:center;font-size:10px;color:#b79ad3;line-height:8px">▼ 同じものを2つ</div>');
+        const row = L.items.slice(0, mx).map((it, i) => { const n = i + 1, on = n === lv, c = cnt[n] || 0, sn = on || !!S.seen[ln + n]; return `<div style="display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:10px;${on ? 'background:#ffe48a;font-weight:800' : ''}"><span style="width:34px;font-size:12px">Lv${n}</span><span style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:22px">${!sn ? '<b style="color:#b79ad3">？</b>' : IMG[ln + n] ? `<img src="${IMG[ln + n]}" style="width:30px;height:30px;object-fit:contain" alt="">` : it[1]}</span><span style="flex:1;font-size:12px">${sn ? esc(it[0]) + (it[2] ? ' <small style="color:#888">' + esc(it[2]) + '</small>' : '') : '？？？'}</span><span style="font-size:12px;color:${c ? '#1f9d63' : '#bbb'}">${c ? 'いま ' + c + 'こ' : '−'}</span></div>`; }).join('<div style="text-align:center;font-size:10px;color:#b79ad3;line-height:8px">▼ 同じものを2つ</div>');
         const head = want ? `${esc(L.items[lv - 1][1])} <b>${esc(L.items[lv - 1][0])}</b> (Lv${lv}) がほしいんだって` : `${esc(L.items[lv - 1][1])} <b>${esc(L.items[lv - 1][0])}</b> Lv${lv}`;
         const st = lv >= mx ? 'いちばん上のレベルだよ!' : want ? (cnt[lv] ? '✨ もう持ってる! 渡せるよ' : lack === 0 ? '材料はそろってる! あとは かさねるだけ' : `Lv1に直すと、あと <b>${lack}こ</b> ぶん たりないよ`) : `つぎ → Lv${lv + 1}(同じものをもう1つ かさねる)`;
-        sfx('tap'); overlay(`<h3>${head}</h3><div style="font-size:12px;margin-bottom:6px">${G.icon} <b>${esc(G.name)}</b> から出てくるよ${genOpen(gk) ? '' : '(いまロック中)'} ・ ${st}</div>${row}<div style="text-align:center;margin-top:8px"><button data-x>とじる</button></div>`);
+        sfx('tap'); overlay(`<h3>${head}</h3><div style="font-size:12px;margin-bottom:6px">${G.icon} <b>${esc(G.name)}</b> から出てくるよ${genOpen(gk) ? '' : '(いまロック中)'} ・ ${st}</div>${row}<div class="mg-evb" style="text-align:center;margin-top:8px"><button data-x>とじる</button></div>`);
+        if (so && so.t === 'it' && !so.lk) {   // 場の品をタップして開いたとき: ここから売れる(確認つき)
+          const ov = root.querySelector('.mg-ovl:last-of-type'), bx = ov && ov.querySelector('.mg-evb'); if (!bx) return;
+          const ask = () => { bx.innerHTML = '<button data-sell>売る 🪙' + priceOf(so) + '</button> <button data-x>とじる</button>'; bx.querySelector('[data-sell]').onclick = e => { e.stopPropagation(); bx.innerHTML = '<div style="font-size:12px;margin-bottom:6px">ほんとうに 売る?</div><button data-yes style="background:#ff7f9f!important;color:#fff!important">売る</button> <button data-no>やめる</button>'; bx.querySelector('[data-yes]').onclick = e2 => { e2.stopPropagation(); ov.remove(); if (byU(so.u)) sell(so); }; bx.querySelector('[data-no]').onclick = e2 => { e2.stopPropagation(); ask(); }; }; };
+          ask();
+        }
       }
       function overlay(html) { const o = document.createElement('div'); o.className = 'mg-ovl'; o.innerHTML = `<div class="mg-card">${html}</div>`; root.appendChild(o); o.addEventListener('click', e => { if (e.target === o || e.target.closest('[data-x]')) { sfx('tap'); o.remove(); o.onclose && o.onclose(); } }); return o; }
 
@@ -689,7 +694,7 @@ export function createMergeApp(env = {}) {
       }
       function up(e) {
         if (!drag || e.pointerId !== drag.id) return; const d = drag, o = d.o; clearTimeout(d.lp); drag = null; marks(false); d.el.classList.remove('drag'); if (d.sc) return;
-        if (!d.moved) { if (e.type === 'pointercancel' || d.long) return; if (o.t === 'gen' && o.b != null) { sel = o; spawn(o); info(); } else { sel = sel === o ? null : o; sfx('tap'); pop(d.el, 1.12); info(); } return; }
+        if (!d.moved) { if (e.type === 'pointercancel' || d.long) return; if (o.t === 'gen' && o.b != null) { sel = o; spawn(o); info(); } else if (o.t === 'it') { sel = o; pop(d.el, 1.12); info(); evoPop(o.ln, o.lv, false, o); } else { sel = sel === o ? null : o; sfx('tap'); pop(d.el, 1.12); info(); } return; }
         if (e.type === 'pointercancel') { moveEl(o); return; }
         const R = root.getBoundingClientRect(), x = e.clientX - R.left, y = e.clientY - R.top, cx = Math.floor((x - BX) / CS), cy = Math.floor((y - BY) / CS);
         const from = o.b != null ? { b: o.b } : { s: o.s };
