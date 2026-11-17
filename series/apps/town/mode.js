@@ -38,6 +38,18 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     } catch (e) { console.error(e); } finally { exprBusy = false; }
   }
   let town = null, box = null;
+  // マージの回復ミッションから来たときは、クリアしたら「マージにもどる」ボタンを出す
+  let retMerge = null; const dropRet = () => { document.getElementById('cs-ret-merge')?.remove(); };
+  try {
+    core.events.on((game, name, d = {}) => {
+      if (name !== 'done' || !retMerge || !d.finished || d.play !== retMerge.id || Date.now() - retMerge.t > 6 * 36e5) return;
+      dropRet(); const b = document.createElement('button'); b.id = 'cs-ret-merge'; b.textContent = '✨ミッションクリア! マージにもどる';
+      b.style.cssText = 'position:fixed;left:50%;bottom:max(70px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:99999;border:0;border-radius:999px;padding:14px 22px;font:800 15px system-ui,sans-serif;color:#fff;background:linear-gradient(160deg,#ff9fb5,#ff6f91);box-shadow:0 4px 0 #c2335b,0 8px 20px rgba(0,0,0,.3)';
+      b.onclick = () => { dropRet(); retMerge = null; try { core.host.close(); } catch (e) { } setTimeout(() => { try { town && town.openApp && town.openApp('merge'); } catch (e) { } }, 200); };
+      document.body.appendChild(b);
+    });
+    core.host.onClose(() => dropRet());   // 先に閉じたら、ボタンも消す
+  } catch (e) { }
   const launcher = createLauncher(core, { openApp: (id, p) => town && town.openApp(id, p), to2D: () => go('home'), openStudy });
 
   const episodes = createEpisodes(core, {
@@ -175,7 +187,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         else if (name === 'app:event' && d?.name === 'bonus') { const n = Math.max(1, d.data?.n | 0), g = core.member.earn('once', 50 * n); if (g) { core.ui.toast(`メダルのごほうび +${g}コイン`); } }   // メダル(勉強を続けた日数)を新しくもらったら、1つにつき50コイン
         else if (name === 'app:event' && d?.name === 'daily') core.review && core.review.open({ mode: 'today' });   // 「今日はここまで」
         else if (name === 'app:event' && d?.name === 'done') core.events.report('gamebox', 'done', d.data || {});   // 家のゲーム機の英語ゲーム(メダルの日数に入る)
-        else if (name === 'app:event' && d?.name === 'play') { const p = playOf(d.data?.id); if (p && core.today) core.today.go(p); }   // そら君が勧めた勉強を開く
+        else if (name === 'app:event' && d?.name === 'play') { if (d.data?.back === 'merge') retMerge = { id: d.data.id, t: Date.now() }; const p = playOf(d.data?.id); if (p && core.today) core.today.go(p); }   // そら君が勧めた勉強を開く
         else if (name === 'note' && d?.text) core.events.report('town3d', 'word', { en: d.text, ja: d.meaning || '', kind: d.kind === 'quote' ? 'quote' : d.kind === 'sentence' ? 'short' : undefined });
       },
     });

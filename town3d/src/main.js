@@ -192,7 +192,7 @@ export function mount(container, opt = {}) {
     mission: opt.studyFin ? {
       pick(last) { const C = ['stream.word', 'cc.game', 'stream.read'], dd = x => (x.days == null || x.days > 900 ? 999 : x.days); let L = []; try { L = (opt.studyInfo ? opt.studyInfo() : []).filter(x => C.includes(x.id) && x.id !== last); } catch (e) { } if (!L.length) return null; L.sort((a, b) => dd(b) - dd(a) || Math.random() - 0.5); const x = L[0], f = opt.studyFin(x.id); return { id: x.id, n: x.n, b: { n: f.n, min: f.min, p: opt.studyPlays ? opt.studyPlays(x.id) : 0 } }; },
       stat(m) { const f = opt.studyFin(m.id), pn = opt.studyPlays ? opt.studyPlays(m.id) : 0; return { n: Math.max(f.n - m.b.n, pn - (m.b.p || 0)), min: Math.round((f.min - m.b.min) * 10) / 10 }; },
-      go(m) { try { opt.onEvent && opt.onEvent('app:event', { name: 'play', data: { id: m.id } }); } catch (e) { } },
+      go(m) { try { opt.onEvent && opt.onEvent('app:event', { name: 'play', data: { id: m.id, back: 'merge' } }); } catch (e) { } },
     } : null, openTest: () => (opt.openTest ? opt.openTest() : null), speak: t => opt.speak && opt.speak(t, {}), speakStop: () => opt.speakStop && opt.speakStop() }) });   // マージゲーム(2Dで完結)
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   { // 運営用:町から直接「英語の釣り堀」を開くボタン(?admin=1 で出る)
