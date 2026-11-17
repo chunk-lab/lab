@@ -89,25 +89,9 @@ export function setGlbSize(k, v) {   // 「せってい」のつまみから。�
 const SIT_HIP = 0.17;   // 腰の骨から座面までの高さ(m)の見当(実機で合わせる)
 // 外から持ってきた動き(FBX)を、この体に合わせる。腰だけ向きがちがうので直し、腰の高さは体の大きさに合わせ、前後左右の移動は消す(その場で動く)
 const EXTRA = { bowl: { clip: null, json: BOWL, hipsY: BOWL_HIPS } };
-function fitClip(model, ex, restQ) {
-  const hb = model.getObjectByName('mixamorigHips'); if (!hb || !hb.parent) return null;
+function fitClip(model, ex, restQ) {   // 元データそのまま(書き換えない)
   if (!ex.clip) ex.clip = THREE.AnimationClip.parse(ex.json);
-  model.updateMatrixWorld(true);
-  const inv = new THREE.Matrix4().copy(model.matrixWorld).invert();
-  const pM = new THREE.Matrix4().multiplyMatrices(inv, hb.parent.matrixWorld), pInv = pM.clone().invert();
-  const pq = new THREE.Quaternion(); pM.decompose(new THREE.Vector3(), pq, new THREE.Vector3()); const pqInv = pq.clone().invert();   // 拡大縮小をのぞいた向きだけ取り出す
-  const hW = new THREE.Vector3().setFromMatrixPosition(new THREE.Matrix4().multiplyMatrices(inv, hb.matrixWorld)), k = hW.y / ex.hipsY;
-  const q = new THREE.Quaternion(), v = new THREE.Vector3(), tracks = ex.clip.tracks.map(t => {
-    if (t.name === 'mixamorigHips.position') { const a = Float32Array.from(t.values); for (let i = 0; i < a.length; i += 3) { v.set(hW.x, a[i + 1] * k, hW.z).applyMatrix4(pInv); a[i] = v.x; a[i + 1] = v.y; a[i + 2] = v.z; } return new THREE.VectorKeyframeTrack(t.name, t.times, a); }
-    const m = /^(.*)\.quaternion$/.exec(t.name), fr = m && BOWL_REST[m[1]], bone = m && model.getObjectByName(m[1]);
-    if (fr && bone) {   // 腰以外: 「もとの気をつけ姿勢からの回転量」を、この体の気をつけ姿勢に足す(骨の向きのちがいを吸収)
-      const d = (restQ.get(m[1]) || bone.quaternion).clone().multiply(new THREE.Quaternion().fromArray(fr).invert()), a = Float32Array.from(t.values);
-      for (let i = 0; i < a.length; i += 4) { q.set(a[i], a[i + 1], a[i + 2], a[i + 3]).premultiply(d); a[i] = q.x; a[i + 1] = q.y; a[i + 2] = q.z; a[i + 3] = q.w; }
-      return new THREE.QuaternionKeyframeTrack(t.name, t.times, a);
-    }
-    return t.clone();
-  });
-  return new THREE.AnimationClip('bowl', ex.clip.duration, tracks);
+  return new THREE.AnimationClip('bowl', ex.clip.duration, ex.clip.tracks.filter(t => !/\.position$/.test(t.name)));   // 位置(cm)はキャラの大きさとちがうので使わない。回転は元のまま
 }
 export function useGlb(ch, id, { height } = {}) {
   if (!height) height = 1.3;   // 住人のふだんの背(プレイヤーは約1.65)
