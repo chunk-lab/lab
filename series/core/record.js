@@ -16,6 +16,7 @@ export function createRecord(events, notebook) {
       const p = playOf(d.play) || { want: 'chill' }, t = today(), m = Math.max(0, Math.min(180, +d.min || 0));
       t.min[p.want] = Math.round(((t.min[p.want] || 0) + m) * 10) / 10;
       t.plays[d.play || game] = (t.plays[d.play || game] || 0) + 1;
+      if (d.finished) { R.fin = R.fin || {}; const k = d.play || game, f = R.fin[k] = R.fin[k] || { n: 0, min: 0 }; f.n++; f.min = Math.round((f.min + m) * 10) / 10; }   // 最後までやった回数と分(マージの回復ミッションの判定)
       const bk = d.book || (d.passage && d.whole ? 'st:' + d.passage : null); if (bk && d.finished) { R.books = R.books || {}; R.books[bk] = (R.books[bk] || 0) + 1; } t.words += Math.max(0, +d.words || 0) | 0; t.done++;
       if (Array.isArray(d.missed) && d.missed.length) notebook.addMany(d.missed.slice(0, 50).map(x => ({ ...x, src: x.src || (p.n || game), marks: ['miss'] })));
       if (R.last && R.last.play === d.play && d.finished) R.last = null;
@@ -45,6 +46,7 @@ export function createRecord(events, notebook) {
       if (ch) save(); return Object.keys(R.medals).map(Number);
     },
     daysSince(id) { const ks = Object.keys(R.days).filter(k => (R.days[k].plays || {})[id]).sort(); if (!ks.length) return 999; return Math.floor((new Date(day()) - new Date(ks[ks.length - 1])) / 864e5); },   // その遊びを最後にした日から何日
+    finOf(id) { const f = (R.fin || {})[id]; return { n: f ? f.n : 0, min: f ? f.min : 0 }; },
     playsOf(id) { return Object.values(R.days).reduce((n, d) => n + ((d.plays || {})[id] || 0), 0); },   // その遊びの合計回数
     clearLast() { R.last = null; save(); },
     goal: () => R.goal,

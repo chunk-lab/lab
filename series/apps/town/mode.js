@@ -123,11 +123,12 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     town = window.town3d = window.Hoshimiya.mount(box, {
       playerName: () => core.profile.name,   // 物語ではじめに入れた名前を、3Dのはじめの画面に入れておく
       wallet: core.wallet,   // コインは2Dと共通
-      gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house'), onChange: f => core.member.onChange(f) },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
+      gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house'), add: n => core.member.addGems(n, 'shop'), onChange: f => core.member.onChange(f) },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
       house: ECON.house,
       member: { paid: () => core.member.isPaid() },   // チャンクボックス(有料会員はゲーム機が無料)
       dictUrl: core.base + 'core/dict/data.js',   // 英語対戦ゲームの辞書
       tooEasy: en => { try { if (!lvLoaded) { lvLoaded = true; core.level.load().catch(() => { }); } return core.level.tooEasy(en); } catch (e) { return false; } },
+      studyFin: id => { try { return core.record.finOf(id); } catch (e) { return { n: 0, min: 0 }; } },   // その勉強を「最後までやった」回数と分
       studyPlays: id => { try { return core.record.playsOf(id); } catch (e) { return 0; } },
       studySec: () => { try { return core.daylog.totalSummary().by.study || 0; } catch (e) { return 0; } },   // マージゲーム: ほかの勉強の合計秒数(生成機のロック解除)
       lvStep: d => { try { return d ? core.level.step(d) : core.level.bandNote(); } catch (e) { return ''; } },   // 単語の範囲を ±1段(0なら今の範囲だけ返す)

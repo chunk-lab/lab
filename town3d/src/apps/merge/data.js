@@ -7,7 +7,7 @@ export const CFG = {
   enMax: 100, enStart: 100, regenSec: 90,      // エネルギー: 上限・はじめ・自然回復(1回復の秒数)
   quizGain: 1,                                  // 英語4択 正解1回の回復(学習の回復は上限なし)
   genMax: 5, partMax: 3,                        // 生成機の最大Lv / パーツ Lv3 同士で生成機 Lv1
-  genCharge: lv => 12 + lv * 4, genRecharge: 150, // 生成機: 続けて出せる回数 / 使い切ったあとの休み(秒)
+  genCharge: lv => 12 + lv * 4, genRecharge: lv => lv * 900, msMin: 2, cmDay: 3, // 生成機: 続けて出せる回数 / 使い切ったあとの休み(秒)
   spawnR: lv => 0.16 + lv * 0.06, spawnTop: lv => Math.min(5, 1 + lv),   // 上位品の出やすさ / 出る最高Lv
   sell: [1, 2, 4, 7, 12, 20, 32, 50, 80], partSell: 5,
   slots0: 3, slotsMax: 10, slotPrice: n => 100 * Math.pow(2, n - 3),      // 保管枠

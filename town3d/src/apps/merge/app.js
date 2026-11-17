@@ -95,6 +95,7 @@ const CSS = `
 .mg-combo{position:absolute;right:10px;top:60px;font-size:22px;color:#ff8a1e;text-shadow:0 2px 0 #fff,0 0 6px #fff,0 0 6px #fff;pointer-events:none}
 .mg-toast{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);background:rgba(60,40,85,.94);color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:45;max-width:94%;overflow:hidden;text-overflow:ellipsis}
 .mg-home{flex:none;width:34px;height:32px;border:0;border-radius:11px;background:#fff;box-shadow:0 2px 0 #b79ad3;font-size:17px;padding:0}
+.mg-shw{font-size:13px;margin:2px 0 6px}.mg-sht{font-size:12px;text-align:left;margin:8px 2px 4px;color:#6a548a}.mg-shg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.mg-shi{flex:none;width:76px;border:0!important;border-radius:14px!important;background:#fff!important;box-shadow:inset 0 0 0 2px #cdb6e6!important;padding:6px 2px!important;display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;color:#4a3a5e!important}.mg-shi:disabled{opacity:.45}.mg-sha{width:46px;height:46px;display:flex;align-items:center;justify-content:center}.mg-sha img{width:100%;height:100%;object-fit:contain}.mg-sha .mg-e{font-size:30px}.mg-shi small{font-size:9px;line-height:1.2;min-height:22px}.mg-shi em{font-style:normal;font-size:12px;color:#e0457b}
 .mg-qt{display:flex;gap:6px;justify-content:center;align-items:center;margin:4px 0;font-size:11px}.mg-qt button{white-space:nowrap;border:0;border-radius:999px;padding:5px 10px;background:#efe3ff;color:#5b3f86;font-weight:800;font-size:11px}.mg-qg.full{display:block;color:#e0457b;font-weight:800;font-size:12px;margin-top:2px}.mg-qr{font-size:10px;color:#6a548a}
 .mg-ovl{position:absolute;inset:0;background:rgba(50,30,75,.6);z-index:50;display:flex;align-items:center;justify-content:center;animation:mgFade .2s;touch-action:auto}
 .mg-card{width:min(92%,360px);max-height:88%;overflow:auto;background:#fffaf5;border-radius:22px;padding:16px;box-shadow:0 12px 30px rgba(40,25,60,.4);animation:mgPop .28s cubic-bezier(.3,1.5,.5,1);text-align:center}
@@ -132,7 +133,7 @@ export function createMergeApp(env = {}) {
       const root = document.createElement('div'); root.className = 'mg';
       root.innerHTML = `<div class="mg-top"><div class="mg-pill mg-en">⚡<b>0</b><small></small></div><button class="mg-qb">✏️ 英語で回復</button><span style="flex:1"></span><span class="mg-cy" hidden><b>0</b></span><div class="mg-pill">🪙<b data-bind="coins">${Math.floor(ctx.wallet.get()).toLocaleString('ja-JP')}</b></div><button class="mg-home" aria-label="町にもどる">🏠</button></div>
 <div class="mg-goal"></div><div class="mg-strip"></div><div class="mg-board"></div><div class="mg-info"><span></span></div>
-<div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
+<div class="mg-bot"><div class="mg-slots"></div><button class="mg-rb mg-shop"><b>🛒</b>ショップ</button><button class="mg-rb mg-inb"><b>🎁</b>とどいた</button><button class="mg-rb mg-sell"><b>🪙</b>うる</button></div>
 <div class="mg-fx"></div>`;
       host.appendChild(root);
       const $ = q => root.querySelector(q);
@@ -186,7 +187,7 @@ export function createMergeApp(env = {}) {
       function fillAct(cycle) { while (S.act.length < CFG.vis && S.queue.length) { const id = S.queue.shift(); if (S.act.some(a => a.id === id)) continue; S.act.push({ id, w: newWants(cycle, id) }); } }
       if (S.goal == null) S.goal = 0; if (!S.gp) S.gp = {};
       if (!S.act.length && S.queue.length) fillAct();
-      const TOOLS = { cut: { icon: '✂️', name: 'ハサミ', tip: '品にドラッグ → Lvを1つ下げて2つに分ける(空きマスが1つ必要)' }, up: { icon: '⬆️', name: 'アップグレード', tip: '品にドラッグ → Lvが1つ上がる(Lv5まで)' }, swap: { icon: '🔄', name: 'しゅるい変換', tip: '品にドラッグ → Lvは1つ下がるけど、ほしがられてる別のラインの品に変わる' } };
+      const TOOLS = { cut: { icon: '✂️', name: 'ハサミ', tip: '品にドラッグ → Lvを1つ下げて2つに分ける(空きマスが1つ必要)' }, sup: { icon: '🌟', name: '特別な星', tip: '品にドラッグ → Lv5以上でも Lvが1つ上がる' }, up: { icon: '⬆️', name: 'アップグレード', tip: '品にドラッグ → Lvが1つ上がる(Lv5まで)' }, swap: { icon: '🔄', name: 'しゅるい変換', tip: '品にドラッグ → Lvは1つ下がるけど、ほしがられてる別のラインの品に変わる' } };
       const defOf = o => o.t === 'it' ? { name: LINES[o.ln].items[o.lv - 1][0], icon: LINES[o.ln].items[o.lv - 1][1], color: LINES[o.ln].color, key: o.ln + o.lv, en: LINES[o.ln].items[o.lv - 1][2] || '' }
         : o.t === 'tool' ? { name: TOOLS[o.k].name, icon: TOOLS[o.k].icon, color: '#fff0b3', key: 'tool_' + o.k }
         : o.t === 'gen' ? { name: GENS[o.g].name, icon: GENS[o.g].icon, color: GENS[o.g].color, key: 'gen_' + o.g }
@@ -264,29 +265,75 @@ export function createMergeApp(env = {}) {
       const center = o => { const p = posOf(o); return { x: p.x + CS / 2, y: p.y + CS / 2 }; };
       // ---- ひとやすみ中の生成機: 待つか、ほかの勉強で すぐ再開 ----
       const studyList = () => { try { const L = env.studyList ? env.studyList() : []; return L.slice().sort((x, y) => (y.days == null || y.days > 900 ? 999 : y.days) - (x.days == null || x.days > 900 ? 999 : x.days) || Math.random() - 0.5).filter(x => x.days !== 0).concat(L.filter(x => x.days === 0)); } catch (e) { return []; } };
+      // 回復ミッション: 1つだけ提案 → 最後までやったら(合計 msMin 分以上) ぜんぶ再開。
+      // 係(env.mission)は組み込み先が出す。なければ(単体アプリ) マージの中の英語クイズ10問。
+      const BUILT = { pick: () => ({ id: 'quiz', n: '英語クイズに 10問 正解', built: 1, b: { n: S.qok || 0, min: 0 } }), stat: m => { const k = (S.qok || 0) - m.b.n; return { n: k >= 10 ? 1 : 0, min: 99, pct: k / 10, txt: `${Math.min(10, k)} / 10問` }; }, go: () => setTimeout(() => elQb.click(), 60) };
+      const MS = env.mission || BUILT;
+      const resting = () => S.cells.filter(o => o && o.t === 'gen' && o.cd);
+      function msEnsure() { if (S.ms || !resting().length) return; try { S.ms = MS.pick(S.msLast) || MS.pick(null) || null; } catch (e) { S.ms = null; } save(); }
+      function msStat() { let st = { n: 0, min: 0 }; try { st = MS.stat(S.ms) || st; } catch (e) { } const done = st.n >= 1 && st.min >= CFG.msMin; return { done, pct: Math.max(0, Math.min(1, st.pct != null ? st.pct : Math.min(st.min / CFG.msMin, st.n >= 1 ? 1 : 0.9))), txt: st.txt || `さいごまで ${st.n}回 ・ ${Math.min(99, st.min)} / ${CFG.msMin}分` }; }
+      const cmLeft = () => { const dk = new Date().toDateString(); if (!S.cm || S.cm.d !== dk) S.cm = { d: dk, n: 0 }; return Math.max(0, CFG.cmDay - S.cm.n); };
       function restDialog(g) {
-        const L = studyList(); let i = 0; const gd = GENS[g.g];
-        const o = overlay('');
+        msEnsure(); const gd = GENS[g.g], o = overlay(''); let tm = 0;
         const draw = () => {
-          const left = g.cd ? Math.max(0, Math.ceil((g.cd - Date.now()) / 1000)) : 0, x = L[i % Math.max(1, L.length)];
-          o.querySelector('.mg-card').innerHTML = `<h3>${gd.icon} ${gd.name}は ひとやすみ中</h3><p style="font-size:13px;margin:4px 0 10px">あと ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} で もどるよ。<br>ほかの勉強をすると、<b style="color:#e8366a">すぐ再開</b>できる!</p>`
-            + (x ? `<div style="background:#fff;border-radius:16px;padding:12px;box-shadow:inset 0 0 0 2px #cdb6e6;margin-bottom:10px"><div style="font-size:11px;color:#8a76a6">📚 おすすめ</div><div style="font-size:19px;margin:4px 0">${esc(x.n)}</div><div style="font-size:11px;color:#8a76a6">${x.days == null || x.days > 900 ? 'まだ やったことがないよ' : x.days === 0 ? 'きょうも やったよ' : `${x.days}日ぶり`}</div></div><button data-go style="background:linear-gradient(160deg,#ff9fb5,#ff6f91)!important;color:#fff!important;font-size:15px;padding:10px 24px!important;box-shadow:0 3px 0 #c2335b!important">これをやる!</button> ${L.length > 1 ? '<button data-other>ほかのにする</button>' : ''} <button data-x>まつ</button>` : '<p style="font-size:12px">いまは おすすめできる勉強が ないみたい。ちょっと まってね。</p><button data-x>まつ</button>');
-          o.querySelector('[data-other]')?.addEventListener('click', () => { i++; sfx('tap'); draw(); });
-          o.querySelector('[data-go]')?.addEventListener('click', e => { e.stopPropagation(); sfx('give'); S.recov = { id: x.id, n: x.n, base: studySec(), pl: (env.studyPlays ? env.studyPlays(x.id) : 0), t: Date.now() }; save(); o.remove(); try { ctx.close(); } catch (er) { } setTimeout(() => { try { env.studyGo && env.studyGo(x.id); } catch (er) { } }, 250); });
+          if (!o.isConnected) { clearInterval(tm); return; } if (!g.cd) { o.remove(); return; }
+          const left = Math.max(0, Math.ceil((g.cd - Date.now()) / 1000)), m = S.ms, st = m ? msStat() : null, cl = cmLeft();
+          o.querySelector('.mg-card').innerHTML = `<h3>${gd.icon} ${gd.name}(Lv${g.lv})は ひとやすみ中</h3><p style="font-size:13px;margin:4px 0 10px">あと ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} で もどるよ。<br>ミッションを やりとげると、<b style="color:#e8366a">すぐ再開</b>!</p>`
+            + (m ? `<div style="background:#fff;border-radius:16px;padding:12px;box-shadow:inset 0 0 0 2px #cdb6e6;margin-bottom:10px"><div style="font-size:11px;color:#8a76a6">📚 回復ミッション</div><div style="font-size:18px;margin:4px 0">${esc(m.n)}</div><div style="font-size:11px;color:#8a76a6">${m.built ? '' : `さいごまで やって、合計${CFG.msMin}分以上<br>`}${st.txt}</div><div style="height:8px;border-radius:5px;background:#eadcf7;margin-top:6px;overflow:hidden"><i style="display:block;height:100%;width:${Math.round(st.pct * 100)}%;background:#ff7f9f"></i></div></div><button data-go style="background:linear-gradient(160deg,#ff9fb5,#ff6f91)!important;color:#fff!important;font-size:15px;padding:10px 24px!important;box-shadow:0 3px 0 #c2335b!important">やりにいく!</button>` : '')
+            + `<div style="margin-top:8px"><button data-cm ${cl ? '' : 'disabled style="opacity:.5"'}>📺 CMを見て回復(きょう あと${cl}回)</button> <button data-x>まつ</button></div>`;
+          o.querySelector('[data-go]')?.addEventListener('click', e => { e.stopPropagation(); sfx('give'); save(); clearInterval(tm); o.remove(); if (!m.built) { try { ctx.close(); } catch (er) { } } setTimeout(() => { try { MS.go(m); } catch (er) { } }, 250); });
+          o.querySelector('[data-cm]')?.addEventListener('click', e => { e.stopPropagation(); if (!cmLeft()) return; S.cm.n++; clearInterval(tm); o.remove(); releaseAll('CMを見てくれて ありがとう!(いまは仮)', true); });   // TODO: 広告SDKをつないだら、見終わった合図で releaseAll を呼ぶ
+        };
+        draw(); tm = setInterval(draw, 5000); o.onclose = () => clearInterval(tm);
+      }
+      function releaseAll(why, keepMs) {
+        const rest = resting(); if (!keepMs) { if (S.ms) S.msLast = S.ms.id; S.ms = null; } delete S.recov; if (!rest.length) { save(); return; }
+        if (keepMs) S.ms = null;
+        rest.forEach(o => { o.cd = 0; o.ch = CFG.genCharge(o.lv); genUI(o); const c = center(o); setTimeout(() => { burst(c.x, c.y, 16, ['#ffc400', '#fff', GENS[o.g].color]); sfx('unlock'); pop(els.get(o.u), 1.4); }, 700); });
+        save(); setTimeout(() => toast(`✨ ${why || '勉強ありがとう!'} 生成機が すぐ使えるよ`), 700);
+      }
+      function checkRecov() {
+        if (!resting().length) { if (S.ms) { S.ms = null; save(); } return; }
+        msEnsure(); if (S.ms && msStat().done) releaseAll(`「${S.ms.n}」クリア!`);
+      }
+
+      // ---- ショップ(ダイヤ・コイン・今日の厳選・特別な星) ----
+      // TODO(決済): ダイヤの購入は いまは仮(押すと もらえる)。ストアの決済をつないだら buyGems の中だけ直す
+      const GM = { get: () => (ctx.gems ? ctx.gems.get() : (S.gm || 0)), spend: n => (ctx.gems ? !!ctx.gems.spend(n) : ((S.gm || 0) >= n ? (S.gm -= n, save(), true) : false)), add: n => { if (ctx.gems) { if (ctx.gems.add) ctx.gems.add(n); else return false; } else { S.gm = (S.gm || 0) + n; save(); } return true; } };
+      const buyGems = n => { if (!GM.add(n)) { toast('ここでは ダイヤを買えないみたい'); return false; } sfx('unlock'); toast(`💎 ${n}こ もらった!(テスト用)`); return true; };
+      function picks() {
+        const dk = new Date().toDateString(); let h = 7; for (const c of dk) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+        if (!S.shop || S.shop.d !== dk) S.shop = { d: dk, got: {} };
+        return Object.keys(GENS).map((g, i) => { const ln = GENS[g].lines[(h + i) % 2], top = LINES[ln].items.length, lv = Math.min(top, 6 + ((h >>> (i * 3)) % 3)); return { g, ln, lv, price: Math.max(1, lv - 5) }; });
+      }
+      function grant(o, from) { const to = nearestEmpty(Math.floor(N / 2)); if (to >= 0) { const it = { u: ++S.n, ...o, b: null, s: null }; dropIn(it, to, from || { x: root.clientWidth / 2, y: root.clientHeight / 2 }); if (it.t === 'it') see(it); } else { S.inbox.push(o); toast('盤面がいっぱいなので 🎁とどいた に入れたよ'); } save(); refresh(); }
+      function shop() {
+        const o = overlay(''); 
+        const draw = () => {
+          const P = picks(), gm = GM.get();
+          o.querySelector('.mg-card').innerHTML = `<h3>🛒 ショップ</h3><div class="mg-shw">💎 <b>${gm}</b>　🪙 <b>${Math.floor(ctx.wallet.get()).toLocaleString('ja-JP')}</b></div>`
+            + `<div class="mg-sht">✨ きょうの厳選(まいにち かわる)</div><div class="mg-shg">` + P.map((p, i) => { const d = defOf({ t: 'it', ln: p.ln, lv: p.lv }), got = S.shop.got[p.g]; return `<button class="mg-shi" data-pick="${i}" ${got ? 'disabled' : ''}><span class="mg-sha">${art(d)}</span><small>${esc(d.name)} Lv${p.lv}</small><em>${got ? 'かった' : '💎' + p.price}</em></button>`; }).join('') + `</div>`
+            + `<div class="mg-sht">🌟 とくべつな道具</div><div class="mg-shg"><button class="mg-shi" data-sup><span class="mg-sha"><b class="mg-e">🌟</b></span><small>特別な星<br>Lv5以上も +1</small><em>💎1</em></button><button class="mg-shi" data-coin><span class="mg-sha"><b class="mg-e">🪙</b></span><small>コイン 1,000</small><em>💎1</em></button></div>`
+            + `<div class="mg-sht">💎 ダイヤを買う</div><div class="mg-shg">` + [1, 5, 10].map(n => `<button class="mg-shi" data-gem="${n}"><span class="mg-sha"><b class="mg-e">💎</b></span><small>ダイヤ ${n}こ</small><em>$${n}</em></button>`).join('') + `</div><p style="font-size:10px;color:#8a76a6;margin:4px 0 8px">※ 決済は じゅんび中。いまは 押すと もらえます(テスト用)</p><button data-x>とじる</button>`;
+          const pay = n => { if (GM.get() < n || !GM.spend(n)) { sfx('bad'); toast('💎ダイヤが たりないよ。下の「ダイヤを買う」から どうぞ'); return false; } return true; };
+          o.querySelectorAll('[data-pick]').forEach(b => b.onclick = e => { e.stopPropagation(); const p = P[+b.dataset.pick]; if (S.shop.got[p.g] || !pay(p.price)) return; S.shop.got[p.g] = 1; sfx('unlock'); grant({ t: 'it', ln: p.ln, lv: p.lv }, rel(b)); draw(); });
+          o.querySelector('[data-sup]').onclick = e => { e.stopPropagation(); if (!pay(1)) return; grant({ t: 'tool', k: 'sup' }, rel(e.currentTarget)); sfx('unlock'); toast('🌟 特別な星を 手に入れた!'); draw(); };
+          o.querySelector('[data-coin]').onclick = e => { e.stopPropagation(); if (!pay(1)) return; ctx.wallet.add(1000, 'shop'); sfx('unlock'); toast('🪙 1,000 コイン!'); draw(); };
+          o.querySelectorAll('[data-gem]').forEach(b => b.onclick = e => { e.stopPropagation(); if (buyGems(+b.dataset.gem)) draw(); });
         };
         draw();
       }
-      function releaseAll(why) {
-        const rest = S.cells.filter(o => o && o.t === 'gen' && o.cd); S.recov = null; if (!rest.length) return; save();
-        rest.forEach(o => { o.cd = 0; o.ch = CFG.genCharge(o.lv); genUI(o); const c = center(o); setTimeout(() => { burst(c.x, c.y, 16, ['#ffc400', '#fff', GENS[o.g].color]); sfx('unlock'); pop(els.get(o.u), 1.4); }, 700); });
-        setTimeout(() => toast(`✨ ${why || '勉強ありがとう!'} 生成機が すぐ使えるよ`), 700);
-      }
-      function checkRecov() {
-        if (!S.recov) return; const rest = S.cells.some(o => o && o.t === 'gen' && o.cd); if (!rest) { S.recov = null; return; }
-        let done = false; try { if (env.studyPlays && env.studyPlays(S.recov.id) > (S.recov.pl || 0)) done = true; } catch (e) { }   // 終わりまでやった
-        if (!done && studySec() - S.recov.base >= 60) done = true;   // 勉強の時間が1分たまった
-        if (!done && S.recov.t && Date.now() - S.recov.t >= 120000) done = true;   // 離れて2分以上たった(途中でやめても解放)
-        if (done) releaseAll(`「${S.recov.n}」ありがとう!`);
+      // ⬆️を Lv5以上の品に使おうとした時: 特別な星(💎1)を その場で買って使える
+      function supAsk(t) {
+        const d = defOf(t), o = overlay(''); 
+        const draw = () => {
+          const gm = GM.get();
+          o.querySelector('.mg-card').innerHTML = `<h3>🌟 特別な星が ひつよう</h3><p style="font-size:13px;margin:6px 0 10px">${esc(d.name)}(Lv${t.lv})は、ふつうの⬆️では 上げられないよ。<br><b>特別な星(💎1)</b>なら、いますぐ Lv${t.lv + 1} に!</p><div class="mg-shw">もっているダイヤ 💎 <b>${gm}</b></div>`
+            + (gm >= 1 ? `<button data-use style="background:linear-gradient(160deg,#ffd76a,#ffb020)!important;color:#5a3a00!important;font-size:15px;padding:10px 22px!important">💎1で いますぐ上げる</button>` : `<button data-buy style="background:linear-gradient(160deg,#9fd0ff,#5aa8ff)!important;color:#fff!important;font-size:15px;padding:10px 22px!important">💎1こ 買う($1)</button>`) + ` <button data-x>やめる</button>`;
+          o.querySelector('[data-buy]')?.addEventListener('click', e => { e.stopPropagation(); if (buyGems(1)) draw(); });
+          o.querySelector('[data-use]')?.addEventListener('click', e => { e.stopPropagation(); if (byU(t.u) !== t || t.b == null) { o.remove(); return; } if (!GM.spend(1)) { sfx('bad'); draw(); return; } const c = center(t); o.remove(); reform(t, t.ln, t.lv + 1); sfx('merge'); ftext(c.x, c.y - CS * 0.3, '🌟', '#e87a00'); sel = null; save(); refresh(); });
+        };
+        draw();
       }
 
       // ---- 演出 ----
@@ -338,7 +385,7 @@ export function createMergeApp(env = {}) {
         if (g.cd) { shake(el); sfx('bad'); restDialog(g); return; }
         if (S.en <= 0) { shake(el); sfx('bad'); toast('⚡エネルギーがないよ。英語で回復しよう!'); pop2(elQb); return; }
         const to = nearestEmpty(g.b); if (to < 0) { shake(el); sfx('bad'); toast('盤面がいっぱい! 重ねるか、売るか、保管しよう'); return; }
-        S.en--; g.ch--; if (g.ch <= 0) g.cd = Date.now() + CFG.genRecharge * 1000; S.first = false; root.querySelectorAll('.first').forEach(e => e.classList.remove('first'));
+        S.en--; g.ch--; if (g.ch <= 0) { g.cd = Date.now() + CFG.genRecharge(g.lv) * 1000; msEnsure(); } S.first = false; root.querySelectorAll('.first').forEach(e => e.classList.remove('first'));
         const top = CFG.spawnTop(g.lv), r = CFG.spawnR(g.lv); let w = [], sum = 0; for (let l = 1; l <= top; l++) { w.push(Math.pow(r, l - 1)); sum += w[l - 1]; }
         let x = Math.random() * sum, lv = 1; for (let l = 0; l < top; l++) { x -= w[l]; if (x <= 0) { lv = l + 1; break; } }
         const o = { u: ++S.n, t: 'it', ln: GENS[g.g].lines[rnd(2)], lv, b: null, s: null };
@@ -367,7 +414,7 @@ export function createMergeApp(env = {}) {
       let combo = 0, comboT = 0;
       // ---- 道具: ハサミ(Lv-1で2つ)・アップグレード(Lv+1)・しゅるい変換(Lv-1で、ほしがられてる別ライン) ----
       const topOf = ln => (LINES[ln].mergeMax || LINES[ln].items.length);
-      function toolOk(o, t) { if (!t || t.t !== 'it' || t.b == null) return false; if (o.k === 'cut') return t.lv >= 2 && nearestEmpty(t.b) >= 0; if (o.k === 'up') return t.lv <= 4 && t.lv < topOf(t.ln); return t.lv >= 2 && swapLines(t).length > 0; }
+      function toolOk(o, t) { if (!t || t.t !== 'it' || t.b == null) return false; if (o.k === 'cut') return t.lv >= 2 && nearestEmpty(t.b) >= 0; if (o.k === 'up') return t.lv <= 4 && t.lv < topOf(t.ln); if (o.k === 'sup') return t.lv < topOf(t.ln); return t.lv >= 2 && swapLines(t).length > 0; }
       function swapLines(t) {
         const open = Object.keys(LINES).filter(ln => ln !== t.ln && Object.keys(GENS).some(g => genOpen(g) && GENS[g].lines.includes(ln)));
         const want = S.act.flatMap(a => a.w).filter(w => !w.got).map(w => w.ln).filter(ln => open.includes(ln));
@@ -377,7 +424,7 @@ export function createMergeApp(env = {}) {
       function useTool(o, t) {
         if (!toolOk(o, t)) return false; const c = center(t);
         if (o.k === 'cut') { const to = nearestEmpty(t.b), ln = t.ln, lv = t.lv - 1; reform(t, ln, lv); dropIn({ u: ++S.n, t: 'it', ln, lv, b: null, s: null }, to, c); }
-        else if (o.k === 'up') reform(t, t.ln, t.lv + 1);
+        else if (o.k === 'up' || o.k === 'sup') reform(t, t.ln, t.lv + 1);
         else { const L = swapLines(t); reform(t, L[rnd(L.length)], t.lv - 1); }
         if ((o.n || 1) > 1) { o.n--; tooLabel(o); moveEl(o); } else { take(o); rm(o); }
         sel = null; sfx('merge'); ftext(c.x, c.y - CS * 0.3, TOOLS[o.k].icon, '#e87a00'); save(); refresh(); return true;
@@ -537,6 +584,7 @@ export function createMergeApp(env = {}) {
         const p = CFG.slotPrice(S.slots); if (ctx.wallet.get() < p) { sfx('bad'); toast(`コインが足りないよ(🪙${p})`); return; }
         if (!ctx.wallet.spend(p, 'merge:slot')) return; S.slots++; sfx('unlock'); drawSlots(); save(); toast('保管枠が ふえた!');
       }
+      $('.mg-shop').onclick = () => { sfx('tap'); shop(); };
       $('.mg-home').onclick = () => { sfx('tap'); try { ctx.close(); } catch (e) { } };
       elInb.onclick = () => {
         if (!S.inbox.length) { sfx('tap'); toast('とどいた物は ないよ(住人にわたすと、ときどきパーツがとどく)'); return; }
@@ -584,7 +632,7 @@ export function createMergeApp(env = {}) {
         bd.onclick = () => { sfx('tap'); S.dir = S.dir === 'je' ? 'ej' : 'je'; save(); showCtl(); tk++; ask(); };
         o.querySelector('[data-test]').onclick = () => { try { env.openTest && env.openTest(); } catch (e) { } };
         const ask = async () => {
-          setGg(); if (S.en >= CFG.enMax) { tk++; w.textContent = '⚡ まんたん!'; sub.textContent = '生成機で使ってから、また来てね'; ch.innerHTML = ''; return; }
+          setGg(); if (S.en >= CFG.enMax && !(S.ms && S.ms.built)) { tk++; w.textContent = '⚡ まんたん!'; sub.textContent = '生成機で使ってから、また来てね'; ch.innerHTML = ''; return; }
           const my = ++tk, Q0 = await nextQ(); if (my !== tk || !open || !o.isConnected || !Q0) return;
           let Q = Q0; const je = S.dir === 'je';
           if (je) { const en = [...new Set([...qPool.map(x => x.w.en), ...QUIZ_FB.map(x => x[0])].filter(x => x && x !== Q0.w.en))]; Q = { w: { en: Q0.ans }, ans: Q0.w.en, ch: shuf([Q0.w.en, ...shuf(en).slice(0, 3)]), ex: Q0.ex, fb: Q0.fb }; }
@@ -594,7 +642,7 @@ export function createMergeApp(env = {}) {
             const ok = Q.ch[+b.dataset.k] === Q.ans; ch.querySelectorAll('button').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.classList.add('ok'); else if (x === b) x.classList.add('ng'); });
             try { !Q.fb && env.record && env.record(Q0, ok); } catch (e) { }
             if (je) { try { env.speak && env.speak(Q0.w.en); } catch (e) { } }
-            if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; sfx('quizok'); setGg(); if (streak >= 3) gg.textContent += ` ・ 🔥${streak}連続!`; sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
+            if (ok) { S.qok = (S.qok || 0) + 1; streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; sfx('quizok'); setGg(); if (streak >= 3) gg.textContent += ` ・ 🔥${streak}連続!`; sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
             save(); setTimeout(() => { if (open) ask(); }, ok ? 700 : 1400);
           });
         };
@@ -650,6 +698,7 @@ export function createMergeApp(env = {}) {
           if (!t) { put(o, { b: i }); sfx('land'); }
           else if (t === o) moveEl(o);
           else if (o.t === 'tool' && o.k === 'cut' && t.t === 'tool' && t.k === 'cut') { t.n = (t.n || 1) + (o.n || 1); take(o); rm(o); tooLabel(t); sfx('merge'); sel = null; save(); refresh(); }
+          else if (o.t === 'tool' && o.k === 'up' && t.t === 'it' && !t.lk && t.lv >= 5 && t.lv < topOf(t.ln)) { moveEl(o); supAsk(t); return; }
           else if (o.t === 'tool') { if (!useTool(o, t)) { moveEl(o); shake(els.get(t.u)); sfx('bad'); toast('そこには使えないよ'); } return; }
           else { const res = mergeOf(o, t); if (res) { doMerge(o, t, res); return; } if (t.lk || t.gl || (from.s != null && t.t === 'gen')) { moveEl(o); shake(els.get(t.u)); sfx('bad'); } else { take(o); put(t, from); put(o, { b: i }); sfx('land'); } }
         } else {
