@@ -95,7 +95,7 @@ const CSS = `
 .mg-combo{position:absolute;right:10px;top:60px;font-size:22px;color:#ff8a1e;text-shadow:0 2px 0 #fff,0 0 6px #fff,0 0 6px #fff;pointer-events:none}
 .mg-toast{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);background:rgba(60,40,85,.94);color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:45;max-width:94%;overflow:hidden;text-overflow:ellipsis}
 .mg-home{flex:none;width:34px;height:32px;border:0;border-radius:11px;background:#fff;box-shadow:0 2px 0 #b79ad3;font-size:17px;padding:0}
-.mg-qt{display:flex;gap:6px;justify-content:center;align-items:center;margin:4px 0;font-size:11px}.mg-qt button{white-space:nowrap;border:0;border-radius:999px;padding:5px 10px;background:#efe3ff;color:#5b3f86;font-weight:800;font-size:11px}.mg-qr{font-size:10px;color:#6a548a}
+.mg-qt{display:flex;gap:6px;justify-content:center;align-items:center;margin:4px 0;font-size:11px}.mg-qt button{white-space:nowrap;border:0;border-radius:999px;padding:5px 10px;background:#efe3ff;color:#5b3f86;font-weight:800;font-size:11px}.mg-qg.full{display:block;color:#e0457b;font-weight:800;font-size:12px;margin-top:2px}.mg-qr{font-size:10px;color:#6a548a}
 .mg-ovl{position:absolute;inset:0;background:rgba(50,30,75,.6);z-index:50;display:flex;align-items:center;justify-content:center;animation:mgFade .2s;touch-action:auto}
 .mg-card{width:min(92%,360px);max-height:88%;overflow:auto;background:#fffaf5;border-radius:22px;padding:16px;box-shadow:0 12px 30px rgba(40,25,60,.4);animation:mgPop .28s cubic-bezier(.3,1.5,.5,1);text-align:center}
 .mg-card h3{margin:0 0 8px;font-size:16px}
@@ -575,13 +575,16 @@ export function createMergeApp(env = {}) {
         const o = overlay(`<h3>✏️ 英語で ⚡回復 <small class="mg-qg"></small></h3><div class="mg-qt"><button data-d="-1">⬇ やさしく</button><span class="mg-qr"></span><button data-d="1">⬆ むずかしく</button></div><div class="mg-qt"><button data-dir></button><button data-test>📝 語彙数テスト</button></div><div class="mg-qw">…</div><div class="mg-qs"></div><div class="mg-qc"></div><button data-x>もどる</button>`);
         o.onclose = () => { open = false; try { env.speakStop && env.speakStop(); } catch (e) { } };
         const w = o.querySelector('.mg-qw'), sub = o.querySelector('.mg-qs'), ch = o.querySelector('.mg-qc'), gg = o.querySelector('.mg-qg'), rg = o.querySelector('.mg-qr'), bd = o.querySelector('[data-dir]');
+        let fullSaid = false;
+        const fullTag = () => (S.en >= CFG.enMax ? '⚡まんたん! いまは れんしゅう' : '');
+        const setGg = () => { gg.textContent = (got ? `⚡+${got} ` : '') + fullTag(); gg.classList.toggle('full', S.en >= CFG.enMax); if (S.en >= CFG.enMax && !fullSaid) { fullSaid = true; if (got) { toast('⚡ まんたん! ここからは れんしゅうだよ'); sfx('quizok'); } } };
         const showCtl = () => { try { rg.textContent = (env.lvStep && env.lvStep(0)) || ''; } catch (e) { } bd.textContent = S.dir === 'je' ? '日→英' : '英→日'; };
         let tk = 0;   // 切り替えたら、前の問題の結果は捨てる
         o.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { sfx('tap'); try { env.lvStep && env.lvStep(+b.dataset.d); } catch (e) { } qPool = []; showCtl(); tk++; ask(); });
         bd.onclick = () => { sfx('tap'); S.dir = S.dir === 'je' ? 'ej' : 'je'; save(); showCtl(); tk++; ask(); };
         o.querySelector('[data-test]').onclick = () => { try { env.openTest && env.openTest(); } catch (e) { } };
         const ask = async () => {
-          const my = ++tk, Q0 = await nextQ(); if (my !== tk || !open || !o.isConnected || !Q0) return;
+          setGg(); const my = ++tk, Q0 = await nextQ(); if (my !== tk || !open || !o.isConnected || !Q0) return;
           let Q = Q0; const je = S.dir === 'je';
           if (je) { const en = [...new Set([...qPool.map(x => x.w.en), ...QUIZ_FB.map(x => x[0])].filter(x => x && x !== Q0.w.en))]; Q = { w: { en: Q0.ans }, ans: Q0.w.en, ch: shuf([Q0.w.en, ...shuf(en).slice(0, 3)]), ex: Q0.ex, fb: Q0.fb }; }
           w.textContent = Q.w.en; sub.textContent = je ? 'えいごは どれ?' : 'いみは どれ?'; if (!je) { try { env.speak && env.speak(Q.w.en); } catch (e) { } }
@@ -590,7 +593,7 @@ export function createMergeApp(env = {}) {
             const ok = Q.ch[+b.dataset.k] === Q.ans; ch.querySelectorAll('button').forEach(x => { x.disabled = true; if (Q.ch[+x.dataset.k] === Q.ans) x.classList.add('ok'); else if (x === b) x.classList.add('ng'); });
             try { !Q.fb && env.record && env.record(Q0, ok); } catch (e) { }
             if (je) { try { env.speak && env.speak(Q0.w.en); } catch (e) { } }
-            if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; sfx('quizok'); gg.textContent = `⚡+${got}` + (streak >= 3 ? ` ・ 🔥${streak}連続!` : ''); sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
+            if (ok) { streak++; const bonus = Math.min(4, Math.floor(streak / 3)), g = addEn(CFG.quizGain + bonus, rel(b)); got += g; sfx('quizok'); setGg(); if (streak >= 3) gg.textContent += ` ・ 🔥${streak}連続!`; sub.textContent = (streak >= 3 ? `🔥${streak}連続! ⚡+${CFG.quizGain + bonus} ` : '') + (Q.ex ? Q.ex.en : 'せいかい!'); } else { streak = 0; sfx('quizng'); sub.textContent = `こたえ: ${Q.ans}`; }
             save(); setTimeout(() => { if (open) ask(); }, ok ? 700 : 1400);
           });
         };
