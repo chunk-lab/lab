@@ -213,6 +213,7 @@ export function useGlb(ch, id, { height } = {}) {
       a.stop(); mixer.stopAllAction(); holder.position.y = y0; if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
     } catch (e) { }
     // すわる・ひざをつく・ピアノ: 骨を直接まげる(3Dの体には、この動きのデータがないので)。まげた分だけ腰を下げて、いすの高さに合わせる
+    const hipsV = new THREE.Vector3();
     const Bn = n => (model.getObjectByName('mixamorig' + n) || model.getObjectByName('mixamorig:' + n)), bn = { lu: Bn('LeftUpLeg'), ll: Bn('LeftLeg'), ru: Bn('RightUpLeg'), rl: Bn('RightLeg'), la: Bn('LeftArm'), ra: Bn('RightArm'), lf: Bn('LeftForeArm'), rf: Bn('RightForeArm') };
     const dq = new THREE.Quaternion(), eu = new THREE.Euler(); let poseK = 0, poseName = null;
     const rest = new Map(Object.values(bn).filter(Boolean).map(b => [b, b.quaternion.clone()]));   // 動かす前の向き(毎回ここからまげるので、ずれがたまらない)
@@ -243,6 +244,8 @@ export function useGlb(ch, id, { height } = {}) {
       if (cur === act.walk) act.walk.timeScale = Math.max(0.6, Math.min(1.6, speed / 2.2));
       mixer.update(dt);
       if (act.lay || act.sleep) wrap.rotation.y = layK ? (lieClip === 'lay' ? Math.PI / 2 : 0) : 0;   // ねる動きは体が横(x)向きなので、キャラの前後(z)に沿うように回す(頭が後ろ側)
+      // 座る・寝る: 腰がキャラの真ん中(x,z=0)にくるように、毎コマそろえる(体ごとに腰の位置がちがっても、途中で横にずれたり、寝る場所がずれたりしない)
+      if (sitK || layK) { const hb = Bn('Hips'); if (hb) { wrap.updateMatrixWorld(true); hipsV.setFromMatrixPosition(hb.matrixWorld); wrap.worldToLocal(hipsV); holder.position.x -= hipsV.x; holder.position.z -= hipsV.z; } }
       // 家の中などの「寝転ぶ」: あおむけに倒す(3Dの体には寝る動きがないので、向きだけ変える)
       const lie = ch.pose === 'lie' && !act.lay && !act.sleep; if (lie !== !!ch._lie) { ch._lie = lie; wrap.rotation.x = lie ? -Math.PI / 2 : 0; wrap.position.set(0, lie ? 0.12 : 0, lie ? ch.height / 2 : 0); }
       const want = (ch.pose === 'sit' && !act.sit) || ch.pose === 'piano' || ch.pose === 'kneel' ? ch.pose : null;
@@ -260,7 +263,7 @@ export function useGlb(ch, id, { height } = {}) {
       let ty = -drop +  Math.max(footOf.get(cur) ?? -Infinity, fadeT > 0 && prev ? footOf.get(prev) ?? -Infinity : -Infinity); if (sitK) ty = (ch.seatH != null ? ch.seatH : 0.45) / ch.height - sitContN;   // お尻の下を、座面に合わせる
       if (rideK) ty = (ch.rideY || 0) / ch.height - rideM[rideN].cont;
       if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * (rideK && ch.rideSnap ? 1 : Math.min(1, dt * 8));   // うかんで上下する間は、乗っている人をおくれずに合わせる
-      { const tx = rideK ? -rideM[rideN].dx : sitK ? -sitDX : baseX, tz = rideK ? -rideM[rideN].dz : sitK ? -sitDZ : baseZ, kk = Math.min(1, dt * 8); holder.position.x += (tx - holder.position.x) * kk; holder.position.z += (tz - holder.position.z) * kk; }   // 座るときは、腰が座面の真上に来るように
+      if (!(sitK || layK)) { const tx = rideK ? -rideM[rideN].dx : baseX, tz = rideK ? -rideM[rideN].dz : baseZ, kk = Math.min(1, dt * 8); holder.position.x += (tx - holder.position.x) * kk; holder.position.z += (tz - holder.position.z) * kk; }   // 座るときは、腰が座面の真上に来るように
     };
     (window.__hipsL = window.__hipsL || []).push({ id, f: () => { ch.root.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const w = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld), r = new THREE.Vector3().setFromMatrixPosition(ch.root.matrixWorld); return [+(w.x - r.x).toFixed(3), +(w.y - r.y).toFixed(3), +(w.z - r.z).toFixed(3), +holder.position.x.toFixed(3), +holder.position.z.toFixed(3), +(-sitDX).toFixed(3), String(ch.pose), +baseX.toFixed(3)]; } });
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };
