@@ -46,11 +46,12 @@ export function openCharView(host, ctx = {}, onClose) {
 
   let ch = null, cur = list[0], motion = 'idle', spin = true, yaw = 0.35, pitch = 0.12, zoom = 1, framed = false, h = 1.5, alive = true, last = performance.now(), waveT = 0;
 
+  const built = new Map();   // 一度出したキャラは、この画面を閉じるまで捨てずに残す(もう一度見るときの組み直しをなくす)
   function show(c) {
     cur = c;
     if (ch) { scene.remove(ch.root); ch = null; }
     framed = false;
-    ch = c.mascot ? useChunkkunGlb(makeChunkkun()) : useGlb(makeCharacter(c.look), c.glb);
+    ch = built.get(c.key); if (!ch) { ch = c.mascot ? useChunkkunGlb(makeChunkkun()) : useGlb(makeCharacter(c.look), c.glb); built.set(c.key, ch); }
     ch.root.position.set(0, 0, 0); scene.add(ch.root); setMotion('idle');
     nm.textContent = c.name;
     [...ls.children].forEach(b => { b.style.cssText = chip(b.dataset.k === c.key); });
@@ -100,7 +101,7 @@ export function openCharView(host, ctx = {}, onClose) {
   requestAnimationFrame(frame);
   show(cur);
 
-  const close = () => { alive = false; if (ch) scene.remove(ch.root); renderer.dispose(); root.remove(); onClose?.(); };
+  const close = () => { alive = false; if (ch) scene.remove(ch.root); built.forEach(x => { try { x.glbOff && x.glbOff(); } catch (e) { } }); built.clear(); renderer.dispose(); root.remove(); onClose?.(); };
   root.querySelector('[data-x=back]').onclick = close;
   return { close };
 }
