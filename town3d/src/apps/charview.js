@@ -9,7 +9,7 @@ const ink = '#5a4a6b';
 const chip = (on) => `border:0;border-radius:999px;padding:8px 13px;font:inherit;font-size:13px;font-weight:800;white-space:nowrap;cursor:pointer;color:${on ? '#fff' : ink};background:${on ? 'linear-gradient(160deg,#c9b8ea,#8f7bd0)' : '#fff'};box-shadow:0 1px 6px #0002`;
 
 // 有料で売る予定のMZ版。ふだんは読みこまない(運営のときだけ一覧に出て、選んだ時にはじめて読みこむ)。動きは、今の住人(はな)のものを借りる
-const PAID = [['choco', 'ちょこ'], ['hana', 'はな'], ['mie', 'ミエ'], ['shiori', 'しおり'], ['luna', 'るな'], ['koharu', 'こはる'], ['yuzu', 'ゆず']];
+const PAID = [['choco', 'ちょこ'], ['hana', 'はな'], ['mii', 'ミイ'], ['shiori', 'しおり'], ['luna', 'るな'], ['koharu', 'こはる'], ['yuzu', 'ゆず']];
 const isAdmin = () => { try { return JSON.parse(localStorage.getItem('cs:core:admin')) === true; } catch (e) { return false; } };
 
 // 見られるキャラの一覧
@@ -18,7 +18,7 @@ function roster(player) {
   const list = [{ key: 'me', name: '自分', glb: myLook === 'ren' ? 'self:ren' : 'self:mio', look: LOOKS[myLook] }];
   list.push({ key: 'pm', name: '他の人(女)', glb: 'player:mio', look: LOOKS.mio }, { key: 'pr', name: '他の人(男)', glb: 'player:ren', look: LOOKS.ren });
   for (const r of RESIDENTS) if (GLB_MODELS[r.id]) list.push({ key: r.id, name: r.name || r.id, glb: r.id, look: r.look });
-  if (isAdmin()) for (const [id, name] of PAID) { const k = 'paid:' + id; if (!GLB_MODELS[k]) GLB_MODELS[k] = { url: `paid/${id}_mz.glb`, rotY: 0, animFrom: 'hana' }; list.push({ key: k, name: name + ' MZ版', glb: k, look: LOOKS.mio }); }
+  if (isAdmin()) for (const [id, name] of PAID) { const k = 'paid:' + id; if (!GLB_MODELS[k]) GLB_MODELS[k] = { url: `paid/${id === 'mii' ? 'mie' : id}_mz.glb`, rotY: 0, animFrom: 'hana' }; list.push({ key: k, name: name + ' MZ版', glb: k, look: LOOKS.mio }); }
   const mk = RESIDENTS.find(r => r.mascot); if (mk) list.push({ key: 'chunkkun', name: mk.name || 'チャンクくん', mascot: true });
   return list;
 }

@@ -107,6 +107,17 @@ export function useGlb(ch, id, { height } = {}) {
     const holder = new THREE.Group(); holder.rotation.y = spec.rotY; holder.add(model);
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
     const restQ = new Map(); model.traverse(o => { if (o.isBone) restQ.set(o.name, o.quaternion.clone()); });   // 動かす前の「気をつけ」姿勢(あとで外の動きを合わせる基準)
+    if (id.startsWith('paid:') && src) {   // MZ版: 動きは「はな」から借りる。はなの前腕・手には、骨の軸まわりのねじれ(約100°)が最初から入っているので、その分だけ戻して当てる(腕のねじれ防止)
+      const hr = new Map(); src.scene.traverse(o => { if (o.isBone) hr.set(o.name, o.quaternion.clone()); });
+      const q = new THREE.Quaternion();
+      gltf.animations = gltf.animations.map(cl => new THREE.AnimationClip(cl.name, cl.duration, cl.tracks.map(t => {
+        const m = /^(.*)\.quaternion$/.exec(t.name), h = m && hr.get(m[1]); if (!h) return t;
+        const th = 2 * Math.atan2(h.y, h.w); if (Math.abs(th) < 0.2) return t;
+        const ry = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -th), a = Float32Array.from(t.values);
+        for (let i = 0; i < a.length; i += 4) { q.set(a[i], a[i + 1], a[i + 2], a[i + 3]).premultiply(ry); a[i] = q.x; a[i + 1] = q.y; a[i + 2] = q.z; a[i + 3] = q.w; }
+        return new THREE.QuaternionKeyframeTrack(t.name, t.times, a);
+      })));
+    }
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
