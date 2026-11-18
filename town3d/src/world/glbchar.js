@@ -87,6 +87,40 @@ export function setGlbSize(k, v) {   // 「せってい」のつまみから。�
 }
 
 const SIT_HIP = 0.17;   // 腰の骨から座面までの高さ(m)の見当(実機で合わせる)
+// 他の体(はな)から借りた動きを、この体の骨組みに合わせる。骨ごとに「皮をつけた時の向き(bind)」がちがうので、
+// 各コマで『はなの骨の向き(world) × はなのbind⁻¹ × この体のbind』を求め、親との差にして入れなおす(腕・足のねじれ防止)
+function bindRot(root) {
+  const m = new Map(), q = new THREE.Quaternion(), tmp = new THREE.Matrix4();
+  root.updateMatrixWorld(true);
+  root.traverse(o => { if (!o.isSkinnedMesh) return; o.skeleton.bones.forEach((b, i) => { if (m.has(b.name)) return; tmp.copy(o.skeleton.boneInverses[i]).invert().decompose(new THREE.Vector3(), q, new THREE.Vector3()); m.set(b.name, q.clone().normalize()); }); });
+  return m;
+}
+function retargetBorrowed(cl, srcScene, model) {
+  try {
+    const qt = cl.tracks.filter(t => /\.quaternion$/.test(t.name)); if (!qt.length) return cl;
+    const times = qt[0].times, N = times.length;
+    if (qt.some(t => t.times.length !== N)) return cl;
+    const trk = new Map(qt.map(t => [t.name.replace(/\.quaternion$/, ''), t]));
+    const Bh = bindRot(srcScene), Bm = bindRot(model);
+    const bones = []; srcScene.traverse(o => { if (o.isBone) bones.push(o); });
+    srcScene.updateMatrixWorld(true);
+    const parentRest = o => { const q = new THREE.Quaternion(); if (o.parent) o.parent.getWorldQuaternion(q); return q; };
+    const mzParent = new Map(); bones.forEach(b => { const mb = model.getObjectByName(b.name); if (mb) { const q = new THREE.Quaternion(); if (mb.parent && !mb.parent.isBone) mb.parent.getWorldQuaternion(q); mzParent.set(b.name, q); } });
+    const out = new Map(); trk.forEach((t, n) => out.set(n, new Float32Array(N * 4)));
+    const Wh = new Map(), Wm = new Map(), q = new THREE.Quaternion();
+    for (let i = 0; i < N; i++) {
+      for (const b of bones) {
+        const t = trk.get(b.name); const loc = t ? new THREE.Quaternion(t.values[i * 4], t.values[i * 4 + 1], t.values[i * 4 + 2], t.values[i * 4 + 3]) : b.quaternion.clone();
+        const pw = b.parent && b.parent.isBone ? Wh.get(b.parent.name) : parentRest(b);
+        const w = pw.clone().multiply(loc); Wh.set(b.name, w);
+        const bh = Bh.get(b.name), bm = Bm.get(b.name);
+        const wm = bh && bm ? w.clone().multiply(bh.clone().invert()).multiply(bm) : w.clone(); Wm.set(b.name, wm);
+        if (t) { const pm = b.parent && b.parent.isBone ? Wm.get(b.parent.name) : (mzParent.get(b.name) || parentRest(b)); q.copy(pm).invert().multiply(wm); const a = out.get(b.name); a[i * 4] = q.x; a[i * 4 + 1] = q.y; a[i * 4 + 2] = q.z; a[i * 4 + 3] = q.w; }
+      }
+    }
+    return new THREE.AnimationClip(cl.name, cl.duration, cl.tracks.map(t => { const n = t.name.replace(/\.quaternion$/, ''); return out.has(n) && /\.quaternion$/.test(t.name) ? new THREE.QuaternionKeyframeTrack(t.name, t.times, out.get(n)) : t; }));
+  } catch (e) { return cl; }
+}
 // 外から持ってきた動き(FBX)を、この体に合わせる。腰だけ向きがちがうので直し、腰の高さは体の大きさに合わせ、前後左右の移動は消す(その場で動く)
 const EXTRA = { bowl: { clip: null, json: BOWL, hipsY: BOWL_HIPS } };
 function fitClip(model, ex, restQ) {   // 元データそのまま(書き換えない)
@@ -107,17 +141,7 @@ export function useGlb(ch, id, { height } = {}) {
     const holder = new THREE.Group(); holder.rotation.y = spec.rotY; holder.add(model);
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
     const restQ = new Map(); model.traverse(o => { if (o.isBone) restQ.set(o.name, o.quaternion.clone()); });   // 動かす前の「気をつけ」姿勢(あとで外の動きを合わせる基準)
-    if (id.startsWith('paid:') && src) {   // MZ版: 動きは「はな」から借りる。はなの前腕・手には、骨の軸まわりのねじれ(約100°)が最初から入っているので、その分だけ戻して当てる(腕のねじれ防止)
-      const hr = new Map(); src.scene.traverse(o => { if (o.isBone) hr.set(o.name, o.quaternion.clone()); });
-      const q = new THREE.Quaternion();
-      gltf.animations = gltf.animations.map(cl => new THREE.AnimationClip(cl.name, cl.duration, cl.tracks.map(t => {
-        const m = /^(.*)\.quaternion$/.exec(t.name), h = m && hr.get(m[1]); if (!h) return t;
-        const th = 2 * Math.atan2(h.y, h.w); if (Math.abs(th) < 0.2) return t;
-        const ry = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -th), a = Float32Array.from(t.values);
-        for (let i = 0; i < a.length; i += 4) { q.set(a[i], a[i + 1], a[i + 2], a[i + 3]).premultiply(ry); a[i] = q.x; a[i + 1] = q.y; a[i + 2] = q.z; a[i + 3] = q.w; }
-        return new THREE.QuaternionKeyframeTrack(t.name, t.times, a);
-      })));
-    }
+    if (id.startsWith('paid:') && src) gltf.animations = gltf.animations.map(cl => retargetBorrowed(cl, src.scene, model));
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
