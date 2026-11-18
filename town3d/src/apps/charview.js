@@ -8,12 +8,17 @@ import { RESIDENTS } from '../game/npc.js';
 const ink = '#5a4a6b';
 const chip = (on) => `border:0;border-radius:999px;padding:8px 13px;font:inherit;font-size:13px;font-weight:800;white-space:nowrap;cursor:pointer;color:${on ? '#fff' : ink};background:${on ? 'linear-gradient(160deg,#c9b8ea,#8f7bd0)' : '#fff'};box-shadow:0 1px 6px #0002`;
 
+// 有料で売る予定のMZ版。ふだんは読みこまない(運営のときだけ一覧に出て、選んだ時にはじめて読みこむ)。動きは、今の住人(はな)のものを借りる
+const PAID = [['choco', 'ちょこ'], ['hana', 'はな'], ['mie', 'ミエ'], ['shiori', 'しおり'], ['luna', 'るな'], ['koharu', 'こはる'], ['yuzu', 'ゆず']];
+const isAdmin = () => { try { return JSON.parse(localStorage.getItem('cs:core:admin')) === true; } catch (e) { return false; } };
+
 // 見られるキャラの一覧
 function roster(player) {
   const myLook = player && typeof player.look === 'string' && LOOKS[player.look] ? player.look : 'mio';
   const list = [{ key: 'me', name: '自分', glb: myLook === 'ren' ? 'self:ren' : 'self:mio', look: LOOKS[myLook] }];
   list.push({ key: 'pm', name: '他の人(女)', glb: 'player:mio', look: LOOKS.mio }, { key: 'pr', name: '他の人(男)', glb: 'player:ren', look: LOOKS.ren });
   for (const r of RESIDENTS) if (GLB_MODELS[r.id]) list.push({ key: r.id, name: r.name || r.id, glb: r.id, look: r.look });
+  if (isAdmin()) for (const [id, name] of PAID) { const k = 'paid:' + id; if (!GLB_MODELS[k]) GLB_MODELS[k] = { url: `paid/${id}_mz.glb`, rotY: 0, animFrom: 'hana' }; list.push({ key: k, name: name + ' MZ版', glb: k, look: LOOKS.mio }); }
   const mk = RESIDENTS.find(r => r.mascot); if (mk) list.push({ key: 'chunkkun', name: mk.name || 'チャンクくん', mascot: true });
   return list;
 }
@@ -54,9 +59,10 @@ export function openCharView(host, ctx = {}, onClose) {
     motion = m; if (!ch) return;
     ch.pose = m === 'sit' ? 'sit' : (m === 'lie' || m === 'goro') ? 'lie' : null; ch.lieKind = m === 'goro' ? 'goro' : 'sleep'; ch.seatH = m === 'sit' ? 0.45 : null; stool.visible = m === 'sit';
     if (m === 'wave' && ch.wave) { ch.wave(); waveT = 3.2; }
+    if (m === 'bow' && ch.bow) { ch.bow(); waveT = 2.4; }
     [...mo.children].forEach(b => { b.style.cssText = chip(b.dataset.m === m); });
   }
-  mo.innerHTML = [['idle', 'たつ'], ['walk', 'あるく'], ['wave', '手をふる'], ['sit', 'すわる'], ['lie', 'ねる'], ['goro', 'ゴロゴロ']].map(([m, t]) => `<button data-m="${m}" style="${chip(false)}">${t}</button>`).join('');
+  mo.innerHTML = [['idle', 'たつ'], ['walk', 'あるく'], ['wave', '手をふる'], ['bow', 'おじぎ'], ['sit', 'すわる'], ['lie', 'ねる'], ['goro', 'ゴロゴロ']].map(([m, t]) => `<button data-m="${m}" style="${chip(false)}">${t}</button>`).join('');
   ls.innerHTML = list.map(c => `<button data-k="${c.key}" style="${chip(false)}">${c.name}</button>`).join('');
   mo.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (m) setMotion(m); };
   ls.onclick = e => { const k = e.target.closest('[data-k]')?.dataset.k; const c = list.find(x => x.key === k); if (c) show(c); };
@@ -82,7 +88,7 @@ export function openCharView(host, ctx = {}, onClose) {
     const w = cv.clientWidth, hh = cv.clientHeight; if (w && hh && (w !== sw || hh !== sh)) { sw = w; sh = hh; renderer.setSize(w, hh, false); cam.aspect = w / hh; cam.updateProjectionMatrix(); }
     if (ch) {
       if (!framed && (ch.glb || cur.mascot)) { framed = true; h = cur.mascot ? 1.0 : (ch.height || 1.5); }
-      if (waveT > 0) { waveT -= dt; if (waveT <= 0 && motion === 'wave') setMotion('idle'); }
+      if (waveT > 0) { waveT -= dt; if (waveT <= 0 && (motion === 'wave' || motion === 'bow')) setMotion('idle'); }
       ch.update(dt, motion === 'walk' ? 1.6 : 0);
     }
     if (spin) yaw += dt * 0.6;
