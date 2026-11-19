@@ -4,7 +4,7 @@ import { useGlb, GLB_MODELS, useChunkkunGlb } from '../world/glbchar.js';
 import { PLACES } from '../world/town_data.js';
 import { angleLerp } from '../core/core.js';
 
-// 予定は [時, 場所, 'in'(建物の中=見えない)]。台詞は時間帯ごと。menu は会話の選択肢
+// 予定は [時, 場所, 'in'(建物の中=見えない)]。時間帯ごとに、町に出ているのは5〜6人(早朝・午前・昼・夕方・夜・深夜で顔ぶれが変わる)。台詞は時間帯ごと。menu は会話の選択肢
 export const RESIDENTS = [
   {
     // そら君:英語の相談役。単語や表現を聞くと、例文・場面・ちがい・練習のしかたをノートにまとめてくれる
@@ -13,7 +13,7 @@ export const RESIDENTS = [
     homeLines: { enter: ['おじゃましまーす。へぇ、いい部屋じゃん', 'お、ここが家? 落ちつくね'], sit: ['となり、すわるよ', 'ふかふかだな〜'], lie: ['ベッドでごろーん…やば、寝そう'], goro: ['床ごろごろ、けっこういいじゃん', 'ふぁ〜、天井ってこんな色だったんだ'], talkLie: ['こうしてると、なんか話しやすいね', 'ねえ、最近どう?'], talk: ['なに話す?', 'いい部屋だね'] },
     persona: '英語が大好きな、気さくで面倒見のいい男の子。「〜だよ」「〜じゃん」と話す。人に教えるのが好きで、むずかしいことも、たとえ話でわかりやすく言いかえる。',
     tips: ["「How do you say 〜 in English?」で『〜って英語で何て言うの?』って聞けるよ", "「I see.」は『なるほど』。あいづちの定番だよ", "迷ったら、まず短い文で言ってみる。それが一番の近道じゃん", "「Could you say that again?」で『もう一回言って』。聞き返すのは全然はずかしくないよ", "単語は、例文ごと覚えると忘れにくいんだ"],
-    schedule: [[7, 'school'], [12, 'library'], [17, 'plaza'], [21, 'home', 'in']],
+    schedule: [[0, 'home', 'in'], [8, 'school'], [12, 'library'], [16, 'home', 'in']],
     lines: { morning: ['おはよう! 今日はどんな英語を使ってみる?', '朝は単語を覚えるのにいい時間なんだって。'], day: ['気になる単語や言い方があったら、なんでも聞いてよ。', '図書館で英語の本を読んでたんだ。'], evening: ['今日おぼえた英語、ひとつ使ってみた?', 'わかんない表現あったら、まとめてあげるよ。'], night: ['夜ふかしして英語の動画見ちゃうんだよね。'] },
     menu: [{ label: '英語の相談をする', act: 'consult' }, { label: 'そら君ノートを見る', act: 'soranote' }, { label: '一緒に歩こう', act: 'follow' }, { label: 'カフェでデートする', act: 'date' }, { label: '家においでよ', act: 'invite' }],
   },
@@ -23,49 +23,49 @@ export const RESIDENTS = [
     homeLines: { enter: ['おじゃましま〜す!', 'わぁ、ここがあなたの家?', 'おじゃまします〜。いい部屋!'], sit: ['となり、すわるね〜', 'ふかふかだ!'], lie: ['えへへ、ならんでごろ〜ん', 'ベッドふかふか〜!'], goro: ['ごろ〜ん。床ひんやりしてきもちい〜', 'ふぁ〜、ねむくなっちゃう', 'こうやってゴロゴロするの、すき'], talkLie: ['ねえねえ、天井見てると落ちつくね', 'こうしてると、なんでも話せちゃう気がする', 'ふふ、ゴロゴロ最高〜'], talk: ['おじゃましてま〜す。なに話す?', 'いいお部屋だね!'] },
     persona: '明るくて、ちょっとおっちょこちょいな女の子。好奇心が強く、町のうわさや季節のことをよく知っている。話すのが大好きで、相手の話にも本気で興味を持つ。「〜だよね」「〜かも!」とくだけた話し方。',
     tips: ["ねえねえ、「Guess what!」って『聞いて聞いて!』って意味なんだよ", "「I can't wait!」は『待ちきれない!』。わくわくしてる時に言うの", "「That's so cute!」って、かわいいもの見たらつい言っちゃう", "「No way!」は『うそでしょ!』。びっくりした時にね"],
-    schedule: [[8, 'park'], [11, 'cafe'], [14, 'shop'], [17, 'park2'], [20, 'home', 'in']],
+    schedule: [[0, 'home', 'in'], [8, 'park'], [11, 'cafe'], [14, 'shop'], [16, 'park2'], [20, 'home', 'in']],
     lines: { morning: ['おはよ! 今日なにする? どこか行こうよ。', '朝の公園、気持ちいいね!'], day: ['ねえ、ひま? 一緒にぶらぶらしない?', 'カフェの新作、気になってるんだよね。'], evening: ['夕方の町って、なんかいいよね。', 'ちょっと歩かない?'], night: ['もう暗いね。また明日あそぼ!'] },
     menu: [{ label: '一緒に歩こう', act: 'follow' }, { label: 'カフェでデートする', act: 'date' }, { label: '家においでよ', act: 'invite' }],
   },
   {
     id: 'mii', tips: ["「I'll have a coffee, please.」は、カフェで注文するときの定番ですよ〜", "「Could I have…?」は「Can I have…?」より、少していねいなんです", "「Take your time.」は『ゆっくりでいいよ』。わたし、よく言われます", "「Sounds good!」は、軽く『いいね』って返すのにぴったり", "「Cheers!」は乾杯だけじゃなく、『ありがとう』の意味でも使うんですって"], yomi: 'みい', persona: 'ゆったりしたお姉さん。やさしくて少しのんびり。カフェとカードが好きで、考えるのに時間をかける。', name: 'ミイ', role: 'カフェの常連', look: { skin: 0xffe6d6, hair: 0xf3c2a4, style: 'bob', top: 0xfff4e0, bottom: 0xffb3c1, shoes: 0xffffff, acc: 'ribbon', accColor: 0xa8e6cf },
-    schedule: [[7, 'plaza'], [10, 'cafe'], [15, 'park'], [18, 'cafe'], [22, 'home', 'in']],
+    schedule: [[0, 'home', 'in'], [8, 'plaza'], [10, 'cafe'], [12, 'home', 'in'], [16, 'park'], [18, 'cafe'], [20, 'home', 'in']],
     lines: { morning: ['おはよう。朝の広場って、空気がおいしいよね。'], day: ['カフェでカードしてるの。よかったら一局どう?', 'ゆっくり考えるのが好きなんだ。'], evening: ['夕方の公園、ちょっとさみしくて好き。'], night: ['そろそろ帰らなきゃ。'] },
     menu: [],
   },
   {
     id: 'baron', tips: ["ふはは、「Splendid!」は『素晴らしい!』。わが輩の口ぐせである!", "「I'm afraid…」で始めれば、悪い知らせも偉そうに言えるぞ", "「Indeed.」は『まったくだ』。重々しく言うのがコツだ!", "「Well done!」は『よくやった』。わが輩が言うと偉そうに聞こえるな", "「By the way」は『ところで』。話をそらすのはハッタリの基本だ"], yomi: 'はったりだんしゃく', persona: '大げさで自信家。「わが輩」と名乗り、ハッタリが多いが憎めない。ゲームセンターの記録の話が好き。', name: 'ハッタリ男爵', role: 'ゲームセンターの主', look: { skin: 0xf6d2bb, hair: 0xdcdcdc, style: 'short', top: 0xb79cd9, bottom: 0x4f4766, shoes: 0x2e2a3d, acc: 'tophat', accColor: 0x3f3a52 },
-    schedule: [[9, 'north'], [11, 'gamecenter'], [16, 'plaza2'], [19, 'gamecenter'], [23, 'home', 'in']],
+    schedule: [[0, 'gamecenter'], [1, 'home', 'in'], [12, 'gamecenter'], [14, 'plaza2'], [16, 'home', 'in'], [20, 'gamecenter']],
     lines: { morning: ['ふむ、朝からわが輩に会えるとは運がいい。'], day: ['ゲームセンターの記録、わが輩のものだ。たぶんな。', 'ハッタリも実力のうちである!'], evening: ['夕暮れは勝負の時間だ。'], night: ['夜のネオンは美しい……わが輩の次にな。'] },
     menu: [{ label: 'カードで勝負する', app: 'chunkcards', params: { cpu: 'baron' } }],
   },
   {
     id: 'gon', tips: ["「Look what I found!」で『見ろよ、拾ったぞ!』って言えるぜ", "「It's a bit rusty.」は『ちょっとさびてる』。拾い物の説明に使えるな", "「Where did you get that?」で『それ、どこで手に入れた?』", "「Finders keepers!」は『拾った者の勝ち』。子どもがよく言うぜ", "「No worries.」は『気にすんな』。おれの口ぐせだ"], yomi: 'ひろいやごん', persona: '拾い物好きの気さくな兄ちゃん。くだけた口調。落とし物や変な単語を見つけた話をする。', name: 'ひろい屋ゴン', role: '何でも拾う人', look: { skin: 0xeec3a6, hair: 0x6b4a3a, style: 'spiky', top: 0xfdeeb0, bottom: 0x8fcfae, shoes: 0xc9a28c, acc: 'cap', accColor: 0xffc8a2 },
-    schedule: [[6, 'park'], [9, 'park2'], [13, 'south'], [17, 'shrine'], [21, 'park']],
+    schedule: [[0, 'park'], [5, 'park2'], [8, 'home', 'in'], [16, 'shrine'], [18, 'south'], [20, 'home', 'in']],
     lines: { morning: ['朝いちばんは落とし物が多いんだ。'], day: ['きのう、すごい単語を拾ったよ。', '捨てられた札にも、いい文が眠ってる。'], evening: ['神社の裏、いい物が落ちてるんだよね。'], night: ['夜の公園は静かでいいね。'] },
     menu: [],
   },
   {
     id: 'koharu', tips: ["「How are you?」には「I'm good, thanks.」と返すのが自然ですよ", "「I'm sorry?」と語尾を上げると、『もう一度お願いします』の意味になります", "まちがえても大丈夫。「Let's try again.」と言えば、前向きに聞こえます", "「Could you say that again?」も、聞き返しの定番です", "「I see.」は『なるほど』。相づちに便利ですよ"], yomi: 'こはるせんせい', persona: 'ていねいで励まし上手な先生。です・ます調。まちがえても大丈夫と伝える。英語の勉強が好き。', name: 'こはる先生', role: '学校の先生', look: { skin: 0xffe1cf, hair: 0x5a3e36, style: 'long', top: 0x93b5e1, bottom: 0xfff4e0, shoes: 0x8a5a44, acc: 'glasses', accColor: 0xb08b72 },
-    schedule: [[7, 'north'], [8, 'school'], [16, 'library'], [19, 'home', 'in']],
+    schedule: [[0, 'home', 'in'], [5.5, 'north'], [7, 'school'], [12, 'home', 'in'], [16, 'library'], [20, 'home', 'in']],
     lines: { morning: ['おはようございます。今日もいっしょに練習しましょう。'], day: ['学校では、いちから英語の練習ができますよ。', 'まちがえても大丈夫。それも練習です。'], evening: ['図書館で、明日の準備をしています。'], night: [''] },
     menu: [{ label: '学校で練習する', app: 'school' }],
   },
   {
     id: 'shiori', tips: ["「borrow」は借りる、「lend」は貸す。……ちょっとまぎらわしいですね", "「I'm reading a book.」は『本を読んでいるところ』。進行形です", "「Shh.」は『静かに』。図書館は、世界共通です", "「What's it about?」は『それ、何の話?』。本の話題で使えます", "「page-turner」は、ページをめくる手が止まらない本のことです"], yomi: 'しおりさん', persona: '静かでおだやかな司書。ときどきおちゃめ。本と言葉の話が好き。', name: 'しおりさん', role: '図書館の司書', look: { skin: 0xfce0d0, hair: 0x2e2a3d, style: 'bob', top: 0xc9b8ea, bottom: 0x6f7fa8, shoes: 0xffffff, acc: 'apron', accColor: 0xfff4e0 },
-    schedule: [[9, 'library'], [12, 'plaza'], [13, 'library'], [18, 'cafe'], [20, 'home', 'in']],
+    schedule: [[0, 'home', 'in'], [9, 'library'], [12, 'plaza'], [13, 'library'], [16, 'home', 'in']],
     lines: { morning: ['開館の準備中です。'], day: ['図書館では、集めた言葉を読み返せますよ。', 'お静かに……なんてね。'], evening: ['今日はケーキの日なんです。'], night: [''] },
     menu: [{ label: '図書館に入る', app: 'library' }],
   },
   {
     id: 'maru', tips: ["「How much is this?」は『これいくら?』。買い物の基本だよ!", "「I'll take it.」は『それにします』。買うと決めたときの一言さ", "「Anything else?」は『ほかには?』。店員がよく言うんだ", "「It's on the house.」は『サービスだよ』ってこと。おまけの話になると、つい出ちゃう", "「Do you have a bigger one?」で『もっと大きいのある?』"], yomi: 'まるさん', persona: '商売上手で気前のいい店長。明るく元気。コインのおまけの話が好き。', name: 'マルさん', role: 'ショップの店長', look: { skin: 0xf2c9ac, hair: 0x8a5a44, style: 'short', top: 0xa8e6cf, bottom: 0x5a4a6b, shoes: 0x8a5a44, acc: 'apron', accColor: 0xffb3c1 },
-    schedule: [[8, 'shop'], [12, 'south'], [13, 'shop'], [20, 'plaza'], [22, 'home', 'in']],
+    schedule: [[0, 'home', 'in'], [8, 'shop'], [12, 'home', 'in'], [20, 'plaza']],
     lines: { morning: ['いらっしゃい! 新しい服が入ったよ。'], day: ['家具もそろえてるから見ていって。', 'コインは町のどこでも使えるよ。'], evening: ['夕方は少しおまけしちゃおうかな。'], night: ['今日はもう店じまい。'] },
     menu: [{ label: 'お店を見る', app: 'shop' }],
   },
   {
     id: 'yuzu', adult: false, tips: ["「Make a wish.」は『願いごとをしてね』。おみくじの前の合言葉です", "「Look at the stars.」は『星を見て』。夜の空はきれいです", "「Good luck!」は『がんばって』『幸運を』。おみくじの結果にもぴったりです", "「Good morning.」は朝だけ。昼すぎは「Good afternoon.」になります", "「shooting star」が流れ星のこと。願いごとの相棒ですよ"], yomi: 'ゆず', persona: '神社のみならい。おっとりしていて礼儀正しい。星や朝の空気、おみくじの話が好き。', name: 'ゆず', role: '神社のみならい', look: { skin: 0xffe6d6, hair: 0x3f3a52, style: 'long', top: 0xffffff, bottom: 0xf59a8c, shoes: 0xc9a28c, acc: 'ribbon', accColor: 0xf59a8c },
-    schedule: [[6, 'shrine'], [12, 'busstop'], [13, 'shrine'], [20, 'shrine']],
+    schedule: [[0, 'shrine'], [8, 'home', 'in'], [12, 'busstop'], [13, 'shrine'], [16, 'home', 'in'], [20, 'shrine']],
     lines: { morning: ['朝のおまいりは、気持ちがすっきりしますよ。'], day: ['おみくじ、1日1回ひけます。'], evening: ['夕日の鳥居、きれいでしょう。'], night: ['夜の神社は、星がよく見えるんです。'] },
     menu: [{ label: 'おみくじをひく', app: 'omikuji' }],
   },
@@ -79,7 +79,7 @@ export const RESIDENTS = [
     id: 'choco', tips: ["「Good one!」は『うまい!』。大喜利で、いい答えが出たときに使うよ", "「You got me!」は『やられた!』。笑わされたときの一言!", "「That's hilarious!」は『めっちゃ笑った』。ほめ言葉の最上級だね", "「Nailed it!」は『ばっちり決まった!』", "「punchline」は話のオチのこと。ここが大事なんだよ〜"], yomi: 'おおぎりちょこ', name: '大喜利チョコ', role: '大喜利の達人',
     persona: 'お笑いと大喜利が好きな女の子。落ち着いた普通のため口で、テンションは上げすぎない。ツッコミは短く、聞かれたことにまっすぐ答える。大喜利の話が出たら「大喜利で勝負する」から遊べると伝える。',
     look: { skin: 0xffe1cf, hair: 0x5b3a2e, style: 'bob', top: 0x9c6a4a, bottom: 0xffd6e0, shoes: 0xffffff, acc: 'ribbon', accColor: 0xffb3c1 },
-    schedule: [[7, 'plaza'], [11, 'cafe'], [15, 'gamecenter'], [19, 'plaza2'], [22, 'home', 'in']],
+    schedule: [[0, 'home', 'in'], [12, 'cafe'], [15, 'gamecenter'], [19, 'plaza2']],
     lines: { morning: ['おはよう。今日のお題を考えてるところ。', '朝は頭がすっきりしてて、いい答えが出やすいんだよね。'], day: ['大喜利、やる? いつでもいいよ。', '答えは短いほうが、意外とおもしろいんだ。'], evening: ['夕方になると、ひねった答えが浮かぶんだよね。', 'そろそろ一本、やっておく?'], night: ['夜は静かだから、考えるのにちょうどいいね。'] },
     menu: [{ label: '大喜利で勝負する', act: 'ogiri' }],
   },
@@ -103,7 +103,7 @@ export const RESIDENTS = [
       { en: 'The only thing we have to fear is fear itself.', ja: '恐れるべきは、恐れそのものだけだ。', who: 'ルーズベルト', note: '不安は、考えているうちに大きくなるものだからね。' },
     ],
     look: { skin: 0xf6d2bb, hair: 0xe3e0dc, style: 'short', top: 0x8a7bb0, bottom: 0x5a4a6b, shoes: 0x7a6a5a, acc: 'glasses', accColor: 0x8a5a44 },
-    schedule: [[6, 'shrine'], [10, 'library'], [15, 'park'], [19, 'busstop'], [22, 'home', 'in']],
+    schedule: [[0, 'plaza2'], [2, 'home', 'in'], [5, 'shrine'], [8, 'home', 'in'], [20, 'busstop'], [22, 'plaza2']],
     lines: { morning: ['朝の静けさは、考えごとにぴったりなんだ。', 'おはよう。今日は、どんなことを考えようか。'], day: ['ふと思ったんだ。「ふつう」って、だれが決めたんだろうね。', '本を読んでいると、昔の人と話している気分になるよ。'], evening: ['夕ぐれは、一日をふり返るのにいい時間だね。', '空の色が変わるのを見ていると、時間の流れを感じるよ。'], night: ['夜は、考えが深いところまで降りていくんだ。', '星を見ていると、自分の悩みが小さく思えてくるね。'] },
     menu: [{ label: '格言をひとつ聞く', act: 'quote' }],
   },
@@ -113,7 +113,7 @@ export const RESIDENTS = [
     persona: '自由なさすらいの旅人。ひょうひょうとしていて、口数は少なめでおだやか。「〜さ」「〜だな」と話す。持ち物はオカリナと釣り竿だけ。池でアヒルをながめながら釣りをするのが好きで、釣れなくても気にしない。',
     look: { skin: 0xf2c9ac, hair: 0x8a5a44, style: 'short', top: 0x7f9a52, bottom: 0x8a6b4a, shoes: 0x5a4a3a, acc: 'snuf', accColor: 0x7a8f4a },
     angler: { spot: [46, 22.5], face: [46, 18] },
-    schedule: [[5, 'pond'], [17, 'park2'], [19, 'plaza2'], [21, 'pond']],
+    schedule: [[0, 'pond'], [8, 'home', 'in'], [16, 'park2'], [19, 'plaza2'], [21, 'pond']],
     lines: { morning: ['おはよう。朝の池は、水がきらきらしてるのさ。', 'まだ一匹も釣れてないけど、いい朝だな。'], day: ['釣れなくていいんだ。のんびりしに来てるだけさ。', 'あのアヒル、ぼくのことを見張ってるみたいだな。'], evening: ['夕方は風がやさしいな。そろそろ歩きたくなる。', '今日はどこまで行こうかな。気のむくままさ。'], night: ['夜の池は静かだな。星が水に映ってるのさ。'] },
     menu: [{ label: '🎣 釣りへ行く', app: 'fishing' }, { label: 'オカリナをお願いする', act: 'harmonica' }],   // 入ると釣りのタイトル画面(英語・のんびり・勝負・図鑑…)
   },
@@ -172,14 +172,31 @@ function residentHeight(d) {
 export function createResidents(scene, graph, getHour, collide = null) {
   let outing = new Set();   // きょう お出かけの日の住人
   const list = RESIDENTS.map((d, i) => {
-    const ch = d.mascot ? useChunkkunGlb(makeChunkkun()) : useGlb(makeCharacter(d.look), d.id, { height: residentHeight(d) });
+    const ch = d.mascot ? useChunkkunGlb(makeChunkkun()) : makeCharacter(d.look);   // 3Dの体は、出番が来たら読む(loadR)
     const goal = goalOf(d, getHour());
     const start = graph.nodes[PLACES[goal.place]];
     const sa = i * 2.4 + 0.7; ch.root.position.set(start.x + Math.cos(sa) * (1.5 + (i % 3) * 0.8), 0, start.z + Math.sin(sa) * (1.5 + (i % 3) * 0.8));
     scene.add(ch.root);
     if (goal.inside) ch.root.visible = false;   // 家の中にいる予定なら、最初から見えない(以前は、家のそばに立ったまま固まって見えた)
-    return { def: d, ch, node: PLACES[goal.place], path: [], goal, wait: Math.random() * 2, talking: false, speed: 0, idle: null, hidden: !!goal.inside };
+    return { def: d, ch, node: PLACES[goal.place], path: [], goal, wait: Math.random() * 2, talking: false, speed: 0, idle: null, hidden: !!goal.inside, glb: !!d.mascot || !GLB_MODELS[d.id] };
   });
+  // 3Dの体を読む。町に入るときは、いま外にいる人だけ。ほかの人は、画面が切りかわるとき(prepare)か、呼び出したときに読む
+  function loadR(r) { if (r.glb) return; r.glb = true; useGlb(r.ch, r.def.id, { height: residentHeight(r.def) }); }
+  const outAt = (d, h) => !goalOf(d, ((h % 24) + 24) % 24).inside;
+  list.forEach(r => { if (!r.hidden) loadR(r); });
+  // 外に出てくる場所: 行き先の近くで、プレイヤーから見えにくい離れた所(みんな同じ家から ぞろぞろ出てこないように)
+  const nodeIds = Object.keys(graph.nodes);
+  function spawnNode(place, player) {
+    const g0 = graph.nodes[PLACES[place]], far = n => !player || Math.hypot(n.x - player.x, n.z - player.z) > 16;
+    const c = nodeIds.filter(id => { const n = graph.nodes[id], d = Math.hypot(n.x - g0.x, n.z - g0.z); return d > 3 && d < 24 && far(n); });
+    const pool = c.length ? c : nodeIds.filter(id => far(graph.nodes[id]));
+    return pool.length ? pool[(Math.random() * pool.length) | 0] : PLACES[place];
+  }
+  // 家に帰る場所: いまいる所から少し歩いた先で、プレイヤーから離れた所(みんな同じ家へ ぞろぞろ帰らないように)
+  function doorNode(p, player) {
+    const c = nodeIds.filter(id => { const n = graph.nodes[id], d = Math.hypot(n.x - p.x, n.z - p.z); return d > 6 && d < 22 && (!player || Math.hypot(n.x - player.x, n.z - player.z) > 14); });
+    return c.length ? c[(Math.random() * c.length) | 0] : PLACES.home;
+  }
 
   function goalOf(d, h) {
     const sc = (d.outing && outing.has(d.id)) ? d.outing : d.schedule;   // お出かけの日は、別の予定
@@ -191,14 +208,19 @@ export function createResidents(scene, graph, getHour, collide = null) {
   const api = {
     list, avoid: null,
     summon(id, x, z, sec = 75) {   // 休み中の住人を、目の前に呼び出す(歩いてこない。その場にあらわれる)
-      const r = list.find(q => q.def.id === id); if (!r) return null;
+      const r = list.find(q => q.def.id === id); if (!r) return null; loadR(r);
       r.ch.root.position.set(x, 0, z); r.hidden = false; r.ch.root.visible = true; r.path = []; r.idle = null; r.pin = null; r.summonT = sec; r.vx = r.vz = 0;
       return r;
     },
-    get outing() { return outing; }, set outing(v) { outing = v || new Set(); },
+    prepare(h, ahead = 3) {   // 画面が切りかわるとき: この先 ahead 時間に外に出る人の体を、まとめて読んでおく(遊んでいる最中に読むとカクカクするので)
+      for (const r of list) if (!r.glb) for (let t = 0; t <= ahead; t += 0.5) if (outAt(r.def, h + t)) { loadR(r); break; }
+    },
+    load(id) { const r = list.find(q => q.def.id === id); if (r) loadR(r); return r; },
+        get outing() { return outing; }, set outing(v) { outing = v || new Set(); },
     update(dt, h, player) {
       const anyTalking = list.some(q => q.talking);
       for (const r of list) {
+        if (!r.glb && (r.follow || r.pin || r.visit || r.summonT > 0 || (r.ch.root.visible && !r.hidden))) loadR(r);   // 用があって出てきた人は、その場で読む
         if (r.battle) continue;   // 雪合戦の最中は、雪合戦の方で動かす
         if (r.ride) { r.vx = r.vz = 0; r.ch.update(dt, r.def.mascot ? (r.rideSpeed || 0) : 0); continue; }   // チャンクくんに乗っている間(チャンクくん本人と、後ろに乗った人)は、main が動かす
         if (r.pin) {   // デートなどで、決まった場所に座っている
@@ -245,9 +267,20 @@ export function createResidents(scene, graph, getHour, collide = null) {
           r.speed = v < 0.08 ? 0 : v; r.vx = r.vz = 0; r.ch.pose = null; r.ch.update(dt, r.speed); continue;
         }
         else if (g.place !== r.goal.place) {
-          r.goal = g;
-          r.path = findPath(graph, nearestNode(graph, r.ch.root.position.x, r.ch.root.position.z), PLACES[g.place]);
-          if (r.hidden) { r.hidden = false; r.ch.root.visible = true; }
+          if (r.hidden && g.inside) r.goal = g;   // 家の中から家の中へ: そのまま
+          else if (r.hidden) {   // 外に出る: 体を読みおわっている人だけ。人ごとに少しずつずらして、行き先の近くの離れた所にあらわれる
+            if (r.glb) {
+              r.outT = (r.outT ?? Math.random() * 25) - dt;
+              if (r.outT <= 0) {
+                r.outT = undefined; r.goal = g; const sid = spawnNode(g.place, player), n = graph.nodes[sid];
+                r.ch.root.position.set(n.x + (Math.random() * 2 - 1) * 1.2, 0, n.z + (Math.random() * 2 - 1) * 1.2); r.node = sid; r.vx = r.vz = 0;
+                r.path = findPath(graph, sid, PLACES[g.place]); r.idle = null; r.hidden = false; r.ch.root.visible = true;
+              }
+            }
+          } else {
+            r.goal = g; const P = r.ch.root.position;
+            r.path = findPath(graph, nearestNode(graph, P.x, P.z), g.inside ? doorNode(P, player) : PLACES[g.place]);
+          }
         }
         const p = r.ch.root.position;
         let speed = 0, target = null;

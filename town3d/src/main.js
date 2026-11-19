@@ -1005,6 +1005,7 @@ export function mount(container, opt = {}) {
     hud.toast(k === 'night' ? '🎂 誕生日の夜のテスト:花火と写真' : '🎂 誕生日のテスト:住人に会いに行ってみてね');
   }
   function openApp(id, params) {
+    try { if (loadPct >= 1) residents.prepare(env.hour); } catch (e) { }   // 画面が切りかわるときに、この先に出てくる住人の体を読んでおく
     bumpUse(id === 'fishing' && params && params.tab === 'en' ? 'fishing-en' : id);
     if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox', 'amuse', 'merge'].includes(id)) markPlay(id);
     // 組み込み先(チャンクタウン)が開くアプリ(ゲームなど)は、そちらに任せる
@@ -1823,7 +1824,7 @@ export function mount(container, opt = {}) {
     root.appendChild(lo);
     const bar = lo.querySelector('i'), pct = lo.querySelector('.lp'), skip = lo.querySelector('button'), t0 = performance.now();
     let fin = false, warming = false, shown = 0;
-    setGlbConc(4); glbPreload(['self:ren', 'self:mio', 'sora', 'hana', 'player:ren', 'player:mio']);
+    setGlbConc(4); glbPreload(['self:' + (settings.look === 'ren' ? 'ren' : 'mio'), 'sora', 'hana']);   // 自分の体と、動きの元(そら・はな)だけ先に。住人は、いま外にいる人だけ(npc.js)
     const finish = () => { if (fin) return; fin = true; loadPct = 1; setGlbConc(2); lo.remove(); loadFin(); };
     skip.onclick = finish;
     const tick = async () => {
@@ -1880,7 +1881,8 @@ export function mount(container, opt = {}) {
     debugEnc: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return 'no'; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { enc: true, say: '' }; visiting = r; return enc.ready() ? 'ready' : 'notready'; },   // 点検用
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
-    progress: () => loadPct,   // 読み込みの進み具合(0〜1)
+    progress: () => loadPct,
+    _res: () => residents,   // 点検用
     progressText: () => (loadPct >= 1 ? '' : glbStat().now),   // いま何をしているか
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
