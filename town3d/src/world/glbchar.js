@@ -54,6 +54,17 @@ async function pickUrl(url) {
   if (TEX_MODE === 'lite' && url.startsWith('models/')) { const v = await versions('models_lite'); if (v[f]) return urlOf('models_lite/' + f) + '?v=' + v[f]; }
   const v = await versions('models'); return urlOf(url) + (v[f] ? '?v=' + v[f] : '');
 }
+// 体ごとの「測った値」(背の倍率・足元の高さ・座る位置など)。モデルが同じなら毎回同じなので、前もって測って models/measure.json に入れておく
+// (作り方: tools/gen_measure.mjs)。表の値が古い(モデルや動きを差し替えた・測り方を変えた)ときだけ、その場で測る
+export const MEASURE_VER = 1;   // 測り方(足元・座る位置の計算)を変えたら 1 増やす → 古い表は使われず、その場で測る
+export const glbMeasured = {};   // その場で使った値(表を作るとき用)
+let measP = null;
+const measures = () => measP || (measP = Promise.all([fetch(urlOf('models/measure.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({})), versions('models')]).then(([m, v]) => ({ m, v })));
+function preOf(T, id, spec) {
+  const e = T && T.m[id], f = u => u.split('/').pop(); if (!e || e.cv !== MEASURE_VER || e.mv !== T.v[f(spec.url)]) return null;
+  if (spec.animFrom && e.av !== T.v[f(GLB_MODELS[spec.animFrom].url)]) return null;
+  return e;
+}
 // 読みこみは2つずつ順番に(全員いっぺんに読むとスマホが重くなる)。プレイヤーを先に
 const queue = []; let running = 0, CONC = 2; const stat = { total: 0, done: 0, now: '' }; const readyScenes = [];   // now = いま何をしているか(読み込み中のバーに出す)
 export const glbStat = () => ({ ...stat });
@@ -134,7 +145,7 @@ export function useGlb(ch, id, { height } = {}) {
   const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
   const player = id.startsWith('player:') || id.startsWith('self:');
   height = player ? SIZE_NOW.player : (height !== 1.3 ? height : SIZE_NOW.npc);   // 確認用の住人ごとの背(?npcsizes=1)だけは、そちらを優先
-  Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null]).then(([gltf0, src]) => {
+  Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null, measures().catch(() => null)]).then(([gltf0, src, T]) => {
     stat.now = nm(spec.url) + ' の体と動きを準備';
     const gltf = src && !(gltf0.animations && gltf0.animations.length) ? { scene: gltf0.scene, animations: src.animations } : gltf0;
     // 同じモデルを複数体出してもいいように、骨ごと複製する
@@ -158,17 +169,21 @@ export function useGlb(ch, id, { height } = {}) {
       for (let i = 0; i <= 4; i++) { act.idle.time = dur * i / 4; mixer.update(0); all.union(posedBox(holder)); }
       act.idle.time = 0; mixer.update(0); return all;
     };
+    const pre0 = id.startsWith('paid:') || window.__glbNoPre ? null : preOf(T, id, spec), pre = pre0 && Object.keys(act).every(n => pre0.foot && pre0.foot[n] != null) ? pre0 : null;
+    let k, baseX, baseZ; const footOf = new Map();
+    if (pre) { k = pre.k; holder.scale.setScalar(k); baseX = pre.px; baseZ = pre.pz; holder.position.set(baseX, 0, baseZ); for (const [n, a] of Object.entries(act)) footOf.set(a, pre.foot[n]); }   // 前もって測った値
+    else {
     const box = idleBox(), size = box.getSize(new THREE.Vector3());
-    const k = 1 / size.y; holder.scale.setScalar(k);   // ここでは背を1にそろえ、背の高さは外側(wrap)の大きさで決める
+    k = 1 / size.y; holder.scale.setScalar(k);   // ここでは背を1にそろえ、背の高さは外側(wrap)の大きさで決める
     const b2 = idleBox(), c = b2.getCenter(new THREE.Vector3());
-    holder.position.set(-c.x, -b2.min.y, -c.z); const baseX = -c.x, baseZ = -c.z;
+    holder.position.set(-c.x, -b2.min.y, -c.z); baseX = -c.x; baseZ = -c.z;
     // 動きごとの足元(歩くと腰が下がる、など)。動きを切りかえたら、その動きの足元に合わせて高さをなめらかに直す
-    const footOf = new Map();
     for (const a of Object.values(act)) {
       const prev = holder.position.y; holder.position.y = 0;
       mixer.stopAllAction(); a.reset().play(); const dur = a.getClip().duration; let m = Infinity;
       for (let i = 0; i <= 14; i++) { a.time = dur * i / 14; mixer.update(0); m = Math.min(m, posedBox(holder).min.y); }
       a.stop(); holder.position.y = prev; footOf.set(a, -m);
+    }
     }
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
     const wrap = new THREE.Group(); wrap.add(holder); wrap.scale.setScalar(height);
@@ -176,7 +191,8 @@ export function useGlb(ch, id, { height } = {}) {
     let sitHipN = 0; const sitHipOf = () => { mixer.stopAllAction(); act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const y = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).y / height; act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); } return y; };
     // 座ったときの、お尻の下の高さ(sitContN)と、腰の前後左右のずれ(sitDX,sitDZ)を、体ごとに測る(体つきがちがっても、座面にぴったり乗せるため)
     let sitContN = 0, sitDX = 0, sitDZ = 0, sitRad = 0.05;
-    if (act.sit) {
+    if (pre && pre.sit) { ({ hip: sitHipN, cont: sitContN, dx: sitDX, dz: sitDZ, rad: sitRad } = pre.sit); }
+    else if (act.sit) {
       sitHipN = sitHipOf();
       try {
         mixer.stopAllAction(); act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); const px = holder.position.x, pz = holder.position.z; holder.position.y = 0; wrap.updateMatrixWorld(true);
@@ -204,14 +220,15 @@ export function useGlb(ch, id, { height } = {}) {
       } catch (e) { sitContN = sitHipN - 0.1; }
     }
     // チャンクくんに乗る姿勢: お尻の下の高さと、腰の前後左右のずれを測る(乗る面に、お尻をぴったり合わせるため)
-    const rideM = {};
-    for (const k2 of ['rideF', 'rideB']) if (act[k2]) try {
+    const rideM = pre && pre.ride ? { ...pre.ride } : {};
+    if (!(pre && pre.ride)) for (const k2 of ['rideF', 'rideB']) if (act[k2]) try {
       const a = act[k2], y0 = holder.position.y, px = holder.position.x, pz = holder.position.z;
       mixer.stopAllAction(); a.reset().play(); a.time = 0; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true);
       const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'), hp = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).divideScalar(height);
       rideM[k2] = { cont: hp.y - sitRad * 1.25, dx: hp.x - px, dz: hp.z - pz };
       a.stop(); mixer.stopAllAction(); holder.position.y = y0; if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
     } catch (e) { }
+    { const foot = {}; for (const [n, a] of Object.entries(act)) foot[n] = footOf.get(a); glbMeasured[id] = { cv: MEASURE_VER, k, px: baseX, pz: baseZ, foot, sit: act.sit ? { hip: sitHipN, cont: sitContN, dx: sitDX, dz: sitDZ, rad: sitRad } : null, ride: rideM, pre: !!pre }; }   // 表を作るとき用・点検用
     // すわる・ひざをつく・ピアノ: 骨を直接まげる(3Dの体には、この動きのデータがないので)。まげた分だけ腰を下げて、いすの高さに合わせる
     const hipsV = new THREE.Vector3();
     const Bn = n => (model.getObjectByName('mixamorig' + n) || model.getObjectByName('mixamorig:' + n)), bn = { lu: Bn('LeftUpLeg'), ll: Bn('LeftLeg'), ru: Bn('RightUpLeg'), rl: Bn('RightLeg'), la: Bn('LeftArm'), ra: Bn('RightArm'), lf: Bn('LeftForeArm'), rf: Bn('RightForeArm') };
@@ -325,6 +342,8 @@ export function useChunkkunGlb(ch) {
   }).catch(() => { old.forEach(o => { o.visible = true; }); });
   return ch;
 }
+// 表を作るとき用(tools/gen_measure.mjs): 全員を、その場で測って glbMeasured に入れる
+if (typeof window !== 'undefined') { window.__glbMeasured = glbMeasured; window.__glbMeasureAll = () => { window.__glbNoPre = true; const ids = Object.keys(GLB_MODELS).filter(id => !id.startsWith('paid:')); ids.forEach(id => useGlb({ root: new THREE.Group(), update() { } }, id)); return ids; }; }
 export function glbPreload(ids) { for (const id of ids) { const m = GLB_MODELS[id]; if (m) load(m.url, false).catch(() => { }); } }
 // 画面に出す準備(絵をGPUに送る・光り方を作る)を、1体ずつ間をあけて済ませる。町に入ってからのカクつきをなくす
 export async function glbWarm(renderer, camera) {

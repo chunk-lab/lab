@@ -37,6 +37,7 @@ if (fs.existsSync('dist/models')) {
     if (ok) { fs.copyFileSync('assets_gen/hi/' + f, 'dist/models/' + f); fs.copyFileSync('assets_gen/lite/' + f, 'dist/models_lite/' + f); }
     else { fs.copyFileSync('assets/models/' + f, 'dist/models_lite/' + f); stale.push(f); }
   }
+  if (fs.existsSync('assets_gen/measure.json')) fs.copyFileSync('assets_gen/measure.json', 'dist/models/measure.json');   // 体ごとの測った値(tools/gen_measure.mjs)。古い値は、町の側で見分けて使わない
   if (stale.length) console.log('⚠ 画質モード用が古いので、元のまま使うモデル:', stale.join(' '), '(python3 tools/gen_models.py で作り直す)');
   const ver = {}; for (const f of fs.readdirSync('dist/models_lite')) ver[f] = createHash('sha1').update(fs.readFileSync('dist/models_lite/' + f)).digest('hex').slice(0, 8);
   fs.writeFileSync('dist/models_lite/versions.json', JSON.stringify(ver));
