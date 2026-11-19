@@ -343,7 +343,8 @@ export function useChunkkunGlb(ch) {
   return ch;
 }
 // 表を作るとき用(tools/gen_measure.mjs): 全員を、その場で測って glbMeasured に入れる
-if (typeof window !== 'undefined') { window.__glbMeasured = glbMeasured; window.__glbMeasureAll = () => { window.__glbNoPre = true; const ids = Object.keys(GLB_MODELS).filter(id => !id.startsWith('paid:')); ids.forEach(id => useGlb({ root: new THREE.Group(), update() { } }, id)); return ids; }; }
+if (typeof window !== 'undefined') { window.__glbMeasured = glbMeasured; window.__glbLoadAll = () => Object.keys(GLB_MODELS).filter(id => !id.startsWith('paid:')).forEach(id => useGlb({ root: new THREE.Group(), update() { } }, id));   // 点検用: 町では出番の人だけ読むので、点検のときは全員を読む
+  window.__glbMeasureAll = () => { window.__glbNoPre = true; const ids = Object.keys(GLB_MODELS).filter(id => !id.startsWith('paid:')); ids.forEach(id => useGlb({ root: new THREE.Group(), update() { } }, id)); return ids; }; }
 export function glbPreload(ids) { for (const id of ids) { const m = GLB_MODELS[id]; if (m) load(m.url, false).catch(() => { }); } }
 // 画面に出す準備(絵をGPUに送る・光り方を作る)を、1体ずつ間をあけて済ませる。町に入ってからのカクつきをなくす
 export async function glbWarm(renderer, camera) {
