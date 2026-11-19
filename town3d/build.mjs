@@ -29,6 +29,7 @@ for (const d of fs.readdirSync('assets', { withFileTypes: true })) if (d.isDirec
 if (fs.existsSync('dist/models')) {
   const ver = {};
   for (const f of fs.readdirSync('dist/models')) ver[f] = createHash('sha1').update(fs.readFileSync('dist/models/' + f)).digest('hex').slice(0, 8);
+  if (fs.existsSync('dist/paid')) for (const f of fs.readdirSync('dist/paid')) ver[f] = createHash('sha1').update(fs.readFileSync('dist/paid/' + f)).digest('hex').slice(0, 8);   // 有料モデル(運営の確認用)も同じ。版がないと、差し替えても古いのが出つづける
   fs.writeFileSync('dist/models/versions.json', JSON.stringify(ver));
 }
 // 公開用の town3d/index.html も毎回ここで上書きする(手でコピーし忘れて古いままになるのを防ぐ)
