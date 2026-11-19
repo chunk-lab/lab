@@ -90,3 +90,4 @@ body.md-home-on .tw-chat{width:min(15vw,66px);height:min(15vw,66px);padding:0;bo
 .md-drill span{font-size:19px;font-weight:700;transition:color .15s}.md-drill .on{color:#e8668a}
 .md-drill em{display:block;font-style:normal;font-size:11px;color:#b8abc8}
 .md-drill u{display:block;margin-top:8px;text-decoration:none;font-size:12px;font-weight:700;color:#8f7bd0}
+.md-preload>span{white-space:pre-line;text-align:center}

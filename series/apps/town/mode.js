@@ -85,12 +85,13 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     if (preload) return preload;
     const bar = document.createElement('div'); bar.className = 'md-preload'; bar.innerHTML = '<span>Loading…</span><div><i></i></div>';
     document.body.appendChild(bar);
-    const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = p => { const n = Math.min(100, Math.round(p * 100)) + '%'; fill.style.width = n; txt.textContent = 'Loading… ' + n + (texTag ? '  ' + texTag : ''); };
+    const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = p => { const n = Math.min(100, Math.round(p * 100)) + '%'; fill.style.width = n; txt.textContent = 'Loading… ' + n + (texTag ? '  ' + texTag : '') + (stage ? '\n' + stage + '(' + Math.round((performance.now() - T0) / 1000) + '秒)' : ''); };
+    let stage = ''; const T0 = performance.now(); const say = t => { stage = t; };   // いま何を読んでいるか
     let texTag = '';   // どちらの画質で読んでいるか(キャラの絵: 軽量 / 高画質)
     const stopDrill = loadingDrill(bar);   // 待っている間、直近でまちがえた言葉を「英語 → 日本語」で出して読み上げる
     preload = (async () => {
       try {
-        set(0.01); await loadScript(core.base + 'g/town3d/three.js'); set(0.04); await loadScript(core.base + 'g/town3d/town.js'); set(0.08);
+        say('3Dのプログラムを読む'); set(0.01); await loadScript(core.base + 'g/town3d/three.js'); say('町のプログラムを読む'); set(0.04); await loadScript(core.base + 'g/town3d/town.js'); set(0.08);
         // キャラの絵の画質(町の glbchar.js と同じ決め方): 自動はスマホ=軽量(models_lite) / パソコン=高画質(models)
         const lite = (() => { let m = 'auto'; try { m = localStorage.getItem('hoshimiya:chartex') || 'auto'; } catch (e) { } if (m === 'hi' || m === 'lite') return m === 'lite'; try { return matchMedia('(pointer:coarse)').matches; } catch (e) { return false; } })();
         const root = new URL(core.base + 'g/town3d/' + (lite ? 'models_lite/' : 'models/'), location.href).href;
@@ -101,10 +102,10 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         const miss = cache ? (await Promise.all(files.map(async f => !(await cache.match(root + f + '?v=' + ver[f]))))).filter(Boolean).length : files.length;
         const wFiles = files.length ? 0.35 * miss / files.length : 0, p0 = 0.08, p1 = p0 + wFiles + 0.02;
         let done = 0;
-        const one = async f => { try { const url = root + f + '?v=' + ver[f]; if (cache && !(await cache.match(url))) { const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(p0 + (p1 - p0) * done / files.length); };
+        const one = async f => { try { const url = root + f + '?v=' + ver[f]; if (cache && !(await cache.match(url))) { say(f.replace('.glb', '') + ' をダウンロード(' + (done + 1) + '/' + files.length + ')'); const r = await fetch(url); if (r.ok) await cache.put(url, r); } } catch (e) { } done++; set(p0 + (p1 - p0) * done / files.length); };
         const q = files.slice(); await Promise.all([0, 1, 2].map(async () => { while (q.length) await one(q.shift()); }));
         set(p1); let tk = null;
-        try { const m = mount3D(); tk = setInterval(() => { try { set(p1 + (0.99 - p1) * Math.min(1, (town && town.progress ? town.progress() : 0))); } catch (e) { } }, 250); await m; await Promise.race([town.ready, new Promise(r => setTimeout(r, 90000))]); suspend3D(); } catch (e) { console.error(e); try { stop3D(); } catch (e2) { } }
+        try { say('町を組み立てる'); const m = mount3D(); tk = setInterval(() => { try { const pt = town && town.progressText ? town.progressText() : ''; say(pt ? '町の準備: ' + pt : '町を組み立てる'); set(p1 + (0.99 - p1) * Math.min(1, (town && town.progress ? town.progress() : 0))); } catch (e) { } }, 250); await m; await Promise.race([town.ready, new Promise(r => setTimeout(r, 90000))]); suspend3D(); } catch (e) { console.error(e); try { stop3D(); } catch (e2) { } }
         if (tk) clearInterval(tk); set(1);
       } catch (e) { console.error(e); }
       stopDrill(); bar.remove();

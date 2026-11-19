@@ -39,7 +39,8 @@ const versions = (dir = 'models') => verP[dir] || (verP[dir] = fetch(urlOf(dir +
 const STORE = 'town-glb-v1';
 async function fetchGlb(url) {
   let c = null;
-  try { c = await caches.open(STORE); const hit = await c.match(url); if (hit) return await hit.arrayBuffer(); } catch (e) { c = null; }
+  try { c = await caches.open(STORE); const hit = await c.match(url); if (hit) { stat.now = nm(url) + ' を保存から読む'; return await hit.arrayBuffer(); } } catch (e) { c = null; }
+  stat.now = nm(url) + ' をダウンロード';
   const r = await fetch(url); if (!r.ok) throw new Error('glb ' + r.status);
   if (c) { try { await c.put(url, r.clone()); const key = new URL(url, location.href).pathname; for (const k of await c.keys()) { const u = new URL(k.url); if (u.pathname === key && k.url !== new URL(url, location.href).href) await c.delete(k); } } catch (e) { } }
   return await r.arrayBuffer();
@@ -54,13 +55,14 @@ async function pickUrl(url) {
   const v = await versions('models'); return urlOf(url) + (v[f] ? '?v=' + v[f] : '');
 }
 // 読みこみは2つずつ順番に(全員いっぺんに読むとスマホが重くなる)。プレイヤーを先に
-const queue = []; let running = 0, CONC = 2; const stat = { total: 0, done: 0 }; const readyScenes = [];
+const queue = []; let running = 0, CONC = 2; const stat = { total: 0, done: 0, now: '' }; const readyScenes = [];   // now = いま何をしているか(読み込み中のバーに出す)
 export const glbStat = () => ({ ...stat });
+const nm = u => (u.split('/').pop() || '').split('?')[0].replace(/\.glb$/, '');
 export const setGlbConc = n => { CONC = n; pump(); };
 const pump = () => { while (running < CONC && queue.length) { const j = queue.shift(); running++; j.run().finally(() => { running--; pump(); }); } };
 const load = (url, first) => {
   if (!cache.has(url)) cache.set(url, new Promise((ok, ng) => {
-    stat.total++; const job = { run: () => pickUrl(url).then(u => fetchGlb(u)).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); readyScenes.push(g.scene); stat.done++; ok(g); }, e => { stat.done++; ng(e); }) };
+    stat.total++; const job = { run: () => pickUrl(url).then(u => fetchGlb(u)).then(buf => { stat.now = nm(url) + ' をひらく'; return buf; }).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); readyScenes.push(g.scene); stat.done++; ok(g); }, e => { stat.done++; ng(e); }) };
     first ? queue.unshift(job) : queue.push(job); pump();
   }));
   return cache.get(url);
@@ -133,6 +135,7 @@ export function useGlb(ch, id, { height } = {}) {
   const player = id.startsWith('player:') || id.startsWith('self:');
   height = player ? SIZE_NOW.player : (height !== 1.3 ? height : SIZE_NOW.npc);   // 確認用の住人ごとの背(?npcsizes=1)だけは、そちらを優先
   Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null]).then(([gltf0, src]) => {
+    stat.now = nm(spec.url) + ' の体と動きを準備';
     const gltf = src && !(gltf0.animations && gltf0.animations.length) ? { scene: gltf0.scene, animations: src.animations } : gltf0;
     // 同じモデルを複数体出してもいいように、骨ごと複製する
     const model = cloneSkinned(gltf.scene);
@@ -325,6 +328,7 @@ export function useChunkkunGlb(ch) {
 export function glbPreload(ids) { for (const id of ids) { const m = GLB_MODELS[id]; if (m) load(m.url, false).catch(() => { }); } }
 // 画面に出す準備(絵をGPUに送る・光り方を作る)を、1体ずつ間をあけて済ませる。町に入ってからのカクつきをなくす
 export async function glbWarm(renderer, camera) {
+  stat.now = 'えがく準備(色と光の計算)';
   for (const sc of readyScenes) {
     sc.traverse(o => { if (!o.isMesh) return; const ms = Array.isArray(o.material) ? o.material : [o.material]; for (const m of ms) for (const k of ['map', 'emissiveMap']) if (m && m[k]) { try { renderer.initTexture(m[k]); } catch (e) { } } });
     try { renderer.compile(sc, camera); } catch (e) { }
