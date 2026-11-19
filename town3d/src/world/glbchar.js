@@ -33,8 +33,8 @@ const urlOf = u => { try { return SCRIPT_SRC ? new URL(u, SCRIPT_SRC).href : u; 
 const loader = new GLTFLoader();
 const cache = new Map();
 // 版の印(組み立てのときに作る models/versions.json)。読めなくても、印なしで読みに行く
-let verP = null;
-const versions = () => verP || (verP = fetch(urlOf('models/versions.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({})));
+const verP = {};
+const versions = (dir = 'models') => verP[dir] || (verP[dir] = fetch(urlOf(dir + '/versions.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({})));
 // モデルは、版(?v=)つきの名前でブラウザの保存場所(Cache API)に取っておく。2回目からはネットに取りに行かない。版が変わったときだけ入れ替える
 const STORE = 'town-glb-v1';
 async function fetchGlb(url) {
@@ -51,7 +51,7 @@ export const setGlbConc = n => { CONC = n; pump(); };
 const pump = () => { while (running < CONC && queue.length) { const j = queue.shift(); running++; j.run().finally(() => { running--; pump(); }); } };
 const load = (url, first) => {
   if (!cache.has(url)) cache.set(url, new Promise((ok, ng) => {
-    stat.total++; const job = { run: () => versions().then(v => { const f = url.split('/').pop(); return fetchGlb(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); readyScenes.push(g.scene); stat.done++; ok(g); }, e => { stat.done++; ng(e); }) };
+    stat.total++; const job = { run: () => versions(url.startsWith('paid/') ? 'paid' : 'models').then(v => { const f = url.split('/').pop(); return fetchGlb(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); readyScenes.push(g.scene); stat.done++; ok(g); }, e => { stat.done++; ng(e); }) };
     first ? queue.unshift(job) : queue.push(job); pump();
   }));
   return cache.get(url);
