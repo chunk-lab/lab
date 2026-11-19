@@ -393,6 +393,7 @@ export function createMergeApp(env = {}) {
         dropIn(o, to, center(g)); pop(el, 1.15); sfx('pop'); const c = center(g); ftext(c.x, c.y - CS * 0.4, '⚡-1', '#2a7ae0'); enTick(); genUI(g); see(o); save(); refresh();
       }
       function dropIn(o, to, from) {
+        if (S.cells[to]) { const t2 = nearestEmpty(to); if (t2 < 0) { const { u, b, s, ...rest } = o; S.inbox.push(rest); toast('盤面がいっぱいなので 🎁とどいたへ送ったよ'); refresh(); return; } to = t2; }   // 念のため: すでに品があるマスには置かない(上書きすると、絵だけ残って動かせなくなる)
         S.cells[to] = o; o.b = to; o.s = null; const el = mk(o), p = posOf(o), fx = from.x - CS / 2, fy = from.y - CS / 2;
         el.classList.add('fly');
         el.animate([{ transform: `translate(${fx}px,${fy}px) scale(.3)` }, { transform: `translate(${(fx + p.x) / 2}px,${Math.min(fy, p.y) - CS * 0.7}px) scale(1.15)`, offset: .55 }, { transform: `translate(${p.x}px,${p.y}px) scale(1)` }], { duration: 300, easing: 'ease-out' }).onfinish = () => { el.classList.remove('fly'); pop(el, 1.2); };
@@ -513,8 +514,9 @@ export function createMergeApp(env = {}) {
           lv = lo + rnd(hi - lo + 1);
         }
         const L = LINES[ln]; lv = Math.max(1, Math.min(lv, (L.mergeMax || L.items.length) - 1));
-        const o = { t: 'it', ln, lv }, d = defOf(o), from = card ? rel(card) : { x: root.clientWidth / 2, y: BY }, to = nearestEmpty(Math.floor(N / 2));
+        const o = { t: 'it', ln, lv }, d = defOf(o), from = card ? rel(card) : { x: root.clientWidth / 2, y: BY };
         setTimeout(() => {
+          const to = nearestEmpty(Math.floor(N / 2));   // 置くマスは、置く時に選ぶ(0.56秒前に選ぶと、その間に別の品がそのマスに入って、上書きしてしまう)
           if (to >= 0) dropIn({ u: ++S.n, ...o, b: null, s: null }, to, from); else { S.inbox.push(o); refresh(); }
           sfx('pop'); banner(`${esc(NPC_NAME[a.id] || a.id)}の お返し: ${d.icon} ${esc(d.name)} Lv${lv}${jack ? ' ✨とっておき!' : ''}` + (to < 0 ? ' <small>(🎁とどいたへ)</small>' : '')); if (jack) setTimeout(() => giveTool('up'), 900); else if (Math.random() < 0.03) setTimeout(() => giveTool(Math.random() < 0.5 ? 'cut' : 'swap'), 900); save();
         }, 560);
