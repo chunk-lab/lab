@@ -159,7 +159,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         const weak = Object.entries(H.w).filter(([k, v]) => v[1] !== 0 && H.n - v[0] >= 12 && v[2]).sort((a, b) => a[1][0] - b[1][0]).slice(0, 3);   // まちがえた・なやんだ言葉(古い順)
         weak.forEach(([k, v]) => { seen.delete(k); add({ en: k, ja: v[2] }, 'weak'); });
         try { await core.level.load(); core.daylog.missed(14).filter(w => !core.level.tooEasy(w.en)).slice(0, 3).forEach(w => add(w, 'missed')); } catch (e) { }
-        try { (await core.level.fillWords(Math.max(60, n * 6), seen)).forEach(w => add(w, 'level')); } catch (e) { }
+        try { (await core.level.fillWords(Math.max(60, n * 6), seen, 2)).forEach(w => add(w, 'level')); } catch (e) { }
         const strong = pool.filter(w => w.from !== 'level'), rest = pool.filter(w => w.from === 'level');
         const qs = core.review.makeQs(strong.concat(rest.slice(0, Math.max(n, 12) - strong.length)), n, pool);
         for (const q of qs) { try { q.ex = await core.useit.example(q.w.en); } catch (e) { q.ex = null; } }

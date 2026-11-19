@@ -156,9 +156,9 @@ export function createLevel(core) {
     step(d) { L.adj = Math.max(-4, Math.min(4, (L.adj || 0) + d)); save(); return this.bandNote(); }, bandNote() { const b = effBand(); return `${EDGES[b].toLocaleString()}〜${EDGES[b + 1].toLocaleString()}語` + ((L.adj || 0) ? (L.adj > 0 ? ' (↑むずかしめ)' : ' (↓やさしめ)') : ''); },
     get lv() { return L.lv; }, allowed: () => L.allowed.slice(), name: () => LV_NAME[L.lv] || '', weak: () => L.weak, vocab: () => L.vocab,
     // 単語テストの穴うめ:その人のレベル帯(推定語彙のまわり)の単語を n こ。exclude(英語の小文字)は出さない
-    async fillWords(n, exclude = new Set()) {
+    async fillWords(n, exclude = new Set(), spread = 0) {   // spread=前後に何段ひろげるか(戦闘は2=計5段)
       if (!(await load())) return []; const g = list(); if (!g) return [];
-      const band = effBand(), lo = EDGES[band], hi = Math.min(EDGES[band + 1], g.length), out = [], used = new Set(exclude);
+      const band = effBand(), lo = EDGES[Math.max(0, band - spread)], hi = Math.min(EDGES[Math.min(EDGES.length - 1, band + 1 + spread)], g.length), out = [], used = new Set(exclude);
       for (let t = 0; t < n * 30 && out.length < n && hi > lo; t++) { const w = g[lo + Math.floor(Math.random() * (hi - lo))]; const k = String(w[0]).toLowerCase(); if (used.has(k) || w[0].includes(' ')) continue; used.add(k); out.push({ en: w[0], pos: w[1], ja: w[2] }); }
       return out;
     },
