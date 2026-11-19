@@ -85,7 +85,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     if (preload) return preload;
     const bar = document.createElement('div'); bar.className = 'md-preload'; bar.innerHTML = '<span>Loading…</span><div><i></i></div>';
     document.body.appendChild(bar);
-    const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = p => { const n = Math.min(100, Math.round(p * 100)) + '%'; fill.style.width = n; txt.textContent = 'Loading… ' + n; };
+    const fill = bar.querySelector('i'), txt = bar.querySelector('span'), set = p => { const n = Math.min(100, Math.round(p * 100)) + '%'; fill.style.width = n; txt.textContent = 'Loading… ' + n + (texTag ? '  ' + texTag : ''); };
+    let texTag = '';   // どちらの画質で読んでいるか(キャラの絵: 軽量 / 高画質)
     const stopDrill = loadingDrill(bar);   // 待っている間、直近でまちがえた言葉を「英語 → 日本語」で出して読み上げる
     preload = (async () => {
       try {
@@ -93,6 +94,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         // キャラの絵の画質(町の glbchar.js と同じ決め方): 自動はスマホ=軽量(models_lite) / パソコン=高画質(models)
         const lite = (() => { let m = 'auto'; try { m = localStorage.getItem('hoshimiya:chartex') || 'auto'; } catch (e) { } if (m === 'hi' || m === 'lite') return m === 'lite'; try { return matchMedia('(pointer:coarse)').matches; } catch (e) { return false; } })();
         const root = new URL(core.base + 'g/town3d/' + (lite ? 'models_lite/' : 'models/'), location.href).href;
+        texTag = lite ? '(キャラの絵: 軽量)' : '(キャラの絵: 高画質)';
         const ver = await fetch(root + 'versions.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
         const files = Object.keys(ver).filter(f => /\.glb$/.test(f)), cache = 'caches' in window ? await caches.open('town-glb-v1') : null;
         // 進み具合は「実際の時間のかかり方」に合わせる: ダウンロードが要るときだけ多めに割り当て、町の組み立てと準備(いちばん長い)を後ろに広くとる
