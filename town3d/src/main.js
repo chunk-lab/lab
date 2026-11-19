@@ -1005,7 +1005,7 @@ export function mount(container, opt = {}) {
     hud.toast(k === 'night' ? '🎂 誕生日の夜のテスト:花火と写真' : '🎂 誕生日のテスト:住人に会いに行ってみてね');
   }
   function openApp(id, params) {
-    try { if (loadPct >= 1) residents.prepare(env.hour); } catch (e) { }   // 画面が切りかわるときに、この先に出てくる住人の体を読んでおく
+    try { if (loadPct >= 1) residents.prepare(env.hour, 4); } catch (e) { }   // 画面が切りかわるときに、この先に出てくる住人の体を読んでおく
     bumpUse(id === 'fishing' && params && params.tab === 'en' ? 'fishing-en' : id);
     if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox', 'amuse', 'merge'].includes(id)) markPlay(id);
     // 組み込み先(チャンクタウン)が開くアプリ(ゲームなど)は、そちらに任せる
@@ -1741,6 +1741,7 @@ export function mount(container, opt = {}) {
       if (sportHid) { for (const [o, v] of sportHid) o.visible = v; sportHid = null; }
       residents.update(dt, env.hour, me);
     }
+    { const ap = !!appHost.current; if (_wasApp && !ap) { try { residents.prepare(env.hour, 4); } catch (e) { } } _wasApp = ap; }   // 画面からもどったとき、もう一度先読み
 
     // ほかのプレイヤー(なめらかに追いかける)
     for (const [, q] of peers) {
@@ -1817,6 +1818,7 @@ export function mount(container, opt = {}) {
   on(root, 'pointerdown', () => audio.unlock(), { once: true });
 
   // ---- 読み込み画面: キャラを全部読み込んで、画面に出せる準備まで終えてから町を見せる(入ってから読み込んでカクつかないように) ----
+  let _wasApp = false;
   let loadFin, loadPct = 0; const loadP = new Promise(r => { loadFin = r; });
   {
     const lo = document.createElement('div'); lo.className = 'tw-loading';

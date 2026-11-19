@@ -184,6 +184,7 @@ export function createResidents(scene, graph, getHour, collide = null) {
   function loadR(r) { if (r.glb) return; r.glb = true; useGlb(r.ch, r.def.id, { height: residentHeight(r.def) }); }
   const outAt = (d, h) => !goalOf(d, ((h % 24) + 24) % 24).inside;
   list.forEach(r => { if (!r.hidden) loadR(r); });
+  let loadCk = 6;   // 出番なのに体が未読み込みの人を、遊んでいる最中でも1人ずつ(6秒おき)読む
   // 外に出てくる場所: 行き先の近くで、プレイヤーから見えにくい離れた所(みんな同じ家から ぞろぞろ出てこないように)
   const nodeIds = Object.keys(graph.nodes);
   function spawnNode(place, player) {
@@ -219,6 +220,7 @@ export function createResidents(scene, graph, getHour, collide = null) {
         get outing() { return outing; }, set outing(v) { outing = v || new Set(); },
     update(dt, h, player) {
       const anyTalking = list.some(q => q.talking);
+      if ((loadCk -= dt) <= 0) { loadCk = 6; const o = list.find(q => !q.glb && outAt(q.def, h)); if (o) loadR(o); }
       for (const r of list) {
         if (!r.glb && (r.follow || r.pin || r.visit || r.summonT > 0 || (r.ch.root.visible && !r.hidden))) loadR(r);   // 用があって出てきた人は、その場で読む
         if (r.battle) continue;   // 雪合戦の最中は、雪合戦の方で動かす
