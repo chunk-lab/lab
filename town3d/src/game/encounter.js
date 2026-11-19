@@ -115,13 +115,14 @@ export function createEncounter(env) {   // env: { hud, opt, name(自分の名�
       act('throw');   // 問題を出すたびに、相手が「なげる」ような動き
       await say(`Q${i + 1}/${qs.length}\n「${Q.w.en}」の いみは?`, true);
       try { env.opt.speak && env.opt.speak(Q.w.en); } catch (e) { }
+      const tQ = Date.now();   // 答えるまでの時間(10秒以上なやんだ言葉は、あとでもう一度出す)
       const k = await new Promise(res => {
         chEl.innerHTML = Q.ch.map((c, j) => `<button data-k="${j}">${esc(c)}</button>`).join('');
         chEl.querySelectorAll('button').forEach(b => b.onclick = () => res(+b.dataset.k));
       });
       if (!alive) return;
       const ok = Q.ch[k] === Q.ans; chEl.querySelectorAll('button').forEach(b => { b.disabled = true; if (Q.ch[+b.dataset.k] === Q.ans) b.classList.add('ok'); else if (+b.dataset.k === k) b.classList.add('ng'); });
-      try { env.opt.battleRecord && env.opt.battleRecord(Q, ok); } catch (e) { }
+      try { env.opt.battleRecord && env.opt.battleRecord(Q, ok, (Date.now() - tQ) / 1000 > 10); } catch (e) { }
       if (ok) {   // 例文を呪文のように唱えて、ダメージ
         nOk++; const t = Q.ex ? Q.ex.en : Q.w.en;
         const sp = speak(t, Math.min(4500, Math.max(1700, t.length * 55)));

@@ -12,6 +12,7 @@ import { createLauncher } from './launcher.js';
 import './mode.css';
 
 const st = createStore('town');
+const bhist = () => { try { const h = JSON.parse(localStorage.getItem('hoshimiya:battlehist') || '{}'); return { n: h.n || 0, w: h.w || {} }; } catch (e) { return { n: 0, w: {} }; } };   // 戦闘の出題記録 { n:答えた数, w:{ 単語: [最後に答えたn, 0=正解/1=まちがい・なやんだ, 日本語] } }
 // 3Dの町のアプリid → 2Dの施設（PLACES のキー）か、ゲームを直接
 const ROUTE = {
   school: { place: 'school' },           // 学校
@@ -151,14 +152,20 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       lvStep: d => { try { return d ? core.level.step(d) : core.level.bandNote(); } catch (e) { return ''; } },   // 単語の範囲を ±1段(0なら今の範囲だけ返す)
       openTest: () => core.level.test(),   // 語彙数テスト(いつでも)
       battleQs: async (n = 10, exclude = null) => {   // エンカウント戦闘用の4択(単語テストと同じ作り方)。その人のレベル帯の単語+まちがえた言葉。例文があれば ex に付ける
-        const pool = [], seen = new Set(exclude ? [...exclude] : []), add = (w, from) => { if (!w || !w.en || !w.ja || w.kind === 'sentence' || /\s/.test(w.en)) return; const k = w.en.toLowerCase(); if (seen.has(k)) return; seen.add(k); pool.push({ en: w.en, ja: w.ja, pos: w.pos, from }); };
-        try { await core.level.load(); core.daylog.missed(14).filter(w => !core.level.tooEasy(w.en)).slice(0, 4).forEach(w => add(w, 'missed')); } catch (e) { }
-        try { (await core.level.fillWords(Math.max(30, n * 3), seen)).forEach(w => add(w, 'level')); } catch (e) { }
-        const qs = core.review.makeQs(pool.slice(0, Math.max(n, 12)).concat([]), n, pool);
+        // 出題の記録: 正解した言葉は150問ぶん、まちがい・なやんだ言葉は12問ぶん出さない(そのあと、苦手として優先して出す)
+        const H = bhist(), pool = [], seen = new Set(exclude ? [...exclude] : []);
+        for (const [k, v] of Object.entries(H.w)) if (H.n - v[0] < (v[1] === 0 ? 150 : 12)) seen.add(k);
+        const add = (w, from) => { if (!w || !w.en || !w.ja || w.kind === 'sentence' || /\s/.test(w.en)) return; const k = w.en.toLowerCase(); if (seen.has(k)) return; seen.add(k); pool.push({ en: w.en, ja: w.ja, pos: w.pos, from }); };
+        const weak = Object.entries(H.w).filter(([k, v]) => v[1] !== 0 && H.n - v[0] >= 12 && v[2]).sort((a, b) => a[1][0] - b[1][0]).slice(0, 3);   // まちがえた・なやんだ言葉(古い順)
+        weak.forEach(([k, v]) => { seen.delete(k); add({ en: k, ja: v[2] }, 'weak'); });
+        try { await core.level.load(); core.daylog.missed(14).filter(w => !core.level.tooEasy(w.en)).slice(0, 3).forEach(w => add(w, 'missed')); } catch (e) { }
+        try { (await core.level.fillWords(Math.max(60, n * 6), seen)).forEach(w => add(w, 'level')); } catch (e) { }
+        const strong = pool.filter(w => w.from !== 'level'), rest = pool.filter(w => w.from === 'level');
+        const qs = core.review.makeQs(strong.concat(rest.slice(0, Math.max(n, 12) - strong.length)), n, pool);
         for (const q of qs) { try { q.ex = await core.useit.example(q.w.en); } catch (e) { q.ex = null; } }
         return qs;
       },
-      battleRecord: (q, ok) => core.review.record(q, ok, false, 'battle'),
+      battleRecord: (q, ok, slow) => { try { const H = bhist(), k = q.w.en.toLowerCase(); H.n++; H.w[k] = [H.n, ok && !slow ? 0 : 1, q.ans]; const ks = Object.keys(H.w); if (ks.length > 500) ks.sort((a, b) => H.w[a][0] - H.w[b][0]).slice(0, ks.length - 400).forEach(x => delete H.w[x]); localStorage.setItem('hoshimiya:battlehist', JSON.stringify(H)); } catch (e) { } return core.review.record(q, ok, !!slow, 'battle'); },
       reviewWords: () => { const m = new Map(); try { [...core.daylog.missed(14), ...core.daylog.pending()].forEach(w => { if (w && w.en && w.ja && w.kind !== 'sentence') m.set(w.en.toLowerCase(), { en: w.en, ja: w.ja }); }); } catch (e) { } return [...m.values()]; },   // まちがえた言葉+まだ復習していない言葉(チャンクくんに乗っている間のおさらい)
       speak: (t, o) => core.speech.speak(t, o), speakStop: () => core.speech.stop(),
       aloudBand: el => core.aloud.band(el, { loop: true }),   // チャンクくんに乗っている間も、設定どおりに読む

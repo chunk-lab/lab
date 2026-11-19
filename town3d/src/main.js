@@ -1884,7 +1884,7 @@ export function mount(container, opt = {}) {
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
     progress: () => loadPct,
-    _res: () => residents,   // 点検用
+    _res: () => residents, _opt: () => opt,   // 点検用
     progressText: () => (loadPct >= 1 ? '' : glbStat().now),   // いま何をしているか
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
