@@ -25,6 +25,22 @@ fs.cpSync('sdk', 'dist/sdk', { recursive: true });
 // assets/ の中のフォルダ(tarot・bgm・models など)は、全部そのまま dist/ に置く。
 // 素材の種類を増やしても、ここ・統合アプリ・確認ページのどれも直さなくてよい(dist/ をまるごと使う決まり)。
 for (const d of fs.readdirSync('assets', { withFileTypes: true })) if (d.isDirectory()) fs.cpSync('assets/' + d.name, 'dist/' + d.name, { recursive: true });
+// 画質モード: dist/models は「形を詰めたもの」(高画質)、dist/models_lite は「絵も軽くしたもの」(軽量)。作り方は tools/gen_models.py
+// 元(assets/models)と印がちがう=作り直し忘れのときは、元のファイルをそのまま使う(見た目が古くなったり、壊れたりしない)
+if (fs.existsSync('dist/models')) {
+  const man = fs.existsSync('assets_gen/src.json') ? JSON.parse(fs.readFileSync('assets_gen/src.json', 'utf8')) : {};
+  fs.mkdirSync('dist/models_lite', { recursive: true }); const stale = [];
+  for (const f of fs.readdirSync('assets/models')) {
+    if (!f.endsWith('.glb')) continue;
+    const h = createHash('sha1').update(fs.readFileSync('assets/models/' + f)).digest('hex').slice(0, 12);
+    const ok = man[f] === h && fs.existsSync('assets_gen/hi/' + f) && fs.existsSync('assets_gen/lite/' + f);
+    if (ok) { fs.copyFileSync('assets_gen/hi/' + f, 'dist/models/' + f); fs.copyFileSync('assets_gen/lite/' + f, 'dist/models_lite/' + f); }
+    else { fs.copyFileSync('assets/models/' + f, 'dist/models_lite/' + f); stale.push(f); }
+  }
+  if (stale.length) console.log('⚠ 画質モード用が古いので、元のまま使うモデル:', stale.join(' '), '(python3 tools/gen_models.py で作り直す)');
+  const ver = {}; for (const f of fs.readdirSync('dist/models_lite')) ver[f] = createHash('sha1').update(fs.readFileSync('dist/models_lite/' + f)).digest('hex').slice(0, 8);
+  fs.writeFileSync('dist/models_lite/versions.json', JSON.stringify(ver));
+}
 // 3Dモデルの版の印(中身が変わると変わる)。古いモデルがスマホに残らないよう、読むときに ?v= を付ける
 if (fs.existsSync('dist/models')) {
   const ver = {};

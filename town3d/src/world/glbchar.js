@@ -44,6 +44,15 @@ async function fetchGlb(url) {
   if (c) { try { await c.put(url, r.clone()); const key = new URL(url, location.href).pathname; for (const k of await c.keys()) { const u = new URL(k.url); if (u.pathname === key && k.url !== new URL(url, location.href).href) await c.delete(k); } } catch (e) { } }
   return await r.arrayBuffer();
 }
+// キャラの絵の画質: 自動(スマホ=軽量 / パソコン=高画質)・高画質・軽量。「せってい」で変えると、次に町を開いたときから
+export const TEX_MODE = (() => { let m = 'auto'; try { m = localStorage.getItem('hoshimiya:chartex') || 'auto'; } catch (e) { } if (m !== 'hi' && m !== 'lite') { try { m = matchMedia('(pointer:coarse)').matches ? 'lite' : 'hi'; } catch (e) { m = 'hi'; } } return m; })();
+// 読む場所と版の印を決める。軽量版がないモデルは、ふつうの版を読む
+async function pickUrl(url) {
+  const f = url.split('/').pop();
+  if (url.startsWith('paid/')) { const v = await versions('paid'); return urlOf(url) + (v[f] ? '?v=' + v[f] : ''); }
+  if (TEX_MODE === 'lite' && url.startsWith('models/')) { const v = await versions('models_lite'); if (v[f]) return urlOf('models_lite/' + f) + '?v=' + v[f]; }
+  const v = await versions('models'); return urlOf(url) + (v[f] ? '?v=' + v[f] : '');
+}
 // 読みこみは2つずつ順番に(全員いっぺんに読むとスマホが重くなる)。プレイヤーを先に
 const queue = []; let running = 0, CONC = 2; const stat = { total: 0, done: 0 }; const readyScenes = [];
 export const glbStat = () => ({ ...stat });
@@ -51,7 +60,7 @@ export const setGlbConc = n => { CONC = n; pump(); };
 const pump = () => { while (running < CONC && queue.length) { const j = queue.shift(); running++; j.run().finally(() => { running--; pump(); }); } };
 const load = (url, first) => {
   if (!cache.has(url)) cache.set(url, new Promise((ok, ng) => {
-    stat.total++; const job = { run: () => versions(url.startsWith('paid/') ? 'paid' : 'models').then(v => { const f = url.split('/').pop(); return fetchGlb(urlOf(url) + (v[f] ? '?v=' + v[f] : '')); }).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); readyScenes.push(g.scene); stat.done++; ok(g); }, e => { stat.done++; ng(e); }) };
+    stat.total++; const job = { run: () => pickUrl(url).then(u => fetchGlb(u)).then(buf => new Promise((res, rej) => loader.parse(buf, '', res, rej))).then(g => { toonify(g.scene); readyScenes.push(g.scene); stat.done++; ok(g); }, e => { stat.done++; ng(e); }) };
     first ? queue.unshift(job) : queue.push(job); pump();
   }));
   return cache.get(url);

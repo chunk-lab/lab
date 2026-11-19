@@ -49,7 +49,7 @@ const VERSION = '0.1.0';
 export function mount(container, opt = {}) {
   const bus = createBus();
   const storage = opt.storage || createStorage(opt.storagePrefix || 'town:');
-  const settings = Object.assign({ quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, replyLen: 'normal', adult: 0, birth: '', en: 1, enShort: 0, enLevel: 'easy', tips: 1, enc: 'mid', look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
+  const settings = Object.assign({ charTex: 'auto', quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, replyLen: 'normal', adult: 0, birth: '', en: 1, enShort: 0, enLevel: 'easy', tips: 1, enc: 'mid', look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
   const save = () => storage.set('settings', settings);
   const wallet = opt.wallet || createWallet(storage, bus);   // 組み込み先から共通の財布を渡せる(2Dと3Dで同じコイン)
   const ai = createAI(storage);
@@ -1239,6 +1239,8 @@ export function mount(container, opt = {}) {
     const pn = hud.panel(`<h2>せってい</h2>
       <div class="tw-row">住人との会話${seg('en', [[1, '英語'], [0, '日本語']])}</div>
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
+      <div class="tw-row">キャラの絵${seg('charTex', [['auto', '自動'], ['hi', '高画質'], ['lite', '軽量']])}</div>
+      <div class="tw-note">自動: スマホは軽量、パソコンは高画質。切りかえは、次に町を開いたときから(軽量は読みこみが半分ほど)。</div>
       ${opt.openAdmin ? `<div class="tw-row">住人の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="npc" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.npc}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.npc.toFixed(2)}</b></span></div>` : ''}
       ${opt.openAdmin ? `<div class="tw-row">自分の大きさ<span style="display:flex;gap:8px;align-items:center;width:62%"><input class="tw-sz" data-k="player" type="range" min="1" max="3" step="0.05" value="${SIZE_NOW.player}" style="flex:1"><b class="tw-szv" style="width:2.8em;text-align:right">${SIZE_NOW.player.toFixed(2)}</b></span></div>` : ''}
       <div class="tw-row">低負荷モード${seg('lite', [[0, 'オフ'], [1, 'オン']])}</div>
@@ -1273,6 +1275,7 @@ export function mount(container, opt = {}) {
           if (b.dataset.k === 'en') bus.emit('lang', { on: !!settings.en });
           p.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x => x.classList.toggle('on', x === b));
           if (b.dataset.k === 'quality' || b.dataset.k === 'lite') applyQuality();
+          if (b.dataset.k === 'charTex') { try { localStorage.setItem('hoshimiya:chartex', String(v)); } catch (e) { } }
           if (b.dataset.k === 'timeSpeed') env.speed = v / 60;
           if (b.dataset.k === 'sfx') audio.set({ sfx: v });
           bus.emit('audio', audio.get());
@@ -1296,13 +1299,13 @@ export function mount(container, opt = {}) {
     {   // 一般 / 運営 のタブ。運営の項目は、運営のときだけ「運営」タブに出る(一般の人には、タブも項目も出ない)
       const ADM = ['住人の大きさ', '自分の大きさ', '時間の進み', '時刻', 'テスト:', '桜', '流れ星', 'きせつ', '運営(', '宝さがし大会'], isAdm = !!opt.openAdmin || social.admin();
       const rows = [...pn.querySelectorAll('.tw-row')]; rows.forEach(r => { const t = (r.firstChild && r.firstChild.nodeType === 3 ? r.firstChild.textContent : '').trim(); if (ADM.some(a => t.startsWith(a))) r.dataset.tab = 'adm'; });
-      const show = tab => rows.forEach(r => { if (r.querySelector('[data-act="close"]')) return; r.style.display = (r.dataset.tab === 'adm') === (tab === 'adm') ? '' : 'none'; }), note = pn.querySelector('.tw-note');
+      const show = tab => rows.forEach(r => { if (r.querySelector('[data-act="close"]')) return; r.style.display = (r.dataset.tab === 'adm') === (tab === 'adm') ? '' : 'none'; }), notes = pn.querySelectorAll('.tw-note');
       show('gen');
       if (isAdm) {
         const bar = document.createElement('div'); bar.className = 'tw-seg'; bar.style.cssText = 'display:flex;gap:6px;margin:0 0 8px';
         bar.innerHTML = '<button class="tw-btn on" data-tab="gen" style="flex:1">一般</button><button class="tw-btn" data-tab="adm" style="flex:1">🛠 運営</button>';
         pn.querySelector('h2').after(bar);
-        bar.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; e.stopPropagation(); bar.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); show(b.dataset.tab); if (note) note.style.display = b.dataset.tab === 'gen' ? '' : 'none'; });
+        bar.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; e.stopPropagation(); bar.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); show(b.dataset.tab); notes.forEach(n => { n.style.display = b.dataset.tab === 'gen' ? '' : 'none'; }); });
       }
     }
     pn.querySelectorAll('.tw-sz').forEach(el => el.addEventListener('input', () => { const v = +el.value; setGlbSize(el.dataset.k, v); el.parentNode.querySelector('.tw-szv').textContent = v.toFixed(2); }));
