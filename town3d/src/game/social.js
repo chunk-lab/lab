@@ -45,7 +45,7 @@ export const PREFS = {
   luna: { love: ['cupcake', 'matcha'], like: ['cake', 'cocoa', 'pudding'], no: ['donut'] },
 };
 export const NPC_NAME = { sora: 'そら君', hana: 'はなちゃん', mii: 'ミイ', baron: 'ハッタリ男爵', gon: 'ひろい屋ゴン', koharu: 'こはる先生', shiori: 'しおりさん', maru: 'マルさん', yuzu: 'ゆずちゃん', chunkkun: 'チャンクくん', choco: '大喜利チョコ', tetsu: '哲学者', suna: '潮見さん', luna: '占い師ルナ' };
-const KIDS = ['sora', 'yuzu', 'chunkkun'];   // デートの代わりに、お礼のプレゼント
+const KIDS = ['sora', 'chunkkun'];   // デートの代わりに、お礼のプレゼント
 // いちばん好きなものは+12 / 好き+6 / ふつう+3 / にがて-3。1人に1日1回。その日はじめて話すと+1
 export const PTS = { love: 12, like: 6, normal: 3, no: -3, talk: 1 };
 export const LV = [0, 5, 20, 45, 80];   // Lv0 しりあい → Lv1 → Lv2 → Lv3 → Lv4
@@ -190,6 +190,7 @@ export const memory = {
 };
 // デートのはじめのひとこと(住人ごと)
 export const DATE_FIRST = {
+  yuzu: 'わあ、カフェなのです! ゆず、ここのおだんご、気になってたのです。なににするのです?',
   mii: 'ふふ、ここの窓ぎわ、わたしのお気に入りなの。なに飲む?', baron: 'ふはは! わが輩とお茶とは、光栄に思うがよい! …で、何を頼むのだ?', gon: 'カフェなんて久しぶりだぜ。…なんか落ちつかねえな、へへ',
   koharu: '先生とカフェなんて、ちょっと照れますね。きょうは授業の話はなしですよ', shiori: '本を持たないでカフェに来るの、ひさしぶりです。…なんだか新鮮ですね', maru: 'たまには店をまかせて、のんびりするのもいいね! なに食べる?',
   choco: 'カフェでデート…これはネタになる…いや、きょうはちゃんと楽しむぞ!', tetsu: '人と向かい合ってお茶を飲む時間は、いちばんぜいたくな時間かもしれません', suna: 'カフェもいいもんだな。池とはちがう落ちつきがある', luna: 'あなたと来るのは、星で決まっていたのかもね…ふふ、冗談よ',
