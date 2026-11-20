@@ -102,7 +102,7 @@ const CSS = `
 .mg-card{width:min(92%,360px);max-height:88%;overflow:auto;background:#fffaf5;border-radius:22px;padding:16px;box-shadow:0 12px 30px rgba(40,25,60,.4);animation:mgPop .28s cubic-bezier(.3,1.5,.5,1);text-align:center}
 .mg-card h3{margin:0 0 8px;font-size:16px}
 .mg-qw{font-size:30px;margin:10px 0 2px}
-.mg-qs{font-size:12px;color:#8a76a6;min-height:16px}
+.mg-qs{font-size:12px;line-height:1.4;color:#8a76a6;min-height:52px}   /* 正解後の例文(2〜3行)の分を、最初から空けておく(出ても、下の選択肢がズレない) */
 .mg-qc{display:grid;gap:8px;margin:10px 0}
 .mg-qc button{padding:12px 8px!important;font-size:15px;border-radius:14px!important}
 .mg-qc button.ok{background:#3ecf86!important;color:#fff!important}
@@ -560,7 +560,7 @@ export function createMergeApp(env = {}) {
         banner('🎉 13人ぜんいんに わたせた!'); sfx('fanfare');
         const y0 = BY + CS * 2.2, amp = CS * 1.5, x0 = -130, x1 = W + 40, T = 3100;
         const path = t => ({ x: x0 + (x1 - x0) * t, y: y0 + Math.sin(t * Math.PI * 3.2) * amp + Math.sin(t * 9) * 8 });
-        const t0 = performance.now(); let gi = 0, drop = 0.14;
+        const t0 = performance.now(); let gi = 0, drop = 0.14, inb = 0;
         const frame = now => {
           if (!alive || !ck.isConnected) return;
           const t = Math.min(1, (now - t0) / T), p = path(t), q = path(Math.min(1, t + 0.01));
@@ -568,9 +568,10 @@ export function createMergeApp(env = {}) {
           if (gi < gifts.length && t >= drop) {
             const to = nearestEmpty(Math.floor(N / 2)); drop += 0.8 / gifts.length;
             if (to >= 0) { const o = { u: ++S.n, ...gifts[gi], b: null, s: null }; dropIn(o, to, { x: p.x, y: p.y + 30 }); sfx('pop'); see(o); sparkle(p.x, p.y); }
+            else { S.inbox.push({ t: 'it', ln: gifts[gi].ln, lv: gifts[gi].lv }); inb++; sfx('pop'); sparkle(p.x, p.y); refresh(); save(); }   // 盤面がいっぱいなら「🎁とどいた」へ(消えないように)
             gi++;
           }
-          if (t < 1) requestAnimationFrame(frame); else { ck.remove(); f.remove(); finBusy = false; sfx('fanfare2'); toast(`チャンクくんが つぎの ${S.cycle + 1}しゅう目の 素材を くばっていったよ!`); drawStrip(true); refresh(); save(); }
+          if (t < 1) requestAnimationFrame(frame); else { ck.remove(); f.remove(); finBusy = false; sfx('fanfare2'); toast(`チャンクくんが つぎの ${S.cycle + 1}しゅう目の 素材を くばっていったよ!` + (inb ? `(盤面がいっぱいで、${inb}こは 🎁とどいたに入れたよ)` : '')); drawStrip(true); refresh(); save(); }
         };
         requestAnimationFrame(frame);
       }
