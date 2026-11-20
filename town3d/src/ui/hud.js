@@ -57,7 +57,13 @@ export const CSS = `
 .tw-dname{position:absolute;top:-14px;left:18px;background:var(--tw-pink);color:#fff;padding:4px 14px;border-radius:999px;font-weight:800;font-size:14px}
 .tw-dpic{position:absolute;right:12px;bottom:calc(100% - 22px);height:112px;width:auto;max-width:120px;object-fit:contain;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(90,74,107,.25));animation:tw-up .22s}
 .tw-dname small{font-weight:600;opacity:.85;margin-left:6px}
-.tw-dtext{max-height:min(34vh,180px);overflow-y:auto;overscroll-behavior:contain;min-height:48px;font-size:16px;line-height:1.6;margin-top:6px}
+.tw-dtext{max-height:min(48vh,380px);overflow-y:auto;overscroll-behavior:contain;min-height:48px;font-size:var(--tw-dfs,19px);line-height:1.65;margin-top:6px;white-space:pre-line}
+.tw-choices .tw-dexp{margin-right:auto;font-size:13px;padding:7px 12px}
+.tw-dfull{position:absolute;inset:0;z-index:60;background:#fffaf2;display:flex;flex-direction:column;padding:calc(18px + var(--tw-top)) 20px calc(16px + var(--tw-bot));animation:tw-up .18s;pointer-events:auto}
+.tw-dfn{font-weight:800;font-size:15px;color:#fff;background:var(--tw-pink);align-self:flex-start;padding:4px 14px;border-radius:999px;margin-bottom:12px}
+.tw-dfn small{font-weight:600;opacity:.85;margin-left:6px}
+.tw-dft{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;font-size:calc(var(--tw-dfs,19px) + 3px);line-height:1.85;white-space:pre-line;color:#4a3d63}
+.tw-dfx{align-self:center;margin-top:14px;padding:11px 34px;font-size:16px}
 .tw-choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:flex-end}
 .tw-choices .tw-btn{padding:9px 16px;font-size:14px;background:#fff;border:2px solid var(--tw-lav);box-shadow:none}
 .tw-choices .tw-btn.main{background:var(--tw-mint);border-color:var(--tw-mint)}
@@ -212,7 +218,22 @@ export function createHud(root, bus) {
       const tick = setInterval(() => {
         i++; tx.textContent = chars.slice(0, i).join('');
         if (i % 2) bus.emit('sfx', 'blip');
-        if (i >= chars.length) { clearInterval(tick); ch.style.visibility = ''; }
+        if (i >= chars.length) {
+          clearInterval(tick); ch.style.visibility = '';
+          if (!ch.querySelector('.tw-dexp') && (chars.length > 45 || tx.scrollHeight > tx.clientHeight + 2)) {   // 長いときは、全画面で大きく読めるボタン
+            const eb = h('<button class="tw-btn tw-dexp">⤢ ひろげる</button>');
+            eb.onclick = ev => {
+              ev.stopPropagation(); if (dialog && dialog._full) return;
+              const big = h('<div class="tw-dfull"><div class="tw-dfn"></div><div class="tw-dft"></div><button class="tw-btn tw-dfx">とじる</button></div>');
+              big.querySelector('.tw-dfn').innerHTML = `${esc(name)}${role ? `<small>${esc(role)}</small>` : ''}`;
+              big.querySelector('.tw-dft').textContent = text;
+              big.querySelector('.tw-dfx').onclick = e2 => { e2.stopPropagation(); big.remove(); if (dialog) dialog._full = null; };
+              big.onclick = e2 => e2.stopPropagation();
+              root.appendChild(big); dialog._full = big;
+            };
+            ch.prepend(eb);
+          }
+        }
       }, 32);
       dialog.onclick = () => { if (i < chars.length) { i = chars.length - 1; } };
       dialog._stop = () => clearInterval(tick);
@@ -223,7 +244,7 @@ export function createHud(root, bus) {
       const fn = e => { if (dialog !== d) { document.removeEventListener('pointerdown', fn, true); return; } if (d.contains(e.target)) return; document.removeEventListener('pointerdown', fn, true); e.stopPropagation(); e.preventDefault(); this.closeDialog(); try { after && after(); } catch (x) { } };
       setTimeout(() => { if (dialog === d) document.addEventListener('pointerdown', fn, true); }, 300);
     },
-    closeDialog() { if (dialog) { dialog._stop(); dialog.remove(); dialog = null; document.body.classList.remove('tw-talking'); bus.emit('ui:dialogClosed'); } },
+    closeDialog() { if (dialog) { dialog._stop(); dialog._full?.remove(); dialog.remove(); dialog = null; document.body.classList.remove('tw-talking'); bus.emit('ui:dialogClosed'); } },
     // 頭の上の名前と吹き出し
     tag(id, name, me = false) {
       if (tags.has(id)) return;

@@ -50,7 +50,8 @@ const VERSION = '0.1.0';
 export function mount(container, opt = {}) {
   const bus = createBus();
   const storage = opt.storage || createStorage(opt.storagePrefix || 'town:');
-  const settings = Object.assign({ charTex: 'auto', quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, replyLen: 'normal', adult: 0, birth: '', en: 1, enShort: 0, enLevel: 'easy', tips: 1, enc: 'mid', look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
+  const settings = Object.assign({ charTex: 'auto', quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, dlgFont: 19, replyLen: 'normal', adult: 0, birth: '', en: 1, enShort: 0, enLevel: 'easy', tips: 1, enc: 'mid', look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
+  document.documentElement.style.setProperty('--tw-dfs', (settings.dlgFont || 19) + 'px');   // おしゃべりの文字の大きさ
   const save = () => storage.set('settings', settings);
   const wallet = opt.wallet || createWallet(storage, bus);   // 組み込み先から共通の財布を渡せる(2Dと3Dで同じコイン)
   const ai = createAI(storage);
@@ -1263,6 +1264,7 @@ export function mount(container, opt = {}) {
       ${opt.openAdmin ? '<div class="tw-row">運営(花火・日食・月食の予約)<button class="tw-btn" data-act="admin" style="padding:6px 14px">ひらく</button></div>' : ''}
       <div class="tw-row">おとなトーク(18歳以上)<button class="tw-btn" data-act="adult" style="padding:6px 14px">${settings.adult && ageOk() ? 'オン' : 'オフ'}・せってい</button></div>
       <div class="tw-row">ふだんの短いおしゃべりも英語${seg('enShort', [[0, '日本語'], [1, '英語']])}</div>
+      <div class="tw-row">おしゃべりの文字の大きさ${seg('dlgFont', [[17, '小'], [19, '中'], [22, '大'], [25, '特大']])}</div>
       <div class="tw-row">おしゃべりの返事の長さ${seg('replyLen', [['short', '短め'], ['normal', 'ふつう'], ['long', '長め']])}</div>
       <div class="tw-row">AIとおしゃべり<button class="tw-btn" data-act="ai" style="padding:6px 14px">${ai.ready ? 'せってい(つながっています)' : 'つなぐ'}</button></div>
       ${opt.onSwitchMode ? `<div class="tw-row">${opt.switchLabel || 'ほかのモード'}<button class="tw-btn" data-act="mode" style="padding:6px 14px">きりかえる</button></div>` : ''}
@@ -1279,6 +1281,7 @@ export function mount(container, opt = {}) {
           if (b.dataset.k === 'quality' || b.dataset.k === 'lite') applyQuality();
           if (b.dataset.k === 'charTex') { try { localStorage.setItem('hoshimiya:chartex', String(v)); } catch (e) { } }
           if (b.dataset.k === 'timeSpeed') env.speed = v / 60;
+          if (b.dataset.k === 'dlgFont') document.documentElement.style.setProperty('--tw-dfs', v + 'px');
           if (b.dataset.k === 'sfx') audio.set({ sfx: v });
           bus.emit('audio', audio.get());
         }
@@ -1885,7 +1888,7 @@ export function mount(container, opt = {}) {
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
     progress: () => loadPct,
-    _res: () => residents, _opt: () => opt,   // 点検用
+    _res: () => residents, _opt: () => opt, _hud: () => hud,   // 点検用
     progressText: () => (loadPct >= 1 ? '' : glbStat().now),   // いま何をしているか
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
