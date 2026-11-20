@@ -38,7 +38,6 @@ import { createMergeApp } from './apps/merge/app.js';
 import { setEasy } from './apps/gamebox/en_data.js';
 import { createEncounter, ENC } from './game/encounter.js';
 import { VOICE } from './game/voice.js';
-import { createFishStory } from './game/story_fish.js';
 import { createStage } from './game/encounter3d.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
@@ -51,7 +50,6 @@ const VERSION = '0.1.0';
 export function mount(container, opt = {}) {
   const bus = createBus();
   const storage = opt.storage || createStorage(opt.storagePrefix || 'town:');
-  let _fishStory = null; const fishStory = () => _fishStory || (_fishStory = createFishStory({ hud, furn, social, openApp, bus }));   // 物語 第2話(潮見さん)
   const settings = Object.assign({ charTex: 'auto', quality: matchMedia('(pointer:coarse)').matches ? 'mid' : 'high', timeSpeed: 1, dlgFont: 19, replyLen: 'normal', adult: 0, birth: '', en: 1, enShort: 0, enLevel: 'easy', tips: 1, enc: 'mid', look: 'mio', name: '', bgm: 0.5, sfx: 0.7 }, storage.get('settings') || {});
   document.documentElement.style.setProperty('--tw-dfs', (settings.dlgFont || 19) + 'px');   // おしゃべりの文字の大きさ
   const save = () => storage.set('settings', settings);
@@ -295,7 +293,6 @@ export function mount(container, opt = {}) {
     const usedM = storage.get('menuUsed') || {}, APPK = ['school', 'library', 'shop', 'omikuji', 'fortune', 'fishing', 'chunkcards', 'fishing-en'], markM = k => { if (k && !APPK.includes(k)) bumpUse(k); };   // アプリは openApp の中で数える(二重に数えない)
     const backToTalk = () => { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); };   // 釣りから出たら、会話にもどる
     const items = (r.def.menu || []).filter(m => (!m.season || m.season === seasons.season) && soc.menuOk(m) && !(lunaOut && m.app === 'fortune')).map(m => ({ k: kindOf(m), key: m.app || m.act, label: m.act === 'follow' && r.follow ? 'ここでバイバイ' : m.label, fn: () => { if (m.act) return doAct(r, m); openApp(m.app, m.params); if (m.app === 'fishing') backToTalk(); } }));
-    if (r.def.id === 'suna') items.unshift({ k: 'study', key: 'story-fish', label: social.made('story_fish') ? '📖 魚の育て方(もう一度)' : '📖 魚を育ててみる', fn: () => fishStory().start() });
     if (r.def.id === 'suna') items.push({ k: 'study', key: 'fishing-en', label: '🎣 英語の釣り堀', fn: () => { openApp('fishing', { tab: 'en' }); backToTalk(); } });
     items.push(...soc.choices(r));
     if (!r.def.companion && isComp(r)) items.push({ k: 'bond', key: 'follow', label: r.follow ? 'ここでバイバイ' : '手をつないで一緒に歩こう', fn: () => hanaFollow(r, !r.follow) }, { k: 'bond', key: 'invite', label: '家においでよ', fn: () => doAct(r, { act: 'invite' }) });   // デートできるようになった人
@@ -1891,7 +1888,7 @@ export function mount(container, opt = {}) {
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
     progress: () => loadPct,
-    _res: () => residents, _opt: () => opt, _hud: () => hud, _gl: () => renderer, _fstory: () => fishStory(), _chat: (id, low) => { const r = residents.list.find(x => x.def.id === id); if (r) freeChat(r, 'ねえ、きょうはどこに行く? この町には、図書館やカフェや神社があって、ほかにも釣りやカードや占いなど、いろいろ楽しめるよ。ゆっくり選んでね。', '', !!low); },   // 点検用
+    _res: () => residents, _opt: () => opt, _hud: () => hud, _gl: () => renderer, _chat: (id, low) => { const r = residents.list.find(x => x.def.id === id); if (r) freeChat(r, 'ねえ、きょうはどこに行く? この町には、図書館やカフェや神社があって、ほかにも釣りやカードや占いなど、いろいろ楽しめるよ。ゆっくり選んでね。', '', !!low); },   // 点検用
     progressText: () => (loadPct >= 1 ? '' : glbStat().now),   // いま何をしているか
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
