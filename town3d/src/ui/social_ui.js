@@ -1,4 +1,5 @@
 // 住人とのやりとり(プレゼント・頼みごと・お話)・町の「調べる」・宝探しの運営ツール。main.js から使う
+import { VOICE } from '../game/voice.js';
 import { social, ITEMS, PREFS, NPC_NAME, EPISODES, LV_NAME, LV, PTS, memory, MEM, UNLOCKS } from '../game/social.js';
 const UNLOCKS_OF = id => UNLOCKS[id];
 import { finds, WORDS, PHRASES, PROVERBS, PASSAGES, TREASURES, dayKey } from '../game/finds.js';
@@ -6,6 +7,7 @@ import { weather, WX_INFO } from '../game/weather.js';
 import { FISH } from '../apps/fishing/data.js';
 
 const pick = a => a[Math.floor(Math.random() * a.length)];
+const vo = (id, k) => VOICE[id] && VOICE[id][k];   // その人のセリフ(なければ標準)
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const REACT = {
   love: ['わあっ! これ、大好きなんだ! ありがとう!', 'えっ、うそ…! いちばん好きなやつ! ほんとにありがとう!'],
@@ -25,7 +27,7 @@ export function createSocialUI({ openMerge, hud, wallet, audio, addNote, onAllFo
     for (let l = before + 1; l <= after; l++) {
       if ((l === 1 || l === 3) && EPISODES[id] && social.seenEpisode(id, l)) msgs.push(EPISODES[id][l === 1 ? 0 : 1]);
       for (const u of social.unlocksOf(id).filter(u => u.lv === l)) {
-        if (u.kind === 'gift') { if (social.once('thanks:' + id)) { const g = wallet.give(100, 'thanks'); msgs.push(`いつもありがとう! これ、お礼だよ。(🪙+${g})`); } }
+        if (u.kind === 'gift') { if (social.once('thanks:' + id)) { const g = wallet.give(100, 'thanks'); msgs.push(`${vo(id, 'thanks') || 'いつもありがとう! これ、お礼だよ。'}(🪙+${g})`); } }
         else msgs.push(`🔓 ${u.text}`);
       }
     }
@@ -43,7 +45,7 @@ export function createSocialUI({ openMerge, hud, wallet, audio, addNote, onAllFo
     const id = r.def.id, res = social.give(id, k); if (!res) return;
     audio.play(res.r === 'no' ? 'tap' : 'coin');
     const d = PTS[res.r], ev = !res.up && (res.r === 'love' || res.r === 'like') && canDate(r);
-    hud.dialog({ name: name(r), role: `${heart(id)}`, text: pick(REACT[res.r]) + (ev ? '\nねえ、これ、いっしょに食べない?' : ''), choices: ev ? [{ label: '🏠 お家で食べる', fn: () => invite(r) }, { label: '☕ カフェに行く', fn: () => startDate(r) }] : [] });
+    hud.dialog({ name: name(r), role: `${heart(id)}`, text: pick((vo(id, 'gift') || REACT)[res.r] || REACT[res.r]) + (ev ? '\n' + (vo(id, 'eat') || 'ねえ、これ、いっしょに食べない?') : ''), choices: ev ? [{ label: '🏠 お家で食べる', fn: () => invite(r) }, { label: '☕ カフェに行く', fn: () => startDate(r) }] : [] });
     if (res.up) setTimeout(() => levelUp(r, res.before, res.after), 1600);
   }
   // 「仲良くなる」を開いたときの、住人の最初のひと言と、すぐ使えるボタン
@@ -54,14 +56,14 @@ export function createSocialUI({ openMerge, hud, wallet, audio, addNote, onAllFo
     if (L <= 1) {
       if (mine.length && social.canGive(id)) { const k = pick(mine); text = pick([`あ、それ、${itemName(k)}だよね。どこで買ったの?`, `${itemName(k)}、おいしいよね。ちょっと、うらやましいな。`]); extra.push({ label: `🎁 ${itemName(k)}をあげる`, fn: () => giveItem(r, k) }); }
       else text = pick([`${itemName(pick(P.love))}の話なら、いくらでもできちゃうんだ。`, `${itemName(pick(P.like))}も、わりと好きなんだよね。`, '好きなものの話、してもいい?']);
-    } else if (L >= 4) text = pick(['きょうは、ゆっくり話せるね。', 'いっしょにいると、落ちつくな。']);
-    else text = pick(['なにか話す? それとも、おみやげ?', 'きょうは、なにしようか。']);
+    } else if (L >= 4) text = pick(vo(id, 'hi') || ['きょうは、ゆっくり話せるね。', 'いっしょにいると、落ちつくな。']);
+    else text = pick(vo(id, 'lo') || ['なにか話す? それとも、おみやげ?', 'きょうは、なにしようか。']);
     return { text, extra };
   }
   // ---- プレゼント ----
   function gift(r, back) {
     const id = r.def.id, bag = social.bag(), ks = Object.keys(bag);
-    if (!social.canGive(id)) { hud.dialog({ name: name(r), role: heart(id), text: 'きょうはもう、いいものをもらったよ。また明日ね!', choices: [] }); return; }
+    if (!social.canGive(id)) { hud.dialog({ name: name(r), role: heart(id), text: vo(id, 'already') || 'きょうはもう、いいものをもらったよ。また明日ね!', choices: [] }); return; }
     if (!ks.length) { hud.dialog({ name: name(r), role: heart(id), text: '(おみやげを持っていない…。カフェで買えるよ)', choices: [] }); return; }
     const K = social.knownPrefs();
     hud.dialog({ name: '🎁 なにをあげる?', role: `${NPC_NAME[id] || name(r)} ・ ${heart(id)}`, text: 'おみやげをえらんでね(1人に1日1回)', choices: ks.map(k => ({ label: `${social.isItemLocked(k) ? '🔒 ' : ''}${ITEMS[k].icon} ${ITEMS[k].name}${bag[k] > 1 ? ' ×' + bag[k] : ''}${K[id + ':' + k] === 'love' ? ' 💗' : K[id + ':' + k] === 'no' ? ' 💦' : ''}`, fn: () => {

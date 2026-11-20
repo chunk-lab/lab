@@ -37,6 +37,7 @@ import { openNotes } from './ui/notes.js';
 import { createMergeApp } from './apps/merge/app.js';
 import { setEasy } from './apps/gamebox/en_data.js';
 import { createEncounter, ENC } from './game/encounter.js';
+import { VOICE } from './game/voice.js';
 import { createStage } from './game/encounter3d.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
@@ -453,9 +454,9 @@ export function mount(container, opt = {}) {
   function doAct(r, m) {
     if ((m.act === 'date' || m.act === 'invite') && !m._ok) { special(r, () => doAct(r, { ...m, _ok: 1 })); return; }
     if (m.act === 'consult' || m.act === 'soranote') { r.talking = true; talkingTo = r; input.clear(); soraNote(r); return; }
-    if (m.act === 'follow') { if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, !r.follow); return; }
+    if (m.act === 'follow') { if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: VOICE[r.def.id]?.inviteBusy || 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, !r.follow); return; }
     if (m.act === 'date') { startDate(r); return; }
-    if (m.act === 'invite') { if (env.hour >= 21 || env.hour < 5) { hud.dialog({ name: r.def.name, role: r.def.role, text: '今日はもう遅いから、また今度ね!' }); return; } if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, true, true); r.hold = false; hud.dialog({ name: r.def.name, role: r.def.role, text: 'え、いいの? 行く行く!' }); setTimeout(() => { hud.closeDialog?.(); openApp('home', {}); }, 900); return; }
+    if (m.act === 'invite') { if (env.hour >= 21 || env.hour < 5) { hud.dialog({ name: r.def.name, role: r.def.role, text: VOICE[r.def.id]?.inviteLate || '今日はもう遅いから、また今度ね!' }); return; } if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, true, true); r.hold = false; hud.dialog({ name: r.def.name, role: r.def.role, text: VOICE[r.def.id]?.inviteOk || 'え、いいの? 行く行く!' }); setTimeout(() => { hud.closeDialog?.(); openApp('home', {}); }, 900); return; }
     if (m.act === 'ogiri') {
       r.talking = true; talkingTo = r; input.clear();   // 大喜利をしている間は、その場にいる
       const go = () => openOgiri({ hud, ai, bus, def: r.def, getEn: () => ({ on: !!settings.en, level: settings.enLevel }), setEn: v => { settings.en = v.on ? 1 : 0; save(); bus.emit('lang', { on: !!settings.en }); } });
@@ -564,7 +565,7 @@ export function mount(container, opt = {}) {
   function hanaFollow(r, on, quiet) {
     if (on) for (const o of residents.list) if (o !== r && isComp(o) && o.follow) { o.follow = false; o.hold = false; o.ch.holdTo = null; }   // 一緒に歩けるのは1人だけ
     r.follow = on; r.hintT = 25 + Math.random() * 20; r.lastArea = null; r.hold = false; r.reT = 0; r.ev = null; r.lag = r.lagT = 0; r.blockT = 0; r.ch.holdTo = null; me.ch.holdTo = null; guide = null;
-    if (!quiet) hud.dialog({ name: r.def.name, role: r.def.role, text: (FOLLOW_LINES[r.def.id] || FOLLOW_LINES.hana)[on ? 0 : 1] });
+    if (!quiet) hud.dialog({ name: r.def.name, role: r.def.role, text: (VOICE[r.def.id]?.follow || FOLLOW_LINES[r.def.id] || FOLLOW_LINES.hana)[on ? 0 : 1] });
   }
   // ---- しばらく遊んでいない遊び・勉強を記録して、誘う ----
   const lastPlay = storage.get('lastPlay') || {};
@@ -597,7 +598,7 @@ export function mount(container, opt = {}) {
     const from = nearestNode(city.graph, me.x, me.z), to = nearestNode(city.graph, w.x, w.z);
     guide = { r, p, path: [...findPath(city.graph, from, to).map(id => city.graph.nodes[id]), { x: w.x, z: w.z }], t: 0 };
     r.hold = true; r.holdK = 0; r.lag = 0; r.lagT = 0.45;
-    say1(r, r.def.id === 'sora' ? ['よし、こっちだよ!', 'ついてきて!'] : ['こっちこっち! 連れてってあげる!', '行こ行こ!']);
+    say1(r, VOICE[r.def.id]?.guide || (r.def.id === 'sora' ? ['よし、こっちだよ!', 'ついてきて!'] : ['こっちこっち! 連れてってあげる!', '行こ行こ!']));
   }
   function guideStep(dt, mag) {
     if (!guide || hud.busy || appHost.current) return false;
@@ -836,7 +837,7 @@ export function mount(container, opt = {}) {
     d.r.pin = null; d.r.ch.pose = null; residents.avoid = null; d.r.follow = d.wasFollow; d.r.talking = false;
     if (seat && seat.date) { seat = null; me.ch.pose = null; }
     cam.pitch = d.cam0.pitch; cam.dist = d.cam0.dist;
-    if (!quiet) say1(d.r, d.r.def.id === 'sora' ? '楽しかったよ。また来よう!' : '楽しかった〜! また来ようね', 4);
+    if (!quiet) say1(d.r, VOICE[d.r.def.id]?.dateEnd || (d.r.def.id === 'sora' ? '楽しかったよ。また来よう!' : '楽しかった〜! また来ようね'), 4);
   }
   // ---- ストリートピアノ ----
   let pianoGame = null;
