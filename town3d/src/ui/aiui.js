@@ -62,7 +62,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     <div class="tw-log" aria-live="polite"></div>
     <div class="tw-tools" hidden></div>
     <div class="tw-chatrow"><input class="tw-say" maxlength="${maxLen}" placeholder="話しかける"><button class="tw-btn main" data-a="send">送る</button></div>
-    <div class="tw-actions"><button class="tw-btn" data-a="close">${low ? "おしゃべりをおわる" : "とじる"}</button></div>`, null, { sticky: true });   // 会話は、外をタップしても消えない(「とじる」で終える)
+    <div class="tw-actions"><button class="tw-btn" data-a="big">⤢ ひろげる</button><button class="tw-btn" data-a="close">${low ? "おしゃべりをおわる" : "とじる"}</button></div>`, null, { sticky: true });   // 会話は、外をタップしても消えない(「とじる」で終える)
   p.classList.add('tw-chatp');   // 枠の中で、直前のセリフの欄が縮んで収まる(上に消えない)
   if (low) p.classList.add('tw-low');   // 画面の下半分に出す(デート中は、上で2人が見えるように)
   if (onClose && bus) { const offC = bus.on('ui:panelClosed', () => { offC && offC(); try { onClose(); } catch (e) { } }); }   // とじたら(住人の記憶をまとめる など)
@@ -138,6 +138,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     const a = b.dataset.a;
     if (a === 'send') send();
     else if (a === 'close') hud.closePanel();
+    else if (a === 'big') { const on = p.classList.toggle('tw-big'); b.textContent = on ? '⤡ もどす' : '⤢ ひろげる'; log.scrollTop = log.scrollHeight; }   // 画面いっぱいに ひろげて、大きく読む
     else if (a === 'en') { const c = getEn(); setEn({ on: !c.on, level: c.level }); }
     else if (a === 'lv') { const c = getEn(); setEn({ on: c.on, level: c.level === 'easy' ? 'normal' : 'easy' }); showEn(); }
     else if (a === 'unsel') clearSel();

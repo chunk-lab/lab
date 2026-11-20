@@ -69,7 +69,11 @@ export const CSS = `
 .tw-choices .tw-btn.main{background:var(--tw-mint);border-color:var(--tw-mint)}
 .tw-toast{position:absolute;left:50%;top:calc(64px + var(--tw-top));transform:translateX(-50%);background:rgba(90,74,107,.88);color:#fff;padding:8px 16px;border-radius:999px;font-size:14px;font-weight:700;animation:tw-pop .2s;white-space:nowrap;pointer-events:none}
 .tw-panel{position:absolute;inset:0;z-index:25;background:rgba(90,74,107,.25);display:grid;place-items:center;pointer-events:auto;animation:tw-fade .2s}
-.tw-panel.tw-low{place-items:end center;background:transparent;padding-bottom:12px}.tw-panel.tw-low .tw-card{max-height:52%;display:flex;flex-direction:column}.tw-panel.tw-low .tw-log{height:auto;flex:1;min-height:60px}
+.tw-panel.tw-low{place-items:end center;background:transparent;padding-bottom:12px}.tw-panel.tw-low .tw-card{max-height:64%;display:flex;flex-direction:column}
+.tw-panel.tw-low h2{font-size:14px;margin:0 0 4px}.tw-panel.tw-low .tw-enrow{margin-bottom:4px}
+.tw-panel.tw-chatp.tw-big{padding-top:calc(var(--tw-top) + 10px);padding-bottom:10px}
+.tw-panel.tw-chatp.tw-big .tw-card,.tw-panel.tw-low.tw-big .tw-card{max-height:100%;width:min(96%,620px)}
+.tw-chatp .tw-actions{display:flex;gap:8px;justify-content:flex-end}.tw-panel.tw-low .tw-log{height:auto;flex:1;min-height:60px}
 .tw-card{width:min(92%,420px);max-height:86%;overflow:auto;background:var(--tw-cream);border-radius:24px;padding:20px;box-shadow:0 14px 40px rgba(90,74,107,.3)}
 .tw-card h2{margin:0 0 12px;font-size:19px}
 .tw-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed #e6dcef;font-size:14px}
@@ -129,9 +133,9 @@ export const CSS = `
 .tw-loading{position:absolute;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(#d9e6ff,#ffe9f2);color:var(--tw-ink);pointer-events:auto}.tw-loading .lt{font-weight:800;font-size:18px}.tw-loading .lb{width:min(72%,300px);height:14px;border-radius:9px;background:rgba(255,255,255,.8);overflow:hidden;box-shadow:inset 0 1px 3px rgba(90,74,107,.25)}.tw-loading .lb i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffb3c1,#a8e6cf);border-radius:9px;transition:width .25s}.tw-loading .lp{font-size:14px;opacity:.75;min-height:1.2em}.tw-loading .tw-btn{padding:10px 18px}
 .tw-panel.tw-chatp{padding-top:128px}.tw-chatp .tw-card{display:flex;flex-direction:column;overflow:hidden;max-height:min(100%,560px)}.tw-chatp .tw-log{height:auto;flex:1 1 auto;min-height:96px;overscroll-behavior:contain}.tw-chatp .tw-chatrow,.tw-chatp .tw-actions,.tw-chatp .tw-tools,.tw-chatp .tw-enrow,.tw-chatp h2{flex:none}.tw-kb .tw-chatp h2,.tw-kb .tw-chatp .tw-enrow{display:none}.tw-kb .tw-chatp .tw-card{padding:12px 14px}
 .tw-log{height:min(46vh,340px);overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
-.tw-msg{max-width:84%;padding:8px 12px;border-radius:16px;font-size:15px;line-height:1.5;background:#fff;align-self:flex-start;user-select:text;-webkit-user-select:text}
+.tw-msg{max-width:92%;padding:9px 13px;border-radius:16px;font-size:calc(var(--tw-dfs,19px) - 1px);line-height:1.6;white-space:pre-line;background:#fff;align-self:flex-start;user-select:text;-webkit-user-select:text}
 .tw-msg.me{align-self:flex-end;background:var(--tw-pink);color:#fff}.tw-msg.wait{opacity:.6}.tw-msg.err{background:#fff3e0;color:#9a6a3a}
-.tw-chatrow{display:flex;gap:8px}.tw-chatrow .tw-btn{padding:0 16px;box-shadow:none;border:2px solid var(--tw-mint);background:var(--tw-mint)}
+.tw-chatrow{display:flex;gap:8px}.tw-chatrow .tw-btn{white-space:nowrap;min-width:64px;padding:0 16px;box-shadow:none;border:2px solid var(--tw-mint);background:var(--tw-mint)}
 @keyframes tw-pop{from{transform:scale(.6);opacity:0}}
 .tw-bubble,.tw-toast{animation-name:tw-pop2}
 @keyframes tw-pop2{from{opacity:0;margin-top:6px}}
