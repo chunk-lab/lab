@@ -25,7 +25,7 @@ export function createSocialUI({ openMerge, hud, wallet, audio, addNote, onAllFo
   function levelUp(r, before, after, then) {
     const id = r.def.id, msgs = [];
     for (let l = before + 1; l <= after; l++) {
-      if ((l === 1 || l === 3) && EPISODES[id] && social.seenEpisode(id, l)) msgs.push(EPISODES[id][l === 1 ? 0 : 1]);
+      if ((l === 1 || l === 3) && EPISODES[id] && social.seenEpisode(id, l)) { const ep = EPISODES[id][l === 1 ? 0 : 1]; if (ep) msgs.push(ep); }
       for (const u of social.unlocksOf(id).filter(u => u.lv === l)) {
         if (u.kind === 'gift') { if (social.once('thanks:' + id)) { const g = wallet.give(100, 'thanks'); msgs.push(`${vo(id, 'thanks') || 'いつもありがとう! これ、お礼だよ。'}(🪙+${g})`); } }
         else msgs.push(`🔓 ${u.text}`);
