@@ -110,7 +110,7 @@ export class Batcher {
 export function textTexture(text, { bg = '#fff', fg = '#5a4a6b', w = 512, h = 128, font = 'bold 64px sans-serif', border = null, vertical = false } = {}) {
   const cv = document.createElement('canvas');
   cv.width = w; cv.height = h;
-  const g = cv.getContext('2d');
+  const g = cv.getContext('2d', { willReadFrequently: true });
   g.fillStyle = bg;
   const r = Math.min(w, h) * 0.18;
   g.beginPath(); g.roundRect(4, 4, w - 8, h - 8, r); g.fill();
@@ -141,7 +141,7 @@ export function signMat(text, opts) {
 
 // ---------- こまかい模様(白に近い灰色の濃淡を、材質の色にかけて使う) ----------
 function mk(w, h, draw) {
-  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
+  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d', { willReadFrequently: true }), w, h);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; return t;
 }
 const speckle = (g, w, h, n, a) => { for (let i = 0; i < n; i++) { const v = Math.random() < 0.5 ? 90 : 255; g.fillStyle = `rgba(${v},${v - 10},${v + 10},${a * Math.random()})`; g.fillRect(Math.random() * w, Math.random() * h, 1 + Math.random() * 2, 1 + Math.random() * 2); } };

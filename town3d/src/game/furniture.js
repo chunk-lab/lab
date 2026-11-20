@@ -41,7 +41,7 @@ const medTex = {};
 function medal(g, n, c) {
   box(g, 0.12, 0.35, 0.02, 0xff7a9a, -0.07, 0.25, 0.02).rotation.z = 0.25; box(g, 0.12, 0.35, 0.02, 0x7ab8ff, 0.07, 0.25, 0.02).rotation.z = -0.25;
   disc(g, 0.22, 0.05, c, 0, 0.12, 0.06);
-  if (!medTex[n] && typeof document !== 'undefined') { const cv = document.createElement('canvas'); cv.width = cv.height = 128; const x = cv.getContext('2d'); x.fillStyle = '#fff'; x.font = `900 ${n >= 100 ? 46 : 60}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(n), 64, 58); x.font = '700 20px sans-serif'; x.fillText('DAYS', 64, 100); medTex[n] = new THREE.CanvasTexture(cv); medTex[n].colorSpace = THREE.SRGBColorSpace; }
+  if (!medTex[n] && typeof document !== 'undefined') { const cv = document.createElement('canvas'); cv.width = cv.height = 128; const x = cv.getContext('2d', { willReadFrequently: true }); x.fillStyle = '#fff'; x.font = `900 ${n >= 100 ? 46 : 60}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(n), 64, 58); x.font = '700 20px sans-serif'; x.fillText('DAYS', 64, 100); medTex[n] = new THREE.CanvasTexture(cv); medTex[n].colorSpace = THREE.SRGBColorSpace; }
   if (medTex[n]) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.36, 0.36), new THREE.MeshBasicMaterial({ map: medTex[n], transparent: true })); m.position.set(0, 0.12, 0.09); g.add(m); }
 }
 

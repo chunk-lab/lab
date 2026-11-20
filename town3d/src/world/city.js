@@ -376,7 +376,7 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     for (const sx of [-1, 1]) B.add(box(0.14, 2.3, 0.14), mat(0x8a6a4e), sx * 0.95, 1.15, 0, 0, 1, 1, 1, P4);   // 柱
     B.add(rbox(2.2, 1.3, 0.12, 0.04), mat(0xb88a5e), 0, 1.55, 0, 0, 1, 1, 1, P4);   // 板
     B.add(rbox(2.5, 0.12, 0.6, 0.04), mat(0xd9846f), 0, 2.32, -0.05, 0, 1, 1, 1, P4);   // 小さな屋根
-    const c = document.createElement('canvas'); c.width = 256; c.height = 150; const g = c.getContext('2d');
+    const c = document.createElement('canvas'); c.width = 256; c.height = 150; const g = c.getContext('2d', { willReadFrequently: true });
     g.fillStyle = '#d9b48a'; g.fillRect(0, 0, 256, 150);
     [['#fff0f3', 14, 12, 70, 58, -0.06], ['#eefaf4', 96, 10, 66, 52, 0.05], ['#f3efff', 172, 16, 70, 60, -0.03], ['#fff8e6', 30, 80, 84, 56, 0.04], ['#e8f3ff', 136, 84, 92, 52, -0.05]].forEach(([col, px, py, w, h, rot]) => {
       g.save(); g.translate(px + w / 2, py + h / 2); g.rotate(rot); g.fillStyle = col; g.fillRect(-w / 2, -h / 2, w, h);
@@ -413,12 +413,12 @@ export function buildCity(scene, { quality = 'high', blossom = false } = {}) {
     B.add(cyl(0.6, 0.4, 0.14, 16), stone2, x, 2.9, z);
     B.add(sph(0.3, 16), mat(C.pink), x, 3.12, z);
     // 水面(水位は一定。さざなみの模様だけが流れる)
-    const ripple = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, 256, 256); for (let i = 0; i < 60; i++) { g.strokeStyle = `rgba(150,200,230,${0.1 + Math.random() * 0.15})`; g.lineWidth = 1 + Math.random() * 2; const px = Math.random() * 256, py = Math.random() * 256, l = 14 + Math.random() * 26; for (const dx of [-256, 0, 256]) for (const dy of [-256, 0, 256]) { g.beginPath(); g.moveTo(px + dx, py + dy); g.quadraticCurveTo(px + dx + l / 2, py + dy - 4, px + dx + l, py + dy); g.stroke(); } } const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3, 3); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+    const ripple = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d', { willReadFrequently: true }); g.fillStyle = '#fff'; g.fillRect(0, 0, 256, 256); for (let i = 0; i < 60; i++) { g.strokeStyle = `rgba(150,200,230,${0.1 + Math.random() * 0.15})`; g.lineWidth = 1 + Math.random() * 2; const px = Math.random() * 256, py = Math.random() * 256, l = 14 + Math.random() * 26; for (const dx of [-256, 0, 256]) for (const dy of [-256, 0, 256]) { g.beginPath(); g.moveTo(px + dx, py + dy); g.quadraticCurveTo(px + dx + l / 2, py + dy - 4, px + dx + l, py + dy); g.stroke(); } } const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3, 3); t.colorSpace = THREE.SRGBColorSpace; return t; })();
     const wm = new THREE.MeshStandardMaterial({ color: 0x9ad8f0, map: ripple, transparent: true, opacity: 0.86, roughness: 0.12, metalness: 0.05 });
     const water = new THREE.Mesh(new THREE.CircleGeometry(3.95, 48), wm); water.rotation.x = -Math.PI / 2; water.position.set(x, 0.5, z); scene.add(water);
     const bowl = new THREE.Mesh(new THREE.CircleGeometry(1.8, 32), wm); bowl.rotation.x = -Math.PI / 2; bowl.position.set(x, 1.965, z); scene.add(bowl);
     // 皿からこぼれ落ちる水のカーテン
-    const sheetTex = (() => { const c = document.createElement('canvas'); c.width = 64; c.height = 128; const g = c.getContext('2d'); g.clearRect(0, 0, 64, 128); for (let i = 0; i < 18; i++) { const px = Math.random() * 64; g.fillStyle = `rgba(255,255,255,${0.3 + Math.random() * 0.4})`; g.fillRect(px, 0, 1 + Math.random() * 2, 128); } const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(14, 1); return t; })();
+    const sheetTex = (() => { const c = document.createElement('canvas'); c.width = 64; c.height = 128; const g = c.getContext('2d', { willReadFrequently: true }); g.clearRect(0, 0, 64, 128); for (let i = 0; i < 18; i++) { const px = Math.random() * 64; g.fillStyle = `rgba(255,255,255,${0.3 + Math.random() * 0.4})`; g.fillRect(px, 0, 1 + Math.random() * 2, 128); } const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(14, 1); return t; })();
     const sheet = new THREE.Mesh(new THREE.CylinderGeometry(2.0, 2.05, 1.46, 40, 1, true), new THREE.MeshBasicMaterial({ map: sheetTex, color: 0xdff4ff, transparent: true, opacity: 0.6, depthWrite: false, side: THREE.DoubleSide }));
     sheet.position.set(x, 1.22, z); scene.add(sheet);
     // 噴き上がる水のしぶき(ひとつの描画でまとめて動かす)
@@ -570,7 +570,7 @@ function rectCircleDist(a, cx, cz) {
 
 // ---------- 手描き風のテクスチャ ----------
 function canvas(w, h, draw) {
-  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
+  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d', { willReadFrequently: true }), w, h);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; return t;
 }
 function grassTex() {

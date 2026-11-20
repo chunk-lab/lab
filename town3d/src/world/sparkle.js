@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 const NEAR = 9, HINT = 24, POOL = 8;
 function tex() {
-  const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+  const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d', { willReadFrequently: true });
   const r = g.createRadialGradient(32, 32, 0, 32, 32, 30); r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(0.25, 'rgba(255,240,170,.85)'); r.addColorStop(1, 'rgba(255,220,120,0)');
   g.fillStyle = r; g.fillRect(0, 0, 64, 64);
   g.fillStyle = '#fff'; g.beginPath();   // 4つのとがり

@@ -135,12 +135,12 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
       const NP = 40, bg = new THREE.BufferGeometry(), idx = [];
       bg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(NP * 2 * 3), 3)); bg.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(NP * 2 * 2), 2));
       for (let i = 0; i < NP - 1; i++) { const a = i * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); } bg.setIndex(idx);
-      const cv = document.createElement('canvas'); cv.width = 32; cv.height = 4; const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, 20, 4);
+      const cv = document.createElement('canvas'); cv.width = 32; cv.height = 4; const cx = cv.getContext('2d', { willReadFrequently: true }); cx.fillStyle = '#fff'; cx.fillRect(0, 0, 20, 4);
       const tx = new THREE.CanvasTexture(cv); tx.wrapS = THREE.RepeatWrapping; tx.magFilter = THREE.NearestFilter;
       S.band = new THREE.Mesh(bg, new THREE.MeshBasicMaterial({ map: tx, color: 0xffff00, transparent: true, depthTest: false, depthWrite: false, side: THREE.DoubleSide, opacity: 0.95 })); S.band.frustumCulled = false; S.band.renderOrder = 10; scene.add(S.band); S.objs.push(S.band);
     }   // 線の形は毎フレーム変わるので、さいしょの位置で見えなくならないように
     S.land = new THREE.Mesh(new THREE.RingGeometry(0.5, 0.7, 28), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, side: THREE.DoubleSide })); S.land.rotation.x = -Math.PI / 2; scene.add(S.land); S.objs.push(S.land);
-    { const mk = (draw, col) => { const cv = document.createElement('canvas'); cv.width = cv.height = 64; const g = cv.getContext('2d'); g.strokeStyle = col; g.lineCap = 'round'; draw(g);
+    { const mk = (draw, col) => { const cv = document.createElement('canvas'); cv.width = cv.height = 64; const g = cv.getContext('2d', { willReadFrequently: true }); g.strokeStyle = col; g.lineCap = 'round'; draw(g);
         const m = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, depthTest: false, side: THREE.DoubleSide })); m.rotation.x = -Math.PI / 2; m.renderOrder = 9; m.visible = false; scene.add(m); S.objs.push(m); return m; };
       S.mkFirst = mk(g => { g.lineWidth = 6; g.beginPath(); g.arc(32, 32, 26, 0, 7); g.stroke(); g.beginPath(); g.arc(32, 32, 11, 0, 7); g.stroke(); }, '#ffe14d');
       S.mkStop = mk(g => { g.lineWidth = 9; g.beginPath(); g.moveTo(14, 14); g.lineTo(50, 50); g.moveTo(50, 14); g.lineTo(14, 50); g.stroke(); }, '#ff5a8a'); }
@@ -365,7 +365,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     g.toW = (x, y) => [g.cx + x * g.rx + y * g.dx, g.cz + x * g.rz + y * g.dz];
     g.gradW = (wx, wz) => { const [lx, ly] = g.toL(wx, wz), [gx, gy] = g.grad(lx, ly); return [gx * g.rx + gy * g.dx, gx * g.rz + gy * g.dz]; };   // 世界の向きでの「上り」の向き
     // 地面にはる絵:高低の色 + 傾斜の矢印(青=ゆるい / 赤=強い)
-    const N = 384, Sx = g.Rm + g.fw + 0.6, cv = document.createElement('canvas'); cv.width = cv.height = N; const c = cv.getContext('2d'), im = c.createImageData(N, N);
+    const N = 384, Sx = g.Rm + g.fw + 0.6, cv = document.createElement('canvas'); cv.width = cv.height = N; const c = cv.getContext('2d', { willReadFrequently: true }), im = c.createImageData(N, N);
     let hmin = 9, hmax = -9; for (let x = -g.Rm; x <= g.Rm; x += 0.7) for (let y = -g.Rm; y <= g.Rm; y += 0.7) { const h = g.h(x, y); hmin = Math.min(hmin, h); hmax = Math.max(hmax, h); }
     for (let py = 0; py < N; py++) for (let px = 0; px < N; px++) {
       const x = (px / N * 2 - 1) * Sx, y = (1 - py / N * 2) * Sx, rr = Math.hypot(x, y), R = g.rad(Math.atan2(y, x)), i = (py * N + px) * 4;
@@ -400,7 +400,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
     S.club = k; S.rec = k;
   }
   function drawMap() {   // グリーン全体図(真上から・よみとり用)
-    const g = S.gdef, cv = S.hud.querySelector('.sp-map canvas'), c = cv.getContext('2d'), N = cv.width, Sx = g.Sx, P = (x, y) => [(x / Sx + 1) / 2 * N, (1 - (y / Sx + 1) / 2) * N];
+    const g = S.gdef, cv = S.hud.querySelector('.sp-map canvas'), c = cv.getContext('2d', { willReadFrequently: true }), N = cv.width, Sx = g.Sx, P = (x, y) => [(x / Sx + 1) / 2 * N, (1 - (y / Sx + 1) / 2) * N];
     c.clearRect(0, 0, N, N); c.fillStyle = '#17402a'; c.fillRect(0, 0, N, N); c.drawImage(g.tex, 0, 0, N, N);
     const [px, py] = P(g.pin[0], g.pin[1]); c.fillStyle = '#111'; c.beginPath(); c.arc(px, py, 6, 0, 7); c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 2; c.stroke(); c.beginPath(); c.moveTo(px, py); c.lineTo(px, py - 24); c.stroke(); c.fillStyle = '#ff5a5a'; c.beginPath(); c.moveTo(px, py - 24); c.lineTo(px + 14, py - 19); c.lineTo(px, py - 14); c.fill();
     const [bl, bm] = g.toL(S.pos.x, S.pos.z), [bx, by] = P(bl, bm), [dx, dz] = aimDir(), ax = dx * g.rx + dz * g.rz, ay = dx * g.dx + dz * g.dz, [ex, ey] = P(bl + ax * 40, bm + ay * 40);
@@ -573,7 +573,7 @@ export function createSport({ scene, camera, root, me, city, collide, audio, wal
         for (let i = 0; i < 40; i++) { const q = pts[Math.min(pts.length - 1, Math.round(i / 39 * (pts.length - 1)))]; a2.setXYZ(i, q.x, Math.max(0.08, q.y), q.z); }
         a2.needsUpdate = true; S.aimLine.computeLineDistances(); const e = pts[pts.length - 1]; S.land.position.set(e.x, 0.05, e.z);
         { let f = pts.findIndex((q, i) => i > 1 && q.y <= 0.07); if (f < 0) f = pts.length - 1; const q1 = pts[f]; S.mkFirst.position.set(q1.x, 0.06, q1.z); S.mkStop.position.set(e.x, 0.07, e.z);
-          const cv = S.hud.querySelector('.sp-side'), g = cv.getContext('2d'), W = cv.width, Hh = cv.height; g.clearRect(0, 0, W, Hh);
+          const cv = S.hud.querySelector('.sp-side'), g = cv.getContext('2d', { willReadFrequently: true }), W = cv.width, Hh = cv.height; g.clearRect(0, 0, W, Hh);
           const dist = q => Math.hypot(q.x - S.pos.x, q.z - S.pos.z), D = Math.min(dist(e), CLUBS[S.club].d * 1.3), sx = (W - 24) / (CLUBS[S.club].d * 1.3), sy = (Hh - 24) / Math.max(14, CLUBS[S.club].d * 0.7);   // クラブごとに目もりは固定(段をかえても くらべられる)
           g.strokeStyle = '#fff6'; g.lineWidth = 3; g.beginPath(); g.moveTo(8, Hh - 14); g.lineTo(W - 8, Hh - 14); g.stroke();
           g.strokeStyle = '#fff'; g.lineWidth = 4; g.beginPath(); pts.forEach((q, i) => { const X = 12 + Math.min(dist(q), CLUBS[S.club].d * 1.3) * sx, Y = Hh - 14 - q.y * sy; i ? g.lineTo(X, Y) : g.moveTo(X, Y); }); g.stroke();
