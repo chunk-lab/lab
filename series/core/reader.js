@@ -35,6 +35,7 @@ export function createReader(core) {
   const store = createStore('reader');
   const S = Object.assign({ font: 'm', lines: 2, seg: true, role: true, ja: true, always: false, view: 'read', disp: 'easy' }, store.get('settings') || {});
   const save = () => store.set('settings', S);
+  if (!S.v2) { S.lines = 2; S.v2 = 1; save(); }   // 2026-11-21: 表示する文の数を、だれでも一度だけ「2文」に(あとで自分で変えるのは自由)
   let cur = null;
 
   function open(story, opts = {}) {
@@ -146,6 +147,7 @@ export function createReader(core) {
     }
     function render(noAnim) {
       if (!root.isConnected) return;
+      setTimeout(coachTick, 0);
       const sn = sen(), n = sn.words.length, [ra, rb] = range(), q = qs[RD.qi];
       const unitEnds = new Set(sn.units.map(u => u.e));
       const v = view(), gOn = v === 'read' ? RD.gramOn : (RD.hintOn && RD.hintPolicy === 'grammar');
@@ -275,6 +277,7 @@ export function createReader(core) {
       const res = qs.map(judge), pts = res.reduce((a, r, i) => a + Math.round((qs[i].pts || 100) * ({ o: 1, t: .4, x: 0 })[r]), 0);
       beep(res.every(r => r === 'o') ? 'excellent' : 'great');
       core.events.report('reader', 'grade', { title: story.title, n: qs.length, o: res.filter(r => r === 'o').length, hints: RD.hints });
+      RD.graded = true; setTimeout(coachTick, 0);
       const extra = opts.onGrade ? opts.onGrade({ res, pts, hints: RD.hints, n: qs.length, answered: qs.filter(x => x.ans).length }) : '';
       const MK = { o: ['◯', 'k-excellent'], t: ['△', 'k-good'], x: ['×', 'k-miss'] };
       sheet(`<h2>答え合わせ</h2>
@@ -361,6 +364,16 @@ export function createReader(core) {
       if (!silent && opts.onClose) opts.onClose();
     }
     cur = { root, close };
+    // ---- 案内(opts.coach): 物語のチュートリアル。やってほしいことを上に出し、できたら次へ ----
+    let coachI = 0, coachEl = null;
+    function coachTick() {
+      const C = opts.coach; if (!C || !root.isConnected) return;
+      const done = u => u === 'drag' ? RD.p >= 3 || RD.si > 0 : u === 'last' ? RD.si >= sens.length - 1 : u === 'solve' ? view() === 'solve' : u === 'answered' ? qs.every(x => x.ans) : u === 'graded' ? !!RD.graded : false;
+      while (coachI < C.length && C[coachI].until && done(C[coachI].until)) coachI++;
+      const st = C[Math.min(coachI, C.length - 1)];
+      if (!coachEl) { coachEl = document.createElement('div'); coachEl.style.cssText = 'margin:8px 6px;background:#141a36;color:#fff;border:3px solid #ffd166;border-radius:12px;padding:10px 14px;font:700 15px/1.6 inherit;pointer-events:none;white-space:pre-wrap'; const hp = $('help'); hp.parentNode.insertBefore(coachEl, hp); }   // 説明の文の上に、場所をとって出す(英文や問題を隠さない)
+      coachEl.textContent = st.text;
+    }
     applyFont(); ro.observe($('lane')); render(true);
     core.events.report('reader', 'open', { title: story.title });
     return { close: () => close(true) };

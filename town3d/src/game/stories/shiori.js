@@ -8,8 +8,16 @@ const PRACTICE = {
     ['S:She=彼女は | V:loves=大好きだ | O:old love stories=古い恋の物語が', '彼女は古い恋の物語が大好きだ。'],
     ['T:Every evening=毎晩 | S:she=彼女は | V:waits=待っている | M:for a prince=王子様を', '毎晩、彼女は王子様を待っている。'],
   ],
-  questions: [{ type: 'choice', q: 'しおりは、毎晩なにを待っている？', options: ['王子様', 'バス', '雨'], correct: 0 }],
+  questions: [{ type: 'range', si: 2, a: 5, b: 6, alts: [{ si: 2, a: 4, b: 6 }], q: 'しおりが毎晩待っているのは？（その部分を選ぼう）' }],
 };
+const COACH = [
+  { text: '英文の上を、指で右へドラッグしてみよう。\n英文が動いて、右へ読み進められるよ。', until: 'drag' },
+  { text: '上にフリック(はらう)と次の文、下にフリックすると前の文に移れるよ。\n最後の文まで読んでみよう。', until: 'last' },
+  { text: '読めたら、上の「解く」に切りかえよう。', until: 'solve' },
+  { text: '答えの始まりに線を合わせて「［ ここから」、終わりで「ここまで ］」。\n単語を長押ししてなぞっても選べるよ。選べたら「決定」。', until: 'answered' },
+  { text: '「答え合わせ」を押してみよう。', until: 'graded' },
+  { text: 'よくできました！\n左上の「← 物語にもどる」で、物語にもどろう。' },
+];
 export async function shioriStory(d, ctx = {}) {
   const S = 'shiori', me = (ctx.name && ctx.name()) || 'あなた';
   await d.fade(true, 0.01);
@@ -40,8 +48,8 @@ export async function shioriStory(d, ctx = {}) {
   await d.say(S, '「あ、あの……図書館は はじめてですか？\nここでは、いつでも英語の本が読めるんですよ」');
   await d.say(S, '「読むだけでも いいですし、問題を解きながら 読むこともできます」');
   await d.say(S, '「ためしに、短いお話を ひとつ どうぞ」');
-  await d.say('narr', 'まずは「読む」で、ゆっくり読んでみよう。\n読めたら、上の「解く」に切りかえて、問題を1つ答えてみよう。\n閉じると、物語にもどります。');
-  await d.read(PRACTICE, { label: 'お試し', view: 'read' });
+  await d.say('narr', '読む画面の使い方は、画面の上で案内します。\nおわったら、左上の「← 物語にもどる」で もどれます。');
+  await d.read(PRACTICE, { label: 'お試し', view: 'read', coach: COACH });
   await d.say(S, '「……どうでした？\n読むだけの日も、解いてみる日も、あっていいんです」');
   await d.say(S, '「長いお話も、たくさん ありますから。\nまた、いつでも来てくださいね」');
   // ---- 白い……雲 ----
