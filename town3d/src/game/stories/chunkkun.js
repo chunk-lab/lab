@@ -121,6 +121,7 @@ export async function chunkkunStory(d, ctx = {}) {
   d.shot('me', C, { yaw: 1.2, dist: 5.5, h: 2.0, look: 0.9 });
   await d.say(C, '「町で声かけてくれたら、いつでも乗せてあげるよ〜」');
   await d.say(C, '「でも、ないしょだよ〜。……もちもち」');
+  await d.friend(C, 5);
 
   // ---- オチ ----
   d.hideBox(); await d.fade(true, 1.0);

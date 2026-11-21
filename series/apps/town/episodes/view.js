@@ -11,10 +11,12 @@ const ROOM = `<svg viewBox="0 0 900 700" preserveAspectRatio="xMidYMid slice" ar
 
 // 3Dの町で演じる話(台本は town3d/src/game/stories/)。ここには目次だけ置く
 const CHUNKKUN_3D = { id: 'chunkkun', label: 'チャンクくん', title: 'もちもち', character: 'チャンクくん', cast: 'チャンクくん', town3d: 'chunkkun', steps: [{ type: 'end' }] };
+const S3 = (id, label, title) => ({ id, label, title, character: label, cast: label, town3d: id, steps: [{ type: 'end' }] });
+const MORE_3D = [S3('yuzu', 'ゆず', '何歳に見えますか？'), S3('shiori', 'しおりさん', '白馬の王子様'), S3('gon', 'ゴン', 'ボタンの落とし主'), S3('choco', '大喜利チョコ', '勝っても負けても')];
 
 export function createEpisodes(core, { games, depart, play3d, pauseTown = () => {}, resumeTown = () => {}, onStop = () => {} }) {
   // 話の一覧(新しい話は、ここに足す)。タイトル画面の「つづき」は、まだ終わっていない最初の話を開く
-  const LIST = [FIRST_EPISODE, CHUNKKUN_3D];
+  const LIST = [FIRST_EPISODE, CHUNKKUN_3D, ...MORE_3D];
   const store = createStore('town-episodes'), progs = LIST.map(e => createEpisodeProgress(store, e));
   let k = 0, episode = LIST[0], progress = progs[0], forced = null;
   const num = () => episode.no || k + 1;

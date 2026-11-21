@@ -33,7 +33,7 @@ const HTML = `<header class="rdTop"><button class="gear" data-k="back"></button>
 
 export function createReader(core) {
   const store = createStore('reader');
-  const S = Object.assign({ font: 'm', lines: 1, seg: true, role: true, ja: true, always: false, view: 'read', disp: 'easy' }, store.get('settings') || {});
+  const S = Object.assign({ font: 'm', lines: 2, seg: true, role: true, ja: true, always: false, view: 'read', disp: 'easy' }, store.get('settings') || {});
   const save = () => store.set('settings', S);
   let cur = null;
 

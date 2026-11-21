@@ -1,6 +1,6 @@
 // 天気(町と釣りで共通)。本当の時計で3時間ごとに 晴れ/くもり/雨 が決まる(だれの端末でも同じ天気)。
-//   割合は仮:晴れ 55% / くもり 25% / 雨 20%。数字はここだけ直せば全体に効く。
-export const WX = { BLOCK_H: 3, P: [['sun', 0.55], ['cloud', 0.25], ['rain', 0.20]] };
+//   割合:晴れ 80% / くもり 15% / 雨 5%(2026-11-21)。数字はここだけ直せば全体に効く。
+export const WX = { BLOCK_H: 3, P: [['sun', 0.80], ['cloud', 0.15], ['rain', 0.05]] };
 export const WX_INFO = { sun: { icon: '☀️', night: '🌙', name: '晴れ' }, cloud: { icon: '☁️', name: 'くもり' }, rain: { icon: '☔', name: '雨' } };
 const BMS = WX.BLOCK_H * 36e5, JST = 9 * 36e5;
 const hash = n => { let x = (n * 2654435761) >>> 0; x ^= x >>> 15; x = Math.imul(x, 0x2c1b3c6d) >>> 0; x ^= x >>> 12; x = Math.imul(x, 0x297a2d39) >>> 0; x ^= x >>> 15; return (x >>> 0) / 4294967296; };

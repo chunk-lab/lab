@@ -152,6 +152,8 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       studySec: () => { try { return core.daylog.totalSummary().by.study || 0; } catch (e) { return 0; } },   // マージゲーム: ほかの勉強の合計秒数(生成機のロック解除)
       lvStep: d => { try { return d ? core.level.step(d) : core.level.bandNote(); } catch (e) { return ''; } },   // 単語の範囲を ±1段(0なら今の範囲だけ返す)
       openTest: () => core.level.test(),   // 語彙数テスト(いつでも)
+      // 物語の芝居から、共通の「読む画面」を開く。閉じたら resolve({ graded })
+      openReader: (story, o = {}) => new Promise(res => { let graded = null; try { core.reader.open(story, { backLabel: '← 物語にもどる', ...o, onGrade: r => { graded = r; return ''; }, onClose: () => { try { town && town.resume(); } catch (e) { } res({ graded }); } }); } catch (e) { console.error(e); res({ graded: null }); } }),
       battleQs: async (n = 10, exclude = null) => {   // エンカウント戦闘用の4択(単語テストと同じ作り方)。その人のレベル帯の単語+まちがえた言葉。例文があれば ex に付ける
         // 出題の記録: 正解した言葉は150問ぶん、まちがい・なやんだ言葉は12問ぶん出さない(そのあと、苦手として優先して出す)
         const H = bhist(), pool = [], seen = new Set(exclude ? [...exclude] : []);

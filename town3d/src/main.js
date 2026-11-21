@@ -3,7 +3,7 @@ import { receipt } from './ui/pay.js';
 import * as THREE from 'three';
 import { createBus, createStorage, createWallet, angleLerp, clamp } from './core/core.js';
 import { weather } from './game/weather.js';
-import { social, PREFS, memory, DATE_FIRST } from './game/social.js';
+import { social, PREFS, memory, DATE_FIRST, UNLOCKS, LV, LV_NAME } from './game/social.js';
 import { finds, setAreaName, setSpotValid, loadHuntFile, TREASURES } from './game/finds.js';
 import { createSocialUI } from './ui/social_ui.js';
 import { createAppHost } from './core/apps.js';
@@ -40,7 +40,11 @@ import { createEncounter, ENC } from './game/encounter.js';
 import { VOICE } from './game/voice.js';
 import { createCutscene } from './game/cutscene.js';
 import { chunkkunStory } from './game/stories/chunkkun.js';
-const STORIES = { chunkkun: chunkkunStory };   // 物語の芝居(3D)。id → 台本
+import { yuzuStory } from './game/stories/yuzu.js';
+import { shioriStory } from './game/stories/shiori.js';
+import { gonStory } from './game/stories/gon.js';
+import { chocoStory } from './game/stories/choco.js';
+const STORIES = { chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory };   // 物語の芝居(3D)。id → 台本
 import { createStage } from './game/encounter3d.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
@@ -228,10 +232,16 @@ export function mount(container, opt = {}) {
   // ---- 入力と会話 ----
   let focus = null, talkingTo = null, started = false;
   const input = createInput(root, { onAction: () => doAction() });
-  const cut = createCutscene({ root, scene, residents, me, env, input, names: { me: () => settings.name || 'あなた', chunkkun: 'チャンクくん', mii: 'ミイ', maru: 'マルさん' }, blockers: city.meshes });   // 物語の芝居
+  const cut = createCutscene({ root, scene, residents, me, env, input, names: { me: () => settings.name || 'あなた', chunkkun: 'チャンクくん', mii: 'ミイ', maru: 'マルさん', yuzu: 'ゆず', shiori: 'しおりさん', gon: 'ゴン', suna: '潮見さん', luna: 'ルナ', baron: 'ハッタリ男爵', choco: '大喜利チョコ', tetsu: '哲学者', koharu: 'こはる先生', hana: 'はな', sora: 'そら' }, blockers: city.meshes,
+    openApp: (id, p) => openApp(id, p), bus, openReader: opt.openReader || null,
+    reward: (id, n) => {   // 物語のなかよし(1つの話で1回だけ上がる)
+      const first = social.markMade('story:' + id); if (first) social.addAff(id, n);
+      const lv = social.level(id), aff = social.aff(id), u = (UNLOCKS[id] || []).find(x => x.lv > lv);
+      return { gained: first ? n : 0, lvName: LV_NAME[lv], next: u ? { left: Math.max(1, LV[u.lv] - aff), label: (u.label || (u.kind === 'gift' ? 'お礼のプレゼント' : 'デート')).replace(/^\S+\s/, '') } : null, firstTime: social.markMade('tut:aff') };
+    } });   // 物語の芝居
 
   // ---- ベンチにすわる ----
-  let seat = null, cutRode = false;
+  let seat = null, cutRode = false, cutPax = null;
   function sitOnBench(b0) {
     // 背もたれがないので、立っている側を向いてすわる(前からでも後ろからでも)
     const fx = Math.sin(b0.ry), fz = Math.cos(b0.ry), back = (me.x - b0.x) * fx + (me.z - b0.z) * fz < 0;
@@ -1461,6 +1471,15 @@ export function mount(container, opt = {}) {
   // 運営が決めた長さ(分)。town:evdur = {fw,solar,lunar,rain} 秒。なければ標準
   const evSec = (k, def) => { const v = +(storage.get('evdur') || {})[k]; return v > 5 ? v : def; };
   function stopEvent() { fw.stop(); env.stopEclipse(); env.stopWeather(); audio.rain(0); if (evt && evt.fw) env.release(); evt = null; clearBanner(); }
+  // 通り雨と虹: 3日に1回くらい、昼(9〜17時)のどこかで1回だけ。日にちから決まるので、だれの町でも同じ時間
+  function autoShower() {
+    if (!started || appHost.current || hud.busy || evt || cut.on) return;
+    const now = new Date(), day = Math.floor((now.getTime() + 9 * 36e5) / 864e5), hh = (n => { let x = (n * 2654435761) >>> 0; x ^= x >>> 15; x = Math.imul(x, 0x2c1b3c6d) >>> 0; x ^= x >>> 13; return (x >>> 0) / 4294967296; })(day * 31 + 7);
+    if (hh > 0.34) return;   // 約3日に1回
+    const startMin = 9 * 60 + Math.floor((hh / 0.34) * 8 * 60), m = now.getHours() * 60 + now.getMinutes();
+    if (m < startMin || m > startMin + 20 || storage.get('autoShower') === day) return;   // 始まりから20分以内に町にいれば降る
+    storage.set('autoShower', day); runEvent('rain');
+  }
   function runEvent(kind, meta = {}) {
     stopEvent(); audio.unlock();
     if (kind === 'rain') {
@@ -1629,8 +1648,11 @@ export function mount(container, opt = {}) {
     if (cut.on) cut.meStep(dt);
     if (cut.on && cut.riding) {   // 物語: チャンクくんの背中に乗って飛ぶ(台本が自分を動かし、チャンクくんを下に付ける)
       const r = chunkOf(); if (r) { const A = r.act || (r.act = {}), P = r.ch.root.position; A.y = cut.alt; A.ry = me.ry; P.x = me.x; P.z = me.z; P.y += (cut.alt - P.y) * Math.min(1, dt * 3); r.ch.root.rotation.y = me.ry; r.ch.root.updateMatrixWorld(true);
-        const sk = r.ch.scaleNow || 1; me.ch.pose = 'ride'; me.ch.rideKind = 'front'; me.ch.rideSnap = true; me.ch.rideY = cloudTop(r.ch.root, me.x, me.z, 0.7 * sk + P.y, P.y) - 0.02 * sk; cutRode = true; }
-    } else if (cutRode) { cutRode = false; me.ch.pose = null; me.ch.rideY = 0; me.ch.rideSnap = false; }
+        const sk = r.ch.scaleNow || 1; me.ch.pose = 'ride'; me.ch.rideKind = 'front'; me.ch.rideSnap = true; me.ch.rideY = cloudTop(r.ch.root, me.x, me.z, 0.7 * sk + P.y, P.y) - 0.02 * sk; cutRode = true;
+        const q = cut.pax && residents.list.find(o => o.def.id === cut.pax);   // うしろに乗る人(物語の相手)
+        if (q) { const A2 = q.act || (q.act = {}), fx = Math.sin(me.ry), fz = Math.cos(me.ry), bx = me.x - fx * 0.37 * sk, bz = me.z - fz * 0.37 * sk;
+          q.ch.root.position.set(bx, 0, bz); A2.y = 0; A2.ry = me.ry + Math.PI; q.ch.root.rotation.y = me.ry + Math.PI; A2.pose = 'ride'; q.ch.rideKind = 'back'; q.ch.rideSnap = true; q.ch.rideY = cloudTop(r.ch.root, bx, bz, 0.7 * sk + P.y, P.y) - 0.05 * sk; cutPax = q; } }
+    } else if (cutRode) { cutRode = false; me.ch.pose = null; me.ch.rideY = 0; me.ch.rideSnap = false; if (cutPax) { if (cutPax.act) cutPax.act.pose = null; cutPax.ch.rideY = 0; cutPax.ch.rideSnap = false; cutPax = null; } }
     const guided = cut.on || guideStep(dt, mag) || !!approach || !!goTo || !!(ride && ride.tour);   // 住人に連れて行ってもらっている間は、自動で歩く
     const rideT = Math.max(0, Math.min(1, (mag - 0.55) / 0.45));   // 乗っている間: 軽くたおす=歩く速さ、思いきりたおす=走りの2倍
     const target = mag > 0.05 ? (ride ? 6.8 * Math.max(mag, 0.4) + (24 - 6.8) * rideT * rideT : (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) * pullBoost) : 0;
@@ -1740,7 +1762,7 @@ export function mount(container, opt = {}) {
     if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
     if (evt) { if (evt.wx ? !env.weather : evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
     sparkles.update(dt, me);
-    if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); curWx = weather.now(); env.setAmbient(curWx); }
+    if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); curWx = weather.now(); env.setAmbient(cut.on && cut.wx ? cut.wx : curWx); autoShower(); }
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));

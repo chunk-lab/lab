@@ -39,7 +39,7 @@ function puffTex() {
   g.fillStyle = r; g.fillRect(0, 0, 64, 64); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
-export function createCutscene({ root, scene, residents, me, env, input, names = {}, blockers = [] }) {
+export function createCutscene({ root, scene, residents, me, env, input, names = {}, blockers = [], openApp = null, bus = null, openReader = null, reward = null }) {
   if (!document.getElementById('tw-cut-css')) { const st = document.createElement('style'); st.id = 'tw-cut-css'; st.textContent = CSS; document.head.appendChild(st); }
   let on = false, el = null, skipped = false, meAct = null, camT = null, camP = new THREE.Vector3(), camL = new THREE.Vector3(), camSnap = false, follow = null, camInit = false, offY = 0, riding = false, alt = 0;
   const ray = new THREE.Raycaster(), rv = new THREE.Vector3();
@@ -118,8 +118,8 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
     follow = { a, b, ...o }; camSnap = o.snap !== false;   // ふつうは一瞬で切りかえる(建物の中を通らないように)
   }
   function shotTarget(camera) {
-    if (follow.moon) {   // 月を背にして: 月と反対がわの下から、相手を見上げる
-      const A = pos(follow.a), y = (follow.a === 'me' ? alt + 1 : (who(follow.a)?.ch.root.position.y || 0) + 1), mp = env.skyPos ? env.skyPos('lunar') : null;
+    if (follow.moon || follow.sky) {   // 月(虹)を背にして: 空のものと反対がわの下から、相手ごしに空を見る
+      const A = pos(follow.a), y = (follow.a === 'me' ? alt + 1 : (who(follow.a)?.ch.root.position.y || 0) + 1), mp = env.skyPos ? env.skyPos(follow.sky || 'lunar') : null;
       const c = new THREE.Vector3(A.x, y, A.z), md = mp ? mp.clone().sub(c).normalize() : new THREE.Vector3(0, 0.6, -1).normalize();
       const hx = -md.x, hz = -md.z, hl = Math.hypot(hx, hz) || 1, dist = follow.dist || 12;
       // 月と反対がわ・少し下から、相手と月の間を見る(相手の向こうに月が入る)
@@ -148,8 +148,31 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
       b.onclick = e => { e.stopPropagation(); res(); }; t.appendChild(b); q('.cs-skip').style.display = 'none';
     });
   }
-  const ride = (on, a = 0) => { riding = on; alt = a; };
-  const dir = { only, endCard, ride, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
+  let paxId = null;
+  const ride = (on, a = 0, pax = null) => { riding = on; alt = a; paxId = on ? pax : null; };
+  function faceSky(ids, kind = 'rain') { const mp = env.skyPos && env.skyPos(kind); if (!mp) return; for (const id of ids) { const p = pos(id); face(id, Math.atan2(mp.x - p.x, mp.z - p.z)); } }
+  // 天気: 芝居の間だけ、雨・くもり・晴れを決める(fast=はやく変わる)。rainbow=雨上がりから虹へ
+  let wxK = null, wxFast = false;
+  function wx(kind, fast = false) { wxK = kind; wxFast = fast; env.setAmbient && env.setAmbient(kind, fast === 'snap'); }
+  function rainbow(dur = 40) { env.weather = { t: dur * 0.67, dur, rain: 0, bow: 0 }; wx('sun', true); }
+  // 芝居の途中で、本物のアプリ・読む画面を開く。閉じたら芝居にもどる
+  function away() { el.style.display = 'none'; document.body.classList.remove('tw-cuton'); }
+  function back() { el.style.display = ''; document.body.classList.add('tw-cuton'); input.enabled = false; input.clear && input.clear(); camSnap = true; }
+  async function app(id, params) {
+    guard(); hideBox(); if (!openApp || !bus) return;
+    away();
+    await new Promise(res => { const off = bus.on('app:close', () => { off(); res(); }); let r; try { r = openApp(id, params); } catch (e) { r = false; } Promise.resolve(r).then(v => { if (v === false) { off(); res(); } }); });
+    back(); guard();
+  }
+  async function read(story, o) { guard(); hideBox(); if (!openReader) return null; away(); const r = await openReader(story, o); back(); guard(); return r; }
+  // 話の終わりのなかよし: 上がった量・次に開くもの。はじめての時だけ、しくみの説明
+  async function friend(id, n = 5) {
+    if (!reward) return; const r = reward(id, n); if (!r) return;
+    const nm = NAME(id);
+    await say('narr', `💗 ${nm}と、なかよしになった！${r.gained ? '' : '（もう上がっています）'}\nいま：${r.lvName}` + (r.next ? `\nあと ${r.next.left} で「${r.next.label}」が開くよ` : ''));
+    if (r.firstTime) await say('narr', 'なかよしは、毎日話しかけたり、マージで作った「ほしい品」をわたしたりすると上がります。\n上がるたびに、その人にたのめることや、遊べるものが増えていきます。');
+  }
+  const dir = { only, endCard, ride, faceSky, wx, rainbow, app, read, friend, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
     wait: async s => { guard(); await sleep(s); guard(); }, hour: h => { env.hour = h; }, both: (...ps) => Promise.all(ps) };
 
   async function play(script) {
@@ -166,14 +189,14 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
     try { if (skipped) await fade(true, 0.3); } catch (e) { }
     for (const r of extras) r.act = null; extras = [];
     for (const id of castIds) { const r = who(id); if (r) { r.act = null; r.ch.rideScale = 1; r.ch.snapScale = true; r.ch.root.position.y = 0; } }
-    riding = false; alt = 0; meAct = null; follow = null; camT = null; offY = 0; try { cameraRef && cameraRef.clearViewOffset(); } catch (e) { } puffs.splice(0).forEach(p => { scene.remove(p.s); p.s.material.dispose(); });
+    riding = false; alt = 0; paxId = null; wxK = null; wxFast = false; meAct = null; follow = null; camT = null; offY = 0; try { cameraRef && cameraRef.clearViewOffset(); } catch (e) { } puffs.splice(0).forEach(p => { scene.remove(p.s); p.s.material.dispose(); });
     el.removeEventListener('pointerup', tap); el.remove(); el = null; document.body.classList.remove('tw-cuton'); input.enabled = inputWas !== false; on = false;
     void realAct;
     return ok && !skipped;
   }
 
   return {
-    get on() { return on; }, get riding() { return riding; }, get alt() { return alt; }, play,
+    get on() { return on; }, get wx() { return wxK; }, get pax() { return paxId; }, get riding() { return riding; }, get alt() { return alt; }, play,
     meStep(dt, collide) {   // main の frame から: 自分のキャラを台本どおりに歩かせる
       if (!meAct) { me.speed += (0 - me.speed) * Math.min(1, dt * 8); return; }
       const dx = meAct.x - me.x, dz = meAct.z - me.z, d = Math.hypot(dx, dz);
@@ -182,6 +205,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
     },
     camStep(dt, camera) {
       cameraRef = camera;
+      if (wxK && wxFast && env.amb) { const A = env.amb, k = Math.min(1, dt * 1.5); A.r += (A.tr - A.r) * k; A.c += (A.tc - A.c) * k; }
       for (let i = puffs.length - 1; i >= 0; i--) { const p = puffs[i]; p.t += dt; p.s.position.x += p.vx * dt; p.s.position.y += p.vy * dt; p.s.position.z += p.vz * dt; p.vx *= 0.94; p.vz *= 0.94; p.s.scale.setScalar(p.size * (0.5 + p.t * 1.6)); p.s.material.opacity = Math.max(0, 1 - p.t / 0.9); if (p.t > 0.9) { scene.remove(p.s); p.s.material.dispose(); puffs.splice(i, 1); } }
       const T0 = follow ? shotTarget(camera) : camT; if (!T0) return;
       const T = { p: T0.p.clone(), l: T0.l };
