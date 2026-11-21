@@ -8,6 +8,8 @@ import { createInput } from '../game/input.js';
 import { snapCanvas, shotCard, flash } from '../game/photos.js';
 import { fmtN, clamp } from '../core/core.js';
 import { createHomeMenu, HOME_MENU } from './home_menu.js';
+import { furn as FURN, houseData as HOUSE } from '../game/furniture.js';
+import { models } from '../game/model_rooms.js';
 import { ITEMS, ITEM, CATS, U, WALL_H, MAX_OWN, SIDE_MAX, furn, houseData, size, wallLen, kindOf, heightOf, inside, stackY, findSpot, ROOM_TYPES } from '../game/furniture.js';
 
 const ink = '#5a4a6b';
@@ -48,6 +50,7 @@ function makeThumbs() {
   }));
 }
 
+const askName = () => new Promise(res => { const v = prompt('モデルルームの名前(12文字まで)', ''); res(v == null ? null : v.trim().slice(0, 12)); });
 export const shopApp = {
   mount(el, ctx) {
     setTimeout(makeThumbs, 80);   // 先に画面を出してから、絵を少しずつ作る
@@ -56,7 +59,10 @@ export const shopApp = {
     const box = document.createElement('div');
     box.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;font-family:inherit;color:${ink}`;
     el.appendChild(box);
-    let view = 'list', msg = '', cat = 'すべて';
+    let view = ctx.params && ctx.params.tab === 'model' ? 'model' : 'list', msg = '', cat = 'すべて';
+    const paid = () => { try { return !!(ctx.member && ctx.member.paid()); } catch (e) { return false; } };
+    const tabs = () => `<div style="display:flex;gap:6px;padding:4px 16px 8px"><button data-v="list" style="${btn(view === 'list' ? undefined : '#ece7f3', view === 'list' ? '#fff' : ink)};flex:1">🛋 家具</button><button data-v="model" style="${btn(view === 'model' ? undefined : '#ece7f3', view === 'model' ? '#fff' : ink)};flex:1">🏠 モデルルーム</button></div>`;
+    const ymd = t => { const d = new Date(t); return `${d.getMonth() + 1}月${d.getDate()}日`; };
     const qtyBtn = (id, d, label, on = true) => `<button data-q="${id}" data-d="${d}" style="width:34px;height:34px;border-radius:50%;border:0;font:inherit;font-weight:900;font-size:18px;line-height:1;color:#fff;background:${on ? 'linear-gradient(160deg,#c9b8ea,#b19cd9)' : '#d9d2e3'};${on ? 'cursor:pointer' : 'cursor:default'}">${label}</button>`;
     const stepper = id => {
       const c = furn.cart()[id] || 0, room = MAX_OWN - furn.owned(id);
@@ -70,6 +76,28 @@ export const shopApp = {
       const sc = box.querySelector('.sc'); if (sc) sc.scrollTop = keep;
     };
     const paint = () => {
+      if (view === 'model') {   // ---- モデルルーム ----
+        const L = models.list(), max = models.slots(paid()), g = ctx.gems ? ctx.gems.get() : 0;
+        const card = m => {
+          const price = models.buyPrice(m, ctx.house), rent = m.rent;
+          return `<div style="background:#fff;border-radius:18px;padding:12px;margin-bottom:10px;box-shadow:0 2px 10px #0001">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:16px">🏠 ${m.name}</b><small style="color:#8d7f9e">${m.cols}×${m.rows}マス・家具 ${models.count(m)}点</small></div>
+            ${rent ? `<div style="font-size:12px;color:#e0556b;margin:4px 0">📅 借りています(${ymd(rent.until)}まで)。期限がきたら、部屋と家具を返します。</div>` : ''}
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+              ${rent ? '' : `<button data-mx="edit" data-id="${m.id}" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};flex:1">✏️ 作る・なおす</button>`}
+              <button data-mx="buy" data-id="${m.id}" style="${btn(g >= price ? 'linear-gradient(160deg,#9fd0ff,#6fb2f0)' : '#d9d2e3')};flex:1">💎 ${price} まるごと買う</button>
+              <button data-mx="rent" data-id="${m.id}" style="${btn(g >= models.RENT_GEMS ? undefined : '#d9d2e3')};flex:1">📅 ${rent ? '1か月 延長' : '1か月 借りる'} 💎 ${models.RENT_GEMS}</button>
+              ${rent ? '' : `<button data-mx="del" data-id="${m.id}" style="${btn('#d9d2e3', ink)}">🗑</button>`}
+            </div>${m.paidRent && !rent ? '' : m.paidRent ? `<div style="font-size:11px;color:#8d7f9e;margin-top:4px">借りた分(💎${m.paidRent})を、買う値段から引いています(半分まで)</div>` : ''}</div>`;
+        };
+        box.innerHTML = head('ホームセンター', msg || '家具の置き方ごと、部屋をまるごと登録できるよ。登録した部屋は、まるごと買う(家具は新品で付く)か、1か月だけ借りられる。') + tabs()
+          + `<div class="sc" style="flex:1;overflow:auto;padding:4px 16px 12px">
+            <div style="font-size:12px;color:#8d7f9e;margin-bottom:8px">登録できる部屋: ${L.length} / ${max}${paid() ? '' : '(有料会員は3つまで)'}　💎 ${fmtN(g)}</div>
+            ${L.map(card).join('')}
+            ${L.length < max ? `<button data-mx="new" style="${btn()};width:100%">＋ 新しくモデルルームを作る</button>` : ''}
+            <p style="font-size:11px;color:#8d7f9e;line-height:1.6">・まるごと買う: 部屋を増やす分 + 6×6より広い分 + 1ダイヤで、家具もぜんぶ付いてくる(1つずつ買うよりお得)<br>・借りる: 1か月 ${models.RENT_GEMS}ダイヤ。自動では更新しないよ。期限の3日前にお知らせ。借りている間は、その部屋は作りなおせない</p></div>`;
+        return;
+      }
       const cart = furn.cart(), total = furn.total(cart), n = Object.values(cart).reduce((a, b) => a + b, 0), coins = ctx.wallet.get();
       if (view === 'cart') {
         const rows = Object.entries(cart).map(([id, q]) => `<div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:8px 10px;margin-bottom:8px;box-shadow:0 2px 8px #0001">
@@ -84,7 +112,7 @@ export const shopApp = {
             <div style="display:flex;gap:8px"><button data-v="list" style="${btn('#d9d2e3', ink)};flex:1">もどる</button><button data-pay style="${btn(n && short <= 0 ? undefined : '#d9d2e3')};flex:2;${n && short <= 0 ? '' : 'cursor:default'}">まとめて買う</button></div></div>`;
         return;
       }
-      box.innerHTML = head('ショップ', msg || '気に入った家具を、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけ。') + `<div style="padding:0 16px 6px"><button data-fish style="border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;background:#e3f2ff;color:#3d6a8f">🎣 つり道具はこちら</button> <button data-gbox style="border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;background:#f3e9ff;color:#6b4a9a">🎮 ゲーム機(チャンクボックス)</button></div>`
+      box.innerHTML = head('ホームセンター', msg || '気に入った家具を、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけ。') + tabs() + `<div style="padding:0 16px 6px"><button data-fish style="border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;background:#e3f2ff;color:#3d6a8f">🎣 つり道具はこちら</button> <button data-gbox style="border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;background:#f3e9ff;color:#6b4a9a">🎮 ゲーム機(チャンクボックス)</button></div>`
         + `<div style="display:flex;gap:6px;overflow-x:auto;padding:0 16px 8px">${CATS.map(c => `<button data-c="${c}" style="${btn(c === cat ? undefined : '#ece7f3', c === cat ? '#fff' : ink)};padding:6px 12px;font-size:13px">${c}</button>`).join('')}</div>
         <div class="sc" style="flex:1;overflow:auto;padding:4px 16px 12px"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">${ITEMS.filter(it => !it.noshop && (cat === 'すべて' || it.cat === cat)).map(it => {
           const own = furn.owned(it.id);
@@ -98,6 +126,21 @@ export const shopApp = {
           ${ctx.params && ctx.params.from === 'home' ? `<button data-home style="${btn('#d9d2e3', ink)}">🏠 家へ</button>` : ''}<button data-v="cart" style="${btn(n ? undefined : '#d9d2e3')};${n ? '' : 'cursor:default'}">カゴを見る</button></div>`;
     };
     box.onclick = async e => {
+      const mx = e.target.closest('[data-mx]');
+      if (mx) {
+        const k = mx.dataset.mx, id = mx.dataset.id, m = id && models.get(id);
+        if (k === 'new') { const nm = await askName(); if (nm == null) return; const nm2 = models.create(nm || `モデルルーム ${models.list().length + 1}`); ctx.open('home', { model: nm2.id }); return; }
+        if (k === 'edit' && m) { ctx.open('home', { model: m.id }); return; }
+        if (k === 'del' && m) { if (!confirm(`「${m.name}」を消しますか？`)) return; models.remove(m.id); msg = '消したよ。'; draw(); return; }
+        if (k === 'buy' && m) {
+          const price = models.buyPrice(m, ctx.house); if (!(await confirmPay({ label: `「${m.name}」をまるごと買う(家具${models.count(m)}点つき)`, price, have: ctx.gems ? ctx.gems.get() : 0, icon: '💎', unit: 'ダイヤ', yes: 'かう' }))) return;
+          const r = models.buy(m.id, ctx); msg = r.err || `「${m.name}」が、あなたの家にできたよ！`; draw(); return;
+        }
+        if (k === 'rent' && m) {
+          if (!(await confirmPay({ label: m.rent ? `「${m.name}」を1か月 延長する` : `「${m.name}」を1か月 借りる(期限がきたら、部屋と家具を返します)`, price: models.RENT_GEMS, have: ctx.gems ? ctx.gems.get() : 0, icon: '💎', unit: 'ダイヤ', yes: m.rent ? '延長する' : '借りる' }))) return;
+          const r = models.rent(m.id, ctx); msg = r.err || (r.extended ? `${ymd(r.until)}まで 延長したよ。` : `「${m.name}」を借りたよ！ ${ymd(r.until)}まで、家に部屋があるよ。`); draw(); return;
+        }
+      }
       if (e.target.closest('[data-fish]')) { ctx.open('fishing', { tab: 'shop' }); return; }
       if (e.target.closest('[data-gbox]')) { ctx.open('gamebox', { from: 'home' }); return; }
       if (e.target.closest('[data-home]')) { ctx.open('home'); return; }
@@ -123,6 +166,8 @@ export const shopApp = {
 let homeR = null;
 export const homeApp = {
   mount(el, ctx) {
+    const MODEL = ctx.params && ctx.params.model ? models.storeFor(ctx.params.model) : null;   // ホームセンターのモデルルームを作る(自宅と同じ画面で、保存先だけ別)
+    const houseData = MODEL ? MODEL.houseData : HOUSE, furn = MODEL ? MODEL.furn : FURN;
     const root = document.createElement('div');
     root.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;font-family:inherit;color:${ink};background:linear-gradient(#fdf0f3,#eaf4ff)`;
     root.innerHTML = `<div class="plan" style="display:flex;align-items:center;gap:8px;padding:8px 10px 2px"></div>
@@ -315,7 +360,7 @@ export const homeApp = {
       const tiles = house.rooms.map(r => `<button data-room="${r.id}" style="grid-column:${r.sx - x0 + 1};grid-row:${r.sy - y0 + 1};${btn(r.id === cur().id ? undefined : '#fff', r.id === cur().id ? '#fff' : ink)};border-radius:10px;padding:4px 6px;font-size:11px;box-shadow:0 1px 5px #0002;min-width:56px;overflow:hidden;text-overflow:ellipsis">${r.name}<br><span style="font-weight:600;opacity:.75">${r.cols}×${r.rows}</span></button>`).join('');
       planEl.innerHTML = `<div style="flex:1;min-width:0;overflow:auto"><div style="display:grid;grid-template-columns:repeat(${W},auto);grid-template-rows:repeat(${H},auto);gap:4px;width:max-content" title="間取り">${tiles}</div></div>
         <div style="text-align:right;font-weight:800;font-size:13px;line-height:1.5;white-space:nowrap">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${gemsOf() != null ? `<br>💎 <span data-bind="gems">${fmtN(gemsOf())}</span>` : ''}</div>
-        ${mode === 'edit' ? `<button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 12px;font-size:13px">🏠 ひろげる</button>` : ''}`;
+        ${mode === 'edit' ? `<button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 12px;font-size:13px">🏠 ${MODEL ? '広さ' : 'ひろげる'}</button>` : ''}${MODEL ? `<button data-a="mdone" style="${btn('linear-gradient(160deg,#ffb3c7,#ff7fa0)')};padding:8px 12px;font-size:13px">✅ 登録して もどる</button>` : ''}`;
     }
     function ui() {
       planUI();
@@ -334,19 +379,23 @@ export const homeApp = {
     // ひろげる・部屋を増やす
     let sheetMsg = '';
     function openSheet() {
-      const r = cur(), C = houseData.cost(ctx.house), g = gemsOf();
+      const r = cur(), g = gemsOf(), M = !!houseData.model;
       const row = (axis, label) => {
-        const full = r[axis] >= SIDE_MAX;
+        const full = r[axis] >= SIDE_MAX, P = houseData.linePrice(r.id, axis, ctx.house);
+        const cb = P.coins != null ? `<button data-x="${axis}" data-via="coins" style="${btn(ctx.wallet.get() >= P.coins ? undefined : '#d9d2e3')};flex:1">🪙 ${fmtN(P.coins)}</button>` : '';
+        const gb = g != null && !M ? `<button data-x="${axis}" data-via="gems" style="${btn(g >= P.gems ? 'linear-gradient(160deg,#9fd0ff,#6fb2f0)' : '#d9d2e3')};flex:1">💎 ${P.gems}</button>` : '';
+        const mb = M ? `<button data-x="${axis}" data-via="free" style="${btn()};flex:1">＋ 広げる</button><button data-x="${axis}" data-via="shrink" style="${btn('#d9d2e3', ink)};flex:1">− せまく</button>` : '';
         return `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001">
           <div style="font-weight:800">${label}（いま ${r[axis]}マス${full ? '・これ以上は広げられないよ' : ''}）</div>
-          ${full ? '' : `<div style="display:flex;gap:8px;margin-top:8px"><button data-x="${axis}" data-via="coins" style="${btn(ctx.wallet.get() >= C.coinsPerLine ? undefined : '#d9d2e3')};flex:1">🪙 ${C.coinsPerLine}</button>${g != null ? `<button data-x="${axis}" data-via="gems" style="${btn(g >= C.gemsPerLine ? 'linear-gradient(160deg,#9fd8ff,#6cb8f0)' : '#d9d2e3')};flex:1">💎 ${C.gemsPerLine}</button>` : ''}</div>`}</div>`;
+          ${full && !M ? '' : `<div style="display:flex;gap:8px;margin-top:8px">${M ? mb : cb + gb}</div>`}
+          ${!M && P.coins == null && !full ? '<div style="font-size:11px;color:#8d7f9e;margin-top:4px">この部屋は、ダイヤで広げられるよ(1マスごとに 1→2→4→8…)</div>' : ''}</div>`;
       };
       sheet.style.display = 'flex';
       sheet.innerHTML = `<div style="background:#fffaf0;border-radius:22px 22px 0 0;width:min(520px,100%);max-height:88%;overflow:auto;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))">
         <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">🏠 ${r.name}を ひろげる</h3><b style="background:#fff3cf;border-radius:999px;padding:5px 12px;font-size:13px">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${g != null ? ` 💎 <span data-bind="gems">${fmtN(g)}</span>` : ''}</b></div>
         <p style="margin:6px 0 10px;font-size:13px;color:#8d7f9e">${sheetMsg || 'いまは ' + r.cols + '列 × ' + r.rows + '行。1列・1行ごとに、コインかダイヤで広げられるよ(かべの反対がわにのびるから、家具は動かないよ)。'}</p>
         ${row('cols', 'よこ（列）を1つ')}${row('rows', 'たて（行）を1つ')}
-        ${g != null ? `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800">もうひとつ、部屋を増やす（${house.rooms.length}部屋）</div><div style="font-size:12px;color:#8d7f9e;margin:2px 0 8px">いまの部屋のとなりに、新しい部屋がつながるよ。ダイヤだけで増やせるよ。</div><button data-x="room" style="${btn(g >= C.gemsPerRoom ? 'linear-gradient(160deg,#9fd8ff,#6cb8f0)' : '#d9d2e3')};width:100%">💎 ${C.gemsPerRoom} で 部屋を増やす</button></div>` : ''}
+        ${g != null && !M ? `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800">もうひとつ、部屋を増やす（${house.rooms.length}部屋・💎 ${houseData.roomPrice(ctx.house)}）</div><div style="font-size:12px;color:#8d7f9e;margin:2px 0 8px">いまの部屋のとなりに、新しい部屋がつながるよ。ダイヤだけで増やせるよ。</div><button data-x="room" style="${btn(g >= C.gemsPerRoom ? 'linear-gradient(160deg,#9fd8ff,#6cb8f0)' : '#d9d2e3')};width:100%">💎 ${C.gemsPerRoom} で 部屋を増やす</button></div>` : ''}
         <div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800;margin-bottom:6px">部屋の種類</div><div style="display:flex;gap:6px">${ROOM_TYPES.map(([k, n]) => `<button data-x="type" data-t="${k}" style="${btn((r.type || '') === k ? undefined : '#ece7f3', (r.type || '') === k ? '#fff' : ink)};flex:1;padding:8px 0;font-size:13px">${n}</button>`).join('')}</div><div style="font-size:12px;color:#8d7f9e;margin-top:6px">キッチン・バスルームは、床がタイルになるよ。家具はショップの「キッチン・おふろ」から。</div></div>
         <div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px;box-shadow:0 2px 8px #0001"><div style="font-weight:800;margin-bottom:6px">部屋の名前</div><input class="nm" value="${r.name}" maxlength="10" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e3d9f0;font:inherit;color:${ink}"></div>
         <button data-x="close" style="${btn('#d9d2e3', ink)};width:100%">とじる</button></div>`;
@@ -358,12 +407,13 @@ export const homeApp = {
       if (x === 'close') { const nm = sheet.querySelector('.nm'); if (nm && nm.value.trim() && nm.value !== r.name) { houseData.rename(r.id, nm.value.trim()); house = houseData.get(); } sheet.style.display = 'none'; sheetMsg = ''; ui(); return; }
       if (x === 'type') { houseData.setType(r.id, b.dataset.t); house = houseData.get(); buildShell(); ui(); openSheet(); return; }
       if (x === 'room') {
-        { const c = houseData.cost(ctx.house); if (ctx.gems && !(await confirmPay({ label: '部屋をふやす', price: c.gemsPerRoom, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; }
+        { if (ctx.gems && !(await confirmPay({ label: '部屋をふやす', price: houseData.roomPrice(ctx.house), have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; }
         const res = houseData.addRoom(r.id, ctx);
         if (res.err) sheetMsg = res.err; else { house = houseData.get(); sheetMsg = ''; sheet.style.display = 'none'; enterRoom(res.room.id); tip.textContent = `「${res.room.name}」ができたよ！ 家具を置いてみよう。`; return; }
         openSheet(); return;
       }
-      { const c = houseData.cost(ctx.house), g = b.dataset.via === 'gems'; if (!(await confirmPay(g ? { label: `${x === 'cols' ? 'よこ' : 'たて'}に 1マス 広げる`, price: c.gemsPerLine, have: ctx.gems ? ctx.gems.get() : 0, icon: '💎', unit: 'ダイヤ' } : { label: `${x === 'cols' ? 'よこ' : 'たて'}に 1マス 広げる`, price: c.coinsPerLine, have: ctx.wallet.get() }))) return; }
+      if (houseData.model) { const err = houseData.expand(r.id, x, b.dataset.via); sheetMsg = err || ''; house = houseData.get(); placed = furn.placed(); buildShell(); resize(); relayout(); ui(); openSheet(); return; }   // モデルルームは、ただで広げたり、せまくしたりできる
+      { const P = houseData.linePrice(r.id, x, ctx.house), g = b.dataset.via === 'gems'; if (!(await confirmPay(g ? { label: `${x === 'cols' ? 'よこ' : 'たて'}に 1マス 広げる`, price: P.gems, have: ctx.gems ? ctx.gems.get() : 0, icon: '💎', unit: 'ダイヤ' } : { label: `${x === 'cols' ? 'よこ' : 'たて'}に 1マス 広げる`, price: P.coins, have: ctx.wallet.get() }))) return; }
       const err = houseData.expand(r.id, x, b.dataset.via, ctx);
       sheetMsg = err || `${x === 'cols' ? 'よこ' : 'たて'}に 1マス 広がったよ！`;
       house = houseData.get(); buildShell(); resize(); relayout(); ui(); openSheet();
@@ -373,10 +423,11 @@ export const homeApp = {
     planEl.onclick = e => {
       const id = e.target.closest('[data-room]')?.dataset.room; if (id && id !== cur().id) { enterRoom(id); return; }
       if (e.target.closest('[data-a="size"]')) { sheetMsg = ''; openSheet(); }
+      if (e.target.closest('[data-a="mdone"]')) { try { ctx.open('shop', { tab: 'model' }); } catch (er) { ctx.close && ctx.close(); } }
     };
     ctl.onclick = e => {
       const a = e.target.closest('[data-a]')?.dataset.a, p = placed.find(x => x.uid === selUid);
-      if (a === 'done') { mode = 'view'; selUid = null; mark(); ui(); focusItem(menu && menu.current()); return; }
+      if (a === 'done') { if (MODEL) { try { ctx.open('shop', { tab: 'model' }); } catch (e) { ctx.close && ctx.close(); } return; } mode = 'view'; selUid = null; mark(); ui(); focusItem(menu && menu.current()); return; }
       if (a === 'walk') { enterWalk(); return; }
       if (a === 'album') { ctx.open('album', { from: 'home' }); return; }
       if (a === 'shop') { ctx.open('shop', { from: 'home' }); return; }   // ネットショッピング(家からそのままショップへ)
@@ -713,7 +764,8 @@ export const homeApp = {
     }
     function guestSayLate() { const b = document.createElement('div'); b.textContent = `${guest.name}「今日はもう遅いから、帰るね。また遊ぼ!」`; b.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);max-width:80%;background:#fffaf2;color:#5a4a6b;border-radius:16px;padding:8px 14px;font-size:14px;font-weight:700;box-shadow:0 2px 8px #0003;z-index:30'; root.appendChild(b); setTimeout(() => b.remove(), 3500); }   // アルバムから「部屋にもどる」で、歩いていたところへ
     const offW = ctx.wallet.onChange ? ctx.wallet.onChange(() => planUI()) : null;
-    ctx.setTitle?.('あなたの家');
+    ctx.setTitle?.(MODEL ? 'モデルルームを作る' : 'あなたの家');
+    if (MODEL) { car.style.display = 'none'; run({ act: 'deco' }); tip.textContent = '下から家具をえらんで置こう。置いたまま保存されるよ。「🏠 ひろげる」で広さも変えられる。'; }
     return {
       unmount() {
         cancelAnimationFrame(raf); ro.disconnect(); offW && offW(); if (walk) exitWalk();

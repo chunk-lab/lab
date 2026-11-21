@@ -13,7 +13,7 @@ export const U = 2;                 // 1マス = 2単位(半マス刻み)
 export const WALL_H = 3.4;          // 壁・天井の高さ
 export const MAX_OWN = 50;          // 同じ家具は50個まで
 export const SIDE_MIN = 4, SIDE_MAX = 20;   // 部屋の一辺(マス)の下限・上限
-export const ROOM = 8;              // はじめの部屋の広さ(8×8マス)
+export const ROOM = 6;              // はじめの部屋の広さ(6×6マス。2026-11-21 から。前に作った家はそのまま)
 export const CATS = ['すべて', 'ねる・すわる', 'つくえ・しゅうのう', 'キッチン・おふろ', 'あかり', 'かべ', 'かざり'];
 
 const mat = c => new THREE.MeshLambertMaterial({ color: c });
@@ -301,42 +301,61 @@ export const kindOf = id => (ITEM[id].wall ? 'wall' : ITEM[id].ceil ? 'ceil' : I
 const ROOM_NAMES = ['リビング', 'ベッドルーム', '書斎', 'ダイニング', 'ゲストルーム', 'サンルーム', 'ギャラリー', 'ホール', 'シアタールーム', 'ライブラリー', 'ガレージ', 'テラス'];
 export const ROOM_TYPES = [['', 'ふつう'], ['kitchen', 'キッチン'], ['bath', 'バスルーム']];
 const ROOM_TYPE_NAME = { kitchen: 'キッチン', bath: 'バスルーム' };
-const DEF_COST = { coinsPerLine: 3000, gemsPerLine: 60, gemsPerRoom: 250 };
+const DEF_COST = { coinsPerLine: 3000, coinLines: 3, gemsPerRoom: 25 };   // 1列・1行: 最初の部屋だけコインで3回まで。あとはダイヤで部屋ごと・行と列それぞれ 1,2,4,8… / 部屋を増やす: 25,50,100…
 const st = createStorage('town:furn:');
 export const houseData = {
   get() {
     const h = st.get('house');
     if (h && h.rooms && h.rooms.length) return h;
-    return { rooms: [{ id: 'r1', name: ROOM_NAMES[0], cols: ROOM, rows: ROOM, sx: 0, sy: 0, from: null }] };
+    // 前から遊んでいる人(家具を持っている・置いている)は、前の広さ(8×8)のまま。はじめての人だけ 6×6
+    const old = (st.get('put') || st.get('inv') || st.get('room')) && !st.get('newHome'), n = old ? 8 : ROOM;
+    const nh = { rooms: [{ id: 'r1', name: ROOM_NAMES[0], cols: n, rows: n, sx: 0, sy: 0, from: null }] }; st.set('house', nh); return nh;
   },
   save: v => st.set('house', v),
   room(id) { const h = this.get(); return h.rooms.find(r => r.id === id) || h.rooms[0]; },
   cost(c) { return Object.assign({}, DEF_COST, c || {}); },
+  // 1列(1行)広げる値段: { coins: コイン(使えないとき null), gems: ダイヤ }
+  linePrice(roomId, axis, c0) {
+    const h = this.get(), r = h.rooms.find(x => x.id === roomId) || h.rooms[0], c = this.cost(c0), first = h.rooms[0] && r.id === h.rooms[0].id;
+    return { coins: first && (r.cx || 0) < c.coinLines ? c.coinsPerLine : null, gems: 2 ** ((r.gx || {})[axis] || 0) };
+  },
+  // 部屋を増やす値段(借りている部屋は数えない): 25,50,100…
+  roomPrice(c0) { const h = this.get(), n = h.rooms.filter(r => !r.rent).length; return this.cost(c0).gemsPerRoom * 2 ** Math.max(0, n - 1); },
   // 1列(axis 'cols')・1行('rows')広げる。via 'coins'|'gems'。広げるのは壁と反対側(家具は動かない)
   expand(roomId, axis, via, ctx) {
     const h = this.get(), r = h.rooms.find(x => x.id === roomId); if (!r) return 'へやが見つからないよ';
     if (r[axis] >= SIDE_MAX) return `これ以上は広げられないよ(${SIDE_MAX}マスまで)`;
     const c = this.cost(ctx.house);
-    if (via === 'gems') { if (!ctx.gems) return 'ダイヤが使えない場所だよ'; if (ctx.gems.get() < c.gemsPerLine) return `ダイヤが足りないよ(あと ${c.gemsPerLine - ctx.gems.get()})`; if (!ctx.gems.spend(c.gemsPerLine)) return 'ダイヤが足りないよ'; }
-    else { if (ctx.wallet.get() < c.coinsPerLine) return `コインが足りないよ(あと ${c.coinsPerLine - ctx.wallet.get()})`; if (!ctx.wallet.spend(c.coinsPerLine, 'house')) return 'コインが足りないよ'; }
+    const pr = this.linePrice(roomId, axis, ctx.house);
+    if (via === 'gems') { const need = pr.gems; if (!ctx.gems) return 'ダイヤが使えない場所だよ'; if (ctx.gems.get() < need) return `ダイヤが足りないよ(あと ${need - ctx.gems.get()})`; if (!ctx.gems.spend(need)) return 'ダイヤが足りないよ'; r.gx = r.gx || {}; r.gx[axis] = (r.gx[axis] || 0) + 1; }
+    else if (pr.coins == null) return 'この部屋は、ダイヤで広げてね';
+    else { if (ctx.wallet.get() < pr.coins) return `コインが足りないよ(あと ${pr.coins - ctx.wallet.get()})`; if (!ctx.wallet.spend(pr.coins, 'house')) return 'コインが足りないよ'; r.cx = (r.cx || 0) + 1; }
     r[axis]++; this.save(h); return '';
   },
   // 部屋を増やす(ダイヤだけ)。つながる部屋 parentId の空いている側(間取り図で)にくっつける
   addRoom(parentId, ctx) {
-    const h = this.get(), c = this.cost(ctx.house);
     if (!ctx.gems) return { err: 'ダイヤが使えない場所だよ' };
-    const p = h.rooms.find(x => x.id === parentId) || h.rooms[0];
-    const used = new Set(h.rooms.map(r => r.sx + ',' + r.sy));
-    const sides = [[1, 0], [0, 1], [-1, 0], [0, -1]];
-    const cand = [];
-    for (const r of [p, ...h.rooms]) for (const [dx, dy] of sides) if (!used.has((r.sx + dx) + ',' + (r.sy + dy))) cand.push({ r, sx: r.sx + dx, sy: r.sy + dy });
-    if (!cand.length) return { err: 'これ以上は つながらないよ' };
-    if (ctx.gems.get() < c.gemsPerRoom) return { err: `ダイヤが足りないよ(あと ${c.gemsPerRoom - ctx.gems.get()})` };
-    if (!ctx.gems.spend(c.gemsPerRoom)) return { err: 'ダイヤが足りないよ' };
-    const at = cand[0], n = h.rooms.length;
-    const room = { id: 'r' + (Date.now().toString(36)), name: ROOM_NAMES[n] || `へや ${n + 1}`, cols: 6, rows: 6, sx: at.sx, sy: at.sy, from: at.r.id };
-    h.rooms.push(room); this.save(h); return { room };
+    const price = this.roomPrice(ctx.house), at = this.spot(parentId);
+    if (!at) return { err: 'これ以上は つながらないよ' };
+    if (ctx.gems.get() < price) return { err: `ダイヤが足りないよ(あと ${price - ctx.gems.get()})` };
+    if (!ctx.gems.spend(price)) return { err: 'ダイヤが足りないよ' };
+    return { room: this.putRoom(at, {}) };
   },
+  // 新しい部屋を置ける場所(借りている部屋のとなりには、つなげない)
+  spot(parentId) {
+    const h = this.get(), base = h.rooms.filter(r => !r.rent), p = base.find(x => x.id === parentId) || base[0];
+    const used = new Set(h.rooms.map(r => r.sx + ',' + r.sy)), sides = [[1, 0], [0, 1], [-1, 0], [0, -1]];
+    for (const r of [p, ...base]) for (const [dx, dy] of sides) if (!used.has((r.sx + dx) + ',' + (r.sy + dy))) return { r, sx: r.sx + dx, sy: r.sy + dy };
+    return null;
+  },
+  // 部屋を作る(お金はここでは払わない)。spec: {name, cols, rows, type, rent}
+  putRoom(at, spec) {
+    const h = this.get(), n = h.rooms.length;
+    const room = { id: 'r' + (Date.now().toString(36)) + Math.random().toString(36).slice(2, 4), name: spec.name || ROOM_NAMES[n] || `へや ${n + 1}`, cols: spec.cols || 6, rows: spec.rows || 6, sx: at.sx, sy: at.sy, from: at.r.id };
+    if (spec.type) room.type = spec.type; if (spec.rent) room.rent = spec.rent;
+    h.rooms.push(room); this.save(h); return room;
+  },
+  removeRoom(id) { const h = this.get(); h.rooms = h.rooms.filter(r => r.id !== id); this.save(h); },
   setType(roomId, type) { const h = this.get(), r = h.rooms.find(x => x.id === roomId); if (!r) return; const was = r.type || ''; r.type = type || ''; if (!r.name || ROOM_NAMES.includes(r.name) || r.name === ROOM_TYPE_NAME[was]) r.name = ROOM_TYPE_NAME[r.type] || r.name; this.save(h); },
   rename(roomId, name) { const h = this.get(), r = h.rooms.find(x => x.id === roomId); if (r) { r.name = String(name).slice(0, 10) || r.name; this.save(h); } },
 };
@@ -352,7 +371,7 @@ export const furn = {
       v = Array.isArray(old) ? old.filter(p => p.id && !p.room).map(p => ({ uid: p.uid, id: p.id, room: 'r1', gx: p.gx * U, gz: p.gz * U, r: p.r || 0 })) : [];
       if (!Array.isArray(old) && !st.get('inv')) {   // はじめての人だけ、最初の部屋に机といすを置いておく(持ち物にも1つずつ入れる)
         v = [{ uid: 'init-desk', id: 'desk', room: 'r1', gx: 6, gz: 2, r: 0 }, { uid: 'init-chair', id: 'chair', room: 'r1', gx: 7, gz: 4, r: 2 }];
-        st.set('inv', { desk: 1, chair: 1 });
+        st.set('inv', { desk: 1, chair: 1 }); st.set('newHome', 1);
       }
       st.set('put', v);
     }

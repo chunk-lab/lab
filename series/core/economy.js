@@ -21,7 +21,7 @@ export const ECON = {
   // 家具の値段は 3Dの町の town3d/src/game/furniture.js にある(元の約5倍：小物150〜250、中300〜500、大600〜800)
   // 自宅の広げ方：コインは「1列・1行ごと」に 3,000。ダイヤなら 広げる(1列・1行 60)ことも 部屋そのものを増やす(1部屋 250)こともできる
   photo: { free: 1, max: 5, gemsPerSlot: 40 },   // 写真アルバム：はじめ1枚。ダイヤ40で1枠ずつ、5枚まで
-  house: { coinsPerLine: 3000, gemsPerLine: 60, gemsPerRoom: 250 },
+  house: { coinsPerLine: 3000, coinLines: 3, gemsPerRoom: 25 },   // 2026-11-21: 部屋を増やす 25→50→100…(倍々)。行・列はダイヤで部屋ごとに 1→2→4…(最初の部屋だけコインで3回まで)
   start: { coins: 50, gems: 0 },                 // はじめてのとき
 };
 export const PLAN_NAME = { free: '無料会員', paid: '有料会員' };

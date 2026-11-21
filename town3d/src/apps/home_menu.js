@@ -7,7 +7,7 @@
 //   これから足す予定:✉ メール(お知らせ)・📅 カレンダー(約束)・住人を呼ぶ・クローゼット(服) … 画面ができたら1行足す
 export const HOME_MENU = [
   { k: 'note', ic: '📒', n: '勉強ノート・記録', sub: '覚えたことばの復習と、きょうの記録', fur: ['desk'], need: c => (c.features || []).includes('study'), act: 'study' },
-  { k: 'shop', ic: '🛒', n: 'ネットショップ', sub: '家具を買う', fur: [], act: 'shop' },
+  { k: 'shop', ic: '🛒', n: 'ホームセンター', sub: '家具・モデルルーム(通販)', fur: [], act: 'shop' },
   { k: 'gbox', ic: '🎮', n: 'チャンクボックス', sub: '英語で対戦・あそぶゲーム機', fur: ['tv'], act: 'gbox' },
   { k: 'tank', ic: '🐠', n: '水槽', sub: '釣った魚を育てる', fur: ['tank'], need: (c, f) => f.owned('tank') > 0, act: 'tank' },
   { k: 'album', ic: '🖼', n: 'アルバム', sub: '撮った写真', fur: ['frame'], act: 'album' },

@@ -39,6 +39,7 @@ import { setEasy } from './apps/gamebox/en_data.js';
 import { createEncounter, ENC } from './game/encounter.js';
 import { VOICE } from './game/voice.js';
 import { createCutscene } from './game/cutscene.js';
+import { models } from './game/model_rooms.js';
 import { chunkkunStory } from './game/stories/chunkkun.js';
 import { yuzuStory } from './game/stories/yuzu.js';
 import { shioriStory } from './game/stories/shiori.js';
@@ -1472,6 +1473,12 @@ export function mount(container, opt = {}) {
   const evSec = (k, def) => { const v = +(storage.get('evdur') || {})[k]; return v > 5 ? v : def; };
   function stopEvent() { fw.stop(); env.stopEclipse(); env.stopWeather(); audio.rain(0); if (evt && evt.fw) env.release(); evt = null; clearBanner(); }
   // 通り雨と虹: 3日に1回くらい、昼(9〜17時)のどこかで1回だけ。日にちから決まるので、だれの町でも同じ時間
+  // 借りているモデルルーム: 期限がきたら返す/3日前からお知らせ(1日1回)
+  let rentCk = 0;
+  function rentCheck() {
+    if (!started || appHost.current || cut.on) return;
+    try { for (const n of models.expire()) hud.toast(`📅 借りていた「${n}」の期限がきたので、部屋と家具を返したよ`); for (const o of models.soon()) hud.toast(`📅 借りている「${o.name}」は、あと${o.days}日で返却だよ。延長はホームセンターで`); } catch (e) { }
+  }
   function autoShower() {
     if (!started || appHost.current || hud.busy || evt || cut.on) return;
     const now = new Date(), day = Math.floor((now.getTime() + 9 * 36e5) / 864e5), hh = (n => { let x = (n * 2654435761) >>> 0; x ^= x >>> 15; x = Math.imul(x, 0x2c1b3c6d) >>> 0; x ^= x >>> 13; return (x >>> 0) / 4294967296; })(day * 31 + 7);
@@ -1762,7 +1769,7 @@ export function mount(container, opt = {}) {
     if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
     if (evt) { if (evt.wx ? !env.weather : evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
     sparkles.update(dt, me);
-    if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); curWx = weather.now(); env.setAmbient(cut.on && cut.wx ? cut.wx : curWx); autoShower(); }
+    if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); curWx = weather.now(); env.setAmbient(cut.on && cut.wx ? cut.wx : curWx); autoShower(); rentCheck(); }
     city.update(t, env.hour);
     ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
@@ -1931,7 +1938,7 @@ export function mount(container, opt = {}) {
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
     progress: () => loadPct,
-    _res: () => residents, _opt: () => opt, _hud: () => hud, _gl: () => renderer, _cam: () => camera, _chat: (id, low) => { const r = residents.list.find(x => x.def.id === id); if (r) freeChat(r, 'ねえ、きょうはどこに行く? この町には、図書館やカフェや神社があって、ほかにも釣りやカードや占いなど、いろいろ楽しめるよ。ゆっくり選んでね。', '', !!low); },   // 点検用
+    _res: () => residents, _opt: () => opt, _hud: () => hud, _gl: () => renderer, _cam: () => camera,  _chat: (id, low) => { const r = residents.list.find(x => x.def.id === id); if (r) freeChat(r, 'ねえ、きょうはどこに行く? この町には、図書館やカフェや神社があって、ほかにも釣りやカードや占いなど、いろいろ楽しめるよ。ゆっくり選んでね。', '', !!low); },   // 点検用
     progressText: () => (loadPct >= 1 ? '' : glbStat().now),   // いま何をしているか
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },

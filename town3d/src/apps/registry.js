@@ -57,7 +57,7 @@ export const APPS = [
   { id: 'school', title: 'まちの学校', type: 'iframe', url: 'apps/sample/index.html' },
   { id: 'cinema', title: '映画館', type: 'module', module: soon('映画館', 'ここでは、Storyミング！の長い物語を読めます。') },
   { id: 'library', title: '図書館', type: 'module', module: soon('図書館', '集めた単語、作った文、名コンビ図鑑を読み返せる場所になります。') },
-  { id: 'shop', title: 'ショップ', type: 'module', module: shopApp },
+  { id: 'shop', title: 'ホームセンター', type: 'module', module: shopApp },
   { id: 'home', title: 'あなたの家', type: 'module', module: homeApp },
   { id: 'album', title: 'アルバム', type: 'module', module: albumApp },
   { id: 'fishing', title: 'イングフィッシュ', type: 'module', module: fishingApp },
