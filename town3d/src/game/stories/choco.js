@@ -21,7 +21,8 @@ export async function chocoStory(d, ctx = {}) {
   d.shot('me', C, { yaw: 1.1, dist: 5, h: 2.0, look: 1.0 });
   await d.say('me', '「はじめまして」');
   await d.say(C, '「お、新入りやん。ちょうどええわ」');
-  await d.say(C, '「なあ、大喜利で勝負せえへん？ 3問や。\nミイちゃんとマルさんに、笑ったほうが勝ち」');
+  await d.say(C, '「なあ、大喜利で勝負せえへん？ 3問や。\nミイちゃんとマルさんを、たくさん笑わせたほうが勝ち」');
+  await d.say(C, '「うちな、勝負のあとは、勝っても負けても 自分にごほうびすんねん。\n負けた日は、憂さ晴らしやけどな」');
   d.face('mii', C); d.face('maru', C);
   let you = 0, her = 0;
   for (const o of ODAI) {
@@ -33,36 +34,14 @@ export async function chocoStory(d, ctx = {}) {
     await d.say('narr', LAUGH[o.mine[1]]);
   }
   const res = you > her ? 'win' : you < her ? 'lose' : 'draw';
-  if (res === 'win') { await d.say(C, '「……くっ、負けた。やるやん、あんた」'); await d.say(C, '「こういう日はな、憂さ晴らしや！」'); }
-  else if (res === 'lose') { await d.say(C, '「よっしゃ、うちの勝ち！」'); await d.say(C, '「勝った日はな、ごほうびや！」'); }
-  else { await d.say(C, '「引き分けか……。ほな、ごほうびと憂さ晴らし、両方や！」'); }
-  // ---- 買いもの ----
-  d.hideBox(); await d.fade(true, 0.6);
-  d.place('mii', -3.6, 47.4, P / 2); d.place(C, -1.4, 46.6, -P / 2); d.place('me', -0.2, 48.4, -P / 2); d.face(C, 'mii'); d.face('mii', C);
-  d.shot(C, 'mii', { dist: 4.4, h: 1.8, look: 0.9, side: -1 });
-  await d.fade(false, 0.6);
-  await d.say(C, '「ミイちゃん、いちばん甘いやつ ちょうだい。ふたつ」');
-  await d.say('mii', '「はい〜、どうぞ〜。今日は どっちの日ですか〜？」');
-  await d.say(C, '「……聞かんといて」');
-  d.hideBox(); await d.fade(true, 0.5);
-  d.place('maru', 3.6, 25.4, -P / 2); d.place(C, 1.6, 26.2, P / 2); d.place('me', 1.0, 24.2, P / 2); d.face(C, 'maru'); d.face('maru', C);
-  d.shot(C, 'maru', { dist: 4.4, h: 1.8, look: 0.9, side: -1 });
-  await d.fade(false, 0.5);
-  await d.say('maru', '「この服、新作ですよ！」');
-  await d.say(C, '「それも、これも、ぜんぶ！」');
-  await d.say('narr', '両手いっぱいの、荷物。');
-  // ---- マージ ----
-  d.hideBox(); await d.fade(true, 0.5);
-  d.place(C, 2, 6, P * 0.8); d.place('me', 3.8, 8.6, P); d.place('maru', 30, 70, 0); d.place('mii', -30, 70, 0); d.face(C, 'me'); d.face('me', C);
+  if (res === 'win') await d.say(C, '「……くっ、負けた。やるやん、あんた。\n……こういう日は、憂さ晴らしや！」');
+  else if (res === 'lose') await d.say(C, '「よっしゃ、うちの勝ち！ ごほうびの時間や！」');
+  else await d.say(C, '「引き分けか……。ほな、ごほうびと憂さ晴らし、両方や！」');
+  await d.say(C, '「うちのごほうびは、これ。マージや。\nいろんなもん くっつけて、ええもんにしていくねん。あんたも、やってみ」');
+  await d.say('narr', '閉じると、物語にもどります。');
+  await d.app('merge', { coach: 'choco', coachName: '大喜利チョコ' });
+  d.face(C, 'me');
   d.shot('me', C, { yaw: 1.1, dist: 5, h: 2.0, look: 1.0 });
-  await d.fade(false, 0.5);
-  await d.say(C, '「……買いすぎた」');
-  await d.say(C, '「でもな、こういうのは くっつけたら、もっとええもんになるんやで」');
-  await d.say(C, '「同じもん2つ合わせたら、ひとつ上のもんになる。\nそれを ほしがってる人にあげたら、なかよしが上がるんや」');
-  await d.say(C, '「なかよしが上がったら、その人に頼めることも、遊べるもんも増える。\n13人みんなに とどけたら、チャンクくんが何か配ってくれるらしいで」');
-  await d.say(C, '「エネルギーが切れたら、英語の問題に答えたら 回復する。\n……ほら、やってみ」');
-  await d.say('narr', 'マージで、何か1回 くっつけてみよう。\n閉じると、物語にもどります。');
-  await d.app('merge');
   await d.say(C, '「な？ くせになるやろ」');
   // ---- おわり ----
   d.hideBox(); await d.fade(true, 0.8);

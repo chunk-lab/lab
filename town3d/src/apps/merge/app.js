@@ -138,6 +138,18 @@ export function createMergeApp(env = {}) {
 <div class="mg-fx"></div>`;
       host.appendChild(root);
       const $ = q => root.querySelector(q);
+      // ---- 物語の案内役(params.coach): 遊んでいる最中に、そのとき必要なことだけ吹き出しで教える ----
+      const coach = (() => {
+        const id = ctx.params && ctx.params.coach; if (!id) return { say() { } };
+        const seen = new Set(), b = document.createElement('div');
+        b.style.cssText = 'position:absolute;left:8px;right:8px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:40;display:none;align-items:flex-end;gap:8px;pointer-events:auto';
+        b.innerHTML = `<img alt="" style="width:64px;height:64px;object-fit:contain;flex:none;filter:drop-shadow(0 2px 4px #0004)"><div style="flex:1;background:#141a36ee;color:#fff;border:3px solid #fff;border-radius:12px;padding:10px 12px;font:700 15px/1.6 inherit;box-shadow:0 0 0 3px #141a36"><b style="display:block;font-size:12px;color:#ffd166"></b><span></span></div><button type="button" aria-label="とじる" style="flex:none;border:0;background:#fff;border-radius:999px;width:30px;height:30px;font-weight:900;align-self:flex-start">✕</button>`;
+        try { b.querySelector('img').src = portrait(id) || ''; } catch (e) { }
+        b.querySelector('b').textContent = (ctx.params.coachName || '');
+        b.querySelector('button').onclick = e => { e.stopPropagation(); b.style.display = 'none'; };
+        root.appendChild(b);
+        return { say(k, text) { if (seen.has(k)) return; seen.add(k); b.querySelector('span').textContent = text; b.style.display = 'flex'; } };
+      })();
       const elStrip = $('.mg-strip'), elBoard = $('.mg-board'), elInfo = $('.mg-info'), elSlots = $('.mg-slots'), elFx = $('.mg-fx'), elEn = $('.mg-en'), elQb = $('.mg-qb'), elInb = $('.mg-inb'), elSell = $('.mg-sell');
 
       // ---- 状態 ----
@@ -384,9 +396,9 @@ export function createMergeApp(env = {}) {
         const el = els.get(g.u); idle = 0;
         if (g.gl) { shake(el); sfx('bad'); const m = leftMin(g.g); toast(`${GENS[g.g].icon}${GENS[g.g].name}は ロック中。ほかの勉強(カード・学校・図書館・英語のおしゃべり…)をあと${m}分すると使えるよ`); return; }
         if (g.cd) { shake(el); sfx('bad'); restDialog(g); return; }
-        if (S.en <= 0) { shake(el); sfx('bad'); toast('⚡エネルギーがないよ。英語で回復しよう!'); pop2(elQb); return; }
+        if (S.en <= 0) { shake(el); sfx('bad'); toast('⚡エネルギーがないよ。英語で回復しよう!'); pop2(elQb); coach.say('en', 'エネルギー切れたら、上の「✏️ 英語で回復」や。英語の問題に答えたら、また出せるで'); return; }
         const to = nearestEmpty(g.b); if (to < 0) { shake(el); sfx('bad'); toast('盤面がいっぱい! 重ねるか、売るか、保管しよう'); return; }
-        S.en--; g.ch--; if (g.ch <= 0) { g.cd = Date.now() + CFG.genRecharge(g.lv) * 1000; msEnsure(); } S.first = false; root.querySelectorAll('.first').forEach(e => e.classList.remove('first'));
+        coach.say('spawn', '出てきたやろ？ ほな、同じもん2つ、指で重ねてみ'); S.en--; g.ch--; if (g.ch <= 0) { g.cd = Date.now() + CFG.genRecharge(g.lv) * 1000; msEnsure(); } S.first = false; root.querySelectorAll('.first').forEach(e => e.classList.remove('first'));
         const top = CFG.spawnTop(g.lv), r = CFG.spawnR(g.lv); let w = [], sum = 0; for (let l = 1; l <= top; l++) { w.push(Math.pow(r, l - 1)); sum += w[l - 1]; }
         let x = Math.random() * sum, lv = 1; for (let l = 0; l < top; l++) { x -= w[l]; if (x <= 0) { lv = l + 1; break; } }
         const o = { u: ++S.n, t: 'it', ln: GENS[g.g].lines[rnd(2)], lv, b: null, s: null };
@@ -441,6 +453,7 @@ export function createMergeApp(env = {}) {
         toast(`${TOOLS[k].icon} ${TOOLS[k].name}をもらった!` + (to < 0 ? '(🎁とどいた)' : '')); save(); refresh();
       }
       function doMerge(a, b, res) {
+        coach.say('merge', 'ほら、ひとつ上のもんになった。上に並んでる住人の「ほしい品」を作って、そこまでドラッグしてわたしたら、なかよしが上がるで');
         const idx = b.b, wasLk = b.lk, ea = els.get(a.u), eb = els.get(b.u), c = center(b);
         take(a); take(b); els.delete(a.u); els.delete(b.u);
         ea.classList.remove('drag', 'sel'); ea.classList.add('fly'); tf(ea, c.x - CS / 2, c.y - CS / 2);
@@ -490,7 +503,7 @@ export function createMergeApp(env = {}) {
         setTimeout(() => fly(art(d), from, rel(slot), 440, () => {
           const to = rel(slot); burst(to.x, to.y, 12, ['#ff6f91', '#ffc400', '#fff']);
           const n = CFG.affOf(w.lv); let up = null; try { up = social.addAff(id, n); social.mergeNote(id, d.name, d.icon, w.lv); } catch (e) { } try { env.speak && d.en && env.speak(d.en); } catch (e) { }
-          sfx('heart'); try { if (w.lv >= 5) social.addCredit(id, 1); } catch (e) { } S.gave++;
+          sfx('heart'); try { if (w.lv >= 5) social.addCredit(id, 1); } catch (e) { } S.gave++; coach.say('give', 'なかよし、上がったやろ？ 13人みんなに とどけたら、チャンクくんが何か配ってくれるらしいで。満足したら、右上で閉じてな');
           ftext(to.x, to.y - 10, `💗 好感度 +${n}`, '#e8366a', true);
           ['💗', '💕', '💗'].forEach((h, i) => setTimeout(() => ftext(to.x + (i - 1) * 22, to.y + 14, h), 120 + i * 120));
           const gf = card.querySelector('.mg-hr b'); if (gf) { const g = gaugeOf(id); gf.style.width = g.pct + '%'; }
@@ -739,6 +752,7 @@ export function createMergeApp(env = {}) {
       const onRz = () => layout(); window.addEventListener('resize', onRz);
 
       // ---- はじめ ----
+      setTimeout(() => coach.say('open', 'まずは、盤面の「生成機」をタップしてみ。ものが出てくるで'), 600);
       layout(); goalDraw(); S.cells.forEach(o => o && mk(o)); S.store.forEach((o, i) => { if (o) { if (i >= S.slots) { S.store[i] = null; S.inbox.push({ t: o.t, ln: o.ln, g: o.g, lv: o.lv }); } else mk(o); } });
       if (S.first) S.cells.forEach(o => { if (o && o.t === 'gen' && genOpen(o.g)) els.get(o.u).classList.add('first'); });
       sig = ''; enTick(); refresh(); checkRecov();
