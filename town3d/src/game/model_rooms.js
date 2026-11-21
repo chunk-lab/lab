@@ -31,7 +31,7 @@ export const models = {
   // モデルルームを作る画面(自宅と同じ)用の、家と家具の入れ物
   storeFor(id) {
     const self = this;
-    const room = () => { const m = self.get(id); return { id: 'mr', name: m.name, cols: m.cols, rows: m.rows, type: m.type || '', sx: 0, sy: 0, from: null }; };
+    const room = () => { const m = self.get(id); return { id: 'mr', name: m.name, cols: m.cols, rows: m.rows, type: m.type || '', wall: m.wall, floor: m.floor, cw: m.cw, cf: m.cf, sx: 0, sy: 0, from: null }; };
     const houseD = {
       model: true,
       get: () => ({ rooms: [room()] }),
@@ -46,6 +46,7 @@ export const models = {
         self.put(m); return '';
       },
       addRoom: () => ({ err: 'モデルルームは1部屋だけだよ' }),
+      setColor(rid, k, c, own) { const m = self.get(id); if (!m || m.rent) return; m[k] = c; if (own) m[k === 'wall' ? 'cw' : 'cf'] = c; self.put(m); },
       setType(rid, t) { const m = self.get(id); if (m) { m.type = t || ''; self.put(m); } },
       rename(rid, name) { self.rename(id, name); },
     };
@@ -60,7 +61,7 @@ export const models = {
   // 自宅に部屋を作って、家具を置く(rent があれば借りている印)。置いた家具の uid を返す
   _install(m, rent) {
     const at = houseData.spot(); if (!at) return { err: '家に、新しい部屋をつなげる場所がないよ' };
-    const room = houseData.putRoom(at, { name: m.name, cols: m.cols, rows: m.rows, type: m.type, rent });
+    const room = houseData.putRoom(at, { name: m.name, cols: m.cols, rows: m.rows, type: m.type, rent, wall: m.wall, floor: m.floor, cw: m.cw, cf: m.cf });
     const placed = furn.placed(), inv = furn.inv(), uids = [];
     for (const p of m.put || []) { const uid = 'mp' + Math.random().toString(36).slice(2, 9); placed.push({ ...p, uid, room: room.id, ...(rent ? { rent: m.id } : {}) }); inv[p.id] = (inv[p.id] || 0) + 1; uids.push(uid); }
     furn.savePlaced(placed); furn.saveInv(inv);

@@ -177,7 +177,7 @@ export const homeApp = {
       <div class="ctl" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 10px 6px"></div>
       <div class="inv" style="display:flex;gap:8px;overflow-x:auto;padding:6px 10px 12px"></div>
       <div class="car"></div>
-      <div class="sheet" style="position:absolute;inset:0;background:#0006;display:none;align-items:flex-end;justify-content:center"></div>`;
+      <div class="sheet" style="position:absolute;inset:0;z-index:20;background:#0006;display:none;align-items:flex-end;justify-content:center"></div>`;
     el.appendChild(root);
     const verEl = document.createElement('div'); verEl.textContent = 'ver ' + (typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'); verEl.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);top:4px;font:700 10px/1 monospace;color:#8d7f9e;pointer-events:none;z-index:5;opacity:.85'; root.appendChild(verEl);
     const car = root.querySelector('.car'), cv = root.querySelector('.cv'), tip = root.querySelector('.tip'), ctl = root.querySelector('.ctl'), inv = root.querySelector('.inv'), planEl = root.querySelector('.plan'), sheet = root.querySelector('.sheet');
@@ -228,7 +228,8 @@ export const homeApp = {
     const dispose = g => g.traverse(o => { if (o.isMesh) { o.geometry.dispose(); o.material.dispose(); } });
     function buildShell() {
       shell.children.slice().forEach(c => { shell.remove(c); dispose(c); });
-      const r = cur(), C = r.cols, R = r.rows, pal = r.type === 'kitchen' ? [0xeef1f4, 0xfffaf0, 0xf2f7ee] : r.type === 'bath' ? [0xdff0f6, 0xf2fbfd, 0xe6f4fa] : PAL[house.rooms.indexOf(r) % PAL.length];
+      const r = cur(), C = r.cols, R = r.rows; let pal = r.type === 'kitchen' ? [0xeef1f4, 0xfffaf0, 0xf2f7ee] : r.type === 'bath' ? [0xdff0f6, 0xf2fbfd, 0xe6f4fa] : PAL[house.rooms.indexOf(r) % PAL.length];
+      if (r.floor != null || r.wall != null) pal = [r.floor ?? pal[0], r.wall ?? pal[1], r.wall != null ? new THREE.Color(r.wall).multiplyScalar(0.94).getHex() : pal[2]];   // 自分で選んだ床・かべの色
       const tile = () => { if (!r.type) return null; const gh = new THREE.GridHelper(Math.max(C, R), Math.max(C, R) * 2, 0xc8d3dc, 0xc8d3dc); gh.scale.set(C / Math.max(C, R), 1, R / Math.max(C, R)); gh.position.set(C / 2, 0.012, R / 2); return gh; };   // キッチン・おふろはタイルの床
       if (walk) {   // 歩くとき:かべは「中から見える面だけ」の板(外から見ると消えるので、カメラが外に出ても部屋が見える)
         const fl = new THREE.Mesh(new THREE.BoxGeometry(C, 0.3, R), lm(pal[0])); fl.position.set(C / 2, -0.15, R / 2);
@@ -379,6 +380,15 @@ export const homeApp = {
 
     // ひろげる・部屋を増やす
     let sheetMsg = '';
+    const WALLS = [0xffe9ef, 0xe9f3ff, 0xfff3d9, 0xe6f4e8, 0xf3e8ff, 0xffffff, 0xf0e6dc, 0xdfe3ea], FLOORS = [0xf8e6c8, 0xd9b68c, 0xa9805a, 0xe8e2da, 0xcfe3d4, 0xf3d5dc];
+    const hx = n => '#' + (n >>> 0).toString(16).padStart(6, '0');
+    function colorRows(r) {   // かべ紙・床の色: 見本は無料 / 自分で作る色は 💎1(作った色は、その部屋でずっと使える)
+      const sw = (k, c, on) => `<button data-x="col" data-k="${k}" data-c="${c}" title="" style="width:34px;height:34px;border-radius:10px;border:${on ? '3px solid #ff7fa0' : '2px solid #e3dbea'};background:${hx(c)};padding:0;flex:none"></button>`;
+      const row = (k, label, list, curC, own) => `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800;margin-bottom:6px">${label}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">${list.map(c => sw(k, c, curC === c)).join('')}${own != null && !list.includes(own) ? sw(k, own, curC === own) : ''}
+        <label style="${btn('linear-gradient(160deg,#ffd6e3,#ffb3c7)', ink)};padding:6px 10px;font-size:12px;position:relative;cursor:pointer">🎨 自分で作る 💎1<input type="color" data-own="${k}" value="${hx(curC ?? list[0])}" style="position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer"></label></div></div>`;
+      return row('wall', 'かべ紙の色', WALLS, r.wall ?? null, r.cw ?? null) + row('floor', '床の色', FLOORS, r.floor ?? null, r.cf ?? null);
+    }
     function openSheet() {
       const r = cur(), g = gemsOf(), M = !!houseData.model;
       const row = (axis, label) => {
@@ -393,19 +403,29 @@ export const homeApp = {
       };
       sheet.style.display = 'flex';
       sheet.innerHTML = `<div style="background:#fffaf0;border-radius:22px 22px 0 0;width:min(520px,100%);max-height:88%;overflow:auto;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))">
-        <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">🏠 ${r.name}を ひろげる</h3><b style="background:#fff3cf;border-radius:999px;padding:5px 12px;font-size:13px">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${g != null ? ` 💎 <span data-bind="gems">${fmtN(g)}</span>` : ''}</b></div>
-        <p style="margin:6px 0 10px;font-size:13px;color:#8d7f9e">${sheetMsg || 'いまは ' + r.cols + '列 × ' + r.rows + '行。1列・1行ごとに、コインかダイヤで広げられるよ(かべの反対がわにのびるから、家具は動かないよ)。'}</p>
+        <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">🏠 ${r.name}の 広さ・色</h3><b style="background:#fff3cf;border-radius:999px;padding:5px 12px;font-size:13px">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${g != null ? ` 💎 <span data-bind="gems">${fmtN(g)}</span>` : ''}</b></div>
+        <p style="margin:6px 0 10px;font-size:13px;color:#8d7f9e">${sheetMsg || 'いまは ' + r.cols + '列 × ' + r.rows + '行。' + (M ? '広さは自由に変えられるよ。' : '1列・1行ごとに広げられるよ(かべの反対がわにのびるから、家具は動かないよ)。') + 'かべ紙と床の色は、見本なら無料で変えられるよ。'}</p>
         ${row('cols', 'よこ（列）を1つ')}${row('rows', 'たて（行）を1つ')}
         ${g != null && !M ? `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800">もうひとつ、部屋を増やす（${house.rooms.length}部屋・💎 ${houseData.roomPrice(ctx.house)}）</div><div style="font-size:12px;color:#8d7f9e;margin:2px 0 8px">いまの部屋のとなりに、新しい部屋がつながるよ。ダイヤだけで増やせるよ。</div><button data-x="room" style="${btn(g >= C.gemsPerRoom ? 'linear-gradient(160deg,#9fd8ff,#6cb8f0)' : '#d9d2e3')};width:100%">💎 ${C.gemsPerRoom} で 部屋を増やす</button></div>` : ''}
+        ${colorRows(r)}
         <div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800;margin-bottom:6px">部屋の種類</div><div style="display:flex;gap:6px">${ROOM_TYPES.map(([k, n]) => `<button data-x="type" data-t="${k}" style="${btn((r.type || '') === k ? undefined : '#ece7f3', (r.type || '') === k ? '#fff' : ink)};flex:1;padding:8px 0;font-size:13px">${n}</button>`).join('')}</div><div style="font-size:12px;color:#8d7f9e;margin-top:6px">キッチン・バスルームは、床がタイルになるよ。家具はショップの「キッチン・おふろ」から。</div></div>
         <div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px;box-shadow:0 2px 8px #0001"><div style="font-weight:800;margin-bottom:6px">部屋の名前</div><input class="nm" value="${r.name}" maxlength="10" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e3d9f0;font:inherit;color:${ink}"></div>
         <button data-x="close" style="${btn('#d9d2e3', ink)};width:100%">とじる</button></div>`;
     }
+    sheet.addEventListener('change', async e => {
+      const inp = e.target.closest && e.target.closest('[data-own]'); if (!inp) return;
+      const k = inp.dataset.own, c = parseInt(inp.value.slice(1), 16), r = cur();
+      if (!ctx.gems) { sheetMsg = 'ダイヤが使えない場所だよ'; openSheet(); return; }
+      if (!(await confirmPay({ label: `${k === 'wall' ? 'かべ紙' : '床'}の色を作る(この部屋でずっと使えるよ)`, price: 1, have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ', yes: '作る' }))) { openSheet(); return; }
+      if (!ctx.gems.spend(1)) { sheetMsg = 'ダイヤが足りないよ'; openSheet(); return; }
+      houseData.setColor(r.id, k, c, true); house = houseData.get(); sheetMsg = '色を作ったよ！'; buildShell(); ui(); openSheet();
+    });
     sheet.onclick = async e => {
       if (e.target === sheet) { sheet.style.display = 'none'; return; }
       const b = e.target.closest('[data-x]'); if (!b) return;
       const x = b.dataset.x, r = cur();
       if (x === 'close') { const nm = sheet.querySelector('.nm'); if (nm && nm.value.trim() && nm.value !== r.name) { houseData.rename(r.id, nm.value.trim()); house = houseData.get(); } sheet.style.display = 'none'; sheetMsg = ''; ui(); return; }
+      if (x === 'col') { houseData.setColor(r.id, b.dataset.k, +b.dataset.c); house = houseData.get(); buildShell(); ui(); openSheet(); return; }
       if (x === 'type') { houseData.setType(r.id, b.dataset.t); house = houseData.get(); buildShell(); ui(); openSheet(); return; }
       if (x === 'room') {
         { if (ctx.gems && !(await confirmPay({ label: '部屋をふやす', price: houseData.roomPrice(ctx.house), have: ctx.gems.get(), icon: '💎', unit: 'ダイヤ' }))) return; }

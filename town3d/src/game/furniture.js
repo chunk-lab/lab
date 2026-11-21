@@ -354,11 +354,13 @@ export const houseData = {
   putRoom(at, spec) {
     const h = this.get(), n = h.rooms.length;
     const room = { id: 'r' + (Date.now().toString(36)) + Math.random().toString(36).slice(2, 4), name: spec.name || ROOM_NAMES[n] || `へや ${n + 1}`, cols: spec.cols || 6, rows: spec.rows || 6, sx: at.sx, sy: at.sy, from: at.r.id };
-    if (spec.type) room.type = spec.type; if (spec.rent) room.rent = spec.rent;
+    if (spec.type) room.type = spec.type; if (spec.rent) room.rent = spec.rent; for (const k of ['wall', 'floor', 'cw', 'cf']) if (spec[k] != null) room[k] = spec[k];
     h.rooms.push(room); this.save(h); return room;
   },
   removeRoom(id) { const h = this.get(); h.rooms = h.rooms.filter(r => r.id !== id); this.save(h); },
   setType(roomId, type) { const h = this.get(), r = h.rooms.find(x => x.id === roomId); if (!r) return; const was = r.type || ''; r.type = type || ''; if (!r.name || ROOM_NAMES.includes(r.name) || r.name === ROOM_TYPE_NAME[was]) r.name = ROOM_TYPE_NAME[r.type] || r.name; this.save(h); },
+  // かべ紙・床の色。own=true は自分で作った色(払ったので、その部屋でずっと使える)
+  setColor(roomId, k, c, own = false) { const h = this.get(), r = h.rooms.find(x => x.id === roomId); if (!r) return; r[k] = c; if (own) r[k === 'wall' ? 'cw' : 'cf'] = c; this.save(h); },
   rename(roomId, name) { const h = this.get(), r = h.rooms.find(x => x.id === roomId); if (r) { r.name = String(name).slice(0, 10) || r.name; this.save(h); } },
 };
 
