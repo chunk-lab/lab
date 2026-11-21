@@ -19,7 +19,7 @@ const CSS = `
 .tw-cut .cs-text{font-size:var(--tw-dfs,19px);line-height:1.7;white-space:pre-wrap;font-weight:700;min-height:3.4em}
 .tw-cut .cs-box.narr .cs-text{color:#dfe6ff;font-weight:600}
 .tw-cut .cs-more{position:absolute;right:16px;bottom:8px;font-size:14px;animation:csb .8s infinite alternate;opacity:0}
-.tw-cut .cs-box.done .cs-more{opacity:1}
+.tw-cut .cs-box.done .cs-more{opacity:1}.tw-cut .cs-box.auto .cs-more{display:none}
 @keyframes csb{to{transform:translateY(4px)}}
 .tw-cut .cs-ch{position:absolute;right:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px) + clamp(130px,24vh,200px) + 16px);display:none;flex-direction:column;gap:8px;pointer-events:auto;max-width:86%}
 .tw-cut .cs-ch.on{display:flex}
@@ -63,13 +63,13 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   function say(id, text, o = {}) {
     guard();
     return new Promise(res => {
-      const box = q('.cs-box'), tx = q('.cs-text'); box.classList.add('on'); box.classList.remove('done'); box.classList.toggle('narr', id === 'narr');
+      const box = q('.cs-box'), tx = q('.cs-text'); box.classList.add('on'); box.classList.remove('done'); box.classList.toggle('auto', !!o.auto); box.classList.toggle('narr', id === 'narr');
       q('.cs-name').textContent = NAME(id);
       const pic = q('.cs-pic'), src = id !== 'narr' && id !== 'me' ? portrait(o.face || id) : null; if (src) pic.src = src; else pic.removeAttribute('src');
       const chars = [...text]; let i = 0, done = false; tx.textContent = '';
       const tick = setInterval(() => { i += 1; tx.textContent = chars.slice(0, i).join(''); if (i >= chars.length) finish(); }, 38);
-      function finish() { clearInterval(tick); tx.textContent = text; done = true; box.classList.add('done'); }
-      tapFn = () => { if (skipped) { clearInterval(tick); tapFn = null; res(); return; } if (!done) { finish(); return; } tapFn = null; res(); };
+      function finish() { clearInterval(tick); tx.textContent = text; done = true; box.classList.add('done'); if (o.auto) setTimeout(() => { if (tapFn) { tapFn = null; res(); } }, o.auto * 1000); }   // auto: 押さなくても、出しきってから o.auto 秒で次へ(▼なし)
+      tapFn = () => { if (skipped) { clearInterval(tick); tapFn = null; res(); return; } if (o.auto) return; if (!done) { finish(); return; } tapFn = null; res(); };
     }).then(guard);
   }
   function choose(id, text, opts) {
