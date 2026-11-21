@@ -1,0 +1,300 @@
+juice | n | I drink apple juice every morning. | 私は毎朝リンゴジュースを飲みます。
+juice | n | Would you like some orange juice? | オレンジジュースはいかがですか。
+juice | n | The juice in this glass is cold. | このグラスのジュースは冷たいです。
+fruit | n | Fresh fruit is good for breakfast. | 新鮮な果物は朝食にぴったりです。
+fruit | n | What fruit do you like best? | どの果物が一番好きですか。
+fruit | n | We bought some fruit at the market. | 私たちは市場で果物を買いました。
+apple | n | I eat an apple after lunch. | 私は昼食後にリンゴを食べます。
+apple | n | Is that green apple sweet? | あの緑色のリンゴは甘いですか。
+apple | n | She put three apples in her bag. | 彼女はかばんにリンゴを三つ入れました。
+orange | n | This orange is very sweet and fresh. | このオレンジはとても甘くて新鮮です。
+orange | n | Can you give me an orange? | オレンジを一つくれますか。
+orange | n | We bought some oranges for tomorrow. | 私たちは明日のためにオレンジを買いました。
+banana | n | My brother eats a banana every morning. | 弟は毎朝バナナを食べます。
+banana | n | Would you like another banana today? | 今日はバナナをもう一本いかがですか。
+banana | n | The bananas on the table are yellow. | テーブルの上のバナナは黄色いです。
+vegetable | n | A carrot is my favorite vegetable. | ニンジンは私の一番好きな野菜です。
+vegetable | n | What vegetable goes well with this soup? | このスープにはどんな野菜が合いますか。
+vegetable | n | My mother grows vegetables in her garden. | 母は庭で野菜を育てています。
+cake | n | This chocolate cake looks really good. | このチョコレートケーキはとてもおいしそうです。
+cake | n | Did you make that birthday cake? | あの誕生日ケーキを作ったのですか。
+cake | n | We shared two small cakes after dinner. | 私たちは夕食後に小さなケーキを二つ分け合いました。
+chocolate | n | I bought some chocolate for my sister. | 私は妹にチョコレートを買いました。
+chocolate | n | Do you like chocolate with nuts? | ナッツ入りのチョコレートは好きですか。
+chocolate | n | The children shared their chocolate after lunch. | 子供たちは昼食後にチョコレートを分け合いました。
+sugar | n | Please add some sugar to my tea. | 私のお茶に砂糖を少し入れてください。
+sugar | n | Does this cake have much sugar? | このケーキには砂糖がたくさん入っていますか。
+sugar | n | She put the sugar beside the cups. | 彼女はカップの横に砂糖を置きました。
+salt | n | This soup needs a little salt. | このスープには塩が少し必要です。
+salt | n | Can you pass me the salt? | 塩を取ってくれますか。
+salt | n | My father added salt to the potatoes. | 父はジャガイモに塩を加えました。
+soup | n | Hot soup is nice on cold days. | 寒い日には温かいスープがいいです。
+soup | n | Would you like some more soup? | スープをもう少しいかがですか。
+soup | n | We made two kinds of soup yesterday. | 私たちは昨日二種類のスープを作りました。
+sandwich | n | I made a cheese sandwich for lunch. | 私は昼食にチーズサンドイッチを作りました。
+sandwich | n | Can I have another sandwich, please? | サンドイッチをもう一ついただけますか。
+sandwich | n | The children ate sandwiches in the park. | 子供たちは公園でサンドイッチを食べました。
+father | n | My father works at a small school. | 父は小さな学校で働いています。
+father | n | Does your father like to cook? | お父さんは料理が好きですか。
+father | n | Their fathers played soccer together yesterday. | 彼らの父親たちは昨日一緒にサッカーをしました。
+mother | n | My mother sings while she cooks. | 母は料理をしながら歌います。
+mother | n | Is your mother home this afternoon? | 今日の午後、お母さんは家にいますか。
+mother | n | Our mothers met at the station. | 私たちの母親同士が駅で会いました。
+brother | n | My brother is learning to swim. | 弟は泳ぎ方を習っています。
+brother | n | Does your brother play the piano? | お兄さんはピアノを弾きますか。
+brother | n | The two brothers share a bedroom. | その兄弟二人は寝室を共有しています。
+sister | n | My sister loves reading funny stories. | 妹は面白い物語を読むのが大好きです。
+sister | n | Is your sister older than you? | お姉さんはあなたより年上ですか。
+sister | n | The sisters walked to school together. | その姉妹は一緒に学校へ歩いて行きました。
+son | n | Their son starts school next week. | 彼らの息子は来週学校に通い始めます。
+son | n | How old is your son now? | 息子さんは今何歳ですか。
+son | n | Her sons help her in the garden. | 彼女の息子たちは庭仕事を手伝います。
+daughter | n | My daughter likes drawing pictures of animals. | 私の娘は動物の絵を描くのが好きです。
+daughter | n | Does your daughter enjoy her new school? | 娘さんは新しい学校を楽しんでいますか。
+daughter | n | Their daughters sing in the same group. | 彼らの娘たちは同じグループで歌っています。
+husband | n | Her husband makes breakfast every Sunday. | 彼女の夫は毎週日曜日に朝食を作ります。
+husband | n | Is your husband coming to dinner? | ご主人は夕食に来ますか。
+husband | n | Their husbands work at the same office. | 彼女たちの夫は同じ事務所で働いています。
+wife | n | His wife teaches English at school. | 彼の妻は学校で英語を教えています。
+wife | n | Does your wife like this town? | 奥さんはこの町が好きですか。
+wife | n | The two wives became good friends. | その二人の妻は仲のよい友達になりました。
+baby | n | The baby is sleeping in her bed. | 赤ちゃんはベッドで眠っています。
+baby | n | Can you hear that baby laughing? | あの赤ちゃんが笑っている声が聞こえますか。
+baby | n | The babies played together on the floor. | 赤ちゃんたちは床で一緒に遊びました。
+grandfather | n | My grandfather walks in the park daily. | 祖父は毎日公園を散歩します。
+grandfather | n | Does your grandfather live near here? | おじいさんはこの近くに住んでいますか。
+grandfather | n | Both grandfathers came to my birthday party. | 二人の祖父が私の誕生日会に来ました。
+grandmother | n | My grandmother grows beautiful flowers at home. | 祖母は家できれいな花を育てています。
+grandmother | n | Can your grandmother use a computer? | おばあさんはコンピューターを使えますか。
+grandmother | n | Our grandmothers enjoy drinking tea together. | 私たちの祖母たちは一緒にお茶を飲むのを楽しんでいます。
+uncle | n | My uncle lives near the sea. | 叔父は海の近くに住んでいます。
+uncle | n | Did your uncle visit you yesterday? | 昨日おじさんが訪ねてきましたか。
+uncle | n | Both uncles helped us move the table. | 二人の叔父がテーブルを動かすのを手伝ってくれました。
+aunt | n | My aunt gave me a blue hat. | おばは私に青い帽子をくれました。
+aunt | n | Does your aunt have a cat? | おばさんは猫を飼っていますか。
+aunt | n | Her aunts came for lunch on Sunday. | 彼女のおばたちは日曜日に昼食を食べに来ました。
+cousin | n | My cousin is good at tennis. | 私のいとこはテニスが得意です。
+cousin | n | Will your cousin come with us? | いとこも私たちと一緒に来ますか。
+cousin | n | All my cousins live in this town. | 私のいとこはみんなこの町に住んでいます。
+neighbor | n | Our neighbor has a friendly dog. | 隣人は人なつこい犬を飼っています。
+neighbor | n | Did your neighbor bring you some flowers? | お隣さんが花を持ってきてくれたのですか。
+neighbor | n | The neighbors helped clean the street. | 近所の人たちは通りの掃除を手伝いました。
+doctor | n | The doctor works at this hospital. | その医者はこの病院で働いています。
+doctor | n | Can the doctor see me today? | 先生に今日診てもらえますか。
+doctor | n | Many doctors work here every day. | ここでは毎日多くの医師が働いています。
+nurse | n | My sister wants to become a nurse. | 妹は看護師になりたいと思っています。
+nurse | n | Is that nurse your friend? | あの看護師はあなたの友達ですか。
+nurse | n | The nurses were kind to everyone. | 看護師たちはみんなに親切でした。
+police | n | The police are helping people cross the road. | 警察は人々が道路を渡るのを手伝っています。
+police | n | Can the police help us find it? | 警察はそれを探すのを手伝ってくれますか。
+police | n | We asked the police for directions. | 私たちは警察に道を尋ねました。
+driver | n | The bus driver knows this town well. | そのバスの運転手はこの町をよく知っています。
+driver | n | Is your father a taxi driver? | お父さんはタクシーの運転手ですか。
+driver | n | The drivers waited outside the hotel. | 運転手たちはホテルの外で待っていました。
+artist | n | That artist draws beautiful pictures of birds. | あの芸術家は美しい鳥の絵を描きます。
+artist | n | Do you want to be an artist? | 芸術家になりたいですか。
+artist | n | Several artists showed their work at school. | 何人かの芸術家が学校で作品を見せました。
+singer | n | My sister wants to become a singer. | 妹は歌手になりたいと思っています。
+singer | n | Who is your favorite singer now? | 今、一番好きな歌手は誰ですか。
+singer | n | The singers practiced together after school. | 歌手たちは放課後に一緒に練習しました。
+player | n | Our best player scored a goal yesterday. | 私たちの一番上手な選手が昨日ゴールを決めました。
+player | n | Is that player on your team? | あの選手はあなたのチームにいますか。
+player | n | The piano players practiced before the show. | ピアノ奏者たちは発表会の前に練習しました。
+worker | n | A worker fixed our classroom door. | 作業員が教室のドアを直しました。
+worker | n | Does that worker live near here? | あの作業員はこの近くに住んでいますか。
+worker | n | The workers finished their work before lunch. | 作業員たちは昼食前に仕事を終えました。
+farmer | n | The farmer grows rice and vegetables. | その農家の人は米と野菜を育てています。
+farmer | n | Does your grandfather know that farmer? | おじいさんはあの農家の人を知っていますか。
+farmer | n | Many farmers sell fruit at this market. | 多くの農家がこの市場で果物を売っています。
+king | n | The king lived in a large castle. | その王は大きな城に住んでいました。
+king | n | Was the king kind to everyone? | その王はみんなに親切でしたか。
+king | n | The story tells us about two kings. | その物語は二人の王について語っています。
+queen | n | The queen wore a beautiful blue dress. | 女王は美しい青いドレスを着ていました。
+queen | n | Did the queen visit the village? | 女王はその村を訪れましたか。
+queen | n | The story has two queens in it. | その物語には二人の女王が登場します。
+lady | n | An old lady smiled at me. | 年配の女性が私にほほえみました。
+lady | n | Is that lady your new teacher? | あの女性はあなたの新しい先生ですか。
+lady | n | The ladies sat together by the window. | 女性たちは窓のそばに一緒に座りました。
+gentleman | n | A kind gentleman opened the door. | 親切な紳士がドアを開けてくれました。
+gentleman | n | Is that gentleman your grandfather? | あの紳士はあなたのおじいさんですか。
+gentleman | n | The gentlemen waited quietly in the hall. | 紳士たちは廊下で静かに待っていました。
+team | n | Our team won the game yesterday. | 私たちのチームは昨日試合に勝ちました。
+team | n | Which team does your brother play for? | お兄さんはどのチームでプレーしていますか。
+team | n | Both teams played very well today. | 両チームとも今日はとてもよく戦いました。
+class | n | Our English class starts at nine. | 私たちの英語の授業は9時に始まります。
+class | n | Is your class on the second floor? | あなたのクラスは2階ですか。
+class | n | We have three classes this afternoon. | 今日の午後は授業が三つあります。
+lesson | n | Today's lesson is about the weather. | 今日の授業は天気についてです。
+lesson | n | Did you enjoy your piano lesson? | ピアノのレッスンは楽しかったですか。
+lesson | n | Our teacher gives us short lessons. | 先生は私たちに短い授業をしてくれます。
+test | n | We have a math test tomorrow. | 私たちは明日数学のテストがあります。
+test | n | Was the English test difficult yesterday? | 昨日の英語のテストは難しかったですか。
+test | n | She studied hard for her tests. | 彼女はテストのために一生懸命勉強しました。
+homework | n | I finished my homework before dinner. | 私は夕食前に宿題を終えました。
+homework | n | Can you help me with my homework? | 宿題を手伝ってくれますか。
+homework | n | Our teacher gave us some math homework. | 先生は私たちに数学の宿題を出しました。
+math | n | My sister is very good at math. | 妹は数学がとても得意です。
+math | n | Do you have math on Friday? | 金曜日に数学の授業がありますか。
+math | n | We studied math together after school. | 私たちは放課後に一緒に数学を勉強しました。
+science | n | Science is my favorite subject at school. | 科学は学校で一番好きな科目です。
+science | n | Do you like studying science with friends? | 友達と科学を勉強するのは好きですか。
+science | n | The children learned about plants in science. | 子供たちは理科で植物について学びました。
+language | n | English is a useful language to learn. | 英語は学ぶと役に立つ言語です。
+language | n | What language do people speak there? | そこでは人々は何語を話しますか。
+language | n | She wants to learn two new languages. | 彼女は新しい言語を二つ学びたがっています。
+dream | n | My dream is to become a teacher. | 私の夢は先生になることです。
+dream | n | Did you have a nice dream? | よい夢を見ましたか。
+dream | n | We talked about our dreams after school. | 私たちは放課後に自分たちの夢について話しました。
+trip | n | Our school trip starts next Monday. | 私たちの修学旅行は次の月曜日に始まります。
+trip | n | How was your trip to the mountains? | 山への旅行はどうでしたか。
+trip | n | They took two short trips last summer. | 彼らは去年の夏に短い旅行を二回しました。
+travel | v | I want to travel with my family. | 私は家族と旅行したいです。
+travel | v | Does your brother travel by train often? | お兄さんはよく電車で旅行しますか。
+travel | v | We traveled around the island last summer. | 私たちは去年の夏に島を旅行しました。
+vacation | n | Our summer vacation starts next week. | 私たちの夏休みは来週始まります。
+vacation | n | Where did you go on vacation? | 休暇にはどこへ行きましたか。
+vacation | n | My parents enjoy taking short vacations. | 両親は短い休暇を取るのが好きです。
+holiday | n | Tomorrow is a holiday at our school. | 明日は私たちの学校は休みです。
+holiday | n | What will you do during the holiday? | 休暇中は何をしますか。
+holiday | n | We spent the holidays with our family. | 私たちは休暇を家族と過ごしました。
+birthday | n | Today is my little brother's birthday. | 今日は弟の誕生日です。
+birthday | n | When is your mother's birthday this year? | お母さんの誕生日は今年いつですか。
+birthday | n | We celebrated two birthdays last weekend. | 先週末、私たちは二人の誕生日を祝いました。
+festival | n | Our town has a summer festival. | 私たちの町には夏祭りがあります。
+festival | n | Did you enjoy the music festival? | 音楽祭は楽しかったですか。
+festival | n | Many families visit festivals in autumn. | 多くの家族が秋に祭りを訪れます。
+sport | n | Tennis is a sport I enjoy. | テニスは私が楽しんでいるスポーツです。
+sport | n | What sport do you play after school? | 放課後はどんなスポーツをしますか。
+sport | n | My brother likes many different sports. | 弟はいろいろなスポーツが好きです。
+soccer | n | We play soccer in the park. | 私たちは公園でサッカーをします。
+soccer | n | Does your sister like watching soccer? | 妹さんはサッカーを見るのが好きですか。
+soccer | n | Our soccer game starts at three. | 私たちのサッカーの試合は3時に始まります。
+baseball | n | My father watches baseball every Sunday. | 父は毎週日曜日に野球を見ます。
+baseball | n | Can you play baseball with us tomorrow? | 明日私たちと野球をしませんか。
+baseball | n | The children practiced baseball after school. | 子供たちは放課後に野球を練習しました。
+tennis | n | I play tennis with my uncle. | 私は叔父とテニスをします。
+tennis | n | Is your brother good at tennis? | お兄さんはテニスが得意ですか。
+tennis | n | We watched a tennis game yesterday. | 私たちは昨日テニスの試合を見ました。
+basketball | n | Our school has a basketball team. | 私たちの学校にはバスケットボールのチームがあります。
+basketball | n | Do you play basketball on Saturdays? | 土曜日にバスケットボールをしますか。
+basketball | n | She watched basketball with her friends. | 彼女は友達とバスケットボールを見ました。
+movie | n | That movie made everyone laugh today. | その映画を見て今日はみんなが笑いました。
+movie | n | What movie did you watch yesterday? | 昨日はどんな映画を見ましたか。
+movie | n | My sister likes funny movies best. | 妹は面白い映画が一番好きです。
+song | n | This song makes me feel happy. | この歌を聞くと幸せな気持ちになります。
+song | n | Can you sing that song again? | その歌をもう一度歌ってくれますか。
+song | n | We learned three new songs at school. | 私たちは学校で新しい歌を三曲習いました。
+news | n | The news was good this morning. | 今朝のニュースはよい知らせでした。
+news | n | Did you hear the news today? | 今日のニュースを聞きましたか。
+news | n | My father watches the evening news. | 父は夕方のニュースを見ます。
+magazine | n | I bought a magazine about animals. | 私は動物についての雑誌を買いました。
+magazine | n | Can I read your new magazine? | あなたの新しい雑誌を読んでもよいですか。
+magazine | n | She keeps old magazines on her desk. | 彼女は古い雑誌を机の上に置いています。
+newspaper | n | My grandfather reads the newspaper every morning. | 祖父は毎朝新聞を読みます。
+newspaper | n | Is today's newspaper on the table? | 今日の新聞はテーブルの上にありますか。
+newspaper | n | We used old newspapers for our art class. | 私たちは美術の授業で古い新聞を使いました。
+dictionary | n | I use a dictionary in English class. | 私は英語の授業で辞書を使います。
+dictionary | n | Can I borrow your English dictionary? | 英語の辞書を借りてもよいですか。
+dictionary | n | Our teacher showed us two different dictionaries. | 先生は私たちに二種類の辞書を見せました。
+internet | n | I found this picture on the internet. | 私はインターネットでこの写真を見つけました。
+internet | n | Can you use the internet here? | ここでインターネットを使えますか。
+internet | n | My father reads the news on the internet. | 父はインターネットでニュースを読みます。
+email | n | I sent an email to my teacher. | 私は先生に電子メールを送りました。
+email | n | Did you get my email yesterday? | 昨日私のメールを受け取りましたか。
+email | n | She checks her emails every morning. | 彼女は毎朝メールを確認します。
+message | n | I left a message for my mother. | 私は母に伝言を残しました。
+message | n | Can you give him this message? | 彼にこの伝言を伝えてくれますか。
+message | n | We received three messages this afternoon. | 私たちは今日の午後に伝言を三件受け取りました。
+arrive | v | Please arrive at school before eight. | 8時前に学校に着いてください。
+arrive | v | What time does your train arrive? | 電車は何時に到着しますか。
+arrive | v | My aunt arrived at our house yesterday. | 昨日おばが私たちの家に着きました。
+belong | v | These books belong to our teacher. | これらの本は私たちの先生のものです。
+belong | v | Does this bag belong to you? | このかばんはあなたのものですか。
+belong | v | That blue bike belongs to my brother. | あの青い自転車は弟のものです。
+borrow | v | Can I borrow your pen today? | 今日ペンを借りてもよいですか。
+borrow | v | Did she borrow that book from you? | 彼女はあなたからその本を借りましたか。
+borrow | v | We borrowed some chairs for the party. | 私たちはパーティーのために椅子を何脚か借りました。
+lend | v | Please lend me your English dictionary. | 英語の辞書を貸してください。
+lend | v | Can you lend your bike to Tom? | トムに自転車を貸してくれますか。
+lend | v | My sister lent me her blue coat. | 妹は私に青いコートを貸してくれました。
+invite | v | I want to invite Emma to dinner. | 私はエマを夕食に招待したいです。
+invite | v | Did your friend invite you to the party? | 友達はあなたをパーティーに招待しましたか。
+invite | v | We invited our neighbors for lunch yesterday. | 私たちは昨日隣人を昼食に招きました。
+visit | v | We often visit our grandmother on Sundays. | 私たちは日曜日によく祖母を訪ねます。
+visit | v | Will you visit the museum tomorrow? | 明日博物館を訪れますか。
+visit | v | My cousins visited us last summer. | いとこたちは去年の夏に私たちを訪ねました。
+enjoy | v | I enjoy reading books after dinner. | 私は夕食後に本を読むのを楽しみます。
+enjoy | v | Did your sister enjoy the movie? | 妹さんは映画を楽しみましたか。
+enjoy | v | The children enjoyed playing in the snow. | 子供たちは雪の中で遊ぶのを楽しみました。
+laugh | v | We always laugh at his funny stories. | 私たちは彼の面白い話にいつも笑います。
+laugh | v | Why did everyone laugh just now? | なぜ今みんなが笑ったのですか。
+laugh | v | The babies laughed when their father sang. | 赤ちゃんたちは父親が歌うと笑いました。
+smile | v | Please smile for the family photo. | 家族写真のために笑顔を見せてください。
+smile | v | Does your teacher smile a lot? | 先生はよくほほえみますか。
+smile | v | My grandmother smiled when she saw me. | 祖母は私を見るとほほえみました。
+cry | v | Babies sometimes cry when they are hungry. | 赤ちゃんはおなかがすくと泣くことがあります。
+cry | v | Why did the little boy cry? | なぜその小さな男の子は泣いたのですか。
+cry | v | She cried when she heard the happy news. | 彼女はうれしい知らせを聞いて泣きました。
+shout | v | Please do not shout in the library. | 図書館では大声を出さないでください。
+shout | v | Why is your brother shouting outside? | なぜ弟さんは外で叫んでいるのですか。
+shout | v | The children shouted with joy after the game. | 子供たちは試合の後に喜びの声を上げました。
+listen | v | Please listen to this song carefully. | この歌を注意して聞いてください。
+listen | v | Do you listen to music while studying? | 勉強しながら音楽を聞きますか。
+listen | v | We listened to our teacher in class. | 私たちは授業で先生の話を聞きました。
+hurry | v | We need to hurry to the station. | 私たちは駅へ急ぐ必要があります。
+hurry | v | Why are you hurrying this morning? | 今朝はなぜ急いでいるのですか。
+hurry | v | My sister hurried home before the rain. | 妹は雨が降る前に急いで帰宅しました。
+climb | v | I want to climb that mountain someday. | いつかあの山に登りたいです。
+climb | v | Can your little brother climb this tree? | 弟さんはこの木に登れますか。
+climb | v | We climbed the hill before lunch. | 私たちは昼食前に丘に登りました。
+jump | v | Watch the rabbit jump over the box. | ウサギが箱を飛び越えるのを見てください。
+jump | v | Can you jump as high as Ken? | ケンと同じくらい高く跳べますか。
+jump | v | The children jumped into the pool together. | 子供たちは一緒にプールに飛び込みました。
+dance | v | We dance together every Friday evening. | 私たちは毎週金曜日の夕方に一緒に踊ります。
+dance | v | Can your grandfather dance very well? | おじいさんは踊りが上手ですか。
+dance | v | The girls danced to their favorite song. | 女の子たちはお気に入りの歌に合わせて踊りました。
+cook | v | I often cook dinner for my family. | 私はよく家族のために夕食を作ります。
+cook | v | Can your brother cook rice well? | 弟さんは上手にご飯を炊けますか。
+cook | v | My aunt cooked soup for everyone. | おばはみんなのためにスープを作りました。
+wash | v | Please wash your hands before lunch. | 昼食前に手を洗ってください。
+wash | v | Does your father wash the dishes? | お父さんは皿を洗いますか。
+wash | v | She washed her new shirt yesterday. | 彼女は昨日新しいシャツを洗いました。
+practice | v | I practice the piano after school. | 私は放課後にピアノを練習します。
+practice | v | Do you practice English every day? | 毎日英語を練習していますか。
+practice | v | Our team practiced soccer in the park. | 私たちのチームは公園でサッカーを練習しました。
+finish | v | Please finish your homework before dinner. | 夕食前に宿題を終えてください。
+finish | v | Did your sister finish her book? | 妹さんは本を読み終えましたか。
+finish | v | We finished cleaning the classroom together. | 私たちは一緒に教室の掃除を終えました。
+check | v | Please check your answers before lunch. | 昼食前に答えを確認してください。
+check | v | Did you check the train times? | 電車の時刻を確認しましたか。
+check | v | My father checked the door before leaving. | 父は出かける前にドアを確認しました。
+fill | v | Please fill this bottle with water. | この瓶を水でいっぱいにしてください。
+fill | v | Can you fill my cup with tea? | 私のカップにお茶を注いでくれますか。
+fill | v | The room filled with happy voices. | 部屋は楽しそうな声でいっぱいになりました。
+fix | v | Please fix this picture to the wall. | この絵を壁に固定してください。
+fix | v | Can you fix the paper here? | ここに紙を固定してくれますか。
+fix | v | She fixed the photo to her notebook. | 彼女は写真をノートに貼り付けました。
+save | v | We can save this little plant. | 私たちはこの小さな植物を救えます。
+save | v | Can you save the flowers from the cold? | 花を寒さから守れますか。
+save | v | My friend saved a bird from the water. | 友達は水の中から鳥を救いました。
+count | v | Can you count the apples on the table? | テーブルのリンゴを数えられますか。
+count | v | Does your sister count in English? | 妹さんは英語で数を数えますか。
+count | v | We counted all the chairs after class. | 私たちは授業後に椅子を全部数えました。
+touch | v | Please do not touch the wet paint. | ぬれたペンキには触らないでください。
+touch | v | Can you touch your toes easily? | 簡単につま先に触れられますか。
+touch | v | The baby touched the soft toy. | 赤ちゃんは柔らかいおもちゃに触れました。
+push | v | Please push this door to open it. | このドアを押して開けてください。
+push | v | Can you push the box under the desk? | 箱を机の下へ押して動かせますか。
+push | v | We pushed the table toward the wall. | 私たちはテーブルを壁の方へ押しました。
+pull | v | Please pull the door toward you. | ドアを自分の方へ引いてください。
+pull | v | Can you pull this chair closer? | この椅子をもっと近くに引けますか。
+pull | v | My brother pulled the box from under the bed. | 弟はベッドの下から箱を引き出しました。
+hit | v | Try to hit the ball with this bat. | このバットでボールを打ってみてください。
+hit | v | Can you hit the ball that far? | あんなに遠くまでボールを打てますか。
+hit | v | She hit the tennis ball over the net. | 彼女はテニスボールをネットの向こうへ打ちました。
+kick | v | Please kick the ball toward me. | ボールを私の方へ蹴ってください。
+kick | v | Can your sister kick with her left foot? | 妹さんは左足で蹴れますか。
+kick | v | The boys kicked the ball across the field. | 男の子たちは広場の向こうまでボールを蹴りました。
+shake | v | Please shake the bottle before opening it. | 瓶を開ける前に振ってください。
+shake | v | Does the table shake when you move it? | そのテーブルは動かすと揺れますか。
+shake | v | We shook hands after the game. | 私たちは試合の後に握手しました。

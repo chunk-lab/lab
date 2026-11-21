@@ -1,0 +1,446 @@
+@id beg83
+@lv 1
+@level 4
+@title Come to My Birthday Party!
+@ja 誕生日パーティーへの招待
+@tag 高校受験レベル・メール
+@gloss invite=招待する, party=パーティー, Saturday=土曜日, station=駅, chocolate=チョコレート, bring=持ってくる, anything=何も, Thursday=木曜日
+S| Hi Mika, I {want|wants|wanting|to want} :: ミカ、私は…したい
+V| to {invite|invites|invited|inviting} you :: あなたを招待する
+P| {to|on|of|by} my birthday party. :: 私の誕生日会に
+== ミカ、あなたを私の誕生日パーティーに招待したいです。
+S| The party {is|are|be|am} :: パーティーは…です
+T| {on|in|at|by} Saturday, :: 土曜日に
+T| from two {to|on|of|by} four. :: 2時から4時まで
+== パーティーは土曜日の2時から4時までです。
+S| It {will|is|does|has} be :: それは…になる
+P| {at|on|to|from} my house :: 私の家で
+P| {near|nearly|nears|neared} the station. :: 駅の近くの
+== 会場は駅の近くの私の家です。
+S| {My|Me|I|Mine} mother :: 私の母は
+V| will {make|makes|making|made} :: 作る予定だ
+O| a big chocolate {cake|cakes|caking|caked}. :: 大きなチョコケーキを
+== 母が大きなチョコレートケーキを作ってくれます。
+S| We will {play|plays|playing|played} :: 私たちはする
+O| some fun {games|game's|gamely|gamed} :: 楽しいゲームを
+M| {and|nor|than|because} sing songs. :: そして歌を歌う
+== みんなで楽しいゲームをしたり、歌を歌ったりします。
+S| You {don't|doesn't|aren't|isn't} have to :: あなたは…必要はない
+V| {bring|brings|brought|bringing} :: 持ってくる
+O| {anything|anythings|anywhere|anyway}. :: 何も
+== 何も持ってこなくて大丈夫です。
+V| Please {come|comes|coming|came} :: 来てください
+P| {with|of|than|among} your little brother, :: 弟さんと一緒に
+M| {too|to|two|so}. :: も
+== 弟さんも一緒に来てください。
+S| Can {you|your|yours|yourself} :: あなたは…できる
+V| {come|came|comes|coming} :: 来る
+P| {to|of|than|unless} the party? :: パーティーに
+== パーティーに来られますか。
+V| Please {let|lets|letting|to let} me know :: 知らせてね
+T| {by|than|nor|whose} Thursday :: 木曜日までに
+R| {if|of|than|whose} you can come. :: 来られるかどうか
+== 来られるかどうか、木曜日までに知らせてね。
+?? 1 2 パーティーは何時から何時まで？
+?? 2 1 パーティーはどこで開かれる？
+?? 3 2 母は何を作る？
+?? 8 1 いつまでに返事をすればいい？
+
+@id beg84
+@lv 1
+@level 4
+@title Rules for the City Pool
+@ja 市民プールのきまり
+@tag 高校受験レベル・お知らせ
+@gloss rule=きまり, shower=シャワー, swimming cap=水泳帽, floor=床, wet=ぬれた, adult=大人, lifeguard=監視員, rest area=休けい所, safely=安全に
+S| The city {pool|pools|pooled|pooling} :: 市民プールは
+V| {is|are|be|been} open :: 開いている
+T| {in|on|at|to} July and August. :: 7月と8月に
+== 市民プールは7月と8月に開いています。
+S| It {opens|open|opening|to open} :: それは開く
+T| {at|on|of|than} nine :: 9時に
+T| {in|at|on|of} the morning :: 午前
+M| {and|nor|than|because} closes at five. :: そして5時に閉まる
+== 午前9時に開き、5時に閉まります。
+V| Please {take|takes|taking|took} :: 浴びてください
+O| a {shower|showers|showered|showering} :: シャワーを
+T| {before|because|between|beside} you swim. :: 泳ぐ前に
+== 泳ぐ前にシャワーを浴びてください。
+S| You {must|must to|have|has to} :: …しなければならない
+V| {wear|wears|wearing|worn} :: 身につける
+O| a swimming {cap|caps|capping|capped}. :: 水泳帽を
+== 水泳帽をかぶらなければなりません。
+V| {Don't|Doesn't|Not|No} run :: 走らないで
+P| {around|arounds|aground|round of} the pool :: プールのまわりを
+R| {because|because of|than|whose} :: …なので
+C| the floor {is|are|be|being} wet. :: 床がぬれている
+== 床がぬれているので、プールのまわりを走らないでください。
+S| Children {under|unders|undered|undering} ten :: 10歳未満の子は
+V| must {come|comes|coming|came} :: 来なければならない
+P| {with|than|of|whose} an adult. :: 大人と一緒に
+== 10歳未満の子どもは、大人と一緒に来なければなりません。
+V| Please {listen|listens|listening|listened} :: 聞いてください
+O| {to|of|on|than} the lifeguards :: 監視員の言うことを
+T| {at|on|in|of} all times. :: いつも
+== いつも監視員の言うことを聞いてください。
+S| You {can|cans|can to|could to} :: …できる
+V| {eat|eats|ate|eating} lunch :: 昼食を食べる
+P| {in|of|than|nor} the rest area. :: 休けい所で
+== 休けい所で昼食を食べることができます。
+V| Let's {enjoy|enjoys|enjoying|enjoyed} :: 楽しもう
+O| the pool {together|togethers|togather|togetherly} :: みんなでプールを
+M| {safely|safety|safeness|safes}. :: 安全に
+== みんなで安全にプールを楽しみましょう。
+?? 0 2 プールが開いているのはいつ？
+?? 1 1 プールは何時に開く？
+?? 3 2 プールで何をかぶらなければならない？
+?? 5 0 大人と一緒に来なければならないのはだれ？
+?? 7 2 どこで昼食を食べられる？
+
+@id beg85
+@lv 1
+@level 4
+@title Thank You for the Present
+@ja プレゼントのお礼
+@tag 高校受験レベル・メール
+@gloss present=プレゼント, arrive=届く, scarf=マフラー, warm=暖かい, favorite=いちばん好きな, wear=身につける, yourself=自分自身, vacation=休み, healthy=健康な
+S| Dear Grandma, {thank|thanks|thanked|thanking} you :: おばあちゃん、ありがとう
+P| {for|to|of|at} the present :: プレゼントを
+M| you {sent|sended|sends|sending} me. :: 送ってくれた
+== おばあちゃん、送ってくれたプレゼントをありがとう。
+S| It {arrived|arrive|arriving|arrival} :: それは届いた
+T| {on|in|of|than} my birthday, :: 誕生日に
+M| {and|nor|than|because of} I was so happy. :: とてもうれしかった
+== 誕生日にそれが届いて、とてもうれしかったです。
+S| The blue {scarf|scarves|scarfs|scarfing} :: 青いマフラーは
+V| {is|are|be|were} :: …だ
+C| very {warm|warmly|warmth|warms}. :: とても暖かい
+== 青いマフラーはとても暖かいです。
+S| Blue {is|are|be|am} :: 青は…だ
+C| my {favorite|favorites|favor|favorably} color, :: いちばん好きな色
+M| {so|than|nor|whose} I love it. :: だから大好き
+== 青は私のいちばん好きな色なので、とても気に入っています。
+S| I {wear|wears|wearing|worn} it :: それを身につける
+T| {every|ever|everyone|everything} day :: 毎日
+P| {to|than|whose|nor} school. :: 学校へ
+== 毎日それを着けて学校に行きます。
+S| My friends {said|sayed|saying|sayd} :: 友達は言った
+O| it {looks|look|looking|lookes} :: それは…に見える
+C| very {nice|nicely|nicer|niceness}. :: とてもすてき
+== 友達は、それがとてもすてきだと言いました。
+S| Did {you|your|yours|yourself} :: あなたは…したの
+V| {make|made|makes|making} it :: それを作る
+P| {by|with|of|than} yourself? :: 自分で
+== それはおばあちゃんが自分で作ったのですか。
+S| I {want|wants|wanting|to want} :: 私は…したい
+V| to {visit|visits|visited|visiting} you :: あなたを訪ねる
+T| {during|while|among|whose} winter vacation. :: 冬休みに
+== 冬休みにおばあちゃんに会いに行きたいです。
+V| Please {take|takes|taking|took} care :: 気をつけてね
+P| {of|to|than|at} yourself :: 自分自身に
+M| and stay {healthy|health|healthily|heal}. :: 元気でいてね
+== 体に気をつけて、元気でいてね。
+?? 1 1 プレゼントはいつ届いた？
+?? 2 0 プレゼントは何だった？
+?? 3 1 青は書き手にとってどんな色？
+?? 5 2 友達はマフラーについて何と言った？
+?? 7 2 いつおばあちゃんを訪ねたい？
+
+@id beg86
+@lv 1
+@level 4
+@title The Library Will Be Closed
+@ja 図書館の臨時休館
+@tag 高校受験レベル・お知らせ
+@gloss closed=閉まった, repair=修理する, roof=屋根, borrow=借りる, return=返す, weekend=週末, trouble=迷惑, information=情報, website=ウェブサイト
+S| The {city|cities|citys|citied} library :: 市立図書館は
+V| will {be|is|been|being} closed :: 閉館する
+T| {from|of|than|since} March 3 :: 3月3日から
+T| {to|at|on|in} March 7. :: 3月7日まで
+== 市立図書館は3月3日から3月7日まで休館します。
+S| We {need|needs|needing|to need} :: 私たちは…必要だ
+V| to {repair|repairs|repaired|repairing} :: 修理する
+O| the {roof|roofed|roofly|roofs'}. :: 屋根を
+== 屋根を修理する必要があるためです。
+S| You {can't|can't to|doesn't|aren't} :: あなたは…できない
+V| {borrow|borrows|borrowed|borrowing} books :: 本を借りる
+T| {during|while|among|whose} this time. :: この期間
+== この期間は本を借りることができません。
+M| If you {have|has|having|to have} :: もし…があれば
+O| books {to|than|of|at} return, :: 返す本が
+V| please {use|uses|used|using} :: 使ってください
+O| the box {by|bye|buy|be} the door. :: 入口横の箱を
+== 返す本があれば、入口の横の箱を使ってください。
+S| You {can|cans|can to|could to} :: …できる
+V| {use|uses|used|using} it :: それを使う
+T| {even|ever|every|evening} at night :: 夜でも
+T| {and|nor|than|whose} on weekends. :: 週末も
+== 箱は夜や週末でも使うことができます。
+S| The library will {open|opens|opened|opening} :: 図書館は開く
+M| {again|against|agains|gains} :: 再び
+T| {on|in|at|of} March 8. :: 3月8日に
+== 図書館は3月8日に再び開きます。
+S| We {are|is|am|be} :: 私たちは…です
+C| very {sorry|sorrow|sorrows|sorrily} :: 本当にすまない
+P| {for|to|of|at} the trouble. :: 迷惑について
+== ご迷惑をおかけして申し訳ありません。
+T| For more {information|informations|inform|informed}, :: 詳しくは
+V| please {call|calls|called|calling} us :: 電話してください
+M| {or|nor|than|whose} visit our website. :: またはサイトを見て
+== 詳しくは、お電話いただくかウェブサイトをご覧ください。
+?? 0 2 図書館はいつから閉まる？
+?? 1 2 何を修理する？
+?? 3 3 本を返すときは何を使う？
+?? 5 2 図書館はいつ再び開く？
+
+@id beg87
+@lv 1
+@level 4
+@title Join the English Club!
+@ja 英語クラブ部員募集
+@tag 高校受験レベル・ポスター
+@gloss join=入る, club=クラブ, practice=練習する, speech contest=スピーチ大会, October=10月, Canada=カナダ, funny=面白い, beginner=初心者, welcome=歓迎される
+S| Do you {like|likes|liking|liked} :: 好きですか
+O| {speaking|speak|spoke|spoken} English :: 英語を話すのが
+P| {with|than|of|whose} friends? :: 友達と
+== 友達と英語で話すのは好きですか。
+M| {Then|Than|Them|Thin}, :: それなら
+V| {join|joins|joined|joining} :: 入ろう
+O| {our|we|us|ours} English club! :: 私たちの英語部に
+== それなら、私たちの英語クラブに入りましょう！
+S| We {meet|meets|meeting|to meet} :: 私たちは集まる
+T| {on|in|at|of} Tuesdays :: 毎週火曜日に
+M| {and|nor|than|whose} Fridays :: と金曜日
+T| {after|afternoon|afterward|after of} school. :: 放課後
+== 毎週火曜日と金曜日の放課後に集まります。
+P| {In|Of|Than|Nor} the club, :: クラブでは
+S| we {play|plays|playing|to play} :: 私たちはする
+O| English {games|game's|gamely|gamed} :: 英語のゲームを
+M| {and|nor|than|whose} watch movies. :: そして映画を見る
+== クラブでは、英語のゲームをしたり映画を見たりします。
+S| We also {practice|practices|practicing|to practice} :: 練習もする
+P| {for|to|of|than} the speech contest :: スピーチ大会のために
+T| {in|on|at|of} October. :: 10月の
+== 10月のスピーチ大会に向けた練習もします。
+S| Our {teacher|teach|teaches|teaching}, Ms. Green, :: グリーン先生は
+V| {comes|come|coming|comed} :: 出身だ
+P| {from|for|than|to} Canada. :: カナダの
+== 顧問のグリーン先生はカナダ出身です。
+S| She {is|are|am|be} :: 彼女は…だ
+C| very {kind|kindly|kindness|kinds} :: とても親切
+M| {and|nor|than|whose} funny. :: そして面白い
+== 先生はとても親切で面白いです。
+S| {Beginners|Beginner|Begin|Beginning} :: 初心者は
+V| are {welcome|welcomes|welcomely|welcomeness}, :: 歓迎される
+R| {so|nor|than|whose} don't worry. :: だから心配しないで
+== 初心者も歓迎なので、心配いりません。
+M| If you {are|is|am|be} interested, :: 興味があれば
+V| please {come|comes|coming|came} :: 来てください
+P| {to|at|of|than} Room 3 :: 3号室に
+T| {this|these|those|them} Tuesday. :: 今度の火曜日に
+== 興味がある人は、今度の火曜日に3号室に来てください。
+?? 2 1 クラブは何曜日に集まる？
+?? 3 2 クラブではどんなゲームをする？
+?? 4 1 何に向けて練習する？
+?? 5 2 グリーン先生はどこの出身？
+?? 8 2 興味がある人はどこへ行けばいい？
+
+@id beg88
+@lv 1
+@level 4
+@title Can You Help Me?
+@ja 宿題を手伝って
+@tag 高校受験レベル・メール
+@gloss help=手助け, homework=宿題, absent=欠席の, understand=理解する, math=数学, problem=問題, explain=説明する, library=図書館, snack=おやつ
+S| Hi Taku, I {need|needs|needing|to need} :: タク、私は必要だ
+O| your {help|helped|helpful|helps} :: あなたの助けが
+P| {with|by|than|whose} my homework. :: 宿題のことで
+== タク、宿題のことで手伝ってほしいんだ。
+S| I {was|were|be|being} :: 私は…だった
+C| absent {from|of|than|at} school :: 学校を休んで
+T| {yesterday|yesterdays|yesterday's|yester}. :: 昨日
+== 昨日、私は学校を休んだ。
+S| So I {don't|doesn't|am not|isn't} :: だから私は…ない
+V| {understand|understands|understood|understanding} :: 理解する
+O| the math {homework|homeworks|homeworking|homeworked}. :: 数学の宿題を
+== だから、数学の宿題がわからないんだ。
+S| There {are|is|be|am} :: …がある
+O| five {problems|problem|problematic|problemed} :: 5つの問題
+P| {on|onto|of|than} page 32. :: 32ページに
+== 32ページに問題が5つある。
+S| I {can|cans|can to|could to} do :: 私はできる
+O| the {first|one|firstly|once} two, :: 最初の2問は
+M| {but|nor|than|whose} not the others. :: でも残りはだめ
+== 最初の2問はできるけど、残りはできない。
+S| Could you {explain|explains|explained|explaining} :: 説明してくれる？
+O| them {to|at|of|than} me :: 私にそれらを
+T| {tomorrow|tomorrows|tomorrow's|tomorrowed}? :: 明日
+== 明日、それを説明してくれないかな。
+S| We {can|cans|can to|could to} meet :: 私たちは会える
+P| {at|of|than|nor} the library :: 図書館で
+T| {after|afternoon|afterward|after of} school. :: 放課後
+== 放課後、図書館で会えるよ。
+S| I will {bring|brings|brought|bringing} :: 持っていく
+O| some {snacks|snack's|snacky|snacked} :: おやつを
+P| {for|than|whose|nor} you. :: あなたのために
+== あなたのためにおやつを持っていくね。
+V| Please {write|writes|wrote|writing} :: 書いてね
+M| {back|bake|black|beck} :: 返事を
+T| {soon|soonly|soons|soonness}. :: すぐに
+== すぐに返事をちょうだい。
+?? 1 2 いつ学校を休んだ？
+?? 2 2 何がわからない？
+?? 3 2 問題は何ページにある？
+?? 6 1 どこで会える？
+?? 7 1 何を持っていく？
+
+@id beg89
+@lv 1
+@level 4
+@title School Trip to the Zoo
+@ja 遠足のお知らせ
+@tag 高校受験レベル・お知らせ
+@gloss first-year=1年生の, zoo=動物園, gate=門, bus=バス, lunch=昼食, comfortable=楽な, rain=雨が降る, website=ウェブサイト, towel=タオル
+S| All first-year {students|student|studying|studies} :: 1年生は全員
+V| will {go|goes|went|going} :: 行く
+P| {to|at|of|than} the zoo :: 動物園へ
+T| {on|in|at|of} May 15. :: 5月15日に
+== 1年生は全員、5月15日に動物園へ行きます。
+V| Please {come|comes|coming|came} :: 来てください
+P| {to|of|than|nor} the school gate :: 校門に
+T| {by|than|nor|whose} 8:30. :: 8時半までに
+== 8時半までに校門に来てください。
+S| We will {go|goes|went|going} :: 私たちは行く
+P| {by|on|with|than} bus :: バスで
+M| {and|nor|than|whose} come back at three. :: そして3時に戻る
+== バスで行き、3時に戻ってきます。
+V| Please {bring|brings|brought|bringing} :: 持ってきてください
+O| your {lunch|lunched|lunching|lunchy} :: 昼食を
+M| {and|nor|than|because} something to drink. :: と飲み物を
+== お弁当と飲み物を持ってきてください。
+V| Please {wear|wears|wore|worn} :: はいてください
+O| {comfortable|comfort|comfortably|comforts} shoes :: 楽な靴を
+R| {because|because of|than|whose} :: …ので
+C| we will walk {a lot|a lots|a many|lot}. :: たくさん歩く
+== たくさん歩くので、歩きやすい靴をはいてください。
+M| If it {rains|rain|raining|rainy}, :: もし雨なら
+S| the trip will {be|is|are|been} :: 遠足は…になる
+T| {on|in|at|of} May 17. :: 5月17日に
+== 雨の場合、遠足は5月17日になります。
+V| Please {check|checks|checked|checking} :: 確認してください
+O| {our|we|us|ours} website :: 学校のサイトを
+T| {at|on|in|of} six that morning. :: 当日の朝6時に
+== 当日の朝6時に、学校のウェブサイトを確認してください。
+V| {Don't|Doesn't|Not|No} forget :: 忘れないで
+O| {your|you|yours|yourself} hat :: 帽子を
+M| {and|nor|than|because} a towel. :: とタオルを
+== 帽子とタオルを忘れないでください。
+V| Let's {have|has|having|had} :: 過ごそう
+O| a great {day|days|daily|dayly} :: すばらしい一日を
+P| {at|of|than|nor} the zoo! :: 動物園で
+== 動物園ですばらしい一日を過ごしましょう！
+?? 0 3 遠足はいつ？
+?? 1 2 何時までに校門に来る？
+?? 2 1 何で動物園へ行く？
+?? 4 1 どんな靴をはけばいい？
+?? 5 2 雨の場合、遠足はいつになる？
+
+@id beg90
+@lv 1
+@level 4
+@title I'm Sick Today
+@ja 今日は休みます
+@tag 高校受験レベル・メッセージ
+@gloss sick=具合が悪い, fever=熱, headache=頭痛, doctor=医者, tell=伝える, notebook=ノート, lesson=授業, rest=休む, hope=願う
+M| Good {morning|mourning|mornings|moaning}, Saki. :: おはよう、サキ
+S| I {feel|feels|feeling|to feel} :: 私は感じる
+C| {sick|sickness|sicks|sicken} :: 具合が悪い
+T| {today|todays|to day|today's}. :: 今日は
+== おはよう、サキ。今日は体調が悪いんだ。
+S| I {have|has|having|am} :: 私はある
+O| a {fever|fevers|feverish|fevered} :: 熱が
+M| {and|nor|than|because} a headache. :: と頭痛が
+== 熱があって、頭も痛いんだ。
+S| So I {can't|can't to|doesn't|aren't} go :: だから行けない
+P| {to|at|of|than} school :: 学校に
+T| {today|todays|to day|today's}. :: 今日は
+== だから、今日は学校に行けないの。
+S| My mother will {take|takes|took|taking} me :: 母が連れていく
+P| {to|at|of|than} the doctor :: 医者に
+T| {this|these|those|them} morning. :: 今朝
+== 今朝、母が病院に連れていってくれる。
+S| Could you {tell|tells|told|telling} :: 伝えてくれる？
+O| {our|we|us|ours} teacher :: 先生に
+P| {about|above|abort|abound} it? :: そのことを
+== 先生にそのことを伝えてくれる？
+M| Also, please {show|shows|showed|showing} me :: それと見せて
+O| {your|you|yours|yourself} notebook :: あなたのノートを
+T| {later|latter|latest|lated}. :: あとで
+== それと、あとでノートを見せてね。
+S| I {want|wants|wanting|to want} :: 私は…したい
+V| to {know|knows|knew|known} :: 知る
+O| {about|above|abort|abound} today's lessons. :: 今日の授業について
+== 今日の授業のことを知りたいから。
+S| I will {rest|rests|rested|resting} :: 休むつもり
+P| {at|of|than|nor} home :: 家で
+T| {all|alls|whole|wholly} day. :: 一日中
+== 今日は一日中、家で休むね。
+S| I {hope|hopes|hoping|to hope} :: 私は願う
+O| {to|for|of|than} see you :: あなたに会えるのを
+T| {tomorrow|tomorrows|tomorrow's|tomorrowed}. :: 明日
+== 明日会えるといいな。
+?? 1 2 熱のほかにどんな症状がある？
+?? 3 0 だれが病院に連れていってくれる？
+?? 4 1 だれに伝えてほしい？
+?? 5 1 あとで何を見せてほしい？
+?? 7 1 今日はどこで休む？
+
+@id beg91
+@lv 1
+@level 4
+@title Piano Lessons for Children
+@ja 子どもピアノ教室
+@tag 高校受験レベル・広告
+@gloss piano=ピアノ, station=駅, lesson=レッスン, minute=分, experience=経験, friendly=気さくな, free=無料の, fee=料金, trial=お試しの
+S| Do you {want|wants|wanting|to want} :: …したいですか
+V| to {play|plays|played|playing} :: 弾く
+O| {the|an|them|these} piano? :: ピアノを
+== ピアノを弾いてみたいですか。
+V| {Come|Comes|Coming|Came} :: 来てください
+P| {to|at|of|than} Sakura Music School :: さくら音楽教室に
+M| {near|nearly|nears|neared} the station! :: 駅の近くの
+== 駅の近くのさくら音楽教室に来てください！
+S| We {have|has|having|are} lessons :: レッスンがある
+P| {for|to|than|at} children :: 子ども向けの
+T| {from|since|than|whose} five :: 5歳から
+T| {to|at|on|of} twelve years old. :: 12歳まで
+== 5歳から12歳の子ども向けのレッスンがあります。
+S| Each lesson {is|are|be|am} :: 各レッスンは
+C| thirty {minutes|minute|minuted|minutely} long :: 30分
+M| {with|than|whose|nor} one teacher. :: 先生1人と
+== 各レッスンは30分で、先生と1対1です。
+S| You {don't|doesn't|aren't|isn't} :: あなたは…ない
+V| {need|needs|needed|needing} :: 必要とする
+O| any {experience|experienced|experiencing|experiences'}. :: 経験は
+== 経験は必要ありません。
+S| Our {teachers|teacher|teaching|teaches} :: 先生たちは
+V| {are|is|be|am} :: …だ
+C| kind {and|nor|than|whose} friendly. :: 親切で気さく
+== 先生たちは親切で気さくです。
+S| The first lesson {is|are|be|am} :: 最初のレッスンは
+C| {free|freely|freedom|frees} :: 無料
+P| {for|than|whose|nor} new students. :: 新しい生徒は
+== 新しい生徒は、最初のレッスンが無料です。
+S| The {fee|fees|feet|free} :: 料金は
+V| {is|are|be|am} 5,000 yen :: 5000円です
+T| {a|an|than|whose} month. :: 1か月
+== 料金は1か月5000円です。
+V| Please {call|calls|called|calling} us :: 電話してください
+P| {for|than|whose|nor} a trial lesson :: 体験レッスンは
+T| {today|todays|to day|today's}! :: 今日
+== 体験レッスンのお申し込みは、今日お電話ください！
+?? 1 2 教室はどこにある？
+?? 2 2 何歳からレッスンを受けられる？
+?? 3 1 1回のレッスンは何分？
+?? 6 1 最初のレッスンの料金は？
+?? 7 1 料金は1か月いくら？

@@ -1,0 +1,300 @@
+according to | ph | According to the weather report, it will rain tomorrow. | 天気予報によると明日は雨が降ります。
+according to | ph | According to our teacher, the test starts at nine. | 先生によるとテストは九時に始まります。
+according to | ph | The train leaves at six according to this timetable. | この時刻表によると電車は六時に出発します。
+add to | ph | These new chairs will add to the cost of the event. | 新しい椅子は行事の費用を増やします。
+add to | ph | Heavy rain added to our problems during the trip. | 大雨が旅行中の問題をさらに増やしました。
+add to | ph | Will the extra lessons add to your weekly study time? | 追加授業で毎週の勉強時間は増えますか。
+agree with | ph | I agree with your idea about the school festival. | 学校祭についてのあなたの考えに賛成します。
+agree with | ph | Does everyone agree with the plan for our trip? | みんなは旅行の計画に賛成していますか。
+agree with | ph | My sister agreed with me about the new rules. | 妹は新しい規則について私に賛成しました。
+as a result | ph | It snowed all night; as a result, school was closed. | 一晩中雪が降り、その結果学校は休みになりました。
+as a result | ph | He practiced daily and, as a result, played much better. | 彼は毎日練習し、その結果ずっと上手に演奏しました。
+as a result | ph | We missed the bus; as a result, we arrived late. | バスに乗り遅れ、その結果到着が遅れました。
+as well as | ph | She enjoys swimming as well as playing the piano. | 彼女はピアノだけでなく水泳も楽しみます。
+as well as | ph | The hotel offers breakfast as well as free internet access. | ホテルは無料のインターネット接続だけでなく朝食も提供します。
+as well as | ph | Can you speak French as well as English? | 英語だけでなくフランス語も話せますか。
+at least | ph | We need at least ten people for this game. | このゲームには少なくとも十人が必要です。
+at least | ph | Please arrive at least fifteen minutes before the meeting. | 会議の少なくとも十五分前に到着してください。
+at least | ph | Did you read at least three books this month? | 今月は少なくとも三冊の本を読みましたか。
+be aware of | ph | Students should be aware of the new library rules. | 生徒は新しい図書館の規則を知っておくべきです。
+be aware of | ph | Are you aware of the changes to our schedule? | 予定の変更に気づいていますか。
+be aware of | ph | She was not aware of the problem until yesterday. | 彼女は昨日までその問題に気づいていませんでした。
+be based on | ph | The movie will be based on a popular book. | その映画は人気の本に基づいて作られます。
+be based on | ph | Our report is based on information from the school. | 私たちの報告書は学校の情報に基づいています。
+be based on | ph | Was this story based on a real experience? | この物語は実際の経験に基づいていましたか。
+be likely to | ph | We are likely to see some rain this afternoon. | 今日の午後は雨が降りそうです。
+be likely to | ph | She is likely to win the singing contest. | 彼女は歌の大会で優勝しそうです。
+be likely to | ph | Are we likely to finish the project today? | 私たちは今日その企画を終えられそうですか。
+be responsible for | ph | I will be responsible for preparing the meeting room. | 私は会議室の準備を担当します。
+be responsible for | ph | Who is responsible for cleaning the school garden? | 学校の庭の掃除は誰が担当していますか。
+be responsible for | ph | The manager was responsible for the event schedule. | 責任者は行事の日程を担当していました。
+be supposed to | ph | You are supposed to arrive before the meeting starts. | 会議が始まる前に到着することになっています。
+be supposed to | ph | Are you supposed to wear a uniform at school? | 学校では制服を着ることになっていますか。
+be supposed to | ph | The train was supposed to arrive ten minutes ago. | 電車は10分前に到着する予定でした。
+be used to | ph | You will soon be used to the new school. | あなたはすぐに新しい学校に慣れるでしょう。
+be used to | ph | My father is used to getting up early. | 父は早起きすることに慣れています。
+be used to | ph | Are you used to living in a big city? | 大きな都市での生活に慣れていますか。
+used to | ph | I used to play soccer after school every day. | 私は以前、毎日放課後にサッカーをしていました。
+used to | ph | My grandmother used to live near this river. | 祖母は以前この川の近くに住んでいました。
+used to | ph | Did you use to walk to school alone? | 以前は一人で歩いて学校に通っていましたか。
+break down | ph | Our old car may break down on long trips. | 古い車は長旅で故障するかもしれません。
+break down | ph | The washing machine broke down yesterday morning. | 洗濯機は昨日の朝故障しました。
+break down | ph | What will we do if the bus breaks down? | バスが故障したらどうしますか。
+bring up | ph | They want to bring up their children near nature. | 彼らは自然の近くで子供たちを育てたいと思っています。
+bring up | ph | My grandparents brought me up in this town. | 祖父母はこの町で私を育ててくれました。
+bring up | ph | Is it difficult to bring up children in cities? | 都市で子供を育てるのは難しいですか。
+call off | ph | We may call off the picnic because of rain. | 雨のためにピクニックを中止するかもしれません。
+call off | ph | The school called off the game this morning. | 学校は今朝その試合を中止しました。
+call off | ph | Why did they call off the outdoor concert? | 彼らはなぜ屋外コンサートを中止したのですか。
+carry out | ph | Our class will carry out a survey about reading. | 私たちのクラスは読書についての調査を実施します。
+carry out | ph | Did the team carry out its plan successfully? | チームは計画をうまく実行しましたか。
+carry out | ph | The students carried out an experiment in science class. | 生徒たちは理科の授業で実験を行いました。
+catch up with | ph | I need to catch up with my classmates in math. | 数学でクラスメートに追いつく必要があります。
+catch up with | ph | Can she catch up with the other runners? | 彼女はほかの走者に追いつけますか。
+catch up with | ph | He studied hard and caught up with his friends. | 彼は一生懸命勉強して友達に追いつきました。
+come up with | ph | Can you come up with a name for our team? | 私たちのチームの名前を思いつけますか。
+come up with | ph | She came up with a great idea during lunch. | 彼女は昼食中にすばらしい考えを思いつきました。
+come up with | ph | We need to come up with another solution soon. | 私たちはすぐに別の解決策を考え出す必要があります。
+compared with | ph | Compared with last year, our garden has more flowers. | 去年と比べて私たちの庭には花が増えました。
+compared with | ph | This room is small compared with the main hall. | この部屋は大広間と比べると小さいです。
+compared with | ph | Compared with my old phone, this one is lighter. | 以前の携帯電話と比べてこれは軽いです。
+consist of | ph | Our lunch will consist of rice, fish, and vegetables. | 私たちの昼食はご飯、魚、野菜から成ります。
+consist of | ph | The team consists of five students from different classes. | そのチームは別々のクラスの五人の生徒から成ります。
+consist of | ph | Does this course consist of six weekly lessons? | この講座は週一回の授業六回で構成されていますか。
+cope with | ph | We must learn to cope with changes in our plans. | 私たちは予定の変更に対処する方法を学ばなければなりません。
+cope with | ph | How do you cope with stress before exams? | 試験前のストレスにどう対処していますか。
+cope with | ph | She coped with the busy schedule by planning carefully. | 彼女は慎重に計画して忙しい日程に対処しました。
+deal with | ph | Our teacher will deal with the problem after class. | 先生は授業後にその問題に対処します。
+deal with | ph | Can you deal with these customer questions today? | 今日これらのお客様の質問に対応できますか。
+deal with | ph | He deals with orders at the family shop. | 彼は家族の店で注文を扱っています。
+depend on | ph | You can depend on me when you need help. | 助けが必要なときは私を頼ってよいです。
+depend on | ph | The picnic date depends on the weather forecast. | ピクニックの日程は天気予報次第です。
+depend on | ph | Does the price depend on the size? | 値段は大きさによって変わりますか。
+due to | ph | The train was late due to heavy snow. | 大雪が原因で電車が遅れました。
+due to | ph | Due to the rain, we stayed indoors. | 雨のため私たちは屋内にいました。
+due to | ph | The event was canceled due to strong winds. | 強風が原因で行事は中止されました。
+figure out | ph | I cannot figure out the answer to this question. | 私はこの質問の答えが分かりません。
+figure out | ph | Did you figure out how to use the machine? | その機械の使い方が分かりましたか。
+figure out | ph | She finally figured out the reason for the mistake. | 彼女はついに間違いの理由を理解しました。
+fill out | ph | Please fill out this form before the interview. | 面接の前にこの用紙に記入してください。
+fill out | ph | Have you filled out your application for the club? | クラブへの申込書に記入しましたか。
+fill out | ph | He filled out the form using a black pen. | 彼は黒いペンで用紙に記入しました。
+focus on | ph | Let us focus on the most important question first. | まず最も重要な質問に集中しましょう。
+focus on | ph | She focused on her homework despite the noise. | 彼女は騒音にもかかわらず宿題に集中しました。
+focus on | ph | Can you focus on reading with music playing? | 音楽が流れていても読書に集中できますか。
+get along with | ph | I get along with my neighbors very well. | 私は近所の人たちととても仲よくしています。
+get along with | ph | Does your brother get along with his classmates? | 弟はクラスメートとうまくやっていますか。
+get along with | ph | She got along with everyone at her new school. | 彼女は新しい学校でみんなとうまくやっていました。
+get rid of | ph | We should get rid of these old newspapers. | 私たちはこれらの古い新聞を処分するべきです。
+get rid of | ph | How can I get rid of this strange smell? | この変なにおいをどうやって取り除けますか。
+get rid of | ph | They got rid of the broken chairs yesterday. | 彼らは昨日壊れた椅子を処分しました。
+go through | ph | Many students go through difficult times before graduation. | 多くの生徒は卒業前に大変な時期を経験します。
+go through | ph | She went through many changes at her new school. | 彼女は新しい学校で多くの変化を経験しました。
+go through | ph | Did you go through a similar experience last year? | 去年、似たような経験をしましたか。
+hand in | ph | Please hand in your report before Friday afternoon. | 金曜日の午後までに報告書を提出してください。
+hand in | ph | Did everyone hand in the homework on time? | みんな時間どおりに宿題を提出しましたか。
+hand in | ph | She handed in her application at the office. | 彼女は事務所で申込書を提出しました。
+in addition | ph | We need paper; in addition, please bring some pencils. | 紙が必要です。さらに鉛筆も持ってきてください。
+in addition | ph | The hotel has a pool; in addition, it offers free breakfast. | ホテルにはプールがあり、さらに無料の朝食も提供しています。
+in addition | ph | In addition, we should check the weather before leaving. | さらに出発前に天気を確認するべきです。
+in fact | ph | He looks young, but in fact he is forty. | 彼は若く見えますが、実際は四十歳です。
+in fact | ph | In fact, this is my first visit to the museum. | 実はこの博物館を訪れるのは初めてです。
+in fact | ph | She seems quiet; in fact, she loves talking. | 彼女は静かに見えますが実際は話すのが大好きです。
+in order to | ph | I left early in order to catch the first train. | 始発電車に乗るために早く出発しました。
+in order to | ph | She practices daily in order to improve her singing. | 彼女は歌を上達させるために毎日練習します。
+in order to | ph | In order to save money, we cook at home. | お金を節約するために私たちは家で料理します。
+in spite of | ph | We enjoyed the picnic in spite of the cold weather. | 寒い天気にもかかわらずピクニックを楽しみました。
+in spite of | ph | In spite of the rain, the match continued. | 雨にもかかわらず試合は続きました。
+in spite of | ph | She smiled in spite of her difficult day. | 大変な一日だったにもかかわらず彼女は笑顔でした。
+in general | ph | In general, children enjoy playing games with their friends. | 一般に子供たちは友達と遊ぶことを楽しみます。
+in general | ph | People in this town are friendly in general. | この町の人々は一般に親切です。
+in general | ph | In general, this shop is cheaper than the others. | 一般にこの店はほかの店より安いです。
+in charge of | ph | My sister is in charge of the school garden. | 姉は学校の庭を担当しています。
+in charge of | ph | Who is in charge of organizing the sports event? | スポーツ行事の準備を担当しているのは誰ですか。
+in charge of | ph | He was in charge of preparing the food. | 彼は食事の準備を担当していました。
+in terms of | ph | In terms of price, this bicycle is a good choice. | 価格の点ではこの自転車はよい選択です。
+in terms of | ph | Which plan is better in terms of time? | 時間の点ではどちらの計画がよいですか。
+in terms of | ph | In terms of size, these two rooms are similar. | 広さの点ではこの二つの部屋は似ています。
+keep up with | ph | I study every day to keep up with the class. | 授業についていくために毎日勉強しています。
+keep up with | ph | Can you keep up with the other students? | ほかの生徒たちについていけますか。
+keep up with | ph | He walks quickly, so I cannot keep up with him. | 彼は速く歩くので私はついていけません。
+lead to | ph | Regular practice can lead to better results in sports. | 定期的な練習はスポーツでよりよい結果につながります。
+lead to | ph | Will this road lead to the city center? | この道は市の中心部につながっていますか。
+lead to | ph | A small mistake led to a longer discussion. | 小さな間違いが長い話し合いにつながりました。
+look up | ph | Please look up this word in your dictionary. | この単語を辞書で調べてください。
+look up | ph | Did you look up the meaning of that word? | その単語の意味を辞書で調べましたか。
+look up | ph | She looked up several words before writing her report. | 彼女は報告書を書く前にいくつかの単語を調べました。
+look up to | ph | Many young players look up to their coach. | 多くの若い選手はコーチを尊敬しています。
+look up to | ph | I look up to my grandfather for his kindness. | 私は祖父の優しさを尊敬しています。
+look up to | ph | Does your sister look up to her teacher? | 妹は先生を尊敬していますか。
+look down on | ph | We should never look down on other people. | 私たちは決してほかの人を見下すべきではありません。
+look down on | ph | He does not look down on younger students. | 彼は年下の生徒を見下しません。
+look down on | ph | Why did she look down on his simple job? | 彼女はなぜ彼の質素な仕事を見下したのですか。
+make sense | ph | Your explanation does not make sense to me. | あなたの説明は私には意味が通りません。
+make sense | ph | Does this sentence make sense in English? | この文は英語として意味が通りますか。
+make sense | ph | The story finally made sense after the last chapter. | 最後の章を読んでようやく物語の意味が分かりました。
+make up one's mind | ph | I cannot make up my mind about the menu. | メニューをなかなか決められません。
+make up one's mind | ph | I finally made up my mind to join. | 私はついに参加する決心をしました。
+make up one's mind | ph | Have you made up your mind about the trip? | 旅行についてもう決心しましたか。
+make use of | ph | We should make use of the school library. | 私たちは学校の図書館を活用するべきです。
+make use of | ph | Can you make use of these old boxes? | これらの古い箱を利用できますか。
+make use of | ph | She made use of her free time to study. | 彼女は自由時間を利用して勉強しました。
+no longer | ph | This shop no longer sells fresh bread. | この店はもう焼きたてのパンを売っていません。
+no longer | ph | He no longer lives near our school. | 彼はもう私たちの学校の近くには住んでいません。
+no longer | ph | Are these tickets no longer available online? | これらのチケットはもうオンラインでは買えませんか。
+on the other hand | ph | This room is small; on the other hand, it is bright. | この部屋は小さいですが一方で明るいです。
+on the other hand | ph | He enjoys sports; on the other hand, she prefers reading. | 彼はスポーツを楽しみますが一方で彼女は読書を好みます。
+on the other hand | ph | On the other hand, the second plan costs less. | 一方で二つ目の計画は費用が少なく済みます。
+out of order | ph | The elevator is out of order this morning. | 今朝エレベーターは故障しています。
+out of order | ph | Is the ticket machine still out of order? | 券売機はまだ故障していますか。
+out of order | ph | The printer was out of order all afternoon. | プリンターは午後ずっと故障していました。
+pay attention to | ph | Please pay attention to the teacher's instructions. | 先生の指示に注意を払ってください。
+pay attention to | ph | Did you pay attention to the weather report? | 天気予報に注意を払いましたか。
+pay attention to | ph | Drivers must pay attention to people crossing the street. | 運転手は道を渡る人々に注意しなければなりません。
+point out | ph | I want to point out one mistake in the report. | 報告書の間違いを一つ指摘したいです。
+point out | ph | She pointed out a problem with our plan. | 彼女は私たちの計画の問題を指摘しました。
+point out | ph | Could you point out the differences between these pictures? | これらの絵の違いを指摘してもらえますか。
+put off | ph | We decided to put off the meeting until Monday. | 私たちは会議を月曜日まで延期することにしました。
+put off | ph | Why did they put off the school trip? | 彼らはなぜ修学旅行を延期したのですか。
+put off | ph | The concert was put off because of rain. | そのコンサートは雨のために延期されました。
+put up with | ph | I cannot put up with this noise anymore. | 私はもうこの騒音を我慢できません。
+put up with | ph | How do you put up with the summer heat? | 夏の暑さにどうやって耐えていますか。
+put up with | ph | She put up with the long wait without complaining. | 彼女は文句を言わずに長い待ち時間を我慢しました。
+rather than | ph | I chose to walk rather than take the bus. | 私はバスに乗るより歩くことを選びました。
+rather than | ph | Would you prefer tea rather than coffee today? | 今日はコーヒーより紅茶のほうがよいですか。
+rather than | ph | He stayed home rather than go shopping. | 彼は買い物に行くより家にいることを選びました。
+refer to | ph | Please refer to the map on page ten. | 十ページの地図を参照してください。
+refer to | ph | The teacher referred to our last lesson during class. | 先生は授業中に前回の授業に言及しました。
+refer to | ph | Does this word refer to the person or place? | この単語は人と場所のどちらを指しますか。
+rely on | ph | You can rely on our team for help. | 助けが必要なら私たちのチームを頼れます。
+rely on | ph | She relies on her brother for good advice. | 彼女はよい助言をもらうために兄を頼ります。
+rely on | ph | Do you rely on the bus to get to work? | 仕事に行くのにバスを頼りにしていますか。
+result in | ph | A lot of practice can result in better scores. | たくさん練習すると点数の向上につながることがあります。
+result in | ph | Will the new rules result in shorter meetings? | 新しい規則で会議が短くなるでしょうか。
+result in | ph | The changes resulted in more visitors to the park. | その変更の結果公園への訪問者が増えました。
+result from | ph | These problems may result from a lack of planning. | これらの問題は計画不足から生じているのかもしれません。
+result from | ph | The delay resulted from heavy traffic on the road. | その遅れは道路の激しい交通量から生じました。
+result from | ph | Does this mistake result from a simple misunderstanding? | この間違いは単純な誤解から生じていますか。
+run out of | ph | We may run out of milk before breakfast. | 朝食前に牛乳がなくなるかもしれません。
+run out of | ph | Did you run out of paper during the test? | テスト中に紙を使い果たしましたか。
+run out of | ph | The shop ran out of fresh bread by noon. | その店は正午までに焼きたてのパンを売り切りました。
+set up | ph | They plan to set up a new reading club. | 彼らは新しい読書クラブを設立する予定です。
+set up | ph | Can you set up the chairs before the meeting? | 会議の前に椅子を並べて準備できますか。
+set up | ph | She set up a small shop near the station. | 彼女は駅の近くに小さな店を開きました。
+show up | ph | Please show up ten minutes before the lesson. | 授業の10分前に来てください。
+show up | ph | Why did he show up so late yesterday? | 彼は昨日なぜそんなに遅く現れたのですか。
+show up | ph | Only five students showed up for the practice. | 練習に来た生徒は五人だけでした。
+stand for | ph | What does this letter stand for in the chart? | この図でこの文字は何を表していますか。
+stand for | ph | The letters on this sign stand for our school. | この看板の文字は私たちの学校を表しています。
+stand for | ph | Does this symbol stand for a train station? | この記号は駅を表していますか。
+take part in | ph | I want to take part in the school play. | 私は学校の劇に参加したいです。
+take part in | ph | Did your brother take part in the race? | あなたの弟は競走に参加しましたか。
+take part in | ph | Many families took part in the town festival. | 多くの家族が町のお祭りに参加しました。
+take place | ph | The concert will take place in the school hall. | コンサートは学校の講堂で行われます。
+take place | ph | Where did the meeting take place yesterday? | 昨日の会議はどこで行われましたか。
+take place | ph | The festival takes place every spring in our town. | その祭りは毎年春に私たちの町で開かれます。
+take advantage of | ph | We should take advantage of the sunny weather. | 私たちは晴れた天気を有効に利用するべきです。
+take advantage of | ph | Did you take advantage of the free lessons? | 無料の授業を活用しましたか。
+take advantage of | ph | She took advantage of her holiday to visit family. | 彼女は休暇を利用して家族を訪ねました。
+turn down | ph | I had to turn down the job offer. | 私はその仕事の申し出を断らなければなりませんでした。
+turn down | ph | Why did she turn down your invitation? | 彼女はなぜあなたの招待を断ったのですか。
+turn down | ph | He turned down the chance to join the team. | 彼はチームに参加する機会を断りました。
+turn out | ph | The plan may turn out to be successful. | その計画は最終的に成功するかもしれません。
+turn out | ph | It turned out that the shop was closed. | その店は閉まっていたことが分かりました。
+turn out | ph | Did the test turn out to be easier than expected? | テストは予想より簡単だったと分かりましたか。
+at all | ph | I do not understand this question at all. | 私はこの問題がまったく分かりません。
+at all | ph | She was not tired at all after the walk. | 彼女は散歩の後もまったく疲れていませんでした。
+at all | ph | Did you not enjoy the movie at all? | その映画はまったく楽しめませんでしたか。
+all of a sudden | ph | All of a sudden, the lights went out. | 突然電気が消えました。
+all of a sudden | ph | The cat jumped onto my desk all of a sudden. | 猫が突然私の机に飛び乗りました。
+all of a sudden | ph | Why did the music stop all of a sudden? | なぜ音楽が突然止まったのですか。
+as long as | ph | You can stay here as long as you are quiet. | 静かにしている限りここにいてよいです。
+as long as | ph | As long as it stays sunny, we can play outside. | 晴れている限り外で遊べます。
+as long as | ph | I will help you as long as you need me. | あなたが私を必要とする限り手伝います。
+as far as | ph | As far as I know, the library closes at six. | 私の知る限り図書館は六時に閉まります。
+as far as | ph | As far as I can tell, the answer is correct. | 私に分かる範囲ではその答えは正しいです。
+as far as | ph | As far as we know, everyone has arrived safely. | 私たちが知る限り全員が無事に到着しています。
+be about to | ph | The train seems to be about to leave. | 電車はまさに出発しようとしているようです。
+be about to | ph | I was about to call you when you arrived. | あなたが来たときちょうど電話しようとしていました。
+be about to | ph | Are they about to start the meeting now? | 彼らは今まさに会議を始めようとしていますか。
+be capable of | ph | She hopes to be capable of working independently soon. | 彼女はまもなく一人で仕事ができるようになりたいと思っています。
+be capable of | ph | This computer is capable of running the new program. | このコンピューターは新しいプログラムを動かす能力があります。
+be capable of | ph | Are you capable of swimming across this pool? | このプールを泳いで渡ることができますか。
+be concerned about | ph | Parents may be concerned about their children's schoolwork. | 親は子供の学校の勉強を心配するかもしれません。
+be concerned about | ph | Are you concerned about the cost of the trip? | 旅行の費用を心配していますか。
+be concerned about | ph | She was concerned about her friend's busy schedule. | 彼女は友達の忙しい予定を心配していました。
+be familiar with | ph | You should be familiar with these basic English words. | これらの基本的な英単語をよく知っているべきです。
+be familiar with | ph | Is your brother familiar with this part of town? | あなたの兄は町のこの辺りをよく知っていますか。
+be familiar with | ph | Our teacher is familiar with many different teaching methods. | 先生はさまざまな教え方をよく知っています。
+be filled with | ph | The room will be filled with music tonight. | 今夜その部屋は音楽で満たされるでしょう。
+be filled with | ph | The basket is filled with fresh apples. | かごは新鮮なリンゴでいっぱいです。
+be filled with | ph | Were the streets filled with people during the festival? | 祭りの間通りは人々でいっぱいでしたか。
+be involved in | ph | I would like to be involved in this project. | 私はこの企画に関わりたいです。
+be involved in | ph | Is your sister involved in the school festival? | あなたの姉は学校祭に関わっていますか。
+be involved in | ph | Many local people were involved in planning the event. | 多くの地元の人々が行事の計画に関わりました。
+be known for | ph | This village may be known for its beautiful gardens. | この村は美しい庭園で知られるようになるかもしれません。
+be known for | ph | The restaurant is known for its delicious fish dishes. | そのレストランはおいしい魚料理で知られています。
+be known for | ph | Is your town known for any special food? | あなたの町は何か特別な食べ物で知られていますか。
+be satisfied with | ph | I hope you will be satisfied with the results. | あなたが結果に満足することを願っています。
+be satisfied with | ph | Are the customers satisfied with the new service? | お客様は新しいサービスに満足していますか。
+be satisfied with | ph | She was satisfied with her score on the test. | 彼女はテストの点数に満足していました。
+by chance | ph | I met my old teacher by chance yesterday. | 昨日偶然昔の先生に会いました。
+by chance | ph | Did you find this book by chance? | この本を偶然見つけたのですか。
+by chance | ph | We discovered a small cafe by chance. | 私たちは偶然小さな喫茶店を見つけました。
+by oneself | ph | He cooked dinner by himself without any help. | 彼は誰の助けも借りずに一人で夕食を作りました。
+by oneself | ph | I made this cake all by myself. | 私はこのケーキを一人で作りました。
+by oneself | ph | Can your little brother travel by himself? | あなたの弟は一人で旅行できますか。
+come across | ph | I sometimes come across interesting books at this shop. | 私はこの店で時々面白い本に偶然出会います。
+come across | ph | Did you come across my old school photo? | 私の昔の学校の写真を偶然見つけましたか。
+come across | ph | She came across a friendly dog during her walk. | 彼女は散歩中に人懐こい犬に偶然出会いました。
+come from | ph | My new classmates come from several different towns. | 新しいクラスメートたちはいくつかの異なる町の出身です。
+come from | ph | Where does your English teacher come from? | あなたの英語の先生はどこの出身ですか。
+come from | ph | He comes from a small village near the sea. | 彼は海の近くの小さな村の出身です。
+contribute to | ph | Our club wants to contribute to the local community. | 私たちのクラブは地域社会に貢献したいと思っています。
+contribute to | ph | Can this activity contribute to a cleaner environment? | この活動はよりきれいな環境に貢献できますか。
+contribute to | ph | Many volunteers contributed to the success of the festival. | 多くのボランティアが祭りの成功に貢献しました。
+devote A to B | ph | She devoted her life to helping children. | 彼女は子どもたちを助けることに人生をささげました。
+devote A to B | ph | She devotes her weekends to helping at the library. | 彼女は週末を図書館での手伝いにささげています。
+devote A to B | ph | He devoted his life to teaching young children. | 彼は人生を幼い子供たちの教育にささげました。
+do without | ph | We can do without a television during our camping trip. | キャンプ旅行中はテレビなしで済ませられます。
+do without | ph | Could you do without your phone for one day? | 一日携帯電話なしで過ごせますか。
+do without | ph | They did without a car while living downtown. | 彼らは町の中心部に住んでいる間車なしで暮らしました。
+even if | ph | I will go walking even if it rains tomorrow. | 明日雨が降っても散歩に行きます。
+even if | ph | Even if you are busy, please eat breakfast. | 忙しくても朝食を食べてください。
+even if | ph | She will try again even if she fails. | たとえ失敗しても彼女はもう一度挑戦します。
+every other day | ph | I practice the piano every other day after dinner. | 私は一日おきに夕食後ピアノを練習します。
+every other day | ph | Does your father go running every other day? | お父さんは一日おきに走りに行きますか。
+every other day | ph | We water these plants every other day in spring. | 春にはこれらの植物に一日おきに水をやります。
+for a while | ph | Please sit here and rest for a while. | ここに座ってしばらく休んでください。
+for a while | ph | We talked for a while after the meeting. | 私たちは会議の後しばらく話しました。
+for a while | ph | Can you wait for a while until she returns? | 彼女が戻るまでしばらく待てますか。
+for instance | ph | Many fruits, for instance apples, contain useful vitamins. | リンゴなど、多くの果物には体に必要なビタミンが含まれています。
+for instance | ph | You could try another sport, for instance, swimming. | 例えば水泳など別のスポーツを試してもよいでしょう。
+for instance | ph | Some students, for instance Ken, prefer studying in the morning. | 例えばケンなど朝の勉強を好む生徒もいます。
+get over | ph | You can get over your fear with practice. | 練習すれば恐怖心を乗り越えられます。
+get over | ph | How did she get over her fear of speaking? | 彼女は話すことへの恐怖をどう乗り越えましたか。
+get over | ph | He got over his disappointment and tried again. | 彼は落胆を乗り越えてもう一度挑戦しました。
+go on | ph | The meeting will go on until five this afternoon. | 会議は今日の午後五時まで続きます。
+go on | ph | How long did the concert go on? | コンサートはどのくらい続きましたか。
+go on | ph | The rain went on throughout the night. | 雨は一晩中降り続きました。
+had better | ph | You had better check your answers before leaving. | 帰る前に答えを確認したほうがよいです。
+had better | ph | We had better leave early to avoid traffic. | 交通渋滞を避けるため早く出発したほうがよいです。
+had better | ph | He had better ask the teacher for help. | 彼は先生に助けを求めたほうがよいです。
+in advance | ph | Please book your tickets at least one week in advance. | 少なくとも一週間前にチケットを予約してください。
+in advance | ph | Did you prepare the questions in advance? | 質問を前もって用意しましたか。
+in advance | ph | We paid for the hotel room in advance. | 私たちはホテルの部屋代を前もって支払いました。
+in time | ph | We arrived at the station in time for the train. | 私たちは電車に間に合うよう駅に着きました。
+in time | ph | Can you finish the report in time for Friday? | 金曜日に間に合うよう報告書を終えられますか。
+in time | ph | She reached the theater in time for the show. | 彼女は公演に間に合うよう劇場に着きました。
+in other words | ph | He is my uncle; in other words, my mother's brother. | 彼は私のおじ、つまり母の兄弟です。
+in other words | ph | In other words, we need to start again tomorrow. | 言い換えれば明日もう一度始める必要があります。
+in other words | ph | The shop is closed; in other words, we cannot enter. | 店は閉まっています。つまり中には入れません。
+in the end | ph | In the end, we chose the smaller apartment. | 結局私たちは小さいほうのアパートを選びました。
+in the end | ph | She tried several times and succeeded in the end. | 彼女は何度も挑戦し結局成功しました。
+in the end | ph | What did you decide to do in the end? | 結局何をすることに決めましたか。
+in case | ph | Take an umbrella in case it rains later. | 後で雨が降る場合に備えて傘を持っていってください。
+in case | ph | I saved his number in case I needed help. | 助けが必要な場合に備えて彼の番号を保存しました。
+in case | ph | Should we bring extra water in case it gets hot? | 暑くなる場合に備えて水を余分に持っていくべきですか。
+keep A from B | ph | Heavy rain kept us from going out. | 大雨のせいで、私たちは外出できませんでした。
+keep A from B | ph | The rain kept us from playing outside. | 雨のせいで私たちは外で遊べませんでした。
+keep A from B | ph | How can we keep birds from eating these seeds? | 鳥がこの種を食べないようにするにはどうすればよいですか。

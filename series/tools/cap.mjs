@@ -8,8 +8,8 @@
 import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NAMES = {   // 仮の名前と ID（決まったら直す）
-  town: ['チャンクタウン', 'com.example.chunk.town'], stream: ['チャンクストリーム', 'com.example.chunk.stream'],
-  punichunk: ['ぷにチャンク', 'com.example.chunk.puni'], cards: ['チャンク・カード', 'com.example.chunk.cards'], eigonou: ['英語脳アプリ', 'com.example.chunk.eigonou'], chunkchunk: ['チャンクチャンク', 'com.example.chunk.chunkchunk']
+  town: ['かまってチャンクTOWN', 'com.example.chunk.town'], stream: ['Storyミング！', 'com.example.chunk.stream'],
+  punichunk: ['ぷにチャンク', 'com.example.chunk.puni'], cards: ['チャンク・カード', 'com.example.chunk.cards'], eigonou: ['英文組み立てラボ', 'com.example.chunk.eigonou'], chunkchunk: ['今スラ！', 'com.example.chunk.chunkchunk']
 };
 const app = process.argv[2];
 if (!app || !NAMES[app]) { console.error('使い方: node tools/cap.mjs <' + Object.keys(NAMES).join('|') + '>'); process.exit(1); }

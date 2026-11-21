@@ -5,11 +5,11 @@
 import { ENV, settings, $, unlockAudio, S } from './engine.js';
 import { setMute } from './engine.js';
 const FILES = { title: { f: 'title.mp3', mean: -16.1 }, game: { f: 'game.mp3', mean: -13.8 }, game30: { f: 'game30.mp3', mean: -15.2 }, result: { f: 'result.mp3', mean: -19.1 }, study: { f: 'study.mp3', mean: -19.0 } };
-const BGM_TARGET = { low: -31, mid: -25 };   // 鳴らすときの平均音量(dB)
+const BGM_LEVEL = { low: 0.5, mid: 1 };   // 曲のファイルそのままの大きさ(ふつう=1)。曲ごとの音量そろえや、読み上げ中の音量下げはしない
 let duck = 1;   // 読み上げ中は音楽を小さくする(0〜1)
-export function bgmDuck(on) { duck = on ? 0.25 : 1; try { bgmTick(); } catch (e) { } }
+export function bgmDuck(on) { /* 読み上げ中も音楽は下げない */ }
 let NODES = {}, cur = null, timer = 0, btn = null;
-function level(k) { const m = settings.bgm || 'low'; if (!BGM_TARGET[m]) return 0; return Math.min(1, Math.pow(10, (BGM_TARGET[m] - FILES[k].mean) / 20)) * duck; }
+function level(k) { const m = settings.bgm || 'mid'; return BGM_LEVEL[m] || 0; }
 function node(k) {
   if (NODES[k]) return NODES[k];
   const a = new Audio(ENV.ctx.base + 'audio/bgm/' + FILES[k].f); a.loop = true; a.preload = 'auto';
@@ -19,7 +19,7 @@ function node(k) {
 }
 function setVol(n, v, sec) { if (n.g) { try { const t = ENV.core.sound.ctx().currentTime; n.g.gain.cancelScheduledValues(t); n.g.gain.setTargetAtTime(v, t, sec / 3); } catch (e) { } } else n.a.volume = Math.min(1, v * .5); }
 function wanted() {
-  if (!ENV.root || settings.mute || (settings.bgm || 'low') === 'off' || document.hidden) return null;
+  if (!ENV.root || settings.mute || (settings.bgm || 'mid') === 'off' || document.hidden) return null;
   if ((ENV.make && ENV.make.visible()) || (ENV.story && ENV.story.visible())) return 'study';   // 文を作るレッスン
   const ti = $('title'); if (ti && !ti.hidden) return 'title';
   try { if (ENV.core.reader.isOpen) return 'study'; } catch (e) { }

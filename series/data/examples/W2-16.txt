@@ -1,0 +1,69 @@
+precipitation | n | The weather report predicts heavy precipitation this weekend. | 天気予報では今週末に多量の降水が予想されています。
+precipitation | n | Does this area receive much precipitation in summer? | この地域は夏に降水量が多いですか。
+precipitation | n | Scientists measured the precipitation after the overnight storm. | 科学者たちは夜の嵐の後に降水量を測定しました。
+fumble | v | I often fumble with my keys in the dark. | 私は暗いところでよく鍵を手探りで探します。
+fumble | v | Did you fumble with the buttons on your new camera? | 新しいカメラのボタンを不器用に操作しましたか。
+fumble | v | He fumbled for his ticket inside his crowded bag. | 彼は物がいっぱいのかばんの中で切符を手探りで探しました。
+contradictory | a | The two reports give contradictory information about the event. | 二つの報告書はその行事について矛盾した情報を示しています。
+contradictory | a | Why are these instructions so contradictory and confusing? | なぜこれらの指示はこんなに矛盾していて分かりにくいのですか。
+contradictory | a | Her answers seemed contradictory when we compared them later. | 後で比べると彼女の答えは矛盾しているようでした。
+predicate | n | The predicate tells us what the subject does. | 述語は主語が何をするかを表します。
+predicate | n | Can you find the predicate in this simple sentence? | この簡単な文の述語を見つけられますか。
+predicate | n | Our teacher asked us to underline each predicate. | 先生はそれぞれの述語に下線を引くよう求めました。
+stifle | v | She tried to stifle a laugh during the meeting. | 彼女は会議中に笑いをこらえようとしました。
+stifle | v | Can you stifle a yawn when you feel tired? | 疲れているときにあくびをこらえられますか。
+stifle | v | The strict rules stifled the students' creative ideas. | 厳しい規則は生徒たちの創造的な考えを抑え込みました。
+cascade | n | A beautiful cascade flows down the rocks behind our hotel. | ホテルの裏の岩を美しい小さな滝が流れ落ちています。
+cascade | n | Can you hear the cascade from this walking path? | この散歩道から小さな滝の音が聞こえますか。
+cascade | n | Several cascades appeared along the mountain stream after the rain. | 雨の後で山の小川にいくつもの小さな滝が現れました。
+testimonial | n | A customer wrote a positive testimonial about our service. | お客様が私たちのサービスについて好意的な推薦文を書きました。
+testimonial | n | Did you read the testimonial on the school's website? | 学校のウェブサイトにある推薦文を読みましたか。
+testimonial | n | The shop displayed testimonials from satisfied customers near the entrance. | その店は満足したお客様の推薦文を入口の近くに掲示しました。
+transcription | n | The transcription of the interview took several hours. | インタビューの書き起こしには数時間かかりました。
+transcription | n | Is the transcription available for students who missed the lecture? | 講義を欠席した生徒向けに書き起こしはありますか。
+transcription | n | She checked the transcription against the original recording. | 彼女は書き起こしを元の録音と照らし合わせて確認しました。
+metric | a | The teacher asked us to use metric units in class. | 先生は授業でメートル法の単位を使うよう求めました。
+metric | a | Does this ruler show metric measurements on both sides? | この定規は両面にメートル法の目盛りがありますか。
+metric | a | We converted the distances into metric units for the report. | 私たちは報告書のために距離をメートル法の単位に換算しました。
+intangible | a | Trust is an intangible benefit of working together. | 信頼は一緒に働くことで得られる形のない利益です。
+intangible | a | Can friendship provide intangible support during difficult times? | 友情は大変なときに目に見えない支えになりますか。
+intangible | a | The team valued the intangible rewards of helping others. | チームは人を助けることで得られる無形の報酬を大切にしました。
+incidental | a | The hotel will cover any incidental costs during the trip. | ホテルは旅行中の付随的な費用を負担します。
+incidental | a | Are meals included or treated as incidental expenses? | 食事は含まれていますか、それとも付随的な費用として扱われますか。
+incidental | a | The noise was incidental to the work being done outside. | その騒音は屋外で行われている作業に付随するものでした。
+agitation | n | Her agitation was clear as she waited for the results. | 結果を待つ彼女の動揺は明らかでした。
+agitation | n | Did the unexpected change cause agitation among the students? | 予想外の変更は生徒たちの間に動揺を引き起こしましたか。
+agitation | n | The teacher noticed his agitation and spoke to him quietly. | 先生は彼の動揺に気づいて静かに話しかけました。
+weighty | a | Choosing a new school is a weighty decision for families. | 新しい学校を選ぶことは家族にとって重大な決断です。
+weighty | a | Are you ready to discuss such a weighty matter? | そのような重大な問題について話し合う準備はできていますか。
+weighty | a | The manager considered the weighty question before giving an answer. | 責任者は答える前にその重大な問題をよく考えました。
+conformity | n | The school expects conformity with its basic safety rules. | 学校は基本的な安全規則を守ることを求めています。
+conformity | n | Does conformity always help people work well together? | 周囲に合わせることはいつも協力して働く助けになりますか。
+conformity | n | The group valued creativity more than strict conformity. | そのグループは厳しい同調よりも創造性を重視しました。
+deliberation | n | After careful deliberation, we chose the smaller apartment. | 慎重に検討した結果、私たちは小さい方のアパートを選びました。
+deliberation | n | Did the committee reach a decision after much deliberation? | 委員会は十分に審議した後で決定に至りましたか。
+deliberation | n | The judges continued their deliberations until late afternoon. | 審査員たちは午後遅くまで審議を続けました。
+entail | v | This new job will entail some weekend work. | この新しい仕事には週末の勤務が多少伴います。
+entail | v | Does the course entail studying at home every evening? | その講座では毎晩家で勉強する必要がありますか。
+entail | v | Organizing the festival entailed several months of careful planning. | 祭りを運営するには数か月にわたる慎重な計画が必要でした。
+deviation | n | The teacher noticed a slight deviation from the usual pattern. | 先生はいつもの模様からのわずかなずれに気づきました。
+deviation | n | Is this deviation from the plan really necessary? | 計画からのこの変更は本当に必要ですか。
+deviation | n | The report explained several deviations from the expected results. | 報告書はいくつかの予想結果からのずれを説明しました。
+squarely | r | She looked squarely at the camera and smiled. | 彼女はカメラをまっすぐ見つめて微笑みました。
+squarely | r | Can you place the box squarely on the shelf? | 箱を棚の上にきちんとまっすぐ置けますか。
+squarely | r | The manager squarely addressed the problem during our meeting. | 責任者は会議中にその問題に正面から取り組みました。
+tweak | v | We need to tweak the design before printing it. | 印刷する前にデザインを少し調整する必要があります。
+tweak | v | Could you tweak the settings to make the screen brighter? | 画面を明るくするために設定を微調整してもらえますか。
+tweak | v | The cook tweaked the recipe by adding less sugar. | 料理人は砂糖を減らしてレシピを少し調整しました。
+preventive | n | Regular cleaning is a useful preventive against mold. | 定期的な掃除はカビを防ぐ有効な予防手段です。
+preventive | n | Is there a simple preventive for this common problem? | このよくある問題に簡単な予防手段はありますか。
+preventive | n | The gardener used several preventives to protect young plants. | 庭師は若い植物を守るためにいくつかの予防手段を使いました。
+precede | v | A short introduction will precede the main presentation. | 本題の発表に先立って短い紹介があります。
+precede | v | Does the music precede the opening scene of the film? | その音楽は映画の冒頭の場面より前に流れますか。
+precede | v | A brief discussion preceded the final decision. | 最終決定の前に短い話し合いが行われました。
+refinement | n | The new model shows a refinement of the original design. | 新しい模型には元のデザインの改良が見られます。
+refinement | n | Does this process require further refinement before use? | この工程は使用前にさらに改良する必要がありますか。
+refinement | n | The artist made several refinements to the painting. | 芸術家はその絵にいくつかの改良を加えました。
+evoke | v | This old photograph can evoke happy childhood memories. | この古い写真は子供時代の楽しい思い出を呼び起こします。
+evoke | v | Does that song evoke memories of your school days? | その歌は学生時代の思い出を呼び起こしますか。
+evoke | v | The warm smell of bread evoked memories of home. | パンの温かい香りが故郷の思い出を呼び起こしました。

@@ -1,5 +1,5 @@
 import { ENV } from './env.js';
-import { DB, REG, autoExtra, makeItem, refreshLex, save, toast } from './common.js';
+import { DB, REG, autoExtra, makeItem, refreshLex, save, toast, dupOf } from './common.js';
 import { I18N, tx } from './i18n.js';
 import { PACK_KINDS } from './pack.js';
 import { APP, SAMPLE, esc, go, mutate, pick, renderScene } from './play.js';
@@ -33,7 +33,7 @@ export function addSpecFor(key){
  }
  return null;
 }
-export function mySet(){ let s=DB.sets.find(x=>x.on && !x.packId); if(!s){ s=DB.sets[0]; if(!s){ s={id:'my1',name:'マイセット',on:true,items:[],sentences:[]}; DB.sets.push(s); } s.on=true; } return s; }
+export function mySet(){ let s=DB.sets.find(x=>x.on && !x.packId && !x.auto); if(!s){ s=DB.sets.find(x=>!x.packId && !x.auto); if(!s){ s={id:'my1',name:'マイセット',on:true,items:[],sentences:[]}; DB.sets.push(s); } s.on=true; } return s; }
 export function skelHtml(slot, fixed){ return `<div class="skel">${SKEL.map(([k,l])=>`<button data-sk="${k}" class="${slot===k?(fixed?'fixed on':'on'):''}" ${fixed&&slot!==k?'disabled':''}>${l}</button>`).join('')}</div>`; }
 
 // ---- ゲーム中の「➕ ことばを足す」 ----
@@ -53,7 +53,7 @@ export function openAddWord(key){
   w.querySelector('[data-x="close"]').onclick=()=>w.remove();
   w.querySelector('[data-x="save"]').onclick=()=>{
    if(!st.en.trim()){ toast(tx('add.needEn')); return; } if(!st.ja.trim()){ toast(tx('add.needJa')); return; }
-   const it=buildItem(st.kind, st.en, st.ja, st.e, {fr:sp.fr, ai:st.ai}); const set=mySet(); set.items.push(it); save(); refreshLex();
+   const it0=buildItem(st.kind, st.en, st.ja, st.e, {fr:sp.fr, ai:st.ai}); const ex=dupOf(it0), it=ex||it0; if(!ex){ mySet().items.push(it); save(); refreshLex(); }
    w.remove(); toast(tx('add.saved',{en:it.en+(it.tail?' '+it.tail:'')})); try{ sp.pick(it.id); }catch(e){ renderScene(); }
   };
   aiBox(w.querySelector('[data-ai]'), ()=>({en:st.en, ja:st.ja, kind:st.kind}), r=>{ if(r.ja && !st.ja) st.ja=r.ja; if(r.e && !st.e) st.e=r.e; if(r.en) st.en=r.en+(r.tail?' '+r.tail:''); st.ai=r; draw(); }, true);

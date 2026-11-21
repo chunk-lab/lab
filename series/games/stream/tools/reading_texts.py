@@ -88,6 +88,8 @@ for ln in open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'passages
     if ln.startswith('@id'):cur=ln.split(None,1)[1];src[cur]=[]
     elif cur and ln and not ln.startswith('@') and '::' in ln:
         en=re.sub(r'\{([^|}]*)[^}]*\}',r'\1',ln.split('::')[0]).strip();src[cur]+=en.split()
+_ex=os.path.join(os.path.dirname(os.path.abspath(__file__)),'reading_extra.json')
+if os.path.exists(_ex):T.update(json.load(open(_ex,encoding='utf8')))   # make_passages.py が作る新しい長文
 ok=True
 for k,t in T.items():
     mine=[w for l in t['list'] for w in words_of(l[0])]
@@ -101,5 +103,26 @@ for k,t in T.items():
         for us in l[0].split(' | '):
             if us[1]!=':' or us[0] not in 'SVOICPTMRFX' or '=' not in us:ok=False;print('FMT NG',k,us[:40])
 print('照合', 'OK' if ok else 'NG', {k:len(t['list']) for k,t in T.items()})
-if ok:
-    open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'../data/texts.js'),'w',encoding='utf8').write('/* 長文ゲーム（チャンクストリーム）の文章を、共通の読む画面（core.reader）の文の形式にしたもの。tools/reading_texts.py で生成 */\nconst LS_TEXTS='+json.dumps(T,ensure_ascii=False,separators=(',',':'))+';\n')
+def compact(T):   # 英語は data.js(ゲーム用)と同じなので持たない。チャンクごとの単語の数だけにして、読むときに data.js から組み立てる
+    C={}
+    for k,t in T.items():
+        L=[]
+        for s,ja in t['list']:
+            segs=[]
+            for us in s.split(' | '):
+                rest=us[2:]; i=rest.index('='); en=rest[:i]
+                segs.append(us[:2]+'/'.join(str(len(p.split(' '))) for p in en.split(' / '))+rest[i:])
+            L.append([' | '.join(segs),ja])
+        C[k]=dict(t,list=L)
+    return C
+EXPAND=("(()=>{const C=%s,O={};for(const k in C)Object.defineProperty(O,k,{enumerable:true,configurable:true,get(){"
+ "const p=PASSAGES.find(x=>x.id===k),W=[];p.chunks.forEach(c=>c.tk.forEach(t=>W.push(t[0]+t[1]+t[2])));let i=0;const t=C[k];"
+ "const v=Object.assign({},t,{list:t.list.map(([s,ja])=>[s.split(' | ').map(u=>{const m=u.match(/^(.):([0-9/]+)=/);"
+ "return m[1]+':'+m[2].split('/').map(n=>W.slice(i,i+=+n).join(' ')).join(' / ')+u.slice(m[0].length-1)}).join(' | '),ja])});"
+ "Object.defineProperty(O,k,{value:v,enumerable:true});return v}});return O})()")
+if ok:   # レベルごとの txN.js(LS_ADD で足す) と、問題の数だけの texts.js(LS_NQ)
+    D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'../data/')
+    C=compact(T); LV={'beg':1,'int':2,'adv':3}
+    for lv in (1,2,3):
+        open(D+'tx%d.js'%lv,'w',encoding='utf8').write('/* 長文の「読む画面」用(役割・訳・問題)。tools/reading_texts.py で生成。英語は lv%d.js のチャンクから組み立てる */\nLS_ADD(%s);\n'%(lv,json.dumps({k:v for k,v in C.items() if LV[k[:3]]==lv},ensure_ascii=False,separators=(',',':'))))
+    open(D+'texts.js','w',encoding='utf8').write('/* 読む画面の文は txN.js(レベルごと)。ここは問題の数だけ(図書館・ミッションの「解く」の有無)。tools/reading_texts.py で生成 */\nconst LS_NQ='+json.dumps({k:len(t.get('q') or []) for k,t in T.items()},separators=(',',':'))+';\n')

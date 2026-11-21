@@ -1,0 +1,300 @@
+a lot of | ph | We have a lot of books at home. | 家にはたくさんの本があります。
+a lot of | ph | She eats a lot of fruit every day. | 彼女は毎日たくさんの果物を食べます。
+a lot of | ph | Are there a lot of people here today? | 今日はここにたくさんの人がいますか。
+a few | ph | I have a few questions for you. | あなたにいくつか質問があります。
+a few | ph | We saw a few birds in the park. | 公園で数羽の鳥を見ました。
+a few | ph | Can you wait a few more minutes? | あと数分待ってもらえますか。
+a little | ph | Please add a little milk to my tea. | 私のお茶に少し牛乳を入れてください。
+a little | ph | There is a little water in this bottle. | この瓶には少し水があります。
+a little | ph | Do you have a little time today? | 今日は少し時間がありますか。
+a cup of | ph | I drink a cup of tea every morning. | 私は毎朝お茶を一杯飲みます。
+a cup of | ph | Would you like a cup of coffee? | コーヒーを一杯いかがですか。
+a cup of | ph | She made a cup of soup for me. | 彼女は私にスープを一杯作ってくれました。
+a kind of | ph | A whale is a kind of animal. | クジラは動物の一種です。
+a kind of | ph | This is a kind of sweet bread. | これは甘いパンの一種です。
+a kind of | ph | Is that a kind of flower? | それは花の一種ですか。
+a piece of | ph | May I have a piece of cake? | ケーキを一切れいただけますか。
+a piece of | ph | He found a piece of paper outside. | 彼は外で紙を一枚見つけました。
+a piece of | ph | She gave me a piece of chocolate. | 彼女は私にチョコレートを一かけくれました。
+all over the world | ph | People all over the world enjoy music. | 世界中の人々が音楽を楽しんでいます。
+all over the world | ph | This song is popular all over the world. | この歌は世界中で人気があります。
+all over the world | ph | Children play games all over the world. | 世界中の子供たちが遊びを楽しみます。
+as soon as | ph | Call me as soon as you arrive. | 着いたらすぐに私に電話してください。
+as soon as | ph | I smiled as soon as I saw her. | 彼女を見るとすぐに私は笑顔になりました。
+as soon as | ph | We will leave as soon as it stops raining. | 雨がやんだらすぐに出発します。
+at first | ph | At first, I did not like this food. | 最初はこの食べ物が好きではありませんでした。
+at first | ph | The game was hard at first. | そのゲームは最初は難しかったです。
+at first | ph | Did you feel nervous at first? | 最初は緊張しましたか。
+at last | ph | At last, we found the right road. | ついに私たちは正しい道を見つけました。
+at last | ph | She finished her homework at last. | 彼女はついに宿題を終えました。
+at last | ph | The sun came out at last. | ついに太陽が顔を出しました。
+at once | ph | Please come to my room at once. | すぐに私の部屋に来てください。
+at once | ph | He answered my question at once. | 彼はすぐに私の質問に答えました。
+at once | ph | Can you start the work at once? | すぐに作業を始められますか。
+be able to | ph | I want to be able to swim well. | 私は上手に泳げるようになりたいです。
+be able to | ph | Will she be able to join us? | 彼女は私たちに参加できますか。
+be able to | ph | He was able to finish it alone. | 彼は一人でそれを終えられました。
+be afraid of | ph | You should not be afraid of mistakes. | 間違いを恐れる必要はありません。
+be afraid of | ph | My sister is afraid of big dogs. | 妹は大きな犬を怖がります。
+be afraid of | ph | Are you afraid of the dark? | 暗い所が怖いですか。
+be different from | ph | My answer may be different from yours. | 私の答えはあなたの答えと違うかもしれません。
+be different from | ph | This bag is different from mine. | このかばんは私のものと違います。
+be different from | ph | Is your school different from ours? | あなたの学校は私たちの学校と違いますか。
+be famous for | ph | This town will be famous for its flowers. | この町は花で有名になるでしょう。
+be famous for | ph | That restaurant is famous for its bread. | あのレストランはパンで有名です。
+be famous for | ph | Is this place famous for its lake? | この場所は湖で有名ですか。
+be good at | ph | I hope to be good at English. | 私は英語が得意になりたいです。
+be good at | ph | My brother is good at cooking. | 兄は料理が得意です。
+be good at | ph | Are you good at playing tennis? | あなたはテニスが得意ですか。
+be interested in | ph | You may be interested in this book. | あなたはこの本に興味があるかもしれません。
+be interested in | ph | She is interested in learning French. | 彼女はフランス語を学ぶことに興味があります。
+be interested in | ph | Are your friends interested in art? | あなたの友達は美術に興味がありますか。
+be late for | ph | I do not want to be late for school. | 学校に遅れたくありません。
+be late for | ph | He was late for the meeting. | 彼は会議に遅れました。
+be late for | ph | Will we be late for the train? | 電車に乗り遅れてしまいますか。
+be proud of | ph | You can be proud of your work. | 自分の仕事を誇りに思ってよいです。
+be proud of | ph | My parents are proud of me. | 両親は私を誇りに思っています。
+be proud of | ph | She was proud of her team. | 彼女は自分のチームを誇りに思いました。
+be ready for | ph | We must be ready for the test. | 私たちはテストの準備を整えなければなりません。
+be ready for | ph | Are you ready for your trip? | 旅行の準備はできていますか。
+be ready for | ph | The children were ready for lunch. | 子供たちは昼食の準備ができていました。
+because of | ph | We stayed inside because of the rain. | 雨のために私たちは屋内にいました。
+because of | ph | The game stopped because of strong wind. | 強風のために試合が止まりました。
+because of | ph | She smiled because of your kind words. | あなたの優しい言葉のおかげで彼女は笑顔になりました。
+both A and B | ph | I want both the red pen and the blue one. | 赤いペンも青いペンも両方欲しいです。
+both A and B | ph | Both my parents and I love music. | 両親も私も音楽が大好きです。
+both A and B | ph | She likes both tea and coffee. | 彼女は紅茶もコーヒーも好きです。
+by the way | ph | By the way, where is your brother? | ところで、あなたのお兄さんはどこですか。
+by the way | ph | I like your new bag, by the way. | ところで、新しいかばんが素敵ですね。
+by the way | ph | By the way, did you finish reading it? | ところで、それを読み終えましたか。
+come back | ph | Please come back before it gets dark. | 暗くなる前に戻ってきてください。
+come back | ph | When will your father come back? | お父さんはいつ戻ってきますか。
+come back | ph | She came back from school early. | 彼女は学校から早く帰ってきました。
+each other | ph | We help each other with our homework. | 私たちはお互いの宿題を手伝います。
+each other | ph | The two friends smiled at each other. | 二人の友達はお互いにほほえみました。
+each other | ph | Do your brothers talk to each other? | あなたの兄弟はお互いに話しますか。
+for example | ph | I enjoy sports, for example, tennis and swimming. | 私はテニスや水泳などのスポーツが好きです。
+for example | ph | Some animals, for example, cats, sleep a lot. | 例えば猫など、一部の動物はよく眠ります。
+for example | ph | Can you give me an example, for example, from school? | 例えば学校での出来事など、例を挙げてもらえますか。
+for the first time | ph | I made dinner for the first time. | 私は初めて夕食を作りました。
+for the first time | ph | She visited the sea for the first time. | 彼女は初めて海を訪れました。
+for the first time | ph | Are you meeting him for the first time? | 彼に会うのは初めてですか。
+get up | ph | I get up at seven every morning. | 私は毎朝七時に起きます。
+get up | ph | What time does your sister get up? | あなたの妹は何時に起きますか。
+get up | ph | He got up early to study. | 彼は勉強するために早起きしました。
+get to | ph | How can we get to the station? | 駅にはどうやって行けばよいですか。
+get to | ph | I got to school before eight. | 私は八時前に学校に着きました。
+get to | ph | Did they get to the hotel safely? | 彼らは無事にホテルに着きましたか。
+get on | ph | Please get on the bus here. | ここでバスに乗ってください。
+get on | ph | We got on the train together. | 私たちは一緒に電車に乗りました。
+get on | ph | Where should I get on this boat? | この船にはどこから乗ればよいですか。
+get off | ph | We must get off at the next stop. | 私たちは次の停留所で降りなければなりません。
+get off | ph | She got off the bus near school. | 彼女は学校の近くでバスを降りました。
+get off | ph | Do we get off the train here? | 私たちはここで電車を降りますか。
+give up | ph | Do not give up on your dream. | 自分の夢をあきらめないでください。
+give up | ph | He gave up after three tries. | 彼は三回挑戦した後であきらめました。
+give up | ph | Will you give up so easily? | そんなに簡単にあきらめるのですか。
+go shopping | ph | We go shopping together every Sunday. | 私たちは毎週日曜日に一緒に買い物に行きます。
+go shopping | ph | Would you like to go shopping tomorrow? | 明日買い物に行きませんか。
+go shopping | ph | She went shopping with her mother. | 彼女はお母さんと買い物に行きました。
+go to bed | ph | I usually go to bed at ten. | 私は普段十時に寝ます。
+go to bed | ph | Please go to bed early tonight. | 今夜は早く寝てください。
+go to bed | ph | What time did your brother go to bed? | あなたの弟は何時に寝ましたか。
+have to | ph | We have to clean our classroom today. | 私たちは今日教室を掃除しなければなりません。
+have to | ph | Do you have to leave now? | あなたはもう出発しなければなりませんか。
+have to | ph | She had to finish her homework. | 彼女は宿題を終えなければなりませんでした。
+help A with B | ph | I can help my sister with her homework. | 妹の宿題を手伝えます。
+help A with B | ph | Please help me with this bag. | このかばんを運ぶのを手伝ってください。
+help A with B | ph | He helped his sister with homework. | 彼は妹の宿題を手伝いました。
+in front of | ph | A big tree stands in front of our house. | 私たちの家の前に大きな木が立っています。
+in front of | ph | Please wait in front of the station. | 駅の前で待ってください。
+in front of | ph | Is your bike in front of the shop? | あなたの自転車は店の前にありますか。
+in the future | ph | I want to be a teacher in the future. | 私は将来先生になりたいです。
+in the future | ph | Will people travel more in the future? | 将来、人々はもっと旅行するでしょうか。
+in the future | ph | She hopes to live abroad in the future. | 彼女は将来外国に住みたいと思っています。
+instead of | ph | I drank water instead of orange juice. | 私はオレンジジュースの代わりに水を飲みました。
+instead of | ph | Can we walk instead of taking a bus? | バスに乗る代わりに歩けますか。
+instead of | ph | He chose rice instead of bread. | 彼はパンの代わりにご飯を選びました。
+look at | ph | Please look at the picture on the wall. | 壁にある絵を見てください。
+look at | ph | She looked at the sky and smiled. | 彼女は空を見てほほえみました。
+look at | ph | Can you look at my new drawing? | 私の新しい絵を見てもらえますか。
+look for | ph | I need to look for my keys. | 鍵を探さなければなりません。
+look for | ph | Are you looking for your brother? | お兄さんを探していますか。
+look for | ph | We looked for a nice restaurant. | 私たちは素敵なレストランを探しました。
+look forward to | ph | I look forward to our school trip. | 私は修学旅行を楽しみにしています。
+look forward to | ph | She looks forward to seeing her friends. | 彼女は友達に会うのを楽しみにしています。
+look forward to | ph | We are looking forward to summer vacation. | 私たちは夏休みを楽しみにしています。
+look after | ph | Can you look after my cat today? | 今日、私の猫の世話をしてもらえますか。
+look after | ph | My grandmother looks after the flowers. | 祖母は花の世話をしています。
+look after | ph | He looked after his little sister. | 彼は妹の世話をしました。
+more and more | ph | More and more people visit this park. | ますます多くの人がこの公園を訪れます。
+more and more | ph | My English is getting better and better. | 私の英語はますます上達しています。
+more and more | ph | More and more children enjoy this game. | ますます多くの子供がこの遊びを楽しんでいます。
+next to | ph | My desk is next to the window. | 私の机は窓の隣にあります。
+next to | ph | Please sit next to your sister. | 妹の隣に座ってください。
+next to | ph | Is the library next to the bank? | 図書館は銀行の隣にありますか。
+not only A but also B | ph | I like not only music but also art. | 私は音楽だけでなく美術も好きです。
+not only A but also B | ph | She speaks not only English but also French. | 彼女は英語だけでなくフランス語も話します。
+not only A but also B | ph | He likes not only music but also art. | 彼は音楽だけでなく美術も好きです。
+of course | ph | Of course, you can use my pencil. | もちろん、私の鉛筆を使ってよいです。
+of course | ph | Will you help me? Of course I will. | 手伝ってくれますか。もちろん手伝います。
+of course | ph | Of course, we need to study first. | もちろん、まず勉強する必要があります。
+one day | ph | One day, I found a small kitten. | ある日、私は小さな子猫を見つけました。
+one day | ph | She hopes to visit London one day. | 彼女はいつかロンドンを訪れたいと思っています。
+one day | ph | One day, a bird came to our window. | ある日、一羽の鳥が窓辺に来ました。
+pick up | ph | Please pick up that paper from the floor. | 床にあるその紙を拾ってください。
+pick up | ph | My father picked me up after school. | 父は放課後に私を迎えに来ました。
+pick up | ph | Can you pick up your sister today? | 今日は妹を迎えに行ってもらえますか。
+put on | ph | Please put on your coat before leaving. | 出かける前にコートを着てください。
+put on | ph | She put on her new blue dress. | 彼女は新しい青いドレスを着ました。
+put on | ph | Did you put on your shoes already? | もう靴を履きましたか。
+take off | ph | Please take off your shoes at the door. | 玄関で靴を脱いでください。
+take off | ph | The plane will take off soon. | 飛行機はまもなく離陸します。
+take off | ph | He took off his hat inside. | 彼は室内で帽子を脱ぎました。
+take care of | ph | I take care of our dog every morning. | 私は毎朝犬の世話をします。
+take care of | ph | Can you take care of these flowers? | これらの花の世話をしてもらえますか。
+take care of | ph | She took care of her little brother. | 彼女は弟の世話をしました。
+take a picture | ph | May I take a picture of this flower? | この花の写真を撮ってもよいですか。
+take a picture | ph | She took a picture of the lake. | 彼女は湖の写真を撮りました。
+take a picture | ph | Can we take a picture together here? | ここで一緒に写真を撮れますか。
+thanks to | ph | Thanks to you, I finished my homework. | あなたのおかげで宿題を終えられました。
+thanks to | ph | We arrived early thanks to the bus. | バスのおかげで早く着きました。
+thanks to | ph | Thanks to her, the party was fun. | 彼女のおかげでパーティーは楽しかったです。
+these days | ph | These days, I walk to school every morning. | 最近、私は毎朝歩いて学校に行きます。
+these days | ph | Are you busy with work these days? | 最近、仕事で忙しいですか。
+these days | ph | My brother reads many books these days. | 弟は最近たくさん本を読みます。
+think of | ph | I often think of my old friends. | 私はよく昔の友達のことを考えます。
+think of | ph | What do you think of this idea? | この考えをどう思いますか。
+think of | ph | She thought of a good answer. | 彼女はよい答えを思いつきました。
+too A to B | ph | This box is too heavy to carry alone. | この箱は重すぎて一人では運べません。
+too A to B | ph | This box is too heavy to carry. | この箱は重すぎて運べません。
+too A to B | ph | He was too tired to study. | 彼は疲れすぎて勉強できませんでした。
+try on | ph | Can I try on this red shirt? | この赤いシャツを試着してもよいですか。
+try on | ph | She tried on three pairs of shoes. | 彼女は靴を三足試着しました。
+try on | ph | Please try on the coat before buying it. | 買う前にそのコートを試着してください。
+turn on | ph | Please turn on the light in my room. | 私の部屋の電気をつけてください。
+turn on | ph | He turned on the television after dinner. | 彼は夕食後にテレビをつけました。
+turn on | ph | Can you turn on the kitchen light? | 台所の電気をつけてもらえますか。
+turn off | ph | Please turn off the light before leaving. | 出かける前に電気を消してください。
+turn off | ph | She turned off the television at nine. | 彼女は九時にテレビを消しました。
+turn off | ph | Did you turn off the bedroom light? | 寝室の電気を消しましたか。
+wait for | ph | Please wait for me outside the station. | 駅の外で私を待ってください。
+wait for | ph | We waited for the bus together. | 私たちは一緒にバスを待ちました。
+wait for | ph | Are you waiting for your friend? | 友達を待っていますか。
+wake up | ph | I usually wake up before my brother. | 私は普段弟より先に目が覚めます。
+wake up | ph | What time did you wake up today? | 今日は何時に目が覚めましたか。
+wake up | ph | She woke up when the birds sang. | 彼女は鳥の声で目が覚めました。
+worry about | ph | Do not worry about tomorrow's English test. | 明日の英語のテストを心配しないでください。
+worry about | ph | My mother worries about the weather. | 母は天気を心配しています。
+worry about | ph | Are you worried about your homework? | 宿題のことを心配していますか。
+so A that B | ph | The movie was so long that I fell asleep. | その映画はとても長かったので、眠ってしまいました。
+so A that B | ph | The soup was so hot that I waited. | スープはとても熱かったので私は待ちました。
+so A that B | ph | She was so happy that she cried. | 彼女はとても嬉しかったので泣きました。
+a long time ago | ph | A long time ago, people wrote many letters. | ずっと昔、人々はたくさん手紙を書きました。
+a long time ago | ph | My grandfather lived here a long time ago. | 祖父はずっと昔ここに住んでいました。
+a long time ago | ph | Did you visit this town a long time ago? | ずっと昔にこの町を訪れましたか。
+after school | ph | We play tennis together after school. | 私たちは放課後に一緒にテニスをします。
+after school | ph | What do you usually do after school? | 普段、放課後は何をしますか。
+after school | ph | She went to the library after school. | 彼女は放課後に図書館へ行きました。
+all day | ph | It rained all day last Sunday. | 先週の日曜日は一日中雨が降りました。
+all day | ph | Do you study at home all day? | 一日中家で勉強しますか。
+all day | ph | The children played outside all day. | 子供たちは一日中外で遊びました。
+at home | ph | My father is working at home today. | 父は今日家で仕事をしています。
+at home | ph | Do you often cook dinner at home? | 家でよく夕食を作りますか。
+at home | ph | She stayed at home on Sunday. | 彼女は日曜日に家にいました。
+at that time | ph | I was only six at that time. | 私はその時まだ六歳でした。
+at that time | ph | Where did you live at that time? | その時どこに住んでいましたか。
+at that time | ph | My brother was at school at that time. | 弟はその時学校にいました。
+be born | ph | Many baby animals will be born in spring. | 春にはたくさんの動物の赤ちゃんが生まれます。
+be born | ph | I was born in this town. | 私はこの町で生まれました。
+be born | ph | When was your little sister born? | あなたの妹はいつ生まれましたか。
+be full of | ph | The box may be full of toys. | その箱はおもちゃでいっぱいかもしれません。
+be full of | ph | Our garden is full of flowers. | 私たちの庭は花でいっぱいです。
+be full of | ph | Was the room full of people? | その部屋は人でいっぱいでしたか。
+be surprised at | ph | You will be surprised at the news. | あなたはその知らせに驚くでしょう。
+be surprised at | ph | I was surprised at his answer. | 私は彼の答えに驚きました。
+be surprised at | ph | Were they surprised at the price? | 彼らは値段に驚きましたか。
+be tired of | ph | I may be tired of this game soon. | 私はもうすぐこのゲームに飽きるかもしれません。
+be tired of | ph | She is tired of the same food. | 彼女は同じ食べ物にうんざりしています。
+be tired of | ph | Are you tired of waiting here? | ここで待つのにうんざりしていますか。
+be made of | ph | This table seems to be made of wood. | この机は木でできているようです。
+be made of | ph | The ring is made of silver. | その指輪は銀でできています。
+be made of | ph | Is this bag made of paper? | このかばんは紙でできていますか。
+belong to | ph | These books belong to my older sister. | これらの本は姉のものです。
+belong to | ph | Does this pencil belong to you? | この鉛筆はあなたのものですか。
+belong to | ph | He belongs to our school team. | 彼は私たちの学校のチームに所属しています。
+between A and B | ph | Choose the road between the bank and the library. | 銀行と図書館の間にある道を選んでください。
+between A and B | ph | The bank is between the two shops. | 銀行は二つの店の間にあります。
+between A and B | ph | She sat between her mother and father. | 彼女は母親と父親の間に座りました。
+by bus | ph | I go to school by bus every day. | 私は毎日バスで学校へ行きます。
+by bus | ph | Did you come here by bus? | ここにはバスで来ましたか。
+by bus | ph | We traveled to the town by bus. | 私たちはバスでその町へ行きました。
+come true | ph | I hope your dream will come true. | あなたの夢が実現することを願っています。
+come true | ph | Her wish finally came true yesterday. | 彼女の願いは昨日ついに実現しました。
+come true | ph | Do you think this dream can come true? | この夢は実現すると思いますか。
+do one's best | ph | I will do my best in tomorrow's game. | 明日の試合で全力を尽くします。
+do one's best | ph | I will do my best tomorrow. | 私は明日全力を尽くします。
+do one's best | ph | She did her best in the race. | 彼女は競走で全力を尽くしました。
+each of | ph | Each of these books has a picture. | これらの本にはそれぞれ絵があります。
+each of | ph | I gave each of them a flower. | 私は彼ら一人一人に花をあげました。
+each of | ph | Does each of your friends like music? | あなたの友達はそれぞれ音楽が好きですか。
+far from | ph | Our house is far from the station. | 私たちの家は駅から遠いです。
+far from | ph | Is the park far from here? | 公園はここから遠いですか。
+far from | ph | She lives far from her school. | 彼女は学校から遠くに住んでいます。
+find out | ph | Please find out when the shop opens. | その店がいつ開くか調べてください。
+find out | ph | Did you find out his name? | 彼の名前が分かりましたか。
+find out | ph | We found out the answer together. | 私たちは一緒に答えを見つけました。
+get angry | ph | Please do not get angry with me. | 私に怒らないでください。
+get angry | ph | My father rarely gets angry at home. | 父は家でめったに怒りません。
+get angry | ph | Why did she get angry yesterday? | 彼女は昨日なぜ怒ったのですか。
+go out | ph | We often go out on Sundays. | 私たちは日曜日によく外出します。
+go out | ph | Do you want to go out today? | 今日は出かけたいですか。
+go out | ph | She went out with her friends. | 彼女は友達と出かけました。
+grow up | ph | I want to grow up and become a doctor. | 私は大人になって医者になりたいです。
+grow up | ph | Where did your father grow up? | お父さんはどこで育ちましたか。
+grow up | ph | The children grew up in this town. | 子供たちはこの町で育ちました。
+hear from | ph | I hope to hear from you soon. | 近いうちにあなたから連絡があることを願っています。
+hear from | ph | Did you hear from your cousin? | いとこから連絡がありましたか。
+hear from | ph | She heard from her friend yesterday. | 彼女は昨日友達から連絡をもらいました。
+hurry up | ph | Please hurry up or we will be late. | 急いでください。そうしないと遅れます。
+hurry up | ph | We must hurry up to catch the train. | 電車に間に合うよう急がなければなりません。
+hurry up | ph | He hurried up and finished breakfast. | 彼は急いで朝食を済ませました。
+in the morning | ph | I drink milk in the morning. | 私は朝に牛乳を飲みます。
+in the morning | ph | Do you run in the morning? | あなたは朝に走りますか。
+in the morning | ph | She studies English in the morning. | 彼女は朝に英語を勉強します。
+keep in touch | ph | Let us keep in touch after graduation. | 卒業後も連絡を取り合いましょう。
+keep in touch | ph | We keep in touch by email. | 私たちはメールで連絡を取り合っています。
+keep in touch | ph | Do you keep in touch with Tom? | トムと連絡を取り合っていますか。
+laugh at | ph | Please do not laugh at my drawing. | 私の絵を笑わないでください。
+laugh at | ph | The children laughed at his funny hat. | 子供たちは彼のおかしな帽子を見て笑いました。
+laugh at | ph | Why did you laugh at that joke? | なぜその冗談を聞いて笑ったのですか。
+listen to | ph | I listen to music after dinner. | 私は夕食後に音楽を聴きます。
+listen to | ph | Please listen to your teacher carefully. | 先生の話をよく聞いてください。
+listen to | ph | Did you listen to the radio yesterday? | 昨日ラジオを聴きましたか。
+on time | ph | Our train arrived at the station on time. | 私たちの電車は時間どおりに駅に着きました。
+on time | ph | Can you finish your work on time? | 仕事を時間どおりに終えられますか。
+on time | ph | She always comes to class on time. | 彼女はいつも時間どおりに授業に来ます。
+out of | ph | A small bird flew out of the box. | 小さな鳥が箱から飛び出しました。
+out of | ph | Please take your books out of your bag. | かばんから本を取り出してください。
+out of | ph | He walked out of the room quietly. | 彼は静かに部屋から出ました。
+right now | ph | I need to leave home right now. | 私は今すぐ家を出る必要があります。
+right now | ph | Can you help me right now? | 今すぐ手伝ってもらえますか。
+right now | ph | She is doing her homework right now. | 彼女は今まさに宿題をしています。
+say hello to | ph | Please say hello to your mother for me. | お母さんによろしく伝えてください。
+say hello to | ph | I said hello to our new teacher. | 私は新しい先生にあいさつしました。
+say hello to | ph | Can you say hello to Ken for me? | ケンによろしく伝えてもらえますか。
+stay with | ph | I will stay with my aunt this weekend. | 今週末はおばの家に泊まります。
+stay with | ph | Did you stay with your grandparents? | 祖父母の家に泊まりましたか。
+stay with | ph | She stayed with her friend during summer vacation. | 彼女は夏休みに友達の家に泊まりました。
+talk to | ph | I want to talk to my teacher. | 先生と話したいです。
+talk to | ph | Did you talk to your brother yesterday? | 昨日お兄さんと話しましたか。
+talk to | ph | She talked to her friends after class. | 彼女は授業後に友達と話しました。
+the other day | ph | I saw your sister the other day. | 先日あなたの妹に会いました。
+the other day | ph | The other day, we visited a new cafe. | 先日、私たちは新しい喫茶店を訪れました。
+the other day | ph | Did you call me the other day? | 先日私に電話しましたか。
+write to | ph | I want to write to my grandmother. | 祖母に手紙を書きたいです。
+write to | ph | Do you often write to your friends? | 友達によく手紙を書きますか。
+write to | ph | She wrote to her cousin last week. | 彼女は先週いとこに手紙を書きました。
+why don't you | ph | Why don't you join us for lunch? | 私たちと一緒に昼食を食べませんか。
+why don't you | ph | Why don't you ask your teacher? | 先生に聞いてみたらどうですか。
+why don't you | ph | Why don't you take a short break? | 少し休憩したらどうですか。

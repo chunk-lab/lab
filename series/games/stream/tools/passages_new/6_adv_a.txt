@@ -1,0 +1,742 @@
+@id adv8
+@lv 3
+@level 8
+@title Seeing What We Expect
+@ja 見たいものを見る心
+@tag 難関大レベル・論説文
+@gloss confirmation bias=確証バイアス, overlook=見落とす, document=記録する, penalty=刑罰, rigorous=厳密な, dismiss=退ける, persistent=根強い, selectively=選択的に, remedy=対策
+M| {Once|Ever|Since ago|Until then} we have formed a belief, :: いったん信念を持つと
+S| we {tend|tends|tending|tendency} :: 私たちは傾向がある
+X| {to notice|noticing to|to noticing|notice to} evidence :: 証拠に気づく
+X| {that|what|who|whom} supports it :: それを支える
+X| and {to overlook|overlooking to|to overlooking|overlooks to} :: そして見落とす
+O| evidence that {does|do|doing|done} not. :: そうでない証拠を
+== いったん信念を持つと、私たちはそれを支える証拠には気づき、そうでない証拠は見落としがちだ。
+S| Psychologists {call|calls|calling|called to} this tendency :: 心理学者はこの傾向を呼ぶ
+C| {confirmation|confirms|confirmed to|confirmingly} bias, :: 確証バイアスと
+X| and it {is|are|be|being} among :: そしてそれは…の一つ
+X| the most {thoroughly|thorough|thoroughness|through} :: 最も徹底的に
+X| {documented|documents|document|to document} errors :: 記録された誤り
+P| {in|into|onto|besides} human reasoning. :: 人間の推論の
+== 心理学者はこの傾向を確証バイアスと呼び、それは人間の推論の誤りの中でも最も徹底的に記録されたものの一つだ。
+P| {In|On|At|Of} one classic study, :: ある古典的研究で
+S| participants {who|whom|which|whose} :: …の参加者が
+X| either supported {or|nor|and|but} opposed :: 支持か反対かの
+O| the death {penalty|penal|penalize|penalties of} :: 死刑に
+V| {read|reads|reading|readen} :: 読んだ
+O| the same {mixed|mixes|to mix|mixedly} set of findings. :: 同じ賛否混在の結果を
+== ある古典的研究では、死刑に賛成か反対かの参加者が、賛否の入り混じった同じ研究結果を読んだ。
+M| {Rather|Rate|Rarely|Rapidly} than :: …するどころか
+X| {moving|moved|moves|to moving} toward agreement, :: 合意に向かう
+S| both groups {emerged|emerge to|emerging|emergence} :: 両グループは…になった
+C| more {convinced|convincing|convince|conviction} :: より確信して
+P| {of|to|for|at} their original views. :: 元の考えを
+== 両グループは合意に近づくどころか、元の考えをいっそう確信するようになった。
+S| Each {side|sides|sided|siding} :: それぞれの側は
+V| {judged|judge|judging|judgment} :: 判断した
+O| the studies {supporting|supports to|supportive|support of} its position :: 自説を支える研究を
+C| {to be|being|be|been} rigorous :: 厳密だと
+X| and {dismissed|dismiss|dismissing|dismissal} the rest :: 残りを退けた
+C| {as|for|like|to} flawed. :: 欠陥があるとして
+== どちらの側も自説を支える研究は厳密だと評価し、残りは欠陥があるとして退けた。
+S| What {makes|make|making|made of} the bias so persistent :: 偏りを根強くするのは
+V| {is|are|be|being} that :: …ということだ
+X| it {rarely|rare|rarity|rarer} feels :: めったに感じない
+C| {like|alike|likely|likes} bias :: 偏りのように
+P| {from|of|for|by} the inside. :: 内側からは
+== この偏りが根強いのは、内側からは偏りのように感じられないからだ。
+P| {To|At|On|Of} the person :: 本人にとって
+X| {holding|held|holds|hold} the belief, :: 信念を抱く
+S| weighing evidence {selectively|selective|selection|select} :: 証拠を選んで量ること
+V| {simply|simple|simplicity|simplify} seems :: ただ思える
+C| like {being|be|been|to be} sensible. :: 分別があるように
+== 信念を抱く本人には、証拠を選り好みすることが、ただ分別ある態度に思えるのだ。
+S| {Intelligence|Intelligent|Intelligently|Intellect of}, :: 知性は
+M| {contrary|contrarily|contrast|contradict} to expectation, :: 予想に反し
+V| {offers|offer|offering|offered to} :: 与える
+O| {little|few|a few|fewer} protection; :: ほとんど防御を
+S| clever people are often {better|well|more|gooder} :: 賢い人はむしろ得意だ
+X| at {defending|defend|defended|defends} :: 擁護することが
+O| conclusions {they|them|their|theirs} already hold. :: すでに持つ結論を
+== 意外にも知性はほとんど歯止めにならず、賢い人ほど自分がすでに持つ結論を擁護するのがうまいことが多い。
+S| The most {reliable|reliably|reliance|rely} remedy, :: 最も確かな対策は
+V| then, {is|are|be|being} not :: つまり…ではなく
+C| more {intelligence|intelligent|intelligently|intellectual} :: さらなる知性
+X| but {deliberately|deliberate|deliberation|deliberated} :: 意図的に
+X| {seeking|seek|sought|seeks} out the strongest case :: 最強の論拠を探すこと
+P| {against|again|agonist|across} one's own view. :: 自分の考えに反する
+== したがって最も確かな対策は、知性を高めることではなく、自説に反する最も強い論拠を意図的に探すことだ。
+S| Science {itself|himself|its|it's} :: 科学そのものが
+V| can be {seen|saw|seeing|see} as :: …と見なせる
+C| a set of habits {designed|designs|design|to designing} :: 作られた習慣の集まり
+R| to {force|forcing|forced|forces} us :: 私たちに強いるため
+X| to do {exactly|exact|exactness|exacting} this. :: まさにこれをするよう
+== 科学そのものも、まさにこれを私たちに強いるために作られた習慣の集まりと見なせる。
+?? 0 3 信念を持つと私たちはどんな証拠に気づきがち？
+?? 3 3 両グループは研究結果を読んでどうなった？
+?? 7 3 知性は偏りに対してどれほど防御になる？
+?? 8 4 最も確かな対策は何を探すこと？
+
+@id adv9
+@lv 3
+@level 8
+@title The Power of the First Number
+@ja 最初の数字の力
+@tag 難関大レベル・論説文
+@gloss rig=細工する, estimate=見積もり, anchoring=係留・アンカリング, adjust=調整する, immune=影響を受けない, sway=左右する, irrelevant=無関係な, negotiation=交渉, suspicion=疑い
+P| {In|On|Onto|Of} a well-known experiment, :: ある有名な実験で
+S| researchers {spun|spinned|spin|spinning} a wheel :: 研究者は円盤を回した
+X| {that|what|who|whom} had been rigged :: 細工された
+R| to stop {at|into|onto|toward} either 10 or 65. :: 10か65で止まるよう
+== ある有名な実験で、研究者は10か65のどちらかで止まるよう細工した円盤を回した。
+S| Participants {were|was|being|be} then asked :: 参加者は次に求められた
+X| {to estimate|estimating|estimate|to estimating} :: 見積もるよう
+O| the percentage {of|at|with|on} African countries :: アフリカ諸国の割合を
+P| {in|into|onto|within of} the United Nations. :: 国連に加盟する
+== 参加者は次に、国連に加盟する国のうちアフリカ諸国が占める割合を見積もるよう求められた。
+S| Those {who|which|whom|whose} saw the higher number :: 大きい数を見た人は
+V| {gave|give|given|giving} :: 答えた
+O| {considerably|considerable|consideration|considerate} higher estimates, :: かなり高い見積もりを
+M| even {though|through|thorough|throughout} the number :: その数は…なのに
+V| was {obviously|obvious|obviousness|obviate} random. :: 明らかに偶然だった
+== 大きい数を見た人は、その数が明らかに偶然のものなのに、かなり高い見積もりを出した。
+S| This {effect|effects|effecting|effectively}, :: この効果は
+V| {known|knowing|knew|know} as anchoring, :: 係留と呼ばれる
+V| {suggests|suggest|suggesting|suggestion} :: 示している
+O| {that|what|which|whom} our judgments :: 私たちの判断が
+V| {begin|begins|beginning|began to} from a starting point :: 出発点から始まり
+X| and are {adjusted|adjust|adjusts|adjustment} too little. :: 調整が足りないと
+== 係留と呼ばれるこの効果は、判断がある出発点から始まり、そこから十分に調整されないことを示している。
+S| One might {assume|assumes|assuming|assumption} :: …と思うかもしれない
+O| {that|what|whose|whom} experts :: 専門家は
+V| {are|is|be|being} immune :: 影響を受けない
+P| {to|of|with|at} such influences. :: こうした影響を
+== 専門家ならこうした影響は受けないと思うかもしれない。
+M| {Yet|Despite|Although|However of} studies have found :: しかし研究によれば
+O| that {experienced|experiencing|experience|experiences} property agents :: 熟練の不動産業者や
+X| and even {judges|judge|judging|judged} :: 裁判官さえ
+V| can be {swayed|sway|swaying|sways} :: 左右されうる
+P| by numbers {that|what|whom|where} :: …な数字に
+V| {should|shall to|must to|ought} be irrelevant. :: 無関係なはずの
+== しかし研究では、熟練の不動産業者や裁判官でさえ、本来無関係なはずの数字に左右されうることがわかっている。
+P| {In|On|Onto|Of} negotiations, :: 交渉では
+S| the first {offer|offers|offering of|offered} :: 最初の提示額が
+V| often {functions|function|functional|functioning} :: しばしば働く
+C| {as|so|than|into} an anchor :: 基準点として
+X| {that|what|whom|whose} shapes :: …を形づくる
+O| everything {that|who|whom|whose} follows. :: その後のすべてを
+== 交渉では、最初の提示額が、その後のすべてを形づくる基準点として働くことが多い。
+S| This is {why|what|which|whose} :: だからこそ
+S| negotiators are often {advised|advise|advising|advice} :: 交渉者は助言される
+X| to make the opening offer {themselves|theirselves|themself|their own} :: 自ら最初に提示するよう
+M| {rather|rarely|rapidly|readily} than :: …よりも
+X| {wait|waits|waited|waiting of} for the other side. :: 相手を待つ
+== だから交渉者は、相手を待つより自分から最初の提示をするよう勧められることが多い。
+S| {Awareness|Aware|Awarely|Awaring} of the bias, :: 偏りへの自覚は
+M| {unfortunately|unfortunate|fortune|unfortunacy}, :: 残念ながら
+V| {does|do|doing|done} little :: ほとんど役立たない
+R| to {eliminate|eliminating|eliminated|elimination} it. :: それをなくすのに
+== 残念ながら、この偏りを知っていても、それをなくす役にはほとんど立たない。
+S| A more {promising|promises|promisingly|promise to} strategy :: もっと有望な方法は
+V| is to {deliberately|deliberate|deliberation|deliberated} consider :: 意図的に考えること
+O| reasons {why|whom|what|whose} the anchor :: 基準点が…理由を
+V| might be {wrong|wrongly|wrongness|wrongful of} :: 誤りかもしれない
+T| before {settling|settle|settled|settles} on a judgment. :: 判断を固める前に
+== もっと有望なのは、判断を固める前に、その基準点が誤りかもしれない理由を意図的に考えることだ。
+S| The first number {we|us|our|ours} hear, :: 最初に聞く数字は
+M| in {short|shortly|shorten|shortage}, :: 要するに
+V| {deserves|deserve|deserving|deserved of} :: 値する
+O| far more {suspicion|suspicious|suspect|suspiciously} :: ずっと多くの疑いに
+X| {than|then|that|as} we usually give it. :: 普段向けるより
+== 要するに、最初に耳にする数字には、普段よりはるかに強い疑いの目を向けるべきなのだ。
+?? 0 3 円盤はどの数で止まるよう細工された？
+?? 5 2 不動産業者のほかに数字に左右されうる専門家は？
+?? 6 1 交渉で基準点として働くのは何？
+?? 9 2 有望な方法では何を考える？
+
+@id adv10
+@lv 3
+@level 8
+@title Why We Justify Our Choices
+@ja 自分を正当化する心
+@tag 難関大レベル・論説文
+@gloss contradict=矛盾する, cognitive dissonance=認知的不協和, tedious=退屈な, peg=釘・栓, justification=正当化, mechanism=しくみ, refine=洗練する, insight=洞察
+T| {In|On|At|Of} the 1950s, :: 1950年代に
+S| the {psychologist|psychology|psychological|psychologize} Leon Festinger :: 心理学者フェスティンガー
+V| {proposed|propose|proposing|proposal} :: 唱えた
+O| that people {feel|feels|feeling|felt to} :: 人は感じると
+O| a {distinct|distinction|distinctly|distinguish} discomfort :: はっきりした不快感を
+T| when their actions {contradict|contradicts|contradicting|contradiction} their beliefs. :: 行動が信念と矛盾すると
+== 1950年代、心理学者フェスティンガーは、行動が信念と矛盾すると人ははっきりした不快感を覚えると唱えた。
+S| He {called|calls of|calling|call to} this state :: 彼はこの状態を呼んだ
+C| {cognitive|cognition|cognize|cognitively} dissonance, :: 認知的不協和と
+X| and {argued|argue to|arguing|argument} :: そして主張した
+O| that we are strongly {motivated|motivating|motivate|motivation} :: 人は強く駆り立てられると
+R| to {reduce|reducing|reduced|reduces} it. :: それを減らそうと
+== 彼はこの状態を認知的不協和と呼び、人はそれを減らそうと強く駆り立てられると主張した。
+P| {In|On|Onto|Of} a famous experiment, :: 有名な実験で
+S| students {spent|spending|spented|spends} an hour :: 学生は1時間費やした
+P| {on|onto|upon of|into} deliberately tedious tasks, :: わざと退屈な作業に
+X| such as {turning|turns|to turning|turn of} pegs. :: 釘を回すなどの
+== ある有名な実験で、学生たちは釘を回すなど、わざと退屈にした作業に1時間を費やした。
+S| They {were|was|be|being} then paid :: 次にお金を受け取った
+O| either one dollar {or|nor|and|but} twenty :: 1ドルか20ドルの
+R| to {tell|telling|told|tells} the next participant :: 次の参加者に伝えるため
+O| {that|what|whom|which} the tasks :: 作業が…だったと
+V| had been {enjoyable|enjoyably|enjoyment|enjoys}. :: 楽しかったと
+== その後彼らは、次の参加者に作業は楽しかったと伝える代わりに、1ドルか20ドルを支払われた。
+M| {Surprisingly|Surprising|Surprised|Surprise}, :: 意外にも
+X| it was those {paid|paying|pay|pays} only one dollar :: 1ドルの人たちだった
+X| {who|whom|which|whose} later rated :: 後で評価したのは
+O| the tasks {as|for|like|to} more interesting. :: 作業をより面白いと
+== 意外にも、後で作業をより面白いと評価したのは、1ドルしかもらわなかった人たちだった。
+X| {Having|Have|Had|Has} lied :: うそをついたが
+P| without {sufficient|sufficiently|suffice|sufficiency of} reward, :: 十分な報酬なしに
+S| they could not {explain|explaining|explained|explanation} :: 説明できなかった
+O| their behavior {by|of|into|onto} the money, :: 行動をお金で
+X| so they changed their attitude {instead|instead of|insteadly|in stead of}. :: 代わりに態度を変えた
+== 十分な報酬なしにうそをついた彼らは、その行動をお金で説明できず、代わりに態度を変えたのだ。
+S| {Twenty|Twentieth|Twenty of|Twenties} dollars, :: 20ドルは
+M| by {contrast|contrary|contrasting|contrastive}, :: 対照的に
+V| {provided|provide|providing|provision} :: 与えた
+O| an external {justification|justify|justified|justifiable} :: 外からの正当化を
+X| {that|what|whom|whose} made the lie :: うそを…にする
+C| easy {to accept|accepting|to accepting|accepted}. :: 受け入れやすく
+== 対照的に20ドルは、うそを受け入れやすくする外からの正当化となった。
+S| The same {mechanism|mechanical|mechanize|mechanically} :: 同じしくみは
+V| {helps|help|helping|helpful} explain :: 説明に役立つ
+O| why people often {value|values|valuing|valuable} :: 人がなぜ…を重んじるか
+O| things {more|many|mostly|moreover} :: 物をより
+T| after working {hard|harden|hardness|hardship} for them. :: 苦労して得た後で
+== 同じしくみは、人が苦労して手に入れたものほど高く評価しがちな理由の説明にもなる。
+S| Dissonance {theory|theorize|theoretic|theorized} :: 不協和理論は
+V| has been {refined|refining|refine|refines} :: 洗練されてきた
+T| {over|above|upon|along} the decades, :: 何十年もかけて
+S| but its {central|centrally|center of|centralize} insight :: だがその中心的洞察は
+V| remains {influential|influence of|influentially|influences}. :: 影響力を保つ
+== 不協和理論は数十年かけて洗練されてきたが、その中心的な洞察は今も影響力を持つ。
+S| We do not {simply|simple|simplify|simplicity} :: 私たちはただ…ではない
+V| act {on|in|at|to} our beliefs; :: 信念に従って動く
+S| we also {adjust|adjusts|adjusting|adjustment} our beliefs :: 信念を調整もする
+R| to {fit|fitting|fits|fitted} :: …に合うように
+O| {what|that|which|whom} we have already done. :: すでにしたことに
+== 私たちは信念に従って行動するだけでなく、すでにしたことに合うよう信念を調整してもいるのだ。
+?? 0 1 認知的不協和を唱えたのは誰？
+?? 2 2 学生たちはどんな作業に1時間を費やした？
+?? 4 1 作業をより面白いと評価したのはどちらの人たち？
+?? 6 3 20ドルは何として働いた？
+
+@id adv11
+@lv 3
+@level 8
+@title Why Losses Loom Larger
+@ja 損失はなぜ大きく見えるか
+@tag 難関大レベル・論説文
+@gloss loom=大きく迫る, favorable=有利な, equivalent=同等の, asymmetry=非対称, loss aversion=損失回避, endowment=保有・授かり, frame=枠づける, mortality=死亡率, identical=同一の
+V| {Imagine|Imagination|Imaginary|Imagining} :: 想像してほしい
+O| being {offered|offering|offer|offers} a bet :: 賭けを持ちかけられるのを
+P| {on|in|at|by} a coin toss: :: コイン投げの
+X| you lose 100 dollars {if|despite|during|without} it lands tails, :: 裏なら100ドル失い
+X| but {win|wins|winning|won to} 150 if heads. :: 表なら150もらう
+== コイン投げの賭けを持ちかけられたとしよう。裏なら100ドル失い、表なら150ドルもらえる。
+M| {Although|Despite|However|Because of} the bet :: その賭けは…なのに
+V| is {favorable|favorably|favor|favorite of} :: 有利だ
+M| {on|in|at|by} average, :: 平均すれば
+S| most people {refuse|refuses|refusing|refusal} it. :: 大半が断る
+== その賭けは平均すれば有利なのに、大半の人は断る。
+P| {According|Accordingly|Accord|Accordance} to Kahneman and Tversky, :: カーネマンらによれば
+S| this {is|are|be|being} because :: それは…からだ
+S| losses {feel|feels|feeling|felt to} :: 損失は感じられる
+C| more {powerful|powerfulness|empower|powered of} :: より強烈に
+X| {than|then|that|as} equivalent gains. :: 同額の利益より
+== カーネマンとトヴェルスキーによれば、それは損失が同じ額の利益より強烈に感じられるからだ。
+S| They {named|name of|naming|names to} this asymmetry :: この非対称を名づけた
+C| loss {aversion|averse to|avert|averting of}, :: 損失回避と
+X| and it {became|become to|becoming|becomes of} :: そしてそれはなった
+C| a {central|centrally|centered of|centrality} idea :: 中心的な考えに
+P| {in|into|onto|at} behavioral economics. :: 行動経済学の
+== 彼らはこの非対称を損失回避と名づけ、それは行動経済学の中心的な考えになった。
+M| {Strikingly|Striking|Strike|Struck}, :: 驚くべきことに
+S| the effect {appears|appear|appearing|appearance} :: その効果は現れる
+P| even {with|by|of|onto} objects :: 物についてさえ
+X| we have {owned|own|owning|owns} :: 所有してきた
+T| for only {a few|a little|little|much} minutes. :: ほんの数分間
+== 驚くべきことに、この効果は手にしてほんの数分しかたっていない物にさえ現れる。
+P| {In|On|Onto|Of} experiments, :: 実験では
+S| people {given|giving|gave|give} a mug :: マグをもらった人は
+V| typically {demanded|demanding|demands|demand of} :: 普通は求めた
+O| far more {to sell|selling|to selling|sell} it :: 売るのにずっと高い額を
+X| than others {were|was|be|being} willing :: 他人が…気がある額より
+R| to {pay|paying|paid|pays} for it. :: それに払う
+== 実験では、マグカップをもらった人は、他の人が払ってもいい額よりはるかに高い売値を求めるのが普通だった。
+S| This {tendency|tend|tendentious|tended}, :: この傾向は
+X| {known|knowing|knew|know} as the endowment effect, :: 保有効果と呼ばれる
+V| {suggests|suggest|suggesting|suggestion} :: 示唆する
+O| that ownership {itself|himself|its|it} :: 所有そのものが
+V| {changes|change|changing|changed of} :: 変えると
+O| how we {value|values|valuing|valuable} things. :: 物の価値の感じ方を
+== 保有効果と呼ばれるこの傾向は、所有するだけで物の価値の感じ方が変わることを示唆する。
+S| Loss aversion {also|alike|although|unless} explains :: 損失回避はまた説明する
+O| {why|whom|whose|which} the way :: なぜ…しかたが
+X| a choice is {framed|framing|frame|frames} :: 選択が提示される
+V| {matters|matter|mattering|material} so much. :: それほど重要なのか
+== 損失回避は、選択の提示のしかたがなぜあれほど重要なのかも説明する。
+S| A treatment {described|describing|describes|describe} :: …と説明された治療は
+P| as having a 90 percent {survival|survive|survived|surviving of} rate :: 生存率90％と
+V| is chosen far more {often|frequent|usual|common} :: ずっと多く選ばれる
+X| than one {with|by|into|to} a 10 percent mortality rate, :: 死亡率10％のものより
+M| {though|through|thorough|throughout} the two are identical. :: 両者は同じなのに
+== 生存率90％と説明された治療は、死亡率10％と説明された治療よりはるかに多く選ばれるが、両者は同じ内容だ。
+S| {Recognizing|Recognize|Recognized|Recognizes} this bias :: この偏りを認めることは
+V| does not {mean|means|meaning|meant} :: 意味しない
+O| {ignoring|ignore|ignored|ignorance} losses; :: 損失を無視することを
+S| it means {asking|ask|asked|asks} :: 問うことを意味する
+O| whether we {refuse|refuses|refusing|refusal} good chances :: 好機を断っていないか
+P| {out|off|on|in} of fear alone. :: 恐れだけから
+== この偏りを認めるとは、損失を無視することではなく、恐れだけで好機を断っていないかを問うことだ。
+?? 0 3 コインが裏だと何ドル失う？
+?? 2 3 損失は同額の利益と比べてどう感じられる？
+?? 5 1 実験で人々に渡された物は何？
+?? 8 1 多く選ばれたのは生存率何％と説明された治療？
+
+@id adv12
+@lv 3
+@level 8
+@title Why Crowds Fail to Help
+@ja 人が多いと助けないのはなぜ
+@tag 難関大レベル・論説文
+@gloss exaggerate=誇張する, intercom=インターホン, seizure=発作, diffusion=拡散, responsibility=責任, oblige=義務を負わせる, ambiguity=あいまいさ, emergency=緊急事態, indifferent=無関心な
+T| {In|On|At|Of} 1964, :: 1964年に
+S| a newspaper {reported|report|reporting|reportedly} :: ある新聞が報じた
+O| {that|what|whom|whose} dozens of neighbors :: 何十人もの住民が
+V| had {watched|watch|watching|watches} :: 見ていたと
+O| a woman being {attacked|attack|attacking|attacks} :: 女性が襲われるのを
+P| without {calling|call|called|calls} the police. :: 警察を呼ばずに
+== 1964年、ある新聞は、何十人もの住民が女性が襲われるのを見ていながら警察を呼ばなかったと報じた。
+S| Later {investigations|investigate|investigated|investigative} :: 後の調査は
+V| {showed|show of|showing|shown} :: 示した
+O| the account {to be|being of|be|been} :: その報道が…だと
+C| {greatly|great|greatness|greater} exaggerated. :: 大きく誇張されていたと
+== 後の調査で、その報道は大きく誇張されていたことがわかった。
+M| {Still|Despite|Although|Even though}, :: それでも
+S| the case {inspired|inspire|inspiring|inspiration} :: その事件は促した
+O| psychologists {to ask|asking|ask|to asking} :: 心理学者に問うよう
+O| why people {in|on|at|to} groups :: なぜ集団の中の人は
+V| sometimes {fail|fails|failing|failure} to act. :: 時に行動しないのか
+== それでもこの事件は、集団の中の人がなぜ時に行動しないのかを心理学者が問うきっかけになった。
+P| {In|On|Onto|Of} one experiment, :: ある実験で
+S| participants {talking|talk|talked to|talks} over an intercom :: インターホンで話す人が
+V| {heard|hear of|hearing|heared} another student :: 別の学生の…を聞いた
+X| {apparently|apparent|appearance|appear} having a seizure. :: 発作らしき様子
+== ある実験では、インターホン越しに話す参加者が、別の学生が発作を起こしたらしい様子を耳にした。
+S| Those {who|whom|which|whose} believed :: …と信じた人は
+O| they were the {only|alone|lonely|once} listener :: 聞き手は自分だけだと
+V| {usually|usual|usage|use} went :: たいてい行った
+P| {for|at|on|by} help. :: 助けを呼びに
+== 聞いているのは自分だけだと思った人は、たいてい助けを呼びに行った。
+M| {However|Despite|Although|Whereas}, :: 一方
+S| those who {thought|thinked|thinking|think of} :: …と思った人は
+O| several others could {also|alike|alone|else} hear :: 他にも聞く人がいると
+V| responded more {slowly|slowness|slowed|slows} :: 反応が遅れた
+X| {or|nor|than|so} not at all. :: か全く反応しなかった
+== 一方、他にも何人か聞いていると思った人は、反応が遅れるか、まったく反応しなかった。
+S| Researchers {explain|explains|explaining|explanation} this :: 研究者はこれを説明する
+P| {through|though|thorough|throughout} the diffusion :: 拡散によって
+X| {of|at|onto|into} responsibility: :: 責任の
+X| the {more|most|much|many} people present, :: 人が多くいるほど
+S| the {less|least|little|fewer} each one feels :: 各自は感じにくい
+C| personally {obliged|obliging|oblige|obligation} to act. :: 自ら動く義務を
+== 研究者はこれを責任の拡散で説明する。居合わせる人が多いほど、各自が自ら行動すべきだと感じにくくなるのだ。
+S| {Ambiguity|Ambiguous|Ambiguously|Ambiguities of} also :: あいまいさも
+V| plays a {role|roll|rule|rows}, :: 役割を果たす
+R| {since|because of|due|despite} people look :: 人は目を向けるので
+X| to {others|other|otherwise|otherness} :: 他人に
+R| to {decide|decided|decides|decision} :: 判断するために
+O| whether a situation is {really|real|reality|realize} an emergency. :: 本当に緊急かどうか
+== あいまいさも影響する。人は状況が本当に緊急かどうかを判断するのに、他人の様子をうかがうからだ。
+M| If everyone {else|elses|other|others} :: 他の皆が
+V| {appears|appear|appearing|appearance} calm, :: 落ち着いて見えると
+S| each person {concludes|conclude|concluding|conclusion} :: 各自が結論する
+O| that nothing {is|are|be|being} wrong. :: 何も問題ないと
+== 周りの皆が落ち着いて見えると、一人ひとりが何も問題はないと結論づけてしまう。
+S| The lesson {is|are|be|being} not :: 教訓は…ではない
+O| that people are {indifferent|indifference|indifferently|differ}, :: 人が無関心だということ
+X| but that a crowd {can|cans|could to|can to} make :: 群衆は…させうる
+O| {helping|helped|helps|to helping} feel :: 助けることを感じさせ
+X| like someone {else's|elses|else|other's} job. :: 他人の役目のように
+== 教訓は人が無関心だということではなく、群衆の中では助けることが誰か他人の役目のように感じられうるということだ。
+?? 1 3 後の調査で新聞の報道はどうだったとわかった？
+?? 3 1 実験の参加者は何を通して話していた？
+?? 6 1 研究者はこの現象を何で説明する？
+?? 8 1 周りの皆がどう見えると何も問題ないと思ってしまう？
+
+@id adv13
+@lv 3
+@level 8
+@title The Marshmallow Question
+@ja マシュマロ実験再考
+@tag 難関大レベル・論説文
+@gloss follow-up=追跡の, trait=特性, complicate=複雑にする, diverse=多様な, background=生い立ち・背景, unpredictable=予測できない, rational=合理的な, willpower=意志の力, circumstance=状況
+X| {Starting|Start|Started|Starts} in the late 1960s, :: 1960年代後半から
+S| researchers {at|on|to|into} Stanford University :: スタンフォードの研究者は
+V| {offered|offer to|offering|offers to} young children :: 幼い子に与えた
+O| a simple {choice|choose|chose|chosen}: :: 単純な選択を
+X| one marshmallow now, {or|nor|than|so} two :: 今1個か、2個か
+M| if they could {wait|waits|waiting|waited}. :: 待てるなら
+== 1960年代後半から、スタンフォード大学の研究者は幼い子どもに、今マシュマロを1個もらうか、待って2個もらうかという単純な選択をさせた。
+S| Follow-up {studies|study|studying|studied} :: 追跡研究は
+V| {suggested|suggest of|suggesting|suggestion} :: 示唆した
+O| that children who {waited|wait to|waiting|waits} longer :: 長く待てた子は
+V| {tended|tend of|tending|tendency} to achieve more :: 多くを達成しがちだと
+T| {later|lately|latter|late of} in life. :: のちの人生で
+== 追跡研究は、長く待てた子どもほど、のちの人生でより多くを成し遂げる傾向があると示唆した。
+S| The finding was {widely|wide|width|widen} taken :: 結果は広く受け止められた
+C| {as|so|than|into} proof :: 証拠として
+O| that {self-control|self-controls|self-controlled|self-controlling} :: 自制心が
+V| is a {fixed|fix|fixing|fixes} trait :: 固定的な特性で
+X| {that|what|whom|whose} determines success. :: 成功を決めるという
+== その結果は、自制心が成功を決める固定的な特性だという証拠として広く受け止められた。
+S| Later {research|researches of|researching|researched}, :: その後の研究は
+M| {however|whatever|whenever|moreover of}, :: しかし
+V| has {complicated|complicate|complicating|complicates} :: 複雑にした
+O| this neat {story|stories|storied|storey}. :: この明快な話を
+== しかしその後の研究は、この明快な話を複雑にした。
+S| A larger study {with|by|at|to} a more diverse sample :: 多様な対象の大規模研究は
+V| {found|founded|find of|finding} :: 明らかにした
+O| that the {link|links|linked|linking} :: その関連は
+V| became much {weaker|weak|weakly|weaken} :: ずっと弱まると
+T| once family background {was|were|be|being} :: 家庭環境を…すると
+X| taken {into|in to|onto|unto} account. :: 考慮に入れる
+== より多様な対象での大規模な研究では、家庭環境を考慮に入れると、その関連はずっと弱まることがわかった。
+S| Another {study|studies|studying|studied} :: 別の研究は
+V| {showed|show of|showing|shown} :: 示した
+O| that children {waited|waits|waiting|wait of} :: 子どもが待つ時間は
+C| far {less|least|little|fewer} :: ずっと短いと
+T| when an adult {had|have|was|having} just broken :: 大人が直前に破ると
+O| a promise {to|at|onto|into} them. :: 子への約束を
+== 別の研究では、大人が直前に約束を破ると、子どもが待つ時間はずっと短くなることが示された。
+P| {For|At|To of|Of} a child :: 子どもにとって
+X| {whose|who|whom|which} world is unpredictable, :: 世界が予測できない
+S| taking the treat {now|know|no|known} :: 今お菓子を取ることは
+V| may {be|being|been|is} :: …かもしれない
+C| a perfectly {rational|rationally|rationale|ration} choice. :: 全く合理的な選択
+== 世界が予測できない子どもにとっては、今お菓子を取ることは全く合理的な選択かもしれない。
+S| {Waiting|Wait|Waited|Waits}, in other words, :: つまり待つことは
+V| {reflects|reflect|reflecting|reflection} not only :: …だけでなく反映する
+O| {willpower|willpowered|willful|willingly} :: 意志の力を
+X| but {also|alike|alone|else} :: …も
+O| trust {in|at|into|over} the environment. :: 環境への信頼を
+== つまり待てるかどうかは、意志の力だけでなく、環境への信頼も反映しているのだ。
+S| This does not {mean|means|meaning|meant} :: これは…ではない
+O| that self-control is {unimportant|importance|importantly|unimportance}; :: 自制心が重要でない
+S| it {means|mean|meaning|meant to} :: 意味するのは
+O| that it is {shaped|shaping|shape|shapes} :: それが形づくられること
+P| by circumstances {as|so|such|too} well :: 状況によっても
+P| as by {character|characteristic|characterize|characters of}. :: 性格と同じく
+== これは自制心が重要でないという意味ではなく、それが性格だけでなく状況によっても形づくられるということだ。
+S| The marshmallow {test|tests|tested|testy}, :: マシュマロテストは
+M| then, may {tell|tells|telling|told} us :: つまり教えてくれる
+O| as {much|many|more|most} about :: 同じくらい多くを
+X| children's {surroundings|surround|surrounded|surrounds} :: 子どもの環境について
+X| {as|than|so|that} about the children themselves. :: 子ども自身についてと
+== つまりマシュマロテストは、子ども自身についてと同じくらい、子どもを取り巻く環境について教えてくれるのかもしれない。
+?? 0 4 待てた子どもはマシュマロを何個もらえた？
+?? 4 4 何を考慮に入れると関連が弱まった？
+?? 5 4 子どもが待つ時間が短くなったのはどんな時？
+?? 7 4 待つことは意志の力のほかに何を反映している？
+
+@id adv14
+@lv 3
+@level 8
+@title Knowing What We Don't Know
+@ja 自分の無知を知る
+@tag 難関大レベル・論説文
+@gloss overestimate=過大評価する, burden=負担, artifact=見せかけの結果, dismiss=退ける, competence=能力, metacognition=メタ認知, ironically=皮肉にも, expertise=専門性
+P| {In|Onto|Upon of|Into} a well-known 1999 study, :: 1999年の有名な研究で
+S| psychologists {tested|test of|testing|tests to} people :: 心理学者は人々を試した
+P| {on|to|onto|toward} grammar, logic and humor, :: 文法・論理・笑いで
+X| and then {asked|ask of|asking|asks to} them :: そして頼んだ
+R| to estimate how {well|good|better of|best of} :: どれほどよく…か予想を
+X| they {had|has|having|haves} done. :: できたか
+== 1999年のよく知られた研究で、心理学者は人々に文法・論理・ユーモアのテストを受けさせ、自分の出来を予想させた。
+S| Those {who|whom|which|whose} performed worst :: 成績が最低の人は
+V| {greatly|great|greatness|greater} overestimated :: 大きく過大評価した
+O| their own {ability|able|ably|enable}, :: 自分の能力を
+X| {believing|believe|believed of|belief} :: …と思い込んで
+O| they had done better {than|then|that|as} most. :: 大半よりできたと
+== 最も成績の悪かった人は自分の能力を大きく過大評価し、大半の人よりよくできたと思い込んでいた。
+S| The researchers {argued|argue of|arguing|argument} :: 研究者は論じた
+O| that the skills {needed|need|needing|needs} :: 必要な技能は
+R| to {perform|performing|performed|performance} well :: うまくやるのに
+V| are the {same|alike|samely|sameness} skills :: 同じ技能だと
+X| {needed|need|needing|needs} to recognize :: 見極めるのに必要な
+O| a good {performance|perform|performer of|performed}. :: よい出来を
+== 研究者は、うまくやるのに必要な技能は、よい出来を見極めるのに必要な技能と同じだと論じた。
+X| {Lacking|Lack|Lacked|Lacks} that knowledge, :: その知識がないので
+S| the {least|little|fewest|lest} skilled :: 最も未熟な人は
+V| {suffer|suffering|sufferance|sufferable} a double burden: :: 二重の負担を負う
+S| they {make|makes|making|made of} mistakes :: 誤りを犯し
+X| and cannot {see|sees|seeing|saw} them. :: それに気づけない
+== その知識がないため、最も未熟な人は二重の負担を負う。誤りを犯し、しかもそれに気づけないのだ。
+S| The effect has {since|ago|before of|yet since} become famous, :: その効果はその後有名に
+M| {though|through|thorough|tough} some statisticians argue :: 統計学者は論じるが
+O| that part {of|at|onto|into} the pattern :: そのパターンの一部は
+V| may {be|being|been|is} :: …かもしれない
+C| a statistical {artifact|artificial|artful|artfully}. :: 統計上の見せかけ
+== その効果はその後有名になったが、一部の統計学者は、パターンの一部は統計上の見せかけかもしれないと論じている。
+M| Even {so|such|as|though}, :: それでも
+S| the broader {lesson|lessen|lessons|lessoned} :: より広い教訓は
+V| is hard {to dismiss|dismissing|dismiss|to dismissing}: :: 退けがたい
+S| judging our own {competence|competent|compete|competently} :: 自分の能力の判断は
+V| is {itself|himself|its|it's} a skill. :: それ自体が技能だ
+== それでも、より広い教訓は否定しがたい。自分の能力を判断することは、それ自体が一つの技能なのだ。
+S| This {ability|able|ably|abilities}, :: この能力は
+X| often {called|calling|calls|call} metacognition, :: メタ認知とよく呼ばれる
+V| can {be improved|improved|improving|been improved} :: 高められる
+P| {through|though|thorough|throughout} training and feedback. :: 訓練と評価を通して
+== メタ認知とよく呼ばれるこの能力は、訓練とフィードバックによって高めることができる。
+P| {In|Onto|Into|Of} the original study, :: 元の研究では
+S| participants {who|whom|which|whose} were taught :: 教わった参加者は
+O| basic {logic|logical|logically|logician} :: 基本的な論理を
+V| became more {accurate|accurately|accuracy|accurateness} :: より正確になった
+P| at {judging|judge|judged|judgment of} :: 判断するのが
+O| {their|there|they're|them} earlier scores. :: 自分の先の得点を
+== 元の研究では、基本的な論理を教わった参加者は、自分の先の得点をより正確に判断できるようになった。
+M| {Ironically|Ironic|Irony|Ironical}, :: 皮肉にも
+S| {gaining|gain|gained|gains} knowledge :: 知識を得ることは
+V| can {lower|lowers|lowering|low} our confidence, :: 自信を下げうる
+R| because it {reveals|reveal|revealing|revelation} :: 明らかにするので
+O| how {much|many|more|most} remains unknown. :: どれほど未知が残るか
+== 皮肉にも、知識を得ると自信が下がることがある。どれほど多くのことが未知のまま残っているかが見えるからだ。
+S| Real {expertise|expert|expertly|experts}, :: 本当の専門性は
+M| then, often {looks|look|looking|looked of} :: つまり…に見える
+X| less {like|alike|likely|likes} certainty :: 確信というより
+X| and {more|most|much|many} like :: むしろ…のように
+O| a clear sense of one's own {limits|limit of|limiting|limited}. :: 自分の限界の自覚に
+== つまり本当の専門性は、確信よりも、自分の限界をはっきり自覚していることに近いのだ。
+?? 0 2 テストで扱われた3つの分野は？
+?? 1 2 成績の最も悪い人は何を過大評価した？
+?? 6 3 メタ認知は何によって高められる？
+?? 8 4 知識を得ると何が見えるから自信が下がる？
+
+@id adv15
+@lv 3
+@level 8
+@title How Habits Take Hold
+@ja 習慣が根づくしくみ
+@tag 難関大レベル・論説文
+@gloss conscious=意識的な, cue=きっかけ, reward=報酬, context=状況, trigger=引き起こす, automaticity=自動性, unreliable=頼りにならない, temptation=誘惑, altogether=完全に
+S| {Much|Many|Mostly|Muchly} of what we do :: 私たちの行動の多くは
+T| each {day|days|daily|daytime} :: 毎日の
+V| is not the {result|resulting|resultant|results} :: 結果ではない
+P| of {conscious|consciously|conscience|consciousness} decisions :: 意識的な決定の
+X| but {of|for|by|to} habit. :: 習慣のものだ
+== 私たちが毎日することの多くは、意識的な決定ではなく習慣の産物だ。
+S| Many writers {describe|describes|describing|description} a habit :: 多くの人は習慣を説明する
+C| {as|so|than|into} a loop :: ループとして
+P| {of|at|onto|into} three parts: :: 3つの部分からなる
+O| a cue, a routine, {and|nor|but|so} a reward. :: きっかけ・行動・報酬
+== 多くの書き手は、習慣を「きっかけ・行動・報酬」の3つからなるループとして説明する。
+T| When the same {action|act of|active|actively} :: 同じ行動が
+V| is {repeated|repeating|repeat|repeats} :: くり返されると
+P| in the same {context|contextual|contextually|contexted}, :: 同じ状況で
+S| the link {between|among|betweens|from} cue and action :: きっかけと行動の結合は
+V| gradually {strengthens|strengthen|strength|strong}. :: 次第に強まる
+== 同じ状況で同じ行動がくり返されると、きっかけと行動の結びつきは次第に強まる。
+M| {Eventually|Eventual|Event|Eventuality}, :: やがて
+S| the cue {alone|lonely|along|alike} :: きっかけだけで
+V| is {enough|sufficiently|adequately|enoughs} :: 十分になる
+R| to {trigger|triggering|triggered|triggers} the behavior, :: 行動を起こすのに
+M| with {little|few|a few|fewer} need for thought. :: ほとんど考えずに
+== やがて、きっかけだけで、ほとんど考えることなくその行動が起こるようになる。
+S| This {automaticity|automatic|automate|automatically} :: この自動性は
+V| is {efficient|efficiently|efficiency|effect}, :: 効率がよい
+R| since it {frees|free|freeing|freedom} the mind :: 心を解放するので
+P| {for|at|on|by} other tasks. :: 他の作業のために
+== この自動性は、心を他の作業に回せるので効率がよい。
+M| Yet the same {feature|features|featured|featuring} :: しかし同じ特徴が
+V| {makes|make|making|made of} bad habits :: 悪い習慣を…にする
+C| {remarkably|remarkable|remark|remarkability} hard :: 非常に難しく
+R| to {break|breaking|broken|breaks}. :: やめるのが
+== しかし同じ特徴のせいで、悪い習慣はやめるのが非常に難しくなる。
+S| {Willpower|Willful|Willing|Willed}, :: 意志の力は
+M| {contrary|contrarily|contrast|contradict} to popular belief, :: 通念に反して
+V| is a fairly {unreliable|unreliably|unreliability|rely} tool :: かなり頼りない道具だ
+P| for {changing|change|changed|changes} habits. :: 習慣を変えるのに
+== 一般に思われているのとは違い、意志の力は習慣を変えるにはかなり頼りない道具だ。
+S| People who {seem|seems|seeming|seemed of} :: …に見える人は
+X| to have {strong|strongly|strength|strengthen} self-control :: 自制心が強い
+V| often {rely|relies|relying|reliance} less :: あまり頼らない
+P| {on|in|at|to} resisting temptation :: 誘惑に抵抗することに
+X| than on {avoiding|avoid|avoided|avoidance} it altogether. :: そもそも避けることより
+== 自制心が強そうに見える人は、誘惑に抵抗するよりも、そもそも誘惑を避けることに頼っていることが多い。
+S| {Changing|Change|Changed|Changes} the environment, :: 環境を変えること
+X| {such|so|as|like} as keeping snacks :: お菓子を置くなど
+P| {out|off|over|on} of sight, :: 見えない所に
+V| can {therefore|whereas|despite|although} be :: だから…でありうる
+C| more {effective|effectively|effect|efficiency} :: より効果的
+X| than simply {trying|try|tried|tries} harder. :: ただ頑張るより
+== したがって、お菓子を見えない所に置くなど環境を変えるほうが、ただ頑張るより効果的なこともある。
+S| Habits {are|is|be|being} not :: 習慣は…ではない
+C| a sign {of|at|onto|into} weakness; :: 弱さのしるし
+S| they are the mind's {way|wayward|weigh|wayed} :: それは心のやり方だ
+X| of {saving|save|saved|saves} effort, :: 労力を省く
+X| and they {can|cans|could to|can to} be put :: そして…できる
+O| to good {use|using|used|useful}. :: うまく活用
+== 習慣は弱さのしるしではない。労力を省くための心のやり方であり、うまく活用することもできる。
+?? 1 3 習慣のループの3つの部分は何？
+?? 3 1 やがて何だけで行動が起こるようになる？
+?? 7 4 自制心の強そうな人は誘惑に対して何をしている？
+?? 8 1 環境を変える例として何が挙げられている？
+
+@id adv16
+@lv 3
+@level 8
+@title The Planes That Did Not Return
+@ja 帰らなかった飛行機
+@tag 難関大レベル・論説文
+@gloss bomber=爆撃機, mission=任務, armor=装甲, statistician=統計学者, survivor=生き残り, survivorship bias=生存者バイアス, overrate=過大評価する, concentrate=集中させる
+T| {During|While|Meanwhile|Throughout of} the Second World War, :: 第二次大戦中
+S| military analysts {studied|study of|studying|studies to} :: 軍の分析者は調べた
+O| the {bombers|bombered|bomberly|bombings of} :: 爆撃機を
+X| {that|what|whom|whose} returned from missions :: 任務から帰還した
+X| {covered|covering|cover|covers} in bullet holes. :: 弾痕だらけで
+== 第二次世界大戦中、軍の分析者は、弾痕だらけで任務から帰還した爆撃機を調べた。
+S| The holes were {concentrated|concentrating|concentrate|concentration} :: 弾痕は集中していた
+P| {on|onto of|into|at of} the wings and body, :: 翼と胴体に
+X| so the {obvious|obviously|obviousness|obviate} plan :: だから明白な案は
+V| {was|were|be|being} :: …だった
+C| to add armor {there|their|they're|theirs}. :: そこを補強すること
+== 弾痕は翼と胴体に集中していたので、当然の案はそこに装甲を足すことだった。
+S| The {statistician|statistic|statistical|statistics} Abraham Wald, :: 統計学者ワルドは
+M| {however|whenever|whatever|moreover of}, :: しかし
+V| {pointed|point of|pointing|points to} out :: 指摘した
+O| that the planes {being|been|be|been being} examined :: 調べている機体は
+V| were {only|lonely|once|alone of} the survivors. :: 生還機だけだと
+== しかし統計学者ワルドは、調べている機体は生き残ったものにすぎないと指摘した。
+S| Planes {hit|hits|hitted|to hit} :: 被弾した機は
+P| {in|into of|onto|at of} the engines :: エンジンに
+V| had mostly {failed|fail|failing|failure} to return, :: 大半が戻らなかった
+X| {which|what|whom|who} is precisely why :: まさにそれが理由で
+S| such damage was {rarely|rare|rarity|rarer} seen. :: その損傷は珍しかった
+== エンジンに被弾した機の大半は戻らなかった。だからこそ、そうした損傷はほとんど見られなかったのだ。
+S| The {armor|armored|armoring of|armors of}, :: 装甲は
+M| he {argued|argue of|arguing|argument}, :: 彼の主張では
+V| {belonged|belong to|belonging|belongs of} :: あるべきだった
+X| {where|which|whom|whose} the returning planes :: 帰還機が…場所に
+V| showed {no|not|none|nor} holes at all. :: 穴が全くない
+== 彼の主張では、装甲は帰還機に穴が全くない場所にこそ付けるべきだった。
+S| This {error|err|erroneous|erring}, :: この誤りは
+X| now {known|knowing|knew|know} as survivorship bias, :: 生存者バイアスと呼ばれる
+V| {arises|arise|arising|arouse} :: 生じる
+T| {whenever|whatever|whichever|whomever} we draw conclusions :: 結論を出すたびに
+P| {from|onto|into|at} cases :: 事例から
+X| that {happened|happening|happens|to happen} to survive. :: たまたま生き残った
+== この誤りは今では生存者バイアスと呼ばれ、たまたま生き残った事例から結論を出すたびに生じる。
+S| Business {books|book|booked|booking}, :: ビジネス書は
+M| for {example|examples|exemplary|exemplify}, :: たとえば
+V| often {study|studies|studying|studied of} :: よく調べる
+O| {successful|successfully|succeed|succeeds} companies :: 成功した企業を
+X| and {list|lists|listing|listed of} the habits they share. :: 共通の習慣を挙げる
+== たとえばビジネス書は、成功した企業を調べて、その共通の習慣を挙げることが多い。
+M| {Yet|Despite|Although|Unless} many :: しかし多くの
+S| {failed|fail|failing of|fails} companies :: 倒産企業も
+V| may have {had|has|have|having} :: 持っていたかも
+O| {exactly|exact|exactness|exacting} the same habits. :: まさに同じ習慣を
+== しかし倒産した多くの企業も、まったく同じ習慣を持っていたかもしれない。
+S| They {simply|simple|simplify|simplicity} :: それらは単に
+V| {disappeared|disappear of|disappearing|disappearance} :: 消えてしまった
+T| before {anyone|anywhere|anyhow|any one of} :: 誰かが…前に
+V| {thought|thinked|thinking|thinks of} to study them. :: 調べようと思う
+== それらは、誰かが調べようと思う前に消えてしまっただけなのだ。
+S| The same {bias|biased|biasing|biases of} :: 同じ偏りは
+V| {leads|lead|leading|led of} us :: 私たちを導く
+R| to {overrate|overrating|overrated|overrates} risky paths :: 危険な道を過大評価へ
+T| when we hear {only|lonely|once|alone of} :: …だけ聞くと
+P| {from|for|into|by} those who succeeded. :: 成功者から
+== 同じ偏りのせいで、成功した人の話だけを聞くと、私たちは危険な道を過大評価してしまう。
+T| Before {trusting|trust|trusted|trusts} :: 信じる前に
+O| any lesson {drawn|drew|draws|draw} from winners, :: 勝者からの教訓を
+S| it is {worth|worthy|worthily|worthwhile of} asking: :: 問う価値がある
+V| where {are|is|be|being} the cases :: 事例はどこにあるか
+X| {we|us|our|ours} cannot see? :: 私たちに見えない
+== 勝者から引き出された教訓を信じる前に、問う価値がある。私たちに見えない事例はどこにあるのか、と。
+?? 1 1 弾痕はどこに集中していた？
+?? 2 0 調べた機体は生還機だけだと指摘したのは誰？
+?? 4 4 ワルドは装甲をどこに付けるべきだと主張した？
+?? 6 3 ビジネス書は何を調べることが多い？
+
+@id adv17
+@lv 3
+@level 8
+@title The Myth of Multitasking
+@ja マルチタスクの神話
+@tag 難関大レベル・論説文
+@gloss pride oneself on=…を自負する, switch=切り替え, fraction=ごく一部, residue=残り, linger=残る, concentrate=集中する, irrelevant=無関係な, accurate=正確な
+S| Many {of|for|in|from} us :: 私たちの多くは
+V| pride {ourselves|ourself|us|our} on :: …を自負している
+O| being {able|ably|ability|enable} to do :: できることを
+O| several {things|thing|thinks|thinking} at once. :: 複数のことを同時に
+== 私たちの多くは、複数のことを同時にこなせると自負している。
+S| Research {on|at|to|onto} attention, :: 注意の研究は
+M| {however|whatever|whenever|moreover of}, :: しかし
+V| {suggests|suggest|suggesting|suggestion} :: 示している
+O| that {what|whom|whose|where} we call multitasking :: いわゆるマルチタスクは
+V| is usually {rapid|rapidity|rapids|rapidness} switching :: たいてい素早い切り替え
+P| between {tasks|task|tasking|tasked}. :: 作業間の
+== しかし注意の研究によれば、いわゆるマルチタスクはたいてい、作業間の素早い切り替えにすぎない。
+S| Each {switch|switches|switched|switching} :: 各切り替えは
+V| {carries|carry|carrying|carried of} a small cost, :: 小さな代償を伴う
+R| {as|so|than|such} the mind must :: 心は…ねばならないので
+V| set {aside|asides|inside of|along of} one set of rules :: ある規則を脇に置き
+X| and {load|loads|loading|loaded} another. :: 別の規則を読み込む
+== 切り替えのたびに小さな代償が生じる。心はある規則を脇に置き、別の規則を読み込まなければならないからだ。
+S| These {costs|cost|costing|costly} :: こうした代償は
+V| may {last|lasts|lasting|lasted} :: 続くかもしれない
+C| only a {fraction|fractional|fractionally|fracture of} of a second, :: ほんの一瞬だけ
+X| but they {add|adds|adding|addition} up :: だが積み重なる
+T| {over|above|upon|along} a day. :: 一日のうちに
+== こうした代償は一瞬しか続かないかもしれないが、一日のうちに積み重なっていく。
+M| {Moreover|Moreoften|Whereas|Despite}, :: さらに
+T| when we leave a task {unfinished|unfinishing|unfinish|finishing of}, :: 作業を途中でやめると
+S| part {of|at|onto|into} our attention :: 注意の一部が
+V| tends {to remain|remaining|remain|to remaining} on it. :: そこに残りがちだ
+== さらに、作業を途中で切り上げると、注意の一部がそこに残りがちだ。
+S| This {lingering|linger|lingered|lingers} focus, :: この残った意識は
+X| sometimes {called|calling|calls|call} attention residue, :: 注意残余と呼ばれる
+V| {makes|make|making|made of} it harder :: より難しくする
+R| to {concentrate|concentrating|concentrated|concentration} on :: …に集中するのを
+O| the {next|nest|nearly|nexus} task. :: 次の作業に
+== 注意残余とも呼ばれるこの残った意識は、次の作業への集中を難しくする。
+M| {Interestingly|Interesting|Interest|Interested}, :: 興味深いことに
+S| heavy {multitaskers|multitasking|multitask|multitasked} :: よく同時作業する人は
+V| often {believe|believes|believing|belief} :: しばしば信じている
+O| they are good {at|on|to|by} it. :: 自分は得意だと
+== 興味深いことに、よくマルチタスクをする人ほど、自分はそれが得意だと思っていることが多い。
+M| Yet {in|on|at|onto} one study, :: しかしある研究で
+S| they were {worse|worst|bad|badly} :: 彼らは劣っていた
+P| at {ignoring|ignore|ignored|ignorance of} :: 無視することが
+O| {irrelevant|irrelevance|irrelevantly|relevance} information :: 無関係な情報を
+X| {than|then|that|as} those who rarely multitasked. :: めったにしない人より
+== しかしある研究では、彼らはめったにマルチタスクをしない人より、無関係な情報を無視するのが苦手だった。
+S| This does not {mean|means|meaning|meant} :: これは…ではない
+O| that {all|every|each|whole} multitasking :: すべての同時作業が
+V| is {harmful|harm|harmfully|harms} :: 有害だと
+P| {for|at|onto|into} everyone. :: 誰にとっても
+== これは、すべての同時作業が誰にとっても有害だという意味ではない。
+S| Walking {while|whilst of|during|meanwhile} talking, :: 話しながら歩くのは
+M| for {instance|instants|instances|instant}, :: たとえば
+V| is {easy|easily|ease|easier of}, :: 簡単だ
+R| because one of the {two|twice|twain of|twos} activities :: 2つのうち一方が
+V| requires {almost|most|mostly|almost of} no attention. :: ほぼ注意を要さない
+== たとえば話しながら歩くのが簡単なのは、2つのうち一方がほとんど注意を必要としないからだ。
+X| But when two tasks {both|either|neither|every} :: だが2つの作業が両方
+V| {demand|demands|demanding|demanded of} thought, :: 思考を要する時
+S| doing them one {at|by|in|on} a time :: 一つずつやるほうが
+V| is almost always {faster|fastly|fasten|fastness} :: ほぼ常に速く
+X| and more {accurate|accurately|accuracy|accurateness}. :: より正確だ
+== しかし2つの作業がどちらも思考を要するなら、一つずつこなすほうがほぼ常に速く正確だ。
+?? 1 4 いわゆるマルチタスクの実態はたいてい何？
+?? 3 2 切り替えの代償はどのくらい続く？
+?? 7 3 よくマルチタスクをする人は何を無視するのが苦手だった？
+?? 9 4 話しながら歩くのが簡単なのはなぜ？

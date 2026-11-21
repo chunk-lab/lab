@@ -1,0 +1,520 @@
+@id int17
+@lv 2
+@level 6
+@title Morning Reading Time
+@ja 朝の読書時間
+@tag 共通テストレベル・記事
+@gloss quiet=静かな, allow=許す, boring=退屈な, focus=集中する, survey=調査, improve=向上させる, lifelong=一生の, habit=習慣
+S| Many schools {in|on|at|to} Japan :: 日本の多くの学校は
+V| {have|has|having|to have} :: ある
+O| a {quiet|quite|quietly|quiet's} reading time :: 静かな読書時間が
+T| {before|ago|during|between} classes start. :: 授業が始まる前に
+== 日本の多くの学校には、授業が始まる前に静かな読書時間がある。
+T| {For|Since|While|During} about ten minutes, :: 約10分間
+S| every {student|students|studying|studied} :: すべての生徒が
+V| {reads|read|reading|to read} a book :: 本を読む
+M| {of|at|on|into} their own choice. :: 自分で選んだ
+== 約10分間、すべての生徒が自分で選んだ本を読む。
+S| Nobody {is|are|be|being} allowed :: だれも許されない
+V| {to talk|talking|talk|talked} :: 話すことを
+O| or {use|uses|used|using} phones :: スマホを使うことを
+T| {during|while|among|between} this time. :: この時間中は
+== この時間中は、だれも話したりスマホを使ったりしてはいけない。
+T| At {first|firstly|fast|front}, :: 最初は
+S| some {students|student|studying|studies} :: 一部の生徒は
+V| {found|finds|finding|founded} it :: それを…と感じた
+C| {boring|bored|bore|boringly}. :: 退屈だと
+== 最初は、退屈だと感じる生徒もいた。
+M| {However|Because|Unless|Although}, :: しかし
+S| many {of|in|from|with} them :: 彼らの多くが
+V| now {say|says|saying|to say} :: 今は言う
+O| {that|what|which|who} it helps them :: それが役立つと
+R| {focus|focusing|focused|focuses} in class. :: 授業に集中するのに
+== しかし、今では多くの生徒が、授業に集中するのに役立つと言っている。
+P| {According to|According|Accord to|Accorded to} one survey, :: ある調査によると
+S| students {at|on|to|into} these schools :: これらの学校の生徒は
+V| read {more|most|much|many} books :: より多くの本を読む
+T| {than|then|that|as} before. :: 以前より
+== ある調査によると、これらの学校の生徒は以前より多くの本を読んでいる。
+S| Some teachers {also|too|either|as well} believe :: …と考える教師もいる
+O| that reading {every day|everyday|every days|all days} :: 毎日読むことが
+V| {improves|improve|improving|improvement} :: 向上させると
+O| students' {writing|write|wrote|written}. :: 生徒の文章力を
+== 毎日読むことで生徒の文章力が上がると考える教師もいる。
+S| Reading time {is|are|be|being} short, :: 読書時間は短い
+M| {but|nor|than|whom} it can become :: しかしなりうる
+C| a {lifelong|life longs|lifelongly|living long} habit. :: 一生の習慣に
+== 読書時間は短いが、一生続く習慣になりうる。
+?? 0 3 読書時間はいつある？
+?? 1 0 読書時間はどのくらいの長さ？
+?? 2 2 この時間に禁止されていることは？
+?? 4 4 生徒は読書時間が何に役立つと言っている？
+
+@id int18
+@lv 2
+@level 6
+@title Asking My Teacher for Help
+@ja 先生へのお願いメール
+@tag 共通テストレベル・メール
+@gloss absent=欠席の, fever=熱, assignment=課題, due=期限の, notes=ノート, possible=可能な, grateful=ありがたく思う, explain=説明する, sincerely=敬具
+X| {Dear|Dearly|Dears|Dear to} Mr. Brown, :: ブラウン先生
+== ブラウン先生
+S| I {was|were|am|be} absent :: 私は欠席した
+P| {from|of|at|to} school :: 学校を
+T| {last|latest|later|lately} week :: 先週
+R| {because of|because|due|owing} a fever. :: 熱のために
+== 先週、熱のために学校を休みました。
+S| I {heard|hear of|hearing|hears} :: 聞きました
+O| that you {gave|given|giving|gives} us :: 先生が出したと
+O| an {assignment|assign|assigned|assigning} :: 課題を
+T| {on|in|at|into} Tuesday. :: 火曜日に
+== 火曜日に課題が出されたと聞きました。
+S| {Could|Have to|Does|Are} you tell me :: 教えてくれませんか
+O| {what|that|whose|whom} I need to do :: 何をすべきか
+M| and {when|what|who|whose} it is due? :: いつが期限か
+== 何をすればよいか、そしていつが期限か教えていただけますか。
+S| My friend Ken {showed|show|showing|shown} me :: 友人のケンが見せた
+O| his {notes|note's|noted|noting}, :: 彼のノートを
+M| {but|nor|than|whom} I couldn't understand :: でも理解できなかった
+O| one {part|parts|parting|partly}. :: 一か所を
+== 友人のケンがノートを見せてくれましたが、一か所わかりませんでした。
+S| {Would|Will to|Should to|Does} it be possible :: …は可能でしょうか
+V| {to see|seeing|see|saw} you :: お会いすることは
+T| {after|later|since|ago} school :: 放課後に
+T| {on|in|at|to} Friday? :: 金曜日の
+== 金曜日の放課後にお会いすることはできますか。
+S| I would be {grateful|gratitude|gratefully|great full} :: ありがたいです
+M| {if|what|which|whose} you could explain it :: 説明していただければ
+P| {to|at|on|from} me. :: 私に
+== 説明していただけるとありがたいです。
+S| Thank {you|your|yours|you're} :: ありがとうございます
+P| {for|to|with|of} your help. :: ご協力に
+== ご協力ありがとうございます。
+X| {Sincerely|Sincere|Sincerity|Sincerer}, Aya Tanaka :: 敬具 田中アヤ
+== 敬具 田中アヤ
+?? 1 3 アヤはなぜ学校を休んだ？
+?? 2 3 課題は何曜日に出された？
+?? 4 0 だれがノートを見せてくれた？
+?? 5 3 アヤは何曜日に先生に会いたい？
+
+@id int19
+@lv 2
+@level 6
+@title The Last Relay
+@ja 最後のリレー
+@tag 共通テストレベル・物語文
+@gloss relay=リレー, nervous=緊張して, baton=バトン, pass=追い抜く, finish line=ゴール, trip=つまずく, cheer=応援する, hug=抱きしめること, matter=重要である
+T| {On|Of|Into|Onto} sports day, :: 運動会の日
+S| Yuta {was chosen|chose|was choose|choosing} :: ユウタは選ばれた
+P| {as|so|such|than} the last runner :: アンカーとして
+P| {in|into|onto|than} the class relay. :: クラスリレーの
+== 運動会で、ユウタはクラスリレーのアンカーに選ばれた。
+S| He was {nervous|nerve|nervously|nerves} :: 彼は緊張していた
+M| because he had {never|ever|none|no} :: 一度もなかったので
+V| {run|ran|running|runs} in front of :: …の前で走ったことが
+O| so {many|much|more|lot} people. :: とても多くの人の
+== 彼はそんなに大勢の人の前で走ったことがなかったので、緊張していた。
+T| When he {got|get|gotten|getting} the baton, :: バトンを受けたとき
+S| his team {was|been|be|being} :: チームは
+C| {in|on|by|of} third place. :: 3位だった
+== 彼がバトンを受け取ったとき、チームは3位だった。
+S| He {ran|run|runs|running} :: 彼は走った
+M| as fast {as|than|so|that} he could :: できる限り速く
+V| and {passed|past|passing|passes} one runner. :: 一人を抜いた
+== 彼は全力で走り、一人を追い抜いた。
+T| Just {before|ago|since|front} the finish line, :: ゴールの直前で
+M| {however|because|unless|although}, :: しかし
+V| he {tripped|trip|tripping|tripps} :: 彼はつまずいた
+O| and {fell|fall|fallen|falled} down. :: 転んだ
+== しかし、ゴールの直前で、彼はつまずいて転んだ。
+S| His {classmates|classmate's|classmating|classmated} :: クラスメートは
+V| {did not stop|did not stopped|not stopped|does stop not} :: やめなかった
+O| {cheering|to cheering|cheer|cheered} for him. :: 彼を応援するのを
+== クラスメートは彼を応援し続けた。
+S| He {got|get|gets|getting} up :: 彼は起き上がった
+V| and {finished|finish|finishing|finishes} the race, :: レースを終えた
+M| {but|nor|than|whom} his team :: しかしチームは
+V| came {in|into|onto|than} last. :: 最下位になった
+== 彼は起き上がって走りきったが、チームは最下位だった。
+S| Yuta felt {terrible|terribly|terror|terrify}, :: ユウタは落ちこんだ
+M| {but|nor|than|whom} his friends :: でも友だちは
+V| {gave|give|given|gives} him :: 彼にした
+O| a big {hug|hugs|hugged|hugging}. :: 大きなハグを
+== ユウタは落ちこんだが、友だちは彼をぎゅっと抱きしめた。
+S| "You {never|ever|none|no} :: きみは決して
+V| {gave up|given up|giving up|gaves up}," :: あきらめなかった
+S| one {of|in|from|for} them said. :: 一人が言った
+== 「きみは最後まであきらめなかった」と一人が言った。
+S| "That {is|are|be|am} :: それこそが
+O| {what|which|that|who} really :: 本当に…ことだ
+V| {matters|matter|mattering|to matter}." :: 大切な
+== 「それが本当に大切なことなんだ」
+?? 0 2 ユウタは何に選ばれた？
+?? 2 2 バトンを受けたとき、チームは何位だった？
+?? 4 0 ユウタはどこで転んだ？
+?? 6 3 チームの結果は何位だった？
+
+@id int20
+@lv 2
+@level 6
+@title My Brass Band Diary
+@ja 吹奏楽部日記
+@tag 共通テストレベル・ブログ
+@gloss brass band=吹奏楽部, contest=コンクール, practice=練習する, especially=特に, shake=震える, nerves=緊張, prize=賞, disappointed=がっかりした, proud=誇りに思う, aim=目指す
+X| {Hi|High|Hay|Hit} everyone! :: みなさん、こんにちは
+S| My name {is|are|be|am} Mika, :: 私の名前はミカ
+M| {and|nor|than|whom} I play the trumpet :: トランペットを吹く
+P| {in|on|to|into} our school brass band. :: 学校の吹奏楽部で
+== みなさん、こんにちは！私はミカで、学校の吹奏楽部でトランペットを吹いています。
+T| {Today|Todays|To days|Tomorrow's} :: 今日は
+S| I want {to write|writing|write|wrote} :: 書きたい
+O| {about|above|around|across} our summer contest. :: 夏のコンクールについて
+== 今日は夏のコンクールについて書きたいと思います。
+S| We {practiced|practicing|practices|to practice} :: 私たちは練習した
+T| {for|since|during|while} three hours :: 3時間
+T| every {day|days|daily|day's} :: 毎日
+T| {during|while|among|between} the summer vacation. :: 夏休みの間
+== 夏休みの間、私たちは毎日3時間練習しました。
+S| It {was|were|is being|be} hard, :: 大変だった
+M| {especially|especial|special|speciality} on hot days, :: 特に暑い日は
+M| {but|nor|than|whom} nobody :: でもだれも
+V| {gave up|give up|given up|giving up}. :: あきらめなかった
+== 特に暑い日は大変でしたが、だれもあきらめませんでした。
+T| On the day {of|at|on|to} the contest, :: コンクール当日
+S| my hands {were shaking|was shaking|were shake|shaking} :: 手が震えていた
+T| {before|ago|front|during} we went on stage. :: 舞台に出る前
+== コンクール当日、舞台に出る前は手が震えていました。
+M| But {once|one|ones|one's} we started playing, :: でも演奏を始めると
+S| I {forgot|forget|forgotten|forgetting} :: 忘れた
+O| {about|above|around|among} my nerves. :: 緊張のことを
+== でも演奏を始めると、緊張のことは忘れてしまいました。
+S| We {won|win|wins|winning} :: 私たちは取った
+O| a silver {prize|price|prized|prizes}, :: 銀賞を
+M| {not|no|none|nor} gold. :: 金賞ではなく
+== 私たちは金賞ではなく、銀賞を取りました。
+S| I was a little {disappointed|disappoint|disappointment|disappoints} :: 少しがっかりした
+T| at {first|firstly|fast|front}, :: 最初は
+M| {but|nor|than|whom} our teacher said :: でも先生は言った
+O| she was proud {of|for|to|with} us. :: 私たちを誇りに思うと
+== 最初は少しがっかりしましたが、先生は私たちを誇りに思うと言ってくれました。
+T| Next {year|years|yearly|year's}, :: 来年は
+S| we {will aim|will aims|aiming|will aimed} :: 目指します
+O| {for|to|by|of} gold! :: 金賞を
+== 来年は金賞を目指します！
+?? 0 2 ミカは何の楽器を吹いている？
+?? 2 1 毎日何時間練習した？
+?? 6 1 コンクールで何賞を取った？
+?? 7 3 先生は何と言った？
+
+@id int21
+@lv 2
+@level 6
+@title Notice: Study Room Open for Exams
+@ja 自習室開放のお知らせ
+@tag 共通テストレベル・お知らせ
+@gloss study room=自習室, exam=試験, alone=1人で, voice=声, allow=許す, bottled water=ペットボトルの水, save a seat=席を取る, empty=空いている, do one's best=全力を尽くす
+S| The library {study room|studying rooms|studies room|studied room} :: 図書館の自習室は
+V| will {be open|open be|be opening to|opens} :: 開いている
+T| {until|since|ago|among} 7 p.m. :: 午後7時まで
+T| {during|while|among|between} exam week. :: 試験週間は
+== 試験週間中、図書館の自習室は午後7時まで開いています。
+S| {Students|Student|Studying|Studied} :: 生徒は
+V| can {use|used|using|uses} it :: 使える
+R| {to study|studying|study|studied} :: 勉強するために
+M| alone {or|nor|than|but} in groups. :: 1人かグループで
+== 生徒は、1人でもグループでも勉強するために使えます。
+S| Group {tables|table|tabled|tabling} :: グループ用の机は
+V| {are|is|be|being} in the back, :: 奥にある
+M| {so|nor|than|whom} please keep :: なので保ってください
+O| your voices {down|downs|downing|downed}. :: 声を小さく
+== グループ用の机は奥にあるので、声を小さくしてください。
+S| Teachers {will be|will being|will are|are be} there :: 先生がいる
+T| {on|in|at|into} Tuesday and Thursday :: 火曜と木曜に
+R| {to answer|answer|answered|answers} questions. :: 質問に答えるため
+== 火曜日と木曜日には、質問に答えるため先生がいます。
+S| Food {is not|are not|not is|does not} allowed, :: 食べ物は禁止
+M| {but|nor|than|whom} you may :: でも…してよい
+V| {bring|brings|brought|bringing} :: 持ってくる
+O| {bottled|bottles|bottling|bottly} water. :: ペットボトルの水を
+== 食べ物は禁止ですが、ペットボトルの水は持ってきてかまいません。
+S| Please {do not|not|does not|not do} :: …しないでください
+V| {save|saves|saving|saved} seats :: 席を取る
+P| {for|to|by|at} your friends. :: 友だちのために
+== 友だちのために席を取っておかないでください。
+M| If a seat {is|are|be|been} empty :: 席が空いていたら
+T| for more {than|then|that|as} 30 minutes, :: 30分以上
+S| {anyone|anything|anywhere|any} :: だれでも
+V| may {use|used|using|uses} it. :: 使ってよい
+== 席が30分以上空いていたら、だれが使ってもかまいません。
+S| We {hope|hopes|hoping|hoped to} :: 私たちは願う
+O| this space {helps|help|helping|helpful} you :: この場所が役立つと
+V| {do|doing|did|done} your best :: 全力を出すのに
+P| {on|by|to|of} your exams. :: 試験で
+== この場所が、みなさんが試験で全力を出す助けになることを願っています。
+?? 0 2 自習室は何時まで開いている？
+?? 3 1 先生がいるのは何曜日？
+?? 4 3 持ってきてよいものは何？
+?? 6 1 何分以上空いていたら使ってよい？
+
+@id int22
+@lv 2
+@level 6
+@title Interview with a Soccer Captain
+@ja サッカー部キャプテンに聞く
+@tag 共通テストレベル・インタビュー
+@gloss captain=キャプテン, older brother=兄, hardest=いちばん大変な, disagree=意見が違う, balance=両立させる, member=部員, afraid=恐れて, mistake=間違い
+T| This {month|months|monthly|month's}, :: 今月は
+S| we {talked|talking|talks|to talk} :: 私たちは話した
+O| {to|at|by|onto} Ren, :: レンに
+M| the captain {of|onto|into|than} the soccer club. :: サッカー部のキャプテン
+== 今月は、サッカー部キャプテンのレンに話を聞きました。
+S| Q: When {did|does|done|doing} you :: Q: いつあなたは
+V| start {playing|play|played|plays} :: 始めたか
+O| {soccer|soccers|the soccers|soccer's}? :: サッカーを
+== Q: いつサッカーを始めましたか。
+S| A: I {started|start|starting|starts} :: A: 始めた
+T| when I {was|were|am|be} seven, :: 7歳のときに
+R| {because|because of|due|owing} my older brother played. :: 兄がしていたので
+== A: 兄がやっていたので、7歳のときに始めました。
+S| Q: What {is|are|be|am} :: Q: 何ですか
+C| the {hardest|hard|hardly|hardness} part :: いちばん大変な点は
+P| {of|to|at|on} being captain? :: キャプテンであることの
+== Q: キャプテンでいていちばん大変なことは何ですか。
+S| A: I {have to|has to|having to|have} :: A: 私は…なければ
+V| listen {to|at|on|of} everyone, :: 全員の話を聞く
+M| {even when|even|even so|although when} :: …ときでも
+S| we {disagree|disagrees|disagreeing|disagreement}. :: 意見が違う
+== A: 意見が違うときでも、全員の話を聞かなければなりません。
+S| Q: How {do|does|did to|are} you :: Q: どうやって
+V| {balance|balances|balancing|balanced} soccer :: サッカーを両立させる
+O| and {studying|studied|study's|studys}? :: 勉強と
+== Q: サッカーと勉強をどうやって両立していますか。
+S| A: I {study|studies|studying|studied to} :: A: 勉強する
+T| {for|since|during|while} an hour :: 1時間
+P| {on|at|onto|than} the train :: 電車の中で
+T| every {morning|mornings|morning's|mornings'}. :: 毎朝
+== A: 毎朝、電車の中で1時間勉強しています。
+S| Q: Do you have {a message|a messages|an message|message} :: Q: メッセージはあるか
+P| {for|at|on|into} new members :: 新入部員へ
+T| {this|these|those|they} year? :: 今年の
+== Q: 今年の新入部員へメッセージはありますか。
+V| A: Don't be {afraid|afraidly|afrayed|fears} :: A: 恐れないで
+P| {of|to|for|with} making mistakes, :: 間違えることを
+R| {because|because of|due|owing} everyone makes them. :: だれでもするから
+== A: 間違えることを恐れないで。だれでも間違えるのだから。
+?? 2 1 レンは何歳でサッカーを始めた？
+?? 2 2 レンがサッカーを始めた理由は？
+?? 4 1 キャプテンとして何をしなければならない？
+?? 6 2 レンはどこで勉強している？
+?? 8 0 新入部員へのメッセージは？
+
+@id int23
+@lv 2
+@level 6
+@title How to Take Good Notes
+@ja 上手なノートの取り方
+@tag 共通テストレベル・説明文
+@gloss notes=ノート, remember=覚える, carefully=注意深く, instead=そのかわりに, key word=キーワード, main idea=要点, arrow=矢印, within=…以内に, tool=道具
+S| Good {notes|note|noting|noted} :: よいノートは
+V| can {help|helps|helping|helped} you :: 助けになる
+V| {remember|remembers|remembered|remembering} :: 覚えるのに
+O| {what|that|which|who} you learned in class. :: 授業で学んだことを
+== よいノートは、授業で学んだことを覚えるのに役立つ。
+M| {However|Because|Unless|Although}, :: しかし
+S| many {students|student|studying|studies} :: 多くの生徒は
+V| try {to write down|to writing down|write down|wrote down} :: 書き取ろうとする
+O| everything {the teacher says|the teacher say|the teachers says|teacher say}. :: 先生の言うことすべて
+== しかし、多くの生徒は先生の言うことをすべて書き取ろうとする。
+S| This {is|are|be|am} :: これは
+C| not a good {idea|ideas|idealy|idly}, :: よい考えではない
+M| {because|because of|due|owing} you can't listen :: 聞けないから
+M| {carefully|careful|care|careless} at the same time. :: 同時にしっかり
+== 同時にしっかり聞くことができないので、これはよい考えではない。
+M| {Instead|Instead of|In stead|Insteadly}, :: そのかわりに
+V| write {only|alone|lonely|once} :: …だけを書こう
+O| the key {words|wordy|worded|wordly} :: キーワードと
+O| and main {ideas|idea|ideal|idle}. :: 要点を
+== そのかわりに、キーワードと要点だけを書こう。
+S| You can {also|too|either|as well} :: …こともできる
+V| {use|used|using|uses} arrows :: 矢印を使う
+O| and simple {drawings|drew|drawn|draws} :: 簡単な絵を
+R| {to save|save|saved|saves} time. :: 時間を節約するため
+== 時間を節約するために、矢印や簡単な絵を使うこともできる。
+T| {After|Later|Since|Ago} class, :: 授業のあと
+V| read your notes {again|against|gain|agains} :: ノートを読み直そう
+T| {within|during|while|among} a day. :: 1日以内に
+== 授業のあと、1日以内にノートを読み直そう。
+M| If {something|somewhere|sometime|somehow} :: もし何かが
+V| {is not|are not|not is|does not} clear, :: はっきりしないなら
+V| {ask|asks|asking|asked} a friend :: 友だちに聞こう
+M| {or|nor|than|but} your teacher. :: か先生に
+== 何かわからないところがあれば、友だちか先生に聞こう。
+S| Notes {are|is|be|being} a tool :: ノートは道具だ
+P| {for|to|at|by} thinking, :: 考えるための
+M| not just {for|to|at|by} writing. :: 書くためだけでなく
+== ノートは書くためだけでなく、考えるための道具なのだ。
+?? 1 3 多くの生徒は何を書き取ろうとする？
+?? 3 2 ノートには何を書くとよい？
+?? 5 2 いつまでにノートを読み直す？
+?? 6 2 わからないことがあればどうする？
+
+@id int24
+@lv 2
+@level 6
+@title Phones in the Classroom
+@ja 教室のスマホ
+@tag 共通テストレベル・論説文
+@gloss allow=許す, out of date=時代遅れの, useful=便利な, emergency=緊急事態, attention=注意, ignore=無視する, opinion=意見, wisely=賢く
+S| Many {schools|school|schooling|schooled} :: 多くの学校は
+V| {do not allow|does not allow|not allow|do not allows} students :: 生徒に許さない
+O| {to use|using|use|used} smartphones :: スマホを使うことを
+T| {during|while|among|between} the day. :: 日中に
+== 多くの学校は、日中に生徒がスマホを使うことを認めていない。
+S| Some people {say|says|saying|to say} :: …と言う人もいる
+O| {that|what|which|who} this rule :: この規則は
+V| is {out of date|out date|out of dated|outing date}. :: 時代遅れだ
+== この規則は時代遅れだと言う人もいる。
+S| {Phones|Phone|Phoning|Phoned} :: スマホは
+V| can {be|being|been|is} useful tools :: 便利な道具になる
+P| {for|to|at|by} learning, :: 学習のための
+M| {such as|such like|as such|so as} looking up words. :: 単語を調べるなど
+== スマホは、単語を調べるなど、学習に便利な道具になりうる。
+S| Students can {also|too|either|as well} :: 生徒は…もできる
+V| {contact|contacts|contacting|contacted} :: 連絡する
+O| {their|there|they're|them} families :: 家族に
+P| {in|on|at|by} an emergency. :: 緊急時に
+== 生徒は緊急時に家族に連絡することもできる。
+M| On the other {hand|hands|handed|handy}, :: 一方で
+S| phones can {easily|easy|ease|easier} :: スマホは簡単に
+V| {take|takes|took|taking} students' attention :: 生徒の注意を奪う
+P| away {from|to|of|by} lessons. :: 授業から
+== 一方で、スマホは生徒の注意を授業から簡単にそらしてしまう。
+S| Messages and games {are|is|be|being} :: メッセージやゲームは
+C| {hard|hardly|hardness|harden} :: 難しい
+R| {to ignore|ignoring|ignore|ignored}. :: 無視するのが
+== メッセージやゲームを無視するのは難しい。
+P| In my {opinion|opine|opinions|opinioned}, :: 私の考えでは
+S| schools {should allow|should allows|should allowing|should to allow} phones :: 学校は許可すべき
+M| {but|nor|than|whom} set clear rules :: でも明確な規則を作る
+P| {for|to|at|by} using them. :: 使い方について
+== 私の考えでは、学校はスマホを認めつつ、使い方について明確な規則を作るべきだ。
+M| For {example|examples|exam|sample}, :: たとえば
+S| students {could use|could used|could using|could uses} them :: 生徒は使えるだろう
+M| only {when|what|who|whose} the teacher :: 先生が…ときだけ
+V| {says|say|saying|said to} it is OK. :: いいと言う
+== たとえば、先生がいいと言ったときだけ使えるようにしてもよい。
+S| Learning {to use|using|use|used} phones wisely :: 賢く使うのを学ぶのは
+V| is an {important|importance|importantly|import} skill :: 大切な技能だ
+P| {for|to|at|by} the future. :: 将来のための
+== スマホを賢く使えるようになることは、将来のための大切な技能だ。
+?? 2 3 スマホが学習に役立つ例は？
+?? 3 3 生徒はどんなときに家族に連絡できる？
+?? 5 0 無視するのが難しいものは？
+?? 6 2 筆者は学校が何をすべきだと考えている？
+
+@id int25
+@lv 2
+@level 6
+@title A Letter to My Old Classmate
+@ja 前の同級生への手紙
+@tag 共通テストレベル・手紙
+@gloss move=引っ越す, lonely=寂しい, join=入る, named=…という名前の, favorite=大好きな, show ~ around=案内する, miss=恋しく思う, visit=訪ねる
+X| {Dear|Dearly|Dears|Dear to} Haruka, :: ハルカへ
+== ハルカへ
+S| It {has been|have been|has be|has being} :: …になる
+O| three {months|month|monthly|month's} :: 3か月
+T| {since|for|from|ago} I moved :: 引っ越してから
+P| {to|at|on|for} Sapporo. :: 札幌に
+== 札幌に引っ越してから3か月になります。
+S| My new school {is|are|be|being} :: 新しい学校は
+C| much {bigger|big|biggest|more big} :: ずっと大きい
+P| {than|then|that|as} our old one. :: 前の学校より
+== 新しい学校は前の学校よりずっと大きいです。
+T| At {first|firstly|fast|front}, :: 最初は
+S| I had {no one|no ones|not one's|nobody's} :: だれもいなかった
+R| to eat lunch {with|by|at|for}, :: 一緒に昼食を食べる
+M| and I felt {lonely|lonelily|loneliness|loneliest}. :: 寂しかった
+== 最初は一緒に昼食を食べる人がいなくて、寂しかったです。
+M| But {last|latest|lately|later} month, :: でも先月
+S| I {joined|join|joining|joins} :: 私は入った
+O| the art {club|clubbed|clubbing|clubby}, :: 美術部に
+M| {and|nor|than|whom} things changed. :: それで状況が変わった
+== でも先月美術部に入って、状況が変わりました。
+S| A girl {named|name|naming|names} Saki :: サキという子が
+V| sits {next to|next|nearly|beside to} me, :: 隣に座っている
+M| {and|nor|than|whom} we often talk :: よく話す
+P| {about|above|around|across} our favorite manga. :: 好きな漫画について
+== サキという女の子が隣に座っていて、好きな漫画についてよく話します。
+S| She {even|ever|every|evenly} :: 彼女は…さえ
+V| {showed|show|shown|showing} me :: 案内してくれた
+P| {around|among|aroundly|between} the city :: 町を
+T| {last|latest|lately|lastly} weekend. :: 先週末
+== 先週末には町を案内してくれました。
+S| I {still|stilly|stillness|steel} :: 私は今でも
+V| {miss|misses|missing|to miss} you :: あなたが恋しい
+O| and {everyone|every|ever|evenly} :: みんなが
+P| {in|on|at|to} our old class. :: 前のクラスの
+== 今でもあなたや前のクラスのみんなが恋しいです。
+S| Please {come|comes|coming|came} :: ぜひ来てね
+R| {to visit|visits|visited|visitor} me :: 遊びに
+T| {during|while|among|between} summer vacation! :: 夏休みに
+== 夏休みにぜひ遊びに来てね！
+X| Your {friend|friendly|friendship|friends}, Nana :: あなたの友 ナナ
+== あなたの友だち ナナより
+?? 1 1 引っ越してどのくらいたった？
+?? 3 3 ナナは最初どう感じた？
+?? 4 2 ナナは何部に入った？
+?? 5 3 サキとは何について話す？
+
+@id int26
+@lv 2
+@level 6
+@title Join the Science Club!
+@ja 科学部へようこそ
+@tag 共通テストレベル・広告
+@gloss perfect=ぴったりの, robot=ロボット, crystal=結晶, grow=育てる, plan=計画する, curiosity=好奇心, interested=興味がある, experience=経験
+S| Do you {like|likes|liking|liked} :: 好きですか
+O| {asking|ask|asked|to asking} questions :: 疑問をもつのが
+P| {about|above|around|across} the world :: 世界について
+M| {around|among|between|aside} you? :: 身の回りの
+== 身の回りの世界について疑問をもつのは好きですか。
+S| {Then|Than|That|Them} the Science Club :: それなら科学部が
+V| is the {perfect|perfectly|perfection|perfects} place :: ぴったりの場所だ
+P| {for|to|at|by} you! :: あなたに
+== それなら、科学部はあなたにぴったりの場所です！
+S| We {meet|meets|meeting|met to} :: 活動する
+T| every {Wednesday|Wednesdays|Wednesday's|Wednesdays'} :: 毎週水曜
+P| {in|on|to|into} Room 204 :: 204教室で
+T| {after|later|since|ago} school. :: 放課後に
+== 毎週水曜日の放課後、204教室で活動しています。
+T| Last {year|years|yearly|year's}, :: 去年は
+S| we {made|make|making|makes} :: 作った
+O| a small {robot|robots|robotic|robotics} :: 小さなロボットを
+O| and {grew|grow|grown|growing} crystals. :: 結晶を育てた
+== 去年は小さなロボットを作り、結晶を育てました。
+T| This {year|years|yearly|year's}, :: 今年は
+S| we are {planning|plan|planned|plans} :: 計画している
+V| {to study|studying|study|studied} :: 調べることを
+O| the stars {at|in|on|to} night. :: 夜の星を
+== 今年は、夜の星を観察する計画を立てています。
+S| You {do not need|does not need|not need|do not needs} :: 必要はない
+V| {to be|being|be|been} good :: 得意である
+P| {at|on|to|by} science. :: 理科が
+== 理科が得意である必要はありません。
+S| All you {need|needs|needing|needed to} :: 必要なのは
+V| {is|are|be|being} curiosity :: 好奇心だ
+O| and a love {of|to|at|by} learning. :: 学ぶことへの愛
+== 必要なのは、好奇心と学ぶことが好きな気持ちだけです。
+M| If you {are|is|be|being} interested, :: 興味があれば
+V| come and {see|sees|seeing|saw} us :: 見に来て
+T| {on|in|at|to} April 15. :: 4月15日に
+== 興味があれば、4月15日に見学に来てください。
+S| No {experience|experienced|experiences|experiencing} :: 経験は
+V| is {necessary|necessity|necessarily|need} :: 必要ない
+M| {and|nor|than|whom} everyone :: そしてだれでも
+V| is {welcome|welcomes|welcomely|to welcome}! :: 歓迎だ
+== 経験は必要ありません。だれでも大歓迎です！
+?? 2 1 科学部の活動日は？
+?? 2 2 科学部はどこで活動している？
+?? 3 2 去年作ったものは？
+?? 7 2 見学に行く日はいつ？

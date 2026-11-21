@@ -27,7 +27,7 @@ import { TUT } from './tutorial.js';
   export function cat(c) { return c.kind === 'pron' || (c.kind === 'n' && /^(person|animal)$/.test(c.w.e.cat)) ? 'subj' : c.kind === 'v' ? 'verb' : c.kind === 'n' ? 'noun' : 'mod'; }
   export var WANT = { subj: [2, 3], verb: [2, 3], noun: [2, 3], mod: [1, 2] };
   export function deal() { fillTo(8); }
-  export function fillTo(N) {
+  export function fillTo(N, noFix) {
     if (!R.draw.length) { R.draw = shuffle(R.disc); R.disc = []; }
     while (R.hand.length + R.row.filter(function (c) { return !c.tsu; }).length < N) {
       if (!R.draw.length) { if (!R.disc.length) break; R.draw = shuffle(R.disc); R.disc = []; }
@@ -39,6 +39,7 @@ import { TUT } from './tutorial.js';
       if (idx < 0) idx = R.draw.length - 1;
       R.hand.push(R.draw.splice(idx, 1)[0]);
     }
+    if (noFix) return;
     // 他動詞があるのに目的語になれる名詞がないときは、山札から合う名詞と入れかえる
     var vs = R.hand.filter(function (c) { return c.kind === 'v' && c.w.e.fr !== 'intr'; }), ns = R.hand.filter(function (c) { return c.kind === 'n'; });
     if (vs.length && !vs.some(function (v) { return ns.some(function (n) { return verbFits(v, n); }); })) {

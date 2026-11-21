@@ -70,9 +70,9 @@ window.CS_STORY = {
               cut:"切れたね！切ったところをタップすると元に戻せるよ。",
               end:"最後まで進んだら『かんせい』を押してね。" },
       items:[
-        { s:"Tom | plays / soccer.", ja:"トムはサッカーをする。" },
-        { s:"My sister | likes / cats.", ja:"わたしの姉はネコが好き。" },
-        { s:"The dog | runs / fast.", ja:"その犬は速く走る。" }
+        { s:"Tom | plays / soccer.", r:"S V O", ja:"トムはサッカーをする。" },
+        { s:"My sister | likes / cats.", r:"S V O", ja:"わたしの姉はネコが好き。" },
+        { s:"The dog | runs / fast.", r:"S V M", ja:"その犬は速く走る。" }
       ] } },
 
   { no:2, title:"「＝」のことばと「うごき」のことば", sub:"主役のようすを見つける",
@@ -406,7 +406,7 @@ async function run(ch){
   if (adv !== me) return;
   runStage(ch);
 }
-function waitTap(){ return new Promise(r => { if (adv.skip) return r("skip"); adv.resolve = v => { adv.resolve = null; r(v); }; }); }
+function waitTap(){ return new Promise(r => { const me = adv; if (!me) return r("cancel"); if (me.skip) return r("skip"); me.resolve = v => { me.resolve = null; r(v); }; }); }
 
 function slotOf(who){ return adv.chars[who]; }
 function setFace(who, face){
@@ -417,6 +417,7 @@ function setFace(who, face){
   slot.innerHTML = ""; slot.appendChild(charaNode(who, face)); if (q) slot.appendChild(q);
 }
 async function say(st){
+  const me = adv; if (!me) return;
   const c = A.chara[st.say];
   if (st.f) setFace(st.say, st.f);
   Object.entries(adv.chars).forEach(([w, sl]) => sl.classList.toggle("cs-off", w !== st.say));
@@ -425,22 +426,27 @@ async function say(st){
   adv.tbox.classList.remove("cs-ask"); adv.tbox.classList.toggle("cs-big", !!st.big);
   adv.log.push({ who: c ? c.name : "", t: st.t });
   await type(st.t);
+  if (adv !== me) return;
   adv.nx.hidden = false;
   await waitTap();
+  if (adv !== me) return;
   adv.nx.hidden = true; adv.tbox.classList.remove("cs-big");
 }
 async function type(text){
-  adv.tx.textContent = "";
+  const me = adv; if (!me) return;
+  me.tx.textContent = "";
   let done = false, i = 0;
   const p = waitTap().then(() => { done = true; });
-  while (!done && i < text.length && !adv.skip){ adv.tx.textContent += text[i++]; await sleep(26); }
-  adv.tx.textContent = text;
-  if (!done && adv.resolve) { adv.resolve = null; }
+  while (adv === me && !done && i < text.length && !me.skip){ me.tx.textContent += text[i++]; await sleep(26); }
+  if (adv !== me) return;
+  me.tx.textContent = text;
+  if (!done && me.resolve) { me.resolve = null; }
 }
 async function ask(st){
-  const line = adv.lines[st.ask]; if (!line) return;
-  Object.values(adv.chars).forEach(sl => sl.classList.add("cs-off"));
-  adv.nm.textContent = ""; adv.tbox.classList.add("cs-ask"); adv.tx.textContent = st.t;
+  const me = adv; if (!me) return;
+  const line = me.lines[st.ask]; if (!line) return;
+  Object.values(me.chars).forEach(sl => sl.classList.add("cs-off"));
+  me.nm.textContent = ""; me.tbox.classList.add("cs-ask"); me.tx.textContent = st.t;
   const tok = line.tokens[st.i];
   line.tokens.forEach(t => { t.classList.add("cs-tapme"); t.tabIndex = 0; });
   await new Promise(res => {
@@ -449,14 +455,14 @@ async function ask(st){
         e.stopPropagation();
         if (t === tok){ res(); return; }
         t.classList.remove("cs-wrong"); void t.offsetWidth; t.classList.add("cs-wrong");
-        adv.tx.textContent = st.ng || "もう一回！";
+        me.tx.textContent = st.ng || "もう一回！";
       };
       t.onkeydown = e => { if (e.key === "Enter" || e.key === " ") t.onclick(e); };
     });
-    adv.resolve = v => { if (v === "skip") { adv.resolve = null; res(); } };
+    me.resolve = v => { if (v === "skip" || v === "cancel") { me.resolve = null; res(); } };
   });
   line.tokens.forEach(t => { t.classList.remove("cs-tapme"); t.onclick = null; t.onkeydown = null; t.removeAttribute("tabindex"); });
-  adv.tbox.classList.remove("cs-ask");
+  if (adv === me) me.tbox.classList.remove("cs-ask");
 }
 function showLog(){
   const o = el("div", "log"); const inn = el("div", "in");
@@ -483,8 +489,10 @@ const FX = {
     });
   },
   clear: async () => {
-    const kids = [...adv.board.children]; kids.forEach(k => k.classList.add("cs-fade"));
-    await sleep(kids.length ? 330 : 0); adv.board.innerHTML = ""; adv.lines = {};
+    const me = adv; if (!me) return;
+    const kids = [...me.board.children]; kids.forEach(k => k.classList.add("cs-fade"));
+    await sleep(kids.length ? 330 : 0); if (adv !== me) return;
+    me.board.innerHTML = ""; me.lines = {};
   },
   wait: st => sleep(st.ms || 400),
   wall: () => {
@@ -573,13 +581,15 @@ const FX = {
 };
 
 /* ================= ステージ ================= */
-function parseCut(s){
-  const words = [], B = new Set(), O = new Set();
+function parseCut(s, r){   // r:"S V O" = | と / で分けた1まとまりごとの役割(なくてもよい)
+  const words = [], B = new Set(), O = new Set(), rs = r ? r.split(/\s+/) : [], roles = []; let seg = 0;
   s.split(/\s+/).filter(Boolean).forEach(tk => {
-    if (tk === "|") B.add(words.length); else if (tk === "/") O.add(words.length); else words.push(tk);
+    if (tk === "|") { B.add(words.length); seg++; } else if (tk === "/") { O.add(words.length); seg++; } else { words.push(tk); roles.push(rs[seg] || null); }
   });
-  return { words, B, O };
+  return { words, B, O, roles, hasRoles: rs.length > 0 };
 }
+const RCOL = { S:"#7cc4ff", V:"#ff8f8f", O:"#8ee6a8", I:"#6fe0d8", C:"#ffb870", P:"#d6a8ff", T:"#ffd166", M:"#e6ecf5", X:"#9fb0c6" };
+const RTAG = { S:"主役！", V:"どうしてる！", O:"お相手！", I:"お相手！", C:"ようす！", P:"つけたし！", T:"つけたし！", M:"つけたし！", X:"つけたし！" };
 function judge(p, cuts){
   const n = p.words.length, pts = [0, ...[...cuts].sort((a, b) => a - b), n];
   const ok = new Set([0, n, ...p.B, ...p.O]);
@@ -641,7 +651,7 @@ function cutStage(ch, st, finish){
   function next(){
     if (!f.alive) return;
     if (n >= st.items.length) return finish(all);
-    const item = st.items[n], p = parseCut(item.s), len = p.words.length;
+    const item = st.items[n], p = parseCut(item.s, item.r), len = p.words.length;
     f.cnt.textContent = (n + 1) + " / " + st.items.length;
     f.ja.textContent = item.ja || "";
     try { opts.speak && opts.speak(p.words.join(" ")); } catch (e) {}
@@ -657,6 +667,7 @@ function cutStage(ch, st, finish){
     nav.append(bBack, bFwd);
     const bCut = el("button", "cutBtn"); bCut.innerHTML = "区切る<small>▶で進んで、ここだと思ったら押す</small>";
     bar.append(nav, bCut); f.foot.appendChild(bar);
+    f.foot.appendChild(el("div", "dragnote", "指で単語をなぞって、チャンクを囲んでもOK"));
 
     let passed = 0, over = false, hintAt = null;
     const cuts = new Set();   // 「i番目のことばの前で切る」
@@ -671,9 +682,18 @@ function cutStage(ch, st, finish){
 
     function render(anim){
       strip.innerHTML = "";
+      const cs = [...cuts].sort((a, b) => a - b), jr = judge(p, cuts), jc = [];   // 切ったチャンク(いちばん右の区切りより左だけ)
+      { let a0 = 0; cs.forEach((c, k) => { jc.push({ a: a0, b: c - 1, r: jr[k].r }); a0 = c; }); }
       p.words.forEach((w, i) => {
-        const cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "";
-        strip.appendChild(el("span", "w" + cls, esc(w)));
+        let cls = i < passed - 2 ? " gone" : i < passed ? " past" : i === passed ? " next" : "", sty = "";
+        const ch = jc.find(c => i >= c.a && i <= c.b);
+        if (ch) {
+          const rl = p.roles[i], fr = p.roles[ch.a], ok = ch.r === "o", meh = ch.r === "t";
+          cls += " cj " + (ok ? "ok" : meh ? "meh" : "bad") + (i === ch.a ? " cst" : "") + (i === ch.b ? " cen" : "");
+          sty = `--rc:${ok ? RCOL[fr] || "#7cc4ff" : meh ? "#ffd166" : "#ff6b6b"};--wc:${ok && rl ? RCOL[rl] : "#dfe8f5"}`;
+        }
+        const wd = el("span", "w" + cls, esc(w)); if (sty) wd.style.cssText = sty;
+        strip.appendChild(wd);
         if (i + 1 < len && !cuts.has(i + 1) && hintAt === i + 1) strip.appendChild(el("span", "hintmk", "◆"));
         if (i + 1 < len && cuts.has(i + 1)){
           const c = el("span", "cutmark", "｜"); c.title = "タップで元に戻す";
@@ -696,6 +716,17 @@ function cutStage(ch, st, finish){
       bCut.innerHTML = fin ? "かんせい<small>おしまいまで進んだよ</small>" : "区切る<small>▶で進んで、ここだと思ったら押す</small>";
       bCut.disabled = !fin && (over || passed === 0 || cuts.has(passed));
     }
+    // 切った瞬間、そのチャンクの上に役割が はじけて出る(役割データのある問題だけ)
+    function burst(e){
+      if (!p.hasRoles) return; const cs = [...cuts].filter(c => c < e).sort((a, b) => a - b), a = cs.length ? cs[cs.length - 1] : 0;
+      const ws = strip.querySelectorAll(".cs-w"), wa = ws[a], wb = ws[e - 1]; if (!wa || !wb) return;
+      if (((judge(p, cuts).find(c => c.text === p.words.slice(a, e).join(" ")) || {}).r) !== "o") return;
+      const rl = p.roles.slice(a, e).filter((r, i, arr) => r && (!i || r !== arr[i - 1])).slice(0, 3); if (!rl.length) return;
+      lw.querySelectorAll(".cs-rtags").forEach(x => x.remove());
+      const box = el("div", "rtags"); box.innerHTML = rl.map((r, i) => `<span class="cs-rtag" style="--rc:${RCOL[r] || "#9fb0c6"};--d:${i * 90}ms">${RTAG[r] || ""}</span>`).join("");
+      const w = wb.offsetLeft + wb.offsetWidth - wa.offsetLeft; box.style.left = Math.max(50, Math.round(lw.clientWidth * 0.34) - w / 2 - 4) + "px"; lw.appendChild(box);
+      setTimeout(() => { box.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: "forwards" }).onfinish = () => box.remove(); }, 1700);
+    }
     function done(){
       over = true;
       const res = judge(p, cuts); all.push({ s: p.words.join(" "), chunks: res });
@@ -711,13 +742,45 @@ function cutStage(ch, st, finish){
       go.onclick = () => { n++; next(); };
       f.foot.appendChild(go);
     }
+    // 指でなぞって囲む:なぞった範囲の前とうしろで区切る(▶と「区切る」の操作も、そのまま使える)
+    let drag = null; strip.style.touchAction = "none";
+    const wordAt = (x, y) => { const t = document.elementsFromPoint(x, y).find(q => q.classList && q.classList.contains("cs-w") && strip.contains(q)); return t ? [...strip.querySelectorAll(".cs-w")].indexOf(t) : -1; };
+    const paint = () => strip.querySelectorAll(".cs-w").forEach((w, i) => w.classList.toggle("cs-pick", !!drag && i >= Math.min(drag.a, drag.b) && i <= Math.max(drag.a, drag.b)));
+    strip.addEventListener("pointerdown", e => { if (over) return; const i = wordAt(e.clientX, e.clientY); if (i < 0) return; drag = { a: i, b: i, moved: false }; try { strip.setPointerCapture(e.pointerId); } catch (_) {} });
+    strip.addEventListener("pointermove", e => { if (!drag) return; const i = wordAt(e.clientX, e.clientY); if (i >= 0 && i !== drag.b) { drag.b = i; drag.moved = true; paint(); } });
+    const dragEnd = () => {
+      if (!drag) return; const d = drag; drag = null; paint(); if (!d.moved || over) return;
+      const a = Math.min(d.a, d.b), b = Math.max(d.a, d.b);
+      if (a > 0) cuts.add(a); if (b + 1 < len) cuts.add(b + 1);
+      passed = Math.max(passed, b + 1); hintAt = null; render(true); burst(b + 1 < len ? b + 1 : len); tell("cut");
+    };
+    strip.addEventListener("pointerup", dragEnd); strip.addEventListener("pointercancel", () => { drag = null; paint(); });
     bBack.onclick = () => { if (over || bBack.disabled) return; passed--; [...cuts].forEach(i => { if (i > passed) cuts.delete(i); }); render(true); };   // 戻った範囲の区切りは取り消す
     bFwd.onclick = () => { if (over || passed >= len) return; passed++; render(true); if (passed >= len) tell("end"); };
     bCut.onclick = () => {
       if (bCut.disabled || over) return;
       if (passed >= len) return done();
-      cuts.add(passed); if (hintAt === passed) hintAt = null; render(true); tell("cut");
+      cuts.add(passed); if (hintAt === passed) hintAt = null; render(true); burst(passed); tell("cut");
     };
+    // はじめて切る人向け:操作する場所を、暗い背景のくり抜き＋指マークで順番に示す(最初の1回切るまで)
+    if (n === 0 && (opts.episode || ch.no === 1)) {
+      const spot = el("div", "spot"), hand = el("div", "spothand", "👇"), cap = el("div", "spotcap");
+      f.s.append(spot, hand, cap);
+      const off = () => { clearInterval(tm); spot.remove(); hand.remove(); cap.remove(); };
+      const tick = () => {
+        if (!f.alive || !spot.isConnected || over) return off();
+        // ①▶で進む → ②区切る → ③つづけて▶(切るたびにくり返し) → ④最後まで来たら「かんせい」
+        const fin = passed >= len, tg = fin ? bCut : (passed === 0 || cuts.size > 0) ? bFwd : bCut, r = tg.getBoundingClientRect(), sr = f.s.getBoundingClientRect();
+        spot.style.cssText = `left:${r.left - sr.left - 6}px;top:${r.top - sr.top - 6}px;width:${r.width + 12}px;height:${r.height + 12}px`;
+        hand.style.cssText = `left:${r.left - sr.left + r.width / 2}px;top:${r.top - sr.top - 52}px`;
+        cap.style.cssText = `top:${Math.max(8, r.top - sr.top - 150)}px`;
+        cap.innerHTML = fin ? "<b>④ 最後まで来たよ！</b><br><b>「かんせい」</b>を押して、答え合わせしよう。"
+          : passed === 0 ? "<b>① ▶を押す</b><br>言葉が1つずつ、オレンジの線へ進むよ。"
+          : cuts.size === 0 ? "<b>② 線の左までが ひとまとまり</b><br>ここで区切りたいと思ったら、<b>「区切る」</b>を押そう。<small>（言葉を指でなぞって囲んでもOK）</small>"
+          : "<b>③ 切れたね！</b><br>つづけて<b>▶</b>で進もう。区切りたいところで「区切る」。<small>最後の言葉まで進めたら終わりだよ。</small>";
+      };
+      const tm = setInterval(tick, 200); tick();
+    }
     render(false);
   }
 }
@@ -784,6 +847,7 @@ function showResult(ch, results){
   if (unlockedMode) s.appendChild(el("div", "unl", `「${esc(unlockedMode.name)}」があそべるようになった！`));
   const col = el("div", "col");
   const nextCh = S.chapters.find(c => c.no === ch.no + 1);
+  if (opts.episode){ const be = el("button", "bb go", "物語のつづきへ"); be.onclick = () => opts.onEpisodeNext && opts.onEpisodeNext(); col.appendChild(be); const br0 = el("button", "bb", "もう一回あそぶ"); br0.onclick = () => runStage(ch); col.appendChild(br0); s.appendChild(col); opts.onChapterClear && opts.onChapterClear(ch.no, { pct, firstClear }); return; }   // 物語の中では「次の章へ・マップへ」を出さず、物語に戻る道を1本にする
   if (nextCh){ const bn = el("button", "bb go", "つぎの章へ"); bn.onclick = () => playChapter(nextCh.no); col.appendChild(bn); }
   else if (opts.onFinish){ const bf2 = el("button", "bb go", "ゲームへ"); bf2.onclick = () => opts.onFinish(prog); col.appendChild(bf2); }
   const br = el("button", "bb", "もう一回あそぶ"); br.onclick = () => runStage(ch);
@@ -811,6 +875,7 @@ window.ChunkStory = {
   isUnlocked: key => !!prog.unlocked[key],
   reset(){ prog = { cleared:{}, unlocked:{} }; save(prog); openMap(); },
   unmount(){
+    if (adv && adv.resolve) adv.resolve("cancel");
     adv = null; if (curFrame) curFrame.alive = false;
     if (root){ root.innerHTML = ""; root.classList.remove("cs-root"); }
     root = app = null;

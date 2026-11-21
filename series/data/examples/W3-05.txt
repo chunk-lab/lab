@@ -1,0 +1,66 @@
+inflate | v | Use this small pump to inflate the balloons for the party. | パーティー用の風船を膨らませるために、この小さなポンプを使ってください。
+inflate | v | Can you inflate the bicycle tire before our afternoon ride? | 午後のサイクリングの前に自転車のタイヤを膨らませられますか。
+inflate | v | The children inflated several colorful balloons to decorate the classroom. | 子供たちは教室を飾るために色とりどりの風船をいくつか膨らませました。
+ventilate | v | Open both windows to ventilate the room after painting. | 塗装の後は両方の窓を開けて部屋を換気してください。
+ventilate | v | How often should we ventilate this crowded meeting room? | この人が多い会議室はどのくらいの頻度で換気すべきですか。
+ventilate | v | The staff ventilated the kitchen before preparing the evening meal. | 職員たちは夕食の準備前に台所を換気しました。
+annoyance | n | To my annoyance, the train arrived later than expected. | 困ったことに、電車は予想より遅く到着しました。
+annoyance | n | Did the repeated changes cause annoyance among the event organizers? | 度重なる変更は行事の主催者たちを困惑させましたか。
+annoyance | n | She expressed her annoyance when the instructions suddenly became unclear. | 説明が突然分かりにくくなり、彼女は困惑した気持ちを表しました。
+reciprocal | n | The reciprocal of four is one divided by four. | 四の逆数は一を四で割った数です。
+reciprocal | n | Can you find the reciprocal of this fraction without a calculator? | 計算機を使わずにこの分数の逆数を求められますか。
+reciprocal | n | The students learned that multiplying a number by its reciprocal gives one. | 生徒たちは数とその逆数を掛けると一になると学びました。
+certify | v | The school can certify that you completed the training course. | 学校はあなたが研修課程を修了したことを証明できます。
+certify | v | Will the office certify this document before the application deadline? | その事務所は申請期限までにこの書類を証明してくれますか。
+certify | v | The inspector certified that the equipment met the required standards. | 検査員はその機器が必要な基準を満たしていると証明しました。
+cultivation | n | The cultivation of vegetables requires careful attention to the soil. | 野菜の耕作には土への細やかな注意が必要です。
+cultivation | n | Does the cultivation of rice depend on a steady water supply? | 稲の耕作には安定した水の供給が必要ですか。
+cultivation | n | Local farmers improved their methods of cultivation over several years. | 地元の農家は数年かけて耕作方法を改善しました。
+familiarity | n | Her familiarity with the neighborhood helped us find the station. | 彼女がその地域をよく知っていたおかげで駅を見つけられました。
+familiarity | n | Does your familiarity with this software make the task easier? | このソフトをよく知っていることで作業が楽になりますか。
+familiarity | n | Years of practice gave him great familiarity with the instrument. | 長年の練習で彼はその楽器に非常に詳しくなりました。
+disentangle | v | Please help me disentangle these wires before we move the desk. | 机を動かす前に、これらのコードをほどくのを手伝ってください。
+disentangle | v | Can you disentangle the string without cutting it into pieces? | ひもを切らずにほどくことができますか。
+disentangle | v | She carefully disentangled the necklace from the other jewelry. | 彼女はネックレスをほかのアクセサリーから慎重にほどきました。
+portrayal | n | The actor's portrayal of a friendly teacher impressed the audience. | その俳優による親しみやすい先生の描写は観客に感銘を与えました。
+portrayal | n | Was the film's portrayal of village life accurate and convincing? | その映画の村の暮らしの描写は正確で説得力がありましたか。
+portrayal | n | Critics praised her sensitive portrayal of the main character. | 批評家たちは彼女による主人公の繊細な描写を称賛しました。
+harden | v | Leave the clay in a dry place to harden overnight. | 粘土を乾燥した場所に一晩置いて固くしてください。
+harden | v | Will the chocolate harden if we put it somewhere cool? | チョコレートを涼しい場所に置くと固くなりますか。
+harden | v | The cold weather hardened the ground around the garden. | 寒い天候で庭の周りの地面が固くなりました。
+illumination | n | Soft illumination made the small restaurant feel warm and welcoming. | 柔らかな照明が小さなレストランを温かく居心地よく感じさせました。
+illumination | n | Does the library provide enough illumination for reading at night? | その図書館には夜の読書に十分な照明がありますか。
+illumination | n | The designer adjusted the illumination to highlight the paintings. | デザイナーは絵画を引き立てるために照明を調整しました。
+honeycomb | n | The beekeeper showed us a honeycomb filled with golden honey. | 養蜂家は黄金色の蜂蜜で満たされたミツバチの巣を見せてくれました。
+honeycomb | n | Have you ever seen a honeycomb inside a beehive? | ミツバチの巣箱の中で蜂の巣を見たことがありますか。
+honeycomb | n | The children noticed that the honeycomb contained many small cells. | 子供たちはミツバチの巣に小さな部屋がたくさんあると気づきました。
+assimilate | v | Students need time to assimilate new information after a difficult lesson. | 生徒たちは難しい授業の後、新しい情報を吸収する時間が必要です。
+assimilate | v | Can you assimilate all these ideas in a single afternoon? | これらの考えをすべて一日の午後で吸収できますか。
+assimilate | v | She gradually assimilated the knowledge gained from her practical experience. | 彼女は実際の経験から得た知識を徐々に吸収しました。
+rebate | n | The store offered a rebate after customers purchased the washing machine. | その店は洗濯機を購入した客に払い戻しを提供しました。
+rebate | n | Can I receive a rebate if I complete this application? | この申請書を記入すれば払い戻しを受けられますか。
+rebate | n | Customers received their rebates several weeks after submitting the forms. | 客たちは書類を提出して数週間後に払い戻しを受けました。
+distill | v | The students watched their teacher distill water during the science lesson. | 生徒たちは理科の授業で先生が水を蒸留するのを見ました。
+distill | v | Can we distill this water using the equipment in our laboratory? | 実験室の装置を使ってこの水を蒸留できますか。
+distill | v | The scientist distilled the liquid and collected the resulting pure water. | 科学者は液体を蒸留し、得られた純粋な水を集めました。
+falsify | v | No researcher should falsify results to make an experiment look successful. | 実験が成功したように見せるために結果を偽造してはいけません。
+falsify | v | Why would someone falsify a signature on an official document? | なぜ公的書類の署名を偽造する人がいるのでしょうか。
+falsify | v | The manager discovered that someone had falsified the sales records. | 責任者は誰かが売上記録を偽造していたことを発見しました。
+mosaic | n | A colorful mosaic covered the wall beside the museum entrance. | 博物館の入り口の横の壁は色鮮やかなモザイクで覆われていました。
+mosaic | n | Can you make a mosaic using these small pieces of glass? | これらの小さなガラス片を使ってモザイクを作れますか。
+mosaic | n | Visitors admired the beautiful mosaics on the old building's floor. | 訪問者たちは古い建物の床にある美しいモザイクに感心しました。
+thickly | r | Spread the cream thickly over the top of the cake. | ケーキの上にクリームを厚く塗ってください。
+thickly | r | Did the gardener spread the soil thickly around the plants? | 庭師は植物の周りに土を厚く敷きましたか。
+thickly | r | Fresh snow lay thickly across the fields after the storm. | 嵐の後、新しい雪が野原一面に厚く積もっていました。
+deviate | v | Please do not deviate from the marked hiking trail. | 標識のあるハイキングコースからそれないでください。
+deviate | v | Why did the driver deviate from the planned route? | 運転手はなぜ予定の道順からそれたのですか。
+deviate | v | The discussion deviated from its original topic several times. | 話し合いは何度か元の話題からそれました。
+decomposition | n | The decomposition of fallen leaves helps enrich the garden soil. | 落ち葉の分解は庭の土を豊かにする助けになります。
+decomposition | n | Does decomposition happen faster in warm and wet conditions? | 分解は暖かく湿った条件でより速く進みますか。
+decomposition | n | The class observed the decomposition of fruit scraps in compost. | 授業では堆肥の中の果物くずの分解を観察しました。
+condemnation | n | The unfair decision drew strong condemnation from many local residents. | その不公平な決定は多くの地元住民から強い非難を受けました。
+condemnation | n | Did the company's sudden announcement lead to public condemnation? | その会社の突然の発表は世間の非難につながりましたか。
+condemnation | n | Her public condemnation of the plan surprised the other committee members. | 彼女が公にその計画を非難したことはほかの委員を驚かせました。
+transcribe | v | Please transcribe the interview carefully before writing your report. | 報告書を書く前にインタビューを書き起こしてください。
+transcribe | v | Can you transcribe this short recording by tomorrow afternoon? | 明日の午後までにこの短い録音を書き起こせますか。
+transcribe | v | The students transcribed their teacher's speech for the school newspaper. | 生徒たちは学校新聞のために先生のスピーチを書き起こしました。

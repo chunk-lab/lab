@@ -1,0 +1,539 @@
+@id beg18
+@lv 1
+@level 4
+@title Our School Trip to Nara
+@ja 奈良への修学旅行
+@tag 高校受験レベル・日記
+@gloss school trip=修学旅行, temple=寺, statue=像, huge=巨大な, Buddha=仏, deer=シカ, souvenir=おみやげ, wonderful=すばらしい
+T| {Today|Todays|Yesterday's|To day} :: 今日
+S| our class {went|go|goes|going} :: 私たちのクラスは行った
+P| {to|at|in|for} Nara :: 奈良へ
+R| {on|in|at|by} a school trip. :: 修学旅行で
+== 今日、私たちのクラスは修学旅行で奈良へ行った。
+T| {In|On|At|By} the morning, :: 午前中に
+S| we {visited|visit|visiting|visits} :: 私たちは訪れた
+O| a {famous|fame|famously|fames} temple. :: 有名な寺を
+== 午前中、私たちは有名な寺を訪れた。
+S| {There|Their|They|Them} was :: …があった
+C| a {huge|hugely|hug|hugs} statue :: 巨大な像が
+P| {of|off|at|than} Buddha :: 仏の
+P| {inside|insides|inner|in side} the temple. :: 寺の中に
+== 寺の中には巨大な大仏があった。
+S| {It|Its|It's|They} :: それは
+V| was {bigger|big|biggest|more big} :: より大きかった
+P| {than|then|that|as} I thought. :: 思っていたより
+== それは思っていたより大きかった。
+T| {After|Afters|Since|While} lunch, :: 昼食の後
+S| we {walked|walk|walking|walks} :: 私たちは歩いた
+P| {around|arounds|around of|round to} Nara Park. :: 奈良公園を回って
+== 昼食の後、私たちは奈良公園を歩いて回った。
+S| {Many|Much|A lot|Lot} deer :: たくさんのシカが
+V| {came|comed|coming|to come} :: やって来た
+P| {up to|up for|up of|up at} us :: 私たちのそばに
+R| {for|to|of|at} food. :: 食べ物を求めて
+== たくさんのシカが食べ物を求めて私たちのそばに来た。
+S| One deer {pushed|push|pushing|pushs} :: 1頭のシカが押した
+O| my {bag|bagged|bagging|to bag} :: 私のかばんを
+M| {with|of|at|than} its head. :: 頭で
+== 1頭のシカが頭で私のかばんを押した。
+S| {Everyone|Every|Everyones|Each} :: みんなが
+V| {laughed|laugh|laughing|laughted} :: 笑った
+O| {at|on|in|to} the deer. :: そのシカを見て
+== みんながそのシカを見て笑った。
+T| {In|On|At|For} the evening, :: 夕方に
+S| I {bought|buy|buyed|buys} :: 私は買った
+O| {souvenirs|souvenir|a souvenirs|souvenired} :: おみやげを
+P| {for|to|of|at} my family. :: 家族に
+== 夕方、私は家族におみやげを買った。
+S| {It|Its|They|Them} :: それは
+V| {was|were|be|being} :: …だった
+C| a {wonderful|wonder|wonderfully|wonders} day. :: すばらしい日
+== すばらしい一日だった。
+?? 1 2 午前中にどこを訪れた？
+?? 4 2 昼食の後、どこを歩いて回った？
+?? 5 3 シカは何を求めて来た？
+?? 8 3 だれにおみやげを買った？
+
+@id beg19
+@lv 1
+@level 4
+@title My Favorite Teacher
+@ja 好きな先生
+@tag 高校受験レベル・スピーチ
+@gloss favorite=大好きな, subject=教科, explain=説明する, clearly=わかりやすく, joke=冗談, worried=心配して, future=将来, advice=助言, respect=尊敬する
+S| {I'd|I'm|I'll|I've} like :: 私は…したい
+V| {to talk|talk|talking|to talking} :: 話すこと
+O| {about|abouts|above|around} my favorite teacher. :: 好きな先生について
+== 私の大好きな先生についてお話ししたいと思います。
+S| Her {name|names|named|naming} :: 彼女の名前は
+V| {is|are|be|am} Ms. Tanaka, :: 田中先生です
+C| {our|we|us|ours} math teacher. :: 私たちの数学の先生
+== 彼女の名前は田中先生で、私たちの数学の先生です。
+M| {At|In|On|For} first, :: 最初は
+S| I {didn't|doesn't|wasn't|not} like :: 私は好きでなかった
+O| math {very much|very many|many much|very more}. :: 数学があまり
+== 最初、私は数学があまり好きではありませんでした。
+S| {She|Her|Hers|Herself} :: 彼女は
+V| {explained|explain|explaining|explainned} :: 説明した
+O| {everything|every|everythings|anythings} :: すべてを
+M| {clearly|clear|clearful|clearness}. :: わかりやすく
+== 彼女はすべてをわかりやすく説明してくれました。
+S| She {often|oftenly|often to|offer} :: 彼女はよく
+V| {told|tell|telled|telling} us :: 私たちに言った
+O| {funny|funnily|fan|funnies} jokes :: おもしろい冗談を
+P| {in|on|at|by} class. :: 授業中に
+== 彼女は授業中によくおもしろい冗談を言いました。
+M| {Thanks to|Thank to|Thanks for|Thanking} her, :: 彼女のおかげで
+S| math {became|become|becomed|becoming} :: 数学はなった
+C| my {favorite|favor|favorably|favors} subject. :: 好きな教科に
+== 彼女のおかげで、数学は私の好きな教科になりました。
+T| {Last|Next|Later|Ago} year, :: 去年
+S| I {was|were|am|be} worried :: 私は心配していた
+O| {about|above|abouts|of} my future. :: 将来について
+== 去年、私は将来のことで悩んでいました。
+S| She {listened|listen|listening|listend} :: 彼女は聞いた
+O| {to|for|at|with} me :: 私の話を
+M| and {gave|give|given|giving} me :: そしてくれた
+O| good {advice|advices|advise|adviced}. :: よい助言を
+== 彼女は私の話を聞いて、よいアドバイスをくれました。
+S| I {respect|respects|respecting|respectful} :: 私は尊敬している
+O| {her|she|hers|herself} :: 彼女を
+M| {very much|very many|many much|much very}. :: とても
+== 私は彼女をとても尊敬しています。
+T| {Someday|Somedays|Yesterday|Ago}, :: いつか
+S| I {want|wants|wanting|wanted to} :: 私は…したい
+V| {to be|be|being|been} :: …になること
+C| a teacher {like|likes|liked|liking} her. :: 彼女のような先生
+== いつか、彼女のような先生になりたいです。
+?? 1 2 田中先生は何の先生？
+?? 3 3 先生はどのように説明した？
+?? 7 3 先生は何をくれた？
+?? 9 3 いつか何になりたい？
+
+@id beg20
+@lv 1
+@level 4
+@title The Relay Race
+@ja 運動会
+@tag 高校受験レベル・物語文
+@gloss sports day=運動会, relay=リレー, runner=走者, nervous=緊張して, behind=遅れて, baton=バトン, cheer=応援する, finish line=ゴール, proud=誇りに思う
+T| {Last|Late|Lastly|Latest} October, :: 去年の10月
+S| Kenta's school {had|has|have|having} :: ケンタの学校は行った
+O| {its|it's|it|it is} sports day. :: 運動会を
+== 去年の10月、ケンタの学校で運動会があった。
+S| Kenta {was|were|be|being} :: ケンタは…だった
+C| the {last|lastly|late|lasting} runner :: 最後の走者
+P| {in|on|into|than} the relay. :: リレーの
+== ケンタはリレーのアンカーだった。
+T| {Before|Befor|Beforehand|Ago} the race, :: レースの前
+S| he {was|were|be|been} :: 彼は…だった
+C| very {nervous|nerve|nervously|nerves}. :: とても緊張して
+== レースの前、彼はとても緊張していた。
+T| {During|While|Durings|Since} the race, :: レース中に
+S| a boy {on|to|than|nor} his team :: チームの男の子が
+V| {fell|fall|falled|fallen} down. :: 転んだ
+== レース中に、彼のチームの男の子が転んでしまった。
+S| Their team {was|be|been|being} :: 彼らのチームは
+C| far {behind|behinds|before|beside} :: ずっと遅れて
+P| {the other|the others|another|others of} teams. :: ほかのチームより
+== 彼らのチームはほかのチームにずっと遅れていた。
+T| {Then|Than|There|That} :: そのとき
+S| Kenta {got|get|getted|getting} :: ケンタは受け取った
+O| the {baton|batons|batton|batoned}. :: バトンを
+== そのとき、ケンタがバトンを受け取った。
+S| He {ran|run|runned|running} :: 彼は走った
+M| as {fast|faster|fastly|fastest} :: できるだけ速く
+X| as he {could|can|cans|could to}. :: できる限り
+== 彼はできるだけ速く走った。
+S| Everyone {cheered|cheer|cheering|cheerd} :: みんなが応援した
+O| {for|to|at|of} him :: 彼を
+M| {loudly|loudness|loudy|aloudly}. :: 大きな声で
+== みんなが大きな声で彼を応援した。
+S| He {passed|past|pass|passing} :: 彼は抜いた
+O| two {runners|runner|running|runned} :: 2人の走者を
+P| {before|befor|since|ago} the finish line. :: ゴールの前で
+== 彼はゴールの前で2人の走者を抜いた。
+S| His {teammates|teammate|team mates's|teaming} :: チームの仲間は
+V| {were|was|is|be} :: …だった
+C| very {proud|pride|proudly|prouds} of him. :: 彼を誇りに
+== チームの仲間たちは彼をとても誇りに思った。
+?? 1 1 ケンタはリレーで何番目の走者だった？
+?? 3 2 レース中に男の子はどうなった？
+?? 8 1 ケンタは何人を抜いた？
+?? 9 2 仲間はケンタをどう思った？
+
+@id beg21
+@lv 1
+@level 4
+@title The Class Play
+@ja 文化祭の劇
+@tag 高校受験レベル・物語文
+@gloss school festival=文化祭, play=劇, main role=主役, practice=練習する, line=せりふ, stage=舞台, whisper=ささやく, audience=観客, clap=拍手する
+P| {At|Of|To|Than} the school festival, :: 文化祭で
+S| Yui's class {did|do|done|doing} :: ユイのクラスはした
+O| a {play|plays|player|playing}. :: 劇を
+== 文化祭で、ユイのクラスは劇をした。
+S| Yui {got|get|gotten|getting} :: ユイはもらった
+O| the {main|mainly|mains|mane} role :: 主役を
+P| {in|on|to|into} the play. :: 劇で
+== ユイは劇の主役をもらった。
+S| She {practiced|practice|practicing|practise} :: 彼女は練習した
+O| her {lines|line's|lining|lined} :: せりふを
+T| {every|ever|very|everyone} day. :: 毎日
+== 彼女は毎日せりふを練習した。
+T| {On|In|Of|To} the day of the play, :: 劇の当日
+S| she {was|were|be|been} :: 彼女は…だった
+C| {so|such|too|very} nervous :: とても緊張して
+R| {that|than|then|what} her hands shook. :: 手が震えるほど
+== 劇の当日、彼女は手が震えるほど緊張していた。
+P| {On|Of|To|Than} the stage, :: 舞台の上で
+S| she {forgot|forget|forgotten|forgetting} :: 彼女は忘れた
+O| {one|once|ones|won} line. :: せりふを1つ
+== 舞台の上で、彼女はせりふを1つ忘れてしまった。
+S| Her {friend|friends|friendly|friendship} Mika :: 友達のミカが
+V| {whispered|whisper|whispering|whisperd} :: ささやいた
+O| the line {to|of|than|nor} her. :: 彼女にせりふを
+== 友達のミカが彼女にせりふをささやいた。
+S| Yui {remembered|remember|remembering|remembred} :: ユイは思い出した
+O| {it|its|it's|them} :: それを
+M| and {continued|continue|continuing|continueing}. :: そして続けた
+== ユイはそれを思い出して、続けた。
+P| {At|To|Of|For} the end, :: 最後に
+S| the {audience|audiense|audiencing|audienced} :: 観客は
+V| {clapped|clap|claped|clapping} :: 拍手した
+M| {for|to|at|of} a long time. :: 長いあいだ
+== 最後に、観客は長いあいだ拍手をした。
+S| Yui {said|say|told|sayed} :: ユイは言った
+P| {to|for|at|with} Mika, :: ミカに
+O| "Thank you {for|to|of|at} your help." :: 助けてありがとう
+== ユイはミカに「助けてくれてありがとう」と言った。
+S| It {was|were|be|been} :: それは…だった
+C| the {best|bestest|goodest|better} day :: 最高の日
+P| {of|on|at|than} her school life. :: 学校生活で
+== それは彼女の学校生活でいちばんの日だった。
+?? 1 1 ユイは何の役をもらった？
+?? 4 2 舞台でユイは何を忘れた？
+?? 5 0 だれがせりふをささやいた？
+?? 7 2 最後に観客はどうした？
+
+@id beg22
+@lv 1
+@level 4
+@title Lunch Time at Japanese Schools
+@ja 学校の給食の時間
+@tag 高校受験レベル・説明文
+@gloss school lunch=給食, take turns=交代でする, serve=配る, apron=エプロン, nutritionist=栄養士, menu=献立, balanced=バランスのとれた, plate=皿, kitchen=調理室
+P| {In|On|Of|To} many Japanese schools, :: 多くの日本の学校で
+S| students {eat|eats|eating|ate to} :: 生徒は食べる
+O| school {lunch|launch|lunching|lunched} :: 給食を
+P| {in|on|to|into} their classroom. :: 教室で
+== 多くの日本の学校では、生徒は教室で給食を食べる。
+S| Students {take|takes|taken|taking} turns :: 生徒は交代で
+V| {serving|serve|served|to serving} :: 配ることを
+O| the {food|foodes|feed's|fooding}. :: 食べ物を
+== 生徒は交代で食べ物を配る。
+S| They {wear|wears|weared|wearing} :: 彼らは身につける
+O| white aprons {and|nor|but|so} caps :: 白いエプロンと帽子を
+R| {to keep|keep|keeps|kept} the food clean. :: 食べ物を清潔に保つため
+== 彼らは食べ物を清潔に保つため、白いエプロンと帽子を身につける。
+S| A {nutritionist|nutrition|nutritious|nutritiously} :: 栄養士が
+V| {plans|plan|planning|planned to} :: 考える
+O| the {menu|manu|menued|menuing} :: 献立を
+R| {for|to|than|nor} each day. :: 毎日の
+== 栄養士が毎日の献立を考える。
+M| {Usually|Usual|Usualy|Usuals}, :: ふだん
+S| the meals {are|is|be|being} :: 食事は…だ
+C| healthy {and|nor|but|than} balanced. :: 健康的でバランスよい
+== ふだん、食事は健康的でバランスがとれている。
+S| {Everyone|Every|Everyones|Each ones} :: みんなが
+V| {says|say|saying|sayed} "Itadakimasu" :: 「いただきます」と言う
+M| {together|togather|togethers|gethered} :: いっしょに
+T| {before|befor|ago|since} eating. :: 食べる前に
+== みんなで食べる前に「いただきます」と言う。
+S| Students {try|tries|trying|tryed} :: 生徒は…しようとする
+V| {not to|not|don't to|no to} leave :: 残さないように
+O| food {on|to|than|nor} their plates. :: 皿に食べ物を
+== 生徒は皿に食べ物を残さないようにする。
+T| {After|Afters|While|Since} lunch, :: 昼食の後
+S| they {carry|carries|carrying|carried to} :: 彼らは運ぶ
+O| the {dishes|dishs|dishies|dishing} :: 食器を
+P| {back to|back of|back at|back than} the kitchen. :: 調理室へ戻して
+== 昼食の後、生徒は食器を調理室へ運んで返す。
+S| School lunch {teaches|teach|taught to|teaching} :: 給食は教える
+O| {children|child|childs|childrens} :: 子どもたちに
+O| {many|much|lot|a lot} things. :: 多くのことを
+== 給食は子どもたちに多くのことを教えてくれる。
+?? 0 3 生徒はどこで給食を食べる？
+?? 3 0 だれが献立を考える？
+?? 5 3 いつ「いただきます」と言う？
+?? 7 3 食器をどこへ運ぶ？
+
+@id beg23
+@lv 1
+@level 4
+@title The Speech Contest
+@ja 英語スピーチコンテスト
+@tag 高校受験レベル・日記
+@gloss take part in=参加する, speech contest=弁論大会, topic=テーマ, practice=練習する, heart=心臓, beat=鼓動する, judge=審査員, voice=声, prize=賞
+T| {Today|Todays|To day|Today's} :: 今日
+S| I {took|take|taken|takes} part :: 私は参加した
+P| {in|on|at|to} an English speech contest. :: 英語弁論大会に
+== 今日、私は英語スピーチコンテストに出た。
+S| The {topic|topics|topical|topically} :: テーマは
+P| {of|off|than|at} my speech :: 私のスピーチの
+V| {was|were|be|been} my grandmother. :: 祖母だった
+== 私のスピーチのテーマは祖母だった。
+S| I {had|has|having|haves} practiced :: 私は練習していた
+O| {it|its|it's|them} :: それを
+T| {for|since|while|ago} a month. :: 1か月間
+== 私は1か月間それを練習してきた。
+S| {There|Their|They're|They} were :: …がいた
+C| ten {speakers|speaker|speaking|speaks} :: 10人の発表者が
+P| {before|befor|ago|since} me. :: 私の前に
+== 私の前に10人の発表者がいた。
+S| My {heart|hearts|heard|heartly} :: 私の心臓は
+V| was {beating|beat|beats|beated} :: 鳴っていた
+M| very {fast|fastly|fasting|fasted}. :: とても速く
+== 心臓がとても速くドキドキしていた。
+S| I {walked|walken|walking|walks} :: 私は歩いた
+P| {onto|ontos|on top|into to} the stage :: ステージに
+M| and {looked|look|looking|looks} :: そして見た
+P| {at|on|in|to} the judges. :: 審査員を
+== 私はステージに上がり、審査員を見た。
+T| {Then|Than|There|They} :: それから
+S| I {spoke|speaked|spoken|speaking} :: 私は話した
+M| {slowly|slowness|slowed|slowy} :: ゆっくりと
+P| {in|on|at|to} a loud voice. :: 大きな声で
+== それから、私は大きな声でゆっくり話した。
+T| {After|Afters|Since|While} the contest, :: コンテストの後
+S| a judge {came|comed|coming|comen} :: 審査員が来た
+P| {to|on|of|than} me. :: 私のところへ
+== コンテストの後、審査員の一人が私のところに来た。
+S| She {said|say|told|sayed}, :: 彼女は言った
+O| "Your {story|stories|storing|storey} :: あなたの話は
+V| {was|were|is being|be} :: …だった
+C| {beautiful|beauty|beautifully|beautify}." :: すてき
+== 彼女は「あなたの話はすてきでした」と言った。
+S| I {didn't|doesn't|wasn't|not} win :: 私はとれなかった
+O| a {prize|prizes|prise|prized}, :: 賞を
+M| {but|than|nor|whom} I was happy. :: でもうれしかった
+== 賞はとれなかったけれど、私はうれしかった。
+?? 1 2 スピーチのテーマは何だった？
+?? 2 2 どのくらいの期間練習した？
+?? 3 1 私の前に何人の発表者がいた？
+?? 8 3 審査員は話をどう言った？
+
+@id beg24
+@lv 1
+@level 4
+@title A New Friend from Brazil
+@ja ブラジルから来た転校生
+@tag 高校受験レベル・物語文
+@gloss introduce=紹介する, Portuguese=ポルトガル語, quiet=静かな, lunch break=昼休み, soccer=サッカー, light up=明るくなる, smile=笑顔, best friend=親友
+T| {One|Once|Ones|Won} morning, :: ある朝
+S| a new student {came|comed|coming|comen} :: 新しい生徒が来た
+P| {to|on|at|of} our class. :: 私たちのクラスに
+== ある朝、私たちのクラスに新しい生徒が来た。
+S| His name {was|were|be|been} Lucas, :: 名前はルーカス
+M| and he {was|were|be|being} :: そして彼は
+P| {from|for|of|to} Brazil. :: ブラジル出身
+== 彼の名前はルーカスで、ブラジル出身だった。
+S| He {introduced|introduce|introducing|introducted} :: 彼は紹介した
+O| {himself|hisself|himselves|he's} :: 自分を
+P| {in|on|at|by} English. :: 英語で
+== 彼は英語で自己紹介をした。
+S| He {could|cans|coulds|couldn't to} :: 彼は…できた
+V| {speak|speaks|spoke|speaking} :: 話す
+O| {Portuguese|Portugal|Portuguese's|Portugueses}. :: ポルトガル語を
+== 彼はポルトガル語を話すことができた。
+M| {At|In|On|For} first, :: 最初は
+S| he {was|were|be|been} :: 彼は…だった
+C| very {quiet|quite|quietly|quiets}. :: とても静かで
+== 最初、彼はとても静かだった。
+T| {During|While|Durring|Since} lunch break, :: 昼休みに
+S| I {asked|askt|asks|asking} him, :: 私は彼にたずねた
+O| "Do you {like|likes|liking|liked} soccer?" :: サッカーは好き？
+== 昼休みに、私は彼に「サッカーは好き？」とたずねた。
+S| His {face|fase|faced|facing} :: 彼の顔が
+V| {lit up|light up|lit on|lighten up} :: 明るくなった
+M| {right away|right a way|rightly away|right way}. :: すぐに
+== 彼の顔はすぐにぱっと明るくなった。
+S| He {said|sayed|sain|saying} :: 彼は言った
+M| {with|by|of|at} a big smile, :: 大きな笑顔で
+O| "Yes! I {love|loves|loving|lovely} it!" :: うん、大好き！
+== 彼は大きな笑顔で「うん、大好きだよ！」と言った。
+T| {After|Afters|Since|While} school, :: 放課後
+S| we {played|plaid|playing|plays} :: 私たちはした
+O| soccer {together|togather|togethers|gethered}. :: いっしょにサッカーを
+== 放課後、私たちはいっしょにサッカーをした。
+T| {Now|Know|No|New} :: 今では
+S| Lucas {is|are|be|being} :: ルーカスは…だ
+C| my {best|bestest|most good|better} friend. :: 私の親友
+== 今では、ルーカスは私の親友だ。
+?? 1 2 ルーカスはどこの出身？
+?? 3 2 ルーカスは何語を話せた？
+?? 5 2 昼休みに何をたずねた？
+?? 8 2 放課後に何をした？
+
+@id beg25
+@lv 1
+@level 4
+@title Cleaning Time at School
+@ja 学校のそうじの時間
+@tag 高校受験レベル・説明文
+@gloss own=自分自身の, spend=使う, sweep=掃く, floor=床, wipe=ふく, hallway=廊下, foreign=外国の, surprised=驚いて, responsibility=責任
+P| {In|On|At|Of} Japan, :: 日本では
+S| students {clean|cleans|cleaning|cleaned to} :: 生徒はそうじする
+O| their {own|owns|owner|owned} school. :: 自分たちの学校を
+== 日本では、生徒が自分たちの学校をそうじする。
+T| {Every|Ever|Very|Everyone} day, :: 毎日
+S| they {spend|spends|spent to|spending} :: 彼らは使う
+O| about {fifteen|fiveteen|fifteenth|fifteens} minutes :: 約15分を
+M| {on|at|to|of} cleaning. :: そうじに
+== 毎日、生徒はそうじに約15分を使う。
+S| Some students {sweep|sweeps|swept to|sweeping} :: 掃く生徒もいる
+O| the {floor|flor|floored|floory} :: 床を
+P| {of|off|than|nor} the classroom. :: 教室の
+== 教室の床を掃く生徒もいる。
+S| {Others|Other|Another|Otherwise} :: ほかの生徒は
+V| {wipe|wipes|wiping|wiped to} :: ふく
+O| the {desks|deskes|desking|desked} :: 机を
+P| {and|nor|but|than} the windows. :: と窓を
+== ほかの生徒は机と窓をふく。
+S| Some {clean|cleans|cleaning|cleanes} :: そうじする者もいる
+O| the {hallways|hallwaies|hallwaying|hall's way} :: 廊下を
+M| {and|nor|but|than} the bathrooms. :: とトイレを
+== 廊下やトイレをそうじする生徒もいる。
+S| They {work|works|working|worked to} :: 彼らは働く
+P| {in|on|at|of} small groups :: 小さなグループで
+M| {with|by|of|than} their teachers. :: 先生といっしょに
+== 生徒は先生といっしょに小さなグループで働く。
+S| {Many|Much|A lot|Lots} foreign people :: 多くの外国人は
+V| are {surprised|surprise|surprisely|surprises} :: 驚く
+P| {at|on|in|to} this. :: これに
+== 多くの外国の人はこれに驚く。
+P| {In|On|At|Of} some countries, :: いくつかの国では
+S| {workers|worker|workes|workering} :: 作業員が
+V| {clean|cleans|cleaning|cleaned to} :: そうじする
+O| the {schools|schooles|scool|schooled}. :: 学校を
+== 国によっては、作業員が学校をそうじする。
+S| {Cleaning|Clean|Cleaned|Cleans} :: そうじは
+V| also {teaches|teach|taught to|teaching} :: …も教える
+O| students {responsibility|responsible|responsibly|responsibilitys}. :: 生徒に責任を
+== そうじは生徒に責任も教えてくれる。
+S| Students {learn|learns|learning|learned to} :: 生徒は学ぶ
+O| {to take|take|taking|took} care :: 大切にすることを
+P| {of|off|for|at} things. :: 物を
+== 生徒は物を大切にすることを学ぶ。
+?? 1 2 毎日何分くらいそうじする？
+?? 3 2 ほかの生徒は何をふく？
+?? 5 2 生徒はだれといっしょに働く？
+?? 8 2 そうじは生徒に何を教える？
+
+@id beg26
+@lv 1
+@level 4
+@title The Chorus Contest
+@ja 合唱コンクール
+@tag 高校受験レベル・物語文
+@gloss chorus contest=合唱コンクール, conductor=指揮者, practice=練習する, seriously=まじめに, angry=腹を立てた, together=いっしょに, gym=体育館, voice=声, prize=賞
+T| {In|On|At|By} November, :: 11月に
+S| Aoi's school {held|hold|helded|holding} :: アオイの学校は開いた
+O| a chorus {contest|contests|contesting|contested}. :: 合唱コンクールを
+== 11月、アオイの学校で合唱コンクールが開かれた。
+S| Aoi {was|were|be|been} :: アオイは…だった
+C| the {conductor|conduct|conducted|conducting} :: 指揮者
+P| {for|to|at|than} her class. :: クラスの
+== アオイはクラスの指揮者だった。
+S| {Some|Any|Much|Every} boys :: 一部の男子は
+V| {didn't|doesn't|wasn't|not} practice :: 練習しなかった
+M| {seriously|serious|seriousness|seriouser}. :: まじめに
+== 一部の男子はまじめに練習しなかった。
+S| Aoi {felt|feel|feeled|feeling} :: アオイは感じた
+C| {sad|sadly|sadness|sads} :: 悲しく
+M| {and|nor|than|whom} a little angry. :: そして少し腹立たしく
+== アオイは悲しくて、少し腹が立った。
+T| {One|Once|Ones|Won} day, :: ある日
+S| she {said|sayed|told|saying} :: 彼女は言った
+P| {to|for|at|with} the class, :: クラスに
+O| "Let's {sing|sings|singing|sang} together." :: いっしょに歌おう
+== ある日、彼女はクラスに「いっしょに歌おう」と言った。
+T| {After|Afters|Since|While} that, :: その後
+S| everyone {practiced|practice|practicing|practise} :: みんなが練習した
+M| {harder|hardly|harderly|hardy} :: もっと一生懸命
+P| {in|on|to|than} the music room. :: 音楽室で
+== その後、みんなは音楽室でもっと一生懸命練習した。
+T| {On|In|Of|To} the day of the contest, :: コンクール当日
+S| they {sang|singed|singing|sings} :: 彼らは歌った
+P| {in|on|to|of} the gym. :: 体育館で
+== コンクール当日、彼らは体育館で歌った。
+S| Their {voices|voice's|voicing|voiced} :: 彼らの声は
+V| {were|was|is|be} :: …だった
+C| {beautiful|beauty|beautifully|beautify}. :: 美しかった
+== 彼らの声は美しかった。
+S| They {won|winned|wined|wins} :: 彼らはとった
+O| {second|two|twice|seconds} prize :: 2位を
+P| {in|on|to|than} the contest. :: コンクールで
+== 彼らはコンクールで2位をとった。
+S| The boys {said|sayed|told|saying} :: 男子たちは言った
+P| {to|for|at|with} Aoi, :: アオイに
+O| "You {were|was|been|be} a great conductor!" :: すごい指揮者だった
+== 男子たちはアオイに「君はすばらしい指揮者だったよ！」と言った。
+?? 1 1 アオイはクラスで何をした？
+?? 2 0 だれがまじめに練習しなかった？
+?? 6 2 どこで歌った？
+?? 8 1 コンクールで何位だった？
+
+@id beg27
+@lv 1
+@level 4
+@title My Summer Homework
+@ja 夏休みの宿題
+@tag 高校受験レベル・ブログ
+@gloss vacation=休み, almost=ほとんど, homework=宿題, honestly=正直に言うと, put off=先延ばしにする, report=レポート, insect=昆虫, worksheet=プリント, diary=日記
+X| {Hi|High|Hey's|Hie}, everyone! :: みなさん、こんにちは
+S| Summer vacation {is|are|be|being} :: 夏休みは…だ
+V| almost {over|overs|ever|cover}. :: もうすぐ終わり
+== みなさん、こんにちは！夏休みももうすぐ終わりです。
+S| {Have|Has|Having|Haves} you :: あなたは…した？
+V| {finished|finish|finishing|finishes} :: 終えた
+O| your {homework|homeworks|home work|homeworking}? :: 宿題を
+== みなさんは宿題を終えましたか？
+M| {Honestly|Honesty|Honester|Honestful}, :: 正直に言うと
+S| I {still|steal|still to|stills} have :: 私はまだある
+O| a lot {of|for|to|off} homework. :: たくさんの宿題が
+== 正直に言うと、私にはまだたくさん宿題があります。
+P| {In|On|At|Of} July, :: 7月に
+S| I {played|plaid|plays|playing} :: 私は遊んだ
+M| {every|ever|very|everyone} day :: 毎日
+M| {and|nor|than|whom} did nothing else. :: ほかは何もしなかった
+== 7月は毎日遊んで、ほかには何もしませんでした。
+S| I {put off|put of|putted off|puts off} :: 私は先延ばしにした
+O| my {homework|homeworks|home work|homeworking} :: 宿題を
+T| {until|since|ago|than} August. :: 8月まで
+== 宿題を8月まで先延ばしにしてしまいました。
+T| {Last|Late|Lastly|Latest} week, :: 先週
+S| I {wrote|write|writed|written} :: 私は書いた
+O| a {report|reports|repot|reported} :: レポートを
+P| {about|above|abouts|around} insects. :: 昆虫について
+== 先週、昆虫についてのレポートを書きました。
+T| {Yesterday|Yesterdays|Tomorrow|Today's}, :: きのう
+S| I {finished|finish|finishing|finishes} :: 私は終えた
+O| {all|every|each|whole} the math worksheets. :: 数学のプリント全部を
+== きのう、数学のプリントを全部終わらせました。
+S| I {haven't|hasn't|don't|not} written :: 私は書いていない
+O| my {diary|diaryes|diarys|diaried} :: 日記を
+T| {yet|already|ago|yesterday}. :: まだ
+== 日記はまだ書いていません。
+S| I {have to|has to|have|must to} :: 私は…しなければ
+V| {write|writes|wrote|writing} :: 書く
+O| about {thirty|thirties|thirtieth|thirtys} days! :: 約30日分を
+== 約30日分を書かなければなりません！
+T| {Next|Last|Latest|Nearly} year, :: 来年は
+S| I {will|was|am|did to} make :: 私は立てる
+O| a {better|best|well|betters} plan. :: もっとよい計画を
+== 来年は、もっとよい計画を立てます。
+?? 3 1 7月は毎日何をしていた？
+?? 5 3 何についてのレポートを書いた？
+?? 6 2 きのう何を終えた？
+?? 7 1 まだ書いていないものは何？

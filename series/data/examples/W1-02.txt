@@ -1,0 +1,300 @@
+even | r | Even my little brother can swim well. | 私の弟でさえ上手に泳げます。
+even | r | She even made a cake for us. | 彼女は私たちのためにケーキまで作ってくれました。
+even | r | Did you even read the first page? | 最初のページさえ読まなかったのですか。
+here | r | Please come here and sit with us. | ここに来て私たちと座ってください。
+here | r | I left my school bag here yesterday. | 私は昨日ここに通学かばんを置きました。
+here | r | Is your father working here today? | あなたのお父さんは今日ここで働いていますか。
+last | a | We went to the beach last Sunday. | 私たちはこの前の日曜日に海へ行きました。
+last | a | This is the last bus today. | これは今日の最終バスです。
+last | a | What did you eat for dinner last night? | 昨夜の夕食には何を食べましたか。
+child | n | Every child in this class likes music. | このクラスの子どもはみんな音楽が好きです。
+child | n | Is that child waiting for her mother? | あの子どもはお母さんを待っていますか。
+child | n | The children played outside after lunch. | 子どもたちは昼食後に外で遊びました。
+tell | v | Please tell me about your summer vacation. | 夏休みについて私に話してください。
+tell | v | What did your teacher tell you yesterday? | 昨日先生はあなたに何を話しましたか。
+tell | v | My grandfather tells us funny stories. | 祖父は私たちに面白い話をしてくれます。
+really | r | I really like this new English song. | 私はこの新しい英語の歌が本当に好きです。
+really | r | Do you really want to go there? | あなたは本当にそこへ行きたいのですか。
+really | r | The cake was really good and sweet. | そのケーキは本当においしくて甘かったです。
+call | v | Please call your mother after school today. | 今日の放課後にお母さんに電話してください。
+call | v | My friends call me by my first name. | 友達は私を名前で呼びます。
+call | v | What do you call this in English? | これは英語で何と呼びますか。
+before | cj | Wash your hands before you eat dinner. | 夕食を食べる前に手を洗ってください。
+before | cj | I read a book before I went to bed. | 寝る前に本を読みました。
+before | cj | Can we talk before the class starts? | 授業が始まる前に話せますか。
+before | pp | I always eat breakfast before seven. | 私はいつも7時前に朝食を食べます。
+before | pp | We played outside before the rain. | 雨が降る前に私たちは外で遊びました。
+before | pp | Please come home before dinner tonight. | 今夜は夕食前に帰宅してください。
+before | r | I have seen this picture before. | 私は以前にこの写真を見たことがあります。
+before | r | Have you ever been here before? | あなたは以前ここに来たことがありますか。
+before | r | She never tried this food before. | 彼女は以前この食べ物を試したことがありませんでした。
+company | n | My father works for a small company. | 私の父は小さな会社で働いています。
+company | n | We enjoyed your company at lunch today. | 今日の昼食ではあなたと一緒に過ごせて楽しかったです。
+company | n | Does your sister work for that company? | あなたのお姉さんはあの会社で働いていますか。
+through | pp | We walked through the park after school. | 私たちは放課後、公園を通って歩きました。
+through | pp | Can you see the garden through this window? | この窓を通して庭が見えますか。
+through | pp | The train went through a long tunnel. | 電車は長いトンネルを通りました。
+down | pp | The children ran down the small hill. | 子どもたちは小さな丘を駆け下りました。
+down | pp | We walked down the stairs together. | 私たちは一緒に階段を下りました。
+down | pp | Can you ride your bike down this road? | この道を自転車で下れますか。
+down | r | Please sit down and open your book. | 座って本を開いてください。
+down | r | The little boy looked down and smiled. | 小さな男の子は下を見て笑いました。
+down | r | Can you put that heavy box down? | その重い箱を下に置いてくれますか。
+show | v | Please show me your new school bag. | 新しい通学かばんを私に見せてください。
+show | v | Can you show us your favorite picture? | お気に入りの写真を私たちに見せてくれますか。
+show | v | She showed her mother the birthday card. | 彼女はお母さんに誕生日カードを見せました。
+life | n | My life in this town is fun. | この町での私の生活は楽しいです。
+life | n | School life is different in each country. | 学校生活は国によって違います。
+life | n | What is your life like at home? | 家ではどのような生活をしていますか。
+man | n | That man is my new music teacher. | あの男性は私の新しい音楽の先生です。
+man | n | Do you know the man by the door? | ドアのそばの男性を知っていますか。
+man | n | Two men are working in the garden. | 二人の男性が庭で働いています。
+change | v | I want to change my room today. | 今日は自分の部屋を変えたいです。
+change | v | Did you change your plans for Sunday? | 日曜日の予定を変えましたか。
+change | v | The weather changes a lot in spring. | 春は天気がよく変わります。
+place | n | This is a nice place for lunch. | ここは昼食を食べるのによい場所です。
+place | n | Where is the best place to sit? | 座るのに一番よい場所はどこですか。
+place | n | We visited three different places yesterday. | 私たちは昨日、三つの違う場所を訪れました。
+long | a | This is a long road to school. | これは学校へ続く長い道です。
+long | a | Does your sister have long black hair? | あなたの妹は長い黒髪ですか。
+long | a | We took a long walk after dinner. | 私たちは夕食後に長い散歩をしました。
+between | pp | The school is between two small parks. | 学校は二つの小さな公園の間にあります。
+between | pp | Please sit between your brother and me. | あなたのお兄さんと私の間に座ってください。
+between | pp | Is the shop between the bank and station? | その店は銀行と駅の間にありますか。
+feel | v | I feel happy when I hear this song. | この歌を聞くと幸せな気持ちになります。
+feel | v | Can you feel how soft this cat is? | この猫がどれほど柔らかいか触って確かめられますか。
+feel | v | She felt tired after the long walk. | 彼女は長く歩いた後で疲れを感じました。
+too | r | My sister wants to come with us too. | 妹も私たちと一緒に来たがっています。
+too | r | This soup is too hot to eat. | このスープは熱すぎて食べられません。
+too | r | Can I have some more water too? | 私も水をもう少しもらえますか。
+still | r | My father is still at work now. | 父は今もまだ仕事中です。
+still | r | Are you still reading that long book? | あなたはまだあの長い本を読んでいるのですか。
+still | r | We still have time before the movie. | 映画までまだ時間があります。
+problem | n | I have a problem with my computer. | 私のコンピューターには問題があります。
+problem | n | Can you help me with this math problem? | この数学の問題を手伝ってくれますか。
+problem | n | We talked about the problem after class. | 私たちは授業後にその問題について話しました。
+write | v | Please write your name on this paper. | この紙に名前を書いてください。
+write | v | What did you write in your notebook? | ノートに何を書きましたか。
+write | v | My sister writes letters to her friends. | 妹は友達に手紙を書きます。
+same | a | We go to the same school every day. | 私たちは毎日同じ学校に通っています。
+same | a | Do you have the same bag as me? | あなたは私と同じかばんを持っていますか。
+same | a | They chose the same color for their rooms. | 彼らは部屋に同じ色を選びました。
+lot | n | A lot of birds come here in spring. | 春にはたくさんの鳥がここに来ます。
+lot | n | Did you have a lot of homework yesterday? | 昨日は宿題がたくさんありましたか。
+lot | n | We learned a lot from our teacher. | 私たちは先生からたくさんのことを学びました。
+great | a | We had a great time at the park. | 私たちは公園で素晴らしい時間を過ごしました。
+great | a | Is that your great idea for the party? | それがパーティーのための素晴らしい案ですか。
+great | a | My grandfather is a great cook. | 私の祖父は料理がとても上手です。
+try | v | I want to try this new game. | 私はこの新しいゲームを試したいです。
+try | v | Have you tried making bread at home? | 家でパンを作ってみたことがありますか。
+try | v | Please try to speak English with me. | 私と英語で話してみてください。
+leave | v | We leave home at eight every morning. | 私たちは毎朝8時に家を出ます。
+leave | v | When did your brother leave for school? | お兄さんはいつ学校へ出かけましたか。
+leave | v | Please do not leave the room yet. | まだ部屋から出ないでください。
+number | n | Write your phone number on this paper. | この紙に電話番号を書いてください。
+number | n | What is the number of your room? | あなたの部屋の番号は何ですか。
+number | n | The number of students is going up. | 生徒の数が増えています。
+both | pn | Both are good, but I like this one. | 両方ともよいですが私はこれが好きです。
+both | pn | Do you want both of these books? | これらの本を両方とも欲しいですか。
+both | pn | My sisters are here, and both are happy. | 姉妹はここにいて二人とも喜んでいます。
+own | a | I want my own room next year. | 私は来年、自分自身の部屋が欲しいです。
+own | a | Does your brother have his own bike? | お兄さんは自分専用の自転車を持っていますか。
+own | a | She made her own lunch this morning. | 彼女は今朝、自分で昼食を作りました。
+part | n | This part of the movie is funny. | 映画のこの部分は面白いです。
+part | n | Which part of the book did you like? | 本のどの部分が好きでしたか。
+part | n | We cleaned every part of our classroom. | 私たちは教室のすべての部分を掃除しました。
+point | n | I do not understand the main point. | 私は一番大事な要点が分かりません。
+point | n | What is the point of this story? | この話の要点は何ですか。
+point | n | She put a red point on the map. | 彼女は地図に赤い点を付けました。
+little | a | A little bird is singing outside my window. | 小さな鳥が窓の外で歌っています。
+little | a | Is that little dog your new pet? | あの小さな犬はあなたの新しいペットですか。
+little | a | My brother found a little green frog. | 弟は小さな緑色のカエルを見つけました。
+help | v | Please help me carry these heavy books. | この重い本を運ぶのを手伝ってください。
+help | v | Can you help your mother make dinner? | お母さんが夕食を作るのを手伝えますか。
+help | v | My friends helped me clean the classroom. | 友達が教室の掃除を手伝ってくれました。
+ask | v | I want to ask you a question. | あなたに質問を一つしたいです。
+ask | v | Did you ask your teacher for help? | 先生に助けを頼みましたか。
+ask | v | My sister asks me about school every day. | 妹は毎日私に学校について尋ねます。
+meet | v | We meet our friends at the station. | 私たちは駅で友達に会います。
+meet | v | Where did you meet your best friend? | 親友とはどこで出会いましたか。
+meet | v | Please meet me outside the library tomorrow. | 明日、図書館の外で私と会ってください。
+start | v | Our English classes start at nine. | 私たちの英語の授業は9時に始まります。
+start | v | Can we start the game after lunch? | 昼食後にゲームを始められますか。
+start | v | The movie started ten minutes ago. | 映画は10分前に始まりました。
+talk | v | I want to talk with you after school. | 放課後にあなたと話したいです。
+talk | v | What did you talk about at lunch? | 昼食のとき何について話しましたか。
+talk | v | My parents talk about books every evening. | 両親は毎晩、本について話します。
+something | pn | I have something nice to show you. | あなたに見せたいすてきなものがあります。
+something | pn | Did you hear something outside the window? | 窓の外で何か聞こえましたか。
+something | pn | She wants to eat something warm today. | 彼女は今日は何か温かいものを食べたがっています。
+put | v | Please put your shoes by the door. | 靴をドアのそばに置いてください。
+put | v | Where did you put my blue pen? | 私の青いペンをどこに置きましたか。
+put | v | My mother put flowers on the table. | 母はテーブルの上に花を置きました。
+become | v | I want to become a good teacher. | 私はよい先生になりたいです。
+become | v | How did your brother become so tall? | お兄さんはどうしてそんなに背が高くなったのですか。
+become | v | The sky became dark before the rain. | 雨が降る前に空が暗くなりました。
+interest | n | My interest in music started at school. | 私が音楽に興味を持ったのは学校がきっかけです。
+interest | n | Does your sister have an interest in art? | あなたの妹は美術に興味がありますか。
+interest | n | He showed great interest in the new game. | 彼は新しいゲームに強い興味を示しました。
+country | n | I want to visit another country someday. | 私はいつか別の国を訪れたいです。
+country | n | Which country does your new friend come from? | 新しい友達はどこの国の出身ですか。
+country | n | Many countries have different foods and songs. | 多くの国にはそれぞれ違う食べ物や歌があります。
+old | a | This old house has a beautiful garden. | この古い家には美しい庭があります。
+old | a | How old is your little sister now? | あなたの妹は今何歳ですか。
+old | a | My grandfather likes reading old books. | 祖父は古い本を読むのが好きです。
+school | n | Our school has a big music room. | 私たちの学校には大きな音楽室があります。
+school | n | Do you walk to school with your friends? | 友達と歩いて学校へ行きますか。
+school | n | The children came home from school early. | 子どもたちは学校から早く帰宅しました。
+late | a | The late bus made us miss the movie. | 遅れたバスのせいで映画に間に合いませんでした。
+late | a | Why were you late for class today? | 今日はなぜ授業に遅れたのですか。
+late | a | My brother took the late train home. | 兄は遅い時間の電車で帰宅しました。
+high | a | A high wall stands behind our house. | 家の裏には高い壁があります。
+high | a | Can you see that high mountain from here? | ここからあの高い山が見えますか。
+high | a | The bird flew high above the trees. | 鳥は木々のずっと高いところを飛びました。
+different | a | We have different ideas about this game. | 私たちはこのゲームについて違う考えを持っています。
+different | a | Is your new school different from your old one? | 新しい学校は前の学校と違いますか。
+different | a | My two sisters like different kinds of music. | 私の二人の姉妹は違う種類の音楽が好きです。
+off | pp | The cat jumped off the kitchen table. | 猫は台所のテーブルから飛び降りました。
+off | pp | Please take your bag off the chair. | 椅子からかばんをどけてください。
+off | pp | The ball fell off the desk yesterday. | 昨日ボールが机から落ちました。
+off | r | Please turn the light off before bed. | 寝る前に明かりを消してください。
+off | r | The little bird flew off into the sky. | 小さな鳥は空へ飛び去りました。
+off | r | Is the computer off in your room? | あなたの部屋のコンピューターは電源が切れていますか。
+next | a | Our next English class is on Friday. | 次の英語の授業は金曜日です。
+next | a | What will you do next Sunday morning? | 次の日曜日の朝は何をしますか。
+next | a | She wants to read the next book. | 彼女は次の本を読みたがっています。
+end | n | We sat at the end of the table. | 私たちはテーブルの端に座りました。
+end | n | What happens at the end of the story? | その物語の終わりには何が起こりますか。
+end | n | The school year ends in March. | 学校の年度は3月に終わります。
+live | v | I live near a big city park. | 私は大きな市の公園の近くに住んでいます。
+live | v | Does your grandmother live with your family? | おばあさんはあなたの家族と一緒に住んでいますか。
+live | v | Many fish live in this clean river. | このきれいな川には多くの魚が生きています。
+why | r | Why do you like this song so much? | なぜこの歌がそんなに好きなのですか。
+why | r | Can you tell me why she is happy? | 彼女がなぜ喜んでいるか教えてくれますか。
+why | r | Why did your brother go home early? | お兄さんはなぜ早く帰宅したのですか。
+while | cj | Please read this book while I cook dinner. | 私が夕食を作る間、この本を読んでください。
+while | cj | She listened to music while she cleaned. | 彼女は掃除をしている間、音楽を聴きました。
+while | cj | Can you wait here while we get ready? | 私たちが準備する間、ここで待ってくれますか。
+while | n | Please stay here for a while. | しばらくの間ここにいてください。
+while | n | We talked for a while after lunch. | 私たちは昼食後しばらく話しました。
+while | n | Can you wait a while longer? | もうしばらく待ってくれますか。
+world | n | The world has many beautiful places. | 世界には美しい場所がたくさんあります。
+world | n | Do children around the world play this game? | 世界中の子どもたちはこのゲームをしますか。
+world | n | She wants to travel around the world. | 彼女は世界中を旅したいと思っています。
+week | n | I play tennis twice a week. | 私は週に2回テニスをします。
+week | n | How was your first week at school? | 学校での最初の1週間はどうでしたか。
+week | n | We will visit our grandparents next week. | 私たちは来週祖父母を訪ねます。
+play | v | The children play outside after school. | 子どもたちは放課後、外で遊びます。
+play | v | Can your sister play the piano well? | あなたの妹はピアノを上手に弾けますか。
+play | v | We played a new game yesterday afternoon. | 私たちは昨日の午後、新しいゲームで遊びました。
+home | n | My home is near the train station. | 私の家は駅の近くにあります。
+home | n | Is your new home far from school? | あなたの新しい家は学校から遠いですか。
+home | n | We made our home warm and bright. | 私たちは家を暖かく明るくしました。
+never | r | I never drink coffee before school. | 私は学校へ行く前には決してコーヒーを飲みません。
+never | r | My brother has never visited that town. | 兄はあの町を一度も訪れたことがありません。
+never | r | She never forgets her friends' birthdays. | 彼女は友達の誕生日を決して忘れません。
+include | v | Please include my name on the list. | その一覧に私の名前も入れてください。
+include | v | Does the price include breakfast at this hotel? | このホテルの料金には朝食が含まれていますか。
+include | v | The box includes three books and a pen. | その箱には本3冊とペン1本が入っています。
+house | n | My house has three small bedrooms. | 私の家には小さな寝室が三つあります。
+house | n | Can you see that white house over there? | あそこにある白い家が見えますか。
+house | n | They built a new house near the river. | 彼らは川の近くに新しい家を建てました。
+report | n | I wrote a short report about our trip. | 私は旅行について短い報告を書きました。
+report | n | Did you read the school report yesterday? | 昨日、学校の報告書を読みましたか。
+report | n | Our teacher liked my report on animals. | 先生は私の動物についての報告を気に入りました。
+group | n | Our group meets every Friday after school. | 私たちのグループは毎週金曜日の放課後に集まります。
+group | n | Which group will you join for the game? | ゲームではどのグループに入りますか。
+group | n | A group of children sang together outside. | 子どもたちのグループが外で一緒に歌いました。
+woman | n | That woman teaches English at our school. | あの女性は私たちの学校で英語を教えています。
+woman | n | Do you know the woman near the window? | 窓の近くにいる女性を知っていますか。
+woman | n | Two women are talking in the garden. | 二人の女性が庭で話しています。
+around | pp | We walked around the lake after lunch. | 私たちは昼食後、湖の周りを歩きました。
+around | pp | There are many flowers around our house. | 私たちの家の周りには花がたくさんあります。
+around | pp | Can you run around the park with me? | 私と一緒に公園の周りを走れますか。
+around | r | The children ran around in the garden. | 子どもたちは庭をあちこち走り回りました。
+around | r | Please look around before you choose a seat. | 席を選ぶ前に周りを見てください。
+around | r | My dog likes to walk around outside. | 私の犬は外をあちこち歩くのが好きです。
+book | n | This book has many beautiful pictures. | この本には美しい絵がたくさんあります。
+book | n | Did you bring your English book today? | 今日は英語の本を持ってきましたか。
+book | n | My father reads books before bed. | 父は寝る前に本を読みます。
+family | n | My family eats dinner together every evening. | 私の家族は毎晩一緒に夕食を食べます。
+family | n | Does your family like going to the beach? | あなたの家族は海へ行くのが好きですか。
+family | n | We met a friendly family at the park. | 私たちは公園で親切な家族に会いました。
+seem | v | You seem happy about your new school. | 新しい学校のことでうれしそうですね。
+seem | v | Does this question seem hard to you? | この質問はあなたには難しそうですか。
+seem | v | The children seemed tired after the game. | 子どもたちは試合の後、疲れているようでした。
+let | v | Please let me use your blue pen. | あなたの青いペンを使わせてください。
+let | v | Will your parents let you stay here? | ご両親はあなたがここにいることを許してくれますか。
+let | v | Our teacher let us play outside today. | 先生は今日、私たちを外で遊ばせてくれました。
+again | r | Can you say that word again, please? | その単語をもう一度言ってくれますか。
+again | r | We went to the same park again. | 私たちはまた同じ公園へ行きました。
+again | r | My sister wants to watch this movie again. | 妹はこの映画をもう一度見たがっています。
+keep | v | Please keep this room clean every day. | この部屋を毎日きれいに保ってください。
+keep | v | Can I keep this picture for my room? | この写真を自分の部屋用に取っておいてもいいですか。
+keep | v | My uncle keeps two dogs at home. | おじは家で犬を2匹飼っています。
+hear | v | I can hear birds singing outside. | 外で鳥が鳴いているのが聞こえます。
+hear | v | Did you hear the news from your friend? | 友達からその知らせを聞きましたか。
+hear | v | We heard beautiful music at the school. | 私たちは学校で美しい音楽を聞きました。
+question | n | I have a question about this word. | この単語について質問があります。
+question | n | Can you answer the last question now? | 今、最後の質問に答えられますか。
+question | n | Our teacher asked us three easy questions. | 先生は私たちに簡単な質問を三つしました。
+during | pp | We played games during our lunch break. | 私たちは昼休みの間にゲームをしました。
+during | pp | Did you sleep during the long train ride? | 長い電車の移動中に眠りましたか。
+during | pp | Please be quiet during the movie. | 映画の間は静かにしてください。
+always | r | My grandmother always makes tea after dinner. | 祖母はいつも夕食後にお茶を入れます。
+always | r | Do you always walk to school alone? | あなたはいつも一人で歩いて学校へ行きますか。
+always | r | He is always kind to younger children. | 彼はいつも年下の子どもたちに親切です。
+big | a | There is a big tree behind our school. | 学校の裏に大きな木があります。
+big | a | Would you like the big cup or small one? | 大きなカップと小さなカップのどちらがよいですか。
+big | a | My sister has a big blue bag. | 妹は大きな青いかばんを持っています。
+set | v | Please set the box on this table. | その箱をこのテーブルの上に置いてください。
+set | v | She set her cup beside the plate. | 彼女はカップを皿のそばに置きました。
+set | v | Can you set these flowers by the window? | これらの花を窓のそばに置いてくれますか。
+small | a | A small cat is sleeping under the chair. | 小さな猫が椅子の下で眠っています。
+small | a | Do you want a small piece of cake? | 小さなケーキを一切れ欲しいですか。
+small | a | We found a small shop near the station. | 私たちは駅の近くに小さなお店を見つけました。
+study | v | I study English with my sister every evening. | 私は毎晩妹と英語を勉強します。
+study | v | Where do you usually study after school? | あなたは普段、放課後どこで勉強しますか。
+study | v | My brother studied math for two hours. | 兄は数学を2時間勉強しました。
+follow | v | Please follow me to the music room. | 音楽室まで私について来てください。
+follow | v | Did you follow the teacher's instructions today? | 今日は先生の指示に従いましたか。
+follow | v | The little dog followed us home. | 小さな犬は私たちについて家まで来ました。
+begin | v | Our music lessons begin at ten. | 私たちの音楽の授業は10時に始まります。
+begin | v | When does your summer vacation begin? | あなたの夏休みはいつ始まりますか。
+begin | v | The movie began before we arrived. | 映画は私たちが着く前に始まりました。
+important | a | Breakfast is an important meal for children. | 朝食は子どもにとって大切な食事です。
+important | a | Is this test important for our class? | このテストは私たちのクラスにとって重要ですか。
+important | a | My family is very important to me. | 家族は私にとってとても大切です。
+since | cj | Since it is sunny, we can play outside. | 晴れているので私たちは外で遊べます。
+since | cj | We stayed home since everyone was tired. | みんな疲れていたので私たちは家にいました。
+since | cj | Since you are here, please help me. | あなたがここにいるので手伝ってください。
+since | pp | I have lived here since last spring. | 私は去年の春からここに住んでいます。
+since | pp | She has studied English since April. | 彼女は4月から英語を勉強しています。
+since | pp | Have you seen your friend since Monday? | 月曜日以来、友達に会いましたか。
+run | v | I run in the park every morning. | 私は毎朝公園を走ります。
+run | v | Can your little brother run very fast? | あなたの弟はとても速く走れますか。
+run | v | The children ran home before the rain. | 子どもたちは雨が降る前に走って帰宅しました。
+under | pp | My cat likes sleeping under the table. | 私の猫はテーブルの下で寝るのが好きです。
+under | pp | Is your bag under that blue chair? | あなたのかばんはあの青い椅子の下ですか。
+under | pp | We sat under a tree after lunch. | 私たちは昼食後に木の下に座りました。
+turn | v | Please turn the page and read aloud. | ページをめくって声に出して読んでください。
+turn | v | Can you turn left at the next street? | 次の通りで左に曲がれますか。
+turn | v | The leaves turned yellow in autumn. | 秋に葉が黄色くなりました。
+bring | v | Please bring your English book to class. | 英語の本を授業に持ってきてください。
+bring | v | Can you bring some water for everyone? | みんなのために水を持ってきてくれますか。
+bring | v | My aunt brought us fresh apples yesterday. | おばは昨日、私たちに新鮮なリンゴを持ってきてくれました。
+early | a | We took an early train this morning. | 私たちは今朝、早い時間の電車に乗りました。
+early | a | Is there an early bus on Sunday? | 日曜日には早い時間のバスがありますか。
+early | a | My father has an early meeting tomorrow. | 父は明日、朝早くに会議があります。
+hand | n | Please raise your hand if you know. | 分かる人は手を挙げてください。
+hand | n | Can you hold this bag in one hand? | このかばんを片手で持てますか。
+hand | n | She washed her hands before lunch. | 彼女は昼食前に手を洗いました。
+state | n | The house was in a good state. | その家はよい状態でした。
+state | n | Which state does your uncle live in? | おじさんはどの州に住んでいますか。
+state | n | The room is still in the same state. | その部屋はまだ同じ状態です。
+move | v | Please move your chair closer to the table. | 椅子をテーブルにもっと近づけてください。
+move | v | Did your family move to a new house? | あなたの家族は新しい家に引っ越しましたか。
+move | v | The little boat moved slowly across the lake. | 小さなボートは湖をゆっくり進みました。
+money | n | I saved some money for a new bike. | 私は新しい自転車のためにお金を貯めました。
+money | n | Do you have enough money for lunch? | 昼食を買うのに十分なお金がありますか。
+money | n | My brother found some money in his pocket. | 兄はポケットの中にお金を見つけました。

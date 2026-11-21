@@ -1,0 +1,506 @@
+@id beg28
+@lv 1
+@level 4
+@title Camping with Friends
+@ja 友だちとキャンプ
+@tag 高校受験レベル・日記
+@gloss camping=キャンプ, put up=(テントを)張る, tent=テント, river=川, cook=料理する, taste=味がする, star=星, wonderful=すばらしい
+T| {Last|Lastly|Lasting|Lasts} weekend, :: 先週末
+S| I {went|gone|goes|going} :: 私は行った
+O| {camping|camp|to camping|camped} :: キャンプに
+P| {with|at|of|on} my friends. :: 友だちと
+== 先週末、私は友だちとキャンプに行った。
+S| We {put up|put on|put in|put off} :: 私たちは張った
+O| a big {tent|tents|tenth|tense} :: 大きなテントを
+P| {near|nearly|nears|neared} a river. :: 川の近くに
+== 私たちは川の近くに大きなテントを張った。
+T| {In|On|To|Of} the evening, :: 夕方に
+S| Ken {cooked|cook|cooking|to cook} :: ケンは作った
+O| curry {for|of|at|than} us. :: 私たちにカレーを
+== 夕方、ケンが私たちにカレーを作ってくれた。
+S| The {curry|curries|curried|carry} :: カレーは
+V| {tasted|taste|tasting|to taste} :: 味がした
+C| really {good|well|goodness|best}. :: とてもよい
+== カレーはとてもおいしかった。
+T| {After|Afterward|Among|Into} dinner, :: 夕食のあと
+S| we {looked|looking|looks|to look} :: 私たちは見た
+O| {at|of|off|than} the stars. :: 星を
+== 夕食のあと、私たちは星を見た。
+S| There {were|was|is|be} :: …があった
+O| {so many|so much|such many|so lot} stars :: とても多くの星が
+P| {in|on|at|of} the sky. :: 空に
+== 空にはとてもたくさんの星があった。
+T| {At|In|On|To} night, :: 夜は
+S| it {got|get|gotten|getting} :: …になった
+C| very {cold|colder|coldly|coldness}. :: とても寒く
+== 夜はとても寒くなった。
+S| We {talked|talking|talks|to talk} :: 私たちは話した
+M| {until|by|during|while} late :: 遅くまで
+P| {in|of|to|than} the tent. :: テントの中で
+== 私たちはテントの中で遅くまで話した。
+S| It {was|were|is be|being} :: それは…だった
+C| a {wonderful|wonder|wonderfully|wondered} day :: すばらしい日
+P| {for|at|of|by} me. :: 私にとって
+== 私にとってすばらしい一日だった。
+?? 0 3 誰とキャンプに行った？
+?? 1 2 テントをどこに張った？
+?? 2 1 誰がカレーを作った？
+?? 6 2 夜はどうなった？
+
+@id beg29
+@lv 1
+@level 4
+@title A Rainy Sunday
+@ja 雨の日曜日
+@tag 高校受験レベル・物語文
+@gloss rain=雨が降る, outside=外で, bored=退屈した, idea=考え, blanket=毛布, flashlight=懐中電灯, card game=カードゲーム, win=勝つ
+T| {On|In|At|Of} Sunday, :: 日曜日に
+S| it {rained|rain|raining|rainy} :: 雨が降った
+M| {all|whole|much|many} day. :: 一日中
+== 日曜日は一日中雨が降った。
+S| Yuki and her {brother|brother's|brotherly|brothering} :: ユキと弟は
+V| {couldn't|can't not|couldn't to|not could} :: …できなかった
+V| {play|plays|played|playing} outside. :: 外で遊ぶ
+== ユキと弟は外で遊べなかった。
+O| "I'm {so|such|much|many} bored," :: 「すごく退屈」と
+V| {said|say|saying|told} :: 言った
+S| her little {brother|brotherly|brothers'|brothering}. :: 弟が
+== 「すごく退屈だよ」と弟は言った。
+T| {Then|Than|There|They} :: そのとき
+S| Yuki {had|have|having|haved} :: ユキは持った
+O| a good {idea|ideas|idle|ideally}. :: いい考えを
+== そのとき、ユキにいい考えが浮かんだ。
+S| They {made|making|makes|maked} :: 二人は作った
+O| a {small|smallest|smally|smalls} house :: 小さな家を
+P| {with|at|to|than} boxes and blankets. :: 箱と毛布で
+== 二人は箱と毛布で小さな家を作った。
+P| {Inside|Insides|Inner|Inward} the house, :: 家の中で
+S| they {read|reads|reading|readed} :: 二人は読んだ
+O| {picture|picturing|pictured|pictures'} books :: 絵本を
+P| {with|at|to|than} a flashlight. :: 懐中電灯で
+== 家の中で、二人は懐中電灯で絵本を読んだ。
+T| {Later|Latest|Lateness|Latter}, :: あとで
+S| they {played|playing|plays|plaied} :: 二人はした
+O| a card {game|games|gaming|gamed} :: カードゲームを
+P| {with|at|of|than} their mother. :: お母さんと
+== あとで、二人はお母さんとカードゲームをした。
+S| Mother {won|win|winned|winning} :: お母さんは勝った
+M| {three|third|thirds|threes} times, :: 3回
+M| but Yuki {won|win|winned|winning} :: でもユキが勝った
+O| {the last|the lastly|lastly the|the lasts} game. :: 最後の試合に
+== お母さんが3回勝ったが、最後の試合はユキが勝った。
+S| "Rainy days {are|is|be|was} :: 「雨の日は
+C| {fun|funs|funnily|funned} too!" :: 楽しくもある」と
+V| {said|saying|told|sayed} her brother. :: 弟は言った
+== 「雨の日も楽しいね！」と弟は言った。
+?? 0 2 雨はどのくらい降った？
+?? 4 2 二人は何で家を作った？
+?? 5 3 何を使って絵本を読んだ？
+?? 7 3 ユキはどの試合に勝った？
+
+@id beg30
+@lv 1
+@level 4
+@title A Surprise for Mika
+@ja ミカへのサプライズ
+@tag 高校受験レベル・物語文
+@gloss decide=決める, secret=秘密, shout=叫ぶ, surprised=驚いた, candle=ろうそく, blow out=吹き消す, at once=一度に, ever=今までで
+S| Mika's {birthday|birthdays|birth|born} :: ミカの誕生日は
+V| {was|were|been|be} :: …だった
+T| {on|in|at|of} Friday. :: 金曜日
+== ミカの誕生日は金曜日だった。
+S| Her {friends|friendly|friend's|friending} :: 彼女の友だちは
+V| {decided|deciding|decides|decision} :: 決めた
+O| {to have|having|to having|have} a party :: パーティーを開くと
+M| {for|at|of|than} her. :: 彼女のために
+== 友だちは彼女のためにパーティーを開くことにした。
+S| They {kept|keep|keeped|keeping} :: 彼らはしておいた
+O| it a {secret|secrets|secretly|secreted} :: それを秘密に
+P| {from|of|at|than} Mika. :: ミカには
+== 彼らはミカにはそれを秘密にしておいた。
+P| {On|In|At|Of} Friday evening, :: 金曜日の夕方
+S| Aya {asked|asking|askes|ask to} Mika :: アヤはミカに頼んだ
+O| {to come|coming|come|came} to her house. :: 家に来るように
+== 金曜日の夕方、アヤはミカに家へ来るよう頼んだ。
+M| {When|What|Where|Which} Mika opened the door, :: ドアを開けると
+S| everyone {shouted|shout|shouting|shouten} :: みんなが叫んだ
+O| "{Surprise|Surprising|Surprisingly|Surprises}!" :: 「サプライズ！」と
+== ミカがドアを開けると、みんなが「サプライズ！」と叫んだ。
+S| Mika {was|were|be|been} :: ミカは…だった
+C| very {surprised|surprise|surprisedly|surprises} :: とても驚いて
+M| {at first|at firstly|in firstly|on first}. :: 最初は
+== ミカは最初、とても驚いた。
+P| {On|Of|Into|Than} the table, :: テーブルの上に
+S| there {was|were|be|been} :: …があった
+O| a big {cake|cakes|caked|caking} :: 大きなケーキが
+P| {with|at|by|than} candles. :: ろうそくのついた
+== テーブルの上には、ろうそくのついた大きなケーキがあった。
+S| Her friends {sang|sung|singing|sings} :: 友だちは歌った
+O| a birthday {song|songs|sang|sing} :: 誕生日の歌を
+P| {for|at|of|than} her. :: 彼女のために
+== 友だちは彼女のために誕生日の歌を歌った。
+S| Mika {blew|blow|blown|blowed} out :: ミカは吹き消した
+O| {all|every|each|much} the candles :: ろうそくを全部
+M| {at|in|on|by} once. :: 一度に
+== ミカはろうそくを全部一度に吹き消した。
+S| "This is the {best|better|goodest|most} :: 「これは最高の
+O| birthday {ever|never|even|every}!" :: 今までの誕生日」と
+V| she {said|saying|sayed|told}. :: 彼女は言った
+== 「今までで最高の誕生日！」と彼女は言った。
+?? 0 2 ミカの誕生日は何曜日？
+?? 3 2 アヤはミカに何を頼んだ？
+?? 6 3 ケーキには何がついていた？
+?? 8 2 ろうそくをどのように吹き消した？
+
+@id beg31
+@lv 1
+@level 4
+@title Playing Catch
+@ja 公園でキャッチボール
+@tag 高校受験レベル・日記
+@gloss park=公園, catch=キャッチボール, throw=投げる, high=高く, carefully=注意して, again=もう一度, bench=ベンチ, juice=ジュース
+T| {This|These|That's|Those} morning, :: 今朝
+S| I {went|gone|goes|going} :: 私は行った
+P| {to|for|at|on} the park :: 公園へ
+P| {with|of|at|than} my father. :: 父と
+== 今朝、私は父と公園に行った。
+S| We {played|plays|playing|plaied} :: 私たちはした
+O| {catch|catches|catching|caught} :: キャッチボールを
+P| {for|since|during|while} an hour. :: 1時間
+== 私たちは1時間キャッチボールをした。
+T| {At|In|On|By} first, :: 最初は
+S| my father {threw|throw|thrown|throwed} :: 父は投げた
+O| the ball {very|much|many|lot} high. :: ボールをとても高く
+== 最初、父はボールをとても高く投げた。
+S| I {couldn't|can't not|not could|couldn't to} :: 私は…できなかった
+V| {catch|catches|caught|catching} it :: それを捕る
+M| {well|good|nice|goodly}. :: うまく
+== 私はうまく捕れなかった。
+S| He {said|saying|sayed|tell}, :: 彼は言った
+O| "{Watch|Watches|Watching|Watched} the ball :: 「ボールを見て
+M| {carefully|careful|care|carefulness}." :: よく」と
+== 彼は「ボールをよく見て」と言った。
+S| I {tried|trying|tries|tryed} :: 私はやってみた
+M| {again|against|gain|agains} :: もう一度
+M| {and|nor|than|if} caught the ball! :: そしてボールを捕った
+== もう一度やってみたら、ボールを捕れた！
+S| My father {was|were|be|being} :: 父は…だった
+C| very {happy|happily|happiness|happier} :: とてもうれしい
+M| {too|to|two|either}. :: …も
+== 父もとてもうれしそうだった。
+T| {After|Since|Among|Into} that, :: そのあと
+S| we {drank|drink|drunk|drinked} :: 私たちは飲んだ
+O| {cold|coldly|coldness|colds} juice :: 冷たいジュースを
+P| {on|of|to|than} a bench. :: ベンチで
+== そのあと、私たちはベンチで冷たいジュースを飲んだ。
+S| I {want|wants|wanting|wanted to} :: 私は…したい
+O| {to play|playing|play|played} again :: また遊ぶこと
+T| {next|nextly|near|neighbor} Sunday. :: 次の日曜日に
+== 次の日曜日もまたやりたい。
+?? 0 3 誰と公園に行った？
+?? 1 2 どのくらいキャッチボールをした？
+?? 4 1 父は何を見るように言った？
+?? 7 3 どこでジュースを飲んだ？
+
+@id beg32
+@lv 1
+@level 4
+@title My Friend's Rabbit
+@ja 友だちのウサギ
+@tag 高校受験レベル・ブログ
+@gloss pet=ペット, rabbit=ウサギ, named=～という名の, ear=耳, carrot=にんじん, piece=1切れ, fur=毛, quiet=静かな
+S| My friend Saki {has|have|having|haves} :: 友だちのサキは飼う
+O| a pet {rabbit|rabbits|rabbited|rabbiting} :: ペットのウサギを
+M| {named|name|names|naming} Momo. :: モモという名の
+== 友だちのサキはモモという名のウサギを飼っている。
+T| {Yesterday|Tomorrow|Yesterdays|Today's}, :: きのう
+S| I {visited|visiting|visits|visitted} :: 私は訪ねた
+O| her {house|housed|house's|housely} :: 彼女の家を
+R| {to see|seeing|see|saw} Momo. :: モモに会いに
+== きのう、モモに会いにサキの家へ行った。
+S| Momo {is|are|be|am} :: モモは…だ
+C| white {and|nor|than|if} very small :: 白くてとても小さい
+M| {with|at|to|than} long ears. :: 長い耳の
+== モモは白くてとても小さく、耳が長い。
+S| She {likes|like|liking|liked to} :: 彼女は好きだ
+O| {eating|eats|ate|eaten} carrots :: にんじんを食べるのが
+M| {very|many|more|lot} much. :: とても
+== モモはにんじんを食べるのが大好きだ。
+S| Saki {gave|give|given|gived} me :: サキは私にくれた
+O| a {piece|peace|pieces|piecing} of carrot :: にんじん1切れを
+M| {for|at|of|than} Momo. :: モモ用に
+== サキがモモ用のにんじんを1切れくれた。
+S| Momo {ate|eat|eaten|eated} it :: モモはそれを食べた
+P| {from|for|of|than} my hand :: 私の手から
+M| {quickly|quickness|quicken|quicks}. :: すばやく
+== モモは私の手からそれをすばやく食べた。
+S| Her {fur|far|fir|for} :: 彼女の毛は
+V| {was|were|been|be} :: …だった
+C| {soft|softly|soften|softness} :: やわらかい
+M| {and|nor|than|if} warm. :: そして温かい
+== モモの毛はやわらかくて温かかった。
+S| Saki {told|tell|telling|telled} me, :: サキは私に言った
+O| "{Rabbits|Rabbit|Rabbit's|Rabbiting} :: 「ウサギは
+V| {need|needs|needing|needed to} :: 必要とする
+O| a quiet {place|places|placed|placing}." :: 静かな場所を」と
+== サキは「ウサギには静かな場所が必要なの」と教えてくれた。
+S| I {want|wants|wanting|wanted to} :: 私は…したい
+V| {to have|having|have|had} a rabbit :: ウサギを飼う
+T| {someday|somewhat|someone|sometime's}. :: いつか
+== 私もいつかウサギを飼いたい。
+?? 0 2 ウサギの名前は？
+?? 3 1 モモは何を食べるのが好き？
+?? 6 2 モモの毛はどんな手ざわりだった？
+?? 7 3 ウサギには何が必要？
+
+@id beg33
+@lv 1
+@level 4
+@title Our Snowman
+@ja 雪だるまを作った日
+@tag 高校受験レベル・日記
+@gloss snow=雪が降る, garden=庭, snowman=雪だるま, roll=転がす, snowball=雪玉, stone=石, nose=鼻, funny=おもしろい
+T| {Last|Lastly|Lasting|Lasts} night, :: 昨夜
+S| it {snowed|snowing|snowy|snows} :: 雪が降った
+M| {a lot|a lots|lots|much lot}. :: たくさん
+== 昨夜、雪がたくさん降った。
+T| {This|These|Those|Them} morning, :: 今朝
+S| the garden {was|were|be|been} :: 庭は…だった
+C| all {white|whiter|whitely|whiten}. :: 真っ白
+== 今朝、庭は真っ白だった。
+S| My sister and I {made|maked|making|makes} :: 妹と私は作った
+O| a big {snowman|snowmen|snowy|snowing} :: 大きな雪だるまを
+P| {in|of|to|than} the garden. :: 庭で
+== 妹と私は庭で大きな雪だるまを作った。
+T| {First|Firsts|Ones|Fast}, :: まず
+S| we {rolled|rolling|rolls|to roll} :: 私たちは転がした
+O| {two|second|twice|seconds} snowballs. :: 雪玉を2つ
+== まず、私たちは雪玉を2つ転がした。
+S| My sister {put|putted|putting|to put} :: 妹はのせた
+O| the small {one|ones|once|won} :: 小さいほうを
+P| {on|of|at|than} the big one. :: 大きいほうの上に
+== 妹が小さいほうを大きいほうの上にのせた。
+S| I {used|uses|using|to use} :: 私は使った
+O| two {stones|stone|stony|stoned} :: 石を2つ
+R| {for|of|at|than} its eyes. :: 目のために
+== 私は目に石を2つ使った。
+S| My sister {found|find|finding|finded} :: 妹は見つけた
+O| a {carrot|carrots|carroty|carroted} :: にんじんを
+R| {for|of|at|than} its nose. :: 鼻用に
+== 妹は鼻にするにんじんを見つけてきた。
+S| Our snowman {looked|look|looking|lookt} :: 雪だるまは見えた
+C| very {funny|funnily|funs|funnier} :: とてもおもしろく
+M| {and|nor|than|if} cute. :: そしてかわいく
+== 私たちの雪だるまは、とてもおもしろくてかわいかった。
+S| Mom {took|take|taken|taked} :: お母さんは撮った
+O| a {picture|pictures|picturing|pictured} :: 写真を
+P| {of|to|than|into} us :: 私たちの
+M| {with|at|than|into} it. :: それといっしょの
+== お母さんが雪だるまといっしょの私たちの写真を撮ってくれた。
+?? 2 1 二人は何を作った？
+?? 5 1 目には何を使った？
+?? 6 1 鼻には何を使った？
+?? 8 0 誰が写真を撮った？
+
+@id beg34
+@lv 1
+@level 4
+@title A Day at the Zoo
+@ja 動物園の一日
+@tag 高校受験レベル・日記
+@gloss zoo=動物園, elephant=ゾウ, nose=鼻, monkey=サル, area=場所, jump=跳ぶ, laugh=笑う, lion=ライオン
+T| {Today|Todays|Yesterday's|To day}, :: 今日
+S| my class {went|gone|going|goed} :: 私のクラスは行った
+P| {to|of|at|than} the zoo. :: 動物園へ
+== 今日、私のクラスは動物園に行った。
+T| {First|Fast|Firsts|Fist}, :: 最初に
+S| we {saw|seen|seeing|seed} :: 私たちは見た
+O| {two|second|twice|twins} big elephants. :: 大きなゾウを2頭
+== 最初に、私たちは大きなゾウを2頭見た。
+S| One elephant {was|were|be|being} :: 1頭は…していた
+V| {drinking|drink|drank|drinks} water :: 水を飲んで
+P| {with|of|at|than} its long nose. :: 長い鼻で
+== 1頭が長い鼻で水を飲んでいた。
+T| {Next|Nextly|Near|Nearly}, :: 次に
+S| we {went|gone|goed|going} :: 私たちは行った
+P| {to|at|on|of} the monkey area. :: サルのエリアへ
+== 次に、私たちはサルのエリアへ行った。
+S| The monkeys {were|was|is|be} :: サルたちは…していた
+V| {jumping|jump|jumped|jumps} :: 跳びはねて
+P| {from|for|of|by} tree to tree. :: 木から木へ
+== サルたちは木から木へ跳びはねていた。
+S| My friend Rina {laughed|laugh|laughing|laughted} :: 友だちのリナは笑った
+M| {a lot|a lots|lots|much lot} :: たくさん
+P| {at|on|in|to} them. :: 彼らを見て
+== 友だちのリナはサルたちを見てたくさん笑った。
+P| {At|In|On|Of} noon, :: 正午に
+S| we {ate|eat|eaten|eated} lunch :: 私たちは昼食を食べた
+P| {near|nearly|nears|neared} the lion area. :: ライオンの所の近くで
+== 正午に、私たちはライオンのエリアの近くで昼食を食べた。
+S| The lion {was|were|be|are} :: ライオンは…していた
+V| {sleeping|sleep|slept|sleeps} :: 眠って
+P| {under|until|unless|undo} a big tree. :: 大きな木の下で
+== ライオンは大きな木の下で眠っていた。
+S| I {want|wants|wanting|wanted to} :: 私は…したい
+V| {to go|going|go|went} there :: そこに行く
+M| {again|against|gain|agains}. :: もう一度
+== またそこに行きたい。
+?? 1 2 最初に何を見た？
+?? 2 2 ゾウは何を使って水を飲んでいた？
+?? 6 2 どこで昼食を食べた？
+?? 7 2 ライオンはどこで寝ていた？
+
+@id beg35
+@lv 1
+@level 4
+@title The Flying Kite
+@ja 飛んでいったたこ
+@tag 高校受験レベル・物語文
+@gloss kite=たこ, grandfather=祖父, windy=風の強い, hill=丘, suddenly=突然, string=ひも, break=切れる, hold=持つ
+S| Taro {had|have|having|haved} :: タロウは持っていた
+O| a new red {kite|kites|kited|kiting} :: 新しい赤いたこを
+M| {from|at|than|into} his grandfather. :: 祖父からの
+== タロウはおじいさんからもらった新しい赤いたこを持っていた。
+T| {One|Once|Ones|First} windy day, :: ある風の強い日
+S| he {went|gone|going|goed} :: 彼は行った
+P| {to|at|of|than} the hill :: 丘へ
+R| {to fly|fly|flew|flown} it. :: それをあげに
+== ある風の強い日、彼はたこをあげに丘へ行った。
+S| The kite {went|go|gone|going} :: たこは行った
+M| {up|upper|ups|upped} :: 上へ
+M| {high|height|highly|heights} :: 高く
+P| {in|on|at|of} the sky. :: 空に
+== たこは空高く上がった。
+M| {Suddenly|Sudden|Suddenness|Suddener}, :: 突然
+S| a strong wind {blew|blow|blown|blowed} :: 強い風が吹いた
+M| {and|nor|than|if} the string broke. :: そしてひもが切れた
+== 突然強い風が吹いて、ひもが切れた。
+S| The kite {flew|fly|flown|flied} :: たこは飛んだ
+M| {away|way|aways|a way} :: 遠くへ
+P| {over|of|than|until} the trees. :: 木々の上を
+== たこは木々の上を越えて飛んでいってしまった。
+S| Taro {ran|run|runned|running} after it, :: タロウは追いかけた
+M| {but|nor|than|if} he couldn't :: でもできなかった
+V| {catch|catches|caught|catching} it. :: それを捕まえる
+== タロウは追いかけたが、捕まえられなかった。
+S| He {felt|feel|feeled|feeling} :: 彼は感じた
+C| very {sad|sadly|sadness|sadden} :: とても悲しく
+M| {and|nor|than|if} went home. :: そして家に帰った
+== 彼はとても悲しくなって、家に帰った。
+T| The {next|nextly|near|neighbor} day, :: 次の日
+S| a girl {came|come|coming|comed} :: 女の子が来た
+P| {to|at|on|of} his house. :: 彼の家に
+== 次の日、女の子が彼の家にやって来た。
+S| She {was|were|be|been} :: 彼女は…していた
+V| {holding|hold|held|holds} :: 持って
+O| his red {kite|kites|kited|kiting}! :: 彼の赤いたこを
+== 彼女は彼の赤いたこを持っていた！
+S| Taro {was|were|be|been} :: タロウは…だった
+C| very {happy|happily|happiness|happier} :: とてもうれしく
+M| {and|nor|than|if} thanked her. :: 彼女に礼を言った
+== タロウはとても喜んで、彼女にお礼を言った。
+?? 0 2 たこは誰からもらった？
+?? 1 3 何をしに丘へ行った？
+?? 4 2 たこはどこを飛んでいった？
+?? 7 1 次の日、誰が来た？
+
+@id beg36
+@lv 1
+@level 4
+@title Homework First
+@ja ゲームと宿題
+@tag 高校受験レベル・意見文
+@gloss video game=テレビゲーム, homework=宿題, should=～すべき, forget=忘れる, tired=疲れた, finish=終える, relaxed=くつろいだ, parents=両親
+S| {Many|Much|Lot|Every} students :: 多くの生徒は
+V| {like|likes|liking|to like} :: 好きだ
+O| {playing|plays|played|to playing} video games. :: テレビゲームをするのが
+== 多くの生徒はテレビゲームをするのが好きだ。
+S| I {like|likes|liking|liked to} :: 私は好きだ
+O| {them|they|their|theirs}, :: それらが
+M| {too|to|two|either}. :: …も
+== 私もゲームが好きだ。
+M| {But|Nor|Than|If} I think :: でも私は思う
+O| homework {should|shoulds|should to|shall to} come :: 宿題が来るべきだと
+M| {first|fast|firsts|fist}. :: 最初に
+== でも、宿題を先にするべきだと思う。
+M| {If|Of|It|In} you play games first, :: 先にゲームをすると
+S| you {may|mays|maying|may to} :: …かもしれない
+V| {forget|forgets|forgot|forgotten} your homework. :: 宿題を忘れる
+== 先にゲームをすると、宿題を忘れるかもしれない。
+M| {Also|Too|Either|Neither}, :: また
+S| you {will|wills|willing|will to} :: あなたは…だろう
+V| {feel|feels|felt|feeling} :: 感じる
+C| too {tired|tire|tiredly|tires} to study. :: 疲れて勉強できない
+== また、疲れすぎて勉強できなくなるだろう。
+M| {When|What|Which|Who} I finish my homework, :: 宿題を終えると
+S| I {feel|feels|feeling|felt to} :: 私は感じる
+C| {relaxed|relax|relaxing|relaxedly}. :: ほっとして
+== 宿題を終えると、私はほっとする。
+T| {Then|Than|There|They} :: そうすれば
+S| I {can|cans|can to|caning} enjoy :: 私は楽しめる
+O| games {more|many|mores|moreover}. :: ゲームをもっと
+== そうすれば、もっとゲームを楽しめる。
+S| My {parents|parental|parenting|parent's} :: 両親も
+V| {are|is|be|was} :: …だ
+C| {happy|happily|happiness|happen}, too. :: うれしい
+== 両親も喜んでくれる。
+M| {So|Nor|Than|If} I say, :: だから私は言う
+O| "Homework {first|firstly|fast|firsts}, :: 「宿題が先
+O| games {later|latest|lately|latter}!" :: ゲームはあと」と
+== だから私は言いたい。「宿題が先、ゲームはあとで！」
+?? 0 2 多くの生徒は何をするのが好き？
+?? 3 2 先にゲームをすると何を忘れるかもしれない？
+?? 5 2 宿題を終えるとどう感じる？
+?? 8 1 筆者は何を先にすべきと言っている？
+
+@id beg37
+@lv 1
+@level 4
+@title Summer Fireworks
+@ja 夏の花火
+@tag 高校受験レベル・ブログ
+@gloss fireworks=花火, festival=祭り, wear=着る, river=川, mat=敷物, loud=音が大きい, scared=こわがって, clap=たたく, last=続く
+T| {Last|Lastly|Lasting|Lasts} Saturday, :: 先週の土曜日
+S| I {went|gone|goes|going} :: 私は行った
+P| {to|of|at|than} a fireworks festival. :: 花火大会に
+== 先週の土曜日、私は花火大会に行った。
+S| I {wore|weared|worn|wearing} :: 私は着た
+O| a {blue|blues|bluely|blued} yukata :: 青いゆかたを
+M| {for|of|at|than} the first time. :: 初めて
+== 私は初めて青いゆかたを着た。
+S| There {were|was|is|be} :: …がいた
+O| {a lot of|a lot|lot of|a lots of} people :: たくさんの人が
+P| {by|of|than|into} the river. :: 川のそばに
+== 川のそばにはたくさんの人がいた。
+S| My family {sat|seat|sitted|sitten} :: 家族は座った
+P| {on|of|than|into} a big mat :: 大きなシートに
+M| {and|nor|than|if} waited. :: そして待った
+== 家族は大きなシートに座って待った。
+P| {At|In|On|Of} seven, :: 7時に
+S| the {first|firstly|once|fast} firework :: 最初の花火が
+V| {went up|gone up|going up|wented up}. :: 上がった
+== 7時に、最初の花火が上がった。
+S| It {was|were|be|been} :: それは…だった
+C| very {beautiful|beauty|beautifully|beautify} :: とても美しく
+M| {and|nor|than|if} loud. :: そして音が大きい
+== それはとても美しく、音も大きかった。
+S| My little sister {was|were|be|are} :: 妹は…だった
+C| {scared|scare|scaring|scaredly} :: こわがって
+P| {at|on|in|by} first. :: 最初は
+== 妹は最初こわがっていた。
+T| {But|Nor|Than|If} soon :: でもすぐに
+S| she {started|start|starting|startted} :: 彼女は始めた
+O| {to clap|clap|clapped|claps} her hands. :: 手をたたくことを
+== でもすぐに、妹は手をたたき始めた。
+S| The fireworks {show|showed|showing|shown} :: 花火大会は
+V| {lasted|last|lasting|lastly} :: 続いた
+P| {for|since|while|until} an hour. :: 1時間
+== 花火大会は1時間続いた。
+S| I {want|wants|wanting|wanted to} :: 私は…したい
+V| {to go|going|go|went} again :: また行く
+T| next {summer|summers|summery|summered}. :: 来年の夏に
+== 来年の夏もまた行きたい。
+?? 1 1 筆者は何を着た？
+?? 4 0 最初の花火は何時に上がった？
+?? 6 1 妹は最初どんな様子だった？
+?? 8 2 花火大会はどのくらい続いた？
