@@ -193,7 +193,7 @@ export const fishingApp = {
     const goPond = () => { wxRefresh(); clear(); screen = 'en'; ctx.setTitle('英語の釣り堀'); head(); try { ctx.emit('act', { layer: 'sub', cat: 'study', label: '英語の釣り堀' }); } catch (e) { } EN.pondScreen({ onPick: (id, lv) => { baseCond.spot = EN_SPOT[lv] || 'pond'; play({ en: id }); }, onBack: menu }); };
     const head = () => ctx.setHead?.([{ label: '🐠 アクアリウム', fn: () => goAq(null, screen === 'menu' ? menu : null) }]);   // 上のバー:町にもどる の左
     // 水槽・魚・飾り・合成・図鑑は、ぜんぶ同じ「アクアリウム」の画面(どこから開いても同じ)
-    const goAq = (tab, back) => { clear(); screen = 'aq'; ctx.setTitle('アクアリウム'); head(); EN.aquarium({ tab, onBack: back || goPond }); };
+    const goAq = (tab, back) => { clear(); screen = 'aq'; ctx.setTitle('アクアリウム'); head(); EN.aquarium({ tab, onBack: back || goPond, coach: !!P.storyAq }); };
     const goTank = () => goAq('fish'), goCol = () => goAq('dex');
 
     // ================= 釣り場をえらぶ(のんびり・勝負のとき。かならず選ぶ) =================

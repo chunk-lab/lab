@@ -408,12 +408,26 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
   //   釣り堀・家・アミューズメントセンター、どこから開いてもこの画面。
   //   上=水槽(いつでも指で飾りを動かせる。下へ引っぱって離すと、しまう。魚をタップ=えさ・ひかえへ)
   //   下=タブ:🐟魚 / 🪸飾り / 🧪合成 / 📖図鑑
-  function aquarium({ tab: tab0, onBack }) {
+  function aquarium({ tab: tab0, onBack, coach }) {
     vch.bindGems && vch.bindGems(ctx.gems);
     const sc = document.createElement('div'); sc.className = 'ens aq'; root.appendChild(sc);
+    // ---- 物語の案内(coach): えさを作る → えさをあげる → 合成、をやりながら教える。おわったら話にもどる ----
+    let cStep = 0, cFed = false, cMixed = false, cEl = null, cBye = false;
+    const stockN = () => { const st = spec.foodStock(); let n = 0; for (const k in st) for (const v of [].concat(st[k])) n += +v || 0; return n; };
+    function coachUpd() {
+      if (!coach) return;
+      if (cStep === 0 && stockN() > 0) cStep = 1;
+      if (cStep <= 1 && cFed) cStep = 2;
+      if (cStep <= 2 && cMixed) cStep = 3;
+      const T = ['① まずは「🍤 えさを作る」。英語に答えると、えさができるよ。', '② 魚をタップして「えさ」をあげよう。毎日少しずつで、育っていくよ。', '③ 下の「🧪 合成」→「🐟 魚を強くする」で、潮見さんがくれた 育ちきったフナを3匹えらんで、合成してみよう。(育ちきっていない魚は、合成できないよ)', 'できた！ もうすぐ、物語にもどるよ。'][cStep];
+      if (!cEl) { cEl = document.createElement('div'); cEl.style.cssText = 'position:sticky;top:0;z-index:30;margin:0 0 8px;background:#141a36;color:#fff;border:3px solid #ffd166;border-radius:12px;padding:8px 12px;font:700 14px/1.55 inherit'; sc.prepend(cEl); }
+      cEl.textContent = T;
+      if (cStep === 3 && !cBye) { cBye = true; setTimeout(() => { try { ctx.close(); } catch (e) { } }, 3500); }
+    }
+    if (coach) setTimeout(coachUpd, 60);
     let tab = tab0 || ctx.storage.get('aqTab') || 'fish';
     let dexT = ctx.storage.get('aqDex') || 'f';
-    let lockMode = false, mixMode = 'd', mixLv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
+    let lockMode = false, mixMode = coach ? 'f' : 'd', mixLv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
     let raf = 0, swim = [], PL = [], DM = {}, selUid = null, pop = null;
     const Z = { z: 1, x: 0, y: 0 };
     const fx = { pel: [], coin: [], bub: [] };
@@ -717,7 +731,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       body.innerHTML = tab === 'fish' ? tabFish() : tab === 'deco' ? tabDeco() : tab === 'mix' ? tabMix() : tabDex();
       body.scrollTop = y;
     }
-    function redraw(all) { drawHead(); drawBody(); if (all) { rebuildSwim(); } refreshDecor(); }
+    function redraw(all) { drawHead(); drawBody(); if (all) { rebuildSwim(); } refreshDecor(); coachUpd(); }
 
     // ---------- 金券・ふやす ----------
     function walletSheet(k) {
@@ -778,7 +792,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       if (a === 'dsc1') { const q = PL.find(r => r.uid === v); if (q) { q.sc = 1; spec.placeSet(q.uid, { sc: 1 }); refreshDecor(); sfx.play('tap'); closePop(); } return; }
       if (a === 'dtake') { spec.placeRemove(v); selUid = null; closePop(); sfx.play('tap'); refreshDecor(); drawHead(); if (tab === 'deco') drawBody(); return; }
       if (a === 'dup') { closePop(); walletSheet(v); return; }
-      if (a === 'feed') { const r = feed(v); closePop(); if (r) { sfx.play('nibble'); feedFx([v], r === true ? {} : { [v]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${fullGain}`); } else toast(spec.food() ? 'きょうは もうおなかいっぱい' : 'えさがないよ。🐟タブの「えさを作る」で作ろう'); redraw(); return; }
+      if (a === 'feed') { const r = feed(v); closePop(); if (r) { cFed = true; coachUpd(); sfx.play('nibble'); feedFx([v], r === true ? {} : { [v]: r }); if (r === 'coin') toast(`😋 満腹! 🪙 +${fullGain}`); } else toast(spec.food() ? 'きょうは もうおなかいっぱい' : 'えさがないよ。🐟タブの「えさを作る」で作ろう'); redraw(); return; }
       if (a === 'reg') { closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; const f = t[i]; if (f.g < growNeed(f)) return; if (f.lock) { toast('🔒 ロック中(水槽にいる)。ロックをはずすととうろくできるよ'); return; } t.splice(i, 1); spec.saveTank(t); spec.collAdd(f.id, f.rk || 0, 1); spec.markGrown(f.id, f.rk || 0); sfx.play('coin'); toast(`📖 とうろく! ${fname(f)} ×${spec.coll()[f.id + ':' + (f.rk || 0)]}`); redraw(true); return; }
       if (a === 'flk') { const t = spec.tank(), b = spec.box(), f = t.find(z => z.uid === v) || b.find(z => z.uid === v); if (f) { f.lock = f.lock ? 0 : 1; spec.saveTank(t); spec.saveBox(b); sfx.play('tap'); toast(f.lock ? '🔒 この魚は水槽にいるよ(まち・とうろくには動かない)' : '🔓 ロックをはずした'); redraw(); } return; }
       if (a === 'tobox') { { const f0 = spec.tank().find(z => z.uid === v); if (f0 && f0.lock) { closePop(); toast('🔒 ロック中だよ'); return; } } closePop(); const t = spec.tank(), i = t.findIndex(x => x.uid === v); if (i < 0) return; if (!boxRoom()) { toast('ひかえがいっぱい(🐟タブで ふやせるよ)'); return; } const b = spec.box(); b.push(t.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); sfx.play('tap'); toast('📦 ひかえに入れた'); redraw(true); return; }
@@ -788,7 +802,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         for (const q of reviewQs(FOOD_Q)) { const ok = await ask(q, { label: `🍤 えさを作る(${got}問せいかい)`, time: T_Q }); learn.hit(q.w[0], ok, { ja: q.w[2], src: 'fishing' }); if (ok) { got++; const lv = q.lv || 1, tp = foodTypeOf(q.w[1]), tier = lv >= 3 ? 1 : 0, n = lv >= 3 ? 1 : lv >= 2 ? 2 : 1; spec.addFood(tp, tier, n); const k = tp + tier; gain[k] = (gain[k] || 0) + n; } }   // 品詞=種類。やさしい=普通1・ふつう=普通2・難しい=上等1
         toast(got ? `🍤 えさができた! ${Object.entries(gain).map(([k, n]) => `${FOOD_INFO[k[0]][0]}${k[1] === '1' ? '上等' : ''}+${n}`).join(' ')}` : '🍤 まちがえた…また やってみよう'); redraw(); return;
       }
-      if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { sfx.play('nibble'); feedFx(fed, fulls); toast(`🍤 ${n}回 あげた${fullGain ? ' ・ 🪙 +' + fullGain : ''}`); } redraw(); return; }
+      if (a === 'all') { let n = 0; const fed = [], fulls = {}; for (const f of spec.tank()) { let r; while ((r = feed(f.uid))) { n++; fed.push(f.uid); if (r !== true) fulls[f.uid] = r; } } if (n) { cFed = true; sfx.play('nibble'); feedFx(fed, fulls); toast(`🍤 ${n}回 あげた${fullGain ? ' ・ 🪙 +' + fullGain : ''}`); } redraw(); return; }
       if (a === 'takeall') { spec.placed().forEach(q => spec.placeRemove(q.uid)); selUid = null; sfx.play('tap'); refreshDecor(); redraw(); return; }
       if (a === 'wallet') { walletSheet(null); return; }
       if (a === 'idex') { openDex && openDex(); return; }
@@ -807,7 +821,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
           if (sel.length !== MIX_N || sel.some(f => f.id !== sel[0].id || (f.rk || 0) !== (sel[0].rk || 0))) { toast('同じ種類・同じ強さの魚を選んでね'); sfx.play('early'); return; }
           pick3 = []; const rk = (sel[0].rk || 0) + 1, size = Math.round(Math.max(...sel.map(f => f.size)) * RANK_MUL[rk] / RANK_MUL[rk - 1]);
           const nf = { uid: newUid(), id: sel[0].id, size, g: GROW_NEED, day: '', n: 0, at: Date.now(), rk };
-          spec.saveTank(t.filter(f => !sel.includes(f)).concat([nf])); spec.markGrown(nf.id, rk);
+          spec.saveTank(t.filter(f => !sel.includes(f)).concat([nf])); spec.markGrown(nf.id, rk); cMixed = true;
           await gacha(sel.map(x => fishImg(x.id, 70, false, x.rk || 0)), { rar: rk + 1, icon: fishImg(nf.id, 200, false, rk), name: fname(nf), en: (FISHBY[nf.id] || {}).en || '', line: `${size}cm の強い魚になった! 水槽で泳いでるよ` });
         }
         redraw(true); return;

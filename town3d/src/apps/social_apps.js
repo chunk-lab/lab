@@ -35,7 +35,8 @@ const toast = (box, t) => { const d = document.createElement('div'); d.textConte
 export const cafeApp = {
   mount(el, ctx) {
     const box = frame(el, 'cafe');
-    const MAXQ = 20, qty = {}; let last = '';   // qty:{おみやげid: 買う数}。last:さっき買ったものの結果(画面に残す)
+    const MAXQ = 20, qty = {}; let last = '';
+    const gift = !!(ctx.params && ctx.params.gift1); let gave = false;   // 物語から: 町に来た記念に、1つタダでプレゼント   // qty:{おみやげid: 買う数}。last:さっき買ったものの結果(画面に残す)
     const fmt = n => Number(n).toLocaleString('ja-JP');
     const menuNow = () => [...CAFE_MENU.filter(k => !ITEMS[k].secret || social.has(ITEMS[k].secret, 'secret')), ...['wine', 'alamode', 'cafeset'].filter(k => social.made(ITEMS[k].merge))];   // マージゲームで作れた品は、カフェのメニューにならぶ
     const totals = () => { let n = 0, sum = 0; for (const k in qty) if (qty[k] > 0 && ITEMS[k]) { n += qty[k]; sum += qty[k] * ITEMS[k].price; } return { n, sum }; };
@@ -45,6 +46,7 @@ export const cafeApp = {
       box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h2>☕ カフェ「ほしの木」</h2><span class="pill">🪙 <span data-bind="coins">${fmt(coins)}</span></span></div>
         <div class="say">マスター「いらっしゃい。ぜんぶ、おみやげにできますよ。町のみんなにも好きなものがあってね…だれが何を好きかは、占いの館のルナさんがよく知ってるみたいです」</div>
         ${last ? `<div class="res" style="color:#4a3a6b">${last}</div>` : ''}
+        ${gift && !gave ? `<div class="res" style="color:#4a3a6b;text-align:left"><b>🎁 きょうは、町に来た記念！ 好きなものを1つ、プレゼント(タダ)</b><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">${menu.map(k => `<button data-gift="${k}" style="border:0;border-radius:999px;padding:8px 12px;font:inherit;font-weight:800;background:#fff;box-shadow:0 1px 4px #0002">${ITEMS[k].icon} ${esc(ITEMS[k].name)}</button>`).join('')}</div></div>` : ''}
         <div class="grid">${menu.map(k => { const it = ITEMS[k], q = qty[k] || 0, own = bag[k] || 0; return `<div class="it" style="${q ? 'outline:3px solid #ffb35c' : ''}"><span class="ic">${it.icon}</span><b>${esc(it.name)}</b><small>${esc(it.en)}</small><span class="pr">🪙 ${fmt(it.price)}</span><small style="margin-top:4px">もっている: <b style="display:inline">${own}</b></small><div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px">${stepBtn(k, -1, '−', q > 0)}<b style="min-width:22px;font-size:17px">${q}</b>${stepBtn(k, 1, '＋', q < MAXQ)}</div>${q ? `<small style="margin-top:4px;color:#c26a00;font-weight:800">買うと ${own + q}こ ・ 🪙 ${fmt(q * it.price)}</small>` : ''}</div>`; }).join('')}</div>
         <h3>🎒 もっているおみやげ</h3><p class="nt" style="margin:0 0 6px">タップで 🔒ロック(ロック中は、プレゼントで減らないよ)</p><div class="bag">${Object.keys(bag).length ? Object.entries(bag).map(([k, c]) => `<button data-lk="${k}" style="border:0;font:inherit;cursor:pointer;background:${social.isItemLocked(k) ? '#ffe9a8' : '#fff'};border-radius:999px;padding:4px 10px;font-size:13px;font-weight:800">${social.isItemLocked(k) ? '🔒 ' : ''}${ITEMS[k] ? ITEMS[k].icon + ' ' + esc(ITEMS[k].name) : k} ×${c}</button>`).join('') : '<span style="opacity:.6">まだないよ</span>'}</div>
         <p class="nt">住人に話しかけて「🎁 プレゼントする」で渡せるよ(1人に1日1回)。好きなものだと仲良くなれて、ゲームや頼みごと、お話が増えていく。<br>🃏 カード対戦は、アミューズメントセンターに引っ越しました(ハッタリ男爵と仲良くなると遊べる)。</p>
@@ -58,6 +60,7 @@ export const cafeApp = {
     draw();
     let busy = false;
     box.onclick = async e => {
+      const gf = e.target.closest('[data-gift]'); if (gf && gift && !gave) { const k = gf.dataset.gift; gave = true; social.addItem(k, 1); last = `🎁 ${ITEMS[k].icon}${esc(ITEMS[k].name)} をもらったよ！ 「🎒 もっているおみやげ」に入ったよ。`; box.scrollTop = 0; draw(); setTimeout(() => { try { ctx.close(); } catch (er) { } }, 2400); return; }
       const lk = e.target.closest('[data-lk]'); if (lk) { const on = social.toggleItemLock(lk.dataset.lk); toast(box, on ? '🔒 ロックしたよ' : '🔓 ロックをはずしたよ'); const sc = box.scrollTop; draw(); box.scrollTop = sc; return; }
       const q = e.target.closest('[data-q]');
       if (q && !q.disabled) { const k = q.dataset.q; qty[k] = Math.max(0, Math.min(MAXQ, (qty[k] || 0) + +q.dataset.d)); last = ''; const sc = box.scrollTop; draw(); box.scrollTop = sc; return; }

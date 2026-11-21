@@ -39,7 +39,7 @@ function puffTex() {
   g.fillStyle = r; g.fillRect(0, 0, 64, 64); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
-export function createCutscene({ root, scene, residents, me, env, input, names = {}, blockers = [], openApp = null, bus = null, openReader = null, reward = null, openGame = null, tune = null }) {
+export function createCutscene({ root, scene, residents, me, env, input, names = {}, blockers = [], openApp = null, bus = null, openReader = null, reward = null, openGame = null, tune = null, giftFish = null }) {
   if (!document.getElementById('tw-cut-css')) { const st = document.createElement('style'); st.id = 'tw-cut-css'; st.textContent = CSS; document.head.appendChild(st); }
   let on = false, el = null, skipped = false, meAct = null, camT = null, camP = new THREE.Vector3(), camL = new THREE.Vector3(), camSnap = false, follow = null, camInit = false, offY = 0, riding = false, alt = 0;
   const ray = new THREE.Raycaster(), rv = new THREE.Vector3();
@@ -182,7 +182,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
     await say('narr', `💗 ${nm}と、なかよしになった！${r.gained ? '' : '（もう上がっています）'}\nいま：${r.lvName}` + (r.next ? `\nあと ${r.next.left} で「${r.next.label}」が開くよ` : ''));
     if (r.firstTime) await say('narr', 'なかよしは、毎日話しかけたり、マージで作った「ほしい品」をわたしたりすると上がります。\n上がるたびに、その人にたのめることや、遊べるものが増えていきます。');
   }
-  const dir = { only, endCard, ride, faceSky, wx, rainbow, app, read, game, board, music: () => { try { return tune && tune(); } catch (e) { return null; } }, friend, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
+  const dir = { giftFish: (...a) => { try { giftFish && giftFish(...a); } catch (e) { console.error(e); } }, only, endCard, ride, faceSky, wx, rainbow, app, read, game, board, music: () => { try { return tune && tune(); } catch (e) { return null; } }, friend, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
     wait: async s => { guard(); await sleep(s); guard(); }, hour: h => { env.hour = h; }, both: (...ps) => Promise.all(ps) };
 
   async function play(script) {

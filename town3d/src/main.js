@@ -40,6 +40,7 @@ import { createEncounter, ENC } from './game/encounter.js';
 import { VOICE } from './game/voice.js';
 import { createCutscene } from './game/cutscene.js';
 import { models } from './game/model_rooms.js';
+import { spec as fishSpec, growNeed as fishGrowNeed } from './game/specimen.js';
 import { chunkkunStory } from './game/stories/chunkkun.js';
 import { yuzuStory } from './game/stories/yuzu.js';
 import { shioriStory } from './game/stories/shiori.js';
@@ -238,6 +239,10 @@ export function mount(container, opt = {}) {
   const input = createInput(root, { onAction: () => doAction() });
   const cut = createCutscene({ root, scene, residents, me, env, input, names: { me: () => settings.name || 'あなた', chunkkun: 'チャンクくん', mii: 'ミイ', maru: 'マルさん', yuzu: 'ゆず', shiori: 'しおりさん', gon: 'ゴン', suna: '潮見さん', luna: 'ルナ', baron: 'ハッタリ男爵', choco: '大喜利チョコ', tetsu: '哲学者', koharu: 'こはる先生', hana: 'はな', sora: 'そら' }, blockers: city.meshes,
     openApp: (id, p) => openApp(id, p), bus, openReader: opt.openReader || null, openGame: opt.openGame || null,
+    giftFish: (id, n = 1, grown = false) => {   // 物語: 魚を水槽に入れる(grown=育ちきった魚)
+      const t = fishSpec.tank(); for (let i = 0; i < n; i++) { const f = { uid: 'gf' + Date.now().toString(36) + i + Math.random().toString(36).slice(2, 5), id, size: 16 + Math.floor(Math.random() * 8), g: 0, day: '', n: 0, at: Date.now(), rk: 0 }; if (grown) f.g = fishGrowNeed(f); t.push(f); }
+      fishSpec.saveTank(t); if (grown) fishSpec.markGrown(id, 0); if (!fishSpec.hasTank()) fishSpec.gotTank(); if (!furn.owned('tank')) furn.give('tank');
+    },
     tune: () => { audio.unlock(); const t = audio.play('harmonica', audio.pickTune(env.hour)) || { sec: 7 }; const su = residents.list.find(r => r.def.id === 'suna'); if (su) su.harpT = t.sec; return t; },
     reward: (id, n) => {   // 物語のなかよし(1つの話で1回だけ上がる)
       const first = social.markMade('story:' + id); if (first) social.addAff(id, n);
@@ -1362,7 +1367,7 @@ export function mount(container, opt = {}) {
       started = true;
       if (settings.birth && !settings.birthLock) { settings.birthLock = 1; save(); }
       setTimeout(() => { if (soc.gonDaily()) hud.toast('🎒 ゴンが、きょうの拾いものをしてくれたよ'); }, 5000);   // ゴン: 何もしなくても1日1つ
-      if (!settings.birth) setTimeout(() => { if (!hud.busy && !appHost.current) openBirthSetup(true); }, 1800);   // はじめに誕生日をとうろく
+      if (!settings.birth) { const tryBirth = () => { if (settings.birth) return; if (hud.busy || appHost.current || cut.on) { setTimeout(tryBirth, 5000); return; } openBirthSetup(true); }; setTimeout(tryBirth, 1800); }   // はじめに誕生日をとうろく(物語やアプリの最中は、終わるまで待つ)   // はじめに誕生日をとうろく
       else setTimeout(() => birthdayAfter(), 2500);
       bus.emit('start', { name, look });
       opt.onEvent?.('start', { name, look });
