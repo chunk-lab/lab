@@ -29,9 +29,11 @@ export async function sunaStory(d, ctx = {}) {
   d.hour(17.3); d.caption('夕方');
   pondCam();
   await d.fade(false, 0.9);
-  await d.say('narr', '夕方。\n潮見さんの竿は、きょうも ぴくりとも動かなかった。');
   d.caption('');
-  await d.say('me', '「潮見さん、釣れなくていいの？」');
+  await d.say('me', '「潮見さんは、どうでした？」');
+  await d.say(S, '「人生、こんなもんさ」');
+  await d.say('narr', '潮見さんは、空っぽのバケツを 見せてきた。');
+  await d.say('me', '「……釣れなくて、いいんですか？」');
   await d.say(S, '「釣れるかどうかじゃなく、\n釣りができる この時間が、とても贅沢なのさ」');
   // ---- 家の水槽 ----
   d.hideBox(); await d.fade(true, 0.9);

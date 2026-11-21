@@ -849,7 +849,7 @@ export function init_engine(){
     fwd(v-S.passed);
   });
   tickTimer=setInterval(()=>{const now=performance.now(),dt=now-lastTick;lastTick=now;
-    if(S&&manual()&&S.phase==="play"&&!S.paused){S.elapsed+=dt;
+    if(S&&manual()&&S.phase==="play"&&!S.paused&&!S.hold){S.elapsed+=dt;
       if(S.timed){$("timeText").textContent="残り "+Math.max(0,(S.timed.limit-S.elapsed)/1000).toFixed(1);{const rs=Math.ceil((S.timed.limit-S.elapsed)/1000);if(rs<=5&&rs>=1&&S.lastCount!==rs){S.lastCount=rs;sfx("se/count5")}}if(S.elapsed>=S.timed.limit)timedEnd()}
       else $("timeText").textContent="⏱ "+(S.elapsed/1000).toFixed(1)}},100);
   ENV.offs.push(()=>clearInterval(tickTimer));
