@@ -7,6 +7,7 @@ import { portrait } from '../ui/portraits.js';
 const CSS = `
 .tw-cut{position:absolute;inset:0;z-index:60;pointer-events:none;font-family:inherit}
 .tw-cut .cs-fade{position:absolute;inset:0;background:#000;opacity:0;transition:opacity .6s;pointer-events:none}
+.tw-cut .cs-box,.tw-cut .cs-ch{z-index:3}.tw-cut .cs-fade{z-index:2}.tw-cut .cs-skip{z-index:4}.tw-cut .cs-title{z-index:5}   /* 暗転中でもセリフ枠は見える */
 .tw-cut .cs-skip{position:absolute;right:12px;top:calc(12px + env(safe-area-inset-top,0px));pointer-events:auto;border:2px solid #fff;border-radius:999px;background:#1d2340cc;color:#fff;font:800 13px inherit;padding:8px 16px}
 .tw-cut .cs-tap{position:absolute;inset:0;pointer-events:auto}
 .tw-cut .cs-box{position:absolute;left:10px;right:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px));min-height:clamp(130px,24vh,200px);background:#141a36e6;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:16px 18px 30px;pointer-events:auto;display:none}
