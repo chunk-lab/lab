@@ -70,7 +70,7 @@ export const RESIDENTS = [
     menu: [{ label: 'おみくじをひく', app: 'omikuji' }],
   },
   {
-    id: 'chunkkun', adult: false, tips: ["ふわ…「cloud」は雲。ぼくのことだよ", "ふわふわは「fluffy」。ぼくにぴったり", "「Nice to meet you.」は、はじめましての魔法のことば", "「See you!」は『またね』。短くて言いやすいよ", "「It's raining cats and dogs.」は『どしゃ降り』……ふしぎだね"], yomi: 'ちゃんくくん', persona: 'おもちのようなイモムシ。語尾が「〜だよ」「もちもち」。無邪気で、文ができると体がのびるのが自慢。', name: 'チャンクくん', role: '町のマスコット', mascot: true,
+    id: 'chunkkun', adult: false, tips: ["もちもち…「soft」は、やわらかい。お餅みたいでしょ〜", "ふわふわは「fluffy」。ぼくにぴったり", "「Nice to meet you.」は、はじめましての魔法のことば", "「See you!」は『またね』。短くて言いやすいよ", "「It's raining cats and dogs.」は『どしゃ降り』……ふしぎだね"], yomi: 'ちゃんくくん', persona: 'おもちのようなイモムシ。語尾が「〜だよ」「もちもち」。無邪気で、文ができると体がのびるのが自慢。', name: 'チャンクくん', role: '町のマスコット', mascot: true,
     schedule: [[0, 'plaza'], [11, 'gamecenter'], [14, 'plaza2'], [18, 'plaza']],
     lines: { morning: ['もちもち〜! おはよう!'], day: ['いっしょにチャンクつくろ!', 'ぼく、文ができると、のびるんだ!'], evening: ['ゲーセン行こうよ〜。'], night: ['ねむねむ……でも、まだ遊べるよ。'] },
   },
@@ -224,6 +224,16 @@ export function createResidents(scene, graph, getHour, collide = null) {
       for (const r of list) {
         if (!r.glb && (r.follow || r.pin || r.visit || r.summonT > 0 || (r.ch.root.visible && !r.hidden))) loadR(r);   // 用があって出てきた人は、その場で読む
         if (r.battle) continue;   // 雪合戦の最中は、雪合戦の方で動かす
+        if (r.act) {   // 物語の芝居中: 台本(cutscene)の指示どおりに歩く・向く・浮く
+          const A = r.act, P = r.ch.root.position; r.hidden = false; r.ch.root.visible = A.vis !== false; r.path = []; r.idle = null; r.vx = r.vz = 0;
+          if (A.tx != null) {
+            const dx = A.tx - P.x, dz = A.tz - P.z, d = Math.hypot(dx, dz), sp = A.spd || 2.2;
+            if (d > 0.06) { const st = Math.min(d, sp * dt); P.x += dx / d * st; P.z += dz / d * st; r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, Math.atan2(dx, dz), Math.min(1, dt * 8)); r.speed = sp; }
+            else { A.tx = A.tz = null; r.speed = 0; const f = A.done; A.done = null; f && f(); }
+          } else { r.speed = 0; if (A.ry != null) r.ch.root.rotation.y = angleLerp(r.ch.root.rotation.y, A.ry, Math.min(1, dt * 6)); }
+          P.y += ((A.y || 0) + (A.bob ? Math.sin(performance.now() / 700) * A.bob : 0) - P.y) * Math.min(1, dt * 4);
+          r.ch.pose = A.pose || null; r.ch.update(dt, r.speed); continue;
+        }
         if (r.ride) { r.vx = r.vz = 0; r.ch.update(dt, r.def.mascot ? (r.rideSpeed || 0) : 0); continue; }   // チャンクくんに乗っている間(チャンクくん本人と、後ろに乗った人)は、main が動かす
         if (r.pin) {   // デートなどで、決まった場所に座っている
           const P = r.ch.root.position; P.set(r.pin.x, r.pin.y || 0, r.pin.z); r.ch.root.rotation.y = r.pin.ry;

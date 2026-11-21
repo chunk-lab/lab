@@ -333,6 +333,7 @@ export function useChunkkunGlb(ch) {
     let wt = 0;
     let sk = 1;
     ch.update = (dt, speed) => {
+      if (ch.snapScale) { sk = ch.rideScale || 1; ch.snapScale = false; }   // 物語: ぽんっと一瞬で大きさを変える
       sk += ((ch.rideScale || 1) - sk) * Math.min(1, dt * 3); model.scale.setScalar(1.25 * sk);   // 乗っている間は大きくなる(1人=2 / 2人=3)。ゆっくり変わる
       ch.scaleNow = sk;
       const mv = speed > 0.05; go(mv ? (act.crawl || act.idle) : (act.idle || act.crawl)); mixer.update(dt);

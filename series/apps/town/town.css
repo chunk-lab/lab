@@ -47,3 +47,4 @@ body.md-3d-on .tw-today{text-orientation:upright}
 body.tw-talking>.tw-dock{display:none}
 /* エンカウント戦闘中(body.eb-on)は、上のコイン・設定・下の「今日なにする?」をかくす */
 body.eb-on>.tw-top,body.eb-on .tw-dock{display:none!important}
+body.md-story3d>.tw-top,body.md-story3d .tw-dock,body.md-story3d .tw-today,body.md-story3d .cs-band,body.md-story3d #cs-ret-merge{display:none!important}   /* 物語の芝居中も同じ */

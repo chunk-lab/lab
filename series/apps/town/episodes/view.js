@@ -1,6 +1,5 @@
 import { createStore } from '../../../core/store.js';
 import { FIRST_EPISODE } from './first.js';
-import { CHUNKKUN_EPISODE } from './chunkkun.js';
 import { createEpisodeProgress } from './progress.js';
 import './view.css';
 
@@ -10,9 +9,12 @@ const NAME = { hana: 'はな', sora: 'そら', chunkkun: 'チャンクくん', y
 // 一枚絵の背景。2Dではthree.jsや町を読み込まない。
 const ROOM = `<svg viewBox="0 0 900 700" preserveAspectRatio="xMidYMid slice" aria-label="はなちゃんの勉強部屋" role="img"><defs><linearGradient id="epwall" x2="0" y2="1"><stop stop-color="#f5eee7"/><stop offset="1" stop-color="#e4dfd8"/></linearGradient><linearGradient id="epsky" x2="0" y2="1"><stop stop-color="#b6dce9"/><stop offset="1" stop-color="#edf6e3"/></linearGradient></defs><path fill="url(#epwall)" d="M0 0h900v460H0z"/><path fill="#d6b998" d="M0 460h900v240H0z"/><path stroke="#c3a380" stroke-width="2" d="M0 520h900M0 600h900M80 460 0 700M290 460 240 700M500 460 520 700M710 460 820 700"/><rect x="70" y="65" width="260" height="245" rx="5" fill="#fff9ed"/><rect x="83" y="78" width="234" height="218" fill="url(#epsky)"/><path fill="#adcbac" d="M83 257q60-100 115 0 60-110 119-15v54H83z"/><path stroke="#fffaf0" stroke-width="10" d="M200 78v218M83 186h234"/><rect x="640" y="150" width="150" height="320" rx="4" fill="#ba9878"/><rect x="652" y="162" width="126" height="296" fill="#d5b697"/><circle cx="757" cy="324" r="6" fill="#a67e48"/><rect x="368" y="150" width="192" height="315" fill="#c4a581"/><path fill="#ece1c7" d="M380 164h168v86H380zm0 100h168v86H380zm0 100h168v86H380z"/><g fill="#a1b4b1"><rect x="392" y="185" width="19" height="62"/><rect x="418" y="177" width="17" height="70"/><rect x="464" y="284" width="23" height="63"/></g><g fill="#cd9d9f"><rect x="440" y="183" width="20" height="64"/><rect x="470" y="170" width="19" height="77"/><rect x="393" y="275" width="26" height="72"/></g><path fill="#e5c67d" d="M495 194h35v53h-35zm-64 94h23v59h-23z"/><ellipse cx="400" cy="575" rx="245" ry="62" fill="#bcb8d1"/><path fill="#c5a17d" d="M90 420h275v19H90zM110 439h16v120h-16zM330 439h16v120h-16z"/><path fill="#e3c7a1" d="M90 404h275v22H90z"/><path fill="#655f75" d="m205 331 85 6 9 63h-95z"/><path fill="#c7e7ee" d="m214 340 67 5 8 46h-76z"/><path fill="#9c889c" d="M168 468h87v18h-87zm0 18h12v90h-12zm75 0h12v90h-12z"/><path fill="#caafbb" d="M170 455h82v-58h-82z"/><path fill="#a7785d" d="m800 450 10 62h48l10-62z"/><g fill="#8cac89"><ellipse cx="824" cy="409" rx="15" ry="49" transform="rotate(-26 824 409)"/><ellipse cx="851" cy="405" rx="15" ry="52" transform="rotate(24 851 405)"/></g></svg>`;
 
-export function createEpisodes(core, { games, depart, pauseTown = () => {}, resumeTown = () => {}, onStop = () => {} }) {
+// 3Dの町で演じる話(台本は town3d/src/game/stories/)。ここには目次だけ置く
+const CHUNKKUN_3D = { id: 'chunkkun', no: 5, title: 'もちもち', character: 'チャンクくん', cast: 'チャンクくん', town3d: 'chunkkun', steps: [{ type: 'end' }] };
+
+export function createEpisodes(core, { games, depart, play3d, pauseTown = () => {}, resumeTown = () => {}, onStop = () => {} }) {
   // 話の一覧(新しい話は、ここに足す)。タイトル画面の「つづき」は、まだ終わっていない最初の話を開く
-  const LIST = [FIRST_EPISODE, CHUNKKUN_EPISODE];
+  const LIST = [FIRST_EPISODE, CHUNKKUN_3D];
   const store = createStore('town-episodes'), progs = LIST.map(e => createEpisodeProgress(store, e));
   let k = 0, episode = LIST[0], progress = progs[0], forced = null;
   const num = () => episode.no || k + 1;
@@ -20,7 +22,7 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
   pick();
   let root = null, bar = null, scene = null, stage = null, content = null, active = false, waiting = null, epoch = 0, error = '', pending = false, busy = false;
   let sizer = null, offEvent = null, offClose = null, previousFocus = null, background = [];
-  const face = (who, f = 'normal') => who === 'chunkkun' ? 'img/p_chunkkun.webp' : core.base + 'g/chunkchunk/img/chara/' + (who === 'sora' ? 'boy' : 'girl') + '/' + f + '.webp';
+  const face = (who, f = 'normal') => core.base + 'g/chunkchunk/img/chara/' + (who === 'sora' ? 'boy' : 'girl') + '/' + f + '.webp';
   const stateText = () => { if (!active) pick(); const n = num(); return progress.state.completed ? `第${n}話をもう一度見る` : (k > 0 || progress.state.index) ? `つづき:第${n}話` : `第${n}話をはじめる`; };
   const subText = () => { if (!active) pick(); return `${episode.cast || ''}「${episode.title}」`; };
   function disposeScene() { scene?.dispose(); scene = null; }
@@ -165,6 +167,12 @@ export function createEpisodes(core, { games, depart, pauseTown = () => {}, resu
   function open(i) {
     if (active) return;
     if (i != null && LIST[i]) { forced = i; k = i; episode = LIST[i]; progress = progs[i]; progress.restart(); } else { forced = null; pick(); }
+    if (episode.town3d) {   // 3Dの町で演じる話: 町を開いて芝居を始める。最後まで見たら済みにする
+      forced = null; const pr = progress, id = episode.town3d;
+      if (!play3d) { core.ui.toast('この話は3Dの町で見られます'); return; }
+      Promise.resolve(play3d(id)).then(ok => { if (ok) pr.complete(); }).catch(e => { console.error(e); core.ui.toast('町を開けませんでした'); });
+      return;
+    }
     if (core.host.current) { core.ui.toast('ゲームを閉じてから物語を始めてください'); return; }
     active = true; previousFocus = document.activeElement; error = ''; pending = false; busy = false; pauseTown(); build();
     offEvent = core.events.on((game, name, data) => {

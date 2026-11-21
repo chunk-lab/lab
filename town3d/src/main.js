@@ -38,6 +38,9 @@ import { createMergeApp } from './apps/merge/app.js';
 import { setEasy } from './apps/gamebox/en_data.js';
 import { createEncounter, ENC } from './game/encounter.js';
 import { VOICE } from './game/voice.js';
+import { createCutscene } from './game/cutscene.js';
+import { chunkkunStory } from './game/stories/chunkkun.js';
+const STORIES = { chunkkun: chunkkunStory };   // 物語の芝居(3D)。id → 台本
 import { createStage } from './game/encounter3d.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
@@ -225,6 +228,7 @@ export function mount(container, opt = {}) {
   // ---- 入力と会話 ----
   let focus = null, talkingTo = null, started = false;
   const input = createInput(root, { onAction: () => doAction() });
+  const cut = createCutscene({ root, scene, residents, me, env, input, names: { me: () => settings.name || 'あなた', chunkkun: 'チャンクくん', mii: 'ミイ', maru: 'マルさん' } });   // 物語の芝居
 
   // ---- ベンチにすわる ----
   let seat = null;
@@ -1585,6 +1589,7 @@ export function mount(container, opt = {}) {
       const hs = camBar.querySelector('.hs'); if (hs && document.activeElement !== hs) hs.value = heightToV(fcam.y).toFixed(3);
     } else me.ch.root.visible = true;
     if (!started || hud.busy) mx = my = 0;
+    if (cut.on) { mx = my = 0; goTo = null; approach = null; lookAtR = null; }   // 物語の芝居中は、台本が動かす
     const bld = seasons.building();
     if (sport.active && camMode === 'follow' && started && !hud.busy) sport.pan(mx, my, dt);   // ゴルフ中は、左下スティック=カメラを前後左右にずらす
     if (snow.making || bld || battle.making || battle.rolling || sport.active || dodgeT > 0) mx = my = 0;   // 雪玉をつくっている間は動けない(転がり中も)
@@ -1621,7 +1626,8 @@ export function mount(container, opt = {}) {
         if (d < 0.8) ride.tour.shift();
         else { me.ry = angleLerp(me.ry, Math.atan2(dx, dz), Math.min(1, dt * 3.5)); me.speed += (6 - me.speed) * Math.min(1, dt * 3); const st = Math.min(me.speed * dt, d), k = Math.max(0.35, Math.cos(Math.atan2(dx, dz) - me.ry)); me.x += Math.sin(me.ry) * st * k + dx / d * st * (1 - k); me.z += Math.cos(me.ry) * st * k + dz / d * st * (1 - k); } }
     }
-    const guided = guideStep(dt, mag) || !!approach || !!goTo || !!(ride && ride.tour);   // 住人に連れて行ってもらっている間は、自動で歩く
+    if (cut.on) cut.meStep(dt);
+    const guided = cut.on || guideStep(dt, mag) || !!approach || !!goTo || !!(ride && ride.tour);   // 住人に連れて行ってもらっている間は、自動で歩く
     const rideT = Math.max(0, Math.min(1, (mag - 0.55) / 0.45));   // 乗っている間: 軽くたおす=歩く速さ、思いきりたおす=走りの2倍
     const target = mag > 0.05 ? (ride ? 6.8 * Math.max(mag, 0.4) + (24 - 6.8) * rideT * rideT : (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) * pullBoost) : 0;
     if (!guided) me.speed += (target - me.speed) * Math.min(1, dt * 10);
@@ -1702,6 +1708,7 @@ export function mount(container, opt = {}) {
     }
     }
 
+    if (cut.on) cut.camStep(dt, camera);   // 物語の芝居のカメラ(ほかのカメラより優先)
     // ゴルフ・フリスビーの飛んでいる間の特別なカメラ(グリーンのアップ / ボールとゴールが見える視点)。切りかわりはなめらかに
     { const hint = camMode === 'follow' && sport.active ? sport.camHint() : null, w0 = scW;
       scW += ((hint ? 1 : 0) - scW) * Math.min(1, dt * (hint ? 3.2 : 4)); if (scW < 0.004 && !hint) scW = 0;
@@ -1721,7 +1728,7 @@ export function mount(container, opt = {}) {
     }
     if (talkingTo && !hud.busy) { talkingTo.talking = false; talkingTo = null; }   // 会話が終わっているのに止まったままの住人を放す
     for (const r of residents.list) if (r.talking && r !== talkingTo) r.talking = false;
-    tipUpdate(dt); hanaUpdate(dt); birthdayUpdate(dt); visitUpdate(dt);
+    if (!cut.on) { tipUpdate(dt); hanaUpdate(dt); birthdayUpdate(dt); visitUpdate(dt); }
     env.camera = camera; env.update(dt, me.ch.root.position);
     seasons.update(dt, camera.position, env.night || 0); seasons.holdAt(me.x, me.z, me.ry);
     if (fw.busy) fw.update(dt, camera, renderer.domElement.clientHeight || 600);
@@ -1857,6 +1864,16 @@ export function mount(container, opt = {}) {
     closeApp: () => appHost.close(),
     registerApp: def => appHost.register(def),
     setHour: h => { env.hour = h; },
+    // 物語の芝居(3D)を演じる。終わったら、時刻と自分の位置をもとにもどす。最後まで見たら true
+    playStory: async id => {
+      const fn = STORIES[id]; if (!fn || cut.on) return false;
+      try { hud.closeDialog && hud.closeDialog(); } catch (e) { }
+      if (seat) try { standFromSeat(); } catch (e) { }
+      const h0 = env.hour, x0 = me.x, z0 = me.z, r0 = me.ry, cm = camMode; camMode = 'follow';
+      const ok = await cut.play(fn);
+      env.hour = h0; me.x = x0; me.z = z0; me.ry = r0; me.speed = 0; camMode = cm;
+      return ok;
+    },
     weather: () => ({ kind: curWx, rain: env.rainLevel || 0, amb: env.amb ? { ...env.amb } : null }),
     meteor: () => env.meteorNow(),
     setMoon: ph => env.setMoon(ph),
@@ -1888,7 +1905,7 @@ export function mount(container, opt = {}) {
     debugVisit: id => { const r = residents.list.find(x => x.def.id === id); if (!r) return; r.ch.root.position.set(me.x + 9, 0, me.z + 3); r.ch.root.visible = true; r.hidden = false; r.visit = { t: 0 }; r.visitSg = { say: 'テスト: やってみない?', fn: () => hud.toast('やってみる!を押した') }; visiting = r; },   // 点検用
     debugVisitInfo: id => { const r = residents.list.find(x => x.def.id === id); return JSON.stringify({ visit: r.visit, visiting: !!visiting, busy: hud.busy, app: !!appHost.current, cm: camMode, started, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z), talking: r.talking, pin: !!r.pin }); },
     progress: () => loadPct,
-    _res: () => residents, _opt: () => opt, _hud: () => hud, _gl: () => renderer, _chat: (id, low) => { const r = residents.list.find(x => x.def.id === id); if (r) freeChat(r, 'ねえ、きょうはどこに行く? この町には、図書館やカフェや神社があって、ほかにも釣りやカードや占いなど、いろいろ楽しめるよ。ゆっくり選んでね。', '', !!low); },   // 点検用
+    _res: () => residents, _opt: () => opt, _hud: () => hud, _gl: () => renderer, _cam: () => camera, _chat: (id, low) => { const r = residents.list.find(x => x.def.id === id); if (r) freeChat(r, 'ねえ、きょうはどこに行く? この町には、図書館やカフェや神社があって、ほかにも釣りやカードや占いなど、いろいろ楽しめるよ。ゆっくり選んでね。', '', !!low); },   // 点検用
     progressText: () => (loadPct >= 1 ? '' : glbStat().now),   // いま何をしているか
     ready: loadP,   // 読み込みと準備が全部おわったら解決
     teleport: (x, z, ry) => { me.x = x; me.z = z; if (ry !== undefined) { me.ry = ry; cam.yaw = ry + Math.PI; } cam.x = x; cam.z = z; },
