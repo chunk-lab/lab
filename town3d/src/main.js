@@ -46,7 +46,9 @@ import { shioriStory } from './game/stories/shiori.js';
 import { gonStory } from './game/stories/gon.js';
 import { chocoStory } from './game/stories/choco.js';
 import { miiStory } from './game/stories/mii.js';
-const STORIES = { chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory, mii: miiStory };   // 物語の芝居(3D)。id → 台本
+import { sunaStory } from './game/stories/suna.js';
+import { koharuStory } from './game/stories/koharu.js';
+const STORIES = { chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory, mii: miiStory, suna: sunaStory, koharu: koharuStory };   // 物語の芝居(3D)。id → 台本
 import { createStage } from './game/encounter3d.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
@@ -235,7 +237,8 @@ export function mount(container, opt = {}) {
   let focus = null, talkingTo = null, started = false;
   const input = createInput(root, { onAction: () => doAction() });
   const cut = createCutscene({ root, scene, residents, me, env, input, names: { me: () => settings.name || 'あなた', chunkkun: 'チャンクくん', mii: 'ミイ', maru: 'マルさん', yuzu: 'ゆず', shiori: 'しおりさん', gon: 'ゴン', suna: '潮見さん', luna: 'ルナ', baron: 'ハッタリ男爵', choco: '大喜利チョコ', tetsu: '哲学者', koharu: 'こはる先生', hana: 'はな', sora: 'そら' }, blockers: city.meshes,
-    openApp: (id, p) => openApp(id, p), bus, openReader: opt.openReader || null,
+    openApp: (id, p) => openApp(id, p), bus, openReader: opt.openReader || null, openGame: opt.openGame || null,
+    tune: () => { audio.unlock(); const t = audio.play('harmonica', audio.pickTune(env.hour)) || { sec: 7 }; const su = residents.list.find(r => r.def.id === 'suna'); if (su) su.harpT = t.sec; return t; },
     reward: (id, n) => {   // 物語のなかよし(1つの話で1回だけ上がる)
       const first = social.markMade('story:' + id); if (first) social.addAff(id, n);
       const lv = social.level(id), aff = social.aff(id), u = (UNLOCKS[id] || []).find(x => x.lv > lv);
@@ -1899,7 +1902,9 @@ export function mount(container, opt = {}) {
       try { hud.closeDialog && hud.closeDialog(); } catch (e) { }
       if (seat) try { standFromSeat(); } catch (e) { }
       const h0 = env.hour, x0 = me.x, z0 = me.z, r0 = me.ry, cm = camMode; camMode = 'follow';
+      const hid = []; for (const [, q] of peers) { hid.push([q, q.ch.root.visible]); q.ch.root.visible = false; }   // ほかのプレイヤーは芝居の間かくす
       const ok = await cut.play(d => fn(d, { name: () => settings.name || 'あなた' }));
+      for (const [q, v] of hid) q.ch.root.visible = v;
       env.hour = h0; me.x = x0; me.z = z0; me.ry = r0; me.speed = 0; camMode = cm;
       return ok;
     },
