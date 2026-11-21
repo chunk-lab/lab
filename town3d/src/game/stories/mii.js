@@ -20,8 +20,8 @@ export async function miiStory(d, ctx = {}) {
   const a = await d.choose('me', `${me}は……`, ['「中を見てもいい？」', '「また今度来るね」']);
   if (a === 0) {
     await d.say(M, '「もちろんです〜。ゆっくり見ていってくださいね」');
-    await d.say('narr', 'カフェの中を見てみよう。\n閉じると、物語にもどります。');
-    await d.app('cafe');
+    await d.say('narr', 'カフェの中を見てみよう。\nおみやげを1つ買うと、物語にもどります(見るだけなら、右上で閉じてね)。');
+    await d.app('cafe', { story: true });
     d.shot('me', M, { dist: 4.6, h: 1.9, look: 1.0, side: -1 });
   }
   await d.say(M, '「それと……ここ、デートで来る人も多いんですよ〜」');
@@ -50,8 +50,8 @@ export async function miiStory(d, ctx = {}) {
   await d.fade(false, 0.6);
   await d.say(M, '「ここです〜、アミューズメントセンター。\nゲームがいっぱいあるんですよ〜」');
   await d.say(M, '「まずは、ボウリングで勝負です〜。手かげんは、しませんからね？」');
-  await d.say('narr', 'ボウリングを1ゲーム。\nおわって閉じると、物語にもどります。');
-  await d.app('amuse', { game: 'bowling', npc: 'mii', opts: { fr: 3 } });
+  await d.say('narr', 'ボウリングを1ゲーム。\n終わると、物語にもどります。');
+  await d.app('amuse', { game: 'bowling', npc: 'mii', opts: { fr: 3 }, closeOnEnd: true });
   d.face(M, 'me'); d.shot('me', M, { dist: 4.6, h: 1.9, look: 1.0, side: -1 });
   await d.say(M, '「ふふ、楽しかったでしょう〜？」');
   await d.say(M, '「ほかにも、ゲームがたくさんあるんですよ〜。\nまた、いつでも遊びに来てくださいね」');

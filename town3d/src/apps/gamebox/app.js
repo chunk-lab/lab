@@ -297,6 +297,7 @@ export const gameboxApp = {
         end(res) {
           if (done) return; done = true;
           setTimeout(() => result(G, opp, opts, players, res, [...seen.values()]), 900);
+          if (P.closeOnEnd) setTimeout(() => { try { ctx.close(); } catch (e) { } }, 4200);   // 物語から: 1ゲームおわったら、結果を見せて話にもどる
         },
       };
       setTimeout(() => { if (!stage.isConnected) return; cur = G.start(host); }, 1500);

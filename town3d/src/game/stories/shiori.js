@@ -16,7 +16,7 @@ const COACH = [
   { text: '読めたら、上の「解く」に切りかえよう。', until: 'solve' },
   { text: '答えの始まりに線を合わせて「［ ここから」、終わりで「ここまで ］」。\n単語を長押ししてなぞっても選べるよ。選べたら「決定」。', until: 'answered' },
   { text: '「答え合わせ」を押してみよう。', until: 'graded' },
-  { text: 'よくできました！\n左上の「← 物語にもどる」で、物語にもどろう。' },
+  { text: 'よくできました！\nもうすぐ、物語にもどるよ。' },
 ];
 export async function shioriStory(d, ctx = {}) {
   const S = 'shiori', me = (ctx.name && ctx.name()) || 'あなた';
@@ -48,8 +48,8 @@ export async function shioriStory(d, ctx = {}) {
   await d.say(S, '「あ、あの……図書館は はじめてですか？\nここでは、いつでも英語の本が読めるんですよ」');
   await d.say(S, '「読むだけでも いいですし、問題を解きながら 読むこともできます」');
   await d.say(S, '「ためしに、短いお話を ひとつ どうぞ」');
-  await d.say('narr', '読む画面の使い方は、画面の上で案内します。\nおわったら、左上の「← 物語にもどる」で もどれます。');
-  await d.read(PRACTICE, { label: 'お試し', view: 'read', coach: COACH });
+  await d.say('narr', '読む画面の使い方は、画面の中で案内します。\n答え合わせが終わると、物語にもどります。');
+  await d.read(PRACTICE, { label: 'お試し', view: 'read', coach: COACH, autoClose: true });
   await d.say(S, '「……どうでした？\n読むだけの日も、解いてみる日も、あっていいんです」');
   await d.say(S, '「長いお話も、たくさん ありますから。\nまた、いつでも来てくださいね」');
   // ---- 白い……雲 ----

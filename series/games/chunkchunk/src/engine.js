@@ -716,6 +716,7 @@ export async function finishSeq(){
 export function legendHTML(){return `<div class="legend">${"SVOICPTM".split("").map(r=>`<span class="r${r}">■${RN[r][0]}</span>`).join("")}<span class="rX">■説明</span></div>`}
 export function review(){
   sfx("voice/stage_clear");
+  try{ENV.ctx&&ENV.ctx.report("stage_done",{title:S.title})}catch(e){}   // 物語などが「1回おわった」を知るため
   const all=S.results.flatMap(r=>r?r.chunks:[]),cnt=k=>all.filter(c=>c.kind===k||(k==="miss"&&c.kind==="forgot")).length;
   const refHTML=sen=>`<div class="roles">${sen.units.map(u=>`<span class="rcell"><span class="rtx">${u.subs?u.subs.map((p,pi)=>`<span class="r${subIsX(u,pi)?"X":u.role}">${esc(sen.words.slice(p.s,p.e+1).join(" "))}</span>`).join(" "):`<span class="r${u.role}">${esc(u.text)}</span>`}</span><span class="rl r${u.role}">${RN[u.role][settings.disp==="gram"?1:0]}</span></span>`).join('<span class="cutmark">｜</span>')}</div>`;
   openSheet(`<h2>${esc(S.title)} クリア！</h2>

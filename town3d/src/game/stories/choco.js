@@ -38,7 +38,7 @@ export async function chocoStory(d, ctx = {}) {
   else if (res === 'lose') await d.say(C, '「よっしゃ、うちの勝ち！ ごほうびの時間や！」');
   else await d.say(C, '「引き分けか……。ほな、ごほうびと憂さ晴らし、両方や！」');
   await d.say(C, '「うちのごほうびは、これ。マージや。\nいろんなもん くっつけて、ええもんにしていくねん。あんたも、やってみ」');
-  await d.say('narr', '閉じると、物語にもどります。');
+  await d.say('narr', 'マージを、やってみよう。少しやったら、物語にもどります。');
   await d.app('merge', { coach: 'choco', coachName: '大喜利チョコ' });
   d.face(C, 'me');
   d.shot('me', C, { yaw: 1.1, dist: 5, h: 2.0, look: 1.0 });

@@ -70,6 +70,7 @@ export const cafeApp = {
         const got = []; for (const k in qty) if (qty[k] > 0 && ITEMS[k]) { social.addItem(k, qty[k]); got.push(`${ITEMS[k].icon}${esc(ITEMS[k].name)} ×${qty[k]}`); qty[k] = 0; }
         last = `🛍 買ったもの: ${got.join('、')}<br><small>ごうけい 🪙 ${fmt(sum)} をはらったよ。のこり 🪙 ${fmt(ctx.wallet.get())}</small>`;
         box.scrollTop = 0; draw();
+        if (ctx.params && ctx.params.story) setTimeout(() => { try { ctx.close(); } catch (e) { } }, 2200);   // 物語から: 買ったら話にもどる
       } finally { busy = false; }
     };
     return { unmount() { box.remove(); } };

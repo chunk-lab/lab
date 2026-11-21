@@ -910,5 +910,6 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     try { const L = JSON.parse(localStorage.getItem('cs-wordlists') || '[]'), all = []; L.forEach(l => (l.lines || []).forEach(x => { const c = String(x).split('\t'); if (c[0] && c[1]) all.push([c[0], c[1]]); })); return shuffle(all).slice(0, n); } catch (e) { return []; }
   }
 
-  return { ask, playGates, pondScreen, aquarium, tankScreen, collection, mixScreen, keepFish, tankRoom, keepRoom, get busy() { return busy; } };
+  const storySet = () => (SETS.find(x => x.lv === 1) || SETS[0]).id;   // 物語から: 選ばずにすぐ始めるセット(初級の最初)
+  return { storySet, ask, playGates, pondScreen, aquarium, tankScreen, collection, mixScreen, keepFish, tankRoom, keepRoom, get busy() { return busy; } };
 }

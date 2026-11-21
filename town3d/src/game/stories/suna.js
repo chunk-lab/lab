@@ -27,12 +27,10 @@ export async function sunaStory(d, ctx = {}) {
   d.face(S, 'me'); d.cam(55, 3.0, 25.5, 46.8, 1.0, 23.2);
   await d.say(S, '「魚も、いい音が好きなのさ」');
   await d.say(S, '「この池は、英語の釣り堀にもなってる。\n単語の問題に答えると、魚が寄ってくるのさ」');
-  await d.say('narr', '英語の釣り堀で、1匹釣ってみよう。\n閉じると、物語にもどります。');
-  await d.app('fishing', { tab: 'en' });
-  await d.say(S, '「どうだった？」');
-  const b = await d.choose('me', `${me}は……`, ['「釣れた！」', '「にげられた……」']);
-  await d.say(S, b === 0 ? '「やるじゃないか。最初の一匹は、忘れられないもんさ」' : '「それも釣りさ。また来ればいい」');
-  await d.say(S, '「釣った魚は、水槽で育てられる。\nえさは、英語の問題に答えるとできるのさ」');
+  await d.say('narr', '英語の釣り堀で、1匹釣ってみよう。\n釣れたら、物語にもどります。');
+  await d.app('fishing', { tab: 'en', story: true });
+  await d.say(S, '「やるじゃないか。最初の一匹は、忘れられないもんさ」');
+  await d.say(S, '「その魚は、水槽に入れておいたさ。\n水槽で育てられる。えさは、英語の問題に答えるとできるのさ」');
   await d.say(S, '「毎日ちょっとずつ、な。\n水槽は、家でも、上の🐠からでも見られるさ」');
   // ---- 夕方 ----
   d.hideBox(); await d.fade(true, 0.9);

@@ -179,7 +179,7 @@ export function createEpisodes(core, { games, depart, play3d, pauseTown = () => 
     active = true; previousFocus = document.activeElement; error = ''; pending = false; busy = false; pauseTown(); build();
     offEvent = core.events.on((game, name, data) => {
       if (!active || !waiting || waiting.game !== game) return;
-      if (progress.accept(game, name, data)) drawBar();
+      if (progress.accept(game, name, data)) { drawBar(); const w = waiting; setTimeout(() => { if (active && waiting === w && core.host.current === w.game) core.host.close(); }, 3000); }   // 終わったら、ボタンを押さなくても話にもどる
     });
     offClose = core.host.onClose(game => {
       if (!active || waiting?.game !== game) return;

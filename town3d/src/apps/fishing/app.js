@@ -243,6 +243,7 @@ export const fishingApp = {
         </div>`;
       root.appendChild(ui);
       ui.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (!m) return; sfx.play('tap'); ({ en: goPond, free: () => spotPick('のんびり釣り', () => play({})), vs: () => spotPick('釣り勝負', () => vsSetup()), dex: () => goAq('dex', menu), shop: () => shop(), ask: () => ask(), help: () => help(), mode: () => { st.set('mode', st.get('mode') === 'easy' ? 'real' : 'easy'); menu(); }, fx: () => { st.set('fx', st.get('fx') === 'calm' ? 'high' : 'calm'); menu(); } })[m](); };
+      if (P.tab === 'en' && P.story) { P.tab = null; setTimeout(() => { const id = EN.storySet(); wxRefresh(); clear(); screen = 'en'; ctx.setTitle('英語の釣り堀'); baseCond.spot = EN_SPOT[1] || 'pond'; play({ en: id }); }, 0); return; }   // 物語から: 抜き打ちテストもセット選びもなしで、すぐ釣る
       if (P.tab === 'en') { P.tab = null; setTimeout(goPond, 0); return; }
       if (P.tab === 'tank') { P.tab = null; setTimeout(goTank, 0); return; }
       if (P.vs) { const o = P.vs; P.vs = null; setTimeout(() => spotPick('釣り勝負', () => vsSetup(o === 'hard' ? 'hard' : 'easy')), 0); }   // 外から勝負に来ても、かならず釣り場を選ぶ
@@ -603,6 +604,7 @@ export const fishingApp = {
         card.querySelector('[data-x]').onclick = closeCard;
         const kb = card.querySelector('[data-k]'); if (kb) kb.onclick = () => { const r = EN.keepFish(sp, d.size); if (!r) return; sfx.play('splash'); closeCard(); toast(r === 'first' ? '🐠 潮見さんが水槽をくれた!<br><small style="font-size:12px">家の持ち物にも入ったよ。えさは英語で作る</small>' : r === 'box' ? '📖 図鑑の枠に入れた!' : '🐠 水槽に入れた!', 1800); };
         if (info.isNew || info.best || sp.r >= 4) confetti(card);
+        if (P.story) setTimeout(() => { try { if (en && sp.kind === 'fish') EN.keepFish(sp, d.size); } catch (e) { } try { ctx.close(); } catch (e) { } }, 2600);   // 物語から: 1匹釣ったら、水槽に入れて話にもどる
       }
       function showLost(d) { toast(LOST_JP[d.reason] + `<br><small style="font-size:13px">${BYID[d.id] && BYID[d.id].r >= 3 ? 'おしい! 大物だった…' : ''}</small>`, 1500); setTimeout(() => { if (E.S.ph === 'lost') E.ack(); }, 1400); }
       function closeCard() { card?.remove(); card = null; E.ack(); }

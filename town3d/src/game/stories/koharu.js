@@ -18,12 +18,12 @@ export async function koharuStory(d, ctx = {}) {
   await d.say(K, '「たとえば……\nI went / to the park / with my friend.」');
   await d.say(K, '「"わたしは行った" "公園へ" "友だちと"。\n前から順に、まとまりごとに 意味をとっていくんです」');
   await d.say(K, '「今スラでは、このチャンクの切れ目を見つける練習ができますよ。\nまずは"さらさらチャンク"。流れてくる英文の切れ目で、「チャンク！」とタップしてください」');
-  await d.say('narr', 'さらさらチャンクを、少しやってみよう。\n閉じると、物語にもどります。');
-  await d.game('chunkchunk', { play: 'auto-one' });
+  await d.say('narr', 'さらさらチャンクを、1回やってみよう。\n終わると、物語にもどります。');
+  await d.game('chunkchunk', { play: 'auto-one', closeOn: ['stage_done'] });
   d.shot('me', K, { yaw: 1.3, dist: 5, h: 2.0, look: 1.1 });
   await d.say(K, '「上手です！ 次は、自分で送るタイプ。\n今日は、30秒のチャレンジに挑戦してみましょう」');
-  await d.say('narr', '30秒のチャレンジに挑戦しよう。\n閉じると、物語にもどります。');
-  await d.game('chunkchunk', { timed: 30 });
+  await d.say('narr', '30秒のチャレンジに挑戦しよう。\n終わると、物語にもどります。');
+  await d.game('chunkchunk', { timed: 30, closeOn: ['done'], closeDelay: 4500 });
   d.shot('me', K, { yaw: 1.3, dist: 5, h: 2.0, look: 1.1 });
   await d.say(K, '「おつかれさまでした。\nチャレンジの点数は、ランキングに のるんですよ」');
   await d.board('チャレンジ30秒 ランキング', [['Mochi_Master', 1820], ['こはる先生', 1795], ['Star★Reader', 1610], ['Sora', 1540], ['Chunk Hero', 1490]], 'こはる先生');

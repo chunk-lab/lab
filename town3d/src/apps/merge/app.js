@@ -148,7 +148,8 @@ export function createMergeApp(env = {}) {
         b.querySelector('b').textContent = (ctx.params.coachName || '');
         b.querySelector('button').onclick = e => { e.stopPropagation(); b.style.display = 'none'; };
         root.appendChild(b);
-        return { say(k, text) { if (seen.has(k)) return; seen.add(k); b.querySelector('span').textContent = text; b.style.display = 'flex'; } };
+        let merges = 0, closing = false; const done = (ms = 4500) => { if (closing) return; closing = true; setTimeout(() => { try { ctx.close(); } catch (e) { } }, ms); };   // 物語から: やってみたら、自動で話にもどる
+        return { say(k, text) { if (k === 'give') done(); if (seen.has(k)) return; seen.add(k); b.querySelector('span').textContent = text; b.style.display = 'flex'; }, merged() { if (++merges >= 4) done(); } };
       })();
       const elStrip = $('.mg-strip'), elBoard = $('.mg-board'), elInfo = $('.mg-info'), elSlots = $('.mg-slots'), elFx = $('.mg-fx'), elEn = $('.mg-en'), elQb = $('.mg-qb'), elInb = $('.mg-inb'), elSell = $('.mg-sell');
 
@@ -453,7 +454,7 @@ export function createMergeApp(env = {}) {
         toast(`${TOOLS[k].icon} ${TOOLS[k].name}をもらった!` + (to < 0 ? '(🎁とどいた)' : '')); save(); refresh();
       }
       function doMerge(a, b, res) {
-        coach.say('merge', 'ほら、ひとつ上のもんになった。上に並んでる住人の「ほしい品」を作って、そこまでドラッグしてわたしたら、なかよしが上がるで');
+        coach.merged && coach.merged(); coach.say('merge', 'ほら、ひとつ上のもんになった。上に並んでる住人の「ほしい品」を作って、そこまでドラッグしてわたしたら、なかよしが上がるで');
         const idx = b.b, wasLk = b.lk, ea = els.get(a.u), eb = els.get(b.u), c = center(b);
         take(a); take(b); els.delete(a.u); els.delete(b.u);
         ea.classList.remove('drag', 'sel'); ea.classList.add('fly'); tf(ea, c.x - CS / 2, c.y - CS / 2);
@@ -503,7 +504,7 @@ export function createMergeApp(env = {}) {
         setTimeout(() => fly(art(d), from, rel(slot), 440, () => {
           const to = rel(slot); burst(to.x, to.y, 12, ['#ff6f91', '#ffc400', '#fff']);
           const n = CFG.affOf(w.lv); let up = null; try { up = social.addAff(id, n); social.mergeNote(id, d.name, d.icon, w.lv); } catch (e) { } try { env.speak && d.en && env.speak(d.en); } catch (e) { }
-          sfx('heart'); try { if (w.lv >= 5) social.addCredit(id, 1); } catch (e) { } S.gave++; coach.say('give', 'なかよし、上がったやろ？ 13人みんなに とどけたら、チャンクくんが何か配ってくれるらしいで。満足したら、右上で閉じてな');
+          sfx('heart'); try { if (w.lv >= 5) social.addCredit(id, 1); } catch (e) { } S.gave++; coach.say('give', 'なかよし、上がったやろ？ 13人みんなに とどけたら、チャンクくんが何か配ってくれるらしいで');
           ftext(to.x, to.y - 10, `💗 好感度 +${n}`, '#e8366a', true);
           ['💗', '💕', '💗'].forEach((h, i) => setTimeout(() => ftext(to.x + (i - 1) * 22, to.y + 14, h), 120 + i * 120));
           const gf = card.querySelector('.mg-hr b'); if (gf) { const g = gaugeOf(id); gf.style.width = g.pct + '%'; }

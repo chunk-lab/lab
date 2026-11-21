@@ -278,6 +278,7 @@ export function createReader(core) {
       beep(res.every(r => r === 'o') ? 'excellent' : 'great');
       core.events.report('reader', 'grade', { title: story.title, n: qs.length, o: res.filter(r => r === 'o').length, hints: RD.hints });
       RD.graded = true; setTimeout(coachTick, 0);
+      if (opts.autoClose) setTimeout(() => { try { if (root.isConnected) $('back').click(); } catch (e) { } }, 4500);   // 物語から: 答え合わせのあと、自動で話にもどる
       const extra = opts.onGrade ? opts.onGrade({ res, pts, hints: RD.hints, n: qs.length, answered: qs.filter(x => x.ans).length }) : '';
       const MK = { o: ['◯', 'k-excellent'], t: ['△', 'k-good'], x: ['×', 'k-miss'] };
       sheet(`<h2>答え合わせ</h2>
