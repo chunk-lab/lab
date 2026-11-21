@@ -54,7 +54,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   const launcher = createLauncher(core, { openApp: (id, p) => town && town.openApp(id, p), to2D: () => go('home'), openStudy });
 
   const episodes = createEpisodes(core, {
-    play3d: async id => { await go('3d'); if (!town) throw new Error('町を開けませんでした'); if (town.quickStart) town.quickStart(); await new Promise(r => setTimeout(r, 1500)); document.body.classList.add('md-story3d'); try { return town.playStory ? await town.playStory(id) : false; } finally { document.body.classList.remove('md-story3d'); } },
+    play3d: async id => { await go('3d'); if (!town) throw new Error('町を開けませんでした'); if (town.quickStart) town.quickStart(); await new Promise(r => setTimeout(r, 1500)); document.body.classList.add('md-story3d'); let ok = false; try { ok = town.playStory ? await town.playStory(id) : false; } finally { document.body.classList.remove('md-story3d'); } if (ok) await go('home'); return ok; },
     games: GAMES, pauseTown: () => town?.pause(), resumeTown: () => town?.resume(),
     onStop: ({ departed }) => { if (!departed && !town) home.show(); },
     depart: async mode => {

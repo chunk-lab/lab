@@ -228,10 +228,10 @@ export function mount(container, opt = {}) {
   // ---- 入力と会話 ----
   let focus = null, talkingTo = null, started = false;
   const input = createInput(root, { onAction: () => doAction() });
-  const cut = createCutscene({ root, scene, residents, me, env, input, names: { me: () => settings.name || 'あなた', chunkkun: 'チャンクくん', mii: 'ミイ', maru: 'マルさん' } });   // 物語の芝居
+  const cut = createCutscene({ root, scene, residents, me, env, input, names: { me: () => settings.name || 'あなた', chunkkun: 'チャンクくん', mii: 'ミイ', maru: 'マルさん' }, blockers: city.meshes });   // 物語の芝居
 
   // ---- ベンチにすわる ----
-  let seat = null;
+  let seat = null, cutRode = false;
   function sitOnBench(b0) {
     // 背もたれがないので、立っている側を向いてすわる(前からでも後ろからでも)
     const fx = Math.sin(b0.ry), fz = Math.cos(b0.ry), back = (me.x - b0.x) * fx + (me.z - b0.z) * fz < 0;
@@ -1627,6 +1627,10 @@ export function mount(container, opt = {}) {
         else { me.ry = angleLerp(me.ry, Math.atan2(dx, dz), Math.min(1, dt * 3.5)); me.speed += (6 - me.speed) * Math.min(1, dt * 3); const st = Math.min(me.speed * dt, d), k = Math.max(0.35, Math.cos(Math.atan2(dx, dz) - me.ry)); me.x += Math.sin(me.ry) * st * k + dx / d * st * (1 - k); me.z += Math.cos(me.ry) * st * k + dz / d * st * (1 - k); } }
     }
     if (cut.on) cut.meStep(dt);
+    if (cut.on && cut.riding) {   // 物語: チャンクくんの背中に乗って飛ぶ(台本が自分を動かし、チャンクくんを下に付ける)
+      const r = chunkOf(); if (r) { const A = r.act || (r.act = {}), P = r.ch.root.position; A.y = cut.alt; A.ry = me.ry; P.x = me.x; P.z = me.z; P.y += (cut.alt - P.y) * Math.min(1, dt * 3); r.ch.root.rotation.y = me.ry; r.ch.root.updateMatrixWorld(true);
+        const sk = r.ch.scaleNow || 1; me.ch.pose = 'ride'; me.ch.rideKind = 'front'; me.ch.rideSnap = true; me.ch.rideY = cloudTop(r.ch.root, me.x, me.z, 0.7 * sk + P.y, P.y) - 0.02 * sk; cutRode = true; }
+    } else if (cutRode) { cutRode = false; me.ch.pose = null; me.ch.rideY = 0; me.ch.rideSnap = false; }
     const guided = cut.on || guideStep(dt, mag) || !!approach || !!goTo || !!(ride && ride.tour);   // 住人に連れて行ってもらっている間は、自動で歩く
     const rideT = Math.max(0, Math.min(1, (mag - 0.55) / 0.45));   // 乗っている間: 軽くたおす=歩く速さ、思いきりたおす=走りの2倍
     const target = mag > 0.05 ? (ride ? 6.8 * Math.max(mag, 0.4) + (24 - 6.8) * rideT * rideT : (inp.run ? 12 : 6.8) * Math.max(mag, 0.4) * pullBoost) : 0;
@@ -1870,7 +1874,7 @@ export function mount(container, opt = {}) {
       try { hud.closeDialog && hud.closeDialog(); } catch (e) { }
       if (seat) try { standFromSeat(); } catch (e) { }
       const h0 = env.hour, x0 = me.x, z0 = me.z, r0 = me.ry, cm = camMode; camMode = 'follow';
-      const ok = await cut.play(fn);
+      const ok = await cut.play(d => fn(d, { name: () => settings.name || 'あなた' }));
       env.hour = h0; me.x = x0; me.z = z0; me.ry = r0; me.speed = 0; camMode = cm;
       return ok;
     },

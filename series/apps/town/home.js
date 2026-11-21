@@ -20,7 +20,7 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
     const row = p => `<button class="hm-row" data-p="${p.id}"><span>${WANT_ICON[p.want] || '・'}</span><b>${esc(p.n)}</b></button>`;
     el.innerHTML = `<div class="hm-box"><div class="hm-head"><img class="hm-logo" src="${LOGO.town}" alt="かまってチャンクTOWN"></div>
       ${openEpisode ? `<button class="hm-pic hm-ep" data-episode><span class="hm-t"><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}</b><small>${esc(episodeSub ? episodeSub() : 'はな・そら「ちょっと、外に出たい」')}</small></span></button>` : ''}
-      ${core.admin && core.admin.on() && episodeList ? `<div class="hm-epl" style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0">${episodeList().map(e => `<button class="hm-retry" data-epi="${e.i}">物語テスト 第${e.no}話 ${esc(e.title)}</button>`).join('')}</div>` : ''}
+      ${core.admin && core.admin.on() && episodeList ? `<div class="hm-epl" style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0">${episodeList().map(e => `<button class="hm-retry" data-epi="${e.i}">物語テスト ${e.label ? esc(e.label) : '第' + e.no + '話'}「${esc(e.title)}」</button>`).join('')}</div>` : ''}
       ${msg ? `<div class="hm-err">${esc(msg.text)}<button class="hm-retry" data-retry>もう一度</button></div>` : ''}
       ${c ? `<button class="hm-pic hm-cont2" data-main><span class="hm-t"><b>${c.kind === '3d' ? '街であそぶ' : esc(main ? main.n : '')}</b></span></button>` : ''}
       <button class="hm-pic hm-go" data-3d aria-label="街へ行く"></button>
