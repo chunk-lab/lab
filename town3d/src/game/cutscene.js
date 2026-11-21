@@ -221,7 +221,16 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
       const T = { p: T0.p.clone(), l: T0.l };
       if (blockers.length) {   // 見たい所とカメラの間に建物があれば、手前に寄せる(壁しか映らないのを防ぐ)
         rv.subVectors(T.p, T.l); const dd = rv.length(); rv.normalize(); ray.set(T.l, rv); ray.far = dd;
-        const h = ray.intersectObjects(blockers, false)[0]; if (h) T.p.copy(T.l).addScaledVector(rv, Math.max(1.2, h.distance - 0.6));
+        let h = ray.intersectObjects(blockers, false)[0];
+        if (h) {   // まず、同じ距離のまま 少し回りこんだ所・少し上を探す(寄りすぎて誰かしか映らないのを防ぐ)
+          const ox = T.p.x - T.l.x, oz = T.p.z - T.l.z, oy = T.p.y - T.l.y;
+          for (const [ang, up] of [[0.35, 0], [-0.35, 0], [0.7, 0], [-0.7, 0], [0, 2.5], [1.05, 0], [-1.05, 0], [0.35, 2.5], [-0.35, 2.5], [Math.PI, 0]]) {
+            const c = Math.cos(ang), sn = Math.sin(ang), P = new THREE.Vector3(T.l.x + ox * c + oz * sn, T.l.y + oy + up, T.l.z - ox * sn + oz * c);
+            rv.subVectors(P, T.l); const d2 = rv.length(); rv.normalize(); ray.set(T.l, rv); ray.far = d2;
+            if (!ray.intersectObjects(blockers, false)[0]) { T.p.copy(P); h = null; break; }
+          }
+          if (h) { rv.subVectors(T0.p, T.l); rv.normalize(); T.p.copy(T.l).addScaledVector(rv, Math.max(1.2, h.distance - 0.6)); }
+        }
       }
       if (camSnap || !camInit) { camP.copy(T.p); camL.copy(T.l); camSnap = false; camInit = true; } else { const k = Math.min(1, dt * 2.4); camP.lerp(T.p, k); camL.lerp(T.l, k); }
       camera.position.copy(camP); camera.lookAt(camL);

@@ -10,7 +10,7 @@ export function playCoach(kind) {
   const show = (msg, target, ok) => {
     hide();
     bub = document.createElement('div');
-    Object.assign(bub.style, { position: 'fixed', left: '14px', right: '14px', top: '11%', zIndex: 80, background: '#fff8e7', border: '3px solid #f0a040', borderRadius: '16px', padding: '12px 14px', fontSize: '18px', fontWeight: '800', lineHeight: '1.5', color: '#4a3420', textAlign: 'center', boxShadow: '0 6px 18px rgba(0,0,0,.3)', pointerEvents: ok ? 'auto' : 'none' });
+    Object.assign(bub.style, { position: 'fixed', left: '14px', right: '14px', top: '30%', zIndex: 80, background: '#fff8e7', border: '3px solid #f0a040', borderRadius: '16px', padding: '12px 14px', fontSize: '18px', fontWeight: '800', lineHeight: '1.5', color: '#4a3420', textAlign: 'center', boxShadow: '0 6px 18px rgba(0,0,0,.3)', pointerEvents: ok ? 'auto' : 'none' });
     bub.innerHTML = msg;
     if (ok) {
       const b = document.createElement('button'); b.textContent = 'OK';
@@ -19,6 +19,8 @@ export function playCoach(kind) {
       bub.append(b);
     }
     root.append(bub);
+    { const lw = $('laneWrap'), r = lw && lw.getBoundingClientRect();   // 切る文のすぐ上に出す(上すぎると読めない)
+      if (r && r.height) bub.style.top = Math.max(8, r.top - bub.offsetHeight - 10) + 'px'; }
     if (target) anim = target.animate([{ boxShadow: '0 0 0 0 rgba(255,140,30,.95)', transform: 'scale(1)' }, { boxShadow: '0 0 0 16px rgba(255,140,30,0)', transform: 'scale(1.07)' }], { duration: 750, iterations: Infinity });
   };
   const flash = (msg, ms) => { show(msg); setTimeout(() => { if (bub && bub.innerHTML.startsWith(msg)) hide(); }, ms); };
