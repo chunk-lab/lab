@@ -322,7 +322,7 @@ export const gameboxApp = {
       const rb = box.querySelector('[data-rent]'); if (rb) rb.onclick = () => { home(); AMUSE ? rentConsole() : rentTitles(G.id); };
     }
 
-    if (P.game && P.npc) { const G = ALL.find(g => g.id === P.game); home(); if (G) { const o = {}; for (const x of G.options || []) o[x.key] = x.def; play(G, P.npc, o); } }   // 町で雪玉を当てた住人と、すぐ勝負
+    if (P.game && P.npc) { const G = ALL.find(g => g.id === P.game); home(); if (G) { const o = {}; for (const x of G.options || []) o[x.key] = x.def; Object.assign(o, P.opts || {}); play(G, P.npc, o); } }   // 町で雪玉を当てた住人と、すぐ勝負
     else if (P.game) { const G = ALL.find(g => g.id === P.game); if (G) { home(); setup(G); } else home(); }
     else home();
     return { unmount() { clear(); sfx.close(); root.remove(); try { speechSynthesis.cancel(); } catch (e) { } } };
