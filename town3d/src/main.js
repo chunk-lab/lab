@@ -1474,12 +1474,6 @@ export function mount(container, opt = {}) {
   function stopEvent() { fw.stop(); env.stopEclipse(); env.stopWeather(); audio.rain(0); if (evt && evt.fw) env.release(); evt = null; clearBanner(); }
   // 通り雨と虹: 3日に1回くらい、昼(9〜17時)のどこかで1回だけ。日にちから決まるので、だれの町でも同じ時間
   // 借りているモデルルーム: 期限がきたら返す/3日前からお知らせ(1日1回)
-  // 確かめるのは、町を開いたときと、日付が変わったとき(夜0時)だけ
-  function rentCheck() {
-    try { for (const n of models.expire()) hud.toast(`📅 借りていた「${n}」の期限がきたので、部屋と家具を返したよ`); for (const o of models.soon()) hud.toast(`📅 借りている「${o.name}」は、あと${o.days}日で返却だよ。延長はホームセンターで`); } catch (e) { }
-  }
-  const rentAtMidnight = () => { const now = new Date(), next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5); setTimeout(() => { rentCheck(); rentAtMidnight(); }, next - now); };
-  setTimeout(rentCheck, 4000); rentAtMidnight();
   function autoShower() {
     if (!started || appHost.current || hud.busy || evt || cut.on) return;
     const now = new Date(), day = Math.floor((now.getTime() + 9 * 36e5) / 864e5), hh = (n => { let x = (n * 2654435761) >>> 0; x ^= x >>> 15; x = Math.imul(x, 0x2c1b3c6d) >>> 0; x ^= x >>> 13; return (x >>> 0) / 4294967296; })(day * 31 + 7);

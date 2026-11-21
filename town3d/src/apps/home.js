@@ -60,6 +60,7 @@ export const shopApp = {
     box.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;font-family:inherit;color:${ink}`;
     el.appendChild(box);
     let view = ctx.params && ctx.params.tab === 'model' ? 'model' : 'list', msg = '', cat = 'すべて';
+    try { houseData.get(); const so = models.soon(); if (so.length) msg = so.map(o => `📅 借りている「${o.name}」は、あと${o.days}日で返却だよ。`).join(' '); } catch (e) { }
     const paid = () => { try { return !!(ctx.member && ctx.member.paid()); } catch (e) { return false; } };
     const tabs = () => `<div style="display:flex;gap:6px;padding:4px 16px 8px"><button data-v="list" style="${btn(view === 'list' ? undefined : '#ece7f3', view === 'list' ? '#fff' : ink)};flex:1">🛋 家具</button><button data-v="model" style="${btn(view === 'model' ? undefined : '#ece7f3', view === 'model' ? '#fff' : ink)};flex:1">🏠 モデルルーム</button></div>`;
     const ymd = t => { const d = new Date(t); return `${d.getMonth() + 1}月${d.getDate()}日`; };
@@ -765,6 +766,7 @@ export const homeApp = {
     function guestSayLate() { const b = document.createElement('div'); b.textContent = `${guest.name}「今日はもう遅いから、帰るね。また遊ぼ!」`; b.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);max-width:80%;background:#fffaf2;color:#5a4a6b;border-radius:16px;padding:8px 14px;font-size:14px;font-weight:700;box-shadow:0 2px 8px #0003;z-index:30'; root.appendChild(b); setTimeout(() => b.remove(), 3500); }   // アルバムから「部屋にもどる」で、歩いていたところへ
     const offW = ctx.wallet.onChange ? ctx.wallet.onChange(() => planUI()) : null;
     ctx.setTitle?.(MODEL ? 'モデルルームを作る' : 'あなたの家');
+    if (!MODEL) try { for (const o of models.soon()) setTimeout(() => { tip.textContent = `📅 借りている「${o.name}」は、あと${o.days}日で返却だよ。延長はホームセンターで。`; }, 800); } catch (e) { }
     if (MODEL) { car.style.display = 'none'; run({ act: 'deco' }); tip.textContent = '下から家具をえらんで置こう。置いたまま保存されるよ。「🏠 ひろげる」で広さも変えられる。'; }
     return {
       unmount() {

@@ -303,8 +303,10 @@ export const ROOM_TYPES = [['', 'ふつう'], ['kitchen', 'キッチン'], ['bat
 const ROOM_TYPE_NAME = { kitchen: 'キッチン', bath: 'バスルーム' };
 const DEF_COST = { coinsPerLine: 3000, coinLines: 3, gemsPerRoom: 25 };   // 1列・1行: 最初の部屋だけコインで3回まで。あとはダイヤで部屋ごと・行と列それぞれ 1,2,4,8… / 部屋を増やす: 25,50,100…
 const st = createStorage('town:furn:');
+let _expire = null; export const onHouseRead = f => { _expire = f; };   // 借りた部屋の期限切れは、家を読むときに、その場で返す(タイマーで見張らない)
 export const houseData = {
   get() {
+    if (_expire) { const f = _expire; _expire = null; try { f(); } finally { _expire = f; } }
     const h = st.get('house');
     if (h && h.rooms && h.rooms.length) return h;
     // 前から遊んでいる人(家具を持っている・置いている)は、前の広さ(8×8)のまま。はじめての人だけ 6×6

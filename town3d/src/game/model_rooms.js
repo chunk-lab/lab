@@ -4,7 +4,7 @@
          借りていた人は、払ったレンタル代を引く(買う値段の半分まで)。最低 5ダイヤ。
    借りる: 1か月券 3ダイヤ(自動では更新しない)。期限がきたら、部屋と家具を返す。期限の3日前から知らせる。 */
 import { createStorage } from '../core/core.js';
-import { ITEMS, ITEM, MAX_OWN, houseData, furn } from './furniture.js';
+import { ITEMS, ITEM, MAX_OWN, houseData, furn, onHouseRead } from './furniture.js';
 
 const st = createStorage('town:model:');
 const DAY = 864e5, RENT_DAYS = 30, RENT_GEMS = 3, BASE = 6, MIN_BUY = 5;
@@ -113,3 +113,6 @@ export const models = {
     return out;
   },
 };
+
+// 家を読むたびに、期限を過ぎた部屋を返す(読み取りだけで、ふだんは何もしない)
+onHouseRead(() => { if (models.list().some(m => m.rent && m.rent.until <= Date.now())) models.expire(); });
