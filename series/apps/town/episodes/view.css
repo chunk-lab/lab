@@ -63,3 +63,7 @@ body.ep-on:not(.ep-level) .cs-ui>.cs-ov{display:none}
 .ep-portraits img.ep-speaking{scale:1.06}
 .ep-portraits img.ep-sora.ep-speaking{scale:.93}
 .ep-input{width:100%;box-sizing:border-box;margin:6px 0 10px;padding:10px 14px;font:inherit;font-size:18px;font-weight:700;text-align:center;border:2px solid #e2d6ea;border-radius:999px;background:#fff;color:#42364c}
+
+/* ひとりの視点の話(部屋の絵を出さない) */
+.ep-solo .ep-stage>svg{display:none}
+.ep-solo .ep-stage{background:linear-gradient(180deg,#cfeaff,#ffe6ef 70%,#fff3e0)}

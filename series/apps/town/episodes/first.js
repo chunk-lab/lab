@@ -1,7 +1,7 @@
 // 台本だけを置く。既存ゲームのデータ・解放条件は変更しない。
 const say = (who, text, face = 'normal', en = '', ja = '') => ({ type: 'say', who, text, face, en, ja });
 export const FIRST_EPISODE = {
-  id: 'first', title: 'ちょっと、外に出たい', character: 'はな',
+  id: 'first', title: 'ちょっと、外に出たい', character: 'はな', cast: 'はな・そら',
   steps: [
     { type: 'name', who: 'hana', text: 'はじめまして！ わたし、はな。あなたの名前を教えて？' },
     { type: 'level', who: 'sora', title: '英語の単語力をチェック', text: 'ぼくはそら。英語はどのくらい分かる？ 単語のテストで、ちょうどいい難しさを見つけよう。受けなくてもOK。その場合は、やさしい単語から始めるよ。' },

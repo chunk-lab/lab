@@ -22,7 +22,7 @@ export function createEpisodeProgress(store, episode) {
       if (state.index >= episode.steps.length - 1) return false;
       state.index++; state.passed = false; save(); return true;
     },
-    complete() { if (episode.steps[state.index].type !== 'door') return false; state.completed = true; save(); return true; },
+    complete() { if (!['door', 'end'].includes(episode.steps[state.index].type)) return false; state.completed = true; save(); return true; },
     restart() { const mode = state.mode; state = { ...fresh(), mode }; save(); },
   };
 }

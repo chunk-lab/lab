@@ -62,7 +62,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     },
   });
   let lvLoaded = false;
-  const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label() });
+  const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label(), episodeSub: () => episodes.sub(), episodeList: () => episodes.list(), openEpisodeAt: i => episodes.open(i) });
 
   // ---- アプリを立ち上げたらすぐ、3Dの町のプログラムとキャラのモデルを読みこんでおく(バーを出す)。「街へ行く」を押すころには済んでいる ----
   // ---- Loading中のおさらい: 設定した言葉(単語の読み上げの設定)を、設定した向き・回数・秒数で読む(新しい単語は、まだ読みこんでいないので除く) ----

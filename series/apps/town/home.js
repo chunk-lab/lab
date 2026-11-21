@@ -6,7 +6,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
 // 版:組み立てた日時(日本時間)。テスト版が最新かどうか、見分けるための印
 export const verText = () => { const b = window.__APP__ && window.__APP__.build, t = b ? parseInt(b, 36) : NaN; if (!isFinite(t)) return 'ver dev'; const d = new Date(t + 9 * 36e5).toISOString(); return 'ver ' + d.slice(5, 10) + ' ' + d.slice(11, 16) + (window.__APP__.rev ? ' ・ ' + window.__APP__.rev : ''); };
-export function createHome(core, { st, go3D, openFish, openStudy, has, openEpisode, episodeLabel }) {
+export function createHome(core, { st, go3D, openFish, openStudy, has, openEpisode, episodeLabel, episodeSub, episodeList, openEpisodeAt }) {
   let el = null;
   const usable = p => p.go.to === '3d' ? true : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level : p.go.to === 'role' ? !!core.roletest && !!core.books : !!core.openGame && has(p.go.game);
   const cont = () => st.get('cont') || null;
@@ -19,7 +19,8 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
     const APPS = [['chunkchunk', 'cc', '今スラ！'], ['stream', 'story', 'Storyミング！'], ['eigonou', 'eigo', '英文組み立てラボ'], ['fish', 'fish', 'イングフィッシュ']].filter(a => a[0] === 'fish' || has(a[0]));
     const row = p => `<button class="hm-row" data-p="${p.id}"><span>${WANT_ICON[p.want] || '・'}</span><b>${esc(p.n)}</b></button>`;
     el.innerHTML = `<div class="hm-box"><div class="hm-head"><img class="hm-logo" src="${LOGO.town}" alt="かまってチャンクTOWN"></div>
-      ${openEpisode ? `<button class="hm-pic hm-ep" data-episode><span class="hm-t"><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}</b><small>はな・そら「ちょっと、外に出たい」</small></span></button>` : ''}
+      ${openEpisode ? `<button class="hm-pic hm-ep" data-episode><span class="hm-t"><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}</b><small>${esc(episodeSub ? episodeSub() : 'はな・そら「ちょっと、外に出たい」')}</small></span></button>` : ''}
+      ${core.admin && core.admin.on() && episodeList ? `<div class="hm-epl" style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0">${episodeList().map(e => `<button class="hm-retry" data-epi="${e.i}">物語テスト 第${e.no}話 ${esc(e.title)}</button>`).join('')}</div>` : ''}
       ${msg ? `<div class="hm-err">${esc(msg.text)}<button class="hm-retry" data-retry>もう一度</button></div>` : ''}
       ${c ? `<button class="hm-pic hm-cont2" data-main><span class="hm-t"><b>${c.kind === '3d' ? '街であそぶ' : esc(main ? main.n : '')}</b></span></button>` : ''}
       <button class="hm-pic hm-go" data-3d aria-label="街へ行く"></button>
@@ -29,7 +30,8 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
       </div>`;
     el.onclick = e => {
       const b = e.target.closest('button'); if (!b) return;
-      if ('episode' in b.dataset) openEpisode();
+      if ('epi' in b.dataset) openEpisodeAt(+b.dataset.epi);
+      else if ('episode' in b.dataset) openEpisode();
       else if (b.dataset.p) start(PLAYS.find(p => p.id === b.dataset.p));
       else if (b.dataset.app) { if (b.dataset.app === 'fish') openFish(); else { remember({ kind: 'app', id: b.dataset.app, label: b.getAttribute('aria-label') }); core.openGame(b.dataset.app); } }
       else if ('main' in b.dataset) { if (!c) go3D(); else if (c.kind === 'app') core.openGame(c.id); else if (c && c.kind === '3d') go3D(); else if (c && c.kind === 'study') openStudy(); else if (cp) start(cp); else if (main) start(main); }
