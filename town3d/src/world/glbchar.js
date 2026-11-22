@@ -68,6 +68,7 @@ export const GLB_MODELS = {
 // モデルの場所: town.js を読み込んだ場所の横の models/(1つのHTMLで動かすときは、ページの横の models/)。tarot・bgm と同じやり方
 const SCRIPT_SRC = (() => { try { return (document.currentScript && document.currentScript.src) || ''; } catch (e) { return ''; } })();
 const urlOf = u => { try { return SCRIPT_SRC ? new URL(u, SCRIPT_SRC).href : u; } catch (e) { return u; } };
+export const urlModels = urlOf;   // models/ の中のファイルの場所
 const loader = new GLTFLoader();
 const cache = new Map();
 // 版の印(組み立てのときに作る models/versions.json)。読めなくても、印なしで読みに行く

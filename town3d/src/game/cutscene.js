@@ -44,13 +44,16 @@ function puffTex() {
 
 export function createCutscene({ root, scene, residents, me, env, input, names = {}, blockers = [], openApp = null, bus = null, openReader = null, reward = null, openGame = null, tune = null, giftFish = null, warm = null, interiors = null }) {
   if (!document.getElementById('tw-cut-css')) { const st = document.createElement('style'); st.id = 'tw-cut-css'; st.textContent = CSS; document.head.appendChild(st); }
+  let camDirty = 3, camFix = null;
   let on = false, el = null, skipped = false, meAct = null, camT = null, camP = new THREE.Vector3(), camL = new THREE.Vector3(), camSnap = false, follow = null, camInit = false, offY = 0, riding = false, alt = 0;
   const ray = new THREE.Raycaster(), rv = new THREE.Vector3();
   const puffs = []; let ptex = null, cameraRef = null;
   const who = id => id === 'me' ? null : residents.list.find(r => r.def.id === id);
   const pos = id => { if (id === 'me') return { x: me.x, z: me.z, y: 0 }; const r = who(id); const p = r.ch.root.position; return { x: p.x, z: p.z, y: p.y }; };
   const NAME = id => id === 'narr' ? '' : id === 'me' ? (names.me ? names.me() : 'あなた') : (names[id] || (who(id) && who(id).def.name) || id);
-  const sleep = s => new Promise(res => setTimeout(res, s * 1000));
+  // 表を作る道具(tools/gen_storycams.mjs)が、物語を早回しして場面ごとのカメラ位置を書き出すとき(REC)だけ: 待たない・アプリは開かない・選択肢は決めた番号
+  const REC = () => typeof window !== 'undefined' && !!window.__storyRec;
+  const sleep = s => new Promise(res => setTimeout(res, (REC() ? Math.min(s, 0.12) : s) * 1000));
   const guard = () => { if (skipped) throw new Error('skip'); };
 
   function build() {
@@ -65,6 +68,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   // ---- 1文字ずつ出す。1回目のタップで全部出し、2回目で次へ ----
   function say(id, text, o = {}) {
     guard();
+    if (REC()) return sleep(0.15).then(guard);
     return new Promise(res => {
       const box = q('.cs-box'), tx = q('.cs-text'); box.classList.add('on'); box.classList.remove('done'); box.classList.toggle('auto', !!o.auto); box.classList.toggle('narr', id === 'narr');
       q('.cs-name').textContent = NAME(id);
@@ -77,6 +81,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   }
   function choose(id, text, opts) {
     guard();
+    if (REC()) return sleep(0.15).then(() => Math.min(window.__storyRecK || 0, opts.length - 1));
     return new Promise(res => {
       const box = q('.cs-box'); box.classList.add('on', 'done'); box.classList.toggle('narr', id === 'narr');
       q('.cs-name').textContent = NAME(id); q('.cs-pic').removeAttribute('src'); q('.cs-text').textContent = text;
@@ -87,17 +92,19 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   }
   const hideBox = () => { q('.cs-box').classList.remove('on'); };
   async function fade(out, sec = 0.6) { const f = q('.cs-fade'); f.style.transition = `opacity ${sec}s`; f.style.opacity = out ? 1 : 0; await sleep(sec); }
-  async function title(small, big, sec = 2.4) { const t = q('.cs-title'); t.querySelector('small').textContent = small; t.querySelector('b').textContent = big; t.classList.add('on'); await sleep(sec); if (pre) { try { interiors && interiors.prebuild && interiors.prebuild(); } catch (e) { } await Promise.race([pre, sleep(10)]); pre = null; try { warm && warm(); } catch (e) { } } t.classList.remove('on'); await sleep(0.8); }
+  async function title(small, big, sec = 2.4) { const t = q('.cs-title'); t.querySelector('small').textContent = small; t.querySelector('b').textContent = big; t.classList.add('on'); await sleep(sec); if (pre || preA) { try { for (const k of preRooms) interiors && interiors.use(k); } catch (e) { } await Promise.race([Promise.all([pre, preA]), sleep(10)]); pre = null; preA = null; try { warm && warm(); } catch (e) { } } t.classList.remove('on'); await sleep(0.8); }
   function note(text, head = '') { const c = q('.cs-note'); if (!text) { c.classList.remove('on'); return; } c.innerHTML = (head ? '<small></small>' : '') + '<span></span>'; if (head) c.querySelector('small').textContent = head; c.querySelector('span').textContent = text; c.classList.add('on'); }   // 画面の上に、ずっと出しておく文(掲示板の英文など)
   function caption(text) { const c = q('.cs-cap'); if (!text) { c.classList.remove('on'); return; } c.textContent = text; c.classList.add('on'); }
 
   function act(id) { const r = who(id); if (!r) return null; residents.load && residents.load(id); r.act = r.act || {}; r.talking = false; r.follow = false; r.visit = null; r.pin = null; return r.act; }
   function place(id, x, z, ry = 0) {
+    camDirty = 3;
     if (id === 'me') { me.x = x; me.z = z; me.ry = ry; me.speed = 0; meAct = null; return; }
     const r = who(id), A = act(id); if (!r) return; r.ch.root.position.set(x, A.y || 0, z); r.ch.root.rotation.y = ry; A.ry = ry; A.tx = A.tz = null; A.vis = true;
   }
   function walk(id, x, z, spd) {
     guard();
+    if (REC()) { place(id, x, z); return sleep(0.1); }   // 表を作るときは歩かずに置く
     if (id === 'me') return new Promise(res => { meAct = { x, z, spd: spd || 2.6, done: res }; });
     const A = act(id); return new Promise(res => { A.tx = x; A.tz = z; A.spd = spd; A.done = res; });
   }
@@ -117,9 +124,41 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
     }
   }
   // カメラ: 位置と注目点。snap=true で一瞬で切りかえ
-  function cam(px, py, pz, lx, ly, lz, snap = true) { follow = null; camT = { p: new THREE.Vector3(px, py, pz), l: new THREE.Vector3(lx, ly, lz) }; camSnap = snap; }
+  function cam(px, py, pz, lx, ly, lz, snap = true) { follow = null; camDirty = 3; camT = { p: new THREE.Vector3(px, py, pz), l: new THREE.Vector3(lx, ly, lz) }; camSnap = snap; }
   function shot(a, b, o = {}) {   // a(と b)が並んで見えるように、よこから撮る。o: dist, h, side(+1/-1), look(注目の高さ), snap
-    follow = { a, b, ...o }; camSnap = o.snap !== false;   // ふつうは一瞬で切りかえる(建物の中を通らないように)
+    follow = { a, b, ...o }; camSnap = o.snap !== false; camDirty = 3;   // ふつうは一瞬で切りかえる(建物の中を通らないように)
+  }
+  // カメラは、場面ごとに前もって決めた位置(models/storycams.json)に置くだけ。表に無い場面だけ、その場で1回決める
+  let camTab = null;
+  const r1 = v => Math.round(v * 10) / 10;
+  function camKey() {
+    if (!follow) return camT ? 'c:' + [camT.p.x, camT.p.y, camT.p.z, camT.l.x, camT.l.y, camT.l.z].map(r1).join(',') : null;
+    const A = pos(follow.a), B = follow.b ? pos(follow.b) : null, o = { ...follow }; delete o.a; delete o.b;
+    return 's:' + [r1(A.x), r1(A.z)].join(',') + (B ? '|' + [r1(B.x), r1(B.z)].join(',') : '') + '|' + JSON.stringify(o);
+  }
+  function camAim() {
+    const key = camKey(), hit = key && camTab && camTab[key];
+    if (hit) return { p: new THREE.Vector3(hit[0], hit[1], hit[2]), l: new THREE.Vector3(hit[3], hit[4], hit[5]) };
+    const T = camAim0(); if (T && key && REC()) (window.__storyCamsRec = window.__storyCamsRec || {})[key] = [T.p.x, T.p.y, T.p.z, T.l.x, T.l.y, T.l.z].map(v => Math.round(v * 100) / 100);
+    return T;
+  }
+  function camAim0() {   // 場面のカメラ位置を決める(建物にさえぎられたら、回りこみ・上・手前を探す)。表に無いときだけ
+    const T0 = follow ? shotTarget(cameraRef) : camT; if (!T0) return null;
+    const T = { p: T0.p.clone(), l: T0.l.clone() };
+    if (blockers.length) {   // 見たい所とカメラの間に建物があれば、手前に寄せる(壁しか映らないのを防ぐ)
+        rv.subVectors(T.p, T.l); const dd = rv.length(); rv.normalize(); ray.set(T.l, rv); ray.far = dd;
+        let h = ray.intersectObjects(blockers, false)[0];
+        if (h) {   // まず、同じ距離のまま 少し回りこんだ所・少し上を探す(寄りすぎて誰かしか映らないのを防ぐ)
+          const ox = T.p.x - T.l.x, oz = T.p.z - T.l.z, oy = T.p.y - T.l.y;
+          for (const [ang, up] of [[0.35, 0], [-0.35, 0], [0.7, 0], [-0.7, 0], [0, 2.5], [1.05, 0], [-1.05, 0], [0.35, 2.5], [-0.35, 2.5], [Math.PI, 0]]) {
+            const c = Math.cos(ang), sn = Math.sin(ang), P = new THREE.Vector3(T.l.x + ox * c + oz * sn, T.l.y + oy + up, T.l.z - ox * sn + oz * c);
+            rv.subVectors(P, T.l); const d2 = rv.length(); rv.normalize(); ray.set(T.l, rv); ray.far = d2;
+            if (!ray.intersectObjects(blockers, false)[0]) { T.p.copy(P); h = null; break; }
+          }
+          if (h) { rv.subVectors(T0.p, T.l); rv.normalize(); T.p.copy(T.l).addScaledVector(rv, Math.max(1.2, h.distance - 0.6)); }
+        }
+      }
+    return T;
   }
   function shotTarget(camera) {
     if (follow.moon || follow.sky) {   // 月(虹)を背にして: 空のものと反対がわの下から、相手ごしに空を見る
@@ -144,9 +183,9 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   // 芝居に出ない住人は、しばらく消しておく(夜中に通りかかったりしないように)
   let extras = [];
   // 物語の最初(タイトルの間)に、出る住人の体・顔の絵を先に読みこむ(途中でカクカクしないように)
-  let pre = null;
+  let pre = null, preA = null, preRooms = [];   // preA: その話で開くゲームのデータ / preRooms: その話で使う部屋。どちらも物語のはじめ(題名の間)に用意する
   function only(ids) { pre = Promise.all(ids.map(id => { try { const im = new Image(); const s = portrait(id); if (s) im.src = s; } catch (e) { } return residents.ready ? residents.ready(id).then(() => { const r = who(id); if (r && r.ch._lazy) { r.ch._lazy('oca'); r.ch._lazy('throwin'); } }).catch(() => { }) : null; })); extras = residents.list.filter(r => !ids.includes(r.def.id)); for (const r of extras) { r.act = { vis: false }; r.talking = false; r.follow = false; r.visit = null; } }
-  function endCard(small, big, btn = 'タイトルへもどる') {   // 物語のおわり: 暗転した画面の真ん中に、はっきり「おしまい」。押すまで待つ
+  function endCard(small, big, btn = 'タイトルへもどる') { if (REC()) return Promise.resolve();   // 物語のおわり: 暗転した画面の真ん中に、はっきり「おしまい」。押すまで待つ
     return new Promise(res => {
       hideBox(); const f = q('.cs-fade'); f.style.transition = 'opacity .8s'; f.style.opacity = 1;
       const t = q('.cs-title'); t.querySelector('small').textContent = small; t.querySelector('b').textContent = big; t.classList.add('on'); t.style.pointerEvents = 'auto'; t.style.zIndex = 5;
@@ -164,15 +203,15 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   // 芝居の途中で、本物のアプリ・読む画面を開く。閉じたら芝居にもどる
   function away() { el.style.display = 'none'; document.body.classList.remove('tw-cuton'); }
   function back() { el.style.display = ''; document.body.classList.add('tw-cuton'); input.enabled = false; input.clear && input.clear(); camSnap = true; }
-  async function app(id, params) {
+  async function app(id, params) { if (REC()) return null;
     guard(); hideBox(); if (!openApp || !bus) return;
     away();
     await new Promise(res => { const off = bus.on('app:close', () => { off(); res(); }); let r; try { r = openApp(id, params); } catch (e) { r = false; } Promise.resolve(r).then(v => { if (v === false) { off(); res(); } }); });
     back(); guard();
   }
-  async function game(id, o) { guard(); hideBox(); if (!openGame) return null; away(); const r = await openGame(id, o); back(); guard(); return r; }
+  async function game(id, o) { if (REC()) return null; guard(); hideBox(); if (!openGame) return null; away(); const r = await openGame(id, o); back(); guard(); return r; }
   // ランキングの札(物語の小道具)。rows: [[名前, 点], …]。タップで閉じる
-  function board(title, rows, mark) {
+  function board(title, rows, mark) { if (REC()) return null;
     guard(); hideBox();
     return new Promise(res => {
       const b = document.createElement('div'); b.style.cssText = 'position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:min(86vw,360px);z-index:6;background:#141a36f2;border:3px solid #fff;border-radius:14px;box-shadow:0 0 0 3px #141a36;color:#fff;padding:14px 16px;pointer-events:auto;font-weight:800';
@@ -180,9 +219,9 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
       el.appendChild(b); tapFn = () => { tapFn = null; b.remove(); res(); };
     }).then(guard);
   }
-  async function read(story, o) { guard(); hideBox(); if (!openReader) return null; away(); const r = await openReader(story, o); back(); guard(); return r; }
+  async function read(story, o) { if (REC()) return null; guard(); hideBox(); if (!openReader) return null; away(); const r = await openReader(story, o); back(); guard(); return r; }
   // 話の終わりのなかよし: 上がった量・次に開くもの。はじめての時だけ、しくみの説明
-  async function friend(id, n = 5) {
+  async function friend(id, n = 5) { if (REC()) return null;
     if (!reward) return; const r = reward(id, n); if (!r) return;
     const nm = NAME(id);
     await say('narr', `💗 ${nm}と、なかよしになった！${r.gained ? '' : '（もう上がっています）'}\nいま：${r.lvName}` + (r.next ? `\nあと ${r.next.left} で「${r.next.label}」が開くよ` : ''));
@@ -191,8 +230,9 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   const dir = { room: k => { const S = interiors && interiors.use(k); return (x, z) => S ? [S.at[0] + x, S.at[1] + z] : [x, z]; }, note, giftFish: (...a) => { try { giftFish && giftFish(...a); } catch (e) { console.error(e); } }, only, endCard, ride, faceSky, wx, rainbow, app, read, game, board, music: () => { try { return tune && tune(); } catch (e) { return null; } }, friend, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
     wait: async s => { guard(); await sleep(s); guard(); }, hour: h => { env.hour = h; }, both: (...ps) => Promise.all(ps) };
 
-  async function play(script) {
+  async function play(script, cams, preApps, rooms) {
     if (on) return false;
+    camTab = cams || null; preA = preApps || null; preRooms = rooms || [];
     on = true; skipped = false; camInit = false; build(); document.body.classList.add('tw-cuton');
     input.clear && input.clear(); const inputWas = input.enabled; input.enabled = false;
     const tap = e => { if (e.target.closest('.cs-skip, .cs-ch button')) return; tapFn && tapFn(); };
@@ -223,21 +263,9 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
       cameraRef = camera;
       if (wxK && wxFast && env.amb) { const A = env.amb, k = Math.min(1, dt * 1.5); A.r += (A.tr - A.r) * k; A.c += (A.tc - A.c) * k; }
       for (let i = puffs.length - 1; i >= 0; i--) { const p = puffs[i]; p.t += dt; p.s.position.x += p.vx * dt; p.s.position.y += p.vy * dt; p.s.position.z += p.vz * dt; p.vx *= 0.94; p.vz *= 0.94; p.s.scale.setScalar(p.size * (0.5 + p.t * 1.6)); p.s.material.opacity = Math.max(0, 1 - p.t / 0.9); if (p.t > 0.9) { scene.remove(p.s); p.s.material.dispose(); puffs.splice(i, 1); } }
-      const T0 = follow ? shotTarget(camera) : camT; if (!T0) return;
-      const T = { p: T0.p.clone(), l: T0.l };
-      if (blockers.length) {   // 見たい所とカメラの間に建物があれば、手前に寄せる(壁しか映らないのを防ぐ)
-        rv.subVectors(T.p, T.l); const dd = rv.length(); rv.normalize(); ray.set(T.l, rv); ray.far = dd;
-        let h = ray.intersectObjects(blockers, false)[0];
-        if (h) {   // まず、同じ距離のまま 少し回りこんだ所・少し上を探す(寄りすぎて誰かしか映らないのを防ぐ)
-          const ox = T.p.x - T.l.x, oz = T.p.z - T.l.z, oy = T.p.y - T.l.y;
-          for (const [ang, up] of [[0.35, 0], [-0.35, 0], [0.7, 0], [-0.7, 0], [0, 2.5], [1.05, 0], [-1.05, 0], [0.35, 2.5], [-0.35, 2.5], [Math.PI, 0]]) {
-            const c = Math.cos(ang), sn = Math.sin(ang), P = new THREE.Vector3(T.l.x + ox * c + oz * sn, T.l.y + oy + up, T.l.z - ox * sn + oz * c);
-            rv.subVectors(P, T.l); const d2 = rv.length(); rv.normalize(); ray.set(T.l, rv); ray.far = d2;
-            if (!ray.intersectObjects(blockers, false)[0]) { T.p.copy(P); h = null; break; }
-          }
-          if (h) { rv.subVectors(T0.p, T.l); rv.normalize(); T.p.copy(T.l).addScaledVector(rv, Math.max(1.2, h.distance - 0.6)); }
-        }
-      }
+      // カメラの位置は、場面(shot/cam/place)が変わった時に1回だけ決める。毎コマは計算しない(空を飛ぶ場面だけは追いかける)
+      if (camDirty > 0 || !camFix || riding) { camFix = camAim(); if (camDirty > 0) camDirty--; }   // 置いた直後の数コマだけ(位置が反映されるまで)
+      const T = camFix; if (!T) return;
       if (camSnap || !camInit) { camP.copy(T.p); camL.copy(T.l); camSnap = false; camInit = true; } else { const k = Math.min(1, dt * 2.4); camP.lerp(T.p, k); camL.lerp(T.l, k); }
       camera.position.copy(camP); camera.lookAt(camL);
       { const W = root.clientWidth || 1, H = root.clientHeight || 1, box = el && el.querySelector('.cs-box.on');   // セリフ枠に隠れないよう、絵を上へずらす

@@ -17,6 +17,12 @@ import { hush, bgmStop } from './src/sound.js';
 const FONT = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Lexend:wght@400;500;600;700&display=swap';
 export default {
   id: 'stream', name: 'Storyミング！', right: 'game:stream',
+  // 開く前に、使うデータを先に読む(物語のはじめなど)。読んだものは開いたときに読み直さない
+  async preload(ctx, opts = {}) {
+    for (const f of ['data.js', 'pool.js', 'words.js', 'texts.js', 'wlv.js']) await ctx.loadScript(ctx.base + f);
+    const p = opts.passage && typeof PASSAGES !== 'undefined' && PASSAGES.find(x => x.id === opts.passage);   // data.js の中の表(ページ全体の名前)
+    if (p && typeof PASSAGES_NEED === 'function') await PASSAGES_NEED(ctx.loadScript, ctx.base, [p.lv]);
+  },
   async mount(el, ctx) {
     for (const f of ['data.js', 'pool.js', 'words.js', 'texts.js', 'wlv.js']) await ctx.loadScript(ctx.base + f);
     if (!document.querySelector('link[data-ct="stream"]')) { const lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = FONT; lk.dataset.ct = 'stream'; document.head.appendChild(lk); }

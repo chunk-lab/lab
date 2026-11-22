@@ -226,6 +226,7 @@ export function createResidents(scene, graph, getHour, collide = null) {
         if (!r.glb && (r.follow || r.pin || r.visit || r.summonT > 0 || (r.ch.root.visible && !r.hidden))) loadR(r);   // 用があって出てきた人は、その場で読む
         if (r.battle) continue;   // 雪合戦の最中は、雪合戦の方で動かす
         if (r.act) {   // 物語の芝居中: 台本(cutscene)の指示どおりに歩く・向く・浮く
+          if (r.act.vis === false) { r.ch.root.visible = false; continue; }   // 物語に出ない人: 動かさない・描かない
           const A = r.act, P = r.ch.root.position; r.hidden = false; r.ch.root.visible = A.vis !== false; r.path = []; r.idle = null; r.vx = r.vz = 0;
           if (A.tx != null) {
             const dx = A.tx - P.x, dz = A.tz - P.z, d = Math.hypot(dx, dz), sp = A.spd || 2.2;

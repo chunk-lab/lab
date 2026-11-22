@@ -20,7 +20,7 @@ import { createEnv } from './world/env.js';
 import { buildCity } from './world/city.js';
 import { buildAmbient } from './world/ambient.js';
 import { rollPose, rollReset, makeCharacter, LOOKS, LOOK_IDS, setCharOutline } from './world/character.js';
-import { useGlb, glbStat, glbPreload, glbWarm, setGlbConc, setGlbSize, SIZE_NOW } from './world/glbchar.js';
+import { useGlb, glbStat, glbPreload, glbWarm, setGlbConc, setGlbSize, SIZE_NOW , urlModels } from './world/glbchar.js';
 // プレイヤーの背(3Dモデル)。確認用: URL に ?playersize=1.8 で変えられる
 const PLAYER_H = (() => { try { return parseFloat(new URLSearchParams(location.search).get('playersize')) || 1.6; } catch (e) { return 1.6; } })();
 import { setBuildingOutline, eachFoliage, eachTex } from './world/kit.js';
@@ -54,6 +54,8 @@ import { hanaStory } from './game/stories/hana.js';
 import { lunaStory } from './game/stories/luna.js';
 import { tetsuStory } from './game/stories/tetsu.js';
 import { baronStory } from './game/stories/baron.js';
+const STORY_USES = { hana: [['stream', { passage: 'umb1' }]] };   // 物語の中で開くゲーム(はじめに先に読むもの)。町の中のアプリはもう読みこみ済み
+const STORY_ROOMS = { mii: ['cafe'], maru: ['library'] };   // 物語で使う部屋(はじめに作っておく)
 const STORIES = { chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory, mii: miiStory, suna: sunaStory, koharu: koharuStory, baron: baronStory, tetsu: tetsuStory, luna: lunaStory, hana: hanaStory, maru: maruStory };   // 物語の芝居(3D)。id → 台本
 import { createStage } from './game/encounter3d.js';
 import { createInteriors } from './world/interiors.js';
@@ -1576,6 +1578,7 @@ export function mount(container, opt = {}) {
   // ---- ループ ----
   const v3 = new THREE.Vector3(), timer = new THREE.Timer();
   const tagPos = new Map();
+  let storyCamP = null;
   let storyLite = false, storyPR = 1, storyShF = 0;
   let raf = 0, sendT = 0, saveT = 0, paused = false, held = false, frames = 0, fpsT = 0, fps = 60;
   function resize() {
@@ -1780,17 +1783,15 @@ export function mount(container, opt = {}) {
     if (env.weather || evt?.wx || (env.rainLevel || 0) > 0.01) audio.rain(evt?.wx && !appHost.current ? env.rainLevel || 0 : 0);   // 雨の音は、にわか雨(虹の出るイベント)のときだけ
     if (evt?.wx && !evt.bowSaid && env.weather && env.weather.bow > 0.25) { evt.bowSaid = true; banner('🌈 虹が出たよ！', '虹を見る', () => aimSky('rain'), 15000); }
     if (evt) { if (evt.wx ? !env.weather : evt.fw ? !fw.busy : !env.eclipse) endEvent(); }
-    sparkles.update(dt, me);
+    // 物語の芝居の間は、町の裏の動き(きらきら・噴水・人通り・鳩・雪合戦・スポーツ・ほかの人)を止める。終わったら元どおり動く
+    if (!cut.on) sparkles.update(dt, me);
     if ((schedT -= dt) <= 0) { schedT = 3; sched.check(); curWx = weather.now(); env.setAmbient(cut.on && cut.wx ? cut.wx : curWx); autoShower(); }
-    city.update(t, env.hour);
-    ambient.update(dt, t, me.ch.root.position, env.night, me.speed);
+    if (!cut.on) { city.update(t, env.hour); ambient.update(dt, t, me.ch.root.position, env.night, me.speed); }
     hud.setFeed(started && !hud.busy && ambient.pigeonsNear(me.ch.root.position, 10));
     { const sn = seasons.carrying() ? null : seasons.nearest(me.x, me.z, 2.4);
       hud.setSnow(started && seasons.season === 'winter' && !battle.active && !sport.active, snow.making ? '❄️\nころころ' : snow.holding ? '❄️\n投げてね' : seasons.carrying() ? '❄️\n雪玉' : '❄️\n雪玉', seasons.carrying() ? '🙌\n雪だるま' : sn ? '🙌\n雪だるま' : '⛄\n雪だるま', snow.making || snow.holding);
       hud.setDown(started && !!ride && !ride.dive && !ride.bn && (ride.altT || 0) > 0); hud.setDodge(started && !battle.active && !sport.active && !(ride && (ride.dive || ride.bn)), ride ? '☁️\nうく' : '💨\nよける'); }
-    snow.update(dt);
-    battle.update(dt, lastMove);
-    sport.update(dt);
+    if (!cut.on) { snow.update(dt); battle.update(dt, lastMove); sport.update(dt); }
     if (sport.active) {   // ゴルフ・フリスビーなどの間は、ほかの人を止めて見えなくする(軽くなる・じゃまにならない)
       if (!sportHid) { sportHid = new Map(); for (const r of residents.list) { sportHid.set(r.ch.root, r.ch.root.visible); r.ch.root.visible = false; } for (const [, q] of peers) { sportHid.set(q.ch.root, q.ch.root.visible); q.ch.root.visible = false; } }
     } else {
@@ -1800,7 +1801,7 @@ export function mount(container, opt = {}) {
     { const ap = !!appHost.current; if (_wasApp && !ap) { try { residents.prepare(env.hour, 4); } catch (e) { } } _wasApp = ap; }   // 画面からもどったとき、もう一度先読み
 
     // ほかのプレイヤー(なめらかに追いかける)
-    for (const [, q] of peers) {
+    if (!cut.on) for (const [, q] of peers) {
       const p = q.ch.root.position, k = Math.min(1, dt * 8);
       const dx = q.tx - p.x, dz = q.tz - p.z;
       p.x += dx * k; p.z += dz * k;
@@ -1924,7 +1925,10 @@ export function mount(container, opt = {}) {
       if (seat) try { standFromSeat(); } catch (e) { }
       const h0 = env.hour, x0 = me.x, z0 = me.z, r0 = me.ry, cm = camMode; camMode = 'follow';
       const hid = []; for (const [, q] of peers) { hid.push([q, q.ch.root.visible]); q.ch.root.visible = false; }   // ほかのプレイヤーは芝居の間かくす
-      const ok = await cut.play(d => fn(d, { name: () => settings.name || 'あなた' }));
+      if (!storyCamP) storyCamP = fetch(urlModels('models/storycams.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));   // 物語のカメラの表(場面ごとの決まった位置)
+      const cams = window.__storyRec ? null : await storyCamP;
+      const preApps = Promise.all((STORY_USES[id] || []).map(([g, o]) => opt.preloadGame ? opt.preloadGame(g, o) : null));   // その話で開くゲームのデータを、はじめに読む(途中で読まない)
+      const ok = await cut.play(d => fn(d, { name: () => settings.name || 'あなた' }), cams, preApps, STORY_ROOMS[id]);
       for (const [q, v] of hid) q.ch.root.visible = v;
       env.hour = h0; me.x = x0; me.z = z0; me.ry = r0; me.speed = 0; camMode = cm;
       return ok;
