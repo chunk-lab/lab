@@ -198,7 +198,6 @@ export function useGlb(ch, id, { height } = {}) {
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
     // オカリナ・かかえて投げる動きは、使うときに初めて作る(読みこみを重くしない)
     const snap = restSnap(model), lazy = {
-      oca: () => { const oc = dirClip(model, snap, { ch: OCA.ch, frames: [{ t: 0, d: OCA.d }, { t: 1, d: OCA.d }] }, 'oca', 'Spine2'); if (oc) act.oca = mixer.clipAction(oc); },
       throwin: () => { const tc = dirClip(model, snap, THROWIN, 'throwin'); if (!tc) return; act.throwin = mixer.clipAction(tc); act.throwin.setLoop(THREE.LoopOnce, 1); act.throwin.clampWhenFinished = true;
         act.carryUp = mixer.clipAction(new THREE.AnimationClip('carryUp', tc.duration, tc.tracks.filter(t => !/(Hips|Leg|Foot|Toe)/.test(t.name)))); },   // かかえている間: 上半身だけ(足は歩き・立ちのまま)
     };
@@ -232,6 +231,9 @@ export function useGlb(ch, id, { height } = {}) {
     }
     }
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
+    // オカリナ: もらったポーズ(mio の立ち姿から両うで4本を回したもの)の「立ち姿からの差」を、そのまま足すだけ(計算しない・補正しない)。足元の測りの後で足す
+    { const nm = new Map(); model.traverse(o => { if (o.isBone) nm.set(o.name.replace(':', ''), o.name); });
+      act.oca = mixer.clipAction(new THREE.AnimationClip('oca', 1, Object.entries(OCA).filter(([b]) => nm.has(b)).map(([b, q]) => new THREE.QuaternionKeyframeTrack(nm.get(b) + '.quaternion', [0, 1], [...q, ...q])), THREE.AdditiveAnimationBlendMode)); }
     const wrap = new THREE.Group(); wrap.add(holder); wrap.scale.setScalar(height);
     // 座った動きの腰の高さ(背に対する割合)。座面に合わせるときの基準
     let sitHipN = 0; const sitHipOf = () => { mixer.stopAllAction(); act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const y = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).y / height; act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); } return y; };
@@ -300,7 +302,7 @@ export function useGlb(ch, id, { height } = {}) {
     ch.update = (dt, speed) => {
       const sitK = !!act.sit && (ch.pose === 'sit' || ch.pose === 'piano'), layK = !!(act.lay || act.sleep) && ch.pose === 'lie', goro = layK && ch.lieKind === 'goro' && !!act.lay, lieClip = goro ? 'lay' : act.sleep ? 'sleep' : 'lay';   // ゴロゴロ=lay(男:横向き寝 女:足パタパタ) ねる=sleep(あおむけ)
       const rideN = ch.pose === 'ride' ? (ch.rideKind === 'back' ? 'rideB' : 'rideF') : null, rideK = !!(rideN && act[rideN] && rideM[rideN]);
-      if (ch.pose === 'harp' && !act.oca) ch._lazy('oca'); if (ch.pose === 'carry' && !act.carryUp) ch._lazy('throwin');
+      if (ch.pose === 'carry' && !act.carryUp) ch._lazy('throwin');
       if (rideK) play(rideN, 0.35); else if (sitK) play('sit', 0.4); else if (act.oca && ch.pose === 'harp') play('oca', 0.4);
       else if (layK) play(lieClip, 0.4);
       else if (lock > 0) lock -= dt;
