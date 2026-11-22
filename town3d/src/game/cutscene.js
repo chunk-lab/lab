@@ -31,7 +31,7 @@ const CSS = `
 .tw-cut .cs-cap{position:absolute;left:50%;top:calc(60px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:#141a36cc;color:#fff;border:2px solid #fff;border-radius:999px;padding:6px 18px;font-weight:900;font-size:14px;opacity:0;transition:opacity .5s;white-space:nowrap}
 .tw-cut .cs-cap.on{opacity:1}
 .tw-cut .cs-note{position:absolute;left:14px;right:14px;top:calc(64px + env(safe-area-inset-top,0px));background:#fffaf0;color:#2c2418;border:3px solid #8a6a3a;border-radius:10px;padding:8px 12px 10px;font-weight:800;font-size:18px;line-height:1.45;text-align:center;box-shadow:0 4px 12px #0005;display:none;z-index:3}
-.tw-cut .cs-note small{display:block;font-size:12px;color:#8a6a3a;margin-bottom:2px}
+.tw-cut .cs-note span{white-space:pre-line;display:block}.tw-cut .cs-note small{display:block;font-size:12px;color:#8a6a3a;margin-bottom:2px}
 .tw-cut .cs-note.on{display:block}
 body.tw-cuton .tw-root>:not(.tw-canvas):not(.tw-cut){visibility:hidden!important}
 `;
@@ -168,7 +168,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
     await new Promise(res => { const off = bus.on('app:close', () => { off(); res(); }); let r; try { r = openApp(id, params); } catch (e) { r = false; } Promise.resolve(r).then(v => { if (v === false) { off(); res(); } }); });
     back(); guard();
   }
-  async function game(id, o) { guard(); hideBox(); if (!openGame) return; away(); await openGame(id, o); back(); guard(); }
+  async function game(id, o) { guard(); hideBox(); if (!openGame) return null; away(); const r = await openGame(id, o); back(); guard(); return r; }
   // ランキングの札(物語の小道具)。rows: [[名前, 点], …]。タップで閉じる
   function board(title, rows, mark) {
     guard(); hideBox();

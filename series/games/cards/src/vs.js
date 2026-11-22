@@ -119,8 +119,9 @@ import { FACE } from './faces.js';
   function player() { return { lv: {}, stage: 2, hand: [], row: [], field: [], draw: [], disc: [], pts: 0, refill: 0, discards: 99, log: [] }; }
   // CPU の手番で共有の山・場を使う
   function withP(p, fn) { p.draw = ME.draw; p.disc = ME.disc; p.field = ME.field; K.setR(p); try { return fn(); } finally { ME.draw = p.draw; ME.disc = p.disc; ME.field = p.field; K.setR(ME); } }
-  function start(opp) {
+  function start(opp, o) {
     if (!opp) { pickOpp(); return; }
+    HANDS = (o && o.hands) || 6;   // 物語からは1ハンドだけ
     ME = player(); CPU = player(); K.setR(ME);
     var all = K.starterDeck(); for (var i = 0; i < 25; i++) { var c = K.randomCard(); if (c) all.push(c); } all.push(K.mk('pron', 'it'));
     V = { opp: opp, all: all, n: 0, med: { me: START, cpu: START }, first: rnd() < .5 ? 'me' : 'cpu', stats: { win: 0, lose: 0 }, t0: Date.now() };
@@ -370,5 +371,5 @@ import { FACE } from './faces.js';
     $('#re', s).onclick = function () { start(V.opp); }; $('#ot', s).onclick = function () { K.showTitle(); pickOpp(); }; $('#tt', s).onclick = function () { K.showTitle(); };
   }
 
-  export function startById(id) { var o = OPPS.find(function (x) { return x.id === id; }); if (o) start(o); }
+  export function startById(id, op) { var o = OPPS.find(function (x) { return x.id === id; }); if (o) start(o, op); }
   export var VS = { start: start, startById: startById, _search: search, _score: scoreRow, _V: function () { return V; }, _me: function () { return ME; }, _cpu: function () { return CPU; }, OPPS: OPPS };

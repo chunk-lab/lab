@@ -1,6 +1,6 @@
 import { $, CFG, DICT, G, LEVEL, LV_JA, LV_MULT, el, pick, rnd, setLevel, shuffle, store } from './base.js';
 import { BOSSES, BOSS_AT, FORM_JA, JOKERS, KIND_JA, PART_JA, TARGETS, TSU, advise, baseChips, baseScore, card, cardText, colorOf, curTSU, cyclable, cycle, evaluate, isPlace, isTime, lvOf, mk, prevCore, starterDeck, storyOf, tsuCard, vtext, yaku } from './rules.js';
-import { SFX, ac, speak, unlock } from './sound.js';
+import { SFX, ac, speak, unlock, CORE } from './sound.js';
 import { runCoach } from '../../../core/coach.js';
 import { TUT } from './tutorial.js';
   export var VSref = null; export function registerVS(v) { VSref = v; }
@@ -678,6 +678,7 @@ import { TUT } from './tutorial.js';
     R.total += total; afterPlay(cur, sc); R.hintLv = 0; G_.hintBest = null; G_.hintIds = {};
     R.disc = R.disc.concat(R.row.filter(function (c) { return !c.tsu; })); R.row = [];
     await wait(350); deal(); G_.busy = false;
+    if (G_.storyTut) { G_.storyTut = false; setTimeout(function () { try { CORE && CORE.report('story_step', {}); } catch (e) { } }, 1800); return; }   // 物語から: 1回「出す」までやったら、話にもどる
     if (R.score >= R.target) { stageClear(); return; }
     if (R.hands <= 0) { finalReveal(); return; }
     renderAll();
