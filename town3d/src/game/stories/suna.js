@@ -56,9 +56,13 @@ export async function sunaStory(d, ctx = {}) {
   await d.say(S, '「何のことかな？」');
   await d.say('me', '「水槽に入れてくれてましたよね？」');
   await d.say(S, '「さぁ、そんなこともあったかな？\nもう忘れたよ」');
-  d.hideBox(); d.music();
+  await d.say(S, '「そんなことより、\n今、いい曲が 頭に浮かんだんだ」');
+  d.hideBox(); d.set(S, { pose: 'harp' }); d.music();
   d.shot(S, null, { yaw: 2.2, dist: 4.2, h: 1.6, look: 1.2 });
   await d.say('narr', '潮見さんは、おもむろにオカリナを取り出して、\nやさしい曲を 吹きはじめた。', { auto: 4.0 });
+  await d.wait(2.5);
+  d.set(S, { pose: null });
+  await d.say(S, '「僕は いつも ここにいるから。\n釣りをしたくなったら、また おいで」');
   await d.friend(S, 5);
   await d.endCard('潮見さん「釣れなくてもいいのさ」', 'おしまい');
 }

@@ -11,7 +11,7 @@ export async function koharuStory(d, ctx = {}) {
   await d.title('こはる先生', 'チャンクで読もう');
   await d.fade(false, 1.2);
   await d.say('narr', 'まちの広場。\n掲示板に、英語のお知らせが はってある。');
-  await d.say('narr', 'The library will open a new reading room for children.');
+  d.note('The library will open a new reading room for children.', '掲示板のお知らせ');
   await d.say('me', '「うーん……長くて、よく分からない……」');
   d.place(K, -5.6, -6.4, 0); d.face(K, 'me');
   d.shot('me', K, { yaw: P / 4, dist: 9, h: 2.6, look: 1.1 });
@@ -34,6 +34,7 @@ export async function koharuStory(d, ctx = {}) {
   await q('「for children は、どんな役？」', ['主役', 'なにを', 'おまけ(だれのために)'], 2, '「文がなくても 通じる、つけたしの部分です」');
   await d.say(K, '「The library / will open / a new reading room / for children.\n"図書館は" "開きます" "新しい読書室を" "子どもたちのために"。\nまとまりごとに、前から読めばいいんです」');
   await d.say('me', '「読めた！」');
+  d.note('');
   await d.say(K, '「切れ目を見つける練習なら、今スラがおすすめですよ。\nちょっと、やってみましょうか」');
   d.hideBox();
   await d.game('chunkchunk', { play: 'auto-one', closeOn: ['stage_done'], coach: 'auto' });

@@ -30,6 +30,9 @@ const CSS = `
 .tw-cut .cs-title small{font-size:15px;letter-spacing:.3em}.tw-cut .cs-title b{font-size:34px;margin-top:8px}
 .tw-cut .cs-cap{position:absolute;left:50%;top:calc(60px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:#141a36cc;color:#fff;border:2px solid #fff;border-radius:999px;padding:6px 18px;font-weight:900;font-size:14px;opacity:0;transition:opacity .5s;white-space:nowrap}
 .tw-cut .cs-cap.on{opacity:1}
+.tw-cut .cs-note{position:absolute;left:14px;right:14px;top:calc(64px + env(safe-area-inset-top,0px));background:#fffaf0;color:#2c2418;border:3px solid #8a6a3a;border-radius:10px;padding:8px 12px 10px;font-weight:800;font-size:18px;line-height:1.45;text-align:center;box-shadow:0 4px 12px #0005;display:none;z-index:3}
+.tw-cut .cs-note small{display:block;font-size:12px;color:#8a6a3a;margin-bottom:2px}
+.tw-cut .cs-note.on{display:block}
 body.tw-cuton .tw-root>:not(.tw-canvas):not(.tw-cut){visibility:hidden!important}
 `;
 
@@ -52,7 +55,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
 
   function build() {
     el = document.createElement('div'); el.className = 'tw-cut';
-    el.innerHTML = `<div class="cs-tap"></div><div class="cs-title"><small></small><b></b></div><div class="cs-cap"></div><div class="cs-ch"></div><div class="cs-box"><img class="cs-pic" alt=""><div class="cs-name"></div><div class="cs-text"></div><div class="cs-more">▼</div></div><div class="cs-fade"></div><button class="cs-skip" type="button">スキップ ▶▶</button>`;
+    el.innerHTML = `<div class="cs-tap"></div><div class="cs-title"><small></small><b></b></div><div class="cs-cap"></div><div class="cs-note"></div><div class="cs-ch"></div><div class="cs-box"><img class="cs-pic" alt=""><div class="cs-name"></div><div class="cs-text"></div><div class="cs-more">▼</div></div><div class="cs-fade"></div><button class="cs-skip" type="button">スキップ ▶▶</button>`;
     root.appendChild(el);
     el.querySelector('.cs-skip').onclick = e => { e.stopPropagation(); skipped = true; tapFn && tapFn(); chFn && chFn(-1); };
   }
@@ -85,6 +88,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   const hideBox = () => { q('.cs-box').classList.remove('on'); };
   async function fade(out, sec = 0.6) { const f = q('.cs-fade'); f.style.transition = `opacity ${sec}s`; f.style.opacity = out ? 1 : 0; await sleep(sec); }
   async function title(small, big, sec = 2.4) { const t = q('.cs-title'); t.querySelector('small').textContent = small; t.querySelector('b').textContent = big; t.classList.add('on'); await sleep(sec); t.classList.remove('on'); await sleep(0.8); }
+  function note(text, head = '') { const c = q('.cs-note'); if (!text) { c.classList.remove('on'); return; } c.innerHTML = (head ? '<small></small>' : '') + '<span></span>'; if (head) c.querySelector('small').textContent = head; c.querySelector('span').textContent = text; c.classList.add('on'); }   // 画面の上に、ずっと出しておく文(掲示板の英文など)
   function caption(text) { const c = q('.cs-cap'); if (!text) { c.classList.remove('on'); return; } c.textContent = text; c.classList.add('on'); }
 
   function act(id) { const r = who(id); if (!r) return null; residents.load && residents.load(id); r.act = r.act || {}; r.talking = false; r.follow = false; r.visit = null; r.pin = null; return r.act; }
@@ -182,7 +186,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
     await say('narr', `💗 ${nm}と、なかよしになった！${r.gained ? '' : '（もう上がっています）'}\nいま：${r.lvName}` + (r.next ? `\nあと ${r.next.left} で「${r.next.label}」が開くよ` : ''));
     if (r.firstTime) await say('narr', 'なかよしは、毎日話しかけたり、マージで作った「ほしい品」をわたしたりすると上がります。\n上がるたびに、その人にたのめることや、遊べるものが増えていきます。');
   }
-  const dir = { giftFish: (...a) => { try { giftFish && giftFish(...a); } catch (e) { console.error(e); } }, only, endCard, ride, faceSky, wx, rainbow, app, read, game, board, music: () => { try { return tune && tune(); } catch (e) { return null; } }, friend, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
+  const dir = { note, giftFish: (...a) => { try { giftFish && giftFish(...a); } catch (e) { console.error(e); } }, only, endCard, ride, faceSky, wx, rainbow, app, read, game, board, music: () => { try { return tune && tune(); } catch (e) { return null; } }, friend, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
     wait: async s => { guard(); await sleep(s); guard(); }, hour: h => { env.hour = h; }, both: (...ps) => Promise.all(ps) };
 
   async function play(script) {

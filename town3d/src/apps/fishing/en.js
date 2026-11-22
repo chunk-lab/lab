@@ -34,7 +34,7 @@ const MIXCSS = `
 .fz .ens.aq{overflow:hidden;padding:0;display:flex;flex-direction:column;touch-action:auto}
 .aq .aqh{display:flex;align-items:center;gap:8px;padding:8px 10px 6px;flex:none}.aq .aqtt{font-size:16px;white-space:nowrap}
 .aq .aqw{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.aq .aqc{background:#fff;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:900;box-shadow:0 1px 4px #0001}
-.aq .aqt{position:relative;flex:none;height:clamp(190px,36vh,300px);margin:0 10px;border-radius:18px;overflow:hidden;box-shadow:0 4px 14px #0002;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.aq .aqt{position:relative;flex:1;min-height:200px;margin:0 10px 10px;border-radius:18px;overflow:hidden;box-shadow:0 4px 14px #0002;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .aq .aqt canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .aq .aqrk{position:absolute;left:10px;top:6px;font-size:11px;font-weight:900;color:#fff;text-shadow:0 1px 3px #0009;pointer-events:none}
 .aq .aqhint{position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:10px;color:#fff;text-shadow:0 1px 3px #000a;pointer-events:none}
@@ -42,9 +42,15 @@ const MIXCSS = `
 .aq .aqpop .aqpb{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}.aq .aqpop .sbtn{padding:7px 10px;font-size:12px}
 .aq .aqpop .gb{height:6px;border-radius:3px;background:#eee4f2;overflow:hidden;margin:4px 0}.aq .aqpop .gb i{display:block;height:100%;background:linear-gradient(90deg,#7fd3ff,#7fcf9f)}
 .aq .aqtabs{position:relative;display:flex;gap:4px;margin:8px 10px 0;flex:none}
+.aq .aqtabs button{border-radius:12px 12px 0 0}.aq:not(.aqop) .aqtabs{margin-bottom:8px}.aq:not(.aqop) .aqtabs button{border-radius:12px}
+.aq.aqop .aqb{display:block}.aq.aqop .aqt{display:none}.aq.aqop.aqdk .aqt{display:block;flex:none;height:clamp(150px,28vh,230px);margin:0 10px}
+.aq .aqcl{display:flex;justify-content:flex-end;margin:-2px 0 6px}.aq .aqcl .sbtn{padding:6px 12px;font-size:12px}
+.aq .aqmixbar{position:sticky;top:-10px;z-index:2;background:#fff;padding:4px 0 6px;margin:0 -2px;box-shadow:0 6px 8px -6px #0003}
+.aq .cell.cand{outline:3px solid #ffb020;outline-offset:-3px;animation:aqcand 0.9s ease-in-out infinite}.aq .cell.dim{opacity:.4}
+@keyframes aqcand{50%{outline-color:#ffe48a}}
 .aq .aqtabs button{flex:1;border:0;border-radius:12px 12px 0 0;padding:10px 2px;font:inherit;font-weight:900;font-size:13px;background:#efe8f7;color:#5a4a6b}.aq .aqtabs button.on{background:#fff}
 .aq .aqdrop{position:absolute;inset:0;border-radius:12px 12px 0 0;display:none;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;background:rgba(90,74,107,.8);pointer-events:none}.aq .aqdrop.on{display:flex}.aq .aqdrop.hot{background:#e0556b}
-.aq .aqb{flex:1;overflow:auto;background:#fff;margin:0 10px;padding:10px 10px calc(20px + env(safe-area-inset-bottom,0px));touch-action:pan-y;-webkit-overflow-scrolling:touch}
+.aq .aqb{display:none;flex:1;overflow:auto;background:#fff;margin:0 10px;padding:10px 10px calc(20px + env(safe-area-inset-bottom,0px));touch-action:pan-y;-webkit-overflow-scrolling:touch}
 .aq .aqb .row{background:#fbf8ff}
 .aq .aqrow{display:flex;gap:8px;margin-bottom:8px;align-items:center}
 .aq .aqs{margin:12px 0 6px;font-size:14px}.aq .aqs small{font-weight:700;color:#8d7f9e;font-size:11px}
@@ -412,20 +418,23 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     vch.bindGems && vch.bindGems(ctx.gems);
     const sc = document.createElement('div'); sc.className = 'ens aq'; root.appendChild(sc);
     // ---- 物語の案内(coach): えさを作る → えさをあげる → 合成、をやりながら教える。おわったら話にもどる ----
-    let cStep = 0, cFed = false, cMixed = false, cEl = null, cBye = false;
+    let cStep = 0, cLast = -1, cFed = false, cMixed = false, cEl = null, cBye = false;
     const stockN = () => { const st = spec.foodStock(); let n = 0; for (const k in st) for (const v of [].concat(st[k])) n += +v || 0; return n; };
     function coachUpd() {
       if (!coach) return;
       if (cStep === 0 && stockN() > 0) cStep = 1;
       if (cStep <= 1 && cFed) cStep = 2;
       if (cStep <= 2 && cMixed) cStep = 3;
-      const T = ['① まずは「🍤 えさを作る」。英語に答えると、えさができるよ。', '② 魚をタップして「えさ」をあげよう。毎日少しずつで、育っていくよ。', '③ 下の「🧪 合成」→「🐟 魚を強くする」で、潮見さんがくれた 育ちきったフナを3匹えらんで、合成してみよう。(育ちきっていない魚は、合成できないよ)', 'できた！ もうすぐ、物語にもどるよ。'][cStep];
+      if (cStep !== cLast) { const was = cLast; cLast = cStep; if (cStep === 1) { open = false; closePop(); drawHead(); } else if (cStep === 0 && was < 0) { open = true; tab = 'fish'; drawHead(); drawBody(); } }
+      const T = ['① まずは「🍤 えさを作る」。英語に答えると、えさができるよ。', '② 魚をタップして「えさ」をあげよう。毎日少しずつで、育っていくよ。', '③ 上の「🧪 合成」→「🐟 魚を強くする」で、潮見さんがくれた 育ちきったフナを3匹えらんで、合成してみよう。(育ちきっていない魚は、合成できないよ)', 'できた！ もうすぐ、物語にもどるよ。'][cStep];
       if (!cEl) { cEl = document.createElement('div'); cEl.style.cssText = 'position:sticky;top:0;z-index:30;margin:0 0 8px;background:#141a36;color:#fff;border:3px solid #ffd166;border-radius:12px;padding:8px 12px;font:700 14px/1.55 inherit'; sc.prepend(cEl); }
       cEl.textContent = T;
       if (cStep === 3 && !cBye) { cBye = true; setTimeout(() => { try { ctx.close(); } catch (e) { } }, 3500); }
     }
     if (coach) setTimeout(coachUpd, 60);
     let tab = tab0 || ctx.storage.get('aqTab') || 'fish';
+    let open = !!coach;   // タブの中身を広げているか(閉じている間は、水槽を大きく見せる)
+    const layout = () => { sc.classList.toggle('aqop', open); sc.classList.toggle('aqdk', open && tab === 'deco'); };
     let dexT = ctx.storage.get('aqDex') || 'f';
     let lockMode = false, mixMode = coach ? 'f' : 'd', mixLv = +(ctx.storage.get('mixLv') || 1), pick3 = [];
     let raf = 0, swim = [], PL = [], DM = {}, selUid = null, pop = null;
@@ -433,8 +442,8 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     const fx = { pel: [], coin: [], bub: [] };
     const today = dayKey();
     sc.innerHTML = `<div class="aqh"><button class="sbtn" data-a="back">← もどる</button><b class="aqtt">🐠 アクアリウム</b><span class="aqw"></span></div>
-      <div class="aqt"><canvas></canvas><div class="aqrk"></div><div class="aqhint">飾りは指で動かせるよ・2本指で大きさ・下のタブまで引っぱって離すと、しまう</div></div>
       <div class="aqtabs">${[['fish', '🐟 魚'], ['deco', '🪸 飾り'], ['mix', '🧪 合成'], ['dex', '📖 図鑑']].map(([k, n]) => `<button data-tab="${k}">${n}</button>`).join('')}<div class="aqdrop">↩ ここで離すと しまう</div></div>
+      <div class="aqt"><canvas></canvas><div class="aqrk"></div><div class="aqhint">飾りは指で動かせるよ・2本指で大きさ・上のタブまで引っぱって離すと、しまう</div></div>
       <div class="aqb"></div>`;
     const tankEl = sc.querySelector('.aqt'), cv = tankEl.querySelector('canvas'), body = sc.querySelector('.aqb'), dropEl = sc.querySelector('.aqdrop');
     const fname = f => { const sp = FISHBY[f.id]; return RANK_PRE[f.rk || 0] + (sp ? sp.name : f.id); };
@@ -448,7 +457,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
       sc.querySelector('.aqw').innerHTML = `<span class="aqc">🍤 ${spec.food()}</span><span class="aqc">🎫 ${vch.total()}</span><span class="aqc">💎 ${vch.dia()}</span>`;
       const pts = spec.pts(), rk = spec.rank(), nx = TANK_RANKS[rk + 1];
       sc.querySelector('.aqrk').innerHTML = `🏆 ${esc(TANK_RANKS[rk][1])}<small> ${pts}pt${nx ? ` ・あと${nx[0] - pts}` : ''}</small> ・ 🐟 ${spec.tank().length}/${spec.growSlots()}`;
-      sc.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+      sc.querySelectorAll('.aqtabs [data-tab]').forEach(b => b.classList.toggle('on', open && b.dataset.tab === tab)); layout();
     }
 
     // ---------- 水槽(canvas) ----------
@@ -699,12 +708,17 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
         const items = spec.tank().filter(f => f.g >= GROW_NEED && (f.rk || 0) < FISH_MAX_RANK);
         if (pick3.length === MIX_N) { const sel = pick3.map(id => spec.tank().find(f => f.uid === id)).filter(Boolean); if (sel.length === MIX_N && sel.every(f => f.id === sel[0].id && (f.rk || 0) === (sel[0].rk || 0))) result = `${fishImg(sel[0].id, 56, false, (sel[0].rk || 0) + 1)}<small>${esc(RANK_PRE[(sel[0].rk || 0) + 1] + (FISHBY[sel[0].id] || {}).name)}</small>`; else result = '✖<small>同じ種類・同じ強さを3匹</small>'; }
         note = `<p class="nt">水槽で<b>育てきった、同じ種類・同じ強さ</b>の魚を${MIX_N}匹 → 1匹の強い魚(大きく・称号つき。最大2段階)。元の魚は図鑑に残るよ。</p>`;
-        list = items.length ? `<div class="grid">${items.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''}" data-p="${f.uid}"><span class="ic fa">${fishImg(f.id, 80, false, f.rk || 0)}</span><b>${f.lock ? '🔒 ' : ''}${esc(fname(f))}</b><small>${fsize(f)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。🐟 魚タブで、えさをあげて育てよう。</p>`;
+        // 今まぜられる候補を光らせる: まだ選んでいない時は「同じ種類・同じ強さが3匹以上」の魚、選んだ後はそれと合う魚だけ
+        const key = f => f.id + ':' + (f.rk || 0), cnt = {}; items.forEach(f => { if (!f.lock) cnt[key(f)] = (cnt[key(f)] || 0) + 1; });
+        const p0 = pick3.length ? spec.tank().find(f => f.uid === pick3[0]) : null;
+        const cand = f => !f.lock && !pick3.includes(f.uid) && pick3.length < MIX_N && (p0 ? key(f) === key(p0) : cnt[key(f)] >= MIX_N);
+        const dim = f => !pick3.includes(f.uid) && !cand(f);
+        list = items.length ? `<div class="grid">${items.map(f => `<button class="cell got ${pick3.includes(f.uid) ? 'sel' : ''} ${cand(f) ? 'cand' : ''} ${dim(f) ? 'dim' : ''}" data-p="${f.uid}"><span class="ic fa">${fishImg(f.id, 80, false, f.rk || 0)}</span><b>${f.lock ? '🔒 ' : ''}${esc(fname(f))}</b><small>${fsize(f)}cm</small></button>`).join('')}</div>` : `<p class="nt">育ちきった魚がまだいないよ。🐟 魚タブで、えさをあげて育てよう。</p>`;
       }
       note += `<div class="aqrow"><button class="sbtn" data-lm="1" style="${lockMode ? 'background:#ffe9a8' : ''}">🔒 ${lockMode ? 'ロックを切りかえ中(タップで ロック/はずす)' : 'ロックする・はずす'}</button></div>`;
       const slots = Array.from({ length: MIX_N }, (_, i) => `<button class="aqslot ${pick3[i] ? 'on' : ''}" data-slot="${i}">${pick3[i] ? slotIc(pick3[i]) : '<span class="ic" style="opacity:.35">＋</span>'}</button>`).join('<span class="aqplus">+</span>');
-      return `${tabs}${note}<div class="aqmix">${slots}<span class="aqplus">→</span><div class="aqslot res">${result}</div></div>
-        <button class="btn aqgo" data-a="go" ${pick3.length === MIX_N ? '' : 'disabled'}>🧪 混ぜる! (${pick3.length}/${MIX_N})</button>${list}`;
+      return `${tabs}${note}<div class="aqmixbar"><div class="aqmix">${slots}<span class="aqplus">→</span><div class="aqslot res">${result}</div></div>
+        <button class="btn aqgo" data-a="go" ${pick3.length === MIX_N ? '' : 'disabled'}>🧪 混ぜる! (${pick3.length}/${MIX_N})</button></div>${list}`;
     }
     function tabDex() {
       const own = spec.own(), adm = isAdmin(), D = dex || {};
@@ -728,7 +742,7 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     }
     function drawBody() {
       const y = body.scrollTop;
-      body.innerHTML = tab === 'fish' ? tabFish() : tab === 'deco' ? tabDeco() : tab === 'mix' ? tabMix() : tabDex();
+      body.innerHTML = `<div class="aqcl"><button class="sbtn" data-a="aqclose">🐠 水槽を見る</button></div>` + (tab === 'fish' ? tabFish() : tab === 'deco' ? tabDeco() : tab === 'mix' ? tabMix() : tabDex());
       body.scrollTop = y;
     }
     function redraw(all) { drawHead(); drawBody(); if (all) { rebuildSwim(); } refreshDecor(); coachUpd(); }
@@ -829,8 +843,9 @@ export function createEnglish({ root, ctx, sfx, sheet, artCanvas, FISHBY, toast,
     }
     sc.addEventListener('click', async e => {
       const q = (s) => e.target.closest(s);
-      const tb = q('[data-tab]'); if (tb) { sfx.play('tap'); tab = tb.dataset.tab; ctx.storage.set('aqTab', tab); closePop(); body.scrollTop = 0; drawHead(); drawBody(); return; }
-      const a = q('[data-a]'); if (a) { act(a.dataset.a); return; }
+      const tb = q('[data-tab]'); if (tb) { sfx.play('tap'); if (open && tab === tb.dataset.tab && tb.closest('.aqtabs')) { open = false; closePop(); drawHead(); return; } open = true; tab = tb.dataset.tab; ctx.storage.set('aqTab', tab); closePop(); body.scrollTop = 0; drawHead(); drawBody(); return; }
+      const a = q('[data-a]'); if (a && a.dataset.a === 'aqclose') { sfx.play('tap'); open = false; closePop(); drawHead(); return; }
+      if (a) { act(a.dataset.a); return; }
       const fd = q('[data-feed]'); if (fd) { act('feed', fd.dataset.feed); return; }
       const tob = q('[data-tobox]'); if (tob) { act('tobox', tob.dataset.tobox); return; }
       const tt = q('[data-totank]'); if (tt) { const b = spec.box(), i = b.findIndex(x => x.uid === tt.dataset.totank); if (i < 0) return; if (spec.tank().length >= spec.growSlots()) { toast(`育てる枠がいっぱい(${spec.growSlots()}匹まで。育ちきったら「とうろく」。枠はふやせるよ)`); return; } const t = spec.tank(); t.push(b.splice(i, 1)[0]); spec.saveBox(b); spec.saveTank(t); if (!spec.hasTank()) spec.gotTank(); sfx.play('tap'); toast('🐠 育てる枠に入れた'); redraw(true); return; }
