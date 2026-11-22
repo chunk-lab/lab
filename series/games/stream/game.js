@@ -24,6 +24,7 @@ export default {
     el.classList.add('ct-stream');
     el.innerHTML = html.replace(/(src|href)="(img|audio)\//g, (m, at, d) => `${at}="${ctx.base}${d}/`);
     el.querySelectorAll('.logo').forEach(lg => { lg.innerHTML = `<img src="${LOGO.story}" alt="Storyミング！" style="display:block;margin:0 auto;height:min(26vh,150px);width:auto;max-width:90%">`; });
+    ENV.coach = ctx.opts && ctx.opts.coach ? new Set() : null;   // 物語から: ステージごとの遊び方を、その都度出す
     loadSave(); if ([1, 1.2, 1.4, 1.6].includes(ctx.opts?.fontSize)) SV.set.fs = ctx.opts.fontSize;
     const op = ctx.opts && ctx.opts.passage && P(ctx.opts.passage);   // 長文のチャンクはレベルごとのファイル。いま開くレベル(と指定の本のレベル)を先に読み込む
     try { await PASSAGES_NEED(ctx.loadScript, ctx.base, [SV.lv || 1, op ? op.lv : 0]); } catch (e) { console.error(e); }
