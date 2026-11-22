@@ -217,6 +217,7 @@ export function createResidents(scene, graph, getHour, collide = null) {
       for (const r of list) if (!r.glb) for (let t = 0; t <= ahead; t += 0.5) if (outAt(r.def, h + t)) { loadR(r); break; }
     },
     load(id) { const r = list.find(q => q.def.id === id); if (r) loadR(r); return r; },
+    ready(id) { const r = list.find(q => q.def.id === id); if (r) loadR(r); return (r && r.ch.glbReady) || Promise.resolve(); },   // 体の読みこみが終わるまで
         get outing() { return outing; }, set outing(v) { outing = v || new Set(); },
     update(dt, h, player) {
       const anyTalking = list.some(q => q.talking);

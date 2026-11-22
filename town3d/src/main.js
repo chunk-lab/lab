@@ -56,6 +56,7 @@ import { tetsuStory } from './game/stories/tetsu.js';
 import { baronStory } from './game/stories/baron.js';
 const STORIES = { chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory, mii: miiStory, suna: sunaStory, koharu: koharuStory, baron: baronStory, tetsu: tetsuStory, luna: lunaStory, hana: hanaStory, maru: maruStory };   // 物語の芝居(3D)。id → 台本
 import { createStage } from './game/encounter3d.js';
+import { createInteriors } from './world/interiors.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
 import { createFireworks, FW_TYPES, FW_SHOWS, FW_CENTER } from './world/fireworks.js';
@@ -243,7 +244,7 @@ export function mount(container, opt = {}) {
   let focus = null, talkingTo = null, started = false;
   const input = createInput(root, { onAction: () => doAction() });
   const cut = createCutscene({ root, scene, residents, me, env, input, names: { me: () => settings.name || 'あなた', chunkkun: 'チャンクくん', mii: 'ミイ', maru: 'マルさん', yuzu: 'ゆず', shiori: 'しおりさん', gon: 'ゴン', suna: '潮見さん', luna: 'ルナ', baron: 'ハッタリ男爵', choco: '大喜利チョコ', tetsu: '哲学者', koharu: 'こはる先生', hana: 'はな', sora: 'そら' }, blockers: city.meshes,
-    openApp: (id, p) => openApp(id, p), bus, openReader: opt.openReader || null, openGame: opt.openGame || null,
+    openApp: (id, p) => openApp(id, p), bus, openReader: opt.openReader || null, interiors: createInteriors(scene), warm: () => { try { renderer.compile(scene, camera); } catch (e) { } }, openGame: opt.openGame || null,
     giftFish: (id, n = 1, grown = false) => {   // 物語: 魚を水槽に入れる(grown=育ちきった魚)
       const t = fishSpec.tank(); for (let i = 0; i < n; i++) { const f = { uid: 'gf' + Date.now().toString(36) + i + Math.random().toString(36).slice(2, 5), id, size: 16 + Math.floor(Math.random() * 8), g: 0, day: '', n: 0, at: Date.now(), rk: 0 }; if (grown) f.g = fishGrowNeed(f); t.push(f); }
       fishSpec.saveTank(t); if (grown) fishSpec.markGrown(id, 0); if (!fishSpec.hasTank()) fishSpec.gotTank(); if (!furn.owned('tank')) furn.give('tank');

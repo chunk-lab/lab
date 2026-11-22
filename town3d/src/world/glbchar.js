@@ -180,7 +180,7 @@ export function useGlb(ch, id, { height } = {}) {
   const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
   const player = id.startsWith('player:') || id.startsWith('self:');
   height = player ? SIZE_NOW.player : (height !== 1.3 ? height : SIZE_NOW.npc);   // 確認用の住人ごとの背(?npcsizes=1)だけは、そちらを優先
-  Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null, measures().catch(() => null)]).then(([gltf0, src, T]) => {
+  ch.glbReady = Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null, measures().catch(() => null)]).then(([gltf0, src, T]) => {
     stat.now = nm(spec.url) + ' の体と動きを準備';
     const gltf = src && !(gltf0.animations && gltf0.animations.length) ? { scene: gltf0.scene, animations: src.animations } : gltf0;
     // 同じモデルを複数体出してもいいように、骨ごと複製する

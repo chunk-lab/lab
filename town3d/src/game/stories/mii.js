@@ -15,6 +15,12 @@ export async function miiStory(d, ctx = {}) {
   d.shot('me', M, { dist: 4.6, h: 1.9, look: 1.0, side: -1 });
   await d.say('me', '「はじめまして」');
   await d.say(M, '「あら、新しく来た方ですね〜。いらっしゃいませ。\nここは、町のみんなが集まるカフェなんですよ〜」');
+  await d.say(M, '「さあ、どうぞ 中へ〜」');
+  // ---- カフェの中 ----
+  d.hideBox(); await d.fade(true, 0.6);
+  { const R = d.room('cafe'), [mx, mz] = R(3.6, 1.9), [px, pz] = R(5.4, 3.4); d.place(M, mx, mz, 0); d.place('me', px, pz, P); d.face(M, 'me'); d.face('me', M); }
+  d.shot('me', M, { yaw: 0.2, dist: 6.5, h: 3.0, look: 1.0 });
+  await d.fade(false, 0.6);
   await d.say(M, '「お菓子や飲みもの、おみやげも買えますよ〜。\n町のだれかにプレゼントすると、きっと喜ばれますよ〜」');
   await d.say(M, '「好きなものをあげると、とっても喜ぶんです。\nだれが何を好きか、お話ししながら探してみてくださいね〜」');
   await d.say(M, '「そうだ！ 今日は、あなたがこの町に来た記念に、\nひとつ プレゼントしますね〜。好きなものを選んでください」');

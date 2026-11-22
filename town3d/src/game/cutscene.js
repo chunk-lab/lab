@@ -42,7 +42,7 @@ function puffTex() {
   g.fillStyle = r; g.fillRect(0, 0, 64, 64); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
-export function createCutscene({ root, scene, residents, me, env, input, names = {}, blockers = [], openApp = null, bus = null, openReader = null, reward = null, openGame = null, tune = null, giftFish = null }) {
+export function createCutscene({ root, scene, residents, me, env, input, names = {}, blockers = [], openApp = null, bus = null, openReader = null, reward = null, openGame = null, tune = null, giftFish = null, warm = null, interiors = null }) {
   if (!document.getElementById('tw-cut-css')) { const st = document.createElement('style'); st.id = 'tw-cut-css'; st.textContent = CSS; document.head.appendChild(st); }
   let on = false, el = null, skipped = false, meAct = null, camT = null, camP = new THREE.Vector3(), camL = new THREE.Vector3(), camSnap = false, follow = null, camInit = false, offY = 0, riding = false, alt = 0;
   const ray = new THREE.Raycaster(), rv = new THREE.Vector3();
@@ -87,7 +87,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   }
   const hideBox = () => { q('.cs-box').classList.remove('on'); };
   async function fade(out, sec = 0.6) { const f = q('.cs-fade'); f.style.transition = `opacity ${sec}s`; f.style.opacity = out ? 1 : 0; await sleep(sec); }
-  async function title(small, big, sec = 2.4) { const t = q('.cs-title'); t.querySelector('small').textContent = small; t.querySelector('b').textContent = big; t.classList.add('on'); await sleep(sec); t.classList.remove('on'); await sleep(0.8); }
+  async function title(small, big, sec = 2.4) { const t = q('.cs-title'); t.querySelector('small').textContent = small; t.querySelector('b').textContent = big; t.classList.add('on'); await sleep(sec); if (pre) { await Promise.race([pre, sleep(10)]); pre = null; try { warm && warm(); } catch (e) { } } t.classList.remove('on'); await sleep(0.8); }
   function note(text, head = '') { const c = q('.cs-note'); if (!text) { c.classList.remove('on'); return; } c.innerHTML = (head ? '<small></small>' : '') + '<span></span>'; if (head) c.querySelector('small').textContent = head; c.querySelector('span').textContent = text; c.classList.add('on'); }   // 画面の上に、ずっと出しておく文(掲示板の英文など)
   function caption(text) { const c = q('.cs-cap'); if (!text) { c.classList.remove('on'); return; } c.textContent = text; c.classList.add('on'); }
 
@@ -143,7 +143,9 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
 
   // 芝居に出ない住人は、しばらく消しておく(夜中に通りかかったりしないように)
   let extras = [];
-  function only(ids) { extras = residents.list.filter(r => !ids.includes(r.def.id)); for (const r of extras) { r.act = { vis: false }; r.talking = false; r.follow = false; r.visit = null; } }
+  // 物語の最初(タイトルの間)に、出る住人の体・顔の絵を先に読みこむ(途中でカクカクしないように)
+  let pre = null;
+  function only(ids) { pre = Promise.all(ids.map(id => { try { const im = new Image(); const s = portrait(id); if (s) im.src = s; } catch (e) { } return residents.ready ? residents.ready(id).catch(() => { }) : null; })); extras = residents.list.filter(r => !ids.includes(r.def.id)); for (const r of extras) { r.act = { vis: false }; r.talking = false; r.follow = false; r.visit = null; } }
   function endCard(small, big, btn = 'タイトルへもどる') {   // 物語のおわり: 暗転した画面の真ん中に、はっきり「おしまい」。押すまで待つ
     return new Promise(res => {
       hideBox(); const f = q('.cs-fade'); f.style.transition = 'opacity .8s'; f.style.opacity = 1;
@@ -186,7 +188,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
     await say('narr', `💗 ${nm}と、なかよしになった！${r.gained ? '' : '（もう上がっています）'}\nいま：${r.lvName}` + (r.next ? `\nあと ${r.next.left} で「${r.next.label}」が開くよ` : ''));
     if (r.firstTime) await say('narr', 'なかよしは、毎日話しかけたり、マージで作った「ほしい品」をわたしたりすると上がります。\n上がるたびに、その人にたのめることや、遊べるものが増えていきます。');
   }
-  const dir = { note, giftFish: (...a) => { try { giftFish && giftFish(...a); } catch (e) { console.error(e); } }, only, endCard, ride, faceSky, wx, rainbow, app, read, game, board, music: () => { try { return tune && tune(); } catch (e) { return null; } }, friend, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
+  const dir = { room: k => { const S = interiors && interiors.use(k); return (x, z) => S ? [S.at[0] + x, S.at[1] + z] : [x, z]; }, note, giftFish: (...a) => { try { giftFish && giftFish(...a); } catch (e) { console.error(e); } }, only, endCard, ride, faceSky, wx, rainbow, app, read, game, board, music: () => { try { return tune && tune(); } catch (e) { return null; } }, friend, setAlt: a => { alt = a; }, say, choose, hideBox, fade, title, caption, place, walk, face, set, scale, hide, puff, cam, shot, pos,
     wait: async s => { guard(); await sleep(s); guard(); }, hour: h => { env.hour = h; }, both: (...ps) => Promise.all(ps) };
 
   async function play(script) {
