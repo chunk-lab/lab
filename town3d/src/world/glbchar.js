@@ -5,6 +5,33 @@ import { BOWL, BOWL_HIPS, BOWL_REST } from './bowl_clip.js';
 import { bodyFrames, retargetRot, clipSource } from './retarget.js';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import OCA from './oca_pose.json';
+// オカリナを吹くポーズ(ユーザーさん作の mio の姿勢)。骨のねじれ方は体ごとに違うので、「骨の向き(関節→次の関節)」だけを体の向きに合わせて写す
+function ocaClip(model) {
+  model.updateMatrixWorld(true);
+  const by = new Map(); model.traverse(o => { if (o.isBone) by.set(o.name.replace(':', '').replace(/^mixamorig/, ''), o); });
+  const g = n => by.get(n); if (!g('Hips') || !g('Spine2') || !g('LeftUpLeg') || !g('RightUpLeg')) return null;
+  const inv = new THREE.Matrix4().copy(model.matrixWorld).invert(), m = new THREE.Matrix4(), tv = new THREE.Vector3(), ts = new THREE.Vector3();
+  const wp = o => new THREE.Vector3().setFromMatrixPosition(m.multiplyMatrices(inv, o.matrixWorld));
+  const wq = o => { const q = new THREE.Quaternion(); m.multiplyMatrices(inv, o.matrixWorld).decompose(tv, q, ts); return q; };
+  const up = wp(g('Spine2')).sub(wp(g('Hips'))).normalize(), rt = wp(g('RightUpLeg')).sub(wp(g('LeftUpLeg')));
+  rt.addScaledVector(up, -rt.dot(up)).normalize(); const fw = new THREE.Vector3().crossVectors(rt, up);
+  const W = new Map(), tracks = [], bones = []; model.traverse(o => { if (o.isBone) bones.push(o); });
+  for (const b of bones) {
+    const p = b.parent, pW = p && W.has(p) ? W.get(p) : wq(p), rW = wq(b);
+    let Wb = pW.clone().multiply(b.quaternion);
+    const key = b.name.replace(':', '').replace(/^mixamorig/, ''), d = OCA.d[key], c = d && g(OCA.ch[key]);
+    if (c) {
+      const v = wp(c).sub(wp(b)).applyQuaternion(Wb.clone().multiply(rW.clone().invert())).normalize();
+      const want = new THREE.Vector3().addScaledVector(rt, d[0]).addScaledVector(up, d[1]).addScaledVector(fw, d[2]).normalize();
+      Wb = new THREE.Quaternion().setFromUnitVectors(v, want).multiply(Wb);
+      const L = pW.clone().invert().multiply(Wb).normalize();
+      tracks.push(new THREE.QuaternionKeyframeTrack(b.name + '.quaternion', [0, 1], [L.x, L.y, L.z, L.w, L.x, L.y, L.z, L.w]));
+    }
+    W.set(b, Wb);
+  }
+  return new THREE.AnimationClip('oca', 1, tracks);
+}
 
 // 住人id → モデル。rotY は「モデルの正面を +z に向ける」補正(ゆず・潮見さんは -x 向きで出てくる)
 export const GLB_MODELS = {
@@ -157,6 +184,7 @@ export function useGlb(ch, id, { height } = {}) {
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
+    try { const oc = ocaClip(model); if (oc) act.oca = mixer.clipAction(oc); } catch (e) { console.warn('oca', e); }
     const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
     if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
     try { const c = bowlClip(model, bodyFrames(model)); act.bowl = mixer.clipAction(c); act.bowl.setLoop(THREE.LoopOnce, 1); act.bowl.clampWhenFinished = true; } catch (e) { }   // 投球の動き(ボウリング)
@@ -254,7 +282,7 @@ export function useGlb(ch, id, { height } = {}) {
     ch.update = (dt, speed) => {
       const sitK = !!act.sit && (ch.pose === 'sit' || ch.pose === 'piano'), layK = !!(act.lay || act.sleep) && ch.pose === 'lie', goro = layK && ch.lieKind === 'goro' && !!act.lay, lieClip = goro ? 'lay' : act.sleep ? 'sleep' : 'lay';   // ゴロゴロ=lay(男:横向き寝 女:足パタパタ) ねる=sleep(あおむけ)
       const rideN = ch.pose === 'ride' ? (ch.rideKind === 'back' ? 'rideB' : 'rideF') : null, rideK = !!(rideN && act[rideN] && rideM[rideN]);
-      if (rideK) play(rideN, 0.35); else if (sitK) play('sit', 0.4); else if (layK) play(lieClip, 0.4);
+      if (rideK) play(rideN, 0.35); else if (sitK) play('sit', 0.4); else if (act.oca && ch.pose === 'harp') play('oca', 0.4); else if (layK) play(lieClip, 0.4);
       else if (lock > 0) lock -= dt;
       else play(act.run && (cur === act.run ? speed > 3.0 : speed > 4.2) ? 'run' : speed > 0.05 ? 'walk' : 'idle');   // 歩き⇔走りは少し幅をもたせる(行ったり来たりしない)
       if (cur === act.run) act.run.timeScale = Math.max(0.7, Math.min(1.4, speed / 5));
