@@ -22,8 +22,8 @@ export async function maruStory(d, ctx = {}) {
   d.hideBox(); await d.fade(true, 0.7);
   await d.app('home', { coach: true });
   // ---- 家の前 ----
-  d.place(M, 30.8, -4.6, P); d.place('me', 29.0, -3.6, 0); d.face(M, 'me'); d.face('me', M);
-  d.shot('me', M, { yaw: 2.6, dist: 6.5, h: 2.2, look: 1.0 });
+  d.place(M, 31.2, -2.4, P); d.place('me', 29.2, -1.6, 0); d.face(M, 'me'); d.face('me', M);
+  d.shot('me', M, { yaw: 0.3, dist: 6.5, h: 2.2, look: 1.0 });
   await d.fade(false, 0.7);
   await d.say(M, '「いいね〜！ 部屋が ぐっと よくなった！」');
   await d.say(M, '「広くしたいときは、"ひろげる"から。\nさいしょの部屋は、コインで 広げられるよ」');
