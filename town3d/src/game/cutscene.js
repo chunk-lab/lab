@@ -145,7 +145,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   let extras = [];
   // 物語の最初(タイトルの間)に、出る住人の体・顔の絵を先に読みこむ(途中でカクカクしないように)
   let pre = null;
-  function only(ids) { pre = Promise.all(ids.map(id => { try { const im = new Image(); const s = portrait(id); if (s) im.src = s; } catch (e) { } return residents.ready ? residents.ready(id).catch(() => { }) : null; })); extras = residents.list.filter(r => !ids.includes(r.def.id)); for (const r of extras) { r.act = { vis: false }; r.talking = false; r.follow = false; r.visit = null; } }
+  function only(ids) { pre = Promise.all(ids.map(id => { try { const im = new Image(); const s = portrait(id); if (s) im.src = s; } catch (e) { } return residents.ready ? residents.ready(id).then(() => { const r = who(id); if (r && r.ch._lazy) { r.ch._lazy('oca'); r.ch._lazy('throwin'); } }).catch(() => { }) : null; })); extras = residents.list.filter(r => !ids.includes(r.def.id)); for (const r of extras) { r.act = { vis: false }; r.talking = false; r.follow = false; r.visit = null; } }
   function endCard(small, big, btn = 'タイトルへもどる') {   // 物語のおわり: 暗転した画面の真ん中に、はっきり「おしまい」。押すまで待つ
     return new Promise(res => {
       hideBox(); const f = q('.cs-fade'); f.style.transition = 'opacity .8s'; f.style.opacity = 1;
