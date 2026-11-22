@@ -343,6 +343,7 @@ export function mountTarot(box, o) {
 
   // ---------- 支払い ----------
   async function pay() {
+    if (o.storyFree) return 'free';   // 物語のお祝い: お代はいらない(無料回も使わない)
     const sp = SPREADS[S.sp];
     if (sp.tier === 'deep') {
       if (st.tk > 0) { st.tk--; save(); return 'ticket'; }
@@ -376,8 +377,8 @@ export function mountTarot(box, o) {
   }
   function menu() {
     const free = freeNow(), cp = coinPrice();
-    const easyPr = free ? `無料<small>${dailyFree() ? 'きょうの1回' : '今週の1回'}</small>` : `🪙 ${cp}${discount() ? '<small>仲良し割</small>' : ''}`;
-    const deepPr = st.tk ? `🎫 1まい<small>のこり ${st.tk}</small>` : `💎 ${TAROT_PRICE.gem}`;
+    const easyPr = o.storyFree ? '無料<small>お祝い</small>' : free ? `無料<small>${dailyFree() ? 'きょうの1回' : '今週の1回'}</small>` : `🪙 ${cp}${discount() ? '<small>仲良し割</small>' : ''}`;
+    const deepPr = o.storyFree ? '無料<small>お祝い</small>' : st.tk ? `🎫 1まい<small>のこり ${st.tk}</small>` : `💎 ${TAROT_PRICE.gem}`;
     const mini = n => `<span class="mini">${'<i></i>'.repeat(n)}</span>`;
     return head() + `<div class="tz-say tz-in">🔮 ルナ「${esc(o.lunaLine || 'カードは、あなたの心をうつす鏡。…なにを たずねたいの?')}」</div>
       ${Object.entries(SPREADS).map(([id, sp], i) => `<button class="tz-sp ${sp.tier} tz-in"${D(i + 1)} data-sp="${id}">${mini(Math.min(sp.pos.length, 5))}<span><b>${sp.n}<em>${sp.en}</em></b><small>${sp.d}</small>${sp.tier === 'deep' ? '<small>✨ ルナのくわしい鑑定・鑑定書つき</small>' : ''}</span><span class="pr">${sp.tier === 'deep' ? deepPr : easyPr}</span></button>`).join('')}
@@ -391,7 +392,7 @@ export function mountTarot(box, o) {
       <div class="tz-chips tz-in"${D(1)}>${THEMES.map(([id, ic, n]) => `<button data-th="${id}" class="${S.theme === id ? 'on' : ''}">${ic} ${n}</button>`).join('')}</div>
       <input class="tz-q tz-in"${D(2)} maxlength="80" placeholder="たずねたいこと(書かなくてもOK)" value="${esc(S.q)}">
       <p class="tz-nt tz-in"${D(3)}>質問を心の中で思いうかべながら、カードを混ぜてね。${ai && ai.ready ? '書いた質問は、ルナの鑑定に使われます。' : ''}</p>
-      <div class="tz-c tz-in"${D(4)} style="margin-top:14px"><button class="tz-btn" data-a="go">✦ 儀式を始める(${sp.tier === 'deep' ? (st.tk ? '🎫1まい' : '💎' + TAROT_PRICE.gem) : freeNow() ? '無料' : '🪙' + coinPrice()})</button></div>
+      <div class="tz-c tz-in"${D(4)} style="margin-top:14px"><button class="tz-btn" data-a="go">✦ 儀式を始める(${o.storyFree ? '無料' : sp.tier === 'deep' ? (st.tk ? '🎫1まい' : '💎' + TAROT_PRICE.gem) : freeNow() ? '無料' : '🪙' + coinPrice()})</button></div>
       <button class="tz-back tz-in"${D(5)} data-a="menu">← もどる</button>`;
   }
   function hist() {

@@ -98,7 +98,8 @@ export const fortuneApp = {
       box.style.display = 'none';
       tarot = mountTarot(el, { ctx, social, ai: P.ai, getEn: P.getEn, artBase: P.tarotArt || '', logWord: P.logWord, onRead: P.onTarot, rec: P.rec, saveWord: P.saveWord, dictUrl: ctx.dictUrl || '',
         lunaLine: 'カードは、あなたの心をうつす鏡。…なにを たずねたいの?',
-        onExit: () => { tarot && tarot.unmount(); tarot = null; box.style.display = ''; draw(); } });
+        storyFree: !!P.storyTarot,
+        onExit: () => { tarot && tarot.unmount(); tarot = null; if (P.storyTarot) { ctx.close(); return; } box.style.display = ''; draw(); } });
     };
     const pay = async (label, n) => { const p = n == null ? price() : n; if (!(await confirmPay({ label, price: p, have: ctx.wallet.get() }))) return false; if (!ctx.wallet.spend(p, 'fortune')) { toast(box, `コインが ${p} まい いるわ`); return false; } return true; };   // 買う前に必ず確認(いくらで、いま・あとで いくらか)
     const say = t => `<div class="say">🔮 ルナ「${t}」</div>`;
@@ -174,7 +175,7 @@ export const fortuneApp = {
       }
     };
     draw();
-    if (P.tarot) openTarot();   // 「タロットで占って」から来たとき
+    if (P.tarot || P.storyTarot) openTarot();   // 「タロットで占って」から来たとき・物語のお祝い
     return { unmount() { tarot && tarot.unmount(); box.remove(); } };
   },
 };
