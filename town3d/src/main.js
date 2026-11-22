@@ -49,8 +49,9 @@ import { chocoStory } from './game/stories/choco.js';
 import { miiStory } from './game/stories/mii.js';
 import { sunaStory } from './game/stories/suna.js';
 import { koharuStory } from './game/stories/koharu.js';
+import { tetsuStory } from './game/stories/tetsu.js';
 import { baronStory } from './game/stories/baron.js';
-const STORIES = { chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory, mii: miiStory, suna: sunaStory, koharu: koharuStory, baron: baronStory };   // 物語の芝居(3D)。id → 台本
+const STORIES = { chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory, mii: miiStory, suna: sunaStory, koharu: koharuStory, baron: baronStory, tetsu: tetsuStory };   // 物語の芝居(3D)。id → 台本
 import { createStage } from './game/encounter3d.js';
 import { createSparkles } from './world/sparkle.js';
 import { snapCanvas, shotCard, flash, photos } from './game/photos.js';
