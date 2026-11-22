@@ -44,7 +44,7 @@ function dirClip(model, snap, data, name, upBone = 'Spine') {
   return new THREE.AnimationClip(name, times[times.length - 1], [...out].map(([n, v]) => new THREE.QuaternionKeyframeTrack(n + '.quaternion', times, v)));
 }
 
-// 住人id → モデル。rotY は「モデルの正面を +z に向ける」補正(ゆず・潮見さんは -x 向きで出てくる)
+// 住人id → モデル。全員の骨の初期の数値は self_mio と同じ(tools/unify_bones.py)。正面も全員 +z(rotY は 0)
 export const GLB_MODELS = {
   baron: { url: 'models/baron.glb', rotY: 0, sex: 'm' },
   koharu: { url: 'models/koharu.glb', rotY: 0, animFrom: 'hana' },
@@ -61,7 +61,7 @@ export const GLB_MODELS = {
   'self:mio': { url: 'models/self_mio.glb', rotY: 0, animFrom: 'hana' },
   luna: { url: 'models/luna.glb', rotY: 0 },
   tetsu: { url: 'models/philosopher.glb', rotY: 0, sex: 'm' },
-  suna: { url: 'models/shiomi.glb', rotY: Math.PI / 2 },
+  suna: { url: 'models/shiomi.glb', rotY: 0 },   // 正面の向きは tools/unify_bones.py でモデルに入れた
   sora: { url: 'models/sora.glb', rotY: 0, sex: 'm' },
   hana: { url: 'models/hana.glb', rotY: 0 },
 };
@@ -152,14 +152,9 @@ const SIT_HIP = 0.17;   // 腰の骨から座面までの高さ(m)の見当(実�
 // 動きは全員共通の道(retarget.js)で当てはめる。基準は各体の「皮膚を付けた時の姿勢」
 // 借りる動き(はな・そらの5つ): 体ごとに1回だけ作って、同じ体の2人目からは使い回す
 const borrowedClips = new Map();
-// オカリナ: もらったポーズ(oca_pose.json, 元の体=self_mio)を、他の動きと同じ道(retargetRot)で この体に当てはめる。体ごとに1回だけ
-const ocaClips = new Map();
-let ocaSrc = null;
-function ocaClip(key, model, rotY = 0) {   // rotY: 正面を+zに向ける回転(元の体 self_mio は 0)
-  if (ocaClips.has(key)) return ocaClips.get(key);
-  if (!ocaSrc) { const m = o => new Map(Object.entries(o).map(([k, q]) => [k, new THREE.Quaternion(q[0], q[1], q[2], q[3])])); ocaSrc = { rest: m(OCA.rest), top: m(OCA.top), tracks: new Map(Object.entries(OCA.tracks).map(([k, q]) => [k, { times: [0, 1], values: [...q, ...q] }])) }; }
-  const c = new THREE.AnimationClip('oca', 1, retargetRot(bodyFrames(model, rotY), ocaSrc)); ocaClips.set(key, c); return c;
-}
+// オカリナ: もらったポーズの骨ごとの数値(oca_pose.json)を、そのまま入れるだけ。全員の骨の初期の数値が同じなので、1つのクリップを全員で使う
+let ocaC = null;
+const ocaClip = () => ocaC || (ocaC = new THREE.AnimationClip('oca', 1, Object.entries(OCA).map(([b, q]) => new THREE.QuaternionKeyframeTrack(b + '.quaternion', [0, 1], [...q, ...q]))));
 function borrowClips(key, model, src) {
   if (borrowedClips.has(key)) return borrowedClips.get(key);
   const fr = bodyFrames(model), sf = bodyFrames(src.scene);
@@ -210,7 +205,6 @@ export function useGlb(ch, id, { height } = {}) {
         act.carryUp = mixer.clipAction(new THREE.AnimationClip('carryUp', tc.duration, tc.tracks.filter(t => !/(Hips|Leg|Foot|Toe)/.test(t.name)))); },   // かかえている間: 上半身だけ(足は歩き・立ちのまま)
     };
     ch._lazy = k => { const f = lazy[k]; if (!f) return; lazy[k] = null; try { f(); } catch (e) { console.warn(k, e); } };
-    let ocC = null; try { ocC = ocaClip(spec.url, model, spec.rotY || 0); } catch (e) { console.warn('oca', e); }   // 測りの前(動かす前の姿勢)で作る。act に入れるのは測りの後
     const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
     if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
     try { const c = bowlClip(model, bodyFrames(model)); act.bowl = mixer.clipAction(c); act.bowl.setLoop(THREE.LoopOnce, 1); act.bowl.clampWhenFinished = true; } catch (e) { }   // 投球の動き(ボウリング)
@@ -240,7 +234,7 @@ export function useGlb(ch, id, { height } = {}) {
     }
     }
     mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); }
-    if (ocC) act.oca = mixer.clipAction(ocC);   // オカリナ(足元の測りの後で足す)
+    if (Object.keys(OCA).every(b => model.getObjectByName(b))) act.oca = mixer.clipAction(ocaClip());   // オカリナ(足元の測りの後で足す。骨が全部ある体だけ)
     const wrap = new THREE.Group(); wrap.add(holder); wrap.scale.setScalar(height);
     // 座った動きの腰の高さ(背に対する割合)。座面に合わせるときの基準
     let sitHipN = 0; const sitHipOf = () => { mixer.stopAllAction(); act.sit.reset().play(); act.sit.time = act.sit.getClip().duration * 0.5; mixer.update(0); holder.position.y = 0; wrap.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const y = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld).y / height; act.sit.stop(); mixer.stopAllAction(); if (act.idle) { act.idle.reset().play(); mixer.update(0); holder.position.y = footOf.get(act.idle); } return y; };
