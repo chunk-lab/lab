@@ -57,6 +57,7 @@ export function playCoach(kind) {
 
   const iv = setInterval(() => {
     if (!alive) return;
+    { const sb = $('startBox'); if (sb && !sb.hidden) { const b = $('startBtn'); b && b.click(); } }   // スタートの画面は、とばす
     if (!S || S.phase !== 'play') return;
     if (kind === 'auto') {
       if (mode === 'wait') { stops = ends().slice(0, -1); mode = 'go'; flash('英文が流れてくるよ', 1600); return; }

@@ -87,7 +87,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
   }
   const hideBox = () => { q('.cs-box').classList.remove('on'); };
   async function fade(out, sec = 0.6) { const f = q('.cs-fade'); f.style.transition = `opacity ${sec}s`; f.style.opacity = out ? 1 : 0; await sleep(sec); }
-  async function title(small, big, sec = 2.4) { const t = q('.cs-title'); t.querySelector('small').textContent = small; t.querySelector('b').textContent = big; t.classList.add('on'); await sleep(sec); if (pre) { await Promise.race([pre, sleep(10)]); pre = null; try { warm && warm(); } catch (e) { } } t.classList.remove('on'); await sleep(0.8); }
+  async function title(small, big, sec = 2.4) { const t = q('.cs-title'); t.querySelector('small').textContent = small; t.querySelector('b').textContent = big; t.classList.add('on'); await sleep(sec); if (pre) { try { interiors && interiors.prebuild && interiors.prebuild(); } catch (e) { } await Promise.race([pre, sleep(10)]); pre = null; try { warm && warm(); } catch (e) { } } t.classList.remove('on'); await sleep(0.8); }
   function note(text, head = '') { const c = q('.cs-note'); if (!text) { c.classList.remove('on'); return; } c.innerHTML = (head ? '<small></small>' : '') + '<span></span>'; if (head) c.querySelector('small').textContent = head; c.querySelector('span').textContent = text; c.classList.add('on'); }   // 画面の上に、ずっと出しておく文(掲示板の英文など)
   function caption(text) { const c = q('.cs-cap'); if (!text) { c.classList.remove('on'); return; } c.textContent = text; c.classList.add('on'); }
 

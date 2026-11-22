@@ -37,14 +37,14 @@ export async function hanaStory(d, ctx = {}) {
   await d.say('narr', '1本の傘に、ふたりで入る。\n肩が、少しだけ ふれた。');
   await d.say(H, '「なんだか、映画みたいだね……」');
   // ---- チャンクくん ----
-  d.place(C, 3.6, 48.1, P / 2); d.set(C, { y: 2.6, bob: 0.08 }); d.scale(C, 0.6, false);
+  d.place(C, 3.6, 48.1, P / 2); d.set(C, { y: 3.0, bob: 0.06 }); d.scale(C, 0.6, true);
   d.puff(3.6, 2.8, 48.1, 14, 1.4);
-  d.scale(C, 1.6, false);
+  d.scale(C, 2.4, false);   // ふたりを おおう、傘の大きさ(最後まで このまま)
   d.shot('me', H, { yaw: 1.4, dist: 8, h: 2.6, look: 1.8 });
   await d.say(C, '「もちもち〜！」');
   await d.say('narr', 'チャンクくんが、ふたりの上で ぷくーっと ふくらんだ。\n……雲の傘だ。');
   await d.say(H, '「……あはは。チャンクくん、ありがとう」');
-  await d.say(H, '「……もう。いいところ だったのに〜」');
+  await d.say(H, '(……もう。いいところ だったのに〜)');
   await d.friend(H, 5);
   await d.endCard('はな「Two Umbrellas」', 'おしまい');
 }

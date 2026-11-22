@@ -1576,6 +1576,7 @@ export function mount(container, opt = {}) {
   // ---- ループ ----
   const v3 = new THREE.Vector3(), timer = new THREE.Timer();
   const tagPos = new Map();
+  let storyLite = false, storyPR = 1, storyShF = 0;
   let raf = 0, sendT = 0, saveT = 0, paused = false, held = false, frames = 0, fpsT = 0, fps = 60;
   function resize() {
     const w = root.clientWidth || 1, h = root.clientHeight || 1;
@@ -1850,7 +1851,15 @@ export function mount(container, opt = {}) {
     saveT += dt;
     if (saveT > 5) { saveT = 0; residents.outing = outingOf(testDate); storage.set('pos', [+me.x.toFixed(1), +me.z.toFixed(1)]); storage.set('hour', +env.hour.toFixed(2)); }
 
-    if (fx) fx.composer.render(dt); else renderer.render(scene, camera);
+    // 物語の芝居の間は軽くする: 画面の細かさを少し下げる・影の計算は3コマに1回・光のにじみ(仕上げ)はなし。終わったら元にもどす
+    if (cut.on !== storyLite) {
+      storyLite = cut.on;
+      if (storyLite) { storyPR = renderer.getPixelRatio(); renderer.setPixelRatio(Math.min(storyPR, 1.25)); renderer.shadowMap.autoUpdate = false; renderer.shadowMap.needsUpdate = true; }
+      else { renderer.setPixelRatio(storyPR); renderer.shadowMap.autoUpdate = true; }
+      resize();
+    }
+    if (storyLite && (storyShF = (storyShF + 1) % 3) === 0) renderer.shadowMap.needsUpdate = true;
+    if (fx && !storyLite) fx.composer.render(dt); else renderer.render(scene, camera);
     frames++; fpsT += dt;
     if (fpsT > 1) { fps = frames / fpsT; frames = 0; fpsT = 0; }
   }

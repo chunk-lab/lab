@@ -257,6 +257,7 @@ export function mountTarot(box, o) {
   const sky = root.querySelector('.tz-sky'), pg = root.querySelector('.tz-pg');
   const st = Object.assign({ wk: '', dk: '', tk: 0, hist: [] }, ctx.storage.get('tarot') || {});
   const save = () => ctx.storage.set('tarot', st);
+  let storyT = 0;
   const S = { step: 'menu', sp: null, theme: 'all', q: '', deck: [], draws: [], shuffles: 0, narr: [], sum: null, aiRaw: '', aiState: '', aiP: {}, t: 0 };
   const discount = () => social.has('luna', 'discount'), dailyFree = () => social.has('luna', 'tarot');
   const coinPrice = () => discount() ? TAROT_PRICE.coin / 2 : TAROT_PRICE.coin;
@@ -785,6 +786,7 @@ export function mountTarot(box, o) {
     const ce = np.querySelector('.tz-cert'); if (ce) { ce.style.display = ''; ce.animate([{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 600 }); }
     const broken = !!(ai && ai.ready && S.aiBad), canRe = broken && (S.rr || 0) < 2;
     if (broken) { const nt = document.createElement('div'); nt.className = 'tz-note'; nt.style.cssText = 'margin-top:8px;font-size:13px;opacity:.9'; nt.textContent = canRe ? '🌙 ルナの声が乱れてしまったわ。カードの意味をそのままお伝えしたの。もう一度、読み直してもらう?(お代はいらないわ)' : '🌙 ルナの声が乱れてしまったの。今回は、カードの意味をそのままお届けするわ。'; tx.parentNode.insertBefore(nt, go); }
+    if (o.storyFree) { go.innerHTML = '<button class="tz-btn" data-a="exit">つづきへ ▶</button>'; clearTimeout(storyT); storyT = setTimeout(() => { if (!dead) o.onExit && o.onExit(); }, 15000); return; }   // 物語から: 読み終わったら、そのまま話にもどる
     go.innerHTML = (canRe ? '<button class="tz-btn" data-a="reread">🔁 もう一度 読み直す(無料)</button>' : '') + '<button class="tz-btn sub" data-a="detail">カードの意味をくわしく</button><button class="tz-btn' + (canRe ? ' sub' : '') + '" data-a="again">もう一度 占う</button><button class="tz-btn sub" data-a="menu">メニューへ</button>';
   }
 
@@ -882,6 +884,7 @@ export function mountTarot(box, o) {
     if (a === 'read') return readAll();
   });
   pg.addEventListener('input', e => { if (e.target.classList.contains('tz-q')) S.q = e.target.value; });
-  page();
+  if (o.storyFree) { S.sp = 'one'; S.theme = 'all'; S.q = ''; startDeck(); S.shuffles = 0; S.step = 'ritual'; ritual(); }   // 物語から: メニューをとばして、ワンオラクルをすぐ始める
+  else page();
   return { el: root, unmount() { dead = true; cancelAnimationFrame(raf); root.remove(); } };
 }

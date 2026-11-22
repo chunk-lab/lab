@@ -47,6 +47,7 @@ export function createInteriors(scene) {
     scene.add(g); return g;
   }
   return {
+    prebuild() { for (const k in INTERIORS) if (!built[k]) built[k] = build(k); },   // 物語の最初に、ぜんぶ作っておく(途中で作るとカクカクする)
     use(k) { if (!INTERIORS[k]) return null; if (!built[k]) built[k] = build(k); built[k].visible = true; return INTERIORS[k]; },
     // 部屋の中の座標 → 町の座標
     at(k, x, z) { const S = INTERIORS[k]; return [S.at[0] + x, S.at[1] + z]; },
