@@ -114,14 +114,14 @@ import { FACE } from './faces.js';
     { id: 'gon', name: 'ひろい屋ゴン', face: '🦝', lv: 2, style: 'collector', tag: 'つよい', desc: 'あなたの捨てたカードを拾っていく。and や because で長い文も作る。' }
   ];
   var QS = [[290, 360, 540], [390, 530, 640], [500, 680, 880]]; // CPU がふだん作れる点(25%・50%・75%)
-  var HANDS = 6, ANTE = 5, BETS = { 1: 10, 3: 20 }, START = 100;
+  var STORY = false, HANDS = 6, ANTE = 5, BETS = { 1: 10, 3: 20 }, START = 100;
   var V = null, ME = null, CPU = null;
   function player() { return { lv: {}, stage: 2, hand: [], row: [], field: [], draw: [], disc: [], pts: 0, refill: 0, discards: 99, log: [] }; }
   // CPU の手番で共有の山・場を使う
   function withP(p, fn) { p.draw = ME.draw; p.disc = ME.disc; p.field = ME.field; K.setR(p); try { return fn(); } finally { ME.draw = p.draw; ME.disc = p.disc; ME.field = p.field; K.setR(ME); } }
   function start(opp, o) {
     if (!opp) { pickOpp(); return; }
-    HANDS = (o && o.hands) || 6;   // 物語からは1ハンドだけ
+    HANDS = (o && o.hands) || 6; STORY = !!(o && o.hands);   // 物語からは1ハンドだけ(勝負のあとは自動で進む)
     ME = player(); CPU = player(); K.setR(ME);
     var all = K.starterDeck(); for (var i = 0; i < 25; i++) { var c = K.randomCard(); if (c) all.push(c); } all.push(K.mk('pron', 'it'));
     V = { opp: opp, all: all, n: 0, med: { me: START, cpu: START }, first: rnd() < .5 ? 'me' : 'cpu', stats: { win: 0, lose: 0 }, t0: Date.now() };
@@ -330,6 +330,7 @@ import { FACE } from './faces.js';
     var p = settle(winner); G_.busy = false; renderAll(); if (winner === 'me') SFX.win(); else SFX.lose();
     var o = el('div', 'modal', '<div class="box sd"><h2>' + (winner === 'me' ? V.opp.name + 'が降りた!' : '降りた') + '</h2><p class="res' + (winner === 'me' ? ' w' : ' l') + '">' + (winner === 'me' ? '🪙 +' + p : '🪙 ' + p + ' は ' + V.opp.name + 'へ') + '</p><button class="btn go" id="nx">つぎのハンドへ</button></div>');
     K.root().appendChild(o); $('#nx', o).onclick = function () { o.remove(); nextHand(); };
+    if (STORY) setTimeout(function () { if (o.isConnected) { o.remove(); nextHand(); } }, 2500);
   }
   function miniRow(row, ev) { var w = el('div', 'srow'), sf = K.surfaceOf(row, ev); row.forEach(function (c, i) { var e = K.cardEl(c, 'field', 0, sf ? sf[i] : null); e.classList.add('mini'); w.appendChild(e); }); return w; }
   async function showdown() {
@@ -358,6 +359,7 @@ import { FACE } from './faces.js';
     if (rv) { await wait(900); await K.reviewAfter(rv); } // 直した所は勝負のあとすぐ(上級は見たい人だけ)
     $('#nx', o).style.visibility = 'visible'; G_.busy = false; renderAll();
     $('#nx', o).onclick = function () { o.remove(); nextHand(); };
+    if (STORY) setTimeout(function () { if (o.isConnected) { o.remove(); nextHand(); } }, 3000);
   }
   function endMatch(quit) {
     var won = !quit && V.med.me > V.med.cpu, draw = !quit && V.med.me === V.med.cpu;
