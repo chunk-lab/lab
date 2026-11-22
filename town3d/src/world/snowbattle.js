@@ -176,11 +176,11 @@ export function createSnowBattle({ scene, camera, root, me, residents, meshes, c
   function lift(f) {   // 頭の上に持ち上げる(持ち主はまた作れるようになる)
     const m = nearMan(f); if (!m || f.carry) return false;
     B.men = B.men.filter(x => x !== m); m.owner.men = m.owner.men.filter(x => x !== m);
-    f.carry = m.g; f.carry.scale.setScalar(0.75); f.makeT = -1; audio?.play?.('open'); return true;
+    f.carry = m.g; f.carry.scale.setScalar(0.75); f.makeT = -1; f.ch.pose = 'carry'; audio?.play?.('open'); return true;
   }
-  function dropCarry(f, remove) { if (!f.carry) return; if (remove) scene.remove(f.carry); f.carry = null; }
+  function dropCarry(f, remove) { if (f.ch.pose === 'carry') f.ch.pose = null; if (!f.carry) return; if (remove) scene.remove(f.carry); f.carry = null; }
   function throwMan(f, to) {
-    if (!f.carry) return; const g = f.carry; f.carry = null; const from = g.position.clone(), d = Math.hypot(to.x - from.x, to.z - from.z);
+    if (!f.carry) return; if (f.ch.pose === 'carry') f.ch.pose = null; f.ch.throwGo && f.ch.throwGo(); const g = f.carry; f.carry = null; const from = g.position.clone(), d = Math.hypot(to.x - from.x, to.z - from.z);
     to.y = Math.max(0, Math.min(to.y, 1.0)); launch(f, from, to, 0.55 + d / 18, 'man', 3, g); f.cd = 0.6;
   }
   function roll(f, dir) {

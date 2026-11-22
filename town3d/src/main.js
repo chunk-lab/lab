@@ -1119,6 +1119,7 @@ export function mount(container, opt = {}) {
         const pt = new THREE.Vector3(); if (!ray.ray.intersectPlane(groundPl, pt)) return;
         if (Math.hypot(pt.x - me.x, pt.z - me.z) > 12) { hud.toast('そこは遠すぎるよ'); return; }
         const [lx, lz] = collide(pt.x, pt.z, 0.5); if (seasons.launch(new THREE.Vector3(me.x, 1.9, me.z), new THREE.Vector3(lx, 0, lz), (x, z, h) => { if (h) { snow.fx(h.p, h.n, 3, h.npc ? h.npc.ch.root : null); if (h.npc) snow.hitNpc(h.npc, 3); } else snow.fx(new THREE.Vector3(x, 0.2, z), new THREE.Vector3(0, 1, 0), 3); }, manCheck)) { audio.play('wave'); me.ch.wave?.(); }
+        if (!seasons.carrying()) { me.ch.pose = null; me.ch.throwGo && me.ch.throwGo(); }   // 投げる動き
         return;
       }
       const r = snow.throwAt(e.clientX, e.clientY, cv.getBoundingClientRect());
@@ -1681,7 +1682,7 @@ export function mount(container, opt = {}) {
     if (dodgeT > 0) { dodgeT -= dt; me.ry = Math.atan2(ddx, ddz); me.speed = 8; [me.x, me.z] = collide(me.x + ddx * 8.5 * dt, me.z + ddz * 8.5 * dt); }
     me.ch.root.position.set(me.x, seat ? -0.04 : 0, me.z); me.ch.root.rotation.y = me.ry;
     rideStep(dt);
-    if (!seat && !battle.active) { if (snow.making || bld) me.ch.pose = 'kneel'; else if (me.ch.pose === 'kneel') me.ch.pose = null; }
+    if (!seat && !battle.active) { if (snow.making || bld) me.ch.pose = 'kneel'; else if (seasons.carrying()) me.ch.pose = 'carry'; else if (me.ch.pose === 'kneel' || me.ch.pose === 'carry') me.ch.pose = null; }
     me.ch.update(dt, me.speed);
     { const rg = me.ch.rig;   // よけている間はくるっと回る / 雪だるまを持っている間は両手を上げる
       if (rg) { if (dodgeT > 0) { rollPose(rg, 1 - dodgeT / 0.55); dodgeRot = true; } else if (dodgeRot) { rollReset(rg); dodgeRot = false; }

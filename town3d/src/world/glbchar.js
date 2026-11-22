@@ -2,35 +2,43 @@
 // 読み込み中・失敗時は、元のコード製キャラのまま動く(落ちない)。
 import { makeSeatClips } from './seatanim.js';
 import { BOWL, BOWL_HIPS, BOWL_REST } from './bowl_clip.js';
+import { THROWIN } from './throw_clip.js';
 import { bodyFrames, retargetRot, clipSource } from './retarget.js';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import OCA from './oca_pose.json';
-// オカリナを吹くポーズ(ユーザーさん作の mio の姿勢)。骨のねじれ方は体ごとに違うので、「骨の向き(関節→次の関節)」だけを体の向きに合わせて写す
-function ocaClip(model) {
+// 骨の向き(関節→次の関節)だけを写す動き。骨のねじれ方は体ごとに違うので、向きを体の向き(腰→背骨・左右の脚)基準で合わせる
+// data: { ch: 骨→次の関節, frames: [{ t, d: 骨→[右,上,前] }] }。オカリナのポーズ(ユーザーさん作 mio)・投げる動き(Throw In)
+function dirClip(model, data, name, upBone = 'Spine') {
   model.updateMatrixWorld(true);
   const by = new Map(); model.traverse(o => { if (o.isBone) by.set(o.name.replace(':', '').replace(/^mixamorig/, ''), o); });
-  const g = n => by.get(n); if (!g('Hips') || !g('Spine2') || !g('LeftUpLeg') || !g('RightUpLeg')) return null;
+  const g = n => by.get(n); if (!g('Hips') || !g(upBone) || !g('LeftUpLeg') || !g('RightUpLeg')) return null;
   const inv = new THREE.Matrix4().copy(model.matrixWorld).invert(), m = new THREE.Matrix4(), tv = new THREE.Vector3(), ts = new THREE.Vector3();
   const wp = o => new THREE.Vector3().setFromMatrixPosition(m.multiplyMatrices(inv, o.matrixWorld));
   const wq = o => { const q = new THREE.Quaternion(); m.multiplyMatrices(inv, o.matrixWorld).decompose(tv, q, ts); return q; };
-  const up = wp(g('Spine2')).sub(wp(g('Hips'))).normalize(), rt = wp(g('RightUpLeg')).sub(wp(g('LeftUpLeg')));
+  const up = wp(g(upBone)).sub(wp(g('Hips'))).normalize(), rt = wp(g('RightUpLeg')).sub(wp(g('LeftUpLeg')));
   rt.addScaledVector(up, -rt.dot(up)).normalize(); const fw = new THREE.Vector3().crossVectors(rt, up);
-  const W = new Map(), tracks = [], bones = []; model.traverse(o => { if (o.isBone) bones.push(o); });
-  for (const b of bones) {
-    const p = b.parent, pW = p && W.has(p) ? W.get(p) : wq(p), rW = wq(b);
-    let Wb = pW.clone().multiply(b.quaternion);
-    const key = b.name.replace(':', '').replace(/^mixamorig/, ''), d = OCA.d[key], c = d && g(OCA.ch[key]);
-    if (c) {
-      const v = wp(c).sub(wp(b)).applyQuaternion(Wb.clone().multiply(rW.clone().invert())).normalize();
-      const want = new THREE.Vector3().addScaledVector(rt, d[0]).addScaledVector(up, d[1]).addScaledVector(fw, d[2]).normalize();
-      Wb = new THREE.Quaternion().setFromUnitVectors(v, want).multiply(Wb);
-      const L = pW.clone().invert().multiply(Wb).normalize();
-      tracks.push(new THREE.QuaternionKeyframeTrack(b.name + '.quaternion', [0, 1], [L.x, L.y, L.z, L.w, L.x, L.y, L.z, L.w]));
+  const bones = []; model.traverse(o => { if (o.isBone) bones.push(o); });
+  const RP = new Map(bones.map(b => [b, wp(b)])), RQ = new Map(bones.map(b => [b, wq(b)])), P0 = new Map(bones.map(b => [b, b.parent && !b.parent.isBone ? wq(b.parent) : null]));
+  const out = new Map(), times = data.frames.map(f => f.t);
+  data.frames.forEach((fr, i) => {
+    const W = new Map();
+    for (const b of bones) {
+      const pW = W.get(b.parent) || P0.get(b) || RQ.get(b.parent) || new THREE.Quaternion();
+      let Wb = pW.clone().multiply(b.quaternion);
+      const key = b.name.replace(':', '').replace(/^mixamorig/, ''), d = fr.d[key], c = d && g(data.ch[key]);
+      if (c) {
+        const v = RP.get(c).clone().sub(RP.get(b)).applyQuaternion(Wb.clone().multiply(RQ.get(b).clone().invert())).normalize();
+        const want = new THREE.Vector3().addScaledVector(rt, d[0]).addScaledVector(up, d[1]).addScaledVector(fw, d[2]).normalize();
+        Wb = new THREE.Quaternion().setFromUnitVectors(v, want).multiply(Wb);
+        const L = pW.clone().invert().multiply(Wb).normalize();
+        if (!out.has(b.name)) out.set(b.name, new Float32Array(times.length * 4));
+        out.get(b.name).set([L.x, L.y, L.z, L.w], i * 4);
+      }
+      W.set(b, Wb);
     }
-    W.set(b, Wb);
-  }
-  return new THREE.AnimationClip('oca', 1, tracks);
+  });
+  return new THREE.AnimationClip(name, times[times.length - 1], [...out].map(([n, v]) => new THREE.QuaternionKeyframeTrack(n + '.quaternion', times, v)));
 }
 
 // 住人id → モデル。rotY は「モデルの正面を +z に向ける」補正(ゆず・潮見さんは -x 向きで出てくる)
@@ -184,9 +192,11 @@ export function useGlb(ch, id, { height } = {}) {
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
-    try { const oc = ocaClip(model); if (oc) act.oca = mixer.clipAction(oc); } catch (e) { console.warn('oca', e); }
+    try { const oc = dirClip(model, { ch: OCA.ch, frames: [{ t: 0, d: OCA.d }, { t: 1, d: OCA.d }] }, 'oca', 'Spine2'); if (oc) act.oca = mixer.clipAction(oc); } catch (e) { console.warn('oca', e); }
     const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
     if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
+    try { const tc = dirClip(model, THROWIN, 'throwin'); act.throwin = mixer.clipAction(tc); act.throwin.setLoop(THREE.LoopOnce, 1); act.throwin.clampWhenFinished = true;
+      act.carryUp = mixer.clipAction(new THREE.AnimationClip('carryUp', tc.duration, tc.tracks.filter(t => !/(Hips|Leg|Foot|Toe)/.test(t.name))));   /* かかえている間: 上半身だけ(足は歩き・立ちのまま) */ } catch (e) { console.warn('throwin', e); }   // 頭の上にかかえる・投げる
     try { const c = bowlClip(model, bodyFrames(model)); act.bowl = mixer.clipAction(c); act.bowl.setLoop(THREE.LoopOnce, 1); act.bowl.clampWhenFinished = true; } catch (e) { }   // 投球の動き(ボウリング)
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
     // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
@@ -282,9 +292,13 @@ export function useGlb(ch, id, { height } = {}) {
     ch.update = (dt, speed) => {
       const sitK = !!act.sit && (ch.pose === 'sit' || ch.pose === 'piano'), layK = !!(act.lay || act.sleep) && ch.pose === 'lie', goro = layK && ch.lieKind === 'goro' && !!act.lay, lieClip = goro ? 'lay' : act.sleep ? 'sleep' : 'lay';   // ゴロゴロ=lay(男:横向き寝 女:足パタパタ) ねる=sleep(あおむけ)
       const rideN = ch.pose === 'ride' ? (ch.rideKind === 'back' ? 'rideB' : 'rideF') : null, rideK = !!(rideN && act[rideN] && rideM[rideN]);
-      if (rideK) play(rideN, 0.35); else if (sitK) play('sit', 0.4); else if (act.oca && ch.pose === 'harp') play('oca', 0.4); else if (layK) play(lieClip, 0.4);
+      if (rideK) play(rideN, 0.35); else if (sitK) play('sit', 0.4); else if (act.oca && ch.pose === 'harp') play('oca', 0.4);
+      else if (layK) play(lieClip, 0.4);
       else if (lock > 0) lock -= dt;
       else play(act.run && (cur === act.run ? speed > 3.0 : speed > 4.2) ? 'run' : speed > 0.05 ? 'walk' : 'idle');   // 歩き⇔走りは少し幅をもたせる(行ったり来たりしない)
+      if (act.carryUp) { const on = ch.pose === 'carry' && cur !== act.throwin;   // 頭の上にかかえる(上半身だけ重ねる)
+        if (on && !ch._carryOn) { ch._carryOn = true; const a = act.carryUp; a.reset(); a.setEffectiveWeight(8); a.play(); a.time = 0.1; a.paused = true; }
+        else if (!on && ch._carryOn) { ch._carryOn = false; act.carryUp.stop(); } }
       if (cur === act.run) act.run.timeScale = Math.max(0.7, Math.min(1.4, speed / 5));
       if (cur === act.walk) act.walk.timeScale = Math.max(0.6, Math.min(1.6, speed / 2.2));
       mixer.update(dt);
@@ -315,6 +329,7 @@ export function useGlb(ch, id, { height } = {}) {
     ch.bow = () => { if (act.bow) { play('bow', 0.2); lock = 2.2; } };
     // ボウリング: hold=投球の動きを from 秒めから流して、さいごの姿勢で止める / free=止めた姿勢から、ゆっくり元にもどる
     ch.hand = () => model.getObjectByName('mixamorigRightHand');
+    ch.throwGo = () => { const a = act.throwin; if (!a) return false; if (ch.pose === 'carry') ch.pose = null; cur = null; play('throwin', 0.05); a.time = 0.2; a.paused = false; lock = 0.8; return true; };   // かかえた物を投げる
     ch.hold = (name, from = 0, fade = 0.15) => { const a = act[name]; if (!a) return false; if (cur === a) { cur = null; } play(name, fade); a.time = from; a.paused = false; lock = 1e9; return true; };
     ch.free = (fade = 0.5) => { lock = 0; if (act.idle) { cur === act.idle ? 0 : play('idle', fade); } };
     void base;
