@@ -147,6 +147,9 @@ export function setGlbSize(k, v) {   // 「せってい」のつまみから。�
 }
 
 const SIT_HIP = 0.17;   // 腰の骨から座面までの高さ(m)の見当(実機で合わせる)
+// ダンス(浴衣のキャラを見る): 標準の骨の数値の表(assets/paid/dance.json)。必要になった時に1回だけ読む
+let danceP = null; const danceTable = u => danceP || (danceP = pickUrl(u).then(x => fetch(x)).then(r => r.json()));
+const danceClip = D => new THREE.AnimationClip('dance', D.dur, Object.entries(D.rot).map(([b, e]) => new THREE.QuaternionKeyframeTrack(b + '.quaternion', e.t, e.v)));
 // オカリナ: もらったポーズの骨ごとの数値(oca_pose.json)を、そのまま入れるだけ。全員の骨の初期の数値が同じなので、1つのクリップを全員で使う
 let ocaC = null;
 const ocaClip = () => ocaC || (ocaC = new THREE.AnimationClip('oca', 1, Object.entries(OCA).map(([b, q]) => new THREE.QuaternionKeyframeTrack(b + '.quaternion', [0, 1], [...q, ...q]))));
@@ -166,7 +169,7 @@ export function useGlb(ch, id, { height } = {}) {
   const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
   const player = id.startsWith('player:') || id.startsWith('self:');
   height = player ? SIZE_NOW.player : (height !== 1.3 ? height : SIZE_NOW.npc);   // 確認用の住人ごとの背(?npcsizes=1)だけは、そちらを優先
-  ch.glbReady = Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null, measures().catch(() => null), spec.animFile ? load(spec.animFile, player) : null]).then(([gltf0, src, T, dsrc]) => {
+  ch.glbReady = Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null, measures().catch(() => null), spec.dance ? danceTable(spec.dance) : null]).then(([gltf0, src, T, dsrc]) => {
     stat.now = nm(spec.url) + ' の体と動きを準備';
     const gltf = src && !(gltf0.animations && gltf0.animations.length) ? { scene: gltf0.scene, animations: src.animations } : gltf0;
     // 同じモデルを複数体出してもいいように、骨ごと複製する
@@ -177,7 +180,7 @@ export function useGlb(ch, id, { height } = {}) {
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
-    if (dsrc && dsrc.animations[0]) act.idle = mixer.clipAction(dsrc.animations[0]);   // 動きだけの別ファイル(ちょこ浴衣のダンス)。この体は、ずっとこの動き
+    if (dsrc) act.idle = mixer.clipAction(danceClip(dsrc)); else if (clip('dance')) act.idle = mixer.clipAction(clip('dance'));   // ダンス: 前もって作った骨の数値の表(tools/gen_dance.py)をそのまま入れるだけ。この体は、ずっとこの動き
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
     // オカリナ・かかえて投げる動きは、使うときに初めて作る(読みこみを重くしない)
     const snap = restSnap(model), lazy = {

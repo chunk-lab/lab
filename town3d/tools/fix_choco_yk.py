@@ -5,7 +5,7 @@
 #       → 使う側で直すのではなく、モデルの初期の数値を動きのファイルにそろえる(見た目は変えない。世界での骨の位置・向きが同じか数値で確かめる)
 import os, sys, json, struct, numpy as np
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, ROOT + '/tools'); import glbn
-P, D = f'{ROOT}/assets/paid/choco_yk.glb', f'{ROOT}/assets/paid/choco_dance.glb'
+P, D = f'{ROOT}/assets/paid/choco_yk.glb', f'{ROOT}/tools/src/choco_dance.glb'
 def rd(p):
     d = open(p, 'rb').read(); jl = struct.unpack('<I', d[12:16])[0]; J = json.loads(d[20:20 + jl]); o = 20 + jl; bl = struct.unpack('<I', d[o:o + 4])[0]; return J, bytearray(d[o + 8:o + 8 + bl])
 def wr(p, J, B):

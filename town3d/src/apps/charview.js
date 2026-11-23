@@ -20,7 +20,7 @@ function roster(player) {
   const list = [{ key: 'me', name: '自分', glb: myLook === 'ren' ? 'self:ren' : 'self:mio', look: LOOKS[myLook] }];
   list.push({ key: 'pm', name: '他の人(女)', glb: 'player:mio', look: LOOKS.mio }, { key: 'pr', name: '他の人(男)', glb: 'player:ren', look: LOOKS.ren });
   for (const r of RESIDENTS) if (GLB_MODELS[r.id]) list.push({ key: r.id, name: r.name || r.id, glb: r.id, look: r.look });
-  for (const [id, name] of YUKATA) { const k = 'paid:yk_' + id; if (!GLB_MODELS[k]) GLB_MODELS[k] = id === 'choco' ? { url: 'paid/choco_yk.glb', rotY: 0, sex: 'm', animFile: 'paid/choco_dance.glb' } : { url: `paid/${id}_yk.glb`, rotY: 0, animFrom: 'hana' }; list.push({ key: k, name: name + ' 浴衣', glb: k, look: id === 'choco' ? LOOKS.ren : LOOKS.mio }); }
+  for (const [id, name] of YUKATA) { const k = 'paid:yk_' + id; if (!GLB_MODELS[k]) GLB_MODELS[k] = id === 'choco' ? { url: 'paid/choco_yk.glb', rotY: 0, sex: 'm' } : { url: `paid/${id}_yk.glb`, rotY: 0, animFrom: 'hana', dance: 'paid/dance.json' }; list.push({ key: k, name: name + ' 浴衣', glb: k, look: id === 'choco' ? LOOKS.ren : LOOKS.mio }); }
   if (isAdmin()) for (const [id, name] of PAID) { const k = 'paid:' + id; if (!GLB_MODELS[k]) GLB_MODELS[k] = { url: `paid/${id === 'mii' ? 'mie' : id}_mz.glb`, rotY: 0, animFrom: 'hana' }; list.push({ key: k, name: name + ' MZ版', glb: k, look: LOOKS.mio }); }
   const mk = RESIDENTS.find(r => r.mascot); if (mk) list.push({ key: 'chunkkun', name: mk.name || 'チャンクくん', mascot: true });
   return list;
