@@ -166,7 +166,7 @@ export function useGlb(ch, id, { height } = {}) {
   const old = ch.root.children.slice(); old.forEach(o => { o.visible = false; });
   const player = id.startsWith('player:') || id.startsWith('self:');
   height = player ? SIZE_NOW.player : (height !== 1.3 ? height : SIZE_NOW.npc);   // 確認用の住人ごとの背(?npcsizes=1)だけは、そちらを優先
-  ch.glbReady = Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null, measures().catch(() => null)]).then(([gltf0, src, T]) => {
+  ch.glbReady = Promise.all([load(spec.url, player), spec.animFrom ? load(GLB_MODELS[spec.animFrom].url, player) : null, measures().catch(() => null), spec.animFile ? load(spec.animFile, player) : null]).then(([gltf0, src, T, dsrc]) => {
     stat.now = nm(spec.url) + ' の体と動きを準備';
     const gltf = src && !(gltf0.animations && gltf0.animations.length) ? { scene: gltf0.scene, animations: src.animations } : gltf0;
     // 同じモデルを複数体出してもいいように、骨ごと複製する
@@ -177,6 +177,7 @@ export function useGlb(ch, id, { height } = {}) {
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
+    if (dsrc && dsrc.animations[0]) act.idle = mixer.clipAction(dsrc.animations[0]);   // 動きだけの別ファイル(ちょこ浴衣のダンス)。この体は、ずっとこの動き
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
     // オカリナ・かかえて投げる動きは、使うときに初めて作る(読みこみを重くしない)
     const snap = restSnap(model), lazy = {
@@ -185,9 +186,9 @@ export function useGlb(ch, id, { height } = {}) {
     };
     ch._lazy = k => { const f = lazy[k]; if (!f) return; lazy[k] = null; try { f(); } catch (e) { console.warn(k, e); } };
     const mf = spec.url.split('/').pop(), bset = new Set(), male = spec.sex === 'm'; model.traverse(o => { if (o.isBone) bset.add(o.name); });
-    const SC = { ok: true, sit: mcClip('Sit', male ? 'sitM' : 'sitW', mf, bset), lay: mcClip('Lay', male ? 'lay' : 'flutter', mf, bset), sleep: mcClip('Sleep', 'sleep', mf, bset), rideF: mcClip('RideF', 'rideF', mf, bset), rideB: mcClip('RideB', 'rideB', mf, bset), layLoop: !male }; if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
+    const SC = { ok: bset.has('mixamorigHips'), sit: mcClip('Sit', male ? 'sitM' : 'sitW', mf, bset), lay: mcClip('Lay', male ? 'lay' : 'flutter', mf, bset), sleep: mcClip('Sleep', 'sleep', mf, bset), rideF: mcClip('RideF', 'rideF', mf, bset), rideB: mcClip('RideB', 'rideB', mf, bset), layLoop: !male }; if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
     if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
-    try { const c = mcClip('bowl', 'bowl', mf, bset); act.bowl = mixer.clipAction(c); act.bowl.setLoop(THREE.LoopOnce, 1); act.bowl.clampWhenFinished = true; } catch (e) { }   // 投球の動き(ボウリング)
+    try { if (!SC.ok) throw 0; const c = mcClip('bowl', 'bowl', mf, bset); act.bowl = mixer.clipAction(c); act.bowl.setLoop(THREE.LoopOnce, 1); act.bowl.clampWhenFinished = true; } catch (e) { }   // 投球の動き(ボウリング)
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
     // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
     // 待機の動きを何コマか見て、いちばん低い足元・いちばん高い頭で測る(動きの途中で沈まないように)

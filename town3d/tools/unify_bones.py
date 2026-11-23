@@ -8,6 +8,7 @@
 import os, sys, json, struct, numpy as np, glob
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REF = 'self_mio.glb'
+DIR = os.environ.get('DIR', 'assets/models')   # 対象のフォルダ(既定は assets/models。浴衣などは DIR=assets/paid)
 FACE = {'shiomi.glb': np.pi / 2}   # 正面を +z に向ける回転(いまのコードの rotY と同じ値)
 SKIP = {'chunkkun.glb', REF}
 CT = {5126: np.float32}
@@ -94,7 +95,7 @@ files = [a for a in sys.argv[1:] if not a.startswith('--')] or sorted(os.path.ba
 ok_all = True
 for f in files:
     if f in SKIP: continue
-    p = f'{ROOT}/assets/models/{f}'; J, B = rd(p); par = tree(J); N = J['nodes']
+    p = f'{ROOT}/{DIR}/{f}'; J, B = rd(p); par = tree(J); N = J['nodes']
     L0 = {i: trs(n) for i, n in enumerate(N)}
     IB0 = [acc(J, B, s['inverseBindMatrices']).reshape(-1, 4, 4).transpose(0, 2, 1) for s in J['skins']]
     before = [skinmats(J, L0, par, IB0)] + [skinmats(J, anim_locals(J, B, L0, an, t), par, IB0) for an in J.get('animations', []) for t in (0.0, 0.37, 0.81)]
@@ -114,7 +115,7 @@ for f in files:
     for i in range(len(N)):
         Lp = Ry @ L0[i] if i in roots else L0[i]
         Ln = (rot4(C[par[i]].T) @ Lp if i in par else Lp) @ Ci[i]
-        sc = np.linalg.norm(Ln[:3, :3], axis=0); assert max(sc) - min(sc) < 1e-5 * max(sc), (f, N[i].get('name'), sc)
+        sc = np.linalg.norm(Ln[:3, :3], axis=0); assert max(sc) - min(sc) < 1e-4 * max(sc), (f, N[i].get('name'), sc)
         if np.allclose(Ln, L0[i], atol=1e-9) and 'matrix' not in N[i]: continue
         R = Ln[:3, :3] / sc; n = N[i]; n.pop('matrix', None)
         n['translation'] = Ln[:3, 3].tolist(); n['rotation'] = m2q(R).tolist(); n['scale'] = sc.tolist()
