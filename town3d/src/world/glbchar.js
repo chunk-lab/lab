@@ -315,6 +315,7 @@ export function useGlb(ch, id, { height } = {}) {
       if (rideK) ty = (ch.rideY || 0) / ch.height - rideM[rideN].cont;
       if (ty > -Infinity) holder.position.y += (ty - holder.position.y) * (rideK && ch.rideSnap ? 1 : Math.min(1, dt * 8));   // うかんで上下する間は、乗っている人をおくれずに合わせる
       if (!(sitK || layK)) { const tx = rideK ? -rideM[rideN].dx : baseX, tz = rideK ? -rideM[rideN].dz : baseZ, kk = Math.min(1, dt * 8); holder.position.x += (tx - holder.position.x) * kk; holder.position.z += (tz - holder.position.z) * kk; }   // 座るときは、腰が座面の真上に来るように
+      if (window.__flyDbg) { ch.root.updateMatrixWorld(true); const hb = Bn('Hips'), hv = new THREE.Vector3(); if (hb) hv.setFromMatrixPosition(hb.matrixWorld); ch.dbg = { rk: rideK, cur: cur ? cur.getClip().name : '', hx: holder.position.x, hz: holder.position.z, hy: holder.position.y, wx: hv.x, wy: hv.y, wz: hv.z }; }   // 点検用(飛行中だけ)
     };
     (window.__hipsL = window.__hipsL || []).push({ id, f: () => { ch.root.updateMatrixWorld(true); const hb = model.getObjectByName('mixamorigHips') || model.getObjectByName('mixamorig:Hips'); const w = new THREE.Vector3().setFromMatrixPosition(hb.matrixWorld), r = new THREE.Vector3().setFromMatrixPosition(ch.root.matrixWorld); return [+(w.x - r.x).toFixed(3), +(w.y - r.y).toFixed(3), +(w.z - r.z).toFixed(3), +holder.position.x.toFixed(3), +holder.position.z.toFixed(3), +(-sitDX).toFixed(3), String(ch.pose), +baseX.toFixed(3)]; } });
     ch.wave = () => { if (act.wave) { play('wave', 0.2); lock = 3.2; } };

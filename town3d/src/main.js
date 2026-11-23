@@ -1693,7 +1693,15 @@ export function mount(container, opt = {}) {
     me.ch.root.position.set(me.x, seat ? -0.04 : 0, me.z); me.ch.root.rotation.y = me.ry;
     rideStep(dt);
     if (!seat && !battle.active) { if (snow.making || bld) me.ch.pose = 'kneel'; else if (seasons.carrying()) me.ch.pose = 'carry'; else if (me.ch.pose === 'kneel' || me.ch.pose === 'carry') me.ch.pose = null; }
+    window.__flyDbg = !!(cut.on && cut.riding);   // 点検用: 飛行中の乗り手の動きを数える(画面の左上に出す)
     me.ch.update(dt, me.speed);
+    if (window.__flyDbg && me.ch.dbg) { const D = me.ch.dbg, r = chunkOf(); if (r) { let F = window.__fly; if (!F || F.done) F = window.__fly = { n: 0, dtMin: 9, dtMax: 0, aMin: 9, aMax: -9, aStep: 0, jumps: 0, rkOff: 0, curSw: 0, cur: '', la: null, hzMin: 9, hzMax: -9, hxMin: 9, hxMax: -9, hyMin: 9, hyMax: -9, sMin: 9, sMax: 0, ls: null };
+      F.n++; F.dtMin = Math.min(F.dtMin, dt); F.dtMax = Math.max(F.dtMax, dt); const fx = Math.sin(me.ry), fz = Math.cos(me.ry), a = (D.wx - r.ch.root.position.x) * fx + (D.wz - r.ch.root.position.z) * fz;
+      if (F.n > 3) { F.aMin = Math.min(F.aMin, a); F.aMax = Math.max(F.aMax, a); if (F.la != null) { const st = Math.abs(a - F.la); F.aStep = Math.max(F.aStep, st); if (st > 0.1) F.jumps++; } F.hzMin = Math.min(F.hzMin, D.hz); F.hzMax = Math.max(F.hzMax, D.hz); F.hxMin = Math.min(F.hxMin, D.hx); F.hxMax = Math.max(F.hxMax, D.hx); F.hyMin = Math.min(F.hyMin, D.hy); F.hyMax = Math.max(F.hyMax, D.hy); } F.la = a;
+      if (!D.rk) F.rkOff++; if (D.cur !== F.cur) { F.curSw++; F.cur = D.cur; }
+      let el = document.getElementById('flydbg'); if (!el) { el = document.createElement('div'); el.id = 'flydbg'; el.style.cssText = 'position:fixed;left:4px;top:4px;z-index:99999;background:rgba(0,0,0,.7);color:#0f0;font:11px/1.3 monospace;padding:4px 6px;pointer-events:none;white-space:pre'; document.body.appendChild(el); }
+      if (F.n % 15 === 0) el.textContent = `フレーム ${F.n}  dt ${(F.dtMin * 1000) | 0}〜${(F.dtMax * 1000) | 0}ms\n腰の前後 ${F.aMin.toFixed(2)}〜${F.aMax.toFixed(2)}  1コマ最大 ${F.aStep.toFixed(2)}  0.1超え ${F.jumps}回\n乗り動き外れ ${F.rkOff}  動き切替 ${F.curSw} (${F.cur})\nholder z ${F.hzMin.toFixed(2)}〜${F.hzMax.toFixed(2)} x ${F.hxMin.toFixed(2)}〜${F.hxMax.toFixed(2)} y ${F.hyMin.toFixed(2)}〜${F.hyMax.toFixed(2)}`; } }
+    else if (window.__fly && !window.__fly.done) window.__fly.done = true;
     { const rg = me.ch.rig;   // よけている間はくるっと回る / 雪だるまを持っている間は両手を上げる
       if (rg) { if (dodgeT > 0) { rollPose(rg, 1 - dodgeT / 0.55); dodgeRot = true; } else if (dodgeRot) { rollReset(rg); dodgeRot = false; }
         if ((snow.making || bld) && !battle.active) { rg.body.rotation.x = 0.35; rg.arms[0].rotation.x = rg.arms[1].rotation.x = -1.25; rg.arms[0].rotation.z = -0.1; rg.arms[1].rotation.z = 0.1; } else if (!seasons.carrying() && !dodgeRot && rg.body.rotation.x === 0.35) rg.body.rotation.x = 0;
