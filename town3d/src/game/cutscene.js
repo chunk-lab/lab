@@ -166,7 +166,7 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
       const c = new THREE.Vector3(A.x, y, A.z), md = mp ? mp.clone().sub(c).normalize() : new THREE.Vector3(0, 0.6, -1).normalize();
       const hx = -md.x, hz = -md.z, hl = Math.hypot(hx, hz) || 1, dist = follow.dist || 12;
       // 月と反対がわ・少し下から、相手と月の間を見る(相手の向こうに月が入る)
-      return { p: new THREE.Vector3(c.x + hx / hl * dist, c.y - 1.5, c.z + hz / hl * dist), l: c.clone().addScaledVector(md, dist * 0.45) };
+      return { p: new THREE.Vector3(c.x + hx / hl * dist, Math.max(c.y - 1.5, 0.8), c.z + hz / hl * dist), l: c.clone().addScaledVector(md, dist * 0.45) };   // 地面より下には置かない(地面の縁が下から見えて、みんなが浮いて見えた)
     }
     const f = follow, A = pos(f.a), B = f.b ? pos(f.b) : A;
     const mx = (A.x + B.x) / 2, mz = (A.z + B.z) / 2, dx = B.x - A.x, dz = B.z - A.z, d = Math.hypot(dx, dz);

@@ -790,13 +790,14 @@ export const homeApp = {
     if (MODEL) { car.style.display = 'none'; run({ act: 'deco' }); tip.textContent = '下から家具をえらんで置こう。置いたまま保存されるよ。「🏠 ひろげる」で広さも変えられる。'; }
     // ---- 物語の案内(coach): もようがえ → 家具を置く → かべ紙の色、をやりながら教える。おわったら話にもどる ----
     if (ctx.params && ctx.params.coach && !MODEL) {
-      const n0 = furn.placed().length, r0 = cur(), c0 = [r0.wall, r0.cw, r0.floor, r0.cf].join(), hasItem = ITEMS.some(it => furn.owned(it.id) > 0);
+      const n0 = furn.placed().length, r0 = cur(), c0 = [r0.wall, r0.cw, r0.floor, r0.cf].join();
+      const gave = !ITEMS.some(it => furn.owned(it.id) > 0); if (gave) furn.give('chair', 1);   // 置く家具をひとつも持っていない人には、いすを1つあげる
       let st = 0, bye = false; const ce = document.createElement('div');
-      ce.style.cssText = 'position:absolute;left:10px;right:10px;top:54px;z-index:30;background:#141a36;color:#fff;border:3px solid #ffd166;border-radius:12px;padding:8px 12px;font:700 14px/1.55 inherit;pointer-events:none';
-      root.appendChild(ce);
-      const T = ['① 下の「🛋 もようがえ」を押そう', '② 下にならんだ家具をタップして、部屋に置いてみよう', '③「🏠 ひろげる」を押して、かべ紙の色を変えてみよう(見本の色は無料)', 'できた！ もうすぐ、物語にもどるよ'];
+      ce.style.cssText = 'margin:2px 10px 0;background:#141a36;color:#fff;border:3px solid #ffd166;border-radius:12px;padding:6px 12px;font:700 14px/1.5 inherit;pointer-events:none';   // 上のバー(「ひろげる」ボタン)に重ねず、そのすぐ下に並べる
+      root.insertBefore(ce, root.querySelector('.cv'));
+      const T = ['① 下の「🛋 もようがえ」を押そう', '② 下にならんだ家具をタップして、部屋に置いてみよう' + (gave ? '(いすを1つプレゼント！)' : ''), '③「🏠 ひろげる」を押して、かべ紙の色を変えてみよう(見本の色は無料)', 'できた！ もうすぐ、物語にもどるよ'];
       const cupd = () => {
-        if (st === 0 && mode === 'edit') st = hasItem ? 1 : 2;
+        if (st === 0 && mode === 'edit') st = 1;
         if (st === 1 && furn.placed().length > n0) st = 2;
         if (st === 2) { const r = cur(); if ([r.wall, r.cw, r.floor, r.cf].join() !== c0) st = 3; }
         ce.textContent = T[st];
