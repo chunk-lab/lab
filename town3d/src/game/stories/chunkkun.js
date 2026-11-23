@@ -101,7 +101,6 @@ export async function chunkkunStory(d, ctx = {}) {
 
   // ---- 月を背にして、空へ ----
   d.hideBox();
-  d.set(C, { bob: 0 });   // 飛ぶ間は、雲のふわふわ上下をなし(試し)
   d.puff(5, 1.2, 7, 16, 2.0);
   d.place('me', 5, 7, 0.4); d.scale(C, 3, true);
   d.ride(true, 0.3);

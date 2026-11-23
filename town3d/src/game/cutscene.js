@@ -45,7 +45,6 @@ function puffTex() {
 export function createCutscene({ root, scene, residents, me, env, input, names = {}, blockers = [], openApp = null, bus = null, openReader = null, reward = null, openGame = null, tune = null, giftFish = null, warm = null, interiors = null }) {
   if (!document.getElementById('tw-cut-css')) { const st = document.createElement('style'); st.id = 'tw-cut-css'; st.textContent = CSS; document.head.appendChild(st); }
   let camDirty = 3, camFix = null;
-  let rideLast = null;
   let on = false, el = null, skipped = false, meAct = null, camT = null, camP = new THREE.Vector3(), camL = new THREE.Vector3(), camSnap = false, follow = null, camInit = false, offY = 0, riding = false, alt = 0;
   const ray = new THREE.Raycaster(), rv = new THREE.Vector3();
   const puffs = []; let ptex = null, cameraRef = null;
@@ -267,7 +266,6 @@ export function createCutscene({ root, scene, residents, me, env, input, names =
       // カメラの位置は、場面(shot/cam/place)が変わった時に1回だけ決める。毎コマは計算しない(空を飛ぶ場面だけは追いかける)
       if (camDirty > 0 || !camFix || riding) { camFix = camAim(); if (camDirty > 0) camDirty--; }   // 置いた直後の数コマだけ(位置が反映されるまで)
       const T = camFix; if (!T) return;
-      if (riding) { if (rideLast && !camSnap && camInit) { const dx = me.x - rideLast.x, dz = me.z - rideLast.z; camP.x += dx; camP.z += dz; camL.x += dx; camL.z += dz; } (rideLast || (rideLast = { x: 0, z: 0 })).x = me.x; rideLast.z = me.z; } else rideLast = null;   // 飛んでいる間は、カメラも乗り手と同じだけ進める(遅れて追いかけると、曲がる所で画面を横切ってカクつく)
       if (camSnap || !camInit) { camP.copy(T.p); camL.copy(T.l); camSnap = false; camInit = true; } else { const k = Math.min(1, dt * 2.4); camP.lerp(T.p, k); camL.lerp(T.l, k); }
       camera.position.copy(camP); camera.lookAt(camL);
       { const W = root.clientWidth || 1, H = root.clientHeight || 1, box = el && el.querySelector('.cs-box.on');   // セリフ枠に隠れないよう、絵を上へずらす
