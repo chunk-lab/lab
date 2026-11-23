@@ -1,12 +1,10 @@
 // Mixamoリグ入りのGLB(ちびキャラ)を、makeCharacter と同じ使い方(root/height/update/wave)で動かす。
 // 読み込み中・失敗時は、元のコード製キャラのまま動く(落ちない)。
-import { makeSeatClips } from './seatanim.js';
-import { BOWL, BOWL_HIPS, BOWL_REST } from './bowl_clip.js';
 import { THROWIN } from './throw_clip.js';
-import { bodyFrames, retargetRot, clipSource } from './retarget.js';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import OCA from './oca_pose.json';
+import MC from './motion_clips.json';
 // 骨の向き(関節→次の関節)だけを写す動き。骨のねじれ方は体ごとに違うので、向きを体の向き(腰→背骨・左右の脚)基準で合わせる
 // data: { ch: 骨→次の関節, frames: [{ t, d: 骨→[右,上,前] }] }。オカリナのポーズ(ユーザーさん作 mio)・投げる動き(Throw In)
 // 動かす前(読みこんだまま)の骨の形を写しておく(安い)。動きを作るのは、使うときに初めて(重いので、読みこみの時にはしない)
@@ -149,36 +147,17 @@ export function setGlbSize(k, v) {   // 「せってい」のつまみから。�
 }
 
 const SIT_HIP = 0.17;   // 腰の骨から座面までの高さ(m)の見当(実機で合わせる)
-// 動きは全員共通の道(retarget.js)で当てはめる。基準は各体の「皮膚を付けた時の姿勢」
-// 借りる動き(はな・そらの5つ): 体ごとに1回だけ作って、同じ体の2人目からは使い回す
-const borrowedClips = new Map();
 // オカリナ: もらったポーズの骨ごとの数値(oca_pose.json)を、そのまま入れるだけ。全員の骨の初期の数値が同じなので、1つのクリップを全員で使う
 let ocaC = null;
 const ocaClip = () => ocaC || (ocaC = new THREE.AnimationClip('oca', 1, Object.entries(OCA).map(([b, q]) => new THREE.QuaternionKeyframeTrack(b + '.quaternion', [0, 1], [...q, ...q]))));
-function borrowClips(key, model, src) {
-  if (borrowedClips.has(key)) return borrowedClips.get(key);
-  const fr = bodyFrames(model), sf = bodyFrames(src.scene);
-  const clips = src.animations.map(cl => new THREE.AnimationClip(cl.name, cl.duration, retargetRot(fr, clipSource(cl, sf)).concat(cl.tracks.filter(t => !/\.quaternion$/.test(t.name)))));
-  borrowedClips.set(key, clips); return clips;
-}
-// ボウリングの投球(外から持ってきたFBXの動き)。腰の上下だけ体の大きさに合わせて残し、前後左右の移動は消す(その場で動く)
-let bowlRaw = null;
-function bowlClip(model, fr) {
-  if (!bowlRaw) bowlRaw = THREE.AnimationClip.parse(BOWL);
-  const rest = new Map();   // BOWL_REST は親からの向き。親子をたどって、元の体の基準の向きにする
-  fr.bones.forEach(b => { const l = BOWL_REST[b.name]; if (!l) return; const p = b.parent && rest.get(b.parent.name); rest.set(b.name, (p ? p.clone() : new THREE.Quaternion()).multiply(new THREE.Quaternion(l[0], l[1], l[2], l[3]))); });
-  const src = { rest, top: new Map(), tracks: new Map() };
-  bowlRaw.tracks.forEach(t => { const m = t.name.match(/^(.*)\.quaternion$/); if (m) src.tracks.set(m[1], { times: t.times, values: t.values }); });
-  const tracks = retargetRot(fr, src);
-  const hb = fr.bones[0], ht = bowlRaw.tracks.find(t => t.name === hb.name + '.position');
-  if (ht) {
-    model.updateMatrixWorld(true);
-    const inv = new THREE.Matrix4().copy(model.matrixWorld).invert(), hw = new THREE.Vector3().setFromMatrixPosition(new THREE.Matrix4().multiplyMatrices(inv, hb.matrixWorld));
-    const pInv = new THREE.Matrix4().multiplyMatrices(inv, hb.parent.matrixWorld).invert(), k = hw.y / BOWL_HIPS, out = [], v = new THREE.Vector3();
-    for (let i = 0; i < ht.times.length; i++) { v.set(hw.x, hw.y + (ht.values[i * 3 + 1] - BOWL_HIPS) * k, hw.z).applyMatrix4(pInv); out.push(v.x, v.y, v.z); }
-    tracks.push(new THREE.VectorKeyframeTrack(hb.name + '.position', ht.times, out));
-  }
-  return new THREE.AnimationClip('bowl', bowlRaw.duration, tracks);
+// 座る・寝る・乗る・投球: 前もって作った決まったデータ(motion_clips.json。作り方 tools/gen_clips/)をそのまま入れるだけ。
+// 骨の初期の数値は全員同じなので、回転は全員共通。腰の位置(体の大きさで変わる)だけ体ごとの表を使う
+const mcRot = {};
+const mcTracks = key => mcRot[key] || (mcRot[key] = Object.entries(MC.rot[key] || {}).map(([b, e]) => new THREE.QuaternionKeyframeTrack(b + '.quaternion', e.t, e.v)));
+function mcClip(name, key, file, bones) {
+  if (!MC.rot[key]) return null; const h = MC.hips[file] && MC.hips[file][key];
+  const tr = mcTracks(key).filter(t => bones.has(t.name.slice(0, -11))); if (h) tr.push(new THREE.VectorKeyframeTrack('mixamorigHips.position', h.t, h.v));
+  return new THREE.AnimationClip(name, MC.dur[key], tr);
 }
 export function useGlb(ch, id, { height } = {}) {
   if (!height) height = 1.3;   // 住人のふだんの背(プレイヤーは約1.65)
@@ -194,7 +173,7 @@ export function useGlb(ch, id, { height } = {}) {
     const model = cloneSkinned(gltf.scene);
     const holder = new THREE.Group(); holder.rotation.y = spec.rotY; holder.add(model);
     model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
-    if (src && gltf !== gltf0) gltf.animations = borrowClips(spec.url, model, src);   // 動きを借りる体(はなの動き→この体の骨の向きに)
+    if (src && gltf !== gltf0) gltf.animations = src.animations;   // 動きを借りる体(はな・そらの動きを、そのまま使う。骨の初期の数値は全員同じ)
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
@@ -205,9 +184,10 @@ export function useGlb(ch, id, { height } = {}) {
         act.carryUp = mixer.clipAction(new THREE.AnimationClip('carryUp', tc.duration, tc.tracks.filter(t => !/(Hips|Leg|Foot|Toe)/.test(t.name)))); },   // かかえている間: 上半身だけ(足は歩き・立ちのまま)
     };
     ch._lazy = k => { const f = lazy[k]; if (!f) return; lazy[k] = null; try { f(); } catch (e) { console.warn(k, e); } };
-    const SC = makeSeatClips(model, spec.sex, spec.rotY || 0); if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
+    const mf = spec.url.split('/').pop(), bset = new Set(), male = spec.sex === 'm'; model.traverse(o => { if (o.isBone) bset.add(o.name); });
+    const SC = { ok: true, sit: mcClip('Sit', male ? 'sitM' : 'sitW', mf, bset), lay: mcClip('Lay', male ? 'lay' : 'flutter', mf, bset), sleep: mcClip('Sleep', 'sleep', mf, bset), rideF: mcClip('RideF', 'rideF', mf, bset), rideB: mcClip('RideB', 'rideB', mf, bset), layLoop: !male }; if (SC.ok) { if (SC.sit) act.sit = mixer.clipAction(SC.sit); if (SC.lay) { act.lay = mixer.clipAction(SC.lay); if (SC.layLoop) act.lay.setLoop(THREE.LoopRepeat, Infinity); else { act.lay.setLoop(THREE.LoopOnce, 1); act.lay.clampWhenFinished = true; } } for (const k2 of ['rideF', 'rideB']) if (SC[k2]) act[k2] = mixer.clipAction(SC[k2]).setLoop(THREE.LoopRepeat, Infinity);   // チャンクくんに乗る(前むき・後ろむき)
     if (SC.sleep) { act.sleep = mixer.clipAction(SC.sleep); act.sleep.setLoop(THREE.LoopOnce, 1); act.sleep.clampWhenFinished = true; } }
-    try { const c = bowlClip(model, bodyFrames(model)); act.bowl = mixer.clipAction(c); act.bowl.setLoop(THREE.LoopOnce, 1); act.bowl.clampWhenFinished = true; } catch (e) { }   // 投球の動き(ボウリング)
+    try { const c = mcClip('bowl', 'bowl', mf, bset); act.bowl = mixer.clipAction(c); act.bowl.setLoop(THREE.LoopOnce, 1); act.bowl.clampWhenFinished = true; } catch (e) { }   // 投球の動き(ボウリング)
     for (const k2 of ['bow', 'wave']) if (act[k2]) { act[k2].setLoop(THREE.LoopOnce, 1); act[k2].clampWhenFinished = true; }
     // 大きさと足元は「待機の姿勢で骨を動かした形」で測る(骨を動かす前の形で測ると、足が地面に埋まる)
     // 待機の動きを何コマか見て、いちばん低い足元・いちばん高い頭で測る(動きの途中で沈まないように)
