@@ -675,7 +675,7 @@ export function mount(container, opt = {}) {
     sora: [['広場', '噴水の音、落ちつくよな'], ['カフェ', 'ここのケーキ、うまいんだよ'], ['公園', 'ベンチでぼーっとするの、好きなんだ'], ['神社', 'おみくじ、大吉出たことある?'], ['図書館', 'ここ、よく来るんだ'], ['学校', '懐かしいなぁ'], ['ゲームセンター', '一回だけ遊んでいく?'], ['池', '潮見さん、今日も釣ってるかな']],
   };
   // ---- チャンクくんに乗る: 自分は前むき。手をつないでいる相手がいれば、後ろに背中合わせで乗る。乗っている間、チャンクくんは大きくなる(1人=2 / 2人=3) ----
-  let ride = null, rideUIel = null, rideLift = 0;
+  let ride = null, rideUIel = null, rideLift = 0; let camDistS = null;
   const chunkOf = () => residents.list.find(x => x.def.mascot);
   const encStage = createStage(renderer, scene);
   const enc = createEncounter({ hud, opt, stage: encStage, name: () => settings.name, music: on => audio.battle(on), hold: r => { r.talking = true; talkingTo = r; }, release: r => { r.talking = false; if (talkingTo === r) talkingTo = null; } });   // エンカウント英語クイズ(住人が近づいて聞いてくる)
@@ -1751,6 +1751,8 @@ export function mount(container, opt = {}) {
     } else if (battle.active && battle.view === 'fp') {   // 一人称:自分の目の高さから、向いている方を見る(yaw はカメラ=見ている向き)
       camera.position.set(me.x, 1.55, me.z); camera.lookAt(me.x - Math.sin(cam.yaw), 1.45, me.z - Math.cos(cam.yaw));
     } else {
+    // 乗っている間は速いので、建物に当たる/はずれるたびにカメラの距離が一瞬で変わり、キャラが前後に飛んで見える。近づくのは早く・遠ざかるのはゆっくり、なめらかにつなぐ
+    if (ride) { if (camDistS == null) camDistS = dist; camDistS += (dist - camDistS) * Math.min(1, dt * (dist < camDistS ? 10 : 2)); dist = camDistS; } else camDistS = null;
     camera.position.copy(look).addScaledVector(off, dist);
     if (camera.position.y < 0.2) camera.position.y = 0.2;   // 地面より下には行かない
     camera.lookAt(look);
@@ -1951,7 +1953,7 @@ export function mount(container, opt = {}) {
     // 町の中のもの(app の id。例 'omikuji')の前へ飛んで、そちらを向く
     goToApp: id => { const i = city.interact.find(x => x.app === id); if (!i) return false; const x = i.x, z = i.z + 2; me.x = x; me.z = z; me.ry = Math.atan2(i.x - x, i.z - z); me.speed = 0; cam.yaw = me.ry + Math.PI; cam.x = x; cam.z = z; return true; },
     snowState: () => { const B = battle.state; return B && { phase: B.phase, men: B.men.map(m => { const v = new THREE.Vector3(m.x, 0.6, m.z).project(camera); return [m.x, m.z, m.hp, m.g.scale.x, !!m.g.parent, m.g.visible, +v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(3), m.g.children.length, m.g.children[0].visible]; }), me: [me.x, me.z, me.ry], F: B.F.map(f => [f.name, f.x, f.z, f.hp]) }; },
-    rideTest: () => { rideStart('free', false); return !!ride; }, camLag: () => Math.hypot(cam.x - me.x, cam.z - me.z), rideFloat: () => bus.emit('ui:dodge'), rideOff: () => rideOff(), rideDown: () => bus.emit('ui:down'), rideSt: () => ride ? { alt: +(ride.alt||0).toFixed(1), t: ride.altT, dive: !!ride.dive, bn: !!ride.bn, y: +me.ch.rideY.toFixed(1) } : null, openApp: (id, p) => openApp(id, p || {}), sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
+    rideTest: () => { rideStart('free', false); return !!ride; }, camLag: () => Math.hypot(cam.x - me.x, cam.z - me.z), ridePts: () => { const r = chunkOf(); if (!r) return null; camera.updateMatrixWorld(true); const v = new THREE.Vector3(), P = p => { v.copy(p).project(camera); return [v.x, v.y]; }; let hp = null; me.ch.root.traverse(o => { if (o.name === 'mixamorigHips') hp = o; }); const hw = hp ? hp.getWorldPosition(new THREE.Vector3()) : me.ch.root.position; const cp = r.ch.root.position.clone(); cp.y += 0.6; return { me: P(hw), ch: P(cp), mw: [hw.x, hw.y, hw.z], cw: [cp.x, cp.y, cp.z], cam: camera.position.toArray(), rl: rideLift }; }, rideFloat: () => bus.emit('ui:dodge'), rideOff: () => rideOff(), rideDown: () => bus.emit('ui:down'), rideSt: () => ride ? { alt: +(ride.alt||0).toFixed(1), t: ride.altT, dive: !!ride.dive, bn: !!ride.bn, y: +me.ch.rideY.toFixed(1) } : null, openApp: (id, p) => openApp(id, p || {}), sportStart: k => sport.start(k), sportCheat: () => sport.cheatHole(), sportShot: (pw, f) => sport.debugShot(pw, f), debugSc: () => +scW.toFixed(2),   // テスト用
     npc: id => residents.list.find(x => x.def.id === id),   // テスト用
     finds: () => finds.spots().map(s => ({ key: s.key, x: s.x, z: s.z, kind: s.kind })),   // テスト用
     benchNear: () => { const b = city.interact.filter(i => i.kind === 'bench').sort((a, c) => Math.hypot(a.x - me.x, a.z - me.z) - Math.hypot(c.x - me.x, c.z - me.z))[0]; me.x = b.x + Math.sin(b.ry) * 1.2; me.z = b.z + Math.cos(b.ry) * 1.2; sitOnBench(b); },   // テスト用
