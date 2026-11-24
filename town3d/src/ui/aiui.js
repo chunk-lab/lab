@@ -57,7 +57,7 @@ export function openAiSetup({ hud, ai, onDone }) {
 
 // 住人との自由なおしゃべり。ask(text) → Promise<string>
 // ストーリーの会話と同じ窓。1セリフ1窓で、左右にフリックすると、自分と相手のセリフが順にめくれる。
-export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, maxLen = 80, low = false, meName = 'あなた' }) {
+export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, onUsed, maxLen = 80, low = false, meName = 'あなた' }) {
   const pic = portrait(name), col = charColor(name);
   const p = hud.panel(`<div class="tc">
     <div class="tc-top"><button class="tw-btn" data-a="en"></button><button class="tw-btn" data-a="lv"></button><span class="tc-sp"></span><button class="tw-btn" data-a="close">${low ? 'おしゃべりをおわる' : 'とじる ✕'}</button></div>
@@ -74,6 +74,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   const isJa = s => /[぀-ヿ一-鿿]/.test(s);
   // セリフの一覧(自分と相手、ぜんぶ)。相手のセリフは「英語」と「日本語」の両方を持つ
   const items = [{ who: 'npc', en: '', ja: first, flip: false }];
+  const learned = new Set(), used = new Set();
   let idx = 0, words = [], curText = '', sel = null, busy = false;
   const clearSel = () => { sel = null; words.forEach(w => w.classList.remove('sel')); tools.hidden = true; };
   const langOf = it => { const en = getEn().on; let l = en && it.en ? 'en' : !en && it.ja ? 'ja' : it.en ? 'en' : 'ja'; if (it.flip) l = l === 'en' ? 'ja' : 'en'; return l; };
@@ -124,6 +125,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   const send = async () => {
     const t = inp.value.trim(); if (!t || busy) return;
     inp.value = ''; busy = true; inp.blur();
+    try { (onUsed ? onUsed(t) : []).forEach(x => used.add(x)); } catch (e) { }
     items.push({ who: 'me', text: t }); const w = { who: 'npc', wait: true, part: '', en: '', ja: '', flip: false }; items.push(w); idx = items.length - 1; draw();
     try { bus && bus.emit('chat:say', { name, text: t }); } catch (e) { }
     try {
@@ -146,7 +148,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     else if (a === 'en') { const c = getEn(); setEn({ on: !c.on, level: c.level }); }
     else if (a === 'lv') { const c = getEn(); setEn({ on: c.on, level: c.level === 'easy' ? 'normal' : 'easy' }); showEn(); }
     else if (a === 'unsel') clearSel();
-    else if (a === 'savesel' && sel) { const txt = words.slice(sel.a, sel.b + 1).map(x => x.textContent).join(' '), single = sel.a === sel.b, sentence = curText; clearSel(); toast(saveNote({ kind: single ? 'word' : 'phrase', text: txt, sentence })); }
+    else if (a === 'savesel' && sel) { const txt = words.slice(sel.a, sel.b + 1).map(x => x.textContent).join(' '), single = sel.a === sel.b, sentence = curText; clearSel(); const m = saveNote({ kind: single ? 'word' : 'phrase', text: txt, sentence }); if (!/もう一度/.test(String(m))) learned.add(txt); toast(m); }
     else if (a === 'savesent' && sel) { const sentence = curText; clearSel(); toast(saveNote({ kind: 'sentence', text: sentence, sentence })); }
     else if (a === 'tr' && it && it.who === 'npc') {   // 英語と日本語を、同じ窓の中で切りかえる
       it.flip = !it.flip; draw();
@@ -156,9 +158,33 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   });
   // 英日の切りかえ(上のボタンからも)が来たら、いまの窓も切りかえる。パネルを閉じたら受け取りをやめる
   const offLang = bus.on('lang', () => { items.forEach(i => { i.flip = false; }); showEn(); draw(); });
-  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); window.removeEventListener('resize', onRs); });
+  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); if (learned.size || used.size) setTimeout(() => showResult(hud, name, [...learned], [...used]), 120); window.removeEventListener('resize', onRs); });
   // キーボードが出ても窓は動かさない: 高さを開いた時の画面の高さに固定して、キーボードは上から被せる。入力欄は画面の上寄り(キーボードに隠れない位置)
   const tc = q('.tc'); let fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px');
   const onRs = () => { if (window.innerHeight > fh) { fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px'); } };
   window.addEventListener('resize', onRs);
+}
+
+// おしゃべりのあとの「けっか」。戦闘のあとの経験値のように、知った単語・使えた単語を書き出す
+function fanfare() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    const c = new AC(), t0 = c.currentTime + 0.05;
+    const tone = (f, t, d, v = 0.12, type = 'square') => { const o = c.createOscillator(), g = c.createGain(); o.type = type; o.frequency.value = f; g.gain.setValueAtTime(0.0001, t0 + t); g.gain.exponentialRampToValueAtTime(v, t0 + t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + t + d); o.connect(g); g.connect(c.destination); o.start(t0 + t); o.stop(t0 + t + d + 0.05); };
+    [[523, 0], [523, .13], [523, .26], [659, .39]].forEach(([f, t]) => tone(f, t, .12));
+    [[784, .58, .16], [659, .76, .12], [784, .9, .5]].forEach(([f, t, d]) => tone(f, t, d));
+    [[523, .9], [659, .9], [1047, .9]].forEach(([f, t]) => tone(f, t, .6, .07, 'triangle'));
+    setTimeout(() => { try { c.close(); } catch (e) { } }, 2500);
+  } catch (e) { }
+}
+function showResult(hud, name, learned, used) {
+  const L = learned.length, U = used.length, exp = L * 10 + U * 20;
+  const chips = a => a.map(x => `<span class="rs-c">${esc(x)}</span>`).join('');
+  let body = '';
+  if (L) body += `<div class="rs-l">${L > 3 ? `新しい単語を <b>${L}こ</b> 知った！` : `<b>${L}こ</b> 知った！`}</div><div class="rs-w">${chips(learned)}</div>`;
+  if (U) body += `<div class="rs-l">${U > 3 ? `<b>${U}こ</b> の単語を使えた！` : '使えた！'}</div><div class="rs-w">${chips(used)}</div><div class="rs-s">${U > 1 ? 'ぜんぶ' : ''}覚えたよ ✨</div>`;
+  const p = hud.panel(`<div class="rs"><div class="rs-box"><div class="rs-h">おしゃべり けっか！</div><div class="rs-n">${esc(name)}との会話</div>${body}<div class="rs-e">EXP <b>+${exp}</b></div><button class="rs-ok">OK ▶</button></div></div>`, null, { sticky: true });
+  const st = document.createElement('style'); st.textContent = '.tw-panel:has(.rs){background:#0008;display:flex;align-items:center;justify-content:center;padding:0}.tw-panel:has(.rs) .tw-card{background:transparent;box-shadow:none;padding:0;width:auto;max-height:none;overflow:visible}.rs-box{width:min(86vw,340px);background:#141a36;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0008;color:#fff;padding:18px 16px;text-align:center;animation:rsin .35s cubic-bezier(.2,1.6,.4,1)}@keyframes rsin{from{transform:scale(.6);opacity:0}}.rs-h{font-size:20px;font-weight:900;color:#ffd166;letter-spacing:.05em}.rs-n{font-size:12px;color:#c9d2ff;margin:2px 0 12px}.rs-l{font-size:16px;font-weight:800;margin-top:8px}.rs-l b{color:#ffd166;font-size:20px}.rs-w{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0}.rs-c{background:#2c3a8a;border:2px solid #ffd166;border-radius:8px;padding:3px 10px;font-size:14px;font-weight:800}.rs-s{font-size:14px;color:#a8f0d0;font-weight:800}.rs-e{margin-top:12px;font-size:15px;color:#c9d2ff}.rs-e b{color:#ffd166;font-size:22px}.rs-ok{margin-top:12px;background:#ffd166;color:#141a36;border:3px solid #fff;border-radius:12px;padding:8px 28px;font-size:16px;font-weight:900}';
+  p.appendChild(st); fanfare();
+  p.querySelector('.rs-ok').addEventListener('click', () => hud.closePanel());
 }

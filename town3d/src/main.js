@@ -401,6 +401,12 @@ export function mount(container, opt = {}) {
       if (list.length) hud.toast(`📝 きょうの表現 ${list.length}こ を、ふりかえりに入れたよ`);
     } catch (e) { }
   }
+  // 自分が打った英文に、ほぞんした単語・フレーズが入っていたら「使えた」として数える
+  const usedWords = t => {
+    const low = ' ' + String(t).toLowerCase().replace(/[^a-z0-9'’ -]+/g, ' ').replace(/\s+/g, ' ') + ' ', out = [];
+    for (const n of notes) { if (n.kind === 'sentence') continue; const k = n.text.toLowerCase().trim(); if (k.length > 1 && /^[a-z]/.test(k) && low.includes(' ' + k + ' ')) { n.used = (n.used || 0) + 1; out.push(n.text); } }
+    if (out.length) saveNotes(); return out;
+  };
   function addNote({ kind, text, sentence, npc, meaning }) {
     const key = text.trim().toLowerCase(), hit = notes.find(n => n.kind === kind && n.text.toLowerCase() === key);
     if (hit) { hit.count = (hit.count || 1) + 1; hit.npc = npc; saveNotes(); logWord(hit.text, hit.meaning, kind === 'sentence' ? 'sentence' : 'word', 'chat'); return `「${text}」をもう一度ほぞん(×${hit.count})`; }
@@ -526,7 +532,7 @@ export function mount(container, opt = {}) {
       setEn: v => { if (v.on) { settings.en = 1; settings.enShort = 1; } else settings.en = 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
       saveNote: it => addNote({ ...it, npc: r.def.name }),
-      onSeen: seenLine,
+      onSeen: seenLine, onUsed: usedWords,
       ask: async (t, onPart) => {
         hist.push({ role: 'user', text: t.slice(0, 80) });
         const H = Math.floor(env.hour), M = Math.floor((env.hour % 1) * 60);
@@ -646,7 +652,7 @@ export function mount(container, opt = {}) {
     r.talking = true; talkingTo = r; input.clear();
     openChat({
       hud, bus, name: r.def.name, role: r.def.role, first, meName: settings.name || 'あなた', maxLen: 400, low, onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
-      onSeen: seenLine,
+      onSeen: seenLine, onUsed: usedWords,
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
       setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
