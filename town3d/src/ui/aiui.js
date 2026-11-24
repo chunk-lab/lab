@@ -158,7 +158,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   });
   // 英日の切りかえ(上のボタンからも)が来たら、いまの窓も切りかえる。パネルを閉じたら受け取りをやめる
   const offLang = bus.on('lang', () => { items.forEach(i => { i.flip = false; }); showEn(); draw(); });
-  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); if (learned.size || used.size) setTimeout(() => showResult(hud, name, [...learned], [...used]), 120); window.removeEventListener('resize', onRs); });
+  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); setTimeout(() => showResult(hud, name, [...learned], [...used]), 120); window.removeEventListener('resize', onRs); });
   // キーボードが出ても窓は動かさない: 高さを開いた時の画面の高さに固定して、キーボードは上から被せる。入力欄は画面の上寄り(キーボードに隠れない位置)
   const tc = q('.tc'); let fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px');
   const onRs = () => { if (window.innerHeight > fh) { fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px'); } };
@@ -180,9 +180,9 @@ function fanfare() {
 function showResult(hud, name, learned, used) {
   const L = learned.length, U = used.length, exp = L * 10 + U * 20;
   const chips = a => a.map(x => `<span class="rs-c">${esc(x)}</span>`).join('');
-  let body = '';
-  if (L) body += `<div class="rs-l">${L > 3 ? `新しい単語を <b>${L}こ</b> 知った！` : `<b>${L}こ</b> 知った！`}</div><div class="rs-w">${chips(learned)}</div>`;
-  if (U) body += `<div class="rs-l">${U > 3 ? `<b>${U}こ</b> の単語を使えた！` : '使えた！'}</div><div class="rs-w">${chips(used)}</div><div class="rs-s">${U > 1 ? 'ぜんぶ' : ''}覚えたよ ✨</div>`;
+  const sec = (a, n, head0, headN) => `<div class="rs-l">${n ? headN : head0}</div>${n ? `<div class="rs-w">${chips(a)}</div>` : ''}`;
+  const body = sec(learned, L, '新しく知った単語 <b>0こ</b>', L > 3 ? `新しい単語を <b>${L}こ</b> 知った！` : `新しく <b>${L}こ</b> 知った！`)
+    + sec(used, U, '新しく使った単語 <b>0こ</b>', `<b>${U}こ</b> 使えた！覚えたよ ✨`);
   const p = hud.panel(`<div class="rs"><div class="rs-box"><div class="rs-h">おしゃべり けっか！</div><div class="rs-n">${esc(name)}との会話</div>${body}<div class="rs-e">EXP <b>+${exp}</b></div><button class="rs-ok">OK ▶</button></div></div>`, null, { sticky: true });
   const st = document.createElement('style'); st.textContent = '.tw-panel:has(.rs){background:#0008;display:flex;align-items:center;justify-content:center;padding:0}.tw-panel:has(.rs) .tw-card{background:transparent;box-shadow:none;padding:0;width:auto;max-height:none;overflow:visible}.rs-box{width:min(86vw,340px);background:#141a36;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0008;color:#fff;padding:18px 16px;text-align:center;animation:rsin .35s cubic-bezier(.2,1.6,.4,1)}@keyframes rsin{from{transform:scale(.6);opacity:0}}.rs-h{font-size:20px;font-weight:900;color:#ffd166;letter-spacing:.05em}.rs-n{font-size:12px;color:#c9d2ff;margin:2px 0 12px}.rs-l{font-size:16px;font-weight:800;margin-top:8px}.rs-l b{color:#ffd166;font-size:20px}.rs-w{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0}.rs-c{background:#2c3a8a;border:2px solid #ffd166;border-radius:8px;padding:3px 10px;font-size:14px;font-weight:800}.rs-s{font-size:14px;color:#a8f0d0;font-weight:800}.rs-e{margin-top:12px;font-size:15px;color:#c9d2ff}.rs-e b{color:#ffd166;font-size:22px}.rs-ok{margin-top:12px;background:#ffd166;color:#141a36;border:3px solid #fff;border-radius:12px;padding:8px 28px;font-size:16px;font-weight:900}';
   p.appendChild(st); fanfare();
