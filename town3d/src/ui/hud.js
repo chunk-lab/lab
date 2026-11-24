@@ -136,6 +136,8 @@ export const CSS = `
 .tw-msg{max-width:92%;padding:9px 13px;border-radius:16px;font-size:calc(var(--tw-dfs,19px) - 1px);line-height:1.6;white-space:pre-line;background:#fff;align-self:flex-start;user-select:text;-webkit-user-select:text}
 .tw-msg.me{align-self:flex-end;background:var(--tw-pink);color:#fff}.tw-msg.wait{opacity:.6}.tw-msg.err{background:#fff3e0;color:#9a6a3a}
 .tw-chatrow{display:flex;gap:8px}.tw-chatrow .tw-btn{white-space:nowrap;min-width:64px;padding:0 16px;box-shadow:none;border:2px solid var(--tw-mint);background:var(--tw-mint)}
+.tw-dialog{right:60px!important}   /* 右下のボタン(🎮🏠📷…)を、会話の窓でふさがない */
+.tw-dialog.tw-bare{bottom:calc(66px + var(--tw-bot))}   /* ボタンの説明のとき: 下の列(手をふる・ひとこと)も押せるよう、窓を上げる */
 /* 会話の窓: ストーリーモードと同じ形(紺の窓・白いふち・名前札・選択肢は窓の上に大きいボタン) */
 .tw-dialog{left:10px;right:10px;bottom:calc(12px + var(--tw-bot));background:#141a36ee;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:18px 18px 14px;min-height:clamp(120px,22vh,180px);box-sizing:border-box}
 .tw-dname{top:-17px;left:14px;background:#141a36;border:3px solid #fff;border-radius:8px;padding:3px 14px;font-weight:900;font-size:15px;letter-spacing:.04em}
@@ -222,12 +224,12 @@ export function createHud(root, bus) {
       toastT = setTimeout(() => { toastEl?.remove(); toastEl = null; }, 2200);
     },
     // 会話:文字送り。choices を押すか、最後まで出たあとに押すと閉じる
-    dialog({ name, role, text, choices = [], face }) {
+    dialog({ name, role, text, choices = [], face, bare = false }) {
       this.closeDialog();
-      dialog = h(`<div class="tw-dialog"><div class="tw-dname"></div><div class="tw-dtext"></div><div class="tw-choices"></div></div>`);
+      dialog = h(`<div class="tw-dialog${bare ? ' tw-bare' : ''}"><div class="tw-dname"></div><div class="tw-dtext"></div><div class="tw-choices"></div></div>`);
       dialog.querySelector('.tw-dname').innerHTML = `${esc(name)}${role ? `<small>${esc(role)}</small>` : ''}`;
       const tx = dialog.querySelector('.tw-dtext'), ch = dialog.querySelector('.tw-choices');
-      const all = [...choices, { label: 'とじる', fn: null }];
+      const all = bare ? choices : [...choices, { label: 'とじる', fn: null }];
       all.forEach((c, i) => { const b = h(`<button class="tw-btn${i === 0 && choices.length ? ' main' : ''}"></button>`); b.textContent = c.label; b.onclick = ev => { ev.stopPropagation(); this.closeDialog(); c.fn?.(); }; ch.appendChild(b); });
       ch.style.visibility = 'hidden';
       const pic = portrait(face || name); if (pic) { const im = document.createElement('img'); im.className = 'tw-dpic'; im.src = pic; im.alt = ''; dialog.appendChild(im); }   // 顔絵

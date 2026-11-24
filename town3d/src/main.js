@@ -557,7 +557,7 @@ export function mount(container, opt = {}) {
     });
   }
   // ---- はな: チュートリアルの入口(「なにについて知りたいの?」→ 選ぶと、そのチュートリアルへ) ----
-  const hanaSay = (text, choices, r) => { if (r) { r.talking = true; talkingTo = r; } hud.dialog({ name: 'はな', role: r ? (PREFS.hana ? `${r.def.role} ・ ${soc.heart('hana')}` : r.def.role) : '', text, choices, face: 'hana' }); };
+  const hanaSay = (text, choices, r, bare) => { hud.dialog({ name: 'はな', role: r ? (PREFS.hana ? `${r.def.role} ・ ${soc.heart('hana')}` : r.def.role) : '', text, choices, face: 'hana', bare }); if (r) { r.talking = true; talkingTo = r; } };   // 先に会話を出す(出すとき前の会話を閉じて「話し中」が外れるので、そのあとで付ける)
   function hanaTeach(r, back) {
     hanaSay('なにについて知りたいの?', [
       { label: '🔑 AIの登録', fn: () => hanaAi(r, () => hanaTeach(r, back)) },
@@ -584,20 +584,23 @@ export function mount(container, opt = {}) {
       ['[data-e="say"]', '💬 ひとこと。頭の上に、ひとこと出して話せるよ。'],
       ['#twToday', '「今日なにする?」を押すと、そらが、今日やることを一緒に考えてくれるよ。'],
     ].filter(x => { const el = R(x[0]); return el && el.offsetParent !== null; });
-    let lit = null, on = true;
+    let lit = null, on = true, skip = null;
     const mark = el => { lit && lit.classList.remove('tw-hl'); lit = el; lit && lit.classList.add('tw-hl'); };
-    const end = () => { on = false; mark(null); document.removeEventListener('pointerdown', cap, true); document.removeEventListener('click', cap, true); };
-    const ask = text => hanaSay(text, [{ label: 'もういい', fn: () => { end(); hanaSay('うん、また知りたくなったら聞いてね!', [], r); } }], r);
+    const end = () => { on = false; mark(null); skip && skip.remove(); skip = null; document.removeEventListener('pointerdown', cap, true); document.removeEventListener('click', cap, true); try { hud.closeDialog(); } catch (e) { } };
     function cap(e) {
       if (!on) return;
-      if (e.target.closest('.tw-dialog,.tw-choices')) return;   // 会話の「もういい」は、ふつうに押せる
+      if (e.target.closest('.tw-dialog,.tw-tourskip')) return;
       const hit = S.find(x => { const el = R(x[0]); return el && el.contains(e.target); });
       if (!hit) return;
-      e.stopPropagation(); e.preventDefault();
-      if (e.type === 'click') { mark(R(hit[0])); hanaSay(hit[1] + '\n\n他のボタンも知りたい?押してくれたら説明するね。', [{ label: 'もういい', fn: () => { end(); hanaSay('うん、また知りたくなったら聞いてね!', [], r); } }], r); }
+      e.stopPropagation(); e.preventDefault();   // 押したボタンは動かさない
+      if (e.type === 'pointerdown') { mark(R(hit[0])); hanaSay(hit[1] + '\n\n他のボタンも知りたい?押してくれたら説明するね。', [], r, true); }   // 押した瞬間に説明(セリフの途中でも)
     }
+    skip = document.createElement('button'); skip.className = 'tw-tourskip'; skip.textContent = 'とばす ▶▶';
+    skip.style.cssText = 'position:fixed;right:12px;top:calc(64px + env(safe-area-inset-top,0px));z-index:200;border:2px solid #fff;border-radius:999px;background:#1d2340dd;color:#fff;font:800 13px inherit;padding:8px 16px;pointer-events:auto';
+    skip.onclick = e => { e.stopPropagation(); end(); };
+    root.appendChild(skip);
     document.addEventListener('pointerdown', cap, true); document.addEventListener('click', cap, true);
-    ask('どのボタンのことを知りたい?\n好きなボタンを押してみて!');
+    hanaSay('どのボタンのことを知りたい?\n好きなボタンを押してみて!', [], r, true);
   }
   // AIの登録: ページへ飛ぶ → キーを作る → コピー → もどってきたら[はりつける]で入れる(キーの形から会社を見分ける)
   const keyProv = k => /^AIza[0-9A-Za-z_\-]{20,}$/.test(k) ? 'gemini' : /^sk-ant-/.test(k) ? 'claude' : /^sk-[A-Za-z0-9_\-]{20,}/.test(k) ? 'openai' : null;
