@@ -54,9 +54,10 @@ import { hanaStory } from './game/stories/hana.js';
 import { lunaStory } from './game/stories/luna.js';
 import { tetsuStory } from './game/stories/tetsu.js';
 import { baronStory } from './game/stories/baron.js';
+import { introStory1, introStory2, introStory3, INTRO_AT } from './game/stories/intro.js';
 const STORY_USES = { hana: [['stream', { passage: 'umb1' }]] };   // 物語の中で開くゲーム(はじめに先に読むもの)。町の中のアプリはもう読みこみ済み
 const STORY_ROOMS = { mii: ['cafe'], maru: ['library'] };   // 物語で使う部屋(はじめに作っておく)
-const STORIES = { chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory, mii: miiStory, suna: sunaStory, koharu: koharuStory, baron: baronStory, tetsu: tetsuStory, luna: lunaStory, hana: hanaStory, maru: maruStory };   // 物語の芝居(3D)。id → 台本
+const STORIES = { intro1: introStory1, intro2: introStory2, intro3: introStory3, chunkkun: chunkkunStory, yuzu: yuzuStory, shiori: shioriStory, gon: gonStory, choco: chocoStory, mii: miiStory, suna: sunaStory, koharu: koharuStory, baron: baronStory, tetsu: tetsuStory, luna: lunaStory, hana: hanaStory, maru: maruStory };   // 物語の芝居(3D)。id → 台本
 import { createStage } from './game/encounter3d.js';
 import { createInteriors } from './world/interiors.js';
 import { createSparkles } from './world/sparkle.js';
@@ -310,7 +311,9 @@ export function mount(container, opt = {}) {
     return residents.list.filter(r => r.ch.root.visible).map(r => ({ r, d: Math.hypot(r.ch.root.position.x - me.x, r.ch.root.position.z - me.z) })).filter(o => o.d < 2.8).sort((a, b) => a.d - b.d).map(o => o.r);
   }
   const bumpUse = k => { const u = storage.get('menuUsed') || {}; u[k] = (u[k] || 0) + 1; storage.set('menuUsed', u); };   // 項目を使った回数(あまりやらない遊びを勧めるのに使う)
+  let introTalk = null, introRun = false;   // introRun: 導入の間(誕生日の登録などは、あとで)   // はじめての導入: 決まった人に話しかけたときだけ、決まった会話にする
   function talkTo(r) {
+    if (introTalk && introTalk(r)) return;
     input.clear(); r.talking = true; talkingTo = r;
     audio.play('talk');
     let text = residents.lineFor(r, env.hour);
@@ -917,6 +920,7 @@ export function mount(container, opt = {}) {
     if (m > 0 && encG < 1) encG = Math.min(encG, 1);
   }
   function visitUpdate(dt) {
+    if (introRun) return;   // 導入の間は、住人から話しかけに来ない
     encTick(dt);
     if (visiting) {
       const r = visiting;
@@ -1376,7 +1380,7 @@ export function mount(container, opt = {}) {
       started = true;
       if (settings.birth && !settings.birthLock) { settings.birthLock = 1; save(); }
       setTimeout(() => { if (soc.gonDaily()) hud.toast('🎒 ゴンが、きょうの拾いものをしてくれたよ'); }, 5000);   // ゴン: 何もしなくても1日1つ
-      if (!settings.birth) { const tryBirth = () => { if (settings.birth) return; if (hud.busy || appHost.current || cut.on) { setTimeout(tryBirth, 5000); return; } openBirthSetup(true); }; setTimeout(tryBirth, 1800); }   // はじめに誕生日をとうろく(物語やアプリの最中は、終わるまで待つ)   // はじめに誕生日をとうろく
+      if (!settings.birth) { const tryBirth = () => { if (settings.birth) return; if (hud.busy || appHost.current || cut.on || introRun) { setTimeout(tryBirth, 5000); return; } openBirthSetup(true); }; setTimeout(tryBirth, 1800); }   // はじめに誕生日をとうろく(物語やアプリの最中は、終わるまで待つ)   // はじめに誕生日をとうろく
       else setTimeout(() => birthdayAfter(), 2500);
       bus.emit('start', { name, look });
       opt.onEvent?.('start', { name, look });
@@ -1909,9 +1913,93 @@ export function mount(container, opt = {}) {
     tick();
   }
 
+  // 物語の芝居(3D)を演じる。終わったら、時刻と自分の位置をもとにもどす(keep: もどさない=導入の続きで使う)。最後まで見たら true
+  async function playStory(id, keep = false) {
+    const fn = STORIES[id]; if (!fn || cut.on) return false;
+    try { hud.closeDialog && hud.closeDialog(); } catch (e) { }
+    if (seat) try { standFromSeat(); } catch (e) { }
+    const h0 = env.hour, x0 = me.x, z0 = me.z, r0 = me.ry, cm = camMode; camMode = 'follow';
+    const hid = []; for (const [, q] of peers) { hid.push([q, q.ch.root.visible]); q.ch.root.visible = false; }   // ほかのプレイヤーは芝居の間かくす
+    if (!storyCamP) storyCamP = fetch(urlModels('models/storycams.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));   // 物語のカメラの表(場面ごとの決まった位置)
+    const cams = window.__storyRec ? null : await storyCamP;
+    const preApps = Promise.all((STORY_USES[id] || []).map(([g, o]) => opt.preloadGame ? opt.preloadGame(g, o) : null));   // その話で開くゲームのデータを、はじめに読む(途中で読まない)
+    const ok = await cut.play(d => fn(d, { name: () => settings.name || 'あなた' }), cams, preApps, STORY_ROOMS[id]);
+    for (const [q, v] of hid) q.ch.root.visible = v;
+    if (!keep) { env.hour = h0; me.x = x0; me.z = z0; me.ry = r0; }
+    me.speed = 0; camMode = cm;
+    return ok;
+  }
+  // ---- はじめての導入 ----
+  const INTRO_KEY = 'hoshimiya:introDone';
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const PRAC_CSS = `.tw-prac{position:absolute;left:10px;right:10px;top:calc(10px + env(safe-area-inset-top,0px));z-index:58;background:#141a36ee;color:#fff;border:3px solid #fff;border-radius:14px;box-shadow:0 0 0 3px #141a36;padding:10px 14px 10px;font-weight:800;pointer-events:auto;animation:twpin .35s ease-out}
+.tw-prac b{display:inline-block;background:#ffd166;color:#141a36;border-radius:8px;padding:1px 10px;font-size:13px;margin-bottom:4px}
+.tw-prac p{margin:2px 0 8px;font-size:17px;line-height:1.6;white-space:pre-line}
+.tw-prac .pr-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tw-prac .pr-dots{font-size:13px;color:#c9d1ff;letter-spacing:.2em}
+.tw-prac button{border:2px solid #fff;border-radius:999px;background:transparent;color:#fff;font:800 13px inherit;padding:6px 14px}
+.tw-prac.ok{background:#2a8f5aee}
+@keyframes twpin{from{transform:translateY(-30px);opacity:0}}`;
+  function practice(who, text, n, total, done) {   // 実際にやってもらう。done() が true になるか「とばす」でおわる
+    if (!document.getElementById('tw-prac-css')) { const st = document.createElement('style'); st.id = 'tw-prac-css'; st.textContent = PRAC_CSS; document.head.appendChild(st); }
+    const el = document.createElement('div'); el.className = 'tw-prac';
+    el.innerHTML = `<b>${esc(who)}</b><p>${esc(text)}</p><div class="pr-row"><span class="pr-dots">${'●'.repeat(n)}${'○'.repeat(total - n)}</span><button type="button">とばす</button></div>`;
+    root.appendChild(el); input.clear(); input.enabled = true;
+    return new Promise(res => {
+      let fin = false;
+      const end = ok => { if (fin) return; fin = true; clearInterval(t); if (ok) { el.classList.add('ok'); el.querySelector('p').textContent = 'できた！'; audio.play('open'); setTimeout(() => { el.remove(); res(true); }, 900); } else { el.remove(); res(false); } };
+      el.querySelector('button').onclick = e => { e.stopPropagation(); end(false); };
+      el.addEventListener('pointerdown', e => e.stopPropagation());
+      const t = setInterval(() => { try { if (done()) end(true); } catch (e) { } }, 120);
+    });
+  }
+  async function runIntro() {
+    await loadP;
+    // 1) 名前とすがた
+    introRun = true;
+    const nm = await new Promise(res => hud.title({ look: settings.look, name: '', intro: true, first: true }, res));
+    startAs(nm); try { opt.setPlayerName && opt.setPlayerName(nm.name); } catch (e) { }
+    const h0 = env.hour;
+    const pinAt = (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (!r) return null; r.pin = { x, z, ry: Math.atan2(me.x - x, me.z - z) }; return r; };
+    const unpin = ids => ids.forEach(id => { const r = residents.list.find(q => q.def.id === id); if (r) r.pin = null; });
+    const A = INTRO_AT, TOTAL = 4;
+    let ok = await playStory('intro1', true);
+    if (ok) {
+      // 2) 操作の練習(その場で、実際にやってもらう)
+      pinAt('hana', ...A.hana); pinAt('sora', ...A.sora);
+      cam.dist = Math.min(cam.dist, 16);   // 練習の間は、自分が見えるくらいに寄る
+      let px = me.x, pz = me.z, walked = 0;
+      await practice('そら', '画面の下半分を、指でおしたまま ずらしてみて。\nスティックで歩けるよ。少し歩いてみよう！', 1, TOTAL, () => { const d = Math.hypot(me.x - px, me.z - pz); px = me.x; pz = me.z; if (!goTo && !approach) walked += d; return walked > 3; });
+      let y0 = cam.yaw, turned = 0;
+      await practice('はな', '画面の上半分を、左右にドラッグしてみて。\nぐるっと、まわりを見わたせるよ！', 2, TOTAL, () => { turned += Math.abs(cam.yaw - y0); y0 = cam.yaw; return turned > 1.6; });
+      let went = false, from = [me.x, me.z];
+      await practice('そら', '行きたい地面を、すばやく2回タップしてみて。\nそこまで走っていくよ！', 3, TOTAL, () => { if (goTo) went = true; return went && !goTo && Math.hypot(me.x - from[0], me.z - from[1]) > 2; });
+      ok = await playStory('intro2', true);
+      if (ok) {
+        const K = pinAt('koharu', ...A.koharu); pinAt('hana', ...A.hana); pinAt('sora', ...A.sora);
+        let talked = false, closed = false;
+        introTalk = r => {
+          if (r.def.id !== 'koharu') return false;
+          input.clear(); r.talking = true; talkingTo = r; audio.play('talk'); soc.onTalk(r); talked = true;
+          const role = PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role;
+          const bye = () => { hud.closeDialog(); r.talking = false; talkingTo = null; closed = true; };
+          hud.dialog({ name: r.def.name, role, text: `はじめまして、${settings.name}さん。わたしは、まちの学校で英語を教えている こはるです。\n"How are you?"(元気？)って聞かれたら、"I'm good, thanks."(元気です)って答えてみてくださいね。`, choices: [{ label: "I'm good, thanks!", fn: bye }] });
+          return true;
+        };
+        await practice('そら', 'こはる先生を、すばやく2回タップしてみて。\nそばまで行って、話しかけるよ！', 4, TOTAL, () => talked && (closed || !hud.busy));
+        introTalk = null; if (K && !talked) soc.onTalk(K);
+        ok = await playStory('intro3', true);
+        unpin(['koharu']);
+      }
+      unpin(['hana', 'sora']);
+    }
+    env.hour = h0; introRun = false;
+    try { localStorage.setItem(INTRO_KEY, '1'); } catch (e) { }
+    return ok;
+  }
   frame();
   if (opt.skipTitle) { settings.name ||= LOOKS[settings.look].name; started = true; hud.tag(me.id, settings.name, true); net?.connect({ id: me.id, name: settings.name, look: settings.look }); netStarted = true; }
-  else loadP.then(() => { if (!started) showTitle(); });   // 読み込みがおわってから、タイトルを出す
+  else loadP.then(() => { if (!started && !(opt.noTitle && opt.noTitle())) showTitle(); });   // はじめての人(導入を見る)は、タイトルを出さない   // 読み込みがおわってから、タイトルを出す
   opt.onEvent?.('ready', { version: VERSION });
 
   return {
@@ -1922,20 +2010,9 @@ export function mount(container, opt = {}) {
     registerApp: def => appHost.register(def),
     setHour: h => { env.hour = h; },
     // 物語の芝居(3D)を演じる。終わったら、時刻と自分の位置をもとにもどす。最後まで見たら true
-    playStory: async id => {
-      const fn = STORIES[id]; if (!fn || cut.on) return false;
-      try { hud.closeDialog && hud.closeDialog(); } catch (e) { }
-      if (seat) try { standFromSeat(); } catch (e) { }
-      const h0 = env.hour, x0 = me.x, z0 = me.z, r0 = me.ry, cm = camMode; camMode = 'follow';
-      const hid = []; for (const [, q] of peers) { hid.push([q, q.ch.root.visible]); q.ch.root.visible = false; }   // ほかのプレイヤーは芝居の間かくす
-      if (!storyCamP) storyCamP = fetch(urlModels('models/storycams.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));   // 物語のカメラの表(場面ごとの決まった位置)
-      const cams = window.__storyRec ? null : await storyCamP;
-      const preApps = Promise.all((STORY_USES[id] || []).map(([g, o]) => opt.preloadGame ? opt.preloadGame(g, o) : null));   // その話で開くゲームのデータを、はじめに読む(途中で読まない)
-      const ok = await cut.play(d => fn(d, { name: () => settings.name || 'あなた' }), cams, preApps, STORY_ROOMS[id]);
-      for (const [q, v] of hid) q.ch.root.visible = v;
-      env.hour = h0; me.x = x0; me.z = z0; me.ry = r0; me.speed = 0; camMode = cm;
-      return ok;
-    },
+    playStory: (id, keep) => playStory(id, keep),
+    // はじめての導入(タイトルの前)。名前 → 芝居と操作の練習 → ナレーション。おわったら resolve(このあと、組み込み先がタイトルを出す)
+    intro: () => runIntro(),
     weather: () => ({ kind: curWx, rain: env.rainLevel || 0, amb: env.amb ? { ...env.amb } : null }),
     meteor: () => env.meteorNow(),
     setMoon: ph => env.setMoon(ph),

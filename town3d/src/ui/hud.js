@@ -296,11 +296,17 @@ export function createHud(root, bus) {
     },
     closePanel() { if (panel) { panel.remove(); panel = null; bus.emit('ui:panelClosed'); } },
     // 最初の画面:キャラを選んで名前を決める
-    title({ look, name, intro = false }, onStart) {
+    title({ look, name, intro = false, first = false }, onStart) {
       const el = h(`<div class="tw-title"><div class="tw-logo"><img src="${LOGO.town}" alt="かまってチャンクTOWN"></div><div class="tw-sub">パステルの町で、くらしてみよう</div><div class="tw-looks"></div><input class="tw-name" maxlength="8" placeholder="なまえ"><button class="tw-btn tw-start">町へ出かける</button><div class="tw-ver" style="position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 62px);font:bold 12px/1 monospace;color:#fff;background:rgba(220,40,80,.85);padding:4px 9px;border-radius:8px;pointer-events:none;white-space:nowrap">ver ${typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'}</div><div class="tw-hint">PC:WASD で移動・ドラッグで見まわす・E で話す<br>スマホ:左側をなぞって移動・右側で見まわす</div></div>`);
+      if (first) {   // はじめての導入: ロゴは最後に出すので、ここでは名前とすがただけ
+        el.querySelector('.tw-logo').remove(); el.querySelector('.tw-sub').remove(); el.querySelector('.tw-ver')?.remove(); el.querySelector('.tw-hint')?.remove();
+        el.querySelector('.tw-start').textContent = 'これで決定！';
+        const hd = document.createElement('h2'); hd.textContent = 'あなたのことを教えてね'; hd.style.cssText = 'margin:0 0 4px;font-size:22px;color:inherit';
+        el.prepend(hd);
+      }
       if (intro) {
         el.style.overflowY = 'auto'; el.style.justifyContent = 'safe center';
-        const greeting = document.createElement('p'); greeting.className = 'tw-arrival'; greeting.textContent = 'ここはかまってチャンクTOWN。今から君は、街の住人の一人として過ごせるよ。まずは名前を入れてね。';
+        const greeting = document.createElement('p'); greeting.className = 'tw-arrival'; greeting.textContent = first ? 'すがたを えらんで、名前を入れてね。' : 'ここはかまってチャンクTOWN。今から君は、街の住人の一人として過ごせるよ。まずは名前を入れてね。';
         greeting.style.cssText = 'max-width:340px;margin:12px 20px;font-size:18px;line-height:1.7;text-align:left;color:inherit';
         el.querySelector('.tw-looks').before(greeting);
         el.querySelector('.tw-name').setAttribute('aria-label', '町で使う名前');

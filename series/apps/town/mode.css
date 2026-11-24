@@ -91,3 +91,15 @@ body.md-home-on .tw-chat{width:min(15vw,66px);height:min(15vw,66px);padding:0;bo
 .md-drill em{display:block;font-style:normal;font-size:11px;color:#b8abc8}
 .md-drill u{display:block;margin-top:8px;text-decoration:none;font-size:12px;font-weight:700;color:#8f7bd0}
 .md-preload>span{white-space:pre-line;text-align:center}
+/* 導入のおわり: ロゴが上から降りてくる(はずむ→光が走る→キラキラ)。ほかはあとから出る */
+.hm-intro{background:radial-gradient(circle at 50% 18%,#fff6d8 0,transparent 55%)}
+.hm-intro .hm-head{position:relative;overflow:visible}
+.hm-intro .hm-logo{animation:hmDrop 1.5s cubic-bezier(.3,.8,.35,1) both,hmGlow 1.2s 1.5s ease-out}
+.hm-shine{position:absolute;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);background-size:250% 100%;background-position:120% 0;animation:hmShine .9s 1.45s ease-in-out both}
+.hm-intro .hm-head::before{content:'✦  ✧  ✦    ✧  ✦  ✧';position:absolute;left:0;right:0;top:-6%;text-align:center;font-size:22px;letter-spacing:.3em;color:#ffcf4d;text-shadow:0 0 8px #fff;opacity:0;pointer-events:none;animation:hmSpark 1.6s 1.4s ease-out both}
+.hm-intro .hm-box>:not(.hm-head){animation:hmIn .7s 2.1s ease-out both}
+@keyframes hmDrop{0%{transform:translateY(-120vh) scale(1.35) rotate(-8deg)}58%{transform:translateY(0) scale(1.05) rotate(2deg)}70%{transform:translateY(-6%) scale(.96,1.06)}80%{transform:translateY(0) scale(1.04,.95)}90%{transform:translateY(-2%)}100%{transform:none}}
+@keyframes hmGlow{0%{filter:drop-shadow(0 0 0 #fff) brightness(1)}35%{filter:drop-shadow(0 0 22px #fff6b0) brightness(1.25)}100%{filter:drop-shadow(0 3px 4px rgba(60,40,20,.25)) brightness(1)}}
+@keyframes hmShine{from{background-position:120% 0}to{background-position:-30% 0}}
+@keyframes hmSpark{0%{opacity:0;transform:scale(.6)}30%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.25) translateY(-14px)}}
+@keyframes hmIn{from{opacity:0;transform:translateY(18px)}}

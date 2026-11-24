@@ -6,7 +6,7 @@ const PW = process.env.PW || '/home/claude/.npm-global/lib/node_modules/@playwri
 const { chromium } = await import(PW);
 const url = process.argv[2] || 'http://localhost:8110/town/';
 const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
-const ids = [...main.match(/const STORIES = \{([^}]*)\}/)[1].matchAll(/(\w+):/g)].map(m => m[1]);
+const ids = process.env.IDS ? process.env.IDS.split(',') : [...main.match(/const STORIES = \{([^}]*)\}/)[1].matchAll(/(\w+):/g)].map(m => m[1]);   // IDS=intro1,intro2 で一部だけ作り直し(前の表に足す)
 const b = await chromium.launch({ executablePath: process.env.CHROME || '/usr/bin/google-chrome', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 const p = await b.newPage({ viewport: { width: 393, height: 722 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
 await p.goto(url); await p.waitForSelector('.md-preload', { state: 'detached', timeout: 250000 }); await p.waitForTimeout(1500);
@@ -19,5 +19,6 @@ for (const id of ids) for (const k of [0, 1, 2]) {
   console.log(id, k, ok, await tf.evaluate(() => Object.keys(window.__storyCamsRec).length));
 }
 const cams = await tf.evaluate(() => window.__storyCamsRec);
-fs.writeFileSync(new URL('../assets_gen/storycams.json', import.meta.url), JSON.stringify(cams));
+const out = new URL('../assets_gen/storycams.json', import.meta.url), old = process.env.IDS && fs.existsSync(out) ? JSON.parse(fs.readFileSync(out, 'utf8')) : {};
+fs.writeFileSync(out, JSON.stringify(Object.assign(old, cams)));
 console.log('cams', Object.keys(cams).length, 'errs', errs.slice(0, 3)); await b.close();

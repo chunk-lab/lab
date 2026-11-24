@@ -44,6 +44,17 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
       if (!el) { el = document.createElement('div'); el.className = 'hm-ov'; document.body.appendChild(el); }
       el.hidden = false; document.body.classList.add('md-home-on'); draw(msg); el.scrollTop = 0;
     },
+    // 導入のおわり: ロゴが上から降りてきて、はずんで光る。ほかの部分は、あとからふわっと出る
+    dropLogo() {
+      if (!el) return; el.classList.remove('hm-intro'); void el.offsetWidth; el.classList.add('hm-intro');
+      const hd = el.querySelector('.hm-head'), img = el.querySelector('.hm-logo');
+      if (hd && img) {   // ロゴの形だけに、光の帯を走らせる
+        const sh = document.createElement('div'); sh.className = 'hm-shine';   // 位置は offset で(降りてくる途中の動きに左右されない)
+        sh.style.cssText += `left:${img.offsetLeft}px;top:${img.offsetTop}px;width:${img.offsetWidth}px;height:${img.offsetHeight}px;-webkit-mask:url("${img.src}") center/contain no-repeat;mask:url("${img.src}") center/contain no-repeat`;
+        hd.appendChild(sh); setTimeout(() => sh.remove(), 4200);
+      }
+      setTimeout(() => el && el.classList.remove('hm-intro'), 4200);
+    },
     hide() { if (el) el.hidden = true; document.body.classList.remove('md-home-on'); },
     remember,
   };

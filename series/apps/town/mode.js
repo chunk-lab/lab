@@ -118,7 +118,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   async function go(m) {
     if (m !== '3d') { suspend3D(); document.body.classList.remove('md-3d-on'); home.show(); return; }   // 町は捨てずに、止めて隠すだけ(次に入るときは読み込みなしですぐ入れる)   // 勉強部屋(ホーム)へ
     if (preload) await preload;
-    const enter = () => { home.remember({ kind: '3d' }); core.daylog.act('base', { cat: 'relax', label: '街を歩く' }); try { if (core.profile.name && town.quickStart) town.quickStart(); } catch (e) { console.error(e); } };
+    const enter = () => { home.remember({ kind: '3d' }); core.daylog.act('base', { cat: 'relax', label: '街を歩く' }); try { if (core.profile.name && !introOn && town.quickStart) town.quickStart(); } catch (e) { console.error(e); } };
     if (town) { home.hide(); document.body.classList.add('md-3d-on'); if (box) box.style.display = ''; try { town.resume(); } catch (e) { } enter(); return; }
     home.hide(); document.body.classList.add('md-3d-on');
     const wait = document.createElement('div'); wait.className = 'md-wait'; wait.textContent = '町を読みこんでいます…'; document.body.appendChild(wait);
@@ -127,7 +127,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     catch (e) { fail(e); return; }
     try { await mount3D(wait); } catch (e) { fail(e); return; }
     // 2回目からは、キャラ選択の画面を出さずに、そのまま町へ(はじめての人だけ、名前を決める画面)
-    try { if (town && core.profile.name && town.quickStart) town.quickStart(); } catch (e) { console.error(e); }
+    try { if (town && core.profile.name && !introOn && town.quickStart) town.quickStart(); } catch (e) { console.error(e); }
     // 管理者だけ、町に入って10秒ほど版(ビルド日時)を出す
     try { if (core.admin && core.admin.on()) { const v = document.createElement('div'); v.className = 'md-ver'; v.textContent = verText(); document.body.appendChild(v); setTimeout(() => v.remove(), 10000); } } catch (e) { }
   }
@@ -140,7 +140,9 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     box = document.createElement('div'); box.className = 'md-town3d'; document.body.appendChild(box);
     if (wait) home.remember({ kind: '3d' });
     town = window.town3d = window.Hoshimiya.mount(box, {
-      playerName: () => core.profile.name,   // 物語ではじめに入れた名前を、3Dのはじめの画面に入れておく
+      playerName: () => core.profile.name,
+      setPlayerName: n => { try { core.profile.setName(n); } catch (e) { } },   // 導入で決めた名前を、2Dと共通の名前にする
+      noTitle: () => introOn,   // 導入の間は、3Dのタイトルを出さない   // 物語ではじめに入れた名前を、3Dのはじめの画面に入れておく
       wallet: core.wallet,   // コインは2Dと共通
       gems: { get: () => core.member.gems(), spend: n => core.member.spendGems(n, 'house'), add: n => core.member.addGems(n, 'shop'), onChange: f => core.member.onChange(f) },   // ダイヤも2Dと共通(自宅を広げる・部屋を増やす)
       house: ECON.house,
@@ -215,11 +217,26 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
   function stop3D() { document.body.classList.remove('md-app-open', 'tw-talking'); core.daylog.act('base', null); if (!town) return; try { town.unmount(); } catch (e) { console.error(e); } box.remove(); town = null; box = null; }
 
   // ゲームを開いている間は3Dの町を止め、閉じたら再開する
+  const forceIntro = /[?&]intro=1/.test(location.search);   // 確認用: ?intro=1 で、もう一度導入を見る
+  const needIntro = () => { if (forceIntro) return true; if (/[?&]intro=0/.test(location.search)) return false; if (core.profile.name) return false; try { return !localStorage.getItem('hoshimiya:introDone'); } catch (e) { return false; } };
+  let introOn = false;
+  async function runIntro() {
+    introOn = true; document.body.classList.add('md-story3d');   // 物語と同じく、2Dの帯やボタンは出さない
+    try { await go('3d'); if (!town || !town.intro) throw new Error('no intro'); await town.intro(); }
+    catch (e) { console.error(e); }
+    introOn = false; document.body.classList.remove('md-story3d');
+    suspend3D(); document.body.classList.remove('md-3d-on');
+    home.show(); home.dropLogo && home.dropLogo();
+  }
   core.events.on((game, name) => { if (name === 'open' && game !== 'town3d' && town) town.pause(); });
   const resume = () => { if (town) town.resume(); };
 
   return {
-    start() { home.show(); },
+    start() {
+      // はじめての人(名前がなく、導入をまだ見ていない): タイトルの前に、3Dの町で はな・そらの導入。おわったら、ロゴが降りてきてタイトルへ
+      if (needIntro()) { runIntro(); return; }
+      home.show();
+    },
     to3D: () => go('3d'),
     resume,
     get is3D() { return !!town; },

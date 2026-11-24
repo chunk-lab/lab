@@ -142,6 +142,7 @@ export function createEpisodes(core, { games, depart, play3d, pauseTown = () => 
       content.innerHTML = `<div class="ep-card"><small>第${num()}話</small><h2>${esc(episode.title)}</h2><p>${rich(s.text || '')}</p><div class="ep-actions"></div></div>`;
       content.querySelector('.ep-actions').append(button('タイトルへもどる', () => { progress.complete(); stop(); }, 'ep-primary'));
     } else if (s.type === 'name') {
+      if (core.profile.name) { progress.next(); render(); return; }   // 名前は、はじめての導入で決めてある
       content.innerHTML = `<div class="ep-dialog"><b class="ep-name">${NAME[s.who || 'hana']}</b><p class="ep-line">${rich(s.text)}</p><input class="ep-input" maxlength="8" placeholder="なまえ" aria-label="あなたの名前" value="${esc(core.profile.name || '')}"><div class="ep-actions"></div></div>`;
       const inp = content.querySelector('.ep-input'), go = () => { const v = inp.value.trim(); if (v) core.profile.setName(v); progress.next(); render(); };
       content.querySelector('.ep-actions').append(button('きめた', go, 'ep-primary'));
