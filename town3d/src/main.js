@@ -1962,7 +1962,7 @@ export function mount(container, opt = {}) {
     const h0 = env.hour;
     const pinAt = (id, x, z) => { const r = residents.list.find(q => q.def.id === id); if (!r) return null; r.pin = { x, z, ry: Math.atan2(me.x - x, me.z - z) }; return r; };
     const unpin = ids => ids.forEach(id => { const r = residents.list.find(q => q.def.id === id); if (r) r.pin = null; });
-    const A = INTRO_AT, TOTAL = 4;
+    const A = INTRO_AT, TOTAL = 5;
     let ok = await playStory('intro1', true);
     if (ok) {
       // 2) 操作の練習(その場で、実際にやってもらう)
@@ -1972,8 +1972,10 @@ export function mount(container, opt = {}) {
       await practice('そら', '画面の下半分を、指でおしたまま ずらしてみて。\nスティックで歩けるよ。少し歩いてみよう！', 1, TOTAL, () => { const d = Math.hypot(me.x - px, me.z - pz); px = me.x; pz = me.z; if (!goTo && !approach) walked += d; return walked > 3; });
       let y0 = cam.yaw, turned = 0;
       await practice('はな', '画面の上半分を、左右にドラッグしてみて。\nぐるっと、まわりを見わたせるよ！', 2, TOTAL, () => { turned += Math.abs(cam.yaw - y0); y0 = cam.yaw; return turned > 1.6; });
+      let d0 = cam.dist, zin = 0, zout = 0;
+      await practice('はな', '2本の指で、画面をつまんだり ひろげたりしてみて。\n寄ったり、引いたりできるよ！', 3, TOTAL, () => { const d = cam.dist - d0; d0 = cam.dist; if (d < 0) zin -= d; else zout += d; return zin > 1.5 && zout > 1.5; });
       let went = false, from = [me.x, me.z];
-      await practice('そら', '行きたい地面を、すばやく2回タップしてみて。\nそこまで走っていくよ！', 3, TOTAL, () => { if (goTo) went = true; return went && !goTo && Math.hypot(me.x - from[0], me.z - from[1]) > 2; });
+      await practice('そら', '行きたい地面を、すばやく2回タップしてみて。\nそこまで走っていくよ！', 4, TOTAL, () => { if (goTo) went = true; return went && !goTo && Math.hypot(me.x - from[0], me.z - from[1]) > 2; });
       ok = await playStory('intro2', true);
       if (ok) {
         const K = pinAt('koharu', ...A.koharu); pinAt('hana', ...A.hana); pinAt('sora', ...A.sora);
@@ -1986,7 +1988,7 @@ export function mount(container, opt = {}) {
           hud.dialog({ name: r.def.name, role, text: `はじめまして、${settings.name}さん。わたしは、まちの学校で英語を教えている こはるです。\n"How are you?"(元気？)って聞かれたら、"I'm good, thanks."(元気です)って答えてみてくださいね。`, choices: [{ label: "I'm good, thanks!", fn: bye }] });
           return true;
         };
-        await practice('そら', 'こはる先生を、すばやく2回タップしてみて。\nそばまで行って、話しかけるよ！', 4, TOTAL, () => talked && (closed || !hud.busy));
+        await practice('そら', 'こはる先生を、すばやく2回タップしてみて。\nそばまで行って、話しかけるよ！', 5, TOTAL, () => talked && (closed || !hud.busy));
         introTalk = null; if (K && !talked) soc.onTalk(K);
         ok = await playStory('intro3', true);
         unpin(['koharu']);

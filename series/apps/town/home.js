@@ -2,12 +2,18 @@
    2Dの地図のかわりに「行き先のリスト」（core/plays.js の表から作る）。3Dの町は、えらんだときだけ読み込む。 */
 import { PLAYS } from '../../core/plays.js';
 import { LOGO } from '../../core/logos.js';
+import { TITLE_VOICE } from '../../core/title_voice.js';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
 // 版:組み立てた日時(日本時間)。テスト版が最新かどうか、見分けるための印
 export const verText = () => { const b = window.__APP__ && window.__APP__.build, t = b ? parseInt(b, 36) : NaN; if (!isFinite(t)) return 'ver dev'; const d = new Date(t + 9 * 36e5).toISOString(); return 'ver ' + d.slice(5, 10) + ' ' + d.slice(11, 16) + (window.__APP__.rev ? ' ・ ' + window.__APP__.rev : ''); };
 export function createHome(core, { st, go3D, openFish, openStudy, has, openEpisode, episodeLabel, episodeSub, episodeList, openEpisodeAt }) {
-  let el = null;
+  let el = null, voice = null, voiced = false;
+  // タイトルの声:ページを開いて最初のタイトルで1回。音が出せない(まだ画面にさわっていない)ときは、最初にさわった瞬間に鳴らす
+  const sayTitle = () => {
+    voiced = true; try { if (!voice) voice = new Audio(TITLE_VOICE); voice.currentTime = 0; const p = voice.play();
+      if (p && p.catch) p.catch(() => { const go = () => { if (el && !el.hidden) { try { voice.currentTime = 0; voice.play().catch(() => { }); } catch (e) { } } }; document.addEventListener('pointerdown', go, { once: true, capture: true }); }); } catch (e) { }
+  };
   const usable = p => p.go.to === '3d' ? true : p.go.to === 'note' ? !!core.study : p.go.to === 'test' ? !!core.level : p.go.to === 'role' ? !!core.roletest && !!core.books : !!core.openGame && has(p.go.game);
   const cont = () => st.get('cont') || null;
   const remember = (c) => st.set('cont', Object.assign({ at: Date.now() }, c));
@@ -43,10 +49,11 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
     show(msg) {
       if (!el) { el = document.createElement('div'); el.className = 'hm-ov'; document.body.appendChild(el); }
       el.hidden = false; document.body.classList.add('md-home-on'); draw(msg); el.scrollTop = 0;
+      if (!voiced) setTimeout(() => { if (!voiced && el && !el.hidden) sayTitle(); }, 0);   // 導入のときは、ロゴが降りてくる瞬間(dropLogo)に鳴らす
     },
     // 導入のおわり: ロゴが上から降りてきて、はずんで光る。ほかの部分は、あとからふわっと出る
     dropLogo() {
-      if (!el) return; el.classList.remove('hm-intro'); void el.offsetWidth; el.classList.add('hm-intro');
+      if (!el) return; sayTitle(); el.classList.remove('hm-intro'); void el.offsetWidth; el.classList.add('hm-intro');
       const hd = el.querySelector('.hm-head'), img = el.querySelector('.hm-logo');
       if (hd && img) {   // ロゴの形だけに、光の帯を走らせる
         const sh = document.createElement('div'); sh.className = 'hm-shine';   // 位置は offset で(降りてくる途中の動きに左右されない)
