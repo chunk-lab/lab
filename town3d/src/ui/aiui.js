@@ -123,7 +123,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   const toast = msg => { tools.hidden = false; tools.innerHTML = `<span class="tw-seltxt">${esc(msg)}</span>`; setTimeout(() => { if (!sel) tools.hidden = true; }, 1600); };
   const send = async () => {
     const t = inp.value.trim(); if (!t || busy) return;
-    inp.value = ''; busy = true;
+    inp.value = ''; busy = true; inp.blur();
     items.push({ who: 'me', text: t }); const w = { who: 'npc', wait: true, part: '', en: '', ja: '', flip: false }; items.push(w); idx = items.length - 1; draw();
     try { bus && bus.emit('chat:say', { name, text: t }); } catch (e) { }
     try {
@@ -131,7 +131,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
       setPair(w, String(out).split('|||')); w.wait = false;
     } catch (e) { w.wait = false; w.err = true; w.msg = e.message || 'うまく話せなかったよ'; }
     if (items[idx] === w) draw(); else if (!w.err) { /* 前のセリフを見ている間に届いた: ▼で最新へ */ latestB.hidden = false; posEl.textContent = ` ${idx + 1} / ${items.length} `; }
-    busy = false; if (items[idx] === w) inp.focus();
+    busy = false;
   };
   inp.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); send(); } });
   p.addEventListener('click', async e => {
@@ -142,7 +142,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     else if (a === 'close') hud.closePanel();
     else if (a === 'prev') go(idx - 1);
     else if (a === 'next') go(idx + 1);
-    else if (a === 'latest') { idx = items.length - 1; draw(); inp.focus(); }
+    else if (a === 'latest') { idx = items.length - 1; draw(); }
     else if (a === 'en') { const c = getEn(); setEn({ on: !c.on, level: c.level }); }
     else if (a === 'lv') { const c = getEn(); setEn({ on: c.on, level: c.level === 'easy' ? 'normal' : 'easy' }); showEn(); }
     else if (a === 'unsel') clearSel();
@@ -161,5 +161,4 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   const tc = q('.tc'); let fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px');
   const onRs = () => { if (window.innerHeight > fh) { fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px'); } };
   window.addEventListener('resize', onRs);
-  setTimeout(() => inp.focus(), 50);
 }

@@ -166,13 +166,13 @@ body:has(.tc) #twToday{display:none!important}
 .tc-row .tw-say{flex:1;min-width:0;background:#fffaf2;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36}
 .tc-row .tw-btn{white-space:nowrap;padding:0 18px;background:#ffd166;color:#141a36;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36;font-weight:900}
 /* 会話の窓: ストーリーモードと同じ形(紺の窓・白いふち・名前札・選択肢は窓の上に大きいボタン) */
-.tw-dialog{left:10px;right:10px;bottom:calc(12px + var(--tw-bot));background:#141a36ee;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:18px 18px 14px;min-height:clamp(120px,22vh,180px);box-sizing:border-box}
+.tw-dialog{left:10px;right:10px;bottom:calc(12px + var(--tw-bot));background:#141a36fa;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:18px 18px 14px;min-height:clamp(120px,22vh,180px);box-sizing:border-box}
 .tw-dname{top:-17px;left:14px;background:#141a36;border:3px solid #fff;border-radius:8px;padding:3px 14px;font-weight:900;font-size:15px;letter-spacing:.04em}
-.tw-dname small{color:#c9d2ff;opacity:1}
+.tw-dname small{display:none}.tw-dname{white-space:nowrap}
 .tw-dtext{color:#fff;font-weight:700;max-height:min(38vh,300px)}
 .tw-dpic{right:8px;bottom:calc(100% + 2px);height:auto;width:min(26vw,108px);max-width:none;filter:drop-shadow(0 4px 10px #0006)}
 .tw-choices{position:absolute;left:4px;right:calc(min(26vw,108px) + 8px);bottom:calc(100% + 24px);margin:0;display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:8px;max-height:calc(100vh - var(--tw-top) - var(--tw-bot) - clamp(120px,22vh,180px) - 120px);overflow-y:auto;overscroll-behavior:contain;padding:3px}
-.tw-choices .tw-btn{background:#141a36ee;color:#fff;border:3px solid #fff;border-radius:12px;padding:11px 16px;font-size:16px;font-weight:800;text-align:left;box-shadow:0 0 0 3px #141a36;flex:none}
+.tw-choices .tw-btn{background:#141a36f6;color:#fff;border:3px solid #fff;border-radius:12px;padding:7px 14px;font-size:14px;font-weight:800;text-align:left;box-shadow:0 0 0 3px #141a36;flex:none}
 .tw-choices .tw-btn::before{content:'▶ ';color:#ffd166;font-size:13px}
 .tw-choices .tw-btn.main{background:linear-gradient(#2c3a8a,#1d2766);border-color:#ffd166;color:#fff}
 .tw-choices .tw-dexp{align-self:flex-start;margin:0;font-size:13px;padding:6px 12px}
