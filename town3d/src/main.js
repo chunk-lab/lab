@@ -567,7 +567,7 @@ export function mount(container, opt = {}) {
       { label: '🧩 マージゲーム', fn: () => openApp('merge', { coach: 'choco', coachName: '大喜利チョコ' }) },
       ...(back ? [{ label: '← もどる', fn: back }] : [])], r);
   }
-  // 画面のボタンを、1つずつ光らせて教える
+  // 画面のボタン: 押されたボタンについてだけ教える(押しても、そのボタンは動かない)。「もういい」でおわり
   function iconTour(r) {
     const R = s => root.querySelector(s) || document.querySelector(s);
     const S = [
@@ -580,18 +580,24 @@ export function mount(container, opt = {}) {
       ['.tw-photo', '📷 写真をとれるよ。みんなと記念写真もとってね!'],
       ['.tw-daily', '🌙 今日はここまで。今日やったことを、ふりかえれるよ。'],
       ['.tw-menu', '⚙ 設定。音の大きさや、AIのキーなどを変えられるよ。'],
-      ['[data-e="wave"]', '👋 手をふったり、💬 ひとこと話しかけたりできるよ。'],
+      ['[data-e="wave"]', '👋 手をふるよ。近くの住人に、あいさつできるの。'],
+      ['[data-e="say"]', '💬 ひとこと。頭の上に、ひとこと出して話せるよ。'],
       ['#twToday', '「今日なにする?」を押すと、そらが、今日やることを一緒に考えてくれるよ。'],
     ].filter(x => { const el = R(x[0]); return el && el.offsetParent !== null; });
-    let i = 0, lit = null;
-    const off = () => { lit && lit.classList.remove('tw-hl'); lit = null; };
-    const step = () => {
-      off(); if (i >= S.length) { hanaSay('これで、ボタンはぜんぶ! 分からなくなったら、また聞いてね。', [], r); return; }
-      lit = R(S[i][0]); lit && lit.classList.add('tw-hl');
-      hanaSay(S[i][1], [{ label: i === S.length - 1 ? 'わかった!' : 'つぎへ', fn: () => { i++; step(); } }], r);
-    };
-    const offC = bus.on('ui:dialogClosed', () => { if (!lit) return; setTimeout(() => { if (!hud.busy) { off(); offC(); } }, 50); });
-    step();
+    let lit = null, on = true;
+    const mark = el => { lit && lit.classList.remove('tw-hl'); lit = el; lit && lit.classList.add('tw-hl'); };
+    const end = () => { on = false; mark(null); document.removeEventListener('pointerdown', cap, true); document.removeEventListener('click', cap, true); };
+    const ask = text => hanaSay(text, [{ label: 'もういい', fn: () => { end(); hanaSay('うん、また知りたくなったら聞いてね!', [], r); } }], r);
+    function cap(e) {
+      if (!on) return;
+      if (e.target.closest('.tw-dialog,.tw-choices')) return;   // 会話の「もういい」は、ふつうに押せる
+      const hit = S.find(x => { const el = R(x[0]); return el && el.contains(e.target); });
+      if (!hit) return;
+      e.stopPropagation(); e.preventDefault();
+      if (e.type === 'click') { mark(R(hit[0])); hanaSay(hit[1] + '\n\n他のボタンも知りたい?押してくれたら説明するね。', [{ label: 'もういい', fn: () => { end(); hanaSay('うん、また知りたくなったら聞いてね!', [], r); } }], r); }
+    }
+    document.addEventListener('pointerdown', cap, true); document.addEventListener('click', cap, true);
+    ask('どのボタンのことを知りたい?\n好きなボタンを押してみて!');
   }
   // AIの登録: ページへ飛ぶ → キーを作る → コピー → もどってきたら[はりつける]で入れる(キーの形から会社を見分ける)
   const keyProv = k => /^AIza[0-9A-Za-z_\-]{20,}$/.test(k) ? 'gemini' : /^sk-ant-/.test(k) ? 'claude' : /^sk-[A-Za-z0-9_\-]{20,}/.test(k) ? 'openai' : null;
