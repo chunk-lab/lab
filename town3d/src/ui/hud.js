@@ -1,7 +1,7 @@
 // 画面の上に重ねる UI(DOM)。クラスはすべて tw- 接頭辞
 import { LOOKS, LOOK_IDS } from '../world/character.js';
 import { fmtN } from '../core/core.js';
-import { portrait } from './portraits.js';
+import { portrait, charColor } from './portraits.js';
 import { LOGO } from './logos.js';
 
 export const CSS = `
@@ -138,6 +138,32 @@ export const CSS = `
 .tw-chatrow{display:flex;gap:8px}.tw-chatrow .tw-btn{white-space:nowrap;min-width:64px;padding:0 16px;box-shadow:none;border:2px solid var(--tw-mint);background:var(--tw-mint)}
 .tw-dialog{right:60px!important}   /* 右下のボタン(🎮🏠📷…)を、会話の窓でふさがない */
 .tw-dialog.tw-bare{bottom:calc(66px + var(--tw-bot))}   /* ボタンの説明のとき: 下の列(手をふる・ひとこと)も押せるよう、窓を上げる */
+/* おしゃべり: ストーリー風の窓(1セリフ1窓・フリックでめくる) */
+.tw-panel:has(.tc){background:transparent;display:block;padding:0}
+.tw-panel:has(.tc) .tw-card{background:transparent;box-shadow:none;padding:0;width:auto;max-height:none;overflow:visible;position:static}
+.tc{position:absolute;inset:0;pointer-events:none;--kb:0px}
+.tc>*{pointer-events:auto}
+.tc-top{position:absolute;left:10px;right:10px;top:calc(62px + var(--tw-top));display:flex;gap:6px;align-items:center;justify-content:flex-start;pointer-events:none!important}
+.tc-top .tw-btn{pointer-events:auto;font-size:13px;padding:7px 13px;background:#1d2340dd;color:#fff;border:2px solid #fff;box-shadow:none}
+.tc-top .tw-btn.on{background:#2c3a8a;border-color:#ffd166}
+.tc-top .tc-sp{flex:1}
+.tc-tools{position:absolute;left:10px;right:10px;top:calc(108px + var(--tw-top));background:#fff7e0;color:#4a3d63}
+.tc-win{position:absolute;left:10px;right:10px;bottom:calc(76px + var(--kb) + env(safe-area-inset-bottom,0px));min-height:150px;box-sizing:border-box;background:#141a36f2;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:20px 18px 34px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.tc-name{position:absolute;left:14px;top:-17px;background:#141a36;border:3px solid #fff;border-radius:8px;padding:3px 14px;font-weight:900;font-size:15px;letter-spacing:.04em}
+.tc-pic{position:absolute;right:8px;bottom:calc(100% + 2px);width:min(30vw,120px);pointer-events:none;filter:drop-shadow(0 4px 10px #0006)}
+.tc-text{font-size:var(--tw-dfs,19px);line-height:1.7;font-weight:700;white-space:pre-wrap;max-height:min(40vh,320px);overflow-y:auto;overscroll-behavior:contain;min-height:3.4em;-webkit-user-select:text;user-select:text}
+.tc-win.wait .tc-text{opacity:.6}.tc-win.err .tc-text{color:#ffb38a!important}
+.tc-text .tw-w{border-bottom:1px dotted #ffffff99}.tc-text .tw-w.sel{background:#ffe08a;color:#141a36;border-bottom-color:transparent}
+.tc-tr{position:absolute;right:12px;top:-15px;border:2px solid #fff;background:#2c3a8a;color:#fff;border-radius:10px;font:800 13px inherit;padding:2px 14px}
+.tc-win.npc .tc-tr{right:auto;left:auto}
+.tc-foot{position:absolute;left:14px;right:14px;bottom:6px;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#c9d2ff;font-weight:800}
+.tc-nav{background:none;border:0;color:#c9d2ff;font:800 15px inherit;padding:2px 8px}
+.tc-nav:disabled{opacity:.25}
+.tc-latest{background:#ffd166;color:#141a36;border:0;border-radius:999px;font:900 15px inherit;padding:1px 18px;animation:gdb .8s infinite alternate}
+@keyframes gdb{to{transform:translateY(3px)}}
+.tc-row{position:absolute;left:10px;right:10px;bottom:calc(12px + var(--kb) + env(safe-area-inset-bottom,0px));display:flex;gap:8px}
+.tc-row .tw-say{flex:1;min-width:0;background:#fffaf2;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36}
+.tc-row .tw-btn{white-space:nowrap;padding:0 18px;background:#ffd166;color:#141a36;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36;font-weight:900}
 /* 会話の窓: ストーリーモードと同じ形(紺の窓・白いふち・名前札・選択肢は窓の上に大きいボタン) */
 .tw-dialog{left:10px;right:10px;bottom:calc(12px + var(--tw-bot));background:#141a36ee;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:18px 18px 14px;min-height:clamp(120px,22vh,180px);box-sizing:border-box}
 .tw-dname{top:-17px;left:14px;background:#141a36;border:3px solid #fff;border-radius:8px;padding:3px 14px;font-weight:900;font-size:15px;letter-spacing:.04em}
@@ -232,6 +258,7 @@ export function createHud(root, bus) {
       const all = bare ? choices : [...choices, { label: 'とじる', fn: null }];
       all.forEach((c, i) => { const b = h(`<button class="tw-btn${i === 0 && choices.length ? ' main' : ''}"></button>`); b.textContent = c.label; b.onclick = ev => { ev.stopPropagation(); this.closeDialog(); c.fn?.(); }; ch.appendChild(b); });
       ch.style.visibility = 'hidden';
+      tx.style.color = charColor(face || name);   // キャラごとの文字色
       const pic = portrait(face || name); if (pic) { const im = document.createElement('img'); im.className = 'tw-dpic'; im.src = pic; im.alt = ''; dialog.appendChild(im); }   // 顔絵
       root.appendChild(dialog); document.body.classList.add('tw-talking');   // 会話中は画面の下の「今日なにする?」を隠す
       let i = 0; const chars = [...text];

@@ -7,3 +7,7 @@ import sora from './portraits/sora.webp'; import hana from './portraits/hana.web
 const BY_ID = { self_mio, self_ren, sora, hana, shiori, koharu, mii, baron, gon, maru, yuzu, chunkkun, choco, luna, tetsu, suna };
 const BY_NAME = { 'そら': sora, 'はな': hana, 'しおりさん': shiori, 'こはる先生': koharu, 'ミイ': mii, 'ハッタリ男爵': baron, 'ひろい屋ゴン': gon, 'マルさん': maru, 'ゆず': yuzu, 'チャンクくん': chunkkun, '大喜利チョコ': choco, 'ルナ': luna, '哲学者': tetsu, '潮見さん': suna };
 export const portrait = k => BY_ID[k] || BY_NAME[k] || null;
+// 会話の文字色(キャラごと)。自分とナレーションは白
+const COL = { hana: '#ffb3d1', sora: '#9bd8ff', shiori: '#bfe8a8', koharu: '#d8b8ff', mii: '#ffd09b', baron: '#ffe27a', gon: '#ffb38a', maru: '#a8f0d0', yuzu: '#ffd36b', chunkkun: '#dfe8ff', choco: '#e6b48f', luna: '#a8b4ff', tetsu: '#cfcfcf', suna: '#7fe6dc' };
+const COL_NAME = { 'そら': 'sora', 'はな': 'hana', 'しおりさん': 'shiori', 'こはる先生': 'koharu', 'ミイ': 'mii', 'ハッタリ男爵': 'baron', 'ひろい屋ゴン': 'gon', 'ゴン': 'gon', 'マルさん': 'maru', 'ゆず': 'yuzu', 'チャンクくん': 'chunkkun', '大喜利チョコ': 'choco', 'ルナ': 'luna', '哲学者': 'tetsu', '潮見さん': 'suna' };
+export const charColor = k => COL[k] || COL[COL_NAME[k]] || '#ffffff';

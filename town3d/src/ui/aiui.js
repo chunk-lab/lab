@@ -1,6 +1,6 @@
 // AIまわりの画面:つなぎかた(キー取得の案内つき)と、住人とのおしゃべり
 import { PROVIDERS } from '../core/ai.js';
-import { portrait } from './portraits.js';
+import { portrait, charColor } from './portraits.js';
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -56,105 +56,110 @@ export function openAiSetup({ hud, ai, onDone }) {
 }
 
 // 住人との自由なおしゃべり。ask(text) → Promise<string>
-export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, maxLen = 80, low = false }) {
-  const p = hud.panel(`<h2>${portrait(name) ? `<img src="${portrait(name)}" alt="" style="height:44px;vertical-align:middle;margin-right:8px">` : ''}${esc(name)}<small>${esc(role || '')}</small></h2>
-    <div class="tw-enrow"><button class="tw-btn" data-a="en"></button><button class="tw-btn" data-a="lv"></button></div>
-    <div class="tw-log" aria-live="polite"></div>
-    <div class="tw-tools" hidden></div>
-    <div class="tw-chatrow"><input class="tw-say" maxlength="${maxLen}" placeholder="話しかける"><button class="tw-btn main" data-a="send">送る</button></div>
-    <div class="tw-actions"><button class="tw-btn" data-a="big">⤢ ひろげる</button><button class="tw-btn" data-a="close">${low ? "おしゃべりをおわる" : "とじる"}</button></div>`, null, { sticky: true });   // 会話は、外をタップしても消えない(「とじる」で終える)
-  p.classList.add('tw-chatp');   // 枠の中で、直前のセリフの欄が縮んで収まる(上に消えない)
-  if (low) p.classList.add('tw-low');   // 画面の下半分に出す(デート中は、上で2人が見えるように)
-  if (onClose && bus) { const offC = bus.on('ui:panelClosed', () => { offC && offC(); try { onClose(); } catch (e) { } }); }   // とじたら(住人の記憶をまとめる など)
-  const log = p.querySelector('.tw-log'), inp = p.querySelector('.tw-say'), tools = p.querySelector('.tw-tools');
-  const enB = p.querySelector('[data-a="en"]'), lvB = p.querySelector('[data-a="lv"]');
+// ストーリーの会話と同じ窓。1セリフ1窓で、左右にフリックすると、自分と相手のセリフが順にめくれる。
+export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, maxLen = 80, low = false, meName = 'あなた' }) {
+  const pic = portrait(name), col = charColor(name);
+  const p = hud.panel(`<div class="tc">
+    <div class="tc-top"><button class="tw-btn" data-a="en"></button><button class="tw-btn" data-a="lv"></button><span class="tc-sp"></span><button class="tw-btn" data-a="close">${low ? 'おしゃべりをおわる' : 'とじる ✕'}</button></div>
+    <div class="tw-tools tc-tools" hidden></div>
+    <div class="tc-win"><img class="tc-pic" alt=""><div class="tc-name"></div><button class="tc-tr" data-a="tr" hidden>訳</button><div class="tc-text" aria-live="polite"></div>
+      <div class="tc-foot"><span><button class="tc-nav" data-a="prev">◀</button><span class="tc-pos"></span><button class="tc-nav" data-a="next">▶</button></span><button class="tc-latest" data-a="latest" hidden>▼</button></div></div>
+    <div class="tc-row"><input class="tw-say" maxlength="${maxLen}" placeholder="話しかける"><button class="tw-btn main" data-a="send">送る</button></div></div>`, null, { sticky: true });
+  if (onClose && bus) { const offC = bus.on('ui:panelClosed', () => { offC && offC(); try { onClose(); } catch (e) { } }); }
+  const q = x => p.querySelector(x);
+  const win = q('.tc-win'), nameEl = q('.tc-name'), picEl = q('.tc-pic'), textEl = q('.tc-text'), trB = q('.tc-tr'), posEl = q('.tc-pos'), latestB = q('.tc-latest'), row = q('.tc-row'), inp = q('.tw-say'), tools = q('.tc-tools');
+  const enB = q('[data-a="en"]'), lvB = q('[data-a="lv"]');
   const showEn = () => { const e = getEn(); enB.textContent = 'English: ' + (e.on ? 'ON' : 'OFF'); enB.classList.toggle('on', e.on); lvB.hidden = !e.on; lvB.textContent = e.level === 'easy' ? 'やさしい' : 'ふつう'; };
   showEn();
-  let sel = null;   // 選んだ単語・フレーズ { el, a, b }
-  const clearSel = () => { if (sel) sel.el._w.forEach(w => w.classList.remove('sel')); sel = null; tools.hidden = true; };
-  const add = (who, text, opt = {}) => {
-    const d = document.createElement('div'); d.className = 'tw-msg ' + who;
-    const t = document.createElement('span'); t.className = 'tw-t'; t.textContent = text; d.appendChild(t);
-    log.appendChild(d); log.scrollTop = log.scrollHeight; d._t = t; return d;
-  };
-  // 英語の返事:単語ごとにタップできる形にして、「訳」ボタンを付ける
-  const isJa = s => /[\u3040-\u30ff\u4e00-\u9fff]/.test(s);
-  // 返事は「英語」と「日本語」の両方を持っておき、いまのモードに合わせて見せる(切りかえても、AIを呼びなおさない)
-  const msgs = [];
-  const render = d => {
-    d.querySelectorAll('.tw-trbtn,.tw-tr').forEach(x => x.remove());
-    d._w = [];
-    const en = getEn().on;
-    if (en && d._en) enable(d, d._en);
-    else if (!en && d._ja) { d._text = d._ja; d._t.textContent = d._ja; }
-    else if (d._en) enable(d, d._en);   // 日本語がないときは、あるほうをそのまま見せる
-    else { d._text = d._ja || ''; d._t.textContent = d._ja || ''; }
-  };
-  const setPair = (d, parts) => {   // 「英語 ||| 日本語」(または逆)を、文字の種類で見わけて入れる
-    d._en = d._ja = '';
-    for (const x of parts.map(q => q.trim().replace(/^["「『]|["」』]$/g, '')).filter(Boolean)) { if (isJa(x)) d._ja = d._ja || x; else d._en = d._en || x; }
-  };
-  const enable = (d, text) => {
-    d._text = text; d._w = [];
-    d._t.textContent = '';
-    text.split(/([A-Za-z][A-Za-z'’-]*)/).forEach(tok => {
-      if (!tok) return;
-      if (/^[A-Za-z]/.test(tok)) { const w = document.createElement('span'); w.className = 'tw-w'; w.dataset.i = d._w.length; w.textContent = tok; d._t.appendChild(w); d._w.push(w); }
-      else d._t.appendChild(document.createTextNode(tok));
-    });
-    const b = document.createElement('button'); b.className = 'tw-trbtn'; b.dataset.a = 'tr'; b.textContent = '訳'; d.appendChild(b);
+  const isJa = s => /[぀-ヿ一-鿿]/.test(s);
+  // セリフの一覧(自分と相手、ぜんぶ)。相手のセリフは「英語」と「日本語」の両方を持つ
+  const items = [{ who: 'npc', en: '', ja: first, flip: false }];
+  let idx = 0, words = [], curText = '', sel = null, busy = false;
+  const clearSel = () => { sel = null; words.forEach(w => w.classList.remove('sel')); tools.hidden = true; };
+  const langOf = it => { const en = getEn().on; let l = en && it.en ? 'en' : !en && it.ja ? 'ja' : it.en ? 'en' : 'ja'; if (it.flip) l = l === 'en' ? 'ja' : 'en'; return l; };
+  function draw() {
+    const it = items[idx], last = idx === items.length - 1, me = it.who === 'me';
+    clearSel(); words = [];
+    win.classList.toggle('me', me); win.classList.toggle('npc', !me); win.classList.toggle('wait', !!it.wait); win.classList.toggle('err', !!it.err);
+    nameEl.textContent = me ? meName : name;
+    if (!me && pic) { picEl.src = pic; picEl.hidden = false; } else picEl.hidden = true;
+    textEl.style.color = me ? '#fff' : col;
+    textEl.scrollTop = 0; textEl.textContent = '';
+    if (me) { curText = it.text; textEl.textContent = it.text; }
+    else if (it.wait) { curText = ''; textEl.textContent = it.part || '…'; }
+    else if (it.err) { curText = ''; textEl.textContent = it.msg; }
+    else {
+      const l = langOf(it), t = l === 'en' ? it.en : it.ja; curText = t || '';
+      if (l === 'en') curText.split(/([A-Za-z][A-Za-z'’-]*)/).forEach(tok => { if (!tok) return; if (/^[A-Za-z]/.test(tok)) { const w = document.createElement('span'); w.className = 'tw-w'; w.dataset.i = words.length; w.textContent = tok; textEl.appendChild(w); words.push(w); } else textEl.appendChild(document.createTextNode(tok)); });
+      else textEl.textContent = t || '…';
+    }
+    trB.hidden = me || !!it.wait || !!it.err || !(it.en || (it.ja && it.flip));
+    trB.textContent = !me && !it.wait && !it.err && langOf(it) === 'en' ? '訳' : '英';
+    posEl.textContent = ` ${idx + 1} / ${items.length} `;
+    q('[data-a="prev"]').disabled = idx === 0; q('[data-a="next"]').disabled = last;
+    latestB.hidden = last; row.hidden = !last;
+  }
+  draw();
+  const go = i => { if (i < 0 || i >= items.length || i === idx) return; idx = i; draw(); };
+  // フリック: 左へ=つぎ(新しい方)、右へ=前
+  { let sx = 0, sy = 0, st = 0, on = false;
+    win.addEventListener('pointerdown', e => { if (e.target.closest('button')) return; on = true; sx = e.clientX; sy = e.clientY; st = Date.now(); });
+    win.addEventListener('pointerup', e => { if (!on) return; on = false; const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.3 && Date.now() - st < 700) go(idx + (dx < 0 ? 1 : -1)); });
+    win.addEventListener('pointercancel', () => { on = false; }); }
+  const setPair = (d, parts) => {
+    d.en = d.ja = '';
+    for (const x of parts.map(t => t.trim().replace(/^["「『]|["」』]$/g, '')).filter(Boolean)) { if (isJa(x)) d.ja = d.ja || x; else d.en = d.en || x; }
   };
   const showTools = () => {
-    const txt = sel.el._w.slice(sel.a, sel.b + 1).map(w => w.textContent).join(' ');
+    const txt = words.slice(sel.a, sel.b + 1).map(w => w.textContent).join(' ');
     tools.innerHTML = `<span class="tw-seltxt">${esc(txt)}</span><button class="tw-btn main" data-a="savesel">${sel.a === sel.b ? '単語' : 'フレーズ'}をほぞん</button><button class="tw-btn" data-a="savesent">文ごとほぞん</button><button class="tw-btn" data-a="unsel">×</button>`;
     tools.hidden = false;
   };
   const pick = w => {
-    const d = w.closest('.tw-msg'), i = +w.dataset.i;
-    if (sel && sel.el === d && sel.a === sel.b && i !== sel.a) { sel.b = Math.max(sel.a, i); sel.a = Math.min(sel.a, i); }
-    else { clearSel(); sel = { el: d, a: i, b: i }; }
-    d._w.forEach((x, k) => x.classList.toggle('sel', k >= sel.a && k <= sel.b));
-    showTools();
+    const i = +w.dataset.i;
+    if (sel && sel.a === sel.b && i !== sel.a) { sel.b = Math.max(sel.a, i); sel.a = Math.min(sel.a, i); } else sel = { a: i, b: i };
+    words.forEach((x, k) => x.classList.toggle('sel', k >= sel.a && k <= sel.b)); showTools();
   };
-  const toast = msg => { const x = tools; x.hidden = false; x.innerHTML = `<span class="tw-seltxt">${esc(msg)}</span>`; setTimeout(() => { if (!sel) x.hidden = true; }, 1600); };
-  { const d0 = add('npc', first); d0._ja = first; msgs.push(d0); render(d0); }
-  let busy = false;
+  const toast = msg => { tools.hidden = false; tools.innerHTML = `<span class="tw-seltxt">${esc(msg)}</span>`; setTimeout(() => { if (!sel) tools.hidden = true; }, 1600); };
   const send = async () => {
     const t = inp.value.trim(); if (!t || busy) return;
-    inp.value = ''; busy = true; clearSel(); add('me', t); try { bus && bus.emit('chat:say', { name, text: t }); } catch (e) { }
-    const en = getEn().on;
-    const wait = add('npc', '…'); wait.classList.add('wait');
+    inp.value = ''; busy = true;
+    items.push({ who: 'me', text: t }); const w = { who: 'npc', wait: true, part: '', en: '', ja: '', flip: false }; items.push(w); idx = items.length - 1; draw();
+    try { bus && bus.emit('chat:say', { name, text: t }); } catch (e) { }
     try {
-      const out = await ask(t, part => { wait.classList.remove('wait'); wait._t.textContent = part.split('|||')[0].trim(); log.scrollTop = log.scrollHeight; });
-      setPair(wait, String(out).split('|||')); msgs.push(wait); render(wait);
-      log.scrollTop += wait.getBoundingClientRect().top - log.getBoundingClientRect().top - 6;   // 長い返事は、頭から読めるように
-    } catch (e) { wait._t.textContent = e.message || 'うまく話せなかったよ'; wait.classList.add('err'); }
-    wait.classList.remove('wait'); busy = false; inp.focus();
+      const out = await ask(t, part => { w.part = part.split('|||')[0].trim(); if (items[idx] === w) textEl.textContent = w.part; });   // 届いた分から、そのまま出す
+      setPair(w, String(out).split('|||')); w.wait = false;
+    } catch (e) { w.wait = false; w.err = true; w.msg = e.message || 'うまく話せなかったよ'; }
+    if (items[idx] === w) draw(); else if (!w.err) { /* 前のセリフを見ている間に届いた: ▼で最新へ */ latestB.hidden = false; posEl.textContent = ` ${idx + 1} / ${items.length} `; }
+    busy = false; if (items[idx] === w) inp.focus();
   };
   inp.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); send(); } });
   p.addEventListener('click', async e => {
     const w = e.target.closest('.tw-w'); if (w) return pick(w);
     const b = e.target.closest('button'); if (!b) return;
-    const a = b.dataset.a;
+    const a = b.dataset.a, it = items[idx];
     if (a === 'send') send();
     else if (a === 'close') hud.closePanel();
-    else if (a === 'big') { const on = p.classList.toggle('tw-big'); b.textContent = on ? '⤡ もどす' : '⤢ ひろげる'; log.scrollTop = log.scrollHeight; }   // 画面いっぱいに ひろげて、大きく読む
+    else if (a === 'prev') go(idx - 1);
+    else if (a === 'next') go(idx + 1);
+    else if (a === 'latest') { idx = items.length - 1; draw(); inp.focus(); }
     else if (a === 'en') { const c = getEn(); setEn({ on: !c.on, level: c.level }); }
     else if (a === 'lv') { const c = getEn(); setEn({ on: c.on, level: c.level === 'easy' ? 'normal' : 'easy' }); showEn(); }
     else if (a === 'unsel') clearSel();
-    else if (a === 'savesel' && sel) { const txt = sel.el._w.slice(sel.a, sel.b + 1).map(x => x.textContent).join(' '), single = sel.a === sel.b, sentence = sel.el._text; clearSel(); toast(saveNote({ kind: single ? 'word' : 'phrase', text: txt, sentence })); }
-    else if (a === 'savesent' && sel) { const sentence = sel.el._text; clearSel(); toast(saveNote({ kind: 'sentence', text: sentence, sentence })); }
-    else if (a === 'tr') {
-      const d = b.closest('.tw-msg'); let tr = d.querySelector('.tw-tr');
-      if (tr) { tr.hidden = !tr.hidden; return; }
-      tr = document.createElement('div'); tr.className = 'tw-tr'; tr.textContent = d._ja || '…'; d.appendChild(tr);
-      if (!d._ja) { try { d._ja = await translate(d._text); tr.textContent = d._ja; } catch (err) { tr.textContent = err.message || '訳せなかったよ'; } }
-      if (!d._seen && d._ja && d._en && onSeen) { d._seen = 1; try { onSeen(d._en, d._ja); } catch (e) { } }   // 訳を見た英文は、あしたのふりかえりに出す
-      log.scrollTop = log.scrollHeight;
+    else if (a === 'savesel' && sel) { const txt = words.slice(sel.a, sel.b + 1).map(x => x.textContent).join(' '), single = sel.a === sel.b, sentence = curText; clearSel(); toast(saveNote({ kind: single ? 'word' : 'phrase', text: txt, sentence })); }
+    else if (a === 'savesent' && sel) { const sentence = curText; clearSel(); toast(saveNote({ kind: 'sentence', text: sentence, sentence })); }
+    else if (a === 'tr' && it && it.who === 'npc') {   // 英語と日本語を、同じ窓の中で切りかえる
+      it.flip = !it.flip; draw();
+      if (langOf(it) === 'ja' && !it.ja && it.en) { try { it.ja = await translate(it.en); } catch (err) { it.ja = err.message || '訳せなかったよ'; } if (items[idx] === it) draw(); }
+      if (langOf(it) === 'ja' && it.ja && it.en && !it._seen && onSeen) { it._seen = 1; try { onSeen(it.en, it.ja); } catch (e) { } }   // 訳を見た英文は、あしたのふりかえりに出す
     }
   });
-  // 英日の切りかえ(上バーのボタンからも)が来たら、いまある返事も全部切りかえる。パネルを閉じたら受け取りをやめる
-  const offLang = bus.on('lang', () => { clearSel(); showEn(); msgs.forEach(render); });
-  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); });
+  // 英日の切りかえ(上のボタンからも)が来たら、いまの窓も切りかえる。パネルを閉じたら受け取りをやめる
+  const offLang = bus.on('lang', () => { items.forEach(i => { i.flip = false; }); showEn(); draw(); });
+  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); if (vv) vv.removeEventListener('resize', kb); });
+  // キーボードが出たら、窓と入力欄をその上へ
+  const vv = window.visualViewport, tc = q('.tc');
+  const kb = () => { const h = Math.max(0, window.innerHeight - vv.height - vv.offsetTop); tc.style.setProperty('--kb', h + 'px'); };
+  if (vv) { vv.addEventListener('resize', kb); kb(); }
   setTimeout(() => inp.focus(), 50);
 }

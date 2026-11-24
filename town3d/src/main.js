@@ -521,7 +521,7 @@ export function mount(container, opt = {}) {
     r.talking = true; talkingTo = r; input.clear();
     const enS = () => !!(forceEn || (settings.en && settings.enShort));   // ふだんの短いおしゃべりは、設定で英語にできる(みじかい返事だと不自然になりやすいので、はじめは日本語)
     openChat({
-      hud, bus, name: r.def.name, role: r.def.role, first, onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
+      hud, bus, name: r.def.name, role: r.def.role, first, meName: settings.name || 'あなた', onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
       getEn: () => ({ on: enS(), level: settings.enLevel }),
       setEn: v => { if (v.on) { settings.en = 1; settings.enShort = 1; } else settings.en = 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
@@ -645,7 +645,7 @@ export function mount(container, opt = {}) {
     const hist = []; ai.warm();
     r.talking = true; talkingTo = r; input.clear();
     openChat({
-      hud, bus, name: r.def.name, role: r.def.role, first, maxLen: 400, low, onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
+      hud, bus, name: r.def.name, role: r.def.role, first, meName: settings.name || 'あなた', maxLen: 400, low, onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
       onSeen: seenLine,
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
       setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
