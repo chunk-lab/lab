@@ -156,10 +156,10 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   });
   // 英日の切りかえ(上のボタンからも)が来たら、いまの窓も切りかえる。パネルを閉じたら受け取りをやめる
   const offLang = bus.on('lang', () => { items.forEach(i => { i.flip = false; }); showEn(); draw(); });
-  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); if (vv) vv.removeEventListener('resize', kb); });
-  // キーボードが出たら、窓と入力欄をその上へ
-  const vv = window.visualViewport, tc = q('.tc');
-  const kb = () => { const h = Math.max(0, window.innerHeight - vv.height - vv.offsetTop); tc.style.setProperty('--kb', h + 'px'); };
-  if (vv) { vv.addEventListener('resize', kb); kb(); }
+  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); window.removeEventListener('resize', onRs); });
+  // キーボードが出ても窓は動かさない: 高さを開いた時の画面の高さに固定して、キーボードは上から被せる。入力欄は画面の上寄り(キーボードに隠れない位置)
+  const tc = q('.tc'); let fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px');
+  const onRs = () => { if (window.innerHeight > fh) { fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px'); } };
+  window.addEventListener('resize', onRs);
   setTimeout(() => inp.focus(), 50);
 }

@@ -141,14 +141,15 @@ export const CSS = `
 /* おしゃべり: ストーリー風の窓(1セリフ1窓・フリックでめくる) */
 .tw-panel:has(.tc){background:transparent;display:block;padding:0}
 .tw-panel:has(.tc) .tw-card{background:transparent;box-shadow:none;padding:0;width:auto;max-height:none;overflow:visible;position:static}
-.tc{position:absolute;inset:0;pointer-events:none;--kb:0px}
+body:has(.tc) #twToday{display:none!important}
+.tc{position:absolute;left:0;right:0;top:0;height:var(--fh,100%);pointer-events:none}
 .tc>*{pointer-events:auto}
 .tc-top{position:absolute;left:10px;right:10px;top:calc(62px + var(--tw-top));display:flex;gap:6px;align-items:center;justify-content:flex-start;pointer-events:none!important}
 .tc-top .tw-btn{pointer-events:auto;font-size:13px;padding:7px 13px;background:#1d2340dd;color:#fff;border:2px solid #fff;box-shadow:none}
 .tc-top .tw-btn.on{background:#2c3a8a;border-color:#ffd166}
 .tc-top .tc-sp{flex:1}
 .tc-tools{position:absolute;left:10px;right:10px;top:calc(108px + var(--tw-top));background:#fff7e0;color:#4a3d63}
-.tc-win{position:absolute;left:10px;right:10px;bottom:calc(76px + var(--kb) + env(safe-area-inset-bottom,0px));min-height:150px;box-sizing:border-box;background:#141a36f2;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:20px 18px 34px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.tc-win{position:absolute;left:10px;right:10px;bottom:calc(76px + env(safe-area-inset-bottom,0px));min-height:150px;box-sizing:border-box;background:#141a36f2;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:20px 18px 34px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .tc-name{position:absolute;left:14px;top:-17px;background:#141a36;border:3px solid #fff;border-radius:8px;padding:3px 14px;font-weight:900;font-size:15px;letter-spacing:.04em}
 .tc-pic{position:absolute;right:8px;bottom:calc(100% + 2px);width:min(30vw,120px);pointer-events:none;filter:drop-shadow(0 4px 10px #0006)}
 .tc-text{font-size:var(--tw-dfs,19px);line-height:1.7;font-weight:700;white-space:pre-wrap;max-height:min(40vh,320px);overflow-y:auto;overscroll-behavior:contain;min-height:3.4em;-webkit-user-select:text;user-select:text}
@@ -161,7 +162,7 @@ export const CSS = `
 .tc-nav:disabled{opacity:.25}
 .tc-latest{background:#ffd166;color:#141a36;border:0;border-radius:999px;font:900 15px inherit;padding:1px 18px;animation:gdb .8s infinite alternate}
 @keyframes gdb{to{transform:translateY(3px)}}
-.tc-row{position:absolute;left:10px;right:10px;bottom:calc(12px + var(--kb) + env(safe-area-inset-bottom,0px));display:flex;gap:8px}
+.tc-row{position:absolute;left:10px;right:10px;top:calc(var(--fh,700px)*.3);display:flex;gap:8px}
 .tc-row .tw-say{flex:1;min-width:0;background:#fffaf2;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36}
 .tc-row .tw-btn{white-space:nowrap;padding:0 18px;background:#ffd166;color:#141a36;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36;font-weight:900}
 /* 会話の窓: ストーリーモードと同じ形(紺の窓・白いふち・名前札・選択肢は窓の上に大きいボタン) */
