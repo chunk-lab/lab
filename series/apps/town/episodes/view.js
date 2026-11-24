@@ -192,5 +192,5 @@ export function createEpisodes(core, { games, depart, play3d, pauseTown = () => 
     if (progress.state.completed) progress.restart();
     render();
   }
-  return { open, stop, label: stateText, sub: subText, list: () => LIST.map((e, i) => ({ i, no: e.no || i + 1, label: e.label, title: e.title })), get active() { return active; } };
+  return { open, stop, label: stateText, sub: subText, list: () => LIST.map((e, i) => ({ i, no: e.no || i + 1, label: e.label, title: e.title, cast: e.cast, done: !!progs[i].state.completed, started: !!progs[i].state.index })), get active() { return active; } };
 }

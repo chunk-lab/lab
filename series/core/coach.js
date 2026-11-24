@@ -27,7 +27,7 @@ export function runCoach(steps, opt = {}) {
   function show() {
     const s = steps[i];
     const u = faceOf(s.w, s.f); if (u) { img.hidden = false; box.classList.remove('nofc'); img.src = u; } else { img.hidden = true; box.classList.add('nofc'); }
-    const nm = q('.cn'); nm.textContent = NAME[s.w] || NAME.g; nm.className = 'cn ' + (s.w || 'g');
+    const nm = q('.cn'); nm.textContent = (opt.names && opt.names[s.w]) || NAME[s.w] || NAME.g; nm.className = 'cn ' + (s.w || 'g');
     q('.ct').textContent = s.t;
     ov.classList.toggle('pass', !!s.wait); q('.cnx').hidden = !!s.wait; q('.cwt').hidden = !s.wait;
     q('.cnx').textContent = i === steps.length - 1 ? 'おわり ✓' : 'つぎへ ▶';

@@ -103,3 +103,13 @@ body.md-home-on .tw-chat{width:min(15vw,66px);height:min(15vw,66px);padding:0;bo
 @keyframes hmShine{from{background-position:120% 0}to{background-position:-30% 0}}
 @keyframes hmSpark{0%{opacity:0;transform:scale(.6)}30%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.25) translateY(-14px)}}
 @keyframes hmIn{from{opacity:0;transform:translateY(18px)}}
+
+/* タイトル: 英語レッスン(そら)・キャラストーリー(はな) */
+.hm-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:2px 0}
+.hm-big{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;min-height:132px;padding:12px 14px;border-radius:20px;border:3px solid #fff;font:inherit;text-align:left;color:#fff;cursor:pointer;box-shadow:0 0 0 2px #2b3a7a,0 6px 0 #1d2766,0 10px 18px #1d276640;-webkit-tap-highlight-color:transparent;transition:transform .12s}
+.hm-big:active{transform:translateY(3px) scale(.98)}
+.hm-les{background:linear-gradient(155deg,#5ab8ff,#2f6fe0 60%,#2a4fb8)}
+.hm-sto{background:linear-gradient(155deg,#ff9cc8,#f0629e 60%,#c9407e);box-shadow:0 0 0 2px #8a2f5c,0 6px 0 #8a2f5c,0 10px 18px #8a2f5c40}
+.hm-big img{position:absolute;right:-6px;bottom:-10px;width:52%;max-width:104px;filter:drop-shadow(0 3px 6px #0005);pointer-events:none}
+.hm-big b{position:relative;font-size:clamp(19px,5.6vw,24px);font-weight:900;line-height:1.15;text-shadow:0 2px 0 #0003,0 0 8px #0003}
+.hm-big small{position:relative;margin-top:auto;max-width:58%;font-size:12px;font-weight:800;opacity:.95}

@@ -3,6 +3,7 @@
 import { PLAYS } from '../../core/plays.js';
 import { LOGO } from '../../core/logos.js';
 import { TITLE_VOICE } from '../../core/title_voice.js';
+import { SORA, HANA } from '../../core/guide_pics.js';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const WANT_ICON = { word: '🔤', read: '📖', make: '✏️', talk: '🗣', chill: '☕' };
 // 版:組み立てた日時(日本時間)。テスト版が最新かどうか、見分けるための印
@@ -25,10 +26,9 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
     const APPS = [['chunkchunk', 'cc', '今スラ！'], ['stream', 'story', 'Storyミング！'], ['eigonou', 'eigo', '英文組み立てラボ'], ['fish', 'fish', 'イングフィッシュ']].filter(a => a[0] === 'fish' || has(a[0]));
     const row = p => `<button class="hm-row" data-p="${p.id}"><span>${WANT_ICON[p.want] || '・'}</span><b>${esc(p.n)}</b></button>`;
     el.innerHTML = `<div class="hm-box"><div class="hm-head"><img class="hm-logo" src="${LOGO.town}" alt="かまってチャンクTOWN"></div>
-      ${openEpisode ? `<button class="hm-pic hm-ep" data-episode><span class="hm-t"><b>${esc(episodeLabel ? episodeLabel() : '第1話をはじめる')}</b><small>${esc(episodeSub ? episodeSub() : 'はな・そら「ちょっと、外に出たい」')}</small></span></button>` : ''}
+      <div class="hm-two"><button class="hm-big hm-les" data-lessons><img src="${SORA}" alt=""><b>英語<br>レッスン</b><small>そらと勉強</small></button><button class="hm-big hm-sto" data-stories><img src="${HANA}" alt=""><b>キャラ<br>ストーリー</b><small>みんなのお話</small></button></div>
       ${core.admin && core.admin.on() && episodeList ? `<div class="hm-epl" style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0">${episodeList().map(e => `<button class="hm-retry" data-epi="${e.i}">物語テスト ${e.label ? esc(e.label) : '第' + e.no + '話'}「${esc(e.title)}」</button>`).join('')}</div>` : ''}
       ${msg ? `<div class="hm-err">${esc(msg.text)}<button class="hm-retry" data-retry>もう一度</button></div>` : ''}
-      ${c ? `<button class="hm-pic hm-cont2" data-main><span class="hm-t"><b>${c.kind === '3d' ? '街であそぶ' : esc(main ? main.n : '')}</b></span></button>` : ''}
       <button class="hm-pic hm-go" data-3d aria-label="街へ行く"></button>
       <div class="hm-apps">${APPS.map(a => `<button class="hm-pic hm-app hm-app-${a[0]}" data-app="${a[0]}" aria-label="${a[2]}"></button>`).join('')}</div>
       <button class="hm-pic hm-st" data-note aria-label="勉強する"></button>
@@ -36,7 +36,9 @@ export function createHome(core, { st, go3D, openFish, openStudy, has, openEpiso
       </div>`;
     el.onclick = e => {
       const b = e.target.closest('button'); if (!b) return;
-      if ('epi' in b.dataset) openEpisodeAt(+b.dataset.epi);
+      if ('lessons' in b.dataset) core.guide && core.guide.sora();
+      else if ('stories' in b.dataset) core.guide && core.guide.stories();
+      else if ('epi' in b.dataset) openEpisodeAt(+b.dataset.epi);
       else if ('episode' in b.dataset) openEpisode();
       else if (b.dataset.p) start(PLAYS.find(p => p.id === b.dataset.p));
       else if (b.dataset.app) { if (b.dataset.app === 'fish') openFish(); else { remember({ kind: 'app', id: b.dataset.app, label: b.getAttribute('aria-label') }); core.openGame(b.dataset.app); } }

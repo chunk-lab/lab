@@ -136,6 +136,20 @@ export const CSS = `
 .tw-msg{max-width:92%;padding:9px 13px;border-radius:16px;font-size:calc(var(--tw-dfs,19px) - 1px);line-height:1.6;white-space:pre-line;background:#fff;align-self:flex-start;user-select:text;-webkit-user-select:text}
 .tw-msg.me{align-self:flex-end;background:var(--tw-pink);color:#fff}.tw-msg.wait{opacity:.6}.tw-msg.err{background:#fff3e0;color:#9a6a3a}
 .tw-chatrow{display:flex;gap:8px}.tw-chatrow .tw-btn{white-space:nowrap;min-width:64px;padding:0 16px;box-shadow:none;border:2px solid var(--tw-mint);background:var(--tw-mint)}
+/* 会話の窓: ストーリーモードと同じ形(紺の窓・白いふち・名前札・選択肢は窓の上に大きいボタン) */
+.tw-dialog{left:10px;right:10px;bottom:calc(12px + var(--tw-bot));background:#141a36ee;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;color:#fff;padding:18px 18px 14px;min-height:clamp(120px,22vh,180px);box-sizing:border-box}
+.tw-dname{top:-17px;left:14px;background:#141a36;border:3px solid #fff;border-radius:8px;padding:3px 14px;font-weight:900;font-size:15px;letter-spacing:.04em}
+.tw-dname small{color:#c9d2ff;opacity:1}
+.tw-dtext{color:#fff;font-weight:700;max-height:min(38vh,300px)}
+.tw-dpic{right:8px;bottom:calc(100% + 2px);height:auto;width:min(26vw,108px);max-width:none;filter:drop-shadow(0 4px 10px #0006)}
+.tw-choices{position:absolute;left:4px;right:calc(min(26vw,108px) + 8px);bottom:calc(100% + 24px);margin:0;display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:8px;max-height:calc(100vh - var(--tw-top) - var(--tw-bot) - clamp(120px,22vh,180px) - 120px);overflow-y:auto;overscroll-behavior:contain;padding:3px}
+.tw-choices .tw-btn{background:#141a36ee;color:#fff;border:3px solid #fff;border-radius:12px;padding:11px 16px;font-size:16px;font-weight:800;text-align:left;box-shadow:0 0 0 3px #141a36;flex:none}
+.tw-choices .tw-btn::before{content:'▶ ';color:#ffd166;font-size:13px}
+.tw-choices .tw-btn.main{background:linear-gradient(#2c3a8a,#1d2766);border-color:#ffd166;color:#fff}
+.tw-choices .tw-dexp{align-self:flex-start;margin:0;font-size:13px;padding:6px 12px}
+.tw-choices .tw-dexp::before{content:''}
+.tw-hl{outline:4px solid #ffd166!important;outline-offset:3px;border-radius:14px;animation:twhl .7s infinite alternate;position:relative;z-index:5}
+@keyframes twhl{to{outline-color:#ff7eb3}}
 @keyframes tw-pop{from{transform:scale(.6);opacity:0}}
 .tw-bubble,.tw-toast{animation-name:tw-pop2}
 @keyframes tw-pop2{from{opacity:0;margin-top:6px}}

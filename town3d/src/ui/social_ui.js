@@ -1,5 +1,6 @@
 // 住人とのやりとり(プレゼント・頼みごと・お話)・町の「調べる」・宝探しの運営ツール。main.js から使う
 import { VOICE } from '../game/voice.js';
+import { portrait } from './portraits.js';
 import { social, ITEMS, PREFS, NPC_NAME, EPISODES, LV_NAME, LV, PTS, memory, MEM, UNLOCKS } from '../game/social.js';
 const UNLOCKS_OF = id => UNLOCKS[id];
 import { finds, WORDS, PHRASES, PROVERBS, PASSAGES, TREASURES, dayKey } from '../game/finds.js';
@@ -123,21 +124,30 @@ export function createSocialUI({ openMerge, hud, wallet, audio, addNote, onAllFo
     return out;
   }
   // ---- ステータス: 好感度・説明・覚えていること・好み・マージで わたした品 ----
-  function statusPanel(r) {
+  function statusPanel(r) {   // RPGのステータス画面のように: 顔・Lv・ゲージ・数字・好み・できること
     const id = r.def.id, L = social.level(id), a = social.aff(id), nx = social.next(id), mg = social.mergeOf(id), K = social.knownPrefs(), mem = memory.of(id);
-    const likes = Object.keys(K).filter(k => k.startsWith(id + ':')).map(k => { const it = ITEMS[k.slice(id.length + 1)]; return it ? `${it.icon}${it.name}…${{ love: '大好物', like: '好き', no: 'にがて', normal: 'ふつう' }[K[k]]}` : null; }).filter(Boolean);
-    const un = social.unlocksOf(id).filter(u => u.label), nextU = (UNLOCKS_OF(id) || []).find(u => u.label && social.level(id) < u.lv);
+    const lo = LV[L] || 0, hi = LV[L + 1], pct = hi == null ? 100 : Math.max(0, Math.min(100, Math.round((a - lo) / (hi - lo) * 100)));
+    const E = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const prefs = Object.keys(K).filter(k => k.startsWith(id + ':')).map(k => { const it = ITEMS[k.slice(id.length + 1)]; return it ? { t: it.icon + it.name, v: K[k] } : null; }).filter(Boolean);
+    const PV = { love: ['大好物', 'love'], like: ['好き', 'like'], normal: ['ふつう', 'nm'], no: ['にがて', 'no'] };
+    const un = social.unlocksOf(id).filter(u => u.label), nextU = (UNLOCKS[id] || []).find(u => u.label && L < u.lv);
     const big = mem.auto.filter(x => x.imp).slice(-2).map(x => x.t).concat(mem.keep.slice(-1).map(x => x.t || x));
-    const L1 = [`♥ ${LV_NAME[L]}(Lv${L})  好感度 ${a}` + (nx ? ` ・ つぎまで あと${nx}` : ' ・ いちばん なかよし!'),
-      `📖 ${String(r.def.persona || r.def.role).split('。')[0]}。`,
-      mg.n ? `🧩 マージで わたした品: ${mg.n}こ(${mg.last.slice(-3).map(x => x.icon + x.name).join(' ')})` : '🧩 マージゲームで ほしい品を作って わたすと、好感度が上がるよ',
-      likes.length ? `🍰 好み: ${likes.join(' / ')}` : '🍰 好みは まだ わからない(プレゼントで わかるよ)',
-      big.length ? `🗒 覚えていること: ${big.join(' / ')}` : '',
-      un.length ? `🗝 できること: ${un.map(u => u.label).join(' / ')}` : '',
-      nextU ? `🔒 Lv${nextU.lv}で: ${nextU.label}` : '',
-      social.credit(id) ? `🎁 とっておきの品: ${social.credit(id)}こ(デートなど特別なことに使えるよ)` : '🎁 マージで高めの品(Lv5〜)を渡すと、デートなど特別なことができるよ',
-      '👗 着替え・🖼 思い出アルバム: じゅんびちゅう'].filter(Boolean);
-    hud.dialog({ name: name(r), role: heart(id), text: L1.join('\n'), choices: [{ label: 'もどる', fn: () => hud.closeDialog && hud.closeDialog() }] });
+    const pic = portrait(id) || portrait(r.def.name);
+    if (!document.getElementById('tw-rpg-css')) { const st = document.createElement('style'); st.id = 'tw-rpg-css'; st.textContent = RPG_CSS; document.head.appendChild(st); }
+    hud.panel(`<div class="rpg">
+      <div class="rpg-head">${pic ? `<img src="${pic}" alt="">` : ''}<div class="rpg-hd">
+        <div class="rpg-nm">${E(name(r))}</div><div class="rpg-role">${E(r.def.role || '')}</div>
+        <div class="rpg-lv"><span>Lv</span><b>${L}</b><em>${E(LV_NAME[L])}</em></div>
+        <div class="rpg-bar"><i style="width:${pct}%"></i></div>
+        <div class="rpg-exp">♥ ${a}${hi != null ? ` <small>つぎのLvまで あと${nx}</small>` : ' <small>いちばん なかよし!</small>'}</div></div></div>
+      <div class="rpg-hearts">${LV_NAME.map((n, i) => `<span class="${i <= L ? 'on' : ''}">♥</span>`).join('')}</div>
+      <div class="rpg-num"><div><small>🧩 わたした品</small><b>${mg.n || 0}</b></div><div><small>🎁 とっておき</small><b>${social.credit(id) || 0}</b></div><div><small>🍰 わかった好み</small><b>${prefs.length}</b></div></div>
+      <h4>🍰 好み</h4>${prefs.length ? `<div class="rpg-chips">${prefs.map(p => `<span class="${PV[p.v] ? PV[p.v][1] : ''}">${E(p.t)}<small>${PV[p.v] ? PV[p.v][0] : ''}</small></span>`).join('')}</div>` : '<p class="rpg-no">まだ わからない(プレゼントで わかるよ)</p>'}
+      <h4>🗝 できること</h4>${un.length ? `<div class="rpg-chips">${un.map(u => `<span class="ok">${E(u.label)}</span>`).join('')}</div>` : '<p class="rpg-no">まだ ない</p>'}${nextU ? `<p class="rpg-lock">🔒 Lv${nextU.lv}で:${E(nextU.label)}</p>` : ''}
+      ${big.length ? `<h4>🗒 覚えていること</h4><ul class="rpg-mem">${big.map(t => `<li>${E(t)}</li>`).join('')}</ul>` : ''}
+      <h4>📖 プロフィール</h4><p class="rpg-txt">${E(String(r.def.persona || r.def.role).split('。')[0])}。</p>
+      <p class="rpg-tip">${mg.n ? '' : '🧩 マージゲームで、ほしい品を作ってわたすと、好感度が上がるよ。'}${social.credit(id) ? '' : ' 🎁 Lv5以上の品をわたすと、デートなど特別なことができるよ。'}</p>
+      <button class="rpg-x" data-x>とじる</button></div>`, (e) => { if (e.target.closest('[data-x]')) hud.closePanel(); });
   }
   // ---- ゴンのひろいもの: 何もしなくても1日1つ。たのむともう1つ。仲良しほど多く ----
   function gonGive(n) {
@@ -287,3 +297,23 @@ export function createSocialUI({ openMerge, hud, wallet, audio, addNote, onAllFo
   }
   return { onTalk, choices, menuOk, hintLine, gonDaily, bondTalk, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel };
 }
+
+const RPG_CSS = `.tw-card:has(.rpg){background:transparent;box-shadow:none;padding:0;max-width:440px}
+.rpg{background:#141a36f2;color:#fff;border:3px solid #fff;border-radius:14px;box-shadow:0 0 0 3px #141a36,0 10px 30px #0007;padding:16px 16px 14px;max-height:min(84vh,680px);overflow-y:auto;overscroll-behavior:contain;font-weight:700}
+.rpg-head{display:flex;gap:12px;align-items:center}
+.rpg-head img{width:84px;height:84px;object-fit:contain;flex:none;background:radial-gradient(#3a4a9a,#1d2766);border:3px solid #ffd166;border-radius:12px}
+.rpg-hd{flex:1;min-width:0}
+.rpg-nm{font-size:20px;font-weight:900;letter-spacing:.04em}
+.rpg-role{font-size:12px;color:#c9d2ff;margin:1px 0 4px}
+.rpg-lv{display:flex;align-items:baseline;gap:6px}.rpg-lv span{font-size:12px;color:#ffd166}.rpg-lv b{font-size:24px;color:#ffd166;line-height:1}.rpg-lv em{font-style:normal;font-size:13px;background:#ffd16622;border:1px solid #ffd166;color:#ffd166;border-radius:6px;padding:0 8px}
+.rpg-bar{height:10px;border-radius:6px;background:#0b0f24;border:2px solid #fff;margin:6px 0 3px;overflow:hidden}.rpg-bar i{display:block;height:100%;background:linear-gradient(90deg,#ff7eb3,#ffd166)}
+.rpg-exp{font-size:14px;color:#ff9cc8}.rpg-exp small{color:#c9d2ff;font-size:12px;margin-left:4px}
+.rpg-hearts{display:flex;justify-content:center;gap:10px;margin:10px 0 4px;font-size:20px}.rpg-hearts span{color:#3a4170}.rpg-hearts span.on{color:#ff7eb3;text-shadow:0 0 8px #ff7eb3aa}
+.rpg-num{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.rpg-num div{background:#0b0f24;border:2px solid #3a4580;border-radius:10px;padding:6px;text-align:center}.rpg-num small{display:block;font-size:11px;color:#c9d2ff}.rpg-num b{font-size:20px;color:#fff}
+.rpg h4{margin:12px 0 6px;font-size:14px;color:#ffd166;border-bottom:2px solid #ffd16655;padding-bottom:3px}
+.rpg-chips{display:flex;flex-wrap:wrap;gap:6px}.rpg-chips span{background:#232b5a;border:2px solid #4a56a0;border-radius:8px;padding:3px 9px;font-size:13px}.rpg-chips span small{margin-left:5px;font-size:11px;color:#c9d2ff}
+.rpg-chips .love{border-color:#ff7eb3}.rpg-chips .like{border-color:#ffd166}.rpg-chips .no{border-color:#7a7f99;opacity:.8}.rpg-chips .ok{border-color:#7fe0b5}
+.rpg-no,.rpg-txt,.rpg-tip{font-size:13px;color:#c9d2ff;margin:2px 0;line-height:1.6}.rpg-lock{font-size:13px;color:#9aa3cf;margin:6px 0 0}
+.rpg-mem{margin:0;padding-left:18px;font-size:13px;line-height:1.6}
+.rpg-tip:empty{display:none}
+.rpg-x{display:block;margin:12px auto 0;background:#141a36;color:#fff;border:3px solid #fff;border-radius:10px;padding:9px 34px;font:800 15px inherit;box-shadow:0 0 0 3px #141a36}`;

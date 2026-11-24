@@ -101,7 +101,7 @@ $('twTo3d').onclick = () => mode.to3D();
 core.to3D = () => mode.to3D();
 // 今日なにする?（2Dでも3Dでも、画面の下のまん中）と、おしゃべり（住人がいる3Dの町へ）
 document.body.insertAdjacentHTML('beforeend', '<div class="tw-dock"><button class="tw-today" id="twToday">今日なにする?</button><button class="tw-chat" id="twChat" aria-label="住人とおしゃべり">💬</button></div>');
-$('twToday').onclick = () => core.today.open({ has: g => !!GAMES[g] });
+$('twToday').onclick = () => core.guide ? core.guide.today() : core.today.open({ has: g => !!GAMES[g] });   // そらが聞いてくれる
 $('twChat').setAttribute('aria-label', 'アミューズメント'); $('twChat').textContent = '🎮';
 // アミューズメント：チャンクボックスのゲーム＋街の外遊び(旬のものは無料、季節外は有料会員のとくてん)
 const SEASON_OF = { golf: 3, frisbee: 9, snow3d: 12 };   // はじまりの月

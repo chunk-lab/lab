@@ -50,6 +50,8 @@ export default {
     const title = el.querySelector('#title'), mo = new MutationObserver(() => ctx.showBack(!title.hidden && !ctx.core.reader.isOpen && !ENV.make.visible() && !ENV.story.visible()));
     mo.observe(title, { attributes: true, attributeFilter: ['hidden'] });
     showTitle(); ctx.showBack(true);
+    if (ctx.opts.open === 'story') setTimeout(() => { try { ENV.story.open(); } catch (e) { console.error(e); } }, 50);   // そらの「レッスン」から: 読む・聞く
+    if (ctx.opts.open === 'make') setTimeout(() => { try { ENV.make.open(); } catch (e) { console.error(e); } }, 50);   // 話す・書く
     if (ctx.opts.storyChapter === 1) ENV.story.open({ chapter: 1, episode: true });   // 物語から読む・聞く第1章へ。通常の入口・保存方法は共通
     if (ctx.opts && ctx.opts.lesson) setTimeout(() => { try { ENV.make.openLesson(ctx.opts.lesson === 'next' ? (ENV.make.nextLesson() || {}).id : ctx.opts.lesson); } catch (e) { console.error(e); } }, 60);   // ミッション:レッスンを指定
     if (ctx.opts && ctx.opts.open === 'mytexts') setTimeout(() => { try { el.querySelector('#title').hidden = true; openMyTexts(); } catch (e) { console.error(e); } }, 50);   // 図書館の「自分の本」から

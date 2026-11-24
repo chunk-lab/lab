@@ -9,7 +9,7 @@ import { createSocialUI } from './ui/social_ui.js';
 import { createAppHost } from './core/apps.js';
 import { createLocalNet, createWsNet } from './core/net.js';
 import { createAudio } from './core/audio.js';
-import { createAI, buildSystem } from './core/ai.js';
+import { createAI, buildSystem, PROVIDERS } from './core/ai.js';
 import { openAiSetup, openChat } from './ui/aiui.js';
 import { openSoraNote } from './ui/sora.js';
 import { openPianoMenu, playSong, runTapGame } from './ui/piano.js';
@@ -334,7 +334,10 @@ export function mount(container, opt = {}) {
     { const other = residents.list.find(o => o !== r && isComp(o) && o.follow); if (other && !r.follow) for (let i = items.length - 1; i >= 0; i--) if (items[i].key === 'follow' || items[i].key === 'invite') items.splice(i, 1); }   // ほかの人と手をつないで歩いている間は、2人目とは つなげない(先に バイバイしてから)
     if (r.def.mascot) items.push({ k: 'play', key: 'ride', label: ride ? '⬇ 降りる' : '☁️ 乗る', fn: () => { try { hud.closeDialog && hud.closeDialog(); } catch (e) { } r.talking = false; talkingTo = null; ride ? rideOff() : rideAsk(r); } });
     const chat = en => () => { r.talking = true; talkingTo = r; if (r.def.id === 'sora') { if (ai.ready) freeChat(r, text); else openAiSetup({ hud, ai, onDone: () => freeChat(r, text) }); return; } if (ai.ready) startChat(r, text, undefined, en); else openAiSetup({ hud, ai, onDone: () => startChat(r, text, undefined, en) }); };
+    if (r.def.id === 'sora' && !r.follow) items.push({ k: 'bond', key: 'chat', label: '💬 おしゃべり' + (ai.ready ? '' : '(AIの設定)'), fn: chat(false) });
     if (r.def.id !== 'sora' || r.follow) { const lb = ai.ready ? '' : '(AIの設定)'; items.push({ k: 'study', key: 'chat-en', label: '💬 英語でおしゃべり' + lb, fn: chat(true) }, { k: 'bond', key: 'chat', label: '💬 おしゃべり' + lb, fn: chat(false) }); }
+    const guideOf = r.def.id === 'sora' || r.def.id === 'hana';   // そら・はな: 最初に「教えて」「仲良くなる」だけ
+    if (guideOf) for (let i = items.length - 1; i >= 0; i--) if (items[i].k === 'study') items.splice(i, 1);
     for (const it of items) { const f = it.fn, key = it.key || it.label; it.fn = () => { markM(key); f(); }; it.ukey = key; }
     // ひと言に足すもの: ゴンのひろいもの・好みのにおわせ・ミイのプレゼント話。なければ、まだ使っていない項目の説明を、たまに
     if (r.def.id === 'gon') { const g = soc.gonDaily(); if (g) text += '\n' + g; }
@@ -355,17 +358,20 @@ export function mount(container, opt = {}) {
     const forMii = r.def.id === 'mii' && !hint && Math.random() < 0.6 ? lessPlayed(SUGG.filter(x => !x.study && x.key)) : null;   // ミイ: あまりやっていないゲームを勧める
     const forKoharu = r.def.id === 'koharu' && !hint && Math.random() < 0.7 ? lessPlayed(SUGG.filter(x => x.study)) : null;   // こはる先生: まだやっていない勉強を勧める
     let sg = forMii ? { ...forMii, say: 'そういえば、あまりやってないよね? ' + forMii.say } : forKoharu ? { ...forKoharu, say: 'まだあまりやってない勉強があるわね。' + forKoharu.say } : !hint && Math.random() < 0.25 && SUGG.length ? (() => { const bag = SUGG.flatMap(x => Array(x.w || 1).fill(x)); return bag[Math.floor(Math.random() * bag.length)]; })() : null;
+    if (r.def.id === 'sora' && !hint && !sg && Math.random() < 0.3) sg = { key: 'gamebox', say: 'ねえ、チャンクボックスで いっしょに遊ばない? 英語のミニゲームがあるんだ。', label: '遊ぶ!', fn: () => openApp('gamebox', {}) };   // そら: たまにチャンクボックスにさそう
     if (r.def.mascot && !ride && Math.random() < 0.45) sg = { say: 'ふわ… ぼくに、乗る?', label: '乗る!', fn: () => rideAsk(r) };   // チャンクくんのほうから、たまに聞いてくる
     if (r.visitSg) { sg = r.visitSg; r.visitSg = null; text = sg.say; }   // 自分から話しかけに来たときは、その用件をひと言に
     if (sg && sg.say !== text) text += '\n' + sg.say;
     const role = PREFS[r.def.id] ? `${r.def.role} ・ ${soc.heart(r.def.id)}` : r.def.role;
-    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: [...(sg && sg.fn ? [{ label: sg.label || 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }] }); };   // 最初の画面は「勉強・遊び・仲良くなる」だけ。デート・家に誘う・手をつなぐ・乗る などは、それぞれの2段目に
+    const top = () => { r.talking = true; talkingTo = r; hud.dialog({ name: r.def.name, role, text, choices: guideOf ? [{ label: '📖 教えて', fn: () => teach() }, { label: '💗 仲良くなる', fn: () => shelf(['bond', 'play']) }, ...(sg && sg.fn ? [{ label: sg.label || 'やってみる!', fn: sg.fn }] : [])] : [...(sg && sg.fn ? [{ label: sg.label || 'やってみる!', fn: sg.fn }] : []), ...(items.some(it => it.k === 'study') ? [{ label: '📖 勉強', fn: () => shelf('study') }] : []), ...(items.some(it => it.k === 'play') ? [{ label: '🎮 遊び', fn: () => shelf('play') }] : []), { label: '💗 仲良くなる', fn: () => shelf('bond') }] }); };   // 最初の画面は「勉強・遊び・仲良くなる」だけ(そら・はなは「教えて」「仲良くなる」)
+    const teach = () => { if (r.def.id === 'sora') { r.talking = false; talkingTo = null; opt.onEvent?.('app:event', { name: 'guide', data: { who: 'sora' } }); return; } hanaTeach(r, top); };
     const shelf = kind => {
       r.talking = true; talkingTo = r;
-      const b = kind === 'bond' ? soc.bondTalk(r) : { text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', extra: [] };
-      hud.dialog({ name: r.def.name, role, text: b.text, choices: [...b.extra, ...items.filter(it => it.k === kind), { label: '← もどる', fn: top }] });
+      const K = [].concat(kind), b = K.includes('bond') ? soc.bondTalk(r) : { text: kind === 'study' ? 'なにを勉強する?' : 'なにして遊ぶ?', extra: [] };
+      hud.dialog({ name: r.def.name, role, text: b.text, choices: [...b.extra, ...items.filter(it => K.includes(it.k)), { label: '← もどる', fn: top }] });
     };
-    top();
+    if (r.def.id === 'hana' && !ai.ready && !storage.get('hanaAi')) { storage.set('hanaAi', 1); hanaAi(r, top); }   // はな: はじめて話しかけたら、AIの登録の案内から
+    else top();
     bus.emit('talk', { npc: r.def.id });
   }
   // ---- ことばノート(英語の単語・フレーズ・文を集める。この端末の中だけに保存) ----
@@ -549,6 +555,77 @@ export function mount(container, opt = {}) {
         ...((opt.features || []).includes('study') ? [{ label: '📚 勉強部屋', fn: () => opt.onEvent?.('app:event', { name: 'study', data: { snap: townSnap() } }) }] : []),
       ],
     });
+  }
+  // ---- はな: チュートリアルの入口(「なにについて知りたいの?」→ 選ぶと、そのチュートリアルへ) ----
+  const hanaSay = (text, choices, r) => { if (r) { r.talking = true; talkingTo = r; } hud.dialog({ name: 'はな', role: r ? (PREFS.hana ? `${r.def.role} ・ ${soc.heart('hana')}` : r.def.role) : '', text, choices, face: 'hana' }); };
+  function hanaTeach(r, back) {
+    hanaSay('なにについて知りたいの?', [
+      { label: '🔑 AIの登録', fn: () => hanaAi(r, () => hanaTeach(r, back)) },
+      { label: '🚶 町の歩き方', fn: () => { r.talking = false; talkingTo = null; movePractice(4); } },
+      { label: '🔘 画面のボタン', fn: () => iconTour(r) },
+      { label: '🏠 家のこと', fn: () => openApp('home', { coach: true }) },
+      { label: '🧩 マージゲーム', fn: () => openApp('merge', { coach: 'choco', coachName: '大喜利チョコ' }) },
+      ...(back ? [{ label: '← もどる', fn: back }] : [])], r);
+  }
+  // 画面のボタンを、1つずつ光らせて教える
+  function iconTour(r) {
+    const R = s => root.querySelector(s) || document.querySelector(s);
+    const S = [
+      ['.tw-clock', '町の時間だよ。時間によって、住人のいる場所や、空の色が変わるの。'],
+      ['.tw-coins', 'コイン。ゲームや勉強でたまって、お店やマージゲームで使えるよ。'],
+      ['.tw-find', '「探す」で、行きたい場所や住人を探して、すぐに行けるよ。'],
+      ['.tw-lang', '📒 ノート。町で集めた英語の言葉が入っているよ。'],
+      ['.tw-appsbtn', '🎮 ぜんぶの入口。町の遊びや勉強に、ここからすぐ行けるの。'],
+      ['.tw-homebtn', '🏠 自分の家に、すぐもどれるよ。'],
+      ['.tw-photo', '📷 写真をとれるよ。みんなと記念写真もとってね!'],
+      ['.tw-daily', '🌙 今日はここまで。今日やったことを、ふりかえれるよ。'],
+      ['.tw-menu', '⚙ 設定。音の大きさや、AIのキーなどを変えられるよ。'],
+      ['[data-e="wave"]', '👋 手をふったり、💬 ひとこと話しかけたりできるよ。'],
+      ['#twToday', '「今日なにする?」を押すと、そらが、今日やることを一緒に考えてくれるよ。'],
+    ].filter(x => { const el = R(x[0]); return el && el.offsetParent !== null; });
+    let i = 0, lit = null;
+    const off = () => { lit && lit.classList.remove('tw-hl'); lit = null; };
+    const step = () => {
+      off(); if (i >= S.length) { hanaSay('これで、ボタンはぜんぶ! 分からなくなったら、また聞いてね。', [], r); return; }
+      lit = R(S[i][0]); lit && lit.classList.add('tw-hl');
+      hanaSay(S[i][1], [{ label: i === S.length - 1 ? 'わかった!' : 'つぎへ', fn: () => { i++; step(); } }], r);
+    };
+    const offC = bus.on('ui:dialogClosed', () => { if (!lit) return; setTimeout(() => { if (!hud.busy) { off(); offC(); } }, 50); });
+    step();
+  }
+  // AIの登録: ページへ飛ぶ → キーを作る → コピー → もどってきたら[はりつける]で入れる(キーの形から会社を見分ける)
+  const keyProv = k => /^AIza[0-9A-Za-z_\-]{20,}$/.test(k) ? 'gemini' : /^sk-ant-/.test(k) ? 'claude' : /^sk-[A-Za-z0-9_\-]{20,}/.test(k) ? 'openai' : null;
+  function hanaAi(r, back) {
+    const me = settings.name || 'あなた', P = PROVIDERS.gemini;
+    let waiting = false;
+    const onVis = () => { if (document.visibilityState === 'visible' && waiting) { waiting = false; pasteAsk('おかえり! キーはコピーできた?\n「はりつける」を押してね。'); } };
+    const stopWait = () => { waiting = false; document.removeEventListener('visibilitychange', onVis); };
+    const later = { label: 'あとで', fn: () => { stopWait(); hanaSay('うん、いつでも言ってね! わたしに「教えて」って話しかければ、また案内するよ。', [], r); } };
+    function pasteAsk(text) {
+      hanaSay(text, [{ label: '📋 はりつける', fn: paste }, { label: '🔗 もう一度ページを開く', fn: openPage }, { label: '✏️ 自分で入れる', fn: () => { stopWait(); openAiSetup({ hud, ai, onDone: done }); } }, later], r);
+    }
+    function openPage() {
+      try { window.open(P.keyUrl, '_blank', 'noopener'); } catch (e) { }
+      waiting = true; document.removeEventListener('visibilitychange', onVis); document.addEventListener('visibilitychange', onVis);
+      pasteAsk('キーをコピーできたら、ここにもどってきてね!\n待ってるよ。');
+    }
+    async function paste() {
+      stopWait(); let k = '';
+      try { k = ((await navigator.clipboard.readText()) || '').trim(); } catch (e) { }
+      if (!k) { hanaSay('ごめんね、コピーしたものを読めなかったの。\n「自分で入れる」の欄を長押しして、貼り付けてみて。', [{ label: '✏️ 自分で入れる', fn: () => openAiSetup({ hud, ai, onDone: done }) }, later], r); return; }
+      const pv = keyProv(k);
+      if (!pv) { pasteAsk('うーん、それはキーじゃないみたい。\nキーの横の「コピー」のマークを押してから、もう一度はりつけてね。'); return; }
+      ai.configure({ provider: pv, key: k });
+      hanaSay('つないでみるね……', [], r);
+      try {
+        await ai.chat({ system: 'あなたは町の住人です。日本語で、10文字ほどであいさつしてください。', messages: [{ role: 'user', text: 'こんにちは' }], maxTokens: 60, test: true });
+        done();
+      } catch (e) { pasteAsk(`つながらなかったみたい……\n(${String(e && e.message || e).slice(0, 60)})\nもう一度コピーして、はりつけてみて。`); }
+    }
+    function done() { stopWait(); audio.play('open'); hanaSay(`やったー! 登録できたよ、${me}!\nこれで、町のみんなと自由におしゃべりできるね。`, back ? [{ label: 'ありがとう!', fn: back }] : [], r); }
+    hanaSay(`ねえ${me}、AIって知ってる?\nAIを登録すると、町のみんなと、自由におしゃべりできるの!`, [{ label: 'つぎへ', fn: () =>
+      hanaSay('それだけじゃないよ。英語が自然かどうか見てくれたり、例文を作ってくれたり……いろんな便利なことが、AIでできるんだ。\nだから、がんばって登録してね!', [{ label: 'やってみる!', fn: () =>
+        hanaSay(`使うのは「Gemini」(Google)がおすすめ。無料で使えるよ。\n① 下のボタンで、ページを開く\n② Googleでログインして「APIキーを作成」を押す\n③ できたキーの横の、コピーのマークを押す\n④ ここに、もどってくる`, [{ label: '🔗 ページを開く', fn: openPage }, later], r) }, later], r) }, later], r);
   }
   // ---- いっしょに出かける住人(はなちゃん・そら君):自由なおしゃべり(決まりごとを足さない)、手をつないで歩く、デート、家に招く ----
   // いっしょに歩く・家に呼べる人:はな・そら、と、デートできるようになった人(好感度でデートが開いた住人)
@@ -1953,6 +2030,17 @@ export function mount(container, opt = {}) {
       const t = setInterval(() => { try { if (done()) end(true); } catch (e) { } }, 120);
     });
   }
+  // 町の歩き方の練習(導入と、はなの「教えて」から)。実際にやってもらう。どれも「とばす」で進める
+  async function movePractice(total) {
+    let px = me.x, pz = me.z, walked = 0;
+    await practice('そら', '画面の下半分を、指でおしたまま ずらしてみて。\nスティックで歩けるよ。少し歩いてみよう！', 1, total, () => { const d = Math.hypot(me.x - px, me.z - pz); px = me.x; pz = me.z; if (!goTo && !approach) walked += d; return walked > 3; });
+    let y0 = cam.yaw, turned = 0;
+    await practice('はな', '画面の上半分を、左右にドラッグしてみて。\nぐるっと、まわりを見わたせるよ！', 2, total, () => { turned += Math.abs(cam.yaw - y0); y0 = cam.yaw; return turned > 1.6; });
+    let d0 = cam.dist, zin = 0, zout = 0;
+    await practice('はな', '2本の指で、画面をつまんだり ひろげたりしてみて。\n寄ったり、引いたりできるよ！', 3, total, () => { const d = cam.dist - d0; d0 = cam.dist; if (d < 0) zin -= d; else zout += d; return zin > 1.5 && zout > 1.5; });
+    let went = false, from = [me.x, me.z];
+    await practice('そら', '行きたい地面を、すばやく2回タップしてみて。\nそこまで走っていくよ！', 4, total, () => { if (goTo) went = true; return went && !goTo && Math.hypot(me.x - from[0], me.z - from[1]) > 2; });
+  }
   async function runIntro() {
     await loadP;
     // 1) 名前とすがた
@@ -1968,14 +2056,7 @@ export function mount(container, opt = {}) {
       // 2) 操作の練習(その場で、実際にやってもらう)
       pinAt('hana', ...A.hana); pinAt('sora', ...A.sora);
       cam.dist = Math.min(cam.dist, 16);   // 練習の間は、自分が見えるくらいに寄る
-      let px = me.x, pz = me.z, walked = 0;
-      await practice('そら', '画面の下半分を、指でおしたまま ずらしてみて。\nスティックで歩けるよ。少し歩いてみよう！', 1, TOTAL, () => { const d = Math.hypot(me.x - px, me.z - pz); px = me.x; pz = me.z; if (!goTo && !approach) walked += d; return walked > 3; });
-      let y0 = cam.yaw, turned = 0;
-      await practice('はな', '画面の上半分を、左右にドラッグしてみて。\nぐるっと、まわりを見わたせるよ！', 2, TOTAL, () => { turned += Math.abs(cam.yaw - y0); y0 = cam.yaw; return turned > 1.6; });
-      let d0 = cam.dist, zin = 0, zout = 0;
-      await practice('はな', '2本の指で、画面をつまんだり ひろげたりしてみて。\n寄ったり、引いたりできるよ！', 3, TOTAL, () => { const d = cam.dist - d0; d0 = cam.dist; if (d < 0) zin -= d; else zout += d; return zin > 1.5 && zout > 1.5; });
-      let went = false, from = [me.x, me.z];
-      await practice('そら', '行きたい地面を、すばやく2回タップしてみて。\nそこまで走っていくよ！', 4, TOTAL, () => { if (goTo) went = true; return went && !goTo && Math.hypot(me.x - from[0], me.z - from[1]) > 2; });
+      await movePractice(TOTAL);
       ok = await playStory('intro2', true);
       if (ok) {
         const K = pinAt('koharu', ...A.koharu); pinAt('hana', ...A.hana); pinAt('sora', ...A.sora);

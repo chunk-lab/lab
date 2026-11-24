@@ -9,6 +9,7 @@ import { catOfApp } from '../../core/daylog.js';
 import { createHome, verText } from './home.js';
 import { createEpisodes } from './episodes/view.js';
 import { createLauncher } from './launcher.js';
+import { createGuide } from '../../core/guide.js';
 import './mode.css';
 
 const st = createStore('town');
@@ -63,6 +64,11 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
     },
   });
   let lvLoaded = false;
+  // そら・はなの案内(タイトル・町の中・「今日なにする?」から同じものを開く)
+  core.guide = createGuide(core, {
+    has: g => !!GAMES[g], storyList: () => episodes.list(), openStory: i => episodes.open(i),
+    openTownApp: async id => { await go('3d'); if (!town) return; if (core.profile.name && town.quickStart) town.quickStart(); setTimeout(() => { try { town.openApp && town.openApp(id); } catch (e) { console.error(e); } }, 600); },
+  });
   const home = createHome(core, { st, go3D: () => go('3d'), openFish: async () => { await go('3d'); if (town && core.profile.name && town.quickStart) { town.quickStart(); town.openApp && town.openApp('fishing'); } }, openStudy, has: g => !!GAMES[g], openEpisode: () => episodes.open(), episodeLabel: () => episodes.label(), episodeSub: () => episodes.sub(), episodeList: () => episodes.list(), openEpisodeAt: i => episodes.open(i) });
 
   // ---- アプリを立ち上げたらすぐ、3Dの町のプログラムとキャラのモデルを読みこんでおく(バーを出す)。「街へ行く」を押すころには済んでいる ----
@@ -206,6 +212,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
         else if (name === 'app:event' && d?.name === 'learn') { if (d.data?.save) { try { core.notebook.add({ en: d.data.en, ja: d.data.ja, src: d.data.src || 'gamebox' }); core.ui.toast('ノートに入れました'); } catch (e) { } } else core.daylog.addWord(d.data); }   // 出会った単語・文
         else if (name === 'app:event' && d?.name === 'eigo') { try { core.eigo.send(d.data.items || []); if (d.data.open) { core.ui.toast('英ラボを開いています…'); setTimeout(() => core.openGame('eigonou'), 300); } } catch (e) { console.error(e); core.ui.toast('英ラボに渡せませんでした:' + String(e && e.message || e).slice(0, 80)); } }   // 英ラボの箱に入れる(次に英ラボを開くと自動で登録される)
         else if (name === 'app:event' && d?.name === 'bonus') { const n = Math.max(1, d.data?.n | 0), g = core.member.earn('once', 50 * n); if (g) { core.ui.toast(`メダルのごほうび +${g}コイン`); } }   // メダル(勉強を続けた日数)を新しくもらったら、1つにつき50コイン
+        else if (name === 'app:event' && d?.name === 'guide') { const g = d.data || {}; if (g.who === 'sora') core.guide.sora(); else if (g.who === 'today') core.guide.today(); }   // 町のそら「教えて」
         else if (name === 'app:event' && d?.name === 'daily') core.review && core.review.open({ mode: 'today' });   // 「今日はここまで」
         else if (name === 'app:event' && d?.name === 'done') core.events.report('gamebox', 'done', d.data || {});   // 家のゲーム機の英語ゲーム(メダルの日数に入る)
         else if (name === 'app:event' && d?.name === 'play') { if (d.data?.back === 'merge') retMerge = { id: d.data.id, t: Date.now() }; const p = playOf(d.data?.id); if (p && core.today) core.today.go(p); }   // そら君が勧めた勉強を開く
