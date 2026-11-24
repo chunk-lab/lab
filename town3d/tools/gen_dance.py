@@ -42,6 +42,10 @@ Wd0 = {k: world(name[v], None) for k, v in MAP.items()}
 Wm = {k: np.zeros((F, 3, 3)) for k in MAP}
 for f in range(F):
     for k, v in MAP.items(): Wm[k][f] = world(name[v], f) @ Wd0[k].T @ Wm0[k]
+# 首: 頭の動き(NECK_K=1 で全部)を首の骨にも分ける。ちょこの首はひねり骨3本に分かれているが、標準の骨は首1本。首が動かないと、頭とのあいだで皮膚がねじれて顔がゆがむ
+NECK_K = float(os.environ.get('NECK_K', '1.0'))
+def slerpR(A, B, k): return q2m(m2q(A)) if k <= 0 else (lambda a, b: q2m(((np.sin((1 - k) * np.arccos(np.clip(abs(np.dot(a, b)), -1, 1))) * a + np.sin(k * np.arccos(np.clip(abs(np.dot(a, b)), -1, 1))) * np.sign(np.dot(a, b)) * b) / max(np.sin(np.arccos(np.clip(abs(np.dot(a, b)), -1, 1))), 1e-9)) if abs(np.dot(a, b)) < 0.99999 else a))(m2q(A), m2q(B))
+for f in range(F): Wm['Neck'][f] = slerpR(Wm['Neck'][f], Wm['Head'][f], NECK_K)
 out = {}
 def worldM(k, f): return Wm[k][f] if k in MAP else Wm0[k]
 for k in MAP:
