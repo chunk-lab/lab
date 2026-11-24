@@ -1852,6 +1852,8 @@ export function mount(container, opt = {}) {
     camera.position.copy(look).addScaledVector(off, dist);
     if (camera.position.y < 0.2) camera.position.y = 0.2;   // 地面より下には行かない
     camera.lookAt(look);
+    // 地面で止まった分は、カメラを上に向けて補う(真上=空まで見上げられる)
+    if (cam.pitch < 0) { const hd = Math.hypot(camera.position.x - look.x, camera.position.z - look.z), up = Math.atan2(look.y - camera.position.y, hd), extra = -cam.pitch - up; if (extra > 0) camera.rotateX(extra); }
     }
     }
 
