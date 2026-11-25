@@ -9,3 +9,10 @@ export function firstRun(id, opts, fn, delay = 700) {
   return true;
 }
 export const tutSeen = id => !!st.get('tut:' + id);
+
+// 初めてなら true を返して「見た」印をつける(自動で出すものを、自分で動かしたいとき用)
+export function claimFirstRun(id, opts) {
+  const o = opts || {}, direct = Object.keys(o).some(k => k !== 'face' && o[k] != null && o[k] !== false);
+  if (direct || st.get('tut:' + id)) return false;
+  st.set('tut:' + id, 1); return true;
+}

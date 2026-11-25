@@ -3,7 +3,7 @@
 import html from './src/view.html';
 
 const safeJSON = x => JSON.stringify(x).replace(/</g, '\\u003c');
-export async function mountEpisodeFrame(el, ctx) {
+export async function mountEpisodeFrame(el, ctx, opt = {}) {   // opt.onDone: 単独アプリの初回案内で使うとき、終わったら呼ぶ(物語のときは今まで通り)
   const token = crypto.randomUUID(), base = new URL(ctx.base, location.href).href;
   const asset = name => {
     const url = new URL(name, base), config = ctx.core.config || {};
@@ -25,8 +25,8 @@ export async function mountEpisodeFrame(el, ctx) {
     if (d.type === 'ready') { ready = true; clearTimeout(timer); resolveReady(); }
     else if (d.type === 'error') { if (!ready) rejectReady(new Error('英文組み立てラボの体験を読み込めませんでした')); }
     else if (d.type === 'speak' && typeof d.text === 'string') ctx.core.speech.speak(d.text.slice(0, 300), { rate: .9 });
-    else if (d.type === 'finish' && ready) { ctx.report('episode_practice', { exercise: 'want-to' }); ctx.exit(); }
-    else if (d.type === 'exit') ctx.exit();
+    else if (d.type === 'finish' && ready) { if (opt.onDone) opt.onDone('finish'); else { ctx.report('episode_practice', { exercise: 'want-to' }); ctx.exit(); } }
+    else if (d.type === 'exit') { if (opt.onDone) opt.onDone('exit'); else ctx.exit(); }
   }
   window.addEventListener('message', receive);
   frame.srcdoc = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="stylesheet" href="${asset('eigo.css')}"><style>html,body{margin:0;height:100%;overflow:hidden}#episode-eigo-root{height:100%;position:relative}</style></head><body><div id="episode-eigo-root" class="ct-eigo"></div><script>

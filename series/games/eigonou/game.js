@@ -4,7 +4,7 @@
    セーブ・読み上げは共通の部品。読み込み時に付けていた document の受け口やタイマーは、開いている間だけ動く（src/env.js）。 */
 import html from './src/view.html';
 import { runCoach } from '../../core/coach.js';
-import { firstRun } from '../../core/firstrun.js';
+import { firstRun, claimFirstRun } from '../../core/firstrun.js';
 import { mountEpisodeFrame } from './episode-frame.js';
 import { prefetchEigo } from './prefetch.js';
 import { LOGO } from '../../core/logos.js';
@@ -22,6 +22,11 @@ export default {
   prefetch(core) { prefetchEigo(core.base + 'g/eigonou/'); },   // 町で遊んでいる間に先読み
   async mount(el, ctx) {
     if (ctx.opts.episodePractice === 'want-to') return mountEpisodeFrame(el, ctx);
+    if (claimFirstRun('eigonou', ctx.opts)) {   // 単独で初めて開いたとき: 本物のデータに触れない体験用の画面で、触りながら覚える。終わったら、そのまま本物へ
+      let done; const fin = new Promise(r => { done = r; });
+      let fr = null; try { fr = await mountEpisodeFrame(el, ctx, { onDone: how => done(how) }); } catch (e) { fr = null; }
+      if (fr) { const how = await fin; fr.unmount(); if (how === 'exit') { ctx.exit(); return { unmount() { } }; } }
+    }
     el.classList.add('ct-eigo');
     el.innerHTML = '<div class="eg-loading" style="display:grid;place-items:center;height:100%;font-weight:700;color:#6b7191">読み込み中…</div>';
     link(FONT, 'eigo-font');
@@ -35,7 +40,6 @@ export default {
     const app = window.__APP__ || {};
     if (app.backButton) { const b = document.createElement('button'); b.className = 'ib eg-home'; b.setAttribute('aria-label', app.backLabel || '戻る'); b.textContent = '🏠'; b.onclick = () => ctx.exit(); const top = el.querySelector('.top'); top && top.prepend(b); }
     { const h = document.createElement('button'); h.className = 'ib eg-how'; h.textContent = '❓ 遊び方'; h.style.cssText = 'font-size:12px;padding:4px 8px;white-space:nowrap'; h.onclick = () => runCoach(HOW); const top = el.querySelector('.top'); top && top.appendChild(h); }
-    firstRun('eigonou', ctx.opts, () => runCoach(HOW));   // 単独で初めて開いたとき: 遊び方を自動で
     return {
       unmount() {
         try { window.__EIGONOU.stop(); } catch (e) { }
