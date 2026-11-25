@@ -234,7 +234,7 @@ export function createMergeApp(env = {}) {
         const TOP = SAFE + 54, BOT = 56;   // 上のバー+お題の行 / 下のボタン列
         const SP0 = 38, rowsH = CFG.rows, MINSH = 60;   // 盤面がいちばん大事: 横いっぱいを先に決め、縦がたりなければ住人カードを小さくする。それでもたりないときだけ盤面を小さくする
         let cw = W >= 520 ? 230 : Math.floor((W - 18) / 2);
-        CS = Math.floor((W - 4) / CFG.cols);
+        CS = Math.max(28, Math.min(Math.floor((W - 4) / CFG.cols), Math.floor((H - TOP - BOT - 6 - MINSH - 4) / rowsH)));   // 横にも縦にも収まる大きさ(iPadなど横長・大きい画面で、盤面がはみ出ないように)
         const bw = CS * CFG.cols + 4, bh = CS * rowsH + 4, spare = H - TOP - bh - BOT - 6;
         SH = Math.max(MINSH, Math.min(spare, 64 + SP0)); const off = Math.max(0, Math.floor((spare - SH) / 2));
         const tiny = SH < 96; elStrip.classList.toggle('tiny', tiny);   // 縦がせまい画面: 名前とハートを消して、絵だけにする
