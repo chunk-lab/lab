@@ -90,5 +90,5 @@ export async function drainInbox() {
   if (left.length) box.send(left);
   plays.forEach(savePlay); save(); refreshLex();
   if (wantPlay && plays.length) { toast('▶ ' + plays[0].en); loadPlay(plays[0]); return; }
-  if (n) PENDING += n;   // 画面には出さない(英ラボを出るときに知らせる)
+  if (n) { PENDING += n; if (got.length || gotS.length) showDone(got, gotS, chunks, plays); }   // 届いた言葉のまとめを最初に出す(▶でその言葉の文がすぐ動く・つくる・れんしゅうへ)
 }
