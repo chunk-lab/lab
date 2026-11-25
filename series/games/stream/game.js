@@ -36,10 +36,6 @@ export default {
       const ts = createStore('core'), seen = new Set(ts.get('tut:stream') || []), add = seen.add.bind(seen);
       seen.add = x => { add(x); ts.set('tut:stream', [...seen]); return seen; };
       ENV.coach = seen;
-      const hb = document.createElement('button'); hb.type = 'button'; hb.textContent = '❓'; hb.setAttribute('aria-label', 'あそびかた');
-      hb.style.cssText = 'position:absolute;left:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:30;width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:#141a36dd;color:#fff;font:900 16px/1 inherit;padding:0';
-      hb.onclick = e => { e.stopPropagation(); seen.clear(); ts.set('tut:stream', []); hb.textContent = '✓'; setTimeout(() => { hb.textContent = '❓'; }, 1500); };
-      el.appendChild(hb);
     }
     loadSave(); if ([1, 1.2, 1.4, 1.6].includes(ctx.opts?.fontSize)) SV.set.fs = ctx.opts.fontSize;
     const op = ctx.opts && ctx.opts.passage && P(ctx.opts.passage);   // 長文のチャンクはレベルごとのファイル。いま開くレベル(と指定の本のレベル)を先に読み込む

@@ -153,7 +153,6 @@ export function createMergeApp(env = {}) {
         let merges = 0, closing = false; const done = (ms = 4500) => { if (closing) return; closing = true; if (!story) { try { ctx.storage.set('cdone', 1); } catch (e) { } return; } setTimeout(() => { try { ctx.close(); } catch (e) { } }, ms); };   // 物語から: やってみたら、自動で話にもどる
         return { replay() { on = true; closing = false; seen.clear(); this.say('open', 'まずは、盤面の「生成機」をタップしてみ。ものが出てくるで'); }, say(k, text) { if (!on) return; if (k === 'give') done(); if (seen.has(k)) return; seen.add(k); b.querySelector('span').textContent = text; b.style.display = 'flex'; }, merged() { if (++merges >= 4) done(); } };
       })();
-      if (!story0) { const hb = document.createElement('button'); hb.type = 'button'; hb.textContent = '❓'; hb.setAttribute('aria-label', 'あそびかた'); hb.style.cssText = 'position:absolute;right:8px;top:calc(8px + env(safe-area-inset-top,0px));z-index:41;width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:#141a36dd;color:#fff;font:900 16px/1 inherit;padding:0'; hb.onclick = e => { e.stopPropagation(); coach.replay(); }; root.appendChild(hb); }
       const elStrip = $('.mg-strip'), elBoard = $('.mg-board'), elInfo = $('.mg-info'), elSlots = $('.mg-slots'), elFx = $('.mg-fx'), elEn = $('.mg-en'), elQb = $('.mg-qb'), elInb = $('.mg-inb'), elSell = $('.mg-sell');
 
       // ---- 状態 ----
