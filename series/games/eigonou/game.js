@@ -4,6 +4,7 @@
    セーブ・読み上げは共通の部品。読み込み時に付けていた document の受け口やタイマーは、開いている間だけ動く（src/env.js）。 */
 import html from './src/view.html';
 import { runCoach } from '../../core/coach.js';
+import { firstRun } from '../../core/firstrun.js';
 import { mountEpisodeFrame } from './episode-frame.js';
 import { prefetchEigo } from './prefetch.js';
 import { LOGO } from '../../core/logos.js';
@@ -34,6 +35,7 @@ export default {
     const app = window.__APP__ || {};
     if (app.backButton) { const b = document.createElement('button'); b.className = 'ib eg-home'; b.setAttribute('aria-label', app.backLabel || '戻る'); b.textContent = '🏠'; b.onclick = () => ctx.exit(); const top = el.querySelector('.top'); top && top.prepend(b); }
     { const h = document.createElement('button'); h.className = 'ib eg-how'; h.textContent = '❓ 遊び方'; h.style.cssText = 'font-size:12px;padding:4px 8px;white-space:nowrap'; h.onclick = () => runCoach(HOW); const top = el.querySelector('.top'); top && top.appendChild(h); }
+    firstRun('eigonou', ctx.opts, () => runCoach(HOW));   // 単独で初めて開いたとき: 遊び方を自動で
     return {
       unmount() {
         try { window.__EIGONOU.stop(); } catch (e) { }

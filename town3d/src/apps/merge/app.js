@@ -139,18 +139,21 @@ export function createMergeApp(env = {}) {
       host.appendChild(root);
       const $ = q => root.querySelector(q);
       // ---- 物語の案内役(params.coach): 遊んでいる最中に、そのとき必要なことだけ吹き出しで教える ----
+      const story0 = !!(ctx.params && ctx.params.coach);
       const coach = (() => {
-        const id = ctx.params && ctx.params.coach; if (!id) return { say() { } };
+        const story = !!(ctx.params && ctx.params.coach), id = story ? ctx.params.coach : 'choco';   // 物語から=話にもどる / 単独=チョコが案内(そのまま遊べる)
+        let on = story || !(() => { try { return ctx.storage.get('cdone'); } catch (e) { return 1; } })();   // 単独は、はじめて開いたときだけ自動で。「❓」でいつでももう一度
         const seen = new Set(), b = document.createElement('div');
         b.style.cssText = 'position:absolute;left:8px;right:8px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:40;display:none;align-items:flex-end;gap:8px;pointer-events:auto';
         b.innerHTML = `<img alt="" style="width:64px;height:64px;object-fit:contain;flex:none;filter:drop-shadow(0 2px 4px #0004)"><div style="flex:1;background:#141a36ee;color:#fff;border:3px solid #fff;border-radius:12px;padding:10px 12px;font:700 15px/1.6 inherit;box-shadow:0 0 0 3px #141a36"><b style="display:block;font-size:12px;color:#ffd166"></b><span></span></div><button type="button" aria-label="とじる" style="flex:none;border:0;background:#fff;border-radius:999px;width:30px;height:30px;font-weight:900;align-self:flex-start">✕</button>`;
         try { b.querySelector('img').src = portrait(id) || ''; } catch (e) { }
-        b.querySelector('b').textContent = (ctx.params.coachName || '');
+        b.querySelector('b').textContent = story ? (ctx.params.coachName || '') : 'チョコ';
         b.querySelector('button').onclick = e => { e.stopPropagation(); b.style.display = 'none'; };
         root.appendChild(b);
-        let merges = 0, closing = false; const done = (ms = 4500) => { if (closing) return; closing = true; setTimeout(() => { try { ctx.close(); } catch (e) { } }, ms); };   // 物語から: やってみたら、自動で話にもどる
-        return { say(k, text) { if (k === 'give') done(); if (seen.has(k)) return; seen.add(k); b.querySelector('span').textContent = text; b.style.display = 'flex'; }, merged() { if (++merges >= 4) done(); } };
+        let merges = 0, closing = false; const done = (ms = 4500) => { if (closing) return; closing = true; if (!story) { try { ctx.storage.set('cdone', 1); } catch (e) { } return; } setTimeout(() => { try { ctx.close(); } catch (e) { } }, ms); };   // 物語から: やってみたら、自動で話にもどる
+        return { replay() { on = true; closing = false; seen.clear(); this.say('open', 'まずは、盤面の「生成機」をタップしてみ。ものが出てくるで'); }, say(k, text) { if (!on) return; if (k === 'give') done(); if (seen.has(k)) return; seen.add(k); b.querySelector('span').textContent = text; b.style.display = 'flex'; }, merged() { if (++merges >= 4) done(); } };
       })();
+      if (!story0) { const hb = document.createElement('button'); hb.type = 'button'; hb.textContent = '❓'; hb.setAttribute('aria-label', 'あそびかた'); hb.style.cssText = 'position:absolute;right:8px;top:calc(8px + env(safe-area-inset-top,0px));z-index:41;width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:#141a36dd;color:#fff;font:900 16px/1 inherit;padding:0'; hb.onclick = e => { e.stopPropagation(); coach.replay(); }; root.appendChild(hb); }
       const elStrip = $('.mg-strip'), elBoard = $('.mg-board'), elInfo = $('.mg-info'), elSlots = $('.mg-slots'), elFx = $('.mg-fx'), elEn = $('.mg-en'), elQb = $('.mg-qb'), elInb = $('.mg-inb'), elSell = $('.mg-sell');
 
       // ---- 状態 ----

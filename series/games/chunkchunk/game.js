@@ -5,6 +5,7 @@
    中身は src/（engine＝流れる文を切るゲーム本体／pick＝文章を選ぶ／reading＝リーディング／texts＝My Texts と共有／
    shorts＝短文／rank＝チャレンジとランキング／title＝施設の入口／data＝内蔵の文と問題）。画面は src/view.html、見た目は src/cc.css */
 import { playCoach } from './src/playcoach.js';
+import { firstRun } from '../../core/firstrun.js';
 import html from './src/view.html';
 import { LOGO } from '../../core/logos.js';
 import './src/cc.css';
@@ -57,7 +58,8 @@ export default {
     if (ctx.opts && ctx.opts.open === 'mytexts') setTimeout(() => { try { el.querySelector('#title').hidden = true; openMyTexts(); } catch (e) { console.error(e); } }, 50);   // 図書館の「自分の本」から
     if (ctx.opts && ctx.opts.timed) setTimeout(() => { try { const b = el.querySelector('[data-timed="' + ctx.opts.timed + '"]'); b && b.click(); } catch (e) { console.error(e); } }, 80);   // 物語から: チャレンジ(30秒)を直接
     if (ctx.opts && ctx.opts.play) setTimeout(() => { try { const b = el.querySelector('[data-play="' + ctx.opts.play + '"]'); b && b.click(); } catch (e) { console.error(e); } }, 80);   // 🎮一覧から「さらさら/よーいどん」を直接始める(auto-one/manual-one)
-    if (ctx.opts && ctx.opts.coach) playCoach(ctx.opts.coach);   // 物語から: やりながら覚える案内
+    if (ctx.opts && ctx.opts.coach) playCoach(ctx.opts.coach);
+    firstRun('chunkchunk', ctx.opts, () => { const b = el.querySelector('[data-howto]'); b && b.click(); }, 900);   // 単独で初めて開いたとき: 遊び方を自動で   // 物語から: やりながら覚える案内
     ctx.report('enter', { face, name: NAMES[face] });
     return {
       unmount() {

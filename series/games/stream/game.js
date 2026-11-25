@@ -5,6 +5,7 @@
    データ（長文・単語・予習の文章）は data/ の別ファイルで、開くときに読み込む（tools/ の道具で作る）。 */
 import html from './src/stream.html';
 import { LOGO } from '../../core/logos.js';
+import { createStore } from '../../core/store.js';
 import './src/stream.css';
 import { ENV, SV, loadSave, stopAll } from './src/base.js';
 import { init_screens } from './src/screens.js';
@@ -30,7 +31,16 @@ export default {
     el.classList.add('ct-stream');
     el.innerHTML = html.replace(/(src|href)="(img|audio)\//g, (m, at, d) => `${at}="${ctx.base}${d}/`);
     el.querySelectorAll('.logo').forEach(lg => { lg.innerHTML = `<img src="${LOGO.story}" alt="Storyミング！" style="display:block;margin:0 auto;height:min(26vh,150px);width:auto;max-width:90%">`; });
-    ENV.coach = ctx.opts && ctx.opts.coach ? new Set() : null;   // 物語から: ステージごとの遊び方を、その都度出す
+    if (ctx.opts && ctx.opts.coach) ENV.coach = new Set();   // 物語から: ステージごとの遊び方を、その都度出す
+    else {   // ふだん(単独): ステージごとの遊び方を、はじめてのときだけ出す(見たステージは覚えておく)。「❓」でもう一度
+      const ts = createStore('core'), seen = new Set(ts.get('tut:stream') || []), add = seen.add.bind(seen);
+      seen.add = x => { add(x); ts.set('tut:stream', [...seen]); return seen; };
+      ENV.coach = seen;
+      const hb = document.createElement('button'); hb.type = 'button'; hb.textContent = '❓'; hb.setAttribute('aria-label', 'あそびかた');
+      hb.style.cssText = 'position:absolute;left:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:30;width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:#141a36dd;color:#fff;font:900 16px/1 inherit;padding:0';
+      hb.onclick = e => { e.stopPropagation(); seen.clear(); ts.set('tut:stream', []); hb.textContent = '✓'; setTimeout(() => { hb.textContent = '❓'; }, 1500); };
+      el.appendChild(hb);
+    }
     loadSave(); if ([1, 1.2, 1.4, 1.6].includes(ctx.opts?.fontSize)) SV.set.fs = ctx.opts.fontSize;
     const op = ctx.opts && ctx.opts.passage && P(ctx.opts.passage);   // 長文のチャンクはレベルごとのファイル。いま開くレベル(と指定の本のレベル)を先に読み込む
     try { await PASSAGES_NEED(ctx.loadScript, ctx.base, [SV.lv || 1, op ? op.lv : 0]); } catch (e) { console.error(e); }
