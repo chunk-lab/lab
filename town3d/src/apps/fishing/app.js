@@ -76,6 +76,9 @@ const CSS = `
 .fz .gauge .t b{position:absolute;top:-6px;width:6px;height:26px;margin-left:-3px;border-radius:3px;background:#2b2140;box-shadow:0 0 0 2px #fff}
 .fz .gauge .row{display:flex;justify-content:space-between;color:#fff;font-weight:800;font-size:12px;margin-top:4px;text-shadow:0 1px 3px #0008}
 .fz .gauge .brk{height:4px;margin-top:3px;border-radius:2px;background:#ff4f6a;transform-origin:left;transform:scaleX(0)}
+.fz .tbub{position:absolute;left:10px;right:10px;top:calc(58px + env(safe-area-inset-top,0px));z-index:6;background:#141a36f6;color:#fff;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0006;padding:10px 14px;font-weight:800;font-size:15px;line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+.fz .tbub b{color:#ffd166}.fz .tbub .tx{flex:1}.fz .tbub .sk{flex:none;background:#fff2;color:#fff;border:2px solid #fff8;border-radius:8px;font:inherit;font-size:12px;padding:3px 8px}
+.fz .tut-hl{outline:4px solid #ffd166;outline-offset:3px;animation:tutp .7s infinite alternate;z-index:5}@keyframes tutp{to{outline-color:#fff;outline-offset:7px}}
 .fz .toast{position:absolute;left:50%;top:70%;transform:translate(-50%,-50%);background:rgba(255,255,255,.95);border-radius:18px;padding:12px 18px;font-weight:900;font-size:20px;box-shadow:0 8px 24px #0004;pointer-events:none;text-align:center;animation:fzPop .25s ease-out}
 .fz .toast.hit{background:#ffe36b;font-size:30px;color:#c0392b}
 @keyframes fzPop{from{transform:translate(-50%,-50%) scale(.6);opacity:0}}
@@ -249,6 +252,8 @@ export const fishingApp = {
       if (P.vs) { const o = P.vs; P.vs = null; setTimeout(() => spotPick('釣り勝負', () => vsSetup(o === 'hard' ? 'hard' : 'easy')), 0); }   // 外から勝負に来ても、かならず釣り場を選ぶ
       else if (P.tab === 'shop') { P.tab = null; setTimeout(() => shop(), 0); }
       else if (P.tab === 'ask') { P.tab = null; setTimeout(() => ask(), 0); }
+      else if (P.coach) { P.coach = null; setTimeout(() => play({ tut: true }), 0); }   // 住人・はな・そらの「教えて」から: やりながら教える
+      else if (!st.get('tut') && !st.get('tutPlay')) setTimeout(() => play({ tut: true }), 300);   // はじめて開いたとき: そのまま、やりながら教える
       else if (!st.get('tut')) setTimeout(() => help(), 300);
     }
     function pickSay() {
@@ -265,8 +270,9 @@ export const fishingApp = {
         <p><b>③ アタリとあわせ</b><br>ウキがツンツン→<b>グッとしずんだら</b>左の<b>「あわせ」</b>! 早すぎると逃げられる。ルアーは「！」が出たらすぐ。</p>
         <p><b>④ ファイト</b><br>魚がかかったら、<b>指をおいたまま上にずらして竿を持ち上げ</b>、<b>指を離さずに画面のどこでもぐるぐる回す</b>と巻ける。竿は指のうごきにあわせて動く。魚が左右に走ったら、竿をその<b>反対</b>にたおす(←→の矢印)。はねたら竿を下げる(↓)。向きが合わないと巻きがおそくなる。離すと巻きは止まる。</p>
         <p><b>⑤ 集める・きそう</b><br>釣れた魚は図鑑へ。時間(朝・昼・夕方・夜)・季節・雨・場所・エサで釣れる魚がかわる。道具屋で道具をそろえて、大物と伝説をねらおう。</p>
-      </div><div style="padding:10px 16px 16px;text-align:center"><button class="btn" data-x>わかった</button></div>`, true);
+      </div><div style="padding:10px 16px 16px;text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn gold" data-try>🎣 やりながら教えて</button><button class="btn sub" data-x>わかった</button></div>`, true);
       s.querySelector('[data-x]').onclick = () => { st.set('tut', 1); s.remove(); after && after(); };
+      s.querySelector('[data-try]').onclick = () => { st.set('tut', 1); s.remove(); play({ tut: true }); };
     }
     function sheet(html, center) {
       const s = document.createElement('div'); s.className = 'sheet'; s.innerHTML = `<div class="panel ${center ? 'center' : ''}">${html}</div>`;
@@ -282,7 +288,7 @@ export const fishingApp = {
       ctx.setTitle(vs ? '釣り勝負' : en ? '英語の釣り堀' : 'のんびり釣り');
       const cond = vs ? vs.cond : baseCond;
       const topH = vs ? 0.3 : 0, STRIP = 34;
-      const easy = vs ? !!vs.easy : st.get('mode') === 'easy', calm = vs ? !!vs.calm : st.get('fx') === 'calm';
+      const easy = vs ? !!vs.easy : (opt.tut || st.get('mode') === 'easy'), calm = vs ? !!vs.calm : st.get('fx') === 'calm';
       // 自分の画面(いちばん下)と、相手の画面(上。自分がファイト中は細い帯にたたむ)
       const cv = document.createElement('canvas'); cv.style.cssText = 'top:0;height:100%'; root.appendChild(cv);
       let oppView = null, oppCv = null;
@@ -318,6 +324,38 @@ export const fishingApp = {
       }
       const tackleChip = () => { const b = gearById('bait', eq.bait); $('[data-b="tackle"]').textContent = `${b.icon} ${b.name}・${gearById('hook', eq.hook).name}`; const tc = $('[data-b="tana"]'); tc.style.display = b.type === 'lure' ? 'none' : ''; tc.textContent = TANA[tanaOf(E.S.tana)].name; };
       tackleChip();
+      // ---- 案内(opt.tut): 本物の釣りをしながら、いま押すところを光らせて教える。投げる→待つ→あわせ→巻く→釣りあげ ----
+      const T = opt.tut ? (() => {
+        let bub = null, hl = null, step = 'cast', done = false, tm = 0;
+        const light = sel => { hl && hl.classList.remove('tut-hl'); hl = sel ? $(sel) : null; hl && hl.classList.add('tut-hl'); };
+        const say = (html, sel) => { if (done) return; if (!bub) { bub = document.createElement('div'); bub.className = 'tbub'; bub.innerHTML = '<span class="tx"></span><button class="sk" type="button">とばす</button>'; bub.querySelector('.sk').onclick = () => end(false); ui.appendChild(bub); } bub.querySelector('.tx').innerHTML = html; light(sel); };
+        const end = ok => { if (done) return; done = true; clearTimeout(tm); light(null); bub && bub.remove(); st.set('tutPlay', 1); st.set('tut', 1); };
+        const to = (k, html, sel) => { step = k; say(html, sel); };
+        const MSG = {
+          cast: ['<b>① 投げる</b><br>池を<b>タップ</b>して、狙う場所を決めよう。そのあと<b>「投げる」を押したまま</b>。力がたまるよ。黄色い帯のところで<b>離す</b>と、うまく飛ぶ!', '.big'],
+          wait: ['<b>② 待つ</b><br>ウキがしずんだ。魚が来るのを、じっと待とう。', null],
+          nib: ['<b>③ まだ!</b><br>ウキが<b>ツンツン</b>してる。まだ押さない。<b>グッとしずんだら</b>…', null],
+          bite: ['<b>④ いま! あわせ!</b><br>左の<b>「あわせ」</b>を押して!', '.hk'],
+          fight: ['<b>⑤ 巻く</b><br>かかった! 画面の指示にそって、<b>竿を持ち上げて</b>、<b>ぐるぐる回して</b>巻こう。', null],
+        };
+        return {
+          start() { to('cast', ...MSG.cast); },
+          ev(type) {
+            if (done) return;
+            if (type === 'cast') to('fly', '飛んだ! おちるのを見よう。', null);
+            else if (type === 'land') { to('wait', ...MSG.wait); clearTimeout(tm); tm = setTimeout(() => { try { E.tutorCall(); } catch (e) { } }, 1800); }
+            else if (type === 'nibble') { if (step !== 'bite') to('nib', ...MSG.nib); }
+            else if (type === 'bite') to('bite', ...MSG.bite);
+            else if (type === 'early') say('早すぎた! <b>グッとしずんでから</b>押そう。もう一度ようすを見て。', null);
+            else if (type === 'miss' || type === 'pass' || type === 'stolen') { say('のがした…。大丈夫、もう一度<b>投げよう</b>。', '.big'); step = 'cast'; }
+            else if (type === 'hooked') to('fight', ...MSG.fight);
+            else if (type === 'lost') { say('にげられた…。<b>ゆるめながら</b>巻くのがコツ。もう一度!', '.big'); step = 'cast'; }
+            else if (type === 'catch') { say('<b>釣れた!</b> おめでとう! あとは、好きなだけ釣ってね。<br><small>「あそびかた」ボタンで、いつでも見返せるよ。</small>', null); st.set('tutPlay', 1); st.set('tut', 1); setTimeout(() => end(true), 6000); }
+          },
+          off() { end(false); },
+        };
+      })() : null;
+      if (T) setTimeout(() => T.start(), 300);
       const G = en ? EN.playGates(en, ui, () => Math.max(0.05, 0.3 / Math.pow(E.G.rod.power, 1.5))) : null; let thrashN = 0, waitQ = 1, okRun = true;   // okRun:前の問題が正解(連続正解)なら、気になり度が2倍たまる=5問くらいで食い付く
       ui.querySelector('.bar').onclick = e => {
         const b = e.target.closest('[data-b]')?.dataset.b; if (!b) return; sfx.play('tap');
@@ -443,6 +481,7 @@ export const fishingApp = {
       function toast(text, ms = 1100, cls = '') { toastEl?.remove(); toastEl = document.createElement('div'); toastEl.className = 'toast ' + cls; toastEl.innerHTML = text; ui.appendChild(toastEl); toastT = ms / 1000; }
       function handleEv(type, d) {
         const L = E.S.lure;
+        if (T) T.ev(type);
         if (G) enGate(type, d);
         if (type === 'cast') { sfx.play('whoosh'); if (d.q) castQ = d.q; }
         if (type === 'land') { sfx.play('plop'); view.splash(d.x, d.d, 8, 0.6); underReady = false; landT = 0; if (castQ) { toast(castQ === 'perfect' ? '<span style="font-size:24px;color:#e08a00">✨パーフェクト!!✨</span><br><small style="font-size:12px">まわりの魚がとても寄ってくる</small>' : 'ナイスキャスト!<br><small style="font-size:12px">魚が寄りやすい</small>', 1200); if (castQ === 'perfect') sfx.play('coin'); castQ = ''; } }

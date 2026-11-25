@@ -605,6 +605,7 @@ export function mount(container, opt = {}) {
       { label: '🔘 画面のボタン', fn: () => iconTour(r) },
       { label: '🤝 なかよし・ステータス', fn: () => teachTopic(r, 'bond') },
       { label: '🔍 探す・📷 写真', fn: () => teachTopic(r, 'find') },
+      { label: '🎣 釣り', fn: () => teachTopic(r, 'fishing') },
       { label: '🏠 家のこと', fn: () => openApp('home', { coach: true }) },
       { label: '🧩 マージゲーム', fn: () => openApp('merge', { coach: 'choco', coachName: '大喜利チョコ' }) },
       ...(back ? [{ label: '← もどる', fn: back }] : [])], r);
@@ -624,12 +625,6 @@ export function mount(container, opt = {}) {
       { t: 'つぎは写真。カメラのボタンを押してみて!', sel: '.tw-photo', wait: true },
       { t: '好きな角度で町や住人を撮れるよ。ピンチで寄ったり、ドラッグで見上げたりして、いい1枚をねらってね。撮った写真はアルバムに残るよ。' },
     ],
-    fishing: [
-      { t: '釣りかい。のんびりやるのが、いちばんさ。' },
-      { t: '「🎣 釣りへ行く」で池に入ると、英語の問題が魚になってる。正しい答えを選べば、釣りあげられるんだ。' },
-      { t: 'まちがえても、魚はまた来る。あせらず、くり返し答えているうちに、単語が手になじんでくる。' },
-      { t: '釣った魚は、水槽や標本にして飾れる。…まあ、まずは1匹、やってみな。', ask: { label: '🎣 釣りへ行く', fn: () => openApp('fishing') } },
-    ],
     fortune: [
       { t: 'ようこそ。わたしの占いは、星とタロットで、あなたの今日を見るものよ。' },
       { t: '「🔮 占ってもらう」で、カードを引いてもらえるわ。カードには英語の言葉がそえてあるの。意味といっしょに覚えると、忘れにくいわよ。' },
@@ -644,6 +639,7 @@ export function mount(container, opt = {}) {
     ],
   };
   function teachTopic(r, topic) {
+    if (topic === 'fishing') { r.talking = false; if (talkingTo === r) talkingTo = null; hud.closeDialog && hud.closeDialog(); openApp('fishing', { coach: true }); return; }   // 釣りの案内は、釣りアプリの中(本物の釣りをしながら)
     const list = TEACH[topic] || [], nm = r.def.id === 'hana' ? 'はな' : (r.def.name || ''), face = r.def.id;
     let i = 0, lit = null, cap = null;
     const R = s => root.querySelector(s) || document.querySelector(s);
