@@ -16,7 +16,10 @@ const MORE_3D = [S3('yuzu', 'ゆず', '何歳に見えますか？'), S3('shiori
 
 export function createEpisodes(core, { games, depart, play3d, pauseTown = () => {}, resumeTown = () => {}, onStop = () => {} }) {
   // 話の一覧(新しい話は、ここに足す)。タイトル画面の「つづき」は、まだ終わっていない最初の話を開く
-  const LIST = [FIRST_EPISODE, CHUNKKUN_3D, ...MORE_3D];
+  // 並びは「物語 全体骨子」の習得順(遊べる場所・英語が、少しずつ広がる順)
+  const ORDER = ['suna', 'chunkkun', 'shiori', 'baron', 'gon', 'luna', 'koharu', 'mii', 'maru', 'yuzu', 'choco', 'tetsu', 'hana'];
+  const BY = Object.fromEntries([CHUNKKUN_3D, ...MORE_3D].map(e => [e.id, e]));
+  const LIST = [FIRST_EPISODE, ...ORDER.map(id => BY[id]).filter(Boolean), ...[CHUNKKUN_3D, ...MORE_3D].filter(e => !ORDER.includes(e.id))];
   const store = createStore('town-episodes'), progs = LIST.map(e => createEpisodeProgress(store, e));
   let k = 0, episode = LIST[0], progress = progs[0], forced = null;
   const num = () => episode.no || k + 1;

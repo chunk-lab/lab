@@ -61,7 +61,7 @@ export const RESIDENTS = [
     id: 'maru', tips: ["「How much is this?」は『これいくら?』。買い物の基本だよ!", "「I'll take it.」は『それにします』。買うと決めたときの一言さ", "「Anything else?」は『ほかには?』。店員がよく言うんだ", "「It's on the house.」は『サービスだよ』ってこと。おまけの話になると、つい出ちゃう", "「Do you have a bigger one?」で『もっと大きいのある?』"], yomi: 'まるさん', persona: '商売上手で気前のいい店長。明るく元気。コインのおまけの話が好き。', name: 'マルさん', role: 'ショップの店長', look: { skin: 0xf2c9ac, hair: 0x8a5a44, style: 'short', top: 0xa8e6cf, bottom: 0x5a4a6b, shoes: 0x8a5a44, acc: 'apron', accColor: 0xffb3c1 },
     schedule: [[0, 'home', 'in'], [8, 'shop'], [12, 'home', 'in'], [20, 'plaza']],
     lines: { morning: ['いらっしゃい! 新しい服が入ったよ。'], day: ['家具もそろえてるから見ていって。', 'コインは町のどこでも使えるよ。'], evening: ['夕方は少しおまけしちゃおうかな。'], night: ['今日はもう店じまい。'] },
-    menu: [{ label: 'お店を見る', app: 'shop' }],
+    menu: [{ label: 'お店を見る', app: 'shop' }, { label: '📖 お店のことを教えて', act: 'teach', topic: 'shop' }],
   },
   {
     id: 'yuzu', adult: false, tips: ["「Make a wish.」は『願いごとをしてね』。おみくじの前の合言葉です", "「Look at the stars.」は『星を見て』。夜の空はきれいです", "「Good luck!」は『がんばって』『幸運を』。おみくじの結果にもぴったりです", "「Good morning.」は朝だけ。昼すぎは「Good afternoon.」になります", "「shooting star」が流れ星のこと。願いごとの相棒ですよ"], yomi: 'ゆず', persona: '神社のみならい。おっとりしていて礼儀正しい。星や朝の空気、おみくじの話が好き。', name: 'ゆず', role: '神社のみならい', look: { skin: 0xffe6d6, hair: 0x3f3a52, style: 'long', top: 0xffffff, bottom: 0xf59a8c, shoes: 0xc9a28c, acc: 'ribbon', accColor: 0xf59a8c },
@@ -115,7 +115,7 @@ export const RESIDENTS = [
     angler: { spot: [46, 22.5], face: [46, 18] },
     schedule: [[0, 'pond'], [8, 'home', 'in'], [16, 'park2'], [19, 'plaza2'], [21, 'pond']],
     lines: { morning: ['おはよう。朝の池は、水がきらきらしてるのさ。', 'まだ一匹も釣れてないけど、いい朝だな。'], day: ['釣れなくていいんだ。のんびりしに来てるだけさ。', 'あのアヒル、ぼくのことを見張ってるみたいだな。'], evening: ['夕方は風がやさしいな。そろそろ歩きたくなる。', '今日はどこまで行こうかな。気のむくままさ。'], night: ['夜の池は静かだな。星が水に映ってるのさ。'] },
-    menu: [{ label: '🎣 釣りへ行く', app: 'fishing' }, { label: 'オカリナをお願いする', act: 'harmonica' }],   // 入ると釣りのタイトル画面(英語・のんびり・勝負・図鑑…)
+    menu: [{ label: '🎣 釣りへ行く', app: 'fishing' }, { label: '📖 釣りのことを教えて', act: 'teach', topic: 'fishing' }, { label: 'オカリナをお願いする', act: 'harmonica' }],   // 入ると釣りのタイトル画面(英語・のんびり・勝負・図鑑…)
   },
   {
     // 占い師ルナ:神社の境内の「占いの館」の前にいる。10コインで、住人の好物・飾りのレシピ・かくれもののありかなどを教えてくれる
@@ -127,7 +127,7 @@ export const RESIDENTS = [
     schedule: [[0, 'fortune', 'in']],   // ふだんは館の中(外には立たない)
     outing: [[0, 'fortune', 'in'], [13, 'shrine'], [14, 'park'], [15.5, 'plaza2'], [17, 'fortune', 'in']],   // たまの お出かけの日(5日に1日くらい):昼すぎから夕方まで町を散歩
     lines: { morning: ['朝の星は見えないけれど、ちゃんとそこにあるのよ。'], day: ['占ってほしいことがあるなら、館にお入りなさい。', 'あなたのまわりに、いい風が吹いているわ。'], evening: ['夕暮れは、運命が変わりやすい時間よ。'], night: ['今夜は星がよく見えるわ…。'] },
-    menu: [{ label: '🔮 占ってもらう', app: 'fortune' }],
+    menu: [{ label: '🔮 占ってもらう', app: 'fortune' }, { label: '📖 占いのことを教えて', act: 'teach', topic: 'fortune' }],
   },
 ];
 

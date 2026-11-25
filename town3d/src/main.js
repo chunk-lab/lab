@@ -3,7 +3,8 @@ import { receipt } from './ui/pay.js';
 import * as THREE from 'three';
 import { createBus, createStorage, createWallet, angleLerp, clamp } from './core/core.js';
 import { weather } from './game/weather.js';
-import { social, PREFS, memory, DATE_FIRST, UNLOCKS, LV, LV_NAME } from './game/social.js';
+import { social, PREFS, memory, DATE_FIRST, UNLOCKS, LV, LV_NAME, NPC_NAME } from './game/social.js';
+import { RPG_CSS } from './ui/social_ui.js';
 import { finds, setAreaName, setSpotValid, loadHuntFile, TREASURES } from './game/finds.js';
 import { createSocialUI } from './ui/social_ui.js';
 import { createAppHost } from './core/apps.js';
@@ -323,7 +324,7 @@ export function mount(container, opt = {}) {
     if (isComp(r) && r.follow) text = (r.def.id === 'sora' ? ['ん? どうした?', 'なに?', 'おう、どうした?'] : ['なになに?', 'どうしたの?', 'ん? よんだ?'])[Math.floor(Math.random() * 3)];
     soc.onTalk(r);
     // ---- 話しかけたときのメニュー: ひと言(自動)のあとに「勉強」と「遊び」だけ。くわしい項目は、おして出た2段目に ----
-    const kindOf = m => (['school', 'library'].includes(m.app) || ['consult', 'soranote', 'quote'].includes(m.act)) ? 'study' : ['follow', 'date', 'invite'].includes(m.act) ? 'bond' : 'play';
+    const kindOf = m => (['school', 'library'].includes(m.app) || ['consult', 'soranote', 'quote', 'teach'].includes(m.act)) ? 'study' : ['follow', 'date', 'invite'].includes(m.act) ? 'bond' : 'play';
     const DESC = { school: '英語の練習ができるよ', library: '長い英文が読めるよ', shop: 'おみやげが買えるよ', omikuji: '運だめしができるよ', fortune: '星で占ってくれるよ', fishing: 'のんびり釣りができるよ', chunkcards: 'カードで勝負できるよ', ogiri: '大喜利で勝負できるよ', quote: '格言を聞けるよ', consult: '英語の相談にのるよ', follow: '一緒に歩けるよ', date: 'カフェでデートできるよ', harmonica: 'オカリナを吹いてもらえるよ' };
     const usedM = storage.get('menuUsed') || {}, APPK = ['school', 'library', 'shop', 'omikuji', 'fortune', 'fishing', 'chunkcards', 'fishing-en'], markM = k => { if (k && !APPK.includes(k)) bumpUse(k); };   // アプリは openApp の中で数える(二重に数えない)
     const backToTalk = () => { const off = bus.on('app:close', () => { off(); setTimeout(() => { if (!appHost.current && !hud.busy && started) talkTo(r); }, 450); }); };   // 釣りから出たら、会話にもどる
@@ -401,6 +402,38 @@ export function mount(container, opt = {}) {
       if (list.length) hud.toast(`📝 きょうの表現 ${list.length}こ を、ふりかえりに入れたよ`);
     } catch (e) { }
   }
+  // ---- 自分のステータス(RPG風): 英語の経験値と、町での歩み ----
+  const PLV = [0, 50, 150, 300, 500, 800, 1200, 1700, 2300, 3000, 4000, 5500, 7500, 10000];
+  function myStatus() {
+    const E = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const words = notes.filter(n => n.kind === 'word').length, phr = notes.filter(n => n.kind !== 'word').length, usedN = notes.filter(n => n.used).length, metN = met.size;
+    const exp = words * 10 + phr * 10 + notes.reduce((a, n) => a + (n.used || 0) * 20, 0) + metN * 2;
+    let L = 0; while (L + 1 < PLV.length && exp >= PLV[L + 1]) L++;
+    const lo = PLV[L], hi = PLV[L + 1], pct = hi == null ? 100 : Math.round((exp - lo) / (hi - lo) * 100);
+    const fr = residents.list.map(r => ({ r, lv: social.level(r.def.id) })).filter(x => x.lv > 0).sort((a, b) => b.lv - a.lv);
+    const recent = notes.slice(-8).reverse();
+    if (!document.getElementById('tw-rpg-css')) { const st = document.createElement('style'); st.id = 'tw-rpg-css'; st.textContent = RPG_CSS; document.head.appendChild(st); }
+    hud.panel(`<div class="rpg">
+      <div class="rpg-head"><div class="rpg-hd">
+        <div class="rpg-nm">${E(settings.name || 'あなた')}</div><div class="rpg-role">かまってチャンクTOWNの住人</div>
+        <div class="rpg-lv"><span>Lv</span><b>${L + 1}</b><em>英語の経験値</em></div>
+        <div class="rpg-bar"><i style="width:${pct}%"></i></div>
+        <div class="rpg-exp">EXP ${exp}${hi != null ? ` <small>つぎのLvまで あと${hi - exp}</small>` : ' <small>さいこうLv!</small>'}</div></div></div>
+      <div class="rpg-num"><div><small>📝 覚えた単語</small><b>${words}</b></div><div><small>💬 フレーズ・文</small><b>${phr}</b></div><div><small>✨ 使えた</small><b>${usedN}</b></div></div>
+      <div class="rpg-num"><div><small>👀 出会った単語</small><b>${metN}</b></div><div><small>🤝 なかよし</small><b>${fr.length}</b></div><div><small>🪙 コイン</small><b>${wallet.get()}</b></div></div>
+      <h4>🤝 なかよしの住人</h4>${fr.length ? `<div class="rpg-chips">${fr.slice(0, 12).map(x => `<span class="ok">${E(NPC_NAME[x.r.def.id] || x.r.def.name)}<small>${E(LV_NAME[x.lv])}</small></span>`).join('')}</div>` : '<p class="rpg-no">まだ いない(話しかけたり、プレゼントしたりしてみよう)</p>'}
+      <h4>📝 さいきん覚えた</h4>${recent.length ? `<div class="rpg-chips">${recent.map(n => `<span>${E(n.text)}${n.used ? '<small>使えた</small>' : ''}</span>`).join('')}</div>` : '<p class="rpg-no">まだ ない(会話の英単語を押すと、ほぞんできるよ)</p>'}
+      <p class="rpg-tip">EXPのもと: ほぞん+10、自分の英文で使う+20、新しい単語に出会う+2</p>
+      <button class="rpg-x" data-x>とじる</button></div>`, e => { if (e.target.closest('[data-x]')) hud.closePanel(); });
+  }
+  // 相手の英語のセリフで、はじめて出会った単語(よく使うやさしい語はのぞく)。町の中で1語1回だけ数える
+  const EASY = new Set('a an the i you he she it we they me him her us them my your his its our their mine yours this that these those is am are was were be been being do does did done have has had will would can could shall should may might must not no yes and or but so if then than because as at by for from in into of on to up out with about over after before again all any some more most very too also just only even still here there now when where what who whom whose which why how well oh ok okay hey hi hello thanks thank please sorry really much many lot lots little good great nice fine like love want need know think see look come go get got make made take say said tell let feel give put keep try one two three time day today tonight tomorrow yesterday thing things something anything nothing everything someone people way back down off own same other another each every both few new old big small first last long right sure maybe yeah wow fun let\'s it\'s i\'m don\'t you\'re that\'s can\'t i\'ll we\'re what\'s'.split(' '));
+  const met = new Set(storage.get('metWords') || []);
+  const metWords = en => {
+    const out = [];
+    for (const m of String(en).toLowerCase().match(/[a-z][a-z'’-]*/g) || []) { const w = m.replace(/[’]/g, "'").replace(/'s$/, ''); if (w.length < 3 || EASY.has(w) || met.has(w) || notes.some(n => n.text.toLowerCase() === w)) continue; met.add(w); out.push(w); }
+    if (out.length) storage.set('metWords', [...met].slice(-5000)); return out;
+  };
   // 自分が打った英文に、ほぞんした単語・フレーズが入っていたら「使えた」として数える
   const usedWords = t => {
     const low = ' ' + String(t).toLowerCase().replace(/[^a-z0-9'’ -]+/g, ' ').replace(/\s+/g, ' ') + ' ', out = [];
@@ -503,6 +536,7 @@ export function mount(container, opt = {}) {
     if ((m.act === 'date' || m.act === 'invite') && !m._ok) { special(r, () => doAct(r, { ...m, _ok: 1 })); return; }
     if (m.act === 'consult' || m.act === 'soranote') { r.talking = true; talkingTo = r; input.clear(); soraNote(r); return; }
     if (m.act === 'follow') { if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: VOICE[r.def.id]?.inviteBusy || 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, !r.follow); return; }
+    if (m.act === 'teach') { teachTopic(r, m.topic); return; }
     if (m.act === 'date') { startDate(r); return; }
     if (m.act === 'invite') { if (env.hour >= 21 || env.hour < 5) { hud.dialog({ name: r.def.name, role: r.def.role, text: VOICE[r.def.id]?.inviteLate || '今日はもう遅いから、また今度ね!' }); return; } if (!r.follow && residents.list.some(o => o !== r && isComp(o) && o.follow)) { hud.dialog({ name: r.def.name, role: r.def.role, text: 'いま ほかの人と一緒みたいだから、また今度ね!' }); return; } hanaFollow(r, true, true); r.hold = false; hud.dialog({ name: r.def.name, role: r.def.role, text: VOICE[r.def.id]?.inviteOk || 'え、いいの? 行く行く!' }); setTimeout(() => { hud.closeDialog?.(); openApp('home', {}); }, 900); return; }
     if (m.act === 'ogiri') {
@@ -532,7 +566,7 @@ export function mount(container, opt = {}) {
       setEn: v => { if (v.on) { settings.en = 1; settings.enShort = 1; } else settings.en = 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
       saveNote: it => addNote({ ...it, npc: r.def.name }),
-      onSeen: seenLine, onUsed: usedWords,
+      onSeen: seenLine, onUsed: usedWords, onMet: metWords,
       ask: async (t, onPart) => {
         hist.push({ role: 'user', text: t.slice(0, 80) });
         const H = Math.floor(env.hour), M = Math.floor((env.hour % 1) * 60);
@@ -569,9 +603,71 @@ export function mount(container, opt = {}) {
       { label: '🔑 AIの登録', fn: () => hanaAi(r, () => hanaTeach(r, back)) },
       { label: '🚶 町の歩き方', fn: () => { r.talking = false; talkingTo = null; movePractice(4); } },
       { label: '🔘 画面のボタン', fn: () => iconTour(r) },
+      { label: '🤝 なかよし・ステータス', fn: () => teachTopic(r, 'bond') },
+      { label: '🔍 探す・📷 写真', fn: () => teachTopic(r, 'find') },
       { label: '🏠 家のこと', fn: () => openApp('home', { coach: true }) },
       { label: '🧩 マージゲーム', fn: () => openApp('merge', { coach: 'choco', coachName: '大喜利チョコ' }) },
       ...(back ? [{ label: '← もどる', fn: back }] : [])], r);
+  }
+  // ---- 住人が教えるチュートリアル: セリフを1つずつ。sel があれば光らせ、wait なら「そのボタンを押す」まで待つ(押しても動かさない) ----
+  const TEACH = {
+    bond: [
+      { t: '住人と話すと「なかよし度(♥)」が少しずつ上がるよ。毎日ちょっとずつ話しかけてみてね。' },
+      { t: 'いちばん上がるのはプレゼント! 話しかけて「仲良くなる」→「プレゼントする」で、カフェの品や、マージで作った品をわたせるの。好きな物だと、どーんと上がるよ。' },
+      { t: 'なかよし度でLvが上がると、デートや、家に呼ぶみたいな、特別なことができるようになるよ。' },
+      { t: '⚙(せってい)の「わたしのステータス」では、あなたの英語のLvや、覚えた単語の数が見られるよ。', sel: '.tw-menu' },
+      { t: '「仲良くなる」→「ステータス」で、その人のLv・♥のゲージ・好み・できることが見られるの。わたしのを見せるね!', end: r => soc.statusPanel && soc.statusPanel(r) },
+    ],
+    find: [
+      { t: 'まずは「探す」。このボタンを押してみて!', sel: '.tw-find', wait: true },
+      { t: '町のどこかに、英語のカードや宝物がかくれてるの。押すと、近くにあるかどうか教えてくれるよ。見つけたら、図鑑に入るんだ。' },
+      { t: 'つぎは写真。カメラのボタンを押してみて!', sel: '.tw-photo', wait: true },
+      { t: '好きな角度で町や住人を撮れるよ。ピンチで寄ったり、ドラッグで見上げたりして、いい1枚をねらってね。撮った写真はアルバムに残るよ。' },
+    ],
+    fishing: [
+      { t: '釣りかい。のんびりやるのが、いちばんさ。' },
+      { t: '「🎣 釣りへ行く」で池に入ると、英語の問題が魚になってる。正しい答えを選べば、釣りあげられるんだ。' },
+      { t: 'まちがえても、魚はまた来る。あせらず、くり返し答えているうちに、単語が手になじんでくる。' },
+      { t: '釣った魚は、水槽や標本にして飾れる。…まあ、まずは1匹、やってみな。', ask: { label: '🎣 釣りへ行く', fn: () => openApp('fishing') } },
+    ],
+    fortune: [
+      { t: 'ようこそ。わたしの占いは、星とタロットで、あなたの今日を見るものよ。' },
+      { t: '「🔮 占ってもらう」で、カードを引いてもらえるわ。カードには英語の言葉がそえてあるの。意味といっしょに覚えると、忘れにくいわよ。' },
+      { t: '正位置と逆位置で、意味が変わるの。占いの結果は、毎日ちがうわ。' },
+      { t: '…わたしが町にいない日は、占えないの。会えた日を大切にしてね。', ask: { label: '🔮 占ってもらう', fn: () => openApp('fortune') } },
+    ],
+    shop: [
+      { t: 'いらっしゃい。うちの店のこと、教えようか。' },
+      { t: '「お店を見る」で、町で使える物が買える。家具やおみやげ、プレゼント用の品もあるよ。' },
+      { t: 'お代はコイン。コインは、ゲームや勉強をすると、たまっていくんだ。右上で今いくら持っているか見られるよ。', sel: '.tw-coins' },
+      { t: '買い物で英語を使ってみたいなら、「How much is this?」(これはいくら?)って聞いてくれてもいいよ。', ask: { label: 'お店を見る', fn: () => openApp('shop') } },
+    ],
+  };
+  function teachTopic(r, topic) {
+    const list = TEACH[topic] || [], nm = r.def.id === 'hana' ? 'はな' : (r.def.name || ''), face = r.def.id;
+    let i = 0, lit = null, cap = null;
+    const R = s => root.querySelector(s) || document.querySelector(s);
+    const mark = el => { lit && lit.classList.remove('tw-hl'); lit = el; lit && lit.classList.add('tw-hl'); };
+    const unwait = () => { if (cap) { document.removeEventListener('pointerdown', cap.pd, true); document.removeEventListener('click', cap.ck, true); cap = null; } };
+    const stop = () => { unwait(); mark(null); r.talking = false; if (talkingTo === r) talkingTo = null; hud.closeDialog && hud.closeDialog(); };
+    const say = (text, choices, bare) => { hud.dialog({ name: nm, role: '', text, choices, face, bare }); r.talking = true; talkingTo = r; };
+    const next = () => {
+      unwait();
+      if (i >= list.length) { stop(); return; }
+      const st = list[i++], last = i >= list.length, el = st.sel ? R(st.sel) : null;
+      mark(el && el.offsetParent ? el : null);
+      if (st.wait && lit) {
+        say(st.t, [{ label: 'とばす ▶▶', fn: stop }], true);
+        const pd = e => { if (!lit || !lit.contains(e.target)) return; e.preventDefault(); e.stopPropagation(); next(); };
+        const ck = e => { if (lit && lit.contains(e.target)) { e.preventDefault(); e.stopPropagation(); } };
+        cap = { pd, ck }; setTimeout(() => { if (cap && cap.pd === pd) { document.addEventListener('pointerdown', pd, true); document.addEventListener('click', ck, true); } }, 0);
+        return;
+      }
+      const ch = last ? [...(st.ask ? [{ label: st.ask.label, fn: () => { stop(); st.ask.fn(); } }] : []), { label: st.end ? '見せて!' : 'わかった!', fn: () => { if (st.end) { stop(); st.end(r); } else stop(); } }]
+        : [{ label: 'つぎへ ▶', fn: next }, { label: 'とばす', fn: stop }];
+      say(st.t, ch);
+    };
+    next();
   }
   // 画面のボタン: 押されたボタンについてだけ教える(押しても、そのボタンは動かない)。「もういい」でおわり
   function iconTour(r) {
@@ -652,7 +748,7 @@ export function mount(container, opt = {}) {
     r.talking = true; talkingTo = r; input.clear();
     openChat({
       hud, bus, name: r.def.name, role: r.def.role, first, meName: settings.name || 'あなた', maxLen: 400, low, onClose: () => { soc.remember(r, hist); pickPhrases(r, hist); },
-      onSeen: seenLine, onUsed: usedWords,
+      onSeen: seenLine, onUsed: usedWords, onMet: metWords,
       getEn: () => ({ on: !!settings.en, level: settings.enLevel }),
       setEn: v => { settings.en = v.on ? 1 : 0; settings.enLevel = v.level; save(); bus.emit('lang', { on: !!settings.en }); },
       translate: text => ai.translate(text),
@@ -1369,6 +1465,7 @@ export function mount(container, opt = {}) {
     if (!started) return;
     const seg = (key, opts) => `<div class="tw-seg">${opts.map(([v, l]) => `<button class="tw-btn${settings[key] == v ? ' on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
     const pn = hud.panel(`<h2>せってい</h2>
+      <div class="tw-row"><button class="tw-btn main" data-mystat style="width:100%">📋 わたしのステータス</button></div>
       <div class="tw-row">住人との会話${seg('en', [[1, '英語'], [0, '日本語']])}</div>
       <div class="tw-row">画質${seg('quality', [['low', '軽い'], ['mid', 'ふつう'], ['high', 'きれい']])}</div>
       <div class="tw-row">キャラの絵${seg('charTex', [['auto', '自動'], ['hi', '高画質'], ['lite', '軽量']])}</div>
@@ -1401,7 +1498,7 @@ export function mount(container, opt = {}) {
       <div class="tw-row" style="border:0;justify-content:center"><button class="tw-btn" data-act="close" style="padding:10px 28px">とじる</button></div>`,
       (e, p) => {
         const b = e.target.closest('button'); if (!b) return;
-        audio.play('tap');
+        audio.play('tap'); if (b.dataset.mystat !== undefined) { myStatus(); return; }
         if (b.dataset.k) {
           const v = isNaN(+b.dataset.v) ? b.dataset.v : +b.dataset.v;
           settings[b.dataset.k] = v; save();

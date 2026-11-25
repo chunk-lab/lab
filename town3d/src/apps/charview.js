@@ -55,18 +55,19 @@ export function openCharView(host, ctx = {}, onClose) {
     if (ch) { scene.remove(ch.root); ch = null; }
     framed = false;
     ch = built.get(c.key); if (!ch) { ch = c.mascot ? useChunkkunGlb(makeChunkkun()) : useGlb(makeCharacter(c.look), c.glb); built.set(c.key, ch); }
-    ch.root.position.set(0, 0, 0); scene.add(ch.root); setMotion('idle');
+    ch.root.position.set(0, 0, 0); scene.add(ch.root); setMotion('idle'); const c0 = ch; Promise.resolve(ch.glbReady).then(() => { if (ch === c0) setMotion(motion === 'dance' && !ch.canDance ? 'idle' : motion); });
     nm.textContent = c.name;
     [...ls.children].forEach(b => { b.style.cssText = chip(b.dataset.k === c.key); });
   }
   function setMotion(m) {
     motion = m; if (!ch) return;
+    ch.dancing = m === 'dance';
     ch.pose = m === 'sit' ? 'sit' : (m === 'lie' || m === 'goro') ? 'lie' : null; ch.lieKind = m === 'goro' ? 'goro' : 'sleep'; ch.seatH = m === 'sit' ? 0.45 : null; stool.visible = m === 'sit';
     if (m === 'wave' && ch.wave) { ch.wave(); waveT = 3.2; }
     if (m === 'bow' && ch.bow) { ch.bow(); waveT = 2.4; }
-    [...mo.children].forEach(b => { b.style.cssText = chip(b.dataset.m === m); });
+    [...mo.children].forEach(b => { b.style.cssText = chip(b.dataset.m === m) + (b.dataset.m === 'dance' && !(ch && ch.canDance) ? ';display:none' : ''); });
   }
-  mo.innerHTML = [['idle', 'たつ'], ['walk', 'あるく'], ['wave', '手をふる'], ['bow', 'おじぎ'], ['sit', 'すわる'], ['lie', 'ねる'], ['goro', 'ゴロゴロ']].map(([m, t]) => `<button data-m="${m}" style="${chip(false)}">${t}</button>`).join('');
+  mo.innerHTML = [['idle', 'たつ'], ['walk', 'あるく'], ['wave', '手をふる'], ['bow', 'おじぎ'], ['sit', 'すわる'], ['lie', 'ねる'], ['goro', 'ゴロゴロ'], ['dance', 'おどる']].map(([m, t]) => `<button data-m="${m}" style="${chip(false)}">${t}</button>`).join('');
   ls.innerHTML = list.map(c => `<button data-k="${c.key}" style="${chip(false)}">${c.name}</button>`).join('');
   mo.onclick = e => { const m = e.target.closest('[data-m]')?.dataset.m; if (m) setMotion(m); };
   ls.onclick = e => { const k = e.target.closest('[data-k]')?.dataset.k; const c = list.find(x => x.key === k); if (c) show(c); };

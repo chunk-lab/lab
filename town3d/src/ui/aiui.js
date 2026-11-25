@@ -57,7 +57,7 @@ export function openAiSetup({ hud, ai, onDone }) {
 
 // 住人との自由なおしゃべり。ask(text) → Promise<string>
 // ストーリーの会話と同じ窓。1セリフ1窓で、左右にフリックすると、自分と相手のセリフが順にめくれる。
-export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, onUsed, maxLen = 80, low = false, meName = 'あなた' }) {
+export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, setEn, translate, saveNote, onSeen, onUsed, onMet, maxLen = 80, low = false, meName = 'あなた' }) {
   const pic = portrait(name), col = charColor(name);
   const p = hud.panel(`<div class="tc">
     <div class="tc-top"><button class="tw-btn" data-a="en"></button><button class="tw-btn" data-a="lv"></button><span class="tc-sp"></span><button class="tw-btn" data-a="close">${low ? 'おしゃべりをおわる' : 'とじる ✕'}</button></div>
@@ -74,7 +74,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   const isJa = s => /[぀-ヿ一-鿿]/.test(s);
   // セリフの一覧(自分と相手、ぜんぶ)。相手のセリフは「英語」と「日本語」の両方を持つ
   const items = [{ who: 'npc', en: '', ja: first, flip: false }];
-  const learned = new Set(), used = new Set();
+  const learned = new Set(), used = new Set(), met = new Set();
   let idx = 0, words = [], curText = '', sel = null, busy = false;
   const clearSel = () => { sel = null; words.forEach(w => w.classList.remove('sel')); tools.hidden = true; };
   const langOf = it => { const en = getEn().on; let l = en && it.en ? 'en' : !en && it.ja ? 'ja' : it.en ? 'en' : 'ja'; if (it.flip) l = l === 'en' ? 'ja' : 'en'; return l; };
@@ -131,6 +131,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
     try {
       const out = await ask(t, part => { w.part = part.split('|||')[0].trim(); if (items[idx] === w) textEl.textContent = w.part; });   // 届いた分から、そのまま出す
       setPair(w, String(out).split('|||')); w.wait = false;
+      try { if (onMet && w.en) onMet(w.en).forEach(x => met.add(x)); } catch (e) { }
     } catch (e) { w.wait = false; w.err = true; w.msg = e.message || 'うまく話せなかったよ'; }
     if (items[idx] === w) draw(); else if (!w.err) { /* 前のセリフを見ている間に届いた: ▼で最新へ */ latestB.hidden = false; posEl.textContent = ` ${idx + 1} / ${items.length} `; }
     busy = false;
@@ -158,7 +159,7 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
   });
   // 英日の切りかえ(上のボタンからも)が来たら、いまの窓も切りかえる。パネルを閉じたら受け取りをやめる
   const offLang = bus.on('lang', () => { items.forEach(i => { i.flip = false; }); showEn(); draw(); });
-  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); setTimeout(() => showResult(hud, name, [...learned], [...used]), 120); window.removeEventListener('resize', onRs); });
+  const offClose = bus.on('ui:panelClosed', () => { offLang(); offClose(); setTimeout(() => showResult(hud, name, [...learned], [...used], [...met].filter(x => !learned.has(x))), 120); window.removeEventListener('resize', onRs); });
   // キーボードが出ても窓は動かさない: 高さを開いた時の画面の高さに固定して、キーボードは上から被せる。入力欄は画面の上寄り(キーボードに隠れない位置)
   const tc = q('.tc'); let fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px');
   const onRs = () => { if (window.innerHeight > fh) { fh = window.innerHeight; tc.style.setProperty('--fh', fh + 'px'); } };
@@ -166,25 +167,27 @@ export function openChat({ hud, name, role, first, ask, onClose, bus, getEn, set
 }
 
 // おしゃべりのあとの「けっか」。戦闘のあとの経験値のように、知った単語・使えた単語を書き出す
-function fanfare() {
+function fanfare(small) {
   try {
     const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
     const c = new AC(), t0 = c.currentTime + 0.05;
     const tone = (f, t, d, v = 0.12, type = 'square') => { const o = c.createOscillator(), g = c.createGain(); o.type = type; o.frequency.value = f; g.gain.setValueAtTime(0.0001, t0 + t); g.gain.exponentialRampToValueAtTime(v, t0 + t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + t + d); o.connect(g); g.connect(c.destination); o.start(t0 + t); o.stop(t0 + t + d + 0.05); };
+    if (small) { [[523, 0, .14], [784, .16, .4]].forEach(([f, t, d]) => tone(f, t, d, .07, 'triangle')); setTimeout(() => { try { c.close(); } catch (e) { } }, 1200); return; }
     [[523, 0], [523, .13], [523, .26], [659, .39]].forEach(([f, t]) => tone(f, t, .12));
     [[784, .58, .16], [659, .76, .12], [784, .9, .5]].forEach(([f, t, d]) => tone(f, t, d));
     [[523, .9], [659, .9], [1047, .9]].forEach(([f, t]) => tone(f, t, .6, .07, 'triangle'));
     setTimeout(() => { try { c.close(); } catch (e) { } }, 2500);
   } catch (e) { }
 }
-function showResult(hud, name, learned, used) {
-  const L = learned.length, U = used.length, exp = L * 10 + U * 20;
+function showResult(hud, name, learned, used, met = []) {
+  const L = learned.length, U = used.length, N = met.length, exp = L * 10 + U * 20 + N * 2;
   const chips = a => a.map(x => `<span class="rs-c">${esc(x)}</span>`).join('');
   const sec = (a, n, head0, headN) => `<div class="rs-l">${n ? headN : head0}</div>${n ? `<div class="rs-w">${chips(a)}</div>` : ''}`;
   const body = sec(learned, L, '新しく知った単語 <b>0こ</b>', L > 3 ? `新しい単語を <b>${L}こ</b> 知った！` : `新しく <b>${L}こ</b> 知った！`)
-    + sec(used, U, '新しく使った単語 <b>0こ</b>', `<b>${U}こ</b> 使えた！覚えたよ ✨`);
+    + sec(used, U, '新しく使った単語 <b>0こ</b>', `<b>${U}こ</b> 使えた！覚えたよ ✨`)
+    + sec(met.slice(0, 12), N, '出会った単語 <b>0こ</b>', `新しい単語に <b>${N}こ</b> 出会った！`);
   const p = hud.panel(`<div class="rs"><div class="rs-box"><div class="rs-h">おしゃべり けっか！</div><div class="rs-n">${esc(name)}との会話</div>${body}<div class="rs-e">EXP <b>+${exp}</b></div><button class="rs-ok">OK ▶</button></div></div>`, null, { sticky: true });
   const st = document.createElement('style'); st.textContent = '.tw-panel:has(.rs){background:#0008;display:flex;align-items:center;justify-content:center;padding:0}.tw-panel:has(.rs) .tw-card{background:transparent;box-shadow:none;padding:0;width:auto;max-height:none;overflow:visible}.rs-box{width:min(86vw,340px);background:#141a36;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 3px #141a36,0 8px 24px #0008;color:#fff;padding:18px 16px;text-align:center;animation:rsin .35s cubic-bezier(.2,1.6,.4,1)}@keyframes rsin{from{transform:scale(.6);opacity:0}}.rs-h{font-size:20px;font-weight:900;color:#ffd166;letter-spacing:.05em}.rs-n{font-size:12px;color:#c9d2ff;margin:2px 0 12px}.rs-l{font-size:16px;font-weight:800;margin-top:8px}.rs-l b{color:#ffd166;font-size:20px}.rs-w{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0}.rs-c{background:#2c3a8a;border:2px solid #ffd166;border-radius:8px;padding:3px 10px;font-size:14px;font-weight:800}.rs-s{font-size:14px;color:#a8f0d0;font-weight:800}.rs-e{margin-top:12px;font-size:15px;color:#c9d2ff}.rs-e b{color:#ffd166;font-size:22px}.rs-ok{margin-top:12px;background:#ffd166;color:#141a36;border:3px solid #fff;border-radius:12px;padding:8px 28px;font-size:16px;font-weight:900}';
-  p.appendChild(st); fanfare();
+  p.appendChild(st); fanfare(!(L || U || N));
   p.querySelector('.rs-ok').addEventListener('click', () => hud.closePanel());
 }

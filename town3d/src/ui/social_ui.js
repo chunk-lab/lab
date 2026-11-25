@@ -295,10 +295,10 @@ export function createSocialUI({ openMerge, hud, wallet, audio, addNote, onAllFo
       ${have.length ? `<div style="max-height:30vh;overflow:auto">${TREASURES.filter(t => have.includes(t[1])).map(t => `<p class="tw-note" style="margin:3px 0">${esc(t[0] + ' ' + t[1])}:${esc(t[2])}</p>`).join('')}</div>` : ''}<div class="tw-actions"><button class="tw-btn" data-x>とじる</button></div>`);
     p.addEventListener('click', e => { if (e.target.closest('[data-x]')) hud.closePanel(); });
   }
-  return { onTalk, choices, menuOk, hintLine, gonDaily, bondTalk, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel };
+  return { onTalk, choices, menuOk, hintLine, gonDaily, bondTalk, heart, nearFind, takeFind, adminHunt, gift, remember, memoryPanel, statusPanel };
 }
 
-const RPG_CSS = `.tw-card:has(.rpg){background:transparent;box-shadow:none;padding:0;max-width:440px}
+export const RPG_CSS = `.tw-card:has(.rpg){background:transparent;box-shadow:none;padding:0;max-width:440px}
 .rpg{background:#141a36f2;color:#fff;border:3px solid #fff;border-radius:14px;box-shadow:0 0 0 3px #141a36,0 10px 30px #0007;padding:16px 16px 14px;max-height:min(84vh,680px);overflow-y:auto;overscroll-behavior:contain;font-weight:700}
 .rpg-head{display:flex;gap:12px;align-items:center}
 .rpg-head img{width:84px;height:84px;object-fit:contain;flex:none;background:radial-gradient(#3a4a9a,#1d2766);border:3px solid #ffd166;border-radius:12px}

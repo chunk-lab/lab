@@ -180,7 +180,8 @@ export function useGlb(ch, id, { height } = {}) {
     const mixer = new THREE.AnimationMixer(model);
     const clip = n => gltf.animations.find(a => a.name === n);
     const act = {}; for (const [k2, n] of [['idle', 'Breathing Idle'], ['walk', 'Standard Walk'], ['bow', 'Quick Formal Bow'], ['wave', 'Waving'], ['run', 'Standard Run']]) { const c = clip(n); if (c) act[k2] = mixer.clipAction(c); }
-    if (dsrc) act.idle = mixer.clipAction(danceClip(dsrc)); else if (clip('dance')) act.idle = mixer.clipAction(clip('dance'));   // ダンス: 前もって作った骨の数値の表(tools/gen_dance.py)をそのまま入れるだけ。この体は、ずっとこの動き
+    if (dsrc) act.dance = mixer.clipAction(danceClip(dsrc)); else if (clip('dance')) act.dance = mixer.clipAction(clip('dance'));   // おどる: ch.dancing=true の間だけ(立っている時)
+    if (!act.idle && act.dance) act.idle = act.dance;   // 標準の動きがない体(チョコの浴衣=骨の名前がちがう)は、これまでどおり立ち=ダンス   // ダンス: 前もって作った骨の数値の表(tools/gen_dance.py)をそのまま入れるだけ。この体は、ずっとこの動き
     // 座る・寝転ぶ: ミクサモの本物の動き(体に合わせて補正)
     // オカリナ・かかえて投げる動きは、使うときに初めて作る(読みこみを重くしない)
     const snap = restSnap(model), lazy = {
@@ -282,6 +283,7 @@ export function useGlb(ch, id, { height } = {}) {
       a.reset().fadeIn(fade).play(); if (cur) cur.fadeOut(fade); prev = cur; fadeT = fade; cur = a;
     };
     cur = act.idle || null; if (!cur) play('idle', 0);
+    ch.canDance = !!act.dance && act.idle !== act.dance;
     ch.height = height; ch.glb = true; ch.hasLay = !!(act.lay || act.sleep);
     const base = ch.update;
     ch.update = (dt, speed) => {
@@ -291,7 +293,7 @@ export function useGlb(ch, id, { height } = {}) {
       if (rideK) play(rideN, 0.35); else if (sitK) play('sit', 0.4); else if (act.oca && ch.pose === 'harp') play('oca', 0.4);
       else if (layK) play(lieClip, 0.4);
       else if (lock > 0) lock -= dt;
-      else play(act.run && (cur === act.run ? speed > 3.0 : speed > 4.2) ? 'run' : speed > 0.05 ? 'walk' : 'idle');   // 歩き⇔走りは少し幅をもたせる(行ったり来たりしない)
+      else play(act.run && (cur === act.run ? speed > 3.0 : speed > 4.2) ? 'run' : speed > 0.05 ? 'walk' : (ch.dancing && act.dance ? 'dance' : 'idle'));   // 歩き⇔走りは少し幅をもたせる(行ったり来たりしない)
       if (act.carryUp) { const on = ch.pose === 'carry' && cur !== act.throwin;   // 頭の上にかかえる(上半身だけ重ねる)
         if (on && !ch._carryOn) { ch._carryOn = true; const a = act.carryUp; a.reset(); a.setEffectiveWeight(8); a.play(); a.time = 0.1; a.paused = true; }
         else if (!on && ch._carryOn) { ch._carryOn = false; act.carryUp.stop(); } }

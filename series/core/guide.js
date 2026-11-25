@@ -156,9 +156,11 @@ export function createGuide(core, deps = {}) {
     const i = await ask('sora', first || '「なにを教えてほしい?」', [
       { t: '📘 勉強の仕方', sub: nx ? (waitToday() ? 'つづきは、また明日' : `つぎ: ${nx.title}`) : 'ぜんぶ聞いたよ(おさらい)', main: !!nx && !waitToday() },
       { t: '📖 レッスン', sub: '読む・聞く / 話す・書く' },
+      { t: '🎮 チャンクボックス', sub: '英語のミニゲームのこと' },
       { t: 'またあとで' }]);
     if (i === 0) return methodMenu();
     if (i === 1) return lessons();
+    if (i === 2) return mBox();
     close();
   }
   // ---- そら: 今日なにする? ----
