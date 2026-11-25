@@ -616,14 +616,15 @@ export function mount(container, opt = {}) {
       { t: '住人と話すと「なかよし度(♥)」が少しずつ上がるよ。毎日ちょっとずつ話しかけてみてね。' },
       { t: 'いちばん上がるのはプレゼント! 話しかけて「仲良くなる」→「プレゼントする」で、カフェの品や、マージで作った品をわたせるの。好きな物だと、どーんと上がるよ。' },
       { t: 'なかよし度でLvが上がると、デートや、家に呼ぶみたいな、特別なことができるようになるよ。' },
-      { t: '⚙(せってい)の「わたしのステータス」では、あなたの英語のLvや、覚えた単語の数が見られるよ。', sel: '.tw-menu' },
+      { t: '右下の⚙を押してみて!', sel: '.tw-menu', pass: 'open' },
+      { t: '「わたしのステータス」を押すと、あなたの英語のLvや、覚えた単語の数が見られるよ。押してみて!', sel: '[data-mystat]', pass: 'close' },
       { t: '「仲良くなる」→「ステータス」で、その人のLv・♥のゲージ・好み・できることが見られるの。わたしのを見せるね!', end: r => soc.statusPanel && soc.statusPanel(r) },
     ],
     find: [
-      { t: 'まずは「探す」。このボタンを押してみて!', sel: '.tw-find', wait: true },
-      { t: '町のどこかに、英語のカードや宝物がかくれてるの。押すと、近くにあるかどうか教えてくれるよ。見つけたら、図鑑に入るんだ。' },
-      { t: 'つぎは写真。カメラのボタンを押してみて!', sel: '.tw-photo', wait: true },
-      { t: '好きな角度で町や住人を撮れるよ。ピンチで寄ったり、ドラッグで見上げたりして、いい1枚をねらってね。撮った写真はアルバムに残るよ。' },
+      { t: 'まずは「探す」。このボタンを押してみて!', sel: '.tw-find', pass: 'close' },
+      { t: '町のどこかに、英語のカードや宝物がかくれてるの。ヒントを見て歩くと、見つかるよ。見つけたら、図鑑に入るんだ。' },
+      { t: 'つぎは写真。📷を押して、1枚撮ってみて!', sel: '.tw-photo', pass: 'close' },
+      { t: 'いい写真だね! 好きな角度で町や住人を撮れるよ。ピンチで寄ったり、ドラッグで見上げたりしてみてね。撮った写真はアルバムに残るよ。' },
     ],
     fortune: [
       { t: 'ようこそ。わたしの占いは、星とタロットで、あなたの今日を見るものよ。' },
@@ -652,6 +653,22 @@ export function mount(container, opt = {}) {
       if (i >= list.length) { stop(); return; }
       const st = list[i++], last = i >= list.length, el = st.sel ? R(st.sel) : null;
       mark(el && el.offsetParent ? el : null);
+      if (st.pass && lit) {
+        say(st.t, [{ label: 'とばす ▶▶', fn: stop }], true);
+        const target = lit, mode = st.pass;
+        const pd = e => {
+          if (!target.contains(e.target)) return;
+          unwait(); mark(null); hud.closeDialog && hud.closeDialog(); r.talking = false; if (talkingTo === r) talkingTo = null;   // 会話の窓があると、押しても動かないので、押した瞬間に閉じる(そのあと本物のボタンが動く)
+          const q = '.tw-panel,.tw-shot', t0 = Date.now(); let seen = false;
+          const iv = setInterval(() => {
+            const on = !!document.querySelector(q);
+            if (on) seen = true;
+            if (mode === 'open' ? seen : (seen && !on) || (!seen && Date.now() - t0 > 2500)) { clearInterval(iv); setTimeout(next, 400); }
+          }, 250);
+        };
+        cap = { pd, ck: () => { } }; setTimeout(() => { if (cap && cap.pd === pd) document.addEventListener('pointerdown', pd, true); }, 0);
+        return;
+      }
       if (st.wait && lit) {
         say(st.t, [{ label: 'とばす ▶▶', fn: stop }], true);
         const pd = e => { if (!lit || !lit.contains(e.target)) return; e.preventDefault(); e.stopPropagation(); next(); };
