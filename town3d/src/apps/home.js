@@ -65,7 +65,7 @@ export const shopApp = {
     try { houseData.get(); const so = models.soon(); if (so.length) msg = so.map(o => `📅 借りている「${o.name}」は、あと${o.days}日で返却だよ。`).join(' '); } catch (e) { }
     const paid = () => { try { return !!(ctx.member && ctx.member.paid()); } catch (e) { return false; } };
     // 町のホームセンターから開いたとき(タブも「家から」も指定なし)は、最初から作る画面(空の6×6の部屋)で始める
-    if (!(ctx.params && (ctx.params.tab || ctx.params.from || ctx.params.coach))) {
+    if (!(ctx.params && (ctx.params.tab || ctx.params.from === 'home' || ctx.params.coach))) {
       try {
         const L = models.list(); let m = L[L.length - 1];
         if (!m && models.slots(paid()) > 0) m = models.create('モデルルーム 1');
