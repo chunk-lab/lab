@@ -4,6 +4,7 @@ import { LEX } from './engine.js';
 import { PACK_KINDS } from './pack.js';
 import { aiPrompt, mySet, parseAi } from './addword.js';
 import { loadPlay, makePlay, savePlay } from './playsent.js';
+import { todo, openList, runBatch } from './batches.js';
 // ================= 外から登録(受け渡し箱 core.eigo → マイことば) =================
 // 勉強ノート・スポーツの表現など、ほかのアプリが core.eigo.send([{en, ja}]) で送っておいたものを、開いたときに登録する。
 // 1語・熟語・句動詞・慣用句は、1つの「ことば」として自動判定(AIのキーがあれば、AIで種類・活用まで上手に仕分ける)。
@@ -77,18 +78,32 @@ export function announceInbox() { const n = PENDING; PENDING = 0; if (n > 0) { t
 export async function drainInbox() {
   const box = ENV.core && ENV.core.eigo; if (!box || !box.count()) return;
   const list = box.take(), aiOk = !!(ENV.core.ai && ENV.core.ai.ready), left = []; let n = 0, chunks = 0, firstEn = ''; const got = [], gotS = [], plays = []; let wantPlay = false;
+  const bt = {}; let playBid = '';
   for (const q of list) {
+    let lastP = null;
     try {
       const isSen = q.kind === 'sentence' || judge(q.en, q.ja) === 'sentence';
-      if (isSen) { chunks += await addSentence(q); n++; gotS.push(q); if (aiOk) { const p = await makePlay({ en: q.en, ex: q.en, exja: q.ja, ja: q.ja }, 'verbs', true); if (p) { plays.push(p); if (q.play) wantPlay = true; } } else if (q.play) toast('文を組み立てるには、AIのキーが必要です'); }
+      if (isSen) { chunks += await addSentence(q); n++; gotS.push(q); if (aiOk) { const p = await makePlay({ en: q.en, ex: q.en, exja: q.ja, ja: q.ja }, 'verbs', true); if (p) { plays.push(p); lastP = p; if (q.play) wantPlay = true; } } else if (q.play) toast('文を組み立てるには、AIのキーが必要です'); }
       else if (!q.ja && !aiOk) { left.push(q); continue; }   // 日本語の意味がなく、AIもないなら、まだ登録できない(箱にもどす)
-      else { const k = await addPhrase(q); if (k) { n++; got.push(q); const p = await makePlay(q, k); if (p) { p.expr = q.en; plays.push(p); if (q.play) wantPlay = true; } } else if (!q.ex) continue; }
+      else { const k = await addPhrase(q); if (k) { n++; got.push(q); const p = await makePlay(q, k); if (p) { p.expr = q.en; plays.push(p); lastP = p; if (q.play) wantPlay = true; } } else if (!q.ex) continue; }
       if (q.ex && /[a-z]/i.test(q.ex)) { const set = mySet(); set.sentences = set.sentences || []; if (!set.sentences.some(s => s.en.toLowerCase() === String(q.ex).toLowerCase())) { set.sentences.push({ en: String(q.ex), ja: q.exja || '' }); gotS.push({ en: q.ex }); } }
+      { const k = q.bid || '_'; (bt[k] = bt[k] || []).push({ en: q.en, ja: q.ja || '', play: lastP || null }); if (q.play && lastP && !playBid) playBid = k; }   // まとまりごとに、言葉とその文を取っておく
       if (!firstEn) firstEn = q.en;
     } catch (e) { console.error('inbox', q.en, e); left.push(q); }
   }
   if (left.length) box.send(left);
   plays.forEach(savePlay); save(); refreshLex();
-  if (wantPlay && plays.length) { toast('▶ ' + plays[0].en); loadPlay(plays[0]); return; }
-  if (n) { PENDING += n; if (got.length || gotS.length) showDone(got, gotS, chunks, plays); }   // 届いた言葉のまとめを最初に出す(▶でその言葉の文がすぐ動く・つくる・れんしゅうへ)
+  // まとまりに入れる(送った単位ごと。単位のない分は「いろいろ」)
+  const B = (box.batches && box.batches()) || [];
+  for (const [bid, arr] of Object.entries(bt)) {
+    let b = B.find(x => x.id === bid);
+    if (!b) { b = { id: bid === '_' ? 'x' + Date.now().toString(36) : bid, label: 'いろいろ', at: Date.now(), n: 0, items: [], done: false, idx: 0 }; B.push(b); if (bid === '_') { bt[b.id] = arr; if (playBid === '_') playBid = b.id; } }
+    b.items = (b.items || []).concat(arr); b.n = b.items.length; b.done = false;
+  }
+  if (box.saveBatches) box.saveBatches(B);
+  if (n) PENDING += n;
+  // 「使ってみる」で送られたときは、その まとまりを、すぐ1つ目から動かす。ほかは、まとまりのカードを出す(1つだけなら、そのまま始める)
+  const open = todo();
+  if (playBid && open.some(b => b.id === playBid)) { runBatch(playBid, 0); return; }
+  if (open.length === 1) runBatch(open[0].id); else if (open.length) openList('todo');
 }

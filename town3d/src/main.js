@@ -179,7 +179,7 @@ export function mount(container, opt = {}) {
     onExpr(list, practice, kind) {   // ホールでもらった表現:勉強ノート・今日のふりかえり・英ラボ(自動登録)へ。開くのは「英ラボで使ってみる」を押したときだけ
       const src = '今日の表現';
       list.forEach(x => opt.onEvent?.('app:event', { name: 'learn', data: { kind: 'expr', en: x.en, ja: x.ja, src, ex: x.ex, exja: x.exja } }));
-      if (list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { open: !!practice, items: list.map((x, i) => ({ en: x.en, ja: x.ja, ex: x.ex, exja: x.exja, ai: x.ai, play: !!practice && i === 0 })) } });
+      if (list.length) opt.onEvent?.('app:event', { name: 'eigo', data: { open: !!practice, label: ({ golf: 'ゴルフ', frisbee: 'フリスビー' })[kind] || 'スポーツ', items: list.map((x, i) => ({ en: x.en, ja: x.ja, ex: x.ex, exja: x.exja, ai: x.ai, play: !!practice && i === 0 })) } });
     },
     onEnd({ kind, quit, total, par }) { actSport(null); if (goHome()) return; if (quit) hud.toast(kind === 'golf' ? 'ゴルフをやめた' : 'フリスビーをやめた'); },
   });
@@ -458,7 +458,7 @@ export function mount(container, opt = {}) {
       const list = finds.dailyFound().filter(s => ['word', 'phrase', 'proverb', 'passage'].includes(s.kind)).map(s => ({ en: s.c[0], ja: s.c[1], sen: s.kind === 'passage' || s.kind === 'proverb' || /[.!?]$/.test(s.c[0]) }));
       if (!list.length) return;
       hud.dialog({ name: '🎉 ぜんぶ見つけた!', role: 'きょうのかくしもの', text: `きょうのかくしもの ${list.length}こ、ぜんぶ見つけたね! 見つけた言葉を、英ラボで文にして使ってみる?`, choices: [
-        { label: '🧠 使ってみる', fn: () => opt.onEvent?.('app:event', { name: 'eigo', data: { open: true, items: list.map((x, i) => ({ en: x.en, ja: x.ja, kind: x.sen ? 'sentence' : '', play: i === 0 })) } }) },
+        { label: '🧠 使ってみる', fn: () => opt.onEvent?.('app:event', { name: 'eigo', data: { open: true, label: '拾い物', items: list.map((x, i) => ({ en: x.en, ja: x.ja, kind: x.sen ? 'sentence' : '', play: i === 0 })) } }) },
         { label: 'あとで', fn: () => { } }] });
     }, startDate: r => special(r, () => startDate(r)), invite: r => doAct(r, { act: 'invite' }), setRain: () => { curWx = weather.now(); env.setAmbient(curWx); }, areaName: (x, z) => city.areaName(x, z), getMe: () => me, canAct: () => started && !appHost.current && !hud.busy, ai, player: () => settings.name || 'あなた' });
   // 「宝を隠す」は、せってい →「運営」タブの中

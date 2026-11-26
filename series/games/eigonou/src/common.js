@@ -43,7 +43,7 @@ export let _tt; export function toast(t){ const el=$('#toast'); el.textContent=t
 export function renderSettings(){
  const S=SET(); const seg=(k,opts)=>`<div class="seg big">${opts.map(([v,l])=>`<button class="${S[k]===v?'on':''}" data-k="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
  const tg=(k,l)=>`<label class="tgl"><input type="checkbox" data-tk="${k}" ${S[k]?'checked':''}><span>${l}</span></label>`;
- $('#settings').innerHTML=`<h2>設定</h2>
+ $('#settings').innerHTML=`<h2>設定</h2><button id="btOpen" style="display:block;width:100%;margin:4px 0 10px;border:0;border-radius:12px;padding:11px;background:#e9e2f2;color:#3b3552;font:inherit;font-weight:800;font-size:14px">📥 英語のまとまり・やった履歴</button>
  <section><h3>文のレベル</h3><p class="note">レベルが上がると、使える文の形が増えます。</p>${seg('slv',[['1','1'],['2','2'],['3','3'],['4','4'],['5','5'],['6','何でも']])}<p class="note">${esc(SLV_DESC[+S.slv||3]||'')}</p></section>
  <section><h3>単語のレベル</h3><p class="note">選んだ級までの単語が中心に出ます。よく使う単語ほど出やすくなります。</p>${seg('level',[[1,'3級まで'],[2,'準2級まで'],[3,'2級まで'],[4,'それ以上も']])}<p class="note">英検の級との対応はおおよその目安です（CEFR A1≒3級、A2≒準2級、B1≒2級）。</p></section>
  <section><h3>候補の言葉</h3><p class="note">音声と、上にできていく文はいつも英語です。</p>${seg('lang',[['ja','日本語'],['en','English'],['both','両方']])}</section>
@@ -58,6 +58,7 @@ ${S.adv?`<div class="advset">
  <section><h3>単語リストの出典</h3><p class="note">単語のレベル分けに『CEFR-J Wordlist Version 1.6』東京外国語大学投野由紀夫研究室（http://www.cefr-j.org/download.html より2026年9月ダウンロード）を利用しています。日本語の意味・活用・使い方の情報はこのゲーム用に付け加えたものです。</p></section>
  <section><h3>色のきまり</h3><div class="legend">${[['subj','noun','だれが・なにが（主語）','Ken'],['pred','verb','する・ある（動詞・助動詞）','eats / can / is'],['obj','noun','だれを・なにを（目的語）','an apple'],['iobj','noun','だれに（間接目的語）','her'],['state','adj','どんなだ（補語）','happy'],['place','adv','どこで','in the park'],['time','adv','いつ','every day'],['freq','adv','どうやって（ようす）','quickly'],['lead','conj','つなぐ言葉','when / who / to'],['q','wh','きく言葉','What / Where']].map(([t,p,a,b])=>`<div class="lg"><span class="ck pos-${p}" data-cat="${t}"><span class="en">${b}</span></span><span>${a}</span></div>`).join('')}</div><p class="note">主語は色つきの塗りつぶし、ほかは枠で見分けます。</p></section>
 </div>`:''}`;
+ { const bo=$('#btOpen'); if(bo) bo.onclick=()=>{ ENV.batchUI&&ENV.batchUI.open(); }; }
  $('#settings').querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{ let v=b.dataset.v; if(b.dataset.k==='rate'||b.dataset.k==='level') v=+v; S[b.dataset.k]=v; save(); renderSettings(); if(b.dataset.k==='slv' && typeof resetAll==='function'){ APP.level=String(v); resetAll(); } });
  $('#settings').querySelectorAll('[data-tk]').forEach(b=>b.onchange=()=>{ S[b.dataset.tk]=b.checked; save(); if(b.dataset.tk==='adv') renderSettings(); });
  { const tv=$('#testv'); if(tv) tv.onclick=()=>say('I am playing soccer in the park with my friends.'); } { const cs=$('#commonSet'); if(cs) cs.onclick=()=>ENV.core.ui.settings(); }

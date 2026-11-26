@@ -96,7 +96,7 @@ export function createUseit(core) {
         try { if (!core.notebook.list({}).some(n => n.en.toLowerCase() === en0.toLowerCase())) core.notebook.add({ en: en0, ja: x.ja || '', kind: isSen ? 'short' : (/\s/.test(en0) ? 'phrase' : 'word'), src: 'useit' }); } catch (e) { console.error(e); }
         say('⏳ 送っています…');
         try {
-          core.eigo.send([{ en: en0, ja: x.ja || '', kind: isSen ? 'sentence' : '', play: true, ex: found[0] && found[0].en, exja: found[0] && found[0].ja }]);   // play=開いたら、完成した文をそのまま「つくる」に出す(見つかった例文があればAIでその文を組み立てる)
+          core.eigo.send([{ en: en0, ja: x.ja || '', kind: isSen ? 'sentence' : '', play: true, ex: found[0] && found[0].en, exja: found[0] && found[0].ja }], { label: 'ノート' });   // play=開いたら、完成した文をそのまま「つくる」に出す(見つかった例文があればAIでその文を組み立てる)
           say('✅ 送りました。英ラボを開きます…');
           if (!core.openGame) throw new Error('この画面では英ラボを開けません');
           // 2) 閉じる→開くを同じ瞬間にやらない(閉じる側の後片づけに、開いた画面が巻き込まれないように)
@@ -123,7 +123,7 @@ export function createUseit(core) {
           const lv = core.level ? core.level.name() : '';
           const r = await ai.examples(x.en, lv), list = [...(r.examples || []), ...(r.passage || [])].filter(s => s && s.en).map(s => ({ en: s.en, ja: s.ja || '', from: 'AI', src: 'ai' }));
           core.notebook.addMany(list.map(s => ({ en: s.en, ja: s.ja, kind: 'short', src: 'ai' })));
-          try { core.eigo.send([{ en: x.en, ja: x.ja || '', ex: list[0] && list[0].en, exja: list[0] && list[0].ja }, ...list.slice(1).map(t => ({ en: t.en, ja: t.ja, kind: 'sentence' }))]); } catch (e) { console.error(e); }   // 英ラボにも自動で登録(次に英ラボを開いたとき)
+          try { core.eigo.send([{ en: x.en, ja: x.ja || '', ex: list[0] && list[0].en, exja: list[0] && list[0].ja }, ...list.slice(1).map(t => ({ en: t.en, ja: t.ja, kind: 'sentence' }))], { label: 'ノートの例文' }); } catch (e) { console.error(e); }   // 英ラボにも自動で登録(次に英ラボを開いたとき)
           const ul = q('[data-gened]'); ul.innerHTML = list.map(sent).join(''); bindList(ul, list); btn.textContent = '勉強ノートと英ラボに入れました';
         } catch (e) { if (byGems) M.addGems(ECON.ai.gems, 'refund'); btn.disabled = false; btn.textContent = '作る'; core.ui.toast(e.message + '(使った分は戻しました)'); }
       };
