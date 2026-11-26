@@ -221,7 +221,8 @@ export function mount(container, opt = {}) {
   (opt.apps || []).forEach(a => appHost.register(a)); // 組み込み先から足すアプリ
   { // 運営用:町から直接「英語の釣り堀」を開くボタン(?admin=1 で出る)
     let adm = false; try { const q = new URLSearchParams(location.search).get('admin'); if (q === '1') localStorage.setItem('cs:core:admin', 'true'); else if (q === '0') localStorage.removeItem('cs:core:admin'); adm = JSON.parse(localStorage.getItem('cs:core:admin')) === true; } catch (e) { }
-    if (adm) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🎣 英語の釣り堀'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(124px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; openApp('fishing', { tab: 'en' }); }; root.append(b); const tg = setInterval(() => { b.style.display = (!started || appHost.current || hud.busy) ? "none" : ""; }, 400); offs.push(() => clearInterval(tg)); }
+    if (adm) { const b = document.createElement('button'); b.className = 'tw-btn'; b.textContent = '🛠🎣 英語の釣り堀'; b.style.cssText = 'position:absolute;left:12px;bottom:calc(124px + var(--tw-bot));z-index:5;font-weight:800'; b.onclick = () => { if (!started || appHost.current || hud.busy) return; openApp('fishing', { tab: 'en' }); }; const b2 = document.createElement('button'); b2.className = 'tw-btn'; b2.textContent = '🛠🧩 単体マージ'; b2.style.cssText = 'position:absolute;left:12px;bottom:calc(172px + var(--tw-bot));z-index:5;font-weight:800'; b2.onclick = () => { if (!started || appHost.current || hud.busy) return; openApp('merge', { solo: 'admin' }); };   // 単体で売るマージを、統合アプリの中で試す(データは単体専用)
+    root.append(b, b2); const tg = setInterval(() => { b.style.display = b2.style.display = (!started || appHost.current || hud.busy) ? "none" : ""; }, 400); offs.push(() => clearInterval(tg)); }
   }
   hud.setCoins(wallet.get(), gemsNow());
   if (opt.gems?.onChange) offs.push(opt.gems.onChange(() => bus.emit('wallet', { coins: wallet.get(), delta: 0, reason: 'sync' })));   // ダイヤが変わったら、コインと同じ知らせで表示を書きかえる(定期的な読み直しはしない)
@@ -1246,8 +1247,10 @@ export function mount(container, opt = {}) {
   }
   function openApp(id, params) {
     try { if (loadPct >= 1) residents.prepare(env.hour, 4); } catch (e) { }   // 画面が切りかわるときに、この先に出てくる住人の体を読んでおく
-    bumpUse(id === 'fishing' && params && params.tab === 'en' ? 'fishing-en' : id);
-    if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox', 'amuse', 'merge'].includes(id)) markPlay(id);
+    if (!(params && params.solo)) {   // 単体モード(運営の試し)は、町の「遊んだ記録」に数えない
+      bumpUse(id === 'fishing' && params && params.tab === 'en' ? 'fishing-en' : id);
+      if (['fishing', 'chunkcards', 'omikuji', 'punichunk', 'gamebox', 'amuse', 'merge'].includes(id)) markPlay(id);
+    }
     // 組み込み先(チャンクタウン)が開くアプリ(ゲームなど)は、そちらに任せる
     if (opt.openExternal?.(id, params)) { input.clear(); return; }
     if (!appHost.has(id)) { hud.toast('まだ準備中みたい'); return; }

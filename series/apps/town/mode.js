@@ -203,7 +203,7 @@ export function createMode(core, { GAMES, enter, start2D, openStudy }) {
       onEvent(name, d) {   // 3Dの町でしたことも、共通の記録に残す（ステータス・あとで課題やコインに使える）
         if (name === 'start') { if (d?.name && !core.profile.name) core.profile.setName(d.name); core.events.report('town3d', 'open'); if (!entered) { entered = true; setTimeout(() => { try { core.review && core.review.enter(); } catch (e) { } }, 1500); } }
         else if (name === 'talk') core.events.report('town3d', 'talk', { id: d?.id });
-        else if (name === 'app:open') { document.body.classList.add('md-app-open'); core.events.report('town3d', 'app', { id: d?.id }); core.daylog.act('app', catOfApp(d?.id)); if (d?.id === 'omikuji') core.review && core.review.mark('omikuji'); }   // 家・ショップなどを開いている間は「今日なにする?」を隠す
+        else if (name === 'app:open') { document.body.classList.add('md-app-open'); if (!d?.solo) { core.events.report('town3d', 'app', { id: d?.id }); core.daylog.act('app', catOfApp(d?.id)); } if (d?.id === 'omikuji') core.review && core.review.mark('omikuji'); }   // 家・ショップなどを開いている間は「今日なにする?」を隠す
         else if (name === 'app:close') { document.body.classList.remove('md-app-open'); core.daylog.act('app', null); core.daylog.act('sub', null); core.daylog.act('chat', null); }
         else if (name === 'app:event' && d?.name === 'snap') { if (d.data) createStore('core').set('townInfo', d.data); }
         else if (name === 'app:event' && d?.name === 'study') { const x = d.data || {}; openStudy(x.tab ? { tab: x.tab, sec: x.sec || 'words' } : {}); }   // 町のノートボタン→勉強ノート(町のひみつの記録もいっしょに渡す)

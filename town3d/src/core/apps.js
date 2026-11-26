@@ -74,7 +74,7 @@ export function createAppHost({ root, bus, storage, wallet, getPlayer, getAudio,
     const body = frame.querySelector('.tw-app-body');
     const ctx = makeCtx(def, params, frame);
     current = { id, def, frame, inst: null };
-    bus.emit('app:open', { id });
+    bus.emit('app:open', { id, solo: !!(params && params.solo) });   // solo = 単体モードの試し(町の記録に数えない)
     try {
       const mounter = def.type === 'script' ? scriptMounter(def) : def.type === 'iframe' ? iframeMounter(def) : def.module;
       const inst = await mounter.mount(body, ctx);

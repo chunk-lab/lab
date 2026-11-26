@@ -10,6 +10,8 @@ import { fmtN, clamp } from '../core/core.js';
 import { createHomeMenu, HOME_MENU } from './home_menu.js';
 import { furn as FURN, houseData as HOUSE } from '../game/furniture.js';
 import { models } from '../game/model_rooms.js';
+import { soloStoreFor, soloWallet, soloReq, soloStore } from '../game/solo.js';
+import { NPC_NAME } from '../game/social.js';
 import { ITEMS, ITEM, CATS, U, WALL_H, MAX_OWN, SIDE_MAX, furn, houseData, size, wallLen, kindOf, heightOf, inside, stackY, findSpot, ROOM_TYPES } from '../game/furniture.js';
 
 const ink = '#5a4a6b';
@@ -197,7 +199,11 @@ let homeR = null;
 export const homeApp = {
   mount(el, ctx) {
     const MODEL = ctx.params && ctx.params.model ? models.storeFor(ctx.params.model) : null;   // ホームセンターのモデルルームを作る(自宅と同じ画面で、保存先だけ別)
-    const houseData = MODEL ? MODEL.houseData : HOUSE, furn = MODEL ? MODEL.furn : FURN;
+    // 単体マージの部屋(params.solo = 'room' 自分の部屋 / 'req' 依頼の部屋)。保存も、お金も、単体専用(町の家・コイン・ダイヤには さわらない)
+    const SOLO = !MODEL && ctx.params && (ctx.params.solo === 'room' || ctx.params.solo === 'req') ? soloStoreFor(ctx.params.solo) : null, SREQ = !!SOLO && ctx.params.solo === 'req';
+    if (SOLO) ctx = { ...ctx, wallet: soloWallet, gems: null, member: null, house: null, storage: soloStore.scope('home') };
+    const toMerge = (o = {}) => { try { ctx.open('merge', { solo: true, ...o }); } catch (e) { ctx.close && ctx.close(); } };
+    const houseData = MODEL ? MODEL.houseData : SOLO ? SOLO.houseData : HOUSE, furn = MODEL ? MODEL.furn : SOLO ? SOLO.furn : FURN;
     const root = document.createElement('div');
     root.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;font-family:inherit;color:${ink};background:linear-gradient(#fdf0f3,#eaf4ff)`;
     root.innerHTML = `<div class="plan" style="display:flex;align-items:center;gap:8px;padding:8px 10px 2px"></div>
@@ -208,7 +214,7 @@ export const homeApp = {
       <div class="car"></div>
       <div class="sheet" style="position:absolute;inset:0;z-index:20;background:#0006;display:none;align-items:flex-end;justify-content:center"></div>`;
     el.appendChild(root);
-    const verEl = document.createElement('div'); verEl.textContent = 'ver ' + (typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'); verEl.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);top:4px;font:700 10px/1 monospace;color:#8d7f9e;pointer-events:none;z-index:5;opacity:.85'; root.appendChild(verEl);
+    const verEl = document.createElement('div'); if (SOLO) verEl.hidden = true; verEl.textContent = 'ver ' + (typeof __BUILD__ === 'string' ? __BUILD__ : 'dev'); verEl.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);top:4px;font:700 10px/1 monospace;color:#8d7f9e;pointer-events:none;z-index:5;opacity:.85'; root.appendChild(verEl);
     const car = root.querySelector('.car'), cv = root.querySelector('.cv'), tip = root.querySelector('.tip'), ctl = root.querySelector('.ctl'), inv = root.querySelector('.inv'), planEl = root.querySelector('.plan'), sheet = root.querySelector('.sheet');
 
     // 部屋の3D(必要なときだけ描き直す)
@@ -387,11 +393,12 @@ export const homeApp = {
     function remaining(id) { return furn.owned(id) - placed.filter(p => p.id === id).length; }
     const gemsOf = () => (ctx.gems ? ctx.gems.get() : null);
     function planUI() {
+      if (SOLO) { planEl.innerHTML = soloPlan(); return; }
       const xs = house.rooms.map(r => r.sx), ys = house.rooms.map(r => r.sy), x0 = Math.min(...xs), y0 = Math.min(...ys), W = Math.max(...xs) - x0 + 1, H = Math.max(...ys) - y0 + 1;
       const tiles = house.rooms.map(r => `<button data-room="${r.id}" style="grid-column:${r.sx - x0 + 1};grid-row:${r.sy - y0 + 1};${btn(r.id === cur().id ? undefined : '#fff', r.id === cur().id ? '#fff' : ink)};border-radius:10px;padding:4px 6px;font-size:11px;box-shadow:0 1px 5px #0002;min-width:56px;overflow:hidden;text-overflow:ellipsis">${r.name}<br><span style="font-weight:600;opacity:.75">${r.cols}×${r.rows}</span></button>`).join('');
       planEl.innerHTML = `<div style="flex:1;min-width:0;overflow:auto"><div style="display:grid;grid-template-columns:repeat(${W},auto);grid-template-rows:repeat(${H},auto);gap:4px;width:max-content" title="間取り">${tiles}</div></div>
         <div style="text-align:right;font-weight:800;font-size:13px;line-height:1.5;white-space:nowrap">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${gemsOf() != null ? `<br>💎 <span data-bind="gems">${fmtN(gemsOf())}</span>` : ''}</div>
-        ${mode === 'edit' ? `<button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 12px;font-size:13px">🏠 ${MODEL ? '広さ' : 'ひろげる'}</button>` : ''}${MODEL ? `<button data-a="mdone" style="${btn('linear-gradient(160deg,#ffb3c7,#ff7fa0)')};padding:8px 12px;font-size:13px">✅ 登録して もどる</button>` : ''}`;
+        ${mode === 'edit' ? `<button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 12px;font-size:13px">🏠 ${MODEL ? '広さ' : SREQ ? '色' : SOLO ? '広げる・色' : 'ひろげる'}</button>` : ''}${MODEL ? `<button data-a="mdone" style="${btn('linear-gradient(160deg,#ffb3c7,#ff7fa0)')};padding:8px 12px;font-size:13px">✅ 登録して もどる</button>` : ''}`;
     }
     function ui() {
       planUI();
@@ -399,10 +406,10 @@ export const homeApp = {
       tip.style.display = view ? 'none' : ''; ctl.style.display = view ? 'none' : ''; inv.style.display = view ? 'none' : 'flex'; hz.style.display = view ? 'none' : 'flex'; car.style.display = view ? '' : 'none';
       if (view) { selUid = null; outline.visible = false; tip.textContent = 'スライドしてえらぶ。真ん中のアイコンか、光っている家具をタップで開くよ。'; return; }
       const p = placed.find(x => x.uid === selUid), k = p && kindOf(p.id);
-      tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ。ほかの家具はダブルタップでえらぶ。` : (Object.keys(furn.inv()).length ? '家具はダブルタップでえらぶよ。何もない所をドラッグで向きを変えられるよ。' : 'まだ家具がないよ。ショップで買ってこよう。');
+      tip.textContent = p ? `${ITEM[p.id].name}をえらび中。ドラッグで動かせるよ。ほかの家具はダブルタップでえらぶ。` : (Object.keys(furn.inv()).length ? '家具はダブルタップでえらぶよ。何もない所をドラッグで向きを変えられるよ。' : (SOLO ? (SREQ ? '置ける家具がないよ。マージの「🛠 家具」で作るか、わたしの部屋から「しまう」と使えるよ。' : 'まだ置ける家具がないよ。マージの「🛠 家具」で作ろう。') : 'まだ家具がないよ。ショップで買ってこよう。'));
       const canLock = p && ITEM[p.id].cat === 'かざり';   // かざりだけ、ロックできる(まちがって動かさない・しまわない)
       if (p && p.lk) tip.textContent = `${ITEM[p.id].name}は🔒位置ロック中(動かないよ)。動かすときは、ロックをはずしてね。`;
-      ctl.innerHTML = p ? `${canLock ? `<button data-a="lock" style="${btn(p.lk ? '#8f7bd0' : '#a99bbb')}">${p.lk ? '🔓 ロックをはずす' : '🔒 ロック'}</button>` : ''}${(k === 'floor' || k === 'flat') ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (`<button data-a="done" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">✓ もようがえを終える</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 家具を買う</button>`);
+      ctl.innerHTML = p ? `${canLock ? `<button data-a="lock" style="${btn(p.lk ? '#8f7bd0' : '#a99bbb')}">${p.lk ? '🔓 ロックをはずす' : '🔒 ロック'}</button>` : ''}${(k === 'floor' || k === 'flat') ? `<button data-a="rot" style="${btn('linear-gradient(160deg,#c9b8ea,#b19cd9)')}">まわす</button>` : ''}<button data-a="del" style="${btn('linear-gradient(160deg,#ffcf9f,#ffb27a)')}">しまう</button><button data-a="off" style="${btn('#d9d2e3')}">おわり</button>` : (SOLO ? (SREQ ? `<button data-a="sgive" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">🎁 この部屋をわたす</button>` : '') + `<button data-a="smake" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛠 家具をつくる</button>` : `<button data-a="done" style="${btn('linear-gradient(160deg,#ffe08a,#ffc93c)', ink)}">✓ もようがえを終える</button><button data-a="shop" style="${btn('linear-gradient(160deg,#ffd0dc,#ffb3c1)')}">🛒 家具を買う</button>`);
       const owned = ITEMS.filter(it => furn.owned(it.id) > 0);
       inv.innerHTML = owned.map(it => { const r = remaining(it.id); return `<button data-i="${it.id}" style="${btn(r > 0 ? '#fff' : '#ece7f3', r > 0 ? ink : '#a99bbb')};box-shadow:0 1px 6px #0002;${r > 0 ? '' : 'cursor:default'}">${it.name} ×${r}</button>`; }).join('');
     }
@@ -416,10 +423,51 @@ export const homeApp = {
       const row = (k, label, list, curC, own) => `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001"><div style="font-weight:800;margin-bottom:6px">${label}</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">${list.map(c => sw(k, c, curC === c)).join('')}${own != null && !list.includes(own) ? sw(k, own, curC === own) : ''}
         <label style="${btn('linear-gradient(160deg,#ffd6e3,#ffb3c7)', ink)};padding:6px 10px;font-size:12px;position:relative;cursor:pointer">🎨 自分で作る 💎1<input type="color" data-own="${k}" value="${hx(curC ?? list[0])}" style="position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer"></label></div></div>`;
-      return row('wall', 'かべ紙の色', WALLS, r.wall ?? null, r.cw ?? null) + row('floor', '床の色', FLOORS, r.floor ?? null, r.cf ?? null);
+      const out = row('wall', 'かべ紙の色', WALLS, r.wall ?? null, r.cw ?? null) + row('floor', '床の色', FLOORS, r.floor ?? null, r.cf ?? null);
+      return SOLO ? out.replace(/<label[^]*?<\/label>/g, '') : out;   // 単体: 自分で作る色(ダイヤ)はない
     }
+    // ---- 単体マージの部屋: 上の帯・広げるシート・わたす ----
+    function soloPlan() {
+      const coin = `<div style="font-weight:800;font-size:13px;white-space:nowrap">🪙 <span data-bind="coins">${fmtN(soloWallet.get())}</span></div>`;
+      const sz = `<button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 10px;font-size:12px;flex:none">🏠 ${SREQ ? '色' : '広げる・色'}</button>`;
+      let info;
+      if (SREQ) {
+        const q = soloReq.get(), ck = soloReq.check(q);
+        info = `<div style="font-size:12px;line-height:1.45"><b>${NPC_NAME[q.who] || q.who}</b>「${q.text}」<br>${ck.rows.map(r => `<span style="white-space:nowrap;color:${r.have >= r.n ? '#2f9e62' : ink}">${r.have >= r.n ? '✅' : '⬜'}${r.cat} ${Math.min(r.have, r.n)}/${r.n}</span>`).join(' ')}</div>`;
+      } else {
+        const g = houseData.growInfo(), n = cur().cols;
+        info = `<div style="font-size:12px;line-height:1.45"><b>${n}×${n}</b> の部屋<br>${g.max ? 'いちばん広い部屋だよ!' : `<span style="color:${g.have >= g.need ? '#2f9e62' : ink}">すてき度 ${Math.min(g.have, g.need)}/${g.need}</span> ・ <span style="color:${g.money >= g.cost ? '#2f9e62' : ink}">🪙${fmtN(g.cost)}</span> で広がる`}</div>`;
+      }
+      return `<div style="flex:1;min-width:0">${info}</div>${coin}${sz}`;
+    }
+    function soloSheet(r) {
+      const g = SREQ ? null : houseData.growInfo();
+      const grow = !g ? '' : `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001">
+        <div style="font-weight:800">部屋を広げる（いま ${r.cols}×${r.rows}）</div>
+        ${g.max ? '<div style="font-size:13px;color:#8d7f9e;margin-top:4px">これ以上は広げられないよ</div>' : `<div style="font-size:13px;margin:6px 0 8px;line-height:1.6">${g.have >= g.need ? '✅' : '⬜'} すてき度 ${g.need}（いま ${g.have}。置いた家具の★の合計）<br>${g.money >= g.cost ? '✅' : '⬜'} 🪙 ${fmtN(g.cost)}（もっている ${fmtN(g.money)}）<br><span style="color:#8d7f9e;font-size:12px">広げると、${r.cols + 1}×${r.rows + 1} になって、作れる家具がふえることがあるよ</span></div>
+        <button data-x="grow" style="${btn(g.ok ? undefined : '#d9d2e3')};width:100%">🏠 ${r.cols + 1}×${r.rows + 1} に広げる</button>`}</div>`;
+      sheet.style.display = 'flex';
+      sheet.innerHTML = `<div style="background:#fffaf0;border-radius:22px 22px 0 0;width:min(520px,100%);max-height:88%;overflow:auto;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))">
+        <h3 style="margin:0 0 6px">🏠 ${SREQ ? '依頼の部屋の色' : r.name + 'の 広さ・色'}</h3>${sheetMsg ? `<p style="margin:0 0 8px;font-size:13px;color:#e0556b">${sheetMsg}</p>` : ''}
+        ${grow}${colorRows(r)}
+        ${SREQ ? '' : `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px;box-shadow:0 2px 8px #0001"><div style="font-weight:800;margin-bottom:6px">部屋の名前</div><input class="nm" value="${r.name}" maxlength="10" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e3dbea;font:inherit"></div>`}
+        <button data-x="close" style="${btn('#d9d2e3', ink)};width:100%">とじる</button></div>`;
+    }
+    function soloGive() {   // わたす前に、なくなる家具を見せて確認する
+      const q = soloReq.get(), ck = soloReq.check(q);
+      if (!ck.ok) { tip.textContent = 'まだ そろっていないよ: ' + ck.rows.filter(r => r.have < r.n).map(r => `${r.cat} あと${r.n - r.have}こ`).join('、'); return; }
+      const rw = soloReq.reward(q), names = q.put.map(p => ITEM[p.id] && ITEM[p.id].name).filter(Boolean);
+      sheet.style.display = 'flex';
+      sheet.innerHTML = `<div style="background:#fffaf0;border-radius:22px 22px 0 0;width:min(520px,100%);padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))">
+        <h3 style="margin:0 0 6px">🎁 ${NPC_NAME[q.who] || q.who}に わたす</h3>
+        <p style="margin:0 0 8px;font-size:13px;line-height:1.6">置いた家具 ${names.length}こ(${names.join('、')})は、わたすと なくなるよ。</p>
+        <p style="margin:0 0 12px;font-size:13px;line-height:1.6">ごほうび: 🪙${rw.coins}${rw.gems ? ` 💎${rw.gems}` : ''} ⚙生成機のパーツ 💗なかよし</p>
+        <div style="display:flex;gap:8px"><button data-x="close" style="${btn('#d9d2e3', ink)};flex:1">やめる</button><button data-x="sgok" style="${btn()};flex:2">わたす</button></div></div>`;
+    }
+    function soloTip() { tip.textContent = SREQ ? '条件の家具を置いたら「🎁 この部屋をわたす」。わたした家具は なくなるよ。' : '家具を置いて、部屋を育てよう。すてき度(置いた家具の★の合計)とコインで、部屋が広がるよ。'; }
     function openSheet() {
       const r = cur(), g = gemsOf(), M = !!houseData.model;
+      if (SOLO) { soloSheet(r); return; }
       const row = (axis, label) => {
         const full = r[axis] >= SIDE_MAX, P = houseData.linePrice(r.id, axis, ctx.house);
         const cb = P.coins != null ? `<button data-x="${axis}" data-via="coins" style="${btn(ctx.wallet.get() >= P.coins ? undefined : '#d9d2e3')};flex:1">🪙 ${fmtN(P.coins)}</button>` : '';
@@ -454,6 +502,13 @@ export const homeApp = {
       const b = e.target.closest('[data-x]'); if (!b) return;
       const x = b.dataset.x, r = cur();
       if (x === 'close') { const nm = sheet.querySelector('.nm'); if (nm && nm.value.trim() && nm.value !== r.name) { houseData.rename(r.id, nm.value.trim()); house = houseData.get(); } sheet.style.display = 'none'; sheetMsg = ''; ui(); return; }
+      if (x === 'sgok' && SREQ) {
+        const res = soloReq.deliver(); sheet.style.display = 'none'; if (res.err) { tip.textContent = res.err; return; }
+        placed = furn.placed(); clearMeshes(); relayout(); draw(); ui();
+        tip.textContent = `🎉 ${NPC_NAME[res.who] || res.who}「ありがとう!」 🪙+${res.rw.coins}${res.rw.gems ? ' 💎+' + res.rw.gems : ''} ⚙パーツ`;
+        setTimeout(() => toMerge({ reqDone: 1 }), 1800); return;
+      }
+      if (x === 'grow' && SOLO) { const err = houseData.grow(); sheetMsg = err; house = houseData.get(); if (!err) { placed = furn.placed(); buildShell(); resize(); relayout(); sheet.style.display = 'none'; ui(); tip.textContent = `🎉 部屋が ${cur().cols}×${cur().rows} に広がったよ!`; return; } openSheet(); return; }
       if (x === 'col') { houseData.setColor(r.id, b.dataset.k, +b.dataset.c); house = houseData.get(); buildShell(); draw(); ui(); openSheet(); return; }
       if (x === 'type') { houseData.setType(r.id, b.dataset.t); house = houseData.get(); buildShell(); ui(); openSheet(); return; }
       if (x === 'room') {
@@ -478,6 +533,9 @@ export const homeApp = {
     ctl.onclick = e => {
       const a = e.target.closest('[data-a]')?.dataset.a, p = placed.find(x => x.uid === selUid);
       if (a === 'done') { if (MODEL) { try { ctx.open('shop', { tab: 'model' }); } catch (e) { ctx.close && ctx.close(); } return; } mode = 'view'; selUid = null; mark(); ui(); focusItem(menu && menu.current()); return; }
+      if (SOLO && a === 'sback') { toMerge(); return; }
+      if (SOLO && a === 'smake') { toMerge({ craft: 1 }); return; }
+      if (SOLO && a === 'sgive') { soloGive(); return; }
       if (a === 'walk') { enterWalk(); return; }
       if (a === 'album') { ctx.open('album', { from: 'home' }); return; }
       if (a === 'shop') { ctx.open('shop', { from: 'home' }); return; }   // ネットショッピング(家からそのままショップへ)
@@ -814,11 +872,12 @@ export const homeApp = {
     }
     function guestSayLate() { const b = document.createElement('div'); b.textContent = `${guest.name}「今日はもう遅いから、帰るね。また遊ぼ!」`; b.style.cssText = 'position:absolute;left:50%;top:64px;transform:translateX(-50%);max-width:80%;background:#fffaf2;color:#5a4a6b;border-radius:16px;padding:8px 14px;font-size:14px;font-weight:700;box-shadow:0 2px 8px #0003;z-index:30'; root.appendChild(b); setTimeout(() => b.remove(), 3500); }   // アルバムから「部屋にもどる」で、歩いていたところへ
     const offW = ctx.wallet.onChange ? ctx.wallet.onChange(() => planUI()) : null;
-    ctx.setTitle?.(MODEL ? 'モデルルームを作る' : 'あなたの家');
-    if (!MODEL) try { for (const o of models.soon()) setTimeout(() => { tip.textContent = `📅 借りている「${o.name}」は、あと${o.days}日で返却だよ。延長はホームセンターで。`; }, 800); } catch (e) { }
+    ctx.setTitle?.(MODEL ? 'モデルルームを作る' : SREQ ? '依頼の部屋' : SOLO ? 'わたしの部屋' : 'あなたの家');
+    if (!MODEL && !SOLO) try { for (const o of models.soon()) setTimeout(() => { tip.textContent = `📅 借りている「${o.name}」は、あと${o.days}日で返却だよ。延長はホームセンターで。`; }, 800); } catch (e) { }
     if (MODEL) { car.style.display = 'none'; run({ act: 'deco' }); tip.textContent = '下から家具をえらんで置こう。置いたまま保存されるよ。「🏠 ひろげる」で広さも変えられる。'; }
     // ---- 物語の案内(coach): もようがえ → 家具を置く → かべ紙の色、をやりながら教える。おわったら話にもどる ----
-    if (ctx.params && ctx.params.coach && !MODEL) {
+    if (SOLO) { car.style.display = 'none'; run({ act: 'deco' }); soloTip(); }
+    if (ctx.params && ctx.params.coach && !MODEL && !SOLO) {
       const n0 = furn.placed().length, r0 = cur(), c0 = [r0.wall, r0.cw, r0.floor, r0.cf].join();
       const gave = !ITEMS.some(it => furn.owned(it.id) > 0); if (gave) furn.give('chair', 1);   // 置く家具をひとつも持っていない人には、いすを1つあげる
       let st = 0, bye = false; const ce = document.createElement('div');
