@@ -10,7 +10,7 @@ import { fmtN, clamp } from '../core/core.js';
 import { createHomeMenu, HOME_MENU } from './home_menu.js';
 import { furn as FURN, houseData as HOUSE } from '../game/furniture.js';
 import { models } from '../game/model_rooms.js';
-import { soloStoreFor, soloWallet, soloReq, soloStore } from '../game/solo.js';
+import { soloStoreFor, soloReq, soloStore } from '../game/solo.js';
 import { NPC_NAME } from '../game/social.js';
 import { ITEMS, ITEM, CATS, U, WALL_H, MAX_OWN, SIDE_MAX, furn, houseData, size, wallLen, kindOf, heightOf, inside, stackY, findSpot, ROOM_TYPES } from '../game/furniture.js';
 
@@ -201,7 +201,7 @@ export const homeApp = {
     const MODEL = ctx.params && ctx.params.model ? models.storeFor(ctx.params.model) : null;   // ホームセンターのモデルルームを作る(自宅と同じ画面で、保存先だけ別)
     // 単体マージの部屋(params.solo = 'room' 自分の部屋 / 'req' 依頼の部屋)。保存も、お金も、単体専用(町の家・コイン・ダイヤには さわらない)
     const SOLO = !MODEL && ctx.params && (ctx.params.solo === 'room' || ctx.params.solo === 'req') ? soloStoreFor(ctx.params.solo) : null, SREQ = !!SOLO && ctx.params.solo === 'req';
-    if (SOLO) ctx = { ...ctx, wallet: soloWallet, gems: null, member: null, house: null, storage: soloStore.scope('home') };
+    if (SOLO) ctx = { ...ctx, wallet: { get: () => 0, add: () => 0, give: () => 0, spend: () => false }, gems: null, member: null, house: null, storage: soloStore.scope('home') };
     const toMerge = (o = {}) => { try { ctx.open('merge', { solo: true, ...o }); } catch (e) { ctx.close && ctx.close(); } };
     const houseData = MODEL ? MODEL.houseData : SOLO ? SOLO.houseData : HOUSE, furn = MODEL ? MODEL.furn : SOLO ? SOLO.furn : FURN;
     const root = document.createElement('div');
@@ -428,7 +428,7 @@ export const homeApp = {
     }
     // ---- 単体マージの部屋: 上の帯・広げるシート・わたす ----
     function soloPlan() {
-      const coin = `<div style="font-weight:800;font-size:13px;white-space:nowrap">🪙 <span data-bind="coins">${fmtN(soloWallet.get())}</span></div>`;
+      const coin = '';   // 部屋づくりでは、お金を使わない
       const sz = `<button data-a="size" style="${btn('linear-gradient(160deg,#9fe3c0,#6fcf9f)')};padding:8px 10px;font-size:12px;flex:none">🏠 ${SREQ ? '色' : '広げる・色'}</button>`;
       let info;
       if (SREQ) {
@@ -436,7 +436,7 @@ export const homeApp = {
         info = `<div style="font-size:12px;line-height:1.45"><b>${NPC_NAME[q.who] || q.who}</b>「${q.text}」<br>${ck.rows.map(r => `<span style="white-space:nowrap;color:${r.have >= r.n ? '#2f9e62' : ink}">${r.have >= r.n ? '✅' : '⬜'}${r.cat} ${Math.min(r.have, r.n)}/${r.n}</span>`).join(' ')}</div>`;
       } else {
         const g = houseData.growInfo(), n = cur().cols;
-        info = `<div style="font-size:12px;line-height:1.45"><b>${n}×${n}</b> の部屋<br>${g.max ? 'いちばん広い部屋だよ!' : `<span style="color:${g.have >= g.need ? '#2f9e62' : ink}">すてき度 ${Math.min(g.have, g.need)}/${g.need}</span> ・ <span style="color:${g.money >= g.cost ? '#2f9e62' : ink}">🪙${fmtN(g.cost)}</span> で広がる`}</div>`;
+        info = `<div style="font-size:12px;line-height:1.45"><b>${n}×${n}</b> の部屋<br>${g.max ? 'いちばん広い部屋だよ!' : `<span style="color:${g.have >= g.need ? '#2f9e62' : ink}">すてき度 ${Math.min(g.have, g.need)}/${g.need}</span> ・ Lv${g.item.lv}以上の品 ${g.item.n}こ で広がる`}</div>`;
       }
       return `<div style="flex:1;min-width:0">${info}</div>${coin}${sz}`;
     }
@@ -444,8 +444,8 @@ export const homeApp = {
       const g = SREQ ? null : houseData.growInfo();
       const grow = !g ? '' : `<div style="background:#fff;border-radius:16px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px #0001">
         <div style="font-weight:800">部屋を広げる（いま ${r.cols}×${r.rows}）</div>
-        ${g.max ? '<div style="font-size:13px;color:#8d7f9e;margin-top:4px">これ以上は広げられないよ</div>' : `<div style="font-size:13px;margin:6px 0 8px;line-height:1.6">${g.have >= g.need ? '✅' : '⬜'} すてき度 ${g.need}（いま ${g.have}。置いた家具の★の合計）<br>${g.money >= g.cost ? '✅' : '⬜'} 🪙 ${fmtN(g.cost)}（もっている ${fmtN(g.money)}）<br><span style="color:#8d7f9e;font-size:12px">広げると、${r.cols + 1}×${r.rows + 1} になって、作れる家具がふえることがあるよ</span></div>
-        <button data-x="grow" style="${btn(g.ok ? undefined : '#d9d2e3')};width:100%">🏠 ${r.cols + 1}×${r.rows + 1} に広げる</button>`}</div>`;
+        ${g.max ? '<div style="font-size:13px;color:#8d7f9e;margin-top:4px">これ以上は広げられないよ</div>' : `<div style="font-size:13px;margin:6px 0 8px;line-height:1.6">${g.have >= g.need ? '✅' : '⬜'} すてき度 ${g.need}（いま ${g.have}。置いた家具の★の合計）<br>⬜ マージで Lv${g.item.lv}以上の品を ${g.item.n}こ おさめる（品は なくなるよ）<br><span style="color:#8d7f9e;font-size:12px">広げると ${r.cols + 1}×${r.rows + 1} になって、作れる家具がふえることがあるよ</span></div>
+        <button data-x="sgrow" style="${btn(g.ok ? undefined : '#d9d2e3')};width:100%">${g.ok ? '🧩 マージで品をおさめて広げる' : `すてき度が あと ${g.need - g.have} たりないよ`}</button>`}</div>`;
       sheet.style.display = 'flex';
       sheet.innerHTML = `<div style="background:#fffaf0;border-radius:22px 22px 0 0;width:min(520px,100%);max-height:88%;overflow:auto;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))">
         <h3 style="margin:0 0 6px">🏠 ${SREQ ? '依頼の部屋の色' : r.name + 'の 広さ・色'}</h3>${sheetMsg ? `<p style="margin:0 0 8px;font-size:13px;color:#e0556b">${sheetMsg}</p>` : ''}
@@ -461,10 +461,10 @@ export const homeApp = {
       sheet.innerHTML = `<div style="background:#fffaf0;border-radius:22px 22px 0 0;width:min(520px,100%);padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))">
         <h3 style="margin:0 0 6px">🎁 ${NPC_NAME[q.who] || q.who}に わたす</h3>
         <p style="margin:0 0 8px;font-size:13px;line-height:1.6">置いた家具 ${names.length}こ(${names.join('、')})は、わたすと なくなるよ。</p>
-        <p style="margin:0 0 12px;font-size:13px;line-height:1.6">ごほうび: 🪙${rw.coins}${rw.gems ? ` 💎${rw.gems}` : ''} ⚙生成機のパーツ 💗なかよし</p>
+        <p style="margin:0 0 12px;font-size:13px;line-height:1.6">ごほうび: ⚙生成機のパーツ 💗なかよし${rw.early ? ` 📜「${rw.earlyName}」の作り方` : ''}</p>
         <div style="display:flex;gap:8px"><button data-x="close" style="${btn('#d9d2e3', ink)};flex:1">やめる</button><button data-x="sgok" style="${btn()};flex:2">わたす</button></div></div>`;
     }
-    function soloTip() { tip.textContent = SREQ ? '条件の家具を置いたら「🎁 この部屋をわたす」。わたした家具は なくなるよ。' : '家具を置いて、部屋を育てよう。すてき度(置いた家具の★の合計)とコインで、部屋が広がるよ。'; }
+    function soloTip() { tip.textContent = SREQ ? '条件の家具を置いたら「🎁 この部屋をわたす」。わたした家具は なくなるよ。' : '家具を置いて、部屋を育てよう。すてき度(置いた家具の★の合計)がたまったら、マージの品をおさめて広げられるよ。'; }
     function openSheet() {
       const r = cur(), g = gemsOf(), M = !!houseData.model;
       if (SOLO) { soloSheet(r); return; }
@@ -505,9 +505,10 @@ export const homeApp = {
       if (x === 'sgok' && SREQ) {
         const res = soloReq.deliver(); sheet.style.display = 'none'; if (res.err) { tip.textContent = res.err; return; }
         placed = furn.placed(); clearMeshes(); relayout(); draw(); ui();
-        tip.textContent = `🎉 ${NPC_NAME[res.who] || res.who}「ありがとう!」 🪙+${res.rw.coins}${res.rw.gems ? ' 💎+' + res.rw.gems : ''} ⚙パーツ`;
+        tip.textContent = `🎉 ${NPC_NAME[res.who] || res.who}「ありがとう!」 ⚙パーツ${res.rw.early ? ` 📜「${res.rw.earlyName}」が作れるようになったよ` : ''}`;
         setTimeout(() => toMerge({ reqDone: 1 }), 1800); return;
       }
+      if (x === 'sgrow' && SOLO) { if (houseData.growInfo().ok) toMerge({ grow: 1 }); return; }
       if (x === 'grow' && SOLO) { const err = houseData.grow(); sheetMsg = err; house = houseData.get(); if (!err) { placed = furn.placed(); buildShell(); resize(); relayout(); sheet.style.display = 'none'; ui(); tip.textContent = `🎉 部屋が ${cur().cols}×${cur().rows} に広がったよ!`; return; } openSheet(); return; }
       if (x === 'col') { houseData.setColor(r.id, b.dataset.k, +b.dataset.c); house = houseData.get(); buildShell(); draw(); ui(); openSheet(); return; }
       if (x === 'type') { houseData.setType(r.id, b.dataset.t); house = houseData.get(); buildShell(); ui(); openSheet(); return; }

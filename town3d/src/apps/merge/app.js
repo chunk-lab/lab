@@ -628,13 +628,14 @@ export function createMergeApp(env0 = {}) {
       // ---- 単体: 家具づくり(マージの品を組み合わせる)・部屋の依頼 ----
       const findIng = (n, used) => [...S.cells, ...S.store].filter(o => o && o.t === 'it' && !o.lk && o.ln === n.ln && o.lv >= n.lv && !used.has(o)).sort((a, b) => a.lv - b.lv)[0] || null;
       const ingsOf = rc => { const used = new Set(); return rc.need.map(n => { const o = findIng(n, used); if (o) used.add(o); return o; }); };
+      const growItems = g => g.max ? [] : [...S.cells, ...S.store].filter(o => o && o.t === 'it' && !o.lk && o.lv >= g.item.lv).sort((a, b) => a.lv - b.lv);
       const canCraft = rc => soloRoom.canMake(rc) && ingsOf(rc).every(Boolean);
       const ingArt = n => { const d = defOf({ t: 'it', ln: n.ln, lv: n.lv }); return IMG[d.key] ? `<img src="${IMG[d.key]}" alt="" style="width:30px;height:30px;object-fit:contain">` : `<b style="font-size:22px">${d.icon}</b>`; };
       function craftPanel(tab = 'make') {
         root.querySelector('.mg-ovl.mg-cf')?.remove();
         const o = overlay(''); o.classList.add('mg-cf'); const card = o.querySelector('.mg-card'); card.style.maxHeight = '86%'; card.style.overflow = 'auto';
         const rank = soloRoom.rank(), nextT = Object.entries(TIER_RANK).find(([, r]) => r > rank);
-        const tabs = `<div style="display:flex;gap:6px;margin:6px 0 10px"><button data-tab="make" style="flex:1;${tab === 'make' ? 'background:#786184;color:#fff' : ''}">🛠 家具をつくる</button><button data-tab="req" style="flex:1;${tab === 'req' ? 'background:#786184;color:#fff' : ''}">📮 部屋の依頼</button></div>`;
+        const tabs = `<div style="display:flex;gap:6px;margin:6px 0 10px"><button data-tab="make" style="flex:1;${tab === 'make' ? 'background:#786184;color:#fff' : ''}">🛠 つくる</button><button data-tab="req" style="flex:1;${tab === 'req' ? 'background:#786184;color:#fff' : ''}">📮 依頼</button><button data-tab="grow" style="flex:1;${tab === 'grow' ? 'background:#786184;color:#fff' : ''}">🏠 広げる</button></div>`;
         let body = '';
         if (tab === 'make') {
           const open = FURN_RECIPES.filter(rc => soloRoom.canMake(rc)).sort((a, b) => canCraft(b) - canCraft(a));
@@ -645,19 +646,34 @@ export function createMergeApp(env0 = {}) {
               <button data-make="${rc.id}" ${ok ? '' : 'disabled'} style="flex:none;${ok ? 'background:linear-gradient(160deg,#ffb3c7,#ff7fa0);color:#fff' : 'opacity:.45'}">つくる</button></div>`; };
           body = `<p style="font-size:12px;margin:0 0 8px">盤面と保管枠の品を組み合わせて、家具を作るよ。品はなくなるよ(🔒の品は使わない)。★が多い家具ほど、部屋のすてき度が上がるよ。</p>${open.map(row).join('')}
             ${nextT ? `<p style="font-size:12px;color:#8a76a6;margin:8px 0 0">🔒 部屋を ${GROW.base + nextT[1]}×${GROW.base + nextT[1]} に広げると、${FURN_RECIPES.filter(rc => rc.tier === +nextT[0]).length}しゅるいの家具が作れるようになるよ</p>` : ''}`;
+        } else if (tab === 'grow') {   // 部屋を広げる: すてき度 + マージの品をおさめる(コイン・ダイヤは使わない)
+          const g = soloRoom.growInfo(), n = GROW.base + g.k;
+          if (g.max) body = '<p style="font-size:14px;margin:16px 0">いちばん広い部屋だよ!</p>';
+          else { const its = growItems(g), ready = g.ok && its.length >= g.item.n;
+            body = `<div style="text-align:left;font-size:13px;background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:8px;line-height:1.7">いまの部屋: ${n}×${n} → <b>${n + 1}×${n + 1}</b><br>${g.have >= g.need ? '✅' : '⬜'} すてき度 ${Math.min(g.have, g.need)}/${g.need}(部屋に置いた家具の★の合計)<br>${its.length >= g.item.n ? '✅' : '⬜'} Lv${g.item.lv}以上の品 ${Math.min(its.length, g.item.n)}/${g.item.n}こ(盤面・保管枠。🔒の品は使わない)</div>
+              <p style="font-size:12px;margin:0 0 8px">おさめた品は なくなるよ。Lvの低い品から使うよ。</p>
+              <button data-grow ${ready ? '' : 'disabled'} style="width:100%;${ready ? 'background:linear-gradient(160deg,#9fe3c0,#6fcf9f);color:#fff' : 'opacity:.45'}">🏠 品をおさめて ${n + 1}×${n + 1} に広げる</button>`; }
         } else {
           const q = soloReq.get(), w = soloReq.wait();
           if (q.done && w > 0) body = `<p style="font-size:14px;margin:16px 0">${esc(NPC_NAME[q.who] || q.who)}に部屋をわたしたよ。<br>つぎの依頼まで あと ${Math.floor(w / 3600e3)}時間${Math.ceil(w % 3600e3 / 60e3)}分</p>`;
           else { const ck = soloReq.check(q);
             body = `<div style="display:flex;gap:10px;align-items:center;text-align:left;margin-bottom:8px">${portrait(q.who) ? `<img src="${portrait(q.who)}" alt="" style="width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:top;background:#efe3fb">` : ''}<div><b>${esc(NPC_NAME[q.who] || q.who)}</b><div style="font-size:14px">「${esc(q.text)}」</div></div></div>
               <div style="text-align:left;font-size:13px;background:#fff;border-radius:14px;padding:8px 10px;margin-bottom:8px">${q.size}×${q.size}の小さな部屋に、<br>${ck.rows.map(r => `${r.have >= r.n ? '✅' : '⬜'} ${r.cat} ${r.n}こ`).join('<br>')}</div>
-              <p style="font-size:12px;margin:0 0 8px">わたした家具は なくなるけど、ごほうび(🪙・⚙生成機のパーツ・ときどき💎)がもらえるよ。</p>
+              <p style="font-size:12px;margin:0 0 8px">わたした家具は なくなるけど、ごほうび(⚙生成機のパーツ・💗なかよし・まだ作れない家具の作り方)がもらえるよ。</p>
               <button data-req style="width:100%;background:linear-gradient(160deg,#9fe3c0,#6fcf9f);color:#fff">🏠 依頼の部屋をつくる</button>`; }
         }
-        card.innerHTML = `<h3>${tab === 'make' ? '🛠 家具づくり' : '📮 部屋の依頼'}</h3>${tabs}${body}<div style="margin-top:8px"><button data-x>とじる</button></div>`;
+        card.innerHTML = `<h3>${tab === 'make' ? '🛠 家具づくり' : tab === 'grow' ? '🏠 部屋を広げる' : '📮 部屋の依頼'}</h3>${tabs}${body}<div style="margin-top:8px"><button data-x>とじる</button></div>`;
         card.querySelectorAll('[data-tab]').forEach(b => b.onclick = e => { e.stopPropagation(); sfx('tap'); craftPanel(b.dataset.tab); });
         card.querySelector('[data-x]').onclick = e => { e.stopPropagation(); o.remove(); };
         card.querySelector('[data-req]')?.addEventListener('click', e => { e.stopPropagation(); save(); try { ctx.storage.set('s', S); } catch (er) { } ctx.open('home', { solo: 'req', back: { id: 'merge', params: { solo: true }, label: '🧩 マージへ' } }); });
+        card.querySelector('[data-grow]')?.addEventListener('click', e => {
+          e.stopPropagation(); const g = soloRoom.growInfo(), its = growItems(g); if (!g.ok || its.length < g.item.n) return;
+          its.slice(0, g.item.n).forEach(x => { take(x); rm(x); }); const err = soloRoom.grow(); save(); refresh(); if (err) { toast(err); return; }
+          sfx('unlock'); o.remove(); const n = GROW.base + soloRoom.rank();
+          const d = overlay(`<h3>🎉 部屋が ${n}×${n} に広がった!</h3><p style="font-size:13px;margin:6px 0 12px">新しく作れる家具がふえたかも。🛠で見てみてね。</p><div><button data-go style="background:linear-gradient(160deg,#9fe3c0,#6fcf9f);color:#fff">🛋 部屋を見る</button> <button data-more>🛠 家具づくり</button></div>`);
+          d.querySelector('[data-go]').onclick = ev => { ev.stopPropagation(); d.remove(); $('.mg-room').click(); };
+          d.querySelector('[data-more]').onclick = ev => { ev.stopPropagation(); d.remove(); craftPanel(); };
+        });
         card.querySelectorAll('[data-make]').forEach(b => b.onclick = e => {
           e.stopPropagation(); const rc = FURN_RECIPES.find(x => x.id === b.dataset.make), ings = rc && ingsOf(rc); if (!rc || !ings.every(Boolean)) return;
           ings.forEach(x => { take(x); rm(x); }); soloFurn.give(rc.id, 1); save(); refresh(); sfx('unlock');
@@ -671,7 +687,7 @@ export function createMergeApp(env0 = {}) {
       }
       function soloHints() {   // 作れる家具があれば 🛠 を、置いていない家具があれば 🛋 を光らせる
         if (!SOLO) return; const c = $('.mg-craft'), r = $('.mg-room'); if (!c) return;
-        const cc = FURN_RECIPES.some(canCraft); c.classList.toggle('need', cc);
+        const gi = soloRoom.growInfo(), cg = gi.ok && growItems(gi).length >= gi.item.n, cc = FURN_RECIPES.some(canCraft); c.classList.toggle('need', cc || cg);
         if (cc) coach.say('craft', 'お、品がそろったで! 右上の🛠で、品を組み合わせて家具が作れるんよ。作った家具は🛋の部屋に置いてな');
         const inv = soloFurn.inv(), placedN = soloRoom.placedCount(), total = Object.values(inv).reduce((a, b) => a + b, 0);
         r.classList.toggle('need', total > placedN && !ctx.storage.get('roomSeen'));
@@ -825,9 +841,9 @@ export function createMergeApp(env0 = {}) {
       if (S.first) S.cells.forEach(o => { if (o && o.t === 'gen' && genOpen(o.g)) els.get(o.u).classList.add('first'); });
       sig = ''; enTick(); refresh(); checkRecov();
       if (SOLO) {   // 依頼のごほうび(ダイヤ・生成機のパーツ)を受け取る / 部屋から「家具をつくる」で来たときは、家具づくりを開く
-        const P = soloReq.takePending(); let gm = 0, pt = 0; P.forEach(x => { if (x.gems) { S.gm = (S.gm || 0) + x.gems; gm += x.gems; } if (x.part) { const gk = Object.keys(GENS); S.inbox.push({ t: 'part', g: gk[rnd(gk.length)], lv: 1 }); pt++; } });
-        if (P.length) { save(); refresh(); setTimeout(() => toast(`📮 依頼のごほうび: ⚙パーツ${pt}こ${gm ? ` 💎${gm}` : ''}(🎁とどいた から出せるよ)`), 600); }
-        if (ctx.params.craft) setTimeout(() => craftPanel(), 300);
+        const P = soloReq.takePending(); let pt = 0; P.forEach(x => { if (x.part) { const gk = Object.keys(GENS); S.inbox.push({ t: 'part', g: gk[rnd(gk.length)], lv: 1 }); pt++; } });
+        if (P.length) { save(); refresh(); setTimeout(() => toast(`📮 依頼のごほうび: ⚙パーツ${pt}こ(🎁とどいた から出せるよ)`), 600); }
+        if (ctx.params.craft || ctx.params.grow) setTimeout(() => craftPanel(ctx.params.grow ? 'grow' : 'make'), 300);
         soloHints();
       }
       requestAnimationFrame(() => { if (alive) layout(); });

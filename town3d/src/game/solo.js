@@ -66,8 +66,8 @@ export const FURN_RECIPES = SOLO_ITEMS.map((it, i) => {
 }).map(rc => (STAR[rc.id] = rc.tier, rc)).sort((a, b) => a.tier - b.tier || a.need.reduce((s, x) => s + x.lv, 0) - b.need.reduce((s, x) => s + x.lv, 0));
 
 // ---- 自分の部屋(1部屋だけ。広げる = 家具を置く + コイン) ----
-// 広げる条件 = 部屋の「すてき度」(置いた家具の ★の合計。★ = 家具の段階1〜5) + コイン。安い家具を並べるだけでは届かない
-export const GROW = { base: 4, max: 8, need: r => [4, 8, 14, 22, 32, 44, 58, 74][r] || 90, cost: r => [50, 100, 200, 300, 500, 700, 1000, 1400][r] || 2000 };
+// 広げる条件 = 部屋の「すてき度」(置いた家具の ★の合計。★ = 家具の段階1〜5) + マージの品をおさめる(盤面から消える)。コイン・ダイヤは使わない
+export const GROW = { base: 4, max: 8, need: r => [4, 8, 14, 22, 32, 44, 58, 74][r] || 90, items: r => ({ lv: 2 + Math.floor(r / 2), n: 2 + r }) };
 const roomD = () => G('room', null) || { name: 'わたしの部屋', rank: 0, type: '', put: [] };
 const saveRoom = r => st.set('room', r);
 export const soloRoom = {
@@ -76,11 +76,13 @@ export const soloRoom = {
   score: () => (roomD().put || []).reduce((a, p) => a + starOf(p.id), 0),
   growInfo() {
     const r = roomD(), k = r.rank || 0; if (k >= GROW.max) return { max: true, k };
-    const need = GROW.need(k), have = (r.put || []).reduce((a, p) => a + starOf(p.id), 0), cost = GROW.cost(k), money = soloWallet.get();
-    return { k, need, have, cost, money, ok: have >= need && money >= cost };
+    const need = GROW.need(k), have = (r.put || []).reduce((a, p) => a + starOf(p.id), 0);
+    return { k, need, have, item: GROW.items(k), ok: have >= need };
   },
-  grow() { const g = this.growInfo(); if (g.max) return 'これ以上は広げられないよ'; if (g.have < g.need) return `すてき度が あと ${g.need - g.have} 足りないよ(★の多い家具を置くと上がるよ)`; if (!soloWallet.spend(g.cost)) return `コインが足りないよ(あと ${g.cost - g.money})`; const r = roomD(); r.rank = (r.rank || 0) + 1; saveRoom(r); return ''; },
-  canMake: rc => TIER_RANK[rc.tier] <= (roomD().rank || 0),
+  // 品をおさめるのは、マージの画面(盤面の品を使う)。ここでは、すてき度だけ確かめて広げる
+  grow() { const g = this.growInfo(); if (g.max) return 'これ以上は広げられないよ'; if (g.have < g.need) return `すてき度が あと ${g.need - g.have} 足りないよ(★の多い家具を置くと上がるよ)`; const r = roomD(); r.rank = (r.rank || 0) + 1; saveRoom(r); return ''; },
+  canMake: rc => TIER_RANK[rc.tier] <= (roomD().rank || 0) || (G('early', [])).includes(rc.id),
+  early: id => (G('early', [])).includes(id),
 };
 
 // ---- 住人の「部屋づくりの依頼」(小さな部屋。わたすと家具はなくなる。ごほうびで、マージが進む) ----
@@ -117,14 +119,15 @@ export const soloReq = {
     const rows = Object.entries(q.c).map(([cat, n]) => ({ cat, n, have: have[cat] || 0 }));
     return { rows, ok: rows.every(r => r.have >= r.n) };
   },
-  reward: q => ({ coins: 60 + q.n * 10 + (q.put || []).length * 20, gems: q.n % 3 === 0 ? 1 : 0, part: true, aff: 3 }),
+  // ごほうび: 生成機のパーツ・なかよし・まだ作れない家具の作り方を1つ先に(コイン・ダイヤは出さない)
+  reward(q) { const rank = roomD().rank || 0, E = G('early', []), nx = FURN_RECIPES.find(rc => TIER_RANK[rc.tier] > rank && !E.includes(rc.id)); return { part: true, aff: 3, early: nx ? nx.id : null, earlyName: nx ? nx.name : '' }; },
   deliver() {   // わたす: 置いた家具は持ち物から なくなる
     const q = this.get(); if (q.done) return { err: 'つぎの依頼を まっているよ' };
     const ck = this.check(q); if (!ck.ok) return { err: 'まだ条件がそろっていないよ' };
     for (const p of q.put) soloFurn.take(p.id, 1);
-    const rw = this.reward(q); soloWallet.add(rw.coins); soloSocial.addAff(q.who, rw.aff);
+    const rw = this.reward(q); soloSocial.addAff(q.who, rw.aff); if (rw.early) { const E = G('early', []); E.push(rw.early); st.set('early', E); }
     q.done = true; q.doneAt = Date.now(); q.got = rw; q.put = []; st.set('req', q);
-    const P = G('pend', []); P.push({ gems: rw.gems, part: rw.part }); st.set('pend', P);   // マージを開いたときに受け取る(ダイヤ・生成機のパーツ)
+    const P = G('pend', []); P.push({ part: rw.part }); st.set('pend', P);   // マージを開いたときに受け取る(生成機のパーツ)
     return { ok: true, rw, who: q.who };
   },
   takePending() { const P = G('pend', []); st.set('pend', []); return P; },
