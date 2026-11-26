@@ -1,0 +1,300 @@
+pleased | a | I am pleased with my English test results this week. | 私は今週の英語のテスト結果を喜んでいます。
+pleased | a | Was your mother pleased to receive your letter? | お母さんはあなたの手紙を受け取って喜びましたか。
+pleased | a | The teacher looked pleased with our group work. | 先生は私たちのグループ活動を喜んでいるようでした。
+amazed | a | We were amazed by the beautiful view from the mountain. | 私たちは山からの美しい景色に驚きました。
+amazed | a | Are you amazed at how fast the children learn? | 子供たちが学ぶ速さに驚いていますか。
+amazed | a | My brother looked amazed when he saw the huge cake. | 弟は大きなケーキを見て驚いた様子でした。
+relaxed | a | I feel relaxed after taking a warm bath. | 私は温かいお風呂に入るとくつろいだ気分になります。
+relaxed | a | Did you feel relaxed during your weekend at home? | 家で過ごした週末はくつろげましたか。
+relaxed | a | The children looked relaxed while listening to music. | 子供たちは音楽を聴きながらくつろいでいるようでした。
+thirsty | a | I always get thirsty after playing basketball outside. | 私は外でバスケットボールをするといつものどが渇きます。
+thirsty | a | Are you thirsty after that long walk in the park? | 公園で長く歩いた後でのどが渇いていますか。
+thirsty | a | The thirsty dog drank water from its bowl. | のどが渇いた犬は器から水を飲みました。
+sleepy | a | I feel sleepy when I study late at night. | 私は夜遅く勉強すると眠くなります。
+sleepy | a | Does your little sister get sleepy after lunch? | 妹さんは昼食後に眠くなりますか。
+sleepy | a | The students looked sleepy during the warm afternoon lesson. | 生徒たちは暖かい午後の授業中に眠そうでした。
+fit | a | My grandfather stays fit by walking every morning. | 祖父は毎朝歩くことで健康を保っています。
+fit | a | Are you fit enough to climb that hill? | あの丘を登れるくらい健康で体力がありますか。
+fit | a | She feels fit after several months of regular exercise. | 彼女は数か月間定期的に運動して健康だと感じています。
+successful | a | Our school festival was successful because everyone helped. | みんなが協力したので学校祭は成功しました。
+successful | a | Was your first cooking class successful this morning? | 今朝の初めての料理教室はうまくいきましたか。
+successful | a | He became a successful writer after years of practice. | 彼は長年の練習の後で成功した作家になりました。
+helpful | a | This map is helpful when visiting the old town. | この地図は古い町を訪れるときに役立ちます。
+helpful | a | Was the advice from your teacher helpful? | 先生からの助言は役に立ちましたか。
+helpful | a | My sister gave me some helpful study tips. | 姉は勉強に役立つ助言をいくつかくれました。
+harmful | a | Too much sun can be harmful to your skin. | 日光を浴びすぎると肌に有害なことがあります。
+harmful | a | Are these cleaning products harmful to small animals? | これらの掃除用品は小さな動物に有害ですか。
+harmful | a | The factory is working to reduce harmful waste. | その工場は有害な廃棄物を減らすために取り組んでいます。
+careless | a | A careless mistake made my answer wrong on the test. | 不注意な間違いでテストの答えが間違ってしまいました。
+careless | a | Were you careless when you wrote down the address? | 住所を書き留めるとき不注意でしたか。
+careless | a | He sometimes makes careless mistakes when he works too quickly. | 彼は急いで作業すると時々不注意な間違いをします。
+useless | a | This old phone is useless without a working battery. | この古い電話は使える電池がなければ役に立ちません。
+useless | a | Is this broken umbrella completely useless now? | この壊れた傘はもうまったく役に立ちませんか。
+useless | a | The map was useless because it showed the wrong roads. | その地図は道が間違っていたので役に立ちませんでした。
+homeless | a | The town opened a shelter for homeless people. | 町は家のない人々のために宿泊施設を開きました。
+homeless | a | Can we help homeless families find safe places to stay? | 家のない家族が安全に泊まる場所を見つける手助けはできますか。
+homeless | a | Local volunteers brought warm clothes to homeless people. | 地元のボランティアは家のない人々に暖かい服を届けました。
+symbol | n | A heart is often used as a symbol of love. | ハートはよく愛の象徴として使われます。
+symbol | n | What does this symbol mean on the map? | 地図のこの記号は何を意味しますか。
+symbol | n | The students drew different symbols on their posters. | 生徒たちはポスターにさまざまな記号を描きました。
+triangle | n | Draw a triangle with three equal sides on the paper. | 紙に三つの辺が等しい三角形を描いてください。
+triangle | n | Can you find a triangle in this picture? | この絵の中に三角形を見つけられますか。
+triangle | n | The children made triangles from small wooden sticks. | 子供たちは小さな木の棒で三角形を作りました。
+fold | v | Please fold the paper in half before cutting it. | 切る前に紙を半分に折ってください。
+fold | v | Can you fold this shirt neatly for me? | このシャツをきれいにたたんでくれますか。
+fold | v | My grandmother folded the towels and put them away. | 祖母はタオルをたたんで片づけました。
+fry | v | We usually fry eggs for breakfast on Sundays. | 私たちは日曜日の朝食によく卵を焼きます。
+fry | v | Did your father fry the fish in a pan? | お父さんはフライパンで魚を焼きましたか。
+fry | v | She is frying potatoes for the family dinner. | 彼女は家族の夕食のためにジャガイモを揚げています。
+slice | v | Please slice the bread before we make sandwiches. | サンドイッチを作る前にパンを薄く切ってください。
+slice | v | Can you slice these tomatoes for the salad? | サラダ用にこのトマトを薄く切ってくれますか。
+slice | v | My brother sliced an apple and shared it with me. | 弟はリンゴを薄く切って私と分け合いました。
+chew | v | Remember to chew your food slowly during meals. | 食事中は食べ物をゆっくりかむことを忘れないでください。
+chew | v | Does your dog chew its toys all day? | あなたの犬は一日中おもちゃをかみますか。
+chew | v | The child chewed the bread carefully before swallowing. | その子は飲み込む前にパンをよくかみました。
+cough | v | Please cover your mouth when you cough in class. | 授業中にせきをするときは口を覆ってください。
+cough | v | Did you cough a lot during the night? | 夜の間に何度もせきをしましたか。
+cough | v | My brother coughed because the room was dusty. | 部屋にほこりが多かったので弟はせきをしました。
+sneeze | v | I often sneeze when there is dust in the room. | 部屋にほこりがあると私はよくくしゃみをします。
+sneeze | v | Do you sneeze when you smell strong flowers? | 香りの強い花のにおいをかぐとくしゃみが出ますか。
+sneeze | v | She sneezed twice and then opened the window. | 彼女は二回くしゃみをしてから窓を開けました。
+yawn | v | I sometimes yawn during long train rides. | 私は長い電車の移動中に時々あくびをします。
+yawn | v | Do you yawn when you feel tired at school? | 学校で疲れを感じるとあくびが出ますか。
+yawn | v | The little boy yawned and went straight to bed. | 小さな男の子はあくびをしてすぐに寝ました。
+lock | v | Please lock the front door before leaving the house. | 家を出る前に玄関のドアに鍵をかけてください。
+lock | v | Did you lock your bicycle outside the station? | 駅の外で自転車に鍵をかけましたか。
+lock | v | My sister locked the shop after the last customer left. | 姉は最後のお客さんが帰った後に店に鍵をかけました。
+unlock | v | Can you unlock the door with this key? | この鍵でドアの鍵を開けられますか。
+unlock | v | Did he unlock his phone before showing the picture? | 彼は写真を見せる前に電話のロックを解除しましたか。
+unlock | v | The teacher unlocked the classroom early this morning. | 先生は今朝早く教室の鍵を開けました。
+switch | v | Please switch to the next page on your screen. | 画面を次のページに切り替えてください。
+switch | v | Can we switch seats so I can see better? | 私がもっとよく見えるように席を交換できますか。
+switch | v | She switched from tea to water after lunch. | 彼女は昼食後に飲み物をお茶から水に替えました。
+download | v | You can download the lesson notes from our school website. | 学校のウェブサイトから授業のノートをダウンロードできます。
+download | v | Did you download the map before your trip? | 旅行前に地図をダウンロードしましたか。
+download | v | My brother downloaded a new game onto his computer. | 弟はパソコンに新しいゲームをダウンロードしました。
+upload | v | Please upload your homework before the class begins. | 授業が始まる前に宿題をアップロードしてください。
+upload | v | Can you upload these pictures to our class page? | この写真をクラスのページにアップロードできますか。
+upload | v | She uploaded her video after checking the sound. | 彼女は音声を確認してから動画をアップロードしました。
+print | v | I need to print these tickets before our trip. | 旅行前にこのチケットを印刷する必要があります。
+print | v | Can you print two copies of this page? | このページを二部印刷してくれますか。
+print | v | The teacher printed the worksheets for tomorrow's lesson. | 先生は明日の授業用のプリントを印刷しました。
+copy | v | Please copy these sentences into your English notebook. | この文を英語のノートに書き写してください。
+copy | v | Can you copy this file onto my computer? | このファイルを私のパソコンにコピーしてくれますか。
+copy | v | He copied the drawing carefully onto another sheet. | 彼はその絵を別の紙に丁寧に写しました。
+delete | v | Please delete the old pictures from this folder. | このフォルダーから古い写真を削除してください。
+delete | v | Did you delete the message by mistake yesterday? | 昨日間違ってそのメッセージを削除しましたか。
+delete | v | She deleted several files to make more space. | 彼女は空き容量を増やすためにいくつかのファイルを削除しました。
+chat | v | We often chat with our neighbors after dinner. | 私たちは夕食後によく近所の人とおしゃべりします。
+chat | v | Can we chat for a few minutes after class? | 授業の後で数分おしゃべりできますか。
+chat | v | My parents chatted while preparing food in the kitchen. | 両親は台所で料理を準備しながらおしゃべりしました。
+apologize | v | I want to apologize for being late this morning. | 今朝遅れたことを謝りたいです。
+apologize | v | Did you apologize to your friend for the mistake? | その間違いについて友達に謝りましたか。
+apologize | v | She apologized after forgetting her sister's birthday. | 彼女は妹の誕生日を忘れたことを謝りました。
+blame | v | Please do not blame your brother for the mistake. | その間違いを弟のせいにしないでください。
+blame | v | Why did you blame me for the lost book? | なぜなくした本のことで私を責めたのですか。
+blame | v | The coach blamed himself for the poor result. | コーチは悪い結果について自分を責めました。
+scold | v | My parents rarely scold me about my schoolwork. | 両親は私の学校の勉強についてめったに叱りません。
+scold | v | Did the teacher scold the students for talking? | 先生はおしゃべりをした生徒たちを叱りましたか。
+scold | v | She scolded her dog for jumping onto the table. | 彼女はテーブルに飛び乗った犬を叱りました。
+convince | v | I tried to convince my parents to visit the museum. | 私は両親に博物館へ行こうと納得させようとしました。
+convince | v | Can you convince him that this plan will work? | この計画がうまくいくと彼を納得させられますか。
+convince | v | Her explanation convinced us to try the new method. | 彼女の説明で私たちは新しい方法を試す気になりました。
+insist | v | I insist that we check the answers before leaving. | 私は帰る前に答えを確認すべきだと強く主張します。
+insist | v | Why does your brother insist on walking to school? | なぜ弟さんは歩いて学校へ行くと言い張るのですか。
+insist | v | She insisted that everyone should get an equal chance. | 彼女は全員に平等な機会を与えるべきだと主張しました。
+complain | v | Please do not complain about every little change. | 小さな変更のたびに不満を言わないでください。
+complain | v | Did the guests complain about the cold room? | お客さんたちは寒い部屋について不満を言いましたか。
+complain | v | My sister complained that the bus was always late. | 姉はバスがいつも遅れると不満を言いました。
+doubt | v | I doubt that the shop will open this early. | 店がこんなに早く開くとは思えません。
+doubt | v | Do you doubt his story about the trip? | 彼の旅行の話を疑っていますか。
+doubt | v | She doubted whether the old computer would work. | 彼女は古いパソコンが動くかどうか疑っていました。
+suppose | v | I suppose we should leave before the rain starts. | 雨が降り始める前に出発したほうがよいと思います。
+suppose | v | Do you suppose the library is still open? | 図書館はまだ開いていると思いますか。
+suppose | v | He supposed that everyone knew about the meeting. | 彼は全員が会議について知っていると思っていました。
+assume | v | Do not assume that everyone likes the same food. | 全員が同じ食べ物を好きだと思い込まないでください。
+assume | v | Can we assume the train will arrive on time? | 電車が時間どおりに着くと考えてよいですか。
+assume | v | She assumed that the meeting started at nine. | 彼女は会議が九時に始まると思い込んでいました。
+predict | v | Can you predict tomorrow's weather from these clouds? | この雲から明日の天気を予測できますか。
+predict | v | Did the teacher predict which team would win? | 先生はどのチームが勝つか予測しましたか。
+predict | v | The children predicted that the snow would stop soon. | 子供たちは雪がすぐにやむと予測しました。
+arrange | v | Please arrange the chairs in a circle for our meeting. | 会議のために椅子を円形に並べてください。
+arrange | v | Can you arrange a taxi for tomorrow morning? | 明日の朝のタクシーを手配してくれますか。
+arrange | v | She arranged the flowers in a glass vase. | 彼女はガラスの花瓶に花を生けました。
+organize | v | We need to organize our books before the school year. | 新学年の前に本を整理する必要があります。
+organize | v | Can you organize the games for our class party? | クラスのパーティーのゲームを企画してくれますか。
+organize | v | My father organized his desk on Sunday afternoon. | 父は日曜日の午後に机を整理しました。
+decrease | v | The number of visitors may decrease during winter. | 冬の間は訪問者の数が減るかもしれません。
+decrease | v | Did the price of these apples decrease yesterday? | このリンゴの値段は昨日下がりましたか。
+decrease | v | Our electricity use decreased after we changed the lights. | 照明を替えてから電気の使用量が減りました。
+flow | v | Small rivers flow through the valley near our town. | 小さな川が私たちの町の近くの谷を流れています。
+flow | v | Does water flow under this old bridge? | この古い橋の下を水が流れていますか。
+flow | v | The water flowed slowly past the green fields. | 水は緑の畑のそばをゆっくり流れました。
+glow | v | The stars glow brightly in the clear night sky. | 澄んだ夜空で星が明るく輝いています。
+glow | v | Does this small lamp glow in the dark? | この小さなランプは暗闇で光りますか。
+glow | v | The windows glowed warmly as evening fell. | 夕方になると窓が暖かい光を放ちました。
+fade | v | Bright colors sometimes fade after many washes. | 鮮やかな色は何度も洗うと薄れることがあります。
+fade | v | Will this blue shirt fade in the sun? | この青いシャツは日光で色あせますか。
+fade | v | The music slowly faded as the movie ended. | 映画が終わるにつれて音楽はゆっくり小さくなりました。
+chase | v | The children chase each other around the playground. | 子供たちは運動場で互いを追いかけます。
+chase | v | Does your dog chase birds in the garden? | あなたの犬は庭で鳥を追いかけますか。
+chase | v | My little brother chased a butterfly across the field. | 弟は野原を飛ぶチョウを追いかけました。
+wander | v | We sometimes wander through the old streets after lunch. | 私たちは昼食後に古い通りをぶらぶら歩くことがあります。
+wander | v | Do you like to wander around new towns? | 知らない町をあてもなく歩くのが好きですか。
+wander | v | The cat wandered into our garden one morning. | ある朝その猫はふらりと私たちの庭に入ってきました。
+stroll | v | I like to stroll along the river after dinner. | 私は夕食後に川沿いをゆっくり散歩するのが好きです。
+stroll | v | Shall we stroll through the park before lunch? | 昼食前に公園をぶらつきませんか。
+stroll | v | The couple strolled around the town on Sunday. | その二人は日曜日に町をゆっくり散歩しました。
+march | v | The students march together during the school sports festival. | 生徒たちは学校の運動会で一緒に行進します。
+march | v | Can you march in time with the music? | 音楽に合わせて行進できますか。
+march | v | The band marched down the street playing music. | 楽団は音楽を演奏しながら通りを行進しました。
+celebrate | v | We will celebrate my grandmother's birthday this weekend. | 私たちは今週末に祖母の誕生日を祝います。
+celebrate | v | How did your family celebrate the good news? | あなたの家族はそのよい知らせをどう祝いましたか。
+celebrate | v | The team celebrated after winning the final game. | チームは最後の試合に勝ってお祝いしました。
+decorate | v | Let's decorate the classroom with flowers and colorful paper. | 花と色紙で教室を飾りましょう。
+decorate | v | Did you decorate the cake for your sister? | 妹さんのためにケーキを飾りましたか。
+decorate | v | Our neighbors decorated their windows for the festival. | 近所の人たちは祭りのために窓を飾りました。
+bless | v | May good luck bless your family in the coming year. | 来年あなたの家族に幸運が訪れますように。
+bless | v | Did your grandmother bless you before your long journey? | 長旅の前におばあさんはあなたの幸せを祈ってくれましたか。
+bless | v | The couple felt blessed to have such kind friends. | その二人は優しい友達に恵まれて幸せだと感じました。
+worship | v | Some people worship nature and respect its beauty. | 自然を崇拝しその美しさを大切にする人もいます。
+worship | v | Did people once worship the sun in this region? | この地域では昔太陽を崇拝していたのですか。
+worship | v | The story describes people who worship the moon. | その物語は月を崇拝する人々を描いています。
+rent | v | We plan to rent bicycles during our summer trip. | 私たちは夏の旅行中に自転車を借りる予定です。
+rent | v | Can you rent a small boat at this lake? | この湖では小さなボートを借りられますか。
+rent | v | My uncle rented his apartment to a student. | 叔父は自分のアパートを学生に貸しました。
+afford | v | I cannot afford to buy a new computer yet. | 私はまだ新しいパソコンを買う余裕がありません。
+afford | v | Can your family afford a holiday abroad this year? | 今年あなたの家族には海外旅行をする余裕がありますか。
+afford | v | She saved money until she could afford the bicycle. | 彼女はその自転車を買えるまでお金を貯めました。
+export | v | Some farms export fresh fruit to other countries. | 一部の農場は新鮮な果物をほかの国へ輸出しています。
+export | v | Does this company export its products to Europe? | この会社は製品をヨーロッパへ輸出していますか。
+export | v | The factory exported many machines last year. | その工場は昨年多くの機械を輸出しました。
+import | v | Our country must import some foods from abroad. | 私たちの国はいくつかの食品を海外から輸入する必要があります。
+import | v | Does this shop import tea from other countries? | この店はほかの国からお茶を輸入していますか。
+import | v | The company imported new machines for its factory. | その会社は工場用に新しい機械を輸入しました。
+hire | v | We need to hire another worker for the busy season. | 忙しい時期のためにもう一人従業員を雇う必要があります。
+hire | v | Did the hotel hire any new staff this month? | そのホテルは今月新しい従業員を雇いましたか。
+hire | v | My family hired a car for our weekend trip. | 私の家族は週末の旅行に車を借りました。
+employ | v | The new restaurant plans to employ ten local people. | 新しいレストランは地元の人を十人雇う予定です。
+employ | v | Does this company employ students during the summer? | この会社は夏の間学生を雇っていますか。
+employ | v | The school employed another teacher for the new term. | 学校は新学期のためにもう一人先生を雇いました。
+volunteer | v | I want to volunteer at the town library this summer. | 私は今年の夏に町の図書館で進んで手伝いたいです。
+volunteer | v | Would you volunteer to help with the school festival? | 学校祭の手伝いに自分から申し出ますか。
+volunteer | v | Several parents volunteered to prepare food for the event. | 何人かの保護者が行事の食事の準備を進んで申し出ました。
+repair | v | My father can repair old bicycles in his free time. | 父は暇な時間に古い自転車を修理できます。
+repair | v | Can you repair this broken chair before Saturday? | 土曜日までにこの壊れた椅子を修理できますか。
+repair | v | The workers repaired the bridge over the small river. | 作業員たちは小さな川に架かる橋を修理しました。
+sketch | v | I like to sketch flowers in the park. | 私は公園で花をスケッチするのが好きです。
+sketch | v | Can you sketch the building from this picture? | この写真を見て建物をスケッチできますか。
+sketch | v | She sketched the mountains during our train journey. | 彼女は列車での旅の間に山々をスケッチしました。
+announce | v | The teacher will announce the results after lunch. | 先生は昼食後に結果を発表します。
+announce | v | Did the school announce the new holiday dates? | 学校は新しい休暇の日程を発表しましたか。
+announce | v | Our coach announced the team members this morning. | コーチは今朝チームのメンバーを発表しました。
+memorize | v | I try to memorize five new English words daily. | 私は毎日新しい英単語を五つ暗記しようとしています。
+memorize | v | Can you memorize this short poem before Friday? | 金曜日までにこの短い詩を暗記できますか。
+memorize | v | She memorized all the lines for her school play. | 彼女は学校の劇のせりふをすべて暗記しました。
+review | v | Please review your notes before tomorrow's English exam. | 明日の英語の試験の前にノートを復習してください。
+review | v | Did you review the plan with your classmates? | クラスメートと計画を見直しましたか。
+review | v | My sister reviews new words on the train. | 姉は電車の中で新しい単語を復習します。
+calculate | v | Can you calculate the total cost of these tickets? | これらのチケットの合計金額を計算できますか。
+calculate | v | Did the students calculate the distance on the map? | 生徒たちは地図上の距離を計算しましたか。
+calculate | v | My father calculated how much money we needed. | 父は必要なお金がいくらか計算しました。
+subtract | v | Please subtract five from twelve in your notebook. | ノートで十二から五を引いてください。
+subtract | v | Can you subtract these numbers without a calculator? | 計算機を使わずにこれらの数字を引き算できますか。
+subtract | v | She subtracted the discount from the original price. | 彼女は元の値段から割引額を引きました。
+multiply | v | To find the answer, multiply six by four. | 答えを出すには六に四を掛けてください。
+multiply | v | Can you multiply these two numbers in your head? | この二つの数を暗算で掛け算できますか。
+multiply | v | The teacher multiplied eight by three on the board. | 先生は黒板で八に三を掛けました。
+attitude | n | Her positive attitude helped the whole team work together. | 彼女の前向きな態度はチーム全体の協力に役立ちました。
+attitude | n | Why did his attitude change after the meeting? | 会議の後で彼の態度が変わったのはなぜですか。
+attitude | n | The teacher praised the students for their good attitudes. | 先生は生徒たちのよい態度を褒めました。
+concept | n | The teacher explained the concept using a simple picture. | 先生は簡単な絵を使ってその概念を説明しました。
+concept | n | Do you understand the concept of saving energy? | エネルギーを節約するという概念を理解していますか。
+concept | n | This book introduces several important concepts in science. | この本は科学の重要な概念をいくつか紹介します。
+context | n | You can often guess a word's meaning from its context. | 単語の意味は文脈から推測できることがよくあります。
+context | n | Does this sentence make sense in that context? | その文はその文脈で意味が通じますか。
+context | n | The teacher explained the story's historical context. | 先生はその物語の歴史的な背景を説明しました。
+definition | n | Please write the definition of this word in English. | この単語の定義を英語で書いてください。
+definition | n | Can you explain that definition in simpler words? | その定義をもっと簡単な言葉で説明できますか。
+definition | n | The dictionary gives several definitions for this word. | 辞書にはこの単語の定義がいくつか載っています。
+emergency | n | Call the hotel desk if there is an emergency. | 緊急事態が起きたらホテルの受付に電話してください。
+emergency | n | Do you know where to go during an emergency? | 緊急時にどこへ行くべきか知っていますか。
+emergency | n | The school practices what to do in emergencies. | 学校では緊急事態への対応を練習しています。
+instance | n | For instance, you can practice English by reading stories. | 例えば物語を読むことで英語を練習できます。
+instance | n | Can you give an instance of good teamwork? | よいチームワークの例を一つ挙げられますか。
+instance | n | The teacher gave several instances of this common mistake. | 先生はこのよくある間違いの例をいくつか挙げました。
+movement | n | The dancer's movement was smooth and easy to follow. | その踊り手の動きは滑らかでわかりやすいものでした。
+movement | n | Did you notice any movement behind the trees? | 木々の後ろで何か動きがあるのに気づきましたか。
+movement | n | The teacher showed us several simple dance movements. | 先生はいくつかの簡単なダンスの動きを見せてくれました。
+option | n | Taking the bus is another option for getting there. | そこへ行くにはバスに乗るという別の選択肢もあります。
+option | n | Which option would you choose for your lunch? | 昼食にはどの選択肢を選びますか。
+option | n | The hotel offers several options for family rooms. | そのホテルには家族向けの部屋の選択肢がいくつかあります。
+performance | n | Her piano performance made the audience very happy. | 彼女のピアノ演奏は観客をとても喜ばせました。
+performance | n | Did you enjoy the students' performance at the festival? | 祭りでの生徒たちの公演を楽しみましたか。
+performance | n | The coach was pleased with the team's performance. | コーチはチームの成績に満足していました。
+pressure | n | The pressure of the exam made him feel nervous. | 試験の重圧で彼は緊張しました。
+pressure | n | Do you feel pressure when speaking before your classmates? | クラスメートの前で話すときプレッシャーを感じますか。
+pressure | n | She works well even under a lot of pressure. | 彼女は大きなプレッシャーの下でも上手に働きます。
+progress | n | You have made great progress in learning English. | あなたは英語学習で大きく進歩しました。
+progress | n | Are you happy with your progress this term? | 今学期の自分の進歩に満足していますか。
+progress | n | The teacher checked our progress every Friday afternoon. | 先生は毎週金曜日の午後に私たちの進み具合を確認しました。
+statement | n | The manager made a short statement about the new schedule. | 責任者は新しい予定について短い発言をしました。
+statement | n | Do you agree with the statement in this article? | この記事の記述に賛成しますか。
+statement | n | Her written statement explained the reason for the change. | 彼女の書面での説明は変更の理由を述べていました。
+structure | n | The structure of this building is simple but strong. | この建物の構造は簡単ですが頑丈です。
+structure | n | Can you explain the structure of this English sentence? | この英文の構造を説明できますか。
+structure | n | The students studied the structure of a flower. | 生徒たちは花の構造を学びました。
+task | n | Our first task is to clean the classroom. | 私たちの最初の仕事は教室を掃除することです。
+task | n | Did you finish the task before the lesson ended? | 授業が終わる前に課題を終えましたか。
+task | n | The teacher gave each group a different task. | 先生は各グループに違う課題を与えました。
+tradition | n | Our family has a tradition of cooking together on Sundays. | 私たちの家族には日曜日に一緒に料理する伝統があります。
+tradition | n | Does your town have a special winter tradition? | あなたの町には特別な冬の伝統がありますか。
+tradition | n | The children learned about local traditions at school. | 子供たちは学校で地元の伝統について学びました。
+access | n | Students have free access to the school library. | 生徒は学校の図書館を無料で利用できます。
+access | n | Do visitors have access to the garden after five? | 訪問者は五時以降も庭を利用できますか。
+access | n | The new road gives farmers easier access to town. | 新しい道路によって農家の人々は町へ行きやすくなりました。
+aspect | n | One important aspect of learning is regular practice. | 学習の重要な側面の一つは定期的な練習です。
+aspect | n | Which aspect of your job do you enjoy most? | 仕事のどの面を最も楽しんでいますか。
+aspect | n | The teacher discussed different aspects of school life. | 先生は学校生活のさまざまな側面について話しました。
+conflict | n | The conflict between the two friends ended after lunch. | 二人の友達の対立は昼食後に解消しました。
+conflict | n | Can we solve this conflict by talking calmly? | 落ち着いて話すことでこの対立を解決できますか。
+conflict | n | The team avoided conflicts by listening to everyone. | チームは全員の話を聞いて対立を避けました。
+contract | n | She read the contract carefully before renting the apartment. | 彼女はアパートを借りる前に契約書を注意深く読みました。
+contract | n | Did you sign the contract for your new job? | 新しい仕事の契約書に署名しましたか。
+contract | n | The company renewed its contract with the local school. | その会社は地元の学校との契約を更新しました。
+crisis | n | The town faced a water crisis during the dry summer. | その町は雨の少ない夏に水不足の危機に直面しました。
+crisis | n | How can we prepare for a future water crisis? | 将来の水不足の危機にどう備えられますか。
+crisis | n | The community worked together to solve the crisis. | 地域の人々は協力してその危機を解決しました。
+equipment | n | Our school bought new equipment for the science room. | 学校は理科室用に新しい設備を購入しました。
+equipment | n | Can we borrow the sports equipment after class? | 授業後にスポーツ用具を借りられますか。
+equipment | n | The workers checked all the equipment before starting. | 作業員たちは作業を始める前にすべての設備を点検しました。
+exhibition | n | We visited an art exhibition at the city museum. | 私たちは市の博物館で美術展を見ました。
+exhibition | n | Is the photography exhibition still open this weekend? | 写真展は今週末も開かれていますか。
+exhibition | n | The students prepared an exhibition of their paintings. | 生徒たちは自分たちの絵の展示会を準備しました。
+generation | n | My grandparents belong to a different generation from me. | 祖父母は私とは違う世代に属しています。
+generation | n | Does the younger generation enjoy these old songs? | 若い世代はこれらの古い歌を楽しみますか。
+generation | n | Each generation has its own way of learning. | それぞれの世代には独自の学び方があります。
+guideline | n | Please follow this guideline when writing your report. | 報告書を書くときはこの指針に従ってください。
+guideline | n | Does the school have a guideline for using computers? | 学校にはパソコンの使用についての指針がありますか。
+guideline | n | The teacher explained the new guidelines to everyone. | 先生は新しい指針を全員に説明しました。
+identity | n | The card helps the school check each student's identity. | そのカードは学校が各生徒の身元を確認するのに役立ちます。
+identity | n | Can you prove your identity with this document? | この書類で身元を証明できますか。
+identity | n | The town has kept its unique identity for years. | その町は長年独自の特色を保ってきました。
+majority | n | The majority of students chose the outdoor activity. | 生徒の大多数が屋外活動を選びました。
+majority | n | Did the majority of visitors enjoy the exhibition? | 来場者の大多数は展示会を楽しみましたか。
+majority | n | A large majority of our class supported the idea. | クラスの大多数がその考えを支持しました。
+minority | n | Only a minority of students walk to school here. | ここでは歩いて通学する生徒は少数です。
+minority | n | Did a minority of people choose the second plan? | 二番目の案を選んだ人は少数でしたか。
+minority | n | The teacher listened carefully to the minority opinion. | 先生は少数派の意見を注意深く聞きました。
+pollution | n | Air pollution can make city life less pleasant. | 大気汚染は都市での生活を快適でなくすることがあります。
+pollution | n | What can students do to reduce water pollution? | 水質汚染を減らすために生徒には何ができますか。
+pollution | n | The town planted more trees to fight pollution. | 町は汚染を減らすために木をもっと植えました。
+poverty | n | The charity works to help families living in poverty. | その慈善団体は貧困の中で暮らす家族を支援しています。
+poverty | n | Can better education help people escape poverty? | よりよい教育は人々が貧困から抜け出す助けになりますか。
+poverty | n | The community started a program to reduce poverty. | 地域は貧困を減らすための計画を始めました。
+production | n | The factory increased production of bicycles this year. | その工場は今年自転車の生産量を増やしました。
+production | n | Did the school begin production of its new play? | 学校は新しい劇の制作を始めましたか。
+production | n | Food production depends on good weather and careful planning. | 食料生産はよい天気と入念な計画に左右されます。
+professor | n | Our professor explained the history of the old city. | 教授は古い町の歴史を説明しました。
+professor | n | Did you ask the professor about your research project? | 研究課題について教授に質問しましたか。
+professor | n | The students thanked their professor after the final lecture. | 学生たちは最後の講義の後で教授に感謝しました。

@@ -1,0 +1,300 @@
+function | n | This button has a useful function. | このボタンには便利な機能があります。
+function | n | What is the function of this key? | このキーにはどんな機能がありますか。
+function | n | The new phone has several functions. | 新しい電話にはいくつかの機能があります。
+growth | n | We can see the growth of this tree. | この木の成長が分かります。
+growth | n | Does good food help a child's growth? | よい食事は子供の成長に役立ちますか。
+growth | n | The plants showed fast growth this spring. | 植物はこの春、早く成長しました。
+impact | n | The rain had an impact on our trip. | 雨は私たちの旅行に影響しました。
+impact | n | What impact did the news have on you? | その知らせはあなたにどんな影響を与えましたか。
+impact | n | The new road had a big impact. | 新しい道路は大きな影響を与えました。
+influence | n | My teacher has a strong influence on me. | 先生は私に強い影響を与えています。
+influence | n | Does music have an influence on your mood? | 音楽はあなたの気分に影響しますか。
+influence | n | Her words had a good influence on us. | 彼女の言葉は私たちによい影響を与えました。
+lack | n | A lack of sleep makes me tired. | 睡眠不足は私を疲れさせます。
+lack | n | Is a lack of water the problem? | 水不足が問題なのですか。
+lack | n | The flowers died from a lack of water. | 花は水不足で枯れました。
+limit | n | There is a limit to my time today. | 今日は使える時間に限りがあります。
+limit | n | Is there a limit on this road? | この道路には制限がありますか。
+limit | n | We reached the limit of our budget. | 私たちは予算の限界に達しました。
+link | n | There is a link between food and health. | 食べ物と健康にはつながりがあります。
+link | n | Can you send me the website link? | ウェブサイトのリンクを送ってくれますか。
+link | n | The two towns have a strong link. | 二つの町には強いつながりがあります。
+loss | n | The shop had a loss last month. | その店は先月損失を出しました。
+loss | n | Was the loss very large this year? | 今年の損失はとても大きかったですか。
+loss | n | The company reported a small loss. | その会社は小さな損失を報告しました。
+pattern | n | This shirt has a beautiful flower pattern. | このシャツには美しい花柄があります。
+pattern | n | Do you like the pattern on this cup? | このカップの模様は好きですか。
+pattern | n | She drew different patterns on the paper. | 彼女は紙にさまざまな模様を描きました。
+period | n | We studied English for a short period. | 私たちは短い期間英語を勉強しました。
+period | n | How long is the summer vacation period? | 夏休みの期間はどのくらいですか。
+period | n | The shop closed for two short periods. | その店は短い期間に二度閉まりました。
+position | n | Please check the position of your chair. | 椅子の位置を確認してください。
+position | n | Is this the right position for the table? | ここがテーブルの正しい位置ですか。
+position | n | She changed the position of her desk. | 彼女は机の位置を変えました。
+principle | n | This is an important principle of good teaching. | これはよい教育の重要な原則です。
+principle | n | Can you explain this principle to us? | この原則を私たちに説明できますか。
+principle | n | Our coach follows a simple principle. | コーチは簡単な原則に従っています。
+proof | n | This photograph is proof of our visit. | この写真は私たちが訪れた証拠です。
+proof | n | Do you have proof of your age? | 年齢を証明するものはありますか。
+proof | n | The teacher asked for proof of his answer. | 先生は彼の答えの根拠を求めました。
+range | n | This shop has a wide range of books. | この店には幅広い種類の本があります。
+range | n | What is the price range here? | ここの価格帯はどのくらいですか。
+range | n | The store offers a large range of shoes. | その店は幅広い種類の靴を扱っています。
+rate | n | The success rate was high this year. | 今年の成功率は高かったです。
+rate | n | What is the rate of this change? | この変化の割合はどのくらいですか。
+rate | n | Our class had a high attendance rate. | 私たちのクラスは出席率が高かったです。
+reaction | n | Her reaction to the gift was wonderful. | 贈り物への彼女の反応はすばらしかったです。
+reaction | n | What was your reaction to the news? | その知らせにどう反応しましたか。
+reaction | n | The children showed different reactions to it. | 子供たちはそれにさまざまな反応を示しました。
+region | n | This region has many beautiful lakes. | この地域には美しい湖がたくさんあります。
+region | n | Is your region warm in winter? | あなたの地域は冬でも暖かいですか。
+region | n | Many people visit the region in spring. | 多くの人が春にその地域を訪れます。
+relation | n | There is a close relation between the two ideas. | 二つの考えには密接な関係があります。
+relation | n | What is the relation between these numbers? | これらの数字にはどんな関係がありますか。
+relation | n | The teacher explained their relation clearly. | 先生はそれらの関係を分かりやすく説明しました。
+request | n | I have a small request for you. | あなたに小さなお願いがあります。
+request | n | Can you answer my request today? | 今日私の依頼に応えてくれますか。
+request | n | The hotel received several requests from guests. | ホテルは宿泊客からいくつかの依頼を受けました。
+response | n | Her response to my question was kind. | 私の質問への彼女の返答は親切でした。
+response | n | Did you get a response from him? | 彼から返事はありましたか。
+response | n | The teacher received many positive responses. | 先生には多くの好意的な反応が寄せられました。
+scale | n | This map has a small scale. | この地図は縮尺が小さいです。
+scale | n | Can you read the scale on this ruler? | この定規の目盛りを読めますか。
+scale | n | The project grew in scale last year. | その計画は昨年規模が大きくなりました。
+section | n | Please read the first section of this book. | この本の最初の部分を読んでください。
+section | n | Which section did you find interesting? | どの部分が面白かったですか。
+section | n | The store has separate sections for children. | その店には子供向けの別々の売り場があります。
+series | n | We watched a series of short videos. | 私たちは短い動画を連続して見ました。
+series | n | Is this the first in the series? | これはシリーズの最初ですか。
+series | n | The school held a series of lessons. | 学校は一連の授業を行いました。
+standard | n | This school has a high standard of teaching. | この学校は教育の水準が高いです。
+standard | n | Does this work meet the standard? | この仕事は基準を満たしていますか。
+standard | n | Their standards are different from ours. | 彼らの基準は私たちのものと違います。
+survey | n | Our class did a survey about breakfast. | 私たちのクラスは朝食について調査しました。
+survey | n | Did you answer the school survey? | 学校の調査に回答しましたか。
+survey | n | The survey showed that students liked music. | 調査では生徒が音楽を好むと分かりました。
+trend | n | This trend is popular among young people. | この傾向は若者の間で広がっています。
+trend | n | Have you noticed a new trend in fashion? | ファッションの新しい傾向に気づきましたか。
+trend | n | The chart shows a clear trend. | その図は明確な傾向を示しています。
+unit | n | A meter is a unit of length. | メートルは長さの単位です。
+unit | n | What unit do we use for weight? | 重さにはどんな単位を使いますか。
+unit | n | The students learned three new units. | 生徒たちは三つの新しい単位を学びました。
+version | n | I have the latest version of this game. | 私はこのゲームの最新版を持っています。
+version | n | Is this the English version of the book? | これはその本の英語版ですか。
+version | n | She tried two different versions of the song. | 彼女はその歌の異なる二つの版を試しました。
+volume | n | Please turn down the volume a little. | 音量を少し下げてください。
+volume | n | Is the volume too high for you? | 音量はあなたには大きすぎますか。
+volume | n | The box has a large volume. | その箱は容積が大きいです。
+agreement | n | We finally reached an agreement about the plan. | 私たちはついに計画について意見が一致しました。
+agreement | n | Is there agreement among all the members? | 全員の意見は一致していますか。
+agreement | n | Their agreement made the work easier. | 彼らの意見の一致で仕事が楽になりました。
+aid | n | We received aid from our neighbors. | 私たちは近所の人から援助を受けました。
+aid | n | Can you give us some aid today? | 今日私たちを少し助けてくれますか。
+aid | n | The school offered aid to new students. | 学校は新入生に援助を提供しました。
+analysis | n | Her analysis of the results was clear. | 彼女の結果の分析は明確でした。
+analysis | n | Can you explain your analysis to us? | あなたの分析を私たちに説明できますか。
+analysis | n | The teacher checked our analysis of the data. | 先生は私たちのデータ分析を確認しました。
+approach | n | The train made its approach to the station. | 列車は駅へ近づいていきました。
+approach | n | Did you notice the approach of winter? | 冬が近づいていることに気づきましたか。
+approach | n | We watched the boat's slow approach. | 私たちは船がゆっくり近づくのを見ました。
+argument | n | They had an argument about the game. | 彼らは試合について口論しました。
+argument | n | Did the argument end before lunch? | 口論は昼食前に終わりましたか。
+argument | n | The brothers settled their argument quickly. | 兄弟はすぐに口論を収めました。
+benefit | n | Walking has a health benefit for everyone. | 歩くことには誰にとっても健康上の利点があります。
+benefit | n | What is the main benefit of this plan? | この計画の主な利点は何ですか。
+benefit | n | The new rules brought several benefits. | 新しい規則はいくつかの恩恵をもたらしました。
+challenge | n | Learning English is a fun challenge for me. | 英語学習は私にとって楽しい挑戦です。
+challenge | n | Are you ready for a new challenge? | 新しい挑戦をする準備はできていますか。
+challenge | n | Our team faced many challenges this year. | 私たちのチームは今年多くの課題に直面しました。
+comment | n | I wrote a short comment about the movie. | 私は映画について短いコメントを書きました。
+comment | n | Can you give me a comment on this? | これについて意見を聞かせてくれますか。
+comment | n | The students shared their comments after class. | 生徒たちは授業後に意見を共有しました。
+contact | n | We keep in contact with our old friends. | 私たちは昔の友達と連絡を取り合っています。
+contact | n | Did you have contact with the hotel? | ホテルと連絡を取りましたか。
+contact | n | She made contact with the school yesterday. | 彼女は昨日学校と連絡を取りました。
+contribution | n | Your contribution made this event a success. | あなたの貢献でこの行事は成功しました。
+contribution | n | Can you make a contribution to our project? | 私たちの計画に貢献してくれますか。
+contribution | n | The children made small contributions to the school. | 子供たちは学校に少しずつ寄付しました。
+damage | n | The rain caused damage to the garden. | 雨は庭に被害を与えました。
+damage | n | Was there any damage to your bicycle? | 自転車に何か損傷はありましたか。
+damage | n | The wind did little damage to the house. | 風による家の被害はわずかでした。
+effort | n | Your effort will help you improve. | あなたの努力は上達に役立ちます。
+effort | n | Did you make an effort to listen? | 聞こうと努力しましたか。
+effort | n | The students put great effort into their work. | 生徒たちは仕事に大きな努力を注ぎました。
+election | n | Our class held an election for its leader. | 私たちのクラスは代表を選ぶ選挙をしました。
+election | n | Did you vote in the school election? | 学校の選挙で投票しましたか。
+election | n | The club announced its election results today. | クラブは今日選挙結果を発表しました。
+employee | n | Every employee gets a lunch break here. | ここではすべての従業員に昼休みがあります。
+employee | n | Is your sister an employee at that shop? | お姉さんはその店の従業員ですか。
+employee | n | The company has twenty new employees. | その会社には新しい従業員が二十人います。
+fashion | n | This fashion is popular among teenagers. | この流行は十代の若者に人気です。
+fashion | n | Do you follow the latest fashion? | 最新の流行を追っていますか。
+fashion | n | Her interest in fashion began at school. | 彼女のファッションへの関心は学校で始まりました。
+finance | n | He studies finance at the university. | 彼は大学で金融を学んでいます。
+finance | n | Is finance an interesting subject for you? | 金融はあなたにとって面白い科目ですか。
+finance | n | She works in finance at a company. | 彼女は会社で財務の仕事をしています。
+individual | n | Every individual has a different opinion. | 一人一人が異なる意見を持っています。
+individual | n | Can one individual make a difference? | 一人の個人でも変化を起こせますか。
+individual | n | The group includes individuals of different ages. | そのグループにはさまざまな年齢の人がいます。
+insurance | n | My family has insurance for our car. | 私の家族は車の保険に入っています。
+insurance | n | Does this insurance cover your bicycle? | この保険は自転車も補償しますか。
+insurance | n | She bought travel insurance before her trip. | 彼女は旅行前に旅行保険に入りました。
+interview | n | I have a job interview tomorrow morning. | 私は明日の朝、就職面接があります。
+interview | n | Did your interview go well yesterday? | 昨日の面接はうまくいきましたか。
+interview | n | The students watched interviews with famous singers. | 生徒たちは有名な歌手のインタビューを見ました。
+investment | n | Buying this machine was a good investment. | この機械を買ったのはよい投資でした。
+investment | n | Is this investment safe for our company? | この投資は私たちの会社にとって安全ですか。
+investment | n | Their investments helped the business grow. | 彼らの投資は事業の成長に役立ちました。
+journal | n | I write about my day in a journal. | 私は日誌にその日のことを書きます。
+journal | n | Do you keep a travel journal? | 旅行の日誌をつけていますか。
+journal | n | She reads a science journal every month. | 彼女は毎月科学雑誌を読みます。
+label | n | Please read the label on this bottle. | この瓶のラベルを読んでください。
+label | n | Does this label show the price? | このラベルには値段が書いてありますか。
+label | n | The boxes have different color labels. | 箱には色の違うラベルがついています。
+labor | n | Building this house took a lot of labor. | この家を建てるには多くの労働が必要でした。
+labor | n | Does this work require much labor? | この仕事には多くの労働が必要ですか。
+labor | n | The farmers shared the hard labor. | 農家の人たちは重労働を分担しました。
+lecture | n | We attended a lecture about ocean life. | 私たちは海の生き物についての講義を聞きました。
+lecture | n | Was the lecture easy to understand? | その講義は分かりやすかったですか。
+lecture | n | Our teacher gave two lectures today. | 先生は今日二回講義をしました。
+license | n | You need a license to drive this bus. | このバスを運転するには免許が必要です。
+license | n | Does your brother have a driving license? | 弟さんは運転免許を持っていますか。
+license | n | She got her license last summer. | 彼女は昨年の夏に免許を取りました。
+mission | n | Our mission is to help new students. | 私たちの使命は新入生を助けることです。
+mission | n | What is the mission of this group? | このグループの使命は何ですか。
+mission | n | The team completed its mission before lunch. | チームは昼食前に任務を終えました。
+opportunity | n | This job is a good opportunity for me. | この仕事は私にとってよい機会です。
+opportunity | n | Did you have an opportunity to speak English? | 英語を話す機会はありましたか。
+opportunity | n | The school offers many opportunities to learn. | 学校は学ぶ機会をたくさん提供しています。
+patient | n | The patient waited quietly for the doctor. | 患者は静かに医者を待っていました。
+patient | n | Is that patient feeling better today? | あの患者は今日具合がよくなっていますか。
+patient | n | The nurse helped several patients this morning. | 看護師は今朝何人かの患者を助けました。
+permission | n | You need permission to use this room. | この部屋を使うには許可が必要です。
+permission | n | Did you get permission from your teacher? | 先生から許可をもらいましたか。
+permission | n | Her parents gave her permission to go. | 両親は彼女が行くことを許可しました。
+presentation | n | I gave a presentation about my hometown. | 私は故郷について発表しました。
+presentation | n | Was your presentation easy to follow? | あなたの発表は分かりやすかったですか。
+presentation | n | The students prepared short presentations in groups. | 生徒たちはグループで短い発表を準備しました。
+protest | n | The students made a protest about the rule. | 生徒たちはその規則に抗議しました。
+protest | n | Did the protest change the school's decision? | その抗議で学校の決定は変わりましたか。
+protest | n | Their peaceful protests continued for several days. | 彼らの平和的な抗議は数日続きました。
+quantity | n | We need a large quantity of water. | 私たちは大量の水を必要としています。
+quantity | n | Is this quantity enough for everyone? | この量で全員に足りますか。
+quantity | n | The shop sells rice in different quantities. | その店は米をさまざまな量で売っています。
+reward | n | The prize was a reward for her work. | その賞は彼女の仕事への報酬でした。
+reward | n | Did you get a reward for helping? | 手伝ったことで報酬をもらいましたか。
+reward | n | The children received small rewards for reading. | 子供たちは読書のご褒美を少しもらいました。
+salary | n | My father gets his salary every month. | 父は毎月給料を受け取ります。
+salary | n | Is the salary good at this company? | この会社の給料はよいですか。
+salary | n | She saved part of her first salary. | 彼女は初めての給料の一部を貯金しました。
+stress | n | Too much stress makes sleep difficult. | ストレスが多すぎると眠りにくくなります。
+stress | n | Does exercise help you with stress? | 運動はストレスの軽減に役立ちますか。
+stress | n | He felt less stress after the holiday. | 彼は休暇の後ストレスが減ったと感じました。
+suggestion | n | I have a suggestion for our next trip. | 次の旅行について提案があります。
+suggestion | n | Can you give me a suggestion? | 何か提案をしてくれますか。
+suggestion | n | The teacher liked her students' suggestions. | 先生は生徒たちの提案を気に入りました。
+target | n | The red circle is our target today. | 今日の標的は赤い円です。
+target | n | Can you see the target over there? | あそこにある標的が見えますか。
+target | n | She threw the ball toward the target. | 彼女は標的に向かってボールを投げました。
+theme | n | Friendship is the theme of this story. | 友情がこの物語の主題です。
+theme | n | What is the theme of your speech? | あなたのスピーチの主題は何ですか。
+theme | n | The students chose different themes for their poems. | 生徒たちは詩に異なる主題を選びました。
+tip | n | The tip of this pencil is broken. | この鉛筆の先端は折れています。
+tip | n | Can you give me a useful tip? | 役立つ助言を一つくれますか。
+tip | n | She left a tip for the waiter. | 彼女は給仕の人にチップを置きました。
+treatment | n | The doctor explained the treatment to me. | 医者は私に治療について説明しました。
+treatment | n | Is this treatment easy to understand? | この治療は理解しやすいですか。
+treatment | n | All guests received the same kind treatment. | すべてのお客さんが同じ親切な待遇を受けました。
+vision | n | Good light helps protect your vision. | よい照明は視力を守るのに役立ちます。
+vision | n | Has your vision changed this year? | 今年、視力は変わりましたか。
+vision | n | She shared her vision for the new school. | 彼女は新しい学校についての構想を話しました。
+wisdom | n | My grandmother has a lot of wisdom. | 祖母には豊かな知恵があります。
+wisdom | n | Can wisdom come from everyday experience? | 賢明さは日々の経験から得られますか。
+wisdom | n | His wisdom helped us make a good choice. | 彼の賢明さのおかげでよい選択ができました。
+background | n | The mountains are in the background of this picture. | この写真の背景には山があります。
+background | n | Can you see the trees in the background? | 背景にある木々が見えますか。
+background | n | She chose a blue background for her drawing. | 彼女は絵の背景に青を選びました。
+boss | n | My boss is very kind to everyone. | 私の上司は誰にでもとても親切です。
+boss | n | Did your boss call you this morning? | 上司は今朝あなたに電話しましたか。
+boss | n | The workers thanked their boss after lunch. | 従業員たちは昼食後に上司に感謝しました。
+button | n | Press the green button to start. | 始めるには緑のボタンを押してください。
+button | n | Is this button for the lights? | このボタンは照明用ですか。
+button | n | Her jacket has five small buttons. | 彼女の上着には小さなボタンが五つあります。
+chain | n | The bicycle has a new chain. | その自転車には新しいチェーンがついています。
+chain | n | Is this chain made of metal? | この鎖は金属製ですか。
+chain | n | He used chains to hold the gate. | 彼は門を固定するために鎖を使いました。
+command | n | The dog followed my first command. | 犬は私の最初の命令に従いました。
+command | n | Did you understand the teacher's command? | 先生の指示が分かりましたか。
+command | n | The computer received several simple commands. | コンピューターはいくつかの簡単な命令を受けました。
+cream | n | I put some cream on my cake. | 私はケーキにクリームを少しのせました。
+cream | n | Would you like cream in your coffee? | コーヒーにクリームを入れますか。
+cream | n | She bought fresh cream for dessert. | 彼女はデザート用に新鮮なクリームを買いました。
+cycle | n | The moon follows a regular cycle. | 月には規則的な周期があります。
+cycle | n | How long is this washing cycle? | この洗濯の一周期はどのくらいですか。
+cycle | n | The machine repeats the same cycle. | その機械は同じ周期を繰り返します。
+flag | n | A blue flag stands near the school. | 学校の近くに青い旗が立っています。
+flag | n | Can you see the flag above the gate? | 門の上にある旗が見えますか。
+flag | n | The children made colorful flags for the festival. | 子供たちは祭り用に色とりどりの旗を作りました。
+frame | n | The wooden frame holds the window glass. | 木製の枠が窓ガラスを支えています。
+frame | n | Is the frame strong enough for this picture? | この額の枠はこの絵に十分丈夫ですか。
+frame | n | They built the frame of the house first. | 彼らは最初に家の骨組みを建てました。
+fuel | n | This car needs less fuel than ours. | この車は私たちの車より燃料を使いません。
+fuel | n | Does this bus use a lot of fuel? | このバスは燃料をたくさん使いますか。
+fuel | n | The driver checked the fuel before leaving. | 運転手は出発前に燃料を確認しました。
+hole | n | There is a small hole in my sock. | 靴下に小さな穴が開いています。
+hole | n | Can you see the hole in the wall? | 壁の穴が見えますか。
+hole | n | The rabbit dug holes in the ground. | ウサギは地面に穴を掘りました。
+jacket | n | I left my jacket on the chair. | 私は上着を椅子に置きました。
+jacket | n | Is that blue jacket yours or mine? | あの青い上着はあなたのですか、私のですか。
+jacket | n | She wore a warm jacket to school. | 彼女は暖かい上着を着て学校に行きました。
+knot | n | There is a knot in this rope. | このロープには結び目があります。
+knot | n | Can you make a strong knot here? | ここにしっかりした結び目を作れますか。
+knot | n | He tied two knots in the string. | 彼はひもに二つの結び目を作りました。
+ladder | n | We need a ladder to reach the roof. | 屋根に届くにははしごが必要です。
+ladder | n | Is this ladder safe to climb? | このはしごは登っても安全ですか。
+ladder | n | My father put the ladder against the wall. | 父ははしごを壁に立てかけました。
+lip | n | She put a finger to her lip. | 彼女は指を唇に当てました。
+lip | n | Did you hurt your lip yesterday? | 昨日唇を痛めましたか。
+lip | n | The baby smiled with closed lips. | 赤ちゃんは唇を閉じてほほ笑みました。
+mess | n | My room is a mess today. | 私の部屋は今日散らかっています。
+mess | n | Who made this mess in the kitchen? | 誰が台所をこんなに散らかしましたか。
+mess | n | The children cleaned up their mess together. | 子供たちは一緒に散らかったものを片づけました。
+nail | n | I broke a nail while working outside. | 私は外で作業中に爪を一本折りました。
+nail | n | Can you see that nail in the wall? | 壁にあるあのくぎが見えますか。
+nail | n | She painted her nails a light pink. | 彼女は爪を薄いピンク色に塗りました。
+net | n | The fish got caught in the net. | 魚は網にかかりました。
+net | n | Can you put the net over the pool? | プールに網をかけられますか。
+net | n | The players carried their nets to the field. | 選手たちは網を競技場へ運びました。
+pocket | n | I found a coin in my pocket. | ポケットの中に硬貨を見つけました。
+pocket | n | Is your phone in your coat pocket? | 電話はコートのポケットにありますか。
+pocket | n | He put his hands into his pockets. | 彼は両手をポケットに入れました。
+pole | n | A tall pole stands beside the gate. | 門のそばに高い棒が立っています。
+pole | n | Can you hold this pole for me? | この棒を持っていてくれますか。
+pole | n | The workers put up two metal poles. | 作業員たちは金属製の柱を二本立てました。
+powder | n | Please add some powder to the water. | 水に粉を少し加えてください。
+powder | n | Is this white powder for baking? | この白い粉はお菓子作り用ですか。
+powder | n | She mixed the powder with warm milk. | 彼女は粉を温かい牛乳に混ぜました。
+rope | n | We tied the boat with a rope. | 私たちはロープで船をつなぎました。
+rope | n | Can you pull this rope slowly? | このロープをゆっくり引けますか。
+rope | n | The children jumped over two ropes. | 子供たちは二本のロープを飛び越えました。
+row | n | Please sit in the first row. | 一列目に座ってください。
+row | n | Is your seat in the back row? | あなたの席は後ろの列ですか。
+row | n | The students stood in three straight rows. | 生徒たちは三つのまっすぐな列に並びました。
+trash | n | Please put the trash in this bag. | ごみをこの袋に入れてください。
+trash | n | Did you take out the trash? | ごみを外に出しましたか。
+trash | n | The park was clean with no trash. | 公園にはごみがなく、きれいでした。
+sheet | n | I need a clean sheet for my bed. | ベッド用に清潔なシーツが必要です。
+sheet | n | Can you give me a sheet of paper? | 紙を一枚くれますか。
+sheet | n | She changed the sheets before bedtime. | 彼女は寝る前にシーツを替えました。
+shelf | n | Put your books on the top shelf. | 本を一番上の棚に置いてください。
+shelf | n | Is this shelf strong enough for the box? | この棚は箱を載せても大丈夫ですか。
+shelf | n | The store has three shelves of toys. | その店にはおもちゃの棚が三段あります。
+skirt | n | She wore a blue skirt to school. | 彼女は青いスカートをはいて学校へ行きました。
+skirt | n | Is this skirt too long for you? | このスカートはあなたには長すぎますか。
+skirt | n | My sister bought two new skirts yesterday. | 姉は昨日新しいスカートを二枚買いました。
+sock | n | I cannot find my other sock. | もう片方の靴下が見つかりません。
+sock | n | Is that sock under your bed? | あの靴下はベッドの下にありますか。
+sock | n | He washed his socks after the game. | 彼は試合後に靴下を洗いました。
+boot | n | I found one boot by the door. | ドアのそばでブーツを片方見つけました。
+boot | n | Is this boot too small for you? | このブーツはあなたには小さすぎますか。
+boot | n | She wore warm boots in the snow. | 彼女は雪の中で暖かいブーツを履きました。

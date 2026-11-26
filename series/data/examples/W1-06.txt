@@ -1,0 +1,300 @@
+nervous | a | I feel nervous before every school test. | 私は学校のテストの前はいつも緊張します。
+nervous | a | She was nervous about her first day. | 彼女は初日を前に緊張していました。
+nervous | a | Are you nervous about speaking English? | 英語を話すことに緊張していますか。
+excited | a | We are excited about our school trip. | 私たちは修学旅行を楽しみにしています。
+excited | a | My brother looks excited about the game. | 弟は試合を楽しみにしているようです。
+excited | a | Were the children excited to see snow? | 子供たちは雪を見てわくわくしましたか。
+surprised | a | I was surprised by the big cake. | 私は大きなケーキに驚きました。
+surprised | a | Her parents looked surprised at the news. | 彼女の両親はその知らせに驚いた様子でした。
+surprised | a | Are you surprised to see me here? | 私がここにいるのを見て驚いていますか。
+interested | a | I am interested in learning new songs. | 私は新しい歌を覚えることに興味があります。
+interested | a | Is your sister interested in art? | あなたの妹は美術に興味がありますか。
+interested | a | They were interested in our school garden. | 彼らは学校の庭に興味を持っていました。
+worried | a | My mother is worried about the weather. | 母は天気を心配しています。
+worried | a | Are you worried about tomorrow's test? | 明日のテストが心配ですか。
+worried | a | He looked worried when he lost his bag. | 彼はかばんをなくして心配そうでした。
+lonely | a | I feel lonely when my friends leave. | 友達が帰ると私は寂しく感じます。
+lonely | a | Does your grandmother ever feel lonely? | あなたのおばあさんは寂しくなることがありますか。
+lonely | a | She was lonely in her new town. | 彼女は新しい町で寂しく感じていました。
+dangerous | a | This road is dangerous at night. | この道は夜には危険です。
+dangerous | a | Is it dangerous to swim here? | ここで泳ぐのは危険ですか。
+dangerous | a | Those rocks can be dangerous when wet. | あの岩はぬれると危険なことがあります。
+comfortable | a | This chair is comfortable for reading books. | この椅子は本を読むのに快適です。
+comfortable | a | Are these shoes comfortable to walk in? | この靴は歩きやすくて快適ですか。
+comfortable | a | Our new room feels warm and comfortable. | 新しい部屋は暖かくて居心地がよいです。
+convenient | a | This bus is convenient for our family. | このバスは私たち家族にとって便利です。
+convenient | a | Is the station convenient for your school? | その駅は学校へ行くのに便利ですか。
+convenient | a | Having a shop nearby is very convenient. | 近くに店があるのはとても便利です。
+delicious | a | This soup is delicious with fresh bread. | このスープは焼きたてのパンと食べるととてもおいしいです。
+delicious | a | Did your father make this delicious cake? | このとてもおいしいケーキはお父さんが作りましたか。
+delicious | a | The apples from our garden taste delicious. | 庭でとれたリンゴはとてもおいしいです。
+bored | a | I get bored on long bus rides. | 長いバス移動では退屈になります。
+bored | a | Do you feel bored at home alone? | 家に一人でいると退屈しますか。
+bored | a | The children were bored on rainy days. | 子供たちは雨の日に退屈していました。
+near | a | The bus stop is very near. | バス停はとても近いです。
+near | a | Is the school near or far? | 学校は近いですか、それとも遠いですか。
+near | a | Our summer holiday is getting near. | 夏休みが近づいています。
+near | pp | We live near a small park. | 私たちは小さな公園の近くに住んでいます。
+near | pp | Is there a bank near your house? | あなたの家の近くに銀行はありますか。
+near | pp | She found a nice cafe near school. | 彼女は学校の近くにすてきなカフェを見つけました。
+behind | pp | My bicycle is behind the house. | 私の自転車は家の裏にあります。
+behind | pp | Who is standing behind that tall tree? | あの高い木の後ろに立っているのは誰ですか。
+behind | pp | The cat slept behind the blue sofa. | 猫は青いソファの後ろで眠りました。
+above | pp | The clock is above the classroom door. | 時計は教室のドアの上にあります。
+above | pp | Can you see the birds above us? | 私たちの上にいる鳥が見えますか。
+above | pp | A small picture hangs above my bed. | 私のベッドの上には小さな絵が掛かっています。
+above | r | Please look above for the answer. | 答えは上を見てください。
+above | r | The room above is very quiet. | 上の部屋はとても静かです。
+above | r | You can find my name above. | 私の名前は上にあります。
+below | pp | My name is below your name. | 私の名前はあなたの名前の下にあります。
+below | pp | The fish swim below the bridge. | 魚は橋の下を泳いでいます。
+below | pp | Can you see the town below us? | 私たちの下に町が見えますか。
+along | pp | We walk along the river every morning. | 私たちは毎朝川に沿って歩きます。
+along | pp | Are there many shops along this street? | この通り沿いには店がたくさんありますか。
+along | pp | She rode her bike along the beach. | 彼女は浜辺に沿って自転車に乗りました。
+among | pp | My brother sat among his friends. | 弟は友達の間に座りました。
+among | pp | Can you find my bag among these bags? | このかばんの中から私のものを見つけられますか。
+among | pp | That song is popular among young people. | その歌は若い人たちの間で人気があります。
+beside | pp | Please sit beside me on this bench. | このベンチで私の隣に座ってください。
+beside | pp | A little dog slept beside the door. | 小さな犬がドアのそばで眠っていました。
+beside | pp | Is that your bag beside the chair? | 椅子のそばのかばんはあなたのものですか。
+inside | pp | The keys are inside my blue bag. | 鍵は私の青いかばんの中にあります。
+inside | pp | Did you put the letter inside the box? | 手紙を箱の中に入れましたか。
+inside | pp | A small cat was sleeping inside the house. | 小さな猫が家の中で眠っていました。
+inside | r | Please come inside and have some tea. | 中に入ってお茶を飲んでください。
+inside | r | Is anyone waiting inside right now? | 今、中で誰かが待っていますか。
+inside | r | The children stayed inside because of rain. | 雨のため子供たちは中にいました。
+outside | pp | My shoes are outside the front door. | 私の靴は玄関のドアの外にあります。
+outside | pp | Are your friends waiting outside the station? | 友達は駅の外で待っていますか。
+outside | pp | We ate lunch outside the school building. | 私たちは校舎の外で昼食を食べました。
+outside | r | Let us go outside and play. | 外へ出て遊びましょう。
+outside | r | Is it still raining outside now? | 今も外では雨が降っていますか。
+outside | r | My dog likes sleeping outside in summer. | 私の犬は夏に外で寝るのが好きです。
+within | pp | Please come back within one hour. | 1時間以内に戻ってきてください。
+within | pp | Can you finish this within ten minutes? | これを10分以内に終えられますか。
+within | pp | The station is within five minutes of here. | 駅はここから5分以内の場所にあります。
+upon | pp | A little bird sat upon the wall. | 小さな鳥が壁の上に止まっていました。
+upon | pp | The book fell upon the floor. | 本が床の上に落ちました。
+upon | pp | She placed her hands upon the table. | 彼女はテーブルの上に両手を置きました。
+onto | pp | The cat jumped onto my bed. | 猫は私のベッドの上に飛び乗りました。
+onto | pp | Did you put the cups onto the table? | カップをテーブルの上に置きましたか。
+onto | pp | A bird flew onto the garden wall. | 鳥が庭の壁の上に飛んできました。
+past | n | We can learn from the past. | 私たちは過去から学べます。
+past | n | Does your grandfather talk about the past? | おじいさんは昔のことを話しますか。
+past | n | She likes reading stories about the past. | 彼女は過去についての物語を読むのが好きです。
+per | pp | This bus comes three times per hour. | このバスは1時間につき3回来ます。
+per | pp | How much do you pay per day? | 1日につきいくら支払いますか。
+per | pp | We have two English classes per week. | 私たちは週に2回英語の授業があります。
+except | pp | Everyone came except my little brother. | 弟を除いてみんな来ました。
+except | pp | Do you like every color except green? | 緑を除くすべての色が好きですか。
+except | pp | The shop opens every day except Sunday. | その店は日曜日を除いて毎日開いています。
+beyond | pp | The mountains are beyond that small town. | 山々はあの小さな町の向こうにあります。
+beyond | pp | Can you see the sea beyond the trees? | 木々の向こうに海が見えますか。
+beyond | pp | Our school is beyond the next bridge. | 私たちの学校は次の橋を越えた先にあります。
+despite | pp | We played outside despite the cold weather. | 寒い天気にもかかわらず私たちは外で遊びました。
+despite | pp | Did she smile despite her bad day? | 彼女は嫌な一日だったのに笑顔でしたか。
+despite | pp | He went walking despite the light rain. | 小雨にもかかわらず彼は散歩に出ました。
+unless | cj | We cannot play outside unless it stops raining. | 雨がやまない限り外では遊べません。
+unless | cj | Will you wait here unless I call? | 私が呼ばない限りここで待ちますか。
+unless | cj | She will miss the bus unless she runs. | 走らないと彼女はバスに乗り遅れます。
+whether | cj | I do not know whether he is home. | 彼が家にいるかどうか分かりません。
+whether | cj | Can you tell me whether this is yours? | これがあなたのものかどうか教えてくれますか。
+whether | cj | She asked whether we liked the song. | 彼女は私たちがその歌を好きかどうか尋ねました。
+although | cj | Although it was cold, we went swimming. | 寒かったけれども私たちは泳ぎに行きました。
+although | cj | Did he come although he was tired? | 彼は疲れていたのに来ましたか。
+although | cj | She smiled although her team lost. | チームが負けたけれども彼女は笑顔でした。
+once | cj | Once you finish dinner, you can play. | 夕食を食べ終えたら遊べます。
+once | cj | Will you call me once you arrive? | 着いたら私に電話してくれますか。
+once | cj | Once the rain stopped, we went outside. | 雨がやむと私たちは外に出ました。
+once | r | I went there once with my father. | 私は一度父とそこへ行きました。
+once | r | Have you visited this museum once before? | この博物館を以前一度訪れたことがありますか。
+once | r | My grandmother once lived in this town. | 祖母はかつてこの町に住んでいました。
+yet | cj | It is cold, yet the sun is bright. | 寒いですが太陽は明るく輝いています。
+yet | cj | She is young, yet she speaks very well. | 彼女は若いけれどもとても上手に話します。
+yet | cj | The bag is small, yet it holds everything. | かばんは小さいけれども全部入ります。
+yet | r | I have not finished my homework yet. | 私はまだ宿題を終えていません。
+yet | r | Has your brother come home yet? | 弟さんはもう家に帰りましたか。
+yet | r | The train has not arrived yet. | 電車はまだ到着していません。
+nor | cj | I do not sing, nor do I dance. | 私は歌いませんし、踊りもしません。
+nor | cj | He cannot swim, nor can his brother. | 彼も弟も泳げません。
+nor | cj | She did not smile, nor did she speak. | 彼女は笑いも話しもしませんでした。
+either | r | I do not like that song either. | 私もその歌は好きではありません。
+either | r | My sister cannot come today either. | 妹も今日は来られません。
+either | r | Did your friend not understand it either? | 友達もそれを理解できなかったのですか。
+maybe | r | Maybe we can visit the park tomorrow. | たぶん明日は公園に行けます。
+maybe | r | Is he maybe still at school? | 彼はもしかしてまだ学校にいますか。
+maybe | r | She will maybe come after lunch. | 彼女はたぶん昼食後に来ます。
+perhaps | r | Perhaps we should take the next bus. | ひょっとすると次のバスに乗るべきかもしれません。
+perhaps | r | Is this perhaps your lost pencil? | これはもしかしてあなたがなくした鉛筆ですか。
+perhaps | r | They will perhaps visit us next week. | 彼らはひょっとすると来週訪ねてくるかもしれません。
+probably | r | It will probably rain this afternoon. | 今日の午後はおそらく雨が降ります。
+probably | r | Is your father probably home by now? | お父さんは今ごろ家にいるのでしょうか。
+probably | r | She probably knows the answer already. | 彼女はおそらくもう答えを知っています。
+actually | r | I actually like this kind of music. | 実は私はこの種類の音楽が好きです。
+actually | r | Did you actually make this cake yourself? | 本当にこのケーキを自分で作ったのですか。
+actually | r | He looks young but is actually forty. | 彼は若く見えますが実際は40歳です。
+quite | r | This book is quite easy to read. | この本はかなり読みやすいです。
+quite | r | Was the water quite cold yesterday? | 昨日の水はかなり冷たかったですか。
+quite | r | My brother can run quite fast. | 弟はかなり速く走れます。
+rather | r | I would rather stay home tonight. | 今夜はむしろ家にいたいです。
+rather | r | Is this bag rather heavy for you? | このかばんはあなたにはかなり重いですか。
+rather | r | She was rather tired after school. | 彼女は放課後かなり疲れていました。
+especially | r | I like fruit, especially sweet apples. | 私は果物、特に甘いリンゴが好きです。
+especially | r | Do you enjoy reading, especially at night? | 特に夜に読書を楽しみますか。
+especially | r | This town is beautiful, especially in spring. | この町は特に春が美しいです。
+finally | r | We finally reached the top of the hill. | 私たちはついに丘の頂上に着きました。
+finally | r | Did your sister finally find her keys? | お姉さんはついに鍵を見つけましたか。
+finally | r | The long school day finally ended. | 長い学校の一日がついに終わりました。
+suddenly | r | The lights suddenly went out last night. | 昨夜、明かりが突然消えました。
+suddenly | r | Why did the music suddenly stop? | なぜ音楽が突然止まったのですか。
+suddenly | r | A small bird suddenly flew into our garden. | 小さな鳥が突然庭に飛んできました。
+usually | r | I usually eat breakfast with my family. | 私はふだん家族と朝食を食べます。
+usually | r | Does your sister usually walk to school? | 妹さんはふだん歩いて学校へ行きますか。
+usually | r | We usually play tennis on Sundays. | 私たちはふだん日曜日にテニスをします。
+soon | r | The movie will start very soon. | 映画はもうすぐ始まります。
+soon | r | Can you come back here soon? | すぐにここへ戻ってこられますか。
+soon | r | My father is coming home soon. | 父はもうすぐ帰宅します。
+later | r | We can talk about that later. | そのことは後で話せます。
+later | r | Will your friends join us later? | 友達は後で私たちに加わりますか。
+later | r | She called me two hours later. | 彼女は2時間後に電話をくれました。
+ago | r | I saw that film two days ago. | 私は2日前にその映画を見ました。
+ago | r | Did you move here a year ago? | 1年前にここへ引っ越しましたか。
+ago | r | My brother left home ten minutes ago. | 弟は10分前に家を出ました。
+tomorrow | r | We will visit our grandmother tomorrow. | 私たちは明日祖母を訪ねます。
+tomorrow | r | Are you going to study tomorrow? | 明日は勉強する予定ですか。
+tomorrow | r | My friend starts a new job tomorrow. | 友達は明日新しい仕事を始めます。
+yesterday | r | I met my teacher at the station yesterday. | 昨日駅で先生に会いました。
+yesterday | r | Did your family go shopping yesterday? | 昨日家族で買い物に行きましたか。
+yesterday | r | It rained all day here yesterday. | 昨日はここで一日中雨が降りました。
+tonight | r | We are having fish for dinner tonight. | 今夜の夕食は魚です。
+tonight | r | Will you watch the stars tonight? | 今夜星を見ますか。
+tonight | r | My sister is studying at home tonight. | 妹は今夜家で勉強しています。
+recently | r | I recently started learning to cook. | 私は最近料理を習い始めました。
+recently | r | Have you seen your old friends recently? | 最近昔の友達に会いましたか。
+recently | r | Our town opened a new library recently. | 私たちの町には最近新しい図書館ができました。
+certainly | r | I can certainly help you tomorrow. | 明日は確かにお手伝いできます。
+certainly | r | Will she certainly be here on time? | 彼女は間違いなく時間どおりに来ますか。
+certainly | r | This is certainly a good idea. | これは確かによい考えです。
+simply | r | I simply want to see my friends. | 私はただ友達に会いたいだけです。
+simply | r | Is he simply asking for help? | 彼は単に助けを求めているだけですか。
+simply | r | She simply smiled and said hello. | 彼女はただ笑って挨拶しました。
+exactly | r | This is exactly what I wanted. | これはまさに私が欲しかったものです。
+exactly | r | Do you know exactly where he lives? | 彼がどこに住んでいるか正確に知っていますか。
+exactly | r | The train arrived at exactly eight. | 電車はちょうど8時に到着しました。
+clearly | r | Please speak clearly so everyone can hear. | みんなに聞こえるようにはっきり話してください。
+clearly | r | Can you see the mountain clearly today? | 今日は山がはっきり見えますか。
+clearly | r | My teacher explained the answer clearly. | 先生は答えをはっきり説明しました。
+easily | r | I can easily carry this small bag. | この小さなかばんは簡単に運べます。
+easily | r | Did your brother find the station easily? | 弟さんは駅を簡単に見つけられましたか。
+easily | r | She learns new songs very easily. | 彼女は新しい歌をとても簡単に覚えます。
+quickly | r | Please finish your breakfast quickly today. | 今日は朝食を早く食べ終えてください。
+quickly | r | Can you quickly find my blue pen? | 私の青いペンをすぐに見つけられますか。
+quickly | r | The children ran quickly to the bus. | 子供たちはバスへ急いで走りました。
+slowly | r | Please walk slowly on these wet steps. | このぬれた階段ではゆっくり歩いてください。
+slowly | r | Why is the bus moving so slowly? | なぜバスはこんなにゆっくり進んでいるのですか。
+slowly | r | The sun slowly went down behind the hills. | 太陽は丘の向こうにゆっくり沈みました。
+carefully | r | Please read the question carefully first. | まず質問を注意深く読んでください。
+carefully | r | Did you carefully wash those glasses? | あのグラスを注意深く洗いましたか。
+carefully | r | She carried the cake carefully into the room. | 彼女はケーキを慎重に部屋へ運びました。
+loudly | r | The children laughed loudly at the funny story. | 子供たちは面白い話に大きな声で笑いました。
+loudly | r | Why is that dog barking so loudly? | なぜあの犬はそんなに大きな声でほえているのですか。
+loudly | r | My brother sang loudly in the shower. | 弟はシャワーを浴びながら大声で歌いました。
+quietly | r | Please close the door quietly tonight. | 今夜はドアを静かに閉めてください。
+quietly | r | Can you wait quietly in this room? | この部屋で静かに待てますか。
+quietly | r | The baby slept quietly beside her mother. | 赤ちゃんは母親のそばで静かに眠っていました。
+happily | r | The children played happily in the park. | 子供たちは公園で楽しそうに遊びました。
+happily | r | Did your grandmother smile happily at you? | おばあさんはあなたにうれしそうに笑いかけましたか。
+happily | r | My dog ran happily across the grass. | 犬は芝生をうれしそうに走りました。
+else | r | What else do you need today? | 今日は他に何が必要ですか。
+else | r | Is there anything else in your bag? | かばんの中に他に何かありますか。
+else | r | Nobody else knows about our little garden. | 私たちの小さな庭のことは他に誰も知りません。
+instead | r | I stayed home and read instead. | 代わりに私は家で本を読みました。
+instead | r | Can we take the train instead? | 代わりに電車に乗れますか。
+instead | r | She chose tea instead of coffee. | 彼女はコーヒーの代わりにお茶を選びました。
+anyway | r | It was raining, but we went anyway. | 雨が降っていましたが、とにかく私たちは行きました。
+anyway | r | Can you come and help anyway? | とにかく来て手伝ってもらえますか。
+anyway | r | I was tired, but I finished anyway. | 疲れていましたが、とにかく最後まで終えました。
+indeed | r | This is indeed a beautiful garden. | これは本当に美しい庭です。
+indeed | r | Is your new teacher indeed that kind? | 新しい先生は本当にそんなに親切ですか。
+indeed | r | The cake was very good indeed. | そのケーキは本当にとてもおいしかったです。
+somewhere | r | My keys must be somewhere in this room. | 鍵はこの部屋のどこかにあるはずです。
+somewhere | r | Can we go somewhere quiet after lunch? | 昼食後にどこか静かな場所へ行けますか。
+somewhere | r | She left her book somewhere at school. | 彼女は学校のどこかに本を置き忘れました。
+anywhere | r | I cannot find my glasses anywhere. | 眼鏡がどこにも見つかりません。
+anywhere | r | Did you see my red bag anywhere? | 私の赤いかばんをどこかで見ましたか。
+anywhere | r | We did not go anywhere yesterday. | 昨日はどこにも行きませんでした。
+everywhere | r | We looked everywhere for the little cat. | 私たちは小さな猫をあちこち探しました。
+everywhere | r | Can you see flowers everywhere in spring? | 春にはどこでも花が見られますか。
+everywhere | r | There were happy children everywhere at school. | 学校のあちこちに楽しそうな子供たちがいました。
+forward | r | Please move forward a little more. | もう少し前へ進んでください。
+forward | r | Can you step forward for this photo? | この写真のために前へ一歩出てもらえますか。
+forward | r | The bus moved forward very slowly. | バスはとてもゆっくり前へ進みました。
+abroad | r | My sister wants to study abroad someday. | 姉はいつか外国へ留学したいと思っています。
+abroad | r | Have your parents ever traveled abroad? | ご両親は外国へ旅行したことがありますか。
+abroad | r | He went abroad to learn English. | 彼は英語を学ぶために外国へ行きました。
+upstairs | r | Please go upstairs and get your bag. | 上の階へ行ってかばんを取ってきてください。
+upstairs | r | Did your brother run upstairs just now? | 弟さんはたった今上の階へ走って行きましたか。
+upstairs | r | My mother is working upstairs today. | 母は今日上の階で仕事をしています。
+downstairs | r | I went downstairs to make breakfast. | 朝食を作るために下の階へ行きました。
+downstairs | r | Can you come downstairs for dinner? | 夕食のために下の階へ来てくれますか。
+downstairs | r | The children ran downstairs after school. | 子供たちは放課後、下の階へ走って行きました。
+twice | r | I brush my teeth twice a day. | 私は一日に2回歯を磨きます。
+twice | r | Have you seen that movie twice? | その映画を2回見たことがありますか。
+twice | r | My sister called me twice yesterday. | 姉は昨日私に2回電話をくれました。
+nearly | r | We are nearly at the station now. | 私たちはもうすぐ駅に着きます。
+nearly | r | Is your homework nearly finished yet? | 宿題はもうほとんど終わっていますか。
+nearly | r | The bottle was nearly full of water. | その瓶には水がほとんどいっぱいに入っていました。
+hardly | r | I can hardly hear your voice. | あなたの声がほとんど聞こえません。
+hardly | r | Does your brother hardly ever eat breakfast? | 弟さんは朝食をほとんど食べないのですか。
+hardly | r | She hardly slept on the long flight. | 彼女は長い飛行中ほとんど眠れませんでした。
+anything | pn | Do you need anything from the shop? | お店で何か必要なものはありますか。
+anything | pn | I did not buy anything yesterday. | 私は昨日何も買いませんでした。
+anything | pn | Is there anything good on television tonight? | 今夜テレビで何か面白い番組はありますか。
+everything | n | Everything in this room looks new. | この部屋のすべてが新しく見えます。
+everything | n | Is everything ready for the trip? | 旅行の準備はすべてできていますか。
+everything | n | She put everything back in its place. | 彼女はすべてを元の場所に戻しました。
+everything | pn | I want to show you everything. | 私はあなたにすべてを見せたいです。
+everything | pn | Did he remember everything from the lesson? | 彼は授業の内容をすべて覚えていましたか。
+everything | pn | We ate everything on our plates. | 私たちは皿の上のものを全部食べました。
+everyone | pn | Everyone in our class likes music. | クラスのみんなは音楽が好きです。
+everyone | pn | Is everyone coming to the party? | みんなパーティーに来ますか。
+everyone | pn | The teacher thanked everyone for their help. | 先生はみんなの手伝いに感謝しました。
+anyone | pn | Can anyone help me with this box? | 誰かこの箱を運ぶのを手伝ってくれますか。
+anyone | pn | I did not see anyone at the park. | 公園では誰にも会いませんでした。
+anyone | pn | Does anyone know where my book is? | 私の本がどこにあるか誰か知っていますか。
+somebody | n | Somebody is waiting at the front door. | 誰かが玄関で待っています。
+somebody | n | Did somebody leave this hat here? | 誰かがここに帽子を置き忘れましたか。
+somebody | n | I heard somebody singing in the next room. | 隣の部屋で誰かが歌っているのが聞こえました。
+somebody | pn | Somebody can help us with the chairs. | 誰かが椅子を運ぶのを手伝ってくれます。
+somebody | pn | Can somebody open this window, please? | 誰かこの窓を開けてくれませんか。
+somebody | pn | She wants somebody to play tennis with. | 彼女は一緒にテニスをする人を探しています。
+nobody | n | Nobody was in the classroom after school. | 放課後、教室には誰もいませんでした。
+nobody | n | Did nobody come to the meeting? | 集まりには誰も来なかったのですか。
+nobody | n | Nobody knows the answer to that question. | その質問の答えは誰も知りません。
+nobody | pn | Nobody wants to miss the school trip. | 修学旅行に行きそびれたい人は誰もいません。
+nobody | pn | Why did nobody answer my question? | なぜ誰も私の質問に答えなかったのですか。
+nobody | pn | Nobody in my family likes cold soup. | 家族には冷たいスープが好きな人は誰もいません。
+none | n | None of the chairs are empty. | 空いている椅子は一つもありません。
+none | n | Were none of your friends there? | 友達は誰もそこにいなかったのですか。
+none | n | None of the students missed the bus. | 生徒は誰もバスに乗り遅れませんでした。
+myself | pn | I made this little cake myself. | この小さなケーキは私自身が作りました。
+myself | pn | Can I carry these bags myself? | このかばんを自分一人で運べますか。
+myself | pn | I taught myself to play the guitar. | 私は独学でギターを弾けるようになりました。
+yourself | pn | You can make this card yourself. | このカードはあなた自身で作れます。
+yourself | pn | Did you paint this picture yourself? | この絵はあなた自身で描いたのですか。
+yourself | pn | Please take care of yourself today. | 今日は自分の体を大切にしてください。
+itself | pn | The cat cleaned itself after breakfast. | 猫は朝食後に自分の体をきれいにしました。
+itself | pn | Can this little door close by itself? | この小さなドアは自然に閉まりますか。
+itself | pn | The flower opened itself to the sun. | 花は太陽に向かって自然に開きました。
+third | a | My classroom is on the third floor. | 私の教室は3階にあります。
+third | a | Is this your third visit here? | ここへ来るのは3回目ですか。
+third | a | She finished third in the school race. | 彼女は学校の競走で3位になりました。
+zero | n | The number on this card is zero. | このカードに書かれた数字はゼロです。
+zero | n | Can you write zero on the board? | 黒板にゼロを書けますか。
+zero | n | We started counting from zero today. | 今日はゼロから数え始めました。
+dog | n | My dog likes to play outside. | 私の犬は外で遊ぶのが好きです。
+dog | n | Does your dog sleep beside your bed? | あなたの犬はベッドのそばで眠りますか。
+dog | n | The little dogs ran across the garden. | 小さな犬たちは庭を走って横切りました。
+cat | n | A white cat is sleeping on my chair. | 白い猫が私の椅子の上で眠っています。
+cat | n | Have you seen our cat today? | 今日うちの猫を見ましたか。
+cat | n | Two cats played under the big tree. | 2匹の猫が大きな木の下で遊びました。

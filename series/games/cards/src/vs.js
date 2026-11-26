@@ -1,4 +1,6 @@
 import { Kit as K } from './play.js';
+import { CORE } from './sound.js';
+import { FACE } from './faces.js';
 /* ===== チャンク・カード:CPU対戦(ポーカー型) =====
    ・2人で山札と「場」を共有。手札8枚。交換を3回ずつ(捨てたカードは表向きで場へ)。
    ・1回目の交換のあとと、最後に「賭け」。最後に文を見せ合って、点が高いほうがポットを取る。 */
@@ -105,22 +107,24 @@ import { Kit as K } from './play.js';
   }
 
   // ---------------- 対戦の進行 ----------------
+  var fh = function (o, px) { return FACE[o.id] ? '<img src="' + FACE[o.id] + '" alt="" style="height:' + px + 'px;width:auto;vertical-align:middle;border-radius:8px">' : o.face; };   // 顔絵(なければ絵文字)
   var OPPS = [
     { id: 'mii', name: 'ミイ', face: '🐱', lv: 0, style: 'careful', tag: 'やさしい', desc: '慎重派。いい文ができたときしか賭けない。賭けてきたら本物かも。' },
     { id: 'baron', name: 'ハッタリ男爵', face: '🎩', lv: 1, style: 'bluff', tag: 'ふつう', desc: '弱い手でも平気で賭けてくる。わざと強いカードを捨てることも。' },
     { id: 'gon', name: 'ひろい屋ゴン', face: '🦝', lv: 2, style: 'collector', tag: 'つよい', desc: 'あなたの捨てたカードを拾っていく。and や because で長い文も作る。' }
   ];
   var QS = [[290, 360, 540], [390, 530, 640], [500, 680, 880]]; // CPU がふだん作れる点(25%・50%・75%)
-  var HANDS = 6, ANTE = 5, BETS = { 1: 10, 3: 20 }, START = 100;
+  var STORY = false, HANDS = 6, ANTE = 5, BETS = { 1: 10, 3: 20 }, START = 100;
   var V = null, ME = null, CPU = null;
   function player() { return { lv: {}, stage: 2, hand: [], row: [], field: [], draw: [], disc: [], pts: 0, refill: 0, discards: 99, log: [] }; }
   // CPU の手番で共有の山・場を使う
   function withP(p, fn) { p.draw = ME.draw; p.disc = ME.disc; p.field = ME.field; K.setR(p); try { return fn(); } finally { ME.draw = p.draw; ME.disc = p.disc; ME.field = p.field; K.setR(ME); } }
-  function start(opp) {
+  function start(opp, o) {
     if (!opp) { pickOpp(); return; }
+    HANDS = (o && o.hands) || 6; STORY = !!(o && o.hands);   // 物語からは1ハンドだけ(勝負のあとは自動で進む)
     ME = player(); CPU = player(); K.setR(ME);
     var all = K.starterDeck(); for (var i = 0; i < 25; i++) { var c = K.randomCard(); if (c) all.push(c); } all.push(K.mk('pron', 'it'));
-    V = { opp: opp, all: all, n: 0, med: { me: START, cpu: START }, first: rnd() < .5 ? 'me' : 'cpu', stats: { win: 0, lose: 0 } };
+    V = { opp: opp, all: all, n: 0, med: { me: START, cpu: START }, first: rnd() < .5 ? 'me' : 'cpu', stats: { win: 0, lose: 0 }, t0: Date.now() };
     showVS(); nextHand();
   }
   function pickOpp() {
@@ -131,7 +135,7 @@ import { Kit as K } from './play.js';
     K.root().appendChild(o);
     OPPS.forEach(function (op) {
       var r = rec[op.id] || { w: 0, l: 0 };
-      var e = el('div', 'oppc', '<div class="face">' + op.face + '</div><div><b>' + op.name + '</b> <span class="lvtag l' + op.lv + '">' + op.tag + '</span><p>' + op.desc + '</p><small>戦績 ' + r.w + '勝 ' + r.l + '敗</small></div>');
+      var e = el('div', 'oppc', '<div class="face">' + fh(op, 46) + '</div><div><b>' + op.name + '</b> <span class="lvtag l' + op.lv + '">' + op.tag + '</span><p>' + op.desc + '</p><small>戦績 ' + r.w + '勝 ' + r.l + '敗</small></div>');
       e.onclick = function () { SFX.put(); o.remove(); start(op); }; $('#ops', o).appendChild(e);
     });
     $('#cx', o).onclick = function () { o.remove(); };
@@ -140,7 +144,7 @@ import { Kit as K } from './play.js';
     var op = V.opp;
     var s = K.screen(
       '<div class="vtop"><div class="vh">ハンド <b id="vhn"></b>/' + HANDS + '</div><div class="pot">🪙 <b id="vpot">0</b><small>ポット</small></div><div class="vmed"><span>あなた<b id="vme"></b></span><span>' + op.face + '<b id="vcpu"></b></span></div><button class="vq" id="vq">✕</button></div>' +
-      '<div class="opp"><div class="face">' + op.face + '</div><div class="oinfo"><div class="oname">' + op.name + '<small>捨て札pt <b id="opt">0</b></small></div><div class="backs" id="obk"></div></div><div class="bubble" id="obb"></div></div>' +
+      '<div class="opp"><div class="face">' + fh(op, 40) + '</div><div class="oinfo"><div class="oname">' + op.name + '<small>捨て札pt <b id="opt">0</b></small></div><div class="backs" id="obk"></div></div><div class="bubble" id="obb"></div></div>' +
       '<div class="rule" id="vrule"></div><div class="vturn" id="vturn"></div>' +
       '<div class="board"><div class="row" id="row"></div>' +
       '<div class="pv"><div class="sent" id="sent"></div><div class="jt" id="jt"></div><div class="yk" id="yk"></div><div class="cm"><span class="chips" id="ch">0</span><span class="x">×</span><span class="mult" id="ml">0</span><span class="eq" id="eq"></span></div><div class="msg" id="msg"></div><div class="hp" id="hp"></div></div><button class="hintb" id="hb">💡 ヒント</button></div>' +
@@ -223,7 +227,11 @@ import { Kit as K } from './play.js';
     V.quest = K.pickQuest(V.usedQ = V.usedQ || []); QCTX = V.quest; V.mission = K.pickMissions(V.usedM = V.usedM || [], 1)[0].m;
     V.rule = pick(K.JOKERS.filter(function (j) { return !/^(bank|lucky|first|last)$/.test(j.id); }));
     V.pot = 0; V.c = { me: 0, cpu: 0 }; pay('me', ANTE); pay('cpu', ANTE);
-    withP(CPU, function () { K.fillTo(8); }); K.fillTo(8);
+    // 最初の8枚は敵とあなたで1枚ずつ交互に引く(先に引くのは先攻側)。入れかえ補正は最後に1回
+    for (var di = 1; di <= 8; di++) {
+      var order = V.first === 'cpu' ? ['cpu', 'me'] : ['me', 'cpu'];
+      order.forEach(function (who) { if (who === 'cpu') withP(CPU, function () { K.fillTo(di, di < 8); }); else K.fillTo(di, di < 8); });
+    }
     var g = K.guestCard(); if (g) { g.by = 'guest'; ME.field.unshift(g); }
     G_.mode = 'play'; G_.mark = []; say(pick(['よろしく!', 'いくよ〜', 'ふふふ…', 'さあ勝負!']));
     renderAll(); SFX.put();
@@ -322,6 +330,7 @@ import { Kit as K } from './play.js';
     var p = settle(winner); G_.busy = false; renderAll(); if (winner === 'me') SFX.win(); else SFX.lose();
     var o = el('div', 'modal', '<div class="box sd"><h2>' + (winner === 'me' ? V.opp.name + 'が降りた!' : '降りた') + '</h2><p class="res' + (winner === 'me' ? ' w' : ' l') + '">' + (winner === 'me' ? '🪙 +' + p : '🪙 ' + p + ' は ' + V.opp.name + 'へ') + '</p><button class="btn go" id="nx">つぎのハンドへ</button></div>');
     K.root().appendChild(o); $('#nx', o).onclick = function () { o.remove(); nextHand(); };
+    if (STORY) setTimeout(function () { if (o.isConnected) { o.remove(); nextHand(); } }, 2500);
   }
   function miniRow(row, ev) { var w = el('div', 'srow'), sf = K.surfaceOf(row, ev); row.forEach(function (c, i) { var e = K.cardEl(c, 'field', 0, sf ? sf[i] : null); e.classList.add('mini'); w.appendChild(e); }); return w; }
   async function showdown() {
@@ -334,7 +343,7 @@ import { Kit as K } from './play.js';
     if (my && ev.f.colloc === 'good' && K.addCombo(ev.f.pair)) K.flash('📖 名コンビ図鑑に登録!「' + ev.f.pair + '」');
     var o = el('div', 'modal', '<div class="box sd"><h2>勝負!</h2>' +
       '<div class="side me"><div class="who">あなた' + (my ? '<button class="spk" id="spm">🔊</button>' : '') + '</div><div class="tx">' + (my ? ev.text : '(文になっていない → 0点)') + '</div>' + (my ? '<div class="yk2">' + my.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (my ? my.chips : 0) + '</b>×<b class="mult">' + (my ? my.mult : 0) + '</b>= <b class="tot" id="mt">0</b></div>' + bl(mb) + (mulNote() ? '<div class="bon">' + mulNote().replace('<br>', '') + '</div>' : '') + '</div>' +
-      '<div class="side cp"><div class="who">' + V.opp.face + ' ' + V.opp.name + (cb ? '<button class="spk" id="spc">🔊 聞く</button>' : '') + '</div><div id="crow"></div><div class="tx">' + (cb ? cb.ev.text : '(文が作れなかった)') + '</div>' + (cs ? '<div class="yk2">' + cs.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (cs ? cs.chips : 0) + '</b>×<b class="mult">' + (cs ? cs.mult : 0) + '</b>= <b class="tot" id="ct">0</b></div>' + bl(cbn) + '</div>' +
+      '<div class="side cp"><div class="who">' + fh(V.opp, 24) + ' ' + V.opp.name + (cb ? '<button class="spk" id="spc">🔊 聞く</button>' : '') + '</div><div id="crow"></div><div class="tx">' + (cb ? cb.ev.text : '(文が作れなかった)') + '</div>' + (cs ? '<div class="yk2">' + cs.y.name + '</div>' : '') + '<div class="cm2"><b class="chips">' + (cs ? cs.chips : 0) + '</b>×<b class="mult">' + (cs ? cs.mult : 0) + '</b>= <b class="tot" id="ct">0</b></div>' + bl(cbn) + '</div>' +
       '<div class="qrev2">🔒 シークレットは「<b>' + Q.label + '</b>」(' + K.TIER_JA[Q.tier] + ' +' + K.Q_PCT[Q.tier] + '%)</div><p class="res" id="rs"></p><button class="btn go" id="nx" style="visibility:hidden">つぎのハンドへ</button></div>');
     K.root().appendChild(o); if (cb) $('#crow', o).appendChild(miniRow(cb.row, cb.ev));
     var rv = my ? K.reviewItems(ME.row, ev) : null; if (my) K.recordHist(V.hist = V.hist || [], ME.row, ev, mt);
@@ -350,16 +359,19 @@ import { Kit as K } from './play.js';
     if (rv) { await wait(900); await K.reviewAfter(rv); } // 直した所は勝負のあとすぐ(上級は見たい人だけ)
     $('#nx', o).style.visibility = 'visible'; G_.busy = false; renderAll();
     $('#nx', o).onclick = function () { o.remove(); nextHand(); };
+    if (STORY) setTimeout(function () { if (o.isConnected) { o.remove(); nextHand(); } }, 3000);
   }
   function endMatch(quit) {
     var won = !quit && V.med.me > V.med.cpu, draw = !quit && V.med.me === V.med.cpu;
     var rec = K.store.get('vs') || {}, r = rec[V.opp.id] || { w: 0, l: 0 }; if (won) r.w++; else if (!draw) r.l++; rec[V.opp.id] = r; K.store.set('vs', rec);
     G_.vs = null; if (won) SFX.win(); else SFX.lose();
-    var s = K.screen('<div class="end"><h1>' + (won ? '🏆 勝ち!' : draw ? '引き分け' : '負け…') + '</h1><div class="st">' + V.opp.face + ' ' + V.opp.name + ' との対戦</div>' +
+    try { if (!quit && CORE && CORE.report) CORE.report('done', { play: 'cards', opp: V.opp.id, won: won, title: V.opp.name + 'との対戦', min: Math.round((Date.now() - V.t0) / 6e3) / 10, score: won ? 100 : draw ? 50 : 20, finished: true }); } catch (e) { }   // 記録へ(勝つとゲームのごほうびコイン)
+    var s = K.screen('<div class="end"><h1>' + (won ? '🏆 勝ち!' : draw ? '引き分け' : '負け…') + '</h1><div class="st">' + fh(V.opp, 30) + ' ' + V.opp.name + ' との対戦</div>' +
       '<div class="tot">あなた 🪙' + V.med.me + ' ・ ' + V.opp.name + ' 🪙' + V.med.cpu + '</div><div class="st">ハンド ' + V.stats.win + '勝 ' + V.stats.lose + '敗 ・ 通算 ' + r.w + '勝 ' + r.l + '敗</div>' +
       ((V.hist || []).length ? '<button class="btn ghost" id="hs">📚 今回の文をふりかえる(' + V.hist.length + ')</button>' : '') + '<button class="btn go" id="re">もう一回</button><button class="btn vs" id="ot">相手をかえる</button><button class="btn ghost" id="tt">タイトルへ</button></div>');
     if ($('#hs', s)) { var hl = V.hist; $('#hs', s).onclick = function () { K.histModal(hl); }; }
     $('#re', s).onclick = function () { start(V.opp); }; $('#ot', s).onclick = function () { K.showTitle(); pickOpp(); }; $('#tt', s).onclick = function () { K.showTitle(); };
   }
 
-  export var VS = { start: start, _search: search, _score: scoreRow, _V: function () { return V; }, _me: function () { return ME; }, _cpu: function () { return CPU; }, OPPS: OPPS };
+  export function startById(id, op) { var o = OPPS.find(function (x) { return x.id === id; }); if (o) start(o, op); }
+  export var VS = { start: start, startById: startById, _search: search, _score: scoreRow, _V: function () { return V; }, _me: function () { return ME; }, _cpu: function () { return CPU; }, OPPS: OPPS };

@@ -1,0 +1,526 @@
+@id int67
+@lv 2
+@level 6
+@title Making Onigiri at Home
+@ja 家でおにぎりを作ろう
+@tag 共通テストレベル・説明文
+@gloss convenient=便利な, wet=ぬらす, palm=手のひら, stick=くっつく, handful=一つかみ, fill=詰める, pickled plum=梅干し, wrap=包む, crisp=パリパリの
+S| Onigiri, {or|nor|than|whom} rice balls, :: おにぎり、つまり
+V| {are|is|be|being} :: …である
+C| a {popular|popularity|popularly|populate} food :: 人気の食べ物
+P| {in|on|at|to} Japan. :: 日本で
+== おにぎり、つまりライスボールは、日本で人気の食べ物だ。
+S| They {are|is|be|been} easy :: それらは簡単だ
+R| {to make|making|made|makes} :: 作るのが
+M| {and|nor|than|so that} convenient :: そして便利だ
+R| {to carry|carrying|carried|carries}. :: 持ち運ぶのに
+== それらは作るのが簡単で、持ち運ぶのにも便利だ。
+S| First, {wash|washing|washed|to washing} your hands :: まず手を洗う
+M| {and|nor|than|whom} wet them :: そしてぬらす
+P| {with|by|at|on} a little water. :: 少しの水で
+== まず手を洗い、少しの水でぬらそう。
+V| {Put|Puts|Putting|To putting} some salt :: 塩を少しつける
+P| {on|of|at|from} your palms :: 手のひらに
+R| {so|such|too|very} the rice :: ごはんが…ように
+V| will not {stick|sticks|sticking|stuck}. :: くっつかない
+== ごはんがくっつかないように、手のひらに塩を少しつけよう。
+T| Next, {take|takes|taking|took} :: 次に取る
+O| a {handful|handfully|handed|hands} of warm rice :: 温かいごはんを一つかみ
+M| {and|nor|than|whom} make a hole :: そして穴を作る
+P| {in|on|of|to} the middle. :: 真ん中に
+== 次に、温かいごはんを一つかみ取り、真ん中に穴をあけよう。
+V| {Fill|Fills|Filling|Filled} the hole :: 穴に詰める
+P| {with|by|at|on} something tasty, :: おいしい物を
+O| {such as|such like|as such|so as} salmon :: 鮭など
+M| {or|nor|than|whom} pickled plum. :: または梅干し
+== 鮭や梅干しなど、おいしい物を穴に詰めよう。
+T| Then {cover|covers|covering|covered} it :: それからおおう
+P| {with|by|at|for} more rice :: さらにごはんで
+M| {and|nor|than|whom} press it gently :: やさしくにぎる
+P| {into|of|than|since} a triangle. :: 三角形に
+== それからさらにごはんでおおい、やさしく三角形ににぎろう。
+T| Finally, {wrap|wraps|wrapping|wrapped} it :: 最後に包む
+P| {in|at|of|to} a sheet :: 1枚の…で
+P| {of|by|on|than} dried seaweed :: 干した海藻の
+M| {called|calling|calls|to call} nori. :: のりと呼ばれる
+== 最後に、のりと呼ばれる干した海藻1枚で包もう。
+S| Many people {wrap|wraps|wrapping|to wrap} the seaweed :: 多くの人はのりを巻く
+T| just {before|ago|since|among} eating :: 食べる直前に
+R| {to keep|kept|keeps|to keeping} it crisp. :: パリパリに保つため
+== 多くの人は、パリパリに保つため、食べる直前にのりを巻く。
+V| {Try|Tries|Trying|Tried} making :: 作ってみよう
+O| your {own|owner|owned|owning} :: 自分のものを
+M| {and|nor|than|whom} take it :: そして持っていこう
+P| {to|at|on|by} school or work. :: 学校や仕事に
+== 自分のおにぎりを作って、学校や仕事に持っていこう。
+?? 3 0 ごはんがくっつかないように、手のひらに何をつける？
+?? 5 3 鮭のほかに、何を詰めるとよいと書かれている？
+?? 7 3 包むのに使う干した海藻は何と呼ばれる？
+?? 8 1 多くの人は、のりをいつ巻く？
+
+@id int68
+@lv 2
+@level 6
+@title A Letter from Kyoto
+@ja 京都からの手紙
+@tag 共通テストレベル・手紙
+@gloss festival=祭り, last=続く, highlight=見どころ, parade=行列, wooden=木の, float=山車, crowded=混雑した, paper fan=うちわ, souvenir=おみやげ
+X| Dear Emma, I {hope|hopes|hoping|hoped to} :: エマへ、願っています
+S| you {are doing|is doing|are do|doing} well :: 元気でいることを
+P| {in|on|to|by} London. :: ロンドンで
+== エマへ、ロンドンで元気に過ごしていることと思います。
+T| {Last|Next|Later|Lately} week, :: 先週
+S| I {visited|visit|visiting|have visited} Kyoto :: 京都を訪れた
+R| {to see|saw|sees|to seeing} the Gion Festival. :: 祇園祭を見るために
+== 先週、祇園祭を見るために京都を訪れました。
+S| It {is|are|be|being} one :: それは一つだ
+P| {of|on|at|by} the most famous festivals :: 最も有名な祭りの
+P| {in|on|at|to} Japan. :: 日本で
+== それは日本で最も有名な祭りの一つです。
+S| The festival {lasts|last|lasting|to last} :: 祭りは続く
+P| {for|since|ago|among} the whole month :: まる1か月間
+P| {of|on|at|by} July. :: 7月の
+== 祭りは7月の1か月間ずっと続きます。
+S| The {highlight|highlights|highly|highlighted} :: いちばんの見どころ
+V| {was|were|been|being} :: …だった
+C| a parade {of|at|than|since} huge wooden floats. :: 巨大な木の山車の行列
+== いちばんの見どころは、巨大な木の山車の行列でした。
+S| Some {of|in|at|by} them :: そのうちいくつかは
+V| {were|was|be|being} :: …だった
+C| {taller|tall|tallest|more tall} :: より高い
+P| {than|then|that|as} a house. :: 家よりも
+== そのうちいくつかは家よりも高かったです。
+S| Dozens {of|in|at|for} men :: 何十人もの男性が
+V| {pulled|pulling|pulls|to pull} them :: それらを引いた
+M| {slowly|slowness|slowest|slowed} :: ゆっくりと
+P| {through|thorough|though|throw} the streets. :: 通りを通って
+== 何十人もの男性が、それらを通りに沿ってゆっくり引いていました。
+S| It was very hot {and|nor|than|whom} crowded, :: とても暑く混んでいた
+M| {so|than|nor|whom} I bought :: だから買った
+O| {a|an|much|many} paper fan. :: うちわを
+== とても暑くて混んでいたので、うちわを買いました。
+S| I {am sending|am send|sending|is sending} you :: あなたに送ります
+O| {one|ones|it one|once} :: 一つ
+P| {as|for as|like as|so} a souvenir. :: おみやげとして
+== おみやげに一つ送りますね。
+S| I hope you {can come|can came|can coming|can to come} :: 来られるといいな
+P| {to|at|on|for} Japan :: 日本に
+T| {next|last|the next of|nextly} summer. Love, Yui :: 来年の夏に ユイより
+== 来年の夏、あなたが日本に来られるといいな。ユイより
+?? 1 2 ユイは何のために京都へ行った？
+?? 3 1 祇園祭はどのくらい続く？
+?? 6 0 山車を引いていたのはだれ？
+?? 7 2 ユイは祭りで何を買った？
+
+@id int69
+@lv 2
+@level 6
+@title Why Do We Say "Itadakimasu"?
+@ja 「いただきます」の意味
+@tag 共通テストレベル・説明文
+@gloss meal=食事, translate=訳す, exactly=正確に, verb=動詞, receive=受け取る, thanks=感謝, farmer=農家, culture=文化
+T| {Before|Since|Ago|Among} meals, :: 食事の前に
+S| people in Japan {usually|usual|usualness|unusual} :: 日本の人はふつう
+V| {say|says|saying|to say} "itadakimasu." :: 「いただきます」と言う
+== 食事の前に、日本の人はふつう「いただきます」と言う。
+S| It is often {translated|translate|translating|translates} :: よく訳される
+P| {as|at|on|of} "Let's eat," :: 「食べよう」と
+M| {but|nor|than|whom} that is :: しかしそれは
+C| not {exactly|exact|exactness|exacting} right. :: 正確には正しくない
+== それはよく「食べよう」と訳されるが、正確には正しくない。
+S| The word {comes|come|coming|to come} :: その言葉は来ている
+P| {from|at|on|than} a verb :: ある動詞から
+M| {that|what|whom|whose} means "to receive." :: 「受け取る」という意味の
+== その言葉は「受け取る」という意味の動詞から来ている。
+P| By {saying|say|said|says} it, :: それを言うことで
+S| people {show|shows|showing|showed to} thanks :: 人々は感謝を示す
+P| {for|at|by|on} the food :: 食べ物への
+M| they {receive|receives|receiving|to receive}. :: 受け取る
+== それを言うことで、人々は受け取る食べ物への感謝を示す。
+S| They also {thank|thanks|thanking|to thank} the farmers :: 農家にも感謝する
+M| {who|which|whose|whom} grew it :: それを育てた
+M| and the cook {who|which|whose|whom} made it. :: 作った料理人に
+== また、それを育てた農家や作った料理人にも感謝する。
+S| Some people {believe|believes|believing|belief} :: …と考える人もいる
+S| it also {thanks|thank|thanking|thanked to} :: それはまた感謝する
+O| the plants and animals {themselves|themself|itself|ourselves}. :: 動植物そのものに
+== 植物や動物そのものへの感謝も表すと考える人もいる。
+M| This is {because|because of|due|since of} :: これは…だからだ
+S| their lives {became|becoming|becomes|to become} :: その命が…になった
+C| {our|ours|us|we} food. :: 私たちの食べ物に
+== それは、その命が私たちの食べ物になったからだ。
+T| {After|Ago|Among|Above} eating, :: 食べた後に
+S| people {say|says|saying|to say} "gochisosama" :: 「ごちそうさま」と言う
+R| {to show|shows|showed|to showing} thanks again. :: また感謝を示すため
+== 食べた後には、もう一度感謝を示すために「ごちそうさま」と言う。
+S| These short words {are|is|be|being} :: この短い言葉は
+C| a small {but|nor|than|whom} important part :: 小さいが大切な一部
+P| {of|at|by|from} Japanese culture. :: 日本文化の
+== これらの短い言葉は、日本文化の小さいけれど大切な一部だ。
+?? 1 1 「いただきます」はよく英語で何と訳される？
+?? 2 2 もとになった動詞はどんな意味？
+?? 4 0 料理を作った人のほかに、だれに感謝する？
+?? 7 0 「ごちそうさま」はいつ言う？
+
+@id int70
+@lv 2
+@level 6
+@title The Tomato Festival in Spain
+@ja スペインのトマト祭り
+@tag 共通テストレベル・記事
+@gloss messy=汚れる, throw=投げる, take place=行われる, rule=規則, crush=つぶす, goggles=ゴーグル, protect=守る, juice=汁, fire truck=消防車
+T| {Every|All|Whole|Each of} year, :: 毎年
+S| a small town {in|on|at|to} Spain :: スペインの小さな町が
+V| {holds|hold|holding|held to} :: 開く
+O| a very {messy|mess|messily|messed} festival. :: とても汚れる祭りを
+== 毎年、スペインのある小さな町で、とても汚れる祭りが開かれる。
+S| It {is called|is calling|calls|is call} La Tomatina, :: ラ・トマティーナと呼ばれ
+M| {and|nor|than|whom} people throw :: 人々は投げる
+O| {tomatoes|tomatos|tomato|tomatoe} :: トマトを
+P| {at|of|from|than} each other. :: お互いに
+== それはラ・トマティーナと呼ばれ、人々がお互いにトマトを投げ合う。
+S| It {takes|take|taking|took to} place :: それは行われる
+T| {on|in|at|by} the last Wednesday :: 最後の水曜日に
+P| {of|at|by|to} August. :: 8月の
+== それは8月の最後の水曜日に行われる。
+S| Thousands {of|in|at|for} visitors :: 何千人もの観光客が
+V| {come|comes|coming|came to} :: やって来る
+P| from {around|among|along|across of} the world :: 世界中から
+R| {to join|joined|joins|to joining} it. :: 参加するために
+== 世界中から何千人もの観光客が参加しにやって来る。
+M| {However|Because|Unless|Although}, :: しかし
+S| there {are|is|be|being} some rules :: いくつか規則がある
+R| {to keep|kept|keeps|to keeping} everyone safe. :: 全員の安全を守るため
+== しかし、全員の安全を守るための規則がいくつかある。
+S| You must {crush|crushes|crushing|crushed} :: つぶさなければならない
+O| {each|every of|all|both} tomato :: トマトを一つずつ
+T| {before|ago|since|among} you throw it. :: 投げる前に
+== トマトは投げる前に一つずつつぶさなければならない。
+S| Many people also {wear|wears|wearing|worn} goggles :: ゴーグルもつける
+R| {to protect|protected|protects|to protecting} :: 守るために
+O| {their|there|they|them} eyes. :: 目を
+== 多くの人は目を守るためにゴーグルもつける。
+T| After {about|above|along|among} an hour, :: 約1時間後
+S| the streets {are covered|are cover|covering|is covered} :: 通りはおおわれる
+P| {in|on|at|to} red juice. :: 赤い汁で
+== 約1時間後、通りは赤い汁でおおわれる。
+T| Then fire trucks {wash|washes|washing|to wash} :: それから消防車が洗う
+O| the town {clean|cleaning|cleanness|cleaned up of} :: 町をきれいに
+P| {with|at|on|of} water. :: 水で
+== それから消防車が水で町をきれいに洗い流す。
+?? 2 1 祭りはいつ行われる？
+?? 5 0 トマトは投げる前にどうしなければならない？
+?? 6 1 多くの人は何のためにゴーグルをつける？
+?? 8 0 祭りの後、町を洗うのは何？
+
+@id int71
+@lv 2
+@level 6
+@title My Week with Chopsticks
+@ja はしと過ごした1週間
+@tag 共通テストレベル・ブログ
+@gloss chopsticks=はし, host family=ホストファミリー, slip=すべる, explain=説明する, upright=まっすぐ立てて, funeral=葬式, bad luck=縁起が悪いこと, bean=豆
+T| When I {arrived|arrive|arriving|arrives} :: 着いたとき
+P| {in|to|on|for} Osaka, :: 大阪に
+S| I could not {use|used|using|uses} chopsticks :: はしを使えなかった
+M| {at all|of all|by all|on all}. :: まったく
+== 大阪に着いたとき、ぼくはまったくはしが使えなかった。
+S| My host family {kindly|kind|kindness|kinder} :: ホストファミリーは親切に
+V| {gave|giving|given|gives to} me a fork, :: フォークをくれた
+M| {but|nor|than|whom} I wanted :: でもぼくは望んだ
+R| {to try|trying|tried|tries}. :: 挑戦することを
+== ホストファミリーは親切にフォークをくれたが、ぼくは挑戦したかった。
+T| {At first|At firstly|In first|On first}, :: 最初は
+S| the food {kept|keep|keeping|keeps to} :: 食べ物はずっと
+V| {slipping|slip|slipped|to slip} :: すべって
+M| and {falling|fall|falls|to falling} on the table. :: テーブルに落ちた
+== 最初は、食べ物がすべってはテーブルに落ちてばかりいた。
+S| My host brother {taught|teached|teach|teaching} me :: ホストの弟が教えてくれた
+R| {to hold|holding|held|holds} :: 持つことを
+O| the {lower|lowly|lowness|lows} stick still. :: 下の1本を動かさずに
+== ホストの弟が、下の1本を動かさずに持つ方法を教えてくれた。
+S| He also {explained|explain|explaining|explains to} :: 彼はまた説明した
+O| {some|much|a|every} rules :: いくつかの決まりを
+P| for {using|use|used|to using} them. :: 使うときの
+== 彼はまた、はしを使うときの決まりもいくつか説明してくれた。
+M| {For example|For examples|By example|In example}, :: たとえば
+S| you should never {stick|sticks|sticking|stuck} them :: 絶対に刺してはいけない
+M| {upright|uprights|upriser|uprighted} :: まっすぐ立てて
+P| {in|of|at|by} a bowl of rice. :: ご飯茶わんに
+== たとえば、はしをご飯茶わんにまっすぐ突き立ててはいけない。
+S| This {is done|is do|does|is doing} :: これはされる
+T| only {at|on|of|by} funerals, :: 葬式のときだけ
+M| {so|than|nor|whom} it is considered :: だから考えられる
+C| {bad luck|bad lucky|badly luck|bad lucks}. :: 縁起が悪いと
+== これは葬式のときにだけ行われるので、縁起が悪いとされる。
+T| After one week {of|at|by|than} practice, :: 1週間の練習の後
+S| I can now {pick up|picked up|picking up|picks up} :: 今はつまめる
+O| {a single|single|singles|a singles} bean. :: 豆1粒を
+== 1週間練習した今、ぼくは豆1粒でもつまめるようになった。
+S| My host mother {says|say|saying|said to} :: ホストの母は言う
+S| I eat {more slowly|most slowly|slowlier|more slowness} now, :: 前よりゆっくり食べる
+M| {which|what|whom|whose} is a good thing! :: それは良いことだ
+== ホストの母によると、ぼくは前よりゆっくり食べるようになったそうで、それは良いことだ！
+?? 1 1 ホストファミリーは最初に何をくれた？
+?? 3 0 はしの持ち方を教えてくれたのはだれ？
+?? 6 1 はしをご飯に突き立てるのはどんなときだけ？
+?? 7 2 1週間の練習の後、何をつまめるようになった？
+
+@id int72
+@lv 2
+@level 6
+@title Japanese Cooking Class for Visitors
+@ja 旅行者向け和食教室
+@tag 共通テストレベル・広告
+@gloss tempura=天ぷら, beginner=初心者, welcome=歓迎される, ingredient=材料, apron=エプロン, include=含む, vegetarian=菜食の, in advance=事前に, except=…以外
+X| Do you {want|wants|wanting|wanted to} :: …したいですか
+R| {to learn|learning|learned|learns} :: 学ぶことを
+O| {how|whose|whom|than} to cook :: 作り方を
+O| {Japanese|Japan|Japaneses|Japans} food? :: 和食の
+== 和食の作り方を学びたいですか。
+V| {Join|Joins|Joining|Joined} :: 参加しよう
+O| our {cooking|cook|cooked|cooks} class :: 料理教室に
+P| {at|on|than|to} Sakura Kitchen :: さくらキッチンで
+P| {in|on|to|than} Asakusa. :: 浅草の
+== 浅草の「さくらキッチン」の料理教室に参加しよう。
+T| {During|While|Since|Among} the two-hour class, :: 2時間の教室で
+S| you will {make|makes|making|made} :: 作ります
+O| miso soup, tempura, {and|nor|than|or but} rice balls. :: みそ汁、天ぷら、おにぎり
+== 2時間の教室で、みそ汁、天ぷら、おにぎりを作ります。
+S| Our teachers {speak|speaks|speaking|spoken} English, :: 講師は英語を話す
+M| {so|than|nor|whom} beginners :: だから初心者も
+V| {are welcome|is welcome|be welcome|being welcome}. :: 歓迎です
+== 講師は英語を話すので、初心者も歓迎です。
+S| All ingredients {and|nor|than|whom} aprons :: 材料とエプロンは全部
+V| {are included|are include|is included|including} :: 含まれている
+P| {in|of|on|than} the price. :: 料金に
+== 材料とエプロンはすべて料金に含まれています。
+T| {After|Ago|Among|Above} cooking, :: 料理の後で
+S| you can {enjoy|enjoys|enjoying|enjoyed} the meal :: 食事を楽しめる
+P| {with|at|than|onto} other students. :: ほかの生徒と
+== 料理の後は、ほかの生徒といっしょに食事を楽しめます。
+S| Vegetarian {menus|menu|menuing|menued} :: 菜食メニューも
+V| {are|is|be|being} available :: 用意できます
+M| {if|than|nor|whom} you ask :: 頼めば
+T| {in advance|in advanced|on advance|at advance}. :: 事前に
+== 事前に頼めば、菜食のメニューも用意できます。
+S| Classes {start|starts|starting|to start} :: 教室は始まる
+T| {at|on|in|to} 10 a.m. and 3 p.m. :: 午前10時と午後3時に
+T| every day {except|expect|accept|excess} Tuesday. :: 火曜以外毎日
+== 教室は火曜日以外の毎日、午前10時と午後3時に始まります。
+V| {Book|Books|Booking|Booked} on our website, :: サイトで予約を
+M| {as|than|nor|whom} each class :: 各教室は…ので
+V| {has|have|having|to have} only eight seats. :: 8席しかない
+== 各教室は8席しかないので、ウェブサイトでご予約ください。
+?? 2 2 教室では何を作る？
+?? 4 0 料金に含まれているものは？
+?? 7 2 教室が休みなのは何曜日？
+?? 8 2 1つの教室には何席ある？
+
+@id int73
+@lv 2
+@level 6
+@title Osechi: Food for the New Year
+@ja 正月のおせち料理
+@tag 共通テストレベル・説明文
+@gloss dish=料理, serve=出す, stack=重ねる, meaning=意味, wish=願い, health=健康, shrimp=えび, bent=曲がった, rest=休む
+P| {In|On|At|To} Japan, :: 日本では
+S| people {eat|eats|eating|eaten} special dishes :: 人々は特別な料理を食べる
+M| {called|calling|calls|call} osechi :: おせちと呼ばれる
+T| {at|of|than|since} New Year. :: 正月に
+== 日本では、正月におせちと呼ばれる特別な料理を食べる。
+S| They are usually {served|serve|serving|serves} :: ふつう出される
+P| {in|at|by|of} beautiful boxes :: 美しい箱に入れて
+M| {stacked|stack|stacks|to stacking} :: 重ねられた
+P| on top {of|in|at|by} each other. :: 互いの上に
+== それらはふつう、重ねられた美しい箱に入れて出される。
+S| {Each|Every of|Both|Many} food :: それぞれの料理は
+V| {has|have|having|to have} :: 持つ
+O| a special {meaning|mean|meant|meaningful} :: 特別な意味を
+M| {or|nor|than|whom} wish :: または願いを
+P| {for|than|whom|since} the new year. :: 新年への
+== それぞれの料理には、新年への特別な意味や願いがこめられている。
+M| For {example|examples|exam|sample}, :: たとえば
+S| black beans {are eaten|are eat|eating|is eaten} :: 黒豆は食べられる
+P| {for|at|on|by} good health. :: 健康のために
+== たとえば、黒豆は健康を願って食べられる。
+S| Fish eggs {called|calling|calls|call} kazunoko :: 数の子という魚卵は
+V| {are|is|be|being} :: …である
+C| a wish {for|at|on|than} many children. :: 子だくさんの願い
+== 数の子という魚卵は、子どもに恵まれるようにという願いだ。
+S| Shrimp, {with|by|at|on} their bent backs, :: 曲がった背中のえびは
+V| {stand|standing|stood to|to stand} :: 表す
+P| {for|at|of|than} a long life. :: 長生きを
+== 背中の曲がったえびは、長生きを表す。
+S| {Most|Almost|Mostly|The most of} osechi dishes :: おせちの多くは
+V| {are cooked|are cook|is cooked|cooking} :: 作られる
+T| {before|ago|among|above} New Year's Day. :: 元日の前に
+== おせち料理のほとんどは元日の前に作られる。
+S| They {keep|keeps|keeping|kept to} well :: 日持ちする
+T| {for|since|ago|among} days, :: 何日も
+M| {so|than|nor|whom} the cook :: だから作る人も
+V| can {rest|rests|resting|rested} :: 休める
+T| {during|while|among|beside} the holidays. :: 休みの間
+== 何日も日持ちするので、作る人も休みの間に休める。
+T| {Today|Todays|Today's|Yesterday's}, :: 今では
+S| many families {buy|buys|buying|bought to} osechi :: 多くの家庭がおせちを買う
+P| {at|on|to|of} stores :: 店で
+M| instead {of|for|to|from} making it. :: 作るかわりに
+== 今では、多くの家庭が作るかわりに店でおせちを買う。
+?? 1 1 おせちはふつう何に入れて出される？
+?? 3 2 黒豆は何を願って食べられる？
+?? 5 2 えびは何を表している？
+?? 7 0 作る人が休みの間に休めるのはなぜ？
+
+@id int74
+@lv 2
+@level 6
+@title Tea Around the World
+@ja 世界のお茶
+@tag 共通テストレベル・記事
+@gloss spice=香辛料, mint=ミント, pour=注ぐ, foam=泡, respect=敬意, guest=客, ceremony=儀式, whisk=泡立てる, habit=習慣
+S| Tea {is|are|be|being} one :: お茶は一つだ
+P| {of|on|at|by} the most popular drinks :: 最も人気の飲み物の
+P| {in|on|at|to} the world. :: 世界で
+== お茶は世界で最も人気のある飲み物の一つだ。
+M| {However|Because|Unless|Although}, :: しかし
+S| people {drink|drinks|drinking|drunk} it :: 人々はそれを飲む
+P| {in|on|at|to} very different ways. :: とても違う方法で
+== しかし、その飲み方は国によってさまざまだ。
+P| {In|On|At|To} India, :: インドでは
+S| many people {enjoy|enjoys|enjoying|enjoyed to} chai, :: チャイを楽しむ
+C| a sweet tea {with|by|at|on} milk and spices. :: ミルクと香辛料の甘い茶
+== インドでは、多くの人がミルクと香辛料の入った甘いお茶、チャイを楽しむ。
+P| {In|On|At|To} Morocco, :: モロッコでは
+S| mint tea {is poured|is pour|pouring|are poured} :: ミント茶は注がれる
+P| {from|for|by|of} high above the glass. :: グラスの上高くから
+== モロッコでは、ミントティーがグラスの上高くから注がれる。
+S| This {makes|make|making|made to} foam :: これは泡を作る
+P| {on|in|at|of} top :: 上に
+M| {and|nor|than|whom} shows respect :: そして敬意を示す
+P| {for|at|by|on} the guest. :: 客への
+== こうすると上に泡ができ、客への敬意も示せる。
+S| In Japan, green tea {called|calling|calls|call} matcha :: 日本では抹茶という茶が
+V| {is used|is use|uses|are used} :: 使われる
+P| {in|on|of|than} the tea ceremony. :: 茶道で
+== 日本では、抹茶という緑茶が茶道で使われる。
+S| It {is whisked|is whisk|whisks|are whisked} :: それは泡立てられる
+P| {with|by|at|on} hot water :: お湯と
+T| {until|during|among|despite} it becomes foamy. :: 泡立つまで
+== それはお湯とともに、泡立つまでかき混ぜられる。
+P| {In|On|At|To} Britain, :: イギリスでは
+S| many people {like|likes|liking|liked to} tea :: 多くの人がお茶を好む
+P| {with|by|at|for} milk :: ミルク入りの
+T| {in|on|at|by} the afternoon. :: 午後に
+== イギリスでは、多くの人が午後にミルクティーを好む。
+T| Next time you {drink|drinks|drinking|drunk} tea, :: 次にお茶を飲むとき
+V| {think|thinks|thinking|thought} :: 考えてみよう
+O| {about|above|along|across} the people :: 人々のことを
+M| {who|which|whose|whom} share this habit. :: この習慣を共にする
+== 次にお茶を飲むときは、この習慣を共にする人々のことを考えてみよう。
+?? 2 2 チャイには何が入っている？
+?? 3 2 モロッコではミントティーをどこから注ぐ？
+?? 4 0 高くから注ぐと、上に何ができる？
+?? 7 2 イギリスでは、お茶に何を入れることが多い？
+
+@id int75
+@lv 2
+@level 6
+@title Guide to the Minato Summer Festival
+@ja みなと夏祭りのご案内
+@tag 共通テストレベル・案内
+@gloss lantern=ちょうちん, food stall=屋台, take part=参加する, fireworks=花火, light up=照らす, rent=借りる, shuttle bus=シャトルバス, trash=ごみ
+S| The Minato Summer Festival {will be held|will held|will be hold|will holding} :: みなと夏祭りが開かれる
+T| {on|in|at|to} August 15 and 16. :: 8月15日と16日に
+== みなと夏祭りは8月15日と16日に開かれます。
+S| The park {will be filled|will filled|will be fill|will filling} :: 公園はいっぱいになる
+P| {with|at|on|than} lanterns :: ちょうちんで
+M| {and|nor|than|whom} food stalls. :: そして屋台で
+== 公園はちょうちんと屋台でいっぱいになります。
+T| {On|To|Of|Than} the first night, :: 初日の夜に
+S| you can {join|joins|joining|joined} :: 参加できる
+O| the Bon {dance|danced|dancer's|danceful} :: 盆踊りに
+T| {from|since|ago|until of} 7 p.m. :: 午後7時から
+== 初日の夜は、午後7時から盆踊りに参加できます。
+S| Anyone {can take|can takes|can took|can taking} part, :: だれでも参加できる
+M| even {if|so|than|whom} you have never :: たとえ一度も…なくても
+V| {danced|dance|dancing|dances} before. :: 踊ったことが
+== 一度も踊ったことがなくても、だれでも参加できます。
+T| {On|To|Of|Than} the second night, :: 2日目の夜に
+S| fireworks {will light|will lights|will lighting|will lit} :: 花火が照らす
+O| up the {sky|skies of|sky's|skied} :: 空を
+T| {at|on|in|to} 8 p.m. :: 午後8時に
+== 2日目の夜は、午後8時に花火が空を彩ります。
+S| Visitors {wearing|wear|wore|wears} yukata :: 浴衣を着た来場者は
+V| {will get|will gets|will got|will getting} :: もらえる
+O| a {free|freely|freedom|freed} drink :: 無料の飲み物を
+P| {at|on|of|than} the information tent. :: 案内テントで
+== 浴衣を着た来場者は、案内テントで無料の飲み物がもらえます。
+S| You can also {rent|rents|renting|rented} one :: 借りることもできる
+P| {at|on|of|than} the community center :: 公民館で
+P| {for|by|on|than} 1,000 yen. :: 1,000円で
+== 浴衣は公民館で1,000円で借りることもできます。
+S| There {is|are|be|has} no parking, :: 駐車場はない
+M| {so|than|nor|whom} please take :: だから乗ってください
+O| the shuttle bus {from|than|whom|since} the station. :: 駅からのシャトルバス
+== 駐車場はないので、駅からシャトルバスをご利用ください。
+V| Please {take|takes|taking|took} your trash :: ごみを持って
+P| {home|homes|homely|homing} :: 家に
+R| {to keep|kept|keeps|to keeping} the park clean. :: 公園をきれいに保つため
+== 公園をきれいに保つため、ごみはお持ち帰りください。
+?? 0 1 祭りはいつ開かれる？
+?? 2 3 盆踊りは何時から？
+?? 4 3 花火は何時に始まる？
+?? 5 2 浴衣を着て行くと何がもらえる？
+?? 7 2 会場へは何で来るように書かれている？
+
+@id int76
+@lv 2
+@level 6
+@title Shoes Off, Please!
+@ja 靴を脱いでね
+@tag 共通テストレベル・メール
+@gloss custom=習慣, take off=脱ぐ, entrance=玄関, dirt=汚れ, slippers=スリッパ, tatami mat=畳, grass=草, damage=傷つける, separate=別の
+X| Hi Lucas, we {are excited|are exciting|is excited|excited are} :: ルーカス、楽しみです
+R| {to welcome|welcoming|welcomed|welcomes} you :: あなたを迎えるのが
+T| {next|last|the next of|nextly} month. :: 来月
+== ルーカスへ、来月あなたを迎えるのを楽しみにしています。
+T| {Before|Ago|Among|Above} you come, :: 来る前に
+S| I want {to tell|telling|told|tells} you :: 伝えたい
+O| {about|above|along|across} a Japanese home custom. :: 日本の家の習慣を
+== 来る前に、日本の家の習慣について伝えたいと思います。
+S| In Japan, we {take off|take of|took of|taking off} :: 日本では脱ぐ
+O| our {shoes|shoed|shoeing|shoe's} :: 靴を
+P| {at|on|of|than} the entrance. :: 玄関で
+== 日本では、玄関で靴を脱ぎます。
+S| This {keeps|keep|keeping|kept to} :: これは保つ
+O| the floor {clean|cleanly|cleanness|cleaning}, :: 床をきれいに
+M| {because|because of|due|so that of} shoes bring in dirt :: 靴は汚れを持ちこむから
+P| {from|for|by|of} outside. :: 外から
+== 靴は外から汚れを持ちこむので、こうすると床がきれいに保てます。
+P| {Inside|Insides|Inner|Innerly} the house, :: 家の中では
+S| you can {wear|wears|wearing|wore} slippers :: スリッパをはける
+M| {that|what|whose|whom} we will give you. :: 私たちが渡す
+== 家の中では、私たちが用意するスリッパをはいてください。
+M| {However|Because|Unless|Although}, please :: ただし…ください
+V| {take|takes|taking|took} them off :: それを脱いで
+T| {before|ago|among|above} you walk :: 歩く前に
+P| {on|at|of|than} tatami mats. :: 畳の上を
+== ただし、畳の上を歩く前にはスリッパを脱いでください。
+S| Tatami {is made|is make|makes|are make} :: 畳は作られている
+P| {of|at|on|than} dried grass :: 乾いた草で
+M| and can be {damaged|damage|damaging|damages} :: 傷つきうる
+M| {easily|easy|ease|easiness}. :: 簡単に
+== 畳は乾いた草でできていて、傷つきやすいのです。
+S| There {are|is|be|has} also :: …もある
+O| {separate|separately|separation|separated of} slippers :: 別のスリッパが
+P| {for|than|since|whom} the bathroom. :: トイレ用の
+== トイレ用の別のスリッパもあります。
+S| Don't {worry|worries|worrying|worried} :: 心配しないで
+M| {if|than|nor|whom} you forget :: 忘れても
+T| {at first|at firstly|in first|on first}. We will help you! :: 最初は。手伝うよ！
+== 最初は忘れても心配しないでね。手伝いますから！
+?? 2 2 日本では靴をどこで脱ぐ？
+?? 3 2 靴を脱ぐと床がきれいに保てるのはなぜ？
+?? 5 2 スリッパはいつ脱ぐ？
+?? 6 1 畳は何でできている？

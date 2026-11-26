@@ -1,0 +1,300 @@
+clear | a | The sky is clear this morning. | 今朝は空が晴れています。
+clear | a | Is my answer clear to you? | 私の答えはあなたにはっきり伝わっていますか。
+clear | a | Her voice was clear on the phone. | 電話で彼女の声がはっきり聞こえました。
+recent | a | This recent photo shows our new house. | この最近の写真には私たちの新しい家が写っています。
+recent | a | Have you read any recent news? | 最近のニュースを何か読みましたか。
+recent | a | My recent trip was a lot of fun. | 最近の旅行はとても楽しかったです。
+strong | a | My brother has very strong arms. | 兄はとても力強い腕をしています。
+strong | a | Is the wind strong outside today? | 今日は外の風が強いですか。
+strong | a | She made some strong coffee this morning. | 彼女は今朝濃いコーヒーを入れました。
+short | a | I wrote a short letter to my friend. | 私は友達に短い手紙を書きました。
+short | a | Is this skirt too short for school? | このスカートは学校には短すぎますか。
+short | a | We took a short walk after dinner. | 私たちは夕食後に少し散歩しました。
+single | a | I have a single ticket for the train. | 私は電車の片道切符を持っています。
+single | a | Is there a single chair left? | 椅子は一脚でも残っていますか。
+single | a | She ate every single piece of cake. | 彼女はケーキを一切れ残らず食べました。
+simple | a | This is a simple way to cook eggs. | これは卵を料理する簡単な方法です。
+simple | a | Can you ask me a simple question? | 簡単な質問をしてくれますか。
+simple | a | My father made a simple wooden table. | 父は簡単な木のテーブルを作りました。
+personal | a | Please keep your personal things in this bag. | 個人の持ち物はこのかばんに入れてください。
+personal | a | Is this your personal computer at home? | これは家で使うあなた個人のパソコンですか。
+personal | a | She wrote about her personal life in a book. | 彼女は本に自分の私生活について書きました。
+current | a | My current school is near the station. | 私が現在通っている学校は駅の近くです。
+current | a | Do you like your current English teacher? | 今の英語の先生は好きですか。
+current | a | His current job is at a small hotel. | 彼の現在の仕事は小さなホテルでの仕事です。
+dark | a | The room is dark without the light. | 明かりがないとその部屋は暗いです。
+dark | a | Is it already dark outside now? | 外はもう暗いですか。
+dark | a | We walked home under the dark sky. | 私たちは暗い空の下を歩いて帰りました。
+hot | a | This soup is too hot to eat. | このスープは熱すぎて食べられません。
+hot | a | Does the water feel hot to you? | その水はあなたには熱く感じますか。
+hot | a | My mother made hot tea for everyone. | 母はみんなに温かいお茶を入れました。
+cold | a | The morning air is very cold today. | 今朝の空気はとても冷たいです。
+cold | a | Are your hands cold after swimming? | 泳いだ後で手が冷たくなっていますか。
+cold | a | We drank cold water after the game. | 私たちは試合の後に冷たい水を飲みました。
+warm | a | This room feels warm in winter. | この部屋は冬でも暖かく感じます。
+warm | a | Would you like some warm milk? | 温かい牛乳はいかがですか。
+warm | a | The sun made the sand warm. | 太陽の光で砂が暖かくなりました。
+cool | a | The garden is cool in the evening. | 夕方の庭は涼しいです。
+cool | a | Is it cool outside after the rain? | 雨の後、外は涼しいですか。
+cool | a | We enjoyed the cool morning air. | 私たちは涼しい朝の空気を楽しみました。
+nice | a | Your new school bag looks nice. | あなたの新しい通学かばんはすてきです。
+nice | a | Did you have a nice weekend? | よい週末を過ごしましたか。
+nice | a | The woman gave us a nice smile. | その女性は私たちにすてきな笑顔を向けました。
+happy | a | I feel happy when I sing. | 私は歌うと幸せな気持ちになります。
+happy | a | Are you happy with your new room? | 新しい部屋に満足していますか。
+happy | a | The children looked happy at the park. | 公園で子どもたちは幸せそうでした。
+sad | a | This story has a sad ending. | この物語には悲しい結末があります。
+sad | a | Why does your sister look sad? | なぜ妹さんは悲しそうなのですか。
+sad | a | He felt sad when summer ended. | 夏が終わったとき彼は悲しく感じました。
+beautiful | a | We saw a beautiful rainbow after the rain. | 雨の後に美しい虹を見ました。
+beautiful | a | Is that beautiful garden open today? | あの美しい庭は今日開いていますか。
+beautiful | a | My grandmother has many beautiful flowers. | 祖母は美しい花をたくさん育てています。
+pretty | a | That pretty dress looks good on you. | あのかわいいドレスはあなたによく似合います。
+pretty | a | Is this little cat pretty? | この小さな猫はかわいいですか。
+pretty | a | She wore a pretty pink hat yesterday. | 彼女は昨日かわいいピンクの帽子をかぶりました。
+wrong | a | I think this answer is wrong. | この答えは間違っていると思います。
+wrong | a | Did we take the wrong bus? | 私たちは間違ったバスに乗りましたか。
+wrong | a | He wrote the wrong date on the paper. | 彼は紙に間違った日付を書きました。
+fine | a | I feel fine after a good sleep. | よく眠ったので元気です。
+fine | a | Are you feeling fine this morning? | 今朝は元気ですか。
+fine | a | The weather was fine all day. | 一日中よい天気でした。
+ready | a | I am ready for the English test. | 私は英語のテストの準備ができています。
+ready | a | Is your brother ready to leave? | 弟さんは出かける準備ができていますか。
+ready | a | Dinner was ready when we came home. | 私たちが帰宅したとき夕食はできていました。
+difficult | a | This math problem is difficult for me. | この数学の問題は私には難しいです。
+difficult | a | Was the English test difficult yesterday? | 昨日の英語のテストは難しかったですか。
+difficult | a | She finished a difficult book last week. | 彼女は先週難しい本を読み終えました。
+available | a | This book is available at our library. | この本は私たちの図書館で利用できます。
+available | a | Are any rooms available for tonight? | 今夜利用できる部屋はありますか。
+available | a | The teacher was available after class. | 先生は授業後に対応できる状態でした。
+popular | a | Soccer is popular at our school. | 私たちの学校ではサッカーが人気です。
+popular | a | Is this song popular with children? | この歌は子どもたちに人気がありますか。
+popular | a | That small restaurant became very popular. | あの小さなレストランはとても人気になりました。
+natural | a | This soap has a natural smell. | この石けんには自然な香りがあります。
+natural | a | Does this English sentence sound natural? | この英文は自然に聞こえますか。
+natural | a | The park has many natural trees and flowers. | その公園には自然の木や花がたくさんあります。
+similar | a | My bag is similar to yours. | 私のかばんはあなたのものと似ています。
+similar | a | Are these two pictures similar in color? | この二つの絵は色が似ていますか。
+similar | a | We found similar shoes at different shops. | 私たちは別々の店で似た靴を見つけました。
+common | a | This is a common English word. | これは一般的な英単語です。
+common | a | Do we have any common interests? | 私たちには共通の興味がありますか。
+common | a | These birds are common in our town. | これらの鳥は私たちの町でよく見られます。
+serious | a | My brother is serious about learning music. | 兄は音楽を学ぶことに真剣です。
+serious | a | Are you serious about this new plan? | あなたはこの新しい計画に本気ですか。
+serious | a | The teacher had a serious talk with us. | 先生は私たちと真剣な話をしました。
+main | a | The main door is near the garden. | 正面のドアは庭の近くにあります。
+main | a | What is the main idea of this story? | この物語の主な考えは何ですか。
+main | a | We ate lunch in the main room. | 私たちはメインの部屋で昼食を食べました。
+final | a | This is the final page of the book. | これは本の最後のページです。
+final | a | Is tomorrow your final day at school? | 明日は学校での最後の日ですか。
+final | a | Our team won the final game. | 私たちのチームは最後の試合に勝ちました。
+general | a | This book gives general information about animals. | この本には動物についての一般的な情報が載っています。
+general | a | Do you know the general rules of tennis? | テニスの一般的なルールを知っていますか。
+general | a | We had a general talk about school life. | 私たちは学校生活について全般的な話をしました。
+private | a | This is my private room at home. | これは家にある私個人の部屋です。
+private | a | Is that garden private or public? | あの庭は私有のものですか、それとも公共のものですか。
+private | a | She keeps her private letters in a box. | 彼女は私的な手紙を箱にしまっています。
+safe | a | This road is safe for children. | この道は子どもたちにとって安全です。
+safe | a | Is it safe to swim here? | ここで泳ぐのは安全ですか。
+safe | a | We found a safe place for our bikes. | 私たちは自転車を置く安全な場所を見つけました。
+quick | a | Let us take a quick break. | 少しだけ休憩しましょう。
+quick | a | Can you give me a quick answer? | すぐに答えてくれますか。
+quick | a | She took a quick look at the clock. | 彼女は時計をさっと見ました。
+slow | a | This old train is very slow. | この古い電車はとても遅いです。
+slow | a | Is your computer slow today? | 今日はパソコンの動きが遅いですか。
+slow | a | We took a slow walk through the park. | 私たちは公園をゆっくり歩きました。
+fast | a | My sister is a fast runner. | 妹は走るのが速いです。
+fast | a | Is that train faster than this one? | あの電車はこの電車より速いですか。
+fast | a | He bought a fast new bike. | 彼は速く走れる新しい自転車を買いました。
+busy | a | My mother is busy this morning. | 母は今朝忙しいです。
+busy | a | Are you busy after school today? | 今日は放課後忙しいですか。
+busy | a | The restaurant was busy at lunchtime. | そのレストランは昼食時に混んでいました。
+quiet | a | Our town is quiet at night. | 私たちの町は夜には静かです。
+quiet | a | Is the library quiet in the morning? | 図書館は朝は静かですか。
+quiet | a | We found a quiet place to read. | 私たちは読書をする静かな場所を見つけました。
+tired | a | I feel tired after playing soccer. | サッカーをした後は疲れます。
+tired | a | Are you tired of this game? | このゲームにはもううんざりしていますか。
+tired | a | My father looked tired after work. | 父は仕事の後で疲れているようでした。
+hungry | a | I am hungry after my swimming lesson. | 水泳の授業の後はおなかがすきます。
+hungry | a | Are the children hungry yet? | 子どもたちはもうおなかがすいていますか。
+hungry | a | We felt hungry on the way home. | 私たちは帰り道におなかがすきました。
+sick | a | My brother feels sick this morning. | 弟は今朝具合が悪いです。
+sick | a | Are you sick or just tired? | 具合が悪いのですか、それとも疲れているだけですか。
+sick | a | She felt sick on the bus. | 彼女はバスの中で気分が悪くなりました。
+angry | a | My sister was angry about the noise. | 妹はその騒音に怒っていました。
+angry | a | Are you angry with me today? | 今日は私に怒っていますか。
+angry | a | He looked angry but said nothing. | 彼は怒っているようでしたが何も言いませんでした。
+afraid | a | My little brother is afraid of dogs. | 弟は犬を怖がっています。
+afraid | a | Are you afraid of the dark? | 暗いところが怖いですか。
+afraid | a | She was afraid to ask the teacher. | 彼女は先生に質問するのを怖がっていました。
+careful | a | Please be careful with this glass cup. | このガラスのカップを注意して扱ってください。
+careful | a | Are you careful when crossing the road? | 道路を渡るときは注意していますか。
+careful | a | He was careful with his new camera. | 彼は新しいカメラを慎重に扱いました。
+famous | a | This town is famous for its flowers. | この町は花で有名です。
+famous | a | Is that singer famous in your country? | あの歌手はあなたの国で有名ですか。
+famous | a | We visited a famous old garden yesterday. | 私たちは昨日、有名な古い庭園を訪れました。
+favorite | a | My favorite food is my mother's soup. | 私の大好きな食べ物は母のスープです。
+favorite | a | What is your favorite school subject? | 学校で一番好きな教科は何ですか。
+favorite | a | She wore her favorite blue dress. | 彼女はお気に入りの青いドレスを着ました。
+foreign | a | I want to learn a foreign language. | 私は外国語を学びたいです。
+foreign | a | Do you have any foreign friends? | 外国の友達はいますか。
+foreign | a | My father enjoys watching foreign movies. | 父は外国の映画を見るのが好きです。
+heavy | a | This box is too heavy for me. | この箱は私には重すぎます。
+heavy | a | Can you carry that heavy bag? | あの重いかばんを運べますか。
+heavy | a | We had heavy rain last night. | 昨夜は強い雨が降りました。
+cheap | a | These shoes are cheap but comfortable. | この靴は安いですが履き心地がよいです。
+cheap | a | Is that bag cheaper than this one? | あのかばんはこれより安いですか。
+cheap | a | My brother bought a cheap bicycle. | 兄は安い自転車を買いました。
+expensive | a | This watch is too expensive for me. | この時計は私には高すぎます。
+expensive | a | Is the hotel expensive in summer? | そのホテルは夏には料金が高いですか。
+expensive | a | She chose an expensive red coat. | 彼女は高価な赤いコートを選びました。
+rich | a | That rich man owns a large house. | あの裕福な男性は大きな家を持っています。
+rich | a | Is this chocolate cake too rich? | このチョコレートケーキは濃厚すぎますか。
+rich | a | The garden has rich soil for flowers. | その庭には花を育てるのに肥えた土があります。
+poor | a | The poor family needed a new home. | その貧しい家族には新しい住まいが必要でした。
+poor | a | Is the picture poor in quality? | その写真は画質が悪いですか。
+poor | a | The team played poorly yesterday. | そのチームは昨日よいプレーができませんでした。
+clean | a | My room is clean and bright. | 私の部屋はきれいで明るいです。
+clean | a | Are these plates clean now? | これらのお皿はもうきれいですか。
+clean | a | We found a clean table by the window. | 私たちは窓のそばにきれいなテーブルを見つけました。
+dirty | a | Your shoes are dirty after the game. | 試合の後であなたの靴は汚れています。
+dirty | a | Is that dirty shirt yours? | あの汚れたシャツはあなたのものですか。
+dirty | a | He washed the dirty dishes after dinner. | 彼は夕食後に汚れた皿を洗いました。
+wide | a | This river is very wide here. | この川はここではとても幅が広いです。
+wide | a | Is the road wide enough for buses? | その道路はバスが通れるほど広いですか。
+wide | a | She opened the window wide this morning. | 彼女は今朝窓を大きく開けました。
+deep | a | This pool is too deep for children. | このプールは子どもには深すぎます。
+deep | a | Is the water deep near the bridge? | 橋の近くは水が深いですか。
+deep | a | They found a deep hole in the garden. | 彼らは庭に深い穴を見つけました。
+dry | a | My clothes are dry after the sun. | 日に当たって私の服は乾いています。
+dry | a | Is the paint dry on this table? | このテーブルの塗料は乾いていますか。
+dry | a | We walked on the dry grass. | 私たちは乾いた草の上を歩きました。
+wet | a | My hair is wet after swimming. | 泳いだ後で髪がぬれています。
+wet | a | Are your shoes wet from the rain? | 雨で靴がぬれていますか。
+wet | a | She put the wet towel outside. | 彼女はぬれたタオルを外に出しました。
+soft | a | This pillow is very soft and comfortable. | この枕はとても柔らかくて快適です。
+soft | a | Do you like soft bread? | 柔らかいパンは好きですか。
+soft | a | The baby slept under a soft blanket. | 赤ちゃんは柔らかい毛布の下で眠りました。
+friendly | a | Our new neighbor is very friendly. | 新しい隣人はとても親しみやすいです。
+friendly | a | Is the hotel staff friendly? | そのホテルの従業員は親切ですか。
+friendly | a | The dog gave us a friendly look. | その犬は私たちに友好的な目を向けました。
+wonderful | a | We had a wonderful time at the beach. | 私たちは海辺ですばらしい時間を過ごしました。
+wonderful | a | Was the music wonderful last night? | 昨夜の音楽はすばらしかったですか。
+wonderful | a | My grandmother made a wonderful cake. | 祖母はすばらしいケーキを作りました。
+interesting | a | This book has many interesting stories. | この本には興味深い物語がたくさんあります。
+interesting | a | Did you see anything interesting at the museum? | 博物館で何か面白いものを見ましたか。
+interesting | a | Our teacher asked an interesting question. | 先生は興味深い質問をしました。
+exciting | a | The soccer game was very exciting. | そのサッカーの試合はとてもわくわくするものでした。
+exciting | a | Is the new movie exciting? | 新しい映画はわくわくしますか。
+exciting | a | We had an exciting day at the zoo. | 私たちは動物園でわくわくする一日を過ごしました。
+boring | a | This movie is boring for me. | この映画は私には退屈です。
+boring | a | Was the long meeting boring? | 長い会議は退屈でしたか。
+boring | a | He stopped reading the boring book. | 彼は退屈な本を読むのをやめました。
+funny | a | My grandfather tells funny stories at dinner. | 祖父は夕食のときに面白い話をします。
+funny | a | Did you hear that funny song? | あの面白い歌を聞きましたか。
+funny | a | The children made funny faces for the photo. | 子どもたちは写真のためにおかしな顔をしました。
+strange | a | I heard a strange sound outside. | 外で奇妙な音が聞こえました。
+strange | a | Does this milk have a strange smell? | この牛乳には変なにおいがありますか。
+strange | a | We saw a strange shape in the clouds. | 私たちは雲の中に奇妙な形を見ました。
+terrible | a | The weather was terrible yesterday afternoon. | 昨日の午後は天気がひどかったです。
+terrible | a | Was the food at that restaurant terrible? | あのレストランの料理はひどかったですか。
+terrible | a | I made a terrible mistake on the test. | 私はテストでひどい間違いをしました。
+excellent | a | Our teacher gave us an excellent lesson. | 先生は私たちにすばらしい授業をしてくれました。
+excellent | a | Is this an excellent place for lunch? | ここは昼食にとてもよい場所ですか。
+excellent | a | She did an excellent job today. | 彼女は今日すばらしい仕事をしました。
+bright | a | The sun is bright this morning. | 今朝は太陽が明るく輝いています。
+bright | a | Is your new classroom bright enough? | 新しい教室は十分明るいですか。
+bright | a | That bright student answered every question. | あの頭のよい生徒はすべての質問に答えました。
+empty | a | This bottle is empty now. | この瓶はもう空です。
+empty | a | Are the seats near the window empty? | 窓の近くの席は空いていますか。
+empty | a | We found an empty room upstairs. | 私たちは上の階に空の部屋を見つけました。
+alone | a | I was alone in the house yesterday. | 昨日、私は家に一人でいました。
+alone | a | Is your little brother alone at home? | 弟さんは家に一人でいますか。
+alone | a | She felt alone in the new school. | 彼女は新しい学校で孤独に感じました。
+alive | a | The old tree is still alive. | その古い木はまだ生きています。
+alive | a | Are those small fish still alive? | あの小さな魚はまだ生きていますか。
+alive | a | The plant remained alive through winter. | その植物は冬の間も生きていました。
+dead | a | The battery in my clock is dead. | 私の時計の電池は切れています。
+dead | a | Is the battery in your phone dead? | あなたの電話の電池は切れていますか。
+dead | a | We found a dead leaf on the ground. | 私たちは地面に枯れた葉を見つけました。
+ill | a | My sister is ill and resting today. | 妹は具合が悪く、今日は休んでいます。
+ill | a | Are you feeling ill this morning? | 今朝は具合が悪いですか。
+ill | a | He stayed home because he was ill. | 彼は病気だったので家にいました。
+glad | a | I am glad to see you again. | またあなたに会えてうれしいです。
+glad | a | Are you glad about the good news? | よい知らせを聞いてうれしいですか。
+glad | a | She was glad to finish her homework. | 彼女は宿題を終えられてうれしかったです。
+sorry | a | I am sorry for being late today. | 今日は遅れてすみません。
+sorry | a | Are you sorry about the broken cup? | カップを割ったことを申し訳なく思っていますか。
+sorry | a | He felt sorry for his mistake. | 彼は自分の間違いを申し訳なく思いました。
+true | a | Is this story true or not? | この話は本当ですか、それとも違いますか。
+true | a | Do you think that answer is true? | その答えは本当だと思いますか。
+true | a | Her words were true after all. | 結局、彼女の言葉は本当でした。
+false | a | This sentence has a false answer. | この文には間違った答えがあります。
+false | a | Is that story true or false? | あの話は本当ですか、それとも嘘ですか。
+false | a | The student found two false statements. | その生徒は間違った記述を二つ見つけました。
+huge | a | A huge tree stands near our school. | 学校の近くに巨大な木が立っています。
+huge | a | Have you seen that huge new building? | あの巨大な新しい建物を見たことがありますか。
+huge | a | We found a huge pumpkin in the garden. | 私たちは庭で巨大なカボチャを見つけました。
+tiny | a | A tiny bird sat on my window. | とても小さな鳥が窓にとまりました。
+tiny | a | Can you see the tiny fish there? | あそこにいるとても小さな魚が見えますか。
+tiny | a | My sister drew a tiny flower. | 妹はとても小さな花を描きました。
+tall | a | My older brother is very tall. | 私の兄はとても背が高いです。
+tall | a | Is that tree taller than our house? | あの木は私たちの家より高いですか。
+tall | a | A tall woman stood near the door. | 背の高い女性がドアの近くに立っていました。
+round | a | The children sat around a round table. | 子どもたちは丸いテーブルを囲んで座りました。
+round | a | Is this ball perfectly round? | このボールは完全に丸いですか。
+round | a | My mother bought a round mirror. | 母は丸い鏡を買いました。
+straight | a | Please draw a straight line here. | ここにまっすぐな線を引いてください。
+straight | a | Is this road straight all the way? | この道はずっとまっすぐですか。
+straight | a | She gave me a straight answer. | 彼女は私に率直な答えをくれました。
+sweet | a | These apples are very sweet and fresh. | これらのリンゴはとても甘くて新鮮です。
+sweet | a | Do you like sweet tea? | 甘いお茶は好きですか。
+sweet | a | My father made a sweet cake yesterday. | 父は昨日甘いケーキを作りました。
+traditional | a | We learned a traditional dance at school. | 私たちは学校で伝統的な踊りを習いました。
+traditional | a | Is this a traditional food in your country? | これはあなたの国の伝統的な食べ物ですか。
+traditional | a | My grandmother wears traditional clothes on special days. | 祖母は特別な日に伝統的な服を着ます。
+economic | a | The town has some economic problems. | その町にはいくつか経済的な問題があります。
+economic | a | Is this an economic problem for the city? | これはその都市にとって経済的な問題ですか。
+economic | a | Our class learned about economic changes. | 私たちのクラスは経済の変化について学びました。
+medical | a | My aunt works at a medical center. | 私のおばは医療センターで働いています。
+medical | a | Does this school have a medical room? | この学校には医務室がありますか。
+medical | a | The library has books about medical science. | 図書館には医学についての本があります。
+physical | a | Swimming is good for physical health. | 水泳は身体の健康によいです。
+physical | a | Do you enjoy physical activity after school? | 放課後に体を動かすのは好きですか。
+physical | a | Our teacher explained physical changes during exercise. | 先生は運動中の身体の変化を説明しました。
+legal | a | This is a legal way to work here. | これはここで働く合法的な方法です。
+legal | a | Is it legal to park here? | ここに駐車するのは合法ですか。
+legal | a | My uncle reads legal papers at work. | おじは仕事で法律関係の書類を読みます。
+central | a | The central station is near our hotel. | 中央駅は私たちのホテルの近くです。
+central | a | Is the central park open today? | 中央公園は今日開いていますか。
+central | a | We met in the central room. | 私たちは中央の部屋で会いました。
+basic | a | We learned basic English words today. | 私たちは今日、基本的な英単語を学びました。
+basic | a | Do you know the basic rules of soccer? | サッカーの基本的なルールを知っていますか。
+basic | a | My brother learned basic cooking at school. | 兄は学校で基本的な料理を学びました。
+necessary | a | Water is necessary for all plants. | 水はすべての植物に必要です。
+necessary | a | Is a ticket necessary for this bus? | このバスには切符が必要ですか。
+necessary | a | We bought the necessary things for school. | 私たちは学校に必要な物を買いました。
+useful | a | This small book is very useful. | この小さな本はとても役に立ちます。
+useful | a | Is this map useful for our trip? | この地図は旅行に役立ちますか。
+useful | a | She gave me some useful advice. | 彼女は私に役立つ助言をくれました。
+healthy | a | My grandfather is still strong and healthy. | 祖父は今も丈夫で健康です。
+healthy | a | Is this a healthy breakfast for children? | これは子どもにとって健康的な朝食ですか。
+healthy | a | We eat healthy food every day. | 私たちは毎日健康によい食べ物を食べます。
+fresh | a | I bought fresh bread this morning. | 私は今朝焼きたてのパンを買いました。
+fresh | a | Are these vegetables fresh today? | 今日のこれらの野菜は新鮮ですか。
+fresh | a | The children enjoyed the fresh mountain air. | 子どもたちは新鮮な山の空気を楽しみました。
+wild | a | We saw a wild bird near the river. | 私たちは川の近くで野生の鳥を見ました。
+wild | a | Are there wild animals in this forest? | この森には野生動物がいますか。
+wild | a | My brother took pictures of wild flowers. | 兄は野生の花の写真を撮りました。
+smart | a | My little sister is very smart. | 妹はとても頭がよいです。
+smart | a | Is that student smart at math? | あの生徒は数学が得意で頭がよいですか。
+smart | a | The smart dog learned a new game. | その賢い犬は新しい遊びを覚えました。
+clever | a | That clever child found the answer quickly. | あの賢い子どもはすぐに答えを見つけました。
+clever | a | Is your cat clever enough to open doors? | あなたの猫はドアを開けられるほど賢いですか。
+clever | a | My friend had a clever idea for the game. | 友達はゲームについて賢い案を思いつきました。
+lucky | a | I was lucky to find my lost bag. | なくしたかばんが見つかって私は幸運でした。
+lucky | a | Do you feel lucky today? | 今日は運がよいと感じますか。
+lucky | a | She was lucky to get the last ticket. | 彼女は最後の切符を手に入れられて幸運でした。
+proud | a | My parents are proud of my sister. | 両親は妹を誇りに思っています。
+proud | a | Are you proud of your school team? | あなたは学校のチームを誇りに思っていますか。
+proud | a | He felt proud after finishing the race. | 彼は競走を走り終えて誇らしく感じました。

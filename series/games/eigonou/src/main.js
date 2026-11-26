@@ -36,13 +36,30 @@ import { init_prac } from './prac.js';
 import { init_drill } from './drill.js';
 import { init_geo } from './geo.js';
 import { init_slot } from './slot.js';
+import { drainInbox, announceInbox } from './inbox.js';
+import { cleanDB } from './clean.js';
+import { openTry, saveMemo, showPlays } from './playsent.js';
+import { startEpisodePractice } from './episode-practice.js';
 const INITS = [init_i18n, init_vocab, init_vocab_a1, init_vocab_a2, init_cefr_map, init_engine, init_pv_user, init_idioms, init_vcomp, init_loc, init_of, init_emoji_fix, init_common, init_noto_map, init_pack, init_addword, init_play, init_motion, init_reel, init_fuku, init_embed, init_big, init_bigdict, init_objrank, init_qbar, init_qfw, init_qsp, init_qfr, init_qfx, init_coord, init_prac_data, init_prac, init_drill, init_geo, init_slot];
 let started = false;
 window.__EIGONOU = {
-  start(root, ctx) {
+  practice: startEpisodePractice,
+  async start(root, ctx) {
     Object.assign(ENV, { root, ctx, core: ctx.core, store: ctx.store });
     attach();
-    if (!started) { started = true; INITS.forEach(f => f()); }
+    if (!started) {   // 35個の初期化を、少しずつ進める（一気に動かすと画面が固まるため）
+      started = true; let t = performance.now();
+      for (const f of INITS) { f(); if (performance.now() - t > 12) { await new Promise(r => setTimeout(r, 0)); t = performance.now(); } }
+    }
+    try { cleanDB(); } catch (e) { }
+    try {
+      const top = root.querySelector('.top');
+      if (top && !top.querySelector('.eg-try-b')) {
+        const mk = (cls, label, fn) => { const b = document.createElement('button'); b.className = 'ib ' + cls; b.textContent = label; b.style.cssText = 'font-size:12px;padding:4px 8px;white-space:nowrap;width:auto;height:34px;flex:0 0 auto'; b.onclick = fn; top.appendChild(b); };
+        mk('eg-try-b', '✨ 使ってみる', () => openTry()); mk('eg-memo-b', '💾 記憶', () => saveMemo()); mk('eg-pl', '📚 記憶した文', () => showPlays());
+      }
+    } catch (e) { }
+    setTimeout(() => { try { drainInbox(); } catch (e) { } }, 400);   // ほかのアプリから送られた言葉・表現・文を、マイことばに入れる
   },
-  stop() { detach(); }
+  stop() { detach(); try { announceInbox(); } catch (e) { } }
 };

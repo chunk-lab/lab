@@ -1,0 +1,300 @@
+duck | n | A duck is swimming in the pond. | 一羽のアヒルが池で泳いでいます。
+duck | n | Can you see those ducks by the bridge? | 橋のそばのアヒルたちが見えますか。
+duck | n | The children fed the ducks some corn. | 子供たちはアヒルにトウモロコシをあげました。
+rabbit | n | A white rabbit lives in our garden. | 白いウサギが私たちの庭に住んでいます。
+rabbit | n | Does your rabbit like fresh grass? | あなたのウサギは新鮮な草が好きですか。
+rabbit | n | Two rabbits ran across the field. | 二羽のウサギが野原を走って横切りました。
+mouse | n | A small mouse ran under the table. | 小さなネズミがテーブルの下を走りました。
+mouse | n | Can you move the mouse on the screen? | 画面上でマウスを動かせますか。
+mouse | n | The mice ate some cheese last night. | 昨夜ネズミたちはチーズを少し食べました。
+bear | n | A brown bear is sleeping under a tree. | 茶色いクマが木の下で眠っています。
+bear | n | Have you ever seen a bear at the zoo? | 動物園でクマを見たことがありますか。
+bear | n | The bears were playing in the water. | クマたちは水の中で遊んでいました。
+elephant | n | An elephant has a very long nose. | ゾウにはとても長い鼻があります。
+elephant | n | Can you see the elephant over there? | 向こうにいるゾウが見えますか。
+elephant | n | The elephants walked slowly through the grass. | ゾウたちは草の中をゆっくり歩きました。
+monkey | n | That monkey is eating a banana. | あのサルはバナナを食べています。
+monkey | n | Does the monkey live in this forest? | そのサルはこの森に住んでいますか。
+monkey | n | We watched three monkeys climb a tree. | 私たちは三匹のサルが木に登るのを見ました。
+snake | n | A green snake moved through the grass. | 緑色のヘビが草の中を進みました。
+snake | n | Can you see that snake near the rock? | 岩の近くのあのヘビが見えますか。
+snake | n | Some snakes live in warm places. | ヘビの中には暖かい場所に住むものもいます。
+insect | n | A small insect landed on my hand. | 小さな昆虫が私の手に止まりました。
+insect | n | Is this insect a kind of bee? | この昆虫はハチの一種ですか。
+insect | n | The children studied insects in science class. | 子供たちは理科の授業で昆虫を学びました。
+bee | n | A bee is flying around that flower. | 一匹のハチがあの花の周りを飛んでいます。
+bee | n | Can you hear the bees outside? | 外にいるハチの音が聞こえますか。
+bee | n | Several bees visited our garden today. | 今日はいくつかのハチが庭に来ました。
+butterfly | n | A beautiful butterfly landed on the flower. | 美しいチョウが花に止まりました。
+butterfly | n | Did you see that yellow butterfly? | あの黄色いチョウを見ましたか。
+butterfly | n | The butterflies flew around the garden. | チョウたちは庭を飛び回りました。
+pet | n | My pet sleeps beside my bed. | 私のペットはベッドのそばで眠ります。
+pet | n | Do you have a pet at home? | 家でペットを飼っていますか。
+pet | n | The children showed pictures of their pets. | 子供たちは自分のペットの写真を見せました。
+wing | n | The bird has a white wing. | その鳥には白い翼があります。
+wing | n | Can this bird move its wings? | この鳥は翼を動かせますか。
+wing | n | The butterfly opened its colorful wings. | チョウは色鮮やかな翼を広げました。
+tail | n | The dog has a long tail. | その犬には長い尾があります。
+tail | n | Why is your cat moving its tail? | あなたの猫はなぜ尾を動かしていますか。
+tail | n | The horses moved their tails slowly. | 馬たちは尾をゆっくり動かしました。
+leaf | n | A yellow leaf fell onto my desk. | 黄色い葉が私の机に落ちました。
+leaf | n | Can you find a red leaf outside? | 外で赤い葉を見つけられますか。
+leaf | n | The leaves turned brown in autumn. | 秋に葉が茶色くなりました。
+root | n | This tree has a very long root. | この木にはとても長い根があります。
+root | n | Can you see the roots under the plant? | 植物の下にある根が見えますか。
+root | n | The farmer checked the roots carefully. | 農家の人は根を注意深く調べました。
+seed | n | Put one seed into this small pot. | この小さな鉢に種を一つ入れてください。
+seed | n | Will this seed grow into a flower? | この種は育って花になりますか。
+seed | n | We planted some seeds after school. | 私たちは放課後に種をいくつか植えました。
+grass | n | The grass is wet this morning. | 今朝は草がぬれています。
+grass | n | Does your rabbit eat fresh grass? | あなたのウサギは新鮮な草を食べますか。
+grass | n | The children sat together on the grass. | 子供たちは草の上に一緒に座りました。
+lemon | n | Please put a lemon in the basket. | かごにレモンを一つ入れてください。
+lemon | n | Is this lemon too sour for you? | このレモンはあなたには酸っぱすぎますか。
+lemon | n | She bought three lemons for dinner. | 彼女は夕食用にレモンを三個買いました。
+peach | n | This peach is sweet and soft. | このモモは甘くて柔らかいです。
+peach | n | Would you like another peach today? | 今日はモモをもう一ついかがですか。
+peach | n | The shop sells fresh peaches in summer. | その店は夏に新鮮なモモを売ります。
+potato | n | I need one potato for the soup. | スープ用にジャガイモが一個必要です。
+potato | n | Can you wash this potato first? | まずこのジャガイモを洗ってくれますか。
+potato | n | Dad cooked potatoes with some butter. | 父はジャガイモをバターで調理しました。
+corn | n | We eat fresh corn in summer. | 私たちは夏に新鮮なトウモロコシを食べます。
+corn | n | Does your sister like sweet corn? | お姉さんは甘いトウモロコシが好きですか。
+corn | n | The farmer grows corn behind his house. | 農家の人は家の裏でトウモロコシを育てています。
+bean | n | There is a bean on my plate. | 私の皿に豆が一粒あります。
+bean | n | Can you put these beans in the soup? | これらの豆をスープに入れてくれますか。
+bean | n | My mother cooked green beans for lunch. | 母は昼食に緑色の豆を料理しました。
+cheese | n | This sandwich has cheese and tomato. | このサンドイッチにはチーズとトマトが入っています。
+cheese | n | Would you like some cheese with your bread? | パンと一緒にチーズはいかがですか。
+cheese | n | She put cheese on the hot potatoes. | 彼女は熱いジャガイモにチーズをのせました。
+butter | n | Please put some butter on my toast. | 私のトーストにバターを少し塗ってください。
+butter | n | Is there any butter in the fridge? | 冷蔵庫にバターはありますか。
+butter | n | He cooked the vegetables with butter. | 彼は野菜をバターで調理しました。
+bill | n | The waiter brought our bill after dinner. | 夕食後に店員が請求書を持ってきました。
+bill | n | Can you pay this bill today? | 今日この請求書を支払えますか。
+bill | n | She gave me two ten-dollar bills. | 彼女は私に十ドル紙幣を二枚くれました。
+coin | n | I found a coin under the chair. | 椅子の下で硬貨を一枚見つけました。
+coin | n | Can you put this coin in my bag? | この硬貨を私のかばんに入れてくれますか。
+coin | n | The child counted five small coins. | その子は小さな硬貨を五枚数えました。
+dollar | n | This notebook costs one dollar today. | このノートは今日一ドルです。
+dollar | n | Do you have a dollar for the bus? | バス代に一ドル持っていますか。
+dollar | n | He saved twenty dollars for the trip. | 彼は旅行のために二十ドル貯めました。
+cent | n | This small candy costs one cent. | この小さなお菓子は一セントです。
+cent | n | Do you have one more cent? | あと一セント持っていますか。
+cent | n | The price went up by five cents. | 値段が五セント上がりました。
+sale | n | The sale starts at nine tomorrow. | 販売は明日の九時に始まります。
+sale | n | Is this book on sale today? | この本は今日特売中ですか。
+sale | n | The shop had a big sale yesterday. | その店は昨日大きなセールをしました。
+fever | n | My brother has a slight fever today. | 弟は今日少し熱があります。
+fever | n | Does your child still have a fever? | お子さんはまだ熱がありますか。
+fever | n | Her fever went down after resting. | 彼女の熱は休んだ後に下がりました。
+medicine | n | Please take your medicine after breakfast. | 朝食後に薬を飲んでください。
+medicine | n | Did the doctor give you any medicine? | 医者はあなたに薬を出しましたか。
+medicine | n | She keeps her medicine in a safe place. | 彼女は薬を安全な場所に保管しています。
+disease | n | This disease can affect many plants. | この病気は多くの植物に影響することがあります。
+disease | n | Can the doctor explain this disease simply? | 医者はこの病気を簡単に説明できますか。
+disease | n | The farmer learned how to prevent plant diseases. | 農家の人は植物の病気の防ぎ方を学びました。
+exercise | n | Walking is good exercise for everyone. | 歩くことは誰にとってもよい運動です。
+exercise | n | Do you get enough exercise each week? | 毎週十分に運動していますか。
+exercise | n | The children enjoyed their morning exercises. | 子供たちは朝の運動を楽しみました。
+diet | n | A healthy diet includes many vegetables. | 健康的な食事には多くの野菜が含まれます。
+diet | n | Does your diet include enough fruit? | あなたの食生活には十分な果物が含まれていますか。
+diet | n | She changed her diet to eat more fish. | 彼女は魚をもっと食べるよう食生活を変えました。
+death | n | The story ends with the king's death. | その物語は王の死で終わります。
+death | n | Did the book discuss the death of a tree? | その本は木の枯死について述べていましたか。
+death | n | The old poem speaks about life and death. | その古い詩は生と死について語っています。
+birth | n | The family celebrated the baby's birth. | 家族は赤ちゃんの誕生を祝いました。
+birth | n | Do you know the date of her birth? | 彼女の誕生日を知っていますか。
+birth | n | The zoo welcomed two animal births this spring. | 動物園ではこの春二匹の動物が誕生しました。
+funeral | n | The family held a quiet funeral. | 家族は静かな葬式を行いました。
+funeral | n | Did you attend the funeral yesterday? | 昨日その葬式に参列しましたか。
+funeral | n | The town prepared flowers for the funeral. | 町の人々は葬式のために花を用意しました。
+marriage | n | Their marriage began with a small party. | 二人の結婚生活は小さなパーティーから始まりました。
+marriage | n | Did they celebrate their marriage last Sunday? | 二人は先週の日曜日に結婚を祝いましたか。
+marriage | n | Her parents have a happy marriage. | 彼女の両親は幸せな結婚生活を送っています。
+friendship | n | Our friendship began at school last year. | 私たちの友情は去年学校で始まりました。
+friendship | n | Does friendship make your life happier? | 友情はあなたの生活をより幸せにしますか。
+friendship | n | The children built strong friendships through music. | 子供たちは音楽を通じて強い友情を築きました。
+kiss | n | The mother gave her baby a kiss. | 母親は赤ちゃんにキスをしました。
+kiss | n | Can I give my child a goodnight kiss? | 子供におやすみのキスをしてもいいですか。
+kiss | n | She gave her daughter two quick kisses. | 彼女は娘に二度軽くキスをしました。
+joy | n | The children jumped with joy after winning. | 子供たちは勝って喜びで跳び上がりました。
+joy | n | Can you see the joy in her face? | 彼女の顔に喜びが表れているのが分かりますか。
+joy | n | Music brings great joy to our family. | 音楽は私たちの家族に大きな喜びをもたらします。
+anger | n | His anger went away after lunch. | 昼食後に彼の怒りは収まりました。
+anger | n | Can you talk about your anger calmly? | 自分の怒りについて落ち着いて話せますか。
+anger | n | She expressed her anger without shouting. | 彼女は叫ばずに怒りを表しました。
+courage | n | It takes courage to try something new. | 新しいことに挑戦するには勇気が必要です。
+courage | n | Do you have the courage to speak first? | 最初に話す勇気がありますか。
+courage | n | Her courage helped the whole team. | 彼女の勇気はチーム全体の助けになりました。
+patience | n | Learning a language takes time and patience. | 言語を学ぶには時間と忍耐が必要です。
+patience | n | Do you have patience with young children? | 小さな子供たちに根気よく接することができますか。
+patience | n | He showed great patience while teaching me. | 彼は私に教えるとき大きな忍耐を示しました。
+luck | n | We had good luck with the weather. | 私たちは天気に恵まれました。
+luck | n | Do you believe in good luck? | 幸運を信じていますか。
+luck | n | She wished her brother luck before the test. | 彼女は試験前に弟の幸運を祈りました。
+journey | n | Our journey began early on Monday. | 私たちの旅行は月曜日の早朝に始まりました。
+journey | n | Did you enjoy the long train journey? | 長い列車の旅は楽しかったですか。
+journey | n | They shared stories about their journeys. | 彼らはそれぞれの旅行について話しました。
+tour | n | We took a tour of the old castle. | 私たちは古い城の観光ツアーに参加しました。
+tour | n | Is the city tour starting now? | 市内観光ツアーは今始まりますか。
+tour | n | The hotel offers short walking tours. | そのホテルは短い徒歩観光ツアーを用意しています。
+guide | n | Our guide showed us the beautiful garden. | 案内人は私たちに美しい庭を見せました。
+guide | n | Can you ask the guide about this building? | この建物について案内人に聞いてくれますか。
+guide | n | The visitors followed their guides into the museum. | 訪問者たちは案内人について博物館に入りました。
+seat | n | Please take a seat near the window. | 窓の近くの席に座ってください。
+seat | n | Is this seat free for my friend? | この席は友達が座ってもいいですか。
+seat | n | We found two empty seats on the train. | 私たちは列車で空席を二つ見つけました。
+traffic | n | There is heavy traffic near the station. | 駅の近くは交通量が多いです。
+traffic | n | Is the traffic bad this morning? | 今朝は交通が混雑していますか。
+traffic | n | We waited because of the traffic. | 私たちは交通渋滞のために待ちました。
+signal | n | Wait until the signal turns green. | 信号が青になるまで待ってください。
+signal | n | Can you see the traffic signal ahead? | 前方の交通信号が見えますか。
+signal | n | The train stopped at a red signal. | 列車は赤信号で止まりました。
+crossing | n | Please use the crossing near the school. | 学校の近くの横断歩道を使ってください。
+crossing | n | Is there a crossing at this corner? | この角に横断歩道はありますか。
+crossing | n | The children waited at the crossings. | 子供たちは横断歩道で待ちました。
+taxi | n | We took a taxi to the hotel. | 私たちはホテルまでタクシーに乗りました。
+taxi | n | Can you call a taxi for us? | 私たちのためにタクシーを呼んでくれますか。
+taxi | n | Several taxis waited outside the station. | 何台かのタクシーが駅の外で待っていました。
+flight | n | Our flight leaves early tomorrow morning. | 私たちの航空便は明日の早朝に出発します。
+flight | n | Is your flight arriving on time? | あなたの便は時間どおりに到着しますか。
+flight | n | The airport has many flights today. | その空港には今日多くの航空便があります。
+speed | n | The train moves at a high speed. | その列車は速い速度で走ります。
+speed | n | Can you check the speed of this bike? | この自転車の速度を確認できますか。
+speed | n | The runners increased their speed near the end. | 走者たちは終盤に速度を上げました。
+pardon | n | The teacher asked for his pardon. | 先生は彼の許しを求めました。
+pardon | n | Will you ask for her pardon? | 彼女に許しを求めますか。
+pardon | n | He received a pardon for his mistake. | 彼は自分の間違いについて許しを得ました。
+several | a | Several students stayed after class today. | 今日はいくつかの生徒が授業後に残りました。
+several | a | Did you visit several shops yesterday? | 昨日はいくつかの店を訪れましたか。
+several | a | We have several choices for lunch. | 昼食にはいくつかの選択肢があります。
+opposite | a | Our rooms are on opposite sides. | 私たちの部屋は反対側にあります。
+opposite | a | Are these two ideas opposite? | この二つの考えは反対ですか。
+opposite | a | The children walked in opposite directions. | 子供たちは反対の方向に歩きました。
+aside | r | Please move aside and let them pass. | わきによけて彼らを通してください。
+aside | r | Can you put your bag aside? | かばんをわきに置いてくれますか。
+aside | r | She stepped aside to open the door. | 彼女はドアを開けるためわきによけました。
+personally | r | I personally like this blue shirt. | 個人的にはこの青いシャツが好きです。
+personally | r | Do you personally know our new teacher? | あなたは新しい先生を個人的に知っていますか。
+personally | r | She personally thanked every student afterward. | 彼女は後で生徒一人一人に直接感謝しました。
+badly | r | He played badly in yesterday's game. | 彼は昨日の試合で下手なプレーをしました。
+badly | r | Did I sing badly just now? | 私は今下手に歌いましたか。
+badly | r | The old radio worked badly yesterday. | 古いラジオは昨日調子が悪かったです。
+independent | a | My sister is an independent person. | 姉は自立した人です。
+independent | a | Are you ready to be independent? | 自立する準備はできていますか。
+independent | a | The children became more independent this year. | 子供たちは今年さらに自立しました。
+equal | a | These two pieces are equal in size. | この二つのかけらは大きさが等しいです。
+equal | a | Are the two numbers equal? | その二つの数字は等しいですか。
+equal | a | Everyone should have an equal chance. | 誰もが等しい機会を持つべきです。
+honest | a | My friend is always honest with me. | 友達はいつも私に正直です。
+honest | a | Can you give me an honest answer? | 正直な答えをくれますか。
+honest | a | She was honest about her mistake. | 彼女は自分の間違いについて正直でした。
+polite | a | Please be polite to our guests. | お客さんには礼儀正しくしてください。
+polite | a | Was the waiter polite to you? | 店員はあなたに礼儀正しかったですか。
+polite | a | The children spoke in polite voices. | 子供たちは礼儀正しい話し方をしました。
+rude | a | It is rude to shout at people. | 人に向かって叫ぶのは失礼です。
+rude | a | Was my question rude to you? | 私の質問はあなたに失礼でしたか。
+rude | a | He made a rude comment yesterday. | 彼は昨日失礼な発言をしました。
+gentle | a | Be gentle with the little kitten. | 小さな子猫には優しくしてください。
+gentle | a | Is your new dog gentle with children? | 新しい犬は子供たちに優しいですか。
+gentle | a | Her gentle voice made everyone calm. | 彼女の優しい声でみんな落ち着きました。
+calm | a | The sea looks calm this morning. | 今朝の海は穏やかに見えます。
+calm | a | Can you stay calm during the test? | 試験中に落ち着いていられますか。
+calm | a | He remained calm before his speech. | 彼は演説の前も落ち着いていました。
+ugly | a | That old building looks ugly to me. | あの古い建物は私には醜く見えます。
+ugly | a | Do you think this picture is ugly? | この絵は醜いと思いますか。
+ugly | a | The children painted over the ugly wall. | 子供たちは醜い壁の上から色を塗りました。
+lovely | a | What a lovely day for a walk! | 散歩にぴったりのすてきな日です。
+lovely | a | Is that your lovely little garden? | あのすてきな小さな庭はあなたのですか。
+lovely | a | We enjoyed a lovely dinner together. | 私たちは一緒にすてきな夕食を楽しみました。
+pleasant | a | We had a pleasant walk after lunch. | 私たちは昼食後に楽しい散歩をしました。
+pleasant | a | Was your trip pleasant this weekend? | 今週末の旅行は楽しかったですか。
+pleasant | a | The room has a pleasant smell. | その部屋には心地よい香りがあります。
+fantastic | a | Your new picture looks fantastic today. | あなたの新しい絵は今日すばらしく見えます。
+fantastic | a | Was the concert as fantastic as you hoped? | コンサートは期待どおりすばらしかったですか。
+fantastic | a | We had a fantastic time at the festival. | 私たちは祭りで最高の時間を過ごしました。
+awful | a | The weather was awful last Sunday. | 先週の日曜日の天気はひどかったです。
+awful | a | Was the noise really that awful? | その騒音は本当にそれほどひどかったですか。
+awful | a | The room had an awful smell. | その部屋にはひどいにおいがありました。
+silly | a | That is a silly question to ask. | それはばかげた質問です。
+silly | a | Did I make a silly mistake? | 私はばかげた間違いをしましたか。
+silly | a | The children laughed at his silly hat. | 子供たちは彼のおかしな帽子を見て笑いました。
+stupid | a | It was a stupid thing to say. | それはばかな発言でした。
+stupid | a | Was that a stupid idea after all? | 結局それはばかな考えでしたか。
+stupid | a | He regretted his stupid mistake later. | 彼は後で自分のばかな間違いを後悔しました。
+crazy | a | That sounds like a crazy idea. | それはばかげた考えに聞こえます。
+crazy | a | Are you crazy about that game? | あなたはそのゲームに夢中ですか。
+crazy | a | We laughed at the crazy plan. | 私たちはそのばかげた計画を笑いました。
+curious | a | The curious child asked many questions. | 好奇心の強い子供はたくさん質問しました。
+curious | a | Are you curious about life in space? | 宇宙での生活に興味がありますか。
+curious | a | Her curious brother opened the old box. | 好奇心の強い弟は古い箱を開けました。
+active | a | My grandfather is still very active. | 祖父は今もとても活発です。
+active | a | Is your dog active in the morning? | あなたの犬は朝に活発ですか。
+active | a | The children stayed active all afternoon. | 子供たちは午後ずっと活発に動きました。
+shy | a | My little sister is very shy. | 妹はとても内気です。
+shy | a | Are you shy around new people? | 初対面の人の前では恥ずかしがりですか。
+shy | a | He was shy on his first day. | 彼は初日は内気でした。
+sharp | a | Be careful with that sharp knife. | その鋭いナイフには気をつけてください。
+sharp | a | Is this pencil sharp enough now? | この鉛筆はもう十分とがっていますか。
+sharp | a | The cat has very sharp teeth. | その猫にはとても鋭い歯があります。
+smooth | a | This stone feels smooth in my hand. | この石は手の中で滑らかに感じます。
+smooth | a | Is the surface of the table smooth? | テーブルの表面は滑らかですか。
+smooth | a | She touched the smooth glass carefully. | 彼女は滑らかなガラスに注意深く触れました。
+rough | a | The road is rough near the farm. | 農場の近くの道はでこぼこしています。
+rough | a | Does this cloth feel rough to you? | この布はあなたにはざらざらして感じますか。
+rough | a | His hands were rough after working outside. | 外で働いた後の彼の手は荒れていました。
+thick | a | This book is too thick for my bag. | この本は厚すぎてかばんに入りません。
+thick | a | Is the wall thick enough here? | ここの壁は十分な厚さがありますか。
+thick | a | She wore thick socks in winter. | 彼女は冬に厚い靴下を履きました。
+thin | a | Please cut the bread into thin pieces. | パンを薄く切ってください。
+thin | a | Is this paper too thin for painting? | この紙は絵を描くには薄すぎますか。
+thin | a | He wore a thin shirt yesterday. | 彼は昨日薄いシャツを着ていました。
+narrow | a | The street is narrow near our house. | 家の近くの通りは狭いです。
+narrow | a | Can a bus use this narrow road? | バスはこの狭い道を通れますか。
+narrow | a | We walked along a narrow path. | 私たちは狭い小道を歩きました。
+loose | a | These shoes feel loose on my feet. | この靴は足に対してゆるく感じます。
+loose | a | Is that button loose on your coat? | コートのそのボタンはゆるんでいますか。
+loose | a | His shirt became loose after washing. | 彼のシャツは洗濯後にゆるくなりました。
+tight | a | This shirt is too tight for me. | このシャツは私にはきつすぎます。
+tight | a | Are those shoes tight around your feet? | その靴は足の周りがきついですか。
+tight | a | She wore a tight hat yesterday. | 彼女は昨日きつい帽子をかぶっていました。
+solid | a | Ice is the solid form of water. | 氷は水の固体の形です。
+solid | a | Is this table made of solid wood? | このテーブルは無垢の木材でできていますか。
+solid | a | The children built a solid wall. | 子供たちは頑丈な壁を作りました。
+flat | a | The ground is flat near the lake. | 湖の近くの地面は平らです。
+flat | a | Is this table completely flat now? | このテーブルは今完全に平らですか。
+flat | a | We walked across a flat field. | 私たちは平らな野原を歩いて横切りました。
+bitter | a | This tea tastes a little bitter. | このお茶は少し苦い味がします。
+bitter | a | Is that chocolate too bitter for you? | そのチョコレートはあなたには苦すぎますか。
+bitter | a | She did not like the bitter drink. | 彼女はその苦い飲み物が好きではありませんでした。
+sour | a | The lemon tastes very sour today. | そのレモンは今日とても酸っぱいです。
+sour | a | Is this orange too sour to eat? | このオレンジは酸っぱすぎて食べられませんか。
+sour | a | He made a face after tasting sour juice. | 彼は酸っぱいジュースを味わって顔をしかめました。
+ripe | a | This peach is ripe and sweet. | このモモは熟していて甘いです。
+ripe | a | Are the bananas ripe enough to eat? | バナナはもう食べられるほど熟していますか。
+ripe | a | She picked three ripe tomatoes yesterday. | 彼女は昨日熟したトマトを三個採りました。
+silent | a | The classroom became silent after lunch. | 昼食後に教室は静かになりました。
+silent | a | Why is everyone so silent today? | 今日はなぜみんなこんなに無言なのですか。
+silent | a | He stayed silent during the meeting. | 彼は会議中ずっと無言でした。
+daily | a | Reading is part of my daily life. | 読書は私の日常生活の一部です。
+daily | a | Do you have a daily exercise plan? | 毎日の運動計画はありますか。
+daily | a | She changed her daily morning routine. | 彼女は毎朝の日課を変えました。
+original | a | This is the original picture I drew. | これは私が描いた元の絵です。
+original | a | Can you show me the original plan? | 元の計画を見せてくれますか。
+original | a | Her original idea surprised the teacher. | 彼女の独創的な考えは先生を驚かせました。
+minor | a | We made a minor change to the plan. | 私たちは計画に小さな変更を加えました。
+minor | a | Is this only a minor problem? | これはほんの小さな問題ですか。
+minor | a | The teacher found two minor mistakes. | 先生は小さな間違いを二つ見つけました。
+primary | a | Our primary goal is to help children. | 私たちの主な目標は子供たちを助けることです。
+primary | a | Is reading your primary reason for coming? | 読書がここへ来た主な理由ですか。
+primary | a | The primary colors include red and blue. | 原色には赤と青が含まれます。
+senior | a | My senior brother is in college now. | 私の年上の兄は今大学生です。
+senior | a | Is she a senior member of the team? | 彼女はチームの上位のメンバーですか。
+senior | a | The senior students helped the younger children. | 上級生たちは年下の子供たちを助けました。
+junior | a | My junior sister started school this year. | 私の年下の妹は今年学校に通い始めました。
+junior | a | Is he a junior member of your club? | 彼はあなたのクラブの下位のメンバーですか。
+junior | a | The junior students played outside together. | 下級生たちは外で一緒に遊びました。
+advanced | a | She takes an advanced English class. | 彼女は上級の英語の授業を受けています。
+advanced | a | Are these books for advanced students? | これらの本は上級の生徒向けですか。
+advanced | a | He learned advanced math at school. | 彼は学校で高度な数学を学びました。

@@ -1,10 +1,10 @@
 /* 効果音と声。音は2種類：
    ・電子音（tone）… ファイルなし。判定の音など
    ・mp3（assets/audio/se, voice）… ボタンの声・コンボの声など。読み込んでから、共通の「効果音」の音量（core.sound.sfxBus）に流す
-   音が大きすぎたので、mp3は元の音量の約3割（−10dB）に下げて鳴らす（FILE_GAIN）。全体の大きさは共通設定の「効果音」でも変えられる */
+   mp3は、ファイルそのままの大きさで鳴らす（絞りはなし）。全体の大きさは共通設定の「効果音」で変えられる */
 import { ENV, settings, tone, unlockAudio } from './engine.js';
-export const FILE_GAIN = 0.3;
-export const VOICE_RATE = 0.5;   // 声のmp3は効果音のさらに半分の大きさ
+export const FILE_GAIN = 1;
+export const VOICE_RATE = 1;   // 声のmp3も、ファイルそのままの大きさ
 const FILES = ['se/mode_game', 'se/mode_study', 'se/btn_sarasara', 'se/btn_yoidon', 'se/btn_lesson', 'voice/chunk', 'voice/combo', 'voice/adjective', 'voice/adverb', 'voice/verb', 'voice/noun', 'voice/perfect', 'voice/nice', 'voice/yes', 'voice/good', 'voice/excellent', 'voice/wow', 'voice/stage_clear', 'voice/try_again'];
 const BUF = {}, LAST = {};
 let curVoice = null;

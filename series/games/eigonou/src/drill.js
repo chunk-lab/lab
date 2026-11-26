@@ -72,7 +72,7 @@ export function drQView(){ const Q=DR.q; if(!Q) return '<p class="note">問題�
 export function drStat(){ const s=pracStore(); s.dr=s.dr||{}; const k=DR.topic; return s.dr[k]=s.dr[k]||{ok:0,miss:0,streak:0}; }
 export function drAnswer(i){ if(DR.done||!DR.q) return; const o=DR.q.opts[i]; const ok=o.tx===DR.q.ans; DR.done=true; DR.pickd=i; DR.msg={ok}; const st=drStat(); if(ok){ st.ok++; st.streak++; } else { st.miss++; st.streak=0; } try{ save(); }catch(e){} try{ say(DR.q.ans); }catch(e){} drRender(); }
 // ---- 画面 ----
-export function prModeSeg(){ const m=PR.mode; return `<div class="seg big prm">${[['pv','🎡 句動詞'],['id','🧩 言い方'],['rep','🔁 反復'],['quiz','🎯 クイズ']].map(([k,l])=>`<button class="${m===k?'on':''}" data-m="${k}">${l}</button>`).join('')}</div>`; }
+export function prModeSeg(){ const m=PR.mode; return `<div class="seg big prm">${[['pv','🎡 句動詞'],['id','🧩 言い方'],['rep','🔁 反復'],['quiz','🎯 クイズ'],['word','🔤 単語']].map(([k,l])=>`<button class="${m===k?'on':''}" data-m="${k}">${l}</button>`).join('')}</div>`; }
 export function drStart(){ if(PR.mode==='rep'){ drRepNew(); } else { drQNew(); } drRender(); }
 export function drRender(){ const el=document.getElementById('prac'); if(!el) return; if(DR.mode!==PR.mode){ DR.mode=PR.mode; }
  const body=PR.mode==='rep'?drRepView():drQView();

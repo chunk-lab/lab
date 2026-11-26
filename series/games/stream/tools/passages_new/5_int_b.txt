@@ -1,0 +1,484 @@
+@id int27
+@lv 2
+@level 6
+@title Your Order Has Been Delayed
+@ja 注文の配送遅れ
+@tag 共通テストレベル・メール
+@gloss shipment=発送, delay=遅らせる, warehouse=倉庫, apologize=謝る, inconvenience=不便, discount=割引, cancel=取り消す, refund=返金
+X| Thank you {for|to|at|by} your order :: ご注文ありがとう
+P| {from|of|to|into} our online store :: 当オンライン店での
+T| {on|in|at|to} October 3. :: 10月3日の
+== 10月3日の当オンラインストアでのご注文、ありがとうございます。
+S| We are sorry {to tell|telling|told|tells} you :: 申し訳なく伝えます
+O| {that|what|which|who} your shipment :: お客様の発送が
+V| {has been|have been|has being|having been} delayed. :: 遅れていると
+== 申し訳ありませんが、お客様の商品の発送が遅れております。
+M| {Because of|Because|Because to|Since of} heavy snow, :: 大雪のため
+S| our warehouse {was closed|was close|were closed|closed was} :: 倉庫は閉鎖された
+T| {for|since|during|while} two days. :: 2日間
+== 大雪のため、倉庫が2日間閉鎖されました。
+S| Your package {will|is|has|was} arrive :: 荷物は届きます
+T| {on|in|at|to} October 12 :: 10月12日に
+M| {instead of|instead|in place|rather} October 9. :: 9日ではなく
+== お荷物は10月9日ではなく、10月12日に届きます。
+S| We {sincerely|sincere|sincerity|sincerer} :: 私たちは心から
+V| {apologize|apology|apologetic|apologizing} :: おわびします
+O| {for|to|at|on} the inconvenience. :: ご不便について
+== ご不便をおかけしたことを心からおわびします。
+R| To thank you {for|to|of|at} waiting, :: お待ちいただいたお礼に
+S| we {have added|has added|have add|adding} :: 加えました
+O| a 20% {discount|discounted|discounting|discounts} :: 20%の割引を
+P| {to|at|of|until} your next order. :: 次回のご注文に
+== お待ちいただいたお礼に、次回のご注文に20%の割引をおつけしました。
+M| If you {prefer|prefers|preferring|preferred to} :: もし…がよければ
+O| {to cancel|cancel|canceling to|canceled} your order, :: 注文の取り消しが
+S| we will {give|gave|giving|given} you :: お渡しします
+O| a full {refund|refunds|refunded|refunding}. :: 全額の返金を
+== ご注文の取り消しをご希望の場合は、全額を返金いたします。
+V| Please {contact|contacting|contacts|to contact} us :: ご連絡ください
+P| {by|with|on|in} phone or email :: 電話かメールで
+M| {if|what|whose|than} you have questions. :: 質問があれば
+== ご質問があれば、電話かメールでご連絡ください。
+?? 2 2 倉庫はどのくらい閉鎖されていた？
+?? 3 1 荷物はいつ届く？
+?? 5 2 次回の注文に何がつく？
+?? 6 3 注文を取り消すと何がもらえる？
+
+@id int28
+@lv 2
+@level 6
+@title New Rules for the Office Kitchen
+@ja 給湯室の新しいルール
+@tag 共通テストレベル・お知らせ
+@gloss staff=職員, complain=不満を言う, fridge=冷蔵庫, sink=流し, label=ラベル, dishwasher=食器洗い機, empty=空にする, throw away=捨てる
+S| Recently, {many|much|lots|a lot} staff members :: 最近多くの職員が
+V| {have complained|has complained|have complain|complaining} :: 不満を言っている
+O| {about|for|on|at} the kitchen. :: 給湯室について
+== 最近、多くの職員が給湯室について不満を言っています。
+S| The fridge is often {full of|full with|fill of|full by} old food, :: 冷蔵庫は古い食品で一杯
+M| {and|nor|than|whom} the sink :: そして流しは
+V| is {covered|covering|cover|covers} :: おおわれている
+P| {with|of|to|from} dirty cups. :: 汚れたカップで
+== 冷蔵庫はよく古い食品でいっぱいで、流しは汚れたカップだらけです。
+T| {Starting|Started|Starter|Starts} next Monday, :: 来週月曜から
+V| please {follow|follows|following|followed} :: 守ってください
+O| {these|this|that|there} three rules. :: この3つのルールを
+== 来週の月曜日から、次の3つのルールを守ってください。
+V| First, {put|puts|putting|to putting} a label :: 1つ目、ラベルをはる
+P| {with|by|at|into} your name :: 名前を書いた
+P| {on|in|at|to} any food in the fridge. :: 冷蔵庫の食品に
+== 1つ目に、冷蔵庫に入れる食品には名前を書いたラベルをはってください。
+V| Second, {wash|washes|washing|washed} your cup :: 2つ目、カップを洗う
+T| {right after|right later|rightly after|right behind} you use it, :: 使ったらすぐに
+M| {or|nor|than|whom} put it :: またはそれを入れる
+P| {in|of|for|to} the dishwasher. :: 食器洗い機に
+== 2つ目に、カップは使ったらすぐに洗うか、食器洗い機に入れてください。
+S| Third, the fridge {will be|will is|is be|will being} emptied :: 3つ目、冷蔵庫を空に
+T| {every|any of|each of|both} Friday afternoon. :: 毎週金曜の午後に
+== 3つ目に、冷蔵庫は毎週金曜日の午後に空にします。
+S| Any food {without|with out|within|throughout} a name :: 名前のない食品は
+V| will be {thrown|threw|throw|throwing} away :: 捨てられる
+T| {at|in|on|of} three o'clock. :: 3時に
+== 名前のない食品は3時に捨てられます。
+S| We {hope|hopes|hoping|to hope} :: 私たちは願っている
+O| {to keep|keeping|keep|kept} the kitchen :: 給湯室を保つことを
+C| {clean|cleanly|cleaning|cleanness} together. :: 一緒にきれいに
+== みんなで給湯室をきれいに保てることを願っています。
+?? 1 0 冷蔵庫はどんな状態？
+?? 3 1 ラベルには何を書く？
+?? 5 1 冷蔵庫はいつ空にされる？
+?? 6 2 名前のない食品は何時に捨てられる？
+
+@id int29
+@lv 2
+@level 6
+@title Grand Opening: Green Leaf Bakery
+@ja パン屋の開店
+@tag 共通テストレベル・広告
+@gloss grand opening=開店, bake=焼く, local=地元の, flour=小麦粉, loaf=(パンの)1斤, sample=試食品, seat=座席, except=〜を除いて
+S| Green Leaf Bakery {will open|will opens|opening|will opened} :: パン屋が開店する
+P| {on|of|to|for} Main Street :: 大通りに
+T| {this|these|those|that's} Saturday. :: 今週の土曜に
+== グリーンリーフ・ベーカリーが、今週の土曜日に大通りに開店します。
+S| All our bread {is baked|is bake|are baked|baked is} :: パンはすべて焼かれる
+T| {every|any of|each of|both} morning :: 毎朝
+P| {with|of|by|at} local flour. :: 地元の小麦粉で
+== 当店のパンはすべて、毎朝地元の小麦粉で焼いています。
+T| {On|In|At|Of} opening day, :: 開店日には
+S| the {first|one|firstly|once} 50 customers :: 先着50名は
+V| will {receive|receives|received|receiving} :: もらえる
+O| a free {loaf|loaves|loafs|loafing} of bread. :: 無料のパン1斤を
+== 開店日には、先着50名様にパンを1斤無料で差し上げます。
+S| You can also {try|tried|trying|tries} :: …も試せる
+O| free {samples|sample|sampled|sampler} :: 無料の試食を
+P| {of|to|at|by} our cakes. :: ケーキの
+== ケーキの無料試食もできます。
+S| Our café corner {has|have|having|is} :: カフェコーナーには
+O| {twenty|twelfth|twentieth|twenties} seats, :: 20席ある
+M| {so|nor|than|whom} you can enjoy :: だから楽しめる
+O| coffee {with|of|to|from} your bread. :: パンとコーヒーを
+== カフェコーナーは20席あるので、パンと一緒にコーヒーを楽しめます。
+S| We are {open|opens|openness|opener} :: 営業しています
+P| {from|since|at|on} 7 a.m. :: 午前7時から
+P| {to|at|by|in} 6 p.m., :: 午後6時まで
+M| {except|expect|accept|excepted} Mondays. :: 月曜を除き
+== 月曜日を除き、午前7時から午後6時まで営業しています。
+V| Bring {this|these|those|they} ad :: この広告を持参
+M| {and|nor|than|whom} get :: そしてもらう
+O| 10% {off|of|out|over} :: 10%引きを
+T| {until|since|while|unless} the end of May. :: 5月末まで
+== この広告をお持ちいただくと、5月末まで10%引きになります。
+S| We {look|looks|looking|looked to} forward :: 楽しみにしている
+O| {to seeing|to see|seeing|for seeing} you :: あなたに会うのを
+P| {at|on|to|of} Green Leaf! :: グリーンリーフで
+== グリーンリーフでお会いできるのを楽しみにしています！
+?? 0 1 パン屋はどこに開店する？
+?? 2 1 開店日に無料のパンがもらえるのは何人？
+?? 5 3 定休日は何曜日？
+?? 6 3 割引はいつまで？
+
+@id int30
+@lv 2
+@level 6
+@title A Guide for New Employees
+@ja 新入社員の初日案内
+@tag 共通テストレベル・案内
+@gloss employee=社員, congratulations=おめでとう, reception=受付, laptop=ノートパソコン, department=部署, training=研修, cafeteria=社員食堂, manager=上司
+X| {Welcome|Welcoming|Welcomes|Welcomed by} :: ようこそ
+P| {to|at|in|for} Tanaka Trading, :: 田中商事へ
+M| and {congratulations|congratulation|congratulate|congratulated} :: そしておめでとう
+P| {on|to|at|by} your new job. :: 新しい仕事に
+== 田中商事へようこそ、そしてご就職おめでとうございます。
+S| This guide {explains|explain|explaining|explanation} :: この案内は説明する
+O| {what|that|which|who} to do :: 何をすべきかを
+T| {on|in|at|by} your first day. :: 初日に
+== この案内では、初日にすることを説明します。
+V| Please {come|comes|coming|came} :: 来てください
+P| {to|on|of|with} the reception desk :: 受付に
+P| {on|in|at|of} the first floor :: 1階の
+T| {by|until|since|for} 9 a.m. :: 午前9時までに
+== 午前9時までに1階の受付に来てください。
+S| There, you {will receive|will received|receive will|will receiving} :: そこで受け取る
+O| your ID card {and|nor|than|whom} a laptop. :: 社員証とパソコンを
+== そこで社員証とノートパソコンを受け取ります。
+T| {After|Ago|Behind|Later} that, :: そのあと
+S| a staff member {will take|will took|will takes|will taking} you :: 職員が連れていく
+P| {to|at|for|of} your department. :: 部署まで
+== そのあと、職員があなたを部署まで案内します。
+S| Training {starts|start|starting|to start} :: 研修は始まる
+T| {at|on|in|of} 10:30 :: 10時半に
+M| {and|nor|than|whom} lasts :: そして続く
+T| {until|by|since|on} noon. :: 正午まで
+== 研修は10時半に始まり、正午まで続きます。
+S| Lunch {is|are|be|were} free :: 昼食は無料
+P| {at|on|to|for} the cafeteria :: 社員食堂で
+T| {for|to|of|by} your first week. :: 最初の1週間は
+== 最初の1週間は、社員食堂の昼食が無料です。
+M| {If|What|Whose|Than} you have any questions, :: 質問があれば
+V| {feel|feels|feeling|felt} free :: 遠慮なく
+O| {to ask|asking|ask|asked} your manager. :: 上司に聞いて
+== 質問があれば、遠慮なく上司にたずねてください。
+?? 2 3 何時までに受付に行く？
+?? 3 1 受付で何を受け取る？
+?? 5 1 研修は何時に始まる？
+?? 6 2 昼食が無料なのはいつまで？
+
+@id int31
+@lv 2
+@level 6
+@title The Rise of Self-Checkout
+@ja 増えるセルフレジ
+@tag 共通テストレベル・記事
+@gloss self-checkout=セルフレジ, scan=読み取る, shortage=不足, cashier=レジ係, especially=特に, avoid=避ける, elderly=高齢の, balance=バランス
+S| {More and more|More and many|Most and more|Much and more} stores :: ますます多くの店が
+V| {are using|are use|is using|using} :: 使っている
+O| self-checkout {machines|machine|machinery's|machined}. :: セルフレジを
+== ますます多くの店がセルフレジを使うようになっている。
+P| {With|Of|At|To} these machines, :: この機械では
+S| customers {scan|scans|scanning|to scan} :: 客が読み取る
+O| {their own|their owns|they own|theirs own} items :: 自分の商品を
+M| {and|nor|than|whom} pay. :: そして支払う
+== この機械では、客が自分で商品を読み取って支払う。
+S| One reason {is|are|be|being} :: 理由の1つは
+C| a {shortage|short|shortly|shorten} :: 不足だ
+P| {of|to|at|by} workers. :: 働き手の
+== 理由の1つは、働き手の不足だ。
+S| Many stores {cannot find|cannot found|cannot finding|not can find} :: 多くの店は見つけられない
+O| {enough|enough of|much|plenty} cashiers, :: 十分なレジ係を
+T| {especially|especial|specially of|special} at night. :: 特に夜は
+== 多くの店は、特に夜に十分なレジ係を見つけられない。
+S| Self-checkout {also|too|either|as well} lets :: セルフレジはまた
+O| customers {avoid|avoids|to avoid|avoided} :: 客に避けさせる
+O| {long|length|lengthy of|longly} lines. :: 長い列を
+== セルフレジは、客が長い列を避けることも可能にする。
+M| {However|Because|Although|Unless}, :: しかし
+S| not {everyone|anyone|each|every} :: 全員が…ではない
+V| {likes|like|liking|to like} :: 好む
+O| {them|they|their|themself}. :: それらを
+== しかし、だれもがそれを好むわけではない。
+S| {Some|Any|Much|Every} elderly shoppers :: 一部の高齢の客は
+V| {find|finds|finding|found to} :: 感じる
+O| the machines {hard|hardly|hardness|harden} :: 機械を難しいと
+R| {to use|using|use|used}. :: 使うのが
+== 一部の高齢の買い物客は、その機械を使いにくいと感じている。
+S| {Others|Other|Another|The other} :: ほかの人は
+V| {miss|misses|missing|missed to} :: 恋しく思う
+O| {talking|to talking|talk|talked} :: 話すことを
+P| {with|at|by|on} the cashier. :: レジ係と
+== また、レジ係と話すことをなつかしく思う人もいる。
+S| Stores {need|needs|needing|to need} :: 店は必要だ
+O| {to find|finding|find|found} a balance :: バランスを見つけることが
+P| {between|among|during|across} machines and people. :: 機械と人の間の
+== 店は、機械と人のバランスを見つける必要がある。
+?? 2 1 セルフレジが増える理由の1つは？
+?? 3 2 特にいつレジ係が足りない？
+?? 4 2 セルフレジで客は何を避けられる？
+?? 6 2 一部の高齢の客は機械をどう感じている？
+
+@id int32
+@lv 2
+@level 6
+@title Our Bookshop Is Closing
+@ja 本屋の閉店のあいさつ
+@tag 共通テストレベル・手紙
+@gloss run=営む, retire=引退する, for good=永久に, customer=客, comic=漫画, half price=半額, support=支え, over the years=長年
+S| I {have run|has run|have ran|having run} :: 私は営んできた
+O| this small {bookshop|bookshops|bookshopping|booked shop} :: この小さな本屋を
+T| {for|since|during|in} twenty years. :: 20年間
+== 私はこの小さな本屋を20年間営んできました。
+M| {Sadly|Sad|Sadness|Saddest}, :: 残念ながら
+S| I {have decided|have decide|has decided|deciding} :: 私は決めた
+O| {to retire|retiring|retire|retired} :: 引退することを
+T| {at|in|on|for} the end of March. :: 3月末で
+== 残念ながら、3月末で引退することを決めました。
+S| The shop {will close|will closes|will closing|closes will} :: 店は閉まる
+M| {for|to|by|at} good :: 永久に
+T| {on|in|at|to} March 31. :: 3月31日に
+== 店は3月31日をもって閉店します。
+T| {During|While|Though|Whose} these years, :: この年月の間に
+S| {many|much|every|each of} customers :: 多くの客が
+V| {have become|have became|has become|becoming} :: なった
+C| {my friends|my friend|mine friends|my friendly}. :: 私の友人に
+== この年月の間に、多くのお客様が私の友人になりました。
+S| I still {remember|remembers|remembering|to remember} :: 今も覚えている
+O| children {who|which|whose|what} came :: 来ていた子どもを
+T| {after|before to|behind|later} school :: 放課後に
+R| {to read|to reading|read|reads} comics. :: 漫画を読みに
+== 放課後に漫画を読みに来ていた子どもたちのことを、今も覚えています。
+S| Some of them {now|ago|yet|ever} bring :: 今では連れてくる人も
+O| {their own|their owns|theirs own|they own} children :: 自分の子どもを
+P| {to|at|in|on} the shop. :: 店に
+== その中には、今では自分の子どもを店に連れてくる人もいます。
+T| {Until|Since|Unless|While} the last day, :: 最終日まで
+S| all books {will be|will is|will being|will been} :: 全ての本は…になる
+C| half {price|prize|prices|pricy}. :: 半額に
+== 最終日まで、全ての本を半額にします。
+X| Thank you {so|such|much of|so of} much :: 本当にありがとう
+P| {for|to|of|by} your support :: ご支援に
+T| {over|on|into|onto} the years. :: 長年の
+== 長年のご支援に、心から感謝しています。
+?? 0 2 本屋は何年営業してきた？
+?? 2 2 店はいつ閉まる？
+?? 4 3 子どもたちは何をしに来ていた？
+?? 6 2 最終日まで本はいくらになる？
+
+@id int33
+@lv 2
+@level 6
+@title An Interview with a Delivery Driver
+@ja 配達ドライバーに聞く
+@tag 共通テストレベル・インタビュー
+@gloss delivery=配達, load=積む, package=荷物, van=バン, parking=駐車場所, deal with=対処する, app=アプリ, choose=選ぶ
+S| Q: What time {do|does|are|is} you :: Q：何時にあなたは
+V| {start|starts|started|starting} :: 始める
+O| {work|works|worker|worked} each day? :: 毎日仕事を
+== Q：毎日何時に仕事を始めますか。
+S| Ken: I {arrive|arrives|arriving|arrival} :: ケン：着きます
+P| {at|to|on|for} the delivery center :: 配送センターに
+T| {at|on|in|for} seven. :: 7時に
+== ケン：配送センターに7時に着きます。
+M| {Then|Than|Them|They} I load :: それから積む
+O| about 150 {packages|package|packaging|packed} :: 約150個の荷物を
+P| {into|at|of|by} my van. :: バンに
+== それから、約150個の荷物をバンに積みます。
+S| Q: What {is|are|do|does} :: Q：何ですか
+C| the {hardest|hardly|hardness|harder than} part :: いちばん大変な部分は
+P| {of|to|by|at} your job? :: 仕事の
+== Q：仕事でいちばん大変なのは何ですか。
+S| Ken: {Finding|Find|Found|To finding} parking :: ケン：駐車場所探しは
+V| {is|are|be|being} :: …だ
+C| {often|ever|yet|ago} difficult :: よく難しい
+P| {in|on|at|to} the city. :: 都会では
+== ケン：都会では、駐車場所を見つけるのがよく難しいです。
+M| {Also|Too|Either|As well}, :: また
+S| many people {are not|is not|do not are|not are} :: 多くの人が…いない
+P| {at|in|on|to} home :: 家に
+T| {when|what|which|whom} I arrive. :: 私が着いたとき
+== また、私が着いたときに家にいない人が多いんです。
+S| Q: {How|What|Who|Which} do you :: Q：どのように
+V| {deal|deals|dealing|dealt} :: 対処する
+O| {with|to|on|by} that? :: それに
+== Q：それにはどう対処していますか。
+S| Ken: Our app {lets|letting|to let|lettings} :: ケン：アプリでは
+O| people {choose|chooses|to choose|choosing} :: 人が選べる
+O| {a|an|much|few} better time. :: より都合のよい時間を
+== ケン：アプリで、もっと都合のよい時間を選べるようになっています。
+S| Q: What do you {enjoy|enjoys|enjoying|enjoyed} :: Q：何が楽しい
+O| {most|almost|more than|the most of} :: いちばん
+P| {about|on|to|by} your work? :: 仕事について
+== Q：仕事で何がいちばん楽しいですか。
+M| Ken: When people {say|says|saying|said to} :: ケン：人が言うと
+O| {thank|thanks|thanked|thanking} you, :: ありがとうと
+V| I feel {happy|happily|happiness|happier than}. :: うれしく感じる
+== ケン：人に「ありがとう」と言われると、うれしくなります。
+?? 1 2 ケンは何時にセンターに着く？
+?? 2 1 何個の荷物をバンに積む？
+?? 4 0 都会でいちばん大変なことは？
+?? 7 1 アプリで人は何ができる？
+
+@id int34
+@lv 2
+@level 6
+@title Applying for a Sales Job
+@ja 販売員の仕事への応募
+@tag 共通テストレベル・メール
+@gloss apply=応募する, position=職, advertise=広告を出す, clothing=衣料品, useful=役に立つ, resume=履歴書, attach=添付する, available=都合がつく
+S| I am writing {to apply|applying|to applying|apply} :: 応募するため書く
+O| {for|to|at|on} the sales assistant position :: 販売員の職に
+M| {advertised|advertising|advertise|advertisement} on your website. :: ウェブに出ていた
+== 御社のウェブサイトに掲載された販売員の職に応募したく、メールいたしました。
+S| I {have worked|have work|has worked|have working} :: 私は働いてきた
+P| {at|on|to|of} a clothing store :: 洋服店で
+T| {for|since|during|while} two years. :: 2年間
+== 私は洋服店で2年間働いてきました。
+P| {In|On|Of|By} this job, :: この仕事で
+S| I {learned|learning|learns|learnt to} :: 学んだ
+O| {how|what|which|who} to help customers :: 客の助け方を
+M| {find|finds|finding|found} the right items. :: 合う商品を探す
+== この仕事で、お客様が合う商品を見つけるお手伝いの仕方を学びました。
+S| I {also|too|either|as well} speak :: 私は…も話せる
+O| English {and|nor|than|whom} Korean, :: 英語と韓国語を
+M| {which|what|who|whom} could be useful :: 役立つかもしれない
+P| {for|of|on|by} your store. :: 御店で
+== 英語と韓国語も話せるので、御店のお役に立てるかもしれません。
+S| I enjoy {working|to work|work|worked} :: 働くのが好き
+O| {with|to|at|by} people :: 人と
+M| {and|nor|than|whom} am good :: そして得意だ
+P| {at|on|to|of} teamwork. :: チームワークが
+== 私は人と働くのが好きで、チームワークも得意です。
+S| I {have attached|have attach|has attached|have attaching} :: 添付しました
+O| my {resume|resumes|resuming|resumed} :: 履歴書を
+P| {to|at|on|by} this email. :: このメールに
+== このメールに履歴書を添付しました。
+S| I am {available|availability|avail|availably} :: 都合がつきます
+P| {for|to|at|with} an interview :: 面接に
+T| {on|in|at|by} weekday afternoons. :: 平日の午後に
+== 平日の午後なら、面接に伺うことができます。
+S| Thank you {for|to|of|by} :: …ありがとう
+O| {reading|read|reads|to reading} my email, :: メールを読んで
+M| and I {hope|hopes|hoping|hoped to} :: そして願う
+O| {to hear|hearing|hear|heard} from you soon. :: すぐお返事をもらうことを
+== メールを読んでいただきありがとうございます。お返事をお待ちしております。
+?? 0 1 何の職に応募している？
+?? 1 2 洋服店で何年働いた？
+?? 3 1 英語のほかに何語が話せる？
+?? 6 2 いつなら面接に行ける？
+
+@id int35
+@lv 2
+@level 6
+@title Bike Repair at Your Door
+@ja 出張自転車修理
+@tag 共通テストレベル・広告
+@gloss repair=修理, mechanic=整備士, tool=道具, flat tire=パンク, basic=基本の, extra charge=追加料金, book=予約する, bell=ベル
+X| Is your bike {broken|broke|break|breaks}, :: 自転車が壊れている
+M| {but|nor|than|whom} you have :: でも…がない
+O| {no|none|not|nothing} time :: 時間がない
+R| {to take|taking|take|took} it to a shop? :: 店に持っていく
+== 自転車が壊れているのに、店に持っていく時間がありませんか？
+S| Bike Doctor {comes|come|coming|to come} :: バイクドクターが来る
+P| {to|on|of|into} you :: あなたのもとへ
+P| {anywhere|anyhow|anyone|anything} in the city! :: 市内どこでも
+== バイクドクターが、市内どこへでも出張します！
+S| Our mechanic {will visit|will visits|will visiting|visit will} :: 整備士が訪ねる
+O| {your|you|yours|yourself} home or office :: ご自宅か職場を
+P| {with|of|by|for} all the tools. :: 道具を全部持って
+== 当店の整備士が、道具一式を持ってご自宅か職場に伺います。
+S| {Most|Almost|Mostly|The most of} repairs, :: たいていの修理は
+M| {such as|such like|so as|as such} flat tires, :: パンクなどの
+V| {take|takes|taking|taken} :: かかる
+O| {less than|less then|fewer then|little than} 30 minutes. :: 30分未満
+== パンクなど、たいていの修理は30分もかかりません。
+S| A basic check {costs|costing|to cost|costly} :: 基本点検は…かかる
+O| {only|alone|lonely|once} $15, :: たった15ドル
+M| {and|nor|than|whom} there is :: そして…ある
+O| no {extra|extremely|extract|extend} charge :: 追加料金なし
+P| {for|to|at|by} the visit. :: 出張に
+== 基本点検はたった15ドルで、出張の追加料金はかかりません。
+V| {Book|Books|Booking|Booked} a visit :: 訪問を予約して
+P| {through|though|thorough|throughout} our app :: アプリから
+M| {or|nor|than|whom} call us :: または電話して
+T| {between|among|during|across} 8 a.m. and 8 p.m. :: 朝8時〜夜8時に
+== アプリから予約するか、午前8時から午後8時の間にお電話ください。
+S| First-time customers {get|gets|getting|got to} :: 初めての客はもらえる
+O| a free {bell|bells|belled|belling} :: 無料のベルを
+P| {for|to|at|by} their bike! :: 自転車用の
+== 初めてのお客様には、自転車用のベルを無料で差し上げます！
+V| {Let|Lets|Letting|To let} us :: 私たちに…させて
+V| {keep|keeps|kept|keeping} :: 保たせて
+O| your bike {safe|safety|saves|safer than} :: 自転車を安全に
+M| {and|nor|than|whom} ready to ride. :: すぐ乗れる状態に
+== あなたの自転車を、安全ですぐ乗れる状態に保つお手伝いをさせてください。
+?? 2 1 整備士はどこに来てくれる？
+?? 3 3 たいていの修理はどのくらいかかる？
+?? 4 1 基本点検はいくら？
+?? 6 1 初めての客は何がもらえる？
+
+@id int36
+@lv 2
+@level 6
+@title Our Return and Exchange Policy
+@ja 返品・交換のご案内
+@tag 共通テストレベル・案内
+@gloss purchase=買ったもの, satisfied=満足した, return=返品する, receipt=レシート, original=元の, condition=状態, store credit=店のポイント, exchange=交換する
+S| We want {every|all|each of|both} customer :: すべての客に
+C| {to be|being|be|been} happy :: 満足してほしい
+P| {with|of|at|to} their purchase. :: 買ったものに
+== 当店は、すべてのお客様に買ったものに満足していただきたいと考えています。
+M| {If|What|Whose|Than} you are not satisfied, :: 満足できなければ
+S| you {can|cans|could to|can to} return :: 返品できる
+O| {most|almost|mostly|the most of} items :: たいていの商品を
+T| {within|during|since|until} 30 days. :: 30日以内に
+== ご満足いただけない場合、たいていの商品は30日以内に返品できます。
+V| Please {bring|brings|brought|bringing} :: 持ってきて
+O| {your|you|yours|yourself} receipt :: レシートを
+M| {and|nor|than|whom} keep the item :: 商品は入れておく
+P| {in|on|at|to} its original box. :: 元の箱に
+== レシートをお持ちいただき、商品は元の箱に入れたままにしてください。
+S| Items {must be|must is|must being|must been} :: 商品は…であること
+C| {in|on|at|of} good condition :: 良い状態
+M| {and|nor|than|whom} not used. :: そして未使用
+== 商品は良い状態で、未使用でなければなりません。
+P| {Without|Withdraw|Within|Throughout} a receipt, :: レシートがなければ
+S| we {can only|cans only|can only to|could only to} give :: お渡しできるのは
+O| store {credit|credited|creditor|crediting} :: 店のポイントだけ
+M| {instead of|instead|in place|rather} cash. :: 現金の代わりに
+== レシートがない場合は、現金ではなく店のポイントでのお返しになります。
+S| Sale items {can be|can is|can being|can been} :: セール品は…できる
+V| {exchanged|exchanging|exchange|exchanges}, :: 交換が
+M| {but|nor|than|whom} not returned. :: でも返品はできない
+== セール品は交換はできますが、返品はできません。
+P| {For|To|At|By} safety reasons, :: 安全上の理由で
+S| food and underwear {cannot be|cannot is|cannot being|not can be} :: 食品と下着は…できない
+V| {returned|returning|return|returns} :: 返品
+M| {at all|at any|on all|of all}. :: いっさい
+== 安全上の理由から、食品と下着はいっさい返品できません。
+S| Our staff {will be|will is|will being|will been} :: スタッフは…でしょう
+C| {glad|gladly|gladness|gladder than} :: 喜んで
+R| {to help|helping|help|helped} you :: お手伝いする
+P| {at|on|in|to} the service counter. :: サービス窓口で
+== サービスカウンターで、スタッフが喜んでお手伝いします。
+?? 1 3 返品は何日以内にできる？
+?? 2 1 何を持っていく？
+?? 4 2 レシートがないと何で返される？
+?? 6 1 返品できないものは何？

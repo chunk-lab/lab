@@ -1,0 +1,300 @@
+flip | v | Please flip the pancake when the bottom turns brown. | 下側が茶色くなったらパンケーキをひっくり返してください。
+flip | v | Can you flip the card without looking at it? | 見ずにカードを裏返せますか。
+flip | v | She flipped the page to see the next picture. | 彼女は次の絵を見るためページをめくりました。
+effective | a | This simple method is effective for learning new words. | この簡単な方法は新しい単語を覚えるのに効果的です。
+effective | a | Is regular exercise effective in helping you sleep better? | 定期的な運動はよく眠るのに効果的ですか。
+effective | a | The teacher found an effective way to explain fractions. | 先生は分数を説明する効果的な方法を見つけました。
+lamb | n | A little lamb followed its mother across the field. | 小さな子羊が野原を横切って母親についていきました。
+lamb | n | Did you see the white lamb near the fence? | 柵の近くの白い子羊を見ましたか。
+lamb | n | The farmer watched the lambs playing in the grass. | 農家の人は子羊たちが草の中で遊ぶのを見ていました。
+rage | n | His face turned red with rage during the argument. | 口論の最中、彼の顔は激怒で赤くなりました。
+rage | n | Could you hear the rage in her voice? | 彼女の声に激しい怒りを感じましたか。
+rage | n | The coach controlled his rage and spoke calmly. | コーチは激怒を抑えて落ち着いて話しました。
+basis | n | Trust is the basis of a good friendship. | 信頼はよい友情の基礎です。
+basis | n | What is the basis for your answer to this question? | この質問への答えの根拠は何ですか。
+basis | n | The team used last year's results as a basis. | チームは昨年の結果を基礎として使いました。
+recover | v | I hope to recover my lost photos from this computer. | このパソコンから失った写真を取り戻したいです。
+recover | v | Did you recover your bag from the train station? | 駅でかばんを取り戻せましたか。
+recover | v | The shop finally recovered the money it had lost. | 店はようやく失ったお金を取り戻しました。
+forbid | v | The school rules forbid students from using phones during tests. | 校則は試験中に生徒が電話を使うことを禁じています。
+forbid | v | Does this sign forbid visitors from taking photographs? | この標識は訪問者の写真撮影を禁じていますか。
+forbid | v | The library forbade eating in its reading rooms. | 図書館は閲覧室での飲食を禁じました。
+humor | n | Her sense of humor makes every family dinner enjoyable. | 彼女のユーモアのセンスで家族の夕食はいつも楽しくなります。
+humor | n | Does your teacher use humor during difficult lessons? | 先生は難しい授業でユーモアを使いますか。
+humor | n | The story has gentle humor that children can understand. | その物語には子供にもわかる穏やかなユーモアがあります。
+discovery | n | The discovery of the old painting surprised everyone. | 古い絵画の発見はみんなを驚かせました。
+discovery | n | Was the discovery made during the school trip? | その発見は遠足中になされたのですか。
+discovery | n | The students shared their discoveries at the science fair. | 生徒たちは科学発表会で発見したことを共有しました。
+dive | v | I want to dive into the clear water this summer. | 今年の夏は澄んだ水に飛び込みたいです。
+dive | v | Can you dive safely from the side of the pool? | プールの縁から安全に飛び込めますか。
+dive | v | The swimmers dived into the water one after another. | 泳ぐ人たちは次々に水へ飛び込みました。
+sack | n | The farmer carried a sack of rice into the barn. | 農家の人は米の袋を納屋へ運びました。
+sack | n | Is that heavy sack full of potatoes? | その重い袋にはジャガイモがいっぱい入っていますか。
+sack | n | Several sacks of flour arrived at the bakery. | パン屋に小麦粉の袋がいくつか届きました。
+nest | n | A small bird built its nest under our roof. | 小鳥が私たちの屋根の下に巣を作りました。
+nest | n | Can you see the nest high in that tree? | あの木の高い所に巣が見えますか。
+nest | n | The children watched birds returning to their nests. | 子供たちは鳥が巣へ戻るのを見ていました。
+palm | n | She held the tiny flower in her palm. | 彼女は小さな花を手のひらに載せました。
+palm | n | Can you balance this coin on your palm? | この硬貨を手のひらに載せて保てますか。
+palm | n | The child opened both palms to show the shells. | 子供は両方の手のひらを開いて貝殻を見せました。
+fund | n | Our school started a fund for new library books. | 学校は新しい図書館の本のための基金を設けました。
+fund | n | How much money is left in the travel fund? | 旅行資金にはいくら残っていますか。
+fund | n | The club collected money for its annual sports fund. | クラブは毎年のスポーツ活動資金を集めました。
+phase | n | The first phase of the project begins next week. | 計画の第一段階は来週始まります。
+phase | n | Are we ready for the next phase of training? | 次の練習段階へ進む準備はできていますか。
+phase | n | The building work entered its final phase yesterday. | 建設作業は昨日最終段階に入りました。
+fleet | n | A fleet of fishing boats returned to the harbor. | 漁船団が港に戻ってきました。
+fleet | n | Did the museum display pictures of the old fleet? | 博物館は昔の艦隊の写真を展示していましたか。
+fleet | n | The country once maintained a large fleet of ships. | その国はかつて大きな艦隊を保有していました。
+temper | n | He has a quick temper but apologizes soon afterward. | 彼は短気ですが、その後すぐに謝ります。
+temper | n | Did you lose your temper over a small mistake? | 小さな間違いでかんしゃくを起こしましたか。
+temper | n | Her calm temper helps everyone work together comfortably. | 彼女の穏やかな気性のおかげでみんなが気持ちよく協力できます。
+discussion | n | Our class had a discussion about healthy eating habits. | クラスで健康的な食習慣について議論しました。
+discussion | n | Can we continue this discussion after the meeting? | この議論を会議の後で続けられますか。
+discussion | n | The students enjoyed discussions about their favorite books. | 生徒たちはお気に入りの本についての話し合いを楽しみました。
+blanket | n | Please bring a warm blanket for the picnic. | ピクニックには暖かい毛布を持ってきてください。
+blanket | n | Is there another blanket in the bedroom closet? | 寝室の押し入れにもう一枚毛布はありますか。
+blanket | n | The children spread blankets on the grass outside. | 子供たちは外の芝生に毛布を広げました。
+nut | n | A squirrel carried a nut up the tree. | リスが木の上へ木の実を運びました。
+nut | n | Did you find a nut under that tall tree? | あの高い木の下で木の実を見つけましたか。
+nut | n | The children collected nuts during their autumn walk. | 子供たちは秋の散歩中に木の実を集めました。
+sober | a | He remained sober and calm throughout the long evening. | 彼は長い夜の間ずっとしらふで落ち着いていました。
+sober | a | Was the driver completely sober before leaving home? | 運転手は家を出る前に完全にしらふでしたか。
+sober | a | She gave a sober answer to the serious question. | 彼女は真剣な質問に落ち着いた答えを返しました。
+delicate | a | These delicate flowers need protection from strong winds. | この繊細な花々は強い風から守る必要があります。
+delicate | a | Can you carry the delicate glass bowl carefully? | その壊れやすいガラスの器を慎重に運べますか。
+delicate | a | The artist painted delicate patterns on the small cups. | 芸術家は小さなカップに繊細な模様を描きました。
+passenger | n | Every passenger must keep their ticket until the end. | 乗客は全員最後まで切符を持っていなければなりません。
+passenger | n | Did the passenger leave a bag on the train? | その乗客は電車にかばんを置き忘れましたか。
+passenger | n | The bus driver greeted passengers with a smile. | バスの運転手は乗客たちに笑顔で挨拶しました。
+permanent | a | The museum has a permanent collection of local paintings. | 博物館には地元の絵画の常設コレクションがあります。
+permanent | a | Is this a permanent change to the school schedule? | これは学校の予定の永久的な変更ですか。
+permanent | a | They built a permanent home beside the lake. | 彼らは湖のそばに永住する家を建てました。
+interfere | v | Please do not interfere with the children while they play. | 子供たちが遊んでいる間は口出ししないでください。
+interfere | v | Did the noise interfere with your work yesterday? | 昨日の騒音は仕事の邪魔になりましたか。
+interfere | v | Heavy rain interfered with our plans for the picnic. | 大雨が私たちのピクニックの計画を妨げました。
+avenue | n | There is a beautiful avenue near the city park. | 市立公園の近くには美しい大通りがあります。
+avenue | n | Can we walk along this avenue to the station? | この大通りを歩いて駅まで行けますか。
+avenue | n | Tall trees line the avenues in the old town. | 古い町の大通りには高い木が並んでいます。
+ash | n | A little ash remained after the wood burned completely. | 木が完全に燃えた後に少し灰が残りました。
+ash | n | Did the wind blow the ash across the garden? | 風が灰を庭に吹き飛ばしましたか。
+ash | n | The gardener mixed wood ash into the soil. | 庭師は木の灰を土に混ぜました。
+parade | n | The parade passed our house on Saturday afternoon. | 土曜の午後に行進が家の前を通りました。
+parade | n | Will the school parade begin at ten tomorrow? | 学校の行進は明日十時に始まりますか。
+parade | n | Families watched the colorful parade from the sidewalk. | 家族連れは歩道から色鮮やかな行進を見ました。
+cherry | n | She put a red cherry on top of the cake. | 彼女はケーキの上に赤いサクランボを載せました。
+cherry | n | Would you like a cherry with your dessert? | デザートにサクランボを一つ添えますか。
+cherry | n | We bought fresh cherries at the market yesterday. | 私たちは昨日市場で新鮮なサクランボを買いました。
+cattle | n | The cattle are eating grass beside the river. | 牛たちは川のそばで草を食べています。
+cattle | n | Does the farmer keep cattle on this large farm? | 農家の人はこの大きな農場で牛を飼っていますか。
+cattle | n | A group of cattle moved slowly across the field. | 牛の群れが野原をゆっくり横切りました。
+breast | n | The bird has bright feathers on its breast. | その鳥の胸には明るい色の羽があります。
+breast | n | Does this chicken breast need more time to cook? | この鶏むね肉はもう少し加熱が必要ですか。
+breast | n | The swimmer felt the cool water against his breast. | 泳ぐ人は胸に冷たい水を感じました。
+recognise | v | I can recognise her voice even over the phone. | 電話越しでも彼女の声だとわかります。
+recognise | v | Did you recognise the song from its first notes? | 最初の音でその曲だとわかりましたか。
+recognise | v | The teacher recognised his hard work at the ceremony. | 先生は式で彼の努力を認めました。
+radiation | n | The sun sends radiation through space toward Earth. | 太陽は宇宙空間を通じて地球へ放射線を送ります。
+radiation | n | Can special glasses protect our eyes from harmful radiation? | 特別な眼鏡は有害な放射線から目を守れますか。
+radiation | n | The science class learned about different kinds of radiation. | 理科の授業ではさまざまな種類の放射線について学びました。
+lung | n | Each lung helps your body take in oxygen. | 左右それぞれの肺は体に酸素を取り込むのを助けます。
+lung | n | Do you know how a lung works when you breathe? | 呼吸するとき肺がどう働くか知っていますか。
+lung | n | The teacher showed a picture of the human lungs. | 先生は人間の肺の絵を見せました。
+explode | v | Some balloons explode when they get too hot. | 風船は熱くなりすぎると破裂することがあります。
+explode | v | Will this balloon explode if we add more air? | もっと空気を入れるとこの風船は破裂しますか。
+explode | v | The children watched bubbles explode on the water. | 子供たちは水面で泡がはじけるのを見ました。
+immediate | a | The broken window needs immediate attention from the owner. | 壊れた窓には持ち主の即座の対応が必要です。
+immediate | a | Can we get an immediate answer to this question? | この質問にすぐ答えをもらえますか。
+immediate | a | The teacher took immediate action when the lights stopped working. | 照明が動かなくなると先生はすぐに対応しました。
+hunger | n | A bowl of soup helped satisfy my hunger. | 一杯のスープが私の空腹を満たしてくれました。
+hunger | n | Does hunger make it difficult for you to study? | 空腹だと勉強に集中しにくくなりますか。
+hunger | n | The long walk left everyone feeling great hunger. | 長い散歩の後でみんなとても空腹になりました。
+combination | n | This combination of colors looks beautiful in the morning light. | この色の組み合わせは朝の光の中で美しく見えます。
+combination | n | Is this combination of fruit and yogurt delicious? | この果物とヨーグルトの組み合わせはおいしいですか。
+combination | n | The recipe uses a simple combination of fresh vegetables. | そのレシピは新鮮な野菜を簡単に組み合わせています。
+severe | a | The severe winter weather kept us indoors all day. | 厳しい冬の天気で私たちは一日中屋内にいました。
+severe | a | Is the water shortage severe in this area? | この地域の水不足は深刻ですか。
+severe | a | The teacher gave a severe warning about missing homework. | 先生は宿題を忘れることについて厳しい注意をしました。
+splendid | a | We had a splendid view of the mountains from our room. | 部屋から山々の見事な眺めが楽しめました。
+splendid | a | Was the concert as splendid as you expected? | コンサートは期待どおりにすばらしかったですか。
+splendid | a | The children did a splendid job decorating the hall. | 子供たちは会場を見事に飾り付けました。
+dismiss | v | The manager decided to dismiss an employee for repeated lateness. | 責任者は度重なる遅刻を理由に従業員を解雇すると決めました。
+dismiss | v | Did the teacher dismiss your idea without listening? | 先生は話を聞かずにあなたの考えを退けましたか。
+dismiss | v | The company dismissed the worker after several warnings. | 会社は何度か注意した後、その従業員を解雇しました。
+drawer | n | The keys are in the top drawer of my desk. | 鍵は机の一番上の引き出しにあります。
+drawer | n | Could you open the drawer beside the bed? | ベッドの横の引き出しを開けてくれますか。
+drawer | n | She keeps clean towels in the bathroom drawers. | 彼女は浴室の引き出しに清潔なタオルをしまっています。
+harp | n | The musician played a beautiful song on the harp. | 音楽家はハープで美しい曲を演奏しました。
+harp | n | Have you ever heard a harp played live? | ハープの生演奏を聞いたことがありますか。
+harp | n | Two harps stood beside the piano on stage. | 舞台ではピアノの横に二台のハープがありました。
+alliance | n | The two clubs formed an alliance to organize events. | 二つのクラブは行事を企画するため協力関係を結びました。
+alliance | n | Could an alliance help these small businesses grow? | 提携によってこれらの小さな会社は成長できますか。
+alliance | n | Several schools joined an alliance to share teaching materials. | いくつかの学校は教材を共有するため連携組織に加わりました。
+wreck | n | The old shipwreck was a wreck beneath the water. | その古い難破船は水中で大破した姿でした。
+wreck | n | Did the museum display pictures of the train wreck? | 博物館には大破した列車の写真が展示されていましたか。
+wreck | n | The storm left the small boat a complete wreck. | 嵐で小さな船は完全に大破しました。
+approve | v | The manager must approve our travel plans before Friday. | 責任者は金曜日までに旅行計画を承認しなければなりません。
+approve | v | Do your parents approve of your new hobby? | ご両親はあなたの新しい趣味に賛成していますか。
+approve | v | The school approved the students' plan for a concert. | 学校は生徒たちのコンサート計画を承認しました。
+inch | n | Move the picture one inch to the left. | 絵を左へ一インチ動かしてください。
+inch | n | Is this table an inch taller than that one? | このテーブルはあちらより一インチ高いですか。
+inch | n | The children measured the paper in inches at school. | 子供たちは学校で紙をインチ単位で測りました。
+basket | n | She carried a basket of apples into the kitchen. | 彼女はリンゴの入ったかごを台所へ運びました。
+basket | n | Can you put the clean towels in this basket? | 清潔なタオルをこのかごに入れてくれますか。
+basket | n | The family packed two baskets for the picnic. | 家族はピクニックのために二つのかごを用意しました。
+toe | n | I hurt my little toe while moving the chair. | 椅子を動かしているとき足の小指を痛めました。
+toe | n | Can you touch your toes without bending your knees? | 膝を曲げずに足の指に触れられますか。
+toe | n | The dancer stood on her toes for a moment. | 踊り手は少しの間つま先立ちをしました。
+shield | n | The museum displayed an old wooden shield behind glass. | 博物館は古い木の盾をガラス越しに展示しました。
+shield | n | Did the actor carry a shield in the play? | その俳優は劇で盾を持っていましたか。
+shield | n | The children made colorful shields for their school performance. | 子供たちは学校の発表会用に色鮮やかな盾を作りました。
+republic | n | A republic usually has a leader who is not a king. | 共和国には通常、王ではない指導者がいます。
+republic | n | Is that country a republic or a kingdom? | その国は共和国ですか、それとも王国ですか。
+republic | n | The textbook explains how a republic chooses its leaders. | 教科書は共和国が指導者を選ぶ仕組みを説明しています。
+bait | v | The fisherman showed me how to bait a hook. | 漁師は釣り針に餌をつける方法を教えてくれました。
+bait | v | Can you bait the fishing line before we leave? | 出発前に釣り糸の針に餌をつけられますか。
+bait | v | She baited the hook with a small piece of bread. | 彼女は小さなパンを釣り針の餌にしました。
+lean | v | Please do not lean against the freshly painted wall. | 塗りたての壁にもたれないでください。
+lean | v | Does this old tree lean toward the road? | この古い木は道路の方へ傾いていますか。
+lean | v | He leaned forward to read the small writing. | 彼は小さな文字を読むため前に身を傾けました。
+gossip | n | The office gossip made everyone feel uncomfortable. | 職場のうわさ話でみんな気まずくなりました。
+gossip | n | Do you enjoy listening to gossip about neighbors? | 近所の人のうわさ話を聞くのが好きですか。
+gossip | n | She avoids gossip and prefers friendly conversations. | 彼女はうわさ話を避けて親しみやすい会話を好みます。
+humble | a | Despite his success, he remains a humble person. | 成功しても彼は謙虚な人のままです。
+humble | a | Is this humble little house really your home? | この質素な小さな家が本当にあなたの家ですか。
+humble | a | The artist gave a humble answer about her achievements. | 芸術家は自分の業績について謙虚に答えました。
+mankind | n | Clean water is important for the future of mankind. | きれいな水は人類の未来にとって大切です。
+mankind | n | Can mankind learn to use less energy every day? | 人類は日々のエネルギー使用を減らすことを学べますか。
+mankind | n | The museum shows how mankind developed different tools. | 博物館は人類がさまざまな道具を発達させた様子を示しています。
+broad | a | A broad path leads from the station to the park. | 広い道が駅から公園へ続いています。
+broad | a | Is this river too broad to swim across? | この川は泳いで渡るには幅が広すぎますか。
+broad | a | The course offers a broad range of useful skills. | その講座では幅広い役立つ技能を学べます。
+vessel | n | The fishing vessel returned to the harbor before sunset. | 漁船は日没前に港へ戻りました。
+vessel | n | Can this glass vessel hold hot water safely? | このガラス容器には安全にお湯を入れられますか。
+vessel | n | Several large vessels waited outside the busy port. | 何隻もの大型船がにぎやかな港の外で待っていました。
+foul | a | A foul smell came from the old food container. | 古い食品容器から不快な臭いがしました。
+foul | a | Did the player make a foul move during the game? | その選手は試合中に反則の動きをしましたか。
+foul | a | The workers cleaned the room to remove the foul odor. | 作業員は不快な臭いを取り除くため部屋を掃除しました。
+hut | n | A small hut stands beside the mountain path. | 山道のそばに小さな小屋があります。
+hut | n | Can we rest inside that wooden hut? | あの木造の小屋の中で休めますか。
+hut | n | The farmers built huts near their fields for storage. | 農家の人たちは畑の近くに保管用の小屋を建てました。
+practical | a | This practical bag has room for all my books. | この実用的なかばんには本が全部入ります。
+practical | a | Is there a practical way to save time? | 時間を節約する実用的な方法はありますか。
+practical | a | The course teaches practical skills for everyday life. | その講座では日常生活に役立つ実用的な技能を教えます。
+rubber | n | The wheels are made of strong black rubber. | 車輪は丈夫な黒いゴムでできています。
+rubber | n | Does this rubber keep water out of the shoes? | このゴムは靴に水が入るのを防ぎますか。
+rubber | n | The factory makes rubber for many different products. | その工場はさまざまな製品用のゴムを作っています。
+beam | n | A beam of sunlight entered through the open window. | 一筋の日光が開いた窓から差し込みました。
+beam | n | Can you see the wooden beam above the door? | ドアの上の木の梁が見えますか。
+beam | n | Bright beams of light crossed the dark room. | 明るい光線が暗い部屋を横切りました。
+poet | n | The poet wrote a short poem about spring. | その詩人は春について短い詩を書きました。
+poet | n | Have you met the poet who visited our school? | 学校を訪れた詩人に会いましたか。
+poet | n | Several young poets read their work at the library. | 何人かの若い詩人が図書館で作品を朗読しました。
+arrow | n | The arrow on this sign points toward the station. | この標識の矢印は駅の方を指しています。
+arrow | n | Can you draw an arrow beside the correct answer? | 正しい答えの横に矢印を描けますか。
+arrow | n | The museum displayed wooden arrows used long ago. | 博物館には昔使われた木の矢が展示されていました。
+carpet | n | A soft carpet covers the floor in our bedroom. | 寝室の床には柔らかいじゅうたんが敷かれています。
+carpet | n | Could you help me clean this large carpet? | この大きなじゅうたんを掃除するのを手伝ってくれますか。
+carpet | n | The children sat together on the colorful carpet. | 子供たちは色鮮やかなじゅうたんの上に一緒に座りました。
+operator | n | The machine operator checked every part before starting work. | 機械の操作員は作業前にすべての部分を確認しました。
+operator | n | Can the operator stop the machine from here? | 操作員はここから機械を止められますか。
+operator | n | Two experienced operators taught the new workers today. | 二人の経験豊かな操作員が今日新人に教えました。
+eastern | a | The eastern side of the island has sandy beaches. | 島の東側には砂浜があります。
+eastern | a | Is the eastern entrance open on weekends? | 東側の入り口は週末に開いていますか。
+eastern | a | Many birds gather near the eastern shore in spring. | 春には多くの鳥が東の岸辺に集まります。
+misery | n | The long rainy week brought misery to the campers. | 長い雨の一週間はキャンプ客にみじめな思いをさせました。
+misery | n | Did the cold weather add to their misery? | 寒い天気が彼らのみじめさを増しましたか。
+misery | n | Her kind words helped him forget his misery. | 彼女の優しい言葉で彼はつらさを忘れられました。
+embrace | v | The team decided to embrace a new way of working. | チームは新しい働き方を受け入れることにしました。
+embrace | v | Can we embrace different ideas in our classroom? | 教室で異なる考えを受け入れられますか。
+embrace | v | She embraced her grandmother after the long journey. | 彼女は長旅の後で祖母を抱きしめました。
+communicate | v | We use pictures to communicate our ideas clearly. | 私たちは考えを明確に伝えるため絵を使います。
+communicate | v | Can you communicate the changes to everyone today? | 今日みんなに変更点を伝えてくれますか。
+communicate | v | The guide communicated important information before the tour. | 案内人は見学前に重要な情報を伝えました。
+rear | n | The kitchen is at the rear of the house. | 台所は家の後ろにあります。
+rear | n | Can you put the boxes in the rear of the car? | 箱を車の後部に入れてくれますか。
+rear | n | The children entered through the rear of the building. | 子供たちは建物の裏側から入りました。
+gum | n | She bought some gum at the station shop. | 彼女は駅の売店でガムを買いました。
+gum | n | Can I chew gum during the long bus ride? | 長いバス移動の間ガムをかんでもいいですか。
+gum | n | He threw his gum away before entering the classroom. | 彼は教室に入る前にガムを捨てました。
+swell | v | Dry beans swell when they are left in water. | 乾燥した豆は水につけておくとふくらみます。
+swell | v | Will this bread swell as it rises in the oven? | このパンはオーブンで焼くとふくらみますか。
+swell | v | The river swelled after several days of rain. | 数日間の雨の後で川の水量が増えました。
+attract | v | Bright flowers attract butterflies to our small garden. | 鮮やかな花は小さな庭にチョウを引きつけます。
+attract | v | Does this museum attract many visitors in summer? | この博物館は夏に多くの訪問者を引きつけますか。
+attract | v | The new cafe attracted students with its quiet atmosphere. | 新しいカフェは静かな雰囲気で学生たちを引きつけました。
+application | n | I sent my application for the summer course yesterday. | 昨日夏の講座への申し込みを送りました。
+application | n | Did you finish the application before the deadline? | 締め切り前に申請を終えましたか。
+application | n | The office received many applications for the new program. | 事務所には新しいプログラムへの申し込みが多数届きました。
+profession | n | Teaching is a profession that requires patience and care. | 教職は忍耐と配慮を必要とする専門職です。
+profession | n | Are you interested in entering the medical profession? | 医療の専門職に就くことに興味がありますか。
+profession | n | She chose a profession that allows her to help children. | 彼女は子供を助けられる専門職を選びました。
+bench | n | We sat on a wooden bench near the lake. | 私たちは湖の近くの木のベンチに座りました。
+bench | n | Is there an empty bench under that tree? | あの木の下に空いているベンチはありますか。
+bench | n | The park has new benches along its walking paths. | 公園の散歩道沿いには新しいベンチがあります。
+pale | a | His face looked pale after the long bus ride. | 長いバス移動の後で彼の顔は青白く見えました。
+pale | a | Why does she look so pale this morning? | 今朝彼女の顔色がとても青白いのはなぜですか。
+pale | a | The child grew pale while waiting for the results. | 結果を待つ間にその子の顔色は青白くなりました。
+defence | n | The team's strong defence kept the score low. | チームの堅い守備で得点が低く抑えられました。
+defence | n | Was their defence effective during the second half? | 後半の彼らの守備は効果的でしたか。
+defence | n | The coach taught several new methods of defence. | コーチはいくつかの新しい守備方法を教えました。
+fame | n | The singer gained fame through her beautiful voice. | その歌手は美しい声で名声を得ました。
+fame | n | Does fame always bring happiness to famous people? | 名声は有名人に必ず幸せをもたらしますか。
+fame | n | He never expected fame from his small cooking videos. | 彼は小さな料理動画で名声を得るとは思いませんでした。
+sorrow | n | She felt deep sorrow when her favorite tree fell. | お気に入りの木が倒れたとき彼女は深い悲しみを感じました。
+sorrow | n | Can music help people express their sorrow? | 音楽は人々が悲しみを表す助けになりますか。
+sorrow | n | His friends listened kindly when he shared his sorrow. | 彼が悲しみを打ち明けると友達は優しく耳を傾けました。
+vault | n | The bank keeps important papers in a secure vault. | 銀行は重要な書類を安全な金庫室に保管しています。
+vault | n | Did the guide show you the old underground vault? | 案内人は古い地下の金庫室を見せましたか。
+vault | n | The museum has a large hall with a stone vault. | 博物館には石造りの丸天井がある大きな広間があります。
+bargain | n | This warm winter coat was a real bargain. | この暖かい冬用コートは本当にお買い得でした。
+bargain | n | Was that bicycle a bargain at the sale? | その自転車はセールでお買い得でしたか。
+bargain | n | We found several bargains at the weekend market. | 週末の市場でお買い得品をいくつか見つけました。
+fuss | v | Please do not fuss over such a small mistake. | そんな小さな間違いで大騒ぎしないでください。
+fuss | v | Why does he fuss about every little detail? | 彼はなぜ細かいことにいちいち騒ぐのですか。
+fuss | v | The children fussed when the trip was delayed. | 旅行が遅れると子供たちは騒ぎ立てました。
+arrangement | n | The arrangement of chairs made the room feel larger. | 椅子の配置で部屋が広く感じられました。
+arrangement | n | Have you made an arrangement for tomorrow's meeting? | 明日の会議の手配は済ませましたか。
+arrangement | n | The musician changed the arrangement of the old song. | 音楽家は古い曲の編曲を変えました。
+assign | v | The teacher will assign different tasks to each group. | 先生は各グループに異なる課題を割り当てます。
+assign | v | Can you assign a room to every visitor? | 訪問者全員に部屋を割り当てられますか。
+assign | v | The manager assigned the new project to our team. | 責任者は新しい計画を私たちのチームに割り当てました。
+collar | n | The collar of this shirt feels too tight. | このシャツの襟はきつすぎる感じがします。
+collar | n | Did you wash the dirt off your collar? | 襟の汚れを洗い落としましたか。
+collar | n | She chose a jacket with a wide collar. | 彼女は幅の広い襟の上着を選びました。
+mere | a | A mere ten minutes was enough to finish the job. | ほんの十分でその仕事を終えるには十分でした。
+mere | a | Can a mere child understand such a difficult question? | ほんの子供にそんな難しい質問が理解できますか。
+mere | a | The walk took a mere five minutes from the station. | 駅から歩いてほんの五分しかかかりませんでした。
+storage | n | This room is used for storage of old furniture. | この部屋は古い家具の保管に使われています。
+storage | n | Do we have enough storage for all these books? | これらの本を全部保管する場所は十分ありますか。
+storage | n | The hotel offers safe storage for guests' bags. | ホテルは宿泊客のかばんを安全に保管するサービスを提供しています。
+sum | n | The sum of these two numbers is twenty. | この二つの数の合計は二十です。
+sum | n | Can you find the sum without using a calculator? | 計算機を使わずに合計を出せますか。
+sum | n | The children checked their sums with the teacher. | 子供たちは計算した合計を先生と確認しました。
+heel | n | My right heel hurts after walking all day. | 一日中歩いた後で右のかかとが痛みます。
+heel | n | Does the heel of this shoe feel comfortable? | この靴のかかとは履き心地がよいですか。
+heel | n | She lifted her heels during the dance practice. | 彼女はダンスの練習中にかかとを上げました。
+cruise | v | We plan to cruise along the coast this summer. | 今年の夏は海岸沿いをゆっくり船で進む予定です。
+cruise | v | Can this boat cruise smoothly through calm water? | この船は穏やかな水面を滑らかに進めますか。
+cruise | v | The small ship cruised past several beautiful islands. | 小さな船は美しい島々のそばをゆっくり進みました。
+adopt | v | Our school plans to adopt a new teaching method. | 学校は新しい指導方法を取り入れる予定です。
+adopt | v | Should we adopt this idea for our next event? | 次の行事にこの案を取り入れるべきですか。
+adopt | v | The company adopted a shorter working day last year. | その会社は昨年短い勤務時間を導入しました。
+barrel | n | The farmer filled a wooden barrel with rainwater. | 農家の人は木のたるに雨水をためました。
+barrel | n | Can this barrel hold enough water for the garden? | このたるには庭に十分な水が入りますか。
+barrel | n | Several empty barrels stood beside the old barn. | 古い納屋のそばに空のたるがいくつか並んでいました。
+cannon | n | The museum displayed an old cannon near the entrance. | 博物館は入り口の近くに古い大砲を展示しました。
+cannon | n | Did you see the large cannon in the castle? | 城の大きな大砲を見ましたか。
+cannon | n | The guide explained how cannons were made long ago. | 案内人は昔の大砲の作り方を説明しました。
+dull | a | The film was dull despite its beautiful scenery. | その映画は景色が美しいのに退屈でした。
+dull | a | Is this knife too dull to cut bread? | このナイフは切れ味が鈍くてパンを切れませんか。
+dull | a | The sky turned dull and gray before sunset. | 日没前に空は薄暗い灰色になりました。
+spike | n | Be careful of the sharp spike on that fence. | あの柵の鋭いとげに気をつけてください。
+spike | n | Did the shop see a spike in sales yesterday? | その店では昨日売上が急増しましたか。
+spike | n | The graph shows spikes in visitors during school holidays. | グラフは学校の休暇中に訪問者が急増する様子を示しています。
+ginger | n | My mother adds fresh ginger to the soup. | 母はスープに新鮮なショウガを加えます。
+ginger | n | Do you like ginger in your hot tea? | 温かいお茶にショウガを入れるのは好きですか。
+ginger | n | The cook used ginger to give the dish more flavor. | 料理人は料理に風味を加えるためショウガを使いました。
+creation | n | The creation of this garden took three years. | この庭の創造には三年かかりました。
+creation | n | Was the creation of the new song difficult? | 新しい曲を作るのは難しかったですか。
+creation | n | The museum celebrates the creation of beautiful handmade objects. | 博物館は美しい手作り作品の創造をたたえています。

@@ -1,0 +1,689 @@
+@id adv48
+@lv 3
+@level 8
+@title The Myth of the Untranslatable Word
+@ja 「訳せない語」の神話
+@tag 難関大レベル・論説文
+@gloss untranslatable=翻訳できない, equivalent=等価なもの, convey=伝える, admittedly=確かに, association=連想, exaggerate=誇張する, romantic=空想的な, fundamentally=根本的に
+S| It is often {claimed|claim|claiming|claims} :: よく言われる
+O| that some words {are|is|be|being} untranslatable, :: 訳せない語があると
+M| {such as|such like|as such|so as} the Portuguese "saudade." :: ポルトガル語の語など
+== ポルトガル語の「サウダージ」のように、翻訳できない語があるとよく言われる。
+S| Such words, {lacking|lack|lacked|lacks} :: そうした語は…を欠き
+O| an exact {equivalent|equivalence of|equivalently|equal to} in English, :: 英語での正確な等価語を
+V| are {treated|treating|treat|treatment} :: 扱われる
+M| {as|like as|for as|so} cultural treasures :: 文化の宝として
+X| that {reveal|reveals|revealing|to reveal} a unique worldview. :: 独自の世界観を示す
+== 英語にぴったりの訳語がないそうした語は、独自の世界観を映す文化の宝として扱われる。
+S| {Yet|Despite|In spite|However of} this view :: しかしこの見方は
+V| {rests|rest|resting|be resting} on a misunderstanding :: 誤解に基づく
+X| of {what|that|which|whom} translation involves. :: 翻訳の本質についての
+== しかしこの見方は、翻訳とは何かについての誤解に基づいている。
+S| Translation {has|have|having|does} never :: 翻訳は決して…ない
+V| {meant|mean|meaning|means} :: 意味してきた
+O| {replacing|replace|replaced|to replacing} one word :: 一語を置き換えること
+P| {with|at|of|from} another; :: 別の語で
+M| {rather|rather than|rather to|instead of}, it is the art :: むしろそれは技術だ
+X| of {conveying|convey|conveyed|conveyance} meaning :: 意味を伝える
+M| {across|cross|crossing|acrossed} languages. :: 言語をまたいで
+== 翻訳とは一語を別の語に置き換えることではなく、言語をまたいで意味を伝える技術なのだ。
+S| A {skilled|skill|skills|skillfully} translator :: 熟練の翻訳者は
+V| {can|cans|can to|could to} :: …できる
+V| {express|expresses|expressing|expressed} "saudade" :: サウダージを表す
+M| {using|use|used|uses} a phrase :: 言い回しを使って
+X| {such as|such like|so as|as such} "a longing for something lost." :: 「失われた物への思慕」等
+== 熟練の翻訳者なら、「失われたものへの思慕」といった言い回しでサウダージを表せる。
+M| {Admittedly|Admitted|Admit|Admitting to}, :: 確かに
+S| something {is|are|be|being} lost :: 何かが失われる
+M| {in|on|at|to} the process: :: その過程で
+S| the rhythm, {the|an|these|any of} sound, :: リズムや響き
+M| {and|but|nor|so} the associations :: そして連想
+X| {that|what|whom|whose} native speakers feel. :: 母語話者が感じる
+== 確かに、その過程で何かは失われる。リズムや響き、そして母語話者が抱く連想である。
+M| {But|Nor|Because of|Despite} the same is true :: だが同じことが言える
+P| {of|on|at|from} any translation, :: どんな翻訳にも
+M| {even|ever|every|evenly} between closely :: 近い…どうしでも
+X| {related|relating|relation|relative} languages. :: 関係した言語
+== だが、それは近縁の言語どうしであっても、どんな翻訳にも言えることだ。
+S| {Calling|Call|Called|Calls} a word untranslatable, :: 訳せないと呼ぶことは
+M| {therefore|therefor|there fore|thereby of}, :: したがって
+V| {exaggerates|exaggerate|exaggerating|exaggeration} :: 誇張する
+O| the gap {between|betweens|of between|in between of} cultures :: 文化間の溝を
+M| {while|whereas of|during|meanwhile} ignoring :: …を無視しつつ
+O| {how|what|which|whom} much they share. :: どれほど共通するかを
+== したがって、ある語を訳せないと呼ぶことは、文化の溝を誇張し、共通点の多さを見落とすことになる。
+M| {Moreover|More|Most over|Moreover of}, :: さらに
+S| the {myth|mythical|mythic|myths of} of untranslatability :: 翻訳不可能の神話は
+V| {can|cans|can to|could to} :: …しうる
+V| {encourage|encourages|encouraging|encouraged} :: 助長する
+O| a romantic {view|viewing|viewed|views} :: 空想的な見方を
+X| of other peoples {as|like as|for as|so} fundamentally different. :: 他者を根本的に異質と
+== さらに、翻訳不可能という神話は、他の民族を根本的に異質とみなす空想的な見方を助長しかねない。
+M| {In|Into|Within|Onto} the end, :: 結局
+S| {what|that|which|whose} makes translation possible :: 翻訳を可能にするのは
+V| {is|are|be|being} :: …だ
+O| not identical {vocabulary|vocabularies of|vocal|vocally} :: 同一の語彙ではなく
+M| {but|nor|or|than} shared human experience. :: 共通の人間経験だ
+== 結局、翻訳を可能にしているのは同一の語彙ではなく、人間に共通する経験なのだ。
+?? 0 2 訳せないとされる語の例は？
+?? 3 5 翻訳とは何をする技術だと述べている？
+?? 5 3 翻訳で失われるものの例は？
+?? 9 4 翻訳を可能にしているのは何？
+
+@id adv49
+@lv 3
+@level 8
+@title Why Languages Die
+@ja 言語はなぜ消えるのか
+@tag 難関大レベル・論説文
+@gloss estimate=推計, dominant=支配的な, ancestral=先祖の, desirable=望ましい, embody=体現する, accumulated=蓄積された, kinship=親族関係, revive=復活させる
+M| {By|Of|Into|Upon} some estimates, :: ある推計では
+S| as many {as|than|so|like} half :: 半数もが
+X| of the world's {roughly|rough|roughness|roughen} 7,000 languages :: 世界の約7千言語の
+V| {may|mays|may to|might to} disappear :: 消えるかもしれない
+T| {by|since|for|among} the end of this century. :: 今世紀末までに
+== ある推計では、世界の約7千の言語のうち半数もが今世紀末までに消えるかもしれない。
+S| A language {rarely|rare|rarity|rarer} dies :: 言語はめったに死なない
+M| {because|because of|due|owing} its speakers vanish; :: 話者が消えたから
+M| {more often|more oftener|more oftenly|much often}, :: たいていは
+S| parents {stop|stops|stopping|stopped to} passing it on :: 親が伝えるのをやめる
+P| {to|at|into|onto} their children. :: 子どもへ
+== 言語が消えるのは話者がいなくなるからではない。たいていは親が子に伝えるのをやめるからだ。
+M| {Pressured|Pressure|Pressuring|Pressures} by economic necessity, :: 経済的必要に迫られ
+S| many families {choose|chooses|choosing|chosen} :: 多くの家庭が選ぶ
+O| {to raise|raising|raise|to raising} their children :: 子を育てることを
+P| {in|on|at|by} a dominant language :: 支配的な言語で
+X| {that|what|whose|whom} promises better jobs. :: よい職を約束する
+== 経済的な必要に迫られ、多くの家庭はよりよい職につながる支配的な言語で子を育てることを選ぶ。
+T| {Within|Withing|Within of|Inward} a generation or two, :: 一、二世代のうちに
+S| the {ancestral|ancestor|ancestry|ancestrally} language :: 先祖の言語は
+V| {survives|survive|surviving|survival} :: 生き残る
+M| {only|lonely|onlying|one} among the elderly. :: 高齢者の間だけで
+== 一、二世代のうちに、先祖の言語は高齢者の間でしか話されなくなる。
+S| Some {argue|argues|arguing|argument} :: …と主張する人もいる
+O| that this loss {is|are|be|being} :: この喪失は…だと
+C| a natural, even {desirable|desire|desirably|desiring}, process, :: 自然で望ましい過程
+R| {since|for since|during|because of} fewer languages :: 言語が減れば
+V| {mean|means|meaning|meant to} easier communication. :: 意思疎通が楽になる
+== この喪失は自然で、むしろ望ましい過程だと主張する人もいる。言語が減れば意思疎通が楽になるからだ。
+S| {Yet|Despite|In spite|However of} this argument :: しかしこの議論は
+V| {overlooks|overlook|overlooking|oversight} :: 見落としている
+O| {what|that|which|whom} is actually lost. :: 実際に失われるものを
+== しかし、この議論は実際に何が失われるのかを見落としている。
+S| Each language {embodies|embody|embodying|embodiment} :: 各言語は体現する
+O| {centuries|century|centurial|centennial} of accumulated knowledge, :: 何世紀もの蓄積知を
+M| {from|form|for from|of from} names for local plants :: 地元の植物名から
+M| {to|at|onto|by} ways of describing kinship. :: 親族の表し方まで
+== 各言語には、地元の植物の名前から親族の言い表し方まで、何世紀にもわたる知識が蓄えられている。
+M| {Once|Ones|Once of|One} a language disappears, :: 言語が消えると
+S| {much|many|a many|such many} of this knowledge :: この知識の多くも
+V| {disappears|disappear|disappearing|disappearance} :: 消える
+M| {with|withing|without of|withal} it. :: それとともに
+== ひとたび言語が消えると、その知識の多くもともに失われる。
+M| {Encouragingly|Encourage|Encouraging of|Encouragement}, :: 心強いことに
+S| some {communities|community|communal|communion} :: 一部の共同体は
+V| {have|has|having|had been} revived :: 復活させてきた
+O| languages {that|what|whom|whose} had nearly fallen silent, :: 途絶えかけた言語を
+M| {as|so|such|than} Hebrew and Hawaiian show. :: ヘブライ語等が示すように
+== 心強いことに、ヘブライ語やハワイ語が示すように、途絶えかけた言語を復活させた共同体もある。
+S| Such efforts {suggest|suggests|suggesting|suggestion} :: こうした努力は示す
+O| that language loss {is|are|be|been} :: 言語の喪失は…だと
+C| not a law {of|at|into|than} history :: 歴史の法則ではない
+M| {but|and|nor|so} the result of choices :: 選択の結果で
+X| {that|what|whom|whose} people can still change. :: 人がまだ変えられる
+== こうした取り組みは、言語の消滅が歴史の法則ではなく、人々がまだ変えられる選択の結果であることを示している。
+?? 0 1 消えるかもしれない言語はどれくらい？
+?? 1 3 言語が消える多くの場合の原因は？
+?? 6 2 各言語に蓄えられているのは？
+?? 8 4 言語を復活させた例は？
+
+@id adv50
+@lv 3
+@level 8
+@title Rethinking Culture Shock
+@ja カルチャーショック再考
+@tag 難関大レベル・論説文
+@gloss anthropologist=人類学者, disorientation=方向感覚の喪失, euphoria=幸福感, frustration=いらだち, adjustment=適応, oversimplify=単純化しすぎる, rigid=硬直した, inevitable=避けられない
+S| The term "culture shock" {was|were|be|has} :: 「カルチャーショック」は
+V| {popularized|popular|popularity|popularizing} :: 広められた
+P| {by|at|into|onto} anthropologists :: 人類学者によって
+R| {to describe|describing|to describing|describe} the disorientation :: 混乱を表すために
+X| {felt|to feeling|feel|feels} in a foreign culture. :: 異文化で感じる
+== 「カルチャーショック」という語は、異文化で感じる混乱を表すために人類学者によって広められた。
+M| {According|Accorded|Accordance|Accord} to a well-known model, :: ある有名なモデルでは
+S| newcomers {pass|passes|passing|passed by} :: 新参者は通過する
+P| {through|though|thorough|throughout of} four stages: :: 4つの段階を
+O| euphoria, {frustration|frustrate|frustrated|frustrating}, :: 高揚、いらだち
+O| {adjustment|adjust|adjusted|adjustable}, and finally mastery. :: 適応、そして習熟
+== ある有名なモデルによれば、新しく来た人は高揚、いらだち、適応、そして習熟という4段階を経る。
+M| {Plotted|Plotting|Plot|Plots} on a graph, :: グラフにすると
+S| {these|this|that|its} stages :: これらの段階は
+V| {form|forms|forming|formation} :: 形づくる
+O| {what|that|which|whom} is called a U-curve. :: U字曲線と呼ばれるものを
+== グラフに描くと、これらの段階はU字曲線と呼ばれる形になる。
+S| The model {is|are|be|have} :: このモデルは…だ
+C| {intuitively|intuitive|intuition|intuit} appealing, :: 直感的に魅力的
+M| {and|nor|than|but of} many people :: そして多くの人が
+V| {recognize|recognizes|recognizing|recognition} :: 認める
+O| their own {experiences|experience of|experienced|experiencing} in it. :: 自分の経験をそこに
+== このモデルは直感的にわかりやすく、多くの人がそこに自分の経験を見いだす。
+M| {Nevertheless|Never the less|Nonetheless of|Nevertheless of}, :: それでも
+S| researchers {have|has|having|had been} found :: 研究者は見いだした
+O| {little|few|a few|fewer} evidence :: ほとんど証拠がない
+X| {that|what|whom|whose} most people follow it. :: 大半が従うという
+== それでも研究者たちは、大半の人がこの曲線をたどるという証拠をほとんど見つけていない。
+S| Some sojourners {feel|feels|feeling|felt to} :: 滞在者には…感じる人も
+C| {miserable|misery|miserably|miser} from the start, :: 最初からつらい
+M| {while|whilst of|during|meanwhile} others :: 一方…人もいる
+V| {never|ever|nevermore of|not ever of} experience :: 一度も…ない
+O| {any|some of|none|no any} crisis at all. :: 危機を全く
+== 最初からつらく感じる滞在者もいれば、危機を全く経験しない人もいる。
+S| {Adjustment|Adjust|Adjusted|Adjusting of}, it turns out, :: 適応はどうやら
+V| {depends|depend|depending|dependent} :: 左右される
+O| {on|in|at|to} factors :: 要因に
+X| such as language {ability|able|ably|enable} :: 語学力など
+M| {and|so|nor|than} social support. :: そして社会的支援
+== どうやら適応は、語学力や周囲の支えといった要因に左右されるようだ。
+S| The U-curve, {then|than|thence of|them}, :: ではU字曲線は
+V| {oversimplifies|oversimplify|oversimplifying|oversimplified of} :: 単純化しすぎている
+O| {a|an|any of|these} complex process. :: 複雑な過程を
+== つまり、U字曲線は複雑な過程を単純化しすぎているのだ。
+M| {Worse|Worst|Badly|Worsen}, :: さらに悪いことに
+S| treating it as a {rigid|rigidly|rigidity|rigor} rule :: 硬直した規則とすると
+V| {may|mays|may to|might to} :: …かもしれない
+V| {lead|leads|leading|led} :: 導く
+O| people {to expect|expecting|expect|to expecting} suffering :: 苦しみを予期する
+M| {as|like as|for as|so} inevitable. :: 避けられないと
+== さらに悪いことに、それを硬直した規則とみなすと、人は苦しみを避けられないものと予期しかねない。
+M| {Rather|Rather than|Rather to|Instead of} than following a script, :: 筋書きに従うより
+S| each {person|persons|personal|personally} :: 一人ひとりが
+V| {finds|find|finding|found to} :: 見いだす
+O| {his or her|him or her|he or she|hers or his} own path :: 自分なりの道を
+P| {into|into of|unto of|in to} a new culture. :: 新しい文化への
+== 決まった筋書きをたどるのではなく、一人ひとりが新しい文化への自分なりの道を見つけるのである。
+?? 1 2 モデルでは新参者はいくつの段階を経る？
+?? 2 3 段階をグラフにすると何と呼ばれる？
+?? 6 3 適応を左右する要因の一つは？
+?? 8 5 硬直した規則とみなすと苦しみをどう予期する？
+
+@id adv51
+@lv 3
+@level 8
+@title Reading Between the Lines
+@ja 行間を読む文化
+@tag 難関大レベル・論説文
+@gloss explicit=明示的な, implicit=暗黙の, context=文脈, ambiguity=あいまいさ, evasive=はぐらかす, blunt=ぶっきらぼうな, framework=枠組み, stereotype=固定観念
+S| The anthropologist Edward Hall {distinguished|distinguish|distinction|distinguishing} :: 人類学者ホールは区別した
+P| {between|betweens|of between|among of} two styles :: 2つの様式を
+X| of {communication|communicate|communicative|communicated}: :: コミュニケーションの
+O| "high-context" {and|nor|than|but} "low-context." :: 高文脈と低文脈
+== 人類学者エドワード・ホールは、「高文脈」と「低文脈」という2つのコミュニケーション様式を区別した。
+P| {In|On|At|To} low-context cultures, :: 低文脈文化では
+S| meaning {is|are|be|being} :: 意味は…される
+V| {conveyed|conveying|convey|conveys} :: 伝えられる
+M| {chiefly|chief|chiefs|chiefdom} through explicit words, :: 主に明示的な言葉で
+M| {so|such|too|very} listeners :: だから聞き手は
+V| {take|takes|taking|taken} statements at face value. :: 言葉を額面通りとる
+== 低文脈文化では、意味は主に明示的な言葉で伝えられるので、聞き手は発言を額面どおりに受け取る。
+P| {In|On|At|To} high-context cultures, :: 高文脈文化では
+M| {by|of|from|with} contrast, :: 対照的に
+S| {much|many|a many|several} of the message :: メッセージの多くは
+V| {lies|lays|lying|lain} :: ある
+P| {in|into|onto|of} tone, relationships, and shared assumptions. :: 口調や関係、前提に
+== 対照的に高文脈文化では、メッセージの多くが口調や人間関係、共有された前提の中にある。
+S| A reply {like|alike|likely|liking} "I'll think about it," :: 「考えておく」等の返事は
+M| {for|of|by|with} instance, :: たとえば
+V| {may|mays|may to|might to} :: …かもしれない
+V| {signal|signals|signaling|signaled} :: 示す
+O| a polite {refusal|refuse|refusely|refused} :: 丁寧な断りを
+P| {to|at|onto|into} a listener who shares the context. :: 文脈を共有する聞き手に
+== たとえば「考えておきます」という返事は、文脈を共有する聞き手には丁寧な断りを意味しうる。
+S| {Problems|Problem|Problematic|Problematically} :: 問題は
+V| {arise|arises|arising|arose to} :: 生じる
+M| {when|what|whom|whose} the two styles meet. :: 2つの様式が出会うと
+== 問題は、この2つの様式が出会ったときに生じる。
+S| A {low-context|low-contexts|lowly-context|low-contextual of} speaker :: 低文脈の話し手は
+V| {may|mays|may to|might to} :: …かもしれない
+V| {find|finds|finding|found} :: 感じる
+O| a high-context partner {evasive|evade|evasion|evasively}, :: 相手をはぐらかしと
+M| {while|whilst of|during|meanwhile} the partner :: 一方で相手は
+V| {may|mays|may to|might to} :: …かもしれない
+V| {consider|considers|considering|considered} the speaker blunt. :: 話し手を無遠慮と思う
+== 低文脈の話し手は高文脈の相手をはぐらかしていると感じ、相手は話し手を無遠慮だと思うかもしれない。
+M| {Neither|Neither of|Nor|None}, of course, :: もちろんどちらも…ない
+V| {is|are|be|being} :: …だ
+C| {superior|superiority|superiorly|super} :: 優れている
+M| {to|than|from|over of} the other. :: 他方より
+== もちろん、どちらかが他方より優れているわけではない。
+S| {Each|Every|All|Both} :: それぞれが
+V| {reflects|reflect|reflecting|reflection} :: 反映する
+O| {what|that|which|whom} a community values most. :: 共同体が最も重んじるもの
+== それぞれが、その共同体が最も重んじるものを反映しているのだ。
+M| {Still|Steal|Stilly|Stall}, :: とはいえ
+S| the framework {has|have|having|is} :: この枠組みは…ある
+V| been {criticized|criticizing|criticize|criticism} :: 批判されて
+R| {for|of|with|to} turning tendencies :: 傾向を…に変えると
+X| {into|onto|in to|unto of} stereotypes. :: 固定観念に
+== とはいえ、この枠組みは傾向にすぎないものを固定観念に変えてしまうと批判されてもきた。
+M| {Within|Withing|Within of|Inward} any culture, :: どの文化の中でも
+S| individuals {differ|differs|differing|different} :: 個人は異なる
+M| {widely|wide|width|widen} :: 大きく
+M| {depending|depend|depended|dependent of} on age, region, and situation. :: 年齢や地域、場面で
+== どの文化の中でも、個人は年齢や地域、場面によって大きく異なる。
+S| The concepts {are|is|be|being} :: これらの概念は…だ
+C| best {used|using|use|uses} :: 最もよく使われる
+M| {as|like as|for as|so} a starting point for curiosity, :: 好奇心の出発点として
+M| {not|no|none|nor} a final judgment. :: 最終判断ではなく
+== これらの概念は、最終的な判断ではなく、相手への好奇心の出発点として使うのが最もよい。
+?? 1 3 低文脈文化では意味は主に何で伝わる？
+?? 2 4 高文脈文化ではメッセージの多くはどこにある？
+?? 3 4 「考えておく」は何を意味しうる？
+?? 8 4 この枠組みは何に変えると批判される？
+
+@id adv52
+@lv 3
+@level 8
+@title The Observer's Paradox
+@ja 観察者のパラドックス
+@tag 難関大レベル・論説文
+@gloss paradox=逆説, fieldwork=現地調査, participant=参加者, conscious=意識した, distort=ゆがめる, eliminate=取り除く, acknowledge=認める, objectivity=客観性
+S| Anthropologists and linguists {face|faces|facing|faced to} :: 人類学者らは直面する
+O| a {peculiar|peculiarly|peculiarity|peculiars} problem. :: 奇妙な問題に
+== 人類学者や言語学者は、奇妙な問題に直面している。
+S| They {want|wants|wanting|wanted to} :: 彼らは…したい
+V| {to study|studying|study|to studying} :: 研究する
+O| {how|what|which|whom} people behave :: 人々がどうふるまうか
+M| {when|what|whom|whose} no one is watching, :: 誰も見ていないとき
+M| {but|nor|than|but of} they can only do so :: だがそれができるのは
+M| {by|at|onto|into} watching. :: 見ることによってのみ
+== 彼らは誰も見ていないときの人々のふるまいを研究したいが、それは見ることによってしかできない。
+S| The linguist William Labov {called|calling|call|calls} :: 言語学者ラボフは呼んだ
+O| this dilemma {"the|a "the|"an|"a the} observer's paradox." :: これを観察者の逆説と
+== 言語学者ウィリアム・ラボフは、このジレンマを「観察者のパラドックス」と呼んだ。
+M| {Aware|Awareness|Aware of|Awarely} that they are being recorded, :: 録音を意識して
+S| speakers {tend|tends|tending|tended to} :: 話者は…しがちだ
+V| {to adopt|adopting|adopt|to adopting} :: 採用する
+O| a more {formal|form|formally|formality} style :: より改まった話し方を
+X| {than|then|as|that} they normally use. :: ふだんより
+== 録音されていると意識すると、話者はふだんより改まった話し方をしがちだ。
+M| {Similarly|Similar|Similarity|Same}, :: 同様に
+S| villagers {visited|visiting|visit|visits} by an anthropologist :: 人類学者が訪ねた村人は
+V| {may|mays|may to|might to} :: …かもしれない
+V| {present|presents|presenting|presented} :: 見せる
+O| an {idealized|idealize|ideal of|idealization of} version :: 理想化した姿を
+X| of their {customs|custom of|customary|customarily}. :: 自分たちの慣習の
+== 同様に、人類学者が訪れた村の人々は、自分たちの慣習を理想化した姿で見せるかもしれない.
+S| The very {presence|present|presently|presenting} :: まさにその存在が
+X| of the researcher, {in|on|at|by} other words, :: つまり研究者の
+V| {distorts|distort|distorting|distortion} :: ゆがめる
+O| the {phenomenon|phenomenon of|phenomenal|phenomenally} :: その現象を
+X| {being|been|be|is} studied. :: 研究されている
+== つまり、研究者がいることそのものが、研究対象の現象をゆがめてしまうのだ。
+M| {To|For|By|At} reduce this effect, :: この影響を減らすため
+S| researchers {have|has|having|had been} developed :: 研究者は開発してきた
+O| {various|vary|variety|variously} techniques. :: さまざまな手法を
+== この影響を減らすため、研究者たちはさまざまな手法を編み出してきた。
+S| Some {spend|spends|spending|spent to} years :: 何年も過ごす人もいる
+P| {living|live|lived|lives} in a community :: 共同体で暮らして
+M| {so|so as|too|very} that their presence :: 存在が…するように
+V| {becomes|become|becoming|became to} unremarkable. :: 目立たなくなる
+== 共同体で何年も暮らし、自分の存在が目立たなくなるようにする研究者もいる。
+S| {Others|Other|Another|The other of} :: ほかの人は
+V| {ask|asks|asking|asked to} about emotional topics :: 感情的な話題を尋ねる
+X| {that|what|whom|whose} make speakers forget :: 話者に忘れさせる
+O| {that|what|whom|whose} they are being observed. :: 観察されていることを
+== また、話者が観察されていることを忘れるような感情的な話題を尋ねる研究者もいる。
+S| {None|No|Nobody of|Nothing of} of these methods, however, :: だがどの方法も…ない
+V| {can|cans|can to|could to} :: …できる
+V| {eliminate|eliminates|eliminating|elimination} the problem :: 問題を取り除く
+M| {entirely|entire|entirety|entires}. :: 完全に
+== しかし、どの方法も問題を完全に取り除くことはできない。
+S| Perhaps {the|a|these|any of} honest response :: 誠実な対応は
+V| {is|are|be|being} :: …だ
+C| {to acknowledge|acknowledging of|acknowledge|to acknowledging} :: 認めることだ
+O| {that|what|whom|whose} pure objectivity is impossible :: 純粋な客観性は無理と
+M| {and|nor|than|but of} to report one's own influence. :: 自分の影響を報告する
+== おそらく誠実な対応とは、純粋な客観性は不可能だと認め、自分の及ぼした影響も報告することだろう。
+?? 2 1 ラボフはこのジレンマを何と呼んだ？
+?? 3 3 録音を意識すると話者はどんな話し方をする？
+?? 7 3 共同体で何年も暮らすと存在はどうなる？
+?? 10 3 誠実な対応では何が不可能だと認める？
+
+@id adv53
+@lv 3
+@level 8
+@title The Limits of Cultural Relativism
+@ja 文化相対主義の限界
+@tag 難関大レベル・論説文
+@gloss relativism=相対主義, ethnocentrism=自民族中心主義, inferior=劣った, suspend=保留する, standard=基準, practice=慣習, condemn=非難する, universal=普遍的な
+P| {In|On|At|To} the nineteenth century, :: 19世紀には
+S| many Western scholars {ranked|rank|ranking|ranks of} :: 西洋の学者は格付けした
+O| {societies|society|societal|socially} :: 社会を
+M| {from|form|for from|of from} "primitive" to "civilized," :: 未開から文明へと
+M| {with|within|without of|withal} their own at the top. :: 自分たちを頂点にして
+== 19世紀、多くの西洋の学者は社会を「未開」から「文明」へと格付けし、自分たちの社会を頂点に置いた.
+S| {Reacting|React|Reacted|Reaction} against such ethnocentrism, :: 自民族中心主義に反発し
+S| later anthropologists {insisted|insist|insisting|insistence} :: 後の人類学者は主張した
+O| {that|what|whom|whose} each culture :: 各文化は…と
+V| {be|to be|being|been} understood :: 理解されるべきだと
+P| {on|of|at|to} its own terms. :: それ自体の基準で
+== そうした自民族中心主義に反発し、後の人類学者たちは各文化をそれ自身の基準で理解すべきだと主張した.
+S| This principle, {known|knowing|know|knew} :: この原則は…と呼ばれ
+M| {as|like|of|to} cultural relativism, :: 文化相対主義として
+V| {asks|ask|asking|asked to} :: 求める
+O| observers {to suspend|suspending|suspend|to suspending} :: 観察者に保留するよう
+O| {judgment|judge|judgmental|judging of} :: 判断を
+R| {until|unless of|since of|during} they understand a practice. :: 慣習を理解するまで
+== 文化相対主義と呼ばれるこの原則は、観察者に、慣習を理解するまで判断を保留するよう求める。
+S| {Its|It's|It|Itself} value :: その価値は
+V| {is|are|be|being} :: …だ
+C| {undeniable|undeniably|undenial|denial}: :: 否定できない
+S| customs {that|what|whom|whose} once seemed strange :: かつて奇妙に見えた慣習は
+V| often {prove|proves|proving|proof} :: しばしば…とわかる
+C| {to be|being|be|to being} sensible responses to local conditions. :: 地域の事情への対応と
+== その価値は否定できない。かつて奇妙に見えた慣習も、地域の事情への理にかなった対応だとわかることが多い。
+M| {Taken|Taking|Take|Took} to an extreme, :: 極端に進めると
+M| {however|whatever|whenever|wherever}, :: しかし
+S| relativism {becomes|become|becoming|became to} :: 相対主義は…になる
+C| {troubling|troublingly|trouble|troubles}. :: 厄介なもの
+== しかし、極端に推し進めると、相対主義は厄介なものになる。
+M| {If|Unless of|Whether of|Even of} every practice :: もしあらゆる慣習が
+V| {is|are|be|being} :: …なら
+C| {valid|validly|validity|validate} within its own culture, :: その文化内で正当
+M| {then|than|them|thence of} no one :: 誰も…ない
+V| {can|cans|can to|could to} :: …できる
+V| {condemn|condemns|condemning|condemnation} even slavery or torture. :: 奴隷制や拷問さえ非難
+== あらゆる慣習がその文化の中で正当なら、奴隷制や拷問さえ誰も非難できなくなってしまう。
+M| {Moreover|More|Most over|Moreover of}, :: さらに
+S| cultures {are|is|be|being} :: 文化は…ない
+C| {rarely|rare|rarity|rarer} unified. :: めったに一枚岩で
+== さらに、文化が一枚岩であることはめったにない。
+S| {Whose|Who|Whom|Which of} "own terms" :: 誰の基準が
+V| {count|counts|counting|counted to} :: 数えられるのか
+M| {when|what|whom|whose} members of a society disagree? :: 社会内で意見が割れると
+== 社会の成員どうしで意見が割れるとき、いったい誰の「基準」が採用されるのか。
+S| Many scholars {now|know|no|known} :: 多くの学者は今
+V| {regard|regards|regarding|regarded} :: みなしている
+O| relativism {as|like|for|to} a method rather than a moral position. :: 相対主義を方法として
+== 今日、多くの学者は相対主義を、道徳的立場ではなく方法とみなしている。
+S| {It|Its|It's|Itself} :: それは
+V| {helps|help|helping|helped to} us understand others :: 他者理解を助ける
+M| {without|with out|within of|withal} requiring us to abandon :: 捨てることを求めずに
+O| {the|an|these|any of} belief in universal human rights. :: 普遍的人権への信念を
+== それは、普遍的人権への信念を捨てることを求めずに、他者を理解する助けになるのだ.
+?? 0 4 学者たちは自分たちの社会をどこに置いた？
+?? 2 5 文化相対主義はいつまで判断を保留させる？
+?? 5 5 極端な相対主義では何さえ非難できない？
+?? 8 2 多くの学者は相対主義を何とみなしている？
+
+@id adv54
+@lv 3
+@level 8
+@title Is There a Critical Period?
+@ja 言語習得に臨界期はあるか
+@tag 難関大レベル・論説文
+@gloss acquire=習得する, effortlessly=楽々と, critical period=臨界期, hypothesis=仮説, puberty=思春期, exposure=触れること, motivation=意欲, decline=衰える
+S| Young children {acquire|acquires|acquiring|acquisition} :: 幼児は習得する
+O| their first language {seemingly|seeming|seem|seemed} effortlessly, :: 母語を一見楽々と
+M| {whereas|where as|whereby of|whereof} adults :: 一方大人は
+V| {struggle|struggles|struggling|struggled to} :: 苦労する
+O| {with|within|without of|withal} a second one. :: 第二言語に
+== 幼い子どもは一見楽々と母語を身につけるが、大人は第二言語に苦労する。
+S| {This|These|Those|They} contrast :: この対比は
+V| {led|lead|leading|leads to} :: 導いた
+O| some researchers {to propose|proposing|propose|to proposing} :: 研究者に提唱へと
+O| the "critical period {hypothesis|hypothesize|hypothetical|hypothesized}." :: 臨界期仮説を
+== この対比から、一部の研究者は「臨界期仮説」を提唱した。
+P| {According|Accorded|Accordance|Accord} to this view, :: この見方によれば
+S| the brain {is|are|be|been} :: 脳は…だ
+C| {especially|special|especial of|specialty} receptive to language :: 特に言語を受け入れやすい
+T| {until|unless of|since of|during} around puberty, :: 思春期ごろまで
+M| {after|afterward|afterwards of|aftermath} which :: その後は
+S| {this|these|those|they} ability :: この能力は
+V| {declines|decline|declining|declination} sharply. :: 急に衰える
+== この見方によると、脳は思春期ごろまで特に言語を受け入れやすく、その後この能力は急に衰える.
+S| {Evidence|Evident|Evidently|Evidences of} :: 証拠は
+V| {comes|come|coming|came to} :: 来る
+P| {from|form|for from|of from} studies of immigrants, :: 移民の研究から
+X| {whose|who|whom|which of} accents :: その訛りが
+V| {tend|tends|tending|tended to} to be stronger :: 強い傾向にある
+M| the later they {arrived|arrive of|arriving|arrival}. :: 到着が遅いほど
+== 証拠は移民の研究から得られており、到着した年齢が遅いほど訛りが強い傾向がある。
+M| {Yet|Despite|In spite|However of} the picture :: しかし実態は
+V| {is|are|be|being} :: …だ
+C| {more|most|much of|many} complicated than it seems. :: 見かけより複雑
+== しかし実態は、見かけよりも複雑だ。
+S| Adults {actually|actual|actuality|actualize} :: 大人は実は
+V| {learn|learns|learning|learned to} grammar faster :: 文法を速く学ぶ
+M| {than|then|as|that} children :: 子どもより
+P| {in|onto|into|within of} the early stages, :: 初期段階では
+M| {and|nor|than|but of} some late learners :: 遅く学ぶ人の中には
+V| {reach|reaches|reaching|reached to} near-native levels. :: 母語話者並みに達する
+== 実は初期段階では大人のほうが子どもより速く文法を学び、遅く始めて母語話者並みに達する人もいる。
+M| {Moreover|More|Most over|Moreover of}, :: さらに
+S| children {enjoy|enjoys|enjoying|enjoyed to} :: 子どもは享受する
+O| {advantages|advantage of|advantageous|advantaged} :: 利点を
+X| {that|what|whom|whose} have little to do with the brain. :: 脳とは無関係な
+== さらに、子どもには脳とはほとんど関係のない利点がある。
+X| They include {years|year|yearly|years of} of exposure, :: 何年もの接触など
+O| patient {teachers|teaches|teacher|taught}, :: 辛抱強い教え手
+M| {and|nor|than|but of} freedom from embarrassment. :: 恥ずかしさのなさ
+== それは、何年にもわたって言語に触れること、辛抱強い教え手、そして恥ずかしさからの自由である。
+S| {Adults|Adult|Adultly|Adulthood of}, by contrast, :: 対照的に大人は
+V| {rarely|rare|rarity|rarer} :: めったに…ない
+V| {receive|receives|receiving|received to} :: 受ける
+O| {such|so|too|as} rich input. :: そんな豊かな入力を
+== 対照的に、大人がそれほど豊かな入力を受けることはめったにない。
+S| {Whether|Weather|Whither|Either} a biological limit exists :: 生物学的限界の有無は
+V| {remains|remain|remaining|remainder} :: 依然…だ
+C| {debated|debate|debating|debatable of}. :: 議論されている
+== 生物学的な限界が存在するかどうかは、今も議論が続いている。
+M| {Nevertheless|Never the less|Nonetheless of|Nevertheless of}, :: それでも
+S| the lesson for {learners|learns|learning|learned} :: 学習者への教訓は
+V| {is|are|be|being} :: …だ
+C| {clear|clearly|clarity|clarify}: :: 明らかだ
+S| age {matters|matter|mattering|mattered to} less :: 年齢はより重要でない
+M| {than|then|as|that} the quantity and quality of input. :: 入力の量と質より
+== それでも学習者にとっての教訓は明らかだ。年齢よりも、入力の量と質のほうが重要なのである。
+?? 2 3 脳が言語を受け入れやすいのはいつごろまで？
+?? 3 2 証拠はどんな人の研究から得られた？
+?? 5 1 初期段階で大人が子どもより速く学ぶものは？
+?? 10 5 年齢より重要なのは何？
+
+@id adv55
+@lv 3
+@level 8
+@title Can Machines Understand What They Translate?
+@ja 機械は訳す文を理解するか
+@tag 難関大レベル・論説文
+@gloss fluent=流ちょうな, pattern=パターン, statistical=統計的な, sarcasm=皮肉, nuance=ニュアンス, literally=文字どおりに, accountability=責任, supervise=監督する
+S| Machine translation {has|have|having|be} :: 機械翻訳は
+V| {improved|improve|improving|improvement} :: 向上した
+M| {so|such|too|very} dramatically :: 非常に劇的に
+M| {that|what|whom|whose} its output :: その出力は
+V| often {reads|read|reading|readable} :: しばしば読める
+M| {as|like as|for as|such} fluently as human writing. :: 人の文のように滑らかに
+== 機械翻訳は劇的に向上し、その訳文はしばしば人間の文章と同じくらい滑らかに読める.
+S| {This|These|Those|They} success :: この成功は
+V| {raises|rises|raising|arise} :: 提起する
+O| {a|an|any of|these} philosophical question. :: ある哲学的な問いを
+== この成功は、ある哲学的な問いを投げかける。
+V| {Does|Do|Doing|Did to} the machine :: 機械は…のか
+V| {understand|understands|understanding|understood} :: 理解している
+O| {what|that|which|whom} it translates? :: 自分が訳すものを
+== 機械は、自分が訳しているものを理解しているのだろうか。
+S| Modern systems {learn|learns|learning|learned to} :: 現代の機械は学ぶ
+O| {from|form|for from|of from} enormous collections :: 膨大な集積から
+X| of {translated|translating|translate|translates} texts, :: 翻訳済み文書の
+V| {detecting|detect|detected|detects} :: 見いだしながら
+O| statistical patterns {between|betweens|of between|among of} languages. :: 言語間の統計的規則を
+== 現代のシステムは膨大な翻訳済み文書から学び、言語間の統計的なパターンを見いだしている。
+S| They {have|has|having|had been} :: 彼らは持っていない
+O| {no|none|not|nor} experience of the world :: 世界の経験を
+X| {to which|which to|to whom of|to what of} the words refer. :: 言葉が指す
+== だが、機械には言葉が指し示す世界についての経験がない。
+S| Critics {argue|argues|arguing|argument} :: 批判者は主張する
+O| {that|what|whom|whose} this explains :: これが説明すると
+O| {why|what|which|whom} machines still stumble :: なぜ機械がつまずくか
+P| {over|overly|unto of|upon of} sarcasm, humor, and cultural nuance. :: 皮肉や冗談などで
+== 批判者は、だから機械はいまだに皮肉やユーモア、文化的なニュアンスでつまずくのだと主張する。
+S| A sarcastic "Great job!" {might|mights|might to|may to} :: 皮肉な「お見事」は
+V| be {translated|translating|translate|translation} literally, :: 文字どおり訳される
+V| {reversing|reverse|reversed|reverses} :: 逆にする
+O| {its|it's|it|itself} intended meaning. :: 意図された意味を
+== 皮肉の「お見事！」が文字どおりに訳され、意図とは正反対の意味になることもある。
+S| {Others|Other|Another|The other of} respond :: 別の人は応じる
+O| {that|what|whom|whose} human understanding :: 人間の理解も…と
+V| {may|mays|may to|might to} :: …かもしれない
+V| {itself|it|its|itselves} be built :: それ自体築かれる
+P| {on|at|of|to} patterns learned from experience. :: 経験から学んだ型の上に
+== 一方で、人間の理解そのものも経験から学んだパターンの上に成り立っているのかもしれない、と応じる人もいる.
+M| {Whichever|Whatever of|Wherever|Whenever} side is right, :: どちらが正しくても
+S| one practical point {stands|stand|standing|stood to} out. :: 実際的な点は明らか
+== どちらの側が正しいにせよ、一つの実際的な点ははっきりしている.
+S| Machines {cannot|can't not|cannot to|could not to} :: 機械は…できない
+V| {take|takes|taking|taken} responsibility :: 責任を負う
+P| {for|of|with|to} the consequences of a mistranslation. :: 誤訳の結果に対して
+== 機械は誤訳がもたらす結果に責任を負うことができない。
+P| {In|On|At|To} medicine, law, and diplomacy, :: 医療や法律や外交で
+M| {therefore|therefor|there fore|thereby of}, :: したがって
+S| humans {must|musts|must to|have} :: 人間は…ねばならない
+V| {continue|continues|continuing|continued} :: 続ける
+R| {to supervise|supervising of|supervise|to supervising} the work. :: 作業を監督し
+== したがって医療や法律、外交の場では、人間が引き続き作業を監督しなければならない。
+?? 3 1 現代のシステムは何から学ぶ？
+?? 5 3 機械がつまずくものの例は？
+?? 6 1 皮肉の「お見事」はどう訳されることがある？
+?? 9 2 機械は何に責任を負えない？
+
+@id adv56
+@lv 3
+@level 8
+@title How New Languages Are Born
+@ja 新しい言語の誕生
+@tag 難関大レベル・説明文
+@gloss pidgin=ピジン語, creole=クレオール語, plantation=大農園, makeshift=間に合わせの, vocabulary=語彙, inconsistent=一貫しない, systematic=体系的な, inflection=語形変化
+S| We usually {think|thinks|thinking|thought to} of languages :: ふつう言語を考える
+M| {as|like|for|to} ancient inheritances, :: 古い遺産として
+M| {but|nor|than|but of} new ones :: だが新しい言語も
+V| {have|has|having|had been} emerged :: 生まれてきた
+M| {within|withing|within of|inward} the past few centuries. :: ここ数世紀で
+== 私たちはふつう言語を古くからの遺産と考えるが、ここ数百年の間にも新しい言語は生まれてきた.
+P| {On|In|At|To} colonial plantations, :: 植民地の大農園では
+S| workers {who|whom|whose|which of} shared no common language :: 共通語のない労働者は
+V| {developed|develop|developing|development} :: 生み出した
+O| {makeshift|make shift|makeshifts of|makes shift} systems :: 間に合わせの仕組みを
+R| {to communicate|communicating of|communicate|to communicating}. :: 意思疎通のために
+== 植民地の大農園で、共通の言語を持たない労働者たちは意思疎通のために間に合わせの仕組みを作った。
+S| {These|This|That|Its} "pidgins" :: これらのピジン語は
+V| {borrowed|borrow|borrowing|borrows of} :: 借りた
+O| {most|almost|mostly|much of} of their vocabulary :: 語彙の大半を
+P| {from|form|for from|of from} a dominant language :: 支配的な言語から
+M| {but|nor|than|so that} had little grammar. :: だが文法は乏しかった
+== これらの「ピジン語」は語彙の大半を支配的な言語から借りていたが、文法はほとんどなかった。
+S| {Their|There|They're|Them} sentences :: その文は
+V| {were|was|be|being} :: …だった
+C| short and {inconsistent|inconsistence|inconsistently|consist}, :: 短く一貫しない
+M| {varying|vary|variety|varies} from speaker to speaker. :: 話者ごとに異なり
+== その文は短く一貫性がなく、話す人によってまちまちだった。
+S| {Something|Somewhat|Some thing of|Somehow} remarkable, however, :: だが驚くべきことが
+V| {happened|happen|happening|happens of} :: 起きた
+M| {when|what|whom|whose} children grew up :: 子どもが育つと
+X| {hearing|hear|heard|hears} a pidgin. :: ピジン語を聞いて
+== しかし、ピジン語を聞いて育った子どもたちの間で驚くべきことが起きた。
+M| {Rather|Rather than|Rather to|Instead of} than simply copying their parents, :: 親をまねるのではなく
+S| {they|them|their|theirs} :: 彼らは
+V| {transformed|transform|transforming|transformation} :: 変えた
+O| it {into|onto|in to|unto of} a full language :: それを完全な言語に
+X| {with|within|without of|withal} systematic grammar. :: 体系的な文法を持つ
+== 子どもたちは親をまねるだけでなく、それを体系的な文法を備えた完全な言語へと作り変えたのだ。
+S| {Such|So|Too|Very} languages, :: そのような言語は
+V| {known|knowing|know|knew} as creoles, :: クレオールと呼ばれ
+V| {include|includes|including|inclusion} :: 含む
+O| Haitian Creole {and|nor|than|but of} Tok Pisin. :: ハイチ語やトク・ピシン
+== クレオールと呼ばれるこうした言語には、ハイチ・クレオール語やトク・ピシンなどがある。
+S| {Some|Any|Much|Every} linguists :: 一部の言語学者は
+V| {see|sees|seeing|seen} :: 見る
+O| {in|on|at|to} this process :: この過程に
+O| evidence {that|what|whom|whose} humans :: 人間が…という証拠を
+V| {are|is|be|being} born :: 生まれる
+X| with a {capacity|capable|capably|capacitate} for grammar. :: 文法の能力を持って
+== 一部の言語学者は、この過程に、人間が文法の能力を持って生まれてくる証拠を見いだしている。
+S| Others {stress|stresses|stressing|stressed to} :: 別の人は強調する
+O| the {role|roll|roles of|rolled} :: 役割を
+X| of {contact|contacted|contacting|contacts of} with other languages :: 他言語との接触の
+M| {and|nor|than|but of} of social needs. :: そして社会的必要の
+== 他言語との接触や社会的な必要が果たす役割を強調する研究者もいる。
+M| {Either|Neither|Whether|Rather} way, :: いずれにせよ
+S| creoles {remind|reminds|reminding|reminder} us :: クレオールは思い出させる
+O| {that|what|whom|whose} language is not a fixed possession :: 言語は固定物でなく
+M| {but|nor|than|so that} a living creation. :: 生きた創造物だと
+== いずれにせよ、クレオールは、言語が固定された所有物ではなく生きた創造物であることを思い出させてくれる。
+?? 1 0 労働者が仕組みを作ったのはどこ？
+?? 2 4 ピジン語に乏しかったものは？
+?? 5 3 子どもたちはピジン語を何に変えた？
+?? 6 3 クレオールの例は？
+
+@id adv57
+@lv 3
+@level 8
+@title The Hidden Obligations of a Gift
+@ja 贈り物にひそむ義務
+@tag 難関大レベル・論説文
+@gloss obligation=義務, reciprocate=お返しをする, anthropologist=人類学者, voluntary=自発的な, bond=絆, insult=侮辱, calculation=打算, sustain=維持する
+S| {We|Us|Our|Ours} tend to think :: 私たちは考えがちだ
+O| {of|for|at|to} gifts :: 贈り物を
+M| {as|like|for|to} free and voluntary acts. :: 自由で自発的な行為と
+== 私たちは贈り物を、自由で自発的な行為だと考えがちだ。
+S| The French anthropologist Marcel Mauss, {however|whatever|whenever|wherever}, :: しかし人類学者モースは
+V| {argued|argue|arguing|argument} :: 主張した
+O| {that|what|whom|whose} gifts are bound :: 贈り物は縛られると
+P| {by|at|onto|than} three obligations: :: 3つの義務で
+== しかしフランスの人類学者マルセル・モースは、贈り物が3つの義務に縛られていると論じた。
+O| the obligation {to give|giving|give|to giving}, :: 与える義務
+O| {to receive|receiving|receive|to receiving}, :: 受け取る義務
+M| {and|nor|than|but of} to reciprocate. :: そして返す義務
+== 与える義務、受け取る義務、そしてお返しをする義務である。
+S| {Refusing|Refuse|Refused|Refuses} a gift, :: 贈り物を断ることは
+M| {for|of|by|with} example, :: たとえば
+V| {can|cans|can to|could to} :: …しうる
+V| {be|being|been|is} taken :: 受け取られる
+M| {as|like|so|to} an insult. :: 侮辱として
+== たとえば、贈り物を断ることは侮辱と受け取られかねない。
+M| {And|Nor|Than|But of} failing to return one :: そして返さないと
+V| {damages|damage|damaging|damaged to} :: 傷つける
+O| a person's {reputation|repute of|reputable|reputed of}. :: 人の評判を
+== そしてお返しをしないことは、その人の評判を傷つける。
+S| {What|That|Which|It} appears to be generosity, :: 気前のよさに見えるものは
+M| {in|on|at|by} other words, :: つまり
+V| {is|are|be|being} :: …だ
+C| {part|parts|partly|partial} of a system :: 仕組みの一部
+X| {that|what|whom|whose} creates lasting bonds. :: 長く続く絆を作る
+== つまり、気前のよさに見えるものは、長く続く絆を生み出す仕組みの一部なのだ。
+S| This insight {applies|apply|applying|application} :: この洞察は当てはまる
+M| {not only|not just of|only not|not alone} to traditional societies :: 伝統社会だけでなく
+M| {but|nor|than|so that} also to our own. :: 私たちの社会にも
+== この洞察は伝統的な社会だけでなく、私たち自身の社会にも当てはまる。
+S| {Anyone|Any one of|Anybody of|Someone of} who has received a birthday present :: プレゼントをもらった人は
+V| {knows|know|knowing|known} :: 知っている
+O| the quiet {pressure|press|pressurize|pressured} :: 静かな圧力を
+R| {to give|giving|give|to giving} something back. :: 何かを返そうとする
+== 誕生日プレゼントをもらったことがある人なら、何かを返さなければという静かな圧力を知っている。
+S| {Some|Any|Much|Every} critics :: 一部の批判者は
+V| {conclude|concludes|concluding|conclusion} :: 結論づける
+O| {that|what|whom|whose} no gift is truly free :: 真に無償の贈り物はなく
+M| {and|nor|than|but of} all generosity is calculation. :: 気前は打算だと
+== 一部の批判者は、真に無償の贈り物などなく、あらゆる気前のよさは打算だと結論づける。
+M| {Yet|Despite|In spite|However of} Mauss himself :: しかしモース自身は
+V| {drew|draw|drawn|drawing} :: 導いた
+O| {a|an|any of|these} more hopeful lesson. :: より希望ある教訓を
+== しかし、モース自身はもっと希望のある教訓を引き出した。
+S| {Obligations|Obligation of|Obligatory|Oblige} :: 義務こそが
+V| {are|is|be|being} :: …だ
+C| {precisely|precise|precision|preciser} what holds a community together :: 共同体をまとめるもの
+X| {and|nor|than|but of} keeps strangers from becoming enemies. :: 他人を敵にしない
+== 義務こそが共同体を結びつけ、見知らぬ者どうしが敵になるのを防いでいるのだ。
+?? 1 3 モースは贈り物がいくつの義務に縛られるとした？
+?? 3 4 贈り物を断るとどう受け取られかねない？
+?? 7 2 プレゼントをもらった人が感じるものは？
+?? 10 2 共同体をまとめているのは何？

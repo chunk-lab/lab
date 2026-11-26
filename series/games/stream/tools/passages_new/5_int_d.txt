@@ -1,0 +1,528 @@
+@id int47
+@lv 2
+@level 6
+@title Why Do Leaves Change Color?
+@ja 葉の色が変わるわけ
+@tag 共通テストレベル・説明文
+@gloss pigment=色素, chlorophyll=葉緑素, contain=含む, sunlight=日光, disappear=消える, hidden=隠れた, produce=作り出す, maple=カエデ
+T| {In|On|To|Of} autumn, :: 秋には
+S| {many|much|every|a} trees :: 多くの木が
+V| {change|changes|changing|to change} color. :: 色を変える
+== 秋になると、多くの木の葉の色が変わる。
+S| Leaves {look|looks|looking|to look} green :: 葉は緑に見える
+M| {because|because of|due|despite} they contain :: …を含むから
+O| a pigment {called|calling|calls|call} chlorophyll. :: 葉緑素という色素を
+== 葉が緑に見えるのは、葉緑素という色素を含むからだ。
+S| This pigment {helps|help|helping|helpful} :: この色素は助ける
+O| the tree {make|makes|made|making} food :: 木が栄養を作るのを
+P| {from|since|than|until} sunlight. :: 日光から
+== この色素は、木が日光から栄養を作るのを助けている。
+T| {As|Than|Whom|Whose} autumn comes, :: 秋が来ると
+S| the {days|day|daily|day's} :: 日は
+V| {get|gets|getting|to get} shorter :: 短くなる
+M| and {cooler|coolly|coolness|coolest}. :: そして涼しく
+== 秋が来ると、日が短くなり、涼しくなる。
+S| Trees {stop|stops|stopped to|stopping} :: 木はやめる
+O| {making|to making|make|made} chlorophyll, :: 葉緑素を作るのを
+M| and the green color {slowly|slow|slowness|slower} :: 緑色はゆっくり
+V| {disappears|disappear|disappearing|disappeared to}. :: 消えていく
+== 木は葉緑素を作るのをやめ、緑色はゆっくり消えていく。
+T| {Then|Than|Them|Thin}, :: すると
+S| yellow and orange {colors|colorfully|colorless|colorize} :: 黄色やだいだい色が
+V| {can be seen|can be saw|can seen|can been seen}. :: 見えるようになる
+== すると、黄色やだいだい色が見えるようになる。
+S| These colors {were|was|been|being} :: これらの色はあった
+P| in the leaves {all|whole|entire|total} summer, :: 夏の間ずっと葉に
+M| {but|nor|than|whom} they were hidden :: でも隠れていた
+P| {by|on|than|into} the green. :: 緑によって
+== これらの色は夏の間ずっと葉の中にあったが、緑に隠されていたのだ。
+S| Some trees, {such as|such like|as such|so as} maples, :: カエデなどの木は
+V| also {produce|produces|producing|production} :: さらに作り出す
+O| {bright|brightly|brightness|brighten} red pigments :: 明るい赤い色素を
+T| {in|on|to|of} autumn. :: 秋に
+== カエデなどの木は、秋に明るい赤い色素も作り出す。
+M| {That|What|Whom|Whose} is why :: だから
+S| mountains {look|looks|looking|to look} :: 山は見える
+C| {so|such|much|very much} beautiful. :: とても美しく
+== だから、山はとても美しく見えるのだ。
+?? 1 2 葉が緑に見えるのは何という色素のため？
+?? 4 1 秋になると木は何を作るのをやめる？
+?? 6 1 黄色やだいだい色は夏の間どこにあった？
+?? 7 0 秋に赤い色素を作る木の例は？
+
+@id int48
+@lv 2
+@level 6
+@title Why Do Camels Have Humps?
+@ja ラクダのこぶの秘密
+@tag 共通テストレベル・説明文
+@gloss hump=こぶ, store=蓄える, fat=脂肪, energy=エネルギー, rest=残り, amount=量, protect=守る, suited=適した, desert=砂漠
+S| Many people {believe|believes|believing|belief} :: 多くの人は信じている
+O| {that|what|whom|whose} a camel's hump :: ラクダのこぶは…と
+V| is full {of|by|at|on} water. :: 水でいっぱいだ
+== 多くの人は、ラクダのこぶは水でいっぱいだと信じている。
+M| {However|Because|Unless|Although}, :: しかし
+S| this {is|are|be|being} not :: これは…ない
+C| {true|truth|truly|trust}. :: 本当で
+== しかし、これは本当ではない。
+S| The hump {actually|actual|actuality|act} :: こぶは実は
+V| {stores|store|storing|storage} :: 蓄えている
+O| {fat|fatty|fatten|fats of}. :: 脂肪を
+== こぶは実は脂肪を蓄えているのだ。
+T| {When|What|Whom|Which} food is :: 食べ物が…とき
+C| hard {to find|finding|find|found}, :: 見つけにくい
+S| camels can {use|used|using|uses} the fat :: ラクダは脂肪を使える
+R| {for|of|at|since} energy. :: エネルギーとして
+== 食べ物が見つけにくいとき、ラクダはその脂肪をエネルギーとして使える。
+S| {Keeping|Keep|Kept|To keeping} fat in one place :: 脂肪を1か所に集めると
+V| also {helps|help|helping|helpful} them :: ラクダを助けもする
+C| {stay|stays|stayed|staying} cool. :: 涼しくいるのを
+== 脂肪を1か所に集めることは、体を涼しく保つのにも役立つ。
+S| Heat {can leave|can leaves|can leaving|can left} :: 熱が逃げられる
+O| the rest {of|for|by|at} the body :: 体のほかの部分から
+M| more {easily|easy|ease|easier}. :: より簡単に
+== 熱が体のほかの部分から、より簡単に逃げられるからだ。
+S| Camels {can also|can also to|also can to|can also be} :: ラクダはさらにできる
+V| {drink|drank|drinking|drinks} :: 飲む
+O| a {large|lot|many|much} amount of water :: 大量の水を
+T| {at|in|on|by} one time. :: 一度に
+== ラクダは一度に大量の水を飲むこともできる。
+S| Their {thick|thickly|thickness|thicken} fur :: 厚い毛が
+V| {protects|protect|protecting|protection} them :: 彼らを守る
+P| {from|of|into|than} the hot sun. :: 強い日差しから
+== 厚い毛が強い日差しから体を守っている。
+P| {In|On|To|Of} these ways, :: このようにして
+S| camels {are|is|be|being} :: ラクダは
+C| well {suited|suit|suiting|suits} :: よく適している
+P| {to|at|with|by} desert life. :: 砂漠の生活に
+== このようにして、ラクダは砂漠の生活によく適している。
+?? 2 2 ラクダのこぶには実は何が入っている？
+?? 3 3 ラクダはこぶの脂肪を何として使う？
+?? 6 2 ラクダは一度にどれくらいの水を飲める？
+?? 7 2 厚い毛はラクダを何から守る？
+
+@id int49
+@lv 2
+@level 6
+@title Where Does Thunder Come From?
+@ja 雷の音の正体
+@tag 共通テストレベル・説明文
+@gloss lightning=稲妻, thunder=雷鳴, spark=火花, electricity=電気, heat=熱する, expand=膨らむ, flash=閃光, guess=推測する, second=秒
+T| {During|While|Among|Unless} a storm, :: 嵐のとき
+S| we often {see|sees|seeing|seen} lightning :: よく稲妻を見る
+M| and then {hear|hears|heard of|hearing} thunder. :: その後雷鳴を聞く
+== 嵐のとき、私たちはよく稲妻を見て、その後に雷鳴を聞く。
+S| Lightning {is|are|be|being} :: 稲妻は…だ
+C| a {huge|hugely|hugeness|huger} spark :: 巨大な火花
+P| {of|by|on|at} electricity. :: 電気の
+== 稲妻は巨大な電気の火花だ。
+S| It {heats|heat|heating|hot} :: それは熱する
+O| the air {around|aside|apart|away} it :: 周りの空気を
+M| very {quickly|quick|quickness|quicken}. :: とても速く
+== 稲妻は、周りの空気をとても速く熱する。
+S| The hot air {expands|expand|expanding|expansion} :: 熱い空気は膨らむ
+M| so {suddenly|sudden|suddenness|sudden of} :: とても急に
+M| {that|what|which|whom} it makes :: その結果出す
+O| a {loud|loudly|loudness|louden} sound. :: 大きな音を
+== 熱くなった空気がとても急に膨らむので、大きな音が出る。
+S| This {is|are|be|were} :: これが…だ
+C| the sound {that|what|whom|whose} :: …音
+S| we {call|calls|calling|called to} thunder. :: 雷鳴と呼ぶ
+== これが、私たちが雷鳴と呼んでいる音だ。
+S| Light {travels|travel|traveling|travel to} :: 光は進む
+M| {much|very|many|more} faster :: はるかに速く
+P| {than|then|that|as} sound. :: 音よりも
+== 光は音よりもはるかに速く進む。
+M| {That|What|Whom|Whose} is why :: だから
+S| we {see|sees|seeing|seen} the flash :: 光が見える
+T| {before|ago|front|previous} we hear it. :: 音を聞く前に
+== だから、音を聞く前に光が見えるのだ。
+S| You can {use|using|used|uses} this fact :: この事実を使える
+R| {to guess|guess|guessing|guessed} :: 推測するために
+O| how {far|much|many|often} away the storm is. :: 嵐までの距離を
+== この事実を使えば、嵐がどれくらい遠くにあるか推測できる。
+V| {Count|Counts|Counting|Counted} the seconds :: 秒数を数えよう
+P| {between|among|either|across} the flash :: 光と…の間の
+M| {and|or|nor|but} the sound. :: 音
+== 光と音の間の秒数を数えてみよう。
+M| {If|Whom|Than|Whose} it is three seconds, :: 3秒なら
+S| the storm {is|are|be|being} :: 嵐は
+C| about one kilometer {away|along|apart|aside}. :: 約1キロ先だ
+== 3秒なら、嵐は約1キロ離れている。
+?? 1 1 稲妻とは何か？
+?? 2 1 稲妻は何を熱する？
+?? 5 1 光は音と比べてどのくらい速い？
+?? 9 2 3秒なら嵐はどのくらい離れている？
+
+@id int50
+@lv 2
+@level 6
+@title The Swallows at Our Bakery
+@ja 店先のツバメ
+@tag 共通テストレベル・物語文
+@gloss swallow=ツバメ, nest=巣, mud=泥, complain=苦情を言う, chick=ひな, board=板, mess=汚れ, hatch=かえる, customer=客
+T| Every {spring|springs|spring's|springy}, :: 毎年春に
+S| swallows {build|builds|building|built of} :: ツバメが作る
+O| a nest {above|among|between|beside of} the door :: 入り口の上に巣を
+P| {of|than|onto|since} our bakery. :: うちのパン屋の
+== 毎年春になると、ツバメがうちのパン屋の入り口の上に巣を作る。
+S| They {make|makes|making|made of} it :: ツバメはそれを作る
+P| {from|by|at|onto} mud :: 泥から
+M| {and|nor|than|whom} dry grass. :: と枯れ草で
+== ツバメは泥と枯れ草で巣を作る。
+T| Last year, my father {said|says|saying|say} :: 去年父は言った
+O| {that|what|whom|whose} the nest :: 巣は…と
+V| {was|were|been|being} a problem. :: 問題だと
+== 去年、父は巣が問題だと言った。
+S| The birds {made|making|maked|makes to} :: 鳥たちはした
+O| the floor {dirty|dirt|dirtily|dirtiness}, :: 床を汚く
+M| and some customers {complained|complain to|complaining|complaint}. :: 苦情を言う客もいた
+== 鳥が床を汚し、苦情を言う客もいたのだ。
+S| I {asked|ask to|asking|asks} him :: 私は父に頼んだ
+O| {to wait|wait|waiting|waited} :: 待つように
+T| {until|by|during|among} the chicks left. :: ひなが巣立つまで
+== 私は父に、ひなが巣立つまで待ってほしいと頼んだ。
+M| So we {put|putting|puts|to put} :: そこで私たちは置いた
+O| a board {under|among|between|across of} the nest :: 巣の下に板を
+R| {to catch|catch|caught|catches} the mess. :: 汚れを受けるため
+== そこで、汚れを受けるために巣の下に板を置いた。
+T| Soon {four|fourth|forty of|for} chicks :: まもなく4羽のひなが
+V| {hatched|hatching|was hatched|hatches of}, :: かえった
+M| and customers {began|begin to|beginning|begun} :: 客たちは始めた
+O| {to watch|watch|watched|watches} them. :: ひなを見守ることを
+== まもなく4羽のひながかえり、客たちはひなを見守るようになった。
+S| Some people even {came|come to|coming|comes} :: 来る人さえいた
+P| {to|at|on|of} the shop :: 店に
+R| just {to see|see|saw|sees} the birds. :: 鳥を見るためだけに
+== 鳥を見るためだけに店に来る人さえいた。
+S| Now my father {is|are|be|being} :: 今では父が…だ
+C| the first person {to say|says|said|to saying}, :: 最初に言う人
+O| "{Welcome|Welcoming|Welcomed|Welcomes} back," :: 「おかえり」と
+T| {every|both|whole|entire} spring. :: 毎年春に
+== 今では、毎年春に「おかえり」と最初に言うのは父だ。
+?? 1 1 ツバメは何で巣を作る？
+?? 3 1 鳥たちは床をどうした？
+?? 5 1 汚れを受けるために何を置いた？
+?? 6 0 何羽のひながかえった？
+
+@id int51
+@lv 2
+@level 6
+@title Monkeys in the Hot Spring
+@ja 温泉に入るサル
+@tag 共通テストレベル・記事
+@gloss valley=谷, wild=野生の, macaque=マカク(サルの一種), temperature=気温, behavior=行動, normal=ふつうの, scientist=科学者, stressed=ストレスを感じた, tourist=観光客
+P| In a {snowy|snowily|snows|snowed of} valley :: 雪深い谷で
+P| {in|on|to|into} Nagano, :: 長野の
+S| wild monkeys {take|takes|taking|took of} :: 野生のサルが入る
+O| {hot baths|hot bath|hotly baths|heat baths}. :: 温泉に
+== 長野の雪深い谷で、野生のサルが温泉に入っている。
+S| They {are|is|be|being} :: 彼らは…だ
+C| Japanese {macaques|macaque|macaque's|macaquely}, :: ニホンザル
+M| often {called|calling|calls|call} snow monkeys. :: スノーモンキーと呼ばれる
+== 彼らはニホンザルで、よく「スノーモンキー」と呼ばれる。
+S| No other monkeys {live|lives|living|lived of} :: ほかのサルは住まない
+M| {as|than|such|very} far north :: これほど北に
+M| {as|than|that|so} they do. :: 彼らほど
+== これほど北に住むサルはほかにいない。
+S| Winter there {is|are|be|being} long, :: そこの冬は長い
+M| {and|nor|than|whom} the temperature :: そして気温は
+V| often {falls|fall|falling|fallen} :: よく下がる
+P| {below|among|between|beside of} zero. :: 0度より下に
+== そこの冬は長く、気温はよく0度を下回る。
+T| {In|On|At|Of} the 1960s, :: 1960年代に
+S| a young monkey {went|go|going|gone} :: 若いサルが入った
+P| {into|onto|than|unless} the hot spring :: 温泉の中に
+R| {to get|getting|get|got} some food. :: えさを取るため
+== 1960年代、1匹の若いサルがえさを取ろうとして温泉に入った。
+S| Other monkeys {soon|soonly|sooner of|soonest} :: ほかのサルもすぐに
+V| {copied|copying|copyed|copies of} :: まねした
+O| {this|these|those|they} behavior. :: この行動を
+== ほかのサルもすぐにこの行動をまねした。
+T| Today, {bathing|bath|bathed|bathes} :: 今では入浴は
+V| {is|are|be|being} :: …だ
+C| a {normal|normally|normality|norm of} part :: ふつうの一部
+P| {of|for|by|at} their winter life. :: 冬の生活の
+== 今では、入浴は彼らの冬の生活のふつうの一部になっている。
+S| Some scientists {believe|believes|believing|belief} :: 考える科学者もいる
+S| the warm water also {helps|help|helping|helpful} :: 温かい湯は助けもする
+O| them {feel|feeling|felt|feels} :: サルが感じるのを
+C| {less|fewer|lesser|lessen} stressed. :: ストレスを少なく
+== 温かいお湯はサルのストレスを減らすのにも役立つと考える科学者もいる。
+S| Many {tourists|tourism|touristy|tour} :: 多くの観光客が
+V| {come|comes|coming|came to} :: やって来る
+R| {to see|see|saw|sees} them :: 彼らを見るために
+P| {from|of|by|at} around the world. :: 世界中から
+== 世界中から多くの観光客が彼らを見にやって来る。
+?? 1 2 このサルはよく何と呼ばれる？
+?? 3 3 冬の気温はどうなる？
+?? 4 3 若いサルはなぜ温泉に入った？
+?? 7 3 温かいお湯はサルの何を減らすと考えられている？
+
+@id int52
+@lv 2
+@level 6
+@title How Do Plants Drink Water?
+@ja 植物が水を吸うしくみ
+@tag 共通テストレベル・説明文
+@gloss instead=その代わりに, root=根, soil=土, collect=集める, stem=茎, tube=管, tiny=とても小さい, surface=表面, escape=出ていく
+S| Plants {cannot|cannot to|do not can|not can} :: 植物はできない
+V| {walk|walking|walked|walks} :: 歩いて行く
+P| {to|at|on|of} a river :: 川まで
+R| {to drink|drinking|drink|drank} water. :: 水を飲みに
+== 植物は水を飲みに川まで歩いて行くことはできない。
+M| {Instead|Instead of|Inside|Instant}, :: その代わりに
+S| they take {in|of|at|than} water :: 水を取り入れる
+P| {through|thorough|though|thought} their roots. :: 根を通して
+== その代わりに、植物は根から水を取り入れる。
+S| The roots {spread|spreads|spreading|to spread} out :: 根は広がる
+P| {in|of|than|since} the soil :: 土の中に
+M| {and|nor|than|whom} collect water. :: そして水を集める
+== 根は土の中に広がり、水を集める。
+S| The water then {moves|move|moving|movement} :: 水はそれから進む
+P| {up|upon|upper|upward of} the stem :: 茎を上へ
+P| {through|throughout of|thought|threw} thin tubes. :: 細い管を通って
+== その後、水は細い管を通って茎を上がっていく。
+M| But how {does|do|is|are} water :: でも水はどうやって
+V| {climb|climbs|climbing|climbed} :: のぼる
+C| {so|such|very much|too much} high :: そんなに高く
+P| {in|of|than|since} tall trees? :: 高い木の中で
+== でも、高い木の中で、水はどうやってそんなに高くまでのぼるのだろう。
+S| The {answer|answers|answered|answering} :: その答えは
+V| can be {found|find|finding|finds} :: 見つかる
+P| {in|of|than|since} the leaves. :: 葉の中に
+== その答えは葉の中にある。
+S| Leaves {have|has|having|to have} :: 葉にはある
+O| {many|much|a|every} tiny holes :: たくさんの小さな穴が
+P| {on|at|than|since} their surface. :: 表面に
+== 葉の表面には小さな穴がたくさんある。
+S| Water {escapes|escape|escaping|escaped of} :: 水が出ていく
+P| {from|than|since|whom} these holes :: これらの穴から
+P| {into|onto|than|unless} the air. :: 空気中へ
+== 水はこれらの穴から空気中へ出ていく。
+T| {As|Than|Whom|Whose} water leaves, :: 水が出ていくと
+S| it {pulls|pull|pulling|pulled of} :: それは引っぱる
+O| more water up {from|than|since|whom} the roots, :: 根からさらに水を
+M| {like|likely|alike|liking} a straw. :: ストローのように
+== 水が出ていくと、ストローのように根からさらに水が引き上げられる。
+?? 1 2 植物は何を通して水を取り入れる？
+?? 3 2 水は茎の中を何を通ってのぼる？
+?? 6 1 葉の表面には何がある？
+?? 8 3 水を引き上げるしくみは何に似ている？
+
+@id int53
+@lv 2
+@level 6
+@title The Longest Journey in the Sky
+@ja 世界一の長旅をする鳥
+@tag 共通テストレベル・説明文
+@gloss distance=距離, seasonal=季節の, migration=渡り, champion=チャンピオン, tern=アジサシ, pigeon=ハト, journey=旅, raise=育てる, daylight=日光
+S| Many {birds|bird|birdie's|bird's} :: 多くの鳥が
+V| {fly|flies|flying|flew of} :: 飛ぶ
+O| long {distances|distant|distantly|distance of} :: 長い距離を
+T| {every|each of|whole|both} year. :: 毎年
+== 毎年、多くの鳥が長い距離を飛ぶ。
+S| This {seasonal|seasonally|seasoning|seasons of} travel :: この季節の移動は
+V| is {called|calling|call|calls} :: …と呼ばれる
+C| {migration|migrate|migrated|migrates}. :: 渡りと
+== この季節ごとの移動は「渡り」と呼ばれる。
+S| The champion {of|by|at|than} migration :: 渡りのチャンピオンは
+V| {is|are|be|being} :: …だ
+C| a small bird {called|calling|calls|call} :: …という小さな鳥
+X| the Arctic {tern|terns|tern's|ternly}. :: キョクアジサシ
+== 渡りのチャンピオンは、キョクアジサシという小さな鳥だ。
+S| It {is|are|be|being} :: それは…だ
+C| {lighter|light|lightly|lightest} than a pigeon, :: ハトより軽い
+M| {but|nor|than|whom} its journey :: でもその旅は
+V| is {amazing|amaze|amazingly|amazes}. :: 驚くべきものだ
+== それはハトより軽いが、その旅は驚くべきものだ。
+T| {In|On|To|Of} summer, :: 夏には
+S| Arctic terns {raise|rise|raises|rising} :: キョクアジサシは育てる
+O| their {chicks|chicked|chickly|chicking} :: ひなを
+P| {in|of|than|since} the Arctic. :: 北極圏で
+== 夏、キョクアジサシは北極圏でひなを育てる。
+T| Then they {fly|flies|flying|flown} :: その後飛んでいく
+M| all the {way|ways|wayside|wait} :: はるばる
+P| {to|than|of|since} the Antarctic. :: 南極まで
+== それから、彼らははるばる南極まで飛んでいく。
+T| {When|What|Whom|Which} it is winter :: 冬のとき
+P| {in|on|than|since} the north, :: 北で
+S| it {is|are|be|being} summer :: 夏だ
+P| {in|on|than|since} the south. :: 南では
+== 北が冬のとき、南は夏だ。
+M| So the terns {enjoy|enjoys|enjoying|enjoyed of} :: だから楽しむ
+O| two {summers|summer|summery|summer's} :: 2回の夏を
+T| {each|every of|whole|both} year. :: 毎年
+== だから、アジサシは毎年2回の夏を楽しむ。
+S| They probably {see|sees|seeing|seen} :: おそらく浴びている
+O| more {daylight|daily|day's|days of} :: より多くの日光を
+P| {than|then|that|as} any other animal :: ほかのどの動物よりも
+P| {on|at|than|since} Earth. :: 地球上の
+== 彼らはおそらく、地球上のほかのどの動物よりも多くの日光を浴びている。
+?? 2 3 渡りのチャンピオンは何という鳥？
+?? 3 1 キョクアジサシは何より軽い？
+?? 4 3 キョクアジサシは夏にどこでひなを育てる？
+?? 7 1 アジサシは毎年何回の夏を楽しむ？
+
+@id int54
+@lv 2
+@level 6
+@title When Coral Turns White
+@ja 白くなるサンゴ
+@tag 共通テストレベル・記事
+@gloss coral=サンゴ, reef=サンゴ礁, colorful=色鮮やかな, algae=藻, bleaching=白化, temperature=温度, serious=深刻な, depend on=頼る, shelter=すみか
+S| Coral reefs {are|is|be|being} :: サンゴ礁は…だ
+C| some {of|for|by|at} the most :: 最も…の一部
+C| {colorful|color|colorfully|colorless of} places :: 色鮮やかな場所
+P| {in|on|than|since} the ocean. :: 海で
+== サンゴ礁は、海の中でも特に色鮮やかな場所の一つだ。
+S| Many people {think|thinks|thinking|thought of} :: 多くの人は思う
+O| coral {is|are|be|being} a plant, :: サンゴは植物だと
+M| {but|nor|than|whom} it is actually :: でも実は…だ
+C| {an|a|many|much} animal. :: 動物
+== サンゴは植物だと思う人が多いが、実は動物だ。
+S| Tiny algae {live|lives|living|lived of} :: 小さな藻が住む
+P| {inside|insides|inner|innerly} the coral :: サンゴの中に
+M| and {give|gives|giving|given} it :: そしてそれに与える
+O| food {and|nor|than|whom} color. :: 栄養と色を
+== 小さな藻がサンゴの中に住み、栄養と色を与えている。
+T| When the water {gets|get|getting|got of} :: 水が…になると
+C| {too|to|two|so much} warm, :: 温かくなりすぎる
+S| the coral {pushes|push|pushing|pushed of} :: サンゴは押し出す
+O| the algae {out|off of|out of|outside of}. :: 藻を外へ
+== 水が温かくなりすぎると、サンゴは藻を外に追い出してしまう。
+P| {Without|Withdraw|Without of|Withhold} the algae, :: 藻がいないと
+S| the coral {turns|turn|turning|turned of} :: サンゴは変わる
+C| {white|whitely|whiten|whiteness}. :: 白く
+== 藻がいなくなると、サンゴは白くなる。
+S| This {is|are|be|were} :: これは
+V| {called|calling|call|calls} :: …と呼ばれる
+C| coral {bleaching|bleached|bleaches|bleachy}. :: サンゴの白化と
+== これは「サンゴの白化」と呼ばれる。
+M| {If|Whom|Than|Whose} the water stays warm :: 水が温かいままなら
+T| {for|since|during|while} too long, :: 長く続くと
+S| the coral {may die|may dies|may dead|may died}. :: サンゴは死ぬかも
+== 水温の高い状態が長く続くと、サンゴは死んでしまうこともある。
+S| {Rising|Raising|Rise|Risen of} ocean temperatures :: 上がる海水温が
+V| are {making|make|made of|makes} :: …にしている
+O| bleaching more {common|commonly|commonness|commons}. :: 白化を起きやすく
+== 海水温の上昇によって、白化がより起きやすくなっている。
+S| This {is|are|be|being} :: これは…だ
+C| a {serious|seriously|seriousness|series} problem :: 深刻な問題
+M| {because|because of|due|despite} many fish :: 多くの魚が…ので
+V| depend {on|in|at|to} reefs :: サンゴ礁に頼る
+R| {for|of|than|since} food and shelter. :: 食べ物とすみかを
+== 多くの魚が食べ物やすみかをサンゴ礁に頼っているので、これは深刻な問題だ。
+?? 1 3 サンゴは実は何？
+?? 2 3 藻はサンゴに何を与える？
+?? 4 2 藻がいなくなるとサンゴは何色になる？
+?? 8 4 魚はサンゴ礁に何を頼っている？
+
+@id int55
+@lv 2
+@level 6
+@title The Night of the Typhoon
+@ja 台風の夜
+@tag 共通テストレベル・物語文
+@gloss typhoon=台風, toward=…に向かって, yard=庭, flashlight=懐中電灯, shake=揺れる, scared=こわい, calmly=落ち着いて, candle=ろうそく, warn=知らせる
+T| {Last|Latest|Lastly|Late of} September, :: 去年の9月
+S| a big typhoon {was coming|were coming|was come|is coming of} :: 大きな台風が来ていた
+P| {toward|towards of|forward|upward} our town. :: 私たちの町に向かって
+== 去年の9月、大きな台風が私たちの町に近づいていた。
+S| My {grandfather|grandfather's|grandfathers of|grand} and I :: 祖父と私は
+V| put {away|aside of|off of|out of} :: 片づけた
+O| everything {in|than|since|whom} the yard. :: 庭のものを全部
+== 祖父と私は、庭にあるものを全部片づけた。
+S| We also {filled|fill of|filling|fills} bottles :: ボトルも満たした
+P| {with|by|at|than} water :: 水で
+M| and {checked|check of|checking|checks} :: そして点検した
+O| the {flashlights|flashlight's|flashly|flashing of}. :: 懐中電灯を
+== 水をボトルに入れ、懐中電灯も点検した。
+T| That night, the wind {was|were|been|being} :: その夜風は…だった
+C| so {strong|strongly|strength|stronger of} :: とても強く
+M| {that|what|which|whom} the windows :: 窓が
+V| {shook|shake|shaken|shaking}. :: 揺れた
+== その夜、風がとても強くて窓が揺れた。
+M| {Suddenly|Sudden|Suddenness|Suddener}, :: 突然
+S| all the {lights|light of|lighting of|lightly} :: 明かりがすべて
+V| {went out|go out|gone out|going out}. :: 消えた
+== 突然、明かりがすべて消えた。
+S| I {was|were|been|being} scared, :: 私はこわかった
+M| {but|nor|than|whom} my grandfather :: でも祖父は
+V| {calmly|calm|calmness|calmed} lit :: 落ち着いてつけた
+O| {a candle|candle|an candle|the candles of}. :: ろうそくを
+== 私はこわかったが、祖父は落ち着いてろうそくに火をつけた。
+S| Then he {told|tell of|telling|said} me :: それから祖父は話した
+O| stories {about|above|around of|among} typhoons :: 台風の話を
+T| {from|since of|than|whom} when he was a boy. :: 子どものころの
+== それから祖父は、子どものころの台風の話をしてくれた。
+T| {Back then|Back than|Then back|Back them}, :: そのころは
+S| people {had|has|having|have of} no TV news :: テレビの報道がなかった
+R| {to warn|warning of|warns|warned} them. :: 知らせてくれる
+== そのころは、知らせてくれるテレビのニュースもなかった。
+T| {By|Until|Since|While} morning, :: 朝までに
+S| the storm {had passed|had past|has pass|had passing}, :: 嵐は過ぎ去っていた
+M| and the sky {was|were|been|being} :: そして空は…だった
+C| {bright|brightly|brightness|brighten} blue. :: 明るい青
+== 朝には嵐は過ぎ去り、空は明るい青色だった。
+S| I {learned|learn of|learning|learns} :: 私は学んだ
+O| {that|what|whom|whose} being ready :: 準備しておくことが
+V| {is|are|be|being} the best way :: いちばんの方法だと
+R| {to stay|staying of|stays|stayed} calm. :: 落ち着くための
+== 準備をしておくことが、落ち着いていられるいちばんの方法だと私は学んだ。
+?? 2 3 二人は何を点検した？
+?? 4 2 突然何が起きた？
+?? 5 3 祖父は何に火をつけた？
+?? 8 3 朝の空は何色だった？
+
+@id int56
+@lv 2
+@level 6
+@title How Seeds Travel
+@ja 種の旅のしかた
+@tag 共通テストレベル・説明文
+@gloss seed=種, parent=親, develop=身につける, clever=賢い, dandelion=タンポポ, fluffy=ふわふわの, hook=かぎ, fur=毛, coconut=ヤシの実
+S| Plants {cannot|cannot to|not can|do not can} move, :: 植物は動けない
+M| {but|nor|than|whom} their seeds :: でもその種は
+V| can {travel|travels|traveling|traveled} far. :: 遠くへ旅できる
+== 植物は動けないが、その種は遠くまで旅することができる。
+M| {If|Whom|Than|Whose} seeds fall :: 種が落ちると
+P| right {under|among|between|across of} their parent, :: 親のすぐ下に
+S| they must {share|shares|sharing|shared} :: 分け合うしかない
+O| sunlight {and|nor|than|whom} water. :: 日光と水を
+== 種が親のすぐ下に落ちると、日光や水を分け合わなければならない。
+S| So plants {have developed|has developed|have develop|have developing} :: だから植物は身につけた
+O| many {clever|cleverly|cleverness|clever of} ways :: 多くの賢い方法を
+R| {to send|sending of|sends|sent} their seeds away. :: 種を遠くへ送る
+== そこで植物は、種を遠くへ送るための賢い方法をたくさん身につけてきた。
+S| Dandelion seeds {have|has|having|to have} :: タンポポの種にはある
+O| {fluffy|fluff|fluffily|fluffed of} parts :: ふわふわした部分が
+M| {that|what|whom|whose} catch the wind. :: 風を受ける
+== タンポポの種には、風を受けるふわふわした部分がある。
+S| Some seeds {have|has|having|to have} :: ある種は持っている
+O| small {hooks|hook|hooking of|hooky} :: 小さなかぎを
+M| {and|nor|than|whom} stick :: そしてくっつく
+P| {to|at|than|since} animals' fur. :: 動物の毛に
+== 小さなかぎを持ち、動物の毛にくっつく種もある。
+S| The animals {carry|carries|carrying|carried of} them :: 動物はそれを運ぶ
+P| {to|than|since|whom} new places :: 新しい場所へ
+M| {without|within|withdraw|with no of} knowing it. :: 知らないうちに
+== 動物は知らないうちに、種を新しい場所へ運ぶ。
+S| Other plants {grow|grows|growing|grown} :: ほかの植物は実らせる
+O| {sweet|sweetly|sweetness|sweeten} fruit :: 甘い実を
+M| {that|what|whom|whose} birds love :: 鳥が大好きな
+R| {to eat|eat|ate|eats}. :: 食べるのが
+== ほかの植物は、鳥が好んで食べる甘い実をつける。
+S| The seeds {pass|passes|passing|passed of} :: 種は通り抜ける
+P| {through|thorough|though|thought} the bird's body :: 鳥の体を
+M| {and|nor|than|whom} are dropped :: そして落とされる
+P| far {away|awake|aware|awful}. :: 遠くに
+== 種は鳥の体を通り抜け、遠くで落とされる。
+S| Coconuts can even {float|floats|floating|floated} :: ヤシの実は浮かべる
+P| {across|cross|crossing of|acrossed} the sea :: 海を渡って
+R| {to reach|reach of|reaching of|reached} other islands. :: ほかの島へ着くため
+== ヤシの実は海を渡って浮かび、ほかの島にたどり着くことさえある。
+?? 1 3 親のすぐ下に落ちた種は何を分け合う？
+?? 3 1 タンポポの種には何がある？
+?? 4 3 かぎのある種は何にくっつく？
+?? 8 0 海を渡って旅するものは何？

@@ -1,0 +1,454 @@
+@id int8
+@lv 2
+@level 6
+@title A Library of Things
+@ja 道具を貸す図書館
+@tag 共通テストレベル・記事
+@gloss lend=貸す, drill=ドリル, tent=テント, librarian=司書, expensive=高価な, register=登録する, fee=料金, return=返す, copy=まねる
+S| Most people {think|thinks|thought of|thinking} :: たいていの人は思う
+O| {that|what|which|who} libraries :: 図書館は…と
+V| {only|alone|single|once} lend :: 貸すだけだ
+O| {books|book|booking|booked}. :: 本を
+== たいていの人は、図書館は本を貸すだけだと思っている。
+M| {However|Because|Although|Unless}, :: しかし
+S| a library in Oregon {now|soon|yet|ago} :: オレゴンの図書館は今
+V| {lends|lend|lending|to lend} :: 貸している
+O| tools {such as|such like|as such|so as} drills and tents. :: ドリルやテントなどを
+== しかし、オレゴンのある図書館は今、ドリルやテントなどの道具を貸している。
+S| The idea {came|come|coming|comes} :: その考えは生まれた
+P| {from|by|at|with} a librarian :: ある司書から
+M| {who|which|whose|what} noticed :: …に気づいた
+O| {something|somewhere|sometime|somehow} simple. :: 簡単なことに
+== その考えは、簡単なことに気づいたある司書から生まれた。
+S| Many families {own|owns|owning|to own} :: 多くの家族は持っている
+O| {expensive|expense|expensively|expend} tools :: 高価な道具を
+M| {but|nor|than|whom} use them :: でも使うのは
+T| only {once|one|ones|one's} a year. :: 年に1回だけ
+== 多くの家族は高価な道具を持っているが、使うのは年に1回だけだ。
+S| {Sharing|Share|Shared|To sharing} them :: それらを共有すると
+V| {saves|save|saving|to save} :: 節約できる
+O| {both|either|neither|each} money and space. :: お金と場所の両方を
+== それらを共有すれば、お金と場所の両方が節約できる。
+S| Anyone {who|which|whose|what} lives in town :: 町に住む人はだれでも
+V| can {borrow|borrowed|borrowing|borrows} :: 借りられる
+O| {up to|up on|up with|as to} five items :: 5点まで
+T| {at|in|on|by} a time. :: 一度に
+== 町に住む人はだれでも、一度に5点まで借りられる。
+S| You {only|alone|lonely|once} need :: 必要なのは…だけ
+O| {to register|registering|register|registered} :: 登録することが
+P| {with|at|by|in} your library card. :: 図書館カードで
+== 図書館カードで登録するだけでよい。
+S| There {is|are|be|has} no fee, :: 料金はない
+M| {but|because|if|until} tools :: しかし道具は
+V| must {be returned|return|returning|be return} :: 返さなければならない
+T| {within|during|since|until} a week. :: 1週間以内に
+== 料金はかからないが、道具は1週間以内に返さなければならない。
+S| The program {has become|has became|have become|becoming} :: その取り組みはなった
+C| so {popular|popularity|popularly|popularize} :: とても人気に
+M| {that|which|what|as} other towns :: ほかの町も
+V| {are copying|copying|are copy|is copying} it. :: まねしている
+== その取り組みはとても人気になり、ほかの町もまねしている。
+S| Your town {might|may to|might to|can to} :: あなたの町も…かも
+V| {be|being|is|been} next. :: 次になる
+== 次はあなたの町かもしれない。
+?? 1 3 この図書館は本のほかに何を貸している？
+?? 3 3 多くの家族は高価な道具をどのくらい使う？
+?? 5 2 一度に何点まで借りられる？
+?? 7 3 道具はいつまでに返す？
+
+@id int9
+@lv 2
+@level 6
+@title Request to Change a Meeting
+@ja 打ち合わせ変更のお願い
+@tag 共通テストレベル・メール
+@gloss regarding=…について, unfortunately=あいにく, attend=出席する, conference=会議, available=都合がつく, suit=都合がよい, appreciate=感謝する
+X| {Dear|Dearly|Dear to|Dears} Ms. Lee, :: リー様
+== リー様
+S| I {am writing|am write|writing|was write} :: ご連絡します
+P| {regarding|regard|regards to|regarded} our meeting :: 打ち合わせについて
+T| {on|in|at|by} Thursday. :: 木曜日の
+== 木曜日の打ち合わせについてご連絡します。
+M| {Unfortunately|Unfortunate|Fortune|Fortunately}, :: あいにく
+S| I {have to|has to|have|having to} :: 私は…なければならない
+V| {attend|attends|attending|attended} :: 出席する
+O| a conference {in|on|to|for to} Osaka :: 大阪での会議に
+T| {that day|those day|that days|this days}. :: その日は
+== あいにく、その日は大阪での会議に出席しなければなりません。
+S| {Would|Will to|Should to|Do} it be possible :: …は可能でしょうか
+V| {to move|moving|move|moved} :: 移すことは
+O| {it|its|it's|them} :: それを
+P| {to|at|in|by} next Monday? :: 来週の月曜に
+== 来週の月曜日に移すことは可能でしょうか。
+S| I {am|have|do|was} :: 私は…です
+C| {available|availability|avail|availably} :: 都合がつく
+M| {at any|in any|on any|by any} time :: いつでも
+P| {after|afterward|later|behind} 1 p.m. :: 午後1時以降なら
+== 午後1時以降ならいつでも大丈夫です。
+M| {If|Unless|So|Because of} Monday :: もし月曜が
+V| {does not|do not|is not|not} work, :: 都合が悪ければ
+S| I {can|could to|can to|am} also meet :: 会うこともできる
+T| {on|in|at|by} Tuesday morning. :: 火曜の午前に
+== 月曜日がだめなら、火曜日の午前でも大丈夫です。
+S| {I'm|I|I've|I'd} sorry :: 申し訳ありません
+P| {for|of|to|with} the trouble. :: ご迷惑をかけて
+== ご迷惑をおかけして申し訳ありません。
+V| {Please|Pleasing|Pleased|Pleasure} let :: …させてください
+O| me {know|knows|to know|knew} :: 私に知らせて
+M| {which|whom|where|who} day :: どちらの日が
+V| {suits|suit|suiting|to suit} you. :: 都合がよいか
+== どちらの日がよいか教えてください。
+S| I {appreciate|appreciation|appreciative|appreciating} :: 感謝します
+O| {your|you|yours|you're} understanding. :: ご理解に
+== ご理解に感謝します。
+X| {Best|Better|Good|Well} regards, Ken Sato :: 敬具 佐藤ケン
+== 敬具 佐藤ケン
+?? 2 3 佐藤さんは何に出席する？
+?? 3 3 打ち合わせを何曜日に移したい？
+?? 4 3 何時以降なら都合がつく？
+?? 5 3 月曜がだめなら、いつ会える？
+
+@id int10
+@lv 2
+@level 6
+@title The Red Umbrella
+@ja 赤いかさ
+@tag 共通テストレベル・物語文
+@gloss pour=激しく降る, platform=ホーム, hold out=差し出す, hesitate=ためらう, insist=言い張る, bakery=パン屋, worth=価値がある
+S| It {was pouring|pouring|was pour|poured is} :: 雨が激しく降っていた
+T| {when|while|during|what} Mika :: ミカが…とき
+V| {arrived|arrive|arrival|arriving} :: 着いた
+P| {at|to|for|into} the station. :: 駅に
+== ミカが駅に着いたとき、雨が激しく降っていた。
+S| She {had left|has left|had leave|have left} :: 置いてきてしまっていた
+O| {her|she|hers|herself} umbrella :: 自分のかさを
+P| {at|on|in to|by} home. :: 家に
+== 彼女はかさを家に置いてきてしまっていた。
+P| {On|Onto|Over to|Of} the platform, :: ホームには
+S| an old man {was standing|was stand|standing|were standing} :: 老人が立っていた
+M| {with|by|in|for} two umbrellas. :: かさを2本持って
+== ホームには、かさを2本持った老人が立っていた。
+S| He {smiled|smile|smiling|smiles} :: 彼はほほえんだ
+M| {and|nor|than|as} held out :: そして差し出した
+O| {the red one|the red ones|a red one's|red one}. :: 赤いほうを
+== 彼はほほえんで、赤いほうを差し出した。
+V| "{Take|Takes|Taking|Took} it," :: 「使いなさい」
+S| he {said|told|talked|spoke}. :: と彼は言った
+== 「使いなさい」と彼は言った。
+S| Mika {hesitated|hesitate|hesitation|hesitating}, :: ミカはためらった
+M| {but|nor|than|whom} he insisted. :: でも彼はゆずらなかった
+== ミカはためらったが、彼はゆずらなかった。
+T| A week {later|late|lately|latter}, :: 1週間後
+S| she {saw|see|seen|sees} :: 彼女は見かけた
+O| {the same|same the|a same|the sames} man :: 同じ男性を
+P| {at|on|in to|for} the bakery. :: パン屋で
+== 1週間後、彼女はパン屋で同じ男性を見かけた。
+S| She {gave|give|given|gives} :: 彼女は渡した
+O| him {back|behind|after|again} his umbrella :: 彼にかさを返して
+M| {along with|along to|alone with|long with} a cake. :: ケーキといっしょに
+== 彼女はケーキといっしょに、かさを返した。
+S| The man {laughed|laugh|laughing|laughter} :: 男性は笑った
+M| {and|nor|if|than} said, :: そして言った
+X| "{It was|It were|It has|There were} worth it." :: 「貸してよかった」
+== 男性は笑って「貸してよかったよ」と言った。
+?? 1 2 ミカはかさをどこに置いてきた？
+?? 2 2 老人は何を持っていた？
+?? 6 3 1週間後、どこで男性を見かけた？
+?? 7 2 ミカはかさといっしょに何を渡した？
+
+@id int11
+@lv 2
+@level 6
+@title How Bees Share Directions
+@ja ミツバチの道案内
+@tag 共通テストレベル・説明文
+@gloss honeybee=ミツバチ, nectar=花のみつ, hive=巣, figure eight=8の字, shake=振る, angle=角度, direction=方向, behavior=行動, insect=虫
+T| When a honeybee {finds|find|found to|finding} :: ミツバチが見つけると
+O| {flowers|flower's|flowering|flowered} with nectar, :: みつのある花を
+S| it {returns|return|returning|to return} :: それは戻る
+P| {to|at|in|for} the hive :: 巣に
+M| {and|nor|than|as} dances. :: そして踊る
+== ミツバチはみつのある花を見つけると、巣に戻って踊る。
+S| This dance {tells|tell|telling|told to} :: この踊りは伝える
+O| {other|another|others|the other's} bees :: ほかのハチに
+M| {where|whose|whom|which} the food is. :: えさがどこにあるか
+== この踊りは、えさがどこにあるかをほかのハチに伝える。
+S| The bee {moves|move|moving|moved to} :: そのハチは動く
+P| {in|on|at|by} a figure eight :: 8の字を描いて
+M| {while|during|since|for} shaking :: …を振りながら
+O| {its|it's|their|it} body. :: 体を
+== ハチは体を振りながら、8の字を描いて動く。
+S| The angle {of|in|for|by} the dance :: 踊りの角度は
+V| {shows|show|showing|shown} :: 示す
+O| the {direction|directing|direct|directed} of the food :: えさの方向を
+P| {compared|comparing|compare|comparison} to the sun. :: 太陽と比べた
+== 踊りの角度は、太陽から見たえさの方向を示す。
+M| {Meanwhile|Meaning|Mean|While}, :: 一方
+S| the length {of|in|at|on} the dance :: 踊りの長さは
+V| {shows|show|showed to|showing} :: 示す
+O| {how far|how much|how many|how long} away it is. :: どれだけ遠いかを
+== 一方、踊りの長さは、それがどれだけ遠いかを示す。
+S| A longer dance {means|mean|meaning|meant to} :: 長い踊りは意味する
+M| {that|what|which|who} the flowers :: 花が…ことを
+V| {are|is|be|been} :: …にある
+C| {farther|further to|farer|more far} away. :: もっと遠く
+== 踊りが長いほど、花は遠くにある。
+S| Scientists {first|first of|fast|firm} :: 科学者が初めて
+V| {explained|explain|explaining|explains} :: 説明した
+O| {this|these|those|they} behavior :: この行動を
+T| {in|on|at|by} the 1940s. :: 1940年代に
+== 科学者がこの行動を初めて説明したのは1940年代だ。
+S| It {is|are|has|was being} :: それは…だ
+C| {amazing|amazed|amaze|amazement} :: 驚くべきこと
+M| {that|what|which|who} such small insects :: こんな小さな虫が
+V| {can share|can shares|can sharing|can to share} :: 伝え合える
+O| {such|so|very|too} detailed information. :: これほど細かい情報を
+== こんな小さな虫がこれほど細かい情報を伝え合えるのは驚きだ。
+?? 1 2 踊りはほかのハチに何を伝える？
+?? 2 1 ハチはどんな形を描いて動く？
+?? 4 3 踊りの長さは何を示す？
+?? 6 3 この行動が説明されたのはいつ？
+
+@id int12
+@lv 2
+@level 6
+@title Should Students Wear Uniforms?
+@ja 制服は必要か
+@tag 共通テストレベル・論説文
+@gloss require=求める, rule=決まり, supporter=賛成派, equal=平等な, critic=反対派, individuality=個性, uncomfortable=着心地が悪い, compromise=歩み寄り
+S| Many schools in Japan {require|requires|requiring|require to} :: 日本の多くの学校は求める
+O| students {to wear|wearing|wear|wore} uniforms. :: 生徒に制服を着ることを
+== 日本の多くの学校は、生徒に制服の着用を求めている。
+M| {However|Although|Because|Unless}, :: しかし
+S| {some|any|much|little} people :: 一部の人は
+V| {question|questions|questioning|questioned to} :: 疑問に思う
+O| {this|these|those|they} rule. :: この決まりを
+== しかし、この決まりに疑問をもつ人もいる。
+S| Supporters {say|says|saying|to say} :: 賛成派は言う
+M| {that|what|which|who} uniforms :: 制服は…と
+V| {make|makes|making|made to} :: …にする
+O| {everyone|every one's|everybody's|all one} equal. :: みんなを平等に
+== 賛成派は、制服はみんなを平等にすると言う。
+S| Students {do not have to|does not have to|do not have|not have to} :: 生徒は…なくてよい
+V| {worry|worries|worrying|worried} :: 悩む
+O| {about|of to|for to|on to} what to wear :: 何を着るかについて
+T| {every|everyone|each of|all of} morning. :: 毎朝
+== 生徒は、毎朝何を着るか悩まなくてすむ。
+M| {On the other hand|On other hand|In other hand|At the other hand}, :: 一方
+S| critics {argue|argues|arguing|argument} :: 反対派は主張する
+M| {that|what|which|whom} uniforms :: 制服は…と
+V| {limit|limits|limiting|limited to} :: 制限する
+O| students' {individuality|individual|individually|individualize}. :: 生徒の個性を
+== 一方、反対派は、制服が生徒の個性を制限すると主張する。
+S| {They|Them|Their|Theirs} also point out :: 彼らはまた指摘する
+M| {that|what|which|who} uniforms :: 制服は…と
+V| {are|is|be|being} :: …だ
+C| {expensive|expensively|expense|expend} :: 高い
+M| {and|nor|than|as} uncomfortable. :: そして着心地が悪い
+== 彼らはまた、制服は高くて着心地も悪いと指摘する。
+S| Some schools {have found|has found|have find|having found} :: …を見つけた学校もある
+O| a {compromise|compromising|compromised|comprise}. :: 歩み寄りの案を
+== 歩み寄りの案を見つけた学校もある。
+S| Students {can choose|can chooses|can chose|can to choose} :: 生徒は選べる
+O| {either|both|neither|each} a uniform or :: 制服か…のどちらかを
+O| {their|there|they're|them} own clothes. :: 自分の服を
+== 生徒は、制服か自分の服かを選べる。
+M| {This|These|Those|They} way, :: こうすれば
+S| everyone {can find|can finds|can found|cans find} :: だれもが見つけられる
+O| {what|which|that|who} works best. :: いちばん合うものを
+== こうすれば、だれもが自分にいちばん合うものを選べる。
+?? 2 3 賛成派によると、制服はみんなをどうする？
+?? 4 4 反対派によると、制服は何を制限する？
+?? 6 1 一部の学校は何を見つけた？
+?? 7 2 生徒は制服のほかに何を選べる？
+
+@id int13
+@lv 2
+@level 6
+@title Join Our Beach Cleanup
+@ja 海岸清掃のお知らせ
+@tag 共通テストレベル・お知らせ
+@gloss volunteer=ボランティア, collect=集める, trash=ごみ, provide=用意する, gloves=手袋, sunscreen=日焼け止め, cancel=中止する, sign up=申しこむ
+S| The city {is looking|is look|looking|are looking} :: 市は探している
+O| {for|to|of|with} volunteers :: ボランティアを
+M| {to clean|cleaning|clean|cleaned} Green Bay Beach :: 海岸を清掃する
+T| {this|these|those|them} Saturday. :: 今週の土曜に
+== 市は、今週土曜日にグリーン湾の海岸を清掃するボランティアを募集している。
+S| The event {will start|will starts|will started|will starting} :: 行事は始まる
+T| {at|on|in|by} 9 a.m. :: 午前9時に
+M| {and|nor|than|as} end :: そして終わる
+T| {at|on|in|for} noon. :: 正午に
+== 行事は午前9時に始まり、正午に終わる。
+T| {Last|Late|Latest|Lately} year, :: 去年
+S| volunteers {collected|collect|collecting|collects} :: ボランティアは集めた
+O| {over|above to|more|upper} 300 kilograms :: 300キロ以上を
+P| {of|for|in|with} trash. :: ごみの
+== 去年、ボランティアは300キロ以上のごみを集めた。
+S| {Most|Almost|Mostly|More} of it :: そのほとんどは
+V| {was|were|is being|have been} :: …だった
+C| {plastic|plasticity|plasticize|plastical}. :: プラスチック
+== そのほとんどがプラスチックだった。
+S| We {will provide|will provides|provide will|will providing} :: 用意します
+O| gloves {and|nor|than|either} bags, :: 手袋と袋を
+M| {but|than|nor|whom} please bring :: でも持ってきて
+O| {your|you|yours|you're} own water. :: 自分の水を
+== 手袋と袋は用意しますが、飲み水は各自で持ってきてください。
+V| {Don't|Doesn't|Not|No} forget :: 忘れないで
+O| {a hat|hat|an hat|the hats a} :: 帽子と
+M| {and|nor|than|as} sunscreen. :: 日焼け止めを
+== 帽子と日焼け止めを忘れずに。
+M| {If|Unless|Though|Whether} it rains, :: 雨の場合は
+S| the event {will be canceled|will cancel|will be cancel|will canceling}. :: 行事は中止になる
+== 雨の場合は中止になります。
+R| {To join|Joining to|Join to|For join}, :: 参加するには
+V| please {sign up|sign upping|signs up|signed up} :: 申しこんでください
+P| {on|over|into|under} the city website :: 市のウェブサイトで
+T| {by|until|till|on to} Thursday. :: 木曜までに
+== 参加するには、木曜日までに市のウェブサイトで申しこんでください。
+?? 1 1 行事は何時に始まる？
+?? 2 2 去年、どれだけのごみが集まった？
+?? 4 3 参加者が自分で持ってくるものは？
+?? 7 3 申しこみの期限は？
+
+@id int14
+@lv 2
+@level 6
+@title The Repair Cafe
+@ja 修理カフェ
+@tag 共通テストレベル・記事
+@gloss repair=修理する, gym=体育館, broken=こわれた, toaster=トースター, retired=引退した, engineer=技術者, throw away=捨てる, landfill=ごみ処分場
+T| {Every|Each of|All|Any} month, :: 毎月
+S| a high school in Chiba {holds|hold|holding|held to} :: 千葉の高校が開く
+O| a "repair cafe" {in|on to|into|of} its gym. :: 体育館で修理カフェを
+== 千葉のある高校は、毎月体育館で「修理カフェ」を開いている。
+S| People {bring|brings|bringing|brought to} :: 人々は持ってくる
+O| broken things {such as|such like|so as|as such} toasters and bikes. :: トースターや自転車などを
+== 人々は、トースターや自転車などのこわれた物を持ってくる。
+S| Students and {retired|retire|retiring|retirement} engineers :: 生徒と元技術者が
+V| {fix|fixes|fixing|to fix} :: 直す
+O| them {for|at|by|with} free. :: それらを無料で
+== 生徒と引退した技術者が、それらを無料で直す。
+S| The idea {is|are|be|were} :: 考え方は…だ
+C| {simple|simply|simplify|simplicity}. :: 単純
+== 考え方は単純だ。
+M| {Instead of|Instead|In stead to|Instead for} throwing things away, :: 物を捨てる代わりに
+S| we {should|should to|ought|must to} :: 私たちは…べきだ
+V| {try|tries|trying|tried} :: 試す
+O| {to fix|fixing to|fix to|to fixing} them. :: 直すことを
+== 物を捨てるのではなく、直してみるべきだ。
+T| {Last|Late|Latest|Lately} year, :: 去年
+S| the cafe {repaired|repair|repairing|repairs} :: そのカフェは直した
+O| {about|around of|almost of|approximately of} 500 items. :: 約500点を
+== 去年、カフェは約500点を直した。
+S| {That|Those|These|They} :: それは
+V| {kept|keep|keeping|keeps} :: 防いだ
+O| {a lot of|a lot|lots|many of} waste :: たくさんのごみを
+P| {out of|out from|off of|outside to} landfills. :: 処分場に行くことから
+== それで、多くのごみが処分場に行かずにすんだ。
+S| One student {said|told|talked|spoke}, :: ある生徒は言う
+M| "I {used to|use to|was used to|used} think :: 以前は思っていた
+O| fixing {was|were|be|being} hard, :: 直すのは難しいと
+M| {but|nor|than|whom} now :: でも今は
+V| I {love|loves|loving|am love} it." :: それが大好き
+== ある生徒は「直すのは難しいと思っていたけど、今は大好き」と言う。
+?? 1 1 人々はどんな物を持ってくる？
+?? 2 2 修理の料金はいくら？
+?? 5 2 去年、何点を直した？
+
+@id int15
+@lv 2
+@level 6
+@title My First Family Dinner
+@ja 初めての家族の夕食
+@tag 共通テストレベル・ブログ
+@gloss recipe=レシピ, favorite=大好物, expect=予想する, chop=きざむ, onion=玉ねぎ, burn=こがす, luckily=運よく, proud=誇らしい
+T| {Last|Late|Latest|Lately} Sunday, :: 先週の日曜
+S| I {cooked|cook|cooking|cooks} :: 私は作った
+O| dinner {for|to|forward|at} my family :: 家族に夕食を
+M| {for|in|at|on} the first time. :: 初めて
+== 先週の日曜日、初めて家族に夕食を作った。
+S| I {decided|decide|deciding|decision} :: 私は決めた
+V| {to make|making|make|made} curry, :: カレーを作ることに
+M| {because|because of|so that|despite} it is :: …だから
+C| my {father's|father|fathers|father is} favorite. :: 父の大好物
+== 父の大好物なので、カレーを作ることにした。
+S| I {followed|follow|following|follows} :: 私は従った
+O| a recipe {on|in|at|by} the internet, :: ネットのレシピに
+M| {but|nor|than|whom} it was :: でも…だった
+C| {harder|hard|hardest|more hard} than I expected. :: 思ったより大変
+== ネットのレシピを見て作ったが、思ったより大変だった。
+S| {Chopping|Chop|Chopped|To chopping} the onions :: 玉ねぎをきざむのは
+V| {made|make|making|makes to} :: …させた
+O| me {cry|to cry|crying|cried}. :: 私を泣かせた
+== 玉ねぎをきざんだら、涙が出た。
+T| {Then|Than|There|Them} I :: それから私は
+V| almost {burned|burn|burning|burns} :: こがしそうになった
+O| the {meat|meet|mate|meant}. :: 肉を
+== それから、肉をこがしそうになった。
+M| {Luckily|Lucky|Luck|Luckier}, :: 運よく
+S| my mother {helped|help|helping|helps} :: 母が助けてくれた
+O| me {just|justly|justice|jest} in time. :: ぎりぎりで
+== 運よく、母がぎりぎりで助けてくれた。
+T| {When|What|During|Which} we ate, :: 食べたとき
+S| my father {said|told|talked|spoke} :: 父は言った
+O| {it|its|it's|this's} was delicious. :: おいしいと
+== 食べたとき、父はおいしいと言ってくれた。
+S| I {felt|feel|felling|fell} :: 私は感じた
+C| {proud|pride|proudly|prouder of} :: 誇らしい
+M| {and|nor|than|as} happy. :: そしてうれしい
+== 誇らしくて、うれしかった。
+T| {Next|Nearest|Neck|Nest} time, :: 次は
+S| I {want|wants|wanting|am want} :: 私は…したい
+V| {to try|trying|try|tried} :: 挑戦する
+O| {something|somewhere|sometime|somehow} new. :: 何か新しいものに
+== 次は、何か新しい料理に挑戦したい。
+?? 1 3 なぜカレーを選んだ？
+?? 3 2 玉ねぎをきざんだらどうなった？
+?? 5 1 だれが助けてくれた？
+?? 6 2 父は料理について何と言った？
+
+@id int16
+@lv 2
+@level 6
+@title Why Is the Sky Blue?
+@ja 空はなぜ青い
+@tag 共通テストレベル・説明文
+@gloss sunlight=日光, mixture=混ざったもの, atmosphere=大気, particle=粒, wavelength=波長, scatter=散らばる, direction=方向, sunset=夕焼け
+S| Sunlight {looks|look|looking|looks like} :: 日光は見える
+C| {white|whiten|whitely|whiteness}, :: 白く
+M| {but|nor|than|whom} it is :: でも…だ
+C| {actually|actual|actuality|act} a mixture of colors. :: 実は色の混ざりもの
+== 日光は白く見えるが、実はいろいろな色が混ざっている。
+T| {When|What|Which|Whom} sunlight :: 日光が…とき
+V| {enters|enter|entering|entrance} :: 入る
+O| the {atmosphere|atmospheric|atmospherically|atmospheres}, :: 大気に
+S| it {hits|hit|hitting|to hit} :: それはぶつかる
+O| tiny {particles|particle|particular|partly} of air. :: 空気の小さな粒に
+== 日光が大気に入ると、空気の小さな粒にぶつかる。
+S| Blue light {has|have|having|is had} :: 青い光は持つ
+O| a {shorter|short|shortest|more short} wavelength, :: より短い波長を
+M| {so|but|nor|than} it scatters :: だから散らばる
+M| {more|most|much|many} easily. :: もっと簡単に
+== 青い光は波長が短いので、より散らばりやすい。
+S| This scattered blue light {reaches|reach|reaching|reached to} :: 散った青い光が届く
+O| our eyes {from|to|of|by} every direction. :: あらゆる方向から目に
+== 散らばった青い光が、あらゆる方向から目に届く。
+M| {That|What|Which|Who} is why :: だから
+S| the sky {looks|look|looking|looked to} blue. :: 空は青く見える
+== だから空は青く見える。
+M| {Then|Than|There|Thus to} why :: では、なぜ
+V| {are|is|do|does} sunsets :: 夕焼けは…のか
+C| {red|read|rid|reed}? :: 赤い
+== では、なぜ夕焼けは赤いのか。
+T| {In|On|At|By} the evening, :: 夕方には
+S| sunlight {travels|travel|traveling|travel to} :: 日光は進む
+P| {through|thorough|though|throw} more air. :: より多くの空気の中を
+== 夕方は、日光がより多くの空気の中を通る。
+S| Most of the blue light {is scattered|scatters is|is scatter|are scattered} away, :: 青い光の大半は散る
+M| {so|but|nor|than} red and orange :: だから赤やオレンジが
+V| {remain|remains|remaining|to remain}. :: 残る
+== 青い光のほとんどが散ってしまい、赤やオレンジが残る。
+?? 0 3 日光は実は何でできている？
+?? 2 1 青い光の波長にはどんな特徴がある？
+?? 6 2 夕方、日光は何の中を通る？
+?? 7 1 夕方に残る光の色は？

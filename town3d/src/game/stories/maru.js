@@ -1,0 +1,73 @@
+// マルさん「本棚と、ふたり」。ホームセンターで部屋づくり(もようがえ・かべ紙・広げる)を教わる→別の日、図書館の改装→しおりさんの前でうまく話せない→本棚を支えて助ける。
+const P = Math.PI;
+export async function maruStory(d, ctx = {}) {
+  const M = 'maru', S = 'shiori', me = (ctx.name && ctx.name()) || 'あなた';
+  await d.fade(true, 0.01);
+  d.only(['maru', 'shiori']);
+  d.hour(11); d.wx('sun', 'snap');
+  // ---- ホームセンターの前 ----
+  d.place(M, 3.6, 24.2, -P / 2); d.place('me', -60, 40, 0); d.place(S, 60, 60, 0);
+  d.shot(M, null, { yaw: -1.2, dist: 6, h: 2.2, look: 1.0 });
+  await d.title('マルさん', '本棚と、ふたり');
+  await d.fade(false, 1.2);
+  await d.say('narr', 'ホームセンターの前。');
+  d.place('me', 1.2, 25.4, P / 2); d.face('me', M); d.face(M, 'me');
+  const two = () => d.shot('me', M, { yaw: -0.6, dist: 6.5, h: 2.2, look: 1.0 });
+  two();
+  await d.say(M, '「いらっしゃい！ ホームセンターへ ようこそ！」');
+  await d.say(M, '「家具も、かべ紙も、床も、ぜんぶ そろうよ。\n部屋を 広げたり、増やしたりも できるんだ」');
+  await d.say(M, '「中には"モデルルーム"もあるよ。\n気に入ったら、まるごと 借りたり 買ったりも できるんだ」');
+  await d.say('me', '「部屋づくり、やってみたいです」');
+  await d.say(M, '「よし！ じゃあ さっそく、あなたの家で やってみよう！」');
+  d.hideBox(); await d.fade(true, 0.7);
+  await d.app('home', { coach: true });
+  // ---- 家の前 ----
+  d.place(M, 31.2, -2.4, P); d.place('me', 29.2, -1.6, 0); d.face(M, 'me'); d.face('me', M);
+  d.shot('me', M, { yaw: 0.3, dist: 6.5, h: 2.2, look: 1.0 });
+  await d.fade(false, 0.7);
+  await d.say(M, '「いいね〜！ 部屋が ぐっと よくなった！」');
+  await d.say(M, '「広くしたいときは、"ひろげる"から。\nさいしょの部屋は、コインで 広げられるよ」');
+  await d.say(M, '「困ったら、いつでも ホームセンターに おいで！」');
+  // ---- 別の日:図書館の中 ----
+  d.hideBox(); await d.fade(true, 0.9);
+  d.hour(14); d.caption('別の日');
+  const R = d.room('library'), at = (id, x, z, ry) => { const [X, Z] = R(x, z); d.place(id, X, Z, ry); };
+  at(M, 6.4, 2.2, 0); at('me', 7.2, 8.6, P); d.place(S, 60, 60, 0);
+  d.shot(M, null, { yaw: 0.3, dist: 8, h: 3.6, look: 1.0 });
+  await d.fade(false, 0.9);
+  await d.say('narr', '図書館に行くと……\n本棚のあいだに、工具箱と 木の板が 置いてあった。');
+  d.caption('');
+  d.face('me', M); d.face(M, 'me');
+  d.shot('me', M, { yaw: 0.1, dist: 8, h: 3.6, look: 1.0 });
+  await d.say(M, `「あっ、${me}！」`);
+  await d.say(M, '「いま、図書館の 改装をしてるんだ。\n本棚を、新しくするんだよ」');
+  at(S, 8.4, 3.0, -P / 2); d.face(S, M);
+  d.shot(M, S, { yaw: 0.1, dist: 7, h: 3.2, look: 1.0 });
+  await d.say(S, '「マルさん、お茶を いれましたので……どうぞ」');
+  d.face(M, S);
+  await d.say(M, '「あっ、あっ、ど、どうも……！」');
+  await d.say('narr', 'さっきまで 元気だったマルさんが、急に 小さくなった。');
+  await d.say(S, '「新しい本棚、とても すてきです。\n……木の、いい においが しますね」');
+  await d.say(M, '「そ、そ、それは……ヒ、ヒノキで……あの……その……」');
+  await d.say('narr', 'マルさんの声は、どんどん 小さくなっていく。');
+  d.shot('me', null, { yaw: 0.1, dist: 6, h: 2.6, look: 1.2 });
+  await d.say('me', '(マルさん、しおりさんの前だと うまく話せないんだ……)');
+  d.shot(M, S, { yaw: 0.1, dist: 7, h: 3.2, look: 1.0 });
+  await d.say('narr', 'そのとき。\nしおりさんの うしろの本棚が、ぐらりと かたむいた！');
+  await d.say(M, '「あぶないっ！」');
+  { const [X, Z] = R(8.6, 1.5); d.hideBox(); d.walk(M, X, Z, 6); await d.wait(0.6); }
+  d.face(M, P); d.set(M, { pose: 'carry' });
+  d.shot(M, S, { yaw: 0.2, dist: 6.5, h: 3.0, look: 1.4 });
+  await d.say('narr', 'マルさんが、たおれてくる本棚を、\n両手で がっしりと 支えた。');
+  await d.say(M, '「だ、だいじょうぶ ですか……！」');
+  d.face(S, M);
+  await d.say(S, '「……は、はい」');
+  await d.say('narr', 'しおりさんの ほおが、ほんのり 赤くなった。');
+  await d.say(S, '「……ありがとう ございます。マルさん」');
+  d.set(M, { pose: null }); d.face(M, S);
+  await d.say(M, '「い、いえ……！ その……\n本棚は、ぼくが ちゃんと 直しますから！」');
+  d.shot(M, S, { yaw: 0.1, dist: 7.5, h: 3.4, look: 1.0 });
+  await d.say('me', '(……案外、お似合いの ふたりかも)');
+  await d.friend(M, 5);
+  await d.endCard('マルさん「本棚と、ふたり」', 'おしまい');
+}

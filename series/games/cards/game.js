@@ -4,7 +4,7 @@
 import './src/cards.css';
 import { bindStore } from './src/base.js';
 import { bindCore } from './src/sound.js';
-import { mount, registerVS } from './src/play.js';
+import { mount, registerVS, G_, newRun } from './src/play.js';
 import { VS } from './src/vs.js';
 registerVS(VS);
 
@@ -18,10 +18,12 @@ function migrate(store) {
 export default {
   id: 'cards', name: 'チャンク・カード', right: 'game:cards',
   async mount(el, ctx) {
-    migrate(ctx.store); bindStore(ctx.store); bindCore({ sound: ctx.core.sound, speech: ctx.core.speech });
+    migrate(ctx.store); bindStore(ctx.store); bindCore({ sound: ctx.core.sound, speech: ctx.core.speech, report: (n, d) => ctx.report(n, d) });
     el.classList.add('ct-cards');
     const root = document.createElement('div'); root.className = 'cc-app'; el.appendChild(root);
     const off = mount(root);
+    if (ctx.opts && ctx.opts.tut) setTimeout(() => { try { G_.tutOn = true; G_.storyTut = true; newRun(); } catch (e) { console.error(e); } }, 60);   // 物語から: 遊び方の案内つきで1回「出す」まで
+    if (ctx.opts && ctx.opts.cpu) setTimeout(() => { try { VS.startById(ctx.opts.cpu, { hands: ctx.opts.hands }); } catch (e) { console.error(e); } }, 60);   // ミッション:対戦相手を指定
     const mo = new MutationObserver(() => ctx.showBack(!!(root.querySelector('#go') || root.querySelector('.end'))));   /* ゲーム中（ステージ・お店）以外は「街へ」を出す */
     mo.observe(root, { childList: true, subtree: true }); ctx.showBack(true);
     return { unmount() { mo.disconnect(); off && off(); try { ctx.core.speech.stop(); } catch (e) { } root.remove(); } };

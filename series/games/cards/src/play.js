@@ -1,6 +1,6 @@
 import { $, CFG, DICT, G, LEVEL, LV_JA, LV_MULT, el, pick, rnd, setLevel, shuffle, store } from './base.js';
 import { BOSSES, BOSS_AT, FORM_JA, JOKERS, KIND_JA, PART_JA, TARGETS, TSU, advise, baseChips, baseScore, card, cardText, colorOf, curTSU, cyclable, cycle, evaluate, isPlace, isTime, lvOf, mk, prevCore, starterDeck, storyOf, tsuCard, vtext, yaku } from './rules.js';
-import { SFX, ac, speak, unlock } from './sound.js';
+import { SFX, ac, speak, unlock, CORE } from './sound.js';
 import { runCoach } from '../../../core/coach.js';
 import { TUT } from './tutorial.js';
   export var VSref = null; export function registerVS(v) { VSref = v; }
@@ -27,7 +27,7 @@ import { TUT } from './tutorial.js';
   export function cat(c) { return c.kind === 'pron' || (c.kind === 'n' && /^(person|animal)$/.test(c.w.e.cat)) ? 'subj' : c.kind === 'v' ? 'verb' : c.kind === 'n' ? 'noun' : 'mod'; }
   export var WANT = { subj: [2, 3], verb: [2, 3], noun: [2, 3], mod: [1, 2] };
   export function deal() { fillTo(8); }
-  export function fillTo(N) {
+  export function fillTo(N, noFix) {
     if (!R.draw.length) { R.draw = shuffle(R.disc); R.disc = []; }
     while (R.hand.length + R.row.filter(function (c) { return !c.tsu; }).length < N) {
       if (!R.draw.length) { if (!R.disc.length) break; R.draw = shuffle(R.disc); R.disc = []; }
@@ -39,6 +39,7 @@ import { TUT } from './tutorial.js';
       if (idx < 0) idx = R.draw.length - 1;
       R.hand.push(R.draw.splice(idx, 1)[0]);
     }
+    if (noFix) return;
     // 他動詞があるのに目的語になれる名詞がないときは、山札から合う名詞と入れかえる
     var vs = R.hand.filter(function (c) { return c.kind === 'v' && c.w.e.fr !== 'intr'; }), ns = R.hand.filter(function (c) { return c.kind === 'n'; });
     if (vs.length && !vs.some(function (v) { return ns.some(function (n) { return verbFits(v, n); }); })) {
@@ -677,6 +678,7 @@ import { TUT } from './tutorial.js';
     R.total += total; afterPlay(cur, sc); R.hintLv = 0; G_.hintBest = null; G_.hintIds = {};
     R.disc = R.disc.concat(R.row.filter(function (c) { return !c.tsu; })); R.row = [];
     await wait(350); deal(); G_.busy = false;
+    if (G_.storyTut) { G_.storyTut = false; setTimeout(function () { try { CORE && CORE.report('story_step', {}); } catch (e) { } }, 1800); return; }   // 物語から: 1回「出す」までやったら、話にもどる
     if (R.score >= R.target) { stageClear(); return; }
     if (R.hands <= 0) { finalReveal(); return; }
     renderAll();

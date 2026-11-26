@@ -13,7 +13,19 @@ MAXJA = 12          # ボタン2行に収まる長さ。意味はこの長さに
 POSMAP = {'n': 'n', 'p': 'n', 'an': 'n', 'v': 'v', 'a': 'a', 'r': 'r', 'adj': 'a', 'adv': 'r', 'prep': 'pp', 'conj': 'cj', 'pr': 'pn', 'int': 'ij', 'num': 'n', 'det': 'a'}
 JTAG = {'名': 'n', '動': 'v', '形': 'a', '副': 'r', '前': 'pp', '接': 'cj', '代': 'pn', '間': 'ij', '形・副': 'a', '名・形': 'n', '前・副': 'pp', '名・動': 'n', '名・副': 'n'}
 BAD_W = set('fuck fucking fucker shit shitty cunt dick pussy bitch whore slut cock nigger nigga fag faggot fagot rape rapist porn porno penis vagina boob boobs tit tits horny dildo masturbate orgasm sperm semen bastard asshole ass arse damn goddamn piss crap gay queer homo lesbian tranny retard'.split())
+# 出題しない語：単語表(data/words/dict_all_words.csv)の「出題＝×」(話しことばの断片・短すぎる略語・人名)と、
+# 人名にもなる語のうち、ほぼ人名として使われる語(NAMES。見て選んだ。rose・ivy・jasmine のような本物の語は残す)。表は tools/build_wordtable.py が作る
+NAMES = set("""benjamin burton chad charlotte don donna henry jonah kris marc marguerite morris phoebe rhea john johnny jenny sonny victoria graham nelson tom""".split())
+def _excl():
+    out = set(NAMES); path = HERE + '../../../data/words/dict_all_words.csv'
+    if not os.path.exists(path): return out
+    for r in csv.DictReader(open(path, encoding='utf-8-sig')):
+        if r['出題'] == '×': out.add(r['単語'].lower())
+    return out
+EXCL = _excl()
 BAD_J = re.compile('性交|売春|性器|陰茎|陰部|膣|精液|ペニス|大便|小便|くそ|ちくしょう|同性愛|乳房|強姦|ポルノ|自慰|淫|売女|娼婦|白痴|気違い|きちがい|めくら|つんぼ|おし（|かたわ|びっこ|黒んぼ')
+BAD_W |= EXCL
+BAD_W |= set('bugger hooker sucker puss peter tucker turner potter miller fuller wheeler mister welter glower bummer'.split())   # 俗語・人名の語尾変化形もどき
 
 def clean(m):
     m = re.sub(r'[（(][^）)]*[）)]', '', m).strip(' 　・')
@@ -63,13 +75,53 @@ for n, l in enumerate(dsrc(DICT + 'chunkchunk_dict.js').split('\n')):
         if '=' in seg:
             p, ms = seg.split('=', 1)
             if p in POSMAP and p not in ('art', 'det', 'num'): D2.setdefault((f[0], POSMAP[p]), ms.split(','))
+# ---- 1語は「いちばんよく使う品詞」の1枚だけにする(exact を動詞「強要する」で出さない) ----
+# 手直し済みの辞書(D2)→頻度順の辞書(DX)の、先に書いてある品詞を、その語の主な品詞とする。
+CONTENT = {'n', 'v', 'a', 'r'}
+PRIM = {}
+for src_ in (D2, DX):
+    for (w_, p_) in src_:
+        if p_ in CONTENT: PRIM.setdefault(w_, p_)
+BSC = {}
+for k_, v_ in secs.items():
+    for l_ in v_.split('\n'):
+        f_ = l_.split('\t')
+        if len(f_) >= 3 and re.fullmatch(r"[a-z][a-z'-]*", f_[0]):
+            pp_ = POSMAP[k_]
+            if pp_ in CONTENT: BSC[(f_[0], pp_)] = max(BSC.get((f_[0], pp_), 0), int(f_[2]))
+PSUM = {}   # 語 → {品詞: v12での点数の合計}。sense_scores.tsv から(点数だけ。訳文は使わない)
+for _l in open(HERE + '../../../data/words/sense_scores.tsv', encoding='utf8'):
+    _f = _l.rstrip('\n').split('\t')
+    if _l[0] != '#' and len(_f) >= 4: PSUM.setdefault(_f[0], {}).setdefault(_f[1], 0.0); PSUM[_f[0]][_f[1]] += float(_f[3])
+KEEP_POS = set('bicycle dizzy flute nickname magic log objective fossil pagan canine convict leak snip screech pout'.split())   # 点数では別の品詞が高いが、今の品詞のままにする語
+def _best_pos(w, cands):
+    d = {c: PSUM.get(w, {}).get(c, 0) for c in cands if c in CONTENT}
+    return d
+PRIM_X = {'curry': 'n'}   # 主な品詞を決め打ち(extra_ja.tsv で足した語など)
+def prim_of(w, cands):
+    if w in PRIM_X: return PRIM_X[w]
+    d = _best_pos(w, cands)
+    if len(d) >= 2 and w not in KEEP_POS:
+        b = max(d, key=d.get); cur = PRIM.get(w)
+        if cur in d and b != cur and d[b] >= max(6, 3 * d[cur]): return b   # 外部辞書でずっと多い品詞を主にする
+    """主な品詞を返す。cands = いまカードがある(または候補の)内容語の品詞"""
+    if w in PRIM and (not cands or PRIM[w] in cands or True): return PRIM[w]
+    cands = [c for c in cands if c in CONTENT]
+    return max(cands, key=lambda c: (BSC.get((w, c), 0), 'nvar'.index(c) * -1)) if cands else None
 rank = lambda w: RANK.get(w, 20000 + (100 - SCORE.get(w, 0)) * 1000 + zlib.crc32(w.encode()) % 997)
 
+_CORE = set()   # 英検の級データかCEFR-Jに載っている語は、career・container・employer のように語尾が -er/-ing でも 独立した語として扱う
+for _r in csv.DictReader(open(HERE + '../../../data/words/dict_all_words.csv', encoding='utf-8-sig')):
+    if _r['出題'] == '○' and (_r['英検の級(実データ)'] or _r['レベルの出どころ'].startswith('CEFR-J')): _CORE.add(_r['単語'].lower())
+PLURALIA = set('news species scissors pants shorts clothes means odds belongings jeans glasses trousers goods savings earnings premises'.split())
 def inflected(w, p):
     if w in PAST: return True
+    if w in _CORE and w not in ('higher', 'warmer') and not re.search(r'(ies|ied|s)$', w): return False
     if p == 'a' and re.search(r'(ing|ed)$', w): return False      # boring・excited などの形容詞は残す
+    if w in PLURALIA or re.search(r'(ss|us|is|ics)$', w): return False   # news・politics・pass・discuss など(語尾が s でも変化形ではない)
     for suf, rep in (('ies', 'y'), ('es', ''), ('s', ''), ('ied', 'y'), ('ed', ''), ('ed', 'e'), ('ing', ''), ('ing', 'e'), ('er', ''), ('est', ''), ('ier', 'y'), ('iest', 'y')):
         if w.endswith(suf):
+            if suf in ('er', 'est', 'ier', 'iest') and p not in ('a', 'r'): continue   # 名詞・動詞の -er は 比較級ではない(career・employer・buyer など)
             b = w[:-len(suf)] + rep
             if len(b) >= 3 and (b in HEAD or (len(b) > 3 and b[-1] == b[-2] and b[:-1] in HEAD)): return True
     return False
@@ -147,6 +199,11 @@ for (w, p), ms in D2.items():
     if (w, p) not in CARD and w not in BAD_W and not inflected(w, p) and len(w) > 1:
         put(w, p, ms, 1 if RANK[w] < 1200 else 2)
 
+_cands = C.defaultdict(list)
+for (w_, p_) in CARD:
+    if p_ in CONTENT: _cands[w_].append(p_)
+for (w_, p_) in list(CARD):
+    if p_ in CONTENT and prim_of(w_, _cands[w_]) != p_: del CARD[(w_, p_)]
 free = {}; usew = []
 for (w, p), (ms, lv) in CARD.items():
     ja = join(ms)
@@ -163,26 +220,116 @@ with open(APP + 'words.js', 'w', encoding='utf8') as fp:
     fp.write('// 単語練習（無料分）。build/build_words2.py で生成。1カード＝1単語の1品詞\nconst WORDS=' + json.dumps(WORDS, ensure_ascii=False, separators=(',', ':')) +
              ';\nconst WSET=' + json.dumps(WSET) + ';\nconst IDIOMS=' + json.dumps(ID, ensure_ascii=False, separators=(',', ':')) + ';\n')
 
+# ---- 訳の順：v12との照らし合わせ(data/words/sense_scores.tsv。tools/build_sense_scores.py が作る)で、主な意味を先に ----
+SENSE = {}
+_sp = HERE + '../../../data/words/sense_scores.tsv'
+if os.path.exists(_sp):
+    for l in open(_sp, encoding='utf8'):
+        if l.startswith('#') or not l.strip(): continue
+        w_, p_, m_, s_ = l.rstrip('\n').split('\t'); SENSE.setdefault((w_, p_), {})[m_] = float(s_)
 # ---- 全単語バンク（解放して遊ぶ分） ----
 have = set(CARD); FREEW = {w for (w, p) in CARD}
 bank = []
+MYJA = {}
+_fl = {}
+for _l in open(HERE + '../../../data/words/' + 'flag_translations.tsv', encoding='utf8'):
+    _f = _l.rstrip('\n').split('\t')
+    if _l[0] != '#' and len(_f) >= 6: _fl.setdefault(_f[2], []).append(_f[3])
+for _l in open(HERE + '../../../data/words/' + 'my_ja.tsv', encoding='utf8'):
+    _f = _l.rstrip('\n').split('\t')
+    if _l[0] == '#' or len(_f) < 3: continue
+    _o = _f[1] if _f[1] in _fl.get(_f[0], []) else (_fl.get(_f[0]) or [_f[1]])[0]
+    MYJA[(_f[0], _o)] = (_f[1], _f[2])
 for (w, p) in set(BIG) | set(DX):
     if (w, p) in have or w in BAD_W or len(w) < 2 or inflected(w, p): continue
     if w in FREEW and (w, p) not in DX and (w, p) not in D2: continue   # よく使う語の、辞書のおまけの品詞（say＝すれば など）は入れない
     if w in FIX and FIX[w] is None and (w in PAST or inflected(w, 'n')): continue
-    ja = join(DX.get((w, p), []) + [BIG.get((w, p), '')])
+    if (w, p) in MYJA:   # 自分たちで書き直した訳(品詞が変わる語もある)
+        p2, ja2 = MYJA[(w, p)]
+        if p2 != p and ((w, p2) in BIG or (w, p2) in DX or (w, p2) in have): continue   # 同じ品詞の別カードがあるなら重複させない
+        bank.append((rank(w), w, p2, join(ja2.split('、')) or ja2)); continue
+    cands = DX.get((w, p), []) + [m for m in re.split(r'[、,]', BIG.get((w, p), '')) if m.strip()]
+    if (w, p) in SENSE: cands = sorted(cands, key=lambda m: -SENSE[(w, p)].get(m.strip(), 0))   # v12で よく書かれている意味(主な意味)を先に
+    _seen = set(); _c2 = []
+    for m in cands:   # 「最高位の」と「最高位」のような、ほぼ同じ訳は1つに
+        kk = re.sub(r'[〜～\s]|(的な|的に|的|する|した|して|な|の|に)$', '', m.strip())
+        if kk and kk not in _seen: _seen.add(kk); _c2.append(m)
+    ja = join(_c2)
     if not ja: continue
     bank.append((rank(w), w, p, ja))
+for _l in open(HERE + '../../../data/words/extra_ja.tsv', encoding='utf8'):   # 抜けているカードを足す
+    _f = _l.rstrip('\n').split('\t')
+    if _l[0] != '#' and len(_f) >= 3:
+        bank = [b for b in bank if not (b[1] == _f[0] and b[2] == _f[1])]; bank.append((rank(_f[0]), _f[0], _f[1], _f[2]))
 for w, p, ja in usew: bank.append((rank(w), w, p, ja))
+_bc = C.defaultdict(list)
+for _r, w_, p_, _j in bank:
+    if p_ in CONTENT: _bc[w_].append(p_)
+_pm = {w_: prim_of(w_, ps_) for w_, ps_ in _bc.items()}
+_sec = set()   # 別の品詞でも よく使う語は、別カードにして「別の意味」の印(4列目の2)を付ける
+def _second(w_, p_):
+    d = _best_pos(w_, _bc[w_]); t = sum(d.values())
+    return w_ not in KEEP_POS2 and len(d) >= 2 and d.get(p_, 0) >= 3 and d.get(p_, 0) >= 0.3 * t
+KEEP_POS2 = set('bicycle flute nickname log'.split())   # 派生にすぎない品詞は別カードにしない
+bank2_ = []
+for x_ in bank:
+    if x_[2] not in CONTENT or _pm.get(x_[1]) == x_[2]: bank2_.append(x_)
+    elif _second(x_[1], x_[2]): bank2_.append((x_[0] + 600, x_[1], x_[2], x_[3])); _sec.add((x_[1], x_[2]))
+bank = bank2_
 bank.sort()
 seen = set(); b2 = []
 for x in bank:            # 同じ語で訳が同じ品詞違い（eleven 形/名 など）は1枚に
     if (x[1], x[3]) in seen: continue
     seen.add((x[1], x[3])); b2.append(x)
 bank = b2
+# ---- 訳が共通の辞書(core/dict/data.js)と同じなら書かない(読むときに辞書から引く。同じ訳を2回持たない) ----
+_CD = {}
+_cs = open(HERE + '../../../core/dict/data.js', encoding='utf8').read()
+for _l in json.loads('"' + re.search(r'__csDictLoad\("((?:[^"\\]|\\.)*)"', _cs).group(1) + '"').split('\n'):
+    _f = _l.split('\t')
+    if len(_f) < 2 or not _f[0] or not _f[1]: continue
+    _k = _f[0].lower()
+    if _k in _CD: continue   # 辞書の読み込みと同じく、先に出たものを使う
+    _CD[_k] = [(s[:s.find('=')], s[s.find('=') + 1:].replace(',', '、')) for s in _f[1].split(';') if '=' in s]
+_PM = {'n': ['n'], 'v': ['v'], 'a': ['adj'], 'r': ['adv']}
+def _same_as_dict(w, p, ja):
+    lw = w.lower()
+    if not re.fullmatch(r"[a-z0-9]([a-z0-9' -]*[a-z0-9])?", lw) or lw.endswith("'s") or lw not in _CD: return False
+    m = next((j for q, j in _CD[lw] if q in _PM.get(p, [p])), None)
+    return m == ja
+def _jaout(w, p, ja): return '' if _same_as_dict(w, p, ja) else ja
+# ---- 覚える語に絞る(辞書としては data.js に残る)：専門・頻度なし・人名の語、どの単語帳にも載らず頻度が低い語は、バンクから外す ----
+_T = {}
+for _r in csv.DictReader(open(HERE + '../../../data/words/dict_all_words.csv', encoding='utf-8-sig')): _T.setdefault(_r['単語'].lower(), _r)
+def _keep(w):
+    r = _T.get(w)
+    if not r: return True
+    z = float(r['頻度Zipf'] or 0)
+    core = bool(r['英検の級(実データ)']) or r['レベルの出どころ'].startswith('CEFR-J')
+    listed = core or int(r['出典の数(v12)'] or 0) > 0
+    if r['区分'] in ('専門・ほぼ使わない', '頻度なし', '人名にもなる語', '略語・短すぎる') and not core: return False
+    return listed or z >= BANK_ZIPF
+BANK_ZIPF = 3.5
+_learn = [b for b in bank if _keep(b[1])]   # 練習で覚える語(bank.js は 実力テストの語彙サイズ推定のため全語のまま)
+print('覚える語に絞り込み:', len(_learn), '/ 全', len(bank))
+with open(APP + 'learn.js', 'w', encoding='utf8') as fp:
+    fp.write('// 練習で覚える語(専門・頻度なし・人名の語、どの単語帳にも載らず頻度が低い語を除く)。build_words2.py が bank.js から作る。1行＝英語<TAB>品詞<TAB>訳[<TAB>2=別の意味]\nconst LEARN_SRC=' +
+             json.dumps('\n'.join(f'{w}\t{p}\t{_jaout(w, p, ja)}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in _learn), ensure_ascii=False) + ';\n')
 with open(APP + 'bank.js', 'w', encoding='utf8') as fp:
     fp.write('// 全単語バンク（解放して遊ぶ分）。build/build_words2.py で生成。1行＝英語<TAB>品詞<TAB>訳。よく使う順。BANK_STAGE語で1ステージ\nconst BANK_STAGE=300;\nconst BANK_SRC=' +
-             json.dumps('\n'.join(f'{w}\t{p}\t{ja}' for _, w, p, ja in bank), ensure_ascii=False) + ';\n')
+             json.dumps('\n'.join(f'{w}\t{p}\t{_jaout(w, p, ja)}' + ('\t2' if (w, p) in _sec else '') for _, w, p, ja in bank), ensure_ascii=False) + ';\n')
 print('free', {l: len(v) for l, v in WORDS.items()}, 'cards', sum(len(v) for v in WORDS.values()), 'usew', len(usew))
 print('bank', len(bank), 'stages', -(-len(bank) // 300), 'pos', C.Counter(b[2] for b in bank))
 print('sample free', WORDS[1][:12]); print('sample bank', [b[1:] for b in bank[:15]], [b[1:] for b in bank[5000:5010]], [b[1:] for b in bank[-8:]])
+
+# ---- 単語ごとのレベル(CEFR 1=A1〜6=C2)：単語表 data/words/dict_all_words.csv から。レベル別の練習と、レベル診断の目安で使う ----
+def _wlv():
+    path = HERE + '../../../data/words/dict_all_words.csv'; out = {}
+    if not os.path.exists(path): return out
+    for r in csv.DictReader(open(path, encoding='utf-8-sig')):
+        if r['レベル(1-6)'] and r['熟語'] == '' and re.fullmatch(r"[a-z][a-z'-]*", r['単語']): out[r['単語']] = r['レベル(1-6)']
+    return out
+WLV = _wlv()
+with open(APP + 'wlv.js', 'w', encoding='utf8') as fp:
+    fp.write('// 単語のレベル(CEFR 1=A1〜6=C2)。build/build_words2.py が 単語表(data/words)から作る。1語=「語:数字」を , でつなぐ\nconst WLV_SRC=' + json.dumps(','.join(f'{w}:{v}' for w, v in sorted(WLV.items())), ensure_ascii=False) + ';\n')
+print('wlv', len(WLV))

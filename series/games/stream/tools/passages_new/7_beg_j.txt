@@ -1,0 +1,459 @@
+@id beg92
+@lv 1
+@level 4
+@title My Dream for the Future
+@ja 将来の夢
+@tag 高校受験レベル・スピーチ
+@gloss dream=夢, vet=獣医, animal hospital=動物病院, kind=親切な, save=救う, life=命, science=理科, come true=かなう
+S| My {dream|dreams|dreaming|dreamed} :: 私の夢は
+V| {is|are|be|am} :: …だ
+C| to {become|becomes|became|becoming} a vet. :: 獣医になること
+== 私の夢は獣医になることです。
+S| A vet {is|are|be|been} :: 獣医は…だ
+C| a {doctor|doctors|doctoring|doctored} :: 医者
+P| {for|into|than|until} animals. :: 動物のための
+== 獣医は動物のためのお医者さんです。
+T| When I {was|were|be|been} seven, :: 7歳のとき
+S| {my|me|mine|I} dog :: 私の犬が
+V| got {sick|sickly|sickness|sicker than}. :: 病気になった
+== 7歳のとき、私の犬が病気になりました。
+S| We {took|taken|taking|takes} him :: 私たちは彼を連れて
+P| {to|of|on|than} an animal hospital. :: 動物病院へ
+== 私たちは彼を動物病院に連れて行きました。
+S| The vet {was|were|be|been} :: 獣医さんは…だった
+C| very {kind|kindly|kindness|kinds} :: とても親切
+P| {to|from|into|than} us. :: 私たちに
+== 獣医さんは私たちにとても親切でした。
+S| {She|Her|Hers|Herself} :: 彼女は
+V| {saved|save|saving|savior} :: 救った
+O| my dog's {life|live|lively|alive}. :: 犬の命を
+== 彼女は私の犬の命を救ってくれました。
+T| {Since|Until|Ago|Among} then, :: それ以来
+S| I {have|has|having|am} wanted :: 私はずっと思ってきた
+O| to {be|being|been|is} a vet. :: 獣医になりたいと
+== それ以来、私はずっと獣医になりたいと思っています。
+S| I {study|studies|studying|to study} :: 私は勉強する
+O| science {hard|hardly|harder than|hardness} :: 理科を一生懸命
+T| {every|many|much|few} day. :: 毎日
+== 私は毎日一生懸命理科を勉強しています。
+S| I {will|being|been|to} :: 私は…だろう
+V| {keep|keeps|kept|keeping} trying :: 努力し続ける
+R| to {make|makes|made|making} my dream come true. :: 夢をかなえるために
+== 夢をかなえるために、私は努力し続けます。
+?? 0 2 夢は何？
+?? 2 2 7歳のとき、犬はどうなった？
+?? 5 2 獣医さんは何を救った？
+?? 7 1 毎日何を勉強している？
+
+@id beg93
+@lv 1
+@level 4
+@title Practicing the Guitar
+@ja ギターの練習
+@tag 高校受験レベル・ブログ
+@gloss used=中古の, expensive=高価な, sound=…に聞こえる, practice=練習する, finger=指, hurt=痛む, chord=コード（和音）, difficult=難しい, give up=あきらめる
+T| Last {month|months|monthly|month's}, :: 先月
+S| I {bought|buy|buyed|buying} :: 私は買った
+O| a {used|use|using|uses} guitar. :: 中古のギターを
+== 先月、私は中古のギターを買いました。
+S| It {was|were|be|been} :: それは…だった
+C| not {expensive|expense|expensively|expenses}, :: 高くなかった
+M| {but|nor|than|because of} :: でも
+V| it {sounds|sound|sounding|soundly} nice. :: いい音がする
+== それは高くありませんでしたが、いい音がします。
+S| I {practice|practices|practicing|practical} :: 私は練習する
+O| {for|since|during|while} thirty minutes :: 30分間
+T| {every|many|much|few} night. :: 毎晩
+== 私は毎晩30分練習しています。
+P| {At|In|On|By} first, :: 最初は
+S| my fingers {hurt|hurts|hurting|hurted} :: 指が痛かった
+M| a {lot|lots|many|much}. :: とても
+== 最初は指がとても痛かったです。
+S| {Playing|Play|Played|Plays} chords :: コードを弾くことは
+V| {was|were|be|being} :: …だった
+C| very {difficult|difficulty|difficultly|difficulties}. :: とても難しい
+== コードを弾くのはとても難しかったです。
+M| {But|Nor|Than|Unless} :: でも
+S| {I|My|Me|Mine} :: 私は
+V| {didn't|doesn't|wasn't|haven't} give up. :: あきらめなかった
+== でも、私はあきらめませんでした。
+T| {Now|Ago|Ever|Since}, :: 今は
+S| I {can|cans|could to|am} play :: 私は弾ける
+O| {three|third|threes|thrice} songs. :: 3曲を
+== 今では3曲弾けます。
+S| My {favorite|favor|favorably|favors} :: 一番好きなのは
+V| {is|are|be|been} :: …だ
+C| "{Happy|Happily|Happiness|Happier than} Birthday." :: 「ハッピーバースデー」
+== 一番好きな曲は「ハッピーバースデー」です。
+T| Next {week|weeks|weekly|weekend's}, :: 来週
+S| I {will|being|been|did} play it :: 私はそれを弾く
+P| {for|of|from|than} my sister's birthday. :: 妹の誕生日に
+== 来週、妹の誕生日にそれを弾くつもりです。
+S| I {hope|hopes|hoping|hopeful} :: 私は願う
+O| she {will|being|been|to} :: 彼女が…と
+V| {like|likes|liking|liked} it! :: 気に入る
+== 妹が気に入ってくれるといいな！
+?? 0 2 何を買った？
+?? 2 1 毎晩どのくらい練習している？
+?? 6 2 今は何曲弾ける？
+?? 8 2 いつそれを弾くつもり？
+
+@id beg94
+@lv 1
+@level 4
+@title Manga Is Good for Students
+@ja マンガを読むこと
+@tag 高校受験レベル・意見文
+@gloss however=しかし, reason=理由, history=歴史, learn=学ぶ, second=第二に, believe=信じる, young=若い
+S| Some {people|peoples|person|people's} :: 一部の人は
+V| {say|says|saying|sayed} :: 言う
+O| {that|what|whom|than} manga is bad. :: マンガは悪いと
+== マンガは悪いものだと言う人もいます。
+S| {However|Although|Despite|Because}, I :: しかし私は
+V| {think|thinks|thinking|thinker} :: 思う
+O| {it|its|it's|they} is good :: それは良いと
+P| {for|than|during|until} students. :: 学生にとって
+== しかし、私はマンガは学生にとって良いものだと思います。
+S| {I|My|Me|Mine} :: 私には
+V| {have|has|having|am} :: ある
+O| two {reasons|reason|reasoning|reasonable}. :: 2つの理由が
+== 理由は2つあります。
+M| {First|Ones|Firsts|Firstest}, :: まず
+S| manga {can|cans|is|being} teach us :: マンガは教えられる
+O| {about|above|along|across} history. :: 歴史について
+== まず、マンガは私たちに歴史について教えてくれます。
+S| I {learned|learning|learns|learner} a lot :: 私は多くを学んだ
+P| {from|than|into|until} a manga :: あるマンガから
+P| {about|above|along|across} old Japan. :: 昔の日本についての
+== 私は昔の日本についてのマンガから多くを学びました。
+M| {Second|Seconds|Secondary|Secondhand}, :: 次に
+S| manga {makes|making|maked|to make} :: マンガは…にする
+O| reading {fun|funs|funning|funnily}. :: 読書を楽しく
+== 次に、マンガは読書を楽しくしてくれます。
+S| My little {brother|brother's|brotherly|brotherhood} :: 私の弟は
+V| {didn't|weren't|don't|haven't} like :: 好きでなかった
+O| {books|book|booking|bookish}. :: 本が
+== 弟は本が好きではありませんでした。
+S| {Now|Ago|Ever|Since} he :: 今では彼は
+V| {reads|reading|readed|to read} :: 読む
+O| manga {every|many|much|few} day. :: 毎日マンガを
+== 今では彼は毎日マンガを読んでいます。
+M| {So|Nor|Than|Unless}, :: だから
+S| I {believe|believes|believing|belief} :: 私は信じる
+O| manga {is|be|being|been} good :: マンガは良いと
+P| {for|than|during|until} young people. :: 若い人にとって
+== だから、私はマンガは若い人にとって良いものだと信じています。
+?? 2 2 理由はいくつある？
+?? 3 2 マンガは何について教えてくれる？
+?? 4 2 どんなマンガから多くを学んだ？
+?? 7 2 弟は今、何を毎日読んでいる？
+
+@id beg95
+@lv 1
+@level 4
+@title I Love Taking Pictures
+@ja 写真をとるのが好き
+@tag 高校受験レベル・ブログ
+@gloss picture=写真, phone=スマートフォン, leaf (leaves)=葉, more than=…以上, show=写す, branch=枝, post=投稿する
+S| I {love|loves|loving|lovely} :: 私は大好きだ
+O| {taking|take|took|takes} pictures :: 写真をとることが
+P| {with|of|than|until} my phone. :: スマホで
+== 私はスマホで写真をとるのが大好きです。
+S| I {take|takes|taking|token} :: 私はとる
+O| pictures {of|than|until|into} :: …の写真を
+O| flowers, cats, {and|nor|than|but} the sky. :: 花やねこや空
+== 私は花やねこや空の写真をとります。
+T| Last {Sunday|Sundays|Sunday's|Sun}, :: この前の日曜
+S| I {went|go|goes|gone} :: 私は行った
+P| {to|at|on|of} the park :: 公園へ
+P| {with|of|than|into} my camera. :: カメラを持って
+== この前の日曜日、私はカメラを持って公園へ行きました。
+S| The {leaves|leaf|leafs|leave} :: 葉は
+V| {were|was|be|is} :: …だった
+C| red {and|nor|than|but} yellow. :: 赤と黄色
+== 葉は赤と黄色でした。
+S| I {took|taken|takes|taking} :: 私はとった
+O| {more|most|much|many} than :: …以上
+O| {fifty|fifth|fifteenth|fiftieth} pictures. :: 50枚の写真を
+== 私は50枚以上の写真をとりました。
+S| My {best|bestly|goodest|well} picture :: 一番いい写真は
+V| {shows|show|showing|shown} :: …を写している
+O| a {small|smallest|smally|smalls} bird. :: 小さな鳥を
+== 一番いい写真には小さな鳥が写っています。
+S| {It|Its|It's|Itself} :: それは
+V| was {sitting|sit|sat|sits} :: とまっていた
+P| {on|of|than|into} a branch. :: 枝の上に
+== その鳥は枝にとまっていました。
+S| I {posted|posting|posts|poster} it :: 私はそれを投稿した
+P| {on|than|until|of} my blog :: ブログに
+T| {yesterday|tomorrow|yesterdays|ago}. :: きのう
+== 私はきのうそれをブログに投稿しました。
+S| {Many|Much|Every|A lot} people :: 多くの人が
+V| {liked|likes|liking|likely} it :: それを気に入った
+M| very {much|many|more|most}. :: とても
+== 多くの人がそれをとても気に入ってくれました。
+S| I {want|wants|wanting|wanted to} :: 私は…たい
+V| {to take|taking|take|took} :: とること
+O| {more|most|much|mores} pictures :: もっと写真を
+T| {next|last|ago|before} year. :: 来年は
+== 来年はもっと写真をとりたいです。
+?? 1 2 何の写真をとる？
+?? 2 2 日曜日にどこへ行った？
+?? 4 2 何枚以上の写真をとった？
+?? 5 2 一番いい写真には何が写っている？
+
+@id beg96
+@lv 1
+@level 4
+@title Robots in Our Lives
+@ja くらしの中のロボット
+@tag 高校受験レベル・説明文
+@gloss robot=ロボット, way=方法, floor=床, themselves=それら自身, factory=工場, carry=運ぶ, useful=役に立つ, control=操作する, future=将来
+S| Today, {robots|robot|robot's|robotic} :: 今日ロボットは
+V| {help|helps|helping|helper} :: 助ける
+O| us {in|of|at|than} many ways. :: 多くの方法で私たちを
+== 今日、ロボットは多くの方法で私たちを助けています。
+S| {Some|Much|Every|A} robots :: いくつかのロボットは
+V| {clean|cleans|cleaning|cleaner} :: そうじする
+O| {floors|floor|floored|floory} :: 床を
+P| {in|of|than|until} homes. :: 家の中で
+== 家の床をそうじするロボットもあります。
+S| {They|Their|Them|Theirs} :: それらは
+V| {move|moves|moving|movement} :: 動く
+M| {by|of|than|until} themselves. :: 自分で
+== それらは自分で動きます。
+S| {Other|Another|Others|The other's} robots :: ほかのロボットは
+V| {work|works|working|worker} :: 働く
+P| {in|than|of|until} factories. :: 工場で
+== ほかのロボットは工場で働いています。
+S| They {can|cans|is|being} make :: それらは作れる
+O| cars {and|nor|than|but} computers :: 車やコンピュータを
+M| very {quickly|quickness|quicken|quickest}. :: とても速く
+== それらは車やコンピュータをとても速く作ることができます。
+P| {In|To|Of|Than} some restaurants, :: 一部のレストランで
+S| robots {carry|carries|carrying|carrier} :: ロボットが運ぶ
+O| {food|foody|foodly|fooded} :: 料理を
+P| {to|of|than|until} the tables. :: テーブルへ
+== 一部のレストランでは、ロボットが料理をテーブルへ運びます。
+S| Robots {are|is|be|being} :: ロボットは…だ
+C| {useful|use|usefully|usefulness}, :: 役に立つ
+M| {but|nor|than|because of} :: しかし
+V| they {cannot|isn't|doesn't|not} do everything. :: 何でもはできない
+== ロボットは役に立ちますが、何でもできるわけではありません。
+S| {People|Peoples|Person|People's} :: 人間は
+V| {still|steal|stills|stilly} need :: まだ必要がある
+O| to {control|controls|controlled|controlling} them. :: それらを操作する
+== 人間はまだロボットを操作する必要があります。
+P| {In|To|Of|Than} the future, :: 将来
+S| robots {will|being|been|to} help us :: ロボットは助けるだろう
+M| even {more|most|many|much}. :: もっと
+== 将来、ロボットはもっと私たちを助けてくれるでしょう。
+?? 1 2 家でロボットは何をそうじする？
+?? 3 2 ほかのロボットはどこで働いている？
+?? 5 2 レストランでロボットは何を運ぶ？
+?? 7 2 人間はまだ何をする必要がある？
+
+@id beg97
+@lv 1
+@level 4
+@title My Hobby Is Drawing
+@ja 絵をかくこと
+@tag 高校受験レベル・スピーチ
+@gloss hobby=趣味, crayon=クレヨン, mostly=主に, calm=落ち着いた, prize=賞, contest=コンテスト, picture book=絵本, children=子どもたち
+S| My {hobby|hobbies|hobbit|hobbyist} :: 私の趣味は
+V| {is|are|be|been} :: …だ
+C| {drawing|draw|drew|drawn} pictures. :: 絵をかくこと
+== 私の趣味は絵をかくことです。
+S| I {started|starting|starts|starter} :: 私は始めた
+O| {drawing|draws|drew|drawn} :: かくことを
+T| when I {was|were|am|be} five. :: 5歳のときに
+== 私は5歳のときに絵をかき始めました。
+S| My {mother|mother's|motherly|motherhood} :: 母が
+V| {gave|give|given|giving} me :: 私にくれた
+O| a {box|boxes|boxing|boxed} of crayons. :: クレヨンの箱を
+== 母が私にクレヨンを1箱くれました。
+S| I {drew|drawed|drawing|drawn} :: 私はかいた
+O| {pictures|picture|pictured|picturing} :: 絵を
+P| {of|than|into|until} my family :: 家族の
+T| {every|many|much|few} day. :: 毎日
+== 私は毎日家族の絵をかきました。
+T| {Now|Ago|Ever|Since}, :: 今は
+S| I {draw|draws|drawing|drawed} :: 私はかく
+O| {mostly|mosts|mostest|almost} animals. :: 主に動物を
+== 今は主に動物をかいています。
+S| {Drawing|Draw|Drew|Drawn} :: かくことは
+V| {makes|make|making|maked} me :: 私を…にする
+C| {calm|calmly|calmness|calms}. :: 落ち着いた気持ち
+== 絵をかくと気持ちが落ち着きます。
+T| Last {year|years|yearly|year's}, :: 去年
+S| my picture {won|win|wins|winning} :: 私の絵がとった
+O| a {prize|price|prizes|prized} :: 賞を
+P| {in|than|until|across} a contest. :: コンテストで
+== 去年、私の絵がコンテストで賞をとりました。
+S| I {was|were|be|been} :: 私は…だった
+C| very {happy|happily|happiness|happier than} :: とてもうれしい
+P| {about|above|along|across} it. :: そのことが
+== 私はそれがとてもうれしかったです。
+T| {In|To|Of|Than} the future, :: 将来
+S| I {want|wants|wanting|wanted to} :: 私は…たい
+O| to {make|makes|made|making} picture books :: 絵本を作ること
+P| {for|than|until|across} children. :: 子どものための
+== 将来、私は子どものための絵本を作りたいです。
+?? 1 2 何歳のときに絵をかき始めた？
+?? 2 2 母は何をくれた？
+?? 4 2 今は主に何をかいている？
+?? 8 2 将来何を作りたい？
+
+@id beg98
+@lv 1
+@level 4
+@title My Stamp Collection
+@ja 切手集め
+@tag 高校受験レベル・ブログ
+@gloss collect=集める, stamp=切手, grandfather=祖父, album=アルバム, hundred=100, favorite=お気に入り, giraffe=キリン, country=国, someday=いつか
+S| I {collect|collects|collecting|collection} :: 私は集めている
+O| {stamps|stamp|stamped|stamping} :: 切手を
+P| {from|than|until|into} many countries. :: 多くの国の
+== 私はいろいろな国の切手を集めています。
+S| {My|Me|Mine|I} grandfather :: 祖父が
+V| {gave|give|given|giving} me :: 私にくれた
+O| his old {album|albumed|albuming|albumly} :: 古いアルバムを
+T| {three|third|threes|thrice} years ago. :: 3年前に
+== 3年前、祖父が古い切手アルバムをくれました。
+S| It {had|have|having|haved} :: それには…あった
+O| about {two hundred|two hundreds|second hundred|two hundredth} stamps. :: 約200枚の切手が
+== その中には約200枚の切手が入っていました。
+S| {That|Than|Then|Them} album :: そのアルバムが
+V| {started|starting|starter|start to} :: 始めた
+O| my {hobby|hobbit|hobbyist|hobbying}. :: 私の趣味を
+== そのアルバムが私の趣味の始まりでした。
+T| {Now|Ago|Ever|Since} :: 今
+S| I {have|has|having|be} :: 私は持っている
+O| more {than|then|that|them} five hundred. :: 500枚以上
+== 今では500枚以上持っています。
+S| My {favorite|favor|favorably|favors} :: 一番好きなのは
+V| {is|are|be|been} :: …だ
+C| a stamp {from|than|until|into} Kenya. :: ケニアの切手
+== 一番のお気に入りはケニアの切手です。
+S| It {has|have|having|haves} :: それには…ある
+O| a {beautiful|beauty|beautifully|beauties} picture :: 美しい絵が
+P| {of|than|until|into} a giraffe. :: キリンの
+== それにはキリンの美しい絵がかいてあります。
+S| {Each|All|Both|Many} stamp :: それぞれの切手は
+V| {tells|tell|telling|teller} :: 教えてくれる
+O| me {about|above|along|across} its country. :: その国について私に
+== 一枚一枚の切手が、その国について教えてくれます。
+S| I {want|wants|wanting|wanted to} :: 私は…たい
+V| to {visit|visits|visited|visiting} :: 訪れること
+O| {those|that|this|them} countries :: それらの国々を
+T| {someday|somedays|yesterday|ago}. :: いつか
+== いつかそれらの国々を訪れたいです。
+?? 1 3 祖父はいつアルバムをくれた？
+?? 2 1 アルバムには約何枚の切手があった？
+?? 5 2 一番好きなのはどこの国の切手？
+?? 6 2 その切手には何の絵がある？
+
+@id beg99
+@lv 1
+@level 4
+@title Shogi with Grandpa
+@ja 祖父と将棋
+@tag 高校受験レベル・日記
+@gloss visit=訪ねる, together=いっしょに, board game=ボードゲーム, chess=チェス, lose (lost)=負ける, piece=駒, do one's best=全力を出す, beat=…に勝つ
+T| {Today|Todays|Today's|To day}, :: きょう
+S| I {visited|visiting|visits|visitor} :: 私は訪ねた
+O| my {grandfather|grandfather's|grandfatherly|grand father's}. :: 祖父を
+== きょう、私は祖父を訪ねた。
+S| We {played|playing|plays|player} :: 私たちはした
+O| shogi {together|togethers|toward|gather} :: いっしょに将棋を
+P| {after|than|across|among} lunch. :: 昼食のあと
+== 昼食のあと、私たちはいっしょに将棋をした。
+S| Shogi {is|are|be|being} :: 将棋は…だ
+C| a Japanese {board|bored|boards|boarding} game :: 日本のボードゲーム
+P| {like|liking|likes|liked} chess. :: チェスのような
+== 将棋はチェスのような日本のボードゲームだ。
+S| My grandfather {is|are|be|being} :: 祖父は…だ
+C| very {good|goodly|goods|goodness} :: とても上手
+P| {at|of|than|until} it. :: それが
+== 祖父は将棋がとても上手だ。
+S| I {lost|loses|losing|loss} :: 私は負けた
+O| the {first|ones|once|firstly} game :: 最初の試合に
+M| {quickly|quickness|quicken|quickest}. :: すぐに
+== 私は1局目にすぐ負けてしまった。
+S| He {taught|teach|teached|teaching} me :: 彼は私に教えた
+O| {how to|to how|how|why to} :: …のしかたを
+V| {move|moves|moved|moving} the pieces. :: 駒を動かす
+== 祖父は駒の動かし方を教えてくれた。
+P| {In|To|Of|Than} the second game, :: 2局目で
+S| I {did|does|done|doing} :: 私はした
+O| my {best|good|better|well}. :: 全力を
+== 2局目では、私は全力を出した。
+M| {But|Nor|Than|Unless} :: でも
+S| {I|My|Me|Mine} :: 私は
+V| {lost|loses|losing|loss} again. :: また負けた
+== でも、また負けてしまった。
+S| Grandpa {said|saying|sayed|speaked}, :: おじいちゃんは言った
+O| "You {are|is|be|am} :: 「君は…だ
+C| {getting|get|gets|got} better!" :: 上手になっている」
+== おじいちゃんは「上手になってきたね」と言った。
+S| I {will|being|been|did} :: 私は…つもりだ
+V| {practice|practices|practiced|practicing} more :: もっと練習する
+R| to {beat|beats|beaten|beating} him. :: 彼に勝つために
+== 祖父に勝つために、もっと練習するつもりだ。
+?? 1 2 いつ将棋をした？
+?? 2 2 将棋は何に似ている？
+?? 5 2 祖父は何のしかたを教えてくれた？
+?? 8 2 おじいちゃんは何と言った？
+
+@id beg100
+@lv 1
+@level 4
+@title Why I Study English
+@ja なぜ英語を勉強するのか
+@tag 高校受験レベル・スピーチ
+@gloss reason=理由, other=ほかの, useful=役に立つ, job=仕事, understand=理解する, without=…なしで, subtitles=字幕, key=かぎ, world=世界
+S| {Today|Todays|Today's|To day} I :: きょう私は
+V| {will|being|been|did} talk :: 話す
+P| {about|above|along|across} :: …について
+O| {why|what|who|whose} I study English. :: なぜ英語を学ぶか
+== きょうは、私がなぜ英語を勉強するのかについて話します。
+S| {I|My|Me|Mine} :: 私には
+V| {have|has|having|am} :: ある
+O| three {reasons|reason|reasoning|reasonable}. :: 3つの理由が
+== 理由は3つあります。
+M| {First|Ones|Firsts|Firstest}, :: 1つ目に
+S| I {want|wants|wanting|wanted to} :: 私は…たい
+V| to {make|makes|made|making} friends :: 友だちを作ること
+P| {from|than|until|into} other countries. :: ほかの国の
+== 1つ目に、私はほかの国の友だちを作りたいです。
+M| {Second|Seconds|Secondary|Secondhand}, :: 2つ目に
+S| English {is|are|be|being} :: 英語は…だ
+C| {useful|use|usefully|usefulness} :: 役に立つ
+P| {for|than|until|into} many jobs. :: 多くの仕事に
+== 2つ目に、英語は多くの仕事で役に立ちます。
+M| {Third|Thirds|Thirteen|Thirtieth}, :: 3つ目に
+S| I {love|loves|loving|lovely} :: 私は大好きだ
+O| {watching|watch|watched|watches} movies :: 映画を見ることが
+P| {in|on|at|to} English. :: 英語の
+== 3つ目に、私は英語の映画を見るのが大好きです。
+S| I {want|wants|wanting|wanted to} :: 私は…たい
+V| to {understand|understands|understood|understanding} them :: それらを理解する
+M| {without|with out|withing|within} subtitles. :: 字幕なしで
+== 私は字幕なしでそれらを理解したいです。
+S| {Learning|Learn|Learned|Learns} English :: 英語を学ぶことは
+V| {is|are|be|been} not :: …ではない
+C| {easy|easily|ease|easier than}. :: 簡単
+== 英語を学ぶのは簡単ではありません。
+M| {But|Nor|Than|Unless} :: でも
+S| I {study|studies|studying|student} :: 私は勉強する
+O| {new|news|newly|newer than} words :: 新しい単語を
+T| {every|many|much|few} day. :: 毎日
+== でも、私は毎日新しい単語を勉強しています。
+S| English {is|are|be|being} :: 英語は…だ
+C| a {key|keys|keyed|keying} :: かぎ
+P| {to|than|until|among} a bigger world. :: もっと広い世界への
+== 英語はもっと広い世界へのかぎです。
+?? 1 2 理由はいくつある？
+?? 2 3 どこの国の友だちを作りたい？
+?? 4 3 何語の映画を見るのが好き？
+?? 7 2 毎日何を勉強している？
