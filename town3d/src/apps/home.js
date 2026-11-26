@@ -63,7 +63,7 @@ export const shopApp = {
     try { houseData.get(); const so = models.soon(); if (so.length) msg = so.map(o => `📅 借りている「${o.name}」は、あと${o.days}日で返却だよ。`).join(' '); } catch (e) { }
     const paid = () => { try { return !!(ctx.member && ctx.member.paid()); } catch (e) { return false; } };
     // 町のホームセンターから開いたとき(タブも「家から」も指定なし)は、最初から作る画面(空の6×6の部屋)で始める
-    if (!(ctx.params && (ctx.params.tab || ctx.params.from))) {
+    if (!(ctx.params && (ctx.params.tab || ctx.params.from || ctx.params.coach))) {
       try {
         const L = models.list(); let m = L[L.length - 1];
         if (!m && models.slots(paid()) > 0) m = models.create('モデルルーム 1');
@@ -79,7 +79,28 @@ export const shopApp = {
     };
     const head = (title, sub) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px 4px"><h2 style="margin:0;font-size:20px">${title}</h2><b style="background:#fff3cf;border-radius:999px;padding:6px 14px">🪙 <span data-bind="coins">${fmtN(ctx.wallet.get())}</span>${ctx.gems ? ` 💎 <span data-bind="gems">${fmtN(ctx.gems.get())}</span>` : ''}</b></div><p style="margin:0;padding:0 16px 8px;font-size:13px;color:#8d7f9e">${sub}</p>`;
     let lastView = '', lastCat = '';
-    const draw = () => {   // 数を変えるたびに作りなおすので、同じ画面なら見ていた位置(スクロール)を保つ
+    // ---- お店の案内(coach): 家具をカゴに入れる → カゴを見る → まとめて買う → 家に置く(家の案内へつづく)。光ったボタンを、本物で押して進む ----
+    const CO = ctx.params && ctx.params.coach ? (() => {
+      const cheap = ITEMS.filter(it => !it.noshop).slice().sort((a, b) => a.price - b.price)[0];
+      const T = ['① 好きな家具の「＋」を押して、カゴに入れよう。お金が減るのは、さいごに「まとめて買う」を押したときだけだよ。', '② 「カゴを見る」を押そう。', '③ 「まとめて買う」を押して、買ってみよう。', '④ 買えたね! つぎは、家に置いてみよう。'];
+      const SEL = [`[data-q="${cheap && cheap.id}"][data-d="1"]`, '[data-v="cart"]', '[data-pay]', null];
+      const inv0 = () => ITEMS.reduce((a, it) => a + furn.owned(it.id), 0), n0 = inv0();
+      if (cheap && ctx.wallet.get() < cheap.price) ctx.wallet.add(cheap.price - ctx.wallet.get(), 'tutorial');   // いちばん安い家具が買えるぶんだけ、案内用にわたす
+      let st = 0, go = false;
+      return {
+        pre() {
+          if (st === 0 && Object.keys(furn.cart()).length) st = 1;
+          if (st === 1 && view === 'cart') st = 2;
+          if (st === 1 && !Object.keys(furn.cart()).length) st = 0;
+          if (st === 2 && inv0() > n0) st = 3;
+          msg = T[st] + (st === 0 && cheap ? `(${cheap.name} 🪙${cheap.price} が買いやすいよ)` : '');
+          if (st === 3 && !go) { go = true; setTimeout(() => { try { ctx.open('home', { coach: true }); } catch (e) { } }, 2200); }
+        },
+        post() { const el = SEL[st] && box.querySelector(SEL[st]); if (el) { el.style.outline = '4px solid #ffd166'; el.style.outlineOffset = '3px'; if (st === 0) try { el.scrollIntoView({ block: 'center' }); } catch (e) { } } },
+      };
+    })() : null;
+    const draw = () => { if (CO) CO.pre(); draw1(); if (CO) CO.post(); };
+    const draw1 = () => {   // 数を変えるたびに作りなおすので、同じ画面なら見ていた位置(スクロール)を保つ
       const keep = lastView === view && lastCat === cat ? (box.querySelector('.sc')?.scrollTop || 0) : 0;
       paint(); lastView = view; lastCat = cat;
       const sc = box.querySelector('.sc'); if (sc) sc.scrollTop = keep;

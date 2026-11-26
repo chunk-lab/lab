@@ -640,6 +640,7 @@ export function mount(container, opt = {}) {
     ],
   };
   function teachTopic(r, topic) {
+    if (topic === 'shop') { r.talking = false; if (talkingTo === r) talkingTo = null; hud.closeDialog && hud.closeDialog(); openApp('shop', { coach: true }); return; }   // お店の案内は、お店の中(本物のカゴ・買い物をしながら)
     if (topic === 'fishing') { r.talking = false; if (talkingTo === r) talkingTo = null; hud.closeDialog && hud.closeDialog(); openApp('fishing', { coach: true }); return; }   // 釣りの案内は、釣りアプリの中(本物の釣りをしながら)
     const list = TEACH[topic] || [], nm = r.def.id === 'hana' ? 'はな' : (r.def.name || ''), face = r.def.id;
     let i = 0, lit = null, cap = null;
